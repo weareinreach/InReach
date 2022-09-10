@@ -1,0 +1,17 @@
+{
+	"recommendations": [
+		"editorconfig.editorconfig",
+		"dsznajder.es7-react-js-snippets",
+		"dbaeumer.vscode-eslint",
+		"bierner.jsdoc-markdown-highlighting",
+		"ms-vsliveshare.vsliveshare",
+		"yzhang.markdown-all-in-one",
+		"bierner.markdown-yaml-preamble",
+		"unifiedjs.vscode-mdx",
+		"mintlify.document",
+		"willstakayama.vscode-nextjs-snippets",
+		"esbenp.prettier-vscode",
+		"eliostruyf.vscode-typescript-exportallmodules",
+		"mattpocock.ts-error-translator"
+	]
+}
