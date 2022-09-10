@@ -1,0 +1,9 @@
+{
+  "socialMediaLinks": [
+    {
+      "service": "Twitter",
+      "url": "testing",
+      "icon": "entypo-social:twitter"
+    }
+  ]
+}
