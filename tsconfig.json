@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -15,7 +16,14 @@
     "jsx": "preserve",
     "incremental": true,
     "noUncheckedIndexedAccess": true
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs"],
-  "exclude": ["node_modules"]
+    // "paths": {
+    //   "@inreach/app": ["./apps/app"],
+    //   "@inreach/web": ["./apps/web"],
+    //   "@inreach/ui": ["./packages/ui"],
+    //   "@inreach/tsconfig": ["./packages/tsconfig"],
+    //   "@inreach/eslint-custom-config": ["./packages/eslint-config-custom"]
+    // }
+  }
+  // "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs"],
+  // "exclude": ["**/node_modules"]
 }

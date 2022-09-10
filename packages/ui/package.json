@@ -8,6 +8,7 @@
     "lint": "eslint *.ts*"
   },
   "devDependencies": {
+    "@iconify/react": "^4.0.0",
     "@inreach/eslint-config-custom": "*",
     "@inreach/tsconfig": "*",
     "@types/react": "^18.0.18",
@@ -36,5 +37,11 @@
     "next": "^12.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+  },
+    "pnpm": {
+    "overrides": {
+      "react": "^18",
+      "react-dom": "^18"
+    }
   }
 }
