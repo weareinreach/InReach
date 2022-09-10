@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "tinacms build && tinacms build && tinacms build && next build",
-    "dev": "tinacms dev -c \"tinacms dev -c \"tinacms dev -c \"next dev\"\"\"",
+    "build": "tinacms build && next build",
+    "dev": "tinacms dev -c \"next dev\"",
     "lint": "next lint",
-    "start": "tinacms build && tinacms build && tinacms build && next start"
+    "start": "tinacms build && next start"
   },
   "dependencies": {
+    "@iconify/react": "^4.0.0",
     "@inreach/ui": "*",
+    "@mantine/core": "^5.3.0",
     "@tinacms/cli": "^0.61.12",
     "next": "^12.2.5",
     "react": "^18.2.0",
