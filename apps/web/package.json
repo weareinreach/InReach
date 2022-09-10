@@ -1,34 +1,37 @@
 {
-	"name": "@inreach/web",
-	"version": "0.1.0",
-	"private": true,
-	"scripts": {
-		"build": "next build",
-		"dev": "next dev",
-		"lint": "next lint",
-		"start": "next start"
-	},
-	"dependencies": {
-		"@inreach/ui": "*",
-		"next": "^12.2.5",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"zod": "^3.18.0"
-	},
-	"devDependencies": {
-		"@inreach/eslint-config-custom": "*",
-		"@inreach/tsconfig": "*",
-		"@types/node": "18.7.16",
-		"@types/react": "^18.0.18",
-		"@types/react-dom": "^18.0.6",
-		"@typescript-eslint/eslint-plugin": "^5.33.0",
-		"@typescript-eslint/parser": "^5.33.0",
-		"eslint": "^8.23.0",
-		"eslint-config-next": "^12.2.5",
-		"next-transpile-modules": "^9.0.0",
-		"typescript": "^4.8.2"
-	},
-	"ct3aMetadata": {
-		"initVersion": "5.10.1"
-	}
+  "name": "@inreach/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tinacms build && tinacms build && tinacms build && next build",
+    "dev": "tinacms dev -c \"tinacms dev -c \"tinacms dev -c \"next dev\"\"\"",
+    "lint": "next lint",
+    "start": "tinacms build && tinacms build && tinacms build && next start"
+  },
+  "dependencies": {
+    "@inreach/ui": "*",
+    "@tinacms/cli": "^0.61.12",
+    "next": "^12.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^5.3.5",
+    "tinacms": "^0.69.6",
+    "zod": "^3.18.0"
+  },
+  "devDependencies": {
+    "@inreach/eslint-config-custom": "*",
+    "@inreach/tsconfig": "*",
+    "@types/node": "18.7.16",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.33.0",
+    "@typescript-eslint/parser": "^5.33.0",
+    "eslint": "^8.23.0",
+    "eslint-config-next": "^12.2.5",
+    "next-transpile-modules": "^9.0.0",
+    "typescript": "^4.8.2"
+  },
+  "ct3aMetadata": {
+    "initVersion": "5.10.1"
+  }
 }

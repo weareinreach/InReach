@@ -1,4 +1,7 @@
-import { env } from "./src/env/server.mjs";
+import { env } from './src/env/server.mjs'
+import initTM from 'next-transpile-modules'
+
+const withTM = initTM(['@inreach/ui'])
 
 /**
  * Don't be scared of the generics here.
@@ -9,10 +12,10 @@ import { env } from "./src/env/server.mjs";
  * @constraint {{import('next').NextConfig}}
  */
 function defineNextConfig(config) {
-  return config;
+	return withTM(config)
 }
 
 export default defineNextConfig({
-  reactStrictMode: true,
-  swcMinify: true,
-});
+	reactStrictMode: true,
+	swcMinify: true,
+})
