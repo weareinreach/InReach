@@ -1,5 +1,5 @@
 {
-  "name": "ui",
+  "name": "@inreach/ui",
   "version": "0.0.0",
   "main": "./index.tsx",
   "types": "./index.tsx",
@@ -8,12 +8,33 @@
     "lint": "eslint *.ts*"
   },
   "devDependencies": {
-    "@types/react": "^17.0.37",
-    "@types/react-dom": "^17.0.11",
-    "eslint": "^7.32.0",
-    "eslint-config-custom": "*",
+    "@inreach/eslint-config-custom": "*",
+    "@inreach/tsconfig": "*",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
+    "eslint": "^8.23.0",
     "react": "^18.2.0",
-    "tsconfig": "*",
     "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/server": "^11.10.0",
+    "@mantine/carousel": "^5.3.0",
+    "@mantine/core": "^5.3.0",
+    "@mantine/dates": "^5.3.0",
+    "@mantine/dropzone": "^5.3.0",
+    "@mantine/form": "^5.3.0",
+    "@mantine/hooks": "^5.3.0",
+    "@mantine/modals": "^5.3.0",
+    "@mantine/next": "^5.3.0",
+    "@mantine/notifications": "^5.3.0",
+    "@mantine/nprogress": "^5.3.0",
+    "@mantine/rte": "^5.3.0",
+    "@mantine/spotlight": "^5.3.0",
+    "dayjs": "^1.11.5",
+    "embla-carousel-react": "^7.0.2",
+    "next": "^12.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

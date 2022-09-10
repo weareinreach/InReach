@@ -1,5 +1,5 @@
 {
-  "name": "monorepo",
+  "name": "inreach",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -15,11 +15,13 @@
   "devDependencies": {
     "eslint-config-custom": "*",
     "prettier": "latest",
-    "turbo": "latest"
+    "turbo": "^1.4.6"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@changesets/cli": "^2.24.4"
+  },
   "packageManager": "yarn@1.22.19"
 }
