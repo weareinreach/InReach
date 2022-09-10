@@ -4,6 +4,7 @@ import { MantineProvider } from '@inreach/ui/mantine/core'
 import { ModalsProvider } from '@inreach/ui/mantine/modals'
 import { NotificationsProvider } from '@inreach/ui/mantine/notifications'
 import { webTheme, webCache } from '@inreach/ui/theme'
+import Tina from '../../.tina/components/TinaDynamicProvider'
 
 const MyApp = (appProps: AppProps) => {
 	const { Component, pageProps } = appProps
@@ -16,7 +17,9 @@ const MyApp = (appProps: AppProps) => {
 		>
 			<NotificationsProvider>
 				<ModalsProvider>
-					<Component {...pageProps} />
+					<Tina>
+						<Component {...pageProps} />
+					</Tina>
 				</ModalsProvider>
 			</NotificationsProvider>
 		</MantineProvider>
