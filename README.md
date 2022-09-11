@@ -22,7 +22,7 @@
 <div align="center">
 <br />
 
-[![Project license](https://img.shields.io/github/license/asylum-connect/inreach.svg?style=flat-square)](LICENSE)
+[![Project license](https://img.shields.io/badge/license-GPLv3-red?style=flat-square)](LICENSE)
 
 [![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg?style=flat-square)](https://github.com/asylum-connect/inreach/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
 [![code with love by InReach](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-InReach%20%26%20Friends-ff1414.svg?style=flat-square)](https://github.com/asylum-connect)
@@ -135,12 +135,6 @@ Please read [our contribution guidelines](docs/CONTRIBUTING.md), and thank you f
 The original setup of this repository is by [InReach](https://github.com/asylum-connect).
 
 For a full list of all authors and contributors, see [the contributors page](https://github.com/asylum-connect/inreach/contributors).
-
-<a href="https://github.com/asylum-connect/inreach/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=asylum-connect/inreach" />
-</a>
-
-Made with [contrib.rocks](https://contrib.rocks).
 
 ## Security
 
