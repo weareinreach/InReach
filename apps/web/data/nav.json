@@ -5,5 +5,21 @@
       "url": "testing",
       "icon": "entypo-social:twitter"
     }
+  ],
+  "navLinks": [
+    {
+      "label": "News",
+      "link": "/news"
+    },
+    {
+      "label": "About Us",
+      "link": "/about-us",
+      "links": [
+        {
+          "label": "Mission",
+          "link": "/about-us/mission"
+        }
+      ]
+    }
   ]
 }

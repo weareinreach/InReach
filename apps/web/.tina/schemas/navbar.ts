@@ -38,5 +38,51 @@ export const navbar: TinaCollection = {
         },
       ],
     },
+    {
+      label: "Navigation Links",
+      name: "navLinks",
+      type: "object",
+      list: true,
+      ui: {
+        itemProps: (item) => {
+          return { label: item?.label };
+        },
+      },
+      fields: [
+        {
+          label: "Top Level Item",
+          name: "label",
+          type: "string",
+        },
+        {
+          label: "URL",
+          name: "link",
+          type: "string",
+        },
+        {
+          label: "Subitems",
+          name: "links",
+          type: "object",
+          list: true,
+          ui: {
+            itemProps: (item) => {
+              return { label: item?.label };
+            },
+          },
+          fields: [
+            {
+              label: "Menu Item",
+              name: "label",
+              type: "string",
+            },
+            {
+              label: "URL",
+              name: "link",
+              type: "string",
+            },
+          ],
+        },
+      ],
+    },
   ],
 };

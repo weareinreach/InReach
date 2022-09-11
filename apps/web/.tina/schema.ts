@@ -1,7 +1,7 @@
 import { defineSchema, defineConfig, wrapFieldsWithMeta } from "tinacms";
 import { object } from "zod";
 import { client } from "./__generated__/client";
-import { navbar } from "./schemas";
+import { navbar, pageCollection } from "./schemas";
 
 const branch =
   process.env.NEXT_PUBLIC_TINA_BRANCH ||
@@ -17,6 +17,7 @@ const schema = defineSchema({
   },
   collections: [
     navbar,
+    pageCollection,
     {
       label: "Blog Posts",
       name: "post",
