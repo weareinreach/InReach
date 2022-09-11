@@ -1,73 +1,162 @@
-# Turborepo starter
+<h1 align="center">
+  <a href="https://github.com/asylum-connect/inreach">
+    <picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/InReach_Logo_White_RGB-1024x384.webp">
+  <img alt="InReach Logo" src="docs/images/InReach_Logo_Color_RGB-1024x384.webp" height=100>
+</picture>
+  </a>
+</h1>
 
-This is an official Yarn v1 starter turborepo.
+<div align="center">
+  <br />
+  <a href="#about"><strong>Explore the screenshots »</strong></a>
+  <br />
+  <br />
+  <a href="https://github.com/asylum-connect/inreach/issues/new?assignees=&labels=bug&template=01_BUG_REPORT.md&title=bug%3A+">Report a Bug</a>
+  ·
+  <a href="https://github.com/asylum-connect/inreach/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
+  .
+  <a href="https://github.com/asylum-connect/inreach/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+">Ask a Question</a>
+</div>
 
-## What's inside?
+<div align="center">
+<br />
 
-This turborepo uses [Yarn](https://classic.yarnpkg.com/) as a package manager. It includes the following packages/apps:
+[![Project license](https://img.shields.io/github/license/asylum-connect/inreach.svg?style=flat-square)](LICENSE)
 
-### Apps and Packages
+[![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg?style=flat-square)](https://github.com/asylum-connect/inreach/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
+[![code with love by InReach](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-InReach%20%26%20Friends-ff1414.svg?style=flat-square)](https://github.com/asylum-connect)
 
-- `docs`: a [Next.js](https://nextjs.org) app
-- `web`: another [Next.js](https://nextjs.org) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+</div>
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+<details open="open">
+<summary>Table of Contents</summary>
 
-### Utilities
+- [About](#about)
+  - [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Roadmap](#roadmap)
+- [Support](#support)
+- [Project assistance](#project-assistance)
+- [Contributing](#contributing)
+- [Authors & contributors](#authors--contributors)
+- [Security](#security)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
 
-This turborepo has some additional tools already setup for you:
+</details>
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+---
 
-### Build
+## About
 
-To build all apps and packages, run the following command:
+> **[?]**
+> Provide general information about your project here.
+> What problem does it (intend to) solve?
+> What is the purpose of your project?
+> Why did you undertake it?
+> You don't have to answer all the questions -- just the ones relevant to your project.
 
-```
-cd my-turborepo
-yarn run build
-```
+<details>
+<summary>Screenshots</summary>
+<br>
 
-### Develop
+> **[?]**
+> Please provide your screenshots here.
 
-To develop all apps and packages, run the following command:
+|                               Home Page                               |                               Login Page                               |
+| :-------------------------------------------------------------------: | :--------------------------------------------------------------------: |
+| <img src="docs/images/screenshot.png" title="Home Page" width="100%"> | <img src="docs/images/screenshot.png" title="Login Page" width="100%"> |
 
-```
-cd my-turborepo
-yarn run dev
-```
+</details>
 
-### Remote Caching
+### Built With
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+> **[?]**
+> Please provide the technologies that are used in the project.
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+## Getting Started
 
-```
-cd my-turborepo
-npx turbo login
-```
+### Prerequisites
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+> **[?]**
+> What are the project requirements/dependencies?
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your turborepo:
+### Installation
 
-```
-npx turbo link
-```
+> **[?]**
+> Describe how to install and get started with the project.
 
-## Useful Links
+## Usage
 
-Learn more about the power of Turborepo:
+> **[?]**
+> How does one go about using it?
+> Provide various use cases and code examples here.
 
-- [Pipelines](https://turborepo.org/docs/core-concepts/pipelines)
-- [Caching](https://turborepo.org/docs/core-concepts/caching)
-- [Remote Caching](https://turborepo.org/docs/core-concepts/remote-caching)
-- [Scoped Tasks](https://turborepo.org/docs/core-concepts/scopes)
-- [Configuration Options](https://turborepo.org/docs/reference/configuration)
-- [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
+## Roadmap
+
+See the [open issues](https://github.com/asylum-connect/inreach/issues) for a list of proposed features (and known issues).
+
+- [Top Feature Requests](https://github.com/asylum-connect/inreach/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Top Bugs](https://github.com/asylum-connect/inreach/issues?q=is%3Aissue+is%3Aopen+label%3Abug+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Newest Bugs](https://github.com/asylum-connect/inreach/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
+
+## Support
+
+> **[?]**
+> Provide additional ways to contact the project maintainer/maintainers.
+
+Reach out to the maintainer at one of the following places:
+
+- [GitHub issues](https://github.com/asylum-connect/inreach/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+)
+- Contact options listed on [this GitHub profile](https://github.com/asylum-connect)
+
+## Project assistance
+
+If you want to say **thank you** or/and support active development of InReach:
+
+- Add a [GitHub Star](https://github.com/asylum-connect/inreach) to the project.
+- Tweet about InReach.
+- Write interesting articles about the project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or your personal blog.
+
+Together, we can make InReach **better**!
+
+## Contributing
+
+First off, thanks for taking the time to contribute! Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make will benefit everybody else and are **greatly appreciated**.
+
+Please read [our contribution guidelines](docs/CONTRIBUTING.md), and thank you for being involved!
+
+## Authors & contributors
+
+The original setup of this repository is by [InReach](https://github.com/asylum-connect).
+
+For a full list of all authors and contributors, see [the contributors page](https://github.com/asylum-connect/inreach/contributors).
+
+<a href="https://github.com/asylum-connect/inreach/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=asylum-connect/inreach" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
+
+## Security
+
+InReach follows good practices of security, but 100% security cannot be assured.
+InReach is provided **"as is"** without any **warranty**. Use at your own risk.
+
+_For more information and to report security issues, please refer to our [security documentation](docs/SECURITY.md)._
+
+## License
+
+This project is licensed under the **GNU General Public License v3**.
+
+See [LICENSE](LICENSE) for more information.
+
+## Acknowledgements
+
+> **[?]**
+> If your work was funded by any organization or institution, acknowledge their support here.
+> In addition, if your work relies on other software libraries, or was inspired by looking at other work, it is appropriate to acknowledge this intellectual debt too.

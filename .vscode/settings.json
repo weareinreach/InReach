@@ -4,5 +4,8 @@
     "/packages/ui/layouts",
     "/apps/web/.tina/schemas"
   ],
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "markdownlint.config": {
+    "MD033": false
+  }
 }
