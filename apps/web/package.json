@@ -6,7 +6,8 @@
     "build": "tinacms build && next build",
     "dev": "tinacms dev -c \"next dev\"",
     "lint": "next lint",
-    "start": "tinacms build && next start"
+    "start": "tinacms build && next start",
+    "cmsaudit": "tinacms audit"
   },
   "dependencies": {
     "@iconify/react": "^4.0.0",
