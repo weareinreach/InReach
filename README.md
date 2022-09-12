@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://github.com/asylum-connect/inreach">
+  <a href="https://github.com/weareinreach/inreach">
     <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/InReach_Logo_White_RGB-1024x384.webp">
   <img alt="InReach Logo" src="docs/images/InReach_Logo_Color_RGB-1024x384.webp" height=100>
@@ -12,11 +12,11 @@
   <a href="#about"><strong>Explore the screenshots »</strong></a>
   <br />
   <br />
-  <a href="https://github.com/asylum-connect/inreach/issues/new?assignees=&labels=bug&template=01_BUG_REPORT.md&title=bug%3A+">Report a Bug</a>
+  <a href="https://github.com/weareinreach/inreach/issues/new?assignees=&labels=bug&template=01_BUG_REPORT.md&title=bug%3A+">Report a Bug</a>
   ·
-  <a href="https://github.com/asylum-connect/inreach/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
+  <a href="https://github.com/weareinreach/inreach/issues/new?assignees=&labels=enhancement&template=02_FEATURE_REQUEST.md&title=feat%3A+">Request a Feature</a>
   .
-  <a href="https://github.com/asylum-connect/inreach/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+">Ask a Question</a>
+  <a href="https://github.com/weareinreach/inreach/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+">Ask a Question</a>
 </div>
 
 <div align="center">
@@ -24,8 +24,8 @@
 
 [![Project license](https://img.shields.io/badge/license-GPLv3-red?style=flat-square)](LICENSE)
 
-[![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg?style=flat-square)](https://github.com/asylum-connect/inreach/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
-[![code with love by InReach](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-InReach%20%26%20Friends-ff1414.svg?style=flat-square)](https://github.com/asylum-connect)
+[![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg?style=flat-square)](https://github.com/weareinreach/inreach/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22)
+[![code with love by InReach](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-InReach%20%26%20Friends-ff1414.svg?style=flat-square)](https://github.com/weareinreach)
 
 </div>
 
@@ -37,6 +37,7 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
+- [Project Structure](#project-structure)
 - [Usage](#usage)
 - [Roadmap](#roadmap)
 - [Support](#support)
@@ -45,7 +46,6 @@
 - [Authors & contributors](#authors--contributors)
 - [Security](#security)
 - [License](#license)
-- [Acknowledgements](#acknowledgements)
 
 </details>
 
@@ -53,14 +53,11 @@
 
 ## About
 
-> **[?]**
-> Provide general information about your project here.
-> What problem does it (intend to) solve?
-> What is the purpose of your project?
-> Why did you undertake it?
-> You don't have to answer all the questions -- just the ones relevant to your project.
+**InReach** is the world’s first tech platform matching LGBTQ+ people with safe, verified resources.
 
-<details>
+InReach is for the entire diverse LGBTQ+ community – including asylum seekers and refugees, undocumented and other immigrants, young people experiencing homelessness, those facing family or community rejection due to their identity, and other transgender and non-binary people in need of safe resources.
+
+<!-- <details>
 <summary>Screenshots</summary>
 <br>
 
@@ -71,54 +68,82 @@
 | :-------------------------------------------------------------------: | :--------------------------------------------------------------------: |
 | <img src="docs/images/screenshot.png" title="Home Page" width="100%"> | <img src="docs/images/screenshot.png" title="Login Page" width="100%"> |
 
-</details>
+</details> -->
 
 ### Built With
 
-> **[?]**
-> Please provide the technologies that are used in the project.
+- [Next.js](https://nextjs.org/)
+- [Mantine](https://mantine.dev/)
+- [Prisma](https://www.prisma.io/)
+- [tRPC](https://trpc.io/)
+- [Turborepo](https://turborepo.org/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ## Getting Started
 
 ### Prerequisites
 
-> **[?]**
-> What are the project requirements/dependencies?
+This project uses [`pnpm`](https://pnpm.io/) to manage packages. To install, run the command:
+
+```bash
+npm -g install pnpm
+```
+
+or follow the instructions on [pnpm's installation page](https://pnpm.io/installation).
 
 ### Installation
 
-> **[?]**
-> Describe how to install and get started with the project.
+To install the required packages & dependencies:
+
+```bash
+pnpm install
+```
+
+## Project Structure
+
+```text
+InReach/
+├── apps/
+│   ├── app/                    # InReach Application
+│   └── web/                    # InReach Main Site
+└── packages/
+    ├── eslint-config-custom/   # Custom ESlint configuration
+    ├── tsconfig/               # Shared TypeScript configuration
+    └── ui/                     # React components shared between App & Web
+```
 
 ## Usage
 
-> **[?]**
-> How does one go about using it?
-> Provide various use cases and code examples here.
+To start the development live servers:
+
+```bash
+pnpm dev
+```
+
+The InReach Application will be available at `http://localhost:3000`
+
+The InReach Main Site will be available at `http://localhost:3001`
 
 ## Roadmap
 
-See the [open issues](https://github.com/asylum-connect/inreach/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/weareinreach/inreach/issues) for a list of proposed features (and known issues).
 
-- [Top Feature Requests](https://github.com/asylum-connect/inreach/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
-- [Top Bugs](https://github.com/asylum-connect/inreach/issues?q=is%3Aissue+is%3Aopen+label%3Abug+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
-- [Newest Bugs](https://github.com/asylum-connect/inreach/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
+- [Top Feature Requests](https://github.com/weareinreach/inreach/issues?q=label%3Aenhancement+is%3Aopen+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Top Bugs](https://github.com/weareinreach/inreach/issues?q=is%3Aissue+is%3Aopen+label%3Abug+sort%3Areactions-%2B1-desc) (Add your votes using the 👍 reaction)
+- [Newest Bugs](https://github.com/weareinreach/inreach/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 
 ## Support
 
-> **[?]**
-> Provide additional ways to contact the project maintainer/maintainers.
-
 Reach out to the maintainer at one of the following places:
 
-- [GitHub issues](https://github.com/asylum-connect/inreach/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+)
-- Contact options listed on [this GitHub profile](https://github.com/asylum-connect)
+- [GitHub issues](https://github.com/weareinreach/inreach/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+)
+- Contact options listed on [this GitHub profile](https://github.com/weareinreach)
 
 ## Project assistance
 
 If you want to say **thank you** or/and support active development of InReach:
 
-- Add a [GitHub Star](https://github.com/asylum-connect/inreach) to the project.
+- Add a [GitHub Star](https://github.com/weareinreach/inreach) to the project.
 - Tweet about InReach.
 - Write interesting articles about the project on [Dev.to](https://dev.to/), [Medium](https://medium.com/) or your personal blog.
 
@@ -132,9 +157,9 @@ Please read [our contribution guidelines](docs/CONTRIBUTING.md), and thank you f
 
 ## Authors & contributors
 
-The original setup of this repository is by [InReach](https://github.com/asylum-connect).
+The original setup of this repository is by [InReach](https://github.com/weareinreach).
 
-For a full list of all authors and contributors, see [the contributors page](https://github.com/asylum-connect/inreach/contributors).
+For a full list of all authors and contributors, see [the contributors page](https://github.com/weareinreach/inreach/contributors).
 
 ## Security
 
@@ -149,8 +174,8 @@ This project is licensed under the **GNU General Public License v3**.
 
 See [LICENSE](LICENSE) for more information.
 
-## Acknowledgements
+<!-- ## Acknowledgements
 
 > **[?]**
 > If your work was funded by any organization or institution, acknowledge their support here.
-> In addition, if your work relies on other software libraries, or was inspired by looking at other work, it is appropriate to acknowledge this intellectual debt too.
+> In addition, if your work relies on other software libraries, or was inspired by looking at other work, it is appropriate to acknowledge this intellectual debt too. -->
