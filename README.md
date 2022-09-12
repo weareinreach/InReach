@@ -46,7 +46,6 @@
 - [Authors & contributors](#authors--contributors)
 - [Security](#security)
 - [License](#license)
-- [Acknowledgements](#acknowledgements)
 
 </details>
 
@@ -175,7 +174,7 @@ This project is licensed under the **GNU General Public License v3**.
 
 See [LICENSE](LICENSE) for more information.
 
-## Acknowledgements
+<!-- ## Acknowledgements
 
 [![Powered by Vercel](.github/images/powered-by-vercel.svg)](https://vercel.com/?utm_source=in-reach&utm_campaign=oss)
 
