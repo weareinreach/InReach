@@ -7,13 +7,14 @@ generator erd {
     includeRelationFromFields = true
 }
 
+generator docs {
+    provider = "node node_modules/prisma-docs-generator"
+    output   = "../docs/prisma"
+}
+
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
-}
-
-model Example {
-    id String @id @default(cuid())
 }
 
 // Necessary for Next auth
@@ -174,6 +175,8 @@ model OrgDescription {
     langId       String
     organization Organization @relation(fields: [orgId], references: [id])
     orgId        String
+
+    @@index([langId, orgId])
 }
 
 model OrgEmail {
@@ -208,8 +211,9 @@ model OrgLocation {
     street1      String
     street2      String
     city         String
-    govDist      String
-    postCode     String
+    govDist      GovDist?     @relation(fields: [govDistId], references: [id])
+    govDistId    String?
+    postCode     String?
     country      Country      @relation(fields: [countryId], references: [id])
     countryId    String
     latitude     Decimal      @db.Decimal(4, 3)
@@ -218,6 +222,8 @@ model OrgLocation {
     organization Organization @relation(fields: [orgId], references: [id])
     orgId        String
     hours        OrgHours[]
+
+    @@index([latitude, longitude])
 }
 
 model OrgNotes {
@@ -364,6 +370,7 @@ model Country {
     orgAddress         OrgLocation[]
     countryTranslation CountryTranslation[]
     users              User[]
+    GovDist            GovDist[]
 }
 
 model CountryTranslation {
@@ -376,6 +383,22 @@ model CountryTranslation {
     countryId   String
     language    Language @relation(fields: [langId], references: [id])
     langId      String
+
+    @@index([langId])
+}
+
+model GovDist {
+    id          String        @id @default(cuid())
+    createdAt   DateTime      @default(now())
+    updatedAt   DateTime      @updatedAt
+    name        String
+    country     Country       @relation(fields: [countryId], references: [id])
+    countryId   String
+    language    Language      @relation(fields: [langId], references: [id])
+    langId      String
+    OrgLocation OrgLocation[]
+
+    @@index([countryId, langId])
 }
 
 model Language {
@@ -397,6 +420,7 @@ model Language {
     UserSOG            UserSOG[]
     UserType           UserType[]
     UserImmigration    UserImmigration[]
+    GovDist            GovDist[]
 }
 
 model TranslationCategory {
