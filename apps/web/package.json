@@ -13,6 +13,7 @@
     "@iconify/react": "^4.0.0",
     "@inreach/ui": "*",
     "@mantine/core": "^5.3.0",
+    "@sentry/nextjs": "^7.13.0",
     "@tinacms/cli": "^0.61.12",
     "next": "^12.2.5",
     "react": "^18.2.0",
@@ -36,5 +37,13 @@
   },
   "ct3aMetadata": {
     "initVersion": "5.10.1"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "react": "^18",
+        "react-dom": "^18"
+      }
+    }
   }
 }
