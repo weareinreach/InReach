@@ -14,6 +14,8 @@ node_modules
 
 # testing
 coverage
+test/cypress/videos
+test/cypress/screenshots
 
 # next.js
 .next/
@@ -39,3 +41,4 @@ yarn-error.log*
 # turbo
 .turbo
 .vercel
+package-lock.json
