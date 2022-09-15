@@ -19,6 +19,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "^5.3.5",
+    "superjson": "^1.9.1",
     "tinacms": "^0.69.6",
     "zod": "^3.18.0"
   },
@@ -30,6 +31,7 @@
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
+    "concurrently": "^7.4.0",
     "eslint": "^8.23.0",
     "eslint-config-next": "^12.2.5",
     "next-transpile-modules": "^9.0.0",
