@@ -36,9 +36,10 @@
     "embla-carousel-react": "^7.0.2",
     "next": "^12.3.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tinacms": "^0.69.6"
   },
-    "pnpm": {
+  "pnpm": {
     "overrides": {
       "react": "^18",
       "react-dom": "^18"
