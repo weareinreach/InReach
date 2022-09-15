@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "addLabels": ["dependencies"],
+  "assignAutomerge": true,
+  "assigneesFromCodeOwners": true,
+  "baseBranches": ["develop"],
+  "configMigration": true,
+  "extends": [
+    "config:base",
+    ":preserveSemverRanges",
+    ":prNotPending",
+    ":rebaseStalePrs",
+    ":automergeMinor"
+  ],
+  "packageRules": [
+    {
+      "groupName": "Mantine monorepo",
+      "matchPackagePrefixes": ["@mantine"]
+    }
+  ],
+  "reviewersFromCodeOwners": true,
+  "semanticCommits": "enabled"
+}
