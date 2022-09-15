@@ -2,6 +2,7 @@ import { defineSchema, defineConfig, wrapFieldsWithMeta } from "tinacms";
 import { object } from "zod";
 import { client } from "./__generated__/client";
 import { navbar, pageCollection } from "./schemas";
+import { env } from "../src/env/server.mjs";
 
 const branch =
   process.env.NEXT_PUBLIC_TINA_BRANCH ||
@@ -11,9 +12,15 @@ const branch =
 const schema = defineSchema({
   // See https://tina.io/docs/tina-cloud/connecting-site/ for more information about this config
   config: {
-    token: "<Your Read Only Token>", // generated on app.tina.io,
-    clientId: "<Your Client ID>", // generated on app.tina.io
+    token: process.env.TINA_TOKEN, // generated on app.tina.io,
+    clientId: process.env.TINA_CLIENTID, // generated on app.tina.io
     branch,
+    media: {
+      tina: {
+        publicFolder: "public",
+        mediaRoot: "uploads",
+      },
+    },
   },
   collections: [
     navbar,
