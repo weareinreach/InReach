@@ -1,5 +1,8 @@
 import type { TinaCollection } from "tinacms";
 import { extractPath, formatPath } from "../util";
+import type React from "react";
+import { TinaMarkdown } from "tinacms/dist/rich-text";
+import superjson from "superjson";
 
 export const pageCollection: TinaCollection = {
   label: "Pages",
@@ -39,17 +42,17 @@ export const pageCollection: TinaCollection = {
           ],
         },
         {
-          type: "rich-text",
-          label: "Page body",
-          name: "body",
-          isBody: true,
+          type: "object",
+          list: true,
+          label: "Sections",
+          name: "blocks",
           templates: [
             {
               name: "HeroCarousel",
               label: "Hero Carousel",
               fields: [
                 {
-                  name: "item",
+                  name: "HeroCarouselSlide",
                   label: "Content",
                   type: "object",
                   list: true,
@@ -58,6 +61,11 @@ export const pageCollection: TinaCollection = {
                       name: "image",
                       label: "Background Image",
                       type: "image",
+                    },
+                    {
+                      name: "alt",
+                      label: "Image Description",
+                      type: "string",
                     },
                     {
                       name: "content",

@@ -8,6 +8,8 @@ import { z } from "zod";
 export const serverSchema = z.object({
   // SERVERVAR: z.string(),
   SENTRY_DSN: z.string(),
+  TINA_TOKEN: z.string(),
+  TINA_CLIENTID: z.string(),
 });
 
 /**
