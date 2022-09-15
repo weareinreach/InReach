@@ -7,5 +7,9 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "markdownlint.config": {
     "MD033": false
-  }
+  },
+  "cucumberautocomplete.steps": [
+    "test/cypress/support/step_definitions/*.js",
+],
+"cucumberautocomplete.strictGherkinCompletion": true
 }
