@@ -41,4 +41,8 @@ yarn-error.log*
 # turbo
 .turbo
 .vercel
+
+# sentry
+.sentryclirc
+
 package-lock.json
