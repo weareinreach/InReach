@@ -140,6 +140,8 @@ model User {
     updateUserRole            UserRole[]            @relation("updateUserRole")
     createUserPermission      UserPermission[]      @relation("createUserPermission")
     updateUserPermission      UserPermission[]      @relation("updateUserPermission")
+    createTranslationVariable TranslationVariable[] @relation("createTranslationVariable")
+    updateTranslationVariable TranslationVariable[] @relation("updateTranslationVariable")
 }
 
 model UserRole {
@@ -686,19 +688,41 @@ model TranslationItem {
 }
 
 model Translation {
-    id         String              @id @default(uuid())
+    id         String                @id @default(uuid())
     text       String
-    language   Language            @relation(fields: [langId], references: [id])
+    language   Language              @relation(fields: [langId], references: [id])
     langId     String
-    category   TranslationCategory @relation(fields: [categoryId], references: [id])
+    category   TranslationCategory   @relation(fields: [categoryId], references: [id])
     categoryId String
-    item       TranslationItem     @relation(fields: [itemId], references: [id])
+    item       TranslationItem       @relation(fields: [itemId], references: [id])
     itemId     String
+    variables  TranslationVariable[]
+    isBase     Boolean               @default(true)
+    // to manage plurals & ordinals
+    children   Translation[]         @relation("translationSubItems")
+    parent     Translation?          @relation("translationSubItems", fields: [parentId], references: [id])
+    parentId   String?
 
     createdAt   DateTime @default(now())
     createdBy   User     @relation("createTranslation", fields: [createdById], references: [id])
     createdById String
     updatedAt   DateTime @updatedAt
     updatedBy   User     @relation("updateTranslation", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model TranslationVariable {
+    id          String        @id @default(uuid())
+    name        String
+    description String
+    plural      Boolean       @default(false)
+    ordinal     Boolean       @default(false)
+    translation Translation[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createTranslationVariable", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateTranslationVariable", fields: [updatedById], references: [id])
     updatedById String
 }
