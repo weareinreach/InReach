@@ -2,7 +2,7 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "$SENTRY_DSN", "$NEXT_PUBLIC_SENTRY_DSN"],
       "outputs": ["dist/**", ".next/**"]
     },
     "lint": {
