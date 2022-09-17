@@ -5,6 +5,9 @@ export const navbar: TinaCollection = {
   name: "navbarData",
   path: "data",
   format: "json",
+  ui: {
+    global: true,
+  },
   fields: [
     {
       label: "Social Media Links",
