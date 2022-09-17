@@ -1,5 +1,5 @@
-import { Button } from "@mantine/core";
-import { NextLink } from "@mantine/next";
+import { Button } from "@inreach/ui/mantine/core";
+import { NextLink } from "@inreach/ui/mantine/next";
 
 export interface LinkButtonProps {
   text: string;
