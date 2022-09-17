@@ -1,5 +1,6 @@
 // Automatically generated index file by: https://marketplace.visualstudio.com/items?itemName=eliostruyf.vscode-typescript-exportallmodules
 
-export * from "./blocks";
-export * from "./navbar";
-export * from "./pages";
+export * from "./awardsSection";
+export * from "./heroCarousel";
+export * from "./issuesSection";
+export * from "./newsSection";

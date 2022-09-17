@@ -6,3 +6,7 @@ export const extractPath = (path: string) => {
   return `/${pathArr.join("/")}`;
 };
 export const formatPath = (path: string) => `content/pages${path}.mdx`;
+
+export const requiredField = (value: any) => {
+  if (value.length === 0) return "Required";
+};
