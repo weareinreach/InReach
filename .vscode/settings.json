@@ -1,9 +1,11 @@
 {
   "exportall.config.folderListener": [
-    "/packages/ui/components",
-    "/packages/ui/layouts",
     "/apps/web/.tina/schemas",
-    "/packages/ui/components/web"
+    "/apps/web/.tina/schemas/blocks",
+    "/apps/web/src/components/cms"
+    "/packages/ui/components",
+    "/packages/ui/components/web",
+    "/packages/ui/layouts",
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "markdownlint.config": {
