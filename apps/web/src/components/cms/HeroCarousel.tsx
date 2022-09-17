@@ -3,6 +3,7 @@ import { LinkButton } from "./";
 import {
   createStyles,
   Overlay,
+  Stack,
   useMantineTheme,
 } from "@inreach/ui/mantine/core";
 import Image from "next/future/image";
@@ -19,7 +20,10 @@ const useStyles = createStyles((theme) => ({
     objectFit: "cover",
   },
   text: {
-    color: theme.colors.white,
+    "*": {
+      color: theme.colors.white,
+      margin: 0,
+    },
   },
 }));
 
@@ -37,7 +41,7 @@ export const HeroCarousel = (props: HeroCarouselProps) => {
     const { image, alt, content } = slide;
 
     return (
-      <Carousel.Slide className={classes.text}>
+      <Carousel.Slide>
         <Image
           src={image as string}
           alt={alt as string}
@@ -46,7 +50,9 @@ export const HeroCarousel = (props: HeroCarouselProps) => {
           priority
         />
         <Overlay opacity={0.6} zIndex={-9} color={theme.colors.gray[0]} />
-        <TinaMarkdown content={content} components={components} />
+        <Stack spacing="xs" className={classes.text}>
+          <TinaMarkdown content={content} components={components} />
+        </Stack>
       </Carousel.Slide>
     );
   });

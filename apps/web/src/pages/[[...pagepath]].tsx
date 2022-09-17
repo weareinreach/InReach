@@ -1,17 +1,18 @@
 import { useTina } from "tinacms/dist/edit-state";
-import { TinaMarkdown } from "tinacms/dist/rich-text";
 import client from "../../.tina/__generated__/client";
 import * as Sentry from "@sentry/nextjs";
 
-import { HeroCarousel, LinkButton } from "@inreach/ui/components/web";
-import { GetStaticPaths, GetStaticProps } from "next";
+import {
+  GetStaticPaths,
+  GetStaticPathsResult,
+  GetStaticProps,
+  InferGetStaticPropsType,
+} from "next";
+import { Blocks } from "../components/Blocks";
 
-const cmsComponents = {
-  HeroCarousel: HeroCarousel,
-  LinkButton: LinkButton,
-};
-
-const PageTemplate = (props) => {
+const PageTemplate = (
+  props: InferGetStaticPropsType<typeof getStaticProps>
+) => {
   const { data } = useTina({
     query: props.query,
     variables: props.variables,
@@ -21,17 +22,24 @@ const PageTemplate = (props) => {
 
   return (
     <>
-      <TinaMarkdown components={cmsComponents} content={data.post.body} />
+      <Blocks {...data.pages} />
     </>
   );
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // console.log(params);
+  // console.log("gsp params", params);
   let data = {};
   let query = {};
-  let variables = { relativePath: `${params.page}.mdx` };
-  console.log("getStaticProps");
+
+  if (!params?.pagepath) throw new Error("No page path passed");
+
+  const pagePath =
+    typeof params.pagepath === "string"
+      ? `${params.pagepath}.mdx`
+      : `${params.pagepath.join("/")}.mdx`;
+  let variables = { relativePath: pagePath };
+  // console.log("relativePath", variables.relativePath);
   try {
     const res = await client.queries.pages(variables);
     query = res.query;
@@ -54,7 +62,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const pagesListData = await client.queries.pagesConnection();
-  console.log("getStaticPaths");
 
   const { edges } = pagesListData.data.pagesConnection;
   const pages = edges?.map((item) => {
@@ -66,14 +73,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
       };
   });
 
-  if (!pages) return;
-
   const results = {
     paths: pages,
     fallback: false,
-  };
+  } as GetStaticPathsResult;
 
-  console.log(results.paths);
   return results;
 };
 
