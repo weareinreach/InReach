@@ -12,7 +12,7 @@
   "dependencies": {
     "@iconify/react": "^4.0.0",
     "@inreach/ui": "*",
-    "@mantine/core": "^5.3.2",
+    "@mantine/core": "^5.4.0",
     "@sentry/nextjs": "^7.13.0",
     "@tinacms/cli": "0.61.13",
     "next": "^12.2.5",
