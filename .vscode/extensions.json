@@ -15,6 +15,7 @@
     "mattpocock.ts-error-translator",
     "arcanis.vscode-zipfs",
     "prisma.prisma",
-    "alexkrechik.cucumberautocomplete"
+    "alexkrechik.cucumberautocomplete",
+    "folke.vscode-monorepo-workspace"
   ]
 }

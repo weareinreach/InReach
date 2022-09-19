@@ -16,16 +16,5 @@
     "strict": true
   },
   "display": "Default",
-  "exclude": ["node_modules"],
-  "references": [
-    {
-      "@inreach/ui": "../../packages/ui"
-    },
-    {
-      "@inreach/app": "../../apps/app"
-    },
-    {
-      "@inreach/web": "../../apps/web"
-    }
-  ]
+  "exclude": ["node_modules"]
 }
