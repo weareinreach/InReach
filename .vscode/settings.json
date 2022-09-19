@@ -1,16 +1,16 @@
 {
-  "exportall.config.folderListener": [
-    "/apps/web/.tina/schemas",
-    "/apps/web/.tina/schemas/blocks",
-    "/apps/web/src/components/cms"
-    "/packages/ui/components",
-    "/packages/ui/components/web",
-    "/packages/ui/layouts",
-  ],
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "markdownlint.config": {
-    "MD033": false
-  },
-  "cucumberautocomplete.steps": ["test/cypress/support/step_definitions/*.js"],
-  "cucumberautocomplete.strictGherkinCompletion": true
+	"exportall.config.folderListener": [
+		"/apps/web/.tina/schemas",
+		"/apps/web/.tina/schemas/blocks",
+		"/apps/web/src/components/cms",
+		"/packages/ui/components",
+		"/packages/ui/components/web",
+		"/packages/ui/layouts"
+	],
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"markdownlint.config": {
+		"MD033": false
+	},
+	"cucumberautocomplete.steps": ["test/cypress/support/step_definitions/*.js"],
+	"cucumberautocomplete.strictGherkinCompletion": true
 }

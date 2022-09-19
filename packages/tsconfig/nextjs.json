@@ -1,23 +1,31 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Next.js",
+  "extends": "./base.json",
   "compilerOptions": {
+    "declaration": false,
+    "declarationMap": false,
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "esModuleInterop": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
     "incremental": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "strict": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "esnext",
-    "noEmit": true,
-    "noUncheckedIndexedAccess": false,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "target": "es5"
+    "strictNullChecks": true,
+    "useUnknownInCatchVariables": true
   },
-  "display": "Next.js",
-  "exclude": ["node_modules"],
-  "extends": "./base",
-  "include": ["src", "next-env.d.ts"]
+  "include": [
+    "src",
+    "next-env.d.ts",
+    "../types/next-auth.d.ts",
+    "../types/*.d.ts"
+  ],
+  "exclude": ["node_modules"]
 }

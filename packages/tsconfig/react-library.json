@@ -1,12 +1,13 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "React Library",
-  "extends": "./base",
+  "extends": "./base.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "lib": ["ES2015"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "module": "ESNext",
-    "target": "es6",
-    "noUncheckedIndexedAccess": false
-  }
+    "target": "ES5",
+    "jsx": "react-jsx"
+  },
+  "include": [".", "../types/next-auth.d.ts"],
+  "exclude": ["dist", "build", "node_modules"]
 }
