@@ -1,15 +1,20 @@
 {
-  "$schema": "https://turborepo.org/schema.json",
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build", "$SENTRY_DSN", "$NEXT_PUBLIC_SENTRY_DSN"],
-      "outputs": ["dist/**", ".next/**"]
-    },
-    "lint": {
-      "outputs": []
-    },
-    "dev": {
-      "cache": false
-    }
-  }
+	"$schema": "https://turborepo.org/schema.json",
+	"pipeline": {
+		"build": {
+			"dependsOn": [
+				"^build",
+				"$SENTRY_DSN",
+				"$NEXT_PUBLIC_SENTRY_DSN",
+				"$NODE_ENV"
+			],
+			"outputs": ["dist/**", ".next/**"]
+		},
+		"lint": {
+			"outputs": []
+		},
+		"dev": {
+			"cache": false
+		}
+	}
 }

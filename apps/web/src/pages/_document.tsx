@@ -1,17 +1,24 @@
-import { createStylesServer, ServerStyles } from '@inreach/ui/mantine/next'
+import { createStylesServer, ServerStyles } from "@inreach/ui/mantine/next";
 import Document, {
 	Head,
 	Html,
 	Main,
 	NextScript,
 	DocumentContext,
-} from 'next/document'
-import { webCache } from '@inreach/ui/theme'
+} from "next/document";
+import { webCache } from "@inreach/ui/theme";
+import { ServerStyleSheetDocument } from "next-sanity/studio";
 
-const stylesServer = createStylesServer(webCache)
-export default class _Document extends Document {
+const stylesServer = createStylesServer(webCache);
+export default class _Document extends ServerStyleSheetDocument {
 	static async getInitialProps(ctx: DocumentContext) {
-		const initialProps = await Document.getInitialProps(ctx)
+		const originalRenderPage = ctx.renderPage;
+		ctx.renderPage = () =>
+			originalRenderPage({
+				enhanceApp: (App) => (props) => <App {...props} />,
+			});
+
+		const initialProps = await ServerStyleSheetDocument.getInitialProps(ctx);
 
 		return {
 			...initialProps,
@@ -20,10 +27,10 @@ export default class _Document extends Document {
 				<ServerStyles
 					html={initialProps.html}
 					server={stylesServer}
-					key='styles'
+					key="styles"
 				/>,
 			],
-		}
+		};
 	}
 
 	render() {
@@ -35,6 +42,6 @@ export default class _Document extends Document {
 					<NextScript />
 				</body>
 			</Html>
-		)
+		);
 	}
 }

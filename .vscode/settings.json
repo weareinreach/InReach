@@ -2,7 +2,6 @@
 	"exportall.config.folderListener": [
 		"/apps/web/.tina/schemas",
 		"/apps/web/.tina/schemas/blocks",
-		"/apps/web/src/components/cms",
 		"/packages/ui/components",
 		"/packages/ui/components/web",
 		"/packages/ui/layouts"
