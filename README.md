@@ -178,3 +178,5 @@ See [LICENSE](LICENSE) for more information.
 ## Acknowledgements
 
 [![Powered by Vercel](docs/images/powered-by-vercel.svg)](https://vercel.com/?utm_source=in-reach&utm_campaign=oss)
+
+[![Structured Content Powered by Sanity](docs/images/sanity-logo.svg)](https://sanity.io)
