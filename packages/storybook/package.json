@@ -1,0 +1,68 @@
+{
+	"name": "@inreach/storybook",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"lint": "next lint",
+		"dev": "start-storybook -p 6006",
+		"build": "build-storybook",
+		"build:swc": "BUILD_TOOL=swc build-storybook",
+		"chromatic": "chromatic"
+	},
+	"dependencies": {
+		"@inreach/app": "workspace:^0.1.0",
+		"@inreach/ui": "workspace:*",
+		"@inreach/web": "workspace:^0.1.0",
+		"@storybook/addon-a11y": "^6.5.12",
+		"@storybook/builder-vite": "^0.2.2",
+		"@storybook/theming": "^6.5.12",
+		"next": "12.3.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"storybook-addon-next": "^1.6.9",
+		"tsconfig-paths-webpack-plugin": "^4.0.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.19.1",
+		"@inreach/eslint-config-custom": "workspace:*",
+		"@inreach/tsconfig": "workspace:*",
+		"@storybook/addon-actions": "^6.5.12",
+		"@storybook/addon-console": "^1.2.3",
+		"@storybook/addon-essentials": "^6.5.12",
+		"@storybook/addon-interactions": "^6.5.12",
+		"@storybook/addon-links": "^6.5.12",
+		"@storybook/builder-webpack5": "^6.5.12",
+		"@storybook/manager-webpack5": "^6.5.12",
+		"@storybook/react": "^6.5.12",
+		"@storybook/testing-library": "^0.0.13",
+		"@types/node": "18.7.18",
+		"@types/react": "18.0.20",
+		"@types/react-dom": "^18.0.6",
+		"babel-loader": "^8.2.5",
+		"chromatic": "^6.9.0",
+		"css-loader": "^6.7.1",
+		"eslint": "8.23.1",
+		"eslint-config-next": "12.3.1",
+		"eslint-plugin-storybook": "^0.6.4",
+		"next-transpile-modules": "^9.0.0",
+		"sb": "^6.5.12",
+		"storybook-addon-designs": "^6.3.1",
+		"storybook-addon-mantine": "^1.2.0",
+		"storybook-addon-swc": "^1.1.8",
+		"storybook-dark-mode": "^1.1.2",
+		"typescript": "4.8.3",
+		"webpack": "5"
+	},
+	"pnpm": {
+		"peerDependencyRules": {
+			"allowedVersions": {
+				"webpack": "5"
+			}
+		},
+		"overrides": {
+			"webpack": "5"
+		}
+	},
+	"readme": "ERROR: No README data found!",
+	"_id": "@inreach/storybook@0.1.0"
+}

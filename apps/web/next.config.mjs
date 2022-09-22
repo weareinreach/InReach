@@ -31,7 +31,7 @@ function defineNextConfig(config) {
 }
 
 export default defineNextConfig({
-	reactStrictMode: true,
+	// reactStrictMode: true,
 	swcMinify: true,
 	reactStrictMode: false, // Off for Sanity Studio until fixed -> https://github.com/sanity-io/sanity/issues/3604
 	sentry: {

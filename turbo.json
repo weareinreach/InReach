@@ -18,6 +18,9 @@
 		},
 		"dev": {
 			"cache": false
+		},
+		"chromatic": {
+			"dependsOn": ["$CHROMATIC_PROJECT_TOKEN"]
 		}
 	}
 }
