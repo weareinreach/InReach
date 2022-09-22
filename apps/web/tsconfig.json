@@ -1,5 +1,8 @@
 {
 	"extends": "../../packages/tsconfig/nextjs.json",
+	"compilerOptions": {
+		"typeRoots": ["./types"]
+	},
 	"include": [
 		"next-env.d.ts",
 		"**/*.ts",

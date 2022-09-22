@@ -44,71 +44,7 @@ export const siteConfig = defineType({
 				},
 			],
 		}),
-		defineField({
-			title: "Main navigation",
-			name: "mainNavigation",
-			description: "Select pages for the top menu",
-			validation: (Rule) => [
-				Rule.max(5).warning("Are you sure you want more than 5 items?"),
-				Rule.unique().error("You have duplicate menu items"),
-			],
-			type: "array",
-			of: [
-				{
-					name: "menu",
-					title: "Menu Header",
-					type: "object",
-					fields: [
-						{
-							name: "label",
-							title: "Label",
-							type: "internationalizedArrayString",
-						},
-						{
-							name: "page",
-							type: "reference",
-							to: [{ type: "route" }],
-						},
-						{
-							name: "subitems",
-							title: "Menu Subitems",
-							type: "array",
-							of: [
-								{
-									name: "item",
-									title: "Menu Subitem",
-									type: "object",
-									fields: [
-										{
-											name: "label",
-											title: "Label",
-											type: "internationalizedArrayString",
-										},
-										{
-											name: "page",
-											type: "reference",
-											to: [{ type: "route" }],
-										},
-									],
-								},
-							],
-						},
-					],
-					preview: {
-						select: {
-							title: "label",
-						},
-						prepare: ({ title }) => {
-							if (!title) return { title: "" };
-							for (const item of title.values()) {
-								if (item._key === "en") return { title: item.value };
-							}
-							return { title: title ?? "" };
-						},
-					},
-				},
-			],
-		}),
+
 		defineField({
 			title: "Social Media Links",
 			name: "socialMediaLinks",
@@ -126,7 +62,7 @@ export const siteConfig = defineType({
 						{
 							name: "href",
 							title: "Profile Link",
-							type: "string",
+							type: "url",
 							validation: (Rule) =>
 								Rule.uri({
 									allowRelative: true,
