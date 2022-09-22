@@ -1,58 +1,37 @@
-import {defineType} from 'sanity'
-import {CtaButton} from '@inreach/ui/components/web'
+import { defineField } from "sanity";
 
-export const ctaButton = defineType({
-	title: 'Call to action',
-	name: 'CtaButton',
-	type: 'object',
-	validation: (Rule) =>
-		Rule.custom((fields = {}) => !fields.route || !fields.link || 'Only one link type is allowed'),
-	fieldsets: [
-		{
-			title: 'Link',
-			name: 'link',
-		},
-	],
+export const ctaButton = defineField({
+	title: "Call to Action Button",
+	name: "CtaButton",
+	type: "object",
+
 	fields: [
-		{
-			title: 'Button Text',
-			name: 'title',
-			type: 'string',
-		},
-		{
-			title: 'Internal link',
-			description: 'Use this to link between pages on the website',
-			name: 'route',
-			type: 'reference',
-			to: [{type: 'route'}],
-			fieldset: 'link',
-			hidden: ({parent, value}) => !value && parent?.link,
-		},
-		{
-			title: 'External link',
-			name: 'link',
-			type: 'url',
-			fieldset: 'link',
-			hidden: ({parent, value}) => !value && parent?.route,
-		},
+		defineField({
+			title: "Button Text",
+			name: "title",
+			type: "string",
+		}),
+		defineField({ name: "href", title: "Link destination", type: "NextLink" }),
 	],
-	// components: {
-	// 	field: CtaButton,
-	// },
 	// preview: {
 	// 	select: {
-	// 		title: 'title',
-	// 		routeTitle: 'route.title',
-	// 		slug: 'route.slug.current',
-	// 		link: 'link',
+	// 		title: "title",
+	// 		routeTitle: "page.title",
+	// 		slug: "page.slug.current",
+	// 		link: "link",
 	// 	},
-	// 	prepare({title, routeTitle = '', slug, link}) {
-	// 		console.log(title)
-	// 		const subtitleExtra = slug ? `Slug:/${slug}/` : link ? `External link: ${link}` : 'Not set'
+	// 	prepare({ title, routeTitle = "", slug, link }) {
+	// 		console.log(title);
+	// 		const subtitleExtra = slug
+	// 			? `Slug:/${slug}/`
+	// 			: link
+	// 			? `External link: ${link}`
+	// 			: "Not set";
 	// 		return {
 	// 			title: `${title}`,
 	// 			subtitle: `${routeTitle} ${subtitleExtra}`,
-	// 		}
+	// 			href: `${slug ?? link}`,
+	// 		};
 	// 	},
 	// },
-})
+});

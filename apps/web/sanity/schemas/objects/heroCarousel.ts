@@ -1,50 +1,88 @@
-import {defineType, defineField} from 'sanity'
+import { CtaPreview } from "@inreach/ui/components/web";
+import { defineType, defineField, defineArrayMember } from "sanity";
+import { groq } from "next-sanity";
+import type { PortableTextProps } from "@portabletext/react";
+
+export interface HeroCarouselReturn {
+	_key: string;
+	_type: string;
+	text: PortableTextProps["value"];
+}
+[];
 
 export const heroCarousel = defineType({
-	name: 'HeroCarousel',
-	title: 'Hero (Carousel Version)',
-	type: 'object',
+	name: "HeroCarousel",
+	title: "Hero (Carousel Version)",
+	type: "object",
 	fields: [
-		{
-			name: 'HeroCarousel',
-			title: 'Slides',
-			type: 'array',
+		defineField({
+			name: "KenBurns",
+			title: "Ken Burns Effect?",
+			type: "boolean",
+		}),
+		defineField({
+			name: "HeroCarousel",
+			title: "Slides",
+			type: "array",
 			of: [
-				defineField({
-					name: 'slides',
-					title: 'Carousel Slides',
-					type: 'object',
+				defineArrayMember({
+					name: "slides",
+					title: "Carousel Slides",
+					type: "object",
 					fields: [
-						{
-							name: 'image',
-							title: 'Background Image',
-							type: 'image',
-						},
-						{
-							name: 'text',
-							title: 'Overlay text',
-							type: 'array',
+						defineField({
+							name: "image",
+							title: "Background Image",
+							type: "image",
+						}),
+						defineField({
+							name: "text",
+							title: "Overlay text",
+							type: "array",
 							of: [
-								{
-									type: 'block',
+								defineArrayMember({
+									type: "block",
 									styles: [],
 									lists: [],
 									marks: {
 										decorators: [
-											{title: 'Strong', value: 'strong'},
-											{title: 'Emphasis', value: 'em'},
+											{ title: "Strong", value: "strong" },
+											{ title: "Emphasis", value: "em" },
 										],
 										annotations: [
 											/* It's a comment. */
 										],
 									},
-									of: [{type: 'CtaButton'}, {type: 'ColorText'}],
-								},
+								}),
+								defineArrayMember({
+									type: "CtaButton",
+									components: {
+										preview: CtaPreview,
+									},
+								}),
+								defineArrayMember({ type: "ColorText" }),
 							],
-						},
+						}),
 					],
 				}),
 			],
-		},
+		}),
 	],
-})
+});
+
+export const heroCarouselFragment = groq`
+HeroCarousel[] {
+	...,
+	text[] {
+		...,
+		children[] {
+			...,
+			route-> {
+				slug {
+					current
+				}
+			}
+		}
+	}
+}
+`;

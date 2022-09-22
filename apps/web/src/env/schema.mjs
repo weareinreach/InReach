@@ -8,8 +8,6 @@ import { z } from "zod";
 export const serverSchema = z.object({
 	// SERVERVAR: z.string(),
 	SENTRY_DSN: z.string(),
-	TINA_TOKEN: z.string(),
-	TINA_CLIENTID: z.string(),
 	SANITY_TOKEN: z.string().optional(),
 	NODE_ENV: z.string(),
 });
@@ -24,6 +22,7 @@ export const clientSchema = z.object({
 	NEXT_PUBLIC_SENTRY_DSN: z.string(),
 	NEXT_PUBLIC_SANITY_PROJECT_ID: z.string(),
 	NEXT_PUBLIC_SANITY_DATASET: z.string(),
+	NEXT_PUBLIC_SANITY_API_VERSION: z.string(),
 });
 
 /**
@@ -37,4 +36,5 @@ export const clientEnv = {
 	NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
 	NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
 	NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
+	NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
 };

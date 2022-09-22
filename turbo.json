@@ -6,7 +6,10 @@
 				"^build",
 				"$SENTRY_DSN",
 				"$NEXT_PUBLIC_SENTRY_DSN",
-				"$NODE_ENV"
+				"$NODE_ENV",
+				"$NEXT_PUBLIC_SANITY_API_VERSION",
+				"$NEXT_PUBLIC_SANITY_DATASET",
+				"$NEXT_PUBLIC_SANITY_PROJECT_ID"
 			],
 			"outputs": ["dist/**", ".next/**"]
 		},

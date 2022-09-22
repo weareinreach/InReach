@@ -1,5 +1,5 @@
 import { Carousel } from "@mantine/carousel";
-import { LinkButton } from "./";
+import { CtaButton } from "./";
 import { createStyles, Overlay, Stack, useMantineTheme } from "@mantine/core";
 import Image from "next/future/image";
 
@@ -26,7 +26,7 @@ export const HeroCarousel = (props: HeroCarouselProps) => {
 	const theme = useMantineTheme();
 
 	const components = {
-		LinkButton: LinkButton,
+		CtaButton: CtaButton,
 	};
 	console.log("hc", items);
 
@@ -43,9 +43,7 @@ export const HeroCarousel = (props: HeroCarouselProps) => {
 					priority
 				/>
 				<Overlay opacity={0.6} zIndex={-9} color={theme.colors.gray[0]} />
-				<Stack spacing="xs" className={classes.text}>
-					<TinaMarkdown content={content} components={components} />
-				</Stack>
+				<Stack spacing="xs" className={classes.text}></Stack>
 			</Carousel.Slide>
 		);
 	});

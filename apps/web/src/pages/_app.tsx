@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import type { NextPage } from "next";
 import type { ReactElement, ReactNode } from "react";
+import { StrictMode } from "react";
 // import Head from 'next/head'
 import { MantineProvider } from "@inreach/ui/mantine/core";
 import { ModalsProvider } from "@inreach/ui/mantine/modals";
@@ -21,23 +22,25 @@ type AppPropsWithLayout = AppProps & {
 const MyApp = (appProps: AppPropsWithLayout) => {
 	const { Component, pageProps, router } = appProps;
 	const getLayout = Component.getLayout ?? ((page) => page);
-	console.log(JSON.stringify(router, null, 2));
+	// console.log(JSON.stringify(router, null, 2));
 	if (router.route === "/sanity/[[...sanity]]") {
 		return <Component {...pageProps} />;
 	}
 	return (
-		<MantineProvider
-			withGlobalStyles
-			withNormalizeCSS
-			theme={webTheme}
-			emotionCache={webCache}
-		>
-			<NotificationsProvider>
-				<ModalsProvider>
-					<>{getLayout(<Component {...pageProps} />)}</>
-				</ModalsProvider>
-			</NotificationsProvider>
-		</MantineProvider>
+		<StrictMode>
+			<MantineProvider
+				withGlobalStyles
+				withNormalizeCSS
+				theme={webTheme}
+				emotionCache={webCache}
+			>
+				<NotificationsProvider>
+					<ModalsProvider>
+						<>{getLayout(<Component {...pageProps} />)}</>
+					</ModalsProvider>
+				</NotificationsProvider>
+			</MantineProvider>
+		</StrictMode>
 	);
 };
 
