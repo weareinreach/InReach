@@ -1,8 +1,8 @@
-import { env } from "../../src/env/client.mjs";
+import { env } from "../src/env/client.mjs";
 
 export const config = {
 	/**
-	 * Find your project ID and dataset in `sanity.json` in your studio project.
+	 * Find your project ID and dataset in `sanity.config.ts` in your studio project.
 	 * These are considered “public”, but you can use environment variables
 	 * if you want differ between local dev and production.
 	 *
