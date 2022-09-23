@@ -1,4 +1,13 @@
-import { defineField } from "sanity";
+import { ConditionalPropertyCallbackContext, defineField } from "sanity";
+
+/**
+ * It returns false if the document is a blog post
+ * @param  - `{document: SanityDocument}` - This is the document that is being queried.
+ */
+const falseIfBlog = (context: ConditionalPropertyCallbackContext) =>
+	context.document?._type !== "post";
+const trueIfBlog = (context: ConditionalPropertyCallbackContext) =>
+	context.document?._type === "post";
 
 export const metaData = defineField({
 	name: "metadata",
@@ -17,19 +26,32 @@ export const metaData = defineField({
 			validation: (Rule) => Rule.required(),
 		}),
 		defineField({
+			name: "author",
+			title: "Author",
+			type: "reference",
+			to: { type: "author" },
+			hidden: (context) => falseIfBlog(context),
+		}),
+		defineField({
+			name: "categories",
+			title: "Categories",
+			type: "array",
+			of: [{ type: "reference", to: { type: "category" } }],
+			hidden: (context) => falseIfBlog(context),
+		}),
+		defineField({
+			name: "publishedAt",
+			title: "Published at",
+			type: "datetime",
+			hidden: (context) => falseIfBlog(context),
+		}),
+		defineField({
 			name: "slug",
 			title: "Slug",
 			type: "string",
 			fieldset: "pageinfo",
-			// hidden: true,
+			hidden: true,
 		}),
-		// defineField({
-		// 	name: "navigation",
-		// 	title: "Navigation Settings",
-		// 	type: "reference",
-		// 	to: [{ type: "navigation.menu" }, { type: "navigation.subMenu" }],
-		// 	fieldset: "pageinfo",
-		// }),
 
 		defineField({
 			name: "seo",

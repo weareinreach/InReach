@@ -17,11 +17,6 @@ export const page = defineType({
 		},
 	],
 	fields: [
-		// defineField({
-		// 	name: "title",
-		// 	type: "string",
-		// 	title: "Title",
-		// }),
 		defineField({
 			name: "content",
 			type: "array",
@@ -39,25 +34,12 @@ export const page = defineType({
 			name: "metadata",
 			type: "metadata",
 		}),
-		// defineField({
-		// 	name: "description",
-		// 	type: "text",
-		// 	title: "Description",
-		// 	description: "This description populates meta-tags on the webpage",
-		// 	fieldset: "metadata",
-		// }),
-		// defineField({
-		// 	name: "openGraphImage",
-		// 	type: "image",
-		// 	title: "Open Graph Image",
-		// 	description: "Image for sharing previews on Facebook, Twitter etc.",
-		// 	fieldset: "metadata",
-		// }),
 	],
 	preview: {
 		select: {
 			title: "metadata.title",
-			media: "openGraphImage",
+			subtitle: "metadata.slug",
+			media: "metadata.seo.openGraphImage",
 		},
 	},
 });

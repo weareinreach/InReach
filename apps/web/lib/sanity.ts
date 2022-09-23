@@ -4,7 +4,7 @@ import {
 	createCurrentUserHook,
 } from "next-sanity";
 import createImageUrlBuilder from "@sanity/image-url";
-import { config } from "./config";
+import { config } from "./sanityConfig";
 
 /**
  * Set up a helper function for generating Image URLs with only the asset reference data in your documents.

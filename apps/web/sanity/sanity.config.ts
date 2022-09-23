@@ -8,6 +8,7 @@ import { colorInput } from "@sanity/color-input";
 import { env } from "../src/env/client.mjs";
 // import { media } from "sanity-plugin-media";
 import { structure } from "./structure";
+import { SetSlugAndPublishAction } from "./actions/slug";
 
 const devOnly = [
 	visionTool({
@@ -41,7 +42,7 @@ export default createConfig({
 	title: process.env.NODE_ENV === "production" ? "InReach" : "InReach Staging",
 	projectId: "dwv4rfh3",
 	dataset: process.env.NODE_ENV === "production" ? "production" : "staging",
-	// basePath: "/sanity",
+	basePath: "/sanity",
 	plugins: [
 		deskTool({
 			structure,
@@ -59,9 +60,14 @@ export default createConfig({
 		...(process.env.NODE_ENV === "production" ? [] : devOnly),
 	],
 
-	// document: {
-	// 	actions: () => {}
-	// },
+	document: {
+		actions: (prev) =>
+			prev.map((previousAction) =>
+				previousAction.action === "publish"
+					? SetSlugAndPublishAction
+					: previousAction
+			),
+	},
 	schema: {
 		types: schemaTypes,
 	},

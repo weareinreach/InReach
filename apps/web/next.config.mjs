@@ -31,9 +31,8 @@ function defineNextConfig(config) {
 }
 
 export default defineNextConfig({
-	// reactStrictMode: true,
-	swcMinify: true,
 	reactStrictMode: false, // Off for Sanity Studio until fixed -> https://github.com/sanity-io/sanity/issues/3604
+	swcMinify: true,
 	sentry: {
 		// See the 'Configure Source Maps' and 'Configure Legacy Browser Support'
 		// sections below for information on the following options:
