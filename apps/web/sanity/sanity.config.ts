@@ -49,17 +49,30 @@ export default createConfig({
 		}),
 		documentI18n(sanityI18nConfig),
 		internationalizedArray({
-			languages: [
-				{ id: "en", title: "English" },
-				{ id: "es", title: "Spanish" },
-			],
+			languages: sanityI18nConfig.languages,
 			fieldTypes: ["string", "url"],
 		}),
 		colorInput(),
 		// media(),
 		...(process.env.NODE_ENV === "production" ? [] : devOnly),
 	],
-
+	schema: {
+		types: schemaTypes,
+		templates: [
+			{
+				id: "post",
+				title: "Blog Post",
+				schemaType: "post",
+				value: (props: unknown) => props,
+			},
+			{
+				id: "teamBio",
+				title: "Team Member Bio",
+				schemaType: "teamBio",
+				value: (props: unknown) => props,
+			},
+		],
+	},
 	document: {
 		actions: (prev) =>
 			prev.map((previousAction) =>
@@ -67,8 +80,17 @@ export default createConfig({
 					? SetSlugAndPublishAction
 					: previousAction
 			),
-	},
-	schema: {
-		types: schemaTypes,
+		newDocumentOptions: () => {
+			return [
+				{
+					templateId: "post",
+					title: "Blog Post",
+				},
+				{
+					templateId: "teamBio",
+					title: "Team Member Bio",
+				},
+			];
+		},
 	},
 });
