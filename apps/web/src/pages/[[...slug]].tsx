@@ -6,7 +6,7 @@ import navData from "../../data/nav.json";
 import type { NextPageWithLayout } from "./_app";
 import type { ReactElement } from "react";
 import { groq } from "next-sanity";
-import { getClient } from "../../sanity/lib/sanity.server";
+import { getClient } from "../../lib/sanity.server";
 import { slugParamToPath, getSlugVariations } from "../utils/url";
 import { heroCarouselFragment } from "../../sanity/schemas/objects";
 import { PortableText } from "@portabletext/react";
