@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 import { SocialMediaIconSelect } from "@inreach/ui/components/web";
 
 export const siteConfig = defineType({
@@ -50,8 +50,7 @@ export const siteConfig = defineType({
 			name: "socialMediaLinks",
 			type: "array",
 			of: [
-				defineField({
-					name: "socialMediaLink",
+				defineArrayMember({
 					type: "object",
 					fields: [
 						defineField({
@@ -92,10 +91,10 @@ export const siteConfig = defineType({
 			],
 			fieldset: "footer",
 			of: [
-				{
+				defineArrayMember({
 					type: "reference",
 					to: [{ type: "route" }],
-				},
+				}),
 			],
 		}),
 		defineField({

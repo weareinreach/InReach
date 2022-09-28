@@ -1,6 +1,6 @@
-import { defineField } from "sanity";
+import { defineField, defineType } from "sanity";
 
-export const post = {
+export const post = defineType({
 	name: "post",
 	title: "Blog Post",
 	type: "document",
@@ -39,4 +39,4 @@ export const post = {
 			return { ...selection, subtitle: author && `by ${author}` };
 		},
 	},
-};
+});

@@ -6,6 +6,7 @@ import {
 	post,
 	navigation,
 	route,
+	teamBio,
 } from "./documents";
 import {
 	blockContent,
@@ -31,7 +32,7 @@ export const schemaTypes = [
 	heroCarousel,
 	colorText,
 	metaData,
-
+	teamBio,
 	//to be disabled later
 	route,
 ];

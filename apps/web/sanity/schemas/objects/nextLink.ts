@@ -7,17 +7,13 @@ import { defineField, defineType } from "sanity";
 
 export const nextLink = defineType({
 	name: "NextLink",
-	title: "Link to URL",
+	title: "Link to:",
 	type: "object",
 	fields: [
 		defineField({
 			name: "internal",
 			type: "reference",
-			to: [
-				{ type: "page" }, // edit these to match collections
-				// {type: 'article'},
-				// {type: 'homePage'},
-			],
+			to: [{ type: "page" }],
 			hidden: ({ parent, value }) => !value && !!parent?.external,
 		}),
 		defineField({
