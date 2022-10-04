@@ -11,9 +11,10 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "cypress:open":"npx cypress open --project test",
+    "cypress:open": "npx cypress open --project test",
     "cypress:run": "npx cypress run --project test",
-    "cypress:run:tagged":"npx cypress run --project test --env TAGS=${TAGS}"
+    "cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
+    "cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting"
   },
   "devDependencies": {
     "cypress": "^10.8.0",
@@ -32,7 +33,7 @@
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": false,
-    "nonGlobalStepBaseDir":"support"
+    "nonGlobalStepBaseDir": "support"
   },
   "pnpm": {
     "peerDependencyRules": {
