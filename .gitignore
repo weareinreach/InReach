@@ -46,3 +46,4 @@ yarn-error.log*
 .sentryclirc
 
 package-lock.json
+test/cypress/fixtures/temp/example-1.json
