@@ -14,7 +14,7 @@
     "cypress:open": "npx cypress open --project test",
     "cypress:run": "npx cypress run --project test",
     "cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
-    "cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting"
+    "cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false"
   },
   "devDependencies": {
     "cypress": "^10.8.0",
