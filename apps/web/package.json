@@ -24,7 +24,7 @@
   "devDependencies": {
     "@inreach/eslint-config-custom": "*",
     "@inreach/tsconfig": "*",
-    "@types/node": "18.7.16",
+    "@types/node": "18.11.5",
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
