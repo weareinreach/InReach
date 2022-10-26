@@ -22,7 +22,7 @@
 		"@sentry/nextjs": "^7.13.0",
 		"luxon": "^3.0.3",
 		"next": "^12.2.5",
-		"next-sanity": "^0.8.4",
+		"next-sanity": "^1.0.0",
 		"next-seo": "^5.5.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
