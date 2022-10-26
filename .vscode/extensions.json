@@ -14,6 +14,8 @@
     "eliostruyf.vscode-typescript-exportallmodules",
     "mattpocock.ts-error-translator",
     "arcanis.vscode-zipfs",
-    "Prisma.prisma"
+    "prisma.prisma",
+    "alexkrechik.cucumberautocomplete",
+    "folke.vscode-monorepo-workspace"
   ]
 }

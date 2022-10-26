@@ -1,0 +1,34 @@
+name: 'Chromatic'
+on:
+  push:
+    paths:
+      - 'packages/storybook/**'
+      - 'packages/ui/**'
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: The SHA-1 hash referring to the commit to check.
+        required: true
+      ref:
+        description: The head branch associated with the pull request.
+        required: true
+jobs:
+  chromatic-deployment:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/storybook
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: npx --yes pnpm -F "@inreach/storybook" install
+        # 👇 Runs yarn in ./packages/storybook
+        working-directory: packages/storybook
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          # 👇 Runs Chromatic CLI in ./packages/storybook
+          workingDir: packages/storybook
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

@@ -91,8 +91,13 @@ const InReachHeader = ({ navData }: { navData: NavData }) => {
   const theme = useMantineTheme();
   const { socialMediaLinks, navLinks } = navData;
 
-  const socialButtons = socialMediaLinks.map((item) => (
-    <Link href={item.url} passHref className={classes.headerButton}>
+  const socialButtons = socialMediaLinks.map((item, i) => (
+    <Link
+      href={item.url}
+      passHref
+      className={classes.headerButton}
+      key={`social-${i}`}
+    >
       <ActionIcon component="a" title={item.service} variant="transparent">
         <Icon icon={item.icon} height={25} color="white" />
       </ActionIcon>
