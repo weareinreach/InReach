@@ -39,7 +39,7 @@
     "next": "^12.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "sanity": "3.0.0-dev-preview.17",
+    "sanity": "3.0.0-v3-v2-pte.56",
     "slugify": "^1.6.5"
   },
   "pnpm": {
