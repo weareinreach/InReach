@@ -1,25 +1,26 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["fieldReference"]
+}
+
+generator erd {
+    provider                  = "prisma-erd-generator"
+    includeRelationFromFields = true
+}
+
+generator docs {
+    provider = "node node_modules/prisma-docs-generator"
+    output   = "../docs/prisma"
 }
 
 datasource db {
-    provider = "sqlite"
-    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.text annotations in model Account below
-    // Further reading: 
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+    provider = "postgresql"
     url      = env("DATABASE_URL")
-}
-
-model Example {
-    id String @id @default(cuid())
 }
 
 // Necessary for Next auth
 model Account {
+    // Do not change - NextAuth fields
     id                String  @id @default(cuid())
     userId            String
     type              String
@@ -38,6 +39,7 @@ model Account {
 }
 
 model Session {
+    // Do not change - NextAuth fields
     id           String   @id @default(cuid())
     sessionToken String   @unique
     userId       String
@@ -46,19 +48,681 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    // Do not change - NextAuth fields
+    id            String           @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?          @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
+    // Ok to change below - Start of custom fields
+    orgOwner      Organization[]
+    orgTitle      UserTitle?       @relation(fields: [orgTitleId], references: [id])
+    orgTitleId    String?
+    ethnicity     UserEthnicity[]
+    countryOrigin Country[]
+    immigration   UserImmigration? @relation(fields: [immigrationId], references: [id])
+    immigrationId String?
+    SOG           UserSOG[]
+    birthYear     String?
+    role          UserRole         @relation(fields: [roleId], references: [id])
+    roleId        String
+    permissions   UserPermission[]
+    userType      UserType         @relation(fields: [userTypeId], references: [id])
+    userTypeId    String
+    lists         UserList[]       @relation("userList")
+    sharedLists   UserList[]       @relation("sharedLists")
+    reasonForJoin String?
+    communities   UserCommunity[]
+    langPref      Language         @relation(fields: [langPrefId], references: [id])
+    langPrefId    String
+
+    createUserEthnicity       UserEthnicity[]       @relation("createUserEthnicity")
+    updateUserEthnicity       UserEthnicity[]       @relation("updateUserEthnicity")
+    createUserImmigration     UserImmigration[]     @relation("createUserImmigration")
+    updateUserImmigration     UserImmigration[]     @relation("updateUserImmigration")
+    createUserSOG             UserSOG[]             @relation("createUserSOG")
+    updateUserSOG             UserSOG[]             @relation("updateUserSOG")
+    createUserType            UserType[]            @relation("createUserType")
+    updateUserType            UserType[]            @relation("updateUserType")
+    createUserCommunity       UserCommunity[]       @relation("createUserCommunity")
+    updateUserCommunity       UserCommunity[]       @relation("updateUserCommunity")
+    createOrganization        Organization[]        @relation("createOrganization")
+    updateOrganization        Organization[]        @relation("updateOrganization")
+    createOrgDescription      OrgDescription[]      @relation("createOrgDescription")
+    updateOrgDescription      OrgDescription[]      @relation("updateOrgDescription")
+    createOrgEmail            OrgEmail[]            @relation("createOrgEmail")
+    updateOrgEmail            OrgEmail[]            @relation("updateOrgEmail")
+    createUserTitle           UserTitle[]           @relation("createUserTitle")
+    updateUserTitle           UserTitle[]           @relation("updateUserTitle")
+    createOrgLocation         OrgLocation[]         @relation("createOrgLocation")
+    updateOrgLocation         OrgLocation[]         @relation("updateOrgLocation")
+    createOrgNotes            OrgNotes[]            @relation("createOrgNotes")
+    updateOrgNotes            OrgNotes[]            @relation("updateOrgNotes")
+    createOrgPhone            OrgPhone[]            @relation("createOrgPhone")
+    updateOrgPhone            OrgPhone[]            @relation("updateOrgPhone")
+    createOrgPhotos           OrgPhotos[]           @relation("createOrgPhotos")
+    updateOrgPhotos           OrgPhotos[]           @relation("updateOrgPhotos")
+    createPhoneType           PhoneType[]           @relation("createPhoneType")
+    updatePhoneType           PhoneType[]           @relation("updatePhoneType")
+    createOrgHours            OrgHours[]            @relation("createOrgHours")
+    updateOrgHours            OrgHours[]            @relation("updateOrgHours")
+    createOrgService          OrgService[]          @relation("createOrgService")
+    updateOrgService          OrgService[]          @relation("updateOrgService")
+    createOrgReview           OrgReview[]           @relation("createOrgReview")
+    updateOrgReview           OrgReview[]           @relation("updateOrgReview")
+    createServiceCategory     ServiceCategory[]     @relation("createServiceCategory")
+    updateServiceCategory     ServiceCategory[]     @relation("updateServiceCategory")
+    createServiceType         ServiceType[]         @relation("createServiceType")
+    updateServiceType         ServiceType[]         @relation("updateServiceType")
+    createOrgSocialMedia      OrgSocialMedia[]      @relation("createOrgSocialMedia")
+    updateOrgSocialMedia      OrgSocialMedia[]      @relation("updateOrgSocialMedia")
+    createOrgSource           OrgSource[]           @relation("createOrgSource")
+    updateOrgSource           OrgSource[]           @relation("updateOrgSource")
+    createCountry             Country[]             @relation("createCountry")
+    updateCountry             Country[]             @relation("updateCountry")
+    createCountryTranslation  CountryTranslation[]  @relation("createCountryTranslation")
+    updateCountryTranslation  CountryTranslation[]  @relation("updateCountryTranslation")
+    createGovDist             GovDist[]             @relation("createGovDist")
+    updateGovDist             GovDist[]             @relation("updateGovDist")
+    createLanguage            Language[]            @relation("createLanguage")
+    updateLanguage            Language[]            @relation("updateLanguage")
+    createTranslationCategory TranslationCategory[] @relation("createTranslationCategory")
+    updateTranslationCategory TranslationCategory[] @relation("updateTranslationCategory")
+    createTranslationItem     TranslationItem[]     @relation("createTranslationItem")
+    updateTranslationItem     TranslationItem[]     @relation("updateTranslationItem")
+    createTranslation         Translation[]         @relation("createTranslation")
+    updateTranslation         Translation[]         @relation("updateTranslation")
+    createSocialMediaService  SocialMediaService[]  @relation("createSocialMediaService")
+    updateSocialMediaService  SocialMediaService[]  @relation("updateSocialMediaService")
+    createUserRole            UserRole[]            @relation("createUserRole")
+    updateUserRole            UserRole[]            @relation("updateUserRole")
+    createUserPermission      UserPermission[]      @relation("createUserPermission")
+    updateUserPermission      UserPermission[]      @relation("updateUserPermission")
+    createTranslationVariable TranslationVariable[] @relation("createTranslationVariable")
+    updateTranslationVariable TranslationVariable[] @relation("updateTranslationVariable")
+}
+
+model UserRole {
+    id          String           @id @default(cuid())
+    name        String
+    permissions UserPermission[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createUserRole", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateUserRole", fields: [updatedById], references: [id])
+    updatedById String
+    User        User[]
+}
+
+model UserPermission {
+    id    String @id @default(cuid())
+    name  String
+    users User[]
+
+    createdAt   DateTime   @default(now())
+    createdBy   User       @relation("createUserPermission", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime   @updatedAt
+    updatedBy   User       @relation("updateUserPermission", fields: [updatedById], references: [id])
+    updatedById String
+    UserRole    UserRole[]
 }
 
 model VerificationToken {
+    // Do not change - NextAuth fields
     identifier String
     token      String   @unique
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model UserEthnicity {
+    id        String   @id @default(cuid())
+    language  Language @relation(fields: [langId], references: [id])
+    langId    String
+    ethnicity String
+    users     User[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createUserEthnicity", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateUserEthnicity", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model UserImmigration {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    language    Language @relation(fields: [langId], references: [id])
+    langId      String
+    status      String
+    users       User[]
+    createdBy   User     @relation("createUserImmigration", fields: [createdById], references: [id])
+    createdById String
+    updatedBy   User     @relation("updateUserImmigration", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model UserSOG {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    language    Language @relation(fields: [langId], references: [id])
+    langId      String
+    sog         String
+    users       User[]
+    createdBy   User     @relation("createUserSOG", fields: [createdById], references: [id])
+    createdById String
+    updatedBy   User     @relation("updateUserSOG", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model UserType {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    language    Language @relation(fields: [langId], references: [id])
+    langId      String
+    type        String
+    users       User[]
+    createdBy   User     @relation("createUserType", fields: [createdById], references: [id])
+    createdById String
+    updatedBy   User     @relation("updateUserType", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model UserTitle {
+    id         String     @id @default(cuid())
+    text       String
+    language   Language   @relation(fields: [langId], references: [id])
+    langId     String
+    email      OrgEmail[]
+    orgUser    User[]
+    searchable Boolean    @default(false)
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createUserTitle", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateUserTitle", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model UserCommunity {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    community   String
+    language    Language @relation(fields: [langId], references: [id])
+    langId      String
+    users       User[]
+    createdBy   User     @relation("createUserCommunity", fields: [createdById], references: [id])
+    createdById String
+    updatedBy   User     @relation("updateUserCommunity", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model UserList {
+    id            String             @id @default(cuid())
+    createdAt     DateTime           @default(now())
+    updatedAt     DateTime           @updatedAt
+    name          String
+    organizations Organization[]
+    visibility    UserListVisibility @default(PRIVATE)
+    ownedBy       User               @relation("userList", fields: [ownedById], references: [id])
+    ownedById     String
+    sharedWith    User[]             @relation("sharedLists")
+}
+
+enum UserListVisibility {
+    PRIVATE
+    SHARED
+    PUBLIC
+}
+
+model Organization {
+    id             String           @id @default(cuid())
+    description    OrgDescription[]
+    email          OrgEmail[]
+    deleted        Boolean          @default(false)
+    published      Boolean          @default(false)
+    location       OrgLocation[]
+    name           String
+    notes          OrgNotes[]
+    owner          User[]
+    phone          OrgPhone[]
+    photos         OrgPhotos[]
+    services       OrgService[]
+    orgSocialMedia OrgSocialMedia[]
+    source         OrgSource        @relation(fields: [sourceId], references: [id])
+    sourceId       String
+    userList       UserList[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrganization", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrganization", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model OrgDescription {
+    id           String       @id @default(cuid())
+    text         String
+    language     Language     @relation(fields: [langId], references: [id])
+    langId       String
+    organization Organization @relation(fields: [orgId], references: [id])
+    orgId        String
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrgDescription", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrgDescription", fields: [updatedById], references: [id])
+    updatedById String
+
+    @@index([langId, orgId])
+}
+
+model OrgEmail {
+    id           String       @id @default(cuid())
+    firstName    String
+    lastName     String
+    primary      Boolean
+    email        String
+    published    Boolean      @default(true)
+    title        UserTitle    @relation(fields: [titleId], references: [id])
+    titleId      String
+    organization Organization @relation(fields: [orgId], references: [id])
+    orgId        String
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrgEmail", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrgEmail", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model OrgLocation {
+    id           String       @id @default(cuid())
+    street1      String
+    street2      String
+    city         String
+    govDist      GovDist?     @relation(fields: [govDistId], references: [id])
+    govDistId    String?
+    postCode     String?
+    country      Country      @relation(fields: [countryId], references: [id])
+    countryId    String
+    latitude     Decimal      @db.Decimal(4, 3)
+    longitude    Decimal      @db.Decimal(4, 3)
+    published    Boolean      @default(true)
+    organization Organization @relation(fields: [orgId], references: [id])
+    orgId        String
+    hours        OrgHours[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrgLocation", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrgLocation", fields: [updatedById], references: [id])
+    updatedById String
+
+    @@index([latitude, longitude])
+}
+
+model OrgNotes {
+    id           String       @id @default(cuid())
+    organization Organization @relation(fields: [orgId], references: [id])
+    orgId        String
+    text         String
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrgNotes", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrgNotes", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model OrgPhone {
+    id             String       @id @default(cuid())
+    number         String
+    published      Boolean      @default(true)
+    primary        Boolean
+    phoneType      PhoneType    @relation(fields: [phoneTypeId], references: [id])
+    phoneTypeId    String
+    organization   Organization @relation(fields: [organizationId], references: [id])
+    organizationId String
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrgPhone", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrgPhone", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model OrgPhotos {
+    id           String       @id @default(cuid())
+    foursquareId String
+    src          String
+    height       Int
+    width        Int
+    organization Organization @relation(fields: [orgId], references: [id])
+    orgId        String
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrgPhotos", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrgPhotos", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model PhoneType {
+    id       String     @id @default(cuid())
+    type     String
+    language Language   @relation(fields: [langId], references: [id])
+    langId   String
+    orgPhone OrgPhone[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createPhoneType", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updatePhoneType", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model OrgHours {
+    id           String       @id @default(cuid())
+    dayIndex     Int          @default(0) // Sunday = 0
+    start        Int          @default(0) // minutes
+    end          Int          @default(1440) // minutes
+    orgLocation  OrgLocation? @relation(fields: [orgLocId], references: [id])
+    orgLocId     String?
+    orgService   OrgService?  @relation(fields: [orgServiceId], references: [id])
+    orgServiceId String?
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrgHours", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrgHours", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model OrgService {
+    id                 String        @id @default(cuid())
+    published          Boolean
+    accessInstructions String
+    description        String
+    hours              OrgHours[]
+    organization       Organization  @relation(fields: [organizationId], references: [id])
+    organizationId     String
+    service            ServiceType[]
+    language           Language      @relation(fields: [langId], references: [id])
+    langId             String
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrgService", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrgService", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model OrgReview {
+    id      String  @id @default(cuid())
+    rating  Int
+    comment String?
+    visible Boolean @default(true)
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrgReview", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrgReview", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model ServiceCategory {
+    id       String        @id @default(cuid())
+    category String
+    language Language      @relation(fields: [langId], references: [id])
+    langId   String
+    services ServiceType[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createServiceCategory", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateServiceCategory", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model ServiceType {
+    id          String          @id @default(cuid())
+    type        String
+    language    Language        @relation(fields: [langId], references: [id])
+    langId      String
+    category    ServiceCategory @relation(fields: [categoryId], references: [id])
+    categoryId  String
+    orgServices OrgService[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createServiceType", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateServiceType", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model OrgSocialMedia {
+    id             String             @id @default(cuid())
+    username       String
+    service        SocialMediaService @relation(fields: [serviceId], references: [id])
+    serviceId      String
+    url            String
+    organization   Organization       @relation(fields: [organizationId], references: [id])
+    organizationId String
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrgSocialMedia", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrgSocialMedia", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model SocialMediaService {
+    id             String           @id @default(cuid())
+    name           String
+    urlBase        String
+    logoIcon       String
+    orgSocialMedia OrgSocialMedia[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createSocialMediaService", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateSocialMediaService", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model OrgSource {
+    id           String         @id @default(cuid())
+    source       String
+    organization Organization[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createOrgSource", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateOrgSource", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model Country {
+    id                 String               @id @default(cuid())
+    name               String
+    govDistName        String?
+    dialCode           String
+    orgAddress         OrgLocation[]
+    countryTranslation CountryTranslation[]
+    users              User[]
+    GovDist            GovDist[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createCountry", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateCountry", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model CountryTranslation {
+    id          String   @id @default(cuid())
+    name        String
+    govDistName String
+    country     Country  @relation(fields: [countryId], references: [id])
+    countryId   String
+    language    Language @relation(fields: [langId], references: [id])
+    langId      String
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createCountryTranslation", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateCountryTranslation", fields: [updatedById], references: [id])
+    updatedById String
+
+    @@index([langId])
+}
+
+model GovDist {
+    id          String        @id @default(cuid())
+    name        String
+    country     Country       @relation(fields: [countryId], references: [id])
+    countryId   String
+    language    Language      @relation(fields: [langId], references: [id])
+    langId      String
+    OrgLocation OrgLocation[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createGovDist", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateGovDist", fields: [updatedById], references: [id])
+    updatedById String
+
+    @@index([countryId, langId])
+}
+
+model Language {
+    id                 String               @id @default(cuid())
+    languageName       String
+    langCode           String
+    nativeName         String
+    translations       Translation[]
+    orgDescriptions    OrgDescription[]
+    userTitle          UserTitle[]
+    ServiceCategory    ServiceCategory[]
+    PhoneType          PhoneType[]
+    ServiceType        ServiceType[]
+    CountryTranslation CountryTranslation[]
+    OrgService         OrgService[]
+    UserEthnicity      UserEthnicity[]
+    UserSOG            UserSOG[]
+    UserType           UserType[]
+    UserImmigration    UserImmigration[]
+    GovDist            GovDist[]
+    UserCommunity      UserCommunity[]
+    User               User[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createLanguage", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateLanguage", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model TranslationCategory {
+    id           String            @id @default(uuid())
+    category     String            @unique
+    translations Translation[]
+    item         TranslationItem[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createTranslationCategory", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateTranslationCategory", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model TranslationItem {
+    id           String              @id @default(uuid())
+    tagName      String
+    category     TranslationCategory @relation(fields: [categoryId], references: [id])
+    categoryId   String
+    translations Translation[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createTranslationItem", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateTranslationItem", fields: [updatedById], references: [id])
+    updatedById String
+
+    @@unique([tagName, categoryId])
+}
+
+model Translation {
+    id         String                @id @default(uuid())
+    text       String
+    language   Language              @relation(fields: [langId], references: [id])
+    langId     String
+    category   TranslationCategory   @relation(fields: [categoryId], references: [id])
+    categoryId String
+    item       TranslationItem       @relation(fields: [itemId], references: [id])
+    itemId     String
+    variables  TranslationVariable[]
+    isBase     Boolean               @default(true)
+    // to manage plurals & ordinals
+    children   Translation[]         @relation("translationSubItems")
+    parent     Translation?          @relation("translationSubItems", fields: [parentId], references: [id])
+    parentId   String?
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createTranslation", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateTranslation", fields: [updatedById], references: [id])
+    updatedById String
+}
+
+model TranslationVariable {
+    id          String        @id @default(uuid())
+    name        String
+    description String
+    plural      Boolean       @default(false)
+    ordinal     Boolean       @default(false)
+    translation Translation[]
+
+    createdAt   DateTime @default(now())
+    createdBy   User     @relation("createTranslationVariable", fields: [createdById], references: [id])
+    createdById String
+    updatedAt   DateTime @updatedAt
+    updatedBy   User     @relation("updateTranslationVariable", fields: [updatedById], references: [id])
+    updatedById String
 }

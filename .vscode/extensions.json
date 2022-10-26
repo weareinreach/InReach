@@ -13,6 +13,7 @@
     "esbenp.prettier-vscode",
     "eliostruyf.vscode-typescript-exportallmodules",
     "mattpocock.ts-error-translator",
-    "arcanis.vscode-zipfs"
+    "arcanis.vscode-zipfs",
+    "Prisma.prisma"
   ]
 }
