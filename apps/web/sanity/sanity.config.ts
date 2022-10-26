@@ -5,14 +5,14 @@ import { documentI18n } from "@sanity/document-internationalization";
 import { internationalizedArray } from "sanity-plugin-internationalized-array";
 import { visionTool } from "@sanity/vision";
 import { colorInput } from "@sanity/color-input";
-import { env } from "../src/env/client.mjs";
+// import { env } from "../src/env/client.mjs";
 // import { media } from "sanity-plugin-media";
 import { structure } from "./structure";
-import { SetSlugAndPublishAction } from "./actions/slug";
+// import { SetSlugAndPublishAction } from "./actions/slug";
 
 const devOnly = [
 	visionTool({
-		defaultApiVersion: env.NEXT_PUBLIC_SANITY_API_VERSION,
+		defaultApiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
 		defaultDataset: "production",
 	}),
 ];
@@ -74,12 +74,12 @@ export default createConfig({
 		],
 	},
 	document: {
-		actions: (prev) =>
-			prev.map((previousAction) =>
-				previousAction.action === "publish"
-					? SetSlugAndPublishAction
-					: previousAction
-			),
+		// actions: (prev) =>
+		// 	prev.map((previousAction) =>
+		// 		previousAction.action === "publish"
+		// 			? SetSlugAndPublishAction
+		// 			: previousAction
+		// 	),
 		newDocumentOptions: () => {
 			return [
 				{
