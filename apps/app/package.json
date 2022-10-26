@@ -37,7 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
     "eslint": "^8.23.0",
-    "eslint-config-next": "12.2.5",
+    "eslint-config-next": "12.3.1",
     "next-transpile-modules": "^9.0.0",
     "prisma": "^4.3.1",
     "prisma-docs-generator": "^0.5.0",
