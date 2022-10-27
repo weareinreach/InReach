@@ -56,11 +56,13 @@
 	"pnpm": {
 		"peerDependencyRules": {
 			"allowedVersions": {
-				"webpack": "5"
+				"webpack": "5",
+				"next": "13"
 			}
 		},
 		"overrides": {
-			"webpack": "5"
+			"webpack": "5",
+			"next": "13"
 		}
 	},
 	"readme": "ERROR: No README data found!",

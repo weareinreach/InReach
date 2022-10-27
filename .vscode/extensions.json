@@ -9,11 +9,9 @@
     "bierner.markdown-yaml-preamble",
     "unifiedjs.vscode-mdx",
     "mintlify.document",
-    "willstakayama.vscode-nextjs-snippets",
     "esbenp.prettier-vscode",
     "eliostruyf.vscode-typescript-exportallmodules",
     "mattpocock.ts-error-translator",
-    "arcanis.vscode-zipfs",
     "prisma.prisma",
     "alexkrechik.cucumberautocomplete",
     "folke.vscode-monorepo-workspace"
