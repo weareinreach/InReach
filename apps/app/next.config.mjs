@@ -1,7 +1,4 @@
 import { env } from "./src/env/server.mjs";
-import initTM from "next-transpile-modules";
-
-const withTM = initTM(["@inreach/ui"]);
 
 /**
  * Don't be scared of the generics here.
@@ -12,20 +9,23 @@ const withTM = initTM(["@inreach/ui"]);
  * @constraint {{import('next').NextConfig}}
  */
 function defineNextConfig(config) {
-  return withTM(config);
+	return config;
 }
 
 export default defineNextConfig({
-  reactStrictMode: true,
-  swcMinify: true,
-  async rewrites() {
-    return {
-      fallback: [
-        {
-          source: "/:path*",
-          destination: "https://inreach-catalog.herokuapp.com/:path*",
-        },
-      ],
-    };
-  },
+	reactStrictMode: true,
+	swcMinify: true,
+	experimental: {
+		transpilePackages: ["@inreach/ui"],
+	},
+	async rewrites() {
+		return {
+			fallback: [
+				{
+					source: "/:path*",
+					destination: "https://inreach-catalog.herokuapp.com/:path*",
+				},
+			],
+		};
+	},
 });

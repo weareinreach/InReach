@@ -2,6 +2,7 @@
 	"name": "@inreach/storybook",
 	"version": "0.1.0",
 	"private": true,
+	"license": "GPL-3.0-only",
 	"scripts": {
 		"lint": "next lint",
 		"dev": "start-storybook -p 6006",
@@ -16,15 +17,17 @@
 		"@storybook/addon-a11y": "^6.5.12",
 		"@storybook/builder-vite": "^0.2.2",
 		"@storybook/theming": "^6.5.12",
-		"next": "13.0.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"storybook-addon-next": "^1.6.9",
 		"tsconfig-paths-webpack-plugin": "^4.0.0"
 	},
+	"peerDependencies": {
+		"next": "13.0.0"
+	},
 	"devDependencies": {
 		"@babel/core": "^7.19.1",
-		"@inreach/eslint-config-custom": "workspace:*",
+		"@inreach/eslint-config": "workspace:*",
 		"@inreach/tsconfig": "workspace:*",
 		"@storybook/addon-actions": "^6.5.12",
 		"@storybook/addon-console": "^1.2.3",

@@ -3,13 +3,13 @@
 	"version": "0.0.0",
 	"main": "./index.tsx",
 	"types": "./index.tsx",
-	"license": "MIT",
+	"license": "GPL-3.0-only",
 	"scripts": {
 		"lint": "eslint *.ts*"
 	},
 	"devDependencies": {
 		"@iconify/react": "^4.0.0",
-		"@inreach/eslint-config-custom": "*",
+		"@inreach/eslint-config": "*",
 		"@inreach/tsconfig": "*",
 		"@types/node": "16.18.0",
 		"@types/react": "^18.0.18",
