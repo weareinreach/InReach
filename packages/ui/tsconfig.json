@@ -1,5 +1,5 @@
 {
-	"extends": "@inreach/tsconfig/react-library",
+	"extends": "@inreach/config/tsconfig/react-library.json",
 	"compilerOptions": { "noUncheckedIndexedAccess": false },
 	"include": ["**/*.ts", "**/*.tsx"],
 	"exclude": ["dist", "build", "node_modules"]

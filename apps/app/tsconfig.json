@@ -1,5 +1,5 @@
 {
-	"extends": "@inreach/tsconfig/nextjs.json",
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+	"extends": "@inreach/config/tsconfig/nextjs.json",
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs"],
 	"exclude": ["node_modules"]
 }

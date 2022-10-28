@@ -1,5 +1,5 @@
 {
-	"extends": "../../packages/tsconfig/nextjs.json",
+	"extends": "@inreach/config/tsconfig/nextjs.json",
 	"compilerOptions": {
 		"noImplicitAny": false,
 		"baseUrl": "."
