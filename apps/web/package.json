@@ -2,6 +2,7 @@
 	"name": "@inreach/web",
 	"version": "0.1.0",
 	"private": true,
+	"license": "GPL-3.0-only",
 	"scripts": {
 		"build": "next build",
 		"dev": "next dev",
@@ -35,7 +36,7 @@
 		"zod": "^3.19.1"
 	},
 	"devDependencies": {
-		"@inreach/eslint-config-custom": "*",
+		"@inreach/eslint-config": "*",
 		"@inreach/tsconfig": "*",
 		"@sanity/eslint-config-studio": "^2.0.0",
 		"@sanity/types": "3.0.0-v3-v2-pte.56",
