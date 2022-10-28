@@ -1,10 +1,11 @@
 {
-	"name": "@inreach/types",
-	"version": "0.0.0",
-	"license": "GPL-3.0-only",
-	"main": "lib/index.ts",
-	"private": true,
-	"devDependencies": {
-		"@inreach/tsconfig": "*"
-	}
+  "name": "@inreach/types",
+  "version": "0.0.0",
+  "license": "GPL-3.0-only",
+  "main": "lib/index.ts",
+  "private": true,
+  "devDependencies": {
+    "@inreach/tsconfig": "*"
+  },
+  "packageManager": "pnpm@7.14.0"
 }

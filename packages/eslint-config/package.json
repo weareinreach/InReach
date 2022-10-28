@@ -1,27 +1,28 @@
 {
-	"name": "@inreach/eslint-config",
-	"version": "0.0.0",
-	"main": "index.js",
-	"license": "GPL-3.0-only",
-	"dependencies": {
-		"@inreach/tsconfig": "workspace:*",
-		"@typescript-eslint/parser": "^5.41.0",
-		"eslint-config-next": "^13.0.0",
-		"eslint-config-prettier": "^8.3.0",
-		"eslint-config-turbo": "latest"
-	},
-	"peerDependencies": {
-		"@typescript-eslint/eslint-plugin": "^5.41.0",
-		"eslint": ">=8",
-		"eslint-plugin-codegen": "^0.16.1",
-		"eslint-plugin-prettier": "^4.2.1",
-		"eslint-plugin-react": "^7.31.7"
-	},
-	"devDependencies": {
-		"@types/eslint": "^8.4.8",
-		"typescript": "^4.7.4"
-	},
-	"publishConfig": {
-		"access": "public"
-	}
+  "name": "@inreach/eslint-config",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "GPL-3.0-only",
+  "dependencies": {
+    "@inreach/tsconfig": "workspace:*",
+    "@typescript-eslint/parser": "^5.41.0",
+    "eslint-config-next": "^13.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-turbo": "latest"
+  },
+  "peerDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "eslint": ">=8",
+    "eslint-plugin-codegen": "^0.16.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.7"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.4.8",
+    "typescript": "^4.7.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@7.14.0"
 }
