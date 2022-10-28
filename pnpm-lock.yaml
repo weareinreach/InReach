@@ -231,7 +231,7 @@ importers:
       eslint: 8.26.0
       eslint-config-next: 13.0.0
       eslint-plugin-storybook: ^0.6.4
-      next: 13.0.0
+      next: 13.0.0 || 13
       next-transpile-modules: ^9.0.0
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -323,15 +323,16 @@ importers:
       dayjs: ^1.11.5
       embla-carousel-react: ^7.0.2
       eslint: ^8.23.0
-      next: ^13.0.0
-      react: ^18.2.0
-      react-dom: ^18.2.0
+      next: ^13.0.0 || 13
+      react: ^18.2.0 || ^18
+      react-dom: ^18.2.0 || ^18
       sanity: 3.0.0-v3-v2-pte.56
       slugify: ^1.6.5
       typescript: ^4.5.2
     dependencies:
       '@emotion/react': 11.10.4_dsf3gximgpcuze2rz7vhtch6by
       '@emotion/server': 11.10.0
+      '@iconify/react': 4.0.0_react@18.2.0
       '@mantine/carousel': 5.6.2_ilqdn4ybgqnaglsitntia3cd6m
       '@mantine/core': 5.6.2_qt2d6ckksp42p7ngsronmvqcwm
       '@mantine/dates': 5.6.2_gtahirjvhoulxx3p6jiabld2aa
@@ -354,7 +355,6 @@ importers:
       sanity: 3.0.0-v3-v2-pte.56_4zer4ocvkrlszt44oduphrv4fu
       slugify: 1.6.5
     devDependencies:
-      '@iconify/react': 4.0.0_react@18.2.0
       '@inreach/eslint-config': link:../eslint-config
       '@inreach/tsconfig': link:../tsconfig
       '@types/node': 16.18.0
@@ -3580,9 +3580,11 @@ packages:
     dependencies:
       '@iconify/types': 2.0.0
       react: 18.2.0
+    dev: false
 
   /@iconify/types/2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
+    dev: false
 
   /@icons/material/0.2.4_react@18.2.0:
     resolution: {integrity: sha512-QPcGmICAPbGLGb6F/yNf/KzKqvFx8z5qx3D1yFqVAjoFmXK35EgyW+cJ57Te3CNsmzblwtzakLGFqHPqrfb4Tw==}
@@ -4313,7 +4315,7 @@ packages:
       react-refresh: '>=0.10.0 <1.0.0'
       sockjs-client: ^1.4.0
       type-fest: '>=0.17.0 <4.0.0'
-      webpack: '>=4.43.0 <6.0.0'
+      webpack: '>=4.43.0 <6.0.0 || 5'
       webpack-dev-server: 3.x || 4.x
       webpack-hot-middleware: 2.x
       webpack-plugin-serve: 0.x || 1.x
@@ -4858,7 +4860,7 @@ packages:
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^18.0.0 || ^18
-      sanity: dev-preview
+      sanity: dev-preview || 3.0.0-dev-preview.22
       styled-components: ^5.2.0
     dependencies:
       '@sanity/icons': 1.3.6_react@18.2.0
@@ -5182,7 +5184,7 @@ packages:
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^18.0.0 || ^18
-      sanity: dev-preview | 3.0.0-dev-preview.22
+      sanity: dev-preview | 3.0.0-dev-preview.22 || 3.0.0-dev-preview.22
     dependencies:
       '@sanity/icons': 1.3.6_react@18.2.0
       '@sanity/incompatible-plugin': 1.0.4_biqbaboplfbrettd7655fr4n2y
@@ -5620,9 +5622,9 @@ packages:
     resolution: {integrity: sha512-EqEfcL36TocxQZ820O2q01pF76oEEU4x8MzhRu4HrKByU7seUwU9m6a6YL8DmzcyJdenwL1HJK0Oyhg99pNcuw==}
     engines: {node: '>=8'}
     peerDependencies:
-      next: ^10.0.8 || ^11.0 || ^12.0
+      next: ^10.0.8 || ^11.0 || ^12.0 || 13
       react: 15.x || 16.x || 17.x || 18.x || ^18
-      webpack: '>= 4.0.0'
+      webpack: '>= 4.0.0 || 5'
     peerDependenciesMeta:
       webpack:
         optional: true
@@ -7063,7 +7065,7 @@ packages:
     resolution: {integrity: sha512-eVg3BxlOm2P+chijHBTByr90IZVUtgRW56qEOLX7xlww2NBuKrcavBlcmn+HH7GIUktquWkMPtvy6e0W0NgA5w==}
     peerDependencies:
       typescript: '>= 3.x'
-      webpack: '>= 4'
+      webpack: '>= 4 || 5'
     dependencies:
       debug: 4.3.4
       endent: 2.1.0
@@ -8200,7 +8202,6 @@ packages:
       typescript: 4.8.3
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@typescript-eslint/parser/5.41.0_wyqvi574yv7oiwfeinomdzmc3m:
     resolution: {integrity: sha512-HQVfix4+RL5YRWZboMD1pUfFN8MpRH4laziWkkAzyO1fvNOY/uinZcvo3QiFJVS/siNHupV8E5+xSwQZrl6PZA==}
@@ -8345,7 +8346,6 @@ packages:
       typescript: 4.8.3
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@typescript-eslint/typescript-estree/5.41.0_typescript@4.8.4:
     resolution: {integrity: sha512-SlzFYRwFSvswzDSQ/zPkIWcHv8O5y42YUskko9c4ki+fV6HATsTODUPbRbcGDFYP86gaJL5xohUEytvyNNcXWg==}
@@ -9285,7 +9285,7 @@ packages:
     engines: {node: '>= 8.9'}
     peerDependencies:
       '@babel/core': ^7.0.0
-      webpack: '>=2'
+      webpack: '>=2 || 5'
     dependencies:
       '@babel/core': 7.19.6
       find-cache-dir: 3.3.2
@@ -9300,7 +9300,7 @@ packages:
     engines: {node: '>= 8.9'}
     peerDependencies:
       '@babel/core': ^7.0.0
-      webpack: '>=2'
+      webpack: '>=2 || 5'
     dependencies:
       '@babel/core': 7.19.6
       find-cache-dir: 3.3.2
@@ -10707,7 +10707,7 @@ packages:
     resolution: {integrity: sha512-M5lSukoWi1If8dhQAUCvj4H8vUt3vOnwbQBH9DdTm/s4Ym2B/3dPMtYZeJmq7Q3S3Pa+I94DcZ7pc9bP14cWIQ==}
     engines: {node: '>= 8.9.0'}
     peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     dependencies:
       camelcase: 5.3.1
       cssesc: 3.0.0
@@ -10729,7 +10729,7 @@ packages:
     resolution: {integrity: sha512-Q7mOvpBNBG7YrVGMxRxcBJZFL75o+cH2abNASdibkj/fffYD8qWbInZrD0S9ccI6vZclF3DsHE7njGlLtaHbhg==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
-      webpack: ^4.27.0 || ^5.0.0
+      webpack: ^4.27.0 || ^5.0.0 || 5
     dependencies:
       icss-utils: 5.1.0_postcss@8.4.16
       loader-utils: 2.0.3
@@ -10748,7 +10748,7 @@ packages:
     resolution: {integrity: sha512-yB5CNFa14MbPJcomwNh3wLThtkZgcNyI2bNMRt8iE5Z8Vwl7f8vQXFAzn2HDOJvtDq2NTZBUGMSUNNyrv3/+cw==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
-      webpack: ^5.0.0
+      webpack: ^5.0.0 || 5
     dependencies:
       icss-utils: 5.1.0_postcss@8.4.16
       postcss: 8.4.16
@@ -12288,7 +12288,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.41.0_wyqvi574yv7oiwfeinomdzmc3m
+      '@typescript-eslint/parser': 5.41.0_k3rzghlbvxbkeygxp7hcorhnku
       debug: 3.2.7
       eslint: 8.26.0
       eslint-import-resolver-node: 0.3.6
@@ -12325,7 +12325,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 5.41.0_wyqvi574yv7oiwfeinomdzmc3m
+      '@typescript-eslint/parser': 5.41.0_k3rzghlbvxbkeygxp7hcorhnku
       array-includes: 3.1.5
       array.prototype.flat: 1.3.0
       debug: 2.6.9
@@ -13179,7 +13179,7 @@ packages:
     resolution: {integrity: sha512-qo3glqyTa61Ytg4u73GultjHGjdRyig3tG6lPtyX/jOEJvHif9uB0/OCI2Kif6ctF3caQTW2G5gym21oAsI4pw==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     dependencies:
       loader-utils: 2.0.3
       schema-utils: 3.1.1
@@ -13393,7 +13393,7 @@ packages:
       eslint: '>= 6'
       typescript: '>= 2.7'
       vue-template-compiler: '*'
-      webpack: '>= 4'
+      webpack: '>= 4 || 5'
     peerDependenciesMeta:
       eslint:
         optional: true
@@ -13421,7 +13421,7 @@ packages:
       eslint: '>= 6'
       typescript: '>= 2.7'
       vue-template-compiler: '*'
-      webpack: '>= 4'
+      webpack: '>= 4 || 5'
     peerDependenciesMeta:
       eslint:
         optional: true
@@ -13452,7 +13452,7 @@ packages:
       eslint: '>= 6'
       typescript: '>= 2.7'
       vue-template-compiler: '*'
-      webpack: '>= 4'
+      webpack: '>= 4 || 5'
     peerDependenciesMeta:
       eslint:
         optional: true
@@ -14385,7 +14385,7 @@ packages:
     resolution: {integrity: sha512-q5oYdzjKUIPQVjOosjgvCHQOv9Ett9CYYHlgvJeXG0qQvdSojnBq4vAdQBwn1+yGveAwHCoe/rMR86ozX3+c2A==}
     engines: {node: '>=6.9'}
     peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     dependencies:
       '@types/html-minifier-terser': 5.1.2
       '@types/tapable': 1.0.8
@@ -14403,7 +14403,7 @@ packages:
     resolution: {integrity: sha512-sy88PC2cRTVxvETRgUHFrL4No3UxvcH8G1NepGhqaTT+GXN2kTamqasot0inS5hXeg1cMbFDt27zzo9p35lZVw==}
     engines: {node: '>=10.13.0'}
     peerDependencies:
-      webpack: ^5.20.0
+      webpack: ^5.20.0 || 5
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
@@ -16450,9 +16450,9 @@ packages:
     resolution: {integrity: sha512-qi750l6SwXYgJ+qnoQ8fX4whkUi8UuAAo3L689RKL00FZQ6V25hLk5P1ilYJ+D4gG2c4rKPVATiOl9qGvEPI3w==}
     engines: {node: '>=14'}
     peerDependencies:
-      next: ^12 || ^13
+      next: ^12 || ^13 || 13
       react: ^16.3 || ^17 || ^18
-      sanity: dev-preview
+      sanity: dev-preview || 3.0.0-dev-preview.22
       styled-components: ^5.2
     peerDependenciesMeta:
       sanity:
@@ -16474,7 +16474,7 @@ packages:
   /next-seo/5.8.0_r5sq4deac3rmm2d5onhwvomqve:
     resolution: {integrity: sha512-V5W/JwqdoX6/0zG4S7m5g8zNajYffytWigkPo2hrbHhLD18yGFBU9607OPhvbI9zX3QjWQFMBSmlUY456xt9cA==}
     peerDependencies:
-      next: ^8.1.1-canary.54 || >=9.0.0
+      next: ^8.1.1-canary.54 || >=9.0.0 || 13
       react: '>=16.0.0 || ^18'
       react-dom: '>=16.0.0 || ^18'
     dependencies:
@@ -17433,7 +17433,7 @@ packages:
     engines: {node: '>= 10.13.0'}
     peerDependencies:
       postcss: ^7.0.0 || ^8.0.1
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     dependencies:
       cosmiconfig: 7.0.1
       klona: 2.0.5
@@ -17449,7 +17449,7 @@ packages:
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       postcss: ^7.0.0 || ^8.0.1
-      webpack: ^5.0.0
+      webpack: ^5.0.0 || 5
     dependencies:
       cosmiconfig: 7.0.1
       klona: 2.0.5
@@ -18058,7 +18058,7 @@ packages:
     resolution: {integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     dependencies:
       loader-utils: 2.0.3
       schema-utils: 3.1.1
@@ -19247,7 +19247,7 @@ packages:
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0 || ^18
-      sanity: purple-unicorn
+      sanity: purple-unicorn || 3.0.0-dev-preview.22
     dependencies:
       '@sanity/icons': 1.3.6_react@18.2.0
       '@sanity/incompatible-plugin': 0.0.1_2qpntmkb2tecmgal3aq2m37jiu
@@ -19271,7 +19271,7 @@ packages:
       '@sanity/icons': ^1.2.8
       react: ^18.0.0 || ^18
       react-dom: ^18.0.0 || ^18
-      sanity: dev-preview
+      sanity: dev-preview || 3.0.0-dev-preview.22
       styled-components: ^5.3.3
     dependencies:
       '@hookform/resolvers': 2.0.0-beta.3_react-hook-form@6.15.8
@@ -19315,7 +19315,7 @@ packages:
       react: ^17.0.0 || ^18.0.0 || ^18
       react-fast-compare: ^3.2.0
       rxjs: ^6.5.3
-      sanity: dev-preview
+      sanity: dev-preview || 3.0.0-dev-preview.22
     dependencies:
       '@sanity/icons': 1.3.6_react@18.2.0
       '@sanity/incompatible-plugin': 1.0.4_biqbaboplfbrettd7655fr4n2y
@@ -19589,7 +19589,7 @@ packages:
       node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
       sass: ^1.3.0
       sass-embedded: '*'
-      webpack: ^5.0.0
+      webpack: ^5.0.0 || 5
     peerDependenciesMeta:
       fibers:
         optional: true
@@ -20173,7 +20173,7 @@ packages:
       prop-types: ^15.0.0
       react: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^18
       react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^18
-      webpack: ^2.0.0  || ^4.0.0 || ^5.0.0
+      webpack: ^2.0.0 || ^4.0.0 || ^5.0.0 || 5
     dependencies:
       '@babel/cli': 7.19.3_@babel+core@7.19.6
       '@babel/core': 7.19.6
@@ -20216,7 +20216,7 @@ packages:
     peerDependencies:
       '@storybook/addon-actions': ^6.0.0
       '@storybook/addons': ^6.0.0
-      next: ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0
+      next: ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0 || 13
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^18
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^18
     dependencies:
@@ -20246,7 +20246,7 @@ packages:
     resolution: {integrity: sha512-JmoPzJ5RA7ytPi58r5dKcRYNEESe57ZAMzJcUqnkMOwBuq0MZvBUH6gHWZxVagQe64RitS83ZOmZEJNxxc0ZWQ==}
     peerDependencies:
       terser-webpack-plugin: ^4.0.0 || ^5.0.0
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     peerDependenciesMeta:
       terser-webpack-plugin:
         optional: true
@@ -20448,7 +20448,7 @@ packages:
     resolution: {integrity: sha512-V7TCORko8rs9rIqkSrlMfkqA63DfoGBBJmK1kKGCcSi+BWb4cqz0SRsnp4l6rU5iwOEd0/2ePv68SV22VXon4Q==}
     engines: {node: '>= 8.9.0'}
     peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     dependencies:
       loader-utils: 2.0.3
       schema-utils: 2.7.1
@@ -20459,7 +20459,7 @@ packages:
     resolution: {integrity: sha512-Z0gYUJmzZ6ZdRUqpg1r8GsaFKypE+3xAzuFeMuoHgjc9KZv3wMyCRjQIWEbhoFSq7+7yoHXySDJyyWQaPajeiQ==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     dependencies:
       loader-utils: 2.0.3
       schema-utils: 3.1.1
@@ -20620,7 +20620,7 @@ packages:
     resolution: {integrity: sha512-NKIm8aJjK/z/yfzk+v7YGwJMjBKaLaUs9ZKI2zoaIGKAjtkwjO92ZLI0fiTZuwzRqVLQl/29fBdSgFCBzquR0w==}
     peerDependencies:
       '@swc/core': ^1.2.147
-      webpack: '>=2'
+      webpack: '>=2 || 5'
     dependencies:
       '@swc/core': 1.3.10
       webpack: 5.74.0_@swc+core@1.3.10
@@ -20749,7 +20749,7 @@ packages:
     resolution: {integrity: sha512-04Rfe496lN8EYruwi6oPQkG0vo8C+HT49X687FZnpPF0qMAIHONI6HEXYPKDOE8e5HjXTyKfqRd/agHtH0kOtw==}
     engines: {node: '>= 6.9.0'}
     peerDependencies:
-      webpack: ^4.0.0
+      webpack: ^4.0.0 || 5
     dependencies:
       cacache: 12.0.4
       find-cache-dir: 2.1.0
@@ -20766,7 +20766,7 @@ packages:
     resolution: {integrity: sha512-jTgXh40RnvOrLQNgIkwEKnQ8rmHjHK4u+6UBEi+W+FPmvb+uo+chJXntKe7/3lW5mNysgSWD60KyesnhW8D6MQ==}
     engines: {node: '>= 10.13.0'}
     peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     dependencies:
       cacache: 15.3.0
       find-cache-dir: 3.3.2
@@ -20789,7 +20789,7 @@ packages:
       '@swc/core': '*'
       esbuild: '*'
       uglify-js: '*'
-      webpack: ^5.1.0
+      webpack: ^5.1.0 || 5
     peerDependenciesMeta:
       '@swc/core':
         optional: true
@@ -21094,7 +21094,6 @@ packages:
     dependencies:
       tslib: 1.14.1
       typescript: 4.8.3
-    dev: true
 
   /tsutils/3.21.0_typescript@4.8.4:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
@@ -21282,7 +21281,6 @@ packages:
     resolution: {integrity: sha512-goMHfm00nWPa8UvR/CPSvykqf6dVV8x/dp0c5mFTMTIu0u0FlGWRioyy7Nn0PGAdHxpJZnuO/ut+PpQ8UiHAig==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /typescript/4.8.4:
     resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
@@ -21521,7 +21519,7 @@ packages:
     engines: {node: '>= 10.13.0'}
     peerDependencies:
       file-loader: '*'
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     peerDependenciesMeta:
       file-loader:
         optional: true
@@ -21906,7 +21904,7 @@ packages:
     resolution: {integrity: sha512-djelc/zGiz9nZj/U7PTBi2ViorGJXEWo/3ltkPbDyxCXhhEXkW0ce99falaok4TPj+AsxLiXJR0EBOb0zh9fKQ==}
     engines: {node: '>= 6'}
     peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     dependencies:
       memory-fs: 0.4.1
       mime: 2.6.0
@@ -21920,7 +21918,7 @@ packages:
     resolution: {integrity: sha512-PjwyVY95/bhBh6VUqt6z4THplYcsvQ8YNNBTBM873xLVmw8FLeALn0qurHbs9EmcfhzQis/eoqypSnZeuUz26w==}
     engines: {node: '>= v10.23.3'}
     peerDependencies:
-      webpack: ^4.0.0 || ^5.0.0
+      webpack: ^4.0.0 || ^5.0.0 || 5
     dependencies:
       colorette: 1.4.0
       mem: 8.1.1
@@ -21935,7 +21933,7 @@ packages:
     resolution: {integrity: sha512-Ez6ytc9IseDMLPo0qCuNNYzgtUl8NovOqjIq4uAU8LTD4uoa1w1KpZyyzFtLTEMZpkkOkLfL9eN+KGYdk1Qtwg==}
     engines: {node: '>= 4.3 < 5.0.0 || >= 5.10'}
     peerDependencies:
-      webpack: ^2.0.0 || ^3.0.0 || ^4.0.0
+      webpack: ^2.0.0 || ^3.0.0 || ^4.0.0 || 5
     dependencies:
       webpack: 4.46.0
     dev: true
