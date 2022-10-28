@@ -1,0 +1,20 @@
+{
+	"name": "@inreach/config",
+	"version": "0.0.0",
+	"private": true,
+	"license": "GPL-3.0-only",
+	"files": [
+		"tsconfig/base.json",
+		"tsconfig/nextjs.json",
+		"tsconfig/react-library.json",
+		"prettier/index.js"
+	],
+	"devDependencies": {
+		"@inreach/eslint-config": "workspace:^0.0.0",
+		"@trivago/prettier-plugin-sort-imports": "^3.4.0",
+		"prettier": "^2.7.1",
+		"prettier-plugin-packagejson": "^2.3.0",
+		"typescript": "^4.8.4"
+	},
+	"packageManager": "pnpm@7.14.0"
+}

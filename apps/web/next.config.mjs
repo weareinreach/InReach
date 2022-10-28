@@ -1,9 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { env } from "./src/env/server.mjs";
-import initTM from "next-transpile-modules";
-import { withSentryConfig } from "@sentry/nextjs";
+import { withSentryConfig } from '@sentry/nextjs'
 
-const withTM = initTM(["@inreach/ui"]);
+import { env } from './src/env/server.mjs'
 
 /**
  * Don't be scared of the generics here.
@@ -13,6 +11,24 @@ const withTM = initTM(["@inreach/ui"]);
  * @param {T} config - A generic parameter that flows through to the return type
  * @constraint {{import('next').NextConfig}}
  */
+const config = {
+	reactStrictMode: false, // Off for Sanity Studio until fixed -> https://github.com/sanity-io/sanity/issues/3604
+	swcMinify: true,
+	experimental: {
+		transpilePackages: ['@inreach/ui'],
+	},
+
+	sentry: {
+		// See the 'Configure Source Maps' and 'Configure Legacy Browser Support'
+		// sections below for information on the following options:
+		//   - disableServerWebpackPlugin
+		//   - disableClientWebpackPlugin
+		//   - hideSourceMaps
+		//   - widenClientFileUpload
+		//   - transpileClientSDK
+		hideSourceMaps: true,
+	},
+}
 
 const sentryWebpackPluginOptions = {
 	// Additional config options for the Sentry Webpack plugin. Keep in mind that
@@ -24,23 +40,10 @@ const sentryWebpackPluginOptions = {
 	silent: true, // Suppresses all logs
 	// For all available options, see:
 	// https://github.com/getsentry/sentry-webpack-plugin#options.
-};
-
-function defineNextConfig(config) {
-	return withSentryConfig(withTM(config), sentryWebpackPluginOptions);
 }
 
-export default defineNextConfig({
-	reactStrictMode: false, // Off for Sanity Studio until fixed -> https://github.com/sanity-io/sanity/issues/3604
-	swcMinify: true,
-	sentry: {
-		// See the 'Configure Source Maps' and 'Configure Legacy Browser Support'
-		// sections below for information on the following options:
-		//   - disableServerWebpackPlugin
-		//   - disableClientWebpackPlugin
-		//   - hideSourceMaps
-		//   - widenClientFileUpload
-		//   - transpileClientSDK
-		hideSourceMaps: true,
-	},
-});
+// function defineNextConfig(config) {
+// 	return ;
+// }
+
+export default withSentryConfig(config, sentryWebpackPluginOptions)

@@ -1,4 +1,5 @@
-import { env } from "./src/env/server.mjs";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { env } from './src/env/server.mjs'
 
 /**
  * Don't be scared of the generics here.
@@ -9,23 +10,23 @@ import { env } from "./src/env/server.mjs";
  * @constraint {{import('next').NextConfig}}
  */
 function defineNextConfig(config) {
-	return config;
+	return config
 }
 
 export default defineNextConfig({
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: {
-		transpilePackages: ["@inreach/ui"],
+		transpilePackages: ['@inreach/ui'],
 	},
 	async rewrites() {
 		return {
 			fallback: [
 				{
-					source: "/:path*",
-					destination: "https://inreach-catalog.herokuapp.com/:path*",
+					source: '/:path*',
+					destination: 'https://inreach-catalog.herokuapp.com/:path*',
 				},
 			],
-		};
+		}
 	},
-});
+})

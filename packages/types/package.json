@@ -1,11 +1,16 @@
 {
-  "name": "@inreach/types",
-  "version": "0.0.0",
-  "license": "GPL-3.0-only",
-  "main": "lib/index.ts",
-  "private": true,
-  "devDependencies": {
-    "@inreach/tsconfig": "*"
-  },
-  "packageManager": "pnpm@7.14.0"
+	"name": "@inreach/types",
+	"version": "0.0.0",
+	"private": true,
+	"license": "GPL-3.0-only",
+	"main": "lib/index.ts",
+	"scripts": {
+		"lint": "eslint . --fix"
+	},
+	"devDependencies": {
+		"@inreach/config": "*",
+		"@inreach/eslint-config": "*",
+		"typescript": "^4.8.4"
+	},
+	"packageManager": "pnpm@7.14.0"
 }
