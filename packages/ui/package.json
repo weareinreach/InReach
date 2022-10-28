@@ -1,25 +1,16 @@
 {
 	"name": "@inreach/ui",
 	"version": "0.0.0",
+	"license": "GPL-3.0-only",
 	"main": "./index.tsx",
 	"types": "./index.tsx",
-	"license": "GPL-3.0-only",
 	"scripts": {
-		"lint": "eslint *.ts*"
-	},
-	"devDependencies": {
-		"@inreach/eslint-config": "*",
-		"@inreach/tsconfig": "*",
-		"@types/node": "16.18.0",
-		"@types/react": "^18.0.18",
-		"@types/react-dom": "^18.0.6",
-		"eslint": "^8.23.0",
-		"typescript": "^4.5.2"
+		"lint": "eslint ."
 	},
 	"dependencies": {
-		"@iconify/react": "^4.0.0",
 		"@emotion/react": "^11.10.4",
 		"@emotion/server": "^11.10.0",
+		"@iconify/react": "^4.0.0",
 		"@mantine/carousel": "^5.4.0",
 		"@mantine/core": "^5.4.0",
 		"@mantine/dates": "^5.4.0",
@@ -39,7 +30,17 @@
 		"sanity": "3.0.0-v3-v2-pte.56",
 		"slugify": "^1.6.5"
 	},
+	"devDependencies": {
+		"@inreach/config": "*",
+		"@inreach/eslint-config": "*",
+		"@types/node": "16.18.0",
+		"@types/react": "^18.0.18",
+		"@types/react-dom": "^18.0.6",
+		"eslint-config-sanity": "^6.0.0",
+		"typescript": "^4.8.3"
+	},
 	"peerDependencies": {
+		"eslint-config-sanity": "^6.0.0",
 		"next": "^13.0.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"
