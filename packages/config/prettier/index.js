@@ -20,7 +20,14 @@ const config = {
 	endOfLine: 'lf',
 	importOrderSeparation: true,
 	importOrderSortSpecifiers: true,
-	importOrder: ['^@(inreach)/(.*)$', '^react/(.*)$|^react$', '^@mantine/(.*)$', '^~/(.*)$', '^[./]'],
+	importOrder: [
+		'^@(inreach)/(.*)$',
+		'^react/(.*)$|^react$',
+		'^@mantine/(.*)$',
+		'^~/(.*)$',
+		'^[./]',
+		'<THIRD_PARTY_MODULES>',
+	],
 	overrides: [
 		{
 			files: '*.json',
