@@ -1,19 +1,36 @@
 /**
- * @template {import('@types/eslint').ESLint.ConfigData}
+ * @template {import('@types/eslint').ESLint.ConfigData} T
+ * @param {T} config A generic parameter that flows through to the return type
  * @constraint {{import('@types/eslint').ESLint.ConfigData}}
  */
 
-module.exports = {
-	parser: "@typescript-eslint/parser",
+const config = {
+	plugins: ["prettier", "codegen", "turbo"],
 	extends: [
 		"next",
-		"turbo",
+		"next/core-web-vitals",
 		"prettier",
-		"plugin:@typescript-eslint/recommended",
+		"plugin:turbo/recommended",
 	],
-	plugins: ["prettier", "codegen", "@typescript-eslint"],
 	rules: {
 		"@next/next/no-html-link-for-pages": "off",
 		"react/jsx-key": "off",
+		"codegen/codegen": "error",
 	},
+	ignorePatterns: ["**/node_modules/**"],
+	settings: {
+		next: {
+			rootDir: ["apps/*/"],
+		},
+	},
+	overrides: [
+		{
+			files: ["**/*.ts?(x)"],
+			plugins: ["@typescript-eslint"],
+			parser: "@typescript-eslint/parser",
+			extends: ["plugin:@typescript-eslint/recommended"],
+		},
+	],
 };
+
+module.exports = config;
