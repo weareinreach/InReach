@@ -1,1 +1,1 @@
-module.exports = require('@inreach/config/lint-staged')
+module.exports = require('../config/lint-staged')

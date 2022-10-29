@@ -1,56 +1,52 @@
-import { Carousel } from "@mantine/carousel";
-import { CtaButton } from "./";
-import { createStyles, Overlay, Stack, useMantineTheme } from "@mantine/core";
-import Image from "next/future/image";
+import Image from 'next/future/image'
+
+import { Carousel } from '@mantine/carousel'
+import { Overlay, Stack, createStyles, useMantineTheme } from '@mantine/core'
+
+import { CtaButton } from './'
 
 interface HeroCarouselProps {
-	items: Array<string>;
+	items: Array<string>
 }
 
 const useStyles = createStyles((theme) => ({
 	backgroundImg: {
 		zIndex: -10,
-		objectFit: "cover",
+		objectFit: 'cover',
 	},
 	text: {
-		"*": {
+		'*': {
 			color: theme.colors.white,
 			margin: 0,
 		},
 	},
-}));
+}))
 
 export const HeroCarousel = (props: HeroCarouselProps) => {
-	const { items } = props;
-	const { classes } = useStyles();
-	const theme = useMantineTheme();
+	const { items } = props
+	const { classes } = useStyles()
+	const theme = useMantineTheme()
 
 	const components = {
 		CtaButton: CtaButton,
-	};
-	console.log("hc", items);
+	}
+	console.log('hc', items)
 
 	const slides = items.map((slide) => {
-		const { image, alt, content } = slide;
+		const { image, alt, content } = slide
 
 		return (
 			<Carousel.Slide>
-				<Image
-					src={image as string}
-					alt={alt as string}
-					className={classes.backgroundImg}
-					fill
-					priority
-				/>
+				<Image src={image as string} alt={alt as string} className={classes.backgroundImg} fill priority />
 				<Overlay opacity={0.6} zIndex={-9} color={theme.colors.gray[0]} />
-				<Stack spacing="xs" className={classes.text}></Stack>
+				<Stack spacing='xs' className={classes.text}></Stack>
 			</Carousel.Slide>
-		);
-	});
+		)
+	})
 
 	return (
-		<Carousel align="center" withControls={false}>
+		<Carousel align='center' withControls={false}>
 			{slides}
 		</Carousel>
-	);
-};
+	)
+}

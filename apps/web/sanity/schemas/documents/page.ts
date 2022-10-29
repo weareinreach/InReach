@@ -1,45 +1,45 @@
-import { MasterDetailIcon } from "@sanity/icons";
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { MasterDetailIcon } from '@sanity/icons'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export const page = defineType({
-	name: "page",
-	type: "document",
-	title: "Page",
+	name: 'page',
+	type: 'document',
+	title: 'Page',
 	initialValue: {
-		__i18n_lang: "en-US",
+		__i18n_lang: 'en-US',
 	},
 	i18n: true,
 	icon: MasterDetailIcon,
 	fieldsets: [
 		{
-			title: "SEO & metadata",
-			name: "metadata",
+			title: 'SEO & metadata',
+			name: 'metadata',
 		},
 	],
 	fields: [
 		defineField({
-			name: "content",
-			type: "array",
-			title: "Page sections",
+			name: 'content',
+			type: 'array',
+			title: 'Page sections',
 			of: [
-				defineArrayMember({ type: "blockContent" }),
+				defineArrayMember({ type: 'blockContent' }),
 				defineArrayMember({
-					name: "HeroCarousel",
+					name: 'HeroCarousel',
 					// title: "Hero (Carousel version)",
-					type: "HeroCarousel",
+					type: 'HeroCarousel',
 				}),
 			],
 		}),
 		defineField({
-			name: "metadata",
-			type: "metadata",
+			name: 'metadata',
+			type: 'metadata',
 		}),
 	],
 	preview: {
 		select: {
-			title: "metadata.title",
-			subtitle: "metadata.slug",
-			media: "metadata.seo.openGraphImage",
+			title: 'metadata.title',
+			subtitle: 'metadata.slug',
+			media: 'metadata.seo.openGraphImage',
 		},
 	},
-});
+})

@@ -5,32 +5,50 @@
  */
 
 const config = {
-	plugins: ["prettier", "codegen", "turbo"],
-	extends: [
-		"next",
-		"next/core-web-vitals",
-		"prettier",
-		"plugin:turbo/recommended",
-	],
+	plugins: ['prettier', 'codegen', 'turbo'],
+	extends: ['next/core-web-vitals', 'prettier', 'plugin:turbo/recommended', 'next'],
 	rules: {
-		"@next/next/no-html-link-for-pages": "off",
-		"react/jsx-key": "off",
-		"codegen/codegen": "error",
+		'@next/next/no-html-link-for-pages': 'off',
+		'react/jsx-key': 'off',
+		'codegen/codegen': 'error',
+		'react/no-unescaped-entities': [
+			'off',
+			// {
+			// 	forbid: [
+			// 		{
+			// 			char: '"',
+			// 			alternatives: ['&quot;'],
+			// 		},
+			// 		{
+			// 			char: "'",
+			// 			alternatives: ['&apos;'],
+			// 		},
+			// 		{
+			// 			char: '>',
+			// 			alternatives: ['&gt;'],
+			// 		},
+			// 		{
+			// 			char: '}',
+			// 			alternatives: ['&#125;'],
+			// 		},
+			// 	],
+			// },
+		],
 	},
-	ignorePatterns: ["**/node_modules/**"],
+	ignorePatterns: ['**/node_modules/**'],
 	settings: {
 		next: {
-			rootDir: ["apps/*/"],
+			rootDir: ['apps/*/'],
 		},
 	},
 	overrides: [
 		{
-			files: ["**/*.ts?(x)"],
-			plugins: ["@typescript-eslint"],
-			parser: "@typescript-eslint/parser",
-			extends: ["plugin:@typescript-eslint/recommended"],
+			files: ['**/*.ts?(x)'],
+			plugins: ['@typescript-eslint'],
+			parser: '@typescript-eslint/parser',
+			extends: ['plugin:@typescript-eslint/recommended'],
 		},
 	],
-};
+}
 
-module.exports = config;
+module.exports = config

@@ -1,48 +1,50 @@
-import { createConfig } from "sanity";
-import { deskTool } from "sanity/desk";
-import { schemaTypes } from "./schemas";
-import { documentI18n } from "@sanity/document-internationalization";
-import { internationalizedArray } from "sanity-plugin-internationalized-array";
-import { visionTool } from "@sanity/vision";
-import { colorInput } from "@sanity/color-input";
+import { colorInput } from '@sanity/color-input'
+import { documentI18n } from '@sanity/document-internationalization'
+import { visionTool } from '@sanity/vision'
+import { createConfig } from 'sanity'
+import { internationalizedArray } from 'sanity-plugin-internationalized-array'
+import { deskTool } from 'sanity/desk'
+
+import { schemaTypes } from './schemas'
 // import { env } from "../src/env/client.mjs";
 // import { media } from "sanity-plugin-media";
-import { structure } from "./structure";
+import { structure } from './structure'
+
 // import { SetSlugAndPublishAction } from "./actions/slug";
 
 const devOnly = [
 	visionTool({
 		defaultApiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
-		defaultDataset: "production",
+		defaultDataset: 'production',
 	}),
-];
+]
 
 export const sanityI18nConfig = {
-	base: "en-US",
+	base: 'en-US',
 	languages: [
 		{
-			title: "English (US)",
-			id: "en-US",
+			title: 'English (US)',
+			id: 'en-US',
 		},
 		{
-			title: "Spanish",
-			id: "es",
+			title: 'Spanish',
+			id: 'es',
 		},
 	],
 	withTranslationsMaintenance: false,
 	fieldNames: {
-		lang: "__i18n_lang",
-		references: "__i18n_refs",
-		baseReference: "__i18n_base",
+		lang: '__i18n_lang',
+		references: '__i18n_refs',
+		baseReference: '__i18n_base',
 	},
-};
+}
 
 export default createConfig({
-	name: "default",
-	title: process.env.NODE_ENV === "production" ? "InReach" : "InReach Staging",
-	projectId: "dwv4rfh3",
-	dataset: process.env.NODE_ENV === "production" ? "production" : "staging",
-	basePath: "/sanity",
+	name: 'default',
+	title: process.env.NODE_ENV === 'production' ? 'InReach' : 'InReach Staging',
+	projectId: 'dwv4rfh3',
+	dataset: process.env.NODE_ENV === 'production' ? 'production' : 'staging',
+	basePath: '/sanity',
 	plugins: [
 		deskTool({
 			structure,
@@ -50,25 +52,25 @@ export default createConfig({
 		documentI18n(sanityI18nConfig),
 		internationalizedArray({
 			languages: sanityI18nConfig.languages,
-			fieldTypes: ["string", "url"],
+			fieldTypes: ['string', 'url'],
 		}),
 		colorInput(),
 		// media(),
-		...(process.env.NODE_ENV === "production" ? [] : devOnly),
+		...(process.env.NODE_ENV === 'production' ? [] : devOnly),
 	],
 	schema: {
 		types: schemaTypes,
 		templates: [
 			{
-				id: "post",
-				title: "Blog Post",
-				schemaType: "post",
+				id: 'post',
+				title: 'Blog Post',
+				schemaType: 'post',
 				value: (props: unknown) => props,
 			},
 			{
-				id: "teamBio",
-				title: "Team Member Bio",
-				schemaType: "teamBio",
+				id: 'teamBio',
+				title: 'Team Member Bio',
+				schemaType: 'teamBio',
 				value: (props: unknown) => props,
 			},
 		],
@@ -83,14 +85,14 @@ export default createConfig({
 		newDocumentOptions: () => {
 			return [
 				{
-					templateId: "post",
-					title: "Blog Post",
+					templateId: 'post',
+					title: 'Blog Post',
 				},
 				{
-					templateId: "teamBio",
-					title: "Team Member Bio",
+					templateId: 'teamBio',
+					title: 'Team Member Bio',
 				},
-			];
+			]
 		},
 	},
-});
+})

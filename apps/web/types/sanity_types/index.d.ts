@@ -1,10 +1,10 @@
-import "@sanity/types";
+import '@sanity/types'
 
-declare module "@sanity/types" {
+declare module '@sanity/types' {
 	declare namespace Schema {
 		export interface DocumentDefinition {
-			i18n?: boolean;
+			i18n?: boolean
 		}
 	}
 }
-export {};
+export {}

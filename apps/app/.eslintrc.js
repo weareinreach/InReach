@@ -5,7 +5,5 @@ module.exports = {
 	// },
 	// "plugins": ["@typescript-eslint"],
 	root: true,
-	extends: [
-		"@inreach/eslint-config" /** ,"plugin:@typescript-eslint/recommended"*/,
-	],
-};
+	extends: ['@inreach/eslint-config'],
+}

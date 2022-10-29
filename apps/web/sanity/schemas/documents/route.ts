@@ -1,5 +1,5 @@
-import {LinkIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import { LinkIcon } from '@sanity/icons'
+import { defineField, defineType } from 'sanity'
 
 export const route = defineType({
 	name: 'route',
@@ -40,7 +40,7 @@ export const route = defineType({
 			slug: 'slug.current',
 			pageTitle: 'page.title',
 		},
-		prepare({slug, pageTitle}) {
+		prepare({ slug, pageTitle }) {
 			return {
 				title: slug === '/' ? '/' : `/${slug}`,
 				subtitle: `Page: ${pageTitle}`,

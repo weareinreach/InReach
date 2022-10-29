@@ -21,18 +21,25 @@ const config = {
 	importOrderSeparation: true,
 	importOrderSortSpecifiers: true,
 	importOrder: [
-		'^@(inreach)/(.*)$',
+		'<THIRD_PARTY_MODULES>',
+		'^next/(.*)$|^next$',
 		'^react/(.*)$|^react$',
 		'^@mantine/(.*)$',
+		'^@(inreach)/(.*)$',
 		'^~/(.*)$',
 		'^[./]',
-		'<THIRD_PARTY_MODULES>',
 	],
 	overrides: [
 		{
 			files: '*.json',
 			options: {
 				singleQuote: false,
+			},
+		},
+		{
+			files: '*.{ts,tsx}',
+			options: {
+				tsdoc: true,
 			},
 		},
 	],

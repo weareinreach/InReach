@@ -4,7 +4,6 @@
 	"license": "GPL-3.0-only",
 	"main": "index.js",
 	"dependencies": {
-		"@inreach/config": "workspace:*",
 		"@typescript-eslint/parser": "^5.41.0",
 		"eslint-config-prettier": "^8.3.0"
 	},

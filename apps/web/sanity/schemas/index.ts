@@ -1,23 +1,14 @@
-import {
-	author,
-	category,
-	siteConfig,
-	page,
-	post,
-	navigation,
-	route,
-	teamBio,
-} from "./documents";
+import { author, category, navigation, page, post, route, siteConfig, teamBio } from './documents'
 import {
 	blockContent,
-	ctaButton,
-	simplePortableText,
-	nextLink,
-	heroCarouselSlides,
-	heroCarousel,
 	colorText,
+	ctaButton,
+	heroCarousel,
+	heroCarouselSlides,
 	metaData,
-} from "./objects";
+	nextLink,
+	simplePortableText,
+} from './objects'
 
 export const schemaTypes = [
 	post,
@@ -37,7 +28,7 @@ export const schemaTypes = [
 	teamBio,
 	//to be disabled later
 	route,
-];
+]
 
 // import * as documents from "./documents";
 // import * as objects from "./objects";

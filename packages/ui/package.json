@@ -5,7 +5,8 @@
 	"main": "./index.tsx",
 	"types": "./index.tsx",
 	"scripts": {
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"lint:fix": "eslint --fix ."
 	},
 	"dependencies": {
 		"@emotion/react": "^11.10.4",
