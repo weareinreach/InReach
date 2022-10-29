@@ -1,30 +1,28 @@
-const path = require("path");
+const path = require('path')
 
 module.exports = {
-	stories: [
-		"../stories/**/*.stories.mdx",
-		"../stories/**/*.stories.@(js|jsx|ts|tsx)",
-	],
+	stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
 	addons: [
-		"@storybook/addon-links",
-		"@storybook/addon-essentials",
-		"@storybook/addon-interactions",
-		"storybook-addon-designs",
-		"@storybook/addon-a11y",
-		"@storybook/addon-console",
-		"storybook-addon-next",
-		"storybook-dark-mode",
-		"storybook-addon-mantine",
-		"storybook-addon-swc",
+		'@storybook/addon-links',
+		'@storybook/addon-essentials',
+		'@storybook/addon-interactions',
+		'storybook-addon-designs',
+		'@storybook/addon-a11y',
+		'@storybook/addon-console',
+		'storybook-addon-next',
+		'storybook-dark-mode',
+		'storybook-addon-mantine',
+		'storybook-addon-swc',
 	],
-	framework: "@storybook/react",
+	framework: '@storybook/react',
 	core: {
-		builder: "webpack5",
+		builder: 'webpack5',
 	},
 	features: { storyStoreV7: true },
 	webpackFinal: async (config) => {
 		/**
 		 * Fixes font import with /
+		 *
 		 * @see https://github.com/storybookjs/storybook/issues/12844#issuecomment-867544160
 		 */
 		// config.resolve.roots = [
@@ -37,7 +35,33 @@ module.exports = {
 		// };
 		/**
 		 * Why webpack5... Just why?
-		 * @type {{console: boolean, process: boolean, timers: boolean, os: boolean, querystring: boolean, sys: boolean, fs: boolean, url: boolean, crypto: boolean, path: boolean, zlib: boolean, punycode: boolean, util: boolean, stream: boolean, assert: boolean, string_decoder: boolean, domain: boolean, vm: boolean, tty: boolean, http: boolean, buffer: boolean, constants: boolean, https: boolean, events: boolean}}
+		 *
+		 * @type {{
+		 * 	console: boolean
+		 * 	process: boolean
+		 * 	timers: boolean
+		 * 	os: boolean
+		 * 	querystring: boolean
+		 * 	sys: boolean
+		 * 	fs: boolean
+		 * 	url: boolean
+		 * 	crypto: boolean
+		 * 	path: boolean
+		 * 	zlib: boolean
+		 * 	punycode: boolean
+		 * 	util: boolean
+		 * 	stream: boolean
+		 * 	assert: boolean
+		 * 	string_decoder: boolean
+		 * 	domain: boolean
+		 * 	vm: boolean
+		 * 	tty: boolean
+		 * 	http: boolean
+		 * 	buffer: boolean
+		 * 	constants: boolean
+		 * 	https: boolean
+		 * 	events: boolean
+		 * }}
 		 */
 		config.resolve.fallback = {
 			fs: false,
@@ -64,7 +88,7 @@ module.exports = {
 			util: false,
 			vm: false,
 			zlib: false,
-		};
-		return config;
+		}
+		return config
 	},
-};
+}

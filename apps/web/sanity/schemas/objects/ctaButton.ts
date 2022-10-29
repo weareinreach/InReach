@@ -1,17 +1,17 @@
-import { defineField } from "sanity";
+import { defineField } from 'sanity'
 
 export const ctaButton = defineField({
-	title: "Call to Action Button",
-	name: "CtaButton",
-	type: "object",
+	title: 'Call to Action Button',
+	name: 'CtaButton',
+	type: 'object',
 
 	fields: [
 		defineField({
-			title: "Button Text",
-			name: "title",
-			type: "string",
+			title: 'Button Text',
+			name: 'title',
+			type: 'string',
 		}),
-		defineField({ name: "href", title: "Link destination", type: "NextLink" }),
+		defineField({ name: 'href', title: 'Link destination', type: 'NextLink' }),
 	],
 	// preview: {
 	// 	select: {
@@ -34,4 +34,4 @@ export const ctaButton = defineField({
 	// 		};
 	// 	},
 	// },
-});
+})

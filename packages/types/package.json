@@ -5,7 +5,8 @@
 	"license": "GPL-3.0-only",
 	"main": "lib/index.ts",
 	"scripts": {
-		"lint": "eslint . --fix"
+		"lint": "eslint .",
+		"lint:fix": "eslint --fix ."
 	},
 	"devDependencies": {
 		"@inreach/config": "*",

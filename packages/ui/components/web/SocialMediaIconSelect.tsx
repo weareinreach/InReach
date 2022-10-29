@@ -1,7 +1,10 @@
-import {Select, Group, Text} from '@mantine/core'
-import {Icon} from '@iconify/react'
-import {forwardRef, useCallback} from 'react'
-import {InputProps, set, unset} from 'sanity/form'
+import { Icon } from '@iconify/react'
+import { InputProps, set, unset } from 'sanity/form'
+
+import { forwardRef, useCallback } from 'react'
+
+import { Group, Select, Text } from '@mantine/core'
+
 const icons = [
 	'500px',
 	'500px-with-circle',
@@ -87,19 +90,17 @@ interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 // eslint-disable-next-line react/display-name
-const SelectItems = forwardRef<HTMLDivElement, ItemProps>(
-	({icon, label, ...others}: ItemProps, ref) => (
-		<div ref={ref} {...others}>
-			<Group noWrap>
-				<Icon icon={icon} />
+const SelectItems = forwardRef<HTMLDivElement, ItemProps>(({ icon, label, ...others }: ItemProps, ref) => (
+	<div ref={ref} {...others}>
+		<Group noWrap>
+			<Icon icon={icon} />
 
-				<div>
-					<Text size="sm">{label}</Text>
-				</div>
-			</Group>
-		</div>
-	)
-)
+			<div>
+				<Text size='sm'>{label}</Text>
+			</div>
+		</Group>
+	</div>
+))
 
 // type Props = {
 // 	input: {
@@ -117,14 +118,14 @@ export const SocialMediaIconSelect = (props: InputProps) => {
 		label: item,
 		value: `entypo-social:${item}`,
 	}))
-	const {onChange, value = '', elementProps} = props
+	const { onChange, value = '', elementProps } = props
 	const handleChange = useCallback(
 		(value: string | null) => onChange(value ? set(value) : unset()),
 		[onChange]
 	)
 	return (
 		<Select
-			label="Select Icon"
+			label='Select Icon'
 			itemComponent={SelectItems}
 			data={items}
 			{...elementProps}

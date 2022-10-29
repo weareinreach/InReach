@@ -9,6 +9,7 @@
 		"inspect-queries": "prisma-query-inspector start",
 		"postinstall": "prisma generate",
 		"lint": "next lint",
+		"lint:fix": "next lint --fix",
 		"prisma": "prisma",
 		"start": "next start"
 	},

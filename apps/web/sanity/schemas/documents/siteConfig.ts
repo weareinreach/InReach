@@ -1,78 +1,78 @@
-import { defineArrayMember, defineField, defineType } from "sanity";
-import { SocialMediaIconSelect } from "@inreach/ui/components/web";
+import { defineArrayMember, defineField, defineType } from 'sanity'
+
+import { SocialMediaIconSelect } from '@inreach/ui/components/web'
 
 export const siteConfig = defineType({
-	name: "site-config",
-	title: "Site Configuration",
-	type: "document",
+	name: 'site-config',
+	title: 'Site Configuration',
+	type: 'document',
 	fieldsets: [
 		{
-			name: "footer",
-			title: "Footer",
+			name: 'footer',
+			title: 'Footer',
 		},
 	],
 	fields: [
 		defineField({
-			name: "title",
-			type: "string",
-			title: "Site Title",
+			name: 'title',
+			type: 'string',
+			title: 'Site Title',
 		}),
 		defineField({
-			title: "URL",
-			name: "url",
-			type: "url",
-			description: "The main site url. Used to create canonical url",
+			title: 'URL',
+			name: 'url',
+			type: 'url',
+			description: 'The main site url. Used to create canonical url',
 		}),
 		defineField({
-			name: "frontpage",
-			type: "reference",
-			description: "Choose page to be the frontpage",
-			to: { type: "page" },
+			name: 'frontpage',
+			type: 'reference',
+			description: 'Choose page to be the frontpage',
+			to: { type: 'page' },
 		}),
 		defineField({
-			title: "Brand logo",
-			description:
-				"Best choice is to use an SVG where the color are set with currentColor",
-			name: "logo",
-			type: "image",
+			title: 'Brand logo',
+			description: 'Best choice is to use an SVG where the color are set with currentColor',
+			name: 'logo',
+			type: 'image',
 			fields: [
 				{
-					name: "alt",
-					type: "internationalizedArrayString",
-					title: "Alternative text",
-					description: "Important for SEO and accessiblity.",
+					name: 'alt',
+					type: 'internationalizedArrayString',
+					title: 'Alternative text',
+					description: 'Important for SEO and accessiblity.',
 				},
 			],
 		}),
 
 		defineField({
-			title: "Social Media Links",
-			name: "socialMediaLinks",
-			type: "array",
+			title: 'Social Media Links',
+			name: 'socialMediaLinks',
+			type: 'array',
 			of: [
 				defineArrayMember({
-					type: "object",
+					type: 'object',
 					fields: [
 						defineField({
-							name: "service",
-							title: "Service",
-							type: "string",
+							name: 'service',
+							title: 'Service',
+							type: 'string',
 						}),
 						{
-							name: "href",
-							title: "Profile Link",
-							type: "url",
+							name: 'href',
+							title: 'Profile Link',
+							type: 'url',
 							validation: (Rule) =>
 								Rule.uri({
 									allowRelative: true,
-									scheme: ["https", "http"],
+									scheme: ['https', 'http'],
 								}),
 						},
 
 						defineField({
-							name: "icon",
-							title: "Icon",
-							type: "string",
+							name: 'icon',
+							title: 'Icon',
+							type: 'string',
 							components: {
 								input: SocialMediaIconSelect,
 							},
@@ -82,25 +82,25 @@ export const siteConfig = defineType({
 			],
 		}),
 		defineField({
-			title: "Footer navigation items",
-			name: "footerNavigation",
-			type: "array",
+			title: 'Footer navigation items',
+			name: 'footerNavigation',
+			type: 'array',
 			validation: (Rule) => [
-				Rule.max(10).warning("Are you sure you want more than 10 items?"),
-				Rule.unique().error("You have duplicate menu items"),
+				Rule.max(10).warning('Are you sure you want more than 10 items?'),
+				Rule.unique().error('You have duplicate menu items'),
 			],
-			fieldset: "footer",
+			fieldset: 'footer',
 			of: [
 				defineArrayMember({
-					type: "reference",
-					to: [{ type: "route" }],
+					type: 'reference',
+					to: [{ type: 'route' }],
 				}),
 			],
 		}),
 		defineField({
-			name: "footerText",
-			type: "simplePortableText",
-			fieldset: "footer",
+			name: 'footerText',
+			type: 'simplePortableText',
+			fieldset: 'footer',
 		}),
 	],
-});
+})

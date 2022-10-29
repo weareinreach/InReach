@@ -8,7 +8,8 @@
 		"build:swc": "BUILD_TOOL=swc build-storybook",
 		"chromatic": "chromatic",
 		"dev": "start-storybook -p 6006",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"lint:fix": "eslint --fix ."
 	},
 	"dependencies": {
 		"@inreach/app": "workspace:^0.1.0",

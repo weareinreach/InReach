@@ -1,11 +1,6 @@
-import { createStylesServer, ServerStyles } from '@inreach/ui/mantine/next'
-import Document, {
-	Head,
-	Html,
-	Main,
-	NextScript,
-	DocumentContext,
-} from 'next/document'
+import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
+
+import { ServerStyles, createStylesServer } from '@inreach/ui/mantine/next'
 import { appCache } from '@inreach/ui/theme'
 
 const stylesServer = createStylesServer(appCache)
@@ -17,11 +12,7 @@ export default class _Document extends Document {
 			...initialProps,
 			styles: [
 				initialProps.styles,
-				<ServerStyles
-					html={initialProps.html}
-					server={stylesServer}
-					key='styles'
-				/>,
+				<ServerStyles html={initialProps.html} server={stylesServer} key='styles' />,
 			],
 		}
 	}

@@ -1,9 +1,11 @@
-import React from "react";
-import { CtaButton } from "@inreach/ui/components/web/sections";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from '@storybook/react'
+
+import React from 'react'
+
+import { CtaButton } from '@inreach/ui/components/web/sections'
 
 export default {
-	title: "Web/Call to Action button",
+	title: 'Web/Call to Action button',
 	component: CtaButton,
 	// argTypes: {
 	// 	value: {
@@ -11,15 +13,13 @@ export default {
 
 	// 	}
 	// }
-} as ComponentMeta<typeof CtaButton>;
+} as ComponentMeta<typeof CtaButton>
 
-const Template: ComponentStory<typeof CtaButton> = (args) => (
-	<CtaButton {...args} />
-);
+const Template: ComponentStory<typeof CtaButton> = (args) => <CtaButton {...args} />
 
-export const Primary = Template.bind({});
+export const Primary = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
-	value: { href: "/", title: "Button Text" },
-	target: "_blank",
-};
+	value: { href: '/', title: 'Button Text' },
+	target: '_blank',
+}

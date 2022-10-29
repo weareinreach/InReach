@@ -1,88 +1,89 @@
-import { SocialMediaIconSelect } from "@inreach/ui/components/web";
-import { defineArrayMember, defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from 'sanity'
+
+import { SocialMediaIconSelect } from '@inreach/ui/components/web'
 
 export const ambassador = defineType({
-	name: "ambassador",
-	title: "Ambassador",
-	type: "document",
+	name: 'ambassador',
+	title: 'Ambassador',
+	type: 'document',
 	i18n: true,
 	fields: [
 		defineField({
-			name: "name",
-			title: "Name",
-			type: "string",
+			name: 'name',
+			title: 'Name',
+			type: 'string',
 		}),
 		defineField({
-			name: "image",
-			title: "Image",
-			type: "image",
+			name: 'image',
+			title: 'Image',
+			type: 'image',
 			options: {
 				hotspot: true,
 			},
 		}),
 		defineField({
-			name: "location",
-			title: "Location",
-			type: "string",
+			name: 'location',
+			title: 'Location',
+			type: 'string',
 		}),
 		defineField({
-			name: "testimonial",
-			title: "Testimonial",
-			type: "array",
+			name: 'testimonial',
+			title: 'Testimonial',
+			type: 'array',
 			of: [
 				defineArrayMember({
-					type: "block",
-					styles: [{ title: "Normal", value: "normal" }],
+					type: 'block',
+					styles: [{ title: 'Normal', value: 'normal' }],
 					lists: [],
 				}),
 			],
 		}),
 		defineField({
-			name: "shortBio",
-			title: "Short Bio Tagline",
-			type: "text",
+			name: 'shortBio',
+			title: 'Short Bio Tagline',
+			type: 'text',
 			rows: 4,
 		}),
 		defineField({
-			name: "bio",
-			title: "Bio",
-			type: "array",
+			name: 'bio',
+			title: 'Bio',
+			type: 'array',
 			of: [
 				defineArrayMember({
-					type: "block",
-					styles: [{ title: "Normal", value: "normal" }],
+					type: 'block',
+					styles: [{ title: 'Normal', value: 'normal' }],
 					lists: [],
 				}),
 			],
 		}),
 		defineField({
-			title: "Social Media Links",
-			name: "socialMediaLinks",
-			type: "array",
+			title: 'Social Media Links',
+			name: 'socialMediaLinks',
+			type: 'array',
 			of: [
 				defineArrayMember({
-					type: "object",
+					type: 'object',
 					fields: [
 						defineField({
-							name: "service",
-							title: "Service",
-							type: "string",
+							name: 'service',
+							title: 'Service',
+							type: 'string',
 						}),
 						{
-							name: "href",
-							title: "Profile Link",
-							type: "url",
+							name: 'href',
+							title: 'Profile Link',
+							type: 'url',
 							validation: (Rule) =>
 								Rule.uri({
 									allowRelative: true,
-									scheme: ["https", "http"],
+									scheme: ['https', 'http'],
 								}),
 						},
 
 						defineField({
-							name: "icon",
-							title: "Icon",
-							type: "string",
+							name: 'icon',
+							title: 'Icon',
+							type: 'string',
 							components: {
 								input: SocialMediaIconSelect,
 							},
@@ -94,8 +95,8 @@ export const ambassador = defineType({
 	],
 	preview: {
 		select: {
-			title: "name",
-			media: "image",
+			title: 'name',
+			media: 'image',
 		},
 	},
-});
+})

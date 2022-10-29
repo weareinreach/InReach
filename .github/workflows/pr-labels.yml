@@ -13,7 +13,7 @@ jobs:
       - name: 🏷 Verify PR has a valid label
         uses: jesusvasquez333/verify-pr-label-action@v1.4.0
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
           valid-labels: >-
             breaking-change, bugfix, documentation, enhancement,
             refactor, performance, new-feature, maintenance, ci, dependencies

@@ -1,4 +1,4 @@
-import {defineType} from 'sanity'
+import { defineType } from 'sanity'
 
 export const colorText = defineType({
 	name: 'ColorText',
@@ -23,7 +23,7 @@ export const colorText = defineType({
 		// 		],
 		// 	},
 		// },
-		{name: 'color', title: 'Color', type: 'color'},
+		{ name: 'color', title: 'Color', type: 'color' },
 	],
 	preview: {
 		select: {

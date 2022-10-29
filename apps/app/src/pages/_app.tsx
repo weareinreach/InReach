@@ -1,15 +1,18 @@
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink'
 import { loggerLink } from '@trpc/client/links/loggerLink'
 import { withTRPC } from '@trpc/next'
-import { SessionProvider } from 'next-auth/react'
-import type { AppProps } from 'next/app'
 import type { Session } from 'next-auth'
+import { SessionProvider } from 'next-auth/react'
 import superjson from 'superjson'
-import type { AppRouter } from '../server/router'
+
+import type { AppProps } from 'next/app'
+
 import { MantineProvider } from '@inreach/ui/mantine/core'
 import { ModalsProvider } from '@inreach/ui/mantine/modals'
 import { NotificationsProvider } from '@inreach/ui/mantine/notifications'
-import { appTheme, appCache } from '@inreach/ui/theme'
+import { appCache, appTheme } from '@inreach/ui/theme'
+
+import type { AppRouter } from '../server/router'
 
 const MyApp = (appProps: AppProps<{ session: Session }>) => {
 	const {
@@ -17,12 +20,7 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 		pageProps: { session, ...pageProps },
 	} = appProps
 	return (
-		<MantineProvider
-			withGlobalStyles
-			withNormalizeCSS
-			theme={appTheme}
-			emotionCache={appCache}
-		>
+		<MantineProvider withGlobalStyles withNormalizeCSS theme={appTheme} emotionCache={appCache}>
 			<SessionProvider session={session}>
 				<NotificationsProvider>
 					<ModalsProvider>
@@ -44,6 +42,7 @@ export default withTRPC<AppRouter>({
 	config() {
 		/**
 		 * If you want to use SSR, you need to use the server's full URL
+		 *
 		 * @link https://trpc.io/docs/ssr
 		 */
 		const url = `${getBaseUrl()}/api/trpc`
@@ -59,9 +58,7 @@ export default withTRPC<AppRouter>({
 			],
 			url,
 			transformer: superjson,
-			/**
-			 * @link https://react-query.tanstack.com/reference/QueryClient
-			 */
+			/** @link https://react-query.tanstack.com/reference/QueryClient */
 			// queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
 
 			// To use SSR properly you need to forward the client's headers to the server
@@ -78,8 +75,6 @@ export default withTRPC<AppRouter>({
 			// }
 		}
 	},
-	/**
-	 * @link https://trpc.io/docs/ssr
-	 */
+	/** @link https://trpc.io/docs/ssr */
 	ssr: false,
 })(MyApp)
