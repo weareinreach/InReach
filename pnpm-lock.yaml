@@ -197,7 +197,6 @@ importers:
 
   packages/eslint-config:
     specifiers:
-      '@inreach/config': workspace:*
       '@types/eslint': ^8.4.8
       '@typescript-eslint/eslint-plugin': ^5.41.0
       '@typescript-eslint/parser': ^5.41.0
@@ -211,7 +210,6 @@ importers:
       eslint-plugin-turbo: ^0.0.4
       typescript: ^4.8.4
     dependencies:
-      '@inreach/config': link:../config
       '@typescript-eslint/parser': 5.41.0_wyqvi574yv7oiwfeinomdzmc3m
       eslint-config-prettier: 8.5.0_eslint@8.26.0
     devDependencies:
@@ -379,7 +377,7 @@ importers:
       '@types/node': 16.18.0
       '@types/react': 18.0.19
       '@types/react-dom': 18.0.6
-      eslint-config-sanity: 6.0.0_eslint@8.23.0
+      eslint-config-sanity: 6.0.0_eslint@8.26.0
       typescript: 4.8.3
 
 packages:
@@ -12363,13 +12361,13 @@ packages:
     dependencies:
       eslint: 8.26.0
 
-  /eslint-config-sanity/6.0.0_eslint@8.23.0:
+  /eslint-config-sanity/6.0.0_eslint@8.26.0:
     resolution: {integrity: sha512-AZfA8138Yf7NAE4fvUf2Jh0jDxg/sPWjBkhv0d1mW7V84DMmZ6ecrI6Yz3roQVMWpwlSZrc19eskog0JgS7moA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       eslint: '>=8.0.0'
     dependencies:
-      eslint: 8.23.0
+      eslint: 8.26.0
     dev: true
 
   /eslint-import-resolver-node/0.3.6:
