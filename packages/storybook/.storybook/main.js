@@ -13,6 +13,7 @@ module.exports = {
 		'storybook-dark-mode',
 		'storybook-addon-mantine',
 		'storybook-addon-swc',
+		'storybook-addon-turbo-build',
 	],
 	framework: '@storybook/react',
 	core: {

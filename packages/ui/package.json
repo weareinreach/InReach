@@ -27,7 +27,7 @@
 		"@portabletext/react": "^1.0.6",
 		"@sanity/types": "^2.33.2",
 		"dayjs": "^1.11.6",
-		"embla-carousel-react": "^7.0.3",
+		"embla-carousel-react": "^7.0.4",
 		"sanity": "3.0.0-v3-v2-pte.56",
 		"slugify": "^1.6.5"
 	},

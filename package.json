@@ -20,7 +20,7 @@
 		"prepare": "husky install"
 	},
 	"dependencies": {
-		"@changesets/cli": "^2.25.0"
+		"@changesets/cli": "^2.25.1"
 	},
 	"devDependencies": {
 		"@badeball/cypress-cucumber-preprocessor": "^13.0.3",

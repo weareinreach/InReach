@@ -2,8 +2,6 @@
 import { PrismaClient } from '@prisma/client'
 import { queryHandler } from 'prisma-query-inspector'
 
-import { env } from '../../env/server.mjs'
-
 declare global {
 	// eslint-disable-next-line no-var
 	var prisma: PrismaClient | undefined
@@ -21,8 +19,9 @@ export const prisma =
 				},
 			],
 	})
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 prisma.$on('query', queryHandler)
-if (env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
 	global.prisma = prisma
 }

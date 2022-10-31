@@ -5,7 +5,10 @@
 		"declarationMap": false,
 		"incremental": true,
 		"noEmit": true,
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"paths": {
+			"~/*": ["src/*"]
+		}
 	},
 	"display": "Next.js",
 	"extends": "./base.json"
