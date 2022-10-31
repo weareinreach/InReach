@@ -1,1 +1,2 @@
 //image or gradient
+export {}

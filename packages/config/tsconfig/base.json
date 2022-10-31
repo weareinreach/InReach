@@ -14,17 +14,18 @@
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"module": "ESNext",
 		"moduleResolution": "node",
+		"noEmit": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"preserveWatchOutput": true,
 		"skipLibCheck": true,
 		"strict": true,
 		"strictNullChecks": true,
-		"target": "ES5",
+		"target": "ES6",
 		"useUnknownInCatchVariables": true,
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitReturns": true
 	},
 	"display": "Default",
-	"exclude": ["node_modules"]
+	"exclude": ["**/node_modules/**/*"]
 }
