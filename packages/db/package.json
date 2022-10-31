@@ -1,0 +1,38 @@
+{
+	"name": "@inreach/db",
+	"version": "0.0.0",
+	"private": true,
+	"keywords": [],
+	"license": "GPL-3.0-only",
+	"author": "",
+	"type": "module",
+	"exports": "./index.ts",
+	"types": "./index.ts",
+	"scripts": {
+		"db:deploy": "prisma migrate deploy",
+		"db:generate": "prisma generate",
+		"db:migrate": "prisma migrate dev",
+		"db:seed": "prisma db seed",
+		"db:studio": "prisma studio",
+		"inspect-queries": "prisma-query-inspector start",
+		"postinstall": "pnpm db:generate",
+		"prisma": "prisma"
+	},
+	"dependencies": {
+		"@prisma/client": "^4.5.0"
+	},
+	"devDependencies": {
+		"@inreach/config": "workspace:^0.0.0",
+		"@types/node": "16",
+		"prisma": "^4.5.0",
+		"prisma-docs-generator": "^0.5.0",
+		"prisma-query-inspector": "^1.4.4",
+		"tsx": "^3.11.0",
+		"typescript": "^4.8.4",
+		"zod": "^3.19.1",
+		"zod-prisma": "^0.5.4"
+	},
+	"prisma": {
+		"seed": "tsx seed/index.ts"
+	}
+}
