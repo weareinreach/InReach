@@ -4,7 +4,6 @@
 		"declaration": false,
 		"declarationMap": false,
 		"incremental": true,
-		"noEmit": true,
 		"resolveJsonModule": true,
 		"paths": {
 			"~/*": ["src/*"]

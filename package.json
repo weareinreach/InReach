@@ -17,6 +17,7 @@
 		"format": "prettier --write --ignore-unknown .",
 		"lint": "turbo run lint",
 		"lint:fix": "turbo run lint:fix",
+		"lint:staged": "lint-staged",
 		"prepare": "husky install"
 	},
 	"dependencies": {
@@ -53,7 +54,8 @@
 				"react-dom": "^18",
 				"next": "13",
 				"webpack": "5",
-				"sanity": "3.0.0-dev-preview.22"
+				"sanity": "3.0.0-dev-preview.22",
+				"listr2": "^5"
 			}
 		}
 	}

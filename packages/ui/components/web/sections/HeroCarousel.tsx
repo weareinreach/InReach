@@ -1,4 +1,4 @@
-import Image from 'next/future/image'
+import Image from 'next/image'
 
 import { Carousel } from '@mantine/carousel'
 import { Overlay, Stack, createStyles, useMantineTheme } from '@mantine/core'

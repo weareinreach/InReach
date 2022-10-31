@@ -1,5 +1,4 @@
 import { PortableText } from '@portabletext/react'
-import * as Sentry from '@sentry/nextjs'
 import { groq } from 'next-sanity'
 
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
