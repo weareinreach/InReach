@@ -2,5 +2,7 @@ node_modules
 # Keep environment variables out of version control
 !.env
 
-data-transfer/output*
+data-transfer/output/**/*.json
+data-transfer/output-types/*.ts
+data-transfer/temp/*.js
 

@@ -5,7 +5,6 @@
 	"keywords": [],
 	"license": "GPL-3.0-only",
 	"author": "",
-	"type": "module",
 	"exports": "./index.ts",
 	"types": "./index.ts",
 	"scripts": {
@@ -28,6 +27,7 @@
 		"@types/recursive-readdir": "^2.2.1",
 		"dotenv": "^16.0.3",
 		"mongoback": "^3.0.3",
+		"mongoose-tsgen": "^9.0.8",
 		"prisma": "^4.5.0",
 		"prisma-docs-generator": "^0.5.0",
 		"prisma-query-inspector": "^1.4.4",
