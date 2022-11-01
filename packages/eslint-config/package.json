@@ -4,18 +4,18 @@
 	"license": "GPL-3.0-only",
 	"main": "index.js",
 	"dependencies": {
-		"@typescript-eslint/parser": "^5.41.0",
+		"@typescript-eslint/parser": "^5.42.0",
 		"eslint-config-prettier": "^8.3.0"
 	},
 	"devDependencies": {
 		"@types/eslint": "^8.4.9",
-		"@typescript-eslint/eslint-plugin": "^5.41.0",
+		"@typescript-eslint/eslint-plugin": "^5.42.0",
 		"eslint": "^8.26.0",
-		"eslint-config-next": "^13.0.0",
+		"eslint-config-next": "^13.0.1",
 		"eslint-plugin-codegen": "^0.16.1",
 		"eslint-plugin-prettier": "^4.2.1",
 		"eslint-plugin-react": "^7.31.10",
-		"eslint-plugin-storybook": "^0.6.4",
+		"eslint-plugin-storybook": "^0.6.7",
 		"eslint-plugin-turbo": "^0.0.4",
 		"typescript": "^4.8.4"
 	},
