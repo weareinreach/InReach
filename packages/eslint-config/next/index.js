@@ -4,10 +4,14 @@
  * @constraint {{import('@types/eslint').ESLint.ConfigData}}
  */
 
-const config = {
-	plugins: ['storybook'],
-	extends: ['../config', 'plugin:storybook/recommended'],
-	rules: {},
+module.exports = {
+	extends: ['../', 'next/core-web-vitals'],
+	rules: {
+		'@next/next/no-html-link-for-pages': 'off',
+	},
+	settings: {
+		next: {
+			rootDir: ['apps/*/'],
+		},
+	},
 }
-
-module.exports = config

@@ -12,6 +12,7 @@ const plugins = [
 	'@trivago/prettier-plugin-sort-imports',
 	'prettier-plugin-packagejson',
 	'prettier-plugin-jsdoc',
+	'prettier-plugin-prisma',
 ]
 
 module.exports = plugins

@@ -1,3 +1,1 @@
-const config = require('./config/eslint.config')
-
-module.exports = config
+module.exports = require('./config')
