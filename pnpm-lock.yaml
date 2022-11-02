@@ -231,10 +231,12 @@ importers:
       eslint-plugin-react: ^7.31.10
       eslint-plugin-storybook: ^0.6.7
       eslint-plugin-turbo: ^0.0.4
+      next: ^13.0.1 || 13
       typescript: ^4.8.4
     dependencies:
       '@typescript-eslint/parser': 5.42.0_wyqvi574yv7oiwfeinomdzmc3m
       eslint-config-prettier: 8.5.0_eslint@8.26.0
+      next: 13.0.1_qtpcxnaaarbm4ws7ughq6oxfve
     devDependencies:
       '@types/eslint': 8.4.9
       '@typescript-eslint/eslint-plugin': 5.42.0_6xw5wg2354iw4zujk2f3vyfrzu
@@ -3585,7 +3587,7 @@ packages:
     resolution: {integrity: sha512-eR8Lo9hnDS7tqkO7NsV+mKvCmv5boaXFSZ70DnfhcgiEne8hv9oCEd36Klw74EtizEqLsy4YnW8UWwpBVolHZA==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      regenerator-runtime: 0.13.9
+      regenerator-runtime: 0.13.10
 
   /@babel/runtime/7.20.1:
     resolution: {integrity: sha512-mrzLkl6U9YLF8qpqI7TB82PESyEGjm/0Ly91jG575eVxMMlb8fYfOXFZIJ8XfLrJZQbm7dlKry2bJmXBUEkdFg==}
@@ -9268,7 +9270,7 @@ packages:
       '@vue/shared': 3.2.41
       estree-walker: 2.0.2
       magic-string: 0.25.9
-      postcss: 8.4.16
+      postcss: 8.4.18
       source-map: 0.6.1
     dev: true
 

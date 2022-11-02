@@ -1,3 +1,5 @@
 {
+	"include": ["./**/*.js", "./**/*.ts", "./**/*.tsx", "./**/*.jsx"],
+	"exclude": ["**/node_modules/*", "./apps/*", "./packages/*"],
 	"extends": "@inreach/config/tsconfig/root.json"
 }

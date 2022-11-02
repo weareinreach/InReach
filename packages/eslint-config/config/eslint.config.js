@@ -6,7 +6,7 @@
 
 const config = {
 	plugins: ['prettier', 'codegen', 'turbo'],
-	extends: ['next/core-web-vitals', 'prettier', 'plugin:turbo/recommended', 'next'],
+	extends: ['prettier', 'plugin:turbo/recommended', 'next/core-web-vitals'],
 	rules: {
 		'@next/next/no-html-link-for-pages': 'off',
 		'react/jsx-key': 'off',
