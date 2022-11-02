@@ -6,15 +6,15 @@ export const _UserRoleModel = z.object({
 	id: z.string(),
 	name: z.string(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().nullish(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().nullish(),
 })
 
 export interface CompleteUserRole extends z.infer<typeof _UserRoleModel> {
 	permissions: CompleteUserPermission[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	createdBy?: CompleteUser | null
+	updatedBy?: CompleteUser | null
 	User: CompleteUser[]
 }
 
@@ -26,8 +26,8 @@ export interface CompleteUserRole extends z.infer<typeof _UserRoleModel> {
 export const UserRoleModel: z.ZodSchema<CompleteUserRole> = z.lazy(() =>
 	_UserRoleModel.extend({
 		permissions: UserPermissionModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		createdBy: UserModel.nullish(),
+		updatedBy: UserModel.nullish(),
 		User: UserModel.array(),
 	})
 )
