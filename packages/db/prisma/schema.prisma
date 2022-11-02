@@ -10,7 +10,7 @@ generator docs {
 
 generator zod {
   provider      = "zod-prisma"
-  output        = "../zod"
+  output        = "../zod-schemas"
   // imports       = "./zod-utils"
   relationModel = "default"
 }
@@ -53,7 +53,7 @@ model User {
   // Do not change - NextAuth fields
   id            String           @id @default(cuid())
   name          String?
-  email         String?          @unique
+  email         String           @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -148,15 +148,15 @@ model User {
 
 model UserRole {
   id          String           @id @default(cuid())
-  name        String
+  name        String           @unique
   permissions UserPermission[]
 
   createdAt   DateTime @default(now())
-  createdBy   User     @relation("createUserRole", fields: [createdById], references: [id])
-  createdById String
+  createdBy   User?    @relation("createUserRole", fields: [createdById], references: [id])
+  createdById String?
   updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateUserRole", fields: [updatedById], references: [id])
-  updatedById String
+  updatedBy   User?    @relation("updateUserRole", fields: [updatedById], references: [id])
+  updatedById String?
   User        User[]
 }
 
@@ -196,6 +196,8 @@ model UserEthnicity {
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserEthnicity", fields: [updatedById], references: [id])
   updatedById String
+
+  @@unique([langId, ethnicity])
 }
 
 model UserImmigration {
@@ -227,17 +229,17 @@ model UserSOG {
 }
 
 model UserType {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  language    Language @relation(fields: [langId], references: [id])
-  langId      String
-  type        String
+  id          String    @id @default(cuid())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  language    Language? @relation(fields: [langId], references: [id])
+  langId      String?
+  type        String    @unique
   users       User[]
-  createdBy   User     @relation("createUserType", fields: [createdById], references: [id])
-  createdById String
-  updatedBy   User     @relation("updateUserType", fields: [updatedById], references: [id])
-  updatedById String
+  createdBy   User?     @relation("createUserType", fields: [createdById], references: [id])
+  createdById String?
+  updatedBy   User?     @relation("updateUserType", fields: [updatedById], references: [id])
+  updatedById String?
 }
 
 model UserTitle {
@@ -632,7 +634,7 @@ model GovDist {
 model Language {
   id                 String               @id @default(cuid())
   languageName       String
-  langCode           String
+  langCode           String               @unique
   nativeName         String
   translations       Translation[]
   orgDescriptions    OrgDescription[]
@@ -651,11 +653,11 @@ model Language {
   User               User[]
 
   createdAt   DateTime @default(now())
-  createdBy   User     @relation("createLanguage", fields: [createdById], references: [id])
-  createdById String
+  createdBy   User?    @relation("createLanguage", fields: [createdById], references: [id])
+  createdById String?
   updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateLanguage", fields: [updatedById], references: [id])
-  updatedById String
+  updatedBy   User?    @relation("updateLanguage", fields: [updatedById], references: [id])
+  updatedById String?
 }
 
 model TranslationCategory {
