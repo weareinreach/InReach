@@ -1,6 +1,5 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"display": "Monorepo Root",
-	"extends": "./base.json",
-	"exclude": ["node_modules", "apps/**/*", "packages/**/*"]
+	"extends": "./base.json"
 }

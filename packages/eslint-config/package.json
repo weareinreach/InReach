@@ -27,7 +27,8 @@
 		"eslint-plugin-prettier": "^4.2.1",
 		"eslint-plugin-react": "^7.31.7",
 		"eslint-plugin-storybook": "^0.6.4",
-		"eslint-plugin-turbo": "^0.0.4"
+		"eslint-plugin-turbo": "^0.0.4",
+		"next": "^13.0.1"
 	},
 	"packageManager": "pnpm@7.14.0",
 	"publishConfig": {

@@ -1,7 +1,5 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"display": "React Library",
-	"extends": "./base.json",
-	"include": [".", "../types/next-auth.d.ts"],
-	"exclude": ["dist", "build"]
+	"extends": "./base.json"
 }

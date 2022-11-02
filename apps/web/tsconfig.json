@@ -1,9 +1,20 @@
 {
-	"extends": "@inreach/config/tsconfig/nextjs.json",
 	"compilerOptions": {
-		"typeRoots": ["./types"],
-		"baseUrl": "."
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"]
+		},
+		"typeRoots": ["./types"]
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs"],
-	"exclude": ["node_modules"]
+	"extends": "@inreach/config/tsconfig/nextjs.json",
+	"include": [
+		"./next-env.d.ts",
+		"./**/*.ts",
+		"./**/*.tsx",
+		"./**/*.js",
+		"./**/*.jsx",
+		"./**/*.mjs",
+		"./**/*.cjs"
+	],
+	"exclude": ["**/node_modules/*"]
 }
