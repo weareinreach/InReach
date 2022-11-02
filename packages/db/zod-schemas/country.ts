@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import {
 	CompleteCountryTranslation,
 	CompleteGovDist,
@@ -13,9 +14,11 @@ import {
 
 export const _CountryModel = z.object({
 	id: z.string(),
+	cca3: z.string(),
 	name: z.string(),
 	govDistName: z.string().nullish(),
 	dialCode: z.string(),
+	flag: z.string(),
 	createdAt: z.date(),
 	createdById: z.string(),
 	updatedAt: z.date(),
@@ -23,10 +26,10 @@ export const _CountryModel = z.object({
 })
 
 export interface CompleteCountry extends z.infer<typeof _CountryModel> {
-	orgAddress: CompleteOrgLocation[]
 	countryTranslation: CompleteCountryTranslation[]
-	users: CompleteUser[]
 	GovDist: CompleteGovDist[]
+	orgAddress: CompleteOrgLocation[]
+	users: CompleteUser[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 }
@@ -38,10 +41,10 @@ export interface CompleteCountry extends z.infer<typeof _CountryModel> {
  */
 export const CountryModel: z.ZodSchema<CompleteCountry> = z.lazy(() =>
 	_CountryModel.extend({
-		orgAddress: OrgLocationModel.array(),
 		countryTranslation: CountryTranslationModel.array(),
-		users: UserModel.array(),
 		GovDist: GovDistModel.array(),
+		orgAddress: OrgLocationModel.array(),
+		users: UserModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
 	})

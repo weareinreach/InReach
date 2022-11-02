@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import {
 	CompleteLanguage,
 	CompleteOrgEmail,
@@ -12,8 +13,8 @@ import {
 export const _UserTitleModel = z.object({
 	id: z.string(),
 	text: z.string(),
-	langId: z.string(),
 	searchable: z.boolean(),
+	langId: z.string(),
 	createdAt: z.date(),
 	createdById: z.string(),
 	updatedAt: z.date(),
@@ -21,9 +22,9 @@ export const _UserTitleModel = z.object({
 })
 
 export interface CompleteUserTitle extends z.infer<typeof _UserTitleModel> {
-	language: CompleteLanguage
 	email: CompleteOrgEmail[]
 	orgUser: CompleteUser[]
+	language: CompleteLanguage
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 }
@@ -35,9 +36,9 @@ export interface CompleteUserTitle extends z.infer<typeof _UserTitleModel> {
  */
 export const UserTitleModel: z.ZodSchema<CompleteUserTitle> = z.lazy(() =>
 	_UserTitleModel.extend({
-		language: LanguageModel,
 		email: OrgEmailModel.array(),
 		orgUser: UserModel.array(),
+		language: LanguageModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
 	})

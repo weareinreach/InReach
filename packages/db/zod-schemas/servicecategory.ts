@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import {
 	CompleteLanguage,
 	CompleteServiceType,
@@ -20,8 +21,8 @@ export const _ServiceCategoryModel = z.object({
 })
 
 export interface CompleteServiceCategory extends z.infer<typeof _ServiceCategoryModel> {
-	language: CompleteLanguage
 	services: CompleteServiceType[]
+	language: CompleteLanguage
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 }
@@ -33,8 +34,8 @@ export interface CompleteServiceCategory extends z.infer<typeof _ServiceCategory
  */
 export const ServiceCategoryModel: z.ZodSchema<CompleteServiceCategory> = z.lazy(() =>
 	_ServiceCategoryModel.extend({
-		language: LanguageModel,
 		services: ServiceTypeModel.array(),
+		language: LanguageModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
 	})

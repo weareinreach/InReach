@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import {
 	AccountModel,
 	CompleteAccount,
@@ -79,30 +80,32 @@ export const _UserModel = z.object({
 	email: z.string(),
 	emailVerified: z.date().nullish(),
 	image: z.string().nullish(),
+	birthYear: z.string().nullish(),
+	reasonForJoin: z.string().nullish(),
 	orgTitleId: z.string().nullish(),
 	immigrationId: z.string().nullish(),
-	birthYear: z.string().nullish(),
 	roleId: z.string(),
 	userTypeId: z.string(),
-	reasonForJoin: z.string().nullish(),
 	langPrefId: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
 })
 
 export interface CompleteUser extends z.infer<typeof _UserModel> {
 	accounts: CompleteAccount[]
 	sessions: CompleteSession[]
-	orgOwner: CompleteOrganization[]
-	orgTitle?: CompleteUserTitle | null
 	ethnicity: CompleteUserEthnicity[]
 	countryOrigin: CompleteCountry[]
-	immigration?: CompleteUserImmigration | null
 	SOG: CompleteUserSOG[]
-	role: CompleteUserRole
+	communities: CompleteUserCommunity[]
+	orgOwner: CompleteOrganization[]
 	permissions: CompleteUserPermission[]
-	userType: CompleteUserType
 	lists: CompleteUserList[]
 	sharedLists: CompleteUserList[]
-	communities: CompleteUserCommunity[]
+	orgTitle?: CompleteUserTitle | null
+	immigration?: CompleteUserImmigration | null
+	role: CompleteUserRole
+	userType: CompleteUserType
 	langPref: CompleteLanguage
 	createUserEthnicity: CompleteUserEthnicity[]
 	updateUserEthnicity: CompleteUserEthnicity[]
@@ -179,18 +182,18 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 	_UserModel.extend({
 		accounts: AccountModel.array(),
 		sessions: SessionModel.array(),
-		orgOwner: OrganizationModel.array(),
-		orgTitle: UserTitleModel.nullish(),
 		ethnicity: UserEthnicityModel.array(),
 		countryOrigin: CountryModel.array(),
-		immigration: UserImmigrationModel.nullish(),
 		SOG: UserSOGModel.array(),
-		role: UserRoleModel,
+		communities: UserCommunityModel.array(),
+		orgOwner: OrganizationModel.array(),
 		permissions: UserPermissionModel.array(),
-		userType: UserTypeModel,
 		lists: UserListModel.array(),
 		sharedLists: UserListModel.array(),
-		communities: UserCommunityModel.array(),
+		orgTitle: UserTitleModel.nullish(),
+		immigration: UserImmigrationModel.nullish(),
+		role: UserRoleModel,
+		userType: UserTypeModel,
 		langPref: LanguageModel,
 		createUserEthnicity: UserEthnicityModel.array(),
 		updateUserEthnicity: UserEthnicityModel.array(),

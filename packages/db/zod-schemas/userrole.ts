@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import { CompleteUser, CompleteUserPermission, UserModel, UserPermissionModel } from './index'
 
 export const _UserRoleModel = z.object({

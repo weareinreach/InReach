@@ -2,7 +2,10 @@
 	"extends": "@inreach/config/tsconfig/nextjs.json",
 	"compilerOptions": {
 		"noImplicitAny": false,
-		"baseUrl": "."
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./*"]
+		}
 	},
 	"include": ["**/*.ts"],
 	"exclude": ["**/node_modules/*"]

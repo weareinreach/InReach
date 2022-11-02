@@ -1,12 +1,13 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import { CompleteUser, UserModel } from './index'
 
 export const _SessionModel = z.object({
 	id: z.string(),
 	sessionToken: z.string(),
-	userId: z.string(),
 	expires: z.date(),
+	userId: z.string(),
 })
 
 export interface CompleteSession extends z.infer<typeof _SessionModel> {

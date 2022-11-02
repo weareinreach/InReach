@@ -1,11 +1,12 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import { CompleteLanguage, CompleteUser, LanguageModel, UserModel } from './index'
 
 export const _UserEthnicityModel = z.object({
 	id: z.string(),
-	langId: z.string(),
 	ethnicity: z.string(),
+	langId: z.string(),
 	createdAt: z.date(),
 	createdById: z.string(),
 	updatedAt: z.date(),
@@ -13,8 +14,8 @@ export const _UserEthnicityModel = z.object({
 })
 
 export interface CompleteUserEthnicity extends z.infer<typeof _UserEthnicityModel> {
-	language: CompleteLanguage
 	users: CompleteUser[]
+	language: CompleteLanguage
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 }
@@ -26,8 +27,8 @@ export interface CompleteUserEthnicity extends z.infer<typeof _UserEthnicityMode
  */
 export const UserEthnicityModel: z.ZodSchema<CompleteUserEthnicity> = z.lazy(() =>
 	_UserEthnicityModel.extend({
-		language: LanguageModel,
 		users: UserModel.array(),
+		language: LanguageModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
 	})

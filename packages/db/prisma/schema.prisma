@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fieldReference"]
+  previewFeatures = ["fieldReference", "postgresqlExtensions"]
 }
 
 generator docs {
@@ -11,20 +11,20 @@ generator docs {
 generator zod {
   provider      = "zod-prisma"
   output        = "../zod-schemas"
-  // imports       = "./zod-utils"
+  imports       = "../zod-util"
   relationModel = "default"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
 }
 
 // Necessary for Next auth
 model Account {
   // Do not change - NextAuth fields
   id                String  @id @default(cuid())
-  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -35,7 +35,12 @@ model Account {
   scope             String?
   id_token          String? //@db.Text
   session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([provider, providerAccountId])
 }
@@ -44,42 +49,55 @@ model Session {
   // Do not change - NextAuth fields
   id           String   @id @default(cuid())
   sessionToken String   @unique
-  userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 }
 
 model User {
   // Do not change - NextAuth fields
-  id            String           @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String           @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+
   // Ok to change below - Start of custom fields
-  orgOwner      Organization[]
-  orgTitle      UserTitle?       @relation(fields: [orgTitleId], references: [id])
-  orgTitleId    String?
   ethnicity     UserEthnicity[]
   countryOrigin Country[]
-  immigration   UserImmigration? @relation(fields: [immigrationId], references: [id])
-  immigrationId String?
   SOG           UserSOG[]
   birthYear     String?
-  role          UserRole         @relation(fields: [roleId], references: [id])
-  roleId        String
-  permissions   UserPermission[]
-  userType      UserType         @relation(fields: [userTypeId], references: [id])
-  userTypeId    String
-  lists         UserList[]       @relation("userList")
-  sharedLists   UserList[]       @relation("sharedLists")
   reasonForJoin String?
   communities   UserCommunity[]
-  langPref      Language         @relation(fields: [langPrefId], references: [id])
-  langPrefId    String
+  orgOwner      Organization[]
+  permissions   UserPermission[]
 
+  // Relationships
+  lists       UserList[] @relation("userList")
+  sharedLists UserList[] @relation("sharedLists")
+
+  orgTitle   UserTitle? @relation(fields: [orgTitleId], references: [id])
+  orgTitleId String?
+
+  immigration   UserImmigration? @relation(fields: [immigrationId], references: [id])
+  immigrationId String?
+
+  role   UserRole @relation(fields: [roleId], references: [id])
+  roleId String
+
+  userType   UserType @relation(fields: [userTypeId], references: [id])
+  userTypeId String
+
+  langPref   Language @relation(fields: [langPrefId], references: [id])
+  langPrefId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // audit log fields
   createUserEthnicity       UserEthnicity[]       @relation("createUserEthnicity")
   updateUserEthnicity       UserEthnicity[]       @relation("updateUserEthnicity")
   createUserImmigration     UserImmigration[]     @relation("createUserImmigration")
@@ -184,11 +202,12 @@ model VerificationToken {
 }
 
 model UserEthnicity {
-  id        String   @id @default(cuid())
-  language  Language @relation(fields: [langId], references: [id])
-  langId    String
+  id        String @id @default(cuid())
   ethnicity String
   users     User[]
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserEthnicity", fields: [createdById], references: [id])
@@ -201,55 +220,62 @@ model UserEthnicity {
 }
 
 model UserImmigration {
-  id          String   @id @default(cuid())
+  id     String @id @default(cuid())
+  status String
+  users  User[]
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
+
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  language    Language @relation(fields: [langId], references: [id])
-  langId      String
-  status      String
-  users       User[]
   createdBy   User     @relation("createUserImmigration", fields: [createdById], references: [id])
   createdById String
+  updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserImmigration", fields: [updatedById], references: [id])
   updatedById String
 }
 
 model UserSOG {
-  id          String   @id @default(cuid())
+  id    String @id @default(cuid())
+  sog   String
+  users User[]
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
+
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  language    Language @relation(fields: [langId], references: [id])
-  langId      String
-  sog         String
-  users       User[]
   createdBy   User     @relation("createUserSOG", fields: [createdById], references: [id])
   createdById String
+  updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserSOG", fields: [updatedById], references: [id])
   updatedById String
 }
 
 model UserType {
-  id          String    @id @default(cuid())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  language    Language? @relation(fields: [langId], references: [id])
-  langId      String?
-  type        String    @unique
-  users       User[]
-  createdBy   User?     @relation("createUserType", fields: [createdById], references: [id])
+  id    String @id @default(cuid())
+  type  String @unique
+  users User[]
+
+  language Language? @relation(fields: [langId], references: [id])
+  langId   String?
+
+  createdAt   DateTime @default(now())
+  createdBy   User?    @relation("createUserType", fields: [createdById], references: [id])
   createdById String?
-  updatedBy   User?     @relation("updateUserType", fields: [updatedById], references: [id])
+  updatedAt   DateTime @updatedAt
+  updatedBy   User?    @relation("updateUserType", fields: [updatedById], references: [id])
   updatedById String?
 }
 
 model UserTitle {
   id         String     @id @default(cuid())
   text       String
-  language   Language   @relation(fields: [langId], references: [id])
-  langId     String
   email      OrgEmail[]
   orgUser    User[]
   searchable Boolean    @default(false)
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserTitle", fields: [createdById], references: [id])
@@ -260,29 +286,33 @@ model UserTitle {
 }
 
 model UserCommunity {
-  id          String   @id @default(cuid())
+  id        String @id @default(cuid())
+  community String
+  users     User[]
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
+
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  community   String
-  language    Language @relation(fields: [langId], references: [id])
-  langId      String
-  users       User[]
   createdBy   User     @relation("createUserCommunity", fields: [createdById], references: [id])
   createdById String
+  updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserCommunity", fields: [updatedById], references: [id])
   updatedById String
 }
 
 model UserList {
   id            String             @id @default(cuid())
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
   name          String
   organizations Organization[]
   visibility    UserListVisibility @default(PRIVATE)
-  ownedBy       User               @relation("userList", fields: [ownedById], references: [id])
-  ownedById     String
   sharedWith    User[]             @relation("sharedLists")
+
+  ownedBy   User   @relation("userList", fields: [ownedById], references: [id])
+  ownedById String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum UserListVisibility {
@@ -305,23 +335,27 @@ model Organization {
   photos         OrgPhotos[]
   services       OrgService[]
   orgSocialMedia OrgSocialMedia[]
-  source         OrgSource        @relation(fields: [sourceId], references: [id])
-  sourceId       String
   userList       UserList[]
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createOrganization", fields: [createdById], references: [id])
+  source   OrgSource @relation(fields: [sourceId], references: [id])
+  sourceId String
+
+  createdAt   DateTime    @default(now())
+  createdBy   User        @relation("createOrganization", fields: [createdById], references: [id])
   createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateOrganization", fields: [updatedById], references: [id])
+  updatedAt   DateTime    @updatedAt
+  updatedBy   User        @relation("updateOrganization", fields: [updatedById], references: [id])
   updatedById String
+  OrgReview   OrgReview[]
 }
 
 model OrgDescription {
-  id           String       @id @default(cuid())
-  text         String
-  language     Language     @relation(fields: [langId], references: [id])
-  langId       String
+  id   String @id @default(cuid())
+  text String
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
+
   organization Organization @relation(fields: [orgId], references: [id])
   orgId        String
 
@@ -336,14 +370,16 @@ model OrgDescription {
 }
 
 model OrgEmail {
-  id           String       @id @default(cuid())
-  firstName    String
-  lastName     String
-  primary      Boolean
-  email        String
-  published    Boolean      @default(true)
-  title        UserTitle    @relation(fields: [titleId], references: [id])
-  titleId      String
+  id        String  @id @default(cuid())
+  firstName String
+  lastName  String
+  primary   Boolean
+  email     String
+  published Boolean @default(true)
+
+  title   UserTitle @relation(fields: [titleId], references: [id])
+  titleId String
+
   organization Organization @relation(fields: [orgId], references: [id])
   orgId        String
 
@@ -356,21 +392,28 @@ model OrgEmail {
 }
 
 model OrgLocation {
-  id           String       @id @default(cuid())
-  street1      String
-  street2      String
-  city         String
-  govDist      GovDist?     @relation(fields: [govDistId], references: [id])
-  govDistId    String?
-  postCode     String?
-  country      Country      @relation(fields: [countryId], references: [id])
-  countryId    String
-  latitude     Decimal      @db.Decimal(4, 3)
-  longitude    Decimal      @db.Decimal(4, 3)
-  published    Boolean      @default(true)
+  id      String @id @default(cuid())
+  street1 String
+  street2 String
+  city    String
+
+  govDist   GovDist? @relation(fields: [govDistId], references: [id])
+  govDistId String?
+
+  postCode String?
+
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
+
+  longitude Decimal @db.Decimal(4, 3)
+  latitude  Decimal @db.Decimal(4, 3)
+  geoJSON   Json /// @zod.custom(imports.GeoJSONSchema)
+
+  published Boolean    @default(true)
+  hours     OrgHours[]
+
   organization Organization @relation(fields: [orgId], references: [id])
   orgId        String
-  hours        OrgHours[]
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgLocation", fields: [createdById], references: [id])
@@ -383,10 +426,11 @@ model OrgLocation {
 }
 
 model OrgNotes {
-  id           String       @id @default(cuid())
+  id   String @id @default(cuid())
+  text String
+
   organization Organization @relation(fields: [orgId], references: [id])
   orgId        String
-  text         String
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgNotes", fields: [createdById], references: [id])
@@ -397,12 +441,14 @@ model OrgNotes {
 }
 
 model OrgPhone {
-  id             String       @id @default(cuid())
-  number         String
-  published      Boolean      @default(true)
-  primary        Boolean
-  phoneType      PhoneType    @relation(fields: [phoneTypeId], references: [id])
-  phoneTypeId    String
+  id        String  @id @default(cuid())
+  number    String
+  published Boolean @default(true)
+  primary   Boolean
+
+  phoneType   PhoneType @relation(fields: [phoneTypeId], references: [id])
+  phoneTypeId String
+
   organization   Organization @relation(fields: [organizationId], references: [id])
   organizationId String
 
@@ -415,11 +461,12 @@ model OrgPhone {
 }
 
 model OrgPhotos {
-  id           String       @id @default(cuid())
-  foursquareId String
+  id           String  @id @default(cuid())
+  foursquareId String?
   src          String
-  height       Int
-  width        Int
+  height       Int?
+  width        Int?
+
   organization Organization @relation(fields: [orgId], references: [id])
   orgId        String
 
@@ -434,9 +481,10 @@ model OrgPhotos {
 model PhoneType {
   id       String     @id @default(cuid())
   type     String
-  language Language   @relation(fields: [langId], references: [id])
-  langId   String
   orgPhone OrgPhone[]
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createPhoneType", fields: [createdById], references: [id])
@@ -447,13 +495,15 @@ model PhoneType {
 }
 
 model OrgHours {
-  id           String       @id @default(cuid())
-  dayIndex     Int          @default(0) // Sunday = 0
-  start        Int          @default(0) // minutes
-  end          Int          @default(1440) // minutes
-  orgLocation  OrgLocation? @relation(fields: [orgLocId], references: [id])
-  orgLocId     String?
-  orgService   OrgService?  @relation(fields: [orgServiceId], references: [id])
+  id       String @id @default(cuid())
+  dayIndex Int    @default(0) // Sunday = 0
+  start    Int    @default(0) // minutes
+  end      Int    @default(1440) // minutes
+
+  orgLocation OrgLocation? @relation(fields: [orgLocId], references: [id])
+  orgLocId    String?
+
+  orgService   OrgService? @relation(fields: [orgServiceId], references: [id])
   orgServiceId String?
 
   createdAt   DateTime @default(now())
@@ -470,11 +520,13 @@ model OrgService {
   accessInstructions String
   description        String
   hours              OrgHours[]
-  organization       Organization  @relation(fields: [organizationId], references: [id])
-  organizationId     String
   service            ServiceType[]
-  language           Language      @relation(fields: [langId], references: [id])
-  langId             String
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgService", fields: [createdById], references: [id])
@@ -490,6 +542,13 @@ model OrgReview {
   comment String?
   visible Boolean @default(true)
 
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+
+  // Optional: Review can be attached to a specific service.
+  service   ServiceType? @relation(fields: [serviceId], references: [id])
+  serviceId String?
+
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgReview", fields: [createdById], references: [id])
   createdById String
@@ -501,9 +560,10 @@ model OrgReview {
 model ServiceCategory {
   id       String        @id @default(cuid())
   category String
-  language Language      @relation(fields: [langId], references: [id])
-  langId   String
   services ServiceType[]
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createServiceCategory", fields: [createdById], references: [id])
@@ -514,13 +574,17 @@ model ServiceCategory {
 }
 
 model ServiceType {
-  id          String          @id @default(cuid())
-  type        String
-  language    Language        @relation(fields: [langId], references: [id])
-  langId      String
-  category    ServiceCategory @relation(fields: [categoryId], references: [id])
-  categoryId  String
+  id   String @id @default(cuid())
+  type String
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
+
+  category   ServiceCategory @relation(fields: [categoryId], references: [id])
+  categoryId String
+
   orgServices OrgService[]
+  OrgReview   OrgReview[]
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createServiceType", fields: [createdById], references: [id])
@@ -531,12 +595,14 @@ model ServiceType {
 }
 
 model OrgSocialMedia {
-  id             String             @id @default(cuid())
-  username       String
-  service        SocialMediaService @relation(fields: [serviceId], references: [id])
-  serviceId      String
-  url            String
-  organization   Organization       @relation(fields: [organizationId], references: [id])
+  id       String @id @default(cuid())
+  username String
+  url      String
+
+  service   SocialMediaService @relation(fields: [serviceId], references: [id])
+  serviceId String
+
+  organization   Organization @relation(fields: [organizationId], references: [id])
   organizationId String
 
   createdAt   DateTime @default(now())
@@ -548,10 +614,11 @@ model OrgSocialMedia {
 }
 
 model SocialMediaService {
-  id             String           @id @default(cuid())
-  name           String
-  urlBase        String
-  logoIcon       String
+  id       String @id @default(cuid())
+  name     String
+  urlBase  String
+  logoIcon String
+
   orgSocialMedia OrgSocialMedia[]
 
   createdAt   DateTime @default(now())
@@ -563,8 +630,9 @@ model SocialMediaService {
 }
 
 model OrgSource {
-  id           String         @id @default(cuid())
-  source       String
+  id     String @id @default(cuid())
+  source String
+
   organization Organization[]
 
   createdAt   DateTime @default(now())
@@ -576,14 +644,18 @@ model OrgSource {
 }
 
 model Country {
-  id                 String               @id @default(cuid())
-  name               String
-  govDistName        String?
-  dialCode           String
-  orgAddress         OrgLocation[]
+  id          String  @id @default(cuid())
+  cca3        String  @unique
+  name        String
+  govDistName String?
+  dialCode    String
+  flag        String
+
   countryTranslation CountryTranslation[]
-  users              User[]
   GovDist            GovDist[]
+
+  orgAddress OrgLocation[]
+  users      User[]
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createCountry", fields: [createdById], references: [id])
@@ -594,13 +666,15 @@ model Country {
 }
 
 model CountryTranslation {
-  id          String   @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
-  govDistName String
-  country     Country  @relation(fields: [countryId], references: [id])
-  countryId   String
-  language    Language @relation(fields: [langId], references: [id])
-  langId      String
+  govDistName String?
+
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createCountryTranslation", fields: [createdById], references: [id])
@@ -609,16 +683,20 @@ model CountryTranslation {
   updatedBy   User     @relation("updateCountryTranslation", fields: [updatedById], references: [id])
   updatedById String
 
+  @@unique([countryId, langId])
   @@index([langId])
 }
 
 model GovDist {
-  id          String        @id @default(cuid())
-  name        String
-  country     Country       @relation(fields: [countryId], references: [id])
-  countryId   String
-  language    Language      @relation(fields: [langId], references: [id])
-  langId      String
+  id   String @id @default(cuid())
+  name String
+
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
+
   OrgLocation OrgLocation[]
 
   createdAt   DateTime @default(now())
@@ -632,10 +710,13 @@ model GovDist {
 }
 
 model Language {
-  id                 String               @id @default(cuid())
-  languageName       String
-  langCode           String               @unique
-  nativeName         String
+  id           String  @id @default(cuid())
+  languageName String
+  localeCode   String  @unique
+  iso6392      String?
+  nativeName   String
+
+  // fields using records
   translations       Translation[]
   orgDescriptions    OrgDescription[]
   userTitle          UserTitle[]
@@ -660,9 +741,15 @@ model Language {
   updatedById String?
 }
 
+//
+// Translation tables for text content.
+//
+
+// Top level category
 model TranslationCategory {
-  id           String            @id @default(uuid())
-  category     String            @unique
+  id       String @id @default(uuid())
+  category String @unique
+
   translations Translation[]
   item         TranslationItem[]
 
@@ -674,6 +761,7 @@ model TranslationCategory {
   updatedById String
 }
 
+// Tag identifier
 model TranslationItem {
   id           String              @id @default(uuid())
   tagName      String
@@ -691,21 +779,30 @@ model TranslationItem {
   @@unique([tagName, categoryId])
 }
 
+// Translation of category & tag
 model Translation {
-  id         String                @id @default(uuid())
-  text       String
-  language   Language              @relation(fields: [langId], references: [id])
-  langId     String
-  category   TranslationCategory   @relation(fields: [categoryId], references: [id])
+  id   String @id @default(uuid())
+  text String
+
+  language Language @relation(fields: [langId], references: [id])
+  langId   String
+
+  category   TranslationCategory @relation(fields: [categoryId], references: [id])
   categoryId String
-  item       TranslationItem       @relation(fields: [itemId], references: [id])
-  itemId     String
-  variables  TranslationVariable[]
-  isBase     Boolean               @default(true)
+
+  item   TranslationItem @relation(fields: [itemId], references: [id])
+  itemId String
+
+  // associate variables to be used in translation (for dynamic content [plurals, ordinals, etc])
+  // example: "You have {#) new {message}" where {message} could be plural
+  variables TranslationVariable[]
+  isBase    Boolean               @default(true)
+  useDigits Boolean               @default(false)
+
   // to manage plurals & ordinals
-  children   Translation[]         @relation("translationSubItems")
-  parent     Translation?          @relation("translationSubItems", fields: [parentId], references: [id])
-  parentId   String?
+  children Translation[] @relation("translationSubItems")
+  parent   Translation?  @relation("translationSubItems", fields: [parentId], references: [id])
+  parentId String?
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createTranslation", fields: [createdById], references: [id])
@@ -715,12 +812,14 @@ model Translation {
   updatedById String
 }
 
+// define variables to be used in translations
 model TranslationVariable {
-  id          String        @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
   description String
-  plural      Boolean       @default(false)
-  ordinal     Boolean       @default(false)
+  plural      Boolean @default(false)
+  ordinal     Boolean @default(false)
+
   translation Translation[]
 
   createdAt   DateTime @default(now())

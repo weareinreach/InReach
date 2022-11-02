@@ -1,11 +1,12 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import { CompleteOrganization, CompleteUser, OrganizationModel, UserModel } from './index'
 
 export const _OrgNotesModel = z.object({
 	id: z.string(),
-	orgId: z.string(),
 	text: z.string(),
+	orgId: z.string(),
 	createdAt: z.date(),
 	createdById: z.string(),
 	updatedAt: z.date(),

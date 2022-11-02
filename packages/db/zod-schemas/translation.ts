@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import {
 	CompleteLanguage,
 	CompleteTranslationCategory,
@@ -20,6 +21,7 @@ export const _TranslationModel = z.object({
 	categoryId: z.string(),
 	itemId: z.string(),
 	isBase: z.boolean(),
+	useDigits: z.boolean(),
 	parentId: z.string().nullish(),
 	createdAt: z.date(),
 	createdById: z.string(),

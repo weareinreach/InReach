@@ -174,6 +174,7 @@ importers:
       prettier: ^2.7.1
       prettier-plugin-jsdoc: ^0.4.2
       prettier-plugin-packagejson: ^2.3.0
+      prettier-plugin-prisma: ^4.4.0
       typescript: ^4.8.4
     devDependencies:
       '@inreach/eslint-config': link:../eslint-config
@@ -181,6 +182,7 @@ importers:
       prettier: 2.7.1
       prettier-plugin-jsdoc: 0.4.2_prettier@2.7.1
       prettier-plugin-packagejson: 2.3.0_prettier@2.7.1
+      prettier-plugin-prisma: 4.4.0_prettier@2.7.1
       typescript: 4.8.4
 
   packages/db:
@@ -189,6 +191,7 @@ importers:
       '@prisma/client': ^4.5.0
       '@types/node': '16'
       '@types/recursive-readdir': ^2.2.1
+      axios: ^1.1.3
       dotenv: ^16.0.3
       mongoback: ^3.0.3
       prisma: ^4.5.0
@@ -207,6 +210,7 @@ importers:
       '@inreach/config': link:../config
       '@types/node': 16.18.0
       '@types/recursive-readdir': 2.2.1
+      axios: 1.1.3
       dotenv: 16.0.3
       mongoback: 3.0.3
       prisma: 4.5.0
@@ -5373,6 +5377,10 @@ packages:
       '@prisma/debug': 3.14.0
     dev: true
 
+  /@prisma/prisma-fmt-wasm/4.4.0-66.f352a33b70356f46311da8b00d83386dd9f145d6:
+    resolution: {integrity: sha512-Hc2i5nfAt3nLDUkQNWJcKFJaA9Avd5zz6t85w9SW7P0vGtFXScQ+xIu6znbULr9bc0pgTWejY1We2u/7EMxHWw==}
+    dev: true
+
   /@prisma/sdk/3.15.2:
     resolution: {integrity: sha512-SE0m63Eee3VmbD2S/GyF9J8Pe/ur6rO0ohxsY9TAQhLWIxbKeh2VkGJCWbc8E/vUtjzRy3jj2XkpjZsHROeNkg==}
     dependencies:
@@ -10063,6 +10071,16 @@ packages:
       - debug
     dev: true
 
+  /axios/1.1.3:
+    resolution: {integrity: sha512-00tXVRwKx/FZr/IDVFt4C+f9FYairX517WoGCL6dpOntqLkZofjhu43F/Xl44UOpqa+9sLFDrG/XAnFsUYgkDA==}
+    dependencies:
+      follow-redirects: 1.15.2
+      form-data: 4.0.0
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+    dev: true
+
   /axobject-query/2.2.0:
     resolution: {integrity: sha512-Td525n+iPOOyUQIeBfcASuG6uJsDOITl7Mds5gFyerkWiX7qhUTdYUBlSgNMyVqtSJqwpt1kXGLdUt6SykLMRA==}
     dev: true
@@ -14120,7 +14138,6 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
-    dev: false
 
   /form-urlencoded/2.0.9:
     resolution: {integrity: sha512-fWUzNiOnYa126vFAT6TFXd1mhJrvD8IqmQ9ilZPjkLYQfaRreBr5fIUoOpPlWtqaAG64nzoE7u5zSetifab9IA==}
@@ -18827,6 +18844,16 @@ packages:
     dependencies:
       prettier: 2.7.1
       sort-package-json: 1.57.0
+    dev: true
+
+  /prettier-plugin-prisma/4.4.0_prettier@2.7.1:
+    resolution: {integrity: sha512-631zwtvHUjcuS+i83wkxE3LqizazojWie4Pkha9GL6r1UsochNUedvxfvWPCdw6Dpyawvc5UKkmxcb9aT9+xfg==}
+    engines: {node: '>=12', npm: '>=7'}
+    peerDependencies:
+      prettier: '>=2'
+    dependencies:
+      '@prisma/prisma-fmt-wasm': 4.4.0-66.f352a33b70356f46311da8b00d83386dd9f145d6
+      prettier: 2.7.1
     dev: true
 
   /prettier/2.3.0:

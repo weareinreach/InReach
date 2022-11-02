@@ -1,10 +1,10 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import { CompleteUser, UserModel } from './index'
 
 export const _AccountModel = z.object({
 	id: z.string(),
-	userId: z.string(),
 	type: z.string(),
 	provider: z.string(),
 	providerAccountId: z.string(),
@@ -15,6 +15,9 @@ export const _AccountModel = z.object({
 	scope: z.string().nullish(),
 	id_token: z.string().nullish(),
 	session_state: z.string().nullish(),
+	userId: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
 })
 
 export interface CompleteAccount extends z.infer<typeof _AccountModel> {

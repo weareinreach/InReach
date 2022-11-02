@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import {
 	CompleteCountry,
 	CompleteGovDist,
@@ -13,6 +14,14 @@ import {
 	UserModel,
 } from './index'
 
+// Helper schema for JSON fields
+type Literal = boolean | number | string
+type Json = Literal | { [key: string]: Json } | Json[]
+const literalSchema = z.union([z.string(), z.number(), z.boolean()])
+const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
+	z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)])
+)
+
 export const _OrgLocationModel = z.object({
 	id: z.string(),
 	street1: z.string(),
@@ -21,8 +30,9 @@ export const _OrgLocationModel = z.object({
 	govDistId: z.string().nullish(),
 	postCode: z.string().nullish(),
 	countryId: z.string(),
-	latitude: z.number(),
 	longitude: z.number(),
+	latitude: z.number(),
+	geoJSON: imports.GeoJSONSchema,
 	published: z.boolean(),
 	orgId: z.string(),
 	createdAt: z.date(),
@@ -34,8 +44,8 @@ export const _OrgLocationModel = z.object({
 export interface CompleteOrgLocation extends z.infer<typeof _OrgLocationModel> {
 	govDist?: CompleteGovDist | null
 	country: CompleteCountry
-	organization: CompleteOrganization
 	hours: CompleteOrgHours[]
+	organization: CompleteOrganization
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 }
@@ -49,8 +59,8 @@ export const OrgLocationModel: z.ZodSchema<CompleteOrgLocation> = z.lazy(() =>
 	_OrgLocationModel.extend({
 		govDist: GovDistModel.nullish(),
 		country: CountryModel,
-		organization: OrganizationModel,
 		hours: OrgHoursModel.array(),
+		organization: OrganizationModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
 	})

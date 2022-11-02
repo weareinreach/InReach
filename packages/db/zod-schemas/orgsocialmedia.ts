@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import {
 	CompleteOrganization,
 	CompleteSocialMediaService,
@@ -12,8 +13,8 @@ import {
 export const _OrgSocialMediaModel = z.object({
 	id: z.string(),
 	username: z.string(),
-	serviceId: z.string(),
 	url: z.string(),
+	serviceId: z.string(),
 	organizationId: z.string(),
 	createdAt: z.date(),
 	createdById: z.string(),
