@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import {
 	CompleteOrgDescription,
 	CompleteOrgEmail,
@@ -7,6 +8,7 @@ import {
 	CompleteOrgNotes,
 	CompleteOrgPhone,
 	CompleteOrgPhotos,
+	CompleteOrgReview,
 	CompleteOrgService,
 	CompleteOrgSocialMedia,
 	CompleteOrgSource,
@@ -18,6 +20,7 @@ import {
 	OrgNotesModel,
 	OrgPhoneModel,
 	OrgPhotosModel,
+	OrgReviewModel,
 	OrgServiceModel,
 	OrgSocialMediaModel,
 	OrgSourceModel,
@@ -47,10 +50,11 @@ export interface CompleteOrganization extends z.infer<typeof _OrganizationModel>
 	photos: CompleteOrgPhotos[]
 	services: CompleteOrgService[]
 	orgSocialMedia: CompleteOrgSocialMedia[]
-	source: CompleteOrgSource
 	userList: CompleteUserList[]
+	source: CompleteOrgSource
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	OrgReview: CompleteOrgReview[]
 }
 
 /**
@@ -69,9 +73,10 @@ export const OrganizationModel: z.ZodSchema<CompleteOrganization> = z.lazy(() =>
 		photos: OrgPhotosModel.array(),
 		services: OrgServiceModel.array(),
 		orgSocialMedia: OrgSocialMediaModel.array(),
-		source: OrgSourceModel,
 		userList: UserListModel.array(),
+		source: OrgSourceModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		OrgReview: OrgReviewModel.array(),
 	})
 )

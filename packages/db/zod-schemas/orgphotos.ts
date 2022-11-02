@@ -1,13 +1,14 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import { CompleteOrganization, CompleteUser, OrganizationModel, UserModel } from './index'
 
 export const _OrgPhotosModel = z.object({
 	id: z.string(),
-	foursquareId: z.string(),
+	foursquareId: z.string().nullish(),
 	src: z.string(),
-	height: z.number().int(),
-	width: z.number().int(),
+	height: z.number().int().nullish(),
+	width: z.number().int().nullish(),
 	orgId: z.string(),
 	createdAt: z.date(),
 	createdById: z.string(),

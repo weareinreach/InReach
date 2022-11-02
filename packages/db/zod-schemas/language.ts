@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import {
 	CompleteCountryTranslation,
 	CompleteGovDist,
@@ -36,7 +37,8 @@ import {
 export const _LanguageModel = z.object({
 	id: z.string(),
 	languageName: z.string(),
-	langCode: z.string(),
+	localeCode: z.string(),
+	iso6392: z.string().nullish(),
 	nativeName: z.string(),
 	createdAt: z.date(),
 	createdById: z.string().nullish(),

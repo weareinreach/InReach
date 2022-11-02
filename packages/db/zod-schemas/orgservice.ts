@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import {
 	CompleteLanguage,
 	CompleteOrgHours,
@@ -28,8 +29,8 @@ export const _OrgServiceModel = z.object({
 
 export interface CompleteOrgService extends z.infer<typeof _OrgServiceModel> {
 	hours: CompleteOrgHours[]
-	organization: CompleteOrganization
 	service: CompleteServiceType[]
+	organization: CompleteOrganization
 	language: CompleteLanguage
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
@@ -43,8 +44,8 @@ export interface CompleteOrgService extends z.infer<typeof _OrgServiceModel> {
 export const OrgServiceModel: z.ZodSchema<CompleteOrgService> = z.lazy(() =>
 	_OrgServiceModel.extend({
 		hours: OrgHoursModel.array(),
-		organization: OrganizationModel,
 		service: ServiceTypeModel.array(),
+		organization: OrganizationModel,
 		language: LanguageModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,

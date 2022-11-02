@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+import * as imports from '../zod-util'
 import {
 	CompleteLanguage,
 	CompleteOrgPhone,
@@ -20,8 +21,8 @@ export const _PhoneTypeModel = z.object({
 })
 
 export interface CompletePhoneType extends z.infer<typeof _PhoneTypeModel> {
-	language: CompleteLanguage
 	orgPhone: CompleteOrgPhone[]
+	language: CompleteLanguage
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 }
@@ -33,8 +34,8 @@ export interface CompletePhoneType extends z.infer<typeof _PhoneTypeModel> {
  */
 export const PhoneTypeModel: z.ZodSchema<CompletePhoneType> = z.lazy(() =>
 	_PhoneTypeModel.extend({
-		language: LanguageModel,
 		orgPhone: OrgPhoneModel.array(),
+		language: LanguageModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
 	})
