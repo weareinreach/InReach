@@ -6,7 +6,7 @@ export const seedEthnicities = async () => {
 	let i = 1
 	for (const item of queue) {
 		console.log(
-			`(${i}/${queue.length}) Upserting Ethnicity: (${item.create.language?.connect?.langCode}) ${item.create.ethnicity}`
+			`(${i}/${queue.length}) Upserting Ethnicity: (${item.create.language?.connect?.localeCode}) ${item.create.ethnicity}`
 		)
 		await prisma.userEthnicity.upsert(item)
 		i++

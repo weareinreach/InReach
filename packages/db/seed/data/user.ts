@@ -1,7 +1,7 @@
 import { type Prisma } from '@prisma/client'
 
 export const userEmail = 'inreach_svc@inreach.org'
-export const langCode = 'en'
+export const localeCode = 'en'
 export const userType = 'System'
 
 export const seedUser: Prisma.UserCreateInput = {
@@ -18,10 +18,10 @@ export const seedUser: Prisma.UserCreateInput = {
 	langPref: {
 		connectOrCreate: {
 			where: {
-				langCode,
+				localeCode,
 			},
 			create: {
-				langCode,
+				localeCode,
 				languageName: 'English',
 				nativeName: 'English',
 			},
@@ -44,3 +44,6 @@ export const connectUser = {
 		email: userEmail,
 	},
 }
+export const createdBy = connectUser
+
+export const updatedBy = connectUser

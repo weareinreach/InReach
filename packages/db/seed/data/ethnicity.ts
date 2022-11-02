@@ -35,7 +35,7 @@ const generator = async (lang: string[], ethnicities: string[]) => {
 		lang.map(async (item) => {
 			const { id: langId } = await prisma.language.findUniqueOrThrow({
 				where: {
-					langCode: item,
+					localeCode: item,
 				},
 				select: {
 					id: true,
@@ -54,7 +54,7 @@ const generator = async (lang: string[], ethnicities: string[]) => {
 						ethnicity,
 						language: {
 							connect: {
-								langCode: item,
+								localeCode: item,
 							},
 						},
 						createdBy: connectUser,

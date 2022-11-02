@@ -1,5 +1,5 @@
 import { prisma } from '../../index'
-import { langCode, seedUser, userEmail, userType } from '../data/user'
+import { localeCode, seedUser, userEmail, userType } from '../data/user'
 
 export const seedSystemUser = async () => {
 	try {
@@ -29,10 +29,10 @@ export const seedSystemUser = async () => {
 				},
 			},
 		}
-		console.log(`Updating createdBy/updatedBy for 'Language (${langCode})'`)
+		console.log(`Updating createdBy/updatedBy for 'Language (${localeCode})'`)
 		await prisma.language.update({
 			where: {
-				langCode: langCode,
+				localeCode: localeCode,
 			},
 			data: updateData,
 		})
