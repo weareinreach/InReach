@@ -6,17 +6,17 @@ export const _UserTypeModel = z.object({
 	id: z.string(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
-	langId: z.string(),
+	langId: z.string().nullish(),
 	type: z.string(),
-	createdById: z.string(),
-	updatedById: z.string(),
+	createdById: z.string().nullish(),
+	updatedById: z.string().nullish(),
 })
 
 export interface CompleteUserType extends z.infer<typeof _UserTypeModel> {
-	language: CompleteLanguage
+	language?: CompleteLanguage | null
 	users: CompleteUser[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	createdBy?: CompleteUser | null
+	updatedBy?: CompleteUser | null
 }
 
 /**
@@ -26,9 +26,9 @@ export interface CompleteUserType extends z.infer<typeof _UserTypeModel> {
  */
 export const UserTypeModel: z.ZodSchema<CompleteUserType> = z.lazy(() =>
 	_UserTypeModel.extend({
-		language: LanguageModel,
+		language: LanguageModel.nullish(),
 		users: UserModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		createdBy: UserModel.nullish(),
+		updatedBy: UserModel.nullish(),
 	})
 )

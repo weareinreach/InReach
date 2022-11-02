@@ -39,9 +39,9 @@ export const _LanguageModel = z.object({
 	langCode: z.string(),
 	nativeName: z.string(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().nullish(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().nullish(),
 })
 
 export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {
@@ -60,8 +60,8 @@ export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {
 	GovDist: CompleteGovDist[]
 	UserCommunity: CompleteUserCommunity[]
 	User: CompleteUser[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	createdBy?: CompleteUser | null
+	updatedBy?: CompleteUser | null
 }
 
 /**
@@ -86,7 +86,7 @@ export const LanguageModel: z.ZodSchema<CompleteLanguage> = z.lazy(() =>
 		GovDist: GovDistModel.array(),
 		UserCommunity: UserCommunityModel.array(),
 		User: UserModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		createdBy: UserModel.nullish(),
+		updatedBy: UserModel.nullish(),
 	})
 )
