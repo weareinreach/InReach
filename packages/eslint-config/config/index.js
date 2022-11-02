@@ -4,11 +4,10 @@
  * @constraint {{import('@types/eslint').ESLint.ConfigData}}
  */
 
-const config = {
+module.exports = {
 	plugins: ['prettier', 'codegen', 'turbo'],
-	extends: ['prettier', 'plugin:turbo/recommended', 'next/core-web-vitals'],
+	extends: ['prettier', 'plugin:turbo/recommended'],
 	rules: {
-		'@next/next/no-html-link-for-pages': 'off',
 		'react/jsx-key': 'off',
 		'codegen/codegen': 'error',
 		'react/no-unescaped-entities': [
@@ -36,11 +35,6 @@ const config = {
 		],
 	},
 	ignorePatterns: ['**/node_modules/**'],
-	settings: {
-		next: {
-			rootDir: ['apps/*/'],
-		},
-	},
 	overrides: [
 		{
 			files: ['**/*.ts?(x)'],
@@ -49,6 +43,11 @@ const config = {
 			extends: ['plugin:@typescript-eslint/recommended'],
 		},
 	],
-}
+	parserOptions: {
+		ecmaVersion: 'latest',
+	},
 
-module.exports = config
+	env: {
+		es6: true,
+	},
+}

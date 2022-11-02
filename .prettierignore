@@ -13,4 +13,4 @@ pnpm-lock.yaml
 .DS_Store
 .eslintignore
 
-apps/app/docs/prisma
+docs/database
