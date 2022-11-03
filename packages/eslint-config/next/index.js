@@ -4,14 +4,21 @@
  * @constraint {{import('@types/eslint').ESLint.ConfigData}}
  */
 
-module.exports = {
+const config = {
+	plugins: ['i18next'],
 	extends: ['../', 'next/core-web-vitals'],
 	rules: {
 		'@next/next/no-html-link-for-pages': 'off',
+		'i18next/no-literal-string': 2,
 	},
 	settings: {
+		'i18next/no-literal-string': {
+			exclude: ['I18n'],
+		},
 		next: {
 			rootDir: ['apps/*/'],
 		},
 	},
 }
+
+module.exports = config
