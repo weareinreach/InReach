@@ -1,23 +1,25 @@
 {
-	"name": "@inreach/storybook",
+	"name": "@weareinreach/storybook",
 	"version": "0.1.0",
 	"private": true,
 	"license": "GPL-3.0-only",
+	"type": "module",
 	"scripts": {
 		"build": "build-storybook",
 		"build:swc": "BUILD_TOOL=swc build-storybook",
 		"chromatic": "chromatic",
 		"dev": "start-storybook -p 6006",
+		"format": "prettier --write --ignore-unknown .",
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix ."
 	},
 	"dependencies": {
-		"@inreach/app": "workspace:^0.1.0",
-		"@inreach/ui": "workspace:*",
-		"@inreach/web": "workspace:^0.1.0",
 		"@storybook/addon-a11y": "^6.5.12",
 		"@storybook/builder-vite": "^0.2.5",
 		"@storybook/theming": "^6.5.12",
+		"@weareinreach/app": "workspace:^0.1.0",
+		"@weareinreach/ui": "workspace:*",
+		"@weareinreach/web": "workspace:^0.1.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"storybook-addon-next": "^1.6.9",
@@ -25,8 +27,6 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.19.1",
-		"@inreach/config": "workspace:*",
-		"@inreach/eslint-config": "workspace:*",
 		"@storybook/addon-actions": "^6.5.12",
 		"@storybook/addon-console": "^1.2.3",
 		"@storybook/addon-essentials": "^6.5.12",
@@ -39,6 +39,8 @@
 		"@types/node": "16.18.0",
 		"@types/react": "18.0.24",
 		"@types/react-dom": "^18.0.8",
+		"@weareinreach/config": "workspace:*",
+		"@weareinreach/eslint-config": "workspace:*",
 		"babel-loader": "^8.2.5",
 		"chromatic": "^6.11.4",
 		"css-loader": "^6.7.1",
@@ -56,5 +58,5 @@
 		"next": "13.0.0"
 	},
 	"packageManager": "pnpm@7.14.0",
-	"_id": "@inreach/storybook@0.1.0"
+	"_id": "@weareinreach/storybook@0.1.0"
 }

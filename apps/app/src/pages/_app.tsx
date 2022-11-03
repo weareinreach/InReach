@@ -1,16 +1,15 @@
 import { httpBatchLink } from '@trpc/client/links/httpBatchLink'
 import { loggerLink } from '@trpc/client/links/loggerLink'
 import { withTRPC } from '@trpc/next'
+import { MantineProvider } from '@weareinreach/ui/mantine/core'
+import { ModalsProvider } from '@weareinreach/ui/mantine/modals'
+import { NotificationsProvider } from '@weareinreach/ui/mantine/notifications'
+import { appCache, appTheme } from '@weareinreach/ui/theme'
 import type { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import superjson from 'superjson'
 
 import type { AppProps } from 'next/app'
-
-import { MantineProvider } from '@inreach/ui/mantine/core'
-import { ModalsProvider } from '@inreach/ui/mantine/modals'
-import { NotificationsProvider } from '@inreach/ui/mantine/notifications'
-import { appCache, appTheme } from '@inreach/ui/theme'
 
 import type { AppRouter } from '../server/router'
 

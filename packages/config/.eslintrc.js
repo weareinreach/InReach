@@ -1,3 +1,3 @@
 module.exports = {
-	extends: ['@inreach/eslint-config'],
+	extends: ['@weareinreach/eslint-config'],
 }

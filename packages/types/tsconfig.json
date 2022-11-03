@@ -1,5 +1,5 @@
 {
-	"extends": "@inreach/config/tsconfig/base.json",
+	"extends": "@weareinreach/config/tsconfig/base.json",
 	"include": ["./**/*.ts", "./**/*.js"],
 	"exclude": ["**/node_modules/*"]
 }

@@ -1,12 +1,11 @@
 import { themes } from '@storybook/theming'
+import { commonTheme } from '@weareinreach/ui/theme'
 import { mantineTheme } from 'storybook-addon-mantine'
 
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 import * as NextImage from 'next/image'
 
 import React from 'react'
-
-import { commonTheme } from '@inreach/ui/theme'
 
 const OriginalNextImage = NextImage.default
 

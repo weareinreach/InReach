@@ -3,8 +3,8 @@
 	"pipeline": {
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": ["dist/**", ".next/**"],
-			"env": ["NODE_ENV"]
+			"env": ["NODE_ENV"],
+			"outputs": ["dist/**", ".next/**"]
 		},
 		"app#build": {
 			"env": ["DATABASE_URL", "NEXTAUTH_SECRET", "NEXTAUTH_URL", "VERCEL_URL", "PORT"]
@@ -19,18 +19,26 @@
 				"NEXT_PUBLIC_SENTRY_DSN"
 			]
 		},
+		"chromatic": {
+			"dependsOn": [],
+			"env": ["CHROMATIC_PROJECT_TOKEN"]
+		},
+		"dev": {
+			"cache": false
+		},
+		"format": {
+			"dependsOn": [],
+			"outputs": []
+		},
 		"lint": {
 			"outputs": []
 		},
 		"lint:fix": {
 			"outputs": []
 		},
-		"dev": {
-			"cache": false
-		},
-		"chromatic": {
+		"post-install": {
 			"dependsOn": [],
-			"env": ["CHROMATIC_PROJECT_TOKEN"]
+			"outputs": ["packages/db/zod-schemas/**", "docs/database/**"]
 		}
 	}
 }

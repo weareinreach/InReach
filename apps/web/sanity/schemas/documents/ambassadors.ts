@@ -1,6 +1,5 @@
+import { SocialMediaIconSelect } from '@weareinreach/ui/components/web'
 import { defineArrayMember, defineField, defineType } from 'sanity'
-
-import { SocialMediaIconSelect } from '@inreach/ui/components/web'
 
 export const ambassador = defineType({
 	name: 'ambassador',

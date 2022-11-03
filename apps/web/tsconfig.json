@@ -6,7 +6,7 @@
 		},
 		"typeRoots": ["./types"]
 	},
-	"extends": "@inreach/config/tsconfig/nextjs.json",
+	"extends": "@weareinreach/config/tsconfig/nextjs.json",
 	"include": [
 		"./next-env.d.ts",
 		"./**/*.ts",

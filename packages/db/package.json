@@ -1,5 +1,5 @@
 {
-	"name": "@inreach/db",
+	"name": "@weareinreach/db",
 	"version": "0.0.0",
 	"private": true,
 	"keywords": [],
@@ -15,12 +15,12 @@
 		"db:mongoexport": "tsx ./data-transfer/scripts/mongoexport.ts && ",
 		"db:seed": "prisma db seed",
 		"db:studio": "prisma studio",
-		"format:all": "pnpm format:docs && pnpm format:export && pnpm format:generated",
-		"format:docs": "prettier --write ../../docs/database",
+		"format": "prettier --write --ignore-unknown .",
+		"format:all": "pnpm format:export && pnpm format:generated",
 		"format:export": "prettier --write ./data-transfer/**/*.{ts,json}",
 		"format:generated": "prettier --write ./**/*.ts",
 		"inspect-queries": "prisma-query-inspector start",
-		"postinstall": "pnpm db:generate",
+		"post-install": "pnpm db:generate",
 		"prisma": "prisma"
 	},
 	"dependencies": {
@@ -28,9 +28,9 @@
 		"zod": "^3.19.1"
 	},
 	"devDependencies": {
-		"@inreach/config": "workspace:^0.0.0",
 		"@types/node": "16",
 		"@types/recursive-readdir": "^2.2.1",
+		"@weareinreach/config": "workspace:^0.0.0",
 		"axios": "^1.1.3",
 		"commander": "^9.4.1",
 		"dotenv": "^16.0.3",

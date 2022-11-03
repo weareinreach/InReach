@@ -32,11 +32,11 @@ export const HeroCarousel = (props: HeroCarouselProps) => {
 	}
 	console.log('hc', items)
 
-	const slides = items.map((slide) => {
+	const slides = items.map((slide, i) => {
 		const { image, alt, content } = slide
 
 		return (
-			<Carousel.Slide>
+			<Carousel.Slide key={i}>
 				<Image src={image as string} alt={alt as string} className={classes.backgroundImg} fill priority />
 				<Overlay opacity={0.6} zIndex={-9} color={theme.colors.gray[0]} />
 				<Stack spacing='xs' className={classes.text}></Stack>
