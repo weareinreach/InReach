@@ -10,3 +10,5 @@ pnpm-lock.yaml
 .prettierignore
 .DS_Store
 .eslintignore
+
+storybook-static/
