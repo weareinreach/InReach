@@ -1,14 +1,14 @@
 // import Head from 'next/head'
+import { MantineProvider } from '@weareinreach/ui/mantine/core'
+import { ModalsProvider } from '@weareinreach/ui/mantine/modals'
+import { NotificationsProvider } from '@weareinreach/ui/mantine/notifications'
+import { webCache, webTheme } from '@weareinreach/ui/theme'
+
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 
 import type { ReactElement, ReactNode } from 'react'
 import { StrictMode } from 'react'
-
-import { MantineProvider } from '@inreach/ui/mantine/core'
-import { ModalsProvider } from '@inreach/ui/mantine/modals'
-import { NotificationsProvider } from '@inreach/ui/mantine/notifications'
-import { webCache, webTheme } from '@inreach/ui/theme'
 
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<P, IP> & {
 	getLayout?: (page: ReactElement) => ReactNode

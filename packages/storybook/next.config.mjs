@@ -4,7 +4,7 @@
  * @constraint {{import('next').NextConfig}}
  */
 
-// const withTM = require('next-transpile-modules')(['@inreach/ui'])
+// const withTM = require('next-transpile-modules')(['@weareinreach/ui'])
 
 function defineNextConfig(config) {
 	// return withTM(config)
@@ -14,7 +14,7 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: {
-		transpilePackages: ['@inreach/ui'],
+		transpilePackages: ['@weareinreach/ui'],
 	},
 }
 

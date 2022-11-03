@@ -1,8 +1,7 @@
 import type { PortableTextProps } from '@portabletext/react'
+import { CtaPreview } from '@weareinreach/ui/components/web'
 import { groq } from 'next-sanity'
 import { defineArrayMember, defineField, defineType } from 'sanity'
-
-import { CtaPreview } from '@inreach/ui/components/web'
 
 export interface HeroCarouselReturn {
 	_key: string

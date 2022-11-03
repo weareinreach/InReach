@@ -5,8 +5,8 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 
 import type { ReactElement } from 'react'
 
-import { Blocks } from '@inreach/ui/components/web'
-import { WebLayout } from '@inreach/ui/layouts'
+import { Blocks } from '@weareinreach/ui/components/web'
+import { WebLayout } from '@weareinreach/ui/layouts'
 
 import navData from '../../data/nav.json'
 import { getClient } from '../../lib/sanity.server'

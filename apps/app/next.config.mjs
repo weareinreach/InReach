@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { env } from './src/env/server.mjs'
+// import { env } from './src/env/server.mjs'
 
 /**
  * Don't be scared of the generics here. All they do is to give us autocompletion when using this.
@@ -16,7 +16,7 @@ export default defineNextConfig({
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: {
-		transpilePackages: ['@inreach/ui'],
+		transpilePackages: ['@weareinreach/ui'],
 	},
 	async rewrites() {
 		return {

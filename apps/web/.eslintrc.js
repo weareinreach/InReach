@@ -3,5 +3,5 @@ module.exports = {
 		project: './tsconfig.json',
 	},
 	root: true,
-	extends: ['@inreach/eslint-config/next'],
+	extends: ['@weareinreach/eslint-config/next'],
 }

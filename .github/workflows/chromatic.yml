@@ -23,7 +23,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install dependencies
-        run: npx --yes pnpm -F "@inreach/storybook" install
+        run: npx --yes pnpm -F "@weareinreach/storybook" install
         # 👇 Runs yarn in ./packages/storybook
         working-directory: packages/storybook
       - name: Publish to Chromatic

@@ -1,5 +1,5 @@
 module.exports = {
-	extends: ['@inreach/eslint-config'],
+	extends: ['@weareinreach/eslint-config'],
 	overrides: [
 		{
 			files: ['./zod-schemas/*/ts'],

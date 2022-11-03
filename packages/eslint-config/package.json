@@ -1,8 +1,11 @@
 {
-	"name": "@inreach/eslint-config",
+	"name": "@weareinreach/eslint-config",
 	"version": "0.0.0",
 	"license": "GPL-3.0-only",
 	"main": "index.js",
+	"scripts": {
+		"format": "prettier --write --ignore-unknown ."
+	},
 	"dependencies": {
 		"@typescript-eslint/parser": "^5.42.0",
 		"eslint-config-prettier": "^8.3.0"

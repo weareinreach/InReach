@@ -1,5 +1,5 @@
 {
-	"name": "@inreach/config",
+	"name": "@weareinreach/config",
 	"version": "0.0.0",
 	"private": true,
 	"license": "GPL-3.0-only",
@@ -9,9 +9,12 @@
 		"tsconfig/react-library.json",
 		"prettier/index.js"
 	],
+	"scripts": {
+		"format": "prettier --write --ignore-unknown ."
+	},
 	"devDependencies": {
-		"@inreach/eslint-config": "workspace:^0.0.0",
 		"@trivago/prettier-plugin-sort-imports": "^3.4.0",
+		"@weareinreach/eslint-config": "workspace:^0.0.0",
 		"prettier": "^2.7.1",
 		"prettier-plugin-jsdoc": "^0.4.2",
 		"prettier-plugin-packagejson": "^2.3.0",

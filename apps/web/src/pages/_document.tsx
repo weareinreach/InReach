@@ -1,9 +1,8 @@
+import { ServerStyles, createStylesServer } from '@weareinreach/ui/mantine/next'
+import { webCache } from '@weareinreach/ui/theme'
 import { ServerStyleSheetDocument } from 'next-sanity/studio'
 
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
-
-import { ServerStyles, createStylesServer } from '@inreach/ui/mantine/next'
-import { webCache } from '@inreach/ui/theme'
 
 const stylesServer = createStylesServer(webCache)
 export default class _Document extends ServerStyleSheetDocument {

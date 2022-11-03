@@ -5,5 +5,5 @@ module.exports = {
 	// },
 	// "plugins": ["@typescript-eslint"],
 	root: true,
-	extends: ['@inreach/eslint-config/next'],
+	extends: ['@weareinreach/eslint-config/next'],
 }

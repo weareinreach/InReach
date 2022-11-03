@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { withSentryConfig } from '@sentry/nextjs'
 
-import { env } from './src/env/server.mjs'
+// import { env } from './src/env/server.mjs'
 
 /**
  * Don't be scared of the generics here. All they do is to give us autocompletion when using this.
@@ -14,7 +14,7 @@ const config = {
 	reactStrictMode: false, // Off for Sanity Studio until fixed -> https://github.com/sanity-io/sanity/issues/3604
 	swcMinify: true,
 	experimental: {
-		transpilePackages: ['@inreach/ui'],
+		transpilePackages: ['@weareinreach/ui'],
 	},
 
 	sentry: {
