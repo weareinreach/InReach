@@ -5,16 +5,11 @@
  */
 
 const config = {
-	plugins: ['i18next'],
 	extends: ['../', 'next/core-web-vitals'],
 	rules: {
 		'@next/next/no-html-link-for-pages': 'off',
-		'i18next/no-literal-string': 1,
 	},
 	settings: {
-		'i18next/no-literal-string': {
-			exclude: ['I18n'],
-		},
 		next: {
 			rootDir: ['apps/*/'],
 		},
