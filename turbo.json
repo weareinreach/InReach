@@ -3,13 +3,19 @@
 	"pipeline": {
 		"build": {
 			"dependsOn": ["^build"],
-			"env": ["NODE_ENV"],
-			"outputs": ["dist/**", ".next/**"]
+			"env": ["NODE_ENV"]
 		},
-		"app#build": {
-			"env": ["DATABASE_URL", "NEXTAUTH_SECRET", "NEXTAUTH_URL", "VERCEL_URL", "PORT"]
+		"@weareinreach/app#build": {
+			"dependsOn": ["^build"],
+			"env": ["DATABASE_URL", "NEXTAUTH_SECRET", "NEXTAUTH_URL", "VERCEL_URL", "PORT"],
+			"outputs": [".next/**"]
 		},
-		"web#build": {
+		"@weareinreach/storybook#build": {
+			"dependsOn": ["^build"],
+			"outputs": ["storybook-static/**", ".next/**"]
+		},
+		"@weareinreach/web#build": {
+			"dependsOn": ["^build"],
 			"env": [
 				"SENTRY_DSN",
 				"SANITY_TOKEN",
@@ -17,24 +23,42 @@
 				"NEXT_PUBLIC_SANITY_DATASET",
 				"NEXT_PUBLIC_SANITY_PROJECT_ID",
 				"NEXT_PUBLIC_SENTRY_DSN"
-			]
+			],
+			"outputs": [".next/**"]
 		},
 		"chromatic": {
-			"dependsOn": [],
+			"dependsOn": ["build"],
 			"env": ["CHROMATIC_PROJECT_TOKEN"]
 		},
 		"dev": {
 			"cache": false
 		},
 		"format": {
-			"dependsOn": [],
 			"outputs": []
 		},
 		"lint": {
 			"outputs": []
 		},
+		"@weareinreach/app#lint": {
+			"outputs": [".next/cache/eslint/**"]
+		},
+		"@weareinreach/storybook#lint": {
+			"outputs": [".next/cache/eslint/**"]
+		},
+		"@weareinreach/web#lint": {
+			"outputs": [".next/cache/eslint/**"]
+		},
 		"lint:fix": {
 			"outputs": []
+		},
+		"@weareinreach/app#lint:fix": {
+			"outputs": [".next/cache/eslint/**"]
+		},
+		"@weareinreach/storybook#lint:fix": {
+			"outputs": [".next/cache/eslint/**"]
+		},
+		"@weareinreach/web#lint:fix": {
+			"outputs": [".next/cache/eslint/**"]
 		},
 		"post-install": {
 			"dependsOn": [],
