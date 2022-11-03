@@ -24,20 +24,20 @@ datasource db {
 // Necessary for Next auth
 model Account {
   // Do not change - NextAuth fields
-  id                String  @id @default(cuid())
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? //@db.Text
-  access_token      String? //@db.Text
+  id                String  @id @default(cuid()) @db.VarChar(32)
+  type              String  @db.VarChar(32)
+  provider          String  @db.VarChar(32)
+  providerAccountId String  @db.VarChar(128)
+  refresh_token     String? @db.VarChar(128)
+  access_token      String? @db.VarChar(128)
   expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? //@db.Text
-  session_state     String?
+  token_type        String? @db.VarChar(32)
+  scope             String? @db.VarChar(256)
+  id_token          String? @db.VarChar(128)
+  session_state     String? @db.VarChar(128)
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  userId String @db.VarChar(32)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -47,21 +47,21 @@ model Account {
 
 model Session {
   // Do not change - NextAuth fields
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
+  id           String   @id @default(cuid()) @db.VarChar(32)
+  sessionToken String   @unique @db.VarChar(128)
   expires      DateTime
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  userId String @db.VarChar(32)
 }
 
 model User {
   // Do not change - NextAuth fields
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
+  id            String    @id @default(cuid()) @db.VarChar(32)
+  name          String?   @db.VarChar(128)
+  email         String    @unique @db.VarChar(128)
   emailVerified DateTime?
-  image         String?
+  image         String?   @db.VarChar(256)
   accounts      Account[]
   sessions      Session[]
 
@@ -69,8 +69,8 @@ model User {
   ethnicity     UserEthnicity[]
   countryOrigin Country[]
   SOG           UserSOG[]
-  birthYear     String?
-  reasonForJoin String?
+  birthYear     String?          @db.VarChar(4)
+  reasonForJoin String?          @db.VarChar(32)
   communities   UserCommunity[]
   orgOwner      Organization[]
   permissions   UserPermission[]
@@ -80,19 +80,19 @@ model User {
   sharedLists UserList[] @relation("sharedLists")
 
   orgTitle   UserTitle? @relation(fields: [orgTitleId], references: [id])
-  orgTitleId String?
+  orgTitleId String?    @db.VarChar(32)
 
   immigration   UserImmigration? @relation(fields: [immigrationId], references: [id])
-  immigrationId String?
+  immigrationId String?          @db.VarChar(32)
 
   role   UserRole @relation(fields: [roleId], references: [id])
-  roleId String
+  roleId String   @db.VarChar(32)
 
   userType   UserType @relation(fields: [userTypeId], references: [id])
-  userTypeId String
+  userTypeId String   @db.VarChar(32)
 
   langPref   Language @relation(fields: [langPrefId], references: [id])
-  langPrefId String
+  langPrefId String   @db.VarChar(32)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -165,151 +165,151 @@ model User {
 }
 
 model UserRole {
-  id          String           @id @default(cuid())
-  name        String           @unique
+  id          String           @id @default(cuid()) @db.VarChar(32)
+  name        String           @unique @db.VarChar(128)
   permissions UserPermission[]
 
   createdAt   DateTime @default(now())
   createdBy   User?    @relation("createUserRole", fields: [createdById], references: [id])
-  createdById String?
+  createdById String?  @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User?    @relation("updateUserRole", fields: [updatedById], references: [id])
-  updatedById String?
+  updatedById String?  @db.VarChar(32)
   User        User[]
 }
 
 model UserPermission {
-  id    String @id @default(cuid())
-  name  String
+  id    String @id @default(cuid()) @db.VarChar(32)
+  name  String @db.VarChar(32)
   users User[]
 
   createdAt   DateTime   @default(now())
   createdBy   User       @relation("createUserPermission", fields: [createdById], references: [id])
-  createdById String
+  createdById String     @db.VarChar(32)
   updatedAt   DateTime   @updatedAt
   updatedBy   User       @relation("updateUserPermission", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String     @db.VarChar(32)
   UserRole    UserRole[]
 }
 
 model VerificationToken {
   // Do not change - NextAuth fields
-  identifier String
-  token      String   @unique
+  identifier String   @db.VarChar(128)
+  token      String   @unique @db.VarChar(128)
   expires    DateTime
 
   @@unique([identifier, token])
 }
 
 model UserEthnicity {
-  id        String @id @default(cuid())
-  ethnicity String
+  id        String @id @default(cuid()) @db.VarChar(32)
+  ethnicity String @db.VarChar(128)
   users     User[]
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserEthnicity", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserEthnicity", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 
   @@unique([langId, ethnicity])
 }
 
 model UserImmigration {
-  id     String @id @default(cuid())
-  status String
+  id     String @id @default(cuid()) @db.VarChar(32)
+  status String @db.VarChar(128)
   users  User[]
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserImmigration", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserImmigration", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model UserSOG {
-  id    String @id @default(cuid())
-  sog   String
+  id    String @id @default(cuid()) @db.VarChar(32)
+  sog   String @db.VarChar(128)
   users User[]
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserSOG", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserSOG", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model UserType {
-  id    String @id @default(cuid())
-  type  String @unique
+  id    String @id @default(cuid()) @db.VarChar(32)
+  type  String @unique @db.VarChar(32)
   users User[]
 
   language Language? @relation(fields: [langId], references: [id])
-  langId   String?
+  langId   String?   @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User?    @relation("createUserType", fields: [createdById], references: [id])
-  createdById String?
+  createdById String?  @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User?    @relation("updateUserType", fields: [updatedById], references: [id])
-  updatedById String?
+  updatedById String?  @db.VarChar(32)
 }
 
 model UserTitle {
-  id         String     @id @default(cuid())
-  text       String
+  id         String     @id @default(cuid()) @db.VarChar(32)
+  text       String     @db.VarChar(128)
   email      OrgEmail[]
   orgUser    User[]
   searchable Boolean    @default(false)
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserTitle", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserTitle", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model UserCommunity {
-  id        String @id @default(cuid())
-  community String
+  id        String @id @default(cuid()) @db.VarChar(32)
+  community String @db.VarChar(128)
   users     User[]
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserCommunity", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserCommunity", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model UserList {
-  id            String             @id @default(cuid())
-  name          String
+  id            String             @id @default(cuid()) @db.VarChar(32)
+  name          String             @db.VarChar(128)
   organizations Organization[]
   visibility    UserListVisibility @default(PRIVATE)
   sharedWith    User[]             @relation("sharedLists")
 
   ownedBy   User   @relation("userList", fields: [ownedById], references: [id])
-  ownedById String
+  ownedById String @db.VarChar(32)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -322,13 +322,13 @@ enum UserListVisibility {
 }
 
 model Organization {
-  id             String           @id @default(cuid())
+  id             String           @id @default(cuid()) @db.VarChar(32)
   description    OrgDescription[]
   email          OrgEmail[]
   deleted        Boolean          @default(false)
   published      Boolean          @default(false)
   location       OrgLocation[]
-  name           String
+  name           String           @db.VarChar(128)
   notes          OrgNotes[]
   owner          User[]
   phone          OrgPhone[]
@@ -338,72 +338,72 @@ model Organization {
   userList       UserList[]
 
   source   OrgSource @relation(fields: [sourceId], references: [id])
-  sourceId String
+  sourceId String    @db.VarChar(32)
 
   createdAt   DateTime    @default(now())
   createdBy   User        @relation("createOrganization", fields: [createdById], references: [id])
-  createdById String
+  createdById String      @db.VarChar(32)
   updatedAt   DateTime    @updatedAt
   updatedBy   User        @relation("updateOrganization", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String      @db.VarChar(32)
   OrgReview   OrgReview[]
 }
 
 model OrgDescription {
-  id   String @id @default(cuid())
+  id   String @id @default(cuid()) @db.VarChar(32)
   text String
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   organization Organization @relation(fields: [orgId], references: [id])
-  orgId        String
+  orgId        String       @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgDescription", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateOrgDescription", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 
   @@index([langId, orgId])
 }
 
 model OrgEmail {
-  id        String  @id @default(cuid())
-  firstName String
-  lastName  String
+  id        String  @id @default(cuid()) @db.VarChar(32)
+  firstName String  @db.VarChar(128)
+  lastName  String  @db.VarChar(128)
   primary   Boolean
-  email     String
+  email     String  @db.VarChar(128)
   published Boolean @default(true)
 
   title   UserTitle @relation(fields: [titleId], references: [id])
-  titleId String
+  titleId String    @db.VarChar(32)
 
   organization Organization @relation(fields: [orgId], references: [id])
-  orgId        String
+  orgId        String       @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgEmail", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateOrgEmail", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model OrgLocation {
-  id      String @id @default(cuid())
-  street1 String
-  street2 String
-  city    String
+  id      String @id @default(cuid()) @db.VarChar(32)
+  street1 String @db.VarChar(128)
+  street2 String @db.VarChar(128)
+  city    String @db.VarChar(128)
 
   govDist   GovDist? @relation(fields: [govDistId], references: [id])
-  govDistId String?
+  govDistId String?  @db.VarChar(32)
 
-  postCode String?
+  postCode String? @db.VarChar(10)
 
   country   Country @relation(fields: [countryId], references: [id])
-  countryId String
+  countryId String  @db.VarChar(32)
 
   longitude Decimal @db.Decimal(4, 3)
   latitude  Decimal @db.Decimal(4, 3)
@@ -413,109 +413,109 @@ model OrgLocation {
   hours     OrgHours[]
 
   organization Organization @relation(fields: [orgId], references: [id])
-  orgId        String
+  orgId        String       @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgLocation", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateOrgLocation", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 
   @@index([latitude, longitude])
 }
 
 model OrgNotes {
-  id   String @id @default(cuid())
+  id   String @id @default(cuid()) @db.VarChar(32)
   text String
 
   organization Organization @relation(fields: [orgId], references: [id])
-  orgId        String
+  orgId        String       @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgNotes", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateOrgNotes", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model OrgPhone {
-  id        String  @id @default(cuid())
-  number    String
+  id        String  @id @default(cuid()) @db.VarChar(32)
+  number    String  @db.VarChar(15)
   published Boolean @default(true)
   primary   Boolean
 
   phoneType   PhoneType @relation(fields: [phoneTypeId], references: [id])
-  phoneTypeId String
+  phoneTypeId String    @db.VarChar(32)
 
   organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String
+  organizationId String       @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgPhone", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateOrgPhone", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model OrgPhotos {
-  id           String  @id @default(cuid())
-  foursquareId String?
-  src          String
-  height       Int?
-  width        Int?
+  id           String  @id @default(cuid()) @db.VarChar(32)
+  foursquareId String? @db.VarChar(128)
+  src          String  @db.VarChar(255)
+  height       Int?    @db.SmallInt
+  width        Int?    @db.SmallInt
 
   organization Organization @relation(fields: [orgId], references: [id])
-  orgId        String
+  orgId        String       @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgPhotos", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateOrgPhotos", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model PhoneType {
-  id       String     @id @default(cuid())
-  type     String
+  id       String     @id @default(cuid()) @db.VarChar(32)
+  type     String     @db.VarChar(32)
   orgPhone OrgPhone[]
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createPhoneType", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updatePhoneType", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model OrgHours {
-  id       String @id @default(cuid())
-  dayIndex Int    @default(0) // Sunday = 0
-  start    Int    @default(0) // minutes
-  end      Int    @default(1440) // minutes
+  id       String @id @default(cuid()) @db.VarChar(32)
+  dayIndex Int    @default(0) @db.SmallInt // Sunday = 0
+  start    Int    @default(0) @db.SmallInt // minutes
+  end      Int    @default(1440) @db.SmallInt // minutes
 
   orgLocation OrgLocation? @relation(fields: [orgLocId], references: [id])
-  orgLocId    String?
+  orgLocId    String?      @db.VarChar(32)
 
   orgService   OrgService? @relation(fields: [orgServiceId], references: [id])
-  orgServiceId String?
+  orgServiceId String?     @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgHours", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateOrgHours", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model OrgService {
-  id                 String        @id @default(cuid())
+  id                 String        @id @default(cuid()) @db.VarChar(32)
   published          Boolean
   accessInstructions String
   description        String
@@ -523,133 +523,133 @@ model OrgService {
   service            ServiceType[]
 
   organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String
+  organizationId String       @db.VarChar(32)
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgService", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateOrgService", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model OrgReview {
-  id      String  @id @default(cuid())
-  rating  Int
+  id      String  @id @default(cuid()) @db.VarChar(32)
+  rating  Int     @db.SmallInt
   comment String?
   visible Boolean @default(true)
 
   organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String
+  organizationId String       @db.VarChar(32)
 
   // Optional: Review can be attached to a specific service.
   service   ServiceType? @relation(fields: [serviceId], references: [id])
-  serviceId String?
+  serviceId String?      @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgReview", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateOrgReview", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model ServiceCategory {
-  id       String        @id @default(cuid())
-  category String
+  id       String        @id @default(cuid()) @db.VarChar(32)
+  category String        @db.VarChar(32)
   services ServiceType[]
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createServiceCategory", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateServiceCategory", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model ServiceType {
-  id   String @id @default(cuid())
-  type String
+  id   String @id @default(cuid()) @db.VarChar(32)
+  type String @db.VarChar(32)
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   category   ServiceCategory @relation(fields: [categoryId], references: [id])
-  categoryId String
+  categoryId String          @db.VarChar(32)
 
   orgServices OrgService[]
   OrgReview   OrgReview[]
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createServiceType", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateServiceType", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model OrgSocialMedia {
-  id       String @id @default(cuid())
-  username String
-  url      String
+  id       String @id @default(cuid()) @db.VarChar(32)
+  username String @db.VarChar(128)
+  url      String @db.VarChar(128)
 
   service   SocialMediaService @relation(fields: [serviceId], references: [id])
-  serviceId String
+  serviceId String             @db.VarChar(32)
 
   organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String
+  organizationId String       @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgSocialMedia", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateOrgSocialMedia", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model SocialMediaService {
-  id       String @id @default(cuid())
-  name     String
-  urlBase  String
-  logoIcon String
+  id       String @id @default(cuid()) @db.VarChar(32)
+  name     String @db.VarChar(32)
+  urlBase  String @db.VarChar(32)
+  logoIcon String @db.VarChar(32)
 
   orgSocialMedia OrgSocialMedia[]
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createSocialMediaService", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateSocialMediaService", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model OrgSource {
-  id     String @id @default(cuid())
-  source String
+  id     String @id @default(cuid()) @db.VarChar(32)
+  source String @db.VarChar(128)
 
   organization Organization[]
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createOrgSource", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateOrgSource", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model Country {
-  id          String  @id @default(cuid())
-  cca3        String  @unique
-  name        String
-  govDistName String?
-  dialCode    String
-  flag        String
+  id          String  @id @default(cuid()) @db.VarChar(32)
+  cca3        String  @unique @db.Char(3)
+  name        String  @db.VarChar(255)
+  govDistName String? @db.VarChar(32)
+  dialCode    String  @db.VarChar(10)
+  flag        String  @db.VarChar(10)
 
   countryTranslation CountryTranslation[]
   GovDist            GovDist[]
@@ -659,62 +659,62 @@ model Country {
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createCountry", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateCountry", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 model CountryTranslation {
-  id          String  @id @default(cuid())
-  name        String
-  govDistName String?
+  id          String  @id @default(cuid()) @db.VarChar(32)
+  name        String  @db.VarChar(255)
+  govDistName String? @db.VarChar(32)
 
   country   Country @relation(fields: [countryId], references: [id])
-  countryId String
+  countryId String  @db.VarChar(32)
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createCountryTranslation", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateCountryTranslation", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 
   @@unique([countryId, langId])
   @@index([langId])
 }
 
 model GovDist {
-  id   String @id @default(cuid())
-  name String
+  id   String @id @default(cuid()) @db.VarChar(32)
+  name String @db.VarChar(128)
 
   country   Country @relation(fields: [countryId], references: [id])
-  countryId String
+  countryId String  @db.VarChar(32)
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   OrgLocation OrgLocation[]
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createGovDist", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateGovDist", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 
   @@index([countryId, langId])
 }
 
 model Language {
-  id           String  @id @default(cuid())
-  languageName String
-  localeCode   String  @unique
-  iso6392      String?
-  nativeName   String
+  id           String  @id @default(cuid()) @db.VarChar(32)
+  languageName String  @db.VarChar(32)
+  localeCode   String  @unique @db.VarChar(7)
+  iso6392      String? @db.Char(3)
+  nativeName   String  @db.VarChar(32)
 
   // fields using records
   translations       Translation[]
@@ -735,10 +735,10 @@ model Language {
 
   createdAt   DateTime @default(now())
   createdBy   User?    @relation("createLanguage", fields: [createdById], references: [id])
-  createdById String?
+  createdById String?  @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User?    @relation("updateLanguage", fields: [updatedById], references: [id])
-  updatedById String?
+  updatedById String?  @db.VarChar(32)
 }
 
 //
@@ -748,33 +748,33 @@ model Language {
 // Top level category
 model TranslationCategory {
   id       String @id @default(uuid())
-  category String @unique
+  category String @unique @db.VarChar(16)
 
   translations Translation[]
   item         TranslationItem[]
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createTranslationCategory", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateTranslationCategory", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 // Tag identifier
 model TranslationItem {
   id           String              @id @default(uuid())
-  tagName      String
+  tagName      String              @db.VarChar(128)
   category     TranslationCategory @relation(fields: [categoryId], references: [id])
-  categoryId   String
+  categoryId   String              @db.VarChar(32)
   translations Translation[]
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createTranslationItem", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateTranslationItem", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 
   @@unique([tagName, categoryId])
 }
@@ -785,13 +785,13 @@ model Translation {
   text String
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String   @db.VarChar(32)
 
   category   TranslationCategory @relation(fields: [categoryId], references: [id])
-  categoryId String
+  categoryId String              @db.VarChar(32)
 
   item   TranslationItem @relation(fields: [itemId], references: [id])
-  itemId String
+  itemId String          @db.VarChar(32)
 
   // associate variables to be used in translation (for dynamic content [plurals, ordinals, etc])
   // example: "You have {#) new {message}" where {message} could be plural
@@ -802,21 +802,21 @@ model Translation {
   // to manage plurals & ordinals
   children Translation[] @relation("translationSubItems")
   parent   Translation?  @relation("translationSubItems", fields: [parentId], references: [id])
-  parentId String?
+  parentId String?       @db.VarChar(32)
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createTranslation", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateTranslation", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }
 
 // define variables to be used in translations
 model TranslationVariable {
   id          String  @id @default(uuid())
-  name        String
-  description String
+  name        String  @db.VarChar(32)
+  description String  @db.VarChar(128)
   plural      Boolean @default(false)
   ordinal     Boolean @default(false)
 
@@ -824,8 +824,8 @@ model TranslationVariable {
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createTranslationVariable", fields: [createdById], references: [id])
-  createdById String
+  createdById String   @db.VarChar(32)
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateTranslationVariable", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String   @db.VarChar(32)
 }

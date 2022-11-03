@@ -52,6 +52,6 @@ interface Translation {
 	common: string
 }
 interface Idd {
-	root?: string
-	suffixes?: string[]
+	root: string
+	suffixes: string[]
 }

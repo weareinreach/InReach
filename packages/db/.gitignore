@@ -6,3 +6,4 @@ data-transfer/output/**/*.json
 data-transfer/output-types/*.ts
 data-transfer/temp/*.js
 
+*.log
