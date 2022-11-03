@@ -1,5 +1,5 @@
 import { CountryTranslation, Prisma } from '@prisma/client'
-import { type Subscriber } from 'rxjs'
+import type { ListrRenderer, ListrTaskWrapper } from 'listr2'
 
 import { prisma } from '~/client'
 import { CompleteCountry, CompleteCountryTranslation } from '~/zod-schemas'
@@ -10,7 +10,7 @@ import { logFile } from '../logger'
 
 type BulkUpsertQueue = Prisma.Prisma__CountryTranslationClient<CountryTranslation>[]
 
-export const seedCountries = async (subscriber: Subscriber<string>) => {
+export const seedCountries = async (task: ListrTaskWrapper<unknown, typeof ListrRenderer>) => {
 	try {
 		const { countries, languageList, userId } = await countryData()
 
@@ -92,14 +92,12 @@ export const seedCountries = async (subscriber: Subscriber<string>) => {
 			logFile.info(
 				`(${i}/${countries.length}) Upserted Country: '${result.name}' with ${result.countryTranslation.length} translated names.`
 			)
-			subscriber.next(
-				`(${i}/${countries.length}) Upserted Country: '${result.name}' with ${result.countryTranslation.length} translated names.`
-			)
+			task.output = `(${i}/${countries.length}) Upserted Country: '${result.name}' with ${result.countryTranslation.length} translated names.`
+
 			i++
 		}
-		return subscriber.complete()
 	} catch (err) {
-		throw subscriber.error(err)
+		throw err
 	}
 }
 
