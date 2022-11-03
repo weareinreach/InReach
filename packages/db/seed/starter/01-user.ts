@@ -1,9 +1,12 @@
-import { prisma } from '../../index'
-import { localeCode, seedUser, userEmail, userType } from '../data/user'
+import { Subscriber } from 'rxjs'
 
-export const seedSystemUser = async () => {
+import { prisma } from '~/client'
+
+import { localeCode, seedUser, userEmail, userType } from '../data/user'
+import { logFile } from '../logger'
+
+export const seedSystemUser = async (subscriber: Subscriber<string>) => {
 	try {
-		console.info(`Seeding 'System' user`)
 		// create user if it does not exist.
 		await prisma.user.upsert({
 			where: {
@@ -15,7 +18,8 @@ export const seedSystemUser = async () => {
 				id: true,
 			},
 		})
-
+		logFile.info(`System user created`)
+		subscriber.next(`System user created`)
 		// updated the 'createdBy' and 'updatedBy' fields for 'Language', 'UserType' & 'UserRole
 		const updateData = {
 			createdBy: {
@@ -29,28 +33,33 @@ export const seedSystemUser = async () => {
 				},
 			},
 		}
-		console.log(`Updating createdBy/updatedBy for 'Language (${localeCode})'`)
+		logFile.log(`Updating createdBy/updatedBy for 'Language (${localeCode})'`)
+		subscriber.next(`Updating createdBy/updatedBy for 'Language (${localeCode})'`)
 		await prisma.language.update({
 			where: {
 				localeCode: localeCode,
 			},
 			data: updateData,
 		})
-		console.log(`Updating createdBy/updatedBy for 'UserType (${userType})'`)
+		logFile.log(`Updating createdBy/updatedBy for 'UserType (${userType})'`)
+		subscriber.next(`Updating createdBy/updatedBy for 'UserType (${userType})'`)
 		await prisma.userType.update({
 			where: {
 				type: userType,
 			},
 			data: updateData,
 		})
-		console.log(`Updating createdBy/updatedBy for 'UserRole (${userType})'`)
+		logFile.log(`Updating createdBy/updatedBy for 'UserRole (${userType})'`)
+		subscriber.next(`Updating createdBy/updatedBy for 'UserRole (${userType})'`)
 		await prisma.userRole.update({
 			where: {
 				name: userType,
 			},
 			data: updateData,
 		})
+		subscriber.complete()
 	} catch (err) {
-		console.error(err)
+		throw subscriber.error(err)
+		// logFile.error(err)
 	}
 }

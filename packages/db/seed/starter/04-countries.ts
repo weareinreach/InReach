@@ -1,71 +1,105 @@
+import { CountryTranslation, Prisma } from '@prisma/client'
+import { type Subscriber } from 'rxjs'
+
 import { prisma } from '~/client'
 import { CompleteCountry, CompleteCountryTranslation } from '~/zod-schemas'
 
 import { type Countries, countryData } from '../data/countries'
 import { createdBy, updatedBy } from '../data/user'
+import { logFile } from '../logger'
 
-export const seedCountries = async () => {
-	const { countries, languageList, userId } = await countryData()
+type BulkUpsertQueue = Prisma.Prisma__CountryTranslationClient<CountryTranslation>[]
 
-	const prismaTransaction = async (
-		country: Countries,
-		languages: typeof languageList
-	): Promise<SeedCountriesReturn> => {
-		const prismaCountry = await prisma.country.upsert({
-			where: {
-				cca3: country.cca3,
-			},
-			create: {
-				cca3: country.cca3,
-				name: country.name.official,
-				dialCode: `${country.idd.root}${country.idd.suffixes?.join('')}`,
-				flag: country.flag,
-				createdBy,
-				updatedBy,
-			},
-			update: {
-				name: country.name.official,
-				dialCode: `${country.idd.root}${country.idd.suffixes?.join('')}`,
-				flag: country.flag,
-				updatedBy,
-			},
-		})
+export const seedCountries = async (subscriber: Subscriber<string>) => {
+	try {
+		const { countries, languageList, userId } = await countryData()
 
-		const bulkUpsert = languages.map((language) =>
-			prisma.countryTranslation.upsert({
+		const prismaTransaction = async (
+			country: Countries,
+			languages: typeof languageList
+		): Promise<SeedCountriesReturn> => {
+			const dialCode = () => {
+				if (country.idd.suffixes.length === 1) return `${country.idd.root}${country.idd.suffixes[0]}`
+				return `${country.idd.root}`
+			}
+			const prismaCountry = await prisma.country.upsert({
 				where: {
-					countryId_langId: {
-						countryId: prismaCountry.id,
-						langId: language.id,
-					},
+					cca3: country.cca3,
 				},
 				create: {
-					langId: language.id,
-					countryId: prismaCountry.id,
-					name: country.translations[language.iso6392 as string].official as string,
-					createdById: userId,
-					updatedById: userId,
+					cca3: country.cca3,
+					name: country.name.official,
+					dialCode: dialCode(),
+					flag: country.flag,
+					createdBy,
+					updatedBy,
 				},
 				update: {
-					name: country.translations[language.iso6392 as string].official as string,
-					updatedById: userId,
+					name: country.name.official,
+					dialCode: dialCode(),
+					flag: country.flag,
+					updatedBy,
 				},
 			})
-		)
-		const bulkResults = await prisma.$transaction(bulkUpsert)
-		const result = {
-			...prismaCountry,
-			countryTranslation: bulkResults as Partial<CompleteCountryTranslation>[],
+
+			const bulkUpsert: BulkUpsertQueue = []
+			for (const language of languages) {
+				if (!language.iso6392 || !Object.keys(country.translations).includes(language.iso6392)) {
+					if (language.iso6392 !== 'eng') {
+						continue
+					}
+				}
+
+				const countryTranslation = (): string => {
+					if (!language.iso6392) throw 'No language code defined'
+					if (language.iso6392 === 'eng') return country.name.official
+					return country.translations[language.iso6392].official
+				}
+				const action = prisma.countryTranslation.upsert({
+					where: {
+						countryId_langId: {
+							countryId: prismaCountry.id,
+							langId: language.id,
+						},
+					},
+					create: {
+						langId: language.id,
+						countryId: prismaCountry.id,
+						name: countryTranslation(),
+						createdById: userId,
+						updatedById: userId,
+					},
+					update: {
+						name: countryTranslation(),
+						updatedById: userId,
+					},
+				})
+
+				bulkUpsert.push(action)
+			}
+
+			const bulkResults = await prisma.$transaction(bulkUpsert)
+			const result = {
+				...prismaCountry,
+				countryTranslation: bulkResults as Partial<CompleteCountryTranslation>[],
+			}
+			return result
 		}
-		return result
-	}
-	let i = 1
-	for (const country of countries) {
-		const result = await prismaTransaction(country, languageList)
-		console.info(
-			`(${i}/${countries.length}) Upserted Country: '${result.name}' with ${result.countryTranslation.length} translated names.`
-		)
-		i++
+
+		let i = 1
+		for (const country of countries) {
+			const result = await prismaTransaction(country, languageList)
+			logFile.info(
+				`(${i}/${countries.length}) Upserted Country: '${result.name}' with ${result.countryTranslation.length} translated names.`
+			)
+			subscriber.next(
+				`(${i}/${countries.length}) Upserted Country: '${result.name}' with ${result.countryTranslation.length} translated names.`
+			)
+			i++
+		}
+		return subscriber.complete()
+	} catch (err) {
+		throw subscriber.error(err)
 	}
 }
 
