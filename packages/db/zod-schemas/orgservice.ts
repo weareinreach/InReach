@@ -5,20 +5,20 @@ import {
 	CompleteLanguage,
 	CompleteOrgHours,
 	CompleteOrganization,
-	CompleteServiceType,
+	CompleteServiceTag,
 	CompleteUser,
 	LanguageModel,
 	OrgHoursModel,
 	OrganizationModel,
-	ServiceTypeModel,
+	ServiceTagModel,
 	UserModel,
 } from './index'
 
 export const _OrgServiceModel = z.object({
 	id: z.string(),
 	published: z.boolean(),
-	accessInstructions: z.string(),
-	description: z.string(),
+	accessInstructions: z.string().nullish(),
+	description: z.string().nullish(),
 	organizationId: z.string(),
 	langId: z.string(),
 	createdAt: z.date(),
@@ -29,7 +29,7 @@ export const _OrgServiceModel = z.object({
 
 export interface CompleteOrgService extends z.infer<typeof _OrgServiceModel> {
 	hours: CompleteOrgHours[]
-	service: CompleteServiceType[]
+	service: CompleteServiceTag[]
 	organization: CompleteOrganization
 	language: CompleteLanguage
 	createdBy: CompleteUser
@@ -44,7 +44,7 @@ export interface CompleteOrgService extends z.infer<typeof _OrgServiceModel> {
 export const OrgServiceModel: z.ZodSchema<CompleteOrgService> = z.lazy(() =>
 	_OrgServiceModel.extend({
 		hours: OrgHoursModel.array(),
-		service: ServiceTypeModel.array(),
+		service: ServiceTagModel.array(),
 		organization: OrganizationModel,
 		language: LanguageModel,
 		createdBy: UserModel,

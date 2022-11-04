@@ -2,11 +2,17 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	CompleteCountry,
+	CompleteGovDist,
+	CompleteLanguage,
 	CompleteOrganization,
-	CompleteServiceType,
+	CompleteServiceTag,
 	CompleteUser,
+	CountryModel,
+	GovDistModel,
+	LanguageModel,
 	OrganizationModel,
-	ServiceTypeModel,
+	ServiceTagModel,
 	UserModel,
 } from './index'
 
@@ -17,6 +23,10 @@ export const _OrgReviewModel = z.object({
 	visible: z.boolean(),
 	organizationId: z.string(),
 	serviceId: z.string().nullish(),
+	langId: z.string().nullish(),
+	lcrCity: z.string().nullish(),
+	lcrGovDistId: z.string().nullish(),
+	lcrCountryId: z.string().nullish(),
 	createdAt: z.date(),
 	createdById: z.string(),
 	updatedAt: z.date(),
@@ -25,7 +35,10 @@ export const _OrgReviewModel = z.object({
 
 export interface CompleteOrgReview extends z.infer<typeof _OrgReviewModel> {
 	organization: CompleteOrganization
-	service?: CompleteServiceType | null
+	service?: CompleteServiceTag | null
+	language?: CompleteLanguage | null
+	lcrGovDist?: CompleteGovDist | null
+	lcrCountry?: CompleteCountry | null
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 }
@@ -38,7 +51,10 @@ export interface CompleteOrgReview extends z.infer<typeof _OrgReviewModel> {
 export const OrgReviewModel: z.ZodSchema<CompleteOrgReview> = z.lazy(() =>
 	_OrgReviewModel.extend({
 		organization: OrganizationModel,
-		service: ServiceTypeModel.nullish(),
+		service: ServiceTagModel.nullish(),
+		language: LanguageModel.nullish(),
+		lcrGovDist: GovDistModel.nullish(),
+		lcrCountry: CountryModel.nullish(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
 	})

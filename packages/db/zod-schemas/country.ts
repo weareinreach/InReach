@@ -2,23 +2,33 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
-	CompleteCountryTranslation,
 	CompleteGovDist,
 	CompleteOrgLocation,
+	CompleteOrgReview,
+	CompleteTranslation,
+	CompleteTranslationKey,
 	CompleteUser,
-	CountryTranslationModel,
 	GovDistModel,
 	OrgLocationModel,
+	OrgReviewModel,
+	TranslationKeyModel,
+	TranslationModel,
 	UserModel,
 } from './index'
 
 export const _CountryModel = z.object({
 	id: z.string(),
+	/** ISO 3166-1 alpha-2 Country code */
+	cca2: z.string(),
+	/** ISO 3166-1 alpha-3 Country code */
 	cca3: z.string(),
+	/** Country name (English). Translations are handled elsewhere. */
 	name: z.string(),
-	govDistName: z.string().nullish(),
-	dialCode: z.string(),
+	/** International dialing code */
+	dialCode: z.number().int(),
+	/** Country flag (emoji) */
 	flag: z.string(),
+	translationKeyId: z.string(),
 	createdAt: z.date(),
 	createdById: z.string(),
 	updatedAt: z.date(),
@@ -26,12 +36,15 @@ export const _CountryModel = z.object({
 })
 
 export interface CompleteCountry extends z.infer<typeof _CountryModel> {
-	countryTranslation: CompleteCountryTranslation[]
+	translationKey: CompleteTranslationKey
 	GovDist: CompleteGovDist[]
 	orgAddress: CompleteOrgLocation[]
-	users: CompleteUser[]
+	originUsers: CompleteUser[]
+	currentUsers: CompleteUser[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	OrgReview: CompleteOrgReview[]
+	Translation: CompleteTranslation[]
 }
 
 /**
@@ -41,11 +54,14 @@ export interface CompleteCountry extends z.infer<typeof _CountryModel> {
  */
 export const CountryModel: z.ZodSchema<CompleteCountry> = z.lazy(() =>
 	_CountryModel.extend({
-		countryTranslation: CountryTranslationModel.array(),
+		translationKey: TranslationKeyModel,
 		GovDist: GovDistModel.array(),
 		orgAddress: OrgLocationModel.array(),
-		users: UserModel.array(),
+		originUsers: UserModel.array(),
+		currentUsers: UserModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		OrgReview: OrgReviewModel.array(),
+		Translation: TranslationModel.array(),
 	})
 )

@@ -1,14 +1,14 @@
+import { VariableType } from '@prisma/client'
 import * as z from 'zod'
 
 import * as imports from '../zod-util'
-import { CompleteTranslation, CompleteUser, TranslationModel, UserModel } from './index'
+import { CompleteTranslationKey, CompleteUser, TranslationKeyModel, UserModel } from './index'
 
 export const _TranslationVariableModel = z.object({
 	id: z.string(),
 	name: z.string(),
 	description: z.string(),
-	plural: z.boolean(),
-	ordinal: z.boolean(),
+	type: z.nativeEnum(VariableType),
 	createdAt: z.date(),
 	createdById: z.string(),
 	updatedAt: z.date(),
@@ -16,7 +16,7 @@ export const _TranslationVariableModel = z.object({
 })
 
 export interface CompleteTranslationVariable extends z.infer<typeof _TranslationVariableModel> {
-	translation: CompleteTranslation[]
+	keys: CompleteTranslationKey[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 }
@@ -28,7 +28,7 @@ export interface CompleteTranslationVariable extends z.infer<typeof _Translation
  */
 export const TranslationVariableModel: z.ZodSchema<CompleteTranslationVariable> = z.lazy(() =>
 	_TranslationVariableModel.extend({
-		translation: TranslationModel.array(),
+		keys: TranslationKeyModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
 	})

@@ -2,15 +2,15 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	CompleteCountry,
 	CompleteLanguage,
-	CompleteTranslationCategory,
-	CompleteTranslationItem,
-	CompleteTranslationVariable,
+	CompleteTranslationKey,
+	CompleteTranslationNamespace,
 	CompleteUser,
+	CountryModel,
 	LanguageModel,
-	TranslationCategoryModel,
-	TranslationItemModel,
-	TranslationVariableModel,
+	TranslationKeyModel,
+	TranslationNamespaceModel,
 	UserModel,
 } from './index'
 
@@ -18,26 +18,22 @@ export const _TranslationModel = z.object({
 	id: z.string(),
 	text: z.string(),
 	langId: z.string(),
-	categoryId: z.string(),
-	itemId: z.string(),
-	isBase: z.boolean(),
-	useDigits: z.boolean(),
-	parentId: z.string().nullish(),
+	namespaceId: z.string(),
+	keyId: z.string(),
 	createdAt: z.date(),
 	createdById: z.string(),
 	updatedAt: z.date(),
 	updatedById: z.string(),
+	countryId: z.string().nullish(),
 })
 
 export interface CompleteTranslation extends z.infer<typeof _TranslationModel> {
 	language: CompleteLanguage
-	category: CompleteTranslationCategory
-	item: CompleteTranslationItem
-	variables: CompleteTranslationVariable[]
-	children: CompleteTranslation[]
-	parent?: CompleteTranslation | null
+	namespace: CompleteTranslationNamespace
+	key: CompleteTranslationKey
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	Country?: CompleteCountry | null
 }
 
 /**
@@ -48,12 +44,10 @@ export interface CompleteTranslation extends z.infer<typeof _TranslationModel> {
 export const TranslationModel: z.ZodSchema<CompleteTranslation> = z.lazy(() =>
 	_TranslationModel.extend({
 		language: LanguageModel,
-		category: TranslationCategoryModel,
-		item: TranslationItemModel,
-		variables: TranslationVariableModel.array(),
-		children: TranslationModel.array(),
-		parent: TranslationModel.nullish(),
+		namespace: TranslationNamespaceModel,
+		key: TranslationKeyModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		Country: CountryModel.nullish(),
 	})
 )

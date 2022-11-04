@@ -7,32 +7,40 @@ import {
 	CompleteOrgLocation,
 	CompleteOrgNotes,
 	CompleteOrgPhone,
-	CompleteOrgPhotos,
+	CompleteOrgPhoto,
 	CompleteOrgReview,
 	CompleteOrgService,
 	CompleteOrgSocialMedia,
-	CompleteOrgSource,
+	CompleteOutsideAPI,
+	CompletePermissionAsset,
+	CompleteSource,
 	CompleteUser,
-	CompleteUserList,
+	CompleteUserSavedList,
 	OrgDescriptionModel,
 	OrgEmailModel,
 	OrgLocationModel,
 	OrgNotesModel,
 	OrgPhoneModel,
-	OrgPhotosModel,
+	OrgPhotoModel,
 	OrgReviewModel,
 	OrgServiceModel,
 	OrgSocialMediaModel,
-	OrgSourceModel,
-	UserListModel,
+	OutsideAPIModel,
+	PermissionAssetModel,
+	SourceModel,
 	UserModel,
+	UserSavedListModel,
 } from './index'
 
 export const _OrganizationModel = z.object({
 	id: z.string(),
+	legacyId: z.string().nullish(),
+	name: z.string(),
+	slug: z.string(),
 	deleted: z.boolean(),
 	published: z.boolean(),
-	name: z.string(),
+	outsideApiId: z.string().nullish(),
+	apiLocationId: z.string().nullish(),
 	sourceId: z.string(),
 	createdAt: z.date(),
 	createdById: z.string(),
@@ -45,13 +53,15 @@ export interface CompleteOrganization extends z.infer<typeof _OrganizationModel>
 	email: CompleteOrgEmail[]
 	location: CompleteOrgLocation[]
 	notes: CompleteOrgNotes[]
-	owner: CompleteUser[]
 	phone: CompleteOrgPhone[]
-	photos: CompleteOrgPhotos[]
+	photos: CompleteOrgPhoto[]
 	services: CompleteOrgService[]
 	orgSocialMedia: CompleteOrgSocialMedia[]
-	userList: CompleteUserList[]
-	source: CompleteOrgSource
+	userList: CompleteUserSavedList[]
+	associatedUsers: CompleteUser[]
+	allowedEditors: CompletePermissionAsset[]
+	outsideApi?: CompleteOutsideAPI | null
+	source: CompleteSource
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 	OrgReview: CompleteOrgReview[]
@@ -68,13 +78,15 @@ export const OrganizationModel: z.ZodSchema<CompleteOrganization> = z.lazy(() =>
 		email: OrgEmailModel.array(),
 		location: OrgLocationModel.array(),
 		notes: OrgNotesModel.array(),
-		owner: UserModel.array(),
 		phone: OrgPhoneModel.array(),
-		photos: OrgPhotosModel.array(),
+		photos: OrgPhotoModel.array(),
 		services: OrgServiceModel.array(),
 		orgSocialMedia: OrgSocialMediaModel.array(),
-		userList: UserListModel.array(),
-		source: OrgSourceModel,
+		userList: UserSavedListModel.array(),
+		associatedUsers: UserModel.array(),
+		allowedEditors: PermissionAssetModel.array(),
+		outsideApi: OutsideAPIModel.nullish(),
+		source: SourceModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
 		OrgReview: OrgReviewModel.array(),

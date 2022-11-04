@@ -2,10 +2,10 @@ import * as Sentry from '@sentry/nextjs'
 
 import { env } from './src/env/server.mjs'
 
-const SENTRY_DSN: string = env.SENTRY_DSN
+const WEB_SENTRY_DSN: string = env.WEB_SENTRY_DSN
 
 Sentry.init({
-	dsn: SENTRY_DSN,
+	dsn: WEB_SENTRY_DSN,
 	// We recommend adjusting this value in production, or using tracesSampler
 	// for finer control
 	tracesSampleRate: 1.0,

@@ -7,7 +7,7 @@ import { z } from 'zod'
  */
 export const serverSchema = z.object({
 	// SERVERVAR: z.string(),
-	SENTRY_DSN: z.string(),
+	WEB_SENTRY_DSN: z.string(),
 	SANITY_TOKEN: z.string().optional(),
 	NODE_ENV: z.string(),
 })
@@ -18,7 +18,7 @@ export const serverSchema = z.object({
  */
 export const clientSchema = z.object({
 	// NEXT_PUBLIC_CLIENTVAR: z.string(),
-	NEXT_PUBLIC_SENTRY_DSN: z.string(),
+	NEXT_PUBLIC_WEB_SENTRY_DSN: z.string(),
 	NEXT_PUBLIC_SANITY_PROJECT_ID: z.string(),
 	NEXT_PUBLIC_SANITY_DATASET: z.string(),
 	NEXT_PUBLIC_SANITY_API_VERSION: z.string(),
@@ -32,7 +32,7 @@ export const clientSchema = z.object({
  */
 export const clientEnv = {
 	// NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
-	NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
+	NEXT_PUBLIC_WEB_SENTRY_DSN: process.env.NEXT_PUBLIC_WEB_SENTRY_DSN,
 	NEXT_PUBLIC_SANITY_PROJECT_ID: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
 	NEXT_PUBLIC_SANITY_DATASET: process.env.NEXT_PUBLIC_SANITY_DATASET,
 	NEXT_PUBLIC_SANITY_API_VERSION: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
