@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"description": "",
 	"keywords": [],
-	"license": "ISC",
+	"license": "GPL-3.0-only",
 	"author": "",
 	"main": "index.js",
 	"scripts": {

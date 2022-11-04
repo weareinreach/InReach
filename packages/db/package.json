@@ -7,9 +7,14 @@
 	"author": "",
 	"exports": "./index.ts",
 	"types": "./index.ts",
+	"files": [
+		"./index.ts",
+		"./prisma.ts"
+	],
 	"scripts": {
 		"db:deploy": "prisma migrate deploy",
 		"db:generate": "prisma generate && pnpm format:generated",
+		"db:generate:aws": "prisma generate",
 		"db:migrate": "prisma migrate dev",
 		"db:migrate:edit": "prisma migrate dev --create-only --skip-seed",
 		"db:mongoexport": "tsx ./data-transfer/scripts/mongoexport.ts && ",

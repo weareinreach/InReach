@@ -2,6 +2,7 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { prisma } from '@weareinreach/db'
 import NextAuth, { type NextAuthOptions } from 'next-auth'
+import CognitoProvider from 'next-auth/providers/cognito'
 
 // import { env } from '../../../env/server.mjs'
 
@@ -18,7 +19,12 @@ export const authOptions: NextAuthOptions = {
 	// Configure one or more authentication providers
 	adapter: PrismaAdapter(prisma),
 	providers: [
-		// ...add more providers here
+		CognitoProvider({
+			clientId: process.env.COGNITO_CLIENT_ID,
+			clientSecret: process.env.COGNITO_CLIENT_SECRET,
+			issuer: process.env.COGNITO_ISSUER,
+			allowDangerousEmailAccountLinking: true,
+		}),
 	],
 }
 

@@ -7,7 +7,18 @@
 		},
 		"@weareinreach/app#build": {
 			"dependsOn": ["^build"],
-			"env": ["DATABASE_URL", "NEXTAUTH_SECRET", "NEXTAUTH_URL", "VERCEL_URL", "PORT"],
+			"env": [
+				"DATABASE_URL",
+				"NEXTAUTH_SECRET",
+				"NEXTAUTH_URL",
+				"VERCEL_URL",
+				"PORT",
+				"COGNITO_CLIENT_ID",
+				"COGNITO_CLIENT_SECRET",
+				"COGNITO_ISSUER",
+				"COGNITO_USER_POOL_ID",
+				"AWS_REGION"
+			],
 			"outputs": [".next/**"]
 		},
 		"@weareinreach/storybook#build": {

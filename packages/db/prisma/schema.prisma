@@ -1,6 +1,8 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["fieldReference", "postgresqlExtensions"]
+  // uncomment below when building aws-lambda
+  // binaryTargets   = ["rhel-openssl-1.0.x"]
 }
 
 generator docs {
@@ -74,6 +76,11 @@ model User {
   communities   UserCommunity[]
   orgOwner      Organization[]
   permissions   UserPermission[]
+
+  // Data for AWS Cognito migration
+  legacyHash  String?   @db.VarChar(1024)
+  legacySalt  String?   @db.VarChar(32)
+  migrateDate DateTime?
 
   // Relationships
   lists       UserList[] @relation("userList")
