@@ -18,4 +18,4 @@ const nextConfig = {
 	},
 }
 
-export default defineNextConfig(nextConfig)
+module.exports = defineNextConfig(nextConfig)
