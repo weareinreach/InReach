@@ -28,12 +28,12 @@
 		"@weareinreach/web#build": {
 			"dependsOn": ["^build"],
 			"env": [
-				"SENTRY_DSN",
+				"WEB_SENTRY_DSN",
 				"SANITY_TOKEN",
 				"NEXT_PUBLIC_SANITY_API_VERSION",
 				"NEXT_PUBLIC_SANITY_DATASET",
 				"NEXT_PUBLIC_SANITY_PROJECT_ID",
-				"NEXT_PUBLIC_SENTRY_DSN"
+				"NEXT_PUBLIC_WEB_SENTRY_DSN"
 			],
 			"outputs": [".next/**"]
 		},

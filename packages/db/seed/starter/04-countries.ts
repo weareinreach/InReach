@@ -22,6 +22,7 @@ export const seedCountries = async (task: ListrTaskWrapper<unknown, typeof Listr
 				if (country.idd.suffixes.length === 1) return `${country.idd.root}${country.idd.suffixes[0]}`
 				return `${country.idd.root}`
 			}
+			/* Upserting the country. */
 			const prismaCountry = await prisma.country.upsert({
 				where: {
 					cca3: country.cca3,
@@ -42,6 +43,7 @@ export const seedCountries = async (task: ListrTaskWrapper<unknown, typeof Listr
 				},
 			})
 
+			/* Creating a queue of upserts to be executed in a transaction. */
 			const bulkUpsert: BulkUpsertQueue = []
 			for (const language of languages) {
 				if (!language.iso6392 || !Object.keys(country.translations).includes(language.iso6392)) {
@@ -78,7 +80,9 @@ export const seedCountries = async (task: ListrTaskWrapper<unknown, typeof Listr
 				bulkUpsert.push(action)
 			}
 
+			/* Executing the queue of upserts in a transaction. */
 			const bulkResults = await prisma.$transaction(bulkUpsert)
+
 			const result = {
 				...prismaCountry,
 				countryTranslation: bulkResults as Partial<CompleteCountryTranslation>[],

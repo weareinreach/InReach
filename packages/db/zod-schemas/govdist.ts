@@ -3,20 +3,28 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	CompleteCountry,
-	CompleteLanguage,
+	CompleteGovDistType,
 	CompleteOrgLocation,
+	CompleteOrgReview,
+	CompleteTranslationKey,
 	CompleteUser,
 	CountryModel,
-	LanguageModel,
+	GovDistTypeModel,
 	OrgLocationModel,
+	OrgReviewModel,
+	TranslationKeyModel,
 	UserModel,
 } from './index'
 
 export const _GovDistModel = z.object({
 	id: z.string(),
+	/** ISO-3166-2 code */
+	iso: z.string(),
+	/** Name (English/Roman alphabet) */
 	name: z.string(),
 	countryId: z.string(),
-	langId: z.string(),
+	govDistTypeId: z.string(),
+	translationKeyId: z.string(),
 	createdAt: z.date(),
 	createdById: z.string(),
 	updatedAt: z.date(),
@@ -25,10 +33,13 @@ export const _GovDistModel = z.object({
 
 export interface CompleteGovDist extends z.infer<typeof _GovDistModel> {
 	country: CompleteCountry
-	language: CompleteLanguage
+	govDistType: CompleteGovDistType
+	translationKey: CompleteTranslationKey
 	OrgLocation: CompleteOrgLocation[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	OrgReview: CompleteOrgReview[]
+	User: CompleteUser[]
 }
 
 /**
@@ -39,9 +50,12 @@ export interface CompleteGovDist extends z.infer<typeof _GovDistModel> {
 export const GovDistModel: z.ZodSchema<CompleteGovDist> = z.lazy(() =>
 	_GovDistModel.extend({
 		country: CountryModel,
-		language: LanguageModel,
+		govDistType: GovDistTypeModel,
+		translationKey: TranslationKeyModel,
 		OrgLocation: OrgLocationModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		OrgReview: OrgReviewModel.array(),
+		User: UserModel.array(),
 	})
 )

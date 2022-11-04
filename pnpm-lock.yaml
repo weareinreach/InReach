@@ -130,8 +130,8 @@ importers:
       '@mantine/core': 5.6.3_4md2hhxmujtaycbumrxkp2e5ju
       '@mdx-js/react': 2.1.5_react@18.2.0
       '@portabletext/react': 1.0.6_react@18.2.0
-      '@sanity/color-input': 3.0.0-v3-studio.10_73y2emitor6twgwdfxzbun6nqu
-      '@sanity/document-internationalization': 1.0.0-v3-studio.12_guio3orzcfrvcigvrncfehc2bm
+      '@sanity/color-input': 3.0.0-v3-studio.11_73y2emitor6twgwdfxzbun6nqu
+      '@sanity/document-internationalization': 1.0.0-v3-studio.13_guio3orzcfrvcigvrncfehc2bm
       '@sanity/image-url': 1.0.1
       '@sanity/orderable-document-list': 1.0.0-v3-studio.7_73y2emitor6twgwdfxzbun6nqu
       '@sanity/vision': 3.0.0-rc.0_3dveyycl3rexrilwqeipsfjkfq
@@ -166,12 +166,6 @@ importers:
       eslint-config-next: 13.0.1_wyqvi574yv7oiwfeinomdzmc3m
       next-transpile-modules: 10.0.0
       typescript: 4.8.4
-
-  docs:
-    specifiers:
-      '@weareinreach/config': workspace:^0.0.0
-    devDependencies:
-      '@weareinreach/config': link:../packages/config
 
   packages/aws-user-migrate:
     specifiers:
@@ -232,6 +226,7 @@ importers:
       commander: ^9.4.1
       dotenv: ^16.0.3
       inquirer: ^9.1.4
+      iso-3166-2: ^1.0.0
       listr2: ^5.0.5
       mongoback: ^3.0.3
       prisma: ^4.5.0
@@ -239,6 +234,7 @@ importers:
       prisma-query-inspector: ^1.4.4
       quicktype-core: ^6.1.0
       recursive-readdir: ^2.2.3
+      slugify: ^1.6.5
       tsx: ^3.11.0
       typescript: ^4.8.4
       zod: ^3.19.1
@@ -254,6 +250,7 @@ importers:
       commander: 9.4.1
       dotenv: 16.0.3
       inquirer: 9.1.4
+      iso-3166-2: 1.0.0
       listr2: 5.0.5
       mongoback: 3.0.3
       prisma: 4.5.0
@@ -261,6 +258,7 @@ importers:
       prisma-query-inspector: 1.4.4
       quicktype-core: 6.1.0
       recursive-readdir: 2.2.3
+      slugify: 1.6.5
       tsx: 3.11.0
       typescript: 4.8.4
       zod-prisma: 0.5.4_prisma@4.5.0+zod@3.19.1
@@ -6607,8 +6605,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@sanity/color-input/3.0.0-v3-studio.10_73y2emitor6twgwdfxzbun6nqu:
-    resolution: {integrity: sha512-VsoWChkdi3ici3sVcnjpOMr+dymu+NepLSGBtcVl1gM+4zkhWuDJE7SsJVhodY0XOBbAlzQmXR8vZL4n1nsPJA==}
+  /@sanity/color-input/3.0.0-v3-studio.11_73y2emitor6twgwdfxzbun6nqu:
+    resolution: {integrity: sha512-AtFTIIoSdgN0jcQpTMPGQL1RqXCqGLFiAvM7DGD8LiqQ9N/X1J4IYEYE5ML4g67IvmSNcqhgQ2hPgHDeFcVgZw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^18.0.0 || ^18
@@ -6654,8 +6652,8 @@ packages:
       diff-match-patch: 1.0.5
     dev: false
 
-  /@sanity/document-internationalization/1.0.0-v3-studio.12_guio3orzcfrvcigvrncfehc2bm:
-    resolution: {integrity: sha512-LXeP9osdPW2qQM+RTBnOPce7NmojDZkue0io4cXFfE/TX541nKSWON3WZBqGfjRiXjaHI3whmGHzEpQWjCUl+w==}
+  /@sanity/document-internationalization/1.0.0-v3-studio.13_guio3orzcfrvcigvrncfehc2bm:
+    resolution: {integrity: sha512-BjWP6Nsr3AQlbveHq1Np8ChpAGm3wrro3mpO0vMlZQXrnKvUYRgrvvyJUeWuMhtygQmT/O7yBXruRWYK97lipw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       '@sanity/ui': ^1.0.0-beta.31
@@ -6665,7 +6663,7 @@ packages:
       react-router: ^5.0.0
       react-router-dom: ^5.0.0
       rxjs: ^6.0.0
-      sanity: dev-preview || 3.0.0-dev-preview.22 || 3.0.0-rc.0
+      sanity: dev-preview || 3.0.0-rc.0
       styled-components: ^5.0.0
     dependencies:
       '@cprecioso/country-flag-emoji': 1.0.0
@@ -17089,6 +17087,10 @@ packages:
   /isexe/2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
+  /iso-3166-2/1.0.0:
+    resolution: {integrity: sha512-xLAazfKZzwlsg/Zz/GQGQk3jJez5/2ORrjD3TjSuqz/arMht/xTK49c0GOE3afO/gEd9tHtBVVlfBla01unUng==}
+    dev: true
+
   /isobject/2.1.0:
     resolution: {integrity: sha512-+OUdGJlgjOBZDfxnDjYYG6zp487z0JGNQq3cYQYg5f5hKR+syHMsaztzGeml/4kGG55CSpKSpWTY+jYGgsHLgA==}
     engines: {node: '>=0.10.0'}
@@ -22753,7 +22755,6 @@ packages:
   /slugify/1.6.5:
     resolution: {integrity: sha512-8mo9bslnBO3tr5PEVFzMPIWwWnipGS0xVbYf65zxDqfNwmzYn1LpiKNrR6DlClusuvo+hDHd1zKpmfAe83NQSQ==}
     engines: {node: '>=8.0.0'}
-    dev: false
 
   /smart-buffer/4.2.0:
     resolution: {integrity: sha512-94hK0Hh8rPqQl2xXc3HsaBoOXKV20MToPkcXvwbISWLEs+64sBq5kFgn2kJDHb1Pry9yrP0dxrCI9RRci7RXKg==}

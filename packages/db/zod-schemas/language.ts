@@ -2,44 +2,33 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
-	CompleteCountryTranslation,
-	CompleteGovDist,
 	CompleteOrgDescription,
+	CompleteOrgReview,
 	CompleteOrgService,
 	CompletePhoneType,
-	CompleteServiceCategory,
-	CompleteServiceType,
 	CompleteTranslation,
 	CompleteUser,
-	CompleteUserCommunity,
-	CompleteUserEthnicity,
-	CompleteUserImmigration,
-	CompleteUserSOG,
 	CompleteUserTitle,
-	CompleteUserType,
-	CountryTranslationModel,
-	GovDistModel,
 	OrgDescriptionModel,
+	OrgReviewModel,
 	OrgServiceModel,
 	PhoneTypeModel,
-	ServiceCategoryModel,
-	ServiceTypeModel,
 	TranslationModel,
-	UserCommunityModel,
-	UserEthnicityModel,
-	UserImmigrationModel,
 	UserModel,
-	UserSOGModel,
 	UserTitleModel,
-	UserTypeModel,
 } from './index'
 
 export const _LanguageModel = z.object({
 	id: z.string(),
 	languageName: z.string(),
+	/** ETF BCP 47 language tag */
 	localeCode: z.string(),
+	/** ISO 639-2 */
 	iso6392: z.string().nullish(),
+	/** Language name in it's language. */
 	nativeName: z.string(),
+	/** Is this a top level locale (not region specific)? */
+	primary: z.boolean(),
 	createdAt: z.date(),
 	createdById: z.string().nullish(),
 	updatedAt: z.date(),
@@ -49,21 +38,13 @@ export const _LanguageModel = z.object({
 export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {
 	translations: CompleteTranslation[]
 	orgDescriptions: CompleteOrgDescription[]
-	userTitle: CompleteUserTitle[]
-	ServiceCategory: CompleteServiceCategory[]
-	PhoneType: CompletePhoneType[]
-	ServiceType: CompleteServiceType[]
-	CountryTranslation: CompleteCountryTranslation[]
 	OrgService: CompleteOrgService[]
-	UserEthnicity: CompleteUserEthnicity[]
-	UserSOG: CompleteUserSOG[]
-	UserType: CompleteUserType[]
-	UserImmigration: CompleteUserImmigration[]
-	GovDist: CompleteGovDist[]
-	UserCommunity: CompleteUserCommunity[]
 	User: CompleteUser[]
 	createdBy?: CompleteUser | null
 	updatedBy?: CompleteUser | null
+	UserTitle: CompleteUserTitle[]
+	OrgReview: CompleteOrgReview[]
+	PhoneType: CompletePhoneType[]
 }
 
 /**
@@ -75,20 +56,12 @@ export const LanguageModel: z.ZodSchema<CompleteLanguage> = z.lazy(() =>
 	_LanguageModel.extend({
 		translations: TranslationModel.array(),
 		orgDescriptions: OrgDescriptionModel.array(),
-		userTitle: UserTitleModel.array(),
-		ServiceCategory: ServiceCategoryModel.array(),
-		PhoneType: PhoneTypeModel.array(),
-		ServiceType: ServiceTypeModel.array(),
-		CountryTranslation: CountryTranslationModel.array(),
 		OrgService: OrgServiceModel.array(),
-		UserEthnicity: UserEthnicityModel.array(),
-		UserSOG: UserSOGModel.array(),
-		UserType: UserTypeModel.array(),
-		UserImmigration: UserImmigrationModel.array(),
-		GovDist: GovDistModel.array(),
-		UserCommunity: UserCommunityModel.array(),
 		User: UserModel.array(),
 		createdBy: UserModel.nullish(),
 		updatedBy: UserModel.nullish(),
+		UserTitle: UserTitleModel.array(),
+		OrgReview: OrgReviewModel.array(),
+		PhoneType: PhoneTypeModel.array(),
 	})
 )

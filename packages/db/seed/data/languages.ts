@@ -1,5 +1,7 @@
 import { Prisma } from '@prisma/client'
 
+import { prisma } from '~/client'
+
 import { connectUser } from './user'
 
 export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
@@ -70,6 +72,7 @@ export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
 			iso6392: 'spa',
 			languageName: 'Spanish',
 			nativeName: 'Español',
+			primary: true,
 			createdBy: connectUser,
 			updatedBy: connectUser,
 		},
@@ -77,6 +80,7 @@ export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
 			iso6392: 'spa',
 			languageName: 'Spanish',
 			nativeName: 'Español',
+			primary: true,
 			updatedBy: connectUser,
 		},
 	},
@@ -138,3 +142,18 @@ export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
 		},
 	},
 ]
+
+export const getPrimaryLanguages = async () =>
+	await prisma.language.findMany({
+		where: {
+			iso6392: {
+				not: null,
+			},
+			primary: true,
+		},
+		select: {
+			id: true,
+			iso6392: true,
+			localeCode: true,
+		},
+	})

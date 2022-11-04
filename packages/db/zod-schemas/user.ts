@@ -5,8 +5,8 @@ import {
 	AccountModel,
 	CompleteAccount,
 	CompleteCountry,
-	CompleteCountryTranslation,
 	CompleteGovDist,
+	CompleteGovDistType,
 	CompleteLanguage,
 	CompleteOrgDescription,
 	CompleteOrgEmail,
@@ -14,33 +14,35 @@ import {
 	CompleteOrgLocation,
 	CompleteOrgNotes,
 	CompleteOrgPhone,
-	CompleteOrgPhotos,
+	CompleteOrgPhoto,
 	CompleteOrgReview,
 	CompleteOrgService,
 	CompleteOrgSocialMedia,
-	CompleteOrgSource,
 	CompleteOrganization,
+	CompleteOutsideAPI,
+	CompletePermissionAsset,
+	CompletePermissionItem,
 	CompletePhoneType,
 	CompleteServiceCategory,
-	CompleteServiceType,
+	CompleteServiceTag,
 	CompleteSession,
 	CompleteSocialMediaService,
+	CompleteSource,
 	CompleteTranslation,
-	CompleteTranslationCategory,
-	CompleteTranslationItem,
+	CompleteTranslationKey,
+	CompleteTranslationNamespace,
 	CompleteTranslationVariable,
 	CompleteUserCommunity,
 	CompleteUserEthnicity,
 	CompleteUserImmigration,
-	CompleteUserList,
-	CompleteUserPermission,
 	CompleteUserRole,
 	CompleteUserSOG,
+	CompleteUserSavedList,
 	CompleteUserTitle,
 	CompleteUserType,
 	CountryModel,
-	CountryTranslationModel,
 	GovDistModel,
+	GovDistTypeModel,
 	LanguageModel,
 	OrgDescriptionModel,
 	OrgEmailModel,
@@ -48,28 +50,30 @@ import {
 	OrgLocationModel,
 	OrgNotesModel,
 	OrgPhoneModel,
-	OrgPhotosModel,
+	OrgPhotoModel,
 	OrgReviewModel,
 	OrgServiceModel,
 	OrgSocialMediaModel,
-	OrgSourceModel,
 	OrganizationModel,
+	OutsideAPIModel,
+	PermissionAssetModel,
+	PermissionItemModel,
 	PhoneTypeModel,
 	ServiceCategoryModel,
-	ServiceTypeModel,
+	ServiceTagModel,
 	SessionModel,
 	SocialMediaServiceModel,
-	TranslationCategoryModel,
-	TranslationItemModel,
+	SourceModel,
+	TranslationKeyModel,
 	TranslationModel,
+	TranslationNamespaceModel,
 	TranslationVariableModel,
 	UserCommunityModel,
 	UserEthnicityModel,
 	UserImmigrationModel,
-	UserListModel,
-	UserPermissionModel,
 	UserRoleModel,
 	UserSOGModel,
+	UserSavedListModel,
 	UserTitleModel,
 	UserTypeModel,
 } from './index'
@@ -80,16 +84,22 @@ export const _UserModel = z.object({
 	email: z.string(),
 	emailVerified: z.date().nullish(),
 	image: z.string().nullish(),
-	birthYear: z.string().nullish(),
+	legacyId: z.string().nullish(),
+	birthYear: z.number().int(),
 	reasonForJoin: z.string().nullish(),
+	currentCity: z.string().nullish(),
+	currentGovDistId: z.string().nullish(),
+	currentCountryId: z.string().nullish(),
 	legacyHash: z.string().nullish(),
 	legacySalt: z.string().nullish(),
 	migrateDate: z.date().nullish(),
-	orgTitleId: z.string().nullish(),
 	immigrationId: z.string().nullish(),
 	roleId: z.string(),
 	userTypeId: z.string(),
 	langPrefId: z.string(),
+	sourceId: z.string().nullish(),
+	associatedOrgId: z.string().nullish(),
+	orgTitleId: z.string().nullish(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
 })
@@ -101,15 +111,19 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	countryOrigin: CompleteCountry[]
 	SOG: CompleteUserSOG[]
 	communities: CompleteUserCommunity[]
-	orgOwner: CompleteOrganization[]
-	permissions: CompleteUserPermission[]
-	lists: CompleteUserList[]
-	sharedLists: CompleteUserList[]
-	orgTitle?: CompleteUserTitle | null
+	permissions: CompletePermissionItem[]
+	PermissionAsset: CompletePermissionAsset[]
+	currentGovDist?: CompleteGovDist | null
+	currentCountry?: CompleteCountry | null
+	lists: CompleteUserSavedList[]
+	sharedLists: CompleteUserSavedList[]
 	immigration?: CompleteUserImmigration | null
 	role: CompleteUserRole
 	userType: CompleteUserType
 	langPref: CompleteLanguage
+	source?: CompleteSource | null
+	associatedOrg?: CompleteOrganization | null
+	orgTitle?: CompleteUserTitle | null
 	createUserEthnicity: CompleteUserEthnicity[]
 	updateUserEthnicity: CompleteUserEthnicity[]
 	createUserImmigration: CompleteUserImmigration[]
@@ -134,8 +148,8 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	updateOrgNotes: CompleteOrgNotes[]
 	createOrgPhone: CompleteOrgPhone[]
 	updateOrgPhone: CompleteOrgPhone[]
-	createOrgPhotos: CompleteOrgPhotos[]
-	updateOrgPhotos: CompleteOrgPhotos[]
+	createOrgPhoto: CompleteOrgPhoto[]
+	updateOrgPhoto: CompleteOrgPhoto[]
 	createPhoneType: CompletePhoneType[]
 	updatePhoneType: CompletePhoneType[]
 	createOrgHours: CompleteOrgHours[]
@@ -146,34 +160,36 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	updateOrgReview: CompleteOrgReview[]
 	createServiceCategory: CompleteServiceCategory[]
 	updateServiceCategory: CompleteServiceCategory[]
-	createServiceType: CompleteServiceType[]
-	updateServiceType: CompleteServiceType[]
+	createServiceTag: CompleteServiceTag[]
+	updateServiceTag: CompleteServiceTag[]
 	createOrgSocialMedia: CompleteOrgSocialMedia[]
 	updateOrgSocialMedia: CompleteOrgSocialMedia[]
-	createOrgSource: CompleteOrgSource[]
-	updateOrgSource: CompleteOrgSource[]
+	createSource: CompleteSource[]
+	updateSource: CompleteSource[]
 	createCountry: CompleteCountry[]
 	updateCountry: CompleteCountry[]
-	createCountryTranslation: CompleteCountryTranslation[]
-	updateCountryTranslation: CompleteCountryTranslation[]
 	createGovDist: CompleteGovDist[]
 	updateGovDist: CompleteGovDist[]
 	createLanguage: CompleteLanguage[]
 	updateLanguage: CompleteLanguage[]
-	createTranslationCategory: CompleteTranslationCategory[]
-	updateTranslationCategory: CompleteTranslationCategory[]
-	createTranslationItem: CompleteTranslationItem[]
-	updateTranslationItem: CompleteTranslationItem[]
+	createTranslationNamespace: CompleteTranslationNamespace[]
+	updateTranslationNamespace: CompleteTranslationNamespace[]
+	createTranslationKey: CompleteTranslationKey[]
+	updateTranslationKey: CompleteTranslationKey[]
 	createTranslation: CompleteTranslation[]
 	updateTranslation: CompleteTranslation[]
 	createSocialMediaService: CompleteSocialMediaService[]
 	updateSocialMediaService: CompleteSocialMediaService[]
 	createUserRole: CompleteUserRole[]
 	updateUserRole: CompleteUserRole[]
-	createUserPermission: CompleteUserPermission[]
-	updateUserPermission: CompleteUserPermission[]
+	createPermissionItem: CompletePermissionItem[]
+	updatePermissionItem: CompletePermissionItem[]
 	createTranslationVariable: CompleteTranslationVariable[]
 	updateTranslationVariable: CompleteTranslationVariable[]
+	createOutsideAPI: CompleteOutsideAPI[]
+	updateOutsideAPI: CompleteOutsideAPI[]
+	createGovDistType: CompleteGovDistType[]
+	updateGovDistType: CompleteGovDistType[]
 }
 
 /**
@@ -189,15 +205,19 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		countryOrigin: CountryModel.array(),
 		SOG: UserSOGModel.array(),
 		communities: UserCommunityModel.array(),
-		orgOwner: OrganizationModel.array(),
-		permissions: UserPermissionModel.array(),
-		lists: UserListModel.array(),
-		sharedLists: UserListModel.array(),
-		orgTitle: UserTitleModel.nullish(),
+		permissions: PermissionItemModel.array(),
+		PermissionAsset: PermissionAssetModel.array(),
+		currentGovDist: GovDistModel.nullish(),
+		currentCountry: CountryModel.nullish(),
+		lists: UserSavedListModel.array(),
+		sharedLists: UserSavedListModel.array(),
 		immigration: UserImmigrationModel.nullish(),
 		role: UserRoleModel,
 		userType: UserTypeModel,
 		langPref: LanguageModel,
+		source: SourceModel.nullish(),
+		associatedOrg: OrganizationModel.nullish(),
+		orgTitle: UserTitleModel.nullish(),
 		createUserEthnicity: UserEthnicityModel.array(),
 		updateUserEthnicity: UserEthnicityModel.array(),
 		createUserImmigration: UserImmigrationModel.array(),
@@ -222,8 +242,8 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		updateOrgNotes: OrgNotesModel.array(),
 		createOrgPhone: OrgPhoneModel.array(),
 		updateOrgPhone: OrgPhoneModel.array(),
-		createOrgPhotos: OrgPhotosModel.array(),
-		updateOrgPhotos: OrgPhotosModel.array(),
+		createOrgPhoto: OrgPhotoModel.array(),
+		updateOrgPhoto: OrgPhotoModel.array(),
 		createPhoneType: PhoneTypeModel.array(),
 		updatePhoneType: PhoneTypeModel.array(),
 		createOrgHours: OrgHoursModel.array(),
@@ -234,33 +254,35 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		updateOrgReview: OrgReviewModel.array(),
 		createServiceCategory: ServiceCategoryModel.array(),
 		updateServiceCategory: ServiceCategoryModel.array(),
-		createServiceType: ServiceTypeModel.array(),
-		updateServiceType: ServiceTypeModel.array(),
+		createServiceTag: ServiceTagModel.array(),
+		updateServiceTag: ServiceTagModel.array(),
 		createOrgSocialMedia: OrgSocialMediaModel.array(),
 		updateOrgSocialMedia: OrgSocialMediaModel.array(),
-		createOrgSource: OrgSourceModel.array(),
-		updateOrgSource: OrgSourceModel.array(),
+		createSource: SourceModel.array(),
+		updateSource: SourceModel.array(),
 		createCountry: CountryModel.array(),
 		updateCountry: CountryModel.array(),
-		createCountryTranslation: CountryTranslationModel.array(),
-		updateCountryTranslation: CountryTranslationModel.array(),
 		createGovDist: GovDistModel.array(),
 		updateGovDist: GovDistModel.array(),
 		createLanguage: LanguageModel.array(),
 		updateLanguage: LanguageModel.array(),
-		createTranslationCategory: TranslationCategoryModel.array(),
-		updateTranslationCategory: TranslationCategoryModel.array(),
-		createTranslationItem: TranslationItemModel.array(),
-		updateTranslationItem: TranslationItemModel.array(),
+		createTranslationNamespace: TranslationNamespaceModel.array(),
+		updateTranslationNamespace: TranslationNamespaceModel.array(),
+		createTranslationKey: TranslationKeyModel.array(),
+		updateTranslationKey: TranslationKeyModel.array(),
 		createTranslation: TranslationModel.array(),
 		updateTranslation: TranslationModel.array(),
 		createSocialMediaService: SocialMediaServiceModel.array(),
 		updateSocialMediaService: SocialMediaServiceModel.array(),
 		createUserRole: UserRoleModel.array(),
 		updateUserRole: UserRoleModel.array(),
-		createUserPermission: UserPermissionModel.array(),
-		updateUserPermission: UserPermissionModel.array(),
+		createPermissionItem: PermissionItemModel.array(),
+		updatePermissionItem: PermissionItemModel.array(),
 		createTranslationVariable: TranslationVariableModel.array(),
 		updateTranslationVariable: TranslationVariableModel.array(),
+		createOutsideAPI: OutsideAPIModel.array(),
+		updateOutsideAPI: OutsideAPIModel.array(),
+		createGovDistType: GovDistTypeModel.array(),
+		updateGovDistType: GovDistTypeModel.array(),
 	})
 )

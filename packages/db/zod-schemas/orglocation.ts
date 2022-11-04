@@ -4,13 +4,19 @@ import * as imports from '../zod-util'
 import {
 	CompleteCountry,
 	CompleteGovDist,
+	CompleteOrgEmail,
 	CompleteOrgHours,
 	CompleteOrganization,
+	CompleteOutsideAPI,
+	CompletePermissionAsset,
 	CompleteUser,
 	CountryModel,
 	GovDistModel,
+	OrgEmailModel,
 	OrgHoursModel,
 	OrganizationModel,
+	OutsideAPIModel,
+	PermissionAssetModel,
 	UserModel,
 } from './index'
 
@@ -27,14 +33,16 @@ export const _OrgLocationModel = z.object({
 	street1: z.string(),
 	street2: z.string(),
 	city: z.string(),
-	govDistId: z.string().nullish(),
 	postCode: z.string().nullish(),
+	govDistId: z.string().nullish(),
 	countryId: z.string(),
 	longitude: z.number(),
 	latitude: z.number(),
 	geoJSON: imports.GeoJSONSchema,
 	published: z.boolean(),
 	orgId: z.string(),
+	outsideApiId: z.string().nullish(),
+	apiLocationId: z.string().nullish(),
 	createdAt: z.date(),
 	createdById: z.string(),
 	updatedAt: z.date(),
@@ -46,6 +54,9 @@ export interface CompleteOrgLocation extends z.infer<typeof _OrgLocationModel> {
 	country: CompleteCountry
 	hours: CompleteOrgHours[]
 	organization: CompleteOrganization
+	allowedEditors: CompletePermissionAsset[]
+	orgEmail: CompleteOrgEmail[]
+	outsideApi?: CompleteOutsideAPI | null
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 }
@@ -61,6 +72,9 @@ export const OrgLocationModel: z.ZodSchema<CompleteOrgLocation> = z.lazy(() =>
 		country: CountryModel,
 		hours: OrgHoursModel.array(),
 		organization: OrganizationModel,
+		allowedEditors: PermissionAssetModel.array(),
+		orgEmail: OrgEmailModel.array(),
+		outsideApi: OutsideAPIModel.nullish(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
 	})
