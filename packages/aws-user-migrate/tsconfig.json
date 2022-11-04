@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./*"],
+			"@weareinreach/db/*": ["../db"]
+		},
+		"target": "es2020",
+		"strict": true,
+		"preserveConstEnums": true,
+		"noEmit": true,
+		"sourceMap": false,
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": false
+	},
+	"include": ["**/*.ts"],
+	"exclude": ["**/node_modules/*"],
+	"files": ["./src/index.ts"]
+}
