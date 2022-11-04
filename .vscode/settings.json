@@ -11,5 +11,28 @@
 		"MD033": false
 	},
 	"cucumberautocomplete.steps": ["test/cypress/support/step_definitions/*.js"],
-	"cucumberautocomplete.strictGherkinCompletion": true
+	"cucumberautocomplete.strictGherkinCompletion": true,
+	"yaml.schemas": {
+		"file:///Users/joe/.vscode/extensions/atlassian.atlascode-2.10.12/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml",
+		"https://raw.githubusercontent.com/awslabs/goformation/master/schema/sam.schema.json": "file:///Users/joe/GitHub/InReach/monorepo/packages/aws-user-migrate/template.yaml"
+	},
+	"todo-tree.general.fileWatcherGlob": "**/*.{ts,tsx",
+	"todo-tree.filtering.excludeGlobs": ["**/node_modules/*", "**/.next/*", "**/storybook-static/*"],
+	"todo-tree.tree.disableCompactFolders": true,
+	"todo-tree.filtering.ignoreGitSubmodules": true,
+	"todo-tree.filtering.useBuiltInExcludes": "file and search excludes",
+	"todo-tree.tree.scanAtStartup": false,
+	"todo-tree.tree.showCountsInTree": true,
+	"vsicons.projectDetection.autoReload": false,
+	"vsicons.projectDetection.disableDetect": true
+	// "eslint.workingDirectories": [
+	// 	{ "directory": "apps/app", "changeProcessCWD": true },
+	// 	{ "directory": "apps/web", "changeProcessCWD": true },
+	// 	{ "directory": "packages/aws-user-migrate", "changeProcessCWD": true },
+	// 	{ "directory": "packages/config", "changeProcessCWD": true },
+	// 	{ "directory": "packages/db", "changeProcessCWD": true },
+	// 	{ "directory": "packages/storybook", "changeProcessCWD": true },
+	// 	{ "directory": "packages/types", "changeProcessCWD": true },
+	// 	{ "directory": "packages/ui", "changeProcessCWD": true }
+	// ]
 }
