@@ -13,14 +13,14 @@ import {
 } from './index'
 
 export const _OutsideAPIModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	name: z.string(),
 	description: z.string(),
 	urlPattern: z.string(),
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteOutsideAPI extends z.infer<typeof _OutsideAPIModel> {

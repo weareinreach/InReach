@@ -13,14 +13,14 @@ import {
 } from './index'
 
 export const _OrgDescriptionModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	text: z.string(),
-	langId: z.string().cuid(),
-	orgId: z.string().cuid(),
+	langId: imports.cuid,
+	orgId: imports.cuid,
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgDescription extends z.infer<typeof _OrgDescriptionModel> {

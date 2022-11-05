@@ -5,30 +5,26 @@ import {
 	CompleteInternalNote,
 	CompleteLanguage,
 	CompleteTranslationKey,
-	CompleteTranslationNamespace,
 	CompleteUser,
 	InternalNoteModel,
 	LanguageModel,
 	TranslationKeyModel,
-	TranslationNamespaceModel,
 	UserModel,
 } from './index'
 
 export const _TranslationModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	text: z.string(),
-	langId: z.string().cuid(),
-	namespaceId: z.string().cuid(),
-	keyId: z.string().cuid(),
+	langId: imports.cuid,
+	keyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteTranslation extends z.infer<typeof _TranslationModel> {
 	language: CompleteLanguage
-	namespace: CompleteTranslationNamespace
 	key: CompleteTranslationKey
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
@@ -43,7 +39,6 @@ export interface CompleteTranslation extends z.infer<typeof _TranslationModel> {
 export const TranslationModel: z.ZodSchema<CompleteTranslation> = z.lazy(() =>
 	_TranslationModel.extend({
 		language: LanguageModel,
-		namespace: TranslationNamespaceModel,
 		key: TranslationKeyModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,

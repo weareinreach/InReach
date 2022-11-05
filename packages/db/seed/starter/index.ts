@@ -1,4 +1,4 @@
-import { Listr } from 'listr2'
+import { Listr, ListrRenderer, ListrTaskWrapper } from 'listr2'
 
 import { seedSystemUser } from './01-user'
 import { seedLanguages } from './02-languages'
@@ -52,3 +52,4 @@ tasks.run()
 export type Context = {
 	error?: boolean
 }
+export type ListrTask = ListrTaskWrapper<unknown, typeof ListrRenderer>

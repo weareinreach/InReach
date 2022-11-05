@@ -19,20 +19,20 @@ import {
 } from './index'
 
 export const _OrgReviewModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	rating: z.number().int(),
 	comment: z.string().nullish(),
 	visible: z.boolean(),
-	organizationId: z.string().cuid(),
-	serviceId: z.string().cuid().nullish(),
-	langId: z.string().cuid().nullish(),
+	organizationId: imports.cuid,
+	serviceId: imports.cuid.nullish(),
+	langId: imports.cuid.nullish(),
 	lcrCity: z.string().nullish(),
-	lcrGovDistId: z.string().cuid().nullish(),
-	lcrCountryId: z.string().cuid().nullish(),
+	lcrGovDistId: imports.cuid.nullish(),
+	lcrCountryId: imports.cuid.nullish(),
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgReview extends z.infer<typeof _OrgReviewModel> {

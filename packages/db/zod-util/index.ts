@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+export const cuid = z.string().cuid()
+
 /** Coordinates must be greater than or equal to -180 and less than or equal to 180. */
 const coordinate = z.number().gte(-180).lte(180)
 /** [Longitude, Latitude] Coordinates must be greater than or equal to -180 and less than or equal to 180. */

@@ -1,23 +1,22 @@
-import type { ListrRenderer, ListrTaskWrapper } from 'listr2'
+import type { ListrTask } from '.'
 
 import { prisma } from '~/client'
 
-import { generateEthnicities } from '../data/ethnicity'
+import { generateEthnicityRecords, generateTranslations } from '../data/ethnicity'
+import { getPrimaryLanguages } from '../data/languages'
 import { logFile } from '../logger'
 
-export const seedEthnicities = async (task: ListrTaskWrapper<unknown, typeof ListrRenderer>) => {
+export const seedEthnicities = async (task: ListrTask) => {
 	try {
-		const queue = await generateEthnicities()
-		let i = 1
-		for (const item of queue) {
-			logFile.log(
-				`(${i}/${queue.length}) Upserting Ethnicity: (${item.create.language?.connect?.localeCode}) ${item.create.ethnicity}`
-			)
-			task.output = `(${i}/${queue.length}) Upserting Ethnicity: (${item.create.language?.connect?.localeCode}) ${item.create.ethnicity}`
-
-			await prisma.userEthnicity.upsert(item)
-			i++
-		}
+		const ethnicities = await prisma.$transaction(generateEthnicityRecords(task))
+		let logMessage = `Ethnicity bulk operation: ${ethnicities.length} successful transactions`
+		logFile.log(logMessage)
+		task.output = logMessage
+		const languageList = await getPrimaryLanguages()
+		const translations = await prisma.$transaction(generateTranslations(ethnicities, languageList, task))
+		logMessage = `Translation bulk operation: ${translations.length} successful transactions`
+		logFile.log(logMessage)
+		task.output = logMessage
 	} catch (err) {
 		throw err
 	}

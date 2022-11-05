@@ -13,9 +13,9 @@ import {
 } from './index'
 
 export const _PermissionAssetModel = z.object({
-	id: z.string().cuid(),
-	userId: z.string().cuid(),
-	permissionId: z.string().cuid(),
+	id: imports.cuid,
+	userId: imports.cuid,
+	permissionId: imports.cuid,
 })
 
 export interface CompletePermissionAsset extends z.infer<typeof _PermissionAssetModel> {

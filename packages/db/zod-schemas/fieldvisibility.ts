@@ -5,8 +5,8 @@ import * as imports from '../zod-util'
 import { CompleteUser, UserModel } from './index'
 
 export const _FieldVisibilityModel = z.object({
-	id: z.string().cuid(),
-	userId: z.string().cuid(),
+	id: imports.cuid,
+	userId: imports.cuid,
 	name: z.nativeEnum(VisibilitySetting),
 	email: z.nativeEnum(VisibilitySetting),
 	image: z.nativeEnum(VisibilitySetting),

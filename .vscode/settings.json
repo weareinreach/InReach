@@ -24,7 +24,19 @@
 	"todo-tree.tree.scanAtStartup": false,
 	"todo-tree.tree.showCountsInTree": true,
 	"vsicons.projectDetection.autoReload": false,
-	"vsicons.projectDetection.disableDetect": true
+	"vsicons.projectDetection.disableDetect": true,
+	"sqltools.connections": [
+		{
+			"previewLimit": 50,
+			"server": "10.42.0.123",
+			"port": 5432,
+			"driver": "PostgreSQL",
+			"name": "devBox",
+			"database": "inreach",
+			"username": "user",
+			"password": "password"
+		}
+	]
 	// "eslint.workingDirectories": [
 	// 	{ "directory": "apps/app", "changeProcessCWD": true },
 	// 	{ "directory": "apps/web", "changeProcessCWD": true },

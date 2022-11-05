@@ -15,17 +15,17 @@ import {
 } from './index'
 
 export const _OrgSocialMediaModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	username: z.string(),
 	url: z.string(),
-	serviceId: z.string().cuid(),
-	organizationId: z.string().cuid(),
+	serviceId: imports.cuid,
+	organizationId: imports.cuid,
 	/** Associated only with location and not overall organization (for large orgs w/ multiple locations) */
 	orgLocationOnly: z.boolean(),
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgSocialMedia extends z.infer<typeof _OrgSocialMediaModel> {

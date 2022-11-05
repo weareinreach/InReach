@@ -21,7 +21,7 @@ import {
 } from './index'
 
 export const _LanguageModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	languageName: z.string(),
 	/** ETF BCP 47 language tag */
 	localeCode: z.string(),
@@ -32,9 +32,9 @@ export const _LanguageModel = z.object({
 	/** Is this a top level locale (not region specific)? */
 	primary: z.boolean(),
 	createdAt: z.date(),
-	createdById: z.string().cuid().nullish(),
+	createdById: imports.cuid.nullish(),
 	updatedAt: z.date(),
-	updatedById: z.string().cuid().nullish(),
+	updatedById: imports.cuid.nullish(),
 })
 
 export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {

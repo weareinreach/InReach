@@ -7,6 +7,7 @@
 		"declarationMap": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
+		"incremental": true,
 		"inlineSources": false,
 		"isolatedModules": true,
 		"jsx": "preserve",
@@ -25,6 +26,5 @@
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitReturns": true
 	},
-	"display": "Default",
-	"exclude": ["**/node_modules/**/*"]
+	"display": "Default"
 }

@@ -35,16 +35,16 @@ import {
 } from './index'
 
 export const _TranslationKeyModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	/** Item key */
 	key: z.string(),
-	namespaceId: z.string().cuid(),
+	namespaceId: imports.cuid,
 	isBase: z.boolean(),
-	parentId: z.string().cuid().nullish(),
+	parentId: imports.cuid.nullish(),
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid.nullish(),
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid.nullish(),
 })
 
 export interface CompleteTranslationKey extends z.infer<typeof _TranslationKeyModel> {
@@ -63,8 +63,8 @@ export interface CompleteTranslationKey extends z.infer<typeof _TranslationKeyMo
 	Country: CompleteCountry[]
 	GovDist: CompleteGovDist[]
 	GovDistType: CompleteGovDistType[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	createdBy?: CompleteUser | null
+	updatedBy?: CompleteUser | null
 	InternalNote: CompleteInternalNote[]
 }
 
@@ -92,8 +92,8 @@ export const TranslationKeyModel: z.ZodSchema<CompleteTranslationKey> = z.lazy((
 		Country: CountryModel.array(),
 		GovDist: GovDistModel.array(),
 		GovDistType: GovDistTypeModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		createdBy: UserModel.nullish(),
+		updatedBy: UserModel.nullish(),
 		InternalNote: InternalNoteModel.array(),
 	})
 )

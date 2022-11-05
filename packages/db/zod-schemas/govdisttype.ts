@@ -11,13 +11,13 @@ import {
 } from './index'
 
 export const _GovDistTypeModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	name: z.string(),
-	translationKeyId: z.string().cuid(),
+	translationKeyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteGovDistType extends z.infer<typeof _GovDistTypeModel> {

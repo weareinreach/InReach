@@ -3,29 +3,26 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	CompleteInternalNote,
-	CompleteTranslation,
 	CompleteTranslationKey,
 	CompleteUser,
 	InternalNoteModel,
 	TranslationKeyModel,
-	TranslationModel,
 	UserModel,
 } from './index'
 
 export const _TranslationNamespaceModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	name: z.string(),
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid.nullish(),
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid.nullish(),
 })
 
 export interface CompleteTranslationNamespace extends z.infer<typeof _TranslationNamespaceModel> {
-	translations: CompleteTranslation[]
-	item: CompleteTranslationKey[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	keys: CompleteTranslationKey[]
+	createdBy?: CompleteUser | null
+	updatedBy?: CompleteUser | null
 	InternalNote: CompleteInternalNote[]
 }
 
@@ -36,10 +33,9 @@ export interface CompleteTranslationNamespace extends z.infer<typeof _Translatio
  */
 export const TranslationNamespaceModel: z.ZodSchema<CompleteTranslationNamespace> = z.lazy(() =>
 	_TranslationNamespaceModel.extend({
-		translations: TranslationModel.array(),
-		item: TranslationKeyModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		keys: TranslationKeyModel.array(),
+		createdBy: UserModel.nullish(),
+		updatedBy: UserModel.nullish(),
 		InternalNote: InternalNoteModel.array(),
 	})
 )
