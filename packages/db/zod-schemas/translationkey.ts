@@ -5,6 +5,7 @@ import {
 	CompleteCountry,
 	CompleteGovDist,
 	CompleteGovDistType,
+	CompleteInternalNote,
 	CompleteServiceCategory,
 	CompleteServiceTag,
 	CompleteTranslation,
@@ -19,6 +20,7 @@ import {
 	CountryModel,
 	GovDistModel,
 	GovDistTypeModel,
+	InternalNoteModel,
 	ServiceCategoryModel,
 	ServiceTagModel,
 	TranslationModel,
@@ -33,16 +35,16 @@ import {
 } from './index'
 
 export const _TranslationKeyModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	/** Item key */
 	key: z.string(),
-	namespaceId: z.string(),
+	namespaceId: z.string().cuid(),
 	isBase: z.boolean(),
-	parentId: z.string().nullish(),
+	parentId: z.string().cuid().nullish(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteTranslationKey extends z.infer<typeof _TranslationKeyModel> {
@@ -63,6 +65,7 @@ export interface CompleteTranslationKey extends z.infer<typeof _TranslationKeyMo
 	GovDistType: CompleteGovDistType[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	InternalNote: CompleteInternalNote[]
 }
 
 /**
@@ -91,5 +94,6 @@ export const TranslationKeyModel: z.ZodSchema<CompleteTranslationKey> = z.lazy((
 		GovDistType: GovDistTypeModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		InternalNote: InternalNoteModel.array(),
 	})
 )

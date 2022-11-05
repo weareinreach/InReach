@@ -2,6 +2,7 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	CompleteInternalNote,
 	CompleteOrgDescription,
 	CompleteOrgReview,
 	CompleteOrgService,
@@ -9,6 +10,7 @@ import {
 	CompleteTranslation,
 	CompleteUser,
 	CompleteUserTitle,
+	InternalNoteModel,
 	OrgDescriptionModel,
 	OrgReviewModel,
 	OrgServiceModel,
@@ -19,7 +21,7 @@ import {
 } from './index'
 
 export const _LanguageModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	languageName: z.string(),
 	/** ETF BCP 47 language tag */
 	localeCode: z.string(),
@@ -30,9 +32,9 @@ export const _LanguageModel = z.object({
 	/** Is this a top level locale (not region specific)? */
 	primary: z.boolean(),
 	createdAt: z.date(),
-	createdById: z.string().nullish(),
+	createdById: z.string().cuid().nullish(),
 	updatedAt: z.date(),
-	updatedById: z.string().nullish(),
+	updatedById: z.string().cuid().nullish(),
 })
 
 export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {
@@ -45,6 +47,7 @@ export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {
 	UserTitle: CompleteUserTitle[]
 	OrgReview: CompleteOrgReview[]
 	PhoneType: CompletePhoneType[]
+	InternalNote: CompleteInternalNote[]
 }
 
 /**
@@ -63,5 +66,6 @@ export const LanguageModel: z.ZodSchema<CompleteLanguage> = z.lazy(() =>
 		UserTitle: UserTitleModel.array(),
 		OrgReview: OrgReviewModel.array(),
 		PhoneType: PhoneTypeModel.array(),
+		InternalNote: InternalNoteModel.array(),
 	})
 )

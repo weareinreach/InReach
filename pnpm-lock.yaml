@@ -1,5 +1,10 @@
 lockfileVersion: 5.4
 
+patchedDependencies:
+  zod-prisma@0.5.4:
+    hash: 4gfbbmurd7u2k6gm2q7tuf7una
+    path: patches/zod-prisma@0.5.4.patch
+
 importers:
 
   .:
@@ -218,13 +223,17 @@ importers:
 
   packages/db:
     specifiers:
+      '@anatine/zod-mock': ^3.6.0
+      '@faker-js/faker': ^7.6.0
       '@prisma/client': ^4.5.0
       '@types/node': '16'
       '@types/recursive-readdir': ^2.2.1
       '@weareinreach/config': workspace:^0.0.0
+      '@weareinreach/eslint-config': workspace:^0.0.0
       axios: ^1.1.3
       commander: ^9.4.1
       dotenv: ^16.0.3
+      eslint: ^8.26.0
       inquirer: ^9.1.4
       iso-3166-2: ^1.0.0
       listr2: ^5.0.5
@@ -232,6 +241,7 @@ importers:
       prisma: ^4.5.0
       prisma-docs-generator: ^0.5.0
       prisma-query-inspector: ^1.4.4
+      prisma-zod-generator: ^0.6.1
       quicktype-core: ^6.1.0
       recursive-readdir: ^2.2.3
       slugify: ^1.6.5
@@ -243,12 +253,16 @@ importers:
       '@prisma/client': 4.5.0_prisma@4.5.0
       zod: 3.19.1
     devDependencies:
+      '@anatine/zod-mock': 3.6.0_@faker-js+faker@7.6.0
+      '@faker-js/faker': 7.6.0
       '@types/node': 16.18.0
       '@types/recursive-readdir': 2.2.1
       '@weareinreach/config': link:../config
+      '@weareinreach/eslint-config': link:../eslint-config
       axios: 1.1.3
       commander: 9.4.1
       dotenv: 16.0.3
+      eslint: 8.26.0
       inquirer: 9.1.4
       iso-3166-2: 1.0.0
       listr2: 5.0.5
@@ -256,12 +270,13 @@ importers:
       prisma: 4.5.0
       prisma-docs-generator: 0.5.0
       prisma-query-inspector: 1.4.4
+      prisma-zod-generator: 0.6.1_prisma@4.5.0
       quicktype-core: 6.1.0
       recursive-readdir: 2.2.3
       slugify: 1.6.5
       tsx: 3.11.0
       typescript: 4.8.4
-      zod-prisma: 0.5.4_prisma@4.5.0+zod@3.19.1
+      zod-prisma: 0.5.4_4gfbbmurd7u2k6gm2q7tuf7una_prisma@4.5.0+zod@3.19.1
 
   packages/eslint-config:
     specifiers:
@@ -462,6 +477,15 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.1.1
       '@jridgewell/trace-mapping': 0.3.17
+
+  /@anatine/zod-mock/3.6.0_@faker-js+faker@7.6.0:
+    resolution: {integrity: sha512-xW7TuAr2dRS8J0Th0w/fAf3rJqDcYJvvpy1uuWvxVoEIs835f7BcqmYoL+rN5PjFU1E6gqa8rxXF3mo9bQt57g==}
+    peerDependencies:
+      '@faker-js/faker': ^7.0.0
+    dependencies:
+      '@faker-js/faker': 7.6.0
+      randexp: 0.5.3
+    dev: true
 
   /@aws-crypto/ie11-detection/2.0.2:
     resolution: {integrity: sha512-5XDMQY98gMAf/WRTic5G++jfmS/VLM0rwpiOpaainKi4L0nqWMSB1SzsrEG5rjFZGYN6ZAefO+/Yta2dFM0kMw==}
@@ -4444,6 +4468,11 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /@faker-js/faker/7.6.0:
+    resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
+    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
+    dev: true
+
   /@figspec/components/1.0.1:
     resolution: {integrity: sha512-UvnEamPEAMh9HExViqpobWmX25g1+soA9kcJu+It3VerMa7CeVyaIbQydNf1Gys5v/rxJVdTDRgQ7OXW2zAAig==}
     dependencies:
@@ -5350,6 +5379,49 @@ packages:
       rimraf: 3.0.2
     dev: true
 
+  /@opentelemetry/api/1.2.0:
+    resolution: {integrity: sha512-0nBr+VZNKm9tvNDZFstI3Pq1fCTEDK5OZTnVKNvBNAKgd0yIvmwsP4m61rEv7ZP+tOUjWJhROpxK5MsnlF911g==}
+    engines: {node: '>=8.0.0'}
+    dev: true
+
+  /@opentelemetry/core/1.7.0_@opentelemetry+api@1.2.0:
+    resolution: {integrity: sha512-AVqAi5uc8DrKJBimCTFUT4iFI+5eXpo4sYmGbQ0CypG0piOTHE2g9c5aSoTGYXu3CzOmJZf7pT6Xh+nwm5d6yQ==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0 <1.3.0'
+    dependencies:
+      '@opentelemetry/api': 1.2.0
+      '@opentelemetry/semantic-conventions': 1.7.0
+    dev: true
+
+  /@opentelemetry/resources/1.7.0_@opentelemetry+api@1.2.0:
+    resolution: {integrity: sha512-u1M0yZotkjyKx8dj+46Sg5thwtOTBmtRieNXqdCRiWUp6SfFiIP0bI+1XK3LhuXqXkBXA1awJZaTqKduNMStRg==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0 <1.3.0'
+    dependencies:
+      '@opentelemetry/api': 1.2.0
+      '@opentelemetry/core': 1.7.0_@opentelemetry+api@1.2.0
+      '@opentelemetry/semantic-conventions': 1.7.0
+    dev: true
+
+  /@opentelemetry/sdk-trace-base/1.7.0_@opentelemetry+api@1.2.0:
+    resolution: {integrity: sha512-Iz84C+FVOskmauh9FNnj4+VrA+hG5o+tkMzXuoesvSfunVSioXib0syVFeNXwOm4+M5GdWCuW632LVjqEXStIg==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0 <1.3.0'
+    dependencies:
+      '@opentelemetry/api': 1.2.0
+      '@opentelemetry/core': 1.7.0_@opentelemetry+api@1.2.0
+      '@opentelemetry/resources': 1.7.0_@opentelemetry+api@1.2.0
+      '@opentelemetry/semantic-conventions': 1.7.0
+    dev: true
+
+  /@opentelemetry/semantic-conventions/1.7.0:
+    resolution: {integrity: sha512-FGBx/Qd09lMaqQcogCHyYrFEpTx4cAjeS+48lMIR12z7LdH+zofGDVQSubN59nL6IpubfKqTeIDu9rNO28iHVA==}
+    engines: {node: '>=14'}
+    dev: true
+
   /@panva/hkdf/1.0.2:
     resolution: {integrity: sha512-MSAs9t3Go7GUkMhpKC44T58DJ5KGk2vBo+h1cqQeqlMfdGkxaVB78ZWpv9gYi/g2fa4sopag9gJsNvS8XGgWJA==}
     dev: false
@@ -6118,7 +6190,6 @@ packages:
     dependencies:
       '@prisma/engines-version': 4.5.0-43.0362da9eebca54d94c8ef5edd3b2e90af99ba452
       prisma: 4.5.0
-    dev: false
 
   /@prisma/debug/3.14.0:
     resolution: {integrity: sha512-cvA2NRJU6oLCFpYcOJO6jjUZZcPwQqdKYVpa6OY+jFrSwLdYLgSPjrfbnBPOD2z1gzODdnrWYfpz3wPKVhZ0IQ==}
@@ -6146,6 +6217,16 @@ packages:
       strip-ansi: 6.0.1
     dev: true
 
+  /@prisma/debug/4.5.0:
+    resolution: {integrity: sha512-zTBisqSCipBN7veltdhuHU89t98BHQWH4qb6rJAla39AulLtsjCOUu5QEBUmXEuND5SChjYP/S9rJ4mVHkcTdg==}
+    dependencies:
+      '@types/debug': 4.1.7
+      debug: 4.3.4
+      strip-ansi: 6.0.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@prisma/engine-core/3.15.2:
     resolution: {integrity: sha512-E5uMBX7CPT46ydRqpduIVmjBSiDwOLx9ONPtzaNH8pNeKQoBORrf1I9k+dTa40JgdfFunYxyjIYaifTw63KpbQ==}
     dependencies:
@@ -6165,9 +6246,29 @@ packages:
       - supports-color
     dev: true
 
+  /@prisma/engine-core/4.5.0:
+    resolution: {integrity: sha512-pOiJPsXwvy5HHVvzCyb2gVs+yT2/KEkH2KrRF7szQrmaRhsh44ollv05u0VMM8xKy79n15L3ZXz4nPS0LxPK4Q==}
+    dependencies:
+      '@opentelemetry/api': 1.2.0
+      '@opentelemetry/sdk-trace-base': 1.7.0_@opentelemetry+api@1.2.0
+      '@prisma/debug': 4.5.0
+      '@prisma/engines': 4.5.0
+      '@prisma/generator-helper': 4.5.0
+      '@prisma/get-platform': 4.5.0
+      chalk: 4.1.2
+      execa: 5.1.1
+      get-stream: 6.0.1
+      indent-string: 4.0.0
+      new-github-issue-url: 0.2.1
+      p-retry: 4.6.2
+      strip-ansi: 6.0.1
+      undici: 5.10.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@prisma/engines-version/4.5.0-43.0362da9eebca54d94c8ef5edd3b2e90af99ba452:
     resolution: {integrity: sha512-o7LyVx8PPJBLrEzLl6lpxxk2D5VnlM4Fwmrbq0NoT6pr5aa1OuHD9ZG+WJY6TlR/iD9bhmo2LNcxddCMr5Rv2A==}
-    dev: false
 
   /@prisma/engines/3.15.1-1.461d6a05159055555eb7dfb337c9fb271cbd4d7e:
     resolution: {integrity: sha512-NHlojO1DFTsSi3FtEleL9QWXeSF/UjhCW0fgpi7bumnNZ4wj/eQ+BJJ5n2pgoOliTOGv9nX2qXvmHap7rJMNmg==}
@@ -6183,6 +6284,31 @@ packages:
     dependencies:
       '@prisma/debug': 3.14.0
       '@prisma/get-platform': 3.15.1-1.461d6a05159055555eb7dfb337c9fb271cbd4d7e
+      chalk: 4.1.2
+      execa: 5.1.1
+      find-cache-dir: 3.3.2
+      hasha: 5.2.2
+      http-proxy-agent: 5.0.0
+      https-proxy-agent: 5.0.1
+      make-dir: 3.1.0
+      node-fetch: 2.6.7
+      p-filter: 2.1.0
+      p-map: 4.0.0
+      p-retry: 4.6.2
+      progress: 2.0.3
+      rimraf: 3.0.2
+      temp-dir: 2.0.0
+      tempy: 1.0.1
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: true
+
+  /@prisma/fetch-engine/4.5.0:
+    resolution: {integrity: sha512-IIJj+7PIfQj65OfkkPv4hyd4O3flE1DfUhdHLa7v2+XZrzoKOC+Dj6ksAeXKhZSj60Tgk0Ed1SPPIczrvN8e6Q==}
+    dependencies:
+      '@prisma/debug': 4.5.0
+      '@prisma/get-platform': 4.5.0
       chalk: 4.1.2
       execa: 5.1.1
       find-cache-dir: 3.3.2
@@ -6223,14 +6349,89 @@ packages:
       cross-spawn: 7.0.3
     dev: true
 
+  /@prisma/generator-helper/4.5.0:
+    resolution: {integrity: sha512-4Ky6sIvTSylLkWQmwVezaw8bHE/TfsnoFyPHDphBOl5r/l3X2I1yy1g2kVAqNQ9phkEDzRX7ZIIn6w9jCGtOLg==}
+    dependencies:
+      '@prisma/debug': 4.5.0
+      '@types/cross-spawn': 6.0.2
+      chalk: 4.1.2
+      cross-spawn: 7.0.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@prisma/get-platform/3.15.1-1.461d6a05159055555eb7dfb337c9fb271cbd4d7e:
     resolution: {integrity: sha512-z306ogr/IvpnboY2R/Ry+Qqgi9XIJ6WXV5h4Isd8l/fQNHB83VQydkCSspRkbCeCIddYSRZNTIlPW7+ICy4NbQ==}
     dependencies:
       '@prisma/debug': 3.14.0
     dev: true
 
+  /@prisma/get-platform/4.5.0:
+    resolution: {integrity: sha512-ndamUoGPzstoirM1MYbbzQ5j4MgBETUuX5HzP/IlewJ8t3AkI18aONfM88bWsbDQaT7vP6I2FEqpwYECP/XXFw==}
+    dependencies:
+      '@prisma/debug': 4.5.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@prisma/internals/4.5.0:
+    resolution: {integrity: sha512-PwvxeMWBMIJK3VykXsXlR4KFVUX6KxAqALIZQA+Bib71bDS+lqIlHRq852mVaPSNZ5QD2fSP/wA7gQ4T+ZJQ6g==}
+    dependencies:
+      '@prisma/debug': 4.5.0
+      '@prisma/engine-core': 4.5.0
+      '@prisma/engines': 4.5.0
+      '@prisma/fetch-engine': 4.5.0
+      '@prisma/generator-helper': 4.5.0
+      '@prisma/get-platform': 4.5.0
+      '@prisma/prisma-fmt-wasm': 4.5.0-43.0362da9eebca54d94c8ef5edd3b2e90af99ba452
+      archiver: 5.3.1
+      arg: 5.0.2
+      chalk: 4.1.2
+      checkpoint-client: 1.1.21
+      cli-truncate: 2.1.0
+      dotenv: 16.0.2
+      escape-string-regexp: 4.0.0
+      execa: 5.1.1
+      find-up: 5.0.0
+      fp-ts: 2.12.3
+      fs-extra: 10.1.0
+      fs-jetpack: 5.0.0
+      global-dirs: 3.0.0
+      globby: 11.1.0
+      has-yarn: 2.1.0
+      is-windows: 1.0.2
+      is-wsl: 2.2.0
+      make-dir: 3.1.0
+      new-github-issue-url: 0.2.1
+      node-fetch: 2.6.7
+      open: 7.4.2
+      ora: 5.4.1
+      p-map: 4.0.0
+      prompts: 2.4.2
+      read-pkg-up: 7.0.1
+      replace-string: 3.1.0
+      resolve: 1.22.1
+      rimraf: 3.0.2
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
+      strip-indent: 3.0.0
+      temp-dir: 2.0.0
+      temp-write: 4.0.0
+      tempy: 1.0.1
+      terminal-link: 2.1.1
+      tmp: 0.2.1
+      ts-pattern: 4.0.5
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: true
+
   /@prisma/prisma-fmt-wasm/4.4.0-66.f352a33b70356f46311da8b00d83386dd9f145d6:
     resolution: {integrity: sha512-Hc2i5nfAt3nLDUkQNWJcKFJaA9Avd5zz6t85w9SW7P0vGtFXScQ+xIu6znbULr9bc0pgTWejY1We2u/7EMxHWw==}
+    dev: true
+
+  /@prisma/prisma-fmt-wasm/4.5.0-43.0362da9eebca54d94c8ef5edd3b2e90af99ba452:
+    resolution: {integrity: sha512-MYWUyB+sk3AL/dJFdAzoGbmcYQKA3F8SzsdPUCVfH3I0FujdwbR+pabIXogOHVt8eZySiJWW7+yAWOD2GkBtoA==}
     dev: true
 
   /@prisma/sdk/3.15.2:
@@ -10682,6 +10883,10 @@ packages:
     resolution: {integrity: sha512-e0hDa9H2Z9AwFkk2qDlwhoMYE4eToKarchkQHovNdLTCYMHZHeRjI71crOh+dio4K6u1IcwubQqo79Ga4CyAQA==}
     dev: true
 
+  /arg/5.0.2:
+    resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
+    dev: true
+
   /argparse/1.0.10:
     resolution: {integrity: sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==}
     dependencies:
@@ -13195,6 +13400,11 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
+  /dotenv/16.0.2:
+    resolution: {integrity: sha512-JvpYKUmzQhYoIFgK2MOnF3bciIZoItIIoryihy0rIA+H4Jy0FmgyKYAHCTN98P5ybGSJcIFbh6QKeJdtZd1qhA==}
+    engines: {node: '>=12'}
+    dev: true
+
   /dotenv/16.0.3:
     resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
     engines: {node: '>=12'}
@@ -13208,6 +13418,11 @@ packages:
   /dotenv/8.6.0:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
     engines: {node: '>=10'}
+
+  /drange/1.1.1:
+    resolution: {integrity: sha512-pYxfDYpued//QpnLIm4Avk7rsNtAtQkUES2cwAYSvD/wd2pKD71gN2Ebj3e7klzXwjocvE8c5vx/1fxwpqmSxA==}
+    engines: {node: '>=4'}
+    dev: true
 
   /duplexer2/0.1.4:
     resolution: {integrity: sha512-asLFVfWWtJ90ZyOUHMqk7/S2w2guQKxUI2itj3d92ADHhxUSbCMGi1f1cBcJ7xM1To+pE/Khbwo1yuNbMEPKeA==}
@@ -15339,6 +15554,10 @@ packages:
     resolution: {integrity: sha512-oxvgqUYR6O9VkKXrxkJ0NOyU0FrE705MeqgBUMEPWyTu6Pwn768cJbHChw2XOBlgFLKfIHxjr2OOBFpv2mUGZw==}
     dev: true
 
+  /fp-ts/2.12.3:
+    resolution: {integrity: sha512-8m0XvW8kZbfnJOA4NvSVXu95mLbPf4LQGwQyqVukIYS4KzSNJiyKSmuZUmbVHteUi6MGkAJGPb0goPZqI+Tsqg==}
+    dev: true
+
   /fragment-cache/0.2.1:
     resolution: {integrity: sha512-GMBAbW9antB8iZRHLoGw0b3HANt57diZYFO/HL1JGIC1MjKrdmhxvrJbupnVvpys0zsz7yBApXdQyfepKly2kA==}
     engines: {node: '>=0.10.0'}
@@ -15467,6 +15686,12 @@ packages:
     dependencies:
       minimatch: 3.1.2
       rimraf: 2.7.1
+    dev: true
+
+  /fs-jetpack/5.0.0:
+    resolution: {integrity: sha512-0f9QoIbfAq/DuafAQisvsHJmLnJB2D53d9FXIu0UZPUg4Kzocez1+AinToPON6JD/C60kDlye121puiR5ivfdg==}
+    dependencies:
+      minimatch: 5.1.0
     dev: true
 
   /fs-minipass/2.1.0:
@@ -20517,6 +20742,22 @@ packages:
       - utf-8-validate
     dev: true
 
+  /prisma-zod-generator/0.6.1_prisma@4.5.0:
+    resolution: {integrity: sha512-ImxsZxnvxblO551M3VNzlKgSY3K35F5SQBtoKZfy1Qthl+hTts2d5HnA7NpHk2bcEs8VqWdUATyE5y6flAEzeQ==}
+    hasBin: true
+    dependencies:
+      '@prisma/client': 4.5.0_prisma@4.5.0
+      '@prisma/generator-helper': 4.5.0
+      '@prisma/internals': 4.5.0
+      prettier: 2.7.1
+      tslib: 2.4.1
+      zod: 3.19.1
+    transitivePeerDependencies:
+      - encoding
+      - prisma
+      - supports-color
+    dev: true
+
   /prisma/4.5.0:
     resolution: {integrity: sha512-9Aeg4qiKlv9Wsjz4NO8k2CzRzlvS3A4FYVJ5+28sBBZ0eEwbiVOE/Jj7v6rZC1tFW2s4GSICQOAyuOjc6WsNew==}
     engines: {node: '>=14.17'}
@@ -20812,6 +21053,14 @@ packages:
 
   /ramda/0.28.0:
     resolution: {integrity: sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==}
+
+  /randexp/0.5.3:
+    resolution: {integrity: sha512-U+5l2KrcMNOUPYvazA3h5ekF80FHTUG+87SEAmHZmolh1M+i/WyTCxVzmi+tidIa1tM4BSe8g2Y/D3loWDjj+w==}
+    engines: {node: '>=4'}
+    dependencies:
+      drange: 1.1.1
+      ret: 0.2.2
+    dev: true
 
   /randombytes/2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
@@ -21904,6 +22153,11 @@ packages:
   /ret/0.1.15:
     resolution: {integrity: sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==}
     engines: {node: '>=0.12'}
+
+  /ret/0.2.2:
+    resolution: {integrity: sha512-M0b3YWQs7R3Z917WRQy1HHA7Ba7D8hvZg6UE5mLykJxQVE2ju0IXbGlaHPPlkY+WN7wFP+wUMXmBFA0aV6vYGQ==}
+    engines: {node: '>=4'}
+    dev: true
 
   /retry/0.13.1:
     resolution: {integrity: sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==}
@@ -24313,6 +24567,11 @@ packages:
     engines: {node: '>=12.18'}
     dev: true
 
+  /undici/5.10.0:
+    resolution: {integrity: sha512-c8HsD3IbwmjjbLvoZuRI26TZic+TSEe8FPMLLOkN1AfYRhdjnKBU6yL+IwcSCbdZiX4e5t0lfMDLDCqj4Sq70g==}
+    engines: {node: '>=12.18'}
+    dev: true
+
   /unfetch/4.2.0:
     resolution: {integrity: sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==}
     dev: true
@@ -25435,7 +25694,7 @@ packages:
       compress-commons: 4.1.1
       readable-stream: 3.6.0
 
-  /zod-prisma/0.5.4_prisma@4.5.0+zod@3.19.1:
+  /zod-prisma/0.5.4_4gfbbmurd7u2k6gm2q7tuf7una_prisma@4.5.0+zod@3.19.1:
     resolution: {integrity: sha512-5Ca4Qd1a1jy1T/NqCEpbr0c+EsbjJfJ/7euEHob3zDvtUK2rTuD1Rc/vfzH8q8PtaR2TZbysD88NHmrLwpv3Xg==}
     engines: {node: '>=14'}
     hasBin: true
@@ -25453,6 +25712,7 @@ packages:
       ts-morph: 13.0.3
       zod: 3.19.1
     dev: true
+    patched: true
 
   /zod/3.17.10:
     resolution: {integrity: sha512-IHXnQYQuOOOL/XgHhgl8YjNxBHi3xX0mVcHmqsvJgcxKkEczPshoWdxqyFwsARpf41E0v9U95WUROqsHHxt0UQ==}

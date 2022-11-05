@@ -25,7 +25,7 @@ datasource db {
 
 /// NextAuth Account **DO NOT ALTER**
 model Account {
-  id                String  @id @default(cuid())
+  id                String  @id @default(cuid()) /// @zod.cuid()
   type              String
   provider          String
   providerAccountId String
@@ -38,7 +38,7 @@ model Account {
   session_state     String?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  userId String /// @zod.cuid()
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -49,12 +49,12 @@ model Account {
 /// NextAuth Session **DO NOT ALTER**
 model Session {
   // Do not change - NextAuth fields
-  id           String   @id @default(cuid())
+  id           String   @id @default(cuid()) /// @zod.cuid()
   sessionToken String   @unique
   expires      DateTime
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  userId String /// @zod.cuid()
 }
 
 /// NextAuth Verification Token **DO NOT ALTER**
@@ -71,7 +71,7 @@ model User {
   //
   // Do not change - NextAuth fields
   //
-  id              String            @id @default(cuid())
+  id              String            @id @default(cuid()) /// @zod.cuid()
   name            String?
   email           String            @unique
   emailVerified   DateTime?
@@ -89,14 +89,15 @@ model User {
   reasonForJoin   String?
   communities     UserCommunity[]
   permissions     PermissionItem[]
-  PermissionAsset PermissionAsset[] // assets that certain permissible roles are attributed to (edit org, etc)
+  /// assets that certain permissible roles are attributed to (edit org, etc)
+  PermissionAsset PermissionAsset[]
 
   // Current location
   currentCity      String?
   currentGovDist   GovDist? @relation(fields: [currentGovDistId], references: [id])
-  currentGovDistId String?
+  currentGovDistId String? /// @zod.cuid()
   currentCountry   Country? @relation(name: "currentCountry", fields: [currentCountryId], references: [id])
-  currentCountryId String?
+  currentCountryId String? /// @zod.cuid()
 
   // Data for AWS Cognito migration
   //  migrated from old DB - once user is migrated to Cognito, legacy fields are cleared, migrateDate is set
@@ -109,26 +110,29 @@ model User {
   sharedLists UserSavedList[] @relation("sharedLists")
 
   immigration   UserImmigration? @relation(fields: [immigrationId], references: [id])
-  immigrationId String?
+  immigrationId String? /// @zod.cuid()
 
   role   UserRole @relation(fields: [roleId], references: [id])
-  roleId String
+  roleId String /// @zod.cuid()
 
   userType   UserType @relation(fields: [userTypeId], references: [id])
-  userTypeId String
+  userTypeId String /// @zod.cuid()
 
   langPref   Language @relation(fields: [langPrefId], references: [id])
-  langPrefId String
+  langPrefId String /// @zod.cuid()
 
   source   Source? @relation(name: "userSource", fields: [sourceId], references: [id])
-  sourceId String?
+  sourceId String? /// @zod.cuid()
 
   // For claimed organizations / organization staff
   associatedOrg   Organization? @relation(fields: [associatedOrgId], references: [id])
-  associatedOrgId String?
+  associatedOrgId String? /// @zod.cuid()
+  orgTitle        UserTitle?    @relation(fields: [orgTitleId], references: [id])
+  orgTitleId      String? /// @zod.cuid()
+  orgEmail        OrgEmail?     @relation("associatedEmail")
+  orgPhone        OrgPhone?     @relation("associatedPhone")
 
-  orgTitle   UserTitle? @relation(fields: [orgTitleId], references: [id])
-  orgTitleId String?
+  FieldVisibility FieldVisibility[] /// For user profile page. All fields default to 'NONE'
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -154,8 +158,8 @@ model User {
   updateUserTitle            UserTitle[]            @relation("updateUserTitle")
   createOrgLocation          OrgLocation[]          @relation("createOrgLocation")
   updateOrgLocation          OrgLocation[]          @relation("updateOrgLocation")
-  createOrgNotes             OrgNotes[]             @relation("createOrgNotes")
-  updateOrgNotes             OrgNotes[]             @relation("updateOrgNotes")
+  createInternalNote         InternalNote[]         @relation("createInternalNote")
+  updateInternalNote         InternalNote[]         @relation("updateInternalNote")
   createOrgPhone             OrgPhone[]             @relation("createOrgPhone")
   updateOrgPhone             OrgPhone[]             @relation("updateOrgPhone")
   createOrgPhoto             OrgPhoto[]             @relation("createOrgPhoto")
@@ -204,7 +208,7 @@ model User {
 
 /// User Role - Contains array of granular permissions
 model UserRole {
-  id   String @id @default(cuid())
+  id   String @id @default(cuid()) /// @zod.cuid()
   name String @unique
 
   permissions PermissionItem[]
@@ -212,19 +216,19 @@ model UserRole {
 
   createdAt   DateTime @default(now())
   createdBy   User?    @relation("createUserRole", fields: [createdById], references: [id])
-  createdById String?
+  createdById String? /// @zod.cuid()
   updatedAt   DateTime @updatedAt
   updatedBy   User?    @relation("updateUserRole", fields: [updatedById], references: [id])
-  updatedById String?
+  updatedById String? /// @zod.cuid()
 }
 
 model PermissionAsset {
-  id     String @id @default(cuid())
+  id     String @id @default(cuid()) /// @zod.cuid()
   user   User   @relation(fields: [userId], references: [id])
-  userId String
+  userId String /// @zod.cuid()
 
   permission   PermissionItem @relation(fields: [permissionId], references: [id])
-  permissionId String
+  permissionId String /// @zod.cuid()
 
   organization Organization[]
   location     OrgLocation[]
@@ -232,7 +236,7 @@ model PermissionAsset {
 
 /// Permission Definition
 model PermissionItem {
-  id   String @id @default(cuid())
+  id   String @id @default(cuid()) /// @zod.cuid()
   name String
 
   users  User[]
@@ -241,21 +245,21 @@ model PermissionItem {
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createPermissionItem", fields: [createdById], references: [id])
-  createdById String
+  createdById String /// @zod.cuid()
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updatePermissionItem", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String /// @zod.cuid()
 }
 
 /// User Info - account type (seeker, org, lawyer, etc.)
 ///  use shorthand descriptions - front-end displayable text is defined in Translations
 model UserType {
-  id    String @id @default(cuid())
+  id    String @id @default(cuid()) /// @zod.cuid()
   type  String @unique
   users User[]
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
-  translationKeyId String
+  translationKeyId String /// @zod.cuid()
 
   createdAt   DateTime @default(now())
   createdBy   User?    @relation("createUserType", fields: [createdById], references: [id])
@@ -268,105 +272,105 @@ model UserType {
 /// User Info - professional title
 ///  this will be a searchable list
 model UserTitle {
-  id         String     @id @default(cuid())
+  id         String     @id @default(cuid()) /// @zod.cuid()
   text       String
   email      OrgEmail[]
   orgUser    User[]
   searchable Boolean    @default(false)
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String /// @zod.cuid()
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserTitle", fields: [createdById], references: [id])
-  createdById String
+  createdById String /// @zod.cuid()
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserTitle", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String /// @zod.cuid()
 }
 
 /// User demographics - Ethnicity
-///  use shorthand descriptions - front-end displayable text is defined in Translations
 model UserEthnicity {
-  id        String @id @default(cuid())
+  id        String @id @default(cuid()) /// @zod.cuid()
+  ///  use shorthand descriptions - front-end displayable text is defined in Translations
   ethnicity String
   users     User[]
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
-  translationKeyId String
+  translationKeyId String /// @zod.cuid()
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserEthnicity", fields: [createdById], references: [id])
-  createdById String
+  createdById String /// @zod.cuid()
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserEthnicity", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String /// @zod.cuid()
 }
 
 /// User demographics - Immigration Status
-///  use shorthand descriptions - front-end displayable text is defined in Translations
 model UserImmigration {
-  id     String @id @default(cuid())
+  id     String @id @default(cuid()) /// @zod.cuid()
+  ///  use shorthand descriptions - front-end displayable text is defined in Translations
   status String
   users  User[]
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
-  translationKeyId String
+  translationKeyId String /// @zod.cuid()
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserImmigration", fields: [createdById], references: [id])
-  createdById String
+  createdById String /// @zod.cuid()
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserImmigration", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String /// @zod.cuid()
 }
 
 /// User demographics - Sexual orientation
-///  use shorthand descriptions - front-end displayable text is defined in Translations
 model UserSOG {
-  id    String @id @default(cuid())
+  id    String @id @default(cuid()) /// @zod.cuid()
+  ///  use shorthand descriptions - front-end displayable text is defined in Translations
   sog   String
   users User[]
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
-  translationKeyId String
+  translationKeyId String /// @zod.cuid()
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserSOG", fields: [createdById], references: [id])
-  createdById String
+  createdById String /// @zod.cuid()
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserSOG", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String /// @zod.cuid()
 }
 
 /// User demographics - Community
-///  use shorthand descriptions - front-end displayable text is defined in Translations
 model UserCommunity {
-  id        String @id @default(cuid())
+  id        String @id @default(cuid()) /// @zod.cuid()
+  ///  use shorthand descriptions - front-end displayable text is defined in Translations
   community String
   users     User[]
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
-  translationKeyId String
+  translationKeyId String /// @zod.cuid()
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createUserCommunity", fields: [createdById], references: [id])
-  createdById String
+  createdById String /// @zod.cuid()
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateUserCommunity", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String /// @zod.cuid()
 }
 
 /// User's list(s) of saved resources.
 model UserSavedList {
-  id            String                  @id @default(cuid())
+  id            String                  @id @default(cuid()) /// @zod.cuid()
   name          String
   organizations Organization[]
   visibility    UserSavedListVisibility @default(PRIVATE)
   sharedWith    User[]                  @relation("sharedLists")
 
   ownedBy   User   @relation("userList", fields: [ownedById], references: [id])
-  ownedById String
+  ownedById String /// @zod.cuid()
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -381,19 +385,20 @@ enum UserSavedListVisibility {
 
 /// Main organization definition
 model Organization {
-  id             String           @id @default(cuid())
-  legacyId       String? // old ID from MongoDB
+  id             String           @id @default(cuid()) /// @zod.cuid()
+  legacyId       String? /// old ID from MongoDB
   name           String
   slug           String           @unique
   description    OrgDescription[]
   email          OrgEmail[]
   location       OrgLocation[]
-  notes          OrgNotes[]
+  notes          InternalNote[]
   phone          OrgPhone[]
   photos         OrgPhoto[]
   services       OrgService[]
   orgSocialMedia OrgSocialMedia[]
   userList       UserSavedList[]
+  reviews        OrgReview[]
 
   deleted   Boolean @default(false)
   published Boolean @default(false)
@@ -404,46 +409,46 @@ model Organization {
 
   // Outside API connections
   outsideApi    OutsideAPI? @relation(fields: [outsideApiId], references: [id])
-  outsideApiId  String?
-  apiLocationId String?
+  outsideApiId  String? /// @zod.cuid()
+  apiIdentifier String?
 
   source   Source @relation(fields: [sourceId], references: [id])
-  sourceId String
+  sourceId String /// @zod.cuid()
 
-  createdAt   DateTime    @default(now())
-  createdBy   User        @relation("createOrganization", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime    @updatedAt
-  updatedBy   User        @relation("updateOrganization", fields: [updatedById], references: [id])
-  updatedById String
-  OrgReview   OrgReview[]
+  createdAt   DateTime @default(now())
+  createdBy   User     @relation("createOrganization", fields: [createdById], references: [id])
+  createdById String /// @zod.cuid()
+  updatedAt   DateTime @updatedAt
+  updatedBy   User     @relation("updateOrganization", fields: [updatedById], references: [id])
+  updatedById String /// @zod.cuid()
 }
 
 /// Description translations
 ///  this does not use i18next
 model OrgDescription {
-  id   String @id @default(cuid())
+  id   String @id @default(cuid()) /// @zod.cuid()
   text String
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String /// @zod.cuid()
 
   organization Organization @relation(fields: [orgId], references: [id])
-  orgId        String
+  orgId        String /// @zod.cuid()
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createOrgDescription", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateOrgDescription", fields: [updatedById], references: [id])
-  updatedById String
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createOrgDescription", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateOrgDescription", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 
   @@index([langId, orgId])
 }
 
 /// Organization email contacts - can be general or location specific
 model OrgEmail {
-  id        String  @id @default(cuid())
+  id        String  @id @default(cuid()) /// @zod.cuid()
   firstName String
   lastName  String
   primary   Boolean
@@ -451,78 +456,95 @@ model OrgEmail {
   published Boolean @default(true)
 
   title   UserTitle @relation(fields: [titleId], references: [id])
-  titleId String
+  titleId String /// @zod.cuid()
 
   organization Organization @relation(fields: [orgId], references: [id])
-  orgId        String
+  orgId        String /// @zod.cuid()
+
+  user   User?   @relation(name: "associatedEmail", fields: [userId], references: [id])
+  userId String? @unique /// @zod.cuid()
 
   // optional - attach email to a specific location
   orgLocation     OrgLocation[]
-  // associated only with location and not overall organization (for large orgs w/ multiple locations)
+  /// associated only with location and not overall organization (for large orgs w/ multiple locations)
   orgLocationOnly Boolean       @default(false)
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createOrgEmail", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateOrgEmail", fields: [updatedById], references: [id])
-  updatedById String
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createOrgEmail", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateOrgEmail", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 /// Org phone numbers - can be general or location specific
 model OrgPhone {
-  id        String  @id @default(cuid())
+  id        String  @id @default(cuid()) /// @zod.cuid()
   number    String
   published Boolean @default(true)
   primary   Boolean
 
   phoneType   PhoneType @relation(fields: [phoneTypeId], references: [id])
-  phoneTypeId String
+  phoneTypeId String /// @zod.cuid()
 
   organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String
+  organizationId String /// @zod.cuid()
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createOrgPhone", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateOrgPhone", fields: [updatedById], references: [id])
-  updatedById String
+  user   User?   @relation(name: "associatedPhone", fields: [userId], references: [id])
+  userId String? @unique /// @zod.cuid()
+
+  orgLocation     OrgLocation[]
+  /// associated only with location and not overall organization (for large orgs w/ multiple locations)
+  orgLocationOnly Boolean       @default(false)
+
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createOrgPhone", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateOrgPhone", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 /// Organization's social media links
 model OrgSocialMedia {
-  id       String @id @default(cuid())
+  id       String @id @default(cuid()) /// @zod.cuid()
   username String
   url      String
 
   service   SocialMediaService @relation(fields: [serviceId], references: [id])
-  serviceId String
+  serviceId String /// @zod.cuid()
 
   organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String
+  organizationId String /// @zod.cuid()
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createOrgSocialMedia", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateOrgSocialMedia", fields: [updatedById], references: [id])
-  updatedById String
+  orgLocation     OrgLocation[]
+  /// associated only with location and not overall organization (for large orgs w/ multiple locations)
+  orgLocationOnly Boolean       @default(false)
+
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createOrgSocialMedia", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateOrgSocialMedia", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 /// Org location information
 model OrgLocation {
-  id       String  @id @default(cuid())
+  id       String  @id @default(cuid()) /// @zod.cuid()
   street1  String
   street2  String
   city     String
   postCode String?
 
   govDist   GovDist? @relation(fields: [govDistId], references: [id])
-  govDistId String?
+  govDistId String? /// @zod.cuid()
 
   country   Country @relation(fields: [countryId], references: [id])
-  countryId String
+  countryId String /// @zod.cuid()
 
   longitude Decimal @db.Decimal(4, 3)
   latitude  Decimal @db.Decimal(4, 3)
@@ -532,88 +554,81 @@ model OrgLocation {
   hours     OrgHours[]
 
   organization   Organization      @relation(fields: [orgId], references: [id])
-  orgId          String
+  orgId          String /// @zod.cuid()
   allowedEditors PermissionAsset[]
 
-  orgEmail OrgEmail[]
+  email       OrgEmail[] /// if location specific
+  phone       OrgPhone[] /// if location specific
+  socialMedia OrgSocialMedia[] /// if location specific
+  photos      OrgPhoto[]
 
   // Outside API connections
   outsideApi    OutsideAPI? @relation(fields: [outsideApiId], references: [id])
-  outsideApiId  String?
+  outsideApiId  String? /// @zod.cuid()
   apiLocationId String?
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createOrgLocation", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateOrgLocation", fields: [updatedById], references: [id])
-  updatedById String
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createOrgLocation", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateOrgLocation", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 
   @@index([latitude, longitude])
 }
 
-/// Organization notes - for internal use
-model OrgNotes {
-  id   String @id @default(cuid())
-  text String
-
-  organization Organization @relation(fields: [orgId], references: [id])
-  orgId        String
-
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createOrgNotes", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateOrgNotes", fields: [updatedById], references: [id])
-  updatedById String
-}
-
 /// Organization photos
 model OrgPhoto {
-  id        String  @id @default(cuid())
+  id        String  @id @default(cuid()) /// @zod.cuid()
   src       String
   height    Int?    @db.SmallInt
   width     Int?    @db.SmallInt
   published Boolean @default(false)
 
-  organization Organization @relation(fields: [orgId], references: [id])
-  orgId        String
+  organization Organization? @relation(fields: [orgId], references: [id])
+  orgId        String? /// @zod.cuid()
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createOrgPhoto", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateOrgPhoto", fields: [updatedById], references: [id])
-  updatedById String
+  orgLocation   OrgLocation? @relation(fields: [orgLocationId], references: [id])
+  orgLocationId String? /// @zod.cuid()
+
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createOrgPhoto", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateOrgPhoto", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 /// Organization location/service hours
 ///  day is stored as integer [0-6], Sunday = 0
 ///  start/end times are stored in MINUTES only (0 = 12:00am; 1439 = 11:59pm)
 model OrgHours {
-  id       String @id @default(cuid())
+  id       String @id @default(cuid()) /// @zod.cuid()
   dayIndex Int    @default(0) @db.SmallInt // Sunday = 0
   start    Int    @default(0) @db.SmallInt // minutes
   end      Int    @default(1439) @db.SmallInt // minutes
 
   orgLocation OrgLocation? @relation(fields: [orgLocId], references: [id])
-  orgLocId    String?
+  orgLocId    String? /// @zod.cuid()
 
   orgService   OrgService? @relation(fields: [orgServiceId], references: [id])
-  orgServiceId String?
+  orgServiceId String? /// @zod.cuid()
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createOrgHours", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateOrgHours", fields: [updatedById], references: [id])
-  updatedById String
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createOrgHours", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateOrgHours", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 /// Organization's offered services - access instructions & details
 ///  associated with service tag
 model OrgService {
-  id                 String       @id @default(cuid())
+  id                 String       @id @default(cuid()) /// @zod.cuid()
   published          Boolean      @default(false)
   accessInstructions String?
   description        String?
@@ -621,112 +636,117 @@ model OrgService {
   service            ServiceTag[]
 
   organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String
+  organizationId String /// @zod.cuid()
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String /// @zod.cuid()
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createOrgService", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateOrgService", fields: [updatedById], references: [id])
-  updatedById String
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createOrgService", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateOrgService", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 /// User reviews/ratings of organization
 model OrgReview {
-  id      String  @id @default(cuid())
+  id      String  @id @default(cuid()) /// @zod.cuid()
   rating  Int     @db.SmallInt
   comment String?
   visible Boolean @default(true)
 
   organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String
+  organizationId String /// @zod.cuid()
 
   // Optional: Review can be attached to a specific service.
   service   ServiceTag? @relation(fields: [serviceId], references: [id])
-  serviceId String?
+  serviceId String? /// @zod.cuid()
 
   // Store the language of the review text
   // Use session locale value or Google Translate lang detect API
   // Optional: do not store anything if 'comment' is null
   language Language? @relation(fields: [langId], references: [id])
-  langId   String?
+  langId   String? /// @zod.cuid()
 
-  // Local community reviwer geographical info
+  // Snapshot local community reviwer geographical info
+  //  review should keep original geo data if LCR user updates their location.
   // Optional - only applicable if user is LCR
   lcrCity      String?
   lcrGovDist   GovDist? @relation(fields: [lcrGovDistId], references: [id])
-  lcrGovDistId String?
+  lcrGovDistId String? /// @zod.cuid()
   lcrCountry   Country? @relation(fields: [lcrCountryId], references: [id])
-  lcrCountryId String?
+  lcrCountryId String? /// @zod.cuid()
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createOrgReview", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateOrgReview", fields: [updatedById], references: [id])
-  updatedById String
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createOrgReview", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateOrgReview", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 model ServiceCategory {
-  id       String       @id @default(cuid())
+  id       String       @id @default(cuid()) /// @zod.cuid()
   category String
   services ServiceTag[]
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
-  translationKeyId String
+  translationKeyId String /// @zod.cuid()
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createServiceCategory", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateServiceCategory", fields: [updatedById], references: [id])
-  updatedById String
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createServiceCategory", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateServiceCategory", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 model ServiceTag {
-  id   String @id @default(cuid())
+  id   String @id @default(cuid()) /// @zod.cuid()
   type String
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
-  translationKeyId String
+  translationKeyId String /// @zod.cuid()
 
   category   ServiceCategory @relation(fields: [categoryId], references: [id])
-  categoryId String
+  categoryId String /// @zod.cuid()
 
   orgServices OrgService[]
   OrgReview   OrgReview[]
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createServiceTag", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateServiceTag", fields: [updatedById], references: [id])
-  updatedById String
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createServiceTag", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateServiceTag", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 /// Phone number descriptors
 model PhoneType {
-  id       String     @id @default(cuid())
+  id       String     @id @default(cuid()) /// @zod.cuid()
   type     String
   orgPhone OrgPhone[]
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String /// @zod.cuid()
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createPhoneType", fields: [createdById], references: [id])
-  createdById String
+  createdById String /// @zod.cuid()
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updatePhoneType", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String /// @zod.cuid()
 }
 
 /// Social media service properties
 model SocialMediaService {
-  id       String @id @default(cuid())
+  id       String @id @default(cuid()) /// @zod.cuid()
   name     String
   urlBase  String
   logoIcon String
@@ -735,16 +755,16 @@ model SocialMediaService {
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createSocialMediaService", fields: [createdById], references: [id])
-  createdById String
+  createdById String /// @zod.cuid()
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateSocialMediaService", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String /// @zod.cuid()
 }
 
 /// Source of organization/user
 ///  *INTERNAL* - for tracking purposes
 model Source {
-  id     String     @id @default(cuid())
+  id     String     @id @default(cuid()) /// @zod.cuid()
   source String
   type   SourceType
 
@@ -753,10 +773,10 @@ model Source {
 
   createdAt   DateTime @default(now())
   createdBy   User     @relation("createSource", fields: [createdById], references: [id])
-  createdById String
+  createdById String /// @zod.cuid()
   updatedAt   DateTime @updatedAt
   updatedBy   User     @relation("updateSource", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String /// @zod.cuid()
 }
 
 enum SourceType {
@@ -766,12 +786,12 @@ enum SourceType {
 
 /// Country metadata
 model Country {
-  id       String @id @default(cuid())
+  id       String @id @default(cuid()) /// @zod.cuid()
   /// ISO 3166-1 alpha-2 Country code
   cca2     String @unique @db.Char(2)
   /// ISO 3166-1 alpha-3 Country code
   cca3     String @unique @db.Char(3)
-  /// Country name (English). Translations are handled elsewhere.
+  /// Country name (English).
   name     String
   /// International dialing code
   dialCode Int    @db.SmallInt
@@ -779,76 +799,77 @@ model Country {
   flag     String
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
-  translationKeyId String
+  translationKeyId String /// @zod.cuid()
 
   // List of principal administrative subdivisions
-  GovDist GovDist[]
+  govDist GovDist[]
 
   orgAddress OrgLocation[]
+  orgReviews OrgReview[]
 
   originUsers  User[] @relation("countryOrigin")
   currentUsers User[] @relation("currentCountry")
 
-  createdAt   DateTime      @default(now())
-  createdBy   User          @relation("createCountry", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime      @updatedAt
-  updatedBy   User          @relation("updateCountry", fields: [updatedById], references: [id])
-  updatedById String
-  OrgReview   OrgReview[]
-  Translation Translation[]
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createCountry", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateCountry", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 /// Principal administrative districts for countries
 model GovDist {
-  id   String @id @default(cuid())
+  id   String @id @default(cuid()) /// @zod.cuid()
   /// ISO-3166-2 code
   iso  String @unique
   /// Name (English/Roman alphabet)
   name String
 
   country   Country @relation(fields: [countryId], references: [id])
-  countryId String
+  countryId String /// @zod.cuid()
 
   govDistType   GovDistType @relation(fields: [govDistTypeId], references: [id])
-  govDistTypeId String
+  govDistTypeId String /// @zod.cuid()
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
-  translationKeyId String
+  translationKeyId String /// @zod.cuid()
 
   OrgLocation OrgLocation[]
 
-  createdAt   DateTime    @default(now())
-  createdBy   User        @relation("createGovDist", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime    @updatedAt
-  updatedBy   User        @relation("updateGovDist", fields: [updatedById], references: [id])
-  updatedById String
-  OrgReview   OrgReview[]
-  User        User[]
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createGovDist", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateGovDist", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  OrgReview    OrgReview[]
+  User         User[]
+  InternalNote InternalNote[]
 }
 
 /// Descriptor of principal administrative districts (state, province, county, etc.)
 model GovDistType {
-  id   String @id @default(cuid())
+  id   String @id @default(cuid()) /// @zod.cuid()
   name String
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
-  translationKeyId String
+  translationKeyId String /// @zod.cuid()
 
   createdAt   DateTime  @default(now())
   createdBy   User      @relation("createGovDistType", fields: [createdById], references: [id])
-  createdById String
+  createdById String /// @zod.cuid()
   updatedAt   DateTime  @updatedAt
   updatedBy   User      @relation("updateGovDistType", fields: [updatedById], references: [id])
-  updatedById String
+  updatedById String /// @zod.cuid()
   GovDist     GovDist[]
 }
 
 /// Languages - ETF BCP 47 language tag
 ///  top level & regional locale (ex: 'en', "en-us", "en-ca")
 model Language {
-  id           String  @id @default(cuid())
+  id           String  @id @default(cuid()) /// @zod.cuid()
   languageName String
   /// ETF BCP 47 language tag
   localeCode   String  @unique
@@ -865,15 +886,16 @@ model Language {
   OrgService      OrgService[]
   User            User[]
 
-  createdAt   DateTime    @default(now())
-  createdBy   User?       @relation("createLanguage", fields: [createdById], references: [id])
-  createdById String?
-  updatedAt   DateTime    @updatedAt
-  updatedBy   User?       @relation("updateLanguage", fields: [updatedById], references: [id])
-  updatedById String?
-  UserTitle   UserTitle[]
-  OrgReview   OrgReview[]
-  PhoneType   PhoneType[]
+  createdAt    DateTime       @default(now())
+  createdBy    User?          @relation("createLanguage", fields: [createdById], references: [id])
+  createdById  String? /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User?          @relation("updateLanguage", fields: [updatedById], references: [id])
+  updatedById  String? /// @zod.cuid()
+  UserTitle    UserTitle[]
+  OrgReview    OrgReview[]
+  PhoneType    PhoneType[]
+  InternalNote InternalNote[]
 }
 
 //
@@ -882,29 +904,30 @@ model Language {
 
 // Top level category for i18next
 model TranslationNamespace {
-  id String @id @default(uuid())
+  id String @id @default(cuid()) /// @zod.cuid()
 
   name String @unique
 
   translations Translation[]
   item         TranslationKey[]
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createTranslationNamespace", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateTranslationNamespace", fields: [updatedById], references: [id])
-  updatedById String
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createTranslationNamespace", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateTranslationNamespace", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 // Item key - i18next
 model TranslationKey {
-  id           String               @id @default(uuid())
+  id           String               @id @default(cuid()) /// @zod.cuid()
   /// Item key
   key          String
   /// Associated namespace
   namespace    TranslationNamespace @relation(fields: [namespaceId], references: [id])
-  namespaceId  String
+  namespaceId  String /// @zod.cuid()
   translations Translation[]
 
   // associate variables to be used in translation (for dynamic content [plurals, ordinals, etc])
@@ -916,7 +939,7 @@ model TranslationKey {
 
   // to manage plurals & ordinals
   parent   TranslationKey?  @relation("translationSubItems", fields: [parentId], references: [id])
-  parentId String?
+  parentId String? /// @zod.cuid()
   children TranslationKey[] @relation("translationSubItems")
 
   /// Associated tables
@@ -931,12 +954,13 @@ model TranslationKey {
   GovDist         GovDist[]
   GovDistType     GovDistType[]
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createTranslationKey", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateTranslationKey", fields: [updatedById], references: [id])
-  updatedById String
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createTranslationKey", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateTranslationKey", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 
   /// Only 1 key per namespace
   @@unique([key, namespaceId])
@@ -944,45 +968,45 @@ model TranslationKey {
 
 /// Translation of TranslationNamespace.TranslationKey
 model Translation {
-  id   String @id @default(uuid())
+  id   String @id @default(cuid()) /// @zod.cuid()
   text String
 
   language Language @relation(fields: [langId], references: [id])
-  langId   String
+  langId   String /// @zod.cuid()
 
   namespace   TranslationNamespace @relation(fields: [namespaceId], references: [id])
-  namespaceId String
+  namespaceId String /// @zod.cuid()
 
   key   TranslationKey @relation(fields: [keyId], references: [id])
-  keyId String
+  keyId String /// @zod.cuid()
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createTranslation", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateTranslation", fields: [updatedById], references: [id])
-  updatedById String
-  Country     Country? @relation(fields: [countryId], references: [id])
-  countryId   String?
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createTranslation", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateTranslation", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 
   @@unique([langId, namespaceId, keyId])
 }
 
 // define variables to be used in translations
 model TranslationVariable {
-  id          String       @id @default(uuid())
+  id          String       @id @default(cuid()) /// @zod.cuid()
   name        String
   description String
   type        VariableType
 
   keys TranslationKey[]
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createTranslationVariable", fields: [createdById], references: [id])
-  createdById String
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateTranslationVariable", fields: [updatedById], references: [id])
-  updatedById String
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createTranslationVariable", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateTranslationVariable", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
 }
 
 // types of variables
@@ -994,18 +1018,102 @@ enum VariableType {
 
 /// Define outside APIs in use
 model OutsideAPI {
-  id          String @id @default(uuid())
+  id          String @id @default(cuid()) /// @zod.cuid()
   name        String @unique
   description String
 
   urlPattern String
 
-  createdAt    DateTime       @default(now())
-  createdBy    User           @relation("createOutsideAPI", fields: [createdById], references: [id])
-  createdById  String
-  updatedAt    DateTime       @updatedAt
-  updatedBy    User           @relation("updateOutsideAPI", fields: [updatedById], references: [id])
-  updatedById  String
   Organization Organization[]
   OrgLocation  OrgLocation[]
+
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createOutsideAPI", fields: [createdById], references: [id])
+  createdById  String /// @zod.cuid()
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateOutsideAPI", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.cuid()
+  InternalNote InternalNote[]
+}
+
+model FieldVisibility {
+  id     String @id @default(cuid()) /// @zod.cuid()
+  user   User   @relation(fields: [userId], references: [id])
+  userId String /// @zod.cuid()
+
+  name           VisibilitySetting @default(NONE)
+  email          VisibilitySetting @default(NONE)
+  image          VisibilitySetting @default(NONE)
+  ethnicity      VisibilitySetting @default(NONE)
+  countryOrigin  VisibilitySetting @default(NONE)
+  SOG            VisibilitySetting @default(NONE)
+  communities    VisibilitySetting @default(NONE)
+  currentCity    VisibilitySetting @default(NONE)
+  currentGovDist VisibilitySetting @default(NONE)
+  currentCountry VisibilitySetting @default(NONE)
+  userType       VisibilitySetting @default(NONE) /// for specialized accounts
+  associatedOrg  VisibilitySetting @default(NONE)
+  orgTitle       VisibilitySetting @default(NONE)
+  createdAt      VisibilitySetting @default(NONE) /// to facilitate "User since..."
+}
+
+enum VisibilitySetting {
+  NONE
+  LOGGED_IN
+  PROVIDER
+  PUBLIC
+}
+
+/// Internal notes - multipurpose
+model InternalNote {
+  id   String @id @default(cuid()) /// @zod.cuid()
+  text String
+
+  organization           Organization?         @relation(fields: [orgId], references: [id])
+  orgId                  String? /// @zod.cuid()
+  orgDescription         OrgDescription?       @relation(fields: [orgDescriptionId], references: [id])
+  orgDescriptionId       String? /// @zod.cuid()
+  orgEmail               OrgEmail?             @relation(fields: [orgEmailId], references: [id])
+  orgEmailId             String? /// @zod.cuid()
+  orgPhone               OrgPhone?             @relation(fields: [orgPhoneId], references: [id])
+  orgPhoneId             String? /// @zod.cuid()
+  orgSocialMedia         OrgSocialMedia?       @relation(fields: [orgSocialMediaId], references: [id])
+  orgSocialMediaId       String? /// @zod.cuid()
+  orgLocation            OrgLocation?          @relation(fields: [orgLocationId], references: [id])
+  orgLocationId          String? /// @zod.cuid()
+  orgPhoto               OrgPhoto?             @relation(fields: [orgPhotoId], references: [id])
+  orgPhotoId             String? /// @zod.cuid()
+  orgHours               OrgHours?             @relation(fields: [orgHoursId], references: [id])
+  orgHoursId             String? /// @zod.cuid()
+  orgService             OrgService?           @relation(fields: [orgServiceId], references: [id])
+  orgServiceId           String? /// @zod.cuid()
+  orgReview              OrgReview?            @relation(fields: [orgReviewId], references: [id])
+  orgReviewId            String? /// @zod.cuid()
+  serviceCategory        ServiceCategory?      @relation(fields: [serviceCategoryId], references: [id])
+  serviceCategoryId      String? /// @zod.cuid()
+  serviceTag             ServiceTag?           @relation(fields: [serviceTagId], references: [id])
+  serviceTagId           String? /// @zod.cuid()
+  country                Country?              @relation(fields: [countryId], references: [id])
+  countryId              String? /// @zod.cuid()
+  govDist                GovDist?              @relation(fields: [govDistId], references: [id])
+  govDistId              String? /// @zod.cuid()
+  language               Language?             @relation(fields: [languageId], references: [id])
+  languageId             String? /// @zod.cuid()
+  translationNamespace   TranslationNamespace? @relation(fields: [translationNamespaceId], references: [id])
+  translationNamespaceId String? /// @zod.cuid()
+  translationKey         TranslationKey?       @relation(fields: [translationKeyId], references: [id])
+  translationKeyId       String? /// @zod.cuid()
+  translation            Translation?          @relation(fields: [translationId], references: [id])
+  translationId          String? /// @zod.cuid()
+  translationVariable    TranslationVariable?  @relation(fields: [translationVariableId], references: [id])
+  translationVariableId  String? /// @zod.cuid()
+  outsideApi             OutsideAPI?           @relation(fields: [outsideApiId], references: [id])
+  outsideApiId           String? /// @zod.cuid()
+
+  createdAt   DateTime @default(now())
+  createdBy   User     @relation("createInternalNote", fields: [createdById], references: [id])
+  createdById String /// @zod.cuid()
+  updatedAt   DateTime @updatedAt
+  updatedBy   User     @relation("updateInternalNote", fields: [updatedById], references: [id])
+  updatedById String /// @zod.cuid()
 }

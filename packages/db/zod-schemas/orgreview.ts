@@ -4,12 +4,14 @@ import * as imports from '../zod-util'
 import {
 	CompleteCountry,
 	CompleteGovDist,
+	CompleteInternalNote,
 	CompleteLanguage,
 	CompleteOrganization,
 	CompleteServiceTag,
 	CompleteUser,
 	CountryModel,
 	GovDistModel,
+	InternalNoteModel,
 	LanguageModel,
 	OrganizationModel,
 	ServiceTagModel,
@@ -17,20 +19,20 @@ import {
 } from './index'
 
 export const _OrgReviewModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	rating: z.number().int(),
 	comment: z.string().nullish(),
 	visible: z.boolean(),
-	organizationId: z.string(),
-	serviceId: z.string().nullish(),
-	langId: z.string().nullish(),
+	organizationId: z.string().cuid(),
+	serviceId: z.string().cuid().nullish(),
+	langId: z.string().cuid().nullish(),
 	lcrCity: z.string().nullish(),
-	lcrGovDistId: z.string().nullish(),
-	lcrCountryId: z.string().nullish(),
+	lcrGovDistId: z.string().cuid().nullish(),
+	lcrCountryId: z.string().cuid().nullish(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteOrgReview extends z.infer<typeof _OrgReviewModel> {
@@ -41,6 +43,7 @@ export interface CompleteOrgReview extends z.infer<typeof _OrgReviewModel> {
 	lcrCountry?: CompleteCountry | null
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	InternalNote: CompleteInternalNote[]
 }
 
 /**
@@ -57,5 +60,6 @@ export const OrgReviewModel: z.ZodSchema<CompleteOrgReview> = z.lazy(() =>
 		lcrCountry: CountryModel.nullish(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		InternalNote: InternalNoteModel.array(),
 	})
 )

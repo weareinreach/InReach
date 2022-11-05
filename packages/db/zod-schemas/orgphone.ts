@@ -2,32 +2,42 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	CompleteInternalNote,
+	CompleteOrgLocation,
 	CompleteOrganization,
 	CompletePhoneType,
 	CompleteUser,
+	InternalNoteModel,
+	OrgLocationModel,
 	OrganizationModel,
 	PhoneTypeModel,
 	UserModel,
 } from './index'
 
 export const _OrgPhoneModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	number: z.string(),
 	published: z.boolean(),
 	primary: z.boolean(),
-	phoneTypeId: z.string(),
-	organizationId: z.string(),
+	phoneTypeId: z.string().cuid(),
+	organizationId: z.string().cuid(),
+	userId: z.string().cuid().nullish(),
+	/** Associated only with location and not overall organization (for large orgs w/ multiple locations) */
+	orgLocationOnly: z.boolean(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteOrgPhone extends z.infer<typeof _OrgPhoneModel> {
 	phoneType: CompletePhoneType
 	organization: CompleteOrganization
+	user?: CompleteUser | null
+	orgLocation: CompleteOrgLocation[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	InternalNote: CompleteInternalNote[]
 }
 
 /**
@@ -39,7 +49,10 @@ export const OrgPhoneModel: z.ZodSchema<CompleteOrgPhone> = z.lazy(() =>
 	_OrgPhoneModel.extend({
 		phoneType: PhoneTypeModel,
 		organization: OrganizationModel,
+		user: UserModel.nullish(),
+		orgLocation: OrgLocationModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		InternalNote: InternalNoteModel.array(),
 	})
 )

@@ -2,25 +2,27 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	CompleteInternalNote,
 	CompleteOrgLocation,
 	CompleteOrgService,
 	CompleteUser,
+	InternalNoteModel,
 	OrgLocationModel,
 	OrgServiceModel,
 	UserModel,
 } from './index'
 
 export const _OrgHoursModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	dayIndex: z.number().int(),
 	start: z.number().int(),
 	end: z.number().int(),
-	orgLocId: z.string().nullish(),
-	orgServiceId: z.string().nullish(),
+	orgLocId: z.string().cuid().nullish(),
+	orgServiceId: z.string().cuid().nullish(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteOrgHours extends z.infer<typeof _OrgHoursModel> {
@@ -28,6 +30,7 @@ export interface CompleteOrgHours extends z.infer<typeof _OrgHoursModel> {
 	orgService?: CompleteOrgService | null
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	InternalNote: CompleteInternalNote[]
 }
 
 /**
@@ -41,5 +44,6 @@ export const OrgHoursModel: z.ZodSchema<CompleteOrgHours> = z.lazy(() =>
 		orgService: OrgServiceModel.nullish(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		InternalNote: InternalNoteModel.array(),
 	})
 )

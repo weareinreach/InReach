@@ -4,10 +4,10 @@ import * as imports from '../zod-util'
 import { CompleteUser, UserModel } from './index'
 
 export const _SessionModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	sessionToken: z.string(),
 	expires: z.date(),
-	userId: z.string(),
+	userId: z.string().cuid(),
 })
 
 export interface CompleteSession extends z.infer<typeof _SessionModel> {

@@ -4,9 +4,9 @@ import * as imports from '../zod-util'
 import { CompleteTranslationKey, CompleteUser, TranslationKeyModel, UserModel } from './index'
 
 export const _UserTypeModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	type: z.string(),
-	translationKeyId: z.string(),
+	translationKeyId: z.string().cuid(),
 	createdAt: z.date(),
 	createdById: z.string().nullish(),
 	updatedAt: z.date(),

@@ -11,12 +11,12 @@ import {
 } from './index'
 
 export const _PermissionItemModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	name: z.string(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompletePermissionItem extends z.infer<typeof _PermissionItemModel> {

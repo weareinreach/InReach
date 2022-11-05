@@ -2,11 +2,13 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	CompleteInternalNote,
 	CompleteLanguage,
 	CompleteOrgHours,
 	CompleteOrganization,
 	CompleteServiceTag,
 	CompleteUser,
+	InternalNoteModel,
 	LanguageModel,
 	OrgHoursModel,
 	OrganizationModel,
@@ -15,16 +17,16 @@ import {
 } from './index'
 
 export const _OrgServiceModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	published: z.boolean(),
 	accessInstructions: z.string().nullish(),
 	description: z.string().nullish(),
-	organizationId: z.string(),
-	langId: z.string(),
+	organizationId: z.string().cuid(),
+	langId: z.string().cuid(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteOrgService extends z.infer<typeof _OrgServiceModel> {
@@ -34,6 +36,7 @@ export interface CompleteOrgService extends z.infer<typeof _OrgServiceModel> {
 	language: CompleteLanguage
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	InternalNote: CompleteInternalNote[]
 }
 
 /**
@@ -49,5 +52,6 @@ export const OrgServiceModel: z.ZodSchema<CompleteOrgService> = z.lazy(() =>
 		language: LanguageModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		InternalNote: InternalNoteModel.array(),
 	})
 )

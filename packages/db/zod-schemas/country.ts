@@ -3,48 +3,48 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	CompleteGovDist,
+	CompleteInternalNote,
 	CompleteOrgLocation,
 	CompleteOrgReview,
-	CompleteTranslation,
 	CompleteTranslationKey,
 	CompleteUser,
 	GovDistModel,
+	InternalNoteModel,
 	OrgLocationModel,
 	OrgReviewModel,
 	TranslationKeyModel,
-	TranslationModel,
 	UserModel,
 } from './index'
 
 export const _CountryModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	/** ISO 3166-1 alpha-2 Country code */
 	cca2: z.string(),
 	/** ISO 3166-1 alpha-3 Country code */
 	cca3: z.string(),
-	/** Country name (English). Translations are handled elsewhere. */
+	/** Country name (English). */
 	name: z.string(),
 	/** International dialing code */
 	dialCode: z.number().int(),
 	/** Country flag (emoji) */
 	flag: z.string(),
-	translationKeyId: z.string(),
+	translationKeyId: z.string().cuid(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteCountry extends z.infer<typeof _CountryModel> {
 	translationKey: CompleteTranslationKey
-	GovDist: CompleteGovDist[]
+	govDist: CompleteGovDist[]
 	orgAddress: CompleteOrgLocation[]
+	orgReviews: CompleteOrgReview[]
 	originUsers: CompleteUser[]
 	currentUsers: CompleteUser[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	OrgReview: CompleteOrgReview[]
-	Translation: CompleteTranslation[]
+	InternalNote: CompleteInternalNote[]
 }
 
 /**
@@ -55,13 +55,13 @@ export interface CompleteCountry extends z.infer<typeof _CountryModel> {
 export const CountryModel: z.ZodSchema<CompleteCountry> = z.lazy(() =>
 	_CountryModel.extend({
 		translationKey: TranslationKeyModel,
-		GovDist: GovDistModel.array(),
+		govDist: GovDistModel.array(),
 		orgAddress: OrgLocationModel.array(),
+		orgReviews: OrgReviewModel.array(),
 		originUsers: UserModel.array(),
 		currentUsers: UserModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		OrgReview: OrgReviewModel.array(),
-		Translation: TranslationModel.array(),
+		InternalNote: InternalNoteModel.array(),
 	})
 )
