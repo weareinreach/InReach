@@ -33,20 +33,20 @@ import {
 } from './index'
 
 export const _OrganizationModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	/** Old ID from MongoDB */
 	legacyId: z.string().nullish(),
 	name: z.string(),
 	slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/gm),
 	deleted: z.boolean(),
 	published: z.boolean(),
-	outsideApiId: z.string().cuid().nullish(),
+	outsideApiId: imports.cuid.nullish(),
 	apiIdentifier: z.string().nullish(),
-	sourceId: z.string().cuid(),
+	sourceId: imports.cuid,
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteOrganization extends z.infer<typeof _OrganizationModel> {

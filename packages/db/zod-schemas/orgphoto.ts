@@ -13,17 +13,17 @@ import {
 } from './index'
 
 export const _OrgPhotoModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	src: z.string(),
 	height: z.number().int().nullish(),
 	width: z.number().int().nullish(),
 	published: z.boolean(),
-	orgId: z.string().cuid().nullish(),
-	orgLocationId: z.string().cuid().nullish(),
+	orgId: imports.cuid.nullish(),
+	orgLocationId: imports.cuid.nullish(),
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgPhoto extends z.infer<typeof _OrgPhotoModel> {

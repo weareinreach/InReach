@@ -17,14 +17,14 @@ import {
 } from './index'
 
 export const _ServiceTagModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	type: z.string(),
-	translationKeyId: z.string().cuid(),
-	categoryId: z.string().cuid(),
+	translationKeyId: imports.cuid,
+	categoryId: imports.cuid,
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteServiceTag extends z.infer<typeof _ServiceTagModel> {

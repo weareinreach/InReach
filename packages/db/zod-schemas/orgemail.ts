@@ -15,21 +15,21 @@ import {
 } from './index'
 
 export const _OrgEmailModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	firstName: z.string(),
 	lastName: z.string(),
 	primary: z.boolean(),
 	email: z.string(),
 	published: z.boolean(),
-	titleId: z.string().cuid(),
-	orgId: z.string().cuid(),
-	userId: z.string().cuid().nullish(),
+	titleId: imports.cuid,
+	orgId: imports.cuid,
+	userId: imports.cuid.nullish(),
 	/** Associated only with location and not overall organization (for large orgs w/ multiple locations) */
 	orgLocationOnly: z.boolean(),
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgEmail extends z.infer<typeof _OrgEmailModel> {

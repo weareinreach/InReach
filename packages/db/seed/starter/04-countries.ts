@@ -1,26 +1,46 @@
-import { CountryTranslation, Prisma } from '@prisma/client'
-import type { ListrRenderer, ListrTaskWrapper } from 'listr2'
+import { ListrTask } from '.'
+import { Prisma } from '@prisma/client'
 
 import { prisma } from '~/client'
-import { CompleteCountry, CompleteCountryTranslation } from '~/zod-schemas'
 
 import { type Countries, countryData } from '../data/countries'
+import { namespaces } from '../data/translations'
 import { createdBy, updatedBy } from '../data/user'
 import { logFile } from '../logger'
 
-type BulkUpsertQueue = Prisma.Prisma__CountryTranslationClient<CountryTranslation>[]
+const translationNamespace = namespaces.common
+const translationKey = (item: string) => `country-${item}`
 
-export const seedCountries = async (task: ListrTaskWrapper<unknown, typeof ListrRenderer>) => {
+export const seedCountries = async (task: ListrTask) => {
 	try {
 		const { countries, languageList, userId } = await countryData()
 
-		const prismaTransaction = async (
-			country: Countries,
-			languages: typeof languageList
-		): Promise<SeedCountriesReturn> => {
+		const prismaTransaction = async (country: Countries, languages: typeof languageList) => {
 			const dialCode = () => {
-				if (country.idd.suffixes.length === 1) return `${country.idd.root}${country.idd.suffixes[0]}`
-				return `${country.idd.root}`
+				if (typeof country.idd.root !== 'number') return undefined
+				if (country.idd.suffixes.length === 1)
+					return parseInt(`${country.idd.root}${country.idd.suffixes[0]}`)
+				return parseInt(country.idd.root)
+			}
+			const translations: Prisma.TranslationCreateManyKeyInput[] = []
+			for (const lang of languages) {
+				if (lang.iso6392 === 'eng') {
+					const text = country.name.common
+					translations.push({
+						langId: lang.id,
+						text,
+						createdById: userId,
+						updatedById: userId,
+					})
+				} else if (lang.iso6392 && typeof country.translations[lang.iso6392].common === 'string') {
+					const text = country.translations[lang.iso6392].common
+					translations.push({
+						langId: lang.id,
+						text,
+						createdById: userId,
+						updatedById: userId,
+					})
+				}
 			}
 			/* Upserting the country. */
 			const prismaCountry = await prisma.country.upsert({
@@ -28,83 +48,80 @@ export const seedCountries = async (task: ListrTaskWrapper<unknown, typeof Listr
 					cca3: country.cca3,
 				},
 				create: {
+					cca2: country.cca2,
 					cca3: country.cca3,
-					name: country.name.official,
+					name: country.name.common,
 					dialCode: dialCode(),
 					flag: country.flag,
+					translationKey: {
+						create: {
+							namespace: {
+								connectOrCreate: {
+									where: {
+										name: translationNamespace,
+									},
+									create: {
+										name: translationNamespace,
+										createdBy,
+										updatedBy,
+									},
+								},
+							},
+							key: translationKey(country.cca3),
+							translations: {
+								createMany: {
+									data: translations,
+								},
+							},
+							createdBy,
+							updatedBy,
+						},
+					},
 					createdBy,
 					updatedBy,
 				},
 				update: {
-					name: country.name.official,
+					cca2: country.cca2,
+					name: country.name.common,
 					dialCode: dialCode(),
 					flag: country.flag,
-					updatedBy,
-				},
-			})
-
-			/* Creating a queue of upserts to be executed in a transaction. */
-			const bulkUpsert: BulkUpsertQueue = []
-			for (const language of languages) {
-				if (!language.iso6392 || !Object.keys(country.translations).includes(language.iso6392)) {
-					if (language.iso6392 !== 'eng') {
-						continue
-					}
-				}
-
-				const countryTranslation = (): string => {
-					if (!language.iso6392) throw 'No language code defined'
-					if (language.iso6392 === 'eng') return country.name.official
-					return country.translations[language.iso6392].official
-				}
-				const action = prisma.countryTranslation.upsert({
-					where: {
-						countryId_langId: {
-							countryId: prismaCountry.id,
-							langId: language.id,
+					translationKey: {
+						update: {
+							translations: {
+								createMany: {
+									data: translations,
+									skipDuplicates: true,
+								},
+							},
 						},
 					},
-					create: {
-						langId: language.id,
-						countryId: prismaCountry.id,
-						name: countryTranslation(),
-						createdById: userId,
-						updatedById: userId,
+					updatedBy,
+				},
+				include: {
+					translationKey: {
+						include: {
+							translations: {
+								select: {
+									text: true,
+								},
+							},
+						},
 					},
-					update: {
-						name: countryTranslation(),
-						updatedById: userId,
-					},
-				})
-
-				bulkUpsert.push(action)
-			}
-
-			/* Executing the queue of upserts in a transaction. */
-			const bulkResults = await prisma.$transaction(bulkUpsert)
-
-			const result = {
-				...prismaCountry,
-				countryTranslation: bulkResults as Partial<CompleteCountryTranslation>[],
-			}
-			return result
+				},
+			})
+			return prismaCountry
 		}
 
 		let i = 1
 		for (const country of countries) {
 			const result = await prismaTransaction(country, languageList)
-			logFile.info(
-				`(${i}/${countries.length}) Upserted Country: '${result.name}' with ${result.countryTranslation.length} translated names.`
-			)
-			task.output = `(${i}/${countries.length}) Upserted Country: '${result.name}' with ${result.countryTranslation.length} translated names.`
+			const logMessage = `(${i}/${countries.length}) Upserted Country: '${result.name}' with ${result.translationKey.translations.length} translated names.`
+			logFile.log(logMessage)
+			task.output = logMessage
 
 			i++
 		}
 	} catch (err) {
 		throw err
 	}
-}
-
-interface SeedCountriesReturn extends Partial<Omit<CompleteCountry, 'countryTranslation'>> {
-	countryTranslation: Partial<CompleteCountryTranslation>[]
 }

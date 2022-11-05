@@ -13,13 +13,13 @@ import {
 } from './index'
 
 export const _ServiceCategoryModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	category: z.string(),
-	translationKeyId: z.string().cuid(),
+	translationKeyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteServiceCategory extends z.infer<typeof _ServiceCategoryModel> {

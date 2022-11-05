@@ -4,14 +4,14 @@ import * as imports from '../zod-util'
 import { CompleteTranslationKey, CompleteUser, TranslationKeyModel, UserModel } from './index'
 
 export const _UserSOGModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	/** Use shorthand descriptions - front-end displayable text is defined in Translations */
 	sog: z.string(),
-	translationKeyId: z.string().cuid(),
+	translationKeyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteUserSOG extends z.infer<typeof _UserSOGModel> {

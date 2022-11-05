@@ -12,14 +12,14 @@ import {
 } from './index'
 
 export const _TranslationVariableModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	name: z.string(),
 	description: z.string(),
 	type: z.nativeEnum(VariableType),
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteTranslationVariable extends z.infer<typeof _TranslationVariableModel> {

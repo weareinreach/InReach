@@ -27,25 +27,30 @@ const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
 )
 
 export const _GovDistModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	/** ISO-3166-2 code */
 	iso: z.string(),
 	/** Name (English/Roman alphabet) */
 	name: z.string(),
 	/** GeoJSON object - required only if this will be considered a "service area" */
 	geoJSON: imports.GeoJSONSchema,
-	countryId: z.string().cuid(),
-	govDistTypeId: z.string().cuid(),
-	translationKeyId: z.string().cuid(),
+	countryId: imports.cuid,
+	govDistTypeId: imports.cuid,
+	/** Table can be used for "sub districts" (State -> County -> City) */
+	isPrimary: z.boolean().nullish(),
+	parentId: z.string().nullish(),
+	translationKeyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteGovDist extends z.infer<typeof _GovDistModel> {
 	country: CompleteCountry
 	govDistType: CompleteGovDistType
+	parent?: CompleteGovDist | null
+	subDistricts: CompleteGovDist[]
 	translationKey: CompleteTranslationKey
 	OrgLocation: CompleteOrgLocation[]
 	createdBy: CompleteUser
@@ -64,6 +69,8 @@ export const GovDistModel: z.ZodSchema<CompleteGovDist> = z.lazy(() =>
 	_GovDistModel.extend({
 		country: CountryModel,
 		govDistType: GovDistTypeModel,
+		parent: GovDistModel.nullish(),
+		subDistricts: GovDistModel.array(),
 		translationKey: TranslationKeyModel,
 		OrgLocation: OrgLocationModel.array(),
 		createdBy: UserModel,

@@ -37,24 +37,24 @@ const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
 )
 
 export const _OrgLocationModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	street1: z.string(),
 	street2: z.string(),
 	city: z.string(),
 	postCode: z.string().nullish(),
-	govDistId: z.string().cuid().nullish(),
-	countryId: z.string().cuid(),
+	govDistId: imports.cuid.nullish(),
+	countryId: imports.cuid,
 	longitude: z.number(),
 	latitude: z.number(),
 	geoJSON: imports.GeoJSONSchema,
 	published: z.boolean(),
-	orgId: z.string().cuid(),
-	outsideApiId: z.string().cuid().nullish(),
+	orgId: imports.cuid,
+	outsideApiId: imports.cuid.nullish(),
 	apiLocationId: z.string().nullish(),
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgLocation extends z.infer<typeof _OrgLocationModel> {

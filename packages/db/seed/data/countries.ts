@@ -7,7 +7,7 @@ import { userEmail } from './user'
 
 export const countryData = async () => {
 	const { data: countries } = await axios.get<Array<Countries>>(
-		'https://restcountries.com/v3.1/all?fields=name,translations,cca3,flag,idd'
+		'https://restcountries.com/v3.1/all?fields=name,translations,cca2,cca3,flag,idd'
 	)
 
 	const languageList = await getPrimaryLanguages()
@@ -25,6 +25,7 @@ export const countryData = async () => {
 
 export interface Countries {
 	name: Name
+	cca2: string
 	cca3: string
 	translations: { [key: string]: Translation }
 	flag: string

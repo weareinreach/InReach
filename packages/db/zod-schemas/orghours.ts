@@ -13,16 +13,16 @@ import {
 } from './index'
 
 export const _OrgHoursModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	dayIndex: z.number().int(),
-	start: z.number().int(),
-	end: z.number().int(),
-	orgLocId: z.string().cuid().nullish(),
-	orgServiceId: z.string().cuid().nullish(),
+	start: z.date(),
+	end: z.date(),
+	orgLocId: imports.cuid.nullish(),
+	orgServiceId: imports.cuid.nullish(),
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgHours extends z.infer<typeof _OrgHoursModel> {

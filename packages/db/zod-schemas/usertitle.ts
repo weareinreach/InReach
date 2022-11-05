@@ -11,14 +11,14 @@ import {
 } from './index'
 
 export const _UserTitleModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	text: z.string(),
 	searchable: z.boolean(),
-	langId: z.string().cuid(),
+	langId: imports.cuid,
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteUserTitle extends z.infer<typeof _UserTitleModel> {

@@ -3,7 +3,6 @@
 	"compilerOptions": {
 		"declaration": false,
 		"declarationMap": false,
-		"incremental": true,
 		"resolveJsonModule": true
 	},
 	"display": "Next.js",

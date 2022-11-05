@@ -92,14 +92,14 @@ export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
 			localeCode: 'es_us',
 			iso6392: 'spa',
 			languageName: 'Spanish (US)',
-			nativeName: 'Español (US)',
+			nativeName: 'Español (EE)',
 			createdBy: connectUser,
 			updatedBy: connectUser,
 		},
 		update: {
 			iso6392: 'spa',
 			languageName: 'Spanish (US)',
-			nativeName: 'Español (US)',
+			nativeName: 'Español (EE)',
 			updatedBy: connectUser,
 		},
 	},
@@ -157,3 +157,5 @@ export const getPrimaryLanguages = async () =>
 			localeCode: true,
 		},
 	})
+
+export type PrimaryLanguages = Prisma.PromiseReturnType<typeof getPrimaryLanguages>

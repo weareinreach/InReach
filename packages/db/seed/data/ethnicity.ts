@@ -1,69 +1,144 @@
-import { type Prisma } from '@prisma/client'
+import { Prisma, Translation, UserEthnicity } from '@prisma/client'
 
-import { getPrimaryLanguages } from './languages'
-import { connectUser } from './user'
+import { prisma } from '~/client'
 
-type LanguageList = Prisma.PromiseReturnType<typeof getPrimaryLanguages>
+import { logFile } from '../logger'
+import { ListrTask } from '../starter'
+import { PrimaryLanguages } from './languages'
+import { keySlug } from './translations'
+import { connectUser, translationNamespace } from './user'
 
-const ethnicityData = {
-	en: [
-		'Black',
-		'Middle Eastern/North African',
-		'Asian',
-		'Latino/a/x/Hispanic',
-		'South Asian',
-		'Biracial/Multiracial',
-		'American Indian/Native American/Indigenous Person',
-		'Native Hawaiian/Pacific Islander',
-		'White',
-	],
+type Translations = { en: string; es: string }
+type EthnicityData = Record<string, Translations>
 
-	es: [
-		'Negrx',
-		'del Medio Oriente/África del Norte',
-		'Asiáticx',
-		'Latinx/Hispanx',
-		'Sudasiáticx',
-		'Birracial/Multirracial',
-		'Indix Americanx/Nativx Americanx/Indígenx',
-		'Nativx de Hawai/Isleñx del Pacífico',
-		'Blancx',
-	],
+const ethnicityData: EthnicityData = {
+	black: {
+		en: 'Black',
+		es: 'Negrx',
+	},
+	'middle eastern/north african': {
+		en: 'Middle Eastern/North African',
+		es: 'del Medio Oriente/África del Norte',
+	},
+	asian: { en: 'Asian', es: 'Asiáticx' },
+	latinx: { en: 'Latino/a/x/Hispanic', es: 'Latinx/Hispanx' },
+	'south asian': { en: 'South Asian', es: 'Sudasiáticx' },
+	'biracial/multiracial': { en: 'Biracial/Multiracial', es: 'Birracial/Multirracial' },
+	'native/indigenous': {
+		en: 'American Indian/Native American/Indigenous Person',
+		es: 'Indix Americanx/Nativx Americanx/Indígenx',
+	},
+	'hawaiian/pacific islander': {
+		en: 'Native Hawaiian/Pacific Islander',
+		es: 'Nativx de Hawai/Isleñx del Pacífico',
+	},
+	white: { en: 'White', es: 'Blancx' },
 }
-const generator = async (lang: LanguageList[0]) => {
-	if (!Object.keys(ethnicityData).includes(lang.localeCode)) throw 'No data for locale code'
-	const ethnicities = ethnicityData[lang.localeCode] as string[]
-	const enQueue = ethnicities.map(
-		(ethnicity: string): Prisma.UserEthnicityUpsertArgs => ({
+
+export const generateEthnicityRecords = (task: ListrTask) => {
+	const queue: Prisma.Prisma__UserEthnicityClient<UserEthnicity>[] = []
+	let i = 1
+	for (const item in ethnicityData) {
+		const transaction: Prisma.Prisma__UserEthnicityClient<UserEthnicity> = prisma.userEthnicity.upsert({
 			where: {
-				langId_ethnicity: {
-					langId: lang.id,
-					ethnicity,
-				},
+				ethnicity: item,
 			},
 			create: {
-				ethnicity,
-				language: {
-					connect: {
-						localeCode: lang.localeCode,
+				ethnicity: item,
+				translationKey: {
+					create: {
+						key: keySlug(item),
+						namespace: {
+							connect: {
+								name: translationNamespace,
+							},
+						},
+						createdBy: connectUser,
+						updatedBy: connectUser,
 					},
 				},
 				createdBy: connectUser,
 				updatedBy: connectUser,
 			},
 			update: {
-				ethnicity,
 				updatedBy: connectUser,
+				translationKey: {
+					update: {
+						key: keySlug(item),
+						updatedBy: connectUser,
+					},
+				},
 			},
+			// include: {
+			// 	translationKey: {
+			// 		select: {
+			// 			id: true
+			// 		},
+			// 		include: {
+			// 			namespace: {
+			// 				select: {
+			// 					id: true
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// }
 		})
-	)
 
-	return enQueue
+		queue.push(transaction)
+		const logMessage = `(${i}/${ethnicityData.length}) Added Ethnicity transaction to queue: ${item}`
+		logFile.log(logMessage)
+		task.output = logMessage
+		i++
+	}
+	return queue
 }
 
-export const generateEthnicities = async () => {
-	const languageList = await getPrimaryLanguages()
+export const generateTranslations = (
+	ethnicities: UserEthnicity[],
+	languageList: PrimaryLanguages,
+	task: ListrTask
+) => {
+	const transactionQueue: Prisma.Prisma__TranslationClient<Translation>[] = []
+	for (const lang of languageList) {
+		let i = 1
+		for (const ethnicity of ethnicities) {
+			const text = ethnicityData[ethnicity.ethnicity][lang.localeCode]
 
-	const transactions = await Promise.all(languageList.map(async (item) => await generator(item)))
-	return transactions.flat(2)
+			if (typeof text !== 'string') continue
+
+			const transaction = prisma.translation.upsert({
+				where: {
+					langId_keyId: {
+						keyId: ethnicity.translationKeyId,
+						langId: lang.id,
+					},
+				},
+				create: {
+					text,
+					key: {
+						connect: {
+							id: ethnicity.translationKeyId,
+						},
+					},
+					language: {
+						connect: {
+							id: lang.id,
+						},
+					},
+					createdBy: connectUser,
+					updatedBy: connectUser,
+				},
+				update: { text, updatedBy: connectUser },
+			})
+			const logMessage = `(${i}/${ethnicities.length}) Added Translation transaction to queue: ${ethnicity.ethnicity} (${lang.localeCode})`
+			logFile.log(logMessage)
+			task.output = logMessage
+
+			transactionQueue.push(transaction)
+			i++
+		}
+	}
+
+	return transactionQueue
 }

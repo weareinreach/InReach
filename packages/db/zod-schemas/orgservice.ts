@@ -17,16 +17,16 @@ import {
 } from './index'
 
 export const _OrgServiceModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	published: z.boolean(),
 	accessInstructions: z.string().nullish(),
 	description: z.string().nullish(),
-	organizationId: z.string().cuid(),
-	langId: z.string().cuid(),
+	organizationId: imports.cuid,
+	langId: imports.cuid,
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgService extends z.infer<typeof _OrgServiceModel> {

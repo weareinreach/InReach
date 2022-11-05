@@ -25,7 +25,7 @@ const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
 )
 
 export const _CountryModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	/** ISO 3166-1 alpha-2 Country code */
 	cca2: z.string(),
 	/** ISO 3166-1 alpha-3 Country code */
@@ -33,16 +33,16 @@ export const _CountryModel = z.object({
 	/** Country name (English). */
 	name: z.string(),
 	/** International dialing code */
-	dialCode: z.number().int(),
+	dialCode: z.number().int().nullish(),
 	/** Country flag (emoji) */
 	flag: z.string(),
 	/** GeoJSON object - required only if this will be considered a "service area" */
 	geoJSON: imports.GeoJSONSchema,
-	translationKeyId: z.string().cuid(),
+	translationKeyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteCountry extends z.infer<typeof _CountryModel> {

@@ -1,8 +1,12 @@
 import { type Prisma } from '@prisma/client'
 
+import { namespaces } from './translations'
+
 export const userEmail = 'inreach_svc@inreach.org'
 export const localeCode = 'en'
 export const userType = 'System'
+export const translationNamespace = namespaces.user
+export const translationKey = `type-${userType.toLowerCase()}`
 
 export const seedUser: Prisma.UserCreateInput = {
 	name: 'Database Seed User',
@@ -36,6 +40,21 @@ export const seedUser: Prisma.UserCreateInput = {
 			},
 			create: {
 				type: userType,
+				translationKey: {
+					create: {
+						key: translationKey,
+						namespace: {
+							connectOrCreate: {
+								where: {
+									name: translationNamespace,
+								},
+								create: {
+									name: translationNamespace,
+								},
+							},
+						},
+					},
+				},
 			},
 		},
 	},

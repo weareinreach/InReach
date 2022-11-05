@@ -4,14 +4,14 @@ import * as imports from '../zod-util'
 import { CompleteOrgSocialMedia, CompleteUser, OrgSocialMediaModel, UserModel } from './index'
 
 export const _SocialMediaServiceModel = z.object({
-	id: z.string().cuid(),
+	id: imports.cuid,
 	name: z.string(),
 	urlBase: z.string(),
 	logoIcon: z.string(),
 	createdAt: z.date(),
-	createdById: z.string().cuid(),
+	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: z.string().cuid(),
+	updatedById: imports.cuid,
 })
 
 export interface CompleteSocialMediaService extends z.infer<typeof _SocialMediaServiceModel> {
