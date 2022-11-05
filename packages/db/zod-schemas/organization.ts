@@ -37,7 +37,7 @@ export const _OrganizationModel = z.object({
 	/** Old ID from MongoDB */
 	legacyId: z.string().nullish(),
 	name: z.string(),
-	slug: z.string(),
+	slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/gm),
 	deleted: z.boolean(),
 	published: z.boolean(),
 	outsideApiId: z.string().cuid().nullish(),
