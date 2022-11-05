@@ -5,10 +5,10 @@ import * as imports from '../zod-util'
 import { CompleteOrganization, CompleteUser, OrganizationModel, UserModel } from './index'
 
 export const _UserSavedListModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	name: z.string(),
 	visibility: z.nativeEnum(UserSavedListVisibility),
-	ownedById: z.string(),
+	ownedById: z.string().cuid(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
 })

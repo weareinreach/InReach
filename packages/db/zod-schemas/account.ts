@@ -4,7 +4,7 @@ import * as imports from '../zod-util'
 import { CompleteUser, UserModel } from './index'
 
 export const _AccountModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	type: z.string(),
 	provider: z.string(),
 	providerAccountId: z.string(),
@@ -15,7 +15,7 @@ export const _AccountModel = z.object({
 	scope: z.string().nullish(),
 	id_token: z.string().nullish(),
 	session_state: z.string().nullish(),
-	userId: z.string(),
+	userId: z.string().cuid(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
 })

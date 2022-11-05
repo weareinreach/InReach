@@ -5,13 +5,13 @@ import * as imports from '../zod-util'
 import { CompleteOrganization, CompleteUser, OrganizationModel, UserModel } from './index'
 
 export const _SourceModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	source: z.string(),
 	type: z.nativeEnum(SourceType),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteSource extends z.infer<typeof _SourceModel> {

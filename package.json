@@ -59,6 +59,9 @@
 				"listr2": "^5",
 				"prisma": "^4"
 			}
+		},
+		"patchedDependencies": {
+			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch"
 		}
 	}
 }

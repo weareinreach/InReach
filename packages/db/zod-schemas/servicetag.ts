@@ -2,11 +2,13 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	CompleteInternalNote,
 	CompleteOrgReview,
 	CompleteOrgService,
 	CompleteServiceCategory,
 	CompleteTranslationKey,
 	CompleteUser,
+	InternalNoteModel,
 	OrgReviewModel,
 	OrgServiceModel,
 	ServiceCategoryModel,
@@ -15,14 +17,14 @@ import {
 } from './index'
 
 export const _ServiceTagModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	type: z.string(),
-	translationKeyId: z.string(),
-	categoryId: z.string(),
+	translationKeyId: z.string().cuid(),
+	categoryId: z.string().cuid(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteServiceTag extends z.infer<typeof _ServiceTagModel> {
@@ -32,6 +34,7 @@ export interface CompleteServiceTag extends z.infer<typeof _ServiceTagModel> {
 	OrgReview: CompleteOrgReview[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	InternalNote: CompleteInternalNote[]
 }
 
 /**
@@ -47,5 +50,6 @@ export const ServiceTagModel: z.ZodSchema<CompleteServiceTag> = z.lazy(() =>
 		OrgReview: OrgReviewModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		InternalNote: InternalNoteModel.array(),
 	})
 )

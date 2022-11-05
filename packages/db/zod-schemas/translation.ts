@@ -2,12 +2,12 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
-	CompleteCountry,
+	CompleteInternalNote,
 	CompleteLanguage,
 	CompleteTranslationKey,
 	CompleteTranslationNamespace,
 	CompleteUser,
-	CountryModel,
+	InternalNoteModel,
 	LanguageModel,
 	TranslationKeyModel,
 	TranslationNamespaceModel,
@@ -15,16 +15,15 @@ import {
 } from './index'
 
 export const _TranslationModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	text: z.string(),
-	langId: z.string(),
-	namespaceId: z.string(),
-	keyId: z.string(),
+	langId: z.string().cuid(),
+	namespaceId: z.string().cuid(),
+	keyId: z.string().cuid(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
-	countryId: z.string().nullish(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteTranslation extends z.infer<typeof _TranslationModel> {
@@ -33,7 +32,7 @@ export interface CompleteTranslation extends z.infer<typeof _TranslationModel> {
 	key: CompleteTranslationKey
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	Country?: CompleteCountry | null
+	InternalNote: CompleteInternalNote[]
 }
 
 /**
@@ -48,6 +47,6 @@ export const TranslationModel: z.ZodSchema<CompleteTranslation> = z.lazy(() =>
 		key: TranslationKeyModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		Country: CountryModel.nullish(),
+		InternalNote: InternalNoteModel.array(),
 	})
 )

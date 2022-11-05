@@ -11,13 +11,13 @@ import {
 } from './index'
 
 export const _PhoneTypeModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	type: z.string(),
-	langId: z.string(),
+	langId: z.string().cuid(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompletePhoneType extends z.infer<typeof _PhoneTypeModel> {

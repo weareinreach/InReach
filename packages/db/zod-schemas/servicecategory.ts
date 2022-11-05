@@ -2,22 +2,24 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	CompleteInternalNote,
 	CompleteServiceTag,
 	CompleteTranslationKey,
 	CompleteUser,
+	InternalNoteModel,
 	ServiceTagModel,
 	TranslationKeyModel,
 	UserModel,
 } from './index'
 
 export const _ServiceCategoryModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	category: z.string(),
-	translationKeyId: z.string(),
+	translationKeyId: z.string().cuid(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteServiceCategory extends z.infer<typeof _ServiceCategoryModel> {
@@ -25,6 +27,7 @@ export interface CompleteServiceCategory extends z.infer<typeof _ServiceCategory
 	translationKey: CompleteTranslationKey
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	InternalNote: CompleteInternalNote[]
 }
 
 /**
@@ -38,5 +41,6 @@ export const ServiceCategoryModel: z.ZodSchema<CompleteServiceCategory> = z.lazy
 		translationKey: TranslationKeyModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		InternalNote: InternalNoteModel.array(),
 	})
 )

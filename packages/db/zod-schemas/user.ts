@@ -5,14 +5,15 @@ import {
 	AccountModel,
 	CompleteAccount,
 	CompleteCountry,
+	CompleteFieldVisibility,
 	CompleteGovDist,
 	CompleteGovDistType,
+	CompleteInternalNote,
 	CompleteLanguage,
 	CompleteOrgDescription,
 	CompleteOrgEmail,
 	CompleteOrgHours,
 	CompleteOrgLocation,
-	CompleteOrgNotes,
 	CompleteOrgPhone,
 	CompleteOrgPhoto,
 	CompleteOrgReview,
@@ -41,14 +42,15 @@ import {
 	CompleteUserTitle,
 	CompleteUserType,
 	CountryModel,
+	FieldVisibilityModel,
 	GovDistModel,
 	GovDistTypeModel,
+	InternalNoteModel,
 	LanguageModel,
 	OrgDescriptionModel,
 	OrgEmailModel,
 	OrgHoursModel,
 	OrgLocationModel,
-	OrgNotesModel,
 	OrgPhoneModel,
 	OrgPhotoModel,
 	OrgReviewModel,
@@ -79,7 +81,7 @@ import {
 } from './index'
 
 export const _UserModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	name: z.string().nullish(),
 	email: z.string(),
 	emailVerified: z.date().nullish(),
@@ -88,18 +90,18 @@ export const _UserModel = z.object({
 	birthYear: z.number().int(),
 	reasonForJoin: z.string().nullish(),
 	currentCity: z.string().nullish(),
-	currentGovDistId: z.string().nullish(),
-	currentCountryId: z.string().nullish(),
+	currentGovDistId: z.string().cuid().nullish(),
+	currentCountryId: z.string().cuid().nullish(),
 	legacyHash: z.string().nullish(),
 	legacySalt: z.string().nullish(),
 	migrateDate: z.date().nullish(),
-	immigrationId: z.string().nullish(),
-	roleId: z.string(),
-	userTypeId: z.string(),
-	langPrefId: z.string(),
-	sourceId: z.string().nullish(),
-	associatedOrgId: z.string().nullish(),
-	orgTitleId: z.string().nullish(),
+	immigrationId: z.string().cuid().nullish(),
+	roleId: z.string().cuid(),
+	userTypeId: z.string().cuid(),
+	langPrefId: z.string().cuid(),
+	sourceId: z.string().cuid().nullish(),
+	associatedOrgId: z.string().cuid().nullish(),
+	orgTitleId: z.string().cuid().nullish(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
 })
@@ -124,6 +126,9 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	source?: CompleteSource | null
 	associatedOrg?: CompleteOrganization | null
 	orgTitle?: CompleteUserTitle | null
+	orgEmail?: CompleteOrgEmail | null
+	orgPhone?: CompleteOrgPhone | null
+	FieldVisibility: CompleteFieldVisibility[]
 	createUserEthnicity: CompleteUserEthnicity[]
 	updateUserEthnicity: CompleteUserEthnicity[]
 	createUserImmigration: CompleteUserImmigration[]
@@ -144,8 +149,8 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	updateUserTitle: CompleteUserTitle[]
 	createOrgLocation: CompleteOrgLocation[]
 	updateOrgLocation: CompleteOrgLocation[]
-	createOrgNotes: CompleteOrgNotes[]
-	updateOrgNotes: CompleteOrgNotes[]
+	createInternalNote: CompleteInternalNote[]
+	updateInternalNote: CompleteInternalNote[]
 	createOrgPhone: CompleteOrgPhone[]
 	updateOrgPhone: CompleteOrgPhone[]
 	createOrgPhoto: CompleteOrgPhoto[]
@@ -206,6 +211,7 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		SOG: UserSOGModel.array(),
 		communities: UserCommunityModel.array(),
 		permissions: PermissionItemModel.array(),
+		/** Assets that certain permissible roles are attributed to (edit org, etc) */
 		PermissionAsset: PermissionAssetModel.array(),
 		currentGovDist: GovDistModel.nullish(),
 		currentCountry: CountryModel.nullish(),
@@ -218,6 +224,10 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		source: SourceModel.nullish(),
 		associatedOrg: OrganizationModel.nullish(),
 		orgTitle: UserTitleModel.nullish(),
+		orgEmail: OrgEmailModel.nullish(),
+		orgPhone: OrgPhoneModel.nullish(),
+		/** For user profile page. All fields default to 'NONE' */
+		FieldVisibility: FieldVisibilityModel.array(),
 		createUserEthnicity: UserEthnicityModel.array(),
 		updateUserEthnicity: UserEthnicityModel.array(),
 		createUserImmigration: UserImmigrationModel.array(),
@@ -238,8 +248,8 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		updateUserTitle: UserTitleModel.array(),
 		createOrgLocation: OrgLocationModel.array(),
 		updateOrgLocation: OrgLocationModel.array(),
-		createOrgNotes: OrgNotesModel.array(),
-		updateOrgNotes: OrgNotesModel.array(),
+		createInternalNote: InternalNoteModel.array(),
+		updateInternalNote: InternalNoteModel.array(),
 		createOrgPhone: OrgPhoneModel.array(),
 		updateOrgPhone: OrgPhoneModel.array(),
 		createOrgPhoto: OrgPhotoModel.array(),

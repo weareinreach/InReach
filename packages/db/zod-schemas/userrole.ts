@@ -4,12 +4,12 @@ import * as imports from '../zod-util'
 import { CompletePermissionItem, CompleteUser, PermissionItemModel, UserModel } from './index'
 
 export const _UserRoleModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
 	name: z.string(),
 	createdAt: z.date(),
-	createdById: z.string().nullish(),
+	createdById: z.string().cuid().nullish(),
 	updatedAt: z.date(),
-	updatedById: z.string().nullish(),
+	updatedById: z.string().cuid().nullish(),
 })
 
 export interface CompleteUserRole extends z.infer<typeof _UserRoleModel> {

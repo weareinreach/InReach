@@ -13,7 +13,7 @@
 	],
 	"scripts": {
 		"db:deploy": "prisma migrate deploy",
-		"db:generate": "prisma generate && pnpm format:generated",
+		"db:generate": "rm zod-schemas/* && prisma generate && pnpm format:generated",
 		"db:generate:aws": "prisma generate",
 		"db:migrate": "prisma migrate dev",
 		"db:migrate:edit": "prisma migrate dev --create-only --skip-seed",
@@ -25,6 +25,8 @@
 		"format:export": "prettier --write ./data-transfer/**/*.{ts,json}",
 		"format:generated": "prettier --write ./**/*.ts",
 		"inspect-queries": "prisma-query-inspector start",
+		"lint": "eslint .",
+		"lint:fix": "eslint --fix .",
 		"post-install": "pnpm db:generate",
 		"prisma": "prisma"
 	},
@@ -33,12 +35,16 @@
 		"zod": "^3.19.1"
 	},
 	"devDependencies": {
+		"@anatine/zod-mock": "^3.6.0",
+		"@faker-js/faker": "^7.6.0",
 		"@types/node": "16",
 		"@types/recursive-readdir": "^2.2.1",
 		"@weareinreach/config": "workspace:^0.0.0",
+		"@weareinreach/eslint-config": "workspace:^0.0.0",
 		"axios": "^1.1.3",
 		"commander": "^9.4.1",
 		"dotenv": "^16.0.3",
+		"eslint": "^8.26.0",
 		"inquirer": "^9.1.4",
 		"iso-3166-2": "^1.0.0",
 		"listr2": "^5.0.5",

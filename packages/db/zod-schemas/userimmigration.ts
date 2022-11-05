@@ -4,13 +4,14 @@ import * as imports from '../zod-util'
 import { CompleteTranslationKey, CompleteUser, TranslationKeyModel, UserModel } from './index'
 
 export const _UserImmigrationModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
+	/** Use shorthand descriptions - front-end displayable text is defined in Translations */
 	status: z.string(),
-	translationKeyId: z.string(),
+	translationKeyId: z.string().cuid(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteUserImmigration extends z.infer<typeof _UserImmigrationModel> {

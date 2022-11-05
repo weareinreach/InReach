@@ -2,10 +2,10 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	CompleteInternalNote,
 	CompleteOrgDescription,
 	CompleteOrgEmail,
 	CompleteOrgLocation,
-	CompleteOrgNotes,
 	CompleteOrgPhone,
 	CompleteOrgPhoto,
 	CompleteOrgReview,
@@ -16,10 +16,10 @@ import {
 	CompleteSource,
 	CompleteUser,
 	CompleteUserSavedList,
+	InternalNoteModel,
 	OrgDescriptionModel,
 	OrgEmailModel,
 	OrgLocationModel,
-	OrgNotesModel,
 	OrgPhoneModel,
 	OrgPhotoModel,
 	OrgReviewModel,
@@ -33,38 +33,39 @@ import {
 } from './index'
 
 export const _OrganizationModel = z.object({
-	id: z.string(),
+	id: z.string().cuid(),
+	/** Old ID from MongoDB */
 	legacyId: z.string().nullish(),
 	name: z.string(),
 	slug: z.string(),
 	deleted: z.boolean(),
 	published: z.boolean(),
-	outsideApiId: z.string().nullish(),
-	apiLocationId: z.string().nullish(),
-	sourceId: z.string(),
+	outsideApiId: z.string().cuid().nullish(),
+	apiIdentifier: z.string().nullish(),
+	sourceId: z.string().cuid(),
 	createdAt: z.date(),
-	createdById: z.string(),
+	createdById: z.string().cuid(),
 	updatedAt: z.date(),
-	updatedById: z.string(),
+	updatedById: z.string().cuid(),
 })
 
 export interface CompleteOrganization extends z.infer<typeof _OrganizationModel> {
 	description: CompleteOrgDescription[]
 	email: CompleteOrgEmail[]
 	location: CompleteOrgLocation[]
-	notes: CompleteOrgNotes[]
+	notes: CompleteInternalNote[]
 	phone: CompleteOrgPhone[]
 	photos: CompleteOrgPhoto[]
 	services: CompleteOrgService[]
 	orgSocialMedia: CompleteOrgSocialMedia[]
 	userList: CompleteUserSavedList[]
+	reviews: CompleteOrgReview[]
 	associatedUsers: CompleteUser[]
 	allowedEditors: CompletePermissionAsset[]
 	outsideApi?: CompleteOutsideAPI | null
 	source: CompleteSource
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	OrgReview: CompleteOrgReview[]
 }
 
 /**
@@ -77,18 +78,18 @@ export const OrganizationModel: z.ZodSchema<CompleteOrganization> = z.lazy(() =>
 		description: OrgDescriptionModel.array(),
 		email: OrgEmailModel.array(),
 		location: OrgLocationModel.array(),
-		notes: OrgNotesModel.array(),
+		notes: InternalNoteModel.array(),
 		phone: OrgPhoneModel.array(),
 		photos: OrgPhotoModel.array(),
 		services: OrgServiceModel.array(),
 		orgSocialMedia: OrgSocialMediaModel.array(),
 		userList: UserSavedListModel.array(),
+		reviews: OrgReviewModel.array(),
 		associatedUsers: UserModel.array(),
 		allowedEditors: PermissionAssetModel.array(),
 		outsideApi: OutsideAPIModel.nullish(),
 		source: SourceModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		OrgReview: OrgReviewModel.array(),
 	})
 )
