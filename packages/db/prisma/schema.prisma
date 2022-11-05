@@ -388,7 +388,7 @@ model Organization {
   id             String           @id @default(cuid()) /// @zod.cuid()
   legacyId       String? /// old ID from MongoDB
   name           String
-  slug           String           @unique
+  slug           String           @unique /// @zod.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/gm)
   description    OrgDescription[]
   email          OrgEmail[]
   location       OrgLocation[]
@@ -797,6 +797,8 @@ model Country {
   dialCode Int    @db.SmallInt
   /// Country flag (emoji)
   flag     String
+  /// GeoJSON object - required only if this will be considered a "service area"
+  geoJSON  Json? /// @zod.custom(imports.GeoJSONSchema)
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
   translationKeyId String /// @zod.cuid()
@@ -821,11 +823,13 @@ model Country {
 
 /// Principal administrative districts for countries
 model GovDist {
-  id   String @id @default(cuid()) /// @zod.cuid()
+  id      String @id @default(cuid()) /// @zod.cuid()
   /// ISO-3166-2 code
-  iso  String @unique
+  iso     String @unique
   /// Name (English/Roman alphabet)
-  name String
+  name    String
+  /// GeoJSON object - required only if this will be considered a "service area"
+  geoJSON Json? /// @zod.custom(imports.GeoJSONSchema)
 
   country   Country @relation(fields: [countryId], references: [id])
   countryId String /// @zod.cuid()

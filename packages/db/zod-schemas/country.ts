@@ -16,6 +16,14 @@ import {
 	UserModel,
 } from './index'
 
+// Helper schema for JSON fields
+type Literal = boolean | number | string
+type Json = Literal | { [key: string]: Json } | Json[]
+const literalSchema = z.union([z.string(), z.number(), z.boolean()])
+const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
+	z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)])
+)
+
 export const _CountryModel = z.object({
 	id: z.string().cuid(),
 	/** ISO 3166-1 alpha-2 Country code */
@@ -28,6 +36,8 @@ export const _CountryModel = z.object({
 	dialCode: z.number().int(),
 	/** Country flag (emoji) */
 	flag: z.string(),
+	/** GeoJSON object - required only if this will be considered a "service area" */
+	geoJSON: imports.GeoJSONSchema,
 	translationKeyId: z.string().cuid(),
 	createdAt: z.date(),
 	createdById: z.string().cuid(),

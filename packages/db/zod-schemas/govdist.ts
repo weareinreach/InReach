@@ -18,12 +18,22 @@ import {
 	UserModel,
 } from './index'
 
+// Helper schema for JSON fields
+type Literal = boolean | number | string
+type Json = Literal | { [key: string]: Json } | Json[]
+const literalSchema = z.union([z.string(), z.number(), z.boolean()])
+const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
+	z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)])
+)
+
 export const _GovDistModel = z.object({
 	id: z.string().cuid(),
 	/** ISO-3166-2 code */
 	iso: z.string(),
 	/** Name (English/Roman alphabet) */
 	name: z.string(),
+	/** GeoJSON object - required only if this will be considered a "service area" */
+	geoJSON: imports.GeoJSONSchema,
 	countryId: z.string().cuid(),
 	govDistTypeId: z.string().cuid(),
 	translationKeyId: z.string().cuid(),
