@@ -2,10 +2,12 @@ import { z } from 'zod'
 
 export const cuid = z.string().cuid()
 
-/** Coordinates must be greater than or equal to -180 and less than or equal to 180. */
-const coordinate = z.number().gte(-180).lte(180)
-/** [Longitude, Latitude] Coordinates must be greater than or equal to -180 and less than or equal to 180. */
-const coordTuple = z.tuple([coordinate, coordinate])
+/** Longitudes are vertical lines that measure east or west of the meridian in Greenwich, England */
+const longitude = z.number().gte(-180).lte(180)
+/** Latitudes are horizontal lines that measure distance north or south of the equator. */
+const latitude = z.number().gte(-90).lte(90)
+/** [Longitude, Latitude] */
+const coordTuple = z.tuple([longitude, latitude])
 
 const FeatureSchema = z.object({
 	type: z.literal('Feature'),
@@ -19,9 +21,11 @@ const FeatureSchema = z.object({
 			/** An object representing a single point. */
 			type: z.literal('Point'),
 			/**
-			 * [Longitude, Latitude]
+			 * [**Longitude**, **Latitude**]
 			 *
-			 * Coordinates must be greater than or equal to -180 and less than or equal to 180.
+			 * **Longitudes** are vertical lines that measure east or west of the meridian in Greenwich, England.
+			 *
+			 * **Latitudes** are horizontal lines that measure distance north or south of the equator.
 			 */
 			coordinates: coordTuple,
 		}),
@@ -29,11 +33,13 @@ const FeatureSchema = z.object({
 			/** An array of coordinates defining a polygon. */
 			type: z.literal('Polygon'),
 			/**
-			 * [[Longitude, Latitude], [Longitude, Latitude],...]
+			 * [[**Longitude**, **Latitude**], [**Longitude**, **Latitude**],...]
 			 *
 			 * Polygon must have a **minimum** of **4** coordinate pairs.
 			 *
-			 * Coordinates must be greater than or equal to **-180** and less than or equal to **180**.
+			 * **Longitudes** are vertical lines that measure east or west of the meridian in Greenwich, England.
+			 *
+			 * **Latitudes** are horizontal lines that measure distance north or south of the equator.
 			 */
 			coordinates: coordTuple.array().min(4),
 		}),
@@ -41,20 +47,22 @@ const FeatureSchema = z.object({
 			/** An object that represents multiple polygons in a single object. */
 			type: z.literal('MultiPolygon'),
 			/**
-			 * [[[Longitude, Latitude],...], [[Longitude, Latitude],...], ...]
+			 * [[[**Longitude**, **Latitude**],...], [[**Longitude**, **Latitude**],...], ...]
 			 *
 			 * MultiPolygons are an array of at least **2** polygons.
 			 *
 			 * Polygon must have a **minimum** of **4** coordinate pairs.
 			 *
-			 * Coordinates must be greater than or equal to **-180** and less than or equal to **180**.
+			 * **Longitudes** are vertical lines that measure east or west of the meridian in Greenwich, England.
+			 *
+			 * **Latitudes** are horizontal lines that measure distance north or south of the equator.
 			 */
 			coordinates: coordTuple.array().min(4).array(),
 			/**
 			 * A GeoJSON bounding box is usually a 4-item array representing the rectangle that will contain the
 			 * GeoJSON object.
 			 */
-			bbox: coordinate.array().min(4).optional(),
+			bbox: longitude.or(latitude),
 		}),
 	]),
 	/** @param properties - Any misc metadata */
