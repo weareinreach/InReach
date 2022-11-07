@@ -1,6 +1,5 @@
 import { type inferAsyncReturnType } from '@trpc/server'
 import { type CreateNextContextOptions } from '@trpc/server/adapters/next'
-// import { prisma } from '@weareinreach/db'
 import { prisma } from '@weareinreach/db'
 import { type Session } from 'next-auth'
 
