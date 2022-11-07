@@ -611,7 +611,7 @@ export const resourceTypes = [
 ]
 
 //use this to exclude certain resource types from the list for certain locales
-const localeExclusions = {
+export const localeExclusions = {
 	en_US: [
 		/** Title values ** */
 		'Asylum application in Mexico (Affirmative Asylum)',

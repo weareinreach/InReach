@@ -10,6 +10,7 @@ import {
 	CompleteGovDistType,
 	CompleteInternalNote,
 	CompleteLanguage,
+	CompleteNavigation,
 	CompleteOrgDescription,
 	CompleteOrgEmail,
 	CompleteOrgHours,
@@ -47,6 +48,7 @@ import {
 	GovDistTypeModel,
 	InternalNoteModel,
 	LanguageModel,
+	NavigationModel,
 	OrgDescriptionModel,
 	OrgEmailModel,
 	OrgHoursModel,
@@ -195,6 +197,8 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	updateOutsideAPI: CompleteOutsideAPI[]
 	createGovDistType: CompleteGovDistType[]
 	updateGovDistType: CompleteGovDistType[]
+	createNavigation: CompleteNavigation[]
+	updateNavigation: CompleteNavigation[]
 }
 
 /**
@@ -294,5 +298,7 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		updateOutsideAPI: OutsideAPIModel.array(),
 		createGovDistType: GovDistTypeModel.array(),
 		updateGovDistType: GovDistTypeModel.array(),
+		createNavigation: NavigationModel.array(),
+		updateNavigation: NavigationModel.array(),
 	})
 )

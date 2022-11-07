@@ -9,7 +9,8 @@
 	"types": "./index.ts",
 	"files": [
 		"./index.ts",
-		"./prisma.ts"
+		"./prisma.ts",
+		"./clinet.ts"
 	],
 	"scripts": {
 		"db:deploy": "prisma migrate deploy",
