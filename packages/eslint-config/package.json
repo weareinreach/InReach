@@ -4,7 +4,8 @@
 	"license": "GPL-3.0-only",
 	"main": "index.js",
 	"scripts": {
-		"format": "prettier --write --ignore-unknown ."
+		"format": "prettier --write --ignore-unknown .",
+		"preinstall": "npx only-allow pnpm"
 	},
 	"dependencies": {
 		"@typescript-eslint/parser": "^5.42.0",

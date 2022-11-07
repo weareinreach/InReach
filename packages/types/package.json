@@ -6,6 +6,7 @@
 	"main": "lib/index.ts",
 	"scripts": {
 		"format": "prettier --write --ignore-unknown .",
+		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix ."
 	},

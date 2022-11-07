@@ -9,6 +9,7 @@
 		"chromatic": "chromatic",
 		"dev": "start-storybook -p 6006",
 		"format": "prettier --write --ignore-unknown .",
+		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix ."
 	},

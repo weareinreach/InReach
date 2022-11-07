@@ -15,6 +15,7 @@
 		"cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
 		"dev": "turbo run dev --parallel",
 		"format": "turbo run format",
+		"preinstall": "npx only-allow pnpm",
 		"postinstall": "turbo run post-install",
 		"lint": "turbo run lint",
 		"lint:fix": "turbo run lint:fix",

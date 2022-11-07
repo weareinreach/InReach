@@ -26,6 +26,7 @@
 		"format:export": "prettier --write ./data-transfer/**/*.{ts,json}",
 		"format:generated": "prettier --write ./**/*.ts",
 		"inspect-queries": "prisma-query-inspector start",
+		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix .",
 		"post-install": "pnpm db:generate",
