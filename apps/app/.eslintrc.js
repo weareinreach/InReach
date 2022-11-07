@@ -7,5 +7,8 @@ module.exports = {
 		'i18next/no-literal-string': {
 			exclude: ['I18n'],
 		},
+		next: {
+			rootDir: './',
+		},
 	},
 }
