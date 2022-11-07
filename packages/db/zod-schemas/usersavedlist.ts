@@ -8,6 +8,7 @@ export const _UserSavedListModel = z.object({
 	id: imports.cuid,
 	name: z.string(),
 	visibility: z.nativeEnum(UserSavedListVisibility),
+	sharedLinkKey: z.string().nullish(),
 	ownedById: imports.cuid,
 	createdAt: z.date(),
 	updatedAt: z.date(),

@@ -5,6 +5,7 @@ import {
 	CompleteCountry,
 	CompleteGovDist,
 	CompleteLanguage,
+	CompleteNavigation,
 	CompleteOrgDescription,
 	CompleteOrgEmail,
 	CompleteOrgHours,
@@ -26,6 +27,7 @@ import {
 	CountryModel,
 	GovDistModel,
 	LanguageModel,
+	NavigationModel,
 	OrgDescriptionModel,
 	OrgEmailModel,
 	OrgHoursModel,
@@ -69,6 +71,7 @@ export const _InternalNoteModel = z.object({
 	translationId: imports.cuid.nullish(),
 	translationVariableId: imports.cuid.nullish(),
 	outsideApiId: imports.cuid.nullish(),
+	navigationId: imports.cuid.nullish(),
 	createdAt: z.date(),
 	createdById: imports.cuid,
 	updatedAt: z.date(),
@@ -96,6 +99,7 @@ export interface CompleteInternalNote extends z.infer<typeof _InternalNoteModel>
 	translation?: CompleteTranslation | null
 	translationVariable?: CompleteTranslationVariable | null
 	outsideApi?: CompleteOutsideAPI | null
+	navigation?: CompleteNavigation | null
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 }
@@ -127,6 +131,7 @@ export const InternalNoteModel: z.ZodSchema<CompleteInternalNote> = z.lazy(() =>
 		translation: TranslationModel.nullish(),
 		translationVariable: TranslationVariableModel.nullish(),
 		outsideApi: OutsideAPIModel.nullish(),
+		navigation: NavigationModel.nullish(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
 	})
