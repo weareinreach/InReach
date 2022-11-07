@@ -15,6 +15,5 @@
 		"./**/*.mjs",
 		"./**/*.cjs"
 	],
-	"exclude": ["**/node_modules/*"],
-	"references": [{ "path": "../../packages/db" }, { "path": "../../packages/ui" }]
+	"exclude": ["**/node_modules/*"]
 }
