@@ -1,12 +1,11 @@
 {
+	"extends": "@weareinreach/config/tsconfig/nextjs.json",
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["./src/*"]
-		},
-		"typeRoots": ["./types"]
+		}
 	},
-	"extends": "@weareinreach/config/tsconfig/nextjs.json",
 	"include": [
 		"./next-env.d.ts",
 		"./**/*.ts",
@@ -16,6 +15,5 @@
 		"./**/*.mjs",
 		"./**/*.cjs"
 	],
-	"exclude": ["**/node_modules/*"],
-	"references": [{ "path": "../../packages/ui" }]
+	"exclude": ["**/node_modules/*"]
 }
