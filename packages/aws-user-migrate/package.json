@@ -11,6 +11,7 @@
 		"bundle": "ncc build ./src/index.ts",
 		"clean": "rm -fr dist",
 		"format": "prettier --write --ignore-unknown .",
+		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix .",
 		"package": "cd dist && zip -r bundle.zip *"

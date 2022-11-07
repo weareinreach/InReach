@@ -10,7 +10,8 @@
 		"prettier/index.js"
 	],
 	"scripts": {
-		"format": "prettier --write --ignore-unknown ."
+		"format": "prettier --write --ignore-unknown .",
+		"preinstall": "npx only-allow pnpm"
 	},
 	"devDependencies": {
 		"@trivago/prettier-plugin-sort-imports": "^3.4.0",

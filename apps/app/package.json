@@ -7,6 +7,7 @@
 		"build": "next build",
 		"dev": "next dev",
 		"format": "prettier --write --ignore-unknown .",
+		"preinstall": "npx only-allow pnpm",
 		"lint": "next lint",
 		"lint:fix": "next lint --fix",
 		"start": "next start"
