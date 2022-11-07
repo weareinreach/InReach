@@ -5,15 +5,15 @@
  */
 
 const config = {
-	extends: ['../', 'next/core-web-vitals'],
+	extends: ['../config', 'next/core-web-vitals'],
 	rules: {
 		'@next/next/no-html-link-for-pages': 'off',
 	},
-	settings: {
-		next: {
-			rootDir: ['apps/*/'],
-		},
-	},
+	// settings: {
+	// 	next: {
+	// 		rootDir: ['apps/*/'],
+	// 	},
+	// },
 }
 
 module.exports = config
