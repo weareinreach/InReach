@@ -5,7 +5,7 @@ import transpiler from 'next-transpile-modules'
 
 import i18nConfig from './next-i18next.config.mjs'
 
-const withTM = transpiler(['@weareinreach/ui'])
+const withTM = transpiler(['@weareinreach/ui', '@weareinreach/db'])
 /* eslint-disable-next-line turbo/no-undeclared-env-vars */
 const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
 /**
@@ -17,8 +17,8 @@ const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'tru
  */
 function defineNextConfig(config) {
 	// return withTM(config)
-	// return withBundleAnalyzer( withTM( config ) )
-	return withBundleAnalyzer(config)
+	return withBundleAnalyzer(withTM(config))
+	// return withBundleAnalyzer(config)
 }
 
 export default defineNextConfig({
@@ -26,8 +26,8 @@ export default defineNextConfig({
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: {
-		transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
-		serverComponentsExternalPackages: ['@prisma/client'],
+		// transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
+		// serverComponentsExternalPackages: ['@prisma/client'],
 	},
 	// async rewrites() {
 	// 	return {
