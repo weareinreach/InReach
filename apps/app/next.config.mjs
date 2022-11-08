@@ -24,9 +24,10 @@ export default defineNextConfig({
 	i18n: i18nConfig.i18n,
 	reactStrictMode: true,
 	swcMinify: true,
-	// experimental: {
-	// 	transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
-	// },
+	experimental: {
+		// 	transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
+		serverComponentsExternalPackages: ['@prisma/client'],
+	},
 	// async rewrites() {
 	// 	return {
 	// 		fallback: [
