@@ -5,14 +5,20 @@
 	"keywords": [],
 	"license": "GPL-3.0-only",
 	"author": "",
-	"main": "./index.ts",
+	"main": "index.ts",
+	"types": "index.d.ts",
+	"files": [
+		"client.ts",
+		"prisma.ts",
+		"zod-schemas"
+	],
 	"scripts": {
 		"db:deploy": "prisma migrate deploy",
-		"db:generate": "rimraf zod-schemas/* && prisma generate && pnpm format:generated",
-		"db:generate:aws": "prisma generate",
+		"db:generate": "pnpm schema:clean && prisma generate && pnpm format:generated",
+		"db:generate:aws": "PRISMA_CLI_BINARY_TARGETS=rhel-openssl-1.0.x prisma generate",
 		"db:migrate": "prisma migrate dev",
 		"db:migrate:edit": "prisma migrate dev --create-only --skip-seed",
-		"db:mongoexport": "tsx ./data-transfer/scripts/mongoexport.ts && ",
+		"db:mongoexport": "tsx ./data-transfer/scripts/mongoexport.ts",
 		"db:seed": "prisma db seed",
 		"db:studio": "prisma studio",
 		"format": "prettier --write --ignore-unknown .",
@@ -24,7 +30,8 @@
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix .",
 		"post-install": "pnpm db:generate",
-		"prisma": "prisma"
+		"prisma": "prisma",
+		"schema:clean": "rm -rf zod-schemas/* || true"
 	},
 	"dependencies": {
 		"@prisma/client": "^4.5.0",
@@ -50,11 +57,14 @@
 		"prisma-query-inspector": "^1.4.4",
 		"quicktype-core": "^6.1.0",
 		"recursive-readdir": "^2.2.3",
-		"rimraf": "^3.0.2",
 		"slugify": "^1.6.5",
 		"tsx": "^3.11.0",
 		"typescript": "^4.8.4",
 		"zod-prisma": "^0.5.4"
+	},
+	"peerDependencies": {
+		"@prisma/client": "^4.5.0",
+		"prisma": "^4.5.0"
 	},
 	"prisma": {
 		"seed": "tsx ./seed/starter/index.ts"

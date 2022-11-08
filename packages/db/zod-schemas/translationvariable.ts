@@ -1,3 +1,4 @@
+import { VariableType } from '@prisma/client'
 import * as z from 'zod'
 
 import * as imports from '../zod-util'
@@ -9,7 +10,6 @@ import {
 	TranslationKeyModel,
 	UserModel,
 } from './index'
-import { VariableType } from '.prisma/client'
 
 export const _TranslationVariableModel = z.object({
 	id: imports.cuid,

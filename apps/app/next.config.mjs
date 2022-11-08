@@ -2,11 +2,9 @@
 // import { env } from './src/env/server.mjs'
 import transpiler from 'next-transpile-modules'
 
-import i18nConfig from './next-i18next.config.js'
+import i18nConfig from './next-i18next.config.mjs'
 
-const withTM = transpiler(['@weareinreach/ui', '@weareinreach/db'], {
-	resolveSymlinks: true,
-})
+const withTM = transpiler(['@weareinreach/ui', '@weareinreach/db'])
 
 /**
  * Don't be scared of the generics here. All they do is to give us autocompletion when using this.
@@ -20,9 +18,9 @@ function defineNextConfig(config) {
 }
 
 export default defineNextConfig({
-	...i18nConfig,
+	i18n: i18nConfig.i18n,
 	reactStrictMode: true,
-	swcMinify: true,
+	swcMinify: false,
 	// experimental: {
 	// 	transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
 	// },
