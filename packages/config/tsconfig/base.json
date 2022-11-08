@@ -2,7 +2,6 @@
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"allowJs": true,
-		"composite": false,
 		"declaration": true,
 		"declarationMap": true,
 		"esModuleInterop": true,
@@ -17,6 +16,7 @@
 		"noEmit": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
+		"preserveSymlinks": false,
 		"preserveWatchOutput": true,
 		"skipLibCheck": true,
 		"strict": true,

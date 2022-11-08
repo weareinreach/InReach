@@ -19,7 +19,7 @@
 		"@trpc/next": "10.0.0-rc.3",
 		"@trpc/react-query": "10.0.0-rc.3",
 		"@trpc/server": "10.0.0-rc.3",
-		"@weareinreach/db": "workspace:^0.0.0",
+		"@weareinreach/db": "*",
 		"@weareinreach/ui": "*",
 		"i18next": "^22.0.4",
 		"next": "^13.0.2",
