@@ -5,6 +5,5 @@
 		"baseUrl": "."
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-	"exclude": ["**/node_modules/*"],
-	"references": [{ "path": "../../apps/app" }, { "path": "../ui" }, { "path": "../../apps/web" }]
+	"exclude": ["**/node_modules/*"]
 }

@@ -1,7 +1,7 @@
 // src/pages/api/examples.ts
-import { prisma } from '@weareinreach/db'
-
 import type { NextApiRequest, NextApiResponse } from 'next'
+
+import { prisma } from '@weareinreach/db'
 
 const examples = async (_req: NextApiRequest, res: NextApiResponse) => {
 	const examples = await prisma.user.findMany()
