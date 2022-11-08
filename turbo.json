@@ -3,7 +3,8 @@
 	"pipeline": {
 		"build": {
 			"dependsOn": ["^build"],
-			"env": ["NODE_ENV"]
+			"env": ["NODE_ENV"],
+			"outputs": ["dist/**", ".next/**", "storybook-static/**"]
 		},
 		"@weareinreach/app#build": {
 			"dependsOn": ["^build"],
@@ -18,12 +19,7 @@
 				"COGNITO_ISSUER",
 				"COGNITO_USER_POOL_ID",
 				"AWS_REGION"
-			],
-			"outputs": [".next/**"]
-		},
-		"@weareinreach/storybook#build": {
-			"dependsOn": ["^build"],
-			"outputs": ["storybook-static/**", ".next/**"]
+			]
 		},
 		"@weareinreach/web#build": {
 			"dependsOn": ["^build"],
@@ -34,8 +30,7 @@
 				"NEXT_PUBLIC_SANITY_DATASET",
 				"NEXT_PUBLIC_SANITY_PROJECT_ID",
 				"NEXT_PUBLIC_WEB_SENTRY_DSN"
-			],
-			"outputs": [".next/**"]
+			]
 		},
 		"chromatic": {
 			"dependsOn": ["build"],
@@ -48,27 +43,9 @@
 			"outputs": []
 		},
 		"lint": {
-			"outputs": []
-		},
-		"@weareinreach/app#lint": {
-			"outputs": [".next/cache/eslint/**"]
-		},
-		"@weareinreach/storybook#lint": {
-			"outputs": [".next/cache/eslint/**"]
-		},
-		"@weareinreach/web#lint": {
 			"outputs": [".next/cache/eslint/**"]
 		},
 		"lint:fix": {
-			"outputs": []
-		},
-		"@weareinreach/app#lint:fix": {
-			"outputs": [".next/cache/eslint/**"]
-		},
-		"@weareinreach/storybook#lint:fix": {
-			"outputs": [".next/cache/eslint/**"]
-		},
-		"@weareinreach/web#lint:fix": {
 			"outputs": [".next/cache/eslint/**"]
 		},
 		"post-install": {

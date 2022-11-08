@@ -5,21 +5,22 @@
 	"license": "GPL-3.0-only",
 	"files": [
 		"tsconfig/base.json",
+		"tsconfig/lambda.json",
 		"tsconfig/nextjs.json",
 		"tsconfig/react-library.json",
-		"prettier/index.js"
+		"tsconfig/root.json",
+		"lint-staged/index.js",
+		"lint-staged/next.js",
+		"prettier/index.js",
+		"i18next/index.js"
 	],
 	"scripts": {
 		"format": "prettier --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm"
 	},
 	"devDependencies": {
-		"@trivago/prettier-plugin-sort-imports": "^3.4.0",
 		"@weareinreach/eslint-config": "workspace:^0.0.0",
-		"prettier": "^2.7.1",
-		"prettier-plugin-jsdoc": "^0.4.2",
-		"prettier-plugin-packagejson": "^2.3.0",
-		"prettier-plugin-prisma": "^4.4.0",
+		"next-i18next": "^12.1.0",
 		"typescript": "^4.8.4"
 	},
 	"packageManager": "pnpm@7.14.0"

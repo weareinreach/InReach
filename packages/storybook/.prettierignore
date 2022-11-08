@@ -1,6 +1,8 @@
 node_modules
 .next
 public
+storybook-static
+dist
 
 pnpm-lock.yaml
 *.log
@@ -10,5 +12,3 @@ pnpm-lock.yaml
 .prettierignore
 .DS_Store
 .eslintignore
-
-storybook-static/

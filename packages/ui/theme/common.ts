@@ -1,5 +1,5 @@
-import type { MantineThemeOverride } from '@mantine/core'
 import { DefaultMantineColor, Tuple } from '@mantine/core'
+import type { MantineThemeOverride } from '@mantine/core'
 
 type ExtendedCustomColors = 'inReachGreen' | DefaultMantineColor
 

@@ -1,7 +1,8 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { CtaButton } from '@weareinreach/ui/components/web/sections'
 
 import React from 'react'
+
+import { CtaButton } from '@weareinreach/ui/components/web/sections'
 
 export default {
 	title: 'Web/Call to Action button',

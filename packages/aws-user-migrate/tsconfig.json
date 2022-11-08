@@ -19,6 +19,5 @@
 	},
 	"include": ["**/*.ts"],
 	"exclude": ["**/node_modules/*"],
-	"files": ["./src/index.ts"],
-	"references": [{ "path": "../config" }, { "path": "../db" }]
+	"files": ["./src/index.ts"]
 }

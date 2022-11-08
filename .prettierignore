@@ -1,6 +1,8 @@
 node_modules
 .next
 public
+storybook-static
+dist
 
 pnpm-lock.yaml
 *.log

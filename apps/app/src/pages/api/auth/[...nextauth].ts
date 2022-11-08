@@ -1,8 +1,9 @@
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { prisma } from '@weareinreach/db'
 import NextAuth, { type NextAuthOptions } from 'next-auth'
 import CognitoProvider from 'next-auth/providers/cognito'
+
+import { prisma } from '@weareinreach/db'
 
 // import { env } from '../../../env/server.mjs'
 

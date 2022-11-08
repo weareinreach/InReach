@@ -1,7 +1,6 @@
-import type { ListrTask } from '.'
-
 import { prisma } from '~/client'
 
+import type { ListrTask } from '.'
 import { generateEthnicityRecords, generateTranslations } from '../data/ethnicity'
 import { getPrimaryLanguages } from '../data/languages'
 import { logFile } from '../logger'
