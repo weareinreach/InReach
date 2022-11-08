@@ -33,7 +33,7 @@
 			]
 		},
 		"@weareinreach/db#build": {
-			"dependsOn": ["db:generate"],
+			"dependsOn": ["clean", "db:generate"],
 			"env": ["DATABASE_URL"]
 		},
 		"chromatic": {
