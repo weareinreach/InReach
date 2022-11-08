@@ -12,7 +12,7 @@
 	"scripts": {
 		"clean": "rm -rf dist || true",
 		"db:deploy": "prisma migrate deploy",
-		"db:generate": "pnpm schema:clean && prisma generate && pnpm format:generated",
+		"db:generate": "prisma generate && pnpm format:generated",
 		"db:generate:aws": "PRISMA_CLI_BINARY_TARGETS=rhel-openssl-1.0.x prisma generate",
 		"db:migrate": "prisma migrate dev",
 		"db:migrate:edit": "prisma migrate dev --create-only --skip-seed",
