@@ -46,6 +46,7 @@ importers:
     specifiers:
       '@next-auth/prisma-adapter': ^1.0.5
       '@next/bundle-analyzer': ^13.0.2
+      '@prisma/client': ^4.6.0
       '@tanstack/react-query': ^4.14.5
       '@trpc/client': 10.0.0-rc.3
       '@trpc/next': 10.0.0-rc.3
@@ -57,7 +58,6 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.42.1
       '@typescript-eslint/parser': ^5.42.1
       '@weareinreach/config': '*'
-      '@weareinreach/db': '*'
       '@weareinreach/eslint-config': '*'
       '@weareinreach/ui': '*'
       eslint: ^8.27.0
@@ -67,6 +67,7 @@ importers:
       next-auth: ^4.16.4
       next-i18next: ^12.1.0
       next-transpile-modules: ^10.0.0
+      prisma: ^4.6.0
       react: ^18.2.0
       react-dom: ^18.2.0
       react-i18next: ^12.0.0
@@ -77,6 +78,7 @@ importers:
     dependencies:
       '@next-auth/prisma-adapter': 1.0.5_ruhnq7iyzswb2xlkdi5fzmejem
       '@next/bundle-analyzer': 13.0.2
+      '@prisma/client': 4.6.0_prisma@4.6.0
       '@tanstack/react-query': 4.14.5_biqbaboplfbrettd7655fr4n2y
       '@trpc/client': 10.0.0-rc.3_@trpc+server@10.0.0-rc.3
       '@trpc/next': 10.0.0-rc.3_v3ohxh5wa4kl6itgmhwk6tj7wy
@@ -100,11 +102,11 @@ importers:
       '@typescript-eslint/eslint-plugin': 5.42.1_2udltptbznfmezdozpdoa2aemq
       '@typescript-eslint/parser': 5.42.1_rmayb2veg2btbq6mbmnyivgasy
       '@weareinreach/config': link:../../packages/config
-      '@weareinreach/db': link:../../packages/db
       '@weareinreach/eslint-config': link:../../packages/eslint-config
       '@weareinreach/ui': link:../../packages/ui
       eslint: 8.27.0
       eslint-config-next: 13.0.1_rmayb2veg2btbq6mbmnyivgasy
+      prisma: 4.6.0
       typescript: 4.8.4
 
   apps/web:
@@ -3905,7 +3907,7 @@ packages:
       '@prisma/client': '>=2.26.0 || >=3'
       next-auth: ^4
     dependencies:
-      '@prisma/client': 4.6.0
+      '@prisma/client': 4.6.0_prisma@4.6.0
       next-auth: 4.16.4_pknogjuzx4bv7zxtatcb2ahtsq
     dev: false
 
@@ -4813,19 +4815,6 @@ packages:
 
   /@polka/url/1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
-    dev: false
-
-  /@prisma/client/4.6.0:
-    resolution: {integrity: sha512-D9LaQinDxOHinRpcJTw2tjMtjhc9HTP+aF1IRd2oLldp/8TiwIfxK8x17OhBBiX4y1PzbJXXET7kS+5wB3es/w==}
-    engines: {node: '>=14.17'}
-    requiresBuild: true
-    peerDependencies:
-      prisma: '*'
-    peerDependenciesMeta:
-      prisma:
-        optional: true
-    dependencies:
-      '@prisma/engines-version': 4.6.0-53.2e719efb80b56a3f32d18a62489de95bb9c130e3
     dev: false
 
   /@prisma/client/4.6.0_prisma@4.6.0:
