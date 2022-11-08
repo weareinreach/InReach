@@ -2,8 +2,8 @@ lockfileVersion: 5.4
 
 patchedDependencies:
   zod-prisma@0.5.4:
-    hash: 4gfbbmurd7u2k6gm2q7tuf7una
-    path: ./patches/zod-prisma@0.5.4.patch
+    hash: sgyu4cerrvputcbquvozfdvpkm
+    path: patches/zod-prisma@0.5.4.patch
 
 importers:
 
@@ -230,7 +230,7 @@ importers:
       tsup: 6.4.0_typescript@4.8.4
       tsx: 3.11.0
       typescript: 4.8.4
-      zod-prisma: 0.5.4_4gfbbmurd7u2k6gm2q7tuf7una_prisma@4.6.0+zod@3.19.1
+      zod-prisma: 0.5.4_sgyu4cerrvputcbquvozfdvpkm_prisma@4.6.0+zod@3.19.1
 
   packages/eslint-config:
     specifiers:
@@ -21131,7 +21131,7 @@ packages:
       readable-stream: 3.6.0
     dev: true
 
-  /zod-prisma/0.5.4_4gfbbmurd7u2k6gm2q7tuf7una_prisma@4.6.0+zod@3.19.1:
+  /zod-prisma/0.5.4_sgyu4cerrvputcbquvozfdvpkm_prisma@4.6.0+zod@3.19.1:
     resolution: {integrity: sha512-5Ca4Qd1a1jy1T/NqCEpbr0c+EsbjJfJ/7euEHob3zDvtUK2rTuD1Rc/vfzH8q8PtaR2TZbysD88NHmrLwpv3Xg==}
     engines: {node: '>=14'}
     hasBin: true
