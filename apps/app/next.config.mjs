@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // import { env } from './src/env/server.mjs'
-import { i18n } from './next-i18next.config'
+import i18nConfig from './next-i18next.config'
 
 /**
  * Don't be scared of the generics here. All they do is to give us autocompletion when using this.
@@ -14,7 +14,7 @@ function defineNextConfig(config) {
 }
 
 export default defineNextConfig({
-	i18n,
+	...i18nConfig,
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: {

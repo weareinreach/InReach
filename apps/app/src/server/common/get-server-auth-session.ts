@@ -2,7 +2,7 @@ import { unstable_getServerSession } from 'next-auth'
 
 import { type GetServerSidePropsContext } from 'next'
 
-import { authOptions } from '../../pages/api/auth/[...nextauth]'
+import { authOptions } from '~/pages/api/auth/[...nextauth]'
 
 /**
  * Wrapper for unstable_getServerSession https://next-auth.js.org/configuration/nextjs See example usage in
