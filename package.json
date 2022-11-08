@@ -13,6 +13,7 @@
 		"cypress:run": "npx cypress run --project test",
 		"cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false",
 		"cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
+		"db:generate": "turbo run db:generate",
 		"dev": "turbo run dev --parallel",
 		"format": "turbo run format",
 		"preinstall": "npx only-allow pnpm",

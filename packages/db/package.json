@@ -5,12 +5,12 @@
 	"keywords": [],
 	"license": "GPL-3.0-only",
 	"author": "",
-	"exports": "./index.ts",
+	"main": "./index.ts",
 	"types": "./index.ts",
 	"files": [
 		"./index.ts",
 		"./prisma.ts",
-		"./clinet.ts"
+		"./client.ts"
 	],
 	"scripts": {
 		"db:deploy": "prisma migrate deploy",
