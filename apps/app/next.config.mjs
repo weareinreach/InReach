@@ -20,7 +20,7 @@ function defineNextConfig(config) {
 export default defineNextConfig({
 	i18n: i18nConfig.i18n,
 	reactStrictMode: true,
-	swcMinify: false,
+	swcMinify: true,
 	// experimental: {
 	// 	transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
 	// },
