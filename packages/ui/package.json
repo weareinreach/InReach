@@ -28,7 +28,8 @@
 		"@mantine/spotlight": "^5.7.1",
 		"dayjs": "^1.11.6",
 		"embla-carousel-react": "^7.0.4",
-		"slugify": "^1.6.5"
+		"slugify": "^1.6.5",
+		"zod": "^3.19.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.20.2",
@@ -44,9 +45,12 @@
 	},
 	"peerDependencies": {
 		"@babel/core": "^7.20.2",
+		"i18next": "^22.0.4",
 		"next": "^13.0.0",
+		"next-i18next": "^12.1.0",
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0"
+		"react-dom": "^18.2.0",
+		"react-i18next": "^12.0.0"
 	},
 	"packageManager": "pnpm@7.14.0"
 }
