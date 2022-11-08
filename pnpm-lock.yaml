@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 patchedDependencies:
   zod-prisma@0.5.4:
     hash: 4gfbbmurd7u2k6gm2q7tuf7una
-    path: patches/zod-prisma@0.5.4.patch
+    path: ./patches/zod-prisma@0.5.4.patch
 
 importers:
 
