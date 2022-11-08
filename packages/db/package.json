@@ -34,7 +34,7 @@
 		"lint:fix": "eslint --fix .",
 		"post-install": "pnpm db:generate",
 		"prisma": "prisma",
-		"schema:clean": "rm -rf zod-schemas/* || true"
+		"schema:clean": "rm -rf src/zod-schemas/* || true"
 	},
 	"dependencies": {
 		"@prisma/client": "^4.6.0",
