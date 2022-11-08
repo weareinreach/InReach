@@ -17,7 +17,8 @@ const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'tru
  */
 function defineNextConfig(config) {
 	// return withTM(config)
-	return withBundleAnalyzer(withTM(config))
+	// return withBundleAnalyzer( withTM( config ) )
+	return withBundleAnalyzer(config)
 }
 
 export default defineNextConfig({
@@ -25,8 +26,8 @@ export default defineNextConfig({
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: {
-		// 	transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
-		// serverComponentsExternalPackages: ['@prisma/client'],
+		transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
+		serverComponentsExternalPackages: ['@prisma/client'],
 	},
 	// async rewrites() {
 	// 	return {
