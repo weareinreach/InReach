@@ -1,8 +1,8 @@
-import { VisibilitySetting } from '@prisma/client'
 import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import { CompleteUser, UserModel } from './index'
+import { VisibilitySetting } from '.prisma/client'
 
 export const _FieldVisibilityModel = z.object({
 	id: imports.cuid,
