@@ -26,24 +26,24 @@
 		"@mantine/nprogress": "^5.7.1",
 		"@mantine/rte": "^5.7.1",
 		"@mantine/spotlight": "^5.7.1",
-		"@portabletext/react": "^1.0.6",
-		"@sanity/types": "^2.33.2",
 		"dayjs": "^1.11.6",
 		"embla-carousel-react": "^7.0.4",
-		"sanity": "3.0.0-v3-v2-pte.56",
 		"slugify": "^1.6.5"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.20.2",
 		"@types/node": "16.18.0",
 		"@types/react": "^18.0.25",
 		"@types/react-dom": "^18.0.8",
 		"@weareinreach/config": "*",
 		"@weareinreach/eslint-config": "*",
-		"eslint-config-sanity": "^6.0.0",
+		"next": "^13.0.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
 		"typescript": "^4.8.4"
 	},
 	"peerDependencies": {
-		"eslint-config-sanity": "^6.0.0",
+		"@babel/core": "^7.20.2",
 		"next": "^13.0.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"
