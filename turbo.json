@@ -7,7 +7,7 @@
 			"outputs": ["dist/**", ".next/**", "storybook-static/**"]
 		},
 		"@weareinreach/app#build": {
-			"dependsOn": ["^build", "post-install"],
+			"dependsOn": ["^build"],
 			"env": [
 				"DATABASE_URL",
 				"NEXTAUTH_SECRET",

@@ -11,12 +11,12 @@ generator docs {
   output   = "../../../docs/database"
 }
 
-// generator zod {
-//   provider      = "zod-prisma"
-//   output        = "../src/zod-schemas"
-//   imports       = "../src/zod-util"
-//   relationModel = "default"
-// }
+generator zod {
+  provider      = "zod-prisma"
+  output        = "../src/zod-schemas"
+  imports       = "../src/zod-util"
+  relationModel = "default"
+}
 
 datasource db {
   provider   = "postgresql"
