@@ -40,6 +40,7 @@
 			"dependsOn": ["build"],
 			"env": ["CHROMATIC_PROJECT_TOKEN"]
 		},
+		"clean": {},
 		"db:generate": {
 			"cache": false
 		},
