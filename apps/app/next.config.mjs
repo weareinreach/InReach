@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // import { env } from './src/env/server.mjs'
-import i18nConfig from './next-i18next.config'
+import i18nConfig from './next-i18next.config.js'
 
 /**
  * Don't be scared of the generics here. All they do is to give us autocompletion when using this.
