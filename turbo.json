@@ -32,6 +32,10 @@
 				"NEXT_PUBLIC_WEB_SENTRY_DSN"
 			]
 		},
+		"@weareinreach/db#build": {
+			"dependsOn": ["db:generate"],
+			"env": ["DATABASE_URL"]
+		},
 		"chromatic": {
 			"dependsOn": ["build"],
 			"env": ["CHROMATIC_PROJECT_TOKEN"]
