@@ -34,7 +34,8 @@
 		},
 		"@weareinreach/db#build": {
 			"dependsOn": ["clean", "db:generate"],
-			"env": ["DATABASE_URL"]
+			"env": ["DATABASE_URL"],
+			"inputs": ["./prisma/schema.prisma"]
 		},
 		"chromatic": {
 			"dependsOn": ["build"],

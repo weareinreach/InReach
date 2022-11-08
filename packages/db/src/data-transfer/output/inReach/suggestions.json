@@ -1,0 +1,62 @@
+[
+	{
+		"_id": { "$oid": "5ec7ecada1aef60017f0034c" },
+		"organizationId": "5ec330bdf3222c0017a187ab",
+		"userEmail": "fundraising@asylumconnect.org",
+		"field": "Description",
+		"value": "This is a test. ",
+		"created_at": { "$date": "2020-05-22T15:15:57.299Z" },
+		"updated_at": { "$date": "2020-05-22T15:15:57.299Z" },
+		"__v": 0
+	},
+	{
+		"_id": { "$oid": "60ddd289772c7300159baabe" },
+		"organizationId": "5f660905cd7db10017f497d8",
+		"userEmail": "carolyn.oconnor@esperanzaqc.com",
+		"field": "Description",
+		"value": "Esperanza Legal Assistance Center provides immigration legal assistance to individuals and families in need of advise, assistance and/or representation. Our focus is family-based immigration as well as DACA, naturalization, humanitarian visas, etc.  The office is recognized by the US Department of Justice. (NOTE: We do not provide Immigration Court representation nor can we assist with removal hearings.)",
+		"created_at": { "$date": "2021-07-01T14:34:49.951Z" },
+		"updated_at": { "$date": "2021-07-01T14:34:49.951Z" },
+		"__v": 0
+	},
+	{
+		"_id": { "$oid": "630cbd84b83bfd001630b711" },
+		"organizationId": "5e7e4be0d54f1760921a51ce",
+		"userEmail": "victorialewis@riverdalehub.ca",
+		"field": "Alert Message",
+		"value": "They have a COVID-19 response team that helps clients work towards their goals for surviving and thriving during the pandemic through virtual individual and group support. Included is support for social isolation, housing, mental health and addictions, and finding culturally appropriate community resources. For more information email info@riverdalehub.ca",
+		"created_at": { "$date": "2022-08-29T13:22:12.527Z" },
+		"updated_at": { "$date": "2022-08-29T13:22:12.527Z" },
+		"__v": 0
+	},
+	{
+		"_id": { "$oid": "630cbd84b83bfd001630b712" },
+		"organizationId": "5e7e4be0d54f1760921a51ce",
+		"userEmail": "victorialewis@riverdalehub.ca",
+		"field": "Description",
+		"value": "Riverdale Immigrant Women’s Centre (RIWC) is a community based registered charity founded with a mission to empower racialized immigrant and refugee women and their families. RIWC delivers its services through a holistic and integrated service framework that addresses the social, cultural and economic determinants of healthy and vibrant immigrant communities.",
+		"created_at": { "$date": "2022-08-29T13:22:12.527Z" },
+		"updated_at": { "$date": "2022-08-29T13:22:12.527Z" },
+		"__v": 0
+	},
+	{
+		"_id": { "$oid": "632db38245ad40001663eeb7" },
+		"organizationId": "5e7e4be1d54f1760921a545c",
+		"userEmail": "keith@kwmulticultural.ca",
+		"field": "Website",
+		"value": "https://www.kwmulticultural.ca",
+		"created_at": { "$date": "2022-09-23T13:24:18.704Z" },
+		"updated_at": { "$date": "2022-09-23T13:24:18.704Z" },
+		"__v": 0
+	},
+	{
+		"_id": { "$oid": "633ccdde27f64200166d1d66" },
+		"organizationId": "604696ccd51dc50015b65491",
+		"userEmail": "crobinson@fbd.org",
+		"field": "Description",
+		"value": "The mission of the Food Bank of Delaware is to provide nutritious foods to Delawareans in need and facilitate long-term solutions to the problems of hunger and poverty through community education and advocacy.",
+		"created_at": { "$date": "2022-10-05T00:20:46.814Z" },
+		"updated_at": { "$date": "2022-10-05T00:20:46.814Z" },
+		"__v": 0
+	}
+]

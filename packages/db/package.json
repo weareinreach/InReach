@@ -27,7 +27,7 @@
 		"format": "prettier --write --ignore-unknown .",
 		"format:all": "pnpm format:export && pnpm format:generated",
 		"format:export": "prettier --write ./src/data-transfer/**/*.{ts,json}",
-		"format:generated": "prettier --write ./src/**/*.ts",
+		"format:generated": "prettier --write ./src/zod*/*",
 		"inspect-queries": "prisma-query-inspector start",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint .",
