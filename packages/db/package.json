@@ -5,14 +5,15 @@
 	"keywords": [],
 	"license": "GPL-3.0-only",
 	"author": "",
-	"main": "index.ts",
-	"types": "index.d.ts",
+	"main": "./dist/index.js",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.ts",
 	"files": [
-		"client.ts",
-		"prisma.ts",
-		"zod-schemas"
+		"dist/**"
 	],
 	"scripts": {
+		"build": "tsup",
+		"clean": "rm -rf dist || true",
 		"db:deploy": "prisma migrate deploy",
 		"db:generate": "pnpm schema:clean && prisma generate && pnpm format:generated",
 		"db:generate:aws": "PRISMA_CLI_BINARY_TARGETS=rhel-openssl-1.0.x prisma generate",
@@ -21,6 +22,8 @@
 		"db:mongoexport": "tsx ./data-transfer/scripts/mongoexport.ts",
 		"db:seed": "prisma db seed",
 		"db:studio": "prisma studio",
+		"predev": "pnpm db:generate",
+		"dev": "tsup --watch",
 		"format": "prettier --write --ignore-unknown .",
 		"format:all": "pnpm format:export && pnpm format:generated",
 		"format:export": "prettier --write ./data-transfer/**/*.{ts,json}",
@@ -58,9 +61,13 @@
 		"quicktype-core": "^6.1.0",
 		"recursive-readdir": "^2.2.3",
 		"slugify": "^1.6.5",
+		"tsup": "^6.4.0",
 		"tsx": "^3.11.0",
 		"typescript": "^4.8.4",
 		"zod-prisma": "^0.5.4"
+	},
+	"peerDependencies": {
+		"next": "^13.0.2"
 	},
 	"prisma": {
 		"seed": "tsx ./seed/starter/index.ts"

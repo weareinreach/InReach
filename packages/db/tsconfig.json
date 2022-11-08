@@ -4,7 +4,7 @@
 		"noImplicitAny": false,
 		"baseUrl": ".",
 		"paths": {
-			"~/*": ["./*"]
+			"~/*": ["./src/*"]
 		}
 	},
 	"include": ["**/*.ts", "**/*.js"],

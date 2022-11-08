@@ -13,8 +13,8 @@ generator docs {
 
 generator zod {
   provider      = "zod-prisma"
-  output        = "../zod-schemas"
-  imports       = "../zod-util"
+  output        = "src/zod-schemas"
+  imports       = "src/zod-util"
   relationModel = "default"
 }
 
