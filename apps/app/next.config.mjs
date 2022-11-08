@@ -1,6 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // import { env } from './src/env/server.mjs'
+import transpiler from 'next-transpile-modules'
+
 import i18nConfig from './next-i18next.config.js'
+
+const withTM = transpiler(['@weareinreach/ui', '@weareinreach/db'], {
+	resolveSymlinks: true,
+})
 
 /**
  * Don't be scared of the generics here. All they do is to give us autocompletion when using this.
@@ -10,16 +16,16 @@ import i18nConfig from './next-i18next.config.js'
  * @constraint {{import('next').NextConfig}}
  */
 function defineNextConfig(config) {
-	return config
+	return withTM(config)
 }
 
 export default defineNextConfig({
 	...i18nConfig,
 	reactStrictMode: true,
 	swcMinify: true,
-	experimental: {
-		transpilePackages: ['@weareinreach/ui'],
-	},
+	// experimental: {
+	// 	transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
+	// },
 	// async rewrites() {
 	// 	return {
 	// 		fallback: [

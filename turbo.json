@@ -7,7 +7,7 @@
 			"outputs": ["dist/**", ".next/**", "storybook-static/**"]
 		},
 		"@weareinreach/app#build": {
-			"dependsOn": ["^build"],
+			"dependsOn": ["^build", "post-install"],
 			"env": [
 				"DATABASE_URL",
 				"NEXTAUTH_SECRET",
@@ -36,6 +36,9 @@
 			"dependsOn": ["build"],
 			"env": ["CHROMATIC_PROJECT_TOKEN"]
 		},
+		"db:generate": {
+			"cache": false
+		},
 		"dev": {
 			"cache": false
 		},
@@ -49,8 +52,7 @@
 			"outputs": [".next/cache/eslint/**"]
 		},
 		"post-install": {
-			"dependsOn": [],
-			"outputs": ["packages/db/zod-schemas/**", "docs/database/**"]
+			"cache": false
 		}
 	}
 }

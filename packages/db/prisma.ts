@@ -43,5 +43,5 @@ export type {
 	UserType,
 	VariableType,
 	VerificationToken,
-} from '../../node_modules/.prisma/client'
-export { Prisma } from '../../node_modules/.prisma/client'
+} from '@prisma/client'
+export { Prisma } from '@prisma/client'
