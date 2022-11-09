@@ -3,7 +3,7 @@ import { createNextApiHandler } from '@trpc/server/adapters/next'
 import { createContext } from '~/server/context'
 import { appRouter } from '~/server/router'
 
-// export API handler
+/* Creating a handler for the tRPC endpoint. */
 export default createNextApiHandler({
 	router: appRouter,
 	createContext,
