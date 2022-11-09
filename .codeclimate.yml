@@ -33,3 +33,4 @@ exclude_patterns:
   - '**/node_modules'
   - 'test/'
   - 'patches/'
+  - 'docs/database/styles/main.css'
