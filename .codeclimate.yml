@@ -13,6 +13,10 @@ plugins:
     enabled: true
   scss-lint:
     enabled: true
+    checks:
+      Indentation:
+        enabled: true
+        character: tab
 checks:
   file-lines:
     config:
