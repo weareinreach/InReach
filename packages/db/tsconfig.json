@@ -1,0 +1,12 @@
+{
+	"extends": "@weareinreach/config/tsconfig/base.json",
+	"compilerOptions": {
+		"noImplicitAny": false,
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"]
+		}
+	},
+	"include": ["**/*.ts", "**/*.js"],
+	"exclude": ["node_modules"]
+}
