@@ -34,3 +34,4 @@ exclude_patterns:
   - 'test/'
   - 'patches/'
   - 'docs/database/styles/main.css'
+  
