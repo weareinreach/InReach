@@ -8,13 +8,14 @@
 	"source": "src/index.ts",
 	"scripts": {
 		"build:aws": "pnpm clean && pnpm bundle && pnpm package",
-		"bundle": "ncc build ./src/index.ts",
+		"bundle": "ncc build ./src/index.ts -s -m -a",
 		"clean": "rm -fr dist",
 		"format": "prettier --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix .",
-		"package": "cd dist && zip -r bundle.zip *"
+		"package": "cd dist && rm -v client/!(*rhel*) && zip -r bundle.zip *",
+		"upload": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://dist/bundle.zip"
 	},
 	"dependencies": {
 		"@weareinreach/db": "workspace:^0.0.0",
@@ -27,9 +28,7 @@
 		"@weareinreach/config": "workspace:^0.0.0",
 		"@weareinreach/eslint-config": "workspace:^0.0.0",
 		"aws-lambda": "^1.0.7",
-		"esbuild": "^0.15.13",
 		"eslint": "^8.27.0",
-		"parcel": "^2.7.0",
 		"prettier": "^2.7.1",
 		"typescript": "^4.8.4"
 	}

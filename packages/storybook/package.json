@@ -55,7 +55,7 @@
 		"webpack": "5"
 	},
 	"peerDependencies": {
-		"next": "13.0.0"
+		"next": "^13"
 	},
 	"packageManager": "pnpm@7.14.0",
 	"_id": "@weareinreach/storybook@0.1.0"
