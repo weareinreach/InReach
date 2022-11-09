@@ -48,6 +48,12 @@ const config = {
 				tsdoc: true,
 			},
 		},
+		{
+			files: '*.{yml,yaml}',
+			options: {
+				useTabs: false,
+			},
+		},
 	],
 }
 
