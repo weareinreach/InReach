@@ -1,9 +1,19 @@
 {
-  "name": "@inreach/types",
-  "version": "0.0.0",
-  "main": "index.js",
-  "private": true,
-  "devDependencies": {
-    "@inreach/tsconfig": "*"
-  }
+	"name": "@weareinreach/types",
+	"version": "0.0.0",
+	"private": true,
+	"license": "GPL-3.0-only",
+	"main": "lib/index.ts",
+	"scripts": {
+		"format": "prettier --write --ignore-unknown .",
+		"preinstall": "npx only-allow pnpm",
+		"lint": "eslint .",
+		"lint:fix": "eslint --fix ."
+	},
+	"devDependencies": {
+		"@weareinreach/config": "*",
+		"@weareinreach/eslint-config": "*",
+		"typescript": "^4.8.4"
+	},
+	"packageManager": "pnpm@7.14.0"
 }

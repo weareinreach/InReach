@@ -1,0 +1,67 @@
+{
+	"name": "@weareinreach/db",
+	"version": "0.0.0",
+	"private": true,
+	"keywords": [],
+	"license": "GPL-3.0-only",
+	"author": "",
+	"main": "./src/index.ts",
+	"files": [
+		"src/**"
+	],
+	"scripts": {
+		"clean": "rm -rf dist || true",
+		"db:deploy": "prisma migrate deploy",
+		"db:generate": "prisma generate && pnpm format:generated",
+		"db:generate:aws": "pnpm install && prisma generate",
+		"db:migrate": "prisma migrate dev",
+		"db:migrate:edit": "prisma migrate dev --create-only --skip-seed",
+		"db:mongoexport": "tsx ./src/data-transfer/scripts/mongoexport.ts",
+		"db:seed": "prisma db seed",
+		"db:studio": "prisma studio",
+		"format": "prettier --write --ignore-unknown .",
+		"format:all": "pnpm format:export && pnpm format:generated",
+		"format:export": "prettier --write ./src/data-transfer/**/*.{ts,json}",
+		"format:generated": "prettier --write ./src/zod*/*",
+		"inspect-queries": "prisma-query-inspector start",
+		"preinstall": "npx only-allow pnpm",
+		"lint": "eslint .",
+		"lint:fix": "eslint --fix .",
+		"predev": "pnpm db:generate",
+		"prisma": "prisma",
+		"schema:clean": "rm -rf src/zod-schemas/* || true"
+	},
+	"dependencies": {
+		"@prisma/client": "^4.6.0",
+		"zod": "^3.19.1"
+	},
+	"devDependencies": {
+		"@anatine/zod-mock": "^3.6.0",
+		"@faker-js/faker": "^7.6.0",
+		"@types/node": "^16.18.3",
+		"@types/recursive-readdir": "^2.2.1",
+		"@weareinreach/config": "workspace:^0.0.0",
+		"@weareinreach/eslint-config": "workspace:^0.0.0",
+		"axios": "^1.1.3",
+		"commander": "^9.4.1",
+		"dotenv": "^16.0.3",
+		"eslint": "^8.27.0",
+		"inquirer": "^9.1.4",
+		"iso-3166-2": "^1.0.0",
+		"listr2": "^5.0.5",
+		"mongoback": "^3.0.3",
+		"prisma": "^4.6.0",
+		"prisma-docs-generator": "^0.5.0",
+		"prisma-query-inspector": "^1.4.4",
+		"quicktype-core": "^6.1.0",
+		"recursive-readdir": "^2.2.3",
+		"slugify": "^1.6.5",
+		"tsup": "^6.4.0",
+		"tsx": "^3.11.0",
+		"typescript": "^4.8.4",
+		"zod-prisma": "^0.5.4"
+	},
+	"prisma": {
+		"seed": "tsx ./seed/starter/index.ts"
+	}
+}
