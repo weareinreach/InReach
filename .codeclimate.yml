@@ -11,6 +11,8 @@ plugins:
     enabled: true
   git-legal:
     enabled: true
+  scss-lint:
+    enabled: true
 checks:
   file-lines:
     config:
