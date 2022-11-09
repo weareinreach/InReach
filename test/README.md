@@ -1,7 +1,9 @@
 # Cypress
+
 We are using Cypress to test our application both the Middle layer and the Presentation layer.
 
 ## Project Structure
+
 ```bash
 test
  ┣ cypress
@@ -22,8 +24,9 @@ test
  ┃ ┃ ┗ e2e.js
  ┣ README.md #Documentation
  ┗ cypress.config.js #Cypress configuration
- ```
+```
 
 ## References
+
 - [Cypress Docs](https://docs.cypress.io/)
 - [Github Actions Configuration](https://github.com/cypress-io/github-action)
