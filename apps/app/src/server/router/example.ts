@@ -1,21 +1,14 @@
-import { createRouter } from "./context";
-import { z } from "zod";
+import { z } from 'zod'
 
-export const exampleRouter = createRouter()
-  .query("hello", {
-    input: z
-      .object({
-        text: z.string().nullish(),
-      })
-      .nullish(),
-    resolve({ input }) {
-      return {
-        greeting: `Hello ${input?.text ?? "world"}`,
-      };
-    },
-  })
-  .query("getAll", {
-    async resolve({ ctx }) {
-      return await ctx.prisma.example.findMany();
-    },
-  });
+import { publicProcedure, router } from '../trpc'
+
+export const exampleRouter = router({
+	hello: publicProcedure.input(z.object({ text: z.string().nullish() }).nullish()).query(({ input }) => {
+		return {
+			greeting: `Hello ${input?.text ?? 'world'}`,
+		}
+	}),
+	getAll: publicProcedure.query(({ ctx }) => {
+		return ctx.prisma.user.findMany()
+	}),
+})

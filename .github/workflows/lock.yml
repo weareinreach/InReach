@@ -3,7 +3,7 @@ name: Lock
 
 on:
   schedule:
-    - cron: "0 9 * * *"
+    - cron: '0 9 * * *'
   workflow_dispatch:
 
 jobs:
@@ -14,15 +14,15 @@ jobs:
       - uses: dessant/lock-threads@v3.0.0
         with:
           github-token: ${{ github.token }}
-          issue-inactive-days: "30"
-          issue-lock-reason: ""
+          issue-inactive-days: '30'
+          issue-lock-reason: ''
           issue-comment: >
             Issue closed and locked due to lack of activity.
 
             If you encounter this same issue, please open a new issue and refer
             to this closed one.
-          pr-inactive-days: "1"
-          pr-lock-reason: ""
+          pr-inactive-days: '1'
+          pr-lock-reason: ''
           pr-comment: >
             Pull Request closed and locked due to lack of activity.
 

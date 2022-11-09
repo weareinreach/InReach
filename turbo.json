@@ -2,25 +2,69 @@
 	"$schema": "https://turborepo.org/schema.json",
 	"pipeline": {
 		"build": {
-			"dependsOn": [
-				"^build",
-				"$SENTRY_DSN",
-				"$NEXT_PUBLIC_SENTRY_DSN",
-				"$NODE_ENV",
-				"$NEXT_PUBLIC_SANITY_API_VERSION",
-				"$NEXT_PUBLIC_SANITY_DATASET",
-				"$NEXT_PUBLIC_SANITY_PROJECT_ID"
-			],
-			"outputs": ["dist/**", ".next/**"]
+			"dependsOn": ["^build"],
+			"env": ["NODE_ENV"],
+			"outputs": ["dist/**", ".next/**", "storybook-static/**"]
 		},
-		"lint": {
-			"outputs": []
+		"@weareinreach/app#build": {
+			"dependsOn": ["^build"],
+			"env": [
+				"DATABASE_URL",
+				"NEXTAUTH_SECRET",
+				"NEXTAUTH_URL",
+				"VERCEL_URL",
+				"PORT",
+				"COGNITO_CLIENT_ID",
+				"COGNITO_CLIENT_SECRET",
+				"COGNITO_ISSUER",
+				"COGNITO_USER_POOL_ID",
+				"AWS_REGION"
+			]
+		},
+		"@weareinreach/web#build": {
+			"dependsOn": ["^build"],
+			"env": [
+				"WEB_SENTRY_DSN",
+				"SANITY_TOKEN",
+				"NEXT_PUBLIC_SANITY_API_VERSION",
+				"NEXT_PUBLIC_SANITY_DATASET",
+				"NEXT_PUBLIC_SANITY_PROJECT_ID",
+				"NEXT_PUBLIC_WEB_SENTRY_DSN"
+			]
+		},
+		"@weareinreach/db#build": {
+			"dependsOn": ["clean", "db:generate"],
+			"env": ["DATABASE_URL"],
+			"inputs": ["./prisma/schema.prisma"]
+		},
+		"chromatic": {
+			"dependsOn": ["build"],
+			"env": ["CHROMATIC_PROJECT_TOKEN"]
+		},
+		"clean": {},
+		"db:generate": {
+			"cache": false
 		},
 		"dev": {
 			"cache": false
 		},
-		"chromatic": {
-			"dependsOn": ["$CHROMATIC_PROJECT_TOKEN"]
-		}
+		"format": {
+			"outputs": []
+		},
+		"lint": {
+			"outputs": [".next/cache/eslint/**"]
+		},
+		"lint:fix": {
+			"outputs": [".next/cache/eslint/**"]
+		},
+		"post-install": {
+			"cache": false
+		},
+		"build:aws": {
+			"dependsOn": ["^db:generate:aws"],
+			"env": ["PRISMA_CLI_BINARY_TARGETS"],
+			"outputs": ["dist/**"]
+		},
+		"db:generate:aws": {}
 	}
 }
