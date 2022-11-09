@@ -2,45 +2,72 @@
 	"name": "inreach",
 	"version": "0.0.0",
 	"private": true,
+	"license": "GPL-3.0-only",
 	"workspaces": [
 		"apps/*",
 		"packages/*"
 	],
 	"scripts": {
 		"build": "turbo run build",
-		"dev": "turbo run dev --parallel",
-		"lint": "turbo run lint",
-		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"build:aws": "turbo run build:aws",
 		"cypress:open": "npx cypress open --project test",
 		"cypress:run": "npx cypress run --project test",
+		"cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false",
 		"cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
-		"cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false"
-	},
-	"devDependencies": {
-		"cypress": "^10.8.0",
-		"cypress-cucumber-preprocessor": "^4.3.1",
-		"eslint-config-custom": "*",
-		"prettier": "latest",
-		"turbo": "^1.4.6",
-		"typescript": "^4.8.3"
-	},
-	"engines": {
-		"pnpm": ">=7",
-		"node": ">=16"
+		"db:generate": "turbo run db:generate",
+		"dev": "turbo run dev --parallel",
+		"format": "turbo run format",
+		"postinstall": "turbo run post-install",
+		"lint": "turbo run lint",
+		"lint:fix": "turbo run lint:fix",
+		"lint:staged": "lint-staged",
+		"prepare": "husky install"
 	},
 	"dependencies": {
-		"@changesets/cli": "^2.24.4"
+		"@changesets/cli": "^2.25.2"
+	},
+	"devDependencies": {
+		"@badeball/cypress-cucumber-preprocessor": "^13.0.3",
+		"@trivago/prettier-plugin-sort-imports": "^3.4.0",
+		"@types/prettier": "^2.7.1",
+		"@weareinreach/config": "*",
+		"@weareinreach/eslint-config": "*",
+		"cypress": "^11.0.0",
+		"husky": "^8.0.0",
+		"lint-staged": "^13.0.3",
+		"prettier": "^2.7.1",
+		"prettier-plugin-jsdoc": "^0.4.2",
+		"prettier-plugin-packagejson": "^2.3.0",
+		"prettier-plugin-prisma": "^4.4.0",
+		"turbo": "^1.6.3",
+		"typescript": "^4.8.4"
+	},
+	"peerDependencies": {
+		"@weareinreach/config": "*",
+		"@weareinreach/eslint-config": "*"
+	},
+	"packageManager": "pnpm@7.14.0",
+	"engines": {
+		"node": ">=16",
+		"pnpm": ">=7"
 	},
 	"cypress-cucumber-preprocessor": {
-		"nonGlobalStepDefinitions": false,
-		"nonGlobalStepBaseDir": "support"
+		"stepDefinitions": "test/cypress/support/step_definitions/**/*.{js,ts}"
 	},
 	"pnpm": {
 		"peerDependencyRules": {
 			"allowedVersions": {
 				"react": "^18",
-				"react-dom": "^18"
+				"react-dom": "^18",
+				"next": "^13",
+				"webpack": "^5",
+				"sanity": "^3.0.0-rc.0",
+				"listr2": "^5",
+				"prisma": "^4"
 			}
+		},
+		"patchedDependencies": {
+			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch"
 		}
 	}
 }
