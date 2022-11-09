@@ -59,6 +59,12 @@
 		},
 		"post-install": {
 			"cache": false
-		}
+		},
+		"build:aws": {
+			"dependsOn": ["^db:generate:aws"],
+			"env": ["PRISMA_CLI_BINARY_TARGETS"],
+			"outputs": ["dist/**"]
+		},
+		"db:generate:aws": {}
 	}
 }

@@ -9,6 +9,7 @@
 	],
 	"scripts": {
 		"build": "turbo run build",
+		"build:aws": "turbo run build:aws",
 		"cypress:open": "npx cypress open --project test",
 		"cypress:run": "npx cypress run --project test",
 		"cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false",
@@ -31,7 +32,7 @@
 		"@types/prettier": "^2.7.1",
 		"@weareinreach/config": "*",
 		"@weareinreach/eslint-config": "*",
-		"cypress": "^10.8.0",
+		"cypress": "^11.0.0",
 		"husky": "^8.0.0",
 		"lint-staged": "^13.0.3",
 		"prettier": "^2.7.1",
@@ -58,9 +59,9 @@
 			"allowedVersions": {
 				"react": "^18",
 				"react-dom": "^18",
-				"next": "13",
-				"webpack": "5",
-				"sanity": "3.0.0-rc.0",
+				"next": "^13",
+				"webpack": "^5",
+				"sanity": "^3.0.0-rc.0",
 				"listr2": "^5",
 				"prisma": "^4"
 			}
