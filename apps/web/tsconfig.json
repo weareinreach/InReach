@@ -1,17 +1,20 @@
 {
-	"extends": "../../packages/tsconfig/nextjs.json",
+	"extends": "@weareinreach/config/tsconfig/nextjs.json",
 	"compilerOptions": {
-		"typeRoots": ["./types"],
-		"baseUrl": "."
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"]
+		},
+		"typeRoots": ["./types"]
 	},
 	"include": [
-		"next-env.d.ts",
-		"**/*.ts",
-		"**/*.tsx",
-		"**/*.js",
-		"**/*.jsx",
-		"**/*.mjs",
-		"**/*.cjs"
+		"./next-env.d.ts",
+		"./**/*.ts",
+		"./**/*.tsx",
+		"./**/*.js",
+		"./**/*.jsx",
+		"./**/*.mjs",
+		"./**/*.cjs"
 	],
-	"exclude": ["node_modules"]
+	"exclude": ["**/node_modules/*"]
 }

@@ -1,0 +1,11 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"compilerOptions": {
+		"declaration": false,
+		"declarationMap": false,
+		"incremental": true,
+		"resolveJsonModule": true
+	},
+	"display": "Next.js",
+	"extends": "./base.json"
+}
