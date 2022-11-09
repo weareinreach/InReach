@@ -33,7 +33,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.20.2",
-		"@types/node": "16.18.0",
+		"@types/node": "16.18.3",
 		"@types/react": "^18.0.25",
 		"@types/react-dom": "^18.0.8",
 		"@weareinreach/config": "*",
@@ -52,5 +52,5 @@
 		"react-dom": "^18",
 		"react-i18next": "^12"
 	},
-	"packageManager": "pnpm@7.14.0"
+	"packageManager": "pnpm@7.14.2"
 }

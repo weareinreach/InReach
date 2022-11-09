@@ -46,7 +46,7 @@
 		"@weareinreach/config": "*",
 		"@weareinreach/eslint-config": "*"
 	},
-	"packageManager": "pnpm@7.14.0",
+	"packageManager": "pnpm@7.14.2",
 	"engines": {
 		"node": ">=16",
 		"pnpm": ">=7"

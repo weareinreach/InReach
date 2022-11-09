@@ -50,7 +50,7 @@
 		"eslint-plugin-turbo": "^0.0.4",
 		"next": "^13.0.1"
 	},
-	"packageManager": "pnpm@7.14.0",
+	"packageManager": "pnpm@7.14.2",
 	"publishConfig": {
 		"access": "public"
 	}

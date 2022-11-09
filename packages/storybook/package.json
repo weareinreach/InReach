@@ -36,8 +36,8 @@
 		"@storybook/manager-webpack5": "^6.5.12",
 		"@storybook/react": "^6.5.12",
 		"@storybook/testing-library": "^0.0.13",
-		"@types/node": "16.18.0",
-		"@types/react": "18.0.24",
+		"@types/node": "16.18.3",
+		"@types/react": "18.0.25",
 		"@types/react-dom": "^18.0.8",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
@@ -57,6 +57,6 @@
 	"peerDependencies": {
 		"next": "^13"
 	},
-	"packageManager": "pnpm@7.14.0",
+	"packageManager": "pnpm@7.14.2",
 	"_id": "@weareinreach/storybook@0.1.0"
 }
