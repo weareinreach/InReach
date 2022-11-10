@@ -2,7 +2,7 @@
 	"scanSettings": {
 		"baseBranches": [
 			"main",
-			"develop"
+			"dev"
 		]
 	},
 	"checkRunSettings": {
