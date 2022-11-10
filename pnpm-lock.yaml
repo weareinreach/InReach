@@ -20,7 +20,7 @@ importers:
 
   .:
     specifiers:
-      '@badeball/cypress-cucumber-preprocessor': 13.1.0
+      '@badeball/cypress-cucumber-preprocessor': 14.0.0
       '@changesets/cli': 2.25.2
       '@trivago/prettier-plugin-sort-imports': 3.4.0
       '@types/prettier': 2.7.1
@@ -38,7 +38,7 @@ importers:
     dependencies:
       '@changesets/cli': 2.25.2
     devDependencies:
-      '@badeball/cypress-cucumber-preprocessor': 13.1.0_cypress@11.0.1
+      '@badeball/cypress-cucumber-preprocessor': 14.0.0_cypress@11.0.1
       '@trivago/prettier-plugin-sort-imports': 3.4.0_prettier@2.7.1
       '@types/prettier': 2.7.1
       '@weareinreach/config': link:packages/config
@@ -2683,13 +2683,13 @@ packages:
       - supports-color
     dev: true
 
-  /@badeball/cypress-cucumber-preprocessor/13.1.0_cypress@11.0.1:
-    resolution: {integrity: sha512-TXeHsJ/R2hsI8pp5FZJs3Lt5TwrffpvgHaWmPB1nuDqolTnL6g91sL0mFRJqUcznZhE+ygedfm+EIyHOMipoGw==}
+  /@badeball/cypress-cucumber-preprocessor/14.0.0_cypress@11.0.1:
+    resolution: {integrity: sha512-6biPTAhfnyAB/n3lv+jz1jJyC8/oqAF0v7FavttDYPpQiGnzO/C0vK0qdApwmXPzCIyeqTNlAyIflb9aSKrIiA==}
     engines: {node: '>=14.14.0'}
     hasBin: true
     peerDependencies:
       '@cypress/browserify-preprocessor': ^3.0.1
-      cypress: ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
+      cypress: ^8.0.0 || ^9.0.0 || ^10.0.0 || ^11.0.0
     peerDependenciesMeta:
       '@cypress/browserify-preprocessor':
         optional: true
