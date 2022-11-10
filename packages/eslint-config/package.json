@@ -48,9 +48,9 @@
 		"eslint-plugin-simple-import-sort": "^8.0.0",
 		"eslint-plugin-storybook": "^0.6.4",
 		"eslint-plugin-turbo": "^0.0.4",
-		"next": "^13.0.1"
+		"next": "^13.0.1 || ^13"
 	},
-	"packageManager": "pnpm@7.14.0",
+	"packageManager": "pnpm@7.15.0",
 	"publishConfig": {
 		"access": "public"
 	}
