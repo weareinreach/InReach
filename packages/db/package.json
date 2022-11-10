@@ -27,6 +27,7 @@
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix .",
+		"post-install": "pnpm db:generate",
 		"predev": "pnpm db:generate",
 		"prisma": "prisma",
 		"schema:clean": "rm -rf src/zod-schemas/* || true"
