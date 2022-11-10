@@ -11,9 +11,9 @@
 		"lint:fix": "eslint --fix ."
 	},
 	"dependencies": {
-		"@emotion/react": "^11.10.5",
-		"@emotion/server": "^11.10.0",
-		"@iconify/react": "^4.0.0",
+		"@emotion/react": "11.10.5",
+		"@emotion/server": "11.10.0",
+		"@iconify/react": "4.0.0",
 		"@mantine/carousel": "^5.7.1",
 		"@mantine/core": "^5.7.1",
 		"@mantine/dates": "^5.7.1",
@@ -26,22 +26,22 @@
 		"@mantine/nprogress": "^5.7.1",
 		"@mantine/rte": "^5.7.1",
 		"@mantine/spotlight": "^5.7.1",
-		"dayjs": "^1.11.6",
-		"embla-carousel-react": "^7.0.4",
-		"slugify": "^1.6.5",
-		"zod": "^3.19.1"
+		"dayjs": "1.11.6",
+		"embla-carousel-react": "7.0.5",
+		"slugify": "1.6.5",
+		"zod": "3.19.1"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.20.2",
+		"@babel/core": "7.20.2",
 		"@types/node": "16.18.0",
-		"@types/react": "^18.0.25",
-		"@types/react-dom": "^18.0.8",
+		"@types/react": "18.0.25",
+		"@types/react-dom": "18.0.8",
 		"@weareinreach/config": "*",
 		"@weareinreach/eslint-config": "*",
-		"next": "^13",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"typescript": "^4.8.4"
+		"next": "13.0.2",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"typescript": "4.8.4"
 	},
 	"peerDependencies": {
 		"@babel/core": "^7.20.2",
