@@ -10,7 +10,8 @@
 	},
 	"vsicons.projectDetection.autoReload": false,
 	"vsicons.projectDetection.disableDetect": true,
-	"prettier.resolveGlobalModules": true
+	"prettier.resolveGlobalModules": true,
+	"dotenv.enableAutocloaking": false
 	// "eslint.workingDirectories": [
 	// 	{ "directory": "apps/app", "changeProcessCWD": true },
 	// 	{ "directory": "apps/web", "changeProcessCWD": true },
