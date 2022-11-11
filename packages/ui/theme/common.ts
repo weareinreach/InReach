@@ -27,4 +27,11 @@ export const commonTheme: MantineThemeOverride = {
 	},
 	primaryColor: 'inReachGreen',
 	primaryShade: 5,
+	components: {
+		Button: {
+			defaultProps: {
+				radius: 'xl',
+			},
+		},
+	},
 }
