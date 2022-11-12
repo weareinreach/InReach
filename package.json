@@ -30,7 +30,7 @@
 	},
 	"devDependencies": {
 		"@badeball/cypress-cucumber-preprocessor": "14.0.0",
-		"@next/eslint-plugin-next": "13.0.1",
+		"@next/eslint-plugin-next": "13.0.3",
 		"@trivago/prettier-plugin-sort-imports": "3.4.0",
 		"@types/eslint": "8.4.10",
 		"@types/prettier": "2.7.1",
@@ -38,7 +38,7 @@
 		"@weareinreach/config": "*",
 		"@weareinreach/eslint-config": "*",
 		"cypress": "11.0.1",
-		"eslint-config-next": "13.0.1",
+		"eslint-config-next": "13.0.3",
 		"eslint-import-resolver-typescript": "3.5.2",
 		"eslint-plugin-codegen": "0.16.1",
 		"eslint-plugin-i18next": "6.0.0-4",
