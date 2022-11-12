@@ -1,14 +1,9 @@
 {
-	"ethnicity": "My ethnicity/race is..",
-	"black": "Black",
-	"middle-easternnorth-african": "Middle Eastern/North African",
 	"asian": "Asian",
-	"latinx": "Latino/a/x/Hispanic",
-	"south-asian": "South Asian",
 	"biracialmultiracial": "Biracial/Multiracial",
-	"nativeindigenous": "American Indian/Native American/Indigenous Person",
+	"black": "Black",
+	"ethnicity": "My ethnicity/race is..",
 	"hawaiianpacific-islander": "Native Hawaiian/Pacific Islander",
-	"white": "White",
 	"identity": "I identify as..",
 	"identity-ally": "Ally",
 	"identity-asexual": "Asexual",
@@ -29,5 +24,10 @@
 	"immigration-asylum-seeker": "Asylum seeker",
 	"immigration-dreamer": "Dreamer (DACA recipient)",
 	"immigration-immigrant": "Immigrant",
-	"immigration-refugee": "Refugee"
+	"immigration-refugee": "Refugee",
+	"latinx": "Latino/a/x/Hispanic",
+	"middle-easternnorth-african": "Middle Eastern/North African",
+	"nativeindigenous": "American Indian/Native American/Indigenous Person",
+	"south-asian": "South Asian",
+	"white": "White"
 }

@@ -1,6 +1,9 @@
 {
+	"country-select": "Choose a country",
+	"helloWorld": "Hello world.",
+	"iAmAButton": "I am a button",
+	"inreach": "InReach",
 	"none-apply": "None of these apply to me",
 	"other-specify": "Other (specify)",
-	"prefer-not-to-say": "Prefer not to say",
-	"country-select": "Choose a country"
+	"prefer-not-to-say": "Prefer not to say"
 }
