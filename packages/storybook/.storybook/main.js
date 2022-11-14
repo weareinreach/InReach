@@ -14,6 +14,8 @@ module.exports = {
 		'storybook-addon-mantine',
 		'storybook-addon-swc',
 		'storybook-addon-turbo-build',
+		'@storybook/preset-scss',
+		'@tomfreudenberg/next-auth-mock/storybook',
 	],
 	framework: '@storybook/react',
 	core: {
@@ -21,6 +23,11 @@ module.exports = {
 	},
 	features: { storyStoreV7: true },
 	webpackFinal: async (config) => {
+		/** Next-Auth session mock */
+		config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] = path.resolve(
+			__dirname,
+			'mockAuthStates.js'
+		)
 		/**
 		 * Fixes font import with /
 		 *

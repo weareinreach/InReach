@@ -6,7 +6,9 @@ import * as NextImage from 'next/image'
 
 import React from 'react'
 
-import { commonTheme } from '@weareinreach/ui/theme'
+import { storybookTheme } from '@weareinreach/ui/theme'
+
+import './font.css'
 
 const OriginalNextImage = NextImage.default
 
@@ -39,7 +41,7 @@ const mantineProviderProps = {
 	withGlobalStyles: true,
 	withNormalizeCSS: false,
 }
-const mantineThemeDefs = [{ ...commonTheme, themeName: 'Light Mode' }]
+const mantineThemeDefs = [{ ...storybookTheme, themeName: 'Light Mode' }]
 
 export const decorators = [mantineTheme(mantineThemeDefs, mantineProviderProps)]
 
