@@ -3,7 +3,7 @@
 import bundleAnalyze from '@next/bundle-analyzer'
 import transpiler from 'next-transpile-modules'
 
-import i18nConfig from './next-i18next.config.mjs'
+import i18nConfig from './next-i18next.config.js'
 
 const withTM = transpiler(['@weareinreach/ui', '@weareinreach/db'])
 /* eslint-disable-next-line turbo/no-undeclared-env-vars */
@@ -28,6 +28,7 @@ export default defineNextConfig({
 	experimental: {
 		// transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
 		// serverComponentsExternalPackages: ['@prisma/client'],
+		fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
 	},
 	// async rewrites() {
 	// 	return {
