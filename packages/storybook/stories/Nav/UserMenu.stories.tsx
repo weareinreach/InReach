@@ -1,5 +1,4 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { SessionProvider } from 'next-auth/react'
 
 import React from 'react'
 
