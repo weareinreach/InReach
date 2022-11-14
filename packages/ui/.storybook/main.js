@@ -1,8 +1,9 @@
 const path = require('path')
 
 module.exports = {
-	stories: ['../stories/**/*.stories.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
+	stories: ['../components/**/*.stories.mdx', '../components/**/*.stories.@(js|jsx|ts|tsx)'],
 	addons: [
+		'@tomfreudenberg/next-auth-mock/storybook',
 		'@storybook/addon-links',
 		'@storybook/addon-essentials',
 		'@storybook/addon-interactions',
@@ -15,7 +16,6 @@ module.exports = {
 		'storybook-addon-swc',
 		'storybook-addon-turbo-build',
 		'@storybook/preset-scss',
-		'@tomfreudenberg/next-auth-mock/storybook',
 	],
 	framework: '@storybook/react',
 	core: {

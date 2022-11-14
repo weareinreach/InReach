@@ -2,7 +2,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import React from 'react'
 
-import { UserMenu } from '@weareinreach/ui/components/layout/Nav'
+import { UserMenu } from './'
 
 export default {
 	title: 'App/Navigation/UserMenu',

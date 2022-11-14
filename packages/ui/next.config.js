@@ -13,9 +13,9 @@ function defineNextConfig(config) {
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
-	experimental: {
-		transpilePackages: ['@weareinreach/ui'],
-	},
+	// experimental: {
+	// 	transpilePackages: ['@weareinreach/ui'],
+	// },
 }
 
 module.exports = defineNextConfig(nextConfig)
