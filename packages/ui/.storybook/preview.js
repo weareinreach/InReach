@@ -6,8 +6,7 @@ import * as NextImage from 'next/image'
 
 import React from 'react'
 
-import { storybookTheme } from '@weareinreach/ui/theme'
-
+import { storybookTheme } from '../theme'
 import './font.css'
 
 const OriginalNextImage = NextImage.default

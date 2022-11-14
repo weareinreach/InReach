@@ -2,17 +2,11 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import React from 'react'
 
-import { Nav } from '@weareinreach/ui/components/layout'
+import { Nav } from './Nav'
 
 export default {
 	title: 'App/Navigation/Navigation Bar',
 	component: Nav,
-	// argTypes: {
-	// 	navItems: {
-	// 		type: 'symbol',
-
-	// 	}
-	// }
 } as ComponentMeta<typeof Nav>
 
 const Template: ComponentStory<typeof Nav> = (args) => <Nav {...args} />
