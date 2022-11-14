@@ -1,9 +1,12 @@
 {
 	"country-select": "Choose a country",
-	"helloWorld": "Hello world.",
-	"iAmAButton": "I am a button",
 	"inreach": "InReach",
 	"none-apply": "None of these apply to me",
 	"other-specify": "Other (specify)",
-	"prefer-not-to-say": "Prefer not to say"
+	"prefer-not-to-say": "Prefer not to say",
+	"user-avatar": "User avatar",
+	"nav-about-us": "About us",
+	"nav-take-action": "Take action",
+	"nav-questions": "Questions?",
+	"nav-contact-us": "Contact us"
 }
