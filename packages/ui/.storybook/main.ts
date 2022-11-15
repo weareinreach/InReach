@@ -12,13 +12,12 @@ const config = {
 		'@storybook/addon-essentials',
 		'@storybook/addon-interactions',
 		'@storybook/addon-links',
-		'@storybook/preset-scss',
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
 		'storybook-addon-mantine',
 		'storybook-addon-next',
 		'storybook-addon-swc',
-		'storybook-addon-turbo-build',
+		// 'storybook-addon-turbo-build',
 		'storybook-dark-mode',
 		'storybook-mobile',
 		'storybook-react-i18next',
@@ -28,7 +27,7 @@ const config = {
 		builder: 'webpack5',
 	},
 	features: { storyStoreV7: true },
-	webpackFinal: async (config) => {
+	webpackFinal: async (config: Record<string, any>) => {
 		/** Next-Auth session mock */
 		;(config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] =
 			path.resolve(__dirname, 'mockAuthStates.ts')),

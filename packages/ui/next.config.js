@@ -15,9 +15,10 @@ const nextConfig = {
 	// i18n: i18nConfig.i18n,
 	reactStrictMode: true,
 	swcMinify: true,
-	// experimental: {
-	// 	transpilePackages: ['@weareinreach/ui'],
-	// },
+	experimental: {
+		// 	transpilePackages: ['@weareinreach/ui'],
+		// fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
+	},
 }
 
 module.exports = defineNextConfig(nextConfig)

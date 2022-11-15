@@ -1,6 +1,6 @@
-const { faker } = require('@faker-js/faker')
+import { faker } from '@faker-js/faker'
 
-module.exports = {
+const states = {
 	unknown: {
 		title: 'session unknown',
 		session: null,
@@ -110,3 +110,4 @@ module.exports = {
 		},
 	},
 }
+export default states

@@ -1,9 +1,10 @@
 import { themes } from '@storybook/theming'
+// @ts-ignore
 import { mantineTheme } from 'storybook-addon-mantine'
 
 import { RouterContext } from 'next/dist/shared/lib/router-context'
-import * as NextImage from 'next/image'
 
+// import * as NextImage from 'next/image'
 // import React from 'react'
 import { storybookTheme } from '../theme'
 import './font.css'

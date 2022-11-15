@@ -1,4 +1,4 @@
-module.exports = new Proxy(
+const font = new Proxy(
 	{},
 	{
 		get: function getter(_, receiver) {
@@ -8,3 +8,4 @@ module.exports = new Proxy(
 		},
 	}
 )
+export default font

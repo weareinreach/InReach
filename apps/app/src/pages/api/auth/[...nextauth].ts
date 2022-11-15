@@ -3,7 +3,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import NextAuth, { type NextAuthOptions } from 'next-auth'
 import CognitoProvider from 'next-auth/providers/cognito'
 
-import { prisma } from '@weareinreach/db'
+import { prisma } from '~/utils/prisma'
 
 // import { env } from '../../../env/server.mjs'
 

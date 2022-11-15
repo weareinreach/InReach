@@ -1,6 +1,6 @@
 {
 	"extends": "@weareinreach/config/tsconfig/react-library.json",
-	"compilerOptions": { "noUncheckedIndexedAccess": false, "typeRoots": ["./types"], "baseUrl": "." },
-	"include": ["./**/*.ts", "./**/*.tsx"],
+	"compilerOptions": { "typeRoots": ["./types"], "baseUrl": "." },
+	"include": ["./**/*.ts", "./**/*.tsx", "./.storybook/*.ts"],
 	"exclude": ["**/node_modules/*"]
 }

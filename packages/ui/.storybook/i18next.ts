@@ -16,8 +16,8 @@ export const i18nLocales = {
 // const supportedLngs = ['en-US', 'en-CA', 'en-MX', 'es', 'es-US', 'es-MX']
 const supportedLngs = Object.keys(i18nLocales)
 
-const localePath = (lng, n) => `../../../apps/app/public/locales/${lng}/${n}.json`
-const resources = ns.reduce((acc, n) => {
+// const localePath = (lng: string, n: string) => `../../../apps/app/public/locales/${lng}/${n}.json`
+const resources = ns.reduce((acc: Record<string, any>, n) => {
 	supportedLngs.forEach((lng) => {
 		if (!acc[lng]) acc[lng] = {}
 		acc[lng] = {

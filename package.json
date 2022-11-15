@@ -10,6 +10,8 @@
 	"scripts": {
 		"build": "turbo run build",
 		"build:aws": "turbo run build:aws",
+		"clean": "turbo run clean:node && pnpm clean:node",
+		"clean:node": "rm -rf ./node_modules || true",
 		"cypress:open": "npx cypress open --project test",
 		"cypress:run": "npx cypress run --project test",
 		"cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false",
