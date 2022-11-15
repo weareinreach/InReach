@@ -1,4 +1,4 @@
-const path = require('path')
+import * as path from 'path'
 
 const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
 
@@ -6,20 +6,22 @@ module.exports = {
 	stories: [`../components/**/${filePattern}`, `../layout/**/${filePattern}`],
 	staticDirs: ['../../../apps/app/public'],
 	addons: [
-		'@tomfreudenberg/next-auth-mock/storybook',
-		'storybook-react-i18next',
-		'@storybook/addon-links',
-		'@storybook/addon-essentials',
-		'@storybook/addon-interactions',
-		'storybook-addon-designs',
+		'@geometricpanda/storybook-addon-badges',
 		'@storybook/addon-a11y',
 		'@storybook/addon-console',
-		'storybook-addon-next',
-		'storybook-dark-mode',
+		'@storybook/addon-essentials',
+		'@storybook/addon-interactions',
+		'@storybook/addon-links',
+		'@storybook/preset-scss',
+		'@tomfreudenberg/next-auth-mock/storybook',
+		'storybook-addon-designs',
 		'storybook-addon-mantine',
+		'storybook-addon-next',
 		'storybook-addon-swc',
 		'storybook-addon-turbo-build',
-		'@storybook/preset-scss',
+		'storybook-dark-mode',
+		'storybook-mobile',
+		'storybook-react-i18next',
 	],
 	framework: '@storybook/react',
 	core: {
