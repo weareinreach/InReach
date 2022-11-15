@@ -22,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install dependencies
-        run: npx --yes pnpm -F "@weareinreach/ui" install
+        run: npx --yes pnpm install
         # 👇 Runs yarn in ./packages/ui
         working-directory: packages/ui
       - name: Publish to Chromatic
