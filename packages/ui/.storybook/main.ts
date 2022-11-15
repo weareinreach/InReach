@@ -2,7 +2,7 @@ import * as path from 'path'
 
 const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
 
-module.exports = {
+const config = {
 	stories: [`../components/**/${filePattern}`, `../layout/**/${filePattern}`],
 	staticDirs: ['../../../apps/app/public'],
 	addons: [
@@ -105,3 +105,4 @@ module.exports = {
 		return config
 	},
 }
+export default config
