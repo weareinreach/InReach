@@ -5,12 +5,13 @@
 	"keywords": [],
 	"license": "GPL-3.0-only",
 	"author": "",
-	"main": "./src/index.ts",
+	"main": "./index.ts",
+	"types": "./index.ts",
 	"files": [
 		"src/**"
 	],
 	"scripts": {
-		"clean": "rm -rf dist || true",
+		"clean:node": "rm -rf ./node_modules/ || true",
 		"db:deploy": "prisma migrate deploy",
 		"db:generate": "prisma generate && pnpm format:generated",
 		"db:generate:aws": "pnpm install && prisma generate",

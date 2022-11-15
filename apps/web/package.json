@@ -4,6 +4,7 @@
 	"private": true,
 	"scripts": {
 		"build": "next build",
+		"clean:node": "rm -rf ./node_modules/ || true && rm -rf ./.next || true",
 		"dev": "next dev",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "next lint",
