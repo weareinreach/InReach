@@ -1,3 +1,4 @@
+import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import React from 'react'
@@ -14,6 +15,10 @@ export default {
 			</div>
 		),
 	],
+	parameters: {
+		badges: [BADGE.BETA],
+		layout: 'padded',
+	},
 } as ComponentMeta<typeof Nav>
 
 export const NavigationBar: ComponentStory<typeof Nav> = (args) => <Nav {...args} />

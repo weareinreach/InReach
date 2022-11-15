@@ -7,33 +7,60 @@ import Image from 'next/image'
 
 import { useState } from 'react'
 
-import { Avatar, Button, Group, Menu, Skeleton, Text, UnstyledButton, createStyles } from '@mantine/core'
+import {
+	Avatar,
+	Button,
+	DefaultProps,
+	Group,
+	Menu,
+	Selectors,
+	Skeleton,
+	Text,
+	UnstyledButton,
+	createStyles,
+} from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
 	menu: {
-		width: '15rem',
-		// display: 'inline',
-		alignItems: 'center',
+		width: 250,
+	},
+	buttons: {
+		[theme.fn.smallerThan('md')]: {
+			width: 200,
+			margin: '0 auto',
+		},
+		[theme.fn.smallerThan('sm')]: {
+			width: 300,
+		},
 	},
 	loadingItems: {
 		display: 'inline-block',
 	},
-	userIcon: {
+	avatar: {
 		color: theme.colors.inReachGreen[5],
+		height: 55,
+		width: 55,
+		[theme.fn.smallerThan('md')]: {
+			height: 40,
+			width: 40,
+		},
+	},
+	actionButton: {
+		fontWeight: 800,
 	},
 }))
 
-export const UserMenu = () => {
+export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
 	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
 	const [_userMenuOpen, setUserMenuOpen] = useState(false)
-	const { classes } = useStyles()
+	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 
 	if (status === 'loading' && !session) {
 		return (
-			<Group className={classes.menu}>
-				<Skeleton height={50} circle className={classes.loadingItems} />
-				<Skeleton height={8} radius='xl' className={classes.loadingItems} w='10rem' h='1rem' />
+			<Group className={cx(classes.menu, className)} noWrap>
+				<Skeleton height={55} circle className={classes.loadingItems} />
+				<Skeleton height={8} radius='xl' className={classes.loadingItems} w={160} h={16} />
 			</Group>
 		)
 	}
@@ -48,18 +75,19 @@ export const UserMenu = () => {
 				onOpen={() => setUserMenuOpen(true)}
 			>
 				<Menu.Target>
-					<UnstyledButton className={classes.menu}>
-						<Group>
-							<Avatar h={55} w={55} radius='xl'>
+					<UnstyledButton className={cx(classes.menu, classes.buttons, className)}>
+						<Group noWrap className={classes.buttons}>
+							<Avatar radius='xl' className={classes.avatar}>
 								{session.user.image ? (
 									<Image
 										src={session.user.image}
 										height={55}
 										width={55}
+										className={classes.avatar}
 										alt={session.user.name || t('user-avatar')}
 									/>
 								) : (
-									<Icon icon={userIcon} height={55} width={55} className={classes.userIcon} />
+									<Icon icon={userIcon} height={55} width={55} className={classes.avatar} />
 								)}
 							</Avatar>
 							<Text weight={500} size='sm' sx={{ lineHeight: 1 }} mr={3}>
@@ -80,9 +108,14 @@ export const UserMenu = () => {
 		)
 	}
 	return (
-		<Group className={classes.menu}>
-			<Button>{t('sign-up')}</Button>
-			<Button variant='outline'>{t('log-in')}</Button>
+		<Group className={cx(classes.menu, className)}>
+			<Button className={classes.buttons}>{t('sign-up')}</Button>
+			<Button variant='outline' className={classes.buttons}>
+				{t('log-in')}
+			</Button>
 		</Group>
 	)
 }
+
+type ComponentStyles = Selectors<typeof useStyles>
+type UserMenuProps = DefaultProps<ComponentStyles>

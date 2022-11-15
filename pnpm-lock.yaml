@@ -372,6 +372,7 @@ importers:
       '@storybook/addon-essentials': 6.5.13
       '@storybook/addon-interactions': 6.5.13
       '@storybook/addon-links': 6.5.13
+      '@storybook/addon-viewport': ^6.5.13
       '@storybook/builder-webpack5': 6.5.13
       '@storybook/manager-webpack5': 6.5.13
       '@storybook/react': 6.5.13
@@ -461,6 +462,7 @@ importers:
       '@storybook/addon-essentials': 6.5.13_qo2txrqzwbylpvhq3jieq4mpnm
       '@storybook/addon-interactions': 6.5.13_ne227bvjalmk4zf5jyanirqk64
       '@storybook/addon-links': 6.5.13_biqbaboplfbrettd7655fr4n2y
+      '@storybook/addon-viewport': 6.5.13_biqbaboplfbrettd7655fr4n2y
       '@storybook/builder-webpack5': 6.5.13_ejp77i2iagmf2zl6qujnanikm4
       '@storybook/manager-webpack5': 6.5.13_ejp77i2iagmf2zl6qujnanikm4
       '@storybook/react': 6.5.13_2athxu633vh2uxllkxkd7jlcxy
@@ -19837,7 +19839,7 @@ packages:
   /use-sync-external-store/1.2.0_react@18.2.0:
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^18 || >=18
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
     dependencies:
       react: 18.2.0
 

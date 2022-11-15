@@ -7,13 +7,13 @@
 	"scripts": {
 		"chromatic": "chromatic",
 		"clean:node": "rm -rf ./node_modules/ || true",
+		"dev": "start-storybook -p 6006 --no-open",
 		"format": "prettier --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix .",
 		"sb:build": "build-storybook",
-		"sb:build:swc": "BUILD_TOOL=swc build-storybook",
-		"sb:dev": "start-storybook -p 6006 --no-open"
+		"sb:build:swc": "BUILD_TOOL=swc build-storybook"
 	},
 	"dependencies": {
 		"@emotion/react": "11.10.5",
@@ -51,6 +51,7 @@
 		"@storybook/addon-essentials": "6.5.13",
 		"@storybook/addon-interactions": "6.5.13",
 		"@storybook/addon-links": "6.5.13",
+		"@storybook/addon-viewport": "^6.5.13",
 		"@storybook/builder-webpack5": "6.5.13",
 		"@storybook/manager-webpack5": "6.5.13",
 		"@storybook/react": "6.5.13",
