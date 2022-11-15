@@ -23,19 +23,19 @@ export const NavigationBar: ComponentStory<typeof Nav> = (args) => <Nav {...args
 NavigationBar.args = {
 	navItems: [
 		{
-			key: 'About Us',
+			key: 'nav-about-us',
 			href: '#aboutus',
 		},
 		{
-			key: 'Take Action',
+			key: 'nav-take-action',
 			href: '#takeaction',
 		},
 		{
-			key: 'Questions?',
+			key: 'nav-questions',
 			href: '#questions',
 		},
 		{
-			key: 'Contact Us',
+			key: 'nav-contact-us',
 			href: '#contactus',
 		},
 	],
