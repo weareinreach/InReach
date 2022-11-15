@@ -5,15 +5,22 @@ import React from 'react'
 import { Nav } from './Nav'
 
 export default {
-	title: 'App/Navigation/Navigation Bar',
+	title: 'App/Navigation/NavigationBar',
 	component: Nav,
+	decorators: [
+		(Story) => (
+			<div style={{ width: '100vw' }}>
+				<Story />
+			</div>
+		),
+	],
 } as ComponentMeta<typeof Nav>
 
-const Template: ComponentStory<typeof Nav> = (args) => <Nav {...args} />
+export const NavigationBar: ComponentStory<typeof Nav> = (args) => <Nav {...args} />
 
-export const Primary = Template.bind({})
+// export const NavigationBar = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Primary.args = {
+NavigationBar.args = {
 	navItems: [
 		{
 			key: 'About Us',

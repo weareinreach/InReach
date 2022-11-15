@@ -4,17 +4,19 @@ import { mantineTheme } from 'storybook-addon-mantine'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 import * as NextImage from 'next/image'
 
-import React from 'react'
-
+// import React from 'react'
 import { storybookTheme } from '../theme'
 import './font.css'
+import { i18n, i18nLocales } from './i18next'
 
-const OriginalNextImage = NextImage.default
+// const OriginalNextImage = NextImage.default
 
-Object.defineProperty(NextImage, 'default', {
-	configurable: true,
-	value: (props) => <OriginalNextImage {...props} unoptimized />,
-})
+// Object.defineProperty(NextImage, 'default', {
+// 	configurable: true,
+// 	value: (props) => {
+// 		return <OriginalNextImage {...props} unoptimized />
+// 	},
+// })
 
 export const parameters = {
 	actions: { argTypesRegex: '^on[A-Z].*' },
@@ -33,6 +35,9 @@ export const parameters = {
 		dark: { ...themes.dark },
 		light: { ...themes.light },
 	},
+	i18n,
+	locale: 'en-US',
+	locales: i18nLocales,
 }
 
 const mantineProviderProps = {
@@ -44,12 +49,12 @@ const mantineThemeDefs = [{ ...storybookTheme, themeName: 'Light Mode' }]
 
 export const decorators = [mantineTheme(mantineThemeDefs, mantineProviderProps)]
 
-window.getEmbedNamespace = () => {
-	const url = new URL(document.URL)
-	const namespace = url.searchParams.get('embed')
-	return namespace
-}
+// window.getEmbedNamespace = () => {
+// 	const url = new URL(document.URL)
+// 	const namespace = url.searchParams.get('embed')
+// 	return namespace
+// }
 
-window.getEmbedTheme = () => {
-	return 'auto'
-}
+// window.getEmbedTheme = () => {
+// 	return 'auto'
+// }

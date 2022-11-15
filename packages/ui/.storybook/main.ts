@@ -1,9 +1,13 @@
 const path = require('path')
 
+const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
+
 module.exports = {
-	stories: ['../components/**/*.stories.mdx', '../components/**/*.stories.@(js|jsx|ts|tsx)'],
+	stories: [`../components/**/${filePattern}`, `../layout/**/${filePattern}`],
+	staticDirs: ['../../../apps/app/public'],
 	addons: [
 		'@tomfreudenberg/next-auth-mock/storybook',
+		'storybook-react-i18next',
 		'@storybook/addon-links',
 		'@storybook/addon-essentials',
 		'@storybook/addon-interactions',
@@ -24,10 +28,9 @@ module.exports = {
 	features: { storyStoreV7: true },
 	webpackFinal: async (config) => {
 		/** Next-Auth session mock */
-		config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] = path.resolve(
-			__dirname,
-			'mockAuthStates.js'
-		)
+		;(config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] =
+			path.resolve(__dirname, 'mockAuthStates.ts')),
+			(config.resolve.alias['next-i18next'] = 'react-i18next')
 		/**
 		 * Fixes font import with /
 		 *
