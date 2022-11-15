@@ -27,7 +27,7 @@ export default defineNextConfig({
 	swcMinify: true,
 	experimental: {
 		// transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
-		serverComponentsExternalPackages: ['@swc/core', '@prisma/client'],
+		// serverComponentsExternalPackages: ['@swc/core', '@prisma/client'],
 		fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
 	},
 	// async rewrites() {
