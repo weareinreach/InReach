@@ -2,9 +2,9 @@ import { Open_Sans } from '@next/font/google'
 import type { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { appWithTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import { GetServerSidePropsContext } from 'next'
+// import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+// import { GetServerSidePropsContext } from 'next'
 import type { AppProps } from 'next/app'
 
 import { AppLayout } from '@weareinreach/ui/layout'

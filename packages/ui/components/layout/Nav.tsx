@@ -91,16 +91,17 @@ export const Nav = (props: NavProps) => {
 	const [opened, { toggle, close }] = useDisclosure(false)
 
 	const navLinks = navItems.map((item, idx) => (
-		<Link key={idx} href={item.href} className={classes.link} onClick={close}>
+		<Link key={idx} href={item.href} className={classes.link} onClick={close} legacyBehavior={false}>
 			{t(item.key)}
 		</Link>
 	))
 	return (
 		<Header height={HEADER_HEIGHT} className={classes.root}>
-			<Container className={classes.header}>
+			<Container className={classes.header} size='xl'>
 				<Image src={Logo} alt='InReach' height={50} />
 				<Group spacing={5} className={classes.links}>
 					{navLinks}
+					<UserMenu />
 				</Group>
 
 				<Burger opened={opened} onClick={toggle} className={classes.burger} />
@@ -108,10 +109,10 @@ export const Nav = (props: NavProps) => {
 					{(styles) => (
 						<Paper className={classes.dropdown} withBorder style={styles}>
 							{navLinks}
+							<UserMenu />
 						</Paper>
 					)}
 				</Transition>
-				<UserMenu />
 			</Container>
 		</Header>
 	)

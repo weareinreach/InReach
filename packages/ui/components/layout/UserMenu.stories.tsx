@@ -2,15 +2,14 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import React from 'react'
 
-import { UserMenu } from './'
+import { UserMenu as UserMenuComponent } from './'
 
 export default {
 	title: 'App/Navigation/UserMenu',
-	component: UserMenu,
-	args: {},
-} as ComponentMeta<typeof UserMenu>
+	component: UserMenuComponent,
+} as ComponentMeta<typeof UserMenuComponent>
 
-const Template: ComponentStory<typeof UserMenu> = () => <UserMenu />
+const Template: ComponentStory<typeof UserMenuComponent> = () => <UserMenuComponent />
 
-export const Story = Template.bind({})
-Story.args = {}
+export const UserMenu = Template.bind({})
+UserMenu.args = {}
