@@ -3,11 +3,21 @@ import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { Burger, Container, Group, Header, Paper, Transition, createStyles } from '@mantine/core'
+import {
+	Burger,
+	Center,
+	Container,
+	Group,
+	Header,
+	Paper,
+	Space,
+	Transition,
+	createStyles,
+} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 
 import { NavItem } from '../../layout'
-import { UserMenu } from './UserMenu'
+import { SafetyExit, UserMenu } from './'
 import Logo from './img/inreach.svg'
 
 const HEADER_HEIGHT = 60
@@ -27,8 +37,13 @@ const useStyles = createStyles((theme) => ({
 		borderTopLeftRadius: 0,
 		borderTopWidth: 0,
 		overflow: 'hidden',
-
+		paddingBottom: 25,
 		[theme.fn.largerThan('sm')]: {
+			maxWidth: '50%',
+			minWidth: 250,
+			left: 'inherit',
+		},
+		[theme.fn.largerThan('md')]: {
 			display: 'none',
 		},
 	},
@@ -41,15 +56,17 @@ const useStyles = createStyles((theme) => ({
 	},
 
 	links: {
-		[theme.fn.smallerThan('sm')]: {
+		[theme.fn.smallerThan('md')]: {
 			display: 'none',
 		},
+		padding: '0px 10px',
 	},
 
 	burger: {
-		[theme.fn.largerThan('sm')]: {
+		[theme.fn.largerThan('md')]: {
 			display: 'none',
 		},
+		margin: '0px 10px',
 	},
 
 	link: {
@@ -60,13 +77,14 @@ const useStyles = createStyles((theme) => ({
 		textDecoration: 'none',
 		color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
 		fontSize: theme.fontSizes.sm,
-		fontWeight: 500,
+		fontWeight: 800,
+		textTransform: 'uppercase',
 
 		'&:hover': {
 			backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
 		},
 
-		[theme.fn.smallerThan('sm')]: {
+		[theme.fn.smallerThan('md')]: {
 			borderRadius: 0,
 			padding: theme.spacing.md,
 		},
@@ -78,7 +96,23 @@ const useStyles = createStyles((theme) => ({
 			color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
 		},
 	},
+	navGroup: {
+		padding: '0px 20px',
+		[theme.fn.smallerThan('md')]: {
+			justifyContent: 'end',
+		},
+	},
+	userMenu: {
+		[theme.fn.smallerThan('md')]: {
+			display: 'none',
+		},
+	},
+	burgerUser: {
+		width: '80%',
+	},
 }))
+
+// TODO: Fix layout issues ~1024px viewport width
 
 export interface NavProps {
 	navItems: NavItem[]
@@ -99,17 +133,26 @@ export const Nav = (props: NavProps) => {
 		<Header height={HEADER_HEIGHT} className={classes.root}>
 			<Container className={classes.header} size='xl'>
 				<Image src={Logo} alt='InReach' height={50} />
-				<Group spacing={5} className={classes.links}>
-					{navLinks}
-					<UserMenu />
+
+				{/** This section shows at `lg` and up */}
+				<Group noWrap w='100%' position='apart' className={classes.navGroup}>
+					<Group spacing={5} className={classes.links}>
+						{navLinks}
+					</Group>
+					<SafetyExit />
+					<UserMenu className={classes.userMenu} />
 				</Group>
 
+				{/** This section shows at `md` and down */}
 				<Burger opened={opened} onClick={toggle} className={classes.burger} />
 				<Transition transition='pop-top-right' duration={200} mounted={opened}>
 					{(styles) => (
 						<Paper className={classes.dropdown} withBorder style={styles}>
 							{navLinks}
-							<UserMenu />
+							<Space h='sm' />
+							<Center>
+								<UserMenu className={classes.burgerUser} />
+							</Center>
 						</Paper>
 					)}
 				</Transition>
