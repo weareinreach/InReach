@@ -26,7 +26,7 @@ const useStyles = createStyles((theme) => ({
 export const UserMenu = () => {
 	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
-	const [userMenuOpen, setUserMenuOpen] = useState(false)
+	const [_userMenuOpen, setUserMenuOpen] = useState(false)
 	const { classes } = useStyles()
 
 	if (status === 'loading' && !session) {
