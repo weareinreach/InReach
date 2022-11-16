@@ -3,7 +3,11 @@ name: CodeQL
 
 on:
   push:
+    branches-ignore:
+      - 'l10n_*'
   pull_request:
+    branches-ignore:
+      - 'l10n_*'
   schedule:
     - cron: '30 1 * * 0'
 
