@@ -11,10 +11,10 @@
 		"bundle": "ncc build ./src/index.ts -s -m -a",
 		"clean:dist": "rm -fr dist",
 		"clean:node": "rm -rf ./node_modules/ || true",
-		"format": "prettier --write --ignore-unknown .",
+		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
-		"lint": "eslint .",
-		"lint:fix": "eslint --fix .",
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix .",
 		"package": "cd dist && rm -v client/!(*rhel*) && zip -r bundle.zip *",
 		"upload": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://dist/bundle.zip"
 	},
@@ -31,6 +31,6 @@
 		"aws-lambda": "1.0.7",
 		"eslint": "8.27.0",
 		"prettier": "2.7.1",
-		"typescript": "4.8.4"
+		"typescript": "4.9.3"
 	}
 }

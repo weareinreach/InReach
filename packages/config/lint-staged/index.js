@@ -1,12 +1,16 @@
+const runPrettier = 'prettier --cache --cache-strategy metadata --write'
+const runEslint = 'eslint --cache --fix --max-warnings=-1'
+const runPrismaFormat = (files) => files.map((file) => `prisma format --schema ${file}`)
+
 const config = {
-	'*.{cjs,mjs,js,jsx,ts,tsx}': ['eslint --fix', 'prettier --write'],
-	// 'schema.prisma': ['prisma format'],
-	'*.json': ['prettier --write'],
-	'*.prisma': ['prettier --write'],
-	'*.html': ['prettier --write'],
-	'*.{css,scss}': ['prettier --write'],
-	'*.{yaml,yml}': ['prettier --write'],
-	'*.md': ['prettier --write'],
+	'*.{cjs,mjs,js,jsx,ts,tsx}': [runEslint, runPrettier],
+	'*.prisma': runPrismaFormat,
+	'*.json': [runPrettier],
+	'*.prisma': [runPrettier],
+	'*.html': [runPrettier],
+	'*.{css,scss}': [runPrettier],
+	'*.{yaml,yml}': [runPrettier],
+	'*.md': [runPrettier],
 }
 
 module.exports = config
