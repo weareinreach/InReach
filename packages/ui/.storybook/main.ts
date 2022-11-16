@@ -27,6 +27,16 @@ const config = {
 		builder: 'webpack5',
 	},
 	features: { storyStoreV7: true },
+	typescript: {
+		check: false,
+		checkOptions: {},
+		reactDocgen: 'react-docgen-typescript',
+		reactDocgenTypescriptOptions: {
+			shouldExtractLiteralValuesFromEnum: true,
+			// propFilter: (prop: Record<string, any>) =>
+			// 	prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
+		},
+	},
 	webpackFinal: async (config: Record<string, any>) => {
 		/** Next-Auth session mock */
 		;(config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] =

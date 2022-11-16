@@ -409,6 +409,7 @@ importers:
       next-i18next: 12.1.0
       postcss-loader: ^7.0.1
       react: 18.2.0
+      react-docgen-typescript: ^2.2.2
       react-dom: 18.2.0
       react-i18next: 12.0.0
       resolve-url-loader: ^5.0.0
@@ -495,6 +496,7 @@ importers:
       next-i18next: 12.1.0_cuttyyug54cjzme6dhlgj6veu4
       postcss-loader: 7.0.1_sdypjwo5ssab3pyqgv4b4agnly
       react: 18.2.0
+      react-docgen-typescript: 2.2.2_typescript@4.8.4
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 12.0.0_n3kmhq4527torfjiti537juzwy
       resolve-url-loader: 5.0.0
