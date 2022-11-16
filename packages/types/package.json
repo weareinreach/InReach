@@ -5,15 +5,15 @@
 	"license": "GPL-3.0-only",
 	"main": "lib/index.ts",
 	"scripts": {
-		"format": "prettier --write --ignore-unknown .",
+		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
-		"lint": "eslint .",
-		"lint:fix": "eslint --fix ."
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix ."
 	},
 	"devDependencies": {
 		"@weareinreach/config": "*",
 		"@weareinreach/eslint-config": "*",
-		"typescript": "4.8.4"
+		"typescript": "4.9.3"
 	},
 	"packageManager": "pnpm@7.16.0"
 }

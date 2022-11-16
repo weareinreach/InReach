@@ -6,7 +6,7 @@ import React from 'react'
 import { SafetyExit } from './SafetyExit'
 
 export default {
-	title: 'App/Navigation/SafetyExitButton',
+	title: 'App/Navigation Header Bar/SafetyExitButton',
 	component: SafetyExit,
 	decorators: [(Story) => <Story />],
 	parameters: {
