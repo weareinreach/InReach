@@ -33,7 +33,7 @@
 			]
 		},
 		"@weareinreach/db#build": {
-			"dependsOn": ["clean", "db:generate"],
+			"dependsOn": [],
 			"env": ["DATABASE_URL"],
 			"inputs": ["./prisma/schema.prisma"]
 		},
@@ -65,6 +65,9 @@
 			"env": ["PRISMA_CLI_BINARY_TARGETS"],
 			"outputs": ["dist/**"]
 		},
-		"db:generate:aws": {}
+		"db:generate:aws": {
+			"cache": false
+		},
+		"clean:node": {}
 	}
 }

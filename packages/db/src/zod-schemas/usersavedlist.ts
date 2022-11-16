@@ -1,8 +1,8 @@
-import { UserSavedListVisibility } from '@prisma/client'
 import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import { CompleteOrganization, CompleteUser, OrganizationModel, UserModel } from './index'
+import { UserSavedListVisibility } from '.prisma/client'
 
 export const _UserSavedListModel = z.object({
 	id: imports.cuid,

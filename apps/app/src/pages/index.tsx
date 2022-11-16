@@ -1,15 +1,24 @@
-import type { NextPage } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+import type { GetServerSidePropsContext, NextPage } from 'next'
 import Head from 'next/head'
 
 const Home: NextPage = () => {
+	const { t } = useTranslation('common')
 	return (
 		<>
 			<Head>
-				{/* eslint-disable-next-line i18next/no-literal-string */}
-				<title>InReach</title>
+				<title>{t('inreach')}</title>
 			</Head>
 		</>
 	)
 }
+
+export const getServerSideProps = async ({ locale }: GetServerSidePropsContext) => ({
+	props: {
+		...(await serverSideTranslations(locale as string, ['common'])),
+	},
+})
 
 export default Home

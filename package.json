@@ -10,12 +10,17 @@
 	"scripts": {
 		"build": "turbo run build",
 		"build:aws": "turbo run build:aws",
+		"clean": "turbo run clean:node && pnpm clean:node",
+		"clean:node": "rm -rf ./node_modules || true",
 		"cypress:open": "npx cypress open --project test",
 		"cypress:run": "npx cypress run --project test",
 		"cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false",
 		"cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
 		"db:generate": "turbo run db:generate",
-		"dev": "turbo run dev --parallel",
+		"dev:all": "turbo run dev --parallel",
+		"dev:app": "turbo run dev --filter=app",
+		"dev:sb": "turbo run dev --filter=ui",
+		"dev:web": "turbo run dev --filter=web",
 		"format": "turbo run format",
 		"postinstall": "turbo run post-install",
 		"lint": "turbo run lint",
@@ -28,11 +33,24 @@
 	},
 	"devDependencies": {
 		"@badeball/cypress-cucumber-preprocessor": "14.0.0",
+		"@next/eslint-plugin-next": "13.0.1",
 		"@trivago/prettier-plugin-sort-imports": "3.4.0",
+		"@types/eslint": "8.4.10",
 		"@types/prettier": "2.7.1",
+		"@typescript-eslint/eslint-plugin": "5.42.1",
 		"@weareinreach/config": "*",
 		"@weareinreach/eslint-config": "*",
 		"cypress": "11.0.1",
+		"eslint-config-next": "13.0.1",
+		"eslint-import-resolver-typescript": "3.5.2",
+		"eslint-plugin-codegen": "0.16.1",
+		"eslint-plugin-i18next": "6.0.0-4",
+		"eslint-plugin-import": "2.26.0",
+		"eslint-plugin-prettier": "4.2.1",
+		"eslint-plugin-react": "7.31.10",
+		"eslint-plugin-simple-import-sort": "8.0.0",
+		"eslint-plugin-storybook": "0.6.7",
+		"eslint-plugin-turbo": "0.0.4",
 		"husky": "8.0.2",
 		"lint-staged": "13.0.3",
 		"prettier": "2.7.1",
@@ -46,7 +64,7 @@
 		"@weareinreach/config": "*",
 		"@weareinreach/eslint-config": "*"
 	},
-	"packageManager": "pnpm@7.15.0",
+	"packageManager": "pnpm@7.16.0",
 	"engines": {
 		"node": ">=16",
 		"pnpm": ">=7"
@@ -57,13 +75,17 @@
 	"pnpm": {
 		"peerDependencyRules": {
 			"allowedVersions": {
-				"react": "^18",
-				"react-dom": "^18",
-				"next": "^13",
-				"webpack": "^5",
-				"sanity": "^3.0.0-rc.0",
-				"listr2": "^5",
-				"prisma": "^4"
+				"react": ">=18",
+				"react-dom": ">=18",
+				"next": ">=13",
+				"webpack": ">=5",
+				"sanity": ">=3.0.0-rc.0",
+				"listr2": ">=5",
+				"prisma": ">=4",
+				"babel-loader": ">=9",
+				"i18next-browser-languagedetector": ">=7",
+				"i18next-http-backend": ">=2",
+				"react-i18next": ">=12"
 			},
 			"overrides": {
 				"glob-parent@3.1.0": "glob-parent@^5.1.2",

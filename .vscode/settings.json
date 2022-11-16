@@ -10,15 +10,23 @@
 	},
 	"vsicons.projectDetection.autoReload": false,
 	"vsicons.projectDetection.disableDetect": true,
-	"prettier.resolveGlobalModules": true
-	// "eslint.workingDirectories": [
-	// 	{ "directory": "apps/app", "changeProcessCWD": true },
-	// 	{ "directory": "apps/web", "changeProcessCWD": true },
-	// 	{ "directory": "packages/aws-user-migrate", "changeProcessCWD": true },
-	// 	{ "directory": "packages/config", "changeProcessCWD": true },
-	// 	{ "directory": "packages/db", "changeProcessCWD": true },
-	// 	{ "directory": "packages/storybook", "changeProcessCWD": true },
-	// 	{ "directory": "packages/types", "changeProcessCWD": true },
-	// 	{ "directory": "packages/ui", "changeProcessCWD": true }
-	// ]
+	"prettier.resolveGlobalModules": true,
+	"dotenv.enableAutocloaking": false,
+	"i18n-ally.displayLanguage": "en-US",
+	"i18n-ally.sourceLanguage": "en-US",
+	"i18n-ally.extract.autoDetect": true,
+	"i18n-ally.extract.keygenStyle": "kebab-case",
+	// "i18n-ally.namespace": true,
+	"i18n-ally.pathMatcher": "{locale}/{namespace}.json",
+	"i18n-ally.localesPaths": ["apps/app/public/locales/"],
+	"i18n-ally.sortKeys": true,
+	"i18n-ally.enabledFrameworks": ["react", "i18next", "next-translate", "general"],
+	"i18n-ally.extract.keyMaxLength": 150,
+	"i18n-ally.annotationInPlace": false,
+	"i18n-ally.enabledParsers": ["js", "ts", "json"],
+	"i18n-ally.keystyle": "nested",
+	"i18n-ally.fullReloadOnChanged": true,
+	"i18n-ally.review.enabled": false,
+	"i18n-ally.review.gutters": false,
+	"i18n-ally.showFlags": true
 }

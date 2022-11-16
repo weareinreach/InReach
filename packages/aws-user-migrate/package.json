@@ -7,9 +7,10 @@
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"scripts": {
-		"build:aws": "pnpm clean && pnpm bundle && pnpm package",
+		"build:aws": "pnpm clean:dist && pnpm bundle && pnpm package",
 		"bundle": "ncc build ./src/index.ts -s -m -a",
-		"clean": "rm -fr dist",
+		"clean:dist": "rm -fr dist",
+		"clean:node": "rm -rf ./node_modules/ || true",
 		"format": "prettier --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint .",
