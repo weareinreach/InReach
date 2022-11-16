@@ -6,7 +6,7 @@ import React from 'react'
 import { UserMenu as UserMenuComponent } from './'
 
 export default {
-	title: 'App/Navigation/UserMenu',
+	title: 'App/Navigation Header Bar/User Menu',
 	component: UserMenuComponent,
 	parameters: {
 		badges: [BADGE.BETA],
@@ -15,5 +15,27 @@ export default {
 
 const Template: ComponentStory<typeof UserMenuComponent> = () => <UserMenuComponent />
 
-export const UserMenu = Template.bind({})
-UserMenu.args = {}
+export const LoggedOut = Template.bind({})
+export const Loading = Template.bind({})
+export const LoggedIn = Template.bind({})
+export const LoggedInNoPic = Template.bind({})
+LoggedOut.parameters = {
+	nextAuthMock: {
+		session: 'unknown',
+	},
+}
+Loading.parameters = {
+	nextAuthMock: {
+		session: 'loading',
+	},
+}
+LoggedIn.parameters = {
+	nextAuthMock: {
+		session: 'userPicAuthed',
+	},
+}
+LoggedInNoPic.parameters = {
+	nextAuthMock: {
+		session: 'userAuthed',
+	},
+}
