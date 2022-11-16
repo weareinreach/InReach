@@ -1,5 +1,5 @@
-const runPrettier = 'prettier --write --cache --cache-strategy metadata'
-const runEslint = 'eslint --fix --max-warnings=-1 --cache'
+const runPrettier = 'prettier --cache --cache-strategy metadata --write'
+const runEslint = 'eslint --cache --fix --max-warnings=-1'
 const runPrismaFormat = (files) => files.map((file) => `prisma format --schema ${file}`)
 
 const config = {

@@ -7,7 +7,7 @@
 	"author": "",
 	"main": "index.js",
 	"scripts": {
-		"format": "prettier --write --ignore-unknown ."
+		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown ."
 	},
 	"devDependencies": {
 		"@weareinreach/config": "workspace:^0.0.0"

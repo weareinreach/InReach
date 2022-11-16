@@ -5,10 +5,10 @@
 	"license": "GPL-3.0-only",
 	"main": "lib/index.ts",
 	"scripts": {
-		"format": "prettier --write --ignore-unknown .",
+		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
-		"lint": "eslint .",
-		"lint:fix": "eslint --fix ."
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix ."
 	},
 	"devDependencies": {
 		"@weareinreach/config": "*",
