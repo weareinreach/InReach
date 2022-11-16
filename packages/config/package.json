@@ -15,7 +15,7 @@
 		"i18next/index.js"
 	],
 	"scripts": {
-		"format": "prettier --write --ignore-unknown .",
+		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm"
 	},
 	"devDependencies": {
