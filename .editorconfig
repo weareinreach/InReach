@@ -12,7 +12,6 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[yaml]
+[*.{yaml,yml}]
 indent_style = space
-[yml]
-indent_style = space
+

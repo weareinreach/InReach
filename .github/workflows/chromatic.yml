@@ -2,7 +2,6 @@ name: 'Chromatic'
 on:
   push:
     paths:
-      - 'packages/storybook/**'
       - 'packages/ui/**'
   workflow_dispatch:
     inputs:
@@ -17,18 +16,18 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: packages/storybook
+        working-directory: packages/ui
     steps:
       - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3
         with:
           fetch-depth: 0
       - name: Install dependencies
-        run: npx --yes pnpm -F "@weareinreach/storybook" install
-        # 👇 Runs yarn in ./packages/storybook
-        working-directory: packages/storybook
+        run: npx --yes pnpm install
+        # 👇 Runs yarn in ./packages/ui
+        working-directory: packages/ui
       - name: Publish to Chromatic
         uses: chromaui/action@9f9e97cdc8598bb82e105073569d38527a7ac1f6 # v1
         with:
-          # 👇 Runs Chromatic CLI in ./packages/storybook
-          workingDir: packages/storybook
+          # 👇 Runs Chromatic CLI in ./packages/ui
+          workingDir: packages/ui
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
