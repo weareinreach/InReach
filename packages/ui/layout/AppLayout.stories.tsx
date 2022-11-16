@@ -24,7 +24,7 @@ const mockNav = [
 ]
 
 export default {
-	title: 'Layouts/MainAppLayout',
+	title: 'App/Layout/MainAppLayout',
 	component: AppLayout,
 	args: {
 		navItems: mockNav,

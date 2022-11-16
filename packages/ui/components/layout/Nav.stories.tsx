@@ -3,11 +3,13 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import React from 'react'
 
+import { SafetyExit, UserMenu } from './'
 import { Nav } from './Nav'
 
 export default {
-	title: 'App/Navigation/NavigationBar',
+	title: 'App/Layout/NavigationHeaderBar',
 	component: Nav,
+	subcomponents: { UserMenu, SafetyExit },
 	decorators: [
 		(Story) => (
 			<div style={{ width: '100vw' }}>
@@ -21,11 +23,11 @@ export default {
 	},
 } as ComponentMeta<typeof Nav>
 
-export const NavigationBar: ComponentStory<typeof Nav> = (args) => <Nav {...args} />
+export const NavigationHeaderBar: ComponentStory<typeof Nav> = (args) => <Nav {...args} />
 
 // export const NavigationBar = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-NavigationBar.args = {
+NavigationHeaderBar.args = {
 	navItems: [
 		{
 			key: 'nav-about-us',
