@@ -67,7 +67,7 @@
 		"slugify": "1.6.5",
 		"tsup": "6.4.0",
 		"tsx": "3.12.0",
-		"typescript": "4.8.4",
+		"typescript": "4.9.3",
 		"zod-prisma": "0.5.4"
 	},
 	"prisma": {
