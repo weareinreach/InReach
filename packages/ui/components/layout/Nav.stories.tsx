@@ -19,7 +19,7 @@ export default {
 	],
 	parameters: {
 		badges: [BADGE.BETA],
-		layout: 'padded',
+		layout: 'fullscreen',
 	},
 } as ComponentMeta<typeof Nav>
 
