@@ -22,9 +22,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 						outlineColor: theme.colors.inReachPrimaryHover[5],
 					},
 				},
-				inner: {
-					color: theme.colors.primaryText[9],
-				},
+				inner: {},
 			}
 	}
 	return {

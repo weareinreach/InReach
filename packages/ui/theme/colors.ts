@@ -3,127 +3,180 @@ import { DefaultMantineColor, Tuple } from '@mantine/core'
 /**
  * Color shades generated at: https://noeldelgado.github.io/shadowlord/
  *
- * Shade step was set to `15%` & used colors `+/- 75%` from base
+ * Shade step was set to `15%` & used colors from `-75%` to `+60%` of base
  */
+// Regex to remove junk when copy/pasting from site: ^(?!#\w{6}).*|\n|\s$
 
 /** Names of custom colors */
 type CustomColors =
-	| 'inReachGreen'
 	| 'inReachPrimaryRegular'
 	| 'inReachPrimaryHover'
 	| 'inReachPrimaryDisabled'
+	| 'inReachPrimaryBackground'
 	| 'inReachSecondaryRegular'
 	| 'inReachSecondaryHover'
 	| 'inReachSecondaryDisabled'
+	| 'inReachSecondaryBackground'
+	| 'inReachTertiaryRegular'
+	| 'inReachTertiaryHover'
+	| 'inReachTertiaryDisabled '
 	| 'inReachUtilitySuccess'
 	| 'inReachUtilityError'
 	| 'primaryText'
+	| 'secondaryAlt1'
+	| 'secondaryAlt2'
+	| 'secondaryAlt3'
+	| 'secondaryAlt4'
 
 type DefineColors = Record<string, Tuple<string, 10>>
 
 export const customColors = {
-	/** InReach Green - `Index 5` */
-	inReachGreen: [
-		'#bff1db',
-		'#99e8c5',
-		'#73dfaf',
-		'#4dd699',
-		'#23ce83',
-		'#00c56d' /* index 5 - Primary color */,
-		'#00a75d',
-		'#008a4c',
-		'#006c3c',
-		'#004f2c',
-	],
-	/** Normal State for primary CTA buttons. - `Index 5` */
+	/** Primary - normal - `green` - `Index 5` */
 	inReachPrimaryRegular: [
-		'#f2d1d1',
-		'#ebb5b5',
-		'#e39a9a',
-		'#db7e7e',
-		'#d46363',
-		'#cc4747' /* index 5 - Primary color */,
-		'#ad3c3c',
-		'#8f3232',
-		'#702727',
-		'#521c1c',
+		'#bff5da',
+		'#99eec4',
+		'#73e8ae',
+		'#4de298',
+		'#26db82',
+		'#00d56c',
+		'#00b55c',
+		'#00954c',
+		'#00753b',
+		'#00552b',
 	],
-	/** Hover State for primary CTA buttons - `Index 5` */
+	/** Primary - hover - `green` - `Index 5` */
 	inReachPrimaryHover: [
-		'#e6c7c7',
-		'#d6a5a5',
-		'#c78484',
-		'#b86262',
-		'#a84141',
-		'#991f1f' /* index 5 - Primary color */,
-		'#821a1a',
-		'#6b1616',
-		'#541111',
-		'#3d0c0c',
+		'#bfdfd0',
+		'#99ccb3',
+		'#73b997',
+		'#4da67a',
+		'#26935e',
+		'#008041',
+		'#006d37',
+		'#005a2e',
+		'#004624',
+		'#00331a',
 	],
-	/** Disabled state for primary CTAs. - `Index 5` */
+	/** Primary - disabled - `green` - `Index 5` */
 	inReachPrimaryDisabled: [
-		'#fef6f6',
-		'#fef1f1',
-		'#fdeceb',
-		'#fde7e6',
-		'#fce1e0',
-		'#fcdcdb' /* index 5 - Primary color */,
-		'#d6bbba',
-		'#b09a99',
-		'#8b7978',
-		'#655858',
+		'#ecfcf4',
+		'#e1faed',
+		'#d5f8e7',
+		'#caf6e0',
+		'#bef4da',
+		'#b3f2d3',
+		'#98ceb3',
+		'#7da994',
+		'#628574',
+		'#486154',
+	],
+	/** Primary - background - `green` - `Index 5` */
+	inReachPrimaryBackground: [
+		'#cdf5e1',
+		'#afefcf',
+		'#90e8bc',
+		'#72e2aa',
+		'#54dc98',
+		'#36d686',
+		'#2eb672',
+		'#26965e',
+		'#1e764a',
+		'#165636',
 	],
 	/**
-	 * Normal State for secondary CTAs.
+	 * Secondary - normal
 	 *
-	 * Background color for primary banners. - `Index 5`
+	 * Background color for primary banners. - `blue` - `Index 5`
 	 */
 	inReachSecondaryRegular: [
-		'#d3dcec',
-		'#b9c7e1',
-		'#9fb2d5',
-		'#859dca',
-		'#6a88be',
-		'#5073b3' /* index 5 - Primary color */,
-		'#446298',
-		'#38517d',
-		'#2c3f62',
-		'#202e48',
+		'#d1e4f6',
+		'#b5d3f0',
+		'#9ac3eb',
+		'#7eb3e5',
+		'#63a2e0',
+		'#4792da',
+		'#3c7cb9',
+		'#326699',
+		'#275078',
+		'#1c3a57',
 	],
-	/**
-	 * Hover State for secondary buttons.
-	 *
-	 * Indicates when a menu option is in focus/hover state. - `Index 5`
-	 */
+	/** Secondary - hover - `blue` - `Index 5` */
 	inReachSecondaryHover: [
-		'#cbd2df',
-		'#abb7cc',
-		'#8c9bb9',
-		'#6c80a6',
-		'#4d6593',
-		'#2d4a80' /* index 5 - Primary color */,
-		'#263f6d',
-		'#1f345a',
-		'#192946',
-		'#121e33',
+		'#cad5e0',
+		'#aabccd',
+		'#8aa3bb',
+		'#6b8aa8',
+		'#4b7196',
+		'#2b5883',
+		'#254b6f',
+		'#1e3e5c',
+		'#183048',
+		'#112334',
 	],
-	/**
-	 * Disabled state for secondary CTAs.
-	 *
-	 * Indicates when a drop down menu is active. - `Index 5`
-	 */
+	/** Secondary - disabled - `blue` - `Index 5` */
 	inReachSecondaryDisabled: [
-		'#f8fafc',
-		'#f4f6fa',
-		'#f0f3f8',
-		'#ebf0f7',
-		'#e7ecf5',
-		'#e3e9f3' /* index 5 - Primary color */,
-		'#c1c6cf',
-		'#9fa3aa',
-		'#7d8086',
-		'#5b5d61',
+		'#f1f7fc',
+		'#e9f2fb',
+		'#e1edf9',
+		'#d9e8f7',
+		'#d0e3f6',
+		'#c8def4',
+		'#aabdcf',
+		'#8c9bab',
+		'#6e7a86',
+		'#505962',
+	],
+	/** Secondary - background - `blue` - `Index 5` */
+	inReachSecondaryBackground: [
+		'#fbfcfe',
+		'#f8fbfd',
+		'#f5f9fd',
+		'#f2f7fc',
+		'#f0f6fc',
+		'#edf4fb',
+		'#c9cfd5',
+		'#a6abb0',
+		'#82868a',
+		'#5f6264',
+	],
+	/** Tertiary - regular - `red` - `Index 5` */
+	inReachTertiaryRegular: [
+		'#f6cacf',
+		'#f1abb3',
+		'#eb8b96',
+		'#e66b79',
+		'#e04c5d',
+		'#db2c40',
+		'#ba2536',
+		'#991f2d',
+		'#781823',
+		'#58121a',
+	],
+	/** Tertiary - hover - `red` - `Index 5` */
+	inReachTertiaryHover: [
+		'#e0c6c9',
+		'#cda3a8',
+		'#bb8188',
+		'#a85f67',
+		'#963c47',
+		'#831a26',
+		'#6f1620',
+		'#5c121b',
+		'#480e15',
+		'#340a0f',
+	],
+	/** Tertiary - disabled - `red` - `Index 5` */
+	inReachTertiaryDisabled: [
+		'#fceff1',
+		'#fbe6e8',
+		'#f9dce0',
+		'#f7d3d7',
+		'#f6c9cf',
+		'#f4c0c6',
+		'#cfa3a8',
+		'#ab868b',
+		'#866a6d',
+		'#624d4f',
 	],
 	/**
 	 * Indicates when a user sucessfully completes an action. Text color on light background or background color
@@ -137,7 +190,7 @@ export const customColors = {
 		'#73df81',
 		'#4dd65e',
 		'#26cd3c',
-		'#00c419' /* index 5 - Primary color */,
+		'#00c419' /* index 5 - Primary shade */,
 		'#00a715',
 		'#008912',
 		'#006c0e',
@@ -155,7 +208,7 @@ export const customColors = {
 		'#ef7382',
 		'#ea4d60',
 		'#e6263e',
-		'#e1001c' /* index 5 - Primary color */,
+		'#e1001c' /* index 5 - Primary shade */,
 		'#bf0018',
 		'#9e0014',
 		'#7c000f',
@@ -166,19 +219,73 @@ export const customColors = {
 	 *
 	 * `Index 9` - Dark text for light mode.
 	 *
+	 * `Index 4` - Grey
+	 *
 	 * `Index 0` - White text for dark mode.
 	 */
 	primaryText: [
-		'#ffffff' /* Primary text color for dark mode */,
+		'#ffffff' /* Primary text shade for dark mode */,
 		'#e6e6e6',
 		'#cdcdce',
 		'#b4b4b6',
-		'#9a9b9d',
+		'#e9e9e9' /* Primary text shade for grey */,
 		'#818285',
 		'#686a6c',
 		'#4f5154',
 		'#36383b',
-		'#1d1f23' /* Primary text color for light mode */,
+		'#1d1f23' /* Primary text shade for light mode */,
+	],
+	/** Secondary colors - `orange` - `index 5` */
+	secondaryAlt1: [
+		'#fcdbd4',
+		'#fac5ba',
+		'#f8afa0',
+		'#f79986',
+		'#f5836c',
+		'#f36d52',
+		'#cf5d46',
+		'#aa4c39',
+		'#863c2d',
+		'#612c21',
+	],
+	/** Secondary colors - `yellow` - `index 5` */
+	secondaryAlt2: [
+		'#fff3d1',
+		'#ffecb6',
+		'#ffe59a',
+		'#ffde7f',
+		'#ffd763',
+		'#ffd048',
+		'#d9b13d',
+		'#b39232',
+		'#8c7228',
+		'#66531d',
+	],
+	/** Secondary colors - `green` - `index 5` */
+	secondaryAlt3: [
+		'#c5ede2',
+		'#a1e1d0',
+		'#7ed6bf',
+		'#5bcbad',
+		'#38c09c',
+		'#15b58a',
+		'#129a75',
+		'#0f7f61',
+		'#0c644c',
+		'#084837',
+	],
+	/** Secondary colors - `cyan` - `index 5` */
+	secondaryAlt4: [
+		'#c8eef5',
+		'#a7e4ef',
+		'#86dae9',
+		'#65d0e3',
+		'#44c6dd',
+		'#23bcd7',
+		'#1ea0b7',
+		'#198497',
+		'#136776',
+		'#0e4b56',
 	],
 } as DefineColors
 

@@ -1,4 +1,4 @@
-import { Open_Sans } from '@next/font/google'
+import { Inter } from '@next/font/google'
 import type { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { appWithTranslation } from 'next-i18next'
@@ -16,7 +16,7 @@ import { appCache, appTheme } from '@weareinreach/ui/theme'
 import { default as navItems } from '~/data/nav.json'
 import { trpc } from '~/utils/trpc'
 
-const openSans = Open_Sans({ subsets: ['latin'] })
+const fontInter = Inter({ subsets: ['latin'] })
 
 const MyApp = (appProps: AppProps<{ session: Session }>) => {
 	const {
@@ -27,13 +27,13 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 		<MantineProvider
 			withGlobalStyles
 			withNormalizeCSS
-			theme={{ ...appTheme, fontFamily: openSans.style.fontFamily }}
+			theme={{ ...appTheme, fontFamily: fontInter.style.fontFamily }}
 			emotionCache={appCache}
 		>
 			<SessionProvider session={session}>
 				<NotificationsProvider>
 					<ModalsProvider>
-						<AppLayout navItems={navItems}>
+						<AppLayout navItems={navItems} footerLinks={navItems}>
 							<Component {...pageProps} />
 						</AppLayout>
 					</ModalsProvider>
