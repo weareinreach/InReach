@@ -96,6 +96,10 @@
 		"todo-tree.filtering.ignoreGitSubmodules": true,
 		"todo-tree.filtering.useBuiltInExcludes": "file and search excludes",
 		"todo-tree.general.fileWatcherGlob": "**/*.{js,cjs,mjs,jsx,ts,tsx,mts}",
-		"todo-tree.filtering.includeGlobs": ["**/*.{js,cjs,mjs,jsx,ts,tsx,mts}"]
+		"todo-tree.filtering.includeGlobs": ["**/*.{js,cjs,mjs,jsx,ts,tsx,mts}"],
+		"i18n-ally.extract.ignored": [
+			"1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]}",
+			"${theme.spacing.md}px ${theme.spacing.md}px"
+		]
 	}
 }

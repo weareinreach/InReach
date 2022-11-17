@@ -2,11 +2,11 @@ import { type ReactNode } from 'react'
 
 import { AppShell } from '@mantine/core'
 
-import { Footer, Nav } from '../components/layout'
+import { FooterSection, Nav } from '../components/layout'
 
-export const AppLayout = ({ children, navItems }: Props) => {
+export const AppLayout = ({ children, navItems, footerLinks }: Props) => {
 	return (
-		<AppShell header={<Nav navItems={navItems} />} footer={<Footer />}>
+		<AppShell header={<Nav navItems={navItems} />} footer={<FooterSection links={footerLinks} />}>
 			{children}
 		</AppShell>
 	)
@@ -15,6 +15,7 @@ export const AppLayout = ({ children, navItems }: Props) => {
 type Props = {
 	children: ReactNode
 	navItems: NavItem[]
+	footerLinks: NavItem[]
 }
 
 export type NavItem = {

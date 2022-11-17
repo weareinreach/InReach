@@ -37,7 +37,7 @@ const useStyles = createStyles((theme) => ({
 		display: 'inline-block',
 	},
 	avatar: {
-		color: theme.colors.inReachGreen[5],
+		color: theme.colors.inReachPrimaryRegular[5],
 		height: 55,
 		width: 55,
 		[theme.fn.smallerThan('md')]: {
@@ -46,7 +46,7 @@ const useStyles = createStyles((theme) => ({
 		},
 	},
 	actionButton: {
-		fontWeight: 800,
+		fontWeight: theme.other.fontWeight.bold,
 	},
 }))
 

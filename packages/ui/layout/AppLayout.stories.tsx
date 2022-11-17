@@ -29,6 +29,9 @@ export default {
 	args: {
 		navItems: mockNav,
 	},
+	parameters: {
+		layout: 'fullscreen',
+	},
 } as ComponentMeta<typeof AppLayout>
 
 const Template: ComponentStory<typeof AppLayout> = (args) => <AppLayout {...args} />
@@ -36,6 +39,7 @@ const Template: ComponentStory<typeof AppLayout> = (args) => <AppLayout {...args
 export const MainAppLayout = Template.bind({})
 MainAppLayout.args = {
 	navItems: mockNav,
+	footerLinks: mockNav,
 }
 MainAppLayout.parameters = {
 	layout: 'fullscreen',
