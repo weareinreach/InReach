@@ -1,7 +1,8 @@
-// Automatically generated index file by: https://marketplace.visualstudio.com/items?itemName=eliostruyf.vscode-typescript-exportallmodules
-
+// codegen:start {preset: barrel, include: ./*.ts*}
 export * from './app'
 export * from './appCache'
 export * from './common'
+export * from './storybook'
 export * from './web'
 export * from './webCache'
+// codegen:end
