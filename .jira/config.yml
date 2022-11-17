@@ -1,7 +1,7 @@
 deployments:
-  environment-mapping:
+  environmentMapping:
     development:
     staging:
-      - "Preview*"
+      - "Preview –*"
     production:
-      - "Production*"
+      - "Production –*"
