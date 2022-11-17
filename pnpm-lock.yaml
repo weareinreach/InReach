@@ -363,7 +363,7 @@ importers:
       '@mantine/nprogress': 5.8.0
       '@mantine/prism': 5.8.0
       '@mantine/spotlight': 5.8.0
-      '@mantine/tiptap': ^5.8.0
+      '@mantine/tiptap': 5.8.0
       '@next/eslint-plugin-next': 13.0.1
       '@next/font': ^13.0.1
       '@storybook/addon-a11y': 6.5.13
