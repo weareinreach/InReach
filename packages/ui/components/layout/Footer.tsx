@@ -4,7 +4,7 @@ import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { ActionIcon, Center, Grid, Group, Space, Text, createStyles, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Center, Grid, Group, Text, createStyles, useMantineTheme } from '@mantine/core'
 
 import Vercel from './img/vercel.svg'
 
