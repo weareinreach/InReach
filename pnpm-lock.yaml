@@ -408,6 +408,7 @@ importers:
       i18next: 22.0.4
       i18next-browser-languagedetector: ^7.0.1
       i18next-http-backend: ^2.0.1
+      merge-anything: ^5.1.3
       next: 13.0.1
       next-auth: ^4
       next-i18next: 12.1.0
@@ -428,6 +429,7 @@ importers:
       storybook-mobile: ^1.0.0
       storybook-react-i18next: ^1.1.2
       style-loader: ^3.3.1
+      type-fest: ^3.2.0
       typescript: 4.9.3
       webpack: 5.75.0
       zod: 3.19.1
@@ -474,7 +476,7 @@ importers:
       '@storybook/addon-viewport': 6.5.13_biqbaboplfbrettd7655fr4n2y
       '@storybook/builder-webpack5': 6.5.13_cwgwykwwbfapeynitmerap7u5m
       '@storybook/manager-webpack5': 6.5.13_cwgwykwwbfapeynitmerap7u5m
-      '@storybook/react': 6.5.13_irndadd6tolat6oezbinanmvgq
+      '@storybook/react': 6.5.13_iymafo7g5vsvwand7b2xykyrnq
       '@storybook/testing-library': 0.0.13_biqbaboplfbrettd7655fr4n2y
       '@storybook/theming': 6.5.13_biqbaboplfbrettd7655fr4n2y
       '@tomfreudenberg/next-auth-mock': 0.5.5_xaaafzyeaocoqp6xi3x223iz4i
@@ -501,6 +503,7 @@ importers:
       i18next: 22.0.4
       i18next-browser-languagedetector: 7.0.1
       i18next-http-backend: 2.0.1
+      merge-anything: 5.1.3
       next-i18next: 12.1.0_cuttyyug54cjzme6dhlgj6veu4
       postcss-loader: 7.0.1_sdypjwo5ssab3pyqgv4b4agnly
       react: 18.2.0
@@ -518,6 +521,7 @@ importers:
       storybook-mobile: 1.0.0_pumtretovylab5lwhztzjp2kuy
       storybook-react-i18next: 1.1.2_5eueww3ble6osqfrza2usy2mfa
       style-loader: 3.3.1_webpack@5.75.0
+      type-fest: 3.2.0
       typescript: 4.9.3
       webpack: 5.75.0_@swc+core@1.3.14
 
@@ -4253,7 +4257,7 @@ packages:
       tslib: 2.4.1
     dev: true
 
-  /@pmmmwh/react-refresh-webpack-plugin/0.5.8_ohj47mxwagpoxvu7nhhwxzphqm:
+  /@pmmmwh/react-refresh-webpack-plugin/0.5.8_b55igmbf5xgiivp6m2jrxoxcxm:
     resolution: {integrity: sha512-wxXRwf+IQ6zvHSJZ+5T2RQNEsq+kx4jKRXfFvdt3nBIUzJUAvXEFsUeoaohDe/Kr84MTjGwcuIUPNcstNJORsA==}
     engines: {node: '>= 10.13'}
     peerDependencies:
@@ -4289,6 +4293,7 @@ packages:
       react-refresh: 0.11.0
       schema-utils: 3.1.1
       source-map: 0.7.4
+      type-fest: 3.2.0
       webpack: 5.75.0_@swc+core@1.3.14
     dev: true
 
@@ -5977,7 +5982,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/react/6.5.13_irndadd6tolat6oezbinanmvgq:
+  /@storybook/react/6.5.13_iymafo7g5vsvwand7b2xykyrnq:
     resolution: {integrity: sha512-4gO8qihEkVZ8RNm9iQd7G2iZz4rRAHizJ6T5m58Sn21fxfyg9zAMzhgd0JzXuPXR8lTTj4AvRyPv1Qx7b43smg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
@@ -6008,7 +6013,7 @@ packages:
       '@babel/core': 7.20.2
       '@babel/preset-flow': 7.18.6_@babel+core@7.20.2
       '@babel/preset-react': 7.18.6_@babel+core@7.20.2
-      '@pmmmwh/react-refresh-webpack-plugin': 0.5.8_ohj47mxwagpoxvu7nhhwxzphqm
+      '@pmmmwh/react-refresh-webpack-plugin': 0.5.8_b55igmbf5xgiivp6m2jrxoxcxm
       '@storybook/addons': 6.5.13_biqbaboplfbrettd7655fr4n2y
       '@storybook/builder-webpack4': 6.5.13_s4hqsayxgev7dbmg6rfftu2eyi
       '@storybook/builder-webpack5': 6.5.13_cwgwykwwbfapeynitmerap7u5m
@@ -13673,7 +13678,6 @@ packages:
   /is-what/4.1.7:
     resolution: {integrity: sha512-DBVOQNiPKnGMxRMLIYSwERAS5MVY1B7xYiGnpgctsOFvVDz9f9PFXXxMcTOHuoqYp4NK9qFYQaIC1NRRxLMpBQ==}
     engines: {node: '>=12.13'}
-    dev: false
 
   /is-whitespace-character/1.0.4:
     resolution: {integrity: sha512-SDweEzfIZM0SJV0EUga669UTKlmL0Pq8Lno0QDQsPnvECB3IM2aP0gdx5TrU0A01MAPfViaZiI2V1QMZLaKK5w==}
@@ -14740,6 +14744,13 @@ packages:
       trim-newlines: 3.0.1
       type-fest: 0.18.1
       yargs-parser: 20.2.9
+    dev: true
+
+  /merge-anything/5.1.3:
+    resolution: {integrity: sha512-pMb85+QShjqye+99Dkrg9m6EbTjDXwZFQbPysx/lNkuwjT+UJZlQvpnOy0P8kgGXzUx8iWSoNQel5QJjoyWHmQ==}
+    engines: {node: '>=12.13'}
+    dependencies:
+      is-what: 4.1.7
     dev: true
 
   /merge-descriptors/1.0.1:
@@ -18685,7 +18696,7 @@ packages:
       '@storybook/addons': 6.5.13_biqbaboplfbrettd7655fr4n2y
       '@storybook/builder-webpack4': 6.5.13_s4hqsayxgev7dbmg6rfftu2eyi
       '@storybook/manager-webpack4': 6.5.13_s4hqsayxgev7dbmg6rfftu2eyi
-      '@storybook/react': 6.5.13_irndadd6tolat6oezbinanmvgq
+      '@storybook/react': 6.5.13_iymafo7g5vsvwand7b2xykyrnq
       babel-loader: 9.1.0_npabyccmuonwo2rku4k53xo3hi
       dayjs: 1.11.6
       embla-carousel-react: 7.0.5_react@18.2.0
