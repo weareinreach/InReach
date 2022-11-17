@@ -14,6 +14,7 @@ import { NotificationsProvider } from '@weareinreach/ui/mantine/notifications'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 
 import { default as navItems } from '~/data/nav.json'
+import { default as socialMediaLinks } from '~/data/socialMedia.json'
 import { trpc } from '~/utils/trpc'
 
 const fontInter = Inter({ subsets: ['latin'] })
@@ -33,7 +34,7 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 			<SessionProvider session={session}>
 				<NotificationsProvider>
 					<ModalsProvider>
-						<AppLayout navItems={navItems} footerLinks={navItems}>
+						<AppLayout navItems={navItems} footerLinks={navItems} socialMedia={socialMediaLinks}>
 							<Component {...pageProps} />
 						</AppLayout>
 					</ModalsProvider>
