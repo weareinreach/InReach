@@ -29,6 +29,9 @@
 - name: 'dependencies'
   color: 1d76db
   description: 'Change in project dependencies.'
+- name: 'translations'
+  color: 715aff
+  description: 'Translations from Crowdin'
 
 - name: 'in-progress'
   color: fbca04

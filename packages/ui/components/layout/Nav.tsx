@@ -110,9 +110,12 @@ const useStyles = createStyles((theme) => ({
 	burgerUser: {
 		width: '80%',
 	},
+	safetyExit: {
+		[theme.fn.smallerThan('md')]: {
+			display: 'none',
+		},
+	},
 }))
-
-// TODO: Fix layout issues ~1024px viewport width
 
 export interface NavProps {
 	navItems: NavItem[]
@@ -139,7 +142,7 @@ export const Nav = (props: NavProps) => {
 					<Group spacing={5} className={classes.links}>
 						{navLinks}
 					</Group>
-					<SafetyExit />
+					<SafetyExit className={classes.safetyExit} />
 					<UserMenu className={classes.userMenu} />
 				</Group>
 

@@ -4,5 +4,5 @@ import { commonTheme } from './common'
 
 export const storybookTheme: MantineThemeOverride = {
 	...commonTheme,
-	fontFamily: 'Open Sans',
+	fontFamily: 'Inter',
 }
