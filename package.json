@@ -37,10 +37,10 @@
 		"@trivago/prettier-plugin-sort-imports": "3.4.0",
 		"@types/eslint": "8.4.10",
 		"@types/prettier": "2.7.1",
-		"@typescript-eslint/eslint-plugin": "5.42.1",
+		"@typescript-eslint/eslint-plugin": "5.43.0",
 		"@weareinreach/config": "*",
 		"@weareinreach/eslint-config": "*",
-		"cypress": "11.0.1",
+		"cypress": "11.1.0",
 		"eslint-config-next": "13.0.1",
 		"eslint-import-resolver-typescript": "3.5.2",
 		"eslint-plugin-codegen": "0.16.1",
@@ -64,7 +64,7 @@
 		"@weareinreach/config": "*",
 		"@weareinreach/eslint-config": "*"
 	},
-	"packageManager": "pnpm@7.16.0",
+	"packageManager": "pnpm@7.16.1",
 	"engines": {
 		"node": ">=16",
 		"pnpm": ">=7"

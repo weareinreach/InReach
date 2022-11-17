@@ -14,13 +14,13 @@
 		"preinstall": "npx only-allow pnpm"
 	},
 	"dependencies": {
-		"@typescript-eslint/parser": "5.42.1",
+		"@typescript-eslint/parser": "5.43.0",
 		"eslint-config-prettier": "8.5.0"
 	},
 	"devDependencies": {
 		"@next/eslint-plugin-next": "13.0.1",
 		"@types/eslint": "8.4.10",
-		"@typescript-eslint/eslint-plugin": "5.42.1",
+		"@typescript-eslint/eslint-plugin": "5.43.0",
 		"eslint": "8.27.0",
 		"eslint-config-next": "13.0.1",
 		"eslint-import-resolver-typescript": "3.5.2",
@@ -50,7 +50,7 @@
 		"eslint-plugin-turbo": "^0.0.4",
 		"next": ">=13"
 	},
-	"packageManager": "pnpm@7.16.0",
+	"packageManager": "pnpm@7.16.1",
 	"publishConfig": {
 		"access": "public"
 	}
