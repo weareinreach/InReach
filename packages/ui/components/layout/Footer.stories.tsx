@@ -3,13 +3,11 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import React from 'react'
 
-import { SafetyExit, UserMenu } from './'
-import { Nav } from './Nav'
+import { FooterSection } from './Footer'
 
 export default {
-	title: 'App/Layout/NavigationHeaderBar',
-	component: Nav,
-	subcomponents: { UserMenu, SafetyExit },
+	title: 'App/Layout/PageFooter',
+	component: FooterSection,
 	decorators: [
 		(Story) => (
 			<div style={{ width: '100vw' }}>
@@ -21,14 +19,14 @@ export default {
 		badges: [BADGE.BETA],
 		layout: 'fullscreen',
 	},
-} as ComponentMeta<typeof Nav>
+} as ComponentMeta<typeof FooterSection>
 
-export const NavigationHeaderBar: ComponentStory<typeof Nav> = (args) => <Nav {...args} />
+export const PageFooter: ComponentStory<typeof FooterSection> = (args) => <FooterSection {...args} />
 
-// export const NavigationBar = Template.bind({})
+// export const SafetyExitButton = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-NavigationHeaderBar.args = {
-	navItems: [
+PageFooter.args = {
+	links: [
 		{
 			key: 'nav-about-us',
 			href: '#aboutus',

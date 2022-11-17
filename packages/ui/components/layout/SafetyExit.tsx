@@ -10,7 +10,7 @@ const useStyles = createStyles((theme) => ({
 	},
 	label: {
 		color: theme.colors.white,
-		fontWeight: 800,
+		fontWeight: theme.other.fontWeight.extrabold,
 		fontSize: 16,
 		paddingLeft: 15,
 		paddingRight: 15,
