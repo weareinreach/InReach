@@ -112,7 +112,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-// TODO: Fix layout issues ~1024px viewport width
+// TODO: [IN-689] Fix layout issues ~1024px viewport width
 
 export interface NavProps {
 	navItems: NavItem[]
