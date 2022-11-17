@@ -28,20 +28,57 @@ export const PageFooter: ComponentStory<typeof FooterSection> = (args) => <Foote
 PageFooter.args = {
 	links: [
 		{
-			key: 'nav-about-us',
-			href: '#aboutus',
+			key: 'suggest-a-resource',
+			href: '#suggest',
 		},
 		{
-			key: 'nav-take-action',
-			href: '#takeaction',
+			key: 'subscribe-to-newsletter',
+			href: '#subscribe',
 		},
 		{
-			key: 'nav-questions',
-			href: '#questions',
+			key: 'share-feedback',
+			href: '#feedback',
 		},
 		{
-			key: 'nav-contact-us',
-			href: '#contactus',
+			key: 'disclaimer',
+			href: '#disclaimer',
+		},
+		{
+			key: 'privacy-statement',
+			href: '#privacy',
+		},
+	],
+	socialMedia: [
+		{
+			iconCode: 'fa6-brands:facebook-f',
+			key: 'facebook',
+			href: '#',
+		},
+		{
+			iconCode: 'fa6-brands:twitter',
+			key: 'twitter',
+			href: '#',
+		},
+		{
+			iconCode: 'fa6-brands:linkedin-in',
+			key: 'linkedin',
+			href: '#',
+		},
+		{
+			iconCode: 'fa6-regular:envelope',
+			key: 'email',
+			href: '#',
+		},
+
+		{
+			iconCode: 'fa6-brands:instagram',
+			key: 'instagram',
+			href: '#',
+		},
+		{
+			iconCode: 'fa6-brands:youtube',
+			key: 'youtube',
+			href: '#',
 		},
 	],
 }

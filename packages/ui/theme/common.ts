@@ -23,9 +23,15 @@ export const commonTheme: MantineThemeOverride = {
 		a: {
 			fontWeight: theme.other.fontWeight.semibold,
 			color: theme.colors.inReachSecondaryRegular[5],
+			textDecoration: 'none',
 		},
 	}),
 	components: {
+		ActionIcon: {
+			defaultProps: {
+				color: 'inReachSecondaryRegular.5',
+			},
+		},
 		Button: {
 			defaultProps: {
 				radius: 'xl',
