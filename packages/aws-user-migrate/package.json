@@ -7,13 +7,14 @@
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"scripts": {
-		"build:aws": "pnpm clean && pnpm bundle && pnpm package",
+		"build:aws": "pnpm clean:dist && pnpm bundle && pnpm package",
 		"bundle": "ncc build ./src/index.ts -s -m -a",
-		"clean": "rm -fr dist",
-		"format": "prettier --write --ignore-unknown .",
+		"clean:dist": "rm -fr dist",
+		"clean:node": "rm -rf ./node_modules/ || true",
+		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
-		"lint": "eslint .",
-		"lint:fix": "eslint --fix .",
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix .",
 		"package": "cd dist && rm -v client/!(*rhel*) && zip -r bundle.zip *",
 		"upload": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://dist/bundle.zip"
 	},
@@ -23,13 +24,13 @@
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.108",
-		"@types/node": "16.18.0",
+		"@types/node": "16.18.3",
 		"@vercel/ncc": "0.34.0",
 		"@weareinreach/config": "workspace:^0.0.0",
 		"@weareinreach/eslint-config": "workspace:^0.0.0",
 		"aws-lambda": "1.0.7",
 		"eslint": "8.27.0",
 		"prettier": "2.7.1",
-		"typescript": "4.8.4"
+		"typescript": "4.9.3"
 	}
 }

@@ -6,12 +6,11 @@
 		"declarationMap": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-
 		"inlineSources": false,
 		"isolatedModules": true,
 		"jsx": "preserve",
 		"lib": ["dom", "dom.iterable", "esnext"],
-		"module": "ESNext",
+		"module": "ES2020",
 		"moduleResolution": "node",
 		"noEmit": true,
 		"noUnusedLocals": true,
@@ -21,7 +20,7 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"strictNullChecks": true,
-		"target": "ES6",
+		"target": "ES2018",
 		"useUnknownInCatchVariables": true,
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitReturns": true

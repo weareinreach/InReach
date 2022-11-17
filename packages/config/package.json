@@ -15,13 +15,13 @@
 		"i18next/index.js"
 	],
 	"scripts": {
-		"format": "prettier --write --ignore-unknown .",
+		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm"
 	},
 	"devDependencies": {
 		"@weareinreach/eslint-config": "workspace:^0.0.0",
 		"next-i18next": "12.1.0",
-		"typescript": "4.8.4"
+		"typescript": "4.9.3"
 	},
-	"packageManager": "pnpm@7.15.0"
+	"packageManager": "pnpm@7.16.0"
 }
