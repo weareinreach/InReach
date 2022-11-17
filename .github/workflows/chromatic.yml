@@ -8,6 +8,8 @@ on:
       - ready_for_review
     paths:
       - 'packages/ui/**'
+    branches-ignore:
+      - 'l10n_*'
   workflow_dispatch:
     inputs:
       sha:
