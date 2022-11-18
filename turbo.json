@@ -58,7 +58,7 @@
 			"outputs": [".next/cache/eslint/**"]
 		},
 		"post-install": {
-			"cache": false
+			"outputs": ["node_modules/.prisma/client/**", "docs/database/**", "packages/db/zod-schemas/**"]
 		},
 		"build:aws": {
 			"dependsOn": ["^db:generate:aws"],
@@ -66,7 +66,7 @@
 			"outputs": ["dist/**"]
 		},
 		"db:generate:aws": {
-			"cache": false
+			"outputs": ["../../node_modules/.prisma/client/**", "../../docs/database/**", "zod-schemas/**"]
 		},
 		"clean:node": {}
 	}
