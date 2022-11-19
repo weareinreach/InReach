@@ -85,7 +85,7 @@
 		"i18n-ally.review.enabled": false,
 		"i18n-ally.review.gutters": false,
 		"i18n-ally.showFlags": true,
-		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
+		"typescript.tsdk": "🚀 InReach App (@weareinreach/app)/node_modules/typescript/lib",
 		"typescript.preferences.importModuleSpecifier": "non-relative",
 		"typescript.workspaceSymbols.scope": "allOpenProjects",
 		"prettier.resolveGlobalModules": true,
