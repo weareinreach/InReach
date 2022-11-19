@@ -25,7 +25,7 @@
   description: 'Generic maintenance tasks.'
 - name: 'ci'
   color: 1d76db
-  description: 'Work that improves the continuous integration.'
+  description: 'Work that improves the continuous integration/build pipeline.'
 - name: 'dependencies'
   color: 1d76db
   description: 'Change in project dependencies.'
@@ -73,13 +73,10 @@
   color: e4ea8a
   description: 'Nice addition, maybe... someday...'
 
-- name: 'major'
-  color: b60205
-  description: 'This PR causes a major bump in the version number.'
-- name: 'minor'
-  color: 0e8a16
-  description: 'This PR causes a minor bump in the version number.'
-
 - name: 'automerge'
   color: 00ff00
   description: 'Enable Kodiak auto-merge'
+
+- name: 'changelog-ignore'
+  color: ead2ac
+  description: 'Do not show in changelogs'

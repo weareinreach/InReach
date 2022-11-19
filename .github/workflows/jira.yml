@@ -12,9 +12,9 @@ jobs:
       - name: Login
         uses: atlassian/gajira-login@ca13f8850ea309cf44a6e4e0c49d9aa48ac3ca4c # v3.0.0
         env:
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_BASE_URL: '${{ secrets.JIRA_BASE_URL }}'
+          JIRA_USER_EMAIL: '${{ secrets.JIRA_USER_EMAIL }}'
+          JIRA_API_TOKEN: '${{ secrets.JIRA_API_TOKEN }}'
       - name: Create Jira Issue
         uses: weareinreach/action-create-jira-issue@main
         with:
