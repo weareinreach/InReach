@@ -27,7 +27,7 @@ export default defineNextConfig({
 	swcMinify: true,
 	experimental: {
 		transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
-		serverComponentsExternalPackages: ['@weareinreach/db'],
+		// serverComponentsExternalPackages: ['@weareinreach/db'],
 		fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
 		/**
 		 * OutputFileTracingIgnores will be in a future version

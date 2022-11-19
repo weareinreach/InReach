@@ -5,9 +5,11 @@ on:
   push:
     branches-ignore:
       - 'l10n_*'
+      - 'renovate/*'
   pull_request:
     branches-ignore:
       - 'l10n_*'
+      - 'renovate/*'
   schedule:
     - cron: '30 1 * * 0'
 
