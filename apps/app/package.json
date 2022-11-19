@@ -43,7 +43,7 @@
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"@weareinreach/ui": "workspace:*",
-		"eslint": "8.27.0",
+		"eslint": "8.28.0",
 		"eslint-config-next": "13.0.1",
 		"eslint-import-resolver-typescript": "3.5.2",
 		"eslint-plugin-codegen": "0.16.1",
