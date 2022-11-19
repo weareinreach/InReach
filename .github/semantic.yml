@@ -12,4 +12,5 @@ scopes:
   - eslint-config
   - types
   - docs
+  - workflows
 targetUrl: https://www.conventionalcommits.org/en/v1.0.0/
