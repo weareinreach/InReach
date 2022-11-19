@@ -1,0 +1,21 @@
+name: Monorepo PR Labeler
+
+on:
+  pull_request:
+    branches-ignore:
+      - 'l10n_*'
+      - 'main'
+
+jobs:
+  labelPR:
+    name: Label PR With Repo(s)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Label PRs
+        uses: tinkurlab/monorepo-pr-labeler-action@4.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_DIRS: 'apps|packages'
+        with:
+          prefix: '📦'
+          separator: ' '
