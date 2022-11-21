@@ -1,0 +1,37 @@
+{
+	"name": "@weareinreach/api",
+	"version": "0.100.0",
+	"private": true,
+	"license": "GPL-3.0-only",
+	"author": "",
+	"main": "index.ts",
+	"scripts": {
+		"clean:node": "rm -rf ./node_modules/ || true",
+		"format": "prettier --write --cache --cache-strategy metadata .",
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix .",
+		"type-check": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@trpc/client": "10.0.0-rc.8",
+		"@trpc/server": "10.0.0-rc.8",
+		"@weareinreach/auth": "0.100.0",
+		"@weareinreach/config": "0.100.0",
+		"@weareinreach/db": "0.100.0",
+		"@weareinreach/eslint-config": "0.100.0",
+		"superjson": "1.11.0",
+		"zod": "3.19.1"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "5.43.0",
+		"@typescript-eslint/parser": "5.43.0",
+		"eslint": "8.28.0",
+		"eslint-import-resolver-typescript": "3.5.2",
+		"eslint-plugin-codegen": "0.16.1",
+		"eslint-plugin-import": "2.26.0",
+		"eslint-plugin-prettier": "4.2.1",
+		"eslint-plugin-simple-import-sort": "8.0.0",
+		"typescript": "4.9.3"
+	},
+	"packageManager": "pnpm@7.16.1"
+}
