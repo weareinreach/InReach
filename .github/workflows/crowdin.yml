@@ -24,6 +24,8 @@ jobs:
           pull_request_title: 'New Crowdin translations'
           pull_request_body: 'New Crowdin pull request with translations'
           pull_request_labels: 'translations'
+          pull_request_base_branch_name: ${{ github.ref_name }}
+          add_crowdin_branch: ${{ github.ref_name }}
 
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
