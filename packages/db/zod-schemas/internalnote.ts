@@ -3,6 +3,7 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	CompleteCountry,
+	CompleteFooterLink,
 	CompleteGovDist,
 	CompleteLanguage,
 	CompleteNavigation,
@@ -19,10 +20,12 @@ import {
 	CompleteOutsideAPI,
 	CompleteServiceCategory,
 	CompleteServiceTag,
+	CompleteSocialMediaLink,
 	CompleteTranslationKey,
 	CompleteTranslationNamespace,
 	CompleteUser,
 	CountryModel,
+	FooterLinkModel,
 	GovDistModel,
 	LanguageModel,
 	NavigationModel,
@@ -39,6 +42,7 @@ import {
 	OutsideAPIModel,
 	ServiceCategoryModel,
 	ServiceTagModel,
+	SocialMediaLinkModel,
 	TranslationKeyModel,
 	TranslationNamespaceModel,
 	UserModel,
@@ -66,10 +70,12 @@ export const _InternalNoteModel = z.object({
 	translationKeyId: imports.cuid.nullish(),
 	outsideApiId: imports.cuid.nullish(),
 	navigationId: imports.cuid.nullish(),
+	footerLinkId: imports.cuid.nullish(),
 	createdAt: z.date(),
 	createdById: imports.cuid,
 	updatedAt: z.date(),
 	updatedById: imports.cuid,
+	socialMediaLinkId: z.string().nullish(),
 })
 
 export interface CompleteInternalNote extends z.infer<typeof _InternalNoteModel> {
@@ -92,8 +98,10 @@ export interface CompleteInternalNote extends z.infer<typeof _InternalNoteModel>
 	translationKey?: CompleteTranslationKey | null
 	outsideApi?: CompleteOutsideAPI | null
 	navigation?: CompleteNavigation | null
+	footerLink?: CompleteFooterLink | null
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
+	SocialMediaLink?: CompleteSocialMediaLink | null
 }
 
 /**
@@ -122,7 +130,9 @@ export const InternalNoteModel: z.ZodSchema<CompleteInternalNote> = z.lazy(() =>
 		translationKey: TranslationKeyModel.nullish(),
 		outsideApi: OutsideAPIModel.nullish(),
 		navigation: NavigationModel.nullish(),
+		footerLink: FooterLinkModel.nullish(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
+		SocialMediaLink: SocialMediaLinkModel.nullish(),
 	})
 )

@@ -3,12 +3,14 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	CompleteCountry,
+	CompleteFooterLink,
 	CompleteGovDist,
 	CompleteGovDistType,
 	CompleteInternalNote,
 	CompleteNavigation,
 	CompleteServiceCategory,
 	CompleteServiceTag,
+	CompleteSocialMediaLink,
 	CompleteTranslationNamespace,
 	CompleteUser,
 	CompleteUserCommunity,
@@ -17,12 +19,14 @@ import {
 	CompleteUserSOG,
 	CompleteUserType,
 	CountryModel,
+	FooterLinkModel,
 	GovDistModel,
 	GovDistTypeModel,
 	InternalNoteModel,
 	NavigationModel,
 	ServiceCategoryModel,
 	ServiceTagModel,
+	SocialMediaLinkModel,
 	TranslationNamespaceModel,
 	UserCommunityModel,
 	UserEthnicityModel,
@@ -36,6 +40,10 @@ export const _TranslationKeyModel = z.object({
 	id: imports.cuid,
 	/** Item key */
 	key: z.string(),
+	/** Base string */
+	text: z.string(),
+	/** Context */
+	context: z.string().nullish(),
 	namespaceId: imports.cuid,
 	parentId: imports.cuid.nullish(),
 	createdAt: z.date(),
@@ -62,6 +70,8 @@ export interface CompleteTranslationKey extends z.infer<typeof _TranslationKeyMo
 	createdBy?: CompleteUser | null
 	updatedBy?: CompleteUser | null
 	InternalNote: CompleteInternalNote[]
+	FooterLink: CompleteFooterLink[]
+	SocialMediaLink: CompleteSocialMediaLink[]
 }
 
 /**
@@ -90,5 +100,7 @@ export const TranslationKeyModel: z.ZodSchema<CompleteTranslationKey> = z.lazy((
 		createdBy: UserModel.nullish(),
 		updatedBy: UserModel.nullish(),
 		InternalNote: InternalNoteModel.array(),
+		FooterLink: FooterLinkModel.array(),
+		SocialMediaLink: SocialMediaLinkModel.array(),
 	})
 )

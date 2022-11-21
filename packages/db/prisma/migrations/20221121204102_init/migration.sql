@@ -530,6 +530,8 @@ CREATE TABLE "TranslationNamespace" (
 CREATE TABLE "TranslationKey" (
     "id" TEXT NOT NULL,
     "key" TEXT NOT NULL,
+    "text" TEXT NOT NULL,
+    "context" TEXT,
     "namespaceId" TEXT NOT NULL,
     "parentId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -594,6 +596,36 @@ CREATE TABLE "Navigation" (
 );
 
 -- CreateTable
+CREATE TABLE "FooterLink" (
+    "id" TEXT NOT NULL,
+    "display" TEXT NOT NULL,
+    "href" TEXT,
+    "icon" TEXT,
+    "translationKeyId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdById" TEXT NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "updatedById" TEXT NOT NULL,
+
+    CONSTRAINT "FooterLink_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "SocialMediaLink" (
+    "id" TEXT NOT NULL,
+    "service" TEXT NOT NULL,
+    "href" TEXT NOT NULL,
+    "icon" TEXT NOT NULL,
+    "translationKeyId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdById" TEXT NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "updatedById" TEXT NOT NULL,
+
+    CONSTRAINT "SocialMediaLink_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "InternalNote" (
     "id" TEXT NOT NULL,
     "text" TEXT NOT NULL,
@@ -616,10 +648,12 @@ CREATE TABLE "InternalNote" (
     "translationKeyId" TEXT,
     "outsideApiId" TEXT,
     "navigationId" TEXT,
+    "footerLinkId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "createdById" TEXT NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "updatedById" TEXT NOT NULL,
+    "socialMediaLinkId" TEXT,
 
     CONSTRAINT "InternalNote_pkey" PRIMARY KEY ("id")
 );
@@ -770,6 +804,15 @@ CREATE UNIQUE INDEX "TranslationKey_key_namespaceId_key" ON "TranslationKey"("ke
 
 -- CreateIndex
 CREATE UNIQUE INDEX "OutsideAPI_name_key" ON "OutsideAPI"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Navigation_display_href_key" ON "Navigation"("display", "href");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "FooterLink_display_href_key" ON "FooterLink"("display", "href");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "SocialMediaLink_service_href_key" ON "SocialMediaLink"("service", "href");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_UserToUserEthnicity_AB_unique" ON "_UserToUserEthnicity"("A", "B");
@@ -1228,6 +1271,24 @@ ALTER TABLE "Navigation" ADD CONSTRAINT "Navigation_createdById_fkey" FOREIGN KE
 ALTER TABLE "Navigation" ADD CONSTRAINT "Navigation_updatedById_fkey" FOREIGN KEY ("updatedById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "FooterLink" ADD CONSTRAINT "FooterLink_translationKeyId_fkey" FOREIGN KEY ("translationKeyId") REFERENCES "TranslationKey"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FooterLink" ADD CONSTRAINT "FooterLink_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FooterLink" ADD CONSTRAINT "FooterLink_updatedById_fkey" FOREIGN KEY ("updatedById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "SocialMediaLink" ADD CONSTRAINT "SocialMediaLink_translationKeyId_fkey" FOREIGN KEY ("translationKeyId") REFERENCES "TranslationKey"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "SocialMediaLink" ADD CONSTRAINT "SocialMediaLink_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "SocialMediaLink" ADD CONSTRAINT "SocialMediaLink_updatedById_fkey" FOREIGN KEY ("updatedById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgId_fkey" FOREIGN KEY ("orgId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -1285,10 +1346,16 @@ ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_outsideApiId_fkey" FOREI
 ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_navigationId_fkey" FOREIGN KEY ("navigationId") REFERENCES "Navigation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_footerLinkId_fkey" FOREIGN KEY ("footerLinkId") REFERENCES "FooterLink"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_updatedById_fkey" FOREIGN KEY ("updatedById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_socialMediaLinkId_fkey" FOREIGN KEY ("socialMediaLinkId") REFERENCES "SocialMediaLink"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_UserToUserEthnicity" ADD CONSTRAINT "_UserToUserEthnicity_A_fkey" FOREIGN KEY ("A") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
