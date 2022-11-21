@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 
-import { prisma } from '~/client'
+import { prisma } from '~/index'
 
 import { ListrTask } from '.'
 import { type Countries, countryData } from '../data/countries'

@@ -1,9 +1,4 @@
 {
-	"extends": "./tsconfig/base.json",
-	"compilerOptions": {
-		"noEmit": true,
-		"baseUrl": "."
-	},
-	"include": ["./**/*.js", "./**/*.ts"],
-	"exclude": ["**/node_modules/*"]
+	"extends": "../../tsconfig.json",
+	"include": ["./**/*.js", "./**/*.ts"]
 }

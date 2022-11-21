@@ -1,6 +1,6 @@
 import { Prisma, Translation, UserEthnicity } from '@prisma/client'
 
-import { prisma } from '~/client'
+import { prisma } from '~/index'
 
 import { logFile } from '../logger'
 import { ListrTask } from '../starter'

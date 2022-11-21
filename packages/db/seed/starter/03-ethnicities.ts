@@ -1,4 +1,4 @@
-import { prisma } from '~/client'
+import { prisma } from '~/index'
 
 import type { ListrTask } from '.'
 import { generateEthnicityRecords, generateTranslations } from '../data/ethnicity'

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { prisma } from '~/client'
+import { prisma } from '~/index'
 
 import { getPrimaryLanguages } from './languages'
 import { userEmail } from './user'

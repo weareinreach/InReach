@@ -1,6 +1,6 @@
 import type { ListrRenderer, ListrTaskWrapper } from 'listr2'
 
-import { prisma } from '~/client'
+import { prisma } from '~/index'
 
 import { localeCode, seedUser, translationKey, translationNamespace, userEmail, userType } from '../data/user'
 import { logFile } from '../logger'

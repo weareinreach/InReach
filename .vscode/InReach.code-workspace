@@ -13,6 +13,14 @@
 			"path": "../packages/db"
 		},
 		{
+			"name": "📦 tRPC API (@weareinreach/api)",
+			"path": "../packages/api"
+		},
+		{
+			"name": "📦 Authentication (@weareinreach/auth)",
+			"path": "../packages/auth"
+		},
+		{
 			"name": "🚀 InReach main site (@weareinreach/web)",
 			"path": "../apps/web"
 		},
@@ -85,7 +93,7 @@
 		"i18n-ally.review.enabled": false,
 		"i18n-ally.review.gutters": false,
 		"i18n-ally.showFlags": true,
-		"typescript.tsdk": "🚀 InReach App (@weareinreach/app)/node_modules/typescript/lib",
+		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
 		"typescript.preferences.importModuleSpecifier": "non-relative",
 		"typescript.workspaceSymbols.scope": "allOpenProjects",
 		"prettier.resolveGlobalModules": true,

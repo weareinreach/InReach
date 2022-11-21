@@ -5,6 +5,7 @@
 	"license": "GPL-3.0-only",
 	"main": "lib/index.ts",
 	"scripts": {
+		"clean:node": "rm -rf ./node_modules/ || true",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint --cache .",
@@ -15,5 +16,5 @@
 		"@weareinreach/eslint-config": "0.100.0",
 		"typescript": "4.9.3"
 	},
-	"packageManager": "pnpm@7.16.1"
+	"packageManager": "pnpm@7.17.0"
 }
