@@ -13,6 +13,14 @@
 			"path": "../packages/db"
 		},
 		{
+			"name": "📦 tRPC API (@weareinreach/api)",
+			"path": "../packages/api"
+		},
+		{
+			"name": "📦 Authentication (@weareinreach/auth)",
+			"path": "../packages/auth"
+		},
+		{
 			"name": "🚀 InReach main site (@weareinreach/web)",
 			"path": "../apps/web"
 		},

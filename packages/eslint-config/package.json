@@ -1,6 +1,6 @@
 {
 	"name": "@weareinreach/eslint-config",
-	"version": "0.0.0",
+	"version": "0.100.0",
 	"license": "GPL-3.0-only",
 	"main": "index.js",
 	"files": [
@@ -10,6 +10,7 @@
 		"index.js"
 	],
 	"scripts": {
+		"clean:node": "rm -rf ./node_modules/ || true",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm"
 	},
@@ -18,11 +19,11 @@
 		"eslint-config-prettier": "8.5.0"
 	},
 	"devDependencies": {
-		"@next/eslint-plugin-next": "13.0.1",
+		"@next/eslint-plugin-next": "13.0.5-canary.2",
 		"@types/eslint": "8.4.10",
 		"@typescript-eslint/eslint-plugin": "5.43.0",
 		"eslint": "8.28.0",
-		"eslint-config-next": "13.0.1",
+		"eslint-config-next": "13.0.5-canary.2",
 		"eslint-import-resolver-typescript": "3.5.2",
 		"eslint-plugin-codegen": "0.16.1",
 		"eslint-plugin-i18next": "6.0.0-4",
@@ -32,6 +33,7 @@
 		"eslint-plugin-simple-import-sort": "8.0.0",
 		"eslint-plugin-storybook": "0.6.7",
 		"eslint-plugin-turbo": "0.0.4",
+		"next": "13.0.5-canary.2",
 		"typescript": "4.9.3"
 	},
 	"peerDependencies": {
@@ -50,7 +52,7 @@
 		"eslint-plugin-turbo": "^0.0.4",
 		"next": ">=13"
 	},
-	"packageManager": "pnpm@7.16.1",
+	"packageManager": "pnpm@7.17.0",
 	"publishConfig": {
 		"access": "public"
 	}

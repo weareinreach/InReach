@@ -1,0 +1,36 @@
+{
+	"name": "@weareinreach/auth",
+	"version": "0.100.0",
+	"private": true,
+	"license": "GPL-3.0-only",
+	"main": "./src/index.ts",
+	"types": "./src/index.ts",
+	"scripts": {
+		"clean:node": "rm -rf ./node_modules/ || true",
+		"format": "prettier --write --cache --cache-strategy metadata .",
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix .",
+		"type-check": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@next-auth/prisma-adapter": "1.0.5",
+		"@weareinreach/config": "0.100.0",
+		"@weareinreach/db": "0.100.0",
+		"@weareinreach/eslint-config": "0.100.0",
+		"next": "13.0.5-canary.2",
+		"next-auth": "4.17",
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "5.43.0",
+		"eslint": "8.28.0",
+		"eslint-import-resolver-typescript": "3.5.2",
+		"eslint-plugin-codegen": "0.16.1",
+		"eslint-plugin-import": "2.26.0",
+		"eslint-plugin-prettier": "4.2.1",
+		"eslint-plugin-simple-import-sort": "8.0.0",
+		"typescript": "4.9.3"
+	},
+	"packageManager": "pnpm@7.17.0"
+}

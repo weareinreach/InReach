@@ -1,6 +1,6 @@
 {
 	"name": "@weareinreach/aws-user-migrate",
-	"version": "0.0.0",
+	"version": "0.100.0",
 	"description": "Lambda to gradually migrate existing users to AWS Cognito",
 	"license": "GPL-3.0-only",
 	"author": "",
@@ -19,15 +19,15 @@
 		"upload": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://dist/bundle.zip"
 	},
 	"dependencies": {
-		"@weareinreach/db": "workspace:^0.0.0",
+		"@weareinreach/db": "0.100.0",
 		"aws-sdk": "2.1258.0"
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.108",
 		"@types/node": "16.18.3",
 		"@vercel/ncc": "0.34.0",
-		"@weareinreach/config": "workspace:^0.0.0",
-		"@weareinreach/eslint-config": "workspace:^0.0.0",
+		"@weareinreach/config": "0.100.0",
+		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
 		"eslint": "8.28.0",
 		"prettier": "2.7.1",
