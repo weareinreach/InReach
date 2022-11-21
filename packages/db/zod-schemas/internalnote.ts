@@ -19,10 +19,8 @@ import {
 	CompleteOutsideAPI,
 	CompleteServiceCategory,
 	CompleteServiceTag,
-	CompleteTranslation,
 	CompleteTranslationKey,
 	CompleteTranslationNamespace,
-	CompleteTranslationVariable,
 	CompleteUser,
 	CountryModel,
 	GovDistModel,
@@ -42,9 +40,7 @@ import {
 	ServiceCategoryModel,
 	ServiceTagModel,
 	TranslationKeyModel,
-	TranslationModel,
 	TranslationNamespaceModel,
-	TranslationVariableModel,
 	UserModel,
 } from './index'
 
@@ -68,8 +64,6 @@ export const _InternalNoteModel = z.object({
 	languageId: imports.cuid.nullish(),
 	translationNamespaceId: imports.cuid.nullish(),
 	translationKeyId: imports.cuid.nullish(),
-	translationId: imports.cuid.nullish(),
-	translationVariableId: imports.cuid.nullish(),
 	outsideApiId: imports.cuid.nullish(),
 	navigationId: imports.cuid.nullish(),
 	createdAt: z.date(),
@@ -96,8 +90,6 @@ export interface CompleteInternalNote extends z.infer<typeof _InternalNoteModel>
 	language?: CompleteLanguage | null
 	translationNamespace?: CompleteTranslationNamespace | null
 	translationKey?: CompleteTranslationKey | null
-	translation?: CompleteTranslation | null
-	translationVariable?: CompleteTranslationVariable | null
 	outsideApi?: CompleteOutsideAPI | null
 	navigation?: CompleteNavigation | null
 	createdBy: CompleteUser
@@ -128,8 +120,6 @@ export const InternalNoteModel: z.ZodSchema<CompleteInternalNote> = z.lazy(() =>
 		language: LanguageModel.nullish(),
 		translationNamespace: TranslationNamespaceModel.nullish(),
 		translationKey: TranslationKeyModel.nullish(),
-		translation: TranslationModel.nullish(),
-		translationVariable: TranslationVariableModel.nullish(),
 		outsideApi: OutsideAPIModel.nullish(),
 		navigation: NavigationModel.nullish(),
 		createdBy: UserModel,

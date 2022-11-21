@@ -1,5 +1,0 @@
--- AlterTable
-ALTER TABLE "Country" ALTER COLUMN "name" SET DATA TYPE VARCHAR(255);
-
--- AlterTable
-ALTER TABLE "CountryTranslation" ALTER COLUMN "name" SET DATA TYPE VARCHAR(255);

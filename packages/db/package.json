@@ -26,7 +26,7 @@
 		"post-install": "pnpm db:generate",
 		"predev": "pnpm db:generate",
 		"prisma": "pnpm with-env prisma",
-		"schema:clean": "rm -rf src/zod-schemas/* || true",
+		"schema:clean": "rm -rf ./zod-schemas/* || true",
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
