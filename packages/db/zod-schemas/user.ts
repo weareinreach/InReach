@@ -6,6 +6,7 @@ import {
 	CompleteAccount,
 	CompleteCountry,
 	CompleteFieldVisibility,
+	CompleteFooterLink,
 	CompleteGovDist,
 	CompleteGovDistType,
 	CompleteInternalNote,
@@ -28,6 +29,7 @@ import {
 	CompleteServiceCategory,
 	CompleteServiceTag,
 	CompleteSession,
+	CompleteSocialMediaLink,
 	CompleteSocialMediaService,
 	CompleteSource,
 	CompleteTranslationKey,
@@ -42,6 +44,7 @@ import {
 	CompleteUserType,
 	CountryModel,
 	FieldVisibilityModel,
+	FooterLinkModel,
 	GovDistModel,
 	GovDistTypeModel,
 	InternalNoteModel,
@@ -64,6 +67,7 @@ import {
 	ServiceCategoryModel,
 	ServiceTagModel,
 	SessionModel,
+	SocialMediaLinkModel,
 	SocialMediaServiceModel,
 	SourceModel,
 	TranslationKeyModel,
@@ -191,6 +195,10 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	updateGovDistType: CompleteGovDistType[]
 	createNavigation: CompleteNavigation[]
 	updateNavigation: CompleteNavigation[]
+	createFooterLink: CompleteFooterLink[]
+	updateFooterLink: CompleteFooterLink[]
+	createSocialMediaLink: CompleteSocialMediaLink[]
+	updateSocialMediaLink: CompleteSocialMediaLink[]
 }
 
 /**
@@ -288,5 +296,9 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		updateGovDistType: GovDistTypeModel.array(),
 		createNavigation: NavigationModel.array(),
 		updateNavigation: NavigationModel.array(),
+		createFooterLink: FooterLinkModel.array(),
+		updateFooterLink: FooterLinkModel.array(),
+		createSocialMediaLink: SocialMediaLinkModel.array(),
+		updateSocialMediaLink: SocialMediaLinkModel.array(),
 	})
 )

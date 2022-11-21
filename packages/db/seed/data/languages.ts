@@ -4,144 +4,75 @@ import { prisma } from '~/index'
 
 import { connectUser } from './user'
 
-export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
-	// en is already created during the initial user seed
+const languages = [
 	{
-		where: {
-			localeCode: 'en-US',
-		},
-		create: {
-			localeCode: 'en-US',
-			iso6392: 'eng',
-			languageName: 'English (US)',
-			nativeName: 'English (US)',
-			createdBy: connectUser,
-			updatedBy: connectUser,
-		},
-		update: {
-			iso6392: 'eng',
-			languageName: 'English (US)',
-			nativeName: 'English (US)',
-			updatedBy: connectUser,
-		},
+		localeCode: 'en-US',
+		iso6392: 'eng',
+		languageName: 'English (US)',
+		nativeName: 'English (US)',
 	},
 	{
-		where: {
-			localeCode: 'en-CA',
-		},
-		create: {
-			localeCode: 'en-CA',
-			iso6392: 'eng',
-			languageName: 'English (CA)',
-			nativeName: 'English (CA)',
-			createdBy: connectUser,
-			updatedBy: connectUser,
-		},
-		update: {
-			iso6392: 'eng',
-			languageName: 'English (CA)',
-			nativeName: 'English (CA)',
-			updatedBy: connectUser,
-		},
+		localeCode: 'en-CA',
+		iso6392: 'eng',
+		languageName: 'English (CA)',
+		nativeName: 'English (CA)',
 	},
 	{
-		where: {
-			localeCode: 'en-MX',
-		},
-		create: {
-			localeCode: 'en-MX',
-			iso6392: 'eng',
-			languageName: 'English (MX)',
-			nativeName: 'English (MX)',
-			createdBy: connectUser,
-			updatedBy: connectUser,
-		},
-		update: {
-			iso6392: 'eng',
-			languageName: 'English (MX)',
-			nativeName: 'English (MX)',
-			updatedBy: connectUser,
-		},
+		localeCode: 'en-MX',
+		iso6392: 'eng',
+		languageName: 'English (MX)',
+		nativeName: 'English (MX)',
 	},
 	{
-		where: {
-			localeCode: 'es',
-		},
-		create: {
-			localeCode: 'es',
-			iso6392: 'spa',
-			languageName: 'Spanish',
-			nativeName: 'Español',
-			primary: true,
-			createdBy: connectUser,
-			updatedBy: connectUser,
-		},
-		update: {
-			iso6392: 'spa',
-			languageName: 'Spanish',
-			nativeName: 'Español',
-			primary: true,
-			updatedBy: connectUser,
-		},
+		localeCode: 'es',
+		iso6392: 'spa',
+		languageName: 'Spanish',
+		nativeName: 'Español',
 	},
 	{
-		where: {
-			localeCode: 'es_US',
-		},
-		create: {
-			localeCode: 'es-US',
-			iso6392: 'spa',
-			languageName: 'Spanish (US)',
-			nativeName: 'Español (EE)',
-			createdBy: connectUser,
-			updatedBy: connectUser,
-		},
-		update: {
-			iso6392: 'spa',
-			languageName: 'Spanish (US)',
-			nativeName: 'Español (EE)',
-			updatedBy: connectUser,
-		},
+		localeCode: 'es-US',
+		iso6392: 'spa',
+		languageName: 'Spanish (US)',
+		nativeName: 'Español (EE)',
 	},
 	{
-		where: {
-			localeCode: 'es-CA',
-		},
-		create: {
-			localeCode: 'es-CA',
-			iso6392: 'spa',
-			languageName: 'Spanish (CA)',
-			nativeName: 'Español (CA)',
-			createdBy: connectUser,
-			updatedBy: connectUser,
-		},
-		update: {
-			iso6392: 'spa',
-			languageName: 'Spanish (CA)',
-			nativeName: 'Español (CA)',
-			updatedBy: connectUser,
-		},
+		localeCode: 'es-CA',
+		iso6392: 'spa',
+		languageName: 'Spanish (CA)',
+		nativeName: 'Español (CA)',
 	},
 	{
-		where: {
-			localeCode: 'es-MX',
-		},
-		create: {
-			localeCode: 'es-MX',
-			iso6392: 'spa',
-			languageName: 'Spanish (MX)',
-			nativeName: 'Español (MX)',
-			createdBy: connectUser,
-			updatedBy: connectUser,
-		},
-		update: {
-			iso6392: 'spa',
-			languageName: 'Spanish (MX)',
-			nativeName: 'Español (MX)',
-			updatedBy: connectUser,
-		},
+		localeCode: 'es-MX',
+		iso6392: 'spa',
+		languageName: 'Spanish (MX)',
+		nativeName: 'Español (MX)',
 	},
 ]
+
+// en is already created during the initial user seed
+export const seedLanguageData: Prisma.LanguageUpsertArgs[] = languages.map((lang) => {
+	const { localeCode, iso6392, languageName, nativeName } = lang
+
+	return {
+		where: {
+			localeCode,
+		},
+		create: {
+			localeCode,
+			iso6392,
+			languageName,
+			nativeName,
+			createdBy: connectUser,
+			updatedBy: connectUser,
+		},
+		update: {
+			iso6392,
+			languageName,
+			nativeName,
+			updatedBy: connectUser,
+		},
+	}
+})
 
 export const getPrimaryLanguages = async () =>
 	await prisma.language.findMany({

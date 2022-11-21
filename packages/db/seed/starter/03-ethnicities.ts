@@ -10,6 +10,7 @@ export const seedEthnicities = async (task: ListrTask) => {
 		const logMessage = `Ethnicity bulk operation: ${ethnicities.length} successful transactions`
 		logFile.log(logMessage)
 		task.output = logMessage
+		task.title = `Ethnicities (${ethnicities.length} records)`
 	} catch (err) {
 		throw err
 	}

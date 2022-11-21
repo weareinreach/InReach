@@ -4,8 +4,7 @@ import { prisma } from '~/index'
 
 import { logFile } from '../logger'
 import { ListrTask } from '../starter'
-import { PrimaryLanguages } from './languages'
-import { keySlug } from './translations'
+import { keySlug } from './namespaces'
 import { connectUser, translationNamespace } from './user'
 
 type EthnicityData = string[]
@@ -34,7 +33,8 @@ export const generateEthnicityRecords = (task: ListrTask) => {
 				ethnicity: item,
 				translationKey: {
 					create: {
-						key: keySlug(item),
+						key: `eth-${keySlug(item)}`,
+						text: item,
 						namespace: {
 							connect: {
 								name: translationNamespace,
@@ -51,7 +51,8 @@ export const generateEthnicityRecords = (task: ListrTask) => {
 				updatedBy: connectUser,
 				translationKey: {
 					update: {
-						key: keySlug(item),
+						key: `eth-${keySlug(item)}`,
+						text: item,
 						updatedBy: connectUser,
 					},
 				},

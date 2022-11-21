@@ -2,12 +2,11 @@ import { prisma } from '~/index'
 
 import { ListrTask } from '.'
 import { type Countries, countryData } from '../data/countries'
-import { namespaces } from '../data/translations'
+import { namespaces } from '../data/namespaces'
 import { createdBy, updatedBy } from '../data/user'
 import { logFile } from '../logger'
 
 const translationNamespace = namespaces.country
-const translationKey = (item: string) => `country-${item}`
 
 export const seedCountries = async (task: ListrTask) => {
 	try {
@@ -45,7 +44,8 @@ export const seedCountries = async (task: ListrTask) => {
 									},
 								},
 							},
-							key: translationKey(country.cca3),
+							key: country.cca3,
+							text: country.name.common,
 							createdBy,
 							updatedBy,
 						},
@@ -58,6 +58,11 @@ export const seedCountries = async (task: ListrTask) => {
 					name: country.name.common,
 					dialCode: dialCode(),
 					flag: country.flag,
+					translationKey: {
+						update: {
+							text: country.name.common,
+						},
+					},
 					updatedBy,
 				},
 			})
@@ -73,6 +78,7 @@ export const seedCountries = async (task: ListrTask) => {
 
 			i++
 		}
+		task.title = `Countries (${i - 1} records)`
 	} catch (err) {
 		throw err
 	}
