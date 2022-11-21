@@ -8,10 +8,10 @@ export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
 	// en is already created during the initial user seed
 	{
 		where: {
-			localeCode: 'en_us',
+			localeCode: 'en-US',
 		},
 		create: {
-			localeCode: 'en_us',
+			localeCode: 'en-US',
 			iso6392: 'eng',
 			languageName: 'English (US)',
 			nativeName: 'English (US)',
@@ -27,10 +27,10 @@ export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
 	},
 	{
 		where: {
-			localeCode: 'en_ca',
+			localeCode: 'en-CA',
 		},
 		create: {
-			localeCode: 'en_ca',
+			localeCode: 'en-CA',
 			iso6392: 'eng',
 			languageName: 'English (CA)',
 			nativeName: 'English (CA)',
@@ -46,10 +46,10 @@ export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
 	},
 	{
 		where: {
-			localeCode: 'en_mx',
+			localeCode: 'en-MX',
 		},
 		create: {
-			localeCode: 'en_mx',
+			localeCode: 'en-MX',
 			iso6392: 'eng',
 			languageName: 'English (MX)',
 			nativeName: 'English (MX)',
@@ -86,10 +86,10 @@ export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
 	},
 	{
 		where: {
-			localeCode: 'es_us',
+			localeCode: 'es_US',
 		},
 		create: {
-			localeCode: 'es_us',
+			localeCode: 'es-US',
 			iso6392: 'spa',
 			languageName: 'Spanish (US)',
 			nativeName: 'Español (EE)',
@@ -105,10 +105,10 @@ export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
 	},
 	{
 		where: {
-			localeCode: 'es_ca',
+			localeCode: 'es-CA',
 		},
 		create: {
-			localeCode: 'es_ca',
+			localeCode: 'es-CA',
 			iso6392: 'spa',
 			languageName: 'Spanish (CA)',
 			nativeName: 'Español (CA)',
@@ -124,10 +124,10 @@ export const seedLanguageData: Prisma.LanguageUpsertArgs[] = [
 	},
 	{
 		where: {
-			localeCode: 'es_mx',
+			localeCode: 'es-MX',
 		},
 		create: {
-			localeCode: 'es_mx',
+			localeCode: 'es-MX',
 			iso6392: 'spa',
 			languageName: 'Spanish (MX)',
 			nativeName: 'Español (MX)',

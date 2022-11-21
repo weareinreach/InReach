@@ -1,7 +1,14 @@
 import * as z from 'zod'
 
 import * as imports from '../zod-util'
-import { CompleteInternalNote, CompleteUser, InternalNoteModel, UserModel } from './index'
+import {
+	CompleteInternalNote,
+	CompleteTranslationKey,
+	CompleteUser,
+	InternalNoteModel,
+	TranslationKeyModel,
+	UserModel,
+} from './index'
 
 export const _NavigationModel = z.object({
 	id: imports.cuid,
@@ -9,6 +16,7 @@ export const _NavigationModel = z.object({
 	href: z.string().nullish(),
 	isParent: z.boolean(),
 	icon: z.string().nullish(),
+	translationKeyId: z.string(),
 	parentId: imports.cuid.nullish(),
 	createdAt: z.date(),
 	createdById: imports.cuid,
@@ -17,6 +25,7 @@ export const _NavigationModel = z.object({
 })
 
 export interface CompleteNavigation extends z.infer<typeof _NavigationModel> {
+	translationKey: CompleteTranslationKey
 	parentItem?: CompleteNavigation | null
 	children: CompleteNavigation[]
 	createdBy: CompleteUser
@@ -31,6 +40,7 @@ export interface CompleteNavigation extends z.infer<typeof _NavigationModel> {
  */
 export const NavigationModel: z.ZodSchema<CompleteNavigation> = z.lazy(() =>
 	_NavigationModel.extend({
+		translationKey: TranslationKeyModel,
 		parentItem: NavigationModel.nullish(),
 		children: NavigationModel.array(),
 		createdBy: UserModel,

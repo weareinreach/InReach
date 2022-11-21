@@ -30,10 +30,8 @@ import {
 	CompleteSession,
 	CompleteSocialMediaService,
 	CompleteSource,
-	CompleteTranslation,
 	CompleteTranslationKey,
 	CompleteTranslationNamespace,
-	CompleteTranslationVariable,
 	CompleteUserCommunity,
 	CompleteUserEthnicity,
 	CompleteUserImmigration,
@@ -69,9 +67,7 @@ import {
 	SocialMediaServiceModel,
 	SourceModel,
 	TranslationKeyModel,
-	TranslationModel,
 	TranslationNamespaceModel,
-	TranslationVariableModel,
 	UserCommunityModel,
 	UserEthnicityModel,
 	UserImmigrationModel,
@@ -183,16 +179,12 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	updateTranslationNamespace: CompleteTranslationNamespace[]
 	createTranslationKey: CompleteTranslationKey[]
 	updateTranslationKey: CompleteTranslationKey[]
-	createTranslation: CompleteTranslation[]
-	updateTranslation: CompleteTranslation[]
 	createSocialMediaService: CompleteSocialMediaService[]
 	updateSocialMediaService: CompleteSocialMediaService[]
 	createUserRole: CompleteUserRole[]
 	updateUserRole: CompleteUserRole[]
 	createPermissionItem: CompletePermissionItem[]
 	updatePermissionItem: CompletePermissionItem[]
-	createTranslationVariable: CompleteTranslationVariable[]
-	updateTranslationVariable: CompleteTranslationVariable[]
 	createOutsideAPI: CompleteOutsideAPI[]
 	updateOutsideAPI: CompleteOutsideAPI[]
 	createGovDistType: CompleteGovDistType[]
@@ -284,16 +276,12 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		updateTranslationNamespace: TranslationNamespaceModel.array(),
 		createTranslationKey: TranslationKeyModel.array(),
 		updateTranslationKey: TranslationKeyModel.array(),
-		createTranslation: TranslationModel.array(),
-		updateTranslation: TranslationModel.array(),
 		createSocialMediaService: SocialMediaServiceModel.array(),
 		updateSocialMediaService: SocialMediaServiceModel.array(),
 		createUserRole: UserRoleModel.array(),
 		updateUserRole: UserRoleModel.array(),
 		createPermissionItem: PermissionItemModel.array(),
 		updatePermissionItem: PermissionItemModel.array(),
-		createTranslationVariable: TranslationVariableModel.array(),
-		updateTranslationVariable: TranslationVariableModel.array(),
 		createOutsideAPI: OutsideAPIModel.array(),
 		updateOutsideAPI: OutsideAPIModel.array(),
 		createGovDistType: GovDistTypeModel.array(),
