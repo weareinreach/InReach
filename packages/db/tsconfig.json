@@ -1,5 +1,5 @@
 {
-	"extends": "@weareinreach/config/tsconfig/base.json",
+	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"noImplicitAny": false,
 		"baseUrl": ".",
@@ -7,6 +7,5 @@
 			"~/*": ["./*"]
 		}
 	},
-	"include": ["**/*.ts", "**/*.js"],
-	"exclude": ["node_modules"]
+	"include": ["index.ts", "data-transfer", "seed", "zod-schemas", "zod-util"]
 }

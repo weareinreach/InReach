@@ -26,7 +26,7 @@ export default defineNextConfig({
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: {
-		transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
+		transpilePackages: ['@weareinreach/ui', '@weareinreach/db', '@weareinreach/auth', '@weareinreach/api'],
 		// serverComponentsExternalPackages: ['@weareinreach/db'],
 		fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
 		/**

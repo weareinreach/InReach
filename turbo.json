@@ -8,7 +8,6 @@
 		},
 		"@weareinreach/app#build": {
 			"dependsOn": ["^build", "^db:generate"],
-			"outputs": [".next/**"],
 			"env": [
 				"DATABASE_URL",
 				"NEXTAUTH_SECRET",
@@ -24,7 +23,6 @@
 		},
 		"@weareinreach/web#build": {
 			"dependsOn": ["^build"],
-			"outputs": [".next/**"],
 			"env": [
 				"WEB_SENTRY_DSN",
 				"SANITY_TOKEN",
@@ -41,8 +39,14 @@
 			"dependsOn": ["build"],
 			"env": ["CHROMATIC_PROJECT_TOKEN"]
 		},
-		"clean": {},
-		"db:generate": {},
+		"clean": { "cache": false },
+		"//#clean": {
+			"cache": false
+		},
+		"db:generate": {
+			"inputs": ["prisma/schema.prisma"],
+			"cache": false
+		},
 		"dev": {
 			"cache": false
 		},
@@ -55,10 +59,17 @@
 		},
 		"post-install": {},
 		"build:aws": {
-			"dependsOn": ["^db:generate:aws"],
+			"dependsOn": ["^db:generate"],
 			"outputs": ["dist/**"]
 		},
-		"db:generate:aws": {},
-		"clean:node": {}
+		"db:generate:aws": {
+			"inputs": ["prisma/schema.prisma"],
+			"cache": false
+		},
+		"clean:node": {},
+		"type-check": {
+			"dependsOn": ["^db:generate"],
+			"cache": false
+		}
 	}
 }

@@ -52,3 +52,6 @@ test/cypress/fixtures/temp/example-1.json
 
 # cache files
 .eslintcache
+
+# TypeScript incremental compilation cache
+*.tsbuildinfo
