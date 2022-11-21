@@ -20,7 +20,7 @@
 	},
 	"dependencies": {
 		"@weareinreach/db": "0.100.0",
-		"aws-sdk": "2.1258.0"
+		"aws-sdk": "2.1259.0"
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.108",
