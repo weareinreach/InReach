@@ -3,7 +3,7 @@ generator client {
   previewFeatures = ["fieldReference", "postgresqlExtensions"]
   output          = "../../../node_modules/.prisma/client"
   // uncomment below when building aws-lambda
-  binaryTargets   = ["native", "rhel-openssl-1.0.x"]
+  // binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
 generator docs {
@@ -13,8 +13,8 @@ generator docs {
 
 generator zod {
   provider      = "zod-prisma"
-  output        = "../src/zod-schemas"
-  imports       = "../src/zod-util"
+  output        = "../zod-schemas"
+  imports       = "../zod-util"
   relationModel = "default"
 }
 
