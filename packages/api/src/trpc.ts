@@ -10,11 +10,6 @@ const t = initTRPC.context<Context>().create({
 	},
 })
 
-export const router = t.router
-
-/** Unprotected procedure */
-export const publicProcedure = t.procedure
-
 /** Reusable middleware to ensure users are logged in */
 const isAuthed = t.middleware(({ ctx, next }) => {
 	if (!ctx.session || !ctx.session.user) {
@@ -27,6 +22,11 @@ const isAuthed = t.middleware(({ ctx, next }) => {
 		},
 	})
 })
+
+export const router = t.router
+
+/** Unprotected procedure */
+export const publicProcedure = t.procedure
 
 /** Protected procedure */
 export const protectedProcedure = t.procedure.use(isAuthed)
