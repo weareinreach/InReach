@@ -99,6 +99,8 @@ importers:
       '@weareinreach/db': 0.100.0
       '@weareinreach/eslint-config': 0.100.0
       '@weareinreach/ui': 0.100.0
+      commander: 9.4.1
+      dotenv: 16.0.3
       eslint: 8.28.0
       eslint-config-next: 13.0.5-canary.2
       eslint-import-resolver-typescript: 3.5.2
@@ -108,6 +110,7 @@ importers:
       eslint-plugin-prettier: 4.2.1
       eslint-plugin-simple-import-sort: 8.0.0
       i18next: 22.0.6
+      listr2: 5.0.5
       next: 13.0.5-canary.2
       next-auth: '4.17'
       next-i18next: 12.1.0
@@ -146,6 +149,8 @@ importers:
       '@typescript-eslint/parser': 5.43.0_hsf322ms6xhhd4b5ne6lb74y4a
       '@weareinreach/config': link:../../packages/config
       '@weareinreach/eslint-config': link:../../packages/eslint-config
+      commander: 9.4.1
+      dotenv: 16.0.3
       eslint: 8.28.0
       eslint-config-next: 13.0.5-canary.2_hsf322ms6xhhd4b5ne6lb74y4a
       eslint-import-resolver-typescript: 3.5.2_ktrec6dplf4now6nlbc6d67jee
@@ -154,6 +159,7 @@ importers:
       eslint-plugin-import: 2.26.0_d5vn4nsvkp5ugznurcfxmdkaeu
       eslint-plugin-prettier: 4.2.1_bqvntwytoepwmeyeh2xeb7vzue
       eslint-plugin-simple-import-sort: 8.0.0_eslint@8.28.0
+      listr2: 5.0.5
       typescript: 4.9.3
 
   apps/web:
