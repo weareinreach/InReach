@@ -28,6 +28,8 @@ export const _AttributeModel = z.object({
 	description: z.string().nullish(),
 	categoryId: imports.cuid,
 	keyId: imports.cuid.nullish(),
+	requireLanguage: z.boolean(),
+	requireCountry: z.boolean(),
 	createdAt: z.date(),
 	createdById: imports.cuid,
 	updatedAt: z.date(),

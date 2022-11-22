@@ -732,6 +732,9 @@ model Attribute {
   key   TranslationKey? @relation(fields: [keyId], references: [id])
   keyId String? /// @zod.custom(imports.cuid)
 
+  requireLanguage Boolean @default(false)
+  requireCountry  Boolean @default(false)
+
   /// Tables using Attribute
   organization    Organization[]
   orgLocation     OrgLocation[]

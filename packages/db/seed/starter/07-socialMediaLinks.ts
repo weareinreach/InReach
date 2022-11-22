@@ -1,7 +1,6 @@
 import { prisma } from '~/index'
-import { namespaces } from '~/seed/data/00-namespaces'
-import { createMeta } from '~/seed/data/01-user'
-import { socialMediaLinks } from '~/seed/data/07-socialMediaLink'
+import { createMeta, namespaces, socialMediaLinks } from '~/seed/data'
+import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
 export const seedSocialMediaLinks = async (task: ListrTask) => {
@@ -60,6 +59,7 @@ export const seedSocialMediaLinks = async (task: ListrTask) => {
 
 		const result = await prisma.$transaction(transactions)
 		const logMessage = `Social Media Link records added: ${result.length}`
+		logFile.log(logMessage)
 		task.output = logMessage
 		task.title = `Social Media Links (${result.length} records)`
 	} catch (err) {
