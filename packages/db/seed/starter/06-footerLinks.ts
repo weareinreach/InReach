@@ -1,7 +1,6 @@
 import { prisma } from '~/index'
-import { namespaces } from '~/seed/data/00-namespaces'
-import { createMeta } from '~/seed/data/01-user'
-import { footerLinks } from '~/seed/data/06-footerLink'
+import { createMeta, footerLinks, namespaces } from '~/seed/data'
+import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
 export const seedFooterLinks = async (task: ListrTask) => {
@@ -59,6 +58,7 @@ export const seedFooterLinks = async (task: ListrTask) => {
 
 		const result = await prisma.$transaction(transactions)
 		const logMessage = `Footer Link records added: ${result.length}`
+		logFile.log(logMessage)
 		task.output = logMessage
 		task.title = `Footer Links (${result.length} records)`
 	} catch (err) {
