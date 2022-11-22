@@ -3,7 +3,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import Backend from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
-const ns = ['common', 'countries', 'user']
+const ns = ['common', 'country', 'user', 'footer', 'nav', 'socialMedia']
 export const i18nLocales = {
 	en: 'English',
 	'en-US': 'English (US)',
@@ -34,7 +34,7 @@ i18n
 	.use(initReactI18next)
 	.init({
 		debug: true,
-		lng: 'en-US',
+		lng: 'en',
 		fallbackLng: {
 			en: ['en-US'],
 			es: ['es-US'],

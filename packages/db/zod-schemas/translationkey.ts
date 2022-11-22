@@ -3,14 +3,15 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	CompleteCountry,
+	CompleteFooterLink,
 	CompleteGovDist,
 	CompleteGovDistType,
 	CompleteInternalNote,
+	CompleteNavigation,
 	CompleteServiceCategory,
 	CompleteServiceTag,
-	CompleteTranslation,
+	CompleteSocialMediaLink,
 	CompleteTranslationNamespace,
-	CompleteTranslationVariable,
 	CompleteUser,
 	CompleteUserCommunity,
 	CompleteUserEthnicity,
@@ -18,14 +19,15 @@ import {
 	CompleteUserSOG,
 	CompleteUserType,
 	CountryModel,
+	FooterLinkModel,
 	GovDistModel,
 	GovDistTypeModel,
 	InternalNoteModel,
+	NavigationModel,
 	ServiceCategoryModel,
 	ServiceTagModel,
-	TranslationModel,
+	SocialMediaLinkModel,
 	TranslationNamespaceModel,
-	TranslationVariableModel,
 	UserCommunityModel,
 	UserEthnicityModel,
 	UserImmigrationModel,
@@ -38,8 +40,11 @@ export const _TranslationKeyModel = z.object({
 	id: imports.cuid,
 	/** Item key */
 	key: z.string(),
+	/** Base string */
+	text: z.string(),
+	/** Context */
+	context: z.string().nullish(),
 	namespaceId: imports.cuid,
-	isBase: z.boolean(),
 	parentId: imports.cuid.nullish(),
 	createdAt: z.date(),
 	createdById: imports.cuid.nullish(),
@@ -49,8 +54,6 @@ export const _TranslationKeyModel = z.object({
 
 export interface CompleteTranslationKey extends z.infer<typeof _TranslationKeyModel> {
 	namespace: CompleteTranslationNamespace
-	translations: CompleteTranslation[]
-	variables: CompleteTranslationVariable[]
 	parent?: CompleteTranslationKey | null
 	children: CompleteTranslationKey[]
 	UserType: CompleteUserType[]
@@ -63,9 +66,12 @@ export interface CompleteTranslationKey extends z.infer<typeof _TranslationKeyMo
 	Country: CompleteCountry[]
 	GovDist: CompleteGovDist[]
 	GovDistType: CompleteGovDistType[]
+	Navigation: CompleteNavigation[]
 	createdBy?: CompleteUser | null
 	updatedBy?: CompleteUser | null
 	InternalNote: CompleteInternalNote[]
+	FooterLink: CompleteFooterLink[]
+	SocialMediaLink: CompleteSocialMediaLink[]
 }
 
 /**
@@ -77,8 +83,6 @@ export const TranslationKeyModel: z.ZodSchema<CompleteTranslationKey> = z.lazy((
 	_TranslationKeyModel.extend({
 		/** Associated namespace */
 		namespace: TranslationNamespaceModel,
-		translations: TranslationModel.array(),
-		variables: TranslationVariableModel.array(),
 		parent: TranslationKeyModel.nullish(),
 		children: TranslationKeyModel.array(),
 		/** Associated tables */
@@ -92,8 +96,11 @@ export const TranslationKeyModel: z.ZodSchema<CompleteTranslationKey> = z.lazy((
 		Country: CountryModel.array(),
 		GovDist: GovDistModel.array(),
 		GovDistType: GovDistTypeModel.array(),
+		Navigation: NavigationModel.array(),
 		createdBy: UserModel.nullish(),
 		updatedBy: UserModel.nullish(),
 		InternalNote: InternalNoteModel.array(),
+		FooterLink: FooterLinkModel.array(),
+		SocialMediaLink: SocialMediaLinkModel.array(),
 	})
 )

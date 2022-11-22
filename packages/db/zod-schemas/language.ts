@@ -7,7 +7,6 @@ import {
 	CompleteOrgReview,
 	CompleteOrgService,
 	CompletePhoneType,
-	CompleteTranslation,
 	CompleteUser,
 	CompleteUserTitle,
 	InternalNoteModel,
@@ -15,7 +14,6 @@ import {
 	OrgReviewModel,
 	OrgServiceModel,
 	PhoneTypeModel,
-	TranslationModel,
 	UserModel,
 	UserTitleModel,
 } from './index'
@@ -38,7 +36,6 @@ export const _LanguageModel = z.object({
 })
 
 export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {
-	translations: CompleteTranslation[]
 	orgDescriptions: CompleteOrgDescription[]
 	OrgService: CompleteOrgService[]
 	User: CompleteUser[]
@@ -57,7 +54,6 @@ export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {
  */
 export const LanguageModel: z.ZodSchema<CompleteLanguage> = z.lazy(() =>
 	_LanguageModel.extend({
-		translations: TranslationModel.array(),
 		orgDescriptions: OrgDescriptionModel.array(),
 		OrgService: OrgServiceModel.array(),
 		User: UserModel.array(),

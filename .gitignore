@@ -55,3 +55,7 @@ test/cypress/fixtures/temp/example-1.json
 
 # TypeScript incremental compilation cache
 *.tsbuildinfo
+
+# Generated files (except folder placeholder)
+_generated/*
+!_generated/.gitkeep

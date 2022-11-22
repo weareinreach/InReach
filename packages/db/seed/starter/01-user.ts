@@ -21,6 +21,7 @@ export const seedSystemUser = async (task: ListrTaskWrapper<unknown, typeof List
 		let logMessage = `System user created`
 		logFile.info(logMessage)
 		task.output = logMessage
+		task.title = `System user (1 record)`
 		// updated the 'createdBy' and 'updatedBy' fields for 'Language', 'UserType' & 'UserRole
 		const updateData = {
 			createdBy: {

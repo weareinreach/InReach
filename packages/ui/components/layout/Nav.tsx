@@ -16,7 +16,6 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 
-import { NavItem } from '../../layout'
 import { SafetyExit, UserMenu } from './'
 import Logo from './img/inreach.svg'
 
@@ -120,7 +119,10 @@ const useStyles = createStyles((theme) => ({
 export interface NavProps {
 	navItems: NavItem[]
 }
-
+export type NavItem = {
+	key: string
+	href?: string
+}
 export const Nav = (props: NavProps) => {
 	const { navItems } = props
 	const { classes } = useStyles()
@@ -128,7 +130,13 @@ export const Nav = (props: NavProps) => {
 	const [opened, { toggle, close }] = useDisclosure(false)
 
 	const navLinks = navItems.map((item, idx) => (
-		<Link key={idx} href={item.href} className={classes.link} onClick={close} legacyBehavior={false}>
+		<Link
+			key={idx}
+			href={item.href as string}
+			className={classes.link}
+			onClick={close}
+			legacyBehavior={false}
+		>
 			{t(item.key)}
 		</Link>
 	))

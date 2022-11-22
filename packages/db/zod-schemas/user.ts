@@ -6,6 +6,7 @@ import {
 	CompleteAccount,
 	CompleteCountry,
 	CompleteFieldVisibility,
+	CompleteFooterLink,
 	CompleteGovDist,
 	CompleteGovDistType,
 	CompleteInternalNote,
@@ -28,12 +29,11 @@ import {
 	CompleteServiceCategory,
 	CompleteServiceTag,
 	CompleteSession,
+	CompleteSocialMediaLink,
 	CompleteSocialMediaService,
 	CompleteSource,
-	CompleteTranslation,
 	CompleteTranslationKey,
 	CompleteTranslationNamespace,
-	CompleteTranslationVariable,
 	CompleteUserCommunity,
 	CompleteUserEthnicity,
 	CompleteUserImmigration,
@@ -44,6 +44,7 @@ import {
 	CompleteUserType,
 	CountryModel,
 	FieldVisibilityModel,
+	FooterLinkModel,
 	GovDistModel,
 	GovDistTypeModel,
 	InternalNoteModel,
@@ -66,12 +67,11 @@ import {
 	ServiceCategoryModel,
 	ServiceTagModel,
 	SessionModel,
+	SocialMediaLinkModel,
 	SocialMediaServiceModel,
 	SourceModel,
 	TranslationKeyModel,
-	TranslationModel,
 	TranslationNamespaceModel,
-	TranslationVariableModel,
 	UserCommunityModel,
 	UserEthnicityModel,
 	UserImmigrationModel,
@@ -183,22 +183,22 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	updateTranslationNamespace: CompleteTranslationNamespace[]
 	createTranslationKey: CompleteTranslationKey[]
 	updateTranslationKey: CompleteTranslationKey[]
-	createTranslation: CompleteTranslation[]
-	updateTranslation: CompleteTranslation[]
 	createSocialMediaService: CompleteSocialMediaService[]
 	updateSocialMediaService: CompleteSocialMediaService[]
 	createUserRole: CompleteUserRole[]
 	updateUserRole: CompleteUserRole[]
 	createPermissionItem: CompletePermissionItem[]
 	updatePermissionItem: CompletePermissionItem[]
-	createTranslationVariable: CompleteTranslationVariable[]
-	updateTranslationVariable: CompleteTranslationVariable[]
 	createOutsideAPI: CompleteOutsideAPI[]
 	updateOutsideAPI: CompleteOutsideAPI[]
 	createGovDistType: CompleteGovDistType[]
 	updateGovDistType: CompleteGovDistType[]
 	createNavigation: CompleteNavigation[]
 	updateNavigation: CompleteNavigation[]
+	createFooterLink: CompleteFooterLink[]
+	updateFooterLink: CompleteFooterLink[]
+	createSocialMediaLink: CompleteSocialMediaLink[]
+	updateSocialMediaLink: CompleteSocialMediaLink[]
 }
 
 /**
@@ -284,21 +284,21 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		updateTranslationNamespace: TranslationNamespaceModel.array(),
 		createTranslationKey: TranslationKeyModel.array(),
 		updateTranslationKey: TranslationKeyModel.array(),
-		createTranslation: TranslationModel.array(),
-		updateTranslation: TranslationModel.array(),
 		createSocialMediaService: SocialMediaServiceModel.array(),
 		updateSocialMediaService: SocialMediaServiceModel.array(),
 		createUserRole: UserRoleModel.array(),
 		updateUserRole: UserRoleModel.array(),
 		createPermissionItem: PermissionItemModel.array(),
 		updatePermissionItem: PermissionItemModel.array(),
-		createTranslationVariable: TranslationVariableModel.array(),
-		updateTranslationVariable: TranslationVariableModel.array(),
 		createOutsideAPI: OutsideAPIModel.array(),
 		updateOutsideAPI: OutsideAPIModel.array(),
 		createGovDistType: GovDistTypeModel.array(),
 		updateGovDistType: GovDistTypeModel.array(),
 		createNavigation: NavigationModel.array(),
 		updateNavigation: NavigationModel.array(),
+		createFooterLink: FooterLinkModel.array(),
+		updateFooterLink: FooterLinkModel.array(),
+		createSocialMediaLink: SocialMediaLinkModel.array(),
+		updateSocialMediaLink: SocialMediaLinkModel.array(),
 	})
 )

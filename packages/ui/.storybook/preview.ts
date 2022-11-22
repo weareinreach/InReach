@@ -27,7 +27,7 @@ export const parameters = {
 		light: { ...themes.light },
 	},
 	i18n,
-	locale: 'en-US',
+	locale: 'en',
 	locales: i18nLocales,
 	viewport: {
 		viewports: INITIAL_VIEWPORTS,
