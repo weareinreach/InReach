@@ -27,8 +27,8 @@ export const _LanguageModel = z.object({
 	iso6392: z.string().nullish(),
 	/** Language name in it's language. */
 	nativeName: z.string(),
-	/** Is this a top level locale (not region specific)? */
-	primary: z.boolean(),
+	/** Is this language being actively used for translations? */
+	activelyTranslated: z.boolean(),
 	createdAt: z.date(),
 	createdById: imports.cuid.nullish(),
 	updatedAt: z.date(),

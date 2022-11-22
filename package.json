@@ -101,7 +101,8 @@
 			}
 		},
 		"patchedDependencies": {
-			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch"
+			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch",
+			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch"
 		},
 		"overrides": {
 			"trim@<0.0.3": ">=0.0.3",

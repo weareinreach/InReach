@@ -11,6 +11,9 @@ overrides:
   node-fetch@<2.6.7: '>=2.6.7'
 
 patchedDependencies:
+  iso-google-locales@3.0.4:
+    hash: ltnamflm7ayajalculwqyezjya
+    path: patches/iso-google-locales@3.0.4.patch
   zod-prisma@0.5.4:
     hash: sgyu4cerrvputcbquvozfdvpkm
     path: patches/zod-prisma@0.5.4.patch
@@ -323,6 +326,7 @@ importers:
       eslint-plugin-simple-import-sort: 8.0.0
       eslint-plugin-turbo: 0.0.4
       inquirer: 9.1.4
+      iso-google-locales: 3.0.4
       listr2: 5.0.5
       mongoback: 3.0.3
       prisma: 4.6.1
@@ -360,6 +364,7 @@ importers:
       eslint-plugin-simple-import-sort: 8.0.0_eslint@8.28.0
       eslint-plugin-turbo: 0.0.4_eslint@8.28.0
       inquirer: 9.1.4
+      iso-google-locales: 3.0.4_ltnamflm7ayajalculwqyezjya
       listr2: 5.0.5
       mongoback: 3.0.3
       prisma: 4.6.1
@@ -13709,6 +13714,12 @@ packages:
 
   /isexe/2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
+
+  /iso-google-locales/3.0.4_ltnamflm7ayajalculwqyezjya:
+    resolution: {integrity: sha512-tbd+JGRdMjE6tdWAmsvTPYiPPXJp64LpDR6qGN5AAyevb3TrrsWzOeoXYsneBFrHz5LYOtOmfWbOwRu/4YgAGQ==}
+    engines: {node: '>=6.0'}
+    dev: true
+    patched: true
 
   /isobject/2.1.0:
     resolution: {integrity: sha512-+OUdGJlgjOBZDfxnDjYYG6zp487z0JGNQq3cYQYg5f5hKR+syHMsaztzGeml/4kGG55CSpKSpWTY+jYGgsHLgA==}

@@ -26,7 +26,6 @@ export const seedUser: Prisma.UserCreateInput = {
 			},
 			create: {
 				localeCode,
-				primary: true,
 				languageName: 'English',
 				nativeName: 'English',
 				iso6392: 'eng',
