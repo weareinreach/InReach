@@ -15,18 +15,18 @@
 		"preinstall": "npx only-allow pnpm"
 	},
 	"dependencies": {
-		"@typescript-eslint/parser": "5.43.0",
+		"@typescript-eslint/parser": "5.44.0",
 		"eslint-config-prettier": "8.5.0"
 	},
 	"devDependencies": {
 		"@next/eslint-plugin-next": "13.0.5-canary.2",
 		"@types/eslint": "8.4.10",
-		"@typescript-eslint/eslint-plugin": "5.43.0",
+		"@typescript-eslint/eslint-plugin": "5.44.0",
 		"eslint": "8.28.0",
 		"eslint-config-next": "13.0.5-canary.2",
 		"eslint-import-resolver-typescript": "3.5.2",
 		"eslint-plugin-codegen": "0.16.1",
-		"eslint-plugin-i18next": "6.0.0-4",
+		"eslint-plugin-i18next": "6.0.0-6",
 		"eslint-plugin-import": "2.26.0",
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-react": "7.31.11",

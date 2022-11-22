@@ -39,7 +39,7 @@
 		"@faker-js/faker": "7.6.0",
 		"@types/node": "16.18.3",
 		"@types/recursive-readdir": "2.2.1",
-		"@typescript-eslint/eslint-plugin": "5.43.0",
+		"@typescript-eslint/eslint-plugin": "5.44.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"axios": "1.1.3",
