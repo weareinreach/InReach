@@ -30,7 +30,7 @@ export interface CompleteOrgHours extends z.infer<typeof _OrgHoursModel> {
 	orgService?: CompleteOrgService | null
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -44,6 +44,6 @@ export const OrgHoursModel: z.ZodSchema<CompleteOrgHours> = z.lazy(() =>
 		orgService: OrgServiceModel.nullish(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

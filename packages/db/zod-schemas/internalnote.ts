@@ -2,6 +2,10 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AttributeCategoryModel,
+	AttributeModel,
+	CompleteAttribute,
+	CompleteAttributeCategory,
 	CompleteCountry,
 	CompleteFooterLink,
 	CompleteGovDist,
@@ -76,6 +80,8 @@ export const _InternalNoteModel = z.object({
 	updatedAt: z.date(),
 	updatedById: imports.cuid,
 	socialMediaLinkId: z.string().nullish(),
+	propertyCategoryId: z.string().nullish(),
+	propertyAttributeId: z.string().nullish(),
 })
 
 export interface CompleteInternalNote extends z.infer<typeof _InternalNoteModel> {
@@ -101,7 +107,9 @@ export interface CompleteInternalNote extends z.infer<typeof _InternalNoteModel>
 	footerLink?: CompleteFooterLink | null
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	SocialMediaLink?: CompleteSocialMediaLink | null
+	socialMediaLink?: CompleteSocialMediaLink | null
+	attributeCategory?: CompleteAttributeCategory | null
+	attribute?: CompleteAttribute | null
 }
 
 /**
@@ -133,6 +141,8 @@ export const InternalNoteModel: z.ZodSchema<CompleteInternalNote> = z.lazy(() =>
 		footerLink: FooterLinkModel.nullish(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		SocialMediaLink: SocialMediaLinkModel.nullish(),
+		socialMediaLink: SocialMediaLinkModel.nullish(),
+		attributeCategory: AttributeCategoryModel.nullish(),
+		attribute: AttributeModel.nullish(),
 	})
 )

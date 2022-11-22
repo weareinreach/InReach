@@ -43,7 +43,7 @@ export interface CompleteOrgReview extends z.infer<typeof _OrgReviewModel> {
 	lcrCountry?: CompleteCountry | null
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -60,6 +60,6 @@ export const OrgReviewModel: z.ZodSchema<CompleteOrgReview> = z.lazy(() =>
 		lcrCountry: CountryModel.nullish(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

@@ -28,7 +28,7 @@ export interface CompleteOutsideAPI extends z.infer<typeof _OutsideAPIModel> {
 	OrgLocation: CompleteOrgLocation[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -42,6 +42,6 @@ export const OutsideAPIModel: z.ZodSchema<CompleteOutsideAPI> = z.lazy(() =>
 		OrgLocation: OrgLocationModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

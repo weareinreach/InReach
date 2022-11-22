@@ -37,14 +37,14 @@ export const _LanguageModel = z.object({
 
 export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {
 	orgDescriptions: CompleteOrgDescription[]
-	OrgService: CompleteOrgService[]
-	User: CompleteUser[]
+	orgService: CompleteOrgService[]
+	user: CompleteUser[]
+	userTitle: CompleteUserTitle[]
+	orgReview: CompleteOrgReview[]
+	phoneType: CompletePhoneType[]
 	createdBy?: CompleteUser | null
 	updatedBy?: CompleteUser | null
-	UserTitle: CompleteUserTitle[]
-	OrgReview: CompleteOrgReview[]
-	PhoneType: CompletePhoneType[]
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -55,13 +55,13 @@ export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {
 export const LanguageModel: z.ZodSchema<CompleteLanguage> = z.lazy(() =>
 	_LanguageModel.extend({
 		orgDescriptions: OrgDescriptionModel.array(),
-		OrgService: OrgServiceModel.array(),
-		User: UserModel.array(),
+		orgService: OrgServiceModel.array(),
+		user: UserModel.array(),
+		userTitle: UserTitleModel.array(),
+		orgReview: OrgReviewModel.array(),
+		phoneType: PhoneTypeModel.array(),
 		createdBy: UserModel.nullish(),
 		updatedBy: UserModel.nullish(),
-		UserTitle: UserTitleModel.array(),
-		OrgReview: OrgReviewModel.array(),
-		PhoneType: PhoneTypeModel.array(),
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

@@ -31,7 +31,7 @@ export interface CompleteOrgPhoto extends z.infer<typeof _OrgPhotoModel> {
 	orgLocation?: CompleteOrgLocation | null
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -45,6 +45,6 @@ export const OrgPhotoModel: z.ZodSchema<CompleteOrgPhoto> = z.lazy(() =>
 		orgLocation: OrgLocationModel.nullish(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

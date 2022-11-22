@@ -2,6 +2,8 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AttributeModel,
+	CompleteAttribute,
 	CompleteCountry,
 	CompleteFooterLink,
 	CompleteGovDist,
@@ -56,22 +58,23 @@ export interface CompleteTranslationKey extends z.infer<typeof _TranslationKeyMo
 	namespace: CompleteTranslationNamespace
 	parent?: CompleteTranslationKey | null
 	children: CompleteTranslationKey[]
-	UserType: CompleteUserType[]
-	UserEthnicity: CompleteUserEthnicity[]
-	UserImmigration: CompleteUserImmigration[]
-	UserSOG: CompleteUserSOG[]
-	UserCommunity: CompleteUserCommunity[]
-	ServiceCategory: CompleteServiceCategory[]
-	ServiceTag: CompleteServiceTag[]
-	Country: CompleteCountry[]
-	GovDist: CompleteGovDist[]
-	GovDistType: CompleteGovDistType[]
-	Navigation: CompleteNavigation[]
+	userType: CompleteUserType[]
+	userEthnicity: CompleteUserEthnicity[]
+	userImmigration: CompleteUserImmigration[]
+	userSOG: CompleteUserSOG[]
+	userCommunity: CompleteUserCommunity[]
+	serviceCategory: CompleteServiceCategory[]
+	serviceTag: CompleteServiceTag[]
+	country: CompleteCountry[]
+	govDist: CompleteGovDist[]
+	govDistType: CompleteGovDistType[]
+	navigation: CompleteNavigation[]
+	footerLink: CompleteFooterLink[]
+	socialMediaLink: CompleteSocialMediaLink[]
+	attribute: CompleteAttribute[]
 	createdBy?: CompleteUser | null
 	updatedBy?: CompleteUser | null
-	InternalNote: CompleteInternalNote[]
-	FooterLink: CompleteFooterLink[]
-	SocialMediaLink: CompleteSocialMediaLink[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -86,21 +89,22 @@ export const TranslationKeyModel: z.ZodSchema<CompleteTranslationKey> = z.lazy((
 		parent: TranslationKeyModel.nullish(),
 		children: TranslationKeyModel.array(),
 		/** Associated tables */
-		UserType: UserTypeModel.array(),
-		UserEthnicity: UserEthnicityModel.array(),
-		UserImmigration: UserImmigrationModel.array(),
-		UserSOG: UserSOGModel.array(),
-		UserCommunity: UserCommunityModel.array(),
-		ServiceCategory: ServiceCategoryModel.array(),
-		ServiceTag: ServiceTagModel.array(),
-		Country: CountryModel.array(),
-		GovDist: GovDistModel.array(),
-		GovDistType: GovDistTypeModel.array(),
-		Navigation: NavigationModel.array(),
+		userType: UserTypeModel.array(),
+		userEthnicity: UserEthnicityModel.array(),
+		userImmigration: UserImmigrationModel.array(),
+		userSOG: UserSOGModel.array(),
+		userCommunity: UserCommunityModel.array(),
+		serviceCategory: ServiceCategoryModel.array(),
+		serviceTag: ServiceTagModel.array(),
+		country: CountryModel.array(),
+		govDist: GovDistModel.array(),
+		govDistType: GovDistTypeModel.array(),
+		navigation: NavigationModel.array(),
+		footerLink: FooterLinkModel.array(),
+		socialMediaLink: SocialMediaLinkModel.array(),
+		attribute: AttributeModel.array(),
 		createdBy: UserModel.nullish(),
 		updatedBy: UserModel.nullish(),
-		InternalNote: InternalNoteModel.array(),
-		FooterLink: FooterLinkModel.array(),
-		SocialMediaLink: SocialMediaLinkModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

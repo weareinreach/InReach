@@ -39,7 +39,7 @@ export interface CompleteOrgEmail extends z.infer<typeof _OrgEmailModel> {
 	orgLocation: CompleteOrgLocation[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -55,6 +55,6 @@ export const OrgEmailModel: z.ZodSchema<CompleteOrgEmail> = z.lazy(() =>
 		orgLocation: OrgLocationModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

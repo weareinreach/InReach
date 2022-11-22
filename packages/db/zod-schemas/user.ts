@@ -3,7 +3,11 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	AccountModel,
+	AttributeCategoryModel,
+	AttributeModel,
 	CompleteAccount,
+	CompleteAttribute,
+	CompleteAttributeCategory,
 	CompleteCountry,
 	CompleteFieldVisibility,
 	CompleteFooterLink,
@@ -199,6 +203,10 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	updateFooterLink: CompleteFooterLink[]
 	createSocialMediaLink: CompleteSocialMediaLink[]
 	updateSocialMediaLink: CompleteSocialMediaLink[]
+	createAttributeCategory: CompleteAttributeCategory[]
+	updateAttributeCategory: CompleteAttributeCategory[]
+	createAttribute: CompleteAttribute[]
+	updateAttribute: CompleteAttribute[]
 }
 
 /**
@@ -300,5 +308,9 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		updateFooterLink: FooterLinkModel.array(),
 		createSocialMediaLink: SocialMediaLinkModel.array(),
 		updateSocialMediaLink: SocialMediaLinkModel.array(),
+		createAttributeCategory: AttributeCategoryModel.array(),
+		updateAttributeCategory: AttributeCategoryModel.array(),
+		createAttribute: AttributeModel.array(),
+		updateAttribute: AttributeModel.array(),
 	})
 )

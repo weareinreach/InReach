@@ -2,6 +2,8 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AttributeModel,
+	CompleteAttribute,
 	CompleteCountry,
 	CompleteGovDist,
 	CompleteInternalNote,
@@ -61,6 +63,7 @@ export interface CompleteOrgLocation extends z.infer<typeof _OrgLocationModel> {
 	govDist?: CompleteGovDist | null
 	country: CompleteCountry
 	hours: CompleteOrgHours[]
+	attributes: CompleteAttribute[]
 	organization: CompleteOrganization
 	allowedEditors: CompletePermissionAsset[]
 	email: CompleteOrgEmail[]
@@ -70,7 +73,7 @@ export interface CompleteOrgLocation extends z.infer<typeof _OrgLocationModel> {
 	outsideApi?: CompleteOutsideAPI | null
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -83,6 +86,7 @@ export const OrgLocationModel: z.ZodSchema<CompleteOrgLocation> = z.lazy(() =>
 		govDist: GovDistModel.nullish(),
 		country: CountryModel,
 		hours: OrgHoursModel.array(),
+		attributes: AttributeModel.array(),
 		organization: OrganizationModel,
 		allowedEditors: PermissionAssetModel.array(),
 		/** If location specific */
@@ -95,6 +99,6 @@ export const OrgLocationModel: z.ZodSchema<CompleteOrgLocation> = z.lazy(() =>
 		outsideApi: OutsideAPIModel.nullish(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

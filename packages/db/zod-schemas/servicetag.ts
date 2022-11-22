@@ -2,6 +2,8 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AttributeModel,
+	CompleteAttribute,
 	CompleteInternalNote,
 	CompleteOrgReview,
 	CompleteOrgService,
@@ -28,13 +30,14 @@ export const _ServiceTagModel = z.object({
 })
 
 export interface CompleteServiceTag extends z.infer<typeof _ServiceTagModel> {
+	attributes: CompleteAttribute[]
 	translationKey: CompleteTranslationKey
 	category: CompleteServiceCategory
 	orgServices: CompleteOrgService[]
-	OrgReview: CompleteOrgReview[]
+	orgReview: CompleteOrgReview[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -44,12 +47,14 @@ export interface CompleteServiceTag extends z.infer<typeof _ServiceTagModel> {
  */
 export const ServiceTagModel: z.ZodSchema<CompleteServiceTag> = z.lazy(() =>
 	_ServiceTagModel.extend({
+		attributes: AttributeModel.array(),
 		translationKey: TranslationKeyModel,
 		category: ServiceCategoryModel,
+		/** Tables referencing ServiceTag */
 		orgServices: OrgServiceModel.array(),
-		OrgReview: OrgReviewModel.array(),
+		orgReview: OrgReviewModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )
