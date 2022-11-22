@@ -6,4 +6,5 @@ export * from './04-countries'
 export * from './05-navigation'
 export * from './06-footerLinks'
 export * from './07-socialMediaLinks'
+export * from './08-services'
 // codegen:end

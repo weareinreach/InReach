@@ -20,7 +20,7 @@ import {
 
 export const _ServiceTagModel = z.object({
 	id: imports.cuid,
-	type: z.string(),
+	name: z.string(),
 	translationKeyId: imports.cuid,
 	categoryId: imports.cuid,
 	createdAt: z.date(),

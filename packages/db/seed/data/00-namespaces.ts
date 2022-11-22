@@ -6,6 +6,7 @@ export const namespaces = {
 	nav: 'nav',
 	footer: 'footer',
 	socialMedia: 'socialMedia',
+	services: 'services',
 } as const
 
 export const keySlug = (item: string) => slugify(item, { lower: true, strict: true })
