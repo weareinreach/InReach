@@ -78,8 +78,8 @@
 			"storybook-static/": true
 		},
 		"i18n-ally.localesPaths": ["apps/app/public/locales"],
-		"i18n-ally.displayLanguage": "en-US",
-		"i18n-ally.sourceLanguage": "en-US",
+		"i18n-ally.displayLanguage": "en",
+		"i18n-ally.sourceLanguage": "en",
 		"i18n-ally.extract.autoDetect": true,
 		"i18n-ally.extract.keygenStyle": "kebab-case",
 		"i18n-ally.pathMatcher": "{locale}/{namespace}.json",

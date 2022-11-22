@@ -1,21 +1,16 @@
 import { prisma } from '~/index'
 
 import type { ListrTask } from '.'
-import { generateEthnicityRecords, generateTranslations } from '../data/ethnicity'
-import { getPrimaryLanguages } from '../data/languages'
+import { generateEthnicityRecords } from '../data/ethnicity'
 import { logFile } from '../logger'
 
 export const seedEthnicities = async (task: ListrTask) => {
 	try {
 		const ethnicities = await prisma.$transaction(generateEthnicityRecords(task))
-		let logMessage = `Ethnicity bulk operation: ${ethnicities.length} successful transactions`
+		const logMessage = `Ethnicity bulk operation: ${ethnicities.length} successful transactions`
 		logFile.log(logMessage)
 		task.output = logMessage
-		const languageList = await getPrimaryLanguages()
-		const translations = await prisma.$transaction(generateTranslations(ethnicities, languageList, task))
-		logMessage = `Translation bulk operation: ${translations.length} successful transactions`
-		logFile.log(logMessage)
-		task.output = logMessage
+		task.title = `Ethnicities (${ethnicities.length} records)`
 	} catch (err) {
 		throw err
 	}

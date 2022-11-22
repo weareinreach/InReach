@@ -50,33 +50,33 @@ PageFooter.args = {
 	],
 	socialMedia: [
 		{
-			iconCode: 'fa6-brands:facebook-f',
+			icon: 'fa6-brands:facebook-f',
 			key: 'facebook',
 			href: '#',
 		},
 		{
-			iconCode: 'fa6-brands:twitter',
+			icon: 'fa6-brands:twitter',
 			key: 'twitter',
 			href: '#',
 		},
 		{
-			iconCode: 'fa6-brands:linkedin-in',
+			icon: 'fa6-brands:linkedin-in',
 			key: 'linkedin',
 			href: '#',
 		},
 		{
-			iconCode: 'fa6-regular:envelope',
+			icon: 'fa6-regular:envelope',
 			key: 'email',
 			href: '#',
 		},
 
 		{
-			iconCode: 'fa6-brands:instagram',
+			icon: 'fa6-brands:instagram',
 			key: 'instagram',
 			href: '#',
 		},
 		{
-			iconCode: 'fa6-brands:youtube',
+			icon: 'fa6-brands:youtube',
 			key: 'youtube',
 			href: '#',
 		},
