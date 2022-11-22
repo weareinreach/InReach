@@ -36,7 +36,6 @@
 		"zod": "3.19.1"
 	},
 	"devDependencies": {
-		"@anatine/zod-mock": "3.6.0",
 		"@faker-js/faker": "7.6.0",
 		"@types/node": "16.18.3",
 		"@types/recursive-readdir": "2.2.1",
@@ -55,7 +54,6 @@
 		"eslint-plugin-simple-import-sort": "8.0.0",
 		"eslint-plugin-turbo": "0.0.4",
 		"inquirer": "9.1.4",
-		"iso-3166-2": "1.0.0",
 		"listr2": "5.0.5",
 		"mongoback": "3.0.3",
 		"prisma": "4.6.1",
