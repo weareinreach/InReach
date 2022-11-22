@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fieldReference", "postgresqlExtensions"]
+  previewFeatures = ["fieldReference", "postgresqlExtensions", "interactiveTransactions"]
   output          = "../../../node_modules/.prisma/client"
   // uncomment below when building aws-lambda
   binaryTargets   = ["native", "rhel-openssl-1.0.x"]
@@ -280,7 +280,7 @@ model UserType {
 ///  this will be a searchable list
 model UserTitle {
   id         String     @id @default(cuid()) /// @zod.custom(imports.cuid)
-  text       String
+  title      String
   email      OrgEmail[]
   orgUser    User[]
   searchable Boolean    @default(false)
@@ -750,7 +750,7 @@ model Attribute {
 
 model ServiceCategory {
   id         String       @id @default(cuid()) /// @zod.custom(imports.cuid)
-  category   String
+  category   String       @unique
   services   ServiceTag[]
   attributes Attribute[]
 
@@ -768,7 +768,7 @@ model ServiceCategory {
 
 model ServiceTag {
   id         String      @id @default(cuid()) /// @zod.custom(imports.cuid)
-  type       String
+  name       String
   attributes Attribute[]
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
@@ -788,6 +788,8 @@ model ServiceTag {
   updatedBy    User           @relation("updateServiceTag", fields: [updatedById], references: [id])
   updatedById  String /// @zod.custom(imports.cuid)
   internalNote InternalNote[]
+
+  @@unique([name, categoryId])
 }
 
 /// Phone number descriptors

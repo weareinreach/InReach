@@ -12,7 +12,7 @@ import {
 
 export const _UserTitleModel = z.object({
 	id: imports.cuid,
-	text: z.string(),
+	title: z.string(),
 	searchable: z.boolean(),
 	langId: imports.cuid,
 	createdAt: z.date(),

@@ -6,6 +6,7 @@ import {
 	seedFooterLinks,
 	seedLanguages,
 	seedNavigation,
+	seedServices,
 	seedSocialMediaLinks,
 	seedSystemUser,
 } from '~/seed/starter'
@@ -53,6 +54,11 @@ const tasks = new Listr<Context>(
 					{
 						title: 'Social Media Links',
 						task: async (_ctx, task): Promise<void> => seedSocialMediaLinks(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Service Categories & Tags',
+						task: async (_ctx, task): Promise<void> => seedServices(task),
 						options: renderOptions,
 					},
 				]),
