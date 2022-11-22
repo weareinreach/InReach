@@ -1,10 +1,10 @@
 import { prisma } from '~/index'
 
-import { ListrTask } from '.'
-import { type Countries, countryData } from '../data/countries'
-import { namespaces } from '../data/namespaces'
-import { createdBy, updatedBy } from '../data/user'
+import { namespaces } from '../data/00-namespaces'
+import { createdBy, updatedBy } from '../data/01-user'
+import { type Countries, countryData } from '../data/04-countries'
 import { logFile } from '../logger'
+import { ListrTask } from '../starterData'
 
 const translationNamespace = namespaces.country
 

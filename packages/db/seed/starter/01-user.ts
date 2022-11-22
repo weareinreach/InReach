@@ -2,7 +2,14 @@ import type { ListrRenderer, ListrTaskWrapper } from 'listr2'
 
 import { prisma } from '~/index'
 
-import { localeCode, seedUser, translationKey, translationNamespace, userEmail, userType } from '../data/user'
+import {
+	localeCode,
+	seedUser,
+	translationKey,
+	translationNamespace,
+	userEmail,
+	userType,
+} from '../data/01-user'
 import { logFile } from '../logger'
 
 export const seedSystemUser = async (task: ListrTaskWrapper<unknown, typeof ListrRenderer>) => {

@@ -1,8 +1,8 @@
 import { prisma } from '~/index'
-import { namespaces } from '~/seed/data/namespaces'
-import { socialMediaLinks } from '~/seed/data/socialMediaLink'
-import { createMeta } from '~/seed/data/user'
-import { ListrTask } from '~/seed/starter'
+import { namespaces } from '~/seed/data/00-namespaces'
+import { createMeta } from '~/seed/data/01-user'
+import { socialMediaLinks } from '~/seed/data/07-socialMediaLink'
+import { ListrTask } from '~/seed/starterData'
 
 export const seedSocialMediaLinks = async (task: ListrTask) => {
 	try {

@@ -3,9 +3,9 @@ import { Prisma, UserEthnicity } from '@prisma/client'
 import { prisma } from '~/index'
 
 import { logFile } from '../logger'
-import { ListrTask } from '../starter'
-import { keySlug } from './namespaces'
-import { connectUser, translationNamespace } from './user'
+import { ListrTask } from '../starterData'
+import { keySlug } from './00-namespaces'
+import { connectUser, translationNamespace } from './01-user'
 
 type EthnicityData = string[]
 

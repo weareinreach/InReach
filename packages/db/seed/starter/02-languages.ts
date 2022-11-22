@@ -2,7 +2,7 @@ import type { ListrRenderer, ListrTaskWrapper } from 'listr2'
 
 import { prisma } from '~/index'
 
-import { seedLanguageData } from '../data/languages'
+import { seedLanguageData } from '../data/02-languages'
 import { logFile } from '../logger'
 
 export const seedLanguages = async (task: ListrTaskWrapper<unknown, typeof ListrRenderer>) => {
