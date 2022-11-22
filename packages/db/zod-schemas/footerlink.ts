@@ -26,7 +26,7 @@ export interface CompleteFooterLink extends z.infer<typeof _FooterLinkModel> {
 	translationKey: CompleteTranslationKey
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -39,6 +39,6 @@ export const FooterLinkModel: z.ZodSchema<CompleteFooterLink> = z.lazy(() =>
 		translationKey: TranslationKeyModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

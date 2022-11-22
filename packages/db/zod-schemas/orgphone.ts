@@ -37,7 +37,7 @@ export interface CompleteOrgPhone extends z.infer<typeof _OrgPhoneModel> {
 	orgLocation: CompleteOrgLocation[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -53,6 +53,6 @@ export const OrgPhoneModel: z.ZodSchema<CompleteOrgPhone> = z.lazy(() =>
 		orgLocation: OrgLocationModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

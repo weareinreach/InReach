@@ -54,7 +54,7 @@ export interface CompleteCountry extends z.infer<typeof _CountryModel> {
 	currentUsers: CompleteUser[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -66,12 +66,13 @@ export const CountryModel: z.ZodSchema<CompleteCountry> = z.lazy(() =>
 	_CountryModel.extend({
 		translationKey: TranslationKeyModel,
 		govDist: GovDistModel.array(),
+		/** Tables using Country */
 		orgAddress: OrgLocationModel.array(),
 		orgReviews: OrgReviewModel.array(),
 		originUsers: UserModel.array(),
 		currentUsers: UserModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

@@ -2,6 +2,8 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AttributeModel,
+	CompleteAttribute,
 	CompleteInternalNote,
 	CompleteLanguage,
 	CompleteOrgHours,
@@ -32,11 +34,12 @@ export const _OrgServiceModel = z.object({
 export interface CompleteOrgService extends z.infer<typeof _OrgServiceModel> {
 	hours: CompleteOrgHours[]
 	service: CompleteServiceTag[]
+	attributes: CompleteAttribute[]
 	organization: CompleteOrganization
 	language: CompleteLanguage
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -48,10 +51,11 @@ export const OrgServiceModel: z.ZodSchema<CompleteOrgService> = z.lazy(() =>
 	_OrgServiceModel.extend({
 		hours: OrgHoursModel.array(),
 		service: ServiceTagModel.array(),
+		attributes: AttributeModel.array(),
 		organization: OrganizationModel,
 		language: LanguageModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

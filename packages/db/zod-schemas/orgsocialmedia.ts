@@ -34,7 +34,7 @@ export interface CompleteOrgSocialMedia extends z.infer<typeof _OrgSocialMediaMo
 	orgLocation: CompleteOrgLocation[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -49,6 +49,6 @@ export const OrgSocialMediaModel: z.ZodSchema<CompleteOrgSocialMedia> = z.lazy((
 		orgLocation: OrgLocationModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

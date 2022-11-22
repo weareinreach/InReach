@@ -28,7 +28,7 @@ export interface CompleteOrgDescription extends z.infer<typeof _OrgDescriptionMo
 	organization: CompleteOrganization
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -42,6 +42,6 @@ export const OrgDescriptionModel: z.ZodSchema<CompleteOrgDescription> = z.lazy((
 		organization: OrganizationModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

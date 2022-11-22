@@ -21,10 +21,10 @@ export const _GovDistTypeModel = z.object({
 })
 
 export interface CompleteGovDistType extends z.infer<typeof _GovDistTypeModel> {
+	govDist: CompleteGovDist[]
 	translationKey: CompleteTranslationKey
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	GovDist: CompleteGovDist[]
 }
 
 /**
@@ -34,9 +34,9 @@ export interface CompleteGovDistType extends z.infer<typeof _GovDistTypeModel> {
  */
 export const GovDistTypeModel: z.ZodSchema<CompleteGovDistType> = z.lazy(() =>
 	_GovDistTypeModel.extend({
+		govDist: GovDistModel.array(),
 		translationKey: TranslationKeyModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		GovDist: GovDistModel.array(),
 	})
 )

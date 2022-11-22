@@ -30,7 +30,7 @@ export interface CompleteNavigation extends z.infer<typeof _NavigationModel> {
 	children: CompleteNavigation[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -45,6 +45,6 @@ export const NavigationModel: z.ZodSchema<CompleteNavigation> = z.lazy(() =>
 		children: NavigationModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

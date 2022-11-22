@@ -26,7 +26,7 @@ export interface CompleteSocialMediaLink extends z.infer<typeof _SocialMediaLink
 	translationKey: CompleteTranslationKey
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -39,6 +39,6 @@ export const SocialMediaLinkModel: z.ZodSchema<CompleteSocialMediaLink> = z.lazy
 		translationKey: TranslationKeyModel,
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

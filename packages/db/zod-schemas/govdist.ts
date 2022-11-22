@@ -52,12 +52,12 @@ export interface CompleteGovDist extends z.infer<typeof _GovDistModel> {
 	parent?: CompleteGovDist | null
 	subDistricts: CompleteGovDist[]
 	translationKey: CompleteTranslationKey
-	OrgLocation: CompleteOrgLocation[]
+	orgLocation: CompleteOrgLocation[]
+	orgReview: CompleteOrgReview[]
+	user: CompleteUser[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
-	OrgReview: CompleteOrgReview[]
-	User: CompleteUser[]
-	InternalNote: CompleteInternalNote[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -72,11 +72,12 @@ export const GovDistModel: z.ZodSchema<CompleteGovDist> = z.lazy(() =>
 		parent: GovDistModel.nullish(),
 		subDistricts: GovDistModel.array(),
 		translationKey: TranslationKeyModel,
-		OrgLocation: OrgLocationModel.array(),
+		/** Tables using GovDist */
+		orgLocation: OrgLocationModel.array(),
+		orgReview: OrgReviewModel.array(),
+		user: UserModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
-		OrgReview: OrgReviewModel.array(),
-		User: UserModel.array(),
-		InternalNote: InternalNoteModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

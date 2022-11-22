@@ -2,6 +2,8 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AttributeModel,
+	CompleteAttribute,
 	CompleteInternalNote,
 	CompleteOrgDescription,
 	CompleteOrgEmail,
@@ -60,6 +62,7 @@ export interface CompleteOrganization extends z.infer<typeof _OrganizationModel>
 	orgSocialMedia: CompleteOrgSocialMedia[]
 	userList: CompleteUserSavedList[]
 	reviews: CompleteOrgReview[]
+	attributes: CompleteAttribute[]
 	associatedUsers: CompleteUser[]
 	allowedEditors: CompletePermissionAsset[]
 	outsideApi?: CompleteOutsideAPI | null
@@ -85,6 +88,7 @@ export const OrganizationModel: z.ZodSchema<CompleteOrganization> = z.lazy(() =>
 		orgSocialMedia: OrgSocialMediaModel.array(),
 		userList: UserSavedListModel.array(),
 		reviews: OrgReviewModel.array(),
+		attributes: AttributeModel.array(),
 		associatedUsers: UserModel.array(),
 		allowedEditors: PermissionAssetModel.array(),
 		outsideApi: OutsideAPIModel.nullish(),
