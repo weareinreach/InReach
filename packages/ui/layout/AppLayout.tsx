@@ -2,7 +2,8 @@ import { type ReactNode } from 'react'
 
 import { AppShell } from '@mantine/core'
 
-import { FooterSection, type FooterSectionProps, Nav } from '../components/layout'
+import { FooterSection, type FooterSectionProps } from '../components/layout/Footer'
+import { Nav, type NavItem } from '../components/layout/Nav'
 
 export const AppLayout = ({ children, navItems, footerLinks, socialMedia }: Props) => {
 	return (
@@ -20,9 +21,4 @@ type Props = {
 	navItems: NavItem[]
 	footerLinks: FooterSectionProps['links']
 	socialMedia: FooterSectionProps['socialMedia']
-}
-
-export type NavItem = {
-	key: string
-	href: string
 }

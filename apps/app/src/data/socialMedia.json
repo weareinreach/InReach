@@ -1,33 +1,32 @@
 [
 	{
-		"iconCode": "fa6-brands:facebook-f",
 		"key": "facebook",
-		"href": "#"
+		"href": "#",
+		"icon": "fa6-brands:facebook-f"
 	},
 	{
-		"iconCode": "fa6-brands:twitter",
 		"key": "twitter",
-		"href": "#"
+		"href": "#",
+		"icon": "fa6-brands:twitter"
 	},
 	{
-		"iconCode": "fa6-brands:linkedin-in",
 		"key": "linkedin",
-		"href": "#"
+		"href": "#",
+		"icon": "fa6-brands:linkedin-in"
 	},
 	{
-		"iconCode": "fa6-regular:envelope",
 		"key": "email",
-		"href": "#"
+		"href": "#",
+		"icon": "fa6-regular:envelope"
 	},
-
 	{
-		"iconCode": "fa6-brands:instagram",
 		"key": "instagram",
-		"href": "#"
+		"href": "#",
+		"icon": "fa6-brands:instagram"
 	},
 	{
-		"iconCode": "fa6-brands:youtube",
 		"key": "youtube",
-		"href": "#"
+		"href": "#",
+		"icon": "fa6-brands:youtube"
 	}
 ]
