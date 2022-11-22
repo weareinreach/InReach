@@ -1,9 +1,14 @@
 {
-	"asian": "crwdns8339:0crwdne8339:0",
-	"biracialmultiracial": "crwdns8341:0crwdne8341:0",
-	"black": "crwdns8343:0crwdne8343:0",
-	"ethnicity": "crwdns8345:0crwdne8345:0",
-	"hawaiianpacific-islander": "crwdns8347:0crwdne8347:0",
+	"eth-black": "crwdns9711:0crwdne9711:0",
+	"eth-asian": "crwdns9713:0crwdne9713:0",
+	"type-system": "crwdns9715:0crwdne9715:0",
+	"eth-middle-easternnorth-african": "crwdns9717:0crwdne9717:0",
+	"eth-latinoaxhispanic": "crwdns9719:0crwdne9719:0",
+	"eth-south-asian": "crwdns9721:0crwdne9721:0",
+	"eth-biracialmultiracial": "crwdns9723:0crwdne9723:0",
+	"eth-american-indiannative-americanindigenous-person": "crwdns9725:0crwdne9725:0",
+	"eth-native-hawaiianpacific-islander": "crwdns9727:0crwdne9727:0",
+	"eth-white": "crwdns9729:0crwdne9729:0",
 	"identity": "crwdns8349:0crwdne8349:0",
 	"identity-ally": "crwdns8351:0crwdne8351:0",
 	"identity-asexual": "crwdns8353:0crwdne8353:0",
@@ -24,10 +29,5 @@
 	"immigration-asylum-seeker": "crwdns8383:0crwdne8383:0",
 	"immigration-dreamer": "crwdns8385:0crwdne8385:0",
 	"immigration-immigrant": "crwdns8387:0crwdne8387:0",
-	"immigration-refugee": "crwdns8389:0crwdne8389:0",
-	"latinx": "crwdns8391:0crwdne8391:0",
-	"middle-easternnorth-african": "crwdns8393:0crwdne8393:0",
-	"nativeindigenous": "crwdns8395:0crwdne8395:0",
-	"south-asian": "crwdns8397:0crwdne8397:0",
-	"white": "crwdns8399:0crwdne8399:0"
+	"immigration-refugee": "crwdns8389:0crwdne8389:0"
 }
