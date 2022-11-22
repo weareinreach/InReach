@@ -3,7 +3,7 @@ generator client {
   previewFeatures = ["fieldReference", "postgresqlExtensions"]
   output          = "../../../node_modules/.prisma/client"
   // uncomment below when building aws-lambda
-  // binaryTargets   = ["native", "rhel-openssl-1.0.x"]
+  binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
 generator docs {
@@ -191,22 +191,22 @@ model User {
   updateTranslationNamespace TranslationNamespace[] @relation("updateTranslationNamespace")
   createTranslationKey       TranslationKey[]       @relation("createTranslationKey")
   updateTranslationKey       TranslationKey[]       @relation("updateTranslationKey")
-  createTranslation          Translation[]          @relation("createTranslation")
-  updateTranslation          Translation[]          @relation("updateTranslation")
   createSocialMediaService   SocialMediaService[]   @relation("createSocialMediaService")
   updateSocialMediaService   SocialMediaService[]   @relation("updateSocialMediaService")
   createUserRole             UserRole[]             @relation("createUserRole")
   updateUserRole             UserRole[]             @relation("updateUserRole")
   createPermissionItem       PermissionItem[]       @relation("createPermissionItem")
   updatePermissionItem       PermissionItem[]       @relation("updatePermissionItem")
-  createTranslationVariable  TranslationVariable[]  @relation("createTranslationVariable")
-  updateTranslationVariable  TranslationVariable[]  @relation("updateTranslationVariable")
   createOutsideAPI           OutsideAPI[]           @relation("createOutsideAPI")
   updateOutsideAPI           OutsideAPI[]           @relation("updateOutsideAPI")
   createGovDistType          GovDistType[]          @relation("createGovDistType")
   updateGovDistType          GovDistType[]          @relation("updateGovDistType")
   createNavigation           Navigation[]           @relation("createNavigation")
   updateNavigation           Navigation[]           @relation("updateNavigation")
+  createFooterLink           FooterLink[]           @relation("createFooter")
+  updateFooterLink           FooterLink[]           @relation("updateFooter")
+  createSocialMediaLink      SocialMediaLink[]      @relation("createSocialMediaLink")
+  updateSocialMediaLink      SocialMediaLink[]      @relation("updateSocialMediaLink")
 }
 
 /// User Role - Contains array of granular permissions
@@ -897,7 +897,6 @@ model Language {
   primary      Boolean @default(false)
 
   // fields using records
-  translations    Translation[]
   orgDescriptions OrgDescription[]
   OrgService      OrgService[]
   User            User[]
@@ -915,7 +914,7 @@ model Language {
 }
 
 //
-// Translation tables for text content.
+// Translation tables for database values.
 //
 
 // Top level category for i18next
@@ -937,20 +936,16 @@ model TranslationNamespace {
 
 // Item key - i18next
 model TranslationKey {
-  id           String               @id @default(cuid()) /// @zod.custom(imports.cuid)
+  id          String               @id @default(cuid()) /// @zod.custom(imports.cuid)
   /// Item key
-  key          String
+  key         String
+  /// Base string
+  text        String
+  /// Context
+  context     String?
   /// Associated namespace
-  namespace    TranslationNamespace @relation(fields: [namespaceId], references: [id])
-  namespaceId  String /// @zod.custom(imports.cuid)
-  translations Translation[]
-
-  // associate variables to be used in translation (for dynamic content [plurals, ordinals, etc])
-  // https://www.i18next.com/translation-function/plurals
-  // example: "You have {#) new {message}" where {message} could be plural
-  variables TranslationVariable[]
-  // is this the root translation?
-  isBase    Boolean               @default(true)
+  namespace   TranslationNamespace @relation(fields: [namespaceId], references: [id])
+  namespaceId String /// @zod.custom(imports.cuid)
 
   // to manage plurals & ordinals
   parent   TranslationKey?  @relation("translationSubItems", fields: [parentId], references: [id])
@@ -968,64 +963,20 @@ model TranslationKey {
   Country         Country[]
   GovDist         GovDist[]
   GovDistType     GovDistType[]
+  Navigation      Navigation[]
 
-  createdAt    DateTime       @default(now())
-  createdBy    User?          @relation("createTranslationKey", fields: [createdById], references: [id])
-  createdById  String? /// @zod.custom(imports.cuid)
-  updatedAt    DateTime       @updatedAt
-  updatedBy    User?          @relation("updateTranslationKey", fields: [updatedById], references: [id])
-  updatedById  String? /// @zod.custom(imports.cuid)
-  InternalNote InternalNote[]
+  createdAt       DateTime          @default(now())
+  createdBy       User?             @relation("createTranslationKey", fields: [createdById], references: [id])
+  createdById     String? /// @zod.custom(imports.cuid)
+  updatedAt       DateTime          @updatedAt
+  updatedBy       User?             @relation("updateTranslationKey", fields: [updatedById], references: [id])
+  updatedById     String? /// @zod.custom(imports.cuid)
+  InternalNote    InternalNote[]
+  FooterLink      FooterLink[]
+  SocialMediaLink SocialMediaLink[]
 
   /// Only 1 key per namespace
   @@unique([key, namespaceId])
-}
-
-/// Translation of TranslationNamespace.TranslationKey
-model Translation {
-  id   String @id @default(cuid()) /// @zod.custom(imports.cuid)
-  text String
-
-  language Language @relation(fields: [langId], references: [id])
-  langId   String /// @zod.custom(imports.cuid)
-
-  key   TranslationKey @relation(fields: [keyId], references: [id])
-  keyId String /// @zod.custom(imports.cuid)
-
-  createdAt    DateTime       @default(now())
-  createdBy    User           @relation("createTranslation", fields: [createdById], references: [id])
-  createdById  String /// @zod.custom(imports.cuid)
-  updatedAt    DateTime       @updatedAt
-  updatedBy    User           @relation("updateTranslation", fields: [updatedById], references: [id])
-  updatedById  String /// @zod.custom(imports.cuid)
-  InternalNote InternalNote[]
-
-  @@unique([langId, keyId])
-}
-
-// define variables to be used in translations
-model TranslationVariable {
-  id          String       @id @default(cuid()) /// @zod.custom(imports.cuid)
-  name        String
-  description String
-  type        VariableType
-
-  keys TranslationKey[]
-
-  createdAt    DateTime       @default(now())
-  createdBy    User           @relation("createTranslationVariable", fields: [createdById], references: [id])
-  createdById  String /// @zod.custom(imports.cuid)
-  updatedAt    DateTime       @updatedAt
-  updatedBy    User           @relation("updateTranslationVariable", fields: [updatedById], references: [id])
-  updatedById  String /// @zod.custom(imports.cuid)
-  InternalNote InternalNote[]
-}
-
-// types of variables
-enum VariableType {
-  CARDINAL // for plurals - (0 = no cats, 1 = a cat, 3 = a few cats)
-  ORDINAL // (1st, 2nd, 3rd, 4th...)
-  VALUE // a value that will be injected (ex: name --- "Hello {{name}}")
 }
 
 /// Define outside APIs in use
@@ -1086,6 +1037,9 @@ model Navigation {
   isParent Boolean @default(true)
   icon     String?
 
+  translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
+  translationKeyId String
+
   parentItem Navigation?  @relation(name: "navHeirarchy", fields: [parentId], references: [id])
   parentId   String? /// @zod.custom(imports.cuid)
   children   Navigation[] @relation("navHeirarchy")
@@ -1097,6 +1051,47 @@ model Navigation {
   updatedBy    User           @relation("updateNavigation", fields: [updatedById], references: [id])
   updatedById  String /// @zod.custom(imports.cuid)
   InternalNote InternalNote[]
+
+  @@unique([display, href])
+}
+
+model FooterLink {
+  id               String         @id @default(cuid()) /// @zod.custom(imports.cuid)
+  display          String
+  href             String
+  icon             String?
+  translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
+  translationKeyId String
+
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createFooter", fields: [createdById], references: [id])
+  createdById  String /// @zod.custom(imports.cuid)
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateFooter", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.custom(imports.cuid)
+  InternalNote InternalNote[]
+
+  @@unique([display, href])
+}
+
+model SocialMediaLink {
+  id      String @id @default(cuid()) /// @zod.custom(imports.cuid)
+  service String
+  href    String
+  icon    String
+
+  translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])
+  translationKeyId String
+
+  createdAt    DateTime       @default(now())
+  createdBy    User           @relation("createSocialMediaLink", fields: [createdById], references: [id])
+  createdById  String /// @zod.custom(imports.cuid)
+  updatedAt    DateTime       @updatedAt
+  updatedBy    User           @relation("updateSocialMediaLink", fields: [updatedById], references: [id])
+  updatedById  String /// @zod.custom(imports.cuid)
+  InternalNote InternalNote[]
+
+  @@unique([service, href])
 }
 
 /// Internal notes - multipurpose
@@ -1138,19 +1133,19 @@ model InternalNote {
   translationNamespaceId String? /// @zod.custom(imports.cuid)
   translationKey         TranslationKey?       @relation(fields: [translationKeyId], references: [id])
   translationKeyId       String? /// @zod.custom(imports.cuid)
-  translation            Translation?          @relation(fields: [translationId], references: [id])
-  translationId          String? /// @zod.custom(imports.cuid)
-  translationVariable    TranslationVariable?  @relation(fields: [translationVariableId], references: [id])
-  translationVariableId  String? /// @zod.custom(imports.cuid)
   outsideApi             OutsideAPI?           @relation(fields: [outsideApiId], references: [id])
   outsideApiId           String? /// @zod.custom(imports.cuid)
   navigation             Navigation?           @relation(fields: [navigationId], references: [id])
   navigationId           String? /// @zod.custom(imports.cuid)
+  footerLink             FooterLink?           @relation(fields: [footerLinkId], references: [id])
+  footerLinkId           String? /// @zod.custom(imports.cuid)
 
-  createdAt   DateTime @default(now())
-  createdBy   User     @relation("createInternalNote", fields: [createdById], references: [id])
-  createdById String /// @zod.custom(imports.cuid)
-  updatedAt   DateTime @updatedAt
-  updatedBy   User     @relation("updateInternalNote", fields: [updatedById], references: [id])
-  updatedById String /// @zod.custom(imports.cuid)
+  createdAt         DateTime         @default(now())
+  createdBy         User             @relation("createInternalNote", fields: [createdById], references: [id])
+  createdById       String /// @zod.custom(imports.cuid)
+  updatedAt         DateTime         @updatedAt
+  updatedBy         User             @relation("updateInternalNote", fields: [updatedById], references: [id])
+  updatedById       String /// @zod.custom(imports.cuid)
+  SocialMediaLink   SocialMediaLink? @relation(fields: [socialMediaLinkId], references: [id])
+  socialMediaLinkId String?
 }

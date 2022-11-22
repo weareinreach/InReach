@@ -1,5 +1,9 @@
 import { Listr, ListrRenderer, ListrTaskWrapper } from 'listr2'
 
+import { seedNavigation } from '~/seed/starter/05-navigation'
+import { seedFooterLinks } from '~/seed/starter/06-footerLinks'
+import { seedSocialMediaLinks } from '~/seed/starter/07-socialMediaLinks'
+
 import { seedSystemUser } from './01-user'
 import { seedLanguages } from './02-languages'
 import { seedEthnicities } from './03-ethnicities'
@@ -33,6 +37,21 @@ const tasks = new Listr<Context>(
 					{
 						title: 'Countries',
 						task: async (_ctx, task): Promise<void> => seedCountries(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Navigation Bar Links',
+						task: async (_ctx, task): Promise<void> => seedNavigation(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Footer Links',
+						task: async (_ctx, task): Promise<void> => seedFooterLinks(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Social Media Links',
+						task: async (_ctx, task): Promise<void> => seedSocialMediaLinks(task),
 						options: renderOptions,
 					},
 				]),

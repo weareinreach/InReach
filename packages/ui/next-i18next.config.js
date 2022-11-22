@@ -7,8 +7,8 @@
  */
 const config = {
 	i18n: {
-		defaultLocale: 'en-US',
-		locales: ['en-US', 'en-CA', 'en-MX', 'es', 'es-US', 'es-MX'],
+		defaultLocale: 'en',
+		locales: ['en', 'en-US', 'en-CA', 'en-MX', 'es', 'es-US', 'es-MX'],
 	},
 	reloadOnPrerender: process.env.NODE_ENV !== 'production',
 	nonExplicitSupportedLngs: true,
