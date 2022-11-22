@@ -16,18 +16,16 @@ jobs:
 
       - name: crowdin action
         uses: crowdin/github-action@1.5.1
-        with:
-          # upload_translations: true
-          download_translations: true
-          localization_branch_name: l10n_crowdin_action
-          create_pull_request: true
-          pull_request_title: 'New Crowdin translations'
-          pull_request_body: 'New Crowdin pull request with translations'
-          pull_request_labels: 'translations'
-          pull_request_base_branch_name: ${{ github.ref_name }}
-          add_crowdin_branch: ${{ github.ref_name }}
-
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+        with:
+          upload_translations: true
+          download_translations: true
+          localization_branch_name: l10n_crowdin_action
+          create_pull_request: true
+          pull_request_body: 'New Crowdin pull request with translations'
+          pull_request_labels: 'translations'
+          pull_request_base_branch_name: ${{ github.ref_name }}
+          crowdin_branch_name: ${{ github.ref_name }}
