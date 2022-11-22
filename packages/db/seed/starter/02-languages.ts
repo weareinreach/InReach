@@ -14,6 +14,7 @@ export const seedLanguages = async (task: ListrTaskWrapper<unknown, typeof Listr
 			await prisma.language.upsert(item)
 			i++
 		}
+		task.title = `Languages (${i - 1} records)`
 	} catch (err) {
 		throw err
 	}

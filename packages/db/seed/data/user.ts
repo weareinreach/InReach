@@ -1,6 +1,6 @@
 import { type Prisma } from '@prisma/client'
 
-import { namespaces } from './translations'
+import { namespaces } from './namespaces'
 
 export const userEmail = 'inreach_svc@inreach.org'
 export const localeCode = 'en'
@@ -43,6 +43,8 @@ export const seedUser: Prisma.UserCreateInput = {
 				translationKey: {
 					create: {
 						key: translationKey,
+						text: userType,
+						context: 'User type: system user',
 						namespace: {
 							connectOrCreate: {
 								where: {
@@ -68,3 +70,6 @@ export const connectUser = {
 export const createdBy = connectUser
 
 export const updatedBy = connectUser
+
+export const createMeta = { createdBy, updatedBy }
+export const updateMeta = { updatedBy }
