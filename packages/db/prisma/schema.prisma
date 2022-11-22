@@ -947,16 +947,16 @@ model GovDistType {
 /// Languages - ETF BCP 47 language tag
 ///  top level & regional locale (ex: 'en', "en-us", "en-ca")
 model Language {
-  id           String  @id @default(cuid()) /// @zod.custom(imports.cuid)
-  languageName String
+  id                 String  @id @default(cuid()) /// @zod.custom(imports.cuid)
+  languageName       String
   /// ETF BCP 47 language tag
-  localeCode   String  @unique
+  localeCode         String  @unique
   /// ISO 639-2
-  iso6392      String? @db.Char(3)
+  iso6392            String? @db.Char(3)
   /// Language name in it's language.
-  nativeName   String
-  /// Is this a top level locale (not region specific)?
-  primary      Boolean @default(false)
+  nativeName         String
+  /// Is this language being actively used for translations?
+  activelyTranslated Boolean @default(false)
 
   // fields using records
   orgDescriptions OrgDescription[]
