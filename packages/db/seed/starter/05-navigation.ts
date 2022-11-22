@@ -1,8 +1,8 @@
 import { prisma } from '~/index'
-import { namespaces } from '~/seed/data/namespaces'
-import { navigation } from '~/seed/data/navigation'
-import { createMeta } from '~/seed/data/user'
-import { ListrTask } from '~/seed/starter'
+import { namespaces } from '~/seed/data/00-namespaces'
+import { createMeta } from '~/seed/data/01-user'
+import { navigation } from '~/seed/data/05-navigation'
+import { ListrTask } from '~/seed/starterData'
 
 export const seedNavigation = async (task: ListrTask) => {
 	try {

@@ -1,6 +1,6 @@
 import { type Prisma } from '@prisma/client'
 
-import { namespaces } from './namespaces'
+import { namespaces } from './00-namespaces'
 
 export const userEmail = 'inreach_svc@inreach.org'
 export const localeCode = 'en'

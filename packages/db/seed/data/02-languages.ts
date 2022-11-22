@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client'
 
 import { prisma } from '~/index'
 
-import { connectUser } from './user'
+import { connectUser } from './01-user'
 
 const languages = [
 	{

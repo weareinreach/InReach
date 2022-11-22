@@ -1,74 +1,9 @@
-import { Listr, ListrRenderer, ListrTaskWrapper } from 'listr2'
-
-import { seedNavigation } from '~/seed/starter/05-navigation'
-import { seedFooterLinks } from '~/seed/starter/06-footerLinks'
-import { seedSocialMediaLinks } from '~/seed/starter/07-socialMediaLinks'
-
-import { seedSystemUser } from './01-user'
-import { seedLanguages } from './02-languages'
-import { seedEthnicities } from './03-ethnicities'
-import { seedCountries } from './04-countries'
-
-const renderOptions = {
-	bottomBar: 10,
-}
-
-const tasks = new Listr<Context>(
-	[
-		{
-			title: 'Seeding basic data...',
-			task: (_ctx, task): Listr =>
-				task.newListr([
-					{
-						title: 'System user',
-						task: async (_ctx, task): Promise<void> => seedSystemUser(task),
-						options: renderOptions,
-					},
-					{
-						title: 'Languages',
-						task: async (_ctx, task): Promise<void> => seedLanguages(task),
-						options: renderOptions,
-					},
-					{
-						title: 'Ethnicities',
-						task: async (_ctx, task): Promise<void> => seedEthnicities(task),
-						options: renderOptions,
-					},
-					{
-						title: 'Countries',
-						task: async (_ctx, task): Promise<void> => seedCountries(task),
-						options: renderOptions,
-					},
-					{
-						title: 'Navigation Bar Links',
-						task: async (_ctx, task): Promise<void> => seedNavigation(task),
-						options: renderOptions,
-					},
-					{
-						title: 'Footer Links',
-						task: async (_ctx, task): Promise<void> => seedFooterLinks(task),
-						options: renderOptions,
-					},
-					{
-						title: 'Social Media Links',
-						task: async (_ctx, task): Promise<void> => seedSocialMediaLinks(task),
-						options: renderOptions,
-					},
-				]),
-			options: renderOptions,
-		},
-	],
-	{
-		rendererOptions: {
-			collapse: false,
-			showTimer: true,
-		},
-	}
-)
-
-tasks.run()
-
-export type Context = {
-	error?: boolean
-}
-export type ListrTask = ListrTaskWrapper<unknown, typeof ListrRenderer>
+// codegen:start {preset: barrel, include: ./*.ts}
+export * from './01-user'
+export * from './02-languages'
+export * from './03-ethnicities'
+export * from './04-countries'
+export * from './05-navigation'
+export * from './06-footerLinks'
+export * from './07-socialMediaLinks'
+// codegen:end

@@ -1,8 +1,8 @@
 import { prisma } from '~/index'
-import { footerLinks } from '~/seed/data/footerLink'
-import { namespaces } from '~/seed/data/namespaces'
-import { createMeta } from '~/seed/data/user'
-import { ListrTask } from '~/seed/starter'
+import { namespaces } from '~/seed/data/00-namespaces'
+import { createMeta } from '~/seed/data/01-user'
+import { footerLinks } from '~/seed/data/06-footerLink'
+import { ListrTask } from '~/seed/starterData'
 
 export const seedFooterLinks = async (task: ListrTask) => {
 	try {
