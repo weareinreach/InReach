@@ -30,7 +30,7 @@
 		"@weareinreach/ui": "0.100.0",
 		"i18next": "22.0.6",
 		"next": "13.0.5-canary.2",
-		"next-auth": "4.17",
+		"next-auth": "4.17.0",
 		"next-i18next": "12.1.0",
 		"next-transpile-modules": "10.0.0",
 		"react": "18.2.0",
