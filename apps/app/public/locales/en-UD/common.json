@@ -11,18 +11,9 @@
 	"none-apply": "crwdns7805:0crwdne7805:0",
 	"other-specify": "crwdns7807:0crwdne7807:0",
 	"prefer-not-to-say": "crwdns7809:0crwdne7809:0",
-	"safety-exit": "crwdns7811:0crwdne7811:0",
 	"saved-lists": "crwdns7813:0crwdne7813:0",
 	"settings": "crwdns7815:0crwdne7815:0",
 	"sign-up": "crwdns7817:0crwdne7817:0",
 	"user-avatar": "crwdns7819:0crwdne7819:0",
-	"your-comments": "crwdns7821:0crwdne7821:0",
-	"powered-by-vercel": "crwdns7823:0crwdne7823:0",
-	"suggest-a-resource": "crwdns7825:0crwdne7825:0",
-	"subscribe-to-newsletter": "crwdns7827:0crwdne7827:0",
-	"share-feedback": "crwdns7829:0crwdne7829:0",
-	"disclaimer": "crwdns7831:0crwdne7831:0",
-	"privacy-statement": "crwdns7833:0crwdne7833:0",
-	"download-app": "crwdns7835:0crwdne7835:0",
-	"copyright": "crwdns7837:0{{year}}crwdne7837:0"
+	"your-comments": "crwdns7821:0crwdne7821:0"
 }
