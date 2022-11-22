@@ -304,7 +304,6 @@ importers:
 
   packages/db:
     specifiers:
-      '@anatine/zod-mock': 3.6.0
       '@faker-js/faker': 7.6.0
       '@prisma/client': 4.6.1
       '@types/node': 16.18.3
@@ -324,7 +323,6 @@ importers:
       eslint-plugin-simple-import-sort: 8.0.0
       eslint-plugin-turbo: 0.0.4
       inquirer: 9.1.4
-      iso-3166-2: 1.0.0
       listr2: 5.0.5
       mongoback: 3.0.3
       prisma: 4.6.1
@@ -344,7 +342,6 @@ importers:
       prisma-query-inspector: 1.4.4
       zod: 3.19.1
     devDependencies:
-      '@anatine/zod-mock': 3.6.0_@faker-js+faker@7.6.0
       '@faker-js/faker': 7.6.0
       '@types/node': 16.18.3
       '@types/recursive-readdir': 2.2.1
@@ -363,7 +360,6 @@ importers:
       eslint-plugin-simple-import-sort: 8.0.0_eslint@8.28.0
       eslint-plugin-turbo: 0.0.4_eslint@8.28.0
       inquirer: 9.1.4
-      iso-3166-2: 1.0.0
       listr2: 5.0.5
       mongoback: 3.0.3
       prisma: 4.6.1
@@ -617,15 +613,6 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.1.1
       '@jridgewell/trace-mapping': 0.3.17
-
-  /@anatine/zod-mock/3.6.0_@faker-js+faker@7.6.0:
-    resolution: {integrity: sha512-xW7TuAr2dRS8J0Th0w/fAf3rJqDcYJvvpy1uuWvxVoEIs835f7BcqmYoL+rN5PjFU1E6gqa8rxXF3mo9bQt57g==}
-    peerDependencies:
-      '@faker-js/faker': ^7.0.0
-    dependencies:
-      '@faker-js/faker': 7.6.0
-      randexp: 0.5.3
-    dev: true
 
   /@aws-crypto/ie11-detection/2.0.2:
     resolution: {integrity: sha512-5XDMQY98gMAf/WRTic5G++jfmS/VLM0rwpiOpaainKi4L0nqWMSB1SzsrEG5rjFZGYN6ZAefO+/Yta2dFM0kMw==}
@@ -10540,11 +10527,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /drange/1.1.1:
-    resolution: {integrity: sha512-pYxfDYpued//QpnLIm4Avk7rsNtAtQkUES2cwAYSvD/wd2pKD71gN2Ebj3e7klzXwjocvE8c5vx/1fxwpqmSxA==}
-    engines: {node: '>=4'}
-    dev: true
-
   /duplexer/0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
     dev: false
@@ -13893,10 +13875,6 @@ packages:
   /isexe/2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
-  /iso-3166-2/1.0.0:
-    resolution: {integrity: sha512-xLAazfKZzwlsg/Zz/GQGQk3jJez5/2ORrjD3TjSuqz/arMht/xTK49c0GOE3afO/gEd9tHtBVVlfBla01unUng==}
-    dev: true
-
   /isobject/2.1.0:
     resolution: {integrity: sha512-+OUdGJlgjOBZDfxnDjYYG6zp487z0JGNQq3cYQYg5f5hKR+syHMsaztzGeml/4kGG55CSpKSpWTY+jYGgsHLgA==}
     engines: {node: '>=0.10.0'}
@@ -17187,14 +17165,6 @@ packages:
     resolution: {integrity: sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==}
     dev: true
 
-  /randexp/0.5.3:
-    resolution: {integrity: sha512-U+5l2KrcMNOUPYvazA3h5ekF80FHTUG+87SEAmHZmolh1M+i/WyTCxVzmi+tidIa1tM4BSe8g2Y/D3loWDjj+w==}
-    engines: {node: '>=4'}
-    dependencies:
-      drange: 1.1.1
-      ret: 0.2.2
-    dev: true
-
   /randombytes/2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
     dependencies:
@@ -17930,11 +17900,6 @@ packages:
   /ret/0.1.15:
     resolution: {integrity: sha512-TTlYpa+OL+vMMNG24xSlQGEJ3B/RzEfUlLct7b5G/ytav+wPrplCpVMFuwzXbkecJrb6IYo1iFb0S9v37754mg==}
     engines: {node: '>=0.12'}
-    dev: true
-
-  /ret/0.2.2:
-    resolution: {integrity: sha512-M0b3YWQs7R3Z917WRQy1HHA7Ba7D8hvZg6UE5mLykJxQVE2ju0IXbGlaHPPlkY+WN7wFP+wUMXmBFA0aV6vYGQ==}
-    engines: {node: '>=4'}
     dev: true
 
   /retry/0.13.1:
