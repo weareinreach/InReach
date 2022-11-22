@@ -59,13 +59,23 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export interface FooterSectionProps {
-	links: { href: string; key: string }[]
-	socialMedia: { iconCode: string; key: string; href: string }[]
+	links: FooterLink[]
+	socialMedia: SocialMediaLink[]
+}
+export type FooterLink = {
+	href: string
+	key: string
+	icon?: string
+}
+export type SocialMediaLink = {
+	icon: string
+	key: string
+	href: string
 }
 
 export const FooterSection = ({ links, socialMedia }: FooterSectionProps) => {
 	const { classes } = useStyles()
-	const { t } = useTranslation('common')
+	const { t } = useTranslation(['footer', 'socialMedia'])
 	const { colors } = useMantineTheme()
 	const items = links.map((link) => (
 		<Link
@@ -82,7 +92,7 @@ export const FooterSection = ({ links, socialMedia }: FooterSectionProps) => {
 	const socialLinks = socialMedia.map((service) => (
 		<ActionIcon key={service.key} component={Link} href={service.href} title={t(service.key)}>
 			<Icon
-				icon={service.iconCode}
+				icon={service.icon}
 				height='1.5rem'
 				color={colors.inReachSecondaryRegular[5]}
 				style={{ lineHeight: '1rem' }}

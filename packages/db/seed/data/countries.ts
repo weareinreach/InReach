@@ -1,33 +1,17 @@
 import axios from 'axios'
 
-import { prisma } from '~/index'
-
-import { getPrimaryLanguages } from './languages'
-import { userEmail } from './user'
-
 export const countryData = async () => {
 	const { data: countries } = await axios.get<Array<Countries>>(
-		'https://restcountries.com/v3.1/all?fields=name,translations,cca2,cca3,flag,idd'
+		'https://restcountries.com/v3.1/all?fields=name,cca2,cca3,flag,idd'
 	)
 
-	const languageList = await getPrimaryLanguages()
-
-	const { id: userId } = await prisma.user.findUniqueOrThrow({
-		where: {
-			email: userEmail,
-		},
-		select: {
-			id: true,
-		},
-	})
-	return { countries, languageList, userId }
+	return { countries }
 }
 
 export interface Countries {
 	name: Name
 	cca2: string
 	cca3: string
-	translations: { [key: string]: Translation }
 	flag: string
 	idd: Idd
 }
@@ -35,13 +19,8 @@ export interface Countries {
 interface Name {
 	common: string
 	official: string
-	nativeName: { [key: string]: Translation }
 }
 
-interface Translation {
-	official: string
-	common: string
-}
 interface Idd {
 	root: string
 	suffixes: string[]

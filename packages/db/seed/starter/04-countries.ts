@@ -1,46 +1,23 @@
-import { Prisma } from '@prisma/client'
-
 import { prisma } from '~/index'
 
 import { ListrTask } from '.'
 import { type Countries, countryData } from '../data/countries'
-import { namespaces } from '../data/translations'
+import { namespaces } from '../data/namespaces'
 import { createdBy, updatedBy } from '../data/user'
 import { logFile } from '../logger'
 
-const translationNamespace = namespaces.common
-const translationKey = (item: string) => `country-${item}`
+const translationNamespace = namespaces.country
 
 export const seedCountries = async (task: ListrTask) => {
 	try {
-		const { countries, languageList, userId } = await countryData()
+		const { countries } = await countryData()
 
-		const prismaTransaction = async (country: Countries, languages: typeof languageList) => {
+		const prismaTransaction = async (country: Countries) => {
 			const dialCode = () => {
 				if (typeof country.idd.root !== 'number') return undefined
 				if (country.idd.suffixes.length === 1)
 					return parseInt(`${country.idd.root}${country.idd.suffixes[0]}`)
 				return parseInt(country.idd.root)
-			}
-			const translations: Prisma.TranslationCreateManyKeyInput[] = []
-			for (const lang of languages) {
-				if (lang.iso6392 === 'eng') {
-					const text = country.name.common
-					translations.push({
-						langId: lang.id,
-						text,
-						createdById: userId,
-						updatedById: userId,
-					})
-				} else if (lang.iso6392 && typeof country.translations[lang.iso6392].common === 'string') {
-					const text = country.translations[lang.iso6392].common
-					translations.push({
-						langId: lang.id,
-						text,
-						createdById: userId,
-						updatedById: userId,
-					})
-				}
 			}
 			/* Upserting the country. */
 			const prismaCountry = await prisma.country.upsert({
@@ -67,12 +44,8 @@ export const seedCountries = async (task: ListrTask) => {
 									},
 								},
 							},
-							key: translationKey(country.cca3),
-							translations: {
-								createMany: {
-									data: translations,
-								},
-							},
+							key: country.cca3,
+							text: country.name.common,
 							createdBy,
 							updatedBy,
 						},
@@ -87,26 +60,10 @@ export const seedCountries = async (task: ListrTask) => {
 					flag: country.flag,
 					translationKey: {
 						update: {
-							translations: {
-								createMany: {
-									data: translations,
-									skipDuplicates: true,
-								},
-							},
+							text: country.name.common,
 						},
 					},
 					updatedBy,
-				},
-				include: {
-					translationKey: {
-						include: {
-							translations: {
-								select: {
-									text: true,
-								},
-							},
-						},
-					},
 				},
 			})
 			return prismaCountry
@@ -114,13 +71,14 @@ export const seedCountries = async (task: ListrTask) => {
 
 		let i = 1
 		for (const country of countries) {
-			const result = await prismaTransaction(country, languageList)
-			const logMessage = `(${i}/${countries.length}) Upserted Country: '${result.name}' with ${result.translationKey.translations.length} translated names.`
+			const result = await prismaTransaction(country)
+			const logMessage = `(${i}/${countries.length}) Upserted Country: ${result.name}.`
 			logFile.log(logMessage)
 			task.output = logMessage
 
 			i++
 		}
+		task.title = `Countries (${i - 1} records)`
 	} catch (err) {
 		throw err
 	}

@@ -8,7 +8,7 @@ preserve_hierarchy: false
 files:
   [
     {
-      source: '/apps/app/public/locales/en-US/*.json',
+      source: '/apps/app/public/locales/en/*.json',
       translation: '/apps/app/public/locales/%locale%/%original_file_name%',
       type: i18next_json,
       update_option: 'update_as_unapproved',
