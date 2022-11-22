@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./*.ts*, exclude: ./*.stories.*}
+// codegen:start {preset: barrel, include: ./*.tsx, exclude: ./*.stories.tsx}
 export * from './Footer'
 export * from './Nav'
 export * from './SafetyExit'

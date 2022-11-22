@@ -1,5 +1,11 @@
 {
 	"extends": "../../tsconfig.json",
-	"compilerOptions": { "typeRoots": ["./types"], "baseUrl": "." },
-	"include": ["./**/*.ts", "./**/*.tsx", "./.storybook/*.ts"]
+	"compilerOptions": {
+		"typeRoots": ["./types"],
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./*"]
+		}
+	},
+	"include": ["./**/*.ts", "./**/*.tsx", ".storybook/*.ts"]
 }
