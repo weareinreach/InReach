@@ -18,7 +18,7 @@ import {
 	CompleteUserCommunity,
 	CompleteUserEthnicity,
 	CompleteUserImmigration,
-	CompleteUserSOG,
+	CompleteUserSOGIdentity,
 	CompleteUserType,
 	CountryModel,
 	FooterLinkModel,
@@ -34,7 +34,7 @@ import {
 	UserEthnicityModel,
 	UserImmigrationModel,
 	UserModel,
-	UserSOGModel,
+	UserSOGIdentityModel,
 	UserTypeModel,
 } from './index'
 
@@ -61,7 +61,7 @@ export interface CompleteTranslationKey extends z.infer<typeof _TranslationKeyMo
 	userType: CompleteUserType[]
 	userEthnicity: CompleteUserEthnicity[]
 	userImmigration: CompleteUserImmigration[]
-	userSOG: CompleteUserSOG[]
+	userSOGIdentity: CompleteUserSOGIdentity[]
 	userCommunity: CompleteUserCommunity[]
 	serviceCategory: CompleteServiceCategory[]
 	serviceTag: CompleteServiceTag[]
@@ -92,7 +92,7 @@ export const TranslationKeyModel: z.ZodSchema<CompleteTranslationKey> = z.lazy((
 		userType: UserTypeModel.array(),
 		userEthnicity: UserEthnicityModel.array(),
 		userImmigration: UserImmigrationModel.array(),
-		userSOG: UserSOGModel.array(),
+		userSOGIdentity: UserSOGIdentityModel.array(),
 		userCommunity: UserCommunityModel.array(),
 		serviceCategory: ServiceCategoryModel.array(),
 		serviceTag: ServiceTagModel.array(),
