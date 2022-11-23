@@ -44,7 +44,7 @@ import {
 	CompleteUserEthnicity,
 	CompleteUserImmigration,
 	CompleteUserRole,
-	CompleteUserSOG,
+	CompleteUserSOGIdentity,
 	CompleteUserSavedList,
 	CompleteUserTitle,
 	CompleteUserType,
@@ -82,7 +82,7 @@ import {
 	UserEthnicityModel,
 	UserImmigrationModel,
 	UserRoleModel,
-	UserSOGModel,
+	UserSOGIdentityModel,
 	UserSavedListModel,
 	UserTitleModel,
 	UserTypeModel,
@@ -119,7 +119,7 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	sessions: CompleteSession[]
 	ethnicity: CompleteUserEthnicity[]
 	countryOrigin: CompleteCountry[]
-	SOG: CompleteUserSOG[]
+	identifiesAs: CompleteUserSOGIdentity[]
 	communities: CompleteUserCommunity[]
 	permissions: CompletePermissionItem[]
 	PermissionAsset: CompletePermissionAsset[]
@@ -141,8 +141,8 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	updateUserEthnicity: CompleteUserEthnicity[]
 	createUserImmigration: CompleteUserImmigration[]
 	updateUserImmigration: CompleteUserImmigration[]
-	createUserSOG: CompleteUserSOG[]
-	updateUserSOG: CompleteUserSOG[]
+	createUserSOGIdentity: CompleteUserSOGIdentity[]
+	updateUserSOGIdentity: CompleteUserSOGIdentity[]
 	createUserType: CompleteUserType[]
 	updateUserType: CompleteUserType[]
 	createUserCommunity: CompleteUserCommunity[]
@@ -224,7 +224,7 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		sessions: SessionModel.array(),
 		ethnicity: UserEthnicityModel.array(),
 		countryOrigin: CountryModel.array(),
-		SOG: UserSOGModel.array(),
+		identifiesAs: UserSOGIdentityModel.array(),
 		communities: UserCommunityModel.array(),
 		permissions: PermissionItemModel.array(),
 		/** Assets that certain permissible roles are attributed to (edit org, etc) */
@@ -248,8 +248,8 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		updateUserEthnicity: UserEthnicityModel.array(),
 		createUserImmigration: UserImmigrationModel.array(),
 		updateUserImmigration: UserImmigrationModel.array(),
-		createUserSOG: UserSOGModel.array(),
-		updateUserSOG: UserSOGModel.array(),
+		createUserSOGIdentity: UserSOGIdentityModel.array(),
+		updateUserSOGIdentity: UserSOGIdentityModel.array(),
 		createUserType: UserTypeModel.array(),
 		updateUserType: UserTypeModel.array(),
 		createUserCommunity: UserCommunityModel.array(),

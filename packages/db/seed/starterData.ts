@@ -7,6 +7,7 @@ import {
 	seedFooterLinks,
 	seedLanguages,
 	seedNavigation,
+	seedSOGIdentity,
 	seedServices,
 	seedSocialMediaLinks,
 	seedSystemUser,
@@ -65,6 +66,11 @@ const tasks = new Listr<Context>(
 					{
 						title: 'Attribute Categories & Attributes',
 						task: async (_ctx, task): Promise<void> => seedAttributes(task),
+						options: renderOptions,
+					},
+					{
+						title: 'SOG/Identity',
+						task: async (_ctx, task): Promise<void> => seedSOGIdentity(task),
 						options: renderOptions,
 					},
 				]),

@@ -8,4 +8,5 @@ export * from './06-footerLinks'
 export * from './07-socialMediaLinks'
 export * from './08-services'
 export * from './09-attributes'
+export * from './10-sogIdentity'
 // codegen:end
