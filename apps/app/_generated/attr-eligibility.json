@@ -1,0 +1,10 @@
+{
+	"elig-age": "Age eligibility",
+	"time-appointment-required": "Time Appointment Required",
+	"req-medical-insurance": "REQUIRES medical insurance",
+	"req-photo-id": "REQUIRES a photo ID",
+	"req-proof-of-age": "REQUIRES proof of age",
+	"req-proof-of-income": "REQUIRES proof of income",
+	"req-proof-of-residence": "REQUIRES proof of residence",
+	"req-referral": "REQUIRES a referral"
+}
