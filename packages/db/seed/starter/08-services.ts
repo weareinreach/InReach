@@ -1,7 +1,5 @@
-import slugify from 'slugify'
-
 import { prisma } from '~/index'
-import { createMeta, namespaces, serviceData } from '~/seed/data/'
+import { createMeta, keySlug, namespaces, serviceData } from '~/seed/data/'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
@@ -37,7 +35,7 @@ export const seedServices = async (task: ListrTask) => {
 					category,
 					translationKey: {
 						create: {
-							key: slugify(category),
+							key: keySlug(category),
 							text: category,
 							namespaceId,
 						},
@@ -72,7 +70,7 @@ export const seedServices = async (task: ListrTask) => {
 								},
 								translationKey: {
 									create: {
-										key: slugify(record),
+										key: keySlug(record),
 										text: record,
 										namespace: {
 											connect: {
