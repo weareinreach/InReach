@@ -3,7 +3,9 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	AttributeCategoryModel,
+	AttributeSupplementModel,
 	CompleteAttributeCategory,
+	CompleteAttributeSupplement,
 	CompleteInternalNote,
 	CompleteOrgLocation,
 	CompleteOrgService,
@@ -30,6 +32,7 @@ export const _AttributeModel = z.object({
 	keyId: imports.cuid.nullish(),
 	requireLanguage: z.boolean(),
 	requireCountry: z.boolean(),
+	requireSupplemental: z.boolean(),
 	createdAt: z.date(),
 	createdById: imports.cuid,
 	updatedAt: z.date(),
@@ -44,6 +47,7 @@ export interface CompleteAttribute extends z.infer<typeof _AttributeModel> {
 	orgService: CompleteOrgService[]
 	serviceCategory: CompleteServiceCategory[]
 	serviceTag: CompleteServiceTag[]
+	attributeSupplement: CompleteAttributeSupplement[]
 	createdBy: CompleteUser
 	updatedBy: CompleteUser
 	internalNote: CompleteInternalNote[]
@@ -64,6 +68,7 @@ export const AttributeModel: z.ZodSchema<CompleteAttribute> = z.lazy(() =>
 		orgService: OrgServiceModel.array(),
 		serviceCategory: ServiceCategoryModel.array(),
 		serviceTag: ServiceTagModel.array(),
+		attributeSupplement: AttributeSupplementModel.array(),
 		createdBy: UserModel,
 		updatedBy: UserModel,
 		internalNote: InternalNoteModel.array(),

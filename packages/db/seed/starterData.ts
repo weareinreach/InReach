@@ -1,6 +1,7 @@
 import { Listr, ListrRenderer, ListrTaskWrapper } from 'listr2'
 
 import {
+	seedAttributes,
 	seedCountries,
 	seedEthnicities,
 	seedFooterLinks,
@@ -59,6 +60,11 @@ const tasks = new Listr<Context>(
 					{
 						title: 'Service Categories & Tags',
 						task: async (_ctx, task): Promise<void> => seedServices(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Attribute Categories & Attributes',
+						task: async (_ctx, task): Promise<void> => seedAttributes(task),
 						options: renderOptions,
 					},
 				]),
