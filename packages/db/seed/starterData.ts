@@ -11,6 +11,7 @@ import {
 	seedServices,
 	seedSocialMediaLinks,
 	seedSystemUser,
+	seedUserImmigration,
 } from '~/seed/starter'
 
 const renderOptions = {
@@ -71,6 +72,11 @@ const tasks = new Listr<Context>(
 					{
 						title: 'SOG/Identity',
 						task: async (_ctx, task): Promise<void> => seedSOGIdentity(task),
+						options: renderOptions,
+					},
+					{
+						title: 'User Immigration Status',
+						task: async (_ctx, task): Promise<void> => seedUserImmigration(task),
 						options: renderOptions,
 					},
 				]),
