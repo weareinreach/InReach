@@ -1,8 +1,8 @@
+import { SourceType } from '@prisma/client'
 import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import { CompleteOrganization, CompleteUser, OrganizationModel, UserModel } from './index'
-import { SourceType } from '.prisma/client'
 
 export const _SourceModel = z.object({
 	id: imports.cuid,
