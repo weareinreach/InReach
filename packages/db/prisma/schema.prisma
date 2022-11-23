@@ -320,7 +320,7 @@ model UserEthnicity {
 model UserImmigration {
   id     String @id @default(cuid()) /// @zod.custom(imports.cuid)
   ///  use shorthand descriptions - front-end displayable text is defined in Translations
-  status String
+  status String @unique
   users  User[]
 
   translationKey   TranslationKey @relation(fields: [translationKeyId], references: [id])

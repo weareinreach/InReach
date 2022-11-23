@@ -3,7 +3,7 @@ import { createMeta, namespaces, sogIdentityData } from '~/seed/data/'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
-export const seedSOGIdentity = (task: ListrTask) => {
+export const seedSOGIdentity = async (task: ListrTask) => {
 	try {
 		let logMessage = ''
 		const transactions = sogIdentityData.map((record, idx) => {
@@ -33,6 +33,7 @@ export const seedSOGIdentity = (task: ListrTask) => {
 				update: {},
 			})
 		})
+		await prisma.$transaction(transactions)
 		logMessage = `SOG/Identity records added: ${transactions.length}`
 		logFile.log(logMessage)
 		task.output = logMessage
