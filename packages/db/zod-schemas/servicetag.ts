@@ -3,7 +3,9 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	AttributeModel,
+	AttributeSupplementModel,
 	CompleteAttribute,
+	CompleteAttributeSupplement,
 	CompleteInternalNote,
 	CompleteOrgReview,
 	CompleteOrgService,
@@ -30,7 +32,8 @@ export const _ServiceTagModel = z.object({
 })
 
 export interface CompleteServiceTag extends z.infer<typeof _ServiceTagModel> {
-	attributes: CompleteAttribute[]
+	defaultAttributes: CompleteAttribute[]
+	defaultAttributeSupplements: CompleteAttributeSupplement[]
 	translationKey: CompleteTranslationKey
 	category: CompleteServiceCategory
 	orgServices: CompleteOrgService[]
@@ -47,7 +50,8 @@ export interface CompleteServiceTag extends z.infer<typeof _ServiceTagModel> {
  */
 export const ServiceTagModel: z.ZodSchema<CompleteServiceTag> = z.lazy(() =>
 	_ServiceTagModel.extend({
-		attributes: AttributeModel.array(),
+		defaultAttributes: AttributeModel.array(),
+		defaultAttributeSupplements: AttributeSupplementModel.array(),
 		translationKey: TranslationKeyModel,
 		category: ServiceCategoryModel,
 		/** Tables referencing ServiceTag */

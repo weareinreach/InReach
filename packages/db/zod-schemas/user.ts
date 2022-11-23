@@ -5,9 +5,11 @@ import {
 	AccountModel,
 	AttributeCategoryModel,
 	AttributeModel,
+	AttributeSupplementModel,
 	CompleteAccount,
 	CompleteAttribute,
 	CompleteAttributeCategory,
+	CompleteAttributeSupplement,
 	CompleteCountry,
 	CompleteFieldVisibility,
 	CompleteFooterLink,
@@ -207,6 +209,8 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	updateAttributeCategory: CompleteAttributeCategory[]
 	createAttribute: CompleteAttribute[]
 	updateAttribute: CompleteAttribute[]
+	createAttributeSupplement: CompleteAttributeSupplement[]
+	updateAttributeSupplement: CompleteAttributeSupplement[]
 }
 
 /**
@@ -312,5 +316,7 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		updateAttributeCategory: AttributeCategoryModel.array(),
 		createAttribute: AttributeModel.array(),
 		updateAttribute: AttributeModel.array(),
+		createAttributeSupplement: AttributeSupplementModel.array(),
+		updateAttributeSupplement: AttributeSupplementModel.array(),
 	})
 )

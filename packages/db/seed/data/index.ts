@@ -8,4 +8,5 @@ export * from './05-navigation'
 export * from './06-footerLink'
 export * from './07-socialMediaLink'
 export * from './08-services'
+export * from './09-attributes'
 // codegen:end
