@@ -8,6 +8,7 @@ const longitude = z.number().gte(-180).lte(180)
 const latitude = z.number().gte(-90).lte(90)
 /** [Longitude, Latitude] */
 const coordTuple = z.tuple([longitude, latitude])
+const polygon = coordTuple.array().min(4).array()
 
 const FeatureSchema = z.object({
 	type: z.literal('Feature'),
@@ -41,7 +42,7 @@ const FeatureSchema = z.object({
 			 *
 			 * **Latitudes** are horizontal lines that measure distance north or south of the equator.
 			 */
-			coordinates: coordTuple.array().min(4),
+			coordinates: polygon,
 		}),
 		z.object({
 			/** An object that represents multiple polygons in a single object. */
@@ -57,12 +58,12 @@ const FeatureSchema = z.object({
 			 *
 			 * **Latitudes** are horizontal lines that measure distance north or south of the equator.
 			 */
-			coordinates: coordTuple.array().min(4).array(),
+			coordinates: polygon.array(),
 			/**
 			 * A GeoJSON bounding box is usually a 4-item array representing the rectangle that will contain the
 			 * GeoJSON object.
 			 */
-			bbox: longitude.or(latitude),
+			bbox: longitude.or(latitude).optional(),
 		}),
 	]),
 	/** @param properties - Any misc metadata */

@@ -11,4 +11,5 @@ export * from './08-services'
 export * from './09-attributes'
 export * from './10-sogIdentity'
 export * from './11-immigration'
+export * from './12-geodata'
 // codegen:end

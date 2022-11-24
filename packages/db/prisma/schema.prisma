@@ -19,6 +19,14 @@ generator zod {
   relationModel = "default"
 }
 
+generator dbml {
+  provider            = "prisma-dbml-generator"
+  output              = "./dbml"
+  outputName          = "inreach.dbml"
+  projectName         = "InReach"
+  projectDatabaseType = "PostgreSQL"
+}
+
 datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
@@ -931,11 +939,15 @@ model Country {
 
 /// Administrative districts for countries
 model GovDist {
-  id      String @id @default(cuid()) /// @zod.custom(imports.cuid)
-  /// ISO-3166-2 code
-  iso     String @unique
+  id      String  @id @default(cuid()) /// @zod.custom(imports.cuid)
   /// Name (English/Roman alphabet)
   name    String
+  /// Slug - [country (ISO)]-[govdist]-[...]
+  slug    String  @unique
+  /// ISO-3166-2 code
+  iso     String?
+  /// Abbreviation (Optional)
+  abbrev  String?
   /// GeoJSON object - required only if this will be considered a "service area"
   geoJSON Json? /// @zod.custom(imports.GeoJSONSchema)
 
@@ -971,7 +983,7 @@ model GovDist {
 /// Descriptor of principal administrative districts (state, province, county, etc.)
 model GovDistType {
   id   String @id @default(cuid()) /// @zod.custom(imports.cuid)
-  name String
+  name String @unique
 
   govDist GovDist[]
 

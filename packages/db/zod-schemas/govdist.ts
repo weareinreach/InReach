@@ -28,10 +28,14 @@ const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
 
 export const _GovDistModel = z.object({
 	id: imports.cuid,
-	/** ISO-3166-2 code */
-	iso: z.string(),
 	/** Name (English/Roman alphabet) */
 	name: z.string(),
+	/** Slug - [country (ISO)]-[govdist]-[...] */
+	slug: z.string(),
+	/** ISO-3166-2 code */
+	iso: z.string().nullish(),
+	/** Abbreviation (Optional) */
+	abbrev: z.string().nullish(),
 	/** GeoJSON object - required only if this will be considered a "service area" */
 	geoJSON: imports.GeoJSONSchema,
 	countryId: imports.cuid,
