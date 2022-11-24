@@ -5,8 +5,7 @@ import { useTranslation } from 'next-i18next'
 
 import Image from 'next/image'
 
-import { useState } from 'react'
-
+// import { useState } from 'react'
 import {
 	Avatar,
 	Button,
@@ -53,7 +52,7 @@ const useStyles = createStyles((theme) => ({
 export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
 	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
-	const [_userMenuOpen, setUserMenuOpen] = useState(false)
+	// const [_userMenuOpen, setUserMenuOpen] = useState(false)
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 
 	if (status === 'loading' && !session) {
@@ -71,8 +70,8 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 				width={260}
 				position='bottom-end'
 				transition='scale-y'
-				onClose={() => setUserMenuOpen(false)}
-				onOpen={() => setUserMenuOpen(true)}
+				// onClose={() => setUserMenuOpen(false)}
+				// onOpen={() => setUserMenuOpen(true)}
 			>
 				<Menu.Target>
 					<UnstyledButton className={cx(classes.menu, classes.buttons, className)}>

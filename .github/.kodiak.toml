@@ -1,4 +1,4 @@
-#:schema https://github.com/chdsbd/kodiak/blob/master/bot/kodiak/test/fixtures/config/config-schema.json
+#:schema https://raw.githubusercontent.com/chdsbd/kodiak/master/bot/kodiak/test/fixtures/config/config-schema.json
 version = 1
 
 [update]
