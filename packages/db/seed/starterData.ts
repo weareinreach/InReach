@@ -5,6 +5,7 @@ import {
 	seedCountries,
 	seedEthnicities,
 	seedFooterLinks,
+	seedGeoData,
 	seedLanguages,
 	seedNavigation,
 	seedSOGIdentity,
@@ -77,6 +78,11 @@ const tasks = new Listr<Context>(
 					{
 						title: 'User Immigration Status',
 						task: async (_ctx, task): Promise<void> => seedUserImmigration(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Governing Districts & GeoJSON',
+						task: async (_ctx, task): Promise<Listr> => seedGeoData(task),
 						options: renderOptions,
 					},
 				]),

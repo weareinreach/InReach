@@ -1,4 +1,4 @@
-import { prisma } from '~/index'
+import { Attribute, Prisma, prisma } from '~/index'
 import { attributeData, createMeta } from '~/seed/data/'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
@@ -47,62 +47,66 @@ export const seedAttributes = async (task: ListrTask) => {
 				},
 			})
 			x++
-			const attributes = await prisma.$transaction(
-				category.attributes.map((record, idx) => {
-					const { name, description, requireCountry, key, requireLanguage, requireSupplemental } = record
-					logMessage = `\t[${idx + 1}/${category.attributes.length}] Upserting Attribute: ${name}`
-					logFile.log(logMessage)
-					task.output = logMessage
-					y++
-					return prisma.attribute.upsert({
-						where: {
-							categoryId_name: {
-								categoryId,
-								name,
-							},
-						},
-						create: {
+			const bulkTransactions: Prisma.Prisma__AttributeClient<Attribute>[] = []
+			for (const record of category.attributes) {
+				let idx = 0
+				const { name, description, requireCountry, key, requireLanguage, requireSupplemental } = record
+				logMessage = `  [${idx + 1}/${category.attributes.length}] Upserting Attribute: ${name}`
+				logFile.log(logMessage)
+				task.output = logMessage
+				y++
+				idx++
+				const transaction = prisma.attribute.upsert({
+					where: {
+						categoryId_name: {
+							categoryId,
 							name,
-							description,
-							requireSupplemental,
-							requireCountry,
-							requireLanguage,
-							category: {
-								connect: {
-									id: categoryId,
-								},
+						},
+					},
+					create: {
+						name,
+						description,
+						requireSupplemental,
+						requireCountry,
+						requireLanguage,
+						category: {
+							connect: {
+								id: categoryId,
 							},
-							key: {
-								create: {
-									key,
-									text: name,
-									namespace: {
-										connect: {
-											name: category.namespace,
-										},
+						},
+						key: {
+							create: {
+								key,
+								text: name,
+								namespace: {
+									connect: {
+										name: category.namespace,
 									},
-									...createMeta,
 								},
-							},
-							...createMeta,
-						},
-						update: {
-							description,
-							requireCountry,
-							requireLanguage,
-							requireSupplemental,
-							key: {
-								update: {
-									text: name,
-								},
+								...createMeta,
 							},
 						},
-					})
+						...createMeta,
+					},
+					update: {
+						description,
+						requireCountry,
+						requireLanguage,
+						requireSupplemental,
+						key: {
+							update: {
+								text: name,
+							},
+						},
+					},
 				})
-			)
+				bulkTransactions.push(transaction)
+			}
+
+			await prisma.$transaction(bulkTransactions)
 
 			logMessage = `(${x + 1}/${attributeData.length}) Upserted Category: ${category.name} with ${
-				attributes.length
+				bulkTransactions.length
 			} attributes`
 			logFile.log(logMessage)
 			task.output = logMessage

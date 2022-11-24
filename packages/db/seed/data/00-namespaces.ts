@@ -7,6 +7,7 @@ export const namespaces = {
 	footer: 'footer',
 	socialMedia: 'socialMedia',
 	services: 'services',
+	govDist: 'gov-dist',
 } as const
 
 export const keySlug = (item: string) => slugify(item, { lower: true, strict: true })
