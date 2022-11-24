@@ -8,13 +8,10 @@ dotenv.config()
 
 export const generateTranslationKeys = async (task: ListrTask) => {
 	const data = await prisma.translationNamespace.findMany({
-		select: {
-			name: true,
+		include: {
 			keys: {
-				select: {
-					key: true,
-					text: true,
-					context: true,
+				orderBy: {
+					key: 'asc',
 				},
 			},
 		},
