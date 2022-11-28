@@ -3,14 +3,13 @@ generator client {
   previewFeatures = ["fieldReference", "postgresqlExtensions", "interactiveTransactions"]
   // output          = "../../../node_modules/.prisma/client"
   // output          = "../node_modules/.prisma/client"
-  // uncomment below when building aws-lambda
   binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
-generator docs {
-  provider = "node node_modules/prisma-docs-generator"
-  output   = "../../../docs/database"
-}
+// generator docs {
+//   provider = "node node_modules/prisma-docs-generator"
+//   output   = "../../../docs/database"
+// }
 
 generator zod {
   provider      = "zod-prisma"
