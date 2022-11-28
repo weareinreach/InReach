@@ -61,7 +61,7 @@ Table User {
   image String
   accounts Account [not null]
   sessions Session [not null]
-  legacyId String
+  legacyId String [unique, note: 'old ID from MongoDB']
   ethnicity UserEthnicity [not null]
   countryOrigin Country [not null]
   identifiesAs UserSOGIdentity [not null]
@@ -335,7 +335,7 @@ Table UserSavedList {
 
 Table Organization {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  legacyId String [note: 'old ID from MongoDB']
+  legacyId String [unique, note: 'old ID from MongoDB']
   name String [not null]
   slug String [unique, not null, note: '@zod.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/gm)']
   description OrgDescription [not null]

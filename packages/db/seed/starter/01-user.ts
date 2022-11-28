@@ -7,6 +7,7 @@ import {
 	translationKey,
 	translationNamespace,
 	userEmail,
+	userRoles,
 	userType,
 	userTypes,
 } from '../data/01-user'
@@ -109,4 +110,18 @@ export const seedUserTypes = async (task: ListrTask) => {
 		})
 	)
 	task.title = `User Types (${userTypes.length} records)`
+}
+export const seedUserRoles = async (task: ListrTask) => {
+	let logMessage = ``
+	let countA = 1
+	await prisma.$transaction(
+		userRoles.map((transaction) => {
+			logMessage = `(${countA}/${userRoles.length}) Upserting User Role: ${transaction.create.name}`
+			logFile.info(logMessage)
+			task.output = logMessage
+			countA++
+			return prisma.userRole.upsert(transaction)
+		})
+	)
+	task.title = `User Roles (${userRoles.length} records)`
 }

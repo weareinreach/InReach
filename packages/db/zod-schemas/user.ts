@@ -94,6 +94,7 @@ export const _UserModel = z.object({
 	email: z.string(),
 	emailVerified: z.date().nullish(),
 	image: z.string().nullish(),
+	/** Old ID from MongoDB */
 	legacyId: z.string().nullish(),
 	birthYear: z.number().int().nullish(),
 	reasonForJoin: z.string().nullish(),

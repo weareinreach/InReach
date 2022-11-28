@@ -1,4 +1,4 @@
-import { type Prisma } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 
 import { namespaces } from './00-namespaces'
 
@@ -73,7 +73,7 @@ export const updatedBy = connectUser
 export const createMeta = { createdBy, updatedBy }
 export const updateMeta = { updatedBy }
 
-const userRoles = [
+const userRoleList = [
 	{ type: 'seeker', name: 'Resource Seeker' },
 	{ type: 'provider', name: 'Service Provider' },
 	{ type: 'lcr', name: 'Local Community Reviewer' },
@@ -82,7 +82,7 @@ const userRoles = [
 	{ type: 'sysadmin', name: 'System Administrator' },
 ]
 
-export const userTypes: Prisma.UserTypeUpsertArgs[] = userRoles.map((role) => ({
+export const userTypes: Prisma.UserTypeUpsertArgs[] = userRoleList.map((role) => ({
 	where: {
 		type: role.type,
 	},
@@ -100,6 +100,17 @@ export const userTypes: Prisma.UserTypeUpsertArgs[] = userRoles.map((role) => ({
 				},
 			},
 		},
+		...createMeta,
+	},
+	update: {},
+}))
+
+export const userRoles: Prisma.UserRoleUpsertArgs[] = userRoleList.map((role) => ({
+	where: {
+		name: role.name,
+	},
+	create: {
+		name: role.name,
 		...createMeta,
 	},
 	update: {},

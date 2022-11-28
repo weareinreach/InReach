@@ -19,6 +19,8 @@ const ethnicityData: EthnicityData = [
 	'American Indian/Native American/Indigenous Person',
 	'Native Hawaiian/Pacific Islander',
 	'White',
+	'Other',
+	'Prefer not to say',
 ]
 
 export const generateEthnicityRecords = (task: ListrTask) => {
