@@ -13,6 +13,7 @@ import {
 	seedSocialMediaLinks,
 	seedSystemUser,
 	seedUserImmigration,
+	seedUserRoles,
 	seedUserTypes,
 } from '~/seed/starter'
 
@@ -34,6 +35,11 @@ const tasks = new Listr<Context>(
 					{
 						title: 'User Types',
 						task: async (_ctx, task): Promise<void> => seedUserTypes(task),
+						options: renderOptions,
+					},
+					{
+						title: 'User Roles',
+						task: async (_ctx, task): Promise<void> => seedUserRoles(task),
 						options: renderOptions,
 					},
 					{
