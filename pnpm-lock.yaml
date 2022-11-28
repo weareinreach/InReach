@@ -311,6 +311,7 @@ importers:
       '@nuskin/mexico-state-lookup': ^2.1.0
       '@placemarkio/check-geojson': ^0.1.12
       '@prisma/client': 4.6.1
+      '@types/luxon': ^3.1.0
       '@types/node': 16.18.3
       '@types/recursive-readdir': 2.2.1
       '@typescript-eslint/eslint-plugin': 5.44.0
@@ -332,6 +333,7 @@ importers:
       iso-3166-2: ^1.0.0
       iso-google-locales: 3.0.4
       listr2: 5.0.5
+      luxon: ^3.1.0
       mongoback: 3.0.3
       prisma: 4.6.1
       prisma-dbml-generator: ^0.9.1
@@ -355,6 +357,7 @@ importers:
       '@faker-js/faker': 7.6.0
       '@nuskin/mexico-state-lookup': 2.1.0
       '@placemarkio/check-geojson': 0.1.12
+      '@types/luxon': 3.1.0
       '@types/node': 16.18.3
       '@types/recursive-readdir': 2.2.1
       '@typescript-eslint/eslint-plugin': 5.44.0_fnsv2sbzcckq65bwfk7a5xwslu
@@ -376,6 +379,7 @@ importers:
       iso-3166-2: 1.0.0
       iso-google-locales: 3.0.4_ltnamflm7ayajalculwqyezjya
       listr2: 5.0.5
+      luxon: 3.1.0
       mongoback: 3.0.3
       prisma: 4.6.1
       prisma-dbml-generator: 0.9.1
@@ -7096,6 +7100,10 @@ packages:
 
   /@types/lodash/4.14.189:
     resolution: {integrity: sha512-kb9/98N6X8gyME9Cf7YaqIMvYGnBSWqEci6tiettE6iJWH1XdJz/PO8LB0GtLCG7x8dU3KWhZT+lA1a35127tA==}
+    dev: true
+
+  /@types/luxon/3.1.0:
+    resolution: {integrity: sha512-gCd/HcCgjqSxfMrgtqxCgYk/22NBQfypwFUG7ZAyG/4pqs51WLTcUzVp1hqTbieDYeHS3WoVEh2Yv/2l+7B0Vg==}
     dev: true
 
   /@types/mdast/3.0.10:
@@ -14535,6 +14543,11 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+
+  /luxon/3.1.0:
+    resolution: {integrity: sha512-7w6hmKC0/aoWnEsmPCu5Br54BmbmUp5GfcqBxQngRcXJ+q5fdfjEzn7dxmJh2YdDhgW8PccYtlWKSv4tQkrTQg==}
+    engines: {node: '>=12'}
+    dev: true
 
   /lz-string/1.4.4:
     resolution: {integrity: sha512-0ckx7ZHRPqb0oUm8zNr+90mtf9DQB60H1wMCjBtfi62Kl3a7JbHob6gA2bC+xRvZoOL+1hzUK8jeuEIQE8svEQ==}
