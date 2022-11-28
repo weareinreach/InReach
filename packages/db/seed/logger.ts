@@ -1,17 +1,10 @@
 import { Console } from 'console'
 import fs from 'fs'
+import { DateTime } from 'luxon'
 
-const pad = (num) => String(num).padStart(2, '0')
+const date = DateTime.now()
 
-const date = new Date(Date.now())
-const yyyy = date.getFullYear()
-const mm = pad(date.getMonth())
-const dd = pad(date.getDay())
-const h = pad(date.getHours())
-const m = pad(date.getMinutes())
-const s = pad(date.getSeconds())
-
-const dateFormat = `${yyyy}-${mm}-${dd}-${h}.${m}.${s}`
+const dateFormat = date.toFormat('yyyy-MM-dd-HH.mm.ss')
 
 export const logFile = new Console({
 	stdout: fs.createWriteStream(`./seed/logs/${dateFormat}.log`),
