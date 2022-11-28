@@ -204,7 +204,7 @@ Table PermissionAsset {
 
 Table PermissionItem {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  name String [not null]
+  name String [unique, not null]
   users User [not null]
   roles UserRole [not null]
   assets PermissionAsset [not null]
@@ -352,6 +352,7 @@ Table Organization {
   attributeSupplement AttributeSupplement [not null]
   deleted Boolean [not null, default: false]
   published Boolean [not null, default: false]
+  lastVerified DateTime
   associatedUsers User [not null]
   allowedEditors PermissionAsset [not null]
   outsideApi OutsideAPI

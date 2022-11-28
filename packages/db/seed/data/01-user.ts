@@ -72,3 +72,35 @@ export const updatedBy = connectUser
 
 export const createMeta = { createdBy, updatedBy }
 export const updateMeta = { updatedBy }
+
+const userRoles = [
+	{ type: 'seeker', name: 'Resource Seeker' },
+	{ type: 'provider', name: 'Service Provider' },
+	{ type: 'lcr', name: 'Local Community Reviewer' },
+	{ type: 'dataManager', name: 'Data Manager' },
+	{ type: 'dataAdmin', name: 'Data Administrator' },
+	{ type: 'sysadmin', name: 'System Administrator' },
+]
+
+export const userTypes: Prisma.UserTypeUpsertArgs[] = userRoles.map((role) => ({
+	where: {
+		type: role.type,
+	},
+	create: {
+		type: role.type,
+		translationKey: {
+			create: {
+				key: role.type,
+				text: role.name,
+				...createMeta,
+				namespace: {
+					connect: {
+						name: namespaces.user,
+					},
+				},
+			},
+		},
+		...createMeta,
+	},
+	update: {},
+}))

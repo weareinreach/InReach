@@ -13,6 +13,7 @@ import {
 	seedSocialMediaLinks,
 	seedSystemUser,
 	seedUserImmigration,
+	seedUserTypes,
 } from '~/seed/starter'
 
 const renderOptions = {
@@ -28,6 +29,11 @@ const tasks = new Listr<Context>(
 					{
 						title: 'System user',
 						task: async (_ctx, task): Promise<void> => seedSystemUser(task),
+						options: renderOptions,
+					},
+					{
+						title: 'User Types',
+						task: async (_ctx, task): Promise<void> => seedUserTypes(task),
 						options: renderOptions,
 					},
 					{

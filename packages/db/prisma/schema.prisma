@@ -255,7 +255,7 @@ model PermissionAsset {
 /// Permission Definition
 model PermissionItem {
   id   String @id @default(cuid()) /// @zod.custom(imports.cuid)
-  name String
+  name String @unique
 
   users  User[]
   roles  UserRole[]
@@ -422,8 +422,9 @@ model Organization {
   attributes          Attribute[]
   attributeSupplement AttributeSupplement[]
 
-  deleted   Boolean @default(false)
-  published Boolean @default(false)
+  deleted      Boolean   @default(false)
+  published    Boolean   @default(false)
+  lastVerified DateTime?
 
   // Users associated with organization (staff)
   associatedUsers User[]

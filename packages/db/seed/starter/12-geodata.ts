@@ -83,11 +83,13 @@ const countryAll = async (task: ListrTask) => {
 			countA++
 		}
 	}
+	task.title = `GeoJSON data for countries (US, CA, MX)`
 }
 
 const upsertDistrictTypes = async (task: ListrTask) => {
 	const { id: namespaceId } = await upsertNamespace()
 	let logMessage = ''
+	let countA = 0
 	for (const type of districtTypes) {
 		logMessage = `Upserting Governing District type: ${type}`
 		logFile.log(logMessage)
@@ -106,8 +108,10 @@ const upsertDistrictTypes = async (task: ListrTask) => {
 				id: true,
 			},
 		})
+		countA++
 		govDist.set(type, id)
 	}
+	task.title = `Governing District Types (${countA + 1} records)`
 }
 
 const countryUS = async (task: ListrTask) => {
@@ -131,7 +135,9 @@ const countryUS = async (task: ListrTask) => {
 		logMessage = `(${countB + 1}/${geoStateDataUS.length}) Upserting Governing District: ${name}`
 		logFile.log(logMessage)
 		task.output = logMessage
-		task.title = `GeoJSON data for US: (${countB + 1}/${geoStateDataUS.length}) - ${name}`
+		task.title = `GeoJSON data for US: (${countB + 1}/${geoStateDataUS.length}) - ${name} (${
+			state.counties.length
+		} Sub-Districts)`
 		const { code: iso, type: isoType } = iso3166.subdivision('US', state.name)
 		const distType = govDist.get(isoType.toLowerCase())
 		if (!distType) throw new Error('Unknown district type')
@@ -207,7 +213,7 @@ const countryUS = async (task: ListrTask) => {
 		await prisma.$transaction(bulkCounties)
 		countB++
 	}
-	task.title = `GeoJSON data for US: ${countB + 1} Districts, ${countA + 1} Sub-Districts`
+	task.title = `GeoJSON data for US (${countB + 1} Districts, ${countA + 1} Sub-Districts)`
 }
 
 const countryCA = async (task: ListrTask) => {
@@ -264,7 +270,7 @@ const countryCA = async (task: ListrTask) => {
 
 		countB++
 	}
-	task.title = `GeoJSON data for CA: ${countB + 1} Districts`
+	task.title = `GeoJSON data for CA (${countB + 1} Districts)`
 }
 
 const countryMX = async (task: ListrTask) => {
@@ -325,7 +331,7 @@ const countryMX = async (task: ListrTask) => {
 		})
 		countB++
 	}
-	task.title = `GeoJSON data for CA: ${countB + 1} Districts`
+	task.title = `GeoJSON data for MX (${countB + 1} Districts)`
 }
 
 const renderOptions = {
