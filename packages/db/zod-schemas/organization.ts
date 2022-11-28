@@ -44,6 +44,7 @@ export const _OrganizationModel = z.object({
 	slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/gm),
 	deleted: z.boolean(),
 	published: z.boolean(),
+	lastVerified: z.date().nullish(),
 	outsideApiId: imports.cuid.nullish(),
 	apiIdentifier: z.string().nullish(),
 	sourceId: imports.cuid,

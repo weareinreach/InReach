@@ -1,6 +1,5 @@
-import type { ListrRenderer, ListrTaskWrapper } from 'listr2'
-
 import { prisma } from '~/index'
+import { ListrTask } from '~/seed/starterData'
 
 import {
 	localeCode,
@@ -9,10 +8,11 @@ import {
 	translationNamespace,
 	userEmail,
 	userType,
+	userTypes,
 } from '../data/01-user'
 import { logFile } from '../logger'
 
-export const seedSystemUser = async (task: ListrTaskWrapper<unknown, typeof ListrRenderer>) => {
+export const seedSystemUser = async (task: ListrTask) => {
 	try {
 		// create user if it does not exist.
 		await prisma.user.upsert({
@@ -94,4 +94,19 @@ export const seedSystemUser = async (task: ListrTaskWrapper<unknown, typeof List
 		logFile.error(err)
 		throw err
 	}
+}
+
+export const seedUserTypes = async (task: ListrTask) => {
+	let logMessage = ``
+	let countA = 1
+	await prisma.$transaction(
+		userTypes.map((transaction) => {
+			logMessage = `(${countA}/${userTypes.length}) Upserting User Type: ${transaction.create.translationKey?.create?.text}`
+			logFile.info(logMessage)
+			task.output = logMessage
+			countA++
+			return prisma.userType.upsert(transaction)
+		})
+	)
+	task.title = `User Types (${userTypes.length} records)`
 }
