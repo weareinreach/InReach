@@ -1,4 +1,7 @@
-import { Attribute, Prisma, prisma } from '~/index'
+import { Attribute } from '@prisma/client'
+import slugify from 'slugify'
+
+import { Prisma, prisma } from '~/index'
 import { attributeData, createMeta } from '~/seed/data/'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
@@ -18,6 +21,7 @@ export const seedAttributes = async (task: ListrTask) => {
 				},
 				create: {
 					name: category.name,
+					tag: slugify(category.name),
 					description: category.description,
 					namespace: category.namespace
 						? {
@@ -31,6 +35,7 @@ export const seedAttributes = async (task: ListrTask) => {
 				},
 				update: {
 					description: category.description,
+					tag: slugify(category.name),
 					namespace: category.namespace
 						? {
 								connectOrCreate: {
@@ -69,6 +74,7 @@ export const seedAttributes = async (task: ListrTask) => {
 					},
 					create: {
 						name,
+						tag: slugify(name),
 						description,
 						requireSupplemental,
 						requireCountry,
@@ -95,15 +101,18 @@ export const seedAttributes = async (task: ListrTask) => {
 						...createMeta,
 					},
 					update: {
+						tag: slugify(name),
 						description,
 						requireCountry,
 						requireLanguage,
 						requireSupplemental,
-						key: {
-							update: {
-								text: name,
-							},
-						},
+						key: key
+							? {
+									update: {
+										text: name,
+									},
+							  }
+							: undefined,
 					},
 				})
 				bulkTransactions.push(transaction)

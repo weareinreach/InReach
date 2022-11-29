@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fieldReference", "postgresqlExtensions", "interactiveTransactions"]
+  previewFeatures = ["fieldReference", "postgresqlExtensions", "clientExtensions"]
   // output          = "../../../node_modules/.prisma/client"
   // output          = "../node_modules/.prisma/client"
   binaryTargets   = ["native", "rhel-openssl-1.0.x"]
@@ -227,6 +227,7 @@ model User {
 model UserRole {
   id   String @id @default(cuid()) /// @zod.custom(imports.cuid)
   name String @unique
+  tag  String @unique
 
   permissions PermissionItem[]
   user        User[]
@@ -718,6 +719,7 @@ model OrgReview {
 /// Additional Properties for Org/Service.
 model AttributeCategory {
   id          String  @id @default(cuid()) /// @zod.custom(imports.cuid)
+  tag         String  @unique
   name        String  @unique
   description String?
 
@@ -737,7 +739,8 @@ model AttributeCategory {
 
 model Attribute {
   id          String  @id @default(cuid()) /// @zod.custom(imports.cuid)
-  name        String
+  tag         String  @unique
+  name        String  @unique
   description String?
 
   category   AttributeCategory @relation(fields: [categoryId], references: [id])
@@ -771,7 +774,7 @@ model Attribute {
 
 model AttributeSupplement {
   id   String @id @default(cuid()) /// @zod.custom(imports.cuid)
-  data Json
+  data Json /// @zod.custom(imports.AttributeSupplement)
 
   attribute   Attribute @relation(fields: [attributeId], references: [id])
   attributeId String /// @zod.custom(imports.cuid)

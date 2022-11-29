@@ -6,6 +6,7 @@ import { CompletePermissionItem, CompleteUser, PermissionItemModel, UserModel } 
 export const _UserRoleModel = z.object({
 	id: imports.cuid,
 	name: z.string(),
+	tag: z.string(),
 	createdAt: z.date(),
 	createdById: imports.cuid.nullish(),
 	updatedAt: z.date(),

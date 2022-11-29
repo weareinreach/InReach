@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client'
+import slugify from 'slugify'
 
 import { namespaces } from './00-namespaces'
 
@@ -16,6 +17,7 @@ export const seedUser: Prisma.UserCreateInput = {
 			where: { name: userType },
 			create: {
 				name: userType,
+				tag: slugify(userType),
 			},
 		},
 	},
@@ -73,7 +75,7 @@ export const updatedBy = connectUser
 export const createMeta = { createdBy, updatedBy }
 export const updateMeta = { updatedBy }
 
-const userRoleList = [
+export const userRoleList = [
 	{ type: 'seeker', name: 'Resource Seeker' },
 	{ type: 'provider', name: 'Service Provider' },
 	{ type: 'lcr', name: 'Local Community Reviewer' },
@@ -111,6 +113,7 @@ export const userRoles: Prisma.UserRoleUpsertArgs[] = userRoleList.map((role) =>
 	},
 	create: {
 		name: role.name,
+		tag: slugify(role.name),
 		...createMeta,
 	},
 	update: {},

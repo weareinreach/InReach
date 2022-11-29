@@ -8,8 +8,9 @@
 	"scripts": {
 		"clean:export": "rm -rf ./datastore/v1/mongodb/{output,output-types}/* || true",
 		"clean:node": "rm -rf ./node_modules/ || true",
+		"clean:zod": "rm -rf ./zod-schemas/* || true",
 		"db:deploy": "pnpm with-env prisma migrate deploy",
-		"db:generate": "pnpm with-env prisma generate && pnpm format:generated && prisma -v",
+		"db:generate": "pnpm clean:zod && pnpm with-env prisma generate && pnpm format:generated && prisma -v",
 		"db:generate:aws": "pnpm install && pnpm with-env prisma generate",
 		"db:migrate": "pnpm with-env prisma migrate dev && pnpm format:generated",
 		"db:migrate:edit": "pnpm with-env prisma migrate dev --create-only --skip-seed && pnpm format:generated",
@@ -27,7 +28,6 @@
 		"post-install": "pnpm db:generate",
 		"predev": "pnpm db:generate",
 		"prisma": "pnpm with-env prisma",
-		"schema:clean": "rm -rf ./zod-schemas/* || true",
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {

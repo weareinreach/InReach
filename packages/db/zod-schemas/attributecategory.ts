@@ -14,6 +14,7 @@ import {
 
 export const _AttributeCategoryModel = z.object({
 	id: imports.cuid,
+	tag: z.string(),
 	name: z.string(),
 	description: z.string().nullish(),
 	namespaceId: imports.cuid.nullish(),
