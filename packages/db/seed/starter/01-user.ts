@@ -1,13 +1,17 @@
-import { prisma } from '~/index'
+import { UserRole } from '@prisma/client'
+import slugify from 'slugify'
+
+import { Prisma, prisma } from '~/index'
 import { ListrTask } from '~/seed/starterData'
 
 import {
+	createMeta,
 	localeCode,
 	seedUser,
 	translationKey,
 	translationNamespace,
 	userEmail,
-	userRoles,
+	userRoleList,
 	userType,
 	userTypes,
 } from '../data/01-user'
@@ -114,14 +118,33 @@ export const seedUserTypes = async (task: ListrTask) => {
 export const seedUserRoles = async (task: ListrTask) => {
 	let logMessage = ``
 	let countA = 1
-	await prisma.$transaction(
-		userRoles.map((transaction) => {
-			logMessage = `(${countA}/${userRoles.length}) Upserting User Role: ${transaction.create.name}`
-			logFile.info(logMessage)
-			task.output = logMessage
-			countA++
-			return prisma.userRole.upsert(transaction)
+	const bulkTransactions: Prisma.Prisma__UserRoleClient<UserRole>[] = userRoleList.map((role) => {
+		logMessage = `(${countA}/${userRoleList.length}) Upserting User Role: ${role.name}`
+		logFile.info(logMessage)
+		task.output = logMessage
+		countA++
+
+		return prisma.userRole.upsert({
+			where: {
+				name: role.name,
+			},
+			create: {
+				name: role.name,
+				tag: slugify(role.name),
+				...createMeta,
+			},
+			update: {},
 		})
-	)
-	task.title = `User Roles (${userRoles.length} records)`
+	})
+
+	// userRoles.map((transaction) => {
+	// 	logMessage = `(${countA}/${userRoles.length}) Upserting User Role: ${transaction.create.name}`
+	// 	logFile.info(logMessage)
+	// 	task.output = logMessage
+	// 	countA++
+	// 	return prisma.userRole.upsert(transaction)
+	// })
+
+	await prisma.$transaction(bulkTransactions)
+	task.title = `User Roles (${userRoleList.length} records)`
 }

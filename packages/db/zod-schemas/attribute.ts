@@ -26,6 +26,7 @@ import {
 
 export const _AttributeModel = z.object({
 	id: imports.cuid,
+	tag: z.string(),
 	name: z.string(),
 	description: z.string().nullish(),
 	categoryId: imports.cuid,

@@ -180,6 +180,7 @@ Table User {
 Table UserRole {
   id String [pk, note: '@zod.custom(imports.cuid)']
   name String [unique, not null]
+  tag String [unique, not null]
   permissions PermissionItem [not null]
   user User [not null]
   createdAt DateTime [default: `now()`, not null]
@@ -596,6 +597,7 @@ Table OrgReview {
 
 Table AttributeCategory {
   id String [pk, note: '@zod.custom(imports.cuid)']
+  tag String [unique, not null]
   name String [unique, not null]
   description String
   namespace TranslationNamespace
@@ -614,7 +616,8 @@ Table AttributeCategory {
 
 Table Attribute {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  name String [not null]
+  tag String [unique, not null]
+  name String [unique, not null]
   description String
   category AttributeCategory [not null]
   categoryId String [not null, note: '@zod.custom(imports.cuid)']
@@ -644,7 +647,7 @@ Table Attribute {
 
 Table AttributeSupplement {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  data Json [not null]
+  data Json [not null, note: '@zod.custom(imports.AttributeSupplement)']
   attribute Attribute [not null]
   attributeId String [not null, note: '@zod.custom(imports.cuid)']
   organization Organization

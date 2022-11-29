@@ -11,12 +11,12 @@ overrides:
   node-fetch@<2.6.7: '>=2.6.7'
 
 patchedDependencies:
-  iso-google-locales@3.0.4:
-    hash: ltnamflm7ayajalculwqyezjya
-    path: patches/iso-google-locales@3.0.4.patch
   zod-prisma@0.5.4:
     hash: sgyu4cerrvputcbquvozfdvpkm
     path: patches/zod-prisma@0.5.4.patch
+  iso-google-locales@3.0.4:
+    hash: ltnamflm7ayajalculwqyezjya
+    path: patches/iso-google-locales@3.0.4.patch
 
 importers:
 
