@@ -19,27 +19,31 @@ export const seedAttributes = async (task: ListrTask) => {
 				create: {
 					name: category.name,
 					description: category.description,
-					namespace: {
-						create: {
-							name: category.namespace,
-							...createMeta,
-						},
-					},
+					namespace: category.namespace
+						? {
+								create: {
+									name: category.namespace,
+									...createMeta,
+								},
+						  }
+						: undefined,
 					...createMeta,
 				},
 				update: {
 					description: category.description,
-					namespace: {
-						connectOrCreate: {
-							where: {
-								name: category.namespace,
-							},
-							create: {
-								name: category.namespace,
-								...createMeta,
-							},
-						},
-					},
+					namespace: category.namespace
+						? {
+								connectOrCreate: {
+									where: {
+										name: category.namespace,
+									},
+									create: {
+										name: category.namespace,
+										...createMeta,
+									},
+								},
+						  }
+						: undefined,
 					updatedBy: createMeta.updatedBy,
 				},
 				select: {
@@ -75,16 +79,18 @@ export const seedAttributes = async (task: ListrTask) => {
 							},
 						},
 						key: {
-							create: {
-								key,
-								text: name,
-								namespace: {
-									connect: {
-										name: category.namespace,
-									},
-								},
-								...createMeta,
-							},
+							create: key
+								? {
+										key,
+										text: name,
+										namespace: {
+											connect: {
+												name: category.namespace,
+											},
+										},
+										...createMeta,
+								  }
+								: undefined,
 						},
 						...createMeta,
 					},

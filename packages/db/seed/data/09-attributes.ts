@@ -1,7 +1,7 @@
 type AttributeItem = {
 	name: string
 	description?: string
-	key: string
+	key?: string
 	requireLanguage?: boolean
 	requireCountry?: boolean
 	requireSupplemental?: boolean
@@ -9,7 +9,7 @@ type AttributeItem = {
 type AttributeCategory = {
 	name: string
 	description?: string
-	namespace: string
+	namespace?: string
 	attributes: AttributeItem[]
 }
 type AttributeData = AttributeCategory[]
@@ -363,6 +363,16 @@ export const attributeData: AttributeData = [
 				requireLanguage: true,
 			},
 			{ key: 'american-sign-language', name: 'American Sign Language' },
+		],
+	},
+	{
+		name: 'System',
+		attributes: [
+			{
+				name: 'Incompatible Information',
+				description: 'Data that needs to be cleaned up',
+				requireSupplemental: true,
+			},
 		],
 	},
 ]
