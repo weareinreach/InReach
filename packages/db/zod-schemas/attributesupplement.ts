@@ -30,7 +30,7 @@ const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
 
 export const _AttributeSupplementModel = z.object({
 	id: imports.cuid,
-	data: jsonSchema,
+	data: imports.AttributeSupplement,
 	attributeId: imports.cuid,
 	organizationId: imports.cuid.nullish(),
 	serviceId: imports.cuid.nullish(),
