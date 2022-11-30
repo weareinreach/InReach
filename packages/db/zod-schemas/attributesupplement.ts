@@ -3,21 +3,21 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	AttributeModel,
+	AuditLogModel,
 	CompleteAttribute,
+	CompleteAuditLog,
 	CompleteInternalNote,
 	CompleteOrgLocation,
 	CompleteOrgService,
 	CompleteOrganization,
 	CompleteServiceCategory,
 	CompleteServiceTag,
-	CompleteUser,
 	InternalNoteModel,
 	OrgLocationModel,
 	OrgServiceModel,
 	OrganizationModel,
 	ServiceCategoryModel,
 	ServiceTagModel,
-	UserModel,
 } from './index'
 
 // Helper schema for JSON fields
@@ -38,9 +38,7 @@ export const _AttributeSupplementModel = z.object({
 	serviceTagId: imports.cuid.nullish(),
 	serviceCategoryId: imports.cuid.nullish(),
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteAttributeSupplement extends z.infer<typeof _AttributeSupplementModel> {
@@ -50,8 +48,7 @@ export interface CompleteAttributeSupplement extends z.infer<typeof _AttributeSu
 	location?: CompleteOrgLocation | null
 	serviceTag?: CompleteServiceTag | null
 	serviceCategory?: CompleteServiceCategory | null
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -68,8 +65,7 @@ export const AttributeSupplementModel: z.ZodSchema<CompleteAttributeSupplement> 
 		location: OrgLocationModel.nullish(),
 		serviceTag: ServiceTagModel.nullish(),
 		serviceCategory: ServiceCategoryModel.nullish(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

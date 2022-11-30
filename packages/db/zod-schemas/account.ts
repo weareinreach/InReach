@@ -1,7 +1,7 @@
 import * as z from 'zod'
 
 import * as imports from '../zod-util'
-import { CompleteUser, UserModel } from './index'
+import { AuditLogModel, CompleteAuditLog, CompleteUser, UserModel } from './index'
 
 export const _AccountModel = z.object({
 	id: imports.cuid,
@@ -22,6 +22,7 @@ export const _AccountModel = z.object({
 
 export interface CompleteAccount extends z.infer<typeof _AccountModel> {
 	user: CompleteUser
+	auditLog: CompleteAuditLog[]
 }
 
 /**
@@ -32,5 +33,6 @@ export interface CompleteAccount extends z.infer<typeof _AccountModel> {
 export const AccountModel: z.ZodSchema<CompleteAccount> = z.lazy(() =>
 	_AccountModel.extend({
 		user: UserModel,
+		auditLog: AuditLogModel.array(),
 	})
 )

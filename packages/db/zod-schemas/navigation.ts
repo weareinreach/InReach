@@ -2,12 +2,12 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteInternalNote,
 	CompleteTranslationKey,
-	CompleteUser,
 	InternalNoteModel,
 	TranslationKeyModel,
-	UserModel,
 } from './index'
 
 export const _NavigationModel = z.object({
@@ -16,20 +16,17 @@ export const _NavigationModel = z.object({
 	href: z.string().nullish(),
 	isParent: z.boolean(),
 	icon: z.string().nullish(),
-	translationKeyId: z.string(),
+	keyId: imports.cuid,
 	parentId: imports.cuid.nullish(),
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteNavigation extends z.infer<typeof _NavigationModel> {
-	translationKey: CompleteTranslationKey
+	key: CompleteTranslationKey
 	parentItem?: CompleteNavigation | null
 	children: CompleteNavigation[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -40,11 +37,10 @@ export interface CompleteNavigation extends z.infer<typeof _NavigationModel> {
  */
 export const NavigationModel: z.ZodSchema<CompleteNavigation> = z.lazy(() =>
 	_NavigationModel.extend({
-		translationKey: TranslationKeyModel,
+		key: TranslationKeyModel,
 		parentItem: NavigationModel.nullish(),
 		children: NavigationModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

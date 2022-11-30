@@ -2,29 +2,29 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteGovDist,
+	CompleteInternalNote,
 	CompleteTranslationKey,
-	CompleteUser,
 	GovDistModel,
+	InternalNoteModel,
 	TranslationKeyModel,
-	UserModel,
 } from './index'
 
 export const _GovDistTypeModel = z.object({
 	id: imports.cuid,
 	name: z.string(),
-	translationKeyId: imports.cuid,
+	keyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteGovDistType extends z.infer<typeof _GovDistTypeModel> {
 	govDist: CompleteGovDist[]
-	translationKey: CompleteTranslationKey
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	key: CompleteTranslationKey
+	auditLog: CompleteAuditLog[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -35,8 +35,8 @@ export interface CompleteGovDistType extends z.infer<typeof _GovDistTypeModel> {
 export const GovDistTypeModel: z.ZodSchema<CompleteGovDistType> = z.lazy(() =>
 	_GovDistTypeModel.extend({
 		govDist: GovDistModel.array(),
-		translationKey: TranslationKeyModel,
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		key: TranslationKeyModel,
+		auditLog: AuditLogModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

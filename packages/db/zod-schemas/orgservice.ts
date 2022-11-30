@@ -4,44 +4,49 @@ import * as imports from '../zod-util'
 import {
 	AttributeModel,
 	AttributeSupplementModel,
+	AuditLogModel,
 	CompleteAttribute,
 	CompleteAttributeSupplement,
+	CompleteAuditLog,
 	CompleteInternalNote,
-	CompleteLanguage,
 	CompleteOrgHours,
+	CompleteOrgLocation,
+	CompleteOrgReview,
 	CompleteOrganization,
 	CompleteServiceTag,
-	CompleteUser,
+	CompleteTranslationKey,
 	InternalNoteModel,
-	LanguageModel,
 	OrgHoursModel,
+	OrgLocationModel,
+	OrgReviewModel,
 	OrganizationModel,
 	ServiceTagModel,
-	UserModel,
+	TranslationKeyModel,
 } from './index'
 
 export const _OrgServiceModel = z.object({
 	id: imports.cuid,
 	published: z.boolean(),
-	accessInstructions: z.string().nullish(),
-	description: z.string().nullish(),
-	organizationId: imports.cuid,
-	langId: imports.cuid,
+	serviceId: imports.cuid,
+	organizationId: imports.cuid.nullish(),
+	orgLocationId: imports.cuid.nullish(),
+	accessKeyId: imports.cuid.nullish(),
+	descKeyId: imports.cuid.nullish(),
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgService extends z.infer<typeof _OrgServiceModel> {
+	service: CompleteServiceTag
 	hours: CompleteOrgHours[]
-	service: CompleteServiceTag[]
+	orgReview: CompleteOrgReview[]
 	attributes: CompleteAttribute[]
 	attributeSupplement: CompleteAttributeSupplement[]
-	organization: CompleteOrganization
-	language: CompleteLanguage
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	organization?: CompleteOrganization | null
+	orgLocation?: CompleteOrgLocation | null
+	accessKey?: CompleteTranslationKey | null
+	descKey?: CompleteTranslationKey | null
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -52,14 +57,16 @@ export interface CompleteOrgService extends z.infer<typeof _OrgServiceModel> {
  */
 export const OrgServiceModel: z.ZodSchema<CompleteOrgService> = z.lazy(() =>
 	_OrgServiceModel.extend({
+		service: ServiceTagModel,
 		hours: OrgHoursModel.array(),
-		service: ServiceTagModel.array(),
+		orgReview: OrgReviewModel.array(),
 		attributes: AttributeModel.array(),
 		attributeSupplement: AttributeSupplementModel.array(),
-		organization: OrganizationModel,
-		language: LanguageModel,
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		organization: OrganizationModel.nullish(),
+		orgLocation: OrgLocationModel.nullish(),
+		accessKey: TranslationKeyModel.nullish(),
+		descKey: TranslationKeyModel.nullish(),
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

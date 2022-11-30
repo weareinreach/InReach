@@ -2,6 +2,8 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteCountry,
 	CompleteGovDistType,
 	CompleteInternalNote,
@@ -42,12 +44,10 @@ export const _GovDistModel = z.object({
 	govDistTypeId: imports.cuid,
 	/** Table can be used for "sub districts" (State -> County -> City) */
 	isPrimary: z.boolean().nullish(),
-	parentId: z.string().nullish(),
-	translationKeyId: imports.cuid,
+	parentId: imports.cuid.nullish(),
+	keyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteGovDist extends z.infer<typeof _GovDistModel> {
@@ -55,12 +55,11 @@ export interface CompleteGovDist extends z.infer<typeof _GovDistModel> {
 	govDistType: CompleteGovDistType
 	parent?: CompleteGovDist | null
 	subDistricts: CompleteGovDist[]
-	translationKey: CompleteTranslationKey
+	key: CompleteTranslationKey
 	orgLocation: CompleteOrgLocation[]
 	orgReview: CompleteOrgReview[]
 	user: CompleteUser[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -75,13 +74,12 @@ export const GovDistModel: z.ZodSchema<CompleteGovDist> = z.lazy(() =>
 		govDistType: GovDistTypeModel,
 		parent: GovDistModel.nullish(),
 		subDistricts: GovDistModel.array(),
-		translationKey: TranslationKeyModel,
+		key: TranslationKeyModel,
 		/** Tables using GovDist */
 		orgLocation: OrgLocationModel.array(),
 		orgReview: OrgReviewModel.array(),
 		user: UserModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

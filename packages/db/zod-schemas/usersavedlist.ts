@@ -2,12 +2,20 @@ import { UserSavedListVisibility } from '@prisma/client'
 import * as z from 'zod'
 
 import * as imports from '../zod-util'
-import { CompleteOrganization, CompleteUser, OrganizationModel, UserModel } from './index'
+import {
+	AuditLogModel,
+	CompleteAuditLog,
+	CompleteOrganization,
+	CompleteUser,
+	OrganizationModel,
+	UserModel,
+} from './index'
 
 export const _UserSavedListModel = z.object({
 	id: imports.cuid,
 	name: z.string(),
 	visibility: z.nativeEnum(UserSavedListVisibility),
+	/** Generated string to share a list via link */
 	sharedLinkKey: z.string().nullish(),
 	ownedById: imports.cuid,
 	createdAt: z.date(),
@@ -18,6 +26,7 @@ export interface CompleteUserSavedList extends z.infer<typeof _UserSavedListMode
 	organizations: CompleteOrganization[]
 	sharedWith: CompleteUser[]
 	ownedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
 }
 
 /**
@@ -30,5 +39,6 @@ export const UserSavedListModel: z.ZodSchema<CompleteUserSavedList> = z.lazy(() 
 		organizations: OrganizationModel.array(),
 		sharedWith: UserModel.array(),
 		ownedBy: UserModel,
+		auditLog: AuditLogModel.array(),
 	})
 )

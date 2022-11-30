@@ -2,11 +2,15 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
+	CompleteCountry,
 	CompleteInternalNote,
 	CompleteOrgLocation,
 	CompleteOrganization,
 	CompletePhoneType,
 	CompleteUser,
+	CountryModel,
 	InternalNoteModel,
 	OrgLocationModel,
 	OrganizationModel,
@@ -19,24 +23,24 @@ export const _OrgPhoneModel = z.object({
 	number: z.string(),
 	published: z.boolean(),
 	primary: z.boolean(),
+	countryId: imports.cuid,
 	phoneTypeId: imports.cuid,
 	organizationId: imports.cuid,
 	userId: imports.cuid.nullish(),
+	orgLocationId: imports.cuid.nullish(),
 	/** Associated only with location and not overall organization (for large orgs w/ multiple locations) */
 	orgLocationOnly: z.boolean(),
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgPhone extends z.infer<typeof _OrgPhoneModel> {
+	country: CompleteCountry
 	phoneType: CompletePhoneType
 	organization: CompleteOrganization
 	user?: CompleteUser | null
-	orgLocation: CompleteOrgLocation[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	orgLocation?: CompleteOrgLocation | null
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -47,12 +51,13 @@ export interface CompleteOrgPhone extends z.infer<typeof _OrgPhoneModel> {
  */
 export const OrgPhoneModel: z.ZodSchema<CompleteOrgPhone> = z.lazy(() =>
 	_OrgPhoneModel.extend({
+		/** Country profiles have intl dial prefix */
+		country: CountryModel,
 		phoneType: PhoneTypeModel,
 		organization: OrganizationModel,
 		user: UserModel.nullish(),
-		orgLocation: OrgLocationModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		orgLocation: OrgLocationModel.nullish(),
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

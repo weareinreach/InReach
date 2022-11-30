@@ -2,6 +2,8 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteOrgLocation,
 	CompleteOrganization,
 	CompletePermissionItem,
@@ -16,6 +18,8 @@ export const _PermissionAssetModel = z.object({
 	id: imports.cuid,
 	userId: imports.cuid,
 	permissionId: imports.cuid,
+	createdAt: z.date(),
+	updatedAt: z.date(),
 })
 
 export interface CompletePermissionAsset extends z.infer<typeof _PermissionAssetModel> {
@@ -23,6 +27,7 @@ export interface CompletePermissionAsset extends z.infer<typeof _PermissionAsset
 	permission: CompletePermissionItem
 	organization: CompleteOrganization[]
 	location: CompleteOrgLocation[]
+	auditLog: CompleteAuditLog[]
 }
 
 /**
@@ -36,5 +41,6 @@ export const PermissionAssetModel: z.ZodSchema<CompletePermissionAsset> = z.lazy
 		permission: PermissionItemModel,
 		organization: OrganizationModel.array(),
 		location: OrgLocationModel.array(),
+		auditLog: AuditLogModel.array(),
 	})
 )

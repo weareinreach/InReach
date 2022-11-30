@@ -1,5 +1,5 @@
 import { prisma } from '~/index'
-import { createMeta, namespaces, sogIdentityData } from '~/seed/data/'
+import { namespaces, sogIdentityData } from '~/seed/data/'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
@@ -17,7 +17,7 @@ export const seedSOGIdentity = async (task: ListrTask) => {
 				},
 				create: {
 					identifyAs: record.text,
-					translationKey: {
+					key: {
 						create: {
 							key: record.key,
 							text: record.text,
@@ -28,7 +28,6 @@ export const seedSOGIdentity = async (task: ListrTask) => {
 							},
 						},
 					},
-					...createMeta,
 				},
 				update: {},
 			})

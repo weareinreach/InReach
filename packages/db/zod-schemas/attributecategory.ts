@@ -3,32 +3,30 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	AttributeModel,
+	AuditLogModel,
 	CompleteAttribute,
+	CompleteAuditLog,
 	CompleteInternalNote,
 	CompleteTranslationNamespace,
-	CompleteUser,
 	InternalNoteModel,
 	TranslationNamespaceModel,
-	UserModel,
 } from './index'
 
 export const _AttributeCategoryModel = z.object({
 	id: imports.cuid,
 	tag: z.string(),
 	name: z.string(),
-	description: z.string().nullish(),
-	namespaceId: imports.cuid.nullish(),
+	/** Internal description */
+	intDesc: z.string().nullish(),
+	namespaceId: imports.cuid,
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteAttributeCategory extends z.infer<typeof _AttributeCategoryModel> {
-	namespace?: CompleteTranslationNamespace | null
+	namespace: CompleteTranslationNamespace
 	attribute: CompleteAttribute[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -39,10 +37,9 @@ export interface CompleteAttributeCategory extends z.infer<typeof _AttributeCate
  */
 export const AttributeCategoryModel: z.ZodSchema<CompleteAttributeCategory> = z.lazy(() =>
 	_AttributeCategoryModel.extend({
-		namespace: TranslationNamespaceModel.nullish(),
+		namespace: TranslationNamespaceModel,
 		attribute: AttributeModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

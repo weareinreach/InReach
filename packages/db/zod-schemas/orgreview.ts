@@ -2,47 +2,48 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteCountry,
 	CompleteGovDist,
 	CompleteInternalNote,
 	CompleteLanguage,
+	CompleteOrgService,
 	CompleteOrganization,
-	CompleteServiceTag,
-	CompleteUser,
 	CountryModel,
 	GovDistModel,
 	InternalNoteModel,
 	LanguageModel,
+	OrgServiceModel,
 	OrganizationModel,
-	ServiceTagModel,
-	UserModel,
 } from './index'
 
 export const _OrgReviewModel = z.object({
 	id: imports.cuid,
 	rating: z.number().int(),
-	comment: z.string().nullish(),
+	reviewText: z.string().nullish(),
 	visible: z.boolean(),
 	organizationId: imports.cuid,
-	serviceId: imports.cuid.nullish(),
+	orgServiceId: imports.cuid.nullish(),
 	langId: imports.cuid.nullish(),
+	/** How confident is the API guess? */
+	langConfidence: z.number().nullish(),
+	/** From https://perspectiveapi.com/ */
+	toxicity: z.number().nullish(),
 	lcrCity: z.string().nullish(),
 	lcrGovDistId: imports.cuid.nullish(),
 	lcrCountryId: imports.cuid.nullish(),
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgReview extends z.infer<typeof _OrgReviewModel> {
 	organization: CompleteOrganization
-	service?: CompleteServiceTag | null
+	orgService?: CompleteOrgService | null
 	language?: CompleteLanguage | null
 	lcrGovDist?: CompleteGovDist | null
 	lcrCountry?: CompleteCountry | null
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -54,12 +55,11 @@ export interface CompleteOrgReview extends z.infer<typeof _OrgReviewModel> {
 export const OrgReviewModel: z.ZodSchema<CompleteOrgReview> = z.lazy(() =>
 	_OrgReviewModel.extend({
 		organization: OrganizationModel,
-		service: ServiceTagModel.nullish(),
+		orgService: OrgServiceModel.nullish(),
 		language: LanguageModel.nullish(),
 		lcrGovDist: GovDistModel.nullish(),
 		lcrCountry: CountryModel.nullish(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

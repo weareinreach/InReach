@@ -1,8 +1,6 @@
 import { Prisma } from '@prisma/client'
 import ISO6391 from 'iso-google-locales'
 
-import { connectUser } from './01-user'
-
 const activeTranslations = ['en', 'en-US', 'en-CA', 'es', 'es-MX', 'es-US']
 
 const languages = ISO6391.getAllCodes()
@@ -22,14 +20,11 @@ export const seedLanguageData: Prisma.LanguageUpsertArgs[] = languages.map((lang
 			languageName,
 			nativeName,
 			activelyTranslated,
-			createdBy: connectUser,
-			updatedBy: connectUser,
 		},
 		update: {
 			languageName,
 			nativeName,
 			activelyTranslated,
-			updatedBy: connectUser,
 		},
 	}
 })

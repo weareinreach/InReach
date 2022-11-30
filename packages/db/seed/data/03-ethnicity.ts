@@ -5,7 +5,7 @@ import { prisma } from '~/index'
 import { logFile } from '../logger'
 import { ListrTask } from '../starterData'
 import { keySlug } from './00-namespaces'
-import { connectUser, translationNamespace } from './01-user'
+import { translationNamespace } from './01-user'
 
 type EthnicityData = string[]
 
@@ -24,16 +24,16 @@ const ethnicityData: EthnicityData = [
 ]
 
 export const generateEthnicityRecords = (task: ListrTask) => {
-	const queue: Prisma.Prisma__UserEthnicityClient<UserEthnicity>[] = []
+	const queue: Prisma.Prisma__UserEthnicityClient<Partial<UserEthnicity>>[] = []
 	let i = 1
 	for (const item of ethnicityData) {
-		const transaction: Prisma.Prisma__UserEthnicityClient<UserEthnicity> = prisma.userEthnicity.upsert({
+		const transaction = prisma.userEthnicity.upsert({
 			where: {
 				ethnicity: item,
 			},
 			create: {
 				ethnicity: item,
-				translationKey: {
+				key: {
 					create: {
 						key: `eth-${keySlug(item)}`,
 						text: item,
@@ -42,22 +42,19 @@ export const generateEthnicityRecords = (task: ListrTask) => {
 								name: translationNamespace,
 							},
 						},
-						createdBy: connectUser,
-						updatedBy: connectUser,
 					},
 				},
-				createdBy: connectUser,
-				updatedBy: connectUser,
 			},
 			update: {
-				updatedBy: connectUser,
-				translationKey: {
+				key: {
 					update: {
 						key: `eth-${keySlug(item)}`,
 						text: item,
-						updatedBy: connectUser,
 					},
 				},
+			},
+			select: {
+				id: true,
 			},
 		})
 

@@ -1,7 +1,7 @@
 type AttributeItem = {
 	name: string
 	description?: string
-	key?: string
+	key: string
 	requireLanguage?: boolean
 	requireCountry?: boolean
 	requireSupplemental?: boolean
@@ -9,7 +9,7 @@ type AttributeItem = {
 type AttributeCategory = {
 	name: string
 	description?: string
-	namespace?: string
+	namespace: string
 	attributes: AttributeItem[]
 }
 type AttributeData = AttributeCategory[]
@@ -18,7 +18,7 @@ export const attributeData: AttributeData = [
 	{
 		name: 'Additional Information',
 		description: 'Misc',
-		namespace: 'attr-additional',
+		namespace: 'additional',
 		attributes: [
 			{
 				key: 'has-confidentiality-policy',
@@ -48,7 +48,7 @@ export const attributeData: AttributeData = [
 	},
 	{
 		name: 'Community',
-		namespace: 'attr-community',
+		namespace: 'community',
 		attributes: [
 			{
 				key: 'language-speakers',
@@ -286,7 +286,7 @@ export const attributeData: AttributeData = [
 	},
 	{
 		name: 'Cost',
-		namespace: 'attr-cost',
+		namespace: 'cost',
 		attributes: [
 			{
 				key: 'cost-free',
@@ -304,7 +304,7 @@ export const attributeData: AttributeData = [
 	},
 	{
 		name: 'Eligibility Requirements',
-		namespace: 'attr-eligibility',
+		namespace: 'eligibility',
 		attributes: [
 			{
 				key: 'elig-age',
@@ -354,7 +354,7 @@ export const attributeData: AttributeData = [
 	},
 	{
 		name: 'Languages',
-		namespace: 'attr-lang',
+		namespace: 'lang',
 		attributes: [
 			{ key: 'all-languages-by-interpreter', name: 'All languages via interpreter' },
 			{
@@ -367,9 +367,11 @@ export const attributeData: AttributeData = [
 	},
 	{
 		name: 'System',
+		namespace: 'sys',
 		attributes: [
 			{
 				name: 'Incompatible Information',
+				key: 'incompatible-info',
 				description: 'Data that needs to be cleaned up',
 				requireSupplemental: true,
 			},

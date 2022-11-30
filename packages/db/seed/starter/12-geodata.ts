@@ -3,7 +3,6 @@ import iso3166 from 'iso-3166-2'
 
 import { prisma } from '~/index'
 import {
-	createMeta,
 	geoCountryData,
 	geoProvinceDataCA,
 	geoStateDataMX,
@@ -20,7 +19,6 @@ const districtTypes = ['state', 'district', 'county', 'outlying area', 'province
 type DistrictTypes = typeof districtTypes[number]
 const govDist = new Map<DistrictTypes, string>()
 
-const { updatedBy } = createMeta
 const connectTo = (id: string) => ({
 	connect: {
 		id,
@@ -34,28 +32,30 @@ const upsertNamespace = async () =>
 		},
 		create: {
 			name: namespaces.govDist,
-			...createMeta,
 		},
 		update: {},
 		select: { id: true },
 	})
 
-const nsCoC = async (text: string, namespaceId: string) => {
+const nsCoC = async (text: string) => {
 	const key = keySlug(text)
 
 	return {
 		connectOrCreate: {
 			where: {
-				key_namespaceId: {
+				ns_key: {
 					key,
-					namespaceId,
+					ns: namespaces.govDist,
 				},
 			},
 			create: {
 				key,
 				text,
-				namespace: connectTo(namespaceId),
-				...createMeta,
+				namespace: {
+					connect: {
+						name: namespaces.govDist,
+					},
+				},
 			},
 		},
 	}
@@ -77,7 +77,6 @@ const countryAll = async (task: ListrTask) => {
 				},
 				data: {
 					geoJSON: element,
-					updatedBy,
 				},
 			})
 			countA++
@@ -87,7 +86,7 @@ const countryAll = async (task: ListrTask) => {
 }
 
 const upsertDistrictTypes = async (task: ListrTask) => {
-	const { id: namespaceId } = await upsertNamespace()
+	await upsertNamespace()
 	let logMessage = ''
 	let countA = 0
 	for (const type of districtTypes) {
@@ -100,8 +99,7 @@ const upsertDistrictTypes = async (task: ListrTask) => {
 			},
 			create: {
 				name: type,
-				translationKey: await nsCoC(type, namespaceId),
-				...createMeta,
+				key: await nsCoC(type),
 			},
 			update: {},
 			select: {
@@ -118,7 +116,7 @@ const countryUS = async (task: ListrTask) => {
 	let logMessage = ''
 	let countB = 0
 	let countA = 0
-	const { id: namespaceId } = await upsertNamespace()
+	await upsertNamespace()
 
 	const { id: countryId } = await prisma.country.findUniqueOrThrow({
 		where: {
@@ -154,8 +152,7 @@ const countryUS = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				translationKey: await nsCoC(name, namespaceId),
-				...createMeta,
+				key: await nsCoC(name),
 			},
 			update: {
 				name,
@@ -164,13 +161,12 @@ const countryUS = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				translationKey: await nsCoC(name, namespaceId),
-				updatedBy,
+				key: await nsCoC(name),
 			},
 			select: { id: true },
 		})
 
-		const bulkCounties: Prisma.Prisma__GovDistClient<GovDist>[] = []
+		const bulkCounties: Prisma.Prisma__GovDistClient<Partial<GovDist>>[] = []
 		for (const county of counties) {
 			const { NAME: countyName } = county.properties
 			logMessage = `  [${countC + 1}/${counties.length}] Upserting Governing Sub-District: ${countyName}`
@@ -192,8 +188,7 @@ const countryUS = async (task: ListrTask) => {
 						govDistType: connectTo(distType),
 						isPrimary: false,
 						parent: connectTo(stateId),
-						translationKey: await nsCoC(countyName, namespaceId),
-						...createMeta,
+						key: await nsCoC(`${state.name}-${countyName}`),
 					},
 					update: {
 						name: countyName,
@@ -202,8 +197,10 @@ const countryUS = async (task: ListrTask) => {
 						govDistType: connectTo(distType),
 						isPrimary: false,
 						parent: connectTo(stateId),
-						translationKey: await nsCoC(countyName, namespaceId),
-						updatedBy,
+						key: await nsCoC(`${state.name}-${countyName}`),
+					},
+					select: {
+						id: true,
 					},
 				})
 			)
@@ -219,7 +216,7 @@ const countryUS = async (task: ListrTask) => {
 const countryCA = async (task: ListrTask) => {
 	let logMessage = ''
 	let countB = 0
-	const { id: namespaceId } = await upsertNamespace()
+	await upsertNamespace()
 
 	const { id: countryId } = await prisma.country.findUniqueOrThrow({
 		where: {
@@ -252,8 +249,7 @@ const countryCA = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				translationKey: await nsCoC(name, namespaceId),
-				...createMeta,
+				key: await nsCoC(name),
 			},
 			update: {
 				name,
@@ -262,8 +258,7 @@ const countryCA = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				translationKey: await nsCoC(name, namespaceId),
-				updatedBy,
+				key: await nsCoC(name),
 			},
 			select: { id: true },
 		})
@@ -276,7 +271,7 @@ const countryCA = async (task: ListrTask) => {
 const countryMX = async (task: ListrTask) => {
 	let logMessage = ''
 	let countB = 0
-	const { id: namespaceId } = await upsertNamespace()
+	await upsertNamespace()
 
 	const { id: countryId } = await prisma.country.findUniqueOrThrow({
 		where: {
@@ -314,8 +309,7 @@ const countryMX = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				translationKey: await nsCoC(name, namespaceId),
-				...createMeta,
+				key: await nsCoC(name),
 			},
 			update: {
 				name,
@@ -324,8 +318,7 @@ const countryMX = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				translationKey: await nsCoC(name, namespaceId),
-				updatedBy,
+				key: await nsCoC(name),
 			},
 			select: { id: true },
 		})

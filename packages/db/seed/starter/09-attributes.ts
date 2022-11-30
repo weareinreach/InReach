@@ -2,15 +2,26 @@ import { Attribute } from '@prisma/client'
 import slugify from 'slugify'
 
 import { Prisma, prisma } from '~/index'
-import { attributeData, createMeta } from '~/seed/data/'
+import { attributeData, namespaces } from '~/seed/data/'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
+
+const upsertNamespace = async () =>
+	await prisma.translationNamespace.createMany({
+		data: [
+			{
+				name: namespaces.attribute,
+			},
+		],
+		skipDuplicates: true,
+	})
 
 export const seedAttributes = async (task: ListrTask) => {
 	try {
 		let x = 0
 		let y = 0
 		let logMessage = ''
+		await upsertNamespace()
 		for (const category of attributeData) {
 			logMessage = `(${x + 1}/${attributeData.length}) Upserting Attribute Category: ${category.name}`
 			logFile.log(logMessage)
@@ -22,34 +33,21 @@ export const seedAttributes = async (task: ListrTask) => {
 				create: {
 					name: category.name,
 					tag: slugify(category.name),
-					description: category.description,
-					namespace: category.namespace
-						? {
-								create: {
-									name: category.namespace,
-									...createMeta,
-								},
-						  }
-						: undefined,
-					...createMeta,
+					intDesc: category.description,
+					namespace: {
+						connect: {
+							name: namespaces.attribute,
+						},
+					},
 				},
 				update: {
-					description: category.description,
+					intDesc: category.description,
 					tag: slugify(category.name),
-					namespace: category.namespace
-						? {
-								connectOrCreate: {
-									where: {
-										name: category.namespace,
-									},
-									create: {
-										name: category.namespace,
-										...createMeta,
-									},
-								},
-						  }
-						: undefined,
-					updatedBy: createMeta.updatedBy,
+					namespace: {
+						connect: {
+							name: namespaces.attribute,
+						},
+					},
 				},
 				select: {
 					id: true,
@@ -57,12 +55,20 @@ export const seedAttributes = async (task: ListrTask) => {
 			})
 			x++
 			const bulkTransactions: Prisma.Prisma__AttributeClient<Attribute>[] = []
+			let idx = 0
 			for (const record of category.attributes) {
-				let idx = 0
-				const { name, description, requireCountry, key, requireLanguage, requireSupplemental } = record
+				const {
+					name,
+					description: intDesc,
+					requireCountry,
+					key: keyTag,
+					requireLanguage,
+					requireSupplemental,
+				} = record
 				logMessage = `  [${idx + 1}/${category.attributes.length}] Upserting Attribute: ${name}`
 				logFile.log(logMessage)
 				task.output = logMessage
+				const key = slugify(`${category.namespace}-${keyTag}`)
 				y++
 				idx++
 				const transaction = prisma.attribute.upsert({
@@ -75,7 +81,7 @@ export const seedAttributes = async (task: ListrTask) => {
 					create: {
 						name,
 						tag: slugify(name),
-						description,
+						intDesc,
 						requireSupplemental,
 						requireCountry,
 						requireLanguage,
@@ -85,34 +91,28 @@ export const seedAttributes = async (task: ListrTask) => {
 							},
 						},
 						key: {
-							create: key
-								? {
-										key,
-										text: name,
-										namespace: {
-											connect: {
-												name: category.namespace,
-											},
-										},
-										...createMeta,
-								  }
-								: undefined,
+							create: {
+								key,
+								text: name,
+								namespace: {
+									connect: {
+										name: namespaces.attribute,
+									},
+								},
+							},
 						},
-						...createMeta,
 					},
 					update: {
 						tag: slugify(name),
-						description,
+						intDesc,
 						requireCountry,
 						requireLanguage,
 						requireSupplemental,
-						key: key
-							? {
-									update: {
-										text: name,
-									},
-							  }
-							: undefined,
+						key: {
+							update: {
+								text: name,
+							},
+						},
 					},
 				})
 				bulkTransactions.push(transaction)
@@ -120,9 +120,7 @@ export const seedAttributes = async (task: ListrTask) => {
 
 			await prisma.$transaction(bulkTransactions)
 
-			logMessage = `(${x + 1}/${attributeData.length}) Upserted Category: ${category.name} with ${
-				bulkTransactions.length
-			} attributes`
+			logMessage = `(${x}/${attributeData.length}) Upserted Category: ${category.name} with ${bulkTransactions.length} attributes`
 			logFile.log(logMessage)
 			task.output = logMessage
 		}
