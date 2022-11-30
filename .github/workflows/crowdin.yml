@@ -36,4 +36,4 @@ jobs:
           pull_request_body: 'i18n: Updated translations from Crowdin'
           pull_request_labels: 'translations'
           pull_request_base_branch_name: ${{ github.ref_name }}
-          crowdin_branch_name: ${{ steps.branchregex.outputs.value }}
+          crowdin_branch_name: ${{ github.ref_name }}
