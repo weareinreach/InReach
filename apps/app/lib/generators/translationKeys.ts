@@ -4,6 +4,8 @@ import { ListrTask } from 'lib/generate'
 
 import { prisma } from '@weareinreach/db'
 
+const localePath = 'public/locales/en'
+
 dotenv.config()
 
 export const generateTranslationKeys = async (task: ListrTask) => {
@@ -19,12 +21,30 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 	let logMessage = ''
 	let i = 0
 	for (const namespace of data) {
-		const output: Record<string, string> = {}
+		const outputData: Record<string, string> = {}
 		for (const item of namespace.keys) {
-			output[item.key] = item.text
+			outputData[item.key] = item.text
 		}
-		logMessage = `${namespace.name}.json generated with ${Object.keys(output).length} items`
-		fs.writeFileSync(`_generated/${namespace.name}.json`, JSON.stringify(output, null, 2))
+		const filename = `${localePath}/${namespace.name}.json`
+		let existingFile: Record<string, string> = {}
+		if (fs.existsSync(filename)) {
+			existingFile = JSON.parse(fs.readFileSync(filename, 'utf-8'))
+		}
+		const existingLength = Object.keys(existingFile).length
+
+		let outputFile = Object.assign(existingFile, outputData)
+		outputFile = Object.keys(outputFile)
+			.sort()
+			.reduce((obj: Record<string, string>, key) => {
+				obj[key] = outputFile[key] as string
+				return obj
+			}, {})
+
+		const newKeys = Object.keys(outputFile).length - existingLength
+
+		logMessage = `${filename} generated with ${newKeys} new ${newKeys === 1 ? 'key' : 'keys'}.`
+
+		fs.writeFileSync(filename, JSON.stringify(outputFile, null, 2))
 		task.output = logMessage
 		i++
 	}
