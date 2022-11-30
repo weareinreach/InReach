@@ -1,5 +1,5 @@
 import { prisma } from '~/index'
-import { createMeta, footerLinks, namespaces } from '~/seed/data'
+import { footerLinks, namespaces } from '~/seed/data'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
@@ -11,7 +11,6 @@ export const seedFooterLinks = async (task: ListrTask) => {
 			},
 			create: {
 				name: namespaces.footer,
-				...createMeta,
 			},
 			update: {},
 			select: {
@@ -30,12 +29,12 @@ export const seedFooterLinks = async (task: ListrTask) => {
 				create: {
 					display: item.display,
 					href: item.href,
-					translationKey: {
+					key: {
 						connectOrCreate: {
 							where: {
-								key_namespaceId: {
+								ns_key: {
 									key: item.key,
-									namespaceId,
+									ns: namespaces.footer,
 								},
 							},
 							create: {
@@ -46,11 +45,9 @@ export const seedFooterLinks = async (task: ListrTask) => {
 										id: namespaceId,
 									},
 								},
-								...createMeta,
 							},
 						},
 					},
-					...createMeta,
 				},
 				update: {},
 			})

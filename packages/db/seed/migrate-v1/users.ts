@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client'
+import { Prisma, User } from '@prisma/client'
 
 import userData from '~/datastore/v1/mongodb/output/users.json'
 import { countryMap } from '~/datastore/v1/util/countryOrigin'
@@ -10,12 +10,13 @@ import { migrateLog } from '~/seed/logger'
 import { ListrTask } from '~/seed/migrate-v1'
 
 export const migrateUsers = async (task: ListrTask) => {
-	const bulkTransactions: Prisma.UserUpsertArgs[] = []
+	const bulkTransactions: Prisma.Prisma__UserClient<User>[] = []
 	let logMessage = ``
 	let countA = 0
 
 	for (const user of userData) {
-		const name = user.name === 'user name' ? undefined : user.name
+		const [firstName = undefined, lastName = undefined] =
+			user.name === 'user name' ? [undefined, undefined] : user.name.split(/(?<=^\S+)\s/)
 
 		/**
 		 * If the user has a string for their immigration status, return an object with a connect property that
@@ -103,13 +104,14 @@ export const migrateUsers = async (task: ListrTask) => {
 		logMessage = `(${countA + 1}/${userData.length}) Preparing user record: ${user._id.$oid}`
 		migrateLog.info(logMessage)
 		task.output = logMessage
-		const userTransaction: Prisma.UserUpsertArgs = {
+		const userTransaction = prisma.user.upsert({
 			where: {
 				email: user.email,
 			},
 			create: {
 				email: user.email,
-				name,
+				firstName,
+				lastName,
 				legacyId: user._id.$oid,
 				ethnicity,
 				countryOrigin,
@@ -138,7 +140,8 @@ export const migrateUsers = async (task: ListrTask) => {
 				legacySalt: user.salt,
 			},
 			update: {
-				name: name ?? null,
+				firstName,
+				lastName,
 				legacyId: user._id.$oid,
 				ethnicity,
 				countryOrigin,
@@ -165,7 +168,7 @@ export const migrateUsers = async (task: ListrTask) => {
 				legacyHash: user.hash,
 				legacySalt: user.salt,
 			},
-		}
+		})
 		bulkTransactions.push(userTransaction)
 		countA++
 	}
@@ -180,7 +183,8 @@ export const migrateUsers = async (task: ListrTask) => {
 		} of ${totalRecords}`
 		migrateLog.info(logMessage)
 		task.output = logMessage
-		await prisma.$transaction(batch.map((record) => prisma.user.upsert(record)))
+		// const batchProcess = batch.map((record) => prisma.user.upsert(record))
+		await prisma.$transaction(batch)
 		countB++
 		countC = countC + batch.length
 	}

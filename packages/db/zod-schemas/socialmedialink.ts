@@ -2,30 +2,26 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteInternalNote,
-	CompleteTranslationKey,
-	CompleteUser,
+	CompleteSocialMediaService,
 	InternalNoteModel,
-	TranslationKeyModel,
-	UserModel,
+	SocialMediaServiceModel,
 } from './index'
 
 export const _SocialMediaLinkModel = z.object({
 	id: imports.cuid,
-	service: z.string(),
 	href: z.string(),
 	icon: z.string(),
-	translationKeyId: z.string(),
+	serviceId: imports.cuid,
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteSocialMediaLink extends z.infer<typeof _SocialMediaLinkModel> {
-	translationKey: CompleteTranslationKey
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	service: CompleteSocialMediaService
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -36,9 +32,8 @@ export interface CompleteSocialMediaLink extends z.infer<typeof _SocialMediaLink
  */
 export const SocialMediaLinkModel: z.ZodSchema<CompleteSocialMediaLink> = z.lazy(() =>
 	_SocialMediaLinkModel.extend({
-		translationKey: TranslationKeyModel,
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		service: SocialMediaServiceModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

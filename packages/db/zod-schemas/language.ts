@@ -2,20 +2,14 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteInternalNote,
-	CompleteOrgDescription,
 	CompleteOrgReview,
-	CompleteOrgService,
-	CompletePhoneType,
 	CompleteUser,
-	CompleteUserTitle,
 	InternalNoteModel,
-	OrgDescriptionModel,
 	OrgReviewModel,
-	OrgServiceModel,
-	PhoneTypeModel,
 	UserModel,
-	UserTitleModel,
 } from './index'
 
 export const _LanguageModel = z.object({
@@ -30,20 +24,13 @@ export const _LanguageModel = z.object({
 	/** Is this language being actively used for translations? */
 	activelyTranslated: z.boolean(),
 	createdAt: z.date(),
-	createdById: imports.cuid.nullish(),
 	updatedAt: z.date(),
-	updatedById: imports.cuid.nullish(),
 })
 
 export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {
-	orgDescriptions: CompleteOrgDescription[]
-	orgService: CompleteOrgService[]
-	user: CompleteUser[]
-	userTitle: CompleteUserTitle[]
-	orgReview: CompleteOrgReview[]
-	phoneType: CompletePhoneType[]
-	createdBy?: CompleteUser | null
-	updatedBy?: CompleteUser | null
+	User: CompleteUser[]
+	OrgReview: CompleteOrgReview[]
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -54,14 +41,9 @@ export interface CompleteLanguage extends z.infer<typeof _LanguageModel> {
  */
 export const LanguageModel: z.ZodSchema<CompleteLanguage> = z.lazy(() =>
 	_LanguageModel.extend({
-		orgDescriptions: OrgDescriptionModel.array(),
-		orgService: OrgServiceModel.array(),
-		user: UserModel.array(),
-		userTitle: UserTitleModel.array(),
-		orgReview: OrgReviewModel.array(),
-		phoneType: PhoneTypeModel.array(),
-		createdBy: UserModel.nullish(),
-		updatedBy: UserModel.nullish(),
+		User: UserModel.array(),
+		OrgReview: OrgReviewModel.array(),
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

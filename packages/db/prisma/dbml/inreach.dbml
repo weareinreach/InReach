@@ -23,6 +23,7 @@ Table Account {
   userId String [not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
+  auditLog AuditLog [not null]
 
   indexes {
     (provider, providerAccountId) [unique]
@@ -55,7 +56,8 @@ Table VerificationToken {
 
 Table User {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  name String
+  firstName String
+  lastName String
   email String [unique, not null]
   emailVerified DateTime
   image String
@@ -90,6 +92,8 @@ Table User {
   langPrefId String [not null, note: '@zod.custom(imports.cuid)']
   source Source
   sourceId String [note: '@zod.custom(imports.cuid)']
+  mailReceived UserMail [not null]
+  mailSent UserMail [not null]
   associatedOrg Organization
   associatedOrgId String [note: '@zod.custom(imports.cuid)']
   orgTitle UserTitle
@@ -97,82 +101,10 @@ Table User {
   orgEmail OrgEmail
   orgPhone OrgPhone
   FieldVisibility FieldVisibility [not null, note: 'For user profile page. All fields default to \'NONE\'']
+  AuditLogEntry AuditLog [not null, note: 'Recording changes made by user']
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
-  createUserEthnicity UserEthnicity [not null]
-  updateUserEthnicity UserEthnicity [not null]
-  createUserImmigration UserImmigration [not null]
-  updateUserImmigration UserImmigration [not null]
-  createUserSOGIdentity UserSOGIdentity [not null]
-  updateUserSOGIdentity UserSOGIdentity [not null]
-  createUserType UserType [not null]
-  updateUserType UserType [not null]
-  createUserCommunity UserCommunity [not null]
-  updateUserCommunity UserCommunity [not null]
-  createOrganization Organization [not null]
-  updateOrganization Organization [not null]
-  createOrgDescription OrgDescription [not null]
-  updateOrgDescription OrgDescription [not null]
-  createOrgEmail OrgEmail [not null]
-  updateOrgEmail OrgEmail [not null]
-  createUserTitle UserTitle [not null]
-  updateUserTitle UserTitle [not null]
-  createOrgLocation OrgLocation [not null]
-  updateOrgLocation OrgLocation [not null]
-  createInternalNote InternalNote [not null]
-  updateInternalNote InternalNote [not null]
-  createOrgPhone OrgPhone [not null]
-  updateOrgPhone OrgPhone [not null]
-  createOrgPhoto OrgPhoto [not null]
-  updateOrgPhoto OrgPhoto [not null]
-  createPhoneType PhoneType [not null]
-  updatePhoneType PhoneType [not null]
-  createOrgHours OrgHours [not null]
-  updateOrgHours OrgHours [not null]
-  createOrgService OrgService [not null]
-  updateOrgService OrgService [not null]
-  createOrgReview OrgReview [not null]
-  updateOrgReview OrgReview [not null]
-  createServiceCategory ServiceCategory [not null]
-  updateServiceCategory ServiceCategory [not null]
-  createServiceTag ServiceTag [not null]
-  updateServiceTag ServiceTag [not null]
-  createOrgSocialMedia OrgSocialMedia [not null]
-  updateOrgSocialMedia OrgSocialMedia [not null]
-  createSource Source [not null]
-  updateSource Source [not null]
-  createCountry Country [not null]
-  updateCountry Country [not null]
-  createGovDist GovDist [not null]
-  updateGovDist GovDist [not null]
-  createLanguage Language [not null]
-  updateLanguage Language [not null]
-  createTranslationNamespace TranslationNamespace [not null]
-  updateTranslationNamespace TranslationNamespace [not null]
-  createTranslationKey TranslationKey [not null]
-  updateTranslationKey TranslationKey [not null]
-  createSocialMediaService SocialMediaService [not null]
-  updateSocialMediaService SocialMediaService [not null]
-  createUserRole UserRole [not null]
-  updateUserRole UserRole [not null]
-  createPermissionItem PermissionItem [not null]
-  updatePermissionItem PermissionItem [not null]
-  createOutsideAPI OutsideAPI [not null]
-  updateOutsideAPI OutsideAPI [not null]
-  createGovDistType GovDistType [not null]
-  updateGovDistType GovDistType [not null]
-  createNavigation Navigation [not null]
-  updateNavigation Navigation [not null]
-  createFooterLink FooterLink [not null]
-  updateFooterLink FooterLink [not null]
-  createSocialMediaLink SocialMediaLink [not null]
-  updateSocialMediaLink SocialMediaLink [not null]
-  createAttributeCategory AttributeCategory [not null]
-  updateAttributeCategory AttributeCategory [not null]
-  createAttribute Attribute [not null]
-  updateAttribute Attribute [not null]
-  createAttributeSupplement AttributeSupplement [not null]
-  updateAttributeSupplement AttributeSupplement [not null]
+  auditLog AuditLog [not null]
 
   Note: 'NextAuth User'
 }
@@ -184,13 +116,11 @@ Table UserRole {
   permissions PermissionItem [not null]
   user User [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User
-  createdById String [note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User
-  updatedById String [note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
 
-  Note: 'User Role - Contains array of granular permissions'
+  Note: 'User Role - Contains array of granular permissions
+Internal use'
 }
 
 Table PermissionAsset {
@@ -201,6 +131,12 @@ Table PermissionAsset {
   permissionId String [not null, note: '@zod.custom(imports.cuid)']
   organization Organization [not null]
   location OrgLocation [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  auditLog AuditLog [not null]
+
+  Note: 'For permissions that are attached to certain records
+example: User is only able to edit one organization.'
 }
 
 Table PermissionItem {
@@ -210,11 +146,8 @@ Table PermissionItem {
   roles UserRole [not null]
   assets PermissionAsset [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
 
   Note: 'Permission Definition'
 }
@@ -223,14 +156,11 @@ Table UserType {
   id String [pk, note: '@zod.custom(imports.cuid)']
   type String [unique, not null]
   users User [not null]
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User
-  createdById String
   updatedAt DateTime [not null]
-  updatedBy User
-  updatedById String
+  auditLog AuditLog [not null]
 
   Note: 'User Info - account type (seeker, org, lawyer, etc.)
 use shorthand descriptions - front-end displayable text is defined in Translations'
@@ -238,18 +168,15 @@ use shorthand descriptions - front-end displayable text is defined in Translatio
 
 Table UserTitle {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  title String [not null]
+  title String [unique, not null]
   email OrgEmail [not null]
   orgUser User [not null]
   searchable Boolean [not null, default: false]
-  language Language [not null]
-  langId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
 
   Note: 'User Info - professional title
 this will be a searchable list'
@@ -259,14 +186,11 @@ Table UserEthnicity {
   id String [pk, note: '@zod.custom(imports.cuid)']
   ethnicity String [unique, not null, note: 'use shorthand descriptions - front-end displayable text is defined in Translations']
   users User [not null]
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
 
   Note: 'User demographics - Ethnicity'
 }
@@ -275,14 +199,11 @@ Table UserImmigration {
   id String [pk, note: '@zod.custom(imports.cuid)']
   status String [unique, not null, note: 'use shorthand descriptions - front-end displayable text is defined in Translations']
   users User [not null]
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
 
   Note: 'User demographics - Immigration Status'
 }
@@ -291,14 +212,11 @@ Table UserSOGIdentity {
   id String [pk, note: '@zod.custom(imports.cuid)']
   identifyAs String [unique, not null, note: 'use shorthand descriptions - front-end displayable text is defined in Translations']
   users User [not null]
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
 
   Note: 'User demographics - Sexual orientation / Identity'
 }
@@ -307,14 +225,11 @@ Table UserCommunity {
   id String [pk, note: '@zod.custom(imports.cuid)']
   community String [unique, not null, note: 'use shorthand descriptions - front-end displayable text is defined in Translations']
   users User [not null]
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
 
   Note: 'User demographics - Community'
 }
@@ -325,13 +240,29 @@ Table UserSavedList {
   organizations Organization [not null]
   visibility UserSavedListVisibility [not null, default: 'PRIVATE']
   sharedWith User [not null]
-  sharedLinkKey String [unique]
+  sharedLinkKey String [unique, note: 'Generated string to share a list via link']
   ownedBy User [not null]
   ownedById String [not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
+  auditLog AuditLog [not null]
 
   Note: 'User\'s list(s) of saved resources.'
+}
+
+Table UserMail {
+  id String [pk, note: '@zod.custom(imports.cuid)']
+  toUser User [not null]
+  toUserId String [not null, note: '@zod.custom(imports.cuid)']
+  read Boolean [not null, default: false]
+  subject String [not null]
+  body String [not null]
+  from String
+  fromUser User
+  fromUserId String [note: '@zod.custom(imports.cuid)']
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  auditLog AuditLog [not null]
 }
 
 Table Organization {
@@ -362,28 +293,21 @@ Table Organization {
   source Source [not null]
   sourceId String [not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
 
   Note: 'Main organization definition'
 }
 
 Table OrgDescription {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  text String [not null]
-  language Language [not null]
-  langId String [not null, note: '@zod.custom(imports.cuid)']
   organization Organization [not null]
-  orgId String [not null, note: '@zod.custom(imports.cuid)']
+  orgId String [unique, not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Description translations
@@ -403,14 +327,12 @@ Table OrgEmail {
   orgId String [not null, note: '@zod.custom(imports.cuid)']
   user User
   userId String [unique, note: '@zod.custom(imports.cuid)']
-  orgLocation OrgLocation [not null]
+  orgLocation OrgLocation
+  orgLocationId String [note: '@zod.custom(imports.cuid)']
   orgLocationOnly Boolean [not null, default: false, note: 'associated only with location and not overall organization (for large orgs w/ multiple locations)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Organization email contacts - can be general or location specific'
@@ -420,21 +342,21 @@ Table OrgPhone {
   id String [pk, note: '@zod.custom(imports.cuid)']
   number String [not null]
   published Boolean [not null, default: true]
-  primary Boolean [not null]
+  primary Boolean [not null, default: false]
+  country Country [not null, note: 'Country profiles have intl dial prefix']
+  countryId String [not null, note: '@zod.custom(imports.cuid)']
   phoneType PhoneType [not null]
   phoneTypeId String [not null, note: '@zod.custom(imports.cuid)']
   organization Organization [not null]
   organizationId String [not null, note: '@zod.custom(imports.cuid)']
   user User
   userId String [unique, note: '@zod.custom(imports.cuid)']
-  orgLocation OrgLocation [not null]
+  orgLocation OrgLocation
+  orgLocationId String [note: '@zod.custom(imports.cuid)']
   orgLocationOnly Boolean [not null, default: false, note: 'associated only with location and not overall organization (for large orgs w/ multiple locations)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Org phone numbers - can be general or location specific'
@@ -448,14 +370,12 @@ Table OrgSocialMedia {
   serviceId String [not null, note: '@zod.custom(imports.cuid)']
   organization Organization [not null]
   organizationId String [not null, note: '@zod.custom(imports.cuid)']
-  orgLocation OrgLocation [not null]
+  orgLocation OrgLocation
+  orgLocationId String
   orgLocationOnly Boolean [not null, default: false, note: 'associated only with location and not overall organization (for large orgs w/ multiple locations)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Organization\'s social media links'
@@ -463,8 +383,9 @@ Table OrgSocialMedia {
 
 Table OrgLocation {
   id String [pk, note: '@zod.custom(imports.cuid)']
+  name String
   street1 String [not null]
-  street2 String [not null]
+  street2 String
   city String [not null]
   postCode String
   govDist GovDist
@@ -479,21 +400,19 @@ Table OrgLocation {
   attributes Attribute [not null]
   attributeSupplement AttributeSupplement [not null]
   organization Organization [not null]
-  orgId String [not null, note: '@zod.custom(imports.cuid)']
+  orgId String [unique, not null, note: '@zod.custom(imports.cuid)']
   allowedEditors PermissionAsset [not null]
   email OrgEmail [not null, note: 'if location specific']
   phone OrgPhone [not null, note: 'if location specific']
   socialMedia OrgSocialMedia [not null, note: 'if location specific']
   photos OrgPhoto [not null]
+  services OrgService [not null]
   outsideApi OutsideAPI
   outsideApiId String [note: '@zod.custom(imports.cuid)']
   apiLocationId String
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Org location information'
@@ -510,11 +429,8 @@ Table OrgPhoto {
   orgLocation OrgLocation
   orgLocationId String [note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Organization photos'
@@ -522,7 +438,7 @@ Table OrgPhoto {
 
 Table OrgHours {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  dayIndex Int [not null, default: 0]
+  dayIndex Int [not null, default: 0, note: 'Sun 0, Mon 1, Tue 2, Wed 3, Thu 3, Fri 4, Sat 6']
   start DateTime [not null]
   end DateTime [not null]
   orgLocation OrgLocation
@@ -530,11 +446,8 @@ Table OrgHours {
   orgService OrgService
   orgServiceId String [note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Organization location/service hours
@@ -546,23 +459,29 @@ as local time. Any timezone offset will be handled by runtime logic'
 Table OrgService {
   id String [pk, note: '@zod.custom(imports.cuid)']
   published Boolean [not null, default: false]
-  accessInstructions String
-  description String
-  hours OrgHours [not null]
   service ServiceTag [not null]
+  serviceId String [not null, note: '@zod.custom(imports.cuid)']
+  hours OrgHours [not null]
+  orgReview OrgReview [not null]
   attributes Attribute [not null]
   attributeSupplement AttributeSupplement [not null]
-  organization Organization [not null]
-  organizationId String [not null, note: '@zod.custom(imports.cuid)']
-  language Language [not null]
-  langId String [not null, note: '@zod.custom(imports.cuid)']
+  organization Organization
+  organizationId String [note: '@zod.custom(imports.cuid)']
+  orgLocation OrgLocation
+  orgLocationId String [note: '@zod.custom(imports.cuid)']
+  accessKey TranslationKey
+  accessKeyId String [unique, note: '@zod.custom(imports.cuid)']
+  descKey TranslationKey
+  descKeyId String [unique, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
+
+  indexes {
+    (serviceId, organizationId) [unique]
+    (serviceId, orgLocationId) [unique]
+  }
 
   Note: 'Organization\'s offered services - access instructions & details
 associated with service tag'
@@ -571,25 +490,24 @@ associated with service tag'
 Table OrgReview {
   id String [pk, note: '@zod.custom(imports.cuid)']
   rating Int [not null]
-  comment String
+  reviewText String
   visible Boolean [not null, default: true]
   organization Organization [not null]
   organizationId String [not null, note: '@zod.custom(imports.cuid)']
-  service ServiceTag
-  serviceId String [note: '@zod.custom(imports.cuid)']
+  orgService OrgService
+  orgServiceId String [note: '@zod.custom(imports.cuid)']
   language Language
   langId String [note: '@zod.custom(imports.cuid)']
+  langConfidence Float [note: 'How confident is the API guess?']
+  toxicity Float [note: 'From https://perspectiveapi.com/']
   lcrCity String
   lcrGovDist GovDist
   lcrGovDistId String [note: '@zod.custom(imports.cuid)']
   lcrCountry Country
   lcrCountryId String [note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'User reviews/ratings of organization'
@@ -599,16 +517,13 @@ Table AttributeCategory {
   id String [pk, note: '@zod.custom(imports.cuid)']
   tag String [unique, not null]
   name String [unique, not null]
-  description String
-  namespace TranslationNamespace
-  namespaceId String [note: '@zod.custom(imports.cuid)']
+  intDesc String [note: 'Internal description']
+  namespace TranslationNamespace [not null]
+  namespaceId String [not null, note: '@zod.custom(imports.cuid)']
   attribute Attribute [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Additional Properties for Org/Service.'
@@ -618,11 +533,12 @@ Table Attribute {
   id String [pk, note: '@zod.custom(imports.cuid)']
   tag String [unique, not null]
   name String [unique, not null]
-  description String
+  intDesc String [note: 'Internal description']
   category AttributeCategory [not null]
   categoryId String [not null, note: '@zod.custom(imports.cuid)']
   key TranslationKey
   keyId String [note: '@zod.custom(imports.cuid)']
+  requireText Boolean [not null, default: false]
   requireLanguage Boolean [not null, default: false]
   requireCountry Boolean [not null, default: false]
   requireSupplemental Boolean [not null, default: false]
@@ -633,11 +549,8 @@ Table Attribute {
   serviceTag ServiceTag [not null]
   attributeSupplement AttributeSupplement [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   indexes {
@@ -661,11 +574,8 @@ Table AttributeSupplement {
   serviceCategory ServiceCategory
   serviceCategoryId String [note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 }
 
@@ -675,14 +585,11 @@ Table ServiceCategory {
   services ServiceTag [not null]
   defaultAttributes Attribute [not null]
   defaultAttributeSupplements AttributeSupplement [not null]
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 }
 
@@ -691,18 +598,14 @@ Table ServiceTag {
   name String [not null]
   defaultAttributes Attribute [not null]
   defaultAttributeSupplements AttributeSupplement [not null]
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   category ServiceCategory [not null]
   categoryId String [not null, note: '@zod.custom(imports.cuid)']
   orgServices OrgService [not null, note: 'Tables referencing ServiceTag']
-  orgReview OrgReview [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   indexes {
@@ -712,32 +615,31 @@ Table ServiceTag {
 
 Table PhoneType {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  type String [not null]
+  type String [unique, not null]
   orgPhone OrgPhone [not null]
-  language Language [not null]
-  langId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
+  internalNote InternalNote [not null]
 
   Note: 'Phone number descriptors'
 }
 
 Table SocialMediaService {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  name String [not null]
+  name String [unique, not null]
   urlBase String [not null]
   logoIcon String [not null]
   orgSocialMedia OrgSocialMedia [not null]
+  socialMediaLink SocialMediaLink [not null]
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
+  internalNote InternalNote [not null]
 
   Note: 'Social media service properties'
 }
@@ -749,11 +651,9 @@ Table Source {
   organization Organization [not null]
   user User [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
+  internalNote InternalNote [not null]
 
   Note: 'Source of organization/user
 *INTERNAL* - for tracking purposes'
@@ -763,24 +663,22 @@ Table Country {
   id String [pk, note: '@zod.custom(imports.cuid)']
   cca2 String [unique, not null, note: 'ISO 3166-1 alpha-2 Country code']
   cca3 String [unique, not null, note: 'ISO 3166-1 alpha-3 Country code']
-  name String [not null, note: 'Country name (English).']
+  name String [unique, not null, note: 'Country name (English).']
   dialCode Int [note: 'International dialing code']
   flag String [not null, note: 'Country flag (emoji)']
   geoJSON Json [note: 'GeoJSON object - required only if this will be considered a "service area"
 @zod.custom(imports.GeoJSONSchema)']
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   govDist GovDist [not null]
   orgAddress OrgLocation [not null, note: 'Tables using Country']
   orgReviews OrgReview [not null]
+  orgPhone OrgPhone [not null]
   originUsers User [not null]
   currentUsers User [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Country metadata'
@@ -800,19 +698,16 @@ Table GovDist {
   govDistTypeId String [not null, note: '@zod.custom(imports.cuid)']
   isPrimary Boolean [default: true, note: 'table can be used for "sub districts" (State -> County -> City)']
   parent GovDist
-  parentId String
+  parentId String [note: '@zod.custom(imports.cuid)']
   subDistricts GovDist [not null]
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   orgLocation OrgLocation [not null, note: 'Tables using GovDist']
   orgReview OrgReview [not null]
   user User [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Administrative districts for countries'
@@ -822,14 +717,12 @@ Table GovDistType {
   id String [pk, note: '@zod.custom(imports.cuid)']
   name String [unique, not null]
   govDist GovDist [not null]
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null, note: '@zod.custom(imports.cuid)']
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
+  internalNote InternalNote [not null]
 
   Note: 'Descriptor of principal administrative districts (state, province, county, etc.)'
 }
@@ -841,18 +734,11 @@ Table Language {
   iso6392 String [note: 'ISO 639-2']
   nativeName String [not null, note: 'Language name in it\'s language.']
   activelyTranslated Boolean [not null, default: false, note: 'Is this language being actively used for translations?']
-  orgDescriptions OrgDescription [not null]
-  orgService OrgService [not null]
-  user User [not null]
-  userTitle UserTitle [not null]
-  orgReview OrgReview [not null]
-  phoneType PhoneType [not null]
+  User User [not null]
+  OrgReview OrgReview [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User
-  createdById String [note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User
-  updatedById String [note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Languages - ETF BCP 47 language tag
@@ -865,12 +751,13 @@ Table TranslationNamespace {
   keys TranslationKey [not null]
   attributeCategory AttributeCategory [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User
-  createdById String [note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User
-  updatedById String [note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
+
+  indexes {
+    (id, name) [unique]
+  }
 }
 
 Table TranslationKey {
@@ -880,33 +767,36 @@ Table TranslationKey {
   context String [note: 'Context']
   namespace TranslationNamespace [not null, note: 'Associated namespace']
   namespaceId String [not null, note: '@zod.custom(imports.cuid)']
+  ns String [not null]
   parent TranslationKey
   parentId String [note: '@zod.custom(imports.cuid)']
   children TranslationKey [not null]
-  userType UserType [not null, note: 'Associated tables']
-  userEthnicity UserEthnicity [not null]
-  userImmigration UserImmigration [not null]
-  userSOGIdentity UserSOGIdentity [not null]
-  userCommunity UserCommunity [not null]
-  serviceCategory ServiceCategory [not null]
-  serviceTag ServiceTag [not null]
+  attribute Attribute [not null, note: 'Associated tables']
   country Country [not null]
+  footerLink FooterLink [not null]
   govDist GovDist [not null]
   govDistType GovDistType [not null]
   navigation Navigation [not null]
-  footerLink FooterLink [not null]
-  socialMediaLink SocialMediaLink [not null]
-  attribute Attribute [not null]
+  orgDescription OrgDescription [not null]
+  orgServiceAccess OrgService [not null]
+  orgServiceDesc OrgService [not null]
+  phoneType PhoneType [not null]
+  serviceCategory ServiceCategory [not null]
+  serviceTag ServiceTag [not null]
+  socialMediaService SocialMediaService [not null]
+  userCommunity UserCommunity [not null]
+  userEthnicity UserEthnicity [not null]
+  userImmigration UserImmigration [not null]
+  userSOGIdentity UserSOGIdentity [not null]
+  userTitle UserTitle [not null]
+  userType UserType [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User
-  createdById String [note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User
-  updatedById String [note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   indexes {
-    (key, namespaceId) [unique]
+    (ns, key) [unique]
   }
 }
 
@@ -918,11 +808,8 @@ Table OutsideAPI {
   Organization Organization [not null]
   OrgLocation OrgLocation [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   Note: 'Define outside APIs in use'
@@ -932,7 +819,9 @@ Table FieldVisibility {
   id String [pk, note: '@zod.custom(imports.cuid)']
   user User [not null]
   userId String [not null, note: '@zod.custom(imports.cuid)']
-  name VisibilitySetting [not null, default: 'NONE']
+  firstName VisibilitySetting [not null, default: 'NONE']
+  lastName VisibilitySetting [not null, default: 'NONE']
+  lastNameInit VisibilitySetting [not null, default: 'NONE']
   email VisibilitySetting [not null, default: 'NONE']
   image VisibilitySetting [not null, default: 'NONE']
   ethnicity VisibilitySetting [not null, default: 'NONE']
@@ -946,6 +835,9 @@ Table FieldVisibility {
   associatedOrg VisibilitySetting [not null, default: 'NONE']
   orgTitle VisibilitySetting [not null, default: 'NONE']
   createdAt VisibilitySetting [not null, default: 'NONE', note: 'to facilitate "User since..."']
+  recordCreatedAt DateTime [default: `now()`, not null]
+  recordupdatedAt DateTime [not null]
+  auditLog AuditLog [not null]
 
   Note: 'Visibilty settings for user profile pages'
 }
@@ -956,17 +848,14 @@ Table Navigation {
   href String
   isParent Boolean [not null, default: true]
   icon String
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null]
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   parentItem Navigation
   parentId String [note: '@zod.custom(imports.cuid)']
   children Navigation [not null]
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   indexes {
@@ -982,14 +871,11 @@ Table FooterLink {
   display String [not null]
   href String [not null]
   icon String
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null]
+  key TranslationKey [not null]
+  keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
 
   indexes {
@@ -999,83 +885,177 @@ Table FooterLink {
 
 Table SocialMediaLink {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  service String [not null]
-  href String [not null]
+  href String [unique, not null]
   icon String [not null]
-  translationKey TranslationKey [not null]
-  translationKeyId String [not null]
+  service SocialMediaService [not null]
+  serviceId String [not null, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
+  auditLog AuditLog [not null]
   internalNote InternalNote [not null]
-
-  indexes {
-    (service, href) [unique]
-  }
 }
 
 Table InternalNote {
   id String [pk, note: '@zod.custom(imports.cuid)']
   text String [not null]
+  attribute Attribute
+  attributeId String [note: '@zod.custom(imports.cuid)']
+  attributeCategory AttributeCategory
+  attributeCategoryId String [note: '@zod.custom(imports.cuid)']
+  attributeSupplement AttributeSupplement
+  attributeSupplementId String [note: '@zod.custom(imports.cuid)']
+  country Country
+  countryId String [note: '@zod.custom(imports.cuid)']
+  footerLink FooterLink
+  footerLinkId String [note: '@zod.custom(imports.cuid)']
+  govDist GovDist
+  govDistId String [note: '@zod.custom(imports.cuid)']
+  govDistType GovDistType
+  govDistTypeId String [note: '@zod.custom(imports.cuid)']
+  language Language
+  languageId String [note: '@zod.custom(imports.cuid)']
+  navigation Navigation
+  navigationId String [note: '@zod.custom(imports.cuid)']
   organization Organization
-  orgId String [note: '@zod.custom(imports.cuid)']
+  organizationId String [note: '@zod.custom(imports.cuid)']
   orgDescription OrgDescription
   orgDescriptionId String [note: '@zod.custom(imports.cuid)']
   orgEmail OrgEmail
   orgEmailId String [note: '@zod.custom(imports.cuid)']
-  orgPhone OrgPhone
-  orgPhoneId String [note: '@zod.custom(imports.cuid)']
-  orgSocialMedia OrgSocialMedia
-  orgSocialMediaId String [note: '@zod.custom(imports.cuid)']
-  orgLocation OrgLocation
-  orgLocationId String [note: '@zod.custom(imports.cuid)']
-  orgPhoto OrgPhoto
-  orgPhotoId String [note: '@zod.custom(imports.cuid)']
   orgHours OrgHours
   orgHoursId String [note: '@zod.custom(imports.cuid)']
-  orgService OrgService
-  orgServiceId String [note: '@zod.custom(imports.cuid)']
+  orgLocation OrgLocation
+  orgLocationId String [note: '@zod.custom(imports.cuid)']
+  orgPhone OrgPhone
+  orgPhoneId String [note: '@zod.custom(imports.cuid)']
+  orgPhoto OrgPhoto
+  orgPhotoId String [note: '@zod.custom(imports.cuid)']
   orgReview OrgReview
   orgReviewId String [note: '@zod.custom(imports.cuid)']
+  orgService OrgService
+  orgServiceId String [note: '@zod.custom(imports.cuid)']
+  orgSocialMedia OrgSocialMedia
+  orgSocialMediaId String [note: '@zod.custom(imports.cuid)']
+  outsideApi OutsideAPI
+  outsideApiId String [note: '@zod.custom(imports.cuid)']
+  phoneType PhoneType
+  phoneTypeId String [note: '@zod.custom(imports.cuid)']
   serviceCategory ServiceCategory
   serviceCategoryId String [note: '@zod.custom(imports.cuid)']
   serviceTag ServiceTag
   serviceTagId String [note: '@zod.custom(imports.cuid)']
-  country Country
-  countryId String [note: '@zod.custom(imports.cuid)']
-  govDist GovDist
-  govDistId String [note: '@zod.custom(imports.cuid)']
-  language Language
-  languageId String [note: '@zod.custom(imports.cuid)']
-  translationNamespace TranslationNamespace
-  translationNamespaceId String [note: '@zod.custom(imports.cuid)']
+  socialMediaLink SocialMediaLink
+  socialMediaLinkId String [note: '@zod.custom(imports.cuid)']
+  socialMediaService SocialMediaService
+  socialMediaServiceId String [note: '@zod.custom(imports.cuid)']
+  source Source
+  sourceId String [note: '@zod.custom(imports.cuid)']
   translationKey TranslationKey
   translationKeyId String [note: '@zod.custom(imports.cuid)']
-  outsideApi OutsideAPI
-  outsideApiId String [note: '@zod.custom(imports.cuid)']
-  navigation Navigation
-  navigationId String [note: '@zod.custom(imports.cuid)']
-  footerLink FooterLink
-  footerLinkId String [note: '@zod.custom(imports.cuid)']
+  translationNamespace TranslationNamespace
+  translationNamespaceId String [note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
-  createdBy User [not null]
-  createdById String [not null, note: '@zod.custom(imports.cuid)']
   updatedAt DateTime [not null]
-  updatedBy User [not null]
-  updatedById String [not null, note: '@zod.custom(imports.cuid)']
-  socialMediaLink SocialMediaLink
-  socialMediaLinkId String
-  attributeCategory AttributeCategory
-  propertyCategoryId String
-  attribute Attribute
-  propertyAttributeId String
-  AttributeSupplement AttributeSupplement
-  attributeSupplementId String
+  auditLog AuditLog [not null]
 
   Note: 'Internal notes - multipurpose'
+}
+
+Table AuditLog {
+  id String [pk, note: '@zod.custom(imports.cuid)']
+  actor User [not null]
+  actorId String [not null, note: '@zod.custom(imports.cuid)']
+  timestamp DateTime [default: `now()`, not null]
+  from Json [not null]
+  to Json [not null]
+  Account Account
+  accountId String [note: '@zod.custom(imports.cuid)']
+  Attribute Attribute
+  attributeId String [note: '@zod.custom(imports.cuid)']
+  AttributeCategory AttributeCategory
+  attributeCategoryId String [note: '@zod.custom(imports.cuid)']
+  AttributeSupplement AttributeSupplement
+  attributeSupplementId String [note: '@zod.custom(imports.cuid)']
+  Country Country
+  countryId String [note: '@zod.custom(imports.cuid)']
+  FieldVisibility FieldVisibility
+  fieldVisibilityId String [note: '@zod.custom(imports.cuid)']
+  FooterLink FooterLink
+  footerLinkId String [note: '@zod.custom(imports.cuid)']
+  GovDist GovDist
+  govDistId String [note: '@zod.custom(imports.cuid)']
+  GovDistType GovDistType
+  govDistTypeId String [note: '@zod.custom(imports.cuid)']
+  InternalNote InternalNote
+  internalNoteId String [note: '@zod.custom(imports.cuid)']
+  Language Language
+  languageId String [note: '@zod.custom(imports.cuid)']
+  Navigation Navigation
+  navigationId String [note: '@zod.custom(imports.cuid)']
+  Organization Organization
+  organizationId String [note: '@zod.custom(imports.cuid)']
+  OrgDescription OrgDescription
+  orgDescriptionId String [note: '@zod.custom(imports.cuid)']
+  OrgEmail OrgEmail
+  orgEmailId String [note: '@zod.custom(imports.cuid)']
+  OrgHours OrgHours
+  orgHoursId String [note: '@zod.custom(imports.cuid)']
+  OrgLocation OrgLocation
+  orgLocationId String [note: '@zod.custom(imports.cuid)']
+  OrgPhone OrgPhone
+  orgPhoneId String [note: '@zod.custom(imports.cuid)']
+  OrgPhoto OrgPhoto
+  orgPhotoId String [note: '@zod.custom(imports.cuid)']
+  OrgReview OrgReview
+  orgReviewId String [note: '@zod.custom(imports.cuid)']
+  OrgService OrgService
+  orgServiceId String [note: '@zod.custom(imports.cuid)']
+  OrgSocialMedia OrgSocialMedia
+  orgSocialMediaId String [note: '@zod.custom(imports.cuid)']
+  OutsideAPI OutsideAPI
+  outsideAPIId String [note: '@zod.custom(imports.cuid)']
+  PermissionAsset PermissionAsset
+  permissionAssetId String [note: '@zod.custom(imports.cuid)']
+  PermissionItem PermissionItem
+  permissionItemId String [note: '@zod.custom(imports.cuid)']
+  PhoneType PhoneType
+  phoneTypeId String [note: '@zod.custom(imports.cuid)']
+  ServiceCategory ServiceCategory
+  serviceCategoryId String [note: '@zod.custom(imports.cuid)']
+  ServiceTag ServiceTag
+  serviceTagId String [note: '@zod.custom(imports.cuid)']
+  SocialMediaLink SocialMediaLink
+  socialMediaLinkId String [note: '@zod.custom(imports.cuid)']
+  SocialMediaService SocialMediaService
+  socialMediaServiceId String [note: '@zod.custom(imports.cuid)']
+  Source Source
+  sourceId String [note: '@zod.custom(imports.cuid)']
+  TranslationKey TranslationKey
+  translationKeyId String [note: '@zod.custom(imports.cuid)']
+  TranslationNamespace TranslationNamespace
+  translationNamespaceId String [note: '@zod.custom(imports.cuid)']
+  User User [not null]
+  userId String [note: '@zod.custom(imports.cuid)']
+  UserCommunity UserCommunity
+  userCommunityId String [note: '@zod.custom(imports.cuid)']
+  UserEthnicity UserEthnicity
+  userEthnicityId String [note: '@zod.custom(imports.cuid)']
+  UserImmigration UserImmigration
+  userImmigrationId String [note: '@zod.custom(imports.cuid)']
+  UserMail UserMail
+  userMailId String [note: '@zod.custom(imports.cuid)']
+  UserRole UserRole
+  userRoleId String [note: '@zod.custom(imports.cuid)']
+  UserSavedList UserSavedList
+  userSavedListId String [note: '@zod.custom(imports.cuid)']
+  UserSOGIdentity UserSOGIdentity
+  userSOGIdentityId String [note: '@zod.custom(imports.cuid)']
+  UserTitle UserTitle
+  userTitleId String [note: '@zod.custom(imports.cuid)']
+  UserType UserType
+  userTypeId String [note: '@zod.custom(imports.cuid)']
+
+  Note: 'Store changes made by users'
 }
 
 Table UserToUserEthnicity {
@@ -1108,6 +1088,11 @@ Table sharedLists {
   sharedwithId String [ref: > User.id]
 }
 
+Table AuditLogEntry {
+  auditlogId String [ref: > AuditLog.id]
+  userId String [ref: > User.id]
+}
+
 Table PermissionItemToUserRole {
   permissionsId String [ref: > PermissionItem.id]
   rolesId String [ref: > UserRole.id]
@@ -1133,29 +1118,9 @@ Table AttributeToOrganization {
   organizationId String [ref: > Organization.id]
 }
 
-Table OrgEmailToOrgLocation {
-  orglocationId String [ref: > OrgLocation.id]
-  emailId String [ref: > OrgEmail.id]
-}
-
-Table OrgLocationToOrgPhone {
-  orglocationId String [ref: > OrgLocation.id]
-  phoneId String [ref: > OrgPhone.id]
-}
-
-Table OrgLocationToOrgSocialMedia {
-  orglocationId String [ref: > OrgLocation.id]
-  socialmediaId String [ref: > OrgSocialMedia.id]
-}
-
 Table AttributeToOrgLocation {
   attributesId String [ref: > Attribute.id]
   orglocationId String [ref: > OrgLocation.id]
-}
-
-Table OrgServiceToServiceTag {
-  serviceId String [ref: > ServiceTag.id]
-  orgservicesId String [ref: > OrgService.id]
 }
 
 Table AttributeToOrgService {
@@ -1181,6 +1146,7 @@ Enum UserSavedListVisibility {
 }
 
 Enum SourceType {
+  EXTERNAL
   ORGANIZATION
   USER
   SYSTEM
@@ -1215,71 +1181,35 @@ Ref: User.associatedOrgId > Organization.id
 
 Ref: User.orgTitleId > UserTitle.id
 
-Ref: UserRole.createdById - User.id
-
-Ref: UserRole.updatedById - User.id
-
 Ref: PermissionAsset.userId > User.id
 
 Ref: PermissionAsset.permissionId > PermissionItem.id
 
-Ref: PermissionItem.createdById > User.id
+Ref: UserType.keyId > TranslationKey.id
 
-Ref: PermissionItem.updatedById > User.id
+Ref: UserTitle.keyId > TranslationKey.id
 
-Ref: UserType.translationKeyId > TranslationKey.id
+Ref: UserEthnicity.keyId > TranslationKey.id
 
-Ref: UserType.createdById - User.id
+Ref: UserImmigration.keyId > TranslationKey.id
 
-Ref: UserType.updatedById - User.id
+Ref: UserSOGIdentity.keyId > TranslationKey.id
 
-Ref: UserTitle.langId > Language.id
-
-Ref: UserTitle.createdById - User.id
-
-Ref: UserTitle.updatedById - User.id
-
-Ref: UserEthnicity.translationKeyId > TranslationKey.id
-
-Ref: UserEthnicity.createdById > User.id
-
-Ref: UserEthnicity.updatedById > User.id
-
-Ref: UserImmigration.translationKeyId > TranslationKey.id
-
-Ref: UserImmigration.createdById - User.id
-
-Ref: UserImmigration.updatedById - User.id
-
-Ref: UserSOGIdentity.translationKeyId > TranslationKey.id
-
-Ref: UserSOGIdentity.createdById > User.id
-
-Ref: UserSOGIdentity.updatedById > User.id
-
-Ref: UserCommunity.translationKeyId > TranslationKey.id
-
-Ref: UserCommunity.createdById > User.id
-
-Ref: UserCommunity.updatedById > User.id
+Ref: UserCommunity.keyId > TranslationKey.id
 
 Ref: UserSavedList.ownedById > User.id
+
+Ref: UserMail.toUserId > User.id
+
+Ref: UserMail.fromUserId > User.id
 
 Ref: Organization.outsideApiId > OutsideAPI.id
 
 Ref: Organization.sourceId > Source.id
 
-Ref: Organization.createdById - User.id
-
-Ref: Organization.updatedById - User.id
-
-Ref: OrgDescription.langId > Language.id
-
 Ref: OrgDescription.orgId > Organization.id
 
-Ref: OrgDescription.createdById > User.id
-
-Ref: OrgDescription.updatedById > User.id
+Ref: OrgDescription.keyId > TranslationKey.id
 
 Ref: OrgEmail.titleId > UserTitle.id
 
@@ -1287,9 +1217,9 @@ Ref: OrgEmail.orgId > Organization.id
 
 Ref: OrgEmail.userId - User.id
 
-Ref: OrgEmail.createdById - User.id
+Ref: OrgEmail.orgLocationId > OrgLocation.id
 
-Ref: OrgEmail.updatedById - User.id
+Ref: OrgPhone.countryId > Country.id
 
 Ref: OrgPhone.phoneTypeId > PhoneType.id
 
@@ -1297,17 +1227,13 @@ Ref: OrgPhone.organizationId > Organization.id
 
 Ref: OrgPhone.userId - User.id
 
-Ref: OrgPhone.createdById - User.id
-
-Ref: OrgPhone.updatedById - User.id
+Ref: OrgPhone.orgLocationId > OrgLocation.id
 
 Ref: OrgSocialMedia.serviceId > SocialMediaService.id
 
 Ref: OrgSocialMedia.organizationId > Organization.id
 
-Ref: OrgSocialMedia.createdById > User.id
-
-Ref: OrgSocialMedia.updatedById > User.id
+Ref: OrgSocialMedia.orgLocationId > OrgLocation.id
 
 Ref: OrgLocation.govDistId > GovDist.id
 
@@ -1317,37 +1243,27 @@ Ref: OrgLocation.orgId > Organization.id
 
 Ref: OrgLocation.outsideApiId > OutsideAPI.id
 
-Ref: OrgLocation.createdById > User.id
-
-Ref: OrgLocation.updatedById > User.id
-
 Ref: OrgPhoto.orgId > Organization.id
 
 Ref: OrgPhoto.orgLocationId > OrgLocation.id
-
-Ref: OrgPhoto.createdById > User.id
-
-Ref: OrgPhoto.updatedById > User.id
 
 Ref: OrgHours.orgLocId > OrgLocation.id
 
 Ref: OrgHours.orgServiceId > OrgService.id
 
-Ref: OrgHours.createdById > User.id
-
-Ref: OrgHours.updatedById > User.id
+Ref: OrgService.serviceId > ServiceTag.id
 
 Ref: OrgService.organizationId > Organization.id
 
-Ref: OrgService.langId > Language.id
+Ref: OrgService.orgLocationId > OrgLocation.id
 
-Ref: OrgService.createdById > User.id
+Ref: OrgService.accessKeyId > TranslationKey.id
 
-Ref: OrgService.updatedById > User.id
+Ref: OrgService.descKeyId > TranslationKey.id
 
 Ref: OrgReview.organizationId > Organization.id
 
-Ref: OrgReview.serviceId > ServiceTag.id
+Ref: OrgReview.orgServiceId > OrgService.id
 
 Ref: OrgReview.langId > Language.id
 
@@ -1355,23 +1271,11 @@ Ref: OrgReview.lcrGovDistId > GovDist.id
 
 Ref: OrgReview.lcrCountryId > Country.id
 
-Ref: OrgReview.createdById > User.id
-
-Ref: OrgReview.updatedById > User.id
-
 Ref: AttributeCategory.namespaceId > TranslationNamespace.id
-
-Ref: AttributeCategory.createdById > User.id
-
-Ref: AttributeCategory.updatedById > User.id
 
 Ref: Attribute.categoryId > AttributeCategory.id
 
 Ref: Attribute.keyId > TranslationKey.id
-
-Ref: Attribute.createdById > User.id
-
-Ref: Attribute.updatedById > User.id
 
 Ref: AttributeSupplement.attributeId > Attribute.id
 
@@ -1385,43 +1289,17 @@ Ref: AttributeSupplement.serviceTagId > ServiceTag.id
 
 Ref: AttributeSupplement.serviceCategoryId > ServiceCategory.id
 
-Ref: AttributeSupplement.createdById > User.id
+Ref: ServiceCategory.keyId > TranslationKey.id
 
-Ref: AttributeSupplement.updatedById > User.id
-
-Ref: ServiceCategory.translationKeyId > TranslationKey.id
-
-Ref: ServiceCategory.createdById > User.id
-
-Ref: ServiceCategory.updatedById > User.id
-
-Ref: ServiceTag.translationKeyId > TranslationKey.id
+Ref: ServiceTag.keyId > TranslationKey.id
 
 Ref: ServiceTag.categoryId > ServiceCategory.id
 
-Ref: ServiceTag.createdById > User.id
+Ref: PhoneType.keyId > TranslationKey.id
 
-Ref: ServiceTag.updatedById > User.id
+Ref: SocialMediaService.keyId > TranslationKey.id
 
-Ref: PhoneType.langId > Language.id
-
-Ref: PhoneType.createdById > User.id
-
-Ref: PhoneType.updatedById > User.id
-
-Ref: SocialMediaService.createdById > User.id
-
-Ref: SocialMediaService.updatedById > User.id
-
-Ref: Source.createdById - User.id
-
-Ref: Source.updatedById - User.id
-
-Ref: Country.translationKeyId > TranslationKey.id
-
-Ref: Country.createdById > User.id
-
-Ref: Country.updatedById > User.id
+Ref: Country.keyId > TranslationKey.id
 
 Ref: GovDist.countryId > Country.id
 
@@ -1429,108 +1307,162 @@ Ref: GovDist.govDistTypeId > GovDistType.id
 
 Ref: GovDist.parentId - GovDist.id
 
-Ref: GovDist.translationKeyId > TranslationKey.id
+Ref: GovDist.keyId > TranslationKey.id
 
-Ref: GovDist.createdById - User.id
+Ref: GovDistType.keyId > TranslationKey.id
 
-Ref: GovDist.updatedById - User.id
-
-Ref: GovDistType.translationKeyId > TranslationKey.id
-
-Ref: GovDistType.createdById > User.id
-
-Ref: GovDistType.updatedById > User.id
-
-Ref: Language.createdById - User.id
-
-Ref: Language.updatedById - User.id
-
-Ref: TranslationNamespace.createdById > User.id
-
-Ref: TranslationNamespace.updatedById > User.id
-
-Ref: TranslationKey.namespaceId > TranslationNamespace.id
+Ref: TranslationKey.(namespaceId, ns) > TranslationNamespace.(id, name)
 
 Ref: TranslationKey.parentId - TranslationKey.id
 
-Ref: TranslationKey.createdById > User.id
-
-Ref: TranslationKey.updatedById > User.id
-
-Ref: OutsideAPI.createdById > User.id
-
-Ref: OutsideAPI.updatedById > User.id
-
 Ref: FieldVisibility.userId > User.id
 
-Ref: Navigation.translationKeyId > TranslationKey.id
+Ref: Navigation.keyId > TranslationKey.id
 
 Ref: Navigation.parentId - Navigation.id
 
-Ref: Navigation.createdById > User.id
+Ref: FooterLink.keyId > TranslationKey.id
 
-Ref: Navigation.updatedById > User.id
+Ref: SocialMediaLink.serviceId > SocialMediaService.id
 
-Ref: FooterLink.translationKeyId > TranslationKey.id
+Ref: InternalNote.attributeId > Attribute.id
 
-Ref: FooterLink.createdById > User.id
+Ref: InternalNote.attributeCategoryId > AttributeCategory.id
 
-Ref: FooterLink.updatedById > User.id
+Ref: InternalNote.attributeSupplementId > AttributeSupplement.id
 
-Ref: SocialMediaLink.translationKeyId > TranslationKey.id
+Ref: InternalNote.countryId > Country.id
 
-Ref: SocialMediaLink.createdById > User.id
+Ref: InternalNote.footerLinkId > FooterLink.id
 
-Ref: SocialMediaLink.updatedById > User.id
+Ref: InternalNote.govDistId > GovDist.id
 
-Ref: InternalNote.orgId > Organization.id
+Ref: InternalNote.govDistTypeId > GovDistType.id
+
+Ref: InternalNote.languageId > Language.id
+
+Ref: InternalNote.navigationId > Navigation.id
+
+Ref: InternalNote.organizationId > Organization.id
 
 Ref: InternalNote.orgDescriptionId > OrgDescription.id
 
 Ref: InternalNote.orgEmailId > OrgEmail.id
 
-Ref: InternalNote.orgPhoneId > OrgPhone.id
-
-Ref: InternalNote.orgSocialMediaId > OrgSocialMedia.id
+Ref: InternalNote.orgHoursId > OrgHours.id
 
 Ref: InternalNote.orgLocationId > OrgLocation.id
 
+Ref: InternalNote.orgPhoneId > OrgPhone.id
+
 Ref: InternalNote.orgPhotoId > OrgPhoto.id
 
-Ref: InternalNote.orgHoursId > OrgHours.id
+Ref: InternalNote.orgReviewId > OrgReview.id
 
 Ref: InternalNote.orgServiceId > OrgService.id
 
-Ref: InternalNote.orgReviewId > OrgReview.id
+Ref: InternalNote.orgSocialMediaId > OrgSocialMedia.id
+
+Ref: InternalNote.outsideApiId > OutsideAPI.id
+
+Ref: InternalNote.phoneTypeId > PhoneType.id
 
 Ref: InternalNote.serviceCategoryId > ServiceCategory.id
 
 Ref: InternalNote.serviceTagId > ServiceTag.id
 
-Ref: InternalNote.countryId > Country.id
+Ref: InternalNote.socialMediaLinkId > SocialMediaLink.id
 
-Ref: InternalNote.govDistId > GovDist.id
+Ref: InternalNote.socialMediaServiceId > SocialMediaService.id
 
-Ref: InternalNote.languageId > Language.id
-
-Ref: InternalNote.translationNamespaceId > TranslationNamespace.id
+Ref: InternalNote.sourceId > Source.id
 
 Ref: InternalNote.translationKeyId > TranslationKey.id
 
-Ref: InternalNote.outsideApiId > OutsideAPI.id
+Ref: InternalNote.translationNamespaceId > TranslationNamespace.id
 
-Ref: InternalNote.navigationId > Navigation.id
+Ref: AuditLog.actorId > User.id
 
-Ref: InternalNote.footerLinkId > FooterLink.id
+Ref: AuditLog.accountId > Account.id
 
-Ref: InternalNote.createdById > User.id
+Ref: AuditLog.attributeId > Attribute.id
 
-Ref: InternalNote.updatedById > User.id
+Ref: AuditLog.attributeCategoryId > AttributeCategory.id
 
-Ref: InternalNote.socialMediaLinkId > SocialMediaLink.id
+Ref: AuditLog.attributeSupplementId > AttributeSupplement.id
 
-Ref: InternalNote.propertyCategoryId > AttributeCategory.id
+Ref: AuditLog.countryId > Country.id
 
-Ref: InternalNote.propertyAttributeId > Attribute.id
+Ref: AuditLog.fieldVisibilityId > FieldVisibility.id
 
-Ref: InternalNote.attributeSupplementId > AttributeSupplement.id
+Ref: AuditLog.footerLinkId > FooterLink.id
+
+Ref: AuditLog.govDistId > GovDist.id
+
+Ref: AuditLog.govDistTypeId > GovDistType.id
+
+Ref: AuditLog.internalNoteId > InternalNote.id
+
+Ref: AuditLog.languageId > Language.id
+
+Ref: AuditLog.navigationId > Navigation.id
+
+Ref: AuditLog.organizationId > Organization.id
+
+Ref: AuditLog.orgDescriptionId > OrgDescription.id
+
+Ref: AuditLog.orgEmailId > OrgEmail.id
+
+Ref: AuditLog.orgHoursId > OrgHours.id
+
+Ref: AuditLog.orgLocationId > OrgLocation.id
+
+Ref: AuditLog.orgPhoneId > OrgPhone.id
+
+Ref: AuditLog.orgPhotoId > OrgPhoto.id
+
+Ref: AuditLog.orgReviewId > OrgReview.id
+
+Ref: AuditLog.orgServiceId > OrgService.id
+
+Ref: AuditLog.orgSocialMediaId > OrgSocialMedia.id
+
+Ref: AuditLog.outsideAPIId > OutsideAPI.id
+
+Ref: AuditLog.permissionAssetId > PermissionAsset.id
+
+Ref: AuditLog.permissionItemId > PermissionItem.id
+
+Ref: AuditLog.phoneTypeId > PhoneType.id
+
+Ref: AuditLog.serviceCategoryId > ServiceCategory.id
+
+Ref: AuditLog.serviceTagId > ServiceTag.id
+
+Ref: AuditLog.socialMediaLinkId > SocialMediaLink.id
+
+Ref: AuditLog.socialMediaServiceId > SocialMediaService.id
+
+Ref: AuditLog.sourceId > Source.id
+
+Ref: AuditLog.translationKeyId > TranslationKey.id
+
+Ref: AuditLog.translationNamespaceId > TranslationNamespace.id
+
+Ref: AuditLog.userCommunityId > UserCommunity.id
+
+Ref: AuditLog.userEthnicityId > UserEthnicity.id
+
+Ref: AuditLog.userImmigrationId > UserImmigration.id
+
+Ref: AuditLog.userMailId > UserMail.id
+
+Ref: AuditLog.userRoleId > UserRole.id
+
+Ref: AuditLog.userSavedListId > UserSavedList.id
+
+Ref: AuditLog.userSOGIdentityId > UserSOGIdentity.id
+
+Ref: AuditLog.userTitleId > UserTitle.id
+
+Ref: AuditLog.userTypeId > UserType.id

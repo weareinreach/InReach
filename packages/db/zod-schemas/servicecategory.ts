@@ -4,35 +4,32 @@ import * as imports from '../zod-util'
 import {
 	AttributeModel,
 	AttributeSupplementModel,
+	AuditLogModel,
 	CompleteAttribute,
 	CompleteAttributeSupplement,
+	CompleteAuditLog,
 	CompleteInternalNote,
 	CompleteServiceTag,
 	CompleteTranslationKey,
-	CompleteUser,
 	InternalNoteModel,
 	ServiceTagModel,
 	TranslationKeyModel,
-	UserModel,
 } from './index'
 
 export const _ServiceCategoryModel = z.object({
 	id: imports.cuid,
 	category: z.string(),
-	translationKeyId: imports.cuid,
+	keyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteServiceCategory extends z.infer<typeof _ServiceCategoryModel> {
 	services: CompleteServiceTag[]
 	defaultAttributes: CompleteAttribute[]
 	defaultAttributeSupplements: CompleteAttributeSupplement[]
-	translationKey: CompleteTranslationKey
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	key: CompleteTranslationKey
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -46,9 +43,8 @@ export const ServiceCategoryModel: z.ZodSchema<CompleteServiceCategory> = z.lazy
 		services: ServiceTagModel.array(),
 		defaultAttributes: AttributeModel.array(),
 		defaultAttributeSupplements: AttributeSupplementModel.array(),
-		translationKey: TranslationKeyModel,
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		key: TranslationKeyModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

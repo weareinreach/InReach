@@ -2,23 +2,30 @@ import { SourceType } from '@prisma/client'
 import * as z from 'zod'
 
 import * as imports from '../zod-util'
-import { CompleteOrganization, CompleteUser, OrganizationModel, UserModel } from './index'
+import {
+	AuditLogModel,
+	CompleteAuditLog,
+	CompleteInternalNote,
+	CompleteOrganization,
+	CompleteUser,
+	InternalNoteModel,
+	OrganizationModel,
+	UserModel,
+} from './index'
 
 export const _SourceModel = z.object({
 	id: imports.cuid,
 	source: z.string(),
 	type: z.nativeEnum(SourceType),
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteSource extends z.infer<typeof _SourceModel> {
 	organization: CompleteOrganization[]
 	user: CompleteUser[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
+	internalNote: CompleteInternalNote[]
 }
 
 /**
@@ -30,7 +37,7 @@ export const SourceModel: z.ZodSchema<CompleteSource> = z.lazy(() =>
 	_SourceModel.extend({
 		organization: OrganizationModel.array(),
 		user: UserModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		auditLog: AuditLogModel.array(),
+		internalNote: InternalNoteModel.array(),
 	})
 )

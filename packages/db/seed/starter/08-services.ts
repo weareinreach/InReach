@@ -1,17 +1,16 @@
 import { prisma } from '~/index'
-import { createMeta, keySlug, namespaces, serviceData } from '~/seed/data/'
+import { keySlug, namespaces, serviceData } from '~/seed/data/'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
 export const seedServices = async (task: ListrTask) => {
 	try {
-		const { id: namespaceId } = await prisma.translationNamespace.upsert({
+		await prisma.translationNamespace.upsert({
 			where: {
 				name: namespaces.services,
 			},
 			create: {
 				name: namespaces.services,
-				...createMeta,
 			},
 			update: {},
 			select: {
@@ -33,14 +32,17 @@ export const seedServices = async (task: ListrTask) => {
 				},
 				create: {
 					category,
-					translationKey: {
+					key: {
 						create: {
 							key: keySlug(category),
 							text: category,
-							namespaceId,
+							namespace: {
+								connect: {
+									name: namespaces.services,
+								},
+							},
 						},
 					},
-					...createMeta,
 				},
 				update: {},
 				select: {
@@ -68,19 +70,17 @@ export const seedServices = async (task: ListrTask) => {
 										id: categoryId,
 									},
 								},
-								translationKey: {
+								key: {
 									create: {
 										key: keySlug(record),
 										text: record,
 										namespace: {
 											connect: {
-												id: namespaceId,
+												name: namespaces.services,
 											},
 										},
-										...createMeta,
 									},
 								},
-								...createMeta,
 							},
 							update: {},
 							select: { id: true },

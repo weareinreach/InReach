@@ -4,8 +4,10 @@ import * as imports from '../zod-util'
 import {
 	AttributeModel,
 	AttributeSupplementModel,
+	AuditLogModel,
 	CompleteAttribute,
 	CompleteAttributeSupplement,
+	CompleteAuditLog,
 	CompleteCountry,
 	CompleteGovDist,
 	CompleteInternalNote,
@@ -13,11 +15,11 @@ import {
 	CompleteOrgHours,
 	CompleteOrgPhone,
 	CompleteOrgPhoto,
+	CompleteOrgService,
 	CompleteOrgSocialMedia,
 	CompleteOrganization,
 	CompleteOutsideAPI,
 	CompletePermissionAsset,
-	CompleteUser,
 	CountryModel,
 	GovDistModel,
 	InternalNoteModel,
@@ -25,11 +27,11 @@ import {
 	OrgHoursModel,
 	OrgPhoneModel,
 	OrgPhotoModel,
+	OrgServiceModel,
 	OrgSocialMediaModel,
 	OrganizationModel,
 	OutsideAPIModel,
 	PermissionAssetModel,
-	UserModel,
 } from './index'
 
 // Helper schema for JSON fields
@@ -42,8 +44,9 @@ const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
 
 export const _OrgLocationModel = z.object({
 	id: imports.cuid,
+	name: z.string().nullish(),
 	street1: z.string(),
-	street2: z.string(),
+	street2: z.string().nullish(),
 	city: z.string(),
 	postCode: z.string().nullish(),
 	govDistId: imports.cuid.nullish(),
@@ -56,9 +59,7 @@ export const _OrgLocationModel = z.object({
 	outsideApiId: imports.cuid.nullish(),
 	apiLocationId: z.string().nullish(),
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgLocation extends z.infer<typeof _OrgLocationModel> {
@@ -73,9 +74,9 @@ export interface CompleteOrgLocation extends z.infer<typeof _OrgLocationModel> {
 	phone: CompleteOrgPhone[]
 	socialMedia: CompleteOrgSocialMedia[]
 	photos: CompleteOrgPhoto[]
+	services: CompleteOrgService[]
 	outsideApi?: CompleteOutsideAPI | null
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -100,9 +101,9 @@ export const OrgLocationModel: z.ZodSchema<CompleteOrgLocation> = z.lazy(() =>
 		/** If location specific */
 		socialMedia: OrgSocialMediaModel.array(),
 		photos: OrgPhotoModel.array(),
+		services: OrgServiceModel.array(),
 		outsideApi: OutsideAPIModel.nullish(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

@@ -1,5 +1,5 @@
 import { prisma } from '~/index'
-import { createMeta, namespaces, socialMediaLinks } from '~/seed/data'
+import { namespaces, socialMediaLinks } from '~/seed/data'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
@@ -11,7 +11,6 @@ export const seedSocialMediaLinks = async (task: ListrTask) => {
 			},
 			create: {
 				name: namespaces.socialMedia,
-				...createMeta,
 			},
 			update: {},
 			select: {
@@ -22,36 +21,34 @@ export const seedSocialMediaLinks = async (task: ListrTask) => {
 		const transactions = socialMediaLinks.map((item) =>
 			prisma.socialMediaLink.upsert({
 				where: {
-					service_href: {
-						service: item.key,
-						href: item.href,
-					},
+					href: item.href,
 				},
 				create: {
-					service: item.key,
-					href: item.href,
-					icon: item.iconCode,
-					translationKey: {
+					service: {
 						connectOrCreate: {
 							where: {
-								key_namespaceId: {
-									key: item.key,
-									namespaceId,
-								},
+								name: item.key,
 							},
 							create: {
-								key: item.key,
-								text: item.key,
-								namespace: {
-									connect: {
-										id: namespaceId,
+								name: item.key,
+								logoIcon: item.iconCode,
+								urlBase: '',
+								key: {
+									create: {
+										key: item.key,
+										text: item.key,
+										namespace: {
+											connect: {
+												id: namespaceId,
+											},
+										},
 									},
 								},
-								...createMeta,
 							},
 						},
 					},
-					...createMeta,
+					href: item.href,
+					icon: item.iconCode,
 				},
 				update: {},
 			})

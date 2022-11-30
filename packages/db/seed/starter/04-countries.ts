@@ -1,7 +1,6 @@
 import { prisma } from '~/index'
 
 import { namespaces } from '../data/00-namespaces'
-import { createdBy, updatedBy } from '../data/01-user'
 import { type Countries, countryData } from '../data/04-countries'
 import { logFile } from '../logger'
 import { ListrTask } from '../starterData'
@@ -30,7 +29,7 @@ export const seedCountries = async (task: ListrTask) => {
 					name: country.name.common,
 					dialCode: dialCode(),
 					flag: country.flag,
-					translationKey: {
+					key: {
 						create: {
 							namespace: {
 								connectOrCreate: {
@@ -39,31 +38,24 @@ export const seedCountries = async (task: ListrTask) => {
 									},
 									create: {
 										name: translationNamespace,
-										createdBy,
-										updatedBy,
 									},
 								},
 							},
 							key: country.cca3,
 							text: country.name.common,
-							createdBy,
-							updatedBy,
 						},
 					},
-					createdBy,
-					updatedBy,
 				},
 				update: {
 					cca2: country.cca2,
 					name: country.name.common,
 					dialCode: dialCode(),
 					flag: country.flag,
-					translationKey: {
+					key: {
 						update: {
 							text: country.name.common,
 						},
 					},
-					updatedBy,
 				},
 			})
 			return prismaCountry

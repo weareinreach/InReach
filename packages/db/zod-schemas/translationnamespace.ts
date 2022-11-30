@@ -3,29 +3,26 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	AttributeCategoryModel,
+	AuditLogModel,
 	CompleteAttributeCategory,
+	CompleteAuditLog,
 	CompleteInternalNote,
 	CompleteTranslationKey,
-	CompleteUser,
 	InternalNoteModel,
 	TranslationKeyModel,
-	UserModel,
 } from './index'
 
 export const _TranslationNamespaceModel = z.object({
 	id: imports.cuid,
 	name: z.string(),
 	createdAt: z.date(),
-	createdById: imports.cuid.nullish(),
 	updatedAt: z.date(),
-	updatedById: imports.cuid.nullish(),
 })
 
 export interface CompleteTranslationNamespace extends z.infer<typeof _TranslationNamespaceModel> {
 	keys: CompleteTranslationKey[]
 	attributeCategory: CompleteAttributeCategory[]
-	createdBy?: CompleteUser | null
-	updatedBy?: CompleteUser | null
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -38,8 +35,7 @@ export const TranslationNamespaceModel: z.ZodSchema<CompleteTranslationNamespace
 	_TranslationNamespaceModel.extend({
 		keys: TranslationKeyModel.array(),
 		attributeCategory: AttributeCategoryModel.array(),
-		createdBy: UserModel.nullish(),
-		updatedBy: UserModel.nullish(),
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

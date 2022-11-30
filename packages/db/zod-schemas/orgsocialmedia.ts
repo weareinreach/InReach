@@ -2,16 +2,16 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteInternalNote,
 	CompleteOrgLocation,
 	CompleteOrganization,
 	CompleteSocialMediaService,
-	CompleteUser,
 	InternalNoteModel,
 	OrgLocationModel,
 	OrganizationModel,
 	SocialMediaServiceModel,
-	UserModel,
 } from './index'
 
 export const _OrgSocialMediaModel = z.object({
@@ -20,20 +20,18 @@ export const _OrgSocialMediaModel = z.object({
 	url: z.string(),
 	serviceId: imports.cuid,
 	organizationId: imports.cuid,
+	orgLocationId: z.string().nullish(),
 	/** Associated only with location and not overall organization (for large orgs w/ multiple locations) */
 	orgLocationOnly: z.boolean(),
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgSocialMedia extends z.infer<typeof _OrgSocialMediaModel> {
 	service: CompleteSocialMediaService
 	organization: CompleteOrganization
-	orgLocation: CompleteOrgLocation[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	orgLocation?: CompleteOrgLocation | null
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -46,9 +44,8 @@ export const OrgSocialMediaModel: z.ZodSchema<CompleteOrgSocialMedia> = z.lazy((
 	_OrgSocialMediaModel.extend({
 		service: SocialMediaServiceModel,
 		organization: OrganizationModel,
-		orgLocation: OrgLocationModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		orgLocation: OrgLocationModel.nullish(),
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

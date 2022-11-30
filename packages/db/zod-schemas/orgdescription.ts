@@ -2,32 +2,28 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteInternalNote,
-	CompleteLanguage,
 	CompleteOrganization,
-	CompleteUser,
+	CompleteTranslationKey,
 	InternalNoteModel,
-	LanguageModel,
 	OrganizationModel,
-	UserModel,
+	TranslationKeyModel,
 } from './index'
 
 export const _OrgDescriptionModel = z.object({
 	id: imports.cuid,
-	text: z.string(),
-	langId: imports.cuid,
 	orgId: imports.cuid,
+	keyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgDescription extends z.infer<typeof _OrgDescriptionModel> {
-	language: CompleteLanguage
 	organization: CompleteOrganization
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	key: CompleteTranslationKey
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -38,10 +34,9 @@ export interface CompleteOrgDescription extends z.infer<typeof _OrgDescriptionMo
  */
 export const OrgDescriptionModel: z.ZodSchema<CompleteOrgDescription> = z.lazy(() =>
 	_OrgDescriptionModel.extend({
-		language: LanguageModel,
 		organization: OrganizationModel,
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		key: TranslationKeyModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

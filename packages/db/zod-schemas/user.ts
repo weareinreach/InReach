@@ -3,46 +3,24 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	AccountModel,
-	AttributeCategoryModel,
-	AttributeModel,
-	AttributeSupplementModel,
+	AuditLogModel,
 	CompleteAccount,
-	CompleteAttribute,
-	CompleteAttributeCategory,
-	CompleteAttributeSupplement,
+	CompleteAuditLog,
 	CompleteCountry,
 	CompleteFieldVisibility,
-	CompleteFooterLink,
 	CompleteGovDist,
-	CompleteGovDistType,
-	CompleteInternalNote,
 	CompleteLanguage,
-	CompleteNavigation,
-	CompleteOrgDescription,
 	CompleteOrgEmail,
-	CompleteOrgHours,
-	CompleteOrgLocation,
 	CompleteOrgPhone,
-	CompleteOrgPhoto,
-	CompleteOrgReview,
-	CompleteOrgService,
-	CompleteOrgSocialMedia,
 	CompleteOrganization,
-	CompleteOutsideAPI,
 	CompletePermissionAsset,
 	CompletePermissionItem,
-	CompletePhoneType,
-	CompleteServiceCategory,
-	CompleteServiceTag,
 	CompleteSession,
-	CompleteSocialMediaLink,
-	CompleteSocialMediaService,
 	CompleteSource,
-	CompleteTranslationKey,
-	CompleteTranslationNamespace,
 	CompleteUserCommunity,
 	CompleteUserEthnicity,
 	CompleteUserImmigration,
+	CompleteUserMail,
 	CompleteUserRole,
 	CompleteUserSOGIdentity,
 	CompleteUserSavedList,
@@ -50,37 +28,19 @@ import {
 	CompleteUserType,
 	CountryModel,
 	FieldVisibilityModel,
-	FooterLinkModel,
 	GovDistModel,
-	GovDistTypeModel,
-	InternalNoteModel,
 	LanguageModel,
-	NavigationModel,
-	OrgDescriptionModel,
 	OrgEmailModel,
-	OrgHoursModel,
-	OrgLocationModel,
 	OrgPhoneModel,
-	OrgPhotoModel,
-	OrgReviewModel,
-	OrgServiceModel,
-	OrgSocialMediaModel,
 	OrganizationModel,
-	OutsideAPIModel,
 	PermissionAssetModel,
 	PermissionItemModel,
-	PhoneTypeModel,
-	ServiceCategoryModel,
-	ServiceTagModel,
 	SessionModel,
-	SocialMediaLinkModel,
-	SocialMediaServiceModel,
 	SourceModel,
-	TranslationKeyModel,
-	TranslationNamespaceModel,
 	UserCommunityModel,
 	UserEthnicityModel,
 	UserImmigrationModel,
+	UserMailModel,
 	UserRoleModel,
 	UserSOGIdentityModel,
 	UserSavedListModel,
@@ -90,7 +50,8 @@ import {
 
 export const _UserModel = z.object({
 	id: imports.cuid,
-	name: z.string().nullish(),
+	firstName: z.string().nullish(),
+	lastName: z.string().nullish(),
 	email: z.string(),
 	emailVerified: z.date().nullish(),
 	image: z.string().nullish(),
@@ -133,85 +94,15 @@ export interface CompleteUser extends z.infer<typeof _UserModel> {
 	userType: CompleteUserType
 	langPref: CompleteLanguage
 	source?: CompleteSource | null
+	mailReceived: CompleteUserMail[]
+	mailSent: CompleteUserMail[]
 	associatedOrg?: CompleteOrganization | null
 	orgTitle?: CompleteUserTitle | null
 	orgEmail?: CompleteOrgEmail | null
 	orgPhone?: CompleteOrgPhone | null
 	FieldVisibility: CompleteFieldVisibility[]
-	createUserEthnicity: CompleteUserEthnicity[]
-	updateUserEthnicity: CompleteUserEthnicity[]
-	createUserImmigration: CompleteUserImmigration[]
-	updateUserImmigration: CompleteUserImmigration[]
-	createUserSOGIdentity: CompleteUserSOGIdentity[]
-	updateUserSOGIdentity: CompleteUserSOGIdentity[]
-	createUserType: CompleteUserType[]
-	updateUserType: CompleteUserType[]
-	createUserCommunity: CompleteUserCommunity[]
-	updateUserCommunity: CompleteUserCommunity[]
-	createOrganization: CompleteOrganization[]
-	updateOrganization: CompleteOrganization[]
-	createOrgDescription: CompleteOrgDescription[]
-	updateOrgDescription: CompleteOrgDescription[]
-	createOrgEmail: CompleteOrgEmail[]
-	updateOrgEmail: CompleteOrgEmail[]
-	createUserTitle: CompleteUserTitle[]
-	updateUserTitle: CompleteUserTitle[]
-	createOrgLocation: CompleteOrgLocation[]
-	updateOrgLocation: CompleteOrgLocation[]
-	createInternalNote: CompleteInternalNote[]
-	updateInternalNote: CompleteInternalNote[]
-	createOrgPhone: CompleteOrgPhone[]
-	updateOrgPhone: CompleteOrgPhone[]
-	createOrgPhoto: CompleteOrgPhoto[]
-	updateOrgPhoto: CompleteOrgPhoto[]
-	createPhoneType: CompletePhoneType[]
-	updatePhoneType: CompletePhoneType[]
-	createOrgHours: CompleteOrgHours[]
-	updateOrgHours: CompleteOrgHours[]
-	createOrgService: CompleteOrgService[]
-	updateOrgService: CompleteOrgService[]
-	createOrgReview: CompleteOrgReview[]
-	updateOrgReview: CompleteOrgReview[]
-	createServiceCategory: CompleteServiceCategory[]
-	updateServiceCategory: CompleteServiceCategory[]
-	createServiceTag: CompleteServiceTag[]
-	updateServiceTag: CompleteServiceTag[]
-	createOrgSocialMedia: CompleteOrgSocialMedia[]
-	updateOrgSocialMedia: CompleteOrgSocialMedia[]
-	createSource: CompleteSource[]
-	updateSource: CompleteSource[]
-	createCountry: CompleteCountry[]
-	updateCountry: CompleteCountry[]
-	createGovDist: CompleteGovDist[]
-	updateGovDist: CompleteGovDist[]
-	createLanguage: CompleteLanguage[]
-	updateLanguage: CompleteLanguage[]
-	createTranslationNamespace: CompleteTranslationNamespace[]
-	updateTranslationNamespace: CompleteTranslationNamespace[]
-	createTranslationKey: CompleteTranslationKey[]
-	updateTranslationKey: CompleteTranslationKey[]
-	createSocialMediaService: CompleteSocialMediaService[]
-	updateSocialMediaService: CompleteSocialMediaService[]
-	createUserRole: CompleteUserRole[]
-	updateUserRole: CompleteUserRole[]
-	createPermissionItem: CompletePermissionItem[]
-	updatePermissionItem: CompletePermissionItem[]
-	createOutsideAPI: CompleteOutsideAPI[]
-	updateOutsideAPI: CompleteOutsideAPI[]
-	createGovDistType: CompleteGovDistType[]
-	updateGovDistType: CompleteGovDistType[]
-	createNavigation: CompleteNavigation[]
-	updateNavigation: CompleteNavigation[]
-	createFooterLink: CompleteFooterLink[]
-	updateFooterLink: CompleteFooterLink[]
-	createSocialMediaLink: CompleteSocialMediaLink[]
-	updateSocialMediaLink: CompleteSocialMediaLink[]
-	createAttributeCategory: CompleteAttributeCategory[]
-	updateAttributeCategory: CompleteAttributeCategory[]
-	createAttribute: CompleteAttribute[]
-	updateAttribute: CompleteAttribute[]
-	createAttributeSupplement: CompleteAttributeSupplement[]
-	updateAttributeSupplement: CompleteAttributeSupplement[]
+	AuditLogEntry: CompleteAuditLog[]
+	auditLog: CompleteAuditLog[]
 }
 
 /**
@@ -239,85 +130,16 @@ export const UserModel: z.ZodSchema<CompleteUser> = z.lazy(() =>
 		userType: UserTypeModel,
 		langPref: LanguageModel,
 		source: SourceModel.nullish(),
+		mailReceived: UserMailModel.array(),
+		mailSent: UserMailModel.array(),
 		associatedOrg: OrganizationModel.nullish(),
 		orgTitle: UserTitleModel.nullish(),
 		orgEmail: OrgEmailModel.nullish(),
 		orgPhone: OrgPhoneModel.nullish(),
 		/** For user profile page. All fields default to 'NONE' */
 		FieldVisibility: FieldVisibilityModel.array(),
-		createUserEthnicity: UserEthnicityModel.array(),
-		updateUserEthnicity: UserEthnicityModel.array(),
-		createUserImmigration: UserImmigrationModel.array(),
-		updateUserImmigration: UserImmigrationModel.array(),
-		createUserSOGIdentity: UserSOGIdentityModel.array(),
-		updateUserSOGIdentity: UserSOGIdentityModel.array(),
-		createUserType: UserTypeModel.array(),
-		updateUserType: UserTypeModel.array(),
-		createUserCommunity: UserCommunityModel.array(),
-		updateUserCommunity: UserCommunityModel.array(),
-		createOrganization: OrganizationModel.array(),
-		updateOrganization: OrganizationModel.array(),
-		createOrgDescription: OrgDescriptionModel.array(),
-		updateOrgDescription: OrgDescriptionModel.array(),
-		createOrgEmail: OrgEmailModel.array(),
-		updateOrgEmail: OrgEmailModel.array(),
-		createUserTitle: UserTitleModel.array(),
-		updateUserTitle: UserTitleModel.array(),
-		createOrgLocation: OrgLocationModel.array(),
-		updateOrgLocation: OrgLocationModel.array(),
-		createInternalNote: InternalNoteModel.array(),
-		updateInternalNote: InternalNoteModel.array(),
-		createOrgPhone: OrgPhoneModel.array(),
-		updateOrgPhone: OrgPhoneModel.array(),
-		createOrgPhoto: OrgPhotoModel.array(),
-		updateOrgPhoto: OrgPhotoModel.array(),
-		createPhoneType: PhoneTypeModel.array(),
-		updatePhoneType: PhoneTypeModel.array(),
-		createOrgHours: OrgHoursModel.array(),
-		updateOrgHours: OrgHoursModel.array(),
-		createOrgService: OrgServiceModel.array(),
-		updateOrgService: OrgServiceModel.array(),
-		createOrgReview: OrgReviewModel.array(),
-		updateOrgReview: OrgReviewModel.array(),
-		createServiceCategory: ServiceCategoryModel.array(),
-		updateServiceCategory: ServiceCategoryModel.array(),
-		createServiceTag: ServiceTagModel.array(),
-		updateServiceTag: ServiceTagModel.array(),
-		createOrgSocialMedia: OrgSocialMediaModel.array(),
-		updateOrgSocialMedia: OrgSocialMediaModel.array(),
-		createSource: SourceModel.array(),
-		updateSource: SourceModel.array(),
-		createCountry: CountryModel.array(),
-		updateCountry: CountryModel.array(),
-		createGovDist: GovDistModel.array(),
-		updateGovDist: GovDistModel.array(),
-		createLanguage: LanguageModel.array(),
-		updateLanguage: LanguageModel.array(),
-		createTranslationNamespace: TranslationNamespaceModel.array(),
-		updateTranslationNamespace: TranslationNamespaceModel.array(),
-		createTranslationKey: TranslationKeyModel.array(),
-		updateTranslationKey: TranslationKeyModel.array(),
-		createSocialMediaService: SocialMediaServiceModel.array(),
-		updateSocialMediaService: SocialMediaServiceModel.array(),
-		createUserRole: UserRoleModel.array(),
-		updateUserRole: UserRoleModel.array(),
-		createPermissionItem: PermissionItemModel.array(),
-		updatePermissionItem: PermissionItemModel.array(),
-		createOutsideAPI: OutsideAPIModel.array(),
-		updateOutsideAPI: OutsideAPIModel.array(),
-		createGovDistType: GovDistTypeModel.array(),
-		updateGovDistType: GovDistTypeModel.array(),
-		createNavigation: NavigationModel.array(),
-		updateNavigation: NavigationModel.array(),
-		createFooterLink: FooterLinkModel.array(),
-		updateFooterLink: FooterLinkModel.array(),
-		createSocialMediaLink: SocialMediaLinkModel.array(),
-		updateSocialMediaLink: SocialMediaLinkModel.array(),
-		createAttributeCategory: AttributeCategoryModel.array(),
-		updateAttributeCategory: AttributeCategoryModel.array(),
-		createAttribute: AttributeModel.array(),
-		updateAttribute: AttributeModel.array(),
-		createAttributeSupplement: AttributeSupplementModel.array(),
-		updateAttributeSupplement: AttributeSupplementModel.array(),
+		/** Recording changes made by user */
+		AuditLogEntry: AuditLogModel.array(),
+		auditLog: AuditLogModel.array(),
 	})
 )

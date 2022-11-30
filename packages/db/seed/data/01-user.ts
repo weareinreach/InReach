@@ -7,10 +7,11 @@ export const userEmail = 'inreach_svc@inreach.org'
 export const localeCode = 'en'
 export const userType = 'System'
 export const translationNamespace = namespaces.user
-export const translationKey = `type-${userType.toLowerCase()}`
+export const key = `type-${userType.toLowerCase()}`
 
 export const seedUser: Prisma.UserCreateInput = {
-	name: 'Database Seed User',
+	firstName: 'System',
+	lastName: 'User',
 	email: userEmail,
 	role: {
 		connectOrCreate: {
@@ -41,9 +42,9 @@ export const seedUser: Prisma.UserCreateInput = {
 			},
 			create: {
 				type: userType,
-				translationKey: {
+				key: {
 					create: {
-						key: translationKey,
+						key: key,
 						text: userType,
 						context: 'User type: system user',
 						namespace: {
@@ -68,12 +69,6 @@ export const connectUser = {
 		email: userEmail,
 	},
 }
-export const createdBy = connectUser
-
-export const updatedBy = connectUser
-
-export const createMeta = { createdBy, updatedBy }
-export const updateMeta = { updatedBy }
 
 export const userRoleList = [
 	{ type: 'seeker', name: 'Resource Seeker' },
@@ -90,11 +85,11 @@ export const userTypes: Prisma.UserTypeUpsertArgs[] = userRoleList.map((role) =>
 	},
 	create: {
 		type: role.type,
-		translationKey: {
+		key: {
 			create: {
 				key: role.type,
 				text: role.name,
-				...createMeta,
+
 				namespace: {
 					connect: {
 						name: namespaces.user,
@@ -102,7 +97,6 @@ export const userTypes: Prisma.UserTypeUpsertArgs[] = userRoleList.map((role) =>
 				},
 			},
 		},
-		...createMeta,
 	},
 	update: {},
 }))
@@ -114,7 +108,6 @@ export const userRoles: Prisma.UserRoleUpsertArgs[] = userRoleList.map((role) =>
 	create: {
 		name: role.name,
 		tag: slugify(role.name),
-		...createMeta,
 	},
 	update: {},
 }))

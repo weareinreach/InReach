@@ -2,6 +2,8 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteInternalNote,
 	CompleteOrgLocation,
 	CompleteOrganization,
@@ -24,21 +26,19 @@ export const _OrgEmailModel = z.object({
 	titleId: imports.cuid,
 	orgId: imports.cuid,
 	userId: imports.cuid.nullish(),
+	orgLocationId: imports.cuid.nullish(),
 	/** Associated only with location and not overall organization (for large orgs w/ multiple locations) */
 	orgLocationOnly: z.boolean(),
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgEmail extends z.infer<typeof _OrgEmailModel> {
 	title: CompleteUserTitle
 	organization: CompleteOrganization
 	user?: CompleteUser | null
-	orgLocation: CompleteOrgLocation[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	orgLocation?: CompleteOrgLocation | null
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -52,9 +52,8 @@ export const OrgEmailModel: z.ZodSchema<CompleteOrgEmail> = z.lazy(() =>
 		title: UserTitleModel,
 		organization: OrganizationModel,
 		user: UserModel.nullish(),
-		orgLocation: OrgLocationModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		orgLocation: OrgLocationModel.nullish(),
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

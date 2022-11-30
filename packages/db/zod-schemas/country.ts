@@ -2,15 +2,19 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteGovDist,
 	CompleteInternalNote,
 	CompleteOrgLocation,
+	CompleteOrgPhone,
 	CompleteOrgReview,
 	CompleteTranslationKey,
 	CompleteUser,
 	GovDistModel,
 	InternalNoteModel,
 	OrgLocationModel,
+	OrgPhoneModel,
 	OrgReviewModel,
 	TranslationKeyModel,
 	UserModel,
@@ -38,22 +42,20 @@ export const _CountryModel = z.object({
 	flag: z.string(),
 	/** GeoJSON object - required only if this will be considered a "service area" */
 	geoJSON: imports.GeoJSONSchema,
-	translationKeyId: imports.cuid,
+	keyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteCountry extends z.infer<typeof _CountryModel> {
-	translationKey: CompleteTranslationKey
+	key: CompleteTranslationKey
 	govDist: CompleteGovDist[]
 	orgAddress: CompleteOrgLocation[]
 	orgReviews: CompleteOrgReview[]
+	orgPhone: CompleteOrgPhone[]
 	originUsers: CompleteUser[]
 	currentUsers: CompleteUser[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -64,15 +66,15 @@ export interface CompleteCountry extends z.infer<typeof _CountryModel> {
  */
 export const CountryModel: z.ZodSchema<CompleteCountry> = z.lazy(() =>
 	_CountryModel.extend({
-		translationKey: TranslationKeyModel,
+		key: TranslationKeyModel,
 		govDist: GovDistModel.array(),
 		/** Tables using Country */
 		orgAddress: OrgLocationModel.array(),
 		orgReviews: OrgReviewModel.array(),
+		orgPhone: OrgPhoneModel.array(),
 		originUsers: UserModel.array(),
 		currentUsers: UserModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

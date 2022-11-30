@@ -2,14 +2,14 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteInternalNote,
 	CompleteOrgLocation,
 	CompleteOrganization,
-	CompleteUser,
 	InternalNoteModel,
 	OrgLocationModel,
 	OrganizationModel,
-	UserModel,
 } from './index'
 
 export const _OutsideAPIModel = z.object({
@@ -18,16 +18,13 @@ export const _OutsideAPIModel = z.object({
 	description: z.string(),
 	urlPattern: z.string(),
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteOutsideAPI extends z.infer<typeof _OutsideAPIModel> {
 	Organization: CompleteOrganization[]
 	OrgLocation: CompleteOrgLocation[]
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -40,8 +37,7 @@ export const OutsideAPIModel: z.ZodSchema<CompleteOutsideAPI> = z.lazy(() =>
 	_OutsideAPIModel.extend({
 		Organization: OrganizationModel.array(),
 		OrgLocation: OrgLocationModel.array(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

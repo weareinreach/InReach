@@ -4,8 +4,10 @@ import * as imports from '../zod-util'
 import {
 	AttributeModel,
 	AttributeSupplementModel,
+	AuditLogModel,
 	CompleteAttribute,
 	CompleteAttributeSupplement,
+	CompleteAuditLog,
 	CompleteInternalNote,
 	CompleteOrgDescription,
 	CompleteOrgEmail,
@@ -49,9 +51,7 @@ export const _OrganizationModel = z.object({
 	apiIdentifier: z.string().nullish(),
 	sourceId: imports.cuid,
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteOrganization extends z.infer<typeof _OrganizationModel> {
@@ -71,8 +71,7 @@ export interface CompleteOrganization extends z.infer<typeof _OrganizationModel>
 	allowedEditors: CompletePermissionAsset[]
 	outsideApi?: CompleteOutsideAPI | null
 	source: CompleteSource
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
 }
 
 /**
@@ -98,7 +97,6 @@ export const OrganizationModel: z.ZodSchema<CompleteOrganization> = z.lazy(() =>
 		allowedEditors: PermissionAssetModel.array(),
 		outsideApi: OutsideAPIModel.nullish(),
 		source: SourceModel,
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		auditLog: AuditLogModel.array(),
 	})
 )

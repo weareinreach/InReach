@@ -1,13 +1,17 @@
 import slugify from 'slugify'
 
 export const namespaces = {
-	user: 'user',
+	attribute: 'attribute',
+	common: 'common',
 	country: 'country',
-	nav: 'nav',
 	footer: 'footer',
-	socialMedia: 'socialMedia',
-	services: 'services',
 	govDist: 'gov-dist',
+	nav: 'nav',
+	orgDescription: 'org-description',
+	orgService: 'org-service',
+	services: 'services',
+	socialMedia: 'socialMedia',
+	user: 'user',
 } as const
 
 export const keySlug = (item: string) => slugify(item, { lower: true, strict: true })

@@ -2,12 +2,12 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteInternalNote,
 	CompleteTranslationKey,
-	CompleteUser,
 	InternalNoteModel,
 	TranslationKeyModel,
-	UserModel,
 } from './index'
 
 export const _FooterLinkModel = z.object({
@@ -15,17 +15,14 @@ export const _FooterLinkModel = z.object({
 	display: z.string(),
 	href: z.string(),
 	icon: z.string().nullish(),
-	translationKeyId: z.string(),
+	keyId: imports.cuid,
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteFooterLink extends z.infer<typeof _FooterLinkModel> {
-	translationKey: CompleteTranslationKey
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	key: CompleteTranslationKey
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -36,9 +33,8 @@ export interface CompleteFooterLink extends z.infer<typeof _FooterLinkModel> {
  */
 export const FooterLinkModel: z.ZodSchema<CompleteFooterLink> = z.lazy(() =>
 	_FooterLinkModel.extend({
-		translationKey: TranslationKeyModel,
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		key: TranslationKeyModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

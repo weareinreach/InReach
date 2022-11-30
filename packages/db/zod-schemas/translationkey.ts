@@ -3,22 +3,27 @@ import * as z from 'zod'
 import * as imports from '../zod-util'
 import {
 	AttributeModel,
+	AuditLogModel,
 	CompleteAttribute,
+	CompleteAuditLog,
 	CompleteCountry,
 	CompleteFooterLink,
 	CompleteGovDist,
 	CompleteGovDistType,
 	CompleteInternalNote,
 	CompleteNavigation,
+	CompleteOrgDescription,
+	CompleteOrgService,
+	CompletePhoneType,
 	CompleteServiceCategory,
 	CompleteServiceTag,
-	CompleteSocialMediaLink,
+	CompleteSocialMediaService,
 	CompleteTranslationNamespace,
-	CompleteUser,
 	CompleteUserCommunity,
 	CompleteUserEthnicity,
 	CompleteUserImmigration,
 	CompleteUserSOGIdentity,
+	CompleteUserTitle,
 	CompleteUserType,
 	CountryModel,
 	FooterLinkModel,
@@ -26,15 +31,18 @@ import {
 	GovDistTypeModel,
 	InternalNoteModel,
 	NavigationModel,
+	OrgDescriptionModel,
+	OrgServiceModel,
+	PhoneTypeModel,
 	ServiceCategoryModel,
 	ServiceTagModel,
-	SocialMediaLinkModel,
+	SocialMediaServiceModel,
 	TranslationNamespaceModel,
 	UserCommunityModel,
 	UserEthnicityModel,
 	UserImmigrationModel,
-	UserModel,
 	UserSOGIdentityModel,
+	UserTitleModel,
 	UserTypeModel,
 } from './index'
 
@@ -47,33 +55,36 @@ export const _TranslationKeyModel = z.object({
 	/** Context */
 	context: z.string().nullish(),
 	namespaceId: imports.cuid,
+	ns: z.string(),
 	parentId: imports.cuid.nullish(),
 	createdAt: z.date(),
-	createdById: imports.cuid.nullish(),
 	updatedAt: z.date(),
-	updatedById: imports.cuid.nullish(),
 })
 
 export interface CompleteTranslationKey extends z.infer<typeof _TranslationKeyModel> {
 	namespace: CompleteTranslationNamespace
 	parent?: CompleteTranslationKey | null
 	children: CompleteTranslationKey[]
-	userType: CompleteUserType[]
-	userEthnicity: CompleteUserEthnicity[]
-	userImmigration: CompleteUserImmigration[]
-	userSOGIdentity: CompleteUserSOGIdentity[]
-	userCommunity: CompleteUserCommunity[]
-	serviceCategory: CompleteServiceCategory[]
-	serviceTag: CompleteServiceTag[]
+	attribute: CompleteAttribute[]
 	country: CompleteCountry[]
+	footerLink: CompleteFooterLink[]
 	govDist: CompleteGovDist[]
 	govDistType: CompleteGovDistType[]
 	navigation: CompleteNavigation[]
-	footerLink: CompleteFooterLink[]
-	socialMediaLink: CompleteSocialMediaLink[]
-	attribute: CompleteAttribute[]
-	createdBy?: CompleteUser | null
-	updatedBy?: CompleteUser | null
+	orgDescription: CompleteOrgDescription[]
+	orgServiceAccess: CompleteOrgService[]
+	orgServiceDesc: CompleteOrgService[]
+	phoneType: CompletePhoneType[]
+	serviceCategory: CompleteServiceCategory[]
+	serviceTag: CompleteServiceTag[]
+	socialMediaService: CompleteSocialMediaService[]
+	userCommunity: CompleteUserCommunity[]
+	userEthnicity: CompleteUserEthnicity[]
+	userImmigration: CompleteUserImmigration[]
+	userSOGIdentity: CompleteUserSOGIdentity[]
+	userTitle: CompleteUserTitle[]
+	userType: CompleteUserType[]
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -89,22 +100,26 @@ export const TranslationKeyModel: z.ZodSchema<CompleteTranslationKey> = z.lazy((
 		parent: TranslationKeyModel.nullish(),
 		children: TranslationKeyModel.array(),
 		/** Associated tables */
-		userType: UserTypeModel.array(),
-		userEthnicity: UserEthnicityModel.array(),
-		userImmigration: UserImmigrationModel.array(),
-		userSOGIdentity: UserSOGIdentityModel.array(),
-		userCommunity: UserCommunityModel.array(),
-		serviceCategory: ServiceCategoryModel.array(),
-		serviceTag: ServiceTagModel.array(),
+		attribute: AttributeModel.array(),
 		country: CountryModel.array(),
+		footerLink: FooterLinkModel.array(),
 		govDist: GovDistModel.array(),
 		govDistType: GovDistTypeModel.array(),
 		navigation: NavigationModel.array(),
-		footerLink: FooterLinkModel.array(),
-		socialMediaLink: SocialMediaLinkModel.array(),
-		attribute: AttributeModel.array(),
-		createdBy: UserModel.nullish(),
-		updatedBy: UserModel.nullish(),
+		orgDescription: OrgDescriptionModel.array(),
+		orgServiceAccess: OrgServiceModel.array(),
+		orgServiceDesc: OrgServiceModel.array(),
+		phoneType: PhoneTypeModel.array(),
+		serviceCategory: ServiceCategoryModel.array(),
+		serviceTag: ServiceTagModel.array(),
+		socialMediaService: SocialMediaServiceModel.array(),
+		userCommunity: UserCommunityModel.array(),
+		userEthnicity: UserEthnicityModel.array(),
+		userImmigration: UserImmigrationModel.array(),
+		userSOGIdentity: UserSOGIdentityModel.array(),
+		userTitle: UserTitleModel.array(),
+		userType: UserTypeModel.array(),
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

@@ -2,14 +2,14 @@ import * as z from 'zod'
 
 import * as imports from '../zod-util'
 import {
+	AuditLogModel,
+	CompleteAuditLog,
 	CompleteInternalNote,
 	CompleteOrgLocation,
 	CompleteOrganization,
-	CompleteUser,
 	InternalNoteModel,
 	OrgLocationModel,
 	OrganizationModel,
-	UserModel,
 } from './index'
 
 export const _OrgPhotoModel = z.object({
@@ -21,16 +21,13 @@ export const _OrgPhotoModel = z.object({
 	orgId: imports.cuid.nullish(),
 	orgLocationId: imports.cuid.nullish(),
 	createdAt: z.date(),
-	createdById: imports.cuid,
 	updatedAt: z.date(),
-	updatedById: imports.cuid,
 })
 
 export interface CompleteOrgPhoto extends z.infer<typeof _OrgPhotoModel> {
 	organization?: CompleteOrganization | null
 	orgLocation?: CompleteOrgLocation | null
-	createdBy: CompleteUser
-	updatedBy: CompleteUser
+	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
 
@@ -43,8 +40,7 @@ export const OrgPhotoModel: z.ZodSchema<CompleteOrgPhoto> = z.lazy(() =>
 	_OrgPhotoModel.extend({
 		organization: OrganizationModel.nullish(),
 		orgLocation: OrgLocationModel.nullish(),
-		createdBy: UserModel,
-		updatedBy: UserModel,
+		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})
 )

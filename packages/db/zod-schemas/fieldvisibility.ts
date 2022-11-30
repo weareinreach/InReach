@@ -2,12 +2,14 @@ import { VisibilitySetting } from '@prisma/client'
 import * as z from 'zod'
 
 import * as imports from '../zod-util'
-import { CompleteUser, UserModel } from './index'
+import { AuditLogModel, CompleteAuditLog, CompleteUser, UserModel } from './index'
 
 export const _FieldVisibilityModel = z.object({
 	id: imports.cuid,
 	userId: imports.cuid,
-	name: z.nativeEnum(VisibilitySetting),
+	firstName: z.nativeEnum(VisibilitySetting),
+	lastName: z.nativeEnum(VisibilitySetting),
+	lastNameInit: z.nativeEnum(VisibilitySetting),
 	email: z.nativeEnum(VisibilitySetting),
 	image: z.nativeEnum(VisibilitySetting),
 	ethnicity: z.nativeEnum(VisibilitySetting),
@@ -23,10 +25,13 @@ export const _FieldVisibilityModel = z.object({
 	orgTitle: z.nativeEnum(VisibilitySetting),
 	/** To facilitate "User since..." */
 	createdAt: z.nativeEnum(VisibilitySetting),
+	recordCreatedAt: z.date(),
+	recordupdatedAt: z.date(),
 })
 
 export interface CompleteFieldVisibility extends z.infer<typeof _FieldVisibilityModel> {
 	user: CompleteUser
+	auditLog: CompleteAuditLog[]
 }
 
 /**
@@ -37,5 +42,6 @@ export interface CompleteFieldVisibility extends z.infer<typeof _FieldVisibility
 export const FieldVisibilityModel: z.ZodSchema<CompleteFieldVisibility> = z.lazy(() =>
 	_FieldVisibilityModel.extend({
 		user: UserModel,
+		auditLog: AuditLogModel.array(),
 	})
 )
