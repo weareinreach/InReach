@@ -883,7 +883,7 @@ model SocialMediaService {
 ///  *INTERNAL* - for tracking purposes
 model Source {
   id     String     @id @default(cuid()) /// @zod.custom(imports.cuid)
-  source String
+  source String     @unique
   type   SourceType
 
   organization Organization[]
@@ -900,6 +900,7 @@ model Source {
 enum SourceType {
   ORGANIZATION
   USER
+  SYSTEM
 }
 
 /// Country metadata

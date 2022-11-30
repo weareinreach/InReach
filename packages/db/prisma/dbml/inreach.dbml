@@ -744,7 +744,7 @@ Table SocialMediaService {
 
 Table Source {
   id String [pk, note: '@zod.custom(imports.cuid)']
-  source String [not null]
+  source String [unique, not null]
   type SourceType [not null]
   organization Organization [not null]
   user User [not null]
@@ -1183,6 +1183,7 @@ Enum UserSavedListVisibility {
 Enum SourceType {
   ORGANIZATION
   USER
+  SYSTEM
 }
 
 Enum VisibilitySetting {
