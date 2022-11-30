@@ -1,8 +1,7 @@
 {
-  "at-capacity": "At capacity",
-  "geo-near-public-transit": "Near public transportation",
-  "geo-public-transit-description": "Public transit / specific directions",
-  "has-confidentiality-policy": "Has A Confidentiality Policy",
-  "test": "test",
-  "time-walk-in": "Has Walk-In Hours"
+	"at-capacity": "At capacity",
+	"geo-near-public-transit": "Near public transportation",
+	"geo-public-transit-description": "Public transit / specific directions",
+	"has-confidentiality-policy": "Has A Confidentiality Policy",
+	"time-walk-in": "Has Walk-In Hours"
 }

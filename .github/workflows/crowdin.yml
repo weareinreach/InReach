@@ -29,10 +29,10 @@ jobs:
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         with:
-          upload_translations: false
-          download_translations: false
+          upload_translations: true
+          download_translations: true
           localization_branch_name: ${{ steps.branchregex.outputs.value }}
-          create_pull_request: false
+          create_pull_request: true
           pull_request_body: 'i18n: Updated translations from Crowdin'
           pull_request_labels: 'translations'
           pull_request_base_branch_name: ${{ github.ref_name }}
