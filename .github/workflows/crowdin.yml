@@ -13,6 +13,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3
 
+      - name: Remove Jira ticket ID from branch name
+        id: branchregex
+        uses: ashley-taylor/regex-property-action@v1.3
+        with:
+          value: ${{ github.ref_name }}
+          regex: IN-\d+
+          flags: gi
+          replacement: IN-xxx
+
       - name: crowdin action
         uses: crowdin/github-action@7092586bfeb2938cad87656e06bfc40623a1853c # 1.5.1
         env:
@@ -22,9 +31,9 @@ jobs:
         with:
           upload_translations: false
           download_translations: false
-          localization_branch_name: l10n_crowdin_action
+          localization_branch_name: ${{ steps.branchregex.outputs.value }}
           create_pull_request: false
-          pull_request_body: 'New Crowdin pull request with translations'
+          pull_request_body: 'i18n: Updated translations from Crowdin'
           pull_request_labels: 'translations'
           pull_request_base_branch_name: ${{ github.ref_name }}
-          crowdin_branch_name: ${{ github.ref_name }}
+          crowdin_branch_name: ${{ steps.branchregex.outputs.value }}
