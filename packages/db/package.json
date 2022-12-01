@@ -28,6 +28,7 @@
 		"post-install": "pnpm db:generate",
 		"predev": "pnpm db:generate",
 		"prisma": "pnpm with-env prisma",
+		"type-check": "tsc --noEmit",
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
