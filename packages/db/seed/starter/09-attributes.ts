@@ -1,7 +1,8 @@
 import { Attribute } from '@prisma/client'
 import slugify from 'slugify'
 
-import { Prisma, prisma } from '~/index'
+import { Prisma } from '~/client'
+import { prisma } from '~/index'
 import { attributeData, namespaces } from '~/seed/data/'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'

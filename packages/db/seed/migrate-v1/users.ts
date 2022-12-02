@@ -1,5 +1,6 @@
-import { Prisma, User } from '@prisma/client'
+import invariant from 'tiny-invariant'
 
+import { Prisma, User } from '~/client'
 import userData from '~/datastore/v1/mongodb/output/users.json'
 import { countryMap } from '~/datastore/v1/util/countryOrigin'
 import { currentLocationMap } from '~/datastore/v1/util/currentLocation'
@@ -68,9 +69,10 @@ export const migrateUsers = async (task: ListrTask) => {
 		}
 		if (user.currentLocation && currentLocationMap.get(user.currentLocation)) {
 			const location = currentLocationMap.get(user.currentLocation)
-			currentCity = location?.currCity
-			currentCountry = { connect: { cca3: location?.currCountry } }
-			currentGovDist = location?.currGovDist ? { connect: { slug: location?.currGovDist } } : undefined
+			invariant(location)
+			currentCity = location.currCity
+			currentCountry = { connect: { cca3: location.currCountry } }
+			currentGovDist = location.currGovDist ? { connect: { slug: location.currGovDist } } : undefined
 		}
 
 		/**

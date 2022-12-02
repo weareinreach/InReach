@@ -37,8 +37,9 @@ const upsertNamespace = async () =>
 		select: { id: true },
 	})
 
-const nsCoC = async (text: string) => {
-	const key = keySlug(text)
+const nsCoC = async (text: string, prefix?: string) => {
+	const slugText = prefix ? `${prefix}-${text}` : text
+	const key = keySlug(slugText)
 
 	return {
 		connectOrCreate: {
@@ -99,7 +100,7 @@ const upsertDistrictTypes = async (task: ListrTask) => {
 			},
 			create: {
 				name: type,
-				key: await nsCoC(type),
+				key: await nsCoC(type, 'type'),
 			},
 			update: {},
 			select: {
@@ -140,6 +141,7 @@ const countryUS = async (task: ListrTask) => {
 		const distType = govDist.get(isoType.toLowerCase())
 		if (!distType) throw new Error('Unknown district type')
 		const slug = keySlug(`US-${state.name}`)
+		const key = await nsCoC(name, 'us')
 		const { id: stateId } = await prisma.govDist.upsert({
 			where: {
 				slug,
@@ -152,7 +154,7 @@ const countryUS = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				key: await nsCoC(name),
+				key,
 			},
 			update: {
 				name,
@@ -161,7 +163,7 @@ const countryUS = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				key: await nsCoC(name),
+				key,
 			},
 			select: { id: true },
 		})
@@ -175,6 +177,7 @@ const countryUS = async (task: ListrTask) => {
 			const slug = keySlug(`US-${state.name}-${countyName}`)
 			const distType = govDist.get('county')
 			if (!distType) throw new Error('Unknown district type')
+			const key = await nsCoC(countyName, `us-${state.name}`)
 			bulkCounties.push(
 				prisma.govDist.upsert({
 					where: {
@@ -188,7 +191,7 @@ const countryUS = async (task: ListrTask) => {
 						govDistType: connectTo(distType),
 						isPrimary: false,
 						parent: connectTo(stateId),
-						key: await nsCoC(`${state.name}-${countyName}`),
+						key,
 					},
 					update: {
 						name: countyName,
@@ -197,7 +200,7 @@ const countryUS = async (task: ListrTask) => {
 						govDistType: connectTo(distType),
 						isPrimary: false,
 						parent: connectTo(stateId),
-						key: await nsCoC(`${state.name}-${countyName}`),
+						key,
 					},
 					select: {
 						id: true,
@@ -237,6 +240,7 @@ const countryCA = async (task: ListrTask) => {
 		const distType = govDist.get(isoType.toLowerCase())
 		if (!distType) throw new Error('Unknown district type')
 		const slug = keySlug(`CA-${province.name}`)
+		const key = await nsCoC(name, 'ca')
 		await prisma.govDist.upsert({
 			where: {
 				slug,
@@ -249,7 +253,7 @@ const countryCA = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				key: await nsCoC(name),
+				key,
 			},
 			update: {
 				name,
@@ -258,7 +262,7 @@ const countryCA = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				key: await nsCoC(name),
+				key,
 			},
 			select: { id: true },
 		})
@@ -296,7 +300,7 @@ const countryMX = async (task: ListrTask) => {
 		if (!distType) throw new Error('Unknown district type')
 
 		const slug = keySlug(`MX-${state.name}`)
-
+		const key = await nsCoC(name, 'mx')
 		await prisma.govDist.upsert({
 			where: {
 				slug,
@@ -309,7 +313,7 @@ const countryMX = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				key: await nsCoC(name),
+				key,
 			},
 			update: {
 				name,
@@ -318,7 +322,7 @@ const countryMX = async (task: ListrTask) => {
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
-				key: await nsCoC(name),
+				key,
 			},
 			select: { id: true },
 		})

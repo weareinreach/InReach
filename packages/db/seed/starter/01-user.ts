@@ -1,7 +1,8 @@
 import { UserRole } from '@prisma/client'
 import slugify from 'slugify'
 
-import { Prisma, prisma } from '~/index'
+import { Prisma } from '~/client'
+import { prisma } from '~/index'
 import { namespaces } from '~/seed/data'
 import { ListrTask } from '~/seed/starterData'
 
