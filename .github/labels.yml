@@ -76,6 +76,9 @@
 - name: 'automerge'
   color: 00ff00
   description: 'Enable Kodiak auto-merge'
+- name: 'do-not-merge'
+  color: ee4b2b
+  description: 'Do not merge this PR'
 
 - name: 'changelog-ignore'
   color: ead2ac
