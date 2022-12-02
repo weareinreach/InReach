@@ -3,11 +3,11 @@ name: PR Labels
 
 on:
   pull_request:
-    types: [opened, labeled, unlabeled, synchronize]
+    types: [opened, labeled, unlabeled, synchronize, reopened, edited]
 
 jobs:
   pr_labels:
-    name: 🏭 Verify
+    name: 🏭 Verify labels
     runs-on: ubuntu-latest
     steps:
       - name: 🏷 Verify PR has a valid label
@@ -18,3 +18,12 @@ jobs:
             breaking-change, bugfix, documentation, enhancement,
             refactor, performance, new-feature, maintenance, ci, dependencies, translations, changelog-ignore
           disable-reviews: false
+  pr_wip_check:
+    runs-on: ubuntu-latest
+    name: 🏭 Check for blocking labels
+    steps:
+    - name: 🏷 Check PR for a merge-blocking label
+      uses: tim-actions/wip-check@8c84f5987215d49440b86475062d61e4f099e1b7 # main branch
+      with:
+        labels: '["do-not-merge", "wip", "rfc", "blocked"]'
+        keywords: '["WIP", "wip", "RFC", "rfc"]'
