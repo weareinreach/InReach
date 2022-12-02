@@ -11,7 +11,7 @@ export const generateNavigation = async (task: ListrTask) => {
 	const data = await prisma.navigation.findMany({
 		select: {
 			href: true,
-			translationKey: {
+			key: {
 				select: { key: true },
 			},
 		},
@@ -21,7 +21,7 @@ export const generateNavigation = async (task: ListrTask) => {
 	for (const record of data) {
 		const {
 			href,
-			translationKey: { key },
+			key: { key },
 		} = record
 		output.push({ key, href: href ?? '' })
 	}
