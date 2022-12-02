@@ -1,12 +1,10 @@
-import { UserRole } from '@prisma/client'
 import slugify from 'slugify'
 
-import { Prisma } from '~/client'
 import { prisma } from '~/index'
 import { namespaces } from '~/seed/data'
 import { ListrTask } from '~/seed/starterData'
 
-import { seedUser, userEmail, userRoleList } from '../data/01-user'
+import { seedUser, userEmail, userRoleList } from '../data'
 import { logFile } from '../logger'
 
 export const seedSystemUser = async (task: ListrTask) => {
@@ -77,7 +75,7 @@ export const seedUserTypes = async (task: ListrTask) => {
 export const seedUserRoles = async (task: ListrTask) => {
 	let logMessage = ``
 	let countA = 1
-	const bulkTransactions: Prisma.Prisma__UserRoleClient<UserRole>[] = userRoleList.map((role) => {
+	const bulkTransactions = userRoleList.map((role) => {
 		logMessage = `(${countA}/${userRoleList.length}) Upserting User Role: ${role.name}`
 		logFile.info(logMessage)
 		task.output = logMessage

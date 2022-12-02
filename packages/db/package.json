@@ -33,7 +33,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@prisma/client": "4.7.0",
+		"@prisma/client": "4.7.1",
 		"prisma-docs-generator": "0.5.0",
 		"zod": "3.19.1"
 	},
@@ -65,7 +65,7 @@
 		"listr2": "5.0.5",
 		"luxon": "3.1.0",
 		"mongoback": "3.0.3",
-		"prisma": "4.7.0",
+		"prisma": "4.7.1",
 		"prisma-dbml-generator": "0.10.0",
 		"quicktype-core": "6.1.0",
 		"recursive-readdir": "2.2.3",

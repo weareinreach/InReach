@@ -1,10 +1,8 @@
-import { Prisma, UserEthnicity } from '~/client'
 import { prisma } from '~/index'
 
 import { logFile } from '../logger'
 import { ListrTask } from '../starterData'
-import { keySlug } from './00-namespaces'
-import { translationNamespace } from './01-user'
+import { keySlug, namespaces } from './00-namespaces'
 
 type EthnicityData = string[]
 
@@ -23,46 +21,39 @@ const ethnicityData: EthnicityData = [
 ]
 
 export const generateEthnicityRecords = (task: ListrTask) => {
-	const queue: Prisma.Prisma__UserEthnicityClient<Partial<UserEthnicity>>[] = []
-	let i = 1
-	for (const item of ethnicityData) {
-		const transaction: Prisma.Prisma__UserEthnicityClient<Partial<UserEthnicity>> =
-			prisma.userEthnicity.upsert({
-				where: {
-					ethnicity: item,
-				},
-				create: {
-					ethnicity: item,
-					key: {
-						create: {
-							key: `eth-${keySlug(item)}`,
-							text: item,
-							namespace: {
-								connect: {
-									name: translationNamespace,
-								},
+	const queue = ethnicityData.map((item, i) => {
+		const logMessage = `(${i}/${ethnicityData.length}) Added Ethnicity transaction to queue: ${item}`
+		logFile.log(logMessage)
+		task.output = logMessage
+
+		return prisma.userEthnicity.upsert({
+			where: {
+				ethnicity: item,
+			},
+			create: {
+				ethnicity: item,
+				key: {
+					create: {
+						key: `eth-${keySlug(item)}`,
+						text: item,
+						namespace: {
+							connect: {
+								name: namespaces.user,
 							},
 						},
 					},
 				},
-				update: {
-					key: {
-						update: {
-							key: `eth-${keySlug(item)}`,
-							text: item,
-						},
+			},
+			update: {
+				key: {
+					update: {
+						key: `eth-${keySlug(item)}`,
+						text: item,
 					},
 				},
-				select: {
-					id: true,
-				},
-			})
+			},
+		})
+	})
 
-		queue.push(transaction)
-		const logMessage = `(${i}/${ethnicityData.length}) Added Ethnicity transaction to queue: ${item}`
-		logFile.log(logMessage)
-		task.output = logMessage
-		i++
-	}
 	return queue
 }

@@ -6,8 +6,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["./*"]
-		},
-		"declaration": true
+		}
 	},
-	"include": ["index.ts", "data-transfer", "seed", "zod-schemas", "zod-util"]
+	"include": ["index.ts", "datastore", "seed", "zod-schemas", "zod-util"]
 }
