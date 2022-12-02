@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - 'apps/app/public/locales/en/*.json'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   synchronize-with-crowdin:
@@ -29,7 +32,8 @@ jobs:
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         with:
-          upload_translations: true
+          upload_sources: true
+          upload_translations: false
           download_translations: true
           localization_branch_name: ${{ steps.branchregex.outputs.value }}
           create_pull_request: true

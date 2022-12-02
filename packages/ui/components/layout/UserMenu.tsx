@@ -50,7 +50,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation('nav')
 	const { data: session, status } = useSession()
 	// const [_userMenuOpen, setUserMenuOpen] = useState(false)
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
