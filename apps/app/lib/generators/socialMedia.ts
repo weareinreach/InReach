@@ -12,8 +12,8 @@ export const generateSocialMediaLinks = async (task: ListrTask) => {
 		select: {
 			href: true,
 			icon: true,
-			translationKey: {
-				select: { key: true },
+			service: {
+				select: { name: true },
 			},
 		},
 	})
@@ -23,7 +23,7 @@ export const generateSocialMediaLinks = async (task: ListrTask) => {
 		const {
 			href,
 			icon,
-			translationKey: { key },
+			service: { name: key },
 		} = record
 		output.push({ key, href, icon })
 	}
