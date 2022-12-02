@@ -1,9 +1,10 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fieldReference", "postgresqlExtensions", "clientExtensions", "filteredRelationCount", "multiSchema"]
-  // output          = "../../../node_modules/.prisma/client"
-  // output          = "../node_modules/.prisma/client"
-  binaryTargets   = ["native", "rhel-openssl-1.0.x"]
+  // clientExtensions causing error
+  // previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "multiSchema", "clientExtensions"]
+  previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "multiSchema"]
+
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
 
 // generator docs {

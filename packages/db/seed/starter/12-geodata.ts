@@ -202,9 +202,6 @@ const countryUS = async (task: ListrTask) => {
 						parent: connectTo(stateId),
 						key,
 					},
-					select: {
-						id: true,
-					},
 				})
 			)
 			countA++
