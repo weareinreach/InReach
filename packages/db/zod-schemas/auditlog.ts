@@ -104,6 +104,8 @@ export const _AuditLogModel = z.object({
 	timestamp: z.date(),
 	from: jsonSchema,
 	to: jsonSchema,
+	table: z.string(),
+	recordId: z.string(),
 	accountId: imports.cuid.nullish(),
 	attributeId: imports.cuid.nullish(),
 	attributeCategoryId: imports.cuid.nullish(),

@@ -1,5 +1,4 @@
-import { Prisma, UserEthnicity } from '@prisma/client'
-
+import { Prisma, UserEthnicity } from '~/client'
 import { prisma } from '~/index'
 
 import { logFile } from '../logger'
@@ -27,36 +26,37 @@ export const generateEthnicityRecords = (task: ListrTask) => {
 	const queue: Prisma.Prisma__UserEthnicityClient<Partial<UserEthnicity>>[] = []
 	let i = 1
 	for (const item of ethnicityData) {
-		const transaction = prisma.userEthnicity.upsert({
-			where: {
-				ethnicity: item,
-			},
-			create: {
-				ethnicity: item,
-				key: {
-					create: {
-						key: `eth-${keySlug(item)}`,
-						text: item,
-						namespace: {
-							connect: {
-								name: translationNamespace,
+		const transaction: Prisma.Prisma__UserEthnicityClient<Partial<UserEthnicity>> =
+			prisma.userEthnicity.upsert({
+				where: {
+					ethnicity: item,
+				},
+				create: {
+					ethnicity: item,
+					key: {
+						create: {
+							key: `eth-${keySlug(item)}`,
+							text: item,
+							namespace: {
+								connect: {
+									name: translationNamespace,
+								},
 							},
 						},
 					},
 				},
-			},
-			update: {
-				key: {
-					update: {
-						key: `eth-${keySlug(item)}`,
-						text: item,
+				update: {
+					key: {
+						update: {
+							key: `eth-${keySlug(item)}`,
+							text: item,
+						},
 					},
 				},
-			},
-			select: {
-				id: true,
-			},
-		})
+				select: {
+					id: true,
+				},
+			})
 
 		queue.push(transaction)
 		const logMessage = `(${i}/${ethnicityData.length}) Added Ethnicity transaction to queue: ${item}`

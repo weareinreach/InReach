@@ -13,8 +13,9 @@
 		"db:generate": "pnpm clean:zod && pnpm with-env prisma generate && pnpm format:generated && prisma -v",
 		"db:generate:aws": "pnpm install && pnpm with-env prisma generate",
 		"db:migrate": "pnpm with-env prisma migrate dev && pnpm format:generated",
-		"db:migrate:edit": "pnpm with-env prisma migrate dev --create-only --skip-seed && pnpm format:generated",
+		"db:migrate:edit": "pnpm with-env prisma migrate dev --create-only --skip-seed",
 		"db:mongoexport": "pnpm clean:export && pnpm with-env tsx ./seed/migrate-v1/mongoexport.ts",
+		"db:reset": "pnpm with-env prisma migrate reset --skip-generate --skip-seed",
 		"db:seed": "pnpm with-env prisma db seed",
 		"db:studio": "pnpm with-env prisma studio",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown . && prisma format",
@@ -34,7 +35,6 @@
 	"dependencies": {
 		"@prisma/client": "4.7.0",
 		"prisma-docs-generator": "0.5.0",
-		"prisma-query-inspector": "1.4.4",
 		"zod": "3.19.1"
 	},
 	"devDependencies": {
