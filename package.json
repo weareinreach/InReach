@@ -1,36 +1,117 @@
 {
-  "name": "inreach",
-  "version": "0.0.0",
-  "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
-  },
-  "devDependencies": {
-    "eslint-config-custom": "*",
-    "prettier": "latest",
-    "turbo": "^1.4.6",
-    "typescript": "^4.8.3"
-  },
-	"engines": {
-		"pnpm": ">=7.11",
-		"node": ">=16"
+	"name": "inreach",
+	"version": "0.100.0",
+	"private": true,
+	"license": "GPL-3.0-only",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+		"build": "turbo run build",
+		"build:aws": "turbo run build:aws",
+		"clean": "turbo run clean:node && pnpm clean:node",
+		"clean:install": "pnpm clean && pnpm install",
+		"clean:node": "rm -rf ./node_modules || true",
+		"cypress:open": "npx cypress open --project test",
+		"cypress:run": "npx cypress run --project test",
+		"cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false",
+		"cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
+		"db:generate": "turbo run db:generate",
+		"dev:all": "turbo run dev --parallel",
+		"dev:app": "turbo run dev --filter=app",
+		"dev:sb": "turbo run dev --filter=ui",
+		"dev:web": "turbo run dev --filter=web",
+		"format": "turbo run format",
+		"lint": "turbo run lint",
+		"lint:fix": "turbo run lint:fix",
+		"lint:pkg": "manypkg check",
+		"lint:staged": "lint-staged",
+		"prepare": "node ./prepare.js",
+		"type-check": "turbo type-check"
 	},
-  "dependencies": {
-    "@changesets/cli": "^2.24.4"
-  },
+	"dependencies": {
+		"@badeball/cypress-cucumber-preprocessor": "14.0.0",
+		"@changesets/cli": "2.25.2",
+		"@manypkg/cli": "0.19.2",
+		"@next/eslint-plugin-next": "13.0.5-canary.2",
+		"@trivago/prettier-plugin-sort-imports": "3.4.0",
+		"@types/eslint": "8.4.10",
+		"@types/prettier": "2.7.1",
+		"@typescript-eslint/eslint-plugin": "5.44.0",
+		"@weareinreach/config": "0.100.0",
+		"@weareinreach/eslint-config": "0.100.0",
+		"cypress": "11.1.0",
+		"eslint-config-next": "13.0.5-canary.2",
+		"eslint-import-resolver-typescript": "3.5.2",
+		"eslint-plugin-codegen": "0.16.1",
+		"eslint-plugin-i18next": "6.0.0-6",
+		"eslint-plugin-import": "2.26.0",
+		"eslint-plugin-prettier": "4.2.1",
+		"eslint-plugin-react": "7.31.11",
+		"eslint-plugin-simple-import-sort": "8.0.0",
+		"eslint-plugin-storybook": "0.6.7",
+		"eslint-plugin-turbo": "0.0.4",
+		"husky": "8.0.2",
+		"lint-staged": "13.0.3",
+		"prettier": "2.7.1",
+		"prettier-plugin-jsdoc": "0.4.2",
+		"prettier-plugin-packagejson": "2.3.0",
+		"prettier-plugin-prisma": "4.4.0",
+		"turbo": "1.6.3",
+		"typescript": "4.9.3"
+	},
+	"packageManager": "pnpm@7.17.0",
+	"engines": {
+		"node": ">=16.18",
+		"pnpm": ">=7"
+	},
+	"cypress-cucumber-preprocessor": {
+		"stepDefinitions": "test/cypress/support/step_definitions/**/*.{js,ts}"
+	},
 	"pnpm": {
 		"peerDependencyRules": {
 			"allowedVersions": {
-				"react": "^18",
-				"react-dom": "^18"
+				"react": ">=18",
+				"react-dom": ">=18",
+				"next": ">=13",
+				"webpack": ">=5",
+				"sanity": ">=3.0.0-rc.0",
+				"listr2": ">=5",
+				"prisma": ">=4",
+				"babel-loader": ">=9",
+				"i18next-browser-languagedetector": ">=7",
+				"i18next-http-backend": ">=2",
+				"react-i18next": ">=12"
+			},
+			"overrides": {
+				"glob-parent@3.1.0": "glob-parent@^5.1.2",
+				"trim@0.0.1": "trim@^0.0.3",
+				"trim@<0.0.3": ">=0.0.3",
+				"trim-newlines@<3.0.1": ">=3.0.1",
+				"got@<11.8.5": ">=11.8.5",
+				"undici@>=4.8.2 <=5.5.0": ">=5.5.1",
+				"glob-parent@<5.1.2": ">=5.1.2",
+				"node-fetch@<2.6.1": ">=2.6.1",
+				"undici@<=5.8.1": ">=5.8.2",
+				"undici@<5.8.0": ">=5.8.0",
+				"node-fetch@<2.6.7": ">=2.6.7",
+				"cli-truncate@<3": ">=3.1.0",
+				"listr2@<5": ">=5.0.5"
 			}
+		},
+		"patchedDependencies": {
+			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch"
+		},
+		"overrides": {
+			"trim@<0.0.3": ">=0.0.3",
+			"trim-newlines@<3.0.1": ">=3.0.1",
+			"undici@>=4.8.2 <=5.5.0": ">=5.5.1",
+			"glob-parent@<5.1.2": ">=5.1.2",
+			"node-fetch@<2.6.1": ">=2.6.1",
+			"undici@<=5.8.1": ">=5.8.2",
+			"undici@<5.8.0": ">=5.8.0",
+			"node-fetch@<2.6.7": ">=2.6.7"
 		}
 	}
 }

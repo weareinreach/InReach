@@ -1,8 +1,8 @@
 <h1 align="center">
   <a href="https://github.com/weareinreach/inreach">
     <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/InReach_Logo_White_RGB-1024x384.webp">
-  <img alt="InReach Logo" src="docs/images/InReach_Logo_Color_RGB-1024x384.webp" height=100>
+  <source media="(prefers-color-scheme: dark)" srcset=".github/images/InReach_Logo_White_RGB-1024x384.webp">
+  <img alt="InReach Logo" src=".github/images/InReach_Logo_Color_RGB-1024x384.webp" height=100>
 </picture>
   </a>
 </h1>
@@ -67,7 +67,7 @@ InReach is for the entire diverse LGBTQ+ community – including asylum seekers 
 
 |                               Home Page                               |                               Login Page                               |
 | :-------------------------------------------------------------------: | :--------------------------------------------------------------------: |
-| <img src="docs/images/screenshot.png" title="Home Page" width="100%"> | <img src="docs/images/screenshot.png" title="Login Page" width="100%"> |
+| <img src=".github/images/screenshot.png" title="Home Page" width="100%"> | <img src=".github/images/screenshot.png" title="Login Page" width="100%"> |
 
 </details> -->
 
@@ -154,7 +154,7 @@ Together, we can make InReach **better**!
 
 First off, thanks for taking the time to contribute! Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make will benefit everybody else and are **greatly appreciated**.
 
-Please read [our contribution guidelines](docs/CONTRIBUTING.md), and thank you for being involved!
+Please read [our contribution guidelines](https://github.com/weareinreach/.github/blob/main/CONTRIBUTING.md), and thank you for being involved!
 
 ## Authors & contributors
 
@@ -167,7 +167,7 @@ For a full list of all authors and contributors, see [the contributors page](htt
 InReach follows good practices of security, but 100% security cannot be assured.
 InReach is provided **"as is"** without any **warranty**. Use at your own risk.
 
-_For more information and to report security issues, please refer to our [security documentation](docs/SECURITY.md)._
+_For more information and to report security issues, please refer to our [security documentation](https://github.com/weareinreach/.github/blob/main/SECURITY.md)._
 
 ## License
 
@@ -177,4 +177,6 @@ See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgements
 
-[![Powered by Vercel](docs/images/powered-by-vercel.svg)](https://vercel.com/?utm_source=in-reach&utm_campaign=oss)
+[![Powered by Vercel](.github/images/powered-by-vercel.svg)](https://vercel.com/?utm_source=in-reach&utm_campaign=oss)
+
+[![Structured Content Powered by Sanity](.github/images/sanity-logo.svg)](https://sanity.io)

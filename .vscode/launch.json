@@ -1,0 +1,60 @@
+{
+	"configurations": [
+		{
+			"name": "Attach by Process ID",
+			"processId": "${command:PickProcess}",
+			"request": "attach",
+			"skipFiles": ["<node_internals>/**/*", "${workspaceFolder}/node_modules/**/*"],
+			"type": "node",
+			"autoAttachChildProcesses": true,
+			"restart": true
+		},
+		{
+			"name": "Attach to :9229",
+			"port": 9229,
+			"request": "attach",
+			"skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**/*"],
+			"type": "node",
+			"autoAttachChildProcesses": true,
+			"restart": true
+		},
+		{
+			"disableNetworkCache": true,
+			"name": "Launch Brave",
+			"port": 9222,
+			"request": "launch",
+			"runtimeArgs": ["--user-data-dir=/Users/joe/.brave-dev-profile"],
+			"runtimeExecutable": "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
+			"type": "chrome",
+			"url": "http://localhost:3000",
+			"userDataDir": true,
+			"webRoot": "${workspaceFolder}",
+			"sourceMaps": true
+		},
+		{
+			"command": "pnpm dev",
+			"name": "pnpm dev",
+			"request": "launch",
+			"serverReadyAction": {
+				"action": "startDebugging",
+				"name": "Launch Brave",
+				"pattern": "http://localhost:([0-9]+)"
+			},
+			"skipFiles": ["<node_internals>/**/*", "${workspaceFolder}/node_modules/**/*"],
+			"sourceMaps": true,
+			"type": "node-terminal"
+		},
+		{
+			"command": "yarn dev",
+			"name": "yarn dev",
+			"request": "launch",
+			"serverReadyAction": {
+				"action": "debugWithChrome",
+				"pattern": "(?:(.*?\bserver.*ready\b)|(.*?\bready.*server\b)).*(\bhttps?://.+\b)",
+				"uriFormat": "%s"
+			},
+			"sourceMaps": true,
+			"type": "node-terminal"
+		}
+	]
+}

@@ -1,0 +1,20 @@
+{
+	"name": "@weareinreach/types",
+	"version": "0.100.0",
+	"private": true,
+	"license": "GPL-3.0-only",
+	"main": "lib/index.ts",
+	"scripts": {
+		"clean:node": "rm -rf ./node_modules/ || true",
+		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
+		"preinstall": "npx only-allow pnpm",
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix ."
+	},
+	"devDependencies": {
+		"@weareinreach/config": "0.100.0",
+		"@weareinreach/eslint-config": "0.100.0",
+		"typescript": "4.9.3"
+	},
+	"packageManager": "pnpm@7.17.0"
+}
