@@ -1,0 +1,10 @@
+node_modules
+# Keep environment variables out of version control
+!.env
+dist
+
+data-transfer/output/**/*.json
+data-transfer/output-types/*.ts
+data-transfer/temp/*.js
+
+*.log

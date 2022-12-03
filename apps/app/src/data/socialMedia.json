@@ -1,0 +1,32 @@
+[
+	{
+		"key": "facebook",
+		"href": "#",
+		"icon": "fa6-brands:facebook-f"
+	},
+	{
+		"key": "twitter",
+		"href": "#",
+		"icon": "fa6-brands:twitter"
+	},
+	{
+		"key": "linkedin",
+		"href": "#",
+		"icon": "fa6-brands:linkedin-in"
+	},
+	{
+		"key": "email",
+		"href": "#",
+		"icon": "fa6-regular:envelope"
+	},
+	{
+		"key": "instagram",
+		"href": "#",
+		"icon": "fa6-brands:instagram"
+	},
+	{
+		"key": "youtube",
+		"href": "#",
+		"icon": "fa6-brands:youtube"
+	}
+]

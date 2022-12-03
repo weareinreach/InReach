@@ -1,5 +1,20 @@
 {
-	"extends": "@inreach/tsconfig/nextjs.json",
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-	"exclude": ["node_modules"]
+	"extends": "../../tsconfig.json",
+	"exclude": [],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["./src/*"]
+		}
+	},
+	"include": [
+		"./next-env.d.ts",
+		"node_modules/@weareinreach/auth/next-auth.d.ts",
+		"./**/*.ts",
+		"./**/*.tsx",
+		"./**/*.js",
+		"./**/*.jsx",
+		"./**/*.mjs",
+		"./**/*.cjs"
+	]
 }

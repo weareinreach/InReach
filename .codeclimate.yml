@@ -1,0 +1,41 @@
+version: '2'
+plugins:
+  tslint:
+    enabled: true
+    config: '.github/tslint.json'
+  duplication:
+    enabled: true
+  fixme:
+    enabled: true
+  nodesecurity:
+    enabled: true
+  git-legal:
+    enabled: true
+  scss-lint:
+    enabled: true
+    checks:
+      Indentation:
+        enabled: true
+        character: tab
+checks:
+  file-lines:
+    config:
+      threshold: 300
+  method-lines:
+    config:
+      threshold: 100
+  similar-code:
+    config:
+      threshold: 175
+  identical-code:
+    config:
+      threshold: 100
+exclude_patterns:
+  - '.vercel/'
+  - '**/.next/'
+  - '**/dist/'
+  - '**/node_modules'
+  - 'test/'
+  - 'patches/'
+  - 'docs/database/styles/main.css'
+  

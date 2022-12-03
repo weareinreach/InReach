@@ -1,15 +1,75 @@
 {
-  "$schema": "https://turborepo.org/schema.json",
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
-    },
-    "lint": {
-      "outputs": []
-    },
-    "dev": {
-      "cache": false
-    }
-  }
+	"$schema": "https://turborepo.org/schema.json",
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build"],
+			"env": ["NODE_ENV"],
+			"outputs": ["dist/**", ".next/**", "storybook-static/**"]
+		},
+		"@weareinreach/app#build": {
+			"dependsOn": ["^build", "^db:generate"],
+			"env": [
+				"DATABASE_URL",
+				"NEXTAUTH_SECRET",
+				"NEXTAUTH_URL",
+				"VERCEL_URL",
+				"PORT",
+				"COGNITO_CLIENT_ID",
+				"COGNITO_CLIENT_SECRET",
+				"COGNITO_ISSUER",
+				"COGNITO_USER_POOL_ID",
+				"AWS_REGION"
+			]
+		},
+		"@weareinreach/web#build": {
+			"dependsOn": ["^build"],
+			"env": [
+				"WEB_SENTRY_DSN",
+				"SANITY_TOKEN",
+				"NEXT_PUBLIC_SANITY_API_VERSION",
+				"NEXT_PUBLIC_SANITY_DATASET",
+				"NEXT_PUBLIC_SANITY_PROJECT_ID",
+				"NEXT_PUBLIC_WEB_SENTRY_DSN"
+			]
+		},
+		"@weareinreach/ui#build": {
+			"outputs": ["storybook-static/**"]
+		},
+		"chromatic": {
+			"dependsOn": ["build"],
+			"env": ["CHROMATIC_PROJECT_TOKEN"]
+		},
+		"clean": { "cache": false },
+		"//#clean": {
+			"cache": false
+		},
+		"db:generate": {
+			"inputs": ["prisma/schema.prisma"],
+			"cache": false
+		},
+		"dev": {
+			"cache": false
+		},
+		"format": {},
+		"lint": {
+			"outputs": [".next/cache/eslint/**"]
+		},
+		"lint:fix": {
+			"outputs": [".next/cache/eslint/**"]
+		},
+		"post-install": {},
+		"build:aws": {
+			"dependsOn": ["^db:generate"],
+			"outputs": ["dist/**"]
+		},
+		"db:generate:aws": {
+			"inputs": ["prisma/schema.prisma"],
+			"cache": false
+		},
+		"clean:node": {},
+		"type-check": {
+			"dependsOn": ["^db:generate"],
+			"cache": false
+		}
+	}
 }

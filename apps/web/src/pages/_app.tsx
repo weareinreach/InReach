@@ -1,33 +1,7 @@
-import type { AppProps } from "next/app";
-// import Head from 'next/head'
-import Tina from "../../.tina/components/TinaDynamicProvider";
-import { MantineProvider } from "@inreach/ui/mantine/core";
-import { ModalsProvider } from "@inreach/ui/mantine/modals";
-import { NotificationsProvider } from "@inreach/ui/mantine/notifications";
-import { webTheme, webCache } from "@inreach/ui/theme";
-import { WebLayout } from "@inreach/ui/layouts";
-import navData from "../../data/nav.json";
+import type { AppProps } from 'next/app'
 
-const MyApp = (appProps: AppProps) => {
-  const { Component, pageProps } = appProps;
-  return (
-    <MantineProvider
-      withGlobalStyles
-      withNormalizeCSS
-      theme={webTheme}
-      emotionCache={webCache}
-    >
-      <NotificationsProvider>
-        <ModalsProvider>
-          <Tina>
-            <WebLayout navData={navData}>
-              <Component {...pageProps} />
-            </WebLayout>
-          </Tina>
-        </ModalsProvider>
-      </NotificationsProvider>
-    </MantineProvider>
-  );
-};
+import '../styles/globals.css'
 
-export default MyApp;
+export default function App({ Component, pageProps }: AppProps) {
+	return <Component {...pageProps} />
+}

@@ -1,0 +1,17 @@
+additional-dependency-files:
+  - type: npm-package-json
+    path: apps/app/package.json
+  - type: npm-package-json
+    path: apps/web/package.json
+  - type: npm-package-json
+    path: packages/aws-user-migrate/package.json
+  - type: npm-package-json
+    path: packages/config/package.json
+  - type: npm-package-json
+    path: packages/db/package.json
+  - type: npm-package-json
+    path: packages/eslint-config/package.json
+  - type: npm-package-json
+    path: packages/types/package.json
+  - type: npm-package-json
+    path: packages/ui/package.json

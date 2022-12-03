@@ -9,11 +9,13 @@ node_modules
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
-
+storybook-static/
 
 
 # testing
 coverage
+test/cypress/videos
+test/cypress/screenshots
 
 # next.js
 .next/
@@ -35,6 +37,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 
 # turbo
 .turbo
@@ -42,3 +45,17 @@ yarn-error.log*
 
 # sentry
 .sentryclirc
+
+package-lock.json
+test/cypress/fixtures/temp/example-1.json
+.DS_Store
+
+# cache files
+.eslintcache
+
+# TypeScript incremental compilation cache
+*.tsbuildinfo
+
+# Generated files (except folder placeholder)
+_generated/*
+!_generated/.gitkeep
