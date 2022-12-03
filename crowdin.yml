@@ -1,7 +1,8 @@
-project_id_env: 'CROWDIN_PROJECT_ID'
+project_id: '12'
 api_token_env: 'CROWDIN_PERSONAL_TOKEN'
+base_url: https://inreach.crowdin.com
 preserve_hierarchy: false
-
+base_path: '.'
 #
 # Files configuration
 #
