@@ -1,5 +1,5 @@
 {
-	"extends": "@weareinreach/config/tsconfig/nextjs.json",
+	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
@@ -16,5 +16,5 @@
 		"./**/*.mjs",
 		"./**/*.cjs"
 	],
-	"exclude": ["**/node_modules/*"]
+	"exclude": []
 }

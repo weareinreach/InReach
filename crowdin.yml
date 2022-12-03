@@ -1,0 +1,22 @@
+project_id: '12'
+api_token_env: 'CROWDIN_PERSONAL_TOKEN'
+base_url: https://inreach.crowdin.com
+preserve_hierarchy: false
+base_path: '.'
+#
+# Files configuration
+#
+files:
+  [
+    {
+      source: '/apps/app/public/locales/en/*.json',
+      translation: '/apps/app/public/locales/%locale%/%original_file_name%',
+      type: i18next_json,
+      update_option: 'update_as_unapproved',
+      export_only_approved: true,
+    },
+  ]
+
+pull_request_labels:
+  - translations
+pull_request_title: 'i18n: Updated translations from Crowdin'

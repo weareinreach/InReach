@@ -9,7 +9,7 @@ node_modules
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
-
+storybook-static/
 
 
 # testing
@@ -49,3 +49,13 @@ yarn-error.log*
 package-lock.json
 test/cypress/fixtures/temp/example-1.json
 .DS_Store
+
+# cache files
+.eslintcache
+
+# TypeScript incremental compilation cache
+*.tsbuildinfo
+
+# Generated files (except folder placeholder)
+_generated/*
+!_generated/.gitkeep
