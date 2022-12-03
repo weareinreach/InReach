@@ -1,27 +1,29 @@
 {
 	"name": "@weareinreach/web",
-	"version": "0.0.0",
+	"version": "0.100.0",
 	"private": true,
 	"scripts": {
 		"build": "next build",
+		"clean:node": "rm -rf ./node_modules/ || true && rm -rf ./.next || true",
 		"dev": "next dev",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "next lint",
-		"start": "next start"
+		"start": "next start",
+		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@types/node": "18.11.9",
+		"@types/node": "16.18.3",
 		"@types/react": "18.0.25",
-		"@types/react-dom": "^18.0.8",
-		"eslint": "^8.27.0",
-		"eslint-config-next": "13.0.2",
-		"next": "^13.0.2",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"typescript": "4.8.4"
+		"@types/react-dom": "18.0.9",
+		"eslint": "8.28.0",
+		"eslint-config-next": "13.0.5-canary.2",
+		"next": "13.0.5-canary.2",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"typescript": "4.9.3"
 	},
 	"devDependencies": {
-		"@weareinreach/config": "*",
-		"@weareinreach/eslint-config": "*"
+		"@weareinreach/config": "0.100.0",
+		"@weareinreach/eslint-config": "0.100.0"
 	}
 }

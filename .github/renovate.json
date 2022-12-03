@@ -1,5 +1,6 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"baseBranches": ["develop"],
-	"extends": ["github>weareinreach/renovate-config"]
+	"baseBranches": ["dev"],
+	"extends": ["github>weareinreach/renovate-config"],
+	"semanticCommitScope": "{{parentDir}}"
 }

@@ -1,9 +1,0 @@
-{
-	"extends": "@weareinreach/config/tsconfig/nextjs.json",
-	"compilerOptions": {
-		"noImplicitAny": false,
-		"baseUrl": "."
-	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-	"exclude": ["**/node_modules/*"]
-}

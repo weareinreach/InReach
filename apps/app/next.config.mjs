@@ -3,9 +3,9 @@
 import bundleAnalyze from '@next/bundle-analyzer'
 import transpiler from 'next-transpile-modules'
 
-import i18nConfig from './next-i18next.config.mjs'
+import i18nConfig from './next-i18next.config.js'
 
-const withTM = transpiler(['@weareinreach/ui'])
+// const withTM = transpiler(['@weareinreach/ui', '@weareinreach/db'])
 /* eslint-disable-next-line turbo/no-undeclared-env-vars */
 const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
 /**
@@ -17,7 +17,8 @@ const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'tru
  */
 function defineNextConfig(config) {
 	// return withTM(config)
-	return withBundleAnalyzer(withTM(config))
+	// return withBundleAnalyzer(withTM(config))
+	return withBundleAnalyzer(config)
 }
 
 export default defineNextConfig({
@@ -25,8 +26,14 @@ export default defineNextConfig({
 	reactStrictMode: true,
 	swcMinify: true,
 	experimental: {
-		// 	transpilePackages: ['@weareinreach/ui', '@weareinreach/db'],
-		// serverComponentsExternalPackages: ['@prisma/client'],
+		transpilePackages: ['@weareinreach/ui', '@weareinreach/db', '@weareinreach/auth', '@weareinreach/api'],
+		// serverComponentsExternalPackages: ['@weareinreach/db'],
+		fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
+		/**
+		 * OutputFileTracingIgnores will be in a future version
+		 * https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
+		 */
+		outputFileTracingIgnores: ['**swc+core**', '**esbuild**'],
 	},
 	// async rewrites() {
 	// 	return {

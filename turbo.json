@@ -7,7 +7,7 @@
 			"outputs": ["dist/**", ".next/**", "storybook-static/**"]
 		},
 		"@weareinreach/app#build": {
-			"dependsOn": ["^build", "post-install"],
+			"dependsOn": ["^build", "^db:generate"],
 			"env": [
 				"DATABASE_URL",
 				"NEXTAUTH_SECRET",
@@ -32,32 +32,43 @@
 				"NEXT_PUBLIC_WEB_SENTRY_DSN"
 			]
 		},
-		"@weareinreach/db#build": {
-			"dependsOn": ["clean", "db:generate"],
-			"env": ["DATABASE_URL"],
-			"inputs": ["./prisma/schema.prisma"]
+		"@weareinreach/ui#build": {
+			"outputs": ["storybook-static/**"]
 		},
 		"chromatic": {
 			"dependsOn": ["build"],
 			"env": ["CHROMATIC_PROJECT_TOKEN"]
 		},
-		"clean": {},
+		"clean": { "cache": false },
+		"//#clean": {
+			"cache": false
+		},
 		"db:generate": {
+			"inputs": ["prisma/schema.prisma"],
 			"cache": false
 		},
 		"dev": {
 			"cache": false
 		},
-		"format": {
-			"outputs": []
-		},
+		"format": {},
 		"lint": {
 			"outputs": [".next/cache/eslint/**"]
 		},
 		"lint:fix": {
 			"outputs": [".next/cache/eslint/**"]
 		},
-		"post-install": {
+		"post-install": {},
+		"build:aws": {
+			"dependsOn": ["^db:generate"],
+			"outputs": ["dist/**"]
+		},
+		"db:generate:aws": {
+			"inputs": ["prisma/schema.prisma"],
+			"cache": false
+		},
+		"clean:node": {},
+		"type-check": {
+			"dependsOn": ["^db:generate"],
 			"cache": false
 		}
 	}

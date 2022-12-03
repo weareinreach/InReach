@@ -2,8 +2,7 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"~/*": ["./*"],
-			"@weareinreach/db/*": ["../db"]
+			"~/*": ["./*"]
 		},
 		"target": "es2020",
 		"strict": true,
