@@ -5,13 +5,13 @@ on:
       - main
 jobs:
   sync-branch:
-    name: Update develop branch
+    name: Update dev branch
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@master
       - uses: connor-baer/action-sync-branch@main
         with:
-          branch: develop
+          branch: dev
           token: ${{ secrets.GH_ACT_PAT }}
           force: false

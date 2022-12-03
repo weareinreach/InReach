@@ -1,0 +1,16 @@
+enabled: true
+titleOnly: true
+titleAndCommits: true
+anyCommit: true
+scopes:
+  - app
+  - web
+  - aws-user-migrate
+  - ui
+  - db
+  - config
+  - eslint-config
+  - types
+  - docs
+  - workflows
+targetUrl: https://www.conventionalcommits.org/en/v1.0.0/

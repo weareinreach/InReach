@@ -1,0 +1,22 @@
+[
+	{
+		"key": "suggest-a-resource",
+		"href": "#suggest"
+	},
+	{
+		"key": "subscribe-to-newsletter",
+		"href": "#subscribe"
+	},
+	{
+		"key": "share-feedback",
+		"href": "#feedback"
+	},
+	{
+		"key": "disclaimer",
+		"href": "#disclaimer"
+	},
+	{
+		"key": "privacy-statement",
+		"href": "#privacy"
+	}
+]

@@ -27,7 +27,7 @@ const handler: UserMigrationTriggerHandler = async (event: UserMigrationTriggerE
 				throw error
 			}
 
-			break
+			
 		case 'UserMigration_ForgotPassword':
 			try {
 				const userProfile = await getUser(username)
@@ -46,7 +46,7 @@ const handler: UserMigrationTriggerHandler = async (event: UserMigrationTriggerE
 				if (typeof error === 'string') throw new Error(error)
 				throw error
 			}
-			break
+			
 
 		default:
 			throw new Error('Bad triggerSource')
