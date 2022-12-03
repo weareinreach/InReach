@@ -1,1 +1,152 @@
-.vscode/InReach.code-workspace
+{
+	"folders": [
+		{
+			"name": "🚀 InReach App (@weareinreach/app)",
+			"path": "./apps/app"
+		},
+		{
+			"name": "📦 Shared UI (@weareinreach/ui)",
+			"path": "./packages/ui"
+		},
+		{
+			"name": "📦 Centralized database (@weareinreach/db)",
+			"path": "./packages/db"
+		},
+		{
+			"name": "📦 tRPC API (@weareinreach/api)",
+			"path": "./packages/api"
+		},
+		{
+			"name": "📦 Authentication (@weareinreach/auth)",
+			"path": "./packages/auth"
+		},
+		{
+			"name": "🚀 InReach main site (@weareinreach/web)",
+			"path": "./apps/web"
+		},
+		{
+			"name": "📦 Shared configs (@weareinreach/config)",
+			"path": "./packages/config"
+		},
+		{
+			"name": "📦 ESLint Config (@weareinreach/eslint-config)",
+			"path": "./packages/eslint-config"
+		},
+		{
+			"name": "📦 Shared TypeScript types (@weareinreach/types)",
+			"path": "./packages/types"
+		},
+		{
+			"name": "📦 AWS User Migration (@weareinreach/aws-user-migrate)",
+			"path": "./packages/aws-user-migrate"
+		},
+		{
+			"name": "✨ InReach (root)",
+			"path": "./"
+		},
+		{
+			"name": "🛠️ Patched packages",
+			"path": "./patches"
+		},
+		{
+			"name": "📚 Documentation (@weareinreach/docs)",
+			"path": "./docs"
+		},
+		{
+			"name": "🧪 Cypress Tests",
+			"path": "./test"
+		},
+		{
+			"name": "🐳 Docker",
+			"path": "./docker"
+		}
+	],
+	"settings": {
+		"tms.stringsCompletionFileExtensions": "ts,tsx,json",
+		"files.exclude": {
+			".next/": true,
+			".turbo/": true,
+			"**/.DS_Store": true,
+			"**/.git": true,
+			"**/Thumbs.db": true,
+			"apps/": true,
+			"docker/": true,
+			"docs/": true,
+			"node_modules/": true,
+			"packages/": true,
+			"patches/": true,
+			"storybook-static/": true,
+			"test/": true
+		},
+		"i18n-ally.annotationInPlace": false,
+		"i18n-ally.displayLanguage": "en",
+		"i18n-ally.enabledParsers": ["js", "json", "ts"],
+		"i18n-ally.ignoredLocales": ["!en"],
+		"i18n-ally.extract.autoDetect": true,
+		"i18n-ally.extract.ignored": [
+			"1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]}",
+			"${theme.spacing.md}px ${theme.spacing.md}px",
+			"0 ${theme.spacing.sm}px"
+		],
+		"i18n-ally.extract.keygenStrategy": "slug",
+		"i18n-ally.extract.keygenStyle": "kebab-case",
+		"i18n-ally.extract.keyMaxLength": 150,
+		"i18n-ally.extract.targetPickingStrategy": "most-similar",
+		"i18n-ally.fullReloadOnChanged": true,
+		"i18n-ally.keystyle": "nested",
+		"i18n-ally.namespace": true,
+		"i18n-ally.pathMatcher": "{locale}/{namespace}.json",
+		"i18n-ally.review.enabled": false,
+		"i18n-ally.review.gutters": false,
+		"i18n-ally.showFlags": true,
+		"i18n-ally.sortKeys": true,
+		"i18n-ally.sourceLanguage": "en",
+		"i18n-ally.tabStyle": "tab",
+		"markdownlint.config": {
+			"MD033": false
+		},
+		"prettier.resolveGlobalModules": true,
+		"typescript.preferences.importModuleSpecifier": "non-relative",
+		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
+		"typescript.workspaceSymbols.scope": "allOpenProjects",
+		"i18n-ally.defaultNamespace": "common",
+		"i18n-ally.extract.ignoredByFiles": {
+			"**/packages/db/**/*.ts": ["*"]
+		},
+
+		"files.watcherExclude": {
+			"**/.next/**": true,
+			"**/storybook-static/**": true,
+			"**/.vercel/output/**": true
+		},
+		"explorer.decorations.badges": true,
+		"explorer.expandSingleFolderWorkspaces": false,
+		"explorer.fileNesting.enabled": true,
+		"explorer.fileNesting.expand": false,
+		"explorer.fileNesting.patterns": {
+			"*.tsx": "${capture}.ts, ${capture}.stories.tsx"
+		},
+		"i18n-ally.localesPaths": ["public/locales"]
+	},
+	"extensions": {
+		"recommendations": [
+			"lokalise.i18n-ally",
+			"editorconfig.editorconfig",
+			"dsznajder.es7-react-js-snippets",
+			"dbaeumer.vscode-eslint",
+			"bierner.jsdoc-markdown-highlighting",
+			"ms-vsliveshare.vsliveshare",
+			"yzhang.markdown-all-in-one",
+			"bierner.markdown-yaml-preamble",
+			"unifiedjs.vscode-mdx",
+			"mintlify.document",
+			"esbenp.prettier-vscode",
+			"eliostruyf.vscode-typescript-exportallmodules",
+			"mattpocock.ts-error-translator",
+			"prisma.prisma",
+			"alexkrechik.cucumberautocomplete",
+			"riccardoforina.storybook-helper",
+			"melmass.vscode-mono-workspace"
+		]
+	}
+}
