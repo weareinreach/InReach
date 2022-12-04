@@ -19,4 +19,11 @@ files:
 
 pull_request_labels:
   - translations
-pull_request_title: 'i18n: Updated translations from Crowdin'
+  - "kodiak: merge.method = 'squash'"
+pull_request_title: 'chore(i18n): Updated translations from Crowdin'
+export_languages:
+  - 'en'
+  - 'en-CA'
+  - 'es'
+  - 'es-US'
+  - 'es-MX'
