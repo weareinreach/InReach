@@ -22,7 +22,7 @@ pull_request_labels:
   - "kodiak: merge.method = 'squash'"
 pull_request_title: 'chore(i18n): Updated translations from Crowdin'
 export_languages:
-  - 'en'
+  - 'en-US'
   - 'en-CA'
   - 'es'
   - 'es-US'
