@@ -6,6 +6,8 @@ import { AuditLogModel, CompleteAuditLog, CompleteUser, UserModel } from './inde
 export const _UserMailModel = z.object({
 	id: imports.cuid,
 	toUserId: imports.cuid,
+	/** Array of email addresses */
+	toExternal: z.string().array(),
 	read: z.boolean(),
 	subject: z.string(),
 	body: z.string(),
@@ -13,12 +15,15 @@ export const _UserMailModel = z.object({
 	fromUserId: imports.cuid.nullish(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
+	responseToId: z.string().nullish(),
 })
 
 export interface CompleteUserMail extends z.infer<typeof _UserMailModel> {
 	toUser: CompleteUser
 	fromUser?: CompleteUser | null
+	replies: CompleteUserMail[]
 	auditLog: CompleteAuditLog[]
+	responseTo?: CompleteUserMail | null
 }
 
 /**
@@ -30,6 +35,8 @@ export const UserMailModel: z.ZodSchema<CompleteUserMail> = z.lazy(() =>
 	_UserMailModel.extend({
 		toUser: UserModel,
 		fromUser: UserModel.nullish(),
+		replies: UserMailModel.array(),
 		auditLog: AuditLogModel.array(),
+		responseTo: UserMailModel.nullish(),
 	})
 )

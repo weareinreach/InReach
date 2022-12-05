@@ -29,6 +29,7 @@
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"@weareinreach/ui": "0.100.0",
+		"axios": "1.1.3",
 		"i18next": "22.0.6",
 		"next": "13.0.6",
 		"next-auth": "4.17.0",
@@ -41,6 +42,7 @@
 	},
 	"devDependencies": {
 		"@next/font": "13.0.6",
+		"@types/flat": "5.0.2",
 		"@types/node": "16.18.3",
 		"@types/react": "18.0.25",
 		"@types/react-dom": "18.0.9",
@@ -58,6 +60,7 @@
 		"eslint-plugin-import": "2.26.0",
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-simple-import-sort": "8.0.0",
+		"flat": "5.0.2",
 		"listr2": "5.0.5",
 		"typescript": "4.9.3"
 	},

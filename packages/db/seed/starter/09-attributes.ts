@@ -74,10 +74,7 @@ export const seedAttributes = async (task: ListrTask) => {
 				idx++
 				const transaction = prisma.attribute.upsert({
 					where: {
-						categoryId_name: {
-							categoryId,
-							name,
-						},
+						name,
 					},
 					create: {
 						name,

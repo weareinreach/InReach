@@ -59,6 +59,7 @@ export const _UserModel = z.object({
 	legacyId: z.string().nullish(),
 	birthYear: z.number().int().nullish(),
 	reasonForJoin: z.string().nullish(),
+	active: z.boolean(),
 	currentCity: z.string().nullish(),
 	currentGovDistId: imports.cuid.nullish(),
 	currentCountryId: imports.cuid.nullish(),

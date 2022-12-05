@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import { unflatten } from 'flat'
 import fs from 'fs'
 import { ListrTask } from 'lib/generate'
 
@@ -7,6 +8,14 @@ import { prisma } from '@weareinreach/db'
 const localePath = 'public/locales/en'
 
 dotenv.config()
+
+type Output = Record<string, string | Record<string, string>>
+
+const countKeys = (obj: Output): number =>
+	Object.keys(obj).reduce((acc, curr) => {
+		if (typeof obj[curr] === 'object') return acc + countKeys(obj[curr] as Output)
+		else return ++acc
+	}, 0)
 
 export const generateTranslationKeys = async (task: ListrTask) => {
 	const data = await prisma.translationNamespace.findMany({
@@ -21,7 +30,7 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 	let logMessage = ''
 	let i = 0
 	for (const namespace of data) {
-		const outputData: Record<string, string> = {}
+		const outputData: Output = {}
 		for (const item of namespace.keys) {
 			outputData[item.key] = item.text
 		}
@@ -30,9 +39,10 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 		if (fs.existsSync(filename)) {
 			existingFile = JSON.parse(fs.readFileSync(filename, 'utf-8'))
 		}
-		const existingLength = Object.keys(existingFile).length
+		// const existingLength = Object.keys(existingFile).length
+		const existingLength = countKeys(existingFile)
 
-		let outputFile = Object.assign(existingFile, outputData)
+		let outputFile: Output = unflatten(Object.assign(existingFile, outputData), { overwrite: true })
 		outputFile = Object.keys(outputFile)
 			.sort()
 			.reduce((obj: Record<string, string>, key) => {
@@ -40,7 +50,7 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 				return obj
 			}, {})
 
-		const newKeys = Object.keys(outputFile).length - existingLength
+		const newKeys = countKeys(outputFile) - existingLength
 
 		logMessage = `${filename} generated with ${newKeys} new ${newKeys === 1 ? 'key' : 'keys'}.`
 

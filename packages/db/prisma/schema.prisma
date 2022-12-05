@@ -2,7 +2,7 @@ generator client {
   provider        = "prisma-client-js"
   // clientExtensions causing error
   // previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "multiSchema", "clientExtensions"]
-  previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "multiSchema"]
+  previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount"]
 
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
 }
@@ -32,7 +32,7 @@ datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
   extensions = [postgis]
-  schemas    = ["user", "org", "system"]
+  // schemas    = ["user", "org", "system"]
 }
 
 /// NextAuth Account **DO NOT ALTER**
@@ -57,7 +57,6 @@ model Account {
   auditLog  AuditLog[]
 
   @@unique([provider, providerAccountId])
-  @@schema("user")
 }
 
 /// NextAuth Session **DO NOT ALTER**
@@ -69,8 +68,6 @@ model Session {
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String /// @zod.custom(imports.cuid)
-
-  @@schema("user")
 }
 
 /// NextAuth Verification Token **DO NOT ALTER**
@@ -80,7 +77,6 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-  @@schema("user")
 }
 
 /// NextAuth User
@@ -105,6 +101,7 @@ model User {
   identifiesAs    UserSOGIdentity[]
   birthYear       Int?              @db.SmallInt
   reasonForJoin   String?
+  active          Boolean           @default(true)
   communities     UserCommunity[]
   permissions     PermissionItem[]
   /// assets that certain permissible roles are attributed to (edit org, etc)
@@ -161,8 +158,6 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   auditLog  AuditLog[] @relation("AuditLogEntry")
-
-  @@schema("user")
 }
 
 /// User Role - Contains array of granular permissions
@@ -179,8 +174,6 @@ model UserRole {
   updatedAt DateTime @updatedAt
 
   auditLog AuditLog[]
-
-  @@schema("user")
 }
 
 /// For permissions that are attached to certain records
@@ -200,8 +193,6 @@ model PermissionAsset {
   updatedAt DateTime @updatedAt
 
   auditLog AuditLog[]
-
-  @@schema("user")
 }
 
 /// Permission Definition
@@ -217,8 +208,6 @@ model PermissionItem {
   updatedAt DateTime @updatedAt
 
   auditLog AuditLog[]
-
-  @@schema("user")
 }
 
 /// User Info - account type (seeker, org, lawyer, etc.)
@@ -235,8 +224,6 @@ model UserType {
   updatedAt DateTime @updatedAt
 
   auditLog AuditLog[]
-
-  @@schema("user")
 }
 
 /// User Info - professional title
@@ -255,8 +242,6 @@ model UserTitle {
   updatedAt DateTime @updatedAt
 
   auditLog AuditLog[]
-
-  @@schema("user")
 }
 
 /// User demographics - Ethnicity
@@ -273,8 +258,6 @@ model UserEthnicity {
   updatedAt DateTime @updatedAt
 
   auditLog AuditLog[]
-
-  @@schema("user")
 }
 
 /// User demographics - Immigration Status
@@ -291,8 +274,6 @@ model UserImmigration {
   updatedAt DateTime @updatedAt
 
   auditLog AuditLog[]
-
-  @@schema("user")
 }
 
 /// User demographics - Sexual orientation / Identity
@@ -309,8 +290,6 @@ model UserSOGIdentity {
   updatedAt DateTime @updatedAt
 
   auditLog AuditLog[]
-
-  @@schema("user")
 }
 
 /// User demographics - Community
@@ -327,8 +306,6 @@ model UserCommunity {
   updatedAt DateTime @updatedAt
 
   auditLog AuditLog[]
-
-  @@schema("user")
 }
 
 /// User's list(s) of saved resources.
@@ -349,7 +326,6 @@ model UserSavedList {
   auditLog  AuditLog[]
 
   @@index([ownedById])
-  @@schema("user")
 }
 
 /// List visiblity
@@ -358,28 +334,29 @@ enum UserSavedListVisibility {
   SHARED_USER
   SHARED_LINK
   PUBLIC
-
-  @@schema("user")
 }
 
 model UserMail {
-  id       String  @id @default(cuid()) /// @zod.custom(imports.cuid)
-  toUser   User    @relation("mailTo", fields: [toUserId], references: [id])
-  toUserId String /// @zod.custom(imports.cuid)
-  read     Boolean @default(false)
-  subject  String
-  body     String
+  id         String   @id @default(cuid()) /// @zod.custom(imports.cuid)
+  toUser     User     @relation("mailTo", fields: [toUserId], references: [id])
+  toUserId   String /// @zod.custom(imports.cuid)
+  toExternal String[] /// Array of email addresses
+  read       Boolean  @default(false)
+  subject    String
+  body       String
 
   from       String?
   fromUser   User?   @relation("mailFrom", fields: [fromUserId], references: [id])
   fromUserId String? /// @zod.custom(imports.cuid)
 
+  replies UserMail[] @relation("userMailReplies")
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  auditLog AuditLog[]
-
-  @@schema("user")
+  auditLog     AuditLog[]
+  responseTo   UserMail?  @relation("userMailReplies", fields: [responseToId], references: [id])
+  responseToId String?
 }
 
 /// Main organization definition
@@ -422,7 +399,6 @@ model Organization {
   auditLog  AuditLog[]
 
   @@index([name(sort: Asc)])
-  @@schema("org")
 }
 
 /// Description translations
@@ -442,7 +418,6 @@ model OrgDescription {
   internalNote InternalNote[]
 
   @@index([keyId, orgId])
-  @@schema("org")
 }
 
 /// Organization email contacts - can be general or location specific
@@ -476,7 +451,6 @@ model OrgEmail {
 
   @@index([lastName(sort: Asc), firstName])
   @@index([email])
-  @@schema("org")
 }
 
 /// Org phone numbers - can be general or location specific
@@ -508,8 +482,6 @@ model OrgPhone {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("org")
 }
 
 /// Organization's social media links
@@ -533,8 +505,6 @@ model OrgSocialMedia {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("org")
 }
 
 /// Org location information
@@ -583,7 +553,6 @@ model OrgLocation {
 
   @@index([latitude, longitude])
   @@index([geoJSON(ops: JsonbPathOps)], type: Gin)
-  @@schema("org")
 }
 
 /// Organization photos
@@ -604,8 +573,6 @@ model OrgPhoto {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("org")
 }
 
 /// Organization location/service hours
@@ -629,8 +596,6 @@ model OrgHours {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("org")
 }
 
 /// Organization's offered services - access instructions & details
@@ -668,7 +633,6 @@ model OrgService {
   @@unique([serviceId, orgLocationId])
   @@index([organizationId(sort: Asc)])
   @@index([orgLocationId(sort: Asc)])
-  @@schema("org")
 }
 
 /// User reviews/ratings of organization
@@ -712,7 +676,6 @@ model OrgReview {
 
   @@index([organizationId(sort: Asc)])
   @@index([orgServiceId(sort: Asc)])
-  @@schema("org")
 }
 
 /// Additional Properties for Org/Service.
@@ -732,8 +695,6 @@ model AttributeCategory {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("system")
 }
 
 model Attribute {
@@ -743,11 +704,10 @@ model Attribute {
   /// Internal description
   intDesc String?
 
-  category   AttributeCategory @relation(fields: [categoryId], references: [id])
-  categoryId String /// @zod.custom(imports.cuid)
+  category AttributeCategory[]
 
   key   TranslationKey? @relation(fields: [keyId], references: [id])
-  keyId String? /// @zod.custom(imports.cuid)
+  keyId String?         @unique /// @zod.custom(imports.cuid)
 
   requireText         Boolean @default(false)
   requireLanguage     Boolean @default(false)
@@ -766,9 +726,6 @@ model Attribute {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@unique([categoryId, name])
-  @@schema("system")
 }
 
 model AttributeSupplement {
@@ -793,8 +750,6 @@ model AttributeSupplement {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("system")
 }
 
 model ServiceCategory {
@@ -811,8 +766,6 @@ model ServiceCategory {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("system")
 }
 
 model ServiceTag {
@@ -836,7 +789,6 @@ model ServiceTag {
   internalNote InternalNote[]
 
   @@unique([name, categoryId])
-  @@schema("system")
 }
 
 /// Phone number descriptors
@@ -852,8 +804,6 @@ model PhoneType {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("system")
 }
 
 /// Social media service properties
@@ -873,8 +823,6 @@ model SocialMediaService {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("system")
 }
 
 /// Source of organization/user
@@ -891,8 +839,6 @@ model Source {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("system")
 }
 
 enum SourceType {
@@ -900,8 +846,6 @@ enum SourceType {
   ORGANIZATION
   SYSTEM
   USER
-
-  @@schema("system")
 }
 
 /// Country metadata
@@ -920,8 +864,11 @@ model Country {
   /// GeoJSON object - required only if this will be considered a "service area"
   geoJSON  Json? /// @zod.custom(imports.GeoJSONSchema)
 
-  key   TranslationKey @relation(fields: [keyId], references: [id])
+  key   TranslationKey @relation("country", fields: [keyId], references: [id])
   keyId String         @unique /// @zod.custom(imports.cuid)
+
+  demonym   TranslationKey? @relation("demonym", fields: [demonymId], references: [id])
+  demonymId String?         @unique /// @zod.custom(imports.cuid)
 
   // List of administrative subdivisions
   govDist GovDist[]
@@ -938,8 +885,6 @@ model Country {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("system")
 }
 
 /// Administrative districts for countries
@@ -983,7 +928,6 @@ model GovDist {
 
   @@index([countryId])
   @@index([parentId])
-  @@schema("system")
 }
 
 /// Descriptor of principal administrative districts (state, province, county, etc.)
@@ -1000,8 +944,6 @@ model GovDistType {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("system")
 }
 
 /// Languages - ETF BCP 47 language tag
@@ -1026,8 +968,6 @@ model Language {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("system")
 }
 
 //
@@ -1051,7 +991,6 @@ model TranslationNamespace {
 
   // needed to have 'ns' field on TranslationKey
   @@unique([id, name])
-  @@schema("system")
 }
 
 // Item key - i18next
@@ -1073,25 +1012,26 @@ model TranslationKey {
   children    TranslationKey[]     @relation("translationSubItems")
 
   /// Associated tables
-  attribute          Attribute[]
-  country            Country[]
-  footerLink         FooterLink[]
+  attribute          Attribute?
+  country            Country?            @relation("country")
+  demonym            Country?            @relation("demonym")
+  footerLink         FooterLink?
   govDist            GovDist[]
-  govDistType        GovDistType[]
-  navigation         Navigation[]
-  orgDescription     OrgDescription[]
-  orgServiceAccess   OrgService[]         @relation("Service Access Instructions")
-  orgServiceDesc     OrgService[]         @relation("Service Description")
-  phoneType          PhoneType[]
-  serviceCategory    ServiceCategory[]
-  serviceTag         ServiceTag[]
-  socialMediaService SocialMediaService[]
-  userCommunity      UserCommunity[]
-  userEthnicity      UserEthnicity[]
-  userImmigration    UserImmigration[]
-  userSOGIdentity    UserSOGIdentity[]
-  userTitle          UserTitle[]
-  userType           UserType[]
+  govDistType        GovDistType?
+  navigation         Navigation?
+  orgDescription     OrgDescription?
+  orgServiceAccess   OrgService?         @relation("Service Access Instructions")
+  orgServiceDesc     OrgService?         @relation("Service Description")
+  phoneType          PhoneType?
+  serviceCategory    ServiceCategory?
+  serviceTag         ServiceTag?
+  socialMediaService SocialMediaService?
+  userCommunity      UserCommunity?
+  userEthnicity      UserEthnicity?
+  userImmigration    UserImmigration?
+  userSOGIdentity    UserSOGIdentity?
+  userTitle          UserTitle?
+  userType           UserType?
 
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -1100,7 +1040,6 @@ model TranslationKey {
 
   /// Only 1 key per namespace
   @@unique([ns(sort: Asc), key(sort: Asc)])
-  @@schema("system")
 }
 
 /// Define outside APIs in use
@@ -1118,8 +1057,6 @@ model OutsideAPI {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("system")
 }
 
 /// Visibilty settings for user profile pages
@@ -1149,8 +1086,6 @@ model FieldVisibility {
   recordupdatedAt DateTime @updatedAt
 
   auditLog AuditLog[]
-
-  @@schema("user")
 }
 
 enum VisibilitySetting {
@@ -1158,8 +1093,6 @@ enum VisibilitySetting {
   LOGGED_IN
   PROVIDER
   PUBLIC
-
-  @@schema("user")
 }
 
 /// Define the App navigation tree
@@ -1184,7 +1117,6 @@ model Navigation {
   internalNote InternalNote[]
 
   @@unique([display, href])
-  @@schema("system")
 }
 
 model FooterLink {
@@ -1202,7 +1134,6 @@ model FooterLink {
   internalNote InternalNote[]
 
   @@unique([display, href])
-  @@schema("system")
 }
 
 model SocialMediaLink {
@@ -1217,8 +1148,6 @@ model SocialMediaLink {
   updatedAt    DateTime       @updatedAt
   auditLog     AuditLog[]
   internalNote InternalNote[]
-
-  @@schema("system")
 }
 
 /// Internal notes - multipurpose
@@ -1287,8 +1216,6 @@ model InternalNote {
   updatedAt DateTime @updatedAt
 
   auditLog AuditLog[]
-
-  @@schema("system")
 }
 
 /// Store changes made by users
@@ -1392,5 +1319,4 @@ model AuditLog {
   userTypeId             String? /// @zod.custom(imports.cuid)
 
   @@unique([timestamp, recordId])
-  @@schema("system")
 }

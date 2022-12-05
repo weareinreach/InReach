@@ -43,12 +43,14 @@ export const _CountryModel = z.object({
 	/** GeoJSON object - required only if this will be considered a "service area" */
 	geoJSON: imports.GeoJSONSchema,
 	keyId: imports.cuid,
+	demonymId: imports.cuid.nullish(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
 })
 
 export interface CompleteCountry extends z.infer<typeof _CountryModel> {
 	key: CompleteTranslationKey
+	demonym?: CompleteTranslationKey | null
 	govDist: CompleteGovDist[]
 	orgAddress: CompleteOrgLocation[]
 	orgReviews: CompleteOrgReview[]
@@ -67,6 +69,7 @@ export interface CompleteCountry extends z.infer<typeof _CountryModel> {
 export const CountryModel: z.ZodSchema<CompleteCountry> = z.lazy(() =>
 	_CountryModel.extend({
 		key: TranslationKeyModel,
+		demonym: TranslationKeyModel.nullish(),
 		govDist: GovDistModel.array(),
 		/** Tables using Country */
 		orgAddress: OrgLocationModel.array(),

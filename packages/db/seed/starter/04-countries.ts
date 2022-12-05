@@ -1,3 +1,5 @@
+import { countries as countryExtra } from 'countries-languages'
+
 import { prisma } from '~/index'
 
 import { namespaces } from '../data/00-namespaces'
@@ -18,6 +20,24 @@ export const seedCountries = async (task: ListrTask) => {
 					return parseInt(`${country.idd.root}${country.idd.suffixes[0]}`)
 				return parseInt(country.idd.root)
 			}
+			const demonymData: string | undefined = countryExtra[country.cca2]?.demonym
+			const demonym = demonymData
+				? {
+						create: {
+							key: `${country.cca3}.demonym_one`,
+							text: demonymData,
+							namespace: { connect: { name: translationNamespace } },
+							children: {
+								create: {
+									key: `${country.cca3}.demonym_other`,
+									text: `${demonymData}s`,
+									namespace: { connect: { name: translationNamespace } },
+								},
+							},
+						},
+				  }
+				: undefined
+
 			/* Upserting the country. */
 			const prismaCountry = await prisma.country.upsert({
 				where: {
@@ -29,6 +49,7 @@ export const seedCountries = async (task: ListrTask) => {
 					name: country.name.common,
 					dialCode: dialCode(),
 					flag: country.flag,
+					demonym,
 					key: {
 						create: {
 							namespace: {
@@ -41,7 +62,7 @@ export const seedCountries = async (task: ListrTask) => {
 									},
 								},
 							},
-							key: country.cca3,
+							key: `${country.cca3}.name`,
 							text: country.name.common,
 						},
 					},

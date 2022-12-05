@@ -65,25 +65,26 @@ export interface CompleteTranslationKey extends z.infer<typeof _TranslationKeyMo
 	namespace: CompleteTranslationNamespace
 	parent?: CompleteTranslationKey | null
 	children: CompleteTranslationKey[]
-	attribute: CompleteAttribute[]
-	country: CompleteCountry[]
-	footerLink: CompleteFooterLink[]
+	attribute?: CompleteAttribute | null
+	country?: CompleteCountry | null
+	demonym?: CompleteCountry | null
+	footerLink?: CompleteFooterLink | null
 	govDist: CompleteGovDist[]
-	govDistType: CompleteGovDistType[]
-	navigation: CompleteNavigation[]
-	orgDescription: CompleteOrgDescription[]
-	orgServiceAccess: CompleteOrgService[]
-	orgServiceDesc: CompleteOrgService[]
-	phoneType: CompletePhoneType[]
-	serviceCategory: CompleteServiceCategory[]
-	serviceTag: CompleteServiceTag[]
-	socialMediaService: CompleteSocialMediaService[]
-	userCommunity: CompleteUserCommunity[]
-	userEthnicity: CompleteUserEthnicity[]
-	userImmigration: CompleteUserImmigration[]
-	userSOGIdentity: CompleteUserSOGIdentity[]
-	userTitle: CompleteUserTitle[]
-	userType: CompleteUserType[]
+	govDistType?: CompleteGovDistType | null
+	navigation?: CompleteNavigation | null
+	orgDescription?: CompleteOrgDescription | null
+	orgServiceAccess?: CompleteOrgService | null
+	orgServiceDesc?: CompleteOrgService | null
+	phoneType?: CompletePhoneType | null
+	serviceCategory?: CompleteServiceCategory | null
+	serviceTag?: CompleteServiceTag | null
+	socialMediaService?: CompleteSocialMediaService | null
+	userCommunity?: CompleteUserCommunity | null
+	userEthnicity?: CompleteUserEthnicity | null
+	userImmigration?: CompleteUserImmigration | null
+	userSOGIdentity?: CompleteUserSOGIdentity | null
+	userTitle?: CompleteUserTitle | null
+	userType?: CompleteUserType | null
 	auditLog: CompleteAuditLog[]
 	internalNote: CompleteInternalNote[]
 }
@@ -100,25 +101,26 @@ export const TranslationKeyModel: z.ZodSchema<CompleteTranslationKey> = z.lazy((
 		parent: TranslationKeyModel.nullish(),
 		children: TranslationKeyModel.array(),
 		/** Associated tables */
-		attribute: AttributeModel.array(),
-		country: CountryModel.array(),
-		footerLink: FooterLinkModel.array(),
+		attribute: AttributeModel.nullish(),
+		country: CountryModel.nullish(),
+		demonym: CountryModel.nullish(),
+		footerLink: FooterLinkModel.nullish(),
 		govDist: GovDistModel.array(),
-		govDistType: GovDistTypeModel.array(),
-		navigation: NavigationModel.array(),
-		orgDescription: OrgDescriptionModel.array(),
-		orgServiceAccess: OrgServiceModel.array(),
-		orgServiceDesc: OrgServiceModel.array(),
-		phoneType: PhoneTypeModel.array(),
-		serviceCategory: ServiceCategoryModel.array(),
-		serviceTag: ServiceTagModel.array(),
-		socialMediaService: SocialMediaServiceModel.array(),
-		userCommunity: UserCommunityModel.array(),
-		userEthnicity: UserEthnicityModel.array(),
-		userImmigration: UserImmigrationModel.array(),
-		userSOGIdentity: UserSOGIdentityModel.array(),
-		userTitle: UserTitleModel.array(),
-		userType: UserTypeModel.array(),
+		govDistType: GovDistTypeModel.nullish(),
+		navigation: NavigationModel.nullish(),
+		orgDescription: OrgDescriptionModel.nullish(),
+		orgServiceAccess: OrgServiceModel.nullish(),
+		orgServiceDesc: OrgServiceModel.nullish(),
+		phoneType: PhoneTypeModel.nullish(),
+		serviceCategory: ServiceCategoryModel.nullish(),
+		serviceTag: ServiceTagModel.nullish(),
+		socialMediaService: SocialMediaServiceModel.nullish(),
+		userCommunity: UserCommunityModel.nullish(),
+		userEthnicity: UserEthnicityModel.nullish(),
+		userImmigration: UserImmigrationModel.nullish(),
+		userSOGIdentity: UserSOGIdentityModel.nullish(),
+		userTitle: UserTitleModel.nullish(),
+		userType: UserTypeModel.nullish(),
 		auditLog: AuditLogModel.array(),
 		internalNote: InternalNoteModel.array(),
 	})

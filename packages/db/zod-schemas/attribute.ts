@@ -30,7 +30,6 @@ export const _AttributeModel = z.object({
 	name: z.string(),
 	/** Internal description */
 	intDesc: z.string().nullish(),
-	categoryId: imports.cuid,
 	keyId: imports.cuid.nullish(),
 	requireText: z.boolean(),
 	requireLanguage: z.boolean(),
@@ -41,7 +40,7 @@ export const _AttributeModel = z.object({
 })
 
 export interface CompleteAttribute extends z.infer<typeof _AttributeModel> {
-	category: CompleteAttributeCategory
+	category: CompleteAttributeCategory[]
 	key?: CompleteTranslationKey | null
 	organization: CompleteOrganization[]
 	orgLocation: CompleteOrgLocation[]
@@ -60,7 +59,7 @@ export interface CompleteAttribute extends z.infer<typeof _AttributeModel> {
  */
 export const AttributeModel: z.ZodSchema<CompleteAttribute> = z.lazy(() =>
 	_AttributeModel.extend({
-		category: AttributeCategoryModel,
+		category: AttributeCategoryModel.array(),
 		key: TranslationKeyModel.nullish(),
 		/** Tables using Attribute */
 		organization: OrganizationModel.array(),

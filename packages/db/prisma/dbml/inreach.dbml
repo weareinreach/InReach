@@ -61,6 +61,7 @@ Table User {
   legacyId String [unique, note: 'old ID from MongoDB']
   birthYear Int
   reasonForJoin String
+  active Boolean [not null, default: true]
   currentCity String
   currentGovDistId String [note: '@zod.custom(imports.cuid)']
   currentCountryId String [note: '@zod.custom(imports.cuid)']
@@ -189,6 +190,7 @@ Table UserSavedList {
 Table UserMail {
   id String [pk, note: '@zod.custom(imports.cuid)']
   toUserId String [not null, note: '@zod.custom(imports.cuid)']
+  toExternal String[] [not null, note: 'Array of email addresses']
   read Boolean [not null, default: false]
   subject String [not null]
   body String [not null]
@@ -196,6 +198,7 @@ Table UserMail {
   fromUserId String [note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
+  responseToId String
 }
 
 Table Organization {
@@ -383,18 +386,13 @@ Table Attribute {
   tag String [unique, not null]
   name String [unique, not null]
   intDesc String [note: 'Internal description']
-  categoryId String [not null, note: '@zod.custom(imports.cuid)']
-  keyId String [note: '@zod.custom(imports.cuid)']
+  keyId String [unique, note: '@zod.custom(imports.cuid)']
   requireText Boolean [not null, default: false]
   requireLanguage Boolean [not null, default: false]
   requireCountry Boolean [not null, default: false]
   requireSupplemental Boolean [not null, default: false]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
-
-  indexes {
-    (categoryId, name) [unique]
-  }
 }
 
 Table AttributeSupplement {
@@ -474,6 +472,7 @@ Table Country {
   geoJSON Json [note: 'GeoJSON object - required only if this will be considered a "service area"
 @zod.custom(imports.GeoJSONSchema)']
   keyId String [unique, not null, note: '@zod.custom(imports.cuid)']
+  demonymId String [unique, note: '@zod.custom(imports.cuid)']
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
 
@@ -794,6 +793,11 @@ Table AttributeToOrgService {
   orgserviceId String [ref: > OrgService.id]
 }
 
+Table AttributeToAttributeCategory {
+  attributeId String [ref: > Attribute.id]
+  categoryId String [ref: > AttributeCategory.id]
+}
+
 Table AttributeToServiceCategory {
   servicecategoryId String [ref: > ServiceCategory.id]
   defaultattributesId String [ref: > Attribute.id]
@@ -851,17 +855,17 @@ Ref: PermissionAsset.userId > User.id
 
 Ref: PermissionAsset.permissionId > PermissionItem.id
 
-Ref: UserType.keyId > TranslationKey.id
+Ref: UserType.keyId - TranslationKey.id
 
-Ref: UserTitle.keyId > TranslationKey.id
+Ref: UserTitle.keyId - TranslationKey.id
 
-Ref: UserEthnicity.keyId > TranslationKey.id
+Ref: UserEthnicity.keyId - TranslationKey.id
 
-Ref: UserImmigration.keyId > TranslationKey.id
+Ref: UserImmigration.keyId - TranslationKey.id
 
-Ref: UserSOGIdentity.keyId > TranslationKey.id
+Ref: UserSOGIdentity.keyId - TranslationKey.id
 
-Ref: UserCommunity.keyId > TranslationKey.id
+Ref: UserCommunity.keyId - TranslationKey.id
 
 Ref: UserSavedList.ownedById > User.id
 
@@ -869,13 +873,15 @@ Ref: UserMail.toUserId > User.id
 
 Ref: UserMail.fromUserId > User.id
 
+Ref: UserMail.responseToId > UserMail.id
+
 Ref: Organization.outsideApiId > OutsideAPI.id
 
 Ref: Organization.sourceId > Source.id
 
 Ref: OrgDescription.orgId > Organization.id
 
-Ref: OrgDescription.keyId > TranslationKey.id
+Ref: OrgDescription.keyId - TranslationKey.id
 
 Ref: OrgEmail.titleId > UserTitle.id
 
@@ -923,9 +929,9 @@ Ref: OrgService.organizationId > Organization.id
 
 Ref: OrgService.orgLocationId > OrgLocation.id
 
-Ref: OrgService.accessKeyId > TranslationKey.id
+Ref: OrgService.accessKeyId - TranslationKey.id
 
-Ref: OrgService.descKeyId > TranslationKey.id
+Ref: OrgService.descKeyId - TranslationKey.id
 
 Ref: OrgReview.organizationId > Organization.id
 
@@ -939,9 +945,7 @@ Ref: OrgReview.lcrCountryId > Country.id
 
 Ref: AttributeCategory.namespaceId > TranslationNamespace.id
 
-Ref: Attribute.categoryId > AttributeCategory.id
-
-Ref: Attribute.keyId > TranslationKey.id
+Ref: Attribute.keyId - TranslationKey.id
 
 Ref: AttributeSupplement.attributeId > Attribute.id
 
@@ -955,17 +959,19 @@ Ref: AttributeSupplement.serviceTagId > ServiceTag.id
 
 Ref: AttributeSupplement.serviceCategoryId > ServiceCategory.id
 
-Ref: ServiceCategory.keyId > TranslationKey.id
+Ref: ServiceCategory.keyId - TranslationKey.id
 
-Ref: ServiceTag.keyId > TranslationKey.id
+Ref: ServiceTag.keyId - TranslationKey.id
 
 Ref: ServiceTag.categoryId > ServiceCategory.id
 
-Ref: PhoneType.keyId > TranslationKey.id
+Ref: PhoneType.keyId - TranslationKey.id
 
-Ref: SocialMediaService.keyId > TranslationKey.id
+Ref: SocialMediaService.keyId - TranslationKey.id
 
-Ref: Country.keyId > TranslationKey.id
+Ref: Country.keyId - TranslationKey.id
+
+Ref: Country.demonymId - TranslationKey.id
 
 Ref: GovDist.countryId > Country.id
 
@@ -975,7 +981,7 @@ Ref: GovDist.parentId - GovDist.id
 
 Ref: GovDist.keyId > TranslationKey.id
 
-Ref: GovDistType.keyId > TranslationKey.id
+Ref: GovDistType.keyId - TranslationKey.id
 
 Ref: TranslationKey.(namespaceId, ns) > TranslationNamespace.(id, name)
 
@@ -983,11 +989,11 @@ Ref: TranslationKey.parentId - TranslationKey.id
 
 Ref: FieldVisibility.userId > User.id
 
-Ref: Navigation.keyId > TranslationKey.id
+Ref: Navigation.keyId - TranslationKey.id
 
 Ref: Navigation.parentId - Navigation.id
 
-Ref: FooterLink.keyId > TranslationKey.id
+Ref: FooterLink.keyId - TranslationKey.id
 
 Ref: SocialMediaLink.serviceId > SocialMediaService.id
 
