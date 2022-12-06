@@ -680,6 +680,7 @@ model AttributeCategory {
   id      String  @id @default(cuid()) /// @zod.custom(imports.cuid)
   tag     String  @unique
   name    String  @unique
+  icon    String?
   /// Internal description
   intDesc String?
 
@@ -698,6 +699,7 @@ model Attribute {
   id      String  @id @default(cuid()) /// @zod.custom(imports.cuid)
   tag     String  @unique
   name    String  @unique
+  icon    String?
   /// Internal description
   intDesc String?
 
