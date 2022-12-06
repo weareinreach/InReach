@@ -344,7 +344,6 @@ CREATE TABLE "OrgHours" (
 CREATE TABLE "OrgService" (
     "id" TEXT NOT NULL,
     "published" BOOLEAN NOT NULL DEFAULT false,
-    "serviceId" TEXT NOT NULL,
     "organizationId" TEXT,
     "orgLocationId" TEXT,
     "accessKeyId" TEXT,
@@ -408,8 +407,11 @@ CREATE TABLE "Attribute" (
 -- CreateTable
 CREATE TABLE "AttributeSupplement" (
     "id" TEXT NOT NULL,
-    "data" JSONB NOT NULL,
-    "attributeId" TEXT NOT NULL,
+    "data" JSONB,
+    "textKeyId" TEXT,
+    "countryId" TEXT,
+    "languageId" TEXT,
+    "attributeDefaultId" TEXT,
     "organizationId" TEXT,
     "serviceId" TEXT,
     "locationId" TEXT,
@@ -544,6 +546,7 @@ CREATE TABLE "Language" (
 CREATE TABLE "TranslationNamespace" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "exportFile" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -792,6 +795,12 @@ CREATE TABLE "_OrgLocationToPermissionAsset" (
 );
 
 -- CreateTable
+CREATE TABLE "_OrgServiceToServiceTag" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
+-- CreateTable
 CREATE TABLE "_AttributeToAttributeCategory" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
@@ -960,12 +969,6 @@ CREATE INDEX "OrgService_organizationId_idx" ON "OrgService"("organizationId" AS
 CREATE INDEX "OrgService_orgLocationId_idx" ON "OrgService"("orgLocationId" ASC);
 
 -- CreateIndex
-CREATE UNIQUE INDEX "OrgService_serviceId_organizationId_key" ON "OrgService"("serviceId", "organizationId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "OrgService_serviceId_orgLocationId_key" ON "OrgService"("serviceId", "orgLocationId");
-
--- CreateIndex
 CREATE INDEX "OrgReview_organizationId_idx" ON "OrgReview"("organizationId" ASC);
 
 -- CreateIndex
@@ -1132,6 +1135,12 @@ CREATE UNIQUE INDEX "_OrgLocationToPermissionAsset_AB_unique" ON "_OrgLocationTo
 
 -- CreateIndex
 CREATE INDEX "_OrgLocationToPermissionAsset_B_index" ON "_OrgLocationToPermissionAsset"("B");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_OrgServiceToServiceTag_AB_unique" ON "_OrgServiceToServiceTag"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_OrgServiceToServiceTag_B_index" ON "_OrgServiceToServiceTag"("B");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_AttributeToAttributeCategory_AB_unique" ON "_AttributeToAttributeCategory"("A", "B");
@@ -1323,9 +1332,6 @@ ALTER TABLE "OrgHours" ADD CONSTRAINT "OrgHours_orgLocId_fkey" FOREIGN KEY ("org
 ALTER TABLE "OrgHours" ADD CONSTRAINT "OrgHours_orgServiceId_fkey" FOREIGN KEY ("orgServiceId") REFERENCES "OrgService"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgService" ADD CONSTRAINT "OrgService_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "ServiceTag"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "OrgService" ADD CONSTRAINT "OrgService_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -1359,7 +1365,16 @@ ALTER TABLE "AttributeCategory" ADD CONSTRAINT "AttributeCategory_namespaceId_fk
 ALTER TABLE "Attribute" ADD CONSTRAINT "Attribute_keyId_fkey" FOREIGN KEY ("keyId") REFERENCES "TranslationKey"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_attributeId_fkey" FOREIGN KEY ("attributeId") REFERENCES "Attribute"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_textKeyId_fkey" FOREIGN KEY ("textKeyId") REFERENCES "TranslationKey"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_countryId_fkey" FOREIGN KEY ("countryId") REFERENCES "Country"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_attributeDefaultId_fkey" FOREIGN KEY ("attributeDefaultId") REFERENCES "Attribute"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -1699,6 +1714,12 @@ ALTER TABLE "_OrgLocationToPermissionAsset" ADD CONSTRAINT "_OrgLocationToPermis
 
 -- AddForeignKey
 ALTER TABLE "_OrgLocationToPermissionAsset" ADD CONSTRAINT "_OrgLocationToPermissionAsset_B_fkey" FOREIGN KEY ("B") REFERENCES "PermissionAsset"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_OrgServiceToServiceTag" ADD CONSTRAINT "_OrgServiceToServiceTag_A_fkey" FOREIGN KEY ("A") REFERENCES "OrgService"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_OrgServiceToServiceTag" ADD CONSTRAINT "_OrgServiceToServiceTag_B_fkey" FOREIGN KEY ("B") REFERENCES "ServiceTag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_AttributeToAttributeCategory" ADD CONSTRAINT "_AttributeToAttributeCategory_A_fkey" FOREIGN KEY ("A") REFERENCES "Attribute"("id") ON DELETE CASCADE ON UPDATE CASCADE;

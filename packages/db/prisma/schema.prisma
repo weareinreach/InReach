@@ -604,8 +604,7 @@ model OrgService {
   id        String  @id @default(cuid()) /// @zod.custom(imports.cuid)
   published Boolean @default(false)
 
-  service   ServiceTag @relation(fields: [serviceId], references: [id])
-  serviceId String /// @zod.custom(imports.cuid)
+  service ServiceTag[]
 
   hours     OrgHours[]
   orgReview OrgReview[]
@@ -629,8 +628,6 @@ model OrgService {
   auditLog     AuditLog[]
   internalNote InternalNote[]
 
-  @@unique([serviceId, organizationId])
-  @@unique([serviceId, orgLocationId])
   @@index([organizationId(sort: Asc)])
   @@index([orgLocationId(sort: Asc)])
 }
@@ -714,13 +711,14 @@ model Attribute {
   requireCountry      Boolean @default(false)
   requireSupplemental Boolean @default(false)
 
+  defaultSupplement AttributeSupplement[]
+
   /// Tables using Attribute
-  organization        Organization[]
-  orgLocation         OrgLocation[]
-  orgService          OrgService[]
-  serviceCategory     ServiceCategory[]
-  serviceTag          ServiceTag[]
-  attributeSupplement AttributeSupplement[]
+  organization    Organization[]
+  orgLocation     OrgLocation[]
+  orgService      OrgService[]
+  serviceCategory ServiceCategory[]
+  serviceTag      ServiceTag[]
 
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -729,11 +727,21 @@ model Attribute {
 }
 
 model AttributeSupplement {
-  id   String @id @default(cuid()) /// @zod.custom(imports.cuid)
-  data Json /// @zod.custom(imports.AttributeSupplement)
+  id String @id @default(cuid()) /// @zod.custom(imports.cuid)
 
-  attribute   Attribute @relation(fields: [attributeId], references: [id])
-  attributeId String /// @zod.custom(imports.cuid)
+  data Json? /// @zod.custom(imports.AttributeSupplement)
+
+  textKey   TranslationKey? @relation(fields: [textKeyId], references: [id])
+  textKeyId String?
+
+  country   Country? @relation(fields: [countryId], references: [id])
+  countryId String?
+
+  language   Language? @relation(fields: [languageId], references: [id])
+  languageId String?
+
+  attributeDefault   Attribute? @relation(fields: [attributeDefaultId], references: [id])
+  attributeDefaultId String?
 
   organization      Organization?    @relation(fields: [organizationId], references: [id])
   organizationId    String? /// @zod.custom(imports.cuid)
@@ -874,9 +882,10 @@ model Country {
   govDist GovDist[]
 
   /// Tables using Country
-  orgAddress OrgLocation[]
-  orgReviews OrgReview[]
-  orgPhone   OrgPhone[]
+  attributeSupplement AttributeSupplement[]
+  orgAddress          OrgLocation[]
+  orgReviews          OrgReview[]
+  orgPhone            OrgPhone[]
 
   originUsers  User[] @relation("countryOrigin")
   currentUsers User[] @relation("currentCountry")
@@ -961,8 +970,9 @@ model Language {
   activelyTranslated Boolean @default(false)
 
   // fields using records
-  User      User[]
-  OrgReview OrgReview[]
+  AttributeSupplement AttributeSupplement[]
+  OrgReview           OrgReview[]
+  User                User[]
 
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -983,6 +993,8 @@ model TranslationNamespace {
   keys TranslationKey[]
 
   attributeCategory AttributeCategory[]
+
+  exportFile Boolean @default(true)
 
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -1012,26 +1024,27 @@ model TranslationKey {
   children    TranslationKey[]     @relation("translationSubItems")
 
   /// Associated tables
-  attribute          Attribute?
-  country            Country?            @relation("country")
-  demonym            Country?            @relation("demonym")
-  footerLink         FooterLink?
-  govDist            GovDist[]
-  govDistType        GovDistType?
-  navigation         Navigation?
-  orgDescription     OrgDescription?
-  orgServiceAccess   OrgService?         @relation("Service Access Instructions")
-  orgServiceDesc     OrgService?         @relation("Service Description")
-  phoneType          PhoneType?
-  serviceCategory    ServiceCategory?
-  serviceTag         ServiceTag?
-  socialMediaService SocialMediaService?
-  userCommunity      UserCommunity?
-  userEthnicity      UserEthnicity?
-  userImmigration    UserImmigration?
-  userSOGIdentity    UserSOGIdentity?
-  userTitle          UserTitle?
-  userType           UserType?
+  attribute           Attribute?
+  attributeSupplement AttributeSupplement[]
+  country             Country?              @relation("country")
+  demonym             Country?              @relation("demonym")
+  footerLink          FooterLink?
+  govDist             GovDist[]
+  govDistType         GovDistType?
+  navigation          Navigation?
+  orgDescription      OrgDescription?
+  orgServiceAccess    OrgService?           @relation("Service Access Instructions")
+  orgServiceDesc      OrgService?           @relation("Service Description")
+  phoneType           PhoneType?
+  serviceCategory     ServiceCategory?
+  serviceTag          ServiceTag?
+  socialMediaService  SocialMediaService?
+  userCommunity       UserCommunity?
+  userEthnicity       UserEthnicity?
+  userImmigration     UserImmigration?
+  userSOGIdentity     UserSOGIdentity?
+  userTitle           UserTitle?
+  userType            UserType?
 
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
