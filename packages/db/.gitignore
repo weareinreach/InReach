@@ -10,3 +10,8 @@ data-transfer/temp/*.js
 *.log
 lib/output/*
 !lib/output/.gitkeep
+
+prisma/generated
+prisma/dbml
+
+zod-schemas/
