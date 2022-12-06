@@ -14,4 +14,15 @@ export const namespaces = {
 	user: 'user',
 } as const
 
+/**
+ * Value for TranslationNamespace.exportFile. Defaults to: `true`
+ *
+ * Only needed when json generation should be suppressed.
+ */
+export const namespaceGen = {
+	orgDescription: false,
+	nav: false,
+	footer: false,
+}
+
 export const keySlug = (item: string) => slugify(item, { lower: true, strict: true })

@@ -12,6 +12,7 @@ import {
 	seedServices,
 	seedSocialMediaLinks,
 	seedSystemUser,
+	seedTranslationNamespaces,
 	seedUserImmigration,
 	seedUserRoles,
 	seedUserTypes,
@@ -30,6 +31,11 @@ const tasks = new Listr<Context>(
 					{
 						title: 'System user',
 						task: async (_ctx, task): Promise<void> => seedSystemUser(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Translation Namespaces',
+						task: async (_ctx, task): Promise<void> => seedTranslationNamespaces(task),
 						options: renderOptions,
 					},
 					{
