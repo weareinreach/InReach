@@ -1,4 +1,4 @@
-import { GovDist, Prisma } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import iso3166 from 'iso-3166-2'
 
 import { prisma } from '~/index'
@@ -21,6 +21,7 @@ const districtTypes = [
 	{ one: 'outlying area', other: 'outlying areas' },
 	{ one: 'province', other: 'provinces' },
 	{ one: 'territory', other: 'territories' },
+	{ one: 'city', other: 'cities' },
 ] as const
 
 type DistrictTypes = typeof districtTypes[number]['one']
@@ -44,9 +45,9 @@ const upsertNamespace = async () =>
 		select: { id: true },
 	})
 
-const nsCoC = async (text: string, prefix?: string) => {
-	const slugText = prefix ? `${prefix}-${text}` : text
-	const key = keySlug(slugText)
+const nsCoC = async (text: string, prefix?: string, suffix?: string) => {
+	const slugText = `${prefix ?? ''} ${text} ${suffix ?? ''}`
+	const key = keySlug(slugText.trim())
 
 	return {
 		connectOrCreate: {
@@ -171,7 +172,49 @@ const countryUS = async (task: ListrTask) => {
 			if (!distType) throw new Error('Unknown district type')
 			const slug = keySlug(`US-${state.name}`)
 			const key = await nsCoC(name, 'us')
-			const { id: stateId } = await prisma.govDist.upsert({
+			const bulkCountiesCreate: Prisma.GovDistCreateWithoutParentInput[] = []
+			const bulkCountiesUpdate: Prisma.GovDistUpdateWithWhereUniqueWithoutParentInput[] = []
+			for (const county of counties) {
+				const { NAME: countyName, LSAD } = county.properties
+				logMessage = `  [${countC + 1}/${counties.length}] Upserting Governing Sub-District: ${countyName}`
+				logFile.log(logMessage)
+				task.output = logMessage
+				const geoType = (search: string) => {
+					const types = districtTypes.map((type) => type.one)
+					const searchLower = search.toLowerCase()
+					if (types.some((x) => x === searchLower)) return search.toLowerCase() as DistrictTypes
+					return 'county'
+				}
+				const distType = govDist.get(geoType(LSAD))
+				if (!distType) throw new Error('Unknown district type')
+				const slug = keySlug(`us-${state.name}-${countyName}-${geoType(LSAD)}`)
+				const key = await nsCoC(countyName, `us-${state.name}`, geoType(LSAD))
+				bulkCountiesCreate.push({
+					name: countyName,
+					slug,
+					geoJSON: county,
+					country: connectTo(countryId),
+					govDistType: connectTo(distType),
+					isPrimary: false,
+					key,
+				})
+				bulkCountiesUpdate.push({
+					where: {
+						slug,
+					},
+					data: {
+						name: countyName,
+						geoJSON: county,
+						country: connectTo(countryId),
+						govDistType: connectTo(distType),
+						isPrimary: false,
+						key,
+					},
+				})
+				countA++
+				countC++
+			}
+			await prisma.govDist.upsert({
 				where: {
 					slug,
 				},
@@ -184,6 +227,9 @@ const countryUS = async (task: ListrTask) => {
 					country: connectTo(countryId),
 					govDistType: connectTo(distType),
 					key,
+					subDistricts: {
+						create: bulkCountiesCreate,
+					},
 				},
 				update: {
 					name,
@@ -193,50 +239,13 @@ const countryUS = async (task: ListrTask) => {
 					country: connectTo(countryId),
 					govDistType: connectTo(distType),
 					key,
+					subDistricts: {
+						update: bulkCountiesUpdate,
+					},
 				},
 				select: { id: true },
 			})
 
-			const bulkCounties: Prisma.Prisma__GovDistClient<Partial<GovDist>>[] = []
-			for (const county of counties) {
-				const { NAME: countyName } = county.properties
-				logMessage = `  [${countC + 1}/${counties.length}] Upserting Governing Sub-District: ${countyName}`
-				logFile.log(logMessage)
-				task.output = logMessage
-				const slug = keySlug(`US-${state.name}-${countyName}`)
-				const distType = govDist.get('county')
-				if (!distType) throw new Error('Unknown district type')
-				const key = await nsCoC(countyName, `us-${state.name}`)
-				bulkCounties.push(
-					prisma.govDist.upsert({
-						where: {
-							slug,
-						},
-						create: {
-							name: countyName,
-							slug,
-							geoJSON: county,
-							country: connectTo(countryId),
-							govDistType: connectTo(distType),
-							isPrimary: false,
-							parent: connectTo(stateId),
-							key,
-						},
-						update: {
-							name: countyName,
-							geoJSON: county,
-							country: connectTo(countryId),
-							govDistType: connectTo(distType),
-							isPrimary: false,
-							parent: connectTo(stateId),
-							key,
-						},
-					})
-				)
-				countA++
-				countC++
-			}
-			await prisma.$transaction(bulkCounties)
 			countB++
 		}
 		task.title = `GeoJSON data for US (${countB + 1} Districts, ${countA + 1} Sub-Districts)`

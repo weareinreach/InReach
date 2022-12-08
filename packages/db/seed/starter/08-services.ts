@@ -81,8 +81,14 @@ export const seedServices = async (task: ListrTask) => {
 				)
 				y = y + serviceTransactions.length
 			} else {
-				await prisma.serviceTag.create({
-					data: {
+				await prisma.serviceTag.upsert({
+					where: {
+						name_categoryId: {
+							name: category,
+							categoryId,
+						},
+					},
+					create: {
 						name: category,
 						category: {
 							connect: {
@@ -95,6 +101,7 @@ export const seedServices = async (task: ListrTask) => {
 							},
 						},
 					},
+					update: {},
 				})
 				y++
 			}

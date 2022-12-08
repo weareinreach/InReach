@@ -7,22 +7,11 @@ import { attributeData, namespaces } from '~/seed/data/'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
-const upsertNamespace = async () =>
-	await prisma.translationNamespace.createMany({
-		data: [
-			{
-				name: namespaces.attribute,
-			},
-		],
-		skipDuplicates: true,
-	})
-
 export const seedAttributes = async (task: ListrTask) => {
 	try {
 		let x = 0
 		let y = 0
 		let logMessage = ''
-		await upsertNamespace()
 		for (const category of attributeData) {
 			logMessage = `(${x + 1}/${attributeData.length}) Upserting Attribute Category: ${category.name}`
 			logFile.log(logMessage)
@@ -33,7 +22,7 @@ export const seedAttributes = async (task: ListrTask) => {
 				},
 				create: {
 					name: category.name,
-					tag: slugify(category.name),
+					tag: slugify(category.name, { lower: true }),
 					intDesc: category.description,
 					namespace: {
 						connect: {
@@ -43,7 +32,7 @@ export const seedAttributes = async (task: ListrTask) => {
 				},
 				update: {
 					intDesc: category.description,
-					tag: slugify(category.name),
+					tag: slugify(category.name, { lower: true }),
 					namespace: {
 						connect: {
 							name: namespaces.attribute,
@@ -64,12 +53,12 @@ export const seedAttributes = async (task: ListrTask) => {
 					requireCountry,
 					key: keyTag,
 					requireLanguage,
-					requireSupplemental,
+					requireData,
 				} = record
 				logMessage = `  [${idx + 1}/${category.attributes.length}] Upserting Attribute: ${name}`
 				logFile.log(logMessage)
 				task.output = logMessage
-				const key = slugify(`${category.namespace}-${keyTag}`)
+				const key = slugify(`${category.namespace}-${keyTag}`, { lower: true })
 				y++
 				idx++
 				const transaction = prisma.attribute.upsert({
@@ -78,9 +67,9 @@ export const seedAttributes = async (task: ListrTask) => {
 					},
 					create: {
 						name,
-						tag: slugify(name),
+						tag: slugify(keyTag, { lower: true }),
 						intDesc,
-						requireSupplemental,
+						requireData,
 						requireCountry,
 						requireLanguage,
 						category: {
@@ -101,11 +90,11 @@ export const seedAttributes = async (task: ListrTask) => {
 						},
 					},
 					update: {
-						tag: slugify(name),
+						tag: slugify(keyTag, { lower: true }),
 						intDesc,
 						requireCountry,
 						requireLanguage,
-						requireSupplemental,
+						requireData,
 						key: {
 							update: {
 								text: name,
