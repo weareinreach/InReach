@@ -35,6 +35,13 @@ const uniqueSlug = async (name: string, city?: string, state?: string) => {
 	throw new Error('Unable to generate unique slug')
 }
 
+/**
+ * If the records are undefined or an empty array, return undefined, otherwise return the record(s) for a
+ * nested connect
+ *
+ * @param {T} records - Either a single Prisma transaction or an array of multiple
+ * @returns A function that takes a generic type T and returns a ConnectRecords<T>
+ */
 const connectIfExist = <T>(records: T): ConnectRecords<T> => {
 	if (typeof records === undefined || (Array.isArray(records) && records.length === 0)) return undefined
 	return {
@@ -43,7 +50,15 @@ const connectIfExist = <T>(records: T): ConnectRecords<T> => {
 		},
 	}
 }
-const createtIfExist = <T>(records: T): CreateRecords<T> => {
+
+/**
+ * If the records are undefined or an empty array, return undefined, otherwise return the record(s) for a
+ * nested create
+ *
+ * @param {T} records - Either a single Prisma transaction or an array of multiple
+ * @returns A function that takes a generic type T and returns a CreateRecords<T>
+ */
+const createIfExist = <T>(records: T): CreateRecords<T> => {
 	if (typeof records === undefined || (Array.isArray(records) && records.length === 0)) return undefined
 	return {
 		create: {
@@ -443,7 +458,7 @@ incompatible-tag data . */
 			service: connectIfExist(tagIds),
 			attributes: connectIfExist(attributeConnect),
 
-			attributeSupplement: createtIfExist(attrSuppCreate),
+			attributeSupplement: createIfExist(attrSuppCreate),
 			serviceArea: {
 				create: {
 					areas: connectIfExist(serviceAreaConnect),
@@ -471,11 +486,13 @@ export const upsertOrg = async (org: OrganizationsJSONCollection) => {
 
 	if (!exists) {
 		const sourceCreate = { create: { source, type: 'SYSTEM' as SourceType } }
+
 		/* Generate Description stub */
 		const { id: descKeyId } = org.description
 			? await generateKey({ type: 'desc', orgSlug: slug, text: org.description })
 			: { id: undefined }
 		const description = descKeyId ? { create: { key: { connect: { id: descKeyId } } } } : undefined
+
 		/* Generate Services stub */
 		const services = org.services.length ? await generateServices(org.services, slug) : undefined
 		return {
