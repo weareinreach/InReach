@@ -319,6 +319,7 @@ importers:
       '@nuskin/mexico-state-lookup': 2.1.0
       '@placemarkio/check-geojson': 0.1.12
       '@prisma/client': 4.7.1
+      '@turf/helpers': ^6.5.0
       '@types/flat': 5.0.2
       '@types/langs': 2.0.1
       '@types/luxon': 3.1.0
@@ -346,6 +347,7 @@ importers:
       iso-3166-2: 1.0.0
       iso-google-locales: 3.0.4
       langs: 2.0.0
+      libphonenumber-js: ^1.10.14
       listr2: 5.0.5
       luxon: 3.1.0
       mongoback: 3.0.3
@@ -370,6 +372,7 @@ importers:
       '@faker-js/faker': 7.6.0
       '@nuskin/mexico-state-lookup': 2.1.0
       '@placemarkio/check-geojson': 0.1.12
+      '@turf/helpers': 6.5.0
       '@types/flat': 5.0.2
       '@types/langs': 2.0.1
       '@types/luxon': 3.1.0
@@ -397,6 +400,7 @@ importers:
       iso-3166-2: 1.0.0
       iso-google-locales: 3.0.4_ltnamflm7ayajalculwqyezjya
       langs: 2.0.0
+      libphonenumber-js: 1.10.14
       listr2: 5.0.5
       luxon: 3.1.0
       mongoback: 3.0.3
@@ -8636,6 +8640,10 @@ packages:
       path-browserify: 1.0.1
     dev: true
 
+  /@turf/helpers/6.5.0:
+    resolution: {integrity: sha512-VbI1dV5bLFzohYYdgqwikdMVpe7pJ9X3E+dlr425wa2/sMJqYDhTO++ec38/pcPvPE6oD9WEEeU3Xu3gza+VPw==}
+    dev: true
+
   /@types/aria-query/4.2.2:
     resolution: {integrity: sha512-HnYpAE1Y6kRyKM/XkEuiRQhTHvkzMBurTHnpFLYLBGPIylZNPs9jJcuOOYWxPLJCSEtmZT0Y8rHDokKN7rRTig==}
     dev: true
@@ -13003,7 +13011,7 @@ packages:
       debug: 4.3.4
       enhanced-resolve: 5.12.0
       eslint: 8.28.0
-      eslint-plugin-import: 2.26.0_vc54pluhgv7booofyyjouvuf74
+      eslint-plugin-import: 2.26.0_xmouedd5rhgbah4737x2hltudq
       get-tsconfig: 4.2.0
       globby: 13.1.2
       is-core-module: 2.11.0
@@ -13040,6 +13048,7 @@ packages:
       eslint-import-resolver-typescript: 3.5.2_ktrec6dplf4now6nlbc6d67jee
     transitivePeerDependencies:
       - supports-color
+    dev: true
 
   /eslint-module-utils/2.7.4_zkfsjkvh2muiaosb2bwsbw52mq:
     resolution: {integrity: sha512-j4GT+rqzCoRKHwURX7pddtIPGySnX9Si/cgMI5ztrcqOPtk5dDEeZ34CQVPphnqkJytlc97Vuk05Um2mJ3gEQA==}
@@ -13125,6 +13134,7 @@ packages:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
+    dev: true
 
   /eslint-plugin-import/2.26.0_xmouedd5rhgbah4737x2hltudq:
     resolution: {integrity: sha512-hYfi3FXaM8WPLf4S1cikh/r4IxnO6zrhZbEGz2b660EJRbuxgpDS5gkCuYgGWg2xxh2rBuIr4Pvhve/7c31koA==}
@@ -16032,6 +16042,10 @@ packages:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+
+  /libphonenumber-js/1.10.14:
+    resolution: {integrity: sha512-McGS7GV/WjJ2KjfOGhJU1oJn29RYeo7Q+RpANRbUNMQ9gj5XArpbjurSuyYPTejFwbaUojstQ4XyWCrAzGOUXw==}
+    dev: true
 
   /lilconfig/2.0.5:
     resolution: {integrity: sha512-xaYmXZtTHPAw5m+xLN8ab9C+3a8YmV3asNSPOATITbtwrfbwaLJj8h66H1WMIpALCkqsIzK3h7oQ+PdX+LQ9Eg==}
