@@ -1,6 +1,8 @@
 // import { Prisma, SourceType } from '@prisma/client'
+// import { point as createGeoPoint } from '@turf/helpers';
 import cuid from 'cuid'
 import { flatten } from 'flat'
+import parsePhoneNumber, { type CountryCode, type PhoneNumber } from 'libphonenumber-js'
 import slugify from 'slugify'
 
 import { Prisma, SourceType } from '~/client'
@@ -17,6 +19,12 @@ import { namespaces } from '~/seed/data'
  * @returns A slug based on name and city/state, if needed.
  */
 const uniqueSlug = async (name: string, city?: string, state?: string) => {
+	/**
+	 * It checks if an organization with the given slug exists in the database
+	 *
+	 * @param slug - The slug to check
+	 * @returns A boolean value
+	 */
 	const check = async (slug: string) => {
 		const existing = await prisma.organization.findUnique({
 			where: {
@@ -68,6 +76,83 @@ const createIfExist = <T>(records: T): CreateRecords<T> => {
 }
 
 /**
+ * It takes a phone number string and an optional country code, and returns a phone record object that can be
+ * used to create a phone record in the database
+ *
+ * @param string - The phone number string to parse
+ * @param [country] - The country code of the phone number.
+ * @returns A promise that resolves to an object with the following properties: countryId: The id of the
+ *   country the phone number is from number: The phone number without the country code ext: The extension of
+ *   the phone number
+ */
+const phoneRecord = async (
+	string: string,
+	country?: CountryCode
+): Promise<undefined | Pick<Prisma.OrgPhoneCreateManyInput, 'countryId' | 'number' | 'ext'>> => {
+	const countryCodes = ['US', 'CA', 'MX'] as const
+	let phoneData: PhoneNumber | undefined
+	if (country) {
+		phoneData = parsePhoneNumber(string, country)
+	} else {
+		for (const country of countryCodes) {
+			phoneData = parsePhoneNumber(string, country)
+			if (phoneData) break
+		}
+	}
+	if (!phoneData) return undefined
+	const { id: countryId } = await prisma.country.findFirstOrThrow({ where: { cca2: phoneData.country } })
+	return {
+		countryId,
+		number: phoneData.nationalNumber,
+		ext: phoneData.ext,
+	}
+}
+
+/**
+ * It takes an organization from the legacy database, and creates all of the phones associated with that
+ * organization in the new database
+ *
+ * @param org - Legacy Org record
+ * @returns An array of objects with the id and legacyId of the phones created.
+ */
+const createAllPhones = async (
+	org: OrganizationsJSONCollection
+): Promise<undefined | PhoneIdWithLegacy[]> => {
+	const legacyIds: string[] = []
+	const transactions: Prisma.OrgPhoneCreateManyInput[] = []
+	for (const phone of org.phones) {
+		const legacyId = phone._id.$oid
+		if (!phone.digits) continue
+		const baseRecord = await phoneRecord(phone.digits)
+		if (!baseRecord) continue
+		legacyIds.push(legacyId)
+		transactions.push({
+			legacyId,
+			...baseRecord,
+			primary: phone.is_primary ?? false,
+			published: phone.show_on_organization ?? false,
+			legacyDesc: phone.phone_type,
+		})
+	}
+	await prisma.orgPhone.createMany({
+		data: transactions,
+		skipDuplicates: true,
+	})
+	const phoneIds = await prisma.orgPhone.findMany({
+		where: {
+			legacyId: {
+				in: legacyIds,
+			},
+		},
+		select: {
+			id: true,
+			legacyId: true,
+		},
+	})
+	return phoneIds as PhoneIdWithLegacy[]
+}
+
+/**
  * It takes in a `params` object, and returns a `Promise` that resolves to a `TranslationKey` object
  *
  * @param params - {
@@ -84,7 +169,8 @@ const generateKey: GenerateKey<KeyType> = async (params) => {
 			break
 		case 'svc':
 			ns = namespaces.orgService
-			key = params.subtype === 'access' ? `${orgSlug}.access` : `${orgSlug}.desc`
+			const keyBase = `${orgSlug}.${params.servId}`
+			key = params.subtype === 'access' ? `${keyBase}.access` : `${keyBase}.desc`
 			break
 		case 'attrSupp':
 			ns = namespaces.orgService
@@ -117,7 +203,7 @@ const generateKey: GenerateKey<KeyType> = async (params) => {
 	})
 }
 
-/** It returns a list of service categories, each of which contains a list of services */
+/** It returns all the service categories and the services that belong to each category */
 const getServiceTags = async () =>
 	await prisma.serviceCategory.findMany({
 		select: {
@@ -190,6 +276,11 @@ const getServiceAreas = async () => {
 	return { area, country }
 }
 
+/**
+ * It returns a list of all languages in the database
+ *
+ * @returns An array of objects with the id and languageName properties.
+ */
 const getLanguages = async () => {
 	const result = await prisma.language.findMany({
 		select: {
@@ -214,7 +305,8 @@ const isTruthy = (val: string | boolean | number | undefined | unknown[]) => {
 	return false
 }
 
-const generateServices: GenerateServices = async (services, orgSlug) => {
+const generateServices: GenerateServices = async (org, orgSlug, phoneRecords) => {
+	const { services } = org
 	const servIds = {}
 	const serviceTags = await getServiceTags()
 	const attributeList = await getAttributeList()
@@ -256,6 +348,7 @@ const generateServices: GenerateServices = async (services, orgSlug) => {
 			const speakerRegex = /community-(.+)-speakers/gi
 			const langRegex = /lang-(.+)/gi
 			const areaRegex = /service-(?:county|national|state)-(.+)/gi
+
 			/**
 			 * It returns the attribute record from the attributeList array.
 			 *
@@ -426,7 +519,7 @@ incompatible-tag data . */
 							}
 							case attrRecord.requireLanguage: {
 								const id = attrData?.language?.id
-								attrSuppCreate.push({ ...attrBase, language: { connect: { id } } })
+								attrSuppCreate.push({ ...attrBase, language: connectIfExist({ id }) })
 								break
 							}
 							case attrRecord.requireText: {
@@ -439,7 +532,7 @@ incompatible-tag data . */
 									suppId,
 									orgSlug,
 								})
-								attrSuppCreate.push({ ...attrBase, id: suppId, textKey: { connect: textKey } })
+								attrSuppCreate.push({ ...attrBase, id: suppId, textKey: connectIfExist(textKey) })
 								break
 							}
 						}
@@ -447,11 +540,19 @@ incompatible-tag data . */
 					}
 					case 'area': {
 						// connect service area
+						if (tagRecord.attribute.type === 'country') {
+							serviceAreaNationalConnect.push({ id: tagRecord.attribute.id })
+						}
+						if (tagRecord.attribute.type === 'dist') {
+							serviceAreaConnect.push({ id: tagRecord.attribute.id })
+						}
 						break
 					}
 				}
 			})
 		}
+		const servPhoneRecord = phoneRecords?.find((record) => record.legacyId === service.phone_id)
+		const servPhoneId = servPhoneRecord ? { id: servPhoneRecord.id } : undefined
 
 		return {
 			id: servId,
@@ -459,12 +560,11 @@ incompatible-tag data . */
 			attributes: connectIfExist(attributeConnect),
 
 			attributeSupplement: createIfExist(attrSuppCreate),
-			serviceArea: {
-				create: {
-					areas: connectIfExist(serviceAreaConnect),
-					country: connectIfExist(serviceAreaNationalConnect),
-				},
-			},
+			serviceArea: createIfExist({
+				areas: connectIfExist(serviceAreaConnect),
+				country: connectIfExist(serviceAreaNationalConnect),
+			}),
+			orgPhone: connectIfExist(servPhoneId),
 		}
 	})
 	return { create: data }
@@ -482,19 +582,22 @@ export const upsertOrg = async (org: OrganizationsJSONCollection) => {
 
 	const primaryLocation = org.locations.find((location) => location.is_primary)
 	const slug = await uniqueSlug(org.name, primaryLocation?.city, primaryLocation?.state)
-	const source = `migration` as string
+	const sourceText = `migration` as string
 
 	if (!exists) {
-		const sourceCreate = { create: { source, type: 'SYSTEM' as SourceType } }
+		const phoneRecords = await createAllPhones(org)
+		const source = { ...createIfExist({ source: sourceText, type: 'SYSTEM' as SourceType }) }
 
 		/* Generate Description stub */
 		const { id: descKeyId } = org.description
 			? await generateKey({ type: 'desc', orgSlug: slug, text: org.description })
 			: { id: undefined }
-		const description = descKeyId ? { create: { key: { connect: { id: descKeyId } } } } : undefined
+		const description = descKeyId
+			? { ...createIfExist({ key: { ...connectIfExist({ id: descKeyId }) } }) }
+			: undefined
 
 		/* Generate Services stub */
-		const services = org.services.length ? await generateServices(org.services, slug) : undefined
+		const services = org.services.length ? await generateServices(org, slug, phoneRecords) : undefined
 		return {
 			exists,
 			org: prisma.organization.create({
@@ -504,9 +607,13 @@ export const upsertOrg = async (org: OrganizationsJSONCollection) => {
 					slug,
 					createdAt: org.created_at.$date,
 					updatedAt: org.updated_at.$date,
-					source: sourceCreate,
+					source,
 					description,
 					services,
+					phone: connectIfExist(phoneRecords?.map((x) => ({ id: x.id }))),
+					//email,
+					//location,
+					//reviews,
 				},
 			}),
 		}
@@ -517,7 +624,7 @@ export const upsertOrg = async (org: OrganizationsJSONCollection) => {
 
 type KeyType = 'desc' | 'svc' | 'attrSupp'
 type DescKey = { type: 'desc'; orgSlug: string; text: string }
-type SvcKey = { type: 'svc'; orgSlug: string; text: string; subtype: 'access' | 'desc' }
+type SvcKey = { type: 'svc'; orgSlug: string; servId: string; text: string; subtype: 'access' | 'desc' }
 type AttrSuppKey = { type: 'attrSupp'; orgSlug: string; text: string; suppId: string }
 type GenerateKey<T> = (
 	params: T extends 'desc' ? DescKey : T extends 'svc' ? SvcKey : AttrSuppKey
@@ -559,6 +666,12 @@ type TagCheck = (
 ) => AttributeReturnService | AttributeReturnArea
 
 type GenerateServices = (
-	services: OrganizationsJSONCollection['services'],
-	orgSlug: string
+	org: OrganizationsJSONCollection,
+	orgSlug: string,
+	phoneRecords?: PhoneIdWithLegacy[]
 ) => Promise<Prisma.OrgServiceCreateNestedManyWithoutOrganizationInput>
+
+type PhoneIdWithLegacy = {
+	id: string
+	legacyId: string
+}

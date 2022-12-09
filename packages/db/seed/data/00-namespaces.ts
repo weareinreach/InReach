@@ -9,6 +9,7 @@ export const namespaces = {
 	nav: 'nav',
 	orgDescription: 'org-description',
 	orgService: 'org-service',
+	phoneType: 'phone-type',
 	services: 'services',
 	socialMedia: 'socialMedia',
 	user: 'user',

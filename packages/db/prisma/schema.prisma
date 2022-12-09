@@ -429,6 +429,7 @@ model OrgEmail {
   primary   Boolean
   email     String
   published Boolean @default(true)
+  deleted   Boolean @default(false)
 
   title   UserTitle @relation(fields: [titleId], references: [id])
   titleId String /// @zod.custom(imports.cuid)
@@ -456,28 +457,35 @@ model OrgEmail {
 
 /// Org phone numbers - can be general or location specific
 model OrgPhone {
-  id        String  @id @default(cuid()) /// @zod.custom(imports.cuid)
-  number    String
-  published Boolean @default(true)
-  primary   Boolean @default(false)
+  id         String  @id @default(cuid()) /// @zod.custom(imports.cuid)
+  legacyId   String? @unique /// old ID from MongoDB
+  legacyDesc String?
+  number     String
+  ext        String?
+  primary    Boolean @default(false)
+  published  Boolean @default(true)
+  deleted    Boolean @default(false)
 
   /// Country profiles have intl dial prefix
   country   Country @relation(fields: [countryId], references: [id])
   countryId String /// @zod.custom(imports.cuid)
 
-  phoneType   PhoneType @relation(fields: [phoneTypeId], references: [id])
-  phoneTypeId String /// @zod.custom(imports.cuid)
+  phoneType   PhoneType? @relation(fields: [phoneTypeId], references: [id])
+  phoneTypeId String? /// @zod.custom(imports.cuid)
 
-  organization   Organization @relation(fields: [organizationId], references: [id])
-  organizationId String /// @zod.custom(imports.cuid)
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String? /// @zod.custom(imports.cuid)
 
   user   User?   @relation(name: "associatedPhone", fields: [userId], references: [id])
   userId String? @unique /// @zod.custom(imports.cuid)
 
-  orgLocation     OrgLocation? @relation(fields: [orgLocationId], references: [id])
-  orgLocationId   String? /// @zod.custom(imports.cuid)
   /// associated only with location and not overall organization (for large orgs w/ multiple locations)
-  orgLocationOnly Boolean      @default(false)
+  orgLocationOnly Boolean       @default(false)
+  orgLocation     OrgLocation[]
+
+  orgService OrgService[]
+
+  phoneLang Language[]
 
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -487,9 +495,11 @@ model OrgPhone {
 
 /// Organization's social media links
 model OrgSocialMedia {
-  id       String @id @default(cuid()) /// @zod.custom(imports.cuid)
-  username String
-  url      String
+  id        String  @id @default(cuid()) /// @zod.custom(imports.cuid)
+  username  String
+  url       String
+  deleted   Boolean @default(false)
+  published Boolean @default(true)
 
   service   SocialMediaService @relation(fields: [serviceId], references: [id])
   serviceId String /// @zod.custom(imports.cuid)
@@ -511,6 +521,7 @@ model OrgSocialMedia {
 /// Org location information
 model OrgLocation {
   id       String  @id @default(cuid()) /// @zod.custom(imports.cuid)
+  legacyId String? @unique /// old ID from MongoDB
   name     String?
   street1  String
   street2  String?
@@ -528,6 +539,7 @@ model OrgLocation {
   geoJSON   Json /// @zod.custom(imports.GeoJSONSchema)
 
   published           Boolean               @default(true)
+  deleted             Boolean               @default(false)
   hours               OrgHours[]
   attributes          Attribute[]
   attributeSupplement AttributeSupplement[]
@@ -564,6 +576,7 @@ model OrgPhoto {
   height    Int?    @db.SmallInt
   width     Int?    @db.SmallInt
   published Boolean @default(false)
+  deleted   Boolean @default(false)
 
   organization Organization? @relation(fields: [orgId], references: [id])
   orgId        String? /// @zod.custom(imports.cuid)
@@ -604,7 +617,9 @@ model OrgHours {
 ///  associated with service tag
 model OrgService {
   id        String  @id @default(cuid()) /// @zod.custom(imports.cuid)
+  legacyId  String? @unique /// old ID from MongoDB
   published Boolean @default(false)
+  deleted   Boolean @default(false)
 
   service     ServiceTag[]
   serviceArea ServiceArea?
@@ -620,6 +635,7 @@ model OrgService {
 
   orgLocation   OrgLocation? @relation(fields: [orgLocationId], references: [id])
   orgLocationId String? /// @zod.custom(imports.cuid)
+  orgPhone      OrgPhone[]
 
   accessKey   TranslationKey? @relation("Service Access Instructions", fields: [accessKeyId], references: [id])
   accessKeyId String?         @unique /// @zod.custom(imports.cuid)
@@ -641,6 +657,7 @@ model OrgReview {
   rating     Int     @db.SmallInt
   reviewText String?
   visible    Boolean @default(true)
+  deleted    Boolean @default(false)
 
   organization   Organization @relation(fields: [organizationId], references: [id])
   organizationId String /// @zod.custom(imports.cuid)
@@ -686,6 +703,7 @@ model AttributeCategory {
   icon    String?
   /// Internal description
   intDesc String?
+  active  Boolean @default(true)
 
   namespace   TranslationNamespace @relation(fields: [namespaceId], references: [id])
   namespaceId String /// @zod.custom(imports.cuid)
@@ -705,6 +723,7 @@ model Attribute {
   icon    String?
   /// Internal description
   intDesc String?
+  active  Boolean @default(true)
 
   category AttributeCategory[]
 
@@ -733,7 +752,8 @@ model Attribute {
 }
 
 model AttributeSupplement {
-  id String @id @default(cuid()) /// @zod.custom(imports.cuid)
+  id     String  @id @default(cuid()) /// @zod.custom(imports.cuid)
+  active Boolean @default(true)
 
   data    Json? /// @zod.custom(imports.AttributeSupplement)
   boolean Boolean?
@@ -770,6 +790,7 @@ model AttributeSupplement {
 model ServiceCategory {
   id                          String                @id @default(cuid()) /// @zod.custom(imports.cuid)
   category                    String                @unique
+  active                      Boolean               @default(true)
   services                    ServiceTag[]
   defaultAttributes           Attribute[]
   defaultAttributeSupplements AttributeSupplement[]
@@ -786,6 +807,7 @@ model ServiceCategory {
 model ServiceTag {
   id                          String                @id @default(cuid()) /// @zod.custom(imports.cuid)
   name                        String
+  active                      Boolean               @default(true)
   defaultAttributes           Attribute[]
   defaultAttributeSupplements AttributeSupplement[]
 
@@ -807,7 +829,8 @@ model ServiceTag {
 }
 
 model ServiceArea {
-  id String @id @default(cuid()) /// @zod.custom(imports.cuid)
+  id     String  @id @default(cuid()) /// @zod.custom(imports.cuid)
+  active Boolean @default(true)
 
   isNational Boolean   @default(false)
   country    Country[]
@@ -1002,6 +1025,7 @@ model Language {
   AttributeSupplement AttributeSupplement[]
   OrgReview           OrgReview[]
   User                User[]
+  OrgPhone            OrgPhone[]
 
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
