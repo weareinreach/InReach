@@ -115,11 +115,10 @@ const phoneRecord = async (
  * @param org - Legacy Org record
  * @returns An array of objects with the id and legacyId of the phones created.
  */
-const createAllPhones = async (
-	org: OrganizationsJSONCollection
-): Promise<undefined | PhoneIdWithLegacy[]> => {
+const createAllPhones = async (org: OrganizationsJSONCollection): Promise<undefined | IdWithLegacy[]> => {
 	const legacyIds: string[] = []
 	const transactions: Prisma.OrgPhoneCreateManyInput[] = []
+	if (!org.phones.length) return
 	for (const phone of org.phones) {
 		const legacyId = phone._id.$oid
 		if (!phone.digits) continue
@@ -132,6 +131,8 @@ const createAllPhones = async (
 			primary: phone.is_primary ?? false,
 			published: phone.show_on_organization ?? false,
 			legacyDesc: phone.phone_type,
+			createdAt: org.created_at.$date,
+			updatedAt: org.updated_at.$date,
 		})
 	}
 	await prisma.orgPhone.createMany({
@@ -149,7 +150,45 @@ const createAllPhones = async (
 			legacyId: true,
 		},
 	})
-	return phoneIds as PhoneIdWithLegacy[]
+	return phoneIds as IdWithLegacy[]
+}
+
+const createAllEmails = async (org: OrganizationsJSONCollection): Promise<undefined | IdWithLegacy[]> => {
+	const legacyIds: string[] = []
+	const transactions: Prisma.OrgEmailCreateManyInput[] = []
+	if (!org.emails.length) return
+	for (const email of org.emails) {
+		const legacyId = email._id.$oid
+		if (!email.email) continue
+		legacyIds.push(legacyId)
+		transactions.push({
+			legacyId,
+			email: email.email,
+			firstName: email.first_name ? email.first_name : undefined,
+			lastName: email.last_name ? email.last_name : undefined,
+			legacyDesc: email.title ?? undefined,
+			primary: email.is_primary ?? false,
+			published: email.show_on_organization ?? false,
+			createdAt: org.created_at.$date,
+			updatedAt: org.updated_at.$date,
+		})
+	}
+	await prisma.orgEmail.createMany({
+		data: transactions,
+		skipDuplicates: true,
+	})
+	const emailIds = await prisma.orgEmail.findMany({
+		where: {
+			legacyId: {
+				in: legacyIds,
+			},
+		},
+		select: {
+			id: true,
+			legacyId: true,
+		},
+	})
+	return emailIds as IdWithLegacy[]
 }
 
 /**
@@ -305,7 +344,7 @@ const isTruthy = (val: string | boolean | number | undefined | unknown[]) => {
 	return false
 }
 
-const generateServices: GenerateServices = async (org, orgSlug, phoneRecords) => {
+const generateServices: GenerateServices = async (org, orgSlug, phoneRecords, emailRecords) => {
 	const { services } = org
 	const servIds = {}
 	const serviceTags = await getServiceTags()
@@ -553,9 +592,13 @@ incompatible-tag data . */
 		}
 		const servPhoneRecord = phoneRecords?.find((record) => record.legacyId === service.phone_id)
 		const servPhoneId = servPhoneRecord ? { id: servPhoneRecord.id } : undefined
+		const servEmailRecord = emailRecords?.find((record) => record.legacyId === service.email_id)
+		const servEmailId = servEmailRecord ? { id: servEmailRecord.id } : undefined
 
 		return {
 			id: servId,
+			createdAt: org.created_at.$date,
+			updatedAt: org.updated_at.$date,
 			service: connectIfExist(tagIds),
 			attributes: connectIfExist(attributeConnect),
 
@@ -565,6 +608,7 @@ incompatible-tag data . */
 				country: connectIfExist(serviceAreaNationalConnect),
 			}),
 			orgPhone: connectIfExist(servPhoneId),
+			orgEmail: connectIfExist(servEmailId),
 		}
 	})
 	return { create: data }
@@ -586,6 +630,7 @@ export const upsertOrg = async (org: OrganizationsJSONCollection) => {
 
 	if (!exists) {
 		const phoneRecords = await createAllPhones(org)
+		const emailRecords = await createAllEmails(org)
 		const source = { ...createIfExist({ source: sourceText, type: 'SYSTEM' as SourceType }) }
 
 		/* Generate Description stub */
@@ -597,7 +642,9 @@ export const upsertOrg = async (org: OrganizationsJSONCollection) => {
 			: undefined
 
 		/* Generate Services stub */
-		const services = org.services.length ? await generateServices(org, slug, phoneRecords) : undefined
+		const services = org.services.length
+			? await generateServices(org, slug, phoneRecords, emailRecords)
+			: undefined
 		return {
 			exists,
 			org: prisma.organization.create({
@@ -611,7 +658,7 @@ export const upsertOrg = async (org: OrganizationsJSONCollection) => {
 					description,
 					services,
 					phone: connectIfExist(phoneRecords?.map((x) => ({ id: x.id }))),
-					//email,
+					email: connectIfExist(emailRecords?.map((x) => ({ id: x.id }))),
 					//location,
 					//reviews,
 				},
@@ -668,10 +715,11 @@ type TagCheck = (
 type GenerateServices = (
 	org: OrganizationsJSONCollection,
 	orgSlug: string,
-	phoneRecords?: PhoneIdWithLegacy[]
+	phoneRecords?: IdWithLegacy[],
+	emailRecords?: IdWithLegacy[]
 ) => Promise<Prisma.OrgServiceCreateNestedManyWithoutOrganizationInput>
 
-type PhoneIdWithLegacy = {
+type IdWithLegacy = {
 	id: string
 	legacyId: string
 }
