@@ -54,7 +54,7 @@ jobs:
         working-directory: packages/ui
         # 👇 Runs yarn in ./packages/ui
       - name: Publish to Chromatic
-        uses: chromaui/action@9f9e97cdc8598bb82e105073569d38527a7ac1f6 # v1
+        uses: chromaui/action@0ec8cd8a4d811c78cadb849bb81f16a175832ed4 # v1
         with:
           # 👇 Runs Chromatic CLI in ./packages/ui
           workingDir: packages/ui
