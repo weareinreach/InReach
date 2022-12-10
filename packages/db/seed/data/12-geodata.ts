@@ -7,10 +7,13 @@ import shoetest from 'shoetest'
 import cityCA from '~/datastore/geojson/cities-ca.json'
 import cityMX from '~/datastore/geojson/cities-mx.json'
 import cityUS from '~/datastore/geojson/cities-us.json'
+import countyPR from '~/datastore/geojson/counties-pr.json'
 import countyUS from '~/datastore/geojson/counties-us.json'
 import countryCA from '~/datastore/geojson/country-ca.json'
 import countryMX from '~/datastore/geojson/country-mx.json'
+import countryPR from '~/datastore/geojson/country-pr.json'
 import countryUS from '~/datastore/geojson/country-us.json'
+import countryVI from '~/datastore/geojson/country-vi.json'
 import provinceCA from '~/datastore/geojson/provinces-ca.json'
 import stateMX from '~/datastore/geojson/states-mx.json'
 import stateUS from '~/datastore/geojson/states-us.json'
@@ -20,6 +23,9 @@ export const geoCountryData = {
 	US: GeoJSONSchema.parse(countryUS),
 	CA: GeoJSONSchema.parse(countryCA),
 	MX: GeoJSONSchema.parse(countryMX),
+	PR: GeoJSONSchema.parse(countryPR),
+	VI: GeoJSONSchema.parse(countryVI),
+	GU: undefined,
 }
 
 export const geoProvinceDataCA = provinceCA.features
@@ -29,7 +35,7 @@ export const geoProvinceDataCA = provinceCA.features
 		)
 		return {
 			name: province.properties.prov_name_en,
-			abbrev: geoStateIso(province.properties.prov_name_en),
+			abbrev: geoStateIso(province.properties.prov_name_en, 'CA'),
 			type: iso3166.subdivision('CA', province.properties.prov_name_en).type,
 			geo: GeoJSONSchema.parse(province),
 			cities: cities.map((city) => GeoJSONSchema.parse(city)),
@@ -81,3 +87,5 @@ export const geoStateDataMX = stateMX.features
 		}
 	})
 	.sort((x: { name: string }, y: { name: string }) => (x.name > y.name ? 1 : y.name > x.name ? -1 : 0))
+
+export const geoCountyDataPR = countyPR.features.map((county) => county)

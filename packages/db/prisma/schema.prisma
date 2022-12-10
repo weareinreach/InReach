@@ -570,6 +570,9 @@ model OrgLocation {
   auditLog     AuditLog[]
   internalNote InternalNote[]
 
+  /// Does this record need to be checked by staff after migration?
+  checkMigration Boolean @default(false)
+
   @@index([latitude, longitude])
   @@index([geoJSON(ops: JsonbPathOps)], type: Gin)
 }

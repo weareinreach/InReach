@@ -344,6 +344,16 @@ const isTruthy = (val: string | boolean | number | undefined | unknown[]) => {
 	return false
 }
 
+/**
+ * It takes an array of services, and returns an array of services that can be used to create a service in the
+ * database
+ *
+ * @param org - The organization record from the legacy database.
+ * @param orgSlug - The slug of the organization.
+ * @param phoneRecords - An array of phone records that have been created.
+ * @param emailRecords - An array of email records.
+ * @returns An object with a create property that is an array of service records.
+ */
 const generateServices: GenerateServices = async (org, orgSlug, phoneRecords, emailRecords) => {
 	const { services } = org
 	const servIds = {}
@@ -614,6 +624,10 @@ incompatible-tag data . */
 	return { create: data }
 }
 
+const generateLocations: GenerateLocations = async (org, orgSlug) => {
+	return
+}
+
 export const upsertOrg = async (org: OrganizationsJSONCollection) => {
 	const orgExists = async (legacyId: string) => {
 		const check = await prisma.organization.findUnique({
@@ -718,6 +732,13 @@ type GenerateServices = (
 	phoneRecords?: IdWithLegacy[],
 	emailRecords?: IdWithLegacy[]
 ) => Promise<Prisma.OrgServiceCreateNestedManyWithoutOrganizationInput>
+
+type GenerateLocations = (
+	org: OrganizationsJSONCollection,
+	orgSlug: string,
+	phoneRecords?: IdWithLegacy[],
+	emailRecords?: IdWithLegacy[]
+) => Promise<Prisma.OrgLocationCreateNestedManyWithoutOrganizationInput>
 
 type IdWithLegacy = {
 	id: string

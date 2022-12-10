@@ -4,6 +4,7 @@ import iso3166 from 'iso-3166-2'
 import { prisma } from '~/index'
 import {
 	geoCountryData,
+	geoCountyDataPR,
 	geoProvinceDataCA,
 	geoStateDataMX,
 	geoStateDataUS,
@@ -12,6 +13,7 @@ import {
 } from '~/seed/data/'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
+import { GeoJSONSchema } from '~/zod-util'
 
 /** Set district types to add here. */
 const districtTypes = [
@@ -72,6 +74,7 @@ const nsCoC = async (text: string, prefix?: string, suffix?: string) => {
 
 const countryAll = async (task: ListrTask) => {
 	let countA = 0
+	const resultList: string[] = []
 	for (const country in geoCountryData) {
 		if (Object.prototype.hasOwnProperty.call(geoCountryData, country)) {
 			const element = geoCountryData[country]
@@ -89,9 +92,10 @@ const countryAll = async (task: ListrTask) => {
 				},
 			})
 			countA++
+			resultList.push(country)
 		}
 	}
-	task.title = `GeoJSON data for countries (US, CA, MX)`
+	task.title = `GeoJSON data for countries (${resultList.join(', ')})`
 }
 
 const upsertDistrictTypes = async (task: ListrTask) => {
@@ -292,7 +296,7 @@ const countryCA = async (task: ListrTask) => {
 				name,
 				slug,
 				iso,
-				abbrev,
+				abbrev: abbrev ?? iso.slice(-2),
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
@@ -301,7 +305,7 @@ const countryCA = async (task: ListrTask) => {
 			update: {
 				name,
 				iso,
-				abbrev,
+				abbrev: abbrev ?? iso.slice(-2),
 				geoJSON: geo,
 				country: connectTo(countryId),
 				govDistType: connectTo(distType),
@@ -330,7 +334,7 @@ const countryMX = async (task: ListrTask) => {
 	})
 	for (const state of geoStateDataMX) {
 		const { name, abbrev, geo, type } = state
-		logMessage = `(${countB + 1}/${geoStateDataUS.length}) Upserting Governing District: ${name}`
+		logMessage = `(${countB + 1}/${geoStateDataMX.length}) Upserting Governing District: ${name}`
 		logFile.log(logMessage)
 		task.output = logMessage
 		task.title = `GeoJSON data for MX: (${countB + 1}/${geoStateDataMX.length}) - ${name}`
@@ -374,6 +378,56 @@ const countryMX = async (task: ListrTask) => {
 	task.title = `GeoJSON data for MX (${countB + 1} Districts)`
 }
 
+const countiesPR = async (task: ListrTask) => {
+	let logMessage = ''
+	let countB = 0
+	await upsertNamespace()
+	const { id: countryId } = await prisma.country.findUniqueOrThrow({
+		where: {
+			cca2: 'PR',
+		},
+		select: {
+			id: true,
+		},
+	})
+	for (const county of geoCountyDataPR) {
+		const name = county.properties.NAME
+		logMessage = `(${countB + 1}/${geoCountyDataPR.length}) Upserting Governing District: ${name}`
+		logFile.log(logMessage)
+		task.output = logMessage
+		task.title = `GeoJSON data for PR: (${countB + 1}/${geoCountyDataPR.length}) - ${name}`
+
+		const distType = govDist.get('county')
+		if (!distType) throw new Error('Unknown district type')
+
+		const slug = keySlug(`PR-${name}`)
+		const key = await nsCoC(name, 'pr')
+		await prisma.govDist.upsert({
+			where: {
+				slug,
+			},
+			create: {
+				name,
+				slug,
+				geoJSON: GeoJSONSchema.parse(county),
+				country: connectTo(countryId),
+				govDistType: connectTo(distType),
+				key,
+			},
+			update: {
+				name,
+				geoJSON: GeoJSONSchema.parse(county),
+				country: connectTo(countryId),
+				govDistType: connectTo(distType),
+				key,
+			},
+			select: { id: true },
+		})
+		countB++
+	}
+	task.title = `GeoJSON data for PR (${countB + 1} Districts)`
+}
+
 const renderOptions = {
 	bottomBar: 10,
 }
@@ -392,6 +446,11 @@ export const seedGeoData = (task: ListrTask) =>
 		{
 			title: 'GeoJSON data for US',
 			task: async (_ctx: unknown, task: ListrTask): Promise<void> => countryUS(task),
+			options: renderOptions,
+		},
+		{
+			title: 'GeoJSON data for PR',
+			task: async (_ctx: unknown, task: ListrTask): Promise<void> => countiesPR(task),
 			options: renderOptions,
 		},
 		{
