@@ -1,14 +1,23 @@
 // import { Prisma, SourceType } from '@prisma/client'
 // import { point as createGeoPoint } from '@turf/helpers';
+import { point as geoPoint } from '@turf/helpers'
 import cuid from 'cuid'
 import { flatten } from 'flat'
 import parsePhoneNumber, { type CountryCode, type PhoneNumber } from 'libphonenumber-js'
 import slugify from 'slugify'
 
 import { Prisma, SourceType } from '~/client'
+import { dayMap, hoursMap, hoursMeta } from '~/datastore/v1/helpers/hours'
+import {
+	countryMap,
+	govDistMap,
+	missingCountryMap,
+	missingDistCityMap,
+} from '~/datastore/v1/helpers/locDataMaps'
 import { OrganizationsJSONCollection } from '~/datastore/v1/mongodb/output-types/organizations'
 import { prisma } from '~/index'
 import { namespaces } from '~/seed/data'
+import { migrateLog } from '~/seed/logger'
 
 /**
  * It takes a name, city, and state, and returns a unique slug based on those values
@@ -36,7 +45,11 @@ const uniqueSlug = async (name: string, city?: string, state?: string) => {
 		})
 		return existing?.slug ? false : true
 	}
-	const slugs = [slugify(name), slugify(`${name} ${state}`), slugify(`${name} ${city} ${state}`)]
+	const slugs = [
+		slugify(name, { lower: true }),
+		slugify(`${name} ${state}`, { lower: true }),
+		slugify(`${name} ${city} ${state}`, { lower: true }),
+	]
 	for (const slug of slugs) {
 		if (await check(slug)) return slug
 	}
@@ -53,9 +66,7 @@ const uniqueSlug = async (name: string, city?: string, state?: string) => {
 const connectIfExist = <T>(records: T): ConnectRecords<T> => {
 	if (typeof records === undefined || (Array.isArray(records) && records.length === 0)) return undefined
 	return {
-		connect: {
-			...records,
-		},
+		connect: records,
 	}
 }
 
@@ -67,11 +78,9 @@ const connectIfExist = <T>(records: T): ConnectRecords<T> => {
  * @returns A function that takes a generic type T and returns a CreateRecords<T>
  */
 const createIfExist = <T>(records: T): CreateRecords<T> => {
-	if (typeof records === undefined || (Array.isArray(records) && records.length === 0)) return undefined
+	if (records === undefined || (Array.isArray(records) && records.length === 0)) return undefined
 	return {
-		create: {
-			...records,
-		},
+		create: records,
 	}
 }
 
@@ -87,6 +96,7 @@ const createIfExist = <T>(records: T): CreateRecords<T> => {
  */
 const phoneRecord = async (
 	string: string,
+	countryMap: Awaited<ReturnType<typeof getCountryMap>>,
 	country?: CountryCode
 ): Promise<undefined | Pick<Prisma.OrgPhoneCreateManyInput, 'countryId' | 'number' | 'ext'>> => {
 	const countryCodes = ['US', 'CA', 'MX'] as const
@@ -100,7 +110,8 @@ const phoneRecord = async (
 		}
 	}
 	if (!phoneData) return undefined
-	const { id: countryId } = await prisma.country.findFirstOrThrow({ where: { cca2: phoneData.country } })
+	const countryId = countryMap.get(phoneData.country as string)
+	if (!countryId) throw 'Cannot find country ID'
 	return {
 		countryId,
 		number: phoneData.nationalNumber,
@@ -115,14 +126,18 @@ const phoneRecord = async (
  * @param org - Legacy Org record
  * @returns An array of objects with the id and legacyId of the phones created.
  */
-const createAllPhones = async (org: OrganizationsJSONCollection): Promise<undefined | IdWithLegacy[]> => {
+const createAllPhones = async (
+	org: OrganizationsJSONCollection,
+	referenceData: ReferenceData
+): Promise<undefined | IdWithLegacy[]> => {
+	const { countryMap } = referenceData
 	const legacyIds: string[] = []
 	const transactions: Prisma.OrgPhoneCreateManyInput[] = []
 	if (!org.phones.length) return
 	for (const phone of org.phones) {
 		const legacyId = phone._id.$oid
 		if (!phone.digits) continue
-		const baseRecord = await phoneRecord(phone.digits)
+		const baseRecord = await phoneRecord(phone.digits, countryMap)
 		if (!baseRecord) continue
 		legacyIds.push(legacyId)
 		transactions.push({
@@ -236,14 +251,13 @@ const generateKey: GenerateKey<KeyType> = async (params) => {
 			text,
 		},
 		select: {
-			key: true,
 			id: true,
 		},
 	})
 }
 
 /** It returns all the service categories and the services that belong to each category */
-const getServiceTags = async () =>
+export const getServiceTags = async () =>
 	await prisma.serviceCategory.findMany({
 		select: {
 			category: true,
@@ -262,7 +276,7 @@ const getServiceTags = async () =>
  *
  * @returns An array of attribute records with category name flattened.
  */
-const getAttributeList = async () => {
+export const getAttributeList = async () => {
 	const results = await prisma.attribute.findMany({
 		select: {
 			id: true,
@@ -292,7 +306,7 @@ const getAttributeList = async () => {
  *
  * @returns An object with two properties, area and country.
  */
-const getServiceAreas = async () => {
+export const getServiceAreas = async () => {
 	const area = await prisma.govDist.findMany({
 		select: {
 			id: true,
@@ -320,7 +334,7 @@ const getServiceAreas = async () => {
  *
  * @returns An array of objects with the id and languageName properties.
  */
-const getLanguages = async () => {
+export const getLanguages = async () => {
 	const result = await prisma.language.findMany({
 		select: {
 			id: true,
@@ -328,6 +342,28 @@ const getLanguages = async () => {
 		},
 	})
 	return result
+}
+
+const getCountryMap = async () => {
+	const result = await prisma.country.findMany({
+		select: {
+			id: true,
+			cca2: true,
+		},
+	})
+	const resultMap = new Map(result.map((x) => [x.cca2, x.id]))
+	return resultMap
+}
+
+export const getReferenceData = async () => {
+	const serviceTags = await getServiceTags()
+	const attributeList = await getAttributeList()
+	const serviceAreas = await getServiceAreas()
+	const languages = await getLanguages()
+	const countryMap = await getCountryMap()
+
+	const references = { serviceTags, attributeList, serviceAreas, languages, countryMap }
+	return references
 }
 
 /**
@@ -354,334 +390,509 @@ const isTruthy = (val: string | boolean | number | undefined | unknown[]) => {
  * @param emailRecords - An array of email records.
  * @returns An object with a create property that is an array of service records.
  */
-const generateServices: GenerateServices = async (org, orgSlug, phoneRecords, emailRecords) => {
-	const { services } = org
-	const servIds = {}
-	const serviceTags = await getServiceTags()
-	const attributeList = await getAttributeList()
-	const serviceAreas = await getServiceAreas()
-	const languages = await getLanguages()
-	serviceTags.forEach((serv) => {
-		serv.services.forEach((x) => (servIds[`${serv.category}.${x.name}`] = x.id))
-	})
+const generateServices: GenerateServices = async (
+	org,
+	orgSlug,
+	referenceData,
+	phoneRecords,
+	emailRecords
+) => {
+	const { serviceTags, attributeList, serviceAreas, languages } = referenceData
 
-	const data: Prisma.OrgServiceCreateInput[] = services.map((service) => {
-		const servId = cuid()
-		const flatServ: Record<string, string> = flatten(service.tags)
-
-		/* It's mapping over the flattened service tags, and returning the id of the new service tag. */
-		const tagIds = Object.keys(flatServ).map((serv) => {
-			let id = ''
-			const servKey = serv.substring(serv.indexOf('.') + 1, serv.length)
-			if (Object.keys(servIds).includes(servKey)) {
-				id = servIds[servKey]
-			}
-			return { id }
+	try {
+		const { services } = org
+		const servIds = {}
+		serviceTags.forEach((serv) => {
+			serv.services.forEach((x) => (servIds[`${serv.category}.${x.name}`] = x.id))
 		})
 
-		const unsupportedAttribute: Record<string, unknown> = {}
-		const attributeConnect: Prisma.AttributeWhereUniqueInput[] = []
-		const attrSuppCreate: Prisma.AttributeSupplementCreateWithoutServiceInput[] = []
-		const serviceAreaConnect: Prisma.GovDistWhereUniqueInput[] = []
-		const serviceAreaNationalConnect: Prisma.CountryWhereUniqueInput[] = []
+		const data: Prisma.OrgServiceCreateWithoutOrganizationInput[] = services.map((service) => {
+			const servId = cuid()
 
-		/**
-		 * > It takes a tag and a value, and returns an object with the attribute record, the data, and the type of
-		 * > attribute
-		 *
-		 * @param tag - The tag that is being checked
-		 * @param value - The value of the tag.
-		 * @returns An object with a type, data, and attribute property.
-		 */
-		const tagCheck: TagCheck = (tag, value) => {
-			const speakerRegex = /community-(.+)-speakers/gi
-			const langRegex = /lang-(.+)/gi
-			const areaRegex = /service-(?:county|national|state)-(.+)/gi
+			const flatServ: Record<string, string> = service.tags ? flatten(service.tags) : {}
+
+			/* It's mapping over the flattened service tags, and returning the id of the new service tag. */
+			const tagIds = Object.keys(flatServ).map((serv) => {
+				let id = ''
+				const servKey = serv.substring(serv.indexOf('.') + 1, serv.length)
+				if (Object.keys(servIds).includes(servKey)) {
+					id = servIds[servKey]
+				}
+				return { id }
+			})
+
+			const unsupportedAttribute: Record<string, unknown> = {}
+			const attributeConnect: Prisma.AttributeWhereUniqueInput[] = []
+			const attrSuppCreate: Prisma.AttributeSupplementCreateWithoutServiceInput[] = []
+			const serviceAreaConnect: Prisma.GovDistWhereUniqueInput[] = []
+			const serviceAreaNationalConnect: Prisma.CountryWhereUniqueInput[] = []
 
 			/**
-			 * It returns the attribute record from the attributeList array.
+			 * > It takes a tag and a value, and returns an object with the attribute record, the data, and the type
+			 * > of attribute
 			 *
-			 * @param {string} tag - The tag of the attribute you want to get.
-			 * @returns The result of the find function.
+			 * @param tag - The tag that is being checked
+			 * @param value - The value of the tag.
+			 * @returns An object with a type, data, and attribute property.
 			 */
-			const getAttrRecord = (tag: string) => {
-				const result = attributeList.find((x) => `${x.category}-${x.tag}` === tag || x.tag === tag)
-				if (result) return result
-			}
-			/**
-			 * It takes a string, splits it into an array, discards the first element ('service'), separates out the
-			 * second element ('county', 'national', or 'state), joins the remaining elements (the region), and then
-			 * uses the result to find a matching record in an array. Any 'city' records are discarded and loaded to
-			 * 'unsupported attributes'
-			 *
-			 * @param {string} tag - The tag that was clicked on
-			 * @returns The ID of the service area
-			 */
-			const getAreaRecord = (tag: string) => {
-				const tagBreakdown = tag.split('-')
-				tagBreakdown.shift()
-				const type = tagBreakdown.shift()
-				const search = tagBreakdown.join('-')
-				const state = new RegExp(`\\w{2}-${search}`, 'gi')
-				const county = new RegExp(`\\w{2}-${search}-.*`, 'gi')
-				if (type === 'city') return undefined
-				if (type === 'national') {
-					const result = serviceAreas.country.find((x) => search.replace('-', ' ') === x.name.toLowerCase())
+			const tagCheck: TagCheck = (tag, value) => {
+				const speakerRegex = /community-(.+)-speakers/i
+				const langRegex = /lang-(.+)/i
+				const areaRegex = /service-(?:county|national|state)-(.+)/i
+
+				/**
+				 * It returns the attribute record from the attributeList array.
+				 *
+				 * @param {string} tag - The tag of the attribute you want to get.
+				 * @returns The result of the find function.
+				 */
+				const getAttrRecord = (tag: string) => {
+					const result = attributeList.find((x) => `${x.category}-${x.tag}` === tag || x.tag === tag)
+					if (result) return result
+				}
+				/**
+				 * It takes a string, splits it into an array, discards the first element ('service'), separates out
+				 * the second element ('county', 'national', or 'state), joins the remaining elements (the region),
+				 * and then uses the result to find a matching record in an array. Any 'city' records are discarded
+				 * and loaded to 'unsupported attributes'
+				 *
+				 * @param {string} tag - The tag that was clicked on
+				 * @returns The ID of the service area
+				 */
+				const getAreaRecord = (tag: string) => {
+					const tagBreakdown = tag.split('-')
+					tagBreakdown.shift()
+					const type = tagBreakdown.shift()
+					const search = tagBreakdown.join('-')
+					const state = new RegExp(`\\w{2}-${search}`, 'gi')
+					const county = new RegExp(`\\w{2}-${search}-.*`, 'gi')
+					if (type === 'city') return undefined
+					if (type === 'national') {
+						const result = serviceAreas.country.find((x) => search.replace('-', ' ') === x.name.toLowerCase())
+						return {
+							type: 'country' as const,
+							id: result?.id,
+						}
+					}
+					const result = serviceAreas.area.find((x) => x.slug.match(type === 'county' ? county : state))
 					return {
-						type: 'country' as const,
+						type: 'dist' as const,
 						id: result?.id,
 					}
 				}
-				const result = serviceAreas.area.find((x) => x.slug.match(type === 'county' ? county : state))
-				return {
-					type: 'dist' as const,
-					id: result?.id,
+
+				/**
+				 * It creates a new object with a type of `unknown` and an attribute of `incompatible-info` and a data
+				 * object with a single key of `tag` and a value of `value`
+				 *
+				 * @param {string} tag - The tag of the incompatible-info attribute.
+				 * @param {string | number | boolean} [value] - The value of the tag.
+				 */
+				const incompatible = (tag: string, value?: string | number | boolean) => ({
+					attribute: getAttrRecord('incompatible-info') as AttributeRecord,
+					data: { [tag]: value },
+					type: 'unknown' as const,
+				})
+
+				let servAttribute: AttributeRecord | undefined
+				let areaAttribute: ServiceAreaRecord | undefined
+
+				/* Ensure that `value` is a not an array. */
+				value = Array.isArray(value) ? JSON.stringify(value) : value
+				let data: AttributeData = { value }
+
+				let type: AttributeType = 'attribute'
+
+				/* Parsing the tag and determining what type of attribute it is. */
+				switch (true) {
+					/* Full tag match */
+					case getAttrRecord(tag) !== undefined: {
+						servAttribute = getAttrRecord(tag)
+						const { requireBoolean: boolean, requireText: text } = servAttribute ?? {
+							boolean: undefined,
+							text: undefined,
+						}
+						data = {
+							boolean: boolean ? isTruthy(value) : undefined,
+							text: text ? value?.toString() : undefined,
+							data: !boolean && !text ? value : undefined,
+						}
+						break
+					}
+					/* `community-xx-speaker` */
+					case !!speakerRegex.exec(tag): {
+						servAttribute = getAttrRecord('language-speakers')
+						const [, lang] = speakerRegex.exec(tag) ?? []
+						const langRecord = languages.find((language) => language.languageName.toLowerCase() === lang)
+						if (!langRecord) {
+							return incompatible(tag)
+						}
+						data = { language: langRecord }
+						break
+					}
+					/* `lang-xx` */
+					case !!langRegex.exec(tag): {
+						servAttribute = getAttrRecord('lang-offered')
+						const [, lang] = langRegex.exec(tag) || []
+						const langRecord = languages.find((language) => language.languageName.toLowerCase() === lang)
+						if (!langRecord) {
+							return incompatible(tag)
+						}
+						data = { language: langRecord }
+						break
+					}
+					/* `service-{county|national|state}-xx...` */
+					case !!areaRegex.exec(tag): {
+						const area = getAreaRecord(tag)
+						if (typeof area?.id !== 'string') return incompatible(tag)
+						areaAttribute = area as ServiceAreaRecord
+						type = 'area' as const
+						break
+					}
 				}
+
+				/* Checking if the areaAttribute and servAttribute are undefined. If they are, it returns the
+incompatible-tag data . */
+				if (areaAttribute === undefined && servAttribute === undefined) {
+					return incompatible(tag, value)
+				}
+
+				return type === 'attribute'
+					? {
+							type: 'attribute',
+							data,
+							attribute: servAttribute as AttributeRecord,
+					  }
+					: {
+							type: 'area',
+							data,
+							attribute: areaAttribute as ServiceAreaRecord,
+					  }
+			}
+
+			const handleUnsupported = (tag: AttributeReturnArea | AttributeReturnService) => {
+				Object.assign(unsupportedAttribute, tag.data)
 			}
 
 			/**
-			 * It creates a new object with a type of `unknown` and an attribute of `incompatible-info` and a data
-			 * object with a single key of `tag` and a value of `value`
+			 * Handle service properties
 			 *
-			 * @param {string} tag - The tag of the incompatible-info attribute.
-			 * @param {string | number | boolean} [value] - The value of the tag.
+			 * Translate over tags - if unable to match, add to "incompatible-tags" attribute
 			 */
-			const incompatible = (tag: string, value?: string | number | boolean) => ({
-				attribute: getAttrRecord('incompatible-info') as AttributeRecord,
-				data: { [tag]: value },
-				type: 'unknown' as const,
-			})
+			if (typeof service.properties === 'object' && Object.keys(service.properties).length) {
+				/** Loop over each service property */
+				Object.entries(service.properties).forEach(async ([key, value]) => {
+					const tagRecord = tagCheck(key, value)
 
-			let servAttribute: AttributeRecord | undefined
-			let areaAttribute: ServiceAreaRecord | undefined
-
-			/* Ensure that `value` is a not an array. */
-			value = Array.isArray(value) ? JSON.stringify(value) : value
-			let data: AttributeData = { value }
-
-			let type: AttributeType = 'attribute'
-
-			/* Parsing the tag and determining what type of attribute it is. */
-			switch (true) {
-				/* Full tag match */
-				case getAttrRecord(tag) !== undefined: {
-					servAttribute = getAttrRecord(tag)
-					const { requireBoolean: boolean, requireText: text } = servAttribute ?? {
-						boolean: undefined,
-						text: undefined,
-					}
-					data = {
-						boolean: boolean ? isTruthy(value) : undefined,
-						text: text ? value?.toString() : undefined,
-						data: !boolean && !text ? value : undefined,
-					}
-					break
-				}
-				/* `community-xx-speaker` */
-				case !!speakerRegex.exec(tag): {
-					servAttribute = getAttrRecord('language-speakers')
-					const [, lang] = speakerRegex.exec(tag) ?? [undefined, '']
-					const langRecord = languages.find((language) => language.languageName.toLowerCase() === lang)
-					if (!langRecord) {
-						return incompatible(tag)
-					}
-					data = { language: langRecord }
-					break
-				}
-				/* `lang-xx` */
-				case !!langRegex.exec(tag): {
-					servAttribute = getAttrRecord('lang-offered')
-					const [, lang] = langRegex.exec(tag) ?? [undefined, '']
-					const langRecord = languages.find((language) => language.languageName.toLowerCase() === lang)
-					if (!langRecord) {
-						return incompatible(tag)
-					}
-					data = { language: langRecord }
-					break
-				}
-				/* `service-{county|national|state}-xx...` */
-				case !!areaRegex.exec(tag): {
-					const area = getAreaRecord(tag)
-					if (typeof area?.id !== 'string') return incompatible(tag)
-					areaAttribute = area as ServiceAreaRecord
-					type = 'area' as const
-					break
-				}
-			}
-
-			/* Checking if the areaAttribute and servAttribute are undefined. If they are, it returns the
-incompatible-tag data . */
-			if (typeof areaAttribute === undefined && typeof servAttribute === undefined) {
-				return incompatible(tag, value)
-			}
-
-			return type === 'attribute'
-				? {
-						type: 'attribute',
-						data,
-						attribute: servAttribute as AttributeRecord,
-				  }
-				: {
-						type: 'area',
-						data,
-						attribute: areaAttribute as ServiceAreaRecord,
-				  }
-		}
-
-		const handleUnsupported = (tag: AttributeReturnArea | AttributeReturnService) => {
-			Object.assign(unsupportedAttribute, tag.data)
-		}
-
-		/**
-		 * Handle service properties
-		 *
-		 * Translate over tags - if unable to match, add to "incompatible-tags" attribute
-		 */
-		if (typeof service.properties === 'object' && Object.keys(service.properties).length) {
-			/** Loop over each service property */
-			Object.entries(service.properties).forEach(async ([key, value]) => {
-				const tagRecord = tagCheck(key, value)
-
-				switch (tagRecord.type) {
-					case 'unknown': {
-						handleUnsupported(tagRecord)
-						break
-					}
-					case 'attribute': {
-						const { attribute: attrRecord, data: attrData } = tagRecord
-						attributeConnect.push({ id: attrRecord.id })
-						/** Base record for connection to service tag */
-						const attrBase: Prisma.AttributeSupplementCreateWithoutServiceInput = {
-							serviceTag: {
-								connect: {
-									id: attrRecord?.id,
+					switch (tagRecord.type) {
+						case 'unknown': {
+							handleUnsupported(tagRecord)
+							break
+						}
+						case 'attribute': {
+							const { attribute: attrRecord, data: attrData } = tagRecord
+							attributeConnect.push({ id: attrRecord.id })
+							/** Base record for connection to service tag */
+							const attrBase: Prisma.AttributeSupplementCreateWithoutServiceInput = {
+								serviceTag: {
+									connect: {
+										id: attrRecord?.id,
+									},
 								},
-							},
+							}
+							/* Checking the attribute record for the attribute type and then creating the attribute accordingly. */
+							switch (true) {
+								case attrRecord.requireBoolean: {
+									// const boolean = isTruthy(value)
+									const boolean = attrData?.boolean
+									attrSuppCreate.push({ ...attrBase, boolean })
+									break
+								}
+								case attrRecord.requireLanguage: {
+									const id = attrData?.language?.id
+									attrSuppCreate.push({ ...attrBase, language: connectIfExist({ id }) })
+									break
+								}
+								case attrRecord.requireText: {
+									const text = attrData?.text
+									if (!text) break
+									const suppId = cuid()
+									const textKey = await generateKey({
+										type: 'attrSupp',
+										text,
+										suppId,
+										orgSlug,
+									})
+									attrSuppCreate.push({ ...attrBase, id: suppId, textKey: connectIfExist(textKey) })
+									break
+								}
+							}
+							break
 						}
-						/* Checking the attribute record for the attribute type and then creating the attribute accordingly. */
-						switch (true) {
-							case attrRecord.requireBoolean: {
-								// const boolean = isTruthy(value)
-								const boolean = attrData?.boolean
-								attrSuppCreate.push({ ...attrBase, boolean })
-								break
+						case 'area': {
+							// connect service area
+							if (tagRecord.attribute.type === 'country') {
+								serviceAreaNationalConnect.push({ id: tagRecord.attribute.id })
 							}
-							case attrRecord.requireLanguage: {
-								const id = attrData?.language?.id
-								attrSuppCreate.push({ ...attrBase, language: connectIfExist({ id }) })
-								break
+							if (tagRecord.attribute.type === 'dist') {
+								serviceAreaConnect.push({ id: tagRecord.attribute.id })
 							}
-							case attrRecord.requireText: {
-								const text = attrData?.text
-								if (!text) break
-								const suppId = cuid()
-								const textKey = await generateKey({
-									type: 'attrSupp',
-									text,
-									suppId,
-									orgSlug,
-								})
-								attrSuppCreate.push({ ...attrBase, id: suppId, textKey: connectIfExist(textKey) })
-								break
-							}
+							break
 						}
-						break
 					}
-					case 'area': {
-						// connect service area
-						if (tagRecord.attribute.type === 'country') {
-							serviceAreaNationalConnect.push({ id: tagRecord.attribute.id })
-						}
-						if (tagRecord.attribute.type === 'dist') {
-							serviceAreaConnect.push({ id: tagRecord.attribute.id })
-						}
-						break
-					}
-				}
-			})
-		}
-		const servPhoneRecord = phoneRecords?.find((record) => record.legacyId === service.phone_id)
-		const servPhoneId = servPhoneRecord ? { id: servPhoneRecord.id } : undefined
-		const servEmailRecord = emailRecords?.find((record) => record.legacyId === service.email_id)
-		const servEmailId = servEmailRecord ? { id: servEmailRecord.id } : undefined
+				})
+			}
+			const servPhoneRecord = phoneRecords?.find((record) => record.legacyId === service.phone_id)
+			const servPhoneId = servPhoneRecord ? { id: servPhoneRecord.id } : undefined
+			const servEmailRecord = emailRecords?.find((record) => record.legacyId === service.email_id)
+			const servEmailId = servEmailRecord ? { id: servEmailRecord.id } : undefined
 
-		return {
-			id: servId,
-			createdAt: org.created_at.$date,
-			updatedAt: org.updated_at.$date,
-			service: connectIfExist(tagIds),
-			attributes: connectIfExist(attributeConnect),
+			return {
+				id: servId,
+				createdAt: org.created_at.$date,
+				updatedAt: org.updated_at.$date,
+				service: connectIfExist(tagIds),
+				attributes: connectIfExist(attributeConnect),
 
-			attributeSupplement: createIfExist(attrSuppCreate),
-			serviceArea: createIfExist({
-				areas: connectIfExist(serviceAreaConnect),
-				country: connectIfExist(serviceAreaNationalConnect),
-			}),
-			orgPhone: connectIfExist(servPhoneId),
-			orgEmail: connectIfExist(servEmailId),
-		}
-	})
-	return { create: data }
-}
-
-const generateLocations: GenerateLocations = async (org, orgSlug) => {
-	return
-}
-
-export const upsertOrg = async (org: OrganizationsJSONCollection) => {
-	const orgExists = async (legacyId: string) => {
-		const check = await prisma.organization.findUnique({
-			where: { legacyId },
-			select: { legacyId: true, id: true },
+				attributeSupplement: createIfExist(attrSuppCreate),
+				serviceArea: createIfExist({
+					areas: connectIfExist(serviceAreaConnect),
+					country: connectIfExist(serviceAreaNationalConnect),
+				}),
+				orgPhone: connectIfExist(servPhoneId),
+				orgEmail: connectIfExist(servEmailId),
+			}
 		})
-		return !!check?.legacyId ? { exists: true, id: check.id } : false
+		return { create: data }
+	} catch (error) {
+		debugger
+		console.error(error)
 	}
-	const exists = await orgExists(org._id.$oid)
+}
 
-	const primaryLocation = org.locations.find((location) => location.is_primary)
-	const slug = await uniqueSlug(org.name, primaryLocation?.city, primaryLocation?.state)
-	const sourceText = `migration` as string
+const generateHours: GenerateHours = (org, parent) => {
+	if (!org.schedules.length) return
+	const data: Prisma.OrgHoursCreateManyInput[] = []
+	let needAssignment = true
+	// const regex = /.*(?:_end|_start)/gi
+	// const regexReplace = /_end|_start/gi
+	const regexStart = /.*_start/i
+	const regexEnd = /.*_end/i
+	if (parent === 'loc' && org.schedules.length === 1) needAssignment = false
+	if (parent === 'org' && org.schedules.length === 1 && org.locations.length === 1) return
+	const hours: HoursObj = {
+		0: {},
+		1: {},
+		2: {},
+		3: {},
+		4: {},
+		5: {},
+		6: {},
+	}
 
-	if (!exists) {
-		const phoneRecords = await createAllPhones(org)
+	for (const schedule of org.schedules) {
+		const { name, note } = schedule
+		for (const [key, value] of Object.entries(schedule)) {
+			if (regexStart.test(key) || regexEnd.test(key)) {
+				const [day, hourType] = key.split('_')
+				if (!day || !hourType) continue
+				const dayIndex = dayMap.get(day) ?? ''
+				if (Object.keys(hours).includes(dayIndex.toString() ?? '')) {
+					const time = hoursMap.get(value)
+					if (time === undefined) return
+					/* handle 'multi,' '24h,' & 'closed' */
+					if (hoursMeta.includes(time)) {
+						switch (time) {
+							case 'multi': {
+								hours[dayIndex][hourType] = '00:00'
+								hours[dayIndex].needReview = true
+								hours[dayIndex].legacyNote = `multiple times. ${note ?? ''}`.trim()
+								break
+							}
+							case '24h': {
+								hours[dayIndex].start = '00:00'
+								hours[dayIndex].end = '23:59'
+								break
+							}
+							case 'closed': {
+								hours[dayIndex].start = '00:00'
+								hours[dayIndex].end = '00:00'
+								hours[dayIndex].closed = true
+							}
+						}
+					}
+					hours[dayIndex][hourType] = time
+					hours[dayIndex].legacyId ??= schedule._id.$oid
+					hours[dayIndex].legacyName ??= name
+					hours[dayIndex].legacyNote ??= note
+					hours[dayIndex].legacyTz = schedule.timezone
+					hours[dayIndex].needAssignment = needAssignment ? true : undefined
+				}
+			}
+		}
+	}
+	for (const [key, value] of Object.entries(hours)) {
+		if (!value || !value.start || !value.end) continue
+		const { start, end, closed, legacyId, legacyName, legacyNote, legacyTz, needAssignment, needReview } =
+			value
+		data.push({
+			dayIndex: parseInt(key),
+			start,
+			end,
+			closed,
+			legacyId,
+			legacyName,
+			legacyNote,
+			legacyTz,
+			needAssignment,
+			needReview,
+		})
+	}
+
+	return data
+}
+
+const generateLocations: GenerateLocations = async (org) => {
+	const { locations } = org
+	const data: Prisma.OrgLocationCreateWithoutOrganizationInput[] = []
+	for (const location of locations) {
+		const legacyId = location._id.$oid
+		const [longitude, latitude] = location.geolocation.coordinates.map((x) => parseInt(x.$numberDecimal))
+		if (!location.country && !location.city && !location.state) continue
+
+		const countryId = () => {
+			if (!location.country) location.country = missingCountryMap.get(legacyId)
+			if (!location.country) throw new Error(`Location missing Country`)
+			if (location.state && ['PR', 'GU', 'VI'].includes(govDistMap.get(location.state) ?? ''))
+				location.country = govDistMap.get(location.state)
+
+			const id = countryMap.get(location.country ?? '')
+
+			if (!id) throw new Error('Unable to map country')
+			return { id }
+		}
+		const govDistId = () => {
+			if (location.state && ['PR', 'GU', 'VI'].includes(govDistMap.get(location.state) ?? ''))
+				return undefined
+			if (!location.state) {
+				const id = missingDistCityMap.get(location.city ?? '')
+				return id ? { id } : undefined
+			}
+			const id = govDistMap.get(location.state)
+			return id ? { id } : undefined
+		}
+		const createPoint = () => {
+			if (!longitude || !latitude) return {}
+			return geoPoint([longitude, latitude])
+		}
+
+		data.push({
+			legacyId,
+			name: location.name,
+			street1: location.address ?? '',
+			street2: location.unit ? location.unit : undefined,
+			city: location.city ?? '',
+			postCode: location.zip_code,
+			govDist: connectIfExist(govDistId()),
+			country: { ...connectIfExist(countryId()) },
+			primary: location.is_primary,
+			latitude,
+			longitude,
+			geoJSON: createPoint(),
+			published: location.show_on_organization,
+			hours: createIfExist(generateHours(org, 'loc')),
+		})
+	}
+	return data
+}
+
+export const upsertOrg: UpsertOrg = async (org, referenceData) => {
+	try {
+		const primaryLocation = org.locations.find((location) => location.is_primary)
+		const slug = await uniqueSlug(org.name, primaryLocation?.city, primaryLocation?.state)
+		const sourceText = `migration` as string
+
+		const phoneRecords = await createAllPhones(org, referenceData)
 		const emailRecords = await createAllEmails(org)
 		const source = { ...createIfExist({ source: sourceText, type: 'SYSTEM' as SourceType }) }
 
 		/* Generate Description stub */
-		const { id: descKeyId } = org.description
-			? await generateKey({ type: 'desc', orgSlug: slug, text: org.description })
-			: { id: undefined }
-		const description = descKeyId
-			? { ...createIfExist({ key: { ...connectIfExist({ id: descKeyId }) } }) }
+		const descKey = org.description
+			? connectIfExist({ ...(await generateKey({ type: 'desc', orgSlug: slug, text: org.description })) })
 			: undefined
+
+		/**
+		 * If the org has a website, create a website object with the url and if the org has a website in Spanish,
+		 * create a website object with the url and the language
+		 *
+		 * @returns An array of objects.
+		 */
+		const orgWebsite = () => {
+			if (!org.website && !org.website_ES) return
+			const websites: Prisma.OrgWebsiteCreateWithoutOrganizationInput[] = []
+
+			if (org.website) {
+				websites.push({ url: org.website })
+			}
+			if (org.website_ES) {
+				websites.push({
+					url: org.website_ES,
+					language: {
+						connect: {
+							localeCode: 'es',
+						},
+					},
+				})
+			}
+			return websites
+		}
 
 		/* Generate Services stub */
 		const services = org.services.length
-			? await generateServices(org, slug, phoneRecords, emailRecords)
+			? await generateServices(org, slug, referenceData, phoneRecords, emailRecords)
 			: undefined
+
 		return {
-			exists,
-			org: prisma.organization.create({
-				data: {
-					legacyId: org._id.$oid,
-					name: org.name,
-					slug,
-					createdAt: org.created_at.$date,
-					updatedAt: org.updated_at.$date,
-					source,
-					description,
-					services,
-					phone: connectIfExist(phoneRecords?.map((x) => ({ id: x.id }))),
-					email: connectIfExist(emailRecords?.map((x) => ({ id: x.id }))),
-					//location,
-					//reviews,
-				},
-			}),
+			where: {
+				legacyId: org._id.$oid,
+			},
+			create: {
+				legacyId: org._id.$oid,
+				name: org.name,
+				slug,
+				createdAt: org.created_at.$date,
+				updatedAt: org.updated_at.$date,
+				source,
+				descKey,
+				services,
+				phone: connectIfExist(phoneRecords?.map((x) => ({ id: x.id }))),
+				email: connectIfExist(emailRecords?.map((x) => ({ id: x.id }))),
+				orgWebsite: createIfExist(orgWebsite()),
+				location: createIfExist(await generateLocations(org)),
+				hours: createIfExist(generateHours(org, 'org')),
+				//reviews,
+			},
+			update: {
+				name: org.name,
+				slug,
+				createdAt: org.created_at.$date,
+				updatedAt: org.updated_at.$date,
+				source,
+				descKey,
+				services,
+				phone: connectIfExist(phoneRecords?.map((x) => ({ id: x.id }))),
+				email: connectIfExist(emailRecords?.map((x) => ({ id: x.id }))),
+				orgWebsite: createIfExist(orgWebsite()),
+				location: createIfExist(await generateLocations(org)),
+				hours: createIfExist(generateHours(org, 'org')),
+			},
 		}
+	} catch (err) {
+		migrateLog.error(err)
 	}
 }
 
-/** Type land. */
+/** Typeland. */
 
 type KeyType = 'desc' | 'svc' | 'attrSupp'
 type DescKey = { type: 'desc'; orgSlug: string; text: string }
@@ -689,7 +900,7 @@ type SvcKey = { type: 'svc'; orgSlug: string; servId: string; text: string; subt
 type AttrSuppKey = { type: 'attrSupp'; orgSlug: string; text: string; suppId: string }
 type GenerateKey<T> = (
 	params: T extends 'desc' ? DescKey : T extends 'svc' ? SvcKey : AttrSuppKey
-) => Promise<{ id: string; key: string }>
+) => Promise<{ id: string }>
 
 type ConnectRecords<T> =
 	| {
@@ -729,18 +940,42 @@ type TagCheck = (
 type GenerateServices = (
 	org: OrganizationsJSONCollection,
 	orgSlug: string,
+	referenceData: ReferenceData,
 	phoneRecords?: IdWithLegacy[],
 	emailRecords?: IdWithLegacy[]
-) => Promise<Prisma.OrgServiceCreateNestedManyWithoutOrganizationInput>
+) => Promise<Prisma.OrgServiceCreateNestedManyWithoutOrganizationInput | undefined>
+
+type GenerateHours = (
+	org: OrganizationsJSONCollection,
+	parent: 'org' | 'loc'
+) => Prisma.OrgHoursCreateManyInput[] | undefined
 
 type GenerateLocations = (
 	org: OrganizationsJSONCollection,
-	orgSlug: string,
 	phoneRecords?: IdWithLegacy[],
 	emailRecords?: IdWithLegacy[]
-) => Promise<Prisma.OrgLocationCreateNestedManyWithoutOrganizationInput>
+) => Promise<Prisma.OrgLocationCreateWithoutOrganizationInput[] | undefined>
 
 type IdWithLegacy = {
 	id: string
 	legacyId: string
 }
+type HoursRecord = {
+	start: string
+	end: string
+	legacyId: string
+	legacyName: string | undefined
+	legacyNote: string | undefined
+	legacyTz: string | undefined
+	closed: boolean | undefined
+	needAssignment: boolean | undefined
+	needReview: boolean | undefined
+}
+
+type HoursObj = Record<0 | 1 | 2 | 3 | 4 | 5 | 6, Partial<HoursRecord> | undefined>
+
+type UpsertOrgReturn = Prisma.OrganizationUpsertArgs | undefined
+
+type UpsertOrg = (org: OrganizationsJSONCollection, referenceData: ReferenceData) => Promise<UpsertOrgReturn>
+
+export type ReferenceData = Awaited<ReturnType<typeof getReferenceData>>

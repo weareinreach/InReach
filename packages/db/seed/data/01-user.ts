@@ -10,8 +10,7 @@ export const translationNamespace = namespaces.user
 export const key = `type-${userType.toLowerCase()}`
 
 export const seedUser: Prisma.UserCreateInput = {
-	firstName: 'System',
-	lastName: 'User',
+	name: 'System User',
 	email: userEmail,
 	role: {
 		connectOrCreate: {

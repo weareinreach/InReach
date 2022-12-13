@@ -1,7 +1,8 @@
+import fs from 'fs'
 import invariant from 'tiny-invariant'
 
-import { Prisma, User } from '~/client'
-import userData from '~/datastore/v1/mongodb/output/users.json'
+import { Prisma, User, UserSurvey } from '~/client'
+import { UsersJSONCollection } from '~/datastore/v1/mongodb/output-types/users'
 import { countryMap } from '~/datastore/v1/util/countryOrigin'
 import { currentLocationMap } from '~/datastore/v1/util/currentLocation'
 import { ethnicityMap } from '~/datastore/v1/util/ethnicity'
@@ -10,14 +11,19 @@ import { prisma } from '~/index'
 import { migrateLog } from '~/seed/logger'
 import { ListrTask } from '~/seed/migrate-v1'
 
+type BulkTransactions = Prisma.Prisma__UserClient<User> | Prisma.Prisma__UserSurveyClient<UserSurvey>
+
+const userData = JSON.parse(
+	fs.readFileSync('./datastore/v1/mongodb/output/users.json', 'utf-8')
+) as UsersJSONCollection[]
+
 export const migrateUsers = async (task: ListrTask) => {
-	const bulkTransactions: Prisma.Prisma__UserClient<User>[] = []
+	const bulkTransactions: BulkTransactions[] = []
 	let logMessage = ``
 	let countA = 0
 
 	for (const user of userData) {
-		const [firstName = undefined, lastName = undefined] =
-			user.name === 'user name' ? [undefined, undefined] : user.name.split(/(?<=^\S+)\s/)
+		const name = user.name === 'user name' ? undefined : user.name
 
 		/**
 		 * If the user has a string for their immigration status, return an object with a connect property that
@@ -112,12 +118,8 @@ export const migrateUsers = async (task: ListrTask) => {
 			},
 			create: {
 				email: user.email,
-				firstName,
-				lastName,
+				name,
 				legacyId: user._id.$oid,
-				ethnicity,
-				countryOrigin,
-				immigration: getImmigrationStatus(),
 				currentCity,
 				currentGovDist,
 				currentCountry,
@@ -142,12 +144,9 @@ export const migrateUsers = async (task: ListrTask) => {
 				legacySalt: user.salt,
 			},
 			update: {
-				firstName,
-				lastName,
+				name,
 				legacyId: user._id.$oid,
-				ethnicity,
-				countryOrigin,
-				immigration: getImmigrationStatus(),
+
 				currentCity,
 				currentGovDist,
 				currentCountry,
@@ -171,7 +170,16 @@ export const migrateUsers = async (task: ListrTask) => {
 				legacySalt: user.salt,
 			},
 		})
+		const userSurvey = prisma.userSurvey.create({
+			data: {
+				ethnicity,
+				countryOrigin,
+				immigration: getImmigrationStatus(),
+			},
+		})
+
 		bulkTransactions.push(userTransaction)
+		bulkTransactions.push(userSurvey)
 		countA++
 	}
 	let countB = 1

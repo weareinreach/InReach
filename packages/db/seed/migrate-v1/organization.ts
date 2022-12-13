@@ -1,20 +1,67 @@
-// import { Prisma } from '@prisma/client'
-// import fs from 'fs'
+import { Organization, Prisma } from '@prisma/client'
+import fs from 'fs'
 
-// import { OrganizationsJSONCollection } from '~/datastore/v1/mongodb/output-types/organizations'
-// import { prisma } from '~/index'
-// import { migrateLog } from '~/seed/logger'
-// import { ListrTask } from '~/seed/migrate-v1'
+import { OrganizationsJSONCollection } from '~/datastore/v1/mongodb/output-types/organizations'
+import { prisma } from '~/index'
+import { migrateLog } from '~/seed/logger'
+import { ListrTask } from '~/seed/migrate-v1'
+import { batchTransact } from '~/seed/migrate-v1/batchProcessor'
+import { getReferenceData, upsertOrg } from '~/seed/migrate-v1/validator/org'
 
-// export const migrateOrgs = async (task: ListrTask) => {
-// 	const bulkTransactions: Prisma.OrganizationUpsertArgs[] = []
-// 	const logMessage = ``
-// 	const countA = 0
+const bulkUpsert: Prisma.Prisma__OrganizationClient<Organization>[] = []
+const bulkData: Prisma.OrganizationUpsertArgs[] = []
 
-// 	const orgData: OrganizationsJSONCollection[] = JSON.parse(
-// 		fs.readFileSync('./datastore/v1/mongodb/output/organizations.json', 'utf-8')
-// 	)
-// 	for (const org of orgData) {
-// 	}
-// }
-export {}
+const generateOrgs = async (task: ListrTask) => {
+	let logMessage = ``
+	let countA = 0
+
+	const referenceData = await getReferenceData()
+	const orgData: OrganizationsJSONCollection[] = JSON.parse(
+		fs.readFileSync('./datastore/v1/mongodb/output/organizations.json', 'utf-8')
+	)
+	for (const org of orgData) {
+		countA++
+		logMessage = `[${countA}/${orgData.length}] Generating organization record for: ${org.name}`
+		migrateLog.info(logMessage)
+		task.output = logMessage
+		const data = await upsertOrg(org, referenceData)
+		if (!data) continue
+		bulkData.push(data)
+		bulkUpsert.push(prisma.organization.upsert(data))
+		if (countA === 50) break
+	}
+	const sample: typeof bulkData = []
+	sample.push(bulkData[0] as typeof bulkData[number])
+	for (let i = 0; i < 10; i++) {
+		const random = Math.floor(Math.random() * bulkData.length)
+		migrateLog.info(`Sampling record ${random} of ${bulkData.length}`)
+		sample.push(bulkData[random] as typeof bulkData[number])
+	}
+	fs.writeFileSync('./seed/migrate-v1/orgSample.json', JSON.stringify(sample, null, 2))
+
+	task.title = `Generate Organization records (${countA} records)`
+}
+
+const batchUpsert = async (task: ListrTask) => {
+	const logMessage = 'Starting Organization batch creation'
+	migrateLog.info(logMessage)
+	const total = await batchTransact(task, bulkUpsert)
+	task.title = `Batch upsert Organization records (${total} records)`
+}
+
+const renderOptions = {
+	bottomBar: 10,
+}
+export const migrateOrgs = (task: ListrTask) =>
+	task.newListr([
+		{
+			title: 'Generate Organization records',
+			task: async (_ctx, task): Promise<void> => generateOrgs(task),
+			options: renderOptions,
+		},
+		{
+			title: 'Batch upsert Organization records',
+			task: async (_ctx, task): Promise<void> => batchUpsert(task),
+			options: renderOptions,
+		},
+	])
