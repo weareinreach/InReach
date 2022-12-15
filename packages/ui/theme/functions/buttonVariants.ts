@@ -2,7 +2,7 @@ import { ButtonVariant, CSSObject, Flex, MantineTheme } from '@mantine/core'
 
 type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => Record<string, CSSObject>
 
-type CustomVariants = 'large-primary' | 'large-secondary' | 'large-accent'
+type CustomVariants = 'lg-primary' | 'lg-secondary' | 'lg-accent'
 
 interface ButtonStylesParams {
 	variant: ButtonVariant | CustomVariants
@@ -30,7 +30,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 				},
 				inner: {},
 			}
-		case 'large-primary':
+		case 'lg-primary':
 			return {
 				root: {
 					display: 'flex',
@@ -67,7 +67,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 					width: theme.spacing.lg,
 				},
 			}
-		case 'large-secondary':
+		case 'lg-secondary':
 			return {
 				root: {
 					border: '1px solid #d9d9d9',
@@ -105,7 +105,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 					width: theme.spacing.lg,
 				},
 			}
-		case 'large-accent':
+		case 'lg-accent':
 			return {
 				root: {
 					display: 'flex',
