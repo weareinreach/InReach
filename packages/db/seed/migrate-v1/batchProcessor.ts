@@ -1,4 +1,5 @@
 import { PrismaPromise } from '@prisma/client'
+import fs from 'fs'
 
 import { prisma } from '~/index'
 import { migrateLog } from '~/seed/logger'
@@ -23,8 +24,10 @@ export const batchTransact = async (
 		} of ${totalRecords}`
 		migrateLog.info(logMessage)
 		task.output = logMessage
-		// const batchProcess = batch.map((record) => prisma.user.upsert(record))
-		await prisma.$transaction(batch)
+
+		const result = await prisma.$transaction(batch)
+		logMessage = `\tBatch result: ${JSON.stringify(result)}`
+		migrateLog.info(logMessage)
 		countB++
 		countA = countA + batch.length
 	}

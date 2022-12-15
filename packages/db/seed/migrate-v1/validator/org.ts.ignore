@@ -19,6 +19,24 @@ import { prisma } from '~/index'
 import { namespaces } from '~/seed/data'
 import { migrateLog } from '~/seed/logger'
 
+
+export const translationKeys: Prisma.TranslationKeyCreateManyInput[] = []
+export const organizations: Prisma.OrganizationCreateManyInput[] = []
+export const orgWebsites: Prisma.OrgWebsiteCreateManyInput[] = []
+export const orgEmails: Prisma.OrgEmailCreateManyInput[] = []
+export const orgPhones: Prisma.OrgPhoneCreateManyInput[] = []
+export const orgSocials: Prisma.OrgSocialMediaCreateManyInput[] = []
+export const orgLocations: Prisma.OrgLocationCreateManyInput[] = []
+export const orgPhotos: Prisma.OrgPhotoCreateManyInput[] = []
+export const orgHours: Prisma.OrgHoursCreateManyInput[] = []
+export const orgServices: Prisma.OrgServiceCreateManyInput[] = []
+export const attributes: Prisma.AttributeCreateManyInput[] = []
+export const attributeSupplements: Prisma.AttributeSupplementCreateManyInput[] = []
+export const serviceAreas: Prisma.ServiceAreaCreateManyInput[] = []
+
+
+
+
 /**
  * It takes a name, city, and state, and returns a unique slug based on those values
  *
@@ -64,11 +82,12 @@ const uniqueSlug = async (name: string, city?: string, state?: string) => {
  * @returns A function that takes a generic type T and returns a ConnectRecords<T>
  */
 const connectIfExist = <T>(records: T): ConnectRecords<T> => {
-	if (typeof records === undefined || (Array.isArray(records) && records.length === 0)) return undefined
+	if (records === undefined || (Array.isArray(records) && records.length === 0)) return undefined
 	return {
 		connect: records,
 	}
 }
+
 
 /**
  * If the records are undefined or an empty array, return undefined, otherwise return the record(s) for a
@@ -231,7 +250,7 @@ const generateKey: GenerateKey<KeyType> = async (params) => {
 			key = `${orgSlug}.attribute.${params.suppId}`
 			break
 	}
-	return await prisma.translationKey.upsert({
+	const result = await prisma.translationKey.upsert({
 		where: {
 			ns_key: {
 				ns,
@@ -251,9 +270,12 @@ const generateKey: GenerateKey<KeyType> = async (params) => {
 			text,
 		},
 		select: {
-			id: true,
+			key: true,
+			ns: true
 		},
 	})
+
+	return {ns_key: result}
 }
 
 /** It returns all the service categories and the services that belong to each category */
@@ -402,26 +424,42 @@ const generateServices: GenerateServices = async (
 	try {
 		const { services } = org
 		const servIds = {}
+		/**
+		 * It returns the attribute record from the attributeList array.
+		 *
+		 * @param {string} tag - The tag of the attribute you want to get.
+		 * @returns The result of the find function.
+		 */
+		const getAttrRecord = (tag: string) => {
+			const result = attributeList.find((x) => `${x.category}-${x.tag}` === tag || x.tag === tag)
+			if (result) return result
+		}
 		serviceTags.forEach((serv) => {
 			serv.services.forEach((x) => (servIds[`${serv.category}.${x.name}`] = x.id))
 		})
 
-		const data: Prisma.OrgServiceCreateWithoutOrganizationInput[] = services.map((service) => {
+		const data: Prisma.OrgServiceCreateManyOrganizationInput[] = services.map((service) => {
 			const servId = cuid()
 
 			const flatServ: Record<string, string> = service.tags ? flatten(service.tags) : {}
 
 			/* It's mapping over the flattened service tags, and returning the id of the new service tag. */
-			const tagIds = Object.keys(flatServ).map((serv) => {
-				let id = ''
+
+			const tagIds: { id: string }[] | undefined = []
+			for (const serv of Object.keys(flatServ)) {
+				let id: string | undefined
 				const servKey = serv.substring(serv.indexOf('.') + 1, serv.length)
 				if (Object.keys(servIds).includes(servKey)) {
 					id = servIds[servKey]
 				}
-				return { id }
-			})
+				if (id) tagIds.push({ id })
+			}
 
-			const unsupportedAttribute: Record<string, unknown> = {}
+			const unsupportedAttribute: UnsupportedAttribute = {
+				id: getAttrRecord('incompatible-info')?.id as string,
+				data: [],
+			}
+
 			const attributeConnect: Prisma.AttributeWhereUniqueInput[] = []
 			const attrSuppCreate: Prisma.AttributeSupplementCreateWithoutServiceInput[] = []
 			const serviceAreaConnect: Prisma.GovDistWhereUniqueInput[] = []
@@ -440,16 +478,6 @@ const generateServices: GenerateServices = async (
 				const langRegex = /lang-(.+)/i
 				const areaRegex = /service-(?:county|national|state)-(.+)/i
 
-				/**
-				 * It returns the attribute record from the attributeList array.
-				 *
-				 * @param {string} tag - The tag of the attribute you want to get.
-				 * @returns The result of the find function.
-				 */
-				const getAttrRecord = (tag: string) => {
-					const result = attributeList.find((x) => `${x.category}-${x.tag}` === tag || x.tag === tag)
-					if (result) return result
-				}
 				/**
 				 * It takes a string, splits it into an array, discards the first element ('service'), separates out
 				 * the second element ('county', 'national', or 'state), joins the remaining elements (the region),
@@ -571,7 +599,7 @@ incompatible-tag data . */
 			}
 
 			const handleUnsupported = (tag: AttributeReturnArea | AttributeReturnService) => {
-				Object.assign(unsupportedAttribute, tag.data)
+				if (tag.data) unsupportedAttribute.data.push(tag.data)
 			}
 
 			/**
@@ -594,9 +622,9 @@ incompatible-tag data . */
 							attributeConnect.push({ id: attrRecord.id })
 							/** Base record for connection to service tag */
 							const attrBase: Prisma.AttributeSupplementCreateWithoutServiceInput = {
-								serviceTag: {
+								attribute: {
 									connect: {
-										id: attrRecord?.id,
+										id: attrRecord.id,
 									},
 								},
 							}
@@ -623,7 +651,7 @@ incompatible-tag data . */
 										suppId,
 										orgSlug,
 									})
-									attrSuppCreate.push({ ...attrBase, id: suppId, textKey: connectIfExist(textKey) })
+									attrSuppCreate.push({ ...attrBase, id: suppId, text:  connectIfExist(textKey) })
 									break
 								}
 							}
@@ -642,6 +670,20 @@ incompatible-tag data . */
 					}
 				})
 			}
+
+			if (unsupportedAttribute.data.length) {
+				attributeConnect.push({ id: unsupportedAttribute.id })
+
+				attrSuppCreate.push({
+					attribute: {
+						connect: {
+							id: unsupportedAttribute.id,
+						},
+					},
+					data: unsupportedAttribute.data,
+				})
+			}
+
 			const servPhoneRecord = phoneRecords?.find((record) => record.legacyId === service.phone_id)
 			const servPhoneId = servPhoneRecord ? { id: servPhoneRecord.id } : undefined
 			const servEmailRecord = emailRecords?.find((record) => record.legacyId === service.email_id)
@@ -651,7 +693,7 @@ incompatible-tag data . */
 				id: servId,
 				createdAt: org.created_at.$date,
 				updatedAt: org.updated_at.$date,
-				service: connectIfExist(tagIds),
+				service: connectIfExist(tagIds.length ? tagIds : undefined),
 				attributes: connectIfExist(attributeConnect),
 
 				attributeSupplement: createIfExist(attrSuppCreate),
@@ -757,7 +799,9 @@ const generateLocations: GenerateLocations = async (org) => {
 	const data: Prisma.OrgLocationCreateWithoutOrganizationInput[] = []
 	for (const location of locations) {
 		const legacyId = location._id.$oid
-		const [longitude, latitude] = location.geolocation.coordinates.map((x) => parseInt(x.$numberDecimal))
+		const [longitude, latitude] = location.geolocation.coordinates.map(
+			(x) => +parseFloat(x.$numberDecimal).toFixed(3)
+		)
 		if (!location.country && !location.city && !location.state) continue
 
 		const countryId = () => {
@@ -766,20 +810,20 @@ const generateLocations: GenerateLocations = async (org) => {
 			if (location.state && ['PR', 'GU', 'VI'].includes(govDistMap.get(location.state) ?? ''))
 				location.country = govDistMap.get(location.state)
 
-			const id = countryMap.get(location.country ?? '')
+			const cca2 = countryMap.get(location.country ?? '')
 
-			if (!id) throw new Error('Unable to map country')
-			return { id }
+			if (!cca2) throw new Error('Unable to map country')
+			return { cca2 }
 		}
 		const govDistId = () => {
 			if (location.state && ['PR', 'GU', 'VI'].includes(govDistMap.get(location.state) ?? ''))
 				return undefined
 			if (!location.state) {
-				const id = missingDistCityMap.get(location.city ?? '')
-				return id ? { id } : undefined
+				const slug = missingDistCityMap.get(location.city ?? '')
+				return slug ? { slug } : undefined
 			}
-			const id = govDistMap.get(location.state)
-			return id ? { id } : undefined
+			const slug = govDistMap.get(location.state)
+			return slug ? { slug } : undefined
 		}
 		const createPoint = () => {
 			if (!longitude || !latitude) return {}
@@ -814,7 +858,7 @@ export const upsertOrg: UpsertOrg = async (org, referenceData) => {
 
 		const phoneRecords = await createAllPhones(org, referenceData)
 		const emailRecords = await createAllEmails(org)
-		const source = { ...createIfExist({ source: sourceText, type: 'SYSTEM' as SourceType }) }
+		const source = {connectOrCreate: { where: {source: sourceText}, create: { source: sourceText, type: 'SYSTEM' as SourceType } }} satisfies Prisma.SourceCreateNestedOneWithoutOrganizationInput
 
 		/* Generate Description stub */
 		const descKey = org.description
@@ -883,7 +927,8 @@ export const upsertOrg: UpsertOrg = async (org, referenceData) => {
 				phone: connectIfExist(phoneRecords?.map((x) => ({ id: x.id }))),
 				email: connectIfExist(emailRecords?.map((x) => ({ id: x.id }))),
 				orgWebsite: createIfExist(orgWebsite()),
-				location: createIfExist(await generateLocations(org)),
+				location: upsertIfExist<Prisma.OrgLocationUpsertWithWhereUniqueWithoutOrganizationInput, Awaited<ReturnType<GenerateLocations>>>(await generateLocations(org), 'legacyId')
+ ,//createIfExist(await generateLocations(org)),
 				hours: createIfExist(generateHours(org, 'org')),
 			},
 		}
@@ -891,6 +936,10 @@ export const upsertOrg: UpsertOrg = async (org, referenceData) => {
 		migrateLog.error(err)
 	}
 }
+
+
+
+
 
 /** Typeland. */
 
@@ -900,7 +949,7 @@ type SvcKey = { type: 'svc'; orgSlug: string; servId: string; text: string; subt
 type AttrSuppKey = { type: 'attrSupp'; orgSlug: string; text: string; suppId: string }
 type GenerateKey<T> = (
 	params: T extends 'desc' ? DescKey : T extends 'svc' ? SvcKey : AttrSuppKey
-) => Promise<{ id: string }>
+) => Promise<{ ns_key: {key: string, ns: string }}>
 
 type ConnectRecords<T> =
 	| {
@@ -910,27 +959,42 @@ type ConnectRecords<T> =
 type CreateRecords<T> =
 	| {
 			create: T
+
 	  }
 	| undefined
 
+
+
+
 type AttributeRecord = Awaited<ReturnType<typeof getAttributeList>>[number]
+
 type ServiceAreaRecord = { type: 'country' | 'dist'; id: string }
+
 type AttributeData = {
 	boolean?: boolean
 	text?: string
 	language?: Awaited<ReturnType<typeof getLanguages>>[number]
 } & Record<string, string | boolean | number | undefined | Record<string, string | number | boolean>>
+
 type AttributeType = 'attribute' | 'area' | 'unknown'
+
 type AttributeReturnService = {
 	attribute: AttributeRecord
 	data?: AttributeData
 	type: Exclude<AttributeType, 'area'>
 }
+
 type AttributeReturnArea = {
 	attribute: ServiceAreaRecord
 	data?: AttributeData
 	type: Extract<AttributeType, 'area'>
 }
+
+type UnsupportedAttribute = {
+	id: string | undefined
+	data: AttributeData[]
+}
+
 type TagCheck = (
 	tag: string,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -948,7 +1012,8 @@ type GenerateServices = (
 type GenerateHours = (
 	org: OrganizationsJSONCollection,
 	parent: 'org' | 'loc'
-) => Prisma.OrgHoursCreateManyInput[] | undefined
+) => Prisma.OrgHoursCreateManyOrganizationInput[] | Prisma.OrgHoursCreateManyOrgLocationInput[] | undefined
+
 
 type GenerateLocations = (
 	org: OrganizationsJSONCollection,

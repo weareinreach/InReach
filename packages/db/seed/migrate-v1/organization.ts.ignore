@@ -24,19 +24,22 @@ const generateOrgs = async (task: ListrTask) => {
 		logMessage = `[${countA}/${orgData.length}] Generating organization record for: ${org.name}`
 		migrateLog.info(logMessage)
 		task.output = logMessage
-		const data = await upsertOrg(org, referenceData)
-		if (!data) continue
+		// const data = await upsertOrg(org, referenceData)
+		// if (!data) continue
+		const data = prisma.$transaction((tx) => {})
+
+		fs.writeFileSync('./batch.json', JSON.stringify(data, null, 2))
 		bulkData.push(data)
 		bulkUpsert.push(prisma.organization.upsert(data))
 		if (countA === 50) break
 	}
 	const sample: typeof bulkData = []
 	sample.push(bulkData[0] as typeof bulkData[number])
-	for (let i = 0; i < 10; i++) {
-		const random = Math.floor(Math.random() * bulkData.length)
-		migrateLog.info(`Sampling record ${random} of ${bulkData.length}`)
-		sample.push(bulkData[random] as typeof bulkData[number])
-	}
+	// for (let i = 0; i < 10; i++) {
+	// 	const random = Math.floor(Math.random() * bulkData.length)
+	// 	migrateLog.info(`Sampling record ${random} of ${bulkData.length}`)
+	// 	sample.push(bulkData[random] as typeof bulkData[number])
+	// }
 	fs.writeFileSync('./seed/migrate-v1/orgSample.json', JSON.stringify(sample, null, 2))
 
 	task.title = `Generate Organization records (${countA} records)`
