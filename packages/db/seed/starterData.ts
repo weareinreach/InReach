@@ -8,6 +8,7 @@ import {
 	seedGeoData,
 	seedLanguages,
 	seedNavigation,
+	seedOutsideAPI,
 	seedSOGIdentity,
 	seedServices,
 	seedSocialMediaLinks,
@@ -101,6 +102,11 @@ const tasks = new Listr<Context>(
 					{
 						title: 'Governing Districts & GeoJSON',
 						task: async (_ctx, task): Promise<Listr> => seedGeoData(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Outside API Services',
+						task: async (_ctx, task): Promise<void> => seedOutsideAPI(task),
 						options: renderOptions,
 					},
 				]),

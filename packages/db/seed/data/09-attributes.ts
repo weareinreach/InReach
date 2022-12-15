@@ -5,6 +5,7 @@ type AttributeItem = {
 	requireLanguage?: boolean
 	requireCountry?: boolean
 	requireData?: boolean
+	requireText?: boolean
 }
 type AttributeCategory = {
 	name: string
@@ -375,6 +376,18 @@ export const attributeData: AttributeData = [
 				description: 'Data that needs to be cleaned up',
 				requireData: true,
 			},
+		],
+	},
+	{
+		name: 'Service Access Instructions',
+		namespace: 'serviceAccess',
+		attributes: [
+			{ key: 'accessEmail', name: 'Access Instructions - Email', requireData: true },
+			{ key: 'accessFile', name: 'Access Instructions - File', requireData: true },
+			{ key: 'accessLink', name: 'Access Instructions - Link', requireData: true },
+			{ key: 'accessLocation', name: 'Access Instructions - Location', requireData: true },
+			{ key: 'accessPhone', name: 'Access Instructions - Phone', requireData: true },
+			{ key: 'accessText', name: 'Access Instructions - Text', requireText: true },
 		],
 	},
 ]

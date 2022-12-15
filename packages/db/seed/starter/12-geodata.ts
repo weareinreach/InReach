@@ -44,7 +44,7 @@ const upsertNamespace = async () =>
 			name: namespaces.govDist,
 		},
 		update: {},
-		select: { id: true },
+		select: { name: true },
 	})
 
 const nsCoC = async (text: string, prefix?: string, suffix?: string) => {
@@ -176,7 +176,8 @@ const countryUS = async (task: ListrTask) => {
 			if (!distType) throw new Error('Unknown district type')
 			const slug = keySlug(`US-${state.name}`)
 			const key = await nsCoC(name, 'us')
-			const bulkCountiesCreate: Prisma.GovDistCreateWithoutParentInput[] = []
+			const bulkCountiesCreate: Prisma.GovDistCreateManyParentInput[] = []
+			const bulkTranslationKeyCreate: Prisma.TranslationKeyCreateManyInput[] = []
 			const bulkCountiesUpdate: Prisma.GovDistUpdateWithWhereUniqueWithoutParentInput[] = []
 			for (const county of counties) {
 				const { NAME: countyName, LSAD } = county.properties
@@ -193,14 +194,25 @@ const countryUS = async (task: ListrTask) => {
 				if (!distType) throw new Error('Unknown district type')
 				const slug = keySlug(`us-${state.name}-${countyName}-${geoType(LSAD)}`)
 				const key = await nsCoC(countyName, `us-${state.name}`, geoType(LSAD))
+				const tsKey = key.connectOrCreate.create.key
+				const tsNs = key.connectOrCreate.create.namespace.connect.name
+				const tsText = key.connectOrCreate.create.text
+				bulkTranslationKeyCreate.push({
+					key: tsKey,
+					ns: tsNs,
+					text: tsText,
+				})
+
 				bulkCountiesCreate.push({
 					name: countyName,
 					slug,
 					geoJSON: county,
-					country: connectTo(countryId),
-					govDistType: connectTo(distType),
+					countryId,
+
+					govDistTypeId: distType,
 					isPrimary: false,
-					key,
+					tsKey,
+					tsNs,
 				})
 				bulkCountiesUpdate.push({
 					where: {
@@ -218,6 +230,11 @@ const countryUS = async (task: ListrTask) => {
 				countA++
 				countC++
 			}
+			await prisma.translationKey.createMany({
+				data: bulkTranslationKeyCreate,
+				skipDuplicates: true,
+			})
+
 			await prisma.govDist.upsert({
 				where: {
 					slug,
@@ -232,7 +249,7 @@ const countryUS = async (task: ListrTask) => {
 					govDistType: connectTo(distType),
 					key,
 					subDistricts: {
-						create: bulkCountiesCreate,
+						createMany: { data: bulkCountiesCreate, skipDuplicates: true },
 					},
 				},
 				update: {

@@ -36,7 +36,8 @@ export const seedServices = async (task: ListrTask) => {
 					id: true,
 					key: {
 						select: {
-							id: true,
+							key: true,
+							ns: true,
 						},
 					},
 				},
@@ -97,7 +98,10 @@ export const seedServices = async (task: ListrTask) => {
 						},
 						key: {
 							connect: {
-								id: newCategory.key.id,
+								ns_key: {
+									key: newCategory.key.key,
+									ns: newCategory.key.ns,
+								},
 							},
 						},
 					},

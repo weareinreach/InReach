@@ -5,7 +5,7 @@ import { ListrTask } from '~/seed/starterData'
 
 export const seedFooterLinks = async (task: ListrTask) => {
 	try {
-		const { id: namespaceId } = await prisma.translationNamespace.upsert({
+		const { name: namespace } = await prisma.translationNamespace.upsert({
 			where: {
 				name: namespaces.footer,
 			},
@@ -14,7 +14,7 @@ export const seedFooterLinks = async (task: ListrTask) => {
 			},
 			update: {},
 			select: {
-				id: true,
+				name: true,
 			},
 		})
 
@@ -42,7 +42,7 @@ export const seedFooterLinks = async (task: ListrTask) => {
 								text: item.display,
 								namespace: {
 									connect: {
-										id: namespaceId,
+										name: namespace,
 									},
 								},
 							},
