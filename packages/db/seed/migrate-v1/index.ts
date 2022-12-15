@@ -1,5 +1,6 @@
 import { Listr, ListrDefaultRenderer, ListrTaskWrapper } from 'listr2'
 
+import { runMigrateOrgs } from '~/seed/migrate-v1/org'
 import { migrateUsers } from '~/seed/migrate-v1/users'
 
 const renderOptions = {
@@ -13,11 +14,11 @@ const tasks = new Listr<Context>([
 		options: renderOptions,
 		skip: true,
 	},
-	// {
-	// 	title: 'Migrate Organization Database',
-	// 	task: (_ctx, task): Listr => migrateOrgs(task),
-	// 	options: renderOptions,
-	// },
+	{
+		title: 'Migrate Organization Database',
+		task: (_ctx, task): Listr => runMigrateOrgs(task),
+		options: renderOptions,
+	},
 ])
 
 tasks.run()

@@ -26,6 +26,7 @@ import { createPoint } from '~/seed/migrate-v1/org/lib/createPoint'
 
 export const orgDescTranslations: Prisma.TranslationKeyCreateManyInput[] = []
 export const organizations: Prisma.OrganizationCreateManyInput[] = []
+
 export const translationKeys: Prisma.TranslationKeyCreateManyInput[] = []
 export const orgLocations: Prisma.OrgLocationCreateManyInput[] = []
 export const orgPhones: Prisma.OrgPhoneCreateManyInput[] = []
@@ -35,7 +36,6 @@ export const orgSocials: Prisma.OrgSocialMediaCreateManyInput[] = []
 export const orgAPIConnections: Prisma.OutsideAPICreateManyInput[] = []
 export const orgPhotos: Prisma.OrgPhotoCreateManyInput[] = []
 export const orgHours: Prisma.OrgHoursCreateManyInput[] = []
-
 export const orgServices: Prisma.OrgServiceCreateManyInput[] = []
 export const serviceAccess: Prisma.ServiceAccessCreateManyInput[] = []
 
@@ -43,7 +43,6 @@ export const serviceAccess: Prisma.ServiceAccessCreateManyInput[] = []
 export const attributeRecords: Prisma.AttributeRecordCreateManyInput[] = []
 export const attributeSupplements: Prisma.AttributeSupplementCreateManyInput[] = []
 export const serviceAreas: Prisma.ServiceAreaUpsertArgs[] = []
-
 export const serviceConnections: Prisma.OrgServiceUpdateArgs[] = []
 
 export const isSuccess = (param: unknown) => (!!param ? `✅` : `❌`)
@@ -133,8 +132,6 @@ export const migrateOrgs = async (task: ListrTask) => {
 	/* Create Organization records */
 	const orgResults = await prisma.organization.createMany({ data: organizations, skipDuplicates: true })
 	log(`🏗️ Organization records created: ${orgResults.count}`)
-
-	/* Get all records & create a Map of legacyId -> id */
 }
 
 export const generateRecords = async (task: ListrTask) => {
@@ -164,6 +161,7 @@ export const generateRecords = async (task: ListrTask) => {
 		langMap,
 	}
 
+	/* Get all records & create a Map of legacyId -> id */
 	const orgRecords = await prisma.organization.findMany({
 		select: { id: true, legacyId: true, name: true, slug: true },
 	})
