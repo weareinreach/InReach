@@ -2,8 +2,13 @@ import { ButtonVariant, CSSObject, Flex, MantineTheme } from '@mantine/core'
 
 type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => Record<string, CSSObject>
 
-type CustomVariants = 'lg-primary' | 'lg-secondary' | 'lg-accent'
-
+type CustomVariants =
+	| 'sm-primary'
+	| 'sm-secondary'
+	| 'sm-accent'
+	| 'lg-primary'
+	| 'lg-secondary'
+	| 'lg-accent'
 interface ButtonStylesParams {
 	variant: ButtonVariant | CustomVariants
 }
@@ -30,9 +35,63 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 				},
 				inner: {},
 			}
+
+		case 'sm-primary':
+			return {
+				root: {
+					padding: '6px 32px',
+					height: '40px',
+					gap: theme.spacing.xs,
+					backgroundColor: theme.other.colors.secondary.black,
+					'&:hover': {
+						background: 'linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #000000',
+					},
+				},
+				inner: {
+					color: theme.other.colors.secondary.white,
+				},
+				label: {
+					top: '10 px',
+					left: '32 px',
+				},
+				leftIcon: {
+					display: 'none',
+				},
+			}
+		case 'sm-secondary':
+			return {
+				root: {
+					height: '40px',
+					border: '1px solid',
+					borderColor: theme.other.colors.tertiary.coolGray,
+					backgroundColor: theme.other.colors.secondary.white,
+					'&:hover': {
+						backgroundColor: theme.other.colors.primary.lightGray,
+					},
+				},
+			}
+		case 'sm-accent':
+			return {
+				root: {
+					height: '40px',
+					backgroundColor: theme.colors.inReachSecondaryRegular[5],
+					'&:hover': {
+						background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), #4792DA',
+					},
+				},
+				inner: {
+					color: theme.colors.primaryText[0],
+				},
+				label: {
+					lineHeight: '125%',
+				},
+			}
 		case 'lg-primary':
 			return {
 				root: {
+					padding: '6px 48px',
+					gap: theme.spacing.sm,
+					height: '48px',
 					backgroundColor: theme.other.colors.secondary.black,
 					borderRadius: theme.radius.md,
 					'&:hover': {
@@ -46,6 +105,9 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'lg-secondary':
 			return {
 				root: {
+					padding: '6px 48px',
+					gap: theme.spacing.sm,
+					height: '48px',
 					border: '1px solid',
 					borderColor: theme.other.colors.tertiary.coolGray,
 					backgroundColor: theme.other.colors.secondary.white,
@@ -58,6 +120,9 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'lg-accent':
 			return {
 				root: {
+					padding: '6px 48px',
+					gap: theme.spacing.sm,
+					height: '48px',
 					backgroundColor: theme.colors.inReachSecondaryRegular[5],
 					'&:hover': {
 						background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), #4792DA',

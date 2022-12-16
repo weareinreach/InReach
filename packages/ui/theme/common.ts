@@ -52,10 +52,8 @@ export const commonTheme: MantineThemeOverride = {
 			styles: (theme, params: ButtonStylesParams) => {
 				const baseStyle = {
 					root: {
-						padding: '6px 48px',
+						top: '20px',
 						width: 'hug',
-						height: '48px',
-						gap: theme.spacing.sm,
 					},
 					inner: {
 						color: theme.colors.primaryText[9],

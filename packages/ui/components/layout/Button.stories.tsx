@@ -21,10 +21,25 @@ const Template: ComponentStory<typeof Button> = (args) => (
 	<Button leftIcon={<Icon icon={args.icon} />} {...args} />
 )
 
+export const SmallPrimary = Template.bind({})
+export const SmallSecondary = Template.bind({})
+export const SmallAccent = Template.bind({})
 export const LargePrimary = Template.bind({})
 export const LargeSecondary = Template.bind({})
 export const LargeAccent = Template.bind({})
 
+SmallPrimary.args = {
+	variant: 'sm-primary',
+	children: 'Download the app',
+}
+SmallSecondary.args = {
+	variant: 'sm-secondary',
+	children: 'InReach.org',
+}
+SmallAccent.args = {
+	variant: 'sm-accent',
+	children: 'Safety exit',
+}
 LargePrimary.args = {
 	variant: 'lg-primary',
 	children: 'More sorting options',
