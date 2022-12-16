@@ -18,6 +18,18 @@ export const commonTheme: MantineThemeOverride = {
 			bold: 700,
 			extrabold: 800,
 		},
+		colors: {
+			primary: {
+				lightGray: '#EFEFEF',
+			},
+			secondary: {
+				black: '#000000',
+				white: '#FFFFFF',
+			},
+			tertiary: {
+				coolGray: '#d9d9d9',
+			},
+		},
 	},
 	globalStyles: (theme) => ({
 		a: {
@@ -79,6 +91,18 @@ declare module '@mantine/core' {
 			semibold: 600
 			bold: 700
 			extrabold: 800
+		}
+		colors: {
+			primary: {
+				lightGray: '#EFEFEF'
+			}
+			secondary: {
+				white: '#FFFFFF'
+				black: '#000000'
+			}
+			tertiary: {
+				coolGray: '#d9d9d9'
+			}
 		}
 	}
 }

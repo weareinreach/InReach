@@ -33,24 +33,25 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'lg-primary':
 			return {
 				root: {
-					backgroundColor: '#000000',
+					backgroundColor: theme.other.colors.secondary.black,
 					borderRadius: theme.radius.md,
 					'&:hover': {
 						background: 'linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #000000',
 					},
 				},
 				inner: {
-					color: '#ffffff',
+					color: theme.other.colors.secondary.white,
 				},
 			}
 		case 'lg-secondary':
 			return {
 				root: {
-					border: '1px solid #d9d9d9',
-					backgroundColor: '#FFFFFF',
+					border: '1px solid',
+					borderColor: theme.other.colors.tertiary.coolGray,
+					backgroundColor: theme.other.colors.secondary.white,
 					borderRadius: theme.radius.md,
 					'&:hover': {
-						backgroundColor: '#EFEFEF',
+						backgroundColor: theme.other.colors.primary.lightGray,
 					},
 				},
 			}
