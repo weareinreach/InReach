@@ -28,6 +28,7 @@ export const commonTheme: MantineThemeOverride = {
 			},
 			tertiary: {
 				coolGray: '#d9d9d9',
+				red: '#C05C4A',
 			},
 		},
 	},
@@ -100,6 +101,7 @@ declare module '@mantine/core' {
 			}
 			tertiary: {
 				coolGray: '#d9d9d9'
+				red: '#C05C4A'
 			}
 		}
 	}

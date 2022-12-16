@@ -61,6 +61,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'sm-secondary':
 			return {
 				root: {
+					padding: '6px 32px',
 					height: '40px',
 					border: '1px solid',
 					borderColor: theme.other.colors.tertiary.coolGray,
@@ -69,14 +70,18 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 						backgroundColor: theme.other.colors.primary.lightGray,
 					},
 				},
+				leftIcon: {
+					display: 'none',
+				},
 			}
 		case 'sm-accent':
 			return {
 				root: {
+					padding: '6px 32px',
 					height: '40px',
-					backgroundColor: theme.colors.inReachSecondaryRegular[5],
+					backgroundColor: theme.other.colors.tertiary.red,
 					'&:hover': {
-						background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), #4792DA',
+						background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), #C05C4A',
 					},
 				},
 				inner: {
@@ -84,6 +89,9 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 				},
 				label: {
 					lineHeight: '125%',
+				},
+				leftIcon: {
+					display: 'none',
 				},
 			}
 		case 'lg-primary':
