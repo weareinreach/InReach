@@ -39,10 +39,12 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'sm-primary':
 			return {
 				root: {
-					padding: '6px 32px',
-					height: '40px',
+					paddingTop: theme.spacing.sm / 2,
+					paddingBottom: theme.spacing.sm / 2,
+					paddingLeft: theme.spacing.md * 2,
+					paddingRight: theme.spacing.md * 2,
+					height: theme.spacing.lg * 2,
 					gap: theme.spacing.xs,
-					backgroundColor: theme.other.colors.secondary.black,
 					'&:hover': {
 						background: 'linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #000000',
 					},
@@ -51,8 +53,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 					color: theme.other.colors.secondary.white,
 				},
 				label: {
-					top: '10 px',
-					left: '32 px',
+					left: theme.spacing.md * 2,
 				},
 				leftIcon: {
 					display: 'none',
@@ -61,14 +62,23 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'sm-secondary':
 			return {
 				root: {
-					padding: '6px 32px',
-					height: '40px',
-					border: '1px solid',
+					paddingTop: theme.spacing.sm / 2,
+					paddingBottom: theme.spacing.sm / 2,
+					paddingLeft: theme.spacing.md * 2,
+					paddingRight: theme.spacing.md * 2,
+					height: theme.spacing.lg * 2,
+					border: theme.other.border.default,
 					borderColor: theme.other.colors.tertiary.coolGray,
 					backgroundColor: theme.other.colors.secondary.white,
 					'&:hover': {
 						backgroundColor: theme.other.colors.primary.lightGray,
 					},
+				},
+				inner: {
+					color: theme.colors.primaryText[9],
+				},
+				label: {
+					left: theme.spacing.md * 2,
 				},
 				leftIcon: {
 					display: 'none',
@@ -77,8 +87,11 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'sm-accent':
 			return {
 				root: {
-					padding: '6px 32px',
-					height: '40px',
+					paddingTop: theme.spacing.sm / 2,
+					paddingBottom: theme.spacing.sm / 2,
+					paddingLeft: theme.spacing.md * 2,
+					paddingRight: theme.spacing.md * 2,
+					height: theme.spacing.lg * 2,
 					backgroundColor: theme.other.colors.tertiary.red,
 					'&:hover': {
 						background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), #C05C4A',
@@ -88,7 +101,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 					color: theme.colors.primaryText[0],
 				},
 				label: {
-					lineHeight: '125%',
+					left: theme.spacing.md * 2,
 				},
 				leftIcon: {
 					display: 'none',
@@ -97,26 +110,16 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'lg-primary':
 			return {
 				root: {
-					padding: '6px 48px',
-					gap: theme.spacing.sm,
-					height: '48px',
-					backgroundColor: theme.other.colors.secondary.black,
 					borderRadius: theme.radius.md,
 					'&:hover': {
 						background: 'linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #000000',
 					},
 				},
-				inner: {
-					color: theme.other.colors.secondary.white,
-				},
 			}
 		case 'lg-secondary':
 			return {
 				root: {
-					padding: '6px 48px',
-					gap: theme.spacing.sm,
-					height: '48px',
-					border: '1px solid',
+					border: theme.other.border.default,
 					borderColor: theme.other.colors.tertiary.coolGray,
 					backgroundColor: theme.other.colors.secondary.white,
 					borderRadius: theme.radius.md,
@@ -124,23 +127,17 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 						backgroundColor: theme.other.colors.primary.lightGray,
 					},
 				},
+				inner: {
+					color: theme.colors.primaryText[9],
+				},
 			}
 		case 'lg-accent':
 			return {
 				root: {
-					padding: '6px 48px',
-					gap: theme.spacing.sm,
-					height: '48px',
 					backgroundColor: theme.colors.inReachSecondaryRegular[5],
 					'&:hover': {
 						background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), #4792DA',
 					},
-				},
-				inner: {
-					color: theme.colors.primaryText[0],
-				},
-				label: {
-					lineHeight: '125%',
 				},
 			}
 	}

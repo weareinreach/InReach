@@ -1,3 +1,4 @@
+import { themes } from '@storybook/theming'
 import { merge } from 'merge-anything'
 
 import type { ButtonStylesParams, MantineThemeOverride } from '@mantine/core'
@@ -14,9 +15,13 @@ export const commonTheme: MantineThemeOverride = {
 		/** Font weights per InReach style guide */
 		fontWeight: {
 			regular: 400,
+			button: 500,
 			semibold: 600,
 			bold: 700,
 			extrabold: 800,
+		},
+		border: {
+			default: '1px solid',
 		},
 		colors: {
 			primary: {
@@ -53,11 +58,17 @@ export const commonTheme: MantineThemeOverride = {
 			styles: (theme, params: ButtonStylesParams) => {
 				const baseStyle = {
 					root: {
-						top: '20px',
-						width: 'hug',
+						top: theme.spacing.lg,
+						paddingTop: theme.spacing.sm / 2,
+						paddingBottom: theme.spacing.sm / 2,
+						paddingLeft: theme.spacing.xl * 2,
+						paddingRight: theme.spacing.xl * 2,
+						height: theme.spacing.xl * 2,
+						gap: theme.spacing.sm,
+						backgroundColor: theme.other.colors.secondary.black,
 					},
 					inner: {
-						color: theme.colors.primaryText[9],
+						color: theme.other.colors.secondary.white,
 					},
 					leftIcon: {
 						svg: {
@@ -66,11 +77,9 @@ export const commonTheme: MantineThemeOverride = {
 						},
 					},
 					label: {
-						fontWeight: theme.other.fontWeight.semibold,
-						width: 'hug',
-						height: 'hug',
-						top: '14px',
-						left: '80px',
+						fontSize: theme.spacing.md,
+						fontWeight: theme.other.fontWeight.button,
+						lineHeight: '125%',
 					},
 				}
 
@@ -87,9 +96,13 @@ declare module '@mantine/core' {
 		/** Font weights per InReach Style Guide */
 		fontWeight: {
 			regular: 400
+			button: 500
 			semibold: 600
 			bold: 700
 			extrabold: 800
+		}
+		border: {
+			default: '1px solid'
 		}
 		colors: {
 			primary: {
