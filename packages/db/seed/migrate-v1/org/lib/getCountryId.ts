@@ -1,4 +1,4 @@
-import { govDistMap, missingCountryMap } from '~/datastore/v1/helpers/locDataMaps'
+import { countryTranslation, govDistMap, missingCountryMap } from '~/datastore/v1/helpers/locDataMaps'
 import type { Location } from '~/datastore/v1/mongodb/output-types/organizations'
 import type { CountryMap } from '~/seed/migrate-v1/org/lib'
 
@@ -8,9 +8,9 @@ export const getCountryId = (location: Location, countryMap: CountryMap) => {
 		location.country = govDistMap.get(location.state)
 	if (!location.country) throw new Error(`Location missing Country`)
 
-	const cca2 = countryMap.get(location.country ?? '')
-	if (!cca2) throw new Error('Unable to map country')
+	const cca2 = countryTranslation.get(location.country)
+	if (!cca2) throw new Error(`Unable to map country: ${location.country}`)
 	const countryId = countryMap.get(cca2)
-	if (!countryId) throw new Error('Unable to map country')
+	if (!countryId) throw new Error(`Unable to map country: ${cca2}`)
 	return countryId
 }

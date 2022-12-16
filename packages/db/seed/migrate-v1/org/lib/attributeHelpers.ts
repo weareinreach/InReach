@@ -75,7 +75,7 @@ export const tagCheck: TagCheck = ({ tag, value, helpers }) => {
 	 * @param {string | number | boolean} [value] - The value of the tag.
 	 */
 	const incompatible = (tag: string, value?: string | number | boolean) => {
-		const attribute = attributeList.get('incompatible-info')
+		const attribute = attributeList.get('system-incompatible-info')
 		if (!attribute) throw new Error('Cannot find "incompatible info" tag')
 		return {
 			attribute,
@@ -111,7 +111,7 @@ export const tagCheck: TagCheck = ({ tag, value, helpers }) => {
 		}
 		/* `community-xx-speaker` */
 		case !!speakerRegex.exec(tag): {
-			servAttribute = attributeList.get('language-speakers')
+			servAttribute = attributeList.get('community-language-speakers')
 			if (!servAttribute) throw new Error('Unable to locate attribute record for "language-speakers"')
 			const [, lang] = speakerRegex.exec(tag) ?? [undefined, '']
 			const langRecord = langMap.get(lang)
@@ -123,7 +123,7 @@ export const tagCheck: TagCheck = ({ tag, value, helpers }) => {
 		}
 		/* `lang-xx` */
 		case !!langRegex.exec(tag): {
-			servAttribute = attributeList.get('lang-offered')
+			servAttribute = attributeList.get('languages-lang-offered')
 			if (!servAttribute) throw new Error('Unable to locate attribute record for "lang-offered"')
 			const [, lang] = langRegex.exec(tag) ?? [undefined, '']
 			const langRecord = langMap.get(lang)

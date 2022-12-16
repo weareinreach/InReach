@@ -1,5 +1,4 @@
 import { PrismaPromise } from '@prisma/client'
-import fs from 'fs'
 
 import { prisma } from '~/index'
 import { migrateLog } from '~/seed/logger'

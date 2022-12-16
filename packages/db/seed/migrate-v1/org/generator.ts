@@ -1,7 +1,9 @@
 import { Prisma, SourceType } from '@prisma/client'
 import cuid from 'cuid'
+import { flatten } from 'flat'
 import fs from 'fs'
 import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js'
+import { DateTime } from 'luxon'
 import slugify from 'slugify'
 
 import { dayMap, hoursMap, hoursMeta } from '~/datastore/v1/helpers/hours'
@@ -19,6 +21,7 @@ import {
 	getGovDistId,
 	getReferenceData,
 	parseSchedule,
+	serviceTagTranslation,
 	uniqueSlug,
 } from '~/seed/migrate-v1/org/lib'
 import { tagCheck } from '~/seed/migrate-v1/org/lib/attributeHelpers'
@@ -27,8 +30,8 @@ import { createPoint } from '~/seed/migrate-v1/org/lib/createPoint'
 export const orgDescTranslations: Prisma.TranslationKeyCreateManyInput[] = []
 export const organizations: Prisma.OrganizationCreateManyInput[] = []
 
-export const translationKeys: Prisma.TranslationKeyCreateManyInput[] = []
 export const orgLocations: Prisma.OrgLocationCreateManyInput[] = []
+export const translationKeys: Prisma.TranslationKeyCreateManyInput[] = []
 export const orgPhones: Prisma.OrgPhoneCreateManyInput[] = []
 export const orgEmails: Prisma.OrgEmailCreateManyInput[] = []
 export const orgWebsites: Prisma.OrgWebsiteCreateManyInput[] = []
@@ -38,12 +41,11 @@ export const orgPhotos: Prisma.OrgPhotoCreateManyInput[] = []
 export const orgHours: Prisma.OrgHoursCreateManyInput[] = []
 export const orgServices: Prisma.OrgServiceCreateManyInput[] = []
 export const serviceAccess: Prisma.ServiceAccessCreateManyInput[] = []
-
-// These go last ?
 export const attributeRecords: Prisma.AttributeRecordCreateManyInput[] = []
 export const attributeSupplements: Prisma.AttributeSupplementCreateManyInput[] = []
 export const serviceAreas: Prisma.ServiceAreaUpsertArgs[] = []
 export const serviceConnections: Prisma.OrgServiceUpdateArgs[] = []
+export const orgConnections: Prisma.OrganizationUpdateArgs[] = []
 
 export const isSuccess = (param: unknown) => (!!param ? `✅` : `❌`)
 
@@ -56,6 +58,26 @@ const legacyAccessMap = new Map<string, string | undefined>([
 	['phone', slugify('Service Access Instructions-accessPhone', { lower: true })],
 	['other', slugify('Service Access Instructions-accessText', { lower: true })],
 ])
+
+const connect = (
+	connections: string | { id: string }[] | undefined
+): ConnectReturn<string | { id: string }[] | undefined> => {
+	if (!connections) return undefined
+	return Array.isArray(connections) ? { connect: connections } : { connect: { id: connections } }
+}
+const connectMulti = <T extends Record<string, unknown>[]>(connections: T): { connect: T } | undefined => {
+	if (!connections.length) return undefined
+	return { connect: connections }
+}
+const createMulti = <T extends Record<string, unknown>[]>(records: T): { create: T } | undefined => {
+	if (!records.length) return undefined
+	return { create: records }
+}
+
+export const translatedStrings = new Map<string, string>()
+const exportTranslation = (key: string | undefined, translatedString: string | undefined): void => {
+	if (key && translatedString) translatedStrings.set(key, translatedString)
+}
 
 export const migrateOrgs = async (task: ListrTask) => {
 	const orgs: OrganizationsJSONCollection[] = JSON.parse(
@@ -98,6 +120,7 @@ export const migrateOrgs = async (task: ListrTask) => {
 				ns: descriptionNs,
 				text: descriptionText,
 			})
+			exportTranslation(descriptionKey, org.description_ES)
 		}
 
 		organizations.push({
@@ -120,18 +143,22 @@ export const migrateOrgs = async (task: ListrTask) => {
 		)
 		countOrg++
 	}
-
+	let translationRecordCount
 	/* Create translation keys for descriptions */
 	if (orgDescTranslations.length) {
 		const results = await prisma.translationKey.createMany({
 			data: orgDescTranslations,
 			skipDuplicates: true,
 		})
+		translationRecordCount = results.count
 		log(`🏗️ Translation Keys created: ${results.count}`)
 	}
 	/* Create Organization records */
 	const orgResults = await prisma.organization.createMany({ data: organizations, skipDuplicates: true })
 	log(`🏗️ Organization records created: ${orgResults.count}`)
+	task.title = `Generate & create base organization records (${orgResults.count} organizations, ${
+		translationRecordCount ?? 0
+	} translation keys)`
 }
 
 export const generateRecords = async (task: ListrTask) => {
@@ -146,13 +173,15 @@ export const generateRecords = async (task: ListrTask) => {
 	const {
 		attributeList,
 		countryMap,
+		countryNameMap,
 		distList,
 		distMap,
 		langMap,
 		localeMap,
-		// serviceTags,
+		permissionMap,
+		serviceTags,
 		socialMediaMap,
-		countryNameMap,
+		userMap,
 	} = await getReferenceData()
 	const tagHelpers: TagHelper = {
 		countryNameMap,
@@ -186,10 +215,10 @@ export const generateRecords = async (task: ListrTask) => {
 
 	/* Loop over orgs again to create supplemental records.*/
 	log(`🛠️ Generating linked records...`)
+	let orgCount = 0
 	for (const org of orgs) {
 		let countLoc = 0
 		let skipLoc = 0
-		const count = countLoc + skipLoc + 1
 		const orgId = orgIdMap.get(org._id.$oid)
 		const orgSlug = orgSlugMap.get(org._id.$oid)
 		const createdAt = org.created_at.$date
@@ -209,6 +238,7 @@ export const generateRecords = async (task: ListrTask) => {
 		} else {
 			log(`🛠️ Generating Location ${pluralRecord(org.locations)} for ${org.name}`)
 			for (const location of org.locations) {
+				const count = countLoc + skipLoc + 1
 				if (!location.country && !location.city && !location.state) {
 					log(
 						`🤷 [${count}/${org.locations.length}] SKIPPING ${org.name} - ${location._id.$oid}: Missing city, state, & country.`
@@ -256,9 +286,9 @@ export const generateRecords = async (task: ListrTask) => {
 		} else {
 			let countPhone = 0
 			let skipPhone = 0
-			const count = countPhone + skipPhone + 1
 			log(`🛠️ Generating Phone ${pluralRecord(org.phones)} for ${org.name}`)
 			for (const phone of org.phones) {
+				const count = countPhone + skipPhone + 1
 				if (!phone.digits) {
 					log(
 						`🤷 [${count}/${org.phones.length}] SKIPPING ${org.name} - ${phone._id.$oid}: Missing phone number.`
@@ -303,9 +333,9 @@ export const generateRecords = async (task: ListrTask) => {
 		} else {
 			let countEmail = 0
 			let skipEmail = 0
-			const count = countEmail + skipEmail + 1
 			log(`🛠️ Generating Email ${pluralRecord(org.emails)} for ${org.name}`)
 			for (const email of org.emails) {
+				const count = countEmail + skipEmail + 1
 				if (!email.email) {
 					log(
 						`🤷 [${count}/${org.emails.length}] SKIPPING ${org.name} - ${email._id.$oid}: Missing email address.`
@@ -341,7 +371,8 @@ export const generateRecords = async (task: ListrTask) => {
 			log(`🤷 SKIPPING Website records for ${org.name}: No websites`)
 		} else {
 			let countWebsite = 0
-			const count = countWebsite + 1
+			// eslint-disable-next-line prefer-const
+			let count = countWebsite + 1
 			const total = org.website && org.website_ES ? 2 : 1
 			const sites =
 				org.website && org.website_ES ? [org.website, org.website_ES] : [org.website ?? org.website_ES]
@@ -377,11 +408,11 @@ export const generateRecords = async (task: ListrTask) => {
 		} else {
 			let countSocial = 0
 			let skipSocial = 0
-			const count = countSocial + skipSocial + 1
 			const regex =
 				/(?:(?:http|https):\/\/|)(?:www\.|)(\w*)\.com\/(?:channel\/|user\/|in\/|company\/|)([a-zA-Z0-9._-]{1,})/
 			log(`🛠️ Generating Social Media ${pluralRecord(org.social_media)} for ${org.name}`)
 			for (const social of org.social_media) {
+				const count = countSocial + skipSocial + 1
 				const [, service, username] = regex.exec(social.url) ?? [undefined, undefined, '']
 				const servLookup = social.name ? social.name : service ?? ''
 				const serviceId = socialMediaMap.get(servLookup)
@@ -417,10 +448,10 @@ export const generateRecords = async (task: ListrTask) => {
 		} else {
 			let countPhoto = 0
 			const skipPhoto = 0
-			const count = countPhoto + skipPhoto + 1
 			log(`🛠️ Generating Photo ${pluralRecord(org.photos)} for ${org.name}`)
 			let apiCreated = false
 			for (const photo of org.photos) {
+				const count = countPhoto + skipPhoto + 1
 				if (!apiCreated) {
 					log(`🛠️ Generating Outside API Connection record for ${org.name}`)
 					orgAPIConnections.push({
@@ -436,8 +467,8 @@ export const generateRecords = async (task: ListrTask) => {
 				orgPhotos.push({
 					orgId,
 					src,
-					height,
-					width,
+					height: Math.round(height),
+					width: Math.round(width),
 				})
 				countPhoto++
 			}
@@ -454,12 +485,12 @@ export const generateRecords = async (task: ListrTask) => {
 			let countHours = 0
 			let skipHours = 0
 			let totalRecordsGenerated = 0
-			const count = countHours + skipHours + 1
 			const needAssignment = org.locations.length < 1
 			const helpers = { dayMap, hoursMap, hoursMeta }
 			log(`🛠️ Generating Hours ${pluralRecord(org.schedules)} for ${org.name}`)
 
 			for (const schedule of org.schedules) {
+				const count = countHours + skipHours + 1
 				const hours = parseSchedule(schedule, helpers)
 				let recordsGenerated = 0
 				if (!hours) {
@@ -480,8 +511,8 @@ export const generateRecords = async (task: ListrTask) => {
 						id,
 						organizationId: orgId,
 						dayIndex: parseInt(key),
-						start,
-						end,
+						start: DateTime.fromFormat(start, 'HH:mm').toJSDate(),
+						end: DateTime.fromFormat(end, 'HH:mm').toJSDate(),
 						closed,
 						legacyId,
 						legacyName,
@@ -512,7 +543,7 @@ export const generateRecords = async (task: ListrTask) => {
 			let skips = 0
 			let supplements = 0
 			let servAreas = 0
-			const count = counter + skips + 1
+			const total = Object.keys(org.properties).length
 			log(`🛠️ Generating Attribute ${pluralRecord(Object.keys(org.properties))} for ${org.name}`)
 			const unsupportedAttributes: Record<string, unknown>[] = []
 
@@ -520,6 +551,7 @@ export const generateRecords = async (task: ListrTask) => {
 			if (!organizationId) break
 
 			for (const [tag, value] of Object.entries(org.properties)) {
+				const count = counter + skips + 1
 				if (!tag) {
 					skips++
 				}
@@ -528,7 +560,7 @@ export const generateRecords = async (task: ListrTask) => {
 				const tagRecord = tagCheck({ tag, value, helpers: tagHelpers })
 				if (tagRecord.type !== 'unknown') {
 					log(
-						`🛠️ [${count}/${org.properties.length}] Organization ${
+						`🛠️ [${count}/${total}] Organization ${
 							tagRecord.type === 'area' ? 'Service Area' : 'Attribute'
 						}: ${tagRecord.type === 'area' ? tagRecord.attribute.name : tagRecord.attribute.tag}`
 					)
@@ -639,7 +671,7 @@ export const generateRecords = async (task: ListrTask) => {
 				counter++
 			}
 			if (unsupportedAttributes.length) {
-				const attributeId = attributeList.get('incompatible-info')?.id
+				const attributeId = attributeList.get('system-incompatible-info')?.id
 				if (!attributeId) throw new Error('Cannot find "incompatible info" tag')
 				const recordId = cuid()
 				attributeRecords.push({
@@ -675,11 +707,11 @@ export const generateRecords = async (task: ListrTask) => {
 		} else {
 			let counter = 0
 			const skips = 0
-			let accessCount = 0
-			const count = counter + skips + 1
 			log(`🛠️ Generating Service ${pluralRecord(org.services)} for ${org.name}`)
 
 			for (const service of org.services) {
+				let accessCount = 0
+				const count = counter + skips + 1
 				const serviceId = cuid()
 				const { key: descriptionKey, ns: descriptionNs } = generateKey({
 					type: 'svc',
@@ -688,6 +720,7 @@ export const generateRecords = async (task: ListrTask) => {
 					servId: serviceId,
 					text: service.description,
 				})
+				exportTranslation(descriptionKey, service.description_ES)
 				log(`🛠️ [${count}/${org.services.length}] Service: ${service.name}`)
 				if (service.access_instructions.length) {
 					log(`🛠️ Generating Service Access ${pluralRecord(service.access_instructions)}`)
@@ -715,6 +748,7 @@ export const generateRecords = async (task: ListrTask) => {
 						suppId: attributeSuppId,
 						text: access.instructions,
 					})
+					exportTranslation(textKey, access.instructions_ES)
 
 					attributeRecords.push({
 						id: attributeRecordId,
@@ -757,19 +791,20 @@ export const generateRecords = async (task: ListrTask) => {
 
 				/* Generate Service Attributes */
 				if (!service.properties || !Object.keys(service.properties).length) {
-					log(`🤷 SKIPPING Attribute records for ${service.name}: No attributes attached to organization`)
+					log(`🤷 SKIPPING Attribute records for ${service.name}: No attributes attached to service`)
 				} else {
 					let counter = 0
 					let skips = 0
 					let supplements = 0
 					let servAreas = 0
-					const count = counter + skips + 1
+					const total = Object.keys(service.properties).length
 					log(`🛠️ Generating Attribute ${pluralRecord(Object.keys(service.properties))} for ${service.name}`)
 					const unsupportedAttributes: Record<string, unknown>[] = []
 
 					const organizationId = orgId
 
 					for (const [tag, value] of Object.entries(service.properties)) {
+						const count = counter + skips + 1
 						if (!tag) {
 							skips++
 						}
@@ -779,7 +814,7 @@ export const generateRecords = async (task: ListrTask) => {
 						const tagRecord = tagCheck({ tag, value: tagValue, helpers: tagHelpers })
 						if (tagRecord.type !== 'unknown') {
 							log(
-								`🛠️ [${count}/${service.properties.length}] ${
+								`🛠️ [${count}/${total}] ${
 									tagRecord.type === 'area' ? 'Service Area' : 'Service Attribute'
 								}: ${tagRecord.type === 'area' ? tagRecord.attribute.name : tagRecord.attribute.tag}`
 							)
@@ -895,7 +930,7 @@ export const generateRecords = async (task: ListrTask) => {
 						counter++
 					}
 					if (unsupportedAttributes.length) {
-						const attributeId = attributeList.get('incompatible-info')?.id
+						const attributeId = attributeList.get('system-incompatible-info')?.id
 						if (!attributeId) throw new Error('Cannot find "incompatible info" tag')
 						const recordId = cuid()
 						attributeRecords.push({
@@ -925,18 +960,96 @@ export const generateRecords = async (task: ListrTask) => {
 					)
 				}
 
+				/* Generate Service Tags */
+				const serviceTagConnection: Prisma.ServiceTagWhereUniqueInput[] = []
+				if (!service.tags || !Object.keys(service.tags).length) {
+					log(`🤷 SKIPPING Attribute records for ${service.name}: No tags attached to service`)
+				} else {
+					let counter = 0
+					let skips = 0
+					const tagSet = new Map<string, string>()
+
+					for (const topVal of Object.values(service.tags)) {
+						const flatServ = flatten(topVal) as Record<string, unknown>
+						if (!Object.keys(topVal).length) {
+							continue
+						}
+						for (const [key] of Object.entries(flatServ)) {
+							const normalizedTag = serviceTagTranslation.get(key)
+							const tag = serviceTags.get(normalizedTag ?? '')
+							if (!tag || !normalizedTag) {
+								log(`🤷 SKIPPING Attribute ${key}: unable to map to Service Tag.`)
+								continue
+							}
+							tagSet.set(normalizedTag, tag)
+						}
+					}
+
+					const tagObj = Object.fromEntries(tagSet)
+					const totalTags = Object.keys(tagObj).length
+					if (!totalTags) {
+						log(`🤷 SKIPPING Attribute records for ${service.name}: No tags to attach`)
+						skips++
+						continue
+					}
+					for (const [key, value] of Object.entries(tagObj)) {
+						log(`🔗 [${counter + 1}/${totalTags}] Generating Service Tag Link: ${key}`)
+
+						serviceTagConnection.push({ id: value })
+
+						counter++
+					}
+					log(
+						`🔗 Generated ${counter} Service Tag ${
+							counter === 1 ? 'link' : 'links'
+						}. Invalid tags skipped: ${skips}`
+					)
+				}
+				/* Generate user permissions */
+				const orgLinkedUsers: Prisma.UserWhereUniqueInput[] = []
+				const orgCreateEditors: Prisma.PermissionAssetCreateWithoutOrganizationInput[] = []
+
+				const editOrgPerm = permissionMap.get('editSingleOrg')
+
+				if (org.owners?.length && editOrgPerm) {
+					log(`🛠️ Generating claimed user ${pluralRecord(org.owners)} for ${org.name}`)
+					let counter = 0
+					let skips = 0
+
+					for (const owner of org.owners) {
+						const count = counter + skips + 1
+						const userId = userMap.get(owner.userId)
+						if (!userId) {
+							log(`🤷 SKIPPING connection for ${owner.userId}: Cannot map userId`)
+							skips++
+							continue
+						}
+						orgLinkedUsers.push({ id: userId })
+						orgCreateEditors.push({
+							permission: connect(editOrgPerm) as ConnectIdString,
+							user: connect(userId) as ConnectIdString,
+							approved: owner.isApproved,
+							createdAt,
+							updatedAt,
+						})
+
+						log(
+							`🛠️ [${count}/${org.owners.length}] Org owner records for: ${
+								owner.userId
+							} - Linked to org: ${isSuccess(true)}, Permission record: ${isSuccess(
+								true
+							)} (Approved: ${isSuccess(owner.isApproved)})`
+						)
+						counter++
+					}
+				}
+
 				/* Connect to existing records, if they exist.*/
 				const email = newEmailMap.get(service.email_id ?? '')
 				const location = newLocationMap.get(service.location_id ?? '')
 				const phone = newPhoneMap.get(service.phone_id ?? '')
 				const schedule = newScheduleMap.get(service.schedule_id ?? '')
-				const connect = (
-					connections: string | { id: string }[] | undefined
-				): ConnectReturn<string | { id: string }[] | undefined> => {
-					if (!connections) return undefined
 
-					return Array.isArray(connections) ? { connect: connections } : { connect: { id: connections } }
-				}
 				log(
 					`🔗 Generating link - Hours: ${isSuccess(schedule)}, Email: ${isSuccess(
 						email
@@ -951,6 +1064,7 @@ export const generateRecords = async (task: ListrTask) => {
 						orgEmail: connect(email),
 						orgLocation: connect(location),
 						orgPhone: connect(phone),
+						service: connectMulti(serviceTagConnection),
 					},
 				})
 				log(
@@ -958,10 +1072,42 @@ export const generateRecords = async (task: ListrTask) => {
 						descriptionKey && descriptionNs
 					)}`
 				)
+				orgConnections.push({
+					where: {
+						id: orgId,
+					},
+					data: {
+						associatedUsers: connectMulti(orgLinkedUsers),
+						allowedEditors: createMulti(orgCreateEditors),
+					},
+				})
 				counter++
 			}
 		}
+		orgCount++
+		task.title = `Generate supplemental organization records [${orgCount}/${orgs.length}]`
+		if (orgCount === 10) break
 	}
+	const translationsOut = Object.fromEntries(translatedStrings)
+	log(`🛠️ Generating translation JSON file (${translatedStrings.size} translations)`)
+	fs.writeFileSync('es-migration.json', JSON.stringify(translationsOut))
+
+	log(`Translation keys generated: ${translationKeys.length}`)
+	log(`Organization locations generated: ${orgLocations.length}`)
+	log(`Phone records generated: ${orgPhones.length}`)
+	log(`Email records generated: ${orgEmails.length}`)
+	log(`Website records generated: ${orgWebsites.length}`)
+	log(`Social media records generated: ${orgSocials.length}`)
+	log(`Outside API connection records generated: ${orgAPIConnections.length}`)
+	log(`Organization photo records generated: ${orgPhotos.length}`)
+	log(`Operating hours records generated: ${orgHours.length}`)
+	log(`Service records generated: ${orgServices.length}`)
+	log(`Service access records generated: ${serviceAccess.length}`)
+	log(`Attribute records generated: ${attributeRecords.length}`)
+	log(`Attribute supplements generated: ${attributeSupplements.length}`)
+	log(`Service area records generated: ${serviceAreas.length}`)
+	log(`Service link updates generated: ${serviceConnections.length}`)
+	log(`Organization link updates generated: ${orgConnections.length}`)
 }
 
 type ConnectReturn<T extends string | { id: string }[] | undefined> = T extends string
@@ -969,6 +1115,8 @@ type ConnectReturn<T extends string | { id: string }[] | undefined> = T extends 
 	: T extends undefined
 	? undefined
 	: { connect: T }
+
+type ConnectIdString = { connect: { id: string } }
 
 export type HoursHelper = {
 	dayMap: typeof dayMap

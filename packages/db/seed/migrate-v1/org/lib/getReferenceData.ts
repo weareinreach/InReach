@@ -1,7 +1,7 @@
 import { prisma } from '~/index'
 
 /** It returns all the service categories and the services that belong to each category */
-const getServiceTags = async () => {
+export const getServiceTags = async () => {
 	const result = await prisma.serviceCategory.findMany({
 		select: {
 			category: true,
@@ -79,7 +79,7 @@ const getServiceAreas = async () => {
 			name: true,
 		},
 	})
-	const distMap = new Map(distList.map(({ id, slug }) => [slug, { id, name }]))
+	const distMap = new Map(distList.map(({ id, slug, name }) => [slug, { id, name }]))
 	const countryMap = new Map(country.map(({ cca2, id, name }) => [cca2, { id, name }]))
 	const countryNameMap = new Map(country.map(({ id, name }) => [name, { id, name }]))
 
@@ -126,6 +126,29 @@ const getSocialMediaMap = async () => {
 	return resultMap
 }
 
+export const getUserData = async () => {
+	const result = await prisma.user.findMany({
+		select: {
+			id: true,
+			legacyId: true,
+		},
+	})
+	const filteredList = result.filter((x) => x.legacyId !== null)
+	const userMap = new Map(filteredList.map((x) => [x.legacyId, x.id]))
+	return userMap
+}
+
+export const getPermissions = async () => {
+	const result = await prisma.permissionItem.findMany({
+		select: {
+			id: true,
+			name: true,
+		},
+	})
+	const resultMap = new Map(result.map((x) => [x.name, x.id]))
+	return resultMap
+}
+
 export const getReferenceData = async (): Promise<ReferenceData> => {
 	const serviceTags = await getServiceTags()
 	const attributeList = await getAttributeList()
@@ -133,17 +156,21 @@ export const getReferenceData = async (): Promise<ReferenceData> => {
 	const { langMap, localeMap } = await getLanguages()
 	const countryMap = await getCountryMap()
 	const socialMediaMap = await getSocialMediaMap()
+	const userMap = await getUserData()
+	const permissionMap = await getPermissions()
 
 	const references = {
-		serviceTags,
 		attributeList,
+		countryMap,
+		countryNameMap,
 		distList,
 		distMap,
 		langMap,
 		localeMap,
-		countryMap,
-		countryNameMap,
+		permissionMap,
+		serviceTags,
 		socialMediaMap,
+		userMap,
 	}
 	return references
 }
@@ -166,15 +193,21 @@ export type SocialMediaMap = Awaited<ReturnType<typeof getSocialMediaMap>>
 export type CountryNameMap = Awaited<ReturnType<typeof getServiceAreas>>['countryNameMap']
 
 export type DistList = Awaited<ReturnType<typeof getServiceAreas>>['distList']
+/** @param - User legacyId @returns user ID */
+export type UserMap = Awaited<ReturnType<typeof getUserData>>
+/** @param - Permission name @returns permission id */
+export type PermissionMap = Awaited<ReturnType<typeof getPermissions>>
 
 export type ReferenceData = {
-	serviceTags: ServiceTagMap
 	attributeList: AttributeListMap
+	countryMap: CountryMap
+	countryNameMap: CountryNameMap
+	distList: DistList
 	distMap: DistMap
 	langMap: LanguageMap
 	localeMap: LocaleMap
-	countryMap: CountryMap
+	permissionMap: PermissionMap
+	serviceTags: ServiceTagMap
 	socialMediaMap: SocialMediaMap
-	countryNameMap: CountryNameMap
-	distList: DistList
+	userMap: UserMap
 }
