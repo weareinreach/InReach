@@ -63,7 +63,7 @@
 	},
 	"packageManager": "pnpm@7.17.0",
 	"engines": {
-		"node": ">=16.19.0",
+		"node": ">=16.18.0",
 		"pnpm": ">=7"
 	},
 	"cypress-cucumber-preprocessor": {
