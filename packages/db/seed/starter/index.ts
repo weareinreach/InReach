@@ -12,4 +12,5 @@ export * from './10-sogIdentity'
 export * from './11-immigration'
 export * from './12-geodata'
 export * from './13-outsideAPI'
+export * from './14-permissions'
 // codegen:end

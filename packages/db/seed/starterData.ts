@@ -9,6 +9,7 @@ import {
 	seedLanguages,
 	seedNavigation,
 	seedOutsideAPI,
+	seedPermissions,
 	seedSOGIdentity,
 	seedServices,
 	seedSocialMediaLinks,
@@ -107,6 +108,11 @@ const tasks = new Listr<Context>(
 					{
 						title: 'Outside API Services',
 						task: async (_ctx, task): Promise<void> => seedOutsideAPI(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Permissions',
+						task: async (_ctx, task): Promise<void> => seedPermissions(task),
 						options: renderOptions,
 					},
 				]),
