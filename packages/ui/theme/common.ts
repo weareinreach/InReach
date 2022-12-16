@@ -36,12 +36,30 @@ export const commonTheme: MantineThemeOverride = {
 			defaultProps: {
 				radius: 'xl',
 			},
+
 			styles: (theme, params: ButtonStylesParams) => {
 				const baseStyle = {
+					root: {
+						padding: '6px 48px',
+						width: 'hug',
+						height: '48px',
+						gap: theme.spacing.sm,
+					},
 					inner: {
 						color: theme.colors.primaryText[9],
-						fontWeight: theme.other.fontWeight.bold,
-						textTransform: 'uppercase',
+					},
+					leftIcon: {
+						svg: {
+							height: theme.spacing.lg,
+							width: theme.spacing.lg,
+						},
+					},
+					label: {
+						fontWeight: theme.other.fontWeight.semibold,
+						width: 'hug',
+						height: 'hug',
+						top: '14px',
+						left: '80px',
 					},
 				}
 
