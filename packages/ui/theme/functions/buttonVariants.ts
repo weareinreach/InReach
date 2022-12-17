@@ -1,4 +1,4 @@
-import { ButtonVariant, CSSObject, Flex, MantineTheme } from '@mantine/core'
+import { ButtonVariant, CSSObject, MantineTheme } from '@mantine/core'
 
 type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => Record<string, CSSObject>
 
@@ -9,6 +9,7 @@ type CustomVariants =
 	| 'lg-primary'
 	| 'lg-secondary'
 	| 'lg-accent'
+
 interface ButtonStylesParams {
 	variant: ButtonVariant | CustomVariants
 }
@@ -35,7 +36,6 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 				},
 				inner: {},
 			}
-
 		case 'sm-primary':
 			return {
 				root: {
@@ -51,12 +51,12 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 				},
 				inner: {
 					color: theme.other.colors.secondary.white,
-				},
-				label: {
-					left: theme.spacing.md * 2,
-				},
-				leftIcon: {
-					display: 'none',
+					label: {
+						left: theme.spacing.md * 2,
+					},
+					leftIcon: {
+						display: 'none',
+					},
 				},
 			}
 		case 'sm-secondary':
@@ -76,12 +76,12 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 				},
 				inner: {
 					color: theme.colors.primaryText[9],
-				},
-				label: {
-					left: theme.spacing.md * 2,
-				},
-				leftIcon: {
-					display: 'none',
+					label: {
+						left: theme.spacing.md * 2,
+					},
+					leftIcon: {
+						display: 'none',
+					},
 				},
 			}
 		case 'sm-accent':
@@ -99,12 +99,12 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 				},
 				inner: {
 					color: theme.colors.primaryText[0],
-				},
-				label: {
-					left: theme.spacing.md * 2,
-				},
-				leftIcon: {
-					display: 'none',
+					label: {
+						left: theme.spacing.md * 2,
+					},
+					leftIcon: {
+						display: 'none',
+					},
 				},
 			}
 		case 'lg-primary':
@@ -115,6 +115,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 						background: 'linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #000000',
 					},
 				},
+				inner: {},
 			}
 		case 'lg-secondary':
 			return {
@@ -139,6 +140,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 						background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), #4792DA',
 					},
 				},
+				inner: {},
 			}
 	}
 	return {

@@ -69,20 +69,19 @@ export const commonTheme: MantineThemeOverride = {
 					},
 					inner: {
 						color: theme.other.colors.secondary.white,
-					},
-					leftIcon: {
-						svg: {
-							height: theme.spacing.lg,
-							width: theme.spacing.lg,
+						leftIcon: {
+							svg: {
+								height: theme.spacing.lg,
+								width: theme.spacing.lg,
+							},
+						},
+						label: {
+							fontSize: theme.spacing.md,
+							fontWeight: theme.other.fontWeight.button,
+							lineHeight: '125%',
 						},
 					},
-					label: {
-						fontSize: theme.spacing.md,
-						fontWeight: theme.other.fontWeight.button,
-						lineHeight: '125%',
-					},
 				}
-
 				return merge(baseStyle, buttonVariants(theme, params))
 			},
 		},
