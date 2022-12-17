@@ -39,15 +39,10 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'sm-primary':
 			return {
 				root: {
-					paddingTop: theme.spacing.sm / 2,
-					paddingBottom: theme.spacing.sm / 2,
 					paddingLeft: theme.spacing.md * 2,
 					paddingRight: theme.spacing.md * 2,
 					height: theme.spacing.lg * 2,
 					gap: theme.spacing.xs,
-					'&:hover': {
-						background: 'linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #000000',
-					},
 				},
 				inner: {
 					color: theme.other.colors.secondary.white,
@@ -62,8 +57,6 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'sm-secondary':
 			return {
 				root: {
-					paddingTop: theme.spacing.sm / 2,
-					paddingBottom: theme.spacing.sm / 2,
 					paddingLeft: theme.spacing.md * 2,
 					paddingRight: theme.spacing.md * 2,
 					height: theme.spacing.lg * 2,
@@ -87,14 +80,12 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'sm-accent':
 			return {
 				root: {
-					paddingTop: theme.spacing.sm / 2,
-					paddingBottom: theme.spacing.sm / 2,
 					paddingLeft: theme.spacing.md * 2,
 					paddingRight: theme.spacing.md * 2,
 					height: theme.spacing.lg * 2,
 					backgroundColor: theme.other.colors.tertiary.red,
 					'&:hover': {
-						background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), #C05C4A',
+						background: theme.fn.darken(theme.other.colors.tertiary.red, 0.4),
 					},
 				},
 				inner: {
@@ -111,9 +102,6 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 			return {
 				root: {
 					borderRadius: theme.radius.md,
-					'&:hover': {
-						background: 'linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #000000',
-					},
 				},
 				inner: {},
 			}
@@ -137,7 +125,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 				root: {
 					backgroundColor: theme.colors.inReachSecondaryRegular[5],
 					'&:hover': {
-						background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), #4792DA',
+						background: theme.fn.darken(theme.colors.inReachSecondaryRegular[5], 0.4),
 					},
 				},
 				inner: {},

@@ -59,27 +59,29 @@ export const commonTheme: MantineThemeOverride = {
 				const baseStyle = {
 					root: {
 						top: theme.spacing.lg,
-						paddingTop: theme.spacing.sm / 2,
-						paddingBottom: theme.spacing.sm / 2,
+						padding: theme.spacing.sm / 2,
 						paddingLeft: theme.spacing.xl * 2,
 						paddingRight: theme.spacing.xl * 2,
 						height: theme.spacing.xl * 2,
 						gap: theme.spacing.sm,
 						backgroundColor: theme.other.colors.secondary.black,
+						'&:hover': {
+							background: theme.fn.lighten(theme.other.colors.secondary.black, 0.4),
+						},
 					},
 					inner: {
 						color: theme.other.colors.secondary.white,
-						leftIcon: {
-							svg: {
-								height: theme.spacing.lg,
-								width: theme.spacing.lg,
-							},
+					},
+					leftIcon: {
+						svg: {
+							height: theme.spacing.lg,
+							width: theme.spacing.lg,
 						},
-						label: {
-							fontSize: theme.spacing.md,
-							fontWeight: theme.other.fontWeight.button,
-							lineHeight: '125%',
-						},
+					},
+					label: {
+						fontSize: theme.spacing.md,
+						fontWeight: theme.other.fontWeight.button,
+						lineHeight: '125%',
 					},
 				}
 				return merge(baseStyle, buttonVariants(theme, params))
