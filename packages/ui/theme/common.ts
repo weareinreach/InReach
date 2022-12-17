@@ -1,7 +1,7 @@
 import { themes } from '@storybook/theming'
 import { merge } from 'merge-anything'
 
-import type { ButtonStylesParams, MantineThemeOverride } from '@mantine/core'
+import { ButtonStylesParams, MantineThemeOverride } from '@mantine/core'
 
 import { customColors } from './colors'
 import { buttonVariants } from './functions'
@@ -58,6 +58,8 @@ export const commonTheme: MantineThemeOverride = {
 			styles: (theme, params: ButtonStylesParams) => {
 				const baseStyle = {
 					root: {
+						position: 'absolute',
+						display: 'flex',
 						top: theme.spacing.lg,
 						padding: theme.spacing.sm / 2,
 						paddingLeft: theme.spacing.xl * 2,
@@ -81,7 +83,9 @@ export const commonTheme: MantineThemeOverride = {
 					label: {
 						fontSize: theme.spacing.md,
 						fontWeight: theme.other.fontWeight.button,
-						lineHeight: '125%',
+						height: 'auto',
+						width: 'auto',
+						lineHeight: theme.spacing.lg + 'px',
 					},
 				}
 				return merge(baseStyle, buttonVariants(theme, params))

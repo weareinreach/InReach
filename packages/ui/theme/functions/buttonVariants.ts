@@ -42,7 +42,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 					paddingLeft: theme.spacing.md * 2,
 					paddingRight: theme.spacing.md * 2,
 					height: theme.spacing.lg * 2,
-					gap: theme.spacing.xs,
+					gap: theme.spacing.md / 2,
 				},
 				inner: {
 					color: theme.other.colors.secondary.white,
@@ -63,6 +63,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 					border: theme.other.border.default,
 					borderColor: theme.other.colors.tertiary.coolGray,
 					backgroundColor: theme.other.colors.secondary.white,
+					gap: theme.spacing.md / 2,
 					'&:hover': {
 						backgroundColor: theme.other.colors.primary.lightGray,
 					},
@@ -84,6 +85,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 					paddingRight: theme.spacing.md * 2,
 					height: theme.spacing.lg * 2,
 					backgroundColor: theme.other.colors.tertiary.red,
+					gap: theme.spacing.md / 2,
 					'&:hover': {
 						background: theme.fn.darken(theme.other.colors.tertiary.red, 0.4),
 					},

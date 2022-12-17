@@ -17,16 +17,17 @@ export default {
 	],
 } as ComponentMeta<typeof Button>
 
-const Template: ComponentStory<typeof Button> = (args) => (
+const Large: ComponentStory<typeof Button> = (args) => (
 	<Button leftIcon={<Icon icon={args.icon} />} {...args} />
 )
+const Small: ComponentStory<typeof Button> = (args) => <Button {...args} />
 
-export const SmallPrimary = Template.bind({})
-export const SmallSecondary = Template.bind({})
-export const SmallAccent = Template.bind({})
-export const LargePrimary = Template.bind({})
-export const LargeSecondary = Template.bind({})
-export const LargeAccent = Template.bind({})
+export const SmallPrimary = Small.bind({})
+export const SmallSecondary = Small.bind({})
+export const SmallAccent = Small.bind({})
+export const LargePrimary = Large.bind({})
+export const LargeSecondary = Large.bind({})
+export const LargeAccent = Large.bind({})
 
 SmallPrimary.args = {
 	variant: 'sm-primary',
