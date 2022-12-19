@@ -122,7 +122,7 @@ const getSocialMediaMap = async () => {
 			name: true,
 		},
 	})
-	const resultMap = new Map(result.map((x) => [x.id, x.name]))
+	const resultMap = new Map(result.map((x) => [x.name, x.id]))
 	return resultMap
 }
 

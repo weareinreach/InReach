@@ -26,10 +26,10 @@ export const generateKey: GenerateKey<KeyType> = (params) => {
 			key = `${orgSlug}.attribute.${params.suppId}`
 			break
 	}
-	return { ns, key, text }
+	return { ns, key, text: text?.trim() }
 }
 
-type KeyType = 'desc' | 'svc' | 'attrSupp'
+export type KeyType = 'desc' | 'svc' | 'attrSupp'
 type DescKey = {
 	type: 'desc'
 	orgSlug: string | undefined
@@ -48,7 +48,9 @@ type AttrSuppKey = {
 	text: string | undefined
 	suppId: string
 }
-type GenerateKey<T> = (params: T extends 'desc' ? DescKey : T extends 'svc' ? SvcKey : AttrSuppKey) => {
+export type GenerateKey<T> = (
+	params: T extends 'desc' ? DescKey : T extends 'svc' ? SvcKey : AttrSuppKey
+) => {
 	key: string | undefined
 	ns: string | undefined
 	text: string | undefined

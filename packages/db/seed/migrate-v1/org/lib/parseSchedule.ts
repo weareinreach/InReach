@@ -22,12 +22,13 @@ export const parseSchedule = (schedule: Schedule, helpers: HoursHelper) => {
 			const dayIndex = dayMap.get(day) ?? ''
 			if (Object.keys(hours).includes(dayIndex.toString() ?? '')) {
 				const time = hoursMap.get(value)
-				if (time === undefined) return
+				if (time === undefined) continue
 				/* handle 'multi,' '24h,' & 'closed' */
 				if (hoursMeta.includes(time)) {
 					switch (time) {
 						case 'multi': {
-							hours[dayIndex][hourType] = '00:00'
+							hours[dayIndex].start = '00:00'
+							hours[dayIndex].end = '00:00'
 							hours[dayIndex].needReview = true
 							hours[dayIndex].legacyNote = `multiple times. ${note ?? ''}`.trim()
 							break

@@ -1,6 +1,7 @@
 import slugify from 'slugify'
 
 import { prisma } from '~/index'
+import { slugSet } from '~/seed/migrate-v1/org/generator'
 
 /**
  * It takes a name, city, and state, and returns a unique slug based on those values
@@ -26,7 +27,7 @@ export const uniqueSlug = async (name: string, city?: string, state?: string) =>
 				slug: true,
 			},
 		})
-		return existing?.slug ? false : true
+		return existing?.slug || slugSet.has(slug) ? false : true
 	}
 	const slugs = [
 		slugify(name, { lower: true }),
