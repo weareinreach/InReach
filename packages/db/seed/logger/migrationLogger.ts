@@ -6,10 +6,7 @@ const date = DateTime.now()
 
 const dateFormat = date.toFormat('yyyy-MM-dd-HH.mm.ss')
 
-export const logFile = new Console({
-	stdout: fs.createWriteStream(`./seed/logs/seed-${dateFormat}.log`),
-})
-
 export const migrateLog = new Console({
-	stdout: fs.createWriteStream(`./seed/logs/migrate-${dateFormat}.log`),
+	stdout: fs.createWriteStream(`./seed/logs/migrate-${dateFormat}.log`, { flags: 'w' }),
+	stderr: fs.createWriteStream(`./seed/logs/migrate-${dateFormat}-error.log`, { flags: 'w' }),
 })
