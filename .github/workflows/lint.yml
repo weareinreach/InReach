@@ -23,16 +23,16 @@ jobs:
           fetch-depth: 0
       - name: Import GPG key
         id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v5
+        uses: crazy-max/ghaction-import-gpg@111c56156bcc6918c056dbef52164cfa583dc549 # v5
         with:
           gpg_private_key: ${{ secrets.BOT_GPG_KEY }}
           git_config_global: true
           git_commit_gpgsign: true
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3
         with:
           node-version: 16
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@c3b53f6a16e57305370b4ae5a540c2077a1d50dd # v2.2.4
         name: Install pnpm
         id: pnpm-install
         with:
@@ -42,7 +42,7 @@ jobs:
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@v3
+      - uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v3
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
@@ -62,7 +62,7 @@ jobs:
 
       # Commit changes
       - name: Commit changed files
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4
         with:
           commit_message: 'chore: lint & format'
           skip_fetch: true
