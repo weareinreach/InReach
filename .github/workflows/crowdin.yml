@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - 'apps/app/public/locales/en/*.json'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   synchronize-with-crowdin:
@@ -13,18 +16,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
 
+      - name: Remove Jira ticket ID from branch name
+        id: branchregex
+        uses: ashley-taylor/regex-property-action@v1.3
+        with:
+          value: ${{ github.ref_name }}
+          regex: IN-\d+
+          flags: gi
+          replacement: IN-xxx
+
       - name: crowdin action
         uses: crowdin/github-action@6db87d404b6a13cd118070f9af29957aa47ee1f3 # 1.5.2
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
-          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         with:
+          upload_sources: true
           upload_translations: false
-          download_translations: false
-          localization_branch_name: l10n_crowdin_action
-          create_pull_request: false
-          pull_request_body: 'New Crowdin pull request with translations'
-          pull_request_labels: 'translations'
+          download_translations: true
+          localization_branch_name: ${{ steps.branchregex.outputs.value }}
+          create_pull_request: true
+          pull_request_title: 'chore(i18n): Updated translations from Crowdin'
+          pull_request_labels: "translations, kodiak: merge.method = 'squash'"
           pull_request_base_branch_name: ${{ github.ref_name }}
           crowdin_branch_name: ${{ github.ref_name }}

@@ -1,58 +1,55 @@
 import { prisma } from '~/index'
-import { namespaces } from '~/seed/data/namespaces'
-import { socialMediaLinks } from '~/seed/data/socialMediaLink'
-import { createMeta } from '~/seed/data/user'
-import { ListrTask } from '~/seed/starter'
+import { namespaces, socialMediaLinks } from '~/seed/data'
+import { logFile } from '~/seed/logger'
+import { ListrTask } from '~/seed/starterData'
 
 export const seedSocialMediaLinks = async (task: ListrTask) => {
 	try {
-		const { id: namespaceId } = await prisma.translationNamespace.upsert({
+		const { name: namespace } = await prisma.translationNamespace.upsert({
 			where: {
 				name: namespaces.socialMedia,
 			},
 			create: {
 				name: namespaces.socialMedia,
-				...createMeta,
 			},
 			update: {},
 			select: {
-				id: true,
+				name: true,
 			},
 		})
 
 		const transactions = socialMediaLinks.map((item) =>
 			prisma.socialMediaLink.upsert({
 				where: {
-					service_href: {
-						service: item.key,
-						href: item.href,
-					},
+					href: item.href,
 				},
 				create: {
-					service: item.key,
-					href: item.href,
-					icon: item.iconCode,
-					translationKey: {
+					service: {
 						connectOrCreate: {
 							where: {
-								key_namespaceId: {
-									key: item.key,
-									namespaceId,
-								},
+								name: item.key,
 							},
 							create: {
-								key: item.key,
-								text: item.key,
-								namespace: {
-									connect: {
-										id: namespaceId,
+								name: item.key,
+								logoIcon: item.iconCode,
+								urlBase: item.href,
+								internal: item.key === 'email' ? true : false,
+								key: {
+									create: {
+										key: item.key,
+										text: item.key,
+										namespace: {
+											connect: {
+												name: namespace,
+											},
+										},
 									},
 								},
-								...createMeta,
 							},
 						},
 					},
-					...createMeta,
+					href: item.href,
+					icon: item.iconCode,
 				},
 				update: {},
 			})
@@ -60,6 +57,7 @@ export const seedSocialMediaLinks = async (task: ListrTask) => {
 
 		const result = await prisma.$transaction(transactions)
 		const logMessage = `Social Media Link records added: ${result.length}`
+		logFile.log(logMessage)
 		task.output = logMessage
 		task.title = `Social Media Links (${result.length} records)`
 	} catch (err) {

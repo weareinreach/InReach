@@ -1,10 +1,11 @@
+import { countries as countryExtra } from 'countries-languages'
+
 import { prisma } from '~/index'
 
-import { ListrTask } from '.'
-import { type Countries, countryData } from '../data/countries'
-import { namespaces } from '../data/namespaces'
-import { createdBy, updatedBy } from '../data/user'
+import { namespaces } from '../data/00-namespaces'
+import { type Countries, countryData } from '../data/04-countries'
 import { logFile } from '../logger'
+import { ListrTask } from '../starterData'
 
 const translationNamespace = namespaces.country
 
@@ -19,6 +20,24 @@ export const seedCountries = async (task: ListrTask) => {
 					return parseInt(`${country.idd.root}${country.idd.suffixes[0]}`)
 				return parseInt(country.idd.root)
 			}
+			const demonymData: string | undefined = countryExtra[country.cca2]?.demonym
+			const demonym = demonymData
+				? {
+						create: {
+							key: `${country.cca3}.demonym_one`,
+							text: demonymData,
+							namespace: { connect: { name: translationNamespace } },
+							children: {
+								create: {
+									key: `${country.cca3}.demonym_other`,
+									text: `${demonymData}s`,
+									namespace: { connect: { name: translationNamespace } },
+								},
+							},
+						},
+				  }
+				: undefined
+
 			/* Upserting the country. */
 			const prismaCountry = await prisma.country.upsert({
 				where: {
@@ -30,7 +49,8 @@ export const seedCountries = async (task: ListrTask) => {
 					name: country.name.common,
 					dialCode: dialCode(),
 					flag: country.flag,
-					translationKey: {
+					demonym,
+					key: {
 						create: {
 							namespace: {
 								connectOrCreate: {
@@ -39,31 +59,24 @@ export const seedCountries = async (task: ListrTask) => {
 									},
 									create: {
 										name: translationNamespace,
-										createdBy,
-										updatedBy,
 									},
 								},
 							},
-							key: country.cca3,
+							key: `${country.cca3}.name`,
 							text: country.name.common,
-							createdBy,
-							updatedBy,
 						},
 					},
-					createdBy,
-					updatedBy,
 				},
 				update: {
 					cca2: country.cca2,
 					name: country.name.common,
 					dialCode: dialCode(),
 					flag: country.flag,
-					translationKey: {
+					key: {
 						update: {
 							text: country.name.common,
 						},
 					},
-					updatedBy,
 				},
 			})
 			return prismaCountry

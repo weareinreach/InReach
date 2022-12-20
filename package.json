@@ -34,15 +34,15 @@
 		"@badeball/cypress-cucumber-preprocessor": "14.0.0",
 		"@changesets/cli": "2.25.2",
 		"@manypkg/cli": "0.19.2",
-		"@next/eslint-plugin-next": "13.0.5-canary.2",
-		"@trivago/prettier-plugin-sort-imports": "3.4.0",
+		"@next/eslint-plugin-next": "13.0.6",
+		"@trivago/prettier-plugin-sort-imports": "4.0.0",
 		"@types/eslint": "8.4.10",
 		"@types/prettier": "2.7.1",
 		"@typescript-eslint/eslint-plugin": "5.44.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"cypress": "11.1.0",
-		"eslint-config-next": "13.0.5-canary.2",
+		"eslint-config-next": "13.0.6",
 		"eslint-import-resolver-typescript": "3.5.2",
 		"eslint-plugin-codegen": "0.16.1",
 		"eslint-plugin-i18next": "6.0.0-6",
@@ -59,11 +59,11 @@
 		"prettier-plugin-packagejson": "2.3.0",
 		"prettier-plugin-prisma": "4.4.0",
 		"turbo": "1.6.3",
-		"typescript": "4.9.3"
+		"typescript": "4.9.4"
 	},
 	"packageManager": "pnpm@7.17.0",
 	"engines": {
-		"node": ">=16.18",
+		"node": ">=16.18.0",
 		"pnpm": ">=7"
 	},
 	"cypress-cucumber-preprocessor": {
@@ -101,7 +101,8 @@
 			}
 		},
 		"patchedDependencies": {
-			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch"
+			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch",
+			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch"
 		},
 		"overrides": {
 			"trim@<0.0.3": ">=0.0.3",

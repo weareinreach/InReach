@@ -5,8 +5,8 @@
  */
 
 module.exports = {
-	plugins: ['prettier', 'codegen', 'turbo'],
-	extends: ['prettier', 'plugin:turbo/recommended'],
+	plugins: ['codegen', 'turbo', 'prettier'],
+	extends: ['plugin:turbo/recommended', 'prettier'],
 	rules: {
 		'react/jsx-key': 'off',
 		'codegen/codegen': 'error',
@@ -34,7 +34,7 @@ module.exports = {
 			// },
 		],
 	},
-	ignorePatterns: ['**/node_modules/**'],
+	ignorePatterns: ['!.*', '**/node_modules/**', 'dist', '.next'],
 	overrides: [
 		{
 			files: ['**/*.ts?(x)'],

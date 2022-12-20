@@ -2,10 +2,12 @@
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"noImplicitAny": false,
+		"strictNullChecks": true,
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["./*"]
 		}
 	},
-	"include": ["index.ts", "data-transfer", "seed", "zod-schemas", "zod-util"]
+	"include": ["**/*"],
+	"exclude": ["node_modules"]
 }
