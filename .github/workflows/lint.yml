@@ -1,0 +1,44 @@
+name: Lint & format
+
+on:
+  push:
+    branches-ignore: [dev, main]
+  pull_request:
+    branches: [dev]
+
+jobs:
+  prettier:
+    name: 'Lint & format'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: 'Lint: Github Super Linter'
+        uses: github/super-linter/slim@bb2d833b08b6c288608686672b93a8a4589cdc49 # v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: dev
+          LINTER_RULES_PATH: /
+          JAVASCRIPT_ES_CONFIG_FILE: .eslintrc.js
+          TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.js
+          VALIDATE_ALL_CODEBASE: true
+          VALIDATE_ENV: true
+          VALIDATE_GITHUB_ACTIONS: true
+          VALIDATE_GITLEAKS: true
+          VALIDATE_JAVASCRIPT_ES: true
+          VALIDATE_JSON: true
+          VALIDATE_TSX: true
+          VALIDATE_TYPESCRIPT_ES: true
+          VALIDATE_YAML: true
+
+      - name: 'Format: Prettier'
+        uses: creyD/prettier_action@6602189cf8bac1ce73ffe601925f6127ab7f21ac # v4.2
+        with:
+          prettier_plugins: '@trivagoprettier-plugin-sort-imports prettier-plugin-packagejson prettier-plugin-jsdoc prettier-plugin-prisma'
+          prettier_options: --write --ignore-unknown .
+          commit_message: 'chore: formatted code with Prettier'
+          only_changed: true
