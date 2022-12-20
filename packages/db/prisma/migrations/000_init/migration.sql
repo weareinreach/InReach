@@ -89,6 +89,7 @@ CREATE TABLE "UserRole" (
 CREATE TABLE "PermissionAsset" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
+    "approved" BOOLEAN NOT NULL DEFAULT false,
     "permissionId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -100,6 +101,7 @@ CREATE TABLE "PermissionAsset" (
 CREATE TABLE "PermissionItem" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "description" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -227,8 +229,8 @@ CREATE TABLE "Organization" (
     "legacyId" TEXT,
     "name" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
-    "descriptionKey" TEXT,
-    "descriptionNs" TEXT,
+    "legacySlug" TEXT,
+    "descriptionId" TEXT,
     "deleted" BOOLEAN NOT NULL DEFAULT false,
     "published" BOOLEAN NOT NULL DEFAULT false,
     "lastVerified" TIMESTAMP(3),
@@ -309,8 +311,7 @@ CREATE TABLE "OrgSocialMedia" (
 CREATE TABLE "OrgWebsite" (
     "id" TEXT NOT NULL,
     "url" TEXT NOT NULL,
-    "descriptionKey" TEXT,
-    "descriptionNs" TEXT,
+    "descriptionId" TEXT,
     "organizationId" TEXT NOT NULL,
     "orgLocationId" TEXT,
     "orgLocationOnly" BOOLEAN NOT NULL DEFAULT false,
@@ -389,6 +390,17 @@ CREATE TABLE "OrgHours" (
 );
 
 -- CreateTable
+CREATE TABLE "FreeText" (
+    "id" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
+    "ns" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "FreeText_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "OrgService" (
     "id" TEXT NOT NULL,
     "legacyId" TEXT,
@@ -396,8 +408,7 @@ CREATE TABLE "OrgService" (
     "deleted" BOOLEAN NOT NULL DEFAULT false,
     "legacyName" TEXT,
     "organizationId" TEXT,
-    "descriptionKey" TEXT,
-    "descriptionNs" TEXT,
+    "descriptionId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "checkMigration" BOOLEAN,
@@ -408,7 +419,6 @@ CREATE TABLE "OrgService" (
 -- CreateTable
 CREATE TABLE "ServiceAccess" (
     "id" TEXT NOT NULL,
-    "legacyId" TEXT,
     "serviceId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -420,10 +430,11 @@ CREATE TABLE "ServiceAccess" (
 CREATE TABLE "OrgReview" (
     "id" TEXT NOT NULL,
     "legacyId" TEXT,
-    "rating" SMALLINT NOT NULL,
+    "rating" SMALLINT,
     "reviewText" TEXT,
     "visible" BOOLEAN NOT NULL DEFAULT true,
     "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "userId" TEXT NOT NULL,
     "organizationId" TEXT NOT NULL,
     "orgServiceId" TEXT,
     "orgLocationId" TEXT,
@@ -497,8 +508,7 @@ CREATE TABLE "AttributeSupplement" (
     "attributeId" TEXT NOT NULL,
     "data" JSONB,
     "boolean" BOOLEAN,
-    "textKey" TEXT,
-    "textNs" TEXT,
+    "textId" TEXT,
     "countryId" TEXT,
     "languageId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -538,7 +548,6 @@ CREATE TABLE "ServiceTag" (
 CREATE TABLE "ServiceArea" (
     "id" TEXT NOT NULL,
     "active" BOOLEAN NOT NULL DEFAULT true,
-    "isNational" BOOLEAN NOT NULL DEFAULT false,
     "organizationId" TEXT,
     "orgLocationId" TEXT,
     "orgServiceId" TEXT,
@@ -702,9 +711,7 @@ CREATE TABLE "OutsideAPI" (
 CREATE TABLE "FieldVisibility" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "firstName" "VisibilitySetting" NOT NULL DEFAULT 'NONE',
-    "lastName" "VisibilitySetting" NOT NULL DEFAULT 'NONE',
-    "lastNameInit" "VisibilitySetting" NOT NULL DEFAULT 'NONE',
+    "name" "VisibilitySetting" NOT NULL DEFAULT 'NONE',
     "email" "VisibilitySetting" NOT NULL DEFAULT 'NONE',
     "image" "VisibilitySetting" NOT NULL DEFAULT 'NONE',
     "ethnicity" "VisibilitySetting" NOT NULL DEFAULT 'NONE',
@@ -825,6 +832,7 @@ CREATE TABLE "AuditLog" (
     "countryId" TEXT,
     "fieldVisibilityId" TEXT,
     "footerLinkId" TEXT,
+    "freeTextId" TEXT,
     "govDistId" TEXT,
     "govDistTypeId" TEXT,
     "internalNoteId" TEXT,
@@ -1071,10 +1079,10 @@ CREATE UNIQUE INDEX "Organization_legacyId_key" ON "Organization"("legacyId");
 CREATE UNIQUE INDEX "Organization_slug_key" ON "Organization"("slug");
 
 -- CreateIndex
-CREATE INDEX "Organization_name_idx" ON "Organization"("name" ASC);
+CREATE UNIQUE INDEX "Organization_descriptionId_key" ON "Organization"("descriptionId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Organization_descriptionKey_descriptionNs_key" ON "Organization"("descriptionKey", "descriptionNs");
+CREATE INDEX "Organization_name_idx" ON "Organization"("name" ASC);
 
 -- CreateIndex
 CREATE UNIQUE INDEX "OrgEmail_legacyId_key" ON "OrgEmail"("legacyId");
@@ -1098,7 +1106,7 @@ CREATE UNIQUE INDEX "OrgPhone_userId_key" ON "OrgPhone"("userId");
 CREATE UNIQUE INDEX "OrgSocialMedia_legacyId_key" ON "OrgSocialMedia"("legacyId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "OrgWebsite_descriptionKey_descriptionNs_key" ON "OrgWebsite"("descriptionKey", "descriptionNs");
+CREATE UNIQUE INDEX "OrgWebsite_descriptionId_key" ON "OrgWebsite"("descriptionId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "OrgLocation_legacyId_key" ON "OrgLocation"("legacyId");
@@ -1110,16 +1118,16 @@ CREATE INDEX "OrgLocation_latitude_longitude_idx" ON "OrgLocation"("latitude", "
 CREATE INDEX "OrgLocation_geoJSON_idx" ON "OrgLocation" USING GIN ("geoJSON" jsonb_path_ops);
 
 -- CreateIndex
+CREATE UNIQUE INDEX "FreeText_key_ns_key" ON "FreeText"("key", "ns");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "OrgService_legacyId_key" ON "OrgService"("legacyId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "OrgService_descriptionId_key" ON "OrgService"("descriptionId");
+
+-- CreateIndex
 CREATE INDEX "OrgService_organizationId_idx" ON "OrgService"("organizationId" ASC);
-
--- CreateIndex
-CREATE UNIQUE INDEX "OrgService_descriptionKey_descriptionNs_key" ON "OrgService"("descriptionKey", "descriptionNs");
-
--- CreateIndex
-CREATE UNIQUE INDEX "ServiceAccess_legacyId_key" ON "ServiceAccess"("legacyId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "OrgReview_legacyId_key" ON "OrgReview"("legacyId");
@@ -1146,7 +1154,7 @@ CREATE UNIQUE INDEX "Attribute_name_key" ON "Attribute"("name");
 CREATE UNIQUE INDEX "Attribute_tsKey_tsNs_key" ON "Attribute"("tsKey", "tsNs");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "AttributeSupplement_textKey_textNs_key" ON "AttributeSupplement"("textKey", "textNs");
+CREATE UNIQUE INDEX "AttributeSupplement_textId_key" ON "AttributeSupplement"("textId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ServiceCategory_category_key" ON "ServiceCategory"("category");
@@ -1431,10 +1439,10 @@ ALTER TABLE "UserCommunity" ADD CONSTRAINT "UserCommunity_tsKey_tsNs_fkey" FOREI
 ALTER TABLE "UserCommunity" ADD CONSTRAINT "UserCommunity_userSurveyId_fkey" FOREIGN KEY ("userSurveyId") REFERENCES "UserSurvey"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserSavedList" ADD CONSTRAINT "UserSavedList_ownedById_fkey" FOREIGN KEY ("ownedById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserSavedList" ADD CONSTRAINT "UserSavedList_ownedById_fkey" FOREIGN KEY ("ownedById") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserMail" ADD CONSTRAINT "UserMail_toUserId_fkey" FOREIGN KEY ("toUserId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "UserMail" ADD CONSTRAINT "UserMail_toUserId_fkey" FOREIGN KEY ("toUserId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "UserMail" ADD CONSTRAINT "UserMail_fromUserId_fkey" FOREIGN KEY ("fromUserId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -1443,7 +1451,7 @@ ALTER TABLE "UserMail" ADD CONSTRAINT "UserMail_fromUserId_fkey" FOREIGN KEY ("f
 ALTER TABLE "UserMail" ADD CONSTRAINT "UserMail_responseToId_fkey" FOREIGN KEY ("responseToId") REFERENCES "UserMail"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Organization" ADD CONSTRAINT "Organization_descriptionKey_descriptionNs_fkey" FOREIGN KEY ("descriptionKey", "descriptionNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Organization" ADD CONSTRAINT "Organization_descriptionId_fkey" FOREIGN KEY ("descriptionId") REFERENCES "FreeText"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Organization" ADD CONSTRAINT "Organization_outsideApiId_fkey" FOREIGN KEY ("outsideApiId") REFERENCES "OutsideAPI"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -1455,7 +1463,7 @@ ALTER TABLE "Organization" ADD CONSTRAINT "Organization_sourceId_fkey" FOREIGN K
 ALTER TABLE "OrgEmail" ADD CONSTRAINT "OrgEmail_titleId_fkey" FOREIGN KEY ("titleId") REFERENCES "UserTitle"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgEmail" ADD CONSTRAINT "OrgEmail_orgId_fkey" FOREIGN KEY ("orgId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "OrgEmail" ADD CONSTRAINT "OrgEmail_orgId_fkey" FOREIGN KEY ("orgId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrgEmail" ADD CONSTRAINT "OrgEmail_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -1473,7 +1481,7 @@ ALTER TABLE "OrgPhone" ADD CONSTRAINT "OrgPhone_countryId_fkey" FOREIGN KEY ("co
 ALTER TABLE "OrgPhone" ADD CONSTRAINT "OrgPhone_phoneTypeId_fkey" FOREIGN KEY ("phoneTypeId") REFERENCES "PhoneType"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgPhone" ADD CONSTRAINT "OrgPhone_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "OrgPhone" ADD CONSTRAINT "OrgPhone_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrgPhone" ADD CONSTRAINT "OrgPhone_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -1482,61 +1490,67 @@ ALTER TABLE "OrgPhone" ADD CONSTRAINT "OrgPhone_userId_fkey" FOREIGN KEY ("userI
 ALTER TABLE "OrgSocialMedia" ADD CONSTRAINT "OrgSocialMedia_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "SocialMediaService"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgSocialMedia" ADD CONSTRAINT "OrgSocialMedia_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "OrgSocialMedia" ADD CONSTRAINT "OrgSocialMedia_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrgSocialMedia" ADD CONSTRAINT "OrgSocialMedia_orgLocationId_fkey" FOREIGN KEY ("orgLocationId") REFERENCES "OrgLocation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgWebsite" ADD CONSTRAINT "OrgWebsite_descriptionKey_descriptionNs_fkey" FOREIGN KEY ("descriptionKey", "descriptionNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "OrgWebsite" ADD CONSTRAINT "OrgWebsite_descriptionId_fkey" FOREIGN KEY ("descriptionId") REFERENCES "FreeText"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgWebsite" ADD CONSTRAINT "OrgWebsite_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "OrgWebsite" ADD CONSTRAINT "OrgWebsite_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrgWebsite" ADD CONSTRAINT "OrgWebsite_orgLocationId_fkey" FOREIGN KEY ("orgLocationId") REFERENCES "OrgLocation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgWebsite" ADD CONSTRAINT "OrgWebsite_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "OrgWebsite" ADD CONSTRAINT "OrgWebsite_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgLocation" ADD CONSTRAINT "OrgLocation_govDistId_fkey" FOREIGN KEY ("govDistId") REFERENCES "GovDist"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "OrgLocation" ADD CONSTRAINT "OrgLocation_govDistId_fkey" FOREIGN KEY ("govDistId") REFERENCES "GovDist"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrgLocation" ADD CONSTRAINT "OrgLocation_countryId_fkey" FOREIGN KEY ("countryId") REFERENCES "Country"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgLocation" ADD CONSTRAINT "OrgLocation_orgId_fkey" FOREIGN KEY ("orgId") REFERENCES "Organization"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "OrgLocation" ADD CONSTRAINT "OrgLocation_orgId_fkey" FOREIGN KEY ("orgId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrgLocation" ADD CONSTRAINT "OrgLocation_outsideApiId_fkey" FOREIGN KEY ("outsideApiId") REFERENCES "OutsideAPI"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgPhoto" ADD CONSTRAINT "OrgPhoto_orgId_fkey" FOREIGN KEY ("orgId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "OrgPhoto" ADD CONSTRAINT "OrgPhoto_orgId_fkey" FOREIGN KEY ("orgId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrgPhoto" ADD CONSTRAINT "OrgPhoto_orgLocationId_fkey" FOREIGN KEY ("orgLocationId") REFERENCES "OrgLocation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgHours" ADD CONSTRAINT "OrgHours_orgLocId_fkey" FOREIGN KEY ("orgLocId") REFERENCES "OrgLocation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "OrgHours" ADD CONSTRAINT "OrgHours_orgLocId_fkey" FOREIGN KEY ("orgLocId") REFERENCES "OrgLocation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrgHours" ADD CONSTRAINT "OrgHours_orgServiceId_fkey" FOREIGN KEY ("orgServiceId") REFERENCES "OrgService"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgHours" ADD CONSTRAINT "OrgHours_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "OrgHours" ADD CONSTRAINT "OrgHours_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgService" ADD CONSTRAINT "OrgService_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "FreeText" ADD CONSTRAINT "FreeText_key_ns_fkey" FOREIGN KEY ("key", "ns") REFERENCES "TranslationKey"("key", "ns") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgService" ADD CONSTRAINT "OrgService_descriptionKey_descriptionNs_fkey" FOREIGN KEY ("descriptionKey", "descriptionNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "OrgService" ADD CONSTRAINT "OrgService_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ServiceAccess" ADD CONSTRAINT "ServiceAccess_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "OrgService"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "OrgService" ADD CONSTRAINT "OrgService_descriptionId_fkey" FOREIGN KEY ("descriptionId") REFERENCES "FreeText"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgReview" ADD CONSTRAINT "OrgReview_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ServiceAccess" ADD CONSTRAINT "ServiceAccess_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "OrgService"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "OrgReview" ADD CONSTRAINT "OrgReview_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "OrgReview" ADD CONSTRAINT "OrgReview_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrgReview" ADD CONSTRAINT "OrgReview_orgServiceId_fkey" FOREIGN KEY ("orgServiceId") REFERENCES "OrgService"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -1545,7 +1559,7 @@ ALTER TABLE "OrgReview" ADD CONSTRAINT "OrgReview_orgServiceId_fkey" FOREIGN KEY
 ALTER TABLE "OrgReview" ADD CONSTRAINT "OrgReview_orgLocationId_fkey" FOREIGN KEY ("orgLocationId") REFERENCES "OrgLocation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrgReview" ADD CONSTRAINT "OrgReview_langId_fkey" FOREIGN KEY ("langId") REFERENCES "Language"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "OrgReview" ADD CONSTRAINT "OrgReview_langId_fkey" FOREIGN KEY ("langId") REFERENCES "Language"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OrgReview" ADD CONSTRAINT "OrgReview_lcrGovDistId_fkey" FOREIGN KEY ("lcrGovDistId") REFERENCES "GovDist"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -1560,34 +1574,34 @@ ALTER TABLE "AttributeCategory" ADD CONSTRAINT "AttributeCategory_ns_fkey" FOREI
 ALTER TABLE "Attribute" ADD CONSTRAINT "Attribute_tsKey_tsNs_fkey" FOREIGN KEY ("tsKey", "tsNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AttributeRecord" ADD CONSTRAINT "AttributeRecord_attributeId_fkey" FOREIGN KEY ("attributeId") REFERENCES "Attribute"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "AttributeRecord" ADD CONSTRAINT "AttributeRecord_attributeId_fkey" FOREIGN KEY ("attributeId") REFERENCES "Attribute"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AttributeRecord" ADD CONSTRAINT "AttributeRecord_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "AttributeCategory"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AttributeRecord" ADD CONSTRAINT "AttributeRecord_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "AttributeRecord" ADD CONSTRAINT "AttributeRecord_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AttributeRecord" ADD CONSTRAINT "AttributeRecord_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "OrgService"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "AttributeRecord" ADD CONSTRAINT "AttributeRecord_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "OrgService"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AttributeRecord" ADD CONSTRAINT "AttributeRecord_serviceAccessId_fkey" FOREIGN KEY ("serviceAccessId") REFERENCES "ServiceAccess"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "AttributeRecord" ADD CONSTRAINT "AttributeRecord_serviceAccessId_fkey" FOREIGN KEY ("serviceAccessId") REFERENCES "ServiceAccess"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AttributeRecord" ADD CONSTRAINT "AttributeRecord_locationId_fkey" FOREIGN KEY ("locationId") REFERENCES "OrgLocation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "AttributeRecord" ADD CONSTRAINT "AttributeRecord_locationId_fkey" FOREIGN KEY ("locationId") REFERENCES "OrgLocation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_attributeId_fkey" FOREIGN KEY ("attributeId") REFERENCES "AttributeRecord"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_attributeId_fkey" FOREIGN KEY ("attributeId") REFERENCES "AttributeRecord"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_textKey_textNs_fkey" FOREIGN KEY ("textKey", "textNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_textId_fkey" FOREIGN KEY ("textId") REFERENCES "FreeText"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_countryId_fkey" FOREIGN KEY ("countryId") REFERENCES "Country"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_countryId_fkey" FOREIGN KEY ("countryId") REFERENCES "Country"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "AttributeSupplement" ADD CONSTRAINT "AttributeSupplement_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ServiceCategory" ADD CONSTRAINT "ServiceCategory_tsKey_tsNs_fkey" FOREIGN KEY ("tsKey", "tsNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -1599,13 +1613,13 @@ ALTER TABLE "ServiceTag" ADD CONSTRAINT "ServiceTag_tsKey_tsNs_fkey" FOREIGN KEY
 ALTER TABLE "ServiceTag" ADD CONSTRAINT "ServiceTag_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "ServiceCategory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ServiceArea" ADD CONSTRAINT "ServiceArea_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "ServiceArea" ADD CONSTRAINT "ServiceArea_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ServiceArea" ADD CONSTRAINT "ServiceArea_orgLocationId_fkey" FOREIGN KEY ("orgLocationId") REFERENCES "OrgLocation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "ServiceArea" ADD CONSTRAINT "ServiceArea_orgLocationId_fkey" FOREIGN KEY ("orgLocationId") REFERENCES "OrgLocation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ServiceArea" ADD CONSTRAINT "ServiceArea_orgServiceId_fkey" FOREIGN KEY ("orgServiceId") REFERENCES "OrgService"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "ServiceArea" ADD CONSTRAINT "ServiceArea_orgServiceId_fkey" FOREIGN KEY ("orgServiceId") REFERENCES "OrgService"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "PhoneType" ADD CONSTRAINT "PhoneType_tsKey_tsNs_fkey" FOREIGN KEY ("tsKey", "tsNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -1617,16 +1631,16 @@ ALTER TABLE "SocialMediaService" ADD CONSTRAINT "SocialMediaService_tsKey_tsNs_f
 ALTER TABLE "Country" ADD CONSTRAINT "Country_tsKey_tsNs_fkey" FOREIGN KEY ("tsKey", "tsNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Country" ADD CONSTRAINT "Country_demonymKey_demodymNs_fkey" FOREIGN KEY ("demonymKey", "demodymNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Country" ADD CONSTRAINT "Country_demonymKey_demodymNs_fkey" FOREIGN KEY ("demonymKey", "demodymNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "GovDist" ADD CONSTRAINT "GovDist_countryId_fkey" FOREIGN KEY ("countryId") REFERENCES "Country"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "GovDist" ADD CONSTRAINT "GovDist_countryId_fkey" FOREIGN KEY ("countryId") REFERENCES "Country"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "GovDist" ADD CONSTRAINT "GovDist_govDistTypeId_fkey" FOREIGN KEY ("govDistTypeId") REFERENCES "GovDistType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "GovDist" ADD CONSTRAINT "GovDist_govDistTypeId_fkey" FOREIGN KEY ("govDistTypeId") REFERENCES "GovDistType"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "GovDist" ADD CONSTRAINT "GovDist_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "GovDist"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "GovDist" ADD CONSTRAINT "GovDist_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "GovDist"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "GovDist" ADD CONSTRAINT "GovDist_tsKey_tsNs_fkey" FOREIGN KEY ("tsKey", "tsNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -1635,22 +1649,22 @@ ALTER TABLE "GovDist" ADD CONSTRAINT "GovDist_tsKey_tsNs_fkey" FOREIGN KEY ("tsK
 ALTER TABLE "GovDistType" ADD CONSTRAINT "GovDistType_tsKey_tsNs_fkey" FOREIGN KEY ("tsKey", "tsNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TranslationKey" ADD CONSTRAINT "TranslationKey_ns_fkey" FOREIGN KEY ("ns") REFERENCES "TranslationNamespace"("name") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "TranslationKey" ADD CONSTRAINT "TranslationKey_ns_fkey" FOREIGN KEY ("ns") REFERENCES "TranslationNamespace"("name") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "TranslationKey" ADD CONSTRAINT "TranslationKey_parentKey_parentNs_fkey" FOREIGN KEY ("parentKey", "parentNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "TranslationKey" ADD CONSTRAINT "TranslationKey_parentKey_parentNs_fkey" FOREIGN KEY ("parentKey", "parentNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "OutsideAPI" ADD CONSTRAINT "OutsideAPI_serviceName_fkey" FOREIGN KEY ("serviceName") REFERENCES "OutsideAPIService"("service") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "FieldVisibility" ADD CONSTRAINT "FieldVisibility_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "FieldVisibility" ADD CONSTRAINT "FieldVisibility_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Navigation" ADD CONSTRAINT "Navigation_tsKey_tsNs_fkey" FOREIGN KEY ("tsKey", "tsNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Navigation" ADD CONSTRAINT "Navigation_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Navigation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Navigation" ADD CONSTRAINT "Navigation_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Navigation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "FooterLink" ADD CONSTRAINT "FooterLink_tsKey_tsNs_fkey" FOREIGN KEY ("tsKey", "tsNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -1659,100 +1673,100 @@ ALTER TABLE "FooterLink" ADD CONSTRAINT "FooterLink_tsKey_tsNs_fkey" FOREIGN KEY
 ALTER TABLE "SocialMediaLink" ADD CONSTRAINT "SocialMediaLink_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "SocialMediaService"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_attributeId_fkey" FOREIGN KEY ("attributeId") REFERENCES "Attribute"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_attributeId_fkey" FOREIGN KEY ("attributeId") REFERENCES "Attribute"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_attributeCategoryId_fkey" FOREIGN KEY ("attributeCategoryId") REFERENCES "AttributeCategory"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_attributeCategoryId_fkey" FOREIGN KEY ("attributeCategoryId") REFERENCES "AttributeCategory"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_attributeRecordId_fkey" FOREIGN KEY ("attributeRecordId") REFERENCES "AttributeRecord"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_attributeRecordId_fkey" FOREIGN KEY ("attributeRecordId") REFERENCES "AttributeRecord"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_attributeSupplementId_fkey" FOREIGN KEY ("attributeSupplementId") REFERENCES "AttributeSupplement"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_attributeSupplementId_fkey" FOREIGN KEY ("attributeSupplementId") REFERENCES "AttributeSupplement"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_countryId_fkey" FOREIGN KEY ("countryId") REFERENCES "Country"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_countryId_fkey" FOREIGN KEY ("countryId") REFERENCES "Country"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_footerLinkId_fkey" FOREIGN KEY ("footerLinkId") REFERENCES "FooterLink"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_footerLinkId_fkey" FOREIGN KEY ("footerLinkId") REFERENCES "FooterLink"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_govDistId_fkey" FOREIGN KEY ("govDistId") REFERENCES "GovDist"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_govDistId_fkey" FOREIGN KEY ("govDistId") REFERENCES "GovDist"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_govDistTypeId_fkey" FOREIGN KEY ("govDistTypeId") REFERENCES "GovDistType"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_govDistTypeId_fkey" FOREIGN KEY ("govDistTypeId") REFERENCES "GovDistType"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_languageId_fkey" FOREIGN KEY ("languageId") REFERENCES "Language"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_navigationId_fkey" FOREIGN KEY ("navigationId") REFERENCES "Navigation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_navigationId_fkey" FOREIGN KEY ("navigationId") REFERENCES "Navigation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgEmailId_fkey" FOREIGN KEY ("orgEmailId") REFERENCES "OrgEmail"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgEmailId_fkey" FOREIGN KEY ("orgEmailId") REFERENCES "OrgEmail"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgHoursId_fkey" FOREIGN KEY ("orgHoursId") REFERENCES "OrgHours"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgHoursId_fkey" FOREIGN KEY ("orgHoursId") REFERENCES "OrgHours"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgLocationId_fkey" FOREIGN KEY ("orgLocationId") REFERENCES "OrgLocation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgLocationId_fkey" FOREIGN KEY ("orgLocationId") REFERENCES "OrgLocation"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgPhoneId_fkey" FOREIGN KEY ("orgPhoneId") REFERENCES "OrgPhone"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgPhoneId_fkey" FOREIGN KEY ("orgPhoneId") REFERENCES "OrgPhone"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgPhotoId_fkey" FOREIGN KEY ("orgPhotoId") REFERENCES "OrgPhoto"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgPhotoId_fkey" FOREIGN KEY ("orgPhotoId") REFERENCES "OrgPhoto"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgReviewId_fkey" FOREIGN KEY ("orgReviewId") REFERENCES "OrgReview"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgReviewId_fkey" FOREIGN KEY ("orgReviewId") REFERENCES "OrgReview"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgServiceId_fkey" FOREIGN KEY ("orgServiceId") REFERENCES "OrgService"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgServiceId_fkey" FOREIGN KEY ("orgServiceId") REFERENCES "OrgService"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgSocialMediaId_fkey" FOREIGN KEY ("orgSocialMediaId") REFERENCES "OrgSocialMedia"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgSocialMediaId_fkey" FOREIGN KEY ("orgSocialMediaId") REFERENCES "OrgSocialMedia"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgWebsiteId_fkey" FOREIGN KEY ("orgWebsiteId") REFERENCES "OrgWebsite"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_orgWebsiteId_fkey" FOREIGN KEY ("orgWebsiteId") REFERENCES "OrgWebsite"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_outsideApiId_fkey" FOREIGN KEY ("outsideApiId") REFERENCES "OutsideAPI"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_outsideApiId_fkey" FOREIGN KEY ("outsideApiId") REFERENCES "OutsideAPI"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_outsideAPIServiceService_fkey" FOREIGN KEY ("outsideAPIServiceService") REFERENCES "OutsideAPIService"("service") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_outsideAPIServiceService_fkey" FOREIGN KEY ("outsideAPIServiceService") REFERENCES "OutsideAPIService"("service") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_phoneTypeId_fkey" FOREIGN KEY ("phoneTypeId") REFERENCES "PhoneType"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_phoneTypeId_fkey" FOREIGN KEY ("phoneTypeId") REFERENCES "PhoneType"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_serviceAccessId_fkey" FOREIGN KEY ("serviceAccessId") REFERENCES "ServiceAccess"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_serviceAccessId_fkey" FOREIGN KEY ("serviceAccessId") REFERENCES "ServiceAccess"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_serviceAreaId_fkey" FOREIGN KEY ("serviceAreaId") REFERENCES "ServiceArea"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_serviceAreaId_fkey" FOREIGN KEY ("serviceAreaId") REFERENCES "ServiceArea"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_serviceCategoryId_fkey" FOREIGN KEY ("serviceCategoryId") REFERENCES "ServiceCategory"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_serviceCategoryId_fkey" FOREIGN KEY ("serviceCategoryId") REFERENCES "ServiceCategory"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_serviceTagId_fkey" FOREIGN KEY ("serviceTagId") REFERENCES "ServiceTag"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_serviceTagId_fkey" FOREIGN KEY ("serviceTagId") REFERENCES "ServiceTag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_socialMediaLinkId_fkey" FOREIGN KEY ("socialMediaLinkId") REFERENCES "SocialMediaLink"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_socialMediaLinkId_fkey" FOREIGN KEY ("socialMediaLinkId") REFERENCES "SocialMediaLink"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_socialMediaServiceId_fkey" FOREIGN KEY ("socialMediaServiceId") REFERENCES "SocialMediaService"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_socialMediaServiceId_fkey" FOREIGN KEY ("socialMediaServiceId") REFERENCES "SocialMediaService"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_sourceId_fkey" FOREIGN KEY ("sourceId") REFERENCES "Source"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_sourceId_fkey" FOREIGN KEY ("sourceId") REFERENCES "Source"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_translationKey_translationNs_fkey" FOREIGN KEY ("translationKey", "translationNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_translationKey_translationNs_fkey" FOREIGN KEY ("translationKey", "translationNs") REFERENCES "TranslationKey"("key", "ns") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_translationNamespaceName_fkey" FOREIGN KEY ("translationNamespaceName") REFERENCES "TranslationNamespace"("name") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "InternalNote" ADD CONSTRAINT "InternalNote_translationNamespaceName_fkey" FOREIGN KEY ("translationNamespaceName") REFERENCES "TranslationNamespace"("name") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AuditLog" ADD CONSTRAINT "AuditLog_actorId_fkey" FOREIGN KEY ("actorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -1780,6 +1794,9 @@ ALTER TABLE "AuditLog" ADD CONSTRAINT "AuditLog_fieldVisibilityId_fkey" FOREIGN 
 
 -- AddForeignKey
 ALTER TABLE "AuditLog" ADD CONSTRAINT "AuditLog_footerLinkId_fkey" FOREIGN KEY ("footerLinkId") REFERENCES "FooterLink"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AuditLog" ADD CONSTRAINT "AuditLog_freeTextId_fkey" FOREIGN KEY ("freeTextId") REFERENCES "FreeText"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "AuditLog" ADD CONSTRAINT "AuditLog_govDistId_fkey" FOREIGN KEY ("govDistId") REFERENCES "GovDist"("id") ON DELETE SET NULL ON UPDATE CASCADE;
