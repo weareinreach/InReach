@@ -1,14 +1,14 @@
-import { merge } from 'merge-anything'
+import { merge } from "merge-anything";
 
-import { ButtonStylesParams, MantineThemeOverride } from '@mantine/core'
+import { ButtonStylesParams, MantineThemeOverride } from "@mantine/core";
 
-import { customColors } from './colors'
-import { buttonVariants } from './functions'
+import { customColors } from "./colors";
+import { buttonVariants } from "./functions";
 
 export const commonTheme: MantineThemeOverride = {
-	colorScheme: 'light',
+	colorScheme: "light",
 	colors: { ...customColors },
-	primaryColor: 'inReachPrimaryRegular',
+	primaryColor: "inReachPrimaryRegular",
 	primaryShade: 5,
 	other: {
 		/** Font weights per InReach style guide */
@@ -20,19 +20,19 @@ export const commonTheme: MantineThemeOverride = {
 			extrabold: 800,
 		},
 		border: {
-			default: '1px solid',
+			default: "1px solid",
 		},
 		colors: {
 			primary: {
-				lightGray: '#EFEFEF',
+				lightGray: "#EFEFEF",
 			},
 			secondary: {
-				black: '#000000',
-				white: '#FFFFFF',
+				black: "#000000",
+				white: "#FFFFFF",
 			},
 			tertiary: {
-				coolGray: '#d9d9d9',
-				red: '#C05C4A',
+				coolGray: "#d9d9d9",
+				red: "#C05C4A",
 			},
 		},
 	},
@@ -40,25 +40,25 @@ export const commonTheme: MantineThemeOverride = {
 		a: {
 			fontWeight: theme.other.fontWeight.semibold,
 			color: theme.colors.inReachSecondaryRegular[5],
-			textDecoration: 'none',
+			textDecoration: "none",
 		},
 	}),
 	components: {
 		ActionIcon: {
 			defaultProps: {
-				color: 'inReachSecondaryRegular.5',
+				color: "inReachSecondaryRegular.5",
 			},
 		},
 		Button: {
 			defaultProps: {
-				radius: 'xl',
+				radius: "xl",
 			},
 
 			styles: (theme, params: ButtonStylesParams) => {
 				const baseStyle = {
 					root: {
-						position: 'absolute',
-						display: 'flex',
+						position: "absolute",
+						display: "flex",
 						top: theme.spacing.lg,
 						padding: theme.spacing.sm / 2,
 						paddingLeft: theme.spacing.xl * 2,
@@ -66,8 +66,11 @@ export const commonTheme: MantineThemeOverride = {
 						height: theme.spacing.xl * 2,
 						gap: theme.spacing.sm,
 						backgroundColor: theme.other.colors.secondary.black,
-						'&:hover': {
-							background: theme.fn.lighten(theme.other.colors.secondary.black, 0.4),
+						"&:hover": {
+							background: theme.fn.lighten(
+								theme.other.colors.secondary.black,
+								0.4
+							),
 						},
 					},
 					inner: {
@@ -82,44 +85,44 @@ export const commonTheme: MantineThemeOverride = {
 					label: {
 						fontSize: theme.spacing.md,
 						fontWeight: theme.other.fontWeight.button,
-						height: 'auto',
-						width: 'auto',
-						lineHeight: theme.spacing.lg + 'px',
+						height: "auto",
+						width: "auto",
+						lineHeight: theme.spacing.lg + "px",
 					},
-				}
-				return merge(baseStyle, buttonVariants(theme, params))
+				};
+				return merge(baseStyle, buttonVariants(theme, params));
 			},
 		},
 	},
-}
+};
 
 // Type Definitions for `other` object
 
-declare module '@mantine/core' {
+declare module "@mantine/core" {
 	export interface MantineThemeOther {
 		/** Font weights per InReach Style Guide */
 		fontWeight: {
-			regular: 400
-			button: 500
-			semibold: 600
-			bold: 700
-			extrabold: 800
-		}
+			regular: 400;
+			button: 500;
+			semibold: 600;
+			bold: 700;
+			extrabold: 800;
+		};
 		border: {
-			default: '1px solid'
-		}
+			default: "1px solid";
+		};
 		colors: {
 			primary: {
-				lightGray: '#EFEFEF'
-			}
+				lightGray: "#EFEFEF";
+			};
 			secondary: {
-				white: '#FFFFFF'
-				black: '#000000'
-			}
+				white: "#FFFFFF";
+				black: "#000000";
+			};
 			tertiary: {
-				coolGray: '#d9d9d9'
-				red: '#C05C4A'
-			}
-		}
+				coolGray: "#d9d9d9";
+				red: "#C05C4A";
+			};
+		};
 	}
 }

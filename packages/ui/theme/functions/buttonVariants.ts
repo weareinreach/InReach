@@ -1,42 +1,45 @@
-import { ButtonVariant, CSSObject, MantineTheme } from '@mantine/core'
+import { ButtonVariant, CSSObject, MantineTheme } from "@mantine/core";
 
-type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => Record<string, CSSObject>
+type ButtonVariants = (
+	theme: MantineTheme,
+	params: ButtonStylesParams
+) => Record<string, CSSObject>;
 
 type CustomVariants =
-	| 'sm-primary'
-	| 'sm-secondary'
-	| 'sm-accent'
-	| 'lg-primary'
-	| 'lg-secondary'
-	| 'lg-accent'
+	| "sm-primary"
+	| "sm-secondary"
+	| "sm-accent"
+	| "lg-primary"
+	| "lg-secondary"
+	| "lg-accent";
 
 interface ButtonStylesParams {
-	variant: ButtonVariant | CustomVariants
+	variant: ButtonVariant | CustomVariants;
 }
 
 export const buttonVariants: ButtonVariants = (theme, params) => {
 	switch (params.variant) {
-		case 'filled':
+		case "filled":
 			return {
 				root: {
 					backgroundColor: theme.colors.inReachPrimaryRegular[5],
-					'&:hover': {
+					"&:hover": {
 						backgroundColor: theme.colors.inReachPrimaryHover[5],
 					},
 				},
 				inner: {},
-			}
-		case 'outline':
+			};
+		case "outline":
 			return {
 				root: {
 					outlineColor: theme.colors.inReachPrimaryRegular[5],
-					'&:hover': {
+					"&:hover": {
 						outlineColor: theme.colors.inReachPrimaryHover[5],
 					},
 				},
 				inner: {},
-			}
-		case 'sm-primary':
+			};
+		case "sm-primary":
 			return {
 				root: {
 					paddingLeft: theme.spacing.md * 2,
@@ -50,11 +53,11 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 						left: theme.spacing.md * 2,
 					},
 					leftIcon: {
-						display: 'none',
+						display: "none",
 					},
 				},
-			}
-		case 'sm-secondary':
+			};
+		case "sm-secondary":
 			return {
 				root: {
 					paddingLeft: theme.spacing.md * 2,
@@ -64,7 +67,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 					borderColor: theme.other.colors.tertiary.coolGray,
 					backgroundColor: theme.other.colors.secondary.white,
 					gap: theme.spacing.md / 2,
-					'&:hover': {
+					"&:hover": {
 						backgroundColor: theme.other.colors.primary.lightGray,
 					},
 				},
@@ -74,11 +77,11 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 						left: theme.spacing.md * 2,
 					},
 					leftIcon: {
-						display: 'none',
+						display: "none",
 					},
 				},
-			}
-		case 'sm-accent':
+			};
+		case "sm-accent":
 			return {
 				root: {
 					paddingLeft: theme.spacing.md * 2,
@@ -86,7 +89,7 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 					height: theme.spacing.lg * 2,
 					backgroundColor: theme.other.colors.tertiary.red,
 					gap: theme.spacing.md / 2,
-					'&:hover': {
+					"&:hover": {
 						background: theme.fn.darken(theme.other.colors.tertiary.red, 0.4),
 					},
 				},
@@ -96,45 +99,48 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 						left: theme.spacing.md * 2,
 					},
 					leftIcon: {
-						display: 'none',
+						display: "none",
 					},
 				},
-			}
-		case 'lg-primary':
+			};
+		case "lg-primary":
 			return {
 				root: {
 					borderRadius: theme.radius.md,
 				},
 				inner: {},
-			}
-		case 'lg-secondary':
+			};
+		case "lg-secondary":
 			return {
 				root: {
 					border: theme.other.border.default,
 					borderColor: theme.other.colors.tertiary.coolGray,
 					backgroundColor: theme.other.colors.secondary.white,
 					borderRadius: theme.radius.md,
-					'&:hover': {
+					"&:hover": {
 						backgroundColor: theme.other.colors.primary.lightGray,
 					},
 				},
 				inner: {
 					color: theme.colors.primaryText[9],
 				},
-			}
-		case 'lg-accent':
+			};
+		case "lg-accent":
 			return {
 				root: {
 					backgroundColor: theme.colors.inReachSecondaryRegular[5],
-					'&:hover': {
-						background: theme.fn.darken(theme.colors.inReachSecondaryRegular[5], 0.4),
+					"&:hover": {
+						background: theme.fn.darken(
+							theme.colors.inReachSecondaryRegular[5],
+							0.4
+						),
 					},
 				},
 				inner: {},
-			}
+			};
 	}
 	return {
 		root: {},
 		inner: {},
-	}
-}
+	};
+};
