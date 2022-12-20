@@ -8,5 +8,6 @@
 			"~/*": ["./*"]
 		}
 	},
-	"include": ["index.ts", "datastore", "seed", "zod-schemas", "zod-util"]
+	"include": ["**/*"],
+	"exclude": ["node_modules"]
 }

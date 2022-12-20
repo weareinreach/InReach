@@ -8,10 +8,13 @@ import {
 	seedGeoData,
 	seedLanguages,
 	seedNavigation,
+	seedOutsideAPI,
+	seedPermissions,
 	seedSOGIdentity,
 	seedServices,
 	seedSocialMediaLinks,
 	seedSystemUser,
+	seedTranslationNamespaces,
 	seedUserImmigration,
 	seedUserRoles,
 	seedUserTypes,
@@ -30,6 +33,11 @@ const tasks = new Listr<Context>(
 					{
 						title: 'System user',
 						task: async (_ctx, task): Promise<void> => seedSystemUser(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Translation Namespaces',
+						task: async (_ctx, task): Promise<void> => seedTranslationNamespaces(task),
 						options: renderOptions,
 					},
 					{
@@ -95,6 +103,16 @@ const tasks = new Listr<Context>(
 					{
 						title: 'Governing Districts & GeoJSON',
 						task: async (_ctx, task): Promise<Listr> => seedGeoData(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Outside API Services',
+						task: async (_ctx, task): Promise<void> => seedOutsideAPI(task),
+						options: renderOptions,
+					},
+					{
+						title: 'Permissions',
+						task: async (_ctx, task): Promise<void> => seedPermissions(task),
 						options: renderOptions,
 					},
 				]),

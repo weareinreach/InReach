@@ -1,7 +1,8 @@
+import { Prisma } from '@prisma/client'
 import slugify from 'slugify'
 
 import { prisma } from '~/index'
-import { namespaces } from '~/seed/data'
+import { namespaceGen, namespaces } from '~/seed/data'
 import { ListrTask } from '~/seed/starterData'
 
 import { seedUser, userEmail, userRoleList } from '../data'
@@ -28,6 +29,33 @@ export const seedSystemUser = async (task: ListrTask) => {
 		logFile.error(err)
 		throw err
 	}
+}
+
+export const seedTranslationNamespaces = async (task: ListrTask) => {
+	let logMessage = ``
+	let countA = 1
+	const totalLength = Object.keys(namespaces).length
+
+	const data: Prisma.TranslationNamespaceCreateManyInput[] = []
+	for (const item in namespaces) {
+		const exportFile = namespaceGen[item] ?? true
+		logMessage = `(${countA}/${totalLength}) Preparing Translation Namespace Record '${namespaces[item]}' (export: ${exportFile})`
+		logFile.info(logMessage)
+		task.output = logMessage
+		data.push({
+			name: namespaces[item],
+			exportFile,
+		})
+		countA++
+	}
+
+	const namespaceData = await prisma.translationNamespace.createMany({ data, skipDuplicates: true })
+	logMessage = `Total Translation Namespace records inserted: ${namespaceData.count}`
+	logFile.info(logMessage)
+	task.output = logMessage
+	task.title = `Translation Namespaces (${namespaceData.count} ${
+		namespaceData.count === 1 ? 'record' : 'records'
+	})`
 }
 
 export const seedUserTypes = async (task: ListrTask) => {

@@ -25,7 +25,7 @@ jobs:
       run:
         working-directory: packages/ui
     steps:
-      - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3
+      - uses: actions/checkout@7dd9e2a3dc350cf687eb1b2a4fadfee8c8e49675 # v3
         with:
           fetch-depth: 0
       - name: Install Node.js
@@ -54,7 +54,7 @@ jobs:
         working-directory: packages/ui
         # 👇 Runs yarn in ./packages/ui
       - name: Publish to Chromatic
-        uses: chromaui/action@9f9e97cdc8598bb82e105073569d38527a7ac1f6 # v1
+        uses: chromaui/action@0ec8cd8a4d811c78cadb849bb81f16a175832ed4 # v1
         with:
           # 👇 Runs Chromatic CLI in ./packages/ui
           workingDir: packages/ui

@@ -5,19 +5,6 @@ import { ListrTask } from '~/seed/starterData'
 
 export const seedServices = async (task: ListrTask) => {
 	try {
-		await prisma.translationNamespace.upsert({
-			where: {
-				name: namespaces.services,
-			},
-			create: {
-				name: namespaces.services,
-			},
-			update: {},
-			select: {
-				id: true,
-			},
-		})
-
 		let x = 0
 		let y = 0
 		let logMessage = ''
@@ -26,7 +13,7 @@ export const seedServices = async (task: ListrTask) => {
 			logMessage = `(${x + 1}/${serviceData.length}) Upserting Service Category: ${category}`
 			logFile.log(logMessage)
 			task.output = logMessage
-			const { id: categoryId } = await prisma.serviceCategory.upsert({
+			const newCategory = await prisma.serviceCategory.upsert({
 				where: {
 					category,
 				},
@@ -47,9 +34,15 @@ export const seedServices = async (task: ListrTask) => {
 				update: {},
 				select: {
 					id: true,
+					key: {
+						select: {
+							key: true,
+							ns: true,
+						},
+					},
 				},
 			})
-
+			const { id: categoryId } = newCategory
 			if (services.length) {
 				const serviceTransactions = await prisma.$transaction(
 					services.map((record, idx) => {
@@ -88,6 +81,33 @@ export const seedServices = async (task: ListrTask) => {
 					})
 				)
 				y = y + serviceTransactions.length
+			} else {
+				await prisma.serviceTag.upsert({
+					where: {
+						name_categoryId: {
+							name: category,
+							categoryId,
+						},
+					},
+					create: {
+						name: category,
+						category: {
+							connect: {
+								id: categoryId,
+							},
+						},
+						key: {
+							connect: {
+								ns_key: {
+									key: newCategory.key.key,
+									ns: newCategory.key.ns,
+								},
+							},
+						},
+					},
+					update: {},
+				})
+				y++
 			}
 			logMessage = `(${x + 1}/${serviceData.length}) Upserted Category: ${category} with ${
 				services.length

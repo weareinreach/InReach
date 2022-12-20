@@ -18,3 +18,7 @@ additional-dependency-files:
 ignore-failures:
   javascript:
     - iso-3166-2
+    - countries-languages
+    - cuid
+    - flat
+    - langs

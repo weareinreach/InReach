@@ -5,7 +5,7 @@ import { ListrTask } from '~/seed/starterData'
 
 export const seedSocialMediaLinks = async (task: ListrTask) => {
 	try {
-		const { id: namespaceId } = await prisma.translationNamespace.upsert({
+		const { name: namespace } = await prisma.translationNamespace.upsert({
 			where: {
 				name: namespaces.socialMedia,
 			},
@@ -14,7 +14,7 @@ export const seedSocialMediaLinks = async (task: ListrTask) => {
 			},
 			update: {},
 			select: {
-				id: true,
+				name: true,
 			},
 		})
 
@@ -32,14 +32,15 @@ export const seedSocialMediaLinks = async (task: ListrTask) => {
 							create: {
 								name: item.key,
 								logoIcon: item.iconCode,
-								urlBase: '',
+								urlBase: item.href,
+								internal: item.key === 'email' ? true : false,
 								key: {
 									create: {
 										key: item.key,
 										text: item.key,
 										namespace: {
 											connect: {
-												id: namespaceId,
+												name: namespace,
 											},
 										},
 									},

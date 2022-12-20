@@ -4,7 +4,8 @@ type AttributeItem = {
 	key: string
 	requireLanguage?: boolean
 	requireCountry?: boolean
-	requireSupplemental?: boolean
+	requireData?: boolean
+	requireText?: boolean
 }
 type AttributeCategory = {
 	name: string
@@ -298,7 +299,7 @@ export const attributeData: AttributeData = [
 				name: 'Incurs a cost',
 				description:
 					'Enter a # or brief written short description of fees (e.g. "costs offered on a sliding scale"',
-				requireSupplemental: true,
+				requireData: true,
 			},
 		],
 	},
@@ -310,7 +311,7 @@ export const attributeData: AttributeData = [
 				key: 'elig-age',
 				name: 'Age eligibility',
 				description: 'Has age requirements (minimum/maximum)',
-				requireSupplemental: true,
+				requireData: true,
 			},
 			{
 				key: 'time-appointment-required',
@@ -373,8 +374,20 @@ export const attributeData: AttributeData = [
 				name: 'Incompatible Information',
 				key: 'incompatible-info',
 				description: 'Data that needs to be cleaned up',
-				requireSupplemental: true,
+				requireData: true,
 			},
+		],
+	},
+	{
+		name: 'Service Access Instructions',
+		namespace: 'serviceAccess',
+		attributes: [
+			{ key: 'accessEmail', name: 'Access Instructions - Email', requireData: true },
+			{ key: 'accessFile', name: 'Access Instructions - File', requireData: true },
+			{ key: 'accessLink', name: 'Access Instructions - Link', requireData: true },
+			{ key: 'accessLocation', name: 'Access Instructions - Location', requireData: true },
+			{ key: 'accessPhone', name: 'Access Instructions - Phone', requireData: true },
+			{ key: 'accessText', name: 'Access Instructions - Text', requireText: true },
 		],
 	},
 ]

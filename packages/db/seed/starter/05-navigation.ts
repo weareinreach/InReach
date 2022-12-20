@@ -15,7 +15,7 @@ export const seedNavigation = async (task: ListrTask) => {
 			},
 			update: {},
 			select: {
-				id: true,
+				name: true,
 			},
 		})
 
