@@ -1,8 +1,8 @@
 import { prisma } from '~/index'
 
-import type { ListrTask } from '.'
-import { generateEthnicityRecords } from '../data/ethnicity'
+import { generateEthnicityRecords } from '../data/03-ethnicity'
 import { logFile } from '../logger'
+import type { ListrTask } from '../starterData'
 
 export const seedEthnicities = async (task: ListrTask) => {
 	try {

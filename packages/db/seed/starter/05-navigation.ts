@@ -1,22 +1,21 @@
 import { prisma } from '~/index'
-import { namespaces } from '~/seed/data/namespaces'
-import { navigation } from '~/seed/data/navigation'
-import { createMeta } from '~/seed/data/user'
-import { ListrTask } from '~/seed/starter'
+import { namespaces, navigation } from '~/seed/data'
+import { ListrTask } from '~/seed/starterData'
+
+import { logFile } from '../logger'
 
 export const seedNavigation = async (task: ListrTask) => {
 	try {
-		const { id: namespaceId } = await prisma.translationNamespace.upsert({
+		await prisma.translationNamespace.upsert({
 			where: {
 				name: namespaces.nav,
 			},
 			create: {
 				name: namespaces.nav,
-				...createMeta,
 			},
 			update: {},
 			select: {
-				id: true,
+				name: true,
 			},
 		})
 
@@ -31,12 +30,12 @@ export const seedNavigation = async (task: ListrTask) => {
 				create: {
 					display: item.display,
 					href: item.href,
-					translationKey: {
+					key: {
 						connectOrCreate: {
 							where: {
-								key_namespaceId: {
+								ns_key: {
+									ns: namespaces.nav,
 									key: item.key,
-									namespaceId,
 								},
 							},
 							create: {
@@ -44,14 +43,12 @@ export const seedNavigation = async (task: ListrTask) => {
 								text: item.display,
 								namespace: {
 									connect: {
-										id: namespaceId,
+										name: namespaces.nav,
 									},
 								},
-								...createMeta,
 							},
 						},
 					},
-					...createMeta,
 				},
 				update: {},
 			})
@@ -59,6 +56,7 @@ export const seedNavigation = async (task: ListrTask) => {
 
 		const result = await prisma.$transaction(transactions)
 		const logMessage = `Navigation records added: ${result.length}`
+		logFile.log(logMessage)
 		task.output = logMessage
 		task.title = `Navigation Bar Links (${result.length} records)`
 	} catch (err) {
