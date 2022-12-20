@@ -14,7 +14,8 @@
 	"devDependencies": {
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
+		"eslint": "8.30.0",
 		"typescript": "4.9.4"
 	},
-	"packageManager": "pnpm@7.17.0"
+	"packageManager": "pnpm@7.18.2"
 }
