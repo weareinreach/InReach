@@ -9,7 +9,7 @@ import { migrateLog } from '~/seed/logger'
 import { ListrTask } from '~/seed/migrate-v1'
 
 export const orgReviews: Prisma.OrgReviewCreateManyInput[] = []
-
+const migratedRecords: unknown[] = []
 export const generateReviews = async (task: ListrTask) => {
 	const log = (message: string) => {
 		migrateLog.info(message)
@@ -31,6 +31,7 @@ export const generateReviews = async (task: ListrTask) => {
 		select: {
 			id: true,
 			legacyId: true,
+			name: true,
 		},
 	})
 	const services = await prisma.orgService.findMany({
@@ -42,6 +43,11 @@ export const generateReviews = async (task: ListrTask) => {
 		select: {
 			id: true,
 			legacyId: true,
+			service: {
+				select: {
+					name: true,
+				},
+			},
 		},
 	})
 	const users = await prisma.user.findMany({
@@ -64,16 +70,23 @@ export const generateReviews = async (task: ListrTask) => {
 		},
 	})
 	const userMap = new Map<string, string>(users.map((x) => [x.legacyId ?? '', x.id]))
-	const orgMap = new Map<string, string>(orgs.map((x) => [x.legacyId ?? '', x.id]))
+	const orgMap = new Map<string, { id: string; name: string }>(
+		orgs.map((x) => [x.legacyId ?? '', { id: x.id, name: x.name }])
+	)
 	const serviceMap = new Map<string, string>(services.map((x) => [x.legacyId ?? '', x.id]))
 
 	for (const item of ratings) {
-		const organizationId = orgMap.get(item.organizationId)
+		const organization = orgMap.get(item.organizationId)
 		const orgServiceId = item.serviceId ? serviceMap.get(item.serviceId) : undefined
-		if (!organizationId || !item.ratings.length) {
-			log(`🤷 SKIPPING ${item._id.$oid}: ${!organizationId ? 'Missing OrgID' : 'No ratings attached'}`)
+		if (!organization || !item.ratings.length) {
+			log(
+				`🤷 SKIPPING Rating ${item._id.$oid}: ${
+					!organization ? 'Cannot map organization' : 'No ratings attached'
+				}`
+			)
 			continue
 		}
+		const { id: organizationId, name } = organization
 		const createdAt = item.created_at.$date
 		const updatedAt = item.updated_at.$date
 
@@ -81,6 +94,7 @@ export const generateReviews = async (task: ListrTask) => {
 			const { rating, userId: user } = record
 			const legacyId = record._id.$oid
 			const userId = userMap.get(user ?? '') ?? systemUser
+
 			orgReviews.push({
 				legacyId,
 				organizationId,
@@ -90,18 +104,22 @@ export const generateReviews = async (task: ListrTask) => {
 				rating,
 				userId,
 			})
-			log(
-				`🏗️ Migrated rating for OrgID: ${organizationId} ${orgServiceId ? `ServiceID: ${orgServiceId}` : ''} `
-			)
+			log(`🏗️ Migrated rating for ${name}${orgServiceId ? `: ServiceID: ${orgServiceId}` : ''} `)
 		}
+		migratedRecords.push(item)
 	}
 	for (const item of comments) {
-		const organizationId = orgMap.get(item.organizationId)
+		const organization = orgMap.get(item.organizationId)
 		const orgServiceId = item.serviceId ? serviceMap.get(item.serviceId) : undefined
-		if (!organizationId || !item.comments.length) {
-			log(`🤷 SKIPPING ${item._id.$oid}: ${!organizationId ? 'Missing OrgID' : 'No reviews attached'}`)
+		if (!organization || !item.comments.length) {
+			log(
+				`🤷 SKIPPING review comment ${item._id.$oid}: ${
+					!organization ? 'Cannot map organization' : 'No reviews attached'
+				}`
+			)
 			continue
 		}
+		const { id: organizationId, name } = organization
 		const createdAt = item.created_at.$date
 		const updatedAt = item.updated_at.$date
 
@@ -121,9 +139,8 @@ export const generateReviews = async (task: ListrTask) => {
 				lcrCity,
 				deleted,
 			})
-			log(
-				`🏗️ Migrated review for OrgID: ${organizationId} ${orgServiceId ? `ServiceID: ${orgServiceId}` : ''} `
-			)
+			log(`🏗️ Migrated review for ${name}${orgServiceId ? `: ServiceID: ${orgServiceId}` : ''} `)
 		}
+		migratedRecords.push(item)
 	}
 }

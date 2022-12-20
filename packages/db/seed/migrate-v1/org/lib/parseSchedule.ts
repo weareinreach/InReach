@@ -30,7 +30,7 @@ export const parseSchedule = (schedule: Schedule, helpers: HoursHelper) => {
 							hours[dayIndex].start = '00:00'
 							hours[dayIndex].end = '00:00'
 							hours[dayIndex].needReview = true
-							hours[dayIndex].legacyNote = `multiple times. ${note ?? ''}`.trim()
+							hours[dayIndex].legacyNote = `multiple times (${value}) ${note ?? ''}`.trim()
 							break
 						}
 						case '24h': {
@@ -42,10 +42,12 @@ export const parseSchedule = (schedule: Schedule, helpers: HoursHelper) => {
 							hours[dayIndex].start = '00:00'
 							hours[dayIndex].end = '00:00'
 							hours[dayIndex].closed = true
+							break
 						}
 					}
+				} else {
+					hours[dayIndex][hourType] = time
 				}
-				hours[dayIndex][hourType] = time
 				hours[dayIndex].legacyId ??= schedule._id.$oid
 				hours[dayIndex].legacyName ??= name
 				hours[dayIndex].legacyNote ??= note

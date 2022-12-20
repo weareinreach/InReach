@@ -13,6 +13,8 @@ import { ListrTask } from '~/seed/migrate-v1'
 
 type BulkTransactions = Prisma.Prisma__UserClient<User> | Prisma.Prisma__UserSurveyClient<UserSurvey>
 
+const batchSize = 250
+
 const userData = JSON.parse(
 	fs.readFileSync('./datastore/v1/mongodb/output/users.json', 'utf-8')
 ) as UsersJSONCollection[]
@@ -111,7 +113,7 @@ export const migrateUsers = async (task: ListrTask) => {
 		}
 		logMessage = `(${countA + 1}/${userData.length}) Preparing user record: ${user._id.$oid}`
 		migrateLog.info(logMessage)
-		task.output = logMessage
+		// task.output = logMessage
 		const userTransaction = prisma.user.upsert({
 			where: {
 				email: user.email,
@@ -170,25 +172,28 @@ export const migrateUsers = async (task: ListrTask) => {
 				legacySalt: user.salt,
 			},
 		})
-		const userSurvey = prisma.userSurvey.create({
-			data: {
-				ethnicity,
-				countryOrigin,
-				immigration: getImmigrationStatus(),
-			},
-		})
-
 		bulkTransactions.push(userTransaction)
-		bulkTransactions.push(userSurvey)
+
+		if (ethnicity || countryOrigin || getImmigrationStatus()) {
+			const userSurvey = prisma.userSurvey.create({
+				data: {
+					ethnicity,
+					countryOrigin,
+					immigration: getImmigrationStatus(),
+				},
+			})
+
+			bulkTransactions.push(userSurvey)
+		}
 		countA++
 	}
 	let countB = 1
 	let countC = 0
 	const totalRecords = bulkTransactions.length
-	const totalBatches = Math.ceil(bulkTransactions.length / 50)
+	const totalBatches = Math.ceil(bulkTransactions.length / batchSize)
 	while (bulkTransactions.length) {
-		const batch = bulkTransactions.splice(0, 50)
-		logMessage = `Batch ${countB} of ${totalBatches}: Upserting user records ${countC + 1} to ${
+		const batch = bulkTransactions.splice(0, batchSize)
+		logMessage = `Batch ${countB} of ${totalBatches}: Upserting records ${countC + 1} to ${
 			countC + batch.length
 		} of ${totalRecords}`
 		migrateLog.info(logMessage)

@@ -1,6 +1,6 @@
 import { Listr } from 'listr2'
 
-import { ListrTask, ListrTaskDef } from '~/seed/migrate-v1'
+import { Context, ListrTask, ListrTaskDef } from '~/seed/migrate-v1'
 
 import {
 	apiConnections,
@@ -30,7 +30,7 @@ const taskOptions: Omit<ListrTaskDef, 'title' | 'task'> = {
 		showTimer: true,
 	},
 }
-export const runMigrateOrgs = async (task: ListrTask) =>
+export const runMigrateOrgs = async (task: ListrTask, ctx: Context) =>
 	task.newListr(
 		[
 			{
@@ -45,77 +45,77 @@ export const runMigrateOrgs = async (task: ListrTask) =>
 			},
 			{
 				title: 'Insert translation keys',
-				task: async (_ctx, task): Promise<void> => translations(task),
+				task: async (_ctx, task): Promise<void> => translations(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert free text linking records',
-				task: async (ctx, task): Promise<void> => freetext(ctx, task),
+				task: async (_ctx, task): Promise<void> => freetext(ctx, task),
 				...taskOptions,
 			},
 			{
 				title: 'Insert locations',
-				task: async (_ctx, task): Promise<void> => locations(task),
+				task: async (_ctx, task): Promise<void> => locations(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert phone numbers',
-				task: async (_ctx, task): Promise<void> => phones(task),
+				task: async (_ctx, task): Promise<void> => phones(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert emails',
-				task: async (_ctx, task): Promise<void> => emails(task),
+				task: async (_ctx, task): Promise<void> => emails(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert websites',
-				task: async (_ctx, task): Promise<void> => websites(task),
+				task: async (_ctx, task): Promise<void> => websites(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert social media',
-				task: async (_ctx, task): Promise<void> => socials(task),
+				task: async (_ctx, task): Promise<void> => socials(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert outside API connections',
-				task: async (_ctx, task): Promise<void> => apiConnections(task),
+				task: async (_ctx, task): Promise<void> => apiConnections(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert photos',
-				task: async (_ctx, task): Promise<void> => photos(task),
+				task: async (_ctx, task): Promise<void> => photos(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert operating hours',
-				task: async (_ctx, task): Promise<void> => hours(task),
+				task: async (_ctx, task): Promise<void> => hours(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert services',
-				task: async (_ctx, task): Promise<void> => services(task),
+				task: async (_ctx, task): Promise<void> => services(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert service access',
-				task: async (_ctx, task): Promise<void> => serviceAccess(task),
+				task: async (_ctx, task): Promise<void> => serviceAccess(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert attributes',
-				task: async (_ctx, task): Promise<void> => attributes(task),
+				task: async (_ctx, task): Promise<void> => attributes(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert attribute supplements',
-				task: async (_ctx, task): Promise<void> => attributeSupplement(task),
+				task: async (_ctx, task): Promise<void> => attributeSupplement(task, ctx),
 				...taskOptions,
 			},
 			{
 				title: 'Insert service areas ',
-				task: async (_ctx, task): Promise<void> => servAreas(task),
+				task: async (_ctx, task): Promise<void> => servAreas(task, ctx),
 				...taskOptions,
 			},
 			{

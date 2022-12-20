@@ -21,7 +21,6 @@ export const namespaces = {
  * Only needed when json generation should be suppressed.
  */
 export const namespaceGen = {
-	orgDescription: false,
 	nav: false,
 	footer: false,
 }

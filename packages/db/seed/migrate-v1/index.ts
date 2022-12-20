@@ -1,4 +1,3 @@
-import { writeFileSync } from 'fs'
 import { Listr, ListrTask as ListrBaseTask, ListrDefaultRenderer, ListrTaskWrapper, Logger } from 'listr2'
 
 import { migrateLog } from '~/seed/logger'
@@ -27,9 +26,9 @@ async function run() {
 			},
 			{
 				title: 'Migrate organizations',
-				task: async (_ctx, task): Promise<Listr> => runMigrateOrgs(task),
+				task: async (ctx, task): Promise<Listr> => runMigrateOrgs(task, ctx),
 				...taskOptions,
-				rollback: async (_ctx, task): Promise<RollbackOrgs> => rollbackOrgs(task),
+				rollback: async (ctx, task): Promise<RollbackOrgs> => rollbackOrgs(task, ctx),
 				// skip: true,
 			},
 			{
@@ -54,7 +53,6 @@ async function run() {
 
 	const job = await tasks.run()
 	try {
-		writeFileSync('./migrateOut.json', JSON.stringify(job, null, 1))
 	} catch (error) {
 		migrateLog.log('top level catch')
 		migrateLog.error(error)
@@ -66,6 +64,7 @@ async function run() {
 run()
 export type Context = {
 	error?: boolean
+	step: string
 }
 export type ListrTaskDef = ListrBaseTask<Context, ListrDefaultRenderer>
 export type RenderOptions = ListrTaskDef['options']
