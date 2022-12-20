@@ -1,6 +1,6 @@
 import { merge } from 'merge-anything'
 
-import type { ButtonStylesParams, MantineThemeOverride } from '@mantine/core'
+import { ButtonStylesParams, MantineThemeOverride } from '@mantine/core'
 
 import { customColors } from './colors'
 import { buttonVariants } from './functions'
@@ -14,9 +14,26 @@ export const commonTheme: MantineThemeOverride = {
 		/** Font weights per InReach style guide */
 		fontWeight: {
 			regular: 400,
+			button: 500,
 			semibold: 600,
 			bold: 700,
 			extrabold: 800,
+		},
+		border: {
+			default: '1px solid',
+		},
+		colors: {
+			primary: {
+				lightGray: '#EFEFEF',
+			},
+			secondary: {
+				black: '#000000',
+				white: '#FFFFFF',
+			},
+			tertiary: {
+				coolGray: '#d9d9d9',
+				red: '#C05C4A',
+			},
 		},
 	},
 	globalStyles: (theme) => ({
@@ -36,15 +53,40 @@ export const commonTheme: MantineThemeOverride = {
 			defaultProps: {
 				radius: 'xl',
 			},
+
 			styles: (theme, params: ButtonStylesParams) => {
 				const baseStyle = {
+					root: {
+						position: 'absolute',
+						display: 'flex',
+						top: theme.spacing.lg,
+						padding: theme.spacing.sm / 2,
+						paddingLeft: theme.spacing.xl * 2,
+						paddingRight: theme.spacing.xl * 2,
+						height: theme.spacing.xl * 2,
+						gap: theme.spacing.sm,
+						backgroundColor: theme.other.colors.secondary.black,
+						'&:hover': {
+							background: theme.fn.lighten(theme.other.colors.secondary.black, 0.4),
+						},
+					},
 					inner: {
-						color: theme.colors.primaryText[9],
-						fontWeight: theme.other.fontWeight.bold,
-						textTransform: 'uppercase',
+						color: theme.other.colors.secondary.white,
+					},
+					leftIcon: {
+						svg: {
+							height: theme.spacing.lg,
+							width: theme.spacing.lg,
+						},
+					},
+					label: {
+						fontSize: theme.spacing.md,
+						fontWeight: theme.other.fontWeight.button,
+						height: 'auto',
+						width: 'auto',
+						lineHeight: `${theme.spacing.lg}px`,
 					},
 				}
-
 				return merge(baseStyle, buttonVariants(theme, params))
 			},
 		},
@@ -58,9 +100,26 @@ declare module '@mantine/core' {
 		/** Font weights per InReach Style Guide */
 		fontWeight: {
 			regular: 400
+			button: 500
 			semibold: 600
 			bold: 700
 			extrabold: 800
+		}
+		border: {
+			default: '1px solid'
+		}
+		colors: {
+			primary: {
+				lightGray: '#EFEFEF'
+			}
+			secondary: {
+				white: '#FFFFFF'
+				black: '#000000'
+			}
+			tertiary: {
+				coolGray: '#d9d9d9'
+				red: '#C05C4A'
+			}
 		}
 	}
 }

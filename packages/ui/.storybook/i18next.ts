@@ -6,12 +6,12 @@ import { initReactI18next } from 'react-i18next'
 const ns = ['common', 'country', 'user', 'footer', 'nav', 'socialMedia']
 export const i18nLocales = {
 	en: 'English',
-	'en-US': 'English (US)',
-	'en-CA': 'English (CA)',
-	'en-MX': 'English (MX)',
-	es: 'Spanish',
-	'es-US': 'Spanish (US)',
-	'es-MX': 'Spanish (MX)',
+	// 'en-US': 'English (US)',
+	// 'en-CA': 'English (CA)',
+	// 'en-MX': 'English (MX)',
+	// es: 'Spanish',
+	// 'es-US': 'Spanish (US)',
+	// 'es-MX': 'Spanish (MX)',
 }
 // const supportedLngs = ['en-US', 'en-CA', 'en-MX', 'es', 'es-US', 'es-MX']
 const supportedLngs = Object.keys(i18nLocales)
