@@ -1,10 +1,9 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { themes } from '@storybook/theming'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { mantineTheme } from 'storybook-addon-mantine'
 
 import { RouterContext } from 'next/dist/shared/lib/router-context'
+
+import { MantineProvider } from '@mantine/core'
 
 import { storybookTheme } from '../theme'
 import './font.css'
@@ -40,6 +39,14 @@ const mantineProviderProps = {
 	withGlobalStyles: true,
 	withNormalizeCSS: false,
 }
-const mantineThemeDefs = [{ ...storybookTheme, themeName: 'Light Mode' }]
 
-export const decorators = [mantineTheme(mantineThemeDefs, mantineProviderProps)]
+const ThemeWrapper = (props: { children: React.ReactNode }) => {
+	return (
+		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
+			{props.children}
+		</MantineProvider>
+	)
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const decorators = [(renderStory: Function) => <ThemeWrapper>{renderStory()}</ThemeWrapper>]
