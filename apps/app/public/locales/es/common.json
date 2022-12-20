@@ -1,1 +1,9 @@
-{}
+{
+	"country-select": "Elija un país",
+	"download-app": "Descargar nuestra aplicación",
+	"edit-profile": "Editar perfil",
+	"inreach": "InReach",
+	"none-apply": "Ninguno de estos se aplica a mí",
+	"other-specify": "Other (specify)",
+	"prefer-not-to-say": "Preferirse a no decir"
+}
