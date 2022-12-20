@@ -84,7 +84,7 @@ export const commonTheme: MantineThemeOverride = {
 						fontWeight: theme.other.fontWeight.button,
 						height: 'auto',
 						width: 'auto',
-						lineHeight: theme.spacing.lg + 'px',
+						lineHeight: `${theme.spacing.lg}px`,
 					},
 				}
 				return merge(baseStyle, buttonVariants(theme, params))

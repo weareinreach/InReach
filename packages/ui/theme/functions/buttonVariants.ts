@@ -132,9 +132,11 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 				},
 				inner: {},
 			}
-	}
-	return {
-		root: {},
-		inner: {},
+		default: {
+			return {
+				root: {},
+				inner: {},
+			}
+		}
 	}
 }
