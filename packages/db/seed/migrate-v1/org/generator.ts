@@ -33,6 +33,7 @@ import { createPoint } from '~/seed/migrate-v1/org/lib/createPoint'
 // const consoleWidth = process.stdout.columns - 10
 
 export const outputDir = `${path.resolve(__dirname, '../out')}/`
+export const generatedDir = `${path.resolve(__dirname, '../_generated')}/`
 
 export const orgDescTranslations: Prisma.TranslationKeyCreateManyInput[] = []
 export const orgDescFreeText: Prisma.FreeTextCreateManyInput[] = []
@@ -1669,11 +1670,11 @@ export const generateRecords = async (task: ListrTask) => {
 		}
 		const translationsOut = Object.fromEntries(translatedStrings)
 		log(`🛠️ Generating translation JSON file (${translatedStrings.size} translations)`)
-		fs.writeFileSync('es-migration.json', JSON.stringify(translationsOut))
+		fs.writeFileSync(`${generatedDir}es-migration.json`, JSON.stringify(translationsOut))
 
 		const unsupportedAttOut = Object.fromEntries(unsupportedMap)
 		log(`🛠️ Generating unsupported attribute JSON file (${unsupportedMap.size} attributes)`)
-		fs.writeFileSync('unsupportedAttributes.json', JSON.stringify(unsupportedAttOut))
+		fs.writeFileSync(`${generatedDir}unsupportedAttributes.json`, JSON.stringify(unsupportedAttOut))
 
 		log(`✍️ Writing rollback file`)
 		fs.writeFileSync(`${outputDir}rollback.json`, JSON.stringify(rollback))
