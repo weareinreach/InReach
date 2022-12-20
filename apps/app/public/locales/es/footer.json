@@ -1,7 +1,9 @@
 {
-  "suggest-a-resource": "Sugerir un Recurso",
-  "subscribe-to-newsletter": "Suscribirse al boletín de noticias",
-  "share-feedback": "Compartir Comentarios",
+  "copyright": "InReach, Inc. {{year}}. Todos los derechos reservados.",
   "disclaimer": "Descargo de responsabilidad",
-  "privacy-statement": "Declaración de privacidad"
+  "powered-by-vercel": "Desarrollado por Vercel",
+  "privacy-statement": "Declaración de privacidad",
+  "share-feedback": "Compartir Comentarios",
+  "subscribe-to-newsletter": "Suscribirse al boletín de noticias",
+  "suggest-a-resource": "Sugerir un Recurso"
 }
