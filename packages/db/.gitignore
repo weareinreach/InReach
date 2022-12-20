@@ -10,6 +10,8 @@ data-transfer/temp/*.js
 *.log
 lib/output/*
 !lib/output/.gitkeep
+seed/migrate-v1/out/*
+!seed/migrate-v1/out/.gitkeep
 
 prisma/generated
 prisma/dbml
