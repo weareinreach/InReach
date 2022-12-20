@@ -5,11 +5,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
-        uses: actions/checkout@7dd9e2a3dc350cf687eb1b2a4fadfee8c8e49675 # v3
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
       - name: Install PNPM
         run: npm i -g pnpm
       - name: Cypress run
-        uses: cypress-io/github-action@c5724eda82337bcff977ce14509f47052c12e04c # v5.0.0
+        uses: cypress-io/github-action@19ae4d7502bfdedf2a3c47961e02ea209aad367b # v5.0.2
         with:
           command: npm run cypress:run:steps
           record: true
