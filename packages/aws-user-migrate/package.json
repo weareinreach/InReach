@@ -20,17 +20,17 @@
 	},
 	"dependencies": {
 		"@weareinreach/db": "0.100.0",
-		"aws-sdk": "2.1259.0"
+		"aws-sdk": "2.1278.0"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.108",
-		"@types/node": "16.18.3",
-		"@vercel/ncc": "0.34.0",
+		"@types/aws-lambda": "8.10.109",
+		"@types/node": "16.18.10",
+		"@vercel/ncc": "0.36.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
-		"eslint": "8.28.0",
-		"prettier": "2.7.1",
-		"typescript": "4.9.3"
+		"eslint": "8.30.0",
+		"prettier": "2.8.1",
+		"typescript": "4.9.4"
 	}
 }

@@ -13,25 +13,25 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@trpc/client": "10.0.0",
-		"@trpc/server": "10.0.0",
+		"@trpc/client": "10.6.0",
+		"@trpc/server": "10.6.0",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
-		"superjson": "1.11.0",
-		"zod": "3.19.1"
+		"superjson": "1.12.1",
+		"zod": "3.20.2"
 	},
 	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "5.44.0",
-		"@typescript-eslint/parser": "5.44.0",
-		"eslint": "8.28.0",
+		"@typescript-eslint/eslint-plugin": "5.47.0",
+		"@typescript-eslint/parser": "5.47.0",
+		"eslint": "8.30.0",
 		"eslint-import-resolver-typescript": "3.5.2",
 		"eslint-plugin-codegen": "0.16.1",
 		"eslint-plugin-import": "2.26.0",
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-simple-import-sort": "8.0.0",
-		"typescript": "4.9.3"
+		"typescript": "4.9.4"
 	},
-	"packageManager": "pnpm@7.17.0"
+	"packageManager": "pnpm@7.18.2"
 }
