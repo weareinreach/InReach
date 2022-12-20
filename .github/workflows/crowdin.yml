@@ -18,7 +18,7 @@ jobs:
 
       - name: Remove Jira ticket ID from branch name
         id: branchregex
-        uses: ashley-taylor/regex-property-action@v1.3
+        uses: ashley-taylor/regex-property-action@eeec905bf940ec1c65ff777402c57f786368d9bc # v1.4
         with:
           value: ${{ github.ref_name }}
           regex: IN-\d+
