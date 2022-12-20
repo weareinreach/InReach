@@ -1,19 +1,9 @@
 {
 	"country-select": "Elija un país",
+	"download-app": "Descargar nuestra aplicación",
 	"edit-profile": "Editar perfil",
 	"inreach": "InReach",
-	"log-in": "Iniciar sesión",
-	"log-out": "Cerrar sesión",
-	"nav-about-us": "Sobre nosotros",
-	"nav-contact-us": "Contáctenos",
-	"nav-questions": "¿Preguntas?",
-	"nav-take-action": "Realizar acción",
 	"none-apply": "Ninguno de estos se aplica a mí",
 	"other-specify": "Other (specify)",
-	"prefer-not-to-say": "Preferirse a no decir",
-	"saved-lists": "Listas guardadas",
-	"settings": "Ajustes",
-	"sign-up": "Regístrate",
-	"user-avatar": "Avatar de usuario",
-	"your-comments": "Tus comentarios"
+	"prefer-not-to-say": "Preferirse a no decir"
 }
