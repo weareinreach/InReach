@@ -84,7 +84,7 @@ importers:
 
   apps/app:
     specifiers:
-      '@crowdin/ota-client': ^0.7.0
+      '@crowdin/ota-client': 0.7.0
       '@next/bundle-analyzer': 13.0.7
       '@next/font': 13.0.7
       '@tanstack/react-query': 4.16.1
