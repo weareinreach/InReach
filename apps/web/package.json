@@ -12,10 +12,10 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@types/node": "16.18.3",
-		"@types/react": "18.0.25",
+		"@types/node": "16.18.10",
+		"@types/react": "18.0.26",
 		"@types/react-dom": "18.0.9",
-		"eslint": "8.28.0",
+		"eslint": "8.30.0",
 		"eslint-config-next": "13.0.7",
 		"next": "13.0.7",
 		"react": "18.2.0",
