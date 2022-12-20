@@ -1,19 +1,9 @@
 {
 	"country-select": "",
+	"download-app": "",
 	"edit-profile": "",
 	"inreach": "",
-	"log-in": "",
-	"log-out": "",
-	"nav-about-us": "",
-	"nav-contact-us": "",
-	"nav-questions": "",
-	"nav-take-action": "",
 	"none-apply": "",
 	"other-specify": "Other (specify)",
-	"prefer-not-to-say": "",
-	"saved-lists": "",
-	"settings": "",
-	"sign-up": "",
-	"user-avatar": "",
-	"your-comments": ""
+	"prefer-not-to-say": ""
 }
