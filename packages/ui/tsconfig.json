@@ -1,11 +1,12 @@
 {
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
+		"esModuleInterop": true,
 		"typeRoots": ["./types"],
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["./*"]
 		}
 	},
-	"include": ["./**/*.ts", "./**/*.tsx", ".storybook/*.ts"]
+	"include": ["./**/*.ts", "./**/*.tsx", ".storybook/*.ts", ".storybook/preview.tsx"]
 }
