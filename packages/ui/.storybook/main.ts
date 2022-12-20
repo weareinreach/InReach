@@ -37,8 +37,10 @@ const config = {
 			// 	prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
 		},
 	},
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	webpackFinal: async (config: Record<string, any>) => {
 		/** Next-Auth session mock */
+		// eslint-disable-next-line @typescript-eslint/no-extra-semi
 		;(config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] =
 			path.resolve(__dirname, 'mockAuthStates.ts')),
 			(config.resolve.alias['next-i18next'] = 'react-i18next')

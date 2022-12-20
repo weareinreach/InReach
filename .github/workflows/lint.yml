@@ -6,39 +6,64 @@ on:
   pull_request:
     branches: [dev]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  prettier:
+  lintformat:
     name: 'Lint & format'
     runs-on: ubuntu-latest
     steps:
+      # Setup steps
       - name: Checkout
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
-
-      - name: 'Lint: Github Super Linter'
-        uses: github/super-linter/slim@bb2d833b08b6c288608686672b93a8a4589cdc49 # v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BRANCH: dev
-          LINTER_RULES_PATH: /
-          JAVASCRIPT_ES_CONFIG_FILE: .eslintrc.js
-          TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.js
-          VALIDATE_ALL_CODEBASE: true
-          VALIDATE_ENV: true
-          VALIDATE_GITHUB_ACTIONS: true
-          VALIDATE_GITLEAKS: true
-          VALIDATE_JAVASCRIPT_ES: true
-          VALIDATE_JSON: true
-          VALIDATE_TSX: true
-          VALIDATE_TYPESCRIPT_ES: true
-          VALIDATE_YAML: true
-
-      - name: 'Format: Prettier'
-        uses: creyD/prettier_action@6602189cf8bac1ce73ffe601925f6127ab7f21ac # v4.2
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v5
         with:
-          prettier_plugins: '@trivagoprettier-plugin-sort-imports prettier-plugin-packagejson prettier-plugin-jsdoc prettier-plugin-prisma'
-          prettier_options: --write --ignore-unknown .
-          commit_message: 'chore: formatted code with Prettier'
-          only_changed: true
+          gpg_private_key: ${{ secrets.BOT_GPG_KEY }}
+          git_config_global: true
+          git_commit_gpgsign: true
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install dependencies
+        run: pnpm install
+
+      # Linting & Formatting
+      - name: Lint workspace
+        run: pnpm lint:pkg
+      - name: Lint projects
+        run: pnpm lint:fix
+      - name: Format projects
+        run: pnpm format
+
+      # Commit changes
+      - name: Commit changed files
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'chore: lint & format'
+          skip_fetch: true
+          skip_checkout: true
