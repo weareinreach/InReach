@@ -18,7 +18,7 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@crowdin/ota-client": "^0.7.0",
+		"@crowdin/ota-client": "0.7.0",
 		"@next/bundle-analyzer": "13.0.7",
 		"@tanstack/react-query": "4.20.4",
 		"@trpc/client": "10.6.0",
