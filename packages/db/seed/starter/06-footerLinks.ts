@@ -1,22 +1,20 @@
 import { prisma } from '~/index'
-import { footerLinks } from '~/seed/data/footerLink'
-import { namespaces } from '~/seed/data/namespaces'
-import { createMeta } from '~/seed/data/user'
-import { ListrTask } from '~/seed/starter'
+import { footerLinks, namespaces } from '~/seed/data'
+import { logFile } from '~/seed/logger'
+import { ListrTask } from '~/seed/starterData'
 
 export const seedFooterLinks = async (task: ListrTask) => {
 	try {
-		const { id: namespaceId } = await prisma.translationNamespace.upsert({
+		const { name: namespace } = await prisma.translationNamespace.upsert({
 			where: {
 				name: namespaces.footer,
 			},
 			create: {
 				name: namespaces.footer,
-				...createMeta,
 			},
 			update: {},
 			select: {
-				id: true,
+				name: true,
 			},
 		})
 
@@ -31,12 +29,12 @@ export const seedFooterLinks = async (task: ListrTask) => {
 				create: {
 					display: item.display,
 					href: item.href,
-					translationKey: {
+					key: {
 						connectOrCreate: {
 							where: {
-								key_namespaceId: {
+								ns_key: {
 									key: item.key,
-									namespaceId,
+									ns: namespaces.footer,
 								},
 							},
 							create: {
@@ -44,14 +42,12 @@ export const seedFooterLinks = async (task: ListrTask) => {
 								text: item.display,
 								namespace: {
 									connect: {
-										id: namespaceId,
+										name: namespace,
 									},
 								},
-								...createMeta,
 							},
 						},
 					},
-					...createMeta,
 				},
 				update: {},
 			})
@@ -59,6 +55,7 @@ export const seedFooterLinks = async (task: ListrTask) => {
 
 		const result = await prisma.$transaction(transactions)
 		const logMessage = `Footer Link records added: ${result.length}`
+		logFile.log(logMessage)
 		task.output = logMessage
 		task.title = `Footer Links (${result.length} records)`
 	} catch (err) {

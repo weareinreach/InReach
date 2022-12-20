@@ -105,7 +105,7 @@ export const FooterSection = ({ links, socialMedia }: FooterSectionProps) => {
 			<div className={classes.upper}>
 				<Group className={classes.socialGroup}>
 					<Group>{socialLinks}</Group>
-					<Link href='#download-app'>{t('download-app')}</Link>
+					<Link href='#download-app'>{t('common.download-app')}</Link>
 				</Group>
 				<Group className={classes.linkGroup}>{items}</Group>
 			</div>
@@ -114,13 +114,13 @@ export const FooterSection = ({ links, socialMedia }: FooterSectionProps) => {
 				<Grid.Col md={4}>
 					<Center h='100%'>
 						<Text align='center' span>
-							{t('copyright', { year: new Date().getFullYear() })}
+							{t('footer.copyright', { year: new Date().getFullYear() })}
 						</Text>
 					</Center>
 				</Grid.Col>
 				<Grid.Col md={4}>
 					<Link href='https://vercel.com/?utm_source=in-reach&utm_campaign=oss'>
-						<Image src={Vercel} alt={t('powered-by-vercel')} className={classes.vercelBlock} />
+						<Image src={Vercel} alt={t('footer.powered-by-vercel')} className={classes.vercelBlock} />
 					</Link>
 				</Grid.Col>
 			</Grid>

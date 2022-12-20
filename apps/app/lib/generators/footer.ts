@@ -12,7 +12,7 @@ export const generateFooterLinks = async (task: ListrTask) => {
 		select: {
 			href: true,
 			icon: true,
-			translationKey: {
+			key: {
 				select: { key: true },
 			},
 		},
@@ -22,7 +22,7 @@ export const generateFooterLinks = async (task: ListrTask) => {
 	for (const record of data) {
 		const {
 			href,
-			translationKey: { key },
+			key: { key },
 		} = record
 		output.push({ key, href })
 	}

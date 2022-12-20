@@ -4,7 +4,6 @@ const runPrismaFormat = (files) => files.map((file) => `prisma format --schema $
 
 const config = {
 	'*.{cjs,mjs,js,jsx,ts,tsx}': [runEslint, runPrettier],
-	'*.prisma': runPrismaFormat,
 	'*.json': [runPrettier],
 	'*.prisma': [runPrettier],
 	'*.html': [runPrettier],
