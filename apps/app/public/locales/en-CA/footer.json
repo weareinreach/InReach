@@ -1,7 +1,9 @@
 {
-  "suggest-a-resource": "",
-  "subscribe-to-newsletter": "",
-  "share-feedback": "",
+  "copyright": "",
   "disclaimer": "",
-  "privacy-statement": ""
+  "powered-by-vercel": "",
+  "privacy-statement": "",
+  "share-feedback": "",
+  "subscribe-to-newsletter": "",
+  "suggest-a-resource": ""
 }
