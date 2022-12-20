@@ -14,11 +14,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@7dd9e2a3dc350cf687eb1b2a4fadfee8c8e49675 # v3
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
 
       - name: Remove Jira ticket ID from branch name
         id: branchregex
-        uses: ashley-taylor/regex-property-action@v1.3
+        uses: ashley-taylor/regex-property-action@eeec905bf940ec1c65ff777402c57f786368d9bc # v1.4
         with:
           value: ${{ github.ref_name }}
           regex: IN-\d+

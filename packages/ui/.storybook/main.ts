@@ -39,7 +39,7 @@ const config = {
 	},
 	webpackFinal: async (config: Record<string, any>) => {
 		/** Next-Auth session mock */
-		(config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] =
+		;(config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] =
 			path.resolve(__dirname, 'mockAuthStates.ts')),
 			(config.resolve.alias['next-i18next'] = 'react-i18next')
 		/**
