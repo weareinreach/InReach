@@ -6,7 +6,7 @@ import React from 'react'
 import { Button, Center } from '@mantine/core'
 
 export default {
-	title: 'App/Layout/eButton',
+	title: 'Core/Button',
 	component: Button,
 	decorators: [
 		(Story) => (
