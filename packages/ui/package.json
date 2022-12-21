@@ -101,7 +101,7 @@
 		"storybook-addon-next": "1.7.1",
 		"storybook-addon-swc": "1.1.9",
 		"storybook-addon-turbo-build": "1.1.0",
-		"storybook-dark-mode": "1.1.2",
+		"storybook-dark-mode": "2.0.4",
 		"storybook-mobile": "1.0.0",
 		"storybook-react-i18next": "1.1.2",
 		"style-loader": "3.3.1",
