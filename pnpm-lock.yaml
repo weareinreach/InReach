@@ -560,7 +560,7 @@ importers:
       storybook-addon-next: 1.7.1
       storybook-addon-swc: 1.1.9
       storybook-addon-turbo-build: 1.1.0
-      storybook-dark-mode: 1.1.2
+      storybook-dark-mode: 2.0.4
       storybook-mobile: 1.0.0
       storybook-react-i18next: 1.1.2
       style-loader: 3.3.1
@@ -652,7 +652,7 @@ importers:
       storybook-addon-next: 1.7.1_wcahyedjseiq346pfot6pb7rnu
       storybook-addon-swc: 1.1.9_webpack@5.75.0
       storybook-addon-turbo-build: 1.1.0_webpack@5.75.0
-      storybook-dark-mode: 1.1.2_biqbaboplfbrettd7655fr4n2y
+      storybook-dark-mode: 2.0.4_biqbaboplfbrettd7655fr4n2y
       storybook-mobile: 1.0.0_7i5myeigehqah43i5u7wbekgba
       storybook-react-i18next: 1.1.2_yu567y5k7tncqb5wr5onr6obbu
       style-loader: 3.3.1_webpack@5.75.0
@@ -19015,8 +19015,8 @@ packages:
       - webpack
     dev: true
 
-  /storybook-dark-mode/1.1.2_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-L5QjJN49bl+ktprM6faMkTeW+LCvuMYWQaRo8/JGSMmzomIjLT7Yo20UiTsnMgMYyYWYF5O4EK/F3OvjDNp8tQ==}
+  /storybook-dark-mode/2.0.4_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-+cJXUOMj49RbXCqCqggIMWf7GGlhvJoOgjK1E2WZUy1OMwlvgeS13Td9jccl3KmuGBx0Eke+Q2ONecNIohUpEQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
