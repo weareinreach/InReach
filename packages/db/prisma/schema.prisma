@@ -107,7 +107,7 @@ model User {
   locationPermission LocationPermission[]
 
   reviews          OrgReview[]
-  // Current location
+  // Current location - for LCR
   currentCity      String?
   currentGovDist   GovDist?    @relation(fields: [currentGovDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   currentGovDistId String? /// @zod.custom(imports.cuid)
@@ -248,13 +248,21 @@ model UserSurvey {
   birthYear     Int?    @db.SmallInt
   reasonForJoin String?
 
-  communities     SurveyCommunity[]
-  ethnicity       SurveyEthnicity[]
-  identifiesAs    SurveySOG[]
-  countryOrigin   Country?          @relation(fields: [countryOriginId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  communities  SurveyCommunity[]
+  ethnicity    SurveyEthnicity[]
+  identifiesAs SurveySOG[]
+
+  countryOrigin   Country? @relation("origin", fields: [countryOriginId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   countryOriginId String? /// @zod.custom(imports.cuid)
-  immigration     UserImmigration?  @relation(fields: [immigrationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  immigrationId   String? /// @zod.custom(imports.cuid)
+
+  immigration   UserImmigration? @relation(fields: [immigrationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  immigrationId String? /// @zod.custom(imports.cuid)
+
+  currentCity      String?
+  currentGovDist   GovDist? @relation(fields: [currentGovDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  currentGovDistId String? /// @zod.custom(imports.cuid)
+  currentCountry   Country? @relation(name: "currentLocation", fields: [currentCountryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  currentCountryId String? /// @zod.custom(imports.cuid)
 
   //@@schema("user")
 }
@@ -762,6 +770,26 @@ model OrgService {
   @@index([organizationId(sort: Asc)])
 }
 
+model ServiceArea {
+  id String @id @default(cuid()) /// @zod.custom(imports.cuid)
+
+  national ServiceAreaCountry[]
+  dist     ServiceAreaDist[]
+
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String?       @unique /// @zod.custom(imports.cuid)
+  orgLocation    OrgLocation?  @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId  String?       @unique /// @zod.custom(imports.cuid)
+  orgService     OrgService?   @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgServiceId   String?       @unique /// @zod.custom(imports.cuid)
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  auditLog  AuditLog[]
+
+  //@@schema("org")
+}
+
 model ServiceAccess {
   id String @id @default(cuid()) /// @zod.custom(imports.cuid)
   // the legacyIds are nowhere near unique
@@ -1104,8 +1132,9 @@ model Country {
   orgPhone            OrgPhone[]
   serviceArea         ServiceAreaCountry[]
 
-  surveys      UserSurvey[]
+  surveys      UserSurvey[] @relation("origin")
   currentUsers User[]       @relation("currentCountry")
+  userSurvey   UserSurvey[] @relation("currentLocation")
 
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -1152,6 +1181,7 @@ model GovDist {
   orgReview   OrgReview[]
   user        User[]
   serviceArea ServiceAreaDist[]
+  userSurvey  UserSurvey[]
 
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -1892,26 +1922,6 @@ model OrgServiceTag {
   //@@schema("relation")
 
   @@id([serviceId, tagId])
-}
-
-model ServiceArea {
-  id String @id @default(cuid()) /// @zod.custom(imports.cuid)
-
-  national ServiceAreaCountry[]
-  dist     ServiceAreaDist[]
-
-  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String?       @unique /// @zod.custom(imports.cuid)
-  orgLocation    OrgLocation?  @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgLocationId  String?       @unique /// @zod.custom(imports.cuid)
-  orgService     OrgService?   @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgServiceId   String?       @unique /// @zod.custom(imports.cuid)
-
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  auditLog  AuditLog[]
-
-  //@@schema("org")
 }
 
 /// Link countries to service areas
