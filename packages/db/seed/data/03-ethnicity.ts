@@ -1,4 +1,6 @@
-import { prisma } from '~/index'
+import { Prisma } from '@prisma/client'
+
+import { Log, iconList } from '~/seed/lib'
 
 import { logFile } from '../logger'
 import { ListrTask } from '../starterData'
@@ -19,41 +21,39 @@ const ethnicityData: EthnicityData = [
 	'Other',
 	'Prefer not to say',
 ]
+type GenEthnicityData = {
+	ethnicity: Prisma.UserEthnicityCreateManyInput[]
+	translate: Prisma.TranslationKeyCreateManyInput[]
+}
 
 export const generateEthnicityRecords = (task: ListrTask) => {
-	const queue = ethnicityData.map((item, i) => {
-		const logMessage = `(${i}/${ethnicityData.length}) Added Ethnicity transaction to queue: ${item}`
-		logFile.log(logMessage)
-		task.output = logMessage
-
-		return prisma.userEthnicity.upsert({
-			where: {
-				ethnicity: item,
-			},
-			create: {
-				ethnicity: item,
-				key: {
-					create: {
-						key: `eth-${keySlug(item)}`,
-						text: item,
-						namespace: {
-							connect: {
-								name: namespaces.user,
-							},
-						},
-					},
-				},
-			},
-			update: {
-				key: {
-					update: {
-						key: `eth-${keySlug(item)}`,
-						text: item,
-					},
-				},
-			},
+	const log: Log = (message, icon?, indent = false) => {
+		const dispIcon = icon ? `${iconList(icon)} ` : ''
+		const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
+		logFile.info(formattedMessage)
+		task.output = formattedMessage
+	}
+	const data: GenEthnicityData = {
+		ethnicity: [],
+		translate: [],
+	}
+	let i = 0
+	for (const item of ethnicityData) {
+		log(`(${i}/${ethnicityData.length}) Generating Ethnicity record: ${item}`, 'generate')
+		log(`Translation key: eth-${keySlug(item)}`, 'tlate', true)
+		const key = `eth-${keySlug(item)}`
+		data.translate.push({
+			key,
+			ns: namespaces.user,
+			text: item,
 		})
-	})
-
-	return queue
+		log(`Ethnicity record: ${item}`, 'generate', true)
+		data.ethnicity.push({
+			ethnicity: item,
+			tsKey: key,
+			tsNs: namespaces.user,
+		})
+		i++
+	}
+	return data
 }

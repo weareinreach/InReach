@@ -31,13 +31,13 @@ const tasks = new Listr<Context>(
 			task: (_ctx, task): Listr =>
 				task.newListr([
 					{
-						title: 'System user',
-						task: async (_ctx, task): Promise<void> => seedSystemUser(task),
+						title: 'Translation Namespaces',
+						task: async (_ctx, task): Promise<void> => seedTranslationNamespaces(task),
 						options: renderOptions,
 					},
 					{
-						title: 'Translation Namespaces',
-						task: async (_ctx, task): Promise<void> => seedTranslationNamespaces(task),
+						title: 'User Roles',
+						task: async (_ctx, task): Promise<void> => seedUserRoles(task),
 						options: renderOptions,
 					},
 					{
@@ -46,8 +46,8 @@ const tasks = new Listr<Context>(
 						options: renderOptions,
 					},
 					{
-						title: 'User Roles',
-						task: async (_ctx, task): Promise<void> => seedUserRoles(task),
+						title: 'System user',
+						task: async (_ctx, task): Promise<void> => seedSystemUser(task),
 						options: renderOptions,
 					},
 					{

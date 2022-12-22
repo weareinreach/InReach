@@ -1,126 +1,104 @@
+import { Prisma } from '@prisma/client'
+import cuid from 'cuid'
+
 import { prisma } from '~/index'
 import { keySlug, namespaces, serviceData } from '~/seed/data/'
+import { Log, iconList } from '~/seed/lib'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
+type Data = {
+	category: Prisma.ServiceCategoryCreateManyInput[]
+	service: Prisma.ServiceTagCreateManyInput[]
+	translation: Prisma.TranslationKeyCreateManyInput[]
+}
+
 export const seedServices = async (task: ListrTask) => {
+	const log: Log = (message, icon?, indent = false) => {
+		const dispIcon = icon ? `${iconList(icon)} ` : ''
+		const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
+		logFile.info(formattedMessage)
+		task.output = formattedMessage
+	}
 	try {
 		let x = 0
-		let y = 0
-		let logMessage = ''
+		const data: Data = {
+			category: [],
+			service: [],
+			translation: [],
+		}
+		const existingCategories = await prisma.serviceCategory.findMany({
+			select: {
+				id: true,
+				category: true,
+			},
+		})
+		const categoryMap = new Map<string, string>(existingCategories.map(({ id, category }) => [category, id]))
 
 		for (const [category, services] of serviceData) {
-			logMessage = `(${x + 1}/${serviceData.length}) Upserting Service Category: ${category}`
-			logFile.log(logMessage)
-			task.output = logMessage
-			const newCategory = await prisma.serviceCategory.upsert({
-				where: {
-					category,
-				},
-				create: {
-					category,
-					key: {
-						create: {
-							key: keySlug(category),
-							text: category,
-							namespace: {
-								connect: {
-									name: namespaces.services,
-								},
-							},
-						},
-					},
-				},
-				update: {},
-				select: {
-					id: true,
-					key: {
-						select: {
-							key: true,
-							ns: true,
-						},
-					},
-				},
-			})
-			const { id: categoryId } = newCategory
-			if (services.length) {
-				const serviceTransactions = await prisma.$transaction(
-					services.map((record, idx) => {
-						logMessage = `\t[${idx + 1}/${services.length}] Upserting Service: ${record}`
-						logFile.log(logMessage)
-						task.output = logMessage
-						return prisma.serviceTag.upsert({
-							where: {
-								name_categoryId: {
-									categoryId,
-									name: record,
-								},
-							},
-							create: {
-								name: record,
-								category: {
-									connect: {
-										id: categoryId,
-									},
-								},
-								key: {
-									create: {
-										key: keySlug(record),
-										text: record,
-										namespace: {
-											connect: {
-												name: namespaces.services,
-											},
-										},
-									},
-								},
-							},
-							update: {},
-							select: { id: true },
-						})
-					})
-				)
-				y = y + serviceTransactions.length
-			} else {
-				await prisma.serviceTag.upsert({
-					where: {
-						name_categoryId: {
-							name: category,
-							categoryId,
-						},
-					},
-					create: {
-						name: category,
-						category: {
-							connect: {
-								id: categoryId,
-							},
-						},
-						key: {
-							connect: {
-								ns_key: {
-									key: newCategory.key.key,
-									ns: newCategory.key.ns,
-								},
-							},
-						},
-					},
-					update: {},
+			log(`(${x + 1}/${serviceData.length}) Prepare Service Category record: ${category}`, 'generate')
+			const categoryId = categoryMap.get(category) ?? cuid()
+			const ns = namespaces.services
+			if (!categoryMap.has(category)) {
+				const key = keySlug(`${category}`)
+				data.translation.push({
+					key,
+					ns,
+					text: category,
 				})
-				y++
-			}
-			logMessage = `(${x + 1}/${serviceData.length}) Upserted Category: ${category} with ${
-				services.length
-			} services`
-			logFile.log(logMessage)
-			task.output = logMessage
+				log(`[${category}] Generated translation key`, 'tlate', true)
 
+				data.category.push({
+					id: categoryId,
+					tsKey: key,
+					tsNs: ns,
+					category,
+				})
+				categoryMap.set(category, categoryId)
+				log(`[${category}] Generated service category definition`, 'generate', true)
+			} else {
+				log(`[${category}] SKIP Service category definition: record exists`, 'skip', true)
+			}
+
+			if (services.length) {
+				let idx = 0
+				for (const record of services) {
+					log(`[${idx + 1}/${services.length}] Generating Service Tag: ${record}`, 'generate', true)
+					const key = keySlug(`${category}.${record}`)
+					const ns = namespaces.services
+					data.translation.push({
+						key,
+						ns,
+						text: record,
+					})
+					log(`[${record}] Generated translation key`, 'tlate', true)
+					data.service.push({
+						categoryId,
+						name: record,
+						tsKey: key,
+						tsNs: ns,
+					})
+					log(`[${record}] Generated service tag definition`, 'generate', true)
+					idx++
+				}
+			}
 			x++
 		}
-		logMessage = `Service Categories added: ${x} Service Records added: ${y}`
-		logFile.log(logMessage)
-		task.output = logMessage
-		task.title = `Service Categories & Tags (${x} categories, ${y} services)`
+
+		const translateResult = await prisma.translationKey.createMany({
+			data: data.translation,
+			skipDuplicates: true,
+		})
+		const categoryResult = await prisma.serviceCategory.createMany({
+			data: data.category,
+			skipDuplicates: true,
+		})
+		const tagResult = await prisma.serviceTag.createMany({ data: data.service, skipDuplicates: true })
+
+		log(`Service category records added: ${categoryResult.count}`, 'create')
+		log(`Service tag records added: ${tagResult.count}`, 'create')
+		log(`Translation key records added: ${translateResult.count}`, 'create')
+		task.title = `Service Categories & Tags (${categoryResult.count} categories, ${tagResult.count} services, ${translateResult.count} translation keys)`
 	} catch (err) {
 		throw err
 	}

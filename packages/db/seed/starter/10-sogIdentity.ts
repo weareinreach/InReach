@@ -1,42 +1,56 @@
+import { Prisma } from '@prisma/client'
+
 import { prisma } from '~/index'
 import { namespaces, sogIdentityData } from '~/seed/data/'
+import { Log, iconList } from '~/seed/lib'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
-export const seedSOGIdentity = async (task: ListrTask) => {
-	try {
-		let logMessage = ''
-		const transactions = sogIdentityData.map((record, idx) => {
-			logMessage = `(${idx + 1}/${sogIdentityData.length}) Upserting SOG/Identity record: ${record.text}`
-			logFile.log(logMessage)
-			task.output = logMessage
+type Data = {
+	translate: Prisma.TranslationKeyCreateManyInput[]
+	sog: Prisma.UserSOGIdentityCreateManyInput[]
+}
 
-			return prisma.userSOGIdentity.upsert({
-				where: {
-					identifyAs: record.text,
-				},
-				create: {
-					identifyAs: record.text,
-					key: {
-						create: {
-							key: record.key,
-							text: record.text,
-							namespace: {
-								connect: {
-									name: namespaces.user,
-								},
-							},
-						},
-					},
-				},
-				update: {},
+export const seedSOGIdentity = async (task: ListrTask) => {
+	const log: Log = (message, icon?, indent = false) => {
+		const dispIcon = icon ? `${iconList(icon)} ` : ''
+		const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
+		logFile.info(formattedMessage)
+		task.output = formattedMessage
+	}
+	const ns = namespaces.user
+	try {
+		let idx = 0
+		const data: Data = {
+			sog: [],
+			translate: [],
+		}
+		for (const record of sogIdentityData) {
+			const count = idx + 1
+			log(`(${count}/${sogIdentityData.length}) Prepare SOG/Identity record: ${record.text}`)
+			data.translate.push({
+				key: record.key,
+				ns,
+				text: record.text,
 			})
+
+			data.sog.push({
+				identifyAs: record.text,
+				tsKey: record.key,
+				tsNs: ns,
+			})
+			idx++
+		}
+
+		const translateResult = await prisma.translationKey.createMany({
+			data: data.translate,
+			skipDuplicates: true,
 		})
-		await prisma.$transaction(transactions)
-		logMessage = `SOG/Identity records added: ${transactions.length}`
-		logFile.log(logMessage)
-		task.output = logMessage
-		task.title = `SOG/Identity (${transactions.length} records)`
+		const sogResult = await prisma.userSOGIdentity.createMany({ data: data.sog, skipDuplicates: true })
+		log(`SOG/Identity records added: ${sogResult.count}`, 'create')
+		log(`Translation keys added: ${translateResult.count}`, 'create')
+
+		task.title = `SOG/Identity (${sogResult.count} records, ${translateResult.count} translation keys)`
 	} catch (error) {
 		throw error
 	}

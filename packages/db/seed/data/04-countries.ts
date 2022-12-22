@@ -1,4 +1,7 @@
 import axios from 'axios'
+import { countries as countryExtra } from 'countries-languages'
+
+import { namespaces } from '~/seed/data/00-namespaces'
 
 export const countryData = async () => {
 	const { data: countries } = await axios.get<Array<Countries>>(
@@ -6,6 +9,47 @@ export const countryData = async () => {
 	)
 
 	return { countries }
+}
+
+export const genDemonymKey = (country: Countries) => {
+	const demonym: string | undefined = countryExtra[country.cca2]?.demonym
+	if (demonym) {
+		return {
+			demonymOne: {
+				key: `${country.cca3}.demonym_one`,
+				ns: namespaces.country,
+				text: demonym,
+				context: `Citizens of ${country.name.common}`,
+			},
+
+			demonymOther: {
+				key: `${country.cca3}.demonym_other`,
+				text: `${demonym}s`,
+				ns: namespaces.country,
+				parentKey: `${country.cca3}.demonym_one`,
+				parentNs: namespaces.country,
+			},
+		}
+	}
+
+	return {
+		demonymOne: undefined,
+		// {
+		// 	key: undefined,
+		// 	ns: undefined,
+		// 	text: undefined,
+		// 	context: undefined,
+		// },
+
+		demonymOther: undefined,
+		// {
+		// 	key: undefined,
+		// 	text: undefined,
+		// 	ns: undefined,
+		// 	parentKey: undefined,
+		// 	parentNs: undefined,
+		// },
+	}
 }
 
 export interface Countries {
