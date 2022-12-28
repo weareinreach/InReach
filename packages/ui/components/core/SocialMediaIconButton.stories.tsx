@@ -7,7 +7,7 @@ import { Center } from '@mantine/core'
 import { SocialMediaIconButton, approvedIcons } from './SocialMediaIcon'
 
 export default {
-	title: 'Core/SocialMediaIconButton',
+	title: 'Core/Social Media Button',
 	component: SocialMediaIconButton,
 	decorators: [
 		(Story) => (
