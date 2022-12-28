@@ -24,7 +24,9 @@ export default {
 } as ComponentMeta<typeof ActionIcon>
 
 const SocialMediaIconVariant: ComponentStory<typeof ActionIcon> = (args) => (
-	<ActionIcon {...args}>{args.children}</ActionIcon>
+	<ActionIcon {...args}>
+		<Icon icon={args.icon} width={32} height={32} style={{ padding: '3px' }} />
+	</ActionIcon>
 )
 
 export const SocialMediaIconButtonSubtle = SocialMediaIconVariant.bind({})
@@ -35,7 +37,7 @@ SocialMediaIconButtonSubtle.args = {
 	variant: 'subtle',
 	href: 'https://facebook.com',
 	target: '_blank',
-	children: <Icon icon='uil:facebook-f' width={32} height={32} style={{ padding: '3px' }} />,
+	icon: 'teenyicons:twitter-solid',
 	radius: 'xl',
 	size: 'xl',
 }
@@ -45,7 +47,7 @@ SocialMediaIconButtonFilled.args = {
 	variant: 'filled',
 	href: 'https://twitter.com',
 	target: '_blank',
-	children: <Icon icon='teenyicons:twitter-solid' width={32} height={32} style={{ padding: '3px' }} />,
+	icon: 'teenyicons:twitter-solid',
 	radius: 'xl',
 	size: 'xl',
 }

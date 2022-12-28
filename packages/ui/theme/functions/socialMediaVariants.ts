@@ -2,11 +2,15 @@ import { ActionIconVariant, CSSObject, MantineTheme } from '@mantine/core'
 
 type ActionIconVariants = (theme: MantineTheme, params: ActionIconStylesParams) => Record<string, CSSObject>
 
+const approvedIcons = {
+	twitter: 'teenyicons:twitter-solid',
+} as const
+
 interface ActionIconStylesParams {
 	component: string
 	href: string
 	variant: ActionIconVariant
-	children: React.ReactNode
+	icon: typeof approvedIcons
 	radius: string
 }
 
