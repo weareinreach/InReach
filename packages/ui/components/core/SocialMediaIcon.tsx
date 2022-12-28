@@ -21,8 +21,8 @@ const useStyles = createStyles((theme) => ({
 		},
 	},
 	icon: {
-		width: '50%',
-		height: '50%',
+		width: '75%',
+		height: '75%',
 	},
 }))
 
