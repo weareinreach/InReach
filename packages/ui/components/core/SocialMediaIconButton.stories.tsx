@@ -1,15 +1,14 @@
-import { Icon } from '@iconify/react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import React from 'react'
 
-import { ActionIcon, Center } from '@mantine/core'
+import { Center } from '@mantine/core'
 
-import { approvedIcons } from '~/theme/functions'
+import { SocialMediaIconButton, approvedIcons } from './SocialMediaIcon'
 
 export default {
 	title: 'Core/SocialMediaIconButton',
-	component: ActionIcon,
+	component: SocialMediaIconButton,
 	decorators: [
 		(Story) => (
 			<Center style={{ width: '100vw' }}>
@@ -23,33 +22,16 @@ export default {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=51%3A472&t=MmGmrL63FUWcqBUe-0',
 		},
 	},
-} as ComponentMeta<typeof ActionIcon>
+} as ComponentMeta<typeof SocialMediaIconButton>
 
-const SocialMediaIconVariant: ComponentStory<typeof ActionIcon> = (args) => (
-	<ActionIcon {...args}>
-		<Icon icon={args.icon} height='1em' />
-	</ActionIcon>
+const SocialMediaIconVariant: ComponentStory<typeof SocialMediaIconButton> = (args) => (
+	<SocialMediaIconButton {...args} />
 )
 
-export const SocialMediaIconButtonSubtle = SocialMediaIconVariant.bind({})
-export const SocialMediaIconButtonFilled = SocialMediaIconVariant.bind({})
+export const SocialMediaButton = SocialMediaIconVariant.bind({})
 
-SocialMediaIconButtonSubtle.args = {
-	component: 'a',
-	variant: 'subtle',
+SocialMediaButton.args = {
 	href: 'https://facebook.com',
-	target: '_blank',
-	icon: approvedIcons.twitter,
-	radius: 'xl',
-	size: 'xl',
-}
-
-SocialMediaIconButtonFilled.args = {
-	component: 'a',
-	variant: 'filled',
-	href: 'https://twitter.com',
-	target: '_blank',
-	icon: approvedIcons.twitter,
-	radius: 'xl',
-	size: 'xl',
+	icon: approvedIcons.facebook,
+	title: 'Social Media Icon',
 }
