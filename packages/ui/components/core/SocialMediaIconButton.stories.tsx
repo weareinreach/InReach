@@ -5,6 +5,8 @@ import React from 'react'
 
 import { ActionIcon, Center } from '@mantine/core'
 
+import { approvedIcons } from '~/theme/functions'
+
 export default {
 	title: 'Core/SocialMediaIconButton',
 	component: ActionIcon,
@@ -25,7 +27,7 @@ export default {
 
 const SocialMediaIconVariant: ComponentStory<typeof ActionIcon> = (args) => (
 	<ActionIcon {...args}>
-		<Icon icon={args.icon} width={32} height={32} style={{ padding: '3px' }} />
+		<Icon icon={args.icon} height='1em' />
 	</ActionIcon>
 )
 
@@ -37,7 +39,7 @@ SocialMediaIconButtonSubtle.args = {
 	variant: 'subtle',
 	href: 'https://facebook.com',
 	target: '_blank',
-	icon: 'teenyicons:twitter-solid',
+	icon: approvedIcons.twitter,
 	radius: 'xl',
 	size: 'xl',
 }
@@ -47,7 +49,7 @@ SocialMediaIconButtonFilled.args = {
 	variant: 'filled',
 	href: 'https://twitter.com',
 	target: '_blank',
-	icon: 'teenyicons:twitter-solid',
+	icon: approvedIcons.twitter,
 	radius: 'xl',
 	size: 'xl',
 }

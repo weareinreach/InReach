@@ -2,8 +2,8 @@ import { ActionIconVariant, CSSObject, MantineTheme } from '@mantine/core'
 
 type ActionIconVariants = (theme: MantineTheme, params: ActionIconStylesParams) => Record<string, CSSObject>
 
-const approvedIcons = {
-	twitter: 'teenyicons:twitter-solid',
+export const approvedIcons = {
+	twitter: 'fe:twitter',
 } as const
 
 interface ActionIconStylesParams {
@@ -18,7 +18,10 @@ export const actionIconVariants: ActionIconVariants = (theme, params) => {
 	switch (params.variant) {
 		case 'subtle':
 			return {
-				root: {},
+				root: {
+					width: '32px',
+					height: '32px',
+				},
 				inner: {},
 				// root:{
 				// 	height: theme.spacing.lg * 2,
@@ -36,7 +39,10 @@ export const actionIconVariants: ActionIconVariants = (theme, params) => {
 			}
 		case 'filled':
 			return {
-				root: {},
+				root: {
+					width: '32px',
+					height: '32px',
+				},
 				inner: {},
 				// root:{
 				// 	height: theme.spacing.lg * 2,
