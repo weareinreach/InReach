@@ -14,7 +14,8 @@ export const approvedIcons = {
 const useStyles = createStyles((theme) => ({
 	button: {
 		color: theme.other.colors.secondary.black,
-		height: '1em',
+		height: '32px',
+		width: '32px',
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
 		},
