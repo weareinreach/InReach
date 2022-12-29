@@ -29,22 +29,26 @@ const getAttributeList = async () => {
 		select: {
 			id: true,
 			tag: true,
-			category: {
-				select: {
-					tag: true,
-				},
-			},
 			requireBoolean: true,
 			requireCountry: true,
 			requireData: true,
 			requireLanguage: true,
 			requireText: true,
+			categories: {
+				select: {
+					category: {
+						select: {
+							tag: true,
+						},
+					},
+				},
+			},
 		},
 	})
 	const flatResults = results.flatMap((record) =>
-		record.category.map((cat) => ({
+		record.categories.map((cat) => ({
 			...record,
-			category: cat.tag,
+			category: cat.category.tag,
 		}))
 	)
 	const attributeMap = new Map(
@@ -122,7 +126,7 @@ const getSocialMediaMap = async () => {
 			name: true,
 		},
 	})
-	const resultMap = new Map(result.map((x) => [x.name, x.id]))
+	const resultMap = new Map(result.map((x) => [x.name.toLowerCase(), x.id]))
 	return resultMap
 }
 
@@ -139,7 +143,7 @@ export const getUserData = async () => {
 }
 
 export const getPermissions = async () => {
-	const result = await prisma.permissionItem.findMany({
+	const result = await prisma.permission.findMany({
 		select: {
 			id: true,
 			name: true,

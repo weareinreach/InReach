@@ -54,7 +54,7 @@ export const seedAttributes = async (task: ListrTask) => {
 					ns,
 					text: category.name,
 				})
-				log(`[${category.name}] Generated translation key`, 'tlate', true)
+				log(`[${catTag}] Generated translation key`, 'tlate', true)
 
 				data.category.push({
 					id: categoryId,
@@ -63,10 +63,10 @@ export const seedAttributes = async (task: ListrTask) => {
 					ns,
 					intDesc: category.description,
 				})
-				log(`[${category.name}] Generated service definition`, 'generate', true)
+				log(`[${catTag}] Generated service definition`, 'generate', true)
 				categoryMap.set(catTag, categoryId)
 			} else {
-				log(`[${category.name}] SKIP Attribute category: record exists`, 'skip', true)
+				log(`[${catTag}] SKIP Attribute category: record exists`, 'skip', true)
 			}
 			x++
 			let idx = 0
@@ -92,12 +92,13 @@ export const seedAttributes = async (task: ListrTask) => {
 						ns,
 						text: name,
 					})
-					log(`[${name}] Generated translation key`, 'tlate', true)
+					log(`[${key}] Generated translation key`, 'tlate', true)
+					const tag = slugify(keyTag, { lower: true })
 
 					data.attribute.push({
 						id: attributeId,
 						name,
-						tag: slugify(keyTag, { lower: true }),
+						tag,
 						intDesc,
 						requireData,
 						requireCountry,
@@ -107,16 +108,16 @@ export const seedAttributes = async (task: ListrTask) => {
 						tsNs: ns,
 					})
 
-					log(`[${name}] Generated attribute definition`, 'generate', true)
+					log(`[${tag}] Generated attribute definition`, 'generate', true)
 
 					data.link.push({
 						attributeId,
 						categoryId,
 					})
-					log(`[${name}] Generated attribute to category link`, 'link', true)
+					log(`[${tag}] Generated attribute to category link`, 'link', true)
 					attributeMap.set(name, attributeId)
 				} else {
-					log(`[${name}] SKIP attribute definition: record exists`, 'skip', true)
+					log(`[${key}] SKIP attribute definition: record exists`, 'skip', true)
 				}
 			}
 		}

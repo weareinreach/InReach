@@ -14,10 +14,27 @@
  * `🔗 link`
  *
  * `⚙️ gear`
+ *
+ * `⚠️ warning`
+ *
+ * `✍️ write`
+ *
+ * `🚮 trash`
  */
 export type Log = (message: string, icon?: IconList, indent?: boolean, silent?: boolean) => void
 
-export type IconList = 'fetch' | 'generate' | 'tlate' | 'create' | 'skip' | 'access' | 'link' | 'gear'
+export type IconList =
+	| 'fetch'
+	| 'generate'
+	| 'tlate'
+	| 'create'
+	| 'skip'
+	| 'access'
+	| 'link'
+	| 'gear'
+	| 'write'
+	| 'warning'
+	| 'trash'
 
 export const iconList = (icon: IconList) => {
 	switch (icon) {
@@ -37,5 +54,11 @@ export const iconList = (icon: IconList) => {
 			return '🔗'
 		case 'gear':
 			return '⚙️'
+		case 'warning':
+			return '⚠️'
+		case 'write':
+			return '✍️'
+		case 'trash':
+			return '🚮'
 	}
 }
