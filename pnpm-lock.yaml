@@ -140,9 +140,9 @@ importers:
       '@weareinreach/ui': link:../../packages/ui
       axios: 1.2.1
       i18next: 22.4.6
-      next: 13.0.7_672uxklweod7ene3nqtsh262ca
-      next-auth: 4.18.6_gvvct4imq5upoiloat43sswrza
-      next-i18next: 13.0.2_vr2ld2zypzwifyvdbfyqot4dai
+      next: 13.1.1_672uxklweod7ene3nqtsh262ca
+      next-auth: 4.18.6_q76c2b4vyoegvsbrcwkfvimnai
+      next-i18next: 13.0.2_ge2a7f353qetwks2s2y4fdhdo4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-i18next: 12.1.1_6vygckh2jgtx4nucc3no6lnm3y
@@ -15859,8 +15859,8 @@ packages:
       react: 18.2.0
       react-i18next: 12.1.1_6vygckh2jgtx4nucc3no6lnm3y
 
-  /next/13.0.7_672uxklweod7ene3nqtsh262ca:
-    resolution: {integrity: sha512-YfTifqX9vfHm+rSU/H/3xvzOHDkYuMuh4wsvTjiqj9h7qHEF7KHB66X4qrH96Po+ohdid4JY8YVGPziDwdXL0A==}
+  /next/13.1.1_672uxklweod7ene3nqtsh262ca:
+    resolution: {integrity: sha512-R5eBAaIa3X7LJeYvv1bMdGnAVF4fVToEjim7MkflceFPuANY3YyvFxXee/A+acrSYwYPvOvf7f6v/BM/48ea5w==}
     engines: {node: '>=14.6.0'}
     hasBin: true
     peerDependencies:
