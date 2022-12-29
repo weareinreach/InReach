@@ -1,11 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // import { env } from './src/env/server.mjs'
 import bundleAnalyze from '@next/bundle-analyzer'
-import transpiler from 'next-transpile-modules'
 
 import i18nConfig from './next-i18next.config.js'
 
-// const withTM = transpiler(['@weareinreach/ui', '@weareinreach/db'])
 /* eslint-disable-next-line turbo/no-undeclared-env-vars */
 const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
 /**
@@ -16,8 +14,6 @@ const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'tru
  * @constraint {{import('next').NextConfig}}
  */
 function defineNextConfig(config) {
-	// return withTM(config)
-	// return withBundleAnalyzer(withTM(config))
 	return withBundleAnalyzer(config)
 }
 
@@ -25,9 +21,8 @@ export default defineNextConfig({
 	i18n: i18nConfig.i18n,
 	reactStrictMode: true,
 	swcMinify: true,
+	transpilePackages: ['@weareinreach/ui', '@weareinreach/db', '@weareinreach/auth', '@weareinreach/api'],
 	experimental: {
-		transpilePackages: ['@weareinreach/ui', '@weareinreach/db', '@weareinreach/auth', '@weareinreach/api'],
-		// serverComponentsExternalPackages: ['@weareinreach/db'],
 		fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
 		/**
 		 * OutputFileTracingIgnores will be in a future version

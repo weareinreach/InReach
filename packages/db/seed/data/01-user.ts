@@ -1,72 +1,28 @@
 import { Prisma } from '@prisma/client'
 import slugify from 'slugify'
+import invariant from 'tiny-invariant'
 
 import { namespaces } from './00-namespaces'
 
 export const userEmail = 'inreach_svc@inreach.org'
 export const localeCode = 'en'
-export const userType = 'System'
+export const userType = { text: 'System', tsKey: 'system', tsNs: namespaces.user }
 export const translationNamespace = namespaces.user
-export const key = `type-${userType.toLowerCase()}`
+export const key = (str: string) => slugify(`type-${str}`)
 
-export const seedUser: Prisma.UserCreateInput = {
-	name: 'System User',
-	email: userEmail,
-	role: {
-		connectOrCreate: {
-			where: { name: userType },
-			create: {
-				name: userType,
-				tag: slugify(userType),
-			},
-		},
-	},
-	langPref: {
-		connectOrCreate: {
-			where: {
-				localeCode,
-			},
-			create: {
-				localeCode,
-				languageName: 'English',
-				nativeName: 'English',
-				iso6392: 'eng',
-			},
-		},
-	},
-	userType: {
-		connectOrCreate: {
-			where: {
-				type: userType,
-			},
-			create: {
-				type: userType,
-				key: {
-					create: {
-						key: key,
-						text: userType,
-						context: 'User type: system user',
-						namespace: {
-							connectOrCreate: {
-								where: {
-									name: translationNamespace,
-								},
-								create: {
-									name: translationNamespace,
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-	},
-}
+export const userRoleMap = new Map<string, string>()
+export const userTypeMap = new Map<string, string>()
 
-export const connectUser = {
-	connect: {
+export const genSeedUser = () => {
+	const userTypeId = userTypeMap.get(key(userType.tsKey))
+	invariant(userTypeId)
+
+	const data: Prisma.UserCreateManyInput = {
 		email: userEmail,
-	},
+		userTypeId,
+		name: 'System User',
+	}
+	return data
 }
 
 export const userRoleList = [
@@ -76,37 +32,5 @@ export const userRoleList = [
 	{ type: 'dataManager', name: 'Data Manager' },
 	{ type: 'dataAdmin', name: 'Data Administrator' },
 	{ type: 'sysadmin', name: 'System Administrator' },
+	{ type: 'system', name: 'System User' },
 ]
-
-export const userTypes: Prisma.UserTypeUpsertArgs[] = userRoleList.map((role) => ({
-	where: {
-		type: role.type,
-	},
-	create: {
-		type: role.type,
-		key: {
-			create: {
-				key: role.type,
-				text: role.name,
-
-				namespace: {
-					connect: {
-						name: namespaces.user,
-					},
-				},
-			},
-		},
-	},
-	update: {},
-}))
-
-export const userRoles: Prisma.UserRoleUpsertArgs[] = userRoleList.map((role) => ({
-	where: {
-		name: role.name,
-	},
-	create: {
-		name: role.name,
-		tag: slugify(role.name),
-	},
-	update: {},
-}))

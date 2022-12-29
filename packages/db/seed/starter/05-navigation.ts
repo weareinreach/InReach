@@ -1,64 +1,46 @@
+import { Prisma } from '@prisma/client'
+
 import { prisma } from '~/index'
 import { namespaces, navigation } from '~/seed/data'
+import { Log, iconList } from '~/seed/lib'
 import { ListrTask } from '~/seed/starterData'
 
 import { logFile } from '../logger'
 
 export const seedNavigation = async (task: ListrTask) => {
 	try {
-		await prisma.translationNamespace.upsert({
-			where: {
-				name: namespaces.nav,
-			},
-			create: {
-				name: namespaces.nav,
-			},
-			update: {},
-			select: {
-				name: true,
-			},
-		})
+		const log: Log = (message, icon?, indent = false) => {
+			const dispIcon = icon ? `${iconList(icon)} ` : ''
+			const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
+			logFile.info(formattedMessage)
+			task.output = formattedMessage
+		}
+		const data: Prisma.NavigationCreateManyInput[] = []
+		const translate: Prisma.TranslationKeyCreateManyInput[] = []
 
-		const transactions = navigation.map((item) =>
-			prisma.navigation.upsert({
-				where: {
-					display_href: {
-						display: item.display,
-						href: item.href,
-					},
-				},
-				create: {
-					display: item.display,
-					href: item.href,
-					key: {
-						connectOrCreate: {
-							where: {
-								ns_key: {
-									ns: namespaces.nav,
-									key: item.key,
-								},
-							},
-							create: {
-								key: item.key,
-								text: item.display,
-								namespace: {
-									connect: {
-										name: namespaces.nav,
-									},
-								},
-							},
-						},
-					},
-				},
-				update: {},
+		for (const item of navigation) {
+			translate.push({
+				ns: namespaces.nav,
+				key: item.key,
+				text: item.display,
 			})
-		)
+			data.push({
+				display: item.display,
+				href: item.href,
+				tsKey: item.key,
+				tsNs: namespaces.nav,
+			})
+		}
 
-		const result = await prisma.$transaction(transactions)
-		const logMessage = `Navigation records added: ${result.length}`
-		logFile.log(logMessage)
-		task.output = logMessage
-		task.title = `Navigation Bar Links (${result.length} records)`
+		const translationResult = await prisma.translationKey.createMany({
+			data: translate,
+			skipDuplicates: true,
+		})
+		const result = await prisma.navigation.createMany({ data, skipDuplicates: true })
+
+		log(`Navigation records added: ${result.count}`, 'create')
+		log(`Translation keys added: ${translationResult.count}`, 'tlate')
+		task.title = `Navigation Bar Links (${result.count} records, ${translationResult.count} translation keys)`
 	} catch (err) {
 		throw err
 	}
