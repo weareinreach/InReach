@@ -2,31 +2,31 @@
 	{
 		"key": "facebook",
 		"href": "#",
-		"icon": "fa6-brands:facebook-f"
+		"icon": "facebook"
 	},
 	{
 		"key": "twitter",
 		"href": "#",
-		"icon": "fa6-brands:twitter"
+		"icon": "twitter"
 	},
 	{
 		"key": "linkedin",
 		"href": "#",
-		"icon": "fa6-brands:linkedin-in"
+		"icon": "linkedin"
 	},
 	{
 		"key": "email",
 		"href": "#",
-		"icon": "fa6-regular:envelope"
+		"icon": "email"
 	},
 	{
 		"key": "instagram",
 		"href": "#",
-		"icon": "fa6-brands:instagram"
+		"icon": "instagram"
 	},
 	{
 		"key": "youtube",
 		"href": "#",
-		"icon": "fa6-brands:youtube"
+		"icon": "youtube"
 	}
 ]

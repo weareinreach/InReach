@@ -68,7 +68,7 @@ export type FooterLink = {
 	icon?: string
 }
 export type SocialMediaLink = {
-	icon: keyof typeof iconMap
+	icon: keyof typeof iconMap | string
 	key: string
 	href: string
 }
@@ -100,7 +100,9 @@ export const FooterSection = ({ links, socialMedia }: FooterSectionProps) => {
 	))
 
 	const socialLinks = socialMedia.map((service) => {
-		const renderIcon = iconMap[service.icon]
+		const renderIcon = Object.keys(iconMap).includes(service.icon)
+			? iconMap[service.icon as keyof typeof iconMap]
+			: service.icon
 		return (
 			<ActionIcon key={service.key} component={Link} href={service.href} title={t(service.key)}>
 				<Icon
