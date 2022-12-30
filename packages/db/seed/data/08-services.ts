@@ -16,7 +16,7 @@ export const serviceData: ServiceList = [
 		'Community Support',
 		['Cultural centers', 'LGBTQ centers', 'Reception services', 'Sponsors', 'Spiritual Support'],
 	],
-	['Computers and Internet', []],
+	['Computers and Internet', ['Computers and Internet']],
 	[
 		'Education and Employment',
 		[
@@ -29,7 +29,7 @@ export const serviceData: ServiceList = [
 			'Scholarships',
 		],
 	],
-	['Food', ['Food assistance']],
+	['Food', ['Food', 'Food assistance']],
 	[
 		'Housing',
 		[
@@ -104,5 +104,5 @@ export const serviceData: ServiceList = [
 		['General translation and interpretation', 'For healthcare', 'For legal services'],
 	],
 	['Transportation', ['Transit passes and discounts', 'Transportation assistance']],
-	['Mail', []],
+	['Mail', ['Mail']],
 ]
