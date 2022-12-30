@@ -5,5 +5,12 @@
 	"inreach": "InReach",
 	"none-apply": "Ninguno de estos se aplica a mí",
 	"other-specify": "Other (specify)",
-	"prefer-not-to-say": "Preferirse a no decir"
+	"prefer-not-to-say": "Preferirse a no decir",
+	"user-avatar": "Avatar de usuario",
+	"sign-up": "Regístrate",
+	"log-out": "Cerrar sesión",
+	"log-in": "Iniciar sesión",
+	"saved-lists": "Listas guardadas",
+	"your-comments": "Tus comentarios",
+	"settings": "Ajustes"
 }
