@@ -1,7 +1,6 @@
-import userIcon from '@iconify/icons-fa6-solid/user'
-import { Icon } from '@iconify/react'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
+import { User } from 'react-feather'
 
 import Image from 'next/image'
 
@@ -86,7 +85,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 										alt={session.user.name || t('user-avatar')}
 									/>
 								) : (
-									<Icon icon={userIcon} height={55} width={55} className={classes.avatar} />
+									<User height={55} width={55} className={classes.avatar} />
 								)}
 							</Avatar>
 							<Text weight={500} size='sm' sx={{ lineHeight: 1 }} mr={3}>
