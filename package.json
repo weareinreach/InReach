@@ -3,10 +3,6 @@
 	"version": "0.100.0",
 	"private": true,
 	"license": "GPL-3.0-only",
-	"workspaces": [
-		"apps/*",
-		"packages/*"
-	],
 	"scripts": {
 		"build": "turbo run build",
 		"build:aws": "turbo run build:aws",
