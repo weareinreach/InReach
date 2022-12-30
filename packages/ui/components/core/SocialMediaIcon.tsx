@@ -1,14 +1,15 @@
 import { Icon } from '@iconify/react'
 
-import { ActionIcon, createStyles, useMantineTheme } from '@mantine/core'
+import { ActionIcon, createStyles } from '@mantine/core'
 
-export const approvedIcons = {
-	facebook: 'fe:facebook',
-	instagram: 'fe:instagram',
-	mail: 'fe:mail',
-	youtube: 'fe:youtube',
-	github: 'fe:github',
-	twitter: 'fe:twitter',
+const approvedIcons = {
+	facebook: 'fa6-brands:facebook-f',
+	instagram: 'fa6-brands:instagram',
+	mail: 'fa6-solid:envelope',
+	youtube: 'fa6-brands:youtube',
+	github: 'fa6-brands:github',
+	twitter: 'fa6-brands:twitter',
+	linkedin: 'fa6-brands:linkedin-in',
 } as const
 
 const useStyles = createStyles((theme) => ({
@@ -28,7 +29,7 @@ const useStyles = createStyles((theme) => ({
 
 export const SocialMediaIconButton = ({ href, icon, title }: Props) => {
 	const { classes } = useStyles()
-
+	const iconRender = approvedIcons[icon]
 	return (
 		<ActionIcon
 			component='a'
@@ -38,7 +39,7 @@ export const SocialMediaIconButton = ({ href, icon, title }: Props) => {
 			radius={100}
 			className={classes.button}
 		>
-			<Icon icon={icon} className={classes.icon} />
+			<Icon icon={iconRender} className={classes.icon} />
 		</ActionIcon>
 	)
 }
@@ -46,5 +47,5 @@ export const SocialMediaIconButton = ({ href, icon, title }: Props) => {
 type Props = {
 	href: string
 	title: string
-	icon: typeof approvedIcons
+	icon: keyof typeof approvedIcons
 }

@@ -4,7 +4,7 @@ import React from 'react'
 
 import { Center } from '@mantine/core'
 
-import { SocialMediaIconButton, approvedIcons } from './SocialMediaIcon'
+import { SocialMediaIconButton } from './SocialMediaIcon'
 
 export default {
 	title: 'Core/Social Media Button',
@@ -22,6 +22,11 @@ export default {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=51%3A472&t=MmGmrL63FUWcqBUe-0',
 		},
 	},
+	argTypes: {
+		icon: {
+			options: ['facebook', 'instagram', 'mail', 'youtube', 'github', 'twitter', 'linkedin'],
+		},
+	},
 } as ComponentMeta<typeof SocialMediaIconButton>
 
 const SocialMediaIconVariant: ComponentStory<typeof SocialMediaIconButton> = (args) => (
@@ -31,7 +36,7 @@ const SocialMediaIconVariant: ComponentStory<typeof SocialMediaIconButton> = (ar
 export const SocialMediaButton = SocialMediaIconVariant.bind({})
 
 SocialMediaButton.args = {
-	href: 'https://facebook.com',
-	icon: approvedIcons.facebook,
+	href: '#',
+	icon: 'facebook',
 	title: 'Social Media Icon',
 }
