@@ -1,0 +1,1244 @@
+{
+  "ABW": {
+    "name": "crwdns49314:0crwdne49314:0",
+    "demonym_one": "crwdns49308:1crwdne49308:1",
+    "demonym_other": "crwdns49308:5crwdne49308:5"
+  },
+  "AFG": {
+    "name": "crwdns49322:0crwdne49322:0",
+    "demonym_one": "crwdns49318:1crwdne49318:1",
+    "demonym_other": "crwdns49318:5crwdne49318:5"
+  },
+  "AGO": {
+    "name": "crwdns49330:0crwdne49330:0",
+    "demonym_one": "crwdns49326:1crwdne49326:1",
+    "demonym_other": "crwdns49326:5crwdne49326:5"
+  },
+  "AIA": {
+    "name": "crwdns49338:0crwdne49338:0",
+    "demonym_one": "crwdns49334:1crwdne49334:1",
+    "demonym_other": "crwdns49334:5crwdne49334:5"
+  },
+  "ALA": {
+    "name": "crwdns49346:0crwdne49346:0",
+    "demonym_one": "crwdns49342:1crwdne49342:1",
+    "demonym_other": "crwdns49342:5crwdne49342:5"
+  },
+  "ALB": {
+    "name": "crwdns49354:0crwdne49354:0",
+    "demonym_one": "crwdns49350:1crwdne49350:1",
+    "demonym_other": "crwdns49350:5crwdne49350:5"
+  },
+  "AND": {
+    "name": "crwdns49360:0crwdne49360:0",
+    "demonym_one": "crwdns49358:1crwdne49358:1",
+    "demonym_other": "crwdns49358:5crwdne49358:5"
+  },
+  "ARE": {
+    "name": "crwdns49368:0crwdne49368:0",
+    "demonym_one": "crwdns49364:1crwdne49364:1",
+    "demonym_other": "crwdns49364:5crwdne49364:5"
+  },
+  "ARG": {
+    "name": "crwdns49378:0crwdne49378:0",
+    "demonym_one": "crwdns49374:1crwdne49374:1",
+    "demonym_other": "crwdns49374:5crwdne49374:5"
+  },
+  "ARM": {
+    "name": "crwdns49384:0crwdne49384:0",
+    "demonym_one": "crwdns49382:1crwdne49382:1",
+    "demonym_other": "crwdns49382:5crwdne49382:5"
+  },
+  "ASM": {
+    "name": "crwdns49392:0crwdne49392:0",
+    "demonym_one": "crwdns49388:1crwdne49388:1",
+    "demonym_other": "crwdns49388:5crwdne49388:5"
+  },
+  "ATA": {
+    "name": "crwdns49400:0crwdne49400:0",
+    "demonym_one": "crwdns49396:1crwdne49396:1",
+    "demonym_other": "crwdns49396:5crwdne49396:5"
+  },
+  "ATF": {
+    "name": "crwdns49410:0crwdne49410:0",
+    "demonym_one": "crwdns49404:1crwdne49404:1",
+    "demonym_other": "crwdns49404:5crwdne49404:5"
+  },
+  "ATG": {
+    "name": "crwdns49416:0crwdne49416:0",
+    "demonym_one": "crwdns49414:1crwdne49414:1",
+    "demonym_other": "crwdns49414:5crwdne49414:5"
+  },
+  "AUS": {
+    "name": "crwdns49424:0crwdne49424:0",
+    "demonym_one": "crwdns49420:1crwdne49420:1",
+    "demonym_other": "crwdns49420:5crwdne49420:5"
+  },
+  "AUT": {
+    "name": "crwdns49432:0crwdne49432:0",
+    "demonym_one": "crwdns49428:1crwdne49428:1",
+    "demonym_other": "crwdns49428:5crwdne49428:5"
+  },
+  "AZE": {
+    "name": "crwdns49440:0crwdne49440:0",
+    "demonym_one": "crwdns49436:1crwdne49436:1",
+    "demonym_other": "crwdns49436:5crwdne49436:5"
+  },
+  "BDI": {
+    "name": "crwdns49448:0crwdne49448:0",
+    "demonym_one": "crwdns49444:1crwdne49444:1",
+    "demonym_other": "crwdns49444:5crwdne49444:5"
+  },
+  "BEL": {
+    "name": "crwdns49456:0crwdne49456:0",
+    "demonym_one": "crwdns49452:1crwdne49452:1",
+    "demonym_other": "crwdns49452:5crwdne49452:5"
+  },
+  "BEN": {
+    "name": "crwdns49464:0crwdne49464:0",
+    "demonym_one": "crwdns49460:1crwdne49460:1",
+    "demonym_other": "crwdns49460:5crwdne49460:5"
+  },
+  "BES": {
+    "name": "crwdns49468:0crwdne49468:0"
+  },
+  "BFA": {
+    "name": "crwdns49476:0crwdne49476:0",
+    "demonym_one": "crwdns49472:1crwdne49472:1",
+    "demonym_other": "crwdns49472:5crwdne49472:5"
+  },
+  "BGD": {
+    "name": "crwdns49486:0crwdne49486:0",
+    "demonym_one": "crwdns49480:1crwdne49480:1",
+    "demonym_other": "crwdns49480:5crwdne49480:5"
+  },
+  "BGR": {
+    "name": "crwdns49494:0crwdne49494:0",
+    "demonym_one": "crwdns49490:1crwdne49490:1",
+    "demonym_other": "crwdns49490:5crwdne49490:5"
+  },
+  "BHR": {
+    "name": "crwdns49502:0crwdne49502:0",
+    "demonym_one": "crwdns49498:1crwdne49498:1",
+    "demonym_other": "crwdns49498:5crwdne49498:5"
+  },
+  "BHS": {
+    "name": "crwdns49510:0crwdne49510:0",
+    "demonym_one": "crwdns49506:1crwdne49506:1",
+    "demonym_other": "crwdns49506:5crwdne49506:5"
+  },
+  "BIH": {
+    "name": "crwdns49518:0crwdne49518:0",
+    "demonym_one": "crwdns49514:1crwdne49514:1",
+    "demonym_other": "crwdns49514:5crwdne49514:5"
+  },
+  "BLM": {
+    "name": "crwdns49526:0crwdne49526:0",
+    "demonym_one": "crwdns49522:1crwdne49522:1",
+    "demonym_other": "crwdns49522:5crwdne49522:5"
+  },
+  "BLR": {
+    "name": "crwdns49534:0crwdne49534:0",
+    "demonym_one": "crwdns49530:1crwdne49530:1",
+    "demonym_other": "crwdns49530:5crwdne49530:5"
+  },
+  "BLZ": {
+    "name": "crwdns49542:0crwdne49542:0",
+    "demonym_one": "crwdns49538:1crwdne49538:1",
+    "demonym_other": "crwdns49538:5crwdne49538:5"
+  },
+  "BMU": {
+    "name": "crwdns49550:0crwdne49550:0",
+    "demonym_one": "crwdns49546:1crwdne49546:1",
+    "demonym_other": "crwdns49546:5crwdne49546:5"
+  },
+  "BOL": {
+    "name": "crwdns49558:0crwdne49558:0",
+    "demonym_one": "crwdns49554:1crwdne49554:1",
+    "demonym_other": "crwdns49554:5crwdne49554:5"
+  },
+  "BRA": {
+    "name": "crwdns49566:0crwdne49566:0",
+    "demonym_one": "crwdns49562:1crwdne49562:1",
+    "demonym_other": "crwdns49562:5crwdne49562:5"
+  },
+  "BRB": {
+    "name": "crwdns49574:0crwdne49574:0",
+    "demonym_one": "crwdns49570:1crwdne49570:1",
+    "demonym_other": "crwdns49570:5crwdne49570:5"
+  },
+  "BRN": {
+    "name": "crwdns49582:0crwdne49582:0",
+    "demonym_one": "crwdns49578:1crwdne49578:1",
+    "demonym_other": "crwdns49578:5crwdne49578:5"
+  },
+  "BTN": {
+    "name": "crwdns49590:0crwdne49590:0",
+    "demonym_one": "crwdns49586:1crwdne49586:1",
+    "demonym_other": "crwdns49586:5crwdne49586:5"
+  },
+  "BVT": {
+    "name": "crwdns49594:0crwdne49594:0"
+  },
+  "BWA": {
+    "name": "crwdns49602:0crwdne49602:0",
+    "demonym_one": "crwdns49598:1crwdne49598:1",
+    "demonym_other": "crwdns49598:5crwdne49598:5"
+  },
+  "CAF": {
+    "name": "crwdns49610:0crwdne49610:0",
+    "demonym_one": "crwdns49606:1crwdne49606:1",
+    "demonym_other": "crwdns49606:5crwdne49606:5"
+  },
+  "CAN": {
+    "name": "crwdns49618:0crwdne49618:0",
+    "demonym_one": "crwdns49614:1crwdne49614:1",
+    "demonym_other": "crwdns49614:5crwdne49614:5"
+  },
+  "CCK": {
+    "name": "crwdns49626:0crwdne49626:0",
+    "demonym_one": "crwdns49622:1crwdne49622:1",
+    "demonym_other": "crwdns49622:5crwdne49622:5"
+  },
+  "CHE": {
+    "name": "crwdns49636:0crwdne49636:0",
+    "demonym_one": "crwdns49630:1crwdne49630:1",
+    "demonym_other": "crwdns49630:5crwdne49630:5"
+  },
+  "CHL": {
+    "name": "crwdns49644:0crwdne49644:0",
+    "demonym_one": "crwdns49640:1crwdne49640:1",
+    "demonym_other": "crwdns49640:5crwdne49640:5"
+  },
+  "CHN": {
+    "name": "crwdns49652:0crwdne49652:0",
+    "demonym_one": "crwdns49648:1crwdne49648:1",
+    "demonym_other": "crwdns49648:5crwdne49648:5"
+  },
+  "CIV": {
+    "name": "crwdns49658:0crwdne49658:0",
+    "demonym_one": "crwdns49654:1crwdne49654:1",
+    "demonym_other": "crwdns49654:5crwdne49654:5"
+  },
+  "CMR": {
+    "name": "crwdns49666:0crwdne49666:0",
+    "demonym_one": "crwdns49662:1crwdne49662:1",
+    "demonym_other": "crwdns49662:5crwdne49662:5"
+  },
+  "COD": {
+    "name": "crwdns49674:0crwdne49674:0",
+    "demonym_one": "crwdns49670:1crwdne49670:1",
+    "demonym_other": "crwdns49670:5crwdne49670:5"
+  },
+  "COG": {
+    "name": "crwdns49682:0crwdne49682:0",
+    "demonym_one": "crwdns49678:1crwdne49678:1",
+    "demonym_other": "crwdns49678:5crwdne49678:5"
+  },
+  "COK": {
+    "name": "crwdns49690:0crwdne49690:0",
+    "demonym_one": "crwdns49686:1crwdne49686:1",
+    "demonym_other": "crwdns49686:5crwdne49686:5"
+  },
+  "COL": {
+    "name": "crwdns49698:0crwdne49698:0",
+    "demonym_one": "crwdns49694:1crwdne49694:1",
+    "demonym_other": "crwdns49694:5crwdne49694:5"
+  },
+  "COM": {
+    "name": "crwdns49706:0crwdne49706:0",
+    "demonym_one": "crwdns49702:1crwdne49702:1",
+    "demonym_other": "crwdns49702:5crwdne49702:5"
+  },
+  "CPV": {
+    "name": "crwdns49714:0crwdne49714:0",
+    "demonym_one": "crwdns49710:1crwdne49710:1",
+    "demonym_other": "crwdns49710:5crwdne49710:5"
+  },
+  "CRI": {
+    "name": "crwdns49722:0crwdne49722:0",
+    "demonym_one": "crwdns49718:1crwdne49718:1",
+    "demonym_other": "crwdns49718:5crwdne49718:5"
+  },
+  "CUB": {
+    "name": "crwdns49730:0crwdne49730:0",
+    "demonym_one": "crwdns49726:1crwdne49726:1",
+    "demonym_other": "crwdns49726:5crwdne49726:5"
+  },
+  "CUW": {
+    "name": "crwdns49738:0crwdne49738:0",
+    "demonym_one": "crwdns49734:1crwdne49734:1",
+    "demonym_other": "crwdns49734:5crwdne49734:5"
+  },
+  "CXR": {
+    "name": "crwdns49746:0crwdne49746:0",
+    "demonym_one": "crwdns49742:1crwdne49742:1",
+    "demonym_other": "crwdns49742:5crwdne49742:5"
+  },
+  "CYM": {
+    "name": "crwdns49754:0crwdne49754:0",
+    "demonym_one": "crwdns49750:1crwdne49750:1",
+    "demonym_other": "crwdns49750:5crwdne49750:5"
+  },
+  "CYP": {
+    "name": "crwdns49762:0crwdne49762:0",
+    "demonym_one": "crwdns49758:1crwdne49758:1",
+    "demonym_other": "crwdns49758:5crwdne49758:5"
+  },
+  "CZE": {
+    "name": "crwdns49770:0crwdne49770:0",
+    "demonym_one": "crwdns49766:1crwdne49766:1",
+    "demonym_other": "crwdns49766:5crwdne49766:5"
+  },
+  "DEU": {
+    "name": "crwdns49778:0crwdne49778:0",
+    "demonym_one": "crwdns49774:1crwdne49774:1",
+    "demonym_other": "crwdns49774:5crwdne49774:5"
+  },
+  "DJI": {
+    "name": "crwdns49786:0crwdne49786:0",
+    "demonym_one": "crwdns49782:1crwdne49782:1",
+    "demonym_other": "crwdns49782:5crwdne49782:5"
+  },
+  "DMA": {
+    "name": "crwdns49794:0crwdne49794:0",
+    "demonym_one": "crwdns49790:1crwdne49790:1",
+    "demonym_other": "crwdns49790:5crwdne49790:5"
+  },
+  "DNK": {
+    "name": "crwdns49802:0crwdne49802:0",
+    "demonym_one": "crwdns49798:1crwdne49798:1",
+    "demonym_other": "crwdns49798:5crwdne49798:5"
+  },
+  "DOM": {
+    "name": "crwdns49810:0crwdne49810:0",
+    "demonym_one": "crwdns49806:1crwdne49806:1",
+    "demonym_other": "crwdns49806:5crwdne49806:5"
+  },
+  "DZA": {
+    "name": "crwdns49818:0crwdne49818:0",
+    "demonym_one": "crwdns49814:1crwdne49814:1",
+    "demonym_other": "crwdns49814:5crwdne49814:5"
+  },
+  "ECU": {
+    "name": "crwdns49826:0crwdne49826:0",
+    "demonym_one": "crwdns49822:1crwdne49822:1",
+    "demonym_other": "crwdns49822:5crwdne49822:5"
+  },
+  "EGY": {
+    "name": "crwdns49834:0crwdne49834:0",
+    "demonym_one": "crwdns49830:1crwdne49830:1",
+    "demonym_other": "crwdns49830:5crwdne49830:5"
+  },
+  "ERI": {
+    "name": "crwdns49842:0crwdne49842:0",
+    "demonym_one": "crwdns49838:1crwdne49838:1",
+    "demonym_other": "crwdns49838:5crwdne49838:5"
+  },
+  "ESH": {
+    "name": "crwdns49848:0crwdne49848:0",
+    "demonym_one": "crwdns49846:1crwdne49846:1",
+    "demonym_other": "crwdns49846:5crwdne49846:5"
+  },
+  "ESP": {
+    "name": "crwdns49856:0crwdne49856:0",
+    "demonym_one": "crwdns49852:1crwdne49852:1",
+    "demonym_other": "crwdns49852:5crwdne49852:5"
+  },
+  "EST": {
+    "name": "crwdns49864:0crwdne49864:0",
+    "demonym_one": "crwdns49860:1crwdne49860:1",
+    "demonym_other": "crwdns49860:5crwdne49860:5"
+  },
+  "ETH": {
+    "name": "crwdns49872:0crwdne49872:0",
+    "demonym_one": "crwdns49868:1crwdne49868:1",
+    "demonym_other": "crwdns49868:5crwdne49868:5"
+  },
+  "FIN": {
+    "name": "crwdns49880:0crwdne49880:0",
+    "demonym_one": "crwdns49876:1crwdne49876:1",
+    "demonym_other": "crwdns49876:5crwdne49876:5"
+  },
+  "FJI": {
+    "name": "crwdns49888:0crwdne49888:0",
+    "demonym_one": "crwdns49884:1crwdne49884:1",
+    "demonym_other": "crwdns49884:5crwdne49884:5"
+  },
+  "FLK": {
+    "name": "crwdns49896:0crwdne49896:0",
+    "demonym_one": "crwdns49892:1crwdne49892:1",
+    "demonym_other": "crwdns49892:5crwdne49892:5"
+  },
+  "FRA": {
+    "name": "crwdns49904:0crwdne49904:0",
+    "demonym_one": "crwdns49900:1crwdne49900:1",
+    "demonym_other": "crwdns49900:5crwdne49900:5"
+  },
+  "FRO": {
+    "name": "crwdns49910:0crwdne49910:0",
+    "demonym_one": "crwdns49908:1crwdne49908:1",
+    "demonym_other": "crwdns49908:5crwdne49908:5"
+  },
+  "FSM": {
+    "name": "crwdns49918:0crwdne49918:0",
+    "demonym_one": "crwdns49914:1crwdne49914:1",
+    "demonym_other": "crwdns49914:5crwdne49914:5"
+  },
+  "GAB": {
+    "name": "crwdns49926:0crwdne49926:0",
+    "demonym_one": "crwdns49922:1crwdne49922:1",
+    "demonym_other": "crwdns49922:5crwdne49922:5"
+  },
+  "GBR": {
+    "name": "crwdns49934:0crwdne49934:0",
+    "demonym_one": "crwdns49930:1crwdne49930:1",
+    "demonym_other": "crwdns49930:5crwdne49930:5"
+  },
+  "GEO": {
+    "name": "crwdns49942:0crwdne49942:0",
+    "demonym_one": "crwdns49938:1crwdne49938:1",
+    "demonym_other": "crwdns49938:5crwdne49938:5"
+  },
+  "GGY": {
+    "name": "crwdns49950:0crwdne49950:0",
+    "demonym_one": "crwdns49946:1crwdne49946:1",
+    "demonym_other": "crwdns49946:5crwdne49946:5"
+  },
+  "GHA": {
+    "name": "crwdns49956:0crwdne49956:0",
+    "demonym_one": "crwdns49952:1crwdne49952:1",
+    "demonym_other": "crwdns49952:5crwdne49952:5"
+  },
+  "GIB": {
+    "name": "crwdns49964:0crwdne49964:0",
+    "demonym_one": "crwdns49960:1crwdne49960:1",
+    "demonym_other": "crwdns49960:5crwdne49960:5"
+  },
+  "GIN": {
+    "name": "crwdns49972:0crwdne49972:0",
+    "demonym_one": "crwdns49968:1crwdne49968:1",
+    "demonym_other": "crwdns49968:5crwdne49968:5"
+  },
+  "GLP": {
+    "name": "crwdns49980:0crwdne49980:0",
+    "demonym_one": "crwdns49976:1crwdne49976:1",
+    "demonym_other": "crwdns49976:5crwdne49976:5"
+  },
+  "GMB": {
+    "name": "crwdns49988:0crwdne49988:0",
+    "demonym_one": "crwdns49984:1crwdne49984:1",
+    "demonym_other": "crwdns49984:5crwdne49984:5"
+  },
+  "GNB": {
+    "name": "crwdns49996:0crwdne49996:0",
+    "demonym_one": "crwdns49992:1crwdne49992:1",
+    "demonym_other": "crwdns49992:5crwdne49992:5"
+  },
+  "GNQ": {
+    "name": "crwdns50004:0crwdne50004:0",
+    "demonym_one": "crwdns50000:1crwdne50000:1",
+    "demonym_other": "crwdns50000:5crwdne50000:5"
+  },
+  "GRC": {
+    "name": "crwdns50014:0crwdne50014:0",
+    "demonym_one": "crwdns50008:1crwdne50008:1",
+    "demonym_other": "crwdns50008:5crwdne50008:5"
+  },
+  "GRD": {
+    "name": "crwdns50022:0crwdne50022:0",
+    "demonym_one": "crwdns50018:1crwdne50018:1",
+    "demonym_other": "crwdns50018:5crwdne50018:5"
+  },
+  "GRL": {
+    "name": "crwdns50030:0crwdne50030:0",
+    "demonym_one": "crwdns50026:1crwdne50026:1",
+    "demonym_other": "crwdns50026:5crwdne50026:5"
+  },
+  "GTM": {
+    "name": "crwdns50038:0crwdne50038:0",
+    "demonym_one": "crwdns50034:1crwdne50034:1",
+    "demonym_other": "crwdns50034:5crwdne50034:5"
+  },
+  "GUF": {
+    "name": "crwdns50042:0crwdne50042:0"
+  },
+  "GUM": {
+    "name": "crwdns50050:0crwdne50050:0",
+    "demonym_one": "crwdns50046:1crwdne50046:1",
+    "demonym_other": "crwdns50046:5crwdne50046:5"
+  },
+  "GUY": {
+    "name": "crwdns50058:0crwdne50058:0",
+    "demonym_one": "crwdns50054:1crwdne50054:1",
+    "demonym_other": "crwdns50054:5crwdne50054:5"
+  },
+  "HKG": {
+    "name": "crwdns50066:0crwdne50066:0",
+    "demonym_one": "crwdns50062:1crwdne50062:1",
+    "demonym_other": "crwdns50062:5crwdne50062:5"
+  },
+  "HMD": {
+    "name": "crwdns50072:0crwdne50072:0",
+    "demonym_one": "crwdns50070:1crwdne50070:1",
+    "demonym_other": "crwdns50070:5crwdne50070:5"
+  },
+  "HND": {
+    "name": "crwdns50080:0crwdne50080:0",
+    "demonym_one": "crwdns50076:1crwdne50076:1",
+    "demonym_other": "crwdns50076:5crwdne50076:5"
+  },
+  "HRV": {
+    "name": "crwdns50088:0crwdne50088:0",
+    "demonym_one": "crwdns50084:1crwdne50084:1",
+    "demonym_other": "crwdns50084:5crwdne50084:5"
+  },
+  "HTI": {
+    "name": "crwdns50096:0crwdne50096:0",
+    "demonym_one": "crwdns50092:1crwdne50092:1",
+    "demonym_other": "crwdns50092:5crwdne50092:5"
+  },
+  "HUN": {
+    "name": "crwdns50104:0crwdne50104:0",
+    "demonym_one": "crwdns50100:1crwdne50100:1",
+    "demonym_other": "crwdns50100:5crwdne50100:5"
+  },
+  "IDN": {
+    "name": "crwdns50112:0crwdne50112:0",
+    "demonym_one": "crwdns50108:1crwdne50108:1",
+    "demonym_other": "crwdns50108:5crwdne50108:5"
+  },
+  "IMN": {
+    "name": "crwdns50120:0crwdne50120:0",
+    "demonym_one": "crwdns50116:1crwdne50116:1",
+    "demonym_other": "crwdns50116:5crwdne50116:5"
+  },
+  "IND": {
+    "name": "crwdns50128:0crwdne50128:0",
+    "demonym_one": "crwdns50124:1crwdne50124:1",
+    "demonym_other": "crwdns50124:5crwdne50124:5"
+  },
+  "IOT": {
+    "name": "crwdns50136:0crwdne50136:0",
+    "demonym_one": "crwdns50132:1crwdne50132:1",
+    "demonym_other": "crwdns50132:5crwdne50132:5"
+  },
+  "IRL": {
+    "name": "crwdns50144:0crwdne50144:0",
+    "demonym_one": "crwdns50140:1crwdne50140:1",
+    "demonym_other": "crwdns50140:5crwdne50140:5"
+  },
+  "IRN": {
+    "name": "crwdns50152:0crwdne50152:0",
+    "demonym_one": "crwdns50148:1crwdne50148:1",
+    "demonym_other": "crwdns50148:5crwdne50148:5"
+  },
+  "IRQ": {
+    "name": "crwdns50160:0crwdne50160:0",
+    "demonym_one": "crwdns50156:1crwdne50156:1",
+    "demonym_other": "crwdns50156:5crwdne50156:5"
+  },
+  "ISL": {
+    "name": "crwdns50168:0crwdne50168:0",
+    "demonym_one": "crwdns50164:1crwdne50164:1",
+    "demonym_other": "crwdns50164:5crwdne50164:5"
+  },
+  "ISR": {
+    "name": "crwdns50176:0crwdne50176:0",
+    "demonym_one": "crwdns50172:1crwdne50172:1",
+    "demonym_other": "crwdns50172:5crwdne50172:5"
+  },
+  "ITA": {
+    "name": "crwdns50184:0crwdne50184:0",
+    "demonym_one": "crwdns50180:1crwdne50180:1",
+    "demonym_other": "crwdns50180:5crwdne50180:5"
+  },
+  "JAM": {
+    "name": "crwdns50192:0crwdne50192:0",
+    "demonym_one": "crwdns50188:1crwdne50188:1",
+    "demonym_other": "crwdns50188:5crwdne50188:5"
+  },
+  "JEY": {
+    "name": "crwdns50200:0crwdne50200:0",
+    "demonym_one": "crwdns50196:1crwdne50196:1",
+    "demonym_other": "crwdns50196:5crwdne50196:5"
+  },
+  "JOR": {
+    "name": "crwdns50208:0crwdne50208:0",
+    "demonym_one": "crwdns50204:1crwdne50204:1",
+    "demonym_other": "crwdns50204:5crwdne50204:5"
+  },
+  "JPN": {
+    "name": "crwdns50216:0crwdne50216:0",
+    "demonym_one": "crwdns50212:1crwdne50212:1",
+    "demonym_other": "crwdns50212:5crwdne50212:5"
+  },
+  "KAZ": {
+    "name": "crwdns50224:0crwdne50224:0",
+    "demonym_one": "crwdns50220:1crwdne50220:1",
+    "demonym_other": "crwdns50220:5crwdne50220:5"
+  },
+  "KEN": {
+    "name": "crwdns50232:0crwdne50232:0",
+    "demonym_one": "crwdns50228:1crwdne50228:1",
+    "demonym_other": "crwdns50228:5crwdne50228:5"
+  },
+  "KGZ": {
+    "name": "crwdns50240:0crwdne50240:0",
+    "demonym_one": "crwdns50236:1crwdne50236:1",
+    "demonym_other": "crwdns50236:5crwdne50236:5"
+  },
+  "KHM": {
+    "name": "crwdns50248:0crwdne50248:0",
+    "demonym_one": "crwdns50244:1crwdne50244:1",
+    "demonym_other": "crwdns50244:5crwdne50244:5"
+  },
+  "KIR": {
+    "name": "crwdns50256:0crwdne50256:0",
+    "demonym_one": "crwdns50252:1crwdne50252:1",
+    "demonym_other": "crwdns50252:5crwdne50252:5"
+  },
+  "KNA": {
+    "name": "crwdns50264:0crwdne50264:0",
+    "demonym_one": "crwdns50260:1crwdne50260:1",
+    "demonym_other": "crwdns50260:5crwdne50260:5"
+  },
+  "KOR": {
+    "name": "crwdns50272:0crwdne50272:0",
+    "demonym_one": "crwdns50268:1crwdne50268:1",
+    "demonym_other": "crwdns50268:5crwdne50268:5"
+  },
+  "KWT": {
+    "name": "crwdns50280:0crwdne50280:0",
+    "demonym_one": "crwdns50276:1crwdne50276:1",
+    "demonym_other": "crwdns50276:5crwdne50276:5"
+  },
+  "LAO": {
+    "name": "crwdns50288:0crwdne50288:0",
+    "demonym_one": "crwdns50284:1crwdne50284:1",
+    "demonym_other": "crwdns50284:5crwdne50284:5"
+  },
+  "LBN": {
+    "name": "crwdns50296:0crwdne50296:0",
+    "demonym_one": "crwdns50292:1crwdne50292:1",
+    "demonym_other": "crwdns50292:5crwdne50292:5"
+  },
+  "LBR": {
+    "name": "crwdns50304:0crwdne50304:0",
+    "demonym_one": "crwdns50300:1crwdne50300:1",
+    "demonym_other": "crwdns50300:5crwdne50300:5"
+  },
+  "LBY": {
+    "name": "crwdns50312:0crwdne50312:0",
+    "demonym_one": "crwdns50308:1crwdne50308:1",
+    "demonym_other": "crwdns50308:5crwdne50308:5"
+  },
+  "LCA": {
+    "name": "crwdns50320:0crwdne50320:0",
+    "demonym_one": "crwdns50316:1crwdne50316:1",
+    "demonym_other": "crwdns50316:5crwdne50316:5"
+  },
+  "LIE": {
+    "name": "crwdns50328:0crwdne50328:0",
+    "demonym_one": "crwdns50324:1crwdne50324:1",
+    "demonym_other": "crwdns50324:5crwdne50324:5"
+  },
+  "LKA": {
+    "name": "crwdns50336:0crwdne50336:0",
+    "demonym_one": "crwdns50332:1crwdne50332:1",
+    "demonym_other": "crwdns50332:5crwdne50332:5"
+  },
+  "LSO": {
+    "name": "crwdns50344:0crwdne50344:0",
+    "demonym_one": "crwdns50340:1crwdne50340:1",
+    "demonym_other": "crwdns50340:5crwdne50340:5"
+  },
+  "LTU": {
+    "name": "crwdns50352:0crwdne50352:0",
+    "demonym_one": "crwdns50348:1crwdne50348:1",
+    "demonym_other": "crwdns50348:5crwdne50348:5"
+  },
+  "LUX": {
+    "name": "crwdns50360:0crwdne50360:0",
+    "demonym_one": "crwdns50356:1crwdne50356:1",
+    "demonym_other": "crwdns50356:5crwdne50356:5"
+  },
+  "LVA": {
+    "name": "crwdns50368:0crwdne50368:0",
+    "demonym_one": "crwdns50364:1crwdne50364:1",
+    "demonym_other": "crwdns50364:5crwdne50364:5"
+  },
+  "MAC": {
+    "name": "crwdns50376:0crwdne50376:0",
+    "demonym_one": "crwdns50372:1crwdne50372:1",
+    "demonym_other": "crwdns50372:5crwdne50372:5"
+  },
+  "MAF": {
+    "name": "crwdns50386:0crwdne50386:0",
+    "demonym_one": "crwdns50382:1crwdne50382:1",
+    "demonym_other": "crwdns50382:5crwdne50382:5"
+  },
+  "MAR": {
+    "name": "crwdns50394:0crwdne50394:0",
+    "demonym_one": "crwdns50390:1crwdne50390:1",
+    "demonym_other": "crwdns50390:5crwdne50390:5"
+  },
+  "MCO": {
+    "name": "crwdns50402:0crwdne50402:0",
+    "demonym_one": "crwdns50398:1crwdne50398:1",
+    "demonym_other": "crwdns50398:5crwdne50398:5"
+  },
+  "MDA": {
+    "name": "crwdns50410:0crwdne50410:0",
+    "demonym_one": "crwdns50406:1crwdne50406:1",
+    "demonym_other": "crwdns50406:5crwdne50406:5"
+  },
+  "MDG": {
+    "name": "crwdns50418:0crwdne50418:0",
+    "demonym_one": "crwdns50414:1crwdne50414:1",
+    "demonym_other": "crwdns50414:5crwdne50414:5"
+  },
+  "MDV": {
+    "name": "crwdns50426:0crwdne50426:0",
+    "demonym_one": "crwdns50422:1crwdne50422:1",
+    "demonym_other": "crwdns50422:5crwdne50422:5"
+  },
+  "MEX": {
+    "name": "crwdns50434:0crwdne50434:0",
+    "demonym_one": "crwdns50430:1crwdne50430:1",
+    "demonym_other": "crwdns50430:5crwdne50430:5"
+  },
+  "MHL": {
+    "name": "crwdns50442:0crwdne50442:0",
+    "demonym_one": "crwdns50438:1crwdne50438:1",
+    "demonym_other": "crwdns50438:5crwdne50438:5"
+  },
+  "MKD": {
+    "name": "crwdns50450:0crwdne50450:0",
+    "demonym_one": "crwdns50446:1crwdne50446:1",
+    "demonym_other": "crwdns50446:5crwdne50446:5"
+  },
+  "MLI": {
+    "name": "crwdns50458:0crwdne50458:0",
+    "demonym_one": "crwdns50454:1crwdne50454:1",
+    "demonym_other": "crwdns50454:5crwdne50454:5"
+  },
+  "MLT": {
+    "name": "crwdns50466:0crwdne50466:0",
+    "demonym_one": "crwdns50462:1crwdne50462:1",
+    "demonym_other": "crwdns50462:5crwdne50462:5"
+  },
+  "MMR": {
+    "name": "crwdns50474:0crwdne50474:0",
+    "demonym_one": "crwdns50470:1crwdne50470:1",
+    "demonym_other": "crwdns50470:5crwdne50470:5"
+  },
+  "MNE": {
+    "name": "crwdns50484:0crwdne50484:0",
+    "demonym_one": "crwdns50480:1crwdne50480:1",
+    "demonym_other": "crwdns50480:5crwdne50480:5"
+  },
+  "MNG": {
+    "name": "crwdns50492:0crwdne50492:0",
+    "demonym_one": "crwdns50488:1crwdne50488:1",
+    "demonym_other": "crwdns50488:5crwdne50488:5"
+  },
+  "MNP": {
+    "name": "crwdns50500:0crwdne50500:0",
+    "demonym_one": "crwdns50496:1crwdne50496:1",
+    "demonym_other": "crwdns50496:5crwdne50496:5"
+  },
+  "MOZ": {
+    "name": "crwdns50508:0crwdne50508:0",
+    "demonym_one": "crwdns50504:1crwdne50504:1",
+    "demonym_other": "crwdns50504:5crwdne50504:5"
+  },
+  "MRT": {
+    "name": "crwdns50516:0crwdne50516:0",
+    "demonym_one": "crwdns50512:1crwdne50512:1",
+    "demonym_other": "crwdns50512:5crwdne50512:5"
+  },
+  "MSR": {
+    "name": "crwdns50524:0crwdne50524:0",
+    "demonym_one": "crwdns50520:1crwdne50520:1",
+    "demonym_other": "crwdns50520:5crwdne50520:5"
+  },
+  "MTQ": {
+    "name": "crwdns50532:0crwdne50532:0",
+    "demonym_one": "crwdns50528:1crwdne50528:1",
+    "demonym_other": "crwdns50528:5crwdne50528:5"
+  },
+  "MUS": {
+    "name": "crwdns50540:0crwdne50540:0",
+    "demonym_one": "crwdns50536:1crwdne50536:1",
+    "demonym_other": "crwdns50536:5crwdne50536:5"
+  },
+  "MWI": {
+    "name": "crwdns50548:0crwdne50548:0",
+    "demonym_one": "crwdns50544:1crwdne50544:1",
+    "demonym_other": "crwdns50544:5crwdne50544:5"
+  },
+  "MYS": {
+    "name": "crwdns50556:0crwdne50556:0",
+    "demonym_one": "crwdns50552:1crwdne50552:1",
+    "demonym_other": "crwdns50552:5crwdne50552:5"
+  },
+  "MYT": {
+    "name": "crwdns50564:0crwdne50564:0",
+    "demonym_one": "crwdns50560:1crwdne50560:1",
+    "demonym_other": "crwdns50560:5crwdne50560:5"
+  },
+  "NAM": {
+    "name": "crwdns50572:0crwdne50572:0",
+    "demonym_one": "crwdns50568:1crwdne50568:1",
+    "demonym_other": "crwdns50568:5crwdne50568:5"
+  },
+  "NCL": {
+    "name": "crwdns50580:0crwdne50580:0",
+    "demonym_one": "crwdns50576:1crwdne50576:1",
+    "demonym_other": "crwdns50576:5crwdne50576:5"
+  },
+  "NER": {
+    "name": "crwdns50588:0crwdne50588:0",
+    "demonym_one": "crwdns50584:1crwdne50584:1",
+    "demonym_other": "crwdns50584:5crwdne50584:5"
+  },
+  "NFK": {
+    "name": "crwdns50594:0crwdne50594:0",
+    "demonym_one": "crwdns50590:1crwdne50590:1",
+    "demonym_other": "crwdns50590:5crwdne50590:5"
+  },
+  "NGA": {
+    "name": "crwdns50602:0crwdne50602:0",
+    "demonym_one": "crwdns50598:1crwdne50598:1",
+    "demonym_other": "crwdns50598:5crwdne50598:5"
+  },
+  "NIC": {
+    "name": "crwdns50610:0crwdne50610:0",
+    "demonym_one": "crwdns50606:1crwdne50606:1",
+    "demonym_other": "crwdns50606:5crwdne50606:5"
+  },
+  "NIU": {
+    "name": "crwdns50618:0crwdne50618:0",
+    "demonym_one": "crwdns50614:1crwdne50614:1",
+    "demonym_other": "crwdns50614:5crwdne50614:5"
+  },
+  "NLD": {
+    "name": "crwdns50626:0crwdne50626:0",
+    "demonym_one": "crwdns50622:1crwdne50622:1",
+    "demonym_other": "crwdns50622:5crwdne50622:5"
+  },
+  "NOR": {
+    "name": "crwdns50634:0crwdne50634:0",
+    "demonym_one": "crwdns50630:1crwdne50630:1",
+    "demonym_other": "crwdns50630:5crwdne50630:5"
+  },
+  "NPL": {
+    "name": "crwdns50642:0crwdne50642:0",
+    "demonym_one": "crwdns50638:1crwdne50638:1",
+    "demonym_other": "crwdns50638:5crwdne50638:5"
+  },
+  "NRU": {
+    "name": "crwdns50650:0crwdne50650:0",
+    "demonym_one": "crwdns50646:1crwdne50646:1",
+    "demonym_other": "crwdns50646:5crwdne50646:5"
+  },
+  "NZL": {
+    "name": "crwdns50658:0crwdne50658:0",
+    "demonym_one": "crwdns50654:1crwdne50654:1",
+    "demonym_other": "crwdns50654:5crwdne50654:5"
+  },
+  "OMN": {
+    "name": "crwdns50666:0crwdne50666:0",
+    "demonym_one": "crwdns50662:1crwdne50662:1",
+    "demonym_other": "crwdns50662:5crwdne50662:5"
+  },
+  "PAK": {
+    "name": "crwdns50674:0crwdne50674:0",
+    "demonym_one": "crwdns50670:1crwdne50670:1",
+    "demonym_other": "crwdns50670:5crwdne50670:5"
+  },
+  "PAN": {
+    "name": "crwdns50682:0crwdne50682:0",
+    "demonym_one": "crwdns50678:1crwdne50678:1",
+    "demonym_other": "crwdns50678:5crwdne50678:5"
+  },
+  "PCN": {
+    "name": "crwdns50690:0crwdne50690:0",
+    "demonym_one": "crwdns50686:1crwdne50686:1",
+    "demonym_other": "crwdns50686:5crwdne50686:5"
+  },
+  "PER": {
+    "name": "crwdns50696:0crwdne50696:0",
+    "demonym_one": "crwdns50694:1crwdne50694:1",
+    "demonym_other": "crwdns50694:5crwdne50694:5"
+  },
+  "PHL": {
+    "name": "crwdns50704:0crwdne50704:0",
+    "demonym_one": "crwdns50700:1crwdne50700:1",
+    "demonym_other": "crwdns50700:5crwdne50700:5"
+  },
+  "PLW": {
+    "name": "crwdns50712:0crwdne50712:0",
+    "demonym_one": "crwdns50708:1crwdne50708:1",
+    "demonym_other": "crwdns50708:5crwdne50708:5"
+  },
+  "PNG": {
+    "name": "crwdns50720:0crwdne50720:0",
+    "demonym_one": "crwdns50716:1crwdne50716:1",
+    "demonym_other": "crwdns50716:5crwdne50716:5"
+  },
+  "POL": {
+    "name": "crwdns50728:0crwdne50728:0",
+    "demonym_one": "crwdns50724:1crwdne50724:1",
+    "demonym_other": "crwdns50724:5crwdne50724:5"
+  },
+  "PRI": {
+    "name": "crwdns50736:0crwdne50736:0",
+    "demonym_one": "crwdns50732:1crwdne50732:1",
+    "demonym_other": "crwdns50732:5crwdne50732:5"
+  },
+  "PRK": {
+    "name": "crwdns50744:0crwdne50744:0",
+    "demonym_one": "crwdns50740:1crwdne50740:1",
+    "demonym_other": "crwdns50740:5crwdne50740:5"
+  },
+  "PRT": {
+    "name": "crwdns50752:0crwdne50752:0",
+    "demonym_one": "crwdns50748:1crwdne50748:1",
+    "demonym_other": "crwdns50748:5crwdne50748:5"
+  },
+  "PRY": {
+    "name": "crwdns50760:0crwdne50760:0",
+    "demonym_one": "crwdns50756:1crwdne50756:1",
+    "demonym_other": "crwdns50756:5crwdne50756:5"
+  },
+  "PSE": {
+    "name": "crwdns50768:0crwdne50768:0",
+    "demonym_one": "crwdns50764:1crwdne50764:1",
+    "demonym_other": "crwdns50764:5crwdne50764:5"
+  },
+  "PYF": {
+    "name": "crwdns50776:0crwdne50776:0",
+    "demonym_one": "crwdns50772:1crwdne50772:1",
+    "demonym_other": "crwdns50772:5crwdne50772:5"
+  },
+  "QAT": {
+    "name": "crwdns50782:0crwdne50782:0",
+    "demonym_one": "crwdns50780:1crwdne50780:1",
+    "demonym_other": "crwdns50780:5crwdne50780:5"
+  },
+  "REU": {
+    "name": "crwdns50790:0crwdne50790:0",
+    "demonym_one": "crwdns50786:1crwdne50786:1",
+    "demonym_other": "crwdns50786:5crwdne50786:5"
+  },
+  "ROU": {
+    "name": "crwdns50798:0crwdne50798:0",
+    "demonym_one": "crwdns50794:1crwdne50794:1",
+    "demonym_other": "crwdns50794:5crwdne50794:5"
+  },
+  "RUS": {
+    "name": "crwdns50806:0crwdne50806:0",
+    "demonym_one": "crwdns50802:1crwdne50802:1",
+    "demonym_other": "crwdns50802:5crwdne50802:5"
+  },
+  "RWA": {
+    "name": "crwdns50816:0crwdne50816:0",
+    "demonym_one": "crwdns50812:1crwdne50812:1",
+    "demonym_other": "crwdns50812:5crwdne50812:5"
+  },
+  "SAU": {
+    "name": "crwdns50822:0crwdne50822:0",
+    "demonym_one": "crwdns50820:1crwdne50820:1",
+    "demonym_other": "crwdns50820:5crwdne50820:5"
+  },
+  "SDN": {
+    "name": "crwdns50830:0crwdne50830:0",
+    "demonym_one": "crwdns50826:1crwdne50826:1",
+    "demonym_other": "crwdns50826:5crwdne50826:5"
+  },
+  "SEN": {
+    "name": "crwdns50838:0crwdne50838:0",
+    "demonym_one": "crwdns50834:1crwdne50834:1",
+    "demonym_other": "crwdns50834:5crwdne50834:5"
+  },
+  "SGP": {
+    "name": "crwdns50846:0crwdne50846:0",
+    "demonym_one": "crwdns50842:1crwdne50842:1",
+    "demonym_other": "crwdns50842:5crwdne50842:5"
+  },
+  "SGS": {
+    "name": "crwdns50854:0crwdne50854:0",
+    "demonym_one": "crwdns50850:1crwdne50850:1",
+    "demonym_other": "crwdns50850:5crwdne50850:5"
+  },
+  "SHN": {
+    "name": "crwdns50858:0crwdne50858:0"
+  },
+  "SJM": {
+    "name": "crwdns50866:0crwdne50866:0",
+    "demonym_one": "crwdns50862:1crwdne50862:1",
+    "demonym_other": "crwdns50862:5crwdne50862:5"
+  },
+  "SLB": {
+    "name": "crwdns50874:0crwdne50874:0",
+    "demonym_one": "crwdns50868:1crwdne50868:1",
+    "demonym_other": "crwdns50868:5crwdne50868:5"
+  },
+  "SLE": {
+    "name": "crwdns50882:0crwdne50882:0",
+    "demonym_one": "crwdns50878:1crwdne50878:1",
+    "demonym_other": "crwdns50878:5crwdne50878:5"
+  },
+  "SLV": {
+    "name": "crwdns50890:0crwdne50890:0",
+    "demonym_one": "crwdns50886:1crwdne50886:1",
+    "demonym_other": "crwdns50886:5crwdne50886:5"
+  },
+  "SMR": {
+    "name": "crwdns50898:0crwdne50898:0",
+    "demonym_one": "crwdns50894:1crwdne50894:1",
+    "demonym_other": "crwdns50894:5crwdne50894:5"
+  },
+  "SOM": {
+    "name": "crwdns50906:0crwdne50906:0",
+    "demonym_one": "crwdns50902:1crwdne50902:1",
+    "demonym_other": "crwdns50902:5crwdne50902:5"
+  },
+  "SPM": {
+    "name": "crwdns50914:0crwdne50914:0",
+    "demonym_one": "crwdns50910:1crwdne50910:1",
+    "demonym_other": "crwdns50910:5crwdne50910:5"
+  },
+  "SRB": {
+    "name": "crwdns50922:0crwdne50922:0",
+    "demonym_one": "crwdns50918:1crwdne50918:1",
+    "demonym_other": "crwdns50918:5crwdne50918:5"
+  },
+  "SSD": {
+    "name": "crwdns50930:0crwdne50930:0",
+    "demonym_one": "crwdns50926:1crwdne50926:1",
+    "demonym_other": "crwdns50926:5crwdne50926:5"
+  },
+  "STP": {
+    "name": "crwdns50936:0crwdne50936:0",
+    "demonym_one": "crwdns50932:1crwdne50932:1",
+    "demonym_other": "crwdns50932:5crwdne50932:5"
+  },
+  "SUR": {
+    "name": "crwdns50944:0crwdne50944:0",
+    "demonym_one": "crwdns50940:1crwdne50940:1",
+    "demonym_other": "crwdns50940:5crwdne50940:5"
+  },
+  "SVK": {
+    "name": "crwdns50952:0crwdne50952:0",
+    "demonym_one": "crwdns50948:1crwdne50948:1",
+    "demonym_other": "crwdns50948:5crwdne50948:5"
+  },
+  "SVN": {
+    "name": "crwdns50960:0crwdne50960:0",
+    "demonym_one": "crwdns50956:1crwdne50956:1",
+    "demonym_other": "crwdns50956:5crwdne50956:5"
+  },
+  "SWE": {
+    "name": "crwdns50968:0crwdne50968:0",
+    "demonym_one": "crwdns50964:1crwdne50964:1",
+    "demonym_other": "crwdns50964:5crwdne50964:5"
+  },
+  "SWZ": {
+    "name": "crwdns50976:0crwdne50976:0",
+    "demonym_one": "crwdns50972:1crwdne50972:1",
+    "demonym_other": "crwdns50972:5crwdne50972:5"
+  },
+  "SXM": {
+    "name": "crwdns50984:0crwdne50984:0",
+    "demonym_one": "crwdns50980:1crwdne50980:1",
+    "demonym_other": "crwdns50980:5crwdne50980:5"
+  },
+  "SYC": {
+    "name": "crwdns50992:0crwdne50992:0",
+    "demonym_one": "crwdns50988:1crwdne50988:1",
+    "demonym_other": "crwdns50988:5crwdne50988:5"
+  },
+  "SYR": {
+    "name": "crwdns51000:0crwdne51000:0",
+    "demonym_one": "crwdns50996:1crwdne50996:1",
+    "demonym_other": "crwdns50996:5crwdne50996:5"
+  },
+  "TCA": {
+    "name": "crwdns51008:0crwdne51008:0",
+    "demonym_one": "crwdns51004:1crwdne51004:1",
+    "demonym_other": "crwdns51004:5crwdne51004:5"
+  },
+  "TCD": {
+    "name": "crwdns51016:0crwdne51016:0",
+    "demonym_one": "crwdns51012:1crwdne51012:1",
+    "demonym_other": "crwdns51012:5crwdne51012:5"
+  },
+  "TGO": {
+    "name": "crwdns51024:0crwdne51024:0",
+    "demonym_one": "crwdns51020:1crwdne51020:1",
+    "demonym_other": "crwdns51020:5crwdne51020:5"
+  },
+  "THA": {
+    "name": "crwdns51032:0crwdne51032:0",
+    "demonym_one": "crwdns51028:1crwdne51028:1",
+    "demonym_other": "crwdns51028:5crwdne51028:5"
+  },
+  "TJK": {
+    "name": "crwdns51040:0crwdne51040:0",
+    "demonym_one": "crwdns51036:1crwdne51036:1",
+    "demonym_other": "crwdns51036:5crwdne51036:5"
+  },
+  "TKL": {
+    "name": "crwdns51048:0crwdne51048:0",
+    "demonym_one": "crwdns51044:1crwdne51044:1",
+    "demonym_other": "crwdns51044:5crwdne51044:5"
+  },
+  "TKM": {
+    "name": "crwdns51056:0crwdne51056:0",
+    "demonym_one": "crwdns51052:1crwdne51052:1",
+    "demonym_other": "crwdns51052:5crwdne51052:5"
+  },
+  "TLS": {
+    "name": "crwdns51064:0crwdne51064:0",
+    "demonym_one": "crwdns51060:1crwdne51060:1",
+    "demonym_other": "crwdns51060:5crwdne51060:5"
+  },
+  "TON": {
+    "name": "crwdns51072:0crwdne51072:0",
+    "demonym_one": "crwdns51068:1crwdne51068:1",
+    "demonym_other": "crwdns51068:5crwdne51068:5"
+  },
+  "TTO": {
+    "name": "crwdns51080:0crwdne51080:0",
+    "demonym_one": "crwdns51076:1crwdne51076:1",
+    "demonym_other": "crwdns51076:5crwdne51076:5"
+  },
+  "TUN": {
+    "name": "crwdns51088:0crwdne51088:0",
+    "demonym_one": "crwdns51084:1crwdne51084:1",
+    "demonym_other": "crwdns51084:5crwdne51084:5"
+  },
+  "TUR": {
+    "name": "crwdns51096:0crwdne51096:0",
+    "demonym_one": "crwdns51092:1crwdne51092:1",
+    "demonym_other": "crwdns51092:5crwdne51092:5"
+  },
+  "TUV": {
+    "name": "crwdns51104:0crwdne51104:0",
+    "demonym_one": "crwdns51100:1crwdne51100:1",
+    "demonym_other": "crwdns51100:5crwdne51100:5"
+  },
+  "TWN": {
+    "name": "crwdns51110:0crwdne51110:0",
+    "demonym_one": "crwdns51108:1crwdne51108:1",
+    "demonym_other": "crwdns51108:5crwdne51108:5"
+  },
+  "TZA": {
+    "name": "crwdns51118:0crwdne51118:0",
+    "demonym_one": "crwdns51114:1crwdne51114:1",
+    "demonym_other": "crwdns51114:5crwdne51114:5"
+  },
+  "UGA": {
+    "name": "crwdns51126:0crwdne51126:0",
+    "demonym_one": "crwdns51122:1crwdne51122:1",
+    "demonym_other": "crwdns51122:5crwdne51122:5"
+  },
+  "UKR": {
+    "name": "crwdns51134:0crwdne51134:0",
+    "demonym_one": "crwdns51130:1crwdne51130:1",
+    "demonym_other": "crwdns51130:5crwdne51130:5"
+  },
+  "UMI": {
+    "name": "crwdns51142:0crwdne51142:0",
+    "demonym_one": "crwdns51138:1crwdne51138:1",
+    "demonym_other": "crwdns51138:5crwdne51138:5"
+  },
+  "UNK": {
+    "name": "crwdns51148:0crwdne51148:0",
+    "demonym_one": "crwdns51146:1crwdne51146:1",
+    "demonym_other": "crwdns51146:5crwdne51146:5"
+  },
+  "URY": {
+    "name": "crwdns51156:0crwdne51156:0",
+    "demonym_one": "crwdns51152:1crwdne51152:1",
+    "demonym_other": "crwdns51152:5crwdne51152:5"
+  },
+  "USA": {
+    "name": "crwdns51164:0crwdne51164:0",
+    "demonym_one": "crwdns51160:1crwdne51160:1",
+    "demonym_other": "crwdns51160:5crwdne51160:5"
+  },
+  "UZB": {
+    "name": "crwdns51170:0crwdne51170:0",
+    "demonym_one": "crwdns51168:1crwdne51168:1",
+    "demonym_other": "crwdns51168:5crwdne51168:5"
+  },
+  "VAT": {
+    "name": "crwdns51178:0crwdne51178:0",
+    "demonym_one": "crwdns51174:1crwdne51174:1",
+    "demonym_other": "crwdns51174:5crwdne51174:5"
+  },
+  "VCT": {
+    "name": "crwdns51186:0crwdne51186:0",
+    "demonym_one": "crwdns51182:1crwdne51182:1",
+    "demonym_other": "crwdns51182:5crwdne51182:5"
+  },
+  "VEN": {
+    "name": "crwdns51194:0crwdne51194:0",
+    "demonym_one": "crwdns51190:1crwdne51190:1",
+    "demonym_other": "crwdns51190:5crwdne51190:5"
+  },
+  "VGB": {
+    "name": "crwdns51202:0crwdne51202:0",
+    "demonym_one": "crwdns51198:1crwdne51198:1",
+    "demonym_other": "crwdns51198:5crwdne51198:5"
+  },
+  "VIR": {
+    "name": "crwdns51210:0crwdne51210:0",
+    "demonym_one": "crwdns51206:1crwdne51206:1",
+    "demonym_other": "crwdns51206:5crwdne51206:5"
+  },
+  "VNM": {
+    "name": "crwdns51218:0crwdne51218:0",
+    "demonym_one": "crwdns51214:1crwdne51214:1",
+    "demonym_other": "crwdns51214:5crwdne51214:5"
+  },
+  "VUT": {
+    "name": "crwdns51226:0crwdne51226:0",
+    "demonym_one": "crwdns51222:1crwdne51222:1",
+    "demonym_other": "crwdns51222:5crwdne51222:5"
+  },
+  "WLF": {
+    "name": "crwdns51234:0crwdne51234:0",
+    "demonym_one": "crwdns51230:1crwdne51230:1",
+    "demonym_other": "crwdns51230:5crwdne51230:5"
+  },
+  "WSM": {
+    "name": "crwdns51242:0crwdne51242:0",
+    "demonym_one": "crwdns51238:1crwdne51238:1",
+    "demonym_other": "crwdns51238:5crwdne51238:5"
+  },
+  "YEM": {
+    "name": "crwdns51250:0crwdne51250:0",
+    "demonym_one": "crwdns51246:1crwdne51246:1",
+    "demonym_other": "crwdns51246:5crwdne51246:5"
+  },
+  "ZAF": {
+    "name": "crwdns51258:0crwdne51258:0",
+    "demonym_one": "crwdns51254:1crwdne51254:1",
+    "demonym_other": "crwdns51254:5crwdne51254:5"
+  },
+  "ZMB": {
+    "name": "crwdns51264:0crwdne51264:0",
+    "demonym_one": "crwdns51260:1crwdne51260:1",
+    "demonym_other": "crwdns51260:5crwdne51260:5"
+  },
+  "ZWE": {
+    "name": "crwdns51272:0crwdne51272:0",
+    "demonym_one": "crwdns51268:1crwdne51268:1",
+    "demonym_other": "crwdns51268:5crwdne51268:5"
+  }
+}
