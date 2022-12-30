@@ -5,8 +5,6 @@
  */
 // const i18nConfig = require('./next-i18next.config.js')
 
-// const withTM = require('next-transpile-modules')(['@weareinreach/ui'])
-
 function defineNextConfig(config) {
 	// return withTM(config)
 	return config

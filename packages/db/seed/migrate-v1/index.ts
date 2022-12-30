@@ -2,7 +2,7 @@ import { Listr, ListrTask as ListrBaseTask, ListrDefaultRenderer, ListrTaskWrapp
 
 import { migrateLog } from '~/seed/logger'
 import { runMigrateOrgs } from '~/seed/migrate-v1/org'
-import { RollbackOrgs, rollbackOrgs } from '~/seed/migrate-v1/org/dbRunner'
+// import { RollbackOrgs, rollbackOrgs } from '~/seed/migrate-v1/org/dbRunner'
 import { runMigrateReviews } from '~/seed/migrate-v1/reviews'
 import { migrateUsers } from '~/seed/migrate-v1/users'
 
@@ -10,7 +10,7 @@ const logger = new Logger({ useIcons: true })
 
 const taskOptions: Omit<ListrTaskDef, 'title' | 'task'> = {
 	options: {
-		bottomBar: 10,
+		bottomBar: 20,
 		showTimer: true,
 	},
 }
@@ -26,9 +26,9 @@ async function run() {
 			},
 			{
 				title: 'Migrate organizations',
-				task: async (ctx, task): Promise<Listr> => runMigrateOrgs(task, ctx),
+				task: async (ctx, task): Promise<Listr> => runMigrateOrgs(task),
 				...taskOptions,
-				rollback: async (ctx, task): Promise<RollbackOrgs> => rollbackOrgs(task, ctx),
+				// rollback: async (ctx, task): Promise<void> => runRollback(task, ctx),
 				// skip: true,
 			},
 			{
@@ -46,7 +46,7 @@ async function run() {
 				showSubtasks: true,
 				showTimer: true,
 				showErrorMessage: true,
-				collapse: false,
+				// collapse: false,
 			},
 		}
 	)
