@@ -108,7 +108,7 @@
 	"peerDependencies": {
 		"@emotion/react": "^11",
 		"@emotion/server": "^11",
-		"@iconify/react": "^4.0.1",
+		"@iconify/react": "^4",
 		"@mantine/carousel": "^5",
 		"@mantine/core": "^5",
 		"@mantine/dates": "^5",
