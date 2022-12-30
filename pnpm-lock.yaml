@@ -85,9 +85,27 @@ importers:
   apps/app:
     specifiers:
       '@crowdin/ota-client': 0.7.0
+      '@emotion/react': 11.10.5
+      '@emotion/server': 11.10.0
+      '@mantine/carousel': 5.9.5
+      '@mantine/core': 5.9.5
+      '@mantine/dates': 5.9.5
+      '@mantine/dropzone': 5.9.5
+      '@mantine/form': 5.9.5
+      '@mantine/hooks': 5.9.5
+      '@mantine/modals': 5.9.5
+      '@mantine/next': 5.9.5
+      '@mantine/notifications': 5.9.5
+      '@mantine/nprogress': 5.9.5
+      '@mantine/prism': 5.9.5
+      '@mantine/spotlight': 5.9.5
+      '@mantine/tiptap': 5.9.5
       '@next/bundle-analyzer': 13.1.1
       '@next/font': 13.1.1
       '@tanstack/react-query': 4.20.4
+      '@tiptap/extension-link': 2.0.0-beta.209
+      '@tiptap/react': 2.0.0-beta.209
+      '@tiptap/starter-kit': 2.0.0-beta.209
       '@trpc/client': 10.7.0
       '@trpc/next': 10.7.0
       '@trpc/react-query': 10.7.0
@@ -106,7 +124,9 @@ importers:
       '@weareinreach/ui': 0.100.0
       axios: 1.2.2
       commander: 9.4.1
+      dayjs: 1.11.7
       dotenv: 16.0.3
+      embla-carousel-react: 7.0.5
       eslint: 8.30.0
       eslint-config-next: 13.1.1
       eslint-import-resolver-typescript: 3.5.2
@@ -115,6 +135,7 @@ importers:
       eslint-plugin-import: 2.26.0
       eslint-plugin-prettier: 4.2.1
       eslint-plugin-simple-import-sort: 8.0.0
+      feather-icons-react: 0.6.2
       flat: 5.0.2
       i18next: 22.4.6
       listr2: 5.0.6
@@ -128,8 +149,26 @@ importers:
       zod: 3.20.2
     dependencies:
       '@crowdin/ota-client': 0.7.0
+      '@emotion/react': 11.10.5_3grbeiqrb6djg67fiejiqngkdi
+      '@emotion/server': 11.10.0
+      '@mantine/carousel': 5.9.5_tt224433qisev6tpy33d7mk3wq
+      '@mantine/core': 5.9.5_hzg3oku4uxnt5crkeceagoktyy
+      '@mantine/dates': 5.9.5_q32zbbv6l2fjmvb2dpa2q3dhma
+      '@mantine/dropzone': 5.9.5_h4zmljtfubfbwzvuu4gizrlimy
+      '@mantine/form': 5.9.5_react@18.2.0
+      '@mantine/hooks': 5.9.5_react@18.2.0
+      '@mantine/modals': 5.9.5_h4zmljtfubfbwzvuu4gizrlimy
+      '@mantine/next': 5.9.5_d5xj5jipthoiwqd5a5nbaex2p4
+      '@mantine/notifications': 5.9.5_h4zmljtfubfbwzvuu4gizrlimy
+      '@mantine/nprogress': 5.9.5_h4zmljtfubfbwzvuu4gizrlimy
+      '@mantine/prism': 5.9.5_h4zmljtfubfbwzvuu4gizrlimy
+      '@mantine/spotlight': 5.9.5_h4zmljtfubfbwzvuu4gizrlimy
+      '@mantine/tiptap': 5.9.5_2yekrcdyamzmv7mxyhexaejs5a
       '@next/bundle-analyzer': 13.1.1
       '@tanstack/react-query': 4.20.4_biqbaboplfbrettd7655fr4n2y
+      '@tiptap/extension-link': 2.0.0-beta.209_kdf7tbeyuz6zzmi7724b5ghupu
+      '@tiptap/react': 2.0.0-beta.209_q2znjafzmb4pvn25xzm5s3hjsu
+      '@tiptap/starter-kit': 2.0.0-beta.209_mr3bhnmfox2kjnahwbtgkxt4cy
       '@trpc/client': 10.7.0_@trpc+server@10.7.0
       '@trpc/next': 10.7.0_gmaturtqmtlrknaw65ek5pmv2i
       '@trpc/react-query': 10.7.0_x4ie6nhblo2vtx2aafrgzlfqy4
@@ -139,8 +178,11 @@ importers:
       '@weareinreach/db': link:../../packages/db
       '@weareinreach/ui': link:../../packages/ui
       axios: 1.2.2
+      dayjs: 1.11.7
+      embla-carousel-react: 7.0.5_react@18.2.0
+      feather-icons-react: 0.6.2_react@18.2.0
       i18next: 22.4.6
-      next: 13.1.1_672uxklweod7ene3nqtsh262ca
+      next: 13.1.1_7xlrwlvvs7cv2obrs6a5y6oxxq
       next-auth: 4.18.7_q76c2b4vyoegvsbrcwkfvimnai
       next-i18next: 13.0.2_ge2a7f353qetwks2s2y4fdhdo4
       react: 18.2.0
@@ -486,8 +528,6 @@ importers:
       '@emotion/server': 11.10.0
       '@faker-js/faker': 7.6.0
       '@geometricpanda/storybook-addon-badges': 0.2.2
-      '@iconify/icons-fa6-solid': 1.2.10
-      '@iconify/react': 4.0.1
       '@mantine/carousel': 5.9.5
       '@mantine/core': 5.9.5
       '@mantine/dates': 5.9.5
@@ -515,7 +555,6 @@ importers:
       '@storybook/react': 6.5.15
       '@storybook/testing-library': 0.0.13
       '@storybook/theming': 6.5.15
-      '@tabler/icons': 1.119.0
       '@tiptap/extension-link': 2.0.0-beta.209
       '@tiptap/react': 2.0.0-beta.209
       '@tiptap/starter-kit': 2.0.0-beta.209
@@ -543,6 +582,7 @@ importers:
       eslint-plugin-simple-import-sort: 8.0.0
       eslint-plugin-storybook: 0.6.8
       eslint-plugin-turbo: 0.0.7
+      feather-icons-react: 0.6.2
       i18next: 22.4.6
       i18next-browser-languagedetector: 7.0.1
       i18next-http-backend: 2.1.1
@@ -554,6 +594,7 @@ importers:
       react: 18.2.0
       react-docgen-typescript: 2.2.2
       react-dom: 18.2.0
+      react-feather: 2.0.10
       react-i18next: 12.1.1
       resolve-url-loader: 5.0.0
       sb: 6.5.15
@@ -573,7 +614,6 @@ importers:
     dependencies:
       '@emotion/react': 11.10.5_3grbeiqrb6djg67fiejiqngkdi
       '@emotion/server': 11.10.0
-      '@iconify/react': 4.0.1_react@18.2.0
       '@mantine/carousel': 5.9.5_tt224433qisev6tpy33d7mk3wq
       '@mantine/core': 5.9.5_hzg3oku4uxnt5crkeceagoktyy
       '@mantine/dates': 5.9.5_q32zbbv6l2fjmvb2dpa2q3dhma
@@ -587,20 +627,20 @@ importers:
       '@mantine/prism': 5.9.5_h4zmljtfubfbwzvuu4gizrlimy
       '@mantine/spotlight': 5.9.5_h4zmljtfubfbwzvuu4gizrlimy
       '@mantine/tiptap': 5.9.5_2yekrcdyamzmv7mxyhexaejs5a
-      '@tabler/icons': 1.119.0_biqbaboplfbrettd7655fr4n2y
       '@tiptap/extension-link': 2.0.0-beta.209_kdf7tbeyuz6zzmi7724b5ghupu
       '@tiptap/react': 2.0.0-beta.209_q2znjafzmb4pvn25xzm5s3hjsu
       '@tiptap/starter-kit': 2.0.0-beta.209_mr3bhnmfox2kjnahwbtgkxt4cy
       dayjs: 1.11.7
       embla-carousel-react: 7.0.5_react@18.2.0
+      feather-icons-react: 0.6.2_react@18.2.0
       next: 13.1.1_7xlrwlvvs7cv2obrs6a5y6oxxq
+      react-feather: 2.0.10_react@18.2.0
       slugify: 1.6.5
       zod: 3.20.2
     devDependencies:
       '@babel/core': 7.20.7
       '@faker-js/faker': 7.6.0
       '@geometricpanda/storybook-addon-badges': 0.2.2
-      '@iconify/icons-fa6-solid': 1.2.10
       '@next/eslint-plugin-next': 13.1.1
       '@next/font': 13.1.1
       '@storybook/addon-a11y': 6.5.15_biqbaboplfbrettd7655fr4n2y
@@ -2078,7 +2118,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-plugin-utils': 7.20.2
       '@babel/plugin-syntax-object-rest-spread': 7.8.3_@babel+core@7.12.9
       '@babel/plugin-transform-parameters': 7.20.5_@babel+core@7.12.9
     dev: true
@@ -3428,7 +3468,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.20.6
       '@types/react': 18.0.26
-      clsx: 1.1.0
+      clsx: 1.1.1
       focus-lock: 0.8.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -3711,6 +3751,7 @@ packages:
 
   /@floating-ui/react-dom-interactions/0.10.3_ib3m5ricvtkl2cll7qpr2f6lvq:
     resolution: {integrity: sha512-UEHqdnzyoiWNU5az/tAljr9iXFzN18DcvpMqW+/cXz4FEhDEB1ogLtWldOWCujLerPBnSRocADALafelOReMpw==}
+    deprecated: Package renamed to @floating-ui/react
     peerDependencies:
       react: '>=16.8.0 || >=18'
       react-dom: '>=16.8.0 || >=18'
@@ -3767,24 +3808,6 @@ packages:
 
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
-
-  /@iconify/icons-fa6-solid/1.2.10:
-    resolution: {integrity: sha512-XoPTci7OKLE34QWy4KDwaqbSz+WabxRHnbMGwTKnnvIwI09PHQrkdJZVTwBPUIleVF/Xc0L4EeHUv4cWj5VTOg==}
-    dependencies:
-      '@iconify/types': 2.0.0
-    dev: true
-
-  /@iconify/react/4.0.1_react@18.2.0:
-    resolution: {integrity: sha512-/DBJqh5K7W4f+d4kpvyJa/OTpVa3GfgrE9bZFAKP0vIWDr0cvVU9MVvbbkek216w9nLQhpJY/FeJtc6izB1PHw==}
-    peerDependencies:
-      react: '>=16 || >=18'
-    dependencies:
-      '@iconify/types': 2.0.0
-      react: 18.2.0
-    dev: false
-
-  /@iconify/types/2.0.0:
-    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
   /@istanbuljs/load-nyc-config/1.1.0:
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
@@ -7194,7 +7217,7 @@ packages:
       '@trpc/client': 10.7.0_@trpc+server@10.7.0
       '@trpc/react-query': 10.7.0_x4ie6nhblo2vtx2aafrgzlfqy4
       '@trpc/server': 10.7.0
-      next: 13.1.1_672uxklweod7ene3nqtsh262ca
+      next: 13.1.1_7xlrwlvvs7cv2obrs6a5y6oxxq
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-ssr-prepass: 1.5.0_react@18.2.0
@@ -9927,7 +9950,6 @@ packages:
   /clsx/1.1.1:
     resolution: {integrity: sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==}
     engines: {node: '>=6'}
-    dev: false
 
   /code-block-writer/11.0.3:
     resolution: {integrity: sha512-NiujjUFB4SwScJq2bwbYUtXbZhBSlY6vYzm++3Q6oC+U+injTqfPYFK8wS9COOmb2lueqp0ZRB4nK1VYeHgNyw==}
@@ -12421,6 +12443,14 @@ packages:
     resolution: {integrity: sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g==}
     dependencies:
       pend: 1.2.0
+
+  /feather-icons-react/0.6.2_react@18.2.0:
+    resolution: {integrity: sha512-G677Y5nc3HzP1f5NNb5LJuZwKrI58BK4+/9O8Bl4naF9JixC+YL4trVom1F2ajnilq/EbU8JETPTNqvCzwH1qA==}
+    peerDependencies:
+      react: '>= 16.8.4 || >=18'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /fetch-blob/3.2.0:
     resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
@@ -15946,7 +15976,7 @@ packages:
       '@panva/hkdf': 1.0.2
       cookie: 0.5.0
       jose: 4.11.1
-      next: 13.1.1_672uxklweod7ene3nqtsh262ca
+      next: 13.1.1_7xlrwlvvs7cv2obrs6a5y6oxxq
       oauth: 0.9.15
       openid-client: 5.3.1
       preact: 10.11.3
@@ -15970,7 +16000,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       i18next: 22.4.6
       i18next-fs-backend: 2.1.1
-      next: 13.1.1_672uxklweod7ene3nqtsh262ca
+      next: 13.1.1_7xlrwlvvs7cv2obrs6a5y6oxxq
       react: 18.2.0
       react-i18next: 12.1.1_6vygckh2jgtx4nucc3no6lnm3y
 
@@ -17754,6 +17784,15 @@ packages:
       react-dom: 18.2.0_react@18.2.0
       react-is: 17.0.2
     dev: true
+
+  /react-feather/2.0.10_react@18.2.0:
+    resolution: {integrity: sha512-BLhukwJ+Z92Nmdcs+EMw6dy1Z/VLiJTzEQACDUEnWMClhYnFykJCGWQx+NmwP/qQHGX/5CzQ+TGi8ofg2+HzVQ==}
+    peerDependencies:
+      react: '>=16.8.6 || >=18'
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
 
   /react-i18next/12.1.1_6vygckh2jgtx4nucc3no6lnm3y:
     resolution: {integrity: sha512-mFdieOI0LDy84q3JuZU6Aou1DoWW2fhapcTGeBS8+vWSJuViuoCLQAMYSb0QoHhXS8B0WKUOPpx4cffAP7r/aA==}
