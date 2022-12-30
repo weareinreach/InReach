@@ -4,10 +4,10 @@ import React from 'react'
 
 import { Center } from '@mantine/core'
 
-import { LinkComponent } from './LinkComponent'
+import { Link as LinkComponent } from './Link'
 
 export default {
-	title: 'Core/Link Component',
+	title: 'Core/Link',
 	component: LinkComponent,
 	decorators: [
 		(Story) => (
@@ -29,7 +29,6 @@ const LinkVariant: ComponentStory<typeof LinkComponent> = (args) => <LinkCompone
 export const Link = LinkVariant.bind({})
 
 Link.args = {
-	text: 'safehorizon.com',
+	children: 'safehorizon.com',
 	href: 'google.com',
-	size: 20,
 }

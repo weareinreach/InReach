@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import NextLink from 'next/link'
 
 import { Text, createStyles } from '@mantine/core'
 
@@ -19,19 +19,16 @@ const useStyles = createStyles((theme) => ({
 	text: {},
 }))
 
-export const LinkComponent = ({ text, href, size }: Props) => {
+export const Link = ({ children, href }: Props) => {
 	const { classes } = useStyles()
 	return (
-		<Link href={href} className={classes.link}>
-			<Text size={size} className={classes.text}>
-				{text}
-			</Text>
-		</Link>
+		<NextLink href={href} className={classes.link}>
+			<Text className={classes.text}>{children}</Text>
+		</NextLink>
 	)
 }
 
 type Props = {
-	text: string
+	children: string
 	href: string
-	size: number
 }
