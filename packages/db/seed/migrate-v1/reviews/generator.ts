@@ -43,9 +43,10 @@ export const generateReviews = async (task: ListrTask) => {
 		select: {
 			id: true,
 			legacyId: true,
-			service: {
+
+			services: {
 				select: {
-					name: true,
+					tag: { select: { name: true } },
 				},
 			},
 		},

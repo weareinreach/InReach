@@ -6,7 +6,7 @@ import React from 'react'
 import { Button, Center } from '@mantine/core'
 
 export default {
-	title: 'App/Layout/eButton',
+	title: 'Core/Button',
 	component: Button,
 	decorators: [
 		(Story) => (
@@ -53,19 +53,19 @@ LargePrimary.args = {
 	variant: 'lg-primary',
 	children: 'More sorting options',
 	// icon: 'lucide:sliders',
-	leftIcon: <Icon icon='lucide:sliders' />,
+	leftIcon: <Icon icon='fa6-solid:sliders' rotate={3} />,
 }
 LargeSecondary.args = {
 	variant: 'lg-secondary',
 	children: 'Save',
 	// icon: 'fe:heart-o',
-	leftIcon: <Icon icon='fe:heart-o' />,
+	leftIcon: <Icon icon='fa6-solid:heart' />,
 }
 LargeAccent.args = {
 	variant: 'lg-accent',
 	children: 'View map',
 	// icon: 'fe:map',
-	leftIcon: <Icon icon='fe:map' />,
+	leftIcon: <Icon icon='fa6-solid:map-location-dot' />,
 }
 // export const SafetyExitButton = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args

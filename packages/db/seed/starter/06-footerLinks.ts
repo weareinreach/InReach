@@ -1,63 +1,46 @@
+import { Prisma } from '@prisma/client'
+
 import { prisma } from '~/index'
 import { footerLinks, namespaces } from '~/seed/data'
+import { Log, iconList } from '~/seed/lib'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
 export const seedFooterLinks = async (task: ListrTask) => {
 	try {
-		const { name: namespace } = await prisma.translationNamespace.upsert({
-			where: {
-				name: namespaces.footer,
-			},
-			create: {
-				name: namespaces.footer,
-			},
-			update: {},
-			select: {
-				name: true,
-			},
-		})
+		const log: Log = (message, icon?, indent = false) => {
+			const dispIcon = icon ? `${iconList(icon)} ` : ''
+			const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
+			logFile.info(formattedMessage)
+			task.output = formattedMessage
+		}
 
-		const transactions = footerLinks.map((item) =>
-			prisma.footerLink.upsert({
-				where: {
-					display_href: {
-						display: item.display,
-						href: item.href,
-					},
-				},
-				create: {
-					display: item.display,
-					href: item.href,
-					key: {
-						connectOrCreate: {
-							where: {
-								ns_key: {
-									key: item.key,
-									ns: namespaces.footer,
-								},
-							},
-							create: {
-								key: item.key,
-								text: item.display,
-								namespace: {
-									connect: {
-										name: namespace,
-									},
-								},
-							},
-						},
-					},
-				},
-				update: {},
+		const translate: Prisma.TranslationKeyCreateManyInput[] = []
+		const data: Prisma.FooterLinkCreateManyInput[] = []
+
+		for (const item of footerLinks) {
+			translate.push({
+				ns: namespaces.nav,
+				key: item.key,
+				text: item.display,
 			})
-		)
+			data.push({
+				display: item.display,
+				href: item.href,
+				tsKey: item.key,
+				tsNs: namespaces.nav,
+			})
+		}
 
-		const result = await prisma.$transaction(transactions)
-		const logMessage = `Footer Link records added: ${result.length}`
-		logFile.log(logMessage)
-		task.output = logMessage
-		task.title = `Footer Links (${result.length} records)`
+		const translationResult = await prisma.translationKey.createMany({
+			data: translate,
+			skipDuplicates: true,
+		})
+		const result = await prisma.footerLink.createMany({ data, skipDuplicates: true })
+
+		log(`Footer links added: ${result.count}`, 'create')
+		log(`Translation keys added: ${translationResult.count}`, 'tlate')
+		task.title = `${task.title} (${result.count} records, ${translationResult.count} translation keys)`
 	} catch (err) {
 		throw err
 	}

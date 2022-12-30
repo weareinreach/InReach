@@ -68,10 +68,20 @@ export type FooterLink = {
 	icon?: string
 }
 export type SocialMediaLink = {
-	icon: string
+	icon: keyof typeof iconMap | string
 	key: string
 	href: string
 }
+
+const iconMap = {
+	facebook: 'fa6-brands:facebook-f',
+	instagram: 'fa6-brands:instagram',
+	email: 'fa6-solid:envelope',
+	youtube: 'fa6-brands:youtube',
+	github: 'fa6-brands:github',
+	twitter: 'fa6-brands:twitter',
+	linkedin: 'fa6-brands:linkedin-in',
+} as const
 
 export const FooterSection = ({ links, socialMedia }: FooterSectionProps) => {
 	const { classes } = useStyles()
@@ -89,16 +99,21 @@ export const FooterSection = ({ links, socialMedia }: FooterSectionProps) => {
 		</Link>
 	))
 
-	const socialLinks = socialMedia.map((service) => (
-		<ActionIcon key={service.key} component={Link} href={service.href} title={t(service.key)}>
-			<Icon
-				icon={service.icon}
-				height='1.5rem'
-				color={colors.inReachSecondaryRegular[5]}
-				style={{ lineHeight: '1rem' }}
-			/>
-		</ActionIcon>
-	))
+	const socialLinks = socialMedia.map((service) => {
+		const renderIcon = Object.keys(iconMap).includes(service.icon)
+			? iconMap[service.icon as keyof typeof iconMap]
+			: service.icon
+		return (
+			<ActionIcon key={service.key} component={Link} href={service.href} title={t(service.key)}>
+				<Icon
+					icon={renderIcon}
+					height='1.5rem'
+					color={colors.inReachSecondaryRegular[5]}
+					style={{ lineHeight: '1rem' }}
+				/>
+			</ActionIcon>
+		)
+	})
 
 	return (
 		<div className={classes.footer}>

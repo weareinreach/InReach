@@ -15,7 +15,7 @@ export const seedPermissions = async (task: ListrTask) => {
 		count++
 	}
 
-	const result = await prisma.permissionItem.createMany({
+	const result = await prisma.permission.createMany({
 		data: permissionData,
 		skipDuplicates: true,
 	})

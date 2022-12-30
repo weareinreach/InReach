@@ -1,4 +1,3 @@
-import userIcon from '@iconify/icons-fa6-solid/user'
 import { Icon } from '@iconify/react'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
@@ -22,6 +21,9 @@ import {
 const useStyles = createStyles((theme) => ({
 	menu: {
 		width: 250,
+	},
+	buttonGroup: {
+		width: 500,
 	},
 	buttons: {
 		[theme.fn.smallerThan('md')]: {
@@ -86,7 +88,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 										alt={session.user.name || t('user-avatar')}
 									/>
 								) : (
-									<Icon icon={userIcon} height={55} width={55} className={classes.avatar} />
+									<Icon icon='fa6-solid:user' className={classes.avatar} />
 								)}
 							</Avatar>
 							<Text weight={500} size='sm' sx={{ lineHeight: 1 }} mr={3}>
@@ -107,7 +109,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 		)
 	}
 	return (
-		<Group className={cx(classes.menu, className)}>
+		<Group className={cx(classes.buttonGroup, className)}>
 			<Button className={classes.buttons}>{t('sign-up')}</Button>
 			<Button variant='outline' className={classes.buttons}>
 				{t('log-in')}
