@@ -581,6 +581,7 @@ importers:
       '@emotion/server': 11.10.0
       '@faker-js/faker': 7.6.0
       '@geometricpanda/storybook-addon-badges': 0.2.2
+      '@iconify/react': 4.0.1
       '@mantine/carousel': 5.9.5
       '@mantine/core': 5.9.5
       '@mantine/dates': 5.9.5
@@ -646,7 +647,6 @@ importers:
       react: 18.2.0
       react-docgen-typescript: 2.2.2
       react-dom: 18.2.0
-      react-feather: 2.0.10
       react-i18next: 12.1.1
       resolve-url-loader: 5.0.0
       sb: 6.5.15
@@ -669,6 +669,7 @@ importers:
       '@emotion/server': 11.10.0
       '@faker-js/faker': 7.6.0
       '@geometricpanda/storybook-addon-badges': 0.2.2
+      '@iconify/react': 4.0.1_react@18.2.0
       '@mantine/carousel': 5.9.5_tt224433qisev6tpy33d7mk3wq
       '@mantine/core': 5.9.5_hzg3oku4uxnt5crkeceagoktyy
       '@mantine/dates': 5.9.5_q32zbbv6l2fjmvb2dpa2q3dhma
@@ -734,7 +735,6 @@ importers:
       react: 18.2.0
       react-docgen-typescript: 2.2.2_typescript@4.9.4
       react-dom: 18.2.0_react@18.2.0
-      react-feather: 2.0.10_react@18.2.0
       react-i18next: 12.1.1_6vygckh2jgtx4nucc3no6lnm3y
       resolve-url-loader: 5.0.0
       sb: 6.5.15_u7mmoyqfty2flmkfggora6dwra
@@ -3843,6 +3843,19 @@ packages:
 
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+
+  /@iconify/react/4.0.1_react@18.2.0:
+    resolution: {integrity: sha512-/DBJqh5K7W4f+d4kpvyJa/OTpVa3GfgrE9bZFAKP0vIWDr0cvVU9MVvbbkek216w9nLQhpJY/FeJtc6izB1PHw==}
+    peerDependencies:
+      react: '>=16 || >=18'
+    dependencies:
+      '@iconify/types': 2.0.0
+      react: 18.2.0
+    dev: true
+
+  /@iconify/types/2.0.0:
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
+    dev: true
 
   /@istanbuljs/load-nyc-config/1.1.0:
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
@@ -17764,15 +17777,6 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-is: 17.0.2
-    dev: true
-
-  /react-feather/2.0.10_react@18.2.0:
-    resolution: {integrity: sha512-BLhukwJ+Z92Nmdcs+EMw6dy1Z/VLiJTzEQACDUEnWMClhYnFykJCGWQx+NmwP/qQHGX/5CzQ+TGi8ofg2+HzVQ==}
-    peerDependencies:
-      react: '>=16.8.6 || >=18'
-    dependencies:
-      prop-types: 15.8.1
-      react: 18.2.0
     dev: true
 
   /react-i18next/12.1.1_6vygckh2jgtx4nucc3no6lnm3y:
