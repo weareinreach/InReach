@@ -20,11 +20,11 @@
 	},
 	"dependencies": {
 		"@weareinreach/db": "0.100.0",
-		"aws-sdk": "2.1278.0"
+		"aws-sdk": "2.1285.0"
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.109",
-		"@types/node": "16.18.10",
+		"@types/node": "16.18.11",
 		"@vercel/ncc": "0.36.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",

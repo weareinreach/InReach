@@ -1,5 +1,5 @@
-import { Icon } from '@iconify/react'
 import { useTranslation } from 'next-i18next'
+import { Facebook, Instagram, Linkedin, Mail, Twitter, Youtube } from 'react-feather'
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -68,10 +68,19 @@ export type FooterLink = {
 	icon?: string
 }
 export type SocialMediaLink = {
-	icon: string
+	icon: keyof typeof iconMap
 	key: string
 	href: string
 }
+
+const iconMap = {
+	facebook: Facebook,
+	twitter: Twitter,
+	linkedin: Linkedin,
+	email: Mail,
+	instagram: Instagram,
+	youtube: Youtube,
+} as const
 
 export const FooterSection = ({ links, socialMedia }: FooterSectionProps) => {
 	const { classes } = useStyles()
@@ -89,16 +98,14 @@ export const FooterSection = ({ links, socialMedia }: FooterSectionProps) => {
 		</Link>
 	))
 
-	const socialLinks = socialMedia.map((service) => (
-		<ActionIcon key={service.key} component={Link} href={service.href} title={t(service.key)}>
-			<Icon
-				icon={service.icon}
-				height='1.5rem'
-				color={colors.inReachSecondaryRegular[5]}
-				style={{ lineHeight: '1rem' }}
-			/>
-		</ActionIcon>
-	))
+	const socialLinks = socialMedia.map((service) => {
+		const Icon = iconMap[service.icon]
+		return (
+			<ActionIcon key={service.key} component={Link} href={service.href} title={t(service.key)}>
+				<Icon height='1.5rem' color={colors.inReachSecondaryRegular[5]} style={{ lineHeight: '1rem' }} />
+			</ActionIcon>
+		)
+	})
 
 	return (
 		<div className={classes.footer}>

@@ -1,5 +1,5 @@
-import { Icon } from '@iconify/react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Heart, Map, Sliders } from 'react-feather'
 
 import React from 'react'
 
@@ -53,19 +53,19 @@ LargePrimary.args = {
 	variant: 'lg-primary',
 	children: 'More sorting options',
 	// icon: 'lucide:sliders',
-	leftIcon: <Icon icon='lucide:sliders' />,
+	leftIcon: <Sliders />,
 }
 LargeSecondary.args = {
 	variant: 'lg-secondary',
 	children: 'Save',
 	// icon: 'fe:heart-o',
-	leftIcon: <Icon icon='fe:heart-o' />,
+	leftIcon: <Heart />,
 }
 LargeAccent.args = {
 	variant: 'lg-accent',
 	children: 'View map',
 	// icon: 'fe:map',
-	leftIcon: <Icon icon='fe:map' />,
+	leftIcon: <Map />,
 }
 // export const SafetyExitButton = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args

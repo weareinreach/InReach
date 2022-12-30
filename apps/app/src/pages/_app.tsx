@@ -7,10 +7,11 @@ import { appWithTranslation } from 'next-i18next'
 // import { GetServerSidePropsContext } from 'next'
 import type { AppProps } from 'next/app'
 
+import { MantineProvider } from '@mantine/core'
+import { ModalsProvider } from '@mantine/modals'
+import { NotificationsProvider } from '@mantine/notifications'
+
 import { AppLayout } from '@weareinreach/ui/layout'
-import { MantineProvider } from '@weareinreach/ui/mantine/core'
-import { ModalsProvider } from '@weareinreach/ui/mantine/modals'
-import { NotificationsProvider } from '@weareinreach/ui/mantine/notifications'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 
 import { default as navItems } from '~/data/nav.json'

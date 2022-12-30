@@ -19,5 +19,5 @@
 		"next-i18next": "13.0.2",
 		"typescript": "4.9.4"
 	},
-	"packageManager": "pnpm@7.18.2"
+	"packageManager": "pnpm@7.21.0"
 }
