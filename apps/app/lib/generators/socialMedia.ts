@@ -22,9 +22,9 @@ export const generateSocialMediaLinks = async (task: ListrTask) => {
 	for (const record of data) {
 		const {
 			href,
-			icon,
 			service: { name: key },
 		} = record
+		const icon = record.icon as SocialMediaLink['icon']
 		output.push({ key, href, icon })
 	}
 	logMessage = `socialMedia.json generated with ${output.length} items`
