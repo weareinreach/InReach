@@ -1,50 +1,74 @@
-import { Attribute } from '@prisma/client'
+import cuid from 'cuid'
 import slugify from 'slugify'
 
 import { Prisma } from '~/client'
 import { prisma } from '~/index'
 import { attributeData, namespaces } from '~/seed/data/'
+import { Log, iconList } from '~/seed/lib'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'
 
+type Data = {
+	category: Prisma.AttributeCategoryCreateManyInput[]
+	translate: Prisma.TranslationKeyCreateManyInput[]
+	attribute: Prisma.AttributeCreateManyInput[]
+	link: Prisma.AttributeToCategoryCreateManyInput[]
+}
 export const seedAttributes = async (task: ListrTask) => {
+	const log: Log = (message, icon?, indent = false) => {
+		const dispIcon = icon ? `${iconList(icon)} ` : ''
+		const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
+		logFile.info(formattedMessage)
+		task.output = formattedMessage
+	}
+	const existingCategories = await prisma.attributeCategory.findMany({
+		select: {
+			id: true,
+			tag: true,
+		},
+	})
+	const categoryMap = new Map<string, string>(existingCategories.map(({ tag, id }) => [tag, id]))
+
+	const existingAttributes = await prisma.attribute.findMany({ select: { id: true, name: true } })
+	const attributeMap = new Map<string, string>(existingAttributes.map(({ name, id }) => [name, id]))
+
 	try {
 		let x = 0
-		let y = 0
-		let logMessage = ''
+		const data: Data = {
+			category: [],
+			translate: [],
+			attribute: [],
+			link: [],
+		}
+		const ns = namespaces.attribute
+
 		for (const category of attributeData) {
-			logMessage = `(${x + 1}/${attributeData.length}) Upserting Attribute Category: ${category.name}`
-			logFile.log(logMessage)
-			task.output = logMessage
-			const { id: categoryId } = await prisma.attributeCategory.upsert({
-				where: {
+			log(`(${x + 1}/${attributeData.length}) Prepare Attribute Category: ${category.name}`, 'generate')
+
+			const catTag = slugify(category.name, { lower: true })
+			const categoryId = categoryMap.get(catTag) ?? cuid()
+
+			if (!categoryMap.has(catTag)) {
+				data.translate.push({
+					key: catTag,
+					ns,
+					text: category.name,
+				})
+				log(`[${catTag}] Generated translation key`, 'tlate', true)
+
+				data.category.push({
+					id: categoryId,
 					name: category.name,
-				},
-				create: {
-					name: category.name,
-					tag: slugify(category.name, { lower: true }),
+					tag: catTag,
+					ns,
 					intDesc: category.description,
-					namespace: {
-						connect: {
-							name: namespaces.attribute,
-						},
-					},
-				},
-				update: {
-					intDesc: category.description,
-					tag: slugify(category.name, { lower: true }),
-					namespace: {
-						connect: {
-							name: namespaces.attribute,
-						},
-					},
-				},
-				select: {
-					id: true,
-				},
-			})
+				})
+				log(`[${catTag}] Generated service definition`, 'generate', true)
+				categoryMap.set(catTag, categoryId)
+			} else {
+				log(`[${catTag}] SKIP Attribute category: record exists`, 'skip', true)
+			}
 			x++
-			const bulkTransactions: Prisma.Prisma__AttributeClient<Attribute>[] = []
 			let idx = 0
 			for (const record of category.attributes) {
 				const {
@@ -54,67 +78,71 @@ export const seedAttributes = async (task: ListrTask) => {
 					key: keyTag,
 					requireLanguage,
 					requireData,
+					requireText,
 				} = record
-				logMessage = `  [${idx + 1}/${category.attributes.length}] Upserting Attribute: ${name}`
-				logFile.log(logMessage)
-				task.output = logMessage
-				const key = slugify(`${category.namespace}-${keyTag}`, { lower: true })
-				y++
+				log(`[${idx + 1}/${category.attributes.length}] Prepare Attribute: ${name}`, 'generate', true)
+
 				idx++
-				const transaction = prisma.attribute.upsert({
-					where: {
+				const key = slugify(`${category.namespace}-${keyTag}`, { lower: true })
+				const attributeId = attributeMap.get(name) ?? cuid()
+
+				if (!attributeMap.has(name)) {
+					data.translate.push({
+						key,
+						ns,
+						text: name,
+					})
+					log(`[${key}] Generated translation key`, 'tlate', true)
+					const tag = slugify(keyTag, { lower: true })
+
+					data.attribute.push({
+						id: attributeId,
 						name,
-					},
-					create: {
-						name,
-						tag: slugify(keyTag, { lower: true }),
+						tag,
 						intDesc,
 						requireData,
 						requireCountry,
 						requireLanguage,
-						category: {
-							connect: {
-								id: categoryId,
-							},
-						},
-						key: {
-							create: {
-								key,
-								text: name,
-								namespace: {
-									connect: {
-										name: namespaces.attribute,
-									},
-								},
-							},
-						},
-					},
-					update: {
-						tag: slugify(keyTag, { lower: true }),
-						intDesc,
-						requireCountry,
-						requireLanguage,
-						requireData,
-						key: {
-							update: {
-								text: name,
-							},
-						},
-					},
-				})
-				bulkTransactions.push(transaction)
+						requireText,
+						tsKey: key,
+						tsNs: ns,
+					})
+
+					log(`[${tag}] Generated attribute definition`, 'generate', true)
+
+					data.link.push({
+						attributeId,
+						categoryId,
+					})
+					log(`[${tag}] Generated attribute to category link`, 'link', true)
+					attributeMap.set(name, attributeId)
+				} else {
+					log(`[${key}] SKIP attribute definition: record exists`, 'skip', true)
+				}
 			}
-
-			await prisma.$transaction(bulkTransactions)
-
-			logMessage = `(${x}/${attributeData.length}) Upserted Category: ${category.name} with ${bulkTransactions.length} attributes`
-			logFile.log(logMessage)
-			task.output = logMessage
 		}
-		logMessage = `Attribute Categories added: ${x} Attribute Records added: ${y}`
-		logFile.log(logMessage)
-		task.output = logMessage
-		task.title = `Attribute Categories & Tags (${x} categories, ${y} attributes)`
+		const translateResult = await prisma.translationKey.createMany({
+			data: data.translate,
+			skipDuplicates: true,
+		})
+		const categoryResult = await prisma.attributeCategory.createMany({
+			data: data.category,
+			skipDuplicates: true,
+		})
+		const attributeResult = await prisma.attribute.createMany({
+			data: data.attribute,
+			skipDuplicates: true,
+		})
+		const linkResult = await prisma.attributeToCategory.createMany({
+			data: data.link,
+			skipDuplicates: true,
+		})
+
+		log(`Attribute category records added: ${categoryResult.count}`, 'create')
+		log(`Attribute records added: ${attributeResult.count}`, 'create')
+		log(`Translation keys added: ${translateResult.count}`, 'create')
+		log(`Attribute to Category links added: ${linkResult.count}`, 'create')
+		task.title = `Attribute Categories & Tags (${categoryResult.count} categories, ${attributeResult.count} attributes, ${translateResult.count} translation keys, ${linkResult.count} links)`
 	} catch (err) {
 		throw err
 	}

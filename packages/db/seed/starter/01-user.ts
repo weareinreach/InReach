@@ -2,29 +2,24 @@ import { Prisma } from '@prisma/client'
 import slugify from 'slugify'
 
 import { prisma } from '~/index'
-import { namespaceGen, namespaces } from '~/seed/data'
+import { genSeedUser, namespaceGen, namespaces, userRoleMap, userTypeMap } from '~/seed/data'
+import { Log, iconList } from '~/seed/lib'
 import { ListrTask } from '~/seed/starterData'
 
-import { seedUser, userEmail, userRoleList } from '../data'
+import { userRoleList } from '../data'
 import { logFile } from '../logger'
 
 export const seedSystemUser = async (task: ListrTask) => {
 	try {
 		// create user if it does not exist.
-		await prisma.user.upsert({
-			where: {
-				email: userEmail,
-			},
-			update: seedUser,
-			create: seedUser,
-			select: {
-				id: true,
-			},
-		})
-		const logMessage = `System user created`
+		const data = genSeedUser()
+
+		const result = await prisma.user.createMany({ data, skipDuplicates: true })
+
+		const logMessage = result.count === 1 ? `System user created` : `System user already exists`
 		logFile.info(logMessage)
 		task.output = logMessage
-		task.title = `System user (1 record)`
+		task.title = `System user (${result.count} ${result.count === 1 ? 'record' : 'records'})`
 	} catch (err) {
 		logFile.error(err)
 		throw err
@@ -32,103 +27,110 @@ export const seedSystemUser = async (task: ListrTask) => {
 }
 
 export const seedTranslationNamespaces = async (task: ListrTask) => {
-	let logMessage = ``
+	const log: Log = (message, icon?) => {
+		const dispIcon = icon ? `${iconList(icon)} ` : ''
+		const formattedMessage = `${dispIcon}${message}`
+		logFile.info(formattedMessage)
+		task.output = formattedMessage
+	}
 	let countA = 1
 	const totalLength = Object.keys(namespaces).length
-
 	const data: Prisma.TranslationNamespaceCreateManyInput[] = []
-	for (const item in namespaces) {
+	const namespaceItems = [...new Set<string>(Object.values(namespaces))]
+	for (const item of namespaceItems) {
 		const exportFile = namespaceGen[item] ?? true
-		logMessage = `(${countA}/${totalLength}) Preparing Translation Namespace Record '${namespaces[item]}' (export: ${exportFile})`
-		logFile.info(logMessage)
-		task.output = logMessage
+		log(
+			`(${countA}/${totalLength}) Preparing Translation Namespace Record '${item}' (export: ${exportFile})`,
+			'generate'
+		)
 		data.push({
-			name: namespaces[item],
+			name: item,
 			exportFile,
 		})
 		countA++
 	}
 
 	const namespaceData = await prisma.translationNamespace.createMany({ data, skipDuplicates: true })
-	logMessage = `Total Translation Namespace records inserted: ${namespaceData.count}`
-	logFile.info(logMessage)
-	task.output = logMessage
+	log(`Total Translation Namespace records inserted: ${namespaceData.count}`, 'create')
 	task.title = `Translation Namespaces (${namespaceData.count} ${
 		namespaceData.count === 1 ? 'record' : 'records'
 	})`
 }
 
+type UserTypeData = {
+	translate: Prisma.TranslationKeyCreateManyInput[]
+	userType: Prisma.UserTypeCreateManyInput[]
+}
 export const seedUserTypes = async (task: ListrTask) => {
-	let logMessage = ``
-	let countA = 1
+	const log: Log = (message, icon?) => {
+		const dispIcon = icon ? `${iconList(icon)} ` : ''
+		const formattedMessage = `${dispIcon}${message}`
+		logFile.info(formattedMessage)
+		task.output = formattedMessage
+	}
+	const key = (str: string) => slugify(`type-${str}`)
+	const ns = namespaces.user
 
-	const bulkTransactions = userRoleList.map((role) => {
-		logMessage = `(${countA}/${userRoleList.length}) Upserting User Type: ${role.name}`
-		logFile.info(logMessage)
-		task.output = logMessage
-		countA++
-		return prisma.userType.upsert({
-			where: {
-				type: role.type,
-			},
-			create: {
-				type: role.type,
-				key: {
-					create: {
-						key: role.type,
-						text: role.name,
+	const data: UserTypeData = {
+		translate: [],
+		userType: [],
+	}
+	let countA = 0
+	for (const record of userRoleList) {
+		log(`(${countA}/${userRoleList.length}) Preparing User Type record: ${record.name}`, 'generate')
 
-						namespace: {
-							connect: {
-								name: namespaces.user,
-							},
-						},
-					},
-				},
-			},
-			update: {},
+		const tsKey = key(record.type)
+		data.translate.push({
+			key: tsKey,
+			ns,
+			text: record.name,
 		})
-	})
 
-	await prisma.$transaction(bulkTransactions)
-	// userTypes.map((transaction) => {
-	// 	logMessage = `(${countA}/${userTypes.length}) Upserting User Type: ${transaction.create.key?.create?.text}`
-	// 	logFile.info(logMessage)
-	// 	task.output = logMessage
-	// 	countA++
-	// 	return prisma.userType.upsert(transaction)
-	// })
-	task.title = `User Types (${userRoleList.length} records)`
+		data.userType.push({
+			tsKey,
+			tsNs: ns,
+			type: record.type,
+		})
+
+		countA++
+	}
+
+	const translateResult = await prisma.translationKey.createMany({
+		data: data.translate,
+		skipDuplicates: true,
+	})
+	const result = await prisma.userType.createMany({ data: data.userType, skipDuplicates: true })
+
+	log(`User Type translation key keys created: ${translateResult.count}`, 'create')
+	log(`User Type records created: ${result.count}`)
+
+	const userTypes = await prisma.userType.findMany({ select: { id: true, tsKey: true } })
+
+	userTypes.forEach(({ id, tsKey }) => userTypeMap.set(tsKey, id))
+	task.title = `User Types (${result.count} records)`
 }
 export const seedUserRoles = async (task: ListrTask) => {
-	let logMessage = ``
+	const log: Log = (message, icon?) => {
+		const dispIcon = icon ? `${iconList(icon)} ` : ''
+		const formattedMessage = `${dispIcon}${message}`
+		logFile.info(formattedMessage)
+		task.output = formattedMessage
+	}
 	let countA = 1
-	const bulkTransactions = userRoleList.map((role) => {
-		logMessage = `(${countA}/${userRoleList.length}) Upserting User Role: ${role.name}`
-		logFile.info(logMessage)
-		task.output = logMessage
+	const data: Prisma.UserRoleCreateManyInput[] = userRoleList.map((role) => {
+		const { name } = role
+		const tag = slugify(name, { lower: true })
+		log(`(${countA}/${userRoleList.length}) Preparing User Role record: ${role.name}`, 'generate')
 		countA++
 
-		return prisma.userRole.upsert({
-			where: {
-				name: role.name,
-			},
-			create: {
-				name: role.name,
-				tag: slugify(role.name),
-			},
-			update: {},
-		})
+		return {
+			name,
+			tag,
+		}
 	})
 
-	// userRoles.map((transaction) => {
-	// 	logMessage = `(${countA}/${userRoles.length}) Upserting User Role: ${transaction.create.name}`
-	// 	logFile.info(logMessage)
-	// 	task.output = logMessage
-	// 	countA++
-	// 	return prisma.userRole.upsert(transaction)
-	// })
-
-	await prisma.$transaction(bulkTransactions)
-	task.title = `User Roles (${userRoleList.length} records)`
+	const result = await prisma.userRole.createMany({ data, skipDuplicates: true })
+	const roles = await prisma.userRole.findMany({ select: { id: true, tag: true } })
+	roles.forEach(({ id, tag }) => userRoleMap.set(tag, id))
+	task.title = `User Roles (${result.count} records)`
 }
