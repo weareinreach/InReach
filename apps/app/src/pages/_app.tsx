@@ -1,4 +1,4 @@
-import { Inter } from '@next/font/google'
+import { Work_Sans } from '@next/font/google'
 import type { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { appWithTranslation } from 'next-i18next'
@@ -18,7 +18,7 @@ import { default as navItems } from '~/data/nav.json'
 import { default as socialMediaLinks } from '~/data/socialMedia.json'
 import { trpc } from '~/utils/trpc'
 
-const fontInter = Inter({ subsets: ['latin'] })
+const fontWorkSans = Work_Sans({ subsets: ['latin'] })
 
 const MyApp = (appProps: AppProps<{ session: Session }>) => {
 	const {
@@ -29,7 +29,7 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 		<MantineProvider
 			withGlobalStyles
 			withNormalizeCSS
-			theme={{ ...appTheme, fontFamily: fontInter.style.fontFamily }}
+			theme={{ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }}
 			emotionCache={appCache}
 		>
 			<SessionProvider session={session}>
