@@ -14,10 +14,8 @@ export const commonTheme: MantineThemeOverride = {
 		/** Font weights per InReach style guide */
 		fontWeight: {
 			regular: 400,
-			button: 500,
-			semibold: 600,
-			bold: 700,
-			extrabold: 800,
+			semibold: 500,
+			bold: 600,
 		},
 		border: {
 			default: '1px solid',
@@ -37,11 +35,11 @@ export const commonTheme: MantineThemeOverride = {
 		},
 	},
 	globalStyles: (theme) => ({
-		a: {
-			fontWeight: theme.other.fontWeight.semibold,
-			color: theme.colors.inReachSecondaryRegular[5],
-			textDecoration: 'none',
-		},
+		// a: {
+		// 	fontWeight: theme.other.fontWeight.semibold,
+		// 	color: theme.colors.inReachSecondaryRegular[5],
+		// 	textDecoration: 'none',
+		// },
 	}),
 	components: {
 		ActionIcon: {
@@ -81,7 +79,7 @@ export const commonTheme: MantineThemeOverride = {
 					},
 					label: {
 						fontSize: theme.spacing.md,
-						fontWeight: theme.other.fontWeight.button,
+						fontWeight: theme.other.fontWeight.semibold,
 						height: 'auto',
 						width: 'auto',
 						lineHeight: `${theme.spacing.lg}px`,
@@ -100,10 +98,8 @@ declare module '@mantine/core' {
 		/** Font weights per InReach Style Guide */
 		fontWeight: {
 			regular: 400
-			button: 500
-			semibold: 600
-			bold: 700
-			extrabold: 800
+			semibold: 500
+			bold: 600
 		}
 		border: {
 			default: '1px solid'
