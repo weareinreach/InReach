@@ -451,7 +451,7 @@ importers:
       prisma: 4.8.1
       prisma-dbml-generator: 0.10.0
       prisma-docs-generator: 0.5.0
-      quicktype-core: 6.1.12
+      quicktype-core: 7.0.2
       recursive-readdir: 2.2.3
       shoetest: 1.2.1
       slugify: 1.6.5
@@ -509,7 +509,7 @@ importers:
       prisma: 4.8.1
       prisma-dbml-generator: 0.10.0
       prisma-docs-generator: 0.5.0
-      quicktype-core: 6.1.12
+      quicktype-core: 7.0.2
       recursive-readdir: 2.2.3
       shoetest: 1.2.1
       slugify: 1.6.5
@@ -17537,8 +17537,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /quicktype-core/6.1.12:
-    resolution: {integrity: sha512-pBV0VbYZEKIG49xaKGHCat6zlUbg1w15fDf3rnbV2IbG3Ec3T7e46V/dIgL+OGWFphjEZ6n7dcWZiogOk9Adtg==}
+  /quicktype-core/7.0.2:
+    resolution: {integrity: sha512-JGVYzgr7H5SmV+UcmhVpiFTvFFxPEOCoBm2014GFPO1vXFQfRqwKIM1iBGIuySMSrQAbFHBr7xOtF73lVgNn8w==}
     dependencies:
       '@mark.probst/unicode-properties': 1.1.0
       browser-or-node: 1.3.0
