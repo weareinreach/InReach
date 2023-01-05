@@ -24,7 +24,13 @@ jobs:
           regex: IN-\d+
           flags: gi
           replacement: IN-xxx
-
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@111c56156bcc6918c056dbef52164cfa583dc549 # v5
+        with:
+          gpg_private_key: ${{ secrets.BOT_GPG_KEY }}
+          git_config_global: true
+          git_commit_gpgsign: true
       - name: crowdin action
         uses: crowdin/github-action@6db87d404b6a13cd118070f9af29957aa47ee1f3 # 1.5.2
         env:
