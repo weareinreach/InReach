@@ -27,7 +27,7 @@
 		"type-check": "turbo type-check"
 	},
 	"dependencies": {
-		"@badeball/cypress-cucumber-preprocessor": "14.0.0",
+		"@badeball/cypress-cucumber-preprocessor": "15.0.0",
 		"@changesets/cli": "2.26.0",
 		"@manypkg/cli": "0.19.2",
 		"@next/eslint-plugin-next": "13.1.1",
