@@ -1,0 +1,33 @@
+{
+	"name": "@weareinreach/i18next-crowdin-backend",
+	"version": "0.100.0",
+	"private": true,
+	"description": "i18next backend utilizing the Crowdin OTA client",
+	"keywords": [],
+	"license": "GPL-3.0-only",
+	"main": "index.ts",
+	"scripts": {
+		"format": "prettier --write --cache --cache-strategy metadata .",
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix .",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"type-check": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@crowdin/crowdin-api-client": "1.20.1",
+		"@crowdin/ota-client": "0.7.0"
+	},
+	"devDependencies": {
+		"@weareinreach/config": "0.100.0",
+		"@weareinreach/eslint-config": "0.100.0",
+		"eslint": "8.30.0",
+		"eslint-import-resolver-typescript": "3.5.2",
+		"eslint-plugin-codegen": "0.16.1",
+		"eslint-plugin-import": "2.26.0",
+		"eslint-plugin-prettier": "4.2.1",
+		"eslint-plugin-simple-import-sort": "8.0.0",
+		"eslint-plugin-turbo": "0.0.7",
+		"i18next": "22.4.6",
+		"typescript": "4.9.4"
+	}
+}
