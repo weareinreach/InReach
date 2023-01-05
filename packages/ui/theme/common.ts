@@ -35,11 +35,11 @@ export const commonTheme: MantineThemeOverride = {
 		},
 	},
 	globalStyles: (theme) => ({
-		a: {
-			fontWeight: theme.other.fontWeight.semibold,
-			color: theme.colors.inReachSecondaryRegular[5],
-			textDecoration: 'none',
-		},
+		// a: {
+		// 	fontWeight: theme.other.fontWeight.semibold,
+		// 	color: theme.colors.inReachSecondaryRegular[5],
+		// 	textDecoration: 'none',
+		// },
 	}),
 	components: {
 		ActionIcon: {
@@ -119,5 +119,3 @@ declare module '@mantine/core' {
 		}
 	}
 }
-type ColorOtherName = 'primary' | 'secondary' | 'tertiary'
-type ColorOther = Record<ColorOtherName, `#${string}`>
