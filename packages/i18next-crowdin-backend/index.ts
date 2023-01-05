@@ -5,11 +5,17 @@ export class CrowdinOta implements BackendModule<BackendOptions> {
 	type: 'backend'
 	otaClient: otaClient
 	init(services: Services, backendOptions: BackendOptions, i18nextOptions: InitOptions<object>): void {
-		return
+		if (!backendOptions.hash) throw new Error('Missing Crowdin hash value')
 	}
-	constructor(hash: string) {
+	constructor(
+		hash: string,
+		services: Services,
+		backendOptions: BackendOptions,
+		i18nextOptions: InitOptions<object>
+	) {
 		this.type = 'backend'
 		this.otaClient = new otaClient(hash)
+		this.init(services, backendOptions, i18nextOptions)
 	}
 
 	read(language: string, namespace: string, callback: ReadCallback) {
