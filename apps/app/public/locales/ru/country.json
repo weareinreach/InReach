@@ -1,0 +1,1736 @@
+{
+  "ABW": {
+    "name": "Aruba",
+    "demonym_one": "Aruban",
+    "demonym_few": "Arubans",
+    "demonym_many": "Arubans",
+    "demonym_other": "Arubans"
+  },
+  "AFG": {
+    "name": "Afghanistan",
+    "demonym_one": "Afghan",
+    "demonym_few": "Afghans",
+    "demonym_many": "Afghans",
+    "demonym_other": "Afghans"
+  },
+  "AGO": {
+    "name": "Angola",
+    "demonym_one": "Angolan",
+    "demonym_few": "Angolans",
+    "demonym_many": "Angolans",
+    "demonym_other": "Angolans"
+  },
+  "AIA": {
+    "name": "Anguilla",
+    "demonym_one": "Anguillian",
+    "demonym_few": "Anguillians",
+    "demonym_many": "Anguillians",
+    "demonym_other": "Anguillians"
+  },
+  "ALA": {
+    "name": "Åland Islands",
+    "demonym_one": "Ålandish",
+    "demonym_few": "Ålandishs",
+    "demonym_many": "Ålandishs",
+    "demonym_other": "Ålandishs"
+  },
+  "ALB": {
+    "name": "Albania",
+    "demonym_one": "Albanian",
+    "demonym_few": "Albanians",
+    "demonym_many": "Albanians",
+    "demonym_other": "Albanians"
+  },
+  "AND": {
+    "name": "Andorra",
+    "demonym_one": "Andorran",
+    "demonym_few": "Andorrans",
+    "demonym_many": "Andorrans",
+    "demonym_other": "Andorrans"
+  },
+  "ARE": {
+    "name": "United Arab Emirates",
+    "demonym_one": "Emirati",
+    "demonym_few": "Emiratis",
+    "demonym_many": "Emiratis",
+    "demonym_other": "Emiratis"
+  },
+  "ARG": {
+    "name": "Argentina",
+    "demonym_one": "Argentinean",
+    "demonym_few": "Argentineans",
+    "demonym_many": "Argentineans",
+    "demonym_other": "Argentineans"
+  },
+  "ARM": {
+    "name": "Armenia",
+    "demonym_one": "Armenian",
+    "demonym_few": "Armenians",
+    "demonym_many": "Armenians",
+    "demonym_other": "Armenians"
+  },
+  "ASM": {
+    "name": "American Samoa",
+    "demonym_one": "American Samoan",
+    "demonym_few": "American Samoans",
+    "demonym_many": "American Samoans",
+    "demonym_other": "American Samoans"
+  },
+  "ATA": {
+    "name": "Antarctica",
+    "demonym_one": "Antarctican",
+    "demonym_few": "Antarcticans",
+    "demonym_many": "Antarcticans",
+    "demonym_other": "Antarcticans"
+  },
+  "ATF": {
+    "name": "French Southern and Antarctic Lands",
+    "demonym_one": "French",
+    "demonym_few": "Frenchs",
+    "demonym_many": "Frenchs",
+    "demonym_other": "Frenchs"
+  },
+  "ATG": {
+    "name": "Antigua and Barbuda",
+    "demonym_one": "Antiguan, Barbudan",
+    "demonym_few": "Antiguan, Barbudans",
+    "demonym_many": "Antiguan, Barbudans",
+    "demonym_other": "Antiguan, Barbudans"
+  },
+  "AUS": {
+    "name": "Australia",
+    "demonym_one": "Australian",
+    "demonym_few": "Australians",
+    "demonym_many": "Australians",
+    "demonym_other": "Australians"
+  },
+  "AUT": {
+    "name": "Austria",
+    "demonym_one": "Austrian",
+    "demonym_few": "Austrians",
+    "demonym_many": "Austrians",
+    "demonym_other": "Austrians"
+  },
+  "AZE": {
+    "name": "Azerbaijan",
+    "demonym_one": "Azerbaijani",
+    "demonym_few": "Azerbaijanis",
+    "demonym_many": "Azerbaijanis",
+    "demonym_other": "Azerbaijanis"
+  },
+  "BDI": {
+    "name": "Burundi",
+    "demonym_one": "Burundian",
+    "demonym_few": "Burundians",
+    "demonym_many": "Burundians",
+    "demonym_other": "Burundians"
+  },
+  "BEL": {
+    "name": "Belgium",
+    "demonym_one": "Belgian",
+    "demonym_few": "Belgians",
+    "demonym_many": "Belgians",
+    "demonym_other": "Belgians"
+  },
+  "BEN": {
+    "name": "Benin",
+    "demonym_one": "Beninese",
+    "demonym_few": "Benineses",
+    "demonym_many": "Benineses",
+    "demonym_other": "Benineses"
+  },
+  "BES": {
+    "name": "Caribbean Netherlands"
+  },
+  "BFA": {
+    "name": "Burkina Faso",
+    "demonym_one": "Burkinabe",
+    "demonym_few": "Burkinabes",
+    "demonym_many": "Burkinabes",
+    "demonym_other": "Burkinabes"
+  },
+  "BGD": {
+    "name": "Bangladesh",
+    "demonym_one": "Bangladeshi",
+    "demonym_few": "Bangladeshis",
+    "demonym_many": "Bangladeshis",
+    "demonym_other": "Bangladeshis"
+  },
+  "BGR": {
+    "name": "Bulgaria",
+    "demonym_one": "Bulgarian",
+    "demonym_few": "Bulgarians",
+    "demonym_many": "Bulgarians",
+    "demonym_other": "Bulgarians"
+  },
+  "BHR": {
+    "name": "Bahrain",
+    "demonym_one": "Bahraini",
+    "demonym_few": "Bahrainis",
+    "demonym_many": "Bahrainis",
+    "demonym_other": "Bahrainis"
+  },
+  "BHS": {
+    "name": "Bahamas",
+    "demonym_one": "Bahamian",
+    "demonym_few": "Bahamians",
+    "demonym_many": "Bahamians",
+    "demonym_other": "Bahamians"
+  },
+  "BIH": {
+    "name": "Bosnia and Herzegovina",
+    "demonym_one": "Bosnian, Herzegovinian",
+    "demonym_few": "Bosnian, Herzegovinians",
+    "demonym_many": "Bosnian, Herzegovinians",
+    "demonym_other": "Bosnian, Herzegovinians"
+  },
+  "BLM": {
+    "name": "Saint Barthélemy",
+    "demonym_one": "Saint Barthélemy Islander",
+    "demonym_few": "Saint Barthélemy Islanders",
+    "demonym_many": "Saint Barthélemy Islanders",
+    "demonym_other": "Saint Barthélemy Islanders"
+  },
+  "BLR": {
+    "name": "Belarus",
+    "demonym_one": "Belarusian",
+    "demonym_few": "Belarusians",
+    "demonym_many": "Belarusians",
+    "demonym_other": "Belarusians"
+  },
+  "BLZ": {
+    "name": "Belize",
+    "demonym_one": "Belizean",
+    "demonym_few": "Belizeans",
+    "demonym_many": "Belizeans",
+    "demonym_other": "Belizeans"
+  },
+  "BMU": {
+    "name": "Bermuda",
+    "demonym_one": "Bermudian",
+    "demonym_few": "Bermudians",
+    "demonym_many": "Bermudians",
+    "demonym_other": "Bermudians"
+  },
+  "BOL": {
+    "name": "Bolivia",
+    "demonym_one": "Bolivian",
+    "demonym_few": "Bolivians",
+    "demonym_many": "Bolivians",
+    "demonym_other": "Bolivians"
+  },
+  "BRA": {
+    "name": "Brazil",
+    "demonym_one": "Brazilian",
+    "demonym_few": "Brazilians",
+    "demonym_many": "Brazilians",
+    "demonym_other": "Brazilians"
+  },
+  "BRB": {
+    "name": "Barbados",
+    "demonym_one": "Barbadian",
+    "demonym_few": "Barbadians",
+    "demonym_many": "Barbadians",
+    "demonym_other": "Barbadians"
+  },
+  "BRN": {
+    "name": "Brunei",
+    "demonym_one": "Bruneian",
+    "demonym_few": "Bruneians",
+    "demonym_many": "Bruneians",
+    "demonym_other": "Bruneians"
+  },
+  "BTN": {
+    "name": "Bhutan",
+    "demonym_one": "Bhutanese",
+    "demonym_few": "Bhutaneses",
+    "demonym_many": "Bhutaneses",
+    "demonym_other": "Bhutaneses"
+  },
+  "BVT": {
+    "name": "Bouvet Island"
+  },
+  "BWA": {
+    "name": "Botswana",
+    "demonym_one": "Motswana",
+    "demonym_few": "Motswanas",
+    "demonym_many": "Motswanas",
+    "demonym_other": "Motswanas"
+  },
+  "CAF": {
+    "name": "Central African Republic",
+    "demonym_one": "Central African",
+    "demonym_few": "Central Africans",
+    "demonym_many": "Central Africans",
+    "demonym_other": "Central Africans"
+  },
+  "CAN": {
+    "name": "Canada",
+    "demonym_one": "Canadian",
+    "demonym_few": "Canadians",
+    "demonym_many": "Canadians",
+    "demonym_other": "Canadians"
+  },
+  "CCK": {
+    "name": "Cocos (Keeling) Islands",
+    "demonym_one": "Cocos Islander",
+    "demonym_few": "Cocos Islanders",
+    "demonym_many": "Cocos Islanders",
+    "demonym_other": "Cocos Islanders"
+  },
+  "CHE": {
+    "name": "Switzerland",
+    "demonym_one": "Swiss",
+    "demonym_few": "Swisss",
+    "demonym_many": "Swisss",
+    "demonym_other": "Swisss"
+  },
+  "CHL": {
+    "name": "Chile",
+    "demonym_one": "Chilean",
+    "demonym_few": "Chileans",
+    "demonym_many": "Chileans",
+    "demonym_other": "Chileans"
+  },
+  "CHN": {
+    "name": "China",
+    "demonym_one": "Chinese",
+    "demonym_few": "Chineses",
+    "demonym_many": "Chineses",
+    "demonym_other": "Chineses"
+  },
+  "CIV": {
+    "name": "Ivory Coast",
+    "demonym_one": "Ivorian",
+    "demonym_few": "Ivorians",
+    "demonym_many": "Ivorians",
+    "demonym_other": "Ivorians"
+  },
+  "CMR": {
+    "name": "Cameroon",
+    "demonym_one": "Cameroonian",
+    "demonym_few": "Cameroonians",
+    "demonym_many": "Cameroonians",
+    "demonym_other": "Cameroonians"
+  },
+  "COD": {
+    "name": "DR Congo",
+    "demonym_one": "Congolese",
+    "demonym_few": "Congoleses",
+    "demonym_many": "Congoleses",
+    "demonym_other": "Congoleses"
+  },
+  "COG": {
+    "name": "Republic of the Congo",
+    "demonym_one": "Congolese",
+    "demonym_few": "Congoleses",
+    "demonym_many": "Congoleses",
+    "demonym_other": "Congoleses"
+  },
+  "COK": {
+    "name": "Cook Islands",
+    "demonym_one": "Cook Islander",
+    "demonym_few": "Cook Islanders",
+    "demonym_many": "Cook Islanders",
+    "demonym_other": "Cook Islanders"
+  },
+  "COL": {
+    "name": "Colombia",
+    "demonym_one": "Colombian",
+    "demonym_few": "Colombians",
+    "demonym_many": "Colombians",
+    "demonym_other": "Colombians"
+  },
+  "COM": {
+    "name": "Comoros",
+    "demonym_one": "Comoran",
+    "demonym_few": "Comorans",
+    "demonym_many": "Comorans",
+    "demonym_other": "Comorans"
+  },
+  "CPV": {
+    "name": "Cape Verde",
+    "demonym_one": "Cape Verdian",
+    "demonym_few": "Cape Verdians",
+    "demonym_many": "Cape Verdians",
+    "demonym_other": "Cape Verdians"
+  },
+  "CRI": {
+    "name": "Costa Rica",
+    "demonym_one": "Costa Rican",
+    "demonym_few": "Costa Ricans",
+    "demonym_many": "Costa Ricans",
+    "demonym_other": "Costa Ricans"
+  },
+  "CUB": {
+    "name": "Cuba",
+    "demonym_one": "Cuban",
+    "demonym_few": "Cubans",
+    "demonym_many": "Cubans",
+    "demonym_other": "Cubans"
+  },
+  "CUW": {
+    "name": "Curaçao",
+    "demonym_one": "Dutch",
+    "demonym_few": "Dutchs",
+    "demonym_many": "Dutchs",
+    "demonym_other": "Dutchs"
+  },
+  "CXR": {
+    "name": "Christmas Island",
+    "demonym_one": "Christmas Island",
+    "demonym_few": "Christmas Islands",
+    "demonym_many": "Christmas Islands",
+    "demonym_other": "Christmas Islands"
+  },
+  "CYM": {
+    "name": "Cayman Islands",
+    "demonym_one": "Caymanian",
+    "demonym_few": "Caymanians",
+    "demonym_many": "Caymanians",
+    "demonym_other": "Caymanians"
+  },
+  "CYP": {
+    "name": "Cyprus",
+    "demonym_one": "Cypriot",
+    "demonym_few": "Cypriots",
+    "demonym_many": "Cypriots",
+    "demonym_other": "Cypriots"
+  },
+  "CZE": {
+    "name": "Czechia",
+    "demonym_one": "Czech",
+    "demonym_few": "Czechs",
+    "demonym_many": "Czechs",
+    "demonym_other": "Czechs"
+  },
+  "DEU": {
+    "name": "Germany",
+    "demonym_one": "German",
+    "demonym_few": "Germans",
+    "demonym_many": "Germans",
+    "demonym_other": "Germans"
+  },
+  "DJI": {
+    "name": "Djibouti",
+    "demonym_one": "Djibouti",
+    "demonym_few": "Djiboutis",
+    "demonym_many": "Djiboutis",
+    "demonym_other": "Djiboutis"
+  },
+  "DMA": {
+    "name": "Dominica",
+    "demonym_one": "Dominican",
+    "demonym_few": "Dominicans",
+    "demonym_many": "Dominicans",
+    "demonym_other": "Dominicans"
+  },
+  "DNK": {
+    "name": "Denmark",
+    "demonym_one": "Danish",
+    "demonym_few": "Danishs",
+    "demonym_many": "Danishs",
+    "demonym_other": "Danishs"
+  },
+  "DOM": {
+    "name": "Dominican Republic",
+    "demonym_one": "Dominican",
+    "demonym_few": "Dominicans",
+    "demonym_many": "Dominicans",
+    "demonym_other": "Dominicans"
+  },
+  "DZA": {
+    "name": "Algeria",
+    "demonym_one": "Algerian",
+    "demonym_few": "Algerians",
+    "demonym_many": "Algerians",
+    "demonym_other": "Algerians"
+  },
+  "ECU": {
+    "name": "Ecuador",
+    "demonym_one": "Ecuadorean",
+    "demonym_few": "Ecuadoreans",
+    "demonym_many": "Ecuadoreans",
+    "demonym_other": "Ecuadoreans"
+  },
+  "EGY": {
+    "name": "Egypt",
+    "demonym_one": "Egyptian",
+    "demonym_few": "Egyptians",
+    "demonym_many": "Egyptians",
+    "demonym_other": "Egyptians"
+  },
+  "ERI": {
+    "name": "Eritrea",
+    "demonym_one": "Eritrean",
+    "demonym_few": "Eritreans",
+    "demonym_many": "Eritreans",
+    "demonym_other": "Eritreans"
+  },
+  "ESH": {
+    "name": "Western Sahara",
+    "demonym_one": "Sahrawi",
+    "demonym_few": "Sahrawis",
+    "demonym_many": "Sahrawis",
+    "demonym_other": "Sahrawis"
+  },
+  "ESP": {
+    "name": "Spain",
+    "demonym_one": "Spanish",
+    "demonym_few": "Spanishs",
+    "demonym_many": "Spanishs",
+    "demonym_other": "Spanishs"
+  },
+  "EST": {
+    "name": "Estonia",
+    "demonym_one": "Estonian",
+    "demonym_few": "Estonians",
+    "demonym_many": "Estonians",
+    "demonym_other": "Estonians"
+  },
+  "ETH": {
+    "name": "Ethiopia",
+    "demonym_one": "Ethiopian",
+    "demonym_few": "Ethiopians",
+    "demonym_many": "Ethiopians",
+    "demonym_other": "Ethiopians"
+  },
+  "FIN": {
+    "name": "Finland",
+    "demonym_one": "Finnish",
+    "demonym_few": "Finnishs",
+    "demonym_many": "Finnishs",
+    "demonym_other": "Finnishs"
+  },
+  "FJI": {
+    "name": "Fiji",
+    "demonym_one": "Fijian",
+    "demonym_few": "Fijians",
+    "demonym_many": "Fijians",
+    "demonym_other": "Fijians"
+  },
+  "FLK": {
+    "name": "Falkland Islands",
+    "demonym_one": "Falkland Islander",
+    "demonym_few": "Falkland Islanders",
+    "demonym_many": "Falkland Islanders",
+    "demonym_other": "Falkland Islanders"
+  },
+  "FRA": {
+    "name": "France",
+    "demonym_one": "French",
+    "demonym_few": "Frenchs",
+    "demonym_many": "Frenchs",
+    "demonym_other": "Frenchs"
+  },
+  "FRO": {
+    "name": "Faroe Islands",
+    "demonym_one": "Faroese",
+    "demonym_few": "Faroeses",
+    "demonym_many": "Faroeses",
+    "demonym_other": "Faroeses"
+  },
+  "FSM": {
+    "name": "Micronesia",
+    "demonym_one": "Micronesian",
+    "demonym_few": "Micronesians",
+    "demonym_many": "Micronesians",
+    "demonym_other": "Micronesians"
+  },
+  "GAB": {
+    "name": "Gabon",
+    "demonym_one": "Gabonese",
+    "demonym_few": "Gaboneses",
+    "demonym_many": "Gaboneses",
+    "demonym_other": "Gaboneses"
+  },
+  "GBR": {
+    "name": "United Kingdom",
+    "demonym_one": "British",
+    "demonym_few": "Britishs",
+    "demonym_many": "Britishs",
+    "demonym_other": "Britishs"
+  },
+  "GEO": {
+    "name": "Georgia",
+    "demonym_one": "Georgian",
+    "demonym_few": "Georgians",
+    "demonym_many": "Georgians",
+    "demonym_other": "Georgians"
+  },
+  "GGY": {
+    "name": "Guernsey",
+    "demonym_one": "Channel Islander",
+    "demonym_few": "Channel Islanders",
+    "demonym_many": "Channel Islanders",
+    "demonym_other": "Channel Islanders"
+  },
+  "GHA": {
+    "name": "Ghana",
+    "demonym_one": "Ghanaian",
+    "demonym_few": "Ghanaians",
+    "demonym_many": "Ghanaians",
+    "demonym_other": "Ghanaians"
+  },
+  "GIB": {
+    "name": "Gibraltar",
+    "demonym_one": "Gibraltar",
+    "demonym_few": "Gibraltars",
+    "demonym_many": "Gibraltars",
+    "demonym_other": "Gibraltars"
+  },
+  "GIN": {
+    "name": "Guinea",
+    "demonym_one": "Guinean",
+    "demonym_few": "Guineans",
+    "demonym_many": "Guineans",
+    "demonym_other": "Guineans"
+  },
+  "GLP": {
+    "name": "Guadeloupe",
+    "demonym_one": "Guadeloupian",
+    "demonym_few": "Guadeloupians",
+    "demonym_many": "Guadeloupians",
+    "demonym_other": "Guadeloupians"
+  },
+  "GMB": {
+    "name": "Gambia",
+    "demonym_one": "Gambian",
+    "demonym_few": "Gambians",
+    "demonym_many": "Gambians",
+    "demonym_other": "Gambians"
+  },
+  "GNB": {
+    "name": "Guinea-Bissau",
+    "demonym_one": "Guinea-Bissauan",
+    "demonym_few": "Guinea-Bissauans",
+    "demonym_many": "Guinea-Bissauans",
+    "demonym_other": "Guinea-Bissauans"
+  },
+  "GNQ": {
+    "name": "Equatorial Guinea",
+    "demonym_one": "Equatorial Guinean",
+    "demonym_few": "Equatorial Guineans",
+    "demonym_many": "Equatorial Guineans",
+    "demonym_other": "Equatorial Guineans"
+  },
+  "GRC": {
+    "name": "Greece",
+    "demonym_one": "Greek",
+    "demonym_few": "Greeks",
+    "demonym_many": "Greeks",
+    "demonym_other": "Greeks"
+  },
+  "GRD": {
+    "name": "Grenada",
+    "demonym_one": "Grenadian",
+    "demonym_few": "Grenadians",
+    "demonym_many": "Grenadians",
+    "demonym_other": "Grenadians"
+  },
+  "GRL": {
+    "name": "Greenland",
+    "demonym_one": "Greenlandic",
+    "demonym_few": "Greenlandics",
+    "demonym_many": "Greenlandics",
+    "demonym_other": "Greenlandics"
+  },
+  "GTM": {
+    "name": "Guatemala",
+    "demonym_one": "Guatemalan",
+    "demonym_few": "Guatemalans",
+    "demonym_many": "Guatemalans",
+    "demonym_other": "Guatemalans"
+  },
+  "GUF": {
+    "name": "French Guiana"
+  },
+  "GUM": {
+    "name": "Guam",
+    "demonym_one": "Guamanian",
+    "demonym_few": "Guamanians",
+    "demonym_many": "Guamanians",
+    "demonym_other": "Guamanians"
+  },
+  "GUY": {
+    "name": "Guyana",
+    "demonym_one": "Guyanese",
+    "demonym_few": "Guyaneses",
+    "demonym_many": "Guyaneses",
+    "demonym_other": "Guyaneses"
+  },
+  "HKG": {
+    "name": "Hong Kong",
+    "demonym_one": "Hong Konger",
+    "demonym_few": "Hong Kongers",
+    "demonym_many": "Hong Kongers",
+    "demonym_other": "Hong Kongers"
+  },
+  "HMD": {
+    "name": "Heard Island and McDonald Islands",
+    "demonym_one": "Heard and McDonald Islander",
+    "demonym_few": "Heard and McDonald Islanders",
+    "demonym_many": "Heard and McDonald Islanders",
+    "demonym_other": "Heard and McDonald Islanders"
+  },
+  "HND": {
+    "name": "Honduras",
+    "demonym_one": "Honduran",
+    "demonym_few": "Hondurans",
+    "demonym_many": "Hondurans",
+    "demonym_other": "Hondurans"
+  },
+  "HRV": {
+    "name": "Croatia",
+    "demonym_one": "Croatian",
+    "demonym_few": "Croatians",
+    "demonym_many": "Croatians",
+    "demonym_other": "Croatians"
+  },
+  "HTI": {
+    "name": "Haiti",
+    "demonym_one": "Haitian",
+    "demonym_few": "Haitians",
+    "demonym_many": "Haitians",
+    "demonym_other": "Haitians"
+  },
+  "HUN": {
+    "name": "Hungary",
+    "demonym_one": "Hungarian",
+    "demonym_few": "Hungarians",
+    "demonym_many": "Hungarians",
+    "demonym_other": "Hungarians"
+  },
+  "IDN": {
+    "name": "Indonesia",
+    "demonym_one": "Indonesian",
+    "demonym_few": "Indonesians",
+    "demonym_many": "Indonesians",
+    "demonym_other": "Indonesians"
+  },
+  "IMN": {
+    "name": "Isle of Man",
+    "demonym_one": "Manx",
+    "demonym_few": "Manxs",
+    "demonym_many": "Manxs",
+    "demonym_other": "Manxs"
+  },
+  "IND": {
+    "name": "India",
+    "demonym_one": "Indian",
+    "demonym_few": "Indians",
+    "demonym_many": "Indians",
+    "demonym_other": "Indians"
+  },
+  "IOT": {
+    "name": "British Indian Ocean Territory",
+    "demonym_one": "Indian",
+    "demonym_few": "Indians",
+    "demonym_many": "Indians",
+    "demonym_other": "Indians"
+  },
+  "IRL": {
+    "name": "Ireland",
+    "demonym_one": "Irish",
+    "demonym_few": "Irishs",
+    "demonym_many": "Irishs",
+    "demonym_other": "Irishs"
+  },
+  "IRN": {
+    "name": "Iran",
+    "demonym_one": "Iranian",
+    "demonym_few": "Iranians",
+    "demonym_many": "Iranians",
+    "demonym_other": "Iranians"
+  },
+  "IRQ": {
+    "name": "Iraq",
+    "demonym_one": "Iraqi",
+    "demonym_few": "Iraqis",
+    "demonym_many": "Iraqis",
+    "demonym_other": "Iraqis"
+  },
+  "ISL": {
+    "name": "Iceland",
+    "demonym_one": "Icelander",
+    "demonym_few": "Icelanders",
+    "demonym_many": "Icelanders",
+    "demonym_other": "Icelanders"
+  },
+  "ISR": {
+    "name": "Israel",
+    "demonym_one": "Israeli",
+    "demonym_few": "Israelis",
+    "demonym_many": "Israelis",
+    "demonym_other": "Israelis"
+  },
+  "ITA": {
+    "name": "Italy",
+    "demonym_one": "Italian",
+    "demonym_few": "Italians",
+    "demonym_many": "Italians",
+    "demonym_other": "Italians"
+  },
+  "JAM": {
+    "name": "Jamaica",
+    "demonym_one": "Jamaican",
+    "demonym_few": "Jamaicans",
+    "demonym_many": "Jamaicans",
+    "demonym_other": "Jamaicans"
+  },
+  "JEY": {
+    "name": "Jersey",
+    "demonym_one": "Channel Islander",
+    "demonym_few": "Channel Islanders",
+    "demonym_many": "Channel Islanders",
+    "demonym_other": "Channel Islanders"
+  },
+  "JOR": {
+    "name": "Jordan",
+    "demonym_one": "Jordanian",
+    "demonym_few": "Jordanians",
+    "demonym_many": "Jordanians",
+    "demonym_other": "Jordanians"
+  },
+  "JPN": {
+    "name": "Japan",
+    "demonym_one": "Japanese",
+    "demonym_few": "Japaneses",
+    "demonym_many": "Japaneses",
+    "demonym_other": "Japaneses"
+  },
+  "KAZ": {
+    "name": "Kazakhstan",
+    "demonym_one": "Kazakhstani",
+    "demonym_few": "Kazakhstanis",
+    "demonym_many": "Kazakhstanis",
+    "demonym_other": "Kazakhstanis"
+  },
+  "KEN": {
+    "name": "Kenya",
+    "demonym_one": "Kenyan",
+    "demonym_few": "Kenyans",
+    "demonym_many": "Kenyans",
+    "demonym_other": "Kenyans"
+  },
+  "KGZ": {
+    "name": "Kyrgyzstan",
+    "demonym_one": "Kirghiz",
+    "demonym_few": "Kirghizs",
+    "demonym_many": "Kirghizs",
+    "demonym_other": "Kirghizs"
+  },
+  "KHM": {
+    "name": "Cambodia",
+    "demonym_one": "Cambodian",
+    "demonym_few": "Cambodians",
+    "demonym_many": "Cambodians",
+    "demonym_other": "Cambodians"
+  },
+  "KIR": {
+    "name": "Kiribati",
+    "demonym_one": "I-Kiribati",
+    "demonym_few": "I-Kiribatis",
+    "demonym_many": "I-Kiribatis",
+    "demonym_other": "I-Kiribatis"
+  },
+  "KNA": {
+    "name": "Saint Kitts and Nevis",
+    "demonym_one": "Kittitian or Nevisian",
+    "demonym_few": "Kittitian or Nevisians",
+    "demonym_many": "Kittitian or Nevisians",
+    "demonym_other": "Kittitian or Nevisians"
+  },
+  "KOR": {
+    "name": "South Korea",
+    "demonym_one": "South Korean",
+    "demonym_few": "South Koreans",
+    "demonym_many": "South Koreans",
+    "demonym_other": "South Koreans"
+  },
+  "KWT": {
+    "name": "Kuwait",
+    "demonym_one": "Kuwaiti",
+    "demonym_few": "Kuwaitis",
+    "demonym_many": "Kuwaitis",
+    "demonym_other": "Kuwaitis"
+  },
+  "LAO": {
+    "name": "Laos",
+    "demonym_one": "Laotian",
+    "demonym_few": "Laotians",
+    "demonym_many": "Laotians",
+    "demonym_other": "Laotians"
+  },
+  "LBN": {
+    "name": "Lebanon",
+    "demonym_one": "Lebanese",
+    "demonym_few": "Lebaneses",
+    "demonym_many": "Lebaneses",
+    "demonym_other": "Lebaneses"
+  },
+  "LBR": {
+    "name": "Liberia",
+    "demonym_one": "Liberian",
+    "demonym_few": "Liberians",
+    "demonym_many": "Liberians",
+    "demonym_other": "Liberians"
+  },
+  "LBY": {
+    "name": "Libya",
+    "demonym_one": "Libyan",
+    "demonym_few": "Libyans",
+    "demonym_many": "Libyans",
+    "demonym_other": "Libyans"
+  },
+  "LCA": {
+    "name": "Saint Lucia",
+    "demonym_one": "Saint Lucian",
+    "demonym_few": "Saint Lucians",
+    "demonym_many": "Saint Lucians",
+    "demonym_other": "Saint Lucians"
+  },
+  "LIE": {
+    "name": "Liechtenstein",
+    "demonym_one": "Liechtensteiner",
+    "demonym_few": "Liechtensteiners",
+    "demonym_many": "Liechtensteiners",
+    "demonym_other": "Liechtensteiners"
+  },
+  "LKA": {
+    "name": "Sri Lanka",
+    "demonym_one": "Sri Lankan",
+    "demonym_few": "Sri Lankans",
+    "demonym_many": "Sri Lankans",
+    "demonym_other": "Sri Lankans"
+  },
+  "LSO": {
+    "name": "Lesotho",
+    "demonym_one": "Mosotho",
+    "demonym_few": "Mosothos",
+    "demonym_many": "Mosothos",
+    "demonym_other": "Mosothos"
+  },
+  "LTU": {
+    "name": "Lithuania",
+    "demonym_one": "Lithuanian",
+    "demonym_few": "Lithuanians",
+    "demonym_many": "Lithuanians",
+    "demonym_other": "Lithuanians"
+  },
+  "LUX": {
+    "name": "Luxembourg",
+    "demonym_one": "Luxembourger",
+    "demonym_few": "Luxembourgers",
+    "demonym_many": "Luxembourgers",
+    "demonym_other": "Luxembourgers"
+  },
+  "LVA": {
+    "name": "Latvia",
+    "demonym_one": "Latvian",
+    "demonym_few": "Latvians",
+    "demonym_many": "Latvians",
+    "demonym_other": "Latvians"
+  },
+  "MAC": {
+    "name": "Macau",
+    "demonym_one": "Chinese",
+    "demonym_few": "Chineses",
+    "demonym_many": "Chineses",
+    "demonym_other": "Chineses"
+  },
+  "MAF": {
+    "name": "Saint Martin",
+    "demonym_one": "Saint Martin Islander",
+    "demonym_few": "Saint Martin Islanders",
+    "demonym_many": "Saint Martin Islanders",
+    "demonym_other": "Saint Martin Islanders"
+  },
+  "MAR": {
+    "name": "Morocco",
+    "demonym_one": "Moroccan",
+    "demonym_few": "Moroccans",
+    "demonym_many": "Moroccans",
+    "demonym_other": "Moroccans"
+  },
+  "MCO": {
+    "name": "Monaco",
+    "demonym_one": "Monegasque",
+    "demonym_few": "Monegasques",
+    "demonym_many": "Monegasques",
+    "demonym_other": "Monegasques"
+  },
+  "MDA": {
+    "name": "Moldova",
+    "demonym_one": "Moldovan",
+    "demonym_few": "Moldovans",
+    "demonym_many": "Moldovans",
+    "demonym_other": "Moldovans"
+  },
+  "MDG": {
+    "name": "Madagascar",
+    "demonym_one": "Malagasy",
+    "demonym_few": "Malagasys",
+    "demonym_many": "Malagasys",
+    "demonym_other": "Malagasys"
+  },
+  "MDV": {
+    "name": "Maldives",
+    "demonym_one": "Maldivan",
+    "demonym_few": "Maldivans",
+    "demonym_many": "Maldivans",
+    "demonym_other": "Maldivans"
+  },
+  "MEX": {
+    "name": "Mexico",
+    "demonym_one": "Mexican",
+    "demonym_few": "Mexicans",
+    "demonym_many": "Mexicans",
+    "demonym_other": "Mexicans"
+  },
+  "MHL": {
+    "name": "Marshall Islands",
+    "demonym_one": "Marshallese",
+    "demonym_few": "Marshalleses",
+    "demonym_many": "Marshalleses",
+    "demonym_other": "Marshalleses"
+  },
+  "MKD": {
+    "name": "North Macedonia",
+    "demonym_one": "Macedonian",
+    "demonym_few": "Macedonians",
+    "demonym_many": "Macedonians",
+    "demonym_other": "Macedonians"
+  },
+  "MLI": {
+    "name": "Mali",
+    "demonym_one": "Malian",
+    "demonym_few": "Malians",
+    "demonym_many": "Malians",
+    "demonym_other": "Malians"
+  },
+  "MLT": {
+    "name": "Malta",
+    "demonym_one": "Maltese",
+    "demonym_few": "Malteses",
+    "demonym_many": "Malteses",
+    "demonym_other": "Malteses"
+  },
+  "MMR": {
+    "name": "Myanmar",
+    "demonym_one": "Bamar",
+    "demonym_few": "Bamars",
+    "demonym_many": "Bamars",
+    "demonym_other": "Bamars"
+  },
+  "MNE": {
+    "name": "Montenegro",
+    "demonym_one": "Montenegrin",
+    "demonym_few": "Montenegrins",
+    "demonym_many": "Montenegrins",
+    "demonym_other": "Montenegrins"
+  },
+  "MNG": {
+    "name": "Mongolia",
+    "demonym_one": "Mongolian",
+    "demonym_few": "Mongolians",
+    "demonym_many": "Mongolians",
+    "demonym_other": "Mongolians"
+  },
+  "MNP": {
+    "name": "Northern Mariana Islands",
+    "demonym_one": "American",
+    "demonym_few": "Americans",
+    "demonym_many": "Americans",
+    "demonym_other": "Americans"
+  },
+  "MOZ": {
+    "name": "Mozambique",
+    "demonym_one": "Mozambican",
+    "demonym_few": "Mozambicans",
+    "demonym_many": "Mozambicans",
+    "demonym_other": "Mozambicans"
+  },
+  "MRT": {
+    "name": "Mauritania",
+    "demonym_one": "Mauritanian",
+    "demonym_few": "Mauritanians",
+    "demonym_many": "Mauritanians",
+    "demonym_other": "Mauritanians"
+  },
+  "MSR": {
+    "name": "Montserrat",
+    "demonym_one": "Montserratian",
+    "demonym_few": "Montserratians",
+    "demonym_many": "Montserratians",
+    "demonym_other": "Montserratians"
+  },
+  "MTQ": {
+    "name": "Martinique",
+    "demonym_one": "French",
+    "demonym_few": "Frenchs",
+    "demonym_many": "Frenchs",
+    "demonym_other": "Frenchs"
+  },
+  "MUS": {
+    "name": "Mauritius",
+    "demonym_one": "Mauritian",
+    "demonym_few": "Mauritians",
+    "demonym_many": "Mauritians",
+    "demonym_other": "Mauritians"
+  },
+  "MWI": {
+    "name": "Malawi",
+    "demonym_one": "Malawian",
+    "demonym_few": "Malawians",
+    "demonym_many": "Malawians",
+    "demonym_other": "Malawians"
+  },
+  "MYS": {
+    "name": "Malaysia",
+    "demonym_one": "Malaysian",
+    "demonym_few": "Malaysians",
+    "demonym_many": "Malaysians",
+    "demonym_other": "Malaysians"
+  },
+  "MYT": {
+    "name": "Mayotte",
+    "demonym_one": "Mahoran",
+    "demonym_few": "Mahorans",
+    "demonym_many": "Mahorans",
+    "demonym_other": "Mahorans"
+  },
+  "NAM": {
+    "name": "Namibia",
+    "demonym_one": "Namibian",
+    "demonym_few": "Namibians",
+    "demonym_many": "Namibians",
+    "demonym_other": "Namibians"
+  },
+  "NCL": {
+    "name": "New Caledonia",
+    "demonym_one": "New Caledonian",
+    "demonym_few": "New Caledonians",
+    "demonym_many": "New Caledonians",
+    "demonym_other": "New Caledonians"
+  },
+  "NER": {
+    "name": "Niger",
+    "demonym_one": "Nigerien",
+    "demonym_few": "Nigeriens",
+    "demonym_many": "Nigeriens",
+    "demonym_other": "Nigeriens"
+  },
+  "NFK": {
+    "name": "Norfolk Island",
+    "demonym_one": "Norfolk Islander",
+    "demonym_few": "Norfolk Islanders",
+    "demonym_many": "Norfolk Islanders",
+    "demonym_other": "Norfolk Islanders"
+  },
+  "NGA": {
+    "name": "Nigeria",
+    "demonym_one": "Nigerian",
+    "demonym_few": "Nigerians",
+    "demonym_many": "Nigerians",
+    "demonym_other": "Nigerians"
+  },
+  "NIC": {
+    "name": "Nicaragua",
+    "demonym_one": "Nicaraguan",
+    "demonym_few": "Nicaraguans",
+    "demonym_many": "Nicaraguans",
+    "demonym_other": "Nicaraguans"
+  },
+  "NIU": {
+    "name": "Niue",
+    "demonym_one": "Niuean",
+    "demonym_few": "Niueans",
+    "demonym_many": "Niueans",
+    "demonym_other": "Niueans"
+  },
+  "NLD": {
+    "name": "Netherlands",
+    "demonym_one": "Dutch",
+    "demonym_few": "Dutchs",
+    "demonym_many": "Dutchs",
+    "demonym_other": "Dutchs"
+  },
+  "NOR": {
+    "name": "Norway",
+    "demonym_one": "Norwegian",
+    "demonym_few": "Norwegians",
+    "demonym_many": "Norwegians",
+    "demonym_other": "Norwegians"
+  },
+  "NPL": {
+    "name": "Nepal",
+    "demonym_one": "Nepalese",
+    "demonym_few": "Nepaleses",
+    "demonym_many": "Nepaleses",
+    "demonym_other": "Nepaleses"
+  },
+  "NRU": {
+    "name": "Nauru",
+    "demonym_one": "Nauruan",
+    "demonym_few": "Nauruans",
+    "demonym_many": "Nauruans",
+    "demonym_other": "Nauruans"
+  },
+  "NZL": {
+    "name": "New Zealand",
+    "demonym_one": "New Zealander",
+    "demonym_few": "New Zealanders",
+    "demonym_many": "New Zealanders",
+    "demonym_other": "New Zealanders"
+  },
+  "OMN": {
+    "name": "Oman",
+    "demonym_one": "Omani",
+    "demonym_few": "Omanis",
+    "demonym_many": "Omanis",
+    "demonym_other": "Omanis"
+  },
+  "PAK": {
+    "name": "Pakistan",
+    "demonym_one": "Pakistani",
+    "demonym_few": "Pakistanis",
+    "demonym_many": "Pakistanis",
+    "demonym_other": "Pakistanis"
+  },
+  "PAN": {
+    "name": "Panama",
+    "demonym_one": "Panamanian",
+    "demonym_few": "Panamanians",
+    "demonym_many": "Panamanians",
+    "demonym_other": "Panamanians"
+  },
+  "PCN": {
+    "name": "Pitcairn Islands",
+    "demonym_one": "Pitcairn Islander",
+    "demonym_few": "Pitcairn Islanders",
+    "demonym_many": "Pitcairn Islanders",
+    "demonym_other": "Pitcairn Islanders"
+  },
+  "PER": {
+    "name": "Peru",
+    "demonym_one": "Peruvian",
+    "demonym_few": "Peruvians",
+    "demonym_many": "Peruvians",
+    "demonym_other": "Peruvians"
+  },
+  "PHL": {
+    "name": "Philippines",
+    "demonym_one": "Filipino",
+    "demonym_few": "Filipinos",
+    "demonym_many": "Filipinos",
+    "demonym_other": "Filipinos"
+  },
+  "PLW": {
+    "name": "Palau",
+    "demonym_one": "Palauan",
+    "demonym_few": "Palauans",
+    "demonym_many": "Palauans",
+    "demonym_other": "Palauans"
+  },
+  "PNG": {
+    "name": "Papua New Guinea",
+    "demonym_one": "Papua New Guinean",
+    "demonym_few": "Papua New Guineans",
+    "demonym_many": "Papua New Guineans",
+    "demonym_other": "Papua New Guineans"
+  },
+  "POL": {
+    "name": "Poland",
+    "demonym_one": "Polish",
+    "demonym_few": "Polishs",
+    "demonym_many": "Polishs",
+    "demonym_other": "Polishs"
+  },
+  "PRI": {
+    "name": "Puerto Rico",
+    "demonym_one": "Puerto Rican",
+    "demonym_few": "Puerto Ricans",
+    "demonym_many": "Puerto Ricans",
+    "demonym_other": "Puerto Ricans"
+  },
+  "PRK": {
+    "name": "North Korea",
+    "demonym_one": "North Korean",
+    "demonym_few": "North Koreans",
+    "demonym_many": "North Koreans",
+    "demonym_other": "North Koreans"
+  },
+  "PRT": {
+    "name": "Portugal",
+    "demonym_one": "Portuguese",
+    "demonym_few": "Portugueses",
+    "demonym_many": "Portugueses",
+    "demonym_other": "Portugueses"
+  },
+  "PRY": {
+    "name": "Paraguay",
+    "demonym_one": "Paraguayan",
+    "demonym_few": "Paraguayans",
+    "demonym_many": "Paraguayans",
+    "demonym_other": "Paraguayans"
+  },
+  "PSE": {
+    "name": "Palestine",
+    "demonym_one": "Palestinian",
+    "demonym_few": "Palestinians",
+    "demonym_many": "Palestinians",
+    "demonym_other": "Palestinians"
+  },
+  "PYF": {
+    "name": "French Polynesia",
+    "demonym_one": "French Polynesian",
+    "demonym_few": "French Polynesians",
+    "demonym_many": "French Polynesians",
+    "demonym_other": "French Polynesians"
+  },
+  "QAT": {
+    "name": "Qatar",
+    "demonym_one": "Qatari",
+    "demonym_few": "Qataris",
+    "demonym_many": "Qataris",
+    "demonym_other": "Qataris"
+  },
+  "REU": {
+    "name": "Réunion",
+    "demonym_one": "French",
+    "demonym_few": "Frenchs",
+    "demonym_many": "Frenchs",
+    "demonym_other": "Frenchs"
+  },
+  "ROU": {
+    "name": "Romania",
+    "demonym_one": "Romanian",
+    "demonym_few": "Romanians",
+    "demonym_many": "Romanians",
+    "demonym_other": "Romanians"
+  },
+  "RUS": {
+    "name": "Russia",
+    "demonym_one": "Russian",
+    "demonym_few": "Russians",
+    "demonym_many": "Russians",
+    "demonym_other": "Russians"
+  },
+  "RWA": {
+    "name": "Rwanda",
+    "demonym_one": "Rwandan",
+    "demonym_few": "Rwandans",
+    "demonym_many": "Rwandans",
+    "demonym_other": "Rwandans"
+  },
+  "SAU": {
+    "name": "Saudi Arabia",
+    "demonym_one": "Saudi Arabian",
+    "demonym_few": "Saudi Arabians",
+    "demonym_many": "Saudi Arabians",
+    "demonym_other": "Saudi Arabians"
+  },
+  "SDN": {
+    "name": "Sudan",
+    "demonym_one": "Sudanese",
+    "demonym_few": "Sudaneses",
+    "demonym_many": "Sudaneses",
+    "demonym_other": "Sudaneses"
+  },
+  "SEN": {
+    "name": "Senegal",
+    "demonym_one": "Senegalese",
+    "demonym_few": "Senegaleses",
+    "demonym_many": "Senegaleses",
+    "demonym_other": "Senegaleses"
+  },
+  "SGP": {
+    "name": "Singapore",
+    "demonym_one": "Singaporean",
+    "demonym_few": "Singaporeans",
+    "demonym_many": "Singaporeans",
+    "demonym_other": "Singaporeans"
+  },
+  "SGS": {
+    "name": "South Georgia",
+    "demonym_one": "South Georgian South Sandwich Islander",
+    "demonym_few": "South Georgian South Sandwich Islanders",
+    "demonym_many": "South Georgian South Sandwich Islanders",
+    "demonym_other": "South Georgian South Sandwich Islanders"
+  },
+  "SHN": {
+    "name": "Saint Helena, Ascension and Tristan da Cunha"
+  },
+  "SJM": {
+    "name": "Svalbard and Jan Mayen",
+    "demonym_one": "Norwegian",
+    "demonym_few": "Norwegians",
+    "demonym_many": "Norwegians",
+    "demonym_other": "Norwegians"
+  },
+  "SLB": {
+    "name": "Solomon Islands",
+    "demonym_one": "Solomon Islander",
+    "demonym_few": "Solomon Islanders",
+    "demonym_many": "Solomon Islanders",
+    "demonym_other": "Solomon Islanders"
+  },
+  "SLE": {
+    "name": "Sierra Leone",
+    "demonym_one": "Sierra Leonean",
+    "demonym_few": "Sierra Leoneans",
+    "demonym_many": "Sierra Leoneans",
+    "demonym_other": "Sierra Leoneans"
+  },
+  "SLV": {
+    "name": "El Salvador",
+    "demonym_one": "Salvadoran",
+    "demonym_few": "Salvadorans",
+    "demonym_many": "Salvadorans",
+    "demonym_other": "Salvadorans"
+  },
+  "SMR": {
+    "name": "San Marino",
+    "demonym_one": "Sammarinese",
+    "demonym_few": "Sammarineses",
+    "demonym_many": "Sammarineses",
+    "demonym_other": "Sammarineses"
+  },
+  "SOM": {
+    "name": "Somalia",
+    "demonym_one": "Somali",
+    "demonym_few": "Somalis",
+    "demonym_many": "Somalis",
+    "demonym_other": "Somalis"
+  },
+  "SPM": {
+    "name": "Saint Pierre and Miquelon",
+    "demonym_one": "French",
+    "demonym_few": "Frenchs",
+    "demonym_many": "Frenchs",
+    "demonym_other": "Frenchs"
+  },
+  "SRB": {
+    "name": "Serbia",
+    "demonym_one": "Serbian",
+    "demonym_few": "Serbians",
+    "demonym_many": "Serbians",
+    "demonym_other": "Serbians"
+  },
+  "SSD": {
+    "name": "South Sudan",
+    "demonym_one": "South Sudanese",
+    "demonym_few": "South Sudaneses",
+    "demonym_many": "South Sudaneses",
+    "demonym_other": "South Sudaneses"
+  },
+  "STP": {
+    "name": "São Tomé and Príncipe",
+    "demonym_one": "Sao Tomean",
+    "demonym_few": "Sao Tomeans",
+    "demonym_many": "Sao Tomeans",
+    "demonym_other": "Sao Tomeans"
+  },
+  "SUR": {
+    "name": "Suriname",
+    "demonym_one": "Surinamer",
+    "demonym_few": "Surinamers",
+    "demonym_many": "Surinamers",
+    "demonym_other": "Surinamers"
+  },
+  "SVK": {
+    "name": "Slovakia",
+    "demonym_one": "Slovak",
+    "demonym_few": "Slovaks",
+    "demonym_many": "Slovaks",
+    "demonym_other": "Slovaks"
+  },
+  "SVN": {
+    "name": "Slovenia",
+    "demonym_one": "Slovene",
+    "demonym_few": "Slovenes",
+    "demonym_many": "Slovenes",
+    "demonym_other": "Slovenes"
+  },
+  "SWE": {
+    "name": "Sweden",
+    "demonym_one": "Swedish",
+    "demonym_few": "Swedishs",
+    "demonym_many": "Swedishs",
+    "demonym_other": "Swedishs"
+  },
+  "SWZ": {
+    "name": "Eswatini",
+    "demonym_one": "Swazi",
+    "demonym_few": "Swazis",
+    "demonym_many": "Swazis",
+    "demonym_other": "Swazis"
+  },
+  "SXM": {
+    "name": "Sint Maarten",
+    "demonym_one": "St. Maartener",
+    "demonym_few": "St. Maarteners",
+    "demonym_many": "St. Maarteners",
+    "demonym_other": "St. Maarteners"
+  },
+  "SYC": {
+    "name": "Seychelles",
+    "demonym_one": "Seychellois",
+    "demonym_few": "Seychelloiss",
+    "demonym_many": "Seychelloiss",
+    "demonym_other": "Seychelloiss"
+  },
+  "SYR": {
+    "name": "Syria",
+    "demonym_one": "Syrian",
+    "demonym_few": "Syrians",
+    "demonym_many": "Syrians",
+    "demonym_other": "Syrians"
+  },
+  "TCA": {
+    "name": "Turks and Caicos Islands",
+    "demonym_one": "Turks and Caicos Islander",
+    "demonym_few": "Turks and Caicos Islanders",
+    "demonym_many": "Turks and Caicos Islanders",
+    "demonym_other": "Turks and Caicos Islanders"
+  },
+  "TCD": {
+    "name": "Chad",
+    "demonym_one": "Chadian",
+    "demonym_few": "Chadians",
+    "demonym_many": "Chadians",
+    "demonym_other": "Chadians"
+  },
+  "TGO": {
+    "name": "Togo",
+    "demonym_one": "Togolese",
+    "demonym_few": "Togoleses",
+    "demonym_many": "Togoleses",
+    "demonym_other": "Togoleses"
+  },
+  "THA": {
+    "name": "Thailand",
+    "demonym_one": "Thai",
+    "demonym_few": "Thais",
+    "demonym_many": "Thais",
+    "demonym_other": "Thais"
+  },
+  "TJK": {
+    "name": "Tajikistan",
+    "demonym_one": "Tadzhik",
+    "demonym_few": "Tadzhiks",
+    "demonym_many": "Tadzhiks",
+    "demonym_other": "Tadzhiks"
+  },
+  "TKL": {
+    "name": "Tokelau",
+    "demonym_one": "Tokelauan",
+    "demonym_few": "Tokelauans",
+    "demonym_many": "Tokelauans",
+    "demonym_other": "Tokelauans"
+  },
+  "TKM": {
+    "name": "Turkmenistan",
+    "demonym_one": "Turkmen",
+    "demonym_few": "Turkmens",
+    "demonym_many": "Turkmens",
+    "demonym_other": "Turkmens"
+  },
+  "TLS": {
+    "name": "Timor-Leste",
+    "demonym_one": "East Timorese",
+    "demonym_few": "East Timoreses",
+    "demonym_many": "East Timoreses",
+    "demonym_other": "East Timoreses"
+  },
+  "TON": {
+    "name": "Tonga",
+    "demonym_one": "Tongan",
+    "demonym_few": "Tongans",
+    "demonym_many": "Tongans",
+    "demonym_other": "Tongans"
+  },
+  "TTO": {
+    "name": "Trinidad and Tobago",
+    "demonym_one": "Trinidadian",
+    "demonym_few": "Trinidadians",
+    "demonym_many": "Trinidadians",
+    "demonym_other": "Trinidadians"
+  },
+  "TUN": {
+    "name": "Tunisia",
+    "demonym_one": "Tunisian",
+    "demonym_few": "Tunisians",
+    "demonym_many": "Tunisians",
+    "demonym_other": "Tunisians"
+  },
+  "TUR": {
+    "name": "Turkey",
+    "demonym_one": "Turkish",
+    "demonym_few": "Turkishs",
+    "demonym_many": "Turkishs",
+    "demonym_other": "Turkishs"
+  },
+  "TUV": {
+    "name": "Tuvalu",
+    "demonym_one": "Tuvaluan",
+    "demonym_few": "Tuvaluans",
+    "demonym_many": "Tuvaluans",
+    "demonym_other": "Tuvaluans"
+  },
+  "TWN": {
+    "name": "Taiwan",
+    "demonym_one": "Taiwanese",
+    "demonym_few": "Taiwaneses",
+    "demonym_many": "Taiwaneses",
+    "demonym_other": "Taiwaneses"
+  },
+  "TZA": {
+    "name": "Tanzania",
+    "demonym_one": "Tanzanian",
+    "demonym_few": "Tanzanians",
+    "demonym_many": "Tanzanians",
+    "demonym_other": "Tanzanians"
+  },
+  "UGA": {
+    "name": "Uganda",
+    "demonym_one": "Ugandan",
+    "demonym_few": "Ugandans",
+    "demonym_many": "Ugandans",
+    "demonym_other": "Ugandans"
+  },
+  "UKR": {
+    "name": "Ukraine",
+    "demonym_one": "Ukrainian",
+    "demonym_few": "Ukrainians",
+    "demonym_many": "Ukrainians",
+    "demonym_other": "Ukrainians"
+  },
+  "UMI": {
+    "name": "United States Minor Outlying Islands",
+    "demonym_one": "American",
+    "demonym_few": "Americans",
+    "demonym_many": "Americans",
+    "demonym_other": "Americans"
+  },
+  "UNK": {
+    "name": "Kosovo",
+    "demonym_one": "Kosovar",
+    "demonym_few": "Kosovars",
+    "demonym_many": "Kosovars",
+    "demonym_other": "Kosovars"
+  },
+  "URY": {
+    "name": "Uruguay",
+    "demonym_one": "Uruguayan",
+    "demonym_few": "Uruguayans",
+    "demonym_many": "Uruguayans",
+    "demonym_other": "Uruguayans"
+  },
+  "USA": {
+    "name": "United States",
+    "demonym_one": "American",
+    "demonym_few": "Americans",
+    "demonym_many": "Americans",
+    "demonym_other": "Americans"
+  },
+  "UZB": {
+    "name": "Uzbekistan",
+    "demonym_one": "Uzbekistani",
+    "demonym_few": "Uzbekistanis",
+    "demonym_many": "Uzbekistanis",
+    "demonym_other": "Uzbekistanis"
+  },
+  "VAT": {
+    "name": "Vatican City",
+    "demonym_one": "Italian",
+    "demonym_few": "Italians",
+    "demonym_many": "Italians",
+    "demonym_other": "Italians"
+  },
+  "VCT": {
+    "name": "Saint Vincent and the Grenadines",
+    "demonym_one": "Saint Vincentian",
+    "demonym_few": "Saint Vincentians",
+    "demonym_many": "Saint Vincentians",
+    "demonym_other": "Saint Vincentians"
+  },
+  "VEN": {
+    "name": "Venezuela",
+    "demonym_one": "Venezuelan",
+    "demonym_few": "Venezuelans",
+    "demonym_many": "Venezuelans",
+    "demonym_other": "Venezuelans"
+  },
+  "VGB": {
+    "name": "British Virgin Islands",
+    "demonym_one": "Virgin Islander",
+    "demonym_few": "Virgin Islanders",
+    "demonym_many": "Virgin Islanders",
+    "demonym_other": "Virgin Islanders"
+  },
+  "VIR": {
+    "name": "United States Virgin Islands",
+    "demonym_one": "Virgin Islander",
+    "demonym_few": "Virgin Islanders",
+    "demonym_many": "Virgin Islanders",
+    "demonym_other": "Virgin Islanders"
+  },
+  "VNM": {
+    "name": "Vietnam",
+    "demonym_one": "Vietnamese",
+    "demonym_few": "Vietnameses",
+    "demonym_many": "Vietnameses",
+    "demonym_other": "Vietnameses"
+  },
+  "VUT": {
+    "name": "Vanuatu",
+    "demonym_one": "Ni-Vanuatu",
+    "demonym_few": "Ni-Vanuatus",
+    "demonym_many": "Ni-Vanuatus",
+    "demonym_other": "Ni-Vanuatus"
+  },
+  "WLF": {
+    "name": "Wallis and Futuna",
+    "demonym_one": "Wallis and Futuna Islander",
+    "demonym_few": "Wallis and Futuna Islanders",
+    "demonym_many": "Wallis and Futuna Islanders",
+    "demonym_other": "Wallis and Futuna Islanders"
+  },
+  "WSM": {
+    "name": "Samoa",
+    "demonym_one": "Samoan",
+    "demonym_few": "Samoans",
+    "demonym_many": "Samoans",
+    "demonym_other": "Samoans"
+  },
+  "YEM": {
+    "name": "Yemen",
+    "demonym_one": "Yemeni",
+    "demonym_few": "Yemenis",
+    "demonym_many": "Yemenis",
+    "demonym_other": "Yemenis"
+  },
+  "ZAF": {
+    "name": "South Africa",
+    "demonym_one": "South African",
+    "demonym_few": "South Africans",
+    "demonym_many": "South Africans",
+    "demonym_other": "South Africans"
+  },
+  "ZMB": {
+    "name": "Zambia",
+    "demonym_one": "Zambian",
+    "demonym_few": "Zambians",
+    "demonym_many": "Zambians",
+    "demonym_other": "Zambians"
+  },
+  "ZWE": {
+    "name": "Zimbabwe",
+    "demonym_one": "Zimbabwean",
+    "demonym_few": "Zimbabweans",
+    "demonym_many": "Zimbabweans",
+    "demonym_other": "Zimbabweans"
+  }
+}
