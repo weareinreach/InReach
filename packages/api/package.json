@@ -13,8 +13,8 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@trpc/client": "10.7.0",
-		"@trpc/server": "10.7.0",
+		"@trpc/client": "10.8.1",
+		"@trpc/server": "10.8.1",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"superjson": "1.12.1",
