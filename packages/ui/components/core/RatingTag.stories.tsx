@@ -29,6 +29,6 @@ const RatingTagVariant: ComponentStory<typeof RatingTag> = (args) => <RatingTag 
 export const Rating = RatingTagVariant.bind({})
 
 Rating.args = {
-	average: '4.3',
-	totalReviews: '10',
+	average: 4.3,
+	reviewCount: 10,
 }
