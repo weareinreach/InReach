@@ -16,7 +16,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 
-import { SafetyExit, UserMenu } from './'
+import { UserMenu } from './'
 import Logo from './img/inreach.svg'
 
 const HEADER_HEIGHT = 60
@@ -150,7 +150,6 @@ export const Nav = (props: NavProps) => {
 					<Group spacing={5} className={classes.links}>
 						{navLinks}
 					</Group>
-					<SafetyExit className={classes.safetyExit} />
 					<UserMenu className={classes.userMenu} />
 				</Group>
 
