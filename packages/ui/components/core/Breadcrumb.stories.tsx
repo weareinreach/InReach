@@ -1,15 +1,14 @@
-import { Icon } from '@iconify/react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 import React from 'react'
 
 import { Center } from '@mantine/core'
 
-import { Breadcrumb } from './Breadcrumb'
+import { Breadcrumb as BreadcrumbCompnent } from './Breadcrumb'
 
 export default {
 	title: 'Core/Breadcrumb',
-	component: Breadcrumb,
+	component: BreadcrumbCompnent,
 	decorators: [
 		(Story) => (
 			<Center style={{ width: '100vw' }}>
@@ -28,13 +27,13 @@ export default {
 			options: ['back', 'close'],
 		},
 	},
-} as ComponentMeta<typeof Breadcrumb>
+} as ComponentMeta<typeof BreadcrumbCompnent>
 
-const BreadcrumbVariant: ComponentStory<typeof Breadcrumb> = (args) => <Breadcrumb {...args} />
+const BreadcrumbStory: ComponentStory<typeof BreadcrumbCompnent> = (args) => <BreadcrumbCompnent {...args} />
 
-export const BreadCrumbVariant = BreadcrumbVariant.bind({})
+export const Breadcrumb = BreadcrumbStory.bind({})
 
-BreadCrumbVariant.args = {
+Breadcrumb.args = {
 	href: '#',
 	option: 'back',
-}
+} as const
