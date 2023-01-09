@@ -18,7 +18,7 @@ export const RatingTag = ({ average, totalReviews }: Props) => {
 	const { classes } = useStyles()
 	return (
 		<Group position='center' spacing={5} className={classes.container}>
-			<Icon icon='ic:baseline-star' className={classes.icon} />
+			<Icon icon='carbon:star-filled' className={classes.icon} />
 			<Text className={classes.text}>
 				{average} ({totalReviews} reviews)
 			</Text>
