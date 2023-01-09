@@ -16,21 +16,21 @@
 		"@next-auth/prisma-adapter": "1.0.5",
 		"@weareinreach/db": "0.100.0",
 		"next": "13.1.1",
-		"next-auth": "4.18.7",
+		"next-auth": "4.18.8",
 		"react": "18.2.0",
 		"react-dom": "18.2.0"
 	},
 	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "5.47.1",
+		"@typescript-eslint/eslint-plugin": "5.48.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
-		"eslint": "8.30.0",
+		"eslint": "8.31.0",
 		"eslint-import-resolver-typescript": "3.5.2",
-		"eslint-plugin-codegen": "0.16.1",
+		"eslint-plugin-codegen": "0.17.0",
 		"eslint-plugin-import": "2.26.0",
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-simple-import-sort": "8.0.0",
 		"typescript": "4.9.4"
 	},
-	"packageManager": "pnpm@7.21.0"
+	"packageManager": "pnpm@7.23.0"
 }

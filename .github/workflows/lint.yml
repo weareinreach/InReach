@@ -17,7 +17,7 @@ jobs:
     steps:
       # Setup steps
       - name: Checkout
-        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
@@ -29,7 +29,7 @@ jobs:
           git_config_global: true
           git_commit_gpgsign: true
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
           node-version: 16
       - uses: pnpm/action-setup@c3b53f6a16e57305370b4ae5a540c2077a1d50dd # v2.2.4
@@ -42,7 +42,7 @@ jobs:
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3
+      - uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}

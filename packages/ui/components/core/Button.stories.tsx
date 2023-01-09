@@ -23,11 +23,6 @@ export default {
 	},
 } as ComponentMeta<typeof Button>
 
-// const Large: ComponentStory<typeof Button> = (args) => (
-// 	<Button leftIcon={<Icon icon={args.icon} />} {...args} />
-// )
-// const Small: ComponentStory<typeof Button> = (args) => <Button {...args} />
-
 const ButtonVariant: ComponentStory<typeof Button> = (args) => <Button {...args} />
 
 export const SmallPrimary = ButtonVariant.bind({})
@@ -52,20 +47,15 @@ SmallAccent.args = {
 LargePrimary.args = {
 	variant: 'lg-primary',
 	children: 'More sorting options',
-	// icon: 'lucide:sliders',
-	leftIcon: <Icon icon='fa6-solid:sliders' rotate={3} />,
+	leftIcon: <Icon icon='carbon:settings-adjust' rotate={3} />,
 }
 LargeSecondary.args = {
 	variant: 'lg-secondary',
 	children: 'Save',
-	// icon: 'fe:heart-o',
-	leftIcon: <Icon icon='fa6-solid:heart' />,
+	leftIcon: <Icon icon='carbon:favorite' />,
 }
 LargeAccent.args = {
 	variant: 'lg-accent',
 	children: 'View map',
-	// icon: 'fe:map',
-	leftIcon: <Icon icon='fa6-solid:map-location-dot' />,
+	leftIcon: <Icon icon='carbon:map' />,
 }
-// export const SafetyExitButton = Template.bind({})
-// More on args: https://storybook.js.org/docs/react/writing-stories/args

@@ -30,7 +30,7 @@ const districtTypes = [
 	{ one: 'city', other: 'cities' },
 ] as const
 
-type DistrictTypes = typeof districtTypes[number]['one']
+type DistrictTypes = (typeof districtTypes)[number]['one']
 const govDist = new Map<DistrictTypes, string>()
 const countryMap = new Map<string, string>()
 
