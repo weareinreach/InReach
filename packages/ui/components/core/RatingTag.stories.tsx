@@ -4,11 +4,11 @@ import React from 'react'
 
 import { Center } from '@mantine/core'
 
-import { RatingTag } from './RatingTag'
+import { RatingTag as RatingTagComp } from './RatingTag'
 
 export default {
 	title: 'Core/Rating Tag',
-	component: RatingTag,
+	component: RatingTagComp,
 	decorators: [
 		(Story) => (
 			<Center style={{ width: '100vw' }}>
@@ -22,13 +22,13 @@ export default {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8361&t=4RD0tTTcFDRbaSxU-0',
 		},
 	},
-} as ComponentMeta<typeof RatingTag>
+} as ComponentMeta<typeof RatingTagComp>
 
-const RatingTagVariant: ComponentStory<typeof RatingTag> = (args) => <RatingTag {...args} />
+const RatingTagVariant: ComponentStory<typeof RatingTagComp> = (args) => <RatingTagComp {...args} />
 
-export const Rating = RatingTagVariant.bind({})
+export const RatingTag = RatingTagVariant.bind({})
 
-Rating.args = {
+RatingTag.args = {
 	average: 4.3,
 	reviewCount: 10,
 }
