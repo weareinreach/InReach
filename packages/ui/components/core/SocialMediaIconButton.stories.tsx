@@ -4,7 +4,7 @@ import React from 'react'
 
 import { Center } from '@mantine/core'
 
-import { SocialMediaIconButton } from './SocialMediaIcon'
+import { SocialMediaIconButton, approvedIcons } from './SocialMediaIconButton'
 
 export default {
 	title: 'Core/Social Media Button',
@@ -24,7 +24,7 @@ export default {
 	},
 	argTypes: {
 		icon: {
-			options: ['facebook', 'instagram', 'mail', 'youtube', 'github', 'twitter', 'linkedin'],
+			options: Object.keys(approvedIcons),
 		},
 	},
 } as ComponentMeta<typeof SocialMediaIconButton>
