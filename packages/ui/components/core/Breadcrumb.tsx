@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react'
+import { useTranslation } from 'next-i18next'
 
 import { ActionIcon, Group, Text, createStyles } from '@mantine/core'
 
 const approvedOptions = {
-	close: { children: 'Close', icon: 'material-symbols:close', title: 'close' },
-	back: { children: 'Back to search', icon: 'material-symbols:arrow-back', title: 'back button' },
+	close: { children: 'close', icon: 'carbon:close', title: 'close' },
+	back: { children: 'back-to-search', icon: 'carbon:arrow-left', title: 'back button' },
 } as const
 
 const useStyles = createStyles((theme) => ({
@@ -28,6 +29,7 @@ const useStyles = createStyles((theme) => ({
 
 export const Breadcrumb = ({ href, option }: Props) => {
 	const { classes } = useStyles()
+	const { t } = useTranslation('common')
 	const iconRender = approvedOptions[option].icon
 	const childrenRender = approvedOptions[option].children
 	return (
@@ -40,7 +42,7 @@ export const Breadcrumb = ({ href, option }: Props) => {
 		>
 			<Group position='center' spacing='xs'>
 				<Icon icon={iconRender} className={classes.icon} />
-				<Text size='sm'>{childrenRender}</Text>
+				<Text size='sm'>{t(childrenRender)}</Text>
 			</Group>
 		</ActionIcon>
 	)
