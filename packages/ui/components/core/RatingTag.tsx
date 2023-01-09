@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
+import { useTranslation } from 'next-i18next'
 
 import { Group, Text, createStyles } from '@mantine/core'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
 	container: {
 		width: 'auto',
 	},
@@ -14,19 +15,20 @@ const useStyles = createStyles((theme) => ({
 	text: {},
 }))
 
-export const RatingTag = ({ average, totalReviews }: Props) => {
+export const RatingTag = ({ average, reviewCount }: Props) => {
 	const { classes } = useStyles()
+	const { t } = useTranslation('common')
 	return (
 		<Group position='center' spacing={5} className={classes.container}>
 			<Icon icon='carbon:star-filled' className={classes.icon} />
 			<Text className={classes.text}>
-				{average} ({totalReviews} reviews)
+				{average} ({t('review-count', { count: reviewCount })})
 			</Text>
 		</Group>
 	)
 }
 
 type Props = {
-	average: string
-	totalReviews: string
+	average: number
+	reviewCount: number
 }
