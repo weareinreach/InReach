@@ -587,7 +587,7 @@ importers:
       eslint-import-resolver-typescript: 3.5.2_2lbwmhbr7bncddqbzzpg77o75m
       eslint-plugin-codegen: 0.16.1
       eslint-plugin-import: 2.26.0_ejvvtv3jid5h5ymvu4wwazkljy
-      eslint-plugin-prettier: 4.2.1_l5rdqc4k22455lce6ocqroldia
+      eslint-plugin-prettier: 4.2.1_itkbgnvtcwnqpg53uclzeko2cq
       eslint-plugin-simple-import-sort: 8.0.0_eslint@8.30.0
       eslint-plugin-turbo: 0.0.7_eslint@8.30.0
       i18next: 22.4.6
@@ -11968,6 +11968,22 @@ packages:
       minimatch: 3.1.2
       semver: 6.3.0
 
+  /eslint-plugin-prettier/4.2.1_itkbgnvtcwnqpg53uclzeko2cq:
+    resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      eslint: '>=7.28.0'
+      eslint-config-prettier: '*'
+      prettier: '>=2.0.0'
+    peerDependenciesMeta:
+      eslint-config-prettier:
+        optional: true
+    dependencies:
+      eslint: 8.30.0
+      prettier: 2.8.2
+      prettier-linter-helpers: 1.0.0
+    dev: true
+
   /eslint-plugin-prettier/4.2.1_iu5s7nk6dw7o3tajefwfiqfmge:
     resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
     engines: {node: '>=12.0.0'}
@@ -11999,22 +12015,6 @@ packages:
       eslint: 8.31.0
       prettier: 2.8.2
       prettier-linter-helpers: 1.0.0
-
-  /eslint-plugin-prettier/4.2.1_l5rdqc4k22455lce6ocqroldia:
-    resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      eslint: '>=7.28.0'
-      eslint-config-prettier: '*'
-      prettier: '>=2.0.0'
-    peerDependenciesMeta:
-      eslint-config-prettier:
-        optional: true
-    dependencies:
-      eslint: 8.30.0
-      prettier: 2.8.1
-      prettier-linter-helpers: 1.0.0
-    dev: true
 
   /eslint-plugin-react-hooks/4.6.0_eslint@8.31.0:
     resolution: {integrity: sha512-oFc7Itz9Qxh2x4gNHStv3BqJq54ExXmfC+a1NjAta66IAN87Wu0R/QArgIS9qKzX3dXKPI9H5crl9QchNMY9+g==}
@@ -13841,6 +13841,12 @@ packages:
       cross-fetch: 3.1.5
     transitivePeerDependencies:
       - encoding
+    dev: true
+
+  /i18next/22.4.6:
+    resolution: {integrity: sha512-9Tm1ezxWyzV+306CIDMBbYBitC1jedQyYuuLtIv7oxjp2ohh8eyxP9xytIf+2bbQfhH784IQKPSYp+Zq9+YSbw==}
+    dependencies:
+      '@babel/runtime': 7.20.6
     dev: true
 
   /i18next/22.4.9:
