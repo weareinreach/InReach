@@ -35,11 +35,11 @@
 		"dayjs": "1.11.7",
 		"embla-carousel-react": "7.0.5",
 		"feather-icons-react": "0.6.2",
-		"i18next": "22.4.8",
+		"i18next": "22.4.9",
 		"next": "13.1.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"react-i18next": "12.1.1"
+		"react-i18next": "12.1.4"
 	},
 	"devDependencies": {
 		"@next/bundle-analyzer": "13.1.1",
