@@ -17,6 +17,7 @@
 		"@trpc/server": "10.8.1",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
+		"cuid": "2.1.8",
 		"superjson": "1.12.1",
 		"zod": "3.20.2"
 	},
