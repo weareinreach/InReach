@@ -6,6 +6,8 @@ scopes:
   - app
   - web
   - aws-user-migrate
+  - api
+  - auth
   - ui
   - db
   - config
