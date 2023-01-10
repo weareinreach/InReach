@@ -16,7 +16,7 @@ import { appCache, appTheme } from '@weareinreach/ui/theme'
 
 import { default as navItems } from '~/data/nav.json'
 import { default as socialMediaLinks } from '~/data/socialMedia.json'
-import { trpc } from '~/utils/trpc'
+import { api } from '~/utils/api'
 
 const fontWorkSans = Work_Sans({ subsets: ['latin'] })
 
@@ -45,4 +45,4 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 	)
 }
 
-export default trpc.withTRPC(appWithTranslation(MyApp))
+export default api.withTRPC(appWithTranslation(MyApp))
