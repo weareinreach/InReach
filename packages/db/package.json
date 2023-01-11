@@ -49,7 +49,7 @@
 		"@types/luxon": "3.2.0",
 		"@types/node": "16.18.11",
 		"@types/recursive-readdir": "2.2.1",
-		"@typescript-eslint/eslint-plugin": "5.48.0",
+		"@typescript-eslint/eslint-plugin": "5.48.1",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"@zerodep/geo.stateiso": "0.1.4",
@@ -60,7 +60,7 @@
 		"dotenv": "16.0.3",
 		"dotenv-cli": "6.0.0",
 		"eslint": "8.31.0",
-		"eslint-import-resolver-typescript": "3.5.2",
+		"eslint-import-resolver-typescript": "3.5.3",
 		"eslint-plugin-codegen": "0.17.0",
 		"eslint-plugin-import": "2.26.0",
 		"eslint-plugin-prettier": "4.2.1",
@@ -71,14 +71,14 @@
 		"iso-3166-2": "1.0.0",
 		"iso-google-locales": "3.0.4",
 		"langs": "2.0.0",
-		"libphonenumber-js": "1.10.17",
+		"libphonenumber-js": "1.10.18",
 		"listr2": "5.0.6",
 		"luxon": "3.2.1",
 		"mongoback": "3.0.3",
 		"prisma": "4.8.1",
 		"prisma-dbml-generator": "0.10.0",
 		"prisma-docs-generator": "0.5.0",
-		"quicktype-core": "7.0.32",
+		"quicktype-core": "7.0.38",
 		"recursive-readdir": "2.2.3",
 		"shoetest": "1.2.1",
 		"slugify": "1.6.5",
@@ -89,7 +89,7 @@
 		"type-fest": "3.5.1",
 		"typescript": "4.9.4",
 		"zod-prisma": "0.5.4",
-		"zod-prisma-types": "1.6.2"
+		"zod-prisma-types": "1.6.3"
 	},
 	"prisma": {
 		"seed": "tsx ./seed/starterData.ts"
