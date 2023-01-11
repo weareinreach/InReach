@@ -4,6 +4,7 @@ export const permissions = [
 	'deleteUserReview',
 	'hideUserReview',
 	'showUserReview',
+	'viewUserReviews',
 ] as const
 
 export type Permission = (typeof permissions)[number]

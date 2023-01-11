@@ -830,10 +830,11 @@ model OrgReview {
   // Store the language of the review text
   // Use session locale value or Google Translate lang detect API
   // Optional: do not store anything if 'comment' is null
-  language       Language? @relation(fields: [langId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  language       Language?          @relation(fields: [langId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   langId         String? /// @zod.string.cuid()
   /// How confident is the API guess?
   langConfidence Float?
+  translatedText TranslatedReview[]
 
   /// From https://perspectiveapi.com/
   toxicity Float?
@@ -855,6 +856,24 @@ model OrgReview {
 
   @@index([organizationId(sort: Asc)])
   @@index([orgServiceId(sort: Asc)])
+}
+
+/// Store machine translations for reviews - save on API calls
+model TranslatedReview {
+  id String @id @default(cuid()) /// @zod.string.cuid()
+
+  review   OrgReview @relation(fields: [reviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  reviewId String
+
+  language   Language @relation(fields: [languageId], references: [id])
+  languageId String
+
+  text String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([reviewId])
 }
 
 /// Additional Properties for Org/Service.
@@ -1204,6 +1223,7 @@ model Language {
   users                User[]
   phones               OrgPhoneLanguage[]
   websites             OrgWebsiteLanguage[]
+  reviewTranslation    TranslatedReview[]
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt

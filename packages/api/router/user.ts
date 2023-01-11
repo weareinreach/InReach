@@ -43,19 +43,6 @@ export const userRouter = defineRouter({
 		})
 		return profile
 	}),
-	getUserReviews: protectedProcedure.query(async ({ ctx }) => {
-		const reviews = await ctx.prisma.orgReview.findMany({
-			where: {
-				userId: ctx.session.user.id,
-			},
-			include: {
-				organization: true,
-				orgLocation: true,
-				orgService: true,
-			},
-		})
-		return reviews
-	}),
 	getPermissions: protectedProcedure.query(async ({ ctx }) => {
 		const permissions = await ctx.prisma.userPermission.findMany({
 			where: {

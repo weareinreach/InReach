@@ -21,4 +21,8 @@ export const permissionData: Prisma.PermissionCreateManyInput[] = [
 		name: 'showUserReview',
 		description: "Show a user's review",
 	},
+	{
+		name: 'viewUserReviews',
+		description: "View another user's reviews",
+	},
 ]
