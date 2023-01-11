@@ -35,6 +35,16 @@ const isAdmin = t.middleware(({ ctx, next }) => {
 		},
 	})
 })
+const isStaff = t.middleware(({ ctx, next }) => {
+	if (!ctx.session || !ctx.session.user) return reject()
+	if (!['dataManager', 'dataAdmin', 'sysadmin', 'system'].includes(ctx.session?.user.role)) return reject()
+
+	return next({
+		ctx: {
+			session: { ...ctx.session, user: ctx.session.user },
+		},
+	})
+})
 
 export const defineRouter = t.router
 
@@ -46,3 +56,6 @@ export const protectedProcedure = t.procedure.use(isAuthed)
 
 /** Admin procedure */
 export const adminProcedure = t.procedure.use(isAdmin)
+
+/** Staff procedure */
+export const staffProcedure = t.procedure.use(isStaff)
