@@ -3,7 +3,7 @@ import { defineRouter, protectedProcedure } from '../lib/trpc'
 import { listId, listIdOrgId, listIdServiceId } from '../schemas/savedLists'
 
 export const savedListRouter = defineRouter({
-	getAllLists: protectedProcedure.query(async ({ ctx }) => {
+	getAll: protectedProcedure.query(async ({ ctx }) => {
 		const lists = await ctx.prisma.userSavedList.findMany({
 			where: {
 				ownedById: ctx.session.user.id,
@@ -20,7 +20,7 @@ export const savedListRouter = defineRouter({
 		})
 		return lists
 	}),
-	getList: protectedProcedure.input(listId).query(async ({ ctx, input }) => {
+	getById: protectedProcedure.input(listId).query(async ({ ctx, input }) => {
 		const list = await ctx.prisma.userSavedList.findFirst({
 			where: {
 				id: input.id,
