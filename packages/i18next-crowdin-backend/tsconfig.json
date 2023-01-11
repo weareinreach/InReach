@@ -1,0 +1,17 @@
+{
+	"extends": "../../tsconfig.json",
+	"exclude": [],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"strictPropertyInitialization": false
+	},
+	"include": [
+		"./next-env.d.ts",
+		"./**/*.ts",
+		"./**/*.tsx",
+		"./**/*.js",
+		"./**/*.jsx",
+		"./**/*.mjs",
+		"./**/*.cjs"
+	]
+}
