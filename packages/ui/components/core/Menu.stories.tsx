@@ -28,23 +28,22 @@ export default {
 // )
 // const Small: ComponentStory<typeof Button> = (args) => <Button {...args} />
 
-const MenuVariant: ComponentStory<typeof Menu> = (args) => (
-	<Menu shadow='md' width={200}>
+const MenuVariant: ComponentStory<typeof Menu> = () => (
+	<Menu>
 		<Menu.Target>
-			<Button>Toggle menu</Button>
+			<Button>Save</Button>
 		</Menu.Target>
 
 		<Menu.Dropdown>
-			<Menu.Label>Application</Menu.Label>
-			<Menu.Item>Settings</Menu.Item>
-
-			<Menu.Divider />
+			<Menu.Item>Create New List</Menu.Item>
+			<Menu.Item>List1</Menu.Item>
+			<Menu.Item>List2</Menu.Item>
 		</Menu.Dropdown>
 	</Menu>
 )
-export const Hello = MenuVariant.bind({})
+export const Save = MenuVariant.bind({})
 
-Hello.args = {
+Save.args = {
 	children: 'Download the app',
 }
 // export const SafetyExitButton = Template.bind({})
