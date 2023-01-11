@@ -1,5 +1,5 @@
-import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~/lib/trpc'
-import { adminCreateUser, createUser, transformUserSurvey, userSurvey } from '~/schemas/user'
+import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '../lib/trpc'
+import { adminCreateUser, createUser, transformUserSurvey, userSurvey } from '../schemas/user'
 
 export const userRouter = defineRouter({
 	create: publicProcedure.input(createUser).mutation(async ({ ctx, input }) => {

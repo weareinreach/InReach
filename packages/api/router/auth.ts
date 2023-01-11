@@ -1,4 +1,4 @@
-import { defineRouter, protectedProcedure, publicProcedure } from '~/lib/trpc'
+import { defineRouter, protectedProcedure, publicProcedure } from '../lib/trpc'
 
 export const authRouter = defineRouter({
 	getSession: publicProcedure.query(({ ctx }) => {

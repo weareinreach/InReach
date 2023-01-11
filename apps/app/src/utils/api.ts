@@ -3,7 +3,7 @@ import { createTRPCNext } from '@trpc/next'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 
 import { type AppRouter } from '@weareinreach/api'
-import { transformer } from '@weareinreach/api/transformer'
+import { transformer } from '@weareinreach/api/lib/transformer'
 
 const getBaseUrl = () => {
 	if (typeof window !== 'undefined') return '' // browser should use relative url
