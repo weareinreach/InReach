@@ -318,6 +318,7 @@ importers:
       eslint-plugin-import: 2.26.0
       eslint-plugin-prettier: 4.2.1
       eslint-plugin-simple-import-sort: 8.0.0
+      nanoid: ^4.0.0
       prisma: 4.8.1
       superjson: 1.12.1
       typescript: 4.9.4
@@ -328,6 +329,7 @@ importers:
       '@weareinreach/auth': link:../auth
       '@weareinreach/db': link:../db
       cuid: 2.1.8
+      nanoid: 4.0.0
       superjson: 1.12.1
       zod: 3.20.2
     devDependencies:
@@ -15953,6 +15955,12 @@ packages:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  /nanoid/4.0.0:
+    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
 
   /nanomatch/1.2.13:
     resolution: {integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==}
