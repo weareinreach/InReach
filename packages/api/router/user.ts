@@ -1,7 +1,7 @@
-import { adminProcedure, protectedProcedure, publicProcedure, router } from '~/lib/trpc'
+import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~/lib/trpc'
 import { adminCreateUser, createUser, transformUserSurvey, userSurvey } from '~/schemas/user'
 
-export const userRouter = router({
+export const userRouter = defineRouter({
 	create: publicProcedure.input(createUser).mutation(async ({ ctx, input }) => {
 		const user = await ctx.prisma.user.create({
 			data: {

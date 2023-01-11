@@ -36,7 +36,7 @@ const isAdmin = t.middleware(({ ctx, next }) => {
 	})
 })
 
-export const router = t.router
+export const defineRouter = t.router
 
 /** Unprotected procedure */
 export const publicProcedure = t.procedure
