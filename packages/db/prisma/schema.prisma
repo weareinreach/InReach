@@ -3,8 +3,8 @@ generator client {
   // clientExtensions causing error
   // previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "multiSchema", "clientExtensions"]
   previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount"]
-
-  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  output          = "./generated/client"
+  binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
 // generator docs {

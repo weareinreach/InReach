@@ -1,6 +1,6 @@
-import { Prisma } from '@prisma/client'
 import slugify from 'slugify'
 
+import { Prisma } from '~/client'
 import { prisma } from '~/index'
 import { genSeedUser, namespaceGen, namespaces, userRoleMap, userTypeMap } from '~/seed/data'
 import { Log, iconList } from '~/seed/lib'

@@ -1,6 +1,6 @@
-import { Prisma } from '@prisma/client'
 import { writeFileSync } from 'fs'
 
+import { Prisma } from '~/client'
 import { queryClient } from '~/seed/migrate-v1/org/clients'
 import { BatchNames } from '~/seed/migrate-v1/org/outData'
 import { ZodInput } from '~/seed/migrate-v1/org/zod'

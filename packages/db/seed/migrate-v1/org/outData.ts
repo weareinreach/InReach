@@ -1,9 +1,9 @@
-import { Prisma } from '@prisma/client'
 import { existsSync, readFileSync, rmSync, writeFileSync } from 'fs'
 import { resolve } from 'path'
 import superjson from 'superjson'
 import invariant from 'tiny-invariant'
 
+import { Prisma } from '~/client'
 import { Log, iconList } from '~/seed/lib'
 import { migrateLog } from '~/seed/logger'
 import { ListrTask } from '~/seed/migrate-v1'

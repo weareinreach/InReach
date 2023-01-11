@@ -1,5 +1,4 @@
-import { Prisma } from '@prisma/client'
-
+import { Prisma } from '~/client'
 import { prisma } from '~/index'
 import { Log, iconList } from '~/seed/lib'
 import { isSuccess } from '~/seed/migrate-v1/org/generator'

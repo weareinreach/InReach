@@ -1,6 +1,6 @@
-import { Prisma } from '@prisma/client'
 import fs from 'fs'
 
+import { Prisma } from '~/client'
 import { CommentsJSONCollection } from '~/datastore/v1/mongodb/output-types/comments'
 import { RatingsJSONCollection } from '~/datastore/v1/mongodb/output-types/ratings'
 import { prisma } from '~/index'

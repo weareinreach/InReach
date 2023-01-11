@@ -1,5 +1,4 @@
-import { Prisma } from '@prisma/client'
-
+import { Prisma } from '~/client'
 import { Log, iconList } from '~/seed/lib'
 
 import { logFile } from '../logger'
