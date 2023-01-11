@@ -14,16 +14,17 @@
 		"cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false",
 		"cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
 		"db:generate": "turbo run db:generate",
+		"dev": "tsx ./lib/devmsg.mts",
 		"dev:all": "turbo run dev --parallel",
 		"dev:app": "turbo run dev --filter=app",
-		"dev:sb": "turbo run dev --filter=ui",
+		"dev:ui": "turbo run dev --filter=ui",
 		"dev:web": "turbo run dev --filter=web",
 		"format": "turbo run format",
 		"lint": "turbo run lint",
 		"lint:fix": "turbo run lint:fix",
 		"lint:pkg": "manypkg check",
 		"lint:staged": "lint-staged",
-		"prepare": "node ./prepare.js",
+		"prepare": "tsx ./lib/prepare.mts",
 		"type-check": "turbo type-check"
 	},
 	"dependencies": {
@@ -37,6 +38,7 @@
 		"@typescript-eslint/eslint-plugin": "5.48.1",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
+		"boxen": "7.0.1",
 		"cypress": "11.2.0",
 		"eslint-config-next": "13.1.1",
 		"eslint-import-resolver-typescript": "3.5.3",
@@ -54,8 +56,12 @@
 		"prettier-plugin-jsdoc": "0.4.2",
 		"prettier-plugin-packagejson": "2.3.0",
 		"prettier-plugin-prisma": "4.8.0",
+		"tsx": "3.12.2",
 		"turbo": "1.7.0",
 		"typescript": "4.9.4"
+	},
+	"devDependencies": {
+		"@types/node": "16.18.11"
 	},
 	"packageManager": "pnpm@7.24.3",
 	"engines": {
