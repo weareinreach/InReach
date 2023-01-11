@@ -15,8 +15,8 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@trpc/client": "10.8.2",
-		"@trpc/server": "10.8.2",
+		"@trpc/client": "10.9.0",
+		"@trpc/server": "10.9.0",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"cuid": "2.1.8",
