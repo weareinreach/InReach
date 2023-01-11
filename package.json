@@ -15,7 +15,7 @@
 		"cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
 		"db:generate": "turbo run db:generate",
 		"dev": "tsx ./lib/devmsg.mts",
-		"dev:all": "turbo run dev --parallel",
+		"dev:all": "turbo run dev",
 		"dev:app": "turbo run dev --filter=app",
 		"dev:ui": "turbo run dev --filter=ui",
 		"dev:web": "turbo run dev --filter=web",
