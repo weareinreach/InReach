@@ -9,7 +9,7 @@ jobs:
       - name: Install PNPM
         run: npm i -g pnpm
       - name: Cypress run
-        uses: cypress-io/github-action@dc9224ac2de4f7e899f14832c39cbede73dec5b2 # v5.0.4
+        uses: cypress-io/github-action@37c511bc322f112c2dd629d3610f4f096bc80096 # v5.0.5
         with:
           command: npm run cypress:run:steps
           record: true
