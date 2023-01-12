@@ -1,8 +1,8 @@
-import { Prisma } from '@prisma/client'
 import cuid from 'cuid'
 import iso3166 from 'iso-3166-2'
 import invariant from 'tiny-invariant'
 
+import { Prisma } from '~/client'
 import { prisma } from '~/index'
 import {
 	geoCountryData,

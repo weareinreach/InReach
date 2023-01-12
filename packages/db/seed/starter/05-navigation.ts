@@ -1,5 +1,4 @@
-import { Prisma } from '@prisma/client'
-
+import { Prisma } from '~/client'
 import { prisma } from '~/index'
 import { namespaces, navigation } from '~/seed/data'
 import { Log, iconList } from '~/seed/lib'

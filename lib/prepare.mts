@@ -1,4 +1,6 @@
+import husky from 'husky'
+
 var isCi = process.env.CI !== undefined
 if (!isCi) {
-	require('husky').install()
+	husky.install()
 }

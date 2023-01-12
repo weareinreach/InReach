@@ -1,7 +1,7 @@
-import { Prisma } from '@prisma/client'
 import ISO6391 from 'iso-google-locales'
 import * as langSupp from 'langs'
 
+import { Prisma } from '~/client'
 import { Log, iconList } from '~/seed/lib'
 import { logFile } from '~/seed/logger'
 import { ListrTask } from '~/seed/starterData'

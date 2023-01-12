@@ -1,4 +1,3 @@
-import { SourceType } from '@prisma/client'
 import cuid from 'cuid'
 import { flatten } from 'flat'
 import fs from 'fs'
@@ -8,6 +7,7 @@ import path from 'path'
 import superjson from 'superjson'
 import invariant from 'tiny-invariant'
 
+import { SourceType } from '~/client'
 import { dayMap, hoursMap, hoursMeta } from '~/datastore/v1/helpers/hours'
 import { OrganizationsJSONCollection } from '~/datastore/v1/mongodb/output-types/organizations'
 import { prisma } from '~/index'

@@ -1,11 +1,6 @@
 {
 	"$schema": "https://turborepo.org/schema.json",
 	"pipeline": {
-		"build": {
-			"dependsOn": ["^build"],
-			"env": ["NODE_ENV"],
-			"outputs": ["dist/**", ".next/**", "storybook-static/**"]
-		},
 		"@weareinreach/app#build": {
 			"dependsOn": ["^build", "^db:generate"],
 			"env": [
@@ -21,6 +16,9 @@
 				"AWS_REGION"
 			]
 		},
+		"@weareinreach/ui#build": {
+			"outputs": ["storybook-static/**"]
+		},
 		"@weareinreach/web#build": {
 			"dependsOn": ["^build"],
 			"env": [
@@ -32,44 +30,57 @@
 				"NEXT_PUBLIC_WEB_SENTRY_DSN"
 			]
 		},
-		"@weareinreach/ui#build": {
-			"outputs": ["storybook-static/**"]
+		"//#clean": {
+			"cache": false
+		},
+		"build": {
+			"dependsOn": ["^build"],
+			"env": ["NODE_ENV"],
+			"outputs": ["dist/**", ".next/**", "storybook-static/**"]
+		},
+		"build:aws": {
+			"dependsOn": ["^db:generate"],
+			"outputs": ["dist/**"]
 		},
 		"chromatic": {
 			"dependsOn": ["build"],
 			"env": ["CHROMATIC_PROJECT_TOKEN"]
 		},
-		"clean": { "cache": false },
-		"//#clean": {
+		"clean": {
+			"cache": false
+		},
+		"clean:node": {
 			"cache": false
 		},
 		"db:generate": {
 			"inputs": ["prisma/schema.prisma"],
-			"cache": false
-		},
-		"dev": {
-			"cache": false
-		},
-		"format": {},
-		"lint": {
-			"outputs": [".next/cache/eslint/**"]
-		},
-		"lint:fix": {
-			"outputs": [".next/cache/eslint/**"]
-		},
-		"post-install": {},
-		"build:aws": {
-			"dependsOn": ["^db:generate"],
-			"outputs": ["dist/**"]
+			"outputs": ["prisma/generated/**", "zod-schemas/**"]
 		},
 		"db:generate:aws": {
-			"inputs": ["prisma/schema.prisma"],
-			"cache": false
+			"cache": false,
+			"inputs": ["prisma/schema.prisma"]
 		},
-		"clean:node": { "cache": false },
-		"type-check": {
+		"dev": {
+			"cache": false,
 			"dependsOn": ["^db:generate"],
-			"cache": false
+			"persistent": true
+		},
+		"format": {
+			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"],
+			"outputs": ["node_modules/.cache/prettier/.prettier-cache"]
+		},
+		"lint": {
+			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"],
+			"outputs": [".next/cache/eslint/**", ".eslintcache"]
+		},
+		"lint:fix": {
+			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"],
+			"outputs": [".next/cache/eslint/**", ".eslintcache"]
+		},
+		"post-install": {},
+		"type-check": {
+			"cache": false,
+			"dependsOn": ["^db:generate"]
 		}
 	}
 }

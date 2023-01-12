@@ -31,8 +31,7 @@ import {
 	TranslationKey,
 	UserPermission,
 	UserToOrganization,
-} from '@prisma/client'
-
+} from '~/client'
 import { BatchNames } from '~/seed/migrate-v1/org/outData'
 import { ZodFindMany, ZodInputs } from '~/seed/migrate-v1/org/zod'
 

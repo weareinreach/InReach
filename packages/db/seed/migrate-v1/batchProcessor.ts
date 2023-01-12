@@ -1,5 +1,4 @@
-import { PrismaPromise } from '@prisma/client'
-
+import { PrismaPromise } from '~/client'
 import { prisma } from '~/index'
 import { migrateLog } from '~/seed/logger'
 import { ListrTask } from '~/seed/migrate-v1'

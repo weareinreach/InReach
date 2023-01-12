@@ -1,6 +1,7 @@
-import { Prisma } from '@prisma/client'
 import slugify from 'slugify'
 import invariant from 'tiny-invariant'
+
+import { Prisma } from '~/client'
 
 import { namespaces } from './00-namespaces'
 

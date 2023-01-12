@@ -1,6 +1,6 @@
-import { Prisma } from '@prisma/client'
 import cuid from 'cuid'
 
+import { Prisma } from '~/client'
 import { prisma } from '~/index'
 import { keySlug, namespaces, socialMediaLinks } from '~/seed/data'
 import { Log, iconList } from '~/seed/lib'
