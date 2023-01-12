@@ -368,6 +368,7 @@ model UserSavedList {
   //@@schema("user")
 
   @@index([ownedById])
+  @@index([sharedLinkKey])
 }
 
 /// List visiblity

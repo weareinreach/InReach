@@ -58,7 +58,20 @@ export const savedListRouter = defineRouter({
 		return result
 	}),
 	shareUrl: protectedProcedure.input(listId).mutation(async ({ ctx, input }) => {
-		const urlSlug = nanoUrl()
+		const generateUniqueSlug = async (): Promise<string> => {
+			const slug = nanoUrl()
+			const response = await ctx.prisma.userSavedList.findUnique({
+				where: {
+					sharedLinkKey: slug,
+				},
+			})
+			if (response) {
+				return generateUniqueSlug()
+			}
+			return slug
+		}
+		const urlSlug = await generateUniqueSlug()
+
 		const sharedUrl = await ctx.prisma.userSavedList.update({
 			where: input,
 			data: {
