@@ -319,6 +319,8 @@ importers:
       eslint-plugin-import: 2.26.0
       eslint-plugin-prettier: 4.2.1
       eslint-plugin-simple-import-sort: 8.0.0
+      just-diff: ^5.2.0
+      just-remove: ^3.2.0
       nanoid: ^4.0.0
       prisma: 4.8.1
       superjson: 1.12.1
@@ -331,6 +333,8 @@ importers:
       '@weareinreach/auth': link:../auth
       '@weareinreach/db': link:../db
       cuid: 2.1.8
+      just-diff: 5.2.0
+      just-remove: 3.2.0
       nanoid: 4.0.0
       superjson: 1.12.1
       tiny-invariant: 1.3.1
@@ -14726,6 +14730,14 @@ packages:
     resolution: {integrity: sha512-pBxcB3LFc8QVgdggvZWyeys+hnrNWg4OcZIU/1X59k5jQdLBlCsYGRQaz234SqoRLTCgMH00fY0xRJH+F9METQ==}
     engines: {node: '>=8'}
     dev: true
+
+  /just-diff/5.2.0:
+    resolution: {integrity: sha512-6ufhP9SHjb7jibNFrNxyFZ6od3g+An6Ai9mhGRvcYe8UJlH0prseN64M+6ZBBUoKYHZsitDP42gAJ8+eVWr3lw==}
+    dev: false
+
+  /just-remove/3.2.0:
+    resolution: {integrity: sha512-gR3EOFIkZapF3g0K4IRRqH4lM+czJEfaOFgrwZl5vNfVUeJqfke9/L67Mf3CgnT3j2HM46C+mdCRvqaCD77Nqg==}
+    dev: false
 
   /keyv/3.1.0:
     resolution: {integrity: sha512-9ykJ/46SN/9KPM/sichzQ7OvXyGDYKGTaDlKMGCAlg2UK8KRy4jb0d8sFc+0Tt0YYnThq8X2RZgCg74RPxgcVA==}

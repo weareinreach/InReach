@@ -2,7 +2,7 @@ generator client {
   provider        = "prisma-client-js"
   // clientExtensions causing error
   // previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "multiSchema", "clientExtensions"]
-  previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount"]
+  previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "extendedWhereUnique"]
   output          = "./generated/client"
   binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
@@ -351,13 +351,12 @@ model UserCommunity {
 
 /// User's list(s) of saved resources.
 model UserSavedList {
-  id            String                  @id @default(cuid()) /// @zod.string.cuid()
+  id            String              @id @default(cuid()) /// @zod.string.cuid()
   name          String
   organizations SavedOrganization[]
   services      SavedService[]
-  visibility    UserSavedListVisibility @default(PRIVATE)
   sharedWith    ListSharedWith[]
-  sharedLinkKey String?                 @unique
+  sharedLinkKey String?             @unique
 
   ownedBy   User   @relation(fields: [ownedById], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ownedById String /// @zod.string.cuid()
@@ -369,16 +368,6 @@ model UserSavedList {
 
   @@index([ownedById])
   @@index([sharedLinkKey])
-}
-
-/// List visiblity
-enum UserSavedListVisibility {
-  PRIVATE
-  SHARED_USER
-  SHARED_LINK
-  PUBLIC
-
-  //@@schema("system")
 }
 
 model UserMail {

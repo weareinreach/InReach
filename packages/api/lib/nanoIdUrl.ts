@@ -2,4 +2,6 @@ import { customAlphabet } from 'nanoid'
 
 const alphaChoices = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 
-export const nanoUrl = customAlphabet(alphaChoices, 10)
+export const slugSize = 10
+
+export const nanoUrl = customAlphabet(alphaChoices, slugSize)
