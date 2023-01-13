@@ -20,6 +20,9 @@ on:
         required: true
 jobs:
   chromatic-deployment:
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -48,13 +51,13 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+        # 👇 Runs pnpm in ./packages/ui
       - name: Install dependencies
         run: pnpm install
         working-directory: packages/ui
-        # 👇 Runs yarn in ./packages/ui
+        # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
         uses: chromaui/action@2440d35eb4edc5bb5bd74f08627006e29c7add22 # v1
         with:
-          # 👇 Runs Chromatic CLI in ./packages/ui
           workingDir: packages/ui
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
