@@ -51,7 +51,7 @@
 		"embla-carousel-react": "7.0.5",
 		"feather-icons-react": "0.6.2",
 		"i18next": "22.4.9",
-		"next": "13.1.1",
+		"next": "13.1.2",
 		"next-auth": "4.18.8",
 		"next-i18next": "13.0.3",
 		"react": "18.2.0",
@@ -60,8 +60,8 @@
 		"zod": "3.20.2"
 	},
 	"devDependencies": {
-		"@next/bundle-analyzer": "13.1.1",
-		"@next/font": "13.1.1",
+		"@next/bundle-analyzer": "13.1.2",
+		"@next/font": "13.1.2",
 		"@types/flat": "5.0.2",
 		"@types/node": "16.18.11",
 		"@types/react": "18.0.26",
@@ -73,7 +73,7 @@
 		"commander": "9.5.0",
 		"dotenv": "16.0.3",
 		"eslint": "8.31.0",
-		"eslint-config-next": "13.1.1",
+		"eslint-config-next": "13.1.2",
 		"eslint-import-resolver-typescript": "3.5.3",
 		"eslint-plugin-codegen": "0.17.0",
 		"eslint-plugin-i18next": "6.0.0-6",
