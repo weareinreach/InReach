@@ -61,6 +61,7 @@ importers:
       '@next/eslint-plugin-next': 13.1.2
       '@trivago/prettier-plugin-sort-imports': 4.0.0_bpy7jqxzjipbm7yazmajhmq2fa
       '@types/eslint': 8.4.10
+      '@types/node': 16.18.11
       '@types/prettier': 2.7.2
       '@typescript-eslint/eslint-plugin': 5.48.1_3jon24igvnqaqexgwtxk6nkpse
       '@weareinreach/config': link:packages/config
@@ -86,8 +87,6 @@ importers:
       tsx: 3.12.2
       turbo: 1.7.0
       typescript: 4.9.4
-    devDependencies:
-      '@types/node': 16.18.11
 
   apps/app:
     specifiers:
@@ -7499,7 +7498,6 @@ packages:
 
   /@types/node/16.18.11:
     resolution: {integrity: sha512-3oJbGBUWuS6ahSnEq1eN2XrCyf4YsWI8OyCvo7c64zQJNplk3mO84t53o8lfTk+2ji59g5ycfc6qQ3fdHliHuA==}
-    dev: true
 
   /@types/node/18.11.17:
     resolution: {integrity: sha512-HJSUJmni4BeDHhfzn6nF0sVmd1SMezP7/4F0Lq+aXzmp2xm9O7WXrUtHW/CHlYVtZUbByEvWidHqRtcJXGF2Ng==}
