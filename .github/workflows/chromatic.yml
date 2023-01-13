@@ -8,8 +8,6 @@ on:
       - ready_for_review
     paths:
       - 'packages/ui/**'
-    branches-ignore:
-      - 'l10n_*'
   workflow_dispatch:
     inputs:
       sha:
@@ -23,6 +21,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      CI: true
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -61,3 +60,6 @@ jobs:
         with:
           workingDir: packages/ui
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: sb:build
+          onlyChanged: true
+          skip: '@(renovate/**|l10_**)'
