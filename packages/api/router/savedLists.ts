@@ -90,10 +90,20 @@ export const savedListRouter = defineRouter({
 	}),
 	/** Delete list by id for current logged in user */
 	delete: protectedProcedure.input(id).mutation(async ({ ctx, input }) => {
-		const result = await ctx.prisma.userSavedList.delete({
+		const list = await ctx.prisma.userSavedList.findFirst({
 			where: {
 				id: input.id,
 				ownedById: ctx.session.user.id,
+			},
+		})
+
+		if (!list) {
+			throw new TRPCError({ code: 'UNAUTHORIZED', message: 'List does not belong to user' })
+		}
+
+		const result = await ctx.prisma.userSavedList.delete({
+			where: {
+				id: input.id,
 			},
 		})
 		return result
