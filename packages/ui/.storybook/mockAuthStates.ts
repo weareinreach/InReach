@@ -1,5 +1,18 @@
 import { faker } from '@faker-js/faker'
 
+import { Session } from '@weareinreach/auth'
+
+interface MockAuthStates {
+	[state: string]: {
+		title: string
+		session: MockSession | null
+	}
+}
+interface MockSession {
+	data: Session | null
+	status: 'loading' | 'authenticated' | 'unauthenticated'
+}
+
 const states = {
 	unknown: {
 		title: 'session unknown',
@@ -17,13 +30,14 @@ const states = {
 		session: {
 			data: {
 				user: {
-					id: 1,
+					id: 'clcuqtira000108l25jzp4ybq',
 					role: 'admin',
-					roles: ['admin', 'user'],
+					permissions: ['admin', 'user'],
 					name: 'Administrator',
 					email: 'admin@local',
 					image: faker.image.avatar(),
 				},
+				expires: '',
 			},
 			status: 'unauthenticated',
 		},
@@ -33,12 +47,13 @@ const states = {
 		session: {
 			data: {
 				user: {
-					id: 1,
+					id: 'clcuqtira000108l25jzp4ybq',
 					role: 'admin',
-					roles: ['admin', 'user'],
+					permissions: ['admin', 'user'],
 					name: 'Administrator',
 					email: 'admin@local',
 				},
+				expires: '',
 			},
 			status: 'authenticated',
 		},
@@ -48,14 +63,14 @@ const states = {
 		session: {
 			data: {
 				user: {
-					id: 999,
-					login: 'user',
+					id: 'clcuqtvi0000208l29g307pvd',
 					role: 'user',
-					roles: ['user'],
+					permissions: ['user'],
 					name: faker.name.fullName(),
 					email: 'user@local',
 					image: faker.image.avatar(),
 				},
+				expires: '',
 			},
 			status: 'unauthenticated',
 		},
@@ -65,14 +80,14 @@ const states = {
 		session: {
 			data: {
 				user: {
-					id: 999,
-					login: 'user',
+					id: 'clcuqtvi0000208l29g307pvd',
 					role: 'user',
-					roles: ['user'],
+					permissions: ['user'],
 					name: faker.name.fullName(),
 					email: 'user@local',
 					image: faker.image.avatar(),
 				},
+				expires: '',
 			},
 			status: 'authenticated',
 		},
@@ -82,13 +97,13 @@ const states = {
 		session: {
 			data: {
 				user: {
-					id: 999,
-					login: 'user',
+					id: 'clcuqtvi0000208l29g307pvd',
 					role: 'user',
-					roles: ['user'],
+					permissions: ['user'],
 					name: faker.name.fullName(),
 					email: 'user@local',
 				},
+				expires: '',
 			},
 			status: 'unauthenticated',
 		},
@@ -98,16 +113,17 @@ const states = {
 		session: {
 			data: {
 				user: {
-					id: 999,
-					login: 'user',
+					id: 'clcuqtvi0000208l29g307pvd',
 					role: 'user',
-					roles: ['user'],
+					permissions: ['user'],
 					name: faker.name.fullName(),
 					email: 'user@local',
 				},
+				expires: '',
 			},
 			status: 'authenticated',
 		},
 	},
-}
+} satisfies MockAuthStates
+
 export default states

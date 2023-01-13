@@ -2,7 +2,8 @@
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"esModuleInterop": true,
-		"typeRoots": ["./types"]
+		"typeRoots": ["./types"],
+		"baseUrl": "."
 	},
 	"include": ["./**/*.ts", "./**/*.tsx", ".storybook/*.ts", ".storybook/preview.tsx"]
 }
