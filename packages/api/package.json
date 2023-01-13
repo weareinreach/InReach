@@ -13,8 +13,8 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@trpc/client": "10.8.2",
-		"@trpc/server": "10.8.2",
+		"@trpc/client": "10.9.0",
+		"@trpc/server": "10.9.0",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"superjson": "1.12.1",
@@ -28,7 +28,7 @@
 		"eslint": "8.31.0",
 		"eslint-import-resolver-typescript": "3.5.3",
 		"eslint-plugin-codegen": "0.17.0",
-		"eslint-plugin-import": "2.26.0",
+		"eslint-plugin-import": "2.27.4",
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-simple-import-sort": "8.0.0",
 		"typescript": "4.9.4"
