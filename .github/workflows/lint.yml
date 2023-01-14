@@ -23,6 +23,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     name: 'Lint & format'
     needs: pre_job
     if: needs.pre_job.outputs.should_skip != 'true'
@@ -80,3 +81,6 @@ jobs:
           commit_message: 'chore: lint & format'
           skip_fetch: true
           skip_checkout: true
+          commit_options: '--signoff'
+          commit_user_name: InReach-svc
+          commit_user_email: InReach-svc@users.noreply.github.com
