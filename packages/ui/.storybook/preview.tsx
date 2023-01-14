@@ -1,10 +1,12 @@
-import { MantineProvider } from '@mantine/core'
+import { MantineProvider, MantineProviderProps } from '@mantine/core'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { themes } from '@storybook/theming'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
+import { ReactNode } from 'react'
 
 import { i18n, i18nLocales } from './i18next'
 import { storybookTheme } from '../theme'
+
 import './font.css'
 
 export const parameters = {
@@ -20,7 +22,6 @@ export const parameters = {
 		Provider: RouterContext.Provider,
 	},
 	darkMode: {
-		current: 'light',
 		dark: { ...themes.dark },
 		light: { ...themes.light },
 	},
@@ -32,7 +33,7 @@ export const parameters = {
 	},
 }
 
-const mantineProviderProps = {
+const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
 	withCSSVariables: false,
 	withGlobalStyles: true,
 	withNormalizeCSS: false,
@@ -46,5 +47,4 @@ const ThemeWrapper = (props: { children: React.ReactNode }) => {
 	)
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const decorators = [(renderStory: Function) => <ThemeWrapper>{renderStory()}</ThemeWrapper>]
+export const decorators = [(renderStory: () => ReactNode) => <ThemeWrapper>{renderStory()}</ThemeWrapper>]

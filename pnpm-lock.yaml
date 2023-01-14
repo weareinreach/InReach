@@ -632,6 +632,7 @@ importers:
       '@storybook/addon-links': 6.5.15
       '@storybook/addon-viewport': 6.5.15
       '@storybook/builder-webpack5': 6.5.15
+      '@storybook/core-common': 6.5.15
       '@storybook/manager-webpack5': 6.5.15
       '@storybook/react': 6.5.15
       '@storybook/testing-library': 0.0.13
@@ -680,6 +681,7 @@ importers:
       slugify: 1.6.5
       storybook-addon-designs: 6.3.1
       storybook-addon-next: 1.7.1
+      storybook-addon-pseudo-states: 1.15.2
       storybook-addon-swc: 1.1.9
       storybook-dark-mode: 2.0.5
       storybook-mobile: 1.0.0
@@ -719,6 +721,7 @@ importers:
       '@storybook/addon-links': 6.5.15_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-viewport': 6.5.15_biqbaboplfbrettd7655fr4n2y
       '@storybook/builder-webpack5': 6.5.15_uha7dmp3qdr4zpfjg4z74d2mgi
+      '@storybook/core-common': 6.5.15_ezwbcwsuf2bqvxzlg3s7mwruqi
       '@storybook/manager-webpack5': 6.5.15_uha7dmp3qdr4zpfjg4z74d2mgi
       '@storybook/react': 6.5.15_4sh7452l4dmq7vv36sscdvxboy
       '@storybook/testing-library': 0.0.13_biqbaboplfbrettd7655fr4n2y
@@ -767,6 +770,7 @@ importers:
       slugify: 1.6.5
       storybook-addon-designs: 6.3.1_react@18.2.0
       storybook-addon-next: 1.7.1_pyjyh5lgn3hyeow7zynizwub4a
+      storybook-addon-pseudo-states: 1.15.2_pmt6gdvpkbsejpsyufhkfrbkda
       storybook-addon-swc: 1.1.9_webpack@5.75.0
       storybook-dark-mode: 2.0.5_biqbaboplfbrettd7655fr4n2y
       storybook-mobile: 1.0.0_pumtretovylab5lwhztzjp2kuy
@@ -18101,6 +18105,31 @@ packages:
       - sass
       - sass-embedded
       - webpack
+    dev: true
+
+  /storybook-addon-pseudo-states/1.15.2_pmt6gdvpkbsejpsyufhkfrbkda:
+    resolution: {integrity: sha512-YMjzct/747PyCfzAD2469283gbBSdK3pMfuPg4nq5ZtPzfDAkaiGlxPnXNL9dMA2Bo1PLgNJ3f9u2Kh1OfuPlw==}
+    peerDependencies:
+      '@storybook/addons': ^6.5.0
+      '@storybook/api': ^6.5.0
+      '@storybook/components': ^6.5.0
+      '@storybook/core-events': ^6.5.0
+      '@storybook/theming': ^6.5.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      '@storybook/addons': 6.5.15_biqbaboplfbrettd7655fr4n2y
+      '@storybook/api': 6.5.15_biqbaboplfbrettd7655fr4n2y
+      '@storybook/components': 6.5.15_biqbaboplfbrettd7655fr4n2y
+      '@storybook/core-events': 6.5.15
+      '@storybook/theming': 6.5.15_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: true
 
   /storybook-addon-swc/1.1.9_webpack@5.75.0:

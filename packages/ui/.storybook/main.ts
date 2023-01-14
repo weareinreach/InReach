@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { type StorybookConfig } from '@storybook/core-common'
+
 import * as path from 'path'
 
 const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
 
-const config = {
+const config: StorybookConfig = {
 	stories: [`../components/**/${filePattern}`, `../layout/**/${filePattern}`],
 	staticDirs: ['../../../apps/app/public'],
 	addons: [
@@ -16,6 +18,7 @@ const config = {
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
 		'storybook-addon-next',
+		'storybook-addon-pseudo-states',
 		'storybook-addon-swc',
 		'storybook-dark-mode',
 		'storybook-mobile',
@@ -27,22 +30,29 @@ const config = {
 	},
 	features: { storyStoreV7: true },
 	typescript: {
-		check: false,
+		check: true,
 		checkOptions: {},
 		reactDocgen: 'react-docgen-typescript',
 		reactDocgenTypescriptOptions: {
 			shouldExtractLiteralValuesFromEnum: true,
+			shouldExtractValuesFromUnion: true,
+			shouldRemoveUndefinedFromOptional: true,
 			// propFilter: (prop: Record<string, any>) =>
 			// 	prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
 		},
 	},
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	webpackFinal: (config: Record<string, any>) => {
+
+	webpackFinal: (config) => {
 		/** Next-Auth session mock */
-		// eslint-disable-next-line @typescript-eslint/no-extra-semi
-		;(config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] =
-			path.resolve(__dirname, 'mockAuthStates.ts')),
-			(config.resolve.alias['next-i18next'] = 'react-i18next')
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] = path.resolve(
+			__dirname,
+			'mockAuthStates.ts'
+		)
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		config.resolve.alias['next-i18next'] = 'react-i18next'
 		/**
 		 * Fixes font import with /
 		 *
@@ -86,6 +96,8 @@ const config = {
 		 * 	events: boolean
 		 * }}
 		 */
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
 		config.resolve.fallback = {
 			fs: false,
 			assert: false,
@@ -112,6 +124,7 @@ const config = {
 			vm: false,
 			zlib: false,
 		}
+
 		return config
 	},
 }
