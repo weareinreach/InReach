@@ -16,9 +16,6 @@
 				"AWS_REGION"
 			]
 		},
-		"@weareinreach/ui#build": {
-			"outputs": ["storybook-static/**"]
-		},
 		"@weareinreach/web#build": {
 			"dependsOn": ["^build"],
 			"env": [
