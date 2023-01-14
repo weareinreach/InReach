@@ -1,6 +1,5 @@
-import { merge } from 'merge-anything'
-
 import { ButtonStylesParams, MantineThemeOverride } from '@mantine/core'
+import { merge } from 'merge-anything'
 
 import { customColors } from './colors'
 import { buttonVariants } from './functions'
