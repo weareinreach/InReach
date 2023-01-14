@@ -14,16 +14,17 @@
 		"cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false",
 		"cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
 		"db:generate": "turbo run db:generate",
-		"dev:all": "turbo run dev --parallel",
+		"dev": "tsx ./lib/devmsg.mts",
+		"dev:all": "turbo run dev",
 		"dev:app": "turbo run dev --filter=app",
-		"dev:sb": "turbo run dev --filter=ui",
+		"dev:ui": "turbo run dev --filter=ui",
 		"dev:web": "turbo run dev --filter=web",
 		"format": "turbo run format",
 		"lint": "turbo run lint",
 		"lint:fix": "turbo run lint:fix",
 		"lint:pkg": "manypkg check",
 		"lint:staged": "lint-staged",
-		"prepare": "node ./prepare.js",
+		"prepare": "tsx ./lib/prepare.mts",
 		"type-check": "turbo type-check"
 	},
 	"dependencies": {
@@ -31,12 +32,13 @@
 		"@changesets/cli": "2.26.0",
 		"@manypkg/cli": "0.19.2",
 		"@next/eslint-plugin-next": "13.1.2",
-		"@trivago/prettier-plugin-sort-imports": "4.0.0",
 		"@types/eslint": "8.4.10",
+		"@types/node": "16.18.11",
 		"@types/prettier": "2.7.2",
 		"@typescript-eslint/eslint-plugin": "5.48.1",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
+		"boxen": "7.0.1",
 		"cypress": "11.2.0",
 		"eslint-config-next": "13.1.2",
 		"eslint-import-resolver-typescript": "3.5.3",
@@ -54,6 +56,7 @@
 		"prettier-plugin-jsdoc": "0.4.2",
 		"prettier-plugin-packagejson": "2.3.0",
 		"prettier-plugin-prisma": "4.8.0",
+		"tsx": "3.12.2",
 		"turbo": "1.7.0",
 		"typescript": "4.9.4"
 	},
@@ -108,7 +111,15 @@
 			"node-fetch@<2.6.1": ">=2.6.1",
 			"undici@<=5.8.1": ">=5.8.2",
 			"undici@<5.8.0": ">=5.8.0",
-			"node-fetch@<2.6.7": ">=2.6.7"
+			"node-fetch@<2.6.7": ">=2.6.7",
+			"@storybook/react-docgen-typescript-plugin@1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0": "npm:react-docgen-typescript-plugin@1.0.2",
+			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
+			"uuid": ">=9.0.0",
+			"sane": ">=5.0.0",
+			"chokidar": ">=3.0.0",
+			"micromatch": ">=4.0.0",
+			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
+			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.4.14"
 		}
 	}
 }

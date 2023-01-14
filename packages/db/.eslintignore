@@ -1,1 +1,2 @@
 datastore/**/*
+prisma/generated/**/*

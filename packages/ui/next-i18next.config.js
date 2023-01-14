@@ -1,5 +1,5 @@
 // @ts-check
-
+/* eslint-disable import/no-unused-modules */
 /**
  * @template {import('next-i18next').UserConfig} T
  * @param {T} config

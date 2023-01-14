@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unused-modules */
 /**
  * @template {import('next').NextConfig} T
  * @param {T} nextConfig - A generic parameter that flows through to the return type
