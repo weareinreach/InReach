@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unused-modules */
 import { DefaultSession } from 'next-auth'
 
 /**
@@ -7,12 +8,14 @@ import { DefaultSession } from 'next-auth'
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 
+type CustomUser = {
+	id: string
+	role: string
+	permissions: string[]
+}
+
 declare module 'next-auth' {
-	interface Session extends DefaultSession {
-		user: {
-			id: string
-			role: string
-			permissions: string[]
-		} & DefaultSession['user']
+	export interface Session extends DefaultSession {
+		user: CustomUser & DefaultSession['user']
 	}
 }
