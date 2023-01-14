@@ -1,9 +1,7 @@
 import { Icon } from '@iconify/react'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
-
-import React from 'react'
-
 import { Button, Center, Menu } from '@mantine/core'
+import { ComponentMeta, ComponentStory } from '@storybook/react'
+import React from 'react'
 
 export default {
 	title: 'Core/Menu',
