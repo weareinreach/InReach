@@ -1,6 +1,7 @@
+import { DateTime } from 'luxon'
+
 import { Console } from 'console'
 import fs from 'fs'
-import { DateTime } from 'luxon'
 
 const date = DateTime.now()
 

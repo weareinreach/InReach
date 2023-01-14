@@ -1,9 +1,9 @@
 import slugify from 'slugify'
 import invariant from 'tiny-invariant'
 
-import { Prisma } from '~/client'
-
 import { namespaces } from './00-namespaces'
+
+import { Prisma, Prisma } from '~/client'
 
 export const userEmail = 'inreach_svc@inreach.org'
 export const localeCode = 'en'
@@ -23,6 +23,7 @@ export const genSeedUser = () => {
 		userTypeId,
 		name: 'System User',
 	}
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	return data
 }
 

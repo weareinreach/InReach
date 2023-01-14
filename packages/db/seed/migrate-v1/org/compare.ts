@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { writeFileSync } from 'fs'
 
 import { Prisma } from '~/client'
@@ -98,7 +101,7 @@ export const compare: Compare = async (tx, input, batchName: BatchNames) => {
 		case 'userPermission':
 		case 'organizationPermission': {
 			const inData = input as ZodInput<typeof batchName>[]
-			const where = { userId: { in: inData.map((item) => item.userId as string) } }
+			const where = { userId: { in: inData.map((item) => item.userId) } }
 			const results = await queryClient[batchName](tx, { where, select: { userId: true } })
 			const flatResults = results.map((x) => x.userId)
 			const diff = inData.filter((item) => !flatResults.includes(item.userId))

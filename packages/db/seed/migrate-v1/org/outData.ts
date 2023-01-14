@@ -1,7 +1,8 @@
-import { existsSync, readFileSync, rmSync, writeFileSync } from 'fs'
-import { resolve } from 'path'
 import superjson from 'superjson'
 import invariant from 'tiny-invariant'
+
+import { existsSync, readFileSync, rmSync, writeFileSync } from 'fs'
+import { resolve } from 'path'
 
 import { Prisma } from '~/client'
 import { Log, iconList } from '~/seed/lib'

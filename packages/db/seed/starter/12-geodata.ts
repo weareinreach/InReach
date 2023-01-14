@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import cuid from 'cuid'
 import iso3166 from 'iso-3166-2'
 import invariant from 'tiny-invariant'
@@ -34,7 +39,7 @@ type DistrictTypes = (typeof districtTypes)[number]['one']
 const govDist = new Map<DistrictTypes, string>()
 const countryMap = new Map<string, string>()
 
-const keyGen = async (text: string, prefix?: string, suffix?: string) => {
+const keyGen = (text: string, prefix?: string, suffix?: string) => {
 	const slugText = `${prefix ?? ''} ${text} ${suffix ?? ''}`
 	const key = keySlug(slugText.trim())
 
@@ -203,7 +208,7 @@ const countryUS = async (task: ListrTask) => {
 			invariant(govDistTypeId, `${isoType.toLowerCase()}`)
 
 			const slug = keySlug(`US-${state.name}`)
-			const { key: tsKey, ns: tsNs } = await keyGen(name, 'us')
+			const { key: tsKey, ns: tsNs } = keyGen(name, 'us')
 			const stateId = distIdMap.get(slug) ?? cuid()
 
 			if (keySet.has(tsKey)) throw new Error('duplicate key', { cause: state })
@@ -245,11 +250,7 @@ const countryUS = async (task: ListrTask) => {
 				const distType = govDist.get(geoType(LSAD))
 				invariant(distType, 'Unknown district type')
 				const slug = keySlug(`us-${state.name}-${countyName}-${geoType(LSAD)}`)
-				const {
-					key: tsKey,
-					ns: tsNs,
-					text: tsText,
-				} = await keyGen(countyName, `us-${state.name}`, geoType(LSAD))
+				const { key: tsKey, ns: tsNs, text: tsText } = keyGen(countyName, `us-${state.name}`, geoType(LSAD))
 
 				if (keySet.has(tsKey)) throw new Error('duplicate key', { cause: county })
 
@@ -353,7 +354,7 @@ const countryCA = async (task: ListrTask) => {
 		const govDistTypeId = govDist.get(isoType.toLowerCase())
 		invariant(govDistTypeId, 'Unknown district type')
 		const slug = keySlug(`CA-${province.name}`)
-		const { key, ns, text } = await keyGen(name, 'ca')
+		const { key, ns, text } = keyGen(name, 'ca')
 
 		const provId = distIdMap.get(slug) ?? cuid()
 
@@ -436,7 +437,7 @@ const countryMX = async (task: ListrTask) => {
 		invariant(govDistTypeId, 'Unknown district type')
 
 		const slug = keySlug(`MX-${state.name}`)
-		const { key, ns, text } = await keyGen(name, 'mx')
+		const { key, ns, text } = keyGen(name, 'mx')
 
 		const stateId = distIdMap.get(slug) ?? cuid()
 
@@ -514,7 +515,7 @@ const countiesPR = async (task: ListrTask) => {
 		invariant(govDistTypeId, 'Unknown district type')
 
 		const slug = keySlug(`PR-${name}`)
-		const { key, ns, text } = await keyGen(name, 'pr')
+		const { key, ns, text } = keyGen(name, 'pr')
 
 		const stateId = distIdMap.get(slug) ?? cuid()
 

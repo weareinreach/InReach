@@ -1,8 +1,3 @@
-import { useTranslation } from 'next-i18next'
-
-import Image from 'next/image'
-import Link from 'next/link'
-
 import {
 	Burger,
 	Center,
@@ -15,6 +10,9 @@ import {
 	createStyles,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 
 import { UserMenu } from './'
 import Logo from './img/inreach.svg'

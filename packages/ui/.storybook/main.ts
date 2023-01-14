@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as path from 'path'
 
 const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
@@ -36,7 +37,7 @@ const config = {
 		},
 	},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	webpackFinal: async (config: Record<string, any>) => {
+	webpackFinal: (config: Record<string, any>) => {
 		/** Next-Auth session mock */
 		// eslint-disable-next-line @typescript-eslint/no-extra-semi
 		;(config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] =

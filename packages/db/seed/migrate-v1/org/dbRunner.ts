@@ -1,5 +1,7 @@
-import { readFileSync } from 'fs'
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import superjson from 'superjson'
+
+import { readFileSync } from 'fs'
 
 import { prisma } from '~/index'
 import { Log, iconList } from '~/seed/lib'

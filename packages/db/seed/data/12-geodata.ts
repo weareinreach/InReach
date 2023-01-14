@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import msc from '@nuskin/mexico-state-lookup'
 // import checkgeo from '@placemarkio/check-geojson'
 import { geoStateIso } from '@zerodep/geo.stateiso'

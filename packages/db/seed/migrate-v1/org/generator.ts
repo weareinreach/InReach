@@ -1,14 +1,20 @@
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import cuid from 'cuid'
 import { flatten } from 'flat'
-import fs from 'fs'
 import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js'
 import { DateTime } from 'luxon'
-import path from 'path'
 import superjson from 'superjson'
 import invariant from 'tiny-invariant'
 
 import { SourceType } from '~/client'
+import fs from 'fs'
+
 import { dayMap, hoursMap, hoursMeta } from '~/datastore/v1/helpers/hours'
+import path from 'path'
+
 import { OrganizationsJSONCollection } from '~/datastore/v1/mongodb/output-types/organizations'
 import { prisma } from '~/index'
 import { Log, iconList } from '~/seed/lib'
@@ -1179,7 +1185,7 @@ export const generateRecords = async (task: ListrTask) => {
 						const tagSet = new Map<string, string>()
 
 						for (const topVal of Object.values(service.tags)) {
-							const flatServ = flatten(topVal) as Record<string, unknown>
+							const flatServ = flatten<object, Record<string, string>>(topVal)
 							if (!Object.keys(topVal).length) {
 								continue
 							}
