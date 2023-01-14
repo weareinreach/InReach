@@ -1,13 +1,16 @@
-import { Prisma } from '@prisma/client'
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import slugify from 'slugify'
+
+import { userRoleList } from '../data'
+
+import { Prisma } from '~/client'
+import { logFile } from '../logger'
 
 import { prisma } from '~/index'
 import { genSeedUser, namespaceGen, namespaces, userRoleMap, userTypeMap } from '~/seed/data'
 import { Log, iconList } from '~/seed/lib'
 import { ListrTask } from '~/seed/starterData'
-
-import { userRoleList } from '../data'
-import { logFile } from '../logger'
 
 export const seedSystemUser = async (task: ListrTask) => {
 	try {
