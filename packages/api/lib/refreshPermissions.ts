@@ -1,6 +1,6 @@
-import { writeFileSync } from 'fs'
-
 import { prisma } from '@weareinreach/db'
+
+import { writeFileSync } from 'fs'
 
 const refreshPermissions = async () => {
 	const permissions = await prisma.permission.findMany({

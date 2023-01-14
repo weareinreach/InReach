@@ -1,5 +1,4 @@
 import { faker } from '@faker-js/faker'
-
 import { Session } from '@weareinreach/auth'
 
 interface MockAuthStates {

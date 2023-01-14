@@ -2,8 +2,8 @@ import { TRPCError, initTRPC } from '@trpc/server'
 import superjson from 'superjson'
 import invariant from 'tiny-invariant'
 
-import { Permission } from '../permissions'
 import { type Context } from './context'
+import { Permission } from '../permissions'
 
 interface Meta {
 	hasPerm: Permission | Permission[]

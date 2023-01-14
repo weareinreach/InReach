@@ -1,6 +1,5 @@
-import { z } from 'zod'
-
 import { Prisma } from '@weareinreach/db'
+import { z } from 'zod'
 
 const userTypes = ['seeker', 'provider', 'lcr', 'dataManager', 'dataAdmin', 'sysadmin', 'system'] as const
 
