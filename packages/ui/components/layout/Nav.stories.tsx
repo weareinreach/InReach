@@ -1,15 +1,14 @@
 import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-
 import React from 'react'
 
-import { SafetyExit, UserMenu } from './'
+import { UserMenu } from './'
 import { Nav } from './Nav'
 
 export default {
 	title: 'App/Layout/NavigationHeaderBar',
 	component: Nav,
-	subcomponents: { UserMenu, SafetyExit },
+	subcomponents: { UserMenu },
 	decorators: [
 		(Story) => (
 			<div style={{ width: '100vw' }}>

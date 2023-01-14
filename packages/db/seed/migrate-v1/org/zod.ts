@@ -128,7 +128,7 @@ export const zodBaseSchema = {
 } as const
 export type ZodBaseSchema = {
 	[K in keyof typeof zodBaseSchema]: K extends keyof typeof zodBaseSchema
-		? z.infer<typeof zodBaseSchema[K]>
+		? z.infer<(typeof zodBaseSchema)[K]>
 		: never
 }
 
@@ -165,9 +165,9 @@ export const zodInput = {
 	organizationPermission: OrganizationPermissionCreateManyInputSchema,
 } as const
 export type ZodInputs = {
-	-readonly [P in BatchNames]: P extends BatchNames ? z.infer<typeof zodInput[P]>[] : never
+	-readonly [P in BatchNames]: P extends BatchNames ? z.infer<(typeof zodInput)[P]>[] : never
 }
-export type ZodInput<K extends BatchNames> = K extends BatchNames ? z.infer<typeof zodInput[K]> : never
+export type ZodInput<K extends BatchNames> = K extends BatchNames ? z.infer<(typeof zodInput)[K]> : never
 export const zodFindMany = {
 	translationKey: TranslationKeyFindManyArgsSchema,
 	freeText: FreeTextFindManyArgsSchema,
@@ -201,5 +201,7 @@ export const zodFindMany = {
 	organizationPermission: OrganizationPermissionFindManyArgsSchema,
 } as const
 export type ZodFindMany = {
-	[K in keyof typeof zodFindMany]: K extends keyof typeof zodFindMany ? z.infer<typeof zodFindMany[K]> : never
+	[K in keyof typeof zodFindMany]: K extends keyof typeof zodFindMany
+		? z.infer<(typeof zodFindMany)[K]>
+		: never
 }

@@ -1,8 +1,3 @@
-import { useTranslation } from 'next-i18next'
-
-import Image from 'next/image'
-import Link from 'next/link'
-
 import {
 	Burger,
 	Center,
@@ -15,8 +10,11 @@ import {
 	createStyles,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 
-import { SafetyExit, UserMenu } from './'
+import { UserMenu } from './'
 import Logo from './img/inreach.svg'
 
 const HEADER_HEIGHT = 60
@@ -150,7 +148,6 @@ export const Nav = (props: NavProps) => {
 					<Group spacing={5} className={classes.links}>
 						{navLinks}
 					</Group>
-					<SafetyExit className={classes.safetyExit} />
 					<UserMenu className={classes.userMenu} />
 				</Group>
 

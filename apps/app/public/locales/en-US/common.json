@@ -1,0 +1,20 @@
+{
+	"back-to-search": "Back to search",
+	"close": "Close",
+	"country-select": "Choose a country",
+	"download-app": "Download our app",
+	"edit-profile": "Edit Profile",
+	"inreach": "InReach",
+	"log-in": "Log In",
+	"log-out": "Log Out",
+	"none-apply": "None of these apply to me",
+	"other-specify": "Other (specify)",
+	"prefer-not-to-say": "Prefer not to say",
+	"saved-lists": "Saved Lists",
+	"settings": "Settings",
+	"sign-up": "Sign Up",
+	"user-avatar": "User avatar",
+	"your-comments": "Your Comments",
+	"review-count_one": "{{count}} review",
+	"review-count_other": "{{count}} reviews"
+}

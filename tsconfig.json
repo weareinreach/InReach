@@ -16,5 +16,5 @@
 		"incremental": true,
 		"noUncheckedIndexedAccess": true
 	},
-	"include": [".eslintrc.js", "prepare.js", ".lintstagedrc.js", ".prettierrc.js", "test/**/*.js"]
+	"include": [".eslintrc.js", "lib/*", ".lintstagedrc.js", ".prettierrc.js", "test/**/*.js"]
 }

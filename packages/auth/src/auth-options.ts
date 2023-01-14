@@ -1,8 +1,7 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { prisma } from '@weareinreach/db'
 import { type NextAuthOptions } from 'next-auth'
 import CognitoProvider from 'next-auth/providers/cognito'
-
-import { prisma } from '@weareinreach/db'
 
 export const authOptions: NextAuthOptions = {
 	// Include user.id on session

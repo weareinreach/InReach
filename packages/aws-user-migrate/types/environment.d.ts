@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unused-modules */
 export {}
 
 declare global {

@@ -6,18 +6,32 @@ on:
   pull_request:
     branches: [dev]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.ref || github.ref }}
-  cancel-in-progress: true
-
 jobs:
+  pre_job:
+    # continue-on-error: true # Uncomment once integration is finished
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@12aca0a884f6137d619d6a8a09fcc3406ced5281 # v5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          concurrent_skipping: 'same_content_newer'
   lintformat:
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     name: 'Lint & format'
+    needs: pre_job
+    if: needs.pre_job.outputs.should_skip != 'true'
     runs-on: ubuntu-latest
     steps:
       # Setup steps
       - name: Checkout
-        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
@@ -29,7 +43,7 @@ jobs:
           git_config_global: true
           git_commit_gpgsign: true
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
           node-version: 16
       - uses: pnpm/action-setup@c3b53f6a16e57305370b4ae5a540c2077a1d50dd # v2.2.4
@@ -42,7 +56,7 @@ jobs:
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - uses: actions/cache@4723a57e26efda3a62cbde1812113b730952852d # v3
+      - uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
@@ -56,7 +70,7 @@ jobs:
       - name: Lint workspace
         run: pnpm lint:pkg
       - name: Lint projects
-        run: pnpm lint:fix
+        run: pnpm lint:fix --concurrency=3
       - name: Format projects
         run: pnpm format
 
@@ -67,3 +81,6 @@ jobs:
           commit_message: 'chore: lint & format'
           skip_fetch: true
           skip_checkout: true
+          commit_options: '--signoff'
+          commit_user_name: InReach-svc
+          commit_user_email: InReach-svc@users.noreply.github.com

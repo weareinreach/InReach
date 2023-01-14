@@ -1,6 +1,7 @@
-import { Prisma } from '@prisma/client'
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import fs from 'fs'
 
+import { Prisma } from '~/client'
 import { CommentsJSONCollection } from '~/datastore/v1/mongodb/output-types/comments'
 import { RatingsJSONCollection } from '~/datastore/v1/mongodb/output-types/ratings'
 import { prisma } from '~/index'

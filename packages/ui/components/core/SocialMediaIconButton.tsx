@@ -1,15 +1,15 @@
 import { Icon } from '@iconify/react'
-
 import { ActionIcon, createStyles } from '@mantine/core'
 
-const approvedIcons = {
-	facebook: 'fa6-brands:facebook-f',
-	instagram: 'fa6-brands:instagram',
-	mail: 'fa6-solid:envelope',
-	youtube: 'fa6-brands:youtube',
-	github: 'fa6-brands:github',
-	twitter: 'fa6-brands:twitter',
-	linkedin: 'fa6-brands:linkedin-in',
+export const approvedIcons = {
+	facebook: 'carbon:logo-facebook',
+	instagram: 'carbon:logo-instagram',
+	mail: 'carbon:email',
+	youtube: 'carbon:logo-youtube',
+	github: 'carbon:logo-github',
+	twitter: 'carbon:logo-twitter',
+	linkedin: 'carbon:logo-linkedin',
+	tiktok: 'simple-icons:tiktok',
 } as const
 
 const useStyles = createStyles((theme) => ({

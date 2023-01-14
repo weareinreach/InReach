@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Schedule } from '~/datastore/v1/mongodb/output-types/organizations'
 import { HoursHelper } from '~/seed/migrate-v1/org/generator'
 

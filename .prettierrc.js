@@ -6,12 +6,7 @@
 const path = require('path')
 
 const config = {
-	plugins: [
-		'@trivago/prettier-plugin-sort-imports',
-		'prettier-plugin-packagejson',
-		'prettier-plugin-jsdoc',
-		'prettier-plugin-prisma',
-	],
+	plugins: ['prettier-plugin-packagejson', 'prettier-plugin-jsdoc', 'prettier-plugin-prisma'],
 	printWidth: 110,
 	tabWidth: 2,
 	useTabs: true,
@@ -24,17 +19,6 @@ const config = {
 	bracketSameLine: false,
 	arrowParens: 'always',
 	endOfLine: 'lf',
-	importOrderSeparation: true,
-	importOrderSortSpecifiers: true,
-	importOrder: [
-		'<THIRD_PARTY_MODULES>',
-		'^next/(.*)$|^next$',
-		'^react/(.*)$|^react$',
-		'^@mantine/(.*)$',
-		'^@weareinreach/(.*)$',
-		'^~/(.*)$',
-		'^([./]).*',
-	],
 	overrides: [
 		{
 			files: '*.json',

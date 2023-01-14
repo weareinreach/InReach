@@ -6,6 +6,8 @@ scopes:
   - app
   - web
   - aws-user-migrate
+  - api
+  - auth
   - ui
   - db
   - config
@@ -13,4 +15,5 @@ scopes:
   - types
   - docs
   - workflows
+  - i18n
 targetUrl: https://www.conventionalcommits.org/en/v1.0.0/

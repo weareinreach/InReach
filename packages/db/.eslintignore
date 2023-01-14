@@ -1,1 +1,3 @@
-datastore/**/*
+datastore/
+prisma/generated/
+zod-schemas/

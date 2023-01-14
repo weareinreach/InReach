@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/require-await */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { Listr, ListrRenderer, ListrTaskWrapper } from 'listr2'
 
 import {

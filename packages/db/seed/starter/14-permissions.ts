@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { prisma } from '~/index'
 import { permissionData } from '~/seed/data'
 import { logFile } from '~/seed/logger'
