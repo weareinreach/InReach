@@ -64,7 +64,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
       - name: Install dependencies
-        run: pnpm install && pnpm db:generate --force
+        run: pnpm install
 
       # Linting & Formatting
       - name: Lint workspace
