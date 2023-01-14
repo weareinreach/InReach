@@ -6,18 +6,8 @@ import i18nConfig from './next-i18next.config.js'
 
 /* eslint-disable-next-line turbo/no-undeclared-env-vars */
 const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
-/**
- * Don't be scared of the generics here. All they do is to give us autocompletion when using this.
- *
- * @template {import('next').NextConfig} T
- * @param {T} config - A generic parameter that flows through to the return type
- * @constraint {{import('next').NextConfig}}
- */
-function defineNextConfig(config) {
-	return withBundleAnalyzer(config)
-}
-
-export default defineNextConfig({
+/** @type {import('next').NextConfig} */
+const nextConfig = {
 	i18n: i18nConfig.i18n,
 	reactStrictMode: true,
 	swcMinify: true,
@@ -40,4 +30,16 @@ export default defineNextConfig({
 	// 		],
 	// 	}
 	// },
-})
+}
+
+/**
+ * Wraps NextJS config with the Bundle Analyzer config.
+ *
+ * @template {typeof nextConfig} T
+ * @param {T} config
+ * @returns {T}
+ */
+function defineNextConfig(config) {
+	return withBundleAnalyzer(config)
+}
+export default defineNextConfig(nextConfig)

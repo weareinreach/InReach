@@ -1,5 +1,5 @@
 {
-	"extends": "../../tsconfig.json",
+	"extends": "@weareinreach/config/tsconfig/base.json",
 	"exclude": [],
 	"compilerOptions": {
 		"baseUrl": ".",
