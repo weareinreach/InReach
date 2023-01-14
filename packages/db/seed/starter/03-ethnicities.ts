@@ -1,9 +1,9 @@
-import { prisma } from '~/index'
-import { Log, iconList } from '~/seed/lib'
-
 import { generateEthnicityRecords } from '../data/03-ethnicity'
 import { logFile } from '../logger'
-import type { ListrTask } from '../starterData'
+import { type ListrTask } from '../starterData'
+
+import { prisma } from '~/index'
+import { Log, iconList } from '~/seed/lib'
 
 export const seedEthnicities = async (task: ListrTask) => {
 	try {

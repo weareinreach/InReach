@@ -1,6 +1,5 @@
-import { type ReactNode } from 'react'
-
 import { AppShell } from '@mantine/core'
+import { type ReactNode } from 'react'
 
 import { FooterSection, type FooterSectionProps } from '../components/layout/Footer'
 import { Nav, type NavItem } from '../components/layout/Nav'

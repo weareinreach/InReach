@@ -6,13 +6,27 @@ on:
   pull_request:
     branches: [dev]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.ref || github.ref }}
-  cancel-in-progress: true
-
 jobs:
+  pre_job:
+    # continue-on-error: true # Uncomment once integration is finished
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@12aca0a884f6137d619d6a8a09fcc3406ced5281 # v5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          concurrent_skipping: 'same_content_newer'
   lintformat:
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     name: 'Lint & format'
+    needs: pre_job
+    if: needs.pre_job.outputs.should_skip != 'true'
     runs-on: ubuntu-latest
     steps:
       # Setup steps
@@ -56,7 +70,7 @@ jobs:
       - name: Lint workspace
         run: pnpm lint:pkg
       - name: Lint projects
-        run: pnpm lint:fix
+        run: pnpm lint:fix --concurrency=3
       - name: Format projects
         run: pnpm format
 
@@ -67,3 +81,6 @@ jobs:
           commit_message: 'chore: lint & format'
           skip_fetch: true
           skip_checkout: true
+          commit_options: '--signoff'
+          commit_user_name: InReach-svc
+          commit_user_email: InReach-svc@users.noreply.github.com

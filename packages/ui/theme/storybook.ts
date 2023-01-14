@@ -1,4 +1,4 @@
-import type { MantineThemeOverride } from '@mantine/core'
+import { type MantineThemeOverride } from '@mantine/core'
 
 import { commonTheme } from './common'
 

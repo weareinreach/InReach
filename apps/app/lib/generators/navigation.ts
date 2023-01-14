@@ -1,9 +1,10 @@
-import dotenv from 'dotenv'
-import fs from 'fs'
-import { ListrTask } from 'lib/generate'
-
 import { prisma } from '@weareinreach/db'
-import type { NavItem } from '@weareinreach/ui/components/layout'
+import { type NavItem } from '@weareinreach/ui/components/layout'
+import dotenv from 'dotenv'
+
+import fs from 'fs'
+
+import { ListrTask } from 'lib/generate'
 
 dotenv.config()
 

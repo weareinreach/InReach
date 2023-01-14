@@ -1,6 +1,5 @@
-import NextLink from 'next/link'
-
 import { Text, createStyles } from '@mantine/core'
+import NextLink from 'next/link'
 
 const useStyles = createStyles((theme) => ({
 	link: {

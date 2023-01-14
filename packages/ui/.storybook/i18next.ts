@@ -22,12 +22,14 @@ const resources = ns.reduce((acc: Record<string, Record<string, string>>, n) => 
 		if (!acc[lng]) acc[lng] = {}
 		acc[lng] = {
 			...acc[lng],
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			[n]: require(`../../../apps/app/public/locales/${lng}/${n}.json`),
 		}
 	})
 	return acc
 }, {})
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 i18n
 	.use(LanguageDetector)
 	.use(Backend)

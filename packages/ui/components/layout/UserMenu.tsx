@@ -1,10 +1,4 @@
 import { Icon } from '@iconify/react'
-import { useSession } from 'next-auth/react'
-import { useTranslation } from 'next-i18next'
-
-import Image from 'next/image'
-
-// import { useState } from 'react'
 import {
 	Avatar,
 	Button,
@@ -17,6 +11,11 @@ import {
 	UnstyledButton,
 	createStyles,
 } from '@mantine/core'
+import Image from 'next/image'
+import { useSession } from 'next-auth/react'
+import { useTranslation } from 'next-i18next'
+
+// import { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
 	menu: {

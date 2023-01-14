@@ -130,7 +130,17 @@
 		"explorer.fileNesting.patterns": {
 			"*.tsx": "${capture}.ts, ${capture}.stories.tsx"
 		},
-		"i18n-ally.localesPaths": ["public/locales"]
+		"i18n-ally.localesPaths": ["public/locales"],
+		"eslint.rules.customizations": [
+			{
+				"rule": "import/order",
+				"severity": "off"
+			},
+			{
+				"rule": "import/newline-after-import",
+				"severity": "off"
+			}
+		]
 	},
 	"extensions": {
 		"recommendations": [
