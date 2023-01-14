@@ -66,6 +66,7 @@
 			"persistent": true
 		},
 		"format": {
+			"dependsOn": ["^db:generate"],
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"],
 			"outputs": ["node_modules/.cache/prettier/.prettier-cache"]
 		},
