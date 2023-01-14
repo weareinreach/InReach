@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import * as path from 'path'
 
 const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
@@ -14,10 +15,8 @@ const config = {
 		'@storybook/addon-links',
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
-		'storybook-addon-mantine',
 		'storybook-addon-next',
 		'storybook-addon-swc',
-		// 'storybook-addon-turbo-build',
 		'storybook-dark-mode',
 		'storybook-mobile',
 		'storybook-react-i18next',
@@ -38,7 +37,7 @@ const config = {
 		},
 	},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	webpackFinal: async (config: Record<string, any>) => {
+	webpackFinal: (config: Record<string, any>) => {
 		/** Next-Auth session mock */
 		// eslint-disable-next-line @typescript-eslint/no-extra-semi
 		;(config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] =

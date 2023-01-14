@@ -1,12 +1,15 @@
 {
-	"extends": "../../tsconfig.json",
+	"extends": "@weareinreach/config/tsconfig/base.json",
 	"compilerOptions": {
 		"esModuleInterop": true,
 		"typeRoots": ["./types"],
-		"baseUrl": ".",
-		"paths": {
-			"~/*": ["./*"]
-		}
+		"baseUrl": "."
 	},
-	"include": ["./**/*.ts", "./**/*.tsx", ".storybook/*.ts", ".storybook/preview.tsx"]
+	"include": [
+		"./**/*.ts",
+		"./**/*.tsx",
+		".storybook/*.ts",
+		".storybook/preview.tsx",
+		"node_modules/@weareinreach/auth/next-auth.d.ts"
+	]
 }

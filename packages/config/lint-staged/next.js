@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unused-modules */
 const path = require('path')
 
 const buildEslintCommand = (filenames) =>
