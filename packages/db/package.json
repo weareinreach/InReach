@@ -54,7 +54,7 @@
 		"@weareinreach/eslint-config": "0.100.0",
 		"@zerodep/geo.stateiso": "0.1.4",
 		"axios": "1.2.2",
-		"commander": "9.5.0",
+		"commander": "10.0.0",
 		"countries-languages": "1.0.3",
 		"cuid": "2.1.8",
 		"dotenv": "16.0.3",
