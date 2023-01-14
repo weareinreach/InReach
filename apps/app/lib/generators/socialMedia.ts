@@ -1,9 +1,10 @@
-import dotenv from 'dotenv'
-import fs from 'fs'
-import { ListrTask } from 'lib/generate'
-
 import { prisma } from '@weareinreach/db'
-import type { SocialMediaLink } from '@weareinreach/ui/components/layout/Footer'
+import { type SocialMediaLink } from '@weareinreach/ui/components/layout/Footer'
+import dotenv from 'dotenv'
+
+import fs from 'fs'
+
+import { ListrTask } from 'lib/generate'
 
 dotenv.config()
 
@@ -24,7 +25,7 @@ export const generateSocialMediaLinks = async (task: ListrTask) => {
 			href,
 			service: { name: key },
 		} = record
-		const icon = record.icon as SocialMediaLink['icon']
+		const icon = record.icon
 		output.push({ key, href, icon })
 	}
 	logMessage = `socialMedia.json generated with ${output.length} items`

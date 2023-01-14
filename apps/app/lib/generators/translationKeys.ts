@@ -1,15 +1,20 @@
+import { prisma } from '@weareinreach/db'
 import dotenv from 'dotenv'
 import { unflatten } from 'flat'
-import fs from 'fs'
-import { ListrTask } from 'lib/generate'
 
-import { prisma } from '@weareinreach/db'
+import fs from 'fs'
+
+import { ListrTask } from 'lib/generate'
 
 const localePath = 'public/locales/en'
 
 dotenv.config()
 
 type Output = Record<string, string | Record<string, string>>
+
+const isOutput = (data: unknown): data is Output => {
+	return typeof data === 'object'
+}
 
 const countKeys = (obj: Output): number =>
 	Object.keys(obj).reduce((acc, curr) => {
@@ -35,9 +40,12 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 			outputData[item.key] = item.text
 		}
 		const filename = `${localePath}/${namespace.name}.json`
-		let existingFile: Record<string, string> = {}
+		// eslint-disable-next-line prefer-const
+		let existingFile = {}
 		if (fs.existsSync(filename)) {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			existingFile = JSON.parse(fs.readFileSync(filename, 'utf-8'))
+			if (!isOutput(existingFile)) throw new Error("tried to load file, but it's empty")
 		}
 		// const existingLength = Object.keys(existingFile).length
 		const existingLength = countKeys(existingFile)

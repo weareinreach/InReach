@@ -1,13 +1,11 @@
+import { MantineProvider } from '@mantine/core'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { themes } from '@storybook/theming'
-
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 
-import { MantineProvider } from '@mantine/core'
-
+import { i18n, i18nLocales } from './i18next'
 import { storybookTheme } from '../theme'
 import './font.css'
-import { i18n, i18nLocales } from './i18next'
 
 export const parameters = {
 	actions: { argTypesRegex: '^on[A-Z].*' },
