@@ -59,7 +59,7 @@ jobs:
       - name: Lint workspace
         run: pnpm lint:pkg
       - name: Lint projects
-        run: pnpm lint:fix
+        run: pnpm lint:fix --concurrency=3
       - name: Format projects
         run: pnpm format
 
