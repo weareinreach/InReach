@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unused-modules */
 /**
  * @template {import('@types/eslint').ESLint.ConfigData} T
  * @param {T} config A generic parameter that flows through to the return type

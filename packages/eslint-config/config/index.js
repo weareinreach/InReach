@@ -5,7 +5,7 @@
  * @constraint {{import('@types/eslint').ESLint.ConfigData}}
  */
 
-module.exports = {
+const config = {
 	plugins: ['codegen', 'turbo', 'prettier', 'import'],
 	extends: ['plugin:turbo/recommended', 'prettier', 'plugin:import/typescript'],
 	rules: {
@@ -60,3 +60,4 @@ module.exports = {
 		es6: true,
 	},
 }
+module.exports = config

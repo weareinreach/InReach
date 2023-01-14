@@ -71,55 +71,56 @@
 	"pnpm": {
 		"peerDependencyRules": {
 			"allowedVersions": {
-				"react": ">=18",
-				"react-dom": ">=18",
-				"next": ">=13",
-				"webpack": ">=5",
-				"sanity": ">=3.0.0-rc.0",
-				"listr2": ">=5",
-				"prisma": ">=4",
 				"babel-loader": ">=9",
 				"i18next-browser-languagedetector": ">=7",
 				"i18next-http-backend": ">=2",
-				"react-i18next": ">=12"
+				"listr2": ">=5",
+				"next": ">=13",
+				"prisma": ">=4",
+				"react-dom": ">=18",
+				"react-i18next": ">=12",
+				"react": ">=18",
+				"sanity": ">=3.0.0-rc.0",
+				"webpack": ">=5"
 			},
 			"overrides": {
-				"glob-parent@3.1.0": "glob-parent@^5.1.2",
-				"trim@0.0.1": "trim@^0.0.3",
-				"trim@<0.0.3": ">=0.0.3",
-				"trim-newlines@<3.0.1": ">=3.0.1",
-				"got@<11.8.5": ">=11.8.5",
-				"undici@>=4.8.2 <=5.5.0": ">=5.5.1",
+				"cli-truncate@<3": ">=3.1.0",
 				"glob-parent@<5.1.2": ">=5.1.2",
+				"glob-parent@3.1.0": "glob-parent@^5.1.2",
+				"got@<11.8.5": ">=11.8.5",
+				"listr2@<5": ">=5.0.5",
 				"node-fetch@<2.6.1": ">=2.6.1",
+				"node-fetch@<2.6.7": ">=2.6.7",
+				"trim-newlines@<3.0.1": ">=3.0.1",
+				"trim@<0.0.3": ">=0.0.3",
+				"trim@0.0.1": "trim@^0.0.3",
 				"undici@<=5.8.1": ">=5.8.2",
 				"undici@<5.8.0": ">=5.8.0",
-				"node-fetch@<2.6.7": ">=2.6.7",
-				"cli-truncate@<3": ">=3.1.0",
-				"listr2@<5": ">=5.0.5"
+				"undici@>=4.8.2 <=5.5.0": ">=5.5.1"
 			}
 		},
 		"patchedDependencies": {
-			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch",
-			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch"
+			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch",
+			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch"
 		},
 		"overrides": {
-			"trim@<0.0.3": ">=0.0.3",
-			"trim-newlines@<3.0.1": ">=3.0.1",
-			"undici@>=4.8.2 <=5.5.0": ">=5.5.1",
+			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
+			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
+			"@storybook/react-docgen-typescript-plugin@1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0": "npm:react-docgen-typescript-plugin@1.0.2",
+			"chokidar": ">=3.0.0",
 			"glob-parent@<5.1.2": ">=5.1.2",
+			"micromatch": ">=4.0.0",
 			"node-fetch@<2.6.1": ">=2.6.1",
+			"node-fetch@<2.6.7": ">=2.6.7",
+			"sane": ">=5.0.0",
+			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.4.14",
+			"trim-newlines@<3.0.1": ">=3.0.1",
+			"trim@<0.0.3": ">=0.0.3",
+			"tsconfig-paths": ">=4.0.0",
 			"undici@<=5.8.1": ">=5.8.2",
 			"undici@<5.8.0": ">=5.8.0",
-			"node-fetch@<2.6.7": ">=2.6.7",
-			"@storybook/react-docgen-typescript-plugin@1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0": "npm:react-docgen-typescript-plugin@1.0.2",
-			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
-			"uuid": ">=9.0.0",
-			"sane": ">=5.0.0",
-			"chokidar": ">=3.0.0",
-			"micromatch": ">=4.0.0",
-			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
-			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.4.14"
+			"undici@>=4.8.2 <=5.5.0": ">=5.5.1",
+			"uuid": ">=9.0.0"
 		}
 	}
 }
