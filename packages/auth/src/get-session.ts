@@ -1,6 +1,5 @@
+import { type GetServerSidePropsContext, type NextApiRequest, type NextApiResponse } from 'next'
 import { unstable_getServerSession } from 'next-auth'
-
-import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next'
 
 import { authOptions } from './auth-options'
 

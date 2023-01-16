@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unused-modules */
 module.exports = {
 	plugins: ['i18next'],
 	root: true,

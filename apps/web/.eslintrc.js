@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unused-modules */
 module.exports = {
 	// parserOptions: {
 	// 	project: './tsconfig.json',

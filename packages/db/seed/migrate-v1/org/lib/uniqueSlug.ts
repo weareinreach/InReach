@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import slugify from 'slugify'
 
 import { prisma } from '~/index'

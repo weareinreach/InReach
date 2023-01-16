@@ -1,5 +1,4 @@
 import { Icon } from '@iconify/react'
-
 import { ActionIcon, createStyles } from '@mantine/core'
 
 export const approvedIcons = {

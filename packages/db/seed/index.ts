@@ -1,4 +1,8 @@
+/* eslint-disable import/no-unused-modules */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Command } from 'commander'
+
 import fs from 'fs'
 
 // import inquirer from 'inquirer'
