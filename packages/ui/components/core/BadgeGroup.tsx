@@ -1,6 +1,5 @@
-import React from 'react'
-
 import { Container, Group, Text, createStyles } from '@mantine/core'
+import React from 'react'
 
 import { BadgeComponent, BadgeProps } from './Badge'
 
