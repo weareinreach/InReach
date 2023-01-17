@@ -3,10 +3,9 @@
 import slugify from 'slugify'
 
 import { userRoleList } from '../data'
-
-import { Prisma } from '~/client'
 import { logFile } from '../logger'
 
+import { Prisma } from '~/client'
 import { prisma } from '~/index'
 import { genSeedUser, namespaceGen, namespaces, userRoleMap, userTypeMap } from '~/seed/data'
 import { Log, iconList } from '~/seed/lib'
