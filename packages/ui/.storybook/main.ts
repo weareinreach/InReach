@@ -25,7 +25,10 @@ const config = {
 	core: {
 		builder: 'webpack5',
 	},
-	features: { storyStoreV7: true },
+	features: {
+		storyStoreV7: true,
+		buildStoriesJson: true,
+	},
 	typescript: {
 		check: false,
 		checkOptions: {},

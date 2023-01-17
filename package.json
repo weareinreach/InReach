@@ -28,7 +28,6 @@
 		"type-check": "turbo type-check"
 	},
 	"dependencies": {
-		"@badeball/cypress-cucumber-preprocessor": "14.0.0",
 		"@changesets/cli": "2.26.0",
 		"@manypkg/cli": "0.19.2",
 		"@next/eslint-plugin-next": "13.1.2",
@@ -39,7 +38,6 @@
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"boxen": "7.0.1",
-		"cypress": "11.2.0",
 		"eslint-config-next": "13.1.2",
 		"eslint-import-resolver-typescript": "3.5.3",
 		"eslint-plugin-codegen": "0.17.0",
@@ -63,9 +61,6 @@
 	"engines": {
 		"node": ">=16.18.0",
 		"pnpm": ">=7"
-	},
-	"cypress-cucumber-preprocessor": {
-		"stepDefinitions": "test/cypress/support/step_definitions/**/*.{js,ts}"
 	},
 	"pnpm": {
 		"peerDependencyRules": {

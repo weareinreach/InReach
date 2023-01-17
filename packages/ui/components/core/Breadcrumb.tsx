@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import { ActionIcon, Group, Text, createStyles } from '@mantine/core'
+import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 
 const approvedOptions = {
@@ -33,7 +34,7 @@ export const Breadcrumb = ({ href, option }: Props) => {
 	const childrenRender = approvedOptions[option].children
 	return (
 		<ActionIcon
-			component='a'
+			component={Link}
 			href={href}
 			title={approvedOptions[option].title}
 			radius={5}
