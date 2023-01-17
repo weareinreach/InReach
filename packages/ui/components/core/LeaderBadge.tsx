@@ -1,6 +1,6 @@
 import { Avatar, Badge, Text, Tooltip, createStyles } from '@mantine/core'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
 	ellipse: {
 		display: 'flex',
 		justifyContent: 'center',
@@ -10,6 +10,7 @@ const useStyles = createStyles((theme) => ({
 	},
 	badge: {
 		paddingLeft: 0,
+		paddingRight: 0,
 		borderStyle: 'hidden',
 	},
 	avatar: {},
@@ -22,17 +23,13 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const BadgeComponent = ({ color, emoji, key_value, minify }: BadgeProps) => {
+export const LeaderBadge = ({ color, emoji, key_value, minify }: LeaderBadgeProps) => {
 	const { classes } = useStyles()
 
 	// Two api calls to retrieve
 	// const key_translated = key;
 	// const key_translated_label = key;
-	const ellipse = (
-		<Text size={4} className={classes.ellipse}>
-			{'\u2B24'}
-		</Text>
-	)
+
 	const emoji_avatar = (
 		<Avatar size={24} color={color} radius={100} className={classes.avatar} variant='filled'>
 			<Text className={classes.emoji}>{emoji}</Text>
@@ -43,14 +40,14 @@ export const BadgeComponent = ({ color, emoji, key_value, minify }: BadgeProps) 
 		<Tooltip label={key_value}>
 			<Badge variant='outline' radius={100} size='xl' className={classes.badge} leftSection={emoji_avatar}>
 				<Text fw={500} className={classes.text} sx={{ display: minify ? 'none' : 'hidden' }}>
-					{key_value} {ellipse}
+					{key_value}
 				</Text>
 			</Badge>
 		</Tooltip>
 	)
 }
 
-export type BadgeProps = {
+export type LeaderBadgeProps = {
 	color: string
 	emoji: string
 	key_value: string
