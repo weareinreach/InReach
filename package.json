@@ -28,7 +28,6 @@
 		"type-check": "turbo type-check"
 	},
 	"dependencies": {
-		"@badeball/cypress-cucumber-preprocessor": "14.0.0",
 		"@changesets/cli": "2.26.0",
 		"@manypkg/cli": "0.19.2",
 		"@next/eslint-plugin-next": "13.1.2",
@@ -39,7 +38,6 @@
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"boxen": "7.0.1",
-		"cypress": "11.2.0",
 		"eslint-config-next": "13.1.2",
 		"eslint-import-resolver-typescript": "3.5.3",
 		"eslint-plugin-codegen": "0.17.0",
@@ -47,7 +45,6 @@
 		"eslint-plugin-import": "2.27.5",
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-react": "7.32.1",
-		"eslint-plugin-simple-import-sort": "8.0.0",
 		"eslint-plugin-storybook": "0.6.10",
 		"eslint-plugin-turbo": "0.0.7",
 		"husky": "8.0.3",
@@ -65,9 +62,6 @@
 		"node": ">=16.18.0",
 		"pnpm": ">=7"
 	},
-	"cypress-cucumber-preprocessor": {
-		"stepDefinitions": "test/cypress/support/step_definitions/**/*.{js,ts}"
-	},
 	"pnpm": {
 		"peerDependencyRules": {
 			"allowedVersions": {
@@ -82,21 +76,6 @@
 				"i18next-browser-languagedetector": ">=7",
 				"i18next-http-backend": ">=2",
 				"react-i18next": ">=12"
-			},
-			"overrides": {
-				"glob-parent@3.1.0": "glob-parent@^5.1.2",
-				"trim@0.0.1": "trim@^0.0.3",
-				"trim@<0.0.3": ">=0.0.3",
-				"trim-newlines@<3.0.1": ">=3.0.1",
-				"got@<11.8.5": ">=11.8.5",
-				"undici@>=4.8.2 <=5.5.0": ">=5.5.1",
-				"glob-parent@<5.1.2": ">=5.1.2",
-				"node-fetch@<2.6.1": ">=2.6.1",
-				"undici@<=5.8.1": ">=5.8.2",
-				"undici@<5.8.0": ">=5.8.0",
-				"node-fetch@<2.6.7": ">=2.6.7",
-				"cli-truncate@<3": ">=3.1.0",
-				"listr2@<5": ">=5.0.5"
 			}
 		},
 		"patchedDependencies": {
@@ -104,22 +83,23 @@
 			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch"
 		},
 		"overrides": {
+			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
+			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
+			"@storybook/react-docgen-typescript-plugin@1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0": "npm:react-docgen-typescript-plugin@1.0.2",
+			"chokidar": ">=3.0.0",
+			"cli-truncate@<3": ">=3.1.0",
+			"glob-parent@<5.1.2": ">=5.1.2",
+			"got@<11.8.5": ">=11.8.5",
+			"listr2@<5": ">=5.0.5",
+			"micromatch": ">=4.0.0",
+			"node-fetch@<2.6.7": ">=2.6.7",
+			"sane": ">=5.0.0",
+			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.4.14",
 			"trim@<0.0.3": ">=0.0.3",
 			"trim-newlines@<3.0.1": ">=3.0.1",
-			"undici@>=4.8.2 <=5.5.0": ">=5.5.1",
-			"glob-parent@<5.1.2": ">=5.1.2",
-			"node-fetch@<2.6.1": ">=2.6.1",
+			"tsconfig-paths": ">=4.0.0",
 			"undici@<=5.8.1": ">=5.8.2",
-			"undici@<5.8.0": ">=5.8.0",
-			"node-fetch@<2.6.7": ">=2.6.7",
-			"@storybook/react-docgen-typescript-plugin@1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0": "npm:react-docgen-typescript-plugin@1.0.2",
-			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
-			"uuid": ">=9.0.0",
-			"sane": ">=5.0.0",
-			"chokidar": ">=3.0.0",
-			"micromatch": ">=4.0.0",
-			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
-			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.4.14"
+			"uuid": ">=9.0.0"
 		}
 	}
 }

@@ -53,10 +53,6 @@
 			"path": "./docs"
 		},
 		{
-			"name": "🧪 Cypress Tests",
-			"path": "./test"
-		},
-		{
 			"name": "🐳 Docker",
 			"path": "./docker"
 		}
@@ -70,13 +66,12 @@
 			"**/.git": true,
 			"**/Thumbs.db": true,
 			"apps/": true,
-			"docker/": true,
-			"docs/": true,
+			"./docker/": true,
+			"./docs/": true,
 			"node_modules/": true,
 			"packages/": true,
 			"patches/": true,
-			"storybook-static/": true,
-			"test/": true
+			"storybook-static/": true
 		},
 		"i18n-ally.annotationInPlace": false,
 		"i18n-ally.displayLanguage": "en",
@@ -140,23 +135,24 @@
 	},
 	"extensions": {
 		"recommendations": [
-			"lokalise.i18n-ally",
-			"editorconfig.editorconfig",
-			"dsznajder.es7-react-js-snippets",
-			"dbaeumer.vscode-eslint",
-			"bierner.jsdoc-markdown-highlighting",
-			"ms-vsliveshare.vsliveshare",
-			"yzhang.markdown-all-in-one",
-			"bierner.markdown-yaml-preamble",
-			"unifiedjs.vscode-mdx",
-			"mintlify.document",
-			"esbenp.prettier-vscode",
-			"eliostruyf.vscode-typescript-exportallmodules",
-			"mattpocock.ts-error-translator",
-			"prisma.prisma",
 			"alexkrechik.cucumberautocomplete",
+			"bierner.jsdoc-markdown-highlighting",
+			"bierner.markdown-yaml-preamble",
+			"dbaeumer.vscode-eslint",
+			"dsznajder.es7-react-js-snippets",
+			"editorconfig.editorconfig",
+			"eliostruyf.vscode-typescript-exportallmodules",
+			"esbenp.prettier-vscode",
+			"lokalise.i18n-ally",
+			"mattpocock.ts-error-translator",
+			"melmass.vscode-mono-workspace",
+			"mintlify.document",
+			"ms-playwright.playwright",
+			"ms-vsliveshare.vsliveshare",
+			"prisma.prisma",
 			"riccardoforina.storybook-helper",
-			"melmass.vscode-mono-workspace"
+			"unifiedjs.vscode-mdx",
+			"yzhang.markdown-all-in-one"
 		]
 	}
 }
