@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { namespaces } from '../data/00-namespaces'
 import { type Countries, countryData, genDemonymKey } from '../data/04-countries'
-
-import { Prisma } from '~/client'
 import { logFile } from '../logger'
-
-import { prisma } from '~/index'
 import { ListrTask } from '../starterData'
 
+import { Prisma } from '~/client'
+import { prisma } from '~/index'
 import { Log, iconList } from '~/seed/lib'
 import { isSuccess } from '~/seed/migrate-v1/org/generator'
 
