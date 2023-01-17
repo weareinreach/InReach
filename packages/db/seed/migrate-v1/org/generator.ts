@@ -9,12 +9,11 @@ import { DateTime } from 'luxon'
 import superjson from 'superjson'
 import invariant from 'tiny-invariant'
 
-import { SourceType } from '~/client'
 import fs from 'fs'
-
-import { dayMap, hoursMap, hoursMeta } from '~/datastore/v1/helpers/hours'
 import path from 'path'
 
+import { SourceType } from '~/client'
+import { dayMap, hoursMap, hoursMeta } from '~/datastore/v1/helpers/hours'
 import { OrganizationsJSONCollection } from '~/datastore/v1/mongodb/output-types/organizations'
 import { prisma } from '~/index'
 import { Log, iconList } from '~/seed/lib'
