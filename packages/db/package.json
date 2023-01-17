@@ -53,7 +53,7 @@
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"@zerodep/geo.stateiso": "0.1.4",
-		"axios": "1.2.2",
+		"axios": "1.2.3",
 		"commander": "9.5.0",
 		"countries-languages": "1.0.3",
 		"cuid": "2.1.8",
