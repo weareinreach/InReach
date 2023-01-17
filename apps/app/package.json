@@ -46,7 +46,7 @@
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"@weareinreach/ui": "0.100.0",
-		"axios": "1.2.2",
+		"axios": "1.2.3",
 		"dayjs": "1.11.7",
 		"embla-carousel-react": "7.0.6",
 		"feather-icons-react": "0.6.2",

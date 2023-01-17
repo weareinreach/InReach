@@ -130,7 +130,7 @@ importers:
       '@weareinreach/db': 0.100.0
       '@weareinreach/eslint-config': 0.100.0
       '@weareinreach/ui': 0.100.0
-      axios: 1.2.2
+      axios: 1.2.3
       commander: 9.5.0
       dayjs: 1.11.7
       dotenv: 16.0.3
@@ -183,7 +183,7 @@ importers:
       '@weareinreach/auth': link:../../packages/auth
       '@weareinreach/db': link:../../packages/db
       '@weareinreach/ui': link:../../packages/ui
-      axios: 1.2.2
+      axios: 1.2.3
       dayjs: 1.11.7
       embla-carousel-react: 7.0.6_react@18.2.0
       feather-icons-react: 0.6.2_react@18.2.0
@@ -443,7 +443,7 @@ importers:
       '@weareinreach/config': 0.100.0
       '@weareinreach/eslint-config': 0.100.0
       '@zerodep/geo.stateiso': 0.1.4
-      axios: 1.2.2
+      axios: 1.2.3
       commander: 9.5.0
       countries-languages: 1.0.3
       cuid: 2.1.8
@@ -500,7 +500,7 @@ importers:
       '@weareinreach/config': link:../config
       '@weareinreach/eslint-config': link:../eslint-config
       '@zerodep/geo.stateiso': 0.1.4
-      axios: 1.2.2
+      axios: 1.2.3
       commander: 9.5.0
       countries-languages: 1.0.3
       cuid: 2.1.8
@@ -8984,8 +8984,8 @@ packages:
       - debug
     dev: false
 
-  /axios/1.2.2:
-    resolution: {integrity: sha512-bz/J4gS2S3I7mpN/YZfGFTqhXTYzRho8Ay38w2otuuDR322KzFIWm/4W2K6gIwvWaws5n+mnb7D1lN9uD+QH6Q==}
+  /axios/1.2.3:
+    resolution: {integrity: sha512-pdDkMYJeuXLZ6Xj/Q5J3Phpe+jbGdsSzlQaFVkMQzRUL05+6+tetX8TV3p4HrU4kzuO9bt+io/yGQxuyxA/xcw==}
     dependencies:
       follow-redirects: 1.15.2
       form-data: 4.0.0
