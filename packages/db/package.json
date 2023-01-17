@@ -78,7 +78,7 @@
 		"prisma": "4.9.0",
 		"prisma-dbml-generator": "0.10.0",
 		"prisma-docs-generator": "0.5.0",
-		"quicktype-core": "7.0.43",
+		"quicktype-core": "20.0.25",
 		"recursive-readdir": "2.2.3",
 		"shoetest": "1.2.2",
 		"slugify": "1.6.5",
