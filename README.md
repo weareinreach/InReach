@@ -102,23 +102,23 @@ pnpm install
 
 ## Project Structure
 
-```text
+```bash
 InReach/
 ├── apps/
 │   ├── app/                      # InReach Application
 │   └── web/                      # InReach Main Site
-├── docker/				                # Docker compose file for local DB instance
+├── docker/                       # Docker compose file for local DB instance
 ├── packages/
-│   ├── api/   			              # tRPC API route definitions
-│   ├── auth/   			            # NextAuth settings
-│   ├── aws-user-migrate/	        # AWS Lambda for user migration
-│   ├── config/			              # Other shared configs
-│   ├── db/   			              # Prisma DB schema & other db scripts
-│   ├── eslint-config/		        # Custom ESlint configuration
+│   ├── api/                      # tRPC API route definitions
+│   ├── auth/                     # NextAuth settings
+│   ├── aws-user-migrate/         # AWS Lambda for user migration
+│   ├── config/                   # Other shared configs
+│   ├── db/                       # Prisma DB schema & other db scripts
+│   ├── eslint-config/            # Custom ESlint configuration
 │   ├── i18next-crowdin-backend/  # Crowdin plugin for translation delivery
-│   ├── types/  		              # Shared TypeScript types
+│   ├── types/                    # Shared TypeScript types
 │   └── ui/                       # React components shared between apps
-└── patches/			                # Patched npm packages
+└── patches/                      # Patched npm packages
 ```
 
 ## Usage
@@ -126,9 +126,9 @@ InReach/
 To start the development live servers:
 
 ```bash
-pnpm dev:app	# Starts Next.js for the InReach WebApp
-pnpm dev:web	# Starts Next.js for inreach.org (future project)
-pnpm dev:ui	  # Starts Storybook for UI component development
+pnpm dev:app  # Starts Next.js for the InReach WebApp
+pnpm dev:web  # Starts Next.js for inreach.org (future project)
+pnpm dev:ui   # Starts Storybook for UI component development
 ```
 
 Next.js based projects will be available at `http://localhost:3000`
