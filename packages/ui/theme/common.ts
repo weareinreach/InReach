@@ -33,17 +33,24 @@ export const commonTheme: MantineThemeOverride = {
 			},
 		},
 	},
-	globalStyles: (theme) => ({
-		// a: {
-		// 	fontWeight: theme.other.fontWeight.semibold,
-		// 	color: theme.colors.inReachSecondaryRegular[5],
-		// 	textDecoration: 'none',
-		// },
-	}),
+	// globalStyles: (theme) => ({
+	// a: {
+	// 	fontWeight: theme.other.fontWeight.semibold,
+	// 	color: theme.colors.inReachSecondaryRegular[5],
+	// 	textDecoration: 'none',
+	// },
+	// }),
 	components: {
 		ActionIcon: {
 			defaultProps: {
 				color: 'inReachSecondaryRegular.5',
+			},
+		},
+		Badge: {
+			styles: {
+				root: {
+					textTransform: 'none',
+				},
 			},
 		},
 		Button: {
