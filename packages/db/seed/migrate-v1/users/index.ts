@@ -1,11 +1,11 @@
 import cuid from 'cuid'
 import invariant from 'tiny-invariant'
 
+import fs from 'fs'
+
 import { Prisma } from '~/client'
 import { govDistMap } from '~/datastore/v1/helpers/locDataMaps'
 import { UsersJSONCollection } from '~/datastore/v1/mongodb/output-types/users'
-import fs from 'fs'
-
 import { countryMap } from '~/datastore/v1/util/countryOrigin'
 import { currentLocationMap } from '~/datastore/v1/util/currentLocation'
 import { ethnicityMap } from '~/datastore/v1/util/ethnicity'
