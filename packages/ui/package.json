@@ -75,7 +75,7 @@
 		"eslint-plugin-import": "2.27.4",
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-react": "7.32.0",
-		"eslint-plugin-simple-import-sort": "8.0.0",
+		"eslint-plugin-simple-import-sort": "9.0.0",
 		"eslint-plugin-storybook": "0.6.10",
 		"i18next": "22.4.9",
 		"i18next-browser-languagedetector": "7.0.1",

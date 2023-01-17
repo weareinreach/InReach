@@ -28,7 +28,7 @@
 		"eslint-plugin-import": "2.27.4",
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-react": "7.32.0",
-		"eslint-plugin-simple-import-sort": "8.0.0",
+		"eslint-plugin-simple-import-sort": "9.0.0",
 		"eslint-plugin-storybook": "0.6.10",
 		"eslint-plugin-turbo": "0.0.7",
 		"next": "13.1.2",
@@ -45,7 +45,7 @@
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-prettier": "^4.2.1",
 		"eslint-plugin-react": "^7.31.7",
-		"eslint-plugin-simple-import-sort": "^8.0.0",
+		"eslint-plugin-simple-import-sort": "^8.0.0 || ^9.0.0",
 		"eslint-plugin-storybook": "^0.6.4",
 		"eslint-plugin-turbo": "^0.0.4 || ^0.0.7",
 		"next": ">=13"

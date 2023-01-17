@@ -64,7 +64,7 @@
 		"eslint-plugin-codegen": "0.17.0",
 		"eslint-plugin-import": "2.27.4",
 		"eslint-plugin-prettier": "4.2.1",
-		"eslint-plugin-simple-import-sort": "8.0.0",
+		"eslint-plugin-simple-import-sort": "9.0.0",
 		"eslint-plugin-turbo": "0.0.7",
 		"flat": "5.0.2",
 		"inquirer": "9.1.4",

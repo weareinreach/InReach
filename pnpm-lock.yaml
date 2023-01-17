@@ -49,7 +49,7 @@ importers:
       eslint-plugin-import: 2.27.4
       eslint-plugin-prettier: 4.2.1
       eslint-plugin-react: 7.32.0
-      eslint-plugin-simple-import-sort: 8.0.0
+      eslint-plugin-simple-import-sort: 9.0.0
       eslint-plugin-storybook: 0.6.10
       eslint-plugin-turbo: 0.0.7
       husky: 8.0.3
@@ -81,7 +81,7 @@ importers:
       eslint-plugin-import: 2.27.4_26i2w5mui4ucix7iyirx6fcd3i
       eslint-plugin-prettier: 4.2.1_3vccgihvamfrdnqonsut5ihh4a
       eslint-plugin-react: 7.32.0_eslint@8.32.0
-      eslint-plugin-simple-import-sort: 8.0.0_eslint@8.32.0
+      eslint-plugin-simple-import-sort: 9.0.0_eslint@8.32.0
       eslint-plugin-storybook: 0.6.10_7uibuqfxkfaozanbtbziikiqje
       eslint-plugin-turbo: 0.0.7_eslint@8.32.0
       husky: 8.0.3
@@ -146,7 +146,7 @@ importers:
       eslint-plugin-i18next: 6.0.0-6
       eslint-plugin-import: 2.27.4
       eslint-plugin-prettier: 4.2.1
-      eslint-plugin-simple-import-sort: 8.0.0
+      eslint-plugin-simple-import-sort: 9.0.0
       feather-icons-react: 0.6.2
       flat: 5.0.2
       i18next: 22.4.9
@@ -220,7 +220,7 @@ importers:
       eslint-plugin-i18next: 6.0.0-6
       eslint-plugin-import: 2.27.4_26i2w5mui4ucix7iyirx6fcd3i
       eslint-plugin-prettier: 4.2.1_3vccgihvamfrdnqonsut5ihh4a
-      eslint-plugin-simple-import-sort: 8.0.0_eslint@8.32.0
+      eslint-plugin-simple-import-sort: 9.0.0_eslint@8.32.0
       flat: 5.0.2
       listr2: 5.0.6
       typescript: 4.9.4
@@ -323,7 +323,7 @@ importers:
       eslint-plugin-codegen: 0.17.0
       eslint-plugin-import: 2.27.4
       eslint-plugin-prettier: 4.2.1
-      eslint-plugin-simple-import-sort: 8.0.0
+      eslint-plugin-simple-import-sort: 9.0.0
       just-diff: 5.2.0
       just-remove: 3.2.0
       nanoid: 4.0.0
@@ -355,7 +355,7 @@ importers:
       eslint-plugin-codegen: 0.17.0
       eslint-plugin-import: 2.27.4_26i2w5mui4ucix7iyirx6fcd3i
       eslint-plugin-prettier: 4.2.1_3vccgihvamfrdnqonsut5ihh4a
-      eslint-plugin-simple-import-sort: 8.0.0_eslint@8.32.0
+      eslint-plugin-simple-import-sort: 9.0.0_eslint@8.32.0
       prisma: 4.8.1
       typescript: 4.9.4
 
@@ -371,7 +371,7 @@ importers:
       eslint-plugin-codegen: 0.17.0
       eslint-plugin-import: 2.27.4
       eslint-plugin-prettier: 4.2.1
-      eslint-plugin-simple-import-sort: 8.0.0
+      eslint-plugin-simple-import-sort: 9.0.0
       next: 13.1.2
       next-auth: 4.18.8
       react: 18.2.0
@@ -393,7 +393,7 @@ importers:
       eslint-plugin-codegen: 0.17.0
       eslint-plugin-import: 2.27.4_26i2w5mui4ucix7iyirx6fcd3i
       eslint-plugin-prettier: 4.2.1_3vccgihvamfrdnqonsut5ihh4a
-      eslint-plugin-simple-import-sort: 8.0.0_eslint@8.32.0
+      eslint-plugin-simple-import-sort: 9.0.0_eslint@8.32.0
       typescript: 4.9.4
 
   packages/aws-user-migrate:
@@ -463,7 +463,7 @@ importers:
       eslint-plugin-codegen: 0.17.0
       eslint-plugin-import: 2.27.4
       eslint-plugin-prettier: 4.2.1
-      eslint-plugin-simple-import-sort: 8.0.0
+      eslint-plugin-simple-import-sort: 9.0.0
       eslint-plugin-turbo: 0.0.7
       flat: 5.0.2
       inquirer: 9.1.4
@@ -521,7 +521,7 @@ importers:
       eslint-plugin-codegen: 0.17.0
       eslint-plugin-import: 2.27.4_26i2w5mui4ucix7iyirx6fcd3i
       eslint-plugin-prettier: 4.2.1_3vccgihvamfrdnqonsut5ihh4a
-      eslint-plugin-simple-import-sort: 8.0.0_eslint@8.32.0
+      eslint-plugin-simple-import-sort: 9.0.0_eslint@8.32.0
       eslint-plugin-turbo: 0.0.7_eslint@8.32.0
       flat: 5.0.2
       inquirer: 9.1.4
@@ -563,7 +563,7 @@ importers:
       eslint-plugin-import: 2.27.4
       eslint-plugin-prettier: 4.2.1
       eslint-plugin-react: 7.32.0
-      eslint-plugin-simple-import-sort: 8.0.0
+      eslint-plugin-simple-import-sort: 9.0.0
       eslint-plugin-storybook: 0.6.10
       eslint-plugin-turbo: 0.0.7
       next: 13.1.2
@@ -582,7 +582,7 @@ importers:
       eslint-plugin-import: 2.27.4_26i2w5mui4ucix7iyirx6fcd3i
       eslint-plugin-prettier: 4.2.1_cn4lalcyadplruoxa5mhp7j3dq
       eslint-plugin-react: 7.32.0_eslint@8.32.0
-      eslint-plugin-simple-import-sort: 8.0.0_eslint@8.32.0
+      eslint-plugin-simple-import-sort: 9.0.0_eslint@8.32.0
       eslint-plugin-storybook: 0.6.10_7uibuqfxkfaozanbtbziikiqje
       eslint-plugin-turbo: 0.0.7_eslint@8.32.0
       next: 13.1.2_pjwopsidmaokadturxaafygjp4
@@ -660,7 +660,7 @@ importers:
       eslint-plugin-import: 2.27.4
       eslint-plugin-prettier: 4.2.1
       eslint-plugin-react: 7.32.0
-      eslint-plugin-simple-import-sort: 8.0.0
+      eslint-plugin-simple-import-sort: 9.0.0
       eslint-plugin-storybook: 0.6.10
       i18next: 22.4.9
       i18next-browser-languagedetector: 7.0.1
@@ -747,7 +747,7 @@ importers:
       eslint-plugin-import: 2.27.4_26i2w5mui4ucix7iyirx6fcd3i
       eslint-plugin-prettier: 4.2.1_3vccgihvamfrdnqonsut5ihh4a
       eslint-plugin-react: 7.32.0_eslint@8.32.0
-      eslint-plugin-simple-import-sort: 8.0.0_eslint@8.32.0
+      eslint-plugin-simple-import-sort: 9.0.0_eslint@8.32.0
       eslint-plugin-storybook: 0.6.10_7uibuqfxkfaozanbtbziikiqje
       i18next: 22.4.9
       i18next-browser-languagedetector: 7.0.1
@@ -11485,8 +11485,8 @@ packages:
       semver: 6.3.0
       string.prototype.matchall: 4.0.8
 
-  /eslint-plugin-simple-import-sort/8.0.0_eslint@8.32.0:
-    resolution: {integrity: sha512-bXgJQ+lqhtQBCuWY/FUWdB27j4+lqcvXv5rUARkzbeWLwea+S5eBZEQrhnO+WgX3ZoJHVj0cn943iyXwByHHQw==}
+  /eslint-plugin-simple-import-sort/9.0.0_eslint@8.32.0:
+    resolution: {integrity: sha512-PtrLjyXP8kjRneWT1n0b99y/2Fyup37we7FVoWsI61/O7x4ztLohzhep/pxI/cYlECr/cQ2j6utckdvWpVwXNA==}
     peerDependencies:
       eslint: '>=5.0.0'
     dependencies:
