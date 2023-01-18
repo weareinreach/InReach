@@ -1,6 +1,9 @@
 import { Avatar, Tooltip, Text, Group, createStyles, Badge } from '@mantine/core'
 import { Icon } from '@iconify/react'
 
+// tooltip max characters for width limit
+const MAX_CHARACTERS = 80
+
 const useStyles = createStyles((theme) => ({
 	avatar: {
 	},
@@ -24,12 +27,14 @@ const useStyles = createStyles((theme) => ({
 		color:'black',
 		marginLeft:"9.25px"
 	},
-	tooltip: {}
+	tooltip: {
+	}
 }))
 
 
 export const VerifiedBadge = ({ text, tooltip_text }: Props) => {
 	const { classes } = useStyles()
+	const trigger_max_width = tooltip_text.length > MAX_CHARACTERS ? 600 : "auto"
 
 	const verified_avatar = (
 		<Avatar size={24} radius={100} className={classes.avatar} color="green" variant='filled'>
@@ -38,7 +43,7 @@ export const VerifiedBadge = ({ text, tooltip_text }: Props) => {
 	)
 
 	return (
-		<Tooltip label={tooltip_text} position='bottom-start' multiline width={600} offset={10}>
+		<Tooltip label={tooltip_text} position='bottom-start' multiline offset={10} className={classes.tooltip} width={trigger_max_width}>
 			<Badge variant='outline' radius={100} size='xl' className={classes.badge} leftSection={verified_avatar}>
 				<Text className={classes.text}>{text}</Text>
 			</Badge>
