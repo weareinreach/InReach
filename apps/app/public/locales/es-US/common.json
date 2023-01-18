@@ -14,6 +14,8 @@
 	"settings": "Ajustes",
 	"sign-up": "Regístrate",
 	"user-avatar": "Avatar de usuario",
+	"verified-information": "Información verificada",
+	"verified-information-detail": "La información de esta página fue actualizada por última vez {{dateString}}. El alcance prioriza la exactitud y la seguridad del usuario, y actualiza toda la información al menos una vez cada 6 meses. Para más información sobre nuestro proceso de veterinario, por favor visite nuestra página del Proceso de Verificación .",
 	"your-comments": "Tus comentarios",
 	"review-count_one": "{{count}} reseña",
 	"review-count_other": "{{count}} valoraciones"
