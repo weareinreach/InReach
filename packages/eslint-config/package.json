@@ -4,9 +4,8 @@
 	"license": "GPL-3.0-only",
 	"main": "index.js",
 	"files": [
-		"config/index.js",
-		"next/index.js",
-		"storybook/index.js",
+		"next.js",
+		"storybook.js",
 		"index.js"
 	],
 	"scripts": {
