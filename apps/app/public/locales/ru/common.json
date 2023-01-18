@@ -18,5 +18,7 @@
 	"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information at least once every 6 months. For more information on our vetting process, please visit our Verification Process page.",
 	"your-comments": "Your Comments",
 	"review-count_one": "{{count}} review",
+	"review-count_few": "{{count}} reviews",
+	"review-count_many": "{{count}} reviews",
 	"review-count_other": "{{count}} reviews"
 }
