@@ -11,12 +11,13 @@
 		"bundle": "ncc build ./src/index.ts -s -m -a",
 		"clean:dist": "rm -fr dist",
 		"clean:node": "rm -rf ./node_modules/ || true",
+		"deploy:aws": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://dist/bundle.zip",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
-		"package": "cd dist && rm -v client/!(*rhel*) && zip -r bundle.zip *",
-		"upload": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://dist/bundle.zip"
+		"package": "pnpm prune-clients && cd dist && zip -r bundle.zip *",
+		"prune-clients": "find ./dist/client -type f -not -name '*rhel*' -delete -print"
 	},
 	"dependencies": {
 		"@weareinreach/db": "0.100.0",

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { PrismaClient } from './client'
+import { PrismaClient } from '@prisma/client'
 
 declare global {
 	// allow global `var` declarations

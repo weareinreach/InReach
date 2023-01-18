@@ -3,7 +3,7 @@ generator client {
   // clientExtensions causing error
   // previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "multiSchema", "clientExtensions"]
   previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount"]
-  output          = "./generated/client"
+  // output          = "./generated/client"
   binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
@@ -43,7 +43,7 @@ datasource db {
 
 /// NextAuth Account **DO NOT ALTER**
 model Account {
-  id                String  @id @default(cuid()) /// @zod.string.cuid()
+  id                String  @id @default(cuid())
   type              String
   provider          String
   providerAccountId String
@@ -69,7 +69,7 @@ model Account {
 /// NextAuth Session **DO NOT ALTER**
 model Session {
   // Do not change - NextAuth fields
-  id           String   @id @default(cuid()) /// @zod.string.cuid()
+  id           String   @id @default(cuid())
   sessionToken String   @unique
   expires      DateTime
 
@@ -94,7 +94,7 @@ model User {
   //
   // Do not change - NextAuth fields
   //
-  id            String    @id @default(cuid()) /// @zod.string.cuid()
+  id            String    @id @default(cuid())
   name          String?
   email         String    @unique(sort: Asc)
   emailVerified DateTime?
@@ -164,7 +164,7 @@ model User {
 /// User Role - Contains array of granular permissions
 ///  Internal use
 model UserRole {
-  id   String @id @default(cuid()) /// @zod.string.cuid()
+  id   String @id @default(cuid())
   name String @unique
   tag  String @unique
 
@@ -181,7 +181,7 @@ model UserRole {
 
 /// Permission Definition
 model Permission {
-  id          String  @id @default(cuid()) /// @zod.string.cuid()
+  id          String  @id @default(cuid())
   name        String  @unique
   description String?
 
@@ -203,7 +203,7 @@ model Permission {
 /// User Info - account type (seeker, org, lawyer, etc.)
 ///  use shorthand descriptions - front-end displayable text is defined in Translations
 model UserType {
-  id    String @id @default(cuid()) /// @zod.string.cuid()
+  id    String @id @default(cuid())
   type  String @unique
   users User[]
 
@@ -223,7 +223,7 @@ model UserType {
 /// User Info - professional title
 ///  this will be a searchable list
 model UserTitle {
-  id         String               @id @default(cuid()) /// @zod.string.cuid()
+  id         String               @id @default(cuid())
   title      String               @unique
   email      OrgEmail[]
   orgUsers   UserToOrganization[]
@@ -243,7 +243,7 @@ model UserTitle {
 }
 
 model UserSurvey {
-  id String @id @default(cuid()) /// @zod.string.cuid()
+  id String @id @default(cuid())
 
   birthYear     Int?    @db.SmallInt
   reasonForJoin String?
@@ -269,7 +269,7 @@ model UserSurvey {
 
 /// User demographics - Ethnicity
 model UserEthnicity {
-  id        String            @id @default(cuid()) /// @zod.string.cuid()
+  id        String            @id @default(cuid())
   ///  use shorthand descriptions - front-end displayable text is defined in Translations
   ethnicity String            @unique
   surveys   SurveyEthnicity[]
@@ -289,7 +289,7 @@ model UserEthnicity {
 
 /// User demographics - Immigration Status
 model UserImmigration {
-  id      String       @id @default(cuid()) /// @zod.string.cuid()
+  id      String       @id @default(cuid())
   ///  use shorthand descriptions - front-end displayable text is defined in Translations
   status  String       @unique
   surveys UserSurvey[]
@@ -309,7 +309,7 @@ model UserImmigration {
 
 /// User demographics - Sexual orientation / Identity
 model UserSOGIdentity {
-  id         String        @id @default(cuid()) /// @zod.string.cuid()
+  id         String        @id @default(cuid())
   ///  use shorthand descriptions - front-end displayable text is defined in Translations
   identifyAs String        @unique
   surveys    SurveySOG[]
@@ -330,7 +330,7 @@ model UserSOGIdentity {
 
 /// User demographics - Community
 model UserCommunity {
-  id        String              @id @default(cuid()) /// @zod.string.cuid()
+  id        String              @id @default(cuid())
   ///  use shorthand descriptions - front-end displayable text is defined in Translations
   community String              @unique
   users     UserCommunityLink[]
@@ -351,7 +351,7 @@ model UserCommunity {
 
 /// User's list(s) of saved resources.
 model UserSavedList {
-  id            String              @id @default(cuid()) /// @zod.string.cuid()
+  id            String              @id @default(cuid())
   name          String
   organizations SavedOrganization[]
   services      SavedService[]
@@ -371,7 +371,7 @@ model UserSavedList {
 }
 
 model UserMail {
-  id         String   @id @default(cuid()) /// @zod.string.cuid()
+  id         String   @id @default(cuid())
   toUser     User     @relation("mailTo", fields: [toUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   toUserId   String /// @zod.string.cuid()
   toExternal String[] /// Array of email addresses
@@ -397,7 +397,7 @@ model UserMail {
 
 /// Main organization definition
 model Organization {
-  id         String  @id @default(cuid()) /// @zod.string.cuid()
+  id         String  @id @default(cuid())
   legacyId   String? @unique /// old ID from MongoDB
   name       String
   slug       String  @unique /// @zod.string.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/gm)
@@ -449,7 +449,7 @@ model Organization {
 
 /// Organization email contacts - can be general or location specific
 model OrgEmail {
-  id         String  @id @default(cuid()) /// @zod.string.cuid()
+  id         String  @id @default(cuid())
   legacyId   String? @unique /// old ID from MongoDB
   legacyDesc String?
   firstName  String?
@@ -486,7 +486,7 @@ model OrgEmail {
 
 /// Org phone numbers - can be general or location specific
 model OrgPhone {
-  id              String   @id @default(cuid()) /// @zod.string.cuid()
+  id              String   @id @default(cuid())
   legacyId        String?  @unique /// old ID from MongoDB
   legacyDesc      String?
   number          String
@@ -525,7 +525,7 @@ model OrgPhone {
 
 /// Organization's social media links
 model OrgSocialMedia {
-  id        String  @id @default(cuid()) /// @zod.string.cuid()
+  id        String  @id @default(cuid())
   legacyId  String? @unique /// old ID from MongoDB
   username  String
   url       String
@@ -552,7 +552,7 @@ model OrgSocialMedia {
 }
 
 model OrgWebsite {
-  id            String    @id @default(cuid()) /// @zod.string.cuid()
+  id            String    @id @default(cuid())
   url           String
   description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   descriptionId String?   @unique /// @zod.string.cuid()
@@ -576,7 +576,7 @@ model OrgWebsite {
 
 /// Org location information
 model OrgLocation {
-  id       String  @id @default(cuid()) /// @zod.string.cuid()
+  id       String  @id @default(cuid())
   legacyId String? @unique /// old ID from MongoDB
   name     String?
   street1  String
@@ -635,7 +635,7 @@ model OrgLocation {
 
 /// Organization photos
 model OrgPhoto {
-  id        String  @id @default(cuid()) /// @zod.string.cuid()
+  id        String  @id @default(cuid())
   src       String
   height    Int?    @db.SmallInt
   width     Int?    @db.SmallInt
@@ -661,7 +661,7 @@ model OrgPhoto {
 ///  start/end times are stored as RFC 3339 Timestamp (without zone)
 ///  as local time. Any timezone offset will be handled by runtime logic
 model OrgHours {
-  id       String   @id @default(cuid()) /// @zod.string.cuid()
+  id       String   @id @default(cuid())
   /// Sun 0, Mon 1, Tue 2, Wed 3, Thu 3, Fri 4, Sat 6
   dayIndex Int      @default(0) @db.SmallInt
   start    DateTime @db.Time(0)
@@ -694,7 +694,7 @@ model OrgHours {
 }
 
 model FreeText {
-  id    String         @id @default(cuid()) /// @zod.string.cuid()
+  id    String         @id @default(cuid())
   tsKey TranslationKey @relation(fields: [key, ns], references: [key, ns], onDelete: Cascade, onUpdate: Cascade)
   key   String
   ns    String
@@ -715,7 +715,7 @@ model FreeText {
 /// Organization's offered services - access instructions & details
 ///  associated with service tag
 model OrgService {
-  id         String  @id @default(cuid()) /// @zod.string.cuid()
+  id         String  @id @default(cuid())
   legacyId   String? @unique /// old ID from MongoDB
   published  Boolean @default(false)
   deleted    Boolean @default(false)
@@ -756,7 +756,7 @@ model OrgService {
 }
 
 model ServiceArea {
-  id String @id @default(cuid()) /// @zod.string.cuid()
+  id String @id @default(cuid())
 
   countries ServiceAreaCountry[]
   districts ServiceAreaDist[]
@@ -776,7 +776,7 @@ model ServiceArea {
 }
 
 model ServiceAccess {
-  id String @id @default(cuid()) /// @zod.string.cuid()
+  id String @id @default(cuid())
   // the legacyIds are nowhere near unique
   // legacyId String? @unique /// old ID from MongoDB
 
@@ -796,7 +796,7 @@ model ServiceAccess {
 
 /// User reviews/ratings of organization
 model OrgReview {
-  id         String  @id @default(cuid()) /// @zod.string.cuid()
+  id         String  @id @default(cuid())
   legacyId   String? @unique /// old ID from MongoDB
   rating     Int?    @db.SmallInt
   reviewText String?
@@ -850,7 +850,7 @@ model OrgReview {
 
 /// Store machine translations for reviews - save on API calls
 model TranslatedReview {
-  id String @id @default(cuid()) /// @zod.string.cuid()
+  id String @id @default(cuid())
 
   review   OrgReview @relation(fields: [reviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   reviewId String
@@ -868,7 +868,7 @@ model TranslatedReview {
 
 /// Additional Properties for Org/Service.
 model AttributeCategory {
-  id      String  @id @default(cuid()) /// @zod.string.cuid()
+  id      String  @id @default(cuid())
   tag     String  @unique
   name    String  @unique
   icon    String?
@@ -890,7 +890,7 @@ model AttributeCategory {
 }
 
 model Attribute {
-  id      String  @id @default(cuid()) /// @zod.string.cuid()
+  id      String  @id @default(cuid())
   tag     String  @unique
   name    String  @unique
   icon    String?
@@ -934,7 +934,7 @@ model Attribute {
 }
 
 model AttributeSupplement {
-  id     String  @id @default(cuid()) /// @zod.string.cuid()
+  id     String  @id @default(cuid())
   active Boolean @default(true)
 
   attachedOrganizations OrganizationAttributeSupplement[]
@@ -963,7 +963,7 @@ model AttributeSupplement {
 }
 
 model ServiceCategory {
-  id                String                            @id @default(cuid()) /// @zod.string.cuid()
+  id                String                            @id @default(cuid())
   category          String                            @unique
   active            Boolean                           @default(true)
   services          ServiceTag[]
@@ -983,7 +983,7 @@ model ServiceCategory {
 }
 
 model ServiceTag {
-  id                String                       @id @default(cuid()) /// @zod.string.cuid()
+  id                String                       @id @default(cuid())
   name              String
   active            Boolean                      @default(true)
   defaultAttributes ServiceTagDefaultAttribute[]
@@ -1010,7 +1010,7 @@ model ServiceTag {
 
 /// Phone number descriptors
 model PhoneType {
-  id             String     @id @default(cuid()) /// @zod.string.cuid()
+  id             String     @id @default(cuid())
   type           String     @unique
   attachedPhones OrgPhone[]
 
@@ -1029,7 +1029,7 @@ model PhoneType {
 
 /// Social media service properties
 model SocialMediaService {
-  id       String   @id @default(cuid()) /// @zod.string.cuid()
+  id       String   @id @default(cuid())
   name     String   @unique
   urlBase  String[]
   logoIcon String
@@ -1054,7 +1054,7 @@ model SocialMediaService {
 /// Source of organization/user
 ///  *INTERNAL* - for tracking purposes
 model Source {
-  id     String     @id @default(cuid()) /// @zod.string.cuid()
+  id     String     @id @default(cuid())
   source String     @unique
   type   SourceType
 
@@ -1080,7 +1080,7 @@ enum SourceType {
 
 /// Country metadata
 model Country {
-  id       String @id @default(cuid()) /// @zod.string.cuid()
+  id       String @id @default(cuid())
   /// ISO 3166-1 alpha-2 Country code
   cca2     String @unique @db.Char(2)
   /// ISO 3166-1 alpha-3 Country code
@@ -1127,7 +1127,7 @@ model Country {
 
 /// Administrative districts for countries
 model GovDist {
-  id      String  @id @default(cuid()) /// @zod.string.cuid()
+  id      String  @id @default(cuid())
   /// Name (English/Roman alphabet)
   name    String
   /// Slug - [country (ISO)]-[govdist]-[...]
@@ -1175,7 +1175,7 @@ model GovDist {
 
 /// Descriptor of principal administrative districts (state, province, county, etc.)
 model GovDistType {
-  id   String @id @default(cuid()) /// @zod.string.cuid()
+  id   String @id @default(cuid())
   name String @unique
 
   districts GovDist[]
@@ -1196,7 +1196,7 @@ model GovDistType {
 /// Languages - ETF BCP 47 language tag
 ///  top level & regional locale (ex: 'en', "en-us", "en-ca")
 model Language {
-  id                 String  @id @default(cuid()) /// @zod.string.cuid()
+  id                 String  @id @default(cuid())
   languageName       String
   /// ETF BCP 47 language tag
   localeCode         String  @unique(sort: Asc)
@@ -1247,7 +1247,7 @@ model TranslationNamespace {
 
 // Item key - i18next
 model TranslationKey {
-  //id        String               @id @default(cuid()) /// @zod.string.cuid()
+  //id        String               @id @default(cuid())
   /// Item key
   key       String
   /// Base string
@@ -1314,7 +1314,7 @@ model OutsideAPIService {
 
 /// Define outside APIs in use
 model OutsideAPI {
-  id String @id @default(cuid()) /// @zod.string.cuid()
+  id String @id @default(cuid())
 
   apiIdentifier String
 
@@ -1336,7 +1336,7 @@ model OutsideAPI {
 
 /// Visibilty settings for user profile pages
 model FieldVisibility {
-  id     String @id @default(cuid()) /// @zod.string.cuid()
+  id     String @id @default(cuid())
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String /// @zod.string.cuid()
 
@@ -1375,7 +1375,7 @@ enum VisibilitySetting {
 /// Define the App navigation tree
 ///  this will be used to generate a json file at build time
 model Navigation {
-  id       String  @id @default(cuid()) /// @zod.string.cuid()
+  id       String  @id @default(cuid())
   display  String
   href     String?
   isParent Boolean @default(true)
@@ -1400,7 +1400,7 @@ model Navigation {
 }
 
 model FooterLink {
-  id      String  @id @default(cuid()) /// @zod.string.cuid()
+  id      String  @id @default(cuid())
   display String
   href    String
   icon    String?
@@ -1420,7 +1420,7 @@ model FooterLink {
 }
 
 model SocialMediaLink {
-  id   String @id @default(cuid()) /// @zod.string.cuid()
+  id   String @id @default(cuid())
   href String @unique
   icon String
 
@@ -1437,7 +1437,7 @@ model SocialMediaLink {
 
 /// Internal notes - multipurpose
 model InternalNote {
-  id       String  @id @default(cuid()) /// @zod.string.cuid()
+  id       String  @id @default(cuid())
   legacyId String? @unique /// old ID from MongoDB
   text     String
 
@@ -1519,7 +1519,7 @@ model InternalNote {
 
 /// Store changes made by users
 model AuditLog {
-  id        String   @id @default(cuid()) /// @zod.string.cuid()
+  id        String   @id @default(cuid())
   actor     User     @relation("Recorded User", fields: [actorId], references: [id])
   actorId   String /// @zod.string.cuid()
   timestamp DateTime @default(now())

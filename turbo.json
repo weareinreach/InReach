@@ -36,8 +36,18 @@
 			"outputs": ["dist/**", ".next/**", "storybook-static/**"]
 		},
 		"build:aws": {
-			"dependsOn": ["^db:generate"],
-			"outputs": ["dist/**"]
+			"outputs": ["dist/**"],
+			"inputs": ["src/**"]
+		},
+		"deploy:aws": {
+			"dependsOn": ["build:aws"]
+		},
+		"@weareinreach/aws-user-migrate#build:aws": {
+			"dependsOn": ["format", "lint:fix", "^db:generate"],
+			"inputs": ["src/**", "../../node_modules/.prisma/client/**"]
+		},
+		"@weareinreach/aws-messaging#build:aws": {
+			"dependsOn": ["format", "lint:fix"]
 		},
 		"chromatic": {
 			"dependsOn": ["build"],
@@ -51,7 +61,7 @@
 		},
 		"db:generate": {
 			"inputs": ["prisma/schema.prisma"],
-			"outputs": ["prisma/generated/**", "zod-schemas/**"]
+			"cache": false
 		},
 		"db:generate:aws": {
 			"cache": false,
