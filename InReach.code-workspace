@@ -40,10 +40,14 @@
 			"name": "📦 AWS User Migration (@weareinreach/aws-user-migrate)",
 			"path": "./packages/aws-user-migrate"
 		},
+    {
+			"name": "📦 AWS Cognito Messaging (@weareinreach/aws-messaging)",
+			"path": "./packages/aws-messaging"
+		},
 		{
 			"name": "📦 Crowdin Loader (@weareinreach/i18next-crowdin-backend)",
 			"path": "./packages/i18next-crowdin-backend"
-		},
+    },
 		{
 			"name": "✨ InReach (root)",
 			"path": "./"
