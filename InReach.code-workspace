@@ -41,6 +41,10 @@
 			"path": "./packages/aws-user-migrate"
 		},
 		{
+			"name": "📦 AWS Cognito Messaging (@weareinreach/aws-messaging)",
+			"path": "./packages/aws-messaging"
+		},
+		{
 			"name": "✨ InReach (root)",
 			"path": "./"
 		},

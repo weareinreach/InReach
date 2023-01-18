@@ -1,9 +1,6 @@
 {
 	"compilerOptions": {
 		"baseUrl": "./src",
-		"paths": {
-			"~/*": ["./*"]
-		},
 		"target": "es2020",
 		"strict": true,
 		"preserveConstEnums": true,
@@ -15,5 +12,6 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"isolatedModules": false
-	}
+	},
+	"files": ["./src/index.ts"]
 }
