@@ -1,15 +1,15 @@
 {
-	"about-us": "Acerca de nosotros",
-	"contact-us": "Contáctenos",
-	"edit-profile": "Editar perfil",
+	"about-us": "About Us",
+	"contact-us": "Contact Us",
+	"edit-profile": "Edit Profile",
 	"inreach": "InReach",
-	"log-in": "Iniciar sesión",
-	"log-out": "Cerrar sesión",
-	"questions": "¿Preguntas?",
-	"saved-lists": "Listas guardadas",
-	"settings": "Ajustes",
-	"sign-up": "Regístrate",
-	"take-action": "Realizar acción",
-	"user-avatar": "Avatar de usuario",
-	"your-comments": "Tus comentarios"
+	"log-in": "Log In",
+	"log-out": "Log Out",
+	"questions": "Questions?",
+	"saved-lists": "Saved Lists",
+	"settings": "Settings",
+	"sign-up": "Sign Up",
+	"take-action": "Take Action",
+	"user-avatar": "User avatar",
+	"your-comments": "Your Comments"
 }
