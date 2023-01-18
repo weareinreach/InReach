@@ -6,4 +6,5 @@ export * from './LeaderBadgeGroup'
 export * from './Link'
 export * from './RatingTag'
 export * from './SocialMediaIconButton'
+export * from './VerifiedBadge'
 // codegen:end
