@@ -14,6 +14,7 @@
 		"cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false",
 		"cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
 		"db:generate": "turbo run db:generate",
+		"deploy:aws": "turbo run deploy:aws",
 		"dev": "tsx ./lib/devmsg.mts",
 		"dev:all": "turbo run dev",
 		"dev:app": "turbo run dev --filter=app",

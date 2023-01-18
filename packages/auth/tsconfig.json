@@ -1,4 +1,3 @@
 {
-	"extends": "@weareinreach/config/tsconfig/base.json",
-	"include": ["src", "index.ts", "next-auth.d.ts"]
+	"extends": "@weareinreach/config/tsconfig/base.json"
 }

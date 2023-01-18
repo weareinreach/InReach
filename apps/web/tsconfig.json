@@ -4,8 +4,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["./src/*"]
-		},
-		"typeRoots": ["./types"]
+		}
 	},
 	"include": [
 		"./next-env.d.ts",
@@ -16,5 +15,5 @@
 		"./**/*.mjs",
 		"./**/*.cjs"
 	],
-	"exclude": []
+	"exclude": ["node_modules"]
 }

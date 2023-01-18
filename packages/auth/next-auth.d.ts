@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unused-modules
 import { DefaultSession } from 'next-auth'
 
 /**
