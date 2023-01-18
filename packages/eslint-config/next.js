@@ -1,8 +1,7 @@
 /* eslint-disable import/no-unused-modules */
-
-/** @type {import('@types/eslint').ESLint.ConfigData} */
+/** @type {import('eslint').ESLint.ConfigData} */
 const config = {
-	extends: ['../config', 'next/core-web-vitals'],
+	extends: ['./', 'next/core-web-vitals'],
 	rules: {
 		'@next/next/no-html-link-for-pages': 'off',
 	},
