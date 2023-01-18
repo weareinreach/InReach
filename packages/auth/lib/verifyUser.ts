@@ -1,73 +1,19 @@
-import {
-	CognitoIdentityProviderClient,
-	InitiateAuthCommand,
-	AuthFlowType,
-	type InitiateAuthCommandOutput,
-	ChallengeNameType,
-} from '@aws-sdk/client-cognito-identity-provider'
-import invariant from 'tiny-invariant'
+import { AuthFlowType } from '@aws-sdk/client-cognito-identity-provider'
 
-const client = new CognitoIdentityProviderClient({
-	credentials: {
-		accessKeyId: process.env.COGNITO_ACCESS_KEY,
-		secretAccessKey: process.env.COGNITO_SECRET,
-	},
-})
+import { cognito, parseAuthResponse, type AuthResult, ClientId, generateHash } from './cognitoClient'
 
-const isChallenge = (name: string | undefined): name is ChallengeNameType =>
-	Object.values(ChallengeNameType).includes(name as ChallengeNameType)
-
-export const verifyUser: VerifyUser = async (user, password) => {
-	const request = new InitiateAuthCommand({
+export const verifyUser: VerifyUser = async (email, password) => {
+	const response = await cognito.initiateAuth({
 		AuthFlow: AuthFlowType.USER_PASSWORD_AUTH,
-		ClientId: process.env.COGNITO_CLIENT_ID,
+		ClientId,
 		AuthParameters: {
-			USERNAME: user,
+			USERNAME: email,
 			PASSWORD: password,
+			SECRET_HASH: generateHash(email),
 		},
 	})
-	const response = await client.send(request)
 
-	const result = (): VerifyUserResult => {
-		if (response.AuthenticationResult) {
-			return {
-				success: true,
-				session: response.AuthenticationResult,
-			}
-		}
-		if (isChallenge(response.ChallengeName)) {
-			invariant(response.ChallengeParameters)
-			invariant(response.Session)
-			return {
-				success: undefined,
-				challengeName: response.ChallengeName,
-				challengeParams: response.ChallengeParameters,
-				challengeSession: response.Session,
-			}
-		}
-		return {
-			success: false,
-			session: undefined,
-		}
-	}
-
-	return result()
+	return parseAuthResponse(response)
 }
 
-type VerifyUser = (user: string, password: string) => Promise<VerifyUserResult>
-
-type VerifyUserResult = Success | Failed | Challenge
-interface Success {
-	success: true
-	session: InitiateAuthCommandOutput['AuthenticationResult']
-}
-interface Failed {
-	success: false
-	session: undefined
-}
-interface Challenge {
-	success: undefined
-	challengeName: ChallengeNameType
-	challengeParams: Record<string, string>
-	challengeSession: string
-}
+type VerifyUser = (email: string, password: string) => Promise<AuthResult>

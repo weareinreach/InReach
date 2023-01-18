@@ -5,5 +5,6 @@ declare namespace NodeJS {
 		COGNITO_ACCESS_KEY: string
 		COGNITO_SECRET: string
 		COGNITO_CLIENT_ID: string
+		COGNITO_CLIENT_SECRET: string
 	}
 }
