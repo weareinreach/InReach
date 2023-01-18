@@ -11,18 +11,9 @@
 	"none-apply": "None of these apply to me",
 	"other-specify": "Other (specify)",
 	"prefer-not-to-say": "Prefer not to say",
-	"safety-exit": "Safety Exit",
 	"saved-lists": "Saved Lists",
 	"settings": "Settings",
 	"sign-up": "Sign Up",
 	"user-avatar": "User avatar",
-	"your-comments": "Your Comments",
-	"powered-by-vercel": "Powered by Vercel",
-	"suggest-a-resource": "Suggest a resource",
-	"subscribe-to-newsletter": "Subscribe to newsletter",
-	"share-feedback": "Share feedback",
-	"disclaimer": "Disclaimer",
-	"privacy-statement": "Privacy statement",
-	"download-app": "Download our app",
-	"copyright": "InReach, Inc. {{year}}. All rights reserved."
+	"your-comments": "Your Comments"
 }
