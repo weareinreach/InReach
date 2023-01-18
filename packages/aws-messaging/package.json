@@ -1,0 +1,35 @@
+{
+	"name": "@weareinreach/aws-messaging",
+	"version": "0.100.0",
+	"description": "Lambda for AWS Cognito messaging",
+	"license": "GPL-3.0-only",
+	"author": "",
+	"main": "dist/index.js",
+	"source": "src/index.ts",
+	"scripts": {
+		"build:aws": "pnpm clean:dist && pnpm bundle && pnpm package",
+		"bundle": "ncc build ./src/index.ts -s -m -a",
+		"clean:dist": "rm -fr dist",
+		"clean:node": "rm -rf ./node_modules/ || true",
+		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
+		"preinstall": "npx only-allow pnpm",
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix .",
+		"package": "cd dist && zip -r bundle.zip *",
+		"upload": "aws lambda update-function-code --function-name cognito-messaging --zip-file fileb://dist/bundle.zip"
+	},
+	"dependencies": {
+		"aws-sdk": "2.1296.0"
+	},
+	"devDependencies": {
+		"@types/aws-lambda": "8.10.109",
+		"@types/node": "16.18.11",
+		"@vercel/ncc": "0.36.0",
+		"@weareinreach/config": "0.100.0",
+		"@weareinreach/eslint-config": "0.100.0",
+		"aws-lambda": "1.0.7",
+		"eslint": "8.32.0",
+		"prettier": "2.8.3",
+		"typescript": "4.9.4"
+	}
+}
