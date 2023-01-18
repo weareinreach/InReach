@@ -1,6 +1,6 @@
 {
-  "dataAdmin": "Administrador de datos",
-  "dataManager": "Gestor de datos",
+  "dataAdmin": "Data Administrator",
+  "dataManager": "Data Manager",
   "eth-american-indiannative-americanindigenous-person": "American Indian/Native American/Indigenous Person",
   "eth-asian": "Asian",
   "eth-biracialmultiracial": "Biracial/Multiracial",
@@ -8,8 +8,8 @@
   "eth-latinoaxhispanic": "Latino/a/x/Hispanic",
   "eth-middle-easternnorth-african": "Middle Eastern/North African",
   "eth-native-hawaiianpacific-islander": "Native Hawaiian/Pacific Islander",
-  "eth-other": "Otro",
-  "eth-prefer-not-to-say": "Preferirse a no decir",
+  "eth-other": "Other",
+  "eth-prefer-not-to-say": "Prefer not to say",
   "eth-south-asian": "South Asian",
   "eth-white": "White",
   "identity-ally": "Ally",
@@ -31,9 +31,9 @@
   "immigration-dreamer": "Dreamer (DACA recipient)",
   "immigration-immigrant": "Immigrant",
   "immigration-refugee": "Refugee",
-  "lcr": "Revisor de la comunidad local",
-  "provider": "Proveedor de servicios",
-  "seeker": "Buscador de recursos",
-  "sysadmin": "Administrador del sistema",
+  "lcr": "Local Community Reviewer",
+  "provider": "Service Provider",
+  "seeker": "Resource Seeker",
+  "sysadmin": "System Administrator",
   "type-system": "System"
 }

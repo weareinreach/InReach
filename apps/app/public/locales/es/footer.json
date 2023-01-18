@@ -1,9 +1,9 @@
 {
   "copyright": "InReach, Inc. {{year}}. Todos los derechos reservados.",
-  "disclaimer": "Descargo de responsabilidad",
+  "disclaimer": "Disclaimer",
   "powered-by-vercel": "Desarrollado por Vercel",
-  "privacy-statement": "Declaración de privacidad",
-  "share-feedback": "Compartir Comentarios",
-  "subscribe-to-newsletter": "Suscribirse al boletín de noticias",
-  "suggest-a-resource": "Sugerir un Recurso"
+  "privacy-statement": "Privacy Statement",
+  "share-feedback": "Share Feedback",
+  "subscribe-to-newsletter": "Subscribe to Newsletter",
+  "suggest-a-resource": "Suggest a Resource"
 }
