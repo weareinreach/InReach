@@ -3,7 +3,7 @@ import { UserMigrationTriggerEvent, UserMigrationTriggerHandler } from 'aws-lamb
 import { getUser } from './getUser'
 import { verifyUser } from './verifyUser'
 
-const handler: UserMigrationTriggerHandler = async (event: UserMigrationTriggerEvent) => {
+export const handler: UserMigrationTriggerHandler = async (event: UserMigrationTriggerEvent) => {
 	// const provider = new CognitoIdentityServiceProvider()
 	const username = event.userName
 	const password = event.request.password
@@ -50,5 +50,3 @@ const handler: UserMigrationTriggerHandler = async (event: UserMigrationTriggerE
 			throw new Error('Bad triggerSource')
 	}
 }
-
-export default handler

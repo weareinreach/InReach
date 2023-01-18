@@ -1,7 +1,7 @@
 {
-	"name": "@weareinreach/aws-user-migrate",
+	"name": "@weareinreach/aws-messaging",
 	"version": "0.100.0",
-	"description": "Lambda to gradually migrate existing users to AWS Cognito",
+	"description": "Lambda for AWS Cognito messaging",
 	"license": "GPL-3.0-only",
 	"author": "",
 	"main": "dist/index.js",
@@ -11,16 +11,14 @@
 		"bundle": "ncc build ./src/index.ts -s -m -a",
 		"clean:dist": "rm -fr dist",
 		"clean:node": "rm -rf ./node_modules/ || true",
-		"deploy:aws": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://dist/bundle.zip",
+		"deploy:aws": "aws lambda update-function-code --function-name cognito-messaging --zip-file fileb://dist/bundle.zip",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
-		"package": "pnpm prune-clients && cd dist && zip -r bundle.zip *",
-		"prune-clients": "find ./dist/client -type f -not -name '*rhel*' -delete -print"
+		"package": "cd dist && zip -r bundle.zip *"
 	},
 	"dependencies": {
-		"@weareinreach/db": "0.100.0",
 		"aws-sdk": "2.1296.0"
 	},
 	"devDependencies": {
