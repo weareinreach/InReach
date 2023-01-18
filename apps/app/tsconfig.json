@@ -1,6 +1,5 @@
 {
 	"extends": "../../tsconfig.json",
-	"exclude": [],
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
@@ -16,5 +15,6 @@
 		"./**/*.jsx",
 		"./**/*.mjs",
 		"./**/*.cjs"
-	]
+	],
+	"exclude": ["node_modules"]
 }

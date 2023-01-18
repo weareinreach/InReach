@@ -1,4 +1,5 @@
 {
 	"extends": "@weareinreach/config/tsconfig/base.json",
-	"include": ["**/*.ts", "node_modules/@weareinreach/auth/next-auth.d.ts"]
+	"include": ["./**/*.ts", "node_modules/@weareinreach/auth/next-auth.d.ts"],
+	"exclude": ["node_modules"]
 }

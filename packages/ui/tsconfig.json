@@ -5,11 +5,6 @@
 		"typeRoots": ["./types"],
 		"baseUrl": "."
 	},
-	"include": [
-		"./**/*.ts",
-		"./**/*.tsx",
-		".storybook/*.ts",
-		".storybook/preview.tsx",
-		"node_modules/@weareinreach/auth/next-auth.d.ts"
-	]
+	"include": ["./**/*.ts", "./**/*.tsx", ".storybook/", "node_modules/@weareinreach/auth/next-auth.d.ts"],
+	"exclude": ["node_modules"]
 }
