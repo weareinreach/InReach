@@ -1,4 +1,7 @@
 {
-	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"module": "ESNext"
+	},
+	"extends": "@weareinreach/config/tsconfig/base.json",
 	"include": ["./**/*.ts", "./**/*.js"]
 }

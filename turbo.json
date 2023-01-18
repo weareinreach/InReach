@@ -13,7 +13,9 @@
 				"COGNITO_CLIENT_SECRET",
 				"COGNITO_ISSUER",
 				"COGNITO_USER_POOL_ID",
-				"AWS_REGION"
+				"AWS_REGION",
+				"COGNITO_ACCESS_KEY",
+				"COGNITO_SECRET"
 			]
 		},
 		"@weareinreach/ui#build": {
