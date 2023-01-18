@@ -8,7 +8,7 @@
 	},
 	"include": [
 		"./next-env.d.ts",
-		"node_modules/@weareinreach/auth/next-auth.d.ts",
+		"../../packages/auth/next-auth.d.ts",
 		"./**/*.ts",
 		"./**/*.tsx",
 		"./**/*.js",

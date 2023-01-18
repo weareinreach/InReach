@@ -3,6 +3,6 @@
 	"compilerOptions": {
 		"baseUrl": "."
 	},
-	"include": ["./**/*.ts", "./**/*.tsx", ".storybook/*", "node_modules/@weareinreach/auth/next-auth.d.ts"],
+	"include": ["./**/*.ts", "./**/*.tsx", ".storybook/*", "../auth/next-auth.d.ts"],
 	"exclude": ["node_modules"]
 }
