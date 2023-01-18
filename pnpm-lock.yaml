@@ -660,6 +660,7 @@ importers:
       '@tiptap/starter-kit': 2.0.0-beta.209
       '@tomfreudenberg/next-auth-mock': 0.5.6
       '@types/eslint': 8.4.10
+      '@types/luxon': 3.2.0
       '@types/node': 16.18.11
       '@types/react': 18.0.26
       '@types/react-dom': 18.0.10
@@ -684,6 +685,7 @@ importers:
       i18next: 22.4.9
       i18next-browser-languagedetector: 7.0.1
       i18next-http-backend: 2.1.1
+      luxon: 3.2.1
       merge-anything: 5.1.4
       next: 13.1.2
       next-auth: 4.18.8
@@ -748,6 +750,7 @@ importers:
       '@tiptap/starter-kit': 2.0.0-beta.209_mr3bhnmfox2kjnahwbtgkxt4cy
       '@tomfreudenberg/next-auth-mock': 0.5.6_3h72zjbl4siw7bb763z3lwjlia
       '@types/eslint': 8.4.10
+      '@types/luxon': 3.2.0
       '@types/node': 16.18.11
       '@types/react': 18.0.26
       '@types/react-dom': 18.0.10
@@ -772,6 +775,7 @@ importers:
       i18next: 22.4.9
       i18next-browser-languagedetector: 7.0.1
       i18next-http-backend: 2.1.1
+      luxon: 3.2.1
       merge-anything: 5.1.4
       next: 13.1.2_pjwopsidmaokadturxaafygjp4
       next-auth: 4.18.8_7jnwqgtpcnwg4nzft4b6xlzlfi
