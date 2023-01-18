@@ -26,10 +26,8 @@ const VerifiedBadgeVariant: ComponentStory<typeof VerifiedBadgeComp> = (args) =>
 	<VerifiedBadgeComp {...args} />
 )
 
-export const VerifiedTag = VerifiedBadgeVariant.bind({})
+export const VerifiedBadge = VerifiedBadgeVariant.bind({})
 
-VerifiedTag.args = {
-	text: 'Verified information',
-	tooltip_text:
-		'The information on this page was last updated Tue, Oct 25, 2022. InReach prioritizes accuracy and user safety, and updates all information at least once every 6 months. For more information on our vetting process, please visit our Verification Process page.',
+VerifiedBadge.args = {
+	lastVerifiedDate: new Date(),
 }
