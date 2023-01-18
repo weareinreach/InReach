@@ -23,7 +23,7 @@ export const badgeVariants: BadgeVariants = (theme, params) => {
 				root: {
 					height: theme.spacing.xl + 8,
 					backgroundColor: theme.other.colors.secondary.white,
-					borderColor: theme.other.colors.tertiary.coolGray
+					borderColor: theme.other.colors.tertiary.coolGray,
 				},
 				inner: {
 					paddingTop: theme.spacing.sm / 2,
@@ -34,15 +34,15 @@ export const badgeVariants: BadgeVariants = (theme, params) => {
 					paddingTop: theme.spacing.sm / 2,
 					paddingBottom: theme.spacing.sm / 2,
 					fontSize: theme.fontSizes.md,
-					marginRight: 0
-				}
+					marginRight: 0,
+				},
 			}
 		case 'commmunityTag-small':
 			return {
 				root: {
 					height: theme.spacing.xl,
 					backgroundColor: theme.other.colors.secondary.white,
-					borderColor: theme.other.colors.tertiary.coolGray
+					borderColor: theme.other.colors.tertiary.coolGray,
 				},
 				inner: {
 					paddingTop: theme.spacing.sm / 4,
@@ -53,8 +53,8 @@ export const badgeVariants: BadgeVariants = (theme, params) => {
 					paddingTop: theme.spacing.sm / 4,
 					paddingBottom: theme.spacing.sm / 4,
 					fontSize: theme.fontSizes.sm,
-					marginRight: 0
-				}
+					marginRight: 0,
+				},
 			}
 		case 'serviceTag-large':
 			return {
@@ -81,7 +81,6 @@ export const badgeVariants: BadgeVariants = (theme, params) => {
 				},
 			}
 		default:
-			return {
-			}
+			return {}
 	}
 }

@@ -1,6 +1,5 @@
-import { merge } from 'merge-anything'
-
 import { BadgeStylesParams, ButtonStylesParams, MantineThemeOverride } from '@mantine/core'
+import { merge } from 'merge-anything'
 
 import { customColors } from './colors'
 import { buttonVariants, badgeVariants } from './functions'
@@ -66,13 +65,12 @@ export const commonTheme: MantineThemeOverride = {
 						paddingRight: theme.spacing.sm,
 					},
 					inner: {
-						fontWeight:  theme.other.fontWeight.semibold,
-						color:  theme.other.colors.secondary.black,
-					}
+						fontWeight: theme.other.fontWeight.semibold,
+						color: theme.other.colors.secondary.black,
+					},
 				}
 				return merge(baseStyle, badgeVariants(theme, params))
 			},
-
 		},
 		Button: {
 			defaultProps: {
