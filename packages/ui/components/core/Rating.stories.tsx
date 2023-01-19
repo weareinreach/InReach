@@ -2,10 +2,10 @@ import { Center } from '@mantine/core'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 
-import { RatingTag as RatingTagComp } from './RatingTag'
+import { Rating as RatingTagComp } from './Rating'
 
 export default {
-	title: 'Core/Rating Tag',
+	title: 'Design System/Rating',
 	component: RatingTagComp,
 	decorators: [
 		(Story) => (
@@ -24,9 +24,9 @@ export default {
 
 const RatingTagVariant: ComponentStory<typeof RatingTagComp> = (args) => <RatingTagComp {...args} />
 
-export const RatingTag = RatingTagVariant.bind({})
+export const Rating = RatingTagVariant.bind({})
 
-RatingTag.args = {
+Rating.args = {
 	average: 4.3,
 	reviewCount: 10,
 }

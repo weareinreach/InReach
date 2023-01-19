@@ -14,7 +14,7 @@ const useStyles = createStyles(() => ({
 	text: {},
 }))
 
-export const RatingTag = ({ average, reviewCount }: Props) => {
+export const Rating = ({ average, reviewCount }: Props) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation('common')
 	return (
