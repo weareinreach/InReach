@@ -1,6 +1,8 @@
-import { BadgeVariant, CSSObject, MantineTheme } from '@mantine/core'
+import { BadgeVariant, CSSObject, MantineTheme, BadgeStylesNames } from '@mantine/core'
 
-type BadgeVariants = (theme: MantineTheme, params: BadgeStylesParams) => Record<string, CSSObject>
+type BadgeVariants = (theme: MantineTheme, params: BadgeStylesParams) => CustomBadgeStyles
+
+export type CustomBadgeStyles = Partial<{ [className in BadgeStylesNames]: CSSObject }>
 
 type CustomVariants =
 	| 'commmunityTag-large'

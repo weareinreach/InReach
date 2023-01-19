@@ -2,7 +2,7 @@ import { BadgeStylesParams, ButtonStylesParams, MantineThemeOverride } from '@ma
 import { merge } from 'merge-anything'
 
 import { customColors } from './colors'
-import { buttonVariants, badgeVariants } from './functions'
+import { buttonVariants, badgeVariants, CustomBadgeStyles, CustomButtonStyles } from './functions'
 
 export const commonTheme: MantineThemeOverride = {
 	colorScheme: 'light',
@@ -68,8 +68,12 @@ export const commonTheme: MantineThemeOverride = {
 						fontWeight: theme.other.fontWeight.semibold,
 						color: theme.other.colors.secondary.black,
 					},
-				}
-				return merge(baseStyle, badgeVariants(theme, params))
+				} satisfies CustomBadgeStyles
+				const variants = badgeVariants(theme, params)
+
+				const mergedStyle = merge(baseStyle, variants)
+
+				return mergedStyle
 			},
 		},
 		Button: {
@@ -109,7 +113,7 @@ export const commonTheme: MantineThemeOverride = {
 						width: 'auto',
 						lineHeight: `${theme.spacing.lg}px`,
 					},
-				}
+				} satisfies CustomButtonStyles
 				return merge(baseStyle, buttonVariants(theme, params))
 			},
 		},

@@ -1,6 +1,8 @@
-import { ButtonVariant, CSSObject, MantineTheme } from '@mantine/core'
+import { ButtonVariant, ButtonStylesNames, CSSObject, MantineTheme } from '@mantine/core'
 
-type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => Record<string, CSSObject>
+type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => CustomButtonStyles
+
+export type CustomButtonStyles = Partial<{ [className in ButtonStylesNames]: CSSObject }>
 
 type CustomVariants =
 	| 'sm-primary'
@@ -24,7 +26,6 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 						backgroundColor: theme.colors.inReachPrimaryHover[5],
 					},
 				},
-				inner: {},
 			}
 		case 'outline':
 			return {
@@ -34,7 +35,6 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 						outlineColor: theme.colors.inReachPrimaryHover[5],
 					},
 				},
-				inner: {},
 			}
 		case 'sm-primary':
 			return {
@@ -105,7 +105,6 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 				root: {
 					borderRadius: theme.radius.md,
 				},
-				inner: {},
 			}
 		case 'lg-secondary':
 			return {
@@ -130,13 +129,9 @@ export const buttonVariants: ButtonVariants = (theme, params) => {
 						background: theme.fn.darken(theme.colors.inReachSecondaryRegular[5], 0.4),
 					},
 				},
-				inner: {},
 			}
 		default: {
-			return {
-				root: {},
-				inner: {},
-			}
+			return {}
 		}
 	}
 }
