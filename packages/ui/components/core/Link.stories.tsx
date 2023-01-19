@@ -5,7 +5,7 @@ import React from 'react'
 import { Link as LinkComponent } from './Link'
 
 export default {
-	title: 'Core/Link',
+	title: 'Design System/Link',
 	component: LinkComponent,
 	decorators: [
 		(Story) => (

@@ -4,7 +4,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 
 export default {
-	title: 'Core/Button',
+	title: 'Design System/Button',
 	component: Button,
 	decorators: [
 		(Story) => (
