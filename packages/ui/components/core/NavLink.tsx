@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useState } from 'react'
-import { Text, createStyles, NavLink } from '@mantine/core'
-import NextLink from 'next/link'
+import { createStyles, NavLink } from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
 	icon: {
