@@ -1,68 +1,32 @@
 import { Prisma } from '@weareinreach/db'
 
+import { handleError } from '../lib'
 import { defineRouter, protectedProcedure, publicProcedure, staffProcedure } from '../lib/trpc'
 import { id, orgId, orgIdLocationId, orgIdServiceId, userId } from '../schemas/common'
 import { createReview, transformCreateReview } from '../schemas/review'
 
 export const reviewRouter = defineRouter({
 	create: protectedProcedure.input(createReview).mutation(async ({ ctx, input }) => {
-		const data: Prisma.OrgReviewCreateInput = {
-			...transformCreateReview(input),
-			user: {
-				connect: {
-					id: ctx.session.user.id,
+		try {
+			const data: Prisma.OrgReviewCreateInput = {
+				...transformCreateReview(input),
+				user: {
+					connect: {
+						id: ctx.session.user.id,
+					},
 				},
-			},
+			}
+			const review = await ctx.prisma.orgReview.create({ data })
+			return review
+		} catch (error) {
+			handleError(error)
 		}
-		const review = await ctx.prisma.orgReview.create({ data })
-		return review
 	}),
 	getCurrentUser: protectedProcedure.query(async ({ ctx }) => {
-		const reviews = await ctx.prisma.orgReview.findMany({
-			where: {
-				userId: ctx.session.user.id,
-			},
-			include: {
-				organization: true,
-				orgLocation: true,
-				orgService: true,
-			},
-		})
-		return reviews
-	}),
-	getByOrg: publicProcedure.input(orgId).query(async ({ ctx, input }) => {
-		const reviews = await ctx.prisma.orgReview.findMany({
-			where: {
-				organizationId: input.orgId,
-			},
-		})
-		return reviews
-	}),
-	getByLocation: publicProcedure.input(orgIdLocationId).query(async ({ ctx, input }) => {
-		const reviews = await ctx.prisma.orgReview.findMany({
-			where: {
-				organizationId: input.orgId,
-				orgLocationId: input.locationId,
-			},
-		})
-		return reviews
-	}),
-	getByService: publicProcedure.input(orgIdServiceId).query(async ({ ctx, input }) => {
-		const reviews = await ctx.prisma.orgReview.findMany({
-			where: {
-				organizationId: input.orgId,
-				orgServiceId: input.serviceId,
-			},
-		})
-		return reviews
-	}),
-	getByUser: staffProcedure
-		.input(userId)
-		.meta({ hasPerm: 'viewUserReviews' })
-		.query(async ({ ctx, input }) => {
+		try {
 			const reviews = await ctx.prisma.orgReview.findMany({
 				where: {
-					userId: input.userId,
+					userId: ctx.session.user.id,
 				},
 				include: {
 					organization: true,
@@ -71,61 +35,138 @@ export const reviewRouter = defineRouter({
 				},
 			})
 			return reviews
+		} catch (error) {
+			handleError(error)
+		}
+	}),
+	getByOrg: publicProcedure.input(orgId).query(async ({ ctx, input }) => {
+		try {
+			const reviews = await ctx.prisma.orgReview.findMany({
+				where: {
+					organizationId: input.orgId,
+				},
+			})
+			return reviews
+		} catch (error) {
+			handleError(error)
+		}
+	}),
+	getByLocation: publicProcedure.input(orgIdLocationId).query(async ({ ctx, input }) => {
+		try {
+			const reviews = await ctx.prisma.orgReview.findMany({
+				where: {
+					organizationId: input.orgId,
+					orgLocationId: input.locationId,
+				},
+			})
+			return reviews
+		} catch (error) {
+			handleError(error)
+		}
+	}),
+	getByService: publicProcedure.input(orgIdServiceId).query(async ({ ctx, input }) => {
+		try {
+			const reviews = await ctx.prisma.orgReview.findMany({
+				where: {
+					organizationId: input.orgId,
+					orgServiceId: input.serviceId,
+				},
+			})
+			return reviews
+		} catch (error) {
+			handleError(error)
+		}
+	}),
+	getByUser: staffProcedure
+		.input(userId)
+		.meta({ hasPerm: 'viewUserReviews' })
+		.query(async ({ ctx, input }) => {
+			try {
+				const reviews = await ctx.prisma.orgReview.findMany({
+					where: {
+						userId: input.userId,
+					},
+					include: {
+						organization: true,
+						orgLocation: true,
+						orgService: true,
+					},
+				})
+				return reviews
+			} catch (error) {
+				handleError(error)
+			}
 		}),
 	hide: staffProcedure
 		.input(id)
 		.meta({ hasPerm: 'hideUserReview' })
 		.mutation(async ({ ctx, input }) => {
-			const result = await ctx.prisma.orgReview.update({
-				where: {
-					id: input.id,
-				},
-				data: {
-					visible: false,
-				},
-			})
-			return result
+			try {
+				const result = await ctx.prisma.orgReview.update({
+					where: {
+						id: input.id,
+					},
+					data: {
+						visible: false,
+					},
+				})
+				return result
+			} catch (error) {
+				handleError(error)
+			}
 		}),
 	unHide: staffProcedure
 		.input(id)
 		.meta({ hasPerm: 'showUserReview' })
 		.mutation(async ({ ctx, input }) => {
-			const result = await ctx.prisma.orgReview.update({
-				where: {
-					id: input.id,
-				},
-				data: {
-					visible: true,
-				},
-			})
-			return result
+			try {
+				const result = await ctx.prisma.orgReview.update({
+					where: {
+						id: input.id,
+					},
+					data: {
+						visible: true,
+					},
+				})
+				return result
+			} catch (error) {
+				handleError(error)
+			}
 		}),
 	delete: protectedProcedure
 		.input(id)
 		.meta({ hasPerm: 'deleteUserReview' })
 		.mutation(async ({ ctx, input }) => {
-			const review = ctx.prisma.orgReview.update({
-				where: {
-					id: input.id,
-				},
-				data: {
-					deleted: true,
-				},
-			})
-			return review
+			try {
+				const review = ctx.prisma.orgReview.update({
+					where: {
+						id: input.id,
+					},
+					data: {
+						deleted: true,
+					},
+				})
+				return review
+			} catch (error) {
+				handleError(error)
+			}
 		}),
 	unDelete: protectedProcedure
 		.input(id)
 		.meta({ hasPerm: 'deleteUserReview' })
 		.mutation(async ({ ctx, input }) => {
-			const review = ctx.prisma.orgReview.update({
-				where: {
-					id: input.id,
-				},
-				data: {
-					deleted: false,
-				},
-			})
-			return review
+			try {
+				const review = ctx.prisma.orgReview.update({
+					where: {
+						id: input.id,
+					},
+					data: {
+						deleted: false,
+					},
+				})
+				return review
+			} catch (error) {
+				handleError(error)
+			}
 		}),
 })
