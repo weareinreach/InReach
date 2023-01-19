@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
-import { useState } from 'react'
 import { Text, createStyles, NavLink } from '@mantine/core'
 import NextLink from 'next/link'
+import { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
 	icon: {
@@ -14,16 +14,14 @@ export const navIcons = {
 	search: 'carbon:search',
 	saved: 'carbon:favorite',
 	account: 'carbon:user',
-	support: 'carbon:help'
+	support: 'carbon:help',
 } as const
 
 export const NavLinkItem = ({ children, icon }: Props) => {
 	const { classes } = useStyles()
 	const iconRender = navIcons[icon]
-	const [active, setActive] = useState(0);
-	return (
-		<NavLink label={children} icon={<Icon icon={iconRender} className={classes.icon} />} />
-	)
+	const [active, setActive] = useState(0)
+	return <NavLink label={children} icon={<Icon icon={iconRender} className={classes.icon} />} />
 }
 
 type Props = {
