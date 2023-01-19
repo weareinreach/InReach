@@ -114,7 +114,8 @@
 		"typescript.workspaceSymbols.scope": "allOpenProjects",
 		"i18n-ally.defaultNamespace": "common",
 		"i18n-ally.extract.ignoredByFiles": {
-			"**/packages/db/**/*.ts": ["*"]
+			"**/packages/db/**/*.ts": ["*"],
+			"../../packages/ui/.storybook/i18next.ts": ["*"]
 		},
 
 		"files.watcherExclude": {

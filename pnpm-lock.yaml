@@ -674,6 +674,7 @@ importers:
       '@storybook/addon-links': 6.5.15
       '@storybook/addon-viewport': 6.5.15
       '@storybook/builder-webpack5': 6.5.15
+      '@storybook/core-common': 6.5.15
       '@storybook/jest': 0.0.10
       '@storybook/manager-webpack5': 6.5.15
       '@storybook/react': 6.5.15
@@ -764,6 +765,7 @@ importers:
       '@storybook/addon-links': 6.5.15_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-viewport': 6.5.15_biqbaboplfbrettd7655fr4n2y
       '@storybook/builder-webpack5': 6.5.15_npr6grw22r3sf3es7y6etwwwci
+      '@storybook/core-common': 6.5.15_72f5ylvv5qyncwuu36nsfplvaa
       '@storybook/jest': 0.0.10_biqbaboplfbrettd7655fr4n2y
       '@storybook/manager-webpack5': 6.5.15_npr6grw22r3sf3es7y6etwwwci
       '@storybook/react': 6.5.15_o4vbcm7enoar4xgk5indz4lqry
