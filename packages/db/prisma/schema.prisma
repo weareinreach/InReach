@@ -403,32 +403,24 @@ model Organization {
   slug       String  @unique /// @zod.string.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/gm)
   legacySlug String?
 
-  description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  descriptionId String?   @unique /// @zod.string.cuid()
-
-  emails       OrgEmail[]
-  locations    OrgLocation[]
-  notes        InternalNote[]
-  phones       OrgPhone[]
-  photos       OrgPhoto[]
-  servicess    OrgService[]
-  socialMedia  OrgSocialMedia[]
-  websites     OrgWebsite[]
-  reviews      OrgReview[]
-  serviceAreas ServiceArea[]
-  hours        OrgHours[] // for schedules that need to be assigned to locations
-  userLists    SavedOrganization[]
-
-  attributes           OrganizationAttribute[]
-  attributeSupplements OrganizationAttributeSupplement[]
+  // nested data
+  description   FreeText?               @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  descriptionId String?                 @unique /// @zod.string.cuid()
+  emails        OrgEmail[]
+  locations     OrgLocation[]
+  phones        OrgPhone[]
+  photos        OrgPhoto[]
+  services      OrgService[]
+  socialMedia   OrgSocialMedia[]
+  websites      OrgWebsite[]
+  reviews       OrgReview[]
+  serviceAreas  ServiceArea[]
+  hours         OrgHours[] // for schedules that need to be assigned to locations
+  attributes    OrganizationAttribute[]
 
   deleted      Boolean   @default(false)
   published    Boolean   @default(false)
   lastVerified DateTime?
-
-  // Users associated with organization (staff)
-  associatedUsers UserToOrganization[]
-  allowedEditors  OrganizationPermission[]
 
   // Outside API connections
   outsideApi OutsideAPI[]
@@ -436,9 +428,16 @@ model Organization {
   source   Source @relation(fields: [sourceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   sourceId String /// @zod.string.cuid()
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  // attachments
+  userLists       SavedOrganization[]
+  // Users associated with organization (staff)
+  associatedUsers UserToOrganization[]
+  allowedEditors  OrganizationPermission[]
+
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
   auditLogs AuditLog[]
+  notes     InternalNote[]
 
   /// Does this record need to be checked by staff after migration?
   checkMigration Boolean?
@@ -599,8 +598,7 @@ model OrgLocation {
   deleted   Boolean    @default(false)
   hours     OrgHours[]
 
-  attributes           LocationAttribute[]
-  attributeSupplements LocationAttributeSupplement[]
+  attributes LocationAttribute[]
 
   organization   Organization         @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   orgId          String /// @zod.string.cuid()
@@ -721,28 +719,24 @@ model OrgService {
   deleted    Boolean @default(false)
   legacyName String?
 
-  services     OrgServiceTag[]
-  serviceAreas ServiceArea[]
-
-  hours   OrgHours[]
-  reviews OrgReview[]
-
-  attributes           ServiceAttribute[]
-  attributeSupplements ServiceAttributeSupplement[]
-
-  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String? /// @zod.string.cuid()
-
-  locations OrgLocationService[]
-  phones    OrgServicePhone[]
-  emails    OrgServiceEmail[]
-
+  // Nested data
+  services      OrgServiceTag[]
+  serviceAreas  ServiceArea[]
+  hours         OrgHours[]
+  reviews       OrgReview[]
+  attributes    ServiceAttribute[]
+  phones        OrgServicePhone[]
+  emails        OrgServiceEmail[]
   accessDetails ServiceAccess[]
+  description   FreeText?          @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  descriptionId String?            @unique /// @zod.string.cuid()
 
-  description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  descriptionId String?   @unique /// @zod.string.cuid()
+  // attachments
+  organization   Organization?        @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String? /// @zod.string.cuid()
+  locations      OrgLocationService[]
+  userLists      SavedService[]
 
-  userLists     SavedService[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
@@ -780,8 +774,7 @@ model ServiceAccess {
   // the legacyIds are nowhere near unique
   // legacyId String? @unique /// old ID from MongoDB
 
-  attributes  ServiceAccessAttribute[]
-  supplements ServiceAccessAttributeSupplement[]
+  attributes ServiceAccessAttribute[]
 
   service   OrgService @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   serviceId String /// old ID from MongoDB
@@ -913,11 +906,6 @@ model Attribute {
   attachedOrganiations  OrganizationAttribute[]
   attachedLocations     LocationAttribute[]
 
-  orgSupplements           OrganizationAttributeSupplement[]
-  locationSupplements      LocationAttributeSupplement[]
-  serviceSupplements       ServiceAttributeSupplement[]
-  serviceAccessSupplements ServiceAccessAttributeSupplement[]
-
   requireText     Boolean @default(false)
   requireLanguage Boolean @default(false)
   requireCountry  Boolean @default(false)
@@ -937,11 +925,6 @@ model AttributeSupplement {
   id     String  @id @default(cuid())
   active Boolean @default(true)
 
-  attachedOrganizations OrganizationAttributeSupplement[]
-  attachedLocations     LocationAttributeSupplement[]
-  attachedServices      ServiceAttributeSupplement[]
-  attachedServiceAccess ServiceAccessAttributeSupplement[]
-
   data    Json? /// @zod.custom.use(AttributeSupplement)
   boolean Boolean?
 
@@ -960,6 +943,10 @@ model AttributeSupplement {
   internalNotes InternalNote[]
 
   //@@schema("system")
+  organizationAttribute  OrganizationAttribute[]
+  locationAttribute      LocationAttribute[]
+  serviceAttribute       ServiceAttribute[]
+  serviceAccessAttribute ServiceAccessAttribute[]
 }
 
 model ServiceCategory {
@@ -1984,10 +1971,12 @@ model ServiceAreaDist {
 
 /// Link attributes to organizations
 model OrganizationAttribute {
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organization   Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   organizationId String /// @zod.string.cuid()
-  attribute      Attribute    @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attribute      Attribute            @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId    String /// @zod.string.cuid()
+  supplement     AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  supplementId   String?              @unique /// @zod.string.cuid()
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1997,10 +1986,12 @@ model OrganizationAttribute {
 
 /// Link attributes to locations
 model LocationAttribute {
-  location    OrgLocation @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  locationId  String /// @zod.string.cuid()
-  attribute   Attribute   @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId String /// @zod.string.cuid()
+  location     OrgLocation          @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  locationId   String /// @zod.string.cuid()
+  attribute    Attribute            @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeId  String /// @zod.string.cuid()
+  supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  supplementId String?              @unique /// @zod.string.cuid()
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2010,10 +2001,12 @@ model LocationAttribute {
 
 /// Link attributes to services
 model ServiceAttribute {
-  service      OrgService @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  service      OrgService           @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   orgServiceId String /// @zod.string.cuid()
-  attribute    Attribute  @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attribute    Attribute            @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId  String /// @zod.string.cuid()
+  supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  supplementId String?              @unique /// @zod.string.cuid()
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2023,10 +2016,12 @@ model ServiceAttribute {
 
 /// Link attributes to Service Access instructions
 model ServiceAccessAttribute {
-  serviceAccess   ServiceAccess @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceAccess   ServiceAccess        @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   serviceAccessId String /// @zod.string.cuid()
-  attribute       Attribute     @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attribute       Attribute            @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId     String /// @zod.string.cuid()
+  supplement      AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  supplementId    String?              @unique /// @zod.string.cuid()
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2045,70 +2040,6 @@ model AttributeToCategory {
   //@@schema("relation")
 
   @@id([attributeId, categoryId])
-}
-
-/// Link attribute supplements to organization
-model OrganizationAttributeSupplement {
-  attribute    Attribute           @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId  String /// @zod.string.cuid()
-  supplement   AttributeSupplement @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  supplementId String /// @zod.string.cuid()
-
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String /// @zod.string.cuid()
-
-  linkedAt DateTime @default(now())
-  //@@schema("relation")
-
-  @@id([attributeId, supplementId, organizationId])
-}
-
-/// Link attribute supplements to location
-model LocationAttributeSupplement {
-  attribute    Attribute           @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId  String /// @zod.string.cuid()
-  supplement   AttributeSupplement @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  supplementId String /// @zod.string.cuid()
-
-  orgLocation OrgLocation @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  locationId  String /// @zod.string.cuid()
-
-  linkedAt DateTime @default(now())
-  //@@schema("relation")
-
-  @@id([attributeId, supplementId, locationId])
-}
-
-/// Link attribute supplements to service
-model ServiceAttributeSupplement {
-  attribute    Attribute           @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId  String /// @zod.string.cuid()
-  supplement   AttributeSupplement @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  supplementId String /// @zod.string.cuid()
-
-  orgService   OrgService @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgServiceId String /// @zod.string.cuid()
-
-  linkedAt DateTime @default(now())
-  //@@schema("relation")
-
-  @@id([attributeId, supplementId, orgServiceId])
-}
-
-/// Link attribute supplements to service access instructions
-model ServiceAccessAttributeSupplement {
-  attribute    Attribute           @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId  String /// @zod.string.cuid()
-  supplement   AttributeSupplement @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  supplementId String /// @zod.string.cuid()
-
-  serviceAccess   ServiceAccess @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceAccessId String /// @zod.string.cuid()
-
-  linkedAt DateTime @default(now())
-  //@@schema("relation")
-
-  @@id([attributeId, supplementId, serviceAccessId])
 }
 
 /// Link default attributes to service category
