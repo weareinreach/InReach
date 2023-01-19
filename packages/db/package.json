@@ -14,7 +14,7 @@
 		"db:migrate": "pnpm with-env prisma migrate dev",
 		"db:migrate:edit": "pnpm with-env prisma migrate dev --create-only --skip-seed",
 		"db:mongoexport": "pnpm clean:export && pnpm with-env tsx ./seed/migrate-v1/mongoexport.ts",
-		"db:repl": "pnpm dlx @prismatools/console@latest",
+		"db:repl": "pnpm dlx @prismatools/console@latest -c ../../node_modules/@prisma/client",
 		"db:reset": "pnpm with-env prisma migrate reset",
 		"db:seed": "pnpm with-env prisma db seed",
 		"db:studio": "pnpm with-env prisma studio",
