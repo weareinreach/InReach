@@ -5,7 +5,7 @@ import React from 'react'
 import { VerifiedBadge as VerifiedBadgeComp } from './VerifiedBadge'
 
 export default {
-	title: 'Core/Verified Badge',
+	title: 'Design System/Tags and Badges/Verified Badge',
 	component: VerifiedBadgeComp,
 	decorators: [
 		(Story) => (

@@ -1,4 +1,5 @@
 import { Avatar, Badge, Text, Tooltip, createStyles } from '@mantine/core'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = createStyles(() => ({
 	ellipse: {
@@ -25,10 +26,10 @@ const useStyles = createStyles(() => ({
 
 export const LeaderBadge = ({ color, emoji, key_value, minify }: LeaderBadgeProps) => {
 	const { classes } = useStyles()
+	const { t } = useTranslation('attribute')
 
-	// Two api calls to retrieve
-	// const key_translated = key;
-	// const key_translated_label = key;
+	const label = t(key_value)
+	const tooltip = t(`${key_value}-org`)
 
 	const emoji_avatar = (
 		<Avatar size={24} color={color} radius={100} className={classes.avatar} variant='filled'>
@@ -37,10 +38,10 @@ export const LeaderBadge = ({ color, emoji, key_value, minify }: LeaderBadgeProp
 	)
 
 	return (
-		<Tooltip label={key_value}>
+		<Tooltip label={tooltip}>
 			<Badge variant='outline' radius={100} size='xl' className={classes.badge} leftSection={emoji_avatar}>
 				<Text fw={500} className={classes.text} sx={{ display: minify ? 'none' : 'hidden' }}>
-					{key_value}
+					{label}
 				</Text>
 			</Badge>
 		</Tooltip>

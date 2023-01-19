@@ -5,7 +5,7 @@ import React from 'react'
 import { SocialMediaIconButton, approvedIcons } from './SocialMediaIconButton'
 
 export default {
-	title: 'Core/Social Media Button',
+	title: 'Design System/Social Media Button',
 	component: SocialMediaIconButton,
 	decorators: [
 		(Story) => (

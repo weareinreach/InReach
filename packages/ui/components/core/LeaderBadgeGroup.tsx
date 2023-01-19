@@ -1,5 +1,4 @@
 import { Group, createStyles, Text } from '@mantine/core'
-import React from 'react'
 
 import { LeaderBadge, LeaderBadgeProps } from './LeaderBadge'
 
