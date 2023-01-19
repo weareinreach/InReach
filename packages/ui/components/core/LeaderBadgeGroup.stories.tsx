@@ -5,7 +5,7 @@ import React from 'react'
 import { LeaderBadgeGroup } from './LeaderBadgeGroup'
 
 export default {
-	title: 'Core/Leader Badge Group',
+	title: 'Design System/Tags and Badges/Leader Badge Group',
 	component: LeaderBadgeGroup,
 	decorators: [
 		(Story) => (
@@ -40,7 +40,7 @@ BadgeGroupMinified.args = {
 		{
 			color: 'green',
 			emoji: '️‍️‍🌎',
-			key_value: 'Immigrant-led',
+			key_value: 'immigrant-led',
 			minify: true,
 		},
 	],
@@ -57,7 +57,7 @@ BadgeGroupRegular.args = {
 		{
 			color: 'red',
 			emoji: '️‍️‍🌎',
-			key_value: 'Immigrant-led',
+			key_value: 'immigrant-led',
 			minify: false,
 		},
 	],

@@ -5,7 +5,7 @@ import React from 'react'
 import { LeaderBadge } from './LeaderBadge'
 
 export default {
-	title: 'Core/Leader Badge',
+	title: 'Design System/Tags and Badges/Leader Badge',
 	component: LeaderBadge,
 	decorators: [
 		(Story) => (

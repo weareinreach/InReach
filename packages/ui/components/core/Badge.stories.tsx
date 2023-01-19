@@ -3,7 +3,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 
 export default {
-	title: 'core/Tags and Badges',
+	title: 'Design System/Tags and Badges',
 	component: Badge,
 	argTypes: {
 		children: {

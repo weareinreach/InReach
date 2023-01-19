@@ -5,7 +5,7 @@ import React from 'react'
 import { Breadcrumb as BreadcrumbCompnent } from './Breadcrumb'
 
 export default {
-	title: 'Core/Breadcrumb',
+	title: 'Design System/Breadcrumb',
 	component: BreadcrumbCompnent,
 	decorators: [
 		(Story) => (
