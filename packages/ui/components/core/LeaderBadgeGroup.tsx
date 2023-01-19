@@ -14,12 +14,15 @@ const useStyles = createStyles(() => ({
 export const LeaderBadgeGroup = ({ badges }: Props) => {
 	const { classes } = useStyles()
 
+	const WithSeparator = (item: LeaderBadgeProps) => (
+		<>
+			<LeaderBadge {...item} />
+			<Text className={classes.separator} inline>{`\u2022`}</Text>
+		</>
+	)
 	const badgeList = badges.map((item: LeaderBadgeProps, idx, arr) =>
 		idx + 1 !== arr.length && !item.minify ? (
-			<>
-				<LeaderBadge key={item.key_value} {...item} />
-				<Text className={classes.separator} inline>{`\u2022`}</Text>
-			</>
+			<WithSeparator key={item.key_value} {...item} />
 		) : (
 			<LeaderBadge key={item.key_value} {...item} />
 		)
