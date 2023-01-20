@@ -1,11 +1,9 @@
-import { Avatar, Group, Skeleton, Stack, Text,createStyles } from '@mantine/core'
+import { Icon } from '@iconify/react'
+import { Avatar, Group, Skeleton, Stack, Text, createStyles } from '@mantine/core'
 import { DateTime } from 'luxon'
+import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
-import Image from 'next/image'
-import { Icon } from '@iconify/react'
-
-
 
 const useStyles = createStyles((theme) => ({
 	group: {
@@ -13,7 +11,7 @@ const useStyles = createStyles((theme) => ({
 			backgroundColor: theme.other.colors.primary.lightGray,
 		},
 	},
-	loadingItems:{
+	loadingItems: {
 		display: 'inline-block',
 	},
 	avatar: {
@@ -33,14 +31,14 @@ const useStyles = createStyles((theme) => ({
 export const UserAvatar = () => {
 	const { classes } = useStyles()
 	const { t, i18n } = useTranslation()
-	const {data: session, status } = useSession()
+	const { data: session, status } = useSession()
 
 	const dateString = DateTime.now()
 		.setLocale(i18n.resolvedLanguage)
 		.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 	const subtextValue = t('in-reach-avatar-date', { dateString })
 
-	if(status === 'loading' && !session){
+	if (status === 'loading' && !session) {
 		return (
 			<Group className={classes.group}>
 				<Skeleton height={55} circle className={classes.loadingItems} />
@@ -61,8 +59,8 @@ export const UserAvatar = () => {
 						height={48}
 						width={48}
 						alt={session.user.name || t('user-avatar')}
-						/>
-				):(
+					/>
+				) : (
 					<Icon icon='fa6-solid:user' className={classes.avatar} />
 				)}
 			</Avatar>
