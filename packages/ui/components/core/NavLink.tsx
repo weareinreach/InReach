@@ -39,16 +39,19 @@ export const NavLinkItem = ({ navItem, activeState }: Props) => {
 	const { t } = useTranslation()
 	const navlabel = t(navItem)
 
-	return <NavLink
-		label={navlabel}
-		icon={<Icon icon={iconRender} />}
-		variant="subtle"
-		active={activeState ?? false}
-		className={classes.navStyle}
-		styles={{
-			icon: { marginRight: 'unset', width: '20px', height: '20px' },
-			body: {fontSize: '14px', fontWeight: 500, lineHeight: '125%'} }}
-	/>
+	return (
+		<NavLink
+			label={navlabel}
+			icon={<Icon icon={iconRender} />}
+			variant='subtle'
+			active={activeState ?? false}
+			className={classes.navStyle}
+			styles={{
+				icon: { marginRight: 'unset', width: '20px', height: '20px' },
+				body: { fontSize: '14px', fontWeight: 500, lineHeight: '125%' },
+			}}
+		/>
+	)
 }
 
 type Props = {
