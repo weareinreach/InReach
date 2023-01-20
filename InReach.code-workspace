@@ -33,10 +33,6 @@
 			"path": "./packages/eslint-config"
 		},
 		{
-			"name": "📦 Shared TypeScript types (@weareinreach/types)",
-			"path": "./packages/types"
-		},
-		{
 			"name": "📦 AWS User Migration (@weareinreach/aws-user-migrate)",
 			"path": "./packages/aws-user-migrate"
 		},

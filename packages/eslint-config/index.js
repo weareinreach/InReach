@@ -2,7 +2,7 @@
 
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
-	plugins: ['codegen', 'turbo', 'prettier', 'import'],
+	plugins: ['codegen', 'turbo', 'prettier', 'import', 'node'],
 	extends: ['plugin:turbo/recommended', 'prettier', 'plugin:import/typescript'],
 	rules: {
 		'import/first': 'error',
@@ -30,6 +30,7 @@ const config = {
 				},
 			},
 		],
+		'node/no-process-env': 'error',
 		'react/jsx-key': 'off',
 		'codegen/codegen': 'error',
 		'react/no-unescaped-entities': ['off'],

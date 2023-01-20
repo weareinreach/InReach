@@ -5,17 +5,18 @@ import {
 	AuthenticationResultType,
 	ChallengeNameType,
 } from '@aws-sdk/client-cognito-identity-provider'
+import { env } from '@weareinreach/config'
 import invariant from 'tiny-invariant'
 
 import { createHmac } from 'crypto'
 
 export const cognito = new CognitoIdentityProvider({
 	credentials: {
-		accessKeyId: process.env.COGNITO_ACCESS_KEY,
-		secretAccessKey: process.env.COGNITO_SECRET,
+		accessKeyId: env.COGNITO_ACCESS_KEY,
+		secretAccessKey: env.COGNITO_SECRET,
 	},
 })
-export const ClientId = process.env.COGNITO_CLIENT_ID
+export const ClientId = env.COGNITO_CLIENT_ID
 
 /**
  * Generates Cognito HMAC hash.
@@ -26,7 +27,7 @@ export const ClientId = process.env.COGNITO_CLIENT_ID
  * @returns AWS compliant HMAC hash
  */
 export const generateHash = (message: string) =>
-	createHmac('sha256', process.env.COGNITO_CLIENT_SECRET).update(`${message}${ClientId}`).digest('base64')
+	createHmac('sha256', env.COGNITO_CLIENT_SECRET).update(`${message}${ClientId}`).digest('base64')
 
 export const parseAuthResponse: AuthResponse = (response) => {
 	const isChallenge = (name: string | undefined): name is ChallengeNameType =>

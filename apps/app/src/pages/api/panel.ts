@@ -1,9 +1,10 @@
 import { appRouter } from '@weareinreach/api'
+import { env } from '@weareinreach/config'
 import { type NextApiRequest, type NextApiResponse } from 'next'
 import { renderTrpcPanel } from 'trpc-panel'
 
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
-	if (process.env.NODE_ENV === 'development') {
+	if (env.NODE_ENV === 'development') {
 		res.status(200).send(
 			renderTrpcPanel(appRouter, {
 				url: 'http://localhost:3000/api/trpc',

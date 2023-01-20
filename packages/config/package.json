@@ -3,16 +3,21 @@
 	"version": "0.100.0",
 	"private": true,
 	"license": "GPL-3.0-only",
+	"main": "index.ts",
 	"files": [
 		"lint-staged/index.js",
 		"lint-staged/next.js",
 		"prettier/index.js",
-		"i18next/index.js"
+		"i18next/index.js",
+		"env/index.ts"
 	],
 	"scripts": {
 		"clean:node": "rm -rf ./node_modules/ || true",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm"
+	},
+	"dependencies": {
+		"znv": "0.3.2"
 	},
 	"devDependencies": {
 		"@weareinreach/eslint-config": "0.100.0",
