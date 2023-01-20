@@ -4,7 +4,15 @@ import { useTranslation } from 'react-i18next'
 
 const useStyles = createStyles((theme) => ({
 	navStyle: {
-		display: 'block',
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center',
+		padding: '12px 0px 8px',
+		gap: '12px',
+		position: 'absolute',
+		width: '75px',
+		height: '70px',
 		color: theme.other.colors.secondary.darkGray,
 		'&:hover': {
 			backgroundColor: theme.other.colors.secondary.white,
@@ -37,7 +45,9 @@ export const NavLinkItem = ({ navItem, activeState }: Props) => {
 		variant="subtle"
 		active={activeState}
 		className={classes.navStyle}
-		styles={{ icon: { marginRight: 'unset' } }}
+		styles={{
+			icon: { marginRight: 'unset', width: '20px', height: '20px' },
+			body: {fontSize: '14px', fontWeight: 500, lineHeight: '125%'} }}
 	/>
 }
 
