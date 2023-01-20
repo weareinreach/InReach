@@ -27,23 +27,23 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const navIcons = {
-	Search: 'carbon:search',
-	Saved: 'carbon:favorite',
-	Account: 'carbon:user',
-	Support: 'carbon:help',
+	search: 'carbon:search',
+	saved: 'carbon:favorite',
+	account: 'carbon:user',
+	support: 'carbon:help',
 } as const
 
 export const NavLinkItem = ({ navItem, activeState }: Props) => {
 	const { classes } = useStyles()
 	const iconRender = navIcons[navItem]
-	const { t } = useTranslation('attribute')
+	const { t } = useTranslation()
 	const navlabel = t(navItem)
 
 	return <NavLink
 		label={navlabel}
 		icon={<Icon icon={iconRender} />}
 		variant="subtle"
-		active={activeState}
+		active={activeState ?? false}
 		className={classes.navStyle}
 		styles={{
 			icon: { marginRight: 'unset', width: '20px', height: '20px' },
@@ -53,6 +53,5 @@ export const NavLinkItem = ({ navItem, activeState }: Props) => {
 
 type Props = {
 	activeState: boolean
-	// labelKey: string
 	navItem: keyof typeof navIcons
 }
