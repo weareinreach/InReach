@@ -26,7 +26,7 @@ export const commonTheme: MantineThemeOverride = {
 			secondary: {
 				black: '#000000',
 				white: '#FFFFFF',
-				darkGray: '#65676B'
+				darkGray: '#65676B',
 			},
 			tertiary: {
 				coolGray: '#d9d9d9',

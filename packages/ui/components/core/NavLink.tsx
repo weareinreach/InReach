@@ -7,7 +7,7 @@ const useStyles = createStyles((theme) => ({
 		display: 'block',
 		color: theme.other.colors.secondary.darkGray,
 		'&:hover': {
-			backgroundColor: theme.other.colors.secondary.white
+			backgroundColor: theme.other.colors.secondary.white,
 		},
 		'&[data-active]': {
 			color: theme.other.colors.secondary.black,
