@@ -504,7 +504,7 @@ importers:
       prisma: 4.9.0
       prisma-dbml-generator: 0.10.0
       prisma-docs-generator: 0.5.0
-      quicktype-core: 20.0.25
+      quicktype-core: 21.0.2
       recursive-readdir: 2.2.3
       shoetest: 1.2.2
       slugify: 1.6.5
@@ -561,7 +561,7 @@ importers:
       prisma: 4.9.0
       prisma-dbml-generator: 0.10.0
       prisma-docs-generator: 0.5.0
-      quicktype-core: 20.0.25
+      quicktype-core: 21.0.2
       recursive-readdir: 2.2.3
       shoetest: 1.2.2
       slugify: 1.6.5
@@ -17928,8 +17928,8 @@ packages:
     resolution: {integrity: sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==}
     engines: {node: '>=10'}
 
-  /quicktype-core/20.0.25:
-    resolution: {integrity: sha512-E1eYGnwfdMgAM7O3UTxefgKBRvPLwhZnW9A+dvR0i8WozAbMMspYaX04NaAmQw9IXKXB79uAR3XaD0SI2w4K7w==}
+  /quicktype-core/21.0.2:
+    resolution: {integrity: sha512-iNVLms/N+XsDQF/YfhAY2VKE5jSEkEOoRJUaZuyzjknB/1upT1fBtDU3+9o6bnFm1TD0B1WaEfA2kjl340h0lQ==}
     dependencies:
       '@glideapps/ts-necessities': 2.1.2
       '@types/urijs': 1.19.19
