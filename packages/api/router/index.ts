@@ -1,4 +1,6 @@
 import { authRouter } from './auth'
+import { locationRouter } from './location'
+import { orgRouter } from './org'
 import { reviewRouter } from './review'
 import { savedListRouter } from './savedLists'
 import { userRouter } from './user'
@@ -9,6 +11,8 @@ export const appRouter = defineRouter({
 	user: userRouter,
 	savedList: savedListRouter,
 	review: reviewRouter,
+	location: locationRouter,
+	organization: orgRouter,
 })
 
 // export type definition of API
