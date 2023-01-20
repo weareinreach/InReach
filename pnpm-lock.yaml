@@ -318,7 +318,7 @@ importers:
       '@weareinreach/db': 0.100.0
       '@weareinreach/eslint-config': 0.100.0
       cuid: 2.1.8
-      dotenv-cli: 6.0.0
+      dotenv-cli: 7.0.0
       eslint: 8.32.0
       eslint-import-resolver-typescript: 3.5.3
       eslint-plugin-codegen: 0.17.0
@@ -349,7 +349,7 @@ importers:
       '@typescript-eslint/parser': 5.48.2_7uibuqfxkfaozanbtbziikiqje
       '@weareinreach/config': link:../config
       '@weareinreach/eslint-config': link:../eslint-config
-      dotenv-cli: 6.0.0
+      dotenv-cli: 7.0.0
       eslint: 8.32.0
       eslint-import-resolver-typescript: 3.5.3_ps7hf4l2dvbuxvtusmrfhmzsba
       eslint-plugin-codegen: 0.17.0
@@ -485,7 +485,7 @@ importers:
       countries-languages: 1.0.3
       cuid: 2.1.8
       dotenv: 16.0.3
-      dotenv-cli: 6.0.0
+      dotenv-cli: 7.0.0
       eslint: 8.32.0
       eslint-import-resolver-typescript: 3.5.3
       eslint-plugin-codegen: 0.17.0
@@ -542,7 +542,7 @@ importers:
       countries-languages: 1.0.3
       cuid: 2.1.8
       dotenv: 16.0.3
-      dotenv-cli: 6.0.0
+      dotenv-cli: 7.0.0
       eslint: 8.32.0
       eslint-import-resolver-typescript: 3.5.3_ps7hf4l2dvbuxvtusmrfhmzsba
       eslint-plugin-codegen: 0.17.0
@@ -11280,23 +11280,23 @@ packages:
       is-obj: 2.0.0
     dev: true
 
-  /dotenv-cli/6.0.0:
-    resolution: {integrity: sha512-qXlCOi3UMDhCWFKe0yq5sg3X+pJAz+RQDiFN38AMSbUrnY3uZshSfDJUAge951OS7J9gwLZGfsBlWRSOYz/TRg==}
+  /dotenv-cli/7.0.0:
+    resolution: {integrity: sha512-XfMzVdpdDTRnlcgvFLg3lSyiLXqFxS4tH7RbK5IxkC4XIUuxPyrGoDufkfLjy/dA28EILzEu+mros6h8aQmyGg==}
     hasBin: true
     dependencies:
       cross-spawn: 7.0.3
       dotenv: 16.0.3
-      dotenv-expand: 8.0.3
+      dotenv-expand: 10.0.0
       minimist: 1.2.7
+    dev: true
+
+  /dotenv-expand/10.0.0:
+    resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
+    engines: {node: '>=12'}
     dev: true
 
   /dotenv-expand/5.1.0:
     resolution: {integrity: sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==}
-    dev: true
-
-  /dotenv-expand/8.0.3:
-    resolution: {integrity: sha512-SErOMvge0ZUyWd5B0NXMQlDkN+8r+HhVUsxgOO7IoPDOdDRD2JjExpN6y3KnFR66jsJMwSn1pqIivhU5rcJiNg==}
-    engines: {node: '>=12'}
     dev: true
 
   /dotenv/16.0.1:
