@@ -12,9 +12,9 @@ const useStyles = createStyles((theme) => ({
 		'&[data-active]': {
 			color: theme.other.colors.secondary.black,
 			'&[data-active]:hover': {
-				backgroundColor: theme.other.colors.secondary.white
-			}
-		}
+				backgroundColor: theme.other.colors.secondary.white,
+			},
+		},
 	},
 }))
 
@@ -31,14 +31,16 @@ export const NavLinkItem = ({ navItem, activeState }: Props) => {
 	const { t } = useTranslation('attribute')
 	const navlabel = t(navItem)
 
-	return <NavLink
-		label={navlabel}
-		icon={<Icon icon={iconRender} />}
-		variant="subtle"
-		active={activeState}
-		className={classes.navStyle}
-		styles={{ icon: { marginRight: 'unset' } }}
-	/>
+	return (
+		<NavLink
+			label={navlabel}
+			icon={<Icon icon={iconRender} />}
+			variant='subtle'
+			active={activeState}
+			className={classes.navStyle}
+			styles={{ icon: { marginRight: 'unset' } }}
+		/>
+	)
 }
 
 type Props = {
