@@ -7,13 +7,6 @@ import { NavLinkItem as NavLinkComponent, navIcons } from './NavLink'
 export default {
 	title: 'Design System/Nav Link',
 	component: NavLinkComponent,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
 	parameters: {
 		design: {
 			type: 'figma',
@@ -32,6 +25,6 @@ const NavLinkVariant: ComponentStory<typeof NavLinkComponent> = (args) => <NavLi
 export const NavLink = NavLinkVariant.bind({})
 
 NavLink.args = {
-	children: 'Search',
+	labelKey: 'Search',
 	icon: 'search',
 }

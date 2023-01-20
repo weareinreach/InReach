@@ -1,12 +1,24 @@
 import { Icon } from '@iconify/react'
 import { createStyles, NavLink } from '@mantine/core'
-import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const useStyles = createStyles((theme) => ({
-	icon: {
-		width: '75%',
-		height: '75%',
-	},
+	navStyle: {
+		display: 'block',
+		color: theme.other.colors.secondary.darkGray,
+		'&:hover': {
+			backgroundColor: theme.other.colors.secondary.white
+		},
+		'&[data-active]': {
+			color: theme.other.colors.secondary.black,
+			'&[data-active]:hover': {
+				backgroundColor: theme.other.colors.secondary.white
+			}
+		},
+		icon: {
+			marginRight: 0
+		}
+	}
 }))
 
 export const navIcons = {
@@ -16,14 +28,22 @@ export const navIcons = {
 	support: 'carbon:help',
 } as const
 
-export const NavLinkItem = ({ children, icon }: Props) => {
+export const NavLinkItem = ({ labelKey, icon, activeState }: Props) => {
 	const { classes } = useStyles()
 	const iconRender = navIcons[icon]
-	const [active, setActive] = useState(0)
-	return <NavLink label={children} icon={<Icon icon={iconRender} className={classes.icon} />} />
+	const { t } = useTranslation('attribute')
+	const navlabel = t(labelKey)
+
+	return <NavLink label={navlabel}
+		icon={<Icon icon={iconRender}/>}
+		variant="subtle"
+		active={activeState}
+		className={classes.navStyle}
+	/>
 }
 
 type Props = {
-	children: string
+	activeState: boolean
+	labelKey: string
 	icon: keyof typeof navIcons
 }
