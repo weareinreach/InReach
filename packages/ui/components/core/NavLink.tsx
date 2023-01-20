@@ -20,9 +20,9 @@ const useStyles = createStyles((theme) => ({
 		'&[data-active]': {
 			color: theme.other.colors.secondary.black,
 			'&[data-active]:hover': {
-				backgroundColor: theme.other.colors.secondary.white
-			}
-		}
+				backgroundColor: theme.other.colors.secondary.white,
+			},
+		},
 	},
 }))
 
