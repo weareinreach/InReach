@@ -14,36 +14,35 @@ const useStyles = createStyles((theme) => ({
 			'&[data-active]:hover': {
 				backgroundColor: theme.other.colors.secondary.white
 			}
-		},
-		icon: {
-			marginRight: 0
 		}
-	}
+	},
 }))
 
 export const navIcons = {
-	search: 'carbon:search',
-	saved: 'carbon:favorite',
-	account: 'carbon:user',
-	support: 'carbon:help',
+	Search: 'carbon:search',
+	Saved: 'carbon:favorite',
+	Account: 'carbon:user',
+	Support: 'carbon:help',
 } as const
 
-export const NavLinkItem = ({ labelKey, icon, activeState }: Props) => {
+export const NavLinkItem = ({ navItem, activeState }: Props) => {
 	const { classes } = useStyles()
-	const iconRender = navIcons[icon]
+	const iconRender = navIcons[navItem]
 	const { t } = useTranslation('attribute')
-	const navlabel = t(labelKey)
+	const navlabel = t(navItem)
 
-	return <NavLink label={navlabel}
-		icon={<Icon icon={iconRender}/>}
+	return <NavLink
+		label={navlabel}
+		icon={<Icon icon={iconRender} />}
 		variant="subtle"
 		active={activeState}
 		className={classes.navStyle}
+		styles={{ icon: { marginRight: 'unset' } }}
 	/>
 }
 
 type Props = {
 	activeState: boolean
-	labelKey: string
-	icon: keyof typeof navIcons
+	// labelKey: string
+	navItem: keyof typeof navIcons
 }
