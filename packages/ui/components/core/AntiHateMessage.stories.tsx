@@ -22,6 +22,6 @@ export default {
 	},
 } as ComponentMeta<typeof AntiHateMessageCompnent>
 
-const AntiHateMessage: ComponentStory<typeof AntiHateMessageCompnent> = (args) => <AntiHateMessageCompnent/>
+const AntiHateMessage: ComponentStory<typeof AntiHateMessageCompnent> = () => <AntiHateMessageCompnent/>
 
 export const AntiHateMessageCard = AntiHateMessage.bind({})
