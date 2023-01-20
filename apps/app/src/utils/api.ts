@@ -3,6 +3,7 @@ import { createTRPCNext } from '@trpc/next'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 import { type AppRouter } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
+import { devtoolsLink } from 'trpc-client-devtools-link'
 
 const getBaseUrl = () => {
 	if (typeof window !== 'undefined') return '' // browser should use relative url
@@ -15,6 +16,9 @@ export const api = createTRPCNext<AppRouter>({
 		return {
 			transformer,
 			links: [
+				devtoolsLink({
+					enabled: process.env.NODE_ENV === 'development',
+				}),
 				loggerLink({
 					enabled: (opts) =>
 						process.env.NODE_ENV === 'development' ||

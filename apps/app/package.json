@@ -82,6 +82,9 @@
 		"eslint-plugin-prettier": "4.2.1",
 		"flat": "5.0.2",
 		"listr2": "5.0.6",
+		"trpc-client-devtools-link": "0.2.1-next",
+		"trpc-panel": "1.2.6",
+		"trpc-playground": "1.0.4",
 		"typescript": "4.9.4"
 	},
 	"ct3aMetadata": {
