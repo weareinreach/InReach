@@ -1,6 +1,8 @@
 import { Center } from '@mantine/core'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
+import { useSession } from 'next-auth/react'
+
 
 import { UserAvatar } from './UserAvatar'
 
@@ -22,21 +24,43 @@ export default {
 	},
 } as ComponentMeta<typeof UserAvatar>
 
-const UserAvatarVariant: ComponentStory<typeof UserAvatar> = (args) => <UserAvatar {...args} />
+const UserAvatarVariant: ComponentStory<typeof UserAvatar> = () => <UserAvatar />
 
 export const userAvatarFull = UserAvatarVariant.bind({})
-export const userAvatarAndName = UserAvatarVariant.bind({})
-export const userAvatarOnly = UserAvatarVariant.bind({})
+export const userAvatarNoImage = UserAvatarVariant.bind({})
+export const userAvatarNoImageNoEmail = UserAvatarVariant.bind({})
 
-userAvatarFull.args = {
-	avatarSource:
-		'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80',
-	userName: 'Paul Smith',
-	subtext: 'Service Coordinator',
+export const userAvatarNoData = UserAvatarVariant.bind({})
+export const userAvatarLoading = UserAvatarVariant.bind({})
+
+
+userAvatarFull.parameters = {
+	nextAuthMock: {
+		session: 'userPicAuthed',
+	},
+
 }
-userAvatarAndName.args = {
-	avatarSource:
-		'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80',
-	userName: 'Paul Smith',
+userAvatarNoImage.parameters = {
+	nextAuthMock: {
+		session: 'userAuthed',
+	},
+
 }
-userAvatarOnly.args = {}
+
+userAvatarNoImageNoEmail.parameters = {
+	nextAuthMock: {
+		session: 'userNoPicNoEmailAuthed',
+	},
+
+}
+
+userAvatarLoading.parameters ={
+	nextAuthMock: {
+		session: 'loading',
+	},
+}
+
+userAvatarNoData.parameters = {}
+
+
+
