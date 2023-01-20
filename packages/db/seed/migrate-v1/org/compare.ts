@@ -64,10 +64,7 @@ export const compare: Compare = async (tx, input, batchName: BatchNames) => {
 		}
 		case 'organizationAttribute':
 		case 'serviceAttribute':
-		case 'serviceAccessAttribute':
-		case 'organizationAttributeSupplement':
-		case 'serviceAccessAttributeSupplement':
-		case 'serviceAttributeSupplement': {
+		case 'serviceAccessAttribute': {
 			const inData = input as ZodInput<typeof batchName>[]
 			const where = { attributeId: { in: inData.map((item) => item.attributeId) } }
 			const results = await queryClient[batchName](tx, { where, select: { attributeId: true } })

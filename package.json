@@ -90,7 +90,6 @@
 			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
 			"@storybook/react-docgen-typescript-plugin@1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0": "npm:react-docgen-typescript-plugin@1.0.2",
 			"chokidar": ">=3.0.0",
-			"cli-truncate@<3": ">=3.1.0",
 			"glob-parent@<5.1.2": ">=5.1.2",
 			"got@<11.8.5": ">=11.8.5",
 			"listr2@<5": ">=5.0.5",

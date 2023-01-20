@@ -748,15 +748,7 @@ export const generateRecords = async (task: ListrTask) => {
 								createdAt,
 								updatedAt,
 							}
-							const suppBase = {
-								attributeId: attrRecord.id,
-								organizationId,
-								linkedAt,
-							}
-							data.organizationAttribute.add({
-								organizationId,
-								attributeId: attrRecord.id,
-							})
+							let supplementId: string | undefined
 							switch (true) {
 								case attrRecord.requireBoolean: {
 									const boolean = attrData?.boolean
@@ -766,7 +758,7 @@ export const generateRecords = async (task: ListrTask) => {
 									const id = cuid()
 									data.attributeSupplement.add({ ...attrBase, id, boolean })
 									rollback.attributeSupplement.add(id)
-									data.organizationAttributeSupplement.add({ ...suppBase, supplementId: id })
+									supplementId = id
 									break
 								}
 								case attrRecord.requireLanguage: {
@@ -777,7 +769,7 @@ export const generateRecords = async (task: ListrTask) => {
 									const id = cuid()
 									data.attributeSupplement.add({ ...attrBase, id, languageId })
 									rollback.attributeSupplement.add(id)
-									data.organizationAttributeSupplement.add({ ...suppBase, supplementId: id })
+									supplementId = id
 									break
 								}
 								case attrRecord.requireText: {
@@ -799,11 +791,16 @@ export const generateRecords = async (task: ListrTask) => {
 										data.attributeSupplement.add({ ...attrBase, id: suppId, textId, createdAt, updatedAt })
 										rollback.translationKey.add(key)
 										rollback.attributeSupplement.add(suppId)
-										data.organizationAttributeSupplement.add({ ...suppBase, supplementId: suppId })
+										supplementId = suppId
 									}
 									break
 								}
 							}
+							data.organizationAttribute.add({
+								organizationId,
+								attributeId: attrRecord.id,
+								supplementId,
+							})
 							break
 						}
 						case 'area': {
@@ -846,10 +843,7 @@ export const generateRecords = async (task: ListrTask) => {
 					const attributeId = attributeList.get('system-incompatible-info')?.id
 					if (!attributeId) throw new Error('Cannot find "incompatible info" tag')
 					const suppId = cuid()
-					data.organizationAttribute.add({
-						attributeId,
-						organizationId,
-					})
+
 					log(`🛠️ Attribute supplement- Unsupported items: ${unsupportedAttributes.length}`)
 					data.attributeSupplement.add({
 						id: suppId,
@@ -858,7 +852,11 @@ export const generateRecords = async (task: ListrTask) => {
 						data: JSON.stringify(unsupportedAttributes),
 					})
 					rollback.attributeSupplement.add(suppId)
-					data.organizationAttributeSupplement.add({ attributeId, organizationId, supplementId: suppId })
+					data.organizationAttribute.add({
+						attributeId,
+						organizationId,
+						supplementId: suppId,
+					})
 				}
 
 				log(
@@ -957,6 +955,7 @@ export const generateRecords = async (task: ListrTask) => {
 						data.serviceAccessAttribute.add({
 							attributeId: attribute.id,
 							serviceAccessId: accessId,
+							supplementId: attributeSuppId,
 							linkedAt,
 						})
 						data.attributeSupplement.add({
@@ -972,12 +971,6 @@ export const generateRecords = async (task: ListrTask) => {
 							serviceId,
 						})
 						rollback.serviceAccess.add(accessId)
-						data.serviceAccessAttributeSupplement.add({
-							attributeId: attribute.id,
-							supplementId: attributeSuppId,
-							serviceAccessId: accessId,
-							linkedAt,
-						})
 						log(`\t🔑 Service Access Instruction: '${access.instructions?.trim() ?? access._id.$oid}'`)
 						accessCount++
 					}
@@ -1045,16 +1038,8 @@ export const generateRecords = async (task: ListrTask) => {
 										createdAt,
 										updatedAt,
 									}
-									const suppBase = {
-										attributeId: attrRecord.id,
-										orgServiceId: serviceId,
-										linkedAt,
-									}
-									data.serviceAttribute.add({
-										attributeId: attrRecord.id,
-										orgServiceId: serviceId,
-										linkedAt,
-									})
+
+									let supplementId: string | undefined
 									switch (true) {
 										case attrRecord.requireBoolean: {
 											const boolean = attrData?.boolean
@@ -1064,7 +1049,7 @@ export const generateRecords = async (task: ListrTask) => {
 											const id = cuid()
 											data.attributeSupplement.add({ ...attrBase, id, boolean })
 											rollback.attributeSupplement.add(id)
-											data.serviceAttributeSupplement.add({ ...suppBase, supplementId: id })
+											supplementId = id
 											break
 										}
 										case attrRecord.requireLanguage: {
@@ -1075,7 +1060,7 @@ export const generateRecords = async (task: ListrTask) => {
 											const id = cuid()
 											data.attributeSupplement.add({ ...attrBase, id, languageId })
 											rollback.attributeSupplement.add(id)
-											data.serviceAttributeSupplement.add({ ...suppBase, supplementId: id })
+											supplementId = id
 											break
 										}
 										case attrRecord.requireText: {
@@ -1098,10 +1083,16 @@ export const generateRecords = async (task: ListrTask) => {
 											}
 											data.attributeSupplement.add({ ...attrBase, id: suppId, textId, createdAt, updatedAt })
 											rollback.attributeSupplement.add(suppId)
-											data.serviceAttributeSupplement.add({ ...suppBase, supplementId: suppId })
+											supplementId = suppId
 											break
 										}
 									}
+									data.serviceAttribute.add({
+										attributeId: attrRecord.id,
+										orgServiceId: serviceId,
+										supplementId,
+										linkedAt,
+									})
 									break
 								}
 								case 'area': {
@@ -1142,12 +1133,7 @@ export const generateRecords = async (task: ListrTask) => {
 						if (unsupportedAttributes.length) {
 							const attributeId = attributeList.get('system-incompatible-info')?.id
 							if (!attributeId) throw new Error('Cannot find "incompatible info" tag')
-							data.serviceAttribute.add({
-								attributeId,
-								orgServiceId: serviceId,
-								linkedAt,
-							})
-							log(`🛠️ Attribute supplement- Unsupported items: ${unsupportedAttributes.length}`)
+
 							const suppId = cuid()
 							data.attributeSupplement.add({
 								id: suppId,
@@ -1156,12 +1142,13 @@ export const generateRecords = async (task: ListrTask) => {
 								data: JSON.stringify(unsupportedAttributes),
 							})
 							rollback.attributeSupplement.add(suppId)
-							data.serviceAttributeSupplement.add({
+							data.serviceAttribute.add({
 								attributeId,
 								orgServiceId: serviceId,
 								supplementId: suppId,
 								linkedAt,
 							})
+							log(`🛠️ Attribute supplement- Unsupported items: ${unsupportedAttributes.length}`)
 						}
 
 						log(
