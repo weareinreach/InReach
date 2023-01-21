@@ -33,7 +33,7 @@ export const navIcons = {
 	support: 'carbon:help',
 } as const
 
-export const NavLinkItem = ({ navItem, activeState }: Props) => {
+export const NavLinkItem = ({ navItem, active = false }: Props) => {
 	const { classes } = useStyles()
 	const iconRender = navIcons[navItem]
 	const { t } = useTranslation()
@@ -44,7 +44,7 @@ export const NavLinkItem = ({ navItem, activeState }: Props) => {
 			label={navlabel}
 			icon={<Icon icon={iconRender} />}
 			variant='subtle'
-			active={activeState ?? false}
+			active={active}
 			className={classes.navStyle}
 			styles={{
 				icon: { marginRight: 'unset', width: '20px', height: '20px' },
@@ -55,6 +55,6 @@ export const NavLinkItem = ({ navItem, activeState }: Props) => {
 }
 
 type Props = {
-	activeState: boolean
+	active?: boolean
 	navItem: keyof typeof navIcons
 }
