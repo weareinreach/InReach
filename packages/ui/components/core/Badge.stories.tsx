@@ -49,15 +49,10 @@ export default {
 
 const BadgeVariant: ComponentStory<typeof Badge> = (args) => <Badge {...args} />
 
-export const Default = BadgeVariant.bind({})
 export const CommunityTagLarge = BadgeVariant.bind({})
 export const CommunityTagSmall = BadgeVariant.bind({})
 export const ServiceTagLarge = BadgeVariant.bind({})
 export const ServiceTagSmall = BadgeVariant.bind({})
-
-Default.args = {
-	children: 'default',
-}
 
 CommunityTagLarge.args = {
 	leftSection: '✊🏿',
