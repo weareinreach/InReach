@@ -1,4 +1,5 @@
 {
+	"account": "Cuenta",
 	"anti-hate-text": "Al usar InReach, usted acepta que no usará esta información de recursos para agendas o comentarios nocivos, basados en el odio, homofóbicos, transfóbicos, xenofóbicos y/o racistas.",
 	"anti-hate-title": " Adicional: Compromiso antiodio",
 	"back-to-search": "Volver a buscar",
@@ -14,9 +15,12 @@
 	"none-apply": "Ninguno de estos se aplica a mí",
 	"other-specify": "Other (specify)",
 	"prefer-not-to-say": "Preferirse a no decir",
+	"saved": "Guardado",
 	"saved-lists": "Listas guardadas",
+	"search": "Buscar",
 	"settings": "Ajustes",
 	"sign-up": "Regístrate",
+	"support": "Suport",
 	"user-avatar": "Avatar de usuario",
 	"verified-information": "Información verificada",
 	"verified-information-detail": "La información de esta página fue actualizada por última vez {{dateString}}. El alcance prioriza la exactitud y la seguridad del usuario, y actualiza toda la información al menos una vez cada 6 meses. Para más información sobre nuestro proceso de veterinario, por favor visite nuestra página del Proceso de Verificación .",
