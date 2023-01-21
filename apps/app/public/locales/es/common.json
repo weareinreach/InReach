@@ -1,9 +1,13 @@
 {
+	"anti-hate-text": "Al usar InReach, usted acepta que no usará esta información de recursos para agendas o comentarios nocivos, basados en el odio, homofóbicos, transfóbicos, xenofóbicos y/o racistas.",
+	"anti-hate-title": " Adicional: Compromiso antiodio",
 	"back-to-search": "Volver a buscar",
 	"close": "Cerrar",
 	"country-select": "Elija un país",
 	"download-app": "Descargar nuestra aplicación",
 	"edit-profile": "Editar perfil",
+	"in-reach-avatar-date": "{{dateString}}",
+	"in-reach-user": "Alcanzar usuario",
 	"inreach": "InReach",
 	"log-in": "Iniciar sesión",
 	"log-out": "Cerrar sesión",
