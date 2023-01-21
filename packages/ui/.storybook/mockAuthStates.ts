@@ -91,6 +91,21 @@ const states = {
 			status: 'authenticated',
 		},
 	},
+	userNoPicNoEmailAuthed: {
+		title: 'user wo/ pic [auth]',
+		session: {
+			data: {
+				user: {
+					id: 999,
+					login: 'user',
+					role: 'user',
+					roles: ['user'],
+					name: faker.name.fullName(),
+				},
+			},
+			status: 'authenticated',
+		},
+	},
 	user: {
 		title: 'user w/o pic [no auth]',
 		session: {
