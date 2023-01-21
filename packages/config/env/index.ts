@@ -9,11 +9,10 @@ import { vercelProvidedEnv } from './vercel.js'
 // eslint-disable-next-line node/no-process-env
 export const env = parseEnv(process.env, {
 	...vercelProvidedEnv,
-	COGNITO_ACCESS_KEY: z.string().optional(),
-	COGNITO_SECRET: z.string().optional(),
-	COGNITO_CLIENT_ID: z.string().optional(),
-	COGNITO_CLIENT_SECRET: z.string().optional(),
-	COGNITO_ISSUER: z.string().optional(),
+	COGNITO_ACCESS_KEY: z.string(),
+	COGNITO_SECRET: z.string(),
+	COGNITO_CLIENT_ID: z.string(),
+	COGNITO_CLIENT_SECRET: z.string(),
 	NODE_ENV: {
 		schema: z.enum(['production', 'development']).optional(),
 		description: 'Node environment',

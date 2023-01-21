@@ -32,6 +32,7 @@ export const orgRouter = defineRouter({
 				},
 				select: {
 					id: true,
+					name: true,
 				},
 			})
 			return orgIds

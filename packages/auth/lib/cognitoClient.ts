@@ -23,6 +23,8 @@ export const ClientId = env.COGNITO_CLIENT_ID
  *
  * **Function will suffix message with Cognito ClientID automatically**
  *
+ * `"{message}[COGNITO_CLIENT_ID]" => {hash}`
+ *
  * @param {string} message - The message to be hashed.
  * @returns AWS compliant HMAC hash
  */

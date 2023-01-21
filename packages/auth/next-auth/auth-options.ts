@@ -1,8 +1,7 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { env } from '@weareinreach/config'
 import { prisma } from '@weareinreach/db'
 import { type NextAuthOptions } from 'next-auth'
-import CognitoProvider from 'next-auth/providers/cognito'
+import Credentials from 'next-auth/providers/credentials'
 
 export const authOptions: NextAuthOptions = {
 	// Include user.id on session
@@ -17,11 +16,19 @@ export const authOptions: NextAuthOptions = {
 	// Configure one or more authentication providers
 	adapter: PrismaAdapter(prisma),
 	providers: [
-		CognitoProvider({
-			clientId: env.COGNITO_CLIENT_ID as string,
-			clientSecret: env.COGNITO_CLIENT_SECRET as string,
-			issuer: env.COGNITO_ISSUER,
-			allowDangerousEmailAccountLinking: true,
+		Credentials({
+			name: 'Cognito',
+			credentials: {
+				email: { label: 'Email', type: 'text' },
+				password: { label: 'Password', type: 'password' },
+			},
+			authorize: async (credentials, req) => {
+				console.log(credentials, req)
+				//placeholder
+				return {
+					id: '',
+				}
+			},
 		}),
 	],
 }
