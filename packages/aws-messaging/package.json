@@ -19,7 +19,7 @@
 		"package": "cd dist && zip -r bundle.zip *"
 	},
 	"dependencies": {
-		"aws-sdk": "2.1296.0"
+		"aws-sdk": "2.1299.0"
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.109",
