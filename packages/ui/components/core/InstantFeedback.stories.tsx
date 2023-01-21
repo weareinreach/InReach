@@ -22,10 +22,12 @@ export default {
 	},
 } as ComponentMeta<typeof InstantFeedbackCompnent>
 
-const InstantFeedback: ComponentStory<typeof InstantFeedbackCompnent> = (args) => <InstantFeedbackCompnent {...args} />
+const InstantFeedback: ComponentStory<typeof InstantFeedbackCompnent> = (args) => (
+	<InstantFeedbackCompnent {...args} />
+)
 
 export const InstantFeedbackNotification = InstantFeedback.bind({})
 
 InstantFeedbackNotification.args = {
-    link: "#"
+	link: '#',
 }
