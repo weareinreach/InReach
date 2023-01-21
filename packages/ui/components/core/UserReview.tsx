@@ -45,7 +45,7 @@ export const UserReview = ({ user, reviewText, verifiedUser }: Props) => {
     const [showMore, setShowMore] = useState(true);
 
 
-    let lineClamp = showMore ? 1 : 100;
+    let lineClamp = showMore ? 1 : "";
     let showMoreText = showMore ? t('show-more') : t('show-less')
     let showShowMore = reviewText.length > CHARACTER_LIMIT
 
