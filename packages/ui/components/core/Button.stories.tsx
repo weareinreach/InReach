@@ -1,7 +1,8 @@
-import { Icon } from '@iconify/react'
 import { Button, Center } from '@mantine/core'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
+
+import { Icon } from '../../icon'
 
 export default {
 	title: 'Design System/Button',
