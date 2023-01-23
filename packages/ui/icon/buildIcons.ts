@@ -1,5 +1,7 @@
 import { listIcons } from '@iconify/react'
+
 import { writeFileSync } from 'fs'
+
 import { loadIcons } from './iconCollection'
 
 loadIcons()

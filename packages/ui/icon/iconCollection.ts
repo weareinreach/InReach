@@ -1,7 +1,7 @@
+import { addCollection } from '@iconify/react'
+import { getIcons } from '@iconify/utils'
 import { icons as carbonIcons } from '@iconify-json/carbon'
 import { icons as simpleIcons } from '@iconify-json/simple-icons'
-import { getIcons } from '@iconify/utils'
-import { addCollection } from '@iconify/react'
 
 /**
  * Create icon collection
