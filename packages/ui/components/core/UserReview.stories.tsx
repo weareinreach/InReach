@@ -8,13 +8,6 @@ import { UserReview } from './UserReview'
 export default {
 	title: 'Design System/User Review',
 	component: UserReview,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
 	parameters: {
 		design: {
 			type: 'figma',
@@ -31,50 +24,46 @@ export const UserReviewVariantUserShortReview = UserReviewVariant.bind({})
 export const UserReviewVariantUserUnverified = UserReviewVariant.bind({})
 export const UserReviewVariantUserOnlyName = UserReviewVariant.bind({})
 
-
-
 UserReviewVariantUserFullData.args = {
-    user:{
-        avatarUrl: faker.image.avatar(),
-        avatarName:faker.name.fullName(),
-    },
-    reviewText:faker.lorem.paragraph(),
-	verifiedUser:true
+	user: {
+		avatarUrl: faker.image.avatar(),
+		avatarName: faker.name.fullName(),
+	},
+	reviewText: faker.lorem.paragraph(),
+	verifiedUser: true,
 }
 
-UserReviewVariantUserNoDataUnverified.args ={
-	user:{
+UserReviewVariantUserNoDataUnverified.args = {
+	user: {
 		avatarUrl: null,
-        avatarName:null,
+		avatarName: null,
 	},
-	reviewText:faker.lorem.paragraph(),
-	verifiedUser:false
+	reviewText: faker.lorem.paragraph(),
+	verifiedUser: false,
 }
 
 UserReviewVariantUserShortReview.args = {
-	user:{
+	user: {
 		avatarUrl: faker.image.avatar(),
-        avatarName:faker.name.fullName(),
+		avatarName: faker.name.fullName(),
 	},
-	reviewText:faker.lorem.sentence(),
-	verifiedUser:true
+	reviewText: faker.lorem.sentence(),
+	verifiedUser: true,
 }
 UserReviewVariantUserUnverified.args = {
-	user:{
-        avatarUrl: faker.image.avatar(),
-        avatarName:faker.name.fullName(),
-    },
-    reviewText:faker.lorem.paragraph(),
-	verifiedUser:false
+	user: {
+		avatarUrl: faker.image.avatar(),
+		avatarName: faker.name.fullName(),
+	},
+	reviewText: faker.lorem.paragraph(),
+	verifiedUser: false,
 }
 
 UserReviewVariantUserOnlyName.args = {
-	user:{
-		avatarUrl:null,
-		avatarName:faker.name.fullName(),
+	user: {
+		avatarUrl: null,
+		avatarName: faker.name.fullName(),
 	},
-	reviewText:faker.lorem.paragraph(),
-	verifiedUser:true
+	reviewText: faker.lorem.paragraph(),
+	verifiedUser: true,
 }
-
-
