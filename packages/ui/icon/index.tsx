@@ -5,15 +5,16 @@ import { loadIcons } from 'icon/iconCollection'
 
 import { iconList } from './iconList'
 
-interface CustomIconifyIconProps extends IconifyIconProps {
-	icon: (typeof iconList)[number]
-}
-type IconElementProps = SVGProps<SVGSVGElement>
-
-type CustomIconProps = IconElementProps & CustomIconifyIconProps & { ref?: RefAttributes<SVGSVGElement> }
-
 export const Icon = (props: CustomIconProps) => {
 	loadIcons()
 
 	return <Iconify {...props} />
 }
+
+export type IconList = (typeof iconList)[number]
+interface CustomIconifyIconProps extends IconifyIconProps {
+	icon: IconList
+}
+type IconElementProps = SVGProps<SVGSVGElement>
+
+type CustomIconProps = IconElementProps & CustomIconifyIconProps & { ref?: RefAttributes<SVGSVGElement> }
