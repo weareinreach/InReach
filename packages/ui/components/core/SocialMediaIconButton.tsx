@@ -1,5 +1,6 @@
-import { Icon } from '@iconify/react'
 import { ActionIcon, createStyles } from '@mantine/core'
+
+import { Icon } from '../../icon'
 
 export const approvedIcons = {
 	facebook: 'carbon:logo-facebook',
