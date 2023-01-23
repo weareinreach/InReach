@@ -29,5 +29,10 @@ const InstantFeedback: ComponentStory<typeof InstantFeedbackCompnent> = (args) =
 export const InstantFeedbackNotification = InstantFeedback.bind({})
 
 InstantFeedbackNotification.args = {
-	link: '#',
+	displayTextKey: 'resource-saved',
+	icon: 'heartFilled',
+	link: {
+		href: '#',
+		textKey: 'view-list',
+	},
 }

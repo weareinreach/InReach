@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import { Group, Notification, Text, createStyles } from '@mantine/core'
-import { useTranslation } from 'react-i18next'
+import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 
 const useStyles = createStyles((theme) => ({
 	icon: {
@@ -24,18 +25,25 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const InstantFeedback = ({ link }: Props) => {
+const iconList = {
+	heartFilled: 'carbon:favorite-filled',
+	heartEmpty: 'carbon:favorite',
+	info: 'carbon:information-filled',
+	warning: 'carbon:warning-filled',
+}
+
+export const InstantFeedback = ({ displayTextKey, icon, link }: Props) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation()
 
-	const icon = <Icon icon='mdi:cards-heart' className={classes.icon} />
+	const displayIcon = <Icon icon={iconList[icon]} className={classes.icon} />
 
 	return (
-		<Notification icon={icon} color='dark' radius='lg' className={classes.notification}>
+		<Notification icon={displayIcon} color='dark' radius='lg' className={classes.notification}>
 			<Group position='apart' spacing='lg'>
-				<Text className={classes.resourceText}>{t('resource-saved')}</Text>
-				<Text component='a' href={link} className={classes.viewList}>
-					{t('view-list')}
+				<Text className={classes.resourceText}>{t(displayTextKey)}</Text>
+				<Text component={Link} href={link.href} className={classes.viewList}>
+					{t(link.textKey)}
 				</Text>
 			</Group>
 		</Notification>
@@ -43,5 +51,18 @@ export const InstantFeedback = ({ link }: Props) => {
 }
 
 type Props = {
-	link: string
+	/** I18Next translation key */
+	displayTextKey: string
+	/** Display icon */
+	icon: keyof typeof iconList
+	/**
+	 * @param href - URL
+	 * @param textKey - I18Next translation key
+	 */
+	link: {
+		/** URL */
+		href: string
+		/** I18Next translation key */
+		textKey: string
+	}
 }
