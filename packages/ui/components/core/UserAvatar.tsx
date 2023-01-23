@@ -1,9 +1,10 @@
-import { Icon } from '@iconify/react'
 import { Avatar, Group, Skeleton, Stack, Text, createStyles } from '@mantine/core'
 import { DateTime } from 'luxon'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
+
+import { Icon } from '../../icon'
 
 const useStyles = createStyles((theme) => ({
 	group: {
@@ -61,7 +62,7 @@ export const UserAvatar = () => {
 						alt={session.user.name || t('user-avatar')}
 					/>
 				) : (
-					<Icon icon='fa6-solid:user' className={classes.avatar} />
+					<Icon icon='carbon:user' className={classes.avatar} />
 				)}
 			</Avatar>
 			<Stack align='flex-start' justify='center' spacing={4} className={classes.stack}>
