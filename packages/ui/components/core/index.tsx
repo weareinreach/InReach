@@ -2,6 +2,7 @@
 // codegen:start {preset: barrel, include: ./*.ts*, exclude: ./*.stories.*}
 export * from './AntiHateMessage'
 export * from './Breadcrumb'
+export * from './InstantFeedback'
 export * from './LeaderBadge'
 export * from './LeaderBadgeGroup'
 export * from './Link'
