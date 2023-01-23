@@ -1,7 +1,8 @@
-import { Icon } from '@iconify/react'
 import { ActionIcon, Group, Text, createStyles } from '@mantine/core'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
+
+import { Icon } from '../../icon'
 
 const approvedOptions = {
 	close: { children: 'close', icon: 'carbon:close', title: 'close' },
