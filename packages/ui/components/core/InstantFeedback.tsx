@@ -1,7 +1,9 @@
-import { Icon } from '@iconify/react'
-import { Group, Notification, Text, createStyles } from '@mantine/core'
+import { Group, Notification, Text, createStyles, useMantineTheme } from '@mantine/core'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
+
+import { Icon } from '../../icon'
+import { commonTheme } from '../../theme/common'
 
 const useStyles = createStyles((theme) => ({
 	icon: {
@@ -26,17 +28,19 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const iconList = {
-	heartFilled: 'carbon:favorite-filled',
-	heartEmpty: 'carbon:favorite',
-	info: 'carbon:information-filled',
-	warning: 'carbon:warning-filled',
-}
+	heartFilled: { code: 'carbon:favorite-filled', color: undefined },
+	heartEmpty: { code: 'carbon:favorite', color: undefined },
+	info: { code: 'carbon:information-filled', color: commonTheme.other?.colors.secondary.cornflower },
+	warning: { code: 'carbon:warning-filled', color: commonTheme.other?.colors.tertiary.red },
+} as const
 
 export const InstantFeedback = ({ displayTextKey, icon, link }: Props) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation()
 
-	const displayIcon = <Icon icon={iconList[icon]} className={classes.icon} />
+	const iconStyle = iconList[icon].color ? { color: iconList[icon].color } : undefined
+
+	const displayIcon = <Icon icon={iconList[icon].code} style={iconStyle} className={classes.icon} />
 
 	return (
 		<Notification icon={displayIcon} color='dark' radius='lg' className={classes.notification}>
