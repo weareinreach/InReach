@@ -80,6 +80,8 @@ jobs:
         with:
           message: 'chore: lint & format
             [actions skip]'
-          commit: --signoff
+          commit: --signoff --no-verify
           committer_name: InReach Bot
           committer_email: 108850934+InReach-svc@users.noreply.github.com
+          author_name: InReach Bot
+          author_email: 108850934+InReach-svc@users.noreply.github.com
