@@ -33,10 +33,6 @@
 			"path": "./packages/eslint-config"
 		},
 		{
-			"name": "📦 Shared TypeScript types (@weareinreach/types)",
-			"path": "./packages/types"
-		},
-		{
 			"name": "📦 AWS User Migration (@weareinreach/aws-user-migrate)",
 			"path": "./packages/aws-user-migrate"
 		},
@@ -74,8 +70,8 @@
 			"**/.git": true,
 			"**/Thumbs.db": true,
 			"apps/": true,
-			"./docker/": true,
-			"./docs/": true,
+			"docker/": true,
+			"docs/": true,
 			"node_modules/": true,
 			"packages/": true,
 			"patches/": true,

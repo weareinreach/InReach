@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { type StorybookConfig } from '@storybook/core-common'
 import { merge } from 'merge-anything'
 
