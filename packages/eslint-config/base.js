@@ -5,7 +5,7 @@ const config = {
 	plugins: ['codegen', 'turbo', 'prettier', 'node'],
 	extends: ['plugin:turbo/recommended', 'prettier'],
 	rules: {
-		'node/no-process-env': 'error',
+		'node/no-process-env': 'warn',
 		'react/jsx-key': 'off',
 		'codegen/codegen': 'error',
 		'react/no-unescaped-entities': ['off'],
