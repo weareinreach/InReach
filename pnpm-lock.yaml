@@ -319,7 +319,7 @@ importers:
 
   packages/auth:
     specifiers:
-      '@aws-sdk/client-cognito-identity-provider': ^3.252.0
+      '@aws-sdk/client-cognito-identity-provider': 3.256.0
       '@next-auth/prisma-adapter': 1.0.5
       '@weareinreach/config': 0.100.0
       '@weareinreach/db': 0.100.0

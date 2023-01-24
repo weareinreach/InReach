@@ -1,7 +1,8 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
+import React from 'react'
+
 import { PageFooter } from 'components/layout/Footer.stories'
 import { NavigationHeaderBar } from 'components/layout/Nav.stories'
-import React from 'react'
 
 import { AppLayout } from './AppLayout'
 
