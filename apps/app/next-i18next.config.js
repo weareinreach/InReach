@@ -1,3 +1,4 @@
+/* eslint-disable node/no-process-env */
 // @ts-check
 /* eslint-disable import/no-unused-modules */
 /**

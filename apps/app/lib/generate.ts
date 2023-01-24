@@ -57,5 +57,5 @@ if (cliOpts.data) tasklist.push(...siteData)
 if (Object.keys(cliOpts).length === 0) tasklist = [...translation, ...siteData]
 
 const tasks = new Listr(tasklist)
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
+
 tasks.run()

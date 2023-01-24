@@ -1,0 +1,81 @@
+diff --git a/lib/rules/no-process-env.js b/lib/rules/no-process-env.js
+index f46f00ec06b6bc870588579a5a8a7bd82c06eaea..5226a1e44c805b7542c70c592dd076d5ab53f251 100644
+--- a/lib/rules/no-process-env.js
++++ b/lib/rules/no-process-env.js
+@@ -2,44 +2,44 @@
+  * @author Vignesh Anand
+  * See LICENSE file in root directory for full license.
+  */
+-"use strict"
++'use strict'
+ 
+ //------------------------------------------------------------------------------
+ // Rule Definition
+ //------------------------------------------------------------------------------
+ 
+ module.exports = {
+-    meta: {
+-        type: "suggestion",
+-        docs: {
+-            description: "disallow the use of `process.env`",
+-            category: "Stylistic Issues",
+-            recommended: false,
+-            url:
+-                "https://github.com/mysticatea/eslint-plugin-node/blob/v11.1.0/docs/rules/no-process-env.md",
+-        },
+-        fixable: null,
+-        schema: [],
+-        messages: {
+-            unexpectedProcessEnv: "Unexpected use of process.env.",
+-        },
+-    },
++	meta: {
++		type: 'suggestion',
++		docs: {
++			description: 'disallow the use of `process.env`',
++			category: 'Stylistic Issues',
++			recommended: false,
++			url: 'https://github.com/mysticatea/eslint-plugin-node/blob/v11.1.0/docs/rules/no-process-env.md',
++		},
++		fixable: null,
++		schema: [],
++		messages: {
++			unexpectedProcessEnv:
++				"Do not use 'process.env' - use the 'env' object from @weareinreach/config.",
++		},
++	},
+ 
+-    create(context) {
+-        return {
+-            MemberExpression(node) {
+-                const objectName = node.object.name
+-                const propertyName = node.property.name
++	create(context) {
++		return {
++			MemberExpression(node) {
++				const objectName = node.object.name
++				const propertyName = node.property.name
+ 
+-                if (
+-                    objectName === "process" &&
+-                    !node.computed &&
+-                    propertyName &&
+-                    propertyName === "env"
+-                ) {
+-                    context.report({ node, messageId: "unexpectedProcessEnv" })
+-                }
+-            },
+-        }
+-    },
++				if (
++					objectName === 'process' &&
++					!node.computed &&
++					propertyName &&
++					propertyName === 'env'
++				) {
++					context.report({ node, messageId: 'unexpectedProcessEnv' })
++				}
++			},
++		}
++	},
+ }
