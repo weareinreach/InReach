@@ -1,9 +1,11 @@
 import { prisma } from '@weareinreach/db'
 import dotenv from 'dotenv'
 import { unflatten } from 'flat'
-import { ListrTask } from 'lib/generate'
 
 import fs from 'fs'
+
+import { ListrTask } from 'lib/generate'
+
 
 const localePath = 'public/locales/en'
 

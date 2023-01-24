@@ -1,9 +1,11 @@
 import { prisma } from '@weareinreach/db'
 import { type FooterLink } from '@weareinreach/ui/components/layout/Footer'
 import dotenv from 'dotenv'
-import { ListrTask } from 'lib/generate'
 
 import fs from 'fs'
+
+import { ListrTask } from 'lib/generate'
+
 
 dotenv.config()
 
