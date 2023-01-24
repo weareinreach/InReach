@@ -6,7 +6,6 @@ import fs from 'fs'
 
 import { ListrTask } from 'lib/generate'
 
-
 const localePath = 'public/locales/en'
 
 dotenv.config()
