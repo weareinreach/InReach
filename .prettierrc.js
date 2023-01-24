@@ -1,9 +1,9 @@
+/* eslint-disable import/no-unused-modules */
 /**
  * @template {import('@types/prettier').RequiredOptions} T
  * @param {T} config A generic parameter that flows through to the return type
  * @constraint {{import('@types/prettier').RequiredOptions}}
  */
-const path = require('path')
 
 const config = {
 	plugins: ['prettier-plugin-packagejson', 'prettier-plugin-jsdoc', 'prettier-plugin-prisma'],

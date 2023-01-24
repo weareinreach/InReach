@@ -9,13 +9,9 @@
 		"clean": "turbo run clean:node && pnpm clean:node",
 		"clean:install": "pnpm clean && pnpm install",
 		"clean:node": "rm -rf ./node_modules || true",
-		"cypress:open": "npx cypress open --project test",
-		"cypress:run": "npx cypress run --project test",
-		"cypress:run:steps": "npx cypress run --project test --env TAGS=@stepsTesting --record false",
-		"cypress:run:tagged": "npx cypress run --project test --env TAGS=${TAGS}",
 		"db:generate": "turbo run db:generate",
 		"deploy:aws": "turbo run deploy:aws",
-		"dev": "tsx ./lib/devmsg.mts",
+		"dev": "tsx ./lib/devmsg.ts",
 		"dev:all": "turbo run dev",
 		"dev:app": "turbo run dev --filter=app",
 		"dev:ui": "turbo run dev --filter=ui",
@@ -24,8 +20,9 @@
 		"lint": "turbo run lint",
 		"lint:fix": "turbo run lint:fix",
 		"lint:pkg": "manypkg check",
+		"lint:pkg:fix": "manypkg fix",
 		"lint:staged": "lint-staged",
-		"prepare": "tsx ./lib/prepare.mts",
+		"prepare": "tsx ./lib/prepare.ts",
 		"type-check": "turbo type-check"
 	},
 	"dependencies": {
@@ -39,15 +36,6 @@
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"boxen": "7.0.1",
-		"eslint-config-next": "13.1.5",
-		"eslint-import-resolver-typescript": "3.5.3",
-		"eslint-plugin-codegen": "0.17.0",
-		"eslint-plugin-i18next": "6.0.0-6",
-		"eslint-plugin-import": "2.27.5",
-		"eslint-plugin-prettier": "4.2.1",
-		"eslint-plugin-react": "7.32.1",
-		"eslint-plugin-storybook": "0.6.10",
-		"eslint-plugin-turbo": "0.0.7",
 		"husky": "8.0.3",
 		"lint-staged": "13.1.0",
 		"prettier": "2.8.3",
@@ -64,25 +52,6 @@
 		"pnpm": ">=7"
 	},
 	"pnpm": {
-		"peerDependencyRules": {
-			"allowedVersions": {
-				"react": ">=18",
-				"react-dom": ">=18",
-				"next": ">=13",
-				"webpack": ">=5",
-				"sanity": ">=3.0.0-rc.0",
-				"listr2": ">=5",
-				"prisma": ">=4",
-				"babel-loader": ">=9",
-				"i18next-browser-languagedetector": ">=7",
-				"i18next-http-backend": ">=2",
-				"react-i18next": ">=12"
-			}
-		},
-		"patchedDependencies": {
-			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch",
-			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch"
-		},
 		"overrides": {
 			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
 			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
@@ -96,11 +65,31 @@
 			"node-fetch@<2.6.7": ">=2.6.7",
 			"sane": ">=5.0.0",
 			"sourcemap-codec": "npm:@jridgewell/sourcemap-codec@^1.4.14",
-			"trim@<0.0.3": ">=0.0.3",
 			"trim-newlines@<3.0.1": ">=3.0.1",
+			"trim@<0.0.3": ">=0.0.3",
 			"tsconfig-paths": ">=4.0.0",
 			"undici@<=5.8.1": ">=5.8.2",
 			"uuid": ">=9.0.0"
+		},
+		"patchedDependencies": {
+			"eslint-plugin-node@11.1.0": "patches/eslint-plugin-node@11.1.0.patch",
+			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch",
+			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch"
+		},
+		"peerDependencyRules": {
+			"allowedVersions": {
+				"babel-loader": ">=9",
+				"i18next-browser-languagedetector": ">=7",
+				"i18next-http-backend": ">=2",
+				"listr2": ">=5",
+				"next": ">=13",
+				"prisma": ">=4",
+				"react": ">=18",
+				"react-dom": ">=18",
+				"react-i18next": ">=12",
+				"sanity": ">=3.0.0-rc.0",
+				"webpack": ">=5"
+			}
 		}
 	}
 }

@@ -1,0 +1,22 @@
+{
+	"problemMatcher": [
+		{
+			"owner": "eslint-stylish",
+			"pattern": [
+				{
+					"file": 1,
+					"regexp": "^([^\\s].*)$"
+				},
+				{
+					"code": 5,
+					"column": 2,
+					"line": 1,
+					"loop": true,
+					"message": 4,
+					"regexp": "^\\s+(\\d+):(\\d+)\\s+(error|warning|info)\\s+(.*)\\s\\s+(.*)$",
+					"severity": 3
+				}
+			]
+		}
+	]
+}

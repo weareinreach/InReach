@@ -6,6 +6,7 @@ import fs from 'fs'
 
 import { ListrTask } from 'lib/generate'
 
+
 const localePath = 'public/locales/en'
 
 dotenv.config()
@@ -43,7 +44,6 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 		// eslint-disable-next-line prefer-const
 		let existingFile = {}
 		if (fs.existsSync(filename)) {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			existingFile = JSON.parse(fs.readFileSync(filename, 'utf-8'))
 			if (!isOutput(existingFile)) throw new Error("tried to load file, but it's empty")
 		}

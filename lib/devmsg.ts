@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unused-modules */
 import boxen from 'boxen'
 
 const message = boxen(

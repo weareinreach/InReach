@@ -6,6 +6,7 @@ import fs from 'fs'
 
 import { ListrTask } from 'lib/generate'
 
+
 dotenv.config()
 
 export const generateSocialMediaLinks = async (task: ListrTask) => {
