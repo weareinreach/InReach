@@ -15,7 +15,7 @@ type CreateContextOptions = {
  *
  * @see https://beta.create.t3.gg/en/usage/trpc#-servertrpccontextts
  */
-// eslint-disable-next-line @typescript-eslint/require-await
+
 export const createContextInner = async (opts: CreateContextOptions) => {
 	return {
 		session: opts.session,

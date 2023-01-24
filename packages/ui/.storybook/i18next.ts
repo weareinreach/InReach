@@ -28,7 +28,6 @@ const supportedLngs = Object.keys(i18nLocales)
 // 	return acc
 // }, {})
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
 i18n
 	.use(LanguageDetector)
 	.use(HttpApi)

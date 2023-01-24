@@ -46,5 +46,4 @@ const ThemeWrapper = (props: { children: React.ReactNode }) => {
 	)
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export const decorators = [(renderStory: Function) => <ThemeWrapper>{renderStory()}</ThemeWrapper>]

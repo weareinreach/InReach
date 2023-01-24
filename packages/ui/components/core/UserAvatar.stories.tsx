@@ -18,34 +18,33 @@ export default {
 
 const UserAvatarVariant: ComponentStory<typeof UserAvatar> = () => <UserAvatar />
 
-export const userAvatarFull = UserAvatarVariant.bind({})
-export const userAvatarNoImage = UserAvatarVariant.bind({})
-export const userAvatarNoImageNoEmail = UserAvatarVariant.bind({})
+export const UserAvatarFull = UserAvatarVariant.bind({})
+export const UserAvatarNoImage = UserAvatarVariant.bind({})
+export const UserAvatarNoImageNoEmail = UserAvatarVariant.bind({})
+export const UserAvatarNoData = UserAvatarVariant.bind({})
+export const UserAvatarLoading = UserAvatarVariant.bind({})
 
-export const userAvatarNoData = UserAvatarVariant.bind({})
-export const userAvatarLoading = UserAvatarVariant.bind({})
-
-userAvatarFull.parameters = {
+UserAvatarFull.parameters = {
 	nextAuthMock: {
 		session: 'userPicAuthed',
 	},
 }
-userAvatarNoImage.parameters = {
+UserAvatarNoImage.parameters = {
 	nextAuthMock: {
 		session: 'userAuthed',
 	},
 }
 
-userAvatarNoImageNoEmail.parameters = {
+UserAvatarNoImageNoEmail.parameters = {
 	nextAuthMock: {
 		session: 'userNoPicNoEmailAuthed',
 	},
 }
 
-userAvatarLoading.parameters = {
+UserAvatarLoading.parameters = {
 	nextAuthMock: {
 		session: 'loading',
 	},
 }
 
-userAvatarNoData.parameters = {}
+UserAvatarNoData.parameters = {}
