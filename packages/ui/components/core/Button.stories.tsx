@@ -7,13 +7,6 @@ import { Icon } from '../../icon'
 export default {
 	title: 'Design System/Button',
 	component: Button,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
 	parameters: {
 		design: {
 			type: 'figma',

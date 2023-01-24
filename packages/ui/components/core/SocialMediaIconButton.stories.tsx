@@ -7,13 +7,6 @@ import { SocialMediaIconButton, approvedIcons } from './SocialMediaIconButton'
 export default {
 	title: 'Design System/Social Media Button',
 	component: SocialMediaIconButton,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
 	parameters: {
 		design: {
 			type: 'figma',

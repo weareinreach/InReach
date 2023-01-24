@@ -7,13 +7,7 @@ import { VerifiedBadge as VerifiedBadgeComp } from './VerifiedBadge'
 export default {
 	title: 'Design System/Tags and Badges/Verified Badge',
 	component: VerifiedBadgeComp,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
+
 	parameters: {
 		design: {
 			type: 'figma',
