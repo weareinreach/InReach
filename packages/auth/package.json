@@ -19,16 +19,10 @@
 		"zod": "3.20.2"
 	},
 	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "5.48.2",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"eslint": "8.32.0",
-		"eslint-import-resolver-typescript": "3.5.3",
-		"eslint-plugin-codegen": "0.17.0",
-		"eslint-plugin-import": "2.27.5",
-		"eslint-plugin-node": "11.1.0",
-		"eslint-plugin-prettier": "4.2.1",
 		"next": "13.1.5",
 		"next-auth": "4.18.8",
 		"react": "18.2.0",

@@ -47,4 +47,4 @@ const ThemeWrapper = (props: { children: React.ReactNode }) => {
 	)
 }
 
-export const decorators = [(renderStory: () => ReactNode) => <ThemeWrapper>{renderStory()}</ThemeWrapper>]
+export const decorators = [(renderStory: Function) => <ThemeWrapper>{renderStory()}</ThemeWrapper>]
