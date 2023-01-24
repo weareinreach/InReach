@@ -8,13 +8,6 @@ import { UserAvatar } from './UserAvatar'
 export default {
 	title: 'Design System/User Avatar',
 	component: UserAvatar,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
 	parameters: {
 		design: {
 			type: 'figma',

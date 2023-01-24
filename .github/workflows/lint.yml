@@ -3,30 +3,14 @@ name: Lint & format
 on:
   push:
     branches-ignore: [dev, main]
-  pull_request:
-    branches: [dev]
 
 jobs:
-  pre_job:
-    # continue-on-error: true # Uncomment once integration is finished
-    runs-on: ubuntu-latest
-    # Map a step output to a job output
-    outputs:
-      should_skip: ${{ steps.skip_check.outputs.should_skip }}
-    steps:
-      - id: skip_check
-        uses: fkirc/skip-duplicate-actions@12aca0a884f6137d619d6a8a09fcc3406ced5281 # v5
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          concurrent_skipping: 'same_content_newer'
   lintformat:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
       GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     name: 'Lint & format'
-    needs: pre_job
-    if: needs.pre_job.outputs.should_skip != 'true'
     runs-on: ubuntu-latest
     steps:
       # Setup steps
@@ -40,6 +24,7 @@ jobs:
         uses: crazy-max/ghaction-import-gpg@111c56156bcc6918c056dbef52164cfa583dc549 # v5
         with:
           gpg_private_key: ${{ secrets.BOT_GPG_KEY }}
+          git_user_signingkey: true
           git_config_global: true
           git_commit_gpgsign: true
       - name: Install Node.js
@@ -69,18 +54,25 @@ jobs:
       # Linting & Formatting
       - name: Lint workspace
         run: pnpm lint:pkg
+        if: always()
+        id: workspace-lint
+
       - name: Lint projects
         run: pnpm lint:fix
+        if: always()
+        id: lint
+
       - name: Format projects
         run: pnpm format
+        if: always()
+        id: format
 
       # Commit changes
       - name: Commit changed files
         uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4
+        if: always()
         with:
           commit_message: 'chore: lint & format'
           skip_fetch: true
           skip_checkout: true
           commit_options: '--signoff'
-          commit_user_name: InReach-svc
-          commit_user_email: InReach-svc@users.noreply.github.com
