@@ -67,11 +67,6 @@ export const commonTheme: MantineThemeOverride = {
 			styles: (theme, params: BadgeStylesParams) => {
 				const baseStyle = {
 					root: {
-						display: 'flex',
-						flexDirection: 'row',
-						justifyContent: 'center',
-						alignItems: 'center',
-						gap: theme.spacing.sm - 4,
 						textTransform: 'none',
 						border: '1px solid',
 						paddingLeft: theme.spacing.sm,
@@ -97,14 +92,10 @@ export const commonTheme: MantineThemeOverride = {
 			styles: (theme, params: ButtonStylesParams) => {
 				const baseStyle = {
 					root: {
-						position: 'absolute',
-						display: 'flex',
-						top: theme.spacing.lg,
 						padding: theme.spacing.sm / 2,
 						paddingLeft: theme.spacing.xl * 2,
 						paddingRight: theme.spacing.xl * 2,
 						height: theme.spacing.xl * 2,
-						gap: theme.spacing.sm,
 						backgroundColor: theme.other.colors.secondary.black,
 						'&:hover': {
 							background: theme.fn.lighten(theme.other.colors.secondary.black, 0.4),
@@ -122,8 +113,6 @@ export const commonTheme: MantineThemeOverride = {
 					label: {
 						fontSize: theme.spacing.md,
 						fontWeight: theme.other.fontWeight.semibold,
-						height: 'auto',
-						width: 'auto',
 						lineHeight: `${theme.spacing.lg}px`,
 					},
 				} satisfies CustomButtonStyles

@@ -7,13 +7,6 @@ import { Link as LinkComponent } from './Link'
 export default {
 	title: 'Design System/Link',
 	component: LinkComponent,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
 	parameters: {
 		design: {
 			type: 'figma',

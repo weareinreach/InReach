@@ -7,13 +7,6 @@ import { Breadcrumb as BreadcrumbCompnent } from './Breadcrumb'
 export default {
 	title: 'Design System/Breadcrumb',
 	component: BreadcrumbCompnent,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
 	parameters: {
 		design: {
 			type: 'figma',
