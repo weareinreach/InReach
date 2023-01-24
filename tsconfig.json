@@ -1,4 +1,12 @@
 {
 	"extends": "./packages/config/tsconfig/base.json",
-	"include": [".eslintrc.js", "lib/*", ".lintstagedrc.js", ".prettierrc.js", "test/**/*.js"]
+	"include": [
+		".eslintrc.js",
+		"lib/*",
+		".lintstagedrc.js",
+		".prettierrc.js",
+		"test/**/*.js",
+		"lib/devmsg.ts",
+		"lib/prepare.ts"
+	]
 }
