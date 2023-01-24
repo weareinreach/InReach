@@ -1,61 +1,77 @@
-import { createStyles, NavLink } from '@mantine/core'
+import { createStyles, NavLink, Tabs } from '@mantine/core'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { Icon } from '../../icon'
 
 const useStyles = createStyles((theme) => ({
-	navStyle: {
+	tab: {
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
 		padding: '12px 0px 8px',
 		gap: '12px',
-		position: 'absolute',
+		// position: 'absolute',
 		width: '75px',
 		height: '70px',
 		color: theme.other.colors.secondary.darkGray,
+		borderTop: 0,
 		'&:hover': {
 			backgroundColor: theme.other.colors.secondary.white,
 		},
 		'&[data-active]': {
 			color: theme.other.colors.secondary.black,
+			borderTop: 0,
 			'&[data-active]:hover': {
 				backgroundColor: theme.other.colors.secondary.white,
 			},
 		},
 	},
+	tabsList: {
+		borderTop: 0,
+		flexWrap: 'nowrap',
+	},
+	root: {
+		position: 'absolute',
+		bottom: 0,
+		width: '100%',
+	},
 }))
 
-export const navIcons = {
-	search: 'carbon:search',
-	saved: 'carbon:favorite',
-	account: 'carbon:user',
-	support: 'carbon:help',
+export const navItems = {
+	search: { icon: 'carbon:search', labelKey: 'search', href: '#' },
+	saved: { icon: 'carbon:favorite', labelKey: 'saved', href: '#' },
+	account: { icon: 'carbon:user', labelKey: 'account', href: '#' },
+	support: { icon: 'carbon:help', labelKey: 'support', href: '#' },
 } as const
 
-export const NavLinkItem = ({ navItem, active = false }: Props) => {
+export const MobileNav = () => {
 	const { classes } = useStyles()
-	const iconRender = navIcons[navItem]
 	const { t } = useTranslation()
-	const navlabel = t(navItem)
+	const router = useRouter()
+
+	const tabs = Object.entries(navItems).map(([key, item]) => (
+		<Tabs.Tab key={key} value={key} icon={<Icon icon={item.icon} />}>
+			{t(item.labelKey)}
+		</Tabs.Tab>
+	))
+
+	const switchTab = (tab: string extends NavItems ? NavItems : string | null) => {
+		if (tab === null) return
+		if (Object.keys(navItems).includes(tab)) router.push(navItems[tab as NavItems].href)
+	}
 
 	return (
-		<NavLink
-			label={navlabel}
-			icon={<Icon icon={iconRender} />}
-			variant='subtle'
-			active={active}
-			className={classes.navStyle}
-			styles={{
-				icon: { marginRight: 'unset', width: '20px', height: '20px' },
-				body: { fontSize: '14px', fontWeight: 500, lineHeight: '125%' },
-			}}
-		/>
+		<Tabs
+			inverted
+			classNames={{ tab: classes.tab, tabsList: classes.tabsList, root: classes.root }}
+			defaultValue='search'
+			onTabChange={switchTab}
+		>
+			<Tabs.List position='apart'>{tabs}</Tabs.List>
+		</Tabs>
 	)
 }
 
-type Props = {
-	active?: boolean
-	navItem: keyof typeof navIcons
-}
+type NavItems = keyof typeof navItems

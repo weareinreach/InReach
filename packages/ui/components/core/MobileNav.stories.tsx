@@ -1,12 +1,17 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 
-import { NavLinkItem as NavLinkComponent } from './NavLink'
+import { MobileNav as MobileNavComponent } from './MobileNav'
 
 export default {
-	title: 'Design System/Nav Link',
-	component: NavLinkComponent,
+	title: 'Design System/Mobile Navigation',
+	component: MobileNavComponent,
 	parameters: {
+		layout: 'fullscreen',
+		isFullscreen: true,
+		viewport: {
+			defaultViewport: 'iphone5',
+		},
 		design: {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=68%3A389&t=6tj0T5JJT9cer7Q6-0',
@@ -17,13 +22,8 @@ export default {
 			control: 'boolean',
 		},
 	},
-} as ComponentMeta<typeof NavLinkComponent>
+} as ComponentMeta<typeof MobileNavComponent>
 
-const NavLinkVariant: ComponentStory<typeof NavLinkComponent> = (args) => <NavLinkComponent {...args} />
+const MobileNavigationStory: ComponentStory<typeof MobileNavComponent> = () => <MobileNavComponent />
 
-export const NavLink = NavLinkVariant.bind({})
-
-NavLink.args = {
-	active: true,
-	navItem: 'search',
-}
+export const MobileNavigation = MobileNavigationStory.bind({})
