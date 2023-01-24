@@ -7,13 +7,6 @@ import { InstantFeedback as InstantFeedbackCompnent } from './InstantFeedback'
 export default {
 	title: 'Design System/Instant Feedback',
 	component: InstantFeedbackCompnent,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
 	parameters: {
 		design: {
 			type: 'figma',

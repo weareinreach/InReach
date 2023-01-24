@@ -7,13 +7,6 @@ import { AntiHateMessage as AntiHateMessageCompnent } from './AntiHateMessage'
 export default {
 	title: 'Design System/Anti-Hate Message',
 	component: AntiHateMessageCompnent,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
 	parameters: {
 		design: {
 			type: 'figma',
