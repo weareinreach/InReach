@@ -1,12 +1,11 @@
 import { Command } from 'commander'
-import { Listr, ListrContext, ListrRenderer, ListrTaskWrapper } from 'listr2'
-
 import {
 	generateFooterLinks,
 	generateNavigation,
 	generateSocialMediaLinks,
 	generateTranslationKeys,
 } from 'lib/generators'
+import { Listr, ListrContext, ListrRenderer, ListrTaskWrapper } from 'listr2'
 
 const program = new Command()
 
