@@ -9,7 +9,7 @@ module.exports = {
 			exclude: ['I18n'],
 		},
 		next: {
-			rootDir: './',
+			rootDir: 'apps/app/',
 		},
 	},
 	overrides: [

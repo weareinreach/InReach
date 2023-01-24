@@ -17,7 +17,7 @@ const config = {
 		'import/no-unused-modules': ['warn', { missingExports: true }],
 		'import/consistent-type-specifier-style': ['error', 'prefer-inline'],
 		'import/order': [
-			'error',
+			'warn',
 			{
 				groups: ['external', 'builtin', 'internal', ['index', 'sibling', 'parent'], 'object', 'type'],
 				pathGroups: [

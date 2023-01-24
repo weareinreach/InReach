@@ -20,7 +20,7 @@ module.exports = {
 	extends: ['@weareinreach/eslint-config/next'],
 	settings: {
 		next: {
-			rootDir: './',
+			rootDir: 'apps/web/',
 		},
 	},
 }
