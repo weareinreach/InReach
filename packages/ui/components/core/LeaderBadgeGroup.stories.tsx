@@ -7,13 +7,7 @@ import { LeaderBadgeGroup } from './LeaderBadgeGroup'
 export default {
 	title: 'Design System/Tags and Badges/Leader Badge Group',
 	component: LeaderBadgeGroup,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
+
 	parameters: {
 		design: {
 			type: 'figma',

@@ -7,13 +7,6 @@ import { Rating as RatingTagComp } from './Rating'
 export default {
 	title: 'Design System/Rating',
 	component: RatingTagComp,
-	decorators: [
-		(Story) => (
-			<Center style={{ width: '100vw' }}>
-				<Story />
-			</Center>
-		),
-	],
 	parameters: {
 		design: {
 			type: 'figma',
