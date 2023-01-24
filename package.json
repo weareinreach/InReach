@@ -31,7 +31,7 @@
 	"dependencies": {
 		"@changesets/cli": "2.26.0",
 		"@manypkg/cli": "0.19.2",
-		"@next/eslint-plugin-next": "13.1.4",
+		"@next/eslint-plugin-next": "13.1.5",
 		"@types/eslint": "8.4.10",
 		"@types/node": "16.18.11",
 		"@types/prettier": "2.7.2",
@@ -39,7 +39,7 @@
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"boxen": "7.0.1",
-		"eslint-config-next": "13.1.4",
+		"eslint-config-next": "13.1.5",
 		"eslint-import-resolver-typescript": "3.5.3",
 		"eslint-plugin-codegen": "0.17.0",
 		"eslint-plugin-i18next": "6.0.0-6",
