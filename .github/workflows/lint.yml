@@ -2,7 +2,7 @@ name: Lint & format
 
 on:
   push:
-    branches-ignore: [dev, main]
+    branches-ignore: [dev, main, renovate/*]
 
 jobs:
   lintformat:
