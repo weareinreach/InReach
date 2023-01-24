@@ -19,6 +19,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
+
       - name: Import GPG key
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@111c56156bcc6918c056dbef52164cfa583dc549 # v5
@@ -27,20 +28,24 @@ jobs:
           git_user_signingkey: true
           git_config_global: true
           git_commit_gpgsign: true
+
       - name: Install Node.js
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
           node-version: 16
+
       - uses: pnpm/action-setup@c3b53f6a16e57305370b4ae5a540c2077a1d50dd # v2.2.4
         name: Install pnpm
         id: pnpm-install
         with:
           run_install: false
+
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
       - uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3
         name: Setup pnpm cache
         with:
@@ -48,6 +53,7 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+
       - name: Install dependencies
         run: pnpm install
 
@@ -58,7 +64,7 @@ jobs:
         id: workspace-lint
 
       - name: Lint projects
-        run: pnpm lint:fix
+        run: pnpm lint:fix -- --format github
         if: always()
         id: lint
 
@@ -69,10 +75,11 @@ jobs:
 
       # Commit changes
       - name: Commit changed files
-        uses: stefanzweifel/git-auto-commit-action@3ea6ae190baf489ba007f7c92608f33ce20ef04a # v4
+        uses: EndBug/add-and-commit@61a88be553afe4206585b31aa72387c64295d08b #v9
         if: always()
         with:
-          commit_message: 'chore: lint & format'
-          skip_fetch: true
-          skip_checkout: true
-          commit_options: '--signoff'
+          message: 'chore: lint & format
+            [actions skip]'
+          commit: --signoff
+          committer_name: InReach Bot
+          committer_email: 108850934+InReach-svc@users.noreply.github.com
