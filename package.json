@@ -24,13 +24,14 @@
 		"lint": "turbo run lint",
 		"lint:fix": "turbo run lint:fix",
 		"lint:pkg": "manypkg check",
+		"lint:pkg:fix": "manypkg fix",
 		"lint:staged": "lint-staged",
 		"prepare": "tsx ./lib/prepare.mts",
 		"type-check": "turbo type-check"
 	},
 	"dependencies": {
 		"@changesets/cli": "2.26.0",
-		"@manypkg/cli": "0.19.2",
+		"@manypkg/cli": "0.20.0",
 		"@next/eslint-plugin-next": "13.1.5",
 		"@types/eslint": "8.4.10",
 		"@types/node": "16.18.11",
@@ -91,7 +92,6 @@
 			"@storybook/react-docgen-typescript-plugin@1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0": "npm:react-docgen-typescript-plugin@1.0.2",
 			"chokidar": ">=3.0.0",
 			"glob-parent@<5.1.2": ">=5.1.2",
-			"got@<11.8.5": ">=11.8.5",
 			"listr2@<5": ">=5.0.5",
 			"micromatch": ">=4.0.0",
 			"node-fetch@<2.6.7": ">=2.6.7",
