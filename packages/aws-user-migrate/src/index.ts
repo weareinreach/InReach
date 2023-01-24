@@ -1,6 +1,7 @@
 import { UserMigrationTriggerEvent, UserMigrationTriggerHandler } from 'aws-lambda'
 
 import { getUser } from './getUser'
+import { logger } from './logger'
 import { verifyUser } from './verifyUser'
 
 export const handler: UserMigrationTriggerHandler = async (event: UserMigrationTriggerEvent) => {
@@ -22,8 +23,13 @@ export const handler: UserMigrationTriggerHandler = async (event: UserMigrationT
 					throw new Error('Bad password')
 				}
 			} catch (error) {
-				console.error(error)
-				if (typeof error === 'string') throw new Error(error)
+				if (error instanceof Error) {
+					logger.error({ message: error.message }, { name: error.name, stack: error.stack })
+				}
+				if (typeof error === 'string') {
+					logger.error(error)
+					throw new Error(error)
+				}
 				throw error
 			}
 
@@ -41,8 +47,13 @@ export const handler: UserMigrationTriggerHandler = async (event: UserMigrationT
 					throw new Error('Bad password')
 				}
 			} catch (error) {
-				console.error(error)
-				if (typeof error === 'string') throw new Error(error)
+				if (error instanceof Error) {
+					logger.error({ message: error.message }, { name: error.name, stack: error.stack })
+				}
+				if (typeof error === 'string') {
+					logger.error(error)
+					throw new Error(error)
+				}
 				throw error
 			}
 

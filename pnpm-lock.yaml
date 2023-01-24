@@ -346,6 +346,7 @@ importers:
 
   packages/aws-messaging:
     specifiers:
+      '@aws-lambda-powertools/logger': 1.5.1
       '@types/aws-lambda': 8.10.109
       '@types/node': 16.18.11
       '@vercel/ncc': 0.36.0
@@ -357,6 +358,7 @@ importers:
       prettier: 2.8.3
       typescript: 4.9.4
     dependencies:
+      '@aws-lambda-powertools/logger': 1.5.1
       aws-sdk: 2.1299.0
     devDependencies:
       '@types/aws-lambda': 8.10.109
@@ -371,6 +373,7 @@ importers:
 
   packages/aws-user-migrate:
     specifiers:
+      '@aws-lambda-powertools/logger': 1.5.1
       '@types/aws-lambda': 8.10.109
       '@types/node': 16.18.11
       '@vercel/ncc': 0.36.0
@@ -383,6 +386,7 @@ importers:
       prettier: 2.8.3
       typescript: 4.9.4
     dependencies:
+      '@aws-lambda-powertools/logger': 1.5.1
       '@weareinreach/db': link:../db
       aws-sdk: 2.1299.0
     devDependencies:
@@ -843,6 +847,17 @@ packages:
       '@aws-sdk/types': 3.254.0
       '@aws-sdk/util-utf8-browser': 3.188.0
       tslib: 1.14.1
+    dev: false
+
+  /@aws-lambda-powertools/commons/1.5.1:
+    resolution: {integrity: sha512-qp13/WksB6M/liEHgV3301qmI/aeQKmrYk1iODB+rrkVWeKW4AJqBMuWQ26gIlbD8t82EtuUNPUFle1a2qwjIg==}
+    dev: false
+
+  /@aws-lambda-powertools/logger/1.5.1:
+    resolution: {integrity: sha512-dXvw7c4Z0DUEY62zEWsQ4DQZ3yf+JsEAqojQH+kw+rXVv0cjnIEbM4ZKONPG2jcPS5IMzO6gmCbu/PKB1PYgyA==}
+    dependencies:
+      '@aws-lambda-powertools/commons': 1.5.1
+      lodash.merge: 4.6.2
     dev: false
 
   /@aws-sdk/abort-controller/3.226.0:
@@ -16433,7 +16448,6 @@ packages:
 
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
-    dev: true
 
   /lodash.once/4.1.1:
     resolution: {integrity: sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==}

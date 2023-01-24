@@ -1,4 +1,7 @@
+import { Logger } from '@aws-lambda-powertools/logger'
 import { Callback, Context, CustomMessageTriggerEvent } from 'aws-lambda'
+
+const logger = new Logger({ serviceName: 'cognito-messaging' })
 
 export const encodeUrl = (email: string, databaseId: string) => {
 	const data = { email, databaseId }
@@ -19,7 +22,6 @@ export const handler = (
 	callback: Callback<CustomMessageTriggerEvent>
 ) => {
 	const { triggerSource, userName, request, response } = event
-
 	const { baseUrl } = request.clientMetadata ?? { baseUrl: `http://localhost:3000` }
 
 	const confirmLink = `${baseUrl}/auth/confirm/${encodeUrl(userName, request.userAttributes['custom:id'])}/${
@@ -42,5 +44,10 @@ export const handler = (
 			break
 		}
 	}
-	callback(null, { ...event, response })
+	const reply = { ...event, response }
+
+	logger.info(
+		`Sending confirmation for userId ${request.userAttributes['custom:id']} for event ${triggerSource}`
+	)
+	callback(null, reply)
 }

@@ -20,6 +20,7 @@
 		"prune-clients": "find ./dist/client -type f -not -name '*rhel*' -delete -print"
 	},
 	"dependencies": {
+		"@aws-lambda-powertools/logger": "1.5.1",
 		"@weareinreach/db": "0.100.0",
 		"aws-sdk": "2.1299.0"
 	},
