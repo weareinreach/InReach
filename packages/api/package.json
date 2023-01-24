@@ -28,8 +28,6 @@
 		"zod": "3.20.2"
 	},
 	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "5.48.2",
-		"@typescript-eslint/parser": "5.48.2",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"dotenv-cli": "7.0.0",
