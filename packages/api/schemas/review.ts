@@ -3,17 +3,17 @@ import { z } from 'zod'
 
 export const createReview = z.object({
 	rating: z.number(),
-	reviewText: z.string().nullable(),
-	visible: z.boolean().nullable(),
+	reviewText: z.string().optional(),
+	visible: z.boolean().optional(),
 	organizationId: z.string().cuid(),
-	orgServiceId: z.string().cuid().nullable(),
-	orgLocationId: z.string().cuid().nullable(),
-	langCode: z.string().nullable(),
-	langConfidence: z.number().nullable(),
-	toxicity: z.number().nullable(),
-	lcrCity: z.string().nullable(),
-	lcrGovDistId: z.string().cuid().nullable(),
-	lcrCountryId: z.string().cuid().nullable(),
+	orgServiceId: z.string().cuid().optional(),
+	orgLocationId: z.string().cuid().optional(),
+	langCode: z.string().optional(),
+	langConfidence: z.number().optional(),
+	toxicity: z.number().optional(),
+	lcrCity: z.string().optional(),
+	lcrGovDistId: z.string().cuid().optional(),
+	lcrCountryId: z.string().cuid().optional(),
 })
 type CreateReview = z.infer<typeof createReview>
 

@@ -8,15 +8,12 @@ import { createReview, transformCreateReview } from '../schemas/review'
 export const reviewRouter = defineRouter({
 	create: protectedProcedure.input(createReview).mutation(async ({ ctx, input }) => {
 		try {
-			const data: Prisma.OrgReviewCreateInput = {
-				...transformCreateReview(input),
-				user: {
-					connect: {
-						id: ctx.session.user.id,
-					},
-				},
+			const data: Prisma.OrgReviewCreateArgs['data'] = {
+				...input,
+				userId: ctx.session.user.id,
 			}
 			const review = await ctx.prisma.orgReview.create({ data })
+
 			return review
 		} catch (error) {
 			handleError(error)

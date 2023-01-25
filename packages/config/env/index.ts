@@ -1,3 +1,4 @@
+/* eslint-disable node/no-process-env */
 import { parseEnv, z } from 'znv'
 
 import { vercelProvidedEnv } from './vercel'
@@ -6,13 +7,13 @@ import { vercelProvidedEnv } from './vercel'
  *
  * Why? @see {@link https://github.com/lostfictions/znv#motivation}
  */
-// eslint-disable-next-line node/no-process-env
+
 export const env = parseEnv(process.env, {
 	...vercelProvidedEnv,
-	COGNITO_ACCESS_KEY: z.string(),
-	COGNITO_SECRET: z.string(),
-	COGNITO_CLIENT_ID: z.string(),
-	COGNITO_CLIENT_SECRET: z.string(),
+	COGNITO_ACCESS_KEY: z.string().default(''),
+	COGNITO_SECRET: z.string().default(''),
+	COGNITO_CLIENT_ID: z.string().default(''),
+	COGNITO_CLIENT_SECRET: z.string().default(''),
 	NODE_ENV: {
 		schema: z.enum(['production', 'development']).optional(),
 		description: 'Node environment',
@@ -28,20 +29,32 @@ export const env = parseEnv(process.env, {
 		},
 	},
 	MONGO_URI: {
-		schema: z.string(),
+		schema: z.string().optional(),
 		description: 'This is only used for the database migration process.',
 	},
 	/** @see {@link https://next-auth.js.org/configuration/options} */
 	NEXTAUTH_URL: {
-		schema: z.string().url(),
+		schema: z.string().url().default('http://localhost:3000'),
 		defaults: {
 			development: 'http://localhost:3000',
 		},
 	},
 	/** @see {@link https://next-auth.js.org/configuration/options} */
 	NEXTAUTH_SECRET: {
-		schema: z.string(),
+		schema: z.string().default(''),
 		description:
 			'Used to encrypt the NextAuth.js JWT, and to hash email verification tokens. This is the default value for the secret option in NextAuth and Middleware.',
 	},
 })
+
+export const getEnv = <K extends EnvKeys>(envVar: K): EnvParse[K] | string => {
+	const envResult = env[envVar]
+	// const envResult = process.env[envVar]
+	// console.log(`Get env: ${envVar}. Result: ${envResult}`)
+	return envResult as string
+}
+
+type EnvKeys = keyof typeof env
+type EnvParse = {
+	[K in keyof typeof env]: (typeof env)[K]
+}

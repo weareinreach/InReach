@@ -1,11 +1,11 @@
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { prisma } from '@weareinreach/db'
+// import { PrismaAdapter } from '@next-auth/prisma-adapter'
+// import { getEnv } from '@weareinreach/config/env'
+// import { prisma } from '@weareinreach/db'
 import { User, type NextAuthOptions } from 'next-auth'
 
 import { cognitoCredentialProvider } from '../providers/cognito'
 
 export const authOptions: NextAuthOptions = {
-	// Include user.id on session
 	callbacks: {
 		jwt: async ({ token, user }) => {
 			user && (token.user = user as User)
@@ -19,6 +19,8 @@ export const authOptions: NextAuthOptions = {
 		},
 	},
 	// Configure one or more authentication providers
-	adapter: PrismaAdapter(prisma),
+	// adapter: PrismaAdapter(prisma),
 	providers: [cognitoCredentialProvider],
+	// eslint-disable-next-line node/no-process-env
+	debug: process.env.NODE_ENV === 'development',
 }
