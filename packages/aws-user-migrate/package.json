@@ -7,11 +7,12 @@
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"scripts": {
-		"build:aws": "pnpm clean:dist && pnpm bundle && pnpm package",
-		"bundle": "ncc build ./src/index.ts -s -m -a",
+		"build:aws": "./build.sh",
+		"bundle": "ncc build ./src/index.ts -s  -a -d",
 		"clean:dist": "rm -fr dist",
 		"clean:node": "rm -rf ./node_modules/ || true",
-		"deploy:aws": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://dist/bundle.zip",
+		"db:generate": "prisma generate --schema ../db/prisma/schema.prisma",
+		"deploy:aws": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://bundle.zip",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint --cache .",
@@ -21,8 +22,8 @@
 	},
 	"dependencies": {
 		"@aws-lambda-powertools/logger": "1.5.1",
-		"@weareinreach/db": "0.100.0",
-		"aws-sdk": "2.1299.0"
+		"@prisma/client": "4.9.0",
+		"@weareinreach/db": "workspace:0.100.0"
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.109",
@@ -33,6 +34,7 @@
 		"aws-lambda": "1.0.7",
 		"eslint": "8.32.0",
 		"prettier": "2.8.3",
+		"prisma": "4.9.0",
 		"typescript": "4.9.4"
 	}
 }

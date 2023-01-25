@@ -1,6 +1,4 @@
-import { prisma } from '@weareinreach/db'
-import { Prisma, type User } from '@weareinreach/db'
-
+import { prisma, Prisma, type User } from './client'
 import { logger } from './logger'
 
 type GetUser = (email: string) => Promise<User>

@@ -8,13 +8,18 @@ export const handler: UserMigrationTriggerHandler = async (event: UserMigrationT
 	// const provider = new CognitoIdentityServiceProvider()
 	const username = event.userName
 	const password = event.request.password
+	logger.info(`Starting from ${__dirname}`)
 	switch (event.triggerSource) {
 		case 'UserMigration_Authentication':
 			try {
-				if (await verifyUser(username, password)) {
+				logger.info('Migration trigger')
+				const userResult = await verifyUser(username, password)
+
+				if (userResult.valid) {
 					event.response.userAttributes = {
 						email: username,
 						email_verified: 'true',
+						'custom:id': userResult.id,
 					}
 					event.response.finalUserStatus = 'CONFIRMED'
 					event.response.messageAction = 'SUPPRESS'
@@ -35,11 +40,13 @@ export const handler: UserMigrationTriggerHandler = async (event: UserMigrationT
 
 		case 'UserMigration_ForgotPassword':
 			try {
+				logger.info('Forgot Password trigger')
 				const userProfile = await getUser(username)
 				if (userProfile) {
 					event.response.userAttributes = {
 						email: userProfile.email,
 						email_verified: 'true',
+						'custom:id': userProfile.id,
 					}
 					event.response.messageAction = 'SUPPRESS'
 					return event
