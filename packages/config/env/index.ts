@@ -1,6 +1,6 @@
 import { parseEnv, z } from 'znv'
 
-import { vercelProvidedEnv } from './vercel.js'
+import { vercelProvidedEnv } from './vercel'
 /**
  * Parsed & validated env variables.
  *
