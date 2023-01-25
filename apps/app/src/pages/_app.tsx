@@ -5,6 +5,7 @@ import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { NotificationsProvider } from '@mantine/notifications'
 import { Work_Sans } from '@next/font/google'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AppLayout } from '@weareinreach/ui/layout'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 import { type AppProps } from 'next/app'
@@ -36,6 +37,7 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 						<AppLayout navItems={navItems} footerLinks={navItems} socialMedia={socialMediaLinks}>
 							<Component {...pageProps} />
 						</AppLayout>
+						<ReactQueryDevtools initialIsOpen={false} />
 					</ModalsProvider>
 				</NotificationsProvider>
 			</SessionProvider>
