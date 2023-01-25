@@ -1,5 +1,4 @@
 /* eslint-disable node/no-process-env */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 // import { env } from './src/env/server.mjs'
 import bundleAnalyze from '@next/bundle-analyzer'
 

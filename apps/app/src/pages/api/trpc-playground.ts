@@ -1,6 +1,6 @@
 // pages/api/trpc-playground.ts
 import { appRouter } from '@weareinreach/api'
-import { env } from '@weareinreach/config'
+import { getEnv } from '@weareinreach/config/env'
 import { NextApiHandler } from 'next'
 import { nextHandler } from 'trpc-playground/handlers/next'
 
@@ -17,7 +17,7 @@ const setupHandler = nextHandler({
 
 const handler: NextApiHandler = async (req, res) => {
 	const playgroundHandler = await setupHandler
-	if (env.NODE_ENV === 'development') {
+	if (getEnv('NODE_ENV') === 'development') {
 		await playgroundHandler(req, res)
 	} else {
 		return res.status(403)

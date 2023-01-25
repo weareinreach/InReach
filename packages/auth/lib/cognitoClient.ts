@@ -5,7 +5,7 @@ import {
 	AuthenticationResultType,
 	ChallengeNameType,
 } from '@aws-sdk/client-cognito-identity-provider'
-import { env } from '@weareinreach/config'
+import { getEnv } from '@weareinreach/config/env'
 import { type User } from 'next-auth'
 import invariant from 'tiny-invariant'
 
@@ -15,11 +15,11 @@ import { generateUserSession } from './genUserSession'
 
 export const cognito = new CognitoIdentityProvider({
 	credentials: {
-		accessKeyId: env.COGNITO_ACCESS_KEY,
-		secretAccessKey: env.COGNITO_SECRET,
+		accessKeyId: getEnv('COGNITO_ACCESS_KEY'),
+		secretAccessKey: getEnv('COGNITO_SECRET'),
 	},
 })
-export const ClientId = env.COGNITO_CLIENT_ID
+export const ClientId = getEnv('COGNITO_CLIENT_ID')
 
 /**
  * Generates Cognito HMAC hash.
@@ -32,7 +32,7 @@ export const ClientId = env.COGNITO_CLIENT_ID
  * @returns AWS compliant HMAC hash
  */
 export const generateHash = (message: string) =>
-	createHmac('sha256', env.COGNITO_CLIENT_SECRET).update(`${message}${ClientId}`).digest('base64')
+	createHmac('sha256', getEnv('COGNITO_CLIENT_SECRET')).update(`${message}${ClientId}`).digest('base64')
 
 export const parseAuthResponse: AuthResponse = async (response, email) => {
 	const isChallenge = (name: string | undefined): name is ChallengeNameType =>

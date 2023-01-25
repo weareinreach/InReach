@@ -42,6 +42,13 @@ const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 	}
 }
 
+const checkRole = (allowedRoles: string[], userRoles: string[]) => {
+	for (const userRole of userRoles) {
+		if (allowedRoles.includes(userRole)) return true
+	}
+	return false
+}
+
 const t = initTRPC
 	.context<Context>()
 	.meta<Meta>()
@@ -65,7 +72,7 @@ const isAuthed = t.middleware(({ ctx, meta, next }) => {
 })
 const isAdmin = t.middleware(({ ctx, meta, next }) => {
 	if (!ctx.session || !ctx.session.user) return reject()
-	if (!(['dataAdmin', 'sysadmin'].includes(ctx.session?.user.role) && checkPermissions(meta, ctx)))
+	if (!(checkRole(['dataAdmin', 'sysadmin'], ctx.session?.user.roles) && checkPermissions(meta, ctx)))
 		return reject()
 
 	return next({
@@ -78,7 +85,7 @@ const isStaff = t.middleware(({ ctx, meta, next }) => {
 	if (!ctx.session || !ctx.session.user) return reject()
 	if (
 		!(
-			['dataManager', 'dataAdmin', 'sysadmin', 'system'].includes(ctx.session?.user.role) &&
+			checkRole(['dataManager', 'dataAdmin', 'sysadmin', 'system'], ctx.session?.user.roles) &&
 			checkPermissions(meta, ctx)
 		)
 	)
