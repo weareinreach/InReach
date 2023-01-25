@@ -12,8 +12,7 @@ export const verifyUser: VerifyUser = async (email, password) => {
 			SECRET_HASH: generateHash(email),
 		},
 	})
-
-	return parseAuthResponse(response)
+	return await parseAuthResponse(response, email)
 }
 
 type VerifyUser = (email: string, password: string) => Promise<AuthResult>

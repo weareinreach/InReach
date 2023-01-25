@@ -18,7 +18,7 @@ export const changePasswordResponse: ChangePasswordResponse = async (
 		Session: challengeSession,
 	})
 
-	return parseAuthResponse(response)
+	return await parseAuthResponse(response, email)
 }
 
 type ChangePasswordResponse = (

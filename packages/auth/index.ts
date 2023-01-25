@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unused-modules */
-import { DefaultSession } from 'next-auth/core/types'
+import { type DefaultSession, type DefaultUser, type User } from 'next-auth/core/types'
+import { type DefaultJWT } from 'next-auth/jwt'
 
 export { authOptions } from './next-auth/auth-options'
 export { getServerSession } from './next-auth/get-session'
@@ -12,15 +13,19 @@ export type { Session } from 'next-auth'
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-
-type CustomUser = {
-	id: string
-	role: string
-	permissions: string[]
-}
-
 declare module 'next-auth/core/types' {
 	export interface Session extends DefaultSession {
-		user: CustomUser & DefaultSession['user']
+		user: User
+	}
+	export interface User extends DefaultUser {
+		id: string
+		roles: string[]
+		permissions: string[]
+		email: string
+	}
+}
+declare module 'next-auth/jwt' {
+	export interface JWT extends DefaultJWT {
+		user: User
 	}
 }

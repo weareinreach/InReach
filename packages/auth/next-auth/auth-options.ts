@@ -1,34 +1,24 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { prisma } from '@weareinreach/db'
-import { type NextAuthOptions } from 'next-auth'
-import Credentials from 'next-auth/providers/credentials'
+import { User, type NextAuthOptions } from 'next-auth'
+
+import { cognitoCredentialProvider } from '../providers/cognito'
 
 export const authOptions: NextAuthOptions = {
 	// Include user.id on session
 	callbacks: {
-		session({ session, user }) {
+		jwt: async ({ token, user }) => {
+			user && (token.user = user as User)
+			return token
+		},
+		session: async ({ session, token }) => {
 			if (session.user) {
-				session.user.id = user.id
+				session.user = token.user
 			}
 			return session
 		},
 	},
 	// Configure one or more authentication providers
 	adapter: PrismaAdapter(prisma),
-	providers: [
-		Credentials({
-			name: 'Cognito',
-			credentials: {
-				email: { label: 'Email', type: 'text' },
-				password: { label: 'Password', type: 'password' },
-			},
-			authorize: async (credentials, req) => {
-				console.log(credentials, req)
-				//placeholder
-				return {
-					id: '',
-				}
-			},
-		}),
-	],
+	providers: [cognitoCredentialProvider],
 }
