@@ -42,6 +42,24 @@ export const organizationSelect: Prisma.OrganizationSelect = {
 	published: true,
 	lastVerified: true,
 }
+export const countryInclude: Prisma.CountryArgs = {
+	select: {
+		cca2: true,
+		cca3: true,
+		tsKey: true,
+		tsNs: true,
+		dialCode: true,
+		flag: true,
+	},
+}
+export const hoursSelect: Prisma.OrgHoursArgs = {
+	select: {
+		dayIndex: true,
+		start: true,
+		end: true,
+		closed: true,
+	},
+}
 export const orgEmailInclude: Prisma.OrgEmailArgs = {
 	include: {
 		title: true,
@@ -87,7 +105,7 @@ export const attributeInclude: AttributeInclude = {
 		attribute: true,
 		supplement: {
 			include: {
-				country: true,
+				country: countryInclude,
 				language: true,
 				text: true,
 			},
@@ -96,18 +114,36 @@ export const attributeInclude: AttributeInclude = {
 }
 
 export const govDistInclude: Prisma.GovDistArgs = {
-	include: {
-		govDistType: true,
-		subDistricts: {
-			include: {
-				govDistType: true,
+	select: {
+		govDistType: {
+			select: {
+				tsNs: true,
+				tsKey: true,
 			},
 		},
+		tsKey: true,
+		tsNs: true,
+		abbrev: true,
+
+		// subDistricts: {
+		// 	select: {
+		// 		govDistType: {
+		// 			select: {
+		// 				tsNs: true,
+		// 				tsKey: true,
+		// 			},
+		// 		},
+		// 		tsKey: true,
+		// 		tsNs: true,
+		// 		abbrev: true,
+		// 	},
+		// },
 	},
 }
+
 export const serviceAreaInclude: Prisma.ServiceAreaArgs = {
 	include: {
-		countries: { include: { country: true } },
+		countries: { include: { country: countryInclude } },
 		districts: { include: { govDist: govDistInclude } },
 	},
 }
@@ -141,7 +177,7 @@ const orgServiceEmailInclude: Prisma.OrgServiceEmailArgs = {
 export const orgServiceInclude: Include<Prisma.OrgServiceInclude> = {
 	include: {
 		description: true,
-		hours: true,
+		hours: hoursSelect,
 		attributes: attributeInclude,
 		serviceAreas: serviceAreaInclude,
 		services: orgServiceTagInclude,
@@ -165,7 +201,7 @@ const orgLocationServiceInclude: Prisma.OrgLocationServiceArgs = {
 export const orgLocationInclude: Include<Prisma.OrgLocationInclude> = {
 	include: {
 		govDist: govDistInclude,
-		country: true,
+		country: countryInclude,
 		attributes: attributeInclude,
 		emails: orgLocationEmailInclude,
 		websites: orgWebsiteInclude,
@@ -190,7 +226,7 @@ export const organizationInclude: Include<Prisma.OrganizationInclude> = {
 		websites: orgWebsiteInclude,
 		reviews: reviewIds,
 		serviceAreas: serviceAreaInclude,
-		hours: true,
+		hours: hoursSelect,
 		attributes: attributeInclude,
 	},
 }

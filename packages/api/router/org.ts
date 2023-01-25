@@ -9,7 +9,7 @@ export const orgRouter = defineRouter({
 	getById: publicProcedure.input(id).query(async ({ ctx, input }) => {
 		try {
 			const { include } = organizationInclude
-			const org = await ctx.prisma.organization.findUnique({
+			const org = await ctx.prisma.organization.findUniqueOrThrow({
 				where: {
 					id: input.id,
 				},
