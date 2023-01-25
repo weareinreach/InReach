@@ -1,28 +1,39 @@
 import { UserMigrationTriggerEvent, UserMigrationTriggerHandler } from 'aws-lambda'
 
+import { prisma } from './client'
 import { getUser } from './getUser'
 import { logger } from './logger'
 import { verifyUser } from './verifyUser'
 
 export const handler: UserMigrationTriggerHandler = async (event: UserMigrationTriggerEvent) => {
 	// const provider = new CognitoIdentityServiceProvider()
-	const username = event.userName
+	const email = event.userName
 	const password = event.request.password
-	logger.info(`Starting from ${__dirname}`)
+
 	switch (event.triggerSource) {
 		case 'UserMigration_Authentication':
 			try {
 				logger.info('Migration trigger')
-				const userResult = await verifyUser(username, password)
+				const userResult = await verifyUser(email, password)
 
 				if (userResult.valid) {
 					event.response.userAttributes = {
-						email: username,
+						email,
 						email_verified: 'true',
 						'custom:id': userResult.id,
 					}
 					event.response.finalUserStatus = 'CONFIRMED'
 					event.response.messageAction = 'SUPPRESS'
+					await prisma.user.update({
+						where: {
+							email,
+						},
+						data: {
+							legacyHash: null,
+							legacySalt: null,
+							migrateDate: new Date(),
+						},
+					})
 					return event
 				} else {
 					throw new Error('Bad password')
@@ -41,7 +52,7 @@ export const handler: UserMigrationTriggerHandler = async (event: UserMigrationT
 		case 'UserMigration_ForgotPassword':
 			try {
 				logger.info('Forgot Password trigger')
-				const userProfile = await getUser(username)
+				const userProfile = await getUser(email)
 				if (userProfile) {
 					event.response.userAttributes = {
 						email: userProfile.email,
