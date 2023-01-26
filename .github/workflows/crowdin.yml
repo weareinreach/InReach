@@ -32,7 +32,7 @@ jobs:
           git_config_global: true
           git_commit_gpgsign: true
       - name: crowdin action
-        uses: crowdin/github-action@8461edd493435e3f838de2f81301f093aed04e51 # 1.5.3
+        uses: crowdin/github-action@64e208ea829c2e44820d8be1a1c7ca98ba7036c3 # v1.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
