@@ -1,6 +1,6 @@
 // import { PrismaAdapter } from '@next-auth/prisma-adapter'
 // import { getEnv } from '@weareinreach/config/env'
-// import { prisma } from '@weareinreach/db'
+import { prisma } from '@weareinreach/db'
 import { User, type NextAuthOptions } from 'next-auth'
 
 import { cognitoCredentialProvider } from '../providers/cognito'
@@ -16,6 +16,13 @@ export const authOptions: NextAuthOptions = {
 				session.user = token.user
 			}
 			return session
+		},
+		signIn: async ({ user }) => {
+			const userProfile = await prisma.user.findFirstOrThrow({
+				where: { id: user.id },
+				select: { active: true },
+			})
+			return userProfile.active
 		},
 	},
 	session: {
