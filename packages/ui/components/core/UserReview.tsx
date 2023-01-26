@@ -13,8 +13,14 @@ const useStyles = createStyles((theme) => ({
 	icon: {
 		color: theme.other.colors.primary.allyGreen,
 	},
-	stackContainer: {
-		width: '861px',
+	textContainer: {
+        maxWidth:"816px",
+        [theme.fn.smallerThan("md")]: {
+            width:"700px"
+        },
+        [theme.fn.smallerThan("sm")]: {
+            width:"300px"
+        },
 	},
 	avatar: {
 		height: '48px',
@@ -33,7 +39,6 @@ export const UserReview = ({ user, reviewText, verifiedUser }: Props) => {
 	const [showMore, setShowMore] = useState(true)
 	const theme = useMantineTheme()
 
-	const lineClamp = showMore ? 1 : undefined
 	const showMoreText = showMore ? t('show-more') : t('show-less')
 	const showShowMore = reviewText.length > CHARACTER_LIMIT
 
@@ -42,7 +47,7 @@ export const UserReview = ({ user, reviewText, verifiedUser }: Props) => {
 		.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 
 	return (
-		<Stack className={classes.stackContainer}>
+		<Stack>
 			<Group>
 				<Avatar radius='xl' className={classes.avatar}>
 					{user?.avatarUrl ? (
@@ -58,7 +63,7 @@ export const UserReview = ({ user, reviewText, verifiedUser }: Props) => {
 					<Text>{dateString}</Text>
 				</Stack>
 			</Group>
-			<Text truncate={showMore}>{`"${reviewText}"`}</Text>
+			<Text truncate={showMore} className={classes.textContainer} >{`"${reviewText}"`}</Text>
 			{showShowMore ? (
 				<Text
 					td='underline'
