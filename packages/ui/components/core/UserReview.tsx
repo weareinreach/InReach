@@ -14,13 +14,13 @@ const useStyles = createStyles((theme) => ({
 		color: theme.other.colors.primary.allyGreen,
 	},
 	textContainer: {
-        maxWidth:"816px",
-        [theme.fn.smallerThan("md")]: {
-            width:"700px"
-        },
-        [theme.fn.smallerThan("sm")]: {
-            width:"300px"
-        },
+		maxWidth: '816px',
+		[theme.fn.smallerThan('md')]: {
+			width: '700px',
+		},
+		[theme.fn.smallerThan('sm')]: {
+			width: '300px',
+		},
 	},
 	avatar: {
 		height: '48px',
@@ -63,7 +63,7 @@ export const UserReview = ({ user, reviewText, verifiedUser }: Props) => {
 					<Text>{dateString}</Text>
 				</Stack>
 			</Group>
-			<Text truncate={showMore} className={classes.textContainer} >{`"${reviewText}"`}</Text>
+			<Text truncate={showMore} className={classes.textContainer}>{`"${reviewText}"`}</Text>
 			{showShowMore ? (
 				<Text
 					td='underline'
