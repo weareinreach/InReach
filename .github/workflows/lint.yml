@@ -9,7 +9,7 @@ jobs:
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
-      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
+      # GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     name: 'Lint & format'
     runs-on: ubuntu-latest
     steps:
@@ -78,8 +78,7 @@ jobs:
         uses: EndBug/add-and-commit@61a88be553afe4206585b31aa72387c64295d08b #v9
         if: always()
         with:
-          message: 'chore: lint & format
-            [actions skip]'
+          message: 'chore: lint & format'
           commit: --signoff --no-verify
           committer_name: InReach Bot
           committer_email: 108850934+InReach-svc@users.noreply.github.com

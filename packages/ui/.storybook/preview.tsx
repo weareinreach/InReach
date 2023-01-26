@@ -1,5 +1,6 @@
 import { MantineProvider } from '@mantine/core'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { Story } from '@storybook/react'
 import { themes } from '@storybook/theming'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 
@@ -46,4 +47,10 @@ const ThemeWrapper = (props: { children: React.ReactNode }) => {
 	)
 }
 
-export const decorators = [(renderStory: Function) => <ThemeWrapper>{renderStory()}</ThemeWrapper>]
+export const decorators = [
+	(Story: Story) => (
+		<ThemeWrapper>
+			<Story />
+		</ThemeWrapper>
+	),
+]
