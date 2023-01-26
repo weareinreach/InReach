@@ -30,7 +30,7 @@ const states = {
 			data: {
 				user: {
 					id: 'clcuqtira000108l25jzp4ybq',
-					role: 'admin',
+					roles: ['admin'],
 					permissions: ['admin', 'user'],
 					name: 'Administrator',
 					email: 'admin@local',
@@ -47,7 +47,7 @@ const states = {
 			data: {
 				user: {
 					id: 'clcuqtira000108l25jzp4ybq',
-					role: 'admin',
+					roles: ['admin'],
 					permissions: ['admin', 'user'],
 					name: 'Administrator',
 					email: 'admin@local',
@@ -63,7 +63,7 @@ const states = {
 			data: {
 				user: {
 					id: 'clcuqtvi0000208l29g307pvd',
-					role: 'user',
+					roles: ['user'],
 					permissions: ['user'],
 					name: faker.name.fullName(),
 					email: 'user@local',
@@ -80,7 +80,7 @@ const states = {
 			data: {
 				user: {
 					id: 'clcuqtvi0000208l29g307pvd',
-					role: 'user',
+					roles: ['user'],
 					permissions: ['user'],
 					name: faker.name.fullName(),
 					email: 'user@local',
@@ -96,12 +96,13 @@ const states = {
 		session: {
 			data: {
 				user: {
-					id: 999,
-					login: 'user',
-					role: 'user',
+					id: 'clcuqtvi0000208l29g307pvd',
+					email: faker.internet.email(),
 					roles: ['user'],
+					permissions: ['user'],
 					name: faker.name.fullName(),
 				},
+				expires: '',
 			},
 			status: 'authenticated',
 		},
@@ -112,7 +113,7 @@ const states = {
 			data: {
 				user: {
 					id: 'clcuqtvi0000208l29g307pvd',
-					role: 'user',
+					roles: ['user'],
 					permissions: ['user'],
 					name: faker.name.fullName(),
 					email: 'user@local',
@@ -128,7 +129,7 @@ const states = {
 			data: {
 				user: {
 					id: 'clcuqtvi0000208l29g307pvd',
-					role: 'user',
+					roles: ['user'],
 					permissions: ['user'],
 					name: faker.name.fullName(),
 					email: 'user@local',

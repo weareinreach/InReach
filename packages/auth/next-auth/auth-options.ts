@@ -18,6 +18,9 @@ export const authOptions: NextAuthOptions = {
 			return session
 		},
 	},
+	session: {
+		strategy: 'jwt',
+	},
 	// Configure one or more authentication providers
 	// adapter: PrismaAdapter(prisma),
 	providers: [cognitoCredentialProvider],

@@ -65,18 +65,18 @@ type AuthResponse = (
 	email: string
 ) => Promise<AuthResult>
 
-export type AuthResult = Success | Failed | Challenge
-interface Success {
+export type AuthResult = AuthSuccess | AuthFailed | AuthChallenge
+export interface AuthSuccess {
 	success: true
 	session: AuthenticationResultType
 	user: User
 }
-interface Failed {
+interface AuthFailed {
 	success: false
 	session: undefined
 	user: undefined
 }
-interface Challenge {
+interface AuthChallenge {
 	success: undefined
 	challengeName: ChallengeNameType
 	challengeParams: Record<string, string>

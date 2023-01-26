@@ -1,3 +1,4 @@
+import { prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
 import { ClientId, cognito, generateHash } from './cognitoClient'
@@ -35,7 +36,17 @@ export const createCognitoUser: CreateCognitoUser = async (data) => {
 			},
 		],
 	})
-	return response.UserSub
+	if (response.UserSub) {
+		await prisma.account.create({
+			data: {
+				provider: 'cognito',
+				providerAccountId: response.UserSub,
+				type: 'credential',
+				userId: databaseId,
+			},
+		})
+		return response.UserSub
+	}
 }
 
 type CreateCognitoUser = (data: CreateCognitoUserParams) => Promise<unknown>
