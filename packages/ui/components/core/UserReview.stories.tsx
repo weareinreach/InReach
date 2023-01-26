@@ -11,58 +11,58 @@ export default {
 	parameters: {
 		design: {
 			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=150%3A6885&t=xfoVF0P9A9vO56xj-0',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=150%3A7027&t=OPIs2wdc5n2td3Nf-4',
 		},
 	},
 } as ComponentMeta<typeof UserReview>
 
 const UserReviewVariant: ComponentStory<typeof UserReview> = (args) => <UserReview {...args} />
 
-export const UserReviewVariantUserFullData = UserReviewVariant.bind({})
-export const UserReviewVariantUserNoDataUnverified = UserReviewVariant.bind({})
-export const UserReviewVariantUserShortReview = UserReviewVariant.bind({})
-export const UserReviewVariantUserUnverified = UserReviewVariant.bind({})
-export const UserReviewVariantUserOnlyName = UserReviewVariant.bind({})
+export const VerifiedWithNameAndPicture = UserReviewVariant.bind({})
+export const VerifiedWithNameOnly = UserReviewVariant.bind({})
+export const UnverifiedAnonymous = UserReviewVariant.bind({})
+export const UnverifiedShortWithNameAndPicture = UserReviewVariant.bind({})
+export const UnverifiedWithNameAndPicture = UserReviewVariant.bind({})
 
-UserReviewVariantUserFullData.args = {
+VerifiedWithNameAndPicture.args = {
 	user: {
-		avatarUrl: faker.image.avatar(),
-		avatarName: faker.name.fullName(),
+		image: faker.image.avatar(),
+		name: faker.name.fullName(),
 	},
 	reviewText: faker.lorem.paragraph(),
 	verifiedUser: true,
 }
 
-UserReviewVariantUserNoDataUnverified.args = {
+UnverifiedAnonymous.args = {
 	user: {
-		avatarUrl: null,
-		avatarName: null,
+		image: null,
+		name: null,
 	},
 	reviewText: faker.lorem.paragraph(),
 	verifiedUser: false,
 }
 
-UserReviewVariantUserShortReview.args = {
+UnverifiedShortWithNameAndPicture.args = {
 	user: {
-		avatarUrl: faker.image.avatar(),
-		avatarName: faker.name.fullName(),
+		image: faker.image.avatar(),
+		name: faker.name.fullName(),
 	},
-	reviewText: faker.lorem.sentence(),
+	reviewText: faker.lorem.sentence(8),
 	verifiedUser: true,
 }
-UserReviewVariantUserUnverified.args = {
+UnverifiedWithNameAndPicture.args = {
 	user: {
-		avatarUrl: faker.image.avatar(),
-		avatarName: faker.name.fullName(),
+		image: faker.image.avatar(),
+		name: faker.name.fullName(),
 	},
 	reviewText: faker.lorem.paragraph(),
 	verifiedUser: false,
 }
 
-UserReviewVariantUserOnlyName.args = {
+VerifiedWithNameOnly.args = {
 	user: {
-		avatarUrl: null,
-		avatarName: faker.name.fullName(),
+		image: null,
+		name: faker.name.fullName(),
 	},
 	reviewText: faker.lorem.paragraph(),
 	verifiedUser: true,

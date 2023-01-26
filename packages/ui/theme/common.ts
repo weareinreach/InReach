@@ -46,17 +46,16 @@ export const commonTheme: MantineThemeOverride = {
 			},
 		},
 	},
-	// globalStyles: (theme) => ({
-	// a: {
-	// 	fontWeight: theme.other.fontWeight.semibold,
-	// 	color: theme.colors.inReachSecondaryRegular[5],
-	// 	textDecoration: 'none',
-	// },
-	// }),
 	components: {
 		ActionIcon: {
 			defaultProps: {
 				color: 'inReachSecondaryRegular.5',
+			},
+		},
+		Avatar: {
+			defaultProps: {
+				size: 48,
+				radius: 'xl',
 			},
 		},
 		Badge: {
@@ -117,6 +116,12 @@ export const commonTheme: MantineThemeOverride = {
 					},
 				} satisfies CustomButtonStyles
 				return merge(baseStyle, buttonVariants(theme, params))
+			},
+		},
+		Text: {
+			defaultProps: {
+				component: 'span',
+				weight: 400,
 			},
 		},
 	},
