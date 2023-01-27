@@ -1,5 +1,7 @@
+import { trpcServerClient } from '@weareinreach/api/trpc'
+import { UserReviewPrompt } from '@weareinreach/ui/components/core'
 import { DateTime } from 'luxon'
-import { NextPage } from 'next'
+import { GetServerSidePropsContext, NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 
 import { api } from '~/utils/api'
@@ -16,7 +18,23 @@ const DataTest: NextPage = () => {
 			<br />
 			<br />
 			{JSON.stringify(api.auth.getSession.useQuery(), null, 2)}
+			<UserReviewPrompt avatarName='' avatarUrl='' submitHandler={y} />
 		</>
 	)
 }
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+	const { req, res } = context
+
+	const ssg = await trpcServerClient()
+
+	await ssg.organization.searchName.prefetch({ search: 'trevor' })
+
+	return {
+		props: {
+			trpcState: ssg.dehydrate(),
+		},
+	}
+}
+
 export default DataTest
