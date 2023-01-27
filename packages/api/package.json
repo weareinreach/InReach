@@ -19,7 +19,7 @@
 		"@trpc/server": "10.9.0",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
-		"cuid": "2.1.8",
+		"cuid": "3.0.0",
 		"just-diff": "5.2.0",
 		"just-intersect": "4.3.0",
 		"just-omit": "2.2.0",
