@@ -64,7 +64,9 @@ export const UserReviewPrompt = ({ avatarUrl, avatarName }: UserProps) => {
 				<Textarea label={t('review-resource')} placeholder={t('enter-review')!} radius='md' />
 				<Text color={theme.other.colors.secondary.darkGray}>{t('review-note')}</Text>
 			</Container>
-			<Button variant='sm-primary' children='Submit' className={classes.button} />
+			<Button variant='sm-primary' className={classes.button}>
+				{t('submit')}
+			</Button>
 		</Stack>
 	)
 }
