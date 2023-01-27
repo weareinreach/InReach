@@ -55,7 +55,7 @@
 		"axios": "1.2.5",
 		"commander": "9.5.0",
 		"countries-languages": "1.0.3",
-		"cuid": "2.1.8",
+		"cuid": "3.0.0",
 		"dotenv": "16.0.3",
 		"dotenv-cli": "7.0.0",
 		"eslint": "8.32.0",
