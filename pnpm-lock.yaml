@@ -392,7 +392,7 @@ importers:
       '@types/node': 16.18.11
       '@vercel/ncc': 0.36.0
       '@weareinreach/config': 0.100.0
-      '@weareinreach/db': workspace:0.100.0
+      '@weareinreach/db': 0.100.0
       '@weareinreach/eslint-config': 0.100.0
       aws-lambda: 1.0.7
       eslint: 8.32.0
