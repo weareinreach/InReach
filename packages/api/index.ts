@@ -1,5 +1,12 @@
-export type { AppRouter } from './src/router'
-export { appRouter } from './src/router'
+import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 
-export { createContext } from './src/context'
-export type { Context } from './src/context'
+import { type AppRouter } from './router'
+
+export type { AppRouter } from './router'
+export { appRouter } from './router'
+
+export { createContext } from './lib/context'
+export type { Context } from './lib/context'
+
+export type ApiInput = inferRouterInputs<AppRouter>
+export type ApiOutput = inferRouterOutputs<AppRouter>

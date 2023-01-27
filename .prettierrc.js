@@ -5,6 +5,7 @@
  * @constraint {{import('@types/prettier').RequiredOptions}}
  */
 
+/** @type {import('@types/prettier').RequiredOptions} */
 const config = {
 	plugins: ['prettier-plugin-packagejson', 'prettier-plugin-jsdoc', 'prettier-plugin-prisma'],
 	printWidth: 110,

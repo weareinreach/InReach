@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable node/no-process-env */
 import { PrismaClient } from '@prisma/client'
 
 declare global {

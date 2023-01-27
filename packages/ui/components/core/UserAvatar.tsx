@@ -1,6 +1,5 @@
 import { Avatar, Group, Skeleton, Stack, Text, createStyles } from '@mantine/core'
 import { DateTime } from 'luxon'
-import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 

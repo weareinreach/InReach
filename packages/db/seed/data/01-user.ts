@@ -3,7 +3,7 @@ import invariant from 'tiny-invariant'
 
 import { namespaces } from './00-namespaces'
 
-import { Prisma } from '~/client'
+import { Prisma, Prisma } from '~/client'
 
 export const userEmail = 'inreach_svc@inreach.org'
 export const localeCode = 'en'

@@ -15,5 +15,6 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"isolatedModules": false
-	}
+	},
+	"exclude": ["dist", "node_modules"]
 }
