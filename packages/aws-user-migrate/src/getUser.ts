@@ -1,5 +1,5 @@
-import { prisma } from '@weareinreach/db'
-import { Prisma, type User } from '@weareinreach/db'
+import { prisma, Prisma, type User } from './client'
+import { logger } from './logger'
 
 type GetUser = (email: string) => Promise<User>
 
@@ -12,7 +12,7 @@ export const getUser: GetUser = async (email) => {
 		})
 	} catch (error) {
 		if (error instanceof Prisma.NotFoundError) {
-			console.error(`User not found`)
+			logger.error(`User not found: ${email}`)
 			throw new Error(`User not found`)
 		}
 		throw error

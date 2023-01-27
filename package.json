@@ -27,12 +27,10 @@
 	},
 	"dependencies": {
 		"@changesets/cli": "2.26.0",
-		"@manypkg/cli": "0.19.2",
-		"@next/eslint-plugin-next": "13.1.5",
+		"@manypkg/cli": "0.20.0",
 		"@types/eslint": "8.4.10",
 		"@types/node": "16.18.11",
 		"@types/prettier": "2.7.2",
-		"@typescript-eslint/eslint-plugin": "5.48.2",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"boxen": "7.0.1",
@@ -41,12 +39,12 @@
 		"prettier": "2.8.3",
 		"prettier-plugin-jsdoc": "0.4.2",
 		"prettier-plugin-packagejson": "2.4.0",
-		"prettier-plugin-prisma": "4.8.0",
+		"prettier-plugin-prisma": "4.9.0",
 		"tsx": "3.12.2",
 		"turbo": "1.7.0",
 		"typescript": "4.9.4"
 	},
-	"packageManager": "pnpm@7.25.1",
+	"packageManager": "pnpm@7.26.0",
 	"engines": {
 		"node": ">=16.18.0",
 		"pnpm": ">=7"
@@ -57,9 +55,7 @@
 			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
 			"@storybook/react-docgen-typescript-plugin@1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0": "npm:react-docgen-typescript-plugin@1.0.2",
 			"chokidar": ">=3.0.0",
-			"cli-truncate@<3": ">=3.1.0",
 			"glob-parent@<5.1.2": ">=5.1.2",
-			"got@<11.8.5": ">=11.8.5",
 			"listr2@<5": ">=5.0.5",
 			"micromatch": ">=4.0.0",
 			"node-fetch@<2.6.7": ">=2.6.7",
@@ -73,8 +69,7 @@
 		},
 		"patchedDependencies": {
 			"eslint-plugin-node@11.1.0": "patches/eslint-plugin-node@11.1.0.patch",
-			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch",
-			"zod-prisma@0.5.4": "patches/zod-prisma@0.5.4.patch"
+			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch"
 		},
 		"peerDependencyRules": {
 			"allowedVersions": {

@@ -11,6 +11,7 @@ const config: StorybookConfig = {
 	addons: [
 		'@geometricpanda/storybook-addon-badges',
 		'@storybook/addon-a11y',
+		'@storybook/addon-actions',
 		'@storybook/addon-console',
 		'@storybook/addon-essentials',
 		'@storybook/addon-interactions',
@@ -19,6 +20,7 @@ const config: StorybookConfig = {
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
 		'storybook-addon-next',
+		'storybook-addon-pseudo-states',
 		'storybook-addon-swc',
 		'storybook-dark-mode',
 		'storybook-mobile',
@@ -33,7 +35,7 @@ const config: StorybookConfig = {
 		buildStoriesJson: true,
 	},
 	typescript: {
-		check: false,
+		check: true,
 		checkOptions: {},
 		reactDocgen: 'react-docgen-typescript',
 		reactDocgenTypescriptOptions: {

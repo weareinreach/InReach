@@ -1,10 +1,13 @@
-import { MantineProvider } from '@mantine/core'
+import { MantineProvider, TypographyStylesProvider, MantineProviderProps } from '@mantine/core'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { Story } from '@storybook/react'
 import { themes } from '@storybook/theming'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
+import { ReactNode } from 'react'
 
 import { i18n, i18nLocales } from './i18next'
 import { storybookTheme } from '../theme'
+
 import './font.css'
 
 export const parameters = {
@@ -20,7 +23,6 @@ export const parameters = {
 		Provider: RouterContext.Provider,
 	},
 	darkMode: {
-		current: 'light',
 		dark: { ...themes.dark },
 		light: { ...themes.light },
 	},
@@ -32,7 +34,7 @@ export const parameters = {
 	},
 }
 
-const mantineProviderProps = {
+const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
 	withCSSVariables: false,
 	withGlobalStyles: true,
 	withNormalizeCSS: false,
@@ -41,9 +43,15 @@ const mantineProviderProps = {
 const ThemeWrapper = (props: { children: React.ReactNode }) => {
 	return (
 		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
-			{props.children}
+			<TypographyStylesProvider>{props.children}</TypographyStylesProvider>
 		</MantineProvider>
 	)
 }
 
-export const decorators = [(renderStory: Function) => <ThemeWrapper>{renderStory()}</ThemeWrapper>]
+export const decorators = [
+	(Story: Story) => (
+		<ThemeWrapper>
+			<Story />
+		</ThemeWrapper>
+	),
+]

@@ -11,5 +11,6 @@ export * from './Rating'
 export * from './SocialMediaIconButton'
 export * from './UserAvatar'
 export * from './UserReviewPrompt'
+export * from './UserReview'
 export * from './VerifiedBadge'
 // codegen:end

@@ -42,9 +42,6 @@ export type OutData = {
 	serviceArea: Set<Prisma.ServiceAreaCreateManyInput>
 	serviceAreaCountry: Set<Prisma.ServiceAreaCountryCreateManyInput>
 	serviceAreaDist: Set<Prisma.ServiceAreaDistCreateManyInput>
-	organizationAttributeSupplement: Set<Prisma.OrganizationAttributeSupplementCreateManyInput>
-	serviceAttributeSupplement: Set<Prisma.ServiceAttributeSupplementCreateManyInput>
-	serviceAccessAttributeSupplement: Set<Prisma.ServiceAccessAttributeSupplementCreateManyInput>
 	userToOrganization: Set<Prisma.UserToOrganizationCreateManyInput>
 	userPermission: Set<Prisma.UserPermissionCreateManyInput>
 	organizationPermission: Set<Prisma.OrganizationPermissionCreateManyInput>
@@ -87,11 +84,8 @@ export const data: OutData = {
 	orgLocationService: new Set(),
 	orgServiceTag: new Set(),
 	organizationAttribute: new Set(),
-	organizationAttributeSupplement: new Set(),
 	serviceAttribute: new Set(),
-	serviceAttributeSupplement: new Set(),
 	serviceAccessAttribute: new Set(),
-	serviceAccessAttributeSupplement: new Set(),
 	userToOrganization: new Set(),
 	userPermission: new Set(),
 	organizationPermission: new Set(),
@@ -123,11 +117,8 @@ export const batchNameMap = new Map<BatchNames, string>([
 	['orgLocationService', 'Service -> Location links'],
 	['orgServiceTag', 'Tag -> Service links'],
 	['organizationAttribute', 'Attribute -> Organization links'],
-	['organizationAttributeSupplement', 'Supplement -> Attribute (Organization) links'],
 	['serviceAttribute', 'Attribute -> Service links'],
-	['serviceAttributeSupplement', 'Supplement -> Attribute (Service) links'],
 	['serviceAccessAttribute', 'Attribute -> Service Access links'],
-	['serviceAccessAttributeSupplement', 'Supplement -> Attribute (Service Access) links'],
 	['userToOrganization', 'User -> Organization links'],
 	['userPermission', 'Permission -> User links'],
 	['organizationPermission', 'User Permission -> Organization links'],
