@@ -10,5 +10,6 @@ export * from './MobileNav'
 export * from './Rating'
 export * from './SocialMediaIconButton'
 export * from './UserAvatar'
+export * from './UserReview'
 export * from './VerifiedBadge'
 // codegen:end
