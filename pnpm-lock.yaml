@@ -591,6 +591,7 @@ importers:
       '@mantine/spotlight': 5.10.1
       '@mantine/tiptap': 5.10.1
       '@next/font': 13.1.5
+      '@paralleldrive/cuid2': 2.0.1
       '@storybook/addon-a11y': 6.5.15
       '@storybook/addon-actions': 6.5.15
       '@storybook/addon-console': 1.2.3
@@ -678,6 +679,7 @@ importers:
       '@mantine/spotlight': 5.10.1_ynz4r3bmi75slbqnmaycv7w7wa
       '@mantine/tiptap': 5.10.1_r7tsqi45xrasbds2iau5vedzdy
       '@next/font': 13.1.5
+      '@paralleldrive/cuid2': 2.0.1
       '@storybook/addon-a11y': 6.5.15_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-actions': 6.5.15_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-console': 1.2.3_bmaq7chsqyvprxzjxdxy46j4tm
@@ -5318,6 +5320,10 @@ packages:
     requiresBuild: true
     optional: true
 
+  /@noble/hashes/1.1.5:
+    resolution: {integrity: sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ==}
+    dev: true
+
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -5529,6 +5535,12 @@ packages:
 
   /@panva/hkdf/1.0.2:
     resolution: {integrity: sha512-MSAs9t3Go7GUkMhpKC44T58DJ5KGk2vBo+h1cqQeqlMfdGkxaVB78ZWpv9gYi/g2fa4sopag9gJsNvS8XGgWJA==}
+
+  /@paralleldrive/cuid2/2.0.1:
+    resolution: {integrity: sha512-fi9nN5kCPGv9pcKQjk9g3riSTVcwR5TCFAGPUStbR61b1nXZ07GvxeoyStELKsJDCji1lwuUiUwLtagNTBllQA==}
+    dependencies:
+      '@noble/hashes': 1.1.5
+    dev: true
 
   /@pkgr/utils/2.3.1:
     resolution: {integrity: sha512-wfzX8kc1PMyUILA+1Z/EqoE4UCXGy0iRGMhPwdfae1+f0OXlLqCk+By+aMzgJBzR9AzS4CDizioG6Ss1gvAFJw==}
