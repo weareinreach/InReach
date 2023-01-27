@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unused-modules
-import { DefaultSession } from 'next-auth'
+import { DefaultSession, DefaultUser } from 'next-auth'
 
 /**
  * Module augmentation for `next-auth` types Allows us to add custom properties to the `session` object and
@@ -9,9 +9,13 @@ import { DefaultSession } from 'next-auth'
  */
 
 declare module 'next-auth' {
-	interface Session extends DefaultSession {
-		user: {
-			id: string
-		} & DefaultSession['user']
+	export interface Session extends DefaultSession {
+		user: User
+	}
+	export interface User extends DefaultUser {
+		id: string
+		roles: string[]
+		permissions: string[]
+		email: string
 	}
 }
