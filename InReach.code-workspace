@@ -1,4 +1,26 @@
 {
+	"extensions": {
+		"recommendations": [
+			"alexkrechik.cucumberautocomplete",
+			"bierner.jsdoc-markdown-highlighting",
+			"bierner.markdown-yaml-preamble",
+			"dbaeumer.vscode-eslint",
+			"dsznajder.es7-react-js-snippets",
+			"editorconfig.editorconfig",
+			"eliostruyf.vscode-typescript-exportallmodules",
+			"esbenp.prettier-vscode",
+			"lokalise.i18n-ally",
+			"mattpocock.ts-error-translator",
+			"melmass.vscode-mono-workspace",
+			"mintlify.document",
+			"ms-playwright.playwright",
+			"ms-vsliveshare.vsliveshare",
+			"prisma.prisma",
+			"riccardoforina.storybook-helper",
+			"unifiedjs.vscode-mdx",
+			"yzhang.markdown-all-in-one"
+		]
+	},
 	"folders": [
 		{
 			"name": "🚀 InReach App (@weareinreach/app)",
@@ -58,10 +80,77 @@
 		}
 	],
 	"settings": {
-		"tms.stringsCompletionFileExtensions": "ts,tsx,json",
+		"[javascript]": {
+			"editor.autoClosingBrackets": "languageDefined",
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[javascriptreact]": {
+			"editor.autoClosingBrackets": "languageDefined",
+			"editor.autoClosingOvertype": "always",
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[json]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[jsonc]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[prisma]": {
+			"editor.defaultFormatter": "Prisma.prisma",
+			"editor.formatOnSave": true,
+			"editor.formatOnSaveMode": "file"
+		},
+		"[typescript]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[typescriptreact]": {
+			"editor.autoClosingBrackets": "languageDefined",
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[yaml]": {
+			"editor.defaultFormatter": "redhat.vscode-yaml",
+			"editor.detectIndentation": true,
+			"editor.formatOnPaste": true,
+			"editor.formatOnSave": true,
+			"editor.formatOnType": true,
+			"editor.insertSpaces": true
+		},
+		"debug.javascript.terminalOptions": {
+			"skipFiles": ["<node_internals>/**/*", "**/node_modules/**/*@babel*/*"]
+		},
+		"editor.codeActionsOnSave": {
+			"source.fixAll": true
+		},
+		"editor.formatOnSave": true,
+		"editor.tabSize": 2,
+		"eslint.alwaysShowStatus": true,
+		"eslint.lintTask.enable": true,
+		"eslint.packageManager": "pnpm",
+		"eslint.rules.customizations": [
+			{
+				"rule": "import/order",
+				"severity": "off"
+			},
+			{
+				"rule": "import/newline-after-import",
+				"severity": "off"
+			}
+		],
+		"eslint.runtime": "node",
+		"eslint.useESLintClass": true,
+		"explorer.decorations.badges": true,
+		"explorer.expandSingleFolderWorkspaces": false,
+		"explorer.fileNesting.enabled": true,
+		"explorer.fileNesting.expand": false,
+		"explorer.fileNesting.patterns": {
+			"*.tsx": "${capture}.ts, ${capture}.stories.tsx",
+			"*eslintrc.js": ".eslintignore"
+		},
 		"files.exclude": {
 			".next/": true,
 			".turbo/": true,
+			"*.eslintcache": true,
+			"*.tsbuildinfo": true,
 			"**/.DS_Store": true,
 			"**/.git": true,
 			"**/Thumbs.db": true,
@@ -73,22 +162,34 @@
 			"patches/": true,
 			"storybook-static/": true
 		},
+		"files.watcherExclude": {
+			"**/.next/**": true,
+			"**/.vercel/output/**": true,
+			"**/dist/**": true,
+			"**/storybook-static/**": true
+		},
 		"i18n-ally.annotationInPlace": false,
+		"i18n-ally.defaultNamespace": "common",
 		"i18n-ally.displayLanguage": "en",
 		"i18n-ally.enabledParsers": ["js", "json", "ts"],
-		"i18n-ally.ignoredLocales": ["!en"],
 		"i18n-ally.extract.autoDetect": true,
 		"i18n-ally.extract.ignored": [
 			"1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]}",
 			"${theme.spacing.md}px ${theme.spacing.md}px",
 			"0 ${theme.spacing.sm}px"
 		],
+		"i18n-ally.extract.ignoredByFiles": {
+			"../../packages/ui/.storybook/i18next.ts": ["*"],
+			"**/packages/db/**/*.ts": ["*"]
+		},
 		"i18n-ally.extract.keygenStrategy": "slug",
 		"i18n-ally.extract.keygenStyle": "kebab-case",
 		"i18n-ally.extract.keyMaxLength": 150,
 		"i18n-ally.extract.targetPickingStrategy": "most-similar",
 		"i18n-ally.fullReloadOnChanged": true,
+		"i18n-ally.ignoredLocales": ["!en"],
 		"i18n-ally.keystyle": "nested",
+		"i18n-ally.localesPaths": ["public/locales"],
 		"i18n-ally.namespace": true,
 		"i18n-ally.pathMatcher": "{locale}/{namespace}.json",
 		"i18n-ally.review.enabled": false,
@@ -97,63 +198,15 @@
 		"i18n-ally.sortKeys": true,
 		"i18n-ally.sourceLanguage": "en",
 		"i18n-ally.tabStyle": "tab",
+		"json.format.enable": true,
+		"json.validate.enable": true,
 		"markdownlint.config": {
 			"MD033": false
 		},
-		"prettier.resolveGlobalModules": true,
-		"typescript.preferences.importModuleSpecifier": "non-relative",
+		"prettier.resolveGlobalModules": false,
+		"tms.stringsCompletionFileExtensions": "ts,tsx,json",
+		"typescript.preferences.importModuleSpecifier": "shortest",
 		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
-		"typescript.workspaceSymbols.scope": "allOpenProjects",
-		"i18n-ally.defaultNamespace": "common",
-		"i18n-ally.extract.ignoredByFiles": {
-			"**/packages/db/**/*.ts": ["*"],
-			"../../packages/ui/.storybook/i18next.ts": ["*"]
-		},
-
-		"files.watcherExclude": {
-			"**/.next/**": true,
-			"**/storybook-static/**": true,
-			"**/.vercel/output/**": true
-		},
-		"explorer.decorations.badges": true,
-		"explorer.expandSingleFolderWorkspaces": false,
-		"explorer.fileNesting.enabled": true,
-		"explorer.fileNesting.expand": false,
-		"explorer.fileNesting.patterns": {
-			"*.tsx": "${capture}.ts, ${capture}.stories.tsx"
-		},
-		"i18n-ally.localesPaths": ["public/locales"],
-		"eslint.rules.customizations": [
-			{
-				"rule": "import/order",
-				"severity": "off"
-			},
-			{
-				"rule": "import/newline-after-import",
-				"severity": "off"
-			}
-		]
-	},
-	"extensions": {
-		"recommendations": [
-			"alexkrechik.cucumberautocomplete",
-			"bierner.jsdoc-markdown-highlighting",
-			"bierner.markdown-yaml-preamble",
-			"dbaeumer.vscode-eslint",
-			"dsznajder.es7-react-js-snippets",
-			"editorconfig.editorconfig",
-			"eliostruyf.vscode-typescript-exportallmodules",
-			"esbenp.prettier-vscode",
-			"lokalise.i18n-ally",
-			"mattpocock.ts-error-translator",
-			"melmass.vscode-mono-workspace",
-			"mintlify.document",
-			"ms-playwright.playwright",
-			"ms-vsliveshare.vsliveshare",
-			"prisma.prisma",
-			"riccardoforina.storybook-helper",
-			"unifiedjs.vscode-mdx",
-			"yzhang.markdown-all-in-one"
-		]
+		"typescript.workspaceSymbols.scope": "allOpenProjects"
 	}
 }

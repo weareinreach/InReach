@@ -59,3 +59,5 @@ test/cypress/fixtures/temp/example-1.json
 # Generated files (except folder placeholder)
 _generated/*
 !_generated/.gitkeep
+
+.serverless

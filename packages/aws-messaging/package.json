@@ -19,6 +19,7 @@
 		"package": "cd dist && zip -r bundle.zip *"
 	},
 	"dependencies": {
+		"@aws-lambda-powertools/logger": "1.5.1",
 		"aws-sdk": "2.1299.0"
 	},
 	"devDependencies": {
