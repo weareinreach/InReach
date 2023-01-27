@@ -52,7 +52,7 @@
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"@zerodep/geo.stateiso": "0.1.4",
-		"axios": "1.2.3",
+		"axios": "1.2.5",
 		"commander": "9.5.0",
 		"countries-languages": "1.0.3",
 		"cuid": "2.1.8",
@@ -70,7 +70,7 @@
 		"mongoback": "3.0.3",
 		"prisma": "4.9.0",
 		"prisma-dbml-generator": "0.10.0",
-		"quicktype-core": "21.0.2",
+		"quicktype-core": "21.0.4",
 		"recursive-readdir": "2.2.3",
 		"shoetest": "1.2.2",
 		"slugify": "1.6.5",
@@ -79,7 +79,7 @@
 		"tsx": "3.12.2",
 		"type-fest": "3.5.3",
 		"typescript": "4.9.4",
-		"zod-prisma-types": "1.6.7"
+		"zod-prisma-types": "1.6.8"
 	},
 	"prisma": {
 		"seed": "tsx ./seed/starterData.ts"
