@@ -40,5 +40,5 @@
 		"prisma": "4.9.0",
 		"typescript": "4.9.4"
 	},
-	"packageManager": "pnpm@7.25.1"
+	"packageManager": "pnpm@7.26.0"
 }
