@@ -1,4 +1,3 @@
-import { Center } from '@mantine/core'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 
@@ -10,7 +9,7 @@ export default {
 	parameters: {
 		design: {
 			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=70%3A2310&t=uf3ycT7Eq8Rtc9FZ-0',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=368%3A6934&t=OPIs2wdc5n2td3Nf-4',
 		},
 	},
 } as ComponentMeta<typeof AntiHateMessageCompnent>

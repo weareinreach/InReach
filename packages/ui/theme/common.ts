@@ -1,4 +1,4 @@
-import { BadgeStylesParams, ButtonStylesParams, MantineThemeOverride } from '@mantine/core'
+import { BadgeStylesParams, ButtonStylesParams, MantineThemeOverride, TextStylesParams } from '@mantine/core'
 import { merge } from 'merge-anything'
 
 import { customColors } from './colors'
@@ -9,6 +9,21 @@ export const commonTheme: MantineThemeOverride = {
 	colors: { ...customColors },
 	primaryColor: 'inReachPrimaryRegular',
 	primaryShade: 5,
+	fontFamily:
+		'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+	headings: {
+		fontFamily:
+			'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+		fontWeight: 500,
+		sizes: {
+			h1: { fontSize: 40, lineHeight: 1.25, fontWeight: undefined },
+			h2: { fontSize: 24, lineHeight: 1.25, fontWeight: undefined },
+			h3: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
+			h4: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
+			h5: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
+			h6: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
+		},
+	},
 	other: {
 		/** Font weights per InReach style guide */
 		fontWeight: {
@@ -17,7 +32,7 @@ export const commonTheme: MantineThemeOverride = {
 			bold: 600,
 		},
 		border: {
-			default: '1px solid',
+			default: '1px solid #d9d9d9',
 		},
 		colors: {
 			primary: {
@@ -46,17 +61,16 @@ export const commonTheme: MantineThemeOverride = {
 			},
 		},
 	},
-	// globalStyles: (theme) => ({
-	// a: {
-	// 	fontWeight: theme.other.fontWeight.semibold,
-	// 	color: theme.colors.inReachSecondaryRegular[5],
-	// 	textDecoration: 'none',
-	// },
-	// }),
 	components: {
 		ActionIcon: {
 			defaultProps: {
 				color: 'inReachSecondaryRegular.5',
+			},
+		},
+		Avatar: {
+			defaultProps: {
+				size: 48,
+				radius: 'xl',
 			},
 		},
 		Badge: {
@@ -119,6 +133,24 @@ export const commonTheme: MantineThemeOverride = {
 				return merge(baseStyle, buttonVariants(theme, params))
 			},
 		},
+		Text: {
+			defaultProps: {
+				component: 'span',
+				weight: 400,
+			},
+			styles: {
+				root: {
+					lineHeight: 1.5,
+				},
+			},
+		},
+		Title: {
+			styles: {
+				root: {
+					marginTop: 0,
+				},
+			},
+		},
 	},
 }
 
@@ -133,7 +165,7 @@ declare module '@mantine/core' {
 			bold: 600
 		}
 		border: {
-			default: '1px solid'
+			default: '1px solid #d9d9d9'
 		}
 		colors: {
 			primary: {
