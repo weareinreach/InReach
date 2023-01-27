@@ -5,6 +5,7 @@ import { MantineProvider, TypographyStylesProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { NotificationsProvider } from '@mantine/notifications'
 import { Work_Sans } from '@next/font/google'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AppLayout } from '@weareinreach/ui/layout'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 import { type AppProps } from 'next/app'
@@ -14,7 +15,7 @@ import { appWithTranslation } from 'next-i18next'
 
 import { default as navItems } from '~/data/nav.json'
 import { default as socialMediaLinks } from '~/data/socialMedia.json'
-import { trpc } from '~/utils/trpc'
+import { api } from '~/utils/api'
 
 const fontWorkSans = Work_Sans({ subsets: ['latin'] })
 
@@ -45,4 +46,4 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 	)
 }
 
-export default trpc.withTRPC(appWithTranslation(MyApp))
+export default api.withTRPC(appWithTranslation(MyApp))

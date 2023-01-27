@@ -7,7 +7,7 @@ import { Nav, type NavItem } from '../components/layout/Nav'
 export const AppLayout = ({ children, navItems, footerLinks, socialMedia }: Props) => {
 	return (
 		<AppShell
-			header={<Nav navItems={navItems} />}
+			// header={<Nav navItems={navItems} />}
 			footer={<FooterSection links={footerLinks} socialMedia={socialMedia} />}
 		>
 			{children}

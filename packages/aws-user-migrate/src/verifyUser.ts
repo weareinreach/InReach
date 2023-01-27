@@ -1,8 +1,11 @@
-import { Prisma, prisma } from '@weareinreach/db'
-
 import crypto from 'crypto'
 
-type VerifyUser = (email: string, password: string) => Promise<boolean>
+import { Prisma, prisma } from './client'
+import { logger } from './logger'
+
+type VerifyUser = (email: string, password: string) => Promise<VerifyUserReturn>
+
+type VerifyUserReturn = { valid: true; id: string } | { valid: false }
 
 export const verifyUser: VerifyUser = async (email, password) => {
 	try {
@@ -10,26 +13,37 @@ export const verifyUser: VerifyUser = async (email, password) => {
 			where: {
 				email: email,
 			},
+			select: {
+				id: true,
+				email: true,
+				legacySalt: true,
+				legacyHash: true,
+			},
 		})
-
-		if (typeof userProfile.legacySalt !== 'string') {
-			console.error(`No legacySalt for ${email}`)
+		if (userProfile.legacySalt === null) {
+			logger.error(`No legacySalt for ${email}`)
 			throw new Error(`No legacySalt for ${email}`)
 		}
-
+		if (userProfile.legacyHash === null) {
+			logger.error(`No legacyHash for ${email}`)
+			throw new Error(`No legacyHash for ${email}`)
+		}
 		const hash = crypto.pbkdf2Sync(password, userProfile.legacySalt, 10000, 512, 'sha512').toString('hex')
 
 		if (hash === userProfile.legacyHash) {
-			console.log(`User verified: ${email}`)
-			return true
+			logger.info(`User verified: ${email}`)
+			return { valid: true, id: userProfile.id }
 		}
-		return false
+		return { valid: false }
 	} catch (error) {
 		if (error instanceof Prisma.NotFoundError) {
-			console.error(`User not found: ${email}`)
+			logger.error(`User not found: ${email}`)
 			throw new Error(`User not found: ${email}`)
 		}
-		console.error(error)
+		if (error instanceof Error) {
+			logger.error({ message: error.message }, { name: error.name, stack: error.stack })
+			throw error
+		}
 		throw error
 	}
 }

@@ -15,19 +15,16 @@ import {
 	OrgWebsite,
 	OrgWebsiteLanguage,
 	OrganizationAttribute,
-	OrganizationAttributeSupplement,
 	OrganizationPermission,
 	OutsideAPI,
 	Prisma,
 	PrismaPromise,
 	ServiceAccess,
 	ServiceAccessAttribute,
-	ServiceAccessAttributeSupplement,
 	ServiceArea,
 	ServiceAreaCountry,
 	ServiceAreaDist,
 	ServiceAttribute,
-	ServiceAttributeSupplement,
 	TranslationKey,
 	UserPermission,
 	UserToOrganization,
@@ -62,12 +59,6 @@ export const migrateClient: MigrationClient = {
 	serviceArea: (client, data) => client.serviceArea.createMany({ data, ...clientopt }),
 	serviceAreaCountry: (client, data) => client.serviceAreaCountry.createMany({ data, ...clientopt }),
 	serviceAreaDist: (client, data) => client.serviceAreaDist.createMany({ data, ...clientopt }),
-	organizationAttributeSupplement: (client, data) =>
-		client.organizationAttributeSupplement.createMany({ data, ...clientopt }),
-	serviceAttributeSupplement: (client, data) =>
-		client.serviceAttributeSupplement.createMany({ data, ...clientopt }),
-	serviceAccessAttributeSupplement: (client, data) =>
-		client.serviceAccessAttributeSupplement.createMany({ data, ...clientopt }),
 	userToOrganization: (client, data) => client.userToOrganization.createMany({ data, ...clientopt }),
 	userPermission: (client, data) => client.userPermission.createMany({ data, ...clientopt }),
 	organizationPermission: (client, data) => client.organizationPermission.createMany({ data, ...clientopt }),
@@ -98,9 +89,6 @@ export const queryClient: QueryClient = {
 	serviceArea: (client, args) => client.serviceArea.findMany(args),
 	serviceAreaCountry: (client, args) => client.serviceAreaCountry.findMany(args),
 	serviceAreaDist: (client, args) => client.serviceAreaDist.findMany(args),
-	organizationAttributeSupplement: (client, args) => client.organizationAttributeSupplement.findMany(args),
-	serviceAttributeSupplement: (client, args) => client.serviceAttributeSupplement.findMany(args),
-	serviceAccessAttributeSupplement: (client, args) => client.serviceAccessAttributeSupplement.findMany(args),
 	userToOrganization: (client, args) => client.userToOrganization.findMany(args),
 	userPermission: (client, args) => client.userPermission.findMany(args),
 	organizationPermission: (client, args) => client.organizationPermission.findMany(args),
@@ -154,9 +142,6 @@ type PrismaSchemas = {
 	serviceArea: ServiceArea
 	serviceAreaCountry: ServiceAreaCountry
 	serviceAreaDist: ServiceAreaDist
-	organizationAttributeSupplement: OrganizationAttributeSupplement
-	serviceAttributeSupplement: ServiceAttributeSupplement
-	serviceAccessAttributeSupplement: ServiceAccessAttributeSupplement
 	userToOrganization: UserToOrganization
 	userPermission: UserPermission
 	organizationPermission: OrganizationPermission

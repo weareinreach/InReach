@@ -20,6 +20,7 @@ const config: StorybookConfig = {
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
 		'storybook-addon-next',
+		'storybook-addon-pseudo-states',
 		'storybook-addon-swc',
 		'storybook-dark-mode',
 		'storybook-mobile',
@@ -34,7 +35,7 @@ const config: StorybookConfig = {
 		buildStoriesJson: true,
 	},
 	typescript: {
-		check: false,
+		check: true,
 		checkOptions: {},
 		reactDocgen: 'react-docgen-typescript',
 		reactDocgenTypescriptOptions: {
