@@ -52,7 +52,7 @@ export const MobileNav = () => {
 	const router = useRouter()
 
 	const tabs = Object.entries(navItems).map(([key, item]) => (
-		<Tabs.Tab key={key} value={key} icon={<Icon icon={item.icon} />}>
+		<Tabs.Tab key={key} value={key} icon={<Icon icon={item.icon} height={16} />}>
 			{t(item.labelKey)}
 		</Tabs.Tab>
 	))

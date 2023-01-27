@@ -1,7 +1,8 @@
 import { addCollection } from '@iconify/react'
 import { getIcons } from '@iconify/utils'
-import { icons as carbonIcons } from '@iconify-json/carbon'
-import { icons as simpleIcons } from '@iconify-json/simple-icons'
+
+const { icons: carbonIcons } = require('@iconify-json/carbon')
+const { icons: simpleIcons } = require('@iconify-json/simple-icons')
 
 /**
  * Create icon collection
