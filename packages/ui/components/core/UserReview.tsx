@@ -93,42 +93,40 @@ export const UserReview = ({ user, reviewText, verifiedUser }: Props) => {
 	}
 
 	return (
-		<TypographyStylesProvider>
-			<Stack className={classes.textContainer} spacing='xs'>
-				<Group>
-					<Avatar src={user?.image} alt={user?.name ?? (t('user-avatar') as string)}>
-						<Icon icon='carbon:user' className={classes.placeholderIcon} />
-					</Avatar>
-					<Stack align='flex-start' justify='center' spacing={1}>
-						<Text weight={theme.other.fontWeight.semibold} span>
-							{user.name ?? t('in-reach-user')}
-						</Text>
-						<Text color={theme.other.colors.secondary.darkGray}>{dateString}</Text>
-					</Stack>
-				</Group>
-				<Text
-					ref={reviewTextRef}
-					className={classes.textContainer}
-					component='p'
-					truncate={showMore}
-				>{`"${reviewText}"`}</Text>
-				<Text
-					td='underline'
-					sx={!showMoreLink ? { display: 'none' } : undefined}
-					className={classes.showMore}
-					weight={theme.other.fontWeight.semibold}
-					onClick={() => {
-						setShowMore(!showMore)
-					}}
-				>
-					{showMoreText}
-				</Text>
-				<Group sx={!verifiedUser ? { display: 'none' } : undefined}>
-					<Icon icon='carbon:checkmark-filled' color={theme.other.colors.primary.allyGreen} />
-					<Text>{t('in-reach-verified-reviewer')}</Text>
-				</Group>
-			</Stack>
-		</TypographyStylesProvider>
+		<Stack className={classes.textContainer} spacing='xs'>
+			<Group>
+				<Avatar src={user?.image} alt={user?.name ?? (t('user-avatar') as string)}>
+					<Icon icon='carbon:user' className={classes.placeholderIcon} />
+				</Avatar>
+				<Stack align='flex-start' justify='center' spacing={1}>
+					<Text weight={theme.other.fontWeight.semibold} span>
+						{user.name ?? t('in-reach-user')}
+					</Text>
+					<Text color={theme.other.colors.secondary.darkGray}>{dateString}</Text>
+				</Stack>
+			</Group>
+			<Text
+				ref={reviewTextRef}
+				className={classes.textContainer}
+				component='p'
+				truncate={showMore}
+			>{`"${reviewText}"`}</Text>
+			<Text
+				td='underline'
+				sx={!showMoreLink ? { display: 'none' } : undefined}
+				className={classes.showMore}
+				weight={theme.other.fontWeight.semibold}
+				onClick={() => {
+					setShowMore(!showMore)
+				}}
+			>
+				{showMoreText}
+			</Text>
+			<Group sx={!verifiedUser ? { display: 'none' } : undefined}>
+				<Icon icon='carbon:checkmark-filled' color={theme.other.colors.primary.allyGreen} />
+				<Text>{t('in-reach-verified-reviewer')}</Text>
+			</Group>
+		</Stack>
 	)
 }
 

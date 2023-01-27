@@ -1,17 +1,16 @@
-import { Card, Text, createStyles } from '@mantine/core'
+import { Card, Text, createStyles, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 const useStyles = createStyles((theme) => ({
-	card: {
-		width: '300px',
+	text: {
+		color: theme.other.colors.secondary.darkGray,
+		marginBottom: 0,
+		marginBlockEnd: 0,
 	},
 	title: {
-		fontWeight: theme.other.fontWeight.bold,
-		textAlign: 'left',
-		paddingBottom: theme.spacing.xs,
-	},
-	text: {
-		fontWeight: theme.other.fontWeight.regular,
+		'&h3': {
+			marginTop: '0',
+		},
 	},
 }))
 
@@ -20,9 +19,13 @@ export const AntiHateMessage = () => {
 	const { t } = useTranslation()
 
 	return (
-		<Card className={classes.card} radius='lg' withBorder>
-			<Text className={classes.title}>{t('anti-hate-title')}</Text>
-			<Text className={classes.text}>{t('anti-hate-text')}</Text>
+		<Card radius='lg' withBorder p={20} w={300}>
+			<Title order={3} className={classes.title}>
+				{t('anti-hate-title')}
+			</Title>
+			<Text className={classes.text} component='p'>
+				{t('anti-hate-text')}
+			</Text>
 		</Card>
 	)
 }

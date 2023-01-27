@@ -1,7 +1,7 @@
 // import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 // import { GetServerSidePropsContext } from 'next'
 
-import { MantineProvider } from '@mantine/core'
+import { MantineProvider, TypographyStylesProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { NotificationsProvider } from '@mantine/notifications'
 import { Work_Sans } from '@next/font/google'
@@ -30,15 +30,17 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 			theme={{ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }}
 			emotionCache={appCache}
 		>
-			<SessionProvider session={session}>
-				<NotificationsProvider>
-					<ModalsProvider>
-						<AppLayout navItems={navItems} footerLinks={navItems} socialMedia={socialMediaLinks}>
-							<Component {...pageProps} />
-						</AppLayout>
-					</ModalsProvider>
-				</NotificationsProvider>
-			</SessionProvider>
+			<TypographyStylesProvider>
+				<SessionProvider session={session}>
+					<NotificationsProvider>
+						<ModalsProvider>
+							<AppLayout navItems={navItems} footerLinks={navItems} socialMedia={socialMediaLinks}>
+								<Component {...pageProps} />
+							</AppLayout>
+						</ModalsProvider>
+					</NotificationsProvider>
+				</SessionProvider>
+			</TypographyStylesProvider>
 		</MantineProvider>
 	)
 }

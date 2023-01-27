@@ -1,4 +1,4 @@
-import { MantineProvider } from '@mantine/core'
+import { MantineProvider, TypographyStylesProvider } from '@mantine/core'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { Story } from '@storybook/react'
 import { themes } from '@storybook/theming'
@@ -42,7 +42,7 @@ const mantineProviderProps = {
 const ThemeWrapper = (props: { children: React.ReactNode }) => {
 	return (
 		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
-			{props.children}
+			<TypographyStylesProvider>{props.children}</TypographyStylesProvider>
 		</MantineProvider>
 	)
 }
