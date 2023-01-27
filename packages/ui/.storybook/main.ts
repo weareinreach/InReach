@@ -11,6 +11,7 @@ const config: StorybookConfig = {
 	addons: [
 		'@geometricpanda/storybook-addon-badges',
 		'@storybook/addon-a11y',
+		'@storybook/addon-actions',
 		'@storybook/addon-console',
 		'@storybook/addon-essentials',
 		'@storybook/addon-interactions',
