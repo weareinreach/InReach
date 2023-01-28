@@ -18,9 +18,8 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@weareinreach/api": "workspace:0.100.0",
-		"@mantine/utils": "5.10.2"
-
+		"@mantine/utils": "5.10.2",
+		"@weareinreach/api": "workspace:0.100.0"
 	},
 	"devDependencies": {
 		"@babel/core": "7.20.12",
