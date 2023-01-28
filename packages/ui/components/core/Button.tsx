@@ -9,6 +9,7 @@ import {
 } from '@mantine/core'
 import { PolymorphicComponentProps } from '@mantine/utils'
 import { merge } from 'merge-anything'
+import { forwardRef } from 'react'
 
 const buttonVariants: ButtonVariants = (theme, params) => {
 	switch (params.variant) {
@@ -157,29 +158,38 @@ const useVariantStyles = createStyles((theme, params: ButtonStylesParams) => {
 	return merge(baseStyle, buttonVariants(theme, params))
 })
 
-export const Button = <C = 'button',>(props: PolymorphicComponentProps<C, ButtonProps>) => {
-	const customVariants = [
-		'sm-primary',
-		'sm-secondary',
-		'sm-accent',
-		'lg-primary',
-		'lg-secondary',
-		'lg-accent',
-	]
-	const isCustom = customVariants.includes(props.variant ?? 'filled')
+// eslint-disable-next-line react/display-name
+export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'button', CustomButtonProps>>(
+	(props, ref) => {
+		const customVariants = [
+			'sm-primary',
+			'sm-secondary',
+			'sm-accent',
+			'lg-primary',
+			'lg-secondary',
+			'lg-accent',
+		]
+		const isCustom = customVariants.includes(props.variant ?? 'filled')
 
-	const { classes: baseClasses } = useVariantStyles({ variant: props.variant ?? 'filled' })
+		const { classes: baseClasses } = useVariantStyles({ variant: props.variant ?? 'filled' })
 
-	const { children, variant, classNames, ...others } = props
+		const { children, variant, classNames, ...others } = props as ButtonProps
 
-	return (
-		<MantineButton variant={isCustom ? undefined : variant} classNames={baseClasses} {...others}>
-			{children}
-		</MantineButton>
-	)
-}
+		const mantineVariant = isCustom ? undefined : (variant as ButtonVariant)
+
+		return (
+			<MantineButton variant={mantineVariant} classNames={baseClasses} ref={ref} {...others}>
+				{children}
+			</MantineButton>
+		)
+	}
+)
 
 interface ButtonStylesParams {
+	variant: ButtonVariant | CustomVariants
+}
+
+type CustomButtonProps = Omit<ButtonProps, 'variant'> & {
 	variant: ButtonVariant | CustomVariants
 }
 type CustomVariants =
