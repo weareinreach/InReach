@@ -1,13 +1,4 @@
-import {
-	Stack,
-	Text,
-	Group,
-	createStyles,
-	Avatar,
-	useMantineTheme,
-	Skeleton,
-	TypographyStylesProvider,
-} from '@mantine/core'
+import { Stack, Text, Group, createStyles, Avatar, useMantineTheme, Skeleton } from '@mantine/core'
 import { useViewportSize } from '@mantine/hooks'
 import { DateTime } from 'luxon'
 import { useState, useRef, useEffect } from 'react'
