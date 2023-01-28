@@ -1,16 +1,22 @@
-import { BadgeStylesParams, ButtonStylesParams, MantineThemeOverride, TextStylesParams } from '@mantine/core'
-import { merge } from 'merge-anything'
+import { MantineThemeOverride } from '@mantine/core'
 
 import { customColors } from './colors'
-import { buttonVariants, badgeVariants, CustomBadgeStyles, CustomButtonStyles } from './functions'
 
 export const commonTheme: MantineThemeOverride = {
 	colorScheme: 'light',
 	colors: { ...customColors },
 	primaryColor: 'inReachPrimaryRegular',
 	primaryShade: 5,
+	cursorType: 'pointer',
 	fontFamily:
 		'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+	fontSizes: {
+		xs: 12,
+		sm: 14,
+		md: 16,
+		lg: 18,
+		xl: 20,
+	},
 	headings: {
 		fontFamily:
 			'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
@@ -63,9 +69,10 @@ export const commonTheme: MantineThemeOverride = {
 	},
 	components: {
 		ActionIcon: {
-			defaultProps: {
-				color: 'inReachSecondaryRegular.5',
-			},
+			defaultProps: (theme) => ({
+				color: theme.other.colors.secondary.cornflower,
+				radius: 'xl',
+			}),
 		},
 		Avatar: {
 			defaultProps: {
@@ -75,69 +82,21 @@ export const commonTheme: MantineThemeOverride = {
 		},
 		Badge: {
 			defaultProps: {
-				radius: '100px',
-			},
-
-			styles: (theme, params: BadgeStylesParams) => {
-				const baseStyle = {
-					root: {
-						textTransform: 'none',
-						border: '1px solid',
-						paddingLeft: theme.spacing.sm,
-						paddingRight: theme.spacing.sm,
-					},
-					inner: {
-						fontWeight: theme.other.fontWeight.semibold,
-						color: theme.other.colors.secondary.black,
-					},
-				} satisfies CustomBadgeStyles
-				const variants = badgeVariants(theme, params)
-
-				const mergedStyle = merge(baseStyle, variants)
-
-				return mergedStyle
+				radius: 'xl',
 			},
 		},
 		Button: {
 			defaultProps: {
 				radius: 'xl',
 			},
-
-			styles: (theme, params: ButtonStylesParams) => {
-				const baseStyle = {
-					root: {
-						padding: theme.spacing.sm / 2,
-						paddingLeft: theme.spacing.xl * 2,
-						paddingRight: theme.spacing.xl * 2,
-						height: theme.spacing.xl * 2,
-						backgroundColor: theme.other.colors.secondary.black,
-						'&:hover': {
-							background: theme.fn.lighten(theme.other.colors.secondary.black, 0.4),
-						},
-					},
-					inner: {
-						color: theme.other.colors.secondary.white,
-					},
-					leftIcon: {
-						svg: {
-							height: theme.spacing.lg,
-							width: theme.spacing.lg,
-						},
-					},
-					label: {
-						fontSize: theme.spacing.md,
-						fontWeight: theme.other.fontWeight.semibold,
-						lineHeight: `${theme.spacing.lg}px`,
-					},
-				} satisfies CustomButtonStyles
-				return merge(baseStyle, buttonVariants(theme, params))
-			},
 		},
 		Text: {
-			defaultProps: {
+			defaultProps: (theme) => ({
 				component: 'span',
-				weight: 400,
-			},
+				weight: theme.other.fontWeight.regular,
+				color: theme.other.colors.secondary.black,
+				size: 'md',
+			}),
 			styles: {
 				root: {
 					lineHeight: 1.5,
