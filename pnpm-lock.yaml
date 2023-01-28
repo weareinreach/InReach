@@ -534,6 +534,7 @@ importers:
   packages/eslint-config:
     specifiers:
       '@next/eslint-plugin-next': 13.1.5
+      '@tanstack/eslint-plugin-query': 4.21.0
       '@types/eslint': 8.4.10
       '@typescript-eslint/eslint-plugin': 5.49.0
       '@typescript-eslint/parser': 5.49.0
@@ -554,6 +555,7 @@ importers:
       typescript: 4.9.4
     devDependencies:
       '@next/eslint-plugin-next': 13.1.5
+      '@tanstack/eslint-plugin-query': 4.21.0
       '@types/eslint': 8.4.10
       '@typescript-eslint/eslint-plugin': 5.49.0_iu322prlnwsygkcra5kbpy22si
       '@typescript-eslint/parser': 5.49.0_7uibuqfxkfaozanbtbziikiqje
@@ -665,8 +667,8 @@ importers:
       webpack: 5.75.0
       zod: 3.20.2
     dependencies:
-      '@weareinreach/api': link:../api
       '@mantine/utils': 5.10.2_react@18.2.0
+      '@weareinreach/api': link:../api
     devDependencies:
       '@babel/core': 7.20.12
       '@emotion/react': 11.10.5_yxdp3dl3eazy3vwpbmv4fq727a
@@ -8029,6 +8031,10 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+
+  /@tanstack/eslint-plugin-query/4.21.0:
+    resolution: {integrity: sha512-4ulPL4mQKb8YUjF8FXo1Dcsq8gkh8eZD5F3p/Y/jBX6UnM03lJFgy5bjWBYjDSphZ2WcIXfRsxT2TWHMFHhbog==}
+    dev: true
 
   /@tanstack/match-sorter-utils/8.7.6:
     resolution: {integrity: sha512-2AMpRiA6QivHOUiBpQAVxjiHAA68Ei23ZUMNaRJrN6omWiSFLoYrxGcT6BXtuzp0Jw4h6HZCmGGIM/gbwebO2A==}
