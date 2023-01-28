@@ -16,18 +16,40 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'filled':
 			return {
 				root: {
-					backgroundColor: theme.colors.inReachPrimaryRegular[5],
-					'&:hover': {
-						backgroundColor: theme.colors.inReachPrimaryHover[5],
+					paddingLeft: theme.spacing.md * 2,
+					paddingRight: theme.spacing.md * 2,
+					height: theme.spacing.lg * 2,
+				},
+				inner: {
+					color: theme.other.colors.secondary.white,
+					label: {
+						left: theme.spacing.md * 2,
+					},
+					leftIcon: {
+						display: 'none',
 					},
 				},
 			}
 		case 'outline':
 			return {
 				root: {
-					outlineColor: theme.colors.inReachPrimaryRegular[5],
+					paddingLeft: theme.spacing.md * 2,
+					paddingRight: theme.spacing.md * 2,
+					height: theme.spacing.lg * 2,
+					border: theme.other.border.default,
+					borderColor: theme.other.colors.tertiary.coolGray,
+					backgroundColor: theme.other.colors.secondary.white,
 					'&:hover': {
-						outlineColor: theme.colors.inReachPrimaryHover[5],
+						backgroundColor: theme.other.colors.primary.lightGray,
+					},
+				},
+				inner: {
+					color: theme.colors.primaryText[9],
+					label: {
+						left: theme.spacing.md * 2,
+					},
+					leftIcon: {
+						display: 'none',
 					},
 				},
 			}
@@ -37,6 +59,9 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					paddingLeft: theme.spacing.md * 2,
 					paddingRight: theme.spacing.md * 2,
 					height: theme.spacing.lg * 2,
+				},
+				'&:hover': {
+					backgroundColor: '#666666',
 				},
 				inner: {
 					color: theme.other.colors.secondary.white,
@@ -96,6 +121,9 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 			return {
 				root: {
 					borderRadius: theme.radius.md,
+				},
+				'&:hover': {
+					backgroundColor: '#666666',
 				},
 			}
 		case 'lg-secondary':

@@ -13,6 +13,6 @@ export * from './Rating'
 export * from './SocialMediaIconButton'
 export * from './UserAvatar'
 export * from './UserReview'
-export * from './UserReviewPrompt'
+export * from './UserReviewSubmit'
 export * from './VerifiedBadge'
 // codegen:end

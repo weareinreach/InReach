@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 
-import { UserReviewPrompt as UserReviewPromptCompnt } from './UserReviewPrompt'
+import { UserReviewSubmit as UserReviewPromptCompnt } from './UserReviewSubmit'
 
 export default {
 	title: 'Design System/User Review',
@@ -15,25 +15,25 @@ export default {
 	},
 } as ComponentMeta<typeof UserReviewPromptCompnt>
 
-const UserReviewPromptVariant: ComponentStory<typeof UserReviewPromptCompnt> = (args) => (
+const UserReviewSubmit: ComponentStory<typeof UserReviewPromptCompnt> = (args) => (
 	<UserReviewPromptCompnt {...args} />
 )
 
-export const UserReviewPromptVariantFullData = UserReviewPromptVariant.bind({})
-export const UserReviewPromptVariantNoAvatar = UserReviewPromptVariant.bind({})
-export const UserReviewPromptVariantNoData = UserReviewPromptVariant.bind({})
+export const SubmitReviewFullData = UserReviewSubmit.bind({})
+export const SubmitReviewNoAvatar = UserReviewSubmit.bind({})
+export const SubmitReviewNoData = UserReviewSubmit.bind({})
 
-UserReviewPromptVariantFullData.args = {
+SubmitReviewFullData.args = {
 	avatarUrl: faker.image.avatar(),
 	avatarName: faker.name.fullName(),
 }
 
-UserReviewPromptVariantNoAvatar.args = {
+SubmitReviewNoAvatar.args = {
 	avatarUrl: null,
 	avatarName: faker.name.fullName(),
 }
 
-UserReviewPromptVariantNoData.args = {
+SubmitReviewNoData.args = {
 	avatarUrl: null,
 	avatarName: null,
 }

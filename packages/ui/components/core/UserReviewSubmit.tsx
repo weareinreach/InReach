@@ -4,16 +4,14 @@ import {
 	Group,
 	createStyles,
 	Avatar,
-	Button,
 	Rating,
 	Textarea,
 	useMantineTheme,
 	Container,
 } from '@mantine/core'
-import Image from 'next/image'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { Button } from '.'
 import { Icon } from '../../icon'
 
 const useStyles = createStyles((theme) => ({
@@ -40,26 +38,31 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const UserReviewPrompt = ({ avatarUrl, avatarName }: UserProps) => {
+export const UserReviewSubmit = ({ avatarUrl, avatarName }: UserProps) => {
 	const { classes } = useStyles()
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const theme = useMantineTheme()
 
 	return (
 		<Stack>
 			<Group>
-				<Avatar radius='xl' className={classes.avatar}>
-					{avatarUrl ? (
-						<Image src={avatarUrl} fill alt={avatarName || t('user-avatar')} />
-					) : (
-						<Icon icon='carbon:user' className={classes.avatar} />
-					)}
+				<Avatar
+					radius='xl'
+					className={classes.avatar}
+					src={avatarUrl}
+					alt={avatarName || (t('user-avatar') as string)}
+				>
+					<Icon icon='carbon:user' height={24} />
 				</Avatar>
 				<Stack align='flex-start' justify='center' spacing={4}>
 					<Text weight={theme.other.fontWeight.semibold}>{avatarName ? avatarName : t('in-reach-user')}</Text>
 				</Stack>
 			</Group>
-			<Rating size='md' />
+			<Rating
+				size='md'
+				emptySymbol={<Icon icon='carbon:star-filled' color={theme.other.colors.tertiary.coolGray} />}
+				fullSymbol={<Icon icon='carbon:star-filled' color={theme.other.colors.secondary.black} />}
+			/>
 			<Container className={classes.textContainer}>
 				<Textarea label={t('review-resource')} placeholder={t('enter-review')!} radius='md' />
 				<Text color={theme.other.colors.secondary.darkGray}>{t('review-note')}</Text>
