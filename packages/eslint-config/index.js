@@ -3,7 +3,12 @@
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
 	plugins: ['import'],
-	extends: ['./base.js', 'plugin:import/typescript', 'plugin:@typescript-eslint/recommended'],
+	extends: [
+		'./base.js',
+		'plugin:import/typescript',
+		'plugin:@typescript-eslint/recommended',
+		'eslint:recommended',
+	],
 	// parser: '@typescript-eslint/parser',
 	rules: {},
 	overrides: [

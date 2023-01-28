@@ -23,13 +23,6 @@ export const Link = ({ children, href }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 
-	const linkStyle = {
-		color: theme.other.colors.secondary.black,
-		textDecoration: 'underline',
-		'&::hover': {
-			textDecoration: 'none !important',
-		},
-	}
 	return (
 		<Text
 			component={NextLink}
