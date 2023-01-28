@@ -86,9 +86,12 @@
 		"i18next-http-backend": "2.1.1",
 		"luxon": "3.2.1",
 		"merge-anything": "5.1.4",
+		"msw": "1.0.0",
+		"msw-storybook-addon": "1.7.0",
 		"next": "13.1.5",
 		"next-auth": "4.18.10",
 		"next-i18next": "13.0.3",
+		"next-router-mock": "0.9.1",
 		"postcss-loader": "7.0.2",
 		"react": "18.2.0",
 		"react-docgen-typescript": "2.2.2",
@@ -99,6 +102,7 @@
 		"slugify": "1.6.5",
 		"storybook-addon-designs": "6.3.1",
 		"storybook-addon-next": "1.7.1",
+		"storybook-addon-next-router": "4.0.2",
 		"storybook-addon-pseudo-states": "1.15.2",
 		"storybook-addon-swc": "1.1.9",
 		"storybook-dark-mode": "2.0.5",
@@ -146,5 +150,8 @@
 		"react": "^18",
 		"react-dom": "^18",
 		"react-i18next": "^12"
+	},
+	"msw": {
+		"workerDirectory": "public"
 	}
 }

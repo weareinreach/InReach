@@ -16,3 +16,4 @@ export type ApiInput = inferRouterInputs<AppRouter>
 export type ApiOutput = inferRouterOutputs<AppRouter>
 export type ReactQueryOptions = inferReactQueryProcedureOptions<AppRouter>
 export type RouterProxyClient = inferRouterProxyClient<AppRouter>
+export type { ApiClient } from './trpc/client'

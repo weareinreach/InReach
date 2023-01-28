@@ -2,6 +2,7 @@ import { MantineProvider, TypographyStylesProvider, MantineProviderProps } from 
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { Story } from '@storybook/react'
 import { themes } from '@storybook/theming'
+import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 import { ReactNode } from 'react'
 import { I18nextProvider } from 'react-i18next'
@@ -10,6 +11,8 @@ import { i18n, i18nLocales } from './i18next'
 import { storybookTheme } from '../theme'
 
 import './font.css'
+
+initializeMsw()
 
 export const parameters = {
 	actions: { argTypesRegex: '^on[A-Z].*' },
@@ -57,6 +60,7 @@ export const decorators = [
 			<Story />
 		</ThemeWrapper>
 	),
+	mswDecorator,
 ]
 
 type ThemeWrapperProps = {

@@ -7,7 +7,7 @@ const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
 
 const config: StorybookConfig = {
 	stories: [`../components/**/${filePattern}`, `../layout/**/${filePattern}`],
-	staticDirs: [{ from: '../../../apps/app/public', to: 'public/' }],
+	staticDirs: [{ from: '../../../apps/app/public', to: 'public/' }, '../public'],
 	addons: [
 		'@geometricpanda/storybook-addon-badges',
 		'@storybook/addon-a11y',
@@ -20,6 +20,7 @@ const config: StorybookConfig = {
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
 		'storybook-addon-next',
+		'storybook-addon-next-router',
 		'storybook-addon-pseudo-states',
 		'storybook-addon-swc',
 		'storybook-dark-mode',
