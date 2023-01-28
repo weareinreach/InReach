@@ -1,7 +1,7 @@
-import { Button, Center } from '@mantine/core'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 
+import { Button } from './Button'
 import { Icon } from '../../icon'
 
 export default {
@@ -11,6 +11,18 @@ export default {
 		design: {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=196%3A5045&t=0SZ0JVMYe5r7bNkb-4',
+		},
+		controls: {
+			include: ['variant'],
+		},
+	},
+	argTypes: {
+		variant: {
+			options: ['sm-primary', 'sm-secondary', 'sm-accent', 'lg-primary', 'lg-secondary', 'lg-accent'],
+			control: 'select',
+		},
+		children: {
+			control: 'string',
 		},
 	},
 } as ComponentMeta<typeof Button>

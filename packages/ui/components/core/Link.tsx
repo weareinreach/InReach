@@ -1,18 +1,19 @@
-import { Text, createStyles } from '@mantine/core'
+import { Text, createStyles, useMantineTheme } from '@mantine/core'
 import NextLink from 'next/link'
 
 const useStyles = createStyles((theme) => ({
 	link: {
-		color: theme.other.colors.secondary.black,
+		color: `${theme.other.colors.secondary.black} !important`,
 		paddingBottom: theme.spacing.sm,
 		paddingTop: theme.spacing.sm,
 		paddingLeft: theme.spacing.xs,
 		paddingRight: theme.spacing.xs,
 		borderRadius: theme.spacing.sm,
-		textDecoration: 'underline',
+		textDecoration: 'underline !important',
+
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
-			textDecoration: 'none',
+			textDecoration: 'none !important',
 		},
 	},
 	text: {},
@@ -20,10 +21,18 @@ const useStyles = createStyles((theme) => ({
 
 export const Link = ({ children, href }: Props) => {
 	const { classes } = useStyles()
+	const theme = useMantineTheme()
+
 	return (
-		<NextLink href={href} className={classes.link}>
-			<Text className={classes.text}>{children}</Text>
-		</NextLink>
+		<Text
+			component={NextLink}
+			href={href}
+			className={classes.link}
+			fw={theme.other.fontWeight.semibold}
+			variant='link'
+		>
+			{children}
+		</Text>
 	)
 }
 

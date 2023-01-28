@@ -1,7 +1,9 @@
 /* eslint-disable import/no-unused-modules */
 // codegen:start {preset: barrel, include: ./*.ts*, exclude: ./*.stories.*}
 export * from './AntiHateMessage'
+export * from './Badge'
 export * from './Breadcrumb'
+export * from './Button'
 export * from './InstantFeedback'
 export * from './LeaderBadge'
 export * from './LeaderBadgeGroup'

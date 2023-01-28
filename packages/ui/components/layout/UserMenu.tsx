@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import {
 	Avatar,
-	Button,
 	DefaultProps,
 	Group,
 	Menu,
@@ -15,6 +14,7 @@ import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
+import { Button } from '../core/Button'
 // import { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({

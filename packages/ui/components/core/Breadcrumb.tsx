@@ -1,4 +1,4 @@
-import { ActionIcon, Group, Text, createStyles } from '@mantine/core'
+import { ActionIcon, Group, Text, createStyles, useMantineTheme } from '@mantine/core'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 
@@ -30,6 +30,7 @@ const useStyles = createStyles((theme) => ({
 
 export const Breadcrumb = ({ href, option }: Props) => {
 	const { classes } = useStyles()
+	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
 	const iconRender = approvedOptions[option].icon
 	const childrenRender = approvedOptions[option].children
@@ -43,7 +44,9 @@ export const Breadcrumb = ({ href, option }: Props) => {
 		>
 			<Group position='center' spacing='xs'>
 				<Icon icon={iconRender} className={classes.icon} />
-				<Text size='sm'>{t(childrenRender)}</Text>
+				<Text size='sm' fw={theme.other.fontWeight.semibold}>
+					{t(childrenRender)}
+				</Text>
 			</Group>
 		</ActionIcon>
 	)
