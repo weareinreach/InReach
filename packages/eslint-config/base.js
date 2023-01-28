@@ -40,7 +40,7 @@ const config = {
 		'import/extensions': ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.mts', '.tsx'],
 	},
 	env: {
-		es6: true,
+		node: true,
 	},
 }
 module.exports = config

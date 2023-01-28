@@ -17,6 +17,9 @@
 		"sb:build:swc": "BUILD_TOOL=swc build-storybook",
 		"type-check": "tsc --noEmit"
 	},
+	"dependencies": {
+		"@mantine/utils": "5.10.2"
+	},
 	"devDependencies": {
 		"@babel/core": "7.20.12",
 		"@emotion/react": "11.10.5",
