@@ -130,10 +130,10 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 )
 
 interface BadgeStylesParams {
-	variant: BadgeVariant | CustomVariants
+	variant?: BadgeVariant | CustomVariants
 }
 type CustomBadgeProps = Omit<BadgeProps, 'variant'> & {
-	variant: BadgeVariant | CustomVariants
+	variant?: BadgeVariant | CustomVariants
 }
 type CustomVariants =
 	| 'commmunityTag-large'

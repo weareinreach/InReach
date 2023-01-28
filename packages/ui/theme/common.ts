@@ -7,8 +7,16 @@ export const commonTheme: MantineThemeOverride = {
 	colors: { ...customColors },
 	primaryColor: 'inReachPrimaryRegular',
 	primaryShade: 5,
+	cursorType: 'pointer',
 	fontFamily:
 		'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+	fontSizes: {
+		xs: 12,
+		sm: 14,
+		md: 16,
+		lg: 18,
+		xl: 20,
+	},
 	headings: {
 		fontFamily:
 			'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
@@ -61,9 +69,10 @@ export const commonTheme: MantineThemeOverride = {
 	},
 	components: {
 		ActionIcon: {
-			defaultProps: {
-				color: 'inReachSecondaryRegular.5',
-			},
+			defaultProps: (theme) => ({
+				color: theme.other.colors.secondary.cornflower,
+				radius: 'xl',
+			}),
 		},
 		Avatar: {
 			defaultProps: {
@@ -73,7 +82,7 @@ export const commonTheme: MantineThemeOverride = {
 		},
 		Badge: {
 			defaultProps: {
-				radius: '100px',
+				radius: 'xl',
 			},
 		},
 		Button: {
@@ -82,10 +91,12 @@ export const commonTheme: MantineThemeOverride = {
 			},
 		},
 		Text: {
-			defaultProps: {
+			defaultProps: (theme) => ({
 				component: 'span',
-				weight: 400,
-			},
+				weight: theme.other.fontWeight.regular,
+				color: theme.other.colors.secondary.black,
+				size: 'md',
+			}),
 			styles: {
 				root: {
 					lineHeight: 1.5,

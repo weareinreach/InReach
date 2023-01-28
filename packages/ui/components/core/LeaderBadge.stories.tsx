@@ -2,10 +2,12 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 
 import { LeaderBadge } from './LeaderBadge'
+import { LeaderBadgeGroup } from './LeaderBadgeGroup'
 
 export default {
 	title: 'Design System/Tags and Badges/Leader Badge',
 	component: LeaderBadge,
+	subcomponents: { LeaderBadgeGroup },
 	parameters: {
 		design: {
 			type: 'figma',

@@ -26,7 +26,7 @@ const useStyles = createStyles(() => ({
 	},
 }))
 
-export const LeaderBadge = ({ color, emoji, key_value, minify }: LeaderBadgeProps) => {
+export const LeaderBadge = ({ color, emoji, key_value, minify = false }: LeaderBadgeProps) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation('attribute')
 
@@ -56,5 +56,5 @@ export type LeaderBadgeProps = {
 	color: string
 	emoji: string
 	key_value: string
-	minify: boolean
+	minify?: boolean
 }

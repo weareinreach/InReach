@@ -186,11 +186,11 @@ export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'b
 )
 
 interface ButtonStylesParams {
-	variant: ButtonVariant | CustomVariants
+	variant?: ButtonVariant | CustomVariants
 }
 
 type CustomButtonProps = Omit<ButtonProps, 'variant'> & {
-	variant: ButtonVariant | CustomVariants
+	variant?: ButtonVariant | CustomVariants
 }
 type CustomVariants =
 	| 'sm-primary'

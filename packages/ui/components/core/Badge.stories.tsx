@@ -33,6 +33,7 @@ export default {
 					detail: 'Tag - ✊🏿 OR Badge - 🤎, determined by the "children" value',
 				},
 			},
+			control: 'string',
 		},
 	},
 	parameters: {
@@ -40,6 +41,9 @@ export default {
 			description: {
 				component: 'These are examples of Tags and Badges',
 			},
+		},
+		controls: {
+			include: ['variant', 'children', 'leftSection'],
 		},
 		design: {
 			type: 'figma',
