@@ -18,12 +18,12 @@ overrides:
   uuid: '>=9.0.0'
 
 patchedDependencies:
-  eslint-plugin-node@11.1.0:
-    hash: 45p4dc3r2kwi3h2jyimmny42ju
-    path: patches/eslint-plugin-node@11.1.0.patch
   iso-google-locales@3.0.4:
     hash: ltnamflm7ayajalculwqyezjya
     path: patches/iso-google-locales@3.0.4.patch
+  eslint-plugin-node@11.1.0:
+    hash: 45p4dc3r2kwi3h2jyimmny42ju
+    path: patches/eslint-plugin-node@11.1.0.patch
 
 importers:
 
@@ -590,6 +590,7 @@ importers:
       '@mantine/prism': 5.10.2
       '@mantine/spotlight': 5.10.2
       '@mantine/tiptap': 5.10.2
+      '@mantine/utils': 5.10.2
       '@next/font': 13.1.5
       '@paralleldrive/cuid2': 2.0.1
       '@storybook/addon-a11y': 6.5.16
@@ -654,6 +655,8 @@ importers:
       typescript: 4.9.4
       webpack: 5.75.0
       zod: 3.20.2
+    dependencies:
+      '@mantine/utils': 5.10.2_react@18.2.0
     devDependencies:
       '@babel/core': 7.20.12
       '@emotion/react': 11.10.5_yxdp3dl3eazy3vwpbmv4fq727a

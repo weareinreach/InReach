@@ -6,24 +6,14 @@ import { Icon } from '../../icon'
 import { commonTheme } from '../../theme/common'
 
 const useStyles = createStyles((theme) => ({
-	icon: {
-		height: '18.75px',
-		width: '21.07px',
+	notificationBg: {
+		backgroundColor: theme.other.colors.secondary.black,
 	},
-	notification: {
-		backgroundColor: '#2C2E33',
-		width: '335px',
-		height: '48px',
+	iconBg: {
+		background: `${theme.other.colors.secondary.black} !important`,
 	},
-	resourceText: {
-		color: 'white',
-		fontSize: '16px',
-		fontWeight: theme.other.fontWeight.semibold,
-	},
-	viewList: {
-		color: '#79ADD7',
-		fontSize: '16px',
-		fontWeight: theme.other.fontWeight.semibold,
+	link: {
+		color: theme.other.colors.tertiary.lightBlue,
 	},
 }))
 
@@ -37,16 +27,29 @@ const iconList = {
 export const InstantFeedback = ({ displayTextKey, icon, link }: Props) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation()
+	const theme = useMantineTheme()
+	const iconStyle = { color: iconList[icon].color }
 
-	const iconStyle = iconList[icon].color ? { color: iconList[icon].color } : undefined
-
-	const displayIcon = <Icon icon={iconList[icon].code} style={iconStyle} className={classes.icon} />
+	const displayIcon = <Icon icon={iconList[icon].code} style={iconStyle} height={24} />
 
 	return (
-		<Notification icon={displayIcon} color='dark' radius='lg' className={classes.notification}>
+		<Notification
+			icon={displayIcon}
+			radius='lg'
+			// color='dark'
+			h={48}
+			classNames={{ root: classes.notificationBg, icon: classes.iconBg }}
+		>
 			<Group position='apart' spacing='lg'>
-				<Text className={classes.resourceText}>{t(displayTextKey)}</Text>
-				<Text component={Link} href={link.href} className={classes.viewList}>
+				<Text color={theme.other.colors.secondary.white} fw={theme.other.fontWeight.semibold}>
+					{t(displayTextKey)}
+				</Text>
+				<Text
+					component={Link}
+					href={link.href}
+					style={{ color: theme.other.colors.tertiary.lightBlue }}
+					fw={theme.other.fontWeight.semibold}
+				>
 					{t(link.textKey)}
 				</Text>
 			</Group>
