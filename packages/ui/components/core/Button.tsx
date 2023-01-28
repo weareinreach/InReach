@@ -178,7 +178,12 @@ export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'b
 		const mantineVariant = isCustom ? undefined : (variant as ButtonVariant)
 
 		return (
-			<MantineButton variant={mantineVariant} classNames={baseClasses} ref={ref} {...others}>
+			<MantineButton
+				variant={mantineVariant}
+				classNames={merge(classNames, baseClasses)}
+				ref={ref}
+				{...others}
+			>
 				{children}
 			</MantineButton>
 		)

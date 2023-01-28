@@ -122,7 +122,12 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 		const mantineVariant = isCustom ? undefined : (variant as BadgeVariant)
 
 		return (
-			<MantineBadge variant={mantineVariant} classNames={baseClasses} ref={ref} {...others}>
+			<MantineBadge
+				variant={mantineVariant}
+				classNames={merge(classNames, baseClasses)}
+				ref={ref}
+				{...others}
+			>
 				{children}
 			</MantineBadge>
 		)
