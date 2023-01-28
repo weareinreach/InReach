@@ -2,7 +2,7 @@ import { BadgeStylesParams, ButtonStylesParams, MantineThemeOverride, TextStyles
 import { merge } from 'merge-anything'
 
 import { customColors } from './colors'
-import { buttonVariants, badgeVariants, CustomBadgeStyles, CustomButtonStyles } from './functions'
+import { badgeVariants, CustomBadgeStyles } from './functions'
 
 export const commonTheme: MantineThemeOverride = {
 	colorScheme: 'light',
@@ -77,7 +77,6 @@ export const commonTheme: MantineThemeOverride = {
 			defaultProps: {
 				radius: '100px',
 			},
-
 			styles: (theme, params: BadgeStylesParams) => {
 				const baseStyle = {
 					root: {
@@ -101,36 +100,6 @@ export const commonTheme: MantineThemeOverride = {
 		Button: {
 			defaultProps: {
 				radius: 'xl',
-			},
-
-			styles: (theme, params: ButtonStylesParams) => {
-				const baseStyle = {
-					root: {
-						padding: theme.spacing.sm / 2,
-						paddingLeft: theme.spacing.xl * 2,
-						paddingRight: theme.spacing.xl * 2,
-						height: theme.spacing.xl * 2,
-						backgroundColor: theme.other.colors.secondary.black,
-						'&:hover': {
-							background: theme.fn.lighten(theme.other.colors.secondary.black, 0.4),
-						},
-					},
-					inner: {
-						color: theme.other.colors.secondary.white,
-					},
-					leftIcon: {
-						svg: {
-							height: theme.spacing.lg,
-							width: theme.spacing.lg,
-						},
-					},
-					label: {
-						fontSize: theme.spacing.md,
-						fontWeight: theme.other.fontWeight.semibold,
-						lineHeight: `${theme.spacing.lg}px`,
-					},
-				} satisfies CustomButtonStyles
-				return merge(baseStyle, buttonVariants(theme, params))
 			},
 		},
 		Text: {
