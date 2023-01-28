@@ -1,4 +1,3 @@
-import { Center } from '@mantine/core'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 
@@ -30,6 +29,6 @@ BadgeMinified.args = {
 BadgeRegular.args = {
 	color: 'blue',
 	emoji: '️‍️‍🌎',
-	key_value: 'Immigrant-led',
+	key_value: 'immigrant-led',
 	minify: false,
 } as const

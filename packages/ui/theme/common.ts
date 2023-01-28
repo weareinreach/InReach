@@ -1,8 +1,6 @@
-import { BadgeStylesParams, ButtonStylesParams, MantineThemeOverride, TextStylesParams } from '@mantine/core'
-import { merge } from 'merge-anything'
+import { MantineThemeOverride } from '@mantine/core'
 
 import { customColors } from './colors'
-import { badgeVariants, CustomBadgeStyles } from './functions'
 
 export const commonTheme: MantineThemeOverride = {
 	colorScheme: 'light',
@@ -76,25 +74,6 @@ export const commonTheme: MantineThemeOverride = {
 		Badge: {
 			defaultProps: {
 				radius: '100px',
-			},
-			styles: (theme, params: BadgeStylesParams) => {
-				const baseStyle = {
-					root: {
-						textTransform: 'none',
-						border: '1px solid',
-						paddingLeft: theme.spacing.sm,
-						paddingRight: theme.spacing.sm,
-					},
-					inner: {
-						fontWeight: theme.other.fontWeight.semibold,
-						color: theme.other.colors.secondary.black,
-					},
-				} satisfies CustomBadgeStyles
-				const variants = badgeVariants(theme, params)
-
-				const mergedStyle = merge(baseStyle, variants)
-
-				return mergedStyle
 			},
 		},
 		Button: {
