@@ -8,12 +8,13 @@ import { api } from '~/utils/api'
 
 const DataTest: NextPage = (props) => {
 	const x = api.organization.searchName.useQuery({ search: 'trevor' })
+	const utils = api.useContext()
 
 	return (
 		<>
 			<Code block>{JSON.stringify(useSession(), null, 2)}</Code>
 			<Code block>{JSON.stringify(x, null, 2)}</Code>
-			<Code block>{JSON.stringify(props, null, 2)}</Code>
+			<Code block>{JSON.stringify(api.savedList.getAll.useQuery(), null, 2)}</Code>
 		</>
 	)
 }

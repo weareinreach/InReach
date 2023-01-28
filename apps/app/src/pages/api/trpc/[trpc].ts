@@ -1,6 +1,15 @@
-import { trpcApiHandler } from '@weareinreach/api/trpc'
-import { NextApiHandler } from 'next'
+import { appRouter, createContext } from '@weareinreach/api'
+import { createNextApiHandler } from '@weareinreach/api/trpc/server/adapters/next'
 
-const handler: NextApiHandler = async (req, res) => trpcApiHandler(req, res)
-
-export default handler
+/* Creating a handler for the tRPC endpoint. */
+export default createNextApiHandler({
+	router: appRouter,
+	createContext,
+	onError:
+		// eslint-disable-next-line node/no-process-env
+		process.env.NODE_ENV === 'development'
+			? ({ path, error }) => {
+					console.error(`❌ tRPC failed on ${path}: ${error}`)
+			  }
+			: undefined,
+})

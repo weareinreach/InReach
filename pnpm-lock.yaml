@@ -618,6 +618,7 @@ importers:
       '@storybook/test-runner': 0.9.3
       '@storybook/testing-library': 0.0.13
       '@storybook/theming': 6.5.16
+      '@tanstack/react-query-devtools': 4.23.0
       '@tiptap/extension-link': 2.0.0-beta.209
       '@tiptap/react': 2.0.0-beta.209
       '@tiptap/starter-kit': 2.0.0-beta.209
@@ -710,6 +711,7 @@ importers:
       '@storybook/test-runner': 0.9.3_ie2g44ywzx2t43y3kxtdgelsdq
       '@storybook/testing-library': 0.0.13_biqbaboplfbrettd7655fr4n2y
       '@storybook/theming': 6.5.16_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-query-devtools': 4.23.0_74ln4l2hialvxelty6zunzkpjm
       '@tiptap/extension-link': 2.0.0-beta.209_kdf7tbeyuz6zzmi7724b5ghupu
       '@tiptap/react': 2.0.0-beta.209_q2znjafzmb4pvn25xzm5s3hjsu
       '@tiptap/starter-kit': 2.0.0-beta.209_mr3bhnmfox2kjnahwbtgkxt4cy
@@ -8421,7 +8423,7 @@ packages:
       '@trpc/client': 10.9.0_@trpc+server@10.9.0
       '@trpc/react-query': 10.9.0_22wgxldzdfxutowffn2dykkd3i
       '@trpc/server': 10.9.0
-      next: 13.1.5_biqbaboplfbrettd7655fr4n2y
+      next: 13.1.5_pjwopsidmaokadturxaafygjp4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-ssr-prepass: 1.5.0_react@18.2.0
@@ -17407,6 +17409,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+    dev: true
 
   /next/13.1.5_pjwopsidmaokadturxaafygjp4:
     resolution: {integrity: sha512-rmpYZFCxxWAi2nJCT9sSqMLGC3cu+Pf689hx9clcyP0KbVIhh/7Dus5QcKrVd/PrAd6AjsuogSRR1mCP7BoYRw==}
@@ -20853,6 +20856,7 @@ packages:
     dependencies:
       client-only: 0.0.1
       react: 18.2.0
+    dev: true
 
   /stylis/4.1.3:
     resolution: {integrity: sha512-GP6WDNWf+o403jrEp9c5jibKavrtLW+/qYGhFxFrG8maXhwTBI7gLLhiBb0o7uFccWN+EOS9aMO6cGHWAO07OA==}
