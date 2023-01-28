@@ -4,6 +4,7 @@ import { Story } from '@storybook/react'
 import { themes } from '@storybook/theming'
 import { RouterContext } from 'next/dist/shared/lib/router-context'
 import { ReactNode } from 'react'
+import { I18nextProvider } from 'react-i18next'
 
 import { i18n, i18nLocales } from './i18next'
 import { storybookTheme } from '../theme'
@@ -40,10 +41,12 @@ const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
 	withNormalizeCSS: false,
 }
 
-const ThemeWrapper = (props: { children: React.ReactNode }) => {
+const ThemeWrapper = ({ children }: ThemeWrapperProps) => {
 	return (
 		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
-			<TypographyStylesProvider>{props.children}</TypographyStylesProvider>
+			<TypographyStylesProvider>
+				<I18nextProvider i18n={i18n}>{children}</I18nextProvider>
+			</TypographyStylesProvider>
 		</MantineProvider>
 	)
 }
@@ -55,3 +58,7 @@ export const decorators = [
 		</ThemeWrapper>
 	),
 ]
+
+type ThemeWrapperProps = {
+	children: ReactNode
+}

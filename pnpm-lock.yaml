@@ -18,12 +18,12 @@ overrides:
   uuid: '>=9.0.0'
 
 patchedDependencies:
-  eslint-plugin-node@11.1.0:
-    hash: 45p4dc3r2kwi3h2jyimmny42ju
-    path: patches/eslint-plugin-node@11.1.0.patch
   iso-google-locales@3.0.4:
     hash: ltnamflm7ayajalculwqyezjya
     path: patches/iso-google-locales@3.0.4.patch
+  eslint-plugin-node@11.1.0:
+    hash: 45p4dc3r2kwi3h2jyimmny42ju
+    path: patches/eslint-plugin-node@11.1.0.patch
 
 importers:
 
