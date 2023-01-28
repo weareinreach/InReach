@@ -1,4 +1,3 @@
-import { Center } from '@mantine/core'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 

@@ -1,4 +1,4 @@
-import { ActionIcon, createStyles } from '@mantine/core'
+import { ActionIcon, createStyles, useMantineTheme } from '@mantine/core'
 
 import { Icon } from '../../icon'
 
@@ -16,31 +16,21 @@ export const approvedIcons = {
 const useStyles = createStyles((theme) => ({
 	button: {
 		color: theme.other.colors.secondary.black,
-		height: '32px',
-		width: '32px',
+
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
 		},
-	},
-	icon: {
-		width: '75%',
-		height: '75%',
 	},
 }))
 
 export const SocialMediaIconButton = ({ href, icon, title }: Props) => {
 	const { classes } = useStyles()
+	const theme = useMantineTheme()
 	const iconRender = approvedIcons[icon]
+
 	return (
-		<ActionIcon
-			component='a'
-			href={href}
-			target='_blank'
-			title={title}
-			radius={100}
-			className={classes.button}
-		>
-			<Icon icon={iconRender} className={classes.icon} />
+		<ActionIcon component='a' href={href} target='_blank' title={title} size={32} className={classes.button}>
+			<Icon icon={iconRender} color={theme.other.colors.secondary.black} height={20} />
 		</ActionIcon>
 	)
 }

@@ -1,12 +1,13 @@
-import { Center } from '@mantine/core'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 
 import { LeaderBadge } from './LeaderBadge'
+import { LeaderBadgeGroup } from './LeaderBadgeGroup'
 
 export default {
 	title: 'Design System/Tags and Badges/Leader Badge',
 	component: LeaderBadge,
+	subcomponents: { LeaderBadgeGroup },
 	parameters: {
 		design: {
 			type: 'figma',
@@ -30,6 +31,6 @@ BadgeMinified.args = {
 BadgeRegular.args = {
 	color: 'blue',
 	emoji: '️‍️‍🌎',
-	key_value: 'Immigrant-led',
+	key_value: 'immigrant-led',
 	minify: false,
 } as const
