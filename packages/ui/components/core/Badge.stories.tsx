@@ -1,6 +1,7 @@
-import { Badge } from '@mantine/core'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
+
+import { Badge } from './Badge'
 
 export default {
 	title: 'Design System/Tags and Badges',
@@ -32,6 +33,7 @@ export default {
 					detail: 'Tag - ✊🏿 OR Badge - 🤎, determined by the "children" value',
 				},
 			},
+			control: 'string',
 		},
 	},
 	parameters: {
@@ -39,6 +41,9 @@ export default {
 			description: {
 				component: 'These are examples of Tags and Badges',
 			},
+		},
+		controls: {
+			include: ['variant', 'children', 'leftSection'],
 		},
 		design: {
 			type: 'figma',
