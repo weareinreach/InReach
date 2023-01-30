@@ -1,5 +1,5 @@
-import { createStyles, Text, Paper, useMantineTheme } from '@mantine/core'
-import { useTranslation } from 'next-i18next'
+import { createStyles, Paper, useMantineTheme } from '@mantine/core'
+import { Trans } from 'next-i18next'
 
 import { Icon } from '../../icon'
 
@@ -42,7 +42,6 @@ export const alertTypeIcon = {
 export const AlertMessage = ({ textKey, iconKey, size }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
-	const { t } = useTranslation()
 	const iconRender = alertTypeIcon[iconKey]
 
 	return (
@@ -58,7 +57,13 @@ export const AlertMessage = ({ textKey, iconKey, size }: Props) => {
 				}
 				className={size == 'large' ? classes.iconLarge : classes.iconSmall}
 			></Icon>
-			<Text className={size == 'large' ? classes.textLarge : classes.textSmall}>{t(textKey)}</Text>
+			<Trans
+				className={size == 'large' ? classes.textLarge : classes.textSmall}
+				i18nKey={textKey}
+				components={{ b: <strong /> }}
+			>
+				{/* {t(textKey)} */}
+			</Trans>
 		</Paper>
 	)
 }
