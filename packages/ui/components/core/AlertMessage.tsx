@@ -4,35 +4,33 @@ import { Trans } from 'next-i18next'
 import { Icon } from '../../icon'
 
 const useStyles = createStyles((theme) => ({
-	bannerSmall: {
+	messageContainerSmall: {
 		width: '335px',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'flex-start',
-		padding: '12px',
-		gap: '8px',
+		padding: theme.spacing.sm,
+		gap: theme.spacing.xs - 2,
 		backgroundColor: theme.other.colors.primary.lightGray,
 	},
-	bannerLarge: {
+	messageContainerLarge: {
 		width: '861px',
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'flex-start',
-		padding: '16px',
+		padding: theme.spacing.md,
 		backgroundColor: theme.other.colors.primary.lightGray,
 	},
-	textSmall: {
+	iconContainerLarge: {
+		minWidth: 'fit-content',
+		marginTop: theme.spacing.xs - 8,
+		marginRight: theme.spacing.xs - 0.75,
+	},
+	textContainerSmall: {
 		fontSize: theme.fontSizes.sm,
 	},
-	textLarge: {
+	textContainerLarge: {
 		fontSize: theme.fontSizes.md,
-	},
-	iconSmall: {
-		margin: '0 9.25px 0 0',
-	},
-	iconLarge: {
-		minWidth: 'fit-content',
-		margin: '2px 9.25px',
 	},
 }))
 
@@ -47,7 +45,11 @@ export const AlertMessage = ({ textKey, iconKey, size }: Props) => {
 	const iconRender = alertTypeIcon[iconKey]
 
 	return (
-		<Paper className={size == 'large' ? classes.bannerLarge : classes.bannerSmall} withBorder radius='md'>
+		<Paper
+			withBorder
+			radius='md'
+			className={size == 'large' ? classes.messageContainerLarge : classes.messageContainerSmall}
+		>
 			<Icon
 				icon={iconRender.icon}
 				width={17.5}
@@ -57,12 +59,12 @@ export const AlertMessage = ({ textKey, iconKey, size }: Props) => {
 						? theme.other.colors.secondary.cornflower
 						: theme.other.colors.tertiary.orange
 				}
-				className={size == 'large' ? classes.iconLarge : classes.iconSmall}
+				className={size == 'large' ? classes.iconContainerLarge : ''}
 			></Icon>
 			<Trans
 				i18nKey={textKey}
 				parent='span'
-				style={size == 'large' ? { fontSize: theme.fontSizes.md } : { fontSize: theme.fontSizes.sm }}
+				className={size == 'large' ? classes.textContainerLarge : classes.textContainerSmall}
 			></Trans>
 		</Paper>
 	)
