@@ -24,7 +24,7 @@
 		"@weareinreach/db": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"eslint": "8.32.0",
-		"next": "13.1.5",
+		"next": "13.1.6",
 		"next-auth": "4.18.10",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",

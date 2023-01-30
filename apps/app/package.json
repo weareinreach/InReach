@@ -52,7 +52,7 @@
 		"feather-icons-react": "0.6.2",
 		"i18next": "22.4.9",
 		"luxon": "3.2.1",
-		"next": "13.1.5",
+		"next": "13.1.6",
 		"next-auth": "4.18.10",
 		"next-i18next": "13.0.3",
 		"react": "18.2.0",
@@ -61,8 +61,8 @@
 		"zod": "3.20.2"
 	},
 	"devDependencies": {
-		"@next/bundle-analyzer": "13.1.5",
-		"@next/font": "13.1.5",
+		"@next/bundle-analyzer": "13.1.6",
+		"@next/font": "13.1.6",
 		"@playwright/test": "1.30.0",
 		"@tanstack/react-query-devtools": "4.23.0",
 		"@types/flat": "5.0.2",
