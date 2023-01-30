@@ -5,9 +5,12 @@ import { Icon } from '../../icon'
 
 const useStyles = createStyles((theme) => ({
 	bannerSmall: {
-		width: '365px',
+		width: '335px',
 		display: 'flex',
 		flexDirection: 'column',
+		alignItems: 'flex-start',
+		padding: '12px',
+		gap: '8px',
 		backgroundColor: theme.other.colors.primary.lightGray,
 	},
 	bannerLarge: {
@@ -19,14 +22,13 @@ const useStyles = createStyles((theme) => ({
 		backgroundColor: theme.other.colors.primary.lightGray,
 	},
 	textSmall: {
-		margin: '0 12px 12px 12px',
 		fontSize: theme.fontSizes.sm,
 	},
 	textLarge: {
 		fontSize: theme.fontSizes.md,
 	},
 	iconSmall: {
-		margin: '13.25px 13.25px 9.25px 13.25px',
+		margin: '0 9.25px 0 0',
 	},
 	iconLarge: {
 		minWidth: 'fit-content',
@@ -58,12 +60,10 @@ export const AlertMessage = ({ textKey, iconKey, size }: Props) => {
 				className={size == 'large' ? classes.iconLarge : classes.iconSmall}
 			></Icon>
 			<Trans
-				className={size == 'large' ? classes.textLarge : classes.textSmall}
 				i18nKey={textKey}
-				components={{ b: <strong /> }}
-			>
-				{/* {t(textKey)} */}
-			</Trans>
+				parent='span'
+				style={size == 'large' ? { fontSize: theme.fontSizes.md } : { fontSize: theme.fontSizes.sm }}
+			></Trans>
 		</Paper>
 	)
 }
