@@ -1,4 +1,4 @@
-import { createStyles, Text, Paper } from '@mantine/core'
+import { createStyles, Text, Paper, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 import { Icon } from '../../icon'
@@ -12,6 +12,10 @@ const useStyles = createStyles((theme) => ({
 	},
 	bannerLarge: {
 		width: '861px',
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'flex-start',
+		padding: '16px',
 		backgroundColor: theme.other.colors.primary.lightGray,
 	},
 	textSmall: {
@@ -19,30 +23,41 @@ const useStyles = createStyles((theme) => ({
 		fontSize: theme.fontSizes.sm,
 	},
 	textLarge: {
-		color: 'green',
+		fontSize: theme.fontSizes.md,
 	},
 	iconSmall: {
 		margin: '13.25px 13.25px 9.25px 13.25px',
-		color: theme.other.colors.secondary.cornflower,
-		width: '17.5px',
-		height: '17.5px',
 	},
-	iconLarge: {},
+	iconLarge: {
+		minWidth: 'fit-content',
+		margin: '2px 9.25px',
+	},
 }))
 
 export const alertTypeIcon = {
-	information: 'carbon:information-filled',
-	warning: 'carbon:warning-filled',
+	information: { icon: 'carbon:information-filled' },
+	warning: { icon: 'carbon:warning-filled' },
 } as const
 
 export const AlertMessage = ({ textKey, iconKey, size }: Props) => {
 	const { classes } = useStyles()
+	const theme = useMantineTheme()
 	const { t } = useTranslation()
 	const iconRender = alertTypeIcon[iconKey]
 
 	return (
 		<Paper className={size == 'large' ? classes.bannerLarge : classes.bannerSmall} withBorder radius='md'>
-			<Icon icon={iconRender} className={size == 'large' ? classes.iconLarge : classes.iconSmall}></Icon>
+			<Icon
+				icon={iconRender.icon}
+				width={17.5}
+				height={17.5}
+				color={
+					iconKey == 'information'
+						? theme.other.colors.secondary.cornflower
+						: theme.other.colors.tertiary.orange
+				}
+				className={size == 'large' ? classes.iconLarge : classes.iconSmall}
+			></Icon>
 			<Text className={size == 'large' ? classes.textLarge : classes.textSmall}>{t(textKey)}</Text>
 		</Paper>
 	)

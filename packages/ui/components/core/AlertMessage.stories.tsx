@@ -16,16 +16,29 @@ export default {
 
 const AlertMessage: ComponentStory<typeof AlertMessageCompnent> = (args) => <AlertMessageCompnent {...args} />
 
-export const AlertMessageCardSmall = AlertMessage.bind({})
-export const AlertMessageCardLarge = AlertMessage.bind({})
+export const AlertMessageCardSmallInformation = AlertMessage.bind({})
+export const AlertMessageCardSmallWarning = AlertMessage.bind({})
+export const AlertMessageCardLargeInformation = AlertMessage.bind({})
+export const AlertMessageCardLargeWarning = AlertMessage.bind({})
 
-AlertMessageCardSmall.args = {
+AlertMessageCardSmallInformation.args = {
 	iconKey: 'information',
 	textKey: 'alert-message-1',
 	size: 'small',
 }
+AlertMessageCardSmallWarning.args = {
+	iconKey: 'warning',
+	textKey: 'alert-message-1',
+	size: 'small',
+}
 
-AlertMessageCardLarge.args = {
+AlertMessageCardLargeInformation.args = {
+	iconKey: 'information',
+	textKey: 'alert-message-1',
+	size: 'large',
+}
+
+AlertMessageCardLargeWarning.args = {
 	iconKey: 'warning',
 	textKey: 'alert-message-1',
 	size: 'large',
