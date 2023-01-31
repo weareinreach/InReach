@@ -15,11 +15,11 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@tanstack/react-query": "4.23.0",
-		"@trpc/client": "10.9.0",
-		"@trpc/next": "10.9.0",
-		"@trpc/react-query": "10.9.0",
-		"@trpc/server": "10.9.0",
+		"@tanstack/react-query": "4.24.4",
+		"@trpc/client": "10.9.1",
+		"@trpc/next": "10.9.1",
+		"@trpc/react-query": "10.9.1",
+		"@trpc/server": "10.9.1",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"cuid": "3.0.0",
@@ -38,15 +38,15 @@
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"dotenv-cli": "7.0.0",
-		"eslint": "8.32.0",
+		"eslint": "8.33.0",
 		"next": "13.1.6",
 		"prettier": "2.8.3",
 		"prisma": "4.9.0",
 		"trpc-client-devtools-link": "0.2.1-next",
-		"typescript": "4.9.4"
+		"typescript": "4.9.5"
 	},
 	"peerDependencies": {
 		"next": ">=13"
 	},
-	"packageManager": "pnpm@7.26.0"
+	"packageManager": "pnpm@7.26.2"
 }
