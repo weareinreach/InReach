@@ -42,6 +42,7 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 					</NotificationsProvider>
 				</SessionProvider>
 			</TypographyStylesProvider>
+			<ReactQueryDevtools initialIsOpen={false} />
 		</MantineProvider>
 	)
 }
