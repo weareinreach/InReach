@@ -5,7 +5,7 @@ import { Icon } from '../../icon'
 
 const useStyles = createStyles((theme) => ({
 	messageContainerSmall: {
-		width: '335px',
+		maxWidth: '335px',
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'flex-start',
@@ -14,7 +14,7 @@ const useStyles = createStyles((theme) => ({
 		backgroundColor: theme.other.colors.primary.lightGray,
 	},
 	messageContainerLarge: {
-		width: '861px',
+		maxWidth: '861px',
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'flex-start',
@@ -39,7 +39,8 @@ export const alertTypeIcon = {
 	warning: { icon: 'carbon:warning-filled' },
 } as const
 
-export const AlertMessage = ({ textKey, iconKey, size }: Props) => {
+/** Used to display an alert message on an organization/location/service. */
+export const AlertMessage = ({ textKey, iconKey = 'information', size = 'lg' }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const iconRender = alertTypeIcon[iconKey]
@@ -48,7 +49,7 @@ export const AlertMessage = ({ textKey, iconKey, size }: Props) => {
 		<Paper
 			withBorder
 			radius='md'
-			className={size == 'large' ? classes.messageContainerLarge : classes.messageContainerSmall}
+			className={size == 'lg' ? classes.messageContainerLarge : classes.messageContainerSmall}
 		>
 			<Icon
 				icon={iconRender.icon}
@@ -59,19 +60,22 @@ export const AlertMessage = ({ textKey, iconKey, size }: Props) => {
 						? theme.other.colors.secondary.cornflower
 						: theme.other.colors.tertiary.orange
 				}
-				className={size == 'large' ? classes.iconContainerLarge : ''}
+				className={size == 'lg' ? classes.iconContainerLarge : ''}
 			></Icon>
 			<Trans
 				i18nKey={textKey}
-				parent='span'
-				className={size == 'large' ? classes.textContainerLarge : classes.textContainerSmall}
+				parent='p'
+				className={size == 'lg' ? classes.textContainerLarge : classes.textContainerSmall}
 			></Trans>
 		</Paper>
 	)
 }
 
 type Props = {
+	/** The alert message is created using a textKey from the i18n JSON/Crowdin */
 	textKey: string
+	/** `warning` or `information` will dictate the icon that is displayed with the alert */
 	iconKey: keyof typeof alertTypeIcon
-	size: string
+	/** Size of the alert box */
+	size: 'sm' | 'lg'
 }

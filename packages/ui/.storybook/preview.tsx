@@ -33,6 +33,12 @@ export const parameters = {
 			date: /Date$/,
 		},
 	},
+	docs: {
+		source: {
+			type: 'dynamic',
+			excludeDecorators: true,
+		},
+	},
 	i18n,
 	locale: 'en',
 	locales: i18nLocales,
