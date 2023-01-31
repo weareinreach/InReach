@@ -9,7 +9,7 @@ export default {
 	parameters: {
 		design: {
 			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=368%3A6934&t=OPIs2wdc5n2td3Nf-4',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=70%3A2310&t=v8Asw8U9mWb2EIZk-0',
 		},
 	},
 } as ComponentMeta<typeof AlertMessageCompnent>
