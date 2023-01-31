@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unused-modules */
 // codegen:start {preset: barrel, include: ./*.ts*, exclude: ./*.stories.*}
+export * from './ActionButtons'
 export * from './AntiHateMessage'
 export * from './Badge'
 export * from './Breadcrumb'
