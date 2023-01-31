@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@mantine/utils": "5.10.2",
-		"@weareinreach/api": "workspace:0.100.0"
+		"@weareinreach/api": "0.100.0"
 	},
 	"devDependencies": {
 		"@babel/core": "7.20.12",

@@ -296,7 +296,7 @@ importers:
       just-pluck-it: 2.3.0
       just-remove: 3.2.0
       nanoid: 4.0.0
-      next: 13.1.5
+      next: 13.1.6
       prettier: 2.8.3
       prisma: 4.9.0
       superjson: 1.12.2
@@ -307,7 +307,7 @@ importers:
     dependencies:
       '@tanstack/react-query': 4.23.0_biqbaboplfbrettd7655fr4n2y
       '@trpc/client': 10.9.0_@trpc+server@10.9.0
-      '@trpc/next': 10.9.0_zf4dmnjasp57goshgvidib2hkq
+      '@trpc/next': 10.9.0_o4vjr5433zf4lxe7zgyoyoztjm
       '@trpc/react-query': 10.9.0_22wgxldzdfxutowffn2dykkd3i
       '@trpc/server': 10.9.0
       '@weareinreach/auth': link:../auth
@@ -328,7 +328,7 @@ importers:
       '@weareinreach/eslint-config': link:../eslint-config
       dotenv-cli: 7.0.0
       eslint: 8.32.0
-      next: 13.1.5_biqbaboplfbrettd7655fr4n2y
+      next: 13.1.6_biqbaboplfbrettd7655fr4n2y
       prettier: 2.8.3
       prisma: 4.9.0
       trpc-client-devtools-link: 0.2.1-next_2zpqbmooshoeqfe2ml35ze43ai
@@ -632,7 +632,7 @@ importers:
       '@types/node': 16.18.11
       '@types/react': 18.0.27
       '@types/react-dom': 18.0.10
-      '@weareinreach/api': workspace:0.100.0
+      '@weareinreach/api': 0.100.0
       '@weareinreach/auth': 0.100.0
       '@weareinreach/config': 0.100.0
       '@weareinreach/eslint-config': 0.100.0
@@ -711,7 +711,7 @@ importers:
       '@storybook/addon-links': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-viewport': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/jest': 0.0.11-next.0
-      '@storybook/nextjs': 7.0.0-beta.36_b6wfwoevwgkqfdpizn6p5n2po4
+      '@storybook/nextjs': 7.0.0-beta.36_aofse2jb24ntwp4ksjwmy5mzhu
       '@storybook/react': 7.0.0-beta.36_o4scbtliisanygemawej7x2d6i
       '@storybook/test-runner': 0.10.0-next.5_@types+node@16.18.11
       '@storybook/testing-library': 0.0.14-next.1
@@ -723,7 +723,7 @@ importers:
       '@tiptap/starter-kit': 2.0.0-beta.209_mr3bhnmfox2kjnahwbtgkxt4cy
       '@tomfreudenberg/next-auth-mock': 0.5.6_ramrxj72odtpbxgorowdiuhnxm
       '@trpc/client': 10.9.0_@trpc+server@10.9.0
-      '@trpc/next': 10.9.0_zf4dmnjasp57goshgvidib2hkq
+      '@trpc/next': 10.9.0_o4vjr5433zf4lxe7zgyoyoztjm
       '@trpc/react-query': 10.9.0_22wgxldzdfxutowffn2dykkd3i
       '@types/eslint': 8.4.10
       '@types/luxon': 3.2.0
@@ -746,10 +746,10 @@ importers:
       merge-anything: 5.1.4
       msw: 1.0.0_typescript@4.9.4
       msw-storybook-addon: 1.7.0_manxwoi6vvcd7uumcabbhptjeu
-      next: 13.1.5_pjwopsidmaokadturxaafygjp4
-      next-auth: 4.18.10_s6zlkfvllybxhmcq5pkr2zsuza
-      next-i18next: 13.0.3_bf3g27fdvuof4eynujcim7da5q
-      next-router-mock: 0.9.1_next@13.1.5+react@18.2.0
+      next: 13.1.6_pjwopsidmaokadturxaafygjp4
+      next-auth: 4.18.10_3vryta7zmbcsw4rrqf4axjqggm
+      next-i18next: 13.0.3_orgeahnopbd5moyonutwrwm4pq
+      next-router-mock: 0.9.1_next@13.1.6+react@18.2.0
       postcss-loader: 7.0.2_qxxfhhrl3yknjjmta266mo3u64
       react: 18.2.0
       react-docgen-typescript: 2.2.2_typescript@4.9.4
@@ -7195,7 +7195,7 @@ packages:
     resolution: {integrity: sha512-02w0sgGZaK1agT050yCVhJ+o4rLHANWvLKWjQjeAsYbjneLC5ITt+3GDB4jRiWwJboZ8dHW1fGSK1Vg5fA34aQ==}
     dev: true
 
-  /@storybook/nextjs/7.0.0-beta.36_b6wfwoevwgkqfdpizn6p5n2po4:
+  /@storybook/nextjs/7.0.0-beta.36_aofse2jb24ntwp4ksjwmy5mzhu:
     resolution: {integrity: sha512-5eoptOGjGSotDU8Bm6BrxD4GDEsXNC6zIIrXdIlFDqazNFNR0nGrettik8XYnEBVe08dzxbTyOUDb1qSNruTmQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -7214,7 +7214,7 @@ packages:
         optional: true
     dependencies:
       '@babel/core': 7.20.12
-      '@next/font': 13.1.5
+      '@next/font': 13.1.6
       '@storybook/addon-actions': 7.0.0-beta.36_biqbaboplfbrettd7655fr4n2y
       '@storybook/builder-webpack5': 7.0.0-beta.36_zmxm2um53veyiere2lfyfghica
       '@storybook/core-common': 7.0.0-beta.36
@@ -7227,7 +7227,7 @@ packages:
       fs-extra: 11.1.0
       image-size: 1.0.2
       loader-utils: 3.2.1
-      next: 13.1.5_pjwopsidmaokadturxaafygjp4
+      next: 13.1.6_pjwopsidmaokadturxaafygjp4
       pnp-webpack-plugin: 1.7.0_typescript@4.9.4
       postcss-loader: 6.2.1_qxxfhhrl3yknjjmta266mo3u64
       react: 18.2.0
@@ -16761,18 +16761,18 @@ packages:
       react: 18.2.0
       react-i18next: 12.1.4_iakk3dtjhjpukdoa4oua5khgci
 
-  /next-router-mock/0.9.1_next@13.1.5+react@18.2.0:
+  /next-router-mock/0.9.1_next@13.1.6+react@18.2.0:
     resolution: {integrity: sha512-GTrns944dnFNgycpinyRszOiwwk99LUJsvvX0FWRgUFHv6hOuzCns1rmTlzO+DRimYB9/XMA+87X2/dQLzjiUQ==}
     peerDependencies:
       next: '>=10.0.0 || >=13'
       react: '>=17.0.0 || >=18'
     dependencies:
-      next: 13.1.5_pjwopsidmaokadturxaafygjp4
+      next: 13.1.6_pjwopsidmaokadturxaafygjp4
       react: 18.2.0
     dev: true
 
-  /next/13.1.5_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-rmpYZFCxxWAi2nJCT9sSqMLGC3cu+Pf689hx9clcyP0KbVIhh/7Dus5QcKrVd/PrAd6AjsuogSRR1mCP7BoYRw==}
+  /next/13.1.6_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-hHlbhKPj9pW+Cymvfzc15lvhaOZ54l+8sXDXJWm3OBNBzgrVj6hwGPmqqsXg40xO1Leq+kXpllzRPuncpC0Phw==}
     engines: {node: '>=14.6.0'}
     hasBin: true
     peerDependencies:
