@@ -1,4 +1,4 @@
-import { type StorybookConfig } from '@storybook/core-common'
+import { type StorybookConfig } from '@storybook/nextjs'
 import { merge } from 'merge-anything'
 
 import * as path from 'path'
@@ -7,29 +7,32 @@ const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
 
 const config: StorybookConfig = {
 	stories: [`../components/**/${filePattern}`, `../layout/**/${filePattern}`],
-	staticDirs: [{ from: '../../../apps/app/public', to: 'public/' }],
+	staticDirs: [
+		{
+			from: '../../../apps/app/public',
+			to: 'public/',
+		},
+		'../public',
+	],
 	addons: [
 		'@geometricpanda/storybook-addon-badges',
 		'@storybook/addon-a11y',
-		'@storybook/addon-actions',
-		'@storybook/addon-console',
 		'@storybook/addon-essentials',
 		'@storybook/addon-interactions',
 		'@storybook/addon-links',
-		'@storybook/addon-viewport',
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
-		'storybook-addon-next',
 		'storybook-addon-pseudo-states',
 		'storybook-addon-swc',
-		'storybook-dark-mode',
-		'storybook-mobile',
-		'storybook-react-i18next',
+		// 'storybook-react-i18next',
 	],
-	framework: '@storybook/react',
-	core: {
-		builder: 'webpack5',
+	framework: {
+		name: '@storybook/nextjs',
+		options: {},
 	},
+	// core: {
+	// 	builder: '@storybook/builder-webpack5',
+	// },
 	features: {
 		storyStoreV7: true,
 		buildStoriesJson: true,
@@ -51,6 +54,7 @@ const config: StorybookConfig = {
 						__dirname,
 						'mockAuthStates.ts'
 					),
+					// '@weareinreach/api': path.resolve(__dirname, '../../api'),
 					'next-i18next': 'react-i18next',
 				},
 				roots: [path.resolve(__dirname, '../../../apps/app/public')],
@@ -77,6 +81,7 @@ const config: StorybookConfig = {
 					tty: false,
 					url: false,
 					util: false,
+					v8: false,
 					vm: false,
 					zlib: false,
 				},
@@ -84,6 +89,9 @@ const config: StorybookConfig = {
 		}
 		const mergedConfig = merge(config, configAdditions)
 		return mergedConfig
+	},
+	docs: {
+		autodocs: true,
 	},
 }
 export default config

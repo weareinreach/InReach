@@ -7,6 +7,40 @@
 			"// codegen:end"
 		],
 		"description": "Code to have ESLint generate barrel file"
+	},
+	"Next.js SSR Page with i18n preload": {
+		"prefix": "!ssrpagei18",
+		"body": [
+			"import { trpcServerClient } from '@weareinreach/api/trpc'",
+			"import { GetServerSideProps, NextPage } from 'next'",
+			"import { useTranslation } from 'next-i18next'",
+			"import { serverSideTranslations } from 'next-i18next/serverSideTranslations'",
+			"",
+			"import { api } from '~/utils/api'",
+			"",
+			"const ${1:$TM_FILENAME_BASE}: NextPage = () => {",
+			"	const { t } = useTranslation()",
+			"",
+			"	return <></>",
+			"}",
+			"",
+			"export const getServerSideProps: GetServerSideProps = async ({ req, res, locale }) => {",
+			"	const ssg = await trpcServerClient()",
+			"",
+			"	const props = {",
+			"		trpcState: ssg.dehydrate(),",
+			"		...(await serverSideTranslations(locale as string, ['common'])),",
+			"	}",
+			"",
+			"	return {",
+			"		props,",
+			"	}",
+			"}",
+			"",
+			"export default ${1:$TM_FILENAME_BASE}",
+			""
+		],
+		"description": "Next.js SSR Page with i18n preload"
 	}
 
 	// Place your ✨ InReach (root) workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and

@@ -12,7 +12,7 @@ export const reviewRouter = defineRouter({
 				...input,
 				userId: ctx.session.user.id,
 			}
-			const review = await ctx.prisma.orgReview.create({ data })
+			const review = await ctx.prisma.orgReview.create({ data, select: { id: true } })
 
 			return review
 		} catch (error) {
