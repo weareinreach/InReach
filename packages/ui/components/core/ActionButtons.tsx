@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 
 import { Icon } from '../../icon'
 
-export const approvedButtonIcons = {
+export const actionButtonIcons = {
 	save: { icon: 'carbon:favorite', labelKey: 'save' },
 	share: { icon: 'carbon:share', labelKey: 'share' },
 	print: { icon: 'carbon:printer', labelKey: 'print' },
@@ -25,11 +25,11 @@ export const ActionButtons = ({ iconKey }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation()
-	const iconRender = approvedButtonIcons[iconKey]
+	const iconRender = actionButtonIcons[iconKey]
 
 	return <Button leftIcon={<Icon icon={iconRender.icon} />}>{t(iconRender.labelKey)}</Button>
 }
 
 type Props = {
-	iconKey: keyof typeof approvedButtonIcons
+	iconKey: keyof typeof actionButtonIcons
 }

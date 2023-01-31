@@ -2,11 +2,17 @@ import { Center } from '@mantine/core'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import React from 'react'
 
-import { ActionButtons as ActionButtonsComponent, approvedButtonIcons } from './ActionButtons'
+import { ActionButtons as ActionButtonsComponent, actionButtonIcons } from './ActionButtons'
 
 export default {
 	title: 'Design System/Action Buttons',
 	component: ActionButtonsComponent,
+	argTypes: {
+		iconKey: {
+			description: 'the action button can contain an icon. Allowed value is one of',
+			options: Object.keys(actionButtonIcons),
+		},
+	},
 	parameters: {
 		design: {
 			type: 'figma',
