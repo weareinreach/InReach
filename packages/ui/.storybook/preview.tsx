@@ -1,15 +1,28 @@
-import { MantineProvider, TypographyStylesProvider, MantineProviderProps } from '@mantine/core'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { Story } from '@storybook/react'
-import { themes } from '@storybook/theming'
-import { RouterContext } from 'next/dist/shared/lib/router-context'
-import { ReactNode } from 'react'
-import { I18nextProvider } from 'react-i18next'
+import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 
+import { WithI18n, WithMantine, WithTRPC } from './decorators'
 import { i18n, i18nLocales } from './i18next'
-import { storybookTheme } from '../theme'
 
 import './font.css'
+
+initializeMsw({
+	serviceWorker: {
+		options: {
+			scope: '/trpc',
+		},
+	},
+	onUnhandledRequest: ({ method, url }) => {
+		if (url.pathname.startsWith('/trpc')) {
+			console.error(`Unhandled ${method} request to ${url}.
+
+        This exception has been only logged in the console, however, it's strongly recommended to resolve this error as you don't want unmocked data in Storybook stories.
+
+        If you wish to mock an error response, please refer to this guide: https://mswjs.io/docs/recipes/mocking-error-responses
+      `)
+		}
+	},
+})
 
 export const parameters = {
 	actions: { argTypesRegex: '^on[A-Z].*' },
@@ -20,13 +33,6 @@ export const parameters = {
 			date: /Date$/,
 		},
 	},
-	nextRouter: {
-		Provider: RouterContext.Provider,
-	},
-	darkMode: {
-		dark: { ...themes.dark },
-		light: { ...themes.light },
-	},
 	i18n,
 	locale: 'en',
 	locales: i18nLocales,
@@ -35,30 +41,4 @@ export const parameters = {
 	},
 }
 
-const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
-	withCSSVariables: false,
-	withGlobalStyles: true,
-	withNormalizeCSS: false,
-}
-
-const ThemeWrapper = ({ children }: ThemeWrapperProps) => {
-	return (
-		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
-			<TypographyStylesProvider>
-				<I18nextProvider i18n={i18n}>{children}</I18nextProvider>
-			</TypographyStylesProvider>
-		</MantineProvider>
-	)
-}
-
-export const decorators = [
-	(Story: Story) => (
-		<ThemeWrapper>
-			<Story />
-		</ThemeWrapper>
-	),
-]
-
-type ThemeWrapperProps = {
-	children: ReactNode
-}
+export const decorators = [WithI18n, WithTRPC, WithMantine, mswDecorator]

@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import React from 'react'
 
 import { Badge } from './Badge'
@@ -50,33 +50,34 @@ export default {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8361&t=WHlvdeWA5onN4z6O-0,',
 		},
 	},
-} as ComponentMeta<typeof Badge>
+} as Meta<typeof Badge>
 
-const BadgeVariant: ComponentStory<typeof Badge> = (args) => <Badge {...args} />
-
-export const CommunityTagLarge = BadgeVariant.bind({})
-export const CommunityTagSmall = BadgeVariant.bind({})
-export const ServiceTagLarge = BadgeVariant.bind({})
-export const ServiceTagSmall = BadgeVariant.bind({})
-
-CommunityTagLarge.args = {
-	leftSection: '✊🏿',
-	children: 'BIPOC community',
-	variant: 'commmunityTag-large',
+export const CommunityTagLarge = {
+	args: {
+		leftSection: '✊🏿',
+		children: 'BIPOC community',
+		variant: 'commmunityTag-large',
+	},
 }
 
-CommunityTagSmall.args = {
-	leftSection: '✊🏿',
-	children: 'BIPOC community',
-	variant: 'commmunityTag-small',
+export const CommunityTagSmall = {
+	args: {
+		leftSection: '✊🏿',
+		children: 'BIPOC community',
+		variant: 'commmunityTag-small',
+	},
 }
 
-ServiceTagLarge.args = {
-	children: 'Abortion Care',
-	variant: 'serviceTag-large',
+export const ServiceTagLarge = {
+	args: {
+		children: 'Abortion Care',
+		variant: 'serviceTag-large',
+	},
 }
 
-ServiceTagSmall.args = {
-	children: 'Abortion Care',
-	variant: 'serviceTag-small',
+export const ServiceTagSmall = {
+	args: {
+		children: 'Abortion Care',
+		variant: 'serviceTag-small',
+	},
 }

@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import React from 'react'
 
 import { UserAvatar } from './UserAvatar'
@@ -17,35 +17,38 @@ export default {
 			control: 'date',
 		},
 	},
-} as ComponentMeta<typeof UserAvatar>
+} as Meta<typeof UserAvatar>
 
-const UserAvatarVariant: ComponentStory<typeof UserAvatar> = (args) => <UserAvatar {...args} />
-
-export const FullDetails = UserAvatarVariant.bind({})
-export const NoImage = UserAvatarVariant.bind({})
-export const WithDate = UserAvatarVariant.bind({})
-export const NoData = UserAvatarVariant.bind({})
-export const Loading = UserAvatarVariant.bind({})
-
-FullDetails.parameters = {
-	nextAuthMock: {
-		session: 'userPicAuthed',
-	},
-}
-NoImage.parameters = {
-	nextAuthMock: {
-		session: 'userAuthed',
+export const FullDetails = {
+	parameters: {
+		nextAuthMock: {
+			session: 'userPicAuthed',
+		},
 	},
 }
 
-WithDate.args = {
-	date: new Date(),
-}
-
-Loading.parameters = {
-	nextAuthMock: {
-		session: 'loading',
+export const NoImage = {
+	parameters: {
+		nextAuthMock: {
+			session: 'userAuthed',
+		},
 	},
 }
 
-NoData.parameters = {}
+export const WithDate = {
+	args: {
+		date: new Date(),
+	},
+}
+
+export const NoData = {
+	parameters: {},
+}
+
+export const Loading = {
+	parameters: {
+		nextAuthMock: {
+			session: 'loading',
+		},
+	},
+}
