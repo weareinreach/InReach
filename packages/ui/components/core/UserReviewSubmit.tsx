@@ -10,14 +10,15 @@ import {
 	Container,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
-import { type ApiClient, type ApiInput } from '@weareinreach/api'
-import { useTypedRouter } from '@weareinreach/api/hooks'
+import { ApiInput } from '@weareinreach/api'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 
 import { Button } from '.'
+import { useTypedRouter } from '../../hooks'
 import { Icon } from '../../icon'
+import { trpc as api } from '../../lib/trpcClient'
 
 const useStyles = createStyles((theme) => ({
 	textContainer: {
@@ -45,23 +46,23 @@ const useStyles = createStyles((theme) => ({
 
 const RouterSchema = z.object({
 	slug: z.string(),
-	locationId: z.string().cuid().optional(),
-	serviceId: z.string().cuid().optional(),
+	locationId: z.string().optional(),
+	serviceId: z.string().optional(),
 })
 const ReviewSchema = z.object({
-	organizationId: z.string().cuid(),
-	orgLocationId: z.string().cuid().optional(),
-	orgServiceId: z.string().cuid().optional(),
+	organizationId: z.string(),
+	orgLocationId: z.string().optional(),
+	orgServiceId: z.string().optional(),
 	rating: z.number(),
 	reviewText: z.string().optional(),
 })
 
-export const UserReviewSubmit = ({ avatarUrl, avatarName, api }: UserProps) => {
+export const UserReviewSubmit = ({ avatarUrl, avatarName }: UserProps) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation()
 	const theme = useMantineTheme()
 	const { query } = useTypedRouter(RouterSchema)
-	const { data: orgQuery, status } = api.organization.getIdFromSlug.useQuery(query)
+	const { data: orgQuery, status } = api.organization.getIdFromSlug.useQuery(query, { enabled: !!query })
 	const { locationId, serviceId } = query
 
 	const submitReview = api.review.create.useMutation()
@@ -95,7 +96,11 @@ export const UserReviewSubmit = ({ avatarUrl, avatarName, api }: UserProps) => {
 					<Text weight={theme.other.fontWeight.semibold}>{avatarName ? avatarName : t('in-reach-user')}</Text>
 				</Stack>
 			</Group>
-			<form onSubmit={form.onSubmit((values) => submitReview.mutate(values))}>
+			<form
+				onSubmit={form.onSubmit((values) => {
+					submitReview.mutate(values)
+				}, console.log)}
+			>
 				<Rating
 					size='md'
 					emptySymbol={<Icon icon='carbon:star-filled' color={theme.other.colors.tertiary.coolGray} />}
@@ -111,7 +116,7 @@ export const UserReviewSubmit = ({ avatarUrl, avatarName, api }: UserProps) => {
 					/>
 					<Text color={theme.other.colors.secondary.darkGray}>{t('review-note')}</Text>
 				</Container>
-				<Button variant='sm-primary' className={classes.button}>
+				<Button variant='sm-primary' className={classes.button} type='submit'>
 					{t('submit')}
 				</Button>
 			</form>
@@ -122,7 +127,6 @@ export const UserReviewSubmit = ({ avatarUrl, avatarName, api }: UserProps) => {
 type UserProps = {
 	avatarUrl: string | null
 	avatarName: string | null
-	api: ApiClient
 }
 
 type FormFields = ApiInput['review']['create']
