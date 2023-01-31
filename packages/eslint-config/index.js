@@ -10,7 +10,9 @@ const config = {
 		'eslint:recommended',
 	],
 	// parser: '@typescript-eslint/parser',
-	rules: {},
+	rules: {
+		'no-unused-vars': 1,
+	},
 	overrides: [
 		{
 			files: ['**/*.ts?(x)'],
