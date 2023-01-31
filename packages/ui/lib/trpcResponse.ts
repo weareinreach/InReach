@@ -1,26 +1,24 @@
+import { transformer } from '@weareinreach/api/lib/transformer'
+
 export type RpcResponse<Data> = RpcSuccessResponse<Data> | RpcErrorResponse
 
 export type RpcSuccessResponse<Data> = {
 	// id: null
 	result: {
-		data: {
-			json: Data
-		}
+		data: Data
 	}
 }
 
 export type RpcErrorResponse = {
 	// id: null
 	error: {
-		json: {
-			message: string
-			code: number
-			data: {
-				code: string
-				httpStatus: number
-				stack: string
-				path: string //TQuery
-			}
+		message: string
+		code: number
+		data: {
+			code: string
+			httpStatus: number
+			stack: string
+			path: string //TQuery
 		}
 	}
 }
@@ -30,8 +28,6 @@ export type RpcErrorResponse = {
 export const jsonRpcSuccessResponse = (data: unknown) => ({
 	// id: null,
 	result: {
-		data: {
-			json: data,
-		},
+		data: transformer.serialize(data),
 	},
 })
