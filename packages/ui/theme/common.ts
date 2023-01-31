@@ -122,6 +122,13 @@ export const commonTheme: MantineThemeOverride = {
 				radius: 'xl',
 			},
 		},
+		GridCol: {
+			defaultProps: {
+				span: 12,
+				xs: 6,
+				sm: 4,
+			},
+		},
 		Text: {
 			defaultProps: (theme) => ({
 				component: 'span',
