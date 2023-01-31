@@ -51,7 +51,5 @@ const storybookTRPC = () => createTRPCReact<AppRouter>()
 
 export type StorybookTRPC = ReturnType<typeof storybookTRPC>
 export type NextTRPC = ReturnType<typeof nextTRPC>
-console.log(`Storybook env: ${process.env.STORYBOOK}`)
 
-// export const trpc = process.env.STORYBOOK ? storybookTRPC() : nextTRPC()
-export const trpc = storybookTRPC()
+export const trpc = process.env.STORYBOOK ? storybookTRPC() : nextTRPC()
