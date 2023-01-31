@@ -1,18 +1,20 @@
-import { Button, createStyles, Menu, Text, useMantineTheme } from '@mantine/core'
+import { Avatar, Button, createStyles, Menu, Text, TextInput, useMantineTheme } from '@mantine/core'
 import { useClipboard } from '@mantine/hooks'
+import { openModal, closeAllModals } from '@mantine/modals'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
+import { UserReviewSubmit } from './UserReviewSubmit'
 import { Icon } from '../../icon'
 import { trpc } from '../../lib/trpcClient'
 
 export const actionButtonIcons = {
+	delete: { icon: 'carbon:delete', labelKey: 'delete' },
+	more: { icon: 'carbon:overflow-menu-horizontal' },
+	print: { icon: 'carbon:printer', labelKey: 'print' },
+	review: { icon: 'carbon:star', labelKey: 'review' },
 	save: { icon: 'carbon:favorite', labelKey: 'save' },
 	share: { icon: 'carbon:share', labelKey: 'share' },
-	print: { icon: 'carbon:printer', labelKey: 'print' },
-	delete: { icon: 'carbon:delete', labelKey: 'delete' },
-	review: { icon: 'carbon:star', labelKey: 'review' },
-	more: { icon: 'carbon:overflow-menu-horizontal' },
 } as const
 
 const useStyles = createStyles((theme) => ({
@@ -39,6 +41,29 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const actions = {
+	delete: () => {
+		console.log('clicked delete button')
+		//onClick should open a "are you sure modal"
+		//Yes option closes modal, deletes the specified resource, display notification that 'blah was deleted'
+		//No option closes modal
+		//add temporary 'deleted' message to lang json file
+	},
+	more: () => {
+		console.log('clicked more button')
+		//onClick should open a menu and list the available actions
+		//should this sub-menu show icon + label, just icon, or just label?
+	},
+	print: () => {
+		window.print()
+	},
+	review: () => {
+		console.log('clicked review button')
+		//will need to pass the org/location/service data to the submit review component
+		openModal({
+			title: 'Placeholder Text for Submit a Review Modal',
+			children: <UserReviewSubmit avatarName={'placeholderName'} avatarUrl={'placeholderUrl'} />,
+		})
+	},
 	save: () => {
 		console.log('clicked save button')
 		//onClick should open a menu,
@@ -61,27 +86,6 @@ const actions = {
 		// // https://mantine.dev/hooks/use-clipboard/
 		// const clipboard = useClipboard()
 		// clipboard.copy(path)
-	},
-	print: () => {
-		window.print()
-	},
-	delete: () => {
-		console.log('clicked delete button')
-		//onClick should open a "are you sure modal"
-		//Yes option closes modal, deletes the specified resource, display notification that 'blah was deleted'
-		//No option closes modal
-		//add temporary 'deleted' message to lang json file
-	},
-	review: () => {
-		console.log('clicked review button')
-		//onClick should open the Reviewer modal
-
-		// https://mantine.dev/others/modals/
-	},
-	more: () => {
-		console.log('clicked more button')
-		//onClick should open a menu and list the above actions
-		//should this sub-menu show icon + label, just icon, or just label?
 	},
 } as const
 

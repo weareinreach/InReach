@@ -1,6 +1,4 @@
-import { Center } from '@mantine/core'
-import { Meta, StoryFn } from '@storybook/react'
-import React from 'react'
+import { Meta } from '@storybook/react'
 
 import { ActionButtons as ActionButtonsComponent, actionButtonIcons } from './ActionButtons'
 
@@ -15,21 +13,6 @@ export default {
 	},
 } as Meta<typeof ActionButtonsComponent>
 
-export const ActionButtonSave = {
-	args: {
-		iconKey: 'save',
-	},
-}
-export const ActionButtonShare = {
-	args: {
-		iconKey: 'share',
-	},
-}
-export const ActionButtonPrint = {
-	args: {
-		iconKey: 'print',
-	},
-}
 export const ActionButtonDelete = {
 	args: {
 		iconKey: 'delete',
@@ -38,5 +21,25 @@ export const ActionButtonDelete = {
 export const ActionButtonMore = {
 	args: {
 		iconKey: 'more',
+	},
+}
+export const ActionButtonPrint = {
+	args: {
+		iconKey: 'print',
+	},
+}
+export const ActionButtonReview = {
+	args: {
+		iconKey: 'review',
+	},
+}
+export const ActionButtonSave = {
+	args: {
+		iconKey: 'save',
+	},
+}
+export const ActionButtonShare = {
+	args: {
+		iconKey: 'share',
 	},
 }
