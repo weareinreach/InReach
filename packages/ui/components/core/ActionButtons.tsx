@@ -1,6 +1,6 @@
 import { Avatar, Button, createStyles, Menu, Text, TextInput, useMantineTheme } from '@mantine/core'
 import { useClipboard } from '@mantine/hooks'
-import { openModal, closeAllModals } from '@mantine/modals'
+import { openModal, closeAllModals, openConfirmModal } from '@mantine/modals'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
@@ -42,11 +42,18 @@ const useStyles = createStyles((theme) => ({
 
 const actions = {
 	delete: () => {
-		console.log('clicked delete button')
-		//onClick should open a "are you sure modal"
-		//Yes option closes modal, deletes the specified resource, display notification that 'blah was deleted'
-		//No option closes modal
-		//add temporary 'deleted' message to lang json file
+		openConfirmModal({
+			title: 'Please confirm your action',
+			children: (
+				<Text size='sm'>
+					This action is so important that you are required to confirm it with a modal. Please click one of
+					these buttons to proceed.
+				</Text>
+			),
+			labels: { confirm: 'Confirm', cancel: 'Cancel' },
+			onCancel: () => console.log('Cancel'),
+			onConfirm: () => console.log('Confirmed'),
+		})
 	},
 	more: () => {
 		console.log('clicked more button')
@@ -57,7 +64,6 @@ const actions = {
 		window.print()
 	},
 	review: () => {
-		console.log('clicked review button')
 		//will need to pass the org/location/service data to the submit review component
 		openModal({
 			title: 'Placeholder Text for Submit a Review Modal',
