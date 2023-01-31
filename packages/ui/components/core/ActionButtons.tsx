@@ -63,8 +63,7 @@ const actions = {
 		// clipboard.copy(path)
 	},
 	print: () => {
-		console.log('clicked print button')
-		//onClick should leverage windows.open
+		window.print()
 	},
 	delete: () => {
 		console.log('clicked delete button')
