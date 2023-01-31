@@ -56,6 +56,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				root: {
 					height: theme.spacing.xl + 8,
 					backgroundColor: theme.other.colors.primary.lightGray,
+					border: 'none',
 				},
 				inner: {
 					paddingTop: theme.spacing.sm / 2,
@@ -68,6 +69,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				root: {
 					height: theme.spacing.xl,
 					backgroundColor: theme.other.colors.primary.lightGray,
+					border: 'none',
 				},
 				inner: {
 					paddingTop: theme.spacing.sm / 4,

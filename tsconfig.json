@@ -1,4 +1,7 @@
 {
+	"compilerOptions": {
+		"baseUrl": "./"
+	},
 	"extends": "./packages/config/tsconfig/base.json",
 	"include": [
 		".eslintrc.js",
