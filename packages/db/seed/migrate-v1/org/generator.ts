@@ -51,7 +51,7 @@ import {
 
 export const generatedDir = `${path.resolve(__dirname, '../_generated')}/`
 export const rollbackFile = `${outputDir}rollback.json`
-export const isSuccess = (param: unknown) => (!!param ? `✅` : `❌`)
+export const isSuccess = (param: unknown) => (param ? `✅` : `❌`)
 
 const pluralRecord = (array: unknown[]) => (array.length === 1 ? 'record' : 'records')
 
