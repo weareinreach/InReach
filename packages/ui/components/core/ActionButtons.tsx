@@ -41,9 +41,18 @@ const useStyles = createStyles((theme) => ({
 const actions = {
 	save: () => {
 		console.log('clicked save button')
+		//onClick should open a menu,
+		//menu should have at least one option 'Create new list'
+		////open modal to provide a name for the new list
+		//if user has other lists, show them below the Create new list option
+		//once saved, display notification that 'blah was saved'
+		//add temporary 'saved' message to lang json file
 	},
 	share: () => {
 		console.log('clicked share button')
+		//onClick should create a link from the current page and copy that link to the clipboard
+		//once copied, display notification that 'blah was copied to clipboard'
+		//add temporary 'copied' message to lang json file
 
 		// https://nextjs.org/docs/api-reference/next/router
 		// const { pathname } = useRouter()
@@ -55,17 +64,25 @@ const actions = {
 	},
 	print: () => {
 		console.log('clicked print button')
+		//onClick should leverage windows.open
 	},
 	delete: () => {
 		console.log('clicked delete button')
+		//onClick should open a "are you sure modal"
+		//Yes option closes modal, deletes the specified resource, display notification that 'blah was deleted'
+		//No option closes modal
+		//add temporary 'deleted' message to lang json file
 	},
 	review: () => {
 		console.log('clicked review button')
+		//onClick should open the Reviewer modal
 
 		// https://mantine.dev/others/modals/
 	},
 	more: () => {
 		console.log('clicked more button')
+		//onClick should open a menu and list the above actions
+		//should this sub-menu show icon + label, just icon, or just label?
 	},
 } as const
 
