@@ -85,6 +85,7 @@ const actions = {
 	},
 } as const
 
+/** Used to display the action buttons when viewing an organization/location/service. */
 export const ActionButtons = ({ iconKey }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
@@ -129,6 +130,10 @@ export const ActionButtons = ({ iconKey }: Props) => {
 }
 
 type Props = {
+	/**
+	 * The action button is created using an iconKey, which, depending on the value supplied, will display
+	 * either an icon and a label or just an icon
+	 */
 	iconKey: keyof typeof actionButtonIcons
 	overflowItems?: Array<Exclude<keyof typeof actionButtonIcons, 'more'>>
 }

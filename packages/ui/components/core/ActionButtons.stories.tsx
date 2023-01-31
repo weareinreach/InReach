@@ -7,12 +7,6 @@ import { ActionButtons as ActionButtonsComponent, actionButtonIcons } from './Ac
 export default {
 	title: 'Design System/Action Buttons',
 	component: ActionButtonsComponent,
-	argTypes: {
-		iconKey: {
-			description: 'the action button can contain an icon. Allowed value is one of',
-			options: Object.keys(actionButtonIcons),
-		},
-	},
 	parameters: {
 		design: {
 			type: 'figma',
@@ -21,8 +15,28 @@ export default {
 	},
 } as Meta<typeof ActionButtonsComponent>
 
-export const ActionButton = {
+export const ActionButtonSave = {
 	args: {
 		iconKey: 'save',
+	},
+}
+export const ActionButtonShare = {
+	args: {
+		iconKey: 'share',
+	},
+}
+export const ActionButtonPrint = {
+	args: {
+		iconKey: 'print',
+	},
+}
+export const ActionButtonDelete = {
+	args: {
+		iconKey: 'delete',
+	},
+}
+export const ActionButtonMore = {
+	args: {
+		iconKey: 'more',
 	},
 }
