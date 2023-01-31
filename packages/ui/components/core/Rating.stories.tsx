@@ -1,5 +1,5 @@
 import { Center } from '@mantine/core'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import React from 'react'
 
 import { Rating as RatingTagComp } from './Rating'
@@ -13,13 +13,11 @@ export default {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8361&t=4RD0tTTcFDRbaSxU-0',
 		},
 	},
-} as ComponentMeta<typeof RatingTagComp>
+} as Meta<typeof RatingTagComp>
 
-const RatingTagVariant: ComponentStory<typeof RatingTagComp> = (args) => <RatingTagComp {...args} />
-
-export const Rating = RatingTagVariant.bind({})
-
-Rating.args = {
-	average: 4.3,
-	reviewCount: 10,
+export const Rating = {
+	args: {
+		average: 4.3,
+		reviewCount: 10,
+	},
 }
