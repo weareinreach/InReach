@@ -1,6 +1,7 @@
 /* eslint-disable node/no-process-env */
 import { httpBatchLink, loggerLink } from '@trpc/client'
 import { createTRPCNext } from '@trpc/next'
+import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { getEnv } from '@weareinreach/config/env'
 import { devtoolsLink } from 'trpc-client-devtools-link'
 
@@ -44,5 +45,17 @@ export const trpc = createTRPCNext<AppRouter>({
 	},
 	ssr: false,
 })
+/**
+ * Inference helper for inputs
+ *
+ * @example Type HelloInput = RouterInputs['example']['hello']
+ */
+export type ApiInput = inferRouterInputs<AppRouter>
+/**
+ * Inference helper for outputs
+ *
+ * @example Type HelloOutput = RouterOutputs['example']['hello']
+ */
+export type ApiOutput = inferRouterOutputs<AppRouter>
 
 export type ApiClient = typeof trpc

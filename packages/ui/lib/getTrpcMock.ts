@@ -5,6 +5,7 @@ import { rest } from 'msw'
 
 import path from 'path'
 
+import { getBaseUrl } from './trpcClient'
 import { jsonRpcSuccessResponse } from './trpcResponse'
 
 /**
@@ -31,11 +32,9 @@ export const getTRPCMock = <
 }) => {
 	const fn = endpoint.type === 'mutation' ? rest.post : rest.get
 
-	const route = path.join(
-		'http://localhost:6006',
-		'/trpc/',
-		endpoint.path[0] + '.' + (endpoint.path[1] as string)
-	)
+	const route = path.join(getBaseUrl(), '/trpc/', endpoint.path[0] + '.' + (endpoint.path[1] as string))
+
+	console.log(route)
 
 	return fn(route, (req, res, ctx) => {
 		return res(ctx.json(jsonRpcSuccessResponse(endpoint.response)))

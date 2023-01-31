@@ -15,6 +15,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
+		"@tanstack/react-query": "4.23.0",
 		"@trpc/client": "10.9.0",
 		"@trpc/next": "10.9.0",
 		"@trpc/react-query": "10.9.0",

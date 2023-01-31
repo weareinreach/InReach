@@ -1,8 +1,8 @@
+import { httpBatchLink, loggerLink } from '@trpc/client'
+import { createTRPCNext } from '@trpc/next'
+import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 import { type AppRouter } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
-import { httpBatchLink, loggerLink } from '@weareinreach/api/trpc/client/links'
-import { createTRPCNext } from '@weareinreach/api/trpc/next'
-import { type inferRouterInputs, type inferRouterOutputs } from '@weareinreach/api/trpc/server'
 import { getEnv } from '@weareinreach/config/env'
 import { devtoolsLink } from 'trpc-client-devtools-link'
 

@@ -1,5 +1,5 @@
+import { createNextApiHandler } from '@trpc/server/adapters/next'
 import { appRouter, createContext } from '@weareinreach/api'
-import { createNextApiHandler } from '@weareinreach/api/trpc/server/adapters/next'
 
 /* Creating a handler for the tRPC endpoint. */
 export default createNextApiHandler({
