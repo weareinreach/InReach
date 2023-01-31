@@ -14,7 +14,7 @@ const config = {
 		'import/no-duplicates': 'error',
 		'import/no-empty-named-blocks': 'error',
 		'import/no-extraneous-dependencies': 'error',
-		'import/no-unused-modules': ['warn', { missingExports: true }],
+		'import/no-unused-modules': 'off',
 		'import/consistent-type-specifier-style': ['error', 'prefer-inline'],
 		'import/order': [
 			'warn',
@@ -35,6 +35,14 @@ const config = {
 			},
 		],
 	},
+	overrides: [
+		{
+			files: ['**/index.tsx?'],
+			rules: {
+				'import/no-unused-modules': 0,
+			},
+		},
+	],
 	ignorePatterns: ['!.*', '**/node_modules/**', 'dist/', '.next/'],
 	settings: {
 		'import/extensions': ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.mts', '.tsx'],
