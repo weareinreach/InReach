@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import React from 'react'
 
 import { MobileNav as MobileNavComponent } from './MobileNav'
@@ -22,8 +22,8 @@ export default {
 			control: 'boolean',
 		},
 	},
-} as ComponentMeta<typeof MobileNavComponent>
+} as Meta<typeof MobileNavComponent>
 
-const MobileNavigationStory: ComponentStory<typeof MobileNavComponent> = () => <MobileNavComponent />
-
-export const MobileNavigation = MobileNavigationStory.bind({})
+export const MobileNavigation = {
+	render: () => <MobileNavComponent />,
+}

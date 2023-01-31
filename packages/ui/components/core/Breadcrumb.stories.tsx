@@ -1,5 +1,5 @@
 import { Center } from '@mantine/core'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import React from 'react'
 
 import { Breadcrumb as BreadcrumbCompnent } from './Breadcrumb'
@@ -18,13 +18,11 @@ export default {
 			options: ['back', 'close'],
 		},
 	},
-} as ComponentMeta<typeof BreadcrumbCompnent>
+} as Meta<typeof BreadcrumbCompnent>
 
-const BreadcrumbStory: ComponentStory<typeof BreadcrumbCompnent> = (args) => <BreadcrumbCompnent {...args} />
-
-export const Breadcrumb = BreadcrumbStory.bind({})
-
-Breadcrumb.args = {
-	href: '#',
-	option: 'back',
-} as const
+export const Breadcrumb = {
+	args: {
+		href: '#',
+		option: 'back',
+	} as const,
+}

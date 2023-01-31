@@ -28,11 +28,11 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  *
  * @link https://trpc.io/docs/context
  */
-export const createContext = async (opts: CreateNextContextOptions) => {
-	const { req, res } = opts
+export const createContext = async (opts?: CreateNextContextOptions) => {
+	const { req, res } = opts ?? { req: undefined, res: undefined }
 
 	// Get the session from the server using the unstable_getServerSession wrapper function
-	const session = await getServerSession({ req, res })
+	const session = (req && res && (await getServerSession({ req, res }))) || null
 
 	return await createContextInner({
 		session,

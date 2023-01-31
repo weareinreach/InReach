@@ -1,5 +1,5 @@
 import { Center } from '@mantine/core'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import React from 'react'
 
 import { SocialMediaIconButton, approvedIcons } from './SocialMediaIconButton'
@@ -18,16 +18,12 @@ export default {
 			options: Object.keys(approvedIcons),
 		},
 	},
-} as ComponentMeta<typeof SocialMediaIconButton>
+} as Meta<typeof SocialMediaIconButton>
 
-const SocialMediaIconVariant: ComponentStory<typeof SocialMediaIconButton> = (args) => (
-	<SocialMediaIconButton {...args} />
-)
-
-export const SocialMediaButton = SocialMediaIconVariant.bind({})
-
-SocialMediaButton.args = {
-	href: '#',
-	icon: 'facebook',
-	title: 'Social Media Icon',
+export const SocialMediaButton = {
+	args: {
+		href: '#',
+		icon: 'facebook',
+		title: 'Social Media Icon',
+	},
 }

@@ -1,5 +1,5 @@
 import { BADGE } from '@geometricpanda/storybook-addon-badges'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { StoryObj, Meta, StoryFn } from '@storybook/react'
 import React from 'react'
 
 import { UserMenu } from './'
@@ -20,29 +20,27 @@ export default {
 		badges: [BADGE.BETA],
 		layout: 'fullscreen',
 	},
-} as ComponentMeta<typeof Nav>
+} as Meta<typeof Nav>
 
-export const NavigationHeaderBar: ComponentStory<typeof Nav> = (args) => <Nav {...args} />
-
-// export const NavigationBar = Template.bind({})
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-NavigationHeaderBar.args = {
-	navItems: [
-		{
-			key: 'nav-about-us',
-			href: '#aboutus',
-		},
-		{
-			key: 'nav-take-action',
-			href: '#takeaction',
-		},
-		{
-			key: 'nav-questions',
-			href: '#questions',
-		},
-		{
-			key: 'nav-contact-us',
-			href: '#contactus',
-		},
-	],
+export const NavigationHeaderBar: StoryObj<typeof Nav> = {
+	args: {
+		navItems: [
+			{
+				key: 'nav-about-us',
+				href: '#aboutus',
+			},
+			{
+				key: 'nav-take-action',
+				href: '#takeaction',
+			},
+			{
+				key: 'nav-questions',
+				href: '#questions',
+			},
+			{
+				key: 'nav-contact-us',
+				href: '#contactus',
+			},
+		],
+	},
 }

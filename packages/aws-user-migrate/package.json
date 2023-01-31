@@ -7,11 +7,11 @@
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"scripts": {
+		"aws:db:generate": "prisma generate --schema ../db/prisma/schema.prisma",
 		"build:aws": "./build.sh",
 		"bundle": "ncc build ./src/index.ts -s  -a -d",
 		"clean:dist": "rm -fr dist",
 		"clean:node": "rm -rf ./node_modules/ || true",
-		"db:generate": "prisma generate --schema ../db/prisma/schema.prisma",
 		"deploy:aws": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://bundle.zip",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",

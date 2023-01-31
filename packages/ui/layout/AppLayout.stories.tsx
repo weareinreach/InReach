@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import React from 'react'
 
 import { PageFooter } from 'components/layout/Footer.stories'
@@ -17,16 +17,6 @@ export default {
 	parameters: {
 		layout: 'fullscreen',
 	},
-} as ComponentMeta<typeof AppLayout>
+} as Meta<typeof AppLayout>
 
-const Template: ComponentStory<typeof AppLayout> = (args) => <AppLayout {...args} />
-
-export const MainAppLayout = Template.bind({})
-// MainAppLayout.args = {
-// 	navItems: NavigationHeaderBar.args?.navItems,
-// 	footerLinks: PageFooter.args?.links,
-// 	socialMedia: PageFooter.args?.socialMedia,
-// }
-// MainAppLayout.parameters = {
-// 	layout: 'fullscreen',
-// }
+export const MainAppLayout = {}

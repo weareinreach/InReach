@@ -1,8 +1,7 @@
 import { Icon as Iconify, IconProps, IconifyIconProps } from '@iconify/react'
 import { SVGProps, RefAttributes } from 'react'
 
-import { loadIcons } from 'icon/iconCollection'
-
+import { loadIcons } from './iconCollection'
 import { iconList } from './iconList'
 
 export const Icon = (props: CustomIconProps) => {
