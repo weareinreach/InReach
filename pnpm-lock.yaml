@@ -667,6 +667,7 @@ importers:
       storybook-react-i18next: 1.1.2
       style-loader: 3.3.1
       trpc-client-devtools-link: 0.2.1-next
+      tsconfig-paths-webpack-plugin: 4.0.0
       tsx: 3.12.2
       type-fest: 3.5.4
       typescript: 4.9.5
@@ -764,6 +765,7 @@ importers:
       storybook-react-i18next: 1.1.2_zl642utsrokojz3ly777z4p2lq
       style-loader: 3.3.1_webpack@5.75.0
       trpc-client-devtools-link: 0.2.1-next_g35fzdz3dguu63j4c7uerwgeli
+      tsconfig-paths-webpack-plugin: 4.0.0
       tsx: 3.12.2
       type-fest: 3.5.4
       typescript: 4.9.5
@@ -4366,7 +4368,7 @@ packages:
     dependencies:
       '@storybook/addons': 6.5.15_sfoxds7t5ydpegc3knd667wn6m
       '@storybook/api': 6.5.15_sfoxds7t5ydpegc3knd667wn6m
-      '@storybook/components': 6.5.15_sfoxds7t5ydpegc3knd667wn6m
+      '@storybook/components': 6.5.16_sfoxds7t5ydpegc3knd667wn6m
       '@storybook/theming': 6.5.16_sfoxds7t5ydpegc3knd667wn6m
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -6795,24 +6797,6 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/components/6.5.15_sfoxds7t5ydpegc3knd667wn6m:
-    resolution: {integrity: sha512-bHTT0Oa3s4g+MBMaLBbX9ofMtb1AW59AzIUNGrfqW1XqJMGuUHMiJ7TSo+i5dRSFpbFygnwMEG9LfHxpR2Z0Dw==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
-    dependencies:
-      '@storybook/client-logger': 6.5.15
-      '@storybook/csf': 0.0.2--canary.4566f4d.1
-      '@storybook/theming': 6.5.15_sfoxds7t5ydpegc3knd667wn6m
-      core-js: 3.26.1
-      memoizerific: 1.11.3
-      qs: 6.11.0
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      regenerator-runtime: 0.13.11
-      util-deprecate: 1.0.2
-    dev: true
-
   /@storybook/components/6.5.16_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-LzBOFJKITLtDcbW9jXl0/PaG+4xAz25PK8JxPZpIALbmOpYWOAPcO6V9C2heX6e6NgWFMUxjplkULEk9RCQMNA==}
     peerDependencies:
@@ -6827,6 +6811,24 @@ packages:
       qs: 6.11.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      regenerator-runtime: 0.13.11
+      util-deprecate: 1.0.2
+    dev: true
+
+  /@storybook/components/6.5.16_sfoxds7t5ydpegc3knd667wn6m:
+    resolution: {integrity: sha512-LzBOFJKITLtDcbW9jXl0/PaG+4xAz25PK8JxPZpIALbmOpYWOAPcO6V9C2heX6e6NgWFMUxjplkULEk9RCQMNA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
+    dependencies:
+      '@storybook/client-logger': 6.5.16
+      '@storybook/csf': 0.0.2--canary.4566f4d.1
+      '@storybook/theming': 6.5.16_sfoxds7t5ydpegc3knd667wn6m
+      core-js: 3.26.1
+      memoizerific: 1.11.3
+      qs: 6.11.0
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
       regenerator-runtime: 0.13.11
       util-deprecate: 1.0.2
     dev: true
@@ -20063,7 +20065,7 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     dependencies:
       '@pkgr/utils': 2.3.1
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: true
 
   /synckit/0.8.5:
@@ -20482,6 +20484,15 @@ packages:
       tsconfig-paths: 4.1.2
     dev: true
 
+  /tsconfig-paths-webpack-plugin/4.0.0:
+    resolution: {integrity: sha512-fw/7265mIWukrSHd0i+wSwx64kYUSAKPfxRDksjKIYTxSAp9W9/xcZVBF4Kl0eqQd5eBpAQ/oQrc5RyM/0c1GQ==}
+    engines: {node: '>=10.13.0'}
+    dependencies:
+      chalk: 4.1.2
+      enhanced-resolve: 5.12.0
+      tsconfig-paths: 4.1.2
+    dev: true
+
   /tsconfig-paths/4.1.2:
     resolution: {integrity: sha512-uhxiMgnXQp1IR622dUXI+9Ehnws7i/y6xvpZB9IbUVOPy0muvdvgXeZOn88UcGPiT98Vp3rJPTa8bFoalZ3Qhw==}
     engines: {node: '>=6'}
@@ -20496,7 +20507,7 @@ packages:
 
   /tslib/2.4.1:
     resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
-    dev: true
+    dev: false
 
   /tslib/2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
