@@ -24,6 +24,7 @@ const useStyles = createStyles((theme) => ({
 		fontWeight: theme.other.fontWeight.semibold,
 		color: 'black',
 		marginLeft: '9.25px',
+		textTransform: 'none',
 	},
 	tooltip: {},
 }))
