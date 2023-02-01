@@ -5,6 +5,7 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"incremental": true,
+		"inlineSourceMap": true,
 		"isolatedModules": true,
 		"jsx": "preserve",
 		"lib": ["dom", "dom.iterable", "esnext"],
