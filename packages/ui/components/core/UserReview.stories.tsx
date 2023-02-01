@@ -1,19 +1,21 @@
 import { faker } from '@faker-js/faker'
-import { Center } from '@mantine/core'
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta } from '@storybook/react'
 import React from 'react'
 
 import { UserReview } from './UserReview'
+import { StorybookGrid } from '../layout/BodyGrid'
 
 export default {
 	title: 'Design System/User Review',
 	component: UserReview,
 	parameters: {
+		layout: 'fullscreen',
 		design: {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=150%3A7027&t=OPIs2wdc5n2td3Nf-4',
 		},
 	},
+	decorators: [StorybookGrid],
 } as Meta<typeof UserReview>
 
 export const VerifiedWithNameAndPicture = {

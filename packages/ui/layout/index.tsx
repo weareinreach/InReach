@@ -1,3 +1,3 @@
 // codegen:start {preset: barrel, include: ./*.ts*, exclude: ./*.stories.*}
-export * from './AppLayout'
+export * from './Organization'
 // codegen:end

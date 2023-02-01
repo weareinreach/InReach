@@ -1,5 +1,4 @@
-import { BADGE } from '@geometricpanda/storybook-addon-badges'
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta } from '@storybook/react'
 import React from 'react'
 
 import { UserMenu as UserMenuComponent } from './'
@@ -7,9 +6,6 @@ import { UserMenu as UserMenuComponent } from './'
 export default {
 	title: 'App/Navigation Header Bar/User Menu',
 	component: UserMenuComponent,
-	parameters: {
-		badges: [BADGE.BETA],
-	},
 } as Meta<typeof UserMenuComponent>
 
 export const LoggedOut = {

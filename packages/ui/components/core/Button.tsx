@@ -53,7 +53,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					},
 				},
 			}
-		case 'sm-primary':
+		case 'primary':
 			return {
 				root: {
 					paddingLeft: theme.spacing.md * 2,
@@ -73,7 +73,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					},
 				},
 			}
-		case 'sm-secondary':
+		case 'secondary':
 			return {
 				root: {
 					paddingLeft: theme.spacing.md * 2,
@@ -96,7 +96,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					},
 				},
 			}
-		case 'sm-accent':
+		case 'accent':
 			return {
 				root: {
 					paddingLeft: theme.spacing.md * 2,
@@ -117,7 +117,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					},
 				},
 			}
-		case 'lg-primary':
+		case 'primary-icon':
 			return {
 				root: {
 					borderRadius: theme.radius.md,
@@ -126,7 +126,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					backgroundColor: '#666666',
 				},
 			}
-		case 'lg-secondary':
+		case 'secondary-icon':
 			return {
 				root: {
 					border: theme.other.border.default,
@@ -141,7 +141,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					color: theme.colors.primaryText[9],
 				},
 			}
-		case 'lg-accent':
+		case 'accent-icon':
 			return {
 				root: {
 					backgroundColor: theme.colors.inReachSecondaryRegular[5],
@@ -186,18 +186,19 @@ const useVariantStyles = createStyles((theme, params: ButtonStylesParams) => {
 	return merge(baseStyle, buttonVariants(theme, params))
 })
 
+const customVariants = [
+	'primary',
+	'secondary',
+	'accent',
+	'primary-icon',
+	'secondary-icon',
+	'accent-icon',
+] as const
+
 // eslint-disable-next-line react/display-name
 export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'button', CustomButtonProps>>(
 	(props, ref) => {
-		const customVariants = [
-			'sm-primary',
-			'sm-secondary',
-			'sm-accent',
-			'lg-primary',
-			'lg-secondary',
-			'lg-accent',
-		]
-		const isCustom = customVariants.includes(props.variant ?? 'filled')
+		const isCustom = (customVariants as ReadonlyArray<string>).includes(props.variant ?? 'filled')
 
 		const { classes: baseClasses } = useVariantStyles({ variant: props.variant ?? 'filled' })
 
@@ -225,13 +226,7 @@ interface ButtonStylesParams {
 type CustomButtonProps = Omit<ButtonProps, 'variant'> & {
 	variant?: ButtonVariant | CustomVariants
 }
-type CustomVariants =
-	| 'sm-primary'
-	| 'sm-secondary'
-	| 'sm-accent'
-	| 'lg-primary'
-	| 'lg-secondary'
-	| 'lg-accent'
+type CustomVariants = (typeof customVariants)[number]
 
 type CustomButtonStyles = Partial<{ [className in ButtonStylesNames]: CSSObject }>
 type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => CustomButtonStyles

@@ -27,46 +27,43 @@ export default {
 	},
 } as Meta<typeof Button>
 
-export const SmallPrimary = {
+export const Primary = {
 	args: {
-		variant: 'sm-primary',
+		variant: 'primary',
 		children: 'Download the app',
 	},
 }
-
-export const SmallSecondary = {
+export const PrimaryWithIcon = {
 	args: {
-		variant: 'sm-secondary',
-		children: 'InReach.org',
-	},
-}
-
-export const SmallAccent = {
-	args: {
-		variant: 'sm-accent',
-		children: 'Safety exit',
-	},
-}
-
-export const LargePrimary = {
-	args: {
-		variant: 'lg-primary',
+		variant: 'primary-icon',
 		children: 'More sorting options',
 		leftIcon: <Icon icon='carbon:settings-adjust' rotate={3} />,
 	},
 }
 
-export const LargeSecondary = {
+export const Secondary = {
 	args: {
-		variant: 'lg-secondary',
+		variant: 'secondary',
+		children: 'InReach.org',
+	},
+}
+export const SecondaryWithIcon = {
+	args: {
+		variant: 'secondary-icon',
 		children: 'Save',
 		leftIcon: <Icon icon='carbon:favorite' />,
 	},
 }
 
-export const LargeAccent = {
+export const Accent = {
 	args: {
-		variant: 'lg-accent',
+		variant: 'accent',
+		children: 'Safety exit',
+	},
+}
+export const AccentWithIcon = {
+	args: {
+		variant: 'accent-icon',
 		children: 'View map',
 		leftIcon: <Icon icon='carbon:map' />,
 	},
