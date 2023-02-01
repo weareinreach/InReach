@@ -22,9 +22,8 @@ generator client {
 generator zod {
   provider         = "zod-prisma-types"
   output           = "../zod-schemas"
-  imports          = "import(import {GeoJSONSchema,AttributeSupplement,cuid} from '../zod-util')"
   useMultipleFiles = true
-  createModelTypes = false
+  // createModelTypes = false
 }
 
 // generator dbml {
@@ -576,6 +575,7 @@ model OrgWebsite {
 }
 
 /// Org location information
+/// @zod.custom.imports(["import {GeoJSONSchema} from '../../zod-util'"])
 model OrgLocation {
   id       String  @id @default(cuid())
   legacyId String? @unique /// old ID from MongoDB
@@ -923,6 +923,7 @@ model Attribute {
   @@unique([tsKey, tsNs])
 }
 
+/// @zod.custom.imports(["import { AttributeSupplement } from '../../zod-util/attributeSupplement'"])
 model AttributeSupplement {
   id     String  @id @default(cuid())
   active Boolean @default(true)
@@ -1068,6 +1069,7 @@ enum SourceType {
 }
 
 /// Country metadata
+/// @zod.custom.imports(["import {GeoJSONSchema} from '../../zod-util'"])
 model Country {
   id       String @id @default(cuid())
   /// ISO 3166-1 alpha-2 Country code
@@ -1115,6 +1117,7 @@ model Country {
 }
 
 /// Administrative districts for countries
+/// @zod.custom.imports(["import {GeoJSONSchema} from '../../zod-util'"])
 model GovDist {
   id      String  @id @default(cuid())
   /// Name (English/Roman alphabet)
