@@ -7,7 +7,8 @@ import {
 	Rating,
 	Textarea,
 	useMantineTheme,
-	Container,
+	Paper,
+	Grid,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { ApiInput } from '@weareinreach/api'
@@ -25,22 +26,22 @@ const useStyles = createStyles((theme) => ({
 		paddingLeft: '0px',
 		paddingRight: '0px',
 		height: '120px',
-		width: '816px',
-		[theme.fn.smallerThan('md')]: {
-			width: '700px',
-		},
-		[theme.fn.smallerThan('sm')]: {
-			width: '300px',
-			marginBottom: theme.spacing.sm,
-		},
+		// width: '816px',
+		// [theme.fn.smallerThan('md')]: {
+		// 	width: '700px',
+		// },
+		// [theme.fn.smallerThan('sm')]: {
+		// 	width: '300px',
+		// 	marginBottom: theme.spacing.sm,
+		// },
 	},
 	button: {
-		width: '178px',
-		height: '40px',
+		// width: '178px',
+		// height: '40px',
 	},
 	avatar: {
-		height: '48px',
-		width: '48px',
+		// height: '48px',
+		// width: '48px',
 	},
 }))
 
@@ -82,45 +83,61 @@ export const UserReviewSubmit = ({ avatarUrl, avatarName }: UserProps) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [status, orgQuery?.id])
 	return (
-		<Stack>
-			<Group>
-				<Avatar
-					radius='xl'
-					className={classes.avatar}
-					src={avatarUrl}
-					alt={avatarName || (t('user-avatar') as string)}
+		<Grid.Col sm={8}>
+			<Paper withBorder radius='lg' p={theme.spacing.lg}>
+				<form
+					onSubmit={form.onSubmit((values) => {
+						submitReview.mutate(values)
+					}, console.log)}
 				>
-					<Icon icon='carbon:user' height={24} />
-				</Avatar>
-				<Stack align='flex-start' justify='center' spacing={4}>
-					<Text weight={theme.other.fontWeight.semibold}>{avatarName ? avatarName : t('in-reach-user')}</Text>
-				</Stack>
-			</Group>
-			<form
-				onSubmit={form.onSubmit((values) => {
-					submitReview.mutate(values)
-				}, console.log)}
-			>
-				<Rating
-					size='md'
-					emptySymbol={<Icon icon='carbon:star-filled' color={theme.other.colors.tertiary.coolGray} />}
-					fullSymbol={<Icon icon='carbon:star-filled' color={theme.other.colors.secondary.black} />}
-					{...form.getInputProps('rating')}
-				/>
-				<Container className={classes.textContainer}>
-					<Textarea
-						label={t('review-resource')}
-						placeholder={t('enter-review')!}
-						radius='md'
-						{...form.getInputProps('reviewText')}
-					/>
-					<Text color={theme.other.colors.secondary.darkGray}>{t('review-note')}</Text>
-				</Container>
-				<Button variant='primary' className={classes.button} type='submit'>
-					{t('submit')}
-				</Button>
-			</form>
-		</Stack>
+					<Stack align='flex-start' spacing='xl'>
+						<Group>
+							<Avatar
+								radius='xl'
+								size={48}
+								className={classes.avatar}
+								src={avatarUrl}
+								alt={avatarName || (t('user-avatar') as string)}
+							>
+								<Icon icon='carbon:user' height={24} />
+							</Avatar>
+							<Text weight={theme.other.fontWeight.semibold}>
+								{avatarName ? avatarName : t('in-reach-user')}
+							</Text>
+						</Group>
+
+						<Rating
+							emptySymbol={
+								<Icon icon='carbon:star-filled' color={theme.other.colors.tertiary.coolGray} height={24} />
+							}
+							fullSymbol={
+								<Icon icon='carbon:star-filled' color={theme.other.colors.secondary.black} height={24} />
+							}
+							{...form.getInputProps('rating')}
+						/>
+						<Textarea
+							label=<Text fw={theme.other.fontWeight.semibold} mb={10}>
+								{t('review-resource')}
+							</Text>
+							placeholder={t('enter-review')!}
+							radius='md'
+							autosize
+							minRows={2}
+							maxRows={5}
+							w='100%'
+							{...form.getInputProps('reviewText')}
+						/>
+						<Text size={14} mt={-14} color={theme.other.colors.secondary.darkGray}>
+							{t('review-note')}
+						</Text>
+
+						<Button variant='primary' className={classes.button} type='submit'>
+							{t('submit')}
+						</Button>
+					</Stack>
+				</form>
+			</Paper>
+		</Grid.Col>
 	)
 }
 
