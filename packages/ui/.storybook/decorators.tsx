@@ -1,6 +1,7 @@
 import { MantineProvider, TypographyStylesProvider, MantineProviderProps } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
-import { StoryFn } from '@storybook/react'
+import { NotificationsProvider } from '@mantine/notifications'
+import { StoryContext, StoryFn } from '@storybook/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink } from '@trpc/client'
 import { transformer } from '@weareinreach/api/lib/transformer'
@@ -20,16 +21,29 @@ const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
 export const WithMantine = (Story: StoryFn) => {
 	return (
 		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
-			<ModalsProvider>
-				<TypographyStylesProvider>
-					<Story />
-				</TypographyStylesProvider>
-			</ModalsProvider>
+			<TypographyStylesProvider>
+				<NotificationsProvider>
+					<ModalsProvider>
+						<Story />
+					</ModalsProvider>
+				</NotificationsProvider>
+			</TypographyStylesProvider>
 		</MantineProvider>
 	)
 }
 
-export const WithI18n = (Story: StoryFn) => {
+export const WithI18n = (Story: StoryFn, context: StoryContext) => {
+	const { globals, parameters } = context
+	const [locale, setLocale] = useState(globals.locale ?? 'en')
+
+	useEffect(() => {
+		if (parameters?.i18n && globals?.locale && globals.locale !== locale) {
+			setLocale(globals.locale)
+			parameters.i18n.changeLanguage(globals.locale)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [globals?.locale])
+
 	return (
 		<I18nextProvider i18n={i18n}>
 			<Story />
