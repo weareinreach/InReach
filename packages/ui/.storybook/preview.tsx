@@ -9,9 +9,9 @@ import './font.css'
 
 initializeMsw({
 	serviceWorker: {
-		options: {
-			scope: '/trpc',
-		},
+		// options: {
+		// 	scope: '/trpc',
+		// },
 	},
 	onUnhandledRequest: ({ method, url }) => {
 		if (url.pathname.startsWith('/trpc')) {

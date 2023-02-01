@@ -1,5 +1,7 @@
 import { type StorybookConfig } from '@storybook/nextjs'
 import { merge } from 'merge-anything'
+import { PropItem } from 'react-docgen-typescript'
+import { Component } from 'react-docgen-typescript/lib/parser'
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
 
 import * as path from 'path'
@@ -30,7 +32,10 @@ const config: StorybookConfig = {
 	],
 	framework: {
 		name: '@storybook/nextjs',
-		options: {},
+		options: {
+			builder: {},
+			fastRefresh: true,
+		},
 	},
 	features: {
 		buildStoriesJson: true,
@@ -42,6 +47,19 @@ const config: StorybookConfig = {
 		reactDocgenTypescriptOptions: {
 			shouldExtractLiteralValuesFromEnum: true,
 			shouldRemoveUndefinedFromOptional: true,
+			shouldExtractValuesFromUnion: true,
+			shouldIncludePropTagMap: true,
+			propFilter: (prop: PropItem, component: Component) => {
+				if (prop.declarations !== undefined && prop.declarations.length > 0) {
+					const hasPropAdditionalDescription = prop.declarations.find((declaration) => {
+						return !declaration.fileName.includes('node_modules')
+					})
+
+					return Boolean(hasPropAdditionalDescription)
+				}
+
+				return true
+			},
 		},
 	},
 	webpackFinal: (config) => {
@@ -55,6 +73,7 @@ const config: StorybookConfig = {
 					),
 					// '@weareinreach/api': path.resolve(__dirname, '../../api'),
 					'next-i18next': 'react-i18next',
+					'@next/font': 'storybook-nextjs-font-loader',
 				},
 				roots: [path.resolve(__dirname, '../../../apps/app/public')],
 				fallback: {
