@@ -96,6 +96,7 @@ importers:
       '@trpc/react-query': 10.9.1
       '@trpc/server': 10.9.1
       '@types/flat': 5.0.2
+      '@types/luxon': 3.2.0
       '@types/node': 16.18.11
       '@types/react': 18.0.27
       '@types/react-dom': 18.0.10
@@ -178,6 +179,7 @@ importers:
       '@playwright/test': 1.30.0
       '@tanstack/react-query-devtools': 4.24.4_pkeil6ml7pq7xvil3imldjs2sa
       '@types/flat': 5.0.2
+      '@types/luxon': 3.2.0
       '@types/node': 16.18.11
       '@types/react': 18.0.27
       '@types/react-dom': 18.0.10
@@ -447,6 +449,8 @@ importers:
       '@turf/points-within-polygon': 6.5.0
       '@turf/simplify': 6.5.0
       '@types/flat': 5.0.2
+      '@types/inquirer': 9.0.3
+      '@types/iso-3166-2': 1.0.0
       '@types/langs': 2.0.1
       '@types/luxon': 3.2.0
       '@types/node': 16.18.11
@@ -495,6 +499,8 @@ importers:
       '@turf/points-within-polygon': 6.5.0
       '@turf/simplify': 6.5.0
       '@types/flat': 5.0.2
+      '@types/inquirer': 9.0.3
+      '@types/iso-3166-2': 1.0.0
       '@types/langs': 2.0.1
       '@types/luxon': 3.2.0
       '@types/node': 16.18.11
@@ -2311,7 +2317,7 @@ packages:
       convert-source-map: 1.9.0
       debug: 4.3.4
       gensync: 1.0.0-beta.2
-      json5: 2.2.2
+      json5: 2.2.3
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
@@ -8562,6 +8568,13 @@ packages:
     resolution: {integrity: sha512-SZs7ekbP8CN0txVG2xVRH6EgKmEm31BOxA07vkFaETzZz1xh+cbt8BcI0slpymvwhx5dlFnQG2rTlPVQn+iRPQ==}
     dev: true
 
+  /@types/inquirer/9.0.3:
+    resolution: {integrity: sha512-CzNkWqQftcmk2jaCWdBTf9Sm7xSw4rkI1zpU/Udw3HX5//adEZUIm9STtoRP1qgWj0CWQtJ9UTvqmO2NNjhMJw==}
+    dependencies:
+      '@types/through': 0.0.30
+      rxjs: 7.8.0
+    dev: true
+
   /@types/is-ci/3.0.0:
     resolution: {integrity: sha512-Q0Op0hdWbYd1iahB+IFNQcWXFq4O0Q5MwQP7uN0souuQ4rPg1vEYcnIOfr1gY+M+6rc8FGoRaBO1mOOvL29sEQ==}
     dependencies:
@@ -8570,6 +8583,10 @@ packages:
 
   /@types/is-function/1.0.1:
     resolution: {integrity: sha512-A79HEEiwXTFtfY+Bcbo58M2GRYzCr9itHWzbzHVFNEYCcoU/MMGwYYf721gBrnhpj1s6RGVVha/IgNFnR0Iw/Q==}
+    dev: true
+
+  /@types/iso-3166-2/1.0.0:
+    resolution: {integrity: sha512-DYDyoRyPyxBeI9bYoTXLfsOZH12m1anrWEj9LU5Sl9rgsJ4soJMYf/7byozM+64Smn6/a1i079eQLGuPykwaHQ==}
     dev: true
 
   /@types/istanbul-lib-coverage/2.0.4:
@@ -8760,6 +8777,12 @@ packages:
     resolution: {integrity: sha512-SBwbxYoyPIvxHbeHxTZX2Pe/74F/tX2/D3mMvzabdeJ25bBojfW0TyB8BHrbq/9zaaKICJZjLP+8r6AeZMFCuQ==}
     dependencies:
       '@types/jest': 29.2.5
+    dev: true
+
+  /@types/through/0.0.30:
+    resolution: {integrity: sha512-FvnCJljyxhPM3gkRgWmxmDZyAQSiBQQWLI0A0VFL0K7W1oRUrPJSqNO0NvTnLkBcotdlp3lKvaT0JrnyRDkzOg==}
+    dependencies:
+      '@types/node': 18.11.17
     dev: true
 
   /@types/treeify/1.0.0:
@@ -15635,16 +15658,10 @@ packages:
       minimist: 1.2.7
     dev: true
 
-  /json5/2.2.2:
-    resolution: {integrity: sha512-46Tk9JiOL2z7ytNQWFLpj99RZkVgeHf87yGQKsIkaPz1qSH9UczKH1rO7K3wgRselo0tYMUNfecYpm/p1vC7tQ==}
-    engines: {node: '>=6'}
-    hasBin: true
-
   /json5/2.2.3:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
     hasBin: true
-    dev: true
 
   /jsonfile/4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}

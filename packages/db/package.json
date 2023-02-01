@@ -45,6 +45,8 @@
 		"@turf/points-within-polygon": "6.5.0",
 		"@turf/simplify": "6.5.0",
 		"@types/flat": "5.0.2",
+		"@types/inquirer": "9.0.3",
+		"@types/iso-3166-2": "1.0.0",
 		"@types/langs": "2.0.1",
 		"@types/luxon": "3.2.0",
 		"@types/node": "16.18.11",
