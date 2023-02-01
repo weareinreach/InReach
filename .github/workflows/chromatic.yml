@@ -52,7 +52,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
         # 👇 Runs pnpm in ./packages/ui
       - name: Install dependencies
-        run: pnpm install && pnpm turbo run db:generate
+        run: pnpm install && pnpm -w db:generate
         working-directory: packages/ui
         # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
