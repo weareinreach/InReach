@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react'
 
-import { ActionButtons as ActionButtonsComponent, actionButtonIcons } from './ActionButtons'
+import { ActionButtons as ActionButtonsComponent } from './ActionButtons'
 
 export default {
 	title: 'Design System/Action Buttons',

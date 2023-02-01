@@ -1,6 +1,6 @@
-import { Avatar, Button, createStyles, Menu, Text, TextInput, useMantineTheme } from '@mantine/core'
+import { Button, createStyles, Menu, Text, useMantineTheme } from '@mantine/core'
 import { useClipboard } from '@mantine/hooks'
-import { openModal, closeAllModals, openConfirmModal } from '@mantine/modals'
+import { openModal, openConfirmModal } from '@mantine/modals'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
@@ -10,10 +10,19 @@ import { trpc } from '../../lib/trpcClient'
 
 export const actionButtonIcons = {
 	delete: { icon: 'carbon:delete', labelKey: 'delete' },
-	more: { icon: 'carbon:overflow-menu-horizontal' },
+	more: {
+		icon: 'carbon:overflow-menu-horizontal',
+		useMenu: true,
+		menuItems: ['Save', 'Share', 'Print', 'Delete', 'Review'],
+	},
 	print: { icon: 'carbon:printer', labelKey: 'print' },
 	review: { icon: 'carbon:star', labelKey: 'review' },
-	save: { icon: 'carbon:favorite', labelKey: 'save' },
+	save: {
+		icon: 'carbon:favorite',
+		labelKey: 'save',
+		useMenu: true,
+		menuItems: ['Create new list', 'List 1', 'List 2'],
+	},
 	share: { icon: 'carbon:share', labelKey: 'share' },
 } as const
 
@@ -38,10 +47,20 @@ const useStyles = createStyles((theme) => ({
 		fontWeight: theme.other.fontWeight.semibold,
 		marginLeft: '9.25px',
 	},
+	menu: {
+		background: 'black',
+		'&:button': {
+			color: 'white',
+		},
+	},
 }))
 
 const actions = {
 	delete: () => {
+		console.log('clicked delete button')
+		//onClick should open a "are you sure modal"
+		//Yes - close modal, deletes the specified resource, display notification that 'blah was deleted'
+		//No -  close modal
 		openConfirmModal({
 			title: 'Please confirm your action',
 			children: (
@@ -64,7 +83,7 @@ const actions = {
 		window.print()
 	},
 	review: () => {
-		//will need to pass the org/location/service data to the submit review component
+		console.log('clicked review button')
 		openModal({
 			title: 'Placeholder Text for Submit a Review Modal',
 			children: <UserReviewSubmit avatarName={'placeholderName'} avatarUrl={'placeholderUrl'} />,
@@ -102,12 +121,8 @@ export const ActionButtons = ({ iconKey }: Props) => {
 	const { t } = useTranslation()
 	const iconRender = actionButtonIcons[iconKey]
 	const handler = actions[iconKey]
-
-	// const {data: savedLists, status} = trpc.savedList.getAll.useQuery(undefined,{enabled: iconKey === 'save'})
-
-	// const saveList = trpc.savedList.saveOrg.useMutation()
-	// const unSaveList = trpc.savedList.delOrg.useMutation()
-	// const createList = trpc.savedList.create.useMutation()
+	const menuThings = 'menuItems' in iconRender ? iconRender.menuItems : null
+	console.log(menuThings)
 
 	// createList.mutate({ name: 'new List' }, {
 	// 	onSuccess: (data) => {
@@ -117,6 +132,12 @@ export const ActionButtons = ({ iconKey }: Props) => {
 	// 		console.log('Oops, something went went')
 	// 	}
 	// })
+
+	// const {data: savedLists, status} = trpc.savedList.getAll.useQuery(undefined,{enabled: iconKey === 'save'})
+
+	// const saveList = trpc.savedList.saveOrg.useMutation()
+	// const unSaveList = trpc.savedList.delOrg.useMutation()
+	// const createList = trpc.savedList.create.useMutation()
 
 	// const {data: newList, status: createStatus} = createList
 
@@ -128,14 +149,40 @@ export const ActionButtons = ({ iconKey }: Props) => {
 
 	// trpc.organization.
 	return (
-		<Button onClick={handler} className={classes.button} radius='md'>
-			<Icon
-				icon={iconRender.icon}
-				color={theme.other.colors.secondary.black}
-				className={'labelKey' in iconRender ? '' : classes.icon}
-			/>
-			{'labelKey' in iconRender && <Text className={classes.text}>{t(iconRender.labelKey)}</Text>}
-		</Button>
+		<>
+			{'useMenu' in iconRender ? (
+				<Menu position='bottom-start'>
+					<Menu.Target>
+						<Button className={classes.button} radius='md'>
+							<Icon
+								icon={iconRender.icon}
+								color={theme.other.colors.secondary.black}
+								className={'labelKey' in iconRender ? '' : classes.icon}
+							/>
+							{'labelKey' in iconRender && <Text className={classes.text}>{t(iconRender.labelKey)}</Text>}
+						</Button>
+					</Menu.Target>
+					<Menu.Dropdown style={{ background: 'black' }}>
+						{/* map of menu items based on action option */}
+						{menuThings &&
+							menuThings.map((option, index) => (
+								<Menu.Item key={index} value={index} style={{ color: 'white' }}>
+									{option}
+								</Menu.Item>
+							))}
+					</Menu.Dropdown>
+				</Menu>
+			) : (
+				<Button onClick={handler} className={classes.button} radius='md'>
+					<Icon
+						icon={iconRender.icon}
+						color={theme.other.colors.secondary.black}
+						className={'labelKey' in iconRender ? '' : classes.icon}
+					/>
+					{'labelKey' in iconRender && <Text className={classes.text}>{t(iconRender.labelKey)}</Text>}
+				</Button>
+			)}
+		</>
 	)
 }
 
