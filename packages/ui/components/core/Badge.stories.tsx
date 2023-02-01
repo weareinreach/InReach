@@ -7,11 +7,6 @@ export default {
 	title: 'Design System/Tags and Badges',
 	component: Badge,
 	parameters: {
-		docs: {
-			description: {
-				component: 'These are examples of Tags and Badges',
-			},
-		},
 		controls: {
 			include: ['variant', 'children', 'leftSection'],
 		},
@@ -22,32 +17,17 @@ export default {
 	},
 } as Meta<typeof Badge>
 
-export const CommunityTagLarge = {
+export const CommunityTag = {
 	args: {
 		leftSection: '✊🏿',
 		children: 'BIPOC community',
-		variant: 'commmunityTag-large',
+		variant: 'commmunityTag',
 	},
 }
 
-export const CommunityTagSmall = {
-	args: {
-		leftSection: '✊🏿',
-		children: 'BIPOC community',
-		variant: 'commmunityTag-small',
-	},
-}
-
-export const ServiceTagLarge = {
+export const ServiceTag = {
 	args: {
 		children: 'Abortion Care',
-		variant: 'serviceTag-large',
-	},
-}
-
-export const ServiceTagSmall = {
-	args: {
-		children: 'Abortion Care',
-		variant: 'serviceTag-small',
+		variant: 'serviceTag',
 	},
 }
