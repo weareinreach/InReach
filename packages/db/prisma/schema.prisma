@@ -20,9 +20,11 @@ generator client {
 // }
 
 generator zod {
-  provider = "zod-prisma-types"
-  output   = "../zod-schemas"
-  imports  = "import(import {GeoJSONSchema,AttributeSupplement,cuid} from '../zod-util')"
+  provider         = "zod-prisma-types"
+  output           = "../zod-schemas"
+  imports          = "import(import {GeoJSONSchema,AttributeSupplement,cuid} from '../zod-util')"
+  useMultipleFiles = true
+  createModelTypes = false
 }
 
 // generator dbml {

@@ -79,7 +79,7 @@
 		"tsx": "3.12.2",
 		"type-fest": "3.5.4",
 		"typescript": "4.9.5",
-		"zod-prisma-types": "1.6.8"
+		"zod-prisma-types": "2.0.4"
 	},
 	"prisma": {
 		"seed": "tsx ./seed/starterData.ts"
