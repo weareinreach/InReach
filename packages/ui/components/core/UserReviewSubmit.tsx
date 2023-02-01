@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 
 import { Button } from '.'
-import { useTypedRouter } from '../../hooks'
+import { useTypedRouterQuery } from '../../hooks'
 import { Icon } from '../../icon'
 import { trpc as api } from '../../lib/trpcClient'
 
@@ -61,7 +61,7 @@ export const UserReviewSubmit = ({ avatarUrl, avatarName }: UserProps) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation()
 	const theme = useMantineTheme()
-	const { query } = useTypedRouter(RouterSchema)
+	const { query } = useTypedRouterQuery(RouterSchema)
 	const { data: orgQuery, status } = api.organization.getIdFromSlug.useQuery(query, { enabled: !!query })
 	const { locationId, serviceId } = query
 
