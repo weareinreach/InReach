@@ -9,7 +9,7 @@ import {
 } from '@mantine/core'
 import { PolymorphicComponentProps } from '@mantine/utils'
 import { merge } from 'merge-anything'
-import { forwardRef } from 'react'
+import { forwardRef, ReactNode } from 'react'
 
 const badgeVariants: BadgeVariants = (theme, params) => {
 	switch (params.variant) {
@@ -140,7 +140,13 @@ interface BadgeStylesParams {
 	variant?: BadgeVariant | CustomVariants
 }
 type CustomBadgeProps = Omit<BadgeProps, 'variant'> & {
+	/** Preset designs */
 	variant?: BadgeVariant | CustomVariants
+	/**
+	 * Item rendered on the left side of the badge. Should be either an emoji unicode string or an Icon
+	 * component
+	 */
+	leftSection?: ReactNode
 }
 type CustomVariants =
 	| 'commmunityTag-large'

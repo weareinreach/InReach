@@ -6,36 +6,6 @@ import { Badge } from './Badge'
 export default {
 	title: 'Design System/Tags and Badges',
 	component: Badge,
-	argTypes: {
-		children: {
-			description: 'This is the label to use for the Tag/Badge',
-			table: {
-				type: {
-					summary: 'React Text',
-					detail: 'Pass in a react text component here as a prop.',
-				},
-			},
-		},
-		variant: {
-			description: 'This determines the style for the Tag/Badge',
-			table: {
-				type: {
-					summary: 'Variant options',
-					detail: 'commmunityTag-large, commmunityTag-small, serviceTag-large, serviceTag-small',
-				},
-			},
-		},
-		leftSection: {
-			description: 'This determines the emoji/badge/icon that is to be displayed to the left of the text',
-			table: {
-				type: {
-					summary: 'these are string values',
-					detail: 'Tag - ✊🏿 OR Badge - 🤎, determined by the "children" value',
-				},
-			},
-			control: 'string',
-		},
-	},
 	parameters: {
 		docs: {
 			description: {
