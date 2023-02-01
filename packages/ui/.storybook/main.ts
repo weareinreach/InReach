@@ -1,12 +1,13 @@
 import { type StorybookConfig } from '@storybook/nextjs'
 import { merge } from 'merge-anything'
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
 
 import * as path from 'path'
 
 const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
 
 const config: StorybookConfig = {
-	stories: [`../components/**/${filePattern}`, `../layout/**/${filePattern}`],
+	stories: [`../**/${filePattern}`],
 	staticDirs: [
 		{
 			from: '../../../apps/app/public',
@@ -24,15 +25,13 @@ const config: StorybookConfig = {
 		'storybook-addon-designs',
 		'storybook-addon-pseudo-states',
 		'storybook-addon-swc',
-		// 'storybook-react-i18next',
+		// 'storybook-react-i18next', // Does not play well with v7 docs yet.
+		'@storybook/addon-actions', // Keep this one last
 	],
 	framework: {
 		name: '@storybook/nextjs',
 		options: {},
 	},
-	// core: {
-	// 	builder: '@storybook/builder-webpack5',
-	// },
 	features: {
 		buildStoriesJson: true,
 	},
@@ -85,6 +84,11 @@ const config: StorybookConfig = {
 					vm: false,
 					zlib: false,
 				},
+				plugins: [
+					new TsconfigPathsPlugin({
+						extensions: config.resolve?.extensions,
+					}),
+				],
 			},
 		}
 		const mergedConfig = merge(config, configAdditions)

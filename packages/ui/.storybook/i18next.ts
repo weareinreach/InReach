@@ -13,8 +13,26 @@ export const i18nLocales = {
 	// 'es-US': 'Spanish (US)',
 	// 'es-MX': 'Spanish (MX)',
 }
-// const supportedLngs = ['en-US', 'en-CA', 'en-MX', 'es', 'es-US', 'es-MX']
-const supportedLngs = Object.keys(i18nLocales)
+
+export const customLocales = {
+	name: 'Locale',
+	description: 'Internationalization locale',
+	defaultValue: 'en',
+	toolbar: {
+		icon: 'globe',
+		items: [
+			{ value: 'en', right: '🇺🇸', title: 'English' },
+			// { value: 'fr', right: '🇫🇷', title: 'Français' },
+			{ value: 'es', right: '🇪🇸', title: 'Español' },
+			// { value: 'zh', right: '🇨🇳', title: '中文' },
+			// { value: 'kr', right: '🇰🇷', title: '한국어' },
+		],
+	},
+} as const
+
+export type CustomLocales = typeof supportedLngs
+
+const supportedLngs = customLocales.toolbar.items.map((lang) => lang.value)
 
 // const resources = ns.reduce((acc: Record<string, Record<string, string>>, n) => {
 // 	supportedLngs.forEach((lng) => {

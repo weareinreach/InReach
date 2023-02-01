@@ -1,8 +1,9 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
+import { BaseRouter } from 'next/dist/shared/lib/router/router'
 
 import { WithI18n, WithMantine, WithTRPC } from './decorators'
-import { i18n, i18nLocales } from './i18next'
+import { i18n, CustomLocales } from './i18next'
 
 import './font.css'
 
@@ -40,11 +41,36 @@ export const parameters = {
 		},
 	},
 	i18n,
-	locale: 'en',
-	locales: i18nLocales,
 	viewport: {
 		viewports: INITIAL_VIEWPORTS,
 	},
 }
+export const globalTypes = {
+	locale: {
+		name: 'Locale',
+		description: 'Internationalization locale',
+		defaultValue: 'en',
+		toolbar: {
+			icon: 'globe',
+			items: [
+				{ value: 'en', right: '🇺🇸', title: 'English' },
+				// { value: 'fr', right: '🇫🇷', title: 'Français' },
+				{ value: 'es', right: '🇪🇸', title: 'Español' },
+				// { value: 'zh', right: '🇨🇳', title: '中文' },
+				// { value: 'kr', right: '🇰🇷', title: '한국어' },
+			],
+		},
+	},
+}
 
 export const decorators = [WithI18n, WithTRPC, WithMantine, mswDecorator]
+
+declare module '@storybook/react' {
+	export interface Parameters {
+		nextjs?: {
+			router?: Partial<BaseRouter>
+		}
+		locale?: CustomLocales[number]
+		i18n?: typeof i18n
+	}
+}
