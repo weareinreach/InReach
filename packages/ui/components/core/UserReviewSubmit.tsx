@@ -116,7 +116,7 @@ export const UserReviewSubmit = ({ avatarUrl, avatarName }: UserProps) => {
 					/>
 					<Text color={theme.other.colors.secondary.darkGray}>{t('review-note')}</Text>
 				</Container>
-				<Button variant='sm-primary' className={classes.button} type='submit'>
+				<Button variant='primary' className={classes.button} type='submit'>
 					{t('submit')}
 				</Button>
 			</form>
