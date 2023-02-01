@@ -5,20 +5,23 @@ const config = {
 	plugins: ['import'],
 	extends: [
 		'./base.js',
+		'eslint:recommended',
 		'plugin:import/typescript',
 		'plugin:@typescript-eslint/recommended',
-		'eslint:recommended',
 	],
 	// parser: '@typescript-eslint/parser',
-	rules: {},
+	rules: {
+		'no-useless-catch': 'warn',
+	},
 	overrides: [
 		{
-			files: ['**/*.ts?(x)'],
+			files: ['**/*.tsx?'],
 			// plugins: ['@typescript-eslint'],
 			parser: '@typescript-eslint/parser',
 			parserOptions: {
 				project: 'tsconfig.json',
 			},
+			rules: {},
 			// 	extends: [
 			// 		'plugin:@typescript-eslint/recommended',
 			// 		// 'plugin:@typescript-eslint/recommended-requiring-type-checking',

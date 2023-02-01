@@ -54,12 +54,11 @@ async function run() {
 		}
 	)
 
-	const job = await tasks.run()
 	try {
+		await tasks.run()
 	} catch (error) {
 		migrateLog.log('top level catch')
 		migrateLog.error(error)
-		migrateLog.error(job)
 		logger.fail(JSON.stringify(error))
 		throw error
 	}

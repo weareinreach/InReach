@@ -34,7 +34,6 @@ const config: StorybookConfig = {
 	// 	builder: '@storybook/builder-webpack5',
 	// },
 	features: {
-		storyStoreV7: true,
 		buildStoriesJson: true,
 	},
 	typescript: {
@@ -43,6 +42,7 @@ const config: StorybookConfig = {
 		reactDocgen: 'react-docgen-typescript',
 		reactDocgenTypescriptOptions: {
 			shouldExtractLiteralValuesFromEnum: true,
+			shouldRemoveUndefinedFromOptional: true,
 		},
 	},
 	webpackFinal: (config) => {
