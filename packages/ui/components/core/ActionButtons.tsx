@@ -57,10 +57,6 @@ const useStyles = createStyles((theme) => ({
 
 const actions = {
 	delete: () => {
-		console.log('clicked delete button')
-		//onClick should open a "are you sure modal"
-		//Yes - close modal, deletes the specified resource, display notification that 'blah was deleted'
-		//No -  close modal
 		openConfirmModal({
 			title: 'Please confirm your action',
 			children: (
@@ -86,7 +82,7 @@ const actions = {
 		console.log('clicked review button')
 		openModal({
 			title: 'Placeholder Text for Submit a Review Modal',
-			children: <UserReviewSubmit avatarName={'placeholderName'} avatarUrl={'placeholderUrl'} />,
+			children: <UserReviewSubmit avatarName={null} avatarUrl={null} />,
 		})
 	},
 	save: () => {
