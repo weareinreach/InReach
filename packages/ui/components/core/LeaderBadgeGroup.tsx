@@ -36,5 +36,6 @@ export const LeaderBadgeGroup = ({ badges }: Props) => {
 }
 
 type Props = {
+	/** Array of LeaderBadge props */
 	badges: LeaderBadgeProps[]
 }

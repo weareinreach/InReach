@@ -7,5 +7,6 @@ export const userId = z.object({ userId: cuid })
 export const orgId = z.object({ orgId: cuid })
 export const orgIdServiceId = orgId.extend({ serviceId: cuid })
 export const orgIdLocationId = orgId.extend({ locationId: cuid })
+export const slug = z.object({ slug: z.string() })
 
 export const searchTerm = z.object({ search: z.string() })

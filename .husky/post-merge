@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+check_changed() {
+	if git diff HEAD^ HEAD --exit-code -- $1; then
+	echo "📦 No change to $1"
+else
+	echo "📦 $1 has been modified, executing $2"
+	eval "$2"
+fi
+}
+
+# Run `pnpm install` if package.json changed.
+check_changed "package.json pnpm-lock.yaml" "tsx ./lib/runInstall.ts"

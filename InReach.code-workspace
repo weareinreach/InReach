@@ -144,6 +144,7 @@
 		"explorer.fileNesting.expand": false,
 		"explorer.fileNesting.patterns": {
 			"*.tsx": "${capture}.ts, ${capture}.stories.tsx",
+			"*.ts": "${capture}.ts, ${capture}.stories.tsx",
 			"*eslintrc.js": ".eslintignore"
 		},
 		"files.exclude": {

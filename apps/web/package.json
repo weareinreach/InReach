@@ -36,20 +36,20 @@
 		"embla-carousel-react": "7.0.9",
 		"feather-icons-react": "0.6.2",
 		"i18next": "22.4.9",
-		"next": "13.1.5",
+		"next": "13.1.6",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-i18next": "12.1.4"
 	},
 	"devDependencies": {
-		"@next/bundle-analyzer": "13.1.5",
-		"@next/font": "13.1.5",
+		"@next/bundle-analyzer": "13.1.6",
+		"@next/font": "13.1.6",
 		"@types/node": "16.18.11",
 		"@types/react": "18.0.27",
 		"@types/react-dom": "18.0.10",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
-		"eslint": "8.32.0",
-		"typescript": "4.9.4"
+		"eslint": "8.33.0",
+		"typescript": "4.9.5"
 	}
 }

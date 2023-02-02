@@ -6,7 +6,6 @@ import { ModalsProvider } from '@mantine/modals'
 import { NotificationsProvider } from '@mantine/notifications'
 import { Work_Sans } from '@next/font/google'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { AppLayout } from '@weareinreach/ui/layout'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 import { type AppProps } from 'next/app'
 import { type Session } from 'next-auth'
@@ -35,13 +34,14 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 				<SessionProvider session={session}>
 					<NotificationsProvider>
 						<ModalsProvider>
-							<AppLayout navItems={navItems} footerLinks={navItems} socialMedia={socialMediaLinks}>
-								<Component {...pageProps} />
-							</AppLayout>
+							{/* <AppLayout navItems={navItems} footerLinks={navItems} socialMedia={socialMediaLinks}> */}
+							<Component {...pageProps} />
+							{/* </AppLayout> */}
 						</ModalsProvider>
 					</NotificationsProvider>
 				</SessionProvider>
 			</TypographyStylesProvider>
+			<ReactQueryDevtools initialIsOpen={false} />
 		</MantineProvider>
 	)
 }

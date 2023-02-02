@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import React from 'react'
 
 import { Button } from './Button'
@@ -25,41 +25,46 @@ export default {
 			control: 'string',
 		},
 	},
-} as ComponentMeta<typeof Button>
+} as Meta<typeof Button>
 
-const ButtonVariant: ComponentStory<typeof Button> = (args) => <Button {...args} />
+export const Primary = {
+	args: {
+		variant: 'primary',
+		children: 'Download the app',
+	},
+}
+export const PrimaryWithIcon = {
+	args: {
+		variant: 'primary-icon',
+		children: 'More sorting options',
+		leftIcon: <Icon icon='carbon:settings-adjust' rotate={3} />,
+	},
+}
 
-export const SmallPrimary = ButtonVariant.bind({})
-export const SmallSecondary = ButtonVariant.bind({})
-export const SmallAccent = ButtonVariant.bind({})
-export const LargePrimary = ButtonVariant.bind({})
-export const LargeSecondary = ButtonVariant.bind({})
-export const LargeAccent = ButtonVariant.bind({})
+export const Secondary = {
+	args: {
+		variant: 'secondary',
+		children: 'InReach.org',
+	},
+}
+export const SecondaryWithIcon = {
+	args: {
+		variant: 'secondary-icon',
+		children: 'Save',
+		leftIcon: <Icon icon='carbon:favorite' />,
+	},
+}
 
-SmallPrimary.args = {
-	variant: 'sm-primary',
-	children: 'Download the app',
+export const Accent = {
+	args: {
+		variant: 'accent',
+		children: 'Safety exit',
+	},
 }
-SmallSecondary.args = {
-	variant: 'sm-secondary',
-	children: 'InReach.org',
-}
-SmallAccent.args = {
-	variant: 'sm-accent',
-	children: 'Safety exit',
-}
-LargePrimary.args = {
-	variant: 'lg-primary',
-	children: 'More sorting options',
-	leftIcon: <Icon icon='carbon:settings-adjust' rotate={3} />,
-}
-LargeSecondary.args = {
-	variant: 'lg-secondary',
-	children: 'Save',
-	leftIcon: <Icon icon='carbon:favorite' />,
-}
-LargeAccent.args = {
-	variant: 'lg-accent',
-	children: 'View map',
-	leftIcon: <Icon icon='carbon:map' />,
+export const AccentWithIcon = {
+	args: {
+		variant: 'accent-icon',
+		children: 'View map',
+		leftIcon: <Icon icon='carbon:map' />,
+	},
 }

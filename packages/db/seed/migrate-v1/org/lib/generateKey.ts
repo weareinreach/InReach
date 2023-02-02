@@ -16,11 +16,12 @@ export const generateKey: GenerateKey<KeyType> = (params) => {
 			ns = namespaces.orgDescription
 			key = keyPrefix
 			break
-		case 'svc':
+		case 'svc': {
 			ns = namespaces.orgService
 			const keyBase = `${keyPrefix}.${params.servId}`
 			key = params.subtype === 'access' ? `${keyBase}.access` : `${keyBase}.desc`
 			break
+		}
 		case 'attrSupp':
 			ns = namespaces.orgService
 			key = `${keyPrefix}.attribute.${params.suppId}`

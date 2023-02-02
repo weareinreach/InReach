@@ -2,7 +2,7 @@ import { TRPCError } from '@trpc/server'
 
 import { handleError } from '../lib'
 import { defineRouter, publicProcedure } from '../lib/trpc'
-import { id, searchTerm } from '../schemas/common'
+import { id, searchTerm, slug } from '../schemas/common'
 import { organizationInclude } from '../schemas/selects/org'
 
 export const orgRouter = defineRouter({
@@ -15,8 +15,34 @@ export const orgRouter = defineRouter({
 				},
 				include,
 			})
-			if (!org) throw new TRPCError({ code: 'NOT_FOUND' })
 			return org
+		} catch (error) {
+			handleError(error)
+		}
+	}),
+	getBySlug: publicProcedure.input(slug).query(async ({ ctx, input }) => {
+		try {
+			const { slug } = input
+			const { include } = organizationInclude
+			const org = await ctx.prisma.organization.findUniqueOrThrow({
+				where: {
+					slug,
+				},
+				include,
+			})
+			return org
+		} catch (error) {
+			handleError(error)
+		}
+	}),
+	getIdFromSlug: publicProcedure.input(slug).query(async ({ ctx, input }) => {
+		try {
+			const { slug } = input
+			const orgId = await ctx.prisma.organization.findUniqueOrThrow({
+				where: { slug },
+				select: { id: true },
+			})
+			return orgId
 		} catch (error) {
 			handleError(error)
 		}

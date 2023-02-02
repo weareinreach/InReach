@@ -1,37 +1,43 @@
-import { type StorybookConfig } from '@storybook/core-common'
+import { type StorybookConfig } from '@storybook/nextjs'
 import { merge } from 'merge-anything'
+import { PropItem } from 'react-docgen-typescript'
+import { Component } from 'react-docgen-typescript/lib/parser'
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
 
 import * as path from 'path'
 
 const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
 
 const config: StorybookConfig = {
-	stories: [`../components/**/${filePattern}`, `../layout/**/${filePattern}`],
-	staticDirs: [{ from: '../../../apps/app/public', to: 'public/' }],
+	stories: [`../**/${filePattern}`],
+	staticDirs: [
+		{
+			from: '../../../apps/app/public',
+			to: 'public/',
+		},
+		'../public',
+	],
 	addons: [
 		'@geometricpanda/storybook-addon-badges',
 		'@storybook/addon-a11y',
-		'@storybook/addon-actions',
-		'@storybook/addon-console',
 		'@storybook/addon-essentials',
 		'@storybook/addon-interactions',
 		'@storybook/addon-links',
-		'@storybook/addon-viewport',
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
-		'storybook-addon-next',
 		'storybook-addon-pseudo-states',
 		'storybook-addon-swc',
-		'storybook-dark-mode',
-		'storybook-mobile',
-		'storybook-react-i18next',
+		// 'storybook-react-i18next', // Does not play well with v7 docs yet.
+		'@storybook/addon-actions', // Keep this one last
 	],
-	framework: '@storybook/react',
-	core: {
-		builder: 'webpack5',
+	framework: {
+		name: '@storybook/nextjs',
+		options: {
+			builder: {},
+			fastRefresh: true,
+		},
 	},
 	features: {
-		storyStoreV7: true,
 		buildStoriesJson: true,
 	},
 	typescript: {
@@ -40,6 +46,20 @@ const config: StorybookConfig = {
 		reactDocgen: 'react-docgen-typescript',
 		reactDocgenTypescriptOptions: {
 			shouldExtractLiteralValuesFromEnum: true,
+			shouldRemoveUndefinedFromOptional: true,
+			shouldExtractValuesFromUnion: true,
+			shouldIncludePropTagMap: true,
+			propFilter: (prop: PropItem, component: Component) => {
+				if (prop.declarations !== undefined && prop.declarations.length > 0) {
+					const hasPropAdditionalDescription = prop.declarations.find((declaration) => {
+						return !declaration.fileName.includes('node_modules')
+					})
+
+					return Boolean(hasPropAdditionalDescription)
+				}
+
+				return true
+			},
 		},
 	},
 	webpackFinal: (config) => {
@@ -51,7 +71,9 @@ const config: StorybookConfig = {
 						__dirname,
 						'mockAuthStates.ts'
 					),
+					// '@weareinreach/api': path.resolve(__dirname, '../../api'),
 					'next-i18next': 'react-i18next',
+					'@next/font': 'storybook-nextjs-font-loader',
 				},
 				roots: [path.resolve(__dirname, '../../../apps/app/public')],
 				fallback: {
@@ -77,13 +99,22 @@ const config: StorybookConfig = {
 					tty: false,
 					url: false,
 					util: false,
+					v8: false,
 					vm: false,
 					zlib: false,
 				},
+				plugins: [
+					new TsconfigPathsPlugin({
+						extensions: config.resolve?.extensions,
+					}),
+				],
 			},
 		}
 		const mergedConfig = merge(config, configAdditions)
 		return mergedConfig
+	},
+	docs: {
+		autodocs: true,
 	},
 }
 export default config

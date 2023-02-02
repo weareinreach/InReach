@@ -1,3 +1,6 @@
 {
+	"compilerOptions": {
+		"baseUrl": "./"
+	},
 	"extends": "@weareinreach/config/tsconfig/base.json"
 }

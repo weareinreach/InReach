@@ -43,7 +43,7 @@ jobs:
         id: pnpm-cache
         shell: bash
         run: 'echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT'
-      - uses: actions/cache@58c146cc91c5b9e778e71775dfe9bf1442ad9a12 # v3
+      - uses: actions/cache@627f0f41f6904a5b1efbaed9f96d9eb58e92e920 # v3
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
@@ -52,7 +52,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
         # 👇 Runs pnpm in ./packages/ui
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install && pnpm -w db:generate
         working-directory: packages/ui
         # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic

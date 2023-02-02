@@ -1,5 +1,5 @@
 import { Center } from '@mantine/core'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import React from 'react'
 
 import { VerifiedBadge as VerifiedBadgeComp } from './VerifiedBadge'
@@ -11,17 +11,13 @@ export default {
 	parameters: {
 		design: {
 			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8361&t=zaarlIghpneWF6Qn-0',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8516&t=CeX1OAccIi49cNzc-4',
 		},
 	},
-} as ComponentMeta<typeof VerifiedBadgeComp>
+} as Meta<typeof VerifiedBadgeComp>
 
-const VerifiedBadgeVariant: ComponentStory<typeof VerifiedBadgeComp> = (args) => (
-	<VerifiedBadgeComp {...args} />
-)
-
-export const VerifiedBadge = VerifiedBadgeVariant.bind({})
-
-VerifiedBadge.args = {
-	lastVerifiedDate: new Date(),
+export const VerifiedBadge = {
+	args: {
+		lastVerifiedDate: new Date(),
+	},
 }
