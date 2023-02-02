@@ -167,7 +167,8 @@
 			"**/.next/**": true,
 			"**/.vercel/output/**": true,
 			"**/dist/**": true,
-			"**/storybook-static/**": true
+			"**/storybook-static/**": true,
+			"**/zod-schemas/**": true
 		},
 		"i18n-ally.annotationInPlace": false,
 		"i18n-ally.defaultNamespace": "common",

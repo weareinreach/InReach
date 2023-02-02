@@ -855,8 +855,9 @@ model TranslatedReview {
 
   text String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  auditLogs AuditLog[]
 
   @@index([reviewId])
 }
@@ -1524,8 +1525,6 @@ model AuditLog {
   attributeId                          String? /// @zod.string.cuid()
   AttributeCategory                    AttributeCategory?      @relation(fields: [attributeCategoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   attributeCategoryId                  String? /// @zod.string.cuid()
-  // AttributeRecord          AttributeRecord?      @relation(fields: [attributeRecordId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  // attributeRecordId        String? /// @zod.string.cuid()
   AttributeSupplement                  AttributeSupplement?    @relation(fields: [attributeSupplementId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   attributeSupplementId                String? /// @zod.string.cuid()
   Country                              Country?                @relation(fields: [countryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -1578,8 +1577,6 @@ model AuditLog {
   outsideAPIId                         String? /// @zod.string.cuid()
   OutsideAPIService                    OutsideAPIService?      @relation(fields: [outsideAPIServiceService], references: [service], onDelete: SetNull, onUpdate: Cascade)
   outsideAPIServiceService             String?
-  // PermissionAsset          PermissionAsset?      @relation(fields: [permissionAssetId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  // permissionAssetId        String? /// @zod.string.cuid()
   Permission                           Permission?             @relation(fields: [permissionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   permissionId                         String? /// @zod.string.cuid()
   PhoneType                            PhoneType?              @relation(fields: [phoneTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -1598,6 +1595,8 @@ model AuditLog {
   socialMediaServiceId                 String? /// @zod.string.cuid()
   Source                               Source?                 @relation(fields: [sourceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   sourceId                             String? /// @zod.string.cuid()
+  TranslatedReview                     TranslatedReview?       @relation(fields: [translatedReviewId], references: [id])
+  translatedReviewId                   String? /// @zod.string.cuid()
   Translation                          TranslationKey?         @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: SetNull, onUpdate: Cascade)
   translationKey                       String?
   translationNs                        String?
