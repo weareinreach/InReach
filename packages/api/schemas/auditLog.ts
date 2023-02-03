@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient, AuditLog, prisma } from '@weareinreach/db'
-import { z, ZodRawShape, ZodSchema } from 'zod'
+import omit from 'just-omit'
+import { z } from 'zod'
 
 import { JsonInputOrNull } from './common'
 
@@ -10,10 +11,11 @@ export const connectUser = (id: string): ConnectUser => ({ connect: { id } })
 
 const id = z.string().cuid()
 
-const BaseSchema = z.object({
+export const BaseSchema = z.object({
 	actorId: id,
 	from: JsonInputOrNull,
 	to: JsonInputOrNull,
+	operation: z.enum(['CREATE', 'UPDATE', 'DELETE', 'LINK', 'UNLINK']),
 })
 
 export const AuditLogSchema = {
@@ -189,13 +191,34 @@ export const AuditLogSchema = {
 		orgEmailId: id.nullish(),
 		orgPhoneId: id.nullish(),
 	}),
-} as const
-
-interface Data extends Partial<AuditLogFields> {
-	from: JSON
-	to: JSON
-	actorId: string
 }
+
+type Schema<T = typeof AuditLogSchema> = {
+	[K in PrismaTables]: T extends z.ZodTypeAny ? T : never
+}
+
+export type SchemaKey = keyof SchemaObject
+export type SchemaObject = typeof AuditLogSchema
+
+export type RecordId<K extends SchemaKey = SchemaKey> = (
+	key: K
+) => Omit<SchemaObject[K]['shape'], 'from' | 'to' | 'actorId' | 'operation'>
+
+export const getIds: RecordId = (key) => {
+	const schema = AuditLogSchema[key].shape
+
+	return omit(schema, ['from', 'to', 'actorId', 'operation'])
+}
+
+export type AuditIds<K extends SchemaKey> = Omit<
+	z.infer<SchemaObject[K]>,
+	'from' | 'to' | 'actorId' | 'operation'
+>
+
+export const getSchema = <K extends SchemaKey>(key: K): SchemaObject[K] => {
+	return AuditLogSchema[key]
+}
+export type GetSchema<K extends SchemaKey> = ReturnType<typeof getSchema<K>>
 
 export type PrismaTables = keyof Omit<PrismaClient, (typeof excludedKeys)[number]>
 const excludedKeys = [
@@ -464,9 +487,24 @@ export const prismaQueries = {
 		await prisma.userToOrganization.findUniqueOrThrow({
 			where: { orgEmailId, orgPhoneId, userId_organizationId: { organizationId, userId } },
 		}),
-} as const
+}
 
-export type QueryParams<K extends PrismaTables> = Parameters<(typeof prismaQueries)[K]>
+export type ClientList = typeof prismaQueries
+export type ClientKeys = keyof ClientList
+
+// export const getClient = <K extends SchemaKey>(table: K): (typeof prismaQueriesAlt)[K] => {
+// 	return prismaQueriesAlt[table]
+// }
+// export type ClientReturn<T extends SchemaKey> = ReturnType<typeof getClient<T>>
+
+// export const isClient = <C extends ClientList[T], T extends ClientKeys = ClientKeys>(
+// 	client: C,
+// 	table: T
+// ): client is C => {
+// 	return client === prismaQueries[table]
+// }
+
+export type QueryParams<K extends SchemaKey> = Parameters<ClientList[K]>[0]
 
 type ZodData<T extends Readonly<PrismaTables>> = z.input<(typeof AuditLogSchema)[T]>
 

@@ -1,16 +1,26 @@
 import { Prisma } from '@weareinreach/db'
+import { z } from 'zod'
 
 import { handleError } from '../lib'
+import { auditLog } from '../lib/auditLog'
 import { defineRouter, protectedProcedure, publicProcedure, staffProcedure } from '../lib/trpc'
 import { id, orgId, orgIdLocationId, orgIdServiceId, userId } from '../schemas/common'
-import { createReview, transformCreateReview } from '../schemas/review'
+import { createReview } from '../schemas/review'
 
 export const reviewRouter = defineRouter({
 	create: protectedProcedure.input(createReview).mutation(async ({ ctx, input }) => {
 		try {
+			const auditLogs = auditLog<typeof input, 'userSavedList'>({
+				table: 'userSavedList',
+				operation: 'create',
+				actorId: ctx.session.user.id,
+				to: input,
+			})
+
 			const data: Prisma.OrgReviewCreateArgs['data'] = {
 				...input,
 				userId: ctx.session.user.id,
+				auditLogs,
 			}
 			const review = await ctx.prisma.orgReview.create({ data, select: { id: true } })
 

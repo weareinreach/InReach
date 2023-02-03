@@ -19,12 +19,12 @@ generator client {
 //   relationModel = "default"
 // }
 
-generator zod {
-  provider         = "zod-prisma-types"
-  output           = "../zod-schemas"
-  useMultipleFiles = true
-  // createModelTypes = false
-}
+// generator zod {
+//   provider         = "zod-prisma-types"
+//   output           = "../zod-schemas"
+//   useMultipleFiles = true
+//   // createModelTypes = false
+// }
 
 // generator dbml {
 //   provider              = "prisma-dbml-generator"
@@ -1512,12 +1512,13 @@ model InternalNote {
 
 /// Store changes made by users
 model AuditLog {
-  id        String   @id @default(cuid())
-  actor     User     @relation("Recorded User", fields: [actorId], references: [id])
+  id        String            @id @default(cuid())
+  actor     User              @relation("Recorded User", fields: [actorId], references: [id])
   actorId   String /// @zod.string.cuid()
-  timestamp DateTime @default(now())
+  timestamp DateTime          @default(now())
   from      Json
   to        Json
+  operation AuditLogOperation
 
   Account                              Account?                @relation(fields: [accountId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   accountId                            String? /// @zod.string.cuid()
@@ -1602,7 +1603,7 @@ model AuditLog {
   translationNs                        String?
   TranslationNamespace                 TranslationNamespace?   @relation(fields: [translationNamespaceName], references: [name], onDelete: SetNull, onUpdate: Cascade)
   translationNamespaceName             String? /// @zod.string.cuid()
-  User                                 User[]                  @relation("AuditLogEntry") //@relation("AuditLogEntry", fields: [userId], references: [id],onDelete: SetNull,onUpdate: Cascade)
+  User                                 User?                   @relation("AuditLogEntry", fields: [userId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userId                               String? /// @zod.string.cuid()
   UserCommunity                        UserCommunity?          @relation(fields: [userCommunityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userCommunityId                      String? /// @zod.string.cuid()
@@ -1624,6 +1625,14 @@ model AuditLog {
   userTypeId                           String? /// @zod.string.cuid()
 
   //@@schema("system")
+}
+
+enum AuditLogOperation {
+  CREATE
+  UPDATE
+  DELETE
+  LINK
+  UNLINK
 }
 
 //

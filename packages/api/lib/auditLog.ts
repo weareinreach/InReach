@@ -1,30 +1,72 @@
-import { Prisma, PrismaClient, prisma, AuditLog } from '@weareinreach/db'
+import superjson from 'superjson'
 import { z } from 'zod'
 
-import { InputJsonValueType } from 'schemas/common'
+// import { prismaQueriesAlt } from './prismaQueryClients'
+import { getSchema, PrismaTables, AuditLogSchema, SchemaKey, AuditIds, BaseSchema } from '../schemas/auditLog'
 
-import { PrismaTables, AuditLogSchema, prismaQueries, QueryParams } from '../schemas/auditLog'
+const operationMap = {
+	create: 'CREATE',
+	update: 'UPDATE',
+	delete: 'DELETE',
+	link: 'LINK',
+	unlink: 'UNLINK',
+} as const
 
-export const auditLog: AuditLogParser = async (table, method, data) => {
-	const parser = AuditLogSchema[table]
+export const auditLog = <
+	D extends object,
+	T extends SchemaKey = SchemaKey,
+	M extends Operation = Operation,
+	R extends AuditIds<T> = AuditIds<T>
+>({
+	table,
+	operation,
+	actorId,
+	recordId,
+	from = {},
+	to,
+}: {
+	table: T
+	operation: M
+	actorId: string
+	recordId?: R extends AuditIds<T> ? R : never
+	from?: Partial<D>
+	to: D
+}): AuditLogReturn<T> => {
+	const parser = operation === 'create' ? BaseSchema : getSchema(table)
 
-	return parser.parse(data)
+	const operationValue = operationMap[operation]
+	const logInput = {
+		actorId,
+		to: superjson.serialize(to),
+		from: superjson.serialize(from),
+		operation: operationValue,
+		...recordId,
+	}
+
+	const newAuditLog = {
+		// auditLogs: { create: parser.parse(logInput) },
+		create: parser.parse(logInput),
+	}
+
+	return newAuditLog
 }
 
-type AuditLogParser = <T extends Readonly<PrismaTables>, M extends Method>(
+type AuditLogParser = <D, T extends SchemaKey, M extends Operation>(
 	table: T extends Readonly<PrismaTables> ? T : never,
-	method: M,
-	data: ZodData<T>
+	operation: M,
+	data: D
 ) => Promise<AuditLogReturn<T>>
 
-type Method = CreateMethod | UpdateMethod
+type Operation = CreateOperation | UpdateOperation
 
-type CreateMethod = 'create' | 'link'
-type UpdateMethod = 'update' | 'delete' | 'unlink'
+type CreateOperation = 'create' | 'link'
+type UpdateOperation = 'update' | 'delete' | 'unlink'
 type ZodData<T extends Readonly<PrismaTables>> = z.input<(typeof AuditLogSchema)[T]>
 
-type AuditLogReturn<T extends Readonly<PrismaTables>> = z.output<(typeof AuditLogSchema)[T]>
+type AuditLogReturn<T extends Readonly<PrismaTables>> = {
+	create: z.output<(typeof AuditLogSchema)[T]> | z.output<typeof BaseSchema>
+}
 
-type DataProp<T extends Readonly<PrismaTables>, M extends Method> = M extends CreateMethod
+type DataProp<T extends Readonly<PrismaTables>, M extends Operation> = M extends CreateOperation
 	? Omit<ZodData<T>, 'from'> & Partial<Pick<ZodData<T>, 'from'>>
 	: ZodData<T>
