@@ -2,7 +2,7 @@ import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
 import { handleError } from '../lib'
-import { auditLog } from '../lib/auditLog'
+import { createAuditLog } from '../lib/auditLog'
 import { defineRouter, protectedProcedure, publicProcedure, staffProcedure } from '../lib/trpc'
 import { id, orgId, orgIdLocationId, orgIdServiceId, userId } from '../schemas/common'
 import { createReview } from '../schemas/review'
@@ -10,8 +10,8 @@ import { createReview } from '../schemas/review'
 export const reviewRouter = defineRouter({
 	create: protectedProcedure.input(createReview).mutation(async ({ ctx, input }) => {
 		try {
-			const auditLogs = auditLog<typeof input, 'userSavedList'>({
-				table: 'userSavedList',
+			const auditLogs = createAuditLog<typeof input, 'orgReview'>({
+				table: 'orgReview',
 				operation: 'create',
 				actorId: ctx.session.user.id,
 				to: input,
@@ -109,12 +109,27 @@ export const reviewRouter = defineRouter({
 		.meta({ hasPerm: 'hideUserReview' })
 		.mutation(async ({ ctx, input }) => {
 			try {
+				const data = {
+					visible: false,
+				}
+
+				const auditLogs = createAuditLog<typeof data, 'orgReview'>({
+					actorId: ctx.session.user.id,
+					operation: 'update',
+					table: 'orgReview',
+					from: {
+						visible: true,
+					},
+					to: data,
+				})
+
 				const result = await ctx.prisma.orgReview.update({
 					where: {
 						id: input.id,
 					},
 					data: {
-						visible: false,
+						...data,
+						auditLogs,
 					},
 				})
 				return result
@@ -127,12 +142,27 @@ export const reviewRouter = defineRouter({
 		.meta({ hasPerm: 'showUserReview' })
 		.mutation(async ({ ctx, input }) => {
 			try {
+				const data = {
+					visible: true,
+				}
+
+				const auditLogs = createAuditLog<typeof data, 'orgReview'>({
+					actorId: ctx.session.user.id,
+					operation: 'update',
+					table: 'orgReview',
+					from: {
+						visible: false,
+					},
+					to: data,
+				})
+
 				const result = await ctx.prisma.orgReview.update({
 					where: {
 						id: input.id,
 					},
 					data: {
-						visible: true,
+						...data,
+						auditLogs,
 					},
 				})
 				return result
@@ -145,12 +175,26 @@ export const reviewRouter = defineRouter({
 		.meta({ hasPerm: 'deleteUserReview' })
 		.mutation(async ({ ctx, input }) => {
 			try {
+				const data = {
+					deleted: true,
+				}
+
+				const auditLogs = createAuditLog<typeof data, 'orgReview'>({
+					actorId: ctx.session.user.id,
+					operation: 'delete',
+					table: 'orgReview',
+					from: {
+						deleted: false,
+					},
+					to: data,
+				})
 				const review = ctx.prisma.orgReview.update({
 					where: {
 						id: input.id,
 					},
 					data: {
-						deleted: true,
+						...data,
+						auditLogs,
 					},
 				})
 				return review
@@ -163,12 +207,26 @@ export const reviewRouter = defineRouter({
 		.meta({ hasPerm: 'deleteUserReview' })
 		.mutation(async ({ ctx, input }) => {
 			try {
+				const data = {
+					deleted: false,
+				}
+
+				const auditLogs = createAuditLog<typeof data, 'orgReview'>({
+					actorId: ctx.session.user.id,
+					operation: 'delete',
+					table: 'orgReview',
+					from: {
+						deleted: true,
+					},
+					to: data,
+				})
 				const review = ctx.prisma.orgReview.update({
 					where: {
 						id: input.id,
 					},
 					data: {
-						deleted: false,
+						...data,
+						auditLogs,
 					},
 				})
 				return review

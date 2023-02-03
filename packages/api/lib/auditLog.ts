@@ -59,7 +59,7 @@ export const createAuditLog = <
 	/** Used for m-to-n link entries */
 	recordId?: R extends AuditIds<T> ? R : never
 	/** Data before operation */
-	from?: Partial<D>
+	from?: Partial<{ [K in keyof D]: unknown }>
 	/** Data after operation */
 	to: D
 }): AuditLogReturn<T> => {

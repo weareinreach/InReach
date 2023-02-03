@@ -1,20 +1,34 @@
-import { handleError } from '../lib'
+import { type Prisma } from '@weareinreach/db'
+
+import { createAuditLog, handleError } from '../lib'
 import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '../lib/trpc'
 import { adminCreateUser, createUser, transformUserSurvey, userSurvey } from '../schemas/user'
 
 export const userRouter = defineRouter({
 	create: publicProcedure.input(createUser).mutation(async ({ ctx, input }) => {
 		try {
-			const user = await ctx.prisma.user.create({
-				data: {
-					...input,
-					userType: {
-						connect: {
-							type: 'seeker',
-						},
+			const data: Prisma.UserCreateInput = {
+				...input,
+				userType: {
+					connect: {
+						type: 'seeker',
 					},
 				},
+			}
+
+			const user = await ctx.prisma.user.create({
+				data,
 			})
+			if (user) {
+				await ctx.prisma.auditLog.create({
+					data: createAuditLog<typeof user, 'user'>({
+						actorId: user.id,
+						operation: 'create',
+						table: 'user',
+						to: user,
+					}).create,
+				})
+			}
 			return user.id
 		} catch (error) {
 			handleError(error)
@@ -22,8 +36,17 @@ export const userRouter = defineRouter({
 	}),
 	adminCreate: adminProcedure.input(adminCreateUser).mutation(async ({ ctx, input }) => {
 		try {
+			const data = input
 			const user = await ctx.prisma.user.create({
-				data: input,
+				data: {
+					...data,
+					auditLogs: createAuditLog<typeof data, 'user'>({
+						actorId: ctx.session.user.id,
+						operation: 'create',
+						table: 'user',
+						to: data,
+					}),
+				},
 			})
 			return user.id
 		} catch (error) {

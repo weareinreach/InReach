@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server'
 import remove from 'just-remove'
 
-import { handleError } from '../lib'
+import { createAuditLog, handleError } from '../lib'
 import { nanoUrl } from '../lib/nanoIdUrl'
 import { defineRouter, protectedProcedure, publicProcedure } from '../lib/trpc'
 import { id } from '../schemas/common'
@@ -87,17 +87,17 @@ export const savedListRouter = defineRouter({
 				...input,
 				ownedById: ctx.session.user.id,
 			}
+			const auditLogs = createAuditLog<typeof input, 'userSavedList'>({
+				table: 'userSavedList',
+				actorId: ctx.session.user.id,
+				operation: 'create',
+				to: data,
+			})
 
 			const list = await ctx.prisma.userSavedList.create({
 				data: {
 					...data,
-					auditLogs: {
-						create: {
-							from: {},
-							to: data,
-							actorId: ctx.session.user.id,
-						},
-					},
+					auditLogs,
 				},
 			})
 			return list
@@ -109,20 +109,20 @@ export const savedListRouter = defineRouter({
 	createAndSaveOrg: protectedProcedure.input(schemas.createAndSaveOrg).mutation(async ({ ctx, input }) => {
 		try {
 			const result = await ctx.prisma.$transaction(async (tx) => {
+				const actorId = ctx.session.user.id
 				const newList = {
 					name: input.listName,
-					ownedById: ctx.session.user.id,
+					ownedById: actorId,
 				}
 				const { id: listId } = await tx.userSavedList.create({
 					data: {
 						...newList,
-						auditLogs: {
-							create: {
-								from: {},
-								to: newList,
-								actorId: ctx.session.user.id,
-							},
-						},
+						auditLogs: createAuditLog<typeof newList, 'userSavedList'>({
+							actorId,
+							operation: 'create',
+							table: 'userSavedList',
+							to: newList,
+						}),
 					},
 					select: { id: true },
 				})
@@ -135,14 +135,13 @@ export const savedListRouter = defineRouter({
 					data: saveOrg,
 				})
 				await tx.auditLog.create({
-					data: {
-						from: {},
-						to: {
-							organizations: [input.organizationId],
-						},
-						userSavedListId: listId,
-						actorId: ctx.session.user.id,
-					},
+					data: createAuditLog<typeof saveOrg, 'savedOrganization'>({
+						actorId,
+						operation: 'link',
+						table: 'savedOrganization',
+						recordId: saveOrg,
+						to: saveOrg,
+					}).create,
 				})
 				if (!savedOrg)
 					throw new Error('Error creating and/or saving to list', { cause: { input, listId, savedOrg, ctx } })
@@ -158,22 +157,22 @@ export const savedListRouter = defineRouter({
 		.input(schemas.createAndSaveService)
 		.mutation(async ({ ctx, input }) => {
 			try {
+				const actorId = ctx.session.user.id
 				const result = await ctx.prisma.$transaction(async (tx) => {
 					const newList = {
 						name: input.listName,
-						ownedById: ctx.session.user.id,
+						ownedById: actorId,
 					}
 
 					const { id: listId } = await tx.userSavedList.create({
 						data: {
 							...newList,
-							auditLogs: {
-								create: {
-									from: {},
-									to: newList,
-									actorId: ctx.session.user.id,
-								},
-							},
+							auditLogs: createAuditLog<typeof newList, 'userSavedList'>({
+								actorId,
+								operation: 'create',
+								table: 'userSavedList',
+								to: newList,
+							}),
 						},
 						select: { id: true },
 					})
@@ -186,14 +185,13 @@ export const savedListRouter = defineRouter({
 						data: saveService,
 					})
 					await tx.auditLog.create({
-						data: {
-							from: {},
-							to: {
-								services: [input.serviceId],
-							},
-							userSavedListId: listId,
-							actorId: ctx.session.user.id,
-						},
+						data: createAuditLog<typeof saveService, 'savedService'>({
+							actorId,
+							operation: 'link',
+							table: 'savedService',
+							recordId: saveService,
+							to: saveService,
+						}).create,
 					})
 					if (!savedService)
 						throw new Error('Error creating and/or saving to list', {
@@ -234,25 +232,18 @@ export const savedListRouter = defineRouter({
 	saveOrg: protectedProcedure.input(schemas.listIdOrgId).mutation(async ({ ctx, input }) => {
 		try {
 			const result = await ctx.prisma.$transaction(async (tx) => {
-				const from = (await tx.userSavedList.findUnique({
-					where: {
-						id: input.listId,
-					},
-					select: { organizations: { select: { organizationId: true } } },
-				})) ?? { organizations: [] }
-				const to = from
-				to?.organizations.push({ organizationId: input.organizationId })
 				const addOrg = await tx.savedOrganization.create({
 					data: input,
 				})
 				if (addOrg) {
 					await tx.auditLog.create({
-						data: {
+						data: createAuditLog<typeof input, 'savedOrganization'>({
 							actorId: ctx.session.user.id,
-							from,
-							to,
-							userSavedListId: input.listId,
-						},
+							operation: 'link',
+							table: 'savedOrganization',
+							to: input,
+							recordId: input,
+						}).create,
 					})
 				}
 				return addOrg
@@ -266,28 +257,9 @@ export const savedListRouter = defineRouter({
 	delOrg: protectedProcedure.input(schemas.listIdOrgId).mutation(async ({ ctx, input }) => {
 		try {
 			const result = await ctx.prisma.$transaction(async (tx) => {
-				const from = (await tx.userSavedList.findUnique({
-					where: {
-						id: input.listId,
-					},
-					select: { organizations: { select: { organizationId: true } } },
-				})) ?? { organizations: [] }
-				const to = {
-					organizations: remove(from.organizations, [{ organizationId: input.organizationId }]),
-				}
 				const delOrg = await tx.savedOrganization.delete({
 					where: { listId_organizationId: input },
 				})
-				if (delOrg) {
-					await tx.auditLog.create({
-						data: {
-							actorId: ctx.session.user.id,
-							from,
-							to,
-							userSavedListId: input.listId,
-						},
-					})
-				}
 				return delOrg
 			})
 			return result
@@ -299,25 +271,18 @@ export const savedListRouter = defineRouter({
 	saveService: protectedProcedure.input(schemas.listIdServiceId).mutation(async ({ ctx, input }) => {
 		try {
 			const result = await ctx.prisma.$transaction(async (tx) => {
-				const from = (await tx.userSavedList.findUnique({
-					where: {
-						id: input.listId,
-					},
-					select: { services: { select: { serviceId: true } } },
-				})) ?? { services: [] }
-				const to = from
-				to?.services.push({ serviceId: input.serviceId })
 				const addService = await tx.savedService.create({
 					data: input,
 				})
 				if (addService) {
 					await tx.auditLog.create({
-						data: {
+						data: createAuditLog<typeof input, 'savedService'>({
 							actorId: ctx.session.user.id,
-							from,
-							to,
-							userSavedListId: input.listId,
-						},
+							operation: 'link',
+							table: 'savedService',
+							to: input,
+							recordId: input,
+						}).create,
 					})
 				}
 				return addService
@@ -331,28 +296,9 @@ export const savedListRouter = defineRouter({
 	delService: protectedProcedure.input(schemas.listIdServiceId).mutation(async ({ ctx, input }) => {
 		try {
 			const result = await ctx.prisma.$transaction(async (tx) => {
-				const from = (await tx.userSavedList.findUnique({
-					where: {
-						id: input.listId,
-					},
-					select: { services: { select: { serviceId: true } } },
-				})) ?? { services: [] }
-				const to = {
-					services: remove(from.services, [{ serviceId: input.serviceId }]),
-				}
 				const delOrg = await tx.savedService.delete({
 					where: { listId_serviceId: input },
 				})
-				if (delOrg) {
-					await tx.auditLog.create({
-						data: {
-							actorId: ctx.session.user.id,
-							from,
-							to,
-							userSavedListId: input.listId,
-						},
-					})
-				}
 				return delOrg
 			})
 			return result
@@ -382,32 +328,26 @@ export const savedListRouter = defineRouter({
 			const urlSlug = await generateUniqueSlug()
 
 			const result = await ctx.prisma.$transaction(async (tx) => {
-				const from = (await tx.userSavedList.findUnique({
-					where: input,
-					select: { sharedLinkKey: true },
-				})) ?? { sharedLinkKey: undefined }
+				const data = { sharedLinkKey: urlSlug }
 
 				const sharedUrl = await tx.userSavedList.update({
 					where: input,
-					data: { sharedLinkKey: urlSlug },
+					data: {
+						...data,
+						auditLogs: createAuditLog<typeof data, 'userSavedList'>({
+							actorId: ctx.session.user.id,
+							from: { sharedLinkKey: null },
+							to: data,
+							operation: 'update',
+							table: 'userSavedList',
+						}),
+					},
 					select: {
 						id: true,
 						name: true,
 						sharedLinkKey: true,
 					},
 				})
-				if (sharedUrl) {
-					const { sharedLinkKey, id } = sharedUrl
-					await tx.auditLog.create({
-						data: {
-							actorId: ctx.session.user.id,
-							from,
-							to: { sharedLinkKey },
-							userSavedListId: id,
-						},
-					})
-				}
-
 				return sharedUrl
 			})
 			return result
@@ -426,12 +366,20 @@ export const savedListRouter = defineRouter({
 				const from = (await tx.userSavedList.findUnique({
 					where: input,
 					select: { sharedLinkKey: true },
-				})) ?? { sharedLinkKey: undefined }
+				})) ?? { sharedLinkKey: null }
 
+				const data = { sharedLinkKey: null }
 				const sharedUrl = await tx.userSavedList.update({
 					where: input,
 					data: {
-						sharedLinkKey: null,
+						...data,
+						auditLogs: createAuditLog<typeof data, 'userSavedList'>({
+							actorId: ctx.session.user.id,
+							from,
+							to: data,
+							operation: 'update',
+							table: 'userSavedList',
+						}),
 					},
 					select: {
 						id: true,
@@ -439,17 +387,6 @@ export const savedListRouter = defineRouter({
 						sharedLinkKey: true,
 					},
 				})
-				if (sharedUrl) {
-					const { sharedLinkKey, id } = sharedUrl
-					await tx.auditLog.create({
-						data: {
-							actorId: ctx.session.user.id,
-							from,
-							to: { sharedLinkKey },
-							userSavedListId: id,
-						},
-					})
-				}
 				return sharedUrl
 			})
 			return result
