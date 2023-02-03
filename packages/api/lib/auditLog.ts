@@ -12,7 +12,32 @@ const operationMap = {
 	unlink: 'UNLINK',
 } as const
 
-export const auditLog = <
+/**
+ * Creates a formatted Audit Log entry
+ *
+ * @example
+ *
+ * ```typescript
+ *                  Type arguments: "to" data ⤵   db table ⤵
+ * const auditLogs = createAuditLogs<typeof inputData, 'tableName'>({table,operation,actorId,to})
+ *
+ * const dbTxn = await prisma.tableName.create({
+ * 	data: {
+ * 		...data,
+ * 		auditLogs
+ * 	}
+ * })
+ * ```
+ *
+ * @param _arg0.table - Database table name
+ * @param _arg0.operation - Data operation
+ * @param _arg0.actorId - `userId` of person making change
+ * @param _arg0.recordId - **OPTIONAL**: Used only for m-to-n link entries
+ * @param _arg0.from - **OPTIONAL for 'create' operation**: Data before operation
+ * @param _arg0.to - Data after operation
+ * @returns An object that can be dropped in to a Prisma operation
+ */
+export const createAuditLog = <
 	D extends object,
 	T extends SchemaKey = SchemaKey,
 	M extends Operation = Operation,
@@ -25,11 +50,17 @@ export const auditLog = <
 	from = {},
 	to,
 }: {
+	/** Database table name */
 	table: T
+	/** Data operation */
 	operation: M
+	/** UserId of person making change */
 	actorId: string
+	/** Used for m-to-n link entries */
 	recordId?: R extends AuditIds<T> ? R : never
+	/** Data before operation */
 	from?: Partial<D>
+	/** Data after operation */
 	to: D
 }): AuditLogReturn<T> => {
 	const parser = operation === 'create' ? BaseSchema : getSchema(table)
