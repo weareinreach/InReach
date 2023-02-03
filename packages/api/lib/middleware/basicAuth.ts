@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server'
 
 import { checkPermissions } from './'
-import { t } from '../trpc'
+import { t } from '../initTRPC'
 
 export const isAuthed = t.middleware(({ ctx, meta, next }) => {
 	if (!ctx.session || !ctx.session.user || !checkPermissions(meta, ctx)) {

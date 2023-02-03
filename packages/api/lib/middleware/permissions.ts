@@ -2,7 +2,7 @@ import invariant from 'tiny-invariant'
 
 import { reject } from './'
 import { type Context } from '../context'
-import { type Meta, t } from '../trpc'
+import { type Meta, t } from '../initTRPC'
 
 export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 	try {
