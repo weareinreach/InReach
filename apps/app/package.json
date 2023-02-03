@@ -65,6 +65,8 @@
 		"@next/font": "13.1.6",
 		"@playwright/test": "1.30.0",
 		"@tanstack/react-query-devtools": "4.24.4",
+		"@types/eslint": "8.21.0",
+		"@types/flat": "5.0.2",
 		"@types/luxon": "3.2.0",
 		"@types/node": "18.11.18",
 		"@types/react": "18.0.27",
