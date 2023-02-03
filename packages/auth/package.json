@@ -20,6 +20,7 @@
 		"zod": "3.20.2"
 	},
 	"devDependencies": {
+		"@types/node": "18.11.18",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
