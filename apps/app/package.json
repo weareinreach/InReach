@@ -75,7 +75,7 @@
 		"@typescript-eslint/parser": "5.50.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
-		"commander": "9.5.0",
+		"commander": "10.0.0",
 		"dotenv": "16.0.3",
 		"eslint": "8.33.0",
 		"eslint-plugin-i18next": "6.0.0-6",
