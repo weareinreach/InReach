@@ -1,4 +1,4 @@
-import {Meta } from '@storybook/react'
+import { Meta } from '@storybook/react'
 import React from 'react'
 
 import { SearchBox as SearchBoxComp } from './SearchBox'
@@ -14,15 +14,14 @@ export default {
 	},
 } as Meta<typeof SearchBoxComp>
 
-
 export const SearchBoxLocation = {
-	args:{
-		type:'location'
-	}
+	args: {
+		type: 'location',
+	},
 }
 
-export const SearchBoxOrganization= {
-	args:{
-		type:'organization'
-	}
+export const SearchBoxOrganization = {
+	args: {
+		type: 'organization',
+	},
 }
