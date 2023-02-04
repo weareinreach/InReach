@@ -114,7 +114,7 @@ importers:
       '@weareinreach/eslint-config': 0.100.0
       '@weareinreach/ui': 0.100.0
       axios: 1.3.2
-      commander: 9.5.0
+      commander: 10.0.0
       dayjs: 1.11.7
       dotenv: 16.0.3
       embla-carousel-react: 7.0.9
@@ -193,7 +193,7 @@ importers:
       '@typescript-eslint/parser': 5.50.0_4vsywjlpuriuw3tl5oq6zy5a64
       '@weareinreach/config': link:../../packages/config
       '@weareinreach/eslint-config': link:../../packages/eslint-config
-      commander: 9.5.0
+      commander: 10.0.0
       dotenv: 16.0.3
       eslint: 8.33.0
       eslint-plugin-i18next: 6.0.0-6
@@ -492,7 +492,7 @@ importers:
       '@weareinreach/eslint-config': 0.100.0
       '@zerodep/geo.stateiso': 0.1.4
       axios: 1.3.2
-      commander: 9.5.0
+      commander: 10.0.0
       countries-languages: 1.0.3
       cuid: 3.0.0
       dotenv: 16.0.3
@@ -543,7 +543,7 @@ importers:
       '@weareinreach/eslint-config': link:../eslint-config
       '@zerodep/geo.stateiso': 0.1.4
       axios: 1.3.2
-      commander: 9.5.0
+      commander: 10.0.0
       countries-languages: 1.0.3
       cuid: 3.0.0
       dotenv: 16.0.3
@@ -10790,6 +10790,11 @@ packages:
 
   /command-exists/1.2.9:
     resolution: {integrity: sha512-LTQ/SGc+s0Xc0Fu5WaKnR0YiygZkm9eKFvyS+fRsU7/ZWFF8ykFM6Pc9aCVf1+xasOOZpO3BAVgVrKvsqKHV7w==}
+    dev: true
+
+  /commander/10.0.0:
+    resolution: {integrity: sha512-zS5PnTI22FIRM6ylNW8G4Ap0IEOyk62fhLSD0+uHRT9McRCLGpkVNvao4bjimpK/GShynyQkFFxHhwMcETmduA==}
+    engines: {node: '>=14'}
     dev: true
 
   /commander/2.20.3:
