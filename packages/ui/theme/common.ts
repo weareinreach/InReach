@@ -83,6 +83,7 @@ export const commonTheme: MantineThemeOverride = {
 				darkGray: '#65676B',
 				teal: '#28939C',
 				cornflower: '#4792DA',
+				softBlack: '#21272C',
 			},
 			tertiary: {
 				coolGray: '#d9d9d9',
@@ -171,6 +172,7 @@ declare module '@mantine/core' {
 				darkGray: '#65676B'
 				teal: '#28939C'
 				cornflower: '#4792DA'
+				softBlack: '#21272C'
 			}
 			tertiary: {
 				coolGray: '#d9d9d9'

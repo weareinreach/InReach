@@ -26,6 +26,8 @@
 	"saved": "Saved",
 	"saved-lists": "Saved Lists",
 	"search": "Search",
+	"search-box-location-placeholder":"Enter state, city, or zip code...",
+	"search-box-organization-placeholder":"Enter organization name...",
 	"settings": "Settings",
 	"show-less": "Show less",
 	"show-more": "Show more",
