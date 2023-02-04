@@ -23,7 +23,9 @@
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.110",
-		"@types/node": "16.18.11",
+		"@types/eslint": "8.21.0",
+		"@types/node": "18.11.18",
+		"@types/prettier": "2.7.2",
 		"@vercel/ncc": "0.36.1",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
