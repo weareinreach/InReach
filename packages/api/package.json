@@ -16,10 +16,10 @@
 	},
 	"dependencies": {
 		"@tanstack/react-query": "4.24.4",
-		"@trpc/client": "10.9.1",
-		"@trpc/next": "10.9.1",
-		"@trpc/react-query": "10.9.1",
-		"@trpc/server": "10.9.1",
+		"@trpc/client": "10.10.0",
+		"@trpc/next": "10.10.0",
+		"@trpc/react-query": "10.10.0",
+		"@trpc/server": "10.10.0",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"cuid": "3.0.0",
@@ -35,6 +35,9 @@
 		"zod": "3.20.2"
 	},
 	"devDependencies": {
+		"@types/eslint": "8.21.0",
+		"@types/node": "18.11.18",
+		"@types/prettier": "2.7.2",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"dotenv-cli": "7.0.0",
@@ -48,5 +51,5 @@
 	"peerDependencies": {
 		"next": ">=13"
 	},
-	"packageManager": "pnpm@7.26.2"
+	"packageManager": "pnpm@7.26.3"
 }
