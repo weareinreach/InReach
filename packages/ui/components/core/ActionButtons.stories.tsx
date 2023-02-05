@@ -1,8 +1,6 @@
-import { createId } from '@paralleldrive/cuid2'
 import { Meta } from '@storybook/react'
 
 import { ActionButtons as ActionButtonsComponent } from './ActionButtons'
-import { getTRPCMock } from '../../lib/getTrpcMock'
 
 export default {
 	title: 'Design System/Action Buttons',
@@ -12,34 +10,8 @@ export default {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=51%3A472&t=MmGmrL63FUWcqBUe-0',
 		},
-		nextjs: {
-			router: {
-				pathname: '/org/[slug]',
-				asPath: '/org/mockOrg',
-				query: {
-					slug: 'mockOrg',
-				},
-			},
-		},
-		msw: {
-			handlers: [
-				getTRPCMock({
-					path: ['organization', 'getIdFromSlug'],
-					type: 'query',
-					response: {
-						id: createId(),
-					},
-				}),
-				getTRPCMock({
-					path: ['review', 'create'],
-					type: 'mutation',
-					response: {
-						id: createId(),
-					},
-				}),
-			],
-		},
 	},
+	argTypes: { onClick: { handler: 'clicked' } },
 } as Meta<typeof ActionButtonsComponent>
 
 export const ActionButtonDelete = {
