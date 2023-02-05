@@ -99,7 +99,7 @@ export const ActionButtons = ({ iconKey, overflowItems }: Props) => {
 
 	/** The button component */
 	const buttonComponent = (
-		<Button className={opened ? classes.buttonPressed : classes.button} radius='md'>
+		<Button className={opened ? classes.buttonPressed : classes.button} radius='md' onClick={handler}>
 			<Icon
 				icon={iconRender.icon}
 				color={theme.other.colors.secondary.black}
