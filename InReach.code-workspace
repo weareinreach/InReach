@@ -1,13 +1,11 @@
 {
 	"extensions": {
 		"recommendations": [
-			"alexkrechik.cucumberautocomplete",
 			"bierner.jsdoc-markdown-highlighting",
 			"bierner.markdown-yaml-preamble",
 			"dbaeumer.vscode-eslint",
 			"dsznajder.es7-react-js-snippets",
 			"editorconfig.editorconfig",
-			"eliostruyf.vscode-typescript-exportallmodules",
 			"esbenp.prettier-vscode",
 			"lokalise.i18n-ally",
 			"mattpocock.ts-error-translator",

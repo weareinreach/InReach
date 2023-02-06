@@ -26,6 +26,9 @@ patchedDependencies:
   iso-google-locales@3.0.4:
     hash: ltnamflm7ayajalculwqyezjya
     path: patches/iso-google-locales@3.0.4.patch
+  trpc-panel@1.2.8:
+    hash: sftd6wakcimwnpfmzciflr33te
+    path: patches/trpc-panel@1.2.8.patch
 
 importers:
 
@@ -200,7 +203,7 @@ importers:
       flat: 5.0.2
       listr2: 5.0.7
       trpc-client-devtools-link: 0.2.1-next_2a7aflczskeqccy5ulnfgozswm
-      trpc-panel: 1.2.8_ty3fefsii75ejeai2aadxz5swe
+      trpc-panel: 1.2.8_sftd6wakcimwnpfmzciflr33te_ty3fefsii75ejeai2aadxz5swe
       trpc-playground: 1.0.4_avsiribjeapp23m2vvgjglnuy4
       typescript: 4.9.5
 
@@ -16829,6 +16832,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+    dev: true
 
   /next/13.1.6_pjwopsidmaokadturxaafygjp4:
     resolution: {integrity: sha512-hHlbhKPj9pW+Cymvfzc15lvhaOZ54l+8sXDXJWm3OBNBzgrVj6hwGPmqqsXg40xO1Leq+kXpllzRPuncpC0Phw==}
@@ -19942,6 +19946,7 @@ packages:
     dependencies:
       client-only: 0.0.1
       react: 18.2.0
+    dev: true
 
   /stylis/4.1.3:
     resolution: {integrity: sha512-GP6WDNWf+o403jrEp9c5jibKavrtLW+/qYGhFxFrG8maXhwTBI7gLLhiBb0o7uFccWN+EOS9aMO6cGHWAO07OA==}
@@ -20330,7 +20335,7 @@ packages:
       superjson: 1.12.2
     dev: true
 
-  /trpc-panel/1.2.8_ty3fefsii75ejeai2aadxz5swe:
+  /trpc-panel/1.2.8_sftd6wakcimwnpfmzciflr33te_ty3fefsii75ejeai2aadxz5swe:
     resolution: {integrity: sha512-jaBP1g9sajHtq3Wx+G3DOSsCtekwyDnWEBCspNQpQERXrk47TyZaMw68cRTXQno6bHD0SrS/i7NTm9wS5lfR8g==}
     peerDependencies:
       '@trpc/server': ^10.0.0
@@ -20344,6 +20349,7 @@ packages:
       zod: 3.20.2
       zod-to-json-schema: 3.20.2_zod@3.20.2
     dev: true
+    patched: true
 
   /trpc-playground/1.0.4_avsiribjeapp23m2vvgjglnuy4:
     resolution: {integrity: sha512-6nVf1o2LNoo1g6oTS24yajoH7xV4CFjxGAbAH7qLXqa3yo9qB5QHsWLbrm1hNt51SyCG++P0zHJaCdVfgvEVDg==}
