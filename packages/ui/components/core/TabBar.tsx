@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const TabsMenu = ({}) => {
+export const TabBar = ({}) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation()
