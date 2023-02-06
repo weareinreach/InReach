@@ -7,21 +7,19 @@ import { useState } from 'react'
 import { Icon } from '../../icon'
 
 export const actionButtonIcons = {
-	delete: { icon: 'carbon:delete', labelKey: 'delete' },
-	more: {
-		icon: 'carbon:overflow-menu-horizontal',
-		useMenu: true,
-		menuItems: ['Save', 'Share', 'Print', 'Review', 'Delete'],
-	},
-	print: { icon: 'carbon:printer', labelKey: 'print' },
-	review: { icon: 'carbon:star', labelKey: 'review' },
 	save: {
 		icon: 'carbon:favorite',
 		labelKey: 'save',
 		useMenu: true,
-		menuItems: ['Create new list', 'List 1', 'List 2'],
 	},
 	share: { icon: 'carbon:share', labelKey: 'share' },
+	print: { icon: 'carbon:printer', labelKey: 'print' },
+	review: { icon: 'carbon:star', labelKey: 'review' },
+	delete: { icon: 'carbon:delete', labelKey: 'delete' },
+	more: {
+		icon: 'carbon:overflow-menu-horizontal',
+		useMenu: true,
+	},
 } as const
 
 const useStyles = createStyles((theme) => ({
@@ -58,10 +56,14 @@ const useStyles = createStyles((theme) => ({
 		fontWeight: theme.other.fontWeight.semibold,
 		marginLeft: '9.25px',
 	},
-	menu: {
+	dropdown: {
 		background: 'black',
-		'&:button': {
-			color: 'white',
+	},
+	item: {
+		color: 'white',
+		'&[data-hovered]': {
+			backgroundColor: 'white',
+			color: 'black',
 		},
 	},
 }))
@@ -88,14 +90,43 @@ const actions = {
 } as const
 
 /** Used to display the action buttons when viewing an organization/location/service. */
-export const ActionButtons = ({ iconKey, overflowItems }: Props) => {
+export const ActionButtons = ({ iconKey }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation()
 	const iconRender = actionButtonIcons[iconKey]
 	const handler = actions[iconKey]
-	const menuThings = 'menuItems' in iconRender ? iconRender.menuItems : []
+	const { more: _, ...overFlowItems } = actionButtonIcons
+	const saveItems = ['List 1', 'List 2'] /* this will be the users lists */
+
 	const [opened, setOpened] = useState(false)
+
+	const overflowMenuItems = Object.entries(overFlowItems).map(([key, item]) => (
+		<Menu.Item key={key} value={key} icon={<Icon icon={item.icon} />} onClick={handler}>
+			{t(item.labelKey)}
+		</Menu.Item>
+	))
+
+	const createNewList = (
+		<Menu.Item key='new' value='new' onClick={handler}>
+			{t('create-new-list')}
+		</Menu.Item>
+	)
+	const saveMenuItems = saveItems.map((key) => (
+		<Menu.Item key={key} value={key} onClick={handler}>
+			{key}
+		</Menu.Item>
+	))
+
+	const menuThings =
+		iconKey === 'save' ? (
+			<>
+				{createNewList}
+				{saveMenuItems}
+			</>
+		) : (
+			overflowMenuItems
+		)
 
 	/** The button component */
 	const buttonComponent = (
@@ -111,16 +142,9 @@ export const ActionButtons = ({ iconKey, overflowItems }: Props) => {
 
 	/** The menu component */
 	const menuComponent = (
-		<Menu position='bottom-start' opened={opened} onChange={setOpened}>
+		<Menu position='bottom-start' opened={opened} onChange={setOpened} classNames={classes}>
 			<Menu.Target>{buttonComponent}</Menu.Target>
-			<Menu.Dropdown style={{ background: 'black' }}>
-				{menuThings &&
-					menuThings.map((option, index) => (
-						<Menu.Item key={index} value={index} color='white'>
-							{option}
-						</Menu.Item>
-					))}
-			</Menu.Dropdown>
+			<Menu.Dropdown>{menuThings}</Menu.Dropdown>
 		</Menu>
 	)
 
@@ -133,5 +157,4 @@ type Props = {
 	 * either an icon and a label or just an icon
 	 */
 	iconKey: keyof typeof actionButtonIcons
-	overflowItems?: Array<Exclude<keyof typeof actionButtonIcons, 'more' | undefined>>
 }
