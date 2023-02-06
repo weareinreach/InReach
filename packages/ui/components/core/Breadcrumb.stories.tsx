@@ -1,5 +1,4 @@
-import { Center } from '@mantine/core'
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta } from '@storybook/react'
 import React from 'react'
 
 import { Breadcrumb as BreadcrumbCompnent } from './Breadcrumb'
