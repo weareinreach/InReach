@@ -1,4 +1,4 @@
-import { Meta, StoryFn } from '@storybook/react'
+import { Meta } from '@storybook/react'
 import React from 'react'
 
 import { MobileNav as MobileNavComponent } from './MobileNav'
