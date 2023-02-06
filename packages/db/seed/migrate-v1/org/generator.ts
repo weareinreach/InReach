@@ -12,7 +12,7 @@ import invariant from 'tiny-invariant'
 import fs from 'fs'
 import path from 'path'
 
-import { SourceType } from '~/client'
+import { Prisma, SourceType } from '~/client'
 import { dayMap, hoursMap, hoursMeta } from '~/datastore/v1/helpers/hours'
 import { OrganizationsJSONCollection } from '~/datastore/v1/mongodb/output-types/organizations'
 import { prisma } from '~/index'
@@ -86,17 +86,19 @@ const unsupportedMap = new Map<string, unknown[]>()
 const exportUnsupported = (tagObj: Record<string, unknown>) => {
 	const serviceCityRegex = /(?:service-city-|service-town-).*/
 	const langRegex = /lang-.*/
-	for (let [key, value] of Object.entries(tagObj)) {
+	for (const [key, value] of Object.entries(tagObj)) {
+		let writeValue = value
+		let writeKey = key
 		if (serviceCityRegex.test(key)) {
-			value = key
-			key = 'Service Area Cities'
+			writeValue = key
+			writeKey = 'Service Area Cities'
 		}
 		if (langRegex.test(key)) {
-			value = key
-			key = 'Languages'
+			writeValue = key
+			writeKey = 'Languages'
 		}
-		const newValue = new Set([value].concat(unsupportedMap.get(key)))
-		unsupportedMap.set(key, [...newValue])
+		const newValue = new Set([writeValue].concat(unsupportedMap.get(writeKey)))
+		unsupportedMap.set(writeKey, [...newValue])
 	}
 }
 
@@ -123,7 +125,7 @@ const generateKey: GenerateKey<KeyType> = (params) => {
 			cause,
 		})
 	}
-	output.key ? translationKeySet.add(output.key) : undefined
+	if (output.key) translationKeySet.add(output.key)
 	return output
 }
 
@@ -849,7 +851,7 @@ export const generateRecords = async (task: ListrTask) => {
 						id: suppId,
 						createdAt,
 						updatedAt,
-						data: JSON.stringify(unsupportedAttributes),
+						data: superjson.serialize(unsupportedAttributes) as object as Prisma.JsonObject,
 					})
 					rollback.attributeSupplement.add(suppId)
 					data.organizationAttribute.add({
@@ -963,7 +965,7 @@ export const generateRecords = async (task: ListrTask) => {
 							createdAt,
 							updatedAt,
 							textId,
-							data: JSON.stringify(access),
+							data: superjson.serialize(access) as object as Prisma.JsonObject,
 						})
 						rollback.attributeSupplement.add(attributeSuppId)
 						data.serviceAccess.add({
@@ -1139,7 +1141,7 @@ export const generateRecords = async (task: ListrTask) => {
 								id: suppId,
 								createdAt,
 								updatedAt,
-								data: JSON.stringify(unsupportedAttributes),
+								data: superjson.serialize(unsupportedAttributes) as object as Prisma.JsonObject,
 							})
 							rollback.attributeSupplement.add(suppId)
 							data.serviceAttribute.add({
