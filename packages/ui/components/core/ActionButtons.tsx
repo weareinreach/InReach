@@ -12,6 +12,10 @@ export const actionButtonIcons = {
 		labelKey: 'save',
 		useMenu: true,
 	},
+	saved: {
+		icon: 'carbon:favorite-filled',
+		labelKey: 'saved',
+	},
 	share: { icon: 'carbon:share', labelKey: 'share' },
 	print: { icon: 'carbon:printer', labelKey: 'print' },
 	review: { icon: 'carbon:star', labelKey: 'review' },
@@ -37,6 +41,9 @@ const actions = {
 	},
 	save: () => {
 		console.log('save')
+	},
+	saved: () => {
+		console.log('unsave')
 	},
 	share: () => {
 		console.log('share')
