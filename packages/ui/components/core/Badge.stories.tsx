@@ -12,7 +12,7 @@ export default {
 		},
 		design: {
 			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8361&t=WHlvdeWA5onN4z6O-0,',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8505&t=sleVeGl2lJv7Df18-4',
 		},
 	},
 } as Meta<typeof Badge>
@@ -23,11 +23,23 @@ export const CommunityTag = {
 		children: 'BIPOC community',
 		variant: 'commmunityTag',
 	},
+	parameters: {
+		design: {
+			type: 'figma',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8506&t=sleVeGl2lJv7Df18-4',
+		},
+	},
 }
 
 export const ServiceTag = {
 	args: {
 		children: 'Abortion Care',
 		variant: 'serviceTag',
+	},
+	parameters: {
+		design: {
+			type: 'figma',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8508&t=sleVeGl2lJv7Df18-4',
+		},
 	},
 }
