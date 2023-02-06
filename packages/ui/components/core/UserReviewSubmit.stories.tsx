@@ -13,7 +13,7 @@ export default {
 		layout: 'fullscreen',
 		design: {
 			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=150%3A6885&t=rT8aBd7wpIWpzM0I-0',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=339%3A6891&t=sleVeGl2lJv7Df18-4',
 		},
 		nextjs: {
 			router: {

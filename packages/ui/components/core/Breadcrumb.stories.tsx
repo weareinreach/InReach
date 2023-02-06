@@ -10,7 +10,7 @@ export default {
 	parameters: {
 		design: {
 			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=196%3A5045&t=0SZ0JVMYe5r7bNkb-4',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=297%3A6037&t=sleVeGl2lJv7Df18-4',
 		},
 	},
 	argTypes: {
@@ -20,9 +20,15 @@ export default {
 	},
 } as Meta<typeof BreadcrumbCompnent>
 
-export const Breadcrumb = {
+export const BackToSearch = {
 	args: {
 		href: '#',
 		option: 'back',
+	} as const,
+}
+export const Close = {
+	args: {
+		href: '#',
+		option: 'close',
 	} as const,
 }

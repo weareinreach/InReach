@@ -11,7 +11,7 @@ const Story: Meta<typeof AlertMessageCompnent> = {
 		layout: 'fullscreen',
 		design: {
 			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=70%3A2310&t=v8Asw8U9mWb2EIZk-0',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=212%3A8848&t=sleVeGl2lJv7Df18-4',
 		},
 	},
 	decorators: [StorybookGrid],
