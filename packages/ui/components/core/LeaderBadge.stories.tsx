@@ -10,7 +10,7 @@ const Story: Meta<typeof LeaderBadgeComp> = {
 	parameters: {
 		design: {
 			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8361&t=eVmG29UspAU8Pejs-0',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=337%3A7072&t=sleVeGl2lJv7Df18-4',
 		},
 	},
 }
