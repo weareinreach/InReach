@@ -18,7 +18,7 @@
 		"@tanstack/eslint-plugin-query": "4.24.5",
 		"@types/eslint": "8.21.0",
 		"@types/eslint-plugin-prettier": "3.1.0",
-		"@types/node": "18.11.18",
+		"@types/node": "18.11.19",
 		"@typescript-eslint/eslint-plugin": "5.50.0",
 		"@typescript-eslint/parser": "5.50.0",
 		"eslint": "8.33.0",
