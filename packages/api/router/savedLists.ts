@@ -1,5 +1,4 @@
 import { TRPCError } from '@trpc/server'
-import remove from 'just-remove'
 
 import { createAuditLog, handleError } from '../lib'
 import { nanoUrl } from '../lib/nanoIdUrl'

@@ -206,6 +206,10 @@
 			"MD033": false
 		},
 		"prettier.resolveGlobalModules": false,
+		"sonarlint.connectedMode.project": {
+			"connectionId": "InReach",
+			"projectKey": "weareinreach_InReach"
+		},
 		"tms.stringsCompletionFileExtensions": "ts,tsx,json",
 		"typescript.preferences.importModuleSpecifier": "shortest",
 		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
