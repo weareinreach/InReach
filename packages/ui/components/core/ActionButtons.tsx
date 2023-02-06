@@ -1,6 +1,4 @@
 import { Button, createStyles, Menu, Text, useMantineTheme } from '@mantine/core'
-import { useSetState } from '@mantine/hooks'
-import { background } from '@storybook/theming'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
