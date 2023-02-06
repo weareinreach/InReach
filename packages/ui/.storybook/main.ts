@@ -40,6 +40,14 @@ const config: StorybookConfig = {
 	features: {
 		buildStoriesJson: true,
 	},
+	refs: {
+		chromatic: {
+			// The title of your Storybook
+			title: 'InReach Design System',
+			// The url provided by Chromatic when it was published
+			url: 'https://dev--632cabf2eef8a2954cd3cbc6.chromatic.com',
+		},
+	},
 	typescript: {
 		check: true,
 		checkOptions: {},

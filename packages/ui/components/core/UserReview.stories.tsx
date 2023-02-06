@@ -12,7 +12,7 @@ export default {
 		layout: 'fullscreen',
 		design: {
 			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=150%3A7027&t=OPIs2wdc5n2td3Nf-4',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=150%3A7027&t=sleVeGl2lJv7Df18-4',
 		},
 	},
 	decorators: [StorybookGrid],
