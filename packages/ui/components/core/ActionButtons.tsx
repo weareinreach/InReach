@@ -22,6 +22,33 @@ export const actionButtonIcons = {
 	},
 } as const
 
+const actions = {
+	delete: () => {
+		console.log('delete')
+	},
+	more: () => {
+		console.log('more')
+	},
+	print: () => {
+		window.print()
+	},
+	review: () => {
+		console.log('review')
+	},
+	save: () => {
+		console.log('save')
+	},
+	share: () => {
+		console.log('share')
+	},
+	saveNew: () => {
+		console.log('create new list')
+	},
+	saveToList: () => {
+		console.log('save to existing list')
+	},
+} as const
+
 const useStyles = createStyles((theme) => ({
 	button: {
 		display: 'flex',
@@ -68,27 +95,6 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-const actions = {
-	delete: () => {
-		console.log('delete')
-	},
-	more: () => {
-		console.log('more')
-	},
-	print: () => {
-		window.print()
-	},
-	review: () => {
-		console.log('review')
-	},
-	save: () => {
-		console.log('save')
-	},
-	share: () => {
-		console.log('share')
-	},
-} as const
-
 /** Used to display the action buttons when viewing an organization/location/service. */
 export const ActionButtons = ({ iconKey }: Props) => {
 	const { classes } = useStyles()
@@ -102,18 +108,18 @@ export const ActionButtons = ({ iconKey }: Props) => {
 	const [opened, setOpened] = useState(false)
 
 	const overflowMenuItems = Object.entries(overFlowItems).map(([key, item]) => (
-		<Menu.Item key={key} value={key} icon={<Icon icon={item.icon} />} onClick={handler}>
+		<Menu.Item key={key} value={key} icon={<Icon icon={item.icon} />} onClick={actions[item.labelKey]}>
 			{t(item.labelKey)}
 		</Menu.Item>
 	))
 
 	const createNewList = (
-		<Menu.Item key='new' value='new' onClick={handler}>
+		<Menu.Item key='new' value='new' onClick={actions['saveNew']}>
 			{t('create-new-list')}
 		</Menu.Item>
 	)
 	const saveMenuItems = saveItems.map((key) => (
-		<Menu.Item key={key} value={key} onClick={handler}>
+		<Menu.Item key={key} value={key} onClick={actions['saveToList']}>
 			{key}
 		</Menu.Item>
 	))

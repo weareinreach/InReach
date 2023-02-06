@@ -11,7 +11,7 @@ export default {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=51%3A472&t=MmGmrL63FUWcqBUe-0',
 		},
 	},
-	argTypes: { onClick: { handler: 'clicked' } },
+	argTypes: { onClick: { actions: 'clicked' } },
 } as Meta<typeof ActionButtonsComponent>
 
 export const ActionButtonDelete = {
