@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/require-await */
-import { ListrTask, ListrTaskDef } from '@db/seed/migrate-v1'
 import { Listr } from 'listr2'
 
 import { interactiveRun } from './dbRunner'
 import { generateRecords, migrateOrgs } from './generator'
+
+import { ListrTask, ListrTaskDef } from '~db/seed/migrate-v1'
 
 const taskOptions: Omit<ListrTaskDef, 'title' | 'task'> = {
 	options: {

@@ -3,13 +3,23 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import { Prisma, SourceType } from '@db/client'
-import { dayMap, hoursMap, hoursMeta } from '@db/datastore/v1/helpers/hours'
-import { OrganizationsJSONCollection } from '@db/datastore/v1/mongodb/output-types/organizations'
-import { prisma } from '@db/index'
-import { Log, iconList } from '@db/seed/lib'
-import { migrateLog } from '@db/seed/logger'
-import { ListrTask } from '@db/seed/migrate-v1'
+import cuid from 'cuid'
+import { flatten } from 'flat'
+import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js'
+import { DateTime } from 'luxon'
+import superjson from 'superjson'
+import invariant from 'tiny-invariant'
+
+import fs from 'fs'
+import path from 'path'
+
+import { Prisma, SourceType } from '~db/client'
+import { dayMap, hoursMap, hoursMeta } from '~db/datastore/v1/helpers/hours'
+import { OrganizationsJSONCollection } from '~db/datastore/v1/mongodb/output-types/organizations'
+import { prisma } from '~db/index'
+import { Log, iconList } from '~db/seed/lib'
+import { migrateLog } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/migrate-v1'
 import {
 	AttributeListMap,
 	CountryNameMap,
@@ -25,9 +35,9 @@ import {
 	parseSchedule,
 	serviceTagTranslation,
 	uniqueSlug,
-} from '@db/seed/migrate-v1/org/lib'
-import { tagCheck } from '@db/seed/migrate-v1/org/lib/attributeHelpers'
-import { createPoint } from '@db/seed/migrate-v1/org/lib/createPoint'
+} from '~db/seed/migrate-v1/org/lib'
+import { tagCheck } from '~db/seed/migrate-v1/org/lib/attributeHelpers'
+import { createPoint } from '~db/seed/migrate-v1/org/lib/createPoint'
 import {
 	batchCount,
 	batchNameMap,
@@ -36,16 +46,7 @@ import {
 	outputDir,
 	rollback,
 	writeBatches,
-} from '@db/seed/migrate-v1/org/outData'
-import cuid from 'cuid'
-import { flatten } from 'flat'
-import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js'
-import { DateTime } from 'luxon'
-import superjson from 'superjson'
-import invariant from 'tiny-invariant'
-
-import fs from 'fs'
-import path from 'path'
+} from '~db/seed/migrate-v1/org/outData'
 
 // const consoleWidth = process.stdout.columns - 10
 

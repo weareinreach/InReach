@@ -1,9 +1,10 @@
-import { Prisma } from '@db/client'
-import { Log, iconList } from '@db/seed/lib'
-import { logFile } from '@db/seed/logger'
-import { ListrTask } from '@db/seed/starterData'
 import ISO6391 from 'iso-google-locales'
 import * as langSupp from 'langs'
+
+import { Prisma } from '~db/client'
+import { Log, iconList } from '~db/seed/lib'
+import { logFile } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/starterData'
 
 const activeTranslations = ['en', 'en-US', 'en-CA', 'es', 'es-MX', 'es-US']
 

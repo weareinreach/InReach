@@ -4,7 +4,7 @@ import { GetServerSidePropsContext, NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import { api } from '@app/utils/api'
+import { api } from '~app/utils/api'
 
 const DataTest: NextPage = (props) => {
 	const x = api.organization.searchName.useQuery({ search: 'trevor' })

@@ -1,10 +1,11 @@
-import { Prisma } from '@db/client'
-import { prisma } from '@db/index'
-import { keySlug, namespaces, socialMediaLinks } from '@db/seed/data'
-import { Log, iconList } from '@db/seed/lib'
-import { logFile } from '@db/seed/logger'
-import { ListrTask } from '@db/seed/starterData'
 import cuid from 'cuid'
+
+import { Prisma } from '~db/client'
+import { prisma } from '~db/index'
+import { keySlug, namespaces, socialMediaLinks } from '~db/seed/data'
+import { Log, iconList } from '~db/seed/lib'
+import { logFile } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/starterData'
 
 export const seedSocialMediaLinks = async (task: ListrTask) => {
 	try {

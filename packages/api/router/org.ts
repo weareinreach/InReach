@@ -1,4 +1,4 @@
-import { CreateOrgPrisma, CreateQuickOrgSchema } from '@api/schemas/create/organization'
+import { CreateOrgPrisma, CreateQuickOrgSchema } from '~api/schemas/create/organization'
 
 import { createAuditLog, handleError } from '../lib'
 import { defineRouter, publicProcedure, staffProcedure } from '../lib/trpc'

@@ -1,7 +1,7 @@
 import { Group, Text, createStyles } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
-import { Icon } from '../../icon'
+import { Icon } from '~ui/icon'
 
 const useStyles = createStyles(() => ({
 	container: {

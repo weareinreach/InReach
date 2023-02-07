@@ -1,10 +1,10 @@
-import { Prisma } from '@db/client'
-import { prisma } from '@db/index'
-import { namespaces, navigation } from '@db/seed/data'
-import { Log, iconList } from '@db/seed/lib'
-import { ListrTask } from '@db/seed/starterData'
-
 import { logFile } from '../logger'
+
+import { Prisma } from '~db/client'
+import { prisma } from '~db/index'
+import { namespaces, navigation } from '~db/seed/data'
+import { Log, iconList } from '~db/seed/lib'
+import { ListrTask } from '~db/seed/starterData'
 
 export const seedNavigation = async (task: ListrTask) => {
 	try {

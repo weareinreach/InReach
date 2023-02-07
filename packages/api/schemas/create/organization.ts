@@ -2,6 +2,8 @@ import { Prisma } from '@weareinreach/db'
 import { namespaces } from '@weareinreach/db/seed/data'
 import { z } from 'zod'
 
+import { createAuditLog } from '~api/lib'
+
 import { CreateNestedOrgEmailPrisma, CreateNestedOrgEmailSchema } from './orgEmail'
 import { CreateNestedOrgLocationPrisma, CreateNestedOrgLocationSchema } from './orgLocation'
 import { CreateNestedOrgPhonePrisma, CreateNestedOrgPhoneSchema } from './orgPhone'

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { Prisma } from '@db/client'
-import { prisma } from '@db/index'
-import { Log, iconList } from '@db/seed/lib'
-import { isSuccess } from '@db/seed/migrate-v1/org/generator'
-
 import { namespaces } from '../data/00-namespaces'
 import { type Countries, countryData, genDemonymKey } from '../data/04-countries'
 import { logFile } from '../logger'
 import { ListrTask } from '../starterData'
+
+import { Prisma } from '~db/client'
+import { prisma } from '~db/index'
+import { Log, iconList } from '~db/seed/lib'
+import { isSuccess } from '~db/seed/migrate-v1/org/generator'
 
 const translationNamespace = namespaces.country
 

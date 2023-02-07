@@ -1,6 +1,6 @@
 import { ActionIcon, createStyles, useMantineTheme } from '@mantine/core'
 
-import { Icon } from '../../icon'
+import { Icon } from '~ui/icon'
 
 export const approvedIcons = {
 	facebook: 'carbon:logo-facebook',

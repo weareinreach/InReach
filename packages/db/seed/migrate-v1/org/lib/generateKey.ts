@@ -1,4 +1,4 @@
-import { namespaces } from '@db/seed/data'
+import { namespaces } from '~db/seed/data'
 
 export const generateKey: GenerateKey<KeyType> = (params) => {
 	const { type, keyPrefix, text } = params

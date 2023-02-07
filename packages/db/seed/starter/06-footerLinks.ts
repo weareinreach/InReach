@@ -1,9 +1,9 @@
-import { Prisma } from '@db/client'
-import { prisma } from '@db/index'
-import { footerLinks, namespaces } from '@db/seed/data'
-import { Log, iconList } from '@db/seed/lib'
-import { logFile } from '@db/seed/logger'
-import { ListrTask } from '@db/seed/starterData'
+import { Prisma } from '~db/client'
+import { prisma } from '~db/index'
+import { footerLinks, namespaces } from '~db/seed/data'
+import { Log, iconList } from '~db/seed/lib'
+import { logFile } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/starterData'
 
 export const seedFooterLinks = async (task: ListrTask) => {
 	try {

@@ -1,7 +1,11 @@
 {
 	"extends": "@weareinreach/config/tsconfig/base.json",
 	"compilerOptions": {
-		"baseUrl": "./"
+		"baseUrl": "./",
+		"paths": {
+			"~db/*": ["../db/*"],
+			"~auth/*": ["./*"]
+		}
 	},
 	"exclude": ["**/node_modules", "**/.*/"]
 }

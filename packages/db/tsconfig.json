@@ -5,7 +5,7 @@
 		"strictNullChecks": true,
 		"baseUrl": "./",
 		"paths": {
-			"@db/*": ["*"]
+			"~db/*": ["*"]
 		},
 		"allowJs": true
 	},

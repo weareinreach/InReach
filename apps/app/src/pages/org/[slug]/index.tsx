@@ -5,7 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import { type ParsedUrlQuery } from 'querystring'
 
-import { api } from '@app/utils/api'
+import { api } from '~app/utils/api'
 
 const OrganizationPage: NextPage = () => {
 	const { t } = useTranslation()

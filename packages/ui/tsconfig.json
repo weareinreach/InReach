@@ -3,8 +3,8 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"@ui/*": ["./*"],
-			"@api/*": ["../api/*"]
+			"~ui/*": ["./*"],
+			"~api/*": ["../api/*"]
 		}
 	},
 	"include": ["./**/*.ts", "./**/*.tsx", ".storybook/*"],

@@ -1,7 +1,7 @@
-import { PrismaPromise } from '@db/client'
-import { prisma } from '@db/index'
-import { migrateLog } from '@db/seed/logger'
-import { ListrTask } from '@db/seed/migrate-v1'
+import { PrismaPromise } from '~db/client'
+import { prisma } from '~db/index'
+import { migrateLog } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/migrate-v1'
 
 export const batchTransact = async (
 	task: ListrTask,

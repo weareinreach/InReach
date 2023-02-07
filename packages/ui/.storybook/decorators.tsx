@@ -8,9 +8,10 @@ import { transformer } from '@weareinreach/api/lib/transformer'
 import { useState, useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next'
 
+import { trpc, StorybookTRPC } from '~ui/lib/trpcClient'
+import { storybookTheme } from '~ui/theme'
+
 import { i18n } from './i18next'
-import { trpc, StorybookTRPC } from '../lib/trpcClient'
-import { storybookTheme } from '../theme'
 
 const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
 	withCSSVariables: false,

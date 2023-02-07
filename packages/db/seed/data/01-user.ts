@@ -1,8 +1,9 @@
-import { Prisma } from '@db/client'
 import slugify from 'slugify'
 import invariant from 'tiny-invariant'
 
 import { namespaces } from './00-namespaces'
+
+import { Prisma } from '~db/client'
 
 export const userEmail = 'inreach_svc@inreach.org'
 export const localeCode = 'en'

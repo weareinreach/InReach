@@ -3,8 +3,8 @@
 	"compilerOptions": {
 		"baseUrl": "./",
 		"paths": {
-			"@api/*": ["*"],
-			"@db/*": ["../db/*"]
+			"~api/*": ["*"],
+			"~db/*": ["../db/*"]
 		}
 	},
 	"exclude": ["**/node_modules", "**/.*/"]

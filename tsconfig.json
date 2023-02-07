@@ -1,6 +1,14 @@
 {
 	"compilerOptions": {
-		"baseUrl": "./"
+		"baseUrl": "./",
+		"paths": {
+			"~app/*": ["apps/app/*"],
+			"~web/*": ["apps/web/*"],
+			"~api/*": ["packages/api/*"],
+			"~auth/*": ["packages/auth/*"],
+			"~db/*": ["packages/db/*"],
+			"~ui/*": ["packages/ui/*"]
+		}
 	},
 	"extends": "./packages/config/tsconfig/base.json",
 	"exclude": ["**/node_modules"],

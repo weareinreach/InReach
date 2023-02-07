@@ -5,27 +5,28 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // import checkgeo from '@placemarkio/check-geojson'
 
-import cityCA from '@db/datastore/geojson/cities-ca.json'
-import cityMX from '@db/datastore/geojson/cities-mx.json'
-import cityUS from '@db/datastore/geojson/cities-us.json'
-import countyPR from '@db/datastore/geojson/counties-pr.json'
-import countyUS from '@db/datastore/geojson/counties-us.json'
-import countryCA from '@db/datastore/geojson/country-ca.json'
-import countryMX from '@db/datastore/geojson/country-mx.json'
-import countryPR from '@db/datastore/geojson/country-pr.json'
-import countryUS from '@db/datastore/geojson/country-us.json'
-import countryVI from '@db/datastore/geojson/country-vi.json'
-import provinceCA from '@db/datastore/geojson/provinces-ca.json'
-import stateMX from '@db/datastore/geojson/states-mx.json'
-import stateUS from '@db/datastore/geojson/states-us.json'
-import { GeoJSONSchema } from '@db/zod-util'
-// @ts-ignore
 import msc from '@nuskin/mexico-state-lookup'
 import { geoStateIso } from '@zerodep/geo.stateiso'
 import iso3166 from 'iso-3166-2'
-// @ts-ignore
 import shoetest from 'shoetest'
 import invariant from 'tiny-invariant'
+
+import cityCA from '~db/datastore/geojson/cities-ca.json'
+import cityMX from '~db/datastore/geojson/cities-mx.json'
+import cityUS from '~db/datastore/geojson/cities-us.json'
+import countyPR from '~db/datastore/geojson/counties-pr.json'
+import countyUS from '~db/datastore/geojson/counties-us.json'
+import countryCA from '~db/datastore/geojson/country-ca.json'
+import countryMX from '~db/datastore/geojson/country-mx.json'
+import countryPR from '~db/datastore/geojson/country-pr.json'
+import countryUS from '~db/datastore/geojson/country-us.json'
+import countryVI from '~db/datastore/geojson/country-vi.json'
+import provinceCA from '~db/datastore/geojson/provinces-ca.json'
+import stateMX from '~db/datastore/geojson/states-mx.json'
+import stateUS from '~db/datastore/geojson/states-us.json'
+import { GeoJSONSchema } from '~db/zod-util'
+// @ts-ignore
+// @ts-ignore
 
 export const geoCountryData = {
 	US: GeoJSONSchema.parse(countryUS),

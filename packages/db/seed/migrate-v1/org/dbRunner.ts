@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 
-import { prisma } from '@db/index'
-import { Log, iconList } from '@db/seed/lib'
-import { migrateLog } from '@db/seed/logger'
-import { ListrTask } from '@db/seed/migrate-v1'
-import { getClient, migrateClient } from '@db/seed/migrate-v1/org/clients'
-import { compare, writeOutDiff } from '@db/seed/migrate-v1/org/compare'
-// import { rollbackFile } from '@db/seed/migrate-v1/org/generator'
-import { BatchNames, OutData, batchNameMap, getFileName } from '@db/seed/migrate-v1/org/outData'
-import { ZodInputs } from '@db/seed/migrate-v1/org/zod'
 import superjson from 'superjson'
 
 import { readFileSync } from 'fs'
+
+import { prisma } from '~db/index'
+import { Log, iconList } from '~db/seed/lib'
+import { migrateLog } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/migrate-v1'
+import { getClient, migrateClient } from '~db/seed/migrate-v1/org/clients'
+import { compare, writeOutDiff } from '~db/seed/migrate-v1/org/compare'
+// import { rollbackFile } from '~db/seed/migrate-v1/org/generator'
+import { BatchNames, OutData, batchNameMap, getFileName } from '~db/seed/migrate-v1/org/outData'
+import { ZodInputs } from '~db/seed/migrate-v1/org/zod'
 
 const batchSize = 10_000
 

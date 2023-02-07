@@ -2,7 +2,7 @@ import { Button, createStyles, Menu, Text, useMantineTheme } from '@mantine/core
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
-import { Icon } from '../../icon'
+import { Icon } from '~ui/icon'
 
 export const actionButtonIcons = {
 	save: {
