@@ -131,7 +131,7 @@ export const commonTheme: MantineThemeOverride = {
 			},
 		},
 		Tabs: {
-			defaultProps: (theme) => ({
+			styles: (theme) => ({
 				tab: {
 					'&[data-active]': {
 						borderColor: theme.other.colors.secondary.softBlack,
