@@ -14,7 +14,7 @@ export const prisma =
 	})
 
 export * from './client'
-export * from './zod-util'
+export * from './zod_util'
 
 if (process.env.NODE_ENV !== 'production') {
 	global.prisma = prisma

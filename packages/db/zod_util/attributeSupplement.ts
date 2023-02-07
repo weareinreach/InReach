@@ -35,10 +35,10 @@ const incompatible = z
  *
  * @param type - `num-min-max`, `number`, `free-text-translated`, or `incompatible`
  */
-export const AttributeSupplementSchema = z.discriminatedUnion('type', [
+export const AttributeSupplementDataSchema = z.discriminatedUnion('type', [
 	numMinMax,
 	number,
 	freeTextTranslated,
 	incompatible,
 ])
-export type AttributeSupplementData = z.infer<typeof AttributeSupplementSchema>
+export type AttributeSupplementData = z.infer<typeof AttributeSupplementDataSchema>
