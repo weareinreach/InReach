@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client'
 import { z } from 'zod'
 
 /** Longitudes are vertical lines that measure east or west of the meridian in Greenwich, England */
@@ -81,4 +82,15 @@ export type GeoJSON = z.infer<typeof GeoJSONSchema>
  *
  * @param type - Can be either "FeatureCollection" or "Feature"
  */
-export const GeoJSONSchema = z.discriminatedUnion('type', [FeatureCollectionSchema, FeatureSchema])
+export const GeoJSONSchema: z.ZodType<Prisma.InputJsonValue> = z.discriminatedUnion('type', [
+	FeatureCollectionSchema,
+	FeatureSchema,
+])
+
+export const GeoJSONPointSchema: z.ZodType<Prisma.InputJsonValue> = z.object({
+	type: z.literal('Feature'),
+	geometry: z.object({
+		type: z.literal('Point'),
+		coordinates: coordTuple,
+	}),
+})

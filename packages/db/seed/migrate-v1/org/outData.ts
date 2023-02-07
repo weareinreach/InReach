@@ -1,13 +1,12 @@
+import { Prisma } from '@db/client'
+import { Log, iconList } from '@db/seed/lib'
+import { migrateLog } from '@db/seed/logger'
+import { ListrTask } from '@db/seed/migrate-v1'
 import superjson from 'superjson'
 import invariant from 'tiny-invariant'
 
 import { existsSync, readFileSync, rmSync, writeFileSync } from 'fs'
 import { resolve } from 'path'
-
-import { Prisma } from '~/client'
-import { Log, iconList } from '~/seed/lib'
-import { migrateLog } from '~/seed/logger'
-import { ListrTask } from '~/seed/migrate-v1'
 
 export const outputDir = `${resolve(__dirname, '../out')}/`
 

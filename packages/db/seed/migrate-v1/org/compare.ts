@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { writeFileSync } from 'fs'
 
-import { Prisma } from '~/client'
-import { queryClient } from '~/seed/migrate-v1/org/clients'
-import { BatchNames } from '~/seed/migrate-v1/org/outData'
-import { ZodInput } from '~/seed/migrate-v1/org/zod'
+import { Prisma } from '@db/client'
+import { queryClient } from '@db/seed/migrate-v1/org/clients'
+import { BatchNames } from '@db/seed/migrate-v1/org/outData'
+import { ZodInput } from '@db/seed/migrate-v1/org/zod'
+
+import { writeFileSync } from 'fs'
 
 const diffMap = new Map<BatchNames, ZodInput<BatchNames>[]>()
 

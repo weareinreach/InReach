@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import { Prisma } from '@db/client'
+import { prisma } from '@db/index'
+import { genSeedUser, namespaceGen, namespaces, userRoleMap, userTypeMap } from '@db/seed/data'
+import { Log, iconList } from '@db/seed/lib'
+import { ListrTask } from '@db/seed/starterData'
 import slugify from 'slugify'
 
 import { userRoleList } from '../data'
 import { logFile } from '../logger'
-
-import { Prisma } from '~/client'
-import { prisma } from '~/index'
-import { genSeedUser, namespaceGen, namespaces, userRoleMap, userTypeMap } from '~/seed/data'
-import { Log, iconList } from '~/seed/lib'
-import { ListrTask } from '~/seed/starterData'
 
 export const seedSystemUser = async (task: ListrTask) => {
 	try {

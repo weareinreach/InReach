@@ -3,11 +3,11 @@
 	"compilerOptions": {
 		"noImplicitAny": false,
 		"strictNullChecks": true,
-		"baseUrl": ".",
+		"baseUrl": "./",
 		"paths": {
-			"~/*": ["./*"]
+			"@db/*": ["*"]
 		},
 		"allowJs": true
 	},
-	"exclude": ["**/node_modules", "**/.*/", "./zod-schemas/*"]
+	"exclude": ["**/node_modules", "**/.*/"]
 }

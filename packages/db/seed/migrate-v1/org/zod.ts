@@ -1,6 +1,4 @@
-import { z } from 'zod'
-
-import { BatchNames } from '~/seed/migrate-v1/org/outData'
+import { BatchNames } from '@db/seed/migrate-v1/org/outData'
 import {
 	AttributeSupplementCreateManyInputSchema,
 	AttributeSupplementFindManyArgsSchema,
@@ -83,7 +81,8 @@ import {
 	UserToOrganizationCreateManyInputSchema,
 	UserToOrganizationFindManyArgsSchema,
 	UserToOrganizationSchema,
-} from '~/zod-schemas'
+} from '@db/zod-schemas'
+import { z } from 'zod'
 
 export const zodBaseSchema = {
 	translationKey: TranslationKeySchema,

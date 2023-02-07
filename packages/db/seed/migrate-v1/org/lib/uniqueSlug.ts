@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import slugify from 'slugify'
 
-import { prisma } from '~/index'
-import { slugSet } from '~/seed/migrate-v1/org/generator'
+import { prisma } from '@db/index'
+import { slugSet } from '@db/seed/migrate-v1/org/generator'
+import slugify from 'slugify'
 
 /**
  * It takes a name, city, and state, and returns a unique slug based on those values

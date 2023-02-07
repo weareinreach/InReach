@@ -28,9 +28,9 @@ import {
 	TranslationKey,
 	UserPermission,
 	UserToOrganization,
-} from '~/client'
-import { BatchNames } from '~/seed/migrate-v1/org/outData'
-import { ZodFindMany, ZodInputs } from '~/seed/migrate-v1/org/zod'
+} from '@db/client'
+import { BatchNames } from '@db/seed/migrate-v1/org/outData'
+import { ZodFindMany, ZodInputs } from '@db/seed/migrate-v1/org/zod'
 
 const clientopt = { skipDuplicates: true }
 

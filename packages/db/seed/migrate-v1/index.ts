@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Listr, ListrTask as ListrBaseTask, ListrDefaultRenderer, ListrTaskWrapper, Logger } from 'listr2'
 
-import { migrateLog } from '~/seed/logger'
-import { runMigrateOrgs } from '~/seed/migrate-v1/org'
-// import { RollbackOrgs, rollbackOrgs } from '~/seed/migrate-v1/org/dbRunner'
-import { runMigrateReviews } from '~/seed/migrate-v1/reviews'
-import { migrateUsers } from '~/seed/migrate-v1/users'
+import { migrateLog } from '@db/seed/logger'
+import { runMigrateOrgs } from '@db/seed/migrate-v1/org'
+// import { RollbackOrgs, rollbackOrgs } from '@db/seed/migrate-v1/org/dbRunner'
+import { runMigrateReviews } from '@db/seed/migrate-v1/reviews'
+import { migrateUsers } from '@db/seed/migrate-v1/users'
+import { Listr, ListrTask as ListrBaseTask, ListrDefaultRenderer, ListrTaskWrapper, Logger } from 'listr2'
 
 const logger = new Logger({ useIcons: true })
 

@@ -1,6 +1,6 @@
-import { prisma } from '~/index'
-import { logFile } from '~/seed/logger'
-import { ListrTask } from '~/seed/starterData'
+import { prisma } from '@db/index'
+import { logFile } from '@db/seed/logger'
+import { ListrTask } from '@db/seed/starterData'
 
 export const seedOutsideAPI = async (task: ListrTask) => {
 	const logMessage = 'Upserting Outside API Service record: foursquare'

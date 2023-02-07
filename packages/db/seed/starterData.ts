@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Listr, ListrRenderer, ListrTaskWrapper } from 'listr2'
-
 import {
 	seedAttributes,
 	seedCountries,
@@ -21,7 +19,8 @@ import {
 	seedUserImmigration,
 	seedUserRoles,
 	seedUserTypes,
-} from '~/seed/starter'
+} from '@db/seed/starter'
+import { Listr, ListrRenderer, ListrTaskWrapper } from 'listr2'
 
 const renderOptions = {
 	bottomBar: 10,

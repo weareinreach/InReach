@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import fs from 'fs'
 
-import { Prisma } from '~/client'
-import { CommentsJSONCollection } from '~/datastore/v1/mongodb/output-types/comments'
-import { RatingsJSONCollection } from '~/datastore/v1/mongodb/output-types/ratings'
-import { prisma } from '~/index'
-import { userEmail } from '~/seed/data'
-import { migrateLog } from '~/seed/logger'
-import { ListrTask } from '~/seed/migrate-v1'
+import { Prisma } from '@db/client'
+import { CommentsJSONCollection } from '@db/datastore/v1/mongodb/output-types/comments'
+import { RatingsJSONCollection } from '@db/datastore/v1/mongodb/output-types/ratings'
+import { prisma } from '@db/index'
+import { userEmail } from '@db/seed/data'
+import { migrateLog } from '@db/seed/logger'
+import { ListrTask } from '@db/seed/migrate-v1'
+
+import fs from 'fs'
 
 export const orgReviews: Prisma.OrgReviewCreateManyInput[] = []
 const migratedRecords: unknown[] = []

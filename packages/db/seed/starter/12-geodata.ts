@@ -3,12 +3,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import cuid from 'cuid'
-import iso3166 from 'iso-3166-2'
-import invariant from 'tiny-invariant'
 
-import { Prisma } from '~/client'
-import { prisma } from '~/index'
+import { Prisma } from '@db/client'
+import { prisma } from '@db/index'
 import {
 	geoCountryData,
 	geoCountyDataPR,
@@ -17,12 +14,15 @@ import {
 	geoStateDataUS,
 	keySlug,
 	namespaces,
-} from '~/seed/data/'
-import { Log, iconList } from '~/seed/lib'
-import { logFile } from '~/seed/logger'
-import { ListrTask } from '~/seed/starterData'
+} from '@db/seed/data/'
+import { Log, iconList } from '@db/seed/lib'
+import { logFile } from '@db/seed/logger'
+import { ListrTask } from '@db/seed/starterData'
+import cuid from 'cuid'
+import iso3166 from 'iso-3166-2'
+import invariant from 'tiny-invariant'
 
-// import { GeoJSONSchema } from '~/zod-util';
+// import { GeoJSONSchema } from '@db/zod-util';
 
 /** Set district types to add here. */
 const districtTypes = [

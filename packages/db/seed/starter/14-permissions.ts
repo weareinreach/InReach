@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { prisma } from '~/index'
-import { permissionData } from '~/seed/data'
-import { logFile } from '~/seed/logger'
-import { ListrTask } from '~/seed/starterData'
+import { prisma } from '@db/index'
+import { permissionData } from '@db/seed/data'
+import { logFile } from '@db/seed/logger'
+import { ListrTask } from '@db/seed/starterData'
 
 export const seedPermissions = async (task: ListrTask) => {
 	let count = 1
