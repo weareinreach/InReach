@@ -12,14 +12,16 @@ generator client {
 //   output   = "../../../docs/database"
 //}
 
-// generator zod {
-//   provider                         = "zod-prisma-types"
-//   output                           = "../zod-schemas"
-//   useMultipleFiles                 = true
-//   createModelTypes                 = false
-//   createOptionalDefaultValuesTypes = false
-//   writeNullishInModelTypes         = true
-// }
+generator zod {
+  provider                         = "zod-prisma-types"
+  output                           = "../zod-schemas"
+  useMultipleFiles                 = true
+  createModelTypes                 = true
+  createOptionalDefaultValuesTypes = true
+  writeNullishInModelTypes         = true
+  addInputTypeValidation           = false
+  createInputTypes                 = false
+}
 
 // generator dbml {
 //   provider              = "prisma-dbml-generator"
@@ -570,7 +572,7 @@ model OrgWebsite {
 }
 
 /// Org location information
-/// @zod.import(["import {GeoJSONSchema} from '../../zod-util'"])
+/// @zod.import(["import {GeoJSONSchema} from '../../zod_util'"])
 model OrgLocation {
   id       String  @id @default(cuid())
   legacyId String? @unique /// old ID from MongoDB
@@ -919,12 +921,12 @@ model Attribute {
   @@unique([tsKey, tsNs])
 }
 
-/// @zod.import(["import { AttributeSupplement } from '../../zod-util/attributeSupplement'"])
+/// @zod.import(["import { AttributeSupplementDataSchema } from '../../zod_util/attributeSupplement'"])
 model AttributeSupplement {
   id     String  @id @default(cuid())
   active Boolean @default(true)
 
-  data    Json? /// @zod.custom.use(AttributeSupplement)
+  data    Json? /// @zod.custom.use(AttributeSupplementDataSchema)
   boolean Boolean?
 
   text   FreeText? @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -1065,7 +1067,7 @@ enum SourceType {
 }
 
 /// Country metadata
-/// @zod.import(["import {GeoJSONSchema} from '../../zod-util'"])
+/// @zod.import(["import {GeoJSONSchema} from '../../zod_util'"])
 model Country {
   id       String @id @default(cuid())
   /// ISO 3166-1 alpha-2 Country code
@@ -1113,7 +1115,7 @@ model Country {
 }
 
 /// Administrative districts for countries
-/// @zod.import(["import {GeoJSONSchema} from '../../zod-util'"])
+/// @zod.import(["import {GeoJSONSchema} from '../../zod_util'"])
 model GovDist {
   id      String  @id @default(cuid())
   /// Name (English/Roman alphabet)

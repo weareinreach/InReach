@@ -1,87 +1,34 @@
 import { z } from 'zod'
 
+import { Prisma } from '~db/client'
 import { BatchNames } from '~db/seed/migrate-v1/org/outData'
 import {
-	AttributeSupplementCreateManyInputSchema,
-	AttributeSupplementFindManyArgsSchema,
 	AttributeSupplementSchema,
-	FreeTextCreateManyInputSchema,
-	FreeTextFindManyArgsSchema,
 	FreeTextSchema,
-	OrgEmailCreateManyInputSchema,
-	OrgEmailFindManyArgsSchema,
 	OrgEmailSchema,
-	OrgHoursCreateManyInputSchema,
-	OrgHoursFindManyArgsSchema,
 	OrgHoursSchema,
-	OrgLocationCreateManyInputSchema,
-	OrgLocationFindManyArgsSchema,
 	OrgLocationSchema,
-	OrgLocationServiceCreateManyInputSchema,
-	OrgLocationServiceFindManyArgsSchema,
 	OrgLocationServiceSchema,
-	OrgPhoneCreateManyInputSchema,
-	OrgPhoneFindManyArgsSchema,
 	OrgPhoneSchema,
-	OrgPhotoCreateManyInputSchema,
-	OrgPhotoFindManyArgsSchema,
 	OrgPhotoSchema,
-	OrgServiceCreateManyInputSchema,
-	OrgServiceEmailCreateManyInputSchema,
-	OrgServiceEmailFindManyArgsSchema,
 	OrgServiceEmailSchema,
-	OrgServiceFindManyArgsSchema,
-	OrgServicePhoneCreateManyInputSchema,
-	OrgServicePhoneFindManyArgsSchema,
 	OrgServicePhoneSchema,
 	OrgServiceSchema,
-	OrgServiceTagCreateManyInputSchema,
-	OrgServiceTagFindManyArgsSchema,
 	OrgServiceTagSchema,
-	OrgSocialMediaCreateManyInputSchema,
-	OrgSocialMediaFindManyArgsSchema,
 	OrgSocialMediaSchema,
-	OrgWebsiteCreateManyInputSchema,
-	OrgWebsiteFindManyArgsSchema,
-	OrgWebsiteLanguageCreateManyInputSchema,
-	OrgWebsiteLanguageFindManyArgsSchema,
 	OrgWebsiteLanguageSchema,
 	OrgWebsiteSchema,
-	OrganizationAttributeCreateManyInputSchema,
-	OrganizationAttributeFindManyArgsSchema,
 	OrganizationAttributeSchema,
-	OrganizationPermissionCreateManyInputSchema,
-	OrganizationPermissionFindManyArgsSchema,
 	OrganizationPermissionSchema,
-	OutsideAPICreateManyInputSchema,
-	OutsideAPIFindManyArgsSchema,
 	OutsideAPISchema,
-	ServiceAccessAttributeCreateManyInputSchema,
-	ServiceAccessAttributeFindManyArgsSchema,
 	ServiceAccessAttributeSchema,
-	ServiceAccessCreateManyInputSchema,
-	ServiceAccessFindManyArgsSchema,
 	ServiceAccessSchema,
-	ServiceAreaCountryCreateManyInputSchema,
-	ServiceAreaCountryFindManyArgsSchema,
 	ServiceAreaCountrySchema,
-	ServiceAreaCreateManyInputSchema,
-	ServiceAreaDistCreateManyInputSchema,
-	ServiceAreaDistFindManyArgsSchema,
 	ServiceAreaDistSchema,
-	ServiceAreaFindManyArgsSchema,
 	ServiceAreaSchema,
-	ServiceAttributeCreateManyInputSchema,
-	ServiceAttributeFindManyArgsSchema,
 	ServiceAttributeSchema,
-	TranslationKeyCreateManyInputSchema,
-	TranslationKeyFindManyArgsSchema,
 	TranslationKeySchema,
-	UserPermissionCreateManyInputSchema,
-	UserPermissionFindManyArgsSchema,
 	UserPermissionSchema,
-	UserToOrganizationCreateManyInputSchema,
-	UserToOrganizationFindManyArgsSchema,
 	UserToOrganizationSchema,
 } from '~db/zod-schemas'
 
@@ -120,70 +67,68 @@ export type ZodBaseSchema = {
 		: never
 }
 
-export const zodInput = {
-	translationKey: TranslationKeyCreateManyInputSchema,
-	freeText: FreeTextCreateManyInputSchema,
-	orgLocation: OrgLocationCreateManyInputSchema,
-	orgPhone: OrgPhoneCreateManyInputSchema,
-	orgEmail: OrgEmailCreateManyInputSchema,
-	orgWebsite: OrgWebsiteCreateManyInputSchema,
-	orgWebsiteLanguage: OrgWebsiteLanguageCreateManyInputSchema,
-	orgSocialMedia: OrgSocialMediaCreateManyInputSchema,
-	outsideAPI: OutsideAPICreateManyInputSchema,
-	orgPhoto: OrgPhotoCreateManyInputSchema,
-	orgHours: OrgHoursCreateManyInputSchema,
-	orgService: OrgServiceCreateManyInputSchema,
-	serviceAccess: ServiceAccessCreateManyInputSchema,
-	attributeSupplement: AttributeSupplementCreateManyInputSchema,
-	orgServicePhone: OrgServicePhoneCreateManyInputSchema,
-	orgServiceEmail: OrgServiceEmailCreateManyInputSchema,
-	orgLocationService: OrgLocationServiceCreateManyInputSchema,
-	orgServiceTag: OrgServiceTagCreateManyInputSchema,
-	organizationAttribute: OrganizationAttributeCreateManyInputSchema,
-	serviceAttribute: ServiceAttributeCreateManyInputSchema,
-	serviceAccessAttribute: ServiceAccessAttributeCreateManyInputSchema,
-	serviceArea: ServiceAreaCreateManyInputSchema,
-	serviceAreaCountry: ServiceAreaCountryCreateManyInputSchema,
-	serviceAreaDist: ServiceAreaDistCreateManyInputSchema,
-	userToOrganization: UserToOrganizationCreateManyInputSchema,
-	userPermission: UserPermissionCreateManyInputSchema,
-	organizationPermission: OrganizationPermissionCreateManyInputSchema,
-} as const
-export type ZodInputs = {
-	-readonly [P in BatchNames]: P extends BatchNames ? z.infer<(typeof zodInput)[P]>[] : never
+type zodInput = {
+	translationKey: Prisma.TranslationKeyCreateManyInput
+	freeText: Prisma.FreeTextCreateManyInput
+	orgLocation: Prisma.OrgLocationCreateManyInput
+	orgPhone: Prisma.OrgPhoneCreateManyInput
+	orgEmail: Prisma.OrgEmailCreateManyInput
+	orgWebsite: Prisma.OrgWebsiteCreateManyInput
+	orgWebsiteLanguage: Prisma.OrgWebsiteLanguageCreateManyInput
+	orgSocialMedia: Prisma.OrgSocialMediaCreateManyInput
+	outsideAPI: Prisma.OutsideAPICreateManyInput
+	orgPhoto: Prisma.OrgPhotoCreateManyInput
+	orgHours: Prisma.OrgHoursCreateManyInput
+	orgService: Prisma.OrgServiceCreateManyInput
+	serviceAccess: Prisma.ServiceAccessCreateManyInput
+	attributeSupplement: Prisma.AttributeSupplementCreateManyInput
+	orgServicePhone: Prisma.OrgServicePhoneCreateManyInput
+	orgServiceEmail: Prisma.OrgServiceEmailCreateManyInput
+	orgLocationService: Prisma.OrgLocationServiceCreateManyInput
+	orgServiceTag: Prisma.OrgServiceTagCreateManyInput
+	organizationAttribute: Prisma.OrganizationAttributeCreateManyInput
+	serviceAttribute: Prisma.ServiceAttributeCreateManyInput
+	serviceAccessAttribute: Prisma.ServiceAccessAttributeCreateManyInput
+	serviceArea: Prisma.ServiceAreaCreateManyInput
+	serviceAreaCountry: Prisma.ServiceAreaCountryCreateManyInput
+	serviceAreaDist: Prisma.ServiceAreaDistCreateManyInput
+	userToOrganization: Prisma.UserToOrganizationCreateManyInput
+	userPermission: Prisma.UserPermissionCreateManyInput
+	organizationPermission: Prisma.OrganizationPermissionCreateManyInput
 }
-export type ZodInput<K extends BatchNames> = K extends BatchNames ? z.infer<(typeof zodInput)[K]> : never
-export const zodFindMany = {
-	translationKey: TranslationKeyFindManyArgsSchema,
-	freeText: FreeTextFindManyArgsSchema,
-	orgLocation: OrgLocationFindManyArgsSchema,
-	orgPhone: OrgPhoneFindManyArgsSchema,
-	orgEmail: OrgEmailFindManyArgsSchema,
-	orgWebsite: OrgWebsiteFindManyArgsSchema,
-	orgWebsiteLanguage: OrgWebsiteLanguageFindManyArgsSchema,
-	orgSocialMedia: OrgSocialMediaFindManyArgsSchema,
-	outsideAPI: OutsideAPIFindManyArgsSchema,
-	orgPhoto: OrgPhotoFindManyArgsSchema,
-	orgHours: OrgHoursFindManyArgsSchema,
-	orgService: OrgServiceFindManyArgsSchema,
-	serviceAccess: ServiceAccessFindManyArgsSchema,
-	attributeSupplement: AttributeSupplementFindManyArgsSchema,
-	orgServicePhone: OrgServicePhoneFindManyArgsSchema,
-	orgServiceEmail: OrgServiceEmailFindManyArgsSchema,
-	orgLocationService: OrgLocationServiceFindManyArgsSchema,
-	orgServiceTag: OrgServiceTagFindManyArgsSchema,
-	organizationAttribute: OrganizationAttributeFindManyArgsSchema,
-	serviceAttribute: ServiceAttributeFindManyArgsSchema,
-	serviceAccessAttribute: ServiceAccessAttributeFindManyArgsSchema,
-	serviceArea: ServiceAreaFindManyArgsSchema,
-	serviceAreaCountry: ServiceAreaCountryFindManyArgsSchema,
-	serviceAreaDist: ServiceAreaDistFindManyArgsSchema,
-	userToOrganization: UserToOrganizationFindManyArgsSchema,
-	userPermission: UserPermissionFindManyArgsSchema,
-	organizationPermission: OrganizationPermissionFindManyArgsSchema,
-} as const
+export type ZodInputs = {
+	-readonly [P in BatchNames]: P extends BatchNames ? zodInput[P][] : never
+}
+export type ZodInput<K extends BatchNames> = K extends BatchNames ? zodInput[K] : never
+type zodFindMany = {
+	translationKey: Prisma.TranslationKeyFindManyArgs
+	freeText: Prisma.FreeTextFindManyArgs
+	orgLocation: Prisma.OrgLocationFindManyArgs
+	orgPhone: Prisma.OrgPhoneFindManyArgs
+	orgEmail: Prisma.OrgEmailFindManyArgs
+	orgWebsite: Prisma.OrgWebsiteFindManyArgs
+	orgWebsiteLanguage: Prisma.OrgWebsiteLanguageFindManyArgs
+	orgSocialMedia: Prisma.OrgSocialMediaFindManyArgs
+	outsideAPI: Prisma.OutsideAPIFindManyArgs
+	orgPhoto: Prisma.OrgPhotoFindManyArgs
+	orgHours: Prisma.OrgHoursFindManyArgs
+	orgService: Prisma.OrgServiceFindManyArgs
+	serviceAccess: Prisma.ServiceAccessFindManyArgs
+	attributeSupplement: Prisma.AttributeSupplementFindManyArgs
+	orgServicePhone: Prisma.OrgServicePhoneFindManyArgs
+	orgServiceEmail: Prisma.OrgServiceEmailFindManyArgs
+	orgLocationService: Prisma.OrgLocationServiceFindManyArgs
+	orgServiceTag: Prisma.OrgServiceTagFindManyArgs
+	organizationAttribute: Prisma.OrganizationAttributeFindManyArgs
+	serviceAttribute: Prisma.ServiceAttributeFindManyArgs
+	serviceAccessAttribute: Prisma.ServiceAccessAttributeFindManyArgs
+	serviceArea: Prisma.ServiceAreaFindManyArgs
+	serviceAreaCountry: Prisma.ServiceAreaCountryFindManyArgs
+	serviceAreaDist: Prisma.ServiceAreaDistFindManyArgs
+	userToOrganization: Prisma.UserToOrganizationFindManyArgs
+	userPermission: Prisma.UserPermissionFindManyArgs
+	organizationPermission: Prisma.OrganizationPermissionFindManyArgs
+}
 export type ZodFindMany = {
-	[K in keyof typeof zodFindMany]: K extends keyof typeof zodFindMany
-		? z.infer<(typeof zodFindMany)[K]>
-		: never
+	[K in keyof zodFindMany]: K extends keyof zodFindMany ? zodFindMany[K] : never
 }
