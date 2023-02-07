@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import axios from 'axios'
-// @ts-ignore
 import { countries as countryExtra } from 'countries-languages'
 
 import { namespaces } from '~db/seed/data/00-namespaces'

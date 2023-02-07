@@ -1,11 +1,11 @@
-import { PrismaPromise } from '~db/client'
+import { Prisma } from '~db/client'
 import { prisma } from '~db/index'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
 
 export const batchTransact = async (
 	task: ListrTask,
-	transactions: PrismaPromise<unknown>[],
+	transactions: Prisma.PrismaPromise<unknown>[],
 	batchSize = 1
 ) => {
 	let countA = 0

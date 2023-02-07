@@ -24,9 +24,7 @@ import countryVI from '~db/datastore/geojson/country-vi.json'
 import provinceCA from '~db/datastore/geojson/provinces-ca.json'
 import stateMX from '~db/datastore/geojson/states-mx.json'
 import stateUS from '~db/datastore/geojson/states-us.json'
-import { GeoJSONSchema } from '~db/zod-util'
-// @ts-ignore
-// @ts-ignore
+import { GeoJSONSchema } from '~db/zod_util'
 
 export const geoCountryData = {
 	US: GeoJSONSchema.parse(countryUS),

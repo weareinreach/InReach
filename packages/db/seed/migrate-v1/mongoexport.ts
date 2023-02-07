@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unused-modules */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { env } from '@weareinreach/config'
+import { env } from '@weareinreach/config/env'
 import { type Options as mbOptions, mongoExport } from 'mongoback'
 import { InputData, jsonInputForTargetLanguage, quicktype } from 'quicktype-core'
 import recursive from 'recursive-readdir'
