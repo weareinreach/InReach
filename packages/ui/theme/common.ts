@@ -130,6 +130,23 @@ export const commonTheme: MantineThemeOverride = {
 				sm: 4,
 			},
 		},
+		Tabs: {
+			defaultProps: (theme) => ({
+				tab: {
+					'&[data-active]': {
+						borderColor: theme.other.colors.secondary.softBlack,
+					},
+					'&[data-active]:hover': {
+						borderColor: theme.other.colors.secondary.softBlack,
+					},
+				},
+				tabLabel: {
+					fontWeight: 500,
+					fontSize: '16px',
+					color: theme.other.colors.secondary.softBlack,
+				},
+			}),
+		},
 		Text: {
 			defaultProps: (theme) => ({
 				component: 'span',
