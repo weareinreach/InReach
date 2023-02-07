@@ -7,3 +7,9 @@ export const orgById = z.object({
 	id: z.string().cuid(),
 	include: orgInclude,
 })
+
+export const CreateOrg = z.object({
+	name: z.string(),
+	slug: z.string(),
+	source: z.string(),
+})

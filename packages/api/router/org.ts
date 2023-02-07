@@ -1,7 +1,7 @@
-import { TRPCError } from '@trpc/server'
+import { CreateOrgPrisma, CreateQuickOrgSchema } from 'schemas/create/organization'
 
-import { handleError } from '../lib'
-import { defineRouter, publicProcedure } from '../lib/trpc'
+import { createAuditLog, handleError } from '../lib'
+import { defineRouter, publicProcedure, staffProcedure } from '../lib/trpc'
 import { id, searchTerm, slug } from '../schemas/common'
 import { organizationInclude } from '../schemas/selects/org'
 
@@ -62,6 +62,27 @@ export const orgRouter = defineRouter({
 				},
 			})
 			return orgIds
+		} catch (error) {
+			handleError(error)
+		}
+	}),
+	createNewQuick: staffProcedure.input(CreateQuickOrgSchema).mutation(async ({ ctx, input }) => {
+		try {
+			const data = CreateOrgPrisma(input)
+
+			const newOrg = await ctx.prisma.organization.create({
+				data: {
+					...data,
+					auditLogs: createAuditLog<typeof data, 'organization'>({
+						actorId: ctx.session.user.id,
+						operation: 'create',
+						table: 'organization',
+						to: data,
+					}),
+				},
+			})
+
+			return newOrg
 		} catch (error) {
 			handleError(error)
 		}
