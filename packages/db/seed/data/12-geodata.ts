@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -18,10 +19,13 @@ import provinceCA from '@db/datastore/geojson/provinces-ca.json'
 import stateMX from '@db/datastore/geojson/states-mx.json'
 import stateUS from '@db/datastore/geojson/states-us.json'
 import { GeoJSONSchema } from '@db/zod-util'
+// @ts-ignore
 import msc from '@nuskin/mexico-state-lookup'
 import { geoStateIso } from '@zerodep/geo.stateiso'
 import iso3166 from 'iso-3166-2'
+// @ts-ignore
 import shoetest from 'shoetest'
+import invariant from 'tiny-invariant'
 
 export const geoCountryData = {
 	US: GeoJSONSchema.parse(countryUS),
@@ -37,10 +41,14 @@ export const geoProvinceDataCA = provinceCA.features
 		const cities = cityCA.features.filter(
 			(city) => city.properties.province_id === geoStateIso(province.properties.prov_name_en)
 		)
+
+		const type = iso3166.subdivision('CA', province.properties.prov_name_en)?.type
+		invariant(type)
+
 		return {
 			name: province.properties.prov_name_en,
 			abbrev: geoStateIso(province.properties.prov_name_en, 'CA'),
-			type: iso3166.subdivision('CA', province.properties.prov_name_en).type,
+			type,
 			geo: GeoJSONSchema.parse(province),
 			cities: cities.map((city) => GeoJSONSchema.parse(city)),
 		}
@@ -51,11 +59,14 @@ export const geoStateDataUS = stateUS.features
 	.map((state) => {
 		const abbrev = geoStateIso(state.properties.NAME)
 		const cities = cityUS.features.filter((city) => city.properties['country.etc'] === abbrev)
+		const type = iso3166.subdivision('US', state.properties.NAME)?.type
+		invariant(abbrev && type)
+
 		return {
 			name: state.properties.NAME,
 			geo: GeoJSONSchema.parse(state),
 			abbrev,
-			type: iso3166.subdivision('US', state.properties.NAME).type,
+			type,
 			counties: countyUS.features.filter((county) => county.properties.STATE === state.properties.STATE),
 			cities: cities.map((city) => {
 				const regex = new RegExp(`/\\s${abbrev}$/`)

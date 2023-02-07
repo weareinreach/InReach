@@ -203,8 +203,11 @@ const countryUS = async (task: ListrTask) => {
 			task.title = `GeoJSON data for US: (${countB + 1}/${geoStateDataUS.length}) - ${name} (${
 				state.counties.length
 			} Sub-Districts)`
-			const { code: iso, type: isoType } = iso3166.subdivision('US', state.name)
-			const govDistTypeId = govDist.get(isoType.toLowerCase())
+
+			const isoData = iso3166.subdivision('US', state.name)
+			invariant(isoData)
+			const { code: iso, type: isoType } = isoData
+			const govDistTypeId = govDist.get(isoType.toLowerCase() as DistrictTypes)
 			invariant(govDistTypeId, `${isoType.toLowerCase()}`)
 
 			const slug = keySlug(`US-${state.name}`)
@@ -350,8 +353,11 @@ const countryCA = async (task: ListrTask) => {
 		const { name, abbrev, geo } = province
 		log(`(${countB + 1}/${geoProvinceDataCA.length}) Prepare Governing District: ${name}`)
 		task.title = `GeoJSON data for CA: (${countB + 1}/${geoProvinceDataCA.length}) - ${name}`
-		const { code: iso, type: isoType } = iso3166.subdivision('CA', province.name)
-		const govDistTypeId = govDist.get(isoType.toLowerCase())
+
+		const isoData = iso3166.subdivision('CA', province.name)
+		invariant(isoData)
+		const { code: iso, type: isoType } = isoData
+		const govDistTypeId = govDist.get(isoType.toLowerCase() as DistrictTypes)
 		invariant(govDistTypeId, 'Unknown district type')
 		const slug = keySlug(`CA-${province.name}`)
 		const { key, ns, text } = keyGen(name, 'ca')
@@ -452,7 +458,7 @@ const countryMX = async (task: ListrTask) => {
 			name,
 			slug,
 			iso,
-			abbrev: abbrev ?? iso.slice(-2),
+			abbrev: abbrev ?? iso?.slice(-2),
 			geoJSON: geo,
 			countryId,
 			govDistTypeId,

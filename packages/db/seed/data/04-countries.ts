@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { namespaces } from '@db/seed/data/00-namespaces'
 import axios from 'axios'
+// @ts-ignore
 import { countries as countryExtra } from 'countries-languages'
 
 export const countryData = async () => {
