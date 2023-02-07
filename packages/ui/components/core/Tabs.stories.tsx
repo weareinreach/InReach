@@ -1,11 +1,31 @@
-import { Tabs } from '@mantine/core'
+import { Tabs as MantineTabs } from '@mantine/core'
 import { Meta } from '@storybook/react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
+const Story = () => {
+	const router = useRouter()
+	const { t } = useTranslation()
+
+	return (
+		<MantineTabs
+			defaultValue={router.query.activeTab as string}
+			onTabChange={(value) => {
+				router.push(`/tabs/${value}`, { query: value })
+			}}
+		>
+			<MantineTabs.List>
+				<MantineTabs.Tab value='services'>{t('services')}</MantineTabs.Tab>
+				<MantineTabs.Tab value='photos'>{t('photos')}</MantineTabs.Tab>
+				<MantineTabs.Tab value='reviews'>{t('reviews')}</MantineTabs.Tab>
+			</MantineTabs.List>
+		</MantineTabs>
+	)
+}
+
 export default {
 	title: 'Design System/Tabs',
-	component: Tabs,
+	component: Story,
 	parameters: {
 		design: {
 			type: 'figma',
@@ -13,27 +33,13 @@ export default {
 		},
 		nextjs: {
 			router: {
-				pathname: '/org/[slug]',
-				asPath: '/org/mockOrg',
+				pathname: '/tabs/',
 				query: {
-					slug: 'mockOrg',
+					activeTab: 'services',
 				},
 			},
 		},
 	},
-} as Meta<typeof Tabs>
+} as Meta<typeof MantineTabs>
 
-export const TabsSample = () => {
-	const router = useRouter()
-	const { t } = useTranslation()
-
-	return (
-		<Tabs value={router.query.activeTab as string} onTabChange={(value) => router.push(`/tabs/${value}`)}>
-			<Tabs.List>
-				<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
-				<Tabs.Tab value='photos'>{t('photos')}</Tabs.Tab>
-				<Tabs.Tab value='reviews'>{t('reviews')}</Tabs.Tab>
-			</Tabs.List>
-		</Tabs>
-	)
-}
+export const Tabs = {}
