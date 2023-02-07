@@ -1,3 +1,4 @@
+import { Prisma } from '@weareinreach/db'
 import superjson from 'superjson'
 import { z } from 'zod'
 
@@ -62,7 +63,7 @@ export const createAuditLog = <
 	from?: Partial<{ [K in keyof D]: unknown }>
 	/** Data after operation */
 	to: D
-}): AuditLogReturn<T> => {
+}) => {
 	const parser = operation === 'create' ? BaseSchema : getSchema(table)
 
 	const operationValue = operationMap[operation]
@@ -79,7 +80,9 @@ export const createAuditLog = <
 		create: parser.parse(logInput),
 	}
 
-	return newAuditLog
+	const entry = Prisma.validator<NestedAuditLog>()({ create: parser.parse(logInput) })
+
+	return entry
 }
 
 type AuditLogParser = <D, T extends SchemaKey, M extends Operation>(
@@ -101,3 +104,54 @@ type AuditLogReturn<T extends Readonly<PrismaTables>> = {
 type DataProp<T extends Readonly<PrismaTables>, M extends Operation> = M extends CreateOperation
 	? Omit<ZodData<T>, 'from'> & Partial<Pick<ZodData<T>, 'from'>>
 	: ZodData<T>
+
+type NestedAuditLog =
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutAttributeCategoryInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutAttributeInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutAttributeSupplementInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutCountryInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutFieldVisibilityInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutFooterLinkInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutFreeTextInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutGovDistInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutGovDistTypeInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutInternalNoteInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutLanguageInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutLocationPermissionInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutNavigationInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOrganizationPermissionInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOrgEmailInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOrgHoursInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOrgLocationInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOrgPhoneInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOrgPhotoInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOrgReviewInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOrgServiceInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOrgSocialMediaInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOrgWebsiteInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOutsideAPIInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutOutsideAPIServiceInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutPermissionInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutPhoneTypeInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutServiceAccessInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutServiceAreaInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutServiceCategoryInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutServiceTagInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutSocialMediaLinkInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutSocialMediaServiceInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutSourceInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutTranslatedReviewInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutTranslationInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutTranslationNamespaceInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutUserCommunityInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutUserEthnicityInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutUserImmigrationInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutUserMailInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutUserRoleInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutUserSavedListInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutUserSOGIdentityInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutUserTitleInput
+	| Prisma.AuditLogUncheckedCreateNestedManyWithoutUserTypeInput
+	| { create: Prisma.AuditLogUncheckedCreateInput }
