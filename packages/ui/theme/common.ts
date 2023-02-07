@@ -83,6 +83,7 @@ export const commonTheme: MantineThemeOverride = {
 				darkGray: '#65676B',
 				teal: '#28939C',
 				cornflower: '#4792DA',
+				softBlack: '#21272C',
 			},
 			tertiary: {
 				coolGray: '#d9d9d9',
@@ -129,6 +130,23 @@ export const commonTheme: MantineThemeOverride = {
 				sm: 4,
 			},
 		},
+		Tabs: {
+			styles: (theme) => ({
+				tab: {
+					'&[data-active]': {
+						borderColor: theme.other.colors.secondary.softBlack,
+					},
+					'&[data-active]:hover': {
+						borderColor: theme.other.colors.secondary.softBlack,
+					},
+				},
+				tabLabel: {
+					fontWeight: 500,
+					fontSize: '16px',
+					color: theme.other.colors.secondary.softBlack,
+				},
+			}),
+		},
 		Text: {
 			defaultProps: (theme) => ({
 				component: 'span',
@@ -171,6 +189,7 @@ declare module '@mantine/core' {
 				darkGray: '#65676B'
 				teal: '#28939C'
 				cornflower: '#4792DA'
+				softBlack: '#21272C'
 			}
 			tertiary: {
 				coolGray: '#d9d9d9'
