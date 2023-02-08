@@ -9,12 +9,8 @@ export const CreateOrgEmailSchema = z.object({
 	published: z.boolean().default(false),
 })
 
-export const CreateNestedOrgEmailSchema = CreateOrgEmailSchema.array()
-
-export const CreateNestedOrgEmailPrisma = (data?: z.infer<typeof CreateNestedOrgEmailSchema>) => {
-	if (!data) return undefined
-
-	return Prisma.validator<Prisma.OrgEmailCreateNestedManyWithoutOrganizationInput>()({
+export const CreateNestedOrgEmailSchema = CreateOrgEmailSchema.array().transform((data) =>
+	Prisma.validator<Prisma.OrgEmailCreateNestedManyWithoutOrganizationInput>()({
 		createMany: {
 			data: data.map(({ firstName, lastName, primary, email, published }) => ({
 				firstName,
@@ -26,4 +22,21 @@ export const CreateNestedOrgEmailPrisma = (data?: z.infer<typeof CreateNestedOrg
 			skipDuplicates: true,
 		},
 	})
-}
+)
+
+// export const CreateNestedOrgEmailPrisma = (data?: z.infer<typeof CreateNestedOrgEmailSchema>) => {
+// 	if (!data) return undefined
+
+// 	return Prisma.validator<Prisma.OrgEmailCreateNestedManyWithoutOrganizationInput>()({
+// 		createMany: {
+// 			data: data.map(({ firstName, lastName, primary, email, published }) => ({
+// 				firstName,
+// 				lastName,
+// 				primary,
+// 				email,
+// 				published,
+// 			})),
+// 			skipDuplicates: true,
+// 		},
+// 	})
+// }

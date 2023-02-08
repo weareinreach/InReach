@@ -11,12 +11,8 @@ export const CreateOrgPhoneSchema = z.object({
 	locationOnly: z.boolean().default(false),
 })
 
-export const CreateNestedOrgPhoneSchema = CreateOrgPhoneSchema.array()
-
-export const CreateNestedOrgPhonePrisma = (data?: z.infer<typeof CreateNestedOrgPhoneSchema>) => {
-	if (!data) return undefined
-
-	return Prisma.validator<Prisma.OrgPhoneCreateNestedManyWithoutOrganizationInput>()({
+export const CreateNestedOrgPhoneSchema = CreateOrgPhoneSchema.array().transform((data) =>
+	Prisma.validator<Prisma.OrgPhoneCreateNestedManyWithoutOrganizationInput>()({
 		createMany: {
 			skipDuplicates: true,
 			data: data.map(({ number, ext, primary, published, countryId, phoneTypeId, locationOnly }) => ({
@@ -30,4 +26,23 @@ export const CreateNestedOrgPhonePrisma = (data?: z.infer<typeof CreateNestedOrg
 			})),
 		},
 	})
-}
+)
+
+// export const CreateNestedOrgPhonePrisma = (data?: z.infer<typeof CreateNestedOrgPhoneSchema>) => {
+// 	if (!data) return undefined
+
+// 	return Prisma.validator<Prisma.OrgPhoneCreateNestedManyWithoutOrganizationInput>()({
+// 		createMany: {
+// 			skipDuplicates: true,
+// 			data: data.map(({ number, ext, primary, published, countryId, phoneTypeId, locationOnly }) => ({
+// 				number,
+// 				ext,
+// 				primary,
+// 				published,
+// 				countryId,
+// 				phoneTypeId,
+// 				locationOnly,
+// 			})),
+// 		},
+// 	})
+// }

@@ -8,15 +8,22 @@ export const CreateOrgSocialMediaSchema = z.object({
 	serviceId: z.string(),
 })
 
-export const CreateNestedOrgSocialMediaSchema = CreateOrgSocialMediaSchema.array()
-
-export const CreateNestedOrgSocialMediaPrisma = (data?: z.infer<typeof CreateNestedOrgSocialMediaSchema>) => {
-	if (!data) return undefined
-
-	return Prisma.validator<Prisma.OrgSocialMediaCreateNestedManyWithoutOrganizationInput>()({
+export const CreateNestedOrgSocialMediaSchema = CreateOrgSocialMediaSchema.array().transform((data) =>
+	Prisma.validator<Prisma.OrgSocialMediaCreateNestedManyWithoutOrganizationInput>()({
 		createMany: {
 			skipDuplicates: true,
 			data: data.map(({ username, url, published, serviceId }) => ({ username, url, published, serviceId })),
 		},
 	})
-}
+)
+
+// export const CreateNestedOrgSocialMediaPrisma = (data?: z.infer<typeof CreateNestedOrgSocialMediaSchema>) => {
+// 	if (!data) return undefined
+
+// 	return Prisma.validator<Prisma.OrgSocialMediaCreateNestedManyWithoutOrganizationInput>()({
+// 		createMany: {
+// 			skipDuplicates: true,
+// 			data: data.map(({ username, url, published, serviceId }) => ({ username, url, published, serviceId })),
+// 		},
+// 	})
+// }

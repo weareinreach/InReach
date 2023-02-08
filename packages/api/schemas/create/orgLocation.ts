@@ -16,11 +16,8 @@ export const CreateOrgLocationSchema = z.object({
 	published: z.boolean().default(false),
 })
 
-export const CreateNestedOrgLocationSchema = CreateOrgLocationSchema.array()
-
-export const CreateNestedOrgLocationPrisma = (data?: z.infer<typeof CreateNestedOrgLocationSchema>) => {
-	if (!data) return undefined
-	return Prisma.validator<Prisma.OrgLocationCreateNestedManyWithoutOrganizationInput>()({
+export const CreateNestedOrgLocationSchema = CreateOrgLocationSchema.array().transform((data) =>
+	Prisma.validator<Prisma.OrgLocationCreateNestedManyWithoutOrganizationInput>()({
 		createMany: {
 			data: data.map(
 				({
@@ -53,4 +50,41 @@ export const CreateNestedOrgLocationPrisma = (data?: z.infer<typeof CreateNested
 			),
 		},
 	})
-}
+)
+
+// export const CreateNestedOrgLocationPrisma = (data?: z.infer<typeof CreateNestedOrgLocationSchema>) => {
+// 	if (!data) return undefined
+// 	return Prisma.validator<Prisma.OrgLocationCreateNestedManyWithoutOrganizationInput>()({
+// 		createMany: {
+// 			data: data.map(
+// 				({
+// 					name,
+// 					street1,
+// 					street2,
+// 					city,
+// 					postCode,
+// 					primary,
+// 					govDistId,
+// 					countryId,
+// 					longitude,
+// 					latitude,
+// 					geoJSON,
+// 					published,
+// 				}) => ({
+// 					name,
+// 					street1,
+// 					street2,
+// 					city,
+// 					postCode,
+// 					primary,
+// 					govDistId,
+// 					countryId,
+// 					longitude,
+// 					latitude,
+// 					geoJSON,
+// 					published,
+// 				})
+// 			),
+// 		},
+// 	})
+// }
