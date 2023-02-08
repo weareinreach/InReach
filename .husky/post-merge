@@ -2,10 +2,10 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 check_changed() {
-	if git diff HEAD^ HEAD --exit-code -- $1; then
+	if git diff HEAD^ HEAD --exit-code --quiet -- $1; then
 	echo "📦 No change to $1"
 else
-	echo "📦 $1 has been modified, executing $2"
+	echo "📦 $1 has been modified"
 	eval "$2"
 fi
 }
