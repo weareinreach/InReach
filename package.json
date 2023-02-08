@@ -59,7 +59,7 @@
 		"typescript": "4.9.5",
 		"typesync": "0.10.0"
 	},
-	"packageManager": "pnpm@7.26.3",
+	"packageManager": "pnpm@7.27.0",
 	"engines": {
 		"node": "^18",
 		"pnpm": "^7"
