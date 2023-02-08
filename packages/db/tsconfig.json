@@ -4,10 +4,8 @@
 		"noImplicitAny": false,
 		"strictNullChecks": true,
 		"baseUrl": "./",
-		"paths": {
-			"~db/*": ["*"]
-		},
 		"allowJs": true
 	},
-	"exclude": ["**/node_modules", "**/.*/"]
+	"exclude": ["**/node_modules", "./**/.*/"],
+	"include": ["./**/*.ts", "../../@types/**/*.ts"]
 }

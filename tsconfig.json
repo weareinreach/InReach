@@ -19,6 +19,7 @@
 		".prettierrc.js",
 		"test/**/*.js",
 		"lib/devmsg.ts",
-		"lib/prepare.ts"
+		"lib/prepare.ts",
+		"@types/**/*.ts"
 	]
 }

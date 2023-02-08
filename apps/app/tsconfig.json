@@ -1,14 +1,7 @@
 {
 	"extends": "@weareinreach/config/tsconfig/base.json",
 	"compilerOptions": {
-		"baseUrl": ".",
-		"paths": {
-			"~app/*": ["./src/*"],
-			"~api/*": ["../../packages/api/*"],
-			"~auth/*": ["../../packages/auth/*"],
-			"~db/*": ["../../packages/db/*"],
-			"~ui/*": ["../../packages/ui/*"]
-		}
+		"baseUrl": "."
 	},
 	"include": [
 		"./next-env.d.ts",
@@ -17,7 +10,8 @@
 		"./**/*.js",
 		"./**/*.jsx",
 		"./**/*.mjs",
-		"./**/*.cjs"
+		"./**/*.cjs",
+		"../../@types/**/*.ts"
 	],
-	"exclude": ["node_modules"]
+	"exclude": ["**/node_modules/**"]
 }

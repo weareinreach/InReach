@@ -12,8 +12,6 @@ import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { appWithTranslation } from 'next-i18next'
 
-import { default as navItems } from '~app/data/nav.json'
-import { default as socialMediaLinks } from '~app/data/socialMedia.json'
 import { api } from '~app/utils/api'
 
 const fontWorkSans = Work_Sans({ subsets: ['latin'] })
