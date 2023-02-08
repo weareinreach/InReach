@@ -1,8 +1,8 @@
 import { TRPCError } from '@trpc/server'
 
-import { defineRouter, publicProcedure, handleError } from '../lib'
-import { id, orgId } from '../schemas/common'
-import { orgLocationInclude } from '../schemas/selects/org'
+import { defineRouter, publicProcedure, handleError } from '~api/lib'
+import { id, orgId } from '~api/schemas/common'
+import { orgLocationInclude } from '~api/schemas/selects/org'
 
 export const locationRouter = defineRouter({
 	byId: publicProcedure.input(id).query(async ({ ctx, input }) => {

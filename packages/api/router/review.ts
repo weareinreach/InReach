@@ -1,10 +1,10 @@
 import { Prisma } from '@weareinreach/db'
 
-import { handleError } from '../lib'
-import { createAuditLog } from '../lib/auditLog'
-import { defineRouter, protectedProcedure, publicProcedure, staffProcedure } from '../lib/trpc'
-import { id, orgId, orgIdLocationId, orgIdServiceId, userId } from '../schemas/common'
-import { createReview } from '../schemas/review'
+import { handleError } from '~api/lib'
+import { createAuditLog } from '~api/lib/auditLog'
+import { defineRouter, protectedProcedure, publicProcedure, staffProcedure } from '~api/lib/trpc'
+import { id, orgId, orgIdLocationId, orgIdServiceId, userId } from '~api/schemas/common'
+import { createReview } from '~api/schemas/review'
 
 export const reviewRouter = defineRouter({
 	create: protectedProcedure.input(createReview).mutation(async ({ ctx, input }) => {

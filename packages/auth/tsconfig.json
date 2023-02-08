@@ -4,5 +4,5 @@
 		"baseUrl": "./"
 	},
 	"exclude": ["**/node_modules", "**/.*/"],
-	"include": ["*.ts"]
+	"include": ["./**/*.ts", "../../@types/**/*.ts"]
 }

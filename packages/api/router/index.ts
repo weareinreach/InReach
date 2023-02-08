@@ -1,10 +1,11 @@
+import { defineRouter } from '~api/lib/trpc'
+
 import { authRouter } from './auth'
 import { locationRouter } from './location'
 import { orgRouter } from './org'
 import { reviewRouter } from './review'
 import { savedListRouter } from './savedLists'
 import { userRouter } from './user'
-import { defineRouter } from '../lib/trpc'
 
 export const appRouter = defineRouter({
 	auth: authRouter,

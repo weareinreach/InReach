@@ -1,8 +1,8 @@
 import { type Prisma } from '@weareinreach/db'
 
-import { createAuditLog, handleError } from '../lib'
-import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '../lib/trpc'
-import { adminCreateUser, createUser, transformUserSurvey, userSurvey } from '../schemas/user'
+import { createAuditLog, handleError } from '~api/lib'
+import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
+import { adminCreateUser, createUser, transformUserSurvey, userSurvey } from '~api/schemas/user'
 
 export const userRouter = defineRouter({
 	create: publicProcedure.input(createUser).mutation(async ({ ctx, input }) => {

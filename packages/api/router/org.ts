@@ -1,12 +1,11 @@
 import { Prisma } from '@weareinreach/db'
 
+import { handleError } from '~api/lib'
+import { defineRouter, publicProcedure, staffProcedure } from '~api/lib/trpc'
+import { id, searchTerm, slug } from '~api/schemas/common'
 import { GenerateAuditLog } from '~api/schemas/create/auditLog'
 import { CreateQuickOrgSchema } from '~api/schemas/create/organization'
-
-import { handleError } from '../lib'
-import { defineRouter, publicProcedure, staffProcedure } from '../lib/trpc'
-import { id, searchTerm, slug } from '../schemas/common'
-import { organizationInclude } from '../schemas/selects/org'
+import { organizationInclude } from '~api/schemas/selects/org'
 
 export const orgRouter = defineRouter({
 	getById: publicProcedure.input(id).query(async ({ ctx, input }) => {

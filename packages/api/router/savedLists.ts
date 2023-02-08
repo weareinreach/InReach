@@ -1,10 +1,10 @@
 import { TRPCError } from '@trpc/server'
 
-import { createAuditLog, handleError } from '../lib'
-import { nanoUrl } from '../lib/nanoIdUrl'
-import { defineRouter, protectedProcedure, publicProcedure } from '../lib/trpc'
-import { id } from '../schemas/common'
-import { schemas } from '../schemas/savedLists'
+import { createAuditLog, handleError } from '~api/lib'
+import { nanoUrl } from '~api/lib/nanoIdUrl'
+import { defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
+import { id } from '~api/schemas/common'
+import { schemas } from '~api/schemas/savedLists'
 
 export const savedListRouter = defineRouter({
 	/** Get all saved lists for logged in user */

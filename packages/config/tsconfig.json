@@ -3,6 +3,6 @@
 		"baseUrl": "./"
 	},
 	"extends": "./tsconfig/base.json",
-	"include": ["./**/*.js", "./**/*.ts", "./**/*.mjs"],
+	"include": ["./**/*.js", "./**/*.ts", "./**/*.mjs", "../../@types/**/*.ts"],
 	"exclude": ["node_modules"]
 }
