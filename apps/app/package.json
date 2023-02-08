@@ -35,9 +35,9 @@
 		"@mantine/spotlight": "5.10.3",
 		"@mantine/tiptap": "5.10.3",
 		"@tanstack/react-query": "4.24.4",
-		"@tiptap/extension-link": "2.0.0-beta.213",
-		"@tiptap/react": "2.0.0-beta.213",
-		"@tiptap/starter-kit": "2.0.0-beta.213",
+		"@tiptap/extension-link": "2.0.0-beta.215",
+		"@tiptap/react": "2.0.0-beta.215",
+		"@tiptap/starter-kit": "2.0.0-beta.215",
 		"@trpc/client": "10.10.0",
 		"@trpc/next": "10.10.0",
 		"@trpc/react-query": "10.10.0",
@@ -58,7 +58,7 @@
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-i18next": "12.1.5",
-		"zod": "3.20.2"
+		"zod": "3.20.3"
 	},
 	"devDependencies": {
 		"@next/bundle-analyzer": "13.1.6",
