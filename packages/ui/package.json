@@ -52,6 +52,7 @@
 		"@paralleldrive/cuid2": "2.0.1",
 		"@storybook/addon-a11y": "7.0.0-beta.44",
 		"@storybook/addon-actions": "7.0.0-beta.44",
+		"@storybook/addon-docs": "7.0.0-beta.44",
 		"@storybook/addon-essentials": "7.0.0-beta.44",
 		"@storybook/addon-interactions": "7.0.0-beta.44",
 		"@storybook/addon-links": "7.0.0-beta.44",
