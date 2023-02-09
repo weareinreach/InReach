@@ -15,6 +15,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
+		"@paralleldrive/cuid2": "2.0.1",
 		"@tanstack/react-query": "4.24.4",
 		"@trpc/client": "10.10.0",
 		"@trpc/next": "10.10.0",

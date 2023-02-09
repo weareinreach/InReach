@@ -2,7 +2,8 @@ import { Prisma } from '@weareinreach/db'
 import superjson from 'superjson'
 import { z } from 'zod'
 
-const cuid = z.string().cuid()
+export const cuid = z.union([z.string().cuid(), z.string().cuid2()])
+export const cuidOptional = z.union([z.string().cuid().nullish(), z.string().cuid2().nullish()])
 
 export const id = z.object({ id: cuid })
 export const userId = z.object({ userId: cuid })

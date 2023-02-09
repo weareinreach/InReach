@@ -1,4 +1,5 @@
 /* eslint-disable node/no-process-env */
+import { createId } from '@paralleldrive/cuid2'
 import { PrismaClient } from '@prisma/client'
 
 declare global {
@@ -19,3 +20,5 @@ export * from './zod_util'
 if (process.env.NODE_ENV !== 'production') {
 	global.prisma = prisma
 }
+
+export { createId }

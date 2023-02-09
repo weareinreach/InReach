@@ -1580,7 +1580,7 @@ model AuditLog {
   PhoneType                            PhoneType?              @relation(fields: [phoneTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   phoneTypeId                          String? /// @zod.string.cuid()
   ServiceAccess                        ServiceAccess?          @relation(fields: [serviceAccessId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  serviceAccessId                      String?
+  serviceAccessId                      String? /// @zod.string.cuid()
   ServiceArea                          ServiceArea?            @relation(fields: [serviceAreaId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   serviceAreaId                        String? /// @zod.string.cuid()
   ServiceCategory                      ServiceCategory?        @relation(fields: [serviceCategoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -1599,7 +1599,7 @@ model AuditLog {
   translationKey                       String?
   translationNs                        String?
   TranslationNamespace                 TranslationNamespace?   @relation(fields: [translationNamespaceName], references: [name], onDelete: SetNull, onUpdate: Cascade)
-  translationNamespaceName             String? /// @zod.string.cuid()
+  translationNamespaceName             String?
   User                                 User?                   @relation("AuditLogEntry", fields: [userId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userId                               String? /// @zod.string.cuid()
   UserCommunity                        UserCommunity?          @relation(fields: [userCommunityId], references: [id], onDelete: SetNull, onUpdate: Cascade)

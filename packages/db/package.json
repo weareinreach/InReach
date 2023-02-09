@@ -33,6 +33,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
+		"@paralleldrive/cuid2": "2.0.1",
 		"@prisma/client": "4.10.0",
 		"zod": "3.20.3"
 	},
