@@ -1,8 +1,7 @@
 import { Prisma } from '@weareinreach/db'
-import superjson from 'superjson'
 import { z } from 'zod'
 
-import { cuidOptional, JsonInputOrNullSuperJSON } from '../common'
+import { cuidOptional, JsonInputOrNullSuperJSON } from '~api/schemas/common'
 
 const auditLogLinks = z.object({
 	accountId: cuidOptional,
@@ -99,7 +98,7 @@ const transformer = (data: z.output<typeof AuditLogBaseUnion | typeof AuditLogEx
 			return Prisma.validator<Prisma.AuditLogUncheckedCreateInput>()({
 				...data,
 				from: JsonInputOrNullSuperJSON.parse({}),
-				to: JsonInputOrNullSuperJSON.parse({ linked: true }),
+				to: data.to ?? JsonInputOrNullSuperJSON.parse({ linked: true }),
 			})
 		}
 		case 'DELETE':

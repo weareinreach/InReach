@@ -1,17 +1,17 @@
 import { Prisma, createId } from '@weareinreach/db'
 import { z } from 'zod'
 
+import { userTypes } from '~api/generated/userType'
+import { cuid, CreationBase } from '~api/schemas/common'
 import {
-	cuid,
 	connectOne,
 	connectOneRequired,
-	CreationBase,
 	createManyOrUndefined,
-} from '~api/schemas/common'
+	linkManyWithAudit,
+	createMany,
+} from '~api/schemas/nestedOps'
 
-import { CreateAuditLog } from './auditLog'
-
-import { userTypes } from '~api/generated/userType'
+import { CreateAuditLog, GenerateAuditLog } from './auditLog'
 
 const CreateUserBase = z.object({
 	id: cuid.default(createId()),
@@ -46,12 +46,23 @@ export const CreateUser = CreateUserBase.transform(({ id, name, email, password,
 	}
 })
 
+const adminCreateFields = {
+	userType: z.enum(userTypes),
+	permissions: z.object({ permissionId: cuid }).array(),
+	orgPermission: z
+		.object({ permissionId: cuid, organizationId: cuid, authorized: z.boolean().default(false) })
+		.array(),
+	locationPermission: z
+		.object({ permissionId: cuid, organizationId: cuid, authorized: z.boolean().default(false) })
+		.array(),
+}
+
 export const AdminCreateUser = () => {
-	const { dataParser: parser, inputSchema } = CreationBase(
-		CreateUserBase.extend({ userType: z.enum(userTypes) })
-	)
+	const { dataParser: parser, inputSchema } = CreationBase(CreateUserBase.extend(adminCreateFields))
 	const dataParser = parser.transform(({ actorId, data, operation }) => {
 		const { id, name, email, password, langPref, image, userType } = data
+		const { links: permissions, logs: permissionLogs } = linkManyWithAudit(data?.permissions, actorId)
+
 		return {
 			prisma: Prisma.validator<Prisma.UserCreateArgs>()({
 				data: {
@@ -61,11 +72,15 @@ export const AdminCreateUser = () => {
 					image,
 					userType: connectOneRequired({ type: userType }),
 					langPref: connectOne({ localeCode: langPref }),
-					auditLogs: CreateAuditLog({
-						actorId,
-						operation,
-						to: { id, name, email, image, langPref },
-					}),
+					permissions,
+					auditLogs: createMany([
+						GenerateAuditLog({
+							actorId,
+							operation,
+							to: { id, name, email, image, langPref },
+							...permissionLogs,
+						}),
+					]),
 				},
 				select: { id: true },
 			}),

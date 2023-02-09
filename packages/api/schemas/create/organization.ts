@@ -1,7 +1,8 @@
 import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { cuid, CreationBase, createManyWithAudit } from '~api/schemas/common'
+import { cuid, CreationBase } from '~api/schemas/common'
+import { createManyWithAudit } from '~api/schemas/nestedOps'
 
 import { CreateAuditLog } from './auditLog'
 import { createFreeText } from './freeText'

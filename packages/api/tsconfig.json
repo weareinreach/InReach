@@ -3,6 +3,6 @@
 	"compilerOptions": {
 		"baseUrl": "./"
 	},
-	"exclude": ["**/node_modules", "./**/.*/", "../../@types/**/*.ts"],
-	"include": ["./**/*.ts", "./**/*.js"]
+	"exclude": ["**/node_modules", "./**/.*/"],
+	"include": ["./**/*.ts", "./**/*.js", "../../@types/**/*.ts"]
 }

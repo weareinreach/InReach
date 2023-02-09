@@ -1,13 +1,8 @@
 import { Prisma, GeoJSONPointSchema, createId } from '@weareinreach/db'
 import { z } from 'zod'
 
-import {
-	cuid,
-	JsonInputOrNullSuperJSON,
-	MutationBase,
-	MutationBaseArray,
-	createMany,
-} from '~api/schemas/common'
+import { cuid, JsonInputOrNullSuperJSON, MutationBase, MutationBaseArray } from '~api/schemas/common'
+import { createMany } from '~api/schemas/nestedOps'
 
 import { AuditLogSchema } from './auditLog'
 
