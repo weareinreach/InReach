@@ -60,7 +60,7 @@ export const WithTRPC = (Story: StoryFn) => {
 		storybookTRPC.createClient({
 			links: [
 				httpBatchLink({
-					url: 'http://localhost:6006/trpc',
+					url: '/trpc',
 				}),
 			],
 			transformer,
@@ -71,7 +71,7 @@ export const WithTRPC = (Story: StoryFn) => {
 		const trpc_client = storybookTRPC.createClient({
 			links: [
 				httpBatchLink({
-					url: 'http://localhost:6006/trpc',
+					url: '/trpc',
 				}),
 			],
 

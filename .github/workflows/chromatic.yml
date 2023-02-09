@@ -58,3 +58,4 @@ jobs:
           buildScriptName: sb:build
           onlyChanged: true
           skip: '@(renovate/**|l10_**)'
+          exitOnceUploaded: true
