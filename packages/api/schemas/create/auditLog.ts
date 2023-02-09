@@ -117,7 +117,10 @@ type AuditLogSchema = typeof AuditLogSchema
 
 export type AuditLog = z.infer<AuditLogSchema>
 export type AuditLogInput = z.input<AuditLogSchema>
+
+/** Generates AuditLog object ONLY */
 export const GenerateAuditLog = (data: AuditLogInput) => AuditLogSchema.parse(data)
+/** Generates AuditLog inside of a nested `create` object */
 export const CreateAuditLog = (data: AuditLogInput) => ({ create: GenerateAuditLog(data) })
 
 export const auditLogLinkAction = { linked: true }
