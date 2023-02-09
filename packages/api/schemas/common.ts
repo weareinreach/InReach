@@ -2,8 +2,6 @@ import { Prisma } from '@weareinreach/db'
 import superjson from 'superjson'
 import { z } from 'zod'
 
-import { AuditLogBaseUnion } from './create/auditLog'
-
 export const cuid = z.union([z.string().cuid(), z.string().cuid2()])
 export const cuidOptional = z.union([z.string().cuid().nullish(), z.string().cuid2().nullish()])
 
