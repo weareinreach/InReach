@@ -10,33 +10,5 @@ export const CreateOrgEmailSchema = z.object({
 })
 
 export const CreateNestedOrgEmailSchema = CreateOrgEmailSchema.array().transform((data) =>
-	Prisma.validator<Prisma.OrgEmailCreateNestedManyWithoutOrganizationInput>()({
-		createMany: {
-			data: data.map(({ firstName, lastName, primary, email, published }) => ({
-				firstName,
-				lastName,
-				primary,
-				email,
-				published,
-			})),
-			skipDuplicates: true,
-		},
-	})
+	Prisma.validator<Prisma.Enumerable<Prisma.OrgEmailCreateManyInput>>()(data)
 )
-
-// export const CreateNestedOrgEmailPrisma = (data?: z.infer<typeof CreateNestedOrgEmailSchema>) => {
-// 	if (!data) return undefined
-
-// 	return Prisma.validator<Prisma.OrgEmailCreateNestedManyWithoutOrganizationInput>()({
-// 		createMany: {
-// 			data: data.map(({ firstName, lastName, primary, email, published }) => ({
-// 				firstName,
-// 				lastName,
-// 				primary,
-// 				email,
-// 				published,
-// 			})),
-// 			skipDuplicates: true,
-// 		},
-// 	})
-// }

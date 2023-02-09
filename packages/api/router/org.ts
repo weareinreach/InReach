@@ -1,10 +1,7 @@
-import { Prisma } from '@weareinreach/db'
-
 import { handleError } from '~api/lib'
 import { defineRouter, publicProcedure, staffProcedure } from '~api/lib/trpc'
 import { id, searchTerm, slug } from '~api/schemas/common'
-import { GenerateAuditLog } from '~api/schemas/create/auditLog'
-import { CreateQuickOrgSchema } from '~api/schemas/create/organization'
+import { type CreateQuickOrgInput, CreateQuickOrgSchema } from '~api/schemas/create/organization'
 import { organizationInclude } from '~api/schemas/selects/org'
 
 export const orgRouter = defineRouter({
@@ -68,76 +65,23 @@ export const orgRouter = defineRouter({
 			handleError(error)
 		}
 	}),
-	createNewQuick: staffProcedure.input(CreateQuickOrgSchema).mutation(async ({ ctx, input }) => {
-		try {
-			const result = await ctx.prisma.$transaction(async (tx) => {
-				const newOrg = await tx.organization.create(input)
+	createNewQuick: staffProcedure
+		.input(CreateQuickOrgSchema().inputSchema)
+		.mutation(async ({ ctx, input }) => {
+			try {
+				const inputData = {
+					actorId: ctx.session.user.id,
+					operation: 'CREATE',
+					data: input,
+				} satisfies CreateQuickOrgInput
 
-				const { description, emails, locations, phones, socialMedia, websites, ...org } = newOrg
-				const auditSources = { description, emails, locations, phones, socialMedia, websites, org } as const
-				type Entries<T> = { [K in keyof T]: [key: K, value: T[K]] }[keyof T][]
-				const auditEntries: Prisma.AuditLogUncheckedCreateInput[] = []
-				const auditBase = { actorId: ctx.session.user.id, from: {}, operation: 'CREATE' } as const
+				const record = CreateQuickOrgSchema().dataParser.parse(inputData)
 
-				for (const [key, value] of Object.entries(auditSources) as Entries<typeof auditSources>) {
-					if (value === null || (Array.isArray(value) && !value.length)) continue
-					switch (key) {
-						case 'description': {
-							const { id, ...data } = value
-							auditEntries.push(GenerateAuditLog({ ...auditBase, to: data, freeTextId: id }))
-							break
-						}
-						case 'emails': {
-							const entries = value.map(({ id, ...data }) =>
-								GenerateAuditLog({ ...auditBase, to: data, orgEmailId: id })
-							)
-							auditEntries.push(...entries)
-							break
-						}
-						case 'locations': {
-							const entries = value.map(({ id, ...data }) =>
-								GenerateAuditLog({ ...auditBase, to: data, orgLocationId: id })
-							)
-							auditEntries.push(...entries)
-							break
-						}
-						case 'phones': {
-							const entries = value.map(({ id, ...data }) =>
-								GenerateAuditLog({ ...auditBase, to: data, orgPhoneId: id })
-							)
-							auditEntries.push(...entries)
-							break
-						}
-						case 'socialMedia': {
-							const entries = value.map(({ id, ...data }) =>
-								GenerateAuditLog({ ...auditBase, to: data, orgSocialMediaId: id })
-							)
-							auditEntries.push(...entries)
-							break
-						}
-						case 'websites': {
-							const entries = value.map(({ id, ...data }) =>
-								GenerateAuditLog({ ...auditBase, to: data, orgWebsiteId: id })
-							)
-							auditEntries.push(...entries)
-							break
-						}
-						case 'org': {
-							const { id, ...data } = value
-							auditEntries.push(GenerateAuditLog({ ...auditBase, to: data, organizationId: id }))
-							break
-						}
-					}
-				}
-				await tx.auditLog.createMany({
-					data: auditEntries,
-				})
+				const result = await ctx.prisma.organization.create(record)
 
-				return newOrg
-			})
-			return result
-		} catch (error) {
-			handleError(error)
-		}
-	}),
+				return result
+			} catch (error) {
+				handleError(error)
+			}
+		}),
 })

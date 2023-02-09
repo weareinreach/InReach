@@ -1,6 +1,10 @@
 import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
+import { cuid, CreationBase } from 'schemas/common'
+
+import { CreateAuditLog } from './auditLog'
+import { createManyWithAudit } from './common'
 import { createFreeText } from './freeText'
 import { CreateNestedOrgEmailSchema } from './orgEmail'
 import { CreateNestedOrgLocationSchema } from './orgLocation'
@@ -8,34 +12,40 @@ import { CreateNestedOrgPhoneSchema } from './orgPhone'
 import { CreateNestedOrgSocialMediaSchema } from './orgSocialMedia'
 import { CreateNestedOrgWebsiteSchema } from './orgWebsite'
 
-export const CreateQuickOrgSchema = z
-	.object({
-		name: z.string(),
-		slug: z.string(),
-		source: z.string(),
-		description: z.string().optional(),
-		locations: CreateNestedOrgLocationSchema.optional(),
-		emails: CreateNestedOrgEmailSchema.optional(),
-		phones: CreateNestedOrgPhoneSchema.optional(),
-		websites: CreateNestedOrgWebsiteSchema.optional(),
-		socialMedia: CreateNestedOrgSocialMediaSchema.optional(),
-	})
-	.transform((data) =>
-		Prisma.validator<Prisma.OrganizationCreateArgs>()({
+const CreateOrgBase = z.object({
+	name: z.string(),
+	slug: z.string(),
+	sourceId: cuid,
+})
+const CreateOrgLinks = z.object({
+	description: z.string().optional(),
+	locations: CreateNestedOrgLocationSchema.optional(),
+	emails: CreateNestedOrgEmailSchema.optional(),
+	phones: CreateNestedOrgPhoneSchema.optional(),
+	websites: CreateNestedOrgWebsiteSchema.optional(),
+	socialMedia: CreateNestedOrgSocialMediaSchema.optional(),
+})
+const CreateQuickOrg = CreateOrgBase.merge(CreateOrgLinks)
+
+export const CreateQuickOrgSchema = () => {
+	const { dataParser: parser, inputSchema } = CreationBase(CreateQuickOrg)
+
+	const dataParser = parser.transform(({ actorId, operation, data }) => {
+		const { name, slug, sourceId } = data
+		return Prisma.validator<Prisma.OrganizationCreateArgs>()({
 			data: {
-				name: data.name,
-				slug: data.slug,
+				name,
+				slug,
 				source: {
-					connect: {
-						source: data.source,
-					},
+					connect: { id: sourceId },
 				},
 				description: createFreeText(data.slug, data.description),
-				locations: data.locations,
-				emails: data.emails,
-				phones: data.phones,
-				websites: data.websites,
-				socialMedia: data.socialMedia,
+				locations: createManyWithAudit(data.locations, actorId),
+				emails: createManyWithAudit(data.emails, actorId),
+				phones: createManyWithAudit(data.phones, actorId),
+				socialMedia: createManyWithAudit(data.socialMedia, actorId),
+				websites: createManyWithAudit(data.websites, actorId),
+				auditLogs: CreateAuditLog({ actorId, operation, to: { name, slug, sourceId } }),
 			},
 			include: {
 				description: Boolean(data.description),
@@ -46,24 +56,10 @@ export const CreateQuickOrgSchema = z
 				socialMedia: Boolean(data.socialMedia),
 			},
 		})
-	)
+	})
+	return { dataParser, inputSchema }
+}
 
-export type CreateQuickOrgData = z.infer<typeof CreateQuickOrgSchema>
-
-// export const CreateOrgPrisma = (data) => {
-// 	return Prisma.validator<Prisma.OrganizationCreateInput>()({
-// 		name: data.name,
-// 		slug: data.slug,
-// 		source: {
-// 			connect: {
-// 				source: data.source,
-// 			},
-// 		},
-// 		description: createDescription(data.slug, data.description),
-// 		locations: CreateNestedOrgLocationPrisma(data.locations),
-// 		emails: CreateNestedOrgEmailPrisma(data.emails),
-// 		phones: CreateNestedOrgPhonePrisma(data.phones),
-// 		websites: CreateNestedOrgWebsitePrisma(data.websites),
-// 		socialMedia: CreateNestedOrgSocialMediaPrisma(data.socialMedia),
-// 	})
-// }
+type CreateQuickOrgReturn = ReturnType<typeof CreateQuickOrgSchema>
+export type CreateQuickOrgData = z.infer<CreateQuickOrgReturn['dataParser']>
+export type CreateQuickOrgInput = z.input<CreateQuickOrgReturn['dataParser']>

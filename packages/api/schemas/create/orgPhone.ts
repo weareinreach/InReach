@@ -12,37 +12,5 @@ export const CreateOrgPhoneSchema = z.object({
 })
 
 export const CreateNestedOrgPhoneSchema = CreateOrgPhoneSchema.array().transform((data) =>
-	Prisma.validator<Prisma.OrgPhoneCreateNestedManyWithoutOrganizationInput>()({
-		createMany: {
-			skipDuplicates: true,
-			data: data.map(({ number, ext, primary, published, countryId, phoneTypeId, locationOnly }) => ({
-				number,
-				ext,
-				primary,
-				published,
-				countryId,
-				phoneTypeId,
-				locationOnly,
-			})),
-		},
-	})
+	Prisma.validator<Prisma.Enumerable<Prisma.OrgPhoneCreateManyInput>>()(data)
 )
-
-// export const CreateNestedOrgPhonePrisma = (data?: z.infer<typeof CreateNestedOrgPhoneSchema>) => {
-// 	if (!data) return undefined
-
-// 	return Prisma.validator<Prisma.OrgPhoneCreateNestedManyWithoutOrganizationInput>()({
-// 		createMany: {
-// 			skipDuplicates: true,
-// 			data: data.map(({ number, ext, primary, published, countryId, phoneTypeId, locationOnly }) => ({
-// 				number,
-// 				ext,
-// 				primary,
-// 				published,
-// 				countryId,
-// 				phoneTypeId,
-// 				locationOnly,
-// 			})),
-// 		},
-// 	})
-// }

@@ -9,21 +9,9 @@ export const CreateOrgSocialMediaSchema = z.object({
 })
 
 export const CreateNestedOrgSocialMediaSchema = CreateOrgSocialMediaSchema.array().transform((data) =>
-	Prisma.validator<Prisma.OrgSocialMediaCreateNestedManyWithoutOrganizationInput>()({
-		createMany: {
-			skipDuplicates: true,
-			data: data.map(({ username, url, published, serviceId }) => ({ username, url, published, serviceId })),
-		},
-	})
+	Prisma.validator<
+		Prisma.Enumerable<
+			Prisma.OrgSocialMediaCreateManyOrganizationInput | Prisma.OrgSocialMediaCreateManyOrgLocationInput
+		>
+	>()(data)
 )
-
-// export const CreateNestedOrgSocialMediaPrisma = (data?: z.infer<typeof CreateNestedOrgSocialMediaSchema>) => {
-// 	if (!data) return undefined
-
-// 	return Prisma.validator<Prisma.OrgSocialMediaCreateNestedManyWithoutOrganizationInput>()({
-// 		createMany: {
-// 			skipDuplicates: true,
-// 			data: data.map(({ username, url, published, serviceId }) => ({ username, url, published, serviceId })),
-// 		},
-// 	})
-// }

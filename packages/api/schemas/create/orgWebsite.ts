@@ -6,21 +6,9 @@ export const CreateOrgWebsiteSchema = z.object({
 })
 
 export const CreateNestedOrgWebsiteSchema = CreateOrgWebsiteSchema.array().transform((data) =>
-	Prisma.validator<Prisma.OrgWebsiteCreateNestedManyWithoutOrganizationInput>()({
-		createMany: {
-			skipDuplicates: true,
-			data: data.map(({ url }) => ({ url })),
-		},
-	})
+	Prisma.validator<
+		Prisma.Enumerable<
+			Prisma.OrgWebsiteCreateManyOrganizationInput | Prisma.OrgWebsiteCreateManyOrgLocationInput
+		>
+	>()(data)
 )
-
-// export const CreateNestedOrgWebsitePrisma = (data?: z.infer<typeof CreateNestedOrgWebsiteSchema>) => {
-// 	if (!data) return undefined
-
-// 	return Prisma.validator<Prisma.OrgWebsiteCreateNestedManyWithoutOrganizationInput>()({
-// 		createMany: {
-// 			skipDuplicates: true,
-// 			data: data.map(({ url }) => ({ url })),
-// 		},
-// 	})
-// }
