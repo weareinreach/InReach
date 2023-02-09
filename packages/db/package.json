@@ -34,7 +34,7 @@
 	},
 	"dependencies": {
 		"@prisma/client": "4.10.0",
-		"zod": "3.20.3"
+		"zod": "3.20.5"
 	},
 	"devDependencies": {
 		"@faker-js/faker": "7.6.0",
@@ -70,7 +70,7 @@
 		"libphonenumber-js": "1.10.19",
 		"listr2": "5.0.7",
 		"luxon": "3.2.1",
-		"mongoback": "3.0.3",
+		"mongoback": "3.0.4",
 		"prisma": "4.10.0",
 		"prisma-dbml-generator": "0.10.0",
 		"quicktype-core": "21.0.10",
