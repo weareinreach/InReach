@@ -7,6 +7,8 @@ export { getServerSession } from './next-auth/get-session'
 
 export type { Session } from 'next-auth'
 
+export * from './lib'
+
 /**
  * Module augmentation for `next-auth` types Allows us to add custom properties to the `session` object and
  * keep type safety
