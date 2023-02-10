@@ -117,12 +117,14 @@
 			"skipFiles": ["<node_internals>/**/*", "**/node_modules/**/*@babel*/*"]
 		},
 		"editor.codeActionsOnSave": {
-			"source.fixAll": true
+			"source.fixAll.eslint": true
 		},
 		"editor.formatOnSave": true,
 		"editor.tabSize": 2,
-		"eslint.alwaysShowStatus": true,
 		"eslint.lintTask.enable": true,
+		"eslint.options": {
+			"cache": true
+		},
 		"eslint.packageManager": "pnpm",
 		"eslint.rules.customizations": [
 			{
