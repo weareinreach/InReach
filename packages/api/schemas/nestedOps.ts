@@ -1,3 +1,4 @@
+import flush from 'just-flush'
 import omit from 'just-omit'
 import pick from 'just-pick'
 
@@ -15,7 +16,7 @@ import { auditLogLinkAction, CreateAuditLog, GenerateAuditLog } from './create/a
 export const createMany = <T extends Array<any>>(data: T) =>
 	({
 		createMany: {
-			data,
+			data: flush(data),
 			skipDuplicates: true,
 		},
 	} as const)
@@ -26,7 +27,7 @@ export const createManyOrUndefined = <T extends Array<any>>(data: T | undefined)
 		? undefined
 		: ({
 				createMany: {
-					data,
+					data: flush(data),
 					skipDuplicates: true,
 				},
 		  } as const)
@@ -99,4 +100,41 @@ export const linkManyWithAudit = <T extends object>(
 	})
 
 	return [links, logs] as const
+}
+
+export const createOneSeparateLog = <T extends object>(
+	data: T | undefined,
+	actorId: string,
+	opts?: LinkManyOptions<T>
+) => {
+	if (!data) return [undefined, undefined] as const
+	const links = {
+		create: data,
+	}
+
+	const to = opts?.auditDataKeys ? pick(data, opts.auditDataKeys) : auditLogLinkAction
+	const linkIds = opts?.auditDataKeys ? omit(data, opts.auditDataKeys) : data
+	const log = GenerateAuditLog({
+		actorId,
+		operation: 'LINK',
+		to,
+		...linkIds,
+	})
+
+	return [links, log] as const
+}
+
+export const deleteOneSeparateLog = <T extends object>(data: T | undefined, actorId: string) => {
+	if (!data) return [undefined, undefined] as const
+	const links = {
+		delete: data,
+	}
+
+	const log = GenerateAuditLog({
+		actorId,
+		operation: 'UNLINK',
+		to: data,
+	})
+
+	return [links, log] as const
 }
