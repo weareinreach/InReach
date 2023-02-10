@@ -109,6 +109,7 @@ model User {
   /// assets that certain permissible roles are attributed to (edit org, etc)
   orgPermission      OrganizationPermission[]
   locationPermission LocationPermission[]
+  roles              AssignedRole[]
 
   reviews          OrgReview[]
   // Current location - for LCR
@@ -131,7 +132,6 @@ model User {
   // Relationships
   savedLists          UserSavedList[]
   listsSharedWithUser ListSharedWith[]
-  roles               AssignedRole[]
 
   userType   UserType @relation(fields: [userTypeId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   userTypeId String /// @zod.string.cuid()

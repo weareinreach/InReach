@@ -79,11 +79,7 @@ export const linkManyWithAudit = <T extends object>(
 	actorId: string,
 	opts?: LinkManyOptions<T>
 ) => {
-	if (!data) return { links: undefined, logs: undefined }
-
-	let dataTo = auditLogLinkAction
-	let modData = data
-
+	if (!data) return [undefined, []] as const
 	const links = {
 		createMany: {
 			data,
@@ -93,14 +89,14 @@ export const linkManyWithAudit = <T extends object>(
 	const logs = data.map((record) => {
 		const to = opts?.auditDataKeys ? pick(record, opts.auditDataKeys) : auditLogLinkAction
 		const linkIds = opts?.auditDataKeys ? omit(record, opts.auditDataKeys) : record
-
-		return GenerateAuditLog({
+		const log = GenerateAuditLog({
 			actorId,
 			operation: 'LINK',
 			to,
 			...linkIds,
 		})
+		return log
 	})
 
-	return { links, logs } as const
+	return [links, logs] as const
 }
