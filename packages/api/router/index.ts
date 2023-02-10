@@ -5,6 +5,7 @@ import { locationRouter } from './location'
 import { orgRouter } from './org'
 import { reviewRouter } from './review'
 import { savedListRouter } from './savedLists'
+import { systemRouter } from './system'
 import { userRouter } from './user'
 
 export const appRouter = defineRouter({
@@ -14,6 +15,7 @@ export const appRouter = defineRouter({
 	review: reviewRouter,
 	location: locationRouter,
 	organization: orgRouter,
+	system: systemRouter,
 })
 
 // export type definition of API
