@@ -2,7 +2,7 @@ import { Prisma, createId } from '@weareinreach/db'
 import { z } from 'zod'
 
 import { userTypes } from '~api/generated/userType'
-import { cuid, CreationBase } from '~api/schemas/common'
+import { cuid, CreationBase, id, slug } from '~api/schemas/common'
 import {
 	connectOne,
 	connectOneRequired,
@@ -30,9 +30,11 @@ const CreateUserBase = z.object({
 	 *
 	 * `cca3` = {@link https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3 ISO 3166-1 alpha-3 Country code}
 	 */
-	currentCountry: z.object({ id: cuid, cca2: z.string(), cca3: z.string() }).partial().optional(),
+	currentCountry: z
+		.union([z.object({ id: cuid }), z.object({ cca2: z.string() }), z.object({ cca3: z.string() })])
+		.optional(),
 	/** Requires either `id` or `slug` */
-	currentGovDist: z.object({ id: cuid, slug: z.string() }).partial().optional(),
+	currentGovDist: z.union([id, slug]).optional(),
 })
 
 export const CreateUser = CreateUserBase.transform(
