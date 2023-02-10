@@ -1,3 +1,4 @@
+import { TRPCError } from '@trpc/server'
 import invariant from 'tiny-invariant'
 
 import { reject } from './'
@@ -6,8 +7,12 @@ import { type Meta, t } from '../initTRPC'
 
 export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 	try {
-		/** No permissions submitted, pass */
-		if (typeof meta === 'undefined') return true
+		/** No permissions submitted, throw error */
+		if (typeof meta === 'undefined')
+			throw new TRPCError({
+				code: 'INTERNAL_SERVER_ERROR',
+				message: 'Invalid procedure configuration, missing permission requirements.',
+			})
 
 		/** Check for session object, error if missing */
 		invariant(ctx.session?.user)
@@ -65,4 +70,18 @@ export const isStaff = t.middleware(({ ctx, meta, next }) => {
 			session: { ...ctx.session, user: ctx.session.user },
 		},
 	})
+})
+
+export const hasPermissions = t.middleware(({ ctx, meta, next }) => {
+	if (!ctx.session || !ctx.session.user) return reject()
+
+	if (checkPermissions(meta, ctx))
+		return next({
+			ctx: {
+				session: { ...ctx.session, user: ctx.session.user },
+				actorId: ctx.session.user.id,
+			},
+		})
+
+	throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Insufficient permissions' })
 })

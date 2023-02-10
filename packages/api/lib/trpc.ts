@@ -1,5 +1,5 @@
 import { t } from './initTRPC'
-import { isAdmin, isStaff, isAuthed } from './middleware'
+import { isAdmin, isStaff, isAuthed, hasPermissions } from './middleware'
 
 export const defineRouter = t.router
 
@@ -14,3 +14,6 @@ export const adminProcedure = t.procedure.use(isAdmin)
 
 /** Staff procedure */
 export const staffProcedure = t.procedure.use(isStaff)
+
+/** Permissioned router */
+export const permissionedProcedure = t.procedure.use(hasPermissions)
