@@ -30,6 +30,11 @@ export const orgIdLocationId = orgId.extend({ locationId: cuid })
 export const slug = z.object({ slug: z.string() })
 export const nanoIdUrl = z.string().regex(nanoUrlRegex)
 export const searchTerm = z.object({ search: z.string() })
+export const coord = z.object({
+	lat: z.number(),
+	lon: z.number(),
+})
+export const distSearch = coord.extend({ dist: z.number(), unit: z.enum(['mi', 'km']) })
 
 // Prisma JSON helpers
 export { InputJsonValue, JsonNullValueInputSchema, type InputJsonValueType }

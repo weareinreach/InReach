@@ -1,6 +1,7 @@
 import { handleError } from '~api/lib'
+import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
 import { defineRouter, publicProcedure, staffProcedure } from '~api/lib/trpc'
-import { id, searchTerm, slug } from '~api/schemas/common'
+import { id, searchTerm, slug, distSearch } from '~api/schemas/common'
 import { type CreateQuickOrgInput, CreateQuickOrgSchema } from '~api/schemas/create/organization'
 import { organizationInclude } from '~api/schemas/selects/org'
 
@@ -64,6 +65,17 @@ export const orgRouter = defineRouter({
 		} catch (error) {
 			handleError(error)
 		}
+	}),
+	searchDistance: publicProcedure.input(distSearch).query(async ({ ctx, input }) => {
+		const { lat, lon, dist, unit } = input
+
+		// Convert to meters
+		const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
+
+		const serviceAreas = await getCoveredAreas({ lat, lon }, ctx)
+		const orgs = await searchOrgByDistance({ lat, lon, searchRadius }, ctx)
+
+		return { orgs, serviceAreas }
 	}),
 	createNewQuick: staffProcedure
 		.input(CreateQuickOrgSchema().inputSchema)
