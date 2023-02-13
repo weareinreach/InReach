@@ -271,7 +271,7 @@ const countryUS = async (task: ListrTask) => {
 					name: countyName,
 					slug,
 					geoJSON: county.geometry,
-					geoWKT: geojsonToWKT(geo as Geometry),
+					geoWKT: geojsonToWKT(county.geometry as Geometry),
 					countryId,
 					govDistTypeId: distType,
 					isPrimary: false,
