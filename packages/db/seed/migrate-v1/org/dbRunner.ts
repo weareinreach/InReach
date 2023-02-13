@@ -5,7 +5,7 @@ import superjson from 'superjson'
 import { readFileSync } from 'fs'
 
 import { prisma } from '~db/index'
-import { Log, iconList } from '~db/seed/lib'
+import { Log, iconList, updateGeo } from '~db/seed/lib'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
 import { getClient, migrateClient } from '~db/seed/migrate-v1/org/clients'
@@ -68,4 +68,19 @@ export const interactiveRun = async (task: ListrTask) => {
 			timeout: 180_000,
 		}
 	)
+}
+
+export const updateGeoTask = async (task: ListrTask) => {
+	const log: Log = (message, icon?, indent = false, silent = false) => {
+		const dispIcon = icon ? `${iconList(icon)} ` : ''
+		const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
+		migrateLog.info(formattedMessage)
+		if (!silent) task.output = formattedMessage
+	}
+	const { country, govDist, orgLocation } = await updateGeo()
+
+	const output = `[Countries: ${country}] [GovDists: ${govDist}] [OrgLocations: ${orgLocation}]`
+
+	log(`GeoData records updated: ${output}`)
+	task.title = `${task.title} (${output})`
 }

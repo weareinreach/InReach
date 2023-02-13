@@ -134,6 +134,10 @@
 			{
 				"rule": "import/newline-after-import",
 				"severity": "off"
+			},
+			{
+				"rule": "import/no-extraneous-dependencies",
+				"severity": "off"
 			}
 		],
 		"eslint.runtime": "node",

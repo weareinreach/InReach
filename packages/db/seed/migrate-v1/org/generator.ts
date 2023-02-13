@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
+import { geojsonToWKT } from '@terraformer/wkt'
 import cuid from 'cuid'
 import { flatten } from 'flat'
 import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js'
@@ -16,7 +17,7 @@ import path from 'path'
 import { Prisma, SourceType } from '~db/client'
 import { dayMap, hoursMap, hoursMeta } from '~db/datastore/v1/helpers/hours'
 import { OrganizationsJSONCollection } from '~db/datastore/v1/mongodb/output-types/organizations'
-import { prisma } from '~db/index'
+import { JsonInputOrNull, prisma } from '~db/index'
 import { Log, iconList } from '~db/seed/lib'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
@@ -383,6 +384,9 @@ export const generateRecords = async (task: ListrTask) => {
 					const [longitude, latitude] = location.geolocation.coordinates.map(
 						(x) => +parseFloat(x.$numberDecimal).toFixed(3)
 					)
+					const geoObj = createPoint({ longitude, latitude })
+					const geoJSON = JsonInputOrNull.parse(geoObj)
+					const geoWKT = geoObj === 'JsonNull' ? undefined : geojsonToWKT(geoObj)
 					newLocationMap.set(location._id.$oid, locId)
 					data.orgLocation.add({
 						id: locId,
@@ -398,7 +402,8 @@ export const generateRecords = async (task: ListrTask) => {
 						countryId: getCountryId(location, countryMap),
 						longitude,
 						latitude,
-						geoJSON: createPoint({ longitude, latitude }),
+						geoJSON,
+						geoWKT,
 						published: location.show_on_organization,
 						createdAt,
 						updatedAt,

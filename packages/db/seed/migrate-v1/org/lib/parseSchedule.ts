@@ -25,7 +25,7 @@ export const parseSchedule = (schedule: Schedule, helpers: HoursHelper) => {
 			const [day, hourType] = key.split('_')
 			if (!day || !hourType) continue
 			const dayIndex = dayMap.get(day)
-			invariant(dayIndex)
+			invariant(dayIndex !== undefined)
 			if (Object.keys(hours).includes(dayIndex?.toString())) {
 				const time = hoursMap.get(value)
 				if (time === undefined) continue

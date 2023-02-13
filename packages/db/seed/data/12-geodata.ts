@@ -17,6 +17,7 @@ import cityUS from '~db/datastore/geojson/cities-us.json'
 import countyPR from '~db/datastore/geojson/counties-pr.json'
 import countyUS from '~db/datastore/geojson/counties-us.json'
 import countryCA from '~db/datastore/geojson/country-ca.json'
+import countryGU from '~db/datastore/geojson/country-gu.json'
 import countryMX from '~db/datastore/geojson/country-mx.json'
 import countryPR from '~db/datastore/geojson/country-pr.json'
 import countryUS from '~db/datastore/geojson/country-us.json'
@@ -24,15 +25,15 @@ import countryVI from '~db/datastore/geojson/country-vi.json'
 import provinceCA from '~db/datastore/geojson/provinces-ca.json'
 import stateMX from '~db/datastore/geojson/states-mx.json'
 import stateUS from '~db/datastore/geojson/states-us.json'
-import { GeoJSONSchema } from '~db/zod_util'
+import { Geometry } from '~db/zod_util'
 
 export const geoCountryData = {
-	US: GeoJSONSchema.parse(countryUS),
-	CA: GeoJSONSchema.parse(countryCA),
-	MX: GeoJSONSchema.parse(countryMX),
-	PR: GeoJSONSchema.parse(countryPR),
-	VI: GeoJSONSchema.parse(countryVI),
-	GU: undefined,
+	US: Geometry.parse(countryUS.geometry),
+	CA: Geometry.parse(countryCA.geometry),
+	MX: Geometry.parse(countryMX.geometry),
+	PR: Geometry.parse(countryPR.geometry),
+	VI: Geometry.parse(countryVI.geometry),
+	GU: Geometry.parse(countryGU.geometry),
 }
 
 export const geoProvinceDataCA = provinceCA.features
@@ -48,8 +49,8 @@ export const geoProvinceDataCA = provinceCA.features
 			name: province.properties.prov_name_en,
 			abbrev: geoStateIso(province.properties.prov_name_en, 'CA'),
 			type,
-			geo: GeoJSONSchema.parse(province),
-			cities: cities.map((city) => GeoJSONSchema.parse(city)),
+			geo: Geometry.parse(province.geometry),
+			cities: cities.map((city) => Geometry.parse(city.geometry)),
 		}
 	})
 	.sort((x: { name: string }, y: { name: string }) => (x.name > y.name ? 1 : y.name > x.name ? -1 : 0))
@@ -63,14 +64,14 @@ export const geoStateDataUS = stateUS.features
 
 		return {
 			name: state.properties.NAME,
-			geo: GeoJSONSchema.parse(state),
+			geo: Geometry.parse(state.geometry),
 			abbrev,
 			type,
 			counties: countyUS.features.filter((county) => county.properties.STATE === state.properties.STATE),
 			cities: cities.map((city) => {
 				const regex = new RegExp(`/\\s${abbrev}$/`)
 				city.properties.name = city.properties.name.replace(regex, '')
-				return GeoJSONSchema.parse(city)
+				return Geometry.parse(city.geometry)
 			}),
 		}
 	})
@@ -94,10 +95,10 @@ export const geoStateDataMX = stateMX.features
 			state.properties.admin_name === 'Distrito Federal' ? ('district' as const) : ('state' as const)
 		return {
 			name: state.properties.admin_name,
-			geo: GeoJSONSchema.parse(state),
+			geo: Geometry.parse(state.geometry),
 			type,
 			abbrev,
-			cities: cities.map((city) => GeoJSONSchema.parse(city)),
+			cities: cities.map((city) => Geometry.parse(city.geometry)),
 		}
 	})
 	.sort((x: { name: string }, y: { name: string }) => (x.name > y.name ? 1 : y.name > x.name ? -1 : 0))
