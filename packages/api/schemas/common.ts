@@ -1,4 +1,9 @@
-import { Prisma } from '@weareinreach/db'
+import {
+	InputJsonValue,
+	type InputJsonValueType,
+	JsonInputOrNull,
+	JsonNullValueInputSchema,
+} from '@weareinreach/db/zod_util'
 import superjson from 'superjson'
 import { z } from 'zod'
 
@@ -14,7 +19,7 @@ import { nanoUrlRegex } from '~api/lib/nanoIdUrl'
 
 /** Cuid v1 or v2 */
 export const cuidOptional = z.union([z.string().cuid().nullish(), z.string().cuid2().nullish()])
-export const cuid = z.union([z.string().cuid(), z.string().cuid2()])
+export const cuid = z.string().cuid().or(z.string().cuid2())
 export const id = z.object({ id: cuid })
 export const actorId = z.object({ actorId: cuid })
 export const userId = z.object({ userId: cuid })
@@ -27,16 +32,7 @@ export const nanoIdUrl = z.string().regex(nanoUrlRegex)
 export const searchTerm = z.object({ search: z.string() })
 
 // Prisma JSON helpers
-export const InputJsonValue: z.ZodType<Prisma.InputJsonValue> = z.union([
-	z.string(),
-	z.number(),
-	z.boolean(),
-	z.lazy(() => z.array(InputJsonValue.nullable())),
-	z.lazy(() => z.record(InputJsonValue.nullable())),
-])
-export type InputJsonValueType = z.infer<typeof InputJsonValue>
-export const JsonNullValueInputSchema = z.enum(['JsonNull'])
-export const JsonInputOrNull = z.union([z.lazy(() => JsonNullValueInputSchema), InputJsonValue])
+export { InputJsonValue, JsonNullValueInputSchema, type InputJsonValueType }
 /** Prisma JSON type serialized via SuperJSON */
 export const JsonInputOrNullSuperJSON = z.preprocess((data) => superjson.serialize(data), JsonInputOrNull)
 

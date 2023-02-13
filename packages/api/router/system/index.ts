@@ -5,5 +5,5 @@ import { userRoleSubRouter } from './role'
 
 export const systemRouter = defineRouter({
 	permissions: permissionSubRouter,
-	userRoles: userRoleSubRouter,
+	// userRoles: userRoleSubRouter,
 })
