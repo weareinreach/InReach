@@ -1,9 +1,9 @@
 import { initTRPC } from '@trpc/server'
 import superjson from 'superjson'
 
-import { Permission } from '~api/generated/permission'
-
 import { type Context } from './context'
+
+import { Permission } from '~api/generated/permission'
 
 export interface Meta {
 	hasPerm: Permission | Permission[]
