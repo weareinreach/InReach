@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import axios from 'axios'
 import { countries as countryExtra } from 'countries-languages'
 
-import { namespaces } from '~/seed/data/00-namespaces'
+import { namespaces } from '~db/seed/data/00-namespaces'
 
 export const countryData = async () => {
 	const { data: countries } = await axios.get<Array<Countries>>(

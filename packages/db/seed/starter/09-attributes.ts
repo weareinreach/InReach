@@ -1,12 +1,12 @@
 import cuid from 'cuid'
 import slugify from 'slugify'
 
-import { Prisma } from '~/client'
-import { prisma } from '~/index'
-import { attributeData, namespaces } from '~/seed/data/'
-import { Log, iconList } from '~/seed/lib'
-import { logFile } from '~/seed/logger'
-import { ListrTask } from '~/seed/starterData'
+import { Prisma } from '~db/client'
+import { prisma } from '~db/index'
+import { attributeData, namespaces } from '~db/seed/data/'
+import { Log, iconList } from '~db/seed/lib'
+import { logFile } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/starterData'
 
 type Data = {
 	category: Prisma.AttributeCategoryCreateManyInput[]

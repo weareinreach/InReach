@@ -1,3 +1,5 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
+/* eslint-disable node/no-process-env */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
@@ -21,11 +23,12 @@ import {
 	seedUserImmigration,
 	seedUserRoles,
 	seedUserTypes,
-} from '~/seed/starter'
+} from '~db/seed/starter'
 
 const renderOptions = {
 	bottomBar: 10,
 }
+const skip = !!process.env.SEED_UPDATE
 
 const tasks = new Listr<Context>(
 	[
@@ -52,6 +55,7 @@ const tasks = new Listr<Context>(
 						title: 'System user',
 						task: async (_ctx, task): Promise<void> => seedSystemUser(task),
 						options: renderOptions,
+						skip,
 					},
 					{
 						title: 'Languages',
@@ -67,6 +71,7 @@ const tasks = new Listr<Context>(
 						title: 'Countries',
 						task: async (_ctx, task): Promise<void> => seedCountries(task),
 						options: renderOptions,
+						skip,
 					},
 					{
 						title: 'Navigation Bar Links',
@@ -107,6 +112,7 @@ const tasks = new Listr<Context>(
 						title: 'Governing Districts & GeoJSON',
 						task: async (_ctx, task): Promise<Listr> => seedGeoData(task),
 						options: renderOptions,
+						skip,
 					},
 					{
 						title: 'Outside API Services',

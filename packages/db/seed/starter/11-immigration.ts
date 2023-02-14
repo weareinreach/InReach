@@ -1,9 +1,9 @@
-import { Prisma } from '~/client'
-import { prisma } from '~/index'
-import { namespaces, userImmigrationData } from '~/seed/data/'
-import { Log, iconList } from '~/seed/lib'
-import { logFile } from '~/seed/logger'
-import { ListrTask } from '~/seed/starterData'
+import { Prisma } from '~db/client'
+import { prisma } from '~db/index'
+import { namespaces, userImmigrationData } from '~db/seed/data/'
+import { Log, iconList } from '~db/seed/lib'
+import { logFile } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/starterData'
 
 type Data = {
 	translate: Prisma.TranslationKeyCreateManyInput[]

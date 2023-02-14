@@ -19,28 +19,33 @@
 			"import { api } from '~/utils/api'",
 			"",
 			"const ${1:$TM_FILENAME_BASE}: NextPage = () => {",
-			"	const { t } = useTranslation()",
+			"\tconst { t } = useTranslation()",
 			"",
-			"	return <></>",
+			"\treturn <></>",
 			"}",
 			"",
 			"export const getServerSideProps: GetServerSideProps = async ({ req, res, locale }) => {",
-			"	const ssg = await trpcServerClient()",
+			"\tconst ssg = await trpcServerClient()",
 			"",
-			"	const props = {",
-			"		trpcState: ssg.dehydrate(),",
-			"		...(await serverSideTranslations(locale as string, ['common'])),",
-			"	}",
+			"\tconst props = {",
+			"\t\ttrpcState: ssg.dehydrate(),",
+			"\t\t...(await serverSideTranslations(locale as string, ['common'])),",
+			"\t}",
 			"",
-			"	return {",
-			"		props,",
-			"	}",
+			"\treturn {",
+			"\t\tprops,",
+			"\t}",
 			"}",
 			"",
 			"export default ${1:$TM_FILENAME_BASE}",
 			""
 		],
 		"description": "Next.js SSR Page with i18n preload"
+	},
+	"try/catch with trpc error handler": {
+		"prefix": "trycatchtrpc",
+		"body": ["try {", "\t\t$0", "", "", "\t} catch (error) {", "\t\thandleError(error)", "}"],
+		"description": "try/catch with trpc error handler"
 	}
 
 	// Place your ✨ InReach (root) workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and

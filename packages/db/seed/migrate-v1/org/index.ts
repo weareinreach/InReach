@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { Listr } from 'listr2'
 
-import { interactiveRun } from './dbRunner'
+import { interactiveRun, updateGeoTask } from './dbRunner'
 import { generateRecords, migrateOrgs } from './generator'
 
-import { ListrTask, ListrTaskDef } from '~/seed/migrate-v1'
+import { ListrTask, ListrTaskDef } from '~db/seed/migrate-v1'
 
 const taskOptions: Omit<ListrTaskDef, 'title' | 'task'> = {
 	options: {
@@ -32,6 +32,12 @@ export const runMigrateOrgs = async (task: ListrTask) =>
 			{
 				title: 'Run batch insertions',
 				task: async (_ctx, task): Promise<void> => interactiveRun(task),
+				...taskOptions,
+				skip: false,
+			},
+			{
+				title: 'Update GeoData table',
+				task: async (_ctx, task): Promise<void> => updateGeoTask(task),
 				...taskOptions,
 				skip: false,
 			},

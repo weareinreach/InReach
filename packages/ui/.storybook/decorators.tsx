@@ -3,14 +3,16 @@ import { ModalsProvider } from '@mantine/modals'
 import { NotificationsProvider } from '@mantine/notifications'
 import { StoryContext, StoryFn } from '@storybook/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { httpBatchLink } from '@trpc/client'
+import { httpBatchLink, loggerLink } from '@trpc/client'
 import { transformer } from '@weareinreach/api/lib/transformer'
 import { useState, useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next'
+import { devtoolsLink } from 'trpc-client-devtools-link'
+
+import { trpc, StorybookTRPC } from '~ui/lib/trpcClient'
+import { storybookTheme } from '~ui/theme'
 
 import { i18n } from './i18next'
-import { trpc, StorybookTRPC } from '../lib/trpcClient'
-import { storybookTheme } from '../theme'
 
 const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
 	withCSSVariables: false,
@@ -61,6 +63,10 @@ export const WithTRPC = (Story: StoryFn) => {
 				httpBatchLink({
 					url: '/trpc',
 				}),
+				devtoolsLink({
+					enabled: true,
+				}),
+				loggerLink(),
 			],
 			transformer,
 		})
