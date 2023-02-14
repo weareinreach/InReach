@@ -1,13 +1,11 @@
 {
 	"extensions": {
 		"recommendations": [
-			"alexkrechik.cucumberautocomplete",
 			"bierner.jsdoc-markdown-highlighting",
 			"bierner.markdown-yaml-preamble",
 			"dbaeumer.vscode-eslint",
 			"dsznajder.es7-react-js-snippets",
 			"editorconfig.editorconfig",
-			"eliostruyf.vscode-typescript-exportallmodules",
 			"esbenp.prettier-vscode",
 			"lokalise.i18n-ally",
 			"mattpocock.ts-error-translator",
@@ -123,12 +121,14 @@
 			"skipFiles": ["<node_internals>/**/*", "**/node_modules/**/*@babel*/*"]
 		},
 		"editor.codeActionsOnSave": {
-			"source.fixAll": true
+			"source.fixAll.eslint": true
 		},
 		"editor.formatOnSave": true,
 		"editor.tabSize": 2,
-		"eslint.alwaysShowStatus": true,
 		"eslint.lintTask.enable": true,
+		"eslint.options": {
+			"cache": true
+		},
 		"eslint.packageManager": "pnpm",
 		"eslint.rules.customizations": [
 			{
@@ -137,6 +137,10 @@
 			},
 			{
 				"rule": "import/newline-after-import",
+				"severity": "off"
+			},
+			{
+				"rule": "import/no-extraneous-dependencies",
 				"severity": "off"
 			}
 		],
@@ -171,7 +175,8 @@
 			"**/.next/**": true,
 			"**/.vercel/output/**": true,
 			"**/dist/**": true,
-			"**/storybook-static/**": true
+			"**/storybook-static/**": true,
+			"**/zod-schemas/**": true
 		},
 		"i18n-ally.annotationInPlace": false,
 		"i18n-ally.defaultNamespace": "common",
@@ -209,8 +214,12 @@
 			"MD033": false
 		},
 		"prettier.resolveGlobalModules": false,
+		"sonarlint.connectedMode.project": {
+			"connectionId": "InReach",
+			"projectKey": "weareinreach_InReach"
+		},
 		"tms.stringsCompletionFileExtensions": "ts,tsx,json",
-		"typescript.preferences.importModuleSpecifier": "shortest",
+		"typescript.preferences.importModuleSpecifier": "relative",
 		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
 		"typescript.workspaceSymbols.scope": "allOpenProjects"
 	}

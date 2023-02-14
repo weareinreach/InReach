@@ -4,4 +4,6 @@ const alphaChoices = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
 
 export const slugSize = 10
 
+export const nanoUrlRegex = /(?:^\w{10}$)/
+
 export const nanoUrl = customAlphabet(alphaChoices, slugSize)

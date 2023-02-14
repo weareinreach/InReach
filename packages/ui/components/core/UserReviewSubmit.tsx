@@ -16,10 +16,11 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 
+import { useTypedRouterQuery } from '~ui/hooks'
+import { Icon } from '~ui/icon'
+import { trpc as api } from '~ui/lib/trpcClient'
+
 import { Button } from '.'
-import { useTypedRouterQuery } from '../../hooks'
-import { Icon } from '../../icon'
-import { trpc as api } from '../../lib/trpcClient'
 
 const useStyles = createStyles((theme) => ({
 	textContainer: {

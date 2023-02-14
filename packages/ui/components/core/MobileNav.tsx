@@ -2,7 +2,7 @@ import { createStyles, NavLink, Tabs } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
-import { Icon } from '../../icon'
+import { Icon } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({
 	tab: {

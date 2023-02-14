@@ -1,39 +1,56 @@
-import { handleError } from '../lib'
-import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '../lib/trpc'
-import { adminCreateUser, createUser, transformUserSurvey, userSurvey } from '../schemas/user'
+import { createCognitoUser } from '@weareinreach/auth'
+import { type Prisma } from '@weareinreach/db'
+
+import { handleError } from '~api/lib'
+import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
+import {
+	AdminCreateUser,
+	CreateUser,
+	CreateUserSurvey,
+	type AdminCreateUserInput,
+} from '~api/schemas/create/user'
 
 export const userRouter = defineRouter({
-	create: publicProcedure.input(createUser).mutation(async ({ ctx, input }) => {
+	create: publicProcedure.input(CreateUser).mutation(async ({ ctx, input }) => {
 		try {
-			const user = await ctx.prisma.user.create({
-				data: {
-					...input,
-					userType: {
-						connect: {
-							type: 'seeker',
-						},
-					},
-				},
+			const newUser = await ctx.prisma.$transaction(async (tx) => {
+				const user = await tx.user.create(input.prisma)
+				const cognitoUser = await createCognitoUser(input.cognito)
+				return {
+					user,
+					cognitoUser,
+				}
 			})
-			return user.id
+			return newUser
 		} catch (error) {
 			handleError(error)
 		}
 	}),
-	adminCreate: adminProcedure.input(adminCreateUser).mutation(async ({ ctx, input }) => {
+	adminCreate: adminProcedure.input(AdminCreateUser().inputSchema).mutation(async ({ ctx, input }) => {
 		try {
-			const user = await ctx.prisma.user.create({
+			const inputData = {
+				actorId: ctx.session.user.id,
+				operation: 'CREATE',
 				data: input,
+			} satisfies AdminCreateUserInput
+
+			const recordData = AdminCreateUser().dataParser.parse(inputData)
+			const newUser = await ctx.prisma.$transaction(async (tx) => {
+				const user = await tx.user.create(recordData.prisma)
+				const cognitoUser = await createCognitoUser(recordData.cognito)
+				return {
+					user,
+					cognitoUser,
+				}
 			})
-			return user.id
+			return newUser
 		} catch (error) {
 			handleError(error)
 		}
 	}),
-	submitSurvey: publicProcedure.input(userSurvey).mutation(async ({ ctx, input }) => {
+	submitSurvey: publicProcedure.input(CreateUserSurvey).mutation(async ({ ctx, input }) => {
 		try {
-			const data = transformUserSurvey(input)
-			const survey = await ctx.prisma.userSurvey.create({ data })
+			const survey = await ctx.prisma.userSurvey.create(input)
 			return survey.id
 		} catch (error) {
 			handleError(error)

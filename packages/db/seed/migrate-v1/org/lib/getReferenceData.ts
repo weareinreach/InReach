@@ -1,4 +1,4 @@
-import { prisma } from '~/index'
+import { prisma } from '~db/index'
 
 /** It returns all the service categories and the services that belong to each category */
 export const getServiceTags = async () => {

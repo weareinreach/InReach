@@ -18,6 +18,7 @@
 		"db:reset": "pnpm with-env prisma migrate reset",
 		"db:seed": "pnpm with-env prisma db seed",
 		"db:studio": "pnpm with-env prisma studio",
+		"db:update:seed": "SEED_UPDATE=true pnpm with-env prisma db seed",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown . && prisma format",
 		"format:all": "pnpm format:export && pnpm format:generated",
 		"format:export": "prettier --cache --cache-strategy metadata --write ./data-transfer/**/*.{ts,json}",
@@ -33,6 +34,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
+		"@paralleldrive/cuid2": "2.0.1",
 		"@prisma/client": "4.10.1",
 		"zod": "3.20.6"
 	},
@@ -40,6 +42,7 @@
 		"@faker-js/faker": "7.6.0",
 		"@nuskin/mexico-state-lookup": "2.1.0",
 		"@placemarkio/check-geojson": "0.1.12",
+		"@terraformer/wkt": "2.1.2",
 		"@turf/buffer": "6.5.0",
 		"@turf/helpers": "6.5.0",
 		"@turf/points-within-polygon": "6.5.0",
@@ -52,6 +55,7 @@
 		"@types/luxon": "3.2.0",
 		"@types/node": "18.13.0",
 		"@types/recursive-readdir": "2.2.1",
+		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"@zerodep/geo.stateiso": "0.1.4",

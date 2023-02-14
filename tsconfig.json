@@ -1,8 +1,17 @@
 {
 	"compilerOptions": {
-		"baseUrl": "./"
+		"baseUrl": "./",
+		"paths": {
+			"~app/*": ["apps/app/*"],
+			"~web/*": ["apps/web/*"],
+			"~api/*": ["packages/api/*"],
+			"~auth/*": ["packages/auth/*"],
+			"~db/*": ["packages/db/*"],
+			"~ui/*": ["packages/ui/*"]
+		}
 	},
 	"extends": "./packages/config/tsconfig/base.json",
+	"exclude": ["**/node_modules"],
 	"include": [
 		".eslintrc.js",
 		"lib/*",
@@ -10,6 +19,7 @@
 		".prettierrc.js",
 		"test/**/*.js",
 		"lib/devmsg.ts",
-		"lib/prepare.ts"
+		"lib/prepare.ts",
+		"@types/**/*.ts"
 	]
 }

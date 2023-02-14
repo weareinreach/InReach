@@ -2,8 +2,8 @@ import { keySlug, namespaces } from './00-namespaces'
 import { logFile } from '../logger'
 import { ListrTask } from '../starterData'
 
-import { Prisma } from '~/client'
-import { Log, iconList } from '~/seed/lib'
+import { Prisma } from '~db/client'
+import { Log, iconList } from '~db/seed/lib'
 
 type EthnicityData = string[]
 

@@ -14,7 +14,7 @@ import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
-import { Button } from '../core/Button'
+import { Button } from '~ui/components/core/Button'
 // import { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
