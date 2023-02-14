@@ -29,6 +29,7 @@
 		"dev:ui": "turbo run dev --filter=ui",
 		"dev:web": "turbo run dev --filter=web",
 		"format": "turbo run format --parallel",
+		"generate:data": "turbo run generate:data",
 		"postinstall": "tsx ./lib/postinstall.ts",
 		"lint": "turbo run lint --parallel",
 		"lint:fix": "turbo run lint:fix --parallel",

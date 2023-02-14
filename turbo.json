@@ -5,7 +5,7 @@
 			"cache": false
 		},
 		"@weareinreach/app#build": {
-			"dependsOn": ["^build", "^db:generate"],
+			"dependsOn": ["^build", "^db:generate", "^generate:data"],
 			"env": [
 				"DATABASE_URL",
 				"NEXTAUTH_SECRET",
@@ -81,6 +81,10 @@
 			"dependsOn": ["^db:generate"],
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"],
 			"outputs": ["node_modules/.cache/prettier/.prettier-cache"]
+		},
+		"generate:data": {
+			"cache": false,
+			"dependsOn": ["^db:generate"]
 		},
 		"lint": {
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"],
