@@ -2,8 +2,8 @@
 
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
-	plugins: ['codegen', 'turbo', 'prettier', 'node', '@tanstack/query'],
-	extends: ['plugin:turbo/recommended', 'plugin:@tanstack/eslint-plugin-query/recommended', 'prettier'],
+	plugins: ['codegen', 'turbo', 'node', '@tanstack/query'],
+	extends: ['plugin:turbo/recommended', 'plugin:@tanstack/eslint-plugin-query/recommended'],
 	rules: {
 		'node/no-process-env': 'warn',
 		'react/jsx-key': 'off',
