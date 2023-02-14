@@ -3,8 +3,8 @@ import { showNotification, NotificationProps } from '@mantine/notifications'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 
-import { Icon } from '../icon'
-import { commonTheme } from '../theme/common'
+import { Icon } from '~ui/icon'
+import { commonTheme } from '~ui/theme/common'
 
 export const useStyles = createStyles((theme) => ({
 	notificationBg: {

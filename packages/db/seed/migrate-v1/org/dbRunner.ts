@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
+
 import superjson from 'superjson'
 
 import { readFileSync } from 'fs'
 
-import { prisma } from '~/index'
-import { Log, iconList } from '~/seed/lib'
-import { migrateLog } from '~/seed/logger'
-import { ListrTask } from '~/seed/migrate-v1'
-import { getClient, migrateClient } from '~/seed/migrate-v1/org/clients'
-import { compare, writeOutDiff } from '~/seed/migrate-v1/org/compare'
-// import { rollbackFile } from '~/seed/migrate-v1/org/generator'
-import { BatchNames, OutData, batchNameMap, getFileName } from '~/seed/migrate-v1/org/outData'
-import { ZodInputs } from '~/seed/migrate-v1/org/zod'
+import { prisma } from '~db/index'
+import { Log, iconList, updateGeo } from '~db/seed/lib'
+import { migrateLog } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/migrate-v1'
+import { getClient, migrateClient } from '~db/seed/migrate-v1/org/clients'
+import { compare, writeOutDiff } from '~db/seed/migrate-v1/org/compare'
+// import { rollbackFile } from '~db/seed/migrate-v1/org/generator'
+import { BatchNames, OutData, batchNameMap, getFileName } from '~db/seed/migrate-v1/org/outData'
+import { ZodInputs } from '~db/seed/migrate-v1/org/zod'
 
 const batchSize = 10_000
 
@@ -67,4 +68,19 @@ export const interactiveRun = async (task: ListrTask) => {
 			timeout: 180_000,
 		}
 	)
+}
+
+export const updateGeoTask = async (task: ListrTask) => {
+	const log: Log = (message, icon?, indent = false, silent = false) => {
+		const dispIcon = icon ? `${iconList(icon)} ` : ''
+		const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
+		migrateLog.info(formattedMessage)
+		if (!silent) task.output = formattedMessage
+	}
+	const { country, govDist, orgLocation } = await updateGeo()
+
+	const output = `[Countries: ${country}] [GovDists: ${govDist}] [OrgLocations: ${orgLocation}]`
+
+	log(`GeoData records updated: ${output}`)
+	task.title = `${task.title} (${output})`
 }

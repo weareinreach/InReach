@@ -1,9 +1,12 @@
 import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
-type OrgIncludeKeys = z.ZodObject<{
-	[k in keyof Omit<Prisma.OrganizationInclude, '_count'>]-?: z.ZodDefault<z.ZodBoolean>
-}>
+type OrgIncludeKeys = z.ZodObject<
+	{
+		[k in keyof Omit<Prisma.OrganizationInclude, '_count'>]-?: z.ZodDefault<z.ZodBoolean>
+	},
+	'strip'
+>
 type OrgSelectKeys = {
 	[k in keyof Prisma.OrganizationSelect]: z.infer<typeof boolFalse>
 }
@@ -124,20 +127,6 @@ export const govDistInclude: Prisma.GovDistArgs = {
 		tsKey: true,
 		tsNs: true,
 		abbrev: true,
-
-		// subDistricts: {
-		// 	select: {
-		// 		govDistType: {
-		// 			select: {
-		// 				tsNs: true,
-		// 				tsKey: true,
-		// 			},
-		// 		},
-		// 		tsKey: true,
-		// 		tsNs: true,
-		// 		abbrev: true,
-		// 	},
-		// },
 	},
 }
 

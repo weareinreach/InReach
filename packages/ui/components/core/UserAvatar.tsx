@@ -3,7 +3,7 @@ import { DateTime } from 'luxon'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
-import { Icon } from '../../icon'
+import { Icon } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({
 	group: {

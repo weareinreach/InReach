@@ -1,5 +1,6 @@
 import { TRPCError } from '@trpc/server'
 import { Prisma } from '@weareinreach/db'
+import { Logger } from 'tslog'
 import { ZodError } from 'zod'
 
 import { PRISMA_ERROR_CODES } from './prismaErrorCodes'
@@ -10,7 +11,17 @@ const mapEntries = Object.entries(PRISMA_ERROR_CODES).map(([key, value]) => [key
 ][]
 const prismaErrorMap = new Map<string, TRPCError['code']>(mapEntries)
 
+const devLog = (error: unknown) => {
+	// eslint-disable-next-line node/no-process-env
+	if (process.env.NODE_ENV !== 'production') {
+		const logger = new Logger()
+
+		logger.error(error)
+	}
+}
+
 export const handleError = (error: unknown) => {
+	// devLog(error)
 	// pass through if already TRPCError
 	if (error instanceof TRPCError) {
 		throw error

@@ -3,12 +3,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import { geojsonToWKT } from '@terraformer/wkt'
 import cuid from 'cuid'
+import { type Geometry } from 'geojson'
 import iso3166 from 'iso-3166-2'
 import invariant from 'tiny-invariant'
 
-import { Prisma } from '~/client'
-import { prisma } from '~/index'
+import { prisma, Prisma } from '~db/index'
 import {
 	geoCountryData,
 	geoCountyDataPR,
@@ -17,12 +19,12 @@ import {
 	geoStateDataUS,
 	keySlug,
 	namespaces,
-} from '~/seed/data/'
-import { Log, iconList } from '~/seed/lib'
-import { logFile } from '~/seed/logger'
-import { ListrTask } from '~/seed/starterData'
+} from '~db/seed/data/'
+import { Log, iconList, updateGeo } from '~db/seed/lib'
+import { logFile } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/starterData'
 
-// import { GeoJSONSchema } from '~/zod-util';
+// import { GeoJSONSchema } from '~db/zod-util';
 
 /** Set district types to add here. */
 const districtTypes = [
@@ -69,6 +71,7 @@ const countryAll = async (task: ListrTask) => {
 				},
 				data: {
 					geoJSON: element,
+					geoWKT: geojsonToWKT(element),
 				},
 			})
 			countA++
@@ -203,8 +206,11 @@ const countryUS = async (task: ListrTask) => {
 			task.title = `GeoJSON data for US: (${countB + 1}/${geoStateDataUS.length}) - ${name} (${
 				state.counties.length
 			} Sub-Districts)`
-			const { code: iso, type: isoType } = iso3166.subdivision('US', state.name)
-			const govDistTypeId = govDist.get(isoType.toLowerCase())
+
+			const isoData = iso3166.subdivision('US', state.name)
+			invariant(isoData)
+			const { code: iso, type: isoType } = isoData
+			const govDistTypeId = govDist.get(isoType.toLowerCase() as DistrictTypes)
 			invariant(govDistTypeId, `${isoType.toLowerCase()}`)
 
 			const slug = keySlug(`US-${state.name}`)
@@ -225,6 +231,7 @@ const countryUS = async (task: ListrTask) => {
 				iso,
 				abbrev,
 				geoJSON: geo,
+				geoWKT: geojsonToWKT(geo as Geometry),
 				tsKey,
 				tsNs,
 				countryId,
@@ -263,7 +270,8 @@ const countryUS = async (task: ListrTask) => {
 				data.childDist.push({
 					name: countyName,
 					slug,
-					geoJSON: county,
+					geoJSON: county.geometry,
+					geoWKT: geojsonToWKT(county.geometry as Geometry),
 					countryId,
 					govDistTypeId: distType,
 					isPrimary: false,
@@ -350,8 +358,11 @@ const countryCA = async (task: ListrTask) => {
 		const { name, abbrev, geo } = province
 		log(`(${countB + 1}/${geoProvinceDataCA.length}) Prepare Governing District: ${name}`)
 		task.title = `GeoJSON data for CA: (${countB + 1}/${geoProvinceDataCA.length}) - ${name}`
-		const { code: iso, type: isoType } = iso3166.subdivision('CA', province.name)
-		const govDistTypeId = govDist.get(isoType.toLowerCase())
+
+		const isoData = iso3166.subdivision('CA', province.name)
+		invariant(isoData)
+		const { code: iso, type: isoType } = isoData
+		const govDistTypeId = govDist.get(isoType.toLowerCase() as DistrictTypes)
 		invariant(govDistTypeId, 'Unknown district type')
 		const slug = keySlug(`CA-${province.name}`)
 		const { key, ns, text } = keyGen(name, 'ca')
@@ -371,6 +382,7 @@ const countryCA = async (task: ListrTask) => {
 			iso,
 			abbrev: abbrev ?? iso.slice(-2),
 			geoJSON: geo,
+			geoWKT: geojsonToWKT(geo as Geometry),
 			countryId,
 			govDistTypeId,
 			tsKey: key,
@@ -452,8 +464,9 @@ const countryMX = async (task: ListrTask) => {
 			name,
 			slug,
 			iso,
-			abbrev: abbrev ?? iso.slice(-2),
+			abbrev: abbrev ?? iso?.slice(-2),
 			geoJSON: geo,
+			geoWKT: geojsonToWKT(geo as Geometry),
 			countryId,
 			govDistTypeId,
 			tsKey: key,
@@ -530,7 +543,8 @@ const countiesPR = async (task: ListrTask) => {
 			name,
 			slug,
 			// iso,
-			// geoJSON: geo,
+			geoJSON: county.geometry,
+			geoWKT: geojsonToWKT(county.geometry as Geometry),
 			countryId,
 			govDistTypeId,
 			tsKey: key,
@@ -547,6 +561,21 @@ const countiesPR = async (task: ListrTask) => {
 	log(`Translation keys added: ${translateResult.count}`, 'create')
 
 	task.title = `GeoJSON data for PR (${parentResult.count} Districts, ${translateResult.count} translation keys)`
+}
+
+const updateGeoTask = async (task: ListrTask) => {
+	const log: Log = (message, icon?, indent = false) => {
+		const dispIcon = icon ? `${iconList(icon)} ` : ''
+		const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
+		logFile.info(formattedMessage)
+		task.output = formattedMessage
+	}
+	const { country, govDist, orgLocation } = await updateGeo()
+
+	const output = `[Countries: ${country}] [GovDists: ${govDist}] [OrgLocations: ${orgLocation}]`
+
+	log(`GeoData records updated: ${output}`)
+	task.title = `${task.title} (${output})`
 }
 
 const renderOptions = {
@@ -582,6 +611,11 @@ export const seedGeoData = (task: ListrTask) =>
 		{
 			title: 'GeoJSON data for MX',
 			task: async (_ctx: unknown, task: ListrTask): Promise<void> => countryMX(task),
+			options: renderOptions,
+		},
+		{
+			title: 'Process GeoJSON to PostGIS format',
+			task: async (_ctx: unknown, task: ListrTask): Promise<void> => updateGeoTask(task),
 			options: renderOptions,
 		},
 	])

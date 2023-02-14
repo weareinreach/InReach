@@ -2,9 +2,9 @@ import { prisma, type Prisma } from '@weareinreach/db'
 import { type Provider } from 'next-auth/providers'
 import Credentials from 'next-auth/providers/credentials'
 
-import { type AuthSuccess } from '../lib/cognitoClient'
-import { decodeCognitoJwt } from '../lib/cognitoJwt'
-import { verifyUser, CognitoSessionSchema } from '../lib/verifyUser'
+import { type AuthSuccess } from '~auth/lib/cognitoClient'
+import { decodeCognitoJwt } from '~auth/lib/cognitoJwt'
+import { verifyUser, CognitoSessionSchema } from '~auth/lib/verifyUser'
 
 export const cognitoCredentialProvider: Provider = Credentials({
 	id: 'cognito',

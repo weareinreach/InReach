@@ -8,8 +8,8 @@ export default createNextApiHandler({
 	onError:
 		// eslint-disable-next-line node/no-process-env
 		process.env.NODE_ENV === 'development'
-			? ({ path, error }) => {
-					console.error(`❌ tRPC failed on ${path}: ${error}`)
+			? ({ path, error, type }) => {
+					console.error(`❌ tRPC ${type} failed on ${path}: ${error}`)
 			  }
 			: undefined,
 })

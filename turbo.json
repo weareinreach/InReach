@@ -1,8 +1,11 @@
 {
 	"$schema": "https://turborepo.org/schema.json",
 	"pipeline": {
+		"//#clean": {
+			"cache": false
+		},
 		"@weareinreach/app#build": {
-			"dependsOn": ["^build", "^db:generate"],
+			"dependsOn": ["^build", "^db:generate", "^generate:data"],
 			"env": [
 				"DATABASE_URL",
 				"NEXTAUTH_SECRET",
@@ -18,6 +21,13 @@
 				"COGNITO_SECRET"
 			]
 		},
+		"@weareinreach/aws-messaging#build:aws": {
+			"dependsOn": ["format", "lint:fix"]
+		},
+		"@weareinreach/aws-user-migrate#build:aws": {
+			"dependsOn": ["format", "lint:fix", "^db:generate"],
+			"inputs": ["src/**", "../../node_modules/.prisma/client/**"]
+		},
 		"@weareinreach/ui#build": {
 			"outputs": ["storybook-static/**"]
 		},
@@ -32,27 +42,14 @@
 				"NEXT_PUBLIC_WEB_SENTRY_DSN"
 			]
 		},
-		"//#clean": {
-			"cache": false
-		},
 		"build": {
 			"dependsOn": ["^build"],
 			"env": ["NODE_ENV"],
 			"outputs": ["dist/**", ".next/**", "storybook-static/**"]
 		},
 		"build:aws": {
-			"outputs": ["dist/**"],
-			"inputs": ["src/**"]
-		},
-		"deploy:aws": {
-			"dependsOn": ["build:aws"]
-		},
-		"@weareinreach/aws-user-migrate#build:aws": {
-			"dependsOn": ["format", "lint:fix", "^db:generate"],
-			"inputs": ["src/**", "../../node_modules/.prisma/client/**"]
-		},
-		"@weareinreach/aws-messaging#build:aws": {
-			"dependsOn": ["format", "lint:fix"]
+			"inputs": ["src/**"],
+			"outputs": ["dist/**"]
 		},
 		"chromatic": {
 			"dependsOn": ["build"],
@@ -65,12 +62,15 @@
 			"cache": false
 		},
 		"db:generate": {
-			"inputs": ["prisma/schema.prisma"],
-			"cache": false
+			"cache": false,
+			"inputs": ["prisma/schema.prisma"]
 		},
 		"db:generate:aws": {
 			"cache": false,
 			"inputs": ["prisma/schema.prisma"]
+		},
+		"deploy:aws": {
+			"dependsOn": ["build:aws"]
 		},
 		"dev": {
 			"cache": false,
@@ -81,6 +81,10 @@
 			"dependsOn": ["^db:generate"],
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"],
 			"outputs": ["node_modules/.cache/prettier/.prettier-cache"]
+		},
+		"generate:data": {
+			"cache": false,
+			"dependsOn": ["^db:generate"]
 		},
 		"lint": {
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"],
@@ -93,7 +97,7 @@
 		"post-install": {},
 		"type-check": {
 			"cache": false,
-			"dependsOn": ["^db:generate"]
+			"dependsOn": ["^db:generate", "db:generate"]
 		}
 	}
 }

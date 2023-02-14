@@ -1,4 +1,4 @@
-import { TagHelper } from '~/seed/migrate-v1/org/generator'
+import { TagHelper } from '~db/seed/migrate-v1/org/generator'
 
 /**
  * It takes a value, converts it to a string, converts that string to lowercase, and then returns true if the

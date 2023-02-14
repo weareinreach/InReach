@@ -1,6 +1,6 @@
-import { countryTranslation, govDistMap, missingCountryMap } from '~/datastore/v1/helpers/locDataMaps'
-import { type Location } from '~/datastore/v1/mongodb/output-types/organizations'
-import { type CountryMap } from '~/seed/migrate-v1/org/lib'
+import { countryTranslation, govDistMap, missingCountryMap } from '~db/datastore/v1/helpers/locDataMaps'
+import { type Location } from '~db/datastore/v1/mongodb/output-types/organizations'
+import { type CountryMap } from '~db/seed/migrate-v1/org/lib'
 
 export const getCountryId = (location: Location, countryMap: CountryMap) => {
 	if (!location.country) location.country = missingCountryMap.get(location._id.$oid)

@@ -1,0 +1,84 @@
+import { Prisma } from '@weareinreach/db'
+
+import { CreationBase, cuid } from '../common'
+import { SaveItemSchema } from '../create/userSavedList'
+import { createOneSeparateLog, createMany, deleteOneSeparateLog } from '../nestedOps'
+
+export const SaveItem = () => {
+	const { dataParser: parser, inputSchema } = CreationBase(SaveItemSchema)
+
+	const dataParser = parser.extend({ ownedById: cuid }).transform(({ actorId, ownedById, data }) => {
+		const { id, organizationId, serviceId } = data
+		const [organizations, orgLog] = createOneSeparateLog(
+			organizationId ? { organizationId } : undefined,
+			actorId
+		)
+		const [services, servLog] = createOneSeparateLog(serviceId ? { serviceId } : undefined, actorId)
+
+		return Prisma.validator<Prisma.UserSavedListUpdateArgs>()({
+			where: {
+				id,
+				ownedById,
+			},
+			data: {
+				organizations,
+				services,
+				auditLogs: createMany([orgLog, servLog]),
+			},
+			include: {
+				services: true,
+				organizations: true,
+			},
+		})
+	})
+	return { dataParser, inputSchema }
+}
+
+export const DeleteSavedItem = () => {
+	const { dataParser: parser, inputSchema } = CreationBase(SaveItemSchema)
+
+	const dataParser = parser.extend({ ownedById: cuid }).transform(({ actorId, ownedById, data }) => {
+		const { id, organizationId, serviceId } = data
+		const [organizations, orgLog] = deleteOneSeparateLog(
+			organizationId
+				? {
+						listId_organizationId: {
+							listId: id,
+							organizationId,
+						},
+				  }
+				: undefined,
+			actorId
+		)
+		const [services, servLog] = deleteOneSeparateLog(
+			serviceId
+				? {
+						listId_serviceId: {
+							listId: id,
+							serviceId,
+						},
+				  }
+				: undefined,
+			actorId
+		)
+
+		return Prisma.validator<Prisma.UserSavedListUpdateArgs>()({
+			where: {
+				id,
+				ownedById,
+			},
+			data: {
+				organizations,
+				services,
+				auditLogs: createMany([orgLog, servLog]),
+			},
+			include: {
+				services: true,
+				organizations: true,
+			},
+		})
+	})
+	return { dataParser, inputSchema }
+}
+
+export const ShareListUrl = () => {}

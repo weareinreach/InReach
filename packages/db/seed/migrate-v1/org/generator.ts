@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+import { geojsonToWKT } from '@terraformer/wkt'
 import cuid from 'cuid'
 import { flatten } from 'flat'
 import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js'
@@ -12,13 +14,13 @@ import invariant from 'tiny-invariant'
 import fs from 'fs'
 import path from 'path'
 
-import { SourceType } from '~/client'
-import { dayMap, hoursMap, hoursMeta } from '~/datastore/v1/helpers/hours'
-import { OrganizationsJSONCollection } from '~/datastore/v1/mongodb/output-types/organizations'
-import { prisma } from '~/index'
-import { Log, iconList } from '~/seed/lib'
-import { migrateLog } from '~/seed/logger'
-import { ListrTask } from '~/seed/migrate-v1'
+import { Prisma, SourceType } from '~db/client'
+import { dayMap, hoursMap, hoursMeta } from '~db/datastore/v1/helpers/hours'
+import { OrganizationsJSONCollection } from '~db/datastore/v1/mongodb/output-types/organizations'
+import { JsonInputOrNull, prisma } from '~db/index'
+import { Log, iconList } from '~db/seed/lib'
+import { migrateLog } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/migrate-v1'
 import {
 	AttributeListMap,
 	CountryNameMap,
@@ -34,9 +36,9 @@ import {
 	parseSchedule,
 	serviceTagTranslation,
 	uniqueSlug,
-} from '~/seed/migrate-v1/org/lib'
-import { tagCheck } from '~/seed/migrate-v1/org/lib/attributeHelpers'
-import { createPoint } from '~/seed/migrate-v1/org/lib/createPoint'
+} from '~db/seed/migrate-v1/org/lib'
+import { tagCheck } from '~db/seed/migrate-v1/org/lib/attributeHelpers'
+import { createPoint } from '~db/seed/migrate-v1/org/lib/createPoint'
 import {
 	batchCount,
 	batchNameMap,
@@ -45,7 +47,7 @@ import {
 	outputDir,
 	rollback,
 	writeBatches,
-} from '~/seed/migrate-v1/org/outData'
+} from '~db/seed/migrate-v1/org/outData'
 
 // const consoleWidth = process.stdout.columns - 10
 
@@ -86,17 +88,19 @@ const unsupportedMap = new Map<string, unknown[]>()
 const exportUnsupported = (tagObj: Record<string, unknown>) => {
 	const serviceCityRegex = /(?:service-city-|service-town-).*/
 	const langRegex = /lang-.*/
-	for (let [key, value] of Object.entries(tagObj)) {
+	for (const [key, value] of Object.entries(tagObj)) {
+		let writeValue = value
+		let writeKey = key
 		if (serviceCityRegex.test(key)) {
-			value = key
-			key = 'Service Area Cities'
+			writeValue = key
+			writeKey = 'Service Area Cities'
 		}
 		if (langRegex.test(key)) {
-			value = key
-			key = 'Languages'
+			writeValue = key
+			writeKey = 'Languages'
 		}
-		const newValue = new Set([value].concat(unsupportedMap.get(key)))
-		unsupportedMap.set(key, [...newValue])
+		const newValue = new Set([writeValue].concat(unsupportedMap.get(writeKey)))
+		unsupportedMap.set(writeKey, [...newValue])
 	}
 }
 
@@ -123,7 +127,7 @@ const generateKey: GenerateKey<KeyType> = (params) => {
 			cause,
 		})
 	}
-	output.key ? translationKeySet.add(output.key) : undefined
+	if (output.key) translationKeySet.add(output.key)
 	return output
 }
 
@@ -380,6 +384,9 @@ export const generateRecords = async (task: ListrTask) => {
 					const [longitude, latitude] = location.geolocation.coordinates.map(
 						(x) => +parseFloat(x.$numberDecimal).toFixed(3)
 					)
+					const geoObj = createPoint({ longitude, latitude })
+					const geoJSON = JsonInputOrNull.parse(geoObj)
+					const geoWKT = geoObj === 'JsonNull' ? undefined : geojsonToWKT(geoObj)
 					newLocationMap.set(location._id.$oid, locId)
 					data.orgLocation.add({
 						id: locId,
@@ -395,7 +402,8 @@ export const generateRecords = async (task: ListrTask) => {
 						countryId: getCountryId(location, countryMap),
 						longitude,
 						latitude,
-						geoJSON: createPoint({ longitude, latitude }),
+						geoJSON,
+						geoWKT,
 						published: location.show_on_organization,
 						createdAt,
 						updatedAt,
@@ -849,7 +857,7 @@ export const generateRecords = async (task: ListrTask) => {
 						id: suppId,
 						createdAt,
 						updatedAt,
-						data: JSON.stringify(unsupportedAttributes),
+						data: superjson.serialize(unsupportedAttributes) as object as Prisma.JsonObject,
 					})
 					rollback.attributeSupplement.add(suppId)
 					data.organizationAttribute.add({
@@ -963,7 +971,7 @@ export const generateRecords = async (task: ListrTask) => {
 							createdAt,
 							updatedAt,
 							textId,
-							data: JSON.stringify(access),
+							data: superjson.serialize(access) as object as Prisma.JsonObject,
 						})
 						rollback.attributeSupplement.add(attributeSuppId)
 						data.serviceAccess.add({
@@ -1139,7 +1147,7 @@ export const generateRecords = async (task: ListrTask) => {
 								id: suppId,
 								createdAt,
 								updatedAt,
-								data: JSON.stringify(unsupportedAttributes),
+								data: superjson.serialize(unsupportedAttributes) as object as Prisma.JsonObject,
 							})
 							rollback.attributeSupplement.add(suppId)
 							data.serviceAttribute.add({
