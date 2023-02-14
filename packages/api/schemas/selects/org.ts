@@ -220,4 +220,72 @@ export const organizationInclude: Include<Prisma.OrganizationInclude> = {
 	},
 }
 
+const selectServCat = {
+	select: {
+		services: {
+			select: {
+				tag: {
+					select: {
+						category: {
+							select: {
+								id: true,
+								tsKey: true,
+								tsNs: true,
+							},
+						},
+					},
+				},
+			},
+		},
+	},
+}
+
+export const orgSearchSelect = {
+	id: true,
+	name: true,
+	slug: true,
+	attributes: {
+		select: {
+			attribute: {
+				select: {
+					categories: {
+						where: {
+							category: {
+								tag: {
+									in: ['organization-leadership', 'organization-focus'],
+								},
+							},
+						},
+						select: {
+							attribute: {
+								select: {
+									tsKey: true,
+									tsNs: true,
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	},
+	description: {
+		select: {
+			key: true,
+			ns: true,
+		},
+	},
+	services: selectServCat,
+	locations: {
+		select: {
+			services: {
+				select: {
+					service: selectServCat,
+				},
+			},
+		},
+	},
+} satisfies Prisma.OrganizationSelect
+
 type Include<T> = { include: T }
+type Select<T> = { select: T }

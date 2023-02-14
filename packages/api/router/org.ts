@@ -1,9 +1,11 @@
 import { handleError } from '~api/lib'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
 import { defineRouter, publicProcedure, staffProcedure } from '~api/lib/trpc'
-import { id, searchTerm, slug, distSearch } from '~api/schemas/common'
+import { id, searchTerm, slug, distSearch, idArray } from '~api/schemas/common'
 import { type CreateQuickOrgInput, CreateQuickOrgSchema } from '~api/schemas/create/organization'
-import { organizationInclude } from '~api/schemas/selects/org'
+import { organizationInclude, orgSearchSelect } from '~api/schemas/selects/org'
+
+import { SearchDetailsOutput } from '../schemas/outputTransform/org'
 
 export const orgRouter = defineRouter({
 	getById: publicProcedure.input(id).query(async ({ ctx, input }) => {
@@ -77,6 +79,25 @@ export const orgRouter = defineRouter({
 
 		return { orgs, serviceAreas }
 	}),
+	getSearchDetails: publicProcedure
+		.input(idArray)
+		.output(SearchDetailsOutput)
+		.query(async ({ ctx, input }) => {
+			try {
+				const results = await ctx.prisma.organization.findMany({
+					where: {
+						id: {
+							in: input.ids,
+						},
+					},
+					select: orgSearchSelect,
+				}) //satisfies SearchDetailsResultInput
+
+				return results
+			} catch (error) {
+				handleError(error)
+			}
+		}),
 	createNewQuick: staffProcedure
 		.input(CreateQuickOrgSchema().inputSchema)
 		.mutation(async ({ ctx, input }) => {
