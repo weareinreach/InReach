@@ -390,4 +390,32 @@ export const attributeData: AttributeData = [
 			{ key: 'accessText', name: 'Access Instructions - Text', requireText: true },
 		],
 	},
+	{
+		name: 'Organization Leadership',
+		namespace: 'orgLeader',
+		attributes: [
+			{ key: 'bipoc-led', name: 'BIPOC Led' },
+			{ key: 'black-led', name: 'Black Led' },
+			{ key: 'immigrant-led', name: 'Immigrant Led' },
+			{ key: 'trans-led', name: 'Trans Led' },
+		],
+	},
+	{
+		name: 'Organization Focus',
+		namespace: 'orgFocus',
+		attributes: [
+			{ key: 'bipoc-comm', name: 'BIPOC Community' },
+			{ key: 'immigrant-comm', name: 'Immigrant Community' },
+			{ key: 'asylum-seekers', name: 'Asylum Seekers' },
+			{ key: 'resettled-refugees', name: 'Resettled Refugees' },
+			{ key: 'trans-comm', name: 'Trans Community' },
+			{ key: 'trans-youth-focus', name: 'Trans Youth' },
+			{ key: 'trans-masc', name: 'Trans Men/Transmasculine' },
+			{ key: 'trans-fem', name: 'Trans Women/Transfeminine' },
+			{ key: 'gender-nc', name: 'Gender non-conforming' },
+			{ key: 'lgbtq-youth-focus', name: 'LGBTQ+ Youth' },
+			{ key: 'spanish-speakers', name: 'Spanish Speakers' },
+			{ key: 'hiv-comm', name: 'HIV Community' },
+		],
+	},
 ]
