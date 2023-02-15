@@ -2,6 +2,7 @@
 import { createId } from '@paralleldrive/cuid2'
 import { PrismaClient, Prisma } from '@prisma/client'
 import { queryHandler } from 'prisma-query-inspector'
+import { createPrismaQueryEventHandler } from 'prisma-query-log'
 
 declare global {
 	// allow global `var` declarations
@@ -22,19 +23,15 @@ const clientOptions = {
 
 export const prisma = global.prisma || new PrismaClient(clientOptions)
 
-prisma.$on('query', queryHandler)
-
-prisma.$use(async (params, next) => {
-	const before = Date.now()
-
-	const result = await next(params)
-
-	const after = Date.now()
-
-	console.log(`Query ${params.model}.${params.action} took ${after - before}ms`)
-
-	return result
+const log = createPrismaQueryEventHandler({
+	queryDuration: true,
+	format: true,
+	indent: undefined,
+	linesBetweenQueries: 2,
 })
+prisma.$on('query', log)
+
+prisma.$on('query', queryHandler)
 
 export * from './client'
 export * from './zod_util'

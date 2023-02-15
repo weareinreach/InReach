@@ -526,7 +526,12 @@ importers:
       prisma: 4.10.1
       prisma-dbml-generator: 0.10.0
       prisma-query-inspector: 1.4.4
+<<<<<<< HEAD
       quicktype-core: 22.0.0
+=======
+      prisma-query-log: 3.2.0
+      quicktype-core: 21.0.13
+>>>>>>> a0e7822d (prisma logging)
       recursive-readdir: 2.2.3
       shoetest: 1.2.2
       slugify: 1.6.5
@@ -581,7 +586,12 @@ importers:
       prisma: 4.10.1
       prisma-dbml-generator: 0.10.0
       prisma-query-inspector: 1.4.4
+<<<<<<< HEAD
       quicktype-core: 22.0.0
+=======
+      prisma-query-log: 3.2.0
+      quicktype-core: 21.0.13
+>>>>>>> a0e7822d (prisma logging)
       recursive-readdir: 2.2.3
       shoetest: 1.2.2
       slugify: 1.6.5
@@ -5828,6 +5838,10 @@ packages:
 
   /@socket.io/component-emitter/3.1.0:
     resolution: {integrity: sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==}
+    dev: true
+
+  /@sqltools/formatter/1.2.5:
+    resolution: {integrity: sha512-Uy0+khmZqUrUGm5dmMqVlnvufZRSK0FbYzVgp0UMstm+F5+W2/jnEEQyc9vo1ZR/E5ZI/B1WjjoTqBqwJL6Krw==}
     dev: true
 
   /@storybook/addon-a11y/7.0.0-beta.47_biqbaboplfbrettd7655fr4n2y:
@@ -16651,6 +16665,12 @@ packages:
       - debug
       - supports-color
       - utf-8-validate
+    dev: true
+
+  /prisma-query-log/3.2.0:
+    resolution: {integrity: sha512-Em7u3eedHZR6JJSzEMDEwoyS9zy2MsdQLrKxkfTbLdJF2LwfMetRVDBtkGQdcxM4ntT3wFWGBi/zNR5Q107Jgw==}
+    dependencies:
+      '@sqltools/formatter': 1.2.5
     dev: true
 
   /prisma/4.10.1:
