@@ -1,16 +1,8 @@
 generator client {
   provider        = "prisma-client-js"
-  // clientExtensions causing error
-  // previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "multiSchema", "clientExtensions"]
-  previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "extendedWhereUnique"]
-  // output          = "./generated/client"
+  previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "extendedWhereUnique", "views"]
   binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
-
-// generator docs {
-//   provider = "node node_modules/prisma-docs-generator"
-//   output   = "../../../docs/database"
-//}
 
 generator zod {
   provider                         = "zod-prisma-types"
@@ -749,6 +741,7 @@ model OrgService {
   //@@schema("org")
 
   @@index([organizationId(sort: Asc)])
+  @@index([descriptionId])
 }
 
 model ServiceArea {
@@ -971,6 +964,7 @@ model ServiceCategory {
   //@@schema("system")
 
   @@unique([tsKey, tsNs])
+  @@index([tsKey, tsNs])
 }
 
 model ServiceTag {
@@ -997,6 +991,8 @@ model ServiceTag {
 
   @@unique([tsKey, tsNs])
   @@unique([name, categoryId])
+  @@index([tsKey, tsNs])
+  @@index([categoryId])
 }
 
 /// Phone number descriptors
@@ -2085,4 +2081,49 @@ model ServiceTagDefaultAttribute {
   //@@schema("relation")
 
   @@id([attributeId, serviceId])
+}
+
+view orgsearchresults {
+  id                String @unique
+  name              String
+  attributecategory Json
+  servicetags       Json
+}
+
+view geography_columns {
+  f_table_catalog    Unsupported("name")?
+  f_table_schema     Unsupported("name")?
+  f_table_name       Unsupported("name")?
+  f_geography_column Unsupported("name")?
+  coord_dimension    Int?
+  srid               Int?
+  type               String?
+
+  @@ignore
+}
+
+view geometry_columns {
+  f_table_catalog   String?              @db.VarChar(256)
+  f_table_schema    Unsupported("name")?
+  f_table_name      Unsupported("name")?
+  f_geometry_column Unsupported("name")?
+  coord_dimension   Int?
+  srid              Int?
+  type              String?              @db.VarChar(30)
+
+  @@ignore
+}
+
+view attributeandcategory {
+  attributeid  String @unique
+  attributetag String
+  categoryid   String
+  categorytag  String
+}
+
+view servicetagcategory {
+  tagid        String @unique
+  tagname      String
+  categoryid   String
+  categoryname String
 }
