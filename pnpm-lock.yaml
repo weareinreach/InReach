@@ -598,7 +598,7 @@ importers:
     specifiers:
       '@next/eslint-plugin-next': 13.1.6
       '@tanstack/eslint-plugin-query': 4.24.8
-      '@types/eslint': 8.21.0
+      '@types/eslint': 8.21.1
       '@types/node': 18.13.0
       '@typescript-eslint/eslint-plugin': 5.52.0
       '@typescript-eslint/parser': 5.52.0
@@ -619,7 +619,7 @@ importers:
     devDependencies:
       '@next/eslint-plugin-next': 13.1.6
       '@tanstack/eslint-plugin-query': 4.24.8
-      '@types/eslint': 8.21.0
+      '@types/eslint': 8.21.1
       '@types/node': 18.13.0
       '@typescript-eslint/eslint-plugin': 5.52.0_6cfvjsbua5ptj65675bqcn6oza
       '@typescript-eslint/parser': 5.52.0_7kw3g6rralp5ps6mg3uyzz6azm
@@ -7871,13 +7871,6 @@ packages:
     dependencies:
       '@types/eslint': 8.21.1
       '@types/estree': 1.0.0
-    dev: true
-
-  /@types/eslint/8.21.0:
-    resolution: {integrity: sha512-35EhHNOXgxnUgh4XCJsGhE7zdlDhYDN/aMG6UbkByCFFNgQ7b3U+uVoqBpicFydR8JEfgdjCF7SJ7MiJfzuiTA==}
-    dependencies:
-      '@types/estree': 1.0.0
-      '@types/json-schema': 7.0.11
     dev: true
 
   /@types/eslint/8.21.1:
