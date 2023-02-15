@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@next/eslint-plugin-next": "13.1.6",
-		"@tanstack/eslint-plugin-query": "4.24.7",
+		"@tanstack/eslint-plugin-query": "4.24.8",
 		"@types/eslint": "8.21.0",
 		"@types/node": "18.13.0",
 		"@typescript-eslint/eslint-plugin": "5.52.0",
