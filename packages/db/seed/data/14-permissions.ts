@@ -38,6 +38,62 @@ const org = [
 	},
 ] satisfies PermissionDef
 
+/** Organization Location management permissions */
+const orgLocation = [
+	{
+		name: 'editSingleLocation',
+		description: 'Edit a single location - used for claimed orgs',
+	},
+	{
+		name: 'createLocation',
+		description: 'Create a location',
+	},
+	{
+		name: 'editTeamLocation',
+		description: 'Edit locations assigned to your team',
+	},
+	{
+		name: 'editAnyLocation',
+		description: 'Edit any location',
+	},
+	{
+		name: 'publishLocation',
+		description: 'Publish a location',
+	},
+	{
+		name: 'unpublishLocation',
+		description: 'Remove a location from public view',
+	},
+] satisfies PermissionDef
+
+/** Organization Service management permissions */
+const orgService = [
+	{
+		name: 'editSingleService',
+		description: 'Edit a single service - used for claimed orgs',
+	},
+	{
+		name: 'createService',
+		description: 'Create a service',
+	},
+	{
+		name: 'editTeamService',
+		description: 'Edit services assigned to your team',
+	},
+	{
+		name: 'editAnyService',
+		description: 'Edit any service',
+	},
+	{
+		name: 'publishService',
+		description: 'Publish a service',
+	},
+	{
+		name: 'unpublishService',
+		description: 'Remove a service from public view',
+	},
+] satisfies PermissionDef
+
 /** Organization Review management permissions */
 const orgReview = [
 	{
@@ -116,6 +172,8 @@ const system = [
 export const permissionData = [
 	...basic,
 	...org,
+	...orgLocation,
+	...orgService,
 	...orgReview,
 	...userManagement,
 	...system,
