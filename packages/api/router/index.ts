@@ -2,20 +2,22 @@ import { defineRouter } from '~api/lib/trpc'
 
 import { authRouter } from './auth'
 import { locationRouter } from './location'
-import { orgRouter } from './org'
+import { orgRouter } from './organization'
 import { reviewRouter } from './review'
 import { savedListRouter } from './savedLists'
+import { serviceRouter } from './service'
 import { systemRouter } from './system'
 import { userRouter } from './user'
 
 export const appRouter = defineRouter({
 	auth: authRouter,
-	user: userRouter,
-	savedList: savedListRouter,
-	review: reviewRouter,
 	location: locationRouter,
 	organization: orgRouter,
+	review: reviewRouter,
+	savedList: savedListRouter,
+	service: serviceRouter,
 	system: systemRouter,
+	user: userRouter,
 })
 
 // export type definition of API

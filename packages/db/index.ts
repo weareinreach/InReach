@@ -29,9 +29,12 @@ const log = createPrismaQueryEventHandler({
 	indent: undefined,
 	linesBetweenQueries: 2,
 })
-prisma.$on('query', log)
 
-prisma.$on('query', queryHandler)
+if (!global.prisma) {
+	prisma.$on('query', log)
+
+	prisma.$on('query', queryHandler)
+}
 
 export * from './client'
 export * from './zod_util'
