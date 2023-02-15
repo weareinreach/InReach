@@ -11,10 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🏷 Verify PR has a valid label
-        uses: satvik-s/pr-label-check@5c3107c10f20f6ce1a61d35028204eb4c2842d93 # v1.0.0
+        uses: mheap/github-action-required-labels@v3
         with:
-          labels: breaking-change,bugfix,documentation,enhancement,refactor,performance,new-feature,maintenance,ci,dependencies,translations,changelog-ignore
-          type: any_of
+          labels: "breaking-change, bugfix, documentation, enhancement, refactor, performance, new-feature, maintenance, ci, dependencies, translations, changelog-ignore"
+          mode: minimum
+          count: 1
   pr_wip_check:
     runs-on: ubuntu-latest
     name: 🏭 Check for blocking labels
