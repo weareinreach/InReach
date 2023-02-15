@@ -37,6 +37,7 @@
 		"lint:pkg:fix": "manypkg fix",
 		"lint:staged": "lint-staged",
 		"prepare": "tsx ./lib/prepare.ts",
+		"scripts:post-install": "turbo run post-install",
 		"types:check": "turbo type-check",
 		"types:sync": "typesync"
 	},

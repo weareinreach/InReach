@@ -22,12 +22,12 @@ overrides:
   uuid: '>=9.0.0'
 
 patchedDependencies:
-  eslint-plugin-node@11.1.0:
-    hash: 45p4dc3r2kwi3h2jyimmny42ju
-    path: patches/eslint-plugin-node@11.1.0.patch
   iso-google-locales@3.0.4:
     hash: ltnamflm7ayajalculwqyezjya
     path: patches/iso-google-locales@3.0.4.patch
+  eslint-plugin-node@11.1.0:
+    hash: 45p4dc3r2kwi3h2jyimmny42ju
+    path: patches/eslint-plugin-node@11.1.0.patch
   trpc-panel@1.2.8:
     hash: sftd6wakcimwnpfmzciflr33te
     path: patches/trpc-panel@1.2.8.patch
@@ -526,12 +526,8 @@ importers:
       prisma: 4.10.1
       prisma-dbml-generator: 0.10.0
       prisma-query-inspector: 1.4.4
-<<<<<<< HEAD
-      quicktype-core: 22.0.0
-=======
       prisma-query-log: 3.2.0
-      quicktype-core: 21.0.13
->>>>>>> a0e7822d (prisma logging)
+      quicktype-core: 22.0.0
       recursive-readdir: 2.2.3
       shoetest: 1.2.2
       slugify: 1.6.5
@@ -586,12 +582,8 @@ importers:
       prisma: 4.10.1
       prisma-dbml-generator: 0.10.0
       prisma-query-inspector: 1.4.4
-<<<<<<< HEAD
-      quicktype-core: 22.0.0
-=======
       prisma-query-log: 3.2.0
-      quicktype-core: 21.0.13
->>>>>>> a0e7822d (prisma logging)
+      quicktype-core: 22.0.0
       recursive-readdir: 2.2.3
       shoetest: 1.2.2
       slugify: 1.6.5
@@ -606,7 +598,7 @@ importers:
     specifiers:
       '@next/eslint-plugin-next': 13.1.6
       '@tanstack/eslint-plugin-query': 4.24.8
-      '@types/eslint': 8.21.1
+      '@types/eslint': 8.21.0
       '@types/node': 18.13.0
       '@typescript-eslint/eslint-plugin': 5.52.0
       '@typescript-eslint/parser': 5.52.0
@@ -627,7 +619,7 @@ importers:
     devDependencies:
       '@next/eslint-plugin-next': 13.1.6
       '@tanstack/eslint-plugin-query': 4.24.8
-      '@types/eslint': 8.21.1
+      '@types/eslint': 8.21.0
       '@types/node': 18.13.0
       '@typescript-eslint/eslint-plugin': 5.52.0_6cfvjsbua5ptj65675bqcn6oza
       '@typescript-eslint/parser': 5.52.0_7kw3g6rralp5ps6mg3uyzz6azm
@@ -5844,8 +5836,8 @@ packages:
     resolution: {integrity: sha512-Uy0+khmZqUrUGm5dmMqVlnvufZRSK0FbYzVgp0UMstm+F5+W2/jnEEQyc9vo1ZR/E5ZI/B1WjjoTqBqwJL6Krw==}
     dev: true
 
-  /@storybook/addon-a11y/7.0.0-beta.47_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-Sbzht3pBEWrdqFwcG2FyCH6DOjMob8i5Wfd3T13dw6/19tsDZpu5NLMEMWNWbr6JIKOAa3VdOTPv8g7ke3mI2w==}
+  /@storybook/addon-a11y/7.0.0-beta.48_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-1EFwGd/u4sEV0y8r8EzKcAPkExb5Y8Zr6Ifh+GPI6+a5rCMPcRt+sZoLmmsCMqR0bfMCcrlfF7DUGhHw7CGa3Q==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
@@ -7879,6 +7871,13 @@ packages:
     dependencies:
       '@types/eslint': 8.21.1
       '@types/estree': 1.0.0
+    dev: true
+
+  /@types/eslint/8.21.0:
+    resolution: {integrity: sha512-35EhHNOXgxnUgh4XCJsGhE7zdlDhYDN/aMG6UbkByCFFNgQ7b3U+uVoqBpicFydR8JEfgdjCF7SJ7MiJfzuiTA==}
+    dependencies:
+      '@types/estree': 1.0.0
+      '@types/json-schema': 7.0.11
     dev: true
 
   /@types/eslint/8.21.1:
@@ -14316,6 +14315,7 @@ packages:
 
   /js-yaml/4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
+    hasBin: true
     dependencies:
       argparse: 2.0.1
 
@@ -16524,6 +16524,11 @@ packages:
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+    dev: true
+
+  /prepend-http/2.0.0:
+    resolution: {integrity: sha512-ravE6m9Atw9Z/jjttRUZ+clIXogdghyZAuWJ3qEzjT+jI/dL1ifAqhZeC5VHzQp1MSt1+jxKkFNemj/iO7tVUA==}
+    engines: {node: '>=4'}
     dev: true
 
   /prettier-plugin-jsdoc/0.4.2_prettier@2.8.4:

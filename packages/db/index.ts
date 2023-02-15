@@ -1,7 +1,6 @@
 /* eslint-disable node/no-process-env */
 import { createId } from '@paralleldrive/cuid2'
 import { PrismaClient, Prisma } from '@prisma/client'
-import { queryHandler } from 'prisma-query-inspector'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 
 declare global {
@@ -32,8 +31,6 @@ const log = createPrismaQueryEventHandler({
 
 if (!global.prisma) {
 	prisma.$on('query', log)
-
-	prisma.$on('query', queryHandler)
 }
 
 export * from './client'

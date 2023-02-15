@@ -5,7 +5,8 @@
 	"main": "./index.tsx",
 	"types": "./index.tsx",
 	"scripts": {
-		"build": "tsx ./icon/buildIcons.ts",
+		"build": "pnpm build:icons",
+		"build:icons": "tsx ./icon/buildIcons.ts",
 		"chromatic": "chromatic",
 		"clean:node": "rm -rf ./node_modules/ || true",
 		"dev": "storybook dev -p 6006 --no-open",

@@ -12,3 +12,5 @@ const iconList = `// generated file - do not modify directly\nexport const iconL
 )} as const`
 
 writeFileSync('./icon/iconList.ts', iconList)
+
+console.info(`Generated Icon List with ${listIcons().length} icons`)
