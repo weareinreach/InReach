@@ -34,13 +34,23 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 				},
 			},
 		},
+		orderBy: {
+			name: 'asc',
+		},
 	})
 	let logMessage = ''
 	let i = 0
 	for (const namespace of data) {
 		const outputData: Output = {}
 		for (const item of namespace.keys) {
-			outputData[item.key] = item.text
+			if (item.plural !== 'SINGLE' && typeof item.pluralValues === 'object') {
+				for (const [key, value] of Object.entries(item.pluralValues as object)) {
+					if (typeof value !== 'string') throw new Error('Invalid nested plural item')
+					outputData[`${item.key}_${key}`] = value
+				}
+			} else {
+				outputData[item.key] = item.text
+			}
 		}
 		const filename = `${localePath}/${namespace.name}.json`
 		// eslint-disable-next-line prefer-const
