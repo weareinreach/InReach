@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { Prisma } from '~db/client'
+import { Prisma } from '~db/index'
 import { BatchNames } from '~db/seed/migrate-v1/org/outData'
 import {
 	AttributeSupplementSchema,

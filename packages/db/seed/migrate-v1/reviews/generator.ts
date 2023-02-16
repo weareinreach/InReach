@@ -2,10 +2,9 @@
 
 import fs from 'fs'
 
-import { Prisma } from '~db/client'
 import { CommentsJSONCollection } from '~db/datastore/v1/mongodb/output-types/comments'
 import { RatingsJSONCollection } from '~db/datastore/v1/mongodb/output-types/ratings'
-import { prisma } from '~db/index'
+import { Prisma, prisma } from '~db/index'
 import { userEmail } from '~db/seed/data'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'

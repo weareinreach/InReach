@@ -27,7 +27,7 @@ import {
 	TranslationKey,
 	UserPermission,
 	UserToOrganization,
-} from '~db/client'
+} from '~db/index'
 import { BatchNames } from '~db/seed/migrate-v1/org/outData'
 import { ZodFindMany, ZodInputs } from '~db/seed/migrate-v1/org/zod'
 

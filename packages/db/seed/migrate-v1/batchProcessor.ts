@@ -1,5 +1,4 @@
-import { Prisma } from '~db/client'
-import { prisma } from '~db/index'
+import { Prisma, prisma } from '~db/index'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
 
