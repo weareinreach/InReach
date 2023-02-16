@@ -1,6 +1,7 @@
 import { prisma } from '@weareinreach/db'
 import dotenv from 'dotenv'
 import { unflatten } from 'flat'
+import prettier from 'prettier'
 
 import fs from 'fs'
 
@@ -23,6 +24,8 @@ const countKeys = (obj: Output): number =>
 	}, 0)
 
 export const generateTranslationKeys = async (task: ListrTask) => {
+	const prettierOpts = (await prettier.resolveConfig(__dirname)) ?? undefined
+
 	const data = await prisma.translationNamespace.findMany({
 		include: {
 			keys: {
@@ -61,7 +64,12 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 
 		logMessage = `${filename} generated with ${newKeys} new ${newKeys === 1 ? 'key' : 'keys'}.`
 
-		fs.writeFileSync(filename, JSON.stringify(outputFile, null, 2))
+		const formattedOutput = prettier.format(JSON.stringify(outputFile, null, 2), {
+			...prettierOpts,
+			parser: 'json',
+		})
+
+		fs.writeFileSync(filename, formattedOutput)
 		task.output = logMessage
 		i++
 	}

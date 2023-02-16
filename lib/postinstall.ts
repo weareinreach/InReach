@@ -7,5 +7,5 @@
 const isCi = process.env.CI !== undefined
 if (!isCi) {
 	const { execSync } = require('child_process')
-	execSync('pnpm scripts:postinstall', { stdio: 'inherit' })
+	execSync('turbo run post-install', { stdio: 'inherit' })
 }

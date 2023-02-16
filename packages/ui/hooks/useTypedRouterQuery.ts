@@ -8,11 +8,11 @@ import { z } from 'zod'
  * @param schema - The schema to use to parse the query.
  * @returns The return type is inferred from the schema.
  */
-export const useTypedRouterQuery = <T extends z.ZodType>(schema: T) => {
+export const useTypedRouterQuery = <T extends z.ZodSchema>(schema: T extends z.ZodType ? T : never) => {
 	const { query, ...router } = useRouter()
 
 	return {
-		query: schema.parse(query),
+		query: schema.parse(query) as z.infer<T>,
 		...router,
 	}
 }

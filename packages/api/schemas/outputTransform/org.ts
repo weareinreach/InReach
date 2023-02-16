@@ -87,7 +87,7 @@ export const SearchDetailsOutput = z
 				attributes: attributes.flatMap(({ attribute }) =>
 					attribute.categories.map(({ attribute }) => attribute)
 				),
-				services: Array.from(servCombined).map((item) => JSON.parse(item)),
+				services: Array.from(servCombined).map((item) => JSON.parse(item) as ServCat),
 			}
 		})
 		return result

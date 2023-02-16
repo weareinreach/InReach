@@ -14,6 +14,8 @@ import { appWithTranslation } from 'next-i18next'
 
 import { api } from '~app/utils/api'
 
+import nextI18nConfig from '../../next-i18next.config'
+
 const fontWorkSans = Work_Sans({ subsets: ['latin'] })
 
 const MyApp = (appProps: AppProps<{ session: Session }>) => {
@@ -44,4 +46,4 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 	)
 }
 
-export default api.withTRPC(appWithTranslation(MyApp))
+export default api.withTRPC(appWithTranslation(MyApp, nextI18nConfig))
