@@ -29,6 +29,7 @@
 		"dev:ui": "turbo run dev --filter=ui",
 		"dev:web": "turbo run dev --filter=web",
 		"format": "turbo run format --parallel",
+		"generate:data": "turbo run generate:data",
 		"postinstall": "tsx ./lib/postinstall.ts",
 		"lint": "turbo run lint --parallel",
 		"lint:fix": "turbo run lint:fix --parallel",
@@ -42,7 +43,7 @@
 	"dependencies": {
 		"@changesets/cli": "2.26.0",
 		"@manypkg/cli": "0.20.0",
-		"@types/eslint": "8.21.0",
+		"@types/eslint": "8.21.1",
 		"@types/node": "18.13.0",
 		"@types/prettier": "2.7.2",
 		"@weareinreach/config": "0.100.0",
@@ -88,7 +89,8 @@
 		},
 		"patchedDependencies": {
 			"eslint-plugin-node@11.1.0": "patches/eslint-plugin-node@11.1.0.patch",
-			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch"
+			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch",
+			"trpc-panel@1.2.8": "patches/trpc-panel@1.2.8.patch"
 		},
 		"peerDependencyRules": {
 			"allowedVersions": {

@@ -4,7 +4,7 @@ import { DateTime } from 'luxon'
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Icon } from '../../icon'
+import { Icon } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({
 	showMore: {

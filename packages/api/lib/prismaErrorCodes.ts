@@ -40,7 +40,7 @@ export const PRISMA_ERROR_CODES: Record<string, TRPCError['code']> = {
 	P2022: 'NOT_FOUND', //'The column does not exist in the current database.',
 	P2023: 'BAD_REQUEST', //'Inconsistent column data',
 	P2024: 'TIMEOUT', //'Timed out fetching a new connection from the connection pool.',
-	P2025: 'CONFLICT', //'An operation failed because it depends on one or more records that were required but not found.',
+	P2025: 'NOT_FOUND', //'An operation failed because it depends on one or more records that were required but not found.',
 	P2026: 'INTERNAL_SERVER_ERROR', //"The current database provider doesn't support a feature that the query used.",
 	P2027: 'INTERNAL_SERVER_ERROR', //'Multiple errors occurred on the database during query execution.',
 	P2030: 'INTERNAL_SERVER_ERROR', //'Cannot find a fulltext index to use for the search.',

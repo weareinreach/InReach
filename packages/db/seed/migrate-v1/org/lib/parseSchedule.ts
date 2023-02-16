@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { Schedule } from '~/datastore/v1/mongodb/output-types/organizations'
-import { HoursHelper } from '~/seed/migrate-v1/org/generator'
+import invariant from 'tiny-invariant'
+
+import { Schedule } from '~db/datastore/v1/mongodb/output-types/organizations'
+import { HoursHelper } from '~db/seed/migrate-v1/org/generator'
 
 export const parseSchedule = (schedule: Schedule, helpers: HoursHelper) => {
 	const { dayMap, hoursMap, hoursMeta } = helpers
@@ -22,8 +24,9 @@ export const parseSchedule = (schedule: Schedule, helpers: HoursHelper) => {
 		if (regexStart.test(key) || regexEnd.test(key)) {
 			const [day, hourType] = key.split('_')
 			if (!day || !hourType) continue
-			const dayIndex = dayMap.get(day) ?? ''
-			if (Object.keys(hours).includes(dayIndex.toString() ?? '')) {
+			const dayIndex = dayMap.get(day)
+			invariant(dayIndex !== undefined)
+			if (Object.keys(hours).includes(dayIndex?.toString())) {
 				const time = hoursMap.get(value)
 				if (time === undefined) continue
 				/* handle 'multi,' '24h,' & 'closed' */

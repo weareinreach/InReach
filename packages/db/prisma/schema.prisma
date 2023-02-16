@@ -2,7 +2,7 @@ generator client {
   provider        = "prisma-client-js"
   // clientExtensions causing error
   // previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "multiSchema", "clientExtensions"]
-  previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount"]
+  previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "extendedWhereUnique"]
   // output          = "./generated/client"
   binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
@@ -12,20 +12,16 @@ generator client {
 //   output   = "../../../docs/database"
 //}
 
-// generator zod {
-//   provider      = "zod-prisma"
-//   output        = "../zod-schemas"
-//   imports       = "../zod-util"
-//   relationModel = "default"
-// }
-
-// generator zod {
-//   provider         = "zod-prisma-types"
-//   output           = "../zod-schemas"
-//   imports          = "import(import {GeoJSONSchema,AttributeSupplement,cuid} from '../zod-util')"
-//   useMultipleFiles = true
-//   createModelTypes = false
-// }
+generator zod {
+  provider                         = "zod-prisma-types"
+  output                           = "../zod-schemas"
+  useMultipleFiles                 = true
+  createModelTypes                 = true
+  createOptionalDefaultValuesTypes = true
+  writeNullishInModelTypes         = true
+  addInputTypeValidation           = false
+  createInputTypes                 = false
+}
 
 // generator dbml {
 //   provider              = "prisma-dbml-generator"
@@ -113,6 +109,7 @@ model User {
   /// assets that certain permissible roles are attributed to (edit org, etc)
   orgPermission      OrganizationPermission[]
   locationPermission LocationPermission[]
+  roles              AssignedRole[]
 
   reviews          OrgReview[]
   // Current location - for LCR
@@ -135,7 +132,6 @@ model User {
   // Relationships
   savedLists          UserSavedList[]
   listsSharedWithUser ListSharedWith[]
-  roles               AssignedRole[]
 
   userType   UserType @relation(fields: [userTypeId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   userTypeId String /// @zod.string.cuid()
@@ -576,6 +572,7 @@ model OrgWebsite {
 }
 
 /// Org location information
+/// @zod.import(["import {Geometry} from '../../zod_util'"])
 model OrgLocation {
   id       String  @id @default(cuid())
   legacyId String? @unique /// old ID from MongoDB
@@ -592,9 +589,11 @@ model OrgLocation {
   country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   countryId String /// @zod.string.cuid()
 
-  longitude Decimal? @db.Decimal(7, 4)
-  latitude  Decimal? @db.Decimal(7, 4)
-  geoJSON   Json /// @zod.custom.use(GeoJSONSchema)
+  longitude Decimal?                             @db.Decimal(7, 4)
+  latitude  Decimal?                             @db.Decimal(7, 4)
+  geo       Unsupported("\"public\".geography")?
+  geoJSON   Json /// @zod.custom.use(Geometry)
+  geoWKT    String?
 
   published Boolean    @default(true)
   deleted   Boolean    @default(false)
@@ -629,6 +628,7 @@ model OrgLocation {
   checkMigration Boolean?
   //@@schema("org")
 
+  @@index([geo], type: SpGist)
   @@index([latitude, longitude])
   @@index([geoJSON(ops: JsonbPathOps)], type: Gin)
 }
@@ -855,8 +855,9 @@ model TranslatedReview {
 
   text String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  auditLogs AuditLog[]
 
   @@index([reviewId])
 }
@@ -923,11 +924,12 @@ model Attribute {
   @@unique([tsKey, tsNs])
 }
 
+/// @zod.import(["import { AttributeSupplementDataSchema } from '../../zod_util/attributeSupplement'"])
 model AttributeSupplement {
   id     String  @id @default(cuid())
   active Boolean @default(true)
 
-  data    Json? /// @zod.custom.use(AttributeSupplement)
+  data    Json? /// @zod.custom.use(AttributeSupplementDataSchema)
   boolean Boolean?
 
   text   FreeText? @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -1068,20 +1070,23 @@ enum SourceType {
 }
 
 /// Country metadata
+/// @zod.import(["import {Geometry} from '../../zod_util'"])
 model Country {
-  id       String @id @default(cuid())
+  id       String                               @id @default(cuid())
   /// ISO 3166-1 alpha-2 Country code
-  cca2     String @unique @db.Char(2)
+  cca2     String                               @unique @db.Char(2)
   /// ISO 3166-1 alpha-3 Country code
-  cca3     String @unique @db.Char(3)
+  cca3     String                               @unique @db.Char(3)
   /// Country name (English).
-  name     String @unique(sort: Asc)
+  name     String                               @unique(sort: Asc)
   /// International dialing code
-  dialCode Int?   @db.SmallInt
+  dialCode Int?                                 @db.SmallInt
   /// Country flag (emoji)
   flag     String
   /// GeoJSON object - required only if this will be considered a "service area"
-  geoJSON  Json? /// @zod.custom.use(GeoJSONSchema)
+  geo      Unsupported("\"public\".geography")?
+  geoJSON  Json? /// @zod.custom.use(Geometry)
+  geoWKT   String?
 
   key   TranslationKey @relation("country", fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -1112,21 +1117,25 @@ model Country {
 
   @@unique([tsKey, tsNs])
   @@unique([demonymKey, demonymNs])
+  @@index([geo], type: SpGist)
 }
 
 /// Administrative districts for countries
+/// @zod.import(["import {Geometry} from '../../zod_util'"])
 model GovDist {
-  id      String  @id @default(cuid())
+  id      String                               @id @default(cuid())
   /// Name (English/Roman alphabet)
   name    String
   /// Slug - [country (ISO)]-[govdist]-[...]
-  slug    String  @unique
+  slug    String                               @unique
   /// ISO-3166-2 code
   iso     String?
   /// Abbreviation (Optional)
   abbrev  String?
   /// GeoJSON object - required only if this will be considered a "service area"
-  geoJSON Json? /// @zod.custom.use(GeoJSONSchema)
+  geo     Unsupported("\"public\".geography")?
+  geoJSON Json? /// @zod.custom.use(Geometry)
+  geoWKT  String?
 
   country   Country @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   countryId String /// @zod.string.cuid()
@@ -1158,6 +1167,7 @@ model GovDist {
   //@@schema("system")
 
   @@unique([tsKey, tsNs])
+  @@index([geo], type: SpGist)
   @@index([countryId])
   @@index([parentId])
 }
@@ -1508,12 +1518,13 @@ model InternalNote {
 
 /// Store changes made by users
 model AuditLog {
-  id        String   @id @default(cuid())
-  actor     User     @relation("Recorded User", fields: [actorId], references: [id])
+  id        String            @id @default(cuid())
+  actor     User              @relation("Recorded User", fields: [actorId], references: [id])
   actorId   String /// @zod.string.cuid()
-  timestamp DateTime @default(now())
+  timestamp DateTime          @default(now())
   from      Json
   to        Json
+  operation AuditLogOperation
 
   Account                              Account?                @relation(fields: [accountId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   accountId                            String? /// @zod.string.cuid()
@@ -1521,8 +1532,6 @@ model AuditLog {
   attributeId                          String? /// @zod.string.cuid()
   AttributeCategory                    AttributeCategory?      @relation(fields: [attributeCategoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   attributeCategoryId                  String? /// @zod.string.cuid()
-  // AttributeRecord          AttributeRecord?      @relation(fields: [attributeRecordId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  // attributeRecordId        String? /// @zod.string.cuid()
   AttributeSupplement                  AttributeSupplement?    @relation(fields: [attributeSupplementId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   attributeSupplementId                String? /// @zod.string.cuid()
   Country                              Country?                @relation(fields: [countryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -1575,14 +1584,12 @@ model AuditLog {
   outsideAPIId                         String? /// @zod.string.cuid()
   OutsideAPIService                    OutsideAPIService?      @relation(fields: [outsideAPIServiceService], references: [service], onDelete: SetNull, onUpdate: Cascade)
   outsideAPIServiceService             String?
-  // PermissionAsset          PermissionAsset?      @relation(fields: [permissionAssetId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  // permissionAssetId        String? /// @zod.string.cuid()
   Permission                           Permission?             @relation(fields: [permissionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   permissionId                         String? /// @zod.string.cuid()
   PhoneType                            PhoneType?              @relation(fields: [phoneTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   phoneTypeId                          String? /// @zod.string.cuid()
   ServiceAccess                        ServiceAccess?          @relation(fields: [serviceAccessId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  serviceAccessId                      String?
+  serviceAccessId                      String? /// @zod.string.cuid()
   ServiceArea                          ServiceArea?            @relation(fields: [serviceAreaId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   serviceAreaId                        String? /// @zod.string.cuid()
   ServiceCategory                      ServiceCategory?        @relation(fields: [serviceCategoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -1595,12 +1602,14 @@ model AuditLog {
   socialMediaServiceId                 String? /// @zod.string.cuid()
   Source                               Source?                 @relation(fields: [sourceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   sourceId                             String? /// @zod.string.cuid()
+  TranslatedReview                     TranslatedReview?       @relation(fields: [translatedReviewId], references: [id])
+  translatedReviewId                   String? /// @zod.string.cuid()
   Translation                          TranslationKey?         @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: SetNull, onUpdate: Cascade)
   translationKey                       String?
   translationNs                        String?
   TranslationNamespace                 TranslationNamespace?   @relation(fields: [translationNamespaceName], references: [name], onDelete: SetNull, onUpdate: Cascade)
-  translationNamespaceName             String? /// @zod.string.cuid()
-  User                                 User[]                  @relation("AuditLogEntry") //@relation("AuditLogEntry", fields: [userId], references: [id],onDelete: SetNull,onUpdate: Cascade)
+  translationNamespaceName             String?
+  User                                 User?                   @relation("AuditLogEntry", fields: [userId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userId                               String? /// @zod.string.cuid()
   UserCommunity                        UserCommunity?          @relation(fields: [userCommunityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userCommunityId                      String? /// @zod.string.cuid()
@@ -1622,6 +1631,14 @@ model AuditLog {
   userTypeId                           String? /// @zod.string.cuid()
 
   //@@schema("system")
+}
+
+enum AuditLogOperation {
+  CREATE
+  UPDATE
+  DELETE
+  LINK
+  UNLINK
 }
 
 //

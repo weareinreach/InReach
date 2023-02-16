@@ -13,10 +13,19 @@
 		"moduleResolution": "node",
 		"noEmit": true,
 		"noUncheckedIndexedAccess": true,
+		"paths": {
+			"~api/*": ["../../packages/api/*"],
+			"~app/*": ["../../apps/app/src/*"],
+			"~auth/*": ["../../packages/auth/*"],
+			"~db/*": ["../../packages/db/*"],
+			"~ui/*": ["../../packages/ui/*"],
+			"~web/*": ["../../apps/web/src/*"]
+		},
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "es2017"
 	},
-	"display": "Default"
+	"display": "Default",
+	"include": ["../../@types/**/*.ts"]
 }

@@ -18,7 +18,6 @@ import {
 	OrganizationPermission,
 	OutsideAPI,
 	Prisma,
-	PrismaPromise,
 	ServiceAccess,
 	ServiceAccessAttribute,
 	ServiceArea,
@@ -28,9 +27,9 @@ import {
 	TranslationKey,
 	UserPermission,
 	UserToOrganization,
-} from '~/client'
-import { BatchNames } from '~/seed/migrate-v1/org/outData'
-import { ZodFindMany, ZodInputs } from '~/seed/migrate-v1/org/zod'
+} from '~db/client'
+import { BatchNames } from '~db/seed/migrate-v1/org/outData'
+import { ZodFindMany, ZodInputs } from '~db/seed/migrate-v1/org/zod'
 
 const clientopt = { skipDuplicates: true }
 
@@ -97,19 +96,19 @@ export type QueryClient = {
 	[K in BatchNames]: (
 		client: Prisma.TransactionClient,
 		args: ZodFindMany[K]
-	) => K extends BatchNames ? PrismaPromise<Partial<PrismaSchemas[K]>[]> : never
+	) => K extends BatchNames ? Prisma.PrismaPromise<Partial<PrismaSchemas[K]>[]> : never
 }
 
 export type MigrationClient = {
 	[K in BatchNames]: (
 		client: Prisma.TransactionClient,
 		data: ZodInputs[K]
-	) => K extends BatchNames ? PrismaPromise<Prisma.BatchPayload> : never
+	) => K extends BatchNames ? Prisma.PrismaPromise<Prisma.BatchPayload> : never
 }
 type ClientReturn<B extends BatchNames> = (
 	client: Prisma.TransactionClient,
 	data: ZodInputs[B]
-) => PrismaPromise<Prisma.BatchPayload>
+) => Prisma.PrismaPromise<Prisma.BatchPayload>
 
 type GetClient = <B extends BatchNames>(batchName: B) => ClientReturn<B>
 
