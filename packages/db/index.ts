@@ -3,6 +3,10 @@ import { createId } from '@paralleldrive/cuid2'
 import { PrismaClient, Prisma } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 
+import { generateId, idPrefix, type IdPrefix } from './lib/idGen'
+
+import { idMiddleware } from '~db/lib/idMiddleware'
+
 declare global {
 	// allow global `var` declarations
 	// eslint-disable-next-line no-var
@@ -22,6 +26,8 @@ const clientOptions = {
 
 const prisma = global.prisma || new PrismaClient(clientOptions)
 
+prisma.$use(idMiddleware)
+
 const log = createPrismaQueryEventHandler({
 	queryDuration: true,
 	format: true,
@@ -37,8 +43,8 @@ if (process.env.NODE_ENV !== 'production') {
 	global.prisma = prisma
 }
 
-export * from './client'
+export * from '@prisma/client'
 export * from './zod_util'
-export { generateId } from './lib/idGen'
+
 export { slug } from './lib/slugGen'
-export { createId, prisma }
+export { createId, prisma, generateId }

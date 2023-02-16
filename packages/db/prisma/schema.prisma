@@ -908,6 +908,9 @@ model Attribute {
   requireBoolean  Boolean @default(false)
   requireData     Boolean @default(false)
 
+  /// Can this be used as a filter? No - `null` : Yes - Defined as INCLUDE or EXCLUDE
+  filterType FilterType?
+
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
@@ -915,6 +918,11 @@ model Attribute {
   //@@schema("system")
 
   @@unique([tsKey, tsNs])
+}
+
+enum FilterType {
+  INCLUDE
+  EXCLUDE
 }
 
 /// @zod.import(["import { AttributeSupplementDataSchema } from '../../zod_util/attributeSupplement'"])
@@ -1254,10 +1262,8 @@ model TranslationKey {
   ns        String
 
   // to manage plurals & ordinals
-  parent    TranslationKey?  @relation("translationSubItems", fields: [parentKey, parentNs], references: [key, ns], onDelete: Cascade, onUpdate: Cascade)
-  parentKey String? /// @zod.string.cuid()
-  parentNs  String?
-  children  TranslationKey[] @relation("translationSubItems")
+  plural       TranslationPlurals @default(SINGLE)
+  pluralValues Json?
 
   /// Associated tables
   attribute          Attribute?
@@ -1288,7 +1294,12 @@ model TranslationKey {
   /// Only 1 key per namespace
   // @@unique([ns(sort: Asc), key(sort: Asc)])
   @@id([ns, key])
-  @@unique([parentKey, parentNs])
+}
+
+enum TranslationPlurals {
+  SINGLE
+  PLURAL
+  ORDINAL
 }
 
 model OutsideAPIService {

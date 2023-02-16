@@ -1,4 +1,4 @@
-import { Prisma } from '~db/client'
+import { Prisma } from '~db/index'
 
 type PermissionDef = Prisma.PermissionCreateManyInput[]
 

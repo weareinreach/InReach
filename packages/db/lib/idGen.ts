@@ -51,7 +51,7 @@ export const idPrefix = {
 	userType: 'utyp',
 } satisfies { [K in Uncapitalize<Tables>]: string }
 
-type IdPrefix = keyof typeof idPrefix
+export type IdPrefix = keyof typeof idPrefix
 
 /**
  * It generates a unique id for a given table, prefixed with the table identifier

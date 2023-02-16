@@ -1,8 +1,4 @@
-import cuid from 'cuid'
-import slugify from 'slugify'
-
-import { Prisma } from '~db/client'
-import { prisma } from '~db/index'
+import { prisma, Prisma, generateId, slug } from '~db/index'
 import { attributeData, namespaces } from '~db/seed/data/'
 import { Log, iconList } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
@@ -44,8 +40,8 @@ export const seedAttributes = async (task: ListrTask) => {
 	for (const category of attributeData) {
 		log(`(${x + 1}/${attributeData.length}) Prepare Attribute Category: ${category.name}`, 'generate')
 
-		const catTag = slugify(category.name, { lower: true, strict: true })
-		const categoryId = categoryMap.get(catTag) ?? cuid()
+		const catTag = slug(category.name)
+		const categoryId = categoryMap.get(catTag) ?? generateId('attributeCategory')
 
 		if (!categoryMap.has(catTag)) {
 			data.translate.push({
@@ -78,12 +74,13 @@ export const seedAttributes = async (task: ListrTask) => {
 				requireLanguage,
 				requireData,
 				requireText,
+				filterType,
 			} = record
 			log(`[${idx + 1}/${category.attributes.length}] Prepare Attribute: ${name}`, 'generate', true)
 
 			idx++
-			const key = slugify(`${category.namespace}-${keyTag}`, { lower: true, strict: true })
-			const attributeId = attributeMap.get(name) ?? cuid()
+			const key = slug(`${category.ns}-${keyTag}`)
+			const attributeId = attributeMap.get(name) ?? generateId('attribute')
 
 			if (!attributeMap.has(name)) {
 				data.translate.push({
@@ -92,7 +89,7 @@ export const seedAttributes = async (task: ListrTask) => {
 					text: name,
 				})
 				log(`[${key}] Generated translation key`, 'tlate', true)
-				const tag = slugify(keyTag, { lower: true, strict: true })
+				const tag = slug(keyTag)
 
 				data.attribute.push({
 					id: attributeId,
@@ -105,6 +102,7 @@ export const seedAttributes = async (task: ListrTask) => {
 					requireText,
 					tsKey: key,
 					tsNs: ns,
+					filterType,
 				})
 
 				log(`[${tag}] Generated attribute definition`, 'generate', true)

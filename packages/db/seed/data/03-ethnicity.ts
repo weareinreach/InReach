@@ -1,9 +1,9 @@
 import { keySlug, namespaces } from './00-namespaces'
-import { logFile } from '../logger'
-import { ListrTask } from '../starterData'
 
-import { Prisma } from '~db/client'
+import { Prisma, generateId } from '~db/index'
 import { Log, iconList } from '~db/seed/lib'
+import { logFile } from '~db/seed/logger'
+import { ListrTask } from '~db/seed/starterData'
 
 type EthnicityData = string[]
 
@@ -48,6 +48,7 @@ export const generateEthnicityRecords = (task: ListrTask) => {
 		})
 		log(`Ethnicity record: ${item}`, 'generate', true)
 		data.ethnicity.push({
+			id: generateId('userEthnicity', 0),
 			ethnicity: item,
 			tsKey: key,
 			tsNs: namespaces.user,

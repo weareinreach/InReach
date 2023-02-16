@@ -1,15 +1,10 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import slugify from 'slugify'
-
-import { userRoleList } from '../data'
-import { logFile } from '../logger'
-
-import { Prisma } from '~db/client'
-import { prisma } from '~db/index'
-import { genSeedUser, namespaceGen, namespaces, userRoleMap, userTypeMap } from '~db/seed/data'
+import { generateId, prisma, Prisma, slug } from '~db/index'
+import { genSeedUser, namespaceGen, namespaces, userRoleMap, userTypeMap, userRoleList } from '~db/seed/data'
 import { Log, iconList } from '~db/seed/lib'
+import { logFile } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/starterData'
 
 export const seedSystemUser = async (task: ListrTask) => {
@@ -71,7 +66,7 @@ export const seedUserTypes = async (task: ListrTask) => {
 		logFile.info(formattedMessage)
 		task.output = formattedMessage
 	}
-	const key = (str: string) => slugify(`type-${str}`, { lower: true, strict: true })
+	const key = (str: string) => slug(`type-${str}`)
 	const ns = namespaces.user
 
 	const data: UserTypeData = {
@@ -90,6 +85,7 @@ export const seedUserTypes = async (task: ListrTask) => {
 		})
 
 		data.userType.push({
+			id: generateId('userType', 0),
 			tsKey,
 			tsNs: ns,
 			type: record.type,
@@ -122,11 +118,12 @@ export const seedUserRoles = async (task: ListrTask) => {
 	let countA = 1
 	const data: Prisma.UserRoleCreateManyInput[] = userRoleList.map((role) => {
 		const { name } = role
-		const tag = slugify(name, { lower: true, strict: true })
+		const tag = slug(name)
 		log(`(${countA}/${userRoleList.length}) Preparing User Role record: ${role.name}`, 'generate')
 		countA++
 
 		return {
+			id: generateId('userRole', 0),
 			name,
 			tag,
 		}

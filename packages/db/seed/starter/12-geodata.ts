@@ -5,12 +5,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { geojsonToWKT } from '@terraformer/wkt'
-import cuid from 'cuid'
 import { type Geometry } from 'geojson'
 import iso3166 from 'iso-3166-2'
 import invariant from 'tiny-invariant'
 
-import { prisma, Prisma } from '~db/index'
+import { prisma, Prisma, generateId } from '~db/index'
 import {
 	geoCountryData,
 	geoCountyDataPR,
@@ -48,7 +47,6 @@ const keyGen = (text: string, prefix?: string, suffix?: string) => {
 	return {
 		key,
 		ns: namespaces.govDist,
-
 		text,
 	}
 }
@@ -116,7 +114,7 @@ const upsertDistrictTypes = async (task: ListrTask) => {
 		const key = `type-${keySlug(type.one)}_one`
 		const nameOther = type.other
 		const keyOther = `type-${keySlug(type.one)}_other`
-		const id = distMap.get(name) ?? cuid()
+		const id = distMap.get(name) ?? generateId('govDistType')
 
 		if (!distMap.has(name)) {
 			data.translate.push({
@@ -215,7 +213,7 @@ const countryUS = async (task: ListrTask) => {
 
 			const slug = keySlug(`US-${state.name}`)
 			const { key: tsKey, ns: tsNs } = keyGen(name, 'us')
-			const stateId = distIdMap.get(slug) ?? cuid()
+			const stateId = distIdMap.get(slug) ?? generateId('govDist')
 
 			if (keySet.has(tsKey)) throw new Error('duplicate key', { cause: state })
 
@@ -367,7 +365,7 @@ const countryCA = async (task: ListrTask) => {
 		const slug = keySlug(`CA-${province.name}`)
 		const { key, ns, text } = keyGen(name, 'ca')
 
-		const provId = distIdMap.get(slug) ?? cuid()
+		const provId = distIdMap.get(slug) ?? generateId('govDist')
 
 		data.translate.push({
 			key,
@@ -451,7 +449,7 @@ const countryMX = async (task: ListrTask) => {
 		const slug = keySlug(`MX-${state.name}`)
 		const { key, ns, text } = keyGen(name, 'mx')
 
-		const stateId = distIdMap.get(slug) ?? cuid()
+		const stateId = distIdMap.get(slug) ?? generateId('govDist')
 
 		data.translate.push({
 			key,
@@ -530,7 +528,7 @@ const countiesPR = async (task: ListrTask) => {
 		const slug = keySlug(`PR-${name}`)
 		const { key, ns, text } = keyGen(name, 'pr')
 
-		const stateId = distIdMap.get(slug) ?? cuid()
+		const stateId = distIdMap.get(slug) ?? generateId('govDist')
 
 		data.translate.push({
 			key,

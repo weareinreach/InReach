@@ -1,16 +1,18 @@
-type AttributeItem = {
-	name: string
+import { type Prisma } from '@prisma/client'
+
+type AttributeItem = Omit<Prisma.AttributeCreateManyInput, 'tsKey' | 'tsNs' | 'tag'> & {
+	// name: string
 	description?: string
 	key: string
-	requireLanguage?: boolean
-	requireCountry?: boolean
-	requireData?: boolean
-	requireText?: boolean
+	// requireLanguage?: boolean
+	// requireCountry?: boolean
+	// requireData?: boolean
+	// requireText?: boolean
 }
-type AttributeCategory = {
-	name: string
+type AttributeCategory = Omit<Prisma.AttributeCategoryCreateManyInput, 'tag'> & {
+	// name: string
 	description?: string
-	namespace: string
+	// ns: string
 	attributes: AttributeItem[]
 }
 type AttributeData = AttributeCategory[]
@@ -19,17 +21,19 @@ export const attributeData: AttributeData = [
 	{
 		name: 'Additional Information',
 		description: 'Misc',
-		namespace: 'additional',
+		ns: 'additional',
 		attributes: [
 			{
 				key: 'has-confidentiality-policy',
 				name: 'Has A Confidentiality Policy',
 				description: 'If the organization has a confidentiality policy',
+				filterType: 'INCLUDE',
 			},
 			{
 				key: 'at-capacity',
 				name: 'At capacity',
 				description: 'If the service is currently "at capacity" (i.e. unable to take on new clients)',
+				filterType: 'EXCLUDE',
 			},
 			{
 				key: 'geo-near-public-transit',
@@ -45,11 +49,21 @@ export const attributeData: AttributeData = [
 				name: 'Has Walk-In Hours',
 				description: 'Accepts walk-ins; Walk-in clinic hours; Legal clinic; No appointment required',
 			},
+			{
+				key: 'wheelchair-accessible',
+				name: 'Is wheelchair accessible',
+				filterType: 'INCLUDE',
+			},
+			{
+				key: 'religiously-affiliated',
+				name: 'Is religiously affiliated',
+				filterType: 'EXCLUDE',
+			},
 		],
 	},
 	{
 		name: 'Community',
-		namespace: 'community',
+		ns: 'community',
 		attributes: [
 			{
 				key: 'language-speakers',
@@ -287,12 +301,13 @@ export const attributeData: AttributeData = [
 	},
 	{
 		name: 'Cost',
-		namespace: 'cost',
+		ns: 'cost',
 		attributes: [
 			{
 				key: 'cost-free',
 				name: 'Free of cost',
 				description: 'Services that are free of cost',
+				filterType: 'INCLUDE',
 			},
 			{
 				key: 'cost-fees',
@@ -305,7 +320,7 @@ export const attributeData: AttributeData = [
 	},
 	{
 		name: 'Eligibility Requirements',
-		namespace: 'eligibility',
+		ns: 'eligibility',
 		attributes: [
 			{
 				key: 'elig-age',
@@ -323,39 +338,45 @@ export const attributeData: AttributeData = [
 				name: 'REQUIRES medical insurance',
 				description:
 					'If the service requires medical insurance from new/potential clients in order to access"',
+				filterType: 'EXCLUDE',
 			},
 			{
 				key: 'req-photo-id',
 				name: 'REQUIRES a photo ID',
 				description: 'If the service requires a photo ID from new/potential clients in order to access"',
+				filterType: 'EXCLUDE',
 			},
 			{
 				key: 'req-proof-of-age',
 				name: 'REQUIRES proof of age',
 				description: 'If the service requires proof of age from new/potential clients in order to access"',
+				filterType: 'EXCLUDE',
 			},
 			{
 				key: 'req-proof-of-income',
 				name: 'REQUIRES proof of income',
 				description: 'If the service requires proof of income from new/potential clients in order to access"',
+				filterType: 'EXCLUDE',
 			},
 			{
 				key: 'req-proof-of-residence',
 				name: 'REQUIRES proof of residence',
 				description:
 					'If the service requires proof of residence from new/potential clients in order to access"',
+				filterType: 'EXCLUDE',
 			},
 			{
 				key: 'req-referral',
 				name: 'REQUIRES a referral',
 				description:
 					'If the service requires a referral from another service provider from new/potential clients in order to access"',
+				filterType: 'EXCLUDE',
 			},
 		],
 	},
 	{
 		name: 'Languages',
-		namespace: 'lang',
+		ns: 'lang',
 		attributes: [
 			{ key: 'all-languages-by-interpreter', name: 'All languages via interpreter' },
 			{
@@ -368,7 +389,7 @@ export const attributeData: AttributeData = [
 	},
 	{
 		name: 'System',
-		namespace: 'sys',
+		ns: 'sys',
 		attributes: [
 			{
 				name: 'Incompatible Information',
@@ -380,7 +401,7 @@ export const attributeData: AttributeData = [
 	},
 	{
 		name: 'Service Access Instructions',
-		namespace: 'serviceAccess',
+		ns: 'serviceAccess',
 		attributes: [
 			{ key: 'accessEmail', name: 'Access Instructions - Email', requireData: true },
 			{ key: 'accessFile', name: 'Access Instructions - File', requireData: true },
@@ -392,7 +413,7 @@ export const attributeData: AttributeData = [
 	},
 	{
 		name: 'Organization Leadership',
-		namespace: 'orgLeader',
+		ns: 'orgLeader',
 		attributes: [
 			{ key: 'bipoc-led', name: 'BIPOC Led' },
 			{ key: 'black-led', name: 'Black Led' },
@@ -402,7 +423,7 @@ export const attributeData: AttributeData = [
 	},
 	{
 		name: 'Organization Focus',
-		namespace: 'orgFocus',
+		ns: 'orgFocus',
 		attributes: [
 			{ key: 'bipoc-comm', name: 'BIPOC Community' },
 			{ key: 'immigrant-comm', name: 'Immigrant Community' },
