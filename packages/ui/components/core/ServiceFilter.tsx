@@ -15,14 +15,18 @@ const useStyles = createStyles((theme) => ({
 			background: theme.other.colors.primary.lightGray,
 		},
 		color: theme.other.colors.secondary.black,
-		':root': {
-			display: 'flex',
-			justifyContent: 'space-between',
-			width: '600px',
-		},
 	},
 	container: {
 		width: '600px',
+	},
+	count: {
+		backgroundColor: theme.other.colors.secondary.black,
+		color: theme.other.colors.secondary.white,
+		marginLeft: '8px',
+		paddingLeft: '7px',
+		width: '24px',
+		height: '24px',
+		borderRadius: '100px',
 	},
 }))
 
@@ -63,7 +67,7 @@ export const ServiceFilter = ({}: Props) => {
 					rightIcon={<Icon icon='carbon:chevron-down' />}
 				>
 					<Text>Services</Text>
-					<Text>2</Text>
+					<Text className={classes.count}>2</Text>
 				</Button>
 			</Menu.Target>
 			<Menu.Dropdown>
