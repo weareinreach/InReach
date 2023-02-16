@@ -1,6 +1,5 @@
 import { Accordion, Button, Checkbox, createStyles, Group, Menu, Text, useMantineTheme } from '@mantine/core'
 import { useListState, randomId } from '@mantine/hooks'
-import { background } from '@storybook/theming'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
@@ -59,7 +58,7 @@ export const ServiceFilter = ({}: Props) => {
 	))
 
 	return (
-		<Menu width={600}>
+		<Menu width={600} position='bottom-start'>
 			<Menu.Target>
 				<Button
 					className={classes.button}
@@ -71,42 +70,53 @@ export const ServiceFilter = ({}: Props) => {
 				</Button>
 			</Menu.Target>
 			<Menu.Dropdown>
-				<Menu.Item>
-					<Accordion>
-						<Accordion.Item value='customization'>
-							<Accordion.Control>
-								<Checkbox
-									checked={allChecked}
-									indeterminate={indeterminate}
-									label='Receive all notifications'
-									transitionDuration={0}
-									onChange={() =>
-										handlers.setState((current) =>
-											current.map((value) => ({ ...value, checked: !allChecked }))
-										)
-									}
-								/>
-								{items}
-							</Accordion.Control>
-							<Accordion.Panel>{items}</Accordion.Panel>
-						</Accordion.Item>
-						<Accordion.Item value='flexibility'>
-							<Accordion.Control>Flexibility</Accordion.Control>
-							<Accordion.Panel>
-								Configure components appearance and behavior with vast amount of settings or overwrite any
-								part
-							</Accordion.Panel>
-						</Accordion.Item>
-						<Accordion.Item value='focus-ring'>
-							<Accordion.Control>No annoying focus ring</Accordion.Control>
-							<Accordion.Panel>
-								With new :focus-visible pseudo-class focus ring appears only when user navigates with keyboard
-							</Accordion.Panel>
-						</Accordion.Item>
-					</Accordion>
-				</Menu.Item>
-				{/* <Menu.Item>Thing 2</Menu.Item>
-				<Menu.Item>Thing 3</Menu.Item>
+				{/* <Menu.Item> */}
+				<Accordion
+					chevron={<Icon icon='carbon:chevron-right' />}
+					styles={{ chevron: { '&[data-rotate]': { transform: 'rotate(90deg)' } } }}
+					transitionDuration={0}
+				>
+					<Accordion.Item value='customization'>
+						<Accordion.Control>Customize</Accordion.Control>
+						<Accordion.Panel>
+							<Checkbox
+								checked={allChecked}
+								indeterminate={indeterminate}
+								label='Customize'
+								transitionDuration={0}
+								onChange={() =>
+									handlers.setState((current) => current.map((value) => ({ ...value, checked: !allChecked })))
+								}
+							/>
+							{items}
+						</Accordion.Panel>
+					</Accordion.Item>
+				</Accordion>
+				{/* </Menu.Item> */}
+				{/* <Menu.Item> */}
+				<Accordion
+					chevron={<Icon icon='carbon:chevron-right' />}
+					styles={{ chevron: { '&[data-rotate]': { transform: 'rotate(90deg)' } } }}
+					transitionDuration={0}
+				>
+					<Accordion.Item value='customization2'>
+						<Accordion.Control>Customize2</Accordion.Control>
+						<Accordion.Panel>
+							<Checkbox
+								checked={allChecked}
+								indeterminate={indeterminate}
+								label='Customize2'
+								transitionDuration={0}
+								onChange={() =>
+									handlers.setState((current) => current.map((value) => ({ ...value, checked: !allChecked })))
+								}
+							/>
+							{items}
+						</Accordion.Panel>
+					</Accordion.Item>
+				</Accordion>
+				{/* </Menu.Item> */}
+				{/* <Menu.Item>Thing 3</Menu.Item>
 				<Menu.Item>Thing 4</Menu.Item> */}
 			</Menu.Dropdown>
 		</Menu>
