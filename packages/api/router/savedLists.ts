@@ -1,11 +1,15 @@
 import { TRPCError } from '@trpc/server'
-import remove from 'just-remove'
+import { z } from 'zod'
 
-import { handleError } from '../lib'
-import { nanoUrl } from '../lib/nanoIdUrl'
-import { defineRouter, protectedProcedure, publicProcedure } from '../lib/trpc'
-import { id } from '../schemas/common'
-import { createList, listId, listIdOrgId, listIdServiceId, urlSlug } from '../schemas/savedLists'
+import { handleError } from '~api/lib'
+import { nanoUrl } from '~api/lib/nanoIdUrl'
+import { defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
+import { id } from '~api/schemas/common'
+import { CreateSavedList, CreateListAndEntry } from '~api/schemas/create/userSavedList'
+import { schemas } from '~api/schemas/savedLists'
+import { SaveItem, DeleteSavedItem } from '~api/schemas/update/userSavedList'
+
+import { CreateAuditLog } from '../schemas/create/auditLog'
 
 export const savedListRouter = defineRouter({
 	/** Get all saved lists for logged in user */
@@ -31,7 +35,7 @@ export const savedListRouter = defineRouter({
 		}
 	}),
 	/** Get list by ID. List must be owned by or shared with logged in user */
-	getById: protectedProcedure.input(listId).query(async ({ ctx, input }) => {
+	getById: protectedProcedure.input(schemas.listId).query(async ({ ctx, input }) => {
 		try {
 			const list = await ctx.prisma.userSavedList.findFirst({
 				where: {
@@ -61,7 +65,7 @@ export const savedListRouter = defineRouter({
 		}
 	}),
 	/** Get list by shared URL slug */
-	getByUrl: publicProcedure.input(urlSlug).query(async ({ ctx, input }) => {
+	getByUrl: publicProcedure.input(schemas.urlSlug).query(async ({ ctx, input }) => {
 		try {
 			const list = await ctx.prisma.userSavedList.findUnique({
 				where: {
@@ -81,30 +85,52 @@ export const savedListRouter = defineRouter({
 		}
 	}),
 	/** Create list for logged in user */
-	create: protectedProcedure.input(createList).mutation(async ({ ctx, input }) => {
+	create: protectedProcedure.input(CreateSavedList().inputSchema).mutation(async ({ ctx, input }) => {
 		try {
-			const data = {
-				...input,
-				ownedById: ctx.session.user.id,
-			}
+			const { dataParser } = CreateSavedList()
 
-			const list = await ctx.prisma.userSavedList.create({
-				data: {
-					...data,
-					auditLogs: {
-						create: {
-							from: {},
-							to: data,
-							actorId: ctx.session.user.id,
-						},
-					},
-				},
-			})
+			const inputData = {
+				actorId: ctx.session.user.id,
+				ownedById: ctx.session.user.id,
+				data: input,
+				operation: 'CREATE',
+			} satisfies z.input<typeof dataParser>
+
+			const data = dataParser.parse(inputData)
+
+			const list = await ctx.prisma.userSavedList.create(data)
 			return list
 		} catch (error) {
 			handleError(error)
 		}
 	}),
+	/** Create a new list and save an organization or service to it */
+	createAndSaveItem: protectedProcedure
+		.input(CreateListAndEntry().inputSchema)
+		.mutation(async ({ ctx, input }) => {
+			try {
+				const { dataParser } = CreateListAndEntry()
+
+				const inputData = {
+					actorId: ctx.session.user.id,
+					operation: 'CREATE',
+					ownedById: ctx.session.user.id,
+					data: input,
+				} satisfies z.input<typeof dataParser>
+
+				const data = dataParser.parse(inputData)
+				const result = await ctx.prisma.userSavedList.create(data)
+
+				const flattenedResult = {
+					...result,
+					organizations: result.organizations.map((x) => x.organizationId),
+					services: result.services.map((x) => x.serviceId),
+				}
+				return flattenedResult
+			} catch (error) {
+				handleError(error)
+			}
+		}),
 	/** Delete list by id for current logged in user */
 	delete: protectedProcedure.input(id).mutation(async ({ ctx, input }) => {
 		try {
@@ -129,142 +155,56 @@ export const savedListRouter = defineRouter({
 			handleError(error)
 		}
 	}),
-	/** Save organization to list */
-	saveOrg: protectedProcedure.input(listIdOrgId).mutation(async ({ ctx, input }) => {
+
+	saveItem: protectedProcedure.input(SaveItem().inputSchema).mutation(async ({ ctx, input }) => {
 		try {
-			const result = await ctx.prisma.$transaction(async (tx) => {
-				const from = (await tx.userSavedList.findUnique({
-					where: {
-						id: input.listId,
-					},
-					select: { organizations: { select: { organizationId: true } } },
-				})) ?? { organizations: [] }
-				const to = from
-				to?.organizations.push({ organizationId: input.organizationId })
-				const addOrg = await tx.savedOrganization.create({
-					data: input,
-				})
-				if (addOrg) {
-					await tx.auditLog.create({
-						data: {
-							actorId: ctx.session.user.id,
-							from,
-							to,
-							userSavedListId: input.listId,
-						},
-					})
-				}
-				return addOrg
-			})
-			return result
+			const { dataParser } = SaveItem()
+
+			const inputData = {
+				actorId: ctx.session.user.id,
+				ownedById: ctx.session.user.id,
+				operation: 'LINK',
+				data: input,
+			} satisfies z.input<typeof dataParser>
+			const data = dataParser.parse(inputData)
+
+			const result = await ctx.prisma.userSavedList.update(data)
+			const flattenedResult = {
+				...result,
+				organizations: result.organizations.map((x) => x.organizationId),
+				services: result.services.map((x) => x.serviceId),
+			}
+			return flattenedResult
 		} catch (error) {
 			handleError(error)
 		}
 	}),
-	/** Remove organization from list */
-	delOrg: protectedProcedure.input(listIdOrgId).mutation(async ({ ctx, input }) => {
-		try {
-			const result = await ctx.prisma.$transaction(async (tx) => {
-				const from = (await tx.userSavedList.findUnique({
-					where: {
-						id: input.listId,
-					},
-					select: { organizations: { select: { organizationId: true } } },
-				})) ?? { organizations: [] }
-				const to = {
-					organizations: remove(from.organizations, [{ organizationId: input.organizationId }]),
-				}
-				const delOrg = await tx.savedOrganization.delete({
-					where: { listId_organizationId: input },
-				})
-				if (delOrg) {
-					await tx.auditLog.create({
-						data: {
-							actorId: ctx.session.user.id,
-							from,
-							to,
-							userSavedListId: input.listId,
-						},
-					})
-				}
-				return delOrg
-			})
-			return result
-		} catch (error) {
-			handleError(error)
+	deleteItem: protectedProcedure.input(DeleteSavedItem().inputSchema).mutation(async ({ ctx, input }) => {
+		const { dataParser } = DeleteSavedItem()
+
+		const inputData = {
+			actorId: ctx.session.user.id,
+			ownedById: ctx.session.user.id,
+			operation: 'UNLINK',
+			data: input,
+		} satisfies z.input<typeof dataParser>
+		const data = dataParser.parse(inputData)
+
+		const result = await ctx.prisma.userSavedList.update(data)
+		const flattenedResult = {
+			...result,
+			organizations: result.organizations.map((x) => x.organizationId),
+			services: result.services.map((x) => x.serviceId),
 		}
+		return flattenedResult
 	}),
-	/** Save service to list */
-	saveService: protectedProcedure.input(listIdServiceId).mutation(async ({ ctx, input }) => {
-		try {
-			const result = await ctx.prisma.$transaction(async (tx) => {
-				const from = (await tx.userSavedList.findUnique({
-					where: {
-						id: input.listId,
-					},
-					select: { services: { select: { serviceId: true } } },
-				})) ?? { services: [] }
-				const to = from
-				to?.services.push({ serviceId: input.serviceId })
-				const addService = await tx.savedService.create({
-					data: input,
-				})
-				if (addService) {
-					await tx.auditLog.create({
-						data: {
-							actorId: ctx.session.user.id,
-							from,
-							to,
-							userSavedListId: input.listId,
-						},
-					})
-				}
-				return addService
-			})
-			return result
-		} catch (error) {
-			handleError(error)
-		}
-	}),
-	/** Remove service from list */
-	delService: protectedProcedure.input(listIdServiceId).mutation(async ({ ctx, input }) => {
-		try {
-			const result = await ctx.prisma.$transaction(async (tx) => {
-				const from = (await tx.userSavedList.findUnique({
-					where: {
-						id: input.listId,
-					},
-					select: { services: { select: { serviceId: true } } },
-				})) ?? { services: [] }
-				const to = {
-					services: remove(from.services, [{ serviceId: input.serviceId }]),
-				}
-				const delOrg = await tx.savedService.delete({
-					where: { listId_serviceId: input },
-				})
-				if (delOrg) {
-					await tx.auditLog.create({
-						data: {
-							actorId: ctx.session.user.id,
-							from,
-							to,
-							userSavedListId: input.listId,
-						},
-					})
-				}
-				return delOrg
-			})
-			return result
-		} catch (error) {
-			handleError(error)
-		}
-	}),
+
 	/**
 	 * Create url to share list
 	 *
 	 * List will be viewable by anyone who has this link.
 	 */
-	shareUrl: protectedProcedure.input(listId).mutation(async ({ ctx, input }) => {
+	shareUrl: protectedProcedure.input(schemas.listId).mutation(async ({ ctx, input }) => {
 		try {
 			const generateUniqueSlug = async (): Promise<string> => {
 				const slug = nanoUrl()
@@ -279,35 +219,20 @@ export const savedListRouter = defineRouter({
 				return slug
 			}
 			const urlSlug = await generateUniqueSlug()
+			const from = { sharedLinkKey: null }
 
-			const result = await ctx.prisma.$transaction(async (tx) => {
-				const from = (await tx.userSavedList.findUnique({
-					where: input,
-					select: { sharedLinkKey: true },
-				})) ?? { sharedLinkKey: undefined }
-
-				const sharedUrl = await tx.userSavedList.update({
-					where: input,
-					data: { sharedLinkKey: urlSlug },
-					select: {
-						id: true,
-						name: true,
-						sharedLinkKey: true,
-					},
-				})
-				if (sharedUrl) {
-					const { sharedLinkKey, id } = sharedUrl
-					await tx.auditLog.create({
-						data: {
-							actorId: ctx.session.user.id,
-							from,
-							to: { sharedLinkKey },
-							userSavedListId: id,
-						},
-					})
-				}
-
-				return sharedUrl
+			const data = { sharedLinkKey: urlSlug }
+			const result = await ctx.prisma.userSavedList.update({
+				where: input,
+				data: {
+					...data,
+					auditLogs: CreateAuditLog({ actorId: ctx.session.user.id, operation: 'UPDATE', from, to: data }),
+				},
+				select: {
+					id: true,
+					name: true,
+					sharedLinkKey: true,
+				},
 			})
 			return result
 		} catch (error) {
@@ -319,18 +244,23 @@ export const savedListRouter = defineRouter({
 	 *
 	 * Anyone who visits the old URL will be presented a 404
 	 */
-	unShareUrl: protectedProcedure.input(listId).mutation(async ({ ctx, input }) => {
+	unShareUrl: protectedProcedure.input(schemas.listId).mutation(async ({ ctx, input }) => {
 		try {
 			const result = await ctx.prisma.$transaction(async (tx) => {
-				const from = (await tx.userSavedList.findUnique({
+				const from = await tx.userSavedList.findUniqueOrThrow({
 					where: input,
 					select: { sharedLinkKey: true },
-				})) ?? { sharedLinkKey: undefined }
+				})
 
+				if (from.sharedLinkKey === null)
+					throw new TRPCError({ code: 'BAD_REQUEST', message: `No shared URL for listId ${input.id}` })
+
+				const data = { sharedLinkKey: null }
 				const sharedUrl = await tx.userSavedList.update({
 					where: input,
 					data: {
-						sharedLinkKey: null,
+						...data,
+						auditLogs: CreateAuditLog({ actorId: ctx.session.user.id, operation: 'UPDATE', from, to: data }),
 					},
 					select: {
 						id: true,
@@ -338,17 +268,6 @@ export const savedListRouter = defineRouter({
 						sharedLinkKey: true,
 					},
 				})
-				if (sharedUrl) {
-					const { sharedLinkKey, id } = sharedUrl
-					await tx.auditLog.create({
-						data: {
-							actorId: ctx.session.user.id,
-							from,
-							to: { sharedLinkKey },
-							userSavedListId: id,
-						},
-					})
-				}
 				return sharedUrl
 			})
 			return result

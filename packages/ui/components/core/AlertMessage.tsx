@@ -1,7 +1,7 @@
 import { createStyles, Grid, Paper, useMantineTheme } from '@mantine/core'
 import { Trans } from 'next-i18next'
 
-import { Icon } from '../../icon'
+import { Icon } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({
 	messageContainer: {

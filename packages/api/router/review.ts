@@ -1,17 +1,16 @@
-import { Prisma } from '@weareinreach/db'
+import { z } from 'zod'
 
-import { handleError } from '../lib'
-import { defineRouter, protectedProcedure, publicProcedure, staffProcedure } from '../lib/trpc'
-import { id, orgId, orgIdLocationId, orgIdServiceId, userId } from '../schemas/common'
-import { createReview, transformCreateReview } from '../schemas/review'
+import { handleError } from '~api/lib'
+import { defineRouter, protectedProcedure, publicProcedure, staffProcedure } from '~api/lib/trpc'
+import { id, orgId, orgIdLocationId, orgIdServiceId, userId } from '~api/schemas/common'
+import { CreateReview, CreateReviewInput } from '~api/schemas/create/review'
+import { ReviewVisibility, ReviewToggleDelete } from '~api/schemas/update/review'
 
 export const reviewRouter = defineRouter({
-	create: protectedProcedure.input(createReview).mutation(async ({ ctx, input }) => {
+	create: protectedProcedure.input(CreateReviewInput).mutation(async ({ ctx, input }) => {
 		try {
-			const data: Prisma.OrgReviewCreateArgs['data'] = {
-				...input,
-				userId: ctx.session.user.id,
-			}
+			const { data } = CreateReview.parse({ ...input, userId: ctx.session.user.id })
+
 			const review = await ctx.prisma.orgReview.create({ data, select: { id: true } })
 
 			return review
@@ -99,14 +98,15 @@ export const reviewRouter = defineRouter({
 		.meta({ hasPerm: 'hideUserReview' })
 		.mutation(async ({ ctx, input }) => {
 			try {
-				const result = await ctx.prisma.orgReview.update({
-					where: {
-						id: input.id,
-					},
-					data: {
-						visible: false,
-					},
-				})
+				const inputData = {
+					...input,
+					actorId: ctx.session.user.id,
+					visible: false,
+				} satisfies z.input<typeof ReviewVisibility>
+
+				const data = ReviewVisibility.parse(inputData)
+
+				const result = await ctx.prisma.orgReview.update(data)
 				return result
 			} catch (error) {
 				handleError(error)
@@ -117,14 +117,15 @@ export const reviewRouter = defineRouter({
 		.meta({ hasPerm: 'showUserReview' })
 		.mutation(async ({ ctx, input }) => {
 			try {
-				const result = await ctx.prisma.orgReview.update({
-					where: {
-						id: input.id,
-					},
-					data: {
-						visible: true,
-					},
-				})
+				const inputData = {
+					...input,
+					actorId: ctx.session.user.id,
+					visible: true,
+				} satisfies z.input<typeof ReviewVisibility>
+
+				const data = ReviewVisibility.parse(inputData)
+
+				const result = await ctx.prisma.orgReview.update(data)
 				return result
 			} catch (error) {
 				handleError(error)
@@ -135,15 +136,15 @@ export const reviewRouter = defineRouter({
 		.meta({ hasPerm: 'deleteUserReview' })
 		.mutation(async ({ ctx, input }) => {
 			try {
-				const review = ctx.prisma.orgReview.update({
-					where: {
-						id: input.id,
-					},
-					data: {
-						deleted: true,
-					},
-				})
-				return review
+				const inputData = {
+					...input,
+					actorId: ctx.session.user.id,
+					deleted: true,
+				} satisfies z.input<typeof ReviewToggleDelete>
+				const data = ReviewToggleDelete.parse(inputData)
+
+				const result = await ctx.prisma.orgReview.update(data)
+				return result
 			} catch (error) {
 				handleError(error)
 			}
@@ -153,15 +154,15 @@ export const reviewRouter = defineRouter({
 		.meta({ hasPerm: 'deleteUserReview' })
 		.mutation(async ({ ctx, input }) => {
 			try {
-				const review = ctx.prisma.orgReview.update({
-					where: {
-						id: input.id,
-					},
-					data: {
-						deleted: false,
-					},
-				})
-				return review
+				const inputData = {
+					...input,
+					actorId: ctx.session.user.id,
+					deleted: false,
+				} satisfies z.input<typeof ReviewToggleDelete>
+				const data = ReviewToggleDelete.parse(inputData)
+
+				const result = await ctx.prisma.orgReview.update(data)
+				return result
 			} catch (error) {
 				handleError(error)
 			}

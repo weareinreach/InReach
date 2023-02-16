@@ -20,17 +20,17 @@ const StoryDemo = ({ schema }: StoryProps) => {
 
 type StoryProps = {
 	/** Zod Schema - See {@link https://zod.dev/ Zod documentation} */
-	schema: z.Schema
+	schema: z.ZodType
 }
 
-const meta: Meta<typeof StoryDemo> = {
+const meta = {
 	title: 'Hooks/useTypedRouterQuery',
 	component: StoryDemo,
 	args: {
 		schema: z.object({
 			slug: z.string(),
-			locationId: z.string().optional(),
-			serviceId: z.string().optional(),
+			locationId: z.string(),
+			serviceId: z.string(),
 		}),
 	},
 	argTypes: {
@@ -40,6 +40,29 @@ const meta: Meta<typeof StoryDemo> = {
 		},
 	},
 
+	parameters: {
+		docs: {
+			description: {
+				component: `It takes a [Zod](https://zod.dev/) schema and returns a [NextJS router](https://nextjs.org/docs/api-reference/next/router) object with the query parsed according to the schema`,
+			},
+			source: {
+				code: `const router = useTypedRouterQuery(schema)`,
+				language: 'typescript',
+				type: 'auto',
+			},
+		},
+	},
+} satisfies Meta<typeof StoryDemo>
+
+export default meta
+type Story = StoryObj<typeof StoryDemo>
+
+/*
+ *👇 Render functions are a framework specific feature to allow you control on how the component renders.
+ * See https://storybook.js.org/docs/7.0/react/api/csf
+ * to learn how to use render functions.
+ */
+export const Success: Story = {
 	parameters: {
 		nextjs: {
 			router: {
@@ -52,28 +75,8 @@ const meta: Meta<typeof StoryDemo> = {
 				},
 			},
 		},
-		docs: {
-			description: {
-				component: `It takes a [Zod](https://zod.dev/) schema and returns a [NextJS router](https://nextjs.org/docs/api-reference/next/router) object with the query parsed according to the schema`,
-			},
-			source: {
-				code: `const router = useTypedRouterQuery(schema)`,
-				language: 'typescript',
-				type: 'auto',
-			},
-		},
 	},
 }
-
-export default meta
-type Story = StoryObj<typeof StoryDemo>
-
-/*
- *👇 Render functions are a framework specific feature to allow you control on how the component renders.
- * See https://storybook.js.org/docs/7.0/react/api/csf
- * to learn how to use render functions.
- */
-export const Success: Story = {}
 
 export const Fail: Story = {
 	parameters: {

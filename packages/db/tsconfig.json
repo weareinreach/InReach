@@ -3,10 +3,9 @@
 	"compilerOptions": {
 		"noImplicitAny": false,
 		"strictNullChecks": true,
-		"baseUrl": ".",
-		"paths": {
-			"~/*": ["./*"]
-		},
+		"baseUrl": "./",
 		"allowJs": true
-	}
+	},
+	"exclude": ["**/node_modules", "./**/.*/"],
+	"include": ["./**/*.ts", "../../@types/**/*.ts"]
 }

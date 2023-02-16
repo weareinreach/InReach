@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"~/*": ["./src/*"]
+			"~web/*": ["./src/*"]
 		}
 	},
 	"include": [
@@ -13,7 +13,8 @@
 		"./**/*.js",
 		"./**/*.jsx",
 		"./**/*.mjs",
-		"./**/*.cjs"
+		"./**/*.cjs",
+		"../../@types/**/*.ts"
 	],
 	"exclude": ["node_modules"]
 }

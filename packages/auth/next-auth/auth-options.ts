@@ -3,7 +3,7 @@
 import { prisma } from '@weareinreach/db'
 import { User, type NextAuthOptions } from 'next-auth'
 
-import { cognitoCredentialProvider } from '../providers/cognito'
+import { cognitoCredentialProvider } from '~auth/providers/cognito'
 
 export const authOptions: NextAuthOptions = {
 	callbacks: {

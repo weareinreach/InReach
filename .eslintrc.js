@@ -19,5 +19,11 @@ module.exports = {
 				tsconfigRootDir: __dirname,
 			},
 		},
+		{
+			files: ['./@types/**/*.ts'],
+			rules: {
+				'import/no-extraneous-dependencies': 0,
+			},
+		},
 	],
 }

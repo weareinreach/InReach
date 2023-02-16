@@ -1,8 +1,8 @@
 import { point } from '@turf/helpers'
 
 export const createPoint = ({ longitude, latitude }: CreatePointArgs) => {
-	if (!longitude || !latitude) return {}
-	return point([longitude, latitude])
+	if (!longitude || !latitude) return 'JsonNull'
+	return point([longitude, latitude]).geometry
 }
 
 type CreatePointArgs = {
