@@ -44,7 +44,7 @@ export const seedAttributes = async (task: ListrTask) => {
 	for (const category of attributeData) {
 		log(`(${x + 1}/${attributeData.length}) Prepare Attribute Category: ${category.name}`, 'generate')
 
-		const catTag = slugify(category.name, { lower: true })
+		const catTag = slugify(category.name, { lower: true, strict: true })
 		const categoryId = categoryMap.get(catTag) ?? cuid()
 
 		if (!categoryMap.has(catTag)) {
@@ -82,7 +82,7 @@ export const seedAttributes = async (task: ListrTask) => {
 			log(`[${idx + 1}/${category.attributes.length}] Prepare Attribute: ${name}`, 'generate', true)
 
 			idx++
-			const key = slugify(`${category.namespace}-${keyTag}`, { lower: true })
+			const key = slugify(`${category.namespace}-${keyTag}`, { lower: true, strict: true })
 			const attributeId = attributeMap.get(name) ?? cuid()
 
 			if (!attributeMap.has(name)) {
@@ -92,7 +92,7 @@ export const seedAttributes = async (task: ListrTask) => {
 					text: name,
 				})
 				log(`[${key}] Generated translation key`, 'tlate', true)
-				const tag = slugify(keyTag, { lower: true })
+				const tag = slugify(keyTag, { lower: true, strict: true })
 
 				data.attribute.push({
 					id: attributeId,

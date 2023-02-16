@@ -71,7 +71,7 @@ export const seedUserTypes = async (task: ListrTask) => {
 		logFile.info(formattedMessage)
 		task.output = formattedMessage
 	}
-	const key = (str: string) => slugify(`type-${str}`)
+	const key = (str: string) => slugify(`type-${str}`, { lower: true, strict: true })
 	const ns = namespaces.user
 
 	const data: UserTypeData = {
@@ -122,7 +122,7 @@ export const seedUserRoles = async (task: ListrTask) => {
 	let countA = 1
 	const data: Prisma.UserRoleCreateManyInput[] = userRoleList.map((role) => {
 		const { name } = role
-		const tag = slugify(name, { lower: true })
+		const tag = slugify(name, { lower: true, strict: true })
 		log(`(${countA}/${userRoleList.length}) Preparing User Role record: ${role.name}`, 'generate')
 		countA++
 

@@ -9,7 +9,7 @@ export const userEmail = 'inreach_svc@inreach.org'
 export const localeCode = 'en'
 export const userType = { text: 'System', tsKey: 'system', tsNs: namespaces.user }
 export const translationNamespace = namespaces.user
-export const key = (str: string) => slugify(`type-${str}`)
+export const key = (str: string) => slugify(`type-${str}`, { lower: true, strict: true })
 
 export const userRoleMap = new Map<string, string>()
 export const userTypeMap = new Map<string, string>()
