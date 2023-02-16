@@ -60,4 +60,33 @@ export const queries = defineRouter({
 			handleError(error)
 		}
 	}),
+	getFilterOptions: publicProcedure.query(async ({ ctx }) => {
+		const result = await ctx.prisma.serviceCategory.findMany({
+			where: {
+				active: true,
+			},
+			select: {
+				id: true,
+				tsKey: true,
+				tsNs: true,
+				services: {
+					where: {
+						active: true,
+					},
+					select: {
+						id: true,
+						tsKey: true,
+						tsNs: true,
+					},
+					orderBy: {
+						tsKey: 'asc',
+					},
+				},
+			},
+			orderBy: {
+				tsKey: 'asc',
+			},
+		})
+		return result
+	}),
 })

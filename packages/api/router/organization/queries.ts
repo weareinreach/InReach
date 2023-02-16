@@ -68,6 +68,8 @@ export const queries = defineRouter({
 	}),
 	searchDistance: publicProcedure.input(distSearch).query(async ({ ctx, input }) => {
 		const { lat, lon, dist, unit } = input
+		// TODO: Merge in getSearchDetails
+		// TODO: Return distances in same unit as searched
 
 		// Convert to meters
 		const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
