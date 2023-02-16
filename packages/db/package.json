@@ -17,8 +17,8 @@
 		"db:repl": "pnpm dlx @prismatools/console@latest -c ../../node_modules/@prisma/client",
 		"db:reset": "pnpm with-env prisma migrate reset",
 		"db:seed": "pnpm with-env prisma db seed",
+		"db:seed:update": "SEED_UPDATE=true pnpm with-env prisma db seed",
 		"db:studio": "pnpm with-env prisma studio",
-		"db:update:seed": "SEED_UPDATE=true pnpm with-env prisma db seed",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown . && prisma format",
 		"format:all": "pnpm format:export && pnpm format:generated",
 		"format:export": "prettier --cache --cache-strategy metadata --write ./data-transfer/**/*.{ts,json}",
@@ -35,6 +35,7 @@
 	"dependencies": {
 		"@paralleldrive/cuid2": "2.0.1",
 		"@prisma/client": "4.10.1",
+		"ulid": "2.3.0",
 		"zod": "3.20.6"
 	},
 	"devDependencies": {

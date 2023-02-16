@@ -20,7 +20,7 @@ const clientOptions = {
 			: ['error'],
 } satisfies Prisma.PrismaClientOptions
 
-export const prisma = global.prisma || new PrismaClient(clientOptions)
+const prisma = global.prisma || new PrismaClient(clientOptions)
 
 const log = createPrismaQueryEventHandler({
 	queryDuration: true,
@@ -33,11 +33,12 @@ if (!global.prisma) {
 	prisma.$on('query', log)
 }
 
-export * from './client'
-export * from './zod_util'
-
 if (process.env.NODE_ENV !== 'production') {
 	global.prisma = prisma
 }
 
-export { createId }
+export * from './client'
+export * from './zod_util'
+export { generateId } from './lib/idGen'
+export { slug } from './lib/slugGen'
+export { createId, prisma }

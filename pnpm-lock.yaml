@@ -540,11 +540,13 @@ importers:
       tsx: 3.12.3
       type-fest: 3.5.7
       typescript: 4.9.5
+      ulid: 2.3.0
       zod: 3.20.6
       zod-prisma-types: 2.0.17
     dependencies:
       '@paralleldrive/cuid2': 2.0.1
       '@prisma/client': 4.10.1_prisma@4.10.1
+      ulid: 2.3.0
       zod: 3.20.6
     devDependencies:
       '@faker-js/faker': 7.6.0
@@ -19238,6 +19240,11 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /ulid/2.3.0:
+    resolution: {integrity: sha512-keqHubrlpvT6G2wH0OEfSW4mquYRcbe/J8NMmveoQOjUqmo+hXtO+ORCpWhdbZ7k72UtY61BL7haGxW6enBnjw==}
+    hasBin: true
+    dev: false
 
   /unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
