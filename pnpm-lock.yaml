@@ -726,6 +726,7 @@ importers:
       next-i18next: 13.1.5
       next-router-mock: 0.9.1
       postcss-loader: 7.0.2
+      prettier: 2.8.4
       react: 18.2.0
       react-docgen-typescript: 2.2.2
       react-dom: 18.2.0
@@ -827,6 +828,7 @@ importers:
       next-i18next: 13.1.5_ofn3rluqlytmjlkhptt5cftfxy
       next-router-mock: 0.9.1_next@13.1.6+react@18.2.0
       postcss-loader: 7.0.2_6jdsrmfenkuhhw3gx4zvjlznce
+      prettier: 2.8.4
       react: 18.2.0
       react-docgen-typescript: 2.2.2_typescript@4.9.5
       react-dom: 18.2.0_react@18.2.0
