@@ -583,7 +583,7 @@ model OrgLocation {
 
   longitude Decimal?                             @db.Decimal(7, 4)
   latitude  Decimal?                             @db.Decimal(7, 4)
-  geo       Unsupported("\"public\".geography")?
+  geo       Unsupported("Geometry(POINT,4326)")?
   geoJSON   Json /// @zod.custom.use(Geometry)
   geoWKT    String?
 
@@ -1090,19 +1090,19 @@ enum SourceType {
 /// Country metadata
 /// @zod.import(["import {Geometry} from '../../zod_util'"])
 model Country {
-  id       String                              @id @default(cuid())
+  id       String                                  @id @default(cuid())
   /// ISO 3166-1 alpha-2 Country code
-  cca2     String                              @unique @db.Char(2)
+  cca2     String                                  @unique @db.Char(2)
   /// ISO 3166-1 alpha-3 Country code
-  cca3     String                              @unique @db.Char(3)
+  cca3     String                                  @unique @db.Char(3)
   /// Country name (English).
-  name     String                              @unique(sort: Asc)
+  name     String                                  @unique(sort: Asc)
   /// International dialing code
-  dialCode Int?                                @db.SmallInt
+  dialCode Int?                                    @db.SmallInt
   /// Country flag (emoji)
   flag     String
   /// GeoJSON object - required only if this will be considered a "service area"
-  geo      Unsupported("geography(geometry)")?
+  geo      Unsupported("Geometry(GEOMETRY,4326)")?
   geoJSON  Json? /// @zod.custom.use(Geometry)
   geoWKT   String?
 
@@ -1141,17 +1141,17 @@ model Country {
 /// Administrative districts for countries
 /// @zod.import(["import {Geometry} from '../../zod_util'"])
 model GovDist {
-  id      String                               @id @default(cuid())
+  id      String                                  @id @default(cuid())
   /// Name (English/Roman alphabet)
   name    String
   /// Slug - [country (ISO)]-[govdist]-[...]
-  slug    String                               @unique
+  slug    String                                  @unique
   /// ISO-3166-2 code
   iso     String?
   /// Abbreviation (Optional)
   abbrev  String?
   /// GeoJSON object - required only if this will be considered a "service area"
-  geo     Unsupported("\"public\".geography")?
+  geo     Unsupported("Geometry(GEOMETRY,4326)")?
   geoJSON Json? /// @zod.custom.use(Geometry)
   geoWKT  String?
 

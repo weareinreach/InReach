@@ -63,9 +63,7 @@ export const SearchDetailsOutput = z
 			.array(),
 	})
 	.array()
-	.optional()
 	.transform((data) => {
-		if (!data) return []
 		const result = data.map(({ id, name, attributes, description, locations, services, slug }) => {
 			const servCombined = new Set<string>()
 
@@ -91,10 +89,56 @@ export const SearchDetailsOutput = z
 			}
 		})
 		return result
-	})
+	}) satisfies z.ZodType<any, any, SearchReturn>
 
 type ServCat = {
 	id: string
 	tsKey: string
 	tsNs: string
 }
+
+type SearchReturn = {
+	id: string
+	name: string
+	slug: string
+	attributes: {
+		attribute: {
+			categories: {
+				attribute: {
+					tsNs: string
+					tsKey: string
+				}
+			}[]
+		}
+	}[]
+	description: {
+		key: string
+		ns: string
+	} | null
+	services: {
+		services: {
+			tag: {
+				category: {
+					id: string
+					tsNs: string
+					tsKey: string
+				}
+			}
+		}[]
+	}[]
+	locations: {
+		services: {
+			service: {
+				services: {
+					tag: {
+						category: {
+							id: string
+							tsNs: string
+							tsKey: string
+						}
+					}
+				}[]
+			}
+		}[]
+	}[]
+}[]

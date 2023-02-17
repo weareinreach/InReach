@@ -79,23 +79,24 @@ export const queries = defineRouter({
 
 		return { orgs, serviceAreas }
 	}),
-	getSearchDetails: publicProcedure
-		.input(idArray)
-		.output(SearchDetailsOutput)
-		.query(async ({ ctx, input }) => {
-			try {
-				const results = await ctx.prisma.organization.findMany({
-					where: {
-						id: {
-							in: input.ids,
-						},
+	getSearchDetails: publicProcedure.input(idArray).query(async ({ ctx, input }) => {
+		try {
+			const results = await ctx.prisma.organization.findMany({
+				where: {
+					id: {
+						in: input.ids,
 					},
-					select: orgSearchSelect,
-				}) //satisfies SearchDetailsResultInput
-
-				return results
-			} catch (error) {
-				handleError(error)
-			}
-		}),
+				},
+				select: orgSearchSelect,
+			}) //satisfies SearchDetailsResultInput
+			const orderedResults: typeof results = []
+			input.ids.forEach((id) => {
+				const sort = results.find((result) => result.id === id)
+				if (sort) orderedResults.push(sort)
+			})
+			return SearchDetailsOutput.parse(orderedResults)
+		} catch (error) {
+			handleError(error)
+		}
+	}),
 })

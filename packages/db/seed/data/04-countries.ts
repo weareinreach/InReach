@@ -5,9 +5,8 @@ import { Prisma } from '@prisma/client'
 import axios from 'axios'
 import { countries as countryExtra } from 'countries-languages'
 
-import { TranslationPluralSchema } from '../../zod_util/translationPlurals'
-
 import { namespaces } from '~db/seed/data/00-namespaces'
+import { TranslationPluralSchema } from '~db/zod_util/translationPlurals'
 
 export const countryData = async () => {
 	const { data: countries } = await axios.get<Array<Countries>>(
