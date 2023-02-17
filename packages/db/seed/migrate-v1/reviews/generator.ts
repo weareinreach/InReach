@@ -4,7 +4,7 @@ import fs from 'fs'
 
 import { CommentsJSONCollection } from '~db/datastore/v1/mongodb/output-types/comments'
 import { RatingsJSONCollection } from '~db/datastore/v1/mongodb/output-types/ratings'
-import { Prisma, prisma } from '~db/index'
+import { Prisma, prisma, generateId } from '~db/index'
 import { userEmail } from '~db/seed/data'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
@@ -130,7 +130,9 @@ export const generateReviews = async (task: ListrTask) => {
 			const legacyId = record._id.$oid
 			const userId = userMap.get(user ?? '') ?? systemUser
 			const deleted = isDeleted ?? is_deleted
+			const id = generateId('orgReview', createdAt)
 			orgReviews.push({
+				id,
 				legacyId,
 				organizationId,
 				orgServiceId,

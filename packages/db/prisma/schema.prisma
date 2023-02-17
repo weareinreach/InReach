@@ -948,10 +948,24 @@ model AttributeSupplement {
   internalNotes InternalNote[]
 
   //@@schema("system")
-  organizationAttribute  OrganizationAttribute[]
-  locationAttribute      LocationAttribute[]
-  serviceAttribute       ServiceAttribute[]
-  serviceAccessAttribute ServiceAccessAttribute[]
+  locationAttribute      LocationAttribute?      @relation(references: [attributeId, locationId], fields: [locationAttributeAttributeId, locationAttributeLocationId])
+  organizationAttribute  OrganizationAttribute?  @relation(references: [attributeId, organizationId], fields: [organizationAttributeAttributeId, organizationAttributeOrganizationId])
+  serviceAccessAttribute ServiceAccessAttribute? @relation(references: [attributeId, serviceAccessId], fields: [serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId])
+  serviceAttribute       ServiceAttribute?       @relation(references: [attributeId, orgServiceId], fields: [serviceAttributeAttributeId, serviceAttributeOrgServiceId])
+
+  locationAttributeAttributeId          String?
+  locationAttributeLocationId           String?
+  organizationAttributeAttributeId      String?
+  organizationAttributeOrganizationId   String?
+  serviceAccessAttributeAttributeId     String?
+  serviceAccessAttributeServiceAccessId String?
+  serviceAttributeAttributeId           String?
+  serviceAttributeOrgServiceId          String?
+
+  @@index([locationAttributeAttributeId, locationAttributeLocationId])
+  @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId])
+  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId])
+  @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId])
 }
 
 model ServiceCategory {
@@ -1076,19 +1090,19 @@ enum SourceType {
 /// Country metadata
 /// @zod.import(["import {Geometry} from '../../zod_util'"])
 model Country {
-  id       String                               @id @default(cuid())
+  id       String                              @id @default(cuid())
   /// ISO 3166-1 alpha-2 Country code
-  cca2     String                               @unique @db.Char(2)
+  cca2     String                              @unique @db.Char(2)
   /// ISO 3166-1 alpha-3 Country code
-  cca3     String                               @unique @db.Char(3)
+  cca3     String                              @unique @db.Char(3)
   /// Country name (English).
-  name     String                               @unique(sort: Asc)
+  name     String                              @unique(sort: Asc)
   /// International dialing code
-  dialCode Int?                                 @db.SmallInt
+  dialCode Int?                                @db.SmallInt
   /// Country flag (emoji)
   flag     String
   /// GeoJSON object - required only if this will be considered a "service area"
-  geo      Unsupported("\"public\".geography")?
+  geo      Unsupported("geography(geometry)")?
   geoJSON  Json? /// @zod.custom.use(Geometry)
   geoWKT   String?
 
@@ -1997,12 +2011,13 @@ model ServiceAreaDist {
 
 /// Link attributes to organizations
 model OrganizationAttribute {
-  organization   Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organization   Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   organizationId String /// @zod.string.cuid()
-  attribute      Attribute            @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attribute      Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId    String /// @zod.string.cuid()
-  supplement     AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  supplementId   String?              @unique /// @zod.string.cuid()
+  supplement     AttributeSupplement[]
+  //supplement     AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  //supplementId   String?              @unique /// @zod.string.cuid()
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2012,12 +2027,13 @@ model OrganizationAttribute {
 
 /// Link attributes to locations
 model LocationAttribute {
-  location     OrgLocation          @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  locationId   String /// @zod.string.cuid()
-  attribute    Attribute            @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId  String /// @zod.string.cuid()
-  supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  supplementId String?              @unique /// @zod.string.cuid()
+  location    OrgLocation           @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  locationId  String /// @zod.string.cuid()
+  attribute   Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeId String /// @zod.string.cuid()
+  supplement  AttributeSupplement[]
+  // supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  // supplementId String?              @unique /// @zod.string.cuid()
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2027,12 +2043,13 @@ model LocationAttribute {
 
 /// Link attributes to services
 model ServiceAttribute {
-  service      OrgService           @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  service      OrgService            @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   orgServiceId String /// @zod.string.cuid()
-  attribute    Attribute            @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attribute    Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId  String /// @zod.string.cuid()
-  supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  supplementId String?              @unique /// @zod.string.cuid()
+  supplement   AttributeSupplement[]
+  // supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  // supplementId String?              @unique /// @zod.string.cuid()
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2042,12 +2059,13 @@ model ServiceAttribute {
 
 /// Link attributes to Service Access instructions
 model ServiceAccessAttribute {
-  serviceAccess   ServiceAccess        @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceAccess   ServiceAccess         @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   serviceAccessId String /// @zod.string.cuid()
-  attribute       Attribute            @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attribute       Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId     String /// @zod.string.cuid()
-  supplement      AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  supplementId    String?              @unique /// @zod.string.cuid()
+  supplement      AttributeSupplement[]
+  // supplement      AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  // supplementId    String?              @unique /// @zod.string.cuid()
 
   linkedAt DateTime @default(now())
   //@@schema("relation")

@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
 import { writeFileSync } from 'fs'
+import path from 'path'
 
 import { Prisma } from '~db/index'
 import { queryClient } from '~db/seed/migrate-v1/org/clients'
@@ -110,10 +111,12 @@ export const compare: Compare = async (tx, input, batchName: BatchNames) => {
 
 		default: {
 			throw new Error('Unmapped comparison!')
-			break
 		}
 	}
 }
 export const writeOutDiff = () => {
-	writeFileSync('./skipped.json', JSON.stringify(Object.fromEntries(diffMap)))
+	writeFileSync(
+		path.resolve(__dirname, '../_generated/skipped.json'),
+		JSON.stringify(Object.fromEntries(diffMap))
+	)
 }

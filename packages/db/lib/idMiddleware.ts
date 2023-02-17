@@ -12,7 +12,7 @@ export const idMiddleware: Prisma.Middleware = async (params, next) => {
 					params.args.data.id = generateId(modelName as IdPrefix)
 				}
 			} else if (Array.isArray(params.args.data)) {
-				params.args.data = params.args.data.map((record) => ({
+				params.args.data = params.args.data.map((record: Record<string, unknown>) => ({
 					id: record.id ? record.id : generateId(modelName as IdPrefix),
 					...record,
 				}))

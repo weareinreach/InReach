@@ -4,10 +4,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { geojsonToWKT } from '@terraformer/wkt'
-import cuid from 'cuid'
 import { flatten } from 'flat'
 import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js'
 import { DateTime } from 'luxon'
+import prettier from 'prettier'
 import superjson from 'superjson'
 import invariant from 'tiny-invariant'
 
@@ -16,7 +16,7 @@ import path from 'path'
 
 import { dayMap, hoursMap, hoursMeta } from '~db/datastore/v1/helpers/hours'
 import { OrganizationsJSONCollection } from '~db/datastore/v1/mongodb/output-types/organizations'
-import { Prisma, SourceType, JsonInputOrNull, prisma } from '~db/index'
+import { SourceType, JsonInputOrNull, JsonInputOrNullSuperJSON, prisma, generateId } from '~db/index'
 import { Log, iconList } from '~db/seed/lib'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
@@ -200,7 +200,7 @@ export const migrateOrgs = async (task: ListrTask) => {
 			})
 			if (descriptionKey && descriptionNs && descriptionText) {
 				const [key, ns, text] = [descriptionKey, descriptionNs, descriptionText]
-				const id = cuid()
+				const id = generateId('freeText', createdAt)
 				orgTranslationKey.add({
 					key,
 					ns,
@@ -217,7 +217,7 @@ export const migrateOrgs = async (task: ListrTask) => {
 				)
 				exportTranslation(descriptionKey, org.description_ES, log)
 			}
-			const id = cuid()
+			const id = generateId('organization', createdAt)
 			organization.add({
 				id,
 				name: org.name,
@@ -292,7 +292,7 @@ export const generateRecords = async (task: ListrTask) => {
 		migrateLog.info(formattedMessage)
 		if (!silent) task.output = formattedMessage
 	}
-
+	const prettierOpts = (await prettier.resolveConfig(__dirname)) ?? undefined
 	const {
 		attributeList,
 		countryMap,
@@ -379,7 +379,7 @@ export const generateRecords = async (task: ListrTask) => {
 						continue
 					}
 					log(`🛠️ [${count}/${org.locations.length}] Location: ${location.name ?? location._id.$oid}`)
-					const locId = cuid()
+					const locId = generateId('orgLocation', createdAt)
 					const [longitude, latitude] = location.geolocation.coordinates.map(
 						(x) => +parseFloat(x.$numberDecimal).toFixed(3)
 					)
@@ -445,7 +445,7 @@ export const generateRecords = async (task: ListrTask) => {
 					const countryId = countryMap.get(phoneData?.country ?? 'US')
 					if (!countryId) throw new Error('Unable to retrieve Country ID')
 					const migrationReview = phoneData ? true : undefined
-					const id = cuid()
+					const id = generateId('orgPhone', createdAt)
 					newPhoneMap.set(phone._id.$oid, id)
 					data.orgPhone.add({
 						id,
@@ -487,7 +487,7 @@ export const generateRecords = async (task: ListrTask) => {
 						continue
 					}
 					log(`🛠️ [${count}/${org.emails.length}] Email: ${email.title ?? email._id.$oid}`)
-					const id = cuid()
+					const id = generateId('orgEmail', createdAt)
 					newEmailMap.set(email._id.$oid, id)
 					data.orgEmail.add({
 						id,
@@ -525,7 +525,7 @@ export const generateRecords = async (task: ListrTask) => {
 				log(`🛠️ Generating Website ${pluralRecord(sites)} for ${org.name}`)
 				if (org.website?.length) {
 					log(`🛠️ [${count}/${total}] Website: ${org.website}`)
-					const id = cuid()
+					const id = generateId('orgWebsite', createdAt)
 					data.orgWebsite.add({
 						id,
 						organizationId: orgId,
@@ -539,7 +539,7 @@ export const generateRecords = async (task: ListrTask) => {
 				if (org.website_ES?.length) {
 					log(`🛠️ [${count}/${total}] Website: ${org.website_ES}`)
 					const languageId = localeMap.get('es')
-					const id = cuid()
+					const id = generateId('orgWebsite', createdAt)
 					data.orgWebsite.add({
 						id,
 						organizationId: orgId,
@@ -581,7 +581,9 @@ export const generateRecords = async (task: ListrTask) => {
 						continue
 					}
 					log(`🛠️ [${count}/${org.social_media.length}] Social Media: ${servLookup}`)
+					const id = generateId('orgSocialMedia', createdAt)
 					data.orgSocialMedia.add({
+						id,
 						organizationId: orgId,
 						serviceId,
 						url: social.url,
@@ -612,7 +614,7 @@ export const generateRecords = async (task: ListrTask) => {
 					const count = countPhoto + skipPhoto + 1
 					if (!apiCreated) {
 						log(`🛠️ Generating Outside API Connection record for ${org.name}`)
-						const id = cuid()
+						const id = generateId('outsideAPI', createdAt)
 						data.outsideAPI.add({
 							id,
 							serviceName: 'foursquare',
@@ -625,7 +627,7 @@ export const generateRecords = async (task: ListrTask) => {
 					}
 					log(`🛠️ [${count}/${org.photos.length}] Photo Record`)
 					const { src, height, width } = photo
-					const id = cuid()
+					const id = generateId('orgPhoto', createdAt)
 					data.orgPhoto.add({
 						id,
 						orgId,
@@ -674,7 +676,7 @@ export const generateRecords = async (task: ListrTask) => {
 						if (!value || !value.start || !value.end) continue
 						const { start, end, closed, legacyId, legacyName, legacyNote, legacyTz } = value
 						let { needReview } = value
-						const id = cuid()
+						const id = generateId('orgHours', createdAt)
 						if (!start || !end) needReview = true
 						newIds.add(id)
 						data.orgHours.add({
@@ -755,17 +757,23 @@ export const generateRecords = async (task: ListrTask) => {
 								createdAt,
 								updatedAt,
 							}
-							let supplementId: string | undefined
+							// let supplementId: string | undefined
 							switch (true) {
 								case attrRecord.requireBoolean: {
 									const boolean = attrData?.boolean
 									if (!boolean) break
 									log(`🛠️ Attribute boolean supplement: ${boolean}`)
 									supplements++
-									const id = cuid()
-									data.attributeSupplement.add({ ...attrBase, id, boolean })
+									const id = generateId('attributeSupplement', createdAt)
+									data.attributeSupplement.add({
+										...attrBase,
+										id,
+										boolean,
+										organizationAttributeAttributeId: attrRecord.id,
+										organizationAttributeOrganizationId: organizationId,
+									})
 									rollback.attributeSupplement.add(id)
-									supplementId = id
+									// supplementId = id
 									break
 								}
 								case attrRecord.requireLanguage: {
@@ -773,17 +781,23 @@ export const generateRecords = async (task: ListrTask) => {
 									if (!languageId) break
 									log(`🛠️ Attribute language supplement: Attached record ${attrData?.language}`)
 									supplements++
-									const id = cuid()
-									data.attributeSupplement.add({ ...attrBase, id, languageId })
+									const id = generateId('attributeSupplement', createdAt)
+									data.attributeSupplement.add({
+										...attrBase,
+										id,
+										languageId,
+										organizationAttributeAttributeId: attrRecord.id,
+										organizationAttributeOrganizationId: organizationId,
+									})
 									rollback.attributeSupplement.add(id)
-									supplementId = id
+									// supplementId = id
 									break
 								}
 								case attrRecord.requireText: {
 									const text = attrData?.text
 									if (!text || !orgSlug) break
-									const suppId = cuid()
-									const textId = cuid()
+									const suppId = generateId('attributeSupplement', createdAt)
+									const textId = generateId('freeText', createdAt)
 									const {
 										key,
 										ns,
@@ -795,10 +809,18 @@ export const generateRecords = async (task: ListrTask) => {
 									if (key && ns) {
 										data.translationKey.add({ key, ns, text: keyText, createdAt, updatedAt })
 										data.freeText.add({ id: textId, key, ns, createdAt, updatedAt })
-										data.attributeSupplement.add({ ...attrBase, id: suppId, textId, createdAt, updatedAt })
+										data.attributeSupplement.add({
+											...attrBase,
+											id: suppId,
+											textId,
+											createdAt,
+											updatedAt,
+											organizationAttributeAttributeId: attrRecord.id,
+											organizationAttributeOrganizationId: organizationId,
+										})
 										rollback.translationKey.add(key)
 										rollback.attributeSupplement.add(suppId)
-										supplementId = suppId
+										// supplementId = suppId
 									}
 									break
 								}
@@ -806,7 +828,7 @@ export const generateRecords = async (task: ListrTask) => {
 							data.organizationAttribute.add({
 								organizationId,
 								attributeId: attrRecord.id,
-								supplementId,
+								// supplementId,
 							})
 							break
 						}
@@ -816,7 +838,7 @@ export const generateRecords = async (task: ListrTask) => {
 							if (tagRecord.attribute.id) {
 								servAreas++
 								if (!orgServiceAreaCreated) {
-									const id = cuid()
+									const id = generateId('serviceArea', createdAt)
 
 									data.serviceArea.add({
 										id,
@@ -849,20 +871,22 @@ export const generateRecords = async (task: ListrTask) => {
 				if (unsupportedAttributes.length) {
 					const attributeId = attributeList.get('system-incompatible-info')?.id
 					if (!attributeId) throw new Error('Cannot find "incompatible info" tag')
-					const suppId = cuid()
+					const suppId = generateId('attributeSupplement', createdAt)
 
 					log(`🛠️ Attribute supplement- Unsupported items: ${unsupportedAttributes.length}`)
 					data.attributeSupplement.add({
 						id: suppId,
 						createdAt,
 						updatedAt,
-						data: superjson.serialize(unsupportedAttributes) as object as Prisma.JsonObject,
+						data: JsonInputOrNullSuperJSON.parse(unsupportedAttributes),
+						organizationAttributeAttributeId: attributeId,
+						organizationAttributeOrganizationId: organizationId,
 					})
 					rollback.attributeSupplement.add(suppId)
 					data.organizationAttribute.add({
 						attributeId,
 						organizationId,
-						supplementId: suppId,
+						// supplementId: suppId,
 					})
 				}
 
@@ -888,7 +912,7 @@ export const generateRecords = async (task: ListrTask) => {
 				for (const service of org.services) {
 					let accessCount = 0
 					const count = counter + skips + 1
-					const serviceId = cuid()
+					const serviceId = generateId('orgService', createdAt)
 					log(`🛠️ [${count}/${org.services.length}] Service: ${service.name}`)
 					const {
 						key: descriptionKey,
@@ -903,7 +927,7 @@ export const generateRecords = async (task: ListrTask) => {
 					})
 					let descriptionId: string | undefined
 					if (descriptionKey && descriptionNs && descriptionText) {
-						const id = cuid()
+						const id = generateId('freeText', createdAt)
 						const [key, ns, text] = [descriptionKey, descriptionNs, descriptionText]
 						data.translationKey.add({
 							key,
@@ -926,8 +950,8 @@ export const generateRecords = async (task: ListrTask) => {
 
 					/* Access Instruction records*/
 					for (const access of service.access_instructions) {
-						const accessId = cuid()
-						const attributeSuppId = cuid()
+						const accessId = generateId('serviceAccess', createdAt)
+						const attributeSuppId = generateId('attributeSupplement', createdAt)
 						const newTag = legacyAccessMap.get(access.access_type ?? '')
 						const attribute = attributeList.get(newTag ?? '')
 						if (!attribute) {
@@ -942,7 +966,7 @@ export const generateRecords = async (task: ListrTask) => {
 								suppId: attributeSuppId,
 								text: access.instructions?.trim(),
 							})
-							const freeTextId = cuid()
+							const freeTextId = generateId('freeText', createdAt)
 							if (key && ns && text) {
 								data.translationKey.add({
 									key,
@@ -962,7 +986,7 @@ export const generateRecords = async (task: ListrTask) => {
 						data.serviceAccessAttribute.add({
 							attributeId: attribute.id,
 							serviceAccessId: accessId,
-							supplementId: attributeSuppId,
+							// supplementId: attributeSuppId,
 							linkedAt,
 						})
 						data.attributeSupplement.add({
@@ -970,7 +994,9 @@ export const generateRecords = async (task: ListrTask) => {
 							createdAt,
 							updatedAt,
 							textId,
-							data: superjson.serialize(access) as object as Prisma.JsonObject,
+							data: JsonInputOrNullSuperJSON.parse(access),
+							serviceAccessAttributeAttributeId: attribute.id,
+							serviceAccessAttributeServiceAccessId: accessId,
 						})
 						rollback.attributeSupplement.add(attributeSuppId)
 						data.serviceAccess.add({
@@ -1046,17 +1072,23 @@ export const generateRecords = async (task: ListrTask) => {
 										updatedAt,
 									}
 
-									let supplementId: string | undefined
+									// let supplementId: string | undefined
 									switch (true) {
 										case attrRecord.requireBoolean: {
 											const boolean = attrData?.boolean
 											if (!boolean) break
 											log(`🛠️ Attribute boolean supplement: ${boolean}`)
 											supplements++
-											const id = cuid()
-											data.attributeSupplement.add({ ...attrBase, id, boolean })
+											const id = generateId('attributeSupplement', createdAt)
+											data.attributeSupplement.add({
+												...attrBase,
+												id,
+												boolean,
+												serviceAttributeAttributeId: attrRecord.id,
+												serviceAttributeOrgServiceId: serviceId,
+											})
 											rollback.attributeSupplement.add(id)
-											supplementId = id
+											// supplementId = id
 											break
 										}
 										case attrRecord.requireLanguage: {
@@ -1064,23 +1096,29 @@ export const generateRecords = async (task: ListrTask) => {
 											if (!languageId) break
 											log(`🛠️ Attribute language supplement: Attached record ${attrData?.language}`)
 											supplements++
-											const id = cuid()
-											data.attributeSupplement.add({ ...attrBase, id, languageId })
+											const id = generateId('attributeSupplement', createdAt)
+											data.attributeSupplement.add({
+												...attrBase,
+												id,
+												languageId,
+												serviceAttributeAttributeId: attrRecord.id,
+												serviceAttributeOrgServiceId: serviceId,
+											})
 											rollback.attributeSupplement.add(id)
-											supplementId = id
+											// supplementId = id
 											break
 										}
 										case attrRecord.requireText: {
 											const text = attrData?.text?.trim()
 											if (!text || !orgSlug) break
-											const suppId = cuid()
+											const suppId = generateId('attributeSupplement', createdAt)
 											const {
 												key,
 												ns,
 												text: keyText,
 											} = generateKey({ type: 'attrSupp', keyPrefix: orgSlug, suppId, text })
 											if (!key || !ns || !keyText) break
-											const textId = cuid()
+											const textId = generateId('freeText', createdAt)
 											log(`🗣️ Attribute text supplement. Namespace: ${ns}, Key: ${key}, Free text: ${textId}`)
 											supplements++
 											if (key && ns) {
@@ -1088,16 +1126,24 @@ export const generateRecords = async (task: ListrTask) => {
 												data.freeText.add({ id: textId, key, ns, createdAt, updatedAt })
 												rollback.translationKey.add(key)
 											}
-											data.attributeSupplement.add({ ...attrBase, id: suppId, textId, createdAt, updatedAt })
+											data.attributeSupplement.add({
+												...attrBase,
+												id: suppId,
+												textId,
+												createdAt,
+												updatedAt,
+												serviceAttributeAttributeId: attrRecord.id,
+												serviceAttributeOrgServiceId: serviceId,
+											})
 											rollback.attributeSupplement.add(suppId)
-											supplementId = suppId
+											// supplementId = suppId
 											break
 										}
 									}
 									data.serviceAttribute.add({
 										attributeId: attrRecord.id,
 										orgServiceId: serviceId,
-										supplementId,
+										// supplementId,
 										linkedAt,
 									})
 									break
@@ -1108,7 +1154,7 @@ export const generateRecords = async (task: ListrTask) => {
 									if (tagRecord.attribute.id) {
 										servAreas++
 										if (!serviceAreaCreated) {
-											const id = cuid()
+											const id = generateId('serviceArea', createdAt)
 
 											data.serviceArea.add({
 												id,
@@ -1141,18 +1187,20 @@ export const generateRecords = async (task: ListrTask) => {
 							const attributeId = attributeList.get('system-incompatible-info')?.id
 							if (!attributeId) throw new Error('Cannot find "incompatible info" tag')
 
-							const suppId = cuid()
+							const suppId = generateId('attributeSupplement', createdAt)
 							data.attributeSupplement.add({
 								id: suppId,
 								createdAt,
 								updatedAt,
-								data: superjson.serialize(unsupportedAttributes) as object as Prisma.JsonObject,
+								data: JsonInputOrNullSuperJSON.parse(unsupportedAttributes),
+								serviceAttributeAttributeId: attributeId,
+								serviceAttributeOrgServiceId: serviceId,
 							})
 							rollback.attributeSupplement.add(suppId)
 							data.serviceAttribute.add({
 								attributeId,
 								orgServiceId: serviceId,
-								supplementId: suppId,
+								// supplementId: suppId,
 								linkedAt,
 							})
 							log(`🛠️ Attribute supplement- Unsupported items: ${unsupportedAttributes.length}`)
@@ -1285,13 +1333,19 @@ export const generateRecords = async (task: ListrTask) => {
 			}
 			// if (batchCounter === 1) break
 		}
+
+		const formatJson = (data: string) => prettier.format(data, { ...prettierOpts, parser: 'json-stringify' })
+
 		const translationsOut = Object.fromEntries(translatedStrings)
 		log(`🛠️ Generating translation JSON file (${translatedStrings.size} translations)`)
-		fs.writeFileSync(`${generatedDir}es-migration.json`, JSON.stringify(translationsOut))
+		fs.writeFileSync(`${generatedDir}es-migration.json`, formatJson(JSON.stringify(translationsOut)))
 
 		log(`🛠️ Generating unsupported attribute JSON file (${unsupportedMap.size} attributes)`)
 		const unsupportedAttOut = Object.fromEntries(unsupportedMap)
-		fs.writeFileSync(`${generatedDir}unsupportedAttributes.json`, JSON.stringify(unsupportedAttOut))
+		fs.writeFileSync(
+			`${generatedDir}unsupportedAttributes.json`,
+			formatJson(JSON.stringify(unsupportedAttOut))
+		)
 
 		log(`✍️ Writing rollback file`)
 		fs.writeFileSync(rollbackFile, superjson.stringify(rollback))
