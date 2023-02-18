@@ -525,7 +525,7 @@ importers:
       mongoback: 3.0.6
       prisma: 4.10.1
       prisma-dbml-generator: 0.10.0
-      quicktype-core: 22.0.0
+      quicktype-core: 23.0.1
       recursive-readdir: 2.2.3
       shoetest: 1.2.2
       slugify: 1.6.5
@@ -579,7 +579,7 @@ importers:
       mongoback: 3.0.6
       prisma: 4.10.1
       prisma-dbml-generator: 0.10.0
-      quicktype-core: 22.0.0
+      quicktype-core: 23.0.1
       recursive-readdir: 2.2.3
       shoetest: 1.2.2
       slugify: 1.6.5
@@ -16819,8 +16819,8 @@ packages:
     resolution: {integrity: sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==}
     engines: {node: '>=10'}
 
-  /quicktype-core/22.0.0:
-    resolution: {integrity: sha512-fDhIJiHcmxP018QYqX/zlSPd9wBia12DaY7DkaNoPRXTK6P6L7wvQ7fVAoXwExG3g9IM/alP+/NN6p3mzY/4RA==}
+  /quicktype-core/23.0.1:
+    resolution: {integrity: sha512-ztnb07ZO9QCrzcXXGQ+mYvEcJ6X6Y61prcByiAkn0a5nYTgCGdHqJs2k6E/T+abFkcZdnbsX5kHnUc/wbgbRMA==}
     dependencies:
       '@glideapps/ts-necessities': 2.1.2
       '@types/urijs': 1.19.19
