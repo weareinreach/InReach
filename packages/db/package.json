@@ -19,6 +19,7 @@
 		"db:seed": "pnpm with-env prisma db seed",
 		"db:seed:update": "SEED_UPDATE=true pnpm with-env prisma db seed",
 		"db:studio": "pnpm with-env prisma studio",
+		"download:seedData": "tsx ./seed/downloadData.ts",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown . && prisma format",
 		"format:all": "pnpm format:export && pnpm format:generated",
 		"format:export": "prettier --cache --cache-strategy metadata --write ./data-transfer/**/*.{ts,json}",

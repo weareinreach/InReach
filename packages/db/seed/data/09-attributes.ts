@@ -422,8 +422,8 @@ export const attributeData: AttributeData = [
 		],
 	},
 	{
-		name: 'Organization Focus',
-		ns: 'orgFocus',
+		name: 'Service Focus',
+		ns: 'srvFocus',
 		attributes: [
 			{ key: 'bipoc-comm', name: 'BIPOC Community' },
 			{ key: 'immigrant-comm', name: 'Immigrant Community' },

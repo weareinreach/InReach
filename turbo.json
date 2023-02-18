@@ -81,6 +81,9 @@
 			"dependsOn": ["^db:generate"],
 			"persistent": true
 		},
+		"download:seedData": {
+			"outputs": ["seed/data/downloaded/*.json"]
+		},
 		"format": {
 			"dependsOn": ["^db:generate"],
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"],
@@ -88,7 +91,8 @@
 		},
 		"generate:data": {
 			"cache": false,
-			"dependsOn": ["^db:generate"]
+			"dependsOn": ["^db:generate"],
+			"env": ["DATABASE_URL"]
 		},
 		"lint": {
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"],
@@ -99,7 +103,7 @@
 			"outputs": [".next/cache/eslint/**", ".eslintcache"]
 		},
 		"post-install": {
-			"dependsOn": ["^generate:data", "^build:icons"]
+			"dependsOn": ["^generate:data", "^build:icons", "^download:seedData"]
 		},
 		"type-check": {
 			"cache": false,
