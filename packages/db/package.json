@@ -77,7 +77,7 @@
 		"mongoback": "3.0.6",
 		"prisma": "4.10.1",
 		"prisma-dbml-generator": "0.10.0",
-		"quicktype-core": "22.0.0",
+		"quicktype-core": "23.0.1",
 		"recursive-readdir": "2.2.3",
 		"shoetest": "1.2.2",
 		"slugify": "1.6.5",
