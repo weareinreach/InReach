@@ -45,8 +45,7 @@
 		},
 		"sb:build": {},
 		"type-check": {
-			"cache": false,
-			"dependsOn": ["^db:generate", "db:generate"]
+			"cache": false
 		}
 	}
 }

@@ -8,6 +8,7 @@
 		},
 		"download:seedData": {
 			"outputs": ["seed/data/downloaded/*.json"]
-		}
+		},
+		"type-check": {}
 	}
 }
