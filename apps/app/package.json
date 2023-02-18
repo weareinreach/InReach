@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@crowdin/ota-client": "0.7.0",
-		"@emotion/react": "11.10.5",
+		"@emotion/react": "11.10.6",
 		"@emotion/server": "11.10.0",
 		"@mantine/carousel": "5.10.4",
 		"@mantine/core": "5.10.4",
