@@ -34,7 +34,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@paralleldrive/cuid2": "2.0.1",
+		"@paralleldrive/cuid2": "2.1.0",
 		"@prisma/client": "4.10.1",
 		"zod": "3.20.6"
 	},
@@ -53,7 +53,7 @@
 		"@types/iso-3166-2": "1.0.0",
 		"@types/langs": "2.0.1",
 		"@types/luxon": "3.2.0",
-		"@types/node": "18.13.0",
+		"@types/node": "18.14.0",
 		"@types/recursive-readdir": "2.2.1",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "0.100.0",
@@ -86,7 +86,7 @@
 		"tsx": "3.12.3",
 		"type-fest": "3.6.0",
 		"typescript": "4.9.5",
-		"zod-prisma-types": "2.1.0"
+		"zod-prisma-types": "2.2.0"
 	},
 	"prisma": {
 		"seed": "tsx ./seed/starterData.ts"
