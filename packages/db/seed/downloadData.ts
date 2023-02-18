@@ -60,6 +60,7 @@ export const task = new Listr(
 			showTimer: true,
 			collapse: false,
 		},
+		exitOnError: false,
 	}
 )
 

@@ -58,6 +58,8 @@ if (cliOpts.translations) tasklist.push(...translation)
 // if (cliOpts.data) tasklist.push(...siteData)
 if (Object.keys(cliOpts).length === 0) tasklist = [...translation /*...siteData*/]
 
-const tasks = new Listr(tasklist)
+const tasks = new Listr(tasklist, {
+	exitOnError: false,
+})
 
 tasks.run()
