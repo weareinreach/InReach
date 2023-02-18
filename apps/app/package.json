@@ -86,7 +86,7 @@
 		"trpc-client-devtools-link": "0.2.1-next",
 		"trpc-panel": "1.2.8",
 		"trpc-playground": "1.0.4",
-		"tslog": "4.7.3",
+		"tslog": "4.7.2",
 		"typescript": "4.9.5"
 	},
 	"ct3aMetadata": {

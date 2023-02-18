@@ -141,7 +141,7 @@ importers:
       trpc-client-devtools-link: 0.2.1-next
       trpc-panel: 1.2.8
       trpc-playground: 1.0.4
-      tslog: 4.7.3
+      tslog: 4.7.2
       typescript: 4.9.5
       zod: 3.20.6
     dependencies:
@@ -212,7 +212,7 @@ importers:
       trpc-client-devtools-link: 0.2.1-next_bzap5a3rqydeod6e7n2ymah3la
       trpc-panel: 1.2.8_sftd6wakcimwnpfmzciflr33te_rddbu46lyy4fcqpvwrkjezbvue
       trpc-playground: 1.0.4_efrrutz2h4um7ylosvp7kanlui
-      tslog: 4.7.3
+      tslog: 4.7.2
       typescript: 4.9.5
 
   apps/web:
@@ -328,7 +328,7 @@ importers:
       superjson: 1.12.2
       tiny-invariant: 1.3.1
       trpc-client-devtools-link: 0.2.1-next
-      tslog: 4.7.3
+      tslog: 4.7.2
       typescript: 4.9.5
       zod: 3.20.6
     dependencies:
@@ -350,7 +350,6 @@ importers:
       nanoid: 4.0.1
       superjson: 1.12.2
       tiny-invariant: 1.3.1
-      tslog: 4.7.3
       zod: 3.20.6
     devDependencies:
       '@types/eslint': 8.21.1
@@ -365,6 +364,7 @@ importers:
       prettier: 2.8.4
       prisma: 4.10.1
       trpc-client-devtools-link: 0.2.1-next_bzap5a3rqydeod6e7n2ymah3la
+      tslog: 4.7.2
       typescript: 4.9.5
 
   packages/auth:
@@ -19002,9 +19002,10 @@ packages:
   /tslib/2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
 
-  /tslog/4.7.3:
-    resolution: {integrity: sha512-MaOZLa8EJjJ9Z5ml/364aiHWYpkSWAGNCI9wQcPTWgUfhXezvtfx3ypMKWDOXTNlYm+aL3LAecCtTG08AqquTw==}
+  /tslog/4.7.2:
+    resolution: {integrity: sha512-NZCunFmbQK25tt+Egv28MLcmbo8M1HgUy6X2hdVbgrAlcR7zRGvPmM8SnpoljXZ48zHRRYWp9vYIHFHKWsR4HA==}
     engines: {node: '>=16'}
+    dev: true
 
   /tsutils/3.21.0_typescript@4.9.5:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
