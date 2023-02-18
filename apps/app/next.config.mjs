@@ -20,6 +20,9 @@ const nextConfig = {
 		 */
 		outputFileTracingIgnores: ['**swc+core**', '**esbuild**'],
 	},
+	typescript: {
+		ignoreBuildErrors: true,
+	},
 	// async rewrites() {
 	// 	return {
 	// 		fallback: [

@@ -9,6 +9,7 @@ const config = {
 		'react/jsx-key': 'off',
 		'codegen/codegen': 'error',
 		'react/no-unescaped-entities': ['off'],
+		'turbo/no-undeclared-env-vars': 'warn',
 		'import/first': 'error',
 		'import/newline-after-import': 'error',
 		'import/no-duplicates': 'error',

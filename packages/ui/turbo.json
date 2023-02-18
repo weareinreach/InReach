@@ -1,0 +1,22 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"extends": ["//"],
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": ["storybook-static/**", "./icon/iconList.ts"]
+		},
+		"build:icons": {
+			"inputs": ["./icon/iconList.ts"]
+		},
+		"chromatic": {
+			"dependsOn": ["build"],
+			"env": ["CHROMATIC_PROJECT_TOKEN"]
+		},
+		"sb:build": {
+			"dependsOn": ["build", "^db:generate"],
+			"inputs": ["./**/*.tsx", "./**/*.ts", "./.storybook/**"],
+			"outputs": ["storybook-static/**"]
+		}
+	}
+}

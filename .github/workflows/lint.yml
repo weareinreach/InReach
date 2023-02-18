@@ -73,6 +73,11 @@ jobs:
         if: always()
         id: format
 
+      - name: Check Types
+        run: pnpm types:check
+        if: always()
+        id: typecheck
+
       # Commit changes
       - name: Commit changed files
         uses: EndBug/add-and-commit@61a88be553afe4206585b31aa72387c64295d08b #v9

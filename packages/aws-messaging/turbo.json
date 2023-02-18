@@ -1,0 +1,14 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"extends": ["//"],
+	"pipeline": {
+		"build:aws": {
+			"dependsOn": ["format", "lint:fix", "type-check"],
+			"inputs": ["src/**"],
+			"outputs": ["./dist/**"]
+		},
+		"deploy:aws": {
+			"dependsOn": ["build:aws"]
+		}
+	}
+}

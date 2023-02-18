@@ -1,110 +1,49 @@
 {
 	"$schema": "https://turborepo.org/schema.json",
+	"globalEnv": ["NODE_ENV"],
 	"pipeline": {
 		"//#clean": {
 			"cache": false
 		},
-		"@weareinreach/app#build": {
-			"dependsOn": ["^build", "^db:generate", "^generate:data"],
-			"env": [
-				"DATABASE_URL",
-				"NEXTAUTH_SECRET",
-				"NEXTAUTH_URL",
-				"VERCEL_URL",
-				"PORT",
-				"COGNITO_CLIENT_ID",
-				"COGNITO_CLIENT_SECRET",
-				"COGNITO_ISSUER",
-				"COGNITO_USER_POOL_ID",
-				"AWS_REGION",
-				"COGNITO_ACCESS_KEY",
-				"COGNITO_SECRET"
-			]
-		},
-		"@weareinreach/aws-messaging#build:aws": {
-			"dependsOn": ["format", "lint:fix"]
-		},
-		"@weareinreach/aws-user-migrate#build:aws": {
-			"dependsOn": ["format", "lint:fix", "^db:generate"],
-			"inputs": ["src/**", "../../node_modules/.prisma/client/**"]
-		},
-		"@weareinreach/ui#build": {
-			"outputs": ["storybook-static/**"]
-		},
-		"@weareinreach/web#build": {
-			"dependsOn": ["^build"],
-			"env": [
-				"WEB_SENTRY_DSN",
-				"SANITY_TOKEN",
-				"NEXT_PUBLIC_SANITY_API_VERSION",
-				"NEXT_PUBLIC_SANITY_DATASET",
-				"NEXT_PUBLIC_SANITY_PROJECT_ID",
-				"NEXT_PUBLIC_WEB_SENTRY_DSN"
-			]
-		},
 		"build": {
 			"dependsOn": ["^build"],
-			"env": ["NODE_ENV"],
-			"outputs": ["dist/**", ".next/**", "storybook-static/**"]
+			"env": ["NODE_ENV"]
 		},
-		"build:aws": {
-			"inputs": ["src/**"],
-			"outputs": ["dist/**"]
-		},
-		"build:icons": {
-			"cache": false,
-			"inputs": ["icon/*"]
-		},
-		"chromatic": {
-			"dependsOn": ["build"],
-			"env": ["CHROMATIC_PROJECT_TOKEN"]
-		},
+		"build:aws": {},
+		"build:icons": {},
+		"chromatic": {},
 		"clean": {
 			"cache": false
 		},
 		"clean:node": {
 			"cache": false
 		},
-		"db:generate": {
-			"cache": false,
-			"inputs": ["prisma/schema.prisma"]
-		},
-		"db:generate:aws": {
-			"cache": false,
-			"inputs": ["prisma/schema.prisma"]
-		},
-		"deploy:aws": {
-			"dependsOn": ["build:aws"]
-		},
+		"db:generate": {},
+		"deploy:aws": {},
 		"dev": {
 			"cache": false,
 			"dependsOn": ["^db:generate"],
 			"persistent": true
 		},
-		"download:seedData": {
-			"outputs": ["seed/data/downloaded/*.json"]
-		},
+		"download:seedData": {},
 		"format": {
 			"dependsOn": ["^db:generate"],
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"],
 			"outputs": ["node_modules/.cache/prettier/.prettier-cache"]
 		},
-		"generate:data": {
-			"cache": false,
-			"dependsOn": ["^db:generate"],
-			"env": ["DATABASE_URL"]
-		},
+		"generate:data": {},
 		"lint": {
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"],
-			"outputs": [".next/cache/eslint/**", ".eslintcache"]
+			"outputs": [".eslintcache"]
 		},
 		"lint:fix": {
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"],
-			"outputs": [".next/cache/eslint/**", ".eslintcache"]
+			"outputs": [".eslintcache"]
 		},
 		"post-install": {
 			"dependsOn": ["^generate:data", "^build:icons", "^download:seedData"]
 		},
+		"sb:build": {},
 		"type-check": {
 			"cache": false,
 			"dependsOn": ["^db:generate", "db:generate"]
