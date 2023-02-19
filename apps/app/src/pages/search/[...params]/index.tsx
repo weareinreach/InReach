@@ -1,10 +1,11 @@
 /* eslint-disable i18next/no-literal-string */
 import { Code } from '@mantine/core'
 import { trpcServerClient } from '@weareinreach/api/trpc'
-import { useTypedRouterQuery } from '@weareinreach/ui/hooks'
 import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { type RoutedQuery } from 'nextjs-routes'
 import { z } from 'zod'
 
 import { api } from '~app/utils/api'
@@ -19,11 +20,13 @@ const ParamSchema = z.tuple([
 ])
 
 const SearchResults = () => {
-	const { query } = useTypedRouterQuery(z.object({ params: ParamSchema }))
+	const { query } = useRouter<'/search/[...params]'>()
 	const queryClient = api.useContext()
 	const { t, ready } = useTranslation(['services', 'org-description'])
+	const queryParams = ParamSchema.safeParse(query.params)
+	if (!queryParams.success) return <>Error</>
 
-	const [searchType, lon, lat, dist, unit] = query.params
+	const [searchType, lon, lat, dist, unit] = queryParams.data
 	const ids = api.organization.searchDistance.useQuery(
 		{ lat, lon, dist, unit },
 		{
@@ -68,8 +71,13 @@ const SearchResults = () => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res, locale, query }) => {
-	const [searchType, lon, lat, dist, unit] = ParamSchema.parse(query.params)
+export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/search/[...params]'>> = async ({
+	locale,
+	query,
+}) => {
+	const urlParams = ParamSchema.safeParse(query.params)
+
+	const [_searchType, lon, lat, dist, unit] = ParamSchema.parse(query.params)
 
 	const ssg = await trpcServerClient()
 
@@ -77,7 +85,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, locale,
 
 	const props = {
 		trpcState: ssg.dehydrate(),
-		// ...(await serverSideTranslations(locale as string, [], i18nextConfig)),
+		...(await serverSideTranslations(locale ?? 'en', [], i18nextConfig)),
 	}
 
 	return {
