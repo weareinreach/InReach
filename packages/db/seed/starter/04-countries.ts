@@ -1,20 +1,17 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { namespaces } from '../data/00-namespaces'
-import { type Countries, countryData, genDemonymKey } from '../data/04-countries'
-import { logFile } from '../logger'
-import { ListrTask } from '../starterData'
-
-import { Prisma } from '~db/client'
-import { prisma } from '~db/index'
+import { prisma, Prisma } from '~db/index'
+import { namespaces } from '~db/seed/data/00-namespaces'
+import { type Countries, countryData, genDemonymKey } from '~db/seed/data/04-countries'
 import { Log, iconList } from '~db/seed/lib'
+import { logFile } from '~db/seed/logger'
 import { isSuccess } from '~db/seed/migrate-v1/org/generator'
+import { ListrTask } from '~db/seed/starterData'
 
 const translationNamespace = namespaces.country
 
 type Data = {
 	country: Prisma.CountryCreateManyInput[]
 	translation: Prisma.TranslationKeyCreateManyInput[]
-	translationChild: Prisma.TranslationKeyCreateManyInput[]
 }
 export const seedCountries = async (task: ListrTask) => {
 	const log: Log = (message, icon?, indent = false) => {
@@ -28,61 +25,50 @@ export const seedCountries = async (task: ListrTask) => {
 		if (country.idd.suffixes.length === 1) return parseInt(`${country.idd.root}${country.idd.suffixes[0]}`)
 		return parseInt(country.idd.root)
 	}
-	try {
-		const { countries } = await countryData()
+	const { countries } = await countryData()
 
-		let i = 1
-		const data: Data = {
-			country: [],
-			translation: [],
-			translationChild: [],
-		}
-		for (const country of countries) {
-			const { demonymOne, demonymOther } = genDemonymKey(country)
-
-			if (demonymOne) {
-				data.translation.push(demonymOne)
-
-				data.translationChild.push(demonymOther)
-			}
-
-			data.translation.push({
-				key: `${country.cca3}.name`,
-				text: country.name.common,
-				ns: translationNamespace,
-			})
-			data.country.push({
-				cca2: country.cca2,
-				cca3: country.cca3,
-				name: country.name.common,
-				dialCode: dialCode(country),
-				flag: country.flag,
-				tsKey: `${country.cca3}.name`,
-				tsNs: translationNamespace,
-				demonymKey: demonymOne?.key,
-				demonymNs: demonymOne?.ns,
-			})
-
-			log(
-				`(${i}/${countries.length}) Prepare Country record: ${country.name.common} - Demonym: ${isSuccess(
-					!!demonymOne
-				)}`
-			)
-			i++
-		}
-		const translation = await prisma.translationKey.createMany({
-			data: data.translation,
-			skipDuplicates: true,
-		})
-		const translationChild = await prisma.translationKey.createMany({
-			data: data.translationChild,
-			skipDuplicates: true,
-		})
-		const result = await prisma.country.createMany({ data: data.country, skipDuplicates: true })
-		const translateTotal = translation.count + translationChild.count
-
-		task.title = `Countries (${result.count} records, ${translateTotal} translation keys)`
-	} catch (err) {
-		throw err
+	let i = 1
+	const data: Data = {
+		country: [],
+		translation: [],
 	}
+	for (const country of countries) {
+		const demonym = genDemonymKey(country)
+
+		if (demonym) {
+			data.translation.push(demonym)
+		}
+
+		data.translation.push({
+			key: `${country.cca3}.name`,
+			text: country.name.common,
+			ns: translationNamespace,
+		})
+		data.country.push({
+			cca2: country.cca2,
+			cca3: country.cca3,
+			name: country.name.common,
+			dialCode: dialCode(country),
+			flag: country.flag,
+			tsKey: `${country.cca3}.name`,
+			tsNs: translationNamespace,
+			demonymKey: demonym?.key,
+			demonymNs: demonym?.ns,
+		})
+
+		log(
+			`(${i}/${countries.length}) Prepare Country record: ${country.name.common} - Demonym: ${isSuccess(
+				!!demonym
+			)}`
+		)
+		i++
+	}
+	const translation = await prisma.translationKey.createMany({
+		data: data.translation,
+		skipDuplicates: true,
+	})
+
+	const result = await prisma.country.createMany({ data: data.country, skipDuplicates: true })
+
+	task.title = `Countries (${result.count} records, ${translation.count} translation keys)`
 }

@@ -2,6 +2,7 @@ import { t } from './initTRPC'
 import { isAdmin, isStaff, isAuthed, hasPermissions } from './middleware'
 
 export const defineRouter = t.router
+export const mergeRouters = t.mergeRouters
 
 /** Unprotected procedure */
 export const publicProcedure = t.procedure

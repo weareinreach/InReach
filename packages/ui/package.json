@@ -5,7 +5,8 @@
 	"main": "./index.tsx",
 	"types": "./index.tsx",
 	"scripts": {
-		"build": "tsx ./icon/buildIcons.ts",
+		"build": "pnpm build:icons",
+		"build:icons": "tsx ./icon/buildIcons.ts",
 		"chromatic": "chromatic",
 		"clean:node": "rm -rf ./node_modules/ || true",
 		"dev": "storybook dev -p 6006 --no-open",
@@ -19,7 +20,8 @@
 	},
 	"dependencies": {
 		"@mantine/utils": "5.10.4",
-		"@weareinreach/api": "0.100.0"
+		"@weareinreach/api": "0.100.0",
+		"nextjs-routes": "1.0.8"
 	},
 	"devDependencies": {
 		"@babel/core": "7.20.12",
@@ -100,6 +102,7 @@
 		"next-i18next": "13.1.5",
 		"next-router-mock": "0.9.1",
 		"postcss-loader": "7.0.2",
+		"prettier": "2.8.4",
 		"react": "18.2.0",
 		"react-docgen-typescript": "2.2.2",
 		"react-dom": "18.2.0",

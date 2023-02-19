@@ -1,0 +1,14 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"extends": ["//"],
+	"pipeline": {
+		"build:aws": {
+			"dependsOn": ["format", "lint:fix", "^db:generate", "type-check"],
+			"inputs": ["src/**", "../../node_modules/.prisma/client/**"],
+			"outputs": ["./dist/**"]
+		},
+		"deploy:aws": {
+			"dependsOn": ["build:aws"]
+		}
+	}
+}

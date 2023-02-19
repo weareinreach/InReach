@@ -1,0 +1,24 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"extends": ["//"],
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build"],
+			"env": [
+				"WEB_SENTRY_DSN",
+				"SANITY_TOKEN",
+				"NEXT_PUBLIC_SANITY_API_VERSION",
+				"NEXT_PUBLIC_SANITY_DATASET",
+				"NEXT_PUBLIC_SANITY_PROJECT_ID",
+				"NEXT_PUBLIC_WEB_SENTRY_DSN"
+			],
+			"outputs": [".next/**"]
+		},
+		"lint": {
+			"outputs": [".next/cache/eslint/**"]
+		},
+		"lint:fix": {
+			"outputs": [".next/cache/eslint/**"]
+		}
+	}
+}

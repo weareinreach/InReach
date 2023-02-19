@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 import React from 'react'
 
 import { Link as LinkComponent } from './Link'
@@ -12,11 +12,20 @@ export default {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=297%3A6035&t=sleVeGl2lJv7Df18-4',
 		},
 	},
-} as Meta<typeof LinkComponent>
+} satisfies Meta<typeof LinkComponent>
+type StoryDef = StoryObj<typeof LinkComponent>
 
-export const Link = {
+export const Internal = {
 	args: {
-		children: 'safehorizon.com',
-		href: 'google.com',
+		href: '/',
+		children: 'Home',
 	},
-}
+} satisfies StoryDef
+
+export const External = {
+	args: {
+		children: 'Google',
+		href: 'https://google.com',
+		target: '_blank',
+	},
+} satisfies StoryDef

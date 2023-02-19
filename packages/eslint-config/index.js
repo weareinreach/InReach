@@ -8,6 +8,7 @@ const config = {
 		'eslint:recommended',
 		'plugin:import/typescript',
 		'plugin:@typescript-eslint/recommended',
+		'prettier',
 	],
 	// parser: '@typescript-eslint/parser',
 	rules: {
