@@ -1,6 +1,61 @@
-import { MantineThemeOverride } from '@mantine/core'
+import {
+	ActionIconProps,
+	AvatarProps,
+	BadgeProps,
+	ButtonProps,
+	ColProps,
+	CSSObject,
+	DefaultProps,
+	MantineThemeOverride,
+	Styles,
+	TabsStylesNames,
+	TabsStylesParams,
+	TextProps,
+	TitleStylesParams,
+} from '@mantine/core'
+import { PolymorphicComponentProps } from '@mantine/utils'
+import React from 'react'
 
 import { customColors } from './colors'
+
+const themeCustomObj = {
+	/** Font weights per InReach style guide */
+	fontWeight: {
+		regular: 400,
+		semibold: 500,
+		bold: 600,
+	},
+	border: {
+		default: '1px solid #d9d9d9',
+	},
+	colors: {
+		primary: {
+			lightGray: '#EFEFEF',
+			allyGreen: '#00D56C',
+		},
+		secondary: {
+			black: '#000000',
+			white: '#FFFFFF',
+			darkGray: '#65676B',
+			teal: '#28939C',
+			cornflower: '#4792DA',
+			softBlack: '#21272C',
+		},
+		tertiary: {
+			coolGray: '#d9d9d9',
+			red: '#C05C4A',
+			pink: '#D4A1BA',
+			lightBlue: '#79ADD7',
+			purple: '#705890',
+			darkBlue: '#3c4e8f',
+			green: '#749C66',
+			yellow: '#F1DD7F',
+			orange: '#c77e54',
+			brown: '#5d4830',
+			darkBrown: '#322f2e',
+		},
+	},
+} as const
 
 export const commonTheme: MantineThemeOverride = {
 	colorScheme: 'light',
@@ -62,148 +117,80 @@ export const commonTheme: MantineThemeOverride = {
 			h6: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
 		},
 	},
-	other: {
-		/** Font weights per InReach style guide */
-		fontWeight: {
-			regular: 400,
-			semibold: 500,
-			bold: 600,
-		},
-		border: {
-			default: '1px solid #d9d9d9',
-		},
-		colors: {
-			primary: {
-				lightGray: '#EFEFEF',
-				allyGreen: '#00D56C',
-			},
-			secondary: {
-				black: '#000000',
-				white: '#FFFFFF',
-				darkGray: '#65676B',
-				teal: '#28939C',
-				cornflower: '#4792DA',
-				softBlack: '#21272C',
-			},
-			tertiary: {
-				coolGray: '#d9d9d9',
-				red: '#C05C4A',
-				pink: '#D4A1BA',
-				lightBlue: '#79ADD7',
-				purple: '#705890',
-				darkBlue: '#3c4e8f',
-				green: '#749C66',
-				yellow: '#F1DD7F',
-				orange: '#c77e54',
-				brown: '#5d4830',
-				darkBrown: '#322f2e',
-			},
-		},
-	},
+	other: themeCustomObj,
 	components: {
 		ActionIcon: {
-			defaultProps: (theme) => ({
-				color: theme.other.colors.secondary.cornflower,
-				radius: 'xl',
-			}),
+			defaultProps: (theme) =>
+				({
+					color: theme.other.colors.secondary.cornflower,
+					radius: 'xl',
+				} satisfies ActionIconProps),
 		},
 		Avatar: {
 			defaultProps: {
 				size: 48,
 				radius: 'xl',
-			},
+			} satisfies AvatarProps,
 		},
 		Badge: {
 			defaultProps: {
 				radius: 'xl',
-			},
+			} satisfies BadgeProps,
 		},
 		Button: {
 			defaultProps: {
 				radius: 'xl',
-			},
+			} satisfies ButtonProps,
 		},
 		GridCol: {
 			defaultProps: {
 				span: 12,
 				xs: 6,
 				sm: 4,
-			},
+			} satisfies ColProps,
 		},
 		Tabs: {
-			styles: (theme) => ({
-				tab: {
-					'&[data-active]': {
-						borderColor: theme.other.colors.secondary.softBlack,
+			styles: (theme) =>
+				({
+					tab: {
+						'&[data-active]': {
+							borderColor: theme.other.colors.secondary.softBlack,
+						},
+						'&[data-active]:hover': {
+							borderColor: theme.other.colors.secondary.softBlack,
+						},
 					},
-					'&[data-active]:hover': {
-						borderColor: theme.other.colors.secondary.softBlack,
+					tabLabel: {
+						fontWeight: 500,
+						fontSize: '16px',
+						color: theme.other.colors.secondary.softBlack,
 					},
-				},
-				tabLabel: {
-					fontWeight: 500,
-					fontSize: '16px',
-					color: theme.other.colors.secondary.softBlack,
-				},
-			}),
+				} satisfies Styles<TabsStylesNames, TabsStylesParams>),
 		},
 		Text: {
-			defaultProps: (theme) => ({
-				component: 'span',
-				weight: theme.other.fontWeight.regular,
-				color: theme.other.colors.secondary.black,
-				size: 'md',
-			}),
+			defaultProps: (theme) =>
+				({
+					component: 'span',
+					weight: theme.other.fontWeight.regular,
+					color: theme.other.colors.secondary.black,
+					size: 'md',
+				} satisfies PolyComponent<TextProps>),
 		},
 		Title: {
 			styles: {
 				root: {
 					marginTop: 0,
 				},
-			},
+			} satisfies Styles<never, TitleStylesParams>,
 		},
 	},
 }
 
-// Type Definitions for `other` object
-
+type PolyComponent<ComponentProps extends DefaultProps> = PolymorphicComponentProps<
+	keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>,
+	ComponentProps
+>
+type ThemeCustomObject = typeof themeCustomObj
 declare module '@mantine/core' {
-	export interface MantineThemeOther {
-		/** Font weights per InReach Style Guide */
-		fontWeight: {
-			regular: 400
-			semibold: 500
-			bold: 600
-		}
-		border: {
-			default: '1px solid #d9d9d9'
-		}
-		colors: {
-			primary: {
-				lightGray: '#EFEFEF'
-				allyGreen: '#00D56C'
-			}
-			secondary: {
-				black: '#000000'
-				white: '#FFFFFF'
-				darkGray: '#65676B'
-				teal: '#28939C'
-				cornflower: '#4792DA'
-				softBlack: '#21272C'
-			}
-			tertiary: {
-				coolGray: '#d9d9d9'
-				red: '#C05C4A'
-				pink: '#D4A1BA'
-				lightBlue: '#79ADD7'
-				purple: '#705890'
-				darkBlue: '#3c4e8f'
-				green: '#749C66'
-				yellow: '#F1DD7F'
-				orange: '#c77e54'
-				brown: '#5d4830'
-				darkBrown: '#322f2e'
-			}
-		}
-	}
+	export interface MantineThemeOther extends ThemeCustomObject {}
 }
