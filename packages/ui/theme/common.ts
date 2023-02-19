@@ -1,22 +1,23 @@
 import {
-	ActionIconProps,
-	AvatarProps,
-	BadgeProps,
-	ButtonProps,
-	ColProps,
-	CSSObject,
-	DefaultProps,
-	MantineThemeOverride,
-	Styles,
-	TabsStylesNames,
-	TabsStylesParams,
-	TextProps,
-	TitleStylesParams,
+	type ActionIconProps,
+	type AvatarProps,
+	type BadgeProps,
+	type ButtonProps,
+	type ColProps,
+	type DefaultProps,
+	type MantineThemeOther,
+	type MantineThemeOverride,
+	type Styles,
+	type TabsStylesNames,
+	type TabsStylesParams,
+	type TextProps,
+	type TitleStylesParams,
 } from '@mantine/core'
-import { PolymorphicComponentProps } from '@mantine/utils'
-import React from 'react'
+import { type PolymorphicComponentProps } from '@mantine/utils'
 
 import { customColors } from './colors'
+
+import type React from 'react'
 
 const themeCustomObj = {
 	/** Font weights per InReach style guide */
@@ -55,9 +56,9 @@ const themeCustomObj = {
 			darkBrown: '#322f2e',
 		},
 	},
-} as const
+} as const satisfies MantineThemeOther
 
-export const commonTheme: MantineThemeOverride = {
+export const commonTheme = {
 	colorScheme: 'light',
 	colors: { ...customColors },
 	primaryColor: 'inReachPrimaryRegular',
@@ -184,7 +185,7 @@ export const commonTheme: MantineThemeOverride = {
 			} satisfies Styles<never, TitleStylesParams>,
 		},
 	},
-}
+} as const satisfies MantineThemeOverride
 
 type PolyComponent<ComponentProps extends DefaultProps> = PolymorphicComponentProps<
 	keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>,
