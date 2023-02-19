@@ -130,11 +130,13 @@ export const ServiceFilter = ({}: Props) => {
 		setValues(newVals)
 	}
 
-	function updateService(serviceIndex: number, event1: boolean) {
+	function updateService(serviceIndex: number) {
+		let checkedValue = !allChecked(serviceIndex)
 		let newVals = [...values]
-		let newServices = newVals[serviceIndex]!.services
-		newServices = serviceTags(newServices, !event1)
-		console.log(event1)
+		let newServiceTags = newVals[serviceIndex]!.services
+		newServiceTags = serviceTags(newServiceTags, checkedValue)
+		newVals[serviceIndex]!.services = newServiceTags
+		setValues(newVals)
 	}
 
 	function allChecked(serviceIndex: number) {
@@ -171,8 +173,8 @@ export const ServiceFilter = ({}: Props) => {
 					indeterminate={indeterminate(index)}
 					label={t(service.tsKey)}
 					transitionDuration={0}
-					onChange={(event) => {
-						console.log(event.currentTarget)
+					onChange={() => {
+						updateService(index)
 					}}
 				/>
 				{items(index, service.services)}
@@ -686,7 +688,7 @@ const servicesList = mockServiceData.map((service) => ({
 	services: serviceTags(service.services, false),
 }))
 
-function serviceTags(serviceTagArray: any, eventTarget: boolean) {
+function serviceTags(serviceTagArray: any, eventTarget?: boolean) {
 	return serviceTagArray.map((serviceTag: any) => ({
 		...serviceTag,
 		checked: eventTarget ? eventTarget : false,
