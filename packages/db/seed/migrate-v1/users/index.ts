@@ -1,9 +1,7 @@
-import cuid from 'cuid'
 import invariant from 'tiny-invariant'
 
 import fs from 'fs'
 
-import { Prisma } from '~db/client'
 import { govDistMap } from '~db/datastore/v1/helpers/locDataMaps'
 import { UsersJSONCollection } from '~db/datastore/v1/mongodb/output-types/users'
 import { countryMap } from '~db/datastore/v1/util/countryOrigin'
@@ -12,7 +10,7 @@ import { ethnicityMap } from '~db/datastore/v1/util/ethnicity'
 import { immigrationMap } from '~db/datastore/v1/util/immigration'
 import { ageMap } from '~db/datastore/v1/util/userAge'
 import { sogMap } from '~db/datastore/v1/util/userSog'
-import { prisma } from '~db/index'
+import { Prisma, prisma, generateId } from '~db/index'
 import { Log, iconList } from '~db/seed/lib'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
@@ -140,7 +138,7 @@ export const migrateUsers = async (task: ListrTask) => {
 			}
 		}
 		log(`(${countA + 1}/${userData.length}) Preparing user record: ${user._id.$oid}`, 'generate', true, true)
-		const id = cuid()
+		const id = generateId('user', user.created_at.$date)
 		const roleId = userRoleMap.get(role().name)
 		const userTypeId = userTypeMap.get(role().type)
 
@@ -164,7 +162,7 @@ export const migrateUsers = async (task: ListrTask) => {
 
 		if (ethnicity || countryOrigin || getImmigrationStatus()) {
 			const immigrationId = getImmigrationStatus()
-			const surveyId = cuid()
+			const surveyId = generateId('userSurvey')
 			data.userSurvey.push({
 				id: surveyId,
 				countryOriginId,

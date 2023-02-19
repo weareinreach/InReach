@@ -1,5 +1,4 @@
-import { Prisma } from '~db/client'
-import { prisma } from '~db/index'
+import { prisma, Prisma } from '~db/index'
 import { namespaces, userImmigrationData } from '~db/seed/data/'
 import { Log, iconList } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
@@ -19,40 +18,36 @@ export const seedUserImmigration = async (task: ListrTask) => {
 	}
 	const ns = namespaces.user
 
-	try {
-		let idx = 0
-		const data: Data = {
-			immigration: [],
-			translate: [],
-		}
-
-		for (const record of userImmigrationData) {
-			const count = idx + 1
-			log(`(${count}/${userImmigrationData.length}) Prepare Immigration status record: ${record.text}`)
-			data.translate.push({
-				key: record.key,
-				ns,
-				text: record.text,
-			})
-
-			data.immigration.push({
-				status: record.text,
-				tsKey: record.key,
-				tsNs: ns,
-			})
-			idx++
-		}
-
-		const translateResult = await prisma.translationKey.createMany({
-			data: data.translate,
-			skipDuplicates: true,
-		})
-		const result = await prisma.userImmigration.createMany({ data: data.immigration, skipDuplicates: true })
-		log(`Immigration status records added: ${result.count}`, 'create')
-		log(`Translation keys added: ${translateResult.count}`, 'create')
-
-		task.title = `Immigration status (${result.count} records, ${translateResult.count} translation keys)`
-	} catch (error) {
-		throw error
+	let idx = 0
+	const data: Data = {
+		immigration: [],
+		translate: [],
 	}
+
+	for (const record of userImmigrationData) {
+		const count = idx + 1
+		log(`(${count}/${userImmigrationData.length}) Prepare Immigration status record: ${record.text}`)
+		data.translate.push({
+			key: record.key,
+			ns,
+			text: record.text,
+		})
+
+		data.immigration.push({
+			status: record.text,
+			tsKey: record.key,
+			tsNs: ns,
+		})
+		idx++
+	}
+
+	const translateResult = await prisma.translationKey.createMany({
+		data: data.translate,
+		skipDuplicates: true,
+	})
+	const result = await prisma.userImmigration.createMany({ data: data.immigration, skipDuplicates: true })
+	log(`Immigration status records added: ${result.count}`, 'create')
+	log(`Translation keys added: ${translateResult.count}`, 'create')
+
+	task.title = `Immigration status (${result.count} records, ${translateResult.count} translation keys)`
 }

@@ -1,3 +1,4 @@
+/* eslint-disable node/no-process-env */
 import { Command } from 'commander'
 import { Listr, ListrContext, ListrRenderer, ListrTaskWrapper } from 'listr2'
 
@@ -21,6 +22,7 @@ const translation = [
 		title: 'Translation definitions from DB',
 		task: (_ctx: ListrContext, task: ListrTask) => generateTranslationKeys(task),
 		options,
+		skip: !process.env.DATABASE_URL,
 	},
 ]
 const siteData = [
@@ -56,6 +58,8 @@ if (cliOpts.translations) tasklist.push(...translation)
 // if (cliOpts.data) tasklist.push(...siteData)
 if (Object.keys(cliOpts).length === 0) tasklist = [...translation /*...siteData*/]
 
-const tasks = new Listr(tasklist)
+const tasks = new Listr(tasklist, {
+	exitOnError: false,
+})
 
 tasks.run()

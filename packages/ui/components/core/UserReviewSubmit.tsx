@@ -12,11 +12,11 @@ import {
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { ApiInput } from '@weareinreach/api'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 
-import { useTypedRouterQuery } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -63,7 +63,8 @@ export const UserReviewSubmit = ({ avatarUrl, avatarName }: UserProps) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation()
 	const theme = useMantineTheme()
-	const { query } = useTypedRouterQuery(RouterSchema)
+	const { query: rawQuery } = useRouter()
+	const query = RouterSchema.parse(rawQuery)
 	const { data: orgQuery, status } = api.organization.getIdFromSlug.useQuery(query, { enabled: !!query })
 	const { locationId, serviceId } = query
 

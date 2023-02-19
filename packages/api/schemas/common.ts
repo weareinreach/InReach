@@ -19,8 +19,9 @@ import { nanoUrlRegex } from '~api/lib/nanoIdUrl'
 
 /** Cuid v1 or v2 */
 export const cuidOptional = z.union([z.string().cuid().nullish(), z.string().cuid2().nullish()])
-export const cuid = z.string().cuid().or(z.string().cuid2())
-export const id = z.object({ id: cuid })
+export const cuid = z.string().refine((val) => z.string().cuid().or(z.string().cuid2()).parse(val))
+export const id = z.object({ id: z.string() })
+export const idArray = z.object({ ids: z.string().array() })
 export const actorId = z.object({ actorId: cuid })
 export const userId = z.object({ userId: cuid })
 export const orgId = z.object({ orgId: cuid })

@@ -3,6 +3,12 @@
 	"compilerOptions": {
 		"baseUrl": "."
 	},
-	"include": ["./**/*.ts", "./**/*.tsx", ".storybook/**/*", "../../@types/**/*.ts"],
+	"include": [
+		"./**/*.ts",
+		"./**/*.tsx",
+		".storybook/**/*",
+		"../../@types/**/*.ts",
+		"../../apps/app/nextjs-routes.d.ts"
+	],
 	"exclude": ["**/node_modules", "**/storybook-static/"]
 }

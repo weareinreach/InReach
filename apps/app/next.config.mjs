@@ -1,6 +1,7 @@
 /* eslint-disable node/no-process-env */
 // import { env } from './src/env/server.mjs'
 import bundleAnalyze from '@next/bundle-analyzer'
+import withRoutes from 'nextjs-routes/config'
 
 import i18nConfig from './next-i18next.config.js'
 
@@ -40,6 +41,6 @@ const nextConfig = {
  * @returns {T}
  */
 function defineNextConfig(config) {
-	return withBundleAnalyzer(config)
+	return withBundleAnalyzer(withRoutes()(config))
 }
 export default defineNextConfig(nextConfig)

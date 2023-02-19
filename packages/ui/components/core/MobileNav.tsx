@@ -1,4 +1,4 @@
-import { createStyles, NavLink, Tabs } from '@mantine/core'
+import { createStyles, Tabs } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
@@ -40,10 +40,10 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const navItems = {
-	search: { icon: 'carbon:search', labelKey: 'search', href: '#' },
-	saved: { icon: 'carbon:favorite', labelKey: 'saved', href: '#' },
-	account: { icon: 'carbon:user', labelKey: 'account', href: '#' },
-	support: { icon: 'carbon:help', labelKey: 'support', href: '#' },
+	search: { icon: 'carbon:search', labelKey: 'search', href: '/search' },
+	saved: { icon: 'carbon:favorite', labelKey: 'saved', href: '/' },
+	account: { icon: 'carbon:user', labelKey: 'account', href: '/' },
+	support: { icon: 'carbon:help', labelKey: 'support', href: '/' },
 } as const
 
 export const MobileNav = () => {
