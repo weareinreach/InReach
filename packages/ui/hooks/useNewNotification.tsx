@@ -1,6 +1,6 @@
 import { Group, Text, createStyles, useMantineTheme } from '@mantine/core'
 import { showNotification, NotificationProps } from '@mantine/notifications'
-import Link from 'next/link'
+import Link, { type LinkProps } from 'next/link'
 import { useTranslation } from 'next-i18next'
 
 import { Icon } from '~ui/icon'
@@ -89,7 +89,7 @@ export type UseNotificationProps = {
 	 */
 	link: {
 		/** URL */
-		href: string
+		href: LinkProps['href']
 		/** I18Next translation key */
 		textKey: string
 	}

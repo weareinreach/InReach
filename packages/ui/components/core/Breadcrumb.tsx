@@ -1,5 +1,5 @@
 import { ActionIcon, Group, Text, createStyles, useMantineTheme } from '@mantine/core'
-import Link from 'next/link'
+import Link, { type LinkProps } from 'next/link'
 import { useTranslation } from 'next-i18next'
 
 import { Icon } from '~ui/icon'
@@ -53,6 +53,6 @@ export const Breadcrumb = ({ href, option }: Props) => {
 }
 
 type Props = {
-	href: string
+	href: LinkProps['href']
 	option: keyof typeof approvedOptions
 }

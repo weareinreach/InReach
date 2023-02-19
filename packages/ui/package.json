@@ -20,7 +20,8 @@
 	},
 	"dependencies": {
 		"@mantine/utils": "5.10.4",
-		"@weareinreach/api": "0.100.0"
+		"@weareinreach/api": "0.100.0",
+		"nextjs-routes": "1.0.8"
 	},
 	"devDependencies": {
 		"@babel/core": "7.20.12",

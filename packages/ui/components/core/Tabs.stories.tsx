@@ -2,6 +2,7 @@ import { Tabs as MantineTabs } from '@mantine/core'
 import { Meta } from '@storybook/react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { Query } from 'nextjs-routes'
 
 const Story = () => {
 	const router = useRouter()
@@ -11,7 +12,7 @@ const Story = () => {
 		<MantineTabs
 			defaultValue={router.query.activeTab as string}
 			onTabChange={(value) => {
-				router.push(`/tabs/${value}`, { query: value })
+				router.push({ pathname: '/', query: { tab: value ?? '' } })
 			}}
 		>
 			<MantineTabs.List>
