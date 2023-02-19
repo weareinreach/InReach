@@ -1,0 +1,14 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"extends": ["//"],
+	"pipeline": {
+		"db:generate": {
+			"cache": false,
+			"inputs": ["prisma/schema.prisma"]
+		},
+		"download:seedData": {
+			"outputs": ["seed/data/downloaded/*.json"]
+		},
+		"type-check": {}
+	}
+}

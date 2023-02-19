@@ -1,6 +1,7 @@
 import { prisma } from '@weareinreach/db'
 import dotenv from 'dotenv'
 import { unflatten } from 'flat'
+import prettier from 'prettier'
 
 import fs from 'fs'
 
@@ -23,6 +24,8 @@ const countKeys = (obj: Output): number =>
 	}, 0)
 
 export const generateTranslationKeys = async (task: ListrTask) => {
+	const prettierOpts = (await prettier.resolveConfig(__dirname)) ?? undefined
+
 	const data = await prisma.translationNamespace.findMany({
 		include: {
 			keys: {
@@ -31,13 +34,23 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 				},
 			},
 		},
+		orderBy: {
+			name: 'asc',
+		},
 	})
 	let logMessage = ''
 	let i = 0
 	for (const namespace of data) {
 		const outputData: Output = {}
 		for (const item of namespace.keys) {
-			outputData[item.key] = item.text
+			if (item.plural !== 'SINGLE' && typeof item.pluralValues === 'object') {
+				for (const [key, value] of Object.entries(item.pluralValues as object)) {
+					if (typeof value !== 'string') throw new Error('Invalid nested plural item')
+					outputData[`${item.key}_${key}`] = value
+				}
+			} else {
+				outputData[item.key] = item.text
+			}
 		}
 		const filename = `${localePath}/${namespace.name}.json`
 		// eslint-disable-next-line prefer-const
@@ -61,7 +74,12 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 
 		logMessage = `${filename} generated with ${newKeys} new ${newKeys === 1 ? 'key' : 'keys'}.`
 
-		fs.writeFileSync(filename, JSON.stringify(outputFile, null, 2))
+		const formattedOutput = prettier.format(JSON.stringify(outputFile, null, 2), {
+			...prettierOpts,
+			parser: 'json',
+		})
+
+		fs.writeFileSync(filename, formattedOutput)
 		task.output = logMessage
 		i++
 	}

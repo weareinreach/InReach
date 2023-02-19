@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { Prisma } from '@prisma/client'
 import axios from 'axios'
 import { countries as countryExtra } from 'countries-languages'
 
 import { namespaces } from '~db/seed/data/00-namespaces'
+import { TranslationPluralSchema } from '~db/zod_util/translationPlurals'
 
 export const countryData = async () => {
 	const { data: countries } = await axios.get<Array<Countries>>(
@@ -17,42 +19,27 @@ export const countryData = async () => {
 export const genDemonymKey = (country: Countries) => {
 	const demonym: string | undefined = countryExtra[country.cca2]?.demonym
 	if (demonym) {
-		return {
-			demonymOne: {
-				key: `${country.cca3}.demonym_one`,
-				ns: namespaces.country,
-				text: demonym,
-				context: `Citizens of ${country.name.common}`,
+		const { plural, pluralValues } = TranslationPluralSchema.parse({
+			plural: 'PLURAL',
+			pluralValues: {
+				one: demonym,
+				other: demonym,
 			},
+		})
 
-			demonymOther: {
-				key: `${country.cca3}.demonym_other`,
-				text: `${demonym}s`,
-				ns: namespaces.country,
-				parentKey: `${country.cca3}.demonym_one`,
-				parentNs: namespaces.country,
-			},
-		}
+		const newKey = {
+			key: `${country.cca3}.demonym`,
+			ns: namespaces.country,
+			text: demonym,
+			context: `Citizens of ${country.name.common}`,
+			plural,
+			pluralValues,
+		} satisfies Prisma.TranslationKeyCreateManyInput
+
+		return newKey
 	}
 
-	return {
-		demonymOne: undefined,
-		// {
-		// 	key: undefined,
-		// 	ns: undefined,
-		// 	text: undefined,
-		// 	context: undefined,
-		// },
-
-		demonymOther: undefined,
-		// {
-		// 	key: undefined,
-		// 	text: undefined,
-		// 	ns: undefined,
-		// 	parentKey: undefined,
-		// 	parentNs: undefined,
-		// },
-	}
+	return undefined
 }
 
 export interface Countries {

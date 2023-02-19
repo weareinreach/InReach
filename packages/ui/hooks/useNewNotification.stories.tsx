@@ -54,7 +54,7 @@ const Story: Meta<Story> = {
 		displayTextKey: 'resource-saved',
 		icon: 'heartFilled',
 		link: {
-			href: '#',
+			href: '/',
 			textKey: 'view-list',
 		},
 	},

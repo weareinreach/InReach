@@ -1,7 +1,7 @@
 import ISO6391 from 'iso-google-locales'
 import * as langSupp from 'langs'
 
-import { Prisma } from '~db/client'
+import { Prisma, generateId } from '~db/.'
 import { Log, iconList } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/starterData'
@@ -29,6 +29,7 @@ export const genSeedLanguageData = (task: ListrTask) => {
 		const total = languages.length
 		log(`(${count}/${total}) Preparing language record for: ${languageName}`)
 		return {
+			id: generateId('language', 0),
 			localeCode,
 			iso6392,
 			languageName,

@@ -9,6 +9,7 @@ lib/output
 seed/migrate-v1/_generated
 zod-schemas/
 prisma/generated
+seed/data/downloaded
 
 pnpm-lock.yaml
 *.log

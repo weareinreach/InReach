@@ -1,5 +1,5 @@
-import { Text, createStyles, useMantineTheme } from '@mantine/core'
-import NextLink from 'next/link'
+import { Text, createStyles, useMantineTheme, Anchor } from '@mantine/core'
+import NextLink, { type LinkProps } from 'next/link'
 
 const useStyles = createStyles((theme) => ({
 	link: {
@@ -19,9 +19,24 @@ const useStyles = createStyles((theme) => ({
 	text: {},
 }))
 
-export const Link = ({ children, href }: Props) => {
+export const Link = ({ children, href, ...rest }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
+
+	if (typeof href === 'string' && href.substring(0, 3) === 'http') {
+		return (
+			<Anchor
+				component='a'
+				href={href}
+				className={classes.link}
+				fw={theme.other.fontWeight.semibold}
+				variant='link'
+				{...rest}
+			>
+				{children}
+			</Anchor>
+		)
+	}
 
 	return (
 		<Text
@@ -30,13 +45,13 @@ export const Link = ({ children, href }: Props) => {
 			className={classes.link}
 			fw={theme.other.fontWeight.semibold}
 			variant='link'
+			{...rest}
 		>
 			{children}
 		</Text>
 	)
 }
 
-type Props = {
-	children: string
-	href: string
+interface Props extends Omit<LinkProps, 'href'> {
+	href: LinkProps['href'] | `http${string}`
 }

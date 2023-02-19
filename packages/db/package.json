@@ -17,8 +17,9 @@
 		"db:repl": "pnpm dlx @prismatools/console@latest -c ../../node_modules/@prisma/client",
 		"db:reset": "pnpm with-env prisma migrate reset",
 		"db:seed": "pnpm with-env prisma db seed",
+		"db:seed:update": "SEED_UPDATE=true pnpm with-env prisma db seed",
 		"db:studio": "pnpm with-env prisma studio",
-		"db:update:seed": "SEED_UPDATE=true pnpm with-env prisma db seed",
+		"download:seedData": "tsx ./seed/downloadData.ts",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown . && prisma format",
 		"format:all": "pnpm format:export && pnpm format:generated",
 		"format:export": "prettier --cache --cache-strategy metadata --write ./data-transfer/**/*.{ts,json}",
@@ -27,7 +28,6 @@
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
-		"post-install": "pnpm db:generate",
 		"predev": "pnpm db:generate",
 		"prisma": "pnpm with-env prisma",
 		"type-check": "tsc --noEmit",
@@ -36,6 +36,7 @@
 	"dependencies": {
 		"@paralleldrive/cuid2": "2.1.0",
 		"@prisma/client": "4.10.1",
+		"ulid": "2.3.0",
 		"zod": "3.20.6"
 	},
 	"devDependencies": {
@@ -75,8 +76,11 @@
 		"listr2": "5.0.7",
 		"luxon": "3.2.1",
 		"mongoback": "3.0.6",
+		"prettier": "2.8.4",
 		"prisma": "4.10.1",
 		"prisma-dbml-generator": "0.10.0",
+		"prisma-query-inspector": "1.4.4",
+		"prisma-query-log": "3.2.0",
 		"quicktype-core": "23.0.1",
 		"recursive-readdir": "2.2.3",
 		"shoetest": "1.2.2",
