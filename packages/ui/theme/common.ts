@@ -1,4 +1,6 @@
 import {
+	type ModalStylesNames,
+	type ModalStylesParams,
 	type ActionIconProps,
 	type AvatarProps,
 	type BadgeProps,
@@ -149,6 +151,25 @@ export const commonTheme = {
 				xs: 6,
 				sm: 4,
 			} satisfies ColProps,
+		},
+		Modal: {
+			styles: (theme) =>
+				({
+					modal: {
+						[theme.fn.largerThan('sm')]: {
+							maxHeight: 800,
+						},
+					},
+					inner: {
+						margin: [20, 20],
+						[theme.fn.largerThan('xs')]: {
+							margin: [20, 32],
+						},
+						[theme.fn.largerThan('sm')]: {
+							margin: [40, 32],
+						},
+					},
+				} satisfies Styles<ModalStylesNames, ModalStylesParams>),
 		},
 		Tabs: {
 			styles: (theme) =>
