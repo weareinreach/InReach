@@ -37,12 +37,11 @@ const themeCustomObj = {
 			allyGreen: '#00D56C',
 		},
 		secondary: {
-			black: '#000000',
+			black: '#21272C',
 			white: '#FFFFFF',
 			darkGray: '#65676B',
 			teal: '#28939C',
 			cornflower: '#4792DA',
-			softBlack: '#21272C',
 		},
 		tertiary: {
 			coolGray: '#d9d9d9',
@@ -176,16 +175,16 @@ export const commonTheme = {
 				({
 					tab: {
 						'&[data-active]': {
-							borderColor: theme.other.colors.secondary.softBlack,
+							borderColor: theme.other.colors.secondary.black,
 						},
 						'&[data-active]:hover': {
-							borderColor: theme.other.colors.secondary.softBlack,
+							borderColor: theme.other.colors.secondary.black,
 						},
 					},
 					tabLabel: {
 						fontWeight: 500,
 						fontSize: '16px',
-						color: theme.other.colors.secondary.softBlack,
+						color: theme.other.colors.secondary.black,
 					},
 				} satisfies Styles<TabsStylesNames, TabsStylesParams>),
 		},
