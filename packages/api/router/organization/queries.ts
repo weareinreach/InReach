@@ -1,19 +1,21 @@
 import { handleError } from '~api/lib'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
-import { defineRouter, publicProcedure, staffProcedure } from '~api/lib/trpc'
+import { defineRouter, publicProcedure } from '~api/lib/trpc'
 import { id, searchTerm, slug, distSearch, idArray } from '~api/schemas/common'
 import { SearchDetailsOutput } from '~api/schemas/outputTransform/org'
+import { isPublic } from '~api/schemas/selects/common'
 import { organizationInclude, orgSearchSelect } from '~api/schemas/selects/org'
 
 export const queries = defineRouter({
 	getById: publicProcedure.input(id).query(async ({ ctx, input }) => {
 		try {
-			const { include } = organizationInclude
+			const { select } = organizationInclude
 			const org = await ctx.prisma.organization.findUniqueOrThrow({
 				where: {
 					id: input.id,
+					...isPublic,
 				},
-				include,
+				select,
 			})
 			return org
 		} catch (error) {
@@ -23,12 +25,13 @@ export const queries = defineRouter({
 	getBySlug: publicProcedure.input(slug).query(async ({ ctx, input }) => {
 		try {
 			const { slug } = input
-			const { include } = organizationInclude
+			const { select } = organizationInclude
 			const org = await ctx.prisma.organization.findUniqueOrThrow({
 				where: {
 					slug,
+					...isPublic,
 				},
-				include,
+				select,
 			})
 			return org
 		} catch (error) {
@@ -39,7 +42,7 @@ export const queries = defineRouter({
 		try {
 			const { slug } = input
 			const orgId = await ctx.prisma.organization.findUniqueOrThrow({
-				where: { slug },
+				where: { slug, ...isPublic },
 				select: { id: true },
 			})
 			return orgId
@@ -55,6 +58,7 @@ export const queries = defineRouter({
 						contains: input.search,
 						mode: 'insensitive',
 					},
+					...isPublic,
 				},
 				select: {
 					id: true,
@@ -86,6 +90,7 @@ export const queries = defineRouter({
 					id: {
 						in: input.ids,
 					},
+					...isPublic,
 				},
 				select: orgSearchSelect,
 			}) //satisfies SearchDetailsResultInput

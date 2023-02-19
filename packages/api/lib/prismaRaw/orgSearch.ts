@@ -6,7 +6,7 @@ export const searchOrgByDistance = async (params: Params, ctx: Context) => {
 		SELECT *
 		FROM (
 			SELECT
-				DISTINCT ON ("Organization".id) "Organization".id,
+				DISTINCT ON (o.id) o.id,
 				ROUND(
 					ST_Distance(
 						ST_Transform(
@@ -21,9 +21,9 @@ export const searchOrgByDistance = async (params: Params, ctx: Context) => {
 					)::NUMERIC, 0
 				)
 				AS "distMeters"
-			FROM "Organization"
+			FROM "Organization" o
 			JOIN "OrgLocation" loc
-				ON loc."orgId" = "Organization".id
+				ON loc."orgId" = o.id
 			WHERE ST_Distance(
 				ST_Transform(
 					loc.geo, 3857
@@ -32,6 +32,8 @@ export const searchOrgByDistance = async (params: Params, ctx: Context) => {
 					ST_SetSRID(ST_MakePoint(${lon},${lat}),4326), 3857
 				)
 			) <= ${searchRadius}
+			AND o.published = TRUE
+			AND o.deleted = FALSE
 		) org
 		ORDER BY "distMeters" ASC`
 	const formattedResults = results.map((result) => ({

@@ -1,5 +1,17 @@
 import { Prisma } from '@weareinreach/db'
 
+export const isPublic = {
+	published: true,
+	deleted: false,
+}
+
+export const freeText = {
+	select: {
+		key: true,
+		ns: true,
+	},
+} satisfies Prisma.FreeTextArgs
+
 export const countryWithoutGeo = {
 	select: {
 		cca2: true,
