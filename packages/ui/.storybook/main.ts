@@ -9,7 +9,7 @@ import * as path from 'path'
 const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
 
 const config: StorybookConfig = {
-	stories: [`../**/${filePattern}`],
+	stories: [`../(components|hooks|layout|modals)/**/${filePattern}`],
 	staticDirs: [
 		{
 			from: '../../../apps/app/public',
