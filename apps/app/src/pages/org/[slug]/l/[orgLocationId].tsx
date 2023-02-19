@@ -29,3 +29,4 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params })
 		props,
 	}
 }
+export default OrgLocationPage
