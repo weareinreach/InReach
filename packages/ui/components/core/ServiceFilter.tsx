@@ -10,11 +10,7 @@ const useStyles = createStyles((theme) => ({
 		color: theme.other.colors.secondary.white,
 		marginLeft: '8px',
 		padding: '2px 7px',
-		minWidth: '24px',
-		minHeight: '24px',
 		borderRadius: '100px',
-		alignItems: 'center',
-		justifyContent: 'center',
 	},
 	group: {
 		justifyContent: 'space-between',
@@ -25,6 +21,12 @@ const useStyles = createStyles((theme) => ({
 	item: {
 		paddingLeft: '16px',
 		paddingRight: '16px',
+	},
+	uncheck: {
+		'&:hover': {
+			color: theme.other.colors.secondary.black,
+			cursor: 'pointer',
+		},
 	},
 }))
 
@@ -67,6 +69,11 @@ export const ServiceFilter = ({}: Props) => {
 			})
 		})
 		return count
+	}
+
+	function uncheckAll() {
+		setValues(serviceListEmpty)
+		console.log(serviceListEmpty)
 	}
 
 	const selectedItems = countOfChecked()
@@ -116,7 +123,9 @@ export const ServiceFilter = ({}: Props) => {
 					<Text>
 						{t('services')} {selectedItems > 0 ? selectedCountIcon : null}
 					</Text>
-					<a onClick={() => console.log('clickd uncheck all')}>{t('uncheck-all')}</a>
+					<a onClick={() => uncheckAll()} className={classes.uncheck}>
+						<Text>{t('uncheck-all')}</Text>
+					</a>
 				</Group>
 				{services}
 			</Accordion>
@@ -605,6 +614,11 @@ const mockServiceData = [
 		],
 	},
 ]
+
+const serviceListEmpty = mockServiceData.map((service) => ({
+	...service,
+	services: serviceTags(service.services),
+}))
 
 const servicesList = mockServiceData.map((service) => ({
 	...service,
