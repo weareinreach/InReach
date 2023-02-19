@@ -1,3 +1,4 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 // @ts-check
 /* eslint-disable import/no-unused-modules */
@@ -15,7 +16,8 @@ const config = {
 		locales: ['en', 'en-US', 'en-CA', 'en-MX', 'es', 'es-US', 'es-MX'],
 	},
 	reloadOnPrerender: process.env.NODE_ENV !== 'production',
-	debug: process.env.NODE_ENV !== 'production',
+	debug: process.env.NODE_ENV !== 'production' && !!process.env.NEXT_VERBOSE,
+
 	nonExplicitSupportedLngs: true,
 	react: { useSuspense: false },
 	backend: {

@@ -7,6 +7,7 @@
 		"build": "next build",
 		"clean:node": "rm -rf ./node_modules/ || true && rm -rf ./.next || true",
 		"dev": "next dev",
+		"dev:verbose": "NEXT_VERBOSE=1 next dev",
 		"format": "prettier --write --ignore-unknown .",
 		"generate:all": "tsx ./lib/generate.ts",
 		"generate:data": "tsx ./lib/generate.ts -d",

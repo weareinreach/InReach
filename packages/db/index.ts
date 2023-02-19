@@ -1,9 +1,10 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import { createId } from '@paralleldrive/cuid2'
 import { PrismaClient, Prisma } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 
-import { generateId, idPrefix, type IdPrefix } from './lib/idGen'
+import { generateId } from './lib/idGen'
 
 import { idMiddleware } from '~db/lib/idMiddleware'
 
@@ -15,7 +16,7 @@ declare global {
 
 const clientOptions = {
 	log:
-		process.env.NODE_ENV === 'development'
+		process.env.NODE_ENV === 'development' && !!process.env.NEXT_VERBOSE
 			? [
 					{ level: 'query', emit: 'event' },
 					{ level: 'error', emit: 'stdout' },
