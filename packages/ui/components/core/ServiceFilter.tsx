@@ -1,9 +1,6 @@
 import { Accordion, Checkbox, createStyles, Group, Text, useMantineTheme } from '@mantine/core'
-import { useListState } from '@mantine/hooks'
-import { id } from '@weareinreach/api/schemas/common'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { array } from 'zod'
 
 import { Icon } from '../../icon'
 
@@ -13,9 +10,11 @@ const useStyles = createStyles((theme) => ({
 		color: theme.other.colors.secondary.white,
 		marginLeft: '8px',
 		padding: '2px 7px',
-		width: '24px',
-		height: '24px',
+		minWidth: '24px',
+		minHeight: '24px',
 		borderRadius: '100px',
+		alignItems: 'center',
+		justifyContent: 'center',
 	},
 	group: {
 		justifyContent: 'space-between',
@@ -24,99 +23,15 @@ const useStyles = createStyles((theme) => ({
 		width: '600px',
 	},
 	item: {
-		width: '600px',
+		paddingLeft: '16px',
+		paddingRight: '16px',
 	},
 }))
-
-const initialValues = [
-	{
-		id: 'cle6jfyhu0006ag9kf8ibft65',
-		tsKey: 'abortion-care',
-		tsNs: 'services',
-		checked: false,
-		services: [
-			{
-				id: 'cle6jfyq800dp9kag3isplyq5',
-				tsKey: 'abortion-careabortion-providers',
-				tsNs: 'services',
-				checked: false,
-			},
-			{
-				id: 'cle6jfyq800dq9kagg0rwwb5y',
-				tsKey: 'abortion-carefinancial-assistance',
-				tsNs: 'services',
-				checked: false,
-			},
-			{
-				id: 'cle6jfyq800dr9kagitvx69cq',
-				tsKey: 'abortion-carelodging-assistance',
-				tsNs: 'services',
-				checked: false,
-			},
-			{
-				id: 'cle6jfyq800ds9kagl89381u3',
-				tsKey: 'abortion-caremail-order-services',
-				tsNs: 'services',
-				checked: false,
-			},
-			{
-				id: 'cle6jfyq800dt9kaghmf06y1h',
-				tsKey: 'abortion-caremental-health-support',
-				tsNs: 'services',
-				checked: false,
-			},
-			{
-				id: 'cle6jfyq800du9kags5p2l0ql',
-				tsKey: 'abortion-caretravel-assistance',
-				tsNs: 'services',
-				checked: false,
-			},
-		],
-	},
-	{
-		id: 'cle6jfyig0007ag9khqr98tgc',
-		tsKey: 'community-support',
-		tsNs: 'services',
-		checked: false,
-		services: [
-			{
-				id: 'cle6jfyq800dv9kagrbf6kpkj',
-				tsKey: 'community-supportcultural-centers',
-				tsNs: 'services',
-				checked: false,
-			},
-			{
-				id: 'cle6jfyq800dw9kag6j07imrs',
-				tsKey: 'community-supportlgbtq-centers',
-				tsNs: 'services',
-				checked: false,
-			},
-			{
-				id: 'cle6jfyq800dx9kagfvxr0pxp',
-				tsKey: 'community-supportreception-services',
-				tsNs: 'services',
-				checked: false,
-			},
-			{
-				id: 'cle6jfyq800dy9kag260ai4tr',
-				tsKey: 'community-supportsponsors',
-				tsNs: 'services',
-				checked: false,
-			},
-			{
-				id: 'cle6jfyq800dz9kag44iv15t5',
-				tsKey: 'community-supportspiritual-support',
-				tsNs: 'services',
-				checked: false,
-			},
-		],
-	},
-]
 
 export const ServiceFilter = ({}: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
-	const { t } = useTranslation('services')
+	const { t } = useTranslation(['common', 'services'])
 	const [opened, setOpened] = useState(false)
 
 	const [values, setValues] = useState(servicesList)
@@ -131,11 +46,8 @@ export const ServiceFilter = ({}: Props) => {
 	}
 
 	function updateService(serviceIndex: number) {
-		let checkedValue = !allChecked(serviceIndex)
 		let newVals = [...values]
-		let newServiceTags = newVals[serviceIndex]!.services
-		newServiceTags = serviceTags(newServiceTags, checkedValue)
-		newVals[serviceIndex]!.services = newServiceTags
+		newVals[serviceIndex]!.services = serviceTags(newVals[serviceIndex]!.services, !allChecked(serviceIndex))
 		setValues(newVals)
 	}
 
@@ -147,11 +59,21 @@ export const ServiceFilter = ({}: Props) => {
 		return values[serviceIndex]?.services.some((service: any) => service.checked) && !allChecked(serviceIndex)
 	}
 
-	const selectedItems = 2
+	function countOfChecked() {
+		let count = 0
+		values.forEach((service) => {
+			service.services.map((item: any) => {
+				item.checked == true ? (count = count + 1) : (count = count)
+			})
+		})
+		return count
+	}
+
+	const selectedItems = countOfChecked()
 	const selectedCountIcon = <Text className={classes.count}>{selectedItems}</Text>
 
-	const items = (sIndex: any, serviceTags: any) =>
-		serviceTags.map((tag: any, stIndex: any) => (
+	const items = (serviceIndex: any, serviceTags: any) =>
+		serviceTags.map((tag: any, serviceIndexTagIndex: any) => (
 			<Checkbox
 				mt='xs'
 				ml={33}
@@ -159,25 +81,25 @@ export const ServiceFilter = ({}: Props) => {
 				key={tag.id}
 				checked={tag.checked}
 				onChange={(event) => {
-					updateServiceTag(sIndex, stIndex, event.currentTarget.checked)
+					updateServiceTag(serviceIndex, serviceIndexTagIndex, event.currentTarget.checked)
 				}}
 			/>
 		))
 
-	const services = values.map((service, index) => (
-		<Accordion.Item value={service.id} key={service.id}>
+	const services = values.map((service, serviceIndex) => (
+		<Accordion.Item value={service.id} key={service.id} className={classes.item}>
 			<Accordion.Control>{t(service.tsKey)}</Accordion.Control>
 			<Accordion.Panel>
 				<Checkbox
-					checked={allChecked(index)}
-					indeterminate={indeterminate(index)}
+					checked={allChecked(serviceIndex)}
+					indeterminate={indeterminate(serviceIndex)}
 					label={t(service.tsKey)}
 					transitionDuration={0}
 					onChange={() => {
-						updateService(index)
+						updateService(serviceIndex)
 					}}
 				/>
-				{items(index, service.services)}
+				{items(serviceIndex, service.services)}
 			</Accordion.Panel>
 		</Accordion.Item>
 	))
@@ -191,8 +113,10 @@ export const ServiceFilter = ({}: Props) => {
 				classNames={classes}
 			>
 				<Group className={classes.group}>
-					<Text>Services {selectedCountIcon}</Text>
-					<a>Uncheck all</a>
+					<Text>
+						{t('services')} {selectedItems > 0 ? selectedCountIcon : null}
+					</Text>
+					<a onClick={() => console.log('clickd uncheck all')}>{t('uncheck-all')}</a>
 				</Group>
 				{services}
 			</Accordion>
@@ -684,8 +608,7 @@ const mockServiceData = [
 
 const servicesList = mockServiceData.map((service) => ({
 	...service,
-	checked: false,
-	services: serviceTags(service.services, false),
+	services: serviceTags(service.services),
 }))
 
 function serviceTags(serviceTagArray: any, eventTarget?: boolean) {
