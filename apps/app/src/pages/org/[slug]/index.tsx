@@ -1,36 +1,58 @@
+/* eslint-disable i18next/no-literal-string */
+import { Code } from '@mantine/core'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { GetServerSideProps, NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-
-import { type ParsedUrlQuery } from 'querystring'
+import { type RoutedQuery } from 'nextjs-routes'
 
 import { api } from '~app/utils/api'
 
 const OrganizationPage: NextPage = () => {
 	const { t } = useTranslation()
+	const router = useRouter<'/org/[slug]'>()
+	const { query } = router
+	console.log(query)
+	const { data, isLoading } = api.organization.getBySlug.useQuery(query)
 
-	return <></>
+	if (isLoading && !data) return <>Loading</>
+
+	if (data?.locations?.length === 1) {
+		return (
+			<>
+				Single Location view
+				<Code block>{JSON.stringify(data, null, 2)}</Code>
+			</>
+		)
+	}
+
+	return (
+		<>
+			Multi Location view
+			<Code block>{JSON.stringify(data, null, 2)}</Code>
+		</>
+	)
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res, locale, params }) => {
+export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/org/[slug]'>> = async ({
+	locale,
+	params,
+}) => {
+	if (!params) return { notFound: true }
+	const { slug } = params
+
 	const ssg = await trpcServerClient()
-	const { slug } = params as PathParams
 
 	await ssg.organization.getBySlug.prefetch({ slug })
-	await ssg.organization.getIdFromSlug.prefetch({ slug })
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await serverSideTranslations(locale as string, ['common'])),
+		...(await serverSideTranslations(locale ?? 'en', ['common'])),
 	}
 
 	return {
 		props,
 	}
-}
-
-interface PathParams extends ParsedUrlQuery {
-	slug: string
 }
 
 export default OrganizationPage

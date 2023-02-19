@@ -1,19 +1,21 @@
 import { handleError } from '~api/lib'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
-import { defineRouter, publicProcedure, staffProcedure } from '~api/lib/trpc'
-import { id, searchTerm, slug, distSearch } from '~api/schemas/common'
-import { type CreateQuickOrgInput, CreateQuickOrgSchema } from '~api/schemas/create/organization'
-import { organizationInclude } from '~api/schemas/selects/org'
+import { defineRouter, publicProcedure } from '~api/lib/trpc'
+import { id, searchTerm, slug, distSearch, idArray } from '~api/schemas/common'
+import { SearchDetailsOutput } from '~api/schemas/outputTransform/org'
+import { isPublic } from '~api/schemas/selects/common'
+import { organizationInclude, orgSearchSelect } from '~api/schemas/selects/org'
 
-export const orgRouter = defineRouter({
+export const queries = defineRouter({
 	getById: publicProcedure.input(id).query(async ({ ctx, input }) => {
 		try {
-			const { include } = organizationInclude
+			const { select } = organizationInclude
 			const org = await ctx.prisma.organization.findUniqueOrThrow({
 				where: {
 					id: input.id,
+					...isPublic,
 				},
-				include,
+				select,
 			})
 			return org
 		} catch (error) {
@@ -23,12 +25,13 @@ export const orgRouter = defineRouter({
 	getBySlug: publicProcedure.input(slug).query(async ({ ctx, input }) => {
 		try {
 			const { slug } = input
-			const { include } = organizationInclude
+			const { select } = organizationInclude
 			const org = await ctx.prisma.organization.findUniqueOrThrow({
 				where: {
 					slug,
+					...isPublic,
 				},
-				include,
+				select,
 			})
 			return org
 		} catch (error) {
@@ -39,7 +42,7 @@ export const orgRouter = defineRouter({
 		try {
 			const { slug } = input
 			const orgId = await ctx.prisma.organization.findUniqueOrThrow({
-				where: { slug },
+				where: { slug, ...isPublic },
 				select: { id: true },
 			})
 			return orgId
@@ -55,6 +58,7 @@ export const orgRouter = defineRouter({
 						contains: input.search,
 						mode: 'insensitive',
 					},
+					...isPublic,
 				},
 				select: {
 					id: true,
@@ -68,6 +72,8 @@ export const orgRouter = defineRouter({
 	}),
 	searchDistance: publicProcedure.input(distSearch).query(async ({ ctx, input }) => {
 		const { lat, lon, dist, unit } = input
+		// TODO: Merge in getSearchDetails
+		// TODO: Return distances in same unit as searched
 
 		// Convert to meters
 		const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
@@ -77,23 +83,25 @@ export const orgRouter = defineRouter({
 
 		return { orgs, serviceAreas }
 	}),
-	createNewQuick: staffProcedure
-		.input(CreateQuickOrgSchema().inputSchema)
-		.mutation(async ({ ctx, input }) => {
-			try {
-				const inputData = {
-					actorId: ctx.session.user.id,
-					operation: 'CREATE',
-					data: input,
-				} satisfies CreateQuickOrgInput
-
-				const record = CreateQuickOrgSchema().dataParser.parse(inputData)
-
-				const result = await ctx.prisma.organization.create(record)
-
-				return result
-			} catch (error) {
-				handleError(error)
-			}
-		}),
+	getSearchDetails: publicProcedure.input(idArray).query(async ({ ctx, input }) => {
+		try {
+			const results = await ctx.prisma.organization.findMany({
+				where: {
+					id: {
+						in: input.ids,
+					},
+					...isPublic,
+				},
+				select: orgSearchSelect,
+			}) //satisfies SearchDetailsResultInput
+			const orderedResults: typeof results = []
+			input.ids.forEach((id) => {
+				const sort = results.find((result) => result.id === id)
+				if (sort) orderedResults.push(sort)
+			})
+			return SearchDetailsOutput.parse(orderedResults)
+		} catch (error) {
+			handleError(error)
+		}
+	}),
 })

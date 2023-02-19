@@ -1,3 +1,4 @@
+import superjson from 'superjson'
 import { z } from 'zod'
 
 import { Prisma } from '../'
@@ -12,3 +13,4 @@ export const InputJsonValue: z.ZodType<Prisma.InputJsonValue> = z.union([
 export type InputJsonValueType = z.infer<typeof InputJsonValue>
 export const JsonNullValueInputSchema = z.enum(['JsonNull'])
 export const JsonInputOrNull = z.union([z.lazy(() => JsonNullValueInputSchema), InputJsonValue])
+export const JsonInputOrNullSuperJSON = z.preprocess((data) => superjson.serialize(data), JsonInputOrNull)

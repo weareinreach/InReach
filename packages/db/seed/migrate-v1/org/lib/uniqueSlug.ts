@@ -32,9 +32,9 @@ export const uniqueSlug = async (name: string, city?: string, state?: string) =>
 		return existing?.slug || slugSet.has(slug) ? false : true
 	}
 	const slugs = [
-		slugify(name, { lower: true }),
-		slugify(`${name} ${state}`, { lower: true }),
-		slugify(`${name} ${city} ${state}`, { lower: true }),
+		slugify(name, { lower: true, strict: true }),
+		slugify(`${name} ${state}`, { lower: true, strict: true }),
+		slugify(`${name} ${city} ${state}`, { lower: true, strict: true }),
 	]
 	for (const slug of slugs) {
 		if (await check(slug)) return slug

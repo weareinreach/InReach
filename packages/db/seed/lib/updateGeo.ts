@@ -8,13 +8,13 @@ import { prisma } from '~db/.'
  */
 export const updateGeo = async () => {
 	const country =
-		await prisma.$executeRaw`UPDATE "Country" set geo = ST_SetSRID(ST_GeographyFromText("geoWKT"),4326)`
+		await prisma.$executeRaw`UPDATE "Country" set geo = ST_SetSRID(ST_GeometryFromText("geoWKT"),4326)`
 
 	const govDist =
-		await prisma.$executeRaw`UPDATE "GovDist" set geo = ST_SetSRID(ST_GeographyFromText("geoWKT"),4326)`
+		await prisma.$executeRaw`UPDATE "GovDist" set geo = ST_SetSRID(ST_GeometryFromText("geoWKT"),4326)`
 
 	const orgLocation =
-		await prisma.$executeRaw`UPDATE "OrgLocation" set geo = ST_SetSRID(ST_GeographyFromText("geoWKT"),4326)`
+		await prisma.$executeRaw`UPDATE "OrgLocation" set geo = ST_SetSRID(ST_GeometryFromText("geoWKT"),4326)`
 
 	return { country, govDist, orgLocation }
 }

@@ -1,4 +1,4 @@
-import slugify from 'slugify'
+import { slug } from '~db/.'
 
 export const namespaces = {
 	attribute: 'attribute',
@@ -22,4 +22,4 @@ export const namespaces = {
  */
 export const namespaceGen = {}
 
-export const keySlug = (item: string) => slugify(item, { lower: true, strict: true })
+export const keySlug = (item: string) => slug(item)
