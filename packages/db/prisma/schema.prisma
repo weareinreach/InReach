@@ -451,6 +451,9 @@ model OrgEmail {
   title   UserTitle? @relation(fields: [titleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   titleId String? /// @zod.string.cuid()
 
+  description   FreeText? @relation(references: [id], fields: [descriptionId])
+  descriptionId String?   @unique
+
   organization Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   orgId        String? /// @zod.string.cuid()
 
@@ -581,8 +584,8 @@ model OrgLocation {
   country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   countryId String /// @zod.string.cuid()
 
-  longitude Decimal?                             @db.Decimal(7, 4)
-  latitude  Decimal?                             @db.Decimal(7, 4)
+  longitude Float?                               @db.Real
+  latitude  Float?                               @db.Real
   geo       Unsupported("Geometry(POINT,4326)")?
   geoJSON   Json /// @zod.custom.use(Geometry)
   geoWKT    String?
@@ -695,6 +698,7 @@ model FreeText {
   OrgWebsite          OrgWebsite?
   OrgService          OrgService?
   AttributeSupplement AttributeSupplement?
+  OrgEmail            OrgEmail?
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt

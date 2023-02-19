@@ -111,9 +111,9 @@ const upsertDistrictTypes = async (task: ListrTask) => {
 		log(`Preparing record for Governing District type: ${type.one}`, 'generate')
 
 		const name = type.one
-		const key = `type-${keySlug(type.one)}_one`
+		const key = `type-${keySlug(type.one)}`
 		const nameOther = type.other
-		const keyOther = `type-${keySlug(type.one)}_other`
+
 		const id = distMap.get(name) ?? generateId('govDistType')
 
 		if (!distMap.has(name)) {
@@ -121,11 +121,11 @@ const upsertDistrictTypes = async (task: ListrTask) => {
 				key,
 				ns,
 				text: name,
-			})
-			data.translateChild.push({
-				key: keyOther,
-				ns,
-				text: nameOther,
+				plural: 'PLURAL',
+				pluralValues: {
+					one: name,
+					other: nameOther,
+				},
 			})
 
 			data.govDistType.push({

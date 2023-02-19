@@ -231,6 +231,7 @@ CREATE TABLE "OrgEmail" (
 	"published" BOOLEAN NOT NULL DEFAULT true,
 	"deleted" BOOLEAN NOT NULL DEFAULT false,
 	"titleId" TEXT,
+	"descriptionId" TEXT,
 	"orgId" TEXT,
 	"locationOnly" BOOLEAN NOT NULL DEFAULT false,
 	"serviceOnly" BOOLEAN NOT NULL DEFAULT false,
@@ -301,8 +302,8 @@ CREATE TABLE "OrgLocation" (
 	"primary" BOOLEAN NOT NULL DEFAULT true,
 	"govDistId" TEXT,
 	"countryId" TEXT NOT NULL,
-	"longitude" DECIMAL(7, 4),
-	"latitude" DECIMAL(7, 4),
+	"longitude" REAL,
+	"latitude" REAL,
 	"geo" Geometry(POINT, 4326),
 	"geoJSON" JSONB NOT NULL,
 	"geoWKT" TEXT,
@@ -1172,6 +1173,9 @@ CREATE INDEX "Organization_name_idx" ON "Organization"("name" ASC);
 CREATE UNIQUE INDEX "OrgEmail_legacyId_key" ON "OrgEmail"("legacyId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "OrgEmail_descriptionId_key" ON "OrgEmail"("descriptionId");
+
+-- CreateIndex
 CREATE INDEX "OrgEmail_lastName_firstName_idx" ON "OrgEmail"("lastName" ASC, "firstName");
 
 -- CreateIndex
@@ -1543,6 +1547,14 @@ ALTER TABLE
 	"OrgEmail"
 ADD
 	CONSTRAINT "OrgEmail_titleId_fkey" FOREIGN KEY ("titleId") REFERENCES "UserTitle"("id") ON DELETE
+SET
+	NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE
+	"OrgEmail"
+ADD
+	CONSTRAINT "OrgEmail_descriptionId_fkey" FOREIGN KEY ("descriptionId") REFERENCES "FreeText"("id") ON DELETE
 SET
 	NULL ON UPDATE CASCADE;
 
@@ -2972,11 +2984,8 @@ ALTER TABLE
 ADD
 	CONSTRAINT "ServiceTagDefaultAttribute_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "ServiceTag"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
-
-
-	-- CUSTOM ADDITIONS
-
-	-- Add check constraint to make sure one of the required records is linked.
+-- CUSTOM ADDITIONS
+-- Add check constraint to make sure one of the required records is linked.
 ALTER TABLE
 	"AttributeSupplement"
 ADD
