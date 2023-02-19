@@ -393,7 +393,7 @@ export const generateRecords = async (task: ListrTask) => {
 						legacyId: location._id.$oid,
 						name: location.name,
 						street1: location.address ?? '',
-						street2: location.unit,
+						street2: location.unit === '' ? location.unit : undefined,
 						city: location.city ?? '',
 						postCode: location.zip_code,
 						primary: location.is_primary ?? false,
