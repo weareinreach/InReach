@@ -123,6 +123,16 @@ export const commonTheme: MantineThemeOverride = {
 				radius: 'xl',
 			},
 		},
+		Checkbox: {
+			styles: (theme) => ({
+				input: {
+					'&:checked': {
+						backgroundColor: theme.other.colors.secondary.black,
+						borderColor: theme.other.colors.secondary.black,
+					},
+				},
+			}),
+		},
 		GridCol: {
 			defaultProps: {
 				span: 12,

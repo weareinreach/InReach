@@ -581,7 +581,6 @@ export const ServiceFilter = ({}) => {
 	const items = (serviceIndex: any, serviceTags: any) =>
 		serviceTags.map((tag: any, serviceIndexTagIndex: any) => (
 			<Checkbox
-				color='dark'
 				mt='xs'
 				ml={33}
 				label={t(tag.tsKey)}
@@ -598,7 +597,6 @@ export const ServiceFilter = ({}) => {
 			<Accordion.Control>{t(service.tsKey)}</Accordion.Control>
 			<Accordion.Panel>
 				<Checkbox
-					color='dark'
 					checked={allChecked(serviceIndex)}
 					indeterminate={indeterminate(serviceIndex)}
 					label={t(service.tsKey)}
