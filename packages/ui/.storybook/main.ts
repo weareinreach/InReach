@@ -27,7 +27,6 @@ const config: StorybookConfig = {
 		'storybook-addon-designs',
 		'storybook-addon-pseudo-states',
 		'storybook-addon-swc',
-		// 'storybook-react-i18next', // Does not play well with v7 docs yet.
 		'@storybook/addon-actions', // Keep this one last
 	],
 	framework: {
