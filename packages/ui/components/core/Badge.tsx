@@ -37,6 +37,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				leftSection: {
 					paddingTop: theme.spacing.sm / 4,
 					paddingBottom: theme.spacing.sm / 4,
+					paddingRight: theme.spacing.xs,
 					fontSize: theme.fontSizes.sm,
 					marginRight: 0,
 					[theme.fn.largerThan('sm')]: {
@@ -123,7 +124,7 @@ interface BadgeStylesParams {
 }
 type CustomBadgeProps = Omit<BadgeProps, 'variant'> & {
 	/** Preset designs */
-	variant?: BadgeVariant | CustomVariants
+	variant?: CustomVariants | 'outline'
 	/**
 	 * Item rendered on the left side of the badge. Should be either an emoji unicode string or an Icon
 	 * component

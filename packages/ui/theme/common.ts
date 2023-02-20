@@ -14,7 +14,9 @@ import {
 	type TabsStylesParams,
 	type TextProps,
 	type TitleStylesParams,
-	TypographyStylesProviderProps,
+	type TypographyStylesProviderProps,
+	type BadgeStylesNames,
+	type BadgeStylesParams,
 } from '@mantine/core'
 import { type PolymorphicComponentProps } from '@mantine/utils'
 
@@ -139,6 +141,12 @@ export const commonTheme = {
 			defaultProps: {
 				radius: 'xl',
 			} satisfies BadgeProps,
+			styles: (theme) =>
+				({
+					root: {
+						letterSpacing: 'inherit',
+					},
+				} satisfies Styles<BadgeStylesNames, BadgeStylesParams>),
 		},
 		Button: {
 			defaultProps: {

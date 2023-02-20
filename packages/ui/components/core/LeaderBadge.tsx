@@ -1,22 +1,23 @@
-import { Text, Tooltip, createStyles, useMantineTheme } from '@mantine/core'
+import { Text, Tooltip, createStyles, useMantineTheme, Box, ColorSwatch } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
 
 import { Badge } from './Badge'
 
 const useStyles = createStyles((theme, params: Pick<LeaderBadgeProps, 'color'>) => ({
 	avatar: {
-		fontSize: theme.fontSizes.md,
-		backgroundColor: params.color,
+		fontSize: theme.fontSizes.xs,
+		// backgroundColor: params.color,
 		borderRadius: theme.radius.xl,
 		height: 24,
 		width: 24,
-		textAlign: 'center',
-		lineHeight: 1.6,
+		margin: 0,
+	},
+	leftSection: {
 		margin: 0,
 	},
 	text: {
-		color: 'black',
-		marginLeft: 5,
+		color: theme.other.colors.secondary.black,
+		marginLeft: theme.spacing.xs,
 	},
 }))
 
@@ -37,7 +38,9 @@ export const LeaderBadge = ({
 		? {
 				height: 40,
 				width: 40,
-				backgroundColor: theme.other.colors.primary.lightGray,
+				['&:hover']: {
+					backgroundColor: theme.other.colors.primary.lightGray,
+				},
 				radius: theme.radius.xl,
 				padding: 0,
 		  }
@@ -57,9 +60,13 @@ export const LeaderBadge = ({
 			<Badge
 				variant='outline'
 				size='xl'
-				classNames={{ leftSection: classes.avatar }}
+				classNames={{ leftSection: classes.leftSection }}
 				sx={{ border: 0, padding: 0, ...miniStyle, ...miniGroupStyle }}
-				leftSection={emoji}
+				leftSection={
+					<ColorSwatch color={color} className={classes.avatar} radius={24} size={24}>
+						<span>{emoji}</span>
+					</ColorSwatch>
+				}
 			>
 				<Text fw={500} className={classes.text} sx={{ display: minify ? 'none' : 'hidden' }}>
 					{label}
