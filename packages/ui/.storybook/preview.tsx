@@ -33,6 +33,7 @@ export const parameters = {
 			color: /(background|color)$/i,
 			date: /Date$/,
 		},
+		expanded: true,
 	},
 	docs: {
 		source: {
@@ -43,6 +44,9 @@ export const parameters = {
 	i18n,
 	viewport: {
 		viewports: INITIAL_VIEWPORTS,
+	},
+	chromatic: {
+		delay: 1000,
 	},
 }
 export const globalTypes = {

@@ -152,6 +152,27 @@ export const commonTheme = {
 			defaultProps: {
 				radius: 'xl',
 			} satisfies ButtonProps,
+			styles: (theme) => ({
+				root: {
+					'&:disabled, &[data-disabled]': {
+						backgroundColor: theme.other.colors.primary.lightGray,
+						cursor: 'not-allowed',
+						pointerEvents: 'none',
+						'& *': {
+							color: theme.other.colors.secondary.darkGray,
+						},
+
+						'&:active': {
+							transform: 'none',
+						},
+					},
+				},
+				inner: {
+					'&:disabled, &[data-disabled]': {
+						color: theme.other.colors.secondary.darkGray,
+					},
+				},
+			}),
 		},
 		GridCol: {
 			defaultProps: {
