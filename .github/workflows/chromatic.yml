@@ -48,7 +48,9 @@ jobs:
             ${{ runner.os }}-pnpm-store-
         # 👇 Runs pnpm in ./packages/ui
       - name: Install dependencies
-        run: pnpm install && pnpm scripts:post-install
+        run: pnpm install && pnpm -w scripts:post-install
+        working-directory: packages/ui
+
         # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
         uses: chromaui/action@d5ecbf7522dc237c97ef746e40e9100e653bd0bf # v1
