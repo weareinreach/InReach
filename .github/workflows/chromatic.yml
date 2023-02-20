@@ -48,15 +48,10 @@ jobs:
             pnpm-store-
       - name: Install dependencies
         run: pnpm install
-      - name: Run pre-build scripts
-        run: pnpm turbo run post-install
-      - name: Build Storybook
-        run: pnpm sb:build:swc
-        working-directory: packages/ui
         # 👇 Runs pnpm in ./packages/ui
-      # - name: Install dependencies
-      #   run: pnpm install && pnpm -w scripts:post-install
-      #   working-directory: packages/ui
+      - name: Install dependencies
+        run: pnpm install && pnpm -w scripts:post-install
+        working-directory: packages/ui
 
       # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
@@ -64,8 +59,8 @@ jobs:
         with:
           workingDir: packages/ui
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          storybookBuildDir: storybook-static/
-          # buildScriptName: sb:build
+          # storybookBuildDir: storybook-static/
+          buildScriptName: sb:build
           onlyChanged: true
           skip: '@(renovate/**|l10_**)'
           exitOnceUploaded: true
