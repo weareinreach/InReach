@@ -47,11 +47,11 @@ jobs:
           key: pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             pnpm-store-
+      # - name: Install dependencies
+      #   run: pnpm install
+      # 👇 Runs pnpm in ./packages/ui
       - name: Install dependencies
         run: pnpm install
-        # 👇 Runs pnpm in ./packages/ui
-      - name: Install dependencies
-        run: pnpm install && pnpm -w scripts:post-install
         working-directory: packages/ui
 
       # 👇 Runs Chromatic CLI in ./packages/ui
