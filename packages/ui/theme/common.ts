@@ -31,6 +31,29 @@ const themeCustomObj = {
 		semibold: 500,
 		bold: 600,
 	},
+	/** Utility font definitions */
+	utilityFonts: {
+		utility1: {
+			fontSize: 16,
+			fontWeight: 500,
+			lineHeight: 1.25,
+		},
+		utility2: {
+			fontSize: 16,
+			fontWeight: 400,
+			lineHeight: 1.25,
+		},
+		utility3: {
+			fontSize: 14,
+			fontWeight: 500,
+			lineHeight: 1.25,
+		},
+		utility4: {
+			fontSize: 14,
+			fontWeight: 400,
+			lineHeight: 1.25,
+		},
+	},
 	border: {
 		default: '1px solid #d9d9d9',
 	},
