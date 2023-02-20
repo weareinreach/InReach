@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { Button } from './Button'
 import { Icon } from '../../icon'
@@ -26,12 +26,14 @@ export default {
 	},
 } satisfies Meta<typeof Button>
 
+type StoryDef = StoryObj<typeof Button>
+
 export const Primary = {
 	args: {
 		variant: 'primary',
 		children: 'Download the app',
 	},
-}
+} satisfies StoryDef
 export const PrimaryWithIcon = {
 	args: {
 		variant: 'primary-icon',
