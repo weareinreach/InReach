@@ -24,7 +24,7 @@ export default {
 			control: 'string',
 		},
 	},
-} as Meta<typeof Button>
+} satisfies Meta<typeof Button>
 
 export const Primary = {
 	args: {
