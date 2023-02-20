@@ -1,9 +1,11 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
 
 import { WithI18n, WithMantine, WithTRPC } from './decorators'
 import { i18n, CustomLocales } from './i18next'
+import { Viewports } from './types'
 
 import './font.css'
 
@@ -76,5 +78,15 @@ declare module '@storybook/react' {
 		}
 		locale?: CustomLocales[number]
 		i18n?: typeof i18n
+		viewport?: {
+			viewports?: typeof INITIAL_VIEWPORTS
+			defaultViewport?: Viewports
+		}
+		design?: {
+			type: 'figma'
+			url: `https://${string}`
+		}
+		layout?: 'centered' | 'fullscreen' | 'padded'
+		msw?: RequestHandler[] | { handlers: RequestHandler[] | Record<string, RequestHandler> }
 	}
 }

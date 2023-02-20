@@ -48,14 +48,14 @@ const config: StorybookConfig = {
 		},
 	},
 	typescript: {
-		check: true,
-		checkOptions: {},
+		check: false,
 		reactDocgen: 'react-docgen-typescript',
 		reactDocgenTypescriptOptions: {
 			shouldExtractLiteralValuesFromEnum: true,
 			shouldRemoveUndefinedFromOptional: true,
 			shouldExtractValuesFromUnion: true,
 			shouldIncludePropTagMap: true,
+			tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
 			propFilter: (prop: PropItem, component: Component) => {
 				if (prop.declarations !== undefined && prop.declarations.length > 0) {
 					const hasPropAdditionalDescription = prop.declarations.find((declaration) => {
