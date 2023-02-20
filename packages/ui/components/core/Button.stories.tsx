@@ -11,9 +11,6 @@ export default {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=196%3A5045&t=0SZ0JVMYe5r7bNkb-4',
 		},
-		// controls: {
-		// 	include: ['children'],
-		// },
 	},
 	argTypes: {
 		variant: {
@@ -62,7 +59,7 @@ export const Secondary = {
 		variant: 'secondary',
 		children: 'InReach.org',
 	},
-}
+} satisfies StoryDef
 export const SecondaryDisabled = disabled(Secondary)
 export const SecondaryWithIcon = {
 	args: {
@@ -70,14 +67,14 @@ export const SecondaryWithIcon = {
 		children: 'Save',
 		leftIcon: <Icon icon='carbon:favorite' />,
 	},
-}
+} satisfies StoryDef
 export const SecondaryWithIconDisabled = disabled(SecondaryWithIcon)
 export const Accent = {
 	args: {
 		variant: 'accent',
 		children: 'Safety exit',
 	},
-}
+} satisfies StoryDef
 export const AccentDisabled = disabled(Accent)
 export const AccentWithIcon = {
 	args: {
@@ -85,5 +82,5 @@ export const AccentWithIcon = {
 		children: 'View map',
 		leftIcon: <Icon icon='carbon:map' />,
 	},
-}
+} satisfies StoryDef
 export const AccentWithIconDisabled = disabled(AccentWithIcon)
