@@ -43,21 +43,29 @@ jobs:
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-        # 👇 Runs pnpm in ./packages/ui
+            pnpm-store-
       - name: Install dependencies
-        run: pnpm install && pnpm -w scripts:post-install
+        run: pnpm install
+      - name: Run pre-build scripts
+        run: pnpm scripts:post-install
+      - name: Build Storybook
+        run: pnpm sb:build:swc
         working-directory: packages/ui
+        # 👇 Runs pnpm in ./packages/ui
+      # - name: Install dependencies
+      #   run: pnpm install && pnpm -w scripts:post-install
+      #   working-directory: packages/ui
 
-        # 👇 Runs Chromatic CLI in ./packages/ui
+      # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
         uses: chromaui/action@d5ecbf7522dc237c97ef746e40e9100e653bd0bf # v1
         with:
           workingDir: packages/ui
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: sb:build
+          storybookBuildDir: storybook-static/
+          # buildScriptName: sb:build
           onlyChanged: true
           skip: '@(renovate/**|l10_**)'
           exitOnceUploaded: true
