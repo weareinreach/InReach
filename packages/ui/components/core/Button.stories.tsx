@@ -48,7 +48,7 @@ export const PrimaryWithIcon = {
 	args: {
 		variant: 'primary-icon',
 		children: 'More filters',
-		leftIcon: <Icon icon='carbon:settings-adjust' rotate={3} />,
+		leftIcon: <Icon icon='carbon:settings-adjust' rotate={2} />,
 	},
 } satisfies StoryDef
 export const PrimaryWithIconDisabled = disabled(PrimaryWithIcon)

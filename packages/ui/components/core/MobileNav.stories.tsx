@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { MobileNav as MobileNavComponent } from './MobileNav'
 import { StorybookGrid } from '../layout/BodyGrid'
@@ -22,4 +22,13 @@ export default {
 	decorators: [StorybookGrid],
 } satisfies Meta<typeof MobileNavComponent>
 
-export const MobileNavigation = {}
+type StoryDef = StoryObj<typeof MobileNavComponent>
+
+export const Mobile = {} satisfies StoryObj
+export const Tablet = {
+	parameters: {
+		viewport: {
+			defaultViewport: 'ipad',
+		},
+	},
+} satisfies StoryObj
