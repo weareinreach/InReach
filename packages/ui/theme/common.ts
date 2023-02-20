@@ -24,6 +24,33 @@ import { customColors } from './colors'
 
 import type React from 'react'
 
+const colors = {
+	primary: {
+		lightGray: '#EFEFEF',
+		allyGreen: '#00D56C',
+	},
+	secondary: {
+		black: '#21272C',
+		white: '#FFFFFF',
+		darkGray: '#65676B',
+		teal: '#28939C',
+		cornflower: '#4792DA',
+	},
+	tertiary: {
+		coolGray: '#d9d9d9',
+		red: '#C05C4A',
+		pink: '#D4A1BA',
+		lightBlue: '#79ADD7',
+		purple: '#705890',
+		darkBlue: '#3c4e8f',
+		green: '#749C66',
+		yellow: '#F1DD7F',
+		orange: '#c77e54',
+		brown: '#5d4830',
+		darkBrown: '#322f2e',
+	},
+} as const
+
 const themeCustomObj = {
 	/** Font weights per InReach style guide */
 	fontWeight: {
@@ -37,52 +64,31 @@ const themeCustomObj = {
 			fontSize: 16,
 			fontWeight: 500,
 			lineHeight: 1.25,
+			color: colors.secondary.black,
 		},
 		utility2: {
 			fontSize: 16,
 			fontWeight: 400,
 			lineHeight: 1.25,
+			color: colors.secondary.black,
 		},
 		utility3: {
 			fontSize: 14,
 			fontWeight: 500,
 			lineHeight: 1.25,
+			color: colors.secondary.black,
 		},
 		utility4: {
 			fontSize: 14,
 			fontWeight: 400,
 			lineHeight: 1.25,
+			color: colors.secondary.black,
 		},
 	},
 	border: {
 		default: '1px solid #d9d9d9',
 	},
-	colors: {
-		primary: {
-			lightGray: '#EFEFEF',
-			allyGreen: '#00D56C',
-		},
-		secondary: {
-			black: '#21272C',
-			white: '#FFFFFF',
-			darkGray: '#65676B',
-			teal: '#28939C',
-			cornflower: '#4792DA',
-		},
-		tertiary: {
-			coolGray: '#d9d9d9',
-			red: '#C05C4A',
-			pink: '#D4A1BA',
-			lightBlue: '#79ADD7',
-			purple: '#705890',
-			darkBlue: '#3c4e8f',
-			green: '#749C66',
-			yellow: '#F1DD7F',
-			orange: '#c77e54',
-			brown: '#5d4830',
-			darkBrown: '#322f2e',
-		},
-	},
+	colors,
 } as const satisfies MantineThemeOther
 
 export const commonTheme = {
@@ -227,6 +233,7 @@ export const commonTheme = {
 			styles: (theme) =>
 				({
 					tab: {
+						padding: [`16px`, `24px`],
 						'&[data-active]': {
 							borderColor: theme.other.colors.secondary.black,
 						},
@@ -235,9 +242,7 @@ export const commonTheme = {
 						},
 					},
 					tabLabel: {
-						fontWeight: 500,
-						fontSize: '16px',
-						color: theme.other.colors.secondary.black,
+						...theme.other.utilityFonts.utility1,
 					},
 				} satisfies Styles<TabsStylesNames, TabsStylesParams>),
 		},
