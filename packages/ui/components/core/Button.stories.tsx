@@ -14,7 +14,6 @@ export default {
 	},
 	argTypes: {
 		variant: {
-			options: ['sm-primary', 'sm-secondary', 'sm-accent', 'lg-primary', 'lg-secondary', 'lg-accent'],
 			control: false,
 		},
 		children: {
