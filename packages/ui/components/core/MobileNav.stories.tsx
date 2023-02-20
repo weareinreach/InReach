@@ -1,5 +1,4 @@
 import { Meta } from '@storybook/react'
-import React from 'react'
 
 import { MobileNav as MobileNavComponent } from './MobileNav'
 import { StorybookGrid } from '../layout/BodyGrid'
@@ -21,6 +20,6 @@ export default {
 		},
 	},
 	decorators: [StorybookGrid],
-} as Meta<typeof MobileNavComponent>
+} satisfies Meta<typeof MobileNavComponent>
 
 export const MobileNavigation = {}
