@@ -5,6 +5,7 @@ import { BaseRouter } from 'next/dist/shared/lib/router/router'
 
 import { WithI18n, WithMantine, WithTRPC } from './decorators'
 import { i18n, CustomLocales } from './i18next'
+import authStates from './mockAuthStates'
 import { Viewports } from './types'
 
 import './font.css'
@@ -88,5 +89,6 @@ declare module '@storybook/react' {
 		}
 		layout?: 'centered' | 'fullscreen' | 'padded'
 		msw?: RequestHandler[] | { handlers: RequestHandler[] | Record<string, RequestHandler> }
+		nextAuthMock?: { session: keyof typeof authStates }
 	}
 }

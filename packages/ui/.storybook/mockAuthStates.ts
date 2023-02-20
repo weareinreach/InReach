@@ -1,9 +1,11 @@
-import { createId } from '@paralleldrive/cuid2'
 import { Session } from '@weareinreach/auth'
+import { ulid } from 'ulid'
 
 const expires = (Date.now() / 1000 + 3600).toString()
 
-const states: MockAuth = {
+const createId = () => `user_${ulid()}`
+
+const states = {
 	unknown: {
 		title: 'session unknown',
 		session: null,
@@ -115,7 +117,7 @@ const states: MockAuth = {
 			status: 'authenticated',
 		},
 	},
-}
+} as const
 
 type SessionContext =
 	| {
@@ -125,11 +127,12 @@ type SessionContext =
 	| undefined
 	| null
 
-type MockAuth = {
-	[key: string]: {
+type MockAuth = Record<
+	string,
+	{
 		title: string
 		session: SessionContext
 	}
-}
+>
 
 export default states

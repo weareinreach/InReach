@@ -1,4 +1,4 @@
-import { Avatar, Group, Skeleton, Stack, Text, createStyles } from '@mantine/core'
+import { Avatar, Group, Skeleton, Stack, Text, createStyles, useMantineTheme } from '@mantine/core'
 import { DateTime } from 'luxon'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
@@ -7,6 +7,7 @@ import { Icon } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({
 	group: {
+		gap: theme.spacing.md,
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
 		},
@@ -14,16 +15,13 @@ const useStyles = createStyles((theme) => ({
 	loadingItems: {
 		display: 'inline-block',
 	},
-	iconPlaceholder: {
-		height: '70%',
-		width: '70%',
-	},
 	name: {
 		width: 'auto',
-		fontWeight: theme.other.fontWeight.semibold,
+		...theme.other.utilityFonts.utility1,
 	},
 	subText: {
-		fontWeight: theme.other.fontWeight.regular,
+		...theme.other.utilityFonts.utility2,
+		color: theme.other.colors.secondary.darkGray,
 	},
 }))
 
@@ -31,6 +29,7 @@ export const UserAvatar = ({ date }: Props) => {
 	const { classes } = useStyles()
 	const { t, i18n } = useTranslation()
 	const { data: session, status } = useSession()
+	const theme = useMantineTheme()
 
 	const dateString = DateTime.fromJSDate(date ?? new Date())
 		.setLocale(i18n.resolvedLanguage)
@@ -51,11 +50,11 @@ export const UserAvatar = ({ date }: Props) => {
 	return (
 		<Group position='left' spacing='xs' className={classes.group}>
 			<Avatar src={session?.user.image} alt={session?.user.name ?? (t('user-avatar') as string)}>
-				<Icon icon='carbon:user' className={classes.iconPlaceholder} />
+				<Icon icon='carbon:user' height={24} color={theme.other.colors.secondary.darkGray} />
 			</Avatar>
 			<Stack align='flex-start' justify='center' spacing={4}>
 				<Text className={classes.name}>{session?.user.name ?? t('in-reach-user')}</Text>
-				<Text classNames={classes.subText}>{date ? dateString : session?.user.email}</Text>
+				<Text className={classes.subText}>{date ? dateString : session?.user.email}</Text>
 			</Stack>
 		</Group>
 	)

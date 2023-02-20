@@ -1,5 +1,4 @@
-import { Meta } from '@storybook/react'
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { UserAvatar } from './UserAvatar'
 
@@ -17,7 +16,9 @@ export default {
 			control: 'date',
 		},
 	},
-} as Meta<typeof UserAvatar>
+} satisfies Meta<typeof UserAvatar>
+
+type StoryDef = StoryObj<typeof UserAvatar>
 
 export const FullDetails = {
 	parameters: {
@@ -25,7 +26,7 @@ export const FullDetails = {
 			session: 'userPicAuthed',
 		},
 	},
-}
+} satisfies StoryDef
 
 export const NoImage = {
 	parameters: {
@@ -33,17 +34,17 @@ export const NoImage = {
 			session: 'userAuthed',
 		},
 	},
-}
+} satisfies StoryDef
 
 export const WithDate = {
 	args: {
 		date: new Date(),
 	},
-}
+} satisfies StoryDef
 
 export const NoData = {
 	parameters: {},
-}
+} satisfies StoryDef
 
 export const Loading = {
 	parameters: {
@@ -51,4 +52,4 @@ export const Loading = {
 			session: 'loading',
 		},
 	},
-}
+} satisfies StoryDef
