@@ -46,9 +46,11 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      - name: Install Turborepo
+        run: pnpm -g add turbo
         # 👇 Runs pnpm in ./packages/ui
       - name: Install dependencies
-        run: pnpm install && pnpm turbo run post-install
+        run: pnpm install && turbo run post-install
         # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
         uses: chromaui/action@d5ecbf7522dc237c97ef746e40e9100e653bd0bf # v1
