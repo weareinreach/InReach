@@ -14,6 +14,7 @@ import {
 	type TabsStylesParams,
 	type TextProps,
 	type TitleStylesParams,
+	TypographyStylesProviderProps,
 } from '@mantine/core'
 import { type PolymorphicComponentProps } from '@mantine/utils'
 
@@ -198,14 +199,63 @@ export const commonTheme = {
 				} satisfies PolyComponent<TextProps>),
 		},
 		Title: {
-			styles: {
-				root: {
-					marginTop: 0,
-				},
-			} satisfies Styles<never, TitleStylesParams>,
+			styles: (theme) =>
+				({
+					root: {
+						'&:is(h1)': {
+							marginTop: 0,
+							[theme.fn.smallerThan(755)]: {
+								fontSize: theme.headings.sizes.h1.fontSize,
+							},
+						},
+						'&:is(h2)': {
+							marginTop: 0,
+							[theme.fn.smallerThan(755)]: {
+								fontSize: theme.headings.sizes.h2.fontSize,
+							},
+						},
+						'&:is(h3)': {
+							marginTop: 0,
+							[theme.fn.smallerThan(755)]: {
+								fontSize: theme.headings.sizes.h3.fontSize,
+							},
+						},
+						'&:is(h4)': {
+							marginTop: 0,
+							[theme.fn.smallerThan(755)]: {
+								fontSize: theme.headings.sizes.h4.fontSize,
+							},
+						},
+						'&:is(h5)': {
+							marginTop: 0,
+							[theme.fn.smallerThan(755)]: {
+								fontSize: theme.headings.sizes.h5.fontSize,
+							},
+						},
+						'&:is(h6)': {
+							marginTop: 0,
+							[theme.fn.smallerThan(755)]: {
+								fontSize: theme.headings.sizes.h6.fontSize,
+							},
+						},
+					},
+				} satisfies Styles<'root', TitleStylesParams>),
+		},
+		TypographyStylesProvider: {
+			styles: (theme) =>
+				({
+					root: {
+						'& p': {
+							marginBottom: 0,
+							'@media (max-width: 755px)': {
+								fontSize: theme.fontSizes.md,
+							},
+						},
+					},
+				} satisfies Styles<'root', TypographyStylesProviderProps>),
 		},
 	},
-} as const satisfies MantineThemeOverride
+} satisfies MantineThemeOverride
 
 type PolyComponent<ComponentProps extends DefaultProps> = PolymorphicComponentProps<
 	keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>,
