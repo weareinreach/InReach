@@ -49,7 +49,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run pre-build scripts
-        run: pnpm scripts:post-install
+        run: pnpm turbo run post-install
       - name: Build Storybook
         run: pnpm sb:build:swc
         working-directory: packages/ui
