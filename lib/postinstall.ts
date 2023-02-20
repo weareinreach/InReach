@@ -6,7 +6,11 @@
 // @ts-ignore
 const isCi = process.env.CI !== undefined
 const override = process.env.OVERRIDE_CI !== undefined
-if (!isCi || override) {
+if (!isCi) {
 	const { execSync } = require('child_process')
 	execSync('turbo run post-install', { stdio: 'inherit' })
+}
+if (override) {
+	const { execSync } = require('child_process')
+	execSync('turbo run post-install --force', { stdio: 'inherit' })
 }
