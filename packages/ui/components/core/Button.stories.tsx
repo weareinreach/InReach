@@ -40,7 +40,7 @@ export const PrimaryWithIcon = {
 		children: 'More sorting options',
 		leftIcon: <Icon icon='carbon:settings-adjust' rotate={3} />,
 	},
-}
+} satisfies StoryDef
 
 export const Secondary = {
 	args: {
