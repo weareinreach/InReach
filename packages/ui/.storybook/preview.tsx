@@ -53,6 +53,9 @@ export const parameters = {
 	chromatic: {
 		delay: 1000,
 	},
+	pseudo: {
+		rootElement: 'storybook-root',
+	},
 }
 export const globalTypes = {
 	locale: {

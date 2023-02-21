@@ -73,25 +73,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 	}
 }
 
-const useVariantStyles = createStyles((theme, params: BadgeStylesParams) => {
-	const baseStyle = {
-		root: {
-			border: '1px solid',
-			paddingLeft: theme.spacing.sm,
-			paddingRight: theme.spacing.sm,
-		},
-		inner: {
-			textTransform: 'none',
-			fontWeight: theme.other.fontWeight.semibold,
-			color: theme.other.colors.secondary.black,
-		},
-	} as const
-	const variants = badgeVariants(theme, params)
-
-	const mergedStyle = merge(baseStyle, variants)
-
-	return mergedStyle
-})
+const useVariantStyles = createStyles((theme, params: BadgeStylesParams) => badgeVariants(theme, params))
 
 const customVariants = ['commmunityTag', 'serviceTag', 'leader', 'verified', 'claimed', 'unclaimed'] as const
 

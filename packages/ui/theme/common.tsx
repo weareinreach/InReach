@@ -19,6 +19,8 @@ import {
 	type SkeletonProps,
 } from '@mantine/core'
 
+import { Icon } from '~ui/icon'
+
 import { customColors } from './colors'
 
 import type React from 'react'
@@ -106,6 +108,20 @@ export const commonTheme = {
 		lg: 18,
 		xl: 20,
 	},
+	headings: {
+		fontFamily:
+			'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+		fontWeight: 500,
+		sizes: {
+			h1: { fontSize: 40, lineHeight: 1.25, fontWeight: undefined },
+			h2: { fontSize: 24, lineHeight: 1.25, fontWeight: undefined },
+			h3: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
+			h4: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
+			h5: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
+			h6: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
+		},
+	},
+
 	shadows: {
 		xs: '0px 4px 20px rgba(0, 0, 0, 0.1)',
 		sm: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 10px 15px -5px, rgba(0, 0, 0, 0.04) 0px 7px 7px -5px',
@@ -121,7 +137,6 @@ export const commonTheme = {
 		lg: 16,
 		xl: 32,
 	},
-
 	spacing: {
 		xs: 8,
 		sm: 12,
@@ -137,19 +152,7 @@ export const commonTheme = {
 		lg: 1200,
 		xl: 1440,
 	},
-	headings: {
-		fontFamily:
-			'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
-		fontWeight: 500,
-		sizes: {
-			h1: { fontSize: 40, lineHeight: 1.25, fontWeight: undefined },
-			h2: { fontSize: 24, lineHeight: 1.25, fontWeight: undefined },
-			h3: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
-			h4: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
-			h5: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
-			h6: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
-		},
-	},
+
 	other: themeCustomObj,
 	components: {
 		ActionIcon: {
@@ -168,11 +171,23 @@ export const commonTheme = {
 		Badge: {
 			defaultProps: {
 				radius: 'xl',
+				size: 'xl',
 			} satisfies BadgeProps,
 			styles: (theme) =>
 				({
 					root: {
 						letterSpacing: 'inherit',
+						border: '1px solid',
+						paddingLeft: theme.spacing.sm,
+						paddingRight: theme.spacing.sm,
+						textTransform: 'none',
+					},
+					inner: {
+						fontWeight: theme.other.fontWeight.semibold,
+						color: theme.other.colors.secondary.black,
+					},
+					leftSection: {
+						margin: 0,
 					},
 				} satisfies Styles<BadgeStylesNames, BadgeStylesParams>),
 		},
@@ -182,6 +197,14 @@ export const commonTheme = {
 			} satisfies ButtonProps,
 			styles: (theme) => ({
 				root: {
+					padding: theme.spacing.sm / 2,
+					paddingLeft: theme.spacing.xl * 2,
+					paddingRight: theme.spacing.xl * 2,
+					height: theme.spacing.xl * 2,
+					backgroundColor: theme.other.colors.secondary.black,
+					'&:hover': {
+						background: theme.fn.lighten(theme.other.colors.secondary.black, 0.4),
+					},
 					'&:disabled, &[data-disabled]': {
 						backgroundColor: theme.other.colors.primary.lightGray,
 						cursor: 'not-allowed',
@@ -196,8 +219,16 @@ export const commonTheme = {
 					},
 				},
 				inner: {
+					...theme.other.utilityFonts.utility1,
+					color: theme.other.colors.secondary.white,
 					'&:disabled, &[data-disabled]': {
 						color: theme.other.colors.secondary.darkGray,
+					},
+				},
+				leftIcon: {
+					svg: {
+						height: theme.spacing.xl,
+						width: theme.spacing.xl,
 					},
 				},
 			}),
@@ -228,11 +259,33 @@ export const commonTheme = {
 					},
 				} satisfies Styles<ModalStylesNames, ModalStylesParams>),
 		},
+		Rating: {
+			defaultProps: (theme) => ({
+				emptySymbol: (
+					<Icon icon='carbon:star-filled' color={theme.other.colors.tertiary.coolGray} height={24} />
+				),
+				fullSymbol: <Icon icon='carbon:star-filled' color={theme.other.colors.secondary.black} height={24} />,
+			}),
+			styles: (theme) => ({
+				root: {
+					columnGap: '4px',
+				},
+			}),
+		},
 		Skeleton: {
 			defaultProps: (theme) =>
 				({
 					height: theme.fontSizes.md,
 				} satisfies SkeletonProps),
+		},
+		Switch: {
+			styles: (theme) => ({
+				root: {
+					'&:hover': {
+						backgroundColor: theme.other.colors.primary.lightGray,
+					},
+				},
+			}),
 		},
 		Tabs: {
 			styles: (theme) =>
@@ -257,6 +310,33 @@ export const commonTheme = {
 				weight: theme.other.fontWeight.regular,
 				color: theme.other.colors.secondary.black,
 				size: 'md',
+			}),
+		},
+		Textarea: {
+			defaultProps: {
+				radius: 'md',
+				autosize: true,
+				minRows: 3,
+				maxRows: 5,
+			},
+			styles: (theme) => ({
+				label: {
+					paddingBottom: 10,
+				},
+				input: {
+					padding: '14px 16px',
+					borderColor: theme.other.colors.tertiary.coolGray,
+
+					...theme.other.utilityFonts.utility2,
+					'&::placeholder': {
+						color: theme.other.colors.secondary.darkGray,
+					},
+					'&:focus, &:focus-within': {
+						borderColor: theme.other.colors.secondary.black,
+						borderWidth: '2px',
+					},
+				},
+				wrapper: { height: '96px' },
 			}),
 		},
 		Title: {
@@ -301,6 +381,17 @@ export const commonTheme = {
 						},
 					},
 				} satisfies Styles<'root', TitleStylesParams>),
+		},
+		Tooltip: {
+			defaultProps: {
+				offset: 10,
+				position: 'top-start',
+			},
+			styles: (theme) => ({
+				tooltip: {
+					boxShadow: theme.shadows.xs,
+				},
+			}),
 		},
 		TypographyStylesProvider: {
 			styles: (theme) =>

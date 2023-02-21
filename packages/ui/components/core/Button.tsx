@@ -159,35 +159,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 	}
 }
 
-const useVariantStyles = createStyles((theme, params: ButtonStylesParams) => {
-	const baseStyle = {
-		root: {
-			padding: theme.spacing.sm / 2,
-			paddingLeft: theme.spacing.xl * 2,
-			paddingRight: theme.spacing.xl * 2,
-			height: theme.spacing.xl * 2,
-			backgroundColor: theme.other.colors.secondary.black,
-			'&:hover': {
-				background: theme.fn.lighten(theme.other.colors.secondary.black, 0.4),
-			},
-		},
-		inner: {
-			color: theme.other.colors.secondary.white,
-		},
-		leftIcon: {
-			svg: {
-				height: theme.spacing.xl,
-				width: theme.spacing.xl,
-			},
-		},
-		label: {
-			fontSize: theme.spacing.md,
-			fontWeight: theme.other.fontWeight.semibold,
-			lineHeight: `${theme.spacing.lg}px`,
-		},
-	} satisfies CustomButtonStyles
-	return merge(baseStyle, buttonVariants(theme, params))
-})
+const useVariantStyles = createStyles((theme, params: ButtonStylesParams) => buttonVariants(theme, params))
 
 const customVariants = [
 	'primary',

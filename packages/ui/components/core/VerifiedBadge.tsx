@@ -22,12 +22,6 @@ const useStyles = createStyles((theme) => ({
 		marginLeft: theme.spacing.xs,
 		textTransform: 'none',
 	},
-	leftSection: {
-		margin: 0,
-	},
-	tooltip: {
-		boxShadow: theme.shadows.xs,
-	},
 }))
 
 export const VerifiedBadge = ({ lastVerifiedDate }: Props) => {
@@ -42,20 +36,10 @@ export const VerifiedBadge = ({ lastVerifiedDate }: Props) => {
 	const trigger_max_width = tooltipText.length > MAX_CHARACTERS ? 600 : 'auto'
 
 	return (
-		<Tooltip
-			label={tooltipText}
-			position='top-start'
-			multiline
-			offset={10}
-			width={trigger_max_width}
-			classNames={{ tooltip: classes.tooltip }}
-		>
+		<Tooltip label={tooltipText} multiline width={trigger_max_width}>
 			<Badge
 				variant='outline'
-				radius={100}
-				size='xl'
 				className={classes.badge}
-				classNames={{ leftSection: classes.leftSection }}
 				leftSection={
 					<Icon
 						icon='carbon:checkmark-filled'

@@ -18,32 +18,6 @@ const useStyles = createStyles((theme) => ({
 		paddingRight: '0px',
 		height: '120px',
 	},
-	button: {
-		// width: '178px',
-		// height: '40px',
-	},
-	rating: {
-		columnGap: '4px',
-	},
-	reviewLabel: {
-		paddingBottom: 10,
-	},
-	inputElement: {
-		padding: '14px 16px',
-		borderColor: theme.other.colors.tertiary.coolGray,
-
-		...theme.other.utilityFonts.utility2,
-		'&::placeholder': {
-			color: theme.other.colors.secondary.darkGray,
-		},
-		'&:focus, &:focus-within': {
-			borderColor: theme.other.colors.secondary.black,
-			borderWidth: '2px',
-		},
-	},
-	inputWrapper: {
-		height: '96px',
-	},
 }))
 
 const RouterSchema = z.object({
@@ -94,38 +68,19 @@ export const UserReviewSubmit = () => {
 				>
 					<Stack align='flex-start' spacing='xl'>
 						<UserAvatar useLoggedIn={true} subheading={null} />
-						<Rating
-							emptySymbol={
-								<Icon icon='carbon:star-filled' color={theme.other.colors.tertiary.coolGray} height={24} />
-							}
-							fullSymbol={
-								<Icon icon='carbon:star-filled' color={theme.other.colors.secondary.black} height={24} />
-							}
-							classNames={{ root: classes.rating }}
-							{...form.getInputProps('rating')}
-						/>
-						<Stack spacing={10}>
+						<Rating {...form.getInputProps('rating')} />
+						<Stack spacing={10} w='100%'>
 							<Textarea
 								label=<Text fw={theme.other.fontWeight.semibold}>{t('review-resource')}</Text>
 								placeholder={t('enter-review')!}
-								radius='md'
-								autosize
-								minRows={3}
-								maxRows={5}
-								w='100%'
-								classNames={{
-									label: classes.reviewLabel,
-									input: classes.inputElement,
-									wrapper: classes.inputWrapper,
-								}}
 								{...form.getInputProps('reviewText')}
 							/>
 							<Text size={14} color={theme.other.colors.secondary.darkGray}>
 								{t('review-note')}
 							</Text>
 						</Stack>
-						<Button variant='primary' className={classes.button} type='submit'>
-							{t('submit')}
+						<Button variant='primary' type='submit'>
+							{t('submit-review')}
 						</Button>
 					</Stack>
 				</form>

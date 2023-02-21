@@ -12,9 +12,6 @@ const useStyles = createStyles((theme, params: Pick<LeaderBadgeProps, 'color'>) 
 		width: 24,
 		margin: 0,
 	},
-	leftSection: {
-		margin: 0,
-	},
 	text: {
 		color: theme.other.colors.secondary.black,
 		marginLeft: theme.spacing.xs,
@@ -59,8 +56,6 @@ export const LeaderBadge = ({
 		<Tooltip label={tooltip} disabled={!minify}>
 			<Badge
 				variant='outline'
-				size='xl'
-				classNames={{ leftSection: classes.leftSection }}
 				sx={{ border: 0, padding: 0, ...miniStyle, ...miniGroupStyle }}
 				leftSection={
 					<ColorSwatch color={color} className={classes.avatar} radius={24} size={24}>

@@ -1,7 +1,6 @@
 import { type StorybookConfig } from '@storybook/nextjs'
 import { merge } from 'merge-anything'
 import { PropItem } from 'react-docgen-typescript'
-import { Component } from 'react-docgen-typescript/lib/parser'
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
 
 import * as path from 'path'
@@ -9,7 +8,7 @@ import * as path from 'path'
 const filePattern = '*.stories.@(ts|tsx)'
 
 const config: StorybookConfig = {
-	stories: [`../(components|hooks|layout|modals)/**/${filePattern}`],
+	stories: [`../(components|hooks|layout|modals|other)/**/${filePattern}`, '../other/**/*.mdx'],
 	staticDirs: [
 		{
 			from: '../../../apps/app/public',
