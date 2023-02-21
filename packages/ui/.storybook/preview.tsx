@@ -37,6 +37,8 @@ export const parameters = {
 			date: /Date$/,
 		},
 		expanded: true,
+		sort: 'requiredFirst',
+		hideNoControlsWarning: true,
 	},
 	docs: {
 		source: {

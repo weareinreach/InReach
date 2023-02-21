@@ -68,6 +68,7 @@
 		"dotenv-cli": "7.0.0",
 		"eslint": "8.34.0",
 		"flat": "5.0.2",
+		"geojson": "0.5.0",
 		"inquirer": "9.1.4",
 		"iso-3166-2": "1.0.0",
 		"iso-google-locales": "3.0.4",

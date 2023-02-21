@@ -6,7 +6,7 @@ import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
 
 import * as path from 'path'
 
-const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
+const filePattern = '*.stories.@(ts|tsx)'
 
 const config: StorybookConfig = {
 	stories: [`../(components|hooks|layout|modals)/**/${filePattern}`],
@@ -26,14 +26,33 @@ const config: StorybookConfig = {
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
 		'storybook-addon-pseudo-states',
-		'storybook-addon-swc',
+		{
+			name: 'storybook-addon-swc',
+			options: {
+				swcLoaderOptions: {
+					jsc: {
+						target: 'es2016',
+					},
+				},
+				swcMinifyOptions: {
+					compress: {
+						ecma: 2016,
+					},
+				},
+			},
+		},
 		'@storybook/addon-actions', // Keep this one last
 	],
 	framework: {
 		name: '@storybook/nextjs',
 		options: {
-			builder: {},
+			builder: {
+				// lazyCompilation: true,
+				// fsCache: true,
+			},
+			nextConfigPath: path.resolve(__dirname, '../../../apps/app/next.config.mjs'),
 			fastRefresh: true,
+			strictMode: true,
 		},
 	},
 	features: {
@@ -53,20 +72,25 @@ const config: StorybookConfig = {
 		reactDocgenTypescriptOptions: {
 			shouldExtractLiteralValuesFromEnum: true,
 			shouldRemoveUndefinedFromOptional: true,
-			shouldExtractValuesFromUnion: true,
+			shouldExtractValuesFromUnion: false,
 			shouldIncludePropTagMap: true,
-			tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
-			propFilter: (prop: PropItem, component: Component) => {
-				if (prop.declarations !== undefined && prop.declarations.length > 0) {
-					const hasPropAdditionalDescription = prop.declarations.find((declaration) => {
-						return !declaration.fileName.includes('node_modules')
-					})
-
-					return Boolean(hasPropAdditionalDescription)
-				}
-
-				return true
+			// tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
+			compilerOptions: {
+				esModuleInterop: false,
+				allowSyntheticDefaultImports: false,
 			},
+
+			// propFilter: (prop: PropItem, component: Component) => {
+			// 	if (prop.declarations !== undefined && prop.declarations.length > 0) {
+			// 		const hasPropAdditionalDescription = prop.declarations.find((declaration) => {
+			// 			return !declaration.fileName.includes('node_modules')
+			// 		})
+
+			// 		return Boolean(hasPropAdditionalDescription)
+			// 	}
+
+			// 	return true
+			// },
 		},
 	},
 	webpackFinal: (config) => {
