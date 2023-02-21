@@ -12,14 +12,12 @@ import {
 	type Styles,
 	type TabsStylesNames,
 	type TabsStylesParams,
-	type TextProps,
 	type TitleStylesParams,
 	type TypographyStylesProviderProps,
 	type BadgeStylesNames,
 	type BadgeStylesParams,
 	type SkeletonProps,
 } from '@mantine/core'
-import { type PolymorphicComponentProps } from '@mantine/utils'
 
 import { customColors } from './colors'
 
@@ -254,13 +252,12 @@ export const commonTheme = {
 				} satisfies Styles<TabsStylesNames, TabsStylesParams>),
 		},
 		Text: {
-			defaultProps: (theme) =>
-				({
-					component: 'span',
-					weight: theme.other.fontWeight.regular,
-					color: theme.other.colors.secondary.black,
-					size: 'md',
-				} satisfies PolyComponent<TextProps>),
+			defaultProps: (theme) => ({
+				component: 'span',
+				weight: theme.other.fontWeight.regular,
+				color: theme.other.colors.secondary.black,
+				size: 'md',
+			}),
 		},
 		Title: {
 			styles: (theme) =>
@@ -321,10 +318,6 @@ export const commonTheme = {
 	},
 } satisfies MantineThemeOverride
 
-type PolyComponent<ComponentProps extends DefaultProps> = PolymorphicComponentProps<
-	keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>,
-	ComponentProps
->
 type ThemeCustomObject = typeof themeCustomObj
 declare module '@mantine/core' {
 	export interface MantineThemeOther extends ThemeCustomObject {}

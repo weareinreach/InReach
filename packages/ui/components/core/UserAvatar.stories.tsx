@@ -13,10 +13,22 @@ export default {
 	},
 	argTypes: {
 		useLoggedIn: {
-			control: false,
+			type: 'boolean',
 		},
 		user: {
 			control: 'object',
+			if: {
+				arg: 'useLoggedIn',
+				truthy: false,
+			},
+		},
+		loading: {
+			defaultValue: false,
+			type: 'boolean',
+			if: {
+				arg: 'useLoggedIn',
+				truthy: false,
+			},
 		},
 	},
 } satisfies Meta<typeof UserAvatar>

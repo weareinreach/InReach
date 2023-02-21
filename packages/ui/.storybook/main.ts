@@ -26,6 +26,7 @@ const config: StorybookConfig = {
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
 		'storybook-addon-pseudo-states',
+		// 'storybook-addon-swc',
 		{
 			name: 'storybook-addon-swc',
 			options: {
@@ -52,7 +53,6 @@ const config: StorybookConfig = {
 			},
 			nextConfigPath: path.resolve(__dirname, '../../../apps/app/next.config.mjs'),
 			fastRefresh: true,
-			strictMode: true,
 		},
 	},
 	features: {
@@ -74,11 +74,13 @@ const config: StorybookConfig = {
 			shouldRemoveUndefinedFromOptional: true,
 			shouldExtractValuesFromUnion: false,
 			shouldIncludePropTagMap: true,
-			// tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
+			tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
 			compilerOptions: {
 				esModuleInterop: false,
 				allowSyntheticDefaultImports: false,
 			},
+			propFilter: (prop: PropItem) =>
+				prop.parent ? !/node_modules\/(?!@mantine)/.test(prop.parent.fileName) : true,
 
 			// propFilter: (prop: PropItem, component: Component) => {
 			// 	if (prop.declarations !== undefined && prop.declarations.length > 0) {

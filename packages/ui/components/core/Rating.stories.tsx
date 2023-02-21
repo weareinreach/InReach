@@ -11,6 +11,12 @@ export default {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8521&t=sleVeGl2lJv7Df18-4',
 		},
 	},
+	argTypes: {
+		showCount: {
+			defaultValue: true,
+			type: 'boolean',
+		},
+	},
 } satisfies Meta<typeof RatingTagComp>
 
 type StoryDef = StoryObj<typeof RatingTagComp>
