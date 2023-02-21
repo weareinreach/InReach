@@ -17,14 +17,16 @@ const useStyles = createStyles((theme) => ({
 		margin: 0,
 	},
 	text: {
+		...theme.other.utilityFonts.utility1,
 		width: 'auto',
-		fontWeight: theme.other.fontWeight.semibold,
-		color: 'black',
 		marginLeft: theme.spacing.xs,
 		textTransform: 'none',
 	},
 	leftSection: {
 		margin: 0,
+	},
+	tooltip: {
+		boxShadow: theme.shadows.xs,
 	},
 }))
 
@@ -39,27 +41,30 @@ export const VerifiedBadge = ({ lastVerifiedDate }: Props) => {
 	const tooltipText = t('verified-information-detail', { dateString })
 	const trigger_max_width = tooltipText.length > MAX_CHARACTERS ? 600 : 'auto'
 
-	const verified_avatar = (
-		// <Avatar size={22} radius='xl' className={classes.avatar} color='inReachPrimaryRegular.5' variant='filled'>
-		<Icon
-			icon='carbon:checkmark-filled'
-			className={classes.icon}
-			color={theme.other.colors.primary.allyGreen}
-			height={20}
-			width={20}
-		/>
-		// </Avatar>
-	)
-
 	return (
-		<Tooltip label={tooltipText} position='bottom-start' multiline offset={10} width={trigger_max_width}>
+		<Tooltip
+			label={tooltipText}
+			position='top-start'
+			multiline
+			offset={10}
+			width={trigger_max_width}
+			classNames={{ tooltip: classes.tooltip }}
+		>
 			<Badge
 				variant='outline'
 				radius={100}
 				size='xl'
 				className={classes.badge}
 				classNames={{ leftSection: classes.leftSection }}
-				leftSection={verified_avatar}
+				leftSection={
+					<Icon
+						icon='carbon:checkmark-filled'
+						className={classes.icon}
+						color={theme.other.colors.primary.allyGreen}
+						height={20}
+						width={20}
+					/>
+				}
 			>
 				<Text className={classes.text}>{t('verified-information')}</Text>
 			</Badge>

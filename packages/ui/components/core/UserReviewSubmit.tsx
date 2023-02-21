@@ -1,15 +1,4 @@
-import {
-	Stack,
-	Text,
-	Group,
-	createStyles,
-	Avatar,
-	Rating,
-	Textarea,
-	useMantineTheme,
-	Paper,
-	Grid,
-} from '@mantine/core'
+import { Stack, Text, createStyles, Rating, Textarea, useMantineTheme, Paper, Grid } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { ApiInput } from '@weareinreach/api'
 import { useRouter } from 'next/router'
@@ -20,29 +9,40 @@ import { z } from 'zod'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { Button } from '.'
+import { Button } from './Button'
+import { UserAvatar } from './UserAvatar'
 
 const useStyles = createStyles((theme) => ({
 	textContainer: {
 		paddingLeft: '0px',
 		paddingRight: '0px',
 		height: '120px',
-		// width: '816px',
-		// [theme.fn.smallerThan('md')]: {
-		// 	width: '700px',
-		// },
-		// [theme.fn.smallerThan('sm')]: {
-		// 	width: '300px',
-		// 	marginBottom: theme.spacing.sm,
-		// },
 	},
 	button: {
 		// width: '178px',
 		// height: '40px',
 	},
-	avatar: {
-		// height: '48px',
-		// width: '48px',
+	rating: {
+		columnGap: '4px',
+	},
+	reviewLabel: {
+		paddingBottom: 10,
+	},
+	inputElement: {
+		padding: '14px 16px',
+		borderColor: theme.other.colors.tertiary.coolGray,
+
+		...theme.other.utilityFonts.utility2,
+		'&::placeholder': {
+			color: theme.other.colors.secondary.darkGray,
+		},
+		'&:focus, &:focus-within': {
+			borderColor: theme.other.colors.secondary.black,
+			borderWidth: '2px',
+		},
+	},
+	inputWrapper: {
+		height: '96px',
 	},
 }))
 
@@ -59,7 +59,7 @@ const ReviewSchema = z.object({
 	reviewText: z.string().optional(),
 })
 
-export const UserReviewSubmit = ({ avatarUrl, avatarName }: UserProps) => {
+export const UserReviewSubmit = () => {
 	const { classes } = useStyles()
 	const { t } = useTranslation()
 	const theme = useMantineTheme()
@@ -93,21 +93,7 @@ export const UserReviewSubmit = ({ avatarUrl, avatarName }: UserProps) => {
 					}, console.log)}
 				>
 					<Stack align='flex-start' spacing='xl'>
-						<Group>
-							<Avatar
-								radius='xl'
-								size={48}
-								className={classes.avatar}
-								src={avatarUrl}
-								alt={avatarName || (t('user-avatar') as string)}
-							>
-								<Icon icon='carbon:user' height={24} />
-							</Avatar>
-							<Text weight={theme.other.fontWeight.semibold}>
-								{avatarName ? avatarName : t('in-reach-user')}
-							</Text>
-						</Group>
-
+						<UserAvatar useLoggedIn={true} subheading={null} />
 						<Rating
 							emptySymbol={
 								<Icon icon='carbon:star-filled' color={theme.other.colors.tertiary.coolGray} height={24} />
@@ -115,24 +101,29 @@ export const UserReviewSubmit = ({ avatarUrl, avatarName }: UserProps) => {
 							fullSymbol={
 								<Icon icon='carbon:star-filled' color={theme.other.colors.secondary.black} height={24} />
 							}
+							classNames={{ root: classes.rating }}
 							{...form.getInputProps('rating')}
 						/>
-						<Textarea
-							label=<Text fw={theme.other.fontWeight.semibold} mb={10}>
-								{t('review-resource')}
+						<Stack spacing={10}>
+							<Textarea
+								label=<Text fw={theme.other.fontWeight.semibold}>{t('review-resource')}</Text>
+								placeholder={t('enter-review')!}
+								radius='md'
+								autosize
+								minRows={3}
+								maxRows={5}
+								w='100%'
+								classNames={{
+									label: classes.reviewLabel,
+									input: classes.inputElement,
+									wrapper: classes.inputWrapper,
+								}}
+								{...form.getInputProps('reviewText')}
+							/>
+							<Text size={14} color={theme.other.colors.secondary.darkGray}>
+								{t('review-note')}
 							</Text>
-							placeholder={t('enter-review')!}
-							radius='md'
-							autosize
-							minRows={2}
-							maxRows={5}
-							w='100%'
-							{...form.getInputProps('reviewText')}
-						/>
-						<Text size={14} mt={-14} color={theme.other.colors.secondary.darkGray}>
-							{t('review-note')}
-						</Text>
-
+						</Stack>
 						<Button variant='primary' className={classes.button} type='submit'>
 							{t('submit')}
 						</Button>
@@ -141,11 +132,6 @@ export const UserReviewSubmit = ({ avatarUrl, avatarName }: UserProps) => {
 			</Paper>
 		</Grid.Col>
 	)
-}
-
-type UserProps = {
-	avatarUrl: string | null
-	avatarName: string | null
 }
 
 type FormFields = ApiInput['review']['create']

@@ -17,25 +17,15 @@ const states = {
 			status: 'loading',
 		},
 	},
-	admin: {
-		title: 'admin [no auth]',
+	noAuth: {
+		title: 'not logged in',
 		session: {
-			data: {
-				user: {
-					id: createId(),
-					permissions: ['canAdmin', 'canUser'],
-					roles: ['admin', 'user'],
-					name: 'Administrator',
-					email: 'placeholder.admin@gmail.com',
-					image: 'https://i.pravatar.cc/50?u=1234567',
-				},
-				expires,
-			},
+			data: null,
 			status: 'unauthenticated',
 		},
 	},
 	adminAuthed: {
-		title: 'admin [auth]',
+		title: 'admin session',
 		session: {
 			data: {
 				user: {
@@ -51,24 +41,7 @@ const states = {
 		},
 	},
 	userPic: {
-		title: 'user w/ pic [no auth]',
-		session: {
-			data: {
-				user: {
-					id: createId(),
-					roles: ['user'],
-					permissions: ['canUser'],
-					name: "Unauth'd User",
-					email: 'placeholder.user@gmail.com',
-					image: 'https://i.pravatar.cc/50?u=abcdef',
-				},
-				expires,
-			},
-			status: 'unauthenticated',
-		},
-	},
-	userPicAuthed: {
-		title: 'user w/ pic [auth]',
+		title: 'user w/ pic',
 		session: {
 			data: {
 				user: {
@@ -84,25 +57,8 @@ const states = {
 			status: 'authenticated',
 		},
 	},
-
-	user: {
-		title: 'user w/o pic [no auth]',
-		session: {
-			data: {
-				user: {
-					id: createId(),
-					roles: ['user'],
-					permissions: ['canUser'],
-					name: 'User name',
-					email: 'user.name@gmail.com',
-				},
-				expires,
-			},
-			status: 'unauthenticated',
-		},
-	},
-	userAuthed: {
-		title: 'user w/o pic [auth]',
+	userNoPic: {
+		title: 'user w/o pic',
 		session: {
 			data: {
 				user: {
@@ -117,15 +73,27 @@ const states = {
 			status: 'authenticated',
 		},
 	},
+	userNoPicNoName: {
+		title: 'user w/o pic or name',
+		session: {
+			data: {
+				user: {
+					id: createId(),
+					roles: ['user'],
+					permissions: ['canUser'],
+					email: 'user.name@gmail.com',
+				},
+				expires,
+			},
+			status: 'authenticated',
+		},
+	},
 } as const
 
-type SessionContext =
-	| {
-			data: Session | null
-			status: 'unauthenticated' | 'loading' | 'authenticated'
-	  }
-	| undefined
-	| null
+type SessionContext = {
+	data: Session | null
+	status: 'unauthenticated' | 'loading' | 'authenticated'
+} | null
 
 type MockAuth = Record<
 	string,

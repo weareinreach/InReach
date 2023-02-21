@@ -47,23 +47,34 @@ export default {
 
 type StoryDef = StoryObj<typeof UserReviewPromptCompnt>
 
-export const SubmitReviewFullData = {
-	args: {
-		avatarName: 'Reviewer Name',
-		avatarUrl: 'https://i.pravatar.cc/50?u=1234567',
+export const SubmitReview = {
+	parameters: {
+		nextAuthMock: {
+			session: 'userPic',
+		},
 	},
 } satisfies StoryDef
 
-export const SubmitReviewNoAvatar = {
-	args: {
-		avatarUrl: null,
-		avatarName: 'User NoPic',
+export const SubmitReviewNoPic = {
+	parameters: {
+		nextAuthMock: {
+			session: 'userNoPic',
+		},
 	},
 } satisfies StoryDef
 
-export const SubmitReviewNoData = {
-	args: {
-		avatarUrl: null,
-		avatarName: null,
+export const SubmitReviewNoPicOrName = {
+	parameters: {
+		nextAuthMock: {
+			session: 'userNoPicNoName',
+		},
+	},
+} satisfies StoryDef
+
+export const SubmitReviewNotLoggedIn = {
+	parameters: {
+		nextAuthMock: {
+			session: 'noAuth',
+		},
 	},
 } satisfies StoryDef

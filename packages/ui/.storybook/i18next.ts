@@ -3,6 +3,8 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import HttpApi, { HttpBackendOptions } from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
+import config from '../next-i18next.config'
+
 const ns = ['common', 'country', 'user', 'footer', 'nav', 'socialMedia', 'attribute']
 export const i18nLocales = {
 	en: 'English',
@@ -51,6 +53,7 @@ i18n
 	.use(HttpApi)
 	.use(initReactI18next)
 	.init<HttpBackendOptions>({
+		...config,
 		debug: true,
 		lng: 'en',
 		backend: {
@@ -62,7 +65,7 @@ i18n
 		},
 		defaultNS: 'common',
 		interpolation: { escapeValue: false },
-		react: { useSuspense: false },
+		react: { useSuspense: true },
 		cleanCode: true,
 		supportedLngs,
 		ns,

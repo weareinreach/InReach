@@ -12,44 +12,75 @@ export default {
 		},
 	},
 	argTypes: {
-		date: {
-			control: 'date',
+		useLoggedIn: {
+			control: false,
+		},
+		user: {
+			control: 'object',
 		},
 	},
 } satisfies Meta<typeof UserAvatar>
 
 type StoryDef = StoryObj<typeof UserAvatar>
 
-export const FullDetails = {
+export const SessionFullDetails = {
 	parameters: {
 		nextAuthMock: {
-			session: 'userPicAuthed',
+			session: 'userPic',
 		},
 	},
-} satisfies StoryDef
-
-export const NoImage = {
-	parameters: {
-		nextAuthMock: {
-			session: 'userAuthed',
-		},
-	},
-} satisfies StoryDef
-
-export const WithDate = {
 	args: {
-		date: new Date(),
+		useLoggedIn: true,
 	},
 } satisfies StoryDef
 
-export const NoData = {
-	parameters: {},
+export const SessionNoImage = {
+	parameters: {
+		nextAuthMock: {
+			session: 'userNoPic',
+		},
+	},
+	args: {
+		useLoggedIn: true,
+	},
 } satisfies StoryDef
 
-export const Loading = {
+export const SessionLoading = {
 	parameters: {
 		nextAuthMock: {
 			session: 'loading',
 		},
 	},
+	args: {
+		useLoggedIn: true,
+	},
+} satisfies StoryDef
+
+export const PassedFullInfo = {
+	args: {
+		user: {
+			name: 'User Name',
+			image: 'https://i.pravatar.cc/50?u=1234567',
+		},
+		subheading: new Date(2023, 1, 1),
+	},
+} satisfies StoryDef
+
+export const PassedNameNoImage = {
+	args: {
+		user: {
+			name: 'User Name',
+		},
+		subheading: new Date(2023, 1, 28),
+	},
+} satisfies StoryDef
+
+export const PassedWithDateNoUser = {
+	args: {
+		subheading: new Date(2023, 0, 1),
+	},
+} satisfies StoryDef
+
+export const NoData = {
+	parameters: {},
 } satisfies StoryDef
