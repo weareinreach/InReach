@@ -1,4 +1,4 @@
-import { Accordion, Checkbox, createStyles, Group, Text, useMantineTheme } from '@mantine/core'
+import { Accordion, Badge, Checkbox, createStyles, Group, Text, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
@@ -6,27 +6,37 @@ import { Icon } from '../../icon'
 
 const useStyles = createStyles((theme) => ({
 	count: {
-		backgroundColor: theme.other.colors.secondary.black,
+		background: theme.other.colors.secondary.black,
+		borderRadius: '100%',
 		color: theme.other.colors.secondary.white,
-		marginLeft: '8px',
-		padding: '2px 7px',
-		borderRadius: '100px',
+		width: 24,
+		lineHeight: 1.6,
+		textAlign: 'center',
+		display: 'inline-block',
 	},
 	group: {
 		justifyContent: 'space-between',
-		borderBottom: 'solid 1px black',
-		padding: '25px 32px',
-		width: '600px',
+		borderBottom: 'solid 1px' + theme.other.colors.secondary.black,
+		padding: theme.spacing.xl & theme.spacing.xl,
+		width: theme.spacing.lg * 30,
 	},
 	item: {
-		paddingLeft: '16px',
-		paddingRight: '16px',
+		paddingLeft: theme.spacing.md,
+		paddingRight: theme.spacing.md,
 	},
 	uncheck: {
+		color: theme.other.colors.secondary.black,
+		textDecoration: 'underline',
 		'&:hover': {
+			textDecoration: 'underline',
+
 			color: theme.other.colors.secondary.black,
 			cursor: 'pointer',
 		},
+	},
+	uncheckDisabled: {
+		textDecoration: 'underline',
+		color: theme.other.colors.secondary.darkGray,
 	},
 }))
 
@@ -572,14 +582,13 @@ export const ServiceFilter = ({}) => {
 
 	function uncheckAll() {
 		setValues(serviceListEmpty)
-		console.log(serviceListEmpty)
 	}
 
 	const selectedItems = countOfChecked()
 	const selectedCountIcon = <Text className={classes.count}>{selectedItems}</Text>
 
-	const items = (serviceIndex: any, serviceTags: any) =>
-		serviceTags.map((tag: any, serviceIndexTagIndex: any) => (
+	const items = (serviceIndex: number, serviceTags: any) =>
+		serviceTags.map((tag: any, serviceTagIndex: number) => (
 			<Checkbox
 				mt='xs'
 				ml={33}
@@ -587,7 +596,7 @@ export const ServiceFilter = ({}) => {
 				key={tag.id}
 				checked={tag.checked}
 				onChange={(event) => {
-					updateServiceTag(serviceIndex, serviceIndexTagIndex, event.currentTarget.checked)
+					updateServiceTag(serviceIndex, serviceTagIndex, event.currentTarget.checked)
 				}}
 			/>
 		))
@@ -622,9 +631,12 @@ export const ServiceFilter = ({}) => {
 					<Text>
 						{t('services')} {selectedItems > 0 ? selectedCountIcon : null}
 					</Text>
-					<a onClick={() => uncheckAll()} className={classes.uncheck}>
-						<Text>{t('uncheck-all')}</Text>
-					</a>
+					<Text
+						onClick={() => uncheckAll()}
+						className={selectedItems > 0 ? classes.uncheck : classes.uncheckDisabled}
+					>
+						{t('uncheck-all')}
+					</Text>
 				</Group>
 				{services}
 			</Accordion>
