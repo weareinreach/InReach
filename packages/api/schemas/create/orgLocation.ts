@@ -1,26 +1,26 @@
-import { Prisma, GeoJSONPointSchema, createId } from '@weareinreach/db'
+import { Prisma, GeoJSONPointSchema, generateId } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { cuid, JsonInputOrNullSuperJSON, MutationBase, MutationBaseArray } from '~api/schemas/common'
+import { idString, JsonInputOrNullSuperJSON, MutationBase, MutationBaseArray } from '~api/schemas/common'
 import { createMany } from '~api/schemas/nestedOps'
 
 import { AuditLogSchema } from './auditLog'
 
 export const LinkOrgLocationServiceSchema = z.object({
-	orgLocationId: cuid,
-	serviceId: cuid,
+	orgLocationId: idString,
+	serviceId: idString,
 })
 export const LinkOrgLocationEmailSchema = z.object({
-	orgLocationId: cuid,
-	orgEmailId: cuid,
+	orgLocationId: idString,
+	orgEmailId: idString,
 })
 export const LinkOrgLocationPhoneSchema = z.object({
-	orgLocationId: cuid,
-	phoneId: cuid,
+	orgLocationId: idString,
+	phoneId: idString,
 })
 
 export const CreateOrgLocationBaseSchema = z.object({
-	id: cuid.optional(),
+	id: idString.optional(),
 	name: z.string().optional(),
 	street1: z.string(),
 	street2: z.string().optional(),
@@ -53,7 +53,7 @@ export const CreateManyOrgLocationSchema = () => {
 		const auditLogs: Prisma.AuditLogCreateManyInput[] = []
 
 		for (const record of data) {
-			const id = createId()
+			const id = generateId('orgLocation')
 			dataOut.push(
 				Prisma.validator<Prisma.OrgLocationCreateManyInput>()({
 					id,

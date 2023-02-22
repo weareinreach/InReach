@@ -1,7 +1,7 @@
 import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { cuid, CreationBase } from '~api/schemas/common'
+import { idString, CreationBase } from '~api/schemas/common'
 import { createManyWithAudit } from '~api/schemas/nestedOps'
 
 import { CreateAuditLog } from './auditLog'
@@ -15,7 +15,7 @@ import { CreateNestedOrgWebsiteSchema } from './orgWebsite'
 const CreateOrgBase = z.object({
 	name: z.string(),
 	slug: z.string(),
-	sourceId: cuid,
+	sourceId: idString,
 })
 const CreateOrgLinks = z.object({
 	description: z.string().optional(),
