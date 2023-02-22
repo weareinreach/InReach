@@ -563,7 +563,9 @@ export const ServiceFilter = ({}) => {
 	}
 
 	function allChecked(serviceIndex: number) {
-		return values[serviceIndex]?.services.every((service: any) => service.checked)
+		if (values[serviceIndex]?.services.length > 0) {
+			return values[serviceIndex]?.services.every((service: any) => service.checked)
+		}
 	}
 
 	function indeterminate(serviceIndex: number) {
@@ -588,13 +590,13 @@ export const ServiceFilter = ({}) => {
 	const selectedCountIcon = <Text className={classes.count}>{selectedItems.length}</Text>
 
 	const items = (serviceIndex: number, serviceTags: any) =>
-		serviceTags.map((tag: any, serviceTagIndex: number) => (
+		serviceTags.map((serviceTag: any, serviceTagIndex: number) => (
 			<Checkbox
 				mt='xs'
 				ml={33}
-				label={t(tag.tsKey)}
-				key={tag.id}
-				checked={tag.checked}
+				label={t(serviceTag.tsKey)}
+				key={serviceTag.id}
+				checked={serviceTag.checked}
 				onChange={(event) => {
 					updateServiceTag(serviceIndex, serviceTagIndex, event.currentTarget.checked)
 				}}
@@ -638,6 +640,7 @@ export const ServiceFilter = ({}) => {
 						{t('uncheck-all')}
 					</Text>
 				</Group>
+				{services}
 			</Accordion>
 		</>
 	)
