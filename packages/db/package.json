@@ -80,7 +80,7 @@
 		"prisma-dbml-generator": "0.10.0",
 		"prisma-query-inspector": "1.4.4",
 		"prisma-query-log": "3.2.0",
-		"quicktype-core": "23.0.1",
+		"quicktype-core": "23.0.5",
 		"recursive-readdir": "2.2.3",
 		"shoetest": "1.2.2",
 		"slugify": "1.6.5",
