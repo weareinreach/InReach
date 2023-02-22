@@ -10,27 +10,39 @@ const useStyles = createStyles((theme) => ({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		padding: '12px 0px 8px',
+		padding: [12, 0, 8, 0],
 		gap: '12px',
 		// position: 'absolute',
 		width: '75px',
 		height: '70px',
 		color: theme.other.colors.secondary.darkGray,
 		borderTop: 0,
+
 		'&:hover': {
 			backgroundColor: theme.other.colors.secondary.white,
 		},
 		'&[data-active]': {
 			color: theme.other.colors.secondary.black,
 			borderTop: 0,
+			fontWeight: theme.other.fontWeight.semibold,
+			'& .mantine-Tabs-tabLabel': {
+				fontWeight: theme.other.fontWeight.semibold,
+			},
+
 			'&[data-active]:hover': {
 				backgroundColor: theme.other.colors.secondary.white,
 			},
 		},
 	},
+	tabLabel: {
+		fontSize: theme.fontSizes.sm,
+		fontWeight: theme.other.fontWeight.regular,
+	},
 	tabsList: {
 		borderTop: 0,
 		flexWrap: 'nowrap',
+		height: 70,
+		justifyContent: 'space-around',
 	},
 	root: {
 		position: 'absolute',
@@ -52,7 +64,7 @@ export const MobileNav = () => {
 	const router = useRouter()
 
 	const tabs = Object.entries(navItems).map(([key, item]) => (
-		<Tabs.Tab key={key} value={key} icon={<Icon icon={item.icon} height={16} />}>
+		<Tabs.Tab key={key} value={key} icon={<Icon icon={item.icon} height={20} />}>
 			{t(item.labelKey)}
 		</Tabs.Tab>
 	))
@@ -63,12 +75,7 @@ export const MobileNav = () => {
 	}
 
 	return (
-		<Tabs
-			inverted
-			classNames={{ tab: classes.tab, tabsList: classes.tabsList, root: classes.root }}
-			defaultValue='search'
-			onTabChange={switchTab}
-		>
+		<Tabs inverted classNames={{ ...classes }} defaultValue='search' onTabChange={switchTab}>
 			<Tabs.List position='apart'>{tabs}</Tabs.List>
 		</Tabs>
 	)

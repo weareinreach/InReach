@@ -1,7 +1,7 @@
 import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { cuid } from '~api/schemas/common'
+import { idString } from '~api/schemas/common'
 import { connectOne, connectOneRequired } from '~api/schemas/nestedOps'
 
 import { CreateAuditLog } from './auditLog'
@@ -13,15 +13,15 @@ export const CreateReviewInput = z.object({
 	toxicity: z.number().optional(),
 	lcrCity: z.string().optional(),
 	langConfidence: z.number().optional(),
-	organizationId: cuid,
-	orgServiceId: cuid.optional(),
-	orgLocationId: cuid.optional(),
-	languageId: cuid.optional(),
-	lcrGovDistId: cuid.optional(),
-	lcrCountryId: cuid.optional(),
+	organizationId: idString,
+	orgServiceId: idString.optional(),
+	orgLocationId: idString.optional(),
+	languageId: idString.optional(),
+	lcrGovDistId: idString.optional(),
+	lcrCountryId: idString.optional(),
 })
 
-export const CreateReview = CreateReviewInput.extend({ userId: cuid }).transform((data) => {
+export const CreateReview = CreateReviewInput.extend({ userId: idString }).transform((data) => {
 	const {
 		userId,
 		organizationId,

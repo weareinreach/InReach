@@ -1,15 +1,14 @@
 import { type StorybookConfig } from '@storybook/nextjs'
 import { merge } from 'merge-anything'
 import { PropItem } from 'react-docgen-typescript'
-import { Component } from 'react-docgen-typescript/lib/parser'
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
 
 import * as path from 'path'
 
-const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
+const filePattern = '*.stories.@(ts|tsx)'
 
 const config: StorybookConfig = {
-	stories: [`../**/${filePattern}`],
+	stories: [`../(components|hooks|layout|modals|other)/**/${filePattern}`, '../other/**/*.mdx'],
 	staticDirs: [
 		{
 			from: '../../../apps/app/public',
@@ -27,13 +26,31 @@ const config: StorybookConfig = {
 		'storybook-addon-designs',
 		'storybook-addon-pseudo-states',
 		'storybook-addon-swc',
-		// 'storybook-react-i18next', // Does not play well with v7 docs yet.
+		// {
+		// 	name: 'storybook-addon-swc',
+		// 	options: {
+		// 		swcLoaderOptions: {
+		// 			jsc: {
+		// 				target: 'es2016',
+		// 			},
+		// 		},
+		// 		swcMinifyOptions: {
+		// 			compress: {
+		// 				ecma: 2016,
+		// 			},
+		// 		},
+		// 	},
+		// },
 		'@storybook/addon-actions', // Keep this one last
 	],
 	framework: {
 		name: '@storybook/nextjs',
 		options: {
-			builder: {},
+			builder: {
+				// lazyCompilation: true,
+				// fsCache: true,
+			},
+			nextConfigPath: path.resolve(__dirname, '../../../apps/app/next.config.mjs'),
 			fastRefresh: true,
 		},
 	},
@@ -41,33 +58,40 @@ const config: StorybookConfig = {
 		buildStoriesJson: true,
 	},
 	refs: {
-		chromatic: {
-			// The title of your Storybook
-			title: 'InReach Design System',
-			// The url provided by Chromatic when it was published
-			url: 'https://dev--632cabf2eef8a2954cd3cbc6.chromatic.com',
-		},
+		// chromatic: {
+		// 	// The title of your Storybook
+		// 	title: 'InReach Design System',
+		// 	// The url provided by Chromatic when it was published
+		// 	url: 'https://dev--632cabf2eef8a2954cd3cbc6.chromatic.com',
+		// },
 	},
 	typescript: {
-		check: true,
-		checkOptions: {},
+		check: false,
 		reactDocgen: 'react-docgen-typescript',
 		reactDocgenTypescriptOptions: {
 			shouldExtractLiteralValuesFromEnum: true,
 			shouldRemoveUndefinedFromOptional: true,
-			shouldExtractValuesFromUnion: true,
+			shouldExtractValuesFromUnion: false,
 			shouldIncludePropTagMap: true,
-			propFilter: (prop: PropItem, component: Component) => {
-				if (prop.declarations !== undefined && prop.declarations.length > 0) {
-					const hasPropAdditionalDescription = prop.declarations.find((declaration) => {
-						return !declaration.fileName.includes('node_modules')
-					})
-
-					return Boolean(hasPropAdditionalDescription)
-				}
-
-				return true
+			tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
+			compilerOptions: {
+				esModuleInterop: false,
+				allowSyntheticDefaultImports: false,
 			},
+			propFilter: (prop: PropItem) =>
+				prop.parent ? !/node_modules\/(?!@mantine)/.test(prop.parent.fileName) : true,
+
+			// propFilter: (prop: PropItem, component: Component) => {
+			// 	if (prop.declarations !== undefined && prop.declarations.length > 0) {
+			// 		const hasPropAdditionalDescription = prop.declarations.find((declaration) => {
+			// 			return !declaration.fileName.includes('node_modules')
+			// 		})
+
+			// 		return Boolean(hasPropAdditionalDescription)
+			// 	}
+
+			// 	return true
+			// },
 		},
 	},
 	webpackFinal: (config) => {

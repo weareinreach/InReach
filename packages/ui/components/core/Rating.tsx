@@ -3,27 +3,32 @@ import { useTranslation } from 'next-i18next'
 
 import { Icon } from '~ui/icon'
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles((theme) => ({
 	container: {
 		width: 'auto',
 	},
-	icon: {
-		height: '21px',
-		width: '22px',
-		fontSize: '20px',
+	icon: {},
+	text: {
+		...theme.other.utilityFonts.utility1,
 	},
-	text: {},
 }))
 
-export const Rating = ({ average, reviewCount }: Props) => {
+export const Rating = ({ average, reviewCount, showCount = true }: Props) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation('common')
+
+	const noReviews = reviewCount === 0
+
 	return (
 		<Group position='center' spacing={5} className={classes.container}>
-			<Icon icon='carbon:star-filled' className={classes.icon} />
-			<Text className={classes.text}>
-				{average} ({t('review-count', { count: reviewCount })})
-			</Text>
+			<Icon icon='carbon:star-filled' className={classes.icon} height={24} />
+			{noReviews ? (
+				<Text className={classes.text}>{t('no-reviews')}</Text>
+			) : (
+				<Text className={classes.text}>
+					{average} {showCount && `(${t('review-count', { count: reviewCount })})`}
+				</Text>
+			)}
 		</Group>
 	)
 }
@@ -31,4 +36,5 @@ export const Rating = ({ average, reviewCount }: Props) => {
 type Props = {
 	average: number
 	reviewCount: number
+	showCount?: boolean
 }

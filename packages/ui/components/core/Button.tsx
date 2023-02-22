@@ -9,7 +9,7 @@ import {
 } from '@mantine/core'
 import { PolymorphicComponentProps } from '@mantine/utils'
 import { merge } from 'merge-anything'
-import { forwardRef } from 'react'
+import { forwardRef, ReactNode } from 'react'
 
 const buttonVariants: ButtonVariants = (theme, params) => {
 	switch (params.variant) {
@@ -44,7 +44,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					},
 				},
 				inner: {
-					color: theme.colors.primaryText[9],
+					color: theme.other.colors.secondary.black,
 					label: {
 						left: theme.spacing.md * 2,
 					},
@@ -61,7 +61,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					height: theme.spacing.lg * 2,
 				},
 				'&:hover': {
-					backgroundColor: '#666666',
+					backgroundColor: theme.fn.darken(theme.other.colors.secondary.white, 0.4),
 				},
 				inner: {
 					color: theme.other.colors.secondary.white,
@@ -87,7 +87,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					},
 				},
 				inner: {
-					color: theme.colors.primaryText[9],
+					color: theme.other.colors.secondary.black,
 					label: {
 						left: theme.spacing.md * 2,
 					},
@@ -108,7 +108,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					},
 				},
 				inner: {
-					color: theme.colors.primaryText[0],
+					color: theme.other.colors.secondary.white,
 					label: {
 						left: theme.spacing.md * 2,
 					},
@@ -123,7 +123,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					borderRadius: theme.radius.md,
 				},
 				'&:hover': {
-					backgroundColor: '#666666',
+					backgroundColor: theme.fn.darken(theme.other.colors.secondary.white, 0.4),
 				},
 			}
 		case 'secondary-icon':
@@ -138,15 +138,18 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					},
 				},
 				inner: {
-					color: theme.colors.primaryText[9],
+					color: theme.other.colors.secondary.black,
+					'&:disabled, &[data-disabled]': {
+						color: theme.other.colors.secondary.darkGray,
+					},
 				},
 			}
 		case 'accent-icon':
 			return {
 				root: {
-					backgroundColor: theme.colors.inReachSecondaryRegular[5],
+					backgroundColor: theme.other.colors.secondary.cornflower,
 					'&:hover': {
-						background: theme.fn.darken(theme.colors.inReachSecondaryRegular[5], 0.4),
+						background: theme.fn.darken(theme.other.colors.secondary.cornflower, 0.4),
 					},
 				},
 			}
@@ -156,35 +159,7 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 	}
 }
 
-const useVariantStyles = createStyles((theme, params: ButtonStylesParams) => {
-	const baseStyle = {
-		root: {
-			padding: theme.spacing.sm / 2,
-			paddingLeft: theme.spacing.xl * 2,
-			paddingRight: theme.spacing.xl * 2,
-			height: theme.spacing.xl * 2,
-			backgroundColor: theme.other.colors.secondary.black,
-			'&:hover': {
-				background: theme.fn.lighten(theme.other.colors.secondary.black, 0.4),
-			},
-		},
-		inner: {
-			color: theme.other.colors.secondary.white,
-		},
-		leftIcon: {
-			svg: {
-				height: theme.spacing.lg,
-				width: theme.spacing.lg,
-			},
-		},
-		label: {
-			fontSize: theme.spacing.md,
-			fontWeight: theme.other.fontWeight.semibold,
-			lineHeight: `${theme.spacing.lg}px`,
-		},
-	} satisfies CustomButtonStyles
-	return merge(baseStyle, buttonVariants(theme, params))
-})
+const useVariantStyles = createStyles((theme, params: ButtonStylesParams) => buttonVariants(theme, params))
 
 const customVariants = [
 	'primary',
@@ -220,11 +195,22 @@ export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'b
 )
 
 interface ButtonStylesParams {
-	variant?: ButtonVariant | CustomVariants
+	variant?: CustomVariants | 'filled' | 'outline'
 }
+type MantineButtonProps = Pick<
+	ButtonProps,
+	'type' | 'fullWidth' | 'uppercase' | 'loaderProps' | 'loaderPosition'
+>
 
-type CustomButtonProps = Omit<ButtonProps, 'variant'> & {
-	variant?: ButtonVariant | CustomVariants
+interface CustomButtonProps extends MantineButtonProps {
+	/** Button style/design */
+	variant?: CustomVariants | 'filled' | 'outline'
+	/** Label Text */
+	children?: ReactNode
+	/** Icon to render for 'icon' variants - pass in the full Icon component */
+	leftIcon?: JSX.Element
+	/** Disabled state */
+	disabled?: boolean
 }
 type CustomVariants = (typeof customVariants)[number]
 

@@ -1,6 +1,5 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
-import { createId } from '@paralleldrive/cuid2'
 import { PrismaClient, Prisma } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 
@@ -48,4 +47,4 @@ export * from '@prisma/client'
 export * from './zod_util'
 
 export { slug } from './lib/slugGen'
-export { createId, prisma, generateId }
+export { prisma, generateId }

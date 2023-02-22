@@ -16,18 +16,16 @@ import { nanoUrlRegex } from '~api/lib/nanoIdUrl'
  *
  * `*************`
  */
-
-/** Cuid v1 or v2 */
-export const cuidOptional = z.union([z.string().cuid().nullish(), z.string().cuid2().nullish()])
-export const cuid = z.string().refine((val) => z.string().cuid().or(z.string().cuid2()).parse(val))
+export const idString = z.string()
+export const idOptional = z.string().optional()
 export const id = z.object({ id: z.string() })
 export const idArray = z.object({ ids: z.string().array() })
-export const actorId = z.object({ actorId: cuid })
-export const userId = z.object({ userId: cuid })
-export const orgId = z.object({ orgId: cuid })
-export const organizationId = z.object({ organizationId: cuid })
-export const orgIdServiceId = orgId.extend({ serviceId: cuid })
-export const orgIdLocationId = orgId.extend({ locationId: cuid })
+export const actorId = z.object({ actorId: z.string() })
+export const userId = z.object({ userId: z.string() })
+export const orgId = z.object({ orgId: z.string() })
+export const organizationId = z.object({ organizationId: z.string() })
+export const orgIdServiceId = orgId.extend({ serviceId: z.string() })
+export const orgIdLocationId = orgId.extend({ locationId: z.string() })
 export const slug = z.object({ slug: z.string() })
 export const nanoIdUrl = z.string().regex(nanoUrlRegex)
 export const searchTerm = z.object({ search: z.string() })

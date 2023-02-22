@@ -35,6 +35,8 @@ const config = {
 				},
 			},
 		],
+		'import/no-self-import': 'error',
+		// 'import/no-cycle': 'error',
 	},
 	overrides: [
 		{

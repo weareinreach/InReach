@@ -1,5 +1,4 @@
-import { Meta } from '@storybook/react'
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { UserAvatar } from './UserAvatar'
 
@@ -13,42 +12,87 @@ export default {
 		},
 	},
 	argTypes: {
-		date: {
-			control: 'date',
+		useLoggedIn: {
+			type: 'boolean',
+		},
+		user: {
+			control: 'object',
+			if: {
+				arg: 'useLoggedIn',
+				truthy: false,
+			},
+		},
+		loading: {
+			defaultValue: false,
+			type: 'boolean',
+			if: {
+				arg: 'useLoggedIn',
+				truthy: false,
+			},
 		},
 	},
-} as Meta<typeof UserAvatar>
+} satisfies Meta<typeof UserAvatar>
 
-export const FullDetails = {
+type StoryDef = StoryObj<typeof UserAvatar>
+
+export const SessionFullDetails = {
 	parameters: {
 		nextAuthMock: {
-			session: 'userPicAuthed',
+			session: 'userPic',
 		},
 	},
-}
-
-export const NoImage = {
-	parameters: {
-		nextAuthMock: {
-			session: 'userAuthed',
-		},
-	},
-}
-
-export const WithDate = {
 	args: {
-		date: new Date(),
+		useLoggedIn: true,
 	},
-}
+} satisfies StoryDef
 
-export const NoData = {
-	parameters: {},
-}
+export const SessionNoImage = {
+	parameters: {
+		nextAuthMock: {
+			session: 'userNoPic',
+		},
+	},
+	args: {
+		useLoggedIn: true,
+	},
+} satisfies StoryDef
 
-export const Loading = {
+export const SessionLoading = {
 	parameters: {
 		nextAuthMock: {
 			session: 'loading',
 		},
 	},
-}
+	args: {
+		useLoggedIn: true,
+	},
+} satisfies StoryDef
+
+export const PassedFullInfo = {
+	args: {
+		user: {
+			name: 'User Name',
+			image: 'https://i.pravatar.cc/50?u=1234567',
+		},
+		subheading: new Date(2023, 1, 1),
+	},
+} satisfies StoryDef
+
+export const PassedNameNoImage = {
+	args: {
+		user: {
+			name: 'User Name',
+		},
+		subheading: new Date(2023, 1, 28),
+	},
+} satisfies StoryDef
+
+export const PassedWithDateNoUser = {
+	args: {
+		subheading: new Date(2023, 0, 1),
+	},
+} satisfies StoryDef
+
+export const NoData = {
+	parameters: {},
+} satisfies StoryDef
