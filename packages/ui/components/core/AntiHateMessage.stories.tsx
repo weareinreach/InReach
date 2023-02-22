@@ -12,10 +12,10 @@ export default {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=368%3A6905&t=sleVeGl2lJv7Df18-4',
 		},
+		layout: 'fullscreen',
 	},
-	layout: 'fullscreen',
 	decorators: [StorybookGrid],
-} as Meta<typeof AntiHateMessageCompnent>
+} satisfies Meta<typeof AntiHateMessageCompnent>
 
 export const AntiHateMessageCard = {
 	render: () => <AntiHateMessageCompnent />,

@@ -33,7 +33,7 @@ export const LoggedIn = {
 
 	parameters: {
 		nextAuthMock: {
-			session: 'userPicAuthed',
+			session: 'userPic',
 		},
 	},
 }
@@ -43,7 +43,7 @@ export const LoggedInNoPic = {
 
 	parameters: {
 		nextAuthMock: {
-			session: 'userAuthed',
+			session: 'userNoPic',
 		},
 	},
 }

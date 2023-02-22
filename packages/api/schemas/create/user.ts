@@ -1,7 +1,7 @@
-import { Prisma, createId } from '@weareinreach/db'
+import { Prisma, generateId } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { cuid, CreationBase, id, slug } from '~api/schemas/common'
+import { idString, CreationBase, id, slug } from '~api/schemas/common'
 import {
 	connectOne,
 	connectOneRequired,
@@ -15,7 +15,7 @@ import { CreateAuditLog, GenerateAuditLog } from './auditLog'
 import { userTypes } from '~api/generated/userType'
 
 const CreateUserBase = z.object({
-	id: cuid.default(createId()),
+	id: idString.default(generateId('user')),
 	email: z.string().email(),
 	password: z.string(),
 	name: z.string().optional(),
@@ -32,7 +32,7 @@ const CreateUserBase = z.object({
 	 * `cca3` = {@link https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3 ISO 3166-1 alpha-3 Country code}
 	 */
 	currentCountry: z
-		.union([z.object({ id: cuid }), z.object({ cca2: z.string() }), z.object({ cca3: z.string() })])
+		.union([z.object({ id: idString }), z.object({ cca2: z.string() }), z.object({ cca3: z.string() })])
 		.optional(),
 	/** Requires either `id` or `slug` */
 	currentGovDist: z.union([id, slug]).optional(),
@@ -77,16 +77,16 @@ export const CreateUser = CreateUserBase.transform(
 const adminCreateFields = z
 	.object({
 		userType: z.enum(userTypes),
-		permissions: z.object({ permissionId: cuid }).array(),
+		permissions: z.object({ permissionId: idString }).array(),
 		orgPermission: z
-			.object({ permissionId: cuid, organizationId: cuid, authorized: z.boolean().default(false) })
+			.object({ permissionId: idString, organizationId: idString, authorized: z.boolean().default(false) })
 			.array(),
 		locationPermission: z
-			.object({ permissionId: cuid, orgLocationId: cuid, authorized: z.boolean().default(false) })
+			.object({ permissionId: idString, orgLocationId: idString, authorized: z.boolean().default(false) })
 			.array(),
 		roles: z
 			.object({
-				roleId: cuid,
+				roleId: idString,
 			})
 			.array(),
 	})
@@ -151,14 +151,14 @@ export const CreateUserSurvey = z
 	.object({
 		birthYear: z.number(),
 		reasonForJoin: z.string(),
-		communityIds: cuid.array(),
-		ethnicityIds: cuid.array(),
-		identifyIds: cuid.array(),
-		countryOriginId: cuid,
-		immigrationId: cuid,
+		communityIds: idString.array(),
+		ethnicityIds: idString.array(),
+		identifyIds: idString.array(),
+		countryOriginId: idString,
+		immigrationId: idString,
 		currentCity: z.string(),
-		currentGovDistId: cuid,
-		currentCountryId: cuid,
+		currentGovDistId: idString,
+		currentCountryId: idString,
 	})
 	.partial()
 	.transform(

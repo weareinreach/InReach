@@ -2,7 +2,6 @@ import { Tabs as MantineTabs } from '@mantine/core'
 import { Meta } from '@storybook/react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { Query } from 'nextjs-routes'
 
 const Story = () => {
 	const router = useRouter()
@@ -41,6 +40,6 @@ export default {
 			},
 		},
 	},
-} as Meta<typeof MantineTabs>
+} satisfies Meta<typeof MantineTabs>
 
 export const Tabs = {}

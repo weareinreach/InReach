@@ -1,16 +1,16 @@
 import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { CreationBase, cuid } from '~api/schemas/common'
+import { CreationBase, idString } from '~api/schemas/common'
 import { CreateAuditLog, GenerateAuditLog } from '~api/schemas/create/auditLog'
 
 import { createMany, createOneSeparateLog } from '../nestedOps'
 
 const CreateListSchema = z.object({ name: z.string() })
 export const SaveItemSchema = z.object({
-	id: cuid,
-	organizationId: cuid.optional(),
-	serviceId: cuid.optional(),
+	id: idString,
+	organizationId: idString.optional(),
+	serviceId: idString.optional(),
 })
 
 const CreateAndSave = CreateListSchema.merge(SaveItemSchema.omit({ id: true }))
@@ -19,7 +19,7 @@ export const CreateSavedList = () => {
 	const { dataParser: parser, inputSchema } = CreationBase(CreateListSchema)
 
 	const dataParser = parser
-		.extend({ ownedById: cuid })
+		.extend({ ownedById: idString })
 		.transform(({ actorId, operation, data, ownedById }) => {
 			const { name } = data
 			return Prisma.validator<Prisma.UserSavedListCreateArgs>()({
@@ -49,7 +49,7 @@ export const CreateListAndEntry = () => {
 	)
 
 	const dataParser = parser
-		.extend({ ownedById: cuid })
+		.extend({ ownedById: idString })
 		.transform(({ actorId, operation, data, ownedById }) => {
 			const { name, organizationId, serviceId } = data
 

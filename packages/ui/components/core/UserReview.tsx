@@ -1,16 +1,22 @@
-import { Stack, Text, Group, createStyles, Avatar, useMantineTheme, Skeleton, Grid } from '@mantine/core'
+import { Stack, Text, Group, createStyles, useMantineTheme, Skeleton, Grid } from '@mantine/core'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
-import { DateTime } from 'luxon'
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Icon } from '~ui/icon'
 
+import { UserAvatar } from './UserAvatar'
+
 const useStyles = createStyles((theme) => ({
 	showMore: {
+		paddingTop: theme.spacing.sm,
 		'&:hover': {
 			cursor: 'pointer',
 		},
+	},
+	reviewText: {
+		paddingTop: theme.spacing.xl,
+		paddingBottom: theme.spacing.xl,
 	},
 }))
 const isTextTruncated = (event: HTMLParagraphElement | null) => {
@@ -20,7 +26,7 @@ const isTextTruncated = (event: HTMLParagraphElement | null) => {
 	return false
 }
 
-export const UserReview = ({ user, reviewText, verifiedUser }: Props) => {
+export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLoading = false }: Props) => {
 	const [showMore, setShowMore] = useState(true)
 	const [showMoreLink, setShowMoreLink] = useState<boolean | undefined>()
 	const [initialLoad, setInitialLoad] = useState(true)
@@ -28,7 +34,7 @@ export const UserReview = ({ user, reviewText, verifiedUser }: Props) => {
 	const theme = useMantineTheme()
 	const { classes } = useStyles()
 	const viewportSize = useViewportSize()
-	const { t, i18n } = useTranslation()
+	const { t, ready } = useTranslation()
 
 	const showMoreText = showMore ? t('show-more') : t('show-less')
 
@@ -36,36 +42,29 @@ export const UserReview = ({ user, reviewText, verifiedUser }: Props) => {
 	const clampValue = isMobile ? 3 : 2
 	const lineClamp = showMore ? clampValue : undefined
 
-	const dateString = DateTime.now()
-		.setLocale(i18n.resolvedLanguage)
-		.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
-
 	useEffect(() => {
 		if (isTextTruncated(reviewTextRef.current)) {
 			setShowMoreLink(true)
 			setInitialLoad(false)
-			return
+		} else {
+			setShowMoreLink(false)
+			setInitialLoad(false)
 		}
-		setShowMoreLink(false)
-		setInitialLoad(false)
 	}, [showMoreLink, viewportSize])
 
-	if (initialLoad) {
+	if (initialLoad || forceLoading || !ready) {
 		return (
 			<Grid.Col sm={8}>
-				<Stack>
-					<Group>
-						<Skeleton height={48} circle />
-						<Stack align='flex-start' justify='center' spacing={4}>
-							<Skeleton height={theme.fontSizes.md} width={175} m='4px 0' />
-							<Skeleton height={theme.fontSizes.md} width={125} m='4px 0' />
-						</Stack>
-					</Group>
-					<Skeleton height={theme.fontSizes.md} p='4px 0' />
-					<Skeleton height={theme.fontSizes.md} width={100} />
-					<Group sx={!verifiedUser ? { display: 'none' } : undefined}>
-						<Skeleton height={14} circle />
-						<Skeleton height={theme.fontSizes.md} width={200} />
+				<Stack spacing='xl'>
+					<UserAvatar loading={true} />
+					<Stack className={classes.reviewText} spacing={8}>
+						<Skeleton />
+						<Skeleton />
+						<Skeleton width={100} mt={4} />
+					</Stack>
+					<Group sx={!verifiedUser ? { display: 'none' } : undefined} spacing={8}>
+						<Skeleton height={20} circle />
+						<Skeleton width={200} />
 					</Group>
 				</Stack>
 			</Grid.Col>
@@ -74,34 +73,26 @@ export const UserReview = ({ user, reviewText, verifiedUser }: Props) => {
 
 	return (
 		<Grid.Col sm={8}>
-			<Stack spacing='xs'>
-				<Group>
-					<Avatar src={user?.image} alt={user?.name ?? (t('user-avatar') as string)}>
-						<Icon icon='carbon:user' height={24} />
-					</Avatar>
-					<Stack align='flex-start' justify='center' spacing={1}>
-						<Text weight={theme.other.fontWeight.semibold} span>
-							{user.name ?? t('in-reach-user')}
-						</Text>
-						<Text color={theme.other.colors.secondary.darkGray}>{dateString}</Text>
-					</Stack>
-				</Group>
-				<Text ref={reviewTextRef} lineClamp={lineClamp} component='p'>{`"${reviewText}"`}</Text>
-				<Text
-					td='underline'
-					sx={!showMoreLink ? { display: 'none' } : undefined}
-					className={classes.showMore}
-					weight={theme.other.fontWeight.semibold}
-					onClick={() => {
-						setShowMore(!showMore)
-					}}
-				>
-					{showMoreText}
-				</Text>
+			<Stack spacing={0}>
+				<UserAvatar user={user} subheading={reviewDate} />
+				<Stack className={classes.reviewText} spacing={0}>
+					<Text ref={reviewTextRef} lineClamp={lineClamp} component='p'>{`"${reviewText}"`}</Text>
+					<Text
+						td='underline'
+						sx={!showMoreLink ? { display: 'none' } : undefined}
+						className={classes.showMore}
+						weight={theme.other.fontWeight.semibold}
+						onClick={() => {
+							setShowMore(!showMore)
+						}}
+					>
+						{showMoreText}
+					</Text>
+				</Stack>
 				{verifiedUser && (
-					<Group>
-						<Icon icon='carbon:checkmark-filled' color={theme.other.colors.primary.allyGreen} />
-						<Text>{t('in-reach-verified-reviewer')}</Text>
+					<Group spacing={theme.spacing.xs}>
+						<Icon icon='carbon:checkmark-filled' height={20} color={theme.other.colors.primary.allyGreen} />
+						<Text color={theme.other.colors.secondary.darkGray}>{t('in-reach-verified-reviewer')}</Text>
 					</Group>
 				)}
 			</Stack>
@@ -110,12 +101,15 @@ export const UserReview = ({ user, reviewText, verifiedUser }: Props) => {
 }
 
 type Props = {
-	user: UserProps
+	user?: UserProps
 	reviewText: string
+	reviewDate: Date
 	verifiedUser: boolean
+	/** For storybook purposes */
+	forceLoading?: boolean
 }
 
 type UserProps = {
-	image: string | null
-	name: string | null
+	image?: string
+	name?: string
 }

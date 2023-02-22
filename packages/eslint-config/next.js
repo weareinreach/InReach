@@ -10,6 +10,14 @@ const config = {
 			presets: [require.resolve('next/babel')],
 		},
 	},
+	overrides: [
+		{
+			files: ['*/pages/**/*.tsx'],
+			rules: {
+				'import/prefer-default-export': ['error', { target: 'any' }],
+			},
+		},
+	],
 	// settings: {
 	// 	next: {
 	// 		rootDir: ['apps/*/'],

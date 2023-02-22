@@ -95,9 +95,6 @@
 		},
 		"peerDependencyRules": {
 			"allowedVersions": {
-				"@storybook/components": "^7.0.0-beta.36 || next",
-				"@storybook/core-events": "^7.0.0-beta.36 || next",
-				"@storybook/theming": "^7.0.0-beta.36 || next",
 				"babel-loader": ">=9",
 				"i18next-browser-languagedetector": ">=7",
 				"i18next-http-backend": ">=2",
