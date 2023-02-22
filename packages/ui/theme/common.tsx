@@ -17,6 +17,17 @@ import {
 	type BadgeStylesNames,
 	type BadgeStylesParams,
 	type SkeletonProps,
+	StackProps,
+	CheckboxStylesNames,
+	CheckboxStylesParams,
+	CheckboxProps,
+	RadioStylesNames,
+	RadioStylesParams,
+	SwitchProps,
+	SwitchStylesNames,
+	SwitchStylesParams,
+	SwitchGroupProps,
+	TextareaProps,
 } from '@mantine/core'
 
 import { Icon } from '~ui/icon'
@@ -233,6 +244,52 @@ export const commonTheme = {
 				},
 			}),
 		},
+		Checkbox: {
+			styles: (theme, params: CheckboxStylesParams) =>
+				({
+					root: {
+						padding: '8px 0 8px 4px',
+						'&:hover': {
+							backgroundColor: theme.other.colors.primary.lightGray,
+						},
+					},
+					label: {
+						...theme.other.utilityFonts.utility2,
+						paddingLeft: theme.spacing.xs,
+						'&:disabled': {
+							color: theme.other.colors.secondary.darkGray,
+						},
+					},
+					labelWrapper: {
+						justifyContent: 'center',
+					},
+					input: {
+						borderColor: theme.other.colors.tertiary.coolGray,
+						height: theme.spacing.xl,
+						width: theme.spacing.xl,
+						'&:checked': {
+							backgroundColor: params.indeterminate
+								? theme.other.colors.secondary.white
+								: theme.other.colors.secondary.black,
+							color: params.indeterminate
+								? theme.other.colors.secondary.black
+								: theme.other.colors.secondary.white,
+						},
+						'&:disabled': {
+							backgroundColor: theme.other.colors.primary.lightGray,
+						},
+					},
+					inner: {
+						height: 24,
+						width: 24,
+					},
+					icon: {
+						width: params.indeterminate ? '12px' : '14px',
+						height: params.indeterminate ? '3px' : '10.5px',
+						margin: params.indeterminate ? '10.5px 6px' : '6.75px 5px',
+					},
+				} satisfies Styles<CheckboxStylesNames, CheckboxStylesParams>),
+		},
 		GridCol: {
 			defaultProps: {
 				span: 12,
@@ -259,6 +316,33 @@ export const commonTheme = {
 					},
 				} satisfies Styles<ModalStylesNames, ModalStylesParams>),
 		},
+		Radio: {
+			styles: (theme) =>
+				({
+					root: {
+						padding: '10px 0 10px 2px',
+						'&:hover': {
+							backgroundColor: theme.other.colors.primary.lightGray,
+						},
+					},
+					label: {
+						...theme.other.utilityFonts.utility2,
+					},
+					radio: {
+						backgroundColor: theme.other.colors.secondary.white,
+						borderColor: theme.other.colors.secondary.black,
+						color: theme.other.colors.secondary.black,
+						borderWidth: 2,
+						'&:checked': {
+							background: theme.other.colors.secondary.black,
+							borderColor: theme.other.colors.secondary.black,
+						},
+						'&:disabled': {
+							backgroundColor: theme.other.colors.primary.lightGray,
+						},
+					},
+				} satisfies Styles<RadioStylesNames, RadioStylesParams>),
+		},
 		Rating: {
 			defaultProps: (theme) => ({
 				emptySymbol: (
@@ -279,13 +363,64 @@ export const commonTheme = {
 				} satisfies SkeletonProps),
 		},
 		Switch: {
-			styles: (theme) => ({
-				root: {
-					'&:hover': {
-						backgroundColor: theme.other.colors.primary.lightGray,
+			defaultProps: {
+				labelPosition: 'left',
+			} satisfies SwitchProps,
+			styles: (theme) =>
+				({
+					root: {
+						padding: '12px 0 12px 0px',
+						'&:hover': {
+							backgroundColor: theme.other.colors.primary.lightGray,
+						},
 					},
-				},
-			}),
+					body: {
+						justifyContent: 'space-between',
+					},
+					label: {
+						...theme.other.utilityFonts.utility2,
+						'input:disabled + &': {
+							color: theme.other.colors.secondary.darkGray,
+							borderColor: theme.other.colors.secondary.darkGray,
+						},
+					},
+					track: {
+						height: 16,
+						width: 48,
+						backgroundColor: theme.other.colors.tertiary.coolGray,
+						overflow: 'inherit',
+						'input:checked + &': {
+							backgroundColor: theme.other.colors.tertiary.coolGray,
+							borderColor: theme.other.colors.tertiary.coolGray,
+						},
+					},
+					thumb: {
+						left: 0,
+						height: 24,
+						width: 24,
+						borderWidth: 0.5,
+						borderColor: theme.fn.darken(theme.other.colors.secondary.white, 0.04),
+						boxShadow: '0px 3px 8px rgba(0, 0, 0, 0.15), 0px 3px 1px rgba(0, 0, 0, 0.06)',
+						'input:checked + * > &': {
+							backgroundColor: theme.other.colors.secondary.black,
+							borderColor: theme.fn.darken(theme.other.colors.secondary.black, 0.04),
+						},
+						'input:disabled + * > &': {
+							backgroundColor: theme.other.colors.primary.lightGray,
+							borderColor: theme.other.colors.primary.lightGray,
+						},
+					},
+				} satisfies Styles<SwitchStylesNames, SwitchStylesParams>),
+		},
+		SwitchGroup: {
+			defaultProps: {
+				orientation: 'vertical',
+			} satisfies Partial<SwitchGroupProps>,
+		},
+		Stack: {
+			defaultProps: {
+				spacing: 'md',
+			} satisfies StackProps,
 		},
 		Tabs: {
 			styles: (theme) =>
@@ -318,7 +453,7 @@ export const commonTheme = {
 				autosize: true,
 				minRows: 3,
 				maxRows: 5,
-			},
+			} satisfies TextareaProps,
 			styles: (theme) => ({
 				label: {
 					paddingBottom: 10,
@@ -336,7 +471,59 @@ export const commonTheme = {
 						borderWidth: '2px',
 					},
 				},
+				invalid: {
+					'&::placeholder': {
+						color: theme.other.colors.secondary.darkGray,
+					},
+					'&:focus, &:focus-within': {
+						color: theme.other.colors.secondary.black,
+						borderColor: theme.other.colors.tertiary.red,
+						borderWidth: '2px',
+					},
+				},
 				wrapper: { height: '96px' },
+			}),
+		},
+		TextInput: {
+			styles: (theme) => ({
+				label: {
+					paddingBottom: 10,
+				},
+				input: {
+					padding: '14px 16px',
+					borderColor: theme.other.colors.tertiary.coolGray,
+
+					...theme.other.utilityFonts.utility2,
+					'&::placeholder': {
+						color: theme.other.colors.secondary.darkGray,
+					},
+					'&:focus, &:focus-within': {
+						borderColor: theme.other.colors.secondary.black,
+						borderWidth: '2px',
+					},
+				},
+				icon: {
+					color: theme.other.colors.secondary.black,
+					marginLeft: theme.spacing.md,
+					width: 'fit-content',
+				},
+				withIcon: {
+					borderRadius: theme.radius.xl,
+					paddingLeft: '44px',
+				},
+				rightSection: {
+					paddingRight: theme.spacing.md,
+				},
+				invalid: {
+					'&::placeholder': {
+						color: theme.other.colors.secondary.darkGray,
+					},
+					'&:focus, &:focus-within': {
+						color: theme.other.colors.secondary.black,
+						borderColor: theme.other.colors.tertiary.red,
+						borderWidth: '2px',
+					},
+				},
 			}),
 		},
 		Title: {

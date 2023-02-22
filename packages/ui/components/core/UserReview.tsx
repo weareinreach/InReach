@@ -55,7 +55,7 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 	if (initialLoad || forceLoading || !ready) {
 		return (
 			<Grid.Col sm={8}>
-				<Stack>
+				<Stack spacing='xl'>
 					<UserAvatar loading={true} />
 					<Stack className={classes.reviewText} spacing={8}>
 						<Skeleton />
@@ -73,7 +73,7 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 
 	return (
 		<Grid.Col sm={8}>
-			<Stack>
+			<Stack spacing={0}>
 				<UserAvatar user={user} subheading={reviewDate} />
 				<Stack className={classes.reviewText} spacing={0}>
 					<Text ref={reviewTextRef} lineClamp={lineClamp} component='p'>{`"${reviewText}"`}</Text>
