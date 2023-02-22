@@ -1,13 +1,13 @@
 import { Prisma } from '@weareinreach/db'
 
-import { CreationBase, cuid } from '../common'
+import { CreationBase, idString } from '../common'
 import { SaveItemSchema } from '../create/userSavedList'
 import { createOneSeparateLog, createMany, deleteOneSeparateLog } from '../nestedOps'
 
 export const SaveItem = () => {
 	const { dataParser: parser, inputSchema } = CreationBase(SaveItemSchema)
 
-	const dataParser = parser.extend({ ownedById: cuid }).transform(({ actorId, ownedById, data }) => {
+	const dataParser = parser.extend({ ownedById: idString }).transform(({ actorId, ownedById, data }) => {
 		const { id, organizationId, serviceId } = data
 		const [organizations, orgLog] = createOneSeparateLog(
 			organizationId ? { organizationId } : undefined,
@@ -37,7 +37,7 @@ export const SaveItem = () => {
 export const DeleteSavedItem = () => {
 	const { dataParser: parser, inputSchema } = CreationBase(SaveItemSchema)
 
-	const dataParser = parser.extend({ ownedById: cuid }).transform(({ actorId, ownedById, data }) => {
+	const dataParser = parser.extend({ ownedById: idString }).transform(({ actorId, ownedById, data }) => {
 		const { id, organizationId, serviceId } = data
 		const [organizations, orgLog] = deleteOneSeparateLog(
 			organizationId

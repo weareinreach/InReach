@@ -1,9 +1,8 @@
-import { Meta } from '@storybook/react'
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { LeaderBadgeGroup } from './LeaderBadgeGroup'
 
-const Story: Meta<typeof LeaderBadgeGroup> = {
+const Story = {
 	title: 'Design System/Tags and Badges/Leader Badge Group',
 	component: LeaderBadgeGroup,
 	parameters: {
@@ -21,8 +20,10 @@ const Story: Meta<typeof LeaderBadgeGroup> = {
 			},
 		},
 	},
-}
+} satisfies Meta<typeof LeaderBadgeGroup>
 export default Story
+
+type StoryDef = StoryObj<typeof LeaderBadgeGroup>
 
 export const Primary = {
 	args: {
@@ -41,7 +42,7 @@ export const Primary = {
 			},
 		],
 	},
-}
+} satisfies StoryDef
 
 export const Minified = {
 	args: {
@@ -62,4 +63,4 @@ export const Minified = {
 			},
 		],
 	},
-}
+} satisfies StoryDef

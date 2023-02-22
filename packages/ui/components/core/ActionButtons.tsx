@@ -59,10 +59,10 @@ const useStyles = createStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
-		minWidth: '48px',
-		height: '48px',
-		padding: '12px',
-		gap: '8px',
+		minWidth: 48,
+		height: 48,
+		padding: 12,
+		gap: 8,
 		backgroundColor: theme.other.colors.secondary.white,
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
@@ -72,30 +72,32 @@ const useStyles = createStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
-		minWidth: '48px',
-		height: '48px',
-		padding: '12px',
-		gap: '8px',
+		minWidth: 48,
+		height: 48,
+		padding: 12,
+		gap: 8,
 		backgroundColor: theme.other.colors.primary.lightGray,
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
 		},
 	},
-	icon: {
-		marginLeft: '5.5px',
-	},
+	icon: {},
 	text: {
 		fontWeight: theme.other.fontWeight.semibold,
-		marginLeft: '9.25px',
+		marginLeft: 8,
 	},
 	dropdown: {
-		background: 'black',
+		background: theme.other.colors.secondary.black,
+		borderRadius: theme.radius.md,
 	},
 	item: {
 		color: 'white',
+		fontWeight: theme.other.fontWeight.semibold,
+		fontSize: theme.fontSizes.md,
 		'&[data-hovered]': {
-			backgroundColor: 'white',
-			color: 'black',
+			backgroundColor: 'inherit',
+			// color: 'black',
+			textDecoration: 'underline',
 		},
 	},
 }))
@@ -145,7 +147,9 @@ export const ActionButtons = ({ iconKey }: Props) => {
 			<Icon
 				icon={iconRender.icon}
 				color={theme.other.colors.secondary.black}
-				className={'labelKey' in iconRender ? '' : classes.icon}
+				className={'labelKey' in iconRender ? undefined : classes.icon}
+				height={24}
+				width={24}
 			/>
 			{'labelKey' in iconRender && <Text className={classes.text}>{t(iconRender.labelKey)}</Text>}
 		</Button>
