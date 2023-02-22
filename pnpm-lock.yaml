@@ -301,6 +301,7 @@ importers:
   packages/api:
     specifiers:
       '@tanstack/react-query': 4.24.10
+      '@terraformer/wkt': 2.1.2
       '@trpc/client': 10.12.0
       '@trpc/next': 10.12.0
       '@trpc/react-query': 10.12.0
@@ -308,6 +309,7 @@ importers:
       '@types/eslint': 8.21.1
       '@types/node': 18.14.0
       '@types/prettier': 2.7.2
+      '@types/terraformer__wkt': 2.0.0
       '@weareinreach/auth': 0.100.0
       '@weareinreach/config': 0.100.0
       '@weareinreach/db': 0.100.0
@@ -333,6 +335,7 @@ importers:
       zod: 3.20.6
     dependencies:
       '@tanstack/react-query': 4.24.10_biqbaboplfbrettd7655fr4n2y
+      '@terraformer/wkt': 2.1.2
       '@trpc/client': 10.12.0_@trpc+server@10.12.0
       '@trpc/next': 10.12.0_twxsmod72jqp5mq5sjgf4pkz2u
       '@trpc/react-query': 10.12.0_tij422wpfxfl3iixjhzsgwgs2e
@@ -353,6 +356,7 @@ importers:
       '@types/eslint': 8.21.1
       '@types/node': 18.14.0
       '@types/prettier': 2.7.2
+      '@types/terraformer__wkt': 2.0.0
       '@weareinreach/config': link:../config
       '@weareinreach/eslint-config': link:../eslint-config
       dotenv-cli: 7.0.0
@@ -7390,7 +7394,6 @@ packages:
 
   /@terraformer/wkt/2.1.2:
     resolution: {integrity: sha512-2AyTBWqSfvGs4mTkuOMTdnL0Em6+awGyQd6f0nAMenoRLPWG05nWxxOHP8qKJVLmfZjkr0JfIWlakPgIyNgV7g==}
-    dev: true
 
   /@testing-library/dom/8.20.0:
     resolution: {integrity: sha512-d9ULIT+a4EXLX3UU8FBjauG9NnsZHkHztXoIcTsOKoOw030fyjheN9svkTULjJxtYag9DZz5Jz5qkWZDPxTFwA==}

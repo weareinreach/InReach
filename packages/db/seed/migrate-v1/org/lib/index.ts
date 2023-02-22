@@ -1,6 +1,5 @@
 // codegen:start {preset: barrel, include: ./*.ts}
 export * from './attributeHelpers'
-export * from './createPoint'
 export * from './generateKey'
 export * from './getCountryId'
 export * from './getGovDistId'

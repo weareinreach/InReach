@@ -89,10 +89,14 @@ export const GeoJSONSchema: z.ZodType<Prisma.InputJsonValue> = z.discriminatedUn
 	FeatureSchema,
 ])
 
+// export const GeoJSONPointSchema: z.ZodType<Prisma.InputJsonValue> = z.object({
+// 	type: z.literal('Feature'),
+// 	geometry: z.object({
+// 		type: z.literal('Point'),
+// 		coordinates: coordTuple,
+// 	}),
+// })
 export const GeoJSONPointSchema: z.ZodType<Prisma.InputJsonValue> = z.object({
-	type: z.literal('Feature'),
-	geometry: z.object({
-		type: z.literal('Point'),
-		coordinates: coordTuple,
-	}),
+	type: z.literal('Point'),
+	coordinates: coordTuple,
 })
