@@ -15,6 +15,7 @@ const useStyles = createStyles((theme) => ({
 		width: 'auto',
 		padding: [theme.spacing.sm - 2, theme.spacing.xs],
 		color: theme.other.colors.secondary.black,
+		backgroundColor: theme.other.colors.secondary.white,
 		borderRadius: 5,
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,

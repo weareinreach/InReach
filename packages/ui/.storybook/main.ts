@@ -25,22 +25,22 @@ const config: StorybookConfig = {
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
 		'storybook-addon-pseudo-states',
-		// 'storybook-addon-swc',
-		{
-			name: 'storybook-addon-swc',
-			options: {
-				swcLoaderOptions: {
-					jsc: {
-						target: 'es2016',
-					},
-				},
-				swcMinifyOptions: {
-					compress: {
-						ecma: 2016,
-					},
-				},
-			},
-		},
+		'storybook-addon-swc',
+		// {
+		// 	name: 'storybook-addon-swc',
+		// 	options: {
+		// 		swcLoaderOptions: {
+		// 			jsc: {
+		// 				target: 'es2016',
+		// 			},
+		// 		},
+		// 		swcMinifyOptions: {
+		// 			compress: {
+		// 				ecma: 2016,
+		// 			},
+		// 		},
+		// 	},
+		// },
 		'@storybook/addon-actions', // Keep this one last
 	],
 	framework: {
