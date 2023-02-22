@@ -570,22 +570,22 @@ export const ServiceFilter = ({}) => {
 		return values[serviceIndex]?.services.some((service: any) => service.checked) && !allChecked(serviceIndex)
 	}
 
-	function countOfChecked() {
-		let count = 0
+	function getSelectedServiceTagIds() {
+		let tempArr: any[] = []
 		values.forEach((service) => {
-			service.services.map((item: any) => {
-				item.checked == true ? (count = count + 1) : (count = count)
+			service.services.map((serviceTag: any) => {
+				serviceTag.checked ? tempArr.push(serviceTag.id) : null
 			})
 		})
-		return count
+		return tempArr
 	}
 
 	function uncheckAll() {
 		setValues(serviceListEmpty)
 	}
 
-	const selectedItems = countOfChecked()
-	const selectedCountIcon = <Text className={classes.count}>{selectedItems}</Text>
+	const selectedItems = getSelectedServiceTagIds()
+	const selectedCountIcon = <Text className={classes.count}>{selectedItems.length}</Text>
 
 	const items = (serviceIndex: number, serviceTags: any) =>
 		serviceTags.map((tag: any, serviceTagIndex: number) => (
@@ -629,16 +629,15 @@ export const ServiceFilter = ({}) => {
 			>
 				<Group className={classes.group}>
 					<Text>
-						{t('services')} {selectedItems > 0 ? selectedCountIcon : null}
+						{t('services')} {selectedItems.length > 0 ? selectedCountIcon : null}
 					</Text>
 					<Text
 						onClick={() => uncheckAll()}
-						className={selectedItems > 0 ? classes.uncheck : classes.uncheckDisabled}
+						className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
 					>
 						{t('uncheck-all')}
 					</Text>
 				</Group>
-				{services}
 			</Accordion>
 		</>
 	)
