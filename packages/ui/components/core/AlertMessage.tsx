@@ -10,7 +10,7 @@ const useStyles = createStyles((theme) => ({
 		backgroundColor: theme.other.colors.primary.lightGray,
 		flexDirection: 'column',
 		padding: theme.spacing.sm,
-		gap: theme.spacing.xs - 2,
+		gap: theme.spacing.xs,
 		[theme.fn.largerThan('sm')]: {
 			flexDirection: 'row',
 			padding: theme.spacing.md,
@@ -20,8 +20,8 @@ const useStyles = createStyles((theme) => ({
 	iconContainer: {
 		[theme.fn.largerThan('sm')]: {
 			minWidth: 'fit-content',
-			marginTop: theme.spacing.xs - 8,
-			marginRight: theme.spacing.xs - 0.75,
+			// marginTop: 2,
+			marginRight: theme.spacing.xs,
 		},
 	},
 	textContainer: {
@@ -45,11 +45,11 @@ export const AlertMessage = ({ textKey, iconKey = 'information' }: Props) => {
 
 	return (
 		<Grid.Col sm={8} span={12}>
-			<Paper withBorder radius='md' className={classes.messageContainer}>
+			<Paper radius='md' className={classes.messageContainer}>
 				<Icon
 					icon={iconRender.icon}
-					width={17.5}
-					height={17.5}
+					width={20}
+					height={20}
 					color={
 						iconKey == 'information'
 							? theme.other.colors.secondary.cornflower

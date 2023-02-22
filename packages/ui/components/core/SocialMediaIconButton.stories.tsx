@@ -1,5 +1,5 @@
+import { Group } from '@mantine/core'
 import { Meta } from '@storybook/react'
-import React from 'react'
 
 import { SocialMediaIconButton, approvedIcons } from './SocialMediaIconButton'
 
@@ -15,14 +15,21 @@ export default {
 	argTypes: {
 		icon: {
 			options: Object.keys(approvedIcons),
+			type: 'string',
 		},
 	},
+	render: () => (
+		<Group>
+			<SocialMediaIconButton icon='facebook' href='#' title='icon' />
+			<SocialMediaIconButton icon='github' href='#' title='icon' />
+			<SocialMediaIconButton icon='instagram' href='#' title='icon' />
+			<SocialMediaIconButton icon='linkedin' href='#' title='icon' />
+			<SocialMediaIconButton icon='tiktok' href='#' title='icon' />
+			<SocialMediaIconButton icon='twitter' href='#' title='icon' />
+			<SocialMediaIconButton icon='youtube' href='#' title='icon' />
+			<SocialMediaIconButton icon='mail' href='#' title='icon' />
+		</Group>
+	),
 } as Meta<typeof SocialMediaIconButton>
 
-export const SocialMediaButton = {
-	args: {
-		href: '#',
-		icon: 'facebook',
-		title: 'Social Media Icon',
-	},
-}
+export const SocialMediaButtons = {}

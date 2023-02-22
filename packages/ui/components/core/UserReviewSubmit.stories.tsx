@@ -1,6 +1,4 @@
-import { faker } from '@faker-js/faker'
-import { createId } from '@paralleldrive/cuid2'
-import { Meta } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { UserReviewSubmit as UserReviewPromptCompnt } from './UserReviewSubmit'
 import { getTRPCMock } from '../../lib/getTrpcMock'
@@ -30,14 +28,14 @@ export default {
 					path: ['organization', 'getIdFromSlug'],
 					type: 'query',
 					response: {
-						id: createId(),
+						id: 'orgn_ORGANIZATIONID',
 					},
 				}),
 				getTRPCMock({
 					path: ['review', 'create'],
 					type: 'mutation',
 					response: {
-						id: createId(),
+						id: 'orev_NEWREVIEWID',
 					},
 				}),
 			],
@@ -45,25 +43,38 @@ export default {
 	},
 	args: {},
 	decorators: [StorybookGrid],
-} as Meta<typeof UserReviewPromptCompnt>
+} satisfies Meta<typeof UserReviewPromptCompnt>
 
-export const SubmitReviewFullData = {
-	args: {
-		avatarUrl: faker.image.avatar(),
-		avatarName: faker.name.fullName(),
-	},
-}
+type StoryDef = StoryObj<typeof UserReviewPromptCompnt>
 
-export const SubmitReviewNoAvatar = {
-	args: {
-		avatarUrl: null,
-		avatarName: faker.name.fullName(),
+export const SubmitReview = {
+	parameters: {
+		nextAuthMock: {
+			session: 'userPic',
+		},
 	},
-}
+} satisfies StoryDef
 
-export const SubmitReviewNoData = {
-	args: {
-		avatarUrl: null,
-		avatarName: null,
+export const SubmitReviewNoPic = {
+	parameters: {
+		nextAuthMock: {
+			session: 'userNoPic',
+		},
 	},
-}
+} satisfies StoryDef
+
+export const SubmitReviewNoPicOrName = {
+	parameters: {
+		nextAuthMock: {
+			session: 'userNoPicNoName',
+		},
+	},
+} satisfies StoryDef
+
+export const SubmitReviewNotLoggedIn = {
+	parameters: {
+		nextAuthMock: {
+			session: 'noAuth',
+		},
+	},
+} satisfies StoryDef

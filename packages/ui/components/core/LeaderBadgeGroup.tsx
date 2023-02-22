@@ -2,12 +2,12 @@ import { Group, createStyles, Text } from '@mantine/core'
 
 import { LeaderBadge, LeaderBadgeProps } from './LeaderBadge'
 
-const useStyles = createStyles(() => ({
+const useStyles = createStyles((theme) => ({
 	separator: {
 		fontSize: '1.5rem',
 		display: 'inline',
-		paddingLeft: '4px',
-		paddingRight: '4px',
+		paddingLeft: theme.spacing.xs,
+		paddingRight: theme.spacing.xs,
 	},
 }))
 

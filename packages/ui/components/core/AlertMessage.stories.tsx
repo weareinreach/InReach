@@ -1,10 +1,9 @@
-import { Meta } from '@storybook/react'
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { AlertMessage as AlertMessageCompnent } from './AlertMessage'
 import { StorybookGrid } from '../layout/BodyGrid'
 
-const Story: Meta<typeof AlertMessageCompnent> = {
+const Story = {
 	title: 'Design System/Alert Message',
 	component: AlertMessageCompnent,
 	parameters: {
@@ -15,18 +14,21 @@ const Story: Meta<typeof AlertMessageCompnent> = {
 		},
 	},
 	decorators: [StorybookGrid],
-}
+} satisfies Meta<typeof AlertMessageCompnent>
 export default Story
+
+type StoryDef = StoryObj<typeof AlertMessageCompnent>
+
 export const Information = {
 	args: {
 		iconKey: 'information',
 		textKey: 'alert-message-1',
 	},
-}
+} satisfies StoryDef
 
 export const Warning = {
 	args: {
 		iconKey: 'warning',
 		textKey: 'alert-message-1',
 	},
-}
+} satisfies StoryDef

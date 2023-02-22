@@ -1,9 +1,12 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
 
 import { WithI18n, WithMantine, WithTRPC } from './decorators'
 import { i18n, CustomLocales } from './i18next'
+import authStates from './mockAuthStates'
+import { Viewports } from './types'
 
 import './font.css'
 
@@ -33,6 +36,9 @@ export const parameters = {
 			color: /(background|color)$/i,
 			date: /Date$/,
 		},
+		expanded: true,
+		sort: 'requiredFirst',
+		hideNoControlsWarning: true,
 	},
 	docs: {
 		source: {
@@ -43,6 +49,12 @@ export const parameters = {
 	i18n,
 	viewport: {
 		viewports: INITIAL_VIEWPORTS,
+	},
+	chromatic: {
+		delay: 1000,
+	},
+	pseudo: {
+		rootElement: 'storybook-root',
 	},
 }
 export const globalTypes = {
@@ -72,5 +84,16 @@ declare module '@storybook/react' {
 		}
 		locale?: CustomLocales[number]
 		i18n?: typeof i18n
+		viewport?: {
+			viewports?: typeof INITIAL_VIEWPORTS
+			defaultViewport?: Viewports
+		}
+		design?: {
+			type: 'figma'
+			url: `https://${string}`
+		}
+		layout?: 'centered' | 'fullscreen' | 'padded'
+		msw?: RequestHandler[] | { handlers: RequestHandler[] | Record<string, RequestHandler> }
+		nextAuthMock?: { session: keyof typeof authStates }
 	}
 }

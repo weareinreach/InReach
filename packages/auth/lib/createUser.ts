@@ -9,12 +9,10 @@ import {
 	NEXTAUTH_PROVIDER_TYPE,
 } from './constants'
 
-const cuid = z.union([z.string().cuid(), z.string().cuid2()])
-
 const CreateUserSchema = z.object({
 	email: z.string().email(),
 	password: z.string(),
-	databaseId: cuid,
+	databaseId: z.string(),
 })
 
 /**

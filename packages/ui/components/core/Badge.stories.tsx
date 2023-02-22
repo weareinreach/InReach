@@ -1,5 +1,4 @@
-import { Meta } from '@storybook/react'
-import React from 'react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { Badge } from './Badge'
 
@@ -15,7 +14,13 @@ export default {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8505&t=sleVeGl2lJv7Df18-4',
 		},
 	},
-} as Meta<typeof Badge>
+	argTypes: {
+		leftSection: {
+			control: 'text',
+		},
+	},
+} satisfies Meta<typeof Badge>
+type StoryDef = StoryObj<typeof Badge>
 
 export const CommunityTag = {
 	args: {
@@ -29,7 +34,7 @@ export const CommunityTag = {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8506&t=sleVeGl2lJv7Df18-4',
 		},
 	},
-}
+} satisfies StoryDef
 
 export const ServiceTag = {
 	args: {
@@ -42,4 +47,4 @@ export const ServiceTag = {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8508&t=sleVeGl2lJv7Df18-4',
 		},
 	},
-}
+} satisfies StoryDef

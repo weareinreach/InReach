@@ -2,7 +2,7 @@ import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
 import { attributes, countryWithoutGeo, govDistWithoutGeo } from './common'
-import { cuid } from '../common'
+import { idString } from '../common'
 
 const serviceInclude = z
 	.object({
@@ -101,7 +101,7 @@ const serviceInclude = z
 
 export const serviceById = z
 	.object({
-		id: cuid,
+		id: idString,
 		include: serviceInclude,
 	})
 	.transform(
@@ -116,7 +116,7 @@ export const serviceById = z
 
 export const serviceByOrgId = z
 	.object({
-		organizationId: cuid,
+		organizationId: idString,
 		include: serviceInclude.optional(),
 	})
 	.transform(
@@ -131,7 +131,7 @@ export const serviceByOrgId = z
 
 export const serviceByLocationId = z
 	.object({
-		orgLocationId: cuid,
+		orgLocationId: idString,
 		include: serviceInclude.optional(),
 	})
 	.transform(
@@ -150,7 +150,7 @@ export const serviceByLocationId = z
 
 export const serviceByUserListId = z
 	.object({
-		listId: cuid,
+		listId: idString,
 		include: serviceInclude.optional(),
 	})
 	.transform(

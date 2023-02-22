@@ -37,6 +37,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				leftSection: {
 					paddingTop: theme.spacing.sm / 4,
 					paddingBottom: theme.spacing.sm / 4,
+					paddingRight: theme.spacing.xs,
 					fontSize: theme.fontSizes.sm,
 					marginRight: 0,
 					[theme.fn.largerThan('sm')]: {
@@ -72,25 +73,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 	}
 }
 
-const useVariantStyles = createStyles((theme, params: BadgeStylesParams) => {
-	const baseStyle = {
-		root: {
-			border: '1px solid',
-			paddingLeft: theme.spacing.sm,
-			paddingRight: theme.spacing.sm,
-		},
-		inner: {
-			textTransform: 'none',
-			fontWeight: theme.other.fontWeight.semibold,
-			color: theme.other.colors.secondary.black,
-		},
-	} as const
-	const variants = badgeVariants(theme, params)
-
-	const mergedStyle = merge(baseStyle, variants)
-
-	return mergedStyle
-})
+const useVariantStyles = createStyles((theme, params: BadgeStylesParams) => badgeVariants(theme, params))
 
 const customVariants = ['commmunityTag', 'serviceTag', 'leader', 'verified', 'claimed', 'unclaimed'] as const
 
@@ -123,7 +106,7 @@ interface BadgeStylesParams {
 }
 type CustomBadgeProps = Omit<BadgeProps, 'variant'> & {
 	/** Preset designs */
-	variant?: BadgeVariant | CustomVariants
+	variant?: CustomVariants | 'outline'
 	/**
 	 * Item rendered on the left side of the badge. Should be either an emoji unicode string or an Icon
 	 * component
