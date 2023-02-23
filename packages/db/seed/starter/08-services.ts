@@ -37,7 +37,7 @@ export const seedServices = async (task: ListrTask) => {
 		const categoryId = categoryMap.get(category) ?? generateId('serviceCategory')
 		const ns = namespaces.services
 		if (!categoryMap.has(category)) {
-			const key = slug(`${category}`)
+			const key = slug(`${category}.CATEGORYNAME`)
 			data.translation.push({
 				key,
 				ns,
