@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
 		color: theme.other.colors.secondary.softBlack,
 	},
 	itemComponent: {
-		borderBottom:`1px solid ${theme.other.colors.tertiary.coolGray}`,
+		borderBottom: `1px solid ${theme.other.colors.tertiary.coolGray}`,
 		height: '44px',
 		paddingRight: theme.spacing.md,
 		paddingLeft: theme.spacing.md,
@@ -42,9 +42,9 @@ const useStyles = createStyles((theme) => ({
 		'&:hover': {
 			backgroundColor: theme.other.colors.tertiary.coolGray,
 		},
-		'&:last-child':{
-			borderBottom:'none'
-		}
+		'&:last-child': {
+			borderBottom: 'none',
+		},
 	},
 }))
 
@@ -67,9 +67,7 @@ export const SearchBox = ({ type }: Props) => {
 	)
 
 	function PlaceholderGetOrganizationData(input: string) {
-		let data = [
-			{value: ''}
-		]
+		let data = [{ value: '' }]
 		//AddLast Child
 	}
 
@@ -81,7 +79,7 @@ export const SearchBox = ({ type }: Props) => {
 					rightIcon: rightIcon,
 					leftIcon: <Icon icon='carbon:map' className={classes.leftIcon} />,
 					variant: 'filled' as InputVariant,
-					getDataFunction: ()=> {}
+					getDataFunction: () => {},
 				}
 			case 'organization':
 				return {
@@ -89,7 +87,7 @@ export const SearchBox = ({ type }: Props) => {
 					rightIcon: rightIcon,
 					leftIcon: <Icon icon='carbon:search' className={classes.leftIcon} />,
 					variant: 'default' as InputVariant,
-					gtDataFunction: ()=> {}
+					gtDataFunction: () => {},
 				}
 		}
 	}
@@ -120,11 +118,11 @@ export const SearchBox = ({ type }: Props) => {
 
 	const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(({ value, ...others }: ItemProps, ref) => {
 		return (
-		<Container>
-		<div ref={ref} {...others} className={classes.itemComponent}>
-			<Text>{value}</Text>
-		</div>
-		</Container>
+			<Container>
+				<div ref={ref} {...others} className={classes.itemComponent}>
+					<Text>{value}</Text>
+				</div>
+			</Container>
 		)
 	})
 
