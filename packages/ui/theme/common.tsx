@@ -311,19 +311,33 @@ export const commonTheme = {
 			styles: (theme) =>
 				({
 					modal: {
+						padding: '0px !important',
 						[theme.fn.largerThan('sm')]: {
 							maxHeight: 800,
 							minWidth: 600,
 						},
 					},
-					inner: {
-						margin: [20, 20],
+					header: {
+						margin: 0,
+						padding: '16px 8px 16px 12px',
+						borderBottom: '1px',
+						borderBottomStyle: 'solid',
+						borderColor: theme.other.colors.primary.lightGray,
 						[theme.fn.largerThan('xs')]: {
-							margin: [20, 32],
+							padding: '16px 20px 16px 24px',
+						},
+					},
+					body: {
+						padding: '20px',
+						[theme.fn.largerThan('xs')]: {
+							padding: ['20px', '32px', '20px', '32px'],
 						},
 						[theme.fn.largerThan('sm')]: {
-							margin: [40, 32],
+							padding: ['40px', '32px'],
 						},
+					},
+					title: {
+						margin: 0,
 					},
 				} satisfies Styles<ModalStylesNames, ModalStylesParams>),
 		},
