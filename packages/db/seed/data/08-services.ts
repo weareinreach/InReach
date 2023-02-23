@@ -98,7 +98,7 @@ export const serviceData: ServiceList = [
 			'Trans support groups',
 		],
 	],
-	['Sports and Entertainment', []],
+	['Sports and Entertainment', ['Sports and Entertainment']],
 	[
 		'Translation and Interpretation',
 		['General translation and interpretation', 'For healthcare', 'For legal services'],
