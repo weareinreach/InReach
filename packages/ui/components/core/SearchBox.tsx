@@ -7,6 +7,7 @@ import {
 	SelectItemProps,
 	MantineColor,
 	Avatar,
+	Container,
 } from '@mantine/core'
 import { forwardRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -31,19 +32,19 @@ const useStyles = createStyles((theme) => ({
 		color: theme.other.colors.secondary.softBlack,
 	},
 	itemComponent: {
-		border: '1px',
-		borderColor: theme.other.colors.tertiary.coolGray,
+		borderBottom:`1px solid ${theme.other.colors.tertiary.coolGray}`,
 		height: '44px',
-		paddingRight: '24px',
-		paddingLeft: '24px',
-		paddingTop: '12px',
-		paddingBottom: '12px',
-		display: 'flex',
-		flexDirection: 'row',
+		paddingRight: theme.spacing.md,
+		paddingLeft: theme.spacing.md,
+		paddingTop: theme.spacing.sm,
+		paddingBottom: theme.spacing.sm,
 		alignItems: 'center',
 		'&:hover': {
 			backgroundColor: theme.other.colors.tertiary.coolGray,
 		},
+		'&:last-child':{
+			borderBottom:'none'
+		}
 	},
 }))
 
@@ -65,6 +66,13 @@ export const SearchBox = ({ type }: Props) => {
 		</Group>
 	)
 
+	function PlaceholderGetOrganizationData(input: string) {
+		let data = [
+			{value: ''}
+		]
+		//AddLast Child
+	}
+
 	function selectType(type: string) {
 		switch (type) {
 			case 'location':
@@ -73,6 +81,7 @@ export const SearchBox = ({ type }: Props) => {
 					rightIcon: rightIcon,
 					leftIcon: <Icon icon='carbon:map' className={classes.leftIcon} />,
 					variant: 'filled' as InputVariant,
+					getDataFunction: ()=> {}
 				}
 			case 'organization':
 				return {
@@ -80,6 +89,7 @@ export const SearchBox = ({ type }: Props) => {
 					rightIcon: rightIcon,
 					leftIcon: <Icon icon='carbon:search' className={classes.leftIcon} />,
 					variant: 'default' as InputVariant,
+					gtDataFunction: ()=> {}
 				}
 		}
 	}
@@ -108,11 +118,15 @@ export const SearchBox = ({ type }: Props) => {
 		value: string
 	}
 
-	const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(({ value, ...others }: ItemProps, ref) => (
-		<div ref={ref} {...others}>
+	const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(({ value, ...others }: ItemProps, ref) => {
+		return (
+		<Container>
+		<div ref={ref} {...others} className={classes.itemComponent}>
 			<Text>{value}</Text>
 		</div>
-	))
+		</Container>
+		)
+	})
 
 	return (
 		<Autocomplete
