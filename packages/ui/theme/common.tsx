@@ -1,26 +1,31 @@
-import {
-	type ModalStylesNames,
-	type ModalStylesParams,
-	type ActionIconProps,
-	type AvatarProps,
-	type BadgeProps,
-	type ButtonProps,
-	type ColProps,
-	type DefaultProps,
-	type MantineThemeOther,
-	type MantineThemeOverride,
-	type Styles,
-	type TabsStylesNames,
-	type TabsStylesParams,
-	type TitleStylesParams,
-	type TypographyStylesProviderProps,
-	type BadgeStylesNames,
-	type BadgeStylesParams,
-	type SkeletonProps,
+/* eslint-disable import/consistent-type-specifier-style */
+import { keys } from '@mantine/utils'
+
+import { Icon } from '~ui/icon'
+
+import { customColors } from './colors'
+
+import type {
+	ModalStylesNames,
+	ModalStylesParams,
+	ActionIconProps,
+	AvatarProps,
+	BadgeProps,
+	ButtonProps,
+	ColProps,
+	MantineThemeOther,
+	MantineThemeOverride,
+	Styles,
+	TabsStylesNames,
+	TabsStylesParams,
+	TitleStylesParams,
+	TypographyStylesProviderProps,
+	BadgeStylesNames,
+	BadgeStylesParams,
+	SkeletonProps,
 	StackProps,
 	CheckboxStylesNames,
 	CheckboxStylesParams,
-	CheckboxProps,
 	RadioStylesNames,
 	RadioStylesParams,
 	SwitchProps,
@@ -28,12 +33,9 @@ import {
 	SwitchStylesParams,
 	SwitchGroupProps,
 	TextareaProps,
+	CSSObject,
+	ModalProps,
 } from '@mantine/core'
-
-import { Icon } from '~ui/icon'
-
-import { customColors } from './colors'
-
 import type React from 'react'
 
 const colors = {
@@ -124,8 +126,8 @@ export const commonTheme = {
 			'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
 		fontWeight: 500,
 		sizes: {
-			h1: { fontSize: 40, lineHeight: 1.25, fontWeight: undefined },
-			h2: { fontSize: 24, lineHeight: 1.25, fontWeight: undefined },
+			h1: { fontSize: 40, lineHeight: 1.25, fontWeight: 500 },
+			h2: { fontSize: 24, lineHeight: 1.25, fontWeight: 500 },
 			h3: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
 			h4: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
 			h5: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
@@ -298,11 +300,20 @@ export const commonTheme = {
 			} satisfies ColProps,
 		},
 		Modal: {
+			defaultProps: (theme) =>
+				({
+					overflow: 'inside',
+					radius: theme.radius.xl,
+					centered: true,
+					size: 'auto',
+					withCloseButton: false,
+				} satisfies Partial<ModalProps>),
 			styles: (theme) =>
 				({
 					modal: {
 						[theme.fn.largerThan('sm')]: {
 							maxHeight: 800,
+							minWidth: 600,
 						},
 					},
 					inner: {
@@ -581,9 +592,21 @@ export const commonTheme = {
 			}),
 		},
 		TypographyStylesProvider: {
-			styles: (theme) =>
-				({
+			styles: (theme) => {
+				const headings = keys(theme.headings.sizes).reduce((acc: Record<string, CSSObject>, h) => {
+					acc[`& ${h}`] = {
+						marginBottom: 0,
+						'@media (max-width: 755px)': {
+							fontSize: theme.headings.sizes[h].fontSize,
+						},
+					}
+
+					return acc
+				}, {})
+
+				return {
 					root: {
+						...headings,
 						'& p': {
 							marginBottom: 0,
 							'@media (max-width: 755px)': {
@@ -591,7 +614,8 @@ export const commonTheme = {
 							},
 						},
 					},
-				} satisfies Styles<'root', TypographyStylesProviderProps>),
+				} satisfies Styles<'root', TypographyStylesProviderProps>
+			},
 		},
 	},
 } satisfies MantineThemeOverride
