@@ -13,6 +13,7 @@ import { trpc, StorybookTRPC } from '~ui/lib/trpcClient'
 import { storybookTheme } from '~ui/theme'
 
 import { i18n } from './i18next'
+import { useModalDefaultProps } from '../modals'
 
 const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
 	withCSSVariables: false,
@@ -25,7 +26,7 @@ export const WithMantine = (Story: StoryFn) => {
 		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
 			<TypographyStylesProvider>
 				<NotificationsProvider>
-					<ModalsProvider>
+					<ModalsProvider modalProps={useModalDefaultProps()}>
 						<Story />
 					</ModalsProvider>
 				</NotificationsProvider>
