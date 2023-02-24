@@ -13,7 +13,7 @@ import { trpc, StorybookTRPC } from '~ui/lib/trpcClient'
 import { storybookTheme } from '~ui/theme'
 
 import { i18n } from './i18next'
-import { useModalDefaultProps } from '../modals'
+import { useModalProps } from '../modals'
 
 const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
 	withCSSVariables: false,
