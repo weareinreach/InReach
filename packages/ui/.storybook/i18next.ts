@@ -5,7 +5,21 @@ import { initReactI18next } from 'react-i18next'
 
 import config from '../next-i18next.config'
 
-const ns = ['common', 'country', 'user', 'footer', 'nav', 'socialMedia', 'attribute']
+const ns = [
+	'attribute',
+	'common',
+	'country',
+	'footer',
+	'gov-dist',
+	'nav',
+	'org-description',
+	'orv-service',
+	'phone-type',
+	'services',
+	'socialMedia',
+	'user',
+]
+
 export const i18nLocales = {
 	en: 'English',
 	// 'en-US': 'English (US)',
@@ -64,7 +78,7 @@ i18n
 			'es-US': ['es'],
 		},
 		defaultNS: 'common',
-		interpolation: { escapeValue: false },
+		interpolation: { escapeValue: true, skipOnVariables: false },
 		react: { useSuspense: true },
 		cleanCode: true,
 		supportedLngs,
