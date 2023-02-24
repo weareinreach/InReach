@@ -59,7 +59,6 @@ const useStyles = createStyles((theme) => ({
 		lineHeight: 1.5,
 	},
 	modalTitle: {
-		borderBottom: 'solid 1px' + theme.other.colors.primary.lightGray,
 		padding: '24px 24px 24px 32px',
 		width: '100%',
 	},
@@ -115,10 +114,10 @@ export const ServiceFilter = ({}) => {
 
 	const generateInitialData = () => {
 		if (!serviceOptionData) return {}
-		serviceOptionData.forEach((category) => {
+		serviceOptionData.forEach((category: any) => {
 			valueMap.set(
 				category.id,
-				category.services.map((item) => ({ ...item, categoryId: category.id, selected: false }))
+				category.services.map((item: any) => ({ ...item, categoryId: category.id, selected: false }))
 			)
 		})
 		const initialValues = Object.fromEntries(valueMap.entries())
@@ -156,16 +155,16 @@ export const ServiceFilter = ({}) => {
 
 	const formObjectEntryArray = Object.entries(form.values)
 	const filterList = formObjectEntryArray.map(([categoryId, services], catIdx) => {
-		const checked = hasAll(categoryId)
+		const checked1 = hasAll(categoryId)
 		const indeterminate = hasSome(categoryId)
 
-		const tsKey = serviceOptionData.find((category) => category.id === categoryId)?.tsKey ?? 'error'
+		const tsKey = serviceOptionData.find((category: any) => category.id === categoryId)?.tsKey ?? 'error'
 		return (
 			<Accordion.Item value={categoryId} key={categoryId} className={classes.item}>
 				<Accordion.Control>{t(tsKey, { ns: 'services' })}</Accordion.Control>
 				<Accordion.Panel>
 					<Checkbox
-						checked={checked}
+						checked={checked1}
 						indeterminate={indeterminate}
 						label={t('all-service-category', { serviceCategory: `$t(services:${tsKey})` })}
 						transitionDuration={0}
