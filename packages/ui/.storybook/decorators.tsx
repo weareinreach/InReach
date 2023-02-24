@@ -26,7 +26,7 @@ export const WithMantine = (Story: StoryFn) => {
 		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
 			<TypographyStylesProvider>
 				<NotificationsProvider>
-					<ModalsProvider modalProps={useModalDefaultProps()}>
+					<ModalsProvider modalProps={useModalProps()}>
 						<Story />
 					</ModalsProvider>
 				</NotificationsProvider>
