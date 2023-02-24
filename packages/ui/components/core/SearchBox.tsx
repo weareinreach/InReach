@@ -5,14 +5,19 @@ import {
 	Group,
 	InputVariant,
 	SelectItemProps,
-	MantineColor,
-	Avatar,
-	Container,
+	ScrollArea,
+	ScrollAreaProps,
 } from '@mantine/core'
-import { forwardRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useForm } from '@mantine/form'
+import { useDebouncedValue } from '@mantine/hooks'
+import { type ApiOutput } from '@weareinreach/api'
+import { useRouter } from 'next/router'
+import { useTranslation, Trans } from 'next-i18next'
+import { forwardRef, useEffect, useState } from 'react'
+import reactStringReplace from 'react-string-replace'
 
-import { Icon } from '../../icon'
+import { Icon } from '~ui/icon'
+import { trpc as api } from '~ui/lib/trpcClient'
 
 const useStyles = createStyles((theme) => ({
 	autocompleteContainer: {
@@ -25,19 +30,20 @@ const useStyles = createStyles((theme) => ({
 		},
 		minWidth: '600px',
 	},
+	autocompleteWrapper: {
+		padding: 0,
+		borderBottom: `1px solid ${theme.other.colors.tertiary.coolGray}`,
+	},
+
 	rightIcon: {
 		minWidth: '150px',
 	},
 	leftIcon: {
-		color: theme.other.colors.secondary.softBlack,
+		color: theme.other.colors.secondary.black,
 	},
 	itemComponent: {
 		borderBottom: `1px solid ${theme.other.colors.tertiary.coolGray}`,
-		height: '44px',
-		paddingRight: theme.spacing.md,
-		paddingLeft: theme.spacing.md,
-		paddingTop: theme.spacing.sm,
-		paddingBottom: theme.spacing.sm,
+		padding: `${theme.spacing.sm}px ${theme.spacing.xl}px`,
 		alignItems: 'center',
 		'&:hover': {
 			backgroundColor: theme.other.colors.tertiary.coolGray,
@@ -46,30 +52,43 @@ const useStyles = createStyles((theme) => ({
 			borderBottom: 'none',
 		},
 	},
+	unmatchedText: {
+		...theme.other.utilityFonts.utility2,
+		color: theme.other.colors.secondary.darkGray,
+	},
+	matchedText: {
+		color: theme.other.colors.secondary.black,
+	},
 }))
+
+type FormValues = {
+	search: string
+	results: (NonNullable<ApiOutput['organization']['searchName']>[number] & { value: string })[]
+}
 
 export const SearchBox = ({ type }: Props) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation()
-	const [value, setValue] = useState('')
+	const router = useRouter()
+	const form = useForm<FormValues>({ initialValues: { search: '', results: [] } })
+	const [search] = useDebouncedValue(form.values.search, 400)
+
+	const { data, status, isFetching, isSuccess } = api.organization.searchName.useQuery(
+		{ search },
+		{
+			enabled: search !== '',
+			select: (data) => (data ? data.map(({ name, ...rest }) => ({ value: name, name, ...rest })) : []),
+			onSuccess: (data) => form.setValues({ results: data }),
+			refetchOnWindowFocus: false,
+		}
+	)
 
 	const rightIcon = (
-		<Group
-			spacing={4}
-			className={classes.rightIcon}
-			onClick={() => {
-				setValue('')
-			}}
-		>
+		<Group spacing={4} className={classes.rightIcon} onClick={() => form.reset()}>
 			<Text>Clear</Text>
 			<Icon icon='carbon:close' />
 		</Group>
 	)
-
-	function PlaceholderGetOrganizationData(input: string) {
-		let data = [{ value: '' }]
-		//AddLast Child
-	}
 
 	function selectType(type: string) {
 		switch (type) {
@@ -77,9 +96,8 @@ export const SearchBox = ({ type }: Props) => {
 				return {
 					placeholder: t('search-box-location-placeholder'),
 					rightIcon: rightIcon,
-					leftIcon: <Icon icon='carbon:map' className={classes.leftIcon} />,
+					leftIcon: <Icon icon='carbon:location-filled' className={classes.leftIcon} />,
 					variant: 'filled' as InputVariant,
-					getDataFunction: () => {},
 				}
 			case 'organization':
 				return {
@@ -87,59 +105,81 @@ export const SearchBox = ({ type }: Props) => {
 					rightIcon: rightIcon,
 					leftIcon: <Icon icon='carbon:search' className={classes.leftIcon} />,
 					variant: 'default' as InputVariant,
-					gtDataFunction: () => {},
 				}
 		}
 	}
 
 	const selectedType = selectType(type)
 
-	const testData = [
-		{
-			value: 'Bender Bending Rodríguez',
-		},
-
-		{
-			value: 'Carol Miller',
-		},
-		{
-			value: 'Homer Simpson',
-		},
-		{
-			value: 'Spongebob Squarepants',
-		},
-	]
-
-	const data = testData.map((item) => ({ ...item, value: item.value }))
-
 	interface ItemProps extends SelectItemProps {
 		value: string
+		name: string
 	}
 
-	const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(({ value, ...others }: ItemProps, ref) => {
+	const matchText = (result: string, textToMatch: string) => {
+		const matcher = new RegExp(`(${textToMatch})`, 'ig')
+		const replaced = reactStringReplace(result, matcher, (match, i) => (
+			<span key={i} className={classes.matchedText}>
+				{match}
+			</span>
+		))
+		console.log(replaced)
+		return replaced
+	}
+
+	const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(({ name, ...others }: ItemProps, ref) => {
 		return (
-			<Container>
-				<div ref={ref} {...others} className={classes.itemComponent}>
-					<Text>{value}</Text>
-				</div>
-			</Container>
+			<div ref={ref} {...others} className={classes.itemComponent}>
+				<Text className={classes.unmatchedText} truncate>
+					{matchText(name, form.values.search)}
+				</Text>
+			</div>
 		)
 	})
-
+	AutoCompleteItem.displayName = 'AutoCompleteItem'
+	const SuggestItem = () => {
+		return (
+			<div className={classes.itemComponent} onClick={() => router.push('/suggest')}>
+				<Text className={classes.unmatchedText}>
+					<Trans i18nKey='search-box-suggest-resource' t={t}>
+						Can’t find it? <u>Suggest an organization</u> you think should be included.
+					</Trans>
+				</Text>
+			</div>
+		)
+	}
+	const ResultContainer = forwardRef<HTMLDivElement, ScrollAreaProps>(
+		({ children, style, ...props }, ref) => {
+			return (
+				<ScrollArea viewportRef={ref} style={{ width: '100%', ...style }} {...props}>
+					{children}
+					<SuggestItem />
+				</ScrollArea>
+			)
+		}
+	)
+	ResultContainer.displayName = 'ResultContainer'
 	return (
 		<Autocomplete
-			classNames={{ input: classes.autocompleteContainer }}
+			classNames={{ input: classes.autocompleteContainer, itemsWrapper: classes.autocompleteWrapper }}
 			itemComponent={AutoCompleteItem}
+			dropdownComponent={ResultContainer}
 			variant={selectedType?.variant}
-			label=''
 			placeholder={selectedType?.placeholder}
-			value={value}
-			onChange={setValue}
-			data={data}
+			data={form.values.results}
 			icon={selectedType?.leftIcon}
 			dropdownPosition='bottom'
 			radius='xl'
-			rightSection={value.length > 0 ? selectedType?.rightIcon : null}
+			onItemSubmit={(e) =>
+				router.push({
+					pathname: '/org/[slug]',
+					query: {
+						slug: e.slug,
+					},
+				})
+			}
+			rightSection={form.values.search.length > 0 ? selectedType?.rightIcon : null}
+			{...form.getInputProps('search')}
 		/>
 	)
 }
