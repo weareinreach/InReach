@@ -14,15 +14,27 @@ export default {
 } satisfies Meta<typeof BreadcrumbCompnent>
 
 type StoryDef = StoryObj<typeof BreadcrumbCompnent>
-export const BackToSearch = {
-	args: {
-		href: '/',
-		option: 'back',
-	},
-} satisfies StoryDef
 export const Close = {
 	args: {
-		href: '/',
 		option: 'close',
+	},
+} satisfies StoryDef
+export const Back = {
+	args: {
+		option: 'back',
+		backTo: 'none',
+	},
+} satisfies StoryDef
+export const BackToSearch = {
+	args: {
+		option: 'back',
+		backTo: 'search',
+	},
+} satisfies StoryDef
+export const BackToDynamic = {
+	args: {
+		option: 'back',
+		backTo: 'dynamicText',
+		backToText: 'Sample Organization Name',
 	},
 } satisfies StoryDef

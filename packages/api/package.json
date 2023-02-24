@@ -36,7 +36,7 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "8.21.1",
-		"@types/node": "18.14.0",
+		"@types/node": "18.14.1",
 		"@types/prettier": "2.7.2",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "0.100.0",
@@ -44,11 +44,11 @@
 		"dotenv-cli": "7.0.0",
 		"eslint": "8.34.0",
 		"listr2": "5.0.7",
-		"next": "13.1.6",
+		"next": "13.2.1",
 		"prettier": "2.8.4",
 		"prisma": "4.10.1",
 		"trpc-client-devtools-link": "0.2.1-next",
-		"tslog": "4.7.4",
+		"tslog": "4.7.5",
 		"typescript": "4.9.5"
 	},
 	"peerDependencies": {

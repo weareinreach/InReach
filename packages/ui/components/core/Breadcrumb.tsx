@@ -1,13 +1,8 @@
-import { ActionIcon, Group, Text, createStyles, useMantineTheme, Button } from '@mantine/core'
-import Link, { type LinkProps } from 'next/link'
-import { useTranslation } from 'next-i18next'
+import { Text, createStyles, useMantineTheme, Button } from '@mantine/core'
+import { Trans, useTranslation } from 'next-i18next'
+import { MouseEventHandler } from 'react'
 
 import { Icon } from '~ui/icon'
-
-const approvedOptions = {
-	close: { children: 'close', icon: 'carbon:close', title: 'close' },
-	back: { children: 'back-to-search', icon: 'carbon:arrow-left', title: 'back button' },
-} as const
 
 const useStyles = createStyles((theme) => ({
 	root: {
@@ -29,31 +24,74 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const Breadcrumb = ({ href, option }: Props) => {
+export const Breadcrumb = ({ option, ...props }: BreadcrumbProps) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
-	const iconRender = approvedOptions[option].icon
-	const childrenRender = approvedOptions[option].children
+	const icons = {
+		close: 'carbon:close',
+		back: 'carbon:arrow-left',
+	} as const
+	const iconRender = icons[option]
+	const childrenRender = (function () {
+		switch (option) {
+			case 'close': {
+				return t('close')
+			}
+			case 'back': {
+				switch (props.backTo) {
+					case 'search': {
+						return t('back-to-search')
+					}
+					case 'none': {
+						return t('back')
+					}
+					case 'dynamicText': {
+						const page = props.backToText
+						return (
+							<Trans i18nKey='back-to-dynamic' ns='common' values={{ page }}>
+								Back to <span style={{ textDecoration: 'underline' }}>{page}</span>
+							</Trans>
+						)
+					}
+				}
+			}
+			default:
+				return t('close')
+		}
+	})()
+
 	return (
 		<Button
-			component={Link}
 			variant='subtle'
-			href={href}
-			title={approvedOptions[option].title}
 			classNames={{ root: classes.root, icon: classes.icon }}
 			px={theme.spacing.sm - 2}
 			py={theme.spacing.xs}
+			onClick={props.onClick}
 			leftIcon={<Icon icon={iconRender} height={24} color={theme.other.colors.secondary.black} />}
 		>
 			<Text size='md' fw={theme.other.fontWeight.semibold}>
-				{t(childrenRender)}
+				{childrenRender}
 			</Text>
 		</Button>
 	)
 }
 
-type Props = {
-	href: LinkProps['href']
-	option: keyof typeof approvedOptions
+type BreadcrumbProps = (Close | Back | BackToDynamic) & { onClick: MouseEventHandler<HTMLButtonElement> }
+interface Close {
+	option: 'close'
+	backTo?: undefined
+	backToText?: undefined
+}
+
+interface Back {
+	option: 'back'
+	backTo: 'search' | 'none'
+	backToText?: undefined
+}
+
+interface BackToDynamic {
+	option: 'back'
+	backTo: 'dynamicText'
+	backToText: string
 }

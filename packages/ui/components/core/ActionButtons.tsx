@@ -103,7 +103,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 /** Used to display the action buttons when viewing an organization/location/service. */
-export const ActionButtons = ({ iconKey }: Props) => {
+export const ActionButtons = ({ iconKey, omitLabel = false }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation()
@@ -151,7 +151,9 @@ export const ActionButtons = ({ iconKey }: Props) => {
 				height={24}
 				width={24}
 			/>
-			{'labelKey' in iconRender && <Text className={classes.text}>{t(iconRender.labelKey)}</Text>}
+			{!omitLabel && 'labelKey' in iconRender && (
+				<Text className={classes.text}>{t(iconRender.labelKey)}</Text>
+			)}
 		</Button>
 	)
 
@@ -172,4 +174,6 @@ type Props = {
 	 * either an icon and a label or just an icon
 	 */
 	iconKey: keyof typeof actionButtonIcons
+	/** Display icon only */
+	omitLabel?: boolean
 }

@@ -26,7 +26,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const UserAvatar = ({ subheading, user, useLoggedIn = false, loading = false }: Props) => {
+export const UserAvatar = ({ subheading, user, useLoggedIn = false, loading = false }: UserAvatarProps) => {
 	const { classes } = useStyles()
 	const { t, i18n } = useTranslation()
 	const { data: session, status } = useSession()
@@ -85,7 +85,7 @@ export const UserAvatar = ({ subheading, user, useLoggedIn = false, loading = fa
 	)
 }
 
-type Props = PropsPassed | PropsSession
+export type UserAvatarProps = PropsPassed | PropsSession
 
 interface PropsPassed {
 	/** Get user info from the user's logged in session */
