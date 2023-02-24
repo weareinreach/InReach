@@ -63,6 +63,7 @@ export const queries = defineRouter({
 				select: {
 					id: true,
 					name: true,
+					slug: true,
 				},
 			})
 			return orgIds

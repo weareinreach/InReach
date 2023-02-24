@@ -731,6 +731,7 @@ importers:
       react-docgen-typescript: 2.2.2
       react-dom: 18.2.0
       react-i18next: 12.2.0
+      react-string-replace: 1.1.0
       resolve-url-loader: 5.0.0
       slugify: 1.6.5
       storybook: 7.0.0-beta.53
@@ -751,6 +752,7 @@ importers:
       '@mantine/utils': 5.10.4_react@18.2.0
       '@weareinreach/api': link:../api
       nextjs-routes: 1.0.8_next@13.2.0
+      react-string-replace: 1.1.0
     devDependencies:
       '@babel/core': 7.21.0
       '@babel/plugin-transform-typescript': 7.21.0_@babel+core@7.21.0
@@ -2464,14 +2466,6 @@ packages:
       '@babel/types': 7.21.0
     dev: true
 
-  /@babel/helper-function-name/7.19.0:
-    resolution: {integrity: sha512-WAwHBINyrpqywkUH0nTnNgI5ina5TFn85HKS0pbPDfxFfhyR/aNQEn4hGi1P1JyT//I0t4OgXUlofzWILRvS5w==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/template': 7.20.7
-      '@babel/types': 7.21.0
-    dev: true
-
   /@babel/helper-function-name/7.21.0:
     resolution: {integrity: sha512-HfK1aMRanKHpxemaY2gqBmL04iAPOPRj7DxtNbiDOrJK+gdwkiNRVpCpUJYbUT+aZyemKN8brqTOxzCaG6ExRg==}
     engines: {node: '>=6.9.0'}
@@ -3659,13 +3653,13 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/code-frame': 7.18.6
-      '@babel/generator': 7.20.14
+      '@babel/generator': 7.21.1
       '@babel/helper-environment-visitor': 7.18.9
-      '@babel/helper-function-name': 7.19.0
+      '@babel/helper-function-name': 7.21.0
       '@babel/helper-hoist-variables': 7.18.6
       '@babel/helper-split-export-declaration': 7.18.6
-      '@babel/parser': 7.20.15
-      '@babel/types': 7.20.7
+      '@babel/parser': 7.21.1
+      '@babel/types': 7.21.0
       debug: 4.3.4_supports-color@5.5.0
       globals: 11.12.0
     transitivePeerDependencies:
@@ -7880,7 +7874,7 @@ packages:
   /@types/babel__traverse/7.18.3:
     resolution: {integrity: sha512-1kbcJ40lLB7MHsj39U4Sh1uTd2E7rLEa79kmDpI6cy+XiXsteB3POdQomoq4FxszMrO3ZYchkhYJw7A2862b3w==}
     dependencies:
-      '@babel/types': 7.20.7
+      '@babel/types': 7.21.0
     dev: true
 
   /@types/body-parser/1.19.2:
@@ -17347,6 +17341,11 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
     dependencies:
       react: 18.2.0
+
+  /react-string-replace/1.1.0:
+    resolution: {integrity: sha512-N6RalSDFGbOHs0IJi1H611WbZsvk3ZT47Jl2JEXFbiS3kTwsdCYij70Keo/tWtLy7sfhDsYm7CwNM/WmjXIaMw==}
+    engines: {node: '>=0.12.0'}
+    dev: false
 
   /react-textarea-autosize/8.3.4_pmekkgnqduwlme35zpnqhenc34:
     resolution: {integrity: sha512-CdtmP8Dc19xL8/R6sWvtknD/eCXkQr30dtvC4VmGInhRsfF8X/ihXCq6+9l9qbxmKRiq407/7z5fxE7cVWQNgQ==}
