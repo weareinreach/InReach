@@ -2,7 +2,8 @@ import { Meta } from '@storybook/react'
 import React from 'react'
 
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { mockSearch } from '~ui/mockData/orgSearch'
+import { mockAutocomplete, mockGeocode } from '~ui/mockData/locationSearch'
+import { mockOrgNameSearch } from '~ui/mockData/orgSearch'
 
 import { SearchBox as SearchBoxComp } from './SearchBox'
 
@@ -18,7 +19,17 @@ export default {
 			getTRPCMock({
 				path: ['organization', 'searchName'],
 				type: 'query',
-				response: (input) => mockSearch(input),
+				response: (input) => mockOrgNameSearch(input),
+			}),
+			getTRPCMock({
+				path: ['geo', 'autocomplete'],
+				type: 'query',
+				response: (input) => mockAutocomplete(input),
+			}),
+			getTRPCMock({
+				path: ['geo', 'geoByPlaceId'],
+				type: 'query',
+				response: (input) => mockGeocode(input),
 			}),
 		],
 	},

@@ -66,9 +66,11 @@ export const queries = defineRouter({
 					slug: true,
 				},
 			})
-			return orgIds
+			const shaped = orgIds.map(({ name, ...rest }) => ({ value: name, name, ...rest }))
+			return shaped
 		} catch (error) {
 			handleError(error)
+			return []
 		}
 	}),
 	searchDistance: publicProcedure.input(distSearch).query(async ({ ctx, input }) => {
