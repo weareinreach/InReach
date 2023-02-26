@@ -21,7 +21,8 @@
 	"dependencies": {
 		"@mantine/utils": "5.10.4",
 		"@weareinreach/api": "0.100.0",
-		"nextjs-routes": "1.0.8"
+		"nextjs-routes": "1.0.8",
+		"react-string-replace": "1.1.0"
 	},
 	"devDependencies": {
 		"@babel/core": "7.21.0",
