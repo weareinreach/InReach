@@ -2,6 +2,7 @@
 // codegen:start {preset: barrel, include: ./*.ts, exclude: ./refreshPermissions.ts}
 export * from './context'
 export * from './errorHandler'
+export * from './googleHandler'
 export * from './initTRPC'
 export * from './nanoIdUrl'
 export * from './prismaErrorCodes'

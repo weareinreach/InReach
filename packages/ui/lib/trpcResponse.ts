@@ -1,17 +1,17 @@
 import { action } from '@storybook/addon-actions'
-import { transformer } from '@weareinreach/api/lib/transformer'
+import { ApiInput } from '@weareinreach/api'
+import { TRPC_ERROR_CODES_BY_KEY, getHTTPStatusCodeFromError } from '@weareinreach/api/errorTypes'
+import { transformer, type SuperJSONResult } from '@weareinreach/api/lib/transformer'
 
 export type RpcResponse<Data> = RpcSuccessResponse<Data> | RpcErrorResponse
 
 export type RpcSuccessResponse<Data> = {
-	// id: null
 	result: {
-		data: Data
+		data: Data | SuperJSONResult
 	}
 }
 
 export type RpcErrorResponse = {
-	// id: null
 	error: {
 		message: string
 		code: number
@@ -26,13 +26,41 @@ export type RpcErrorResponse = {
 
 // According to JSON-RPC 2.0 and tRPC documentation.
 // https://trpc.io/docs/rpc
-export const jsonRpcSuccessResponse = (data: unknown) => {
-	const recordAction = action('tRPC')
+export const jsonRpcSuccessResponse = <T = unknown>(data: T): RpcSuccessResponse<T> => {
+	const recordAction = action('tRPC Success')
 	recordAction(data)
 	return {
-		// id: null,
 		result: {
 			data: transformer.serialize(data),
+		},
+	}
+}
+
+type ErrorInput<K1 extends keyof ApiInput, K2 extends keyof ApiInput[K1]> = {
+	code: keyof typeof TRPC_ERROR_CODES_BY_KEY
+	path: [K1, K2]
+	message: string
+}
+
+export const jsonRpcErrorResponse = <K1 extends keyof ApiInput, K2 extends keyof ApiInput[K1]>(
+	error: ErrorInput<K1, K2>
+): RpcErrorResponse => {
+	const recordAction = action('tRPC Error')
+	recordAction(error)
+	const { message, code, path } = error
+
+	const httpStatus = getHTTPStatusCodeFromError({ code, message, name: code })
+
+	return {
+		error: {
+			message,
+			code: TRPC_ERROR_CODES_BY_KEY[code],
+			data: {
+				code,
+				httpStatus,
+				stack: 'Stacktrace',
+				path: path.join('.'),
+			},
 		},
 	}
 }
