@@ -1,29 +1,9 @@
-import { Group, Stack, Title, List } from '@mantine/core'
-import { closeAllModals } from '@mantine/modals'
+import { Stack, Title, List } from '@mantine/core'
 import { ModalSettings } from '@mantine/modals/lib/context'
-import { useTranslation } from 'next-i18next'
 
-import { ActionButtons, Badge, Breadcrumb } from '~ui/components/core'
+import { Badge } from '~ui/components/core'
 
-export const ExampleModalTitle = ({ backToText }: ExampleModalTitleProps) => {
-	const { t } = useTranslation()
-	return (
-		<Group position='apart' noWrap>
-			<Breadcrumb
-				option='back'
-				backTo='dynamicText'
-				backToText={backToText}
-				onClick={() => {
-					closeAllModals()
-				}}
-			/>
-			<Group position='right' spacing={0} noWrap>
-				<ActionButtons iconKey='share' omitLabel />
-				<ActionButtons iconKey='save' omitLabel />
-			</Group>
-		</Group>
-	)
-}
+import { ModalTitle } from './ModalTitle'
 
 export const ExampleModalBody = ({ text }: ExampleModalBodyProps) => (
 	<Stack>
@@ -39,7 +19,7 @@ export const ExampleModalBody = ({ text }: ExampleModalBodyProps) => (
 
 export const ExampleModal = (props: ExampleModalProps) =>
 	({
-		title: <ExampleModalTitle {...props.title} />,
+		title: <ModalTitle {...props.title} />,
 		children: <ExampleModalBody {...props.body} />,
 	} satisfies ModalSettings)
 
