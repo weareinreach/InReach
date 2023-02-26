@@ -36,35 +36,40 @@ const coordinates = z.object({
 	lng: z.number(),
 })
 
-export const geocodeResponse = z.object({
-	results: z
-		.object({
-			geometry: z.object({
-				location: coordinates,
-				bounds: z
-					.object({
+export const geocodeResponse = z
+	.object({
+		results: z
+			.object({
+				geometry: z.object({
+					location: coordinates,
+					bounds: z
+						.object({
+							northeast: coordinates,
+							southwest: coordinates,
+						})
+						.optional(),
+					viewport: z.object({
 						northeast: coordinates,
 						southwest: coordinates,
-					})
-					.optional(),
-				viewport: z.object({
-					northeast: coordinates,
-					southwest: coordinates,
+					}),
 				}),
-			}),
-		})
-		.array(),
-	status: z.enum([
-		'OK',
-		'ZERO_RESULTS',
-		'INVALID_REQUEST',
-		'OVER_QUERY_LIMIT',
-		'REQUEST_DENIED',
-		'UNKNOWN_ERROR',
-	]),
-	error_message: z.string().optional(),
-	info_messages: z.string().array().optional(),
-})
+			})
+			.array(),
+		status: z.enum([
+			'OK',
+			'ZERO_RESULTS',
+			'INVALID_REQUEST',
+			'OVER_QUERY_LIMIT',
+			'REQUEST_DENIED',
+			'UNKNOWN_ERROR',
+		]),
+		error_message: z.string().optional(),
+		info_messages: z.string().array().optional(),
+	})
+	.transform(({ results, ...data }) => ({
+		result: results[0],
+		...data,
+	}))
 
 export type AutocompleteResponse = z.infer<typeof autocompleteResponse>
 export type GeocodeResponse = z.infer<typeof geocodeResponse>

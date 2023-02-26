@@ -34,9 +34,14 @@ const useStyles = createStyles((theme) => ({
 		padding: 0,
 		borderBottom: `1px solid ${theme.other.colors.tertiary.coolGray}`,
 	},
-
+	emptyLocation: {
+		backgroundColor: theme.other.colors.primary.lightGray,
+	},
 	rightIcon: {
 		minWidth: '150px',
+		'&:hover': {
+			cursor: 'pointer',
+		},
 	},
 	leftIcon: {
 		color: theme.other.colors.secondary.black,
@@ -47,6 +52,7 @@ const useStyles = createStyles((theme) => ({
 		alignItems: 'center',
 		'&:hover': {
 			backgroundColor: theme.other.colors.tertiary.coolGray,
+			cursor: 'pointer',
 		},
 		'&:last-child': {
 			borderBottom: 'none',
@@ -59,62 +65,88 @@ const useStyles = createStyles((theme) => ({
 	matchedText: {
 		color: theme.other.colors.secondary.black,
 	},
+	locationResult: {
+		...theme.other.utilityFonts.utility2,
+		display: 'block',
+	},
 }))
 
-type FormValues = {
-	search: string
-	results: (NonNullable<ApiOutput['organization']['searchName']>[number] & { value: string })[]
-}
+/** Most of Google's autocomplete language options are only the two letter variants */
+const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
-export const SearchBox = ({ type }: Props) => {
-	const { classes } = useStyles()
+export const SearchBox = ({ type }: SearchBoxProps) => {
+	const { classes, cx } = useStyles()
 	const { t } = useTranslation()
 	const router = useRouter()
-	const form = useForm<FormValues>({ initialValues: { search: '', results: [] } })
+	const form = useForm<FormValues>({ initialValues: { search: '' } })
 	const [search] = useDebouncedValue(form.values.search, 400)
+	const [locationSearch, setLocationSearch] = useState('')
+	const isOrgSearch = type === 'organization'
 
-	const { data, status, isFetching, isSuccess } = api.organization.searchName.useQuery(
+	// tRPC functions
+	api.organization.searchName.useQuery(
 		{ search },
 		{
-			enabled: search !== '',
-			select: (data) => (data ? data.map(({ name, ...rest }) => ({ value: name, name, ...rest })) : []),
-			onSuccess: (data) => form.setValues({ results: data }),
+			enabled: search !== '' && isOrgSearch,
+			onSuccess: (data) => form.setValues({ names: data }),
 			refetchOnWindowFocus: false,
 		}
 	)
-
-	const rightIcon = (
-		<Group spacing={4} className={classes.rightIcon} onClick={() => form.reset()}>
-			<Text>Clear</Text>
-			<Icon icon='carbon:close' />
-		</Group>
-	)
-
-	function selectType(type: string) {
-		switch (type) {
-			case 'location':
-				return {
-					placeholder: t('search-box-location-placeholder'),
-					rightIcon: rightIcon,
-					leftIcon: <Icon icon='carbon:location-filled' className={classes.leftIcon} />,
-					variant: 'filled' as InputVariant,
-				}
-			case 'organization':
-				return {
-					placeholder: t('search-box-organization-placeholder'),
-					rightIcon: rightIcon,
-					leftIcon: <Icon icon='carbon:search' className={classes.leftIcon} />,
-					variant: 'default' as InputVariant,
-				}
+	api.geo.autocomplete.useQuery(
+		{ search, locale: simpleLocale(router.locale) },
+		{
+			enabled: search !== '' && !isOrgSearch,
+			onSuccess: ({ results }) => form.setValues({ locations: results }),
+			refetchOnWindowFocus: false,
 		}
-	}
+	)
+	api.geo.geoByPlaceId.useQuery(locationSearch, {
+		enabled: locationSearch !== '' && !isOrgSearch,
+		onSuccess: (data) => {
+			const DEFAULT_RADIUS = 50
+			const DEFAULT_UNIT = 'mi'
+			if (!data.result) return
+			return router.push({
+				pathname: '/search/[...params]',
+				query: {
+					params: [
+						'dist',
+						data.result.geometry.location.lng.toString(),
+						data.result.geometry.location.lat.toString(),
+						DEFAULT_RADIUS.toString(),
+						DEFAULT_UNIT,
+					],
+				},
+			})
+		},
+	})
 
-	const selectedType = selectType(type)
+	const results = (function () {
+		const data = isOrgSearch ? form.values.names : form.values.locations
+		return data ?? []
+	})()
 
-	interface ItemProps extends SelectItemProps {
-		value: string
-		name: string
-	}
+	const rightIcon =
+		form.values.search.length > 0 ? (
+			<Group spacing={4} className={classes.rightIcon} onClick={() => form.reset()}>
+				<Text>Clear</Text>
+				<Icon icon='carbon:close' />
+			</Group>
+		) : null
+
+	const fieldRole = isOrgSearch
+		? {
+				placeholder: t('search-box-organization-placeholder'),
+				rightIcon,
+				leftIcon: <Icon icon='carbon:search' className={classes.leftIcon} />,
+				variant: 'default' as InputVariant,
+		  }
+		: {
+				placeholder: t('search-box-location-placeholder'),
+				rightIcon,
+				leftIcon: <Icon icon='carbon:location-filled' className={classes.leftIcon} />,
+				variant: 'filled' as InputVariant,
+		  }
 
 	const matchText = (result: string, textToMatch: string) => {
 		const matcher = new RegExp(`(${textToMatch})`, 'ig')
@@ -123,20 +155,31 @@ export const SearchBox = ({ type }: Props) => {
 				{match}
 			</span>
 		))
-		console.log(replaced)
 		return replaced
 	}
 
-	const AutoCompleteItem = forwardRef<HTMLDivElement, ItemProps>(({ name, ...others }: ItemProps, ref) => {
-		return (
-			<div ref={ref} {...others} className={classes.itemComponent}>
-				<Text className={classes.unmatchedText} truncate>
-					{matchText(name, form.values.search)}
-				</Text>
-			</div>
-		)
-	})
+	const AutoCompleteItem = forwardRef<HTMLDivElement, AutocompleteItem>(
+		({ value, ...others }: AutocompleteItem, ref) => {
+			return isOrgSearch ? (
+				<div ref={ref} {...others} className={classes.itemComponent}>
+					<Text className={classes.unmatchedText} truncate>
+						{matchText(value, form.values.search)}
+					</Text>
+				</div>
+			) : (
+				<div ref={ref} {...others} className={classes.itemComponent}>
+					<Text className={classes.locationResult} truncate>
+						{value}
+					</Text>
+					<Text className={classes.unmatchedText} truncate>
+						{others.subheading}
+					</Text>
+				</div>
+			)
+		}
+	)
 	AutoCompleteItem.displayName = 'AutoCompleteItem'
+
 	const SuggestItem = () => {
 		return (
 			<div className={classes.itemComponent} onClick={() => router.push('/suggest')}>
@@ -148,6 +191,8 @@ export const SearchBox = ({ type }: Props) => {
 			</div>
 		)
 	}
+
+	// only used for Organization results - always displays suggestion item last.
 	const ResultContainer = forwardRef<HTMLDivElement, ScrollAreaProps>(
 		({ children, style, ...props }, ref) => {
 			return (
@@ -159,31 +204,58 @@ export const SearchBox = ({ type }: Props) => {
 		}
 	)
 	ResultContainer.displayName = 'ResultContainer'
+
+	// org search: route to org page.
+	// location search: pass placeId to tRPC (geo.geoByPlaceId), which will redirect to search after coordinates are fetched
+	const selectionHandler = (item: AutocompleteItem) => {
+		if (isOrgSearch) {
+			if (!item.slug) return
+			return router.push({
+				pathname: '/org/[slug]',
+				query: {
+					slug: item.slug,
+				},
+			})
+		}
+		if (!item.placeId) return
+		setLocationSearch(item.placeId)
+	}
+
 	return (
 		<Autocomplete
-			classNames={{ input: classes.autocompleteContainer, itemsWrapper: classes.autocompleteWrapper }}
+			classNames={{
+				input: isOrgSearch
+					? classes.autocompleteContainer
+					: cx(classes.autocompleteContainer, classes.emptyLocation),
+				itemsWrapper: classes.autocompleteWrapper,
+			}}
 			itemComponent={AutoCompleteItem}
-			dropdownComponent={ResultContainer}
-			variant={selectedType?.variant}
-			placeholder={selectedType?.placeholder}
-			data={form.values.results}
-			icon={selectedType?.leftIcon}
+			dropdownComponent={isOrgSearch ? ResultContainer : undefined}
+			variant={fieldRole.variant}
+			placeholder={fieldRole.placeholder}
+			data={results}
+			icon={fieldRole.leftIcon}
 			dropdownPosition='bottom'
 			radius='xl'
-			onItemSubmit={(e) =>
-				router.push({
-					pathname: '/org/[slug]',
-					query: {
-						slug: e.slug,
-					},
-				})
-			}
-			rightSection={form.values.search.length > 0 ? selectedType?.rightIcon : null}
+			onItemSubmit={selectionHandler}
+			rightSection={fieldRole.rightIcon}
 			{...form.getInputProps('search')}
 		/>
 	)
 }
 
-type Props = {
+type SearchBoxProps = {
 	type: 'location' | 'organization'
+}
+type FormValues = {
+	search: string
+	names?: ApiOutput['organization']['searchName']
+	locations?: ApiOutput['geo']['autocomplete']['results']
+}
+interface AutocompleteItem {
+	value: string
+	name?: string
+	slug?: string
+	subheading?: string
+	placeId?: string
 }

@@ -17,7 +17,7 @@ export const mockGeocode = (input: ApiInput['geo']['geoByPlaceId']): ApiOutput['
 		.filter(({ placeId }) => placeId === input)
 		.map(({ geometry, ...data }) => ({ geometry }))
 
-	return { results, status: 'OK' }
+	return { result: results[0], status: 'OK' }
 }
 
 const locationSearchMockData = {
