@@ -9,7 +9,7 @@ export default {
 		layout: 'fullscreen',
 		design: {
 			type: 'figma',
-			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?t=cm6XAiXXhLOXJAQY-0',
+			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=244%3A4610&t=WqaFVxYHcCYzyF2K-4',
 		},
 	},
 } satisfies Meta<typeof Footer>
