@@ -1,10 +1,29 @@
 import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { attributes, countryWithoutGeo, govDistWithoutGeo } from './common'
+import {
+	attributes,
+	countryWithoutGeo,
+	govDistWithoutGeo,
+	isPublic,
+	languageNames,
+	phoneSelectPublic,
+} from './common'
 import { idString } from '../common'
 
-const serviceInclude = z
+const defaultSelect = {
+	services: true,
+	serviceAreas: true,
+	hours: true,
+	reviews: true,
+	attributes: true,
+	phones: true,
+	emails: true,
+	accessDetails: true,
+	locations: true,
+}
+
+const serviceSelect = z
 	.object({
 		services: z.boolean().default(true),
 		serviceAreas: z.boolean().default(true),
@@ -17,25 +36,43 @@ const serviceInclude = z
 		locations: z.boolean().default(true),
 	})
 	.partial()
-	.transform((include) => {
+	.transform((select) => {
 		const query = {
-			services: include.services
+			services: select.services
 				? {
+						where: {
+							tag: {
+								active: true,
+							},
+						},
 						select: {
 							tag: {
-								include: {
+								select: {
 									defaultAttributes: {
-										include: {
-											attribute: true,
+										select: {
+											attribute: {
+												select: {
+													tsKey: true,
+													tsNs: true,
+												},
+											},
 										},
 									},
-									category: true,
+									category: {
+										select: {
+											tsKey: true,
+											tsNs: true,
+										},
+									},
+									tsKey: true,
+									tsNs: true,
+									active: true,
 								},
 							},
 						},
 				  }
 				: false,
-			serviceAreas: include.serviceAreas
+			serviceAreas: select.serviceAreas
 				? {
 						select: {
 							countries: {
@@ -51,91 +88,131 @@ const serviceInclude = z
 						},
 				  }
 				: false,
-			hours: include.hours,
-			reviews: include.reviews
+			hours: select.hours
 				? {
-						include: {
-							language: true,
-							lcrCountry: countryWithoutGeo,
-							lcrGovDist: govDistWithoutGeo,
-							translatedText: true,
+						select: {
+							dayIndex: true,
+							start: true,
+							end: true,
+							closed: true,
 						},
 				  }
 				: false,
-			attributes: include.attributes ? attributes : false,
-			phones: include.phones
+			reviews: select.reviews
 				? {
+						where: {
+							visible: true,
+							deleted: false,
+						},
 						select: {
-							phone: {
-								include: {
-									country: countryWithoutGeo,
-									phoneLangs: true,
-									phoneType: true,
+							language: languageNames,
+							lcrCountry: countryWithoutGeo,
+							lcrGovDist: govDistWithoutGeo,
+							translatedText: {
+								select: {
+									text: true,
+									language: {
+										select: {
+											localeCode: true,
+										},
+									},
 								},
 							},
 						},
 				  }
 				: false,
-			emails: include.emails
+			attributes: select.attributes ? attributes : false,
+			phones: select.phones ? phoneSelectPublic : false,
+			emails: select.emails
 				? {
+						where: {
+							email: isPublic,
+						},
 						select: {
 							email: {
 								include: {
-									title: true,
+									title: {
+										select: {
+											tsKey: true,
+											tsNs: true,
+										},
+									},
 								},
 							},
 						},
 				  }
 				: false,
-			accessDetails: include.accessDetails
+			accessDetails: select.accessDetails
 				? {
 						select: {
 							attributes,
 						},
 				  }
 				: false,
-			locations: include.locations,
-		} satisfies Prisma.OrgServiceInclude
+			locations: select.locations
+				? {
+						where: {
+							location: isPublic,
+						},
+						select: {
+							location: {
+								select: {
+									name: true,
+									street1: true,
+									street2: true,
+									city: true,
+									postCode: true,
+									primary: true,
+									govDist: govDistWithoutGeo,
+									country: countryWithoutGeo,
+									longitude: true,
+									latitude: true,
+								},
+							},
+						},
+				  }
+				: false,
+		} satisfies Prisma.OrgServiceSelect
 		return query
 	})
 
 export const serviceById = z
 	.object({
 		id: idString,
-		include: serviceInclude,
+		select: serviceSelect.default(defaultSelect),
 	})
 	.transform(
-		({ id, include }) =>
+		({ id, select }) =>
 			({
 				where: {
 					id,
 				},
-				include,
+				select,
 			} satisfies Prisma.OrgServiceFindUniqueOrThrowArgs)
 	)
 
 export const serviceByOrgId = z
 	.object({
 		organizationId: idString,
-		include: serviceInclude.optional(),
+		select: serviceSelect.default(defaultSelect),
 	})
 	.transform(
-		({ include, organizationId }) =>
+		({ select, organizationId }) =>
 			({
 				where: {
 					organizationId,
 				},
-				include,
+				select,
 			} satisfies Prisma.OrgServiceFindManyArgs)
 	)
 
 export const serviceByLocationId = z
 	.object({
 		orgLocationId: idString,
-		include: serviceInclude.optional(),
+		select: serviceSelect.optional(),
 	})
 	.transform(
-		({ include, orgLocationId }) =>
+		({ select, orgLocationId }) =>
 			({
 				where: {
 					locations: {
@@ -144,17 +221,17 @@ export const serviceByLocationId = z
 						},
 					},
 				},
-				include,
+				select,
 			} satisfies Prisma.OrgServiceFindManyArgs)
 	)
 
 export const serviceByUserListId = z
 	.object({
 		listId: idString,
-		include: serviceInclude.optional(),
+		select: serviceSelect.optional(),
 	})
 	.transform(
-		({ include, listId }) =>
+		({ select, listId }) =>
 			({
 				where: {
 					userLists: {
@@ -163,6 +240,6 @@ export const serviceByUserListId = z
 						},
 					},
 				},
-				include,
+				select,
 			} satisfies Prisma.OrgServiceFindManyArgs)
 	)
