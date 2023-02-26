@@ -1,8 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react'
 
+import { StorybookGrid } from '~ui/layouts/BodyGrid'
+
 import { UserReviewSubmit as UserReviewPromptCompnt } from './UserReviewSubmit'
 import { getTRPCMock } from '../../lib/getTrpcMock'
-import { StorybookGrid } from '../layout'
 
 export default {
 	title: 'Design System/User Review',
