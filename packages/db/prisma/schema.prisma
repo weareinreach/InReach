@@ -139,7 +139,7 @@ model User {
 
   orgAssociations UserToOrganization[]
 
-  fieldVisibility FieldVisibility[] /// For user profile page. All fields default to 'NONE'
+  fieldVisibility FieldVisibility? /// For user profile page. All fields default to 'NONE'
 
   /// Recording changes made by user
   AuditLogEntry AuditLog[] @relation("Recorded User")
@@ -1362,7 +1362,7 @@ model OutsideAPI {
 model FieldVisibility {
   id     String @id @default(cuid())
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String /// @zod.string.cuid()
+  userId String @unique
 
   name           VisibilitySetting @default(NONE) /// All users
   email          VisibilitySetting @default(NONE) /// for service provider/professional

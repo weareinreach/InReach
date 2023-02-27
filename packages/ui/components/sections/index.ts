@@ -2,6 +2,7 @@
 export * from './Contact'
 export * from './LocationCard'
 export * from './Photos'
+export * from './Reviews'
 export * from './ServicesInfo'
 export * from './VisitCard'
 // codegen:end
