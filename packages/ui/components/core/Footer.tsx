@@ -55,14 +55,13 @@ export const Footer = () => {
 			<Grid.Col md={5} sm={12} className={classes.footerContent}>
 				<Stack justify='space-between' style={{ height: '100%' }}>
 					<Stack align='start' spacing={40}>
-						<Text>Inreach</Text>
+						<Image src='layouts/img/inreach.svg' alt='vercel' width={100} height={37.53} />
 						<Title order={2} fw={500}>
 							{t('Seek LGBTQ+ resources. Reach safety. Find belonging.')}
 						</Title>
 						<Image src='layouts/img/vercel.svg' alt='vercel' width={240} height={48} />
 					</Stack>
 					<Text className={classes.copyrightText}>
-						{' '}
 						{t('InReach, Inc. 2023 • All rights reserved • InReach ❤️ Open Source')}
 					</Text>
 				</Stack>
