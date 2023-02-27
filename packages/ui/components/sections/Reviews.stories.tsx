@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
 
 import { StorybookGrid } from '~ui/layouts'
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { reviewMockIds, reviewsMock } from '~ui/mockData/reviews'
 
 import { ReviewSection } from './Reviews'
-import { getTRPCMock } from '../../lib/getTrpcMock'
 
 export default {
 	title: 'Sections/Reviews',
@@ -17,7 +17,7 @@ export default {
 			getTRPCMock({
 				path: ['review', 'getByIds'],
 				type: 'query',
-				result: reviewsMock,
+				response: reviewsMock,
 			}),
 		],
 	},
