@@ -1,17 +1,20 @@
 import { Meta, StoryObj } from '@storybook/react'
 
+import { StorybookGrid } from 'components/layout'
+
 import { Footer } from './Footer'
 
 export default {
 	title: 'Design System/Footer',
 	component: Footer,
 	parameters: {
-		layout: 'fullscreen',
 		design: {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=244%3A4610&t=WqaFVxYHcCYzyF2K-4',
 		},
+		layout: 'fullscreen',
 	},
+	decorators: [StorybookGrid],
 } satisfies Meta<typeof Footer>
 
 type StoryDef = StoryObj<typeof Footer>
