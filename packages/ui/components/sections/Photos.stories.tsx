@@ -6,7 +6,7 @@ import { photosMock } from '~ui/mockData/photos'
 import { PhotosSection } from './Photos'
 
 export default {
-	title: 'Sections/Location Info',
+	title: 'Sections/Photos',
 	component: PhotosSection,
 	args: {
 		photos: photosMock,

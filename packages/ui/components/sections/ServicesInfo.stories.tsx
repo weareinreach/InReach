@@ -6,7 +6,7 @@ import { servicesMock } from '~ui/mockData/servicesInfoCard'
 import { ServicesInfoCard } from './ServicesInfo'
 
 export default {
-	title: 'Sections/Location Info',
+	title: 'Sections/Services Info',
 	component: ServicesInfoCard,
 	args: {
 		services: servicesMock,
