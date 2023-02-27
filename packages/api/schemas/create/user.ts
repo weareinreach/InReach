@@ -1,7 +1,6 @@
 import { Prisma, generateId } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { userTypes } from '~api/generated/userType'
 import { idString, CreationBase, id, slug } from '~api/schemas/common'
 import {
 	connectOne,
@@ -12,6 +11,8 @@ import {
 } from '~api/schemas/nestedOps'
 
 import { CreateAuditLog, GenerateAuditLog } from './auditLog'
+
+import { userTypes } from '~api/generated/userType'
 
 const CreateUserBase = {
 	id: idString.default(generateId('user')),
