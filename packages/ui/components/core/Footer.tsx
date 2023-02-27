@@ -1,15 +1,21 @@
-import { Container, Title, Grid, Text, Stack, Group, createStyles } from '@mantine/core'
+import { Title, Grid, Text, Stack, Group, createStyles } from '@mantine/core'
+import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 
-import { Button } from './Button'
+import { Link } from './Link'
 import { SocialMediaIconButton } from './SocialMediaIconButton'
-import { BodyGrid } from '../layout'
 
 const useStyles = createStyles((theme) => ({
-	footer: {
+	link: {
+		color: `${theme.other.colors.secondary.black} !important`,
+	},
+	copyrightText: {
+		...theme.other.utilityFonts.utility4,
+		color: theme.other.colors.secondary.darkGray,
+	},
+	footerContent: {
 		backgroundColor: theme.other.colors.primary.footer,
-		['& a']: {
-			color: theme.colors.dark,
-		},
+		padding: 0,
 	},
 }))
 
@@ -29,63 +35,62 @@ const connectLinks = [
 	['Subscribe to our newsletter', '#'],
 ]
 
-const makeLinks = (links: string[][]) =>
-	links.map(([text, href]) => (
-		<Text key={text} component='a' href={href} fw={500}>
-			{text}
-		</Text>
-	))
-
 export const Footer = () => {
 	const { classes } = useStyles()
+	const { t } = useTranslation()
+
+	const makeLinks = (links: string[][]) =>
+		links.map(([text, href]) => (
+			<Text key={text} component={Link} href={`/${href}`} fw={500} className={classes.link}>
+				{t(text as string)}
+			</Text>
+		))
 
 	const support = makeLinks(supportLinks)
 
 	const connect = makeLinks(connectLinks)
 
 	return (
-		<Container className={classes.footer} fluid>
-			<BodyGrid style={{ padding: '40px' }} grow>
-				<Grid.Col md={5} sm={12}>
-					<Stack justify='space-between' style={{ height: '100%' }}>
-						<Stack align='start' spacing='xl'>
-							<Text>Inreach</Text>
-							<Title order={2} fw={500}>
-								{' '}
-								Seek LGBTQ+ resources. Reach safety. Find belonging
-							</Title>
-							<Button variant='primary' style={{ padding: '6px 48px' }} {...{ radius: 'md' }}>
-								Powered by Vercel
-							</Button>
-						</Stack>
-						<Text fz='xs'>InReach, Inc. 2023 • All rights reserved • InReach ❤️ Open Source</Text>
+		<>
+			<Grid.Col md={5} sm={12} className={classes.footerContent}>
+				<Stack justify='space-between' style={{ height: '100%' }}>
+					<Stack align='start' spacing={40}>
+						<Text>Inreach</Text>
+						<Title order={2} fw={500}>
+							{t('Seek LGBTQ+ resources. Reach safety. Find belonging.')}
+						</Title>
+						<Image src='layout/img/vercel.svg' alt='vercel' width={240} height={48} />
 					</Stack>
-				</Grid.Col>
-				<Grid.Col md={3} sm={6}>
-					<Stack justify='space-between' style={{ height: '100%' }} align='start' spacing='xl'>
-						<Text fw={600}>Support</Text>
-						{support}
-					</Stack>
-				</Grid.Col>
-				<Grid.Col md={3} sm={6}>
-					<Stack spacing='xl'>
-						<Text fw={600}>Connect</Text>
-						{connect}
-						<Group>
-							<SocialMediaIconButton icon='facebook' href='#' title='Facebook' />
-							<SocialMediaIconButton icon='twitter' href='#' title='Twitter' />
-							<SocialMediaIconButton icon='linkedin' href='#' title='LinkedIn' />
-							<SocialMediaIconButton icon='instagram' href='#' title='Instagram' />
-						</Group>
-						<Group>
-							<SocialMediaIconButton icon='youtube' href='#' title='Youtube' />
-							<SocialMediaIconButton icon='tiktok' href='#' title='TikTok' />
-							<SocialMediaIconButton icon='github' href='#' title='GitHub' />
-							<SocialMediaIconButton icon='mail' href='#' title='Mail' />
-						</Group>
-					</Stack>
-				</Grid.Col>
-			</BodyGrid>
-		</Container>
+					<Text className={classes.copyrightText}>
+						{' '}
+						{t('InReach, Inc. 2023 • All rights reserved • InReach ❤️ Open Source')}
+					</Text>
+				</Stack>
+			</Grid.Col>
+			<Grid.Col md={3} sm={6} className={classes.footerContent}>
+				<Stack justify='space-between' style={{ height: '100%' }} align='start' spacing='xl'>
+					<Text fw={600}>{t('Support')}</Text>
+					{support}
+				</Stack>
+			</Grid.Col>
+			<Grid.Col md={3} sm={6} className={classes.footerContent}>
+				<Stack spacing='xl'>
+					<Text fw={600}>{t('Connect')}</Text>
+					{connect}
+					<Group>
+						<SocialMediaIconButton icon='facebook' href='#' title='Facebook' />
+						<SocialMediaIconButton icon='twitter' href='#' title='Twitter' />
+						<SocialMediaIconButton icon='linkedin' href='#' title='LinkedIn' />
+						<SocialMediaIconButton icon='instagram' href='#' title='Instagram' />
+					</Group>
+					<Group>
+						<SocialMediaIconButton icon='youtube' href='#' title='Youtube' />
+						<SocialMediaIconButton icon='tiktok' href='#' title='TikTok' />
+						<SocialMediaIconButton icon='github' href='#' title='GitHub' />
+						<SocialMediaIconButton icon='mail' href='#' title={t('Mail')} />
+					</Group>
+				</Stack>
+			</Grid.Col>
+		</>
 	)
 }
