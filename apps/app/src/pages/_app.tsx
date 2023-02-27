@@ -26,14 +26,14 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 	} = appProps
 
 	return (
-		<MantineProvider
-			withGlobalStyles
-			withNormalizeCSS
-			theme={{ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }}
-			emotionCache={appCache}
-		>
-			<TypographyStylesProvider>
-				<SessionProvider session={session}>
+		<SessionProvider session={session}>
+			<MantineProvider
+				withGlobalStyles
+				withNormalizeCSS
+				theme={{ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }}
+				emotionCache={appCache}
+			>
+				<TypographyStylesProvider>
 					<NotificationsProvider>
 						<ModalsProvider modalProps={useModalProps()}>
 							{/* <AppLayout navItems={navItems} footerLinks={navItems} socialMedia={socialMediaLinks}> */}
@@ -41,10 +41,10 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 							{/* </AppLayout> */}
 						</ModalsProvider>
 					</NotificationsProvider>
-				</SessionProvider>
-			</TypographyStylesProvider>
-			<ReactQueryDevtools initialIsOpen={false} />
-		</MantineProvider>
+				</TypographyStylesProvider>
+				<ReactQueryDevtools initialIsOpen={false} />
+			</MantineProvider>
+		</SessionProvider>
 	)
 }
 
