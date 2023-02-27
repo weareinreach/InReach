@@ -1,12 +1,9 @@
 import { ModalSettings } from '@mantine/modals/lib/context'
-
-import { trpc as api } from '~ui/lib/trpcClient'
+import { ApiOutput } from '@weareinreach/api'
 
 import { ModalTitle, ModalTitleProps } from './ModalTitle'
 
-export const ServiceModalBody = ({ serviceId }: ServiceModalBodyProps) => {
-	const { data, status } = api.service.byId.useQuery({ id: serviceId })
-
+export const ServiceModalBody = ({ service }: ServiceModalBodyProps) => {
 	return <></>
 }
 
@@ -17,10 +14,10 @@ export const ServiceModal = (props: ServiceModalProps) =>
 	} satisfies ModalSettings)
 
 type ServiceModalBodyProps = {
-	serviceId: string
+	service: ApiOutput['service']['byId']
 }
 
-type ServiceModalProps = {
+export type ServiceModalProps = {
 	title: ModalTitleProps
 	body: ServiceModalBodyProps
 }

@@ -3,7 +3,7 @@ import { ModalSettings } from '@mantine/modals/lib/context'
 
 import { Badge } from '~ui/components/core'
 
-import { ModalTitle } from './ModalTitle'
+import { ModalTitle, ModalTitleProps } from './ModalTitle'
 
 export const ExampleModalBody = ({ text }: ExampleModalBodyProps) => (
 	<Stack>
@@ -27,9 +27,7 @@ export type ExampleModalBodyProps = {
 	text: string
 }
 
-export type ExampleModalTitleProps = { backToText: string }
-
 export type ExampleModalProps = {
-	title: ExampleModalTitleProps
+	title: ModalTitleProps
 	body: ExampleModalBodyProps
 }

@@ -8,7 +8,11 @@ import { LoginModal } from './Login'
 
 /** Define the modal to display here. */
 const modalToDisplay = LoginModal({
-	title: { backToText: 'Example Organization' },
+	title: {
+		breadcrumb: {
+			option: 'close',
+		},
+	},
 })
 
 const ModalTemplate = () => {

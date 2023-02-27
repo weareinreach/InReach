@@ -2,26 +2,38 @@ import { Group } from '@mantine/core'
 import { closeAllModals } from '@mantine/modals'
 import { useTranslation } from 'next-i18next'
 
-import { ActionButtons, Breadcrumb } from '~ui/components/core'
+import { ActionButtons, Breadcrumb, BreadcrumbTypes } from '~ui/components/core'
 
-export const ModalTitle = ({ backToText }: ModalTitleProps) => {
+const iconMap = {
+	save: <ActionButtons iconKey='save' omitLabel />,
+	share: <ActionButtons iconKey='share' omitLabel />,
+} as const
+
+export const ModalTitle = (props: ModalTitleProps) => {
+	const { breadcrumb, icons } = props
 	const { t } = useTranslation()
+
 	return (
 		<Group position='apart' noWrap>
 			<Breadcrumb
-				option='back'
-				backTo='dynamicText'
-				backToText={backToText}
 				onClick={() => {
 					closeAllModals()
 				}}
+				{...breadcrumb}
 			/>
-			<Group position='right' spacing={0} noWrap>
-				<ActionButtons iconKey='share' omitLabel />
-				<ActionButtons iconKey='save' omitLabel />
-			</Group>
+			{icons?.length && (
+				<Group position='right' spacing={0} noWrap>
+					{' '}
+					{icons.map((item) => iconMap[item])}
+				</Group>
+			)}
 		</Group>
 	)
 }
 
-export type ModalTitleProps = { backToText: string }
+type TitleIcons = keyof typeof iconMap
+
+export type ModalTitleProps = {
+	breadcrumb: BreadcrumbTypes
+	icons?: TitleIcons[]
+}
