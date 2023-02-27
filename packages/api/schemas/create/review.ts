@@ -6,7 +6,7 @@ import { connectOne, connectOneRequired } from '~api/schemas/nestedOps'
 
 import { CreateAuditLog } from './auditLog'
 
-export const CreateReviewInput = z.object({
+export const CreateReviewInput = {
 	rating: z.number(),
 	reviewText: z.string().optional(),
 	visible: z.boolean().optional(),
@@ -19,9 +19,9 @@ export const CreateReviewInput = z.object({
 	languageId: idString.optional(),
 	lcrGovDistId: idString.optional(),
 	lcrCountryId: idString.optional(),
-})
+}
 
-export const CreateReview = CreateReviewInput.extend({ userId: idString }).transform((data) => {
+export const CreateReview = z.object({ ...CreateReviewInput, userId: idString }).transform((data) => {
 	const {
 		userId,
 		organizationId,

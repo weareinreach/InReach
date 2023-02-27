@@ -24,16 +24,17 @@ export const actorId = z.object({ actorId: z.string() })
 export const userId = z.object({ userId: z.string() })
 export const orgId = z.object({ orgId: z.string() })
 export const organizationId = z.object({ organizationId: z.string() })
-export const orgIdServiceId = orgId.extend({ serviceId: z.string() })
-export const orgIdLocationId = orgId.extend({ locationId: z.string() })
+export const orgIdServiceId = z.object({ orgId: z.string(), serviceId: z.string() })
+export const orgIdLocationId = z.object({ orgId: z.string(), locationId: z.string() })
 export const slug = z.object({ slug: z.string() })
 export const nanoIdUrl = z.string().regex(nanoUrlRegex)
 export const searchTerm = z.object({ search: z.string() })
-export const coord = z.object({
-	lat: z.number(),
-	lon: z.number(),
-})
-export const distSearch = coord.extend({ dist: z.number(), unit: z.enum(['mi', 'km']) })
+const coordItems = {
+	lat: z.number().gte(-90).lte(90),
+	lon: z.number().gte(-180).lte(180),
+}
+export const coord = z.object(coordItems)
+export const distSearch = z.object({ ...coordItems, dist: z.number(), unit: z.enum(['mi', 'km']) })
 
 // Prisma JSON helpers
 export { InputJsonValue, JsonNullValueInputSchema, type InputJsonValueType }

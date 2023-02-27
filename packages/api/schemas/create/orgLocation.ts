@@ -47,11 +47,11 @@ export const CreateOrgLocationBaseSchema = z.object(createOrgBaseFields).transfo
 	...data,
 	...generateGeoFields({ longitude: data.longitude, latitude: data.latitude }),
 }))
-const OrgLocationLinksSchema = z.object({
-	emails: LinkOrgLocationEmailSchema.omit({ orgLocationId: true }).array().optional(),
-	phones: LinkOrgLocationPhoneSchema.omit({ orgLocationId: true }).array().optional(),
-	services: LinkOrgLocationServiceSchema.omit({ orgLocationId: true }).array().optional(),
-})
+const OrgLocationLinksSchema = {
+	emails: z.object({ orgEmailId: idString }).array().optional(),
+	phones: z.object({ phoneId: idString }).array().optional(),
+	services: z.object({ serviceId: idString }).array().optional(),
+}
 
 export const CreateNestedOrgLocationSchema = CreateOrgLocationBaseSchema.array().transform((data) =>
 	Prisma.validator<Prisma.Enumerable<Prisma.OrgLocationCreateManyOrganizationInput>>()(data)
@@ -95,7 +95,7 @@ export const CreateManyOrgLocationSchema = () => {
 
 export const CreateOrgLocationSchema = () => {
 	const { dataParser: parser, inputSchema } = MutationBase(
-		z.object({ orgId: z.string(), ...createOrgBaseFields }).merge(OrgLocationLinksSchema)
+		z.object({ orgId: z.string(), ...createOrgBaseFields, ...OrgLocationLinksSchema })
 	)
 	const dataParser = parser.transform(({ actorId, operation, from, to }) => {
 		const { emails, phones, services, ...dataTo } = to

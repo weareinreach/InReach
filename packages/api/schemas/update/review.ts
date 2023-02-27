@@ -1,15 +1,15 @@
 import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { id, actorId } from '~api/schemas/common'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 
 type UpdateOrg = Prisma.OrgReviewUpdateArgs
 
-const ReviewUpdateActor = id.merge(actorId)
+const ReviewUpdateActor = { id: z.string(), actorId: z.string() }
 
-export const ReviewVisibility = ReviewUpdateActor.extend({ visible: z.boolean() }).transform(
-	({ id, actorId, visible }) =>
+export const ReviewVisibility = z
+	.object({ ...ReviewUpdateActor, visible: z.boolean() })
+	.transform(({ id, actorId, visible }) =>
 		Prisma.validator<UpdateOrg>()({
 			where: { id },
 			data: {
@@ -26,10 +26,11 @@ export const ReviewVisibility = ReviewUpdateActor.extend({ visible: z.boolean() 
 				visible: true,
 			},
 		})
-)
+	)
 
-export const ReviewToggleDelete = ReviewUpdateActor.extend({ deleted: z.boolean() }).transform(
-	({ id, actorId, deleted }) =>
+export const ReviewToggleDelete = z
+	.object({ ...ReviewUpdateActor, deleted: z.boolean() })
+	.transform(({ id, actorId, deleted }) =>
 		Prisma.validator<UpdateOrg>()({
 			where: { id },
 			data: {
@@ -46,4 +47,4 @@ export const ReviewToggleDelete = ReviewUpdateActor.extend({ deleted: z.boolean(
 				visible: true,
 			},
 		})
-)
+	)

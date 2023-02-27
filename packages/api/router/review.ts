@@ -7,7 +7,7 @@ import { CreateReview, CreateReviewInput } from '~api/schemas/create/review'
 import { ReviewVisibility, ReviewToggleDelete } from '~api/schemas/update/review'
 
 export const reviewRouter = defineRouter({
-	create: protectedProcedure.input(CreateReviewInput).mutation(async ({ ctx, input }) => {
+	create: protectedProcedure.input(z.object(CreateReviewInput)).mutation(async ({ ctx, input }) => {
 		try {
 			const { data } = CreateReview.parse({ ...input, userId: ctx.session.user.id })
 
