@@ -6,17 +6,21 @@ import { CreateAuditLog, GenerateAuditLog } from '~api/schemas/create/auditLog'
 
 import { createMany, createOneSeparateLog } from '../nestedOps'
 
-const CreateListSchema = z.object({ name: z.string() })
-export const SaveItemSchema = z.object({
+const CreateListSchema = { name: z.string() }
+export const SaveItemSchema = {
 	id: idString,
+	organizationId: idString.optional(),
+	serviceId: idString.optional(),
+}
+
+const CreateAndSave = z.object({
+	...CreateListSchema,
 	organizationId: idString.optional(),
 	serviceId: idString.optional(),
 })
 
-const CreateAndSave = CreateListSchema.merge(SaveItemSchema.omit({ id: true }))
-
 export const CreateSavedList = () => {
-	const { dataParser: parser, inputSchema } = CreationBase(CreateListSchema)
+	const { dataParser: parser, inputSchema } = CreationBase(z.object(CreateListSchema))
 
 	const dataParser = parser
 		.extend({ ownedById: idString })

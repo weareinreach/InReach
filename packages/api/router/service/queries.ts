@@ -37,7 +37,7 @@ export const queries = defineRouter({
 	}),
 	byUserListId: protectedProcedure.input(serviceByUserListId).query(async ({ ctx, input }) => {
 		try {
-			const { include, where } = input
+			const { select, where } = input
 			const revisedInput = {
 				where: {
 					userLists: {
@@ -51,7 +51,7 @@ export const queries = defineRouter({
 						},
 					},
 				},
-				include,
+				select,
 			} satisfies Prisma.OrgServiceFindManyArgs
 
 			const results = await ctx.prisma.orgService.findMany(revisedInput)

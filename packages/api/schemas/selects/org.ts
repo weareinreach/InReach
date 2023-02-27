@@ -133,12 +133,17 @@ export const orgWebsiteInclude = {
 } satisfies Prisma.Organization$websitesArgs
 
 type AttributeInclude =
-	| Prisma.OrganizationAttributeArgs
-	| Prisma.LocationAttributeArgs
-	| Prisma.ServiceAttributeArgs
-	| Prisma.ServiceAccessAttributeArgs
+	| Prisma.Organization$attributesArgs
+	| Prisma.OrgLocation$attributesArgs
+	| Prisma.OrgService$attributesArgs
+	| Prisma.ServiceAccess$attributesArgs
 
 export const attributeInclude = {
+	where: {
+		attribute: {
+			active: true,
+		},
+	},
 	select: {
 		attribute: {
 			select: {
@@ -184,7 +189,12 @@ const attributeDefInclude = {
 } satisfies Prisma.AttributeArgs
 export const serviceTagInclude = {
 	select: {
-		category: true,
+		category: {
+			select: {
+				tsKey: true,
+				tsNs: true,
+			},
+		},
 		defaultAttributes: { select: { attribute: attributeDefInclude } },
 	},
 } satisfies Prisma.ServiceTagArgs
@@ -210,6 +220,9 @@ const orgServicePhoneInclude = {
 	select: { phone: orgPhoneInclude },
 } satisfies Prisma.OrgService$phonesArgs
 const orgServiceEmailInclude = {
+	where: {
+		email: isPublic,
+	},
 	select: {
 		email: { select: orgEmailInclude.select },
 	},
@@ -231,6 +244,9 @@ export const orgServiceInclude = {
 } satisfies Prisma.Organization$servicesArgs
 
 const orgLocationEmailInclude = {
+	where: {
+		email: isPublic,
+	},
 	select: {
 		email: { select: orgEmailInclude.select },
 	},

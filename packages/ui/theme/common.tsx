@@ -384,6 +384,7 @@ export const commonTheme = {
 					},
 					title: {
 						margin: 0,
+						width: '100%',
 					},
 				} satisfies Styles<ModalStylesNames, ModalStylesParams>),
 		},

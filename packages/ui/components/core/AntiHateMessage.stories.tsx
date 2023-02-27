@@ -1,8 +1,9 @@
 import { Meta } from '@storybook/react'
 import React from 'react'
 
+import { StorybookGrid } from '~ui/layouts/BodyGrid'
+
 import { AntiHateMessage as AntiHateMessageCompnent } from './AntiHateMessage'
-import { StorybookGrid } from '../layout/BodyGrid'
 
 export default {
 	title: 'Design System/Anti-Hate Message',

@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
-import { StorybookGrid } from '~ui/components/layout'
+import { StorybookGrid } from '~ui/layouts/BodyGrid'
 
 import { Icon } from '../icon'
 
