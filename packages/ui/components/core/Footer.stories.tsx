@@ -1,8 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { StorybookGrid } from 'components/layout'
-
 import { Footer } from './Footer'
+import { StorybookGrid } from '../../layouts/BodyGrid'
 
 export default {
 	title: 'Design System/Footer',
