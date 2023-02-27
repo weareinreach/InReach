@@ -35,6 +35,8 @@ import type {
 	TextareaProps,
 	CSSObject,
 	ModalProps,
+	InputStylesNames,
+	InputStylesParams,
 } from '@mantine/core'
 import type React from 'react'
 
@@ -298,6 +300,49 @@ export const commonTheme = {
 				xs: 6,
 				sm: 4,
 			} satisfies ColProps,
+		},
+		Input: {
+			styles: (theme) =>
+				({
+					// label: {
+					// 	paddingBottom: 10,
+					// },
+					input: {
+						padding: '14px 16px',
+						borderColor: theme.other.colors.tertiary.coolGray,
+
+						...theme.other.utilityFonts.utility2,
+						'&::placeholder': {
+							color: theme.other.colors.secondary.darkGray,
+						},
+						'&:focus, &:focus-within': {
+							borderColor: theme.other.colors.secondary.black,
+							borderWidth: '2px',
+						},
+					},
+					icon: {
+						color: theme.other.colors.secondary.black,
+						marginLeft: theme.spacing.md,
+						width: 'fit-content',
+					},
+					withIcon: {
+						borderRadius: theme.radius.xl,
+						paddingLeft: '44px',
+					},
+					rightSection: {
+						paddingRight: theme.spacing.md,
+					},
+					invalid: {
+						'&::placeholder': {
+							color: theme.other.colors.secondary.darkGray,
+						},
+						'&:focus, &:focus-within': {
+							color: theme.other.colors.secondary.black,
+							borderColor: theme.other.colors.tertiary.red,
+							borderWidth: '2px',
+						},
+					},
+				} satisfies Styles<InputStylesNames, InputStylesParams>),
 		},
 		Modal: {
 			defaultProps: (theme) =>
