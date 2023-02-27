@@ -14,6 +14,10 @@ const config: StorybookConfig = {
 			from: '../../../apps/app/public',
 			to: 'public/',
 		},
+		{
+			from: '../components/layout',
+			to: 'layout/',
+		},
 		'../public',
 	],
 	addons: [
