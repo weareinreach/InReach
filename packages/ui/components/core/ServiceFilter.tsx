@@ -105,7 +105,8 @@ export const ServiceFilter = ({}) => {
 	const modalSettings = useModalProps()
 	const theme = useMantineTheme()
 	const isMobile = useMediaQuery(`max-width: ${theme.breakpoints.sm}px`)
-	const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 })
+	const [isChecked, setChecked] = useState(false)
+	const [value, setValue] = useState<string[]>([])
 
 	/** TODO: Results will be filtered live as items are selected - need to update the count of results left */
 	const resultCount = RESULT_PLACEHOLDER
@@ -188,7 +189,7 @@ export const ServiceFilter = ({}) => {
 						onChange={() => toggleCategory(categoryId)}
 					/>
 
-					<Checkbox.Group orientation='vertical'>
+					<Checkbox.Group orientation='vertical' value={value} onChange={setValue}>
 						{services.map((item, index) => {
 							return (
 								<Checkbox
@@ -221,13 +222,7 @@ export const ServiceFilter = ({}) => {
 	const selectedCountIcon = <Text className={classes.count}>{selectedItems.length}</Text>
 
 	const Scrollable = (props: typeof isMobile extends false ? ScrollAreaProps : { children: ReactNode }) =>
-		isMobile ? (
-			<Fragment {...props} />
-		) : (
-			<ScrollArea onScrollPositionChange={onScrollPositionChange}>
-				<ScrollArea.Autosize maxHeight='calc(60vh - 88px)' {...props} />
-			</ScrollArea>
-		)
+		isMobile ? <Fragment {...props} /> : <ScrollArea.Autosize maxHeight='calc(60vh - 88px)' {...props} />
 
 	const ServiceBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
 		const ServicesDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
