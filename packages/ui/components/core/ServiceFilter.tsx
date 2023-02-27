@@ -16,16 +16,20 @@ import {
 	Box,
 	Skeleton,
 } from '@mantine/core'
+import { CheckboxGroup } from '@mantine/core/lib/Checkbox/CheckboxGroup/CheckboxGroup'
 import { useForm } from '@mantine/form'
-import { useMediaQuery } from '@mantine/hooks'
+import { useMediaQuery, useFocusTrap } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { Fragment, ReactNode, useEffect, useState } from 'react'
+
+import { isNull } from 'util'
 
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { useModalProps } from '~ui/modals'
 
 import { Button } from './Button'
+import { navItems } from './MobileNav'
 
 const RESULT_PLACEHOLDER = 5
 
@@ -101,6 +105,7 @@ export const ServiceFilter = ({}) => {
 	const modalSettings = useModalProps()
 	const theme = useMantineTheme()
 	const isMobile = useMediaQuery(`max-width: ${theme.breakpoints.sm}px`)
+	const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 })
 
 	/** TODO: Results will be filtered live as items are selected - need to update the count of results left */
 	const resultCount = RESULT_PLACEHOLDER
@@ -144,6 +149,18 @@ export const ServiceFilter = ({}) => {
 			form.values[categoryId]?.some((item) => item.categoryId === categoryId && item.selected)
 		)
 	}
+	const hasThis = (categoryId: string, serviceIndex: number) => {
+		if (!form.values.hasOwnProperty(categoryId)) return false
+		return form.values[`${categoryId}.${serviceIndex}.selected`]
+	}
+
+	const toggleService = (categoryId: string, serviceIndex: number, event: boolean) => {
+		console.log(categoryId, serviceIndex, event)
+		console.log(form.getInputProps(`${categoryId}.${serviceIndex}.selected`, { type: 'checkbox' }))
+		form.getInputProps(`${categoryId}.${serviceIndex}.selected`, { type: 'checkbox' })
+		if (!form.values.hasOwnProperty(categoryId)) return
+		form.setFieldValue(`${categoryId}.${serviceIndex}.selected`, event)
+	}
 
 	const toggleCategory = (categoryId: string) => {
 		if (!form.values.hasOwnProperty(categoryId)) return
@@ -155,7 +172,7 @@ export const ServiceFilter = ({}) => {
 
 	const formObjectEntryArray = Object.entries(form.values)
 	const filterList = formObjectEntryArray.map(([categoryId, services], catIdx) => {
-		const checked1 = hasAll(categoryId)
+		const checked = hasAll(categoryId)
 		const indeterminate = hasSome(categoryId)
 
 		const tsKey = serviceOptionData.find((category: any) => category.id === categoryId)?.tsKey ?? 'error'
@@ -164,24 +181,28 @@ export const ServiceFilter = ({}) => {
 				<Accordion.Control>{t(tsKey, { ns: 'services' })}</Accordion.Control>
 				<Accordion.Panel>
 					<Checkbox
-						checked={checked1}
+						checked={checked}
 						indeterminate={indeterminate}
 						label={t('all-service-category', { serviceCategory: `$t(services:${tsKey})` })}
 						transitionDuration={0}
 						onChange={() => toggleCategory(categoryId)}
 					/>
 
-					{services.map((item, index) => {
-						return (
-							<Checkbox
-								mt='xs'
-								ml={33}
-								label={t(item.tsKey, { ns: 'services' })}
-								key={item.id}
-								{...form.getInputProps(`${categoryId}.${index}.selected`, { type: 'checkbox' })}
-							/>
-						)
-					})}
+					<Checkbox.Group orientation='vertical'>
+						{services.map((item, index) => {
+							return (
+								<Checkbox
+									mt='xs'
+									ml={33}
+									value={item.id}
+									label={t(item.tsKey, { ns: 'services' })}
+									key={item.id}
+									onClick={(event) => toggleService(categoryId, index, event.currentTarget.checked)}
+									// {...form.getInputProps(`${categoryId}.${index}.selected`, { type: 'checkbox' })}
+								/>
+							)
+						})}
+					</Checkbox.Group>
 				</Accordion.Panel>
 			</Accordion.Item>
 		)
@@ -200,7 +221,13 @@ export const ServiceFilter = ({}) => {
 	const selectedCountIcon = <Text className={classes.count}>{selectedItems.length}</Text>
 
 	const Scrollable = (props: typeof isMobile extends false ? ScrollAreaProps : { children: ReactNode }) =>
-		isMobile ? <Fragment {...props} /> : <ScrollArea.Autosize maxHeight='calc(60vh - 88px)' {...props} />
+		isMobile ? (
+			<Fragment {...props} />
+		) : (
+			<ScrollArea onScrollPositionChange={onScrollPositionChange}>
+				<ScrollArea.Autosize maxHeight='calc(60vh - 88px)' {...props} />
+			</ScrollArea>
+		)
 
 	const ServiceBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
 		const ServicesDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
@@ -260,6 +287,7 @@ export const ServiceFilter = ({}) => {
 						{t('view-x-result', { count: resultCount })}
 					</Button>
 				</Box>
+				{selectedItems}
 			</Modal>
 
 			<UnstyledButton onClick={() => setOpened(true)} w='100%'>
