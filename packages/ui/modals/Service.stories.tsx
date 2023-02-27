@@ -3,29 +3,24 @@ import { Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { trpc as api } from '~ui/lib/trpcClient'
 import { mockServiceData } from '~ui/mockData/serviceModal'
 
 import { ServiceModal, ServiceModalProps } from './Service'
 
 /** Define the modal to display here. */
-const modalToDisplay = (service: ServiceModalProps['body']['service']) =>
-	ServiceModal({
-		body: { service },
-		title: {
-			breadcrumb: {
-				option: 'back',
-				backTo: 'dynamicText',
-				backToText: 'Example Organization',
-			},
-			icons: ['share', 'save'],
+const modalToDisplay = ServiceModal({
+	body: { serviceId: 'svce_KLSDJFKLSJDF' },
+	title: {
+		breadcrumb: {
+			option: 'back',
+			backTo: 'dynamicText',
+			backToText: 'Example Organization',
 		},
-	})
+		icons: ['share', 'save'],
+	},
+})
 
-const ModalTemplate = () => {
-	const { data } = api.service.byId.useQuery({ id: 'serviceId' })
-	return <Button onClick={() => openModal(modalToDisplay(data))}>Open Modal</Button>
-}
+const ModalTemplate = () => <Button onClick={() => openModal(modalToDisplay)}>Open Modal</Button>
 
 export default {
 	title: 'Modals/Service Info',

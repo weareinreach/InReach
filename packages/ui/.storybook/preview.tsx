@@ -75,7 +75,7 @@ export const globalTypes = {
 	},
 }
 
-export const decorators = [WithI18n, WithTRPC, WithMantine, mswDecorator]
+export const decorators = [WithMantine, WithI18n, WithTRPC, mswDecorator]
 
 declare module '@storybook/react' {
 	export interface Parameters {
