@@ -34,7 +34,12 @@ export const govDistWithoutGeo = {
 		iso: true,
 		abbrev: true,
 		country: countryWithoutGeo,
-		govDistType: true,
+		govDistType: {
+			select: {
+				tsKey: true,
+				tsNs: true,
+			},
+		},
 		isPrimary: true,
 		tsKey: true,
 		tsNs: true,
@@ -46,7 +51,12 @@ export const govDistWithoutGeo = {
 				iso: true,
 				abbrev: true,
 				country: countryWithoutGeo,
-				govDistType: true,
+				govDistType: {
+					select: {
+						tsKey: true,
+						tsNs: true,
+					},
+				},
 				isPrimary: true,
 				tsKey: true,
 				tsNs: true,
@@ -56,21 +66,73 @@ export const govDistWithoutGeo = {
 }
 
 export const attributes = {
+	where: {
+		attribute: {
+			active: true,
+		},
+	},
 	select: {
 		attribute: {
-			include: {
+			select: {
 				categories: {
 					select: {
-						category: true,
+						category: {
+							select: {
+								ns: true,
+								tag: true,
+							},
+						},
 					},
 				},
+				tsKey: true,
+				tsNs: true,
 			},
 		},
 		supplement: {
-			include: {
+			select: {
 				country: countryWithoutGeo,
-				language: true,
-				text: true,
+				language: {
+					select: {
+						languageName: true,
+						nativeName: true,
+					},
+				},
+				text: {
+					select: {
+						ns: true,
+						key: true,
+					},
+				},
+				boolean: true,
+				data: true,
+			},
+		},
+	},
+} satisfies Prisma.OrgService$attributesArgs
+
+export const languageNames = { select: { languageName: true, nativeName: true } }
+
+export const phoneSelectPublic = {
+	where: {
+		phone: isPublic,
+	},
+	select: {
+		phone: {
+			select: {
+				country: countryWithoutGeo,
+				phoneLangs: {
+					select: {
+						language: languageNames,
+					},
+				},
+				phoneType: {
+					select: {
+						tsKey: true,
+						tsNs: true,
+					},
+				},
+				number: true,
+				ext: true,
 			},
 		},
 	},

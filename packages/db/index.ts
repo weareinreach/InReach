@@ -47,4 +47,5 @@ export * from '@prisma/client'
 export * from './zod_util'
 
 export { slug } from './lib/slugGen'
+export { createPoint } from './lib/createPoint'
 export { prisma, generateId }

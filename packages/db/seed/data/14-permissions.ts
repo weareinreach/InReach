@@ -8,6 +8,10 @@ const basic = [
 		name: 'basic',
 		description: 'Basic user role',
 	},
+	{
+		name: 'isLCR',
+		description: 'Local Community Reviewer',
+	},
 ] satisfies PermissionDef
 
 /** Organization management permissions */

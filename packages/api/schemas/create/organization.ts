@@ -12,20 +12,20 @@ import { CreateNestedOrgPhoneSchema } from './orgPhone'
 import { CreateNestedOrgSocialMediaSchema } from './orgSocialMedia'
 import { CreateNestedOrgWebsiteSchema } from './orgWebsite'
 
-const CreateOrgBase = z.object({
+const CreateOrgBase = {
 	name: z.string(),
 	slug: z.string(),
 	sourceId: idString,
-})
-const CreateOrgLinks = z.object({
+}
+const CreateOrgLinks = {
 	description: z.string().optional(),
 	locations: CreateNestedOrgLocationSchema.optional(),
 	emails: CreateNestedOrgEmailSchema.optional(),
 	phones: CreateNestedOrgPhoneSchema.optional(),
 	websites: CreateNestedOrgWebsiteSchema.optional(),
 	socialMedia: CreateNestedOrgSocialMediaSchema.optional(),
-})
-const CreateQuickOrg = CreateOrgBase.merge(CreateOrgLinks)
+}
+const CreateQuickOrg = z.object({ ...CreateOrgBase, ...CreateOrgLinks })
 
 export const CreateQuickOrgSchema = () => {
 	const { dataParser: parser, inputSchema } = CreationBase(CreateQuickOrg)

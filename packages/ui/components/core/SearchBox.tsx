@@ -129,7 +129,7 @@ export const SearchBox = ({ type }: SearchBoxProps) => {
 	const rightIcon =
 		form.values.search.length > 0 ? (
 			<Group spacing={4} className={classes.rightIcon} onClick={() => form.reset()}>
-				<Text>Clear</Text>
+				<Text>{t('clear')}</Text>
 				<Icon icon='carbon:close' />
 			</Group>
 		) : null

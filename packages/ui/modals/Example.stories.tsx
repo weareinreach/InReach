@@ -8,7 +8,14 @@ import { ExampleModal } from './Example'
 /** Define the modal to display here. */
 const modalToDisplay = ExampleModal({
 	body: { text: 'Example badge text' },
-	title: { backToText: 'Example Organization' },
+	title: {
+		breadcrumb: {
+			option: 'back',
+			backTo: 'dynamicText',
+			backToText: 'Example Organization',
+		},
+		icons: ['share', 'save'],
+	},
 })
 
 const ModalTemplate = () => {

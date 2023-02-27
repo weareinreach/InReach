@@ -24,7 +24,8 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const Breadcrumb = ({ option, ...props }: BreadcrumbProps) => {
+export const Breadcrumb = (props: BreadcrumbProps) => {
+	const { option } = props
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
@@ -77,17 +78,18 @@ export const Breadcrumb = ({ option, ...props }: BreadcrumbProps) => {
 	)
 }
 
-type BreadcrumbProps = (Close | Back | BackToDynamic) & { onClick: MouseEventHandler<HTMLButtonElement> }
+export type BreadcrumbProps = BreadcrumbTypes & {
+	onClick: MouseEventHandler<HTMLButtonElement>
+}
+
+export type BreadcrumbTypes = Close | Back | BackToDynamic
 interface Close {
 	option: 'close'
-	backTo?: undefined
-	backToText?: undefined
 }
 
 interface Back {
 	option: 'back'
 	backTo: 'search' | 'none'
-	backToText?: undefined
 }
 
 interface BackToDynamic {

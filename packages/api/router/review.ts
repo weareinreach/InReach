@@ -7,7 +7,7 @@ import { CreateReview, CreateReviewInput } from '~api/schemas/create/review'
 import { ReviewVisibility, ReviewToggleDelete } from '~api/schemas/update/review'
 
 export const reviewRouter = defineRouter({
-	create: protectedProcedure.input(CreateReviewInput).mutation(async ({ ctx, input }) => {
+	create: protectedProcedure.input(z.object(CreateReviewInput)).mutation(async ({ ctx, input }) => {
 		try {
 			const { data } = CreateReview.parse({ ...input, userId: ctx.session.user.id })
 
@@ -72,6 +72,103 @@ export const reviewRouter = defineRouter({
 		} catch (error) {
 			handleError(error)
 		}
+	}),
+	/** Returns user reviews ready for public display. Takes reviewer's privacy preferences in to account */
+	getByIds: publicProcedure.input(z.string().array()).query(async ({ ctx, input }) => {
+		const results = await ctx.prisma.orgReview.findMany({
+			where: {
+				id: {
+					in: input,
+				},
+				visible: true,
+				deleted: false,
+			},
+			select: {
+				id: true,
+				rating: true,
+				reviewText: true,
+				user: {
+					select: {
+						name: true,
+						image: true,
+						fieldVisibility: {
+							select: {
+								name: true,
+								image: true,
+								currentCity: true,
+								currentGovDist: true,
+								currentCountry: true,
+							},
+						},
+						permissions: {
+							where: {
+								permission: {
+									name: 'isLCR',
+								},
+							},
+						},
+					},
+				},
+				language: {
+					select: {
+						languageName: true,
+						nativeName: true,
+					},
+				},
+				langConfidence: true,
+				translatedText: {
+					select: {
+						text: true,
+						language: {
+							select: { localeCode: true },
+						},
+					},
+				},
+				lcrCity: true,
+				lcrGovDist: {
+					select: {
+						tsKey: true,
+						tsNs: true,
+					},
+				},
+				lcrCountry: {
+					select: {
+						tsNs: true,
+						tsKey: true,
+					},
+				},
+				createdAt: true,
+			},
+		})
+
+		const filteredResults = results.map((result) => {
+			const {
+				name: nameVisible,
+				image: imageVisible,
+				currentCity: cityVisible,
+				currentGovDist: distVisible,
+				currentCountry: countryVisible,
+			} = result.user.fieldVisibility ?? {
+				name: false,
+				image: false,
+				currentCity: false,
+				currentGovDist: false,
+				currentCountry: false,
+			}
+
+			return {
+				...result,
+				user: {
+					image: imageVisible ? result.user.image : null,
+					name: nameVisible ? result.user.name : null,
+				},
+				lcrCity: cityVisible ? result.lcrCity : null,
+				lcrGovDist: distVisible ? result.lcrGovDist : null,
+				lcrCountry: countryVisible ? result.lcrCountry : null,
+				verifiedUser: Boolean(result.user.permissions.length),
+			}
+		})
+		return filteredResults
 	}),
 	getByUser: staffProcedure
 		.input(userId)
