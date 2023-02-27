@@ -22,9 +22,9 @@ import { jsonRpcSuccessResponse } from './trpcResponse'
  * @todo Make it accept multiple endpoints
  */
 export const getTRPCMock = <
-	K1 extends keyof ApiInput,
-	K2 extends keyof ApiInput[K1], // object itself
-	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2]) // all its keys
+	K1 extends keyof ApiInput, // object itself
+	K2 extends keyof ApiInput[K1], // all its keys
+	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2])
 >(endpoint: {
 	path: [K1, K2]
 	response: O

@@ -1,11 +1,12 @@
 import { Prisma } from '@weareinreach/db'
+import { z } from 'zod'
 
 import { CreationBase, idString } from '../common'
 import { SaveItemSchema } from '../create/userSavedList'
 import { createOneSeparateLog, createMany, deleteOneSeparateLog } from '../nestedOps'
 
 export const SaveItem = () => {
-	const { dataParser: parser, inputSchema } = CreationBase(SaveItemSchema)
+	const { dataParser: parser, inputSchema } = CreationBase(z.object(SaveItemSchema))
 
 	const dataParser = parser.extend({ ownedById: idString }).transform(({ actorId, ownedById, data }) => {
 		const { id, organizationId, serviceId } = data
@@ -35,7 +36,7 @@ export const SaveItem = () => {
 }
 
 export const DeleteSavedItem = () => {
-	const { dataParser: parser, inputSchema } = CreationBase(SaveItemSchema)
+	const { dataParser: parser, inputSchema } = CreationBase(z.object(SaveItemSchema))
 
 	const dataParser = parser.extend({ ownedById: idString }).transform(({ actorId, ownedById, data }) => {
 		const { id, organizationId, serviceId } = data

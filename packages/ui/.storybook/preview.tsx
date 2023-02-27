@@ -17,7 +17,7 @@ initializeMsw({
 		// },
 	},
 	onUnhandledRequest: ({ method, url }) => {
-		if (url.pathname.startsWith('/trpc')) {
+		if (url.pathname.startsWith('/trpc' || '/api')) {
 			console.error(`Unhandled ${method} request to ${url}.
 
         This exception has been only logged in the console, however, it's strongly recommended to resolve this error as you don't want unmocked data in Storybook stories.
@@ -75,7 +75,7 @@ export const globalTypes = {
 	},
 }
 
-export const decorators = [WithI18n, WithTRPC, WithMantine, mswDecorator]
+export const decorators = [WithMantine, WithI18n, WithTRPC, mswDecorator]
 
 declare module '@storybook/react' {
 	export interface Parameters {

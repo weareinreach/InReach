@@ -1,7 +1,7 @@
 import { Grid } from '@mantine/core'
 import { Meta } from '@storybook/react'
 
-import { StorybookGrid } from '~ui/components/layout/BodyGrid'
+import { StorybookGrid } from '~ui/layouts/BodyGrid'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { serviceFilterMock } from '~ui/mockData/serviceFilter'
 

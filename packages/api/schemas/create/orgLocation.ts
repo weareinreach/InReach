@@ -1,4 +1,5 @@
-import { Prisma, GeoJSONPointSchema, generateId } from '@weareinreach/db'
+import { geojsonToWKT } from '@terraformer/wkt'
+import { Prisma, GeoJSONPointSchema, generateId, createPoint } from '@weareinreach/db'
 import { z } from 'zod'
 
 import { idString, JsonInputOrNullSuperJSON, MutationBase, MutationBaseArray } from '~api/schemas/common'
@@ -19,7 +20,7 @@ export const LinkOrgLocationPhoneSchema = z.object({
 	phoneId: idString,
 })
 
-export const CreateOrgLocationBaseSchema = z.object({
+const createOrgBaseFields = {
 	id: idString.optional(),
 	name: z.string().optional(),
 	street1: z.string(),
@@ -31,14 +32,26 @@ export const CreateOrgLocationBaseSchema = z.object({
 	countryId: z.string(),
 	longitude: z.number(),
 	latitude: z.number(),
-	geoJSON: GeoJSONPointSchema,
 	published: z.boolean().default(false),
-})
-const OrgLocationLinksSchema = z.object({
-	emails: LinkOrgLocationEmailSchema.omit({ orgLocationId: true }).array().optional(),
-	phones: LinkOrgLocationPhoneSchema.omit({ orgLocationId: true }).array().optional(),
-	services: LinkOrgLocationServiceSchema.omit({ orgLocationId: true }).array().optional(),
-})
+}
+
+const generateGeoFields = ({ longitude, latitude }: { longitude: number; latitude: number }) => {
+	const geoObj = createPoint({ longitude, latitude })
+	return {
+		geoWKT: geoObj !== 'JsonNull' ? geojsonToWKT(geoObj) : undefined,
+		geoJSON: GeoJSONPointSchema.parse(geoObj),
+	}
+}
+
+export const CreateOrgLocationBaseSchema = z.object(createOrgBaseFields).transform((data) => ({
+	...data,
+	...generateGeoFields({ longitude: data.longitude, latitude: data.latitude }),
+}))
+const OrgLocationLinksSchema = {
+	emails: z.object({ orgEmailId: idString }).array().optional(),
+	phones: z.object({ phoneId: idString }).array().optional(),
+	services: z.object({ serviceId: idString }).array().optional(),
+}
 
 export const CreateNestedOrgLocationSchema = CreateOrgLocationBaseSchema.array().transform((data) =>
 	Prisma.validator<Prisma.Enumerable<Prisma.OrgLocationCreateManyOrganizationInput>>()(data)
@@ -46,7 +59,10 @@ export const CreateNestedOrgLocationSchema = CreateOrgLocationBaseSchema.array()
 
 export const CreateManyOrgLocationSchema = () => {
 	const { dataParser: parser, inputSchema } = MutationBaseArray(
-		CreateOrgLocationBaseSchema.extend({ orgId: z.string() })
+		z.object({
+			...createOrgBaseFields,
+			orgId: z.string(),
+		})
 	)
 	const dataParser = parser.transform(({ actorId, data, operation }) => {
 		const dataOut: Prisma.OrgLocationCreateManyInput[] = []
@@ -58,6 +74,7 @@ export const CreateManyOrgLocationSchema = () => {
 				Prisma.validator<Prisma.OrgLocationCreateManyInput>()({
 					id,
 					...record.to,
+					...generateGeoFields({ longitude: record.to.longitude, latitude: record.to.latitude }),
 				})
 			)
 			auditLogs.push(
@@ -78,7 +95,7 @@ export const CreateManyOrgLocationSchema = () => {
 
 export const CreateOrgLocationSchema = () => {
 	const { dataParser: parser, inputSchema } = MutationBase(
-		CreateOrgLocationBaseSchema.extend({ orgId: z.string() }).merge(OrgLocationLinksSchema)
+		z.object({ orgId: z.string(), ...createOrgBaseFields, ...OrgLocationLinksSchema })
 	)
 	const dataParser = parser.transform(({ actorId, operation, from, to }) => {
 		const { emails, phones, services, ...dataTo } = to
@@ -123,6 +140,7 @@ export const CreateOrgLocationSchema = () => {
 		return Prisma.validator<Prisma.OrgLocationCreateArgs>()({
 			data: {
 				...dataTo,
+				...generateGeoFields({ longitude: dataTo.longitude, latitude: dataTo.latitude }),
 				emails: emailLinks,
 				phones: phoneLinks,
 				services: serviceLinks,

@@ -14,7 +14,7 @@ import { CreateAuditLog, GenerateAuditLog } from './auditLog'
 
 import { userTypes } from '~api/generated/userType'
 
-const CreateUserBase = z.object({
+const CreateUserBase = {
 	id: idString.default(generateId('user')),
 	email: z.string().email(),
 	password: z.string(),
@@ -36,10 +36,11 @@ const CreateUserBase = z.object({
 		.optional(),
 	/** Requires either `id` or `slug` */
 	currentGovDist: z.union([id, slug]).optional(),
-})
+}
 
-export const CreateUser = CreateUserBase.transform(
-	({ id, name, email, password, image, active, currentCity, ...data }) => {
+export const CreateUser = z
+	.object(CreateUserBase)
+	.transform(({ id, name, email, password, image, active, currentCity, ...data }) => {
 		const userType = connectOneRequired({ type: 'seeker' })
 		const langPref = connectOne({ localeCode: data.langPref })
 		const currentCountry = connectOne(data.currentCountry)
@@ -71,29 +72,31 @@ export const CreateUser = CreateUserBase.transform(
 
 			cognito: { databaseId: id, email, password },
 		}
-	}
-)
-
-const adminCreateFields = z
-	.object({
-		userType: z.enum(userTypes),
-		permissions: z.object({ permissionId: idString }).array(),
-		orgPermission: z
-			.object({ permissionId: idString, organizationId: idString, authorized: z.boolean().default(false) })
-			.array(),
-		locationPermission: z
-			.object({ permissionId: idString, orgLocationId: idString, authorized: z.boolean().default(false) })
-			.array(),
-		roles: z
-			.object({
-				roleId: idString,
-			})
-			.array(),
 	})
-	.partial()
+
+const adminCreateFields = {
+	userType: z.enum(userTypes),
+	permissions: z.object({ permissionId: idString }).array().optional(),
+	orgPermission: z
+		.object({ permissionId: idString, organizationId: idString, authorized: z.boolean().default(false) })
+		.array()
+		.optional(),
+	locationPermission: z
+		.object({ permissionId: idString, orgLocationId: idString, authorized: z.boolean().default(false) })
+		.array()
+		.optional(),
+	roles: z
+		.object({
+			roleId: idString,
+		})
+		.array()
+		.optional(),
+}
 
 export const AdminCreateUser = () => {
-	const { dataParser: parser, inputSchema } = CreationBase(CreateUserBase.merge(adminCreateFields))
+	const { dataParser: parser, inputSchema } = CreationBase(
+		z.object({ ...CreateUserBase, ...adminCreateFields })
+	)
 	const dataParser = parser.transform(({ actorId, data, operation }) => {
 		const { id, name, email, password, image } = data
 		const [permissions, permissionLogs] = linkManyWithAudit(data?.permissions, actorId)
