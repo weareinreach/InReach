@@ -1,7 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react'
 
+import { StorybookGrid } from '~ui/layouts/BodyGrid'
+
 import { UserReview } from './UserReview'
-import { StorybookGrid } from '../layout/BodyGrid'
 
 export default {
 	title: 'Design System/User Review',

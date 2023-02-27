@@ -1,7 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react'
 
+import { StorybookGrid } from '~ui/layouts/BodyGrid'
+
 import { AlertMessage as AlertMessageCompnent } from './AlertMessage'
-import { StorybookGrid } from '../layout/BodyGrid'
 
 const Story = {
 	title: 'Design System/Alert Message',

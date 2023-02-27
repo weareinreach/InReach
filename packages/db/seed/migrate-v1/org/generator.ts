@@ -17,6 +17,7 @@ import path from 'path'
 import { dayMap, hoursMap, hoursMeta } from '~db/datastore/v1/helpers/hours'
 import { OrganizationsJSONCollection } from '~db/datastore/v1/mongodb/output-types/organizations'
 import { SourceType, JsonInputOrNull, JsonInputOrNullSuperJSON, prisma, generateId } from '~db/index'
+import { createPoint } from '~db/lib/createPoint'
 import { Log, iconList } from '~db/seed/lib'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
@@ -37,7 +38,6 @@ import {
 	uniqueSlug,
 } from '~db/seed/migrate-v1/org/lib'
 import { tagCheck } from '~db/seed/migrate-v1/org/lib/attributeHelpers'
-import { createPoint } from '~db/seed/migrate-v1/org/lib/createPoint'
 import {
 	batchCount,
 	batchNameMap,
