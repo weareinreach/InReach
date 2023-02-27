@@ -59,7 +59,7 @@ export const Footer = () => {
 						<Title order={2} fw={500}>
 							{t('Seek LGBTQ+ resources. Reach safety. Find belonging.')}
 						</Title>
-						<Image src='layout/img/vercel.svg' alt='vercel' width={240} height={48} />
+						<Image src='layouts/img/vercel.svg' alt='vercel' width={240} height={48} />
 					</Stack>
 					<Text className={classes.copyrightText}>
 						{' '}
