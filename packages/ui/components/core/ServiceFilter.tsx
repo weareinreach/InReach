@@ -1,6 +1,5 @@
 import {
 	Accordion,
-	Loader,
 	Checkbox,
 	createStyles,
 	Group,
@@ -12,24 +11,18 @@ import {
 	TextProps,
 	ScrollArea,
 	useMantineTheme,
-	ScrollAreaProps,
 	Box,
 	Skeleton,
 } from '@mantine/core'
-import { CheckboxGroup } from '@mantine/core/lib/Checkbox/CheckboxGroup/CheckboxGroup'
 import { useForm } from '@mantine/form'
-import { useMediaQuery, useFocusTrap } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { Fragment, ReactNode, useEffect, useState } from 'react'
-
-import { isNull } from 'util'
+import { useEffect, useState } from 'react'
 
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { useModalProps } from '~ui/modals'
 
 import { Button } from './Button'
-import { navItems } from './MobileNav'
 
 const RESULT_PLACEHOLDER = 5
 
@@ -63,6 +56,7 @@ const useStyles = createStyles((theme) => ({
 		lineHeight: 1.5,
 	},
 	modalTitle: {
+		borderBottom: 'solid 1px' + theme.other.colors.primary.lightGray,
 		padding: '24px 24px 24px 32px',
 		width: '100%',
 	},
@@ -85,10 +79,16 @@ const useStyles = createStyles((theme) => ({
 			color: theme.other.colors.secondary.black,
 			cursor: 'pointer',
 		},
+		[theme.fn.smallerThan('md')]: {
+			display: 'none',
+		},
 	},
 	uncheckDisabled: {
 		textDecoration: 'underline',
 		color: theme.other.colors.secondary.darkGray,
+		[theme.fn.smallerThan('md')]: {
+			display: 'none',
+		},
 	},
 	footer: {
 		borderTop: 'solid 1px' + theme.other.colors.primary.lightGray,
@@ -104,15 +104,12 @@ export const ServiceFilter = ({}) => {
 	const [opened, setOpened] = useState(false)
 	const modalSettings = useModalProps()
 	const theme = useMantineTheme()
-	const isMobile = useMediaQuery(`max-width: ${theme.breakpoints.sm}px`)
-	const [isChecked, setChecked] = useState(false)
-	const [value, setValue] = useState<string[]>([])
 
 	/** TODO: Results will be filtered live as items are selected - need to update the count of results left */
 	const resultCount = RESULT_PLACEHOLDER
 
 	type ServiceCategory = NonNullable<typeof serviceOptionData>[number]
-	type FilterValue = ServiceCategory['services'][number] & { categoryId: string; selected: boolean }
+	type FilterValue = ServiceCategory['services'][number] & { categoryId: string; checked: boolean }
 	type FormValues = Omit<ServiceCategory, 'services'> & { services: FilterValue[] }
 
 	const form = useForm<{ [categoryId: string]: FilterValue[] }>()
@@ -120,10 +117,10 @@ export const ServiceFilter = ({}) => {
 
 	const generateInitialData = () => {
 		if (!serviceOptionData) return {}
-		serviceOptionData.forEach((category: any) => {
+		serviceOptionData.forEach((category) => {
 			valueMap.set(
 				category.id,
-				category.services.map((item: any) => ({ ...item, categoryId: category.id, selected: false }))
+				category.services.map((item) => ({ ...item, categoryId: category.id, checked: false }))
 			)
 		})
 		const initialValues = Object.fromEntries(valueMap.entries())
@@ -141,32 +138,20 @@ export const ServiceFilter = ({}) => {
 
 	const hasAll = (categoryId: string) => {
 		if (!form.values.hasOwnProperty(categoryId)) return false
-		return form.values[categoryId]?.every((item) => item.categoryId === categoryId && item.selected)
+		return form.values[categoryId]?.every((item) => item.categoryId === categoryId && item.checked)
 	}
 	const hasSome = (categoryId: string) => {
 		if (!form.values.hasOwnProperty(categoryId)) return false
 		return (
 			!hasAll(categoryId) &&
-			form.values[categoryId]?.some((item) => item.categoryId === categoryId && item.selected)
+			form.values[categoryId]?.some((item) => item.categoryId === categoryId && item.checked)
 		)
-	}
-	const hasThis = (categoryId: string, serviceIndex: number) => {
-		if (!form.values.hasOwnProperty(categoryId)) return false
-		return form.values[`${categoryId}.${serviceIndex}.selected`]
-	}
-
-	const toggleService = (categoryId: string, serviceIndex: number, event: boolean) => {
-		console.log(categoryId, serviceIndex, event)
-		console.log(form.getInputProps(`${categoryId}.${serviceIndex}.selected`, { type: 'checkbox' }))
-		form.getInputProps(`${categoryId}.${serviceIndex}.selected`, { type: 'checkbox' })
-		if (!form.values.hasOwnProperty(categoryId)) return
-		form.setFieldValue(`${categoryId}.${serviceIndex}.selected`, event)
 	}
 
 	const toggleCategory = (categoryId: string) => {
 		if (!form.values.hasOwnProperty(categoryId)) return
 		form.setValues({
-			[categoryId]: form.values[categoryId]?.map((value) => ({ ...value, selected: !hasAll(categoryId) })),
+			[categoryId]: form.values[categoryId]?.map((value) => ({ ...value, checked: !hasAll(categoryId) })),
 		})
 	}
 	const deselectAll = () => form.setValues(generateInitialData())
@@ -176,7 +161,7 @@ export const ServiceFilter = ({}) => {
 		const checked = hasAll(categoryId)
 		const indeterminate = hasSome(categoryId)
 
-		const tsKey = serviceOptionData.find((category: any) => category.id === categoryId)?.tsKey ?? 'error'
+		const tsKey = serviceOptionData.find((category) => category.id === categoryId)?.tsKey ?? 'error'
 		return (
 			<Accordion.Item value={categoryId} key={categoryId} className={classes.item}>
 				<Accordion.Control>{t(tsKey, { ns: 'services' })}</Accordion.Control>
@@ -189,21 +174,17 @@ export const ServiceFilter = ({}) => {
 						onChange={() => toggleCategory(categoryId)}
 					/>
 
-					<Checkbox.Group orientation='vertical' value={value} onChange={setValue}>
-						{services.map((item, index) => {
-							return (
-								<Checkbox
-									mt='xs'
-									ml={33}
-									value={item.id}
-									label={t(item.tsKey, { ns: 'services' })}
-									key={item.id}
-									onClick={(event) => toggleService(categoryId, index, event.currentTarget.checked)}
-									// {...form.getInputProps(`${categoryId}.${index}.selected`, { type: 'checkbox' })}
-								/>
-							)
-						})}
-					</Checkbox.Group>
+					{services.map((item, index) => {
+						return (
+							<Checkbox
+								mt='xs'
+								ml={33}
+								label={t(item.tsKey, { ns: 'services' })}
+								key={item.id}
+								{...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
+							/>
+						)
+					})}
 				</Accordion.Panel>
 			</Accordion.Item>
 		)
@@ -213,16 +194,13 @@ export const ServiceFilter = ({}) => {
 		const selected: string[] = []
 		for (const [categoryId, services] of Object.entries(form.values)) {
 			services.forEach((service) => {
-				if (service.selected) selected.push(service.id)
+				if (service.checked) selected.push(service.id)
 			})
 		}
 		return selected
 	})()
 
 	const selectedCountIcon = <Text className={classes.count}>{selectedItems.length}</Text>
-
-	const Scrollable = (props: typeof isMobile extends false ? ScrollAreaProps : { children: ReactNode }) =>
-		isMobile ? <Fragment {...props} /> : <ScrollArea.Autosize maxHeight='calc(60vh - 88px)' {...props} />
 
 	const ServiceBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
 		const ServicesDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
@@ -264,14 +242,16 @@ export const ServiceFilter = ({}) => {
 					modal: classes.modal,
 				}}
 			>
-				<Accordion
-					chevron={<Icon icon='carbon:chevron-right' />}
-					styles={{ chevron: { '&[data-rotate]': { transform: 'rotate(90deg)' } } }}
-					transitionDuration={0}
-					classNames={classes}
-				>
-					<Scrollable>{filterList}</Scrollable>
-				</Accordion>
+				<div style={{ overflow: 'scroll' }}>
+					<Accordion
+						chevron={<Icon icon='carbon:chevron-right' />}
+						styles={{ chevron: { '&[data-rotate]': { transform: 'rotate(90deg)' } } }}
+						transitionDuration={0}
+						classNames={classes}
+					>
+						<ScrollArea.Autosize maxHeight='calc(60vh - 88px)'>{filterList}</ScrollArea.Autosize>
+					</Accordion>
+				</div>
 
 				<Box className={classes.footer}>
 					<Button
@@ -282,7 +262,6 @@ export const ServiceFilter = ({}) => {
 						{t('view-x-result', { count: resultCount })}
 					</Button>
 				</Box>
-				{selectedItems}
 			</Modal>
 
 			<UnstyledButton onClick={() => setOpened(true)} w='100%'>
