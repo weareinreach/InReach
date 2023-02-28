@@ -7,7 +7,7 @@ import { ModalTitle, ModalTitleProps } from './ModalTitle'
 
 export const ExampleModalBody = ({ text }: ExampleModalBodyProps) => (
 	<Stack>
-		<Badge variant='serviceTag'>{text}</Badge>
+		<Badge variant='service' tsKey='deferred-action-for-childhood-arrivals-daca' />
 		<Title order={3}>Sample Content</Title>
 		<List>
 			<List.Item>List</List.Item>
