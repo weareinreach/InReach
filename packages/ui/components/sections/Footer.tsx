@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
 		},
 	},
 	background: {
-		backgroundColor: theme.other.colors.primary.footer,
+		backgroundColor: theme.other.colors.tertiary.footer,
 	},
 	iconGroup: {
 		maxWidth: '176px',

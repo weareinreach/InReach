@@ -45,7 +45,6 @@ const colors = {
 	primary: {
 		lightGray: '#EFEFEF',
 		allyGreen: '#00D56C',
-		footer: '#F7F7F7',
 	},
 	secondary: {
 		black: '#21272C',
@@ -66,6 +65,7 @@ const colors = {
 		orange: '#c77e54',
 		brown: '#5d4830',
 		darkBrown: '#322f2e',
+		footer: '#F7F7F7',
 	},
 } as const
 
