@@ -37,6 +37,7 @@ import type {
 	ModalProps,
 	InputStylesNames,
 	InputStylesParams,
+	GridProps,
 } from '@mantine/core'
 import type React from 'react'
 
@@ -64,6 +65,7 @@ const colors = {
 		orange: '#c77e54',
 		brown: '#5d4830',
 		darkBrown: '#322f2e',
+		footer: '#F7F7F7',
 	},
 } as const
 
@@ -293,6 +295,31 @@ export const commonTheme = {
 						margin: params.indeterminate ? '10.5px 6px' : '6.75px 5px',
 					},
 				} satisfies Styles<CheckboxStylesNames, CheckboxStylesParams>),
+		},
+		Container: {
+			styles: (theme) => ({
+				root: {
+					padding: '0px 20px',
+					[theme.fn.largerThan('xs')]: {
+						padding: '0px 32px',
+					},
+					[theme.fn.largerThan('sm')]: {
+						padding: '0px 40px',
+					},
+					[theme.fn.largerThan('lg')]: {
+						padding: '0px 64px',
+					},
+				},
+			}),
+		},
+		Grid: {
+			defaultProps: {
+				columns: 12,
+				gutter: 20,
+				gutterXl: 40,
+				justify: 'center',
+				my: 0,
+			} satisfies Partial<GridProps>,
 		},
 		GridCol: {
 			defaultProps: {
