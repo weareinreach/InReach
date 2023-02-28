@@ -1,5 +1,4 @@
 import { Meta } from '@storybook/react'
-import React from 'react'
 
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { mockAutocomplete, mockGeocode } from '~ui/mockData/locationSearch'
