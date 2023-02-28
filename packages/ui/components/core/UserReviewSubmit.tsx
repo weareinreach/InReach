@@ -6,19 +6,10 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 
-import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { Button } from './Button'
 import { UserAvatar } from './UserAvatar'
-
-const useStyles = createStyles((theme) => ({
-	textContainer: {
-		paddingLeft: '0px',
-		paddingRight: '0px',
-		height: '120px',
-	},
-}))
 
 const RouterSchema = z.object({
 	slug: z.string(),
@@ -34,7 +25,6 @@ const ReviewSchema = z.object({
 })
 
 export const UserReviewSubmit = () => {
-	const { classes } = useStyles()
 	const { t } = useTranslation()
 	const theme = useMantineTheme()
 	const { query: rawQuery } = useRouter()

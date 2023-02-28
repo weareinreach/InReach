@@ -9,6 +9,7 @@ export const Icon = (props: CustomIconProps) => {
 
 export type IconList = (typeof iconList)[number]
 interface CustomIconifyIconProps extends IconifyIconProps {
+	/** [Search available icons here](https://icon-sets.iconify.design/carbon/) */
 	icon: IconList
 }
 type IconElementProps = SVGProps<SVGSVGElement>

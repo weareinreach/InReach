@@ -1,3 +1,4 @@
+import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
@@ -75,7 +76,7 @@ export const globalTypes = {
 	},
 }
 
-export const decorators = [WithMantine, WithI18n, WithTRPC, mswDecorator]
+export const decorators = [WithMantine, WithI18n, mswDecorator, WithTRPC]
 
 declare module '@storybook/react' {
 	export interface Parameters {
@@ -95,5 +96,6 @@ declare module '@storybook/react' {
 		layout?: 'centered' | 'fullscreen' | 'padded'
 		msw?: RequestHandler[] | { handlers: RequestHandler[] | Record<string, RequestHandler> }
 		nextAuthMock?: { session: keyof typeof authStates }
+		badges?: BADGE[]
 	}
 }
