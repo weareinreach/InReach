@@ -1,10 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react'
 
+import { StorybookGrid } from '~ui/layouts/BodyGrid'
+
 import { Footer } from './Footer'
-import { StorybookGrid } from '../../layouts/BodyGrid'
 
 export default {
-	title: 'Design System/Footer',
+	title: 'Sections/Footer',
 	component: Footer,
 	parameters: {
 		design: {
@@ -13,7 +14,7 @@ export default {
 		},
 		layout: 'fullscreen',
 	},
-	decorators: [StorybookGrid],
+	// decorators: [StorybookGrid],
 } satisfies Meta<typeof Footer>
 
 type StoryDef = StoryObj<typeof Footer>

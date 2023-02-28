@@ -21,7 +21,7 @@ export const BodyGrid: StoryObj<typeof BodyGridComponent> = {
 		const columns = []
 		for (let i = 0; i < 12; i++) {
 			columns.push(
-				<Grid.Col md={1}>
+				<Grid.Col md={6}>
 					<Box
 						sx={(theme) => ({
 							backgroundColor: theme.other.colors.tertiary.lightBlue,
