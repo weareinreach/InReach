@@ -10,6 +10,7 @@
 		"chromatic": "chromatic",
 		"clean:node": "rm -rf ./node_modules/ || true",
 		"dev": "storybook dev -p 6006 --no-open",
+		"dev:fast": "SKIP_DOCS=1 storybook dev -p 6006 --no-open",
 		"format": "prettier --write --cache --cache-strategy metadata .",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint --cache .",

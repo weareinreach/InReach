@@ -1,3 +1,5 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
+/* eslint-disable node/no-process-env */
 import { type StorybookConfig } from '@storybook/nextjs'
 import { merge } from 'merge-anything'
 import { PropItem } from 'react-docgen-typescript'
@@ -8,7 +10,7 @@ import * as path from 'path'
 const filePattern = '*.stories.@(ts|tsx)'
 
 const config: StorybookConfig = {
-	stories: [`../(components|hooks|layout|modals|other)/**/${filePattern}`, '../other/**/*.mdx'],
+	stories: [`../(components|hooks|icon|layouts|modals|other)/**/${filePattern}`, '../other/**/*.mdx'],
 	staticDirs: [
 		{
 			from: '../../../apps/app/public',
@@ -67,31 +69,18 @@ const config: StorybookConfig = {
 	},
 	typescript: {
 		check: false,
-		reactDocgen: 'react-docgen-typescript',
+		reactDocgen: process.env.SKIP_DOCS ? false : 'react-docgen-typescript',
 		reactDocgenTypescriptOptions: {
 			shouldExtractLiteralValuesFromEnum: true,
 			shouldRemoveUndefinedFromOptional: true,
 			shouldExtractValuesFromUnion: false,
 			shouldIncludePropTagMap: true,
-			tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
-			compilerOptions: {
-				esModuleInterop: false,
-				allowSyntheticDefaultImports: false,
+			tsconfigPath: path.resolve(__dirname, '../tsconfig.storybook.json'),
+			propFilter: (prop: PropItem) => {
+				const pathTest = /node_modules\/(?!(?:\.pnpm\/)?@mantine(?!.?styles))/
+				// if (prop.parent && !pathTest.test(prop.parent.fileName)) console.log(prop)
+				return prop.parent ? !pathTest.test(prop.parent.fileName) : true
 			},
-			propFilter: (prop: PropItem) =>
-				prop.parent ? !/node_modules\/(?!@mantine)/.test(prop.parent.fileName) : true,
-
-			// propFilter: (prop: PropItem, component: Component) => {
-			// 	if (prop.declarations !== undefined && prop.declarations.length > 0) {
-			// 		const hasPropAdditionalDescription = prop.declarations.find((declaration) => {
-			// 			return !declaration.fileName.includes('node_modules')
-			// 		})
-
-			// 		return Boolean(hasPropAdditionalDescription)
-			// 	}
-
-			// 	return true
-			// },
 		},
 	},
 	webpackFinal: (config) => {

@@ -10,10 +10,10 @@ import { I18nextProvider } from 'react-i18next'
 import { devtoolsLink } from 'trpc-client-devtools-link'
 
 import { trpc, StorybookTRPC } from '~ui/lib/trpcClient'
-import { storybookTheme } from '~ui/theme'
+import { useModalProps } from '~ui/modals/settings'
+import { storybookTheme } from '~ui/theme/storybook'
 
 import { i18n } from './i18next'
-import { useModalProps } from '../modals'
 
 const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
 	withCSSVariables: false,

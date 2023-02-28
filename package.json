@@ -70,7 +70,7 @@
 		"overrides": {
 			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
 			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
-			"@storybook/react-docgen-typescript-plugin@1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0": "npm:react-docgen-typescript-plugin@1.0.2",
+			"@storybook/react-docgen-typescript-plugin@1.0.2-canary.6.9d540b91e815f8fc2f8829189deb00553559ff63.0": "npm:react-docgen-typescript-plugin@^1.0.5",
 			"chokidar": ">=3.0.0",
 			"glob-parent@<5.1.2": ">=5.1.2",
 			"http-cache-semantics@<=4.1.0": "^4.1.1",
