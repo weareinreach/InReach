@@ -1,0 +1,16 @@
+{
+	"extends": "@weareinreach/config/tsconfig/base.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"esModuleInterop": false,
+		"allowSyntheticDefaultImports": false
+	},
+	"include": [
+		"./**/*.ts",
+		"./**/*.tsx",
+		".storybook/**/*",
+		"../../@types/**/*.ts",
+		"../../apps/app/nextjs-routes.d.ts"
+	],
+	"exclude": ["**/node_modules", "**/storybook-static/"]
+}
