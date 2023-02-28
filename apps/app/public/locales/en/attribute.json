@@ -1,10 +1,13 @@
 {
+	"additional-accessible": "Accessible",
 	"additional-at-capacity": "At capacity",
 	"additional-geo-near-public-transit": "Near public transportation",
 	"additional-geo-public-transit-description": "Public transit / specific directions",
 	"additional-has-confidentiality-policy": "Has A Confidentiality Policy",
 	"additional-information": "Additional Information",
+	"additional-not-accessible": "Not accessible",
 	"additional-religiously-affiliated": "Is religiously affiliated",
+	"additional-remote": "Remote",
 	"additional-time-walk-in": "Has Walk-In Hours",
 	"additional-wheelchair-accessible": "Is wheelchair accessible",
 	"black-led": "Black-led",
