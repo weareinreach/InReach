@@ -18,10 +18,10 @@
 		"@googlemaps/google-maps-services-js": "3.3.27",
 		"@tanstack/react-query": "4.24.10",
 		"@terraformer/wkt": "2.1.2",
-		"@trpc/client": "10.12.0",
-		"@trpc/next": "10.12.0",
-		"@trpc/react-query": "10.12.0",
-		"@trpc/server": "10.12.0",
+		"@trpc/client": "10.13.2",
+		"@trpc/next": "10.13.2",
+		"@trpc/react-query": "10.13.2",
+		"@trpc/server": "10.13.2",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"just-diff": "5.2.0",
@@ -37,13 +37,13 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "8.21.1",
-		"@types/node": "18.14.1",
+		"@types/node": "18.14.2",
 		"@types/prettier": "2.7.2",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"dotenv-cli": "7.0.0",
-		"eslint": "8.34.0",
+		"eslint": "8.35.0",
 		"listr2": "5.0.7",
 		"next": "13.2.1",
 		"prettier": "2.8.4",
@@ -55,5 +55,5 @@
 	"peerDependencies": {
 		"next": ">=13"
 	},
-	"packageManager": "pnpm@7.27.1"
+	"packageManager": "pnpm@7.28.0"
 }
