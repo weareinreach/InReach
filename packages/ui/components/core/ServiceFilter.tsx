@@ -24,7 +24,7 @@ import { useModalProps } from '~ui/modals'
 
 import { Button } from './Button'
 
-const RESULT_PLACEHOLDER = 5
+const RESULT_PLACEHOLDER = 999
 
 const useStyles = createStyles((theme) => ({
 	label: {
@@ -32,14 +32,16 @@ const useStyles = createStyles((theme) => ({
 	},
 	modalBody: {
 		padding: '40px 32px',
-	},
-	modalHeader: {
-		marginBottom: 0,
+		[theme.fn.smallerThan('md')]: {
+			padding: '40px 20px',
+		},
+		[theme.fn.smallerThan('sm')]: {
+			padding: '10px 16px',
+		},
 	},
 	modal: {
-		padding: '0px !important',
+		padding: '0px 20px 0px 24px !important',
 	},
-
 	root: {
 		overflow: 'scroll',
 	},
@@ -56,7 +58,6 @@ const useStyles = createStyles((theme) => ({
 		lineHeight: 1.5,
 	},
 	modalTitle: {
-		borderBottom: 'solid 1px' + theme.other.colors.primary.lightGray,
 		padding: '24px 24px 24px 32px',
 		width: '100%',
 	},
@@ -90,10 +91,44 @@ const useStyles = createStyles((theme) => ({
 			display: 'none',
 		},
 	},
+	uncheckBtn: {
+		width: '48%',
+		borderRadius: '8px',
+		marginRight: '4px',
+		padding: '6px 8px',
+		[theme.fn.largerThan('md')]: {
+			display: 'none',
+		},
+		[theme.fn.smallerThan('375')]: {
+			width: '100%',
+			marginRight: 'unset',
+		},
+	},
+	resultsBtn: {
+		borderRadius: '8px',
+		[theme.fn.smallerThan('md')]: {
+			width: '48%',
+			marginLeft: '4px',
+			padding: '6px 8px',
+		},
+		[theme.fn.smallerThan('375')]: {
+			width: '100%',
+			marginTop: '12px',
+			marginLeft: 'unset',
+		},
+		[theme.fn.largerThan('md')]: {
+			width: '100%',
+		},
+	},
 	footer: {
 		borderTop: 'solid 1px' + theme.other.colors.primary.lightGray,
-		margin: '0px -32px',
-		padding: '32px 32px 0px 32px',
+		padding: '32px 16px 0px 16px',
+		[theme.fn.smallerThan('md')]: {
+			padding: '32px 0px 0px 0px',
+		},
+		[theme.fn.smallerThan('375')]: {
+			paddingTop: '12px',
+		},
 	},
 }))
 
@@ -238,8 +273,7 @@ export const ServiceFilter = ({}) => {
 				classNames={{
 					body: classes.modalBody,
 					title: classes.modalTitle,
-					header: classes.modalHeader,
-					modal: classes.modal,
+					header: classes.modal,
 				}}
 			>
 				<div style={{ overflow: 'scroll' }}>
@@ -255,10 +289,14 @@ export const ServiceFilter = ({}) => {
 
 				<Box className={classes.footer}>
 					<Button
-						variant='primary'
-						style={{ width: '100%', borderRadius: '8px' }}
-						onClick={() => setOpened(false)}
+						variant='secondary'
+						onClick={() => deselectAll()}
+						disabled={selectedItems.length < 1}
+						className={classes.uncheckBtn}
 					>
+						{t('uncheck-all')}
+					</Button>
+					<Button variant='primary' className={classes.resultsBtn} onClick={() => setOpened(false)}>
 						{t('view-x-result', { count: resultCount })}
 					</Button>
 				</Box>
