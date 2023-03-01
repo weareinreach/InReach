@@ -22,7 +22,7 @@
 	},
 	"dependencies": {
 		"@aws-lambda-powertools/logger": "1.5.1",
-		"@prisma/client": "4.10.1",
+		"@prisma/client": "4.11.0",
 		"@weareinreach/db": "0.100.0"
 	},
 	"devDependencies": {
@@ -36,7 +36,7 @@
 		"aws-lambda": "1.0.7",
 		"eslint": "8.35.0",
 		"prettier": "2.8.4",
-		"prisma": "4.10.1",
+		"prisma": "4.11.0",
 		"typescript": "4.9.5"
 	}
 }
