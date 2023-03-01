@@ -1,20 +1,25 @@
 {
 	"compilerOptions": {
-		"target": "es2017",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
-		"skipLibCheck": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"noEmit": true,
-		"esModuleInterop": true,
-		"module": "esnext",
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"jsx": "preserve",
-		"incremental": true,
-		"noUncheckedIndexedAccess": true
+		"baseUrl": "./",
+		"paths": {
+			"~app/*": ["apps/app/*"],
+			"~web/*": ["apps/web/*"],
+			"~api/*": ["packages/api/*"],
+			"~auth/*": ["packages/auth/*"],
+			"~db/*": ["packages/db/*"],
+			"~ui/*": ["packages/ui/*"]
+		}
 	},
-	"include": [".eslintrc.js", "prepare.js", ".lintstagedrc.js", ".prettierrc.js"]
+	"extends": "./packages/config/tsconfig/base.json",
+	"exclude": ["**/node_modules"],
+	"include": [
+		".eslintrc.js",
+		"lib/*",
+		".lintstagedrc.js",
+		".prettierrc.js",
+		"test/**/*.js",
+		"lib/devmsg.ts",
+		"lib/prepare.ts",
+		"@types/**/*.ts"
+	]
 }

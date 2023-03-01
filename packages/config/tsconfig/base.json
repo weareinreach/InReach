@@ -2,28 +2,30 @@
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"allowJs": true,
-		"declaration": true,
-		"declarationMap": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"inlineSources": false,
+		"incremental": true,
+		"inlineSourceMap": true,
 		"isolatedModules": true,
 		"jsx": "preserve",
 		"lib": ["dom", "dom.iterable", "esnext"],
-		"module": "ES2020",
+		"module": "esnext",
 		"moduleResolution": "node",
 		"noEmit": true,
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"preserveSymlinks": false,
-		"preserveWatchOutput": true,
+		"noUncheckedIndexedAccess": true,
+		"paths": {
+			"~api/*": ["../../packages/api/*"],
+			"~app/*": ["../../apps/app/src/*"],
+			"~auth/*": ["../../packages/auth/*"],
+			"~db/*": ["../../packages/db/*"],
+			"~ui/*": ["../../packages/ui/*"],
+			"~web/*": ["../../apps/web/src/*"]
+		},
+		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": true,
-		"strictNullChecks": true,
-		"target": "ES2018",
-		"useUnknownInCatchVariables": true,
-		"noFallthroughCasesInSwitch": true,
-		"noImplicitReturns": true
+		"target": "es2017"
 	},
-	"display": "Default"
+	"display": "Default",
+	"include": ["../../@types/**/*.ts"]
 }

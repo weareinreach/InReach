@@ -3,9 +3,8 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"~/*": ["./src/*"]
-		},
-		"typeRoots": ["./types"]
+			"~web/*": ["./src/*"]
+		}
 	},
 	"include": [
 		"./next-env.d.ts",
@@ -14,7 +13,8 @@
 		"./**/*.js",
 		"./**/*.jsx",
 		"./**/*.mjs",
-		"./**/*.cjs"
+		"./**/*.cjs",
+		"../../@types/**/*.ts"
 	],
-	"exclude": []
+	"exclude": ["node_modules"]
 }

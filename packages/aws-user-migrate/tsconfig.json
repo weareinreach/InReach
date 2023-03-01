@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
+		"baseUrl": "./src",
 		"paths": {
 			"~/*": ["./*"]
 		},
@@ -16,7 +16,5 @@
 		"forceConsistentCasingInFileNames": true,
 		"isolatedModules": false
 	},
-	"include": ["**/*.ts"],
-	"exclude": ["**/node_modules/*"],
-	"files": ["./src/index.ts"]
+	"exclude": ["dist", "node_modules"]
 }

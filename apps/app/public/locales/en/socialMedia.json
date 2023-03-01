@@ -1,8 +1,8 @@
 {
+	"email": "email",
 	"facebook": "Facebook",
-	"twitter": "Twitter",
-	"linkedin": "LinkedIn",
-	"email": "Email",
-	"instagram": "instagram",
+	"instagram": "Instagram",
+	"linkedin": "linkedin",
+	"twitter": "twitter",
 	"youtube": "youtube"
 }

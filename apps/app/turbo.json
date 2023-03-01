@@ -1,0 +1,31 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"extends": ["//"],
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build", "^db:generate", "^generate:data"],
+			"env": [
+				"DATABASE_URL",
+				"NEXTAUTH_SECRET",
+				"NEXTAUTH_URL",
+				"VERCEL_URL",
+				"PORT",
+				"COGNITO_CLIENT_ID",
+				"COGNITO_CLIENT_SECRET",
+				"COGNITO_ISSUER",
+				"COGNITO_USER_POOL_ID",
+				"AWS_REGION",
+				"COGNITO_ACCESS_KEY",
+				"COGNITO_SECRET",
+				"NODE_ENV"
+			],
+			"outputs": [".next/**"]
+		},
+		"lint": {
+			"outputs": [".next/cache/eslint/**"]
+		},
+		"lint:fix": {
+			"outputs": [".next/cache/eslint/**"]
+		}
+	}
+}

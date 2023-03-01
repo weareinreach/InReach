@@ -1,35 +1,41 @@
-#:schema https://github.com/chdsbd/kodiak/blob/master/bot/kodiak/test/fixtures/config/config-schema.json
+#:schema https://raw.githubusercontent.com/chdsbd/kodiak/master/bot/kodiak/test/fixtures/config/config-schema.json
 version = 1
 
 [update]
-## Keep every PR up to date with main
-always                  = true
-require_automerge_label = false
-ignored_usernames       = ["dependabot", "renovate"]
+	## Keep every PR up to date with main
+	always = true
+	ignored_usernames = [
+		"dependabot",
+		"renovate",
+	]
+	require_automerge_label = false
 
 
 [merge]
-automerge_label                      = "automerge"
-show_missing_automerge_label_message = true
-prioritize_ready_to_merge            = true
-blocking_title_regex                 = "^WIP:.*"
-blocking_labels                      = ['in-progress']
+	automerge_label = "automerge"
+	blocking_labels = [
+		'do-not-merge',
+		'in-progress',
+	]
+	blocking_title_regex = "^WIP:.*"
+	prioritize_ready_to_merge = true
+	show_missing_automerge_label_message = true
 
-[merge.automerge_dependencies]
-# auto merge all PRs opened by dependency management that are "minor" or "patch" version upgrades. "major" version upgrades will be ignored.
-versions  = ["minor", "patch"]
-usernames = ["renovate"]
+	[merge.automerge_dependencies]
+		# auto merge all PRs opened by dependency management that are "minor" or "patch" version upgrades. "major" version upgrades will be ignored.
+		usernames = ["renovate"]
+		versions  = ["minor", "patch", "major"]
 
 
 [approve]
-auto_approve_usernames = ["dependabot", "renovate"]
+	auto_approve_labels    = ["translations"]
 
 [merge.message]
-title                       = "pull_request_title" # default: "github_default"
-body                        = "pull_request_body"  # default: "github_default"
-include_pr_number           = true                 # default: true
-strip_html_comments         = true                 # default: false
-include_pull_request_url    = true
-include_coauthors           = true
-include_pull_request_author = true
-# body_type                   = "markdown"           # default: "markdown"
+	body                        = "pull_request_body"  # default: "github_default"
+	include_coauthors           = true
+	include_pr_number           = true                 # default: true
+	include_pull_request_author = true
+	include_pull_request_url    = true
+	strip_html_comments         = true                 # default: false
+	title                       = "pull_request_title" # default: "github_default"
+	# body_type                   = "markdown"           # default: "markdown"

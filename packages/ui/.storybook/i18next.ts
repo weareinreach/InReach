@@ -1,50 +1,89 @@
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
-import Backend from 'i18next-http-backend'
+import HttpApi, { HttpBackendOptions } from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
-const ns = ['common', 'country', 'user', 'footer', 'nav', 'socialMedia']
+import config from '../next-i18next.config'
+
+const ns = [
+	'attribute',
+	'common',
+	'country',
+	'footer',
+	'gov-dist',
+	'nav',
+	'org-description',
+	'orv-service',
+	'phone-type',
+	'services',
+	'socialMedia',
+	'user',
+]
+
 export const i18nLocales = {
 	en: 'English',
-	'en-US': 'English (US)',
-	'en-CA': 'English (CA)',
-	'en-MX': 'English (MX)',
-	es: 'Spanish',
-	'es-US': 'Spanish (US)',
-	'es-MX': 'Spanish (MX)',
+	// 'en-US': 'English (US)',
+	// 'en-CA': 'English (CA)',
+	// 'en-MX': 'English (MX)',
+	// es: 'Spanish',
+	// 'es-US': 'Spanish (US)',
+	// 'es-MX': 'Spanish (MX)',
 }
-// const supportedLngs = ['en-US', 'en-CA', 'en-MX', 'es', 'es-US', 'es-MX']
-const supportedLngs = Object.keys(i18nLocales)
 
-// const localePath = (lng: string, n: string) => `../../../apps/app/public/locales/${lng}/${n}.json`
-const resources = ns.reduce((acc: Record<string, any>, n) => {
-	supportedLngs.forEach((lng) => {
-		if (!acc[lng]) acc[lng] = {}
-		acc[lng] = {
-			...acc[lng],
-			[n]: require(`../../../apps/app/public/locales/${lng}/${n}.json`),
-		}
-	})
-	return acc
-}, {})
+export const customLocales = {
+	name: 'Locale',
+	description: 'Internationalization locale',
+	defaultValue: 'en',
+	toolbar: {
+		icon: 'globe',
+		items: [
+			{ value: 'en', right: '🇺🇸', title: 'English' },
+			// { value: 'fr', right: '🇫🇷', title: 'Français' },
+			{ value: 'es', right: '🇪🇸', title: 'Español' },
+			// { value: 'zh', right: '🇨🇳', title: '中文' },
+			// { value: 'kr', right: '🇰🇷', title: '한국어' },
+		],
+	},
+} as const
+
+export type CustomLocales = typeof supportedLngs
+
+const supportedLngs = customLocales.toolbar.items.map((lang) => lang.value)
+
+// const resources = ns.reduce((acc: Record<string, Record<string, string>>, n) => {
+// 	supportedLngs.forEach((lng) => {
+// 		if (!acc[lng]) acc[lng] = {}
+// 		acc[lng] = {
+// 			...acc[lng],
+// 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+// 			[n]: require(`../../../apps/app/public/locales/${lng}/${n}.json`),
+// 		}
+// 	})
+// 	return acc
+// }, {})
 
 i18n
 	.use(LanguageDetector)
-	.use(Backend)
+	.use(HttpApi)
 	.use(initReactI18next)
-	.init({
+	.init<HttpBackendOptions>({
+		...config,
 		debug: true,
 		lng: 'en',
+		backend: {
+			loadPath: '/public/locales/{{lng}}/{{ns}}.json',
+		},
 		fallbackLng: {
-			en: ['en-US'],
-			es: ['es-US'],
+			'en-US': ['en'],
+			'es-US': ['es'],
 		},
 		defaultNS: 'common',
-		ns,
-		interpolation: { escapeValue: false },
-		react: { useSuspense: false },
+		interpolation: { escapeValue: true, skipOnVariables: false },
+		react: { useSuspense: true },
+		cleanCode: true,
 		supportedLngs,
-		resources,
+		ns,
+		// resources,
 	})
 
 export { i18n }

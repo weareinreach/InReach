@@ -1,0 +1,3 @@
+datastore/
+prisma/generated/
+zod-schemas/

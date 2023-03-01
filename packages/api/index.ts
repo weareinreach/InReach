@@ -1,5 +1,15 @@
-export type { AppRouter } from './src/router'
-export { appRouter } from './src/router'
+// import { type inferRouterProxyClient } from '@trpc/client'
+import { type inferReactQueryProcedureOptions } from '@trpc/react-query'
 
-export { createContext } from './src/context'
-export type { Context } from './src/context'
+import { type AppRouter } from './router'
+
+export type { AppRouter } from './router'
+export { appRouter } from './router'
+
+export * from './trpc/client'
+
+export { createContext } from './lib/context'
+export type { Context } from './lib/context'
+
+export type ReactQueryOptions = inferReactQueryProcedureOptions<AppRouter>
+// export type RouterProxyClient = inferRouterProxyClient<AppRouter>

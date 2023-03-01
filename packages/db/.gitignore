@@ -8,3 +8,16 @@ data-transfer/output-types/*.ts
 data-transfer/temp/*.js
 
 *.log
+lib/output/*
+!lib/output/.gitkeep
+seed/migrate-v1/out/*
+!seed/migrate-v1/out/.gitkeep
+seed/migrate-v1/_generated/*
+!seed/migrate-v1/_generated/.gitkeep
+seed/data/downloaded/*
+!seed/data/downloaded/.gitkeep
+
+prisma/generated
+prisma/dbml
+
+zod-schemas/

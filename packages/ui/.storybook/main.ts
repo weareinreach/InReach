@@ -1,117 +1,141 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
+/* eslint-disable node/no-process-env */
+import { type StorybookConfig } from '@storybook/nextjs'
+import { merge } from 'merge-anything'
+import { PropItem } from 'react-docgen-typescript'
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
+
 import * as path from 'path'
 
-const filePattern = '*.stories.@(js|jsx|ts|tsx|mdx)'
+const filePattern = '*.stories.@(ts|tsx)'
 
-const config = {
-	stories: [`../components/**/${filePattern}`, `../layout/**/${filePattern}`],
-	staticDirs: ['../../../apps/app/public'],
+const config: StorybookConfig = {
+	stories: [`../(components|hooks|icon|layouts|modals|other)/**/${filePattern}`, '../other/**/*.mdx'],
+	staticDirs: [
+		{
+			from: '../../../apps/app/public',
+			to: 'public/',
+		},
+		'../public',
+	],
 	addons: [
 		'@geometricpanda/storybook-addon-badges',
 		'@storybook/addon-a11y',
-		'@storybook/addon-console',
 		'@storybook/addon-essentials',
 		'@storybook/addon-interactions',
 		'@storybook/addon-links',
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
-		'storybook-addon-mantine',
-		'storybook-addon-next',
+		'storybook-addon-pseudo-states',
 		'storybook-addon-swc',
-		// 'storybook-addon-turbo-build',
-		'storybook-dark-mode',
-		'storybook-mobile',
-		'storybook-react-i18next',
+		// {
+		// 	name: 'storybook-addon-swc',
+		// 	options: {
+		// 		swcLoaderOptions: {
+		// 			jsc: {
+		// 				target: 'es2016',
+		// 			},
+		// 		},
+		// 		swcMinifyOptions: {
+		// 			compress: {
+		// 				ecma: 2016,
+		// 			},
+		// 		},
+		// 	},
+		// },
+		'@storybook/addon-actions', // Keep this one last
 	],
-	framework: '@storybook/react',
-	core: {
-		builder: 'webpack5',
-	},
-	features: { storyStoreV7: true },
-	typescript: {
-		check: false,
-		checkOptions: {},
-		reactDocgen: 'react-docgen-typescript',
-		reactDocgenTypescriptOptions: {
-			shouldExtractLiteralValuesFromEnum: true,
-			// propFilter: (prop: Record<string, any>) =>
-			// 	prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
+	framework: {
+		name: '@storybook/nextjs',
+		options: {
+			builder: {
+				// lazyCompilation: true,
+				// fsCache: true,
+			},
+			nextConfigPath: path.resolve(__dirname, '../../../apps/app/next.config.mjs'),
+			fastRefresh: true,
 		},
 	},
-	webpackFinal: async (config: Record<string, any>) => {
-		/** Next-Auth session mock */
-		;(config.resolve.alias['@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states'] =
-			path.resolve(__dirname, 'mockAuthStates.ts')),
-			(config.resolve.alias['next-i18next'] = 'react-i18next')
-		/**
-		 * Fixes font import with /
-		 *
-		 * @see https://github.com/storybookjs/storybook/issues/12844#issuecomment-867544160
-		 */
-		// config.resolve.roots = [
-		// 	path.resolve(__dirname, "../public"),
-		// 	"node_modules",
-		// ];
-		// config.resolve.alias = {
-		// 	...config.resolve.alias,
-		// 	"@/interfaces": path.resolve(__dirname, "../interfaces"),
-		// };
-		/**
-		 * Why webpack5... Just why?
-		 *
-		 * @type {{
-		 * 	console: boolean
-		 * 	process: boolean
-		 * 	timers: boolean
-		 * 	os: boolean
-		 * 	querystring: boolean
-		 * 	sys: boolean
-		 * 	fs: boolean
-		 * 	url: boolean
-		 * 	crypto: boolean
-		 * 	path: boolean
-		 * 	zlib: boolean
-		 * 	punycode: boolean
-		 * 	util: boolean
-		 * 	stream: boolean
-		 * 	assert: boolean
-		 * 	string_decoder: boolean
-		 * 	domain: boolean
-		 * 	vm: boolean
-		 * 	tty: boolean
-		 * 	http: boolean
-		 * 	buffer: boolean
-		 * 	constants: boolean
-		 * 	https: boolean
-		 * 	events: boolean
-		 * }}
-		 */
-		config.resolve.fallback = {
-			fs: false,
-			assert: false,
-			buffer: false,
-			console: false,
-			constants: false,
-			crypto: false,
-			domain: false,
-			events: false,
-			http: false,
-			https: false,
-			os: false,
-			path: false,
-			punycode: false,
-			process: false,
-			querystring: false,
-			stream: false,
-			string_decoder: false,
-			sys: false,
-			timers: false,
-			tty: false,
-			url: false,
-			util: false,
-			vm: false,
-			zlib: false,
+	features: {
+		buildStoriesJson: true,
+	},
+	refs: {
+		// chromatic: {
+		// 	// The title of your Storybook
+		// 	title: 'InReach Design System',
+		// 	// The url provided by Chromatic when it was published
+		// 	url: 'https://dev--632cabf2eef8a2954cd3cbc6.chromatic.com',
+		// },
+	},
+	typescript: {
+		check: false,
+		reactDocgen: process.env.SKIP_DOCS ? false : 'react-docgen-typescript',
+		reactDocgenTypescriptOptions: {
+			shouldExtractLiteralValuesFromEnum: true,
+			shouldRemoveUndefinedFromOptional: true,
+			shouldExtractValuesFromUnion: false,
+			shouldIncludePropTagMap: true,
+			tsconfigPath: path.resolve(__dirname, '../tsconfig.storybook.json'),
+			propFilter: (prop: PropItem) => {
+				const pathTest = /node_modules\/(?!(?:\.pnpm\/)?@mantine(?!.?styles))/
+				// if (prop.parent && !pathTest.test(prop.parent.fileName)) console.log(prop)
+				return prop.parent ? !pathTest.test(prop.parent.fileName) : true
+			},
+		},
+	},
+	webpackFinal: (config) => {
+		const configAdditions: typeof config = {
+			resolve: {
+				alias: {
+					/** Next-Auth session mock */
+					'@tomfreudenberg/next-auth-mock/storybook/preview-mock-auth-states': path.resolve(
+						__dirname,
+						'mockAuthStates.ts'
+					),
+					// '@weareinreach/api': path.resolve(__dirname, '../../api'),
+					'next-i18next': 'react-i18next',
+					'@next/font': 'storybook-nextjs-font-loader',
+				},
+				roots: [path.resolve(__dirname, '../../../apps/app/public')],
+				fallback: {
+					fs: false,
+					assert: false,
+					buffer: false,
+					console: false,
+					constants: false,
+					crypto: false,
+					domain: false,
+					events: false,
+					http: false,
+					https: false,
+					os: false,
+					path: false,
+					punycode: false,
+					process: false,
+					querystring: false,
+					stream: false,
+					string_decoder: false,
+					sys: false,
+					timers: false,
+					tty: false,
+					url: false,
+					util: false,
+					v8: false,
+					vm: false,
+					zlib: false,
+				},
+				plugins: [
+					new TsconfigPathsPlugin({
+						extensions: config.resolve?.extensions,
+					}),
+				],
+			},
 		}
-		return config
+		const mergedConfig = merge(config, configAdditions)
+		return mergedConfig
+	},
+	docs: {
+		autodocs: true,
 	},
 }
 export default config

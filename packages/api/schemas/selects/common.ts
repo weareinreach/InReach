@@ -1,0 +1,139 @@
+import { Prisma } from '@weareinreach/db'
+
+export const isPublic = {
+	published: true,
+	deleted: false,
+}
+
+export const freeText = {
+	select: {
+		key: true,
+		ns: true,
+	},
+} satisfies Prisma.FreeTextArgs
+
+export const countryWithoutGeo = {
+	select: {
+		cca2: true,
+		cca3: true,
+		id: true,
+		name: true,
+		dialCode: true,
+		flag: true,
+		tsKey: true,
+		tsNs: true,
+		demonymKey: true,
+		demonymNs: true,
+	},
+}
+export const govDistWithoutGeo = {
+	select: {
+		id: true,
+		name: true,
+		slug: true,
+		iso: true,
+		abbrev: true,
+		country: countryWithoutGeo,
+		govDistType: {
+			select: {
+				tsKey: true,
+				tsNs: true,
+			},
+		},
+		isPrimary: true,
+		tsKey: true,
+		tsNs: true,
+		parent: {
+			select: {
+				id: true,
+				name: true,
+				slug: true,
+				iso: true,
+				abbrev: true,
+				country: countryWithoutGeo,
+				govDistType: {
+					select: {
+						tsKey: true,
+						tsNs: true,
+					},
+				},
+				isPrimary: true,
+				tsKey: true,
+				tsNs: true,
+			},
+		},
+	},
+}
+
+export const attributes = {
+	where: {
+		attribute: {
+			active: true,
+		},
+	},
+	select: {
+		attribute: {
+			select: {
+				categories: {
+					select: {
+						category: {
+							select: {
+								ns: true,
+								tag: true,
+							},
+						},
+					},
+				},
+				tsKey: true,
+				tsNs: true,
+			},
+		},
+		supplement: {
+			select: {
+				country: countryWithoutGeo,
+				language: {
+					select: {
+						languageName: true,
+						nativeName: true,
+					},
+				},
+				text: {
+					select: {
+						ns: true,
+						key: true,
+					},
+				},
+				boolean: true,
+				data: true,
+			},
+		},
+	},
+} satisfies Prisma.OrgService$attributesArgs
+
+export const languageNames = { select: { languageName: true, nativeName: true } }
+
+export const phoneSelectPublic = {
+	where: {
+		phone: isPublic,
+	},
+	select: {
+		phone: {
+			select: {
+				country: countryWithoutGeo,
+				phoneLangs: {
+					select: {
+						language: languageNames,
+					},
+				},
+				phoneType: {
+					select: {
+						tsKey: true,
+						tsNs: true,
+					},
+				},
+				number: true,
+				ext: true,
+			},
+		},
+	},
+}

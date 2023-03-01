@@ -7,7 +7,47 @@
 			"// codegen:end"
 		],
 		"description": "Code to have ESLint generate barrel file"
+	},
+	"Next.js SSR Page with i18n preload": {
+		"prefix": "!ssrpagei18",
+		"body": [
+			"import { trpcServerClient } from '@weareinreach/api/trpc'",
+			"import { GetServerSideProps, NextPage } from 'next'",
+			"import { useTranslation } from 'next-i18next'",
+			"import { serverSideTranslations } from 'next-i18next/serverSideTranslations'",
+			"",
+			"import { api } from '~/utils/api'",
+			"",
+			"const ${1:$TM_FILENAME_BASE}: NextPage = () => {",
+			"\tconst { t } = useTranslation()",
+			"",
+			"\treturn <></>",
+			"}",
+			"",
+			"export const getServerSideProps: GetServerSideProps = async ({ req, res, locale }) => {",
+			"\tconst ssg = await trpcServerClient()",
+			"",
+			"\tconst props = {",
+			"\t\ttrpcState: ssg.dehydrate(),",
+			"\t\t...(await serverSideTranslations(locale as string, ['common'])),",
+			"\t}",
+			"",
+			"\treturn {",
+			"\t\tprops,",
+			"\t}",
+			"}",
+			"",
+			"export default ${1:$TM_FILENAME_BASE}",
+			""
+		],
+		"description": "Next.js SSR Page with i18n preload"
+	},
+	"try/catch with trpc error handler": {
+		"prefix": "trycatchtrpc",
+		"body": ["try {", "\t\t$0", "", "", "\t} catch (error) {", "\t\thandleError(error)", "}"],
+		"description": "try/catch with trpc error handler"
 	}
+
 	// Place your ✨ InReach (root) workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
 	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
 	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is

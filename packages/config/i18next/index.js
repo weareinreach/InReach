@@ -1,10 +1,6 @@
+/* eslint-disable import/no-unused-modules */
 // @ts-check
-
-/**
- * @template {import('next-i18next').UserConfig} T
- * @param {T} config
- * @constraint {{import('next-i18next').UserConfig}}
- */
+/** @type {import('next-i18next').UserConfig} */
 const config = {
 	i18n: {
 		defaultLocale: 'en',

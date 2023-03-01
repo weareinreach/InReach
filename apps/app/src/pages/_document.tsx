@@ -1,7 +1,6 @@
-import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
-
-import { ServerStyles, createStylesServer } from '@weareinreach/ui/mantine/next'
+import { ServerStyles, createStylesServer } from '@mantine/next'
 import { appCache } from '@weareinreach/ui/theme'
+import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
 
 const stylesServer = createStylesServer(appCache)
 export default class _Document extends Document {

@@ -1,21 +1,11 @@
-import type { ListrRenderer, ListrTaskWrapper } from 'listr2'
+import { type ListrRenderer, type ListrTaskWrapper } from 'listr2'
 
-import { prisma } from '~/index'
-
-import { seedLanguageData } from '../data/languages'
-import { logFile } from '../logger'
+import { prisma } from '~db/index'
+import { genSeedLanguageData } from '~db/seed/data/02-languages'
 
 export const seedLanguages = async (task: ListrTaskWrapper<unknown, typeof ListrRenderer>) => {
-	try {
-		let i = 1
-		for (const item of seedLanguageData) {
-			logFile.log(`(${i}/${seedLanguageData.length}) Upserting Language: ${item.create.languageName}`)
-			task.output = `(${i}/${seedLanguageData.length}) Upserting Language: ${item.create.languageName}`
-			await prisma.language.upsert(item)
-			i++
-		}
-		task.title = `Languages (${i - 1} records)`
-	} catch (err) {
-		throw err
-	}
+	const data = genSeedLanguageData(task)
+
+	const result = await prisma.language.createMany({ data, skipDuplicates: true })
+	task.title = `Languages (${result.count} records)`
 }

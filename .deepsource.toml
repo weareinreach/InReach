@@ -3,16 +3,16 @@ version = 1
 exclude_patterns = ["docs/database"]
 
 [[analyzers]]
-name = "javascript"
-enabled = true
+	enabled = true
+	name    = "javascript"
 
-  [analyzers.meta]
-  plugins = ["react"]
+	[analyzers.meta]
+		plugins = ["react"]
 
 [[analyzers]]
-name = "secrets"
-enabled = true
+	enabled = true
+	name    = "secrets"
 
 [[transformers]]
-name = "prettier"
-enabled = true
+	enabled = false
+	name    = "prettier"

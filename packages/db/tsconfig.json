@@ -1,11 +1,11 @@
 {
-	"extends": "../../tsconfig.json",
+	"extends": "@weareinreach/config/tsconfig/base.json",
 	"compilerOptions": {
 		"noImplicitAny": false,
-		"baseUrl": ".",
-		"paths": {
-			"~/*": ["./*"]
-		}
+		"strictNullChecks": true,
+		"baseUrl": "./",
+		"allowJs": true
 	},
-	"include": ["index.ts", "data-transfer", "seed", "zod-schemas", "zod-util"]
+	"exclude": ["**/node_modules", "./**/.*/"],
+	"include": ["./**/*.ts", "../../@types/**/*.ts"]
 }

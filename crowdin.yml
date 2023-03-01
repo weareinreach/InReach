@@ -1,7 +1,8 @@
-project_id_env: 'CROWDIN_PROJECT_ID'
+project_id: '12'
 api_token_env: 'CROWDIN_PERSONAL_TOKEN'
+base_url: https://inreach.crowdin.com
 preserve_hierarchy: false
-
+base_path: '.'
 #
 # Files configuration
 #
@@ -18,4 +19,11 @@ files:
 
 pull_request_labels:
   - translations
-pull_request_title: 'i18n: Updated translations from Crowdin'
+  - "kodiak: merge.method = 'squash'"
+pull_request_title: 'chore(i18n): Updated translations from Crowdin'
+export_languages:
+  - 'en-US'
+  - 'en-CA'
+  - 'es'
+  - 'es-US'
+  - 'es-MX'

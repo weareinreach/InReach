@@ -31,6 +31,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.log
+.trace/
 
 # local env files
 .env.local
@@ -59,3 +61,5 @@ test/cypress/fixtures/temp/example-1.json
 # Generated files (except folder placeholder)
 _generated/*
 !_generated/.gitkeep
+
+.serverless

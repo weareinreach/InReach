@@ -1,15 +1,6 @@
-import userIcon from '@iconify/icons-fa6-solid/user'
 import { Icon } from '@iconify/react'
-import { useSession } from 'next-auth/react'
-import { useTranslation } from 'next-i18next'
-
-import Image from 'next/image'
-
-import { useState } from 'react'
-
 import {
 	Avatar,
-	Button,
 	DefaultProps,
 	Group,
 	Menu,
@@ -19,10 +10,19 @@ import {
 	UnstyledButton,
 	createStyles,
 } from '@mantine/core'
+import Image from 'next/image'
+import { useSession } from 'next-auth/react'
+import { useTranslation } from 'next-i18next'
+
+import { Button } from '~ui/components/core/Button'
+// import { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
 	menu: {
 		width: 250,
+	},
+	buttonGroup: {
+		width: 500,
 	},
 	buttons: {
 		[theme.fn.smallerThan('md')]: {
@@ -51,9 +51,9 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation('nav')
 	const { data: session, status } = useSession()
-	const [_userMenuOpen, setUserMenuOpen] = useState(false)
+	// const [_userMenuOpen, setUserMenuOpen] = useState(false)
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 
 	if (status === 'loading' && !session) {
@@ -71,8 +71,8 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 				width={260}
 				position='bottom-end'
 				transition='scale-y'
-				onClose={() => setUserMenuOpen(false)}
-				onOpen={() => setUserMenuOpen(true)}
+				// onClose={() => setUserMenuOpen(false)}
+				// onOpen={() => setUserMenuOpen(true)}
 			>
 				<Menu.Target>
 					<UnstyledButton className={cx(classes.menu, classes.buttons, className)}>
@@ -87,7 +87,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 										alt={session.user.name || t('user-avatar')}
 									/>
 								) : (
-									<Icon icon={userIcon} height={55} width={55} className={classes.avatar} />
+									<Icon icon='fa6-solid:user' className={classes.avatar} />
 								)}
 							</Avatar>
 							<Text weight={500} size='sm' sx={{ lineHeight: 1 }} mr={3}>
@@ -108,7 +108,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 		)
 	}
 	return (
-		<Group className={cx(classes.menu, className)}>
+		<Group className={cx(classes.buttonGroup, className)}>
 			<Button className={classes.buttons}>{t('sign-up')}</Button>
 			<Button variant='outline' className={classes.buttons}>
 				{t('log-in')}

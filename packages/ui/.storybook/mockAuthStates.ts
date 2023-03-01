@@ -1,4 +1,9 @@
-import { faker } from '@faker-js/faker'
+import { Session } from '@weareinreach/auth'
+import { ulid } from 'ulid'
+
+const expires = (Date.now() / 1000 + 3600).toString()
+
+const createId = () => `user_${ulid()}`
 
 const states = {
 	unknown: {
@@ -12,102 +17,90 @@ const states = {
 			status: 'loading',
 		},
 	},
-	admin: {
-		title: 'admin [no auth]',
+	noAuth: {
+		title: 'not logged in',
 		session: {
-			data: {
-				user: {
-					id: 1,
-					role: 'admin',
-					roles: ['admin', 'user'],
-					name: 'Administrator',
-					email: 'admin@local',
-					image: faker.image.avatar(),
-				},
-			},
+			data: null,
 			status: 'unauthenticated',
 		},
 	},
 	adminAuthed: {
-		title: 'admin [auth]',
+		title: 'admin session',
 		session: {
 			data: {
 				user: {
-					id: 1,
-					role: 'admin',
+					id: createId(),
+					permissions: ['canAdmin', 'canUser'],
 					roles: ['admin', 'user'],
 					name: 'Administrator',
-					email: 'admin@local',
+					email: 'placeholder.admin@gmail.com',
 				},
+				expires,
 			},
 			status: 'authenticated',
 		},
 	},
 	userPic: {
-		title: 'user w/ pic [no auth]',
+		title: 'user w/ pic',
 		session: {
 			data: {
 				user: {
-					id: 999,
-					login: 'user',
-					role: 'user',
+					id: createId(),
 					roles: ['user'],
-					name: faker.name.fullName(),
-					email: 'user@local',
-					image: faker.image.avatar(),
+					permissions: ['canUser'],
+					name: "Auth'd User",
+					email: 'placeholder.user@gmail.com',
+					image: 'https://i.pravatar.cc/50?u=abcdef',
 				},
-			},
-			status: 'unauthenticated',
-		},
-	},
-	userPicAuthed: {
-		title: 'user w/ pic [auth]',
-		session: {
-			data: {
-				user: {
-					id: 999,
-					login: 'user',
-					role: 'user',
-					roles: ['user'],
-					name: faker.name.fullName(),
-					email: 'user@local',
-					image: faker.image.avatar(),
-				},
+				expires,
 			},
 			status: 'authenticated',
 		},
 	},
-	user: {
-		title: 'user w/o pic [no auth]',
+	userNoPic: {
+		title: 'user w/o pic',
 		session: {
 			data: {
 				user: {
-					id: 999,
-					login: 'user',
-					role: 'user',
+					id: createId(),
 					roles: ['user'],
-					name: faker.name.fullName(),
-					email: 'user@local',
+					permissions: ['canUser'],
+					name: 'User name',
+					email: 'user.name@gmail.com',
 				},
-			},
-			status: 'unauthenticated',
-		},
-	},
-	userAuthed: {
-		title: 'user w/o pic [auth]',
-		session: {
-			data: {
-				user: {
-					id: 999,
-					login: 'user',
-					role: 'user',
-					roles: ['user'],
-					name: faker.name.fullName(),
-					email: 'user@local',
-				},
+				expires,
 			},
 			status: 'authenticated',
 		},
 	},
-}
+	userNoPicNoName: {
+		title: 'user w/o pic or name',
+		session: {
+			data: {
+				user: {
+					id: createId(),
+					roles: ['user'],
+					permissions: ['canUser'],
+					email: 'user.name@gmail.com',
+				},
+				expires,
+			},
+			status: 'authenticated',
+		},
+	},
+} as const
+
+type SessionContext = {
+	data: Session | null
+	status: 'unauthenticated' | 'loading' | 'authenticated'
+} | null
+
+type MockAuth = Record<
+	string,
+	{
+		title: string
+		session: SessionContext
+	}
+>
+
 export default states

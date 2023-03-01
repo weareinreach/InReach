@@ -1,11 +1,13 @@
+/* eslint-disable node/no-process-env */
 import { Command } from 'commander'
+import { Listr, ListrContext, ListrRenderer, ListrTaskWrapper } from 'listr2'
+
 import {
-	generateFooterLinks,
-	generateNavigation,
-	generateSocialMediaLinks,
+	// generateFooterLinks,
+	// generateNavigation,
+	// generateSocialMediaLinks,
 	generateTranslationKeys,
 } from 'lib/generators'
-import { Listr, ListrContext, ListrRenderer, ListrTaskWrapper } from 'listr2'
 
 const program = new Command()
 
@@ -20,24 +22,25 @@ const translation = [
 		title: 'Translation definitions from DB',
 		task: (_ctx: ListrContext, task: ListrTask) => generateTranslationKeys(task),
 		options,
+		skip: !process.env.DATABASE_URL,
 	},
 ]
 const siteData = [
-	{
-		title: 'Navigation Links',
-		task: (_ctx: ListrContext, task: ListrTask) => generateNavigation(task),
-		options,
-	},
-	{
-		title: 'Footer Links',
-		task: (_ctx: ListrContext, task: ListrTask) => generateFooterLinks(task),
-		options,
-	},
-	{
-		title: 'Social Media Links',
-		task: (_ctx: ListrContext, task: ListrTask) => generateSocialMediaLinks(task),
-		options,
-	},
+	// {
+	// 	title: 'Navigation Links',
+	// 	task: (_ctx: ListrContext, task: ListrTask) => generateNavigation(task),
+	// 	options,
+	// },
+	// {
+	// 	title: 'Footer Links',
+	// 	task: (_ctx: ListrContext, task: ListrTask) => generateFooterLinks(task),
+	// 	options,
+	// },
+	// {
+	// 	title: 'Social Media Links',
+	// 	task: (_ctx: ListrContext, task: ListrTask) => generateSocialMediaLinks(task),
+	// 	options,
+	// },
 ]
 
 program
@@ -52,8 +55,11 @@ let tasklist = []
 
 if (cliOpts.translations) tasklist.push(...translation)
 
-if (cliOpts.data) tasklist.push(...siteData)
-if (Object.keys(cliOpts).length === 0) tasklist = [...translation, ...siteData]
+// if (cliOpts.data) tasklist.push(...siteData)
+if (Object.keys(cliOpts).length === 0) tasklist = [...translation /*...siteData*/]
 
-const tasks = new Listr(tasklist)
+const tasks = new Listr(tasklist, {
+	exitOnError: false,
+})
+
 tasks.run()

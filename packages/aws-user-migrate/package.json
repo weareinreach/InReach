@@ -7,30 +7,36 @@
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"scripts": {
-		"build:aws": "pnpm clean:dist && pnpm bundle && pnpm package",
-		"bundle": "ncc build ./src/index.ts -s -m -a",
+		"aws:db:generate": "prisma generate --schema ../db/prisma/schema.prisma",
+		"build:aws": "./build.sh",
+		"bundle": "ncc build ./src/index.ts -s  -a -d",
 		"clean:dist": "rm -fr dist",
 		"clean:node": "rm -rf ./node_modules/ || true",
+		"deploy:aws": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://bundle.zip",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
-		"package": "cd dist && rm -v client/!(*rhel*) && zip -r bundle.zip *",
-		"upload": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://dist/bundle.zip"
+		"package": "pnpm prune-clients && cd dist && zip -r bundle.zip *",
+		"prune-clients": "find ./dist/client -type f -not -name '*rhel*' -delete -print"
 	},
 	"dependencies": {
-		"@weareinreach/db": "0.100.0",
-		"aws-sdk": "2.1259.0"
+		"@aws-lambda-powertools/logger": "1.5.1",
+		"@prisma/client": "4.10.1",
+		"@weareinreach/db": "0.100.0"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.108",
-		"@types/node": "16.18.3",
-		"@vercel/ncc": "0.34.0",
+		"@types/aws-lambda": "8.10.111",
+		"@types/eslint": "8.21.1",
+		"@types/node": "18.14.2",
+		"@types/prettier": "2.7.2",
+		"@vercel/ncc": "0.36.1",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
-		"eslint": "8.28.0",
-		"prettier": "2.7.1",
-		"typescript": "4.9.3"
+		"eslint": "8.35.0",
+		"prettier": "2.8.4",
+		"prisma": "4.10.1",
+		"typescript": "4.9.5"
 	}
 }

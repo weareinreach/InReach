@@ -1,6 +1,4 @@
-import { BADGE } from '@geometricpanda/storybook-addon-badges'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
-
+import { Meta } from '@storybook/react'
 import React from 'react'
 
 import { UserMenu as UserMenuComponent } from './'
@@ -8,34 +6,44 @@ import { UserMenu as UserMenuComponent } from './'
 export default {
 	title: 'App/Navigation Header Bar/User Menu',
 	component: UserMenuComponent,
+} as Meta<typeof UserMenuComponent>
+
+export const LoggedOut = {
+	render: () => <UserMenuComponent />,
+
 	parameters: {
-		badges: [BADGE.BETA],
+		nextAuthMock: {
+			session: 'unknown',
+		},
 	},
-} as ComponentMeta<typeof UserMenuComponent>
+}
 
-const Template: ComponentStory<typeof UserMenuComponent> = () => <UserMenuComponent />
+export const Loading = {
+	render: () => <UserMenuComponent />,
 
-export const LoggedOut = Template.bind({})
-export const Loading = Template.bind({})
-export const LoggedIn = Template.bind({})
-export const LoggedInNoPic = Template.bind({})
-LoggedOut.parameters = {
-	nextAuthMock: {
-		session: 'unknown',
+	parameters: {
+		nextAuthMock: {
+			session: 'loading',
+		},
 	},
 }
-Loading.parameters = {
-	nextAuthMock: {
-		session: 'loading',
+
+export const LoggedIn = {
+	render: () => <UserMenuComponent />,
+
+	parameters: {
+		nextAuthMock: {
+			session: 'userPic',
+		},
 	},
 }
-LoggedIn.parameters = {
-	nextAuthMock: {
-		session: 'userPicAuthed',
-	},
-}
-LoggedInNoPic.parameters = {
-	nextAuthMock: {
-		session: 'userAuthed',
+
+export const LoggedInNoPic = {
+	render: () => <UserMenuComponent />,
+
+	parameters: {
+		nextAuthMock: {
+			session: 'userNoPic',
+		},
 	},
 }

@@ -1,1 +1,20 @@
-{}
+{
+	"back-to-search": "Volver a buscar",
+	"close": "Cerrar",
+	"country-select": "Elija un país",
+	"download-app": "Descargar nuestra aplicación",
+	"edit-profile": "Editar perfil",
+	"inreach": "InReach",
+	"log-in": "Iniciar sesión",
+	"log-out": "Cerrar sesión",
+	"none-apply": "Ninguno de estos se aplica a mí",
+	"other-specify": "Other (specify)",
+	"prefer-not-to-say": "Preferirse a no decir",
+	"saved-lists": "Listas guardadas",
+	"settings": "Ajustes",
+	"sign-up": "Regístrate",
+	"user-avatar": "Avatar de usuario",
+	"your-comments": "Tus comentarios",
+	"review-count_one": "{{count}} reseña",
+	"review-count_other": "{{count}} valoraciones"
+}

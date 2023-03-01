@@ -12,18 +12,45 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@types/node": "16.18.3",
-		"@types/react": "18.0.25",
-		"@types/react-dom": "18.0.9",
-		"eslint": "8.28.0",
-		"eslint-config-next": "13.0.5-canary.2",
-		"next": "13.0.5-canary.2",
+		"@crowdin/ota-client": "0.7.0",
+		"@emotion/react": "11.10.6",
+		"@emotion/server": "11.10.0",
+		"@mantine/carousel": "5.10.5",
+		"@mantine/core": "5.10.5",
+		"@mantine/dates": "5.10.5",
+		"@mantine/dropzone": "5.10.5",
+		"@mantine/form": "5.10.5",
+		"@mantine/hooks": "5.10.5",
+		"@mantine/modals": "5.10.5",
+		"@mantine/next": "5.10.5",
+		"@mantine/notifications": "5.10.5",
+		"@mantine/nprogress": "5.10.5",
+		"@mantine/prism": "5.10.5",
+		"@mantine/spotlight": "5.10.5",
+		"@mantine/tiptap": "5.10.5",
+		"@tiptap/extension-link": "2.0.0-beta.219",
+		"@tiptap/react": "2.0.0-beta.219",
+		"@tiptap/starter-kit": "2.0.0-beta.219",
+		"@weareinreach/ui": "0.100.0",
+		"dayjs": "1.11.7",
+		"embla-carousel-react": "7.0.9",
+		"feather-icons-react": "0.6.2",
+		"i18next": "22.4.10",
+		"next": "13.2.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"typescript": "4.9.3"
+		"react-i18next": "12.2.0"
 	},
 	"devDependencies": {
+		"@next/bundle-analyzer": "13.2.1",
+		"@next/font": "13.2.1",
+		"@types/eslint": "8.21.1",
+		"@types/node": "18.14.2",
+		"@types/react": "18.0.28",
+		"@types/react-dom": "18.0.11",
 		"@weareinreach/config": "0.100.0",
-		"@weareinreach/eslint-config": "0.100.0"
+		"@weareinreach/eslint-config": "0.100.0",
+		"eslint": "8.35.0",
+		"typescript": "4.9.5"
 	}
 }
