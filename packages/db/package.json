@@ -34,7 +34,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@prisma/client": "4.10.1",
+		"@prisma/client": "4.11.0",
 		"ulid": "2.3.0",
 		"zod": "3.20.6"
 	},
@@ -76,11 +76,11 @@
 		"luxon": "3.2.1",
 		"mongoback": "3.0.6",
 		"prettier": "2.8.4",
-		"prisma": "4.10.1",
+		"prisma": "4.11.0",
 		"prisma-dbml-generator": "0.10.0",
 		"prisma-query-inspector": "1.4.4",
 		"prisma-query-log": "3.2.0",
-		"quicktype-core": "23.0.9",
+		"quicktype-core": "23.0.10",
 		"recursive-readdir": "2.2.3",
 		"shoetest": "1.2.2",
 		"slugify": "1.6.5",
