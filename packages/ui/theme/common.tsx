@@ -1,4 +1,5 @@
 /* eslint-disable import/consistent-type-specifier-style */
+import { useMediaQuery } from '@mantine/hooks'
 import { keys } from '@mantine/utils'
 
 import { Icon } from '~ui/icon'
@@ -372,14 +373,15 @@ export const commonTheme = {
 				} satisfies Styles<InputStylesNames, InputStylesParams>),
 		},
 		Modal: {
-			defaultProps: (theme) =>
-				({
+			defaultProps: (theme) => {
+				return {
 					overflow: 'inside',
 					radius: theme.radius.xl,
 					centered: true,
 					size: 'auto',
 					withCloseButton: false,
-				} satisfies Partial<ModalProps>),
+				} satisfies Partial<ModalProps>
+			},
 			styles: (theme) =>
 				({
 					modal: {
@@ -388,29 +390,40 @@ export const commonTheme = {
 							maxHeight: 800,
 							minWidth: 600,
 						},
+						// [theme.fn.smallerThan('md')]: {
+						// 	position: 'absolute',
+						// 	top: 0,
+						// 	left: 0,
+						// 	right: 0,
+						// 	bottom: 0,
+						// 	// maxHeight: '100vh',
+						// 	width: '100vw',
+						// 	overflowY: 'auto',
+						// },
 					},
 					header: {
 						margin: 0,
-						padding: '16px 8px 16px 12px',
+						padding: '32px 20px 16px 12px',
 						borderBottom: '1px',
 						borderBottomStyle: 'solid',
 						borderColor: theme.other.colors.primary.lightGray,
 						[theme.fn.largerThan('xs')]: {
-							padding: '16px 20px 16px 24px',
+							padding: '16px 32px 16px 24px',
 						},
 					},
 					body: {
 						padding: '20px',
 						[theme.fn.largerThan('xs')]: {
-							padding: ['20px', '32px', '20px', '32px'],
+							padding: '20px 32px 20px 32px',
 						},
 						[theme.fn.largerThan('sm')]: {
-							padding: ['40px', '32px'],
+							padding: '40px 32px',
 						},
 					},
 					title: {
 						margin: 0,
 						width: '100%',
+						padding: 0,
 					},
 				} satisfies Styles<ModalStylesNames, ModalStylesParams>),
 		},
@@ -524,7 +537,7 @@ export const commonTheme = {
 			styles: (theme) =>
 				({
 					tab: {
-						padding: [`16px`, `24px`],
+						padding: `16px 24px`,
 						'&[data-active]': {
 							borderColor: theme.other.colors.secondary.black,
 						},

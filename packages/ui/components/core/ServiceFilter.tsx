@@ -11,10 +11,10 @@ import {
 	TextProps,
 	ScrollArea,
 	useMantineTheme,
-	Box,
 	Skeleton,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 
@@ -26,27 +26,73 @@ import { Button } from './Button'
 
 const RESULT_PLACEHOLDER = 999
 
-const useStyles = createStyles((theme) => ({
+const useAccordionStyles = createStyles((theme) => ({
 	label: {
 		...theme.other.utilityFonts.utility1,
 	},
-	modalBody: {
-		padding: '40px 32px',
-		[theme.fn.smallerThan('md')]: {
-			padding: '40px 20px',
+	content: {
+		padding: '0px 0px 12px 0px',
+	},
+	item: {
+		margin: 0,
+		'&:last-of-type': {
+			marginBottom: '40px',
+		},
+	},
+	chevron: { '&[data-rotate]': { transform: 'rotate(90deg)' } },
+	scrollArea: {
+		paddingRight: '12px',
+	},
+	control: {
+		padding: '12px 0px',
+	},
+	panel: {
+		padding: 0,
+	},
+}))
+
+const useModalStyles = createStyles((theme) => ({
+	body: {
+		padding: '10px 4px 10px 16px',
+		[theme.fn.largerThan('xs')]: {
+			padding: '40px 8px 20px 20px',
+		},
+		[theme.fn.largerThan('sm')]: {
+			padding: '40px 20px 20px 32px',
 		},
 		[theme.fn.smallerThan('sm')]: {
-			padding: '10px 16px',
+			maxHeight: 'none',
+			padding: '10px 8px 40px 20px',
+		},
+		[`@media (orientation: landscape) and (max-height: 376px)`]: {
+			paddingBottom: '20px',
+		},
+		[`@media (orientation: landscape) and (max-height: 430px)`]: {
+			maxHeight: 'none',
+			paddingTop: '20px',
 		},
 	},
-	modalHeader: {
-		padding: '0px 20px 0px 24px !important',
+	title: {
+		padding: '8px 0px 8px 8px',
+		width: '100%',
 	},
-	modalModal: {
-		maxHeight: 'fit-content !important',
+	header: {},
+	modal: {},
+	footer: {
+		borderTop: 'solid 1px' + theme.other.colors.primary.lightGray,
+		padding: '20px 12px 0px 0px',
+		[theme.fn.smallerThan('sm')]: {
+			padding: '32px 12px 0px 0px',
+		},
+		[`${theme.fn.smallerThan(375)}, (orientation: landscape) and (max-height: 376px)`]: {
+			paddingTop: '20px',
+		},
 	},
-	root: {
-		overflow: 'scroll',
+}))
+
+const useStyles = createStyles((theme) => ({
+	label: {
+		...theme.other.utilityFonts.utility1,
 	},
 	count: {
 		...theme.other.utilityFonts.utility1,
@@ -60,19 +106,17 @@ const useStyles = createStyles((theme) => ({
 		verticalAlign: 'center',
 		lineHeight: 1.5,
 	},
-	modalTitle: {
-		padding: '24px 24px 24px 32px',
-		width: '100%',
-	},
+
 	button: {
 		padding: '14px 20px 14px 16px',
 		backgroundColor: theme.other.colors.secondary.white,
 		borderRadius: '8px',
 		border: `${theme.other.colors.tertiary.coolGray} 1px solid`,
 	},
-	item: {
-		marginLeft: theme.spacing.md,
-		marginRight: theme.spacing.md,
+
+	itemParent: {},
+	itemChild: {
+		marginLeft: '40px',
 	},
 	uncheck: {
 		color: theme.other.colors.secondary.black,
@@ -83,65 +127,69 @@ const useStyles = createStyles((theme) => ({
 			color: theme.other.colors.secondary.black,
 			cursor: 'pointer',
 		},
-		[theme.fn.smallerThan('md')]: {
+		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${
+			theme.breakpoints.xs
+		}px)`]: {
 			display: 'none',
 		},
 	},
 	uncheckDisabled: {
 		textDecoration: 'underline',
 		color: theme.other.colors.secondary.darkGray,
-		[theme.fn.smallerThan('md')]: {
+		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${
+			theme.breakpoints.xs
+		}px)`]: {
 			display: 'none',
 		},
 	},
 	uncheckBtn: {
-		width: '48%',
+		width: '50%',
 		borderRadius: '8px',
-		marginRight: '4px',
 		padding: '6px 8px',
 		[theme.fn.largerThan('sm')]: {
 			display: 'none',
 		},
 		[theme.fn.smallerThan(375)]: {
-			width: '100%',
 			marginRight: 'unset',
+			'& *': {
+				fontSize: '14px !important',
+			},
 		},
 	},
 	resultsBtn: {
 		borderRadius: '8px',
 		[theme.fn.smallerThan('sm')]: {
-			width: '48%',
-			marginLeft: '4px',
+			width: '50%',
 			padding: '6px 8px',
 		},
 		[theme.fn.smallerThan(375)]: {
-			width: '100%',
-			marginTop: '12px',
 			marginLeft: 'unset',
+			'& *': {
+				fontSize: '14px !important',
+			},
 		},
-		[theme.fn.largerThan('sm')]: {
-			width: '100%',
-		},
-	},
-	footer: {
-		borderTop: 'solid 1px' + theme.other.colors.primary.lightGray,
-		padding: '32px 16px 0px 16px',
-		[theme.fn.smallerThan('md')]: {
-			padding: '32px 0px 0px 0px',
-		},
-		[theme.fn.smallerThan(375)]: {
-			paddingTop: '12px',
-		},
+		width: '100%',
 	},
 }))
 
 export const ServiceFilter = ({}) => {
 	const { data: serviceOptionData, status } = api.service.getFilterOptions.useQuery()
 	const { classes, cx } = useStyles()
+	const { classes: accordionClasses } = useAccordionStyles()
+	const { classes: modalClasses } = useModalStyles()
 	const { t } = useTranslation(['common', 'services'])
 	const [opened, setOpened] = useState(false)
 	const modalSettings = useModalProps()
 	const theme = useMantineTheme()
+
+	const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`)
+	const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: 430px)`)
+	const isSmallLandscape = useMediaQuery(
+		`(orientation: landscape) and (max-height: 376px) and (max-width: ${theme.breakpoints.xs}px)`
+	)
+	const isMobile = isMobileQuery || isLandscape
+	const viewportHeight = useViewportSize().height + (isLandscape ? (isSmallLandscape ? 40 : 20) : 0)
+	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 : viewportHeight * 0.6 - 88
 
 	/** TODO: Results will be filtered live as items are selected - need to update the count of results left */
 	const resultCount = RESULT_PLACEHOLDER
@@ -195,13 +243,13 @@ export const ServiceFilter = ({}) => {
 	const deselectAll = () => form.setValues(generateInitialData())
 
 	const formObjectEntryArray = Object.entries(form.values)
-	const filterList = formObjectEntryArray.map(([categoryId, services], catIdx) => {
+	const filterList = formObjectEntryArray.map(([categoryId, services]) => {
 		const checked = hasAll(categoryId)
 		const indeterminate = hasSome(categoryId)
 
 		const tsKey = serviceOptionData.find((category) => category.id === categoryId)?.tsKey ?? 'error'
 		return (
-			<Accordion.Item value={categoryId} key={categoryId} className={classes.item}>
+			<Accordion.Item value={categoryId} key={categoryId}>
 				<Accordion.Control>{t(tsKey, { ns: 'services' })}</Accordion.Control>
 				<Accordion.Panel>
 					<Checkbox
@@ -210,13 +258,13 @@ export const ServiceFilter = ({}) => {
 						label={t('all-service-category', { serviceCategory: `$t(services:${tsKey})` })}
 						transitionDuration={0}
 						onChange={() => toggleCategory(categoryId)}
+						className={classes.itemParent}
 					/>
 
 					{services.map((item, index) => {
 						return (
 							<Checkbox
-								mt='xs'
-								ml={33}
+								className={classes.itemChild}
 								label={t(item.tsKey, { ns: 'services' })}
 								key={item.id}
 								{...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
@@ -230,7 +278,7 @@ export const ServiceFilter = ({}) => {
 
 	const selectedItems = (function () {
 		const selected: string[] = []
-		for (const [categoryId, services] of Object.entries(form.values)) {
+		for (const [_categoryId, services] of Object.entries(form.values)) {
 			services.forEach((service) => {
 				if (service.checked) selected.push(service.id)
 			})
@@ -245,8 +293,8 @@ export const ServiceFilter = ({}) => {
 			modalTitle ? <Title order={2} mb={0} {...props} /> : <Text className={classes.label} {...props} />
 
 		return (
-			<Group className={modalTitle ? undefined : classes.button} position='apart'>
-				<Group spacing='xs'>
+			<Group className={modalTitle ? undefined : classes.button} position='apart' noWrap spacing={0}>
+				<Group spacing={8} noWrap>
 					<ServicesDisplay>{t('services')}</ServicesDisplay>
 					{selectedItems.length > 0 ? selectedCountIcon : null}
 				</Group>
@@ -273,25 +321,23 @@ export const ServiceFilter = ({}) => {
 				opened={opened}
 				onClose={() => setOpened(false)}
 				title={<ServiceBar modalTitle />}
-				classNames={{
-					body: classes.modalBody,
-					title: classes.modalTitle,
-					header: classes.modalHeader,
-					modal: classes.modalModal,
-				}}
+				fullScreen={isMobile}
+				classNames={modalClasses}
 			>
-				<div style={{ overflow: 'scroll' }}>
-					<Accordion
-						chevron={<Icon icon='carbon:chevron-right' />}
-						styles={{ chevron: { '&[data-rotate]': { transform: 'rotate(90deg)' } } }}
-						transitionDuration={0}
-						classNames={classes}
+				<Accordion
+					chevron={<Icon icon='carbon:chevron-right' />}
+					transitionDuration={0}
+					classNames={accordionClasses}
+				>
+					<ScrollArea.Autosize
+						classNames={{ viewport: accordionClasses.scrollArea }}
+						maxHeight={`${scrollAreaMaxHeight}px`}
 					>
-						<ScrollArea.Autosize maxHeight='calc(60vh - 88px)'>{filterList}</ScrollArea.Autosize>
-					</Accordion>
-				</div>
+						{filterList}
+					</ScrollArea.Autosize>
+				</Accordion>
 
-				<Box className={classes.footer}>
+				<Group className={modalClasses.footer} noWrap>
 					<Button
 						variant='secondary'
 						onClick={() => deselectAll()}
@@ -303,7 +349,7 @@ export const ServiceFilter = ({}) => {
 					<Button variant='primary' className={classes.resultsBtn} onClick={() => setOpened(false)}>
 						{t('view-x-result', { count: resultCount })}
 					</Button>
-				</Box>
+				</Group>
 			</Modal>
 
 			<UnstyledButton onClick={() => setOpened(true)} w='100%'>
