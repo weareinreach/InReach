@@ -76,6 +76,7 @@ importers:
 
   apps/app:
     specifiers:
+      '@crowdin/crowdin-api-client': 1.21.2
       '@crowdin/ota-client': 0.7.0
       '@emotion/react': 11.10.6
       '@emotion/server': 11.10.0
@@ -146,6 +147,7 @@ importers:
       typescript: 4.9.5
       zod: 3.20.6
     dependencies:
+      '@crowdin/crowdin-api-client': 1.21.2
       '@crowdin/ota-client': 0.7.0
       '@emotion/react': 11.10.6_pmekkgnqduwlme35zpnqhenc34
       '@emotion/server': 11.10.0
@@ -3818,6 +3820,15 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@crowdin/crowdin-api-client/1.21.2:
+    resolution: {integrity: sha512-i3X2bdGIBD6kQp5hfwVcZ/w/nn3lKamulGeP3LoVAAKRtmBOch12TCsrCvFZ1wY5g1IJAiyWI56h0KJfeCX6qw==}
+    engines: {node: '>=12.9.0'}
+    dependencies:
+      axios: 0.21.3
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /@crowdin/ota-client/0.7.0:
     resolution: {integrity: sha512-RNFnR2ter5dsFJlyQysT8jswDn/TBF/ALosiDRpaj2tcOlAk/amQOoqEMJrCdR46xWqMUNwz/hJ4YIlcN51kPQ==}
@@ -9114,6 +9125,14 @@ packages:
     resolution: {integrity: sha512-/BQzOX780JhsxDnPpH4ZiyrJAzcd8AfzFPkv+89veFSr1rcMjuq2JDCwypKaPeB6ljHp9KjXhPpjgCvQlWYuqg==}
     engines: {node: '>=4'}
     dev: true
+
+  /axios/0.21.3:
+    resolution: {integrity: sha512-JtoZ3Ndke/+Iwt5n+BgSli/3idTvpt5OjKyoCmz4LX5+lPiY5l7C1colYezhlxThjNa/NhngCUWZSZFypIFuaA==}
+    dependencies:
+      follow-redirects: 1.15.2
+    transitivePeerDependencies:
+      - debug
+    dev: false
 
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}

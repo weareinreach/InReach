@@ -19,6 +19,7 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
+		"@crowdin/crowdin-api-client": "1.21.2",
 		"@crowdin/ota-client": "0.7.0",
 		"@emotion/react": "11.10.6",
 		"@emotion/server": "11.10.0",
