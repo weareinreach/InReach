@@ -1,5 +1,4 @@
 /* eslint-disable import/consistent-type-specifier-style */
-import { useMediaQuery } from '@mantine/hooks'
 import { keys } from '@mantine/utils'
 
 import { Icon } from '~ui/icon'
@@ -390,16 +389,6 @@ export const commonTheme = {
 							maxHeight: 800,
 							minWidth: 600,
 						},
-						// [theme.fn.smallerThan('md')]: {
-						// 	position: 'absolute',
-						// 	top: 0,
-						// 	left: 0,
-						// 	right: 0,
-						// 	bottom: 0,
-						// 	// maxHeight: '100vh',
-						// 	width: '100vw',
-						// 	overflowY: 'auto',
-						// },
 					},
 					header: {
 						margin: 0,
