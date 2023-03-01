@@ -4,16 +4,16 @@ generator client {
   binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
-generator zod {
-  provider                         = "zod-prisma-types"
-  output                           = "../zod-schemas"
-  useMultipleFiles                 = true
-  createModelTypes                 = true
-  createOptionalDefaultValuesTypes = true
-  writeNullishInModelTypes         = true
-  addInputTypeValidation           = false
-  createInputTypes                 = false
-}
+// generator zod {
+//   provider                         = "zod-prisma-types"
+//   output                           = "../zod-schemas"
+//   useMultipleFiles                 = true
+//   createModelTypes                 = true
+//   createOptionalDefaultValuesTypes = true
+//   writeNullishInModelTypes         = true
+//   addInputTypeValidation           = false
+//   createInputTypes                 = false
+// }
 
 // generator dbml {
 //   provider              = "prisma-dbml-generator"

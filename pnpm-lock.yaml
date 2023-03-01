@@ -93,7 +93,6 @@ importers:
       '@mantine/spotlight': 5.10.5
       '@mantine/tiptap': 5.10.5
       '@next/bundle-analyzer': 13.2.2
-      '@next/font': 13.2.2
       '@playwright/test': 1.31.1
       '@tanstack/react-query': 4.24.10
       '@tanstack/react-query-devtools': 4.24.12
@@ -191,7 +190,6 @@ importers:
       zod: 3.20.6
     devDependencies:
       '@next/bundle-analyzer': 13.2.2
-      '@next/font': 13.2.2
       '@playwright/test': 1.31.1
       '@tanstack/react-query-devtools': 4.24.12_636dldj5wfr5vkyyqzs5k363kq
       '@types/eslint': 8.21.1
@@ -678,7 +676,7 @@ importers:
       '@mantine/spotlight': 5.10.5
       '@mantine/tiptap': 5.10.5
       '@mantine/utils': 5.10.5
-      '@next/font': 13.2.2
+      '@next/font': ^13
       '@storybook/addon-a11y': 7.0.0-beta.55
       '@storybook/addon-actions': 7.0.0-beta.55
       '@storybook/addon-docs': 7.0.0-beta.55
@@ -756,6 +754,7 @@ importers:
       zod: 3.20.6
     dependencies:
       '@mantine/utils': 5.10.5_react@18.2.0
+      '@next/font': 13.2.2
       '@weareinreach/api': link:../api
       nextjs-routes: 1.0.8_next@13.2.2
       react-string-replace: 1.1.0
@@ -787,7 +786,6 @@ importers:
       '@mantine/prism': 5.10.5_7l7cohgiq6l4ncfy2pvlz3brzy
       '@mantine/spotlight': 5.10.5_7l7cohgiq6l4ncfy2pvlz3brzy
       '@mantine/tiptap': 5.10.5_zyvacmvqd6r75kzdczesgdwanq
-      '@next/font': 13.2.2
       '@storybook/addon-a11y': 7.0.0-beta.55_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-actions': 7.0.0-beta.55_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-docs': 7.0.0-beta.55_biqbaboplfbrettd7655fr4n2y
@@ -5089,7 +5087,6 @@ packages:
 
   /@next/font/13.2.2:
     resolution: {integrity: sha512-ZGwJxAfAYRTO+GTrlFqXFnh1vbcXvtf+kMRE23MjyIJpQQA3qFXnMSitXJkfzzyMAFYo1cRuKeWJbIqqFVYRXQ==}
-    dev: true
 
   /@next/swc-android-arm-eabi/13.2.2:
     resolution: {integrity: sha512-JHTnsNTl9gDQkWqggJFj6rQHK2+9lIMGolOPihfZBQAE48amVsGkYyFHbiuWnhwnYX99fCFWomARDwOtLAhzdQ==}

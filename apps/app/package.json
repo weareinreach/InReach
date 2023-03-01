@@ -65,7 +65,6 @@
 	},
 	"devDependencies": {
 		"@next/bundle-analyzer": "13.2.2",
-		"@next/font": "13.2.2",
 		"@playwright/test": "1.31.1",
 		"@tanstack/react-query-devtools": "4.24.12",
 		"@types/eslint": "8.21.1",
