@@ -54,7 +54,7 @@
 		"i18next": "22.4.10",
 		"i18next-http-backend": "2.1.1",
 		"luxon": "3.2.1",
-		"next": "13.2.1",
+		"next": "13.2.2",
 		"next-auth": "4.19.2",
 		"next-i18next": "13.1.6",
 		"nextjs-routes": "1.0.8",
@@ -64,8 +64,8 @@
 		"zod": "3.20.6"
 	},
 	"devDependencies": {
-		"@next/bundle-analyzer": "13.2.1",
-		"@next/font": "13.2.1",
+		"@next/bundle-analyzer": "13.2.2",
+		"@next/font": "13.2.2",
 		"@playwright/test": "1.31.1",
 		"@tanstack/react-query-devtools": "4.24.12",
 		"@types/eslint": "8.21.1",
