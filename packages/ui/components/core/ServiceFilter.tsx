@@ -102,7 +102,7 @@ const useStyles = createStyles((theme) => ({
 		[theme.fn.largerThan('sm')]: {
 			display: 'none',
 		},
-		[theme.fn.smallerThan('375')]: {
+		[theme.fn.smallerThan(375)]: {
 			width: '100%',
 			marginRight: 'unset',
 		},
@@ -114,7 +114,7 @@ const useStyles = createStyles((theme) => ({
 			marginLeft: '4px',
 			padding: '6px 8px',
 		},
-		[theme.fn.smallerThan('375')]: {
+		[theme.fn.smallerThan(375)]: {
 			width: '100%',
 			marginTop: '12px',
 			marginLeft: 'unset',
@@ -129,7 +129,7 @@ const useStyles = createStyles((theme) => ({
 		[theme.fn.smallerThan('md')]: {
 			padding: '32px 0px 0px 0px',
 		},
-		[theme.fn.smallerThan('375')]: {
+		[theme.fn.smallerThan(375)]: {
 			paddingTop: '12px',
 		},
 	},
