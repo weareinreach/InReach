@@ -39,8 +39,11 @@ const useStyles = createStyles((theme) => ({
 			padding: '10px 16px',
 		},
 	},
-	modal: {
+	modalHeader: {
 		padding: '0px 20px 0px 24px !important',
+	},
+	modalModal: {
+		maxHeight: 'fit-content !important',
 	},
 	root: {
 		overflow: 'scroll',
@@ -96,7 +99,7 @@ const useStyles = createStyles((theme) => ({
 		borderRadius: '8px',
 		marginRight: '4px',
 		padding: '6px 8px',
-		[theme.fn.largerThan('md')]: {
+		[theme.fn.largerThan('sm')]: {
 			display: 'none',
 		},
 		[theme.fn.smallerThan('375')]: {
@@ -106,7 +109,7 @@ const useStyles = createStyles((theme) => ({
 	},
 	resultsBtn: {
 		borderRadius: '8px',
-		[theme.fn.smallerThan('md')]: {
+		[theme.fn.smallerThan('sm')]: {
 			width: '48%',
 			marginLeft: '4px',
 			padding: '6px 8px',
@@ -116,7 +119,7 @@ const useStyles = createStyles((theme) => ({
 			marginTop: '12px',
 			marginLeft: 'unset',
 		},
-		[theme.fn.largerThan('md')]: {
+		[theme.fn.largerThan('sm')]: {
 			width: '100%',
 		},
 	},
@@ -273,7 +276,8 @@ export const ServiceFilter = ({}) => {
 				classNames={{
 					body: classes.modalBody,
 					title: classes.modalTitle,
-					header: classes.modal,
+					header: classes.modalHeader,
+					modal: classes.modalModal,
 				}}
 			>
 				<div style={{ overflow: 'scroll' }}>
