@@ -1,71 +1,71 @@
-import { z } from 'zod'
+// import { z } from 'zod'
 
 import { Prisma } from '~db/index'
 import { BatchNames } from '~db/seed/migrate-v1/org/outData'
-import {
-	AttributeSupplementSchema,
-	FreeTextSchema,
-	OrgEmailSchema,
-	OrgHoursSchema,
-	OrgLocationSchema,
-	OrgLocationServiceSchema,
-	OrgPhoneSchema,
-	OrgPhotoSchema,
-	OrgServiceEmailSchema,
-	OrgServicePhoneSchema,
-	OrgServiceSchema,
-	OrgServiceTagSchema,
-	OrgSocialMediaSchema,
-	OrgWebsiteLanguageSchema,
-	OrgWebsiteSchema,
-	OrganizationAttributeSchema,
-	OrganizationPermissionSchema,
-	OutsideAPISchema,
-	ServiceAccessAttributeSchema,
-	ServiceAccessSchema,
-	ServiceAreaCountrySchema,
-	ServiceAreaDistSchema,
-	ServiceAreaSchema,
-	ServiceAttributeSchema,
-	TranslationKeySchema,
-	UserPermissionSchema,
-	UserToOrganizationSchema,
-} from '~db/zod-schemas'
+// import {
+// 	AttributeSupplementSchema,
+// 	FreeTextSchema,
+// 	OrgEmailSchema,
+// 	OrgHoursSchema,
+// 	OrgLocationSchema,
+// 	OrgLocationServiceSchema,
+// 	OrgPhoneSchema,
+// 	OrgPhotoSchema,
+// 	OrgServiceEmailSchema,
+// 	OrgServicePhoneSchema,
+// 	OrgServiceSchema,
+// 	OrgServiceTagSchema,
+// 	OrgSocialMediaSchema,
+// 	OrgWebsiteLanguageSchema,
+// 	OrgWebsiteSchema,
+// 	OrganizationAttributeSchema,
+// 	OrganizationPermissionSchema,
+// 	OutsideAPISchema,
+// 	ServiceAccessAttributeSchema,
+// 	ServiceAccessSchema,
+// 	ServiceAreaCountrySchema,
+// 	ServiceAreaDistSchema,
+// 	ServiceAreaSchema,
+// 	ServiceAttributeSchema,
+// 	TranslationKeySchema,
+// 	UserPermissionSchema,
+// 	UserToOrganizationSchema,
+// } from '~db/zod-schemas'
 
-export const zodBaseSchema = {
-	translationKey: TranslationKeySchema,
-	freeText: FreeTextSchema,
-	orgLocation: OrgLocationSchema,
-	orgPhone: OrgPhoneSchema,
-	orgEmail: OrgEmailSchema,
-	orgWebsite: OrgWebsiteSchema,
-	orgWebsiteLanguage: OrgWebsiteLanguageSchema,
-	orgSocialMedia: OrgSocialMediaSchema,
-	outsideAPI: OutsideAPISchema,
-	orgPhoto: OrgPhotoSchema,
-	orgHours: OrgHoursSchema,
-	orgService: OrgServiceSchema,
-	serviceAccess: ServiceAccessSchema,
-	attributeSupplement: AttributeSupplementSchema,
-	orgServicePhone: OrgServicePhoneSchema,
-	orgServiceEmail: OrgServiceEmailSchema,
-	orgLocationService: OrgLocationServiceSchema,
-	orgServiceTag: OrgServiceTagSchema,
-	organizationAttribute: OrganizationAttributeSchema,
-	serviceAttribute: ServiceAttributeSchema,
-	serviceAccessAttribute: ServiceAccessAttributeSchema,
-	serviceArea: ServiceAreaSchema,
-	serviceAreaCountry: ServiceAreaCountrySchema,
-	serviceAreaDist: ServiceAreaDistSchema,
-	userToOrganization: UserToOrganizationSchema,
-	userPermission: UserPermissionSchema,
-	organizationPermission: OrganizationPermissionSchema,
-} as const
-export type ZodBaseSchema = {
-	[K in keyof typeof zodBaseSchema]: K extends keyof typeof zodBaseSchema
-		? z.infer<(typeof zodBaseSchema)[K]>
-		: never
-}
+// export const zodBaseSchema = {
+// 	translationKey: TranslationKeySchema,
+// 	freeText: FreeTextSchema,
+// 	orgLocation: OrgLocationSchema,
+// 	orgPhone: OrgPhoneSchema,
+// 	orgEmail: OrgEmailSchema,
+// 	orgWebsite: OrgWebsiteSchema,
+// 	orgWebsiteLanguage: OrgWebsiteLanguageSchema,
+// 	orgSocialMedia: OrgSocialMediaSchema,
+// 	outsideAPI: OutsideAPISchema,
+// 	orgPhoto: OrgPhotoSchema,
+// 	orgHours: OrgHoursSchema,
+// 	orgService: OrgServiceSchema,
+// 	serviceAccess: ServiceAccessSchema,
+// 	attributeSupplement: AttributeSupplementSchema,
+// 	orgServicePhone: OrgServicePhoneSchema,
+// 	orgServiceEmail: OrgServiceEmailSchema,
+// 	orgLocationService: OrgLocationServiceSchema,
+// 	orgServiceTag: OrgServiceTagSchema,
+// 	organizationAttribute: OrganizationAttributeSchema,
+// 	serviceAttribute: ServiceAttributeSchema,
+// 	serviceAccessAttribute: ServiceAccessAttributeSchema,
+// 	serviceArea: ServiceAreaSchema,
+// 	serviceAreaCountry: ServiceAreaCountrySchema,
+// 	serviceAreaDist: ServiceAreaDistSchema,
+// 	userToOrganization: UserToOrganizationSchema,
+// 	userPermission: UserPermissionSchema,
+// 	organizationPermission: OrganizationPermissionSchema,
+// } as const
+// export type ZodBaseSchema = {
+// 	[K in keyof typeof zodBaseSchema]: K extends keyof typeof zodBaseSchema
+// 		? z.infer<(typeof zodBaseSchema)[K]>
+// 		: never
+// }
 
 type zodInput = {
 	translationKey: Prisma.TranslationKeyCreateManyInput
