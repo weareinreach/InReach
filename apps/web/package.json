@@ -36,14 +36,14 @@
 		"embla-carousel-react": "7.0.9",
 		"feather-icons-react": "0.6.2",
 		"i18next": "22.4.10",
-		"next": "13.2.2",
+		"next": "13.2.3",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-i18next": "12.2.0"
 	},
 	"devDependencies": {
-		"@next/bundle-analyzer": "13.2.2",
-		"@next/font": "13.2.2",
+		"@next/bundle-analyzer": "13.2.3",
+		"@next/font": "13.2.3",
 		"@types/eslint": "8.21.1",
 		"@types/node": "18.14.2",
 		"@types/react": "18.0.28",
