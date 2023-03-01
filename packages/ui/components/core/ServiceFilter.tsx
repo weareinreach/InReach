@@ -1,6 +1,5 @@
 import {
 	Accordion,
-	Loader,
 	Checkbox,
 	createStyles,
 	Group,
@@ -12,14 +11,12 @@ import {
 	TextProps,
 	ScrollArea,
 	useMantineTheme,
-	ScrollAreaProps,
-	Box,
 	Skeleton,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { useMediaQuery } from '@mantine/hooks'
+import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { Fragment, ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -27,24 +24,75 @@ import { useModalProps } from '~ui/modals'
 
 import { Button } from './Button'
 
-const RESULT_PLACEHOLDER = 5
+const RESULT_PLACEHOLDER = 999
+
+const useAccordionStyles = createStyles((theme) => ({
+	label: {
+		...theme.other.utilityFonts.utility1,
+	},
+	content: {
+		padding: '0px 0px 12px 0px',
+	},
+	item: {
+		margin: 0,
+		'&:last-of-type': {
+			marginBottom: '40px',
+		},
+	},
+	chevron: { '&[data-rotate]': { transform: 'rotate(90deg)' } },
+	scrollArea: {
+		paddingRight: '12px',
+	},
+	control: {
+		padding: '12px 0px',
+	},
+	panel: {
+		padding: 0,
+	},
+}))
+
+const useModalStyles = createStyles((theme) => ({
+	body: {
+		padding: '10px 4px 10px 16px',
+		[theme.fn.largerThan('xs')]: {
+			padding: '40px 8px 20px 20px',
+		},
+		[theme.fn.largerThan('sm')]: {
+			padding: '40px 20px 20px 32px',
+		},
+		[theme.fn.smallerThan('sm')]: {
+			maxHeight: 'none',
+			padding: '10px 8px 40px 20px',
+		},
+		[`@media (orientation: landscape) and (max-height: 376px)`]: {
+			paddingBottom: '20px',
+		},
+		[`@media (orientation: landscape) and (max-height: 430px)`]: {
+			maxHeight: 'none',
+			paddingTop: '20px',
+		},
+	},
+	title: {
+		padding: '8px 0px 8px 8px',
+		width: '100%',
+	},
+	header: {},
+	modal: {},
+	footer: {
+		borderTop: 'solid 1px' + theme.other.colors.primary.lightGray,
+		padding: '20px 12px 0px 0px',
+		[theme.fn.smallerThan('sm')]: {
+			padding: '32px 12px 0px 0px',
+		},
+		[`${theme.fn.smallerThan(375)}, (orientation: landscape) and (max-height: 376px)`]: {
+			paddingTop: '20px',
+		},
+	},
+}))
 
 const useStyles = createStyles((theme) => ({
 	label: {
 		...theme.other.utilityFonts.utility1,
-	},
-	modalBody: {
-		padding: '40px 32px',
-	},
-	modalHeader: {
-		marginBottom: 0,
-	},
-	modal: {
-		padding: '0px !important',
-	},
-
-	root: {
-		overflow: 'scroll',
 	},
 	count: {
 		...theme.other.utilityFonts.utility1,
@@ -58,20 +106,17 @@ const useStyles = createStyles((theme) => ({
 		verticalAlign: 'center',
 		lineHeight: 1.5,
 	},
-	modalTitle: {
-		borderBottom: 'solid 1px' + theme.other.colors.primary.lightGray,
-		padding: '24px 24px 24px 32px',
-		width: '100%',
-	},
+
 	button: {
 		padding: '14px 20px 14px 16px',
 		backgroundColor: theme.other.colors.secondary.white,
 		borderRadius: '8px',
 		border: `${theme.other.colors.tertiary.coolGray} 1px solid`,
 	},
-	item: {
-		marginLeft: theme.spacing.md,
-		marginRight: theme.spacing.md,
+
+	itemParent: {},
+	itemChild: {
+		marginLeft: '40px',
 	},
 	uncheck: {
 		color: theme.other.colors.secondary.black,
@@ -82,32 +127,75 @@ const useStyles = createStyles((theme) => ({
 			color: theme.other.colors.secondary.black,
 			cursor: 'pointer',
 		},
+		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${
+			theme.breakpoints.xs
+		}px)`]: {
+			display: 'none',
+		},
 	},
 	uncheckDisabled: {
 		textDecoration: 'underline',
 		color: theme.other.colors.secondary.darkGray,
+		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${
+			theme.breakpoints.xs
+		}px)`]: {
+			display: 'none',
+		},
 	},
-	footer: {
-		borderTop: 'solid 1px' + theme.other.colors.primary.lightGray,
-		margin: '0px -32px',
-		padding: '32px 32px 0px 32px',
+	uncheckBtn: {
+		width: '50%',
+		borderRadius: '8px',
+		padding: '6px 8px',
+		[theme.fn.largerThan('sm')]: {
+			display: 'none',
+		},
+		[theme.fn.smallerThan(375)]: {
+			marginRight: 'unset',
+			'& *': {
+				fontSize: '14px !important',
+			},
+		},
+	},
+	resultsBtn: {
+		borderRadius: '8px',
+		[theme.fn.smallerThan('sm')]: {
+			width: '50%',
+			padding: '6px 8px',
+		},
+		[theme.fn.smallerThan(375)]: {
+			marginLeft: 'unset',
+			'& *': {
+				fontSize: '14px !important',
+			},
+		},
+		width: '100%',
 	},
 }))
 
 export const ServiceFilter = ({}) => {
 	const { data: serviceOptionData, status } = api.service.getFilterOptions.useQuery()
 	const { classes, cx } = useStyles()
+	const { classes: accordionClasses } = useAccordionStyles()
+	const { classes: modalClasses } = useModalStyles()
 	const { t } = useTranslation(['common', 'services'])
 	const [opened, setOpened] = useState(false)
 	const modalSettings = useModalProps()
 	const theme = useMantineTheme()
-	const isMobile = useMediaQuery(`max-width: ${theme.breakpoints.sm}px`)
+
+	const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`)
+	const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: 430px)`)
+	const isSmallLandscape = useMediaQuery(
+		`(orientation: landscape) and (max-height: 376px) and (max-width: ${theme.breakpoints.xs}px)`
+	)
+	const isMobile = isMobileQuery || isLandscape
+	const viewportHeight = useViewportSize().height + (isLandscape ? (isSmallLandscape ? 40 : 20) : 0)
+	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 : viewportHeight * 0.6 - 88
 
 	/** TODO: Results will be filtered live as items are selected - need to update the count of results left */
 	const resultCount = RESULT_PLACEHOLDER
 
 	type ServiceCategory = NonNullable<typeof serviceOptionData>[number]
-	type FilterValue = ServiceCategory['services'][number] & { categoryId: string; selected: boolean }
+	type FilterValue = ServiceCategory['services'][number] & { categoryId: string; checked: boolean }
 	type FormValues = Omit<ServiceCategory, 'services'> & { services: FilterValue[] }
 
 	const form = useForm<{ [categoryId: string]: FilterValue[] }>()
@@ -118,7 +206,7 @@ export const ServiceFilter = ({}) => {
 		serviceOptionData.forEach((category) => {
 			valueMap.set(
 				category.id,
-				category.services.map((item) => ({ ...item, categoryId: category.id, selected: false }))
+				category.services.map((item) => ({ ...item, categoryId: category.id, checked: false }))
 			)
 		})
 		const initialValues = Object.fromEntries(valueMap.entries())
@@ -136,32 +224,32 @@ export const ServiceFilter = ({}) => {
 
 	const hasAll = (categoryId: string) => {
 		if (!form.values.hasOwnProperty(categoryId)) return false
-		return form.values[categoryId]?.every((item) => item.categoryId === categoryId && item.selected)
+		return form.values[categoryId]?.every((item) => item.categoryId === categoryId && item.checked)
 	}
 	const hasSome = (categoryId: string) => {
 		if (!form.values.hasOwnProperty(categoryId)) return false
 		return (
 			!hasAll(categoryId) &&
-			form.values[categoryId]?.some((item) => item.categoryId === categoryId && item.selected)
+			form.values[categoryId]?.some((item) => item.categoryId === categoryId && item.checked)
 		)
 	}
 
 	const toggleCategory = (categoryId: string) => {
 		if (!form.values.hasOwnProperty(categoryId)) return
 		form.setValues({
-			[categoryId]: form.values[categoryId]?.map((value) => ({ ...value, selected: !hasAll(categoryId) })),
+			[categoryId]: form.values[categoryId]?.map((value) => ({ ...value, checked: !hasAll(categoryId) })),
 		})
 	}
 	const deselectAll = () => form.setValues(generateInitialData())
 
 	const formObjectEntryArray = Object.entries(form.values)
-	const filterList = formObjectEntryArray.map(([categoryId, services], catIdx) => {
+	const filterList = formObjectEntryArray.map(([categoryId, services]) => {
 		const checked = hasAll(categoryId)
 		const indeterminate = hasSome(categoryId)
 
 		const tsKey = serviceOptionData.find((category) => category.id === categoryId)?.tsKey ?? 'error'
 		return (
-			<Accordion.Item value={categoryId} key={categoryId} className={classes.item}>
+			<Accordion.Item value={categoryId} key={categoryId}>
 				<Accordion.Control>{t(tsKey, { ns: 'services' })}</Accordion.Control>
 				<Accordion.Panel>
 					<Checkbox
@@ -170,16 +258,16 @@ export const ServiceFilter = ({}) => {
 						label={t('all-service-category', { serviceCategory: `$t(services:${tsKey})` })}
 						transitionDuration={0}
 						onChange={() => toggleCategory(categoryId)}
+						className={classes.itemParent}
 					/>
 
 					{services.map((item, index) => {
 						return (
 							<Checkbox
-								mt='xs'
-								ml={33}
+								className={classes.itemChild}
 								label={t(item.tsKey, { ns: 'services' })}
 								key={item.id}
-								{...form.getInputProps(`${categoryId}.${index}.selected`, { type: 'checkbox' })}
+								{...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
 							/>
 						)
 					})}
@@ -190,9 +278,9 @@ export const ServiceFilter = ({}) => {
 
 	const selectedItems = (function () {
 		const selected: string[] = []
-		for (const [categoryId, services] of Object.entries(form.values)) {
+		for (const [_categoryId, services] of Object.entries(form.values)) {
 			services.forEach((service) => {
-				if (service.selected) selected.push(service.id)
+				if (service.checked) selected.push(service.id)
 			})
 		}
 		return selected
@@ -200,16 +288,13 @@ export const ServiceFilter = ({}) => {
 
 	const selectedCountIcon = <Text className={classes.count}>{selectedItems.length}</Text>
 
-	const Scrollable = (props: typeof isMobile extends false ? ScrollAreaProps : { children: ReactNode }) =>
-		isMobile ? <Fragment {...props} /> : <ScrollArea.Autosize maxHeight='calc(60vh - 88px)' {...props} />
-
 	const ServiceBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
 		const ServicesDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
 			modalTitle ? <Title order={2} mb={0} {...props} /> : <Text className={classes.label} {...props} />
 
 		return (
-			<Group className={modalTitle ? undefined : classes.button} position='apart'>
-				<Group spacing='xs'>
+			<Group className={modalTitle ? undefined : classes.button} position='apart' noWrap spacing={0}>
+				<Group spacing={8} noWrap>
 					<ServicesDisplay>{t('services')}</ServicesDisplay>
 					{selectedItems.length > 0 ? selectedCountIcon : null}
 				</Group>
@@ -236,31 +321,35 @@ export const ServiceFilter = ({}) => {
 				opened={opened}
 				onClose={() => setOpened(false)}
 				title={<ServiceBar modalTitle />}
-				classNames={{
-					body: classes.modalBody,
-					title: classes.modalTitle,
-					header: classes.modalHeader,
-					modal: classes.modal,
-				}}
+				fullScreen={isMobile}
+				classNames={modalClasses}
 			>
 				<Accordion
 					chevron={<Icon icon='carbon:chevron-right' />}
-					styles={{ chevron: { '&[data-rotate]': { transform: 'rotate(90deg)' } } }}
 					transitionDuration={0}
-					classNames={classes}
+					classNames={accordionClasses}
 				>
-					<Scrollable>{filterList}</Scrollable>
+					<ScrollArea.Autosize
+						classNames={{ viewport: accordionClasses.scrollArea }}
+						maxHeight={`${scrollAreaMaxHeight}px`}
+					>
+						{filterList}
+					</ScrollArea.Autosize>
 				</Accordion>
 
-				<Box className={classes.footer}>
+				<Group className={modalClasses.footer} noWrap>
 					<Button
-						variant='primary'
-						style={{ width: '100%', borderRadius: '8px' }}
-						onClick={() => setOpened(false)}
+						variant='secondary'
+						onClick={() => deselectAll()}
+						disabled={selectedItems.length < 1}
+						className={classes.uncheckBtn}
 					>
+						{t('uncheck-all')}
+					</Button>
+					<Button variant='primary' className={classes.resultsBtn} onClick={() => setOpened(false)}>
 						{t('view-x-result', { count: resultCount })}
 					</Button>
-				</Box>
+				</Group>
 			</Modal>
 
 			<UnstyledButton onClick={() => setOpened(true)} w='100%'>
