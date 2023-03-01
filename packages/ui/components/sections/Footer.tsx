@@ -33,6 +33,9 @@ const useStyles = createStyles((theme) => ({
 	},
 	background: {
 		backgroundColor: theme.other.colors.tertiary.footer,
+		[theme.fn.smallerThan('sm')]: {
+			display: 'none',
+		},
 	},
 	iconGroup: {
 		maxWidth: '176px',
