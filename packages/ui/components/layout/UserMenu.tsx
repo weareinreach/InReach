@@ -7,30 +7,24 @@ import {
 	Selectors,
 	Skeleton,
 	Text,
+	Flex,
 	UnstyledButton,
 	createStyles,
 } from '@mantine/core'
 import Image from 'next/image'
-import { useSession } from 'next-auth/react'
+import { useSession, signOut } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
 import { Button } from '~ui/components/core/Button'
+import { Link } from '~ui/components/core/Link'
 // import { useState } from 'react'
 
 const useStyles = createStyles((theme) => ({
-	menu: {
-		width: 250,
-	},
-	buttonGroup: {
-		width: 500,
-	},
 	buttons: {
-		[theme.fn.smallerThan('md')]: {
-			width: 200,
-			margin: '0 auto',
-		},
-		[theme.fn.smallerThan('sm')]: {
-			width: 300,
+		padding: '4px 12px',
+		borderRadius: 8,
+		'&:hover, &:active': {
+			backgroundColor: theme.other.colors.primary.lightGray,
 		},
 	},
 	loadingItems: {
@@ -38,81 +32,121 @@ const useStyles = createStyles((theme) => ({
 	},
 	avatar: {
 		color: theme.colors.inReachPrimaryRegular[5],
-		height: 55,
-		width: 55,
-		[theme.fn.smallerThan('md')]: {
-			height: 40,
-			width: 40,
-		},
+		height: 40,
+		width: 40,
 	},
 	actionButton: {
 		fontWeight: theme.other.fontWeight.bold,
 	},
+	navText: {
+		...theme.other.utilityFonts.utility1,
+		color: `${theme.other.colors.secondary.black} !important`,
+	},
+	menuItem: {
+		...theme.other.utilityFonts.utility1,
+		color: `${theme.other.colors.secondary.black} !important`,
+		padding: 16,
+	},
 }))
 
+const locales = { en: 'English', es: 'Español' }
+
 export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
-	const { t } = useTranslation('nav')
+	const { t, i18n } = useTranslation('nav')
+	const language = i18n.language
 	const { data: session, status } = useSession()
 	// const [_userMenuOpen, setUserMenuOpen] = useState(false)
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 
 	if (status === 'loading' && !session) {
 		return (
-			<Group className={cx(classes.menu, className)} noWrap>
-				<Skeleton height={55} circle className={classes.loadingItems} />
-				<Skeleton height={8} radius='xl' className={classes.loadingItems} w={160} h={16} />
+			<Group className={cx(className)} noWrap>
+				<Skeleton height={40} circle className={classes.loadingItems} />
+				<Skeleton height={8} radius='xl' className={classes.loadingItems} w={100} h={16} />
 			</Group>
 		)
 	}
 
 	if (session?.user && status === 'authenticated') {
+		let displayName = 'User'
+		if (typeof session.user.name === 'string') {
+			const [name, lastName] = session.user.name.split(' ').slice(0, 2)
+			displayName = `${name} ${typeof lastName === 'string' ? lastName.substr(0, 1).toUpperCase() : ''}.`
+		}
 		return (
-			<Menu
-				width={260}
-				position='bottom-end'
-				transition='scale-y'
-				// onClose={() => setUserMenuOpen(false)}
-				// onOpen={() => setUserMenuOpen(true)}
-			>
-				<Menu.Target>
-					<UnstyledButton className={cx(classes.menu, classes.buttons, className)}>
-						<Group noWrap className={classes.buttons}>
-							<Avatar radius='xl' className={classes.avatar}>
-								{session.user.image ? (
-									<Image
-										src={session.user.image}
-										height={55}
-										width={55}
-										className={classes.avatar}
-										alt={session.user.name || t('user-avatar')}
-									/>
-								) : (
-									<Icon icon='fa6-solid:user' className={classes.avatar} />
-								)}
-							</Avatar>
-							<Text weight={500} size='sm' sx={{ lineHeight: 1 }} mr={3}>
-								{session.user.name}
-							</Text>
-						</Group>
-					</UnstyledButton>
-				</Menu.Target>
-				<Menu.Dropdown>
-					<Menu.Item>{t('saved-lists')}</Menu.Item>
-					<Menu.Item>{t('your-comments')}</Menu.Item>
-					<Menu.Label>{t('settings')}</Menu.Label>
-					<Menu.Item>{t('edit-profile')}</Menu.Item>
-					<Menu.Divider />
-					<Menu.Item>{t('log-out')}</Menu.Item>
-				</Menu.Dropdown>
-			</Menu>
+			<Group noWrap spacing={36}>
+				<Menu
+					width={260}
+					position='bottom-start'
+					transition='scale-y'
+					classNames={{ item: classes.menuItem }}
+					radius='sm'
+					shadow='xs'
+					// onClose={() => setUserMenuOpen(false)}
+					// onOpen={() => setUserMenuOpen(true)}
+				>
+					<Menu.Target>
+						<UnstyledButton className={cx(classes.buttons, className)}>
+							<Group noWrap spacing='sm'>
+								<Avatar radius='xl' className={classes.avatar}>
+									{session.user.image ? (
+										<Image
+											src={session.user.image}
+											height={70}
+											width={70}
+											className={classes.avatar}
+											alt={session.user.name || t('user-avatar')}
+											style={{ margin: 0 }}
+										/>
+									) : (
+										<Icon icon='fa6-solid:user' className={classes.avatar} />
+									)}
+								</Avatar>
+								<Text className={classes.navText}>{displayName}</Text>
+							</Group>
+						</UnstyledButton>
+					</Menu.Target>
+					<Menu.Dropdown>
+						<Menu.Item>{t('saved-lists')}</Menu.Item>
+						<Menu.Item>{t('your-comments')}</Menu.Item>
+						<Menu.Item>{t('settings')}</Menu.Item>
+						<Menu.Item
+							onClick={(e) => {
+								e.preventDefault()
+								signOut()
+							}}
+						>
+							{t('log-out')}
+						</Menu.Item>
+					</Menu.Dropdown>
+				</Menu>
+				<Text
+					component={Link}
+					href='/'
+					className={classes.navText}
+					onClick={(e) => {
+						e.preventDefault()
+						signOut()
+					}}
+				>
+					{t('log-out')}
+				</Text>
+			</Group>
 		)
 	}
 	return (
-		<Group className={cx(classes.buttonGroup, className)}>
-			<Button className={classes.buttons}>{t('sign-up')}</Button>
-			<Button variant='outline' className={classes.buttons}>
+		<Group className={cx(className)} noWrap spacing={40}>
+			<Flex align='center' gap='xs'>
+				<Icon icon='carbon:translate' width={20} height={20} />
+				<Text sx={(theme) => ({ ...theme.other.utilityFonts.utility1 })}>
+					{locales[language as keyof typeof locales]}
+				</Text>
+			</Flex>
+			{/* remember to change the href for login */}
+			<Text component={Link} href='/' className={classes.navText}>
 				{t('log-in')}
-			</Button>
+			</Text>
+			<Button>{t('sign-up')}</Button>
 		</Group>
 	)
 }
