@@ -1,12 +1,24 @@
 import { useMediaQuery } from '@mantine/hooks'
-import { type ModalSettings } from '@mantine/modals/lib/context'
+import { ContextModalProps, ModalsProviderProps } from '@mantine/modals'
+import { FC } from 'react'
 
 import { commonTheme as theme } from '~ui/theme'
+
+import { LoginModalBody } from './Login'
+import { SignUpModalBody } from './SignUp'
+
+const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
+	login: LoginModalBody,
+	signup: SignUpModalBody,
+} as const
 
 export const useModalProps = () => {
 	const isMobile = useMediaQuery(`max-width: ${theme.breakpoints.sm}px`)
 
 	return {
-		fullScreen: isMobile,
-	} satisfies ModalSettings
+		modalProps: {
+			fullScreen: isMobile,
+		},
+		modals: contextModalDefinitions,
+	} satisfies Pick<ModalsProviderProps, 'modalProps' | 'modals'>
 }

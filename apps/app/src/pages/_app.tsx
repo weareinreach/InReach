@@ -35,7 +35,7 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 			>
 				<TypographyStylesProvider>
 					<NotificationsProvider>
-						<ModalsProvider modalProps={useModalProps()}>
+						<ModalsProvider {...useModalProps()}>
 							{/* <AppLayout navItems={navItems} footerLinks={navItems} socialMedia={socialMediaLinks}> */}
 							<Component {...pageProps} />
 							{/* </AppLayout> */}
