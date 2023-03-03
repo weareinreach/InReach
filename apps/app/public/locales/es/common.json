@@ -16,5 +16,6 @@
 	"user-avatar": "Avatar de usuario",
 	"your-comments": "Tus comentarios",
 	"review-count_one": "{{count}} reseña",
-	"review-count_other": "{{count}} valoraciones"
+	"review-count_other": "{{count}} valoraciones",
+	"safety-exit": "Salida de seguridad"
 }
