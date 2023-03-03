@@ -22,9 +22,11 @@ const ParamSchema = z.tuple([
 const SearchResults = () => {
 	const { query } = useRouter<'/search/[...params]'>()
 	const queryClient = api.useContext()
-	const { t, ready } = useTranslation(['services', 'org-description'])
+	const { t, ready, i18n } = useTranslation(['services', 'org-description'], { useSuspense: false })
 	const queryParams = ParamSchema.safeParse(query.params)
 	if (!queryParams.success) return <>Error</>
+
+	console.log('i18n ready', ready)
 
 	const [searchType, lon, lat, dist, unit] = queryParams.data
 	const ids = api.organization.searchDistance.useQuery(
@@ -39,9 +41,9 @@ const SearchResults = () => {
 		ids.data && ids.isSuccess
 			? api.organization.getSearchDetails.useQuery({ ids: ids.data.orgs.map(({ id }) => id) })
 			: undefined
-
+	if (!ready) return <>Loading t...</>
 	const resultList =
-		orgs?.data && orgs?.isSuccess && ready
+		orgs?.data && orgs?.isSuccess
 			? orgs.data.map((result) => {
 					return (
 						<div key={result.id}>
@@ -49,12 +51,19 @@ const SearchResults = () => {
 							<p>Slug: {result.slug}</p>
 							<p>
 								Description:{' '}
-								{result.description ? t(result.description.key, { ns: result.description.ns }) : 'none'}
+								{result.description
+									? t(result.description.key, {
+											ns: result.description.ns,
+											defaultValue: 'default value here',
+									  })
+									: 'none'}
 							</p>
 							Services:{' '}
 							<ul>
 								{result.services.map((service) => (
-									<li key={service.id}>{t(service.tsKey, { ns: service.tsNs })}</li>
+									<li key={service.id}>
+										{t(service.tsKey, { ns: service.tsNs, defaultValue: 'default value' })}
+									</li>
 								))}
 							</ul>
 						</div>
