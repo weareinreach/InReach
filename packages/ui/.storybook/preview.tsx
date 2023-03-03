@@ -1,13 +1,13 @@
 import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { translatedLangs } from '@weareinreach/api/generated/languages'
+import { translatedLangs, LocaleCodes } from '@weareinreach/api/generated/languages'
 import { RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
 import { Router } from 'next/router'
 
 import { WithI18n, WithMantine, WithTRPC } from './decorators'
-import { i18n, CustomLocales } from './i18next'
+import { i18n } from './i18next'
 import authStates from './mockAuthStates'
 import { Viewports } from './types'
 
@@ -79,7 +79,7 @@ declare module '@storybook/react' {
 		nextjs?: {
 			router?: Partial<BaseRouter & { push: Router['push'] }>
 		}
-		locale?: CustomLocales[number]
+		locale?: LocaleCodes
 		i18n?: typeof i18n
 		viewport?: {
 			viewports?: typeof INITIAL_VIEWPORTS
