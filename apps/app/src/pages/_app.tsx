@@ -15,7 +15,7 @@ import { appWithTranslation } from 'next-i18next'
 
 import { api } from '~app/utils/api'
 
-import nextI18nConfig from '../../next-i18next.config'
+import nextI18nConfig from '../../next-i18next.config.mjs'
 
 const fontWorkSans = Work_Sans({ subsets: ['latin'] })
 

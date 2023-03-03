@@ -3,7 +3,7 @@
 import bundleAnalyze from '@next/bundle-analyzer'
 import withRoutes from 'nextjs-routes/config'
 
-import i18nConfig from './next-i18next.config.js'
+import i18nConfig from './next-i18next.config.mjs'
 
 /* eslint-disable-next-line turbo/no-undeclared-env-vars */
 const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
