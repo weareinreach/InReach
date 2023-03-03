@@ -1,4 +1,4 @@
-import { createStyles, Tabs } from '@mantine/core'
+import { createStyles, Tabs, Flex, Box } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
@@ -51,6 +51,12 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
+const decorativeBox = {
+	width: 134,
+	height: 5,
+	borderRadius: 3,
+}
+
 export const navItems = {
 	search: { icon: 'carbon:search', labelKey: 'search', href: '/search' },
 	saved: { icon: 'carbon:favorite', labelKey: 'saved', href: '/' },
@@ -77,6 +83,14 @@ export const MobileNav = () => {
 	return (
 		<Tabs inverted classNames={{ ...classes }} defaultValue='search' onTabChange={switchTab}>
 			<Tabs.List position='apart'>{tabs}</Tabs.List>
+			<Flex justify='center' align='center' style={{ height: 20 }}>
+				<Box
+					sx={(theme) => ({
+						...decorativeBox,
+						backgroundColor: theme.other.colors.secondary.darkGray,
+					})}
+				/>
+			</Flex>
 		</Tabs>
 	)
 }
