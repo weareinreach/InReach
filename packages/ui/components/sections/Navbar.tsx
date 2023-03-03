@@ -1,6 +1,8 @@
-import { Flex, Group, createStyles } from '@mantine/core'
+import { Flex, Group, Grid, createStyles } from '@mantine/core'
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
+
+import { BodyGrid } from '~ui/layouts'
 
 import { Button, MobileNav } from '../core'
 import { UserMenu } from '../layout'
@@ -8,7 +10,6 @@ import { UserMenu } from '../layout'
 const useStyles = createStyles((theme) => ({
 	desktopNav: {
 		height: 64,
-		padding: '0px 64px',
 		boxShadow: theme.shadows.xs,
 		[theme.fn.smallerThan('md')]: {
 			display: 'none',
@@ -27,13 +28,28 @@ export const Navbar = () => {
 
 	return (
 		<>
-			<Flex justify='space-between' align='center' className={classes.desktopNav}>
-				<Image src='public/img/inreach.svg' width={100} height={37.53} alt='InReach' style={{ margin: 0 }} />
-				<Group spacing={40} noWrap>
-					<UserMenu />
-					<Button variant='accent'>{t('safety-exit')}</Button>
-				</Group>
-			</Flex>
+			<BodyGrid
+				className={classes.desktopNav}
+				grow
+				sx={{ margin: '0px !important', height: '100%' }}
+				align='center'
+			>
+				<Grid.Col p='0px !important'>
+					<Flex justify='space-between'>
+						<Image
+							src='public/img/inreach.svg'
+							width={100}
+							height={37.53}
+							alt='InReach'
+							style={{ margin: 0 }}
+						/>
+						<Group spacing={40} noWrap>
+							<UserMenu />
+							<Button variant='accent'>{t('safety-exit')}</Button>
+						</Group>
+					</Flex>
+				</Grid.Col>
+			</BodyGrid>
 			<div className={classes.mobileNav}>
 				<MobileNav />
 			</div>
