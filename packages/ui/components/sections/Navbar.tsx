@@ -10,6 +10,7 @@ import { UserMenu } from '../layout'
 const useStyles = createStyles((theme) => ({
 	desktopNav: {
 		height: 64,
+		padding: '0px 40px !important',
 		boxShadow: theme.shadows.xs,
 		[theme.fn.smallerThan('md')]: {
 			display: 'none',

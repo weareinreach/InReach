@@ -1,10 +1,10 @@
-import { Meta } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { Navbar } from './Navbar'
 import { StorybookGrid } from '../../layouts/BodyGrid'
 
 export default {
-	title: 'App/Navigation Header Bar/Navbar',
+	title: 'Sections/Navbar',
 	component: Navbar,
 	render: () => <Navbar />,
 	parameters: {
@@ -13,13 +13,15 @@ export default {
 	//decorators: [StorybookGrid],
 } satisfies Meta<typeof Navbar>
 
+type StoryDef = StoryObj<typeof Navbar>
+
 export const LoggedOut = {
 	parameters: {
 		nextAuthMock: {
 			session: 'unknown',
 		},
 	},
-}
+} satisfies StoryDef
 
 export const Loading = {
 	parameters: {
@@ -27,7 +29,7 @@ export const Loading = {
 			session: 'loading',
 		},
 	},
-}
+} satisfies StoryDef
 
 export const LoggedIn = {
 	parameters: {
@@ -35,7 +37,7 @@ export const LoggedIn = {
 			session: 'userPic',
 		},
 	},
-}
+} satisfies StoryDef
 
 export const LoggedInNoPic = {
 	parameters: {
@@ -43,4 +45,4 @@ export const LoggedInNoPic = {
 			session: 'userNoPic',
 		},
 	},
-}
+} satisfies StoryDef
