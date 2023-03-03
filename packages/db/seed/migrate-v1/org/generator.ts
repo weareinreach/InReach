@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { geojsonToWKT } from '@terraformer/wkt'
-import { flatten } from 'flat'
+import { flatten, unflatten } from 'flat'
 import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js'
 import { DateTime } from 'luxon'
 import prettier from 'prettier'
@@ -68,7 +68,7 @@ export const translatedStrings: Record<string, Map<string, string>> = {}
 const exportTranslation = (props: ExportTranslationProps): void => {
 	const { ns, key, text, log } = props
 	if (key && text && ns) {
-		if (typeof translatedStrings[ns] === undefined) {
+		if (translatedStrings[ns] === undefined) {
 			translatedStrings[ns] = new Map<string, string>([[key, text]])
 		} else {
 			translatedStrings[ns]?.set(key, text)
@@ -1344,16 +1344,16 @@ export const generateRecords = async (task: ListrTask) => {
 
 		const formatJson = (data: string) => prettier.format(data, { ...prettierOpts, parser: 'json-stringify' })
 
-		const translationDir = path.resolve(__dirname, '../../../../../es')
+		const translationDir = path.resolve(__dirname, '../_generated/')
 		for (const ns in translatedStrings) {
 			const stringMap = translatedStrings[ns] !== undefined ? translatedStrings[ns] : null
 			if (!stringMap) {
 				log(`🤷 SKIPPING translation JSON file for ${ns}: Object was undefined`)
 				continue
 			}
-			const translationsOut = Object.fromEntries(stringMap)
+			const translationsOut = unflatten(Object.fromEntries(stringMap))
 			log(`🛠️ Generating translation JSON file for ${ns} (${stringMap.size} translations)`)
-			fs.writeFileSync(`${translationDir}es-migration.json`, formatJson(JSON.stringify(translationsOut)))
+			fs.writeFileSync(`${translationDir}/es-migration.json`, formatJson(JSON.stringify(translationsOut)))
 		}
 
 		log(`🛠️ Generating unsupported attribute JSON file (${unsupportedMap.size} attributes)`)
