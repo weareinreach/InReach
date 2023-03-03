@@ -3,7 +3,7 @@
 // @ts-check
 /* eslint-disable import/no-unused-modules */
 // @ts-ignore
-const HttpBackend = require('i18next-http-backend/cjs')
+const HttpBackend = require('i18next-http-backend')
 /**
  * @template {import('next-i18next').UserConfig} T
  * @type {import('next-i18next').UserConfig}
@@ -13,7 +13,7 @@ const HttpBackend = require('i18next-http-backend/cjs')
 const config = {
 	i18n: {
 		defaultLocale: 'en',
-		locales: ['en', 'en-US', 'en-CA', 'en-MX', 'es', 'es-US', 'es-MX'],
+		locales: ['en', 'es', 'ar', 'fr', 'ru'],
 	},
 	reloadOnPrerender: process.env.NODE_ENV !== 'production',
 	debug: process.env.NODE_ENV !== 'production' && !!process.env.NEXT_VERBOSE,

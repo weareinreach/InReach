@@ -41,12 +41,10 @@ declare module "nextjs-routes" {
 
   export type Locale = 
     | "en"
-    | "en-US"
-    | "en-CA"
-    | "en-MX"
     | "es"
-    | "es-US"
-    | "es-MX";
+    | "ar"
+    | "fr"
+    | "ru";
 
   /**
    * A typesafe utility function for generating paths in your application.
@@ -124,12 +122,10 @@ declare module "next/router" {
         locale: Locale;
         locales: [
           "en",
-          "en-US",
-          "en-CA",
-          "en-MX",
           "es",
-          "es-US",
-          "es-MX"
+          "ar",
+          "fr",
+          "ru"
         ];
         push(
           url: Route | StaticRoute | Query,

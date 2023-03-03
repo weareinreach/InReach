@@ -2,6 +2,7 @@
 export * from './Contact'
 export * from './Footer'
 export * from './LocationCard'
+export * from './Navbar'
 export * from './Photos'
 export * from './Reviews'
 export * from './ServicesInfo'
