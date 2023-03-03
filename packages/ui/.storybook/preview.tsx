@@ -1,8 +1,10 @@
 import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { translatedLangs } from '@weareinreach/api/generated/languages'
 import { RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
+import { Router } from 'next/router'
 
 import { WithI18n, WithMantine, WithTRPC } from './decorators'
 import { i18n, CustomLocales } from './i18next'
@@ -65,13 +67,7 @@ export const globalTypes = {
 		defaultValue: 'en',
 		toolbar: {
 			icon: 'globe',
-			items: [
-				{ value: 'en', right: '🇺🇸', title: 'English' },
-				// { value: 'fr', right: '🇫🇷', title: 'Français' },
-				{ value: 'es', right: '🇪🇸', title: 'Español' },
-				// { value: 'zh', right: '🇨🇳', title: '中文' },
-				// { value: 'kr', right: '🇰🇷', title: '한국어' },
-			],
+			items: translatedLangs.map((lang) => ({ value: lang.localeCode, title: lang.languageName })),
 		},
 	},
 }
@@ -81,7 +77,7 @@ export const decorators = [WithMantine, WithI18n, mswDecorator, WithTRPC]
 declare module '@storybook/react' {
 	export interface Parameters {
 		nextjs?: {
-			router?: Partial<BaseRouter>
+			router?: Partial<BaseRouter & { push: Router['push'] }>
 		}
 		locale?: CustomLocales[number]
 		i18n?: typeof i18n

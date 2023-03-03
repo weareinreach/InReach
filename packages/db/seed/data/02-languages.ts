@@ -6,7 +6,7 @@ import { Log, iconList } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/starterData'
 
-const activeTranslations = ['en', 'en-US', 'en-CA', 'es', 'es-MX', 'es-US']
+const activeTranslations = ['en', 'es', 'fr', 'ar', 'ru']
 
 const languages = ISO6391.getAllCodes()
 
