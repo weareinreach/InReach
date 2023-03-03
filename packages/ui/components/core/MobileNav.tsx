@@ -1,4 +1,4 @@
-import { createStyles, Tabs } from '@mantine/core'
+import { createStyles, Tabs, Flex, Box } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
