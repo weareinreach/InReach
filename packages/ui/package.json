@@ -146,7 +146,6 @@
 		"@mantine/prism": "^5",
 		"@mantine/spotlight": "^5",
 		"@mantine/tiptap": "^5",
-		"@next/font": "^13",
 		"@tanstack/react-query": "4.24.10",
 		"@tiptap/extension-link": "^2.0.0-beta.209",
 		"@tiptap/react": "^2.0.0-beta.209",

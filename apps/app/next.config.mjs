@@ -14,7 +14,7 @@ const nextConfig = {
 	swcMinify: true,
 	transpilePackages: ['@weareinreach/ui', '@weareinreach/db', '@weareinreach/auth', '@weareinreach/api'],
 	experimental: {
-		fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
+		fontLoaders: [{ loader: 'next/font/google', options: { subsets: ['latin'] } }],
 		/**
 		 * OutputFileTracingIgnores will be in a future version
 		 * https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
