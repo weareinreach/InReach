@@ -15,6 +15,7 @@ export * from './SearchResultCard'
 export * from './ServiceFilter'
 export * from './SocialMediaIconButton'
 export * from './UserAvatar'
+export * from './UserMenu'
 export * from './UserReview'
 export * from './UserReviewSubmit'
 // codegen:end

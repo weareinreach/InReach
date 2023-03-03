@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react'
 import {
 	Avatar,
 	DefaultProps,
@@ -7,7 +6,6 @@ import {
 	Selectors,
 	Skeleton,
 	Text,
-	Flex,
 	UnstyledButton,
 	createStyles,
 } from '@mantine/core'
@@ -16,8 +14,11 @@ import { useSession, signOut } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
 import { Button } from '~ui/components/core/Button'
+import { LangPicker } from '~ui/components/core/LangPicker'
 import { Link } from '~ui/components/core/Link'
-// import { useState } from 'react'
+import { Icon } from '~ui/icon'
+import { openLoginModal } from '~ui/modals/Login'
+import { openSignUpModal } from '~ui/modals/SignUp'
 
 const useStyles = createStyles((theme) => ({
 	buttons: {
@@ -41,6 +42,9 @@ const useStyles = createStyles((theme) => ({
 	navText: {
 		...theme.other.utilityFonts.utility1,
 		color: `${theme.other.colors.secondary.black} !important`,
+		'&:hover': {
+			textDecoration: 'underline',
+		},
 	},
 	menuItem: {
 		...theme.other.utilityFonts.utility1,
@@ -49,14 +53,12 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-const locales = { en: 'English', es: 'Español' }
-
 export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
-	const { t, i18n } = useTranslation('nav')
-	const language = i18n.language
+	const { t, i18n } = useTranslation()
 	const { data: session, status } = useSession()
-	// const [_userMenuOpen, setUserMenuOpen] = useState(false)
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
+
+	const currentLanguage = i18n.language
 
 	if (status === 'loading' && !session) {
 		return (
@@ -82,8 +84,6 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 					classNames={{ item: classes.menuItem }}
 					radius='sm'
 					shadow='xs'
-					// onClose={() => setUserMenuOpen(false)}
-					// onOpen={() => setUserMenuOpen(true)}
 				>
 					<Menu.Target>
 						<UnstyledButton
@@ -106,7 +106,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 											style={{ margin: 0 }}
 										/>
 									) : (
-										<Icon icon='fa6-solid:user' className={classes.avatar} />
+										<Icon icon='carbon:user' className={classes.avatar} />
 									)}
 								</Avatar>
 								<Text className={classes.navText}>{displayName}</Text>
@@ -143,17 +143,13 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 	}
 	return (
 		<Group className={cx(className)} noWrap spacing={40}>
-			<Flex align='center' gap='xs'>
-				<Icon icon='carbon:translate' width={20} height={20} />
-				<Text sx={(theme) => ({ ...theme.other.utilityFonts.utility1 })}>
-					{locales[language as keyof typeof locales]}
+			<LangPicker />
+			<UnstyledButton onClick={() => openLoginModal()}>
+				<Text component={UnstyledButton} className={classes.navText}>
+					{t('log-in')}
 				</Text>
-			</Flex>
-			{/* remember to change the href for login */}
-			<Text component={Link} href='/' className={classes.navText}>
-				{t('log-in')}
-			</Text>
-			<Button>{t('sign-up')}</Button>
+			</UnstyledButton>
+			<Button onClick={() => openSignUpModal()}>{t('sign-up')}</Button>
 		</Group>
 	)
 }

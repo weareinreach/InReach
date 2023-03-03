@@ -2,10 +2,8 @@ import { Flex, Group, Grid, createStyles } from '@mantine/core'
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 
+import { Button, MobileNav, UserMenu } from '~ui/components/core'
 import { BodyGrid } from '~ui/layouts'
-
-import { Button, MobileNav } from '../core'
-import { UserMenu } from '../layout'
 
 const useStyles = createStyles((theme) => ({
 	desktopNav: {
@@ -46,6 +44,7 @@ export const Navbar = () => {
 						/>
 						<Group spacing={40} noWrap>
 							<UserMenu />
+							{/* TODO: add link for safety exit */}
 							<Button variant='accent'>{t('safety-exit')}</Button>
 						</Group>
 					</Flex>
