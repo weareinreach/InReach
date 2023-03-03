@@ -13,6 +13,7 @@ export const namespaces = {
 	services: 'services',
 	socialMedia: 'common',
 	user: 'user',
+	orgData: 'org-data',
 } as const
 
 /**

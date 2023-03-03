@@ -56,7 +56,7 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 		// eslint-disable-next-line prefer-const
 		let existingFile = {}
 		if (fs.existsSync(filename)) {
-			existingFile = JSON.parse(fs.readFileSync(filename, 'utf-8'))
+			existingFile = JSON.parse(fs.readFileSync(filename, 'utf-8')) as {}
 			if (!isOutput(existingFile)) throw new Error("tried to load file, but it's empty")
 		}
 		// const existingLength = Object.keys(existingFile).length
