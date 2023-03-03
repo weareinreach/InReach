@@ -23,7 +23,7 @@ const useStyles = createStyles((theme) => ({
 	buttons: {
 		padding: '4px 12px',
 		borderRadius: 8,
-		'&:hover, &:active': {
+		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
 		},
 	},
@@ -86,7 +86,14 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 					// onOpen={() => setUserMenuOpen(true)}
 				>
 					<Menu.Target>
-						<UnstyledButton className={cx(classes.buttons, className)}>
+						<UnstyledButton
+							className={cx(classes.buttons, className)}
+							sx={(theme) => ({
+								'&[data-expanded]': {
+									backgroundColor: theme.other.colors.primary.lightGray,
+								},
+							})}
+						>
 							<Group noWrap spacing='sm'>
 								<Avatar radius='xl' className={classes.avatar}>
 									{session.user.image ? (
