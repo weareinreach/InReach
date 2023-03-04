@@ -1,7 +1,6 @@
 import { Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
-import { csrf, providers, signin, cognito } from '~ui/mockData/login'
 
 import { openLoginModal } from './Login'
 
@@ -13,11 +12,8 @@ const ModalTemplate = () => {
 }
 
 export default {
-	title: 'Modals/Login',
+	title: 'Modals/Sign Up',
 	component: ModalTemplate,
-	parameters: {
-		msw: [signin(), csrf(), providers(), cognito()],
-	},
 } satisfies Meta<typeof ModalTemplate>
 
 export const Modal = {}
