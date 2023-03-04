@@ -96,6 +96,7 @@ const useStyles = createStyles((theme) => ({
 	label: {
 		...theme.other.utilityFonts.utility1,
 	},
+
 	count: {
 		...theme.other.utilityFonts.utility1,
 		background: theme.other.colors.secondary.black,
@@ -172,6 +173,10 @@ const useStyles = createStyles((theme) => ({
 		},
 		width: '100%',
 	},
+	sectionLabel: {
+		...theme.headings.sizes.h3,
+		marginTop: 24,
+	},
 }))
 
 export const MoreFilter = ({}) => {
@@ -196,17 +201,18 @@ export const MoreFilter = ({}) => {
 	/** TODO: Results will be filtered live as items are selected - need to update the count of results left */
 	const resultCount = RESULT_PLACEHOLDER
 
-	type Filter = NonNullable<typeof moreFilterOptionData>[number]
-	type FilterValue = Filter & { checked: boolean }
-
 	const form = useForm()
 
 	const generateInitialData = () => {
 		if (!moreFilterOptionData) return {}
+
+		console.log(moreFilterOptionData) //'filterType' matches mock data
 		const initialValues = moreFilterOptionData.map((filter) => ({
 			...filter,
 			checked: false,
 		}))
+
+		console.log(initialValues) //shows a different value for filterType than what is in the mockdata file.....what is changing it?
 		return initialValues
 	}
 
@@ -222,17 +228,30 @@ export const MoreFilter = ({}) => {
 	const deselectAll = () => form.setValues(generateInitialData())
 
 	const formObjectEntryArray = Object.entries(form.values)
-	const filterList = formObjectEntryArray.map((filter, index) => {
-		return (
-			<>
+	const filterListIncludes = formObjectEntryArray.map((filter, index) => {
+		if ((filter[1].filterType = 'INCLUDE'))
+			//if logic not working, why are extra parens added here after saving? also Tried wrapping the return in {}, did not help
+			return (
 				<Checkbox
 					className={classes.itemChild}
 					label={filter[1].tsKey}
 					key={filter[1].id}
 					{...form.getInputProps(`${index}.checked`, { type: 'checkbox' })}
 				/>
-			</>
-		)
+			)
+	})
+
+	const filterListExcludes = formObjectEntryArray.map((filter, index) => {
+		if ((filter[1].filterType = 'EXCLUDE'))
+			//if logic not working, why are extra parens added here after saving? also Tried wrapping the return in {}, did not help
+			return (
+				<Checkbox
+					className={classes.itemChild}
+					label={filter[1].tsKey}
+					key={filter[1].id}
+					{...form.getInputProps(`${index}.checked`, { type: 'checkbox' })}
+				/>
+			)
 	})
 
 	const selectedItems = (function () {
@@ -290,7 +309,14 @@ export const MoreFilter = ({}) => {
 						classNames={{ viewport: accordionClasses.scrollArea }}
 						maxHeight={`${scrollAreaMaxHeight}px`}
 					>
-						{filterList}
+						<div className={classes.sectionLabel}>
+							<Text>INCLUDE</Text>
+							{filterListIncludes}
+						</div>
+						<div className={classes.sectionLabel}>
+							<Text>EXCLUDE</Text>
+							{filterListExcludes}
+						</div>
 					</ScrollArea.Autosize>
 				</Accordion>
 				<Group className={modalClasses.footer} noWrap>
