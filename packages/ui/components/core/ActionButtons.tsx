@@ -103,7 +103,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 /** Used to display the action buttons when viewing an organization/location/service. */
-export const ActionButtons = ({ iconKey, omitLabel = false }: Props) => {
+export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation()
@@ -114,7 +114,13 @@ export const ActionButtons = ({ iconKey, omitLabel = false }: Props) => {
 
 	const [opened, setOpened] = useState(false)
 
-	const overflowMenuItems = Object.entries(overFlowItems).map(([key, item]) => (
+	let filteredOverflowItems = Object.entries(overFlowItems)
+
+	if (outsideMoreMenu)
+		/* Keep overFlowItems where the key is not in outsideMoreMenu array */
+		filteredOverflowItems = filteredOverflowItems.filter(([key, item]) => !outsideMoreMenu.includes(key))
+
+	const overflowMenuItems = filteredOverflowItems.map(([key, item]) => (
 		<Menu.Item key={key} value={key} icon={<Icon icon={item.icon} />} onClick={actions[item.labelKey]}>
 			{t(item.labelKey)}
 		</Menu.Item>
@@ -176,4 +182,6 @@ type Props = {
 	iconKey: keyof typeof actionButtonIcons
 	/** Display icon only */
 	omitLabel?: boolean
+	/** Specify which buttons will be displayed in the 'more' dropdown menu */
+	outsideMoreMenu?: string[]
 }
