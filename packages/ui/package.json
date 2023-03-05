@@ -20,6 +20,11 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
+		"@iconify-json/carbon": "1.1.16",
+		"@iconify-json/simple-icons": "1.1.45",
+		"@iconify/react": "4.1.0",
+		"@iconify/types": "2.0.0",
+		"@iconify/utils": "2.1.4",
 		"@mantine/utils": "5.10.5",
 		"@weareinreach/api": "0.100.0",
 		"nextjs-routes": "1.0.8",
@@ -35,11 +40,6 @@
 		"@emotion/server": "11.10.0",
 		"@faker-js/faker": "7.6.0",
 		"@geometricpanda/storybook-addon-badges": "1.1.1",
-		"@iconify-json/carbon": "1.1.16",
-		"@iconify-json/simple-icons": "1.1.45",
-		"@iconify/react": "4.1.0",
-		"@iconify/types": "2.0.0",
-		"@iconify/utils": "2.1.4",
 		"@mantine/carousel": "5.10.5",
 		"@mantine/core": "5.10.5",
 		"@mantine/dates": "5.10.5",

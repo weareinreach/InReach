@@ -2,6 +2,7 @@ import { Flex, Group, Grid, createStyles } from '@mantine/core'
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 
+import InReachLogo from '~ui/assets/inreach.svg'
 import { Button, MobileNav, UserMenu } from '~ui/components/core'
 import { BodyGrid } from '~ui/layouts'
 
@@ -35,13 +36,7 @@ export const Navbar = () => {
 			>
 				<Grid.Col p='0px !important'>
 					<Flex justify='space-between'>
-						<Image
-							src='public/img/inreach.svg'
-							width={100}
-							height={37.53}
-							alt='InReach'
-							style={{ margin: 0 }}
-						/>
+						<Image src={InReachLogo} width={100} height={37.53} alt='InReach' style={{ margin: 0 }} />
 						<Group spacing={40} noWrap>
 							<UserMenu />
 							{/* TODO: add link for safety exit */}
