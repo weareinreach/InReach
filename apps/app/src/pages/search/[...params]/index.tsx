@@ -3,12 +3,13 @@ import { Code } from '@mantine/core'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+import { useTranslation, Trans } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type RoutedQuery } from 'nextjs-routes'
+import { useEffect, useState } from 'react'
 import { z } from 'zod'
 
-import { api } from '~app/utils/api'
+import { api, RouterOutputs } from '~app/utils/api'
 import { i18nextConfig } from '~app/utils/i18n'
 
 const ParamSchema = z.tuple([
@@ -19,14 +20,65 @@ const ParamSchema = z.tuple([
 	z.literal('mi').or(z.literal('km')).describe(`'mi' or 'km'`),
 ])
 
+const ResultCard = ({
+	result,
+}: {
+	result: NonNullable<RouterOutputs['organization']['getSearchDetails']>[number]
+}) => {
+	const namespaces = new Set([result.slug, ...result.services.map((service) => service.tsNs)])
+	const { t, ready, i18n } = useTranslation([...namespaces], { useSuspense: false })
+	console.log(result.slug, 'i18n ready?', ready, 'ns', i18n.hasLoadedNamespace(result.slug), i18n)
+	if (!ready) return <div>Loading Text</div>
+	if (!i18n.hasLoadedNamespace(result.slug)) return <div>ns not loaded</div>
+	console.log(
+		t(result.description.key, {
+			ns: result.slug,
+			returnDetails: true,
+		})
+	)
+	return (
+		<div key={result.id}>
+			<p>Name: {result.name}</p>
+			<p>Slug: {result.slug}</p>
+			<p>
+				Description:{' '}
+				{result.description
+					? // 	<Trans i18nKey={result.description.key} ns={result.slug}>
+					  // 		default value
+					  // 	</Trans>
+					  // ) : (
+					  t(result.description.key, {
+							ns: result.slug,
+					  })
+					: 'none'}
+			</p>
+			Services:{' '}
+			<ul>
+				{result.services.map((service) => (
+					<li key={service.id}>{t(service.tsKey, { ns: service.tsNs, defaultValue: 'default value' })}</li>
+				))}
+			</ul>
+		</div>
+	)
+}
+
 const SearchResults = () => {
-	const { query } = useRouter<'/search/[...params]'>()
+	const { query, locale } = useRouter<'/search/[...params]'>()
 	const queryClient = api.useContext()
-	const { t, ready, i18n } = useTranslation(['services', 'org-description'], { useSuspense: false })
+	const [namespaces, setNamespaces] = useState(['services'])
+	const { t, ready, i18n } = useTranslation(['services'])
 	const queryParams = ParamSchema.safeParse(query.params)
+	const [okay, setOkay] = useState(false)
+	// useEffect(() => {
+	// 	console.log('uE', namespaces)
+	// 	// i18n.getResourceBundle('es', namespaces)
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [namespaces])
+
 	if (!queryParams.success) return <>Error</>
 
 	console.log('i18n ready', ready)
+	console.log('namespaces', namespaces)
 
 	const [searchType, lon, lat, dist, unit] = queryParams.data
 	const ids = api.organization.searchDistance.useQuery(
@@ -37,37 +89,29 @@ const SearchResults = () => {
 		}
 	)
 
-	const orgs =
-		ids.data && ids.isSuccess
-			? api.organization.getSearchDetails.useQuery({ ids: ids.data.orgs.map(({ id }) => id) })
-			: undefined
-	if (!ready) return <>Loading t...</>
+	const resultIds = ids.data?.orgs.map(({ id }) => id) ?? []
+
+	const orgs = api.organization.getSearchDetails.useQuery(
+		{ ids: resultIds },
+		{
+			enabled: ids.isSuccess && Boolean(ids.data) && Boolean(resultIds.length),
+			// onSettled: async (data) => {
+			// 	if (data !== undefined) {
+			// 		if (i18n.language !== 'en') {
+			// 			const ns = data.map((result) => result.slug)
+			// 			await i18n.reloadResources('es', ns)
+			// 			await i18n.loadNamespaces(ns)
+			// 		}
+			// 	}
+			// 	setOkay(true)
+			// },
+		}
+	)
+
 	const resultList =
 		orgs?.data && orgs?.isSuccess
 			? orgs.data.map((result) => {
-					return (
-						<div key={result.id}>
-							<p>Name: {result.name}</p>
-							<p>Slug: {result.slug}</p>
-							<p>
-								Description:{' '}
-								{result.description
-									? t(result.description.key, {
-											ns: result.description.ns,
-											defaultValue: 'default value here',
-									  })
-									: 'none'}
-							</p>
-							Services:{' '}
-							<ul>
-								{result.services.map((service) => (
-									<li key={service.id}>
-										{t(service.tsKey, { ns: service.tsNs, defaultValue: 'default value' })}
-									</li>
-								))}
-							</ul>
-						</div>
-					)
+					return <ResultCard key={result.id} result={result} />
 			  })
 			: null
 
@@ -94,7 +138,7 @@ export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/search/[..
 
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await serverSideTranslations(locale ?? 'en', [], i18nextConfig)),
+		...(await serverSideTranslations(locale ?? 'en', undefined, i18nextConfig)),
 	}
 
 	return {

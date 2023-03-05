@@ -19,7 +19,7 @@ const nextConfig = {
 		 * OutputFileTracingIgnores will be in a future version
 		 * https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
 		 */
-		outputFileTracingIgnores: ['**swc+core**', '**esbuild**'],
+		// outputFileTracingExcludes: ['**swc+core**', '**esbuild**'],
 	},
 	// async rewrites() {
 	// 	return {

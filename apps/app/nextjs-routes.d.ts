@@ -45,8 +45,8 @@ declare module "nextjs-routes" {
   export type Locale = 
     | "en"
     | "es"
-    | "ar"
     | "fr"
+    | "ar"
     | "ru";
 
   /**
@@ -126,8 +126,8 @@ declare module "next/router" {
         locales: [
           "en",
           "es",
-          "ar",
           "fr",
+          "ar",
           "ru"
         ];
         push(

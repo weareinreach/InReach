@@ -1,10 +1,20 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
-import Crowdin, { type StringTranslationsModel } from '@crowdin/crowdin-api-client'
+import Crowdin from '@crowdin/crowdin-api-client'
+import OtaClient from '@crowdin/ota-client'
+import axios from 'axios'
 
-export const crowdin = new Crowdin({
-	organization: 'inreach',
-	token: process.env.CROWDIN_TOKEN as string,
+import { crowdinOpts } from '~app/data/crowdinOta'
+
+export const crowdinApi =
+	global.crowdinApi ||
+	new Crowdin({
+		organization: 'inreach',
+		token: process.env.CROWDIN_TOKEN as string,
+	})
+const axiosClient = axios.create()
+export const crowdinOta = new OtaClient(crowdinOpts.hash, {
+	// httpClient: axiosClient,
 })
 
 export const crowdinProjId = 12 as const
@@ -15,49 +25,24 @@ export const crowdinBranch = {
 	'database-draft': 792,
 } as const
 
-const isPlural = (result: CrowdinResponse): result is StringTranslationsModel.PluralLanguageTranslation => {
-	return 'plurals' in result
+export const fetchCrowdinFile = async (file: string, lang: string) =>
+	await crowdinOta.getStringsByLocale(file, lang)
+
+export const fetchCrowdinKey = async (ns: string, file: string, lang: string) => {
+	console.log(ns, file, lang)
+	const data = await crowdinOta.getStringByKey(ns, file, lang)
+	console.log(data)
+	return data
 }
+export const crowdinDistTimestamp = async () => await crowdinOta.getManifestTimestamp()
 
-export const fetchTranslation = async (branchId: keyof typeof crowdinBranch, lang: string, key: string) => {
-	const tMap = new Map<number, string>()
-	let tToFetch: number[] = []
-	const crowdin = new Crowdin({
-		organization: 'inreach',
-		token: process.env.CROWDIN_TOKEN as string,
-	})
-	const stringIds = await crowdin.sourceStringsApi.listProjectStrings(crowdinProjId, {
-		branchId: crowdinBranch[branchId],
-		filter: key,
-		scope: 'identifier',
-		limit: 500,
-	})
-	stringIds.data.forEach((result) => {
-		tToFetch.push(result.data.id)
-		tMap.set(result.data.id, result.data.identifier)
-	})
-	if (tToFetch.length) {
-		const translations = await crowdin.stringTranslationsApi.listLanguageTranslations(crowdinProjId, lang, {
-			stringIds: JSON.stringify(tToFetch),
-		})
-
-		const fetched: [string, string][] = []
-		translations.data.forEach((result) => {
-			const key = tMap.get(result.data.stringId)
-			if (!key) return
-			if (isPlural(result.data)) {
-				result.data.plurals.forEach((plural) => fetched.push([`${key}_${plural.pluralForm}`, plural.text]))
-				return
-			}
-			fetched.push([key, result.data.text])
-		})
-		const resultObj = Object.fromEntries(new Map(fetched).entries())
-		return resultObj
-	}
-	return undefined
+if (process.env.NODE_ENV !== 'production') {
+	global.crowdinApi = crowdinApi
+	global.crowdinOta = crowdinOta
 }
-
-type CrowdinResponse =
-	| StringTranslationsModel.PlainLanguageTranslation
-	| StringTranslationsModel.PluralLanguageTranslation
-	| StringTranslationsModel.IcuLanguageTranslation
+declare global {
+	// allow global `var` declarations
+	// eslint-disable-next-line no-var
+	var crowdinApi: Crowdin | undefined
+	var crowdinOta: OtaClient | undefined
+}
