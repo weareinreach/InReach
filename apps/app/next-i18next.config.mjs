@@ -4,10 +4,11 @@
 /* eslint-disable import/no-unused-modules */
 // @ts-ignore
 // const HttpBackend = require('i18next-http-backend/cjs')
-import CrowdinOtaBackend from '@weareinreach/i18next-crowdin-ota-backend'
 import { I18nextKeysOnDemand } from '@weareinreach/i18next-keys-ondemand'
 import axios from 'axios'
+import ChainedBackend from 'i18next-chained-backend'
 import HttpBackend from 'i18next-http-backend'
+import LocalStorageBackend from 'i18next-localstorage-backend'
 import MultiBackend from 'i18next-multiload-backend-adapter'
 import { z } from 'zod'
 
@@ -23,6 +24,7 @@ export const namespaces = [
 	'services',
 	'user',
 ]
+const isBrowser = typeof window !== 'undefined'
 
 const Keys = z.record(z.string())
 
@@ -43,22 +45,6 @@ const onDemand = new I18nextKeysOnDemand({
 	translationGetter: onDemandFetcher,
 	debounceDelay: 50,
 })
-export const crowdinOpts = {
-	hash: 'e-39328dacf5f98928e8273b35wj',
-	nsFileMap: {
-		databaseStrings: '/database/org-data.json',
-		common: '/dev/common.json',
-		country: '/dev/country.json',
-		footer: '/dev/footer.json',
-		nav: '/dev/nav.json',
-		socialMedia: '/dev/socialMedia.json',
-		user: '/dev/user.json',
-		'gov-dist': '/dev/gov-dist.json',
-		attribute: '/dev/attribute.json',
-		services: '/dev/services.json',
-	},
-	// redisUrl: process.env.REDIS_URL,
-}
 
 // const crowdinBackend = new CrowdinOtaBackend(undefined, )
 const apiPath = '/api/i18n/load?lng={{lng}}&ns={{ns}}'
@@ -69,7 +55,7 @@ const httpBackend = new HttpBackend(null, {
 
 const multi = new MultiBackend(null, {
 	backend: HttpBackend,
-	debounceInterval: 200,
+	// debounceInterval: 200,
 	backendOption: {
 		loadPath: typeof window !== 'undefined' ? apiPath : `http://localhost:3000${apiPath}`,
 		allowMultiLoading: true,
@@ -87,28 +73,41 @@ const config = {
 		defaultLocale: 'en',
 		locales: ['en', 'es', 'fr', 'ar', 'ru'], // ['en', 'en-US', 'en-CA', 'en-MX', 'es', 'es-US', 'es-MX'],
 	},
+	defaultNS: 'common',
+
 	fallbackLng: ['en'],
 	reloadOnPrerender: process.env.NODE_ENV !== 'production',
-	debug: true, //process.env.NODE_ENV !== 'production' && !!process.env.NEXT_VERBOSE,
-
+	debug: process.env.NODE_ENV !== 'production' && !!process.env.NEXT_VERBOSE,
 	partialBundledLanguages: true,
 	nonExplicitSupportedLngs: true,
 	cleanCode: true,
 	react: {
-		useSuspense: false,
+		useSuspense: true,
+		bindI18nStore: 'added loaded',
+		bindI18n: 'languageChanged added loaded',
 	},
-	// saveMissing: true,
 	backend: {
-		// 	backendOptions: {
-		// 		// translationGetter: onDemandFetcher,
-		// 		allowMultiLoading: true,
-		// 		loadPath: typeof window !== 'undefined' ? apiPath : `http://localhost:3000${apiPath}`,
-		// 	},
-		// 	debounceInterval: 200,
-		// 	backends: [onDemand], //typeof window !== 'undefined' ? [onDemand] : [onDemand],
+		backendOptions: [
+			// {
+			// 	expirationTime: 60 * 60 * 1000,
+			// },
+			{
+				backend: HttpBackend,
+				// debounceInterval: 200,
+				backendOption: {
+					loadPath: isBrowser ? apiPath : `http://localhost:3000${apiPath}`,
+					allowMultiLoading: true,
+				},
+			},
+		],
+		backends: isBrowser ? [multi] : [multi], //[LocalStorageBackend, multi] : [],
 	},
-	serializeConfig: false,
+
+	// saveMissing: true,
+
 	// updateMissing: true,
-	use: [multi], //typeof window !== 'undefined' ? [multi] : [multi],
+	serializeConfig: false,
+	use: isBrowser ? [ChainedBackend] : [ChainedBackend],
+	maxParallelReads: 20,
 }
 export default config

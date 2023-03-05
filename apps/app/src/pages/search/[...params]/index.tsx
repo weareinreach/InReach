@@ -3,10 +3,10 @@ import { Code } from '@mantine/core'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import { useTranslation, Trans } from 'next-i18next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type RoutedQuery } from 'nextjs-routes'
-import { useEffect, useState } from 'react'
+import { Suspense } from 'react'
 import { z } from 'zod'
 
 import { api, RouterOutputs } from '~app/utils/api'
@@ -26,16 +26,11 @@ const ResultCard = ({
 	result: NonNullable<RouterOutputs['organization']['getSearchDetails']>[number]
 }) => {
 	const namespaces = new Set([result.slug, ...result.services.map((service) => service.tsNs)])
-	const { t, ready, i18n } = useTranslation([...namespaces], { useSuspense: false })
+	const { t, ready, i18n } = useTranslation([...namespaces])
 	console.log(result.slug, 'i18n ready?', ready, 'ns', i18n.hasLoadedNamespace(result.slug), i18n)
-	if (!ready) return <div>Loading Text</div>
+
 	if (!i18n.hasLoadedNamespace(result.slug)) return <div>ns not loaded</div>
-	console.log(
-		t(result.description.key, {
-			ns: result.slug,
-			returnDetails: true,
-		})
-	)
+
 	return (
 		<div key={result.id}>
 			<p>Name: {result.name}</p>
@@ -43,12 +38,9 @@ const ResultCard = ({
 			<p>
 				Description:{' '}
 				{result.description
-					? // 	<Trans i18nKey={result.description.key} ns={result.slug}>
-					  // 		default value
-					  // 	</Trans>
-					  // ) : (
-					  t(result.description.key, {
+					? t(result.description.key, {
 							ns: result.slug,
+							defaultValue: result.description.text,
 					  })
 					: 'none'}
 			</p>
@@ -65,22 +57,12 @@ const ResultCard = ({
 const SearchResults = () => {
 	const { query, locale } = useRouter<'/search/[...params]'>()
 	const queryClient = api.useContext()
-	const [namespaces, setNamespaces] = useState(['services'])
-	const { t, ready, i18n } = useTranslation(['services'])
+	const { t } = useTranslation(['services'])
 	const queryParams = ParamSchema.safeParse(query.params)
-	const [okay, setOkay] = useState(false)
-	// useEffect(() => {
-	// 	console.log('uE', namespaces)
-	// 	// i18n.getResourceBundle('es', namespaces)
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [namespaces])
 
 	if (!queryParams.success) return <>Error</>
 
-	console.log('i18n ready', ready)
-	console.log('namespaces', namespaces)
-
-	const [searchType, lon, lat, dist, unit] = queryParams.data
+	const [_searchType, lon, lat, dist, unit] = queryParams.data
 	const ids = api.organization.searchDistance.useQuery(
 		{ lat, lon, dist, unit },
 		{
@@ -95,16 +77,6 @@ const SearchResults = () => {
 		{ ids: resultIds },
 		{
 			enabled: ids.isSuccess && Boolean(ids.data) && Boolean(resultIds.length),
-			// onSettled: async (data) => {
-			// 	if (data !== undefined) {
-			// 		if (i18n.language !== 'en') {
-			// 			const ns = data.map((result) => result.slug)
-			// 			await i18n.reloadResources('es', ns)
-			// 			await i18n.loadNamespaces(ns)
-			// 		}
-			// 	}
-			// 	setOkay(true)
-			// },
 		}
 	)
 
@@ -117,8 +89,9 @@ const SearchResults = () => {
 
 	return (
 		<div>
-			{resultList}
-			{/* <Code block>{JSON.stringify(ids, null, 2)}</Code> */}
+			useRouter locale: {locale}
+			<Suspense fallback={<h1>Loader goes here</h1>}>{resultList}</Suspense>
+			<Code block>{JSON.stringify(ids, null, 2)}</Code>
 			<Code block>{JSON.stringify(orgs, null, 2)}</Code>
 		</div>
 	)
@@ -138,7 +111,7 @@ export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/search/[..
 
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await serverSideTranslations(locale ?? 'en', undefined, i18nextConfig)),
+		...(await serverSideTranslations(locale ?? '', ['services', 'common', 'nav'], i18nextConfig)),
 	}
 
 	return {

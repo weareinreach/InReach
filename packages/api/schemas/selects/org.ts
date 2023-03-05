@@ -364,6 +364,11 @@ export const orgSearchSelect = {
 								select: {
 									tsKey: true,
 									tsNs: true,
+									key: {
+										select: {
+											text: true,
+										},
+									},
 								},
 							},
 						},
