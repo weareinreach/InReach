@@ -3,7 +3,7 @@
 	"extends": ["//"],
 	"pipeline": {
 		"build": {
-			"dependsOn": ["^build"],
+			"dependsOn": ["^build", "^db:generate", "^generate:data"],
 			"env": [
 				"DATABASE_URL",
 				"NEXTAUTH_SECRET",
