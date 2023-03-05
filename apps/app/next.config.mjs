@@ -34,9 +34,9 @@ const nextConfig = {
 		// },
 		outputFileTracingRoot: path.join(__dirname, '../../'),
 
-		turbotrace: {
-			logDetail: true,
-		},
+		// turbotrace: {
+		// 	logDetail: true,
+		// },
 	},
 
 	// async rewrites() {
