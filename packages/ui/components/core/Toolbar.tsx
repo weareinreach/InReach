@@ -35,7 +35,7 @@ export const Toolbar = ({ saved = false }: Props) => {
 	return (
 		<Flex justify='space-between' align='center'>
 			<Breadcrumb option='back' backTo='search' onClick={() => router.push('/search')} />
-			<Group noWrap spacing='xs'>
+			<Group noWrap spacing={0}>
 				{displayButtons}
 				<ActionButtons iconKey='more' outsideMoreMenu={inToolbar} />
 			</Group>
