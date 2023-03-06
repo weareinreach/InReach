@@ -1,4 +1,4 @@
-import { Flex, Group } from '@mantine/core'
+import { Flex, Group, useMantineTheme } from '@mantine/core'
 import { useViewportSize } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 
@@ -7,10 +7,10 @@ import { actionButtonIcons } from './ActionButtons'
 
 const MIN_BUTTON_WIDTH = 55.2
 const BREACRUMB_WIDTH = 162
-const SM_BREAKPOINT = 375
-const LG_BREAKPOINT = 861
 
 export const Toolbar = ({ saved = false }: Props) => {
+	const theme = useMantineTheme()
+	const SM_BREAKPOINT = theme.breakpoints.sm
 	const { width } = useViewportSize()
 	const router = useRouter()
 	const buttons = ['review', 'share', saved ? 'saved' : 'save']
@@ -25,7 +25,7 @@ export const Toolbar = ({ saved = false }: Props) => {
 		<ActionButtons
 			key={button}
 			iconKey={button as keyof typeof actionButtonIcons}
-			omitLabel={width <= LG_BREAKPOINT}
+			omitLabel={width <= SM_BREAKPOINT}
 		/>
 	))
 
