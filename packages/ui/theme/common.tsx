@@ -1,5 +1,12 @@
 /* eslint-disable import/consistent-type-specifier-style */
-import { rem, em, SkeletonStylesParams } from '@mantine/core'
+import {
+	rem,
+	em,
+	SkeletonStylesParams,
+	InputWrapperStylesNames,
+	InputWrapperProps,
+	InputWrapperBaseProps,
+} from '@mantine/core'
 import { keys } from '@mantine/utils'
 
 import { Icon } from '~ui/icon'
@@ -381,6 +388,7 @@ export const commonTheme = {
 							color: params.indeterminate
 								? theme.other.colors.secondary.black
 								: theme.other.colors.secondary.white,
+							borderColor: params.indeterminate ? undefined : theme.other.colors.secondary.black,
 						},
 						'&:disabled': {
 							backgroundColor: theme.other.colors.primary.lightGray,
@@ -432,14 +440,13 @@ export const commonTheme = {
 		Input: {
 			styles: (theme) =>
 				({
-					// label: {
-					// 	paddingBottom: 10,
-					// },
 					input: {
-						padding: `${rem(14)} ${rem(16)}`,
 						borderColor: theme.other.colors.tertiary.coolGray,
-
+						borderRadius: rem(8),
 						...theme.other.utilityFonts.utility2,
+						padding: `${rem(14)} ${rem(16)}`,
+						margin: `${rem(10)} 0`,
+						height: rem(48),
 						'&::placeholder': {
 							color: theme.other.colors.secondary.darkGray,
 						},
@@ -447,9 +454,9 @@ export const commonTheme = {
 							borderColor: theme.other.colors.secondary.black,
 							borderWidth: rem(2),
 						},
-						'$[data-with-icon]': {
+						'&[data-with-icon]': {
 							borderRadius: theme.radius.xl,
-							paddingLeft: rem(44),
+							paddingLeft: rem(36),
 						},
 						'&[data-invalid]': {
 							'&::placeholder': {
@@ -461,6 +468,14 @@ export const commonTheme = {
 								borderWidth: rem(2),
 							},
 						},
+						'&[data-disabled],:disabled': {
+							backgroundColor: theme.other.colors.primary.lightGray,
+							color: theme.other.colors.secondary.darkGray,
+							opacity: 1,
+							'&::placeholder': {
+								color: theme.other.colors.secondary.darkGray,
+							},
+						},
 					},
 					icon: {
 						color: theme.other.colors.secondary.black,
@@ -470,7 +485,38 @@ export const commonTheme = {
 					rightSection: {
 						paddingRight: theme.spacing.md,
 					},
+					wrapper: {
+						margin: 0,
+					},
 				} satisfies Styles<InputStylesNames, InputStylesParams>),
+		},
+		InputWrapper: {
+			defaultProps: {
+				inputWrapperOrder: ['label', 'input', 'description', 'error'],
+			} satisfies Partial<InputWrapperProps>,
+			styles: (theme, { error }: InputWrapperBaseProps) =>
+				({
+					label: {
+						fontSize: rem(16),
+						paddingBottom: 0,
+					},
+					description: {
+						['&:has(~ .mantine-InputWrapper-error)']: {
+							display: 'none',
+						},
+						...theme.other.utilityFonts.utility4,
+						color: `${theme.other.colors.secondary.darkGray}`,
+						'&:focus': {
+							outline: 'none',
+						},
+						'&[data-success]': {
+							...theme.other.utilityFonts.utility3,
+						},
+					},
+					error: {
+						...theme.other.utilityFonts.utility3,
+					},
+				} satisfies Styles<InputWrapperStylesNames>),
 		},
 		Modal: {
 			defaultProps: (theme) => {
@@ -520,7 +566,7 @@ export const commonTheme = {
 			styles: (theme) =>
 				({
 					root: {
-						padding: `${rem(10)} ${rem(0)} ${rem(10)} ${rem(2)}`,
+						padding: `${rem(10)} ${rem(0)} ${rem(10)} ${rem(4)}`,
 						...theme.fn.hover({
 							backgroundColor: theme.other.colors.primary.lightGray,
 						}),
@@ -603,7 +649,7 @@ export const commonTheme = {
 			styles: (theme) =>
 				({
 					root: {
-						padding: `${rem(12)} ${rem(0)}`,
+						padding: `${rem(12)} ${rem(4)}`,
 						...theme.fn.hover({
 							backgroundColor: theme.other.colors.primary.lightGray,
 						}),
@@ -640,6 +686,7 @@ export const commonTheme = {
 						'input:checked + * > &': {
 							backgroundColor: theme.other.colors.secondary.black,
 							borderColor: theme.fn.darken(theme.other.colors.secondary.black, 0.04),
+							left: `calc(100% - ${rem(16)})`,
 						},
 						'input:disabled + * > &': {
 							backgroundColor: theme.other.colors.primary.lightGray,
@@ -684,80 +731,25 @@ export const commonTheme = {
 			}),
 		},
 		Textarea: {
-			defaultProps: {
-				radius: 'md',
-				autosize: true,
-				minRows: 3,
-				maxRows: 5,
-			} satisfies TextareaProps,
+			defaultProps: {} satisfies TextareaProps,
 			styles: (theme) => ({
-				label: {
-					paddingBottom: rem(10),
-				},
 				input: {
-					padding: `${rem(14)} ${rem(16)}`,
-					borderColor: theme.other.colors.tertiary.coolGray,
-
-					...theme.other.utilityFonts.utility2,
-					'&::placeholder': {
-						color: theme.other.colors.secondary.darkGray,
-					},
-					'&:focus, &:focus-within': {
-						borderColor: theme.other.colors.secondary.black,
-						borderWidth: rem(2),
-					},
-				},
-				invalid: {
-					'&::placeholder': {
-						color: theme.other.colors.secondary.darkGray,
-					},
-					'&:focus, &:focus-within': {
-						color: theme.other.colors.secondary.black,
-						borderColor: theme.other.colors.tertiary.red,
-						borderWidth: rem(2),
-					},
+					height: rem(96),
+					padding: `${rem(14)} ${rem(16)} !important`,
 				},
 			}),
 		},
 		TextInput: {
 			styles: (theme) => ({
-				label: {
-					paddingBottom: rem(10),
-				},
 				input: {
-					padding: `${rem(14)} ${rem(16)}`,
-					borderColor: theme.other.colors.tertiary.coolGray,
-
-					...theme.other.utilityFonts.utility2,
-					'&::placeholder': {
-						color: theme.other.colors.secondary.darkGray,
-					},
-					'&:focus, &:focus-within': {
-						borderColor: theme.other.colors.secondary.black,
-						borderWidth: rem(2),
-					},
-				},
-				icon: {
-					color: theme.other.colors.secondary.black,
-					marginLeft: theme.spacing.md,
-					width: 'fit-content',
+					height: rem(48),
 				},
 				withIcon: {
 					borderRadius: theme.radius.xl,
-					paddingLeft: rem(44),
+					paddingLeft: rem(36),
 				},
 				rightSection: {
 					paddingRight: theme.spacing.md,
-				},
-				invalid: {
-					'&::placeholder': {
-						color: theme.other.colors.secondary.darkGray,
-					},
-					'&:focus, &:focus-within': {
-						color: theme.other.colors.secondary.black,
-						borderColor: theme.other.colors.tertiary.red,
-						borderWidth: rem(2),
-					},
 				},
 			}),
 		},

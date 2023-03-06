@@ -59,16 +59,12 @@ export const UserReviewSubmit = () => {
 					<Stack align='flex-start' spacing='xl'>
 						<UserAvatar useLoggedIn={true} subheading={null} />
 						<Rating {...form.getInputProps('rating')} />
-						<Stack spacing={10} w='100%'>
-							<Textarea
-								label=<Text fw={theme.other.fontWeight.semibold}>{t('review-resource')}</Text>
-								placeholder={t('enter-review')!}
-								{...form.getInputProps('reviewText')}
-							/>
-							<Text size={14} color={theme.other.colors.secondary.darkGray}>
-								{t('review-note')}
-							</Text>
-						</Stack>
+						<Textarea
+							label={t('review-resource')}
+							placeholder={t('enter-review')!}
+							description={t('review-note')}
+							{...form.getInputProps('reviewText')}
+						/>
 						<Button variant='primary' type='submit'>
 							{t('submit-review')}
 						</Button>

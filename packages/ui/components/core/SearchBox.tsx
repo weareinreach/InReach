@@ -51,7 +51,7 @@ const useStyles = createStyles((theme) => ({
 		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
 		alignItems: 'center',
 		'&:hover': {
-			backgroundColor: theme.other.colors.tertiary.coolGray,
+			backgroundColor: theme.other.colors.primary.lightGray,
 			cursor: 'pointer',
 		},
 		'&:last-child': {

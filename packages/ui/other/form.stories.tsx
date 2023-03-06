@@ -64,13 +64,32 @@ const Display = () => {
 				<Title order={2}>Textbox (Single line)</Title>
 
 				<Stack>
-					<TextInput label='Default' placeholder='Placeholder text' />
-					<TextInput label='Focused' placeholder='Placeholder text' classNames={{ root: 'focus' }} />
-					<TextInput label='Disabled' placeholder='Placeholder text' disabled />
-					<TextInput label='Error' error placeholder='Placeholder text' />
+					<TextInput
+						label='Default'
+						placeholder='Placeholder text'
+						description='This is some description text'
+					/>
+					<TextInput
+						label='Focused'
+						placeholder='Placeholder text'
+						classNames={{ root: 'focus' }}
+						description='This is some description text'
+					/>
+					<TextInput
+						label='Disabled'
+						placeholder='Placeholder text'
+						disabled
+						description='This is some description text'
+					/>
+					<TextInput
+						label='Error'
+						placeholder='Placeholder text'
+						description='This is some description text'
+						error='This is some error message text'
+					/>
 				</Stack>
 				<Space h='md' />
-				<Stack>
+				{/* <Stack>
 					<TextInput
 						label='With icon'
 						placeholder='Placeholder text'
@@ -102,16 +121,35 @@ const Display = () => {
 						rightSection={<Clear />}
 						rightSectionWidth='fit-content'
 					/>
-				</Stack>
+				</Stack> */}
 			</Grid.Col>
 
 			<Grid.Col sm={6}>
 				<Title order={2}>Textbox (Multi-line)</Title>
-				<Stack spacing={0}>
-					<Textarea label='Default' placeholder='Placeholder text' />
-					<Textarea label='Focused' placeholder='Placeholder text' classNames={{ root: 'focus' }} />
-					<Textarea label='Disabled' placeholder='Placeholder text' disabled />
-					<Textarea label='Error' placeholder='Placeholder text' error />
+				<Stack>
+					<Textarea
+						label='Default'
+						placeholder='Placeholder text'
+						description='This is some description text'
+					/>
+					<Textarea
+						label='Focused'
+						placeholder='Placeholder text'
+						classNames={{ root: 'focus' }}
+						description='This is some description text'
+					/>
+					<Textarea
+						label='Disabled'
+						placeholder='Placeholder text'
+						disabled
+						description='This is some description text'
+					/>
+					<Textarea
+						label='Error'
+						placeholder='Placeholder text'
+						error='This is some error message text'
+						description='This is some description text'
+					/>
 				</Stack>
 			</Grid.Col>
 		</>
