@@ -1,0 +1,15 @@
+export default [
+	'attribute',
+	'common',
+	'country',
+	'common',
+	'gov-dist',
+	'common',
+	'org-description',
+	'org-service',
+	'phone-type',
+	'services',
+	'common',
+	'user',
+	'org-data',
+] as const
