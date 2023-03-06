@@ -111,7 +111,7 @@ export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/search/[..
 
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await serverSideTranslations(locale ?? '', ['services', 'common', 'nav'], i18nextConfig)),
+		...(await serverSideTranslations(locale ?? 'en', ['services', 'common', 'nav'], i18nextConfig)),
 	}
 
 	return {

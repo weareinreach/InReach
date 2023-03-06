@@ -11,7 +11,7 @@ const QuerySchema = z.object({
 	ns: z.string(),
 })
 
-const log = new Logger({ name: 'load api' })
+const log = new Logger({ name: 'i18n Loader' })
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const query = QuerySchema.parse(req.query)

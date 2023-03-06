@@ -27,6 +27,9 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 	const prettierOpts = (await prettier.resolveConfig(__dirname)) ?? undefined
 
 	const data = await prisma.translationNamespace.findMany({
+		where: {
+			exportFile: true,
+		},
 		include: {
 			keys: {
 				orderBy: {

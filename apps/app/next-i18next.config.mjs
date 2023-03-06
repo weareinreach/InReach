@@ -100,14 +100,14 @@ const config = {
 				},
 			},
 		],
-		backends: isBrowser ? [multi] : [multi], //[LocalStorageBackend, multi] : [],
+		backends: isBrowser ? [multi] : [], //[LocalStorageBackend, multi] : [],
 	},
 
 	// saveMissing: true,
 
 	// updateMissing: true,
 	serializeConfig: false,
-	use: isBrowser ? [ChainedBackend] : [ChainedBackend],
+	use: isBrowser ? [ChainedBackend] : [],
 	maxParallelReads: 20,
 }
 export default config
