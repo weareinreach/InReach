@@ -12,6 +12,8 @@ import {
 	ScrollArea,
 	useMantineTheme,
 	Skeleton,
+	rem,
+	em,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
@@ -31,20 +33,24 @@ const useAccordionStyles = createStyles((theme) => ({
 		...theme.other.utilityFonts.utility1,
 	},
 	content: {
-		padding: '0px 0px 12px 0px',
+		padding: `${rem(0)} ${rem(0)} ${rem(12)} ${rem(0)}`,
 	},
 	item: {
 		margin: 0,
+		minHeight: rem(48),
 		'&:last-of-type': {
-			marginBottom: '40px',
+			marginBottom: rem(40),
 		},
 	},
 	chevron: { '&[data-rotate]': { transform: 'rotate(90deg)' } },
 	scrollArea: {
-		paddingRight: '12px',
+		paddingRight: rem(12),
 	},
 	control: {
-		padding: '12px 0px',
+		padding: `${rem(12)} ${rem(0)}`,
+		...theme.fn.hover({
+			backgroundColor: theme.other.colors.primary.lightGray,
+		}),
 	},
 	panel: {
 		padding: 0,
@@ -53,39 +59,39 @@ const useAccordionStyles = createStyles((theme) => ({
 
 const useModalStyles = createStyles((theme) => ({
 	body: {
-		padding: '10px 4px 10px 16px',
+		padding: `${rem(10)} ${rem(4)} ${rem(10)} ${rem(16)}`,
 		[theme.fn.largerThan('xs')]: {
-			padding: '40px 8px 20px 20px',
+			padding: `${rem(40)} ${rem(8)} ${rem(20)} ${rem(20)}`,
 		},
 		[theme.fn.largerThan('sm')]: {
-			padding: '40px 20px 20px 32px',
+			padding: `${rem(40)} ${rem(20)} ${rem(20)} ${rem(32)}`,
 		},
 		[theme.fn.smallerThan('sm')]: {
 			maxHeight: 'none',
-			padding: '10px 8px 40px 20px',
+			padding: `${rem(10)} ${rem(9)} ${rem(30)} ${rem(20)}`,
 		},
-		[`@media (orientation: landscape) and (max-height: 376px)`]: {
-			paddingBottom: '20px',
+		[`@media (orientation: landscape) and (max-height: ${em(376)})`]: {
+			paddingBottom: rem(20),
 		},
-		[`@media (orientation: landscape) and (max-height: 430px)`]: {
+		[`@media (orientation: landscape) and (max-height: ${em(430)})`]: {
 			maxHeight: 'none',
-			paddingTop: '20px',
+			paddingTop: rem(20),
 		},
 	},
 	title: {
-		padding: '8px 0px 8px 8px',
+		padding: `${rem(8)} ${rem(0)} ${rem(8)} ${rem(8)}`,
 		width: '100%',
 	},
 	header: {},
 	modal: {},
 	footer: {
-		borderTop: 'solid 1px' + theme.other.colors.primary.lightGray,
-		padding: '20px 12px 0px 0px',
+		borderTop: `solid ${rem(1)} ${theme.other.colors.primary.lightGray}`,
+		padding: `${rem(20)} ${rem(12)} ${rem(0)} ${rem(0)}`,
 		[theme.fn.smallerThan('sm')]: {
-			padding: '32px 12px 0px 0px',
+			padding: `${rem(32)} ${rem(12)} ${rem(0)} ${rem(0)}`,
 		},
-		[`${theme.fn.smallerThan(375)}, (orientation: landscape) and (max-height: 376px)`]: {
-			paddingTop: '20px',
+		[`${theme.fn.smallerThan(em(375))}, (orientation: landscape) and (max-height: ${em(376)})`]: {
+			paddingTop: rem(20),
 		},
 	},
 }))
@@ -99,8 +105,8 @@ const useStyles = createStyles((theme) => ({
 		background: theme.other.colors.secondary.black,
 		borderRadius: '100%',
 		color: theme.other.colors.secondary.white,
-		width: 24,
-		height: 24,
+		width: rem(24),
+		height: rem(24),
 		textAlign: 'center',
 		display: 'inline-block',
 		verticalAlign: 'center',
@@ -108,15 +114,17 @@ const useStyles = createStyles((theme) => ({
 	},
 
 	button: {
-		padding: '14px 20px 14px 16px',
+		padding: `${rem(14)} ${rem(16)}`,
 		backgroundColor: theme.other.colors.secondary.white,
-		borderRadius: '8px',
-		border: `${theme.other.colors.tertiary.coolGray} 1px solid`,
+		borderRadius: rem(8),
+		border: `${theme.other.colors.tertiary.coolGray} ${rem(1)} solid`,
+		height: rem(48),
+		maxWidth: rem(600),
 	},
 
 	itemParent: {},
 	itemChild: {
-		marginLeft: '40px',
+		marginLeft: rem(40),
 	},
 	uncheck: {
 		color: theme.other.colors.secondary.black,
@@ -127,48 +135,48 @@ const useStyles = createStyles((theme) => ({
 			color: theme.other.colors.secondary.black,
 			cursor: 'pointer',
 		},
-		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${
-			theme.breakpoints.xs
-		}px)`]: {
-			display: 'none',
-		},
+		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${theme.breakpoints.xs})`]:
+			{
+				display: 'none',
+			},
 	},
 	uncheckDisabled: {
 		textDecoration: 'underline',
 		color: theme.other.colors.secondary.darkGray,
-		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${
-			theme.breakpoints.xs
-		}px)`]: {
-			display: 'none',
-		},
+		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${theme.breakpoints.xs})`]:
+			{
+				display: 'none',
+			},
 	},
 	uncheckBtn: {
 		width: '50%',
-		borderRadius: '8px',
-		padding: '6px 8px',
+		borderRadius: rem(8),
+		padding: `${rem(6)} ${rem(8)}`,
 		[theme.fn.largerThan('sm')]: {
 			display: 'none',
 		},
-		[theme.fn.smallerThan(375)]: {
+		[theme.fn.smallerThan(em(375))]: {
 			marginRight: 'unset',
 			'& *': {
-				fontSize: '14px !important',
+				fontSize: `${rem(14)} !important`,
 			},
 		},
+		height: rem(48),
 	},
 	resultsBtn: {
-		borderRadius: '8px',
+		borderRadius: rem(8),
 		[theme.fn.smallerThan('sm')]: {
 			width: '50%',
-			padding: '6px 8px',
+			padding: `${rem(6)} ${rem(8)}`,
 		},
-		[theme.fn.smallerThan(375)]: {
+		[theme.fn.smallerThan(em(375))]: {
 			marginLeft: 'unset',
 			'& *': {
-				fontSize: '14px !important',
+				fontSize: `${rem(14)} !important`,
 			},
 		},
 		width: '100%',
+		height: rem(48),
 	},
 }))
 
@@ -182,21 +190,20 @@ export const ServiceFilter = ({}) => {
 	const modalSettings = useModalProps()
 	const theme = useMantineTheme()
 
-	const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`)
-	const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: 430px)`)
+	const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
+	const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: ${em(430)})`)
 	const isSmallLandscape = useMediaQuery(
-		`(orientation: landscape) and (max-height: 376px) and (max-width: ${theme.breakpoints.xs}px)`
+		`(orientation: landscape) and (max-height: ${em(376)}) and (max-width: ${theme.breakpoints.xs})`
 	)
 	const isMobile = isMobileQuery || isLandscape
 	const viewportHeight = useViewportSize().height + (isLandscape ? (isSmallLandscape ? 40 : 20) : 0)
-	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 : viewportHeight * 0.6 - 88
+	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
 
 	/** TODO: Results will be filtered live as items are selected - need to update the count of results left */
 	const resultCount = RESULT_PLACEHOLDER
 
 	type ServiceCategory = NonNullable<typeof serviceOptionData>[number]
 	type FilterValue = ServiceCategory['services'][number] & { categoryId: string; checked: boolean }
-	type FormValues = Omit<ServiceCategory, 'services'> & { services: FilterValue[] }
 
 	const form = useForm<{ [categoryId: string]: FilterValue[] }>()
 	const valueMap = new Map<string, FilterValue[]>()
@@ -317,12 +324,12 @@ export const ServiceFilter = ({}) => {
 	return (
 		<>
 			<Modal
-				{...modalSettings}
 				opened={opened}
 				onClose={() => setOpened(false)}
 				title={<ServiceBar modalTitle />}
 				fullScreen={isMobile}
 				classNames={modalClasses}
+				scrollAreaComponent={Modal.NativeScrollArea}
 			>
 				<Accordion
 					chevron={<Icon icon='carbon:chevron-right' />}
@@ -331,7 +338,7 @@ export const ServiceFilter = ({}) => {
 				>
 					<ScrollArea.Autosize
 						classNames={{ viewport: accordionClasses.scrollArea }}
-						maxHeight={`${scrollAreaMaxHeight}px`}
+						mah={scrollAreaMaxHeight}
 					>
 						{filterList}
 					</ScrollArea.Autosize>

@@ -1,4 +1,4 @@
-import { Button, createStyles, Menu, Text, useMantineTheme } from '@mantine/core'
+import { Button, createStyles, Menu, Text, useMantineTheme, rem } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
@@ -59,36 +59,38 @@ const useStyles = createStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
-		minWidth: 48,
-		height: 48,
-		padding: 12,
-		gap: 8,
+		minWidth: rem(48),
+		height: rem(48),
+		padding: rem(12),
+		gap: rem(8),
 		backgroundColor: theme.other.colors.secondary.white,
-		'&:hover': {
+		'&:not([data-disabled])': theme.fn.hover({
 			backgroundColor: theme.other.colors.primary.lightGray,
-		},
+		}),
 	},
 	buttonPressed: {
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
-		minWidth: 48,
-		height: 48,
-		padding: 12,
-		gap: 8,
+		minWidth: rem(48),
+		height: rem(48),
+		padding: rem(12),
+		gap: rem(8),
 		backgroundColor: theme.other.colors.primary.lightGray,
-		'&:hover': {
+		'&:not([data-disabled])': theme.fn.hover({
 			backgroundColor: theme.other.colors.primary.lightGray,
-		},
+		}),
 	},
 	icon: {},
 	text: {
 		fontWeight: theme.other.fontWeight.semibold,
-		marginLeft: 8,
+		marginLeft: rem(8),
 	},
 	dropdown: {
 		background: theme.other.colors.secondary.black,
 		borderRadius: theme.radius.md,
+		paddingTop: rem(2),
+		paddingBottom: rem(2),
 	},
 	item: {
 		color: 'white',

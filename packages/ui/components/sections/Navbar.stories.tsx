@@ -6,7 +6,6 @@ import { Navbar } from './Navbar'
 export default {
 	title: 'Sections/Navbar',
 	component: Navbar,
-	render: () => <Navbar />,
 	parameters: {
 		design: {
 			type: 'figma',
