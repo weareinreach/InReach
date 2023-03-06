@@ -20,7 +20,6 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@mantine/utils": "5.10.5",
 		"@weareinreach/api": "0.100.0",
 		"nextjs-routes": "1.0.8",
 		"react-string-replace": "1.1.0"
@@ -53,6 +52,7 @@
 		"@mantine/prism": "5.10.5",
 		"@mantine/spotlight": "5.10.5",
 		"@mantine/tiptap": "5.10.5",
+		"@mantine/utils": "5.10.5",
 		"@storybook/addon-a11y": "7.0.0-beta.61",
 		"@storybook/addon-actions": "7.0.0-beta.61",
 		"@storybook/addon-docs": "7.0.0-beta.61",
@@ -146,6 +146,7 @@
 		"@mantine/prism": "^5",
 		"@mantine/spotlight": "^5",
 		"@mantine/tiptap": "^5",
+		"@mantine/utils": "^5",
 		"@tanstack/react-query": "4.24.10",
 		"@tiptap/extension-link": "^2.0.0-beta.209",
 		"@tiptap/react": "^2.0.0-beta.209",

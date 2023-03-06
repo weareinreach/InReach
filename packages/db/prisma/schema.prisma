@@ -1,7 +1,7 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "extendedWhereUnique", "views", "fullTextSearch"]
-  binaryTargets   = ["native", "rhel-openssl-1.0.x"]
+  // binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
 // generator zod {
@@ -27,6 +27,7 @@ generator client {
 datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
+  directUrl  = env("DB_DIRECT_URL")
   extensions = [postgis]
   // schemas    = ["user", "org", "system", "relation"]
 }

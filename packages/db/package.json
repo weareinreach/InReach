@@ -16,6 +16,7 @@
 		"db:mongoexport": "pnpm clean:export && pnpm with-env tsx ./seed/migrate-v1/mongoexport.ts",
 		"db:repl": "pnpm dlx @prismatools/console@latest -c ../../node_modules/@prisma/client",
 		"db:reset": "pnpm with-env prisma migrate reset",
+		"db:run-seed": "tsx ./seed/starterData.ts",
 		"db:seed": "pnpm with-env prisma db seed",
 		"db:seed:update": "SEED_UPDATE=true pnpm with-env prisma db seed",
 		"db:studio": "pnpm with-env prisma studio",
@@ -92,6 +93,6 @@
 		"zod-prisma-types": "2.3.4"
 	},
 	"prisma": {
-		"seed": "tsx ./seed/starterData.ts"
+		"seed": "turbo run db:run-seed"
 	}
 }

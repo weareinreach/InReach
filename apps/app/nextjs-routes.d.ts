@@ -7,6 +7,8 @@
 declare module "nextjs-routes" {
   export type Route =
     | DynamicRoute<"/api/auth/[...nextauth]", { "nextauth": string[] }>
+    | StaticRoute<"/api/i18n/load">
+    | StaticRoute<"/api/i18n/webhook">
     | StaticRoute<"/api/panel">
     | DynamicRoute<"/api/trpc/[trpc]", { "trpc": string }>
     | StaticRoute<"/api/trpc-playground">
@@ -42,8 +44,8 @@ declare module "nextjs-routes" {
   export type Locale = 
     | "en"
     | "es"
-    | "ar"
     | "fr"
+    | "ar"
     | "ru";
 
   /**
@@ -123,8 +125,8 @@ declare module "next/router" {
         locales: [
           "en",
           "es",
-          "ar",
           "fr",
+          "ar",
           "ru"
         ];
         push(

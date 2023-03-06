@@ -145,9 +145,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 		<Group className={cx(className)} noWrap spacing={40}>
 			<LangPicker />
 			<UnstyledButton onClick={() => openLoginModal()}>
-				<Text component={UnstyledButton} className={classes.navText}>
-					{t('log-in')}
-				</Text>
+				<Text className={classes.navText}>{t('log-in')}</Text>
 			</UnstyledButton>
 			<Button onClick={() => openSignUpModal()}>{t('sign-up')}</Button>
 		</Group>
