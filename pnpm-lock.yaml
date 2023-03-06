@@ -636,7 +636,7 @@ importers:
       eslint-plugin-node: 11.1.0
       eslint-plugin-react: 7.32.2
       eslint-plugin-storybook: 0.6.11
-      eslint-plugin-turbo: 0.0.9
+      eslint-plugin-turbo: 0.0.8
       next: 13.2.3
       typescript: 4.9.5
     devDependencies:
@@ -657,7 +657,7 @@ importers:
       eslint-plugin-node: 11.1.0_45p4dc3r2kwi3h2jyimmny42ju_eslint@8.35.0
       eslint-plugin-react: 7.32.2_eslint@8.35.0
       eslint-plugin-storybook: 0.6.11_ycpbpc6yetojsgtrx3mwntkhsu
-      eslint-plugin-turbo: 0.0.9_eslint@8.35.0
+      eslint-plugin-turbo: 0.0.8_eslint@8.35.0
       next: 13.2.3_6m24vuloj5ihw4zc5lbsktc4fu
       typescript: 4.9.5
 
@@ -11920,8 +11920,8 @@ packages:
       - typescript
     dev: true
 
-  /eslint-plugin-turbo/0.0.9_eslint@8.35.0:
-    resolution: {integrity: sha512-fEsuSnYU3GLtT+s66mUuzDL1LaSieIx5uk3tPO0ToGv7hI2XzOfP24aPkQItTBGl7kq2JaVkRzPwcnfz8hkp0w==}
+  /eslint-plugin-turbo/0.0.8_eslint@8.35.0:
+    resolution: {integrity: sha512-pExSCmjWw/KFKb3/0PVqxiWb30FbcwDEf6kKv3alvNBSVEzDHalyAGHc9klbLSG+nFmbkfNE3Ky/UHDryCqt8g==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
@@ -18282,7 +18282,7 @@ packages:
       async: 3.2.4
       debug: 4.3.4
       lodash.merge: 4.6.2
-      minimist: 1.2.7
+      minimist: 1.2.8
     transitivePeerDependencies:
       - supports-color
     dev: true
