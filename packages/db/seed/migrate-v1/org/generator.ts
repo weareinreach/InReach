@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { geojsonToWKT } from '@terraformer/wkt'
-import { flatten } from 'flat'
+import { flatten, unflatten } from 'flat'
 import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js'
 import { DateTime } from 'luxon'
 import prettier from 'prettier'
@@ -56,7 +56,7 @@ export const isSuccess = (param: unknown) => (param ? `✅` : `❌`)
 
 const pluralRecord = (array: unknown[]) => (array.length === 1 ? 'record' : 'records')
 
-export const translatedStrings = new Map<string, string>()
+export const translatedStrings: Record<string, Map<string, string>> = {}
 /**
  * It takes a key and a translated string, and if both are defined, it adds the key and translated string to
  * the `translatedStrings` map
@@ -65,17 +65,25 @@ export const translatedStrings = new Map<string, string>()
  * @param {string | undefined} translatedString - The translated string.
  * @param [log] - A function that logs a message to the console.
  */
-const exportTranslation = (
-	key: string | undefined,
-	translatedString: string | undefined,
-	log?: (message: string) => void
-): void => {
-	if (key && translatedString) {
-		translatedStrings.set(key, translatedString)
+const exportTranslation = (props: ExportTranslationProps): void => {
+	const { ns, key, text, log } = props
+	if (key && text && ns) {
+		if (translatedStrings[ns] === undefined) {
+			translatedStrings[ns] = new Map<string, string>([[key, text]])
+		} else {
+			translatedStrings[ns]?.set(key, text)
+		}
 		if (log) {
 			log(`🗣️ Translation exported: ${key}`)
 		}
 	}
+}
+
+type ExportTranslationProps = {
+	ns: string | undefined
+	key: string | undefined
+	text: string | undefined
+	log?: (message: string) => void
 }
 
 const unsupportedMap = new Map<string, unknown[]>()
@@ -215,7 +223,7 @@ export const migrateOrgs = async (task: ListrTask) => {
 				log(
 					`🗣️ Organization description. Namespace: ${descriptionNs}, Key: ${descriptionKey}, Org free text: ${id}`
 				)
-				exportTranslation(descriptionKey, org.description_ES, log)
+				exportTranslation({ ns, key, text: org.description_ES, log })
 			}
 			const id = generateId('organization', createdAt)
 			organization.add({
@@ -941,7 +949,7 @@ export const generateRecords = async (task: ListrTask) => {
 						descriptionId = id
 
 						log(`🗣️ Service description. Namespace: ${ns}, Key: ${key}, Free Text: ${id}`)
-						exportTranslation(descriptionKey, service.description_ES, log)
+						exportTranslation({ ns, key, text: service.description_ES, log })
 					}
 
 					if (service.access_instructions.length) {
@@ -978,7 +986,7 @@ export const generateRecords = async (task: ListrTask) => {
 								data.freeText.add({ id: freeTextId, key, ns, createdAt, updatedAt })
 								rollback.translationKey.add(key)
 								log(`🗣️ Service access instructions. Namespace: ${ns}, Key: ${key}, Free text: ${freeTextId}`)
-								exportTranslation(freeTextId, access.instructions_ES, log)
+								exportTranslation({ ns, key, text: access.instructions_ES, log })
 								textId = freeTextId
 							}
 						}
@@ -1336,9 +1344,17 @@ export const generateRecords = async (task: ListrTask) => {
 
 		const formatJson = (data: string) => prettier.format(data, { ...prettierOpts, parser: 'json-stringify' })
 
-		const translationsOut = Object.fromEntries(translatedStrings)
-		log(`🛠️ Generating translation JSON file (${translatedStrings.size} translations)`)
-		fs.writeFileSync(`${generatedDir}es-migration.json`, formatJson(JSON.stringify(translationsOut)))
+		const translationDir = path.resolve(__dirname, '../_generated/')
+		for (const ns in translatedStrings) {
+			const stringMap = translatedStrings[ns] !== undefined ? translatedStrings[ns] : null
+			if (!stringMap) {
+				log(`🤷 SKIPPING translation JSON file for ${ns}: Object was undefined`)
+				continue
+			}
+			const translationsOut = unflatten(Object.fromEntries(stringMap))
+			log(`🛠️ Generating translation JSON file for ${ns} (${stringMap.size} translations)`)
+			fs.writeFileSync(`${translationDir}/es-migration.json`, formatJson(JSON.stringify(translationsOut)))
+		}
 
 		log(`🛠️ Generating unsupported attribute JSON file (${unsupportedMap.size} attributes)`)
 		const unsupportedAttOut = Object.fromEntries(unsupportedMap)

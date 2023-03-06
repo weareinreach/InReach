@@ -13,17 +13,17 @@ export const generateKey: GenerateKey<KeyType> = (params) => {
 	let key: string | undefined
 	switch (type) {
 		case 'desc':
-			ns = namespaces.orgDescription
-			key = keyPrefix
+			ns = namespaces.orgData
+			key = `${keyPrefix}.description`
 			break
 		case 'svc': {
-			ns = namespaces.orgService
+			ns = namespaces.orgData
 			const keyBase = `${keyPrefix}.${params.servId}`
-			key = params.subtype === 'access' ? `${keyBase}.access` : `${keyBase}.desc`
+			key = params.subtype === 'access' ? `${keyBase}.access` : `${keyBase}.description`
 			break
 		}
 		case 'attrSupp':
-			ns = namespaces.orgService
+			ns = namespaces.orgData
 			key = `${keyPrefix}.attribute.${params.suppId}`
 			break
 	}

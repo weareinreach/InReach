@@ -41,7 +41,7 @@
 			"outputs": [".eslintcache"]
 		},
 		"post-install": {
-			"dependsOn": ["^generate:data", "^build:icons", "^download:seedData"]
+			"dependsOn": ["^generate:data", "^build:icons"]
 		},
 		"sb:build": {},
 		"type-check": {

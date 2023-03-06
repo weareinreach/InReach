@@ -94,7 +94,7 @@ const config: StorybookConfig = {
 					),
 					// '@weareinreach/api': path.resolve(__dirname, '../../api'),
 					'next-i18next': 'react-i18next',
-					'@next/font': 'storybook-nextjs-font-loader',
+					// 'next/font': 'storybook-nextjs-font-loader',
 				},
 				roots: [path.resolve(__dirname, '../../../apps/app/public')],
 				fallback: {

@@ -5,6 +5,7 @@ import { MantineProvider, TypographyStylesProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { NotificationsProvider } from '@mantine/notifications'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { Navbar } from '@weareinreach/ui/components/sections'
 import { useModalProps } from '@weareinreach/ui/modals'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 import { type AppProps } from 'next/app'
@@ -15,7 +16,7 @@ import { appWithTranslation } from 'next-i18next'
 
 import { api } from '~app/utils/api'
 
-import nextI18nConfig from '../../next-i18next.config'
+import nextI18nConfig from '../../next-i18next.config.mjs'
 
 const fontWorkSans = Work_Sans({ subsets: ['latin'] })
 
@@ -35,10 +36,9 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 			>
 				<TypographyStylesProvider>
 					<NotificationsProvider>
-						<ModalsProvider modalProps={useModalProps()}>
-							{/* <AppLayout navItems={navItems} footerLinks={navItems} socialMedia={socialMediaLinks}> */}
+						<ModalsProvider {...useModalProps()}>
+							<Navbar />
 							<Component {...pageProps} />
-							{/* </AppLayout> */}
 						</ModalsProvider>
 					</NotificationsProvider>
 				</TypographyStylesProvider>

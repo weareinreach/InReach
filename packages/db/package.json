@@ -16,6 +16,7 @@
 		"db:mongoexport": "pnpm clean:export && pnpm with-env tsx ./seed/migrate-v1/mongoexport.ts",
 		"db:repl": "pnpm dlx @prismatools/console@latest -c ../../node_modules/@prisma/client",
 		"db:reset": "pnpm with-env prisma migrate reset",
+		"db:run-seed": "tsx ./seed/starterData.ts",
 		"db:seed": "pnpm with-env prisma db seed",
 		"db:seed:update": "SEED_UPDATE=true pnpm with-env prisma db seed",
 		"db:studio": "pnpm with-env prisma studio",
@@ -53,7 +54,7 @@
 		"@types/iso-3166-2": "1.0.0",
 		"@types/langs": "2.0.1",
 		"@types/luxon": "3.2.0",
-		"@types/node": "18.14.2",
+		"@types/node": "18.14.6",
 		"@types/recursive-readdir": "2.2.1",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "0.100.0",
@@ -80,7 +81,7 @@
 		"prisma-dbml-generator": "0.10.0",
 		"prisma-query-inspector": "1.4.4",
 		"prisma-query-log": "3.2.0",
-		"quicktype-core": "23.0.10",
+		"quicktype-core": "23.0.11",
 		"recursive-readdir": "2.2.3",
 		"shoetest": "1.2.2",
 		"slugify": "1.6.5",
@@ -89,9 +90,9 @@
 		"tsx": "3.12.3",
 		"type-fest": "3.6.1",
 		"typescript": "4.9.5",
-		"zod-prisma-types": "2.3.3"
+		"zod-prisma-types": "2.3.4"
 	},
 	"prisma": {
-		"seed": "tsx ./seed/starterData.ts"
+		"seed": "turbo run db:run-seed"
 	}
 }

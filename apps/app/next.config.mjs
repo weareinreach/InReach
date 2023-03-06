@@ -1,9 +1,18 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 // import { env } from './src/env/server.mjs'
 import bundleAnalyze from '@next/bundle-analyzer'
 import withRoutes from 'nextjs-routes/config'
 
-import i18nConfig from './next-i18next.config.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+import i18nConfig from './next-i18next.config.mjs'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const isVercelActiveDev = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF !== 'dev'
 
 /* eslint-disable-next-line turbo/no-undeclared-env-vars */
 const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
@@ -14,13 +23,22 @@ const nextConfig = {
 	swcMinify: true,
 	transpilePackages: ['@weareinreach/ui', '@weareinreach/db', '@weareinreach/auth', '@weareinreach/api'],
 	experimental: {
-		fontLoaders: [{ loader: '@next/font/google', options: { subsets: ['latin'] } }],
+		// fontLoaders: [{ loader: 'next/font/google', options: { subsets: ['latin'] } }],
 		/**
 		 * OutputFileTracingIgnores will be in a future version
 		 * https://github.com/vercel/next.js/issues/42641#issuecomment-1320713368
 		 */
 		outputFileTracingIgnores: ['**swc+core**', '**esbuild**'],
+		// outputFileTracingExcludes: {
+		// 	'/': ['**swc+core**', '**esbuild**'],
+		// },
+		outputFileTracingRoot: path.join(__dirname, '../../'),
+
+		// turbotrace: {
+		// 	logDetail: true,
+		// },
 	},
+
 	// async rewrites() {
 	// 	return {
 	// 		fallback: [
@@ -31,6 +49,12 @@ const nextConfig = {
 	// 		],
 	// 	}
 	// },
+	eslint: {
+		ignoreDuringBuilds: isVercelActiveDev,
+	},
+	typescript: {
+		ignoreBuildErrors: isVercelActiveDev,
+	},
 }
 
 /**

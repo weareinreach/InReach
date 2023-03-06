@@ -1,3 +1,4 @@
+import { locales } from '@weareinreach/api/generated/languages'
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import HttpApi, { HttpBackendOptions } from 'i18next-http-backend'
@@ -8,59 +9,17 @@ import config from '../next-i18next.config'
 const ns = [
 	'attribute',
 	'common',
-	'country',
-	'footer',
-	'gov-dist',
-	'nav',
-	'org-description',
-	'orv-service',
+	// 'country',
+	// 'footer',
+	// 'gov-dist',
+	// 'nav',
+	// 'org-description',
+	// 'orv-service',
 	'phone-type',
 	'services',
 	'socialMedia',
 	'user',
 ]
-
-export const i18nLocales = {
-	en: 'English',
-	// 'en-US': 'English (US)',
-	// 'en-CA': 'English (CA)',
-	// 'en-MX': 'English (MX)',
-	// es: 'Spanish',
-	// 'es-US': 'Spanish (US)',
-	// 'es-MX': 'Spanish (MX)',
-}
-
-export const customLocales = {
-	name: 'Locale',
-	description: 'Internationalization locale',
-	defaultValue: 'en',
-	toolbar: {
-		icon: 'globe',
-		items: [
-			{ value: 'en', right: '🇺🇸', title: 'English' },
-			// { value: 'fr', right: '🇫🇷', title: 'Français' },
-			{ value: 'es', right: '🇪🇸', title: 'Español' },
-			// { value: 'zh', right: '🇨🇳', title: '中文' },
-			// { value: 'kr', right: '🇰🇷', title: '한국어' },
-		],
-	},
-} as const
-
-export type CustomLocales = typeof supportedLngs
-
-const supportedLngs = customLocales.toolbar.items.map((lang) => lang.value)
-
-// const resources = ns.reduce((acc: Record<string, Record<string, string>>, n) => {
-// 	supportedLngs.forEach((lng) => {
-// 		if (!acc[lng]) acc[lng] = {}
-// 		acc[lng] = {
-// 			...acc[lng],
-// 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-// 			[n]: require(`../../../apps/app/public/locales/${lng}/${n}.json`),
-// 		}
-// 	})
-// 	return acc
-// }, {})
 
 i18n
 	.use(LanguageDetector)
@@ -71,7 +30,12 @@ i18n
 		debug: true,
 		lng: 'en',
 		backend: {
-			loadPath: '/public/locales/{{lng}}/{{ns}}.json',
+			// loadPath: '/public/locales/{{lng}}/{{ns}}.json',
+			loadPath: 'https://inreach-locale.s3.amazonaws.com/dev/{{ns}}+({{lng}}).json',
+
+			requestOptions: {
+				mode: 'cors',
+			},
 		},
 		fallbackLng: {
 			'en-US': ['en'],
@@ -81,7 +45,7 @@ i18n
 		interpolation: { escapeValue: true, skipOnVariables: false },
 		react: { useSuspense: true },
 		cleanCode: true,
-		supportedLngs,
+		supportedLngs: locales,
 		ns,
 		// resources,
 	})
