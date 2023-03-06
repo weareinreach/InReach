@@ -37,7 +37,7 @@
 	"dependencies": {
 		"@prisma/client": "4.11.0",
 		"ulid": "2.3.0",
-		"zod": "3.21.2"
+		"zod": "3.21.3"
 	},
 	"devDependencies": {
 		"@faker-js/faker": "7.6.0",
