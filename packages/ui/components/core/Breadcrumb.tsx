@@ -1,4 +1,4 @@
-import { Text, createStyles, useMantineTheme, Button } from '@mantine/core'
+import { Text, createStyles, useMantineTheme, Button, rem } from '@mantine/core'
 import { Trans, useTranslation } from 'next-i18next'
 import { MouseEventHandler } from 'react'
 
@@ -8,18 +8,18 @@ const useStyles = createStyles((theme) => ({
 	root: {
 		// height: '40px',
 		width: 'auto',
-		padding: [theme.spacing.sm - 2, theme.spacing.xs],
+		padding: `calc(${theme.spacing.sm} - ${rem(2)}) ${theme.spacing.xs}`,
 		color: theme.other.colors.secondary.black,
 		backgroundColor: theme.other.colors.secondary.white,
-		borderRadius: 5,
+		borderRadius: rem(5),
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
 			textDecoration: 'none !important',
 		},
 	},
 	icon: {
-		width: 24,
-		height: 24,
+		width: rem(24),
+		height: rem(24),
 		marginRight: theme.spacing.xs,
 	},
 }))
@@ -66,7 +66,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 		<Button
 			variant='subtle'
 			classNames={{ root: classes.root, icon: classes.icon }}
-			px={theme.spacing.sm - 2}
+			px={`calc(${theme.spacing.sm} - ${rem(2)})`}
 			py={theme.spacing.xs}
 			onClick={props.onClick}
 			leftIcon={<Icon icon={iconRender} height={24} color={theme.other.colors.secondary.black} />}

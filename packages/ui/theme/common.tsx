@@ -1,13 +1,14 @@
 /* eslint-disable import/consistent-type-specifier-style */
+import { rem, em } from '@mantine/core'
 import { keys } from '@mantine/utils'
 
 import { Icon } from '~ui/icon'
 
 import { customColors } from './colors'
+import { attributeBadge } from './variants'
 
 import type {
 	ModalStylesNames,
-	ModalStylesParams,
 	ActionIconProps,
 	AvatarProps,
 	BadgeProps,
@@ -31,13 +32,13 @@ import type {
 	SwitchProps,
 	SwitchStylesNames,
 	SwitchStylesParams,
-	SwitchGroupProps,
 	TextareaProps,
 	CSSObject,
 	ModalProps,
 	InputStylesNames,
 	InputStylesParams,
 	GridProps,
+	Variants,
 } from '@mantine/core'
 import type React from 'react'
 
@@ -79,25 +80,25 @@ const themeCustomObj = {
 	/** Utility font definitions */
 	utilityFonts: {
 		utility1: {
-			fontSize: 16,
+			fontSize: rem(16),
 			fontWeight: 500,
 			lineHeight: 1.25,
 			color: colors.secondary.black,
 		},
 		utility2: {
-			fontSize: 16,
+			fontSize: rem(16),
 			fontWeight: 400,
 			lineHeight: 1.25,
 			color: colors.secondary.black,
 		},
 		utility3: {
-			fontSize: 14,
+			fontSize: rem(14),
 			fontWeight: 500,
 			lineHeight: 1.25,
 			color: colors.secondary.black,
 		},
 		utility4: {
-			fontSize: 14,
+			fontSize: rem(14),
 			fontWeight: 400,
 			lineHeight: 1.25,
 			color: colors.secondary.black,
@@ -112,6 +113,7 @@ const themeCustomObj = {
 export const commonTheme = {
 	colorScheme: 'light',
 	colors: { ...customColors },
+	black: colors.secondary.black,
 	primaryColor: 'inReachPrimaryRegular',
 	primaryShade: 5,
 	cursorType: 'pointer',
@@ -119,55 +121,56 @@ export const commonTheme = {
 	fontFamily:
 		'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
 	fontSizes: {
-		xs: 12,
-		sm: 14,
-		md: 16,
-		lg: 18,
-		xl: 20,
+		xs: rem(12),
+		sm: rem(14),
+		md: rem(16),
+		lg: rem(18),
+		xl: rem(20),
 	},
 	headings: {
 		fontFamily:
 			'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
 		fontWeight: 500,
 		sizes: {
-			h1: { fontSize: 40, lineHeight: 1.25, fontWeight: 500 },
-			h2: { fontSize: 24, lineHeight: 1.25, fontWeight: 500 },
-			h3: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
-			h4: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
-			h5: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
-			h6: { fontSize: 16, lineHeight: 1.25, fontWeight: 600 },
+			h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },
+			h2: { fontSize: rem(24), lineHeight: 1.25, fontWeight: 500 },
+			h3: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+			h4: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+			h5: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+			h6: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
 		},
 	},
 
 	shadows: {
-		xs: '0px 4px 20px rgba(0, 0, 0, 0.1)',
-		sm: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 10px 15px -5px, rgba(0, 0, 0, 0.04) 0px 7px 7px -5px',
-		md: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px',
-		lg: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 28px 23px -7px, rgba(0, 0, 0, 0.04) 0px 12px 12px -7px',
-		xl: '0 1px 3px rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0px 36px 28px -7px, rgba(0, 0, 0, 0.04) 0px 17px 17px -7px',
+		xs: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.1)',
+		sm: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 0.625rem 0.9375rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.4375rem 0.4375rem -0.3125rem',
+		md: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 1.25rem 1.5625rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.625rem 0.625rem -0.3125rem',
+		lg: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 1.75rem 1.4375rem -0.4375rem, rgba(0, 0, 0, 0.04) 0 0.75rem 0.75rem -0.4375rem',
+		xl: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 2.25rem 1.75rem -0.4375rem, rgba(0, 0, 0, 0.04) 0 1.0625rem 1.0625rem -0.4375rem',
 	},
 
 	radius: {
-		xs: 2,
-		sm: 4,
-		md: 8,
-		lg: 16,
-		xl: 32,
+		xs: rem(2),
+		sm: rem(4),
+		md: rem(8),
+		lg: rem(16),
+		xl: rem(32),
 	},
 	spacing: {
-		xs: 8,
-		sm: 12,
-		md: 16,
-		lg: 20,
-		xl: 24,
+		xxs: rem(6),
+		xs: rem(8),
+		sm: rem(12),
+		md: rem(16),
+		lg: rem(20),
+		xl: rem(24),
 	},
 
 	breakpoints: {
-		xs: 500,
-		sm: 768,
-		md: 1024,
-		lg: 1200,
-		xl: 1440,
+		xs: em(500),
+		sm: em(768),
+		md: em(1024),
+		lg: em(1200),
+		xl: em(1440),
 	},
 
 	other: themeCustomObj,
@@ -194,12 +197,12 @@ export const commonTheme = {
 				({
 					root: {
 						letterSpacing: 'inherit',
-						border: '1px solid',
-						paddingLeft: theme.spacing.sm,
-						paddingRight: theme.spacing.sm,
+						border: `${rem(1)} solid`,
+						padding: `${theme.spacing.xxs} ${theme.spacing.sm}`,
 						textTransform: 'none',
 					},
 					inner: {
+						padding: 0,
 						fontWeight: theme.other.fontWeight.semibold,
 						color: theme.other.colors.secondary.black,
 					},
@@ -207,6 +210,104 @@ export const commonTheme = {
 						margin: 0,
 					},
 				} satisfies Styles<BadgeStylesNames, BadgeStylesParams>),
+			variants: {
+				community: (theme) => ({
+					root: {
+						height: theme.spacing.xl,
+						backgroundColor: theme.other.colors.secondary.white,
+						borderColor: theme.other.colors.tertiary.coolGray,
+						[theme.fn.largerThan('sm')]: {
+							height: `calc(${theme.spacing.xl} + ${rem(8)}`,
+						},
+					},
+					inner: {
+						paddingTop: `calc(${theme.spacing.sm} / 4)`,
+						paddingBottom: `calc(${theme.spacing.sm} / 4)`,
+						fontSize: theme.fontSizes.sm,
+						[theme.fn.largerThan('sm')]: {
+							paddingTop: `calc(${theme.spacing.sm} / 2)`,
+							paddingBottom: `calc(${theme.spacing.sm} / 2)`,
+							fontSize: theme.fontSizes.md,
+						},
+					},
+					leftSection: {
+						paddingTop: `calc(${theme.spacing.sm} / 4)`,
+						paddingBottom: `calc(${theme.spacing.sm} / 4)`,
+						paddingRight: theme.spacing.xs,
+						fontSize: theme.fontSizes.sm,
+						marginRight: 0,
+						[theme.fn.largerThan('sm')]: {
+							paddingTop: `calc(${theme.spacing.sm} / 2)`,
+							paddingBottom: `calc(${theme.spacing.sm} / 2)`,
+							fontSize: theme.fontSizes.md,
+						},
+					},
+				}),
+				service: (theme) => ({
+					root: {
+						height: theme.spacing.xl,
+						backgroundColor: theme.other.colors.primary.lightGray,
+						border: 'none',
+						[theme.fn.largerThan('sm')]: {
+							height: `calc(${theme.spacing.xl} - ${rem(8)})`,
+						},
+					},
+					inner: {
+						paddingTop: `calc(${theme.spacing.sm} / 4)`,
+						paddingBottom: `calc(${theme.spacing.sm} / 4)`,
+						fontSize: theme.fontSizes.sm,
+						[theme.fn.largerThan('sm')]: {
+							paddingTop: `calc(${theme.spacing.sm} / 2)`,
+							paddingBottom: `calc(${theme.spacing.sm} / 2)`,
+							fontSize: theme.fontSizes.md,
+						},
+					},
+				}),
+				leader: (theme) => ({
+					leftSection: {
+						'& *': {
+							fontSize: theme.fontSizes.xs,
+							borderRadius: theme.radius.xl,
+							height: rem(24),
+							width: rem(24),
+							margin: 0,
+							textAlign: 'center',
+							paddingBottom: rem(4),
+						},
+					},
+					inner: {
+						'& *': {
+							color: theme.other.colors.secondary.black,
+							marginLeft: theme.spacing.xs,
+						},
+					},
+					root: {
+						border: 0,
+						padding: 0,
+						'&[data-minify]': {
+							height: rem(40),
+							width: rem(40),
+							...theme.fn.hover({
+								backgroundColor: theme.other.colors.primary.lightGray,
+							}),
+							radius: theme.radius.xl,
+							padding: 0,
+						},
+						'&[data-hideBg]': {
+							backgroundColor: undefined,
+							height: undefined,
+							width: undefined,
+							paddingLeft: rem(6),
+							paddingRight: rem(6),
+						},
+					},
+				}),
+				privatePractice: attributeBadge,
+				claimed: attributeBadge,
+				unclaimed: attributeBadge,
+				verified: attributeBadge,
+				attribute: attributeBadge,
+			},
 		},
 		Button: {
 			defaultProps: {
@@ -214,14 +315,14 @@ export const commonTheme = {
 			} satisfies ButtonProps,
 			styles: (theme) => ({
 				root: {
-					padding: theme.spacing.sm / 2,
-					paddingLeft: theme.spacing.xl * 2,
-					paddingRight: theme.spacing.xl * 2,
-					height: theme.spacing.xl * 2,
+					padding: `calc(${theme.spacing.sm} / 2)`,
+					paddingLeft: `calc(${theme.spacing.xl} * 2)`,
+					paddingRight: `calc(${theme.spacing.xl} * 2)`,
+					height: `calc(${theme.spacing.xl} * 2)`,
 					backgroundColor: theme.other.colors.secondary.black,
-					'&:hover': {
+					'&:not([data-disabled])': theme.fn.hover({
 						background: theme.fn.lighten(theme.other.colors.secondary.black, 0.4),
-					},
+					}),
 					'&:disabled, &[data-disabled]': {
 						backgroundColor: theme.other.colors.primary.lightGray,
 						cursor: 'not-allowed',
@@ -254,10 +355,10 @@ export const commonTheme = {
 			styles: (theme, params: CheckboxStylesParams) =>
 				({
 					root: {
-						padding: '8px 0 8px 4px',
-						'&:hover': {
+						padding: `${rem(8)} 0 ${rem(8)} ${rem(4)}`,
+						...theme.fn.hover({
 							backgroundColor: theme.other.colors.primary.lightGray,
-						},
+						}),
 					},
 					label: {
 						...theme.other.utilityFonts.utility2,
@@ -286,28 +387,28 @@ export const commonTheme = {
 						},
 					},
 					inner: {
-						height: 24,
-						width: 24,
+						height: rem(24),
+						width: rem(24),
 					},
 					icon: {
-						width: params.indeterminate ? '12px' : '14px',
-						height: params.indeterminate ? '3px' : '10.5px',
-						margin: params.indeterminate ? '10.5px 6px' : '6.75px 5px',
+						width: params.indeterminate ? rem(12) : rem(14),
+						height: params.indeterminate ? rem(3) : rem(10.5),
+						margin: params.indeterminate ? `${rem(10.5)} ${rem(6)}` : `${rem(6.75)} ${rem(5)}`,
 					},
 				} satisfies Styles<CheckboxStylesNames, CheckboxStylesParams>),
 		},
 		Container: {
 			styles: (theme) => ({
 				root: {
-					padding: '0px 20px',
+					padding: `${rem(0)} ${rem(20)}`,
 					[theme.fn.largerThan('xs')]: {
-						padding: '0px 32px',
+						padding: `${rem(0)} ${rem(32)}`,
 					},
 					[theme.fn.largerThan('sm')]: {
-						padding: '0px 40px',
+						padding: `${rem(0)} ${rem(40)}`,
 					},
 					[theme.fn.largerThan('lg')]: {
-						padding: '0px 64px',
+						padding: `${rem(0)} ${rem(64)}`,
 					},
 				},
 			}),
@@ -335,7 +436,7 @@ export const commonTheme = {
 					// 	paddingBottom: 10,
 					// },
 					input: {
-						padding: '14px 16px',
+						padding: `${rem(14)} ${rem(16)}`,
 						borderColor: theme.other.colors.tertiary.coolGray,
 
 						...theme.other.utilityFonts.utility2,
@@ -344,7 +445,21 @@ export const commonTheme = {
 						},
 						'&:focus, &:focus-within': {
 							borderColor: theme.other.colors.secondary.black,
-							borderWidth: '2px',
+							borderWidth: rem(2),
+						},
+						'$[data-with-icon]': {
+							borderRadius: theme.radius.xl,
+							paddingLeft: rem(44),
+						},
+						'&[data-invalid]': {
+							'&::placeholder': {
+								color: theme.other.colors.secondary.darkGray,
+							},
+							'&:focus, &:focus-within': {
+								color: theme.other.colors.secondary.black,
+								borderColor: theme.other.colors.tertiary.red,
+								borderWidth: rem(2),
+							},
 						},
 					},
 					icon: {
@@ -352,29 +467,14 @@ export const commonTheme = {
 						marginLeft: theme.spacing.md,
 						width: 'fit-content',
 					},
-					withIcon: {
-						borderRadius: theme.radius.xl,
-						paddingLeft: '44px',
-					},
 					rightSection: {
 						paddingRight: theme.spacing.md,
-					},
-					invalid: {
-						'&::placeholder': {
-							color: theme.other.colors.secondary.darkGray,
-						},
-						'&:focus, &:focus-within': {
-							color: theme.other.colors.secondary.black,
-							borderColor: theme.other.colors.tertiary.red,
-							borderWidth: '2px',
-						},
 					},
 				} satisfies Styles<InputStylesNames, InputStylesParams>),
 		},
 		Modal: {
 			defaultProps: (theme) => {
 				return {
-					overflow: 'inside',
 					radius: theme.radius.xl,
 					centered: true,
 					size: 'auto',
@@ -383,30 +483,30 @@ export const commonTheme = {
 			},
 			styles: (theme) =>
 				({
-					modal: {
+					content: {
 						padding: '0px !important',
 						[theme.fn.largerThan('sm')]: {
-							maxHeight: 800,
-							minWidth: 600,
+							maxHeight: em(800),
+							minWidth: em(600),
 						},
 					},
 					header: {
 						margin: 0,
-						padding: '32px 20px 16px 12px',
-						borderBottom: '1px',
+						padding: `${rem(32)} ${rem(20)} ${rem(16)} ${rem(12)}`,
+						borderBottom: rem(1),
 						borderBottomStyle: 'solid',
 						borderColor: theme.other.colors.primary.lightGray,
 						[theme.fn.largerThan('xs')]: {
-							padding: '16px 32px 16px 24px',
+							padding: `${rem(16)} ${rem(32)} ${rem(16)} ${rem(24)}`,
 						},
 					},
 					body: {
-						padding: '20px',
+						padding: rem(20),
 						[theme.fn.largerThan('xs')]: {
-							padding: '20px 32px 20px 32px',
+							padding: `${rem(20)} ${rem(32)}`,
 						},
 						[theme.fn.largerThan('sm')]: {
-							padding: '40px 32px',
+							padding: `${rem(40)} ${rem(32)}`,
 						},
 					},
 					title: {
@@ -414,16 +514,16 @@ export const commonTheme = {
 						width: '100%',
 						padding: 0,
 					},
-				} satisfies Styles<ModalStylesNames, ModalStylesParams>),
+				} satisfies Styles<ModalStylesNames>),
 		},
 		Radio: {
 			styles: (theme) =>
 				({
 					root: {
-						padding: '10px 0 10px 2px',
-						'&:hover': {
+						padding: `${rem(10)} ${rem(0)} ${rem(10)} ${rem(2)}`,
+						...theme.fn.hover({
 							backgroundColor: theme.other.colors.primary.lightGray,
-						},
+						}),
 					},
 					label: {
 						...theme.other.utilityFonts.utility2,
@@ -432,7 +532,7 @@ export const commonTheme = {
 						backgroundColor: theme.other.colors.secondary.white,
 						borderColor: theme.other.colors.secondary.black,
 						color: theme.other.colors.secondary.black,
-						borderWidth: 2,
+						borderWidth: rem(2),
 						'&:checked': {
 							background: theme.other.colors.secondary.black,
 							borderColor: theme.other.colors.secondary.black,
@@ -452,7 +552,7 @@ export const commonTheme = {
 			}),
 			styles: (theme) => ({
 				root: {
-					columnGap: '4px',
+					columnGap: rem(4),
 				},
 			}),
 		},
@@ -469,10 +569,10 @@ export const commonTheme = {
 			styles: (theme) =>
 				({
 					root: {
-						padding: '12px 0 12px 0px',
-						'&:hover': {
+						padding: `${rem(12)} ${rem(0)}`,
+						...theme.fn.hover({
 							backgroundColor: theme.other.colors.primary.lightGray,
-						},
+						}),
 					},
 					body: {
 						justifyContent: 'space-between',
@@ -485,8 +585,8 @@ export const commonTheme = {
 						},
 					},
 					track: {
-						height: 16,
-						width: 48,
+						height: rem(16),
+						width: rem(48),
 						backgroundColor: theme.other.colors.tertiary.coolGray,
 						overflow: 'inherit',
 						'input:checked + &': {
@@ -496,11 +596,13 @@ export const commonTheme = {
 					},
 					thumb: {
 						left: 0,
-						height: 24,
-						width: 24,
-						borderWidth: 0.5,
+						height: rem(24),
+						width: rem(24),
+						borderWidth: rem(0.5),
 						borderColor: theme.fn.darken(theme.other.colors.secondary.white, 0.04),
-						boxShadow: '0px 3px 8px rgba(0, 0, 0, 0.15), 0px 3px 1px rgba(0, 0, 0, 0.06)',
+						boxShadow: `${rem(0)} ${rem(3)} ${rem(8)}  rgba(0, 0, 0, 0.15), ${rem(0)} ${rem(3)} ${rem(
+							1
+						)} rgba(0, 0, 0, 0.06)`,
 						'input:checked + * > &': {
 							backgroundColor: theme.other.colors.secondary.black,
 							borderColor: theme.fn.darken(theme.other.colors.secondary.black, 0.04),
@@ -513,9 +615,9 @@ export const commonTheme = {
 				} satisfies Styles<SwitchStylesNames, SwitchStylesParams>),
 		},
 		SwitchGroup: {
-			defaultProps: {
-				orientation: 'vertical',
-			} satisfies Partial<SwitchGroupProps>,
+			// defaultProps: {
+			// 	orientation: 'vertical',
+			// } satisfies Partial<SwitchGroupProps>,
 		},
 		Stack: {
 			defaultProps: {
@@ -526,7 +628,7 @@ export const commonTheme = {
 			styles: (theme) =>
 				({
 					tab: {
-						padding: `16px 24px`,
+						padding: `${rem(16)} ${rem(24)}`,
 						'&[data-active]': {
 							borderColor: theme.other.colors.secondary.black,
 						},
@@ -556,10 +658,10 @@ export const commonTheme = {
 			} satisfies TextareaProps,
 			styles: (theme) => ({
 				label: {
-					paddingBottom: 10,
+					paddingBottom: rem(10),
 				},
 				input: {
-					padding: '14px 16px',
+					padding: `${rem(14)} ${rem(16)}`,
 					borderColor: theme.other.colors.tertiary.coolGray,
 
 					...theme.other.utilityFonts.utility2,
@@ -568,7 +670,7 @@ export const commonTheme = {
 					},
 					'&:focus, &:focus-within': {
 						borderColor: theme.other.colors.secondary.black,
-						borderWidth: '2px',
+						borderWidth: rem(2),
 					},
 				},
 				invalid: {
@@ -578,19 +680,19 @@ export const commonTheme = {
 					'&:focus, &:focus-within': {
 						color: theme.other.colors.secondary.black,
 						borderColor: theme.other.colors.tertiary.red,
-						borderWidth: '2px',
+						borderWidth: rem(2),
 					},
 				},
-				wrapper: { height: '96px' },
+				wrapper: { height: rem(96) },
 			}),
 		},
 		TextInput: {
 			styles: (theme) => ({
 				label: {
-					paddingBottom: 10,
+					paddingBottom: rem(10),
 				},
 				input: {
-					padding: '14px 16px',
+					padding: `${rem(14)} ${rem(16)}`,
 					borderColor: theme.other.colors.tertiary.coolGray,
 
 					...theme.other.utilityFonts.utility2,
@@ -599,7 +701,7 @@ export const commonTheme = {
 					},
 					'&:focus, &:focus-within': {
 						borderColor: theme.other.colors.secondary.black,
-						borderWidth: '2px',
+						borderWidth: rem(2),
 					},
 				},
 				icon: {
@@ -609,7 +711,7 @@ export const commonTheme = {
 				},
 				withIcon: {
 					borderRadius: theme.radius.xl,
-					paddingLeft: '44px',
+					paddingLeft: rem(44),
 				},
 				rightSection: {
 					paddingRight: theme.spacing.md,
@@ -621,7 +723,7 @@ export const commonTheme = {
 					'&:focus, &:focus-within': {
 						color: theme.other.colors.secondary.black,
 						borderColor: theme.other.colors.tertiary.red,
-						borderWidth: '2px',
+						borderWidth: rem(2),
 					},
 				},
 			}),
@@ -685,7 +787,7 @@ export const commonTheme = {
 				const headings = keys(theme.headings.sizes).reduce((acc: Record<string, CSSObject>, h) => {
 					acc[`& ${h}`] = {
 						marginBottom: 0,
-						'@media (max-width: 755px)': {
+						[`@media (max-width: ${em(755)})`]: {
 							fontSize: theme.headings.sizes[h].fontSize,
 						},
 					}
@@ -698,7 +800,7 @@ export const commonTheme = {
 						...headings,
 						'& p': {
 							marginBottom: 0,
-							'@media (max-width: 755px)': {
+							[`@media (max-width: ${em(755)})`]: {
 								fontSize: theme.fontSizes.md,
 							},
 						},
@@ -710,6 +812,7 @@ export const commonTheme = {
 } satisfies MantineThemeOverride
 
 type ThemeCustomObject = typeof themeCustomObj
+
 declare module '@mantine/core' {
 	export interface MantineThemeOther extends ThemeCustomObject {}
 }

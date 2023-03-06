@@ -8,6 +8,7 @@ import {
 	Text,
 	UnstyledButton,
 	createStyles,
+	rem,
 } from '@mantine/core'
 import Image from 'next/image'
 import { useSession, signOut } from 'next-auth/react'
@@ -22,8 +23,8 @@ import { openSignUpModal } from '~ui/modals/SignUp'
 
 const useStyles = createStyles((theme) => ({
 	buttons: {
-		padding: '4px 12px',
-		borderRadius: 8,
+		padding: `${rem(4)} ${rem(12)}`,
+		borderRadius: rem(8),
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
 		},
@@ -31,10 +32,8 @@ const useStyles = createStyles((theme) => ({
 	loadingItems: {
 		display: 'inline-block',
 	},
-	avatar: {
-		color: theme.colors.inReachPrimaryRegular[5],
-		height: 40,
-		width: 40,
+	avatarPlaceholder: {
+		color: theme.other.colors.secondary.darkGray,
 	},
 	actionButton: {
 		fontWeight: theme.other.fontWeight.bold,
@@ -49,7 +48,7 @@ const useStyles = createStyles((theme) => ({
 	menuItem: {
 		...theme.other.utilityFonts.utility1,
 		color: `${theme.other.colors.secondary.black} !important`,
-		padding: 16,
+		padding: rem(16),
 	},
 }))
 
@@ -57,8 +56,6 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 	const { t, i18n } = useTranslation()
 	const { data: session, status } = useSession()
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
-
-	const currentLanguage = i18n.language
 
 	if (status === 'loading' && !session) {
 		return (
@@ -80,7 +77,9 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 				<Menu
 					width={260}
 					position='bottom-start'
-					transition='scale-y'
+					transitionProps={{
+						transition: 'scale-y',
+					}}
 					classNames={{ item: classes.menuItem }}
 					radius='sm'
 					shadow='xs'
@@ -95,18 +94,17 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 							})}
 						>
 							<Group noWrap spacing='sm'>
-								<Avatar radius='xl' className={classes.avatar}>
+								<Avatar radius='xl'>
 									{session.user.image ? (
 										<Image
 											src={session.user.image}
 											height={70}
 											width={70}
-											className={classes.avatar}
 											alt={session.user.name || t('user-avatar')}
 											style={{ margin: 0 }}
 										/>
 									) : (
-										<Icon icon='carbon:user' className={classes.avatar} />
+										<Icon icon='carbon:user' className={classes.avatarPlaceholder} height={24} />
 									)}
 								</Avatar>
 								<Text className={classes.navText}>{displayName}</Text>

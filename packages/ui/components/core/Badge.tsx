@@ -2,7 +2,6 @@
 import {
 	Badge as MantineBadge,
 	BadgeProps,
-	BadgeVariant,
 	CSSObject,
 	createStyles,
 	BadgeStylesNames,
@@ -13,6 +12,7 @@ import {
 	Tooltip,
 	TooltipProps,
 	Group,
+	rem,
 } from '@mantine/core'
 import { PolymorphicComponentProps } from '@mantine/utils'
 import { DateTime } from 'luxon'
@@ -27,32 +27,19 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 		case 'community': {
 			return {
 				root: {
-					height: theme.spacing.xl,
 					backgroundColor: theme.other.colors.secondary.white,
 					borderColor: theme.other.colors.tertiary.coolGray,
-					[theme.fn.largerThan('sm')]: {
-						height: theme.spacing.xl + 8,
-					},
 				},
 				inner: {
-					paddingTop: theme.spacing.sm / 4,
-					paddingBottom: theme.spacing.sm / 4,
 					fontSize: theme.fontSizes.sm,
 					[theme.fn.largerThan('sm')]: {
-						paddingTop: theme.spacing.sm / 2,
-						paddingBottom: theme.spacing.sm / 2,
 						fontSize: theme.fontSizes.md,
 					},
 				},
 				leftSection: {
-					paddingTop: theme.spacing.sm / 4,
-					paddingBottom: theme.spacing.sm / 4,
-					paddingRight: theme.spacing.xs,
 					fontSize: theme.fontSizes.sm,
-					marginRight: 0,
+					marginRight: rem(6),
 					[theme.fn.largerThan('sm')]: {
-						paddingTop: theme.spacing.sm / 2,
-						paddingBottom: theme.spacing.sm / 2,
 						fontSize: theme.fontSizes.md,
 					},
 				},
@@ -61,20 +48,12 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 		case 'service': {
 			return {
 				root: {
-					height: theme.spacing.xl,
 					backgroundColor: theme.other.colors.primary.lightGray,
 					border: 'none',
-					[theme.fn.largerThan('sm')]: {
-						height: theme.spacing.xl + 8,
-					},
 				},
 				inner: {
-					paddingTop: theme.spacing.sm / 4,
-					paddingBottom: theme.spacing.sm / 4,
 					fontSize: theme.fontSizes.sm,
 					[theme.fn.largerThan('sm')]: {
-						paddingTop: theme.spacing.sm / 2,
-						paddingBottom: theme.spacing.sm / 2,
 						fontSize: theme.fontSizes.md,
 					},
 				},
@@ -86,11 +65,11 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 					'& *': {
 						fontSize: theme.fontSizes.xs,
 						borderRadius: theme.radius.xl,
-						height: 24,
-						width: 24,
+						height: rem(24),
+						width: rem(24),
 						margin: 0,
 						textAlign: 'center',
-						paddingBottom: '4px',
+						paddingBottom: rem(4),
 					},
 				},
 				inner: {
@@ -101,27 +80,23 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				},
 				root: {
 					border: 0,
-					padding: 0,
-					...(params.minify
-						? {
-								height: 40,
-								width: 40,
-								['&:hover']: {
-									backgroundColor: theme.other.colors.primary.lightGray,
-								},
-								radius: theme.radius.xl,
-								padding: 0,
-						  }
-						: {}),
-					...(params.hideBg
-						? {
-								backgroundColor: undefined,
-								height: undefined,
-								width: undefined,
-								paddingLeft: 6,
-								paddingRight: 6,
-						  }
-						: {}),
+					// padding: 0,
+					'&[data-minify]': {
+						height: rem(40),
+						width: rem(40),
+						['&:hover']: {
+							backgroundColor: theme.other.colors.primary.lightGray,
+						},
+						radius: theme.radius.xl,
+						padding: 0,
+					},
+					'&[data-hideBg]': {
+						backgroundColor: undefined,
+						height: undefined,
+						width: undefined,
+						paddingLeft: rem(6),
+						paddingRight: rem(6),
+					},
 				},
 			}
 		}
@@ -129,29 +104,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 		case 'claimed':
 		case 'unclaimed':
 		case 'verified':
-		// {
-		// 	return {
-		// 		leftSection: {
-		// 			'& *': {
-		// 				verticalAlign: 'middle',
-		// 				margin: 0,
-		// 			},
-		// 		},
-		// 		root: {
-		// 			paddingLeft: 0,
-		// 			paddingRight: 0,
-		// 			borderStyle: 'hidden',
-		// 		},
-		// 		inner: {
-		// 			'& *': {
-		// 				...theme.other.utilityFonts.utility1,
-		// 				width: 'auto',
-		// 				marginLeft: theme.spacing.xs,
-		// 				textTransform: 'none',
-		// 			},
-		// 		},
-		// 	}
-		// }
+		case 'verifiedReviewer':
 		case 'attribute': {
 			return {
 				inner: {
@@ -170,7 +123,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 					borderRadius: 0,
 				},
 				leftSection: {
-					height: 24,
+					height: rem(24),
 					'& *': {
 						margin: 0,
 					},
@@ -180,29 +133,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				},
 			}
 		}
-		// case 'verified': {
-		// 	return {
-		// 		leftSection: {
-		// 			'& *': {
-		// 				verticalAlign: 'middle',
-		// 				margin: 0,
-		// 			},
-		// 		},
-		// 		root: {
-		// 			paddingLeft: 0,
-		// 			paddingRight: 0,
-		// 			borderStyle: 'hidden',
-		// 		},
-		// 		inner: {
-		// 			'& *': {
-		// 				...theme.other.utilityFonts.utility1,
-		// 				width: 'auto',
-		// 				marginLeft: theme.spacing.xs,
-		// 				textTransform: 'none',
-		// 			},
-		// 		},
-		// 	}
-		// }
+
 		default:
 			return {}
 	}
@@ -219,6 +150,7 @@ const customVariants = [
 	'unclaimed',
 	'attribute',
 	'privatePractice',
+	'verifiedReviewer',
 ] as const
 
 const customVariantMap = {
@@ -230,6 +162,7 @@ const customVariantMap = {
 	unclaimed: 'outline',
 	attribute: 'outline',
 	privatePractice: 'outline',
+	verifiedReviewer: 'outline',
 } satisfies Record<CustomVariants, BadgeVariant | undefined>
 
 /** Badge variants `serviceTag` and `communityTag` are responsive - the sizing changes at the `sm` breakpoint. */
@@ -281,17 +214,18 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						<Icon icon='carbon:location-person-filled' color={theme.other.colors.tertiary.pink} height={24} />
 					)
 				}
+				case 'verifiedReviewer': {
+					return (
+						<Icon icon='carbon:checkmark-filled' height={20} color={theme.other.colors.primary.allyGreen} />
+					)
+				}
 			}
 		})()
 
 		const children = (() => {
 			switch (props.variant) {
 				case 'leader': {
-					return (
-						<Text fw={500} sx={{ display: props.minify ? 'none' : 'hidden' }}>
-							{t(props.tsKey, { ns: 'attribute' })}
-						</Text>
-					)
+					return props.minify ? null : <Text fw={500}>{t(props.tsKey, { ns: 'attribute' })}</Text>
 				}
 				case 'verified': {
 					return <Text>{t('verified-information')}</Text>
@@ -313,6 +247,9 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				}
 				case 'privatePractice': {
 					return <Text>{t('privatePractice')}</Text>
+				}
+				case 'verifiedReviewer': {
+					return <Text color={theme.other.colors.secondary.darkGray}>{t('in-reach-verified-reviewer')}</Text>
 				}
 				default: {
 					return props.children
@@ -349,12 +286,18 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				: undefined
 			: (variant as BadgeVariant)
 
+		const styleDataProps = {
+			'data-minify': (props.variant === 'leader' && props.minify) || undefined,
+			'data-hideBg': (props.variant === 'leader' && props.hideBg) || undefined,
+		}
+
 		const badge = (
 			<MantineBadge
 				variant={mantineVariant}
 				classNames={merge(classNames, baseClasses)}
 				ref={ref}
 				leftSection={leftSection}
+				{...styleDataProps}
 				{...others}
 			>
 				{children}
@@ -405,6 +348,7 @@ type BadgeGroupProps = {
 	badges: CustomBadgeProps[]
 	withSeparator: boolean
 }
+type BadgeVariant = BadgeProps['variant']
 
 interface BadgeStylesParams {
 	variant?: BadgeVariant | CustomVariants

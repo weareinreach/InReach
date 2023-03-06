@@ -3,7 +3,7 @@
 
 import { MantineProvider, TypographyStylesProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
-import { NotificationsProvider } from '@mantine/notifications'
+import { Notifications } from '@mantine/notifications'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Navbar } from '@weareinreach/ui/components/sections'
 import { useModalProps } from '@weareinreach/ui/modals'
@@ -35,12 +35,11 @@ const MyApp = (appProps: AppProps<{ session: Session }>) => {
 				emotionCache={appCache}
 			>
 				<TypographyStylesProvider>
-					<NotificationsProvider>
-						<ModalsProvider {...useModalProps()}>
-							<Navbar />
-							<Component {...pageProps} />
-						</ModalsProvider>
-					</NotificationsProvider>
+					<ModalsProvider {...useModalProps()}>
+						<Navbar />
+						<Component {...pageProps} />
+						<Notifications />
+					</ModalsProvider>
 				</TypographyStylesProvider>
 				<ReactQueryDevtools initialIsOpen={false} />
 			</MantineProvider>

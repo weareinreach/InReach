@@ -1,4 +1,4 @@
-import { createStyles, Tabs, Flex, Box } from '@mantine/core'
+import { createStyles, Tabs, rem } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
@@ -10,11 +10,11 @@ const useStyles = createStyles((theme) => ({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		padding: [12, 0, 8, 0],
-		gap: '12px',
+		padding: `${rem(12)} ${rem(0)} ${rem(8)} ${rem(0)}`,
+		gap: rem(12),
 		// position: 'absolute',
-		width: '75px',
-		height: '70px',
+		width: rem(75),
+		height: rem(70),
 		color: theme.other.colors.secondary.darkGray,
 		borderTop: 0,
 
@@ -41,7 +41,7 @@ const useStyles = createStyles((theme) => ({
 	tabsList: {
 		borderTop: 0,
 		flexWrap: 'nowrap',
-		height: 70,
+		height: rem(70),
 		justifyContent: 'space-around',
 	},
 	root: {
