@@ -37,6 +37,7 @@ const useAccordionStyles = createStyles((theme) => ({
 	},
 	item: {
 		margin: 0,
+		minHeight: rem(48),
 		'&:last-of-type': {
 			marginBottom: rem(40),
 		},
@@ -47,6 +48,9 @@ const useAccordionStyles = createStyles((theme) => ({
 	},
 	control: {
 		padding: `${rem(12)} ${rem(0)}`,
+		...theme.fn.hover({
+			backgroundColor: theme.other.colors.primary.lightGray,
+		}),
 	},
 	panel: {
 		padding: 0,
@@ -64,7 +68,7 @@ const useModalStyles = createStyles((theme) => ({
 		},
 		[theme.fn.smallerThan('sm')]: {
 			maxHeight: 'none',
-			padding: `${rem(10)} ${rem(9)} ${rem(40)} ${rem(20)}`,
+			padding: `${rem(10)} ${rem(9)} ${rem(30)} ${rem(20)}`,
 		},
 		[`@media (orientation: landscape) and (max-height: ${em(376)})`]: {
 			paddingBottom: rem(20),
@@ -110,10 +114,12 @@ const useStyles = createStyles((theme) => ({
 	},
 
 	button: {
-		padding: `${rem(14)} ${rem(20)} ${rem(14)} ${rem(16)}`,
+		padding: `${rem(14)} ${rem(16)}`,
 		backgroundColor: theme.other.colors.secondary.white,
 		borderRadius: rem(8),
 		border: `${theme.other.colors.tertiary.coolGray} ${rem(1)} solid`,
+		height: rem(48),
+		maxWidth: rem(600),
 	},
 
 	itemParent: {},
@@ -155,6 +161,7 @@ const useStyles = createStyles((theme) => ({
 				fontSize: `${rem(14)} !important`,
 			},
 		},
+		height: rem(48),
 	},
 	resultsBtn: {
 		borderRadius: rem(8),
@@ -169,6 +176,7 @@ const useStyles = createStyles((theme) => ({
 			},
 		},
 		width: '100%',
+		height: rem(48),
 	},
 }))
 
@@ -189,14 +197,13 @@ export const ServiceFilter = ({}) => {
 	)
 	const isMobile = isMobileQuery || isLandscape
 	const viewportHeight = useViewportSize().height + (isLandscape ? (isSmallLandscape ? 40 : 20) : 0)
-	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 : viewportHeight * 0.6 - 88
+	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
 
 	/** TODO: Results will be filtered live as items are selected - need to update the count of results left */
 	const resultCount = RESULT_PLACEHOLDER
 
 	type ServiceCategory = NonNullable<typeof serviceOptionData>[number]
 	type FilterValue = ServiceCategory['services'][number] & { categoryId: string; checked: boolean }
-	type FormValues = Omit<ServiceCategory, 'services'> & { services: FilterValue[] }
 
 	const form = useForm<{ [categoryId: string]: FilterValue[] }>()
 	const valueMap = new Map<string, FilterValue[]>()
@@ -317,12 +324,12 @@ export const ServiceFilter = ({}) => {
 	return (
 		<>
 			<Modal
-				{...modalSettings}
 				opened={opened}
 				onClose={() => setOpened(false)}
 				title={<ServiceBar modalTitle />}
 				fullScreen={isMobile}
 				classNames={modalClasses}
+				scrollAreaComponent={Modal.NativeScrollArea}
 			>
 				<Accordion
 					chevron={<Icon icon='carbon:chevron-right' />}

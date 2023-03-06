@@ -545,6 +545,7 @@ export const commonTheme = {
 						[theme.fn.largerThan('xs')]: {
 							padding: `${rem(16)} ${rem(32)} ${rem(16)} ${rem(24)}`,
 						},
+						maxHeight: rem(80),
 					},
 					body: {
 						padding: rem(20),
