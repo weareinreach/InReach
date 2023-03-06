@@ -1,6 +1,6 @@
 import { MantineProvider, TypographyStylesProvider, MantineProviderProps } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
-import { NotificationsProvider } from '@mantine/notifications'
+import { Notifications } from '@mantine/notifications'
 import { StoryContext, StoryFn } from '@storybook/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink, loggerLink } from '@trpc/client'
@@ -25,11 +25,10 @@ export const WithMantine = (Story: StoryFn) => {
 	return (
 		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
 			<TypographyStylesProvider>
-				<NotificationsProvider>
-					<ModalsProvider {...useModalProps()}>
-						<Story />
-					</ModalsProvider>
-				</NotificationsProvider>
+				<ModalsProvider {...useModalProps()}>
+					<Notifications />
+					<Story />
+				</ModalsProvider>
 			</TypographyStylesProvider>
 		</MantineProvider>
 	)

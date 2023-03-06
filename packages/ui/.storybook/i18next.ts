@@ -31,6 +31,11 @@ i18n
 		lng: 'en',
 		backend: {
 			loadPath: '/public/locales/{{lng}}/{{ns}}.json',
+			// loadPath: 'https://inreach-locale.s3.amazonaws.com/dev/{{ns}}+({{lng}}).json',
+
+			requestOptions: {
+				mode: 'cors',
+			},
 		},
 		fallbackLng: {
 			'en-US': ['en'],

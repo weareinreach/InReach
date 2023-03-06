@@ -1,7 +1,6 @@
 import {
 	Button as MantineButton,
 	ButtonProps,
-	ButtonVariant,
 	CSSObject,
 	createStyles,
 	ButtonStylesNames,
@@ -16,14 +15,14 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'filled':
 			return {
 				root: {
-					paddingLeft: theme.spacing.md * 2,
-					paddingRight: theme.spacing.md * 2,
-					height: theme.spacing.lg * 2,
+					paddingLeft: `calc(${theme.spacing.md} * 2)`,
+					paddingRight: `calc(${theme.spacing.md} * 2)`,
+					height: `calc(${theme.spacing.lg} * 2)`,
 				},
 				inner: {
 					color: theme.other.colors.secondary.white,
 					label: {
-						left: theme.spacing.md * 2,
+						left: `calc(${theme.spacing.md} * 2)`,
 					},
 					leftIcon: {
 						display: 'none',
@@ -33,20 +32,20 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'outline':
 			return {
 				root: {
-					paddingLeft: theme.spacing.md * 2,
-					paddingRight: theme.spacing.md * 2,
-					height: theme.spacing.lg * 2,
+					paddingLeft: `calc(${theme.spacing.md} * 2)`,
+					paddingRight: `calc(${theme.spacing.md} * 2)`,
+					height: `calc(${theme.spacing.lg} * 2)`,
 					border: theme.other.border.default,
 					borderColor: theme.other.colors.tertiary.coolGray,
 					backgroundColor: theme.other.colors.secondary.white,
-					'&:hover': {
+					'&:not([data-disabled])': theme.fn.hover({
 						backgroundColor: theme.other.colors.primary.lightGray,
-					},
+					}),
 				},
 				inner: {
 					color: theme.other.colors.secondary.black,
 					label: {
-						left: theme.spacing.md * 2,
+						left: `calc(${theme.spacing.md} * 2)`,
 					},
 					leftIcon: {
 						display: 'none',
@@ -56,17 +55,17 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'primary':
 			return {
 				root: {
-					paddingLeft: theme.spacing.md * 2,
-					paddingRight: theme.spacing.md * 2,
-					height: theme.spacing.lg * 2,
+					paddingLeft: `calc(${theme.spacing.md} * 2)`,
+					paddingRight: `calc(${theme.spacing.md} * 2)`,
+					height: `calc(${theme.spacing.lg} * 2)`,
 				},
-				'&:hover': {
+				'&:not([data-disabled])': theme.fn.hover({
 					backgroundColor: theme.fn.darken(theme.other.colors.secondary.white, 0.4),
-				},
+				}),
 				inner: {
 					color: theme.other.colors.secondary.white,
 					label: {
-						left: theme.spacing.md * 2,
+						left: `calc(${theme.spacing.md} * 2)`,
 					},
 					leftIcon: {
 						display: 'none',
@@ -76,20 +75,20 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'secondary':
 			return {
 				root: {
-					paddingLeft: theme.spacing.md * 2,
-					paddingRight: theme.spacing.md * 2,
-					height: theme.spacing.lg * 2,
+					paddingLeft: `calc(${theme.spacing.md} * 2)`,
+					paddingRight: `calc(${theme.spacing.md} * 2)`,
+					height: `calc(${theme.spacing.lg} * 2)`,
 					border: theme.other.border.default,
 					borderColor: theme.other.colors.tertiary.coolGray,
 					backgroundColor: theme.other.colors.secondary.white,
-					'&:hover': {
+					'&:not([data-disabled])': theme.fn.hover({
 						backgroundColor: theme.other.colors.primary.lightGray,
-					},
+					}),
 				},
 				inner: {
 					color: theme.other.colors.secondary.black,
 					label: {
-						left: theme.spacing.md * 2,
+						left: `calc(${theme.spacing.md} * 2)`,
 					},
 					leftIcon: {
 						display: 'none',
@@ -99,18 +98,18 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 		case 'accent':
 			return {
 				root: {
-					paddingLeft: theme.spacing.md * 2,
-					paddingRight: theme.spacing.md * 2,
-					height: theme.spacing.lg * 2,
+					paddingLeft: `calc(${theme.spacing.md} * 2)`,
+					paddingRight: `calc(${theme.spacing.md} * 2)`,
+					height: `calc(${theme.spacing.lg} * 2)`,
 					backgroundColor: theme.other.colors.tertiary.red,
-					'&:hover': {
+					'&:not([data-disabled])': theme.fn.hover({
 						background: theme.fn.darken(theme.other.colors.tertiary.red, 0.4),
-					},
+					}),
 				},
 				inner: {
 					color: theme.other.colors.secondary.white,
 					label: {
-						left: theme.spacing.md * 2,
+						left: `calc(${theme.spacing.md} * 2)`,
 					},
 					leftIcon: {
 						display: 'none',
@@ -122,9 +121,9 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 				root: {
 					borderRadius: theme.radius.md,
 				},
-				'&:hover': {
+				'&:not([data-disabled])': theme.fn.hover({
 					backgroundColor: theme.fn.darken(theme.other.colors.secondary.white, 0.4),
-				},
+				}),
 			}
 		case 'secondary-icon':
 			return {
@@ -133,9 +132,9 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 					borderColor: theme.other.colors.tertiary.coolGray,
 					backgroundColor: theme.other.colors.secondary.white,
 					borderRadius: theme.radius.md,
-					'&:hover': {
+					'&:not([data-disabled])': theme.fn.hover({
 						backgroundColor: theme.other.colors.primary.lightGray,
-					},
+					}),
 				},
 				inner: {
 					color: theme.other.colors.secondary.black,
@@ -148,9 +147,9 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 			return {
 				root: {
 					backgroundColor: theme.other.colors.secondary.cornflower,
-					'&:hover': {
+					'&:not([data-disabled])': theme.fn.hover({
 						background: theme.fn.darken(theme.other.colors.secondary.cornflower, 0.4),
-					},
+					}),
 				},
 			}
 		default: {
@@ -213,6 +212,6 @@ interface CustomButtonProps extends MantineButtonProps {
 	disabled?: boolean
 }
 type CustomVariants = (typeof customVariants)[number]
-
+type ButtonVariant = ButtonProps['variant']
 type CustomButtonStyles = Partial<{ [className in ButtonStylesNames]: CSSObject }>
 type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => CustomButtonStyles

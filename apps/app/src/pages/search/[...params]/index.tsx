@@ -6,9 +6,10 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type RoutedQuery } from 'nextjs-routes'
+import { Suspense } from 'react'
 import { z } from 'zod'
 
-import { api } from '~app/utils/api'
+import { api, RouterOutputs } from '~app/utils/api'
 import { i18nextConfig } from '~app/utils/i18n'
 
 const ParamSchema = z.tuple([
@@ -19,14 +20,49 @@ const ParamSchema = z.tuple([
 	z.literal('mi').or(z.literal('km')).describe(`'mi' or 'km'`),
 ])
 
+const ResultCard = ({
+	result,
+}: {
+	result: NonNullable<RouterOutputs['organization']['getSearchDetails']>[number]
+}) => {
+	const namespaces = new Set([result.slug, ...result.services.map((service) => service.tsNs)])
+	const { t, ready, i18n } = useTranslation([...namespaces])
+	console.log(result.slug, 'i18n ready?', ready, 'ns', i18n.hasLoadedNamespace(result.slug), i18n)
+
+	if (!i18n.hasLoadedNamespace(result.slug)) return <div>ns not loaded</div>
+
+	return (
+		<div key={result.id}>
+			<p>Name: {result.name}</p>
+			<p>Slug: {result.slug}</p>
+			<p>
+				Description:{' '}
+				{result.description
+					? t(result.description.key, {
+							ns: result.slug,
+							defaultValue: result.description.text,
+					  })
+					: 'none'}
+			</p>
+			Services:{' '}
+			<ul>
+				{result.services.map((service) => (
+					<li key={service.id}>{t(service.tsKey, { ns: service.tsNs, defaultValue: 'default value' })}</li>
+				))}
+			</ul>
+		</div>
+	)
+}
+
 const SearchResults = () => {
-	const { query } = useRouter<'/search/[...params]'>()
+	const { query, locale } = useRouter<'/search/[...params]'>()
 	const queryClient = api.useContext()
-	const { t, ready } = useTranslation(['services', 'org-description'])
+	const { t } = useTranslation(['services'])
 	const queryParams = ParamSchema.safeParse(query.params)
+
 	if (!queryParams.success) return <>Error</>
 
-	const [searchType, lon, lat, dist, unit] = queryParams.data
+	const [_searchType, lon, lat, dist, unit] = queryParams.data
 	const ids = api.organization.searchDistance.useQuery(
 		{ lat, lon, dist, unit },
 		{
@@ -35,37 +71,27 @@ const SearchResults = () => {
 		}
 	)
 
-	const orgs =
-		ids.data && ids.isSuccess
-			? api.organization.getSearchDetails.useQuery({ ids: ids.data.orgs.map(({ id }) => id) })
-			: undefined
+	const resultIds = ids.data?.orgs.map(({ id }) => id) ?? []
+
+	const orgs = api.organization.getSearchDetails.useQuery(
+		{ ids: resultIds },
+		{
+			enabled: ids.isSuccess && Boolean(ids.data) && Boolean(resultIds.length),
+		}
+	)
 
 	const resultList =
-		orgs?.data && orgs?.isSuccess && ready
+		orgs?.data && orgs?.isSuccess
 			? orgs.data.map((result) => {
-					return (
-						<div key={result.id}>
-							<p>Name: {result.name}</p>
-							<p>Slug: {result.slug}</p>
-							<p>
-								Description:{' '}
-								{result.description ? t(result.description.key, { ns: result.description.ns }) : 'none'}
-							</p>
-							Services:{' '}
-							<ul>
-								{result.services.map((service) => (
-									<li key={service.id}>{t(service.tsKey, { ns: service.tsNs })}</li>
-								))}
-							</ul>
-						</div>
-					)
+					return <ResultCard key={result.id} result={result} />
 			  })
 			: null
 
 	return (
 		<div>
-			{resultList}
-			{/* <Code block>{JSON.stringify(ids, null, 2)}</Code> */}
+			useRouter locale: {locale}
+			<Suspense fallback={<h1>Loader goes here</h1>}>{resultList}</Suspense>
+			<Code block>{JSON.stringify(ids, null, 2)}</Code>
 			<Code block>{JSON.stringify(orgs, null, 2)}</Code>
 		</div>
 	)
@@ -85,7 +111,7 @@ export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/search/[..
 
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await serverSideTranslations(locale ?? 'en', [], i18nextConfig)),
+		...(await serverSideTranslations(locale ?? 'en', ['services', 'common', 'nav'], i18nextConfig)),
 	}
 
 	return {

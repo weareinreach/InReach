@@ -28,8 +28,11 @@ export const locationMock = {
 		{
 			service: {
 				description: {
-					key: 'whitman-walker-health.osvc_01GSKV973TWEVJWHKJ61Y57773.desc',
-					ns: 'org-service',
+					key: 'whitman-walker-health.osvc_01GTJ0WTERVW3H28Z5XNYHFM3F.description',
+					ns: 'org-data',
+					tsKey: {
+						text: "Whitman-Walker's Red Carpet program is their HIV Specialty Care program for people newly diagnosed with HIV or new to HIV care. Red Carpet is their way of connecting people living with HIV to medical care in a smooth and fast transition that fits easily into daily life. If you have insurance, please call us at 202.745.7000 and mention “Red Carpet.” Their staff will let you know whether they accept your insurance plan and will help you schedule an appointment. If you do not have insurance, please contact their Public Benefits & Insurance Navigation team at 202.745.6151.",
+					},
 				},
 				hours: [],
 				attributes: [
@@ -120,7 +123,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'medical.CATEGORYNAME',
+								tsKey: 'medicalcategoryname',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -140,8 +143,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV973TF5J3AS84GJQDQXJA',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTES4RRASN90DSRXF4SR',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Located at the Whitman-Walker location. Please call.',
+											},
 										},
 										data: {
 											json: {
@@ -170,8 +176,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV973VAA46AMHEEJ5KWYVM',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTESBT75NEVJA770DBTC',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Located at the Max Robinson Center. Call to make an appointment.',
+											},
 										},
 										data: {
 											json: {
@@ -200,8 +209,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV973V7XFD5Q3A3EK0WQGP',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTESY47QWQ8FZF98V1B2',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Visit the webpage for more information.',
+											},
 										},
 										data: {
 											json: {
@@ -244,8 +256,11 @@ export const locationMock = {
 		{
 			service: {
 				description: {
-					key: 'whitman-walker-health.osvc_01GSKV9742T9207X6DMR5EHGKB.desc',
-					ns: 'org-service',
+					key: 'whitman-walker-health.osvc_01GTJ0WTF0PY6QA2M1XC0YDM9V.description',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Whitman-Walker Health offers preventive and restorative dental health services including dental exam, teeth cleaning, mouth guard, orthodontics, prosthodontics, restorative treatment, root canal, scaling and root planing, tooth extraction, teeth whitening.',
+					},
 				},
 				hours: [],
 				attributes: [
@@ -337,7 +352,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'medical.CATEGORYNAME',
+								tsKey: 'medicalcategoryname',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -357,8 +372,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV9742050VYZEX8775DS3Z',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTF1W215RD6G6TJCWPRM',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Call to make a dental appointment.',
+											},
 										},
 										data: {
 											json: {
@@ -387,8 +405,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV97420TM4JR5JQ9989Z8B',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTF14J3QJPS6CY7W6M49',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Check the website for details on specific dental services.',
+											},
 										},
 										data: {
 											json: {
@@ -442,8 +463,11 @@ export const locationMock = {
 		{
 			service: {
 				description: {
-					key: 'whitman-walker-health.osvc_01GSKV97439FQYEMMV1ST1J4RN.desc',
-					ns: 'org-service',
+					key: 'whitman-walker-health.osvc_01GTJ0WTF2K6WBSNSA3GPHE4G1.description',
+					ns: 'org-data',
+					tsKey: {
+						text: "Whitman-Walker's Behavioral Health programs include peer support, substance use treatment, psychotherapy, psychiatry, and gender affirming assessment. They offer services to adults and youth. The behavioral healthcare team includes licensed psychotherapists (social workers, professional counselors, and marriage and family therapists, psychologists), psychiatric providers (medical doctors and nurse practitioners), and highly trained peers and graduate interns. The assessment and referral process will get you started and will help them determine together which services are right for you.",
+					},
 				},
 				hours: [],
 				attributes: [
@@ -608,7 +632,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'mental-health.CATEGORYNAME',
+								tsKey: 'mental-healthcategoryname',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -617,7 +641,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'mental-health.CATEGORYNAME',
+								tsKey: 'mental-healthcategoryname',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -637,8 +661,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV97432VN90BJV978SG3RM',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTF2VB1X6R2NS9QGNHDY',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Visit the website for more information and a full list of services.',
+											},
 										},
 										data: {
 											json: {
@@ -664,8 +691,11 @@ export const locationMock = {
 		{
 			service: {
 				description: {
-					key: 'whitman-walker-health.osvc_01GSKV974DKH1RTA3MQ4JZKEFA.desc',
-					ns: 'org-service',
+					key: 'whitman-walker-health.osvc_01GTJ0WTFCCVR5JCWFZJM3AXZS.description',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Your medical provider (e.g. a doctor, nurse practitioner or physician assistant) will work with you to understand your goals and needs before prescribing medication. Whitman-Walker will follow an informed consent model for gender affirming hormone therapy with people ages 18+. If someone is working with them who is under the age of 18, Whitman-Walker will require a mental health assessment as well as parental or guardian consent.',
+					},
 				},
 				hours: [],
 				attributes: [
@@ -773,7 +803,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'medical.CATEGORYNAME',
+								tsKey: 'medicalcategoryname',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -793,8 +823,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974DY902DYR7N2CZF4QW',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTFDTC1T13DVH4EM22RX',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Call for more information about their Gender Affirming Services.',
+											},
 										},
 										data: {
 											json: {
@@ -823,8 +856,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974DTD839E5A94C899Q3',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTFD40VHRQ2A31VE5MF1',
+											ns: 'org-data',
+											tsKey: {
+												text: "Visit the website to learn more about Whitman-Walker Health's gender affirming hormone therapy.",
+											},
 										},
 										data: {
 											json: {
@@ -855,8 +891,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974D47QBSHEERVMHPTB5',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTFDRRECZM696ZRV9KWR',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Email for more information about their Gender Affirming Services.',
+											},
 										},
 										data: {
 											json: {
@@ -885,8 +924,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974D767RB2H3XKPWH98A',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTFD2FYJV8QBWW8FF44B',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Gender affirming hormone therapy services are offered at the Whitman-Walker at 1525 and Max Robinson Center locations.',
+											},
 										},
 										data: {
 											json: {
@@ -942,8 +984,11 @@ export const locationMock = {
 		{
 			service: {
 				description: {
-					key: 'whitman-walker-health.osvc_01GSKV974EC3S5D0K87BC62R1M.desc',
-					ns: 'org-service',
+					key: 'whitman-walker-health.osvc_01GTJ0WTFEZHHCM1CT1TD1TGKJ.description',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Whitman-Walker offers access to both PEP and PrEP. PEP is a 28-day course of medication that should be used only in emergency situations and must be started within 72 hours after a recent, possible exposure to HIV. If you think you’ve recently been exposed to HIV during sex or through sharing needles and works to prepare drugs, or if you’ve been sexually assaulted, please call them at 202.797.4439 right away. “PrEP” stands for Pre-Exposure Prophylaxis. It is an FDA-approved once-a-day prevention pill for people who don’t have HIV but who have a greater exposure to HIV through sex or other behaviors. When taken every day, PrEP is up to 99% effective at preventing an HIV infection that is transmitted through sex. PrEP does not prevent other STIs or pregnancy. You can use PrEP with other prevention methods, like condoms, to offer more protection as PrEP. For PrEP to work effectively, people who use it must take it every day as prescribed and follow up with their doctor or medical team member every 3 months for routine screening and discussion of barriers to adherence.',
+					},
 				},
 				hours: [],
 				attributes: [
@@ -994,7 +1039,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'medical.CATEGORYNAME',
+								tsKey: 'medicalcategoryname',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -1014,8 +1059,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974F61K6BZXGKH30137N',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTFF5SBQ45QNY6GGB0VC',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Visit the link to learn more about PrEP and access services.',
+											},
 										},
 										data: {
 											json: {
@@ -1044,8 +1092,11 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974FWT0QER9B8K2VA24K',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GTJ0WTFFEXANFV5XCP8EF2Z8',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Visit the link to learn more about PEP and access services.',
+											},
 										},
 										data: {
 											json: {

@@ -1,15 +1,19 @@
-import { Flex, Group, Grid, createStyles } from '@mantine/core'
+import { Flex, Group, Grid, createStyles, rem } from '@mantine/core'
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 
+import InReachLogo from '~ui/assets/inreach.svg'
 import { Button, MobileNav, UserMenu } from '~ui/components/core'
 import { BodyGrid } from '~ui/layouts'
 
 const useStyles = createStyles((theme) => ({
 	desktopNav: {
-		height: 64,
-		padding: '0px 40px !important',
+		height: rem(64),
+		padding: `${rem(0)} ${rem(40)}`,
 		boxShadow: theme.shadows.xs,
+		[theme.fn.largerThan('lg')]: {
+			padding: `${rem(0)} ${rem(64)}`,
+		},
 		[theme.fn.smallerThan('md')]: {
 			display: 'none',
 		},
@@ -34,15 +38,9 @@ export const Navbar = () => {
 				align='center'
 			>
 				<Grid.Col p='0px !important'>
-					<Flex justify='space-between'>
-						<Image
-							src='public/img/inreach.svg'
-							width={100}
-							height={37.53}
-							alt='InReach'
-							style={{ margin: 0 }}
-						/>
-						<Group spacing={40} noWrap>
+					<Flex justify='space-between' align='center'>
+						<Image src={InReachLogo} width={100} height={37.53} alt='InReach' style={{ margin: 0 }} />
+						<Group spacing={40} noWrap align='center'>
 							<UserMenu />
 							{/* TODO: add link for safety exit */}
 							<Button variant='accent'>{t('safety-exit')}</Button>

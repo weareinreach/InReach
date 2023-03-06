@@ -23,6 +23,7 @@ export const SearchDetailsOutput = z
 			.object({
 				key: z.string(),
 				ns: z.string(),
+				tsKey: z.object({ text: z.string() }),
 			})
 			.nullable(),
 		services: z
@@ -76,12 +77,15 @@ export const SearchDetailsOutput = z
 					service.services.forEach(({ tag }) => servCombined.add(JSON.stringify(tag.category)))
 				)
 			)
+			const desc = description
+				? { key: description.key, ns: description.ns, text: description.tsKey.text }
+				: null
 
 			return {
 				id,
 				name,
 				slug,
-				description,
+				description: desc,
 				attributes: attributes.flatMap(({ attribute }) =>
 					attribute.categories.map(({ attribute }) => attribute)
 				),

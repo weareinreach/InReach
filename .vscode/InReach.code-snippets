@@ -46,6 +46,21 @@
 		"prefix": "trycatchtrpc",
 		"body": ["try {", "\t\t$0", "", "", "\t} catch (error) {", "\t\thandleError(error)", "}"],
 		"description": "try/catch with trpc error handler"
+	},
+	"2 REM values": {
+		"prefix": "rem2",
+		"body": ["`${rem(${1})} ${rem(${2})}`"],
+		"description": "2 REM values"
+	},
+	"4 REM values": {
+		"prefix": "rem4",
+		"body": ["`${rem(${1})} ${rem(${2})} ${rem(${3})} ${rem(${4})}`"],
+		"description": "4 REM values"
+	},
+	"Calc CSS": {
+		"prefix": "calcCSS",
+		"body": ["`calc(${${1:variable}\\} ${2|- ${rem(0)},+ ${rem(0)},* 0,/ 0|}${3})`"],
+		"description": "Calc CSS"
 	}
 
 	// Place your ✨ InReach (root) workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
