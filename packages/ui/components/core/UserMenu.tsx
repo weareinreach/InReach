@@ -1,33 +1,19 @@
-import {
-	Avatar,
-	DefaultProps,
-	Group,
-	Menu,
-	Selectors,
-	Skeleton,
-	Text,
-	UnstyledButton,
-	createStyles,
-	rem,
-} from '@mantine/core'
-import Image from 'next/image'
+import { DefaultProps, Group, Menu, Selectors, Text, UnstyledButton, createStyles, rem } from '@mantine/core'
 import { useSession, signOut } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
 import { Button } from '~ui/components/core/Button'
 import { LangPicker } from '~ui/components/core/LangPicker'
 import { Link } from '~ui/components/core/Link'
-import { Icon } from '~ui/icon'
 import { openLoginModal } from '~ui/modals/Login'
 import { openSignUpModal } from '~ui/modals/SignUp'
+
+import { UserAvatar } from './UserAvatar'
 
 const useStyles = createStyles((theme) => ({
 	buttons: {
 		padding: `${rem(4)} ${rem(12)}`,
 		borderRadius: rem(8),
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-		},
 	},
 	loadingItems: {
 		display: 'inline-block',
@@ -50,6 +36,12 @@ const useStyles = createStyles((theme) => ({
 		color: `${theme.other.colors.secondary.black} !important`,
 		padding: rem(16),
 	},
+	menuTarget: {
+		'&:not(:disabled)': theme.fn.hover({
+			backgroundColor: theme.other.colors.primary.lightGray,
+		}),
+		'&:disabled': theme.fn.hover({ cursor: 'auto' }),
+	},
 }))
 
 export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
@@ -57,21 +49,13 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 	const { data: session, status } = useSession()
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 
-	if (status === 'loading' && !session) {
-		return (
-			<Group className={cx(className)} noWrap>
-				<Skeleton height={40} circle className={classes.loadingItems} />
-				<Skeleton height={8} radius='xl' className={classes.loadingItems} w={100} h={16} />
-			</Group>
-		)
-	}
+	// if (status === 'loading' && !session) {
+	// 	return <UserAvatar useLoggedIn />
+	// }
 
-	if (session?.user && status === 'authenticated') {
-		let displayName = 'User'
-		if (typeof session.user.name === 'string') {
-			const [name, lastName] = session.user.name.split(' ').slice(0, 2)
-			displayName = `${name} ${typeof lastName === 'string' ? lastName.substr(0, 1).toUpperCase() : ''}.`
-		}
+	const isLoading = status === 'loading'
+
+	if ((session?.user && status === 'authenticated') || isLoading) {
 		return (
 			<Group noWrap spacing={36}>
 				<Menu
@@ -83,32 +67,19 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 					classNames={{ item: classes.menuItem }}
 					radius='sm'
 					shadow='xs'
+					disabled={isLoading ? true : undefined}
 				>
 					<Menu.Target>
 						<UnstyledButton
-							className={cx(classes.buttons, className)}
+							className={cx(classes.buttons, classes.menuTarget)}
 							sx={(theme) => ({
 								'&[data-expanded]': {
 									backgroundColor: theme.other.colors.primary.lightGray,
 								},
 							})}
+							disabled={isLoading ? true : undefined}
 						>
-							<Group noWrap spacing='sm'>
-								<Avatar radius='xl'>
-									{session.user.image ? (
-										<Image
-											src={session.user.image}
-											height={70}
-											width={70}
-											alt={session.user.name || t('user-avatar')}
-											style={{ margin: 0 }}
-										/>
-									) : (
-										<Icon icon='carbon:user' className={classes.avatarPlaceholder} height={24} />
-									)}
-								</Avatar>
-								<Text className={classes.navText}>{displayName}</Text>
-							</Group>
+							<UserAvatar useLoggedIn />
 						</UnstyledButton>
 					</Menu.Target>
 					<Menu.Dropdown>
@@ -129,6 +100,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 					component={Link}
 					href='/'
 					className={classes.navText}
+					style={{ visibility: isLoading ? 'hidden' : undefined }}
 					onClick={(e) => {
 						e.preventDefault()
 						signOut()

@@ -12,26 +12,25 @@ const useStyles = createStyles((theme) => ({
 		alignItems: 'center',
 		padding: `${rem(12)} ${rem(0)} ${rem(8)} ${rem(0)}`,
 		gap: rem(12),
-		// position: 'absolute',
 		width: rem(75),
 		height: rem(70),
 		color: theme.other.colors.secondary.darkGray,
 		borderTop: 0,
-
 		'&:hover': {
 			backgroundColor: theme.other.colors.secondary.white,
 		},
-		'&[data-active]': {
+		'&[data-active] > .mantine-Tabs-tabLabel': {
 			color: theme.other.colors.secondary.black,
 			borderTop: 0,
-			fontWeight: theme.other.fontWeight.semibold,
-			'& .mantine-Tabs-tabLabel': {
-				fontWeight: theme.other.fontWeight.semibold,
-			},
+			fontWeight: theme.other.fontWeight.bold,
 
 			'&[data-active]:hover': {
 				backgroundColor: theme.other.colors.secondary.white,
 			},
+		},
+		['&[data-active] > .mantine-Tabs-tabIcon']: {
+			stroke: theme.other.colors.secondary.black,
+			strokeWidth: rem(1),
 		},
 	},
 	tabLabel: {
@@ -43,6 +42,11 @@ const useStyles = createStyles((theme) => ({
 		flexWrap: 'nowrap',
 		height: rem(70),
 		justifyContent: 'space-around',
+	},
+	tabIcon: {
+		'&:not(:only-child)': {
+			margin: 0,
+		},
 	},
 	root: {
 		position: 'absolute',

@@ -1,5 +1,5 @@
 /* eslint-disable import/consistent-type-specifier-style */
-import { rem, em } from '@mantine/core'
+import { rem, em, SkeletonStylesParams } from '@mantine/core'
 import { keys } from '@mantine/utils'
 
 import { Icon } from '~ui/icon'
@@ -559,8 +559,42 @@ export const commonTheme = {
 		Skeleton: {
 			defaultProps: (theme) =>
 				({
-					height: theme.fontSizes.md,
+					radius: 'xl',
 				} satisfies SkeletonProps),
+			styles: (theme, { circle }: SkeletonStylesParams) =>
+				({
+					root: {
+						minWidth: circle ? undefined : rem(100),
+					},
+				} satisfies Styles<'root', SkeletonStylesParams>),
+
+			variants: {
+				text: (theme) => ({
+					root: {
+						height: rem(16 * 1.5),
+					},
+				}),
+				utility: (theme) => ({
+					root: {
+						height: rem(16 * 1.25),
+					},
+				}),
+				h1: (theme) => ({
+					root: {
+						height: rem(40 * 1.25),
+					},
+				}),
+				h2: (theme) => ({
+					root: {
+						height: rem(24 * 1.25),
+					},
+				}),
+				h3: (theme) => ({
+					root: {
+						height: rem(16 * 1.25),
+					},
+				}),
+			},
 		},
 		Switch: {
 			defaultProps: {
