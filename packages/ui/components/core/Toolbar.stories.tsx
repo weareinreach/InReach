@@ -1,3 +1,5 @@
+import { Center } from '@mantine/core'
+import { action } from '@storybook/addon-actions'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { Toolbar } from './Toolbar'
@@ -5,7 +7,6 @@ import { Toolbar } from './Toolbar'
 export default {
 	title: 'Design System/Toolbar',
 	component: Toolbar,
-	render: ({ saved }) => <Toolbar saved={saved} />,
 	parameters: {
 		design: {
 			type: 'figma',
@@ -13,6 +14,18 @@ export default {
 		},
 		layout: 'fullscreen',
 	},
+	args: {
+		breadcrumbProps: {
+			option: 'back',
+			backTo: 'search',
+			onClick: () => action('onClick')(''),
+		},
+	},
+	render: (args) => (
+		<Center style={{ maxWidth: '861px', width: '100%', height: '100vh', margin: '0 auto' }}>
+			<Toolbar {...args} />
+		</Center>
+	),
 } satisfies Meta<typeof Toolbar>
 
 type StoryDef = StoryObj<typeof Toolbar>
