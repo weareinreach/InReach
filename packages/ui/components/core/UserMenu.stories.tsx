@@ -4,13 +4,11 @@ import React from 'react'
 import { UserMenu as UserMenuComponent } from './'
 
 export default {
-	title: 'App/Navigation Header Bar/User Menu',
+	title: 'Sections/Navbar/User Menu',
 	component: UserMenuComponent,
 } as Meta<typeof UserMenuComponent>
 
 export const LoggedOut = {
-	render: () => <UserMenuComponent />,
-
 	parameters: {
 		nextAuthMock: {
 			session: 'unknown',
@@ -19,8 +17,6 @@ export const LoggedOut = {
 }
 
 export const Loading = {
-	render: () => <UserMenuComponent />,
-
 	parameters: {
 		nextAuthMock: {
 			session: 'loading',
@@ -29,8 +25,6 @@ export const Loading = {
 }
 
 export const LoggedIn = {
-	render: () => <UserMenuComponent />,
-
 	parameters: {
 		nextAuthMock: {
 			session: 'userPic',
@@ -39,8 +33,6 @@ export const LoggedIn = {
 }
 
 export const LoggedInNoPic = {
-	render: () => <UserMenuComponent />,
-
 	parameters: {
 		nextAuthMock: {
 			session: 'userNoPic',
