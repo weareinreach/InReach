@@ -717,7 +717,6 @@ export const commonTheme = {
 						borderWidth: rem(2),
 					},
 				},
-				wrapper: { height: rem(96) },
 			}),
 		},
 		TextInput: {
