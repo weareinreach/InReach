@@ -3,8 +3,7 @@ import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Icon } from '~ui/icon'
-
+import { Badge } from './Badge'
 import { UserAvatar } from './UserAvatar'
 
 const useStyles = createStyles((theme) => ({
@@ -62,10 +61,12 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 						<Skeleton />
 						<Skeleton width={100} mt={4} />
 					</Stack>
-					<Group sx={!verifiedUser ? { display: 'none' } : undefined} spacing={8}>
-						<Skeleton height={20} circle />
-						<Skeleton width={200} />
-					</Group>
+					{verifiedUser ? (
+						<Group spacing={8}>
+							<Skeleton height={20} circle />
+							<Skeleton width={200} />
+						</Group>
+					) : null}
 				</Stack>
 			</Grid.Col>
 		)
@@ -73,28 +74,24 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 
 	return (
 		<Grid.Col sm={8}>
-			<Stack spacing={0}>
+			<Stack spacing={0} align='flex-start'>
 				<UserAvatar user={user} subheading={reviewDate} />
 				<Stack className={classes.reviewText} spacing={0}>
 					<Text ref={reviewTextRef} lineClamp={lineClamp} component='p'>{`"${reviewText}"`}</Text>
-					<Text
-						td='underline'
-						sx={!showMoreLink ? { display: 'none' } : undefined}
-						className={classes.showMore}
-						weight={theme.other.fontWeight.semibold}
-						onClick={() => {
-							setShowMore(!showMore)
-						}}
-					>
-						{showMoreText}
-					</Text>
+					{showMoreLink ? (
+						<Text
+							td='underline'
+							className={classes.showMore}
+							weight={theme.other.fontWeight.semibold}
+							onClick={() => {
+								setShowMore(!showMore)
+							}}
+						>
+							{showMoreText}
+						</Text>
+					) : null}
 				</Stack>
-				{verifiedUser && (
-					<Group spacing={theme.spacing.xs}>
-						<Icon icon='carbon:checkmark-filled' height={20} color={theme.other.colors.primary.allyGreen} />
-						<Text color={theme.other.colors.secondary.darkGray}>{t('in-reach-verified-reviewer')}</Text>
-					</Group>
-				)}
+				{verifiedUser && <Badge variant='verifiedReviewer' />}
 			</Stack>
 		</Grid.Col>
 	)

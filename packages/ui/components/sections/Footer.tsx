@@ -1,4 +1,4 @@
-import { Title, Grid, Text, Stack, Group, createStyles } from '@mantine/core'
+import { Title, Grid, Text, Stack, Group, createStyles, rem } from '@mantine/core'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
 
@@ -16,21 +16,6 @@ const useStyles = createStyles((theme) => ({
 		...theme.other.utilityFonts.utility4,
 		color: theme.other.colors.secondary.darkGray,
 	},
-	footerContent: {
-		marginTop: '40px',
-		marginBottom: '40px',
-		[theme.fn.smallerThan('sm')]: {
-			marginTop: 0,
-			marginBottom: 0,
-		},
-	},
-	footerStack: {
-		[theme.fn.smallerThan('sm')]: {
-			textAlign: 'center',
-			justifyContent: 'center',
-			alignItems: 'center',
-		},
-	},
 	background: {
 		backgroundColor: theme.other.colors.tertiary.footer,
 		[theme.fn.smallerThan('sm')]: {
@@ -38,7 +23,7 @@ const useStyles = createStyles((theme) => ({
 		},
 	},
 	iconGroup: {
-		maxWidth: '176px',
+		maxWidth: rem(176),
 	},
 }))
 
@@ -75,15 +60,27 @@ export const Footer = () => {
 
 	return (
 		<BodyGrid className={classes.background}>
-			<Grid.Col xs={12} sm={6} className={classes.footerContent} order={3} orderXs={0}>
-				<Stack justify='space-between' style={{ height: '100%' }} className={classes.footerStack}>
-					<Stack align='start' spacing={40} className={classes.footerStack}>
-						<Image src={InReach} alt={t('inreach-logo')} width={100} height={37.53} />
+			<Grid.Col xs={12} sm={6} pl={0}>
+				<Stack justify='space-between' style={{ height: '100%' }}>
+					<Stack align='start' spacing={24}>
+						<Image
+							src={InReach}
+							alt={t('inreach-logo')}
+							width={100}
+							height={37.53}
+							style={{ marginBottom: 0 }}
+						/>
 						<Title order={2} fw={500}>
 							{t('inreach-tagline')}
 						</Title>
-						<a href='https://vercel.com/?utm_source=in-reach&utm_campaign=oss'>
-							<Image src={Vercel} alt={t('powered-by-vercel')} width={240} height={48} />
+						<a href='https://vercel.com/?utm_source=in-reach&utm_campaign=oss' style={{ margin: 0 }}>
+							<Image
+								src={Vercel}
+								alt={t('powered-by-vercel')}
+								width={240}
+								height={48}
+								style={{ marginBottom: 0, marginLeft: -2, marginTop: 8 }}
+							/>
 						</a>
 					</Stack>
 					<Text className={classes.copyrightText}>
@@ -91,20 +88,14 @@ export const Footer = () => {
 					</Text>
 				</Stack>
 			</Grid.Col>
-			<Grid.Col xs={6} sm={3} className={classes.footerContent}>
-				<Stack
-					justify='space-between'
-					style={{ height: '100%' }}
-					align='start'
-					spacing='xl'
-					className={classes.footerStack}
-				>
+			<Grid.Col xs={6} sm={3}>
+				<Stack justify='space-between' style={{ height: '100%' }} align='start' spacing='xl'>
 					<Text fw={600}>{t('Support')}</Text>
 					{support}
 				</Stack>
 			</Grid.Col>
-			<Grid.Col xs={6} sm={3} className={classes.footerContent}>
-				<Stack spacing='xl' className={classes.footerStack}>
+			<Grid.Col xs={6} sm={3} pr={0}>
+				<Stack spacing='xl'>
 					<Text fw={600}>{t('Connect')}</Text>
 					{connect}
 					<Group noWrap className={classes.iconGroup}>

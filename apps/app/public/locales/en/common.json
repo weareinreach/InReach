@@ -83,7 +83,7 @@
 	"unclaimed": "Unclaimed",
 	"user-avatar": "User avatar",
 	"verified-information": "Verified information",
-	"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information at least once every 6 months. For more information on our vetting process, please visit our Verification Process page.",
+	"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information at least once every 6 months.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
 	"view-list": "View list",
 	"view-x-result_one": "View {{count}} result",
 	"view-x-result_other": "View {{count}} results",

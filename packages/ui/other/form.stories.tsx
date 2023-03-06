@@ -24,47 +24,72 @@ const Display = () => {
 		<>
 			<Grid.Col>
 				<Title order={2}>Checkbox</Title>
-				<Checkbox.Group orientation='vertical' defaultValue={['3', '4']}>
-					<Checkbox value='1' checked={false} label='Default' />
-					<Checkbox value='2' checked={false} indeterminate label='Indeterminate' />
-					<Checkbox value='4' checked={true} label='Checked' />
-					<Checkbox value='5' disabled label='Disabled' />
-					<Checkbox value='6' disabled checked label='Disabled checked' />
-					<Checkbox value='7' disabled indeterminate label='Disabled indeterminate' />
-					<Checkbox value='8' label='Hovered' classNames={{ root: 'hover' }} />
+				<Checkbox.Group defaultValue={['3', '4']}>
+					<Stack>
+						<Checkbox value='1' checked={false} label='Default' />
+						<Checkbox value='2' checked={false} indeterminate label='Indeterminate' />
+						<Checkbox value='4' checked={true} label='Checked' />
+						<Checkbox value='5' disabled label='Disabled' />
+						<Checkbox value='6' disabled checked label='Disabled checked' />
+						<Checkbox value='7' disabled indeterminate label='Disabled indeterminate' />
+						<Checkbox value='8' label='Hovered' classNames={{ root: 'hover' }} />
+					</Stack>
 				</Checkbox.Group>
 			</Grid.Col>
 
 			<Grid.Col>
 				<Title order={2}>Radio Buttons</Title>
-				<Radio.Group value='selected' orientation='vertical'>
-					<Radio value='unselected' label='Unselected' />
-					<Radio value='Disabled' label='Disabled' disabled />
-					<Radio value='selected' label='Selected' />
-					<Radio value='hover' label='Hovered' classNames={{ root: 'hover' }} />
+				<Radio.Group value='selected'>
+					<Stack>
+						<Radio value='unselected' label='Unselected' />
+						<Radio value='Disabled' label='Disabled' disabled />
+						<Radio value='selected' label='Selected' />
+						<Radio value='hover' label='Hovered' classNames={{ root: 'hover' }} />
+					</Stack>
 				</Radio.Group>
 			</Grid.Col>
 			<Grid.Col>
 				<Title order={2}>Switch</Title>
 
 				<Switch.Group value={switchVal} onChange={setSwitchVal}>
-					<Switch value='Off' label='Off' />
-					<Switch value='Disabled' label='Disabled' disabled />
-					<Switch value='On' label='On' />
-					<Switch value='Hovered' label='Hovered' classNames={{ root: 'hover' }} />
+					<Stack>
+						<Switch value='Off' label='Off' />
+						<Switch value='Disabled' label='Disabled' disabled />
+						<Switch value='On' label='On' />
+						<Switch value='Hovered' label='Hovered' classNames={{ root: 'hover' }} />
+					</Stack>
 				</Switch.Group>
 			</Grid.Col>
 			<Grid.Col sm={6}>
 				<Title order={2}>Textbox (Single line)</Title>
 
 				<Stack>
-					<TextInput label='Default' placeholder='Placeholder text' />
-					<TextInput label='Focused' placeholder='Placeholder text' classNames={{ root: 'focus' }} />
-					<TextInput label='Disabled' placeholder='Placeholder text' disabled />
-					<TextInput label='Error' error placeholder='Placeholder text' />
+					<TextInput
+						label='Default'
+						placeholder='Placeholder text'
+						description='This is some description text'
+					/>
+					<TextInput
+						label='Focused'
+						placeholder='Placeholder text'
+						classNames={{ root: 'focus' }}
+						description='This is some description text'
+					/>
+					<TextInput
+						label='Disabled'
+						placeholder='Placeholder text'
+						disabled
+						description='This is some description text'
+					/>
+					<TextInput
+						label='Error'
+						placeholder='Placeholder text'
+						description='This is some description text'
+						error='This is some error message text'
+					/>
 				</Stack>
 				<Space h='md' />
-				<Stack>
+				{/* <Stack>
 					<TextInput
 						label='With icon'
 						placeholder='Placeholder text'
@@ -96,16 +121,35 @@ const Display = () => {
 						rightSection={<Clear />}
 						rightSectionWidth='fit-content'
 					/>
-				</Stack>
+				</Stack> */}
 			</Grid.Col>
 
 			<Grid.Col sm={6}>
 				<Title order={2}>Textbox (Multi-line)</Title>
-				<Stack spacing={0}>
-					<Textarea label='Default' placeholder='Placeholder text' />
-					<Textarea label='Focused' placeholder='Placeholder text' classNames={{ root: 'focus' }} />
-					<Textarea label='Disabled' placeholder='Placeholder text' disabled />
-					<Textarea label='Error' placeholder='Placeholder text' error />
+				<Stack>
+					<Textarea
+						label='Default'
+						placeholder='Placeholder text'
+						description='This is some description text'
+					/>
+					<Textarea
+						label='Focused'
+						placeholder='Placeholder text'
+						classNames={{ root: 'focus' }}
+						description='This is some description text'
+					/>
+					<Textarea
+						label='Disabled'
+						placeholder='Placeholder text'
+						disabled
+						description='This is some description text'
+					/>
+					<Textarea
+						label='Error'
+						placeholder='Placeholder text'
+						error='This is some error message text'
+						description='This is some description text'
+					/>
 				</Stack>
 			</Grid.Col>
 		</>

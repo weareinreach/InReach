@@ -1,4 +1,4 @@
-import { Menu, Text, Flex, UnstyledButton, createStyles, UnstyledButtonProps } from '@mantine/core'
+import { Menu, Text, Flex, UnstyledButton, createStyles, UnstyledButtonProps, rem } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { Locale } from 'nextjs-routes'
@@ -25,7 +25,7 @@ const useStyles = createStyles((theme) => ({
 	menuItem: {
 		...theme.other.utilityFonts.utility1,
 		color: `${theme.other.colors.secondary.black} !important`,
-		padding: `16px 32px`,
+		padding: `${rem(16)} ${rem(32)}`,
 	},
 	dropdown: {
 		borderRadius: theme.spacing.sm,

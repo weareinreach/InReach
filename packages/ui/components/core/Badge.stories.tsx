@@ -15,7 +15,16 @@ export default {
 	},
 	argTypes: {
 		variant: {
-			options: ['commmunity', 'service', 'leader', 'verified', 'claimed', 'unclaimed', 'attribute'],
+			options: [
+				'commmunity',
+				'service',
+				'leader',
+				'verified',
+				'claimed',
+				'unclaimed',
+				'attribute',
+				'verifiedUser',
+			],
 			control: 'select',
 		},
 		color: {
@@ -294,6 +303,17 @@ export const Unclaimed = {
 export const PrivatePractice = {
 	args: {
 		variant: 'privatePractice',
+	},
+	parameters: {
+		controls: {
+			include: ['variant'],
+		},
+	},
+} satisfies StoryDef
+
+export const VerifiedReviewer = {
+	args: {
+		variant: 'verifiedReviewer',
 	},
 	parameters: {
 		controls: {
