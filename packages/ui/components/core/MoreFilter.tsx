@@ -205,14 +205,10 @@ export const MoreFilter = ({}) => {
 
 	const generateInitialData = () => {
 		if (!moreFilterOptionData) return {}
-
-		console.log(moreFilterOptionData)
 		const initialValues = moreFilterOptionData.map((filter) => ({
 			...filter,
 			checked: false,
 		}))
-
-		console.log(initialValues)
 		return initialValues
 	}
 
