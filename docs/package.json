@@ -10,6 +10,6 @@
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown ."
 	},
 	"devDependencies": {
-		"@weareinreach/config": "workspace:0.100.0"
+		"@weareinreach/config": "0.100.0"
 	}
 }

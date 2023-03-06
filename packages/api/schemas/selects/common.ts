@@ -9,6 +9,11 @@ export const freeText = {
 	select: {
 		key: true,
 		ns: true,
+		tsKey: {
+			select: {
+				text: true,
+			},
+		},
 	},
 } satisfies Prisma.FreeTextArgs
 
