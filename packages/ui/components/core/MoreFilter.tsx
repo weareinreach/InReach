@@ -206,13 +206,13 @@ export const MoreFilter = ({}) => {
 	const generateInitialData = () => {
 		if (!moreFilterOptionData) return {}
 
-		console.log(moreFilterOptionData) //'filterType' matches mock data
+		console.log(moreFilterOptionData)
 		const initialValues = moreFilterOptionData.map((filter) => ({
 			...filter,
 			checked: false,
 		}))
 
-		console.log(initialValues) //shows a different value for filterType than what is in the mockdata file.....what is changing it?
+		console.log(initialValues)
 		return initialValues
 	}
 
@@ -229,12 +229,11 @@ export const MoreFilter = ({}) => {
 
 	const formObjectEntryArray = Object.entries(form.values)
 	const filterListIncludes = formObjectEntryArray.map((filter, index) => {
-		if ((filter[1].filterType = 'INCLUDE'))
-			//if logic not working, why are extra parens added here after saving? also Tried wrapping the return in {}, did not help
+		if (filter[1].filterType === 'INCLUDE')
 			return (
 				<Checkbox
 					className={classes.itemChild}
-					label={filter[1].tsKey}
+					label={t(filter[1].tsKey, { ns: 'attribute' })}
 					key={filter[1].id}
 					{...form.getInputProps(`${index}.checked`, { type: 'checkbox' })}
 				/>
@@ -242,12 +241,11 @@ export const MoreFilter = ({}) => {
 	})
 
 	const filterListExcludes = formObjectEntryArray.map((filter, index) => {
-		if ((filter[1].filterType = 'EXCLUDE'))
-			//if logic not working, why are extra parens added here after saving? also Tried wrapping the return in {}, did not help
+		if (filter[1].filterType === 'EXCLUDE')
 			return (
 				<Checkbox
 					className={classes.itemChild}
-					label={filter[1].tsKey}
+					label={t(filter[1].tsKey, { ns: 'attribute' })}
 					key={filter[1].id}
 					{...form.getInputProps(`${index}.checked`, { type: 'checkbox' })}
 				/>
@@ -310,11 +308,11 @@ export const MoreFilter = ({}) => {
 						maxHeight={`${scrollAreaMaxHeight}px`}
 					>
 						<div className={classes.sectionLabel}>
-							<Text>INCLUDE</Text>
+							<Text>{t('include')}</Text>
 							{filterListIncludes}
 						</div>
 						<div className={classes.sectionLabel}>
-							<Text>EXCLUDE</Text>
+							<Text>{t('exclude')}</Text>
 							{filterListExcludes}
 						</div>
 					</ScrollArea.Autosize>

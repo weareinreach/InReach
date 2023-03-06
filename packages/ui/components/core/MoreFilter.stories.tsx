@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react'
 
 import { StorybookGrid } from '~ui/layouts/BodyGrid'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { moreFilterMock } from '~ui/mockData/moreFilterNew'
+import { moreFilterMock } from '~ui/mockData/moreFilter'
 
 import { MoreFilter } from './MoreFilter'
 
