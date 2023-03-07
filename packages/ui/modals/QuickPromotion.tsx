@@ -1,19 +1,20 @@
-import { createStyles, Group, List, Text, useMantineTheme, rem, em } from '@mantine/core'
-import { useMediaQuery, useViewportSize } from '@mantine/hooks'
+import { createStyles, Group, Text, rem } from '@mantine/core'
 import { openContextModal } from '@mantine/modals'
 import { ContextModalProps } from '@mantine/modals/lib/context'
-import Link from 'next/link'
-import { signIn } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
 import { Button } from '~ui/components/core'
 
+import { openLoginModal } from './Login'
 import { ModalTitle, ModalTitleProps } from './ModalTitle'
+import { openSignUpModal } from './SignUp'
+import { Link } from '../components/core/Link'
 
 const useStyles = createStyles((theme) => ({
 	container: {
 		flexDirection: 'column',
 		marginTop: rem(40),
+		textAlign: 'center',
 	},
 	heading1: {
 		...theme.other.utilityFonts.utility1,
@@ -34,7 +35,7 @@ const useStyles = createStyles((theme) => ({
 	},
 	button: {
 		marginTop: rem(24),
-		width: '95%',
+		width: '100%',
 	},
 	link: {
 		marginTop: rem(34),
@@ -45,22 +46,33 @@ const useStyles = createStyles((theme) => ({
 export const QuickPromotionModalBody = ({ context, id, innerProps }: ContextModalProps<{}>) => {
 	const { t } = useTranslation(['common'])
 	const { classes } = useStyles()
-	const theme = useMantineTheme()
 
 	return (
 		<Group position='center' className={classes.container}>
 			<Text className={classes.heading1}>🌈</Text>
-			<Text className={classes.heading2}>You need to log in to save resources.</Text>
-			<Text className={classes.heading3}>
-				With a free InReach account you can unlock additional features:
-			</Text>
-			<Text className={classes.body}>💚 Save and share personalized resource lists</Text>
-			<Text className={classes.body}>💬 Leave public rating/reviews on organizations</Text>
-			<Text className={classes.body}>🏠 Suggest organizations in your area</Text>
-			<Text className={classes.body}>🔗 Claim your organization’s profile page</Text>
-			<Button className={classes.button}>Log in</Button>
-			<Link href='/' onClick={() => {}} onMouseEnter={() => {}} onTouchStart={() => {}}>
-				Don’t have an account?
+			<Text className={classes.heading2}>{t('quick-promo-heading2', { ns: 'common' })}</Text>
+			<Text className={classes.heading3}>{t('quick-promo-heading3', { ns: 'common' })}</Text>
+			<Text className={classes.body}>{t('quick-promo-body1', { ns: 'common' })}</Text>
+			<Text className={classes.body}>{t('quick-promo-body2', { ns: 'common' })}</Text>
+			<Text className={classes.body}>{t('quick-promo-body3', { ns: 'common' })}</Text>
+			<Text className={classes.body}>{t('quick-promo-body4', { ns: 'common' })}</Text>
+			<Button
+				className={classes.button}
+				onClick={() => {
+					openLoginModal()
+				}}
+			>
+				{t('log-in', { ns: 'common' })}
+			</Button>
+			<Link
+				href='/'
+				onClick={() => {
+					openSignUpModal()
+				}}
+				onMouseEnter={() => {}}
+				onTouchStart={() => {}}
+			>
+				{t('dont-have-account', { ns: 'common' })}
 			</Link>
 		</Group>
 	)
