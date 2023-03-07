@@ -36,7 +36,7 @@ export const DeleteModalBody = ({ context, id, innerProps }: ContextModalProps<{
 	const { t } = useTranslation(['common'])
 	const { classes } = useStyles()
 	const deleteAccount = async (email: string, password: string) => {
-		//TODO: add delete action here
+		//TODO: [IN-784] add delete action here
 		console.log('called delete account')
 	}
 
@@ -46,7 +46,7 @@ export const DeleteModalBody = ({ context, id, innerProps }: ContextModalProps<{
 			<Text className={classes.subHeading}>{t('delete-account-password', { ns: 'common' })}</Text>
 			<TextInput
 				label={t('password', { ns: 'common' })}
-				placeholder={t('enter-password-placeholder', { ns: 'common' })}
+				placeholder={t('enter-password-placeholder', { ns: 'common' }) ?? ''}
 				required
 				className={classes.input}
 			/>
@@ -72,7 +72,7 @@ export const DeleteModalBody = ({ context, id, innerProps }: ContextModalProps<{
 
 const modalTitle = <ModalTitle breadcrumb={{ option: 'close' }} />
 
-export const openDeleteModalBody = () =>
+export const openDeleteAccountModal = () =>
 	openContextModal({
 		modal: 'delete',
 		title: modalTitle,
