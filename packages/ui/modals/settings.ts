@@ -5,10 +5,12 @@ import { FC } from 'react'
 import { commonTheme as theme } from '~ui/theme'
 
 import { LoginModalBody } from './Login'
+import { QuickPromotionModalBody } from './QuickPromotion'
 import { SignUpModalBody } from './SignUp'
 
 const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
 	login: LoginModalBody,
+	quickPromotion: QuickPromotionModalBody,
 	signup: SignUpModalBody,
 } as const
 
