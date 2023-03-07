@@ -6,12 +6,14 @@ import { commonTheme as theme } from '~ui/theme'
 
 import { LoginModalBody } from './Login'
 import { QuickPromotionModalBody } from './QuickPromotion'
+import { ReviewModalBody } from './Review'
 import { SignUpModalBody } from './SignUp'
 
 const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
 	login: LoginModalBody,
 	quickPromotion: QuickPromotionModalBody,
 	signup: SignUpModalBody,
+	review: ReviewModalBody,
 } as const
 
 export const useModalProps = () => {
