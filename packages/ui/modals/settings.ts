@@ -4,12 +4,14 @@ import { FC } from 'react'
 
 import { commonTheme as theme } from '~ui/theme'
 
+import { DeleteModalBody } from './DeleteModal'
 import { LoginModalBody } from './Login'
 import { SignUpModalBody } from './SignUp'
 
 const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
 	login: LoginModalBody,
 	signup: SignUpModalBody,
+	delete: DeleteModalBody,
 } as const
 
 export const useModalProps = () => {
