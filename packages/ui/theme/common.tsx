@@ -45,7 +45,6 @@ import type {
 	InputStylesNames,
 	InputStylesParams,
 	GridProps,
-	Variants,
 } from '@mantine/core'
 import type React from 'react'
 
@@ -188,6 +187,24 @@ export const commonTheme = {
 					color: theme.other.colors.secondary.cornflower,
 					radius: 'xl',
 				} satisfies ActionIconProps),
+		},
+		Anchor: {
+			styles: (theme) => ({
+				root: {
+					// color: `${theme.other.colors.secondary.black} !important`,
+					paddingBottom: theme.spacing.sm,
+					paddingTop: theme.spacing.sm,
+					paddingLeft: theme.spacing.xs,
+					paddingRight: theme.spacing.xs,
+					borderRadius: theme.spacing.sm,
+					textDecoration: 'underline !important',
+					...theme.other.utilityFonts.utility1,
+					'&:hover': {
+						backgroundColor: theme.other.colors.primary.lightGray,
+						textDecoration: 'none !important',
+					},
+				},
+			}),
 		},
 		Avatar: {
 			defaultProps: {
@@ -730,6 +747,49 @@ export const commonTheme = {
 				color: theme.other.colors.secondary.black,
 				size: 'md',
 			}),
+			variants: {
+				utility1: (theme) => ({
+					root: theme.other.utilityFonts.utility1,
+				}),
+				utility2: (theme) => ({
+					root: theme.other.utilityFonts.utility2,
+				}),
+				utility3: (theme) => ({
+					root: theme.other.utilityFonts.utility3,
+				}),
+				utility4: (theme) => ({
+					root: theme.other.utilityFonts.utility4,
+				}),
+				utility1darkGray: (theme) => ({
+					root: {
+						...theme.other.utilityFonts.utility1,
+						color: theme.other.colors.secondary.darkGray,
+					},
+				}),
+				utility2darkGray: (theme) => ({
+					root: {
+						...theme.other.utilityFonts.utility2,
+						color: theme.other.colors.secondary.darkGray,
+					},
+				}),
+				utility3darkGray: (theme) => ({
+					root: {
+						...theme.other.utilityFonts.utility3,
+						color: theme.other.colors.secondary.darkGray,
+					},
+				}),
+				utility4darkGray: (theme) => ({
+					root: {
+						...theme.other.utilityFonts.utility4,
+						color: theme.other.colors.secondary.darkGray,
+					},
+				}),
+				darkGray: (theme) => ({
+					root: {
+						color: theme.other.colors.secondary.darkGray,
+					},
+				}),
+			},
 		},
 		Textarea: {
 			defaultProps: {} satisfies TextareaProps,

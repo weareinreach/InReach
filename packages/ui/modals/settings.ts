@@ -17,7 +17,7 @@ const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
 } as const
 
 export const useModalProps = () => {
-	const isMobile = useMediaQuery(`max-width: ${theme.breakpoints.sm}px`)
+	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
 	return {
 		modalProps: {
