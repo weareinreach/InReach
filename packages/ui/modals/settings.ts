@@ -5,11 +5,13 @@ import { FC } from 'react'
 import { commonTheme as theme } from '~ui/theme'
 
 import { LoginModalBody } from './Login'
+import { ReviewModalBody } from './Review'
 import { SignUpModalBody } from './SignUp'
 
 const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
 	login: LoginModalBody,
 	signup: SignUpModalBody,
+	review: ReviewModalBody,
 } as const
 
 export const useModalProps = () => {
