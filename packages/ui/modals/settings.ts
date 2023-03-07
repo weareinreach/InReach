@@ -4,6 +4,7 @@ import { FC } from 'react'
 
 import { commonTheme as theme } from '~ui/theme'
 
+import { DeleteModalBody } from './DeleteModal'
 import { LoginModalBody } from './Login'
 import { QuickPromotionModalBody } from './QuickPromotion'
 import { ReviewModalBody } from './Review'
@@ -13,6 +14,7 @@ const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
 	login: LoginModalBody,
 	quickPromotion: QuickPromotionModalBody,
 	signup: SignUpModalBody,
+	delete: DeleteModalBody,
 	review: ReviewModalBody,
 } as const
 
