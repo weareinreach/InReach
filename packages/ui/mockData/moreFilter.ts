@@ -1,3 +1,5 @@
+import { ApiOutput } from '@weareinreach/api'
+
 export const moreFilterMock = [
 	{
 		id: 'cle6jfyrj000mag9kg9wr8v77',
@@ -47,4 +49,4 @@ export const moreFilterMock = [
 		tsNs: 'attribute',
 		filterType: 'EXCLUDE',
 	},
-]
+] satisfies ApiOutput['attribute']['getFilterOptions']

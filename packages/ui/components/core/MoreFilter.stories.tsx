@@ -20,7 +20,7 @@ export default {
 				getTRPCMock({
 					path: ['attribute', 'getFilterOptions'],
 					type: 'query',
-					response: [...moreFilterMock],
+					response: moreFilterMock,
 				}),
 			],
 		},

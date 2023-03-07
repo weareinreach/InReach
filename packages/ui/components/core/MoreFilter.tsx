@@ -1,5 +1,4 @@
 import {
-	Accordion,
 	Checkbox,
 	createStyles,
 	Group,
@@ -12,17 +11,17 @@ import {
 	ScrollArea,
 	useMantineTheme,
 	Skeleton,
-	filterProps,
+	rem,
+	em,
+	Stack,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
-import { boolean } from 'zod'
 
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
-import { useModalProps } from '~ui/modals'
 
 import { Button } from './Button'
 
@@ -33,20 +32,20 @@ const useAccordionStyles = createStyles((theme) => ({
 		...theme.other.utilityFonts.utility1,
 	},
 	content: {
-		padding: '0px 0px 12px 0px',
+		padding: `${rem(0)} ${rem(0)} ${rem(12)} ${rem(0)}`,
 	},
 	item: {
 		margin: 0,
 		'&:last-of-type': {
-			marginBottom: '40px',
+			marginBottom: rem(40),
 		},
 	},
 	chevron: { '&[data-rotate]': { transform: 'rotate(90deg)' } },
 	scrollArea: {
-		paddingRight: '12px',
+		paddingRight: rem(12),
 	},
 	control: {
-		padding: '12px 0px',
+		padding: `${rem(12)} ${rem(0)}`,
 	},
 	panel: {
 		padding: 0,
@@ -55,39 +54,45 @@ const useAccordionStyles = createStyles((theme) => ({
 
 const useModalStyles = createStyles((theme) => ({
 	body: {
-		padding: '10px 4px 10px 16px',
+		padding: `${rem(10)} ${rem(4)} ${rem(10)} ${rem(16)}`,
 		[theme.fn.largerThan('xs')]: {
-			padding: '40px 8px 20px 20px',
+			padding: `${rem(40)} ${rem(8)} ${rem(20)} ${rem(20)}`,
 		},
 		[theme.fn.largerThan('sm')]: {
-			padding: '40px 20px 20px 32px',
+			padding: `${rem(40)} ${rem(20)} ${rem(20)} ${rem(32)}`,
 		},
 		[theme.fn.smallerThan('sm')]: {
 			maxHeight: 'none',
-			padding: '10px 8px 40px 20px',
+			padding: `${rem(10)} ${rem(9)} ${rem(30)} ${rem(20)}`,
 		},
-		[`@media (orientation: landscape) and (max-height: 376px)`]: {
-			paddingBottom: '20px',
+		[`@media (orientation: landscape) and (max-height: ${em(376)})`]: {
+			paddingBottom: rem(20),
 		},
-		[`@media (orientation: landscape) and (max-height: 430px)`]: {
+		[`@media (orientation: landscape) and (max-height: ${em(430)})`]: {
 			maxHeight: 'none',
-			paddingTop: '20px',
+			paddingTop: rem(20),
+		},
+		'&:not(:only-child)': {
+			paddingTop: rem(10),
+			[theme.fn.largerThan('sm')]: {
+				paddingTop: rem(40),
+			},
 		},
 	},
 	title: {
-		padding: '8px 0px 8px 8px',
+		padding: `${rem(8)} ${rem(0)} ${rem(8)} ${rem(8)}`,
 		width: '100%',
 	},
 	header: {},
 	modal: {},
 	footer: {
-		borderTop: 'solid 1px' + theme.other.colors.primary.lightGray,
-		padding: '20px 12px 0px 0px',
+		borderTop: `solid ${rem(1)} ${theme.other.colors.primary.lightGray}`,
+		padding: `${rem(20)} ${rem(12)} ${rem(0)} ${rem(0)}`,
 		[theme.fn.smallerThan('sm')]: {
-			padding: '32px 12px 0px 0px',
+			padding: `${rem(32)} ${rem(12)} ${rem(0)} ${rem(0)}`,
 		},
-		[`${theme.fn.smallerThan(375)}, (orientation: landscape) and (max-height: 376px)`]: {
-			paddingTop: '20px',
+		[`${theme.fn.smallerThan(em(375))}, (orientation: landscape) and (max-height: ${em(376)})`]: {
+			paddingTop: rem(20),
 		},
 	},
 }))
@@ -102,8 +107,8 @@ const useStyles = createStyles((theme) => ({
 		background: theme.other.colors.secondary.black,
 		borderRadius: '100%',
 		color: theme.other.colors.secondary.white,
-		width: 24,
-		height: 24,
+		width: rem(24),
+		height: rem(24),
 		textAlign: 'center',
 		display: 'inline-block',
 		verticalAlign: 'center',
@@ -111,15 +116,17 @@ const useStyles = createStyles((theme) => ({
 	},
 
 	button: {
-		padding: '14px 20px 14px 16px',
+		padding: `${rem(14)} ${rem(20)} ${rem(14)} ${rem(16)}`,
 		backgroundColor: theme.other.colors.secondary.white,
-		borderRadius: '8px',
-		border: `${theme.other.colors.tertiary.coolGray} 1px solid`,
+		borderRadius: rem(8),
+		border: `${theme.other.colors.tertiary.coolGray} ${rem(1)} solid`,
 	},
 
 	itemParent: {},
 	itemChild: {
-		marginLeft: '40px',
+		'&:last-of-type': {
+			marginBottom: rem(40),
+		},
 	},
 	uncheck: {
 		color: theme.other.colors.secondary.black,
@@ -130,81 +137,82 @@ const useStyles = createStyles((theme) => ({
 			color: theme.other.colors.secondary.black,
 			cursor: 'pointer',
 		},
-		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${
-			theme.breakpoints.xs
-		}px)`]: {
-			display: 'none',
-		},
+		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${theme.breakpoints.xs})`]:
+			{
+				display: 'none',
+			},
 	},
 	uncheckDisabled: {
 		textDecoration: 'underline',
 		color: theme.other.colors.secondary.darkGray,
-		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${
-			theme.breakpoints.xs
-		}px)`]: {
-			display: 'none',
-		},
+		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${theme.breakpoints.xs})`]:
+			{
+				display: 'none',
+			},
 	},
 	uncheckBtn: {
 		width: '50%',
-		borderRadius: '8px',
-		padding: '6px 8px',
+		borderRadius: rem(8),
+		padding: `${rem(6)} ${rem(8)}`,
 		[theme.fn.largerThan('sm')]: {
 			display: 'none',
 		},
-		[theme.fn.smallerThan(375)]: {
+		[theme.fn.smallerThan(em(375))]: {
 			marginRight: 'unset',
 			'& *': {
-				fontSize: '14px !important',
+				fontSize: `${rem(14)} !important`,
 			},
 		},
+		height: rem(48),
 	},
 	resultsBtn: {
-		borderRadius: '8px',
+		borderRadius: rem(8),
 		[theme.fn.smallerThan('sm')]: {
 			width: '50%',
-			padding: '6px 8px',
+			padding: `${rem(6)} ${rem(8)}`,
 		},
-		[theme.fn.smallerThan(375)]: {
+		[theme.fn.smallerThan(em(375))]: {
 			marginLeft: 'unset',
 			'& *': {
-				fontSize: '14px !important',
+				fontSize: `${rem(14)} !important`,
 			},
 		},
 		width: '100%',
+		height: rem(48),
 	},
 	sectionLabel: {
-		...theme.headings.sizes.h3,
-		marginTop: 24,
+		// ...theme.headings.sizes.h3,
+		marginTop: rem(24),
 	},
 }))
 
 export const MoreFilter = ({}) => {
 	const { data: moreFilterOptionData, status } = api.attribute.getFilterOptions.useQuery()
-	const { classes, cx } = useStyles()
+	const { classes } = useStyles()
 	const { classes: accordionClasses } = useAccordionStyles()
 	const { classes: modalClasses } = useModalStyles()
 	const { t } = useTranslation(['common', 'attribute'])
 	const [opened, setOpened] = useState(false)
-	const modalSettings = useModalProps()
 	const theme = useMantineTheme()
 
-	const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`)
-	const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: 430px)`)
+	const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
+	const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: ${em(430)})`)
 	const isSmallLandscape = useMediaQuery(
-		`(orientation: landscape) and (max-height: 376px) and (max-width: ${theme.breakpoints.xs}px)`
+		`(orientation: landscape) and (max-height: ${em(376)}) and (max-width: ${theme.breakpoints.xs})`
 	)
 	const isMobile = isMobileQuery || isLandscape
 	const viewportHeight = useViewportSize().height + (isLandscape ? (isSmallLandscape ? 40 : 20) : 0)
-	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 : viewportHeight * 0.6 - 88
+	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
 
 	/** TODO: Results will be filtered live as items are selected - need to update the count of results left */
 	const resultCount = RESULT_PLACEHOLDER
 
-	const form = useForm()
+	type AttributeFilter = NonNullable<typeof moreFilterOptionData>[number]
+	type FilterValue = AttributeFilter & { checked: boolean }
 
+	const form = useForm<FilterValue[]>({ initialValues: [] })
 	const generateInitialData = () => {
-		if (!moreFilterOptionData) return {}
+		if (!moreFilterOptionData) return []
 		const initialValues = moreFilterOptionData.map((filter) => ({
 			...filter,
 			checked: false,
@@ -217,36 +225,43 @@ export const MoreFilter = ({}) => {
 			const initialValues = generateInitialData()
 			form.setValues(initialValues)
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [moreFilterOptionData, status])
 
 	if (!moreFilterOptionData) return <Skeleton height={48} width='100%' radius='xs' />
 
 	const deselectAll = () => form.setValues(generateInitialData())
 
-	const formObjectEntryArray = Object.entries(form.values)
-	const filterListIncludes = formObjectEntryArray.map((filter, index) => {
-		if (filter[1].filterType === 'INCLUDE')
-			return (
-				<Checkbox
-					className={classes.itemChild}
-					label={t(filter[1].tsKey, { ns: 'attribute' })}
-					key={filter[1].id}
-					{...form.getInputProps(`${index}.checked`, { type: 'checkbox' })}
-				/>
-			)
-	})
+	const filterListInclude: JSX.Element[] = []
+	const filterListExclude: JSX.Element[] = []
 
-	const filterListExcludes = formObjectEntryArray.map((filter, index) => {
-		if (filter[1].filterType === 'EXCLUDE')
-			return (
-				<Checkbox
-					className={classes.itemChild}
-					label={t(filter[1].tsKey, { ns: 'attribute' })}
-					key={filter[1].id}
-					{...form.getInputProps(`${index}.checked`, { type: 'checkbox' })}
-				/>
-			)
-	})
+	console.log(form.values)
+	for (const [i, filter] of Object.entries(form.values)) {
+		switch (filter.filterType) {
+			case 'INCLUDE': {
+				filterListInclude.push(
+					<Checkbox
+						// className={classes.itemChild}
+						label={t(filter.tsKey, { ns: 'attribute' })}
+						key={filter.id}
+						{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
+					/>
+				)
+				break
+			}
+			case 'EXCLUDE': {
+				filterListExclude.push(
+					<Checkbox
+						className={classes.itemChild}
+						label={t(filter.tsKey, { ns: 'attribute' })}
+						key={filter.id}
+						{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
+					/>
+				)
+				break
+			}
+		}
+	}
 
 	const selectedItems = (function () {
 		const selected: string[] = []
@@ -287,32 +302,28 @@ export const MoreFilter = ({}) => {
 	return (
 		<>
 			<Modal
-				{...modalSettings}
 				opened={opened}
 				onClose={() => setOpened(false)}
 				title={<TitleBar modalTitle />}
 				fullScreen={isMobile}
 				classNames={modalClasses}
+				scrollAreaComponent={Modal.NativeScrollArea}
 			>
-				<Accordion
-					chevron={<Icon icon='carbon:chevron-right' />}
-					transitionDuration={0}
-					classNames={accordionClasses}
-				>
+				<Stack spacing={24} pb={12}>
 					<ScrollArea.Autosize
 						classNames={{ viewport: accordionClasses.scrollArea }}
-						maxHeight={`${scrollAreaMaxHeight}px`}
+						mah={scrollAreaMaxHeight}
 					>
-						<div className={classes.sectionLabel}>
-							<Text>{t('include')}</Text>
-							{filterListIncludes}
-						</div>
-						<div className={classes.sectionLabel}>
-							<Text>{t('exclude')}</Text>
-							{filterListExcludes}
-						</div>
+						<Stack className={classes.sectionLabel} spacing={4} mt={0}>
+							<Title order={3}>{t('include')}</Title>
+							{filterListInclude}
+						</Stack>
+						<Stack className={classes.sectionLabel} spacing={4}>
+							<Title order={3}>{t('exclude')}</Title>
+							{filterListExclude}
+						</Stack>
 					</ScrollArea.Autosize>
-				</Accordion>
+				</Stack>
 				<Group className={modalClasses.footer} noWrap>
 					<Button
 						variant='secondary'

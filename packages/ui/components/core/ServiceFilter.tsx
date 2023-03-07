@@ -187,7 +187,6 @@ export const ServiceFilter = ({}) => {
 	const { classes: modalClasses } = useModalStyles()
 	const { t } = useTranslation(['common', 'services'])
 	const [opened, setOpened] = useState(false)
-	const modalSettings = useModalProps()
 	const theme = useMantineTheme()
 
 	const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
