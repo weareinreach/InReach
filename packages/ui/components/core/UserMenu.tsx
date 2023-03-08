@@ -98,7 +98,6 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 				</Menu>
 				<Text
 					component={Link}
-					href='/'
 					className={classes.navText}
 					style={{ visibility: isLoading ? 'hidden' : undefined }}
 					onClick={(e) => {
