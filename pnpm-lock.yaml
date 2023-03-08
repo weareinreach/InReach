@@ -7082,33 +7082,6 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/core-common/7.0.0-beta.63:
-    resolution: {integrity: sha512-gzmk7dCBCEyS91glkJouNDQGFDhjhx9ALpGoiNekgb7X3dPklR84bxqY+mbqUqDi7n9qx8WLFuW94pFUxoN2lA==}
-    dependencies:
-      '@storybook/node-logger': 7.0.0-beta.63
-      '@storybook/types': 7.0.0-beta.63
-      '@types/node': 16.18.12
-      '@types/pretty-hrtime': 1.0.1
-      chalk: 4.1.2
-      esbuild: 0.16.17
-      esbuild-register: 3.4.2_esbuild@0.16.17
-      file-system-cache: 2.0.2
-      find-up: 5.0.0
-      fs-extra: 11.1.0
-      glob: 8.1.0
-      glob-promise: 6.0.2_glob@8.1.0
-      handlebars: 4.7.7
-      lazy-universal-dotenv: 4.0.0
-      picomatch: 2.3.1
-      pkg-dir: 5.0.0
-      pretty-hrtime: 1.0.3
-      resolve-from: 5.0.0
-      slash: 3.0.0
-      ts-dedent: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@storybook/core-events/6.5.16:
     resolution: {integrity: sha512-qMZQwmvzpH5F2uwNUllTPg6eZXr2OaYZQRRN8VZJiuorZzDNdAFmiVWMWdkThwmyLEJuQKXxqCL8lMj/7PPM+g==}
     dependencies:
@@ -7209,22 +7182,6 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/csf-tools/7.0.0-beta.63:
-    resolution: {integrity: sha512-0c4UXI4XEEGz3aFmRzrMrvZ5c84rCaURcruVRT4K8fuexNEJ6K8qnWV71S1Scd+YmJUvc0AxHlrr4P9oBrL8Pg==}
-    dependencies:
-      '@babel/generator': 7.21.1
-      '@babel/parser': 7.21.2
-      '@babel/traverse': 7.21.2
-      '@babel/types': 7.21.2
-      '@storybook/csf': 0.0.2-next.10
-      '@storybook/types': 7.0.0-beta.63
-      fs-extra: 11.1.0
-      recast: 0.23.1
-      ts-dedent: 2.2.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@storybook/csf/0.0.1:
     resolution: {integrity: sha512-USTLkZze5gkel8MYCujSRBVIrUQ3YPBrLOx7GNk/0wttvVtlzWXAq9eLbQ4p/NicGxP+3T7KPEMVV//g+yubpw==}
     dependencies:
@@ -7269,16 +7226,6 @@ packages:
 
   /@storybook/global/5.0.0:
     resolution: {integrity: sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ==}
-    dev: true
-
-  /@storybook/instrumenter/7.0.0-beta.63:
-    resolution: {integrity: sha512-qED2rr5beGxczttNpT51H3o6yBgTuqp9UTLnpZsvnMwDH5QLkdl1LOrGPre4AAUclWYgK4E5jx8ykM6/FqzCvA==}
-    dependencies:
-      '@storybook/channels': 7.0.0-beta.63
-      '@storybook/client-logger': 7.0.0-beta.63
-      '@storybook/core-events': 7.0.0-beta.63
-      '@storybook/global': 5.0.0
-      '@storybook/preview-api': 7.0.0-beta.63
     dev: true
 
   /@storybook/instrumenter/7.0.0-beta.63:
@@ -7712,15 +7659,6 @@ packages:
       memoizerific: 1.11.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-    dev: true
-
-  /@storybook/types/7.0.0-beta.63:
-    resolution: {integrity: sha512-qb6fAbHgVFYG3lgOI55Orj+3IFGw66dA2j6B6zrak7NG+ZESVYLiHF3ubWAdEiNJjoBXEZpUkfjDKUnsXFPLzw==}
-    dependencies:
-      '@storybook/channels': 7.0.0-beta.63
-      '@types/babel__core': 7.20.0
-      '@types/express': 4.17.17
-      file-system-cache: 2.0.2
     dev: true
 
   /@storybook/types/7.0.0-beta.63:
