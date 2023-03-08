@@ -19,7 +19,18 @@ export const Anchor = {
 			textDecoration: 'none !important',
 			'&:hover': {
 				backgroundColor: 'transparent !important',
-				textDecoration: 'underline',
+				textDecoration: 'underline !important',
+			},
+		},
+	}),
+	inlineInvertedUtil1: (theme) => ({
+		root: {
+			padding: '0 !important',
+			textDecoration: 'none !important',
+			...theme.other.utilityFonts.utility1,
+			'&:hover': {
+				backgroundColor: 'transparent !important',
+				textDecoration: 'underline !important',
 			},
 		},
 	}),

@@ -327,8 +327,12 @@ export const commonTheme = {
 				} satisfies Styles<CheckboxStylesNames, CheckboxStylesParams>),
 		},
 		Container: {
+			defaultProps: {
+				maw: em(1440),
+			},
 			styles: (theme) => ({
 				root: {
+					margin: '0 auto',
 					padding: `${rem(0)} ${rem(20)}`,
 					[theme.fn.largerThan('xs')]: {
 						padding: `${rem(0)} ${rem(32)}`,
@@ -348,13 +352,11 @@ export const commonTheme = {
 				gutter: 20,
 				gutterXl: 40,
 				justify: 'center',
-				maw: em(1440),
 				my: 0,
 			} satisfies Partial<GridProps>,
 		},
 		GridCol: {
 			defaultProps: {
-				span: 12,
 				xs: 6,
 				sm: 4,
 			} satisfies ColProps,

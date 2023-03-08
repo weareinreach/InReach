@@ -14,6 +14,7 @@ export const variantNames: VariantNames = {
 	Anchor: {
 		inline: 'inline',
 		inlineInverted: 'inlineInverted',
+		inlineInvertedUtil1: 'inlineInvertedUtil1',
 	},
 	Badge: {
 		community: 'community',

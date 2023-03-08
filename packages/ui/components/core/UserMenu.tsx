@@ -4,7 +4,6 @@ import { useTranslation } from 'next-i18next'
 
 import { Button } from '~ui/components/core/Button'
 import { LangPicker } from '~ui/components/core/LangPicker'
-import { Link } from '~ui/components/core/Link'
 import { openLoginModal } from '~ui/modals/Login'
 import { openSignUpModal } from '~ui/modals/SignUp'
 
@@ -49,10 +48,6 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 	const { data: session, status } = useSession()
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 
-	// if (status === 'loading' && !session) {
-	// 	return <UserAvatar useLoggedIn />
-	// }
-
 	const isLoading = status === 'loading'
 
 	if ((session?.user && status === 'authenticated') || isLoading) {
@@ -96,17 +91,18 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 						</Menu.Item>
 					</Menu.Dropdown>
 				</Menu>
-				<Text
-					component={Link}
-					className={classes.navText}
-					style={{ visibility: isLoading ? 'hidden' : undefined }}
-					onClick={(e) => {
-						e.preventDefault()
-						signOut()
-					}}
-				>
-					{t('log-out')}
-				</Text>
+				<UnstyledButton>
+					<Text
+						className={classes.navText}
+						style={{ visibility: isLoading ? 'hidden' : undefined }}
+						onClick={(e) => {
+							e.preventDefault()
+							signOut()
+						}}
+					>
+						{t('log-out')}
+					</Text>
+				</UnstyledButton>
 			</Group>
 		)
 	}
