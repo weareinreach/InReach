@@ -24,12 +24,12 @@ const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
 export const WithMantine = (Story: StoryFn) => {
 	return (
 		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
-			<TypographyStylesProvider>
-				<ModalsProvider {...useModalProps()}>
-					<Notifications />
-					<Story />
-				</ModalsProvider>
-			</TypographyStylesProvider>
+			{/* <TypographyStylesProvider> */}
+			<ModalsProvider {...useModalProps()}>
+				<Notifications />
+				<Story />
+			</ModalsProvider>
+			{/* </TypographyStylesProvider> */}
 		</MantineProvider>
 	)
 }

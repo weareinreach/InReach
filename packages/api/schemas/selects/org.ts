@@ -66,38 +66,51 @@ export const hoursSelect = {
 	},
 } satisfies Prisma.Organization$hoursArgs | Prisma.OrgLocation$hoursArgs
 export const orgEmailInclude = {
-	where: isPublic,
+	where: { email: isPublic },
 	select: {
-		title: {
+		email: {
 			select: {
-				tsKey: true,
-				tsNs: true,
+				title: {
+					select: {
+						tsKey: true,
+						tsNs: true,
+					},
+				},
+				firstName: true,
+				lastName: true,
+				email: true,
+				legacyDesc: true,
+				description: freeText,
+				primary: true,
 			},
 		},
-		firstName: true,
-		lastName: true,
-		email: true,
-		legacyDesc: true,
-		description: freeText,
 	},
 } satisfies Prisma.OrgService$emailsArgs | Prisma.Organization$emailsArgs | Prisma.OrgLocation$emailsArgs
 
 export const orgPhoneInclude = {
+	where: {
+		phone: isPublic,
+	},
+
 	select: {
-		country: {
+		phone: {
 			select: {
-				flag: true,
-				dialCode: true,
-				cca2: true,
-				tsKey: true,
-				tsNs: true,
+				country: {
+					select: {
+						flag: true,
+						dialCode: true,
+						cca2: true,
+						tsKey: true,
+						tsNs: true,
+					},
+				},
+				phoneType: true,
+				number: true,
+				ext: true,
+				primary: true,
+				locationOnly: true,
 			},
 		},
-		phoneType: true,
-		number: true,
-		ext: true,
-		primary: true,
-		locationOnly: true,
 	},
 } satisfies Prisma.Organization$phonesArgs | Prisma.OrgLocation$phonesArgs
 
@@ -127,8 +140,13 @@ export const languageSelect = {
 
 export const orgWebsiteInclude = {
 	select: {
+		id: true,
 		description: freeText,
 		languages: { select: { language: languageSelect } },
+		url: true,
+		isPrimary: true,
+		orgLocationId: true,
+		orgLocationOnly: true,
 	},
 } satisfies Prisma.Organization$websitesArgs
 
@@ -213,21 +231,6 @@ const reviewIds = {
 	select: { id: true },
 } satisfies Prisma.Organization$reviewsArgs | Prisma.OrgLocation$reviewsArgs | Prisma.OrgService$reviewsArgs
 
-const orgServicePhoneInclude = {
-	where: {
-		phone: isPublic,
-	},
-	select: { phone: orgPhoneInclude },
-} satisfies Prisma.OrgService$phonesArgs
-const orgServiceEmailInclude = {
-	where: {
-		email: isPublic,
-	},
-	select: {
-		email: { select: orgEmailInclude.select },
-	},
-} satisfies Prisma.OrgService$emailsArgs
-
 export const orgServiceInclude = {
 	where: isPublic,
 	select: {
@@ -238,25 +241,11 @@ export const orgServiceInclude = {
 		services: orgServiceTagInclude,
 		accessDetails: serviceAccessInclude,
 		reviews: reviewIds,
-		phones: orgServicePhoneInclude,
-		emails: orgServiceEmailInclude,
+		phones: orgPhoneInclude,
+		emails: orgEmailInclude,
 	},
 } satisfies Prisma.Organization$servicesArgs
 
-const orgLocationEmailInclude = {
-	where: {
-		email: isPublic,
-	},
-	select: {
-		email: { select: orgEmailInclude.select },
-	},
-} satisfies Prisma.OrgLocation$emailsArgs
-const orgLocationPhoneInclude = {
-	where: {
-		phone: isPublic,
-	},
-	select: { phone: orgPhoneInclude },
-} satisfies Prisma.OrgLocation$phonesArgs
 const orgLocationServiceInclude = {
 	where: {
 		service: isPublic,
@@ -278,9 +267,9 @@ export const orgLocationInclude = {
 		govDist: govDistInclude,
 		country: countryInclude,
 		attributes: attributeInclude,
-		emails: orgLocationEmailInclude,
+		emails: orgEmailInclude,
 		websites: orgWebsiteInclude,
-		phones: orgLocationPhoneInclude,
+		phones: orgPhoneInclude,
 		photos: photoSelect,
 		reviews: reviewIds,
 		services: orgLocationServiceInclude,
@@ -301,14 +290,8 @@ export const organizationInclude = {
 	select: {
 		description: freeText,
 		emails: orgEmailInclude,
-		locations: {
-			where: isPublic,
-			...orgLocationInclude,
-		},
-		phones: {
-			where: isPublic,
-			...orgPhoneInclude,
-		},
+		locations: orgLocationInclude,
+		phones: orgPhoneInclude,
 		photos: photoSelect,
 		services: orgServiceInclude,
 		socialMedia: orgSocialMediaInclude,

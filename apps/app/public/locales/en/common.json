@@ -12,6 +12,7 @@
 	"claimed": "Claimed",
 	"clear": "Clear",
 	"close": "Close",
+	"contact": "Contact",
 	"contact-us": "Contact Us",
 	"country-select": "Choose a country",
 	"create-new-list": "Create new list",
@@ -52,6 +53,7 @@
 	"none-apply": "None of these apply to me",
 	"other-specify": "Other (please specify)",
 	"password": "Password",
+	"phone": "Phone",
 	"photos": "Photos",
 	"powered-by-vercel": "Powered by Vercel",
 	"prefer-not-to-say": "Prefer not to say",
@@ -82,6 +84,7 @@
 	"show-less": "Show less",
 	"show-more": "Show more",
 	"sign-up": "Sign up for free",
+	"social": "Social",
 	"submit": "Submit",
 	"submit-review": "Submit review",
 	"subscribe-to-newsletter": "Subscribe to Newsletter",
@@ -97,6 +100,7 @@
 	"view-list": "View list",
 	"view-x-result_one": "View {{count}} result",
 	"view-x-result_other": "View {{count}} results",
+	"website": "Website",
 	"your-comments": "Your Comments",
 	"youtube": "YouTube"
 }

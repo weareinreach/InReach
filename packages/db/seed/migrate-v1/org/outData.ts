@@ -45,6 +45,8 @@ export type OutData = {
 	userToOrganization: Set<Prisma.UserToOrganizationCreateManyInput>
 	userPermission: Set<Prisma.UserPermissionCreateManyInput>
 	organizationPermission: Set<Prisma.OrganizationPermissionCreateManyInput>
+	organizationEmail: Set<Prisma.OrganizationEmailCreateManyInput>
+	organizationPhone: Set<Prisma.OrganizationPhoneCreateManyInput>
 }
 type SetType<T> = T extends Set<infer R> ? R : T
 export type OutDataRaw = {
@@ -89,6 +91,8 @@ export const data: OutData = {
 	userToOrganization: new Set(),
 	userPermission: new Set(),
 	organizationPermission: new Set(),
+	organizationEmail: new Set(),
+	organizationPhone: new Set(),
 } as const
 
 export type BatchNames = Readonly<keyof OutData>
@@ -114,6 +118,8 @@ export const batchNameMap = new Map<BatchNames, string>([
 
 	['orgServicePhone', 'Phone -> Organization links'],
 	['orgServiceEmail', 'Email -> Organization links'],
+	['organizationEmail', 'Email -> Organization links'],
+	['organizationPhone', 'Phone -> Organization links'],
 	['orgLocationService', 'Service -> Location links'],
 	['orgServiceTag', 'Tag -> Service links'],
 	['organizationAttribute', 'Attribute -> Organization links'],

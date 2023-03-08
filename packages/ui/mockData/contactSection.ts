@@ -1,8 +1,111 @@
 import { type ContactSectionProps } from '~ui/components/sections'
 
 export const contactMock = {
-	emails: [],
-	phones: [],
-	socialMedia: [],
-	websites: [],
+	emails: [
+		{
+			email: {
+				email: 'hello@demo.org',
+				firstName: null,
+				lastName: null,
+				legacyDesc: null,
+				primary: true,
+				description: {
+					key: 'email-desc-key',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Default text',
+					},
+				},
+				title: null,
+			},
+		},
+	],
+	phones: [
+		{
+			phone: {
+				country: {
+					flag: '🇺🇸',
+					dialCode: null,
+					cca2: 'US',
+					tsKey: 'USA.name',
+					tsNs: 'country',
+				},
+				phoneType: null,
+				number: '2025551234',
+				ext: null,
+				primary: true,
+				locationOnly: false,
+			},
+		},
+	],
+	socialMedia: [
+		{
+			service: {
+				logoIcon: '',
+				name: 'Twitter',
+				tsKey: 'twitter',
+				tsNs: 'common',
+				urlBase: [''],
+			},
+			url: 'https://twitter.com/userName',
+			username: 'userName',
+		},
+		{
+			service: {
+				logoIcon: '',
+				name: 'Facebook',
+				tsKey: 'facebook',
+				tsNs: 'common',
+				urlBase: [''],
+			},
+			url: 'https://facebook.com/userName',
+			username: 'fbUserName',
+		},
+	],
+	websites: [
+		{
+			description: {
+				key: 'website-desc-key',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Default text',
+				},
+			},
+			id: 'i435uoi3wskljhglk',
+			isPrimary: true,
+			languages: [
+				{
+					language: {
+						languageName: 'English',
+						nativeName: 'English',
+					},
+				},
+			],
+			orgLocationId: null,
+			orgLocationOnly: false,
+			url: 'https://google.com',
+		},
+		{
+			description: {
+				key: 'website-desc-key2',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Default text',
+				},
+			},
+			id: 'adskfjawelrjlaksjf',
+			isPrimary: false,
+			languages: [
+				{
+					language: {
+						languageName: 'English',
+						nativeName: 'English',
+					},
+				},
+			],
+			orgLocationId: null,
+			orgLocationOnly: false,
+			url: 'https://maps.google.com',
+		},
+	],
 } satisfies ContactSectionProps['data']

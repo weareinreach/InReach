@@ -98,6 +98,7 @@ importers:
       '@mantine/utils': 6.0.0
       '@next/bundle-analyzer': 13.2.3
       '@playwright/test': 1.31.2
+      '@prisma/nextjs-monorepo-workaround-plugin': 4.11.0
       '@tanstack/react-query': 4.26.1
       '@tanstack/react-query-devtools': 4.26.1
       '@tiptap/extension-link': 2.0.0-beta.220
@@ -210,6 +211,7 @@ importers:
       zod: 3.21.3
     devDependencies:
       '@playwright/test': 1.31.2
+      '@prisma/nextjs-monorepo-workaround-plugin': 4.11.0
       '@tanstack/react-query-devtools': 4.26.1_brdhmlf72zuns3lsk66phyptty
       '@total-typescript/ts-reset': 0.3.7
       '@types/eslint': 8.21.1
@@ -735,6 +737,7 @@ importers:
       i18next: 22.4.10
       i18next-browser-languagedetector: 7.0.1
       i18next-http-backend: 2.1.1
+      libphonenumber-js: 1.10.21
       luxon: 3.3.0
       merge-anything: 5.1.4
       msw: 1.1.0
@@ -769,6 +772,7 @@ importers:
       zod: 3.21.3
     dependencies:
       '@weareinreach/api': link:../api
+      libphonenumber-js: 1.10.21
       nextjs-routes: 1.0.8_next@13.2.3
       react-string-replace: 1.1.0
     devDependencies:
@@ -6130,6 +6134,10 @@ packages:
     transitivePeerDependencies:
       - encoding
       - supports-color
+    dev: true
+
+  /@prisma/nextjs-monorepo-workaround-plugin/4.11.0:
+    resolution: {integrity: sha512-h9Y6Q2fbxsyBbquqdmZpLTVgOaVKbrTfk7V5FUQGtPTeaqGa+jA/DR7ABkunGGgbnKsGrkSijmISrFBPaSh1Yg==}
     dev: true
 
   /@prisma/prisma-fmt-wasm/4.10.0-85.d02666423b9d2b618381d5bee85532527a012123:
@@ -14850,7 +14858,6 @@ packages:
 
   /libphonenumber-js/1.10.21:
     resolution: {integrity: sha512-/udZhx49av2r2gZR/+xXSrwcR8smX/sDNrVpOFrvW+CA26TfYTVZfwb3MIDvmwAYMLs7pXuJjZX0VxxGpqPhsA==}
-    dev: true
 
   /lilconfig/2.0.6:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}

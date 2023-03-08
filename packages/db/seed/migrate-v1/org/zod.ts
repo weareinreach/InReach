@@ -95,6 +95,8 @@ type zodInput = {
 	userToOrganization: Prisma.UserToOrganizationCreateManyInput
 	userPermission: Prisma.UserPermissionCreateManyInput
 	organizationPermission: Prisma.OrganizationPermissionCreateManyInput
+	organizationEmail: Prisma.OrganizationEmailCreateManyInput
+	organizationPhone: Prisma.OrganizationPhoneCreateManyInput
 }
 export type ZodInputs = {
 	-readonly [P in BatchNames]: P extends BatchNames ? zodInput[P][] : never
@@ -128,6 +130,8 @@ type zodFindMany = {
 	userToOrganization: Prisma.UserToOrganizationFindManyArgs
 	userPermission: Prisma.UserPermissionFindManyArgs
 	organizationPermission: Prisma.OrganizationPermissionFindManyArgs
+	organizationEmail: Prisma.OrganizationEmailFindManyArgs
+	organizationPhone: Prisma.OrganizationPhoneFindManyArgs
 }
 export type ZodFindMany = {
 	[K in keyof zodFindMany]: K extends keyof zodFindMany ? zodFindMany[K] : never

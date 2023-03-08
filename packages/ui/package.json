@@ -21,6 +21,7 @@
 	},
 	"dependencies": {
 		"@weareinreach/api": "0.100.0",
+		"libphonenumber-js": "1.10.21",
 		"nextjs-routes": "1.0.8",
 		"react-string-replace": "1.1.0"
 	},

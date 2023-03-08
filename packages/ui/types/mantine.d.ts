@@ -7,6 +7,8 @@ export type VariantDef<P = any> = (
 	context: ContextStylesParams
 ) => Record<string, CSSObject>
 
+export type VariantObj = MantineTheme['components'][string]['variants']
+
 // declare module '@mantine/core' {
 // 	export type BadgeVariants = Variants<
 // 		| 'light'

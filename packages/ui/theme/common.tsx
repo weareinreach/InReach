@@ -12,7 +12,7 @@ import { keys } from '@mantine/utils'
 import { Icon } from '~ui/icon'
 
 import { customColors } from './colors'
-import { attributeBadge } from './variants'
+import { variants } from './variants'
 
 import type {
 	ModalStylesNames,
@@ -197,14 +197,15 @@ export const commonTheme = {
 					paddingLeft: theme.spacing.xs,
 					paddingRight: theme.spacing.xs,
 					borderRadius: theme.spacing.sm,
-					textDecoration: 'underline !important',
+					textDecoration: 'underline',
 					...theme.other.utilityFonts.utility1,
 					'&:hover': {
 						backgroundColor: theme.other.colors.primary.lightGray,
-						textDecoration: 'none !important',
+						textDecoration: 'none',
 					},
 				},
 			}),
+			variants: variants.Anchor,
 		},
 		Avatar: {
 			defaultProps: {
@@ -234,104 +235,7 @@ export const commonTheme = {
 						margin: 0,
 					},
 				} satisfies Styles<BadgeStylesNames, BadgeStylesParams>),
-			variants: {
-				community: (theme) => ({
-					root: {
-						height: theme.spacing.xl,
-						backgroundColor: theme.other.colors.secondary.white,
-						borderColor: theme.other.colors.tertiary.coolGray,
-						[theme.fn.largerThan('sm')]: {
-							height: `calc(${theme.spacing.xl} + ${rem(8)}`,
-						},
-					},
-					inner: {
-						paddingTop: `calc(${theme.spacing.sm} / 4)`,
-						paddingBottom: `calc(${theme.spacing.sm} / 4)`,
-						fontSize: theme.fontSizes.sm,
-						[theme.fn.largerThan('sm')]: {
-							paddingTop: `calc(${theme.spacing.sm} / 2)`,
-							paddingBottom: `calc(${theme.spacing.sm} / 2)`,
-							fontSize: theme.fontSizes.md,
-						},
-					},
-					leftSection: {
-						paddingTop: `calc(${theme.spacing.sm} / 4)`,
-						paddingBottom: `calc(${theme.spacing.sm} / 4)`,
-						paddingRight: theme.spacing.xs,
-						fontSize: theme.fontSizes.sm,
-						marginRight: 0,
-						[theme.fn.largerThan('sm')]: {
-							paddingTop: `calc(${theme.spacing.sm} / 2)`,
-							paddingBottom: `calc(${theme.spacing.sm} / 2)`,
-							fontSize: theme.fontSizes.md,
-						},
-					},
-				}),
-				service: (theme) => ({
-					root: {
-						height: theme.spacing.xl,
-						backgroundColor: theme.other.colors.primary.lightGray,
-						border: 'none',
-						[theme.fn.largerThan('sm')]: {
-							height: `calc(${theme.spacing.xl} - ${rem(8)})`,
-						},
-					},
-					inner: {
-						paddingTop: `calc(${theme.spacing.sm} / 4)`,
-						paddingBottom: `calc(${theme.spacing.sm} / 4)`,
-						fontSize: theme.fontSizes.sm,
-						[theme.fn.largerThan('sm')]: {
-							paddingTop: `calc(${theme.spacing.sm} / 2)`,
-							paddingBottom: `calc(${theme.spacing.sm} / 2)`,
-							fontSize: theme.fontSizes.md,
-						},
-					},
-				}),
-				leader: (theme) => ({
-					leftSection: {
-						'& *': {
-							fontSize: theme.fontSizes.xs,
-							borderRadius: theme.radius.xl,
-							height: rem(24),
-							width: rem(24),
-							margin: 0,
-							textAlign: 'center',
-							paddingBottom: rem(4),
-						},
-					},
-					inner: {
-						'& *': {
-							color: theme.other.colors.secondary.black,
-							marginLeft: theme.spacing.xs,
-						},
-					},
-					root: {
-						border: 0,
-						padding: 0,
-						'&[data-minify]': {
-							height: rem(40),
-							width: rem(40),
-							...theme.fn.hover({
-								backgroundColor: theme.other.colors.primary.lightGray,
-							}),
-							radius: theme.radius.xl,
-							padding: 0,
-						},
-						'&[data-hideBg]': {
-							backgroundColor: undefined,
-							height: undefined,
-							width: undefined,
-							paddingLeft: rem(6),
-							paddingRight: rem(6),
-						},
-					},
-				}),
-				privatePractice: attributeBadge,
-				claimed: attributeBadge,
-				unclaimed: attributeBadge,
-				verified: attributeBadge,
-				attribute: attributeBadge,
-			},
+			variants: variants.Badge,
 		},
 		Button: {
 			defaultProps: {
@@ -423,8 +327,12 @@ export const commonTheme = {
 				} satisfies Styles<CheckboxStylesNames, CheckboxStylesParams>),
 		},
 		Container: {
+			defaultProps: {
+				maw: em(1440),
+			},
 			styles: (theme) => ({
 				root: {
+					margin: '0 auto',
 					padding: `${rem(0)} ${rem(20)}`,
 					[theme.fn.largerThan('xs')]: {
 						padding: `${rem(0)} ${rem(32)}`,
@@ -449,7 +357,6 @@ export const commonTheme = {
 		},
 		GridCol: {
 			defaultProps: {
-				span: 12,
 				xs: 6,
 				sm: 4,
 			} satisfies ColProps,
@@ -580,6 +487,14 @@ export const commonTheme = {
 					},
 				} satisfies Styles<ModalStylesNames>),
 		},
+		Paper: {
+			styles: (theme) => ({
+				root: {
+					padding: rem(20),
+					borderRadius: rem(16),
+				},
+			}),
+		},
 		Radio: {
 			styles: (theme) =>
 				({
@@ -632,33 +547,7 @@ export const commonTheme = {
 					},
 				} satisfies Styles<'root', SkeletonStylesParams>),
 
-			variants: {
-				text: (theme) => ({
-					root: {
-						height: rem(16 * 1.5),
-					},
-				}),
-				utility: (theme) => ({
-					root: {
-						height: rem(16 * 1.25),
-					},
-				}),
-				h1: (theme) => ({
-					root: {
-						height: rem(40 * 1.25),
-					},
-				}),
-				h2: (theme) => ({
-					root: {
-						height: rem(24 * 1.25),
-					},
-				}),
-				h3: (theme) => ({
-					root: {
-						height: rem(16 * 1.25),
-					},
-				}),
-			},
+			variants: variants.Skeleton,
 		},
 		Switch: {
 			defaultProps: {
@@ -747,49 +636,7 @@ export const commonTheme = {
 				color: theme.other.colors.secondary.black,
 				size: 'md',
 			}),
-			variants: {
-				utility1: (theme) => ({
-					root: theme.other.utilityFonts.utility1,
-				}),
-				utility2: (theme) => ({
-					root: theme.other.utilityFonts.utility2,
-				}),
-				utility3: (theme) => ({
-					root: theme.other.utilityFonts.utility3,
-				}),
-				utility4: (theme) => ({
-					root: theme.other.utilityFonts.utility4,
-				}),
-				utility1darkGray: (theme) => ({
-					root: {
-						...theme.other.utilityFonts.utility1,
-						color: theme.other.colors.secondary.darkGray,
-					},
-				}),
-				utility2darkGray: (theme) => ({
-					root: {
-						...theme.other.utilityFonts.utility2,
-						color: theme.other.colors.secondary.darkGray,
-					},
-				}),
-				utility3darkGray: (theme) => ({
-					root: {
-						...theme.other.utilityFonts.utility3,
-						color: theme.other.colors.secondary.darkGray,
-					},
-				}),
-				utility4darkGray: (theme) => ({
-					root: {
-						...theme.other.utilityFonts.utility4,
-						color: theme.other.colors.secondary.darkGray,
-					},
-				}),
-				darkGray: (theme) => ({
-					root: {
-						color: theme.other.colors.secondary.darkGray,
-					},
-				}),
-			},
+			variants: variants.Text,
 		},
 		Textarea: {
 			defaultProps: {} satisfies TextareaProps,
