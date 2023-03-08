@@ -81,6 +81,7 @@ export const orgEmailInclude = {
 				email: true,
 				legacyDesc: true,
 				description: freeText,
+				primary: true,
 			},
 		},
 	},
