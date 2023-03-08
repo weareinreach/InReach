@@ -33,7 +33,7 @@
 		"@tiptap/starter-kit": "2.0.0-beta.220",
 		"@weareinreach/ui": "0.100.0",
 		"dayjs": "1.11.7",
-		"embla-carousel-react": "7.0.9",
+		"embla-carousel-react": "7.1.0",
 		"i18next": "22.4.11",
 		"next": "13.2.3",
 		"react": "18.2.0",
