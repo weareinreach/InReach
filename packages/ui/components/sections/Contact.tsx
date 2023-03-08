@@ -1,5 +1,4 @@
 import { Stack, Title, Text, Grid, Paper, useMantineTheme } from '@mantine/core'
-import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
 import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
 import { useRouter } from 'next/router'
@@ -22,7 +21,6 @@ const WebsiteList = ({ role, websites, t }: WebsiteListProps) => {
 	try {
 		for (const site of websites) {
 			const urlBase = site.url.match(domainExtract)
-			console.log(urlValid(site.url), urlBase)
 			if (!urlValid(site.url)) continue
 			if (!urlBase) continue
 			if (role === 'org' && (site.orgLocationOnly || site.orgLocationId)) continue
@@ -49,12 +47,6 @@ const WebsiteList = ({ role, websites, t }: WebsiteListProps) => {
 		return (
 			<Stack>
 				<Title order={3}>{t('website')}</Title>
-				{/* {sites.length &&
-					sites.map(({ description, key, ...props }) => (
-						<Link key={key} {...props} external variant={variants.Link.inline}>
-							{description}
-						</Link>
-					))} */}
 				{sites}
 			</Stack>
 		)
@@ -95,7 +87,6 @@ const ItemListWithSubtext = (props: SubtextList) => {
 				const href = parsedPhone.getURI()
 				const itemProps = { heading: phoneNumber, href, subheading: desc }
 				const item = <Item key={phone.number} {...itemProps} />
-				console.log('phone', item)
 				addItem(item)
 			}
 			break
@@ -120,7 +111,6 @@ const ItemListWithSubtext = (props: SubtextList) => {
 			}
 			break
 	}
-	console.log(dataType, items)
 	if (!items) return null
 	return (
 		<Stack spacing={12}>
@@ -135,7 +125,6 @@ export const ContactSection = (props: ContactSectionProps) => {
 	const { slug } = router.query
 	const { t } = useTranslation(['common', slug])
 	const { role } = props
-	const theme = useMantineTheme()
 	const { isMobile } = useScreenSize()
 	const { emails, phones, socialMedia, websites } = props.data
 	const hasData = (dataType: (typeof props.data)[keyof typeof props.data]) => Boolean(dataType.length > 0)
@@ -154,7 +143,6 @@ export const ContactSection = (props: ContactSectionProps) => {
 			<SocialLink.Group links={socialLinks} header />
 		</Stack>
 	)
-	console.log(isMobile, useViewportSize())
 	if (isMobile) return <Grid.Col>{body}</Grid.Col>
 	return (
 		<Grid.Col>
