@@ -167,6 +167,8 @@ export const attributeInclude = {
 			select: {
 				tsKey: true,
 				tsNs: true,
+				icon: true,
+				showOnLocation: true,
 			},
 		},
 		supplement: {
@@ -243,6 +245,7 @@ export const orgServiceInclude = {
 		reviews: reviewIds,
 		phones: orgPhoneInclude,
 		emails: orgEmailInclude,
+		id: true,
 	},
 } satisfies Prisma.Organization$servicesArgs
 
@@ -283,6 +286,7 @@ export const orgLocationInclude = {
 		primary: true,
 		longitude: true,
 		latitude: true,
+		id: true,
 	},
 } satisfies Prisma.Organization$locationsArgs
 

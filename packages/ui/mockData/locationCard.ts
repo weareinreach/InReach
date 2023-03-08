@@ -18,15 +18,52 @@ export const locationMock = {
 		dialCode: null,
 		flag: '🇺🇸',
 	},
-	attributes: [],
+	attributes: [
+		{
+			attribute: {
+				icon: 'carbon:accessibility',
+				showOnLocation: true,
+				tsKey: 'wheelchair-accessible',
+				tsNs: 'attribute',
+			},
+			supplement: [],
+		},
+		{
+			attribute: {
+				icon: 'carbon:globe',
+				showOnLocation: true,
+				tsKey: 'offers-remote-services',
+				tsNs: 'attribute',
+			},
+			supplement: [],
+		},
+	],
 	emails: [],
 	websites: [],
-	phones: [],
+	phones: [
+		{
+			phone: {
+				country: {
+					flag: '🇺🇸',
+					dialCode: null,
+					cca2: 'US',
+					tsKey: 'USA.name',
+					tsNs: 'country',
+				},
+				phoneType: null,
+				number: '2025551234',
+				ext: null,
+				primary: true,
+				locationOnly: false,
+			},
+		},
+	],
 	photos: [],
 	reviews: [],
 	services: [
 		{
 			service: {
+				id: 'svce_LKJGOISEURT5IO34U5',
 				description: {
 					key: 'whitman-walker-health.osvc_01GTJ0WTERVW3H28Z5XNYHFM3F.description',
 					ns: 'org-data',
@@ -40,6 +77,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-hiv-aids',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -47,6 +86,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'lang-lang-offered',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [
 							{
@@ -64,6 +105,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'sys-incompatible-info',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [
 							{
@@ -123,7 +166,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'medicalcategoryname',
+								tsKey: 'medical.CATEGORYNAME',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -137,6 +180,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accesslocation',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -170,6 +215,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accesslocation',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -203,6 +250,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -255,6 +304,7 @@ export const locationMock = {
 		},
 		{
 			service: {
+				id: 'svce_LKSJ50345OIJEF843R',
 				description: {
 					key: 'whitman-walker-health.osvc_01GTJ0WTF0PY6QA2M1XC0YDM9V.description',
 					ns: 'org-data',
@@ -268,6 +318,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-hiv-aids',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -275,6 +327,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'lang-lang-offered',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [
 							{
@@ -292,6 +346,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'sys-incompatible-info',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [
 							{
@@ -352,7 +408,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'medicalcategoryname',
+								tsKey: 'medical.CATEGORYNAME',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -366,6 +422,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accessphone',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -399,6 +457,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -463,6 +523,7 @@ export const locationMock = {
 		},
 		{
 			service: {
+				id: 'svce_ESIRTJ9834U52084U5',
 				description: {
 					key: 'whitman-walker-health.osvc_01GTJ0WTF2K6WBSNSA3GPHE4G1.description',
 					ns: 'org-data',
@@ -476,6 +537,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-adults',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -483,6 +546,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-bisexual',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -490,6 +555,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-gay',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -497,6 +564,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-gender-nonconforming',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -504,6 +573,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-hiv-aids',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -511,6 +582,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-lesbian',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -518,6 +591,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-lgbtq-youth',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -525,6 +600,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-nonbinary',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -532,6 +609,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-queer',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -539,6 +618,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-teens',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -546,6 +627,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-transgender',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -553,6 +636,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-trans-youth',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -560,6 +645,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'lang-lang-offered',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [
 							{
@@ -577,6 +664,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'sys-incompatible-info',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [
 							{
@@ -633,7 +722,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'mental-healthcategoryname',
+								tsKey: 'mental-health.CATEGORYNAME',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -642,7 +731,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'mental-healthcategoryname',
+								tsKey: 'mental-health.CATEGORYNAME',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -656,6 +745,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -691,6 +782,7 @@ export const locationMock = {
 		},
 		{
 			service: {
+				id: 'svce_34UTJNG3984T49U8T',
 				description: {
 					key: 'whitman-walker-health.osvc_01GTJ0WTFCCVR5JCWFZJM3AXZS.description',
 					ns: 'org-data',
@@ -704,6 +796,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-transgender',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -711,6 +805,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-trans-youth',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -718,6 +814,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'lang-lang-offered',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [
 							{
@@ -735,6 +833,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'sys-incompatible-info',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [
 							{
@@ -804,7 +904,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'medicalcategoryname',
+								tsKey: 'medical.CATEGORYNAME',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -818,6 +918,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accessphone',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -851,6 +953,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -886,6 +990,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accessemail',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -919,6 +1025,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accesslocation',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -985,6 +1093,7 @@ export const locationMock = {
 		},
 		{
 			service: {
+				id: 'svce_ERJTG09384U5083248F',
 				description: {
 					key: 'whitman-walker-health.osvc_01GTJ0WTFEZHHCM1CT1TD1TGKJ.description',
 					ns: 'org-data',
@@ -998,6 +1107,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'community-hiv-aids',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [],
 					},
@@ -1005,6 +1116,8 @@ export const locationMock = {
 						attribute: {
 							tsKey: 'lang-lang-offered',
 							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
 						},
 						supplement: [
 							{
@@ -1041,7 +1154,7 @@ export const locationMock = {
 					{
 						tag: {
 							category: {
-								tsKey: 'medicalcategoryname',
+								tsKey: 'medical.CATEGORYNAME',
 								tsNs: 'services',
 							},
 							defaultAttributes: [],
@@ -1055,6 +1168,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -1088,6 +1203,8 @@ export const locationMock = {
 								attribute: {
 									tsKey: 'serviceaccess-accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									showOnLocation: null,
 								},
 								supplement: [
 									{
@@ -1132,4 +1249,5 @@ export const locationMock = {
 	primary: true,
 	longitude: -77.032,
 	latitude: 38.91,
+	id: 'oloc_ARTH98W34R524398J',
 } satisfies LocationCardProps['location']
