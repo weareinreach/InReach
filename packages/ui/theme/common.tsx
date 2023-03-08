@@ -197,11 +197,11 @@ export const commonTheme = {
 					paddingLeft: theme.spacing.xs,
 					paddingRight: theme.spacing.xs,
 					borderRadius: theme.spacing.sm,
-					textDecoration: 'underline !important',
+					textDecoration: 'underline',
 					...theme.other.utilityFonts.utility1,
 					'&:hover': {
 						backgroundColor: theme.other.colors.primary.lightGray,
-						textDecoration: 'none !important',
+						textDecoration: 'none',
 					},
 				},
 			}),
@@ -348,6 +348,7 @@ export const commonTheme = {
 				gutter: 20,
 				gutterXl: 40,
 				justify: 'center',
+				maw: em(1440),
 				my: 0,
 			} satisfies Partial<GridProps>,
 		},
@@ -483,6 +484,14 @@ export const commonTheme = {
 						padding: 0,
 					},
 				} satisfies Styles<ModalStylesNames>),
+		},
+		Paper: {
+			styles: (theme) => ({
+				root: {
+					padding: rem(20),
+					borderRadius: rem(16),
+				},
+			}),
 		},
 		Radio: {
 			styles: (theme) =>

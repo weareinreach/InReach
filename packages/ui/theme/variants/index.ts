@@ -13,6 +13,7 @@ export const variants = {
 export const variantNames: VariantNames = {
 	Anchor: {
 		inline: 'inline',
+		inlineInverted: 'inlineInverted',
 	},
 	Badge: {
 		community: 'community',
@@ -43,7 +44,7 @@ export const variantNames: VariantNames = {
 		utility4darkGray: 'utility4darkGray',
 		darkGray: 'darkGray',
 	},
-}
+} as const
 
 type VariantNames = {
 	[K in keyof typeof variants]: {
