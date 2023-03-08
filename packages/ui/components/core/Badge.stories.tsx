@@ -262,6 +262,7 @@ export const ServiceGroup = {
 				variant: 'service',
 			},
 		],
+		withSeparator: false,
 	},
 	...groupParams,
 } satisfies GroupStory

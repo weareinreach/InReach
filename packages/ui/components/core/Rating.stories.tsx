@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
+
 import { Rating as RatingTagComp } from './Rating'
 
 export default {
@@ -10,10 +12,26 @@ export default {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=234%3A8521&t=sleVeGl2lJv7Df18-4',
 		},
+		msw: {
+			handlers: [
+				getTRPCMock({
+					path: ['review', 'getAverage'],
+					type: 'query',
+					response: {
+						average: 4.3,
+						count: 10,
+					},
+				}),
+			],
+		},
 	},
 	argTypes: {
-		showCount: {
-			defaultValue: true,
+		hideCount: {
+			defaultValue: false,
+			type: 'boolean',
+		},
+		forceLoading: {
+			defaultValue: false,
 			type: 'boolean',
 		},
 	},
@@ -23,22 +41,33 @@ type StoryDef = StoryObj<typeof RatingTagComp>
 
 export const Default = {
 	args: {
-		average: 4.3,
-		reviewCount: 10,
+		organizationId: 'orgn_EJFOISU34JKDHFS',
 	},
 } satisfies StoryDef
 
 export const CountHidden = {
 	args: {
-		average: 4.3,
-		reviewCount: 10,
-		showCount: false,
+		hideCount: true,
+		organizationId: 'orgn_EJFOISU34JKDHFS',
 	},
 }
 
 export const NoReviews = {
+	parameters: {
+		msw: {
+			handlers: [
+				getTRPCMock({
+					path: ['review', 'getAverage'],
+					type: 'query',
+					response: {
+						average: null,
+						count: 0,
+					},
+				}),
+			],
+		},
+	},
 	args: {
-		average: 0,
-		reviewCount: 0,
+		organizationId: 'orgn_EJFOISU34JKDHFS',
 	},
 }

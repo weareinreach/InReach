@@ -6,6 +6,7 @@ import {
 	InputWrapperStylesNames,
 	InputWrapperProps,
 	InputWrapperBaseProps,
+	CardProps,
 } from '@mantine/core'
 import { keys } from '@mantine/utils'
 
@@ -123,6 +124,7 @@ export const commonTheme = {
 	primaryColor: 'inReachPrimaryRegular',
 	primaryShade: 5,
 	cursorType: 'pointer',
+	loader: 'dots',
 	lineHeight: 1.5,
 	fontFamily:
 		'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
@@ -225,6 +227,7 @@ export const commonTheme = {
 						border: `${rem(1)} solid`,
 						padding: `${theme.spacing.xxs} ${theme.spacing.sm}`,
 						textTransform: 'none',
+						margin: rem(8),
 					},
 					inner: {
 						padding: 0,
@@ -279,6 +282,22 @@ export const commonTheme = {
 				},
 			}),
 		},
+		Card: {
+			defaultProps: {
+				withBorder: true,
+				radius: 'lg',
+				padding: rem(20),
+			} satisfies Partial<CardProps>,
+			styles: (theme) => ({
+				root: {
+					[theme.fn.largerThan('sm')]: {
+						padding: rem(24),
+					},
+				},
+			}),
+			variants: variants.Card,
+		},
+
 		Checkbox: {
 			styles: (theme, params: CheckboxStylesParams) =>
 				({
@@ -442,6 +461,20 @@ export const commonTheme = {
 					},
 				} satisfies Styles<InputWrapperStylesNames>),
 		},
+		List: {
+			variants: variants.List,
+		},
+		Loader: {
+			defaultProps: (theme) => ({
+				color: theme.other.colors.secondary.darkGray,
+			}),
+		},
+		LoadingOverlay: {
+			defaultProps: (theme) => ({
+				overlayBlur: 2,
+				radius: 'sm',
+			}),
+		},
 		Modal: {
 			defaultProps: (theme) => {
 				return {
@@ -492,6 +525,9 @@ export const commonTheme = {
 				root: {
 					padding: rem(20),
 					borderRadius: rem(16),
+					'&[data-with-border]': {
+						border: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
+					},
 				},
 			}),
 		},
@@ -714,6 +750,7 @@ export const commonTheme = {
 					boxShadow: theme.shadows.xs,
 				},
 			}),
+			variants: variants.Tooltip,
 		},
 		TypographyStylesProvider: {
 			styles: (theme) => {
