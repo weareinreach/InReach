@@ -27,6 +27,8 @@ import {
 	TranslationKey,
 	UserPermission,
 	UserToOrganization,
+	OrganizationEmail,
+	OrganizationPhone,
 } from '~db/index'
 import { BatchNames } from '~db/seed/migrate-v1/org/outData'
 import { ZodFindMany, ZodInputs } from '~db/seed/migrate-v1/org/zod'
@@ -61,6 +63,8 @@ export const migrateClient: MigrationClient = {
 	userToOrganization: (client, data) => client.userToOrganization.createMany({ data, ...clientopt }),
 	userPermission: (client, data) => client.userPermission.createMany({ data, ...clientopt }),
 	organizationPermission: (client, data) => client.organizationPermission.createMany({ data, ...clientopt }),
+	organizationEmail: (client, data) => client.organizationEmail.createMany({ data, ...clientopt }),
+	organizationPhone: (client, data) => client.organizationPhone.createMany({ data, ...clientopt }),
 }
 
 export const queryClient: QueryClient = {
@@ -91,6 +95,8 @@ export const queryClient: QueryClient = {
 	userToOrganization: (client, args) => client.userToOrganization.findMany(args),
 	userPermission: (client, args) => client.userPermission.findMany(args),
 	organizationPermission: (client, args) => client.organizationPermission.findMany(args),
+	organizationEmail: (client, args) => client.organizationEmail.findMany(args),
+	organizationPhone: (client, args) => client.organizationPhone.findMany(args),
 }
 export type QueryClient = {
 	[K in BatchNames]: (
@@ -144,4 +150,6 @@ type PrismaSchemas = {
 	userToOrganization: UserToOrganization
 	userPermission: UserPermission
 	organizationPermission: OrganizationPermission
+	organizationEmail: OrganizationEmail
+	organizationPhone: OrganizationPhone
 }
