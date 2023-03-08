@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import InReach from '~ui/assets/inreach.svg'
 import Vercel from '~ui/assets/vercel.svg'
 import { Link } from '~ui/components/core/Link'
-import { SocialMediaIconButton } from '~ui/components/core/SocialMediaIconButton'
+import { SocialLink } from '~ui/components/core/SocialLink'
 import { BodyGrid } from '~ui/layouts'
 
 const useStyles = createStyles((theme) => ({
@@ -99,16 +99,16 @@ export const Footer = () => {
 					<Text fw={600}>{t('Connect')}</Text>
 					{connect}
 					<Group noWrap className={classes.iconGroup}>
-						<SocialMediaIconButton icon='facebook' href='#' title='Facebook' />
-						<SocialMediaIconButton icon='twitter' href='#' title='Twitter' />
-						<SocialMediaIconButton icon='linkedin' href='#' title='LinkedIn' />
-						<SocialMediaIconButton icon='instagram' href='#' title='Instagram' />
+						<SocialLink icon='facebook' href='#' title='Facebook' />
+						<SocialLink icon='twitter' href='#' title='Twitter' />
+						<SocialLink icon='linkedin' href='#' title='LinkedIn' />
+						<SocialLink icon='instagram' href='#' title='Instagram' />
 					</Group>
 					<Group noWrap className={classes.iconGroup} pb='24px'>
-						<SocialMediaIconButton icon='youtube' href='#' title='Youtube' />
-						<SocialMediaIconButton icon='tiktok' href='#' title='TikTok' />
-						<SocialMediaIconButton icon='github' href='#' title='GitHub' />
-						<SocialMediaIconButton icon='mail' href='#' title={t('Mail')} />
+						<SocialLink icon='youtube' href='#' title='Youtube' />
+						<SocialLink icon='tiktok' href='#' title='TikTok' />
+						<SocialLink icon='github' href='#' title='GitHub' />
+						<SocialLink icon='mail' href='#' title={t('Mail')} />
 					</Group>
 				</Stack>
 			</Grid.Col>
