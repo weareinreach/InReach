@@ -9,10 +9,8 @@ import {
 	seedAttributes,
 	seedCountries,
 	seedEthnicities,
-	seedFooterLinks,
 	seedGeoData,
 	seedLanguages,
-	seedNavigation,
 	seedOutsideAPI,
 	seedPermissions,
 	seedSOGIdentity,
@@ -72,16 +70,6 @@ const tasks = new Listr<Context>(
 						task: async (_ctx, task): Promise<void> => seedCountries(task),
 						options: renderOptions,
 						skip,
-					},
-					{
-						title: 'Navigation Bar Links',
-						task: async (_ctx, task): Promise<void> => seedNavigation(task),
-						options: renderOptions,
-					},
-					{
-						title: 'Footer Links',
-						task: async (_ctx, task): Promise<void> => seedFooterLinks(task),
-						options: renderOptions,
 					},
 					{
 						title: 'Social Media Links',

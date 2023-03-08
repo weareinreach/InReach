@@ -372,6 +372,11 @@ export const attributeData: AttributeData = [
 					'If the service requires a referral from another service provider from new/potential clients in order to access"',
 				filterType: 'EXCLUDE',
 			},
+			{
+				key: 'other-describe',
+				name: 'Other (free text description)',
+				description: 'Free text description',
+			},
 		],
 	},
 	{
