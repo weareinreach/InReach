@@ -890,6 +890,9 @@ model Attribute {
   intDesc String?
   active  Boolean @default(true)
 
+  /// Set this flag to have attribute display on Location/Visit cards
+  showOnLocation Boolean?
+
   categories AttributeToCategory[]
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)

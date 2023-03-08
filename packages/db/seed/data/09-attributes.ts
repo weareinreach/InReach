@@ -51,13 +51,22 @@ export const attributeData: AttributeData = [
 			},
 			{
 				key: 'wheelchair-accessible',
-				name: 'Is wheelchair accessible',
+				name: 'Accessible',
 				filterType: 'INCLUDE',
+				showOnLocation: true,
+				icon: 'carbon:accessibility',
 			},
 			{
 				key: 'religiously-affiliated',
 				name: 'Is religiously affiliated',
 				filterType: 'EXCLUDE',
+			},
+			{
+				key: 'offers-remote-services',
+				name: 'Remote',
+				filterType: 'INCLUDE',
+				showOnLocation: true,
+				icon: 'carbon:globe',
 			},
 		],
 	},

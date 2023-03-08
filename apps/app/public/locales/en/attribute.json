@@ -76,6 +76,7 @@
 	"lang-american-sign-language": "American Sign Language",
 	"lang-lang-offered": "Specific languages offered",
 	"languages": "Languages",
+	"offers-remote-services": "Remote",
 	"organization-leadership": "Organization Leadership",
 	"orgleader-bipoc-led": "BIPOC Led",
 	"orgleader-black-led": "Black Led",
@@ -102,5 +103,6 @@
 	"srvfocus-trans-masc": "Trans Men/Transmasculine",
 	"srvfocus-trans-youth-focus": "Trans Youth",
 	"sys-incompatible-info": "Incompatible Information",
-	"system": "System"
+	"system": "System",
+	"wheelchair-accessible": "Accessible"
 }

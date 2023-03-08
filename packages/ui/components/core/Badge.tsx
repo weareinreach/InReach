@@ -13,6 +13,7 @@ import {
 	TooltipProps,
 	Group,
 	rem,
+	List,
 } from '@mantine/core'
 import { PolymorphicComponentProps } from '@mantine/utils'
 import { DateTime } from 'luxon'
@@ -20,6 +21,7 @@ import { merge } from 'merge-anything'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, ReactNode } from 'react'
 
+import { useCustomVariant } from '~ui/hooks'
 import { Icon, IconList } from '~ui/icon'
 
 const badgeVariants: BadgeVariants = (theme, params) => {
@@ -117,19 +119,20 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				},
 				root: {
 					border: 0,
-					padding: 0,
-					alignItems: 'flex-start',
+					height: rem(24),
+					padding: '0',
+					// alignItems: 'flex-start',
 					lineHeight: 'inherit',
 					borderRadius: 0,
 				},
 				leftSection: {
 					height: rem(24),
-					'& *': {
-						margin: 0,
-					},
-					'& svg': {
-						verticalAlign: 'sub',
-					},
+					// '& *': {
+					// 	margin: 0,
+					// },
+					// '& svg': {
+					// 	verticalAlign: 'sub',
+					// },
 				},
 			}
 		}
@@ -168,9 +171,10 @@ const customVariantMap = {
 /** Badge variants `serviceTag` and `communityTag` are responsive - the sizing changes at the `sm` breakpoint. */
 export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div', CustomBadgeProps>>(
 	(props, ref) => {
-		const theme = useMantineTheme()
+		const variants = useCustomVariant()
 		const { t, i18n } = useTranslation(['common', 'attribute'])
 		const isCustom = (customVariants as ReadonlyArray<string>).includes(props.variant ?? 'light')
+		const theme = useMantineTheme()
 		const { classes: baseClasses } = useVariantStyles({
 			variant: props.variant ?? 'light',
 			...(props.variant === 'leader' ? { minify: props.minify, hideBg: props.hideBg } : {}),
@@ -305,48 +309,34 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 		)
 
 		if (renderTooltip) {
-			return <Tooltip {...renderTooltip}>{badge}</Tooltip>
+			return (
+				<Tooltip multiline variant={variants.Tooltip.utility1} {...renderTooltip}>
+					{badge}
+				</Tooltip>
+			)
 		}
 		return badge
 	}
 )
 
-const useGroupStyles = createStyles((theme) => ({
-	separator: {
-		fontSize: '1.5rem',
-		display: 'inline',
-		paddingLeft: theme.spacing.xs,
-		paddingRight: theme.spacing.xs,
-	},
-}))
-
 export const BadgeGroup = ({ badges, withSeparator = false }: BadgeGroupProps) => {
-	const { classes } = useGroupStyles()
-
-	const WithSeparator = (item: CustomBadgeProps) => (
-		<>
+	const variants = useCustomVariant()
+	const badgeList = badges.map((item: CustomBadgeProps, idx, arr) => (
+		<List.Item key={idx}>
 			<Badge {...item} />
-			<Text className={classes.separator} inline>{`\u2022`}</Text>
-		</>
-	)
-	const isLeaderMini = (item: CustomBadgeProps) => (item.variant === 'leader' ? !item.minify : true)
-	const badgeList = badges.map((item: CustomBadgeProps, idx, arr) =>
-		idx + 1 !== arr.length && isLeaderMini(item) && withSeparator ? (
-			<WithSeparator key={idx} {...item} />
-		) : (
-			<Badge key={idx} {...item} />
-		)
-	)
+		</List.Item>
+	))
 
 	return (
-		<Group position='left' spacing={withSeparator ? 1 : 16}>
+		<List variant={withSeparator ? variants.List.inlineBullet : variants.List.inline} mb={0} ml={-8}>
 			{badgeList}
-		</Group>
+		</List>
 	)
 }
+
 type BadgeGroupProps = {
 	badges: CustomBadgeProps[]
-	withSeparator: boolean
+	withSeparator?: boolean
 }
 type BadgeVariant = BadgeProps['variant']
 

@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { handleError } from '~api/lib'
 import { defineRouter, protectedProcedure, publicProcedure, staffProcedure } from '~api/lib/trpc'
-import { id, orgId, orgIdLocationId, orgIdServiceId, userId } from '~api/schemas/common'
+import { id, orgId, orgIdLocationId, orgIdServiceId, userId, reviewAvgId } from '~api/schemas/common'
 import { CreateReview, CreateReviewInput } from '~api/schemas/create/review'
 import { ReviewVisibility, ReviewToggleDelete } from '~api/schemas/update/review'
 
@@ -264,4 +264,21 @@ export const reviewRouter = defineRouter({
 				handleError(error)
 			}
 		}),
+	getAverage: publicProcedure.input(reviewAvgId).query(async ({ ctx, input }) => {
+		const { orgLocationId, orgServiceId, organizationId } = input
+		const result = await ctx.prisma.orgReview.aggregate({
+			_avg: {
+				rating: true,
+			},
+			_count: {
+				rating: true,
+			},
+			where: {
+				orgLocationId,
+				orgServiceId,
+				organizationId,
+			},
+		})
+		return { average: result._avg.rating, count: result._count.rating }
+	}),
 })
