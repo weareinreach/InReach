@@ -16,6 +16,7 @@ import {
 	List,
 } from '@mantine/core'
 import { PolymorphicComponentProps } from '@mantine/utils'
+import { TOptionsBase } from 'i18next'
 import { DateTime } from 'luxon'
 import { merge } from 'merge-anything'
 import { useTranslation } from 'next-i18next'
@@ -235,13 +236,13 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 					return <Text>{t('verified-information')}</Text>
 				}
 				case 'attribute': {
-					return <Text>{t(props.tsKey, { ns: props.tsNs })}</Text>
+					return <Text>{t(props.tsKey, { ns: props.tsNs, ...props.tProps })}</Text>
 				}
 				case 'community': {
-					return t(props.tsKey, { ns: 'attribute' })
+					return t(props.tsKey, { ns: 'attribute', ...props.tProps })
 				}
 				case 'service': {
-					return t(props.tsKey, { ns: 'services' })
+					return t(props.tsKey, { ns: 'services', ...props.tProps })
 				}
 				case 'claimed': {
 					return <Text>{t('claimed')}</Text>
@@ -391,14 +392,17 @@ type AttributeTagProps = {
 	icon: IconList
 	tsKey: string
 	tsNs: string
+	tProps?: Omit<TOptionsBase, 'ns'>
 }
 
 type CommunityTagProps = {
 	variant: 'community'
 	icon: string
 	tsKey: string
+	tProps?: Omit<TOptionsBase, 'ns'>
 }
 type ServiceTagProps = {
 	variant: 'service'
 	tsKey: string
+	tProps?: Omit<TOptionsBase, 'ns'>
 }
