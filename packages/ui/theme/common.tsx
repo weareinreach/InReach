@@ -12,6 +12,7 @@ import { keys } from '@mantine/utils'
 
 import { Icon } from '~ui/icon'
 
+import { shake } from './animation'
 import { customColors } from './colors'
 import { variants } from './variants'
 
@@ -115,6 +116,9 @@ const themeCustomObj = {
 		default: '1px solid #d9d9d9',
 	},
 	colors,
+	animations: {
+		shake,
+	},
 } as const satisfies MantineThemeOther
 
 export const commonTheme = {
@@ -459,6 +463,9 @@ export const commonTheme = {
 					error: {
 						...theme.other.utilityFonts.utility3,
 					},
+					root: {
+						width: '100%',
+					},
 				} satisfies Styles<InputWrapperStylesNames>),
 		},
 		List: {
@@ -506,11 +513,20 @@ export const commonTheme = {
 					},
 					body: {
 						padding: rem(20),
+						'&:not(:only-child)': {
+							paddingTop: rem(20),
+						},
 						[theme.fn.largerThan('xs')]: {
 							padding: `${rem(20)} ${rem(32)}`,
+							'&:not(:only-child)': {
+								paddingTop: rem(20),
+							},
 						},
 						[theme.fn.largerThan('sm')]: {
 							padding: `${rem(40)} ${rem(32)}`,
+							'&:not(:only-child)': {
+								paddingTop: rem(40),
+							},
 						},
 					},
 					title: {
@@ -527,6 +543,22 @@ export const commonTheme = {
 					borderRadius: rem(16),
 					'&[data-with-border]': {
 						border: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
+					},
+				},
+			}),
+		},
+		PasswordInput: {
+			styles: (theme) => ({
+				innerInput: {
+					height: 'unset',
+					...theme.other.utilityFonts.utility2,
+					'&::placeholder': {
+						color: theme.other.colors.secondary.darkGray,
+					},
+				},
+				input: {
+					'&::placeholder': {
+						color: theme.other.colors.secondary.darkGray,
 					},
 				},
 			}),

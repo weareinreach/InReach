@@ -3,6 +3,7 @@ import { VariantObj } from '~ui/types/mantine'
 export const Anchor = {
 	inline: (theme) => ({
 		root: {
+			display: 'inline',
 			padding: '0 !important',
 			fontWeight: `${theme.other.fontWeight.regular} !important` as unknown as 'normal',
 			lineHeight: `${theme.lineHeight} !important`,
@@ -31,6 +32,19 @@ export const Anchor = {
 			'&:hover': {
 				backgroundColor: 'transparent !important',
 				textDecoration: 'underline !important',
+			},
+		},
+	}),
+	inheritStyle: (theme) => ({
+		root: {
+			display: 'inline',
+			padding: '0 !important',
+			fontWeight: 'inherit !important' as unknown as 'normal',
+			lineHeight: 'inherit !important',
+			color: 'inherit !important',
+			fontSize: 'inherit !important',
+			'&:hover': {
+				backgroundColor: 'transparent !important',
 			},
 		},
 	}),
