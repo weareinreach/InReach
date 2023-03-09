@@ -46,7 +46,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@69d9d449aced6a2ede0bc19182fadc3a0a42d2b0 # v3
+      - uses: actions/cache@940f3d7cf195ba83374c77632d1e2cbb2f24ae68 # v3
         name: Setup pnpm cache
         with:
           path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
