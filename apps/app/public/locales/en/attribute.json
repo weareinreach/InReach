@@ -104,5 +104,7 @@
 	"srvfocus-trans-youth-focus": "Trans Youth",
 	"sys-incompatible-info": "Incompatible Information",
 	"system": "System",
-	"wheelchair-accessible": "Accessible"
+	"wheelchair-accessible": "Accessible",
+	"wheelchair-accessible_false": "Not accessible",
+	"wheelchair-accessible_true": "Accessible"
 }

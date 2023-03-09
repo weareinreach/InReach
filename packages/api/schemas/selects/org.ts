@@ -274,6 +274,7 @@ export const orgLocationInclude = {
 		websites: orgWebsiteInclude,
 		phones: orgPhoneInclude,
 		photos: photoSelect,
+		hours: hoursSelect,
 		reviews: reviewIds,
 		services: orgLocationServiceInclude,
 		serviceAreas: serviceAreaInclude,

@@ -1,6 +1,9 @@
 {
 	"about-us": "About Us",
+	"accessible-building_false": "This building is NOT wheelchair accessible",
+	"accessible-building_true": "This building is wheelchair accessible",
 	"account": "Account",
+	"address": "Address",
 	"alert-message-1": "<strong>COVID-19 policy:</strong> With news and best practices for COVID-19 prevention changing rapidly each day, Whitman-Walker Health continues to update their services to reflect prevention recommendations. Please check their website for the most up-to-date information.",
 	"all-service-category": "All {{serviceCategory}}",
 	"anti-hate-text": "By using InReach, you agree that you will not use this resource information for harmful, hate-based, homophobic, transphobic, xenophobic, and/or racist agendas or commentary.",
@@ -36,6 +39,7 @@
 	"footer-subscribe-newsletter": "Subscribe to our newsletter",
 	"footer-suggest-org": "Suggest an organization",
 	"footer-vetting-process": "Vetting process",
+	"hours": "Hours",
 	"in-reach-user": "InReach User",
 	"in-reach-verified-reviewer": "InReach Verified Reviewer",
 	"include": "Include",
@@ -101,6 +105,7 @@
 	"view-list": "View list",
 	"view-x-result_one": "View {{count}} result",
 	"view-x-result_other": "View {{count}} results",
+	"visit": "Visit",
 	"website": "Website",
 	"your-comments": "Your Comments",
 	"youtube": "YouTube"
