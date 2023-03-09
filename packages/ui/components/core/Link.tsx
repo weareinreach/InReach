@@ -9,8 +9,6 @@ export const isExternal = (href: unknown): href is ExternalLink => {
 }
 
 export const Link = ({ children, href, external, ...rest }: Props) => {
-	console.log('link', children, href, external, rest, isExternal(href))
-
 	if (external === true || href === undefined || isExternal(href)) {
 		return (
 			<Anchor component='a' href={href as string} target='_blank' {...rest}>

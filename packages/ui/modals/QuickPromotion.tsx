@@ -1,51 +1,46 @@
-import { createStyles, Group, Text, rem, Title, Anchor } from '@mantine/core'
+import { Text, Title, Stack } from '@mantine/core'
 import { openContextModal } from '@mantine/modals'
 import { ContextModalProps } from '@mantine/modals/lib/context'
 import { useTranslation, Trans } from 'next-i18next'
 
-import { Button } from '~ui/components/core'
+import { Button, Link } from '~ui/components/core'
+import { useCustomVariant } from '~ui/hooks'
 
 import { openLoginModal } from './Login'
-import { ModalTitle, ModalTitleProps } from './ModalTitle'
+import { ModalTitle } from './ModalTitle'
 import { openSignUpModal } from './SignUp'
-
-const useStyles = createStyles((theme) => ({
-	container: {
-		flexDirection: 'column',
-		marginTop: rem(40),
-		textAlign: 'center',
-	},
-	button: {
-		marginTop: rem(24),
-		width: '100%',
-	},
-	link: {
-		marginTop: rem(34),
-		marginBottom: rem(50),
-	},
-}))
 
 export const QuickPromotionModalBody = ({ context, id, innerProps }: ContextModalProps<{}>) => {
 	const { t } = useTranslation(['common'])
-	const { classes } = useStyles()
+	const variants = useCustomVariant()
 
 	return (
-		<Group position='center' className={classes.container}>
-			<Trans i18nKey='quick-promo-login'>
-				<Title order={1}>🌈</Title>
-				<Title order={2}>You need to log in to save resources.</Title>
-				<Text variant='darkGray'>With a free InReach account you can unlock additional features:</Text>
-				<Text variant='utility1darkGray'>💚 Save and share personalized resource lists</Text>
-				<Text variant='utility1darkGray'>💬 Leave public rating/reviews on organizations</Text>
-				<Text variant='utility1darkGray'>🏠 Suggest organizations in your area</Text>
-				<Text variant='utility1darkGray'>🔗 Claim your organization’s profile page</Text>
-			</Trans>
-
-			<Button className={classes.button} onClick={() => openLoginModal()} variant='primary-icon'>
+		<Stack align='center' spacing={24}>
+			<Stack align='center' spacing={16}>
+				<Trans
+					i18nKey='quick-promo-heading'
+					components={{
+						emojiLg: <Text fz={40}>.</Text>,
+						title2: <Title order={2}>.</Title>,
+						textDarkGray: <Text variant={variants.Text.darkGray}>.</Text>,
+					}}
+				/>
+			</Stack>
+			<Stack align='center' spacing={14}>
+				<Trans
+					i18nKey='quick-promo-body'
+					components={{
+						textUtility1: <Text variant={variants.Text.utility1}>.</Text>,
+					}}
+				/>
+			</Stack>
+			<Button onClick={() => openLoginModal()} variant='primary-icon' fullWidth>
 				{t('log-in')}
 			</Button>
-			<Anchor onClick={() => openSignUpModal()}>{t('dont-have-account')}</Anchor>
-		</Group>
+			<Link external onClick={() => openSignUpModal()}>
+				{t('dont-have-account')}
+			</Link>
+		</Stack>
 	)
 }
 

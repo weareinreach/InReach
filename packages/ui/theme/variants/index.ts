@@ -1,5 +1,6 @@
 import { Anchor } from './Anchor'
 import { Badge } from './Badge'
+import { Button } from './Button'
 import { Card } from './Card'
 import { List } from './List'
 import { Skeleton } from './Skeleton'
@@ -9,6 +10,7 @@ import { Tooltip } from './Tooltip'
 export const variants = {
 	Anchor,
 	Badge,
+	Button,
 	Card,
 	List,
 	Skeleton,
@@ -34,6 +36,14 @@ export const variantNames: VariantNames = {
 		verified: 'verified',
 		attribute: 'attribute',
 	},
+	Button: {
+		accent: 'accent',
+		accentLg: 'accentLg',
+		primaryLg: 'primaryLg',
+		primarySm: 'primarySm',
+		secondaryLg: 'secondaryLg',
+		secondarySm: 'secondarySm',
+	},
 	Card: {
 		hoverCoolGray: 'hoverCoolGray',
 	},
@@ -42,6 +52,7 @@ export const variantNames: VariantNames = {
 		inlineBullet: 'inlineBullet',
 		inlineBulletUtil2: 'inlineBulletUtil2',
 		inlineUtil2: 'inlineUtil2',
+		textDarkGray: 'textDarkGray',
 	},
 	Skeleton: {
 		text: 'text',

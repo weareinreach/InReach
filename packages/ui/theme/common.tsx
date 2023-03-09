@@ -285,6 +285,7 @@ export const commonTheme = {
 					},
 				},
 			}),
+			variants: variants.Button,
 		},
 		Card: {
 			defaultProps: {
@@ -495,6 +496,7 @@ export const commonTheme = {
 				({
 					content: {
 						padding: '0px !important',
+						maxWidth: rem(600),
 						[theme.fn.largerThan('sm')]: {
 							maxHeight: em(800),
 							minWidth: em(600),
