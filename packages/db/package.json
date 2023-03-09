@@ -54,7 +54,7 @@
 		"@types/iso-3166-2": "1.0.0",
 		"@types/langs": "2.0.1",
 		"@types/luxon": "3.2.0",
-		"@types/node": "18.14.6",
+		"@types/node": "18.15.0",
 		"@types/recursive-readdir": "2.2.1",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "0.100.0",
