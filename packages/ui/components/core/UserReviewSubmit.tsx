@@ -1,4 +1,4 @@
-import { Stack, Text, Rating, Textarea, useMantineTheme, Paper, Grid } from '@mantine/core'
+import { Stack, Rating, Textarea, useMantineTheme, Paper, Grid } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { ApiInput } from '@weareinreach/api'
 import { useRouter } from 'next/router'
