@@ -29,7 +29,10 @@ export const Rating = ({
 	const { classes } = useStyles()
 	const { t } = useTranslation('common')
 	const variants = useCustomVariant()
-	const { data, status } = api.review.getAverage.useQuery({ organizationId, orgServiceId, orgLocationId })
+	const { data, status } = api.review.getAverage.useQuery(
+		{ organizationId, orgServiceId, orgLocationId },
+		{ enabled: Boolean(organizationId || orgServiceId || orgLocationId) }
+	)
 
 	const { average, count } = data ?? { average: 0, count: 0 }
 

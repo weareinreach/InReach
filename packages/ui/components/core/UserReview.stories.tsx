@@ -1,3 +1,4 @@
+import { Grid } from '@mantine/core'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { StorybookGrid } from '~ui/layouts/BodyGrid'
@@ -20,6 +21,11 @@ export default {
 		},
 	},
 	decorators: [StorybookGrid],
+	render: (args) => (
+		<Grid.Col sm={8}>
+			<UserReview {...args} />
+		</Grid.Col>
+	),
 } satisfies Meta<typeof UserReview>
 
 type StoryDef = StoryObj<typeof UserReview>
