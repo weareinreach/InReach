@@ -37,7 +37,7 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "8.21.1",
-		"@types/node": "18.14.6",
+		"@types/node": "18.15.0",
 		"@types/prettier": "2.7.2",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "0.100.0",
