@@ -28,3 +28,8 @@ export const useModalProps = () => {
 		modals: contextModalDefinitions,
 	} satisfies Pick<ModalsProviderProps, 'modalProps' | 'modals'>
 }
+declare module '@mantine/modals' {
+	export interface MantineModalsOverride {
+		modals: typeof contextModalDefinitions
+	}
+}

@@ -1,4 +1,5 @@
 import { Button, createStyles, Menu, Text, useMantineTheme, rem } from '@mantine/core'
+import { DefaultTFuncReturn } from 'i18next'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
@@ -23,7 +24,7 @@ export const actionButtonIcons = {
 		useMenu: true,
 	},
 } as const
-
+// TODO: [IN-786] Associate ActionButton click actions
 const actions = {
 	delete: () => {
 		console.log('delete')
@@ -105,7 +106,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 /** Used to display the action buttons when viewing an organization/location/service. */
-export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu }: Props) => {
+export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu, children }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation()
@@ -160,7 +161,7 @@ export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu }: P
 				width={24}
 			/>
 			{!omitLabel && 'labelKey' in iconRender && (
-				<Text className={classes.text}>{t(iconRender.labelKey)}</Text>
+				<Text className={classes.text}>{children ? children : t(iconRender.labelKey)}</Text>
 			)}
 		</Button>
 	)
@@ -173,7 +174,7 @@ export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu }: P
 		</Menu>
 	)
 
-	return <>{'useMenu' in iconRender ? <>{menuComponent}</> : <>{buttonComponent}</>}</>
+	return 'useMenu' in iconRender ? menuComponent : buttonComponent
 }
 
 type Props = {
@@ -186,4 +187,5 @@ type Props = {
 	omitLabel?: boolean
 	/** Specify which buttons will be displayed in the 'more' dropdown menu */
 	outsideMoreMenu?: string[]
+	children?: string | DefaultTFuncReturn
 }

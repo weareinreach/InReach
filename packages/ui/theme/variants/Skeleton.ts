@@ -13,6 +13,11 @@ export const Skeleton = {
 			height: rem(16 * 1.25),
 		},
 	}),
+	utilitySm: (theme) => ({
+		root: {
+			height: rem(14 * 1.25),
+		},
+	}),
 	h1: (theme) => ({
 		root: {
 			height: rem(40 * 1.25),
