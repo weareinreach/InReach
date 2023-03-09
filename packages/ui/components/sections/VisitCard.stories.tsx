@@ -12,6 +12,9 @@ export default {
 		location: locationMock,
 	},
 	decorators: [StorybookGrid],
+	parameters: {
+		layout: 'fullscreen',
+	},
 } satisfies Meta<typeof VisitCard>
 
 type StoryDef = StoryObj<typeof VisitCard>

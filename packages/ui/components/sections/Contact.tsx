@@ -1,4 +1,4 @@
-import { Stack, Title, Text, Grid, Paper, useMantineTheme } from '@mantine/core'
+import { Stack, Title, Text, Grid, Card } from '@mantine/core'
 import { type ApiOutput } from '@weareinreach/api'
 import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
 import { useRouter } from 'next/router'
@@ -146,7 +146,7 @@ export const ContactSection = (props: ContactSectionProps) => {
 	if (isMobile) return <Grid.Col>{body}</Grid.Col>
 	return (
 		<Grid.Col>
-			<Paper withBorder>{body}</Paper>
+			<Card>{body}</Card>
 		</Grid.Col>
 	)
 }

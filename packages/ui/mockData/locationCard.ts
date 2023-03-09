@@ -60,6 +60,44 @@ export const locationMock = {
 	],
 	photos: [],
 	reviews: [],
+	hours: [
+		{
+			dayIndex: 1,
+			start: new Date('1970-01-01T13:30:00.000Z'),
+			end: new Date('1970-01-01T22:30:00.000Z'),
+			closed: false,
+		},
+		{
+			dayIndex: 2,
+			start: new Date('1970-01-01T13:30:00.000Z'),
+			end: new Date('1970-01-01T22:30:00.000Z'),
+			closed: false,
+		},
+		{
+			dayIndex: 3,
+			start: new Date('1970-01-01T13:30:00.000Z'),
+			end: new Date('1970-01-01T22:30:00.000Z'),
+			closed: false,
+		},
+		{
+			dayIndex: 4,
+			start: new Date('1970-01-01T13:30:00.000Z'),
+			end: new Date('1970-01-01T22:30:00.000Z'),
+			closed: false,
+		},
+		{
+			dayIndex: 5,
+			start: new Date('1970-01-01T13:30:00.000Z'),
+			end: new Date('1970-01-01T17:00:00.000Z'),
+			closed: false,
+		},
+		{
+			dayIndex: 5,
+			start: new Date('1970-01-01T18:00:00.000Z'),
+			end: new Date('1970-01-01T03:00:00.000Z'),
+			closed: false,
+		},
+	],
 	services: [
 		{
 			service: {

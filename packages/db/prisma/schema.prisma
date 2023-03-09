@@ -658,8 +658,8 @@ model OrgHours {
   id       String   @id @default(cuid())
   /// Sun 0, Mon 1, Tue 2, Wed 3, Thu 3, Fri 4, Sat 6
   dayIndex Int      @default(0) @db.SmallInt
-  start    DateTime @db.Time(0)
-  end      DateTime @db.Time(0)
+  start    DateTime @db.Timetz(0)
+  end      DateTime @db.Timetz(0)
   closed   Boolean  @default(false)
 
   orgLocation OrgLocation? @relation(fields: [orgLocId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -1319,6 +1319,7 @@ enum TranslationPlurals {
   SINGLE
   PLURAL
   ORDINAL
+  CONTEXT
 }
 
 model OutsideAPIService {
