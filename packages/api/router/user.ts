@@ -1,5 +1,5 @@
-import { createCognitoUser } from '@weareinreach/auth'
-import { type Prisma } from '@weareinreach/db'
+import { createCognitoUser, forgotPassword } from '@weareinreach/auth'
+import { z } from 'zod'
 
 import { handleError } from '~api/lib'
 import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
@@ -124,4 +124,11 @@ export const userRouter = defineRouter({
 			handleError(error)
 		}
 	}),
+	resetPassword: publicProcedure
+		.input(z.object({ email: z.string().email() }))
+		.mutation(async ({ input }) => {
+			const response = await forgotPassword(input.email)
+
+			return response
+		}),
 })
