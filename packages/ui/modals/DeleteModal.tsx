@@ -1,4 +1,4 @@
-import { createStyles, CloseButton, Group, Text, TextInput, rem } from '@mantine/core'
+import { createStyles, PasswordInput, Group, Text, TextInput, rem } from '@mantine/core'
 import { closeModal, openContextModal } from '@mantine/modals'
 import { ContextModalProps } from '@mantine/modals/lib/context'
 import { useTranslation } from 'next-i18next'
@@ -10,7 +10,6 @@ import { ModalTitle, ModalTitleProps } from './ModalTitle'
 const useStyles = createStyles((theme) => ({
 	container: {
 		flexDirection: 'column',
-		marginTop: rem(40),
 	},
 	heading: {
 		textAlign: 'center',
@@ -44,7 +43,7 @@ export const DeleteModalBody = ({ context, id, innerProps }: ContextModalProps<{
 		<Group className={classes.container}>
 			<Text className={classes.heading}>{t('delete-account', { ns: 'common' })}</Text>
 			<Text className={classes.subHeading}>{t('delete-account-password', { ns: 'common' })}</Text>
-			<TextInput
+			<PasswordInput
 				label={t('password', { ns: 'common' })}
 				placeholder={t('enter-password-placeholder', { ns: 'common' }) ?? ''}
 				required

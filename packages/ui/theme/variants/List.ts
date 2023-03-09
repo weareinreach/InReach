@@ -68,4 +68,9 @@ export const List = {
 			listStyle: 'none',
 		},
 	}),
+	textDarkGray: (theme) => ({
+		item: {
+			color: theme.other.colors.secondary.darkGray,
+		},
+	}),
 } satisfies VariantObj

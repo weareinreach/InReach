@@ -1,10 +1,11 @@
-import { Center, Title, Stack } from '@mantine/core'
+import { Center } from '@mantine/core'
 import { Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
 import { csrf, providers, signin, cognito } from '~ui/mockData/login'
 
-import { openLoginModal } from './Login'
+import { openForgotPasswordModal } from './ForgotPassword'
+import { getTRPCMock } from '../lib/getTrpcMock'
 
 /** Define the modal to display here. */
 // const modalToDisplay = LoginModal()
@@ -12,19 +13,26 @@ import { openLoginModal } from './Login'
 const ModalTemplate = () => {
 	return (
 		<Center maw='100vw' h='100vh'>
-			<Stack spacing={32}>
-				<Button onClick={() => openLoginModal()}>Open Modal</Button>
-				<Title order={3}>{`Form will succeed with any email address and a password of "good"`}</Title>
-			</Stack>
+			<Button onClick={() => openForgotPasswordModal()}>Open Modal</Button>
 		</Center>
 	)
 }
 
 export default {
-	title: 'Modals/Login',
+	title: 'Modals/Forgot Password',
 	component: ModalTemplate,
 	parameters: {
-		msw: [signin(), csrf(), providers(), cognito()],
+		msw: [
+			getTRPCMock({
+				path: ['user', 'resetPassword'],
+				type: 'mutation',
+				response: {
+					CodeDeliveryDetails: {
+						DeliveryMedium: 'EMAIL',
+					},
+				},
+			}),
+		],
 		layout: 'fullscreen',
 	},
 } satisfies Meta<typeof ModalTemplate>
