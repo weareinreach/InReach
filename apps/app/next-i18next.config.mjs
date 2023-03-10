@@ -110,5 +110,6 @@ const config = {
 	serializeConfig: false,
 	use: isBrowser ? [ChainedBackend, intervalPlural] : [intervalPlural],
 	maxParallelReads: 20,
+	joinArrays: '',
 }
 export default config

@@ -15,7 +15,6 @@ import { SignUpModalBody } from './SignUp'
 const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
 	login: LoginModalBody,
 	quickPromotion: QuickPromotionModalBody,
-	signup: SignUpModalBody,
 	delete: DeleteModalBody,
 	review: ReviewModalBody,
 	forgotPassword: ForgotPasswordModalBody,

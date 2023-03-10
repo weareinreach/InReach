@@ -20,8 +20,8 @@ export const LoginModalBody = ({ context, id, innerProps }: ContextModalProps<{}
 	const { t } = useTranslation(['common'])
 	const [loginError, setLoginError] = useState(false)
 	const LoginSchema = z.object({
-		email: z.string().email({ message: t('error-enter-valid-email') as string }),
-		password: z.string().min(1, t('error-password-blank') as string),
+		email: z.string().email({ message: t('form-error-enter-valid-email') as string }),
+		password: z.string().min(1, t('form-error-password-blank') as string),
 	})
 	const form = useForm<LoginFormProps>({
 		validate: zodResolver(LoginSchema),
@@ -58,25 +58,32 @@ export const LoginModalBody = ({ context, id, innerProps }: ContextModalProps<{}
 			</Button>
 			<Text variant={variants.Text.utility4darkGray}>
 				<Trans
-					i18nKey='login-disclaimer'
-					components={[
-						<Link
-							key={0}
-							external
-							onClick={() => openPrivacyStatementModal()}
-							variant={variants.Link.inheritStyle}
-						>
-							Privacy Policy
-						</Link>,
-						<Link
-							key={1}
-							external
-							href='https://inreach.org/terms-of-use/'
-							variant={variants.Link.inheritStyle}
-						>
-							Terms of Use
-						</Link>,
-					]}
+					i18nKey='agree-disclaimer'
+					values={{
+						action: '$t(log-in)',
+					}}
+					components={{
+						link1: (
+							<Link
+								key={0}
+								external
+								onClick={() => openPrivacyStatementModal()}
+								variant={variants.Link.inheritStyle}
+							>
+								Privacy Policy
+							</Link>
+						),
+						link2: (
+							<Link
+								key={1}
+								external
+								href='https://inreach.org/terms-of-use/'
+								variant={variants.Link.inheritStyle}
+							>
+								Terms of Use
+							</Link>
+						),
+					}}
 				/>
 			</Text>
 			<Stack spacing={0} align='center'>

@@ -49,6 +49,7 @@ i18n
 		cleanCode: true,
 		supportedLngs: locales,
 		ns,
+		joinArrays: '',
 		// resources,
 	})
 
