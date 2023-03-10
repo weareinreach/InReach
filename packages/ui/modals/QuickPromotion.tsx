@@ -8,7 +8,7 @@ import { useCustomVariant } from '~ui/hooks'
 
 import { openLoginModal } from './Login'
 import { ModalTitle } from './ModalTitle'
-import { openSignUpModal } from './SignUp'
+import { SignupModalLauncher } from './SignUp'
 
 export const QuickPromotionModalBody = ({ context, id, innerProps }: ContextModalProps<{}>) => {
 	const { t } = useTranslation(['common'])
@@ -37,9 +37,10 @@ export const QuickPromotionModalBody = ({ context, id, innerProps }: ContextModa
 			<Button onClick={() => openLoginModal()} variant='primary-icon' fullWidth>
 				{t('log-in')}
 			</Button>
-			<Link external onClick={() => openSignUpModal()}>
+			<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
+			{/* <Link external onClick={() => openSignUpModal()}>
 				{t('dont-have-account')}
-			</Link>
+			</Link> */}
 		</Stack>
 	)
 }

@@ -12,7 +12,8 @@ import {
 	Progress,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
-import { PolymorphicComponentProps, createPolymorphicComponent } from '@mantine/utils'
+import { closeAllModals, closeModal } from '@mantine/modals'
+import { createPolymorphicComponent } from '@mantine/utils'
 import { useTranslation, Trans } from 'next-i18next'
 import { useState, type ElementType, forwardRef } from 'react'
 import { z } from 'zod'
@@ -108,7 +109,7 @@ type SignUpForm = {
 	name: string
 	password: string
 }
-export const SignUpModalBody = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((props, ref) => {
 	const { t } = useTranslation()
 	const { isMobile } = useScreenSize()
 	const [opened, setOpened] = useState(false)
@@ -240,17 +241,32 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, ButtonProps>((props
 
 	return (
 		<>
-			<Modal opened={opened} onClose={() => setOpened(false)} fullScreen={isMobile} title={modalTitle}>
+			<Modal
+				opened={opened}
+				onClose={() => setOpened(false)}
+				fullScreen={isMobile}
+				title={modalTitle}
+				zIndex={500}
+			>
 				<Stack spacing={24} align='center'>
 					<RichTranslate i18nKey='sign-up-header' />
 					{step2Reg}
 				</Stack>
 			</Modal>
-			<Box component='button' ref={ref} onClick={() => setOpened(true)} {...props} />
+			<Box
+				component='button'
+				ref={ref}
+				onClick={() => {
+					setOpened(true)
+				}}
+				{...props}
+			/>
 		</>
 	)
 })
 
 SignUpModalBody.displayName = 'SignupModalBody'
 
-export const SignupModalLauncher = createPolymorphicComponent<'button', ButtonProps>(SignUpModalBody)
+export const SignupModalLauncher = createPolymorphicComponent<'button', SignUpModalBodyProps>(SignUpModalBody)
+
+interface SignUpModalBodyProps extends ButtonProps {}

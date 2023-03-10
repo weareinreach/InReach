@@ -14,7 +14,7 @@ import { useCustomVariant } from '~ui/hooks'
 import { openForgotPasswordModal } from './ForgotPassword'
 import { ModalTitle, ModalTitleProps } from './ModalTitle'
 import { openPrivacyStatementModal } from './PrivacyStatement'
-import { openSignUpModal } from './SignUp'
+import { SignupModalLauncher } from './SignUp'
 
 export const LoginModalBody = ({ context, id, innerProps }: ContextModalProps<{}>) => {
 	const { t } = useTranslation(['common'])
@@ -90,9 +90,10 @@ export const LoginModalBody = ({ context, id, innerProps }: ContextModalProps<{}
 				<Link external onClick={() => openForgotPasswordModal()}>
 					{t('forgot-password')}
 				</Link>
-				<Link external onClick={() => openSignUpModal()}>
+				<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
+				{/* <Link external onClick={() => openSignUpModal()}>
 					{t('dont-have-account')}
-				</Link>
+				</Link> */}
 			</Stack>
 		</Stack>
 	)
