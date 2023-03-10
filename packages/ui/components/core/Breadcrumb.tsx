@@ -81,6 +81,9 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 export type BreadcrumbProps = BreadcrumbTypes & {
 	onClick: MouseEventHandler<HTMLButtonElement>
 }
+export type ModalTitleBreadcrumb = BreadcrumbTypes & {
+	onClick?: MouseEventHandler<HTMLButtonElement>
+}
 
 export type BreadcrumbTypes = Close | Back | BackToDynamic
 interface Close {

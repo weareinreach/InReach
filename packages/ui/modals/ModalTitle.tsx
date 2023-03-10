@@ -3,7 +3,7 @@ import { closeAllModals } from '@mantine/modals'
 import { DefaultTFuncReturn } from 'i18next'
 import { useTranslation } from 'next-i18next'
 
-import { ActionButtons, Breadcrumb, BreadcrumbTypes } from '~ui/components/core'
+import { ActionButtons, Breadcrumb, ModalTitleBreadcrumb } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
 
 export const ModalTitle = (props: ModalTitleProps) => {
@@ -41,7 +41,7 @@ export const ModalTitle = (props: ModalTitleProps) => {
 // type TitleIcons = keyof typeof iconMap
 
 export type ModalTitleProps = {
-	breadcrumb: BreadcrumbTypes
+	breadcrumb: ModalTitleBreadcrumb
 	icons?: ('save' | 'share')[]
 	rightText?: string | DefaultTFuncReturn
 }
