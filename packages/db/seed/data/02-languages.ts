@@ -1,4 +1,5 @@
 import ISO6391 from 'iso-google-locales'
+import capitalize from 'just-capitalize'
 import * as langSupp from 'langs'
 
 import { Prisma, generateId } from '~db/.'
@@ -22,7 +23,7 @@ export const genSeedLanguageData = (task: ListrTask) => {
 	const data: Prisma.LanguageCreateManyInput[] = languages.map((lang, i) => {
 		const localeCode = lang
 		const languageName = ISO6391.getName(lang)
-		const nativeName = ISO6391.getNativeName(lang)
+		const nativeName = capitalize(ISO6391.getNativeName(lang))
 		const activelyTranslated = activeTranslations.includes(lang)
 		const iso6392 = langSupp.where('1', lang)?.[2]
 		const count = i + 1

@@ -335,6 +335,7 @@ importers:
       '@weareinreach/eslint-config': 0.100.0
       dotenv-cli: 7.0.0
       eslint: 8.35.0
+      just-capitalize: 3.2.0
       just-diff: 5.2.0
       just-flush: 2.3.0
       just-intersect: 4.3.0
@@ -381,6 +382,7 @@ importers:
       '@weareinreach/eslint-config': link:../eslint-config
       dotenv-cli: 7.0.0
       eslint: 8.35.0
+      just-capitalize: 3.2.0
       listr2: 5.0.7
       next: 13.2.4_biqbaboplfbrettd7655fr4n2y
       prettier: 2.8.4
@@ -543,6 +545,7 @@ importers:
       inquirer: 9.1.4
       iso-3166-2: 1.0.0
       iso-google-locales: 3.0.4
+      just-capitalize: 3.2.0
       langs: 2.0.0
       libphonenumber-js: 1.10.21
       listr2: 5.0.7
@@ -601,6 +604,7 @@ importers:
       inquirer: 9.1.4
       iso-3166-2: 1.0.0
       iso-google-locales: 3.0.4_ltnamflm7ayajalculwqyezjya
+      just-capitalize: 3.2.0
       langs: 2.0.0
       libphonenumber-js: 1.10.21
       listr2: 5.0.7
@@ -14735,6 +14739,10 @@ packages:
     dependencies:
       array-includes: 3.1.6
       object.assign: 4.1.4
+    dev: true
+
+  /just-capitalize/3.2.0:
+    resolution: {integrity: sha512-FK8U9A5AHCIGxlEXg3RFJkb9Nz/fS9luJlrfRf0bFBZU6xnIQ6tbwl+HitMJLwCFszZqVaXQcyeoy8/PYABS6A==}
     dev: true
 
   /just-debounce/1.1.0:
