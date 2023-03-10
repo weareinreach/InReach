@@ -10,7 +10,6 @@ import { LoginModalBody } from './Login'
 import { PrivacyStatementModalBody } from './PrivacyStatement'
 import { QuickPromotionModalBody } from './QuickPromotion'
 import { ReviewModalBody } from './Review'
-import { SignUpModalBody } from './SignUp'
 
 const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
 	login: LoginModalBody,
