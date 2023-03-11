@@ -21,9 +21,10 @@ declare module 'next-auth/core/types' {
 	}
 	export interface User extends DefaultUser {
 		id: string
+		// email?: never
+		email: string
 		roles: string[]
 		permissions: string[]
-		email: string
 	}
 }
 declare module 'next-auth/jwt' {
