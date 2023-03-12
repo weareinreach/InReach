@@ -11,6 +11,18 @@ export default {
 	args: {
 		services: servicesMock,
 	},
+	parameters: {
+		layout: 'fullscreen',
+		nextjs: {
+			router: {
+				pathname: '/org/[slug]',
+				asPath: '/org/mockOrg',
+				query: {
+					slug: 'mockOrg',
+				},
+			},
+		},
+	},
 	decorators: [StorybookGrid],
 } satisfies Meta<typeof ServicesInfoCard>
 
