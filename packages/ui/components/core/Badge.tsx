@@ -403,7 +403,7 @@ type AttributeTagProps = {
 	tsNs: string
 }
 
-type CommunityTagProps = {
+export type CommunityTagProps = {
 	variant: 'community'
 	icon: string
 	tsKey: string
