@@ -16,10 +16,8 @@ export const userRouter = defineRouter({
 			const newUser = await ctx.prisma.$transaction(async (tx) => {
 				const user = await tx.user.create(input.prisma)
 				const cognitoUser = await createCognitoUser(input.cognito)
-				return {
-					user,
-					cognitoUser,
-				}
+				if (user.id && cognitoUser) return { success: true }
+				return { success: false }
 			})
 			return newUser
 		} catch (error) {
