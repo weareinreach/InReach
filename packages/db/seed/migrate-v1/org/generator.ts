@@ -458,7 +458,6 @@ export const generateRecords = async (task: ListrTask) => {
 					data.orgPhone.add({
 						id,
 						legacyId: phone._id.$oid,
-						organizationId: orgId,
 						countryId,
 						number: phoneData?.nationalNumber ?? phone.digits,
 						ext: phoneData?.ext,
@@ -470,7 +469,10 @@ export const generateRecords = async (task: ListrTask) => {
 						migrationReview,
 					})
 					rollback.orgPhone.add(id)
-
+					data.organizationPhone.add({
+						organizationId: orgId,
+						phoneId: id,
+					})
 					countPhone++
 				}
 				log(
@@ -500,7 +502,6 @@ export const generateRecords = async (task: ListrTask) => {
 					data.orgEmail.add({
 						id,
 						email: email.email,
-						orgId,
 						legacyId: email._id.$oid,
 						firstName: email.first_name === '' ? undefined : email.first_name ?? undefined,
 						lastName: email.last_name === '' ? undefined : email.last_name ?? undefined,
@@ -511,6 +512,10 @@ export const generateRecords = async (task: ListrTask) => {
 						updatedAt,
 					})
 					rollback.orgEmail.add(id)
+					data.organizationEmail.add({
+						organizationId: orgId,
+						orgEmailId: id,
+					})
 					countEmail++
 				}
 				log(

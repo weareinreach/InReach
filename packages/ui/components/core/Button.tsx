@@ -186,6 +186,7 @@ export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'b
 				classNames={merge(classNames, baseClasses)}
 				ref={ref}
 				{...others}
+				w={props.fullWidth ? '100%' : undefined}
 			>
 				{children}
 			</MantineButton>
@@ -210,6 +211,9 @@ interface CustomButtonProps extends MantineButtonProps {
 	leftIcon?: JSX.Element
 	/** Disabled state */
 	disabled?: boolean
+	/** Set width to 100% */
+	fullWidth?: boolean
+	loading?: boolean
 }
 type CustomVariants = (typeof customVariants)[number]
 type ButtonVariant = ButtonProps['variant']

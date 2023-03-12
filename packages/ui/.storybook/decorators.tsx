@@ -3,7 +3,7 @@ import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 import { StoryContext, StoryFn } from '@storybook/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { httpBatchLink, loggerLink } from '@trpc/client'
+import { httpLink, loggerLink } from '@trpc/client'
 import { transformer } from '@weareinreach/api/lib/transformer'
 import { useState, useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next'
@@ -24,12 +24,12 @@ const mantineProviderProps: Omit<MantineProviderProps, 'children'> = {
 export const WithMantine = (Story: StoryFn) => {
 	return (
 		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
-			<TypographyStylesProvider>
-				<ModalsProvider {...useModalProps()}>
-					<Notifications />
-					<Story />
-				</ModalsProvider>
-			</TypographyStylesProvider>
+			{/* <TypographyStylesProvider> */}
+			<ModalsProvider {...useModalProps()}>
+				<Notifications />
+				<Story />
+			</ModalsProvider>
+			{/* </TypographyStylesProvider> */}
 		</MantineProvider>
 	)
 }
@@ -60,7 +60,7 @@ export const WithTRPC = (Story: StoryFn) => {
 	const [trpcClient, setTRPCClient] = useState(
 		storybookTRPC.createClient({
 			links: [
-				httpBatchLink({
+				httpLink({
 					url: '/trpc',
 				}),
 				devtoolsLink({
@@ -75,7 +75,7 @@ export const WithTRPC = (Story: StoryFn) => {
 		queryClient.clear()
 		const trpc_client = storybookTRPC.createClient({
 			links: [
-				httpBatchLink({
+				httpLink({
 					url: '/trpc',
 				}),
 			],

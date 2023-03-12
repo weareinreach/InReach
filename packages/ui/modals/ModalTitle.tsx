@@ -4,14 +4,13 @@ import { useTranslation } from 'next-i18next'
 
 import { ActionButtons, Breadcrumb, BreadcrumbTypes } from '~ui/components/core'
 
-const iconMap = {
-	save: <ActionButtons iconKey='save' omitLabel />,
-	share: <ActionButtons iconKey='share' omitLabel />,
-} as const
-
 export const ModalTitle = (props: ModalTitleProps) => {
 	const { breadcrumb, icons } = props
 	const { t } = useTranslation()
+	const iconMap = {
+		save: <ActionButtons iconKey='save' omitLabel />,
+		share: <ActionButtons iconKey='share' omitLabel />,
+	} as const
 
 	return (
 		<Group position='apart' noWrap>
@@ -31,9 +30,9 @@ export const ModalTitle = (props: ModalTitleProps) => {
 	)
 }
 
-type TitleIcons = keyof typeof iconMap
+// type TitleIcons = keyof typeof iconMap
 
 export type ModalTitleProps = {
 	breadcrumb: BreadcrumbTypes
-	icons?: TitleIcons[]
+	icons?: ('save' | 'share')[]
 }

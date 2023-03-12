@@ -38,6 +38,8 @@ export const cognito = () =>
 				ctx.delay(),
 				ctx.json({
 					url: 'http://localhost:6006/?path=/story/modals-login--modal',
+					status: 200,
+					ok: true,
 				})
 			)
 		}
@@ -46,7 +48,10 @@ export const cognito = () =>
 			ctx.delay(),
 			ctx.status(401),
 			ctx.json({
-				url: 'http://localhost:6006/api/auth/error?error=Incorrect%20username%20or%20password.',
+				error: 'Incorrect username or password.',
+				ok: false,
+				status: 401,
+				url: 'null',
 			})
 		)
 	})

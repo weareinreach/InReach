@@ -8,6 +8,7 @@ import { I18nextKeysOnDemand } from '@weareinreach/i18next-keys-ondemand'
 import axios from 'axios'
 import ChainedBackend from 'i18next-chained-backend'
 import HttpBackend from 'i18next-http-backend'
+import intervalPlural from 'i18next-intervalplural-postprocessor'
 import LocalStorageBackend from 'i18next-localstorage-backend'
 import MultiBackend from 'i18next-multiload-backend-adapter'
 import { z } from 'zod'
@@ -107,7 +108,7 @@ const config = {
 
 	// updateMissing: true,
 	serializeConfig: false,
-	use: isBrowser ? [ChainedBackend] : [],
+	use: isBrowser ? [ChainedBackend, intervalPlural] : [intervalPlural],
 	maxParallelReads: 20,
 }
 export default config

@@ -47,7 +47,7 @@ model Account {
   session_state     String?
 
   user   User   @relation("Account", fields: [userId], references: [id], onDelete: Cascade)
-  userId String /// @zod.string.cuid()
+  userId String
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -65,7 +65,7 @@ model Session {
   expires      DateTime
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String /// @zod.string.cuid()
+  userId String
 
   //@@schema("user")
 }
@@ -108,9 +108,9 @@ model User {
   // Current location - for LCR
   currentCity      String?
   currentGovDist   GovDist?    @relation(fields: [currentGovDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  currentGovDistId String? /// @zod.string.cuid()
+  currentGovDistId String?
   currentCountry   Country?    @relation(name: "currentCountry", fields: [currentCountryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  currentCountryId String? /// @zod.string.cuid()
+  currentCountryId String?
 
   // Data for AWS Cognito migration
   //  migrated from old DB - once user is migrated to Cognito, legacy fields are cleared, migrateDate is set
@@ -127,13 +127,13 @@ model User {
   listsSharedWithUser ListSharedWith[]
 
   userType   UserType @relation(fields: [userTypeId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  userTypeId String /// @zod.string.cuid()
+  userTypeId String
 
   langPref   Language? @relation(fields: [langPrefId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  langPrefId String? /// @zod.string.cuid()
+  langPrefId String?
 
   source   Source? @relation(name: "userSource", fields: [sourceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  sourceId String? /// @zod.string.cuid()
+  sourceId String?
 
   mailReceived UserMail[] @relation("mailTo")
   mailSent     UserMail[] @relation("mailFrom")
@@ -244,16 +244,16 @@ model UserSurvey {
   identifiesAs SurveySOG[]
 
   countryOrigin   Country? @relation("origin", fields: [countryOriginId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  countryOriginId String? /// @zod.string.cuid()
+  countryOriginId String?
 
   immigration   UserImmigration? @relation(fields: [immigrationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  immigrationId String? /// @zod.string.cuid()
+  immigrationId String?
 
   currentCity      String?
   currentGovDist   GovDist? @relation(fields: [currentGovDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  currentGovDistId String? /// @zod.string.cuid()
+  currentGovDistId String?
   currentCountry   Country? @relation(name: "currentLocation", fields: [currentCountryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  currentCountryId String? /// @zod.string.cuid()
+  currentCountryId String?
 
   //@@schema("user")
 }
@@ -350,7 +350,7 @@ model UserSavedList {
   sharedLinkKey String?             @unique
 
   ownedBy   User   @relation(fields: [ownedById], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  ownedById String /// @zod.string.cuid()
+  ownedById String
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -364,7 +364,7 @@ model UserSavedList {
 model UserMail {
   id         String   @id @default(cuid())
   toUser     User     @relation("mailTo", fields: [toUserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  toUserId   String /// @zod.string.cuid()
+  toUserId   String
   toExternal String[] /// Array of email addresses
   read       Boolean  @default(false)
   subject    String
@@ -372,7 +372,7 @@ model UserMail {
 
   from       String?
   fromUser   User?   @relation("mailFrom", fields: [fromUserId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  fromUserId String? /// @zod.string.cuid()
+  fromUserId String?
 
   replies      UserMail[] @relation("userMailReplies")
   responseTo   UserMail?  @relation("userMailReplies", fields: [responseToId], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -396,10 +396,10 @@ model Organization {
 
   // nested data
   description   FreeText?               @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  descriptionId String?                 @unique /// @zod.string.cuid()
-  emails        OrgEmail[]
+  descriptionId String?                 @unique
+  emails        OrganizationEmail[]
   locations     OrgLocation[]
-  phones        OrgPhone[]
+  phones        OrganizationPhone[]
   photos        OrgPhoto[]
   services      OrgService[]
   socialMedia   OrgSocialMedia[]
@@ -417,7 +417,7 @@ model Organization {
   outsideApi OutsideAPI[]
 
   source   Source @relation(fields: [sourceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  sourceId String /// @zod.string.cuid()
+  sourceId String
 
   // attachments
   userLists       SavedOrganization[]
@@ -450,22 +450,20 @@ model OrgEmail {
   deleted    Boolean @default(false)
 
   title   UserTitle? @relation(fields: [titleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  titleId String? /// @zod.string.cuid()
+  titleId String?
 
   description   FreeText? @relation(references: [id], fields: [descriptionId])
   descriptionId String?   @unique
 
-  organization Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgId        String? /// @zod.string.cuid()
-
   associatedUsers UserToOrganization[]
 
   // optional - attach email to a specific location/service
+  organization OrganizationEmail[]
   locations    OrgLocationEmail[]
   services     OrgServiceEmail[]
   /// associated only with location/service and not overall organization (for large orgs w/ multiple locations)
-  locationOnly Boolean            @default(false)
-  serviceOnly  Boolean            @default(false)
+  locationOnly Boolean             @default(false)
+  serviceOnly  Boolean             @default(false)
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -491,20 +489,19 @@ model OrgPhone {
 
   /// Country profiles have intl dial prefix
   country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  countryId String /// @zod.string.cuid()
+  countryId String
 
   phoneType   PhoneType? @relation(fields: [phoneTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  phoneTypeId String? /// @zod.string.cuid()
-
-  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String? /// @zod.string.cuid()
+  phoneTypeId String?
 
   associatedUsers UserToOrganization[]
 
   /// associated only with location and not overall organization (for large orgs w/ multiple locations)
-  locations  OrgLocationPhone[]
-  services   OrgServicePhone[]
-  phoneLangs OrgPhoneLanguage[]
+
+  organization OrganizationPhone?
+  locations    OrgLocationPhone[]
+  services     OrgServicePhone[]
+  phoneLangs   OrgPhoneLanguage[]
 
   locationOnly Boolean @default(false)
 
@@ -526,10 +523,10 @@ model OrgSocialMedia {
   published Boolean @default(true)
 
   service   SocialMediaService @relation(fields: [serviceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  serviceId String /// @zod.string.cuid()
+  serviceId String
 
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String /// @zod.string.cuid()
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String?
 
   orgLocation     OrgLocation? @relation(fields: [orgLocationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgLocationId   String?
@@ -548,10 +545,11 @@ model OrgWebsite {
   id            String    @id @default(cuid())
   url           String
   description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  descriptionId String?   @unique /// @zod.string.cuid()
+  descriptionId String?   @unique
+  isPrimary     Boolean   @default(false)
 
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String?
 
   orgLocation     OrgLocation? @relation(fields: [orgLocationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgLocationId   String?
@@ -580,10 +578,10 @@ model OrgLocation {
   primary  Boolean @default(true)
 
   govDist   GovDist? @relation(fields: [govDistId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  govDistId String? /// @zod.string.cuid()
+  govDistId String?
 
   country   Country @relation(fields: [countryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  countryId String /// @zod.string.cuid()
+  countryId String
 
   longitude Float?                               @db.Real
   latitude  Float?                               @db.Real
@@ -598,7 +596,7 @@ model OrgLocation {
   attributes LocationAttribute[]
 
   organization   Organization         @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgId          String /// @zod.string.cuid()
+  orgId          String
   allowedEditors LocationPermission[]
 
   emails       OrgLocationEmail[] /// if location specific
@@ -639,10 +637,10 @@ model OrgPhoto {
   deleted   Boolean @default(false)
 
   organization Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgId        String? /// @zod.string.cuid()
+  orgId        String?
 
   orgLocation   OrgLocation? @relation(fields: [orgLocationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgLocationId String? /// @zod.string.cuid()
+  orgLocationId String?
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -660,15 +658,15 @@ model OrgHours {
   id       String   @id @default(cuid())
   /// Sun 0, Mon 1, Tue 2, Wed 3, Thu 3, Fri 4, Sat 6
   dayIndex Int      @default(0) @db.SmallInt
-  start    DateTime @db.Time(0)
-  end      DateTime @db.Time(0)
+  start    DateTime @db.Timetz(0)
+  end      DateTime @db.Timetz(0)
   closed   Boolean  @default(false)
 
   orgLocation OrgLocation? @relation(fields: [orgLocId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgLocId    String? /// @zod.string.cuid()
+  orgLocId    String?
 
   orgService     OrgService?   @relation(fields: [orgServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgServiceId   String? /// @zod.string.cuid()
+  orgServiceId   String?
   organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   organizationId String?
 
@@ -728,11 +726,11 @@ model OrgService {
   emails        OrgServiceEmail[]
   accessDetails ServiceAccess[]
   description   FreeText?          @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  descriptionId String?            @unique /// @zod.string.cuid()
+  descriptionId String?            @unique
 
   // attachments
   organization   Organization?        @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String? /// @zod.string.cuid()
+  organizationId String?
   locations      OrgLocationService[]
   userLists      SavedService[]
 
@@ -756,11 +754,11 @@ model ServiceArea {
   districts ServiceAreaDist[]
 
   organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String?       @unique /// @zod.string.cuid()
+  organizationId String?       @unique
   orgLocation    OrgLocation?  @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgLocationId  String?       @unique /// @zod.string.cuid()
+  orgLocationId  String?       @unique
   orgService     OrgService?   @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgServiceId   String?       @unique /// @zod.string.cuid()
+  orgServiceId   String?       @unique
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -800,21 +798,21 @@ model OrgReview {
   userId String
 
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String /// @zod.string.cuid()
+  organizationId String
 
   // Optional: Review can be attached to a specific service.
   orgService   OrgService? @relation(fields: [orgServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgServiceId String? /// @zod.string.cuid()
+  orgServiceId String?
 
   // Optional: Review can be attached to a specific service.
   orgLocation   OrgLocation? @relation(fields: [orgLocationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgLocationId String? /// @zod.string.cuid()
+  orgLocationId String?
 
   // Store the language of the review text
   // Use session locale value or Google Translate lang detect API
   // Optional: do not store anything if 'comment' is null
   language       Language?          @relation(fields: [langId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  langId         String? /// @zod.string.cuid()
+  langId         String?
   /// How confident is the API guess?
   langConfidence Float?
   translatedText TranslatedReview[]
@@ -827,9 +825,9 @@ model OrgReview {
   // Optional - only applicable if user is LCR
   lcrCity      String?
   lcrGovDist   GovDist? @relation(fields: [lcrGovDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  lcrGovDistId String? /// @zod.string.cuid()
+  lcrGovDistId String?
   lcrCountry   Country? @relation(fields: [lcrCountryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  lcrCountryId String? /// @zod.string.cuid()
+  lcrCountryId String?
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -871,7 +869,7 @@ model AttributeCategory {
   active  Boolean @default(true)
 
   namespace TranslationNamespace @relation(fields: [ns], references: [name], onDelete: Restrict, onUpdate: Cascade)
-  ns        String /// @zod.string.cuid()
+  ns        String
 
   attributes AttributeToCategory[]
 
@@ -891,6 +889,9 @@ model Attribute {
   /// Internal description
   intDesc String?
   active  Boolean @default(true)
+
+  /// Set this flag to have attribute display on Location/Visit cards
+  showOnLocation Boolean?
 
   categories AttributeToCategory[]
 
@@ -938,14 +939,14 @@ model AttributeSupplement {
   data    Json? /// @zod.custom.use(AttributeSupplementDataSchema)
   boolean Boolean?
 
-  text   FreeText? @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  textId String?   @unique /// @zod.string.cuid()
-
-  country   Country? @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  countryId String?
-
+  country    Country?  @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId  String?
+  govDist    GovDist?  @relation(fields: [govDistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  govDistId  String?
   language   Language? @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   languageId String?
+  text       FreeText? @relation(fields: [textId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  textId     String?   @unique
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -1005,7 +1006,7 @@ model ServiceTag {
   tsNs  String
 
   category   ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  categoryId String /// @zod.string.cuid()
+  categoryId String
 
   /// Tables referencing ServiceTag
   attachedServices OrgServiceTag[]
@@ -1161,15 +1162,15 @@ model GovDist {
   geoWKT  String?
 
   country   Country @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  countryId String /// @zod.string.cuid()
+  countryId String
 
   govDistType   GovDistType @relation(fields: [govDistTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  govDistTypeId String /// @zod.string.cuid()
+  govDistTypeId String
 
   /// table can be used for "sub districts" (State -> County -> City)
   isPrimary    Boolean?  @default(true)
   parent       GovDist?  @relation(name: "associatedDistricts", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  parentId     String? /// @zod.string.cuid()
+  parentId     String?
   subDistricts GovDist[] @relation("associatedDistricts")
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
@@ -1177,11 +1178,12 @@ model GovDist {
   tsNs  String
 
   /// Tables using GovDist
-  locations    OrgLocation[]
-  reviews      OrgReview[]
-  users        User[]
-  serviceAreas ServiceAreaDist[]
-  userSurveys  UserSurvey[]
+  attributeSupplements AttributeSupplement[]
+  locations            OrgLocation[]
+  reviews              OrgReview[]
+  users                User[]
+  serviceAreas         ServiceAreaDist[]
+  userSurveys          UserSurvey[]
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -1288,11 +1290,9 @@ model TranslationKey {
   attribute          Attribute?
   country            Country?            @relation("country")
   demonym            Country?            @relation("demonym")
-  footerLink         FooterLink?
   freeText           FreeText?
   govDist            GovDist?
   govDistType        GovDistType?
-  navigation         Navigation?
   phoneType          PhoneType?
   serviceCategory    ServiceCategory?
   serviceTag         ServiceTag?
@@ -1319,6 +1319,7 @@ enum TranslationPlurals {
   SINGLE
   PLURAL
   ORDINAL
+  CONTEXT
 }
 
 model OutsideAPIService {
@@ -1397,60 +1398,13 @@ enum VisibilitySetting {
   //@@schema("system")
 }
 
-/// Define the App navigation tree
-///  this will be used to generate a json file at build time
-model Navigation {
-  id       String  @id @default(cuid())
-  display  String
-  href     String?
-  isParent Boolean @default(true)
-  icon     String?
-
-  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
-  tsKey String
-  tsNs  String
-
-  parentItem Navigation?  @relation(name: "navHeirarchy", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  parentId   String? /// @zod.string.cuid()
-  children   Navigation[] @relation("navHeirarchy")
-
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  auditLogs     AuditLog[]
-  internalNotes InternalNote[]
-  //@@schema("system")
-
-  @@unique([tsKey, tsNs])
-  @@unique([display, href])
-}
-
-model FooterLink {
-  id      String  @id @default(cuid())
-  display String
-  href    String
-  icon    String?
-
-  key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
-  tsKey String
-  tsNs  String
-
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  auditLogs     AuditLog[]
-  internalNotes InternalNote[]
-  //@@schema("system")
-
-  @@unique([tsKey, tsNs])
-  @@unique([display, href])
-}
-
 model SocialMediaLink {
   id   String @id @default(cuid())
   href String @unique
   icon String
 
   service   SocialMediaService @relation(fields: [serviceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  serviceId String /// @zod.string.cuid()
+  serviceId String
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -1467,72 +1421,68 @@ model InternalNote {
   text     String
 
   attribute                Attribute?            @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId              String? /// @zod.string.cuid()
+  attributeId              String?
   attributeCategory        AttributeCategory?    @relation(fields: [attributeCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeCategoryId      String? /// @zod.string.cuid()
+  attributeCategoryId      String?
   // attributeRecord          AttributeRecord?      @relation(fields: [attributeRecordId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // attributeRecordId        String? /// @zod.string.cuid()
+  // attributeRecordId        String?
   attributeSupplement      AttributeSupplement?  @relation(fields: [attributeSupplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeSupplementId    String? /// @zod.string.cuid()
+  attributeSupplementId    String?
   country                  Country?              @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  countryId                String? /// @zod.string.cuid()
-  footerLink               FooterLink?           @relation(fields: [footerLinkId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  footerLinkId             String? /// @zod.string.cuid()
+  countryId                String?
   govDist                  GovDist?              @relation(fields: [govDistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  govDistId                String? /// @zod.string.cuid()
+  govDistId                String?
   govDistType              GovDistType?          @relation(fields: [govDistTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  govDistTypeId            String? /// @zod.string.cuid()
+  govDistTypeId            String?
   language                 Language?             @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  languageId               String? /// @zod.string.cuid()
-  navigation               Navigation?           @relation(fields: [navigationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  navigationId             String? /// @zod.string.cuid()
+  languageId               String?
   organization             Organization?         @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId           String? /// @zod.string.cuid()
+  organizationId           String?
   orgEmail                 OrgEmail?             @relation(fields: [orgEmailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgEmailId               String? /// @zod.string.cuid()
+  orgEmailId               String?
   orgHours                 OrgHours?             @relation(fields: [orgHoursId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgHoursId               String? /// @zod.string.cuid()
+  orgHoursId               String?
   orgLocation              OrgLocation?          @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgLocationId            String? /// @zod.string.cuid()
+  orgLocationId            String?
   orgPhone                 OrgPhone?             @relation(fields: [orgPhoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgPhoneId               String? /// @zod.string.cuid()
+  orgPhoneId               String?
   orgPhoto                 OrgPhoto?             @relation(fields: [orgPhotoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgPhotoId               String? /// @zod.string.cuid()
+  orgPhotoId               String?
   orgReview                OrgReview?            @relation(fields: [orgReviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgReviewId              String? /// @zod.string.cuid()
+  orgReviewId              String?
   orgService               OrgService?           @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgServiceId             String? /// @zod.string.cuid()
+  orgServiceId             String?
   orgSocialMedia           OrgSocialMedia?       @relation(fields: [orgSocialMediaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgSocialMediaId         String? /// @zod.string.cuid()
+  orgSocialMediaId         String?
   orgWebsite               OrgWebsite?           @relation(fields: [orgWebsiteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   orgWebsiteId             String?
   outsideApi               OutsideAPI?           @relation(fields: [outsideApiId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  outsideApiId             String? /// @zod.string.cuid()
+  outsideApiId             String?
   outsideAPIService        OutsideAPIService?    @relation(fields: [outsideAPIServiceService], references: [service], onDelete: Cascade, onUpdate: Cascade)
   outsideAPIServiceService String?
   permission               Permission?           @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   permissionId             String?
   phoneType                PhoneType?            @relation(fields: [phoneTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  phoneTypeId              String? /// @zod.string.cuid()
+  phoneTypeId              String?
   serviceAccess            ServiceAccess?        @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceAccessId          String? /// @zod.string.cuid()
+  serviceAccessId          String?
   // serviceArea              ServiceArea?          @relation(fields: [serviceAreaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // serviceAreaId            String? /// @zod.string.cuid()
+  // serviceAreaId            String?
   serviceCategory          ServiceCategory?      @relation(fields: [serviceCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceCategoryId        String? /// @zod.string.cuid()
+  serviceCategoryId        String?
   serviceTag               ServiceTag?           @relation(fields: [serviceTagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceTagId             String? /// @zod.string.cuid()
+  serviceTagId             String?
   socialMediaLink          SocialMediaLink?      @relation(fields: [socialMediaLinkId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  socialMediaLinkId        String? /// @zod.string.cuid()
+  socialMediaLinkId        String?
   socialMediaService       SocialMediaService?   @relation(fields: [socialMediaServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  socialMediaServiceId     String? /// @zod.string.cuid()
+  socialMediaServiceId     String?
   source                   Source?               @relation(fields: [sourceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  sourceId                 String? /// @zod.string.cuid()
+  sourceId                 String?
   translation              TranslationKey?       @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: Cascade, onUpdate: Cascade)
   translationKey           String?
   translationNs            String?
   translationNamespace     TranslationNamespace? @relation(fields: [translationNamespaceName], references: [name], onDelete: Cascade, onUpdate: Cascade)
-  translationNamespaceName String? /// @zod.string.cuid()
+  translationNamespaceName String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1546,115 +1496,111 @@ model InternalNote {
 model AuditLog {
   id        String            @id @default(cuid())
   actor     User              @relation("Recorded User", fields: [actorId], references: [id])
-  actorId   String /// @zod.string.cuid()
+  actorId   String
   timestamp DateTime          @default(now())
   from      Json
   to        Json
   operation AuditLogOperation
 
   Account                              Account?                @relation(fields: [accountId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  accountId                            String? /// @zod.string.cuid()
+  accountId                            String?
   Attribute                            Attribute?              @relation(fields: [attributeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  attributeId                          String? /// @zod.string.cuid()
+  attributeId                          String?
   AttributeCategory                    AttributeCategory?      @relation(fields: [attributeCategoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  attributeCategoryId                  String? /// @zod.string.cuid()
+  attributeCategoryId                  String?
   AttributeSupplement                  AttributeSupplement?    @relation(fields: [attributeSupplementId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  attributeSupplementId                String? /// @zod.string.cuid()
+  attributeSupplementId                String?
   Country                              Country?                @relation(fields: [countryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  countryId                            String? /// @zod.string.cuid()
+  countryId                            String?
   FieldVisibility                      FieldVisibility?        @relation(fields: [fieldVisibilityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  fieldVisibilityId                    String? /// @zod.string.cuid()
-  FooterLink                           FooterLink?             @relation(fields: [footerLinkId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  footerLinkId                         String? /// @zod.string.cuid()
+  fieldVisibilityId                    String?
   FreeText                             FreeText?               @relation(fields: [freeTextId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  freeTextId                           String? /// @zod.string.cuid()
+  freeTextId                           String?
   GovDist                              GovDist?                @relation(fields: [govDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  govDistId                            String? /// @zod.string.cuid()
+  govDistId                            String?
   GovDistType                          GovDistType?            @relation(fields: [govDistTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  govDistTypeId                        String? /// @zod.string.cuid()
+  govDistTypeId                        String?
   InternalNote                         InternalNote?           @relation(fields: [internalNoteId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  internalNoteId                       String? /// @zod.string.cuid()
+  internalNoteId                       String?
   Language                             Language?               @relation(fields: [languageId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  languageId                           String? /// @zod.string.cuid()
+  languageId                           String?
   LocationPermission                   LocationPermission?     @relation(fields: [locationPermissionUserId, locationPermissionPermissionId, locationPermissionOrgLocationId], references: [userId, permissionId, orgLocationId], onDelete: SetNull, onUpdate: Cascade)
-  locationPermissionUserId             String? /// @zod.string.cuid()
-  locationPermissionPermissionId       String? /// @zod.string.cuid()
-  locationPermissionOrgLocationId      String? /// @zod.string.cuid()
-  Navigation                           Navigation?             @relation(fields: [navigationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  navigationId                         String? /// @zod.string.cuid()
+  locationPermissionUserId             String?
+  locationPermissionPermissionId       String?
+  locationPermissionOrgLocationId      String?
   Organization                         Organization?           @relation(fields: [organizationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  organizationId                       String? /// @zod.string.cuid()
+  organizationId                       String?
   OrganizationPermission               OrganizationPermission? @relation(fields: [organizationPermissionUserId, organizationPermissionPermissionId, organizationPermissionOrganizationId], references: [userId, permissionId, organizationId], onDelete: SetNull, onUpdate: Cascade)
-  organizationPermissionUserId         String? /// @zod.string.cuid()
-  organizationPermissionPermissionId   String? /// @zod.string.cuid()
-  organizationPermissionOrganizationId String? /// @zod.string.cuid()
+  organizationPermissionUserId         String?
+  organizationPermissionPermissionId   String?
+  organizationPermissionOrganizationId String?
   OrgEmail                             OrgEmail?               @relation(fields: [orgEmailId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgEmailId                           String? /// @zod.string.cuid()
+  orgEmailId                           String?
   OrgHours                             OrgHours?               @relation(fields: [orgHoursId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgHoursId                           String? /// @zod.string.cuid()
+  orgHoursId                           String?
   OrgLocation                          OrgLocation?            @relation(fields: [orgLocationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgLocationId                        String? /// @zod.string.cuid()
+  orgLocationId                        String?
   OrgPhone                             OrgPhone?               @relation(fields: [orgPhoneId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgPhoneId                           String? /// @zod.string.cuid()
+  orgPhoneId                           String?
   OrgPhoto                             OrgPhoto?               @relation(fields: [orgPhotoId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgPhotoId                           String? /// @zod.string.cuid()
+  orgPhotoId                           String?
   OrgReview                            OrgReview?              @relation(fields: [orgReviewId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgReviewId                          String? /// @zod.string.cuid()
+  orgReviewId                          String?
   OrgService                           OrgService?             @relation(fields: [orgServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgServiceId                         String? /// @zod.string.cuid()
+  orgServiceId                         String?
   OrgSocialMedia                       OrgSocialMedia?         @relation(fields: [orgSocialMediaId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgSocialMediaId                     String? /// @zod.string.cuid()
+  orgSocialMediaId                     String?
   OrgWebsite                           OrgWebsite?             @relation(fields: [orgWebsiteId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgWebsiteId                         String? /// @zod.string.cuid()
+  orgWebsiteId                         String?
   OutsideAPI                           OutsideAPI?             @relation(fields: [outsideAPIId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  outsideAPIId                         String? /// @zod.string.cuid()
+  outsideAPIId                         String?
   OutsideAPIService                    OutsideAPIService?      @relation(fields: [outsideAPIServiceService], references: [service], onDelete: SetNull, onUpdate: Cascade)
   outsideAPIServiceService             String?
   Permission                           Permission?             @relation(fields: [permissionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  permissionId                         String? /// @zod.string.cuid()
+  permissionId                         String?
   PhoneType                            PhoneType?              @relation(fields: [phoneTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  phoneTypeId                          String? /// @zod.string.cuid()
+  phoneTypeId                          String?
   ServiceAccess                        ServiceAccess?          @relation(fields: [serviceAccessId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  serviceAccessId                      String? /// @zod.string.cuid()
+  serviceAccessId                      String?
   ServiceArea                          ServiceArea?            @relation(fields: [serviceAreaId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  serviceAreaId                        String? /// @zod.string.cuid()
+  serviceAreaId                        String?
   ServiceCategory                      ServiceCategory?        @relation(fields: [serviceCategoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  serviceCategoryId                    String? /// @zod.string.cuid()
+  serviceCategoryId                    String?
   ServiceTag                           ServiceTag?             @relation(fields: [serviceTagId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  serviceTagId                         String? /// @zod.string.cuid()
+  serviceTagId                         String?
   SocialMediaLink                      SocialMediaLink?        @relation(fields: [socialMediaLinkId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  socialMediaLinkId                    String? /// @zod.string.cuid()
+  socialMediaLinkId                    String?
   SocialMediaService                   SocialMediaService?     @relation(fields: [socialMediaServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  socialMediaServiceId                 String? /// @zod.string.cuid()
+  socialMediaServiceId                 String?
   Source                               Source?                 @relation(fields: [sourceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  sourceId                             String? /// @zod.string.cuid()
+  sourceId                             String?
   TranslatedReview                     TranslatedReview?       @relation(fields: [translatedReviewId], references: [id])
-  translatedReviewId                   String? /// @zod.string.cuid()
+  translatedReviewId                   String?
   Translation                          TranslationKey?         @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: SetNull, onUpdate: Cascade)
   translationKey                       String?
   translationNs                        String?
   TranslationNamespace                 TranslationNamespace?   @relation(fields: [translationNamespaceName], references: [name], onDelete: SetNull, onUpdate: Cascade)
   translationNamespaceName             String?
   User                                 User?                   @relation("AuditLogEntry", fields: [userId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  userId                               String? /// @zod.string.cuid()
+  userId                               String?
   UserCommunity                        UserCommunity?          @relation(fields: [userCommunityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  userCommunityId                      String? /// @zod.string.cuid()
+  userCommunityId                      String?
   UserEthnicity                        UserEthnicity?          @relation(fields: [userEthnicityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  userEthnicityId                      String? /// @zod.string.cuid()
+  userEthnicityId                      String?
   UserImmigration                      UserImmigration?        @relation(fields: [userImmigrationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  userImmigrationId                    String? /// @zod.string.cuid()
+  userImmigrationId                    String?
   UserMail                             UserMail?               @relation(fields: [userMailId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  userMailId                           String? /// @zod.string.cuid()
+  userMailId                           String?
   UserRole                             UserRole?               @relation(fields: [userRoleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  userRoleId                           String? /// @zod.string.cuid()
+  userRoleId                           String?
   UserSavedList                        UserSavedList?          @relation(fields: [userSavedListId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  userSavedListId                      String? /// @zod.string.cuid()
+  userSavedListId                      String?
   UserSOGIdentity                      UserSOGIdentity?        @relation(fields: [userSOGIdentityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  userSOGIdentityId                    String? /// @zod.string.cuid()
+  userSOGIdentityId                    String?
   UserTitle                            UserTitle?              @relation(fields: [userTitleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  userTitleId                          String? /// @zod.string.cuid()
+  userTitleId                          String?
   UserType                             UserType?               @relation(fields: [userTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  userTypeId                           String? /// @zod.string.cuid()
+  userTypeId                           String?
 
   //@@schema("system")
 }
@@ -1676,9 +1622,9 @@ enum AuditLogOperation {
 /// Assign permissions to user
 model UserPermission {
   user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId       String /// @zod.string.cuid()
+  userId       String
   permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  permissionId String /// @zod.string.cuid()
+  permissionId String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1689,9 +1635,9 @@ model UserPermission {
 /// Assign default permissions to role
 model RolePermission {
   role         UserRole   @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  roleId       String /// @zod.string.cuid()
+  roleId       String
   permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  permissionId String /// @zod.string.cuid()
+  permissionId String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1705,14 +1651,14 @@ model UserToOrganization {
   user           User         @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId         String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String /// @zod.string.cuid()
+  organizationId String
 
   title      UserTitle? @relation(fields: [orgTitleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgTitleId String? /// @zod.string.cuid()
+  orgTitleId String?
   email      OrgEmail?  @relation(fields: [orgEmailId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgEmailId String?    @unique /// @zod.string.cuid()
+  orgEmailId String?    @unique
   phone      OrgPhone?  @relation(fields: [orgPhoneId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  orgPhoneId String?    @unique /// @zod.string.cuid()
+  orgPhoneId String?    @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1723,14 +1669,14 @@ model UserToOrganization {
 /// For certain permissions, attach Organization
 model OrganizationPermission {
   user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId       String /// @zod.string.cuid()
+  userId       String
   permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  permissionId String /// @zod.string.cuid()
+  permissionId String
 
   authorized Boolean @default(false)
 
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String /// @zod.string.cuid()
+  organizationId String
 
   linkedAt DateTime @default(now())
 
@@ -1745,14 +1691,14 @@ model OrganizationPermission {
 /// For certain permissions, attach Organization
 model LocationPermission {
   user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId       String /// @zod.string.cuid()
+  userId       String
   permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  permissionId String /// @zod.string.cuid()
+  permissionId String
 
   authorized Boolean @default(false)
 
   location      OrgLocation @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgLocationId String /// @zod.string.cuid()
+  orgLocationId String
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -1769,9 +1715,9 @@ model LocationPermission {
 /// For LCR accounts - link community to user profile
 model UserCommunityLink {
   user        User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId      String /// @zod.string.cuid()
+  userId      String
   community   UserCommunity @relation(fields: [communityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  communityId String /// @zod.string.cuid()
+  communityId String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1782,9 +1728,9 @@ model UserCommunityLink {
 /// For LCR accounts, link SOG identity to user profile
 model UserSOGLink {
   user          User            @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId        String /// @zod.string.cuid()
+  userId        String
   sogIdentity   UserSOGIdentity @relation(fields: [sogIdentityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  sogIdentityId String /// @zod.string.cuid()
+  sogIdentityId String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1795,9 +1741,9 @@ model UserSOGLink {
 /// Link a user's shared list with other users who can view.
 model ListSharedWith {
   user   User          @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String /// @zod.string.cuid()
+  userId String
   list   UserSavedList @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  listId String /// @zod.string.cuid()
+  listId String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1808,9 +1754,9 @@ model ListSharedWith {
 /// Organizations saved to list
 model SavedOrganization {
   list           UserSavedList @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  listId         String /// @zod.string.cuid()
+  listId         String
   organization   Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String /// @zod.string.cuid()
+  organizationId String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1821,9 +1767,9 @@ model SavedOrganization {
 /// Services saved to list
 model SavedService {
   list      UserSavedList @relation(fields: [listId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  listId    String /// @zod.string.cuid()
+  listId    String
   service   OrgService    @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceId String /// @zod.string.cuid()
+  serviceId String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1834,9 +1780,9 @@ model SavedService {
 /// Role assigned to user
 model AssignedRole {
   user   User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String /// @zod.string.cuid()
+  userId String
   role   UserRole @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  roleId String /// @zod.string.cuid()
+  roleId String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1847,9 +1793,9 @@ model AssignedRole {
 /// Link community to anon user survey
 model SurveyCommunity {
   survey      UserSurvey    @relation(fields: [surveyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  surveyId    String /// @zod.string.cuid()
+  surveyId    String
   community   UserCommunity @relation(fields: [communityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  communityId String /// @zod.string.cuid()
+  communityId String
   //@@schema("relation")
 
   @@id([surveyId, communityId])
@@ -1858,9 +1804,9 @@ model SurveyCommunity {
 /// Link ethnicity to anon user survey
 model SurveyEthnicity {
   survey      UserSurvey    @relation(fields: [surveyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  surveyId    String /// @zod.string.cuid()
+  surveyId    String
   ethnicity   UserEthnicity @relation(fields: [ethnicityId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  ethnicityId String /// @zod.string.cuid()
+  ethnicityId String
   //@@schema("relation")
 
   @@id([surveyId, ethnicityId])
@@ -1869,9 +1815,9 @@ model SurveyEthnicity {
 /// Link SOG identity to anon user survey
 model SurveySOG {
   survey   UserSurvey      @relation(fields: [surveyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  surveyId String /// @zod.string.cuid()
+  surveyId String
   sog      UserSOGIdentity @relation(fields: [sogId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  sogId    String /// @zod.string.cuid()
+  sogId    String
   //@@schema("relation")
 
   @@id([surveyId, sogId])
@@ -1881,12 +1827,36 @@ model SurveySOG {
 // Organization
 //
 
+model OrganizationPhone {
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String
+  phone          OrgPhone     @relation(fields: [phoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  phoneId        String       @unique
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([organizationId, phoneId])
+}
+
+model OrganizationEmail {
+  email          OrgEmail     @relation(fields: [orgEmailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgEmailId     String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId String
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([orgEmailId, organizationId])
+}
+
 /// Link multiple languages to a website entry
 model OrgWebsiteLanguage {
   website      OrgWebsite @relation(fields: [orgWebsiteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgWebsiteId String /// @zod.string.cuid()
+  orgWebsiteId String
   language     Language   @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  languageId   String /// @zod.string.cuid()
+  languageId   String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1897,9 +1867,9 @@ model OrgWebsiteLanguage {
 /// Link multiple languages to a phone number
 model OrgPhoneLanguage {
   phone      OrgPhone @relation(fields: [orgPhoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgPhoneId String /// @zod.string.cuid()
+  orgPhoneId String
   language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  languageId String /// @zod.string.cuid()
+  languageId String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1910,9 +1880,9 @@ model OrgPhoneLanguage {
 /// Link phone numbers to services
 model OrgServicePhone {
   phone      OrgPhone   @relation(fields: [orgPhoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgPhoneId String /// @zod.string.cuid()
+  orgPhoneId String
   service    OrgService @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceId  String /// @zod.string.cuid()
+  serviceId  String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1923,9 +1893,9 @@ model OrgServicePhone {
 /// Link emails to services
 model OrgServiceEmail {
   email      OrgEmail   @relation(fields: [orgEmailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgEmailId String /// @zod.string.cuid()
+  orgEmailId String
   service    OrgService @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceId  String /// @zod.string.cuid()
+  serviceId  String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1936,9 +1906,9 @@ model OrgServiceEmail {
 /// Link emails to locations
 model OrgLocationEmail {
   location      OrgLocation @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgLocationId String /// @zod.string.cuid()
+  orgLocationId String
   email         OrgEmail    @relation(fields: [orgEmailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgEmailId    String /// @zod.string.cuid()
+  orgEmailId    String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1948,9 +1918,9 @@ model OrgLocationEmail {
 
 model OrgLocationPhone {
   location      OrgLocation @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgLocationId String /// @zod.string.cuid()
+  orgLocationId String
   phone         OrgPhone    @relation(fields: [phoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  phoneId       String /// @zod.string.cuid()
+  phoneId       String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1961,9 +1931,9 @@ model OrgLocationPhone {
 /// Link services to organizations
 model OrgLocationService {
   location      OrgLocation @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgLocationId String /// @zod.string.cuid()
+  orgLocationId String
   service       OrgService  @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceId     String /// @zod.string.cuid()
+  serviceId     String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -1974,7 +1944,7 @@ model OrgLocationService {
 /// Link tags to services
 model OrgServiceTag {
   service   OrgService @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceId String /// @zod.string.cuid()
+  serviceId String
   tag       ServiceTag @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   tagId     String
 
@@ -1987,9 +1957,9 @@ model OrgServiceTag {
 /// Link countries to service areas
 model ServiceAreaCountry {
   serviceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceAreaId String /// @zod.string.cuid()
+  serviceAreaId String
   country       Country     @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  countryId     String /// @zod.string.cuid()
+  countryId     String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2000,9 +1970,9 @@ model ServiceAreaCountry {
 /// Link Governing Districts to service areas
 model ServiceAreaDist {
   serviceArea   ServiceArea @relation(fields: [serviceAreaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceAreaId String /// @zod.string.cuid()
+  serviceAreaId String
   govDist       GovDist     @relation(fields: [govDistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  govDistId     String /// @zod.string.cuid()
+  govDistId     String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2017,12 +1987,12 @@ model ServiceAreaDist {
 /// Link attributes to organizations
 model OrganizationAttribute {
   organization   Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId String /// @zod.string.cuid()
+  organizationId String
   attribute      Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId    String /// @zod.string.cuid()
+  attributeId    String
   supplement     AttributeSupplement[]
   //supplement     AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  //supplementId   String?              @unique /// @zod.string.cuid()
+  //supplementId   String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2033,12 +2003,12 @@ model OrganizationAttribute {
 /// Link attributes to locations
 model LocationAttribute {
   location    OrgLocation           @relation(fields: [locationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  locationId  String /// @zod.string.cuid()
+  locationId  String
   attribute   Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId String /// @zod.string.cuid()
+  attributeId String
   supplement  AttributeSupplement[]
   // supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // supplementId String?              @unique /// @zod.string.cuid()
+  // supplementId String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2049,12 +2019,12 @@ model LocationAttribute {
 /// Link attributes to services
 model ServiceAttribute {
   service      OrgService            @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgServiceId String /// @zod.string.cuid()
+  orgServiceId String
   attribute    Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId  String /// @zod.string.cuid()
+  attributeId  String
   supplement   AttributeSupplement[]
   // supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // supplementId String?              @unique /// @zod.string.cuid()
+  // supplementId String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2065,12 +2035,12 @@ model ServiceAttribute {
 /// Link attributes to Service Access instructions
 model ServiceAccessAttribute {
   serviceAccess   ServiceAccess         @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceAccessId String /// @zod.string.cuid()
+  serviceAccessId String
   attribute       Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId     String /// @zod.string.cuid()
+  attributeId     String
   supplement      AttributeSupplement[]
   // supplement      AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // supplementId    String?              @unique /// @zod.string.cuid()
+  // supplementId    String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2081,9 +2051,9 @@ model ServiceAccessAttribute {
 /// Link attributes to category
 model AttributeToCategory {
   attribute   Attribute         @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId String /// @zod.string.cuid()
+  attributeId String
   category    AttributeCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  categoryId  String /// @zod.string.cuid()
+  categoryId  String
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2094,7 +2064,7 @@ model AttributeToCategory {
 /// Link default attributes to service category
 model ServiceCategoryDefaultAttribute {
   attribute   Attribute       @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId String /// @zod.string.cuid()
+  attributeId String
   category    ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   categoryId  String
 
@@ -2107,7 +2077,7 @@ model ServiceCategoryDefaultAttribute {
 /// Link default attributes to service tag
 model ServiceTagDefaultAttribute {
   attribute   Attribute  @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId String /// @zod.string.cuid()
+  attributeId String
   service     ServiceTag @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   serviceId   String
 

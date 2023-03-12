@@ -1,4 +1,5 @@
-import { ActionIcon, createStyles, useMantineTheme } from '@mantine/core'
+import { ActionIcon, createStyles, Group, Stack, Title, useMantineTheme } from '@mantine/core'
+import { useTranslation } from 'next-i18next'
 
 import { Icon } from '~ui/icon'
 
@@ -23,7 +24,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const SocialMediaIconButton = ({ href, icon, title }: Props) => {
+export const SocialLink = ({ href, icon, title }: SocialLinkProps) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const iconRender = approvedIcons[icon]
@@ -35,7 +36,26 @@ export const SocialMediaIconButton = ({ href, icon, title }: Props) => {
 	)
 }
 
-type Props = {
+const SocialGroup = ({ links, header }: GroupProps) => {
+	const { t } = useTranslation(['common'])
+	return (
+		<Stack spacing={12}>
+			{header && <Title order={3}>{t('social')}</Title>}
+			<Group spacing={12} noWrap>
+				{links.map((link, i) => (
+					<SocialLink key={`${i}${link.title}`} {...link} />
+				))}
+			</Group>
+		</Stack>
+	)
+}
+SocialLink.Group = SocialGroup
+type GroupProps = {
+	links: SocialLinkProps[]
+	header?: boolean
+}
+
+export type SocialLinkProps = {
 	href: string
 	title: string
 	icon: keyof typeof approvedIcons

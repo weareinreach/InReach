@@ -6,13 +6,15 @@ import {
 	InputWrapperStylesNames,
 	InputWrapperProps,
 	InputWrapperBaseProps,
+	CardProps,
 } from '@mantine/core'
 import { keys } from '@mantine/utils'
 
 import { Icon } from '~ui/icon'
 
+import { shake } from './animation'
 import { customColors } from './colors'
-import { attributeBadge } from './variants'
+import { variants } from './variants'
 
 import type {
 	ModalStylesNames,
@@ -45,7 +47,6 @@ import type {
 	InputStylesNames,
 	InputStylesParams,
 	GridProps,
-	Variants,
 } from '@mantine/core'
 import type React from 'react'
 
@@ -115,6 +116,9 @@ const themeCustomObj = {
 		default: '1px solid #d9d9d9',
 	},
 	colors,
+	animations: {
+		shake,
+	},
 } as const satisfies MantineThemeOther
 
 export const commonTheme = {
@@ -124,6 +128,7 @@ export const commonTheme = {
 	primaryColor: 'inReachPrimaryRegular',
 	primaryShade: 5,
 	cursorType: 'pointer',
+	loader: 'dots',
 	lineHeight: 1.5,
 	fontFamily:
 		'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
@@ -189,6 +194,25 @@ export const commonTheme = {
 					radius: 'xl',
 				} satisfies ActionIconProps),
 		},
+		Anchor: {
+			styles: (theme) => ({
+				root: {
+					// color: `${theme.other.colors.secondary.black} !important`,
+					paddingBottom: theme.spacing.sm,
+					paddingTop: theme.spacing.sm,
+					paddingLeft: theme.spacing.xs,
+					paddingRight: theme.spacing.xs,
+					borderRadius: theme.spacing.sm,
+					textDecoration: 'underline',
+					...theme.other.utilityFonts.utility1,
+					'&:hover': {
+						backgroundColor: theme.other.colors.primary.lightGray,
+						textDecoration: 'none',
+					},
+				},
+			}),
+			variants: variants.Anchor,
+		},
 		Avatar: {
 			defaultProps: {
 				size: 48,
@@ -207,6 +231,7 @@ export const commonTheme = {
 						border: `${rem(1)} solid`,
 						padding: `${theme.spacing.xxs} ${theme.spacing.sm}`,
 						textTransform: 'none',
+						margin: rem(8),
 					},
 					inner: {
 						padding: 0,
@@ -217,104 +242,7 @@ export const commonTheme = {
 						margin: 0,
 					},
 				} satisfies Styles<BadgeStylesNames, BadgeStylesParams>),
-			variants: {
-				community: (theme) => ({
-					root: {
-						height: theme.spacing.xl,
-						backgroundColor: theme.other.colors.secondary.white,
-						borderColor: theme.other.colors.tertiary.coolGray,
-						[theme.fn.largerThan('sm')]: {
-							height: `calc(${theme.spacing.xl} + ${rem(8)}`,
-						},
-					},
-					inner: {
-						paddingTop: `calc(${theme.spacing.sm} / 4)`,
-						paddingBottom: `calc(${theme.spacing.sm} / 4)`,
-						fontSize: theme.fontSizes.sm,
-						[theme.fn.largerThan('sm')]: {
-							paddingTop: `calc(${theme.spacing.sm} / 2)`,
-							paddingBottom: `calc(${theme.spacing.sm} / 2)`,
-							fontSize: theme.fontSizes.md,
-						},
-					},
-					leftSection: {
-						paddingTop: `calc(${theme.spacing.sm} / 4)`,
-						paddingBottom: `calc(${theme.spacing.sm} / 4)`,
-						paddingRight: theme.spacing.xs,
-						fontSize: theme.fontSizes.sm,
-						marginRight: 0,
-						[theme.fn.largerThan('sm')]: {
-							paddingTop: `calc(${theme.spacing.sm} / 2)`,
-							paddingBottom: `calc(${theme.spacing.sm} / 2)`,
-							fontSize: theme.fontSizes.md,
-						},
-					},
-				}),
-				service: (theme) => ({
-					root: {
-						height: theme.spacing.xl,
-						backgroundColor: theme.other.colors.primary.lightGray,
-						border: 'none',
-						[theme.fn.largerThan('sm')]: {
-							height: `calc(${theme.spacing.xl} - ${rem(8)})`,
-						},
-					},
-					inner: {
-						paddingTop: `calc(${theme.spacing.sm} / 4)`,
-						paddingBottom: `calc(${theme.spacing.sm} / 4)`,
-						fontSize: theme.fontSizes.sm,
-						[theme.fn.largerThan('sm')]: {
-							paddingTop: `calc(${theme.spacing.sm} / 2)`,
-							paddingBottom: `calc(${theme.spacing.sm} / 2)`,
-							fontSize: theme.fontSizes.md,
-						},
-					},
-				}),
-				leader: (theme) => ({
-					leftSection: {
-						'& *': {
-							fontSize: theme.fontSizes.xs,
-							borderRadius: theme.radius.xl,
-							height: rem(24),
-							width: rem(24),
-							margin: 0,
-							textAlign: 'center',
-							paddingBottom: rem(4),
-						},
-					},
-					inner: {
-						'& *': {
-							color: theme.other.colors.secondary.black,
-							marginLeft: theme.spacing.xs,
-						},
-					},
-					root: {
-						border: 0,
-						padding: 0,
-						'&[data-minify]': {
-							height: rem(40),
-							width: rem(40),
-							...theme.fn.hover({
-								backgroundColor: theme.other.colors.primary.lightGray,
-							}),
-							radius: theme.radius.xl,
-							padding: 0,
-						},
-						'&[data-hideBg]': {
-							backgroundColor: undefined,
-							height: undefined,
-							width: undefined,
-							paddingLeft: rem(6),
-							paddingRight: rem(6),
-						},
-					},
-				}),
-				privatePractice: attributeBadge,
-				claimed: attributeBadge,
-				unclaimed: attributeBadge,
-				verified: attributeBadge,
-				attribute: attributeBadge,
-			},
+			variants: variants.Badge,
 		},
 		Button: {
 			defaultProps: {
@@ -357,7 +285,24 @@ export const commonTheme = {
 					},
 				},
 			}),
+			variants: variants.Button,
 		},
+		Card: {
+			defaultProps: {
+				withBorder: true,
+				radius: 'lg',
+				padding: rem(20),
+			} satisfies Partial<CardProps>,
+			styles: (theme) => ({
+				root: {
+					[theme.fn.largerThan('sm')]: {
+						padding: rem(24),
+					},
+				},
+			}),
+			variants: variants.Card,
+		},
+
 		Checkbox: {
 			styles: (theme, params: CheckboxStylesParams) =>
 				({
@@ -406,8 +351,12 @@ export const commonTheme = {
 				} satisfies Styles<CheckboxStylesNames, CheckboxStylesParams>),
 		},
 		Container: {
+			defaultProps: {
+				maw: em(1440),
+			},
 			styles: (theme) => ({
 				root: {
+					margin: '0 auto',
 					padding: `${rem(0)} ${rem(20)}`,
 					[theme.fn.largerThan('xs')]: {
 						padding: `${rem(0)} ${rem(32)}`,
@@ -432,7 +381,6 @@ export const commonTheme = {
 		},
 		GridCol: {
 			defaultProps: {
-				span: 12,
 				xs: 6,
 				sm: 4,
 			} satisfies ColProps,
@@ -516,7 +464,24 @@ export const commonTheme = {
 					error: {
 						...theme.other.utilityFonts.utility3,
 					},
+					root: {
+						width: '100%',
+					},
 				} satisfies Styles<InputWrapperStylesNames>),
+		},
+		List: {
+			variants: variants.List,
+		},
+		Loader: {
+			defaultProps: (theme) => ({
+				color: theme.other.colors.secondary.darkGray,
+			}),
+		},
+		LoadingOverlay: {
+			defaultProps: (theme) => ({
+				overlayBlur: 2,
+				radius: 'sm',
+			}),
 		},
 		Modal: {
 			defaultProps: (theme) => {
@@ -531,6 +496,7 @@ export const commonTheme = {
 				({
 					content: {
 						padding: '0px !important',
+						maxWidth: rem(600),
 						[theme.fn.largerThan('sm')]: {
 							maxHeight: em(800),
 							minWidth: em(600),
@@ -549,11 +515,20 @@ export const commonTheme = {
 					},
 					body: {
 						padding: rem(20),
+						'&:not(:only-child)': {
+							paddingTop: rem(20),
+						},
 						[theme.fn.largerThan('xs')]: {
 							padding: `${rem(20)} ${rem(32)}`,
+							'&:not(:only-child)': {
+								paddingTop: rem(20),
+							},
 						},
 						[theme.fn.largerThan('sm')]: {
 							padding: `${rem(40)} ${rem(32)}`,
+							'&:not(:only-child)': {
+								paddingTop: rem(40),
+							},
 						},
 					},
 					title: {
@@ -562,6 +537,33 @@ export const commonTheme = {
 						padding: 0,
 					},
 				} satisfies Styles<ModalStylesNames>),
+		},
+		Paper: {
+			styles: (theme) => ({
+				root: {
+					padding: rem(20),
+					borderRadius: rem(16),
+					'&[data-with-border]': {
+						border: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
+					},
+				},
+			}),
+		},
+		PasswordInput: {
+			styles: (theme) => ({
+				innerInput: {
+					height: 'unset',
+					...theme.other.utilityFonts.utility2,
+					'&::placeholder': {
+						color: theme.other.colors.secondary.darkGray,
+					},
+				},
+				input: {
+					'&::placeholder': {
+						color: theme.other.colors.secondary.darkGray,
+					},
+				},
+			}),
 		},
 		Radio: {
 			styles: (theme) =>
@@ -615,33 +617,7 @@ export const commonTheme = {
 					},
 				} satisfies Styles<'root', SkeletonStylesParams>),
 
-			variants: {
-				text: (theme) => ({
-					root: {
-						height: rem(16 * 1.5),
-					},
-				}),
-				utility: (theme) => ({
-					root: {
-						height: rem(16 * 1.25),
-					},
-				}),
-				h1: (theme) => ({
-					root: {
-						height: rem(40 * 1.25),
-					},
-				}),
-				h2: (theme) => ({
-					root: {
-						height: rem(24 * 1.25),
-					},
-				}),
-				h3: (theme) => ({
-					root: {
-						height: rem(16 * 1.25),
-					},
-				}),
-			},
+			variants: variants.Skeleton,
 		},
 		Switch: {
 			defaultProps: {
@@ -730,6 +706,7 @@ export const commonTheme = {
 				color: theme.other.colors.secondary.black,
 				size: 'md',
 			}),
+			variants: variants.Text,
 		},
 		Textarea: {
 			defaultProps: {} satisfies TextareaProps,
@@ -807,6 +784,7 @@ export const commonTheme = {
 					boxShadow: theme.shadows.xs,
 				},
 			}),
+			variants: variants.Tooltip,
 		},
 		TypographyStylesProvider: {
 			styles: (theme) => {

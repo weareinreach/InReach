@@ -35,6 +35,9 @@ const coordItems = {
 }
 export const coord = z.object(coordItems)
 export const distSearch = z.object({ ...coordItems, dist: z.number(), unit: z.enum(['mi', 'km']) })
+export const reviewAvgId = z
+	.object({ organizationId: idString, orgServiceId: idString, orgLocationId: idString })
+	.partial()
 
 // Prisma JSON helpers
 export { InputJsonValue, JsonNullValueInputSchema, type InputJsonValueType }

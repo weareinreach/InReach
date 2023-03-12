@@ -51,13 +51,22 @@ export const attributeData: AttributeData = [
 			},
 			{
 				key: 'wheelchair-accessible',
-				name: 'Is wheelchair accessible',
+				name: 'Accessible',
 				filterType: 'INCLUDE',
+				showOnLocation: true,
+				icon: 'carbon:accessibility',
 			},
 			{
 				key: 'religiously-affiliated',
 				name: 'Is religiously affiliated',
 				filterType: 'EXCLUDE',
+			},
+			{
+				key: 'offers-remote-services',
+				name: 'Remote',
+				filterType: 'INCLUDE',
+				showOnLocation: true,
+				icon: 'carbon:globe',
 			},
 		],
 	},
@@ -371,6 +380,11 @@ export const attributeData: AttributeData = [
 				description:
 					'If the service requires a referral from another service provider from new/potential clients in order to access"',
 				filterType: 'EXCLUDE',
+			},
+			{
+				key: 'other-describe',
+				name: 'Other (free text description)',
+				description: 'Free text description',
 			},
 		],
 	},

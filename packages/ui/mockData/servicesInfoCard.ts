@@ -3,6 +3,7 @@ import { type ServicesInfoCardProps } from '~ui/components/sections'
 export const servicesMock = [
 	{
 		service: {
+			id: 'svce_IWUJT98234NF9U2R',
 			description: {
 				key: 'whitman-walker-health.osvc_01GTJ0WTERVW3H28Z5XNYHFM3F.description',
 				ns: 'org-data',
@@ -16,6 +17,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-hiv-aids',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -23,6 +26,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'lang-lang-offered',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [
 						{
@@ -40,6 +45,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'sys-incompatible-info',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [
 						{
@@ -113,6 +120,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accesslocation',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{
@@ -146,6 +155,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accesslocation',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{
@@ -179,6 +190,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accesslink',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{
@@ -231,6 +244,7 @@ export const servicesMock = [
 	},
 	{
 		service: {
+			id: 'osvc_01GV1GTVK16X322V1E3RSNSJE2',
 			description: {
 				key: 'whitman-walker-health.osvc_01GTJ0WTF0PY6QA2M1XC0YDM9V.description',
 				ns: 'org-data',
@@ -244,6 +258,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-hiv-aids',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -251,6 +267,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'lang-lang-offered',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [
 						{
@@ -268,6 +286,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'sys-incompatible-info',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [
 						{
@@ -342,6 +362,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accessphone',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{
@@ -375,6 +397,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accesslink',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{
@@ -431,6 +455,7 @@ export const servicesMock = [
 						email: 'appointments@whitman-walker.org',
 						legacyDesc: 'Schedule An Appointment ',
 						description: null,
+						primary: true,
 					},
 				},
 			],
@@ -438,6 +463,7 @@ export const servicesMock = [
 	},
 	{
 		service: {
+			id: 'osvc_01GV1GVFGXYQ7RSKM3FPMJ5HZ7',
 			description: {
 				key: 'whitman-walker-health.osvc_01GTJ0WTF2K6WBSNSA3GPHE4G1.description',
 				ns: 'org-data',
@@ -451,6 +477,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-adults',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -458,6 +486,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-bisexual',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -465,6 +495,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-gay',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -472,6 +504,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-gender-nonconforming',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -479,6 +513,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-hiv-aids',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -486,6 +522,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-lesbian',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -493,6 +531,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-lgbtq-youth',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -500,6 +540,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-nonbinary',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -507,6 +549,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-queer',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -514,6 +558,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-teens',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -521,6 +567,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-transgender',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -528,6 +576,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-trans-youth',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -535,6 +585,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'lang-lang-offered',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [
 						{
@@ -552,6 +604,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'sys-incompatible-info',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [
 						{
@@ -631,6 +685,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accesslink',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{
@@ -666,6 +722,7 @@ export const servicesMock = [
 	},
 	{
 		service: {
+			id: 'osvc_01GV1GY09PZ0V43TWFRPFQWNRK',
 			description: {
 				key: 'whitman-walker-health.osvc_01GTJ0WTFCCVR5JCWFZJM3AXZS.description',
 				ns: 'org-data',
@@ -679,6 +736,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-transgender',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -686,6 +745,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-trans-youth',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -693,6 +754,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'lang-lang-offered',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [
 						{
@@ -710,6 +773,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'sys-incompatible-info',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [
 						{
@@ -793,6 +858,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accessphone',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{
@@ -826,6 +893,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accesslink',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{
@@ -861,6 +930,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accessemail',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{
@@ -894,6 +965,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accesslocation',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{
@@ -952,6 +1025,7 @@ export const servicesMock = [
 						email: 'Transhealth@whitman-walker.org',
 						legacyDesc: 'Gender Affirming Services',
 						description: null,
+						primary: false,
 					},
 				},
 			],
@@ -959,6 +1033,7 @@ export const servicesMock = [
 	},
 	{
 		service: {
+			id: 'osvc_01GV1GYGCVRSXM863JHXG5MZCJ',
 			description: {
 				key: 'whitman-walker-health.osvc_01GTJ0WTFEZHHCM1CT1TD1TGKJ.description',
 				ns: 'org-data',
@@ -972,6 +1047,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'community-hiv-aids',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [],
 				},
@@ -979,6 +1056,8 @@ export const servicesMock = [
 					attribute: {
 						tsKey: 'lang-lang-offered',
 						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 					},
 					supplement: [
 						{
@@ -1029,6 +1108,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accesslink',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{
@@ -1062,6 +1143,8 @@ export const servicesMock = [
 							attribute: {
 								tsKey: 'serviceaccess-accesslink',
 								tsNs: 'attribute',
+								icon: null,
+								showOnLocation: null,
 							},
 							supplement: [
 								{

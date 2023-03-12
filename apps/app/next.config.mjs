@@ -2,6 +2,7 @@
 /* eslint-disable node/no-process-env */
 // import { env } from './src/env/server.mjs'
 import bundleAnalyze from '@next/bundle-analyzer'
+import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
 import withRoutes from 'nextjs-routes/config'
 
 import path from 'path'
@@ -54,6 +55,12 @@ const nextConfig = {
 	},
 	typescript: {
 		ignoreBuildErrors: isVercelActiveDev,
+	},
+	webpack: (config, { isServer }) => {
+		if (isServer) {
+			config.plugins = [...config.plugins, new PrismaPlugin()]
+		}
+		return config
 	},
 }
 
