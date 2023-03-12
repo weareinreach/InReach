@@ -112,4 +112,5 @@ const excludedTables = [
 	'OutsideAPIService',
 	'OrganizationPhone',
 	'OrganizationEmail',
+	'UserAttribute',
 ] as const // satisfies Prisma.ModelName[]
