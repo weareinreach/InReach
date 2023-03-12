@@ -9,13 +9,13 @@ export const userRoles = [
 ] as const
 
 export const userRolesWithId = [
-	{ id: 'urle_000000000053NMSYRPBK0499E0', tag: 'resource-seeker' },
-	{ id: 'urle_00000000000AVZMJ2HBQGCW1MP', tag: 'service-provider' },
-	{ id: 'urle_0000000000NPXPWEWJSFM0BQ5T', tag: 'local-community-reviewer' },
-	{ id: 'urle_00000000006C1Q58WWJJFMW855', tag: 'data-manager' },
-	{ id: 'urle_0000000000VCA8JCN65XAV461R', tag: 'data-administrator' },
-	{ id: 'urle_0000000000JCD4935XQRV4P8G2', tag: 'system-administrator' },
-	{ id: 'urle_0000000000C8CXHAF3MS5J1HGJ', tag: 'system-user' },
+	{ id: 'urle_00000000003R7BSS9MVC1C6Y4G', tag: 'resource-seeker' },
+	{ id: 'urle_0000000000KY1B1T0N3MPGS7NF', tag: 'service-provider' },
+	{ id: 'urle_000000000057NV51DKC3MEKPM1', tag: 'local-community-reviewer' },
+	{ id: 'urle_000000000083VVFN6D9MW7NY3F', tag: 'data-manager' },
+	{ id: 'urle_00000000006PWQ4KYVYYGK1DMS', tag: 'data-administrator' },
+	{ id: 'urle_0000000000EHEREQADT1M73JT6', tag: 'system-administrator' },
+	{ id: 'urle_00000000009DJJ8DTRAHSR0DF6', tag: 'system-user' },
 ] as const
 
 export type UserRoleTags = (typeof userRoles)[number]

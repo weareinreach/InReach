@@ -1,13 +1,15 @@
 export const attributeCategory = [
-	{ id: 'attc_01GV23GR3TMRH1M4W1KBEK7K0S', tag: 'additional-information', icon: null, ns: 'attribute' },
-	{ id: 'attc_01GV23GR3WP661DDQWZQEMS0K7', tag: 'community', icon: null, ns: 'attribute' },
-	{ id: 'attc_01GV23GR44R5HE8PQ2F4PM1AVV', tag: 'cost', icon: null, ns: 'attribute' },
-	{ id: 'attc_01GV23GR458953HB8T17K7Z13V', tag: 'eligibility-requirements', icon: null, ns: 'attribute' },
-	{ id: 'attc_01GV23GR46GXT4F61E015JE94F', tag: 'languages', icon: null, ns: 'attribute' },
-	{ id: 'attc_01GV23GR47T68BS8FNYNKE79EQ', tag: 'system', icon: null, ns: 'attribute' },
-	{ id: 'attc_01GV23GR476VZ4ZGS98JBTQYSV', tag: 'service-access-instructions', icon: null, ns: 'attribute' },
-	{ id: 'attc_01GV23GR48346KFTB1RGM2E826', tag: 'organization-leadership', icon: null, ns: 'attribute' },
-	{ id: 'attc_01GV23GR49494HXKGPZTX8FQDZ', tag: 'service-focus', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GVBN0WA9BAVQ4B05BRHVZ6MW', tag: 'additional-information', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GVBN0WABRVEB23YNZH7YTG8A', tag: 'community', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GVBN0WAP65G5A0ERQPTC02QA', tag: 'cost', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GVBN0WAP9J7F1XH3T9YDQGAD', tag: 'eligibility-requirements', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GVBN0WARNKYKDR6TTB4GW1PP', tag: 'languages', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GVBN0WASE0Z4NWNY1GSFZAAQ', tag: 'system', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GVBN0WAS97ZJ97D2M9MBF5PX', tag: 'service-access-instructions', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GVBN0WAVZACH2BT7DME6NAKS', tag: 'organization-leadership', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GVBN0WAWZ11VHPHQQN0SN7YR', tag: 'service-focus', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GVBN0WAYB7DGTGXXF1RN5F97', tag: 'law-practice-options', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GVBN0WAZ8D84NA9DDWA25NFF', tag: 'service-provider-options', icon: null, ns: 'attribute' },
 ] as const
 
 export type AtttributeCategory = (typeof attributeCategory)[number]

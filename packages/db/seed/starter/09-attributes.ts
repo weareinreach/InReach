@@ -41,11 +41,12 @@ export const seedAttributes = async (task: ListrTask) => {
 		log(`(${x + 1}/${attributeData.length}) Prepare Attribute Category: ${category.name}`, 'generate')
 
 		const catTag = slug(category.name)
+		const catKey = `${slug(category.ns)}.CATEGORYNAME`
 		const categoryId = categoryMap.get(catTag) ?? generateId('attributeCategory')
 
 		if (!categoryMap.has(catTag)) {
 			data.translate.push({
-				key: catTag,
+				key: catKey,
 				ns,
 				text: category.name,
 			})
@@ -79,7 +80,7 @@ export const seedAttributes = async (task: ListrTask) => {
 			log(`[${idx + 1}/${category.attributes.length}] Prepare Attribute: ${name}`, 'generate', true)
 
 			idx++
-			const key = slug(`${category.ns}-${keyTag}`)
+			const key = `${slug(category.ns)}.${slug(keyTag)}`
 			const attributeId = attributeMap.get(name) ?? generateId('attribute')
 
 			if (!attributeMap.has(name)) {
