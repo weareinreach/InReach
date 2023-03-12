@@ -1,9 +1,10 @@
 import { prisma } from '@weareinreach/db'
 import { type User } from 'next-auth'
 
-export const generateUserSession = async (email: string): Promise<User> => {
+export const generateUserSession = async (email: string /*id: string*/): Promise<User> => {
 	const userRecord = await prisma.user.findUniqueOrThrow({
 		where: { email },
+		// where: { id },
 		select: {
 			id: true,
 			email: true,

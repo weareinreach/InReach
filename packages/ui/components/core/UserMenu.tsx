@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { Button } from '~ui/components/core/Button'
 import { LangPicker } from '~ui/components/core/LangPicker'
 import { openLoginModal } from '~ui/modals/Login'
-import { openSignUpModal } from '~ui/modals/SignUp'
+import { SignupModalLauncher } from '~ui/modals/SignUp'
 
 import { UserAvatar } from './UserAvatar'
 
@@ -112,7 +112,8 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 			<UnstyledButton onClick={() => openLoginModal()}>
 				<Text className={classes.navText}>{t('log-in')}</Text>
 			</UnstyledButton>
-			<Button onClick={() => openSignUpModal()}>{t('sign-up')}</Button>
+			<SignupModalLauncher component={Button}>{t('sign-up-free')}</SignupModalLauncher>
+			{/* <Button onClick={() => openSignUpModal()}>{t('sign-up-free')}</Button> */}
 		</Group>
 	)
 }

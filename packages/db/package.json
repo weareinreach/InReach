@@ -71,6 +71,7 @@
 		"inquirer": "9.1.4",
 		"iso-3166-2": "1.0.0",
 		"iso-google-locales": "3.0.4",
+		"just-capitalize": "3.2.0",
 		"langs": "2.0.0",
 		"libphonenumber-js": "1.10.21",
 		"listr2": "5.0.7",

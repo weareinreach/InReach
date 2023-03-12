@@ -10,6 +10,8 @@ import { PolymorphicComponentProps } from '@mantine/utils'
 import { merge } from 'merge-anything'
 import { forwardRef, ReactNode } from 'react'
 
+import { variantNames } from '~ui/theme/variants'
+
 const buttonVariants: ButtonVariants = (theme, params) => {
 	switch (params.variant) {
 		case 'filled':
@@ -215,7 +217,7 @@ interface CustomButtonProps extends MantineButtonProps {
 	fullWidth?: boolean
 	loading?: boolean
 }
-type CustomVariants = (typeof customVariants)[number]
+type CustomVariants = (typeof customVariants)[number] | keyof (typeof variantNames)['Button']
 type ButtonVariant = ButtonProps['variant']
 type CustomButtonStyles = Partial<{ [className in ButtonStylesNames]: CSSObject }>
 type ButtonVariants = (theme: MantineTheme, params: ButtonStylesParams) => CustomButtonStyles

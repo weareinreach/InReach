@@ -453,4 +453,27 @@ export const attributeData: AttributeData = [
 			{ key: 'hiv-comm', name: 'HIV Community' },
 		],
 	},
+	{
+		name: 'Law Practice Options',
+		ns: 'userLawPractice',
+		attributes: [
+			{ key: 'corp-law-firm', name: 'Corporate law firm' },
+			{ key: 'legal-nonprofit', name: 'Legal non-profit' },
+			{ key: 'law-school-clinic', name: 'Law school student clinic' },
+			{ key: 'law-other', name: 'Other (please specify)', requireData: true },
+		],
+	},
+	{
+		name: 'Service Provider Options',
+		ns: 'userServiceProvider',
+		attributes: [
+			{ key: 'healthcare', name: 'Healthcare provider' },
+			{ key: 'govt-agency', name: 'Government agency' },
+			{ key: 'nonprofit', name: 'Non-profit' },
+			{ key: 'grassroots-direct', name: 'Grassroots Direct Service Organization' },
+			{ key: 'student-club', name: 'Student club' },
+			{ key: 'friend-family', name: 'N/A (Looking on behalf of friends/family)' },
+			{ key: 'servpro-other', name: 'Other (please specify)', requireData: true },
+		],
+	},
 ]

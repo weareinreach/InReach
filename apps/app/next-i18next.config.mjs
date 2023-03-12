@@ -110,5 +110,18 @@ const config = {
 	serializeConfig: false,
 	use: isBrowser ? [ChainedBackend, intervalPlural] : [intervalPlural],
 	maxParallelReads: 20,
+	joinArrays: '',
+	interpolation: {
+		skipOnVariables: false,
+		format: (value, format, lng, edit) => {
+			switch (format) {
+				case 'lowercase': {
+					if (typeof value === 'string') return value.toLowerCase()
+					break
+				}
+			}
+			return value
+		},
+	},
 }
 export default config

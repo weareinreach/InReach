@@ -44,6 +44,7 @@
 		"@weareinreach/eslint-config": "0.100.0",
 		"dotenv-cli": "7.0.0",
 		"eslint": "8.35.0",
+		"just-capitalize": "3.2.0",
 		"listr2": "5.0.7",
 		"next": "13.2.4",
 		"prettier": "2.8.4",

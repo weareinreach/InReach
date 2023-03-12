@@ -1,2 +1,2 @@
-/** @type {['ar', 'en', 'es', 'fr', 'ru']} */
-export const locales = ['ar', 'en', 'es', 'fr', 'ru']
+/** @type {['en', 'es', 'fr', 'ar', 'ru']} */
+export const locales = ['en', 'es', 'fr', 'ar', 'ru']

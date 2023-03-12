@@ -103,6 +103,7 @@ model User {
   orgPermission      OrganizationPermission[]
   locationPermission LocationPermission[]
   roles              AssignedRole[]
+  attributes         UserAttribute[]
 
   reviews          OrgReview[]
   // Current location - for LCR
@@ -884,11 +885,14 @@ model AttributeCategory {
 model Attribute {
   id      String  @id @default(cuid())
   tag     String  @unique
-  name    String  @unique
+  name    String
   icon    String?
   /// Internal description
   intDesc String?
   active  Boolean @default(true)
+
+  /// Can this be used as a filter? No - `null` : Yes - Defined as INCLUDE or EXCLUDE
+  filterType FilterType?
 
   /// Set this flag to have attribute display on Location/Visit cards
   showOnLocation Boolean?
@@ -907,15 +911,13 @@ model Attribute {
   attachedServiceAccess ServiceAccessAttribute[]
   attachedOrganiations  OrganizationAttribute[]
   attachedLocations     LocationAttribute[]
+  attachedUsers         UserAttribute[]
 
   requireText     Boolean @default(false)
   requireLanguage Boolean @default(false)
   requireCountry  Boolean @default(false)
   requireBoolean  Boolean @default(false)
   requireData     Boolean @default(false)
-
-  /// Can this be used as a filter? No - `null` : Yes - Defined as INCLUDE or EXCLUDE
-  filterType FilterType?
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -958,6 +960,7 @@ model AttributeSupplement {
   organizationAttribute  OrganizationAttribute?  @relation(references: [attributeId, organizationId], fields: [organizationAttributeAttributeId, organizationAttributeOrganizationId])
   serviceAccessAttribute ServiceAccessAttribute? @relation(references: [attributeId, serviceAccessId], fields: [serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId])
   serviceAttribute       ServiceAttribute?       @relation(references: [attributeId, orgServiceId], fields: [serviceAttributeAttributeId, serviceAttributeOrgServiceId])
+  userAttribute          UserAttribute?          @relation(references: [attributeId, userId], fields: [userAttributeAttributeId, userAttributeUserId])
 
   locationAttributeAttributeId          String?
   locationAttributeLocationId           String?
@@ -967,11 +970,14 @@ model AttributeSupplement {
   serviceAccessAttributeServiceAccessId String?
   serviceAttributeAttributeId           String?
   serviceAttributeOrgServiceId          String?
+  userAttributeAttributeId              String?
+  userAttributeUserId                   String?
 
   @@index([locationAttributeAttributeId, locationAttributeLocationId])
   @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId])
   @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId])
   @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId])
+  @@index([userAttributeAttributeId, userAttributeUserId])
 }
 
 model ServiceCategory {
@@ -1983,6 +1989,22 @@ model ServiceAreaDist {
 //
 // Attributes
 //
+
+/// Link attributes to users
+model UserAttribute {
+  user        User                  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId      String
+  attribute   Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeId String
+  supplement  AttributeSupplement[]
+  //supplement     AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  //supplementId   String?              @unique
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([userId, attributeId])
+}
 
 /// Link attributes to organizations
 model OrganizationAttribute {

@@ -44,11 +44,24 @@ i18n
 			'es-US': ['es'],
 		},
 		defaultNS: 'common',
-		interpolation: { escapeValue: true, skipOnVariables: false },
+		interpolation: {
+			escapeValue: true,
+			skipOnVariables: false,
+			format: (value, format, lng, edit) => {
+				switch (format) {
+					case 'lowercase': {
+						if (typeof value === 'string') return value.toLowerCase()
+						break
+					}
+				}
+				return value
+			},
+		},
 		react: { useSuspense: true },
 		cleanCode: true,
 		supportedLngs: locales,
 		ns,
+		joinArrays: '',
 		// resources,
 	})
 

@@ -38,10 +38,19 @@ export const parseAuthResponse: AuthResponse = async (response, email) => {
 	const isChallenge = (name: string | undefined): name is ChallengeNameType =>
 		Object.values(ChallengeNameType).includes(name as ChallengeNameType)
 	if (response.AuthenticationResult) {
+		// const userInfo = await cognito.getUser({ AccessToken: response.AuthenticationResult.AccessToken })
+		// console.log('userInfo', userInfo)
+		// if (!userInfo.UserAttributes) throw new Error('Unable to get Id')
+		// const { Value: userId } = userInfo.UserAttributes.find(
+		// 	(x) => x.Name === 'custom:id' && Boolean(x.Value)
+		// ) ?? { Value: undefined }
+		// if (!userId) throw new Error('Unable to get Id')
+
 		return {
 			success: true,
 			session: response.AuthenticationResult,
 			user: await generateUserSession(email),
+			//user: await generateUserSession(userId),
 		}
 	}
 	if (isChallenge(response.ChallengeName)) {
