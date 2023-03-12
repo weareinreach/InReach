@@ -73,6 +73,13 @@ export default {
 					},
 				},
 			}),
+			getTRPCMock({
+				path: ['user', 'create'],
+				type: 'mutation',
+				response: {
+					success: true,
+				},
+			}),
 		],
 	},
 	args: {

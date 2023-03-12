@@ -12,6 +12,7 @@ import {
 
 export const userRouter = defineRouter({
 	create: publicProcedure.input(CreateUser).mutation(async ({ ctx, input }) => {
+		// TODO: [IN-793] Alter signup input to match with Signup Flow data.
 		try {
 			const newUser = await ctx.prisma.$transaction(async (tx) => {
 				const user = await tx.user.create(input.prisma)

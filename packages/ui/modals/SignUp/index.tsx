@@ -3,25 +3,35 @@ import { zodResolver } from '@mantine/form'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { useTranslation, Trans } from 'next-i18next'
-import { useState, forwardRef } from 'react'
+import { useState, forwardRef, Dispatch, SetStateAction } from 'react'
 import { z } from 'zod'
 
-import { Link, Button } from '~ui/components/core'
+import { Link, Button, ModalTitleBreadcrumb } from '~ui/components/core'
 import { useScreenSize, useCustomVariant } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { SignUpFormProvider, useSignUpForm } from './context'
-import { FormEmail, FormName, FormPassword, LanguageSelect, FormLocation } from './fields'
+import {
+	FormEmail,
+	FormName,
+	FormPassword,
+	LanguageSelect,
+	FormLocation,
+	FormLawPractice,
+	FormServiceProvider,
+} from './fields'
 import { ModalTitle } from '../ModalTitle'
 import { openPrivacyStatementModal } from '../PrivacyStatement'
 
 type RichTranslateProps = {
 	i18nKey: string
 	values?: Record<string, any>
+	stateSetter?: Dispatch<SetStateAction<string | null>>
 }
-export const RichTranslate = (props: RichTranslateProps) => {
+export const RichTranslate = ({ stateSetter, ...props }: RichTranslateProps) => {
 	const { t } = useTranslation()
 	const variants = useCustomVariant()
+
 	return (
 		<Trans
 			tOptions={{
@@ -43,7 +53,16 @@ export const RichTranslate = (props: RichTranslateProps) => {
 					</Text>
 				),
 				loginLink: <Link external>.</Link>,
-				button: <Button variant='secondary-icon'>.</Button>,
+				button: (
+					<Button
+						variant='secondary-icon'
+						onClick={
+							stateSetter ? (e) => stateSetter(e.currentTarget.getAttribute('data-option')) : undefined
+						}
+					>
+						.
+					</Button>
+				),
 				group: <Stack align='center'>.</Stack>,
 			}}
 			{...props}
@@ -55,10 +74,15 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 	const { t } = useTranslation('common')
 	const { isMobile } = useScreenSize()
 	const [opened, setOpened] = useState(false)
-	const [step, setStep] = useState(1)
+	const [stepOption, setStepOption] = useState<string | null>(null)
+	const [successMessage, setSuccessMessage] = useState(false)
 	const variants = useCustomVariant()
-	const signUpAction = api.user.create.useMutation()
-	const { locale } = useRouter()
+	const signUpAction = api.user.create.useMutation({
+		onSuccess: () => {
+			setSuccessMessage(true)
+		},
+	})
+	const router = useRouter()
 
 	const SignUpSchema = z.object({
 		name: z.string(),
@@ -73,25 +97,35 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 			email: '',
 			name: '',
 			password: '',
-			language: locale,
+			language: router.locale,
 			searchLocation: '',
 			locationOptions: [],
 		},
 		validateInputOnBlur: true,
 	})
 
-	const modalTitle = (
-		<ModalTitle
-			breadcrumb={{ option: 'close', onClick: () => setOpened(false) }}
-			rightText={t('step-x-y', { ns: 'common', x: step, y: 2 })}
-		/>
-	)
+	const breadcrumbProps: ModalTitleBreadcrumb =
+		stepOption === null || successMessage
+			? { option: 'close', onClick: () => setOpened(false) }
+			: { option: 'back', backTo: 'none', onClick: () => setStepOption(null) }
 
-	const step1 = <RichTranslate i18nKey='sign-up-modal-body' />
+	const titleRightSideProps = successMessage
+		? undefined
+		: t('step-x-y', { ns: 'common', x: stepOption ? 2 : 1, y: 2 })
+	const modalTitle = <ModalTitle breadcrumb={breadcrumbProps} rightText={titleRightSideProps} />
+
+	const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={setStepOption} />
+
+	const submitHandler = () => {
+		if (form.isValid()) {
+			const result = signUpAction.mutate(form.values)
+			console.log(result)
+		}
+	}
 
 	const signUpButton = (
 		<>
-			<Button disabled={!form.isValid()} onClick={() => signUpAction.mutate(form.values)}>
+			<Button disabled={!form.isValid()} onClick={submitHandler} loading={signUpAction.isLoading}>
 				{t('sign-up')}
 			</Button>
 			<Text variant={variants.Text.utility4darkGray}>
@@ -127,16 +161,78 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 		</>
 	)
 
-	const step2Reg = (
-		<Stack>
-			<FormName />
-			<LanguageSelect />
-			<FormEmail />
-			<FormPassword />
-			<FormLocation />
-			{signUpButton}
-		</Stack>
+	const step2 = () => {
+		let nameContext: 'alias' | 'full' = 'alias'
+		let emailContext: 'professional' | 'student-pro' | undefined = undefined
+		let langSelect = false
+		let location = false
+		let lawPractice = false
+		let servProvider = false
+
+		switch (stepOption) {
+			case 'law': {
+				nameContext = 'full'
+				emailContext = 'student-pro'
+				langSelect = true
+				location = true
+				lawPractice = true
+				break
+			}
+			case 'servpro': {
+				nameContext = 'full'
+				emailContext = 'professional'
+				langSelect = true
+				location = true
+				servProvider = true
+				break
+			}
+			case 'lcr': {
+				nameContext = 'full'
+				langSelect = true
+				location = true
+			}
+		}
+
+		return (
+			<Stack>
+				<FormName tContext={nameContext} />
+				<FormEmail tContext={emailContext} />
+				<FormPassword />
+				{langSelect && <LanguageSelect />}
+				{location && <FormLocation />}
+				{lawPractice && <FormLawPractice />}
+				{servProvider && <FormServiceProvider />}
+				{signUpButton}
+			</Stack>
+		)
+	}
+
+	const signupBody = (
+		<>
+			<RichTranslate i18nKey='sign-up-header' />
+			{stepOption === null ? step1 : step2()}
+		</>
 	)
+
+	const successBody = (
+		<>
+			<Title order={1}>✅</Title>
+			<Title order={2}>{t('sign-up-success')}</Title>
+			<Button variant={variants.Button.primaryLg} fullWidth onClick={() => router.push('/')}>
+				{t('find-x', { value: '$t(resources, lowercase)' })}
+			</Button>
+			<Button variant={variants.Button.primaryLg} fullWidth onClick={() => router.push('/profile')}>
+				{t('go-to-x', { value: '$t(profile, lowercase)' })}
+			</Button>
+		</>
+	)
+
+	const modalBody = () => {
+		if (successMessage) {
+			return successBody
+		}
+		return signupBody
+	}
 
 	return (
 		<>
@@ -150,8 +246,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 			>
 				<SignUpFormProvider form={form}>
 					<Stack spacing={24} align='center'>
-						<RichTranslate i18nKey='sign-up-header' />
-						{step2Reg}
+						{modalBody()}
 					</Stack>
 				</SignUpFormProvider>
 			</Modal>

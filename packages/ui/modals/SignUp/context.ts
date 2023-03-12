@@ -15,6 +15,8 @@ interface SignUpFormValues {
 		value: string
 		placeId: string
 	}[]
+	lawPractice?: string
+	servProvider?: string
 }
 
 export const [SignUpFormProvider, useSignUpFormContext, useSignUpForm] = createFormContext<SignUpFormValues>()
