@@ -24,6 +24,7 @@ export const UserAvatar = ({ subheading, user, useLoggedIn = false, loading = fa
 	const { t, i18n } = useTranslation()
 	const { data: session, status } = useSession()
 	const theme = useMantineTheme()
+	console.log({ status, session })
 	const subText = () => {
 		if (!user && useLoggedIn && subheading !== undefined) {
 			return <Text className={classes.subText}>{session?.user.email}</Text>

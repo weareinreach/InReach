@@ -1,7 +1,7 @@
 import { type inferAsyncReturnType } from '@trpc/server'
 import { type CreateNextContextOptions } from '@trpc/server/adapters/next'
 import { type Session, getServerSession } from '@weareinreach/auth'
-import { prisma } from '@weareinreach/db'
+import { prisma, generateId } from '@weareinreach/db'
 
 type CreateContextOptions = {
 	session: Session | null
@@ -20,6 +20,7 @@ export const createContextInner = async (opts: CreateContextOptions) => {
 	return {
 		session: opts.session,
 		prisma,
+		generateId,
 	}
 }
 

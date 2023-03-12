@@ -9,13 +9,13 @@ export const userTypes = [
 ] as const
 
 export const userTypesWithId = [
-	{ id: 'utyp_00000000008XS7VB7W3GWCNZDA', type: 'seeker' },
-	{ id: 'utyp_0000000000JFBZ38PZYF60XYPQ', type: 'provider' },
-	{ id: 'utyp_00000000009M0WY6JD5HZRHCYX', type: 'lcr' },
-	{ id: 'utyp_00000000007N2K4S9KSM21Q5J2', type: 'dataManager' },
-	{ id: 'utyp_0000000000MGQHAWJP8Z481TEM', type: 'dataAdmin' },
-	{ id: 'utyp_00000000004B5DRNJ84TYWV5B7', type: 'sysadmin' },
-	{ id: 'utyp_0000000000DPCMEBJD7YJM2KVP', type: 'system' },
+	{ id: 'utyp_000000000023DP0VZX2Q986NTD', type: 'seeker' },
+	{ id: 'utyp_0000000000A508A58T7HT8XFK7', type: 'provider' },
+	{ id: 'utyp_0000000000EJBYWNY4NZE89R6Q', type: 'lcr' },
+	{ id: 'utyp_0000000000GH8H79CMHCGAGWX0', type: 'dataManager' },
+	{ id: 'utyp_0000000000HM97KKDVZMBKPV8P', type: 'dataAdmin' },
+	{ id: 'utyp_000000000042BK08DBTVJR23M8', type: 'sysadmin' },
+	{ id: 'utyp_0000000000CHQECXGCWFDBS6T3', type: 'system' },
 ] as const
 
 export type UserTypeTags = (typeof userTypes)[number]

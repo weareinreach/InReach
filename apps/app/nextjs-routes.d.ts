@@ -16,6 +16,7 @@ declare module "nextjs-routes" {
     | StaticRoute<"/">
     | DynamicRoute<"/org/[slug]/[orgLocationId]", { "slug": string; "orgLocationId": string }>
     | DynamicRoute<"/org/[slug]", { "slug": string }>
+    | StaticRoute<"/profile">
     | DynamicRoute<"/search/[...params]", { "params": string[] }>
     | StaticRoute<"/search">
     | StaticRoute<"/suggest">;

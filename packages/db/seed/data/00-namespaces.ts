@@ -4,11 +4,7 @@ export const namespaces = {
 	attribute: 'attribute',
 	common: 'common',
 	country: 'country',
-	footer: 'common',
 	govDist: 'gov-dist',
-	nav: 'common',
-	orgDescription: 'org-description',
-	orgService: 'org-service',
 	phoneType: 'phone-type',
 	services: 'services',
 	socialMedia: 'common',
@@ -21,6 +17,8 @@ export const namespaces = {
  *
  * Only needed when json generation should be suppressed.
  */
-export const namespaceGen = {}
+export const namespaceGen = {
+	'org-data': false,
+}
 
 export const keySlug = (item: string) => slug(item)

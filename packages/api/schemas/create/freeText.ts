@@ -9,7 +9,7 @@ export const createFreeText = (slug: string, text?: string) => {
 					key: slug,
 					namespace: {
 						connect: {
-							name: namespaces.orgDescription,
+							name: namespaces.orgData,
 						},
 					},
 					text: text,
