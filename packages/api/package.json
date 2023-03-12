@@ -24,7 +24,7 @@
 		"@trpc/server": "10.14.1",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
-		"just-diff": "5.2.0",
+		"just-diff": "6.0.0",
 		"just-flush": "2.3.0",
 		"just-intersect": "4.3.0",
 		"just-omit": "2.2.0",
