@@ -21,7 +21,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const Navbar = () => {
-	const { t } = useTranslation('nav')
+	const { t } = useTranslation()
 	const { classes } = useStyles()
 
 	return (

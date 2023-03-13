@@ -1,13 +1,15 @@
 /* eslint-disable i18next/no-literal-string */
-import { Code } from '@mantine/core'
+import { Code, Grid, Stack, Title } from '@mantine/core'
 import { trpcServerClient } from '@weareinreach/api/trpc'
+import { Toolbar, Rating, Badge, type CustomBadgeProps } from '@weareinreach/ui/components/core'
+import { ContactSection } from '@weareinreach/ui/components/sections'
 import { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { type RoutedQuery } from 'nextjs-routes'
 
 import { api } from '~app/utils/api'
+import { getServerSideTranslations } from '~app/utils/i18n'
 
 const OrganizationPage: NextPage = () => {
 	const { t } = useTranslation()
@@ -16,13 +18,37 @@ const OrganizationPage: NextPage = () => {
 	console.log(query)
 	const { data, isLoading } = api.organization.getBySlug.useQuery(query)
 
-	if (isLoading && !data) return <>Loading</>
+	if (isLoading || !data) return <>Loading</>
+
+	const { emails, phones, socialMedia, websites, allowedEditors, userLists, attributes, description } = data
+
+	const isClaimed = Boolean(allowedEditors.length)
+
+	const leaderAttributes = attributes.filter(({ attribute }) => {
+		attribute.categories.some(({ category }) => {
+			category.tag === 'orgLeader'
+		})
+	})
+	const infoBadges = () => {
+		const output: CustomBadgeProps[] = []
+	}
 
 	if (data?.locations?.length === 1) {
 		return (
 			<>
-				Single Location view
-				<Code block>{JSON.stringify(data, null, 2)}</Code>
+				<Grid.Col sm={8}>
+					<Toolbar
+						breadcrumbProps={{ option: 'back', backTo: 'search', onClick: () => router.back() }}
+						saved={Boolean(userLists.length)}
+					/>
+					<Stack pt={24} align='flex-start' spacing={40}>
+						<Stack>
+							<Title order={1}>{data.name}</Title>
+							<Rating organizationId={data.id} />
+						</Stack>
+					</Stack>
+				</Grid.Col>
+				<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
 			</>
 		)
 	}
@@ -45,9 +71,10 @@ export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/org/[slug]
 	const ssg = await trpcServerClient()
 
 	await ssg.organization.getBySlug.prefetch({ slug })
+	await ssg.organization.isSaved.prefetch(slug)
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await serverSideTranslations(locale ?? 'en', ['common'])),
+		...(await getServerSideTranslations(locale ?? 'en', ['common', slug])),
 	}
 
 	return {

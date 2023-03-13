@@ -347,7 +347,7 @@ interface BadgeStylesParams {
 	minify?: boolean
 	hideBg?: boolean
 }
-type CustomBadgeProps =
+export type CustomBadgeProps =
 	| (Omit<BadgeProps, 'variant'> & {
 			/** Preset designs */
 			variant?:
