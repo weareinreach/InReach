@@ -302,6 +302,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				classNames={merge(classNames, baseClasses)}
 				ref={ref}
 				leftSection={leftSection}
+				w='fit-content'
 				{...styleDataProps}
 				{...others}
 			>
@@ -323,7 +324,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 export const BadgeGroup = ({ badges, withSeparator = false }: BadgeGroupProps) => {
 	const variants = useCustomVariant()
 	const badgeList = badges.map((item: CustomBadgeProps, idx, arr) => (
-		<List.Item key={idx}>
+		<List.Item key={idx} m={rem(8)}>
 			<Badge {...item} />
 		</List.Item>
 	))
