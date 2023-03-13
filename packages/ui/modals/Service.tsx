@@ -1,6 +1,7 @@
 import { Title, Text, Stack, Group, Box, createStyles } from '@mantine/core'
 import { ModalSettings } from '@mantine/modals/lib/context'
 import { ApiOutput } from '@weareinreach/api'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 
 import { Badge, BadgeGroup, type CommunityTagProps } from '~ui/components/core'
@@ -30,6 +31,10 @@ export const ServiceModalBody = ({ serviceId }: ServiceModalBodyProps) => {
 	const { data, status } = api.service.byId.useQuery({ id: serviceId })
 	const { t } = useTranslation()
 	const { classes } = useStyles()
+	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
+	const { slug, orgLocationId } = router.query
+	const apiQuery = typeof orgLocationId === 'string' ? { orgLocationId } : { slug }
+	const { data: parent } = api.service.getParentName.useQuery(apiQuery)
 
 	const SectionDivider = ({ title, children }: sectionDividerProps) => (
 		<Stack>
