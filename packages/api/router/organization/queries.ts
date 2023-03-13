@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 import { handleError } from '~api/lib'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
@@ -113,4 +115,15 @@ export const queries = defineRouter({
 			handleError(error)
 		}
 	}),
+	getNameFromSlug: publicProcedure.input(z.string()).query(
+		async ({ ctx, input }) =>
+			await ctx.prisma.organization.findUniqueOrThrow({
+				where: {
+					slug: input,
+				},
+				select: {
+					name: true,
+				},
+			})
+	),
 })
