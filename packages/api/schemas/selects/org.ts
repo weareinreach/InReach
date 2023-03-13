@@ -47,7 +47,7 @@ export const organizationSelect = {
 	published: true,
 	lastVerified: true,
 } satisfies Prisma.OrganizationSelect
-export const countryInclude = {
+const countryInclude = {
 	select: {
 		cca2: true,
 		cca3: true,
@@ -57,7 +57,7 @@ export const countryInclude = {
 		flag: true,
 	},
 } satisfies Prisma.CountryArgs
-export const hoursSelect = {
+const hoursSelect = {
 	select: {
 		dayIndex: true,
 		start: true,
@@ -65,7 +65,7 @@ export const hoursSelect = {
 		closed: true,
 	},
 } satisfies Prisma.Organization$hoursArgs | Prisma.OrgLocation$hoursArgs
-export const orgEmailInclude = {
+const orgEmailInclude = {
 	where: { email: isPublic },
 	select: {
 		email: {
@@ -87,7 +87,7 @@ export const orgEmailInclude = {
 	},
 } satisfies Prisma.OrgService$emailsArgs | Prisma.Organization$emailsArgs | Prisma.OrgLocation$emailsArgs
 
-export const orgPhoneInclude = {
+const orgPhoneInclude = {
 	where: {
 		phone: isPublic,
 	},
@@ -114,7 +114,7 @@ export const orgPhoneInclude = {
 	},
 } satisfies Prisma.Organization$phonesArgs | Prisma.OrgLocation$phonesArgs
 
-export const orgSocialMediaInclude = {
+const orgSocialMediaInclude = {
 	where: isPublic,
 	select: {
 		service: {
@@ -131,14 +131,14 @@ export const orgSocialMediaInclude = {
 	},
 } satisfies Prisma.Organization$socialMediaArgs | Prisma.OrgLocation$socialMediaArgs
 
-export const languageSelect = {
+const languageSelect = {
 	select: {
 		languageName: true,
 		nativeName: true,
 	},
 } satisfies Prisma.LanguageArgs
 
-export const orgWebsiteInclude = {
+const orgWebsiteInclude = {
 	select: {
 		id: true,
 		description: freeText,
@@ -156,7 +156,7 @@ type AttributeInclude =
 	| Prisma.OrgService$attributesArgs
 	| Prisma.ServiceAccess$attributesArgs
 
-export const attributeInclude = {
+const attributeInclude = {
 	where: {
 		attribute: {
 			active: true,
@@ -182,7 +182,7 @@ export const attributeInclude = {
 	},
 } satisfies AttributeInclude
 
-export const govDistInclude = {
+const govDistInclude = {
 	select: {
 		govDistType: {
 			select: {
@@ -196,7 +196,7 @@ export const govDistInclude = {
 	},
 } satisfies Prisma.GovDistArgs
 
-export const serviceAreaInclude = {
+const serviceAreaInclude = {
 	select: {
 		countries: { select: { country: countryInclude } },
 		districts: { select: { govDist: govDistInclude } },
@@ -207,8 +207,11 @@ const attributeDefInclude = {
 		categories: { select: { category: { select: { icon: true, ns: true, tag: true } } } },
 	},
 } satisfies Prisma.AttributeArgs
-export const serviceTagInclude = {
+const serviceTagInclude = {
 	select: {
+		name: true,
+		tsKey: true,
+		tsNs: true,
 		category: {
 			select: {
 				tsKey: true,
@@ -222,7 +225,7 @@ const orgServiceTagInclude = {
 	select: { tag: serviceTagInclude },
 } satisfies Prisma.OrgServiceTagArgs
 
-export const serviceAccessInclude = {
+const serviceAccessInclude = {
 	select: { attributes: attributeInclude },
 } satisfies Prisma.ServiceAccessArgs
 const reviewIds = {
@@ -233,7 +236,7 @@ const reviewIds = {
 	select: { id: true },
 } satisfies Prisma.Organization$reviewsArgs | Prisma.OrgLocation$reviewsArgs | Prisma.OrgService$reviewsArgs
 
-export const orgServiceInclude = {
+const orgServiceInclude = {
 	where: isPublic,
 	select: {
 		description: freeText,
