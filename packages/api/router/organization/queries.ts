@@ -33,7 +33,13 @@ export const queries = defineRouter({
 				},
 				select,
 			})
-			return org
+
+			const reformatted = {
+				...org,
+				services: org.services.map((serv) => ({ service: serv })),
+			}
+
+			return reformatted
 		} catch (error) {
 			handleError(error)
 		}

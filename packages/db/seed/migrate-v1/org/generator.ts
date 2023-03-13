@@ -1020,11 +1020,35 @@ export const generateRecords = async (task: ListrTask) => {
 						log(`\t🔑 Service Access Instruction: '${access.instructions?.trim() ?? access._id.$oid}'`)
 						accessCount++
 					}
+					const servNameTextId = generateId('freeText')
+					if (service.name) {
+						const { key, ns, text } = generateKey({
+							type: 'svc',
+							keyPrefix: orgSlug,
+							servId: serviceId,
+							subtype: 'name',
+							text: service.name,
+						})
+						if (text && key && ns) {
+							data.translationKey.add({
+								key,
+								ns,
+								text,
+								createdAt,
+								updatedAt,
+							})
+							data.freeText.add({ id: servNameTextId, key, ns, createdAt, updatedAt })
+							if (service.name_ES) {
+								exportTranslation({ ns, key, text: service.name_ES, log })
+							}
+						}
+					}
 
 					/* Basic Service Record*/
 					data.orgService.add({
 						id: serviceId,
 						descriptionId,
+						serviceNameId: service.name ? servNameTextId : undefined,
 						createdAt,
 						updatedAt,
 						legacyId: service._id.$oid,
