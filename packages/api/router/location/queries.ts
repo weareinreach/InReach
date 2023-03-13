@@ -1,4 +1,5 @@
 import { TRPCError } from '@trpc/server'
+import { z } from 'zod'
 
 import { defineRouter, publicProcedure, handleError } from '~api/lib'
 import { id, orgId } from '~api/schemas/common'
@@ -34,4 +35,11 @@ export const queries = defineRouter({
 			handleError(error)
 		}
 	}),
+	getNameById: publicProcedure.input(z.string()).query(
+		async ({ ctx, input }) =>
+			await ctx.prisma.orgLocation.findUniqueOrThrow({
+				where: { id: input },
+				select: { name: true },
+			})
+	),
 })

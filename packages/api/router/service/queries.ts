@@ -1,5 +1,6 @@
 import { TRPCError } from '@trpc/server'
 import { Prisma } from '@weareinreach/db'
+import { z } from 'zod'
 
 import { defineRouter, publicProcedure, handleError, protectedProcedure } from '~api/lib'
 import {
@@ -89,4 +90,27 @@ export const queries = defineRouter({
 		})
 		return result
 	}),
+	getParentName: publicProcedure
+		.input(z.object({ slug: z.string(), orgLocationId: z.string() }).partial())
+		.query(async ({ ctx, input }) => {
+			const { slug, orgLocationId } = input
+
+			switch (true) {
+				case Boolean(slug): {
+					return await ctx.prisma.organization.findUniqueOrThrow({
+						where: { slug },
+						select: { name: true },
+					})
+				}
+				case Boolean(orgLocationId): {
+					return await ctx.prisma.orgLocation.findUniqueOrThrow({
+						where: { id: orgLocationId },
+						select: { name: true },
+					})
+				}
+				default: {
+					throw new TRPCError({ code: 'BAD_REQUEST' })
+				}
+			}
+		}),
 })
