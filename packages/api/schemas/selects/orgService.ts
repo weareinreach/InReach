@@ -8,6 +8,7 @@ import {
 	isPublic,
 	languageNames,
 	phoneSelectPublic,
+	freeText,
 } from './common'
 import { idString } from '../common'
 
@@ -38,6 +39,7 @@ const serviceSelect = z
 	.partial()
 	.transform((select) => {
 		const query = {
+			serviceName: freeText,
 			services: select.services
 				? {
 						where: {
@@ -120,7 +122,7 @@ const serviceSelect = z
 							},
 						},
 				  }
-				: false,
+				: undefined,
 			attributes: select.attributes ? attributes : undefined,
 			phones: select.phones ? phoneSelectPublic : undefined,
 			emails: select.emails
