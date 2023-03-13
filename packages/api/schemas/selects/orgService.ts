@@ -8,6 +8,7 @@ import {
 	isPublic,
 	languageNames,
 	phoneSelectPublic,
+	freeText,
 } from './common'
 import { idString } from '../common'
 
@@ -38,6 +39,7 @@ const serviceSelect = z
 	.partial()
 	.transform((select) => {
 		const query = {
+			serviceName: freeText,
 			services: select.services
 				? {
 						where: {
@@ -71,7 +73,7 @@ const serviceSelect = z
 							},
 						},
 				  }
-				: false,
+				: undefined,
 			serviceAreas: select.serviceAreas
 				? {
 						select: {
@@ -87,7 +89,7 @@ const serviceSelect = z
 							},
 						},
 				  }
-				: false,
+				: undefined,
 			hours: select.hours
 				? {
 						select: {
@@ -97,7 +99,7 @@ const serviceSelect = z
 							closed: true,
 						},
 				  }
-				: false,
+				: undefined,
 			reviews: select.reviews
 				? {
 						where: {
@@ -120,9 +122,9 @@ const serviceSelect = z
 							},
 						},
 				  }
-				: false,
-			attributes: select.attributes ? attributes : false,
-			phones: select.phones ? phoneSelectPublic : false,
+				: undefined,
+			attributes: select.attributes ? attributes : undefined,
+			phones: select.phones ? phoneSelectPublic : undefined,
 			emails: select.emails
 				? {
 						where: {
@@ -141,14 +143,14 @@ const serviceSelect = z
 							},
 						},
 				  }
-				: false,
+				: undefined,
 			accessDetails: select.accessDetails
 				? {
 						select: {
 							attributes,
 						},
 				  }
-				: false,
+				: undefined,
 			locations: select.locations
 				? {
 						where: {
@@ -171,7 +173,7 @@ const serviceSelect = z
 							},
 						},
 				  }
-				: false,
+				: undefined,
 		} satisfies Prisma.OrgServiceSelect
 		return query
 	})

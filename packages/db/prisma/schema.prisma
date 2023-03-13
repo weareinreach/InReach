@@ -696,9 +696,10 @@ model FreeText {
 
   Organization        Organization?
   OrgWebsite          OrgWebsite?
-  OrgService          OrgService?
+  OrgService          OrgService?          @relation("OrgServiceDescription")
   AttributeSupplement AttributeSupplement?
   OrgEmail            OrgEmail?
+  OrgServiceName      OrgService?          @relation("OrgServiceName")
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -711,12 +712,13 @@ model FreeText {
 /// Organization's offered services - access instructions & details
 ///  associated with service tag
 model OrgService {
-  id         String  @id @default(cuid())
-  legacyId   String? @unique /// old ID from MongoDB
-  published  Boolean @default(false)
-  deleted    Boolean @default(false)
-  legacyName String?
-
+  id            String             @id @default(cuid())
+  legacyId      String?            @unique /// old ID from MongoDB
+  published     Boolean            @default(false)
+  deleted       Boolean            @default(false)
+  legacyName    String?
+  serviceName   FreeText?          @relation("OrgServiceName", fields: [serviceNameId], references: [id])
+  serviceNameId String?            @unique
   // Nested data
   services      OrgServiceTag[]
   serviceAreas  ServiceArea[]
@@ -726,7 +728,7 @@ model OrgService {
   phones        OrgServicePhone[]
   emails        OrgServiceEmail[]
   accessDetails ServiceAccess[]
-  description   FreeText?          @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  description   FreeText?          @relation("OrgServiceDescription", fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   descriptionId String?            @unique
 
   // attachments
