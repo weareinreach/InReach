@@ -117,67 +117,76 @@ export const mockServiceData = {
 	attributes: [
 		{
 			attribute: {
-				categories: [
-					{
-						category: {
-							ns: 'attribute',
-							tag: 'community',
-						},
-					},
-				],
 				tsKey: 'community.homeless',
 				tsNs: 'attribute',
+				icon: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'community',
+							icon: null,
+						},
+					},
+				],
 			},
 			supplement: [],
 		},
 		{
 			attribute: {
-				categories: [
-					{
-						category: {
-							ns: 'attribute',
-							tag: 'community',
-						},
-					},
-				],
 				tsKey: 'community.lgbtq-youth',
 				tsNs: 'attribute',
+				icon: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'community',
+							icon: null,
+						},
+					},
+				],
 			},
 			supplement: [],
 		},
 		{
 			attribute: {
-				categories: [
-					{
-						category: {
-							ns: 'attribute',
-							tag: 'community',
-						},
-					},
-				],
 				tsKey: 'community.teens',
 				tsNs: 'attribute',
+				icon: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'community',
+							icon: null,
+						},
+					},
+				],
 			},
 			supplement: [],
 		},
 		{
 			attribute: {
+				tsKey: 'sys.incompatible-info',
+				tsNs: 'attribute',
+				icon: null,
+				showOnLocation: null,
 				categories: [
 					{
 						category: {
-							ns: 'attribute',
 							tag: 'system',
+							icon: null,
 						},
 					},
 				],
-				tsKey: 'sys.incompatible-info',
-				tsNs: 'attribute',
 			},
 			supplement: [
 				{
 					country: null,
 					language: null,
 					text: null,
+					govDist: null,
 					boolean: null,
 					data: {
 						json: [
@@ -215,16 +224,18 @@ export const mockServiceData = {
 		},
 		{
 			attribute: {
+				tsKey: 'lang.lang-offered',
+				tsNs: 'attribute',
+				icon: null,
+				showOnLocation: null,
 				categories: [
 					{
 						category: {
-							ns: 'attribute',
 							tag: 'languages',
+							icon: null,
 						},
 					},
 				],
-				tsKey: 'lang.lang-offered',
-				tsNs: 'attribute',
 			},
 			supplement: [
 				{
@@ -234,6 +245,7 @@ export const mockServiceData = {
 						nativeName: 'English',
 					},
 					text: null,
+					govDist: null,
 					boolean: null,
 					data: null,
 				},
@@ -247,16 +259,18 @@ export const mockServiceData = {
 			attributes: [
 				{
 					attribute: {
+						tsKey: 'serviceaccess.accesslocation',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 						categories: [
 							{
 								category: {
-									ns: 'attribute',
 									tag: 'service-access-instructions',
+									icon: null,
 								},
 							},
 						],
-						tsKey: 'serviceaccess.accesslocation',
-						tsNs: 'attribute',
 					},
 					supplement: [
 						{
@@ -266,6 +280,7 @@ export const mockServiceData = {
 								ns: 'org-data',
 								key: 'larkin-street-youth-services.attribute.atts_01GVDMX95RTFSRBMJC677B3WAB',
 							},
+							govDist: null,
 							boolean: null,
 							data: {
 								json: {
@@ -289,16 +304,18 @@ export const mockServiceData = {
 			attributes: [
 				{
 					attribute: {
+						tsKey: 'serviceaccess.accessphone',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
 						categories: [
 							{
 								category: {
-									ns: 'attribute',
 									tag: 'service-access-instructions',
+									icon: null,
 								},
 							},
 						],
-						tsKey: 'serviceaccess.accessphone',
-						tsNs: 'attribute',
 					},
 					supplement: [
 						{
@@ -308,6 +325,7 @@ export const mockServiceData = {
 								ns: 'org-data',
 								key: 'larkin-street-youth-services.attribute.atts_01GVDMX95R2GVT18RP93MEQJSH',
 							},
+							govDist: null,
 							boolean: null,
 							data: {
 								json: {
@@ -380,4 +398,14 @@ export const mockServiceData = {
 			},
 		},
 	],
+	id: 'osvc_01GVDMX95RZDJV2ZYKGQADY30D',
+	createdAt: new Date('2020-03-27T18:54:17.534Z'),
+	updatedAt: new Date('2022-10-25T11:28:34.601Z'),
+	description: {
+		key: 'larkin-street-youth-services.osvc_01GVDMX95RZDJV2ZYKGQADY30D.description',
+		ns: 'org-data',
+		tsKey: {
+			text: 'Larkin Street Academy Services offers job readiness, college readiness, computer classes, job placement and retention, internships, tutoring, GED tutoring and classes, secondary and post-secondary school enrollment and support, mindfulness, visual and performing arts. Offices are open Monday through Thursday, 9:00 AM - 16:00 PM, appointments only.',
+		},
+	},
 } satisfies ApiOutput['service']['byId']

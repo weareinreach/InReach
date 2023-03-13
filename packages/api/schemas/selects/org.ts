@@ -1,7 +1,9 @@
 import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { freeText, isPublic } from './common'
+import { Context } from '~api/lib'
+
+import { freeText, isPublic, attributes } from './common'
 
 type OrgIncludeKeys = z.ZodObject<
 	{
@@ -156,31 +158,7 @@ type AttributeInclude =
 	| Prisma.OrgService$attributesArgs
 	| Prisma.ServiceAccess$attributesArgs
 
-const attributeInclude = {
-	where: {
-		attribute: {
-			active: true,
-		},
-	},
-	select: {
-		attribute: {
-			select: {
-				tsKey: true,
-				tsNs: true,
-				icon: true,
-				showOnLocation: true,
-			},
-		},
-		supplement: {
-			select: {
-				country: countryInclude,
-				language: languageSelect,
-				text: freeText,
-				data: true,
-			},
-		},
-	},
-} satisfies AttributeInclude
+const attributeInclude = attributes satisfies AttributeInclude
 
 const govDistInclude = {
 	select: {
@@ -236,29 +214,32 @@ const reviewIds = {
 	select: { id: true },
 } satisfies Prisma.Organization$reviewsArgs | Prisma.OrgLocation$reviewsArgs | Prisma.OrgService$reviewsArgs
 
-const orgServiceInclude = {
-	where: isPublic,
-	select: {
-		serviceName: freeText,
-		description: freeText,
-		hours: hoursSelect,
-		attributes: attributeInclude,
-		serviceAreas: serviceAreaInclude,
-		services: orgServiceTagInclude,
-		accessDetails: serviceAccessInclude,
-		reviews: reviewIds,
-		phones: orgPhoneInclude,
-		emails: orgEmailInclude,
-		id: true,
-	},
-} satisfies Prisma.Organization$servicesArgs
+const orgServiceInclude = (ctx: Context) =>
+	({
+		where: isPublic,
+		select: {
+			serviceName: freeText,
+			description: freeText,
+			hours: hoursSelect,
+			attributes: attributeInclude,
+			serviceAreas: serviceAreaInclude,
+			services: orgServiceTagInclude,
+			accessDetails: serviceAccessInclude,
+			reviews: reviewIds,
+			phones: orgPhoneInclude,
+			emails: orgEmailInclude,
+			userLists: userListSelect(ctx),
+			id: true,
+		},
+	} satisfies Prisma.Organization$servicesArgs)
 
-const orgLocationServiceInclude = {
-	where: {
-		service: isPublic,
-	},
-	select: { service: { select: orgServiceInclude.select } },
-} satisfies Prisma.OrgLocation$servicesArgs
+const orgLocationServiceInclude = (ctx: Context) =>
+	({
+		where: {
+			service: isPublic,
+		},
+		select: { service: { select: orgServiceInclude(ctx).select } },
+	} satisfies Prisma.OrgLocation$servicesArgs)
 
 const photoSelect = {
 	where: isPublic,
@@ -269,51 +250,77 @@ const photoSelect = {
 	},
 } satisfies Prisma.OrgLocation$photosArgs
 
-export const orgLocationInclude = {
-	select: {
-		govDist: govDistInclude,
-		country: countryInclude,
-		attributes: attributeInclude,
-		emails: orgEmailInclude,
-		websites: orgWebsiteInclude,
-		phones: orgPhoneInclude,
-		photos: photoSelect,
-		hours: hoursSelect,
-		reviews: reviewIds,
-		services: orgLocationServiceInclude,
-		serviceAreas: serviceAreaInclude,
-		socialMedia: orgSocialMediaInclude,
-		name: true,
-		street1: true,
-		street2: true,
-		city: true,
-		postCode: true,
-		primary: true,
-		longitude: true,
-		latitude: true,
-		id: true,
-	},
-} satisfies Prisma.Organization$locationsArgs
+const userListSelect = (ctx: Context) => {
+	if (!ctx.session?.user.id) return undefined
+	return {
+		where: {
+			list: {
+				ownedById: ctx.session?.user.id,
+			},
+		},
+		select: {
+			list: {
+				select: {
+					id: true,
+					name: true,
+				},
+			},
+		},
+	}
+}
 
-export const organizationInclude = {
-	select: {
-		description: freeText,
-		emails: orgEmailInclude,
-		locations: orgLocationInclude,
-		phones: orgPhoneInclude,
-		photos: photoSelect,
-		services: orgServiceInclude,
-		socialMedia: orgSocialMediaInclude,
-		websites: orgWebsiteInclude,
-		reviews: reviewIds,
-		serviceAreas: serviceAreaInclude,
-		hours: hoursSelect,
-		attributes: attributeInclude,
-		name: true,
-		slug: true,
-		id: true,
-	},
-} satisfies Pick<Prisma.OrganizationFindUniqueOrThrowArgs, 'select'>
+export const orgLocationInclude = (ctx: Context) =>
+	({
+		select: {
+			govDist: govDistInclude,
+			country: countryInclude,
+			attributes: attributeInclude,
+			emails: orgEmailInclude,
+			websites: orgWebsiteInclude,
+			phones: orgPhoneInclude,
+			photos: photoSelect,
+			hours: hoursSelect,
+			reviews: reviewIds,
+			services: orgLocationServiceInclude(ctx),
+			serviceAreas: serviceAreaInclude,
+			socialMedia: orgSocialMediaInclude,
+			name: true,
+			street1: true,
+			street2: true,
+			city: true,
+			postCode: true,
+			primary: true,
+			longitude: true,
+			latitude: true,
+			id: true,
+		},
+	} satisfies Prisma.Organization$locationsArgs)
+
+export const organizationInclude = (ctx: Context) =>
+	({
+		select: {
+			description: freeText,
+			emails: orgEmailInclude,
+			locations: orgLocationInclude(ctx),
+			phones: orgPhoneInclude,
+			photos: photoSelect,
+			services: orgServiceInclude(ctx),
+			socialMedia: orgSocialMediaInclude,
+			websites: orgWebsiteInclude,
+			reviews: reviewIds,
+			serviceAreas: serviceAreaInclude,
+			hours: hoursSelect,
+			attributes: attributeInclude,
+			name: true,
+			slug: true,
+			id: true,
+			allowedEditors: {
+				where: { authorized: true },
+				select: { _count: true },
+			},
+			userLists: userListSelect(ctx),
+		},
+	} satisfies Pick<Prisma.OrganizationFindUniqueOrThrowArgs, 'select'>)
 
 const selectServCat = {
 	select: {

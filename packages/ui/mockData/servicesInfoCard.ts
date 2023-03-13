@@ -25,27 +25,16 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
 				},
 				{
 					attribute: {
@@ -53,12 +42,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -83,6 +82,35 @@ export const servicesMock = [
 									},
 								},
 							},
+						},
+					],
+				},
+				{
+					attribute: {
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
 						},
 					],
 				},
@@ -128,18 +156,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAEW3NRYNH7TKFDMM3NZ',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Max Robinson Center - NO walk-in testing is available. Monday: 08:30-12:30, 13:30-17:30; Tuesday: 08:30 - 12:30, 13:30 - 17:30; Wednesday: 08:30 - 12:30, 13:30 - 17:30; Thursday: 08:30 - 12:30, 13:30 - 17:30; Friday: 08:30 - 12:30, 14:15 - 17:30.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEW3NRYNH7TKFDMM3NZ',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -164,18 +199,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAEWQVGD6W23N4TYH9VV',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Whitman-Walker at 1525 - NO walk-in testing is available. Monday-Thursday: 08:30-12:30 & 13:30-17:30; Friday: 08:30- 12:30 & 14:30 -17:30.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEWQVGD6W23N4TYH9VV',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -200,18 +242,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAEXHG3AD7VHEFVKTWQT',
 										ns: 'org-data',
-										tsKey: {
-											text: "Visit the website to learn more about Whitman-Walker's testing hours and locations.",
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEXHG3AD7VHEFVKTWQT',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -236,18 +285,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAEX5A8YQPJGFYZ75DYS',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Contact the Main Office about services offered in multiple languages upon request.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEX5A8YQPJGFYZ75DYS',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -285,6 +341,7 @@ export const servicesMock = [
 				},
 			],
 			emails: [],
+			userLists: [],
 			id: 'osvc_01GVDMXAEW2J7Q7FX7H8EDH4YF',
 		},
 	},
@@ -308,10 +365,35 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'community.trans-youth',
+						tsKey: 'community.adults',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.teens',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -321,43 +403,31 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
 							},
-							text: null,
-							data: null,
-						},
-					],
-				},
-				{
-					attribute: {
-						tsKey: 'community.teens',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
+						],
 					},
 					supplement: [],
 				},
 				{
 					attribute: {
-						tsKey: 'community.adults',
+						tsKey: 'community.trans-youth',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -367,12 +437,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -404,6 +484,35 @@ export const servicesMock = [
 						},
 					],
 				},
+				{
+					attribute: {
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
+				},
 			],
 			serviceAreas: [
 				{
@@ -426,11 +535,11 @@ export const servicesMock = [
 			services: [
 				{
 					tag: {
-						name: 'Trans Health - Primary Care',
-						tsKey: 'medical.trans-health-primary-care',
+						name: 'Name and gender change',
+						tsKey: 'legal.name-and-gender-change',
 						tsNs: 'services',
 						category: {
-							tsKey: 'medical.CATEGORYNAME',
+							tsKey: 'legal.CATEGORYNAME',
 							tsNs: 'services',
 						},
 						defaultAttributes: [],
@@ -438,8 +547,8 @@ export const servicesMock = [
 				},
 				{
 					tag: {
-						name: 'Trans Health - Hormone and Surgery Letters',
-						tsKey: 'medical.trans-health-hormone-and-surgery-letters',
+						name: 'Trans Health - Primary Care',
+						tsKey: 'medical.trans-health-primary-care',
 						tsNs: 'services',
 						category: {
 							tsKey: 'medical.CATEGORYNAME',
@@ -462,11 +571,11 @@ export const servicesMock = [
 				},
 				{
 					tag: {
-						name: 'Name and gender change',
-						tsKey: 'legal.name-and-gender-change',
+						name: 'Trans Health - Hormone and Surgery Letters',
+						tsKey: 'medical.trans-health-hormone-and-surgery-letters',
 						tsNs: 'services',
 						category: {
-							tsKey: 'legal.CATEGORYNAME',
+							tsKey: 'medical.CATEGORYNAME',
 							tsNs: 'services',
 						},
 						defaultAttributes: [],
@@ -494,18 +603,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAEYNXX3DT1DHW7R32FA',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Call for more information about their Gender Affirming Services.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEYNXX3DT1DHW7R32FA',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -529,18 +645,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAEY3WJHJM6KT436EHT5',
 										ns: 'org-data',
-										tsKey: {
-											text: "Visit the website to learn more about Whitman-Walker Health's gender affirming services.",
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEY3WJHJM6KT436EHT5',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -565,18 +688,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAEZ2C7WG3HG14EVHT4W',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Email for more information about their Gender Affirming Services.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEZ2C7WG3HG14EVHT4W',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -625,6 +755,7 @@ export const servicesMock = [
 					},
 				},
 			],
+			userLists: [],
 			id: 'osvc_01GVDMXAEYRD4TFWR5TCMQGCKE',
 		},
 	},
@@ -648,22 +779,20 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.hiv-aids',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
 							},
-							text: null,
-							data: null,
-						},
-					],
+						],
+					},
+					supplement: [],
 				},
 				{
 					attribute: {
@@ -671,12 +800,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -709,12 +848,32 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.hiv-aids',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
 					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
 				},
 			],
 			serviceAreas: [
@@ -758,18 +917,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF03G6BBYEDR8JRMZPF',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Located at the Whitman-Walker location. Please call.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF03G6BBYEDR8JRMZPF',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -793,18 +959,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF0SWA6DQNJ00WXXEZX',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Located at the Max Robinson Center. Call to make an appointment.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF0SWA6DQNJ00WXXEZX',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -828,18 +1001,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF1XGF83673HD13FKF4',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Visit the webpage for more information.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF1XGF83673HD13FKF4',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -876,6 +1056,7 @@ export const servicesMock = [
 				},
 			],
 			emails: [],
+			userLists: [],
 			id: 'osvc_01GVDMXAF0C4QY2G3QA6SDRPP9',
 		},
 	},
@@ -899,31 +1080,37 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'community.transgender',
+						tsKey: 'community.hiv-aids',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.lgbtq-youth',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
 							},
-							text: null,
-							data: null,
-						},
-					],
+						],
+					},
+					supplement: [],
 				},
 				{
 					attribute: {
@@ -931,6 +1118,48 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.transgender',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.trans-youth',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -940,12 +1169,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -979,58 +1218,36 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.hiv-aids',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
 					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.lgbtq-youth',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.trans-youth',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
 				},
 			],
 			serviceAreas: [],
 			services: [
-				{
-					tag: {
-						name: 'HIV and sexual health',
-						tsKey: 'medical.hiv-and-sexual-health',
-						tsNs: 'services',
-						category: {
-							tsKey: 'medical.CATEGORYNAME',
-							tsNs: 'services',
-						},
-						defaultAttributes: [],
-					},
-				},
-				{
-					tag: {
-						name: 'Support groups',
-						tsKey: 'mental-health.support-groups',
-						tsNs: 'services',
-						category: {
-							tsKey: 'mental-health.CATEGORYNAME',
-							tsNs: 'services',
-						},
-						defaultAttributes: [],
-					},
-				},
 				{
 					tag: {
 						name: 'Cultural centers',
@@ -1055,6 +1272,30 @@ export const servicesMock = [
 						defaultAttributes: [],
 					},
 				},
+				{
+					tag: {
+						name: 'HIV and sexual health',
+						tsKey: 'medical.hiv-and-sexual-health',
+						tsNs: 'services',
+						category: {
+							tsKey: 'medical.CATEGORYNAME',
+							tsNs: 'services',
+						},
+						defaultAttributes: [],
+					},
+				},
+				{
+					tag: {
+						name: 'Support groups',
+						tsKey: 'mental-health.support-groups',
+						tsNs: 'services',
+						category: {
+							tsKey: 'mental-health.CATEGORYNAME',
+							tsNs: 'services',
+						},
+						defaultAttributes: [],
+					},
+				},
 			],
 			accessDetails: [
 				{
@@ -1065,18 +1306,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF2N15B43MZZ51JHG9D',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Call for more information on youth services or RealTalkDC.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF2N15B43MZZ51JHG9D',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -1100,18 +1348,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF2FY73QDJD5J7BG4QF',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Their Youth Services location is open Monday - Friday 11:00-19:00 (11:00-18:00 on the second Friday of the month) in Eastern Market. No appointments are needed. Testing is walk-in only, but you must arrive no later than 18:45 (17:45 on the second Friday of the month). Stop by and visit them sometime.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF2FY73QDJD5J7BG4QF',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -1135,18 +1390,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF2DN4SPYRF81PBHD1H',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Visit the website for more information.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF2DN4SPYRF81PBHD1H',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -1183,6 +1445,7 @@ export const servicesMock = [
 				},
 			],
 			emails: [],
+			userLists: [],
 			id: 'osvc_01GVDMXAF2F0KEJVKXT3Y87MD9',
 		},
 	},
@@ -1206,22 +1469,37 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.lgbtq-youth',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
 							},
-							text: null,
-							data: null,
-						},
-					],
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.trans-youth',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
 				},
 				{
 					attribute: {
@@ -1229,12 +1507,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -1274,21 +1562,32 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.lgbtq-youth',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
 					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.trans-youth',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
 				},
 			],
 			serviceAreas: [
@@ -1312,11 +1611,11 @@ export const servicesMock = [
 			services: [
 				{
 					tag: {
-						name: 'Private therapy and counseling',
-						tsKey: 'mental-health.private-therapy-and-counseling',
+						name: 'LGBTQ centers',
+						tsKey: 'community-support.lgbtq-centers',
 						tsNs: 'services',
 						category: {
-							tsKey: 'mental-health.CATEGORYNAME',
+							tsKey: 'community-support.CATEGORYNAME',
 							tsNs: 'services',
 						},
 						defaultAttributes: [],
@@ -1336,11 +1635,11 @@ export const servicesMock = [
 				},
 				{
 					tag: {
-						name: 'LGBTQ centers',
-						tsKey: 'community-support.lgbtq-centers',
+						name: 'Private therapy and counseling',
+						tsKey: 'mental-health.private-therapy-and-counseling',
 						tsNs: 'services',
 						category: {
-							tsKey: 'community-support.CATEGORYNAME',
+							tsKey: 'mental-health.CATEGORYNAME',
 							tsNs: 'services',
 						},
 						defaultAttributes: [],
@@ -1356,18 +1655,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF4R1GDN2EEPTZZS831',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Email if you have questions or would like to schedule a screening.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF4R1GDN2EEPTZZS831',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -1391,18 +1697,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF5N04V4F2JD1TS0SKT',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Visit the link to learn more about youth mental health services.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF5N04V4F2JD1TS0SKT',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -1434,6 +1747,7 @@ export const servicesMock = [
 					},
 				},
 			],
+			userLists: [],
 			id: 'osvc_01GVDMXAF47QT3E33ZB414YJEH',
 		},
 	},
@@ -1461,88 +1775,14 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.africa-immigrant',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.residents-green-card-holders',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.undocumented',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.unaccompanied-minors',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.latin-america-immigrant',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.middle-east-immigrant',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
 							},
-							text: null,
-							data: null,
-						},
-					],
-				},
-				{
-					attribute: {
-						tsKey: 'community.asia-immigrant',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
+						],
 					},
 					supplement: [],
 				},
@@ -1552,6 +1792,133 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.africa-immigrant',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.asia-immigrant',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.latin-america-immigrant',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.middle-east-immigrant',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.residents-green-card-holders',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.unaccompanied-minors',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.undocumented',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -1561,12 +1928,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -1588,6 +1965,35 @@ export const servicesMock = [
 									},
 								},
 							},
+						},
+					],
+				},
+				{
+					attribute: {
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
 						},
 					],
 				},
@@ -1637,32 +2043,8 @@ export const servicesMock = [
 				},
 				{
 					tag: {
-						name: 'Crime and discrimination',
-						tsKey: 'legal.crime-and-discrimination',
-						tsNs: 'services',
-						category: {
-							tsKey: 'legal.CATEGORYNAME',
-							tsNs: 'services',
-						},
-						defaultAttributes: [],
-					},
-				},
-				{
-					tag: {
 						name: 'Deferred Action for Childhood Arrivals (DACA)',
 						tsKey: 'legal.deferred-action-for-childhood-arrivals-daca',
-						tsNs: 'services',
-						category: {
-							tsKey: 'legal.CATEGORYNAME',
-							tsNs: 'services',
-						},
-						defaultAttributes: [],
-					},
-				},
-				{
-					tag: {
-						name: 'Family Petitions',
-						tsKey: 'legal.family-petitions',
 						tsNs: 'services',
 						category: {
 							tsKey: 'legal.CATEGORYNAME',
@@ -1685,8 +2067,8 @@ export const servicesMock = [
 				},
 				{
 					tag: {
-						name: 'Residency',
-						tsKey: 'legal.residency',
+						name: 'Crime and discrimination',
+						tsKey: 'legal.crime-and-discrimination',
 						tsNs: 'services',
 						category: {
 							tsKey: 'legal.CATEGORYNAME',
@@ -1709,8 +2091,8 @@ export const servicesMock = [
 				},
 				{
 					tag: {
-						name: 'T Visa',
-						tsKey: 'legal.t-visa',
+						name: 'U Visa',
+						tsKey: 'legal.u-visa',
 						tsNs: 'services',
 						category: {
 							tsKey: 'legal.CATEGORYNAME',
@@ -1721,8 +2103,32 @@ export const servicesMock = [
 				},
 				{
 					tag: {
-						name: 'U Visa',
-						tsKey: 'legal.u-visa',
+						name: 'Family Petitions',
+						tsKey: 'legal.family-petitions',
+						tsNs: 'services',
+						category: {
+							tsKey: 'legal.CATEGORYNAME',
+							tsNs: 'services',
+						},
+						defaultAttributes: [],
+					},
+				},
+				{
+					tag: {
+						name: 'Residency',
+						tsKey: 'legal.residency',
+						tsNs: 'services',
+						category: {
+							tsKey: 'legal.CATEGORYNAME',
+							tsNs: 'services',
+						},
+						defaultAttributes: [],
+					},
+				},
+				{
+					tag: {
+						name: 'T Visa',
+						tsKey: 'legal.t-visa',
 						tsNs: 'services',
 						category: {
 							tsKey: 'legal.CATEGORYNAME',
@@ -1741,18 +2147,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF69PTYFM5P7QSBWRM1',
 										ns: 'org-data',
-										tsKey: {
-											text: "Call the Whitman-Walker Health's legal team for help with this legal issue. Their intake staff will talk with you over the phone to see if they can help you.",
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF69PTYFM5P7QSBWRM1',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -1777,18 +2190,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7E3ZBF0XQXH2ZM4VK',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Walk-in appointments are available at Whitman-Walker 1525, Monday through Friday, 9:00 to 17:00.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7E3ZBF0XQXH2ZM4VK',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -1813,18 +2233,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7Q7NM0TA2NS9SXARQ',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Walk-in appointments are available at Max Robinson Center Monday through Friday 9:00 to 17:00.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7Q7NM0TA2NS9SXARQ',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -1849,18 +2276,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7CQYQ8VG6FMBN50K3',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Contact the Main Office about services offered in multiple languages upon request.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7CQYQ8VG6FMBN50K3',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -1885,18 +2319,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7WYYT4HRB329A3C5Z',
 										ns: 'org-data',
-										tsKey: {
-											text: "Visit the website for more information on how Whitman-Walker Health's legal team can help with immigration issues.",
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7WYYT4HRB329A3C5Z',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -1921,18 +2362,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF8C4WDXMXVG5Z5Y213',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Walk-in appointments are available at WeWork, Monday through Friday, 9:00 to 17:00.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF8C4WDXMXVG5Z5Y213',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -1982,6 +2430,7 @@ export const servicesMock = [
 					},
 				},
 			],
+			userLists: [],
 			id: 'osvc_01GVDMXAF6C0A71VKTK1BTPRB8',
 		},
 	},
@@ -2005,22 +2454,20 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.hiv-aids',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
 							},
-							text: null,
-							data: null,
-						},
-					],
+						],
+					},
+					supplement: [],
 				},
 				{
 					attribute: {
@@ -2028,12 +2475,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -2067,12 +2524,32 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.hiv-aids',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
 					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
 				},
 			],
 			serviceAreas: [
@@ -2116,18 +2593,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF9X7C10C32KQYAY84T',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Call to make a dental appointment.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF9X7C10C32KQYAY84T',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -2151,18 +2635,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAF9WARYPDC8G62ZCX1Z',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Check the website for details on specific dental services.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF9WARYPDC8G62ZCX1Z',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -2211,6 +2702,7 @@ export const servicesMock = [
 					},
 				},
 			],
+			userLists: [],
 			id: 'osvc_01GVDMXAF9V9GTES9TA31ME78D',
 		},
 	},
@@ -2234,110 +2726,18 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'community.nonbinary',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.gay',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.hiv-aids',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.lesbian',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.lgbtq-youth',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.queer',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.trans-youth',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.transgender',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
-				},
-				{
-					attribute: {
 						tsKey: 'community.adults',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.gender-nonconforming',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -2347,6 +2747,133 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.hiv-aids',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.gay',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.gender-nonconforming',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.lgbtq-youth',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.lesbian',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.queer',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.nonbinary',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -2356,6 +2883,48 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.transgender',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.trans-youth',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -2365,12 +2934,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -2398,6 +2977,35 @@ export const servicesMock = [
 						},
 					],
 				},
+				{
+					attribute: {
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
+				},
 			],
 			serviceAreas: [
 				{
@@ -2420,8 +3028,8 @@ export const servicesMock = [
 			services: [
 				{
 					tag: {
-						name: 'Private therapy and counseling',
-						tsKey: 'mental-health.private-therapy-and-counseling',
+						name: 'Support groups',
+						tsKey: 'mental-health.support-groups',
 						tsNs: 'services',
 						category: {
 							tsKey: 'mental-health.CATEGORYNAME',
@@ -2432,8 +3040,8 @@ export const servicesMock = [
 				},
 				{
 					tag: {
-						name: 'Support groups',
-						tsKey: 'mental-health.support-groups',
+						name: 'Private therapy and counseling',
+						tsKey: 'mental-health.private-therapy-and-counseling',
 						tsNs: 'services',
 						category: {
 							tsKey: 'mental-health.CATEGORYNAME',
@@ -2452,18 +3060,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFBAYV2HW8T988GDGE1',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Visit the website for more information and a full list of services.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFBAYV2HW8T988GDGE1',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -2483,6 +3098,7 @@ export const servicesMock = [
 			reviews: [],
 			phones: [],
 			emails: [],
+			userLists: [],
 			id: 'osvc_01GVDMXAFAFE0B4KC3BKRAXG4D',
 		},
 	},
@@ -2506,10 +3122,69 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'community.transgender',
+						tsKey: 'community.asylum-seeker',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.africa-immigrant',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.asylee',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.hiv-aids',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -2519,6 +3194,14 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -2528,27 +3211,33 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.transgender',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
 							},
-							text: null,
-							data: null,
-						},
-					],
+						],
+					},
+					supplement: [],
 				},
 				{
 					attribute: {
@@ -2556,12 +3245,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -2594,39 +3293,32 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.asylum-seeker',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
 					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.hiv-aids',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.africa-immigrant',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.asylee',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
 				},
 			],
 			serviceAreas: [
@@ -2670,18 +3362,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFNV4MHY7NNZCTHMHE0',
 										ns: 'org-data',
-										tsKey: {
-											text: "Call the Whitman-Walker Health's legal team for help with this legal issue. Their intake staff will talk with you over the phone to see if they can help you.",
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFNV4MHY7NNZCTHMHE0',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -2706,18 +3405,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFNWZC7J4Q5QZWRHY99',
 										ns: 'org-data',
-										tsKey: {
-											text: "Email the Whitman-Walker Health's legal team for help with this legal issue.",
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFNWZC7J4Q5QZWRHY99',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -2742,18 +3448,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFP1GJBBNVZMWQSSGX8',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Appointments are available at Whitman-Walker 1525, Monday through Thursday, 08:30-12:30 & 13:30-17:30; and Fridays 08:30-12:30 & 14:30-17:00.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFP1GJBBNVZMWQSSGX8',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -2778,18 +3491,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFPN5QZ4DPQABAKVZ1Y',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Appointments are available at Max Robinson Center Monday through Thursday 08:30-12:30 & 13:30-17:30; and Fridays 08:30-12:30 & 14:15-17:30.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFPN5QZ4DPQABAKVZ1Y',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -2814,18 +3534,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFPPATGSQ4TEY4WVSHK',
 										ns: 'org-data',
-										tsKey: {
-											text: "Visit the website for more information on how Whitman-Walker Health's legal team can help with immigration issues.",
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFPPATGSQ4TEY4WVSHK',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -2850,18 +3577,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFQ84TDVNRBEFNAZ0NN',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Appointments are available at Whitman-Walker at LIZ Mondays & Wednesdays 09:00 –12:15 pm & 13:45 – 16:30; Tuesdays & Thursdays 09:00 – 12:15 &  13:45 – 17:30.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFQ84TDVNRBEFNAZ0NN',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -2911,6 +3645,7 @@ export const servicesMock = [
 					},
 				},
 			],
+			userLists: [],
 			id: 'osvc_01GVDMXAFNGBM61272NF9M1YEV',
 		},
 	},
@@ -2934,29 +3669,18 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
-				},
-				{
-					attribute: {
 						tsKey: 'community.adults',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -2966,6 +3690,14 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -2975,12 +3707,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -3008,6 +3750,35 @@ export const servicesMock = [
 									},
 								},
 							},
+						},
+					],
+				},
+				{
+					attribute: {
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
 						},
 					],
 				},
@@ -3053,18 +3824,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFRSBXKYM3FWS4NR8KA',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Call Whitman-Walker Health to schedule a vaccine appointment.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFRSBXKYM3FWS4NR8KA',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -3088,18 +3866,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFRT2Y02VRKA3GC1CSP',
 										ns: 'org-data',
-										tsKey: {
-											text: 'You can also text Whitman-Walker Health to schedule a vaccine appointment.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFRT2Y02VRKA3GC1CSP',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -3124,18 +3909,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFRYW75H4Z0NZJ0E1W2',
 										ns: 'org-data',
-										tsKey: {
-											text: "See Whitman-Walker Health's website for more information.",
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFRYW75H4Z0NZJ0E1W2',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -3172,6 +3964,7 @@ export const servicesMock = [
 				},
 			],
 			emails: [],
+			userLists: [],
 			id: 'osvc_01GVDMXAFRRRS8S4SGYHDJYSMT',
 		},
 	},
@@ -3199,27 +3992,33 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.trans-youth',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
 							},
-							text: null,
-							data: null,
-						},
-					],
+						],
+					},
+					supplement: [],
 				},
 				{
 					attribute: {
@@ -3227,12 +4026,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -3275,12 +4084,32 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.trans-youth',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
 					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
 				},
 			],
 			serviceAreas: [
@@ -3324,18 +4153,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFTWFXNK9FMPPR5NVQS',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Call for more information about their Gender Affirming Services.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFTWFXNK9FMPPR5NVQS',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -3359,18 +4195,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFTYH39MWMR8R7KXZ1J',
 										ns: 'org-data',
-										tsKey: {
-											text: "Visit the website to learn more about Whitman-Walker Health's gender affirming hormone therapy.",
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFTYH39MWMR8R7KXZ1J',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -3396,18 +4239,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFTYVEGD66VDC1G7A2P',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Email for more information about their Gender Affirming Services.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFTYVEGD66VDC1G7A2P',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -3431,18 +4281,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFVKD4S19YPF3P065PQ',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Gender affirming hormone therapy services are offered at the Whitman-Walker at 1525 and Max Robinson Center locations.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFVKD4S19YPF3P065PQ',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -3493,6 +4350,7 @@ export const servicesMock = [
 					},
 				},
 			],
+			userLists: [],
 			id: 'osvc_01GVDMXAFT7P6BZPJ6CDS0KJ6G',
 		},
 	},
@@ -3520,6 +4378,14 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -3529,6 +4395,14 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
@@ -3538,6 +4412,8 @@ export const servicesMock = [
 								nativeName: 'English',
 							},
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: null,
 						},
 					],
@@ -3584,18 +4460,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFWYGPM1J8CG6WZAWAK',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Visit the link to learn more about PrEP and access services.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFWYGPM1J8CG6WZAWAK',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -3619,18 +4502,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFWQHG9ADW9YWBRQXT7',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Visit the link to learn more about PEP and access services.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFWQHG9ADW9YWBRQXT7',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -3650,6 +4540,7 @@ export const servicesMock = [
 			reviews: [],
 			phones: [],
 			emails: [],
+			userLists: [],
 			id: 'osvc_01GVDMXAFW0HAHAK9N1W77BG44',
 		},
 	},
@@ -3677,15 +4568,14 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.teens',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
@@ -3695,27 +4585,33 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [],
 				},
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.teens',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
+						categories: [
+							{
+								category: {
+									tag: 'community',
+									icon: null,
+								},
 							},
-							text: null,
-							data: null,
-						},
-					],
+						],
+					},
+					supplement: [],
 				},
 				{
 					attribute: {
@@ -3723,12 +4619,22 @@ export const servicesMock = [
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'system',
+									icon: null,
+								},
+							},
+						],
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: null,
+							govDist: null,
+							boolean: null,
 							data: {
 								json: [
 									{
@@ -3742,6 +4648,35 @@ export const servicesMock = [
 									},
 								],
 							},
+						},
+					],
+				},
+				{
+					attribute: {
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+					},
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
 						},
 					],
 				},
@@ -3787,18 +4722,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFXXZP0RTBH628ZNQRV',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Visit the website for more information and a full list of services offered.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFXXZP0RTBH628ZNQRV',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -3823,18 +4765,25 @@ export const servicesMock = [
 								tsNs: 'attribute',
 								icon: null,
 								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
 							},
 							supplement: [
 								{
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVDMXAFX5S84ZAX0P9D2RCJ7',
 										ns: 'org-data',
-										tsKey: {
-											text: 'Call the Insurance Help Line with any questions.',
-										},
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFX5S84ZAX0P9D2RCJ7',
 									},
+									govDist: null,
+									boolean: null,
 									data: {
 										json: {
 											_id: {
@@ -3854,6 +4803,7 @@ export const servicesMock = [
 			reviews: [],
 			phones: [],
 			emails: [],
+			userLists: [],
 			id: 'osvc_01GVDMXAFXBC7MBCHEY04T4MSK',
 		},
 	},

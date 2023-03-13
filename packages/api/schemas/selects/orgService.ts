@@ -174,6 +174,10 @@ const serviceSelect = z
 						},
 				  }
 				: undefined,
+			id: true,
+			createdAt: true,
+			updatedAt: true,
+			description: freeText,
 		} satisfies Prisma.OrgServiceSelect
 		return query
 	})
