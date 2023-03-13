@@ -1,6 +1,13 @@
 import { type ApiOutput } from '@weareinreach/api'
 
 export const mockServiceData = {
+	serviceName: {
+		key: 'larkin-street-youth-services.osvc_01GVDMX95RZDJV2ZYKGQADY30D.name',
+		ns: 'org-data',
+		tsKey: {
+			text: 'Get education and employment services for youth ages 24 and under',
+		},
+	},
 	services: [
 		{
 			tag: {
@@ -21,7 +28,7 @@ export const mockServiceData = {
 			districts: [
 				{
 					govDist: {
-						id: 'gdst_01GSKV71FAE5WQ4S7CPMCABW1F',
+						id: 'gdst_01GVDMWGFBETETNV61RXMF493H',
 						name: 'California',
 						slug: 'us-california',
 						iso: 'US-CA',
@@ -29,7 +36,7 @@ export const mockServiceData = {
 						country: {
 							cca2: 'US',
 							cca3: 'USA',
-							id: 'ctry_01GSKV6PZ0GFFX5TBZA6AJ3F8T',
+							id: 'ctry_01GVDMWD2WTDVEMWA4WCXM50MH',
 							name: 'United States',
 							dialCode: null,
 							flag: '🇺🇸',
@@ -50,7 +57,7 @@ export const mockServiceData = {
 				},
 				{
 					govDist: {
-						id: 'gdst_01GSKV71NACRZEKSRA3RNBWANK',
+						id: 'gdst_01GVDMWGGVH6GP35FXD3GB7E4P',
 						name: 'San Francisco',
 						slug: 'us-california-san-francisco-county',
 						iso: null,
@@ -58,7 +65,7 @@ export const mockServiceData = {
 						country: {
 							cca2: 'US',
 							cca3: 'USA',
-							id: 'ctry_01GSKV6PZ0GFFX5TBZA6AJ3F8T',
+							id: 'ctry_01GVDMWD2WTDVEMWA4WCXM50MH',
 							name: 'United States',
 							dialCode: null,
 							flag: '🇺🇸',
@@ -75,7 +82,7 @@ export const mockServiceData = {
 						tsKey: 'us-california-san-francisco-county',
 						tsNs: 'gov-dist',
 						parent: {
-							id: 'gdst_01GSKV71FAE5WQ4S7CPMCABW1F',
+							id: 'gdst_01GVDMWGFBETETNV61RXMF493H',
 							name: 'California',
 							slug: 'us-california',
 							iso: 'US-CA',
@@ -83,7 +90,7 @@ export const mockServiceData = {
 							country: {
 								cca2: 'US',
 								cca3: 'USA',
-								id: 'ctry_01GSKV6PZ0GFFX5TBZA6AJ3F8T',
+								id: 'ctry_01GVDMWD2WTDVEMWA4WCXM50MH',
 								name: 'United States',
 								dialCode: null,
 								flag: '🇺🇸',
@@ -118,7 +125,7 @@ export const mockServiceData = {
 						},
 					},
 				],
-				tsKey: 'community-homeless',
+				tsKey: 'community.homeless',
 				tsNs: 'attribute',
 			},
 			supplement: [],
@@ -133,7 +140,7 @@ export const mockServiceData = {
 						},
 					},
 				],
-				tsKey: 'community-lgbtq-youth',
+				tsKey: 'community.lgbtq-youth',
 				tsNs: 'attribute',
 			},
 			supplement: [],
@@ -148,36 +155,10 @@ export const mockServiceData = {
 						},
 					},
 				],
-				tsKey: 'community-teens',
+				tsKey: 'community.teens',
 				tsNs: 'attribute',
 			},
 			supplement: [],
-		},
-		{
-			attribute: {
-				categories: [
-					{
-						category: {
-							ns: 'attribute',
-							tag: 'languages',
-						},
-					},
-				],
-				tsKey: 'lang-lang-offered',
-				tsNs: 'attribute',
-			},
-			supplement: [
-				{
-					country: null,
-					language: {
-						languageName: 'English',
-						nativeName: 'English',
-					},
-					text: null,
-					boolean: null,
-					data: null,
-				},
-			],
 		},
 		{
 			attribute: {
@@ -189,7 +170,7 @@ export const mockServiceData = {
 						},
 					},
 				],
-				tsKey: 'sys-incompatible-info',
+				tsKey: 'sys.incompatible-info',
 				tsNs: 'attribute',
 			},
 			supplement: [
@@ -232,6 +213,32 @@ export const mockServiceData = {
 				},
 			],
 		},
+		{
+			attribute: {
+				categories: [
+					{
+						category: {
+							ns: 'attribute',
+							tag: 'languages',
+						},
+					},
+				],
+				tsKey: 'lang.lang-offered',
+				tsNs: 'attribute',
+			},
+			supplement: [
+				{
+					country: null,
+					language: {
+						languageName: 'English',
+						nativeName: 'English',
+					},
+					text: null,
+					boolean: null,
+					data: null,
+				},
+			],
+		},
 	],
 	phones: [],
 	emails: [],
@@ -248,7 +255,7 @@ export const mockServiceData = {
 								},
 							},
 						],
-						tsKey: 'serviceaccess-accesslocation',
+						tsKey: 'serviceaccess.accesslocation',
 						tsNs: 'attribute',
 					},
 					supplement: [
@@ -256,8 +263,8 @@ export const mockServiceData = {
 							country: null,
 							language: null,
 							text: {
-								ns: 'org-service',
-								key: 'larkin-street-youth-services.attribute.atts_01GSKV960T544W381KPN759PP2',
+								ns: 'org-data',
+								key: 'larkin-street-youth-services.attribute.atts_01GVDMX95RTFSRBMJC677B3WAB',
 							},
 							boolean: null,
 							data: {
@@ -290,7 +297,7 @@ export const mockServiceData = {
 								},
 							},
 						],
-						tsKey: 'serviceaccess-accessphone',
+						tsKey: 'serviceaccess.accessphone',
 						tsNs: 'attribute',
 					},
 					supplement: [
@@ -298,8 +305,8 @@ export const mockServiceData = {
 							country: null,
 							language: null,
 							text: {
-								ns: 'org-service',
-								key: 'larkin-street-youth-services.attribute.atts_01GSKV960T0Y3DBA04QZE0HR0W',
+								ns: 'org-data',
+								key: 'larkin-street-youth-services.attribute.atts_01GVDMX95R2GVT18RP93MEQJSH',
 							},
 							boolean: null,
 							data: {
@@ -330,7 +337,7 @@ export const mockServiceData = {
 				postCode: '94109',
 				primary: true,
 				govDist: {
-					id: 'gdst_01GSKV71FAE5WQ4S7CPMCABW1F',
+					id: 'gdst_01GVDMWGFBETETNV61RXMF493H',
 					name: 'California',
 					slug: 'us-california',
 					iso: 'US-CA',
@@ -338,7 +345,7 @@ export const mockServiceData = {
 					country: {
 						cca2: 'US',
 						cca3: 'USA',
-						id: 'ctry_01GSKV6PZ0GFFX5TBZA6AJ3F8T',
+						id: 'ctry_01GVDMWD2WTDVEMWA4WCXM50MH',
 						name: 'United States',
 						dialCode: null,
 						flag: '🇺🇸',
@@ -359,7 +366,7 @@ export const mockServiceData = {
 				country: {
 					cca2: 'US',
 					cca3: 'USA',
-					id: 'ctry_01GSKV6PZ0GFFX5TBZA6AJ3F8T',
+					id: 'ctry_01GVDMWD2WTDVEMWA4WCXM50MH',
 					name: 'United States',
 					dialCode: null,
 					flag: '🇺🇸',
