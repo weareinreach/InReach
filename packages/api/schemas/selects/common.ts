@@ -74,23 +74,32 @@ export const attributes = {
 	where: {
 		attribute: {
 			active: true,
+			categories: {
+				some: {
+					category: {
+						active: true,
+					},
+				},
+			},
 		},
 	},
 	select: {
 		attribute: {
 			select: {
+				tsKey: true,
+				tsNs: true,
+				icon: true,
+				showOnLocation: true,
 				categories: {
 					select: {
 						category: {
 							select: {
-								ns: true,
 								tag: true,
+								icon: true,
 							},
 						},
 					},
 				},
-				tsKey: true,
-				tsNs: true,
 			},
 		},
 		supplement: {
@@ -108,6 +117,7 @@ export const attributes = {
 						key: true,
 					},
 				},
+				govDist: govDistWithoutGeo,
 				boolean: true,
 				data: true,
 			},
