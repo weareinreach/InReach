@@ -135,7 +135,7 @@
 	"show-more": "Show more",
 	"sign-up": "Sign up",
 	"sign-up-free": "Sign up for free",
-	"sign-up-header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people with verified, safe resources.</textDarkGray>\n</group>",
+	"sign-up-header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people facing discrimination and persecution with safe, verified resources.</textDarkGray>\n</group>",
 	"sign-up-modal-body": [
 		"<title3>How can we help you?</title3>",
 		"<group>\n<button data-option='myself'>I am looking for help for myself</button>\n<button data-option='law'>I am an attorney or law student</button>\n<button data-option='servpro'>I am a non-legal service provider</button>\n<button data-option='lcr'>I am a local community reviewer</button>\n</group>",
