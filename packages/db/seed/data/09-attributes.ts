@@ -4,6 +4,8 @@ type AttributeItem = Omit<Prisma.AttributeCreateManyInput, 'tsKey' | 'tsNs' | 't
 	// name: string
 	description?: string
 	key: string
+	icon?: string
+	iconBg?: string
 	// requireLanguage?: boolean
 	// requireCountry?: boolean
 	// requireData?: boolean
@@ -429,10 +431,10 @@ export const attributeData: AttributeData = [
 		name: 'Organization Leadership',
 		ns: 'orgLeader',
 		attributes: [
-			{ key: 'bipoc-led', name: 'BIPOC Led' },
-			{ key: 'black-led', name: 'Black Led' },
-			{ key: 'immigrant-led', name: 'Immigrant Led' },
-			{ key: 'trans-led', name: 'Trans Led' },
+			{ key: 'bipoc-led', name: 'BIPOC-led', icon: '🤎', iconBg: '#F1DD7F' },
+			{ key: 'black-led', name: 'Black-led', icon: '️‍️‍✊🏿', iconBg: '#C77E54' },
+			{ key: 'immigrant-led', name: 'Immigrant-led', icon: '️‍️‍🌎', iconBg: '#79ADD7' },
+			{ key: 'trans-led', name: 'Transgender-led', icon: '️‍🏳️‍⚧️', iconBg: '#D4A1BA' },
 		],
 	},
 	{
