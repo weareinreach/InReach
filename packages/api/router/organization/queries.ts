@@ -11,7 +11,7 @@ import { organizationInclude, orgSearchSelect } from '~api/schemas/selects/org'
 export const queries = defineRouter({
 	getById: publicProcedure.input(id).query(async ({ ctx, input }) => {
 		try {
-			const { select } = organizationInclude
+			const { select } = organizationInclude(ctx)
 			const org = await ctx.prisma.organization.findUniqueOrThrow({
 				where: {
 					id: input.id,
@@ -19,7 +19,12 @@ export const queries = defineRouter({
 				},
 				select,
 			})
-			return org
+			const reformatted = {
+				...org,
+				services: org.services.map((serv) => ({ service: serv })),
+			}
+
+			return reformatted
 		} catch (error) {
 			handleError(error)
 		}
@@ -27,7 +32,7 @@ export const queries = defineRouter({
 	getBySlug: publicProcedure.input(slug).query(async ({ ctx, input }) => {
 		try {
 			const { slug } = input
-			const { select } = organizationInclude
+			const { select } = organizationInclude(ctx)
 			const org = await ctx.prisma.organization.findUniqueOrThrow({
 				where: {
 					slug,
@@ -126,4 +131,30 @@ export const queries = defineRouter({
 				},
 			})
 	),
+	isSaved: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		if (!ctx.session?.user.id) return false
+
+		const listEntries = await ctx.prisma.savedOrganization.findMany({
+			where: {
+				list: {
+					ownedById: ctx.session.user.id,
+				},
+				organization: {
+					slug: input,
+				},
+			},
+			select: {
+				list: {
+					select: {
+						id: true,
+						name: true,
+					},
+				},
+			},
+		})
+
+		if (!listEntries.length) return false
+		const lists = listEntries.map(({ list }) => list)
+		return lists
+	}),
 })
