@@ -3,8 +3,15 @@ import { type ServicesInfoCardProps } from '~ui/components/sections'
 export const servicesMock = [
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAEW2J7Q7FX7H8EDH4YF.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Get rapid HIV testing',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620DP9YS29RSDFR5KPG9V.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAEW2J7Q7FX7H8EDH4YF.description',
 				ns: 'org-data',
 				tsKey: {
 					text: 'Whitman-Walker provides walk-in HIV testing at multiple locations in DC. Walk-in HIV testing includes a confidential, rapid HIV test and risk-reduction counseling. The counseling provides clients with education on their options for having safer sex. Whitman-Walker uses the INSTI® HIV-1/HIV-2 Rapid Antibody Test and results take one minute.',
@@ -20,6 +27,25 @@ export const servicesMock = [
 						showOnLocation: null,
 					},
 					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
 				},
 				{
 					attribute: {
@@ -57,25 +83,6 @@ export const servicesMock = [
 									},
 								},
 							},
-						},
-					],
-				},
-				{
-					attribute: {
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
 						},
 					],
 				},
@@ -127,7 +134,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DPZAY77SC8GTXYV2QQ',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEW3NRYNH7TKFDMM3NZ',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Max Robinson Center - NO walk-in testing is available. Monday: 08:30-12:30, 13:30-17:30; Tuesday: 08:30 - 12:30, 13:30 - 17:30; Wednesday: 08:30 - 12:30, 13:30 - 17:30; Thursday: 08:30 - 12:30, 13:30 - 17:30; Friday: 08:30 - 12:30, 14:15 - 17:30.',
@@ -163,7 +170,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DP96QPMZ654YP9VXWS',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEWQVGD6W23N4TYH9VV',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Whitman-Walker at 1525 - NO walk-in testing is available. Monday-Thursday: 08:30-12:30 & 13:30-17:30; Friday: 08:30- 12:30 & 14:30 -17:30.',
@@ -199,7 +206,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DQ0AJ8X82FYMCQ70K7',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEXHG3AD7VHEFVKTWQT',
 										ns: 'org-data',
 										tsKey: {
 											text: "Visit the website to learn more about Whitman-Walker's testing hours and locations.",
@@ -235,7 +242,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DQ4C38XP3P3CEKVQJF',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEX5A8YQPJGFYZ75DYS',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Contact the Main Office about services offered in multiple languages upon request.',
@@ -278,13 +285,20 @@ export const servicesMock = [
 				},
 			],
 			emails: [],
-			id: 'osvc_01GVC620DP9YS29RSDFR5KPG9V',
+			id: 'osvc_01GVDMXAEW2J7Q7FX7H8EDH4YF',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAEYRD4TFWR5TCMQGCKE.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Receive gender affirming care and services',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620DRDAHE84TN57RM1DGF.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAEYRD4TFWR5TCMQGCKE.description',
 				ns: 'org-data',
 				tsKey: {
 					text: 'Whitman-Walker offers a wide variety of gender affirming services, including: Gender Affirming Hormone Therapy; Trans Care Navigation; Care Navigation; HIV & STI Testing and Counseling; HIV Specialty Care; Gynecology; Breast Health Initiative; Name and Gender Change; and Gender Affirming Counseling & Assessment.',
@@ -292,24 +306,6 @@ export const servicesMock = [
 			},
 			hours: [],
 			attributes: [
-				{
-					attribute: {
-						tsKey: 'community.adults',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.teens',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
 				{
 					attribute: {
 						tsKey: 'community.trans-youth',
@@ -322,6 +318,43 @@ export const servicesMock = [
 				{
 					attribute: {
 						tsKey: 'community.transgender',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
+				},
+				{
+					attribute: {
+						tsKey: 'community.teens',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.adults',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
@@ -371,25 +404,6 @@ export const servicesMock = [
 						},
 					],
 				},
-				{
-					attribute: {
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
-				},
 			],
 			serviceAreas: [
 				{
@@ -410,6 +424,18 @@ export const servicesMock = [
 				},
 			],
 			services: [
+				{
+					tag: {
+						name: 'Trans Health - Primary Care',
+						tsKey: 'medical.trans-health-primary-care',
+						tsNs: 'services',
+						category: {
+							tsKey: 'medical.CATEGORYNAME',
+							tsNs: 'services',
+						},
+						defaultAttributes: [],
+					},
+				},
 				{
 					tag: {
 						name: 'Trans Health - Hormone and Surgery Letters',
@@ -458,18 +484,6 @@ export const servicesMock = [
 						defaultAttributes: [],
 					},
 				},
-				{
-					tag: {
-						name: 'Trans Health - Primary Care',
-						tsKey: 'medical.trans-health-primary-care',
-						tsNs: 'services',
-						category: {
-							tsKey: 'medical.CATEGORYNAME',
-							tsNs: 'services',
-						},
-						defaultAttributes: [],
-					},
-				},
 			],
 			accessDetails: [
 				{
@@ -486,7 +500,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DRNB8VFBS9BM0CAEQ1',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEYNXX3DT1DHW7R32FA',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Call for more information about their Gender Affirming Services.',
@@ -521,7 +535,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DSAG59X8GAKFGWGXGK',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEY3WJHJM6KT436EHT5',
 										ns: 'org-data',
 										tsKey: {
 											text: "Visit the website to learn more about Whitman-Walker Health's gender affirming services.",
@@ -557,7 +571,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DS4WFHJCMQ93TNM6AC',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAEZ2C7WG3HG14EVHT4W',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Email for more information about their Gender Affirming Services.',
@@ -611,13 +625,20 @@ export const servicesMock = [
 					},
 				},
 			],
-			id: 'osvc_01GVC620DRDAHE84TN57RM1DGF',
+			id: 'osvc_01GVDMXAEYRD4TFWR5TCMQGCKE',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAF0C4QY2G3QA6SDRPP9.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Get HIV care for newly diagnosed patients',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620DTZ1KK232H8WDWT5G2.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAF0C4QY2G3QA6SDRPP9.description',
 				ns: 'org-data',
 				tsKey: {
 					text: "Whitman-Walker's Red Carpet program is their HIV Specialty Care program for people newly diagnosed with HIV or new to HIV care. Red Carpet is their way of connecting people living with HIV to medical care in a smooth and fast transition that fits easily into daily life. If you have insurance, please call us at 202.745.7000 and mention “Red Carpet.” Their staff will let you know whether they accept your insurance plan and will help you schedule an appointment. If you do not have insurance, please contact their Public Benefits & Insurance Navigation team at 202.745.6151.",
@@ -627,12 +648,22 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'community.hiv-aids',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
 				},
 				{
 					attribute: {
@@ -678,22 +709,12 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.hiv-aids',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
+					supplement: [],
 				},
 			],
 			serviceAreas: [
@@ -743,7 +764,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DTCGF4PRE0WFMNS7HG',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF03G6BBYEDR8JRMZPF',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Located at the Whitman-Walker location. Please call.',
@@ -778,7 +799,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DT8QSH44AFM6YKSJDC',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF0SWA6DQNJ00WXXEZX',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Located at the Max Robinson Center. Call to make an appointment.',
@@ -813,7 +834,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DVFD3CHR6YFCEM6KQT',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF1XGF83673HD13FKF4',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Visit the webpage for more information.',
@@ -855,13 +876,20 @@ export const servicesMock = [
 				},
 			],
 			emails: [],
-			id: 'osvc_01GVC620DTZ1KK232H8WDWT5G2',
+			id: 'osvc_01GVDMXAF0C4QY2G3QA6SDRPP9',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAF2F0KEJVKXT3Y87MD9.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Access youth and family support services',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620DWRRJEFYYXMZJXWYTG.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAF2F0KEJVKXT3Y87MD9.description',
 				ns: 'org-data',
 				tsKey: {
 					text: 'Whitman-Walker Health Youth Services are about education, prevention and helping you understand your health needs. From free HIV/STI/pregnancy testing to lessons on safer sex, their youth team will answer all your questions. Youth Mental Health services are open to all young person ages 13-24 who have experienced or witnessed something that is difficult to talk about (i.e. crime). RealTalkDC is their main youth program. It connects you to free health resources and offers a safe space for you to express yourself. RealTalkDC provides inclusive sexual health education for young people ages 13-24 through presentations in schools and programing at the RealTalkDC Peer Education Center.',
@@ -871,7 +899,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'community.hiv-aids',
+						tsKey: 'community.transgender',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
@@ -880,34 +908,26 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.lgbtq-youth',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
 				},
 				{
 					attribute: {
 						tsKey: 'community.teens',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.trans-youth',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.transgender',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
@@ -959,50 +979,34 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.hiv-aids',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.lgbtq-youth',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.trans-youth',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
 				},
 			],
 			serviceAreas: [],
 			services: [
-				{
-					tag: {
-						name: 'Cultural centers',
-						tsKey: 'community-support.cultural-centers',
-						tsNs: 'services',
-						category: {
-							tsKey: 'community-support.CATEGORYNAME',
-							tsNs: 'services',
-						},
-						defaultAttributes: [],
-					},
-				},
-				{
-					tag: {
-						name: 'LGBTQ centers',
-						tsKey: 'community-support.lgbtq-centers',
-						tsNs: 'services',
-						category: {
-							tsKey: 'community-support.CATEGORYNAME',
-							tsNs: 'services',
-						},
-						defaultAttributes: [],
-					},
-				},
 				{
 					tag: {
 						name: 'HIV and sexual health',
@@ -1027,6 +1031,30 @@ export const servicesMock = [
 						defaultAttributes: [],
 					},
 				},
+				{
+					tag: {
+						name: 'Cultural centers',
+						tsKey: 'community-support.cultural-centers',
+						tsNs: 'services',
+						category: {
+							tsKey: 'community-support.CATEGORYNAME',
+							tsNs: 'services',
+						},
+						defaultAttributes: [],
+					},
+				},
+				{
+					tag: {
+						name: 'LGBTQ centers',
+						tsKey: 'community-support.lgbtq-centers',
+						tsNs: 'services',
+						category: {
+							tsKey: 'community-support.CATEGORYNAME',
+							tsNs: 'services',
+						},
+						defaultAttributes: [],
+					},
+				},
 			],
 			accessDetails: [
 				{
@@ -1043,7 +1071,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DW6RYW28WW2DZJWC24',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF2N15B43MZZ51JHG9D',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Call for more information on youth services or RealTalkDC.',
@@ -1078,7 +1106,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DWNWCWDR440627P2F0',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF2FY73QDJD5J7BG4QF',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Their Youth Services location is open Monday - Friday 11:00-19:00 (11:00-18:00 on the second Friday of the month) in Eastern Market. No appointments are needed. Testing is walk-in only, but you must arrive no later than 18:45 (17:45 on the second Friday of the month). Stop by and visit them sometime.',
@@ -1113,7 +1141,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DXFPG8JBGCA5372R5V',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF2DN4SPYRF81PBHD1H',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Visit the website for more information.',
@@ -1155,13 +1183,20 @@ export const servicesMock = [
 				},
 			],
 			emails: [],
-			id: 'osvc_01GVC620DWRRJEFYYXMZJXWYTG',
+			id: 'osvc_01GVDMXAF2F0KEJVKXT3Y87MD9',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAF47QT3E33ZB414YJEH.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Get free individual and group psychotherapy for LGBTQ young people (ages 13-24)',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620DYF6EWQ6B23GDBZ0XC.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAF47QT3E33ZB414YJEH.description',
 				ns: 'org-data',
 				tsKey: {
 					text: 'Youth Mental Health services provide individual and group therapy for young people ages 13-24 with a specific focus on trauma recovery, LGBTQ identities and other life challenges. These services are free and available to young people who have experienced or witnessed a crime (no police report required). The program provides low-barrier mental health support to maintain overall wellbeing. This program strives to provide young people a safe and affirming space to explore their own individual capacities for healing. Therapists use a wide array of techniques, from art to music to sand play in session; they tailor sessions to meet the young person’s specific needs. Therapy can be provided at any Whitman-Walker Health location or at other locations in the community.',
@@ -1171,21 +1206,22 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'community.lgbtq-youth',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.trans-youth',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
 				},
 				{
 					attribute: {
@@ -1238,22 +1274,21 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.lgbtq-youth',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.trans-youth',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
 				},
 			],
 			serviceAreas: [
@@ -1275,18 +1310,6 @@ export const servicesMock = [
 				},
 			],
 			services: [
-				{
-					tag: {
-						name: 'LGBTQ centers',
-						tsKey: 'community-support.lgbtq-centers',
-						tsNs: 'services',
-						category: {
-							tsKey: 'community-support.CATEGORYNAME',
-							tsNs: 'services',
-						},
-						defaultAttributes: [],
-					},
-				},
 				{
 					tag: {
 						name: 'Private therapy and counseling',
@@ -1311,6 +1334,18 @@ export const servicesMock = [
 						defaultAttributes: [],
 					},
 				},
+				{
+					tag: {
+						name: 'LGBTQ centers',
+						tsKey: 'community-support.lgbtq-centers',
+						tsNs: 'services',
+						category: {
+							tsKey: 'community-support.CATEGORYNAME',
+							tsNs: 'services',
+						},
+						defaultAttributes: [],
+					},
+				},
 			],
 			accessDetails: [
 				{
@@ -1327,7 +1362,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DZJ4Y2E3P7C85MBR1Z',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF4R1GDN2EEPTZZS831',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Email if you have questions or would like to schedule a screening.',
@@ -1362,7 +1397,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620DZHZ4JVAXFKWC63XAD',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF5N04V4F2JD1TS0SKT',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Visit the link to learn more about youth mental health services.',
@@ -1399,13 +1434,20 @@ export const servicesMock = [
 					},
 				},
 			],
-			id: 'osvc_01GVC620DYF6EWQ6B23GDBZ0XC',
+			id: 'osvc_01GVDMXAF47QT3E33ZB414YJEH',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAF6C0A71VKTK1BTPRB8.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Get legal help with immigration services',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620E0CYEK4ZQK7KTYFTWV.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAF6C0A71VKTK1BTPRB8.description',
 				ns: 'org-data',
 				tsKey: {
 					text: 'The legal team at Whitman-Walker can advise on a variety of immigration issues, including: asylum, adjustment, naturalization, employment authorization document (EAD), family petitions, advance parole, refugee travel documents, re-entry permits, DACA, temporary protected status, U-visas, T-visas, VAWA petitions, removal defense, special immigrant juvenile status, and certificates of citizenship.',
@@ -1413,15 +1455,6 @@ export const servicesMock = [
 			},
 			hours: [],
 			attributes: [
-				{
-					attribute: {
-						tsKey: 'community.citizens',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
 				{
 					attribute: {
 						tsKey: 'community.asylum-seeker',
@@ -1442,7 +1475,25 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.asia-immigrant',
+						tsKey: 'community.residents-green-card-holders',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.undocumented',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.unaccompanied-minors',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
@@ -1469,7 +1520,26 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.residents-green-card-holders',
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
+				},
+				{
+					attribute: {
+						tsKey: 'community.asia-immigrant',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
@@ -1478,16 +1548,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.unaccompanied-minors',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.undocumented',
+						tsKey: 'community.citizens',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
@@ -1530,25 +1591,6 @@ export const servicesMock = [
 						},
 					],
 				},
-				{
-					attribute: {
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
-				},
 			],
 			serviceAreas: [
 				{
@@ -1583,30 +1625,6 @@ export const servicesMock = [
 				},
 				{
 					tag: {
-						name: 'Deferred Action for Childhood Arrivals (DACA)',
-						tsKey: 'legal.deferred-action-for-childhood-arrivals-daca',
-						tsNs: 'services',
-						category: {
-							tsKey: 'legal.CATEGORYNAME',
-							tsNs: 'services',
-						},
-						defaultAttributes: [],
-					},
-				},
-				{
-					tag: {
-						name: 'Employment Authorization',
-						tsKey: 'legal.employment-authorization',
-						tsNs: 'services',
-						category: {
-							tsKey: 'legal.CATEGORYNAME',
-							tsNs: 'services',
-						},
-						defaultAttributes: [],
-					},
-				},
-				{
-					tag: {
 						name: 'Citizenship',
 						tsKey: 'legal.citizenship',
 						tsNs: 'services',
@@ -1631,8 +1649,32 @@ export const servicesMock = [
 				},
 				{
 					tag: {
+						name: 'Deferred Action for Childhood Arrivals (DACA)',
+						tsKey: 'legal.deferred-action-for-childhood-arrivals-daca',
+						tsNs: 'services',
+						category: {
+							tsKey: 'legal.CATEGORYNAME',
+							tsNs: 'services',
+						},
+						defaultAttributes: [],
+					},
+				},
+				{
+					tag: {
 						name: 'Family Petitions',
 						tsKey: 'legal.family-petitions',
+						tsNs: 'services',
+						category: {
+							tsKey: 'legal.CATEGORYNAME',
+							tsNs: 'services',
+						},
+						defaultAttributes: [],
+					},
+				},
+				{
+					tag: {
+						name: 'Employment Authorization',
+						tsKey: 'legal.employment-authorization',
 						tsNs: 'services',
 						category: {
 							tsKey: 'legal.CATEGORYNAME',
@@ -1667,8 +1709,8 @@ export const servicesMock = [
 				},
 				{
 					tag: {
-						name: 'U Visa',
-						tsKey: 'legal.u-visa',
+						name: 'T Visa',
+						tsKey: 'legal.t-visa',
 						tsNs: 'services',
 						category: {
 							tsKey: 'legal.CATEGORYNAME',
@@ -1679,8 +1721,8 @@ export const servicesMock = [
 				},
 				{
 					tag: {
-						name: 'T Visa',
-						tsKey: 'legal.t-visa',
+						name: 'U Visa',
+						tsKey: 'legal.u-visa',
 						tsNs: 'services',
 						category: {
 							tsKey: 'legal.CATEGORYNAME',
@@ -1705,7 +1747,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620E0DSNA38GNY2XCZJNA',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF69PTYFM5P7QSBWRM1',
 										ns: 'org-data',
 										tsKey: {
 											text: "Call the Whitman-Walker Health's legal team for help with this legal issue. Their intake staff will talk with you over the phone to see if they can help you.",
@@ -1741,7 +1783,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620E153RTCJY0ZGJHASFF',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7E3ZBF0XQXH2ZM4VK',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Walk-in appointments are available at Whitman-Walker 1525, Monday through Friday, 9:00 to 17:00.',
@@ -1777,7 +1819,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620E1S0NJECDBZQEDA20F',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7Q7NM0TA2NS9SXARQ',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Walk-in appointments are available at Max Robinson Center Monday through Friday 9:00 to 17:00.',
@@ -1813,7 +1855,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620E136XQJH3HGP7N5CJE',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7CQYQ8VG6FMBN50K3',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Contact the Main Office about services offered in multiple languages upon request.',
@@ -1849,7 +1891,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620E1SKRXKV11C8K3XRTF',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF7WYYT4HRB329A3C5Z',
 										ns: 'org-data',
 										tsKey: {
 											text: "Visit the website for more information on how Whitman-Walker Health's legal team can help with immigration issues.",
@@ -1885,7 +1927,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620E2KXNZ9CQ8HMJGS6JB',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF8C4WDXMXVG5Z5Y213',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Walk-in appointments are available at WeWork, Monday through Friday, 9:00 to 17:00.',
@@ -1940,13 +1982,20 @@ export const servicesMock = [
 					},
 				},
 			],
-			id: 'osvc_01GVC620E0CYEK4ZQK7KTYFTWV',
+			id: 'osvc_01GVDMXAF6C0A71VKTK1BTPRB8',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAF9V9GTES9TA31ME78D.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Get dental health services for HIV-positive individuals',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620E3GE9HRJ8RJG9JYR9K.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAF9V9GTES9TA31ME78D.description',
 				ns: 'org-data',
 				tsKey: {
 					text: 'Whitman-Walker Health offers preventive and restorative dental health services including dental exam, teeth cleaning, mouth guard, orthodontics, prosthodontics, restorative treatment, root canal, scaling and root planing, tooth extraction, teeth whitening.',
@@ -1956,12 +2005,22 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'community.hiv-aids',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
 				},
 				{
 					attribute: {
@@ -2008,22 +2067,12 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.hiv-aids',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
+					supplement: [],
 				},
 			],
 			serviceAreas: [
@@ -2073,7 +2122,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620E3F7PXEJ6XPASNYBDH',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF9X7C10C32KQYAY84T',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Call to make a dental appointment.',
@@ -2108,7 +2157,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620E3MWAAJDPGDGNE2VB9',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAF9WARYPDC8G62ZCX1Z',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Check the website for details on specific dental services.',
@@ -2162,13 +2211,20 @@ export const servicesMock = [
 					},
 				},
 			],
-			id: 'osvc_01GVC620E3GE9HRJ8RJG9JYR9K',
+			id: 'osvc_01GVDMXAF9V9GTES9TA31ME78D',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAFAFE0B4KC3BKRAXG4D.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Receive behavioral health services',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620E4B3KZMARAGFKMY2NC.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAFAFE0B4KC3BKRAXG4D.description',
 				ns: 'org-data',
 				tsKey: {
 					text: "Whitman-Walker's Behavioral Health programs include peer support, substance use treatment, psychotherapy, psychiatry, and gender affirming assessment. They offer services to adults and youth. The behavioral healthcare team includes licensed psychotherapists (social workers, professional counselors, and marriage and family therapists, psychologists), psychiatric providers (medical doctors and nurse practitioners), and highly trained peers and graduate interns. The assessment and referral process will get you started and will help them determine together which services are right for you.",
@@ -2178,16 +2234,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'community.adults',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.bisexual',
+						tsKey: 'community.nonbinary',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
@@ -2206,15 +2253,6 @@ export const servicesMock = [
 				{
 					attribute: {
 						tsKey: 'community.hiv-aids',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.gender-nonconforming',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
@@ -2250,24 +2288,6 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.nonbinary',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.teens',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
 						tsKey: 'community.trans-youth',
 						tsNs: 'attribute',
 						icon: null,
@@ -2278,6 +2298,61 @@ export const servicesMock = [
 				{
 					attribute: {
 						tsKey: 'community.transgender',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
+				},
+				{
+					attribute: {
+						tsKey: 'community.adults',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.gender-nonconforming',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.bisexual',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.teens',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
@@ -2320,25 +2395,6 @@ export const servicesMock = [
 									},
 								},
 							},
-						},
-					],
-				},
-				{
-					attribute: {
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
 						},
 					],
 				},
@@ -2402,7 +2458,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620E4EEX2YTAFN2Q3R5FZ',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFBAYV2HW8T988GDGE1',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Visit the website for more information and a full list of services.',
@@ -2427,13 +2483,20 @@ export const servicesMock = [
 			reviews: [],
 			phones: [],
 			emails: [],
-			id: 'osvc_01GVC620E4B3KZMARAGFKMY2NC',
+			id: 'osvc_01GVDMXAFAFE0B4KC3BKRAXG4D',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAFNGBM61272NF9M1YEV.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Get legal help for transgender people to replace and update name/gender marker on immigration documents',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620EBEA12XS55VF2ZF116.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAFNGBM61272NF9M1YEV.description',
 				ns: 'org-data',
 				tsKey: {
 					text: 'The legal team at Whitman-Walker provides help to Whitman-Walker patients, people living with HIV, and members of the Lesbian, Gay, Bisexual, Transgender, and Queer communities. Note that due to the high demand for immigration legal assistance, Whitman-Walker may provide only referral information. The legal team can advise on a variety of immigration issues, including: applications for transgender clients to replace and update name/gender marker on immigration documents including work permits, green cards, citizenship/naturalization certificates, and travel documents.',
@@ -2443,34 +2506,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'community.asylum-seeker',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.africa-immigrant',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.asylee',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						tsKey: 'community.hiv-aids',
+						tsKey: 'community.transgender',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
@@ -2497,12 +2533,22 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.transgender',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
 				},
 				{
 					attribute: {
@@ -2548,22 +2594,39 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.asylum-seeker',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.hiv-aids',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.africa-immigrant',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						tsKey: 'community.asylee',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
 				},
 			],
 			serviceAreas: [
@@ -2613,7 +2676,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620EBYZ7ZBJJCJ6REN28T',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFNV4MHY7NNZCTHMHE0',
 										ns: 'org-data',
 										tsKey: {
 											text: "Call the Whitman-Walker Health's legal team for help with this legal issue. Their intake staff will talk with you over the phone to see if they can help you.",
@@ -2649,7 +2712,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620EC74PEWBVCAY0A5E6R',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFNWZC7J4Q5QZWRHY99',
 										ns: 'org-data',
 										tsKey: {
 											text: "Email the Whitman-Walker Health's legal team for help with this legal issue.",
@@ -2685,7 +2748,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620ECQDP22FCRXV80AG92',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFP1GJBBNVZMWQSSGX8',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Appointments are available at Whitman-Walker 1525, Monday through Thursday, 08:30-12:30 & 13:30-17:30; and Fridays 08:30-12:30 & 14:30-17:00.',
@@ -2721,7 +2784,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620ECB48F77NZGADDQHV5',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFPN5QZ4DPQABAKVZ1Y',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Appointments are available at Max Robinson Center Monday through Thursday 08:30-12:30 & 13:30-17:30; and Fridays 08:30-12:30 & 14:15-17:30.',
@@ -2757,7 +2820,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620ED0KMYV2TTKKN64JDS',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFPPATGSQ4TEY4WVSHK',
 										ns: 'org-data',
 										tsKey: {
 											text: "Visit the website for more information on how Whitman-Walker Health's legal team can help with immigration issues.",
@@ -2793,7 +2856,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620EDMV2MKMFH4JFQAD27',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFQ84TDVNRBEFNAZ0NN',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Appointments are available at Whitman-Walker at LIZ Mondays & Wednesdays 09:00 –12:15 pm & 13:45 – 16:30; Tuesdays & Thursdays 09:00 – 12:15 &  13:45 – 17:30.',
@@ -2848,13 +2911,20 @@ export const servicesMock = [
 					},
 				},
 			],
-			id: 'osvc_01GVC620EBEA12XS55VF2ZF116',
+			id: 'osvc_01GVDMXAFNGBM61272NF9M1YEV',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAFRRRS8S4SGYHDJYSMT.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Get the COVID-19 vaccine',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620EJJKAD0JXD621SVVBJ.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAFRRRS8S4SGYHDJYSMT.description',
 				ns: 'org-data',
 				tsKey: {
 					text: 'Whitman-Walker Health encourages you to get your COVID-19 vaccine or booster as soon as possible. New cases of COVID-19 are increasing rapidly. Whitman-Walker has the COVID-19 vaccine available. *Please note, if you get your first COVID-19 vaccine dose or full series at a location other than Whitman-Walker, you can schedule your 2nd dose, 3rd dose or booster shot through Whitman-Walker.',
@@ -2862,6 +2932,25 @@ export const servicesMock = [
 			},
 			hours: [],
 			attributes: [
+				{
+					attribute: {
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
+				},
 				{
 					attribute: {
 						tsKey: 'community.adults',
@@ -2922,25 +3011,6 @@ export const servicesMock = [
 						},
 					],
 				},
-				{
-					attribute: {
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
-				},
 			],
 			serviceAreas: [
 				{
@@ -2989,7 +3059,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620EJH9YXA493NHJC36E2',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFRSBXKYM3FWS4NR8KA',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Call Whitman-Walker Health to schedule a vaccine appointment.',
@@ -3024,7 +3094,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620EKJ6BT38JYDMHSTF3Z',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFRT2Y02VRKA3GC1CSP',
 										ns: 'org-data',
 										tsKey: {
 											text: 'You can also text Whitman-Walker Health to schedule a vaccine appointment.',
@@ -3060,7 +3130,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620EKH68BAGJM5N8D5X0W',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFRYW75H4Z0NZJ0E1W2',
 										ns: 'org-data',
 										tsKey: {
 											text: "See Whitman-Walker Health's website for more information.",
@@ -3102,13 +3172,20 @@ export const servicesMock = [
 				},
 			],
 			emails: [],
-			id: 'osvc_01GVC620EJJKAD0JXD621SVVBJ',
+			id: 'osvc_01GVDMXAFRRRS8S4SGYHDJYSMT',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAFT7P6BZPJ6CDS0KJ6G.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Get gender affirming hormone therapy',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620EMTG508FP95V92MR9P.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAFT7P6BZPJ6CDS0KJ6G.description',
 				ns: 'org-data',
 				tsKey: {
 					text: 'Your medical provider (e.g. a doctor, nurse practitioner or physician assistant) will work with you to understand your goals and needs before prescribing medication. Whitman-Walker will follow an informed consent model for gender affirming hormone therapy with people ages 18+. If someone is working with them who is under the age of 18, Whitman-Walker will require a mental health assessment as well as parental or guardian consent.',
@@ -3118,7 +3195,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						tsKey: 'community.trans-youth',
+						tsKey: 'community.transgender',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
@@ -3127,12 +3204,22 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.transgender',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
 				},
 				{
 					attribute: {
@@ -3188,22 +3275,12 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'lang.lang-offered',
+						tsKey: 'community.trans-youth',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
-						},
-					],
+					supplement: [],
 				},
 			],
 			serviceAreas: [
@@ -3253,7 +3330,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620EMRXNJVNVDVYSQQ6S5',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFTWFXNK9FMPPR5NVQS',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Call for more information about their Gender Affirming Services.',
@@ -3288,7 +3365,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620EMQNT2GXS7SP92XBYE',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFTYH39MWMR8R7KXZ1J',
 										ns: 'org-data',
 										tsKey: {
 											text: "Visit the website to learn more about Whitman-Walker Health's gender affirming hormone therapy.",
@@ -3325,7 +3402,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620ENKM14SVXH0C45PM78',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFTYVEGD66VDC1G7A2P',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Email for more information about their Gender Affirming Services.',
@@ -3360,7 +3437,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620ENGSJH5GH2ZFJ098GT',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFVKD4S19YPF3P065PQ',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Gender affirming hormone therapy services are offered at the Whitman-Walker at 1525 and Max Robinson Center locations.',
@@ -3416,13 +3493,20 @@ export const servicesMock = [
 					},
 				},
 			],
-			id: 'osvc_01GVC620EMTG508FP95V92MR9P',
+			id: 'osvc_01GVDMXAFT7P6BZPJ6CDS0KJ6G',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAFW0HAHAK9N1W77BG44.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Access PEP and PrEP',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620EPWF5B1EM6G2C0DDFD.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAFW0HAHAK9N1W77BG44.description',
 				ns: 'org-data',
 				tsKey: {
 					text: 'Whitman-Walker offers access to both PEP and PrEP. PEP is a 28-day course of medication that should be used only in emergency situations and must be started within 72 hours after a recent, possible exposure to HIV. If you think you’ve recently been exposed to HIV during sex or through sharing needles and works to prepare drugs, or if you’ve been sexually assaulted, please call them at 202.797.4439 right away. “PrEP” stands for Pre-Exposure Prophylaxis. It is an FDA-approved once-a-day prevention pill for people who don’t have HIV but who have a greater exposure to HIV through sex or other behaviors. When taken every day, PrEP is up to 99% effective at preventing an HIV infection that is transmitted through sex. PrEP does not prevent other STIs or pregnancy. You can use PrEP with other prevention methods, like condoms, to offer more protection as PrEP. For PrEP to work effectively, people who use it must take it every day as prescribed and follow up with their doctor or medical team member every 3 months for routine screening and discussion of barriers to adherence.',
@@ -3506,7 +3590,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620EPDCTVC0VA9DDBQ2TK',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFWYGPM1J8CG6WZAWAK',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Visit the link to learn more about PrEP and access services.',
@@ -3541,7 +3625,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620EQB4VME07CSV1BADRF',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFWQHG9ADW9YWBRQXT7',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Visit the link to learn more about PEP and access services.',
@@ -3566,13 +3650,20 @@ export const servicesMock = [
 			reviews: [],
 			phones: [],
 			emails: [],
-			id: 'osvc_01GVC620EPWF5B1EM6G2C0DDFD',
+			id: 'osvc_01GVDMXAFW0HAHAK9N1W77BG44',
 		},
 	},
 	{
 		service: {
+			serviceName: {
+				key: 'whitman-walker-health.osvc_01GVDMXAFXBC7MBCHEY04T4MSK.name',
+				ns: 'org-data',
+				tsKey: {
+					text: 'Get help with navigating health insurance options',
+				},
+			},
 			description: {
-				key: 'whitman-walker-health.osvc_01GVC620EQ9KXNCEYKJBHKBFMZ.description',
+				key: 'whitman-walker-health.osvc_01GVDMXAFXBC7MBCHEY04T4MSK.description',
 				ns: 'org-data',
 				tsKey: {
 					text: "Whitman-Walker's team is here to talk with you about your health insurance options and any problems you are having with insurance or the cost of your care. They will meet with any Whitman-Walker patient who doesn’t have insurance to see what they qualify for and to help them enroll.",
@@ -3591,6 +3682,15 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						tsKey: 'community.teens',
+						tsNs: 'attribute',
+						icon: null,
+						showOnLocation: null,
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
 						tsKey: 'community.seniors',
 						tsNs: 'attribute',
 						icon: null,
@@ -3600,12 +3700,22 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						tsKey: 'community.teens',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						showOnLocation: null,
 					},
-					supplement: [],
+					supplement: [
+						{
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							data: null,
+						},
+					],
 				},
 				{
 					attribute: {
@@ -3632,25 +3742,6 @@ export const servicesMock = [
 									},
 								],
 							},
-						},
-					],
-				},
-				{
-					attribute: {
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						showOnLocation: null,
-					},
-					supplement: [
-						{
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							data: null,
 						},
 					],
 				},
@@ -3702,7 +3793,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620EQZJQERMW07FB54V43',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFXXZP0RTBH628ZNQRV',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Visit the website for more information and a full list of services offered.',
@@ -3738,7 +3829,7 @@ export const servicesMock = [
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GVC620ER7KTCHMH71P4QHY6R',
+										key: 'whitman-walker-health.attribute.atts_01GVDMXAFX5S84ZAX0P9D2RCJ7',
 										ns: 'org-data',
 										tsKey: {
 											text: 'Call the Insurance Help Line with any questions.',
@@ -3763,7 +3854,7 @@ export const servicesMock = [
 			reviews: [],
 			phones: [],
 			emails: [],
-			id: 'osvc_01GVC620EQ9KXNCEYKJBHKBFMZ',
+			id: 'osvc_01GVDMXAFXBC7MBCHEY04T4MSK',
 		},
 	},
 ] satisfies ServicesInfoCardProps['services']

@@ -239,6 +239,7 @@ const reviewIds = {
 const orgServiceInclude = {
 	where: isPublic,
 	select: {
+		serviceName: freeText,
 		description: freeText,
 		hours: hoursSelect,
 		attributes: attributeInclude,

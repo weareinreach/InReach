@@ -12,20 +12,27 @@ export const generateKey: GenerateKey<KeyType> = (params) => {
 	let ns: string | undefined
 	let key: string | undefined
 	switch (type) {
-		case 'desc':
+		case 'desc': {
 			ns = namespaces.orgData
 			key = `${keyPrefix}.description`
 			break
+		}
 		case 'svc': {
 			ns = namespaces.orgData
 			const keyBase = `${keyPrefix}.${params.servId}`
-			key = params.subtype === 'access' ? `${keyBase}.access` : `${keyBase}.description`
+			key =
+				params.subtype === 'access'
+					? `${keyBase}.access`
+					: params.subtype === 'name'
+					? `${keyBase}.name`
+					: `${keyBase}.description`
 			break
 		}
-		case 'attrSupp':
+		case 'attrSupp': {
 			ns = namespaces.orgData
 			key = `${keyPrefix}.attribute.${params.suppId}`
 			break
+		}
 	}
 	return { ns, key, text: text?.trim() }
 }
@@ -41,7 +48,7 @@ type SvcKey = {
 	keyPrefix: string | undefined
 	servId: string
 	text: string | undefined
-	subtype: 'access' | 'desc'
+	subtype: 'access' | 'desc' | 'name'
 }
 type AttrSuppKey = {
 	type: 'attrSupp'
