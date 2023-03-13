@@ -89,6 +89,7 @@ export const attributes = {
 				tsKey: true,
 				tsNs: true,
 				icon: true,
+				iconBg: true,
 				showOnLocation: true,
 				categories: {
 					select: {

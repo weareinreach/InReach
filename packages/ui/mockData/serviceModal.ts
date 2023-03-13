@@ -120,6 +120,7 @@ export const mockServiceData = {
 				tsKey: 'community.homeless',
 				tsNs: 'attribute',
 				icon: null,
+				iconBg: null,
 				showOnLocation: null,
 				categories: [
 					{
@@ -137,6 +138,7 @@ export const mockServiceData = {
 				tsKey: 'community.lgbtq-youth',
 				tsNs: 'attribute',
 				icon: null,
+				iconBg: null,
 				showOnLocation: null,
 				categories: [
 					{
@@ -154,6 +156,7 @@ export const mockServiceData = {
 				tsKey: 'community.teens',
 				tsNs: 'attribute',
 				icon: null,
+				iconBg: null,
 				showOnLocation: null,
 				categories: [
 					{
@@ -171,6 +174,7 @@ export const mockServiceData = {
 				tsKey: 'sys.incompatible-info',
 				tsNs: 'attribute',
 				icon: null,
+				iconBg: null,
 				showOnLocation: null,
 				categories: [
 					{
@@ -227,6 +231,7 @@ export const mockServiceData = {
 				tsKey: 'lang.lang-offered',
 				tsNs: 'attribute',
 				icon: null,
+				iconBg: null,
 				showOnLocation: null,
 				categories: [
 					{
@@ -262,6 +267,7 @@ export const mockServiceData = {
 						tsKey: 'serviceaccess.accesslocation',
 						tsNs: 'attribute',
 						icon: null,
+						iconBg: null,
 						showOnLocation: null,
 						categories: [
 							{
@@ -307,6 +313,7 @@ export const mockServiceData = {
 						tsKey: 'serviceaccess.accessphone',
 						tsNs: 'attribute',
 						icon: null,
+						iconBg: null,
 						showOnLocation: null,
 						categories: [
 							{
