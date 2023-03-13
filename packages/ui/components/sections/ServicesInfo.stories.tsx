@@ -1,6 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react'
 
 import { StorybookGrid } from '~ui/layouts'
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
+import { mockServiceData } from '~ui/mockData/serviceModal'
 import { servicesMock } from '~ui/mockData/servicesInfoCard'
 
 import { ServicesInfoCard } from './ServicesInfo'
@@ -10,6 +12,29 @@ export default {
 	component: ServicesInfoCard,
 	args: {
 		services: servicesMock,
+	},
+	parameters: {
+		layout: 'fullscreen',
+		nextjs: {
+			router: {
+				pathname: '/org/[slug]',
+				asPath: '/org/mockOrg',
+				query: {
+					slug: 'mockOrg',
+				},
+			},
+		},
+		msw: [
+			getTRPCMock({
+				path: ['service', 'getParentName'],
+				response: { name: 'Organization/Location name' },
+			}),
+			getTRPCMock({
+				path: ['service', 'byId'],
+				type: 'query',
+				response: mockServiceData,
+			}),
+		],
 	},
 	decorators: [StorybookGrid],
 } satisfies Meta<typeof ServicesInfoCard>

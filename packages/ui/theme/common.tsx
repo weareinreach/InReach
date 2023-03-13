@@ -231,7 +231,8 @@ export const commonTheme = {
 						border: `${rem(1)} solid`,
 						padding: `${theme.spacing.xxs} ${theme.spacing.sm}`,
 						textTransform: 'none',
-						margin: rem(8),
+						// margin: rem(8),
+						marginBottom: rem(8),
 					},
 					inner: {
 						padding: 0,
