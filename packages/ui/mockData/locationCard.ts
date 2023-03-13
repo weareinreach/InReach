@@ -49,6 +49,7 @@ export const locationMock = {
 							tsKey: 'community.hiv-aids',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -66,6 +67,7 @@ export const locationMock = {
 							tsKey: 'sys.incompatible-info',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -118,6 +120,7 @@ export const locationMock = {
 							tsKey: 'lang.lang-offered',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -183,6 +186,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accesslocation',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{
@@ -225,6 +229,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accesslocation',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{
@@ -267,6 +272,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{
@@ -350,6 +356,7 @@ export const locationMock = {
 							tsKey: 'community.hiv-aids',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -367,6 +374,7 @@ export const locationMock = {
 							tsKey: 'sys.incompatible-info',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -420,6 +428,7 @@ export const locationMock = {
 							tsKey: 'lang.lang-offered',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -485,6 +494,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accessphone',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{
@@ -527,6 +537,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{
@@ -622,6 +633,7 @@ export const locationMock = {
 							tsKey: 'community.adults',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -639,6 +651,7 @@ export const locationMock = {
 							tsKey: 'community.bisexual',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -656,6 +669,7 @@ export const locationMock = {
 							tsKey: 'community.hiv-aids',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -673,6 +687,7 @@ export const locationMock = {
 							tsKey: 'community.gay',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -690,6 +705,7 @@ export const locationMock = {
 							tsKey: 'community.gender-nonconforming',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -707,6 +723,7 @@ export const locationMock = {
 							tsKey: 'community.lgbtq-youth',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -724,6 +741,7 @@ export const locationMock = {
 							tsKey: 'community.lesbian',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -741,6 +759,7 @@ export const locationMock = {
 							tsKey: 'community.queer',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -758,6 +777,7 @@ export const locationMock = {
 							tsKey: 'community.nonbinary',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -775,6 +795,7 @@ export const locationMock = {
 							tsKey: 'community.teens',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -792,6 +813,7 @@ export const locationMock = {
 							tsKey: 'community.transgender',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -809,6 +831,7 @@ export const locationMock = {
 							tsKey: 'community.trans-youth',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -826,6 +849,7 @@ export const locationMock = {
 							tsKey: 'sys.incompatible-info',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -875,6 +899,7 @@ export const locationMock = {
 							tsKey: 'lang.lang-offered',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -952,6 +977,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{
@@ -1018,6 +1044,7 @@ export const locationMock = {
 							tsKey: 'community.transgender',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -1035,6 +1062,7 @@ export const locationMock = {
 							tsKey: 'community.trans-youth',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -1052,6 +1080,7 @@ export const locationMock = {
 							tsKey: 'sys.incompatible-info',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -1114,6 +1143,7 @@ export const locationMock = {
 							tsKey: 'lang.lang-offered',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -1179,6 +1209,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accessphone',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{
@@ -1221,6 +1252,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{
@@ -1265,6 +1297,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accessemail',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{
@@ -1307,6 +1340,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accesslocation',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{
@@ -1404,6 +1438,7 @@ export const locationMock = {
 							tsKey: 'community.hiv-aids',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -1421,6 +1456,7 @@ export const locationMock = {
 							tsKey: 'lang.lang-offered',
 							tsNs: 'attribute',
 							icon: null,
+							iconBg: null,
 							showOnLocation: null,
 							categories: [
 								{
@@ -1486,6 +1522,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{
@@ -1528,6 +1565,7 @@ export const locationMock = {
 									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
 									icon: null,
+									iconBg: null,
 									showOnLocation: null,
 									categories: [
 										{

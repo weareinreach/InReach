@@ -889,6 +889,7 @@ model Attribute {
   tag     String  @unique
   name    String
   icon    String?
+  iconBg  String?
   /// Internal description
   intDesc String?
   active  Boolean @default(true)

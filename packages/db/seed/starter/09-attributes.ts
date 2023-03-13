@@ -76,6 +76,8 @@ export const seedAttributes = async (task: ListrTask) => {
 				requireData,
 				requireText,
 				filterType,
+				icon,
+				iconBg,
 			} = record
 			log(`[${idx + 1}/${category.attributes.length}] Prepare Attribute: ${name}`, 'generate', true)
 
@@ -104,6 +106,8 @@ export const seedAttributes = async (task: ListrTask) => {
 					tsKey: key,
 					tsNs: ns,
 					filterType,
+					icon,
+					iconBg,
 				})
 
 				log(`[${tag}] Generated attribute definition`, 'generate', true)
