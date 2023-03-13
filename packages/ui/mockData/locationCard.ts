@@ -18,86 +18,13 @@ export const locationMock = {
 		dialCode: null,
 		flag: '🇺🇸',
 	},
-	attributes: [
-		{
-			attribute: {
-				icon: 'carbon:accessibility',
-				showOnLocation: true,
-				tsKey: 'wheelchair-accessible',
-				tsNs: 'attribute',
-			},
-			supplement: [],
-		},
-		{
-			attribute: {
-				icon: 'carbon:globe',
-				showOnLocation: true,
-				tsKey: 'offers-remote-services',
-				tsNs: 'attribute',
-			},
-			supplement: [],
-		},
-	],
+	attributes: [],
 	emails: [],
 	websites: [],
-	phones: [
-		{
-			phone: {
-				country: {
-					flag: '🇺🇸',
-					dialCode: null,
-					cca2: 'US',
-					tsKey: 'USA.name',
-					tsNs: 'country',
-				},
-				phoneType: null,
-				number: '2025551234',
-				ext: null,
-				primary: true,
-				locationOnly: false,
-			},
-		},
-	],
+	phones: [],
 	photos: [],
+	hours: [],
 	reviews: [],
-	hours: [
-		{
-			dayIndex: 1,
-			start: new Date('1970-01-01T13:30:00.000Z'),
-			end: new Date('1970-01-01T22:30:00.000Z'),
-			closed: false,
-		},
-		{
-			dayIndex: 2,
-			start: new Date('1970-01-01T13:30:00.000Z'),
-			end: new Date('1970-01-01T22:30:00.000Z'),
-			closed: false,
-		},
-		{
-			dayIndex: 3,
-			start: new Date('1970-01-01T13:30:00.000Z'),
-			end: new Date('1970-01-01T22:30:00.000Z'),
-			closed: false,
-		},
-		{
-			dayIndex: 4,
-			start: new Date('1970-01-01T13:30:00.000Z'),
-			end: new Date('1970-01-01T22:30:00.000Z'),
-			closed: false,
-		},
-		{
-			dayIndex: 5,
-			start: new Date('1970-01-01T13:30:00.000Z'),
-			end: new Date('1970-01-01T17:00:00.000Z'),
-			closed: false,
-		},
-		{
-			dayIndex: 5,
-			start: new Date('1970-01-01T18:00:00.000Z'),
-			end: new Date('1970-01-01T03:00:00.000Z'),
-			closed: false,
-		},
-	],
 	services: [
 		{
 			service: {
@@ -119,22 +46,20 @@ export const locationMock = {
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'lang.lang-offered',
+							tsKey: 'community.hiv-aids',
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
-						},
-						supplement: [
-							{
-								country: null,
-								language: {
-									languageName: 'English',
-									nativeName: 'English',
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
 								},
-								text: null,
-								data: null,
-							},
-						],
+							],
+						},
+						supplement: [],
 					},
 					{
 						attribute: {
@@ -142,12 +67,22 @@ export const locationMock = {
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'system',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [
 							{
 								country: null,
 								language: null,
 								text: null,
+								govDist: null,
+								boolean: null,
 								data: {
 									json: [
 										{
@@ -180,12 +115,32 @@ export const locationMock = {
 					},
 					{
 						attribute: {
-							tsKey: 'community.hiv-aids',
+							tsKey: 'lang.lang-offered',
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'languages',
+										icon: null,
+									},
+								},
+							],
 						},
-						supplement: [],
+						supplement: [
+							{
+								country: null,
+								language: {
+									languageName: 'English',
+									nativeName: 'English',
+								},
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
 					},
 				],
 				serviceAreas: [
@@ -229,18 +184,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAF03G6BBYEDR8JRMZPF',
 											ns: 'org-data',
-											tsKey: {
-												text: 'Located at the Whitman-Walker location. Please call.',
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAF03G6BBYEDR8JRMZPF',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -264,18 +226,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAF0SWA6DQNJ00WXXEZX',
 											ns: 'org-data',
-											tsKey: {
-												text: 'Located at the Max Robinson Center. Call to make an appointment.',
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAF0SWA6DQNJ00WXXEZX',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -299,18 +268,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAF1XGF83673HD13FKF4',
 											ns: 'org-data',
-											tsKey: {
-												text: 'Visit the webpage for more information.',
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAF1XGF83673HD13FKF4',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -347,6 +323,7 @@ export const locationMock = {
 					},
 				],
 				emails: [],
+				userLists: [],
 				id: 'osvc_01GVDMXAF0C4QY2G3QA6SDRPP9',
 			},
 		},
@@ -370,22 +347,20 @@ export const locationMock = {
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'lang.lang-offered',
+							tsKey: 'community.hiv-aids',
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
-						},
-						supplement: [
-							{
-								country: null,
-								language: {
-									languageName: 'English',
-									nativeName: 'English',
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
 								},
-								text: null,
-								data: null,
-							},
-						],
+							],
+						},
+						supplement: [],
 					},
 					{
 						attribute: {
@@ -393,12 +368,22 @@ export const locationMock = {
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'system',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [
 							{
 								country: null,
 								language: null,
 								text: null,
+								govDist: null,
+								boolean: null,
 								data: {
 									json: [
 										{
@@ -432,12 +417,32 @@ export const locationMock = {
 					},
 					{
 						attribute: {
-							tsKey: 'community.hiv-aids',
+							tsKey: 'lang.lang-offered',
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'languages',
+										icon: null,
+									},
+								},
+							],
 						},
-						supplement: [],
+						supplement: [
+							{
+								country: null,
+								language: {
+									languageName: 'English',
+									nativeName: 'English',
+								},
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
 					},
 				],
 				serviceAreas: [
@@ -481,18 +486,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAF9X7C10C32KQYAY84T',
 											ns: 'org-data',
-											tsKey: {
-												text: 'Call to make a dental appointment.',
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAF9X7C10C32KQYAY84T',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -516,18 +528,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAF9WARYPDC8G62ZCX1Z',
 											ns: 'org-data',
-											tsKey: {
-												text: 'Check the website for details on specific dental services.',
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAF9WARYPDC8G62ZCX1Z',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -576,6 +595,7 @@ export const locationMock = {
 						},
 					},
 				],
+				userLists: [],
 				id: 'osvc_01GVDMXAF9V9GTES9TA31ME78D',
 			},
 		},
@@ -599,110 +619,18 @@ export const locationMock = {
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'community.nonbinary',
-							tsNs: 'attribute',
-							icon: null,
-							showOnLocation: null,
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.gay',
-							tsNs: 'attribute',
-							icon: null,
-							showOnLocation: null,
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.hiv-aids',
-							tsNs: 'attribute',
-							icon: null,
-							showOnLocation: null,
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.lesbian',
-							tsNs: 'attribute',
-							icon: null,
-							showOnLocation: null,
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.lgbtq-youth',
-							tsNs: 'attribute',
-							icon: null,
-							showOnLocation: null,
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.queer',
-							tsNs: 'attribute',
-							icon: null,
-							showOnLocation: null,
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.trans-youth',
-							tsNs: 'attribute',
-							icon: null,
-							showOnLocation: null,
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.transgender',
-							tsNs: 'attribute',
-							icon: null,
-							showOnLocation: null,
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'lang.lang-offered',
-							tsNs: 'attribute',
-							icon: null,
-							showOnLocation: null,
-						},
-						supplement: [
-							{
-								country: null,
-								language: {
-									languageName: 'English',
-									nativeName: 'English',
-								},
-								text: null,
-								data: null,
-							},
-						],
-					},
-					{
-						attribute: {
 							tsKey: 'community.adults',
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.gender-nonconforming',
-							tsNs: 'attribute',
-							icon: null,
-							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [],
 					},
@@ -712,6 +640,133 @@ export const locationMock = {
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.hiv-aids',
+							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.gay',
+							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.gender-nonconforming',
+							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.lgbtq-youth',
+							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.lesbian',
+							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.queer',
+							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.nonbinary',
+							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [],
 					},
@@ -721,6 +776,48 @@ export const locationMock = {
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.transgender',
+							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.trans-youth',
+							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [],
 					},
@@ -730,12 +827,22 @@ export const locationMock = {
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'system',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [
 							{
 								country: null,
 								language: null,
 								text: null,
+								govDist: null,
+								boolean: null,
 								data: {
 									json: [
 										{
@@ -763,6 +870,35 @@ export const locationMock = {
 							},
 						],
 					},
+					{
+						attribute: {
+							tsKey: 'lang.lang-offered',
+							tsNs: 'attribute',
+							icon: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'languages',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [
+							{
+								country: null,
+								language: {
+									languageName: 'English',
+									nativeName: 'English',
+								},
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
+					},
 				],
 				serviceAreas: [
 					{
@@ -785,8 +921,8 @@ export const locationMock = {
 				services: [
 					{
 						tag: {
-							name: 'Private therapy and counseling',
-							tsKey: 'mental-health.private-therapy-and-counseling',
+							name: 'Support groups',
+							tsKey: 'mental-health.support-groups',
 							tsNs: 'services',
 							category: {
 								tsKey: 'mental-health.CATEGORYNAME',
@@ -797,8 +933,8 @@ export const locationMock = {
 					},
 					{
 						tag: {
-							name: 'Support groups',
-							tsKey: 'mental-health.support-groups',
+							name: 'Private therapy and counseling',
+							tsKey: 'mental-health.private-therapy-and-counseling',
 							tsNs: 'services',
 							category: {
 								tsKey: 'mental-health.CATEGORYNAME',
@@ -817,18 +953,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAFBAYV2HW8T988GDGE1',
 											ns: 'org-data',
-											tsKey: {
-												text: 'Visit the website for more information and a full list of services.',
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAFBAYV2HW8T988GDGE1',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -848,6 +991,7 @@ export const locationMock = {
 				reviews: [],
 				phones: [],
 				emails: [],
+				userLists: [],
 				id: 'osvc_01GVDMXAFAFE0B4KC3BKRAXG4D',
 			},
 		},
@@ -875,27 +1019,33 @@ export const locationMock = {
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [],
 					},
 					{
 						attribute: {
-							tsKey: 'lang.lang-offered',
+							tsKey: 'community.trans-youth',
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
-						},
-						supplement: [
-							{
-								country: null,
-								language: {
-									languageName: 'English',
-									nativeName: 'English',
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
 								},
-								text: null,
-								data: null,
-							},
-						],
+							],
+						},
+						supplement: [],
 					},
 					{
 						attribute: {
@@ -903,12 +1053,22 @@ export const locationMock = {
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'system',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [
 							{
 								country: null,
 								language: null,
 								text: null,
+								govDist: null,
+								boolean: null,
 								data: {
 									json: [
 										{
@@ -951,12 +1111,32 @@ export const locationMock = {
 					},
 					{
 						attribute: {
-							tsKey: 'community.trans-youth',
+							tsKey: 'lang.lang-offered',
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'languages',
+										icon: null,
+									},
+								},
+							],
 						},
-						supplement: [],
+						supplement: [
+							{
+								country: null,
+								language: {
+									languageName: 'English',
+									nativeName: 'English',
+								},
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
 					},
 				],
 				serviceAreas: [
@@ -1000,18 +1180,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAFTWFXNK9FMPPR5NVQS',
 											ns: 'org-data',
-											tsKey: {
-												text: 'Call for more information about their Gender Affirming Services.',
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAFTWFXNK9FMPPR5NVQS',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -1035,18 +1222,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAFTYH39MWMR8R7KXZ1J',
 											ns: 'org-data',
-											tsKey: {
-												text: "Visit the website to learn more about Whitman-Walker Health's gender affirming hormone therapy.",
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAFTYH39MWMR8R7KXZ1J',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -1072,18 +1266,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAFTYVEGD66VDC1G7A2P',
 											ns: 'org-data',
-											tsKey: {
-												text: 'Email for more information about their Gender Affirming Services.',
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAFTYVEGD66VDC1G7A2P',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -1107,18 +1308,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAFVKD4S19YPF3P065PQ',
 											ns: 'org-data',
-											tsKey: {
-												text: 'Gender affirming hormone therapy services are offered at the Whitman-Walker at 1525 and Max Robinson Center locations.',
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAFVKD4S19YPF3P065PQ',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -1169,6 +1377,7 @@ export const locationMock = {
 						},
 					},
 				],
+				userLists: [],
 				id: 'osvc_01GVDMXAFT7P6BZPJ6CDS0KJ6G',
 			},
 		},
@@ -1196,6 +1405,14 @@ export const locationMock = {
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [],
 					},
@@ -1205,6 +1422,14 @@ export const locationMock = {
 							tsNs: 'attribute',
 							icon: null,
 							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'languages',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [
 							{
@@ -1214,6 +1439,8 @@ export const locationMock = {
 									nativeName: 'English',
 								},
 								text: null,
+								govDist: null,
+								boolean: null,
 								data: null,
 							},
 						],
@@ -1260,18 +1487,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAFWYGPM1J8CG6WZAWAK',
 											ns: 'org-data',
-											tsKey: {
-												text: 'Visit the link to learn more about PrEP and access services.',
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAFWYGPM1J8CG6WZAWAK',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -1295,18 +1529,25 @@ export const locationMock = {
 									tsNs: 'attribute',
 									icon: null,
 									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVDMXAFWQHG9ADW9YWBRQXT7',
 											ns: 'org-data',
-											tsKey: {
-												text: 'Visit the link to learn more about PEP and access services.',
-											},
+											key: 'whitman-walker-health.attribute.atts_01GVDMXAFWQHG9ADW9YWBRQXT7',
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -1326,6 +1567,7 @@ export const locationMock = {
 				reviews: [],
 				phones: [],
 				emails: [],
+				userLists: [],
 				id: 'osvc_01GVDMXAFW0HAHAK9N1W77BG44',
 			},
 		},
@@ -1340,5 +1582,5 @@ export const locationMock = {
 	primary: true,
 	longitude: -77.032,
 	latitude: 38.91,
-	id: 'oloc_ARTH98W34R524398J',
+	id: 'oloc_01GVDMXAEGWJJD9XNW2B0NT1S8',
 } satisfies LocationCardProps['location']
