@@ -311,14 +311,15 @@ export const organizationInclude = (ctx: Context) =>
 			serviceAreas: serviceAreaInclude,
 			hours: hoursSelect,
 			attributes: attributeInclude,
-			name: true,
-			slug: true,
-			id: true,
+			userLists: userListSelect(ctx),
 			allowedEditors: {
 				where: { authorized: true },
 				select: { _count: true },
 			},
-			userLists: userListSelect(ctx),
+			name: true,
+			slug: true,
+			id: true,
+			lastVerified: true,
 		},
 	} satisfies Pick<Prisma.OrganizationFindUniqueOrThrowArgs, 'select'>)
 
