@@ -1,4 +1,4 @@
-import { Title, Grid, Card, List, Stack, Group } from '@mantine/core'
+import { Title, Card, List, Stack, Group } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
 import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
@@ -48,28 +48,33 @@ export const LocationCard = (props: LocationCardProps) => {
 
 	const attributeTags = location.attributes.filter(({ attribute }) => Boolean(attribute.showOnLocation))
 
+	const hasServices = Boolean(serviceTags.size)
+	const hasAttributes = Boolean(attributeTags.length)
+
 	return (
-		<Grid.Col xs={12} sm={8}>
-			<Card
-				w='100%'
-				variant={variants.Card.hoverCoolGray}
-				onClick={() =>
-					router.push({
-						pathname: '/org/[slug]/[orgLocationId]',
-						query: {
-							slug: router.query.slug as string,
-							orgLocationId: location.id,
-						},
-					})
-				}
-			>
-				<Stack spacing={32}>
+		<Card
+			w='100%'
+			variant={variants.Card.hoverCoolGray}
+			onClick={() =>
+				router.push({
+					pathname: '/org/[slug]/[orgLocationId]',
+					query: {
+						slug: router.query.slug as string,
+						orgLocationId: location.id,
+					},
+				})
+			}
+		>
+			<Stack spacing={32}>
+				<Stack spacing={12}>
 					<Title order={2}>{location.name}</Title>
 					<List variant={addressListVariant} ref={addressRef}>
 						<List.Item>{formattedAddress}</List.Item>
 						{formattedPhone && <List.Item>{formattedPhone}</List.Item>}
 					</List>
-					<Stack spacing={4}>
+				</Stack>
+				{hasServices && (
+					<Stack spacing={12}>
 						<Title order={3}>{t('services', { ns: 'common' })}</Title>
 						<BadgeGroup
 							badges={[...serviceTags].map((tsKey) => ({
@@ -78,7 +83,9 @@ export const LocationCard = (props: LocationCardProps) => {
 							}))}
 						/>
 					</Stack>
-					<Group spacing={0}>
+				)}
+				<Group spacing={24}>
+					{hasAttributes && (
 						<BadgeGroup
 							badges={attributeTags.map(({ attribute }) => ({
 								variant: 'attribute',
@@ -87,11 +94,11 @@ export const LocationCard = (props: LocationCardProps) => {
 								icon: attribute.icon as IconList,
 							}))}
 						/>
-						<Rating hideCount orgLocationId={location.id} />
-					</Group>
-				</Stack>
-			</Card>
-		</Grid.Col>
+					)}
+					<Rating hideCount recordId={location.id} />
+				</Group>
+			</Stack>
+		</Card>
 	)
 }
 

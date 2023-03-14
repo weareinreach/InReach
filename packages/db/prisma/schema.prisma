@@ -578,6 +578,9 @@ model OrgLocation {
   postCode String?
   primary  Boolean @default(true)
 
+  description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  descriptionId String?   @unique
+
   govDist   GovDist? @relation(fields: [govDistId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   govDistId String?
 
@@ -695,6 +698,7 @@ model FreeText {
   ns    String
 
   Organization        Organization?
+  OrgLocation         OrgLocation?
   OrgWebsite          OrgWebsite?
   OrgService          OrgService?          @relation("OrgServiceDescription")
   AttributeSupplement AttributeSupplement?

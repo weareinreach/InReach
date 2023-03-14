@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { StorybookGrid } from '~ui/layouts'
+import { StorybookGridSingle } from '~ui/layouts'
 import { contactMock } from '~ui/mockData/contactSection'
 
 import { ContactSection } from './Contact'
@@ -24,7 +24,7 @@ export default {
 			},
 		},
 	},
-	decorators: [StorybookGrid],
+	decorators: [StorybookGridSingle],
 } satisfies Meta<typeof ContactSection>
 
 type StoryDef = StoryObj<typeof ContactSection>

@@ -27,6 +27,7 @@ const config: StorybookConfig = {
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
 		'storybook-addon-pseudo-states',
+		'css-chaos-addon',
 		'storybook-addon-swc',
 		// {
 		// 	name: 'storybook-addon-swc',

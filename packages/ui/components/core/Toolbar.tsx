@@ -9,7 +9,8 @@ const BREACRUMB_WIDTH = 162
 
 const useStyles = createStyles((theme) => ({
 	toolbar: {
-		padding: `${rem(0)} ${rem(8)} ${rem(0)} ${rem(12)}`,
+		// padding: `${rem(0)} ${rem(8)} ${rem(0)} ${rem(12)}`,
+		marginLeft: rem(-8),
 	},
 }))
 
@@ -19,8 +20,6 @@ export const Toolbar = ({ saved = false, breadcrumbProps }: Props) => {
 	const { width } = useViewportSize()
 	const { classes } = useStyles()
 	const buttons = ['review', 'share', saved ? 'saved' : 'save']
-
-	console.log('isMobile', isMobile)
 
 	const buttonsInViewPort = isMobile ? Math.ceil((width - BREACRUMB_WIDTH) / MIN_BUTTON_WIDTH) % 3 : 4
 
