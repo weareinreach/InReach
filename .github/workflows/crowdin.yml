@@ -26,7 +26,7 @@ jobs:
           replacement: IN-xxx
 
       - name: crowdin action
-        uses: crowdin/github-action@37e7ee2f55c30ccc6d6064db2276c1c4294c9ad5 # v1.7.0
+        uses: crowdin/github-action@840b586cf1214a04c4701d90f9100f9766d7390d # v1.7.1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
