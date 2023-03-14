@@ -69,7 +69,7 @@ export const VisitCard = (props: VisitCardProps) => {
 	})
 
 	const isAccessible = location.attributes.some(
-		(attribute) => attribute.attribute.tsKey === 'wheelchair-accessible'
+		(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
 	)
 
 	const body = (
@@ -94,7 +94,7 @@ export const VisitCard = (props: VisitCardProps) => {
 				<Badge
 					variant='attribute'
 					tsNs='attribute'
-					tsKey='wheelchair-accessible'
+					tsKey='additional.wheelchair-accessible'
 					tProps={{ context: `${isAccessible}` }}
 					icon={isAccessible ? 'carbon:accessibility' : 'carbon:warning'}
 					style={{ marginLeft: 0 }}
@@ -106,7 +106,13 @@ export const VisitCard = (props: VisitCardProps) => {
 		</Stack>
 	)
 
-	return <Grid.Col>{isMobile ? body : <Card>{body}</Card>}</Grid.Col>
+	return (
+		<>
+			{/* <Grid.Col> */}
+			{isMobile ? body : <Card>{body}</Card>}
+			{/* </Grid.Col> */}
+		</>
+	)
 }
 // TODO: [IN-785] Create variant for Remote/Unpublished address
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>

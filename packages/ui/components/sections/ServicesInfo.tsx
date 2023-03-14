@@ -45,7 +45,7 @@ const ServiceSection = ({ category, services }: ServiceSectionProps) => {
 	const { data: parent } = api.service.getParentName.useQuery(apiQuery)
 	const [preloadService, setPreloadService] = useState<string>('')
 	const variants = useCustomVariant()
-	console.log(services)
+
 	const breadCrumbProps = parent?.name
 		? ({ option: 'back', backTo: 'dynamicText', backToText: parent.name } as const)
 		: ({ option: 'back', backTo: 'none' } as const)
@@ -119,7 +119,13 @@ export const ServicesInfoCard = (props: ServicesInfoCardProps) => {
 
 	const body = <Stack spacing={40}>{sections}</Stack>
 
-	return <Grid.Col sm={8}>{isMobile ? body : <Card>{body}</Card>}</Grid.Col>
+	return (
+		<>
+			{/* <Grid.Col sm={8}> */}
+			{isMobile ? body : <Card>{body}</Card>}
+			{/* </Grid.Col> */}
+		</>
+	)
 }
 
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>

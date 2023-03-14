@@ -20,8 +20,6 @@ export const Toolbar = ({ saved = false, breadcrumbProps }: Props) => {
 	const { classes } = useStyles()
 	const buttons = ['review', 'share', saved ? 'saved' : 'save']
 
-	console.log('isMobile', isMobile)
-
 	const buttonsInViewPort = isMobile ? Math.ceil((width - BREACRUMB_WIDTH) / MIN_BUTTON_WIDTH) % 3 : 4
 
 	/* Contains the actionButtons displayed outside the 'more' actionButton menu */

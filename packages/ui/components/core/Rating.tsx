@@ -10,7 +10,7 @@ const useStyles = createStyles((theme) => ({
 		width: 'auto',
 		position: 'relative',
 		height: rem(24),
-		margin: rem(8),
+		margin: `${rem(8)} ${rem(0)}`,
 		padding: 'auto',
 	},
 	icon: {},
@@ -37,7 +37,6 @@ export const Rating = ({
 	const { average, count } = data ?? { average: 0, count: 0 }
 
 	const parenRegex = /\(|\)/g
-
 	return (
 		<Tooltip
 			label={t('review-count_interval', { count, postProcess: 'interval' }).replace(parenRegex, '')}

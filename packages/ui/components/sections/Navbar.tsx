@@ -9,6 +9,7 @@ const useStyles = createStyles((theme) => ({
 	desktopNav: {
 		height: rem(64),
 		boxShadow: theme.shadows.xs,
+		marginBottom: rem(40),
 		[theme.fn.smallerThan('md')]: {
 			display: 'none',
 		},

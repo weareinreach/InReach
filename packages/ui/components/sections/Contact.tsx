@@ -143,11 +143,10 @@ export const ContactSection = (props: ContactSectionProps) => {
 			<SocialLink.Group links={socialLinks} header />
 		</Stack>
 	)
-	if (isMobile) return <Grid.Col>{body}</Grid.Col>
 	return (
-		<Grid.Col>
-			<Card>{body}</Card>
-		</Grid.Col>
+		// <Grid.Col>
+		<>{isMobile ? body : <Card>{body}</Card>}</>
+		// </Grid.Col>
 	)
 }
 

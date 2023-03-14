@@ -272,7 +272,10 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				}
 				case 'verified': {
 					const MAX_CHARACTERS = 80
-					const dateString = DateTime.fromJSDate(props.lastVerifiedDate)
+					const lastVerified =
+						props.lastverified instanceof Date ? props.lastverified : new Date(props.lastverified)
+
+					const dateString = DateTime.fromJSDate(lastVerified)
 						.setLocale(i18n.resolvedLanguage)
 						.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 					const label = t('verified-information-detail', { dateString })
@@ -324,13 +327,13 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 export const BadgeGroup = ({ badges, withSeparator = false }: BadgeGroupProps) => {
 	const variants = useCustomVariant()
 	const badgeList = badges.map((item: CustomBadgeProps, idx, arr) => (
-		<List.Item key={idx} m={rem(8)}>
+		<List.Item key={idx}>
 			<Badge {...item} />
 		</List.Item>
 	))
 
 	return (
-		<List variant={withSeparator ? variants.List.inlineBullet : variants.List.inline} mb={0} ml={-8}>
+		<List variant={withSeparator ? variants.List.inlineBullet : variants.List.inline} m={0}>
 			{badgeList}
 		</List>
 	)
@@ -385,7 +388,7 @@ type LeaderBadgeProps = {
 
 type VerifiedBadgeProps = {
 	variant: 'verified'
-	lastVerifiedDate: Date
+	lastverified: Date | string
 }
 
 type AttributeTagProps = {

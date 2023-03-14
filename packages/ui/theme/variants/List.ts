@@ -46,15 +46,22 @@ export const List = {
 			},
 		} satisfies Styles<ListStylesNames, ListStylesParams>),
 	inlineBullet: (theme) => ({
+		root: {
+			display: 'flex',
+			gap: rem(8),
+			flexWrap: 'wrap',
+		},
 		item: {
 			display: 'inline-block',
 			listStyle: 'none',
+			margin: 0,
 			// marginBottom: rem(12),
 			'&:not(:first-of-type)::before': {
 				content: `''`,
 				display: 'inline-block',
 				verticalAlign: 'middle',
-				margin: `auto 0`,
+				marginBottom: '0.5rem',
+				marginRight: rem(8),
 				width: rem(4),
 				height: rem(4),
 				borderRadius: '50%',

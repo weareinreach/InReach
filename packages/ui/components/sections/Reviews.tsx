@@ -52,16 +52,16 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 	const noReviews = <Text variant={variants.Text.darkGray}>{t('no-reviews', { ns: 'common' })}</Text>
 
 	return (
-		<Grid.Col sm={8}>
-			<Stack spacing={isMobile ? 32 : 40} align='flex-start'>
-				<Group position='apart' w='100%' align='center'>
-					<Title order={2}>{t('review', { count: 2 })}</Title>
-					<ActionButtons iconKey='review'>{t('add', { ns: 'common', item: '$t(review)' })}</ActionButtons>
-				</Group>
-				{Boolean(props.reviews.length) && <Rating {...ratingProps} />}
-				{props.reviews.length ? reviews : noReviews}
-			</Stack>
-		</Grid.Col>
+		// <Grid.Col sm={8}>
+		<Stack spacing={isMobile ? 32 : 40} align='flex-start'>
+			<Group position='apart' w='100%' align='center'>
+				<Title order={2}>{t('review', { count: 2 })}</Title>
+				<ActionButtons iconKey='review'>{t('add', { ns: 'common', item: '$t(review)' })}</ActionButtons>
+			</Group>
+			{Boolean(props.reviews.length) && <Rating {...ratingProps} />}
+			{props.reviews.length ? reviews : noReviews}
+		</Stack>
+		// </Grid.Col>
 	)
 }
 
