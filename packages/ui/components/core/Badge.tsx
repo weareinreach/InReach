@@ -83,7 +83,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				},
 				root: {
 					border: 0,
-					// padding: 0,
+					padding: 0,
 					'&[data-minify]': {
 						height: rem(40),
 						width: rem(40),
@@ -120,7 +120,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				},
 				root: {
 					border: 0,
-					height: rem(24),
+					minHeight: rem(24),
 					padding: '0',
 					// alignItems: 'flex-start',
 					lineHeight: 'inherit',

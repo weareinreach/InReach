@@ -5,12 +5,12 @@ import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { noMargin }: Partial<Props>) => ({
 	container: {
 		width: 'auto',
 		position: 'relative',
 		height: rem(24),
-		margin: `${rem(8)} ${rem(0)}`,
+		margin: noMargin ? undefined : `${rem(8)} ${rem(0)}`,
 		padding: 'auto',
 	},
 	icon: {},
@@ -25,8 +25,9 @@ export const Rating = ({
 	orgServiceId,
 	orgLocationId,
 	forceLoading,
+	noMargin = false,
 }: Props) => {
-	const { classes } = useStyles()
+	const { classes } = useStyles({ noMargin })
 	const { t } = useTranslation('common')
 	const variants = useCustomVariant()
 	const { data, status } = api.review.getAverage.useQuery(
@@ -60,6 +61,7 @@ type Props = {
 	organizationId?: string
 	orgServiceId?: string
 	orgLocationId?: string
+	noMargin?: boolean
 	/** For Storybook */
 	forceLoading?: boolean
 }
