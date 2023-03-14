@@ -95,7 +95,7 @@ export const LocationCard = (props: LocationCardProps) => {
 							}))}
 						/>
 					)}
-					<Rating hideCount orgLocationId={location.id} />
+					<Rating hideCount recordId={location.id} />
 				</Group>
 			</Stack>
 		</Card>

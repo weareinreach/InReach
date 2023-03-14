@@ -47,4 +47,4 @@ export const useFormattedAddress = (location?: Location) => {
 	return address
 }
 
-type Location = NonNullable<ApiOutput['organization']['getBySlug']>['locations'][number]
+type Location = Partial<NonNullable<ApiOutput['organization']['getBySlug']>['locations'][number]>

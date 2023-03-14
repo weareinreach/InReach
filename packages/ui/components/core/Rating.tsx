@@ -19,21 +19,11 @@ const useStyles = createStyles((theme, { noMargin }: Partial<Props>) => ({
 	},
 }))
 
-export const Rating = ({
-	hideCount = false,
-	organizationId,
-	orgServiceId,
-	orgLocationId,
-	forceLoading,
-	noMargin = false,
-}: Props) => {
+export const Rating = ({ recordId, hideCount = false, noMargin = false, forceLoading = false }: Props) => {
 	const { classes } = useStyles({ noMargin })
 	const { t } = useTranslation('common')
 	const variants = useCustomVariant()
-	const { data, status } = api.review.getAverage.useQuery(
-		{ organizationId, orgServiceId, orgLocationId },
-		{ enabled: Boolean(organizationId || orgServiceId || orgLocationId) }
-	)
+	const { data, status } = api.review.getAverage.useQuery(recordId as string, { enabled: Boolean(recordId) })
 
 	const { average, count } = data ?? { average: 0, count: 0 }
 
@@ -58,9 +48,7 @@ export const Rating = ({
 
 type Props = {
 	hideCount?: boolean
-	organizationId?: string
-	orgServiceId?: string
-	orgLocationId?: string
+	recordId?: string
 	noMargin?: boolean
 	/** For Storybook */
 	forceLoading?: boolean

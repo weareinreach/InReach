@@ -22,9 +22,7 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 	const { data: organizationId } = api.organization.getIdFromSlug.useQuery({ slug })
 
 	const ratingProps = {
-		organizationId: organizationId?.id,
-		orgServiceId: validateString(orgServiceId),
-		orgLocationId: validateString(orgLocationId),
+		recordId: organizationId?.id || validateString(orgServiceId) || validateString(orgLocationId),
 	}
 
 	const reviews =
