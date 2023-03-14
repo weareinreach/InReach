@@ -1,13 +1,16 @@
 /* eslint-disable i18next/no-literal-string */
-import { Code, Grid, Stack, Title, Text, Tabs } from '@mantine/core'
+import { Grid, Stack, Tabs, Image } from '@mantine/core'
+import { useElementSize } from '@mantine/hooks'
 import { trpcServerClient } from '@weareinreach/api/trpc'
-import { Toolbar, Rating, Badge, BadgeGroup, type CustomBadgeProps } from '@weareinreach/ui/components/core'
+import { Toolbar } from '@weareinreach/ui/components/core'
 import {
 	ContactSection,
 	ServicesInfoCard,
 	PhotosSection,
 	ReviewSection,
 	VisitCard,
+	OrgInfo,
+	LocationCard,
 } from '@weareinreach/ui/components/sections'
 import { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -25,6 +28,7 @@ const OrganizationPage: NextPage = () => {
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const { data, isLoading, status } = api.organization.getBySlug.useQuery(query)
+	const { ref, width } = useElementSize()
 	useEffect(() => {
 		if (data && status === 'success') setLoading(false)
 	}, [data, status])
@@ -43,38 +47,8 @@ const OrganizationPage: NextPage = () => {
 		photos,
 		reviews,
 		locations,
+		isClaimed,
 	} = data
-
-	const isClaimed = Boolean(data.allowedEditors.length)
-
-	const leaderAttributes = attributes.filter(({ attribute }) => {
-		attribute.categories.some(({ category }) => {
-			category.tag === 'orgLeader'
-		})
-	})
-	const infoBadges = () => {
-		const output: CustomBadgeProps[] = []
-		if (leaderAttributes.length) {
-			leaderAttributes.forEach((entry) =>
-				output.push({
-					variant: 'leader',
-					icon: entry.attribute.icon ?? '',
-					color: entry.attribute.iconBg ?? '#FFF',
-					tsKey: entry.attribute.tsKey,
-				})
-			)
-		}
-		if (data.lastVerified)
-			output.push({
-				variant: 'verified',
-				lastverified: data.lastVerified.toString(),
-			})
-		output.push({
-			variant: isClaimed ? 'claimed' : 'unclaimed',
-		})
-
-		return output
-	}
 
 	const body =
 		locations?.length === 1 ? (
@@ -95,11 +69,24 @@ const OrganizationPage: NextPage = () => {
 				</Tabs.Panel>
 			</Tabs>
 		) : (
-			<></>
+			<>
+				{locations.map((location) => (
+					<LocationCard key={location.id} location={location} />
+				))}
+			</>
 		)
 
 	const sidebar =
-		locations?.length === 1 ? <>{locations[0] && <VisitCard location={locations[0]} />}</> : <></>
+		locations?.length === 1 ? (
+			<>{locations[0] && <VisitCard location={locations[0]} />}</>
+		) : (
+			<Stack ref={ref}>
+				<Image
+					src={`http://via.placeholder.com/${Math.floor(width)}x${Math.floor(width * 1.185)}`}
+					alt='map placeholder'
+				/>
+			</Stack>
+		)
 
 	return (
 		<>
@@ -109,16 +96,19 @@ const OrganizationPage: NextPage = () => {
 					saved={Boolean(userLists.length)}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
-					<Stack align='flex-start' spacing={12}>
-						<Title order={2}>{data.name}</Title>
-						<Rating organizationId={data.id} />
-						<BadgeGroup badges={infoBadges()} withSeparator />
-						{description?.key && (
-							<Text>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
-						)}
-					</Stack>
-					{/* </Grid.Col> */}
-					{/* <Grid.Col sm={8} order={3}> */}
+					<OrgInfo
+						role='org'
+						data={{
+							name: data.name,
+							id: data.id,
+							slug,
+							lastVerified: data.lastVerified,
+							attributes,
+							description,
+							locations,
+							isClaimed,
+						}}
+					/>
 					{body}
 				</Stack>
 			</Grid.Col>
@@ -146,7 +136,7 @@ export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/org/[slug]
 	await ssg.organization.getBySlug.prefetch({ slug })
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await getServerSideTranslations(locale ?? 'en', ['common', 'services', 'attribute', slug])),
+		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', slug])),
 	}
 
 	return {
