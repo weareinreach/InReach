@@ -1,9 +1,8 @@
 import { type GetServerSidePropsContext, type NextPage } from 'next'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import { i18nextConfig } from '~app/utils/i18n'
+import { getServerSideTranslations } from '~app/utils/i18n'
 
 const Home: NextPage = () => {
 	const { t } = useTranslation('common')
@@ -18,7 +17,7 @@ const Home: NextPage = () => {
 
 export const getServerSideProps = async ({ locale }: GetServerSidePropsContext) => ({
 	props: {
-		...(await serverSideTranslations(locale as string, ['common'], i18nextConfig)),
+		...(await getServerSideTranslations(locale as string, ['common'])),
 	},
 })
 

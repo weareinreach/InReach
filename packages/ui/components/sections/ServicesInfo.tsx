@@ -1,4 +1,4 @@
-import { Stack, Text, Grid, Card, Group, createStyles, rem } from '@mantine/core'
+import { Stack, Text, Card, Group, createStyles, rem } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import { type ApiOutput } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
@@ -39,13 +39,13 @@ const useServiceSectionStyles = createStyles((theme) => ({
 const ServiceSection = ({ category, services }: ServiceSectionProps) => {
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 	const { slug, orgLocationId } = router.query
-	const { t } = useTranslation(['common', 'service', slug])
+	const { t } = useTranslation(['common', 'services', slug])
 	const { classes } = useServiceSectionStyles()
 	const apiQuery = typeof orgLocationId === 'string' ? { orgLocationId } : { slug }
 	const { data: parent } = api.service.getParentName.useQuery(apiQuery)
 	const [preloadService, setPreloadService] = useState<string>('')
 	const variants = useCustomVariant()
-	console.log(services)
+
 	const breadCrumbProps = parent?.name
 		? ({ option: 'back', backTo: 'dynamicText', backToText: parent.name } as const)
 		: ({ option: 'back', backTo: 'none' } as const)
@@ -119,7 +119,7 @@ export const ServicesInfoCard = (props: ServicesInfoCardProps) => {
 
 	const body = <Stack spacing={40}>{sections}</Stack>
 
-	return <Grid.Col sm={8}>{isMobile ? body : <Card>{body}</Card>}</Grid.Col>
+	return isMobile ? body : <Card>{body}</Card>
 }
 
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>

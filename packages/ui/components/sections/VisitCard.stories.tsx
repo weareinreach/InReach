@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { StorybookGrid } from '~ui/layouts'
+import { StorybookGridSingle } from '~ui/layouts'
 import { locationMock } from '~ui/mockData/locationCard'
 
 import { VisitCard } from './VisitCard'
@@ -11,7 +11,7 @@ export default {
 	args: {
 		location: locationMock,
 	},
-	decorators: [StorybookGrid],
+	decorators: [StorybookGridSingle],
 	parameters: {
 		layout: 'fullscreen',
 	},

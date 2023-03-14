@@ -1,4 +1,4 @@
-import { Grid, Text, Title, Group, Stack } from '@mantine/core'
+import { Text, Title, Group, Stack } from '@mantine/core'
 import { type ApiOutput } from '@weareinreach/api'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -22,9 +22,7 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 	const { data: organizationId } = api.organization.getIdFromSlug.useQuery({ slug })
 
 	const ratingProps = {
-		organizationId: organizationId?.id,
-		orgServiceId: validateString(orgServiceId),
-		orgLocationId: validateString(orgLocationId),
+		recordId: organizationId?.id || validateString(orgServiceId) || validateString(orgLocationId),
 	}
 
 	const reviews =
@@ -52,16 +50,14 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 	const noReviews = <Text variant={variants.Text.darkGray}>{t('no-reviews', { ns: 'common' })}</Text>
 
 	return (
-		<Grid.Col sm={8}>
-			<Stack spacing={isMobile ? 32 : 40} align='flex-start'>
-				<Group position='apart' w='100%' align='center'>
-					<Title order={2}>{t('review', { count: 2 })}</Title>
-					<ActionButtons iconKey='review'>{t('add', { ns: 'common', item: '$t(review)' })}</ActionButtons>
-				</Group>
-				{Boolean(props.reviews.length) && <Rating {...ratingProps} />}
-				{props.reviews.length ? reviews : noReviews}
-			</Stack>
-		</Grid.Col>
+		<Stack spacing={isMobile ? 32 : 40} align='flex-start'>
+			<Group position='apart' w='100%' align='center'>
+				<Title order={2}>{t('review', { count: 2 })}</Title>
+				<ActionButtons iconKey='review'>{t('add', { ns: 'common', item: '$t(review)' })}</ActionButtons>
+			</Group>
+			{Boolean(props.reviews.length) && <Rating {...ratingProps} />}
+			{props.reviews.length ? reviews : noReviews}
+		</Stack>
 	)
 }
 

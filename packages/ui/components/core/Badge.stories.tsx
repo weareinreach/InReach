@@ -68,7 +68,7 @@ export default {
 				},
 			},
 		},
-		lastVerifiedDate: {
+		lastverified: {
 			control: {
 				if: {
 					arg: 'variant',
@@ -270,11 +270,11 @@ export const ServiceGroup = {
 export const Verified = {
 	args: {
 		variant: 'verified',
-		lastVerifiedDate: new Date(2023, 1, 15),
+		lastverified: new Date(2023, 1, 15),
 	},
 	parameters: {
 		controls: {
-			include: ['lastVerifiedDate', 'variant'],
+			include: ['lastverified', 'variant'],
 		},
 	},
 } satisfies StoryDef

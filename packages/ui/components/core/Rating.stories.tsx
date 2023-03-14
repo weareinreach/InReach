@@ -41,14 +41,14 @@ type StoryDef = StoryObj<typeof RatingTagComp>
 
 export const Default = {
 	args: {
-		organizationId: 'orgn_EJFOISU34JKDHFS',
+		recordId: 'orgn_EJFOISU34JKDHFS',
 	},
 } satisfies StoryDef
 
 export const CountHidden = {
 	args: {
 		hideCount: true,
-		organizationId: 'orgn_EJFOISU34JKDHFS',
+		recordId: 'orgn_EJFOISU34JKDHFS',
 	},
 }
 
@@ -68,6 +68,6 @@ export const NoReviews = {
 		},
 	},
 	args: {
-		organizationId: 'orgn_EJFOISU34JKDHFS',
+		recordId: 'orgn_EJFOISU34JKDHFS',
 	},
 }

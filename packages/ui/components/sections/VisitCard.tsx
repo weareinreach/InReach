@@ -1,12 +1,11 @@
-import { Title, Grid, Card, List, Stack, Text, Image } from '@mantine/core'
+import { Title, Card, List, Stack, Text, Image } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
-import { formatAddress } from 'localized-address-format'
 import { Interval, DateTime } from 'luxon'
 import { useTranslation } from 'next-i18next'
 
 import { Badge } from '~ui/components/core'
-import { useCustomVariant, useScreenSize } from '~ui/hooks'
+import { useCustomVariant, useScreenSize, useFormattedAddress } from '~ui/hooks'
 
 export const VisitCard = (props: VisitCardProps) => {
 	const variants = useCustomVariant()
@@ -14,22 +13,7 @@ export const VisitCard = (props: VisitCardProps) => {
 	const { location } = props
 	const { t, i18n } = useTranslation(['common', 'attribute'])
 	const { ref, width } = useElementSize()
-
-	const adminArea = location.govDist?.abbrev
-		? location.govDist.abbrev
-		: location.govDist?.tsKey
-		? (t(location.govDist.tsKey, { ns: location.govDist.tsNs }) as string)
-		: undefined
-
-	const formattedAddress = formatAddress({
-		addressLines: location.street2
-			? [location.street1.trim(), location.street2.trim()]
-			: [location.street1.trim()],
-		locality: location.city.trim(),
-		postalCode: location.postCode ? location.postCode.trim() : undefined,
-		postalCountry: location.country.cca2,
-		administrativeArea: adminArea,
-	}).join(', ')
+	const formattedAddress = useFormattedAddress(location)
 
 	const hourDisplay: JSX.Element[] = []
 
@@ -69,7 +53,7 @@ export const VisitCard = (props: VisitCardProps) => {
 	})
 
 	const isAccessible = location.attributes.some(
-		(attribute) => attribute.attribute.tsKey === 'wheelchair-accessible'
+		(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
 	)
 
 	const body = (
@@ -83,18 +67,20 @@ export const VisitCard = (props: VisitCardProps) => {
 					alt='map placeholder'
 				/>
 			</Stack>
-			<Stack spacing={12}>
-				<div>
-					<Title order={3}>{t('hours')}</Title>
-					<Text variant={variants.Text.utility4darkGray}>Timezone goes here</Text>
-				</div>
-				<List listStyleType='none'>{hourDisplay}</List>
-			</Stack>
+			{Boolean(location.hours.length) && (
+				<Stack spacing={12}>
+					<div>
+						<Title order={3}>{t('hours')}</Title>
+						<Text variant={variants.Text.utility4darkGray}>Timezone goes here</Text>
+					</div>
+					<List listStyleType='none'>{hourDisplay}</List>
+				</Stack>
+			)}
 			<Stack spacing={12} align='flex-start'>
 				<Badge
 					variant='attribute'
 					tsNs='attribute'
-					tsKey='wheelchair-accessible'
+					tsKey='additional.wheelchair-accessible'
 					tProps={{ context: `${isAccessible}` }}
 					icon={isAccessible ? 'carbon:accessibility' : 'carbon:warning'}
 					style={{ marginLeft: 0 }}
@@ -106,11 +92,12 @@ export const VisitCard = (props: VisitCardProps) => {
 		</Stack>
 	)
 
-	return <Grid.Col>{isMobile ? body : <Card>{body}</Card>}</Grid.Col>
+	return isMobile ? body : <Card>{body}</Card>
 }
 // TODO: [IN-785] Create variant for Remote/Unpublished address
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>
+type LocationResult = NonNullable<ApiOutput['location']['getById']>
 
 export type VisitCardProps = {
-	location: PageQueryResult['locations'][number]
+	location: PageQueryResult['locations'][number] | LocationResult
 }

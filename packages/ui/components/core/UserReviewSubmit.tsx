@@ -1,4 +1,4 @@
-import { Stack, Rating, Textarea, useMantineTheme, Paper, Grid } from '@mantine/core'
+import { Stack, Rating, Textarea, useMantineTheme, Paper } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { ApiInput } from '@weareinreach/api'
 import { useRouter } from 'next/router'
@@ -79,11 +79,9 @@ export const UserReviewSubmit = ({ type = 'body' }: ReviewSubmitProps) => {
 		}
 		case 'body': {
 			return (
-				<Grid.Col sm={8}>
-					<Paper withBorder radius='lg' p={theme.spacing.lg}>
-						{component}
-					</Paper>
-				</Grid.Col>
+				<Paper withBorder radius='lg' p={theme.spacing.lg}>
+					{component}
+				</Paper>
 			)
 		}
 	}

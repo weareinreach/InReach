@@ -2,6 +2,8 @@ import { ServerStyles, createStylesServer } from '@mantine/next'
 import { appCache } from '@weareinreach/ui/theme'
 import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
 
+import i18nextConfig from '../../next-i18next.config.mjs'
+
 const stylesServer = createStylesServer(appCache)
 export default class _Document extends Document {
 	static async getInitialProps(ctx: DocumentContext) {
@@ -17,8 +19,9 @@ export default class _Document extends Document {
 	}
 
 	render() {
+		const currentLocale = this.props.__NEXT_DATA__.locale || i18nextConfig.i18n.defaultLocale
 		return (
-			<Html>
+			<Html lang={currentLocale}>
 				<Head />
 				<body>
 					<Main />

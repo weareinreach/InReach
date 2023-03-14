@@ -161,7 +161,7 @@ export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu, chi
 				width={24}
 			/>
 			{!omitLabel && 'labelKey' in iconRender && (
-				<Text className={classes.text}>{children ? children : t(iconRender.labelKey)}</Text>
+				<Text className={classes.text}>{children ? children : t(iconRender.labelKey, { count: 1 })}</Text>
 			)}
 		</Button>
 	)

@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { StorybookGrid } from '~ui/layouts'
+import { StorybookGridDouble } from '~ui/layouts'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { locationMock } from '~ui/mockData/locationCard'
 
@@ -12,7 +12,7 @@ export default {
 	args: {
 		location: locationMock,
 	},
-	decorators: [StorybookGrid],
+	decorators: [StorybookGridDouble],
 	parameters: {
 		layout: 'fullscreen',
 		msw: {

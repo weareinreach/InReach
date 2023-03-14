@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { StorybookGrid } from '~ui/layouts'
+import { StorybookGridDouble } from '~ui/layouts'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { reviewMockIds, reviewsMock } from '~ui/mockData/reviews'
 
@@ -55,7 +55,7 @@ export default {
 		},
 		layout: 'fullscreen',
 	},
-	decorators: [StorybookGrid],
+	decorators: [StorybookGridDouble],
 } satisfies Meta<typeof ReviewSection>
 
 type StoryDef = StoryObj<typeof ReviewSection>
