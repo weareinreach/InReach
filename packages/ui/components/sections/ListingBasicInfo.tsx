@@ -5,13 +5,13 @@ import { useTranslation } from 'next-i18next'
 import { Rating, BadgeGroup, type CustomBadgeProps } from '~ui/components/core'
 import { useFormattedAddress, useCustomVariant } from '~ui/hooks'
 
-export const OrgInfo = ({ role, data }: OrgInfoProps) => {
+export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
 	const { t } = useTranslation([data.slug])
 	const variants = useCustomVariant()
-	const { description, attributes, isClaimed, locations } = data
+	const { attributes, isClaimed, locations, description, slug } = data
 
-	const isMultiLoc = role === 'org' && locations?.length > 1
-	const isSingleLoc = role === 'org' && locations?.length === 1
+	const isMultiLoc = role === 'org' && (locations?.length ?? 0) > 1
+	const isSingleLoc = locations?.length === 1
 	const location = isSingleLoc ? locations[0] : undefined
 
 	const addressLine = <Text variant={variants.Text.utility2darkGray}>{useFormattedAddress(location)}</Text>
@@ -52,19 +52,24 @@ export const OrgInfo = ({ role, data }: OrgInfoProps) => {
 		icon: attribute.icon ?? '',
 	}))
 
+	const descriptionSection =
+		description && description.key ? (
+			<Text>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
+		) : null
+
 	return (
 		<Stack align='flex-start' spacing={12}>
 			<Title order={2}>{data.name}</Title>
-			{isSingleLoc && <Rating organizationId={data.id} noMargin />}
+			{isSingleLoc && <Rating recordId={data.id} noMargin />}
 			{addressLine}
 			<BadgeGroup badges={infoBadges()} withSeparator />
-			{description?.key && (
-				<Text>{t(description.key, { ns: data.slug, defaultValue: description.tsKey.text })}</Text>
-			)}
+			{descriptionSection}
 			<BadgeGroup badges={focusedCommBadges} />
 		</Stack>
 	)
 }
+
+export type ListingBasicInfoProps = { role: 'org' | 'location' } & (OrgInfoProps | LocationInfoProps)
 
 export interface OrgInfoProps {
 	role: 'org'
@@ -76,6 +81,20 @@ export interface OrgInfoProps {
 		attributes: NonNullable<ApiOutput['organization']['getBySlug']>['attributes']
 		description: NonNullable<ApiOutput['organization']['getBySlug']>['description']
 		locations: NonNullable<ApiOutput['organization']['getBySlug']>['locations']
+		isClaimed: boolean
+	}
+}
+
+export interface LocationInfoProps {
+	role: 'location'
+	data: {
+		name: string
+		id: string
+		slug: string
+		lastVerified: NonNullable<ApiOutput['organization']['getBySlug']>['lastVerified']
+		attributes: NonNullable<ApiOutput['location']['getById']>['attributes']
+		description: NonNullable<ApiOutput['location']['getById']>['description']
+		locations: NonNullable<ApiOutput['location']['getById']>[]
 		isClaimed: boolean
 	}
 }

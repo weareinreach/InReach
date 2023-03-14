@@ -96,7 +96,8 @@ export const VisitCard = (props: VisitCardProps) => {
 }
 // TODO: [IN-785] Create variant for Remote/Unpublished address
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>
+type LocationResult = NonNullable<ApiOutput['location']['getById']>
 
 export type VisitCardProps = {
-	location: PageQueryResult['locations'][number]
+	location: PageQueryResult['locations'][number] | LocationResult
 }
