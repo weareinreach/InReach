@@ -83,13 +83,15 @@ export const VisitCard = (props: VisitCardProps) => {
 					alt='map placeholder'
 				/>
 			</Stack>
-			<Stack spacing={12}>
-				<div>
-					<Title order={3}>{t('hours')}</Title>
-					<Text variant={variants.Text.utility4darkGray}>Timezone goes here</Text>
-				</div>
-				<List listStyleType='none'>{hourDisplay}</List>
-			</Stack>
+			{Boolean(location.hours.length) && (
+				<Stack spacing={12}>
+					<div>
+						<Title order={3}>{t('hours')}</Title>
+						<Text variant={variants.Text.utility4darkGray}>Timezone goes here</Text>
+					</div>
+					<List listStyleType='none'>{hourDisplay}</List>
+				</Stack>
+			)}
 			<Stack spacing={12} align='flex-start'>
 				<Badge
 					variant='attribute'

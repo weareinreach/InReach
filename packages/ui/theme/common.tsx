@@ -379,6 +379,7 @@ export const commonTheme = {
 				gutterXl: 40,
 				justify: 'center',
 				my: 0,
+				// align: 'flex-start',
 			} satisfies Partial<GridProps>,
 		},
 		GridCol: {

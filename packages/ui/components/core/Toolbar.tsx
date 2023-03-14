@@ -9,7 +9,8 @@ const BREACRUMB_WIDTH = 162
 
 const useStyles = createStyles((theme) => ({
 	toolbar: {
-		padding: `${rem(0)} ${rem(8)} ${rem(0)} ${rem(12)}`,
+		// padding: `${rem(0)} ${rem(8)} ${rem(0)} ${rem(12)}`,
+		marginLeft: rem(-8),
 	},
 }))
 

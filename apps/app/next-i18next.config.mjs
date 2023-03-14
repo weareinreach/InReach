@@ -78,7 +78,7 @@ const config = {
 
 	fallbackLng: ['en'],
 	reloadOnPrerender: process.env.NODE_ENV !== 'production',
-	debug: process.env.NODE_ENV !== 'production' && !!process.env.NEXT_VERBOSE,
+	debug: process.env.NODE_ENV !== 'production', //&& !!process.env.NEXT_VERBOSE,
 	partialBundledLanguages: true,
 	nonExplicitSupportedLngs: true,
 	cleanCode: true,
@@ -87,6 +87,7 @@ const config = {
 		bindI18nStore: 'added loaded',
 		bindI18n: 'languageChanged added loaded',
 	},
+
 	backend: {
 		backendOptions: [
 			// {
@@ -113,6 +114,7 @@ const config = {
 	joinArrays: '',
 	interpolation: {
 		skipOnVariables: false,
+		alwaysFormat: true,
 		format: (value, format, lng, edit) => {
 			switch (format) {
 				case 'lowercase': {
@@ -123,5 +125,6 @@ const config = {
 			return value
 		},
 	},
+	// postProcess: 'interval',
 }
 export default config
