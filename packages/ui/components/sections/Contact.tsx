@@ -1,4 +1,4 @@
-import { Stack, Title, Text, Grid, Card } from '@mantine/core'
+import { Stack, Title, Text, Card } from '@mantine/core'
 import { type ApiOutput } from '@weareinreach/api'
 import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
 import { useRouter } from 'next/router'
@@ -143,11 +143,7 @@ export const ContactSection = (props: ContactSectionProps) => {
 			<SocialLink.Group links={socialLinks} header />
 		</Stack>
 	)
-	return (
-		// <Grid.Col>
-		<>{isMobile ? body : <Card>{body}</Card>}</>
-		// </Grid.Col>
-	)
+	return isMobile ? body : <Card>{body}</Card>
 }
 
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>

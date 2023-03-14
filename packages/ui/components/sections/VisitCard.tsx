@@ -1,4 +1,4 @@
-import { Title, Grid, Card, List, Stack, Text, Image } from '@mantine/core'
+import { Title, Card, List, Stack, Text, Image } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
 import { Interval, DateTime } from 'luxon'
@@ -92,13 +92,7 @@ export const VisitCard = (props: VisitCardProps) => {
 		</Stack>
 	)
 
-	return (
-		<>
-			{/* <Grid.Col> */}
-			{isMobile ? body : <Card>{body}</Card>}
-			{/* </Grid.Col> */}
-		</>
-	)
+	return isMobile ? body : <Card>{body}</Card>
 }
 // TODO: [IN-785] Create variant for Remote/Unpublished address
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>

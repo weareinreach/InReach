@@ -1,4 +1,4 @@
-import { Grid, Text, Title, Group, Stack } from '@mantine/core'
+import { Text, Title, Group, Stack } from '@mantine/core'
 import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
 
@@ -9,7 +9,6 @@ export const PhotosSection = (props: PhotosSectionProps) => {
 	const variants = useCustomVariant()
 	const { isMobile } = useScreenSize()
 	return (
-		// <Grid.Col sm={8}>
 		<Stack spacing={isMobile ? 32 : 40} align='flex-start'>
 			<Group h={48}>
 				<Title order={2}>{t('photo', { count: 2 })}</Title>
@@ -18,7 +17,6 @@ export const PhotosSection = (props: PhotosSectionProps) => {
 				{t('photo_interval', { count: 0, postProcess: 'interval' })}
 			</Text>
 		</Stack>
-		// </Grid.Col>
 	)
 }
 

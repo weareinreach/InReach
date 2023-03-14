@@ -1,4 +1,4 @@
-import { Stack, Text, Grid, Card, Group, createStyles, rem } from '@mantine/core'
+import { Stack, Text, Card, Group, createStyles, rem } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import { type ApiOutput } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
@@ -119,13 +119,7 @@ export const ServicesInfoCard = (props: ServicesInfoCardProps) => {
 
 	const body = <Stack spacing={40}>{sections}</Stack>
 
-	return (
-		<>
-			{/* <Grid.Col sm={8}> */}
-			{isMobile ? body : <Card>{body}</Card>}
-			{/* </Grid.Col> */}
-		</>
-	)
+	return isMobile ? body : <Card>{body}</Card>
 }
 
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>

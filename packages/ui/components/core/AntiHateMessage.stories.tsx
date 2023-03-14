@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react'
 
-import { StorybookGrid } from '~ui/layouts/BodyGrid'
+import { StorybookGridSingle } from '~ui/layouts/BodyGrid'
 
 import { AntiHateMessage as AntiHateMessageCompnent } from './AntiHateMessage'
 
@@ -14,7 +14,7 @@ export default {
 		},
 		layout: 'fullscreen',
 	},
-	decorators: [StorybookGrid],
+	decorators: [StorybookGridSingle],
 } satisfies Meta<typeof AntiHateMessageCompnent>
 
 export const AntiHateMessageCard = {
