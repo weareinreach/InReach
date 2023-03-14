@@ -44,8 +44,8 @@
 	"dependencies": {
 		"@changesets/cli": "2.26.0",
 		"@manypkg/cli": "0.20.0",
-		"@types/eslint": "8.21.1",
-		"@types/node": "18.15.1",
+		"@types/eslint": "8.21.2",
+		"@types/node": "18.15.2",
 		"@types/prettier": "2.7.2",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
