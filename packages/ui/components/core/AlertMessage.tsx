@@ -1,4 +1,4 @@
-import { createStyles, Grid, Paper, useMantineTheme } from '@mantine/core'
+import { createStyles, Paper, useMantineTheme } from '@mantine/core'
 import { Trans } from 'next-i18next'
 
 import { Icon } from '~ui/icon'
@@ -44,22 +44,20 @@ export const AlertMessage = ({ textKey, iconKey = 'information' }: Props) => {
 	const iconRender = alertTypeIcon[iconKey]
 
 	return (
-		<Grid.Col sm={8} span={12}>
-			<Paper radius='md' className={classes.messageContainer}>
-				<Icon
-					icon={iconRender.icon}
-					width={20}
-					height={20}
-					color={
-						iconKey == 'information'
-							? theme.other.colors.secondary.cornflower
-							: theme.other.colors.tertiary.orange
-					}
-					className={classes.iconContainer}
-				></Icon>
-				<Trans i18nKey={textKey} parent='p' className={classes.textContainer}></Trans>
-			</Paper>
-		</Grid.Col>
+		<Paper radius='md' className={classes.messageContainer}>
+			<Icon
+				icon={iconRender.icon}
+				width={20}
+				height={20}
+				color={
+					iconKey == 'information'
+						? theme.other.colors.secondary.cornflower
+						: theme.other.colors.tertiary.orange
+				}
+				className={classes.iconContainer}
+			></Icon>
+			<Trans i18nKey={textKey} parent='p' className={classes.textContainer}></Trans>
+		</Paper>
 	)
 }
 

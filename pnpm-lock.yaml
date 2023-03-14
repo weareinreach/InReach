@@ -736,6 +736,7 @@ importers:
       '@weareinreach/eslint-config': 0.100.0
       babel-loader: 9.1.2
       chromatic: 6.17.1
+      css-chaos-addon: 0.0.5
       css-loader: 6.7.3
       dayjs: 1.11.7
       embla-carousel-react: 7.1.0
@@ -848,6 +849,7 @@ importers:
       '@weareinreach/eslint-config': link:../eslint-config
       babel-loader: 9.1.2_uskqpy7onh7hrgnpolkiy3c37i
       chromatic: 6.17.1
+      css-chaos-addon: 0.0.5_yzaow5k267kqnsc5mgeqrfrub4
       css-loader: 6.7.3_webpack@5.76.1
       dayjs: 1.11.7
       embla-carousel-react: 7.1.0_react@18.2.0
@@ -10750,6 +10752,29 @@ packages:
   /crypto-random-string/2.0.0:
     resolution: {integrity: sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==}
     engines: {node: '>=8'}
+    dev: true
+
+  /css-chaos-addon/0.0.5_yzaow5k267kqnsc5mgeqrfrub4:
+    resolution: {integrity: sha512-h9AravpeFHIPAHcYVNyHTph7Jv3GGviiurddlIv2aY3Zu0SwQa567MWBxgZVLc5KhEX4qUCADbuJLycEKsjcGg==}
+    peerDependencies:
+      '@storybook/addons': ^6.5.8
+      '@storybook/api': ^6.5.8
+      '@storybook/components': ^6.5.8
+      '@storybook/core-events': ^6.5.8
+      '@storybook/theming': ^6.5.8
+      react: ^16.8.0 || ^17.0.0 || >=18
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      '@storybook/addons': 6.5.16_biqbaboplfbrettd7655fr4n2y
+      '@storybook/api': 6.5.16_biqbaboplfbrettd7655fr4n2y
+      '@storybook/theming': 7.0.0-rc.3_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: true
 
   /css-loader/6.7.3_webpack@5.76.1:

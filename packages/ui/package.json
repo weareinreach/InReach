@@ -90,6 +90,7 @@
 		"@weareinreach/eslint-config": "0.100.0",
 		"babel-loader": "9.1.2",
 		"chromatic": "6.17.1",
+		"css-chaos-addon": "0.0.5",
 		"css-loader": "6.7.3",
 		"dayjs": "1.11.7",
 		"embla-carousel-react": "7.1.0",

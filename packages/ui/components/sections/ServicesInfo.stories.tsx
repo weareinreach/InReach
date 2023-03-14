@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { StorybookGrid } from '~ui/layouts'
+import { StorybookGridDouble } from '~ui/layouts'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { mockServiceData } from '~ui/mockData/serviceModal'
 import { servicesMock } from '~ui/mockData/servicesInfoCard'
@@ -36,7 +36,7 @@ export default {
 			}),
 		],
 	},
-	decorators: [StorybookGrid],
+	decorators: [StorybookGridDouble],
 } satisfies Meta<typeof ServicesInfoCard>
 
 type StoryDef = StoryObj<typeof ServicesInfoCard>

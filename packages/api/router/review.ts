@@ -264,8 +264,7 @@ export const reviewRouter = defineRouter({
 				handleError(error)
 			}
 		}),
-	getAverage: publicProcedure.input(reviewAvgId).query(async ({ ctx, input }) => {
-		const { orgLocationId, orgServiceId, organizationId } = input
+	getAverage: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
 		const result = await ctx.prisma.orgReview.aggregate({
 			_avg: {
 				rating: true,
@@ -274,9 +273,7 @@ export const reviewRouter = defineRouter({
 				rating: true,
 			},
 			where: {
-				orgLocationId,
-				orgServiceId,
-				organizationId,
+				OR: [{ orgLocationId: input }, { orgServiceId: input }, { organizationId: input }],
 			},
 		})
 		return { average: result._avg.rating, count: result._count.rating }

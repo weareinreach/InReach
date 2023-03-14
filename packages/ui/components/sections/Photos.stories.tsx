@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { StorybookGrid } from '~ui/layouts'
+import { StorybookGridDouble } from '~ui/layouts'
 import { photosMock } from '~ui/mockData/photos'
 
 import { PhotosSection } from './Photos'
@@ -11,7 +11,7 @@ export default {
 	args: {
 		photos: photosMock,
 	},
-	decorators: [StorybookGrid],
+	decorators: [StorybookGridDouble],
 } satisfies Meta<typeof PhotosSection>
 
 type StoryDef = StoryObj<typeof PhotosSection>

@@ -19,8 +19,10 @@ export const queries = defineRouter({
 				},
 				select,
 			})
+			const { allowedEditors, ...orgData } = org
 			const reformatted = {
-				...org,
+				...orgData,
+				isClaimed: Boolean(allowedEditors.length),
 				services: org.services.map((serv) => ({ service: serv })),
 			}
 
@@ -40,9 +42,10 @@ export const queries = defineRouter({
 				},
 				select,
 			})
-
+			const { allowedEditors, ...orgData } = org
 			const reformatted = {
-				...org,
+				...orgData,
+				isClaimed: Boolean(allowedEditors.length),
 				services: org.services.map((serv) => ({ service: serv })),
 			}
 

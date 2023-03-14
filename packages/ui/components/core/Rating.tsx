@@ -5,12 +5,12 @@ import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { noMargin }: Partial<Props>) => ({
 	container: {
 		width: 'auto',
 		position: 'relative',
 		height: rem(24),
-		margin: rem(8),
+		margin: noMargin ? undefined : `${rem(8)} ${rem(0)}`,
 		padding: 'auto',
 	},
 	icon: {},
@@ -19,25 +19,15 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const Rating = ({
-	hideCount = false,
-	organizationId,
-	orgServiceId,
-	orgLocationId,
-	forceLoading,
-}: Props) => {
-	const { classes } = useStyles()
+export const Rating = ({ recordId, hideCount = false, noMargin = false, forceLoading = false }: Props) => {
+	const { classes } = useStyles({ noMargin })
 	const { t } = useTranslation('common')
 	const variants = useCustomVariant()
-	const { data, status } = api.review.getAverage.useQuery(
-		{ organizationId, orgServiceId, orgLocationId },
-		{ enabled: Boolean(organizationId || orgServiceId || orgLocationId) }
-	)
+	const { data, status } = api.review.getAverage.useQuery(recordId as string, { enabled: Boolean(recordId) })
 
 	const { average, count } = data ?? { average: 0, count: 0 }
 
 	const parenRegex = /\(|\)/g
-
 	return (
 		<Tooltip
 			label={t('review-count_interval', { count, postProcess: 'interval' }).replace(parenRegex, '')}
@@ -58,9 +48,8 @@ export const Rating = ({
 
 type Props = {
 	hideCount?: boolean
-	organizationId?: string
-	orgServiceId?: string
-	orgLocationId?: string
+	recordId?: string
+	noMargin?: boolean
 	/** For Storybook */
 	forceLoading?: boolean
 }
