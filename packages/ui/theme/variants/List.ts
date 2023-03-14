@@ -73,6 +73,7 @@ export const List = {
 		item: {
 			display: 'inline-block',
 			listStyle: 'none',
+			marginRight: rem(16),
 		},
 	}),
 	textDarkGray: (theme) => ({
