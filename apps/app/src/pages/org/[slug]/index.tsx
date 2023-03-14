@@ -9,7 +9,7 @@ import {
 	PhotosSection,
 	ReviewSection,
 	VisitCard,
-	OrgInfo,
+	ListingBasicInfo,
 	LocationCard,
 } from '@weareinreach/ui/components/sections'
 import { GetServerSideProps, NextPage } from 'next'
@@ -96,7 +96,7 @@ const OrganizationPage: NextPage = () => {
 					saved={Boolean(userLists.length)}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
-					<OrgInfo
+					<ListingBasicInfo
 						role='org'
 						data={{
 							name: data.name,
