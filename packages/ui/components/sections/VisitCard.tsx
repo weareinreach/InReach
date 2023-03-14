@@ -1,12 +1,11 @@
 import { Title, Grid, Card, List, Stack, Text, Image } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
-import { formatAddress } from 'localized-address-format'
 import { Interval, DateTime } from 'luxon'
 import { useTranslation } from 'next-i18next'
 
 import { Badge } from '~ui/components/core'
-import { useCustomVariant, useScreenSize } from '~ui/hooks'
+import { useCustomVariant, useScreenSize, useFormattedAddress } from '~ui/hooks'
 
 export const VisitCard = (props: VisitCardProps) => {
 	const variants = useCustomVariant()
@@ -14,22 +13,7 @@ export const VisitCard = (props: VisitCardProps) => {
 	const { location } = props
 	const { t, i18n } = useTranslation(['common', 'attribute'])
 	const { ref, width } = useElementSize()
-
-	const adminArea = location.govDist?.abbrev
-		? location.govDist.abbrev
-		: location.govDist?.tsKey
-		? (t(location.govDist.tsKey, { ns: location.govDist.tsNs }) as string)
-		: undefined
-
-	const formattedAddress = formatAddress({
-		addressLines: location.street2
-			? [location.street1.trim(), location.street2.trim()]
-			: [location.street1.trim()],
-		locality: location.city.trim(),
-		postalCode: location.postCode ? location.postCode.trim() : undefined,
-		postalCountry: location.country.cca2,
-		administrativeArea: adminArea,
-	}).join(', ')
+	const formattedAddress = useFormattedAddress(location)
 
 	const hourDisplay: JSX.Element[] = []
 

@@ -39,7 +39,7 @@ const useServiceSectionStyles = createStyles((theme) => ({
 const ServiceSection = ({ category, services }: ServiceSectionProps) => {
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 	const { slug, orgLocationId } = router.query
-	const { t } = useTranslation(['common', 'service', slug])
+	const { t } = useTranslation(['common', 'services', slug])
 	const { classes } = useServiceSectionStyles()
 	const apiQuery = typeof orgLocationId === 'string' ? { orgLocationId } : { slug }
 	const { data: parent } = api.service.getParentName.useQuery(apiQuery)
