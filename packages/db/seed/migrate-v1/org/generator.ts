@@ -21,6 +21,7 @@ import { createPoint } from '~db/lib/createPoint'
 import { Log, iconList } from '~db/seed/lib'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
+import { idMap, writeIdMap } from '~db/seed/migrate-v1/idMap'
 import {
 	AttributeListMap,
 	CountryNameMap,
@@ -140,6 +141,15 @@ const generateKey: GenerateKey<KeyType> = (params) => {
 
 export const slugSet = new Set<string>()
 
+const getId = (idGen: Parameters<typeof generateId>, legacyId?: string) => {
+	const existingId = legacyId ? idMap.get(legacyId) : undefined
+
+	if (existingId) return existingId
+	const newId = generateId(...idGen)
+	if (legacyId) idMap.set(legacyId, newId)
+	return newId
+}
+
 /**
  * It reads the organizations.json file, generates a slug for each organization, creates a translation key for
  * the organization description, and creates a new organization record in the database
@@ -225,7 +235,7 @@ export const migrateOrgs = async (task: ListrTask) => {
 				)
 				exportTranslation({ ns, key, text: org.description_ES, log })
 			}
-			const id = generateId('organization', createdAt)
+			const id = getId(['organization', createdAt], org._id.$oid)
 			organization.add({
 				id,
 				name: org.name,
@@ -387,7 +397,7 @@ export const generateRecords = async (task: ListrTask) => {
 						continue
 					}
 					log(`🛠️ [${count}/${org.locations.length}] Location: ${location.name ?? location._id.$oid}`)
-					const locId = generateId('orgLocation', createdAt)
+					const locId = getId(['orgLocation', createdAt], location._id.$oid)
 					const [longitude, latitude] = location.geolocation.coordinates.map(
 						(x) => +parseFloat(x.$numberDecimal).toFixed(3)
 					)
@@ -453,7 +463,7 @@ export const generateRecords = async (task: ListrTask) => {
 					const countryId = countryMap.get(phoneData?.country ?? 'US')
 					if (!countryId) throw new Error('Unable to retrieve Country ID')
 					const migrationReview = phoneData ? true : undefined
-					const id = generateId('orgPhone', createdAt)
+					const id = getId(['orgPhone', createdAt], phone._id.$oid)
 					newPhoneMap.set(phone._id.$oid, id)
 					data.orgPhone.add({
 						id,
@@ -497,7 +507,7 @@ export const generateRecords = async (task: ListrTask) => {
 						continue
 					}
 					log(`🛠️ [${count}/${org.emails.length}] Email: ${email.title ?? email._id.$oid}`)
-					const id = generateId('orgEmail', createdAt)
+					const id = getId(['orgEmail', createdAt], email._id.$oid)
 					newEmailMap.set(email._id.$oid, id)
 					data.orgEmail.add({
 						id,
@@ -594,7 +604,7 @@ export const generateRecords = async (task: ListrTask) => {
 						continue
 					}
 					log(`🛠️ [${count}/${org.social_media.length}] Social Media: ${servLookup}`)
-					const id = generateId('orgSocialMedia', createdAt)
+					const id = getId(['orgSocialMedia', createdAt], social._id.$oid)
 					data.orgSocialMedia.add({
 						id,
 						organizationId: orgId,
@@ -925,7 +935,7 @@ export const generateRecords = async (task: ListrTask) => {
 				for (const service of org.services) {
 					let accessCount = 0
 					const count = counter + skips + 1
-					const serviceId = generateId('orgService', createdAt)
+					const serviceId = getId(['orgService', createdAt], service._id.$oid)
 					log(`🛠️ [${count}/${org.services.length}] Service: ${service.name}`)
 					const {
 						key: descriptionKey,
@@ -1391,6 +1401,9 @@ export const generateRecords = async (task: ListrTask) => {
 			`${generatedDir}unsupportedAttributes.json`,
 			formatJson(JSON.stringify(unsupportedAttOut))
 		)
+
+		log(`✍️ Writing ID Map file`)
+		writeIdMap()
 
 		log(`✍️ Writing rollback file`)
 		fs.writeFileSync(rollbackFile, superjson.stringify(rollback))
