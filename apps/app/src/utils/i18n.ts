@@ -1,8 +1,14 @@
+import { type Namespace } from 'i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 import i18nextConfig from '../../next-i18next.config.mjs'
 
-export const getServerSideTranslations = async (locale: string, ns: string[]) =>
-	await serverSideTranslations(locale, ns, i18nextConfig)
+type ArrayElementOrSelf<T> = T extends Array<infer U> ? U[] : T[]
+
+export const getServerSideTranslations = async (
+	locale: string = 'en',
+	namespacesRequired?: ArrayElementOrSelf<Namespace> | undefined,
+	extraLocales?: string[] | false
+) => await serverSideTranslations(locale, namespacesRequired, i18nextConfig, extraLocales)
 
 export { i18nextConfig }
