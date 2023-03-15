@@ -1,0 +1,37 @@
+{
+	"hero": {
+		"community": {
+			"0": "LGBTQ+ asylum seekers",
+			"1": "LGBTQ+ immigrants",
+			"2": "LGBTQ+ refugees",
+			"3": "trans men",
+			"4": "trans women",
+			"5": "LGBTQ+ youth",
+			"6": "HIV+ individuals",
+			"7": "non-binary individuals"
+		},
+		"find-resources": "Find verified <Service></Service> for <Community></Community> with InReach.",
+		"heading": "Find LGBTQ resources.",
+		"services": {
+			"0": "medical care",
+			"1": "legal assistance",
+			"2": "cultural centers",
+			"3": "LGBTQ centers",
+			"4": "spiritual support",
+			"5": "career counseling",
+			"6": "educational support",
+			"7": "language classes",
+			"8": "leadership training",
+			"9": "emergency housing",
+			"10": "housing support",
+			"11": "hair stylists",
+			"12": "legal advice",
+			"13": "immigration services",
+			"14": "dental care",
+			"15": "support hotlines",
+			"16": "support groups",
+			"17": "transportation services"
+		},
+		"subheading": "Welcome to the world's first tech platform matching TLGBQ+ (transgender, lesbian, gay, bisexual, queer and more identities) people facing discrimination and persecution with safe, verified resources."
+	}
+}
