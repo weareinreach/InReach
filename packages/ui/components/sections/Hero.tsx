@@ -63,7 +63,7 @@ const RevolvingBox = ({ role, t }: RevolvingBoxProps) => {
 		role === 'community'
 			? Object.values(t('hero.community', { returnObjects: true }))
 			: Object.values(t('hero.services', { returnObjects: true }))
-	const [item, setItem] = useState(randomArrMember(textItems))
+	const [item, setItem] = useState(textItems[0])
 	const [transition, setTransition] = useState(true)
 
 	const inTime = 750

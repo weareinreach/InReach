@@ -1,4 +1,8 @@
 {
+	"call-out": {
+		"hear-from-users": "<Title1>Hear from our users</Title1>",
+		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led nonprofit increasing access to safe, verified resources for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
+	},
 	"hero": {
 		"community": {
 			"0": "LGBTQ+ asylum seekers",
@@ -33,5 +37,12 @@
 			"17": "transportation services"
 		},
 		"subheading": "Welcome to the world's first tech platform matching TLGBQ+ (transgender, lesbian, gay, bisexual, queer and more identities) people facing discrimination and persecution with safe, verified resources."
+	},
+	"values": {
+		"free": "<Title2>Free forever 🔑</Title2>\n<Text>Our tech platform is 100% free for everyone to ensure safe help is always InReach.</Text>\n<LinkFree>Donate to help us to keep our platform free.</LinkFree>",
+		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first tech platform matching LGBTQ+ people facing discrimination and persecution with independently safe, verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice and more.</Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
+		"our-values": "Our Values",
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
 	}
 }
