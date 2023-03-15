@@ -36,7 +36,7 @@ const supportLinks = [
 	['footer-privacy-statement', '#'],
 	['footer-anti-hate', '#'],
 	['footer-digital-accessibility', '#'],
-	['footer-disclaimer":', '#'],
+	['footer-disclaimer', '#'],
 ]
 
 const connectLinks = [
@@ -46,7 +46,7 @@ const connectLinks = [
 ]
 
 export const Footer = () => {
-	const { t } = useTranslation()
+	const { t } = useTranslation('common')
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const makeLinks = (links: string[][]) =>
