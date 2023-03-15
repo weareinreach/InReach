@@ -258,8 +258,8 @@ export const getServerSideProps = async ({ locale }: GetServerSidePropsContext) 
 	await ssg.review.getByIds.prefetch(featuredReviews)
 
 	return {
-		trpcState: ssg.dehydrate(),
 		props: {
+			trpcState: ssg.dehydrate(),
 			...(await getServerSideTranslations(locale, ['common', 'landingPage'])),
 		},
 	}
