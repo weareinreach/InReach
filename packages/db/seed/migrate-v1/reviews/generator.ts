@@ -8,9 +8,20 @@ import { Prisma, prisma, generateId } from '~db/index'
 import { userEmail } from '~db/seed/data'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
+import { idMap, writeIdMap } from '~db/seed/migrate-v1/idMap'
 
 export const orgReviews: Prisma.OrgReviewCreateManyInput[] = []
 const migratedRecords: unknown[] = []
+
+const getId = (idGen: Parameters<typeof generateId>, legacyId?: string) => {
+	const existingId = legacyId ? idMap.get(legacyId) : undefined
+
+	if (existingId) return existingId
+	const newId = generateId(...idGen)
+	if (legacyId) idMap.set(legacyId, newId)
+	return newId
+}
+
 export const generateReviews = async (task: ListrTask) => {
 	const log = (message: string) => {
 		migrateLog.info(message)
@@ -96,8 +107,10 @@ export const generateReviews = async (task: ListrTask) => {
 			const { rating, userId: user } = record
 			const legacyId = record._id.$oid
 			const userId = userMap.get(user ?? '') ?? systemUser
+			const id = getId(['orgReview', createdAt], legacyId)
 
 			orgReviews.push({
+				id,
 				legacyId,
 				organizationId,
 				orgServiceId,
@@ -130,7 +143,7 @@ export const generateReviews = async (task: ListrTask) => {
 			const legacyId = record._id.$oid
 			const userId = userMap.get(user ?? '') ?? systemUser
 			const deleted = isDeleted ?? is_deleted
-			const id = generateId('orgReview', createdAt)
+			const id = getId(['orgReview', createdAt], legacyId)
 			orgReviews.push({
 				id,
 				legacyId,
@@ -147,4 +160,6 @@ export const generateReviews = async (task: ListrTask) => {
 		}
 		migratedRecords.push(item)
 	}
+	log(`✍️ Writing ID Map file`)
+	writeIdMap()
 }
