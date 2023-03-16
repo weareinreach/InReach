@@ -1,6 +1,6 @@
 import { Title, Grid, Text, Stack, Group, createStyles, rem } from '@mantine/core'
 import Image from 'next/image'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 
 import InReach from '~ui/assets/inreach.svg'
 import Vercel from '~ui/assets/vercel.svg'
@@ -36,7 +36,7 @@ const supportLinks = [
 	['footer-privacy-statement', '#'],
 	['footer-anti-hate', '#'],
 	['footer-digital-accessibility', '#'],
-	['footer-disclaimer":', '#'],
+	['footer-disclaimer', '#'],
 ]
 
 const connectLinks = [
@@ -46,7 +46,7 @@ const connectLinks = [
 ]
 
 export const Footer = () => {
-	const { t } = useTranslation()
+	const { t } = useTranslation('common')
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const makeLinks = (links: string[][]) =>
@@ -99,13 +99,13 @@ export const Footer = () => {
 				</Grid.Col>
 				<Grid.Col xs={6} sm={3}>
 					<Stack justify='space-between' style={{ height: '100%' }} align='start' spacing='xl'>
-						<Text fw={600}>{t('Support')}</Text>
+						<Text fw={600}>{t('support')}</Text>
 						{support}
 					</Stack>
 				</Grid.Col>
 				<Grid.Col xs={6} sm={3} pr={0}>
 					<Stack spacing='xl'>
-						<Text fw={600}>{t('Connect')}</Text>
+						<Text fw={600}>{t('connect')}</Text>
 						{connect}
 						<Group noWrap className={classes.iconGroup}>
 							<SocialLink icon='facebook' href='#' title='Facebook' />
@@ -117,7 +117,7 @@ export const Footer = () => {
 							<SocialLink icon='youtube' href='#' title='Youtube' />
 							<SocialLink icon='tiktok' href='#' title='TikTok' />
 							<SocialLink icon='github' href='#' title='GitHub' />
-							<SocialLink icon='mail' href='#' title={t('Mail')} />
+							<SocialLink icon='mail' href='#' title={t('email')} />
 						</Group>
 					</Stack>
 				</Grid.Col>

@@ -12,6 +12,16 @@ export const Anchor = {
 			},
 		},
 	}),
+	inlineUtil1: (theme) => ({
+		root: {
+			// display: 'inline',
+			padding: '0 !important',
+			...theme.other.utilityFonts.utility1,
+			'&:hover': {
+				backgroundColor: 'transparent !important',
+			},
+		},
+	}),
 	inlineInverted: (theme) => ({
 		root: {
 			padding: '0 !important',
@@ -46,6 +56,11 @@ export const Anchor = {
 			'&:hover': {
 				backgroundColor: 'transparent !important',
 			},
+		},
+	}),
+	block: (theme) => ({
+		root: {
+			display: 'block',
 		},
 	}),
 } satisfies VariantObj

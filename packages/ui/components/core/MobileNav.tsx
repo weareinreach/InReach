@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
 		color: theme.other.colors.secondary.darkGray,
 		borderTop: 0,
 		'&:hover': {
-			backgroundColor: theme.other.colors.secondary.white,
+			backgroundColor: 'transparent',
 		},
 		'&[data-active] > .mantine-Tabs-tabLabel': {
 			color: theme.other.colors.secondary.black,
@@ -25,7 +25,7 @@ const useStyles = createStyles((theme) => ({
 			fontWeight: theme.other.fontWeight.bold,
 
 			'&[data-active]:hover': {
-				backgroundColor: theme.other.colors.secondary.white,
+				backgroundColor: 'transparent',
 			},
 		},
 		['&[data-active] > .mantine-Tabs-tabIcon']: {
@@ -49,9 +49,13 @@ const useStyles = createStyles((theme) => ({
 		},
 	},
 	root: {
-		position: 'absolute',
+		position: 'fixed',
 		bottom: 0,
+		left: 0,
+		right: 0,
 		width: '100%',
+		zIndex: 20,
+		backgroundColor: theme.other.colors.secondary.white,
 	},
 }))
 
@@ -64,7 +68,7 @@ export const navItems = {
 
 export const MobileNav = () => {
 	const { classes } = useStyles()
-	const { t } = useTranslation()
+	const { t } = useTranslation('common')
 	const router = useRouter()
 
 	const tabs = Object.entries(navItems).map(([key, item]) => (
