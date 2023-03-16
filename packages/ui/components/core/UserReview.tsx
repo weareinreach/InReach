@@ -1,7 +1,7 @@
 import { Stack, Text, Group, createStyles, useMantineTheme, Skeleton, rem } from '@mantine/core'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
+import { useTranslation } from 'next-i18next'
 import { useState, useRef, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { useCustomVariant } from '~ui/hooks'
 
