@@ -135,11 +135,7 @@ const Home: NextPageWithoutGrid = () => {
 				<title>{t('inreach', { ns: 'common' })}</title>
 			</Head>
 			<Container mt={-40}>
-				<Grid>
-					<Grid.Col sm={8} style={{ padding: 0 }}>
-						<Hero />
-					</Grid.Col>
-				</Grid>
+				<Hero />
 			</Container>
 			<CallOut backgroundColor={theme.other.colors.tertiary.darkBlue}>
 				<Container>

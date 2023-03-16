@@ -1,5 +1,5 @@
 import { Title, Text, Stack, Box, createStyles, rem, Group, Transition } from '@mantine/core'
-import { useInterval, usePrevious } from '@mantine/hooks'
+import { usePrevious } from '@mantine/hooks'
 import { useTranslation, Trans, TFunction } from 'next-i18next'
 import { useState, useEffect } from 'react'
 
@@ -55,7 +55,9 @@ const randomArrMember: RandomArr = (arr) => arr[Math.floor(Math.random() * arr.l
 
 const RevolvingBox = ({ role, t }: RevolvingBoxProps) => {
 	const backgroundColors = ['#FFC2E2', '#FFDFD3', '#FFF6C9', '#E4F1AC', '#BCE4F9', '#E4D4F4', '#F7C4DD']
-	const [color, setColor] = useState(randomArrMember(backgroundColors))
+	const [color, setColor] = useState(
+		(role === 'community' ? backgroundColors.at(0) : backgroundColors.at(-1)) as string
+	)
 	const previousColor = usePrevious(color)
 	const { classes, cx } = useBoxStyles({ color, previousColor })
 	const style = cx(classes.wrapper, role === 'community' ? classes.community : classes.service)
@@ -63,7 +65,7 @@ const RevolvingBox = ({ role, t }: RevolvingBoxProps) => {
 		role === 'community'
 			? Object.values(t('hero.community', { returnObjects: true }))
 			: Object.values(t('hero.services', { returnObjects: true }))
-	const [item, setItem] = useState(textItems[0])
+	const [item, setItem] = useState(textItems.at(0))
 	const [transition, setTransition] = useState(true)
 
 	const inTime = 750
@@ -126,7 +128,7 @@ export const Hero = () => {
 			<Text fz={24} align='center'>
 				{t('hero.subheading')}
 			</Text>
-			<Group spacing={12}>
+			<Group spacing={12} noWrap>
 				<Trans
 					i18nKey='hero.find-resources'
 					ns='landingPage'
