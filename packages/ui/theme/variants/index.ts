@@ -24,6 +24,8 @@ export const variantNames: VariantNames = {
 		inlineInverted: 'inlineInverted',
 		inlineInvertedUtil1: 'inlineInvertedUtil1',
 		inheritStyle: 'inheritStyle',
+		block: 'block',
+		inlineUtil1: 'inlineUtil1',
 	},
 	Badge: {
 		community: 'community',

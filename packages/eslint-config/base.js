@@ -37,6 +37,18 @@ const config = {
 		],
 		'import/no-self-import': 'error',
 		// 'import/no-cycle': 'error',
+		'no-restricted-imports': [
+			'error',
+			{
+				paths: [
+					{
+						name: 'react-i18next',
+						importNames: ['useTranslation', 'Trans', 'Translation'],
+						message: "Please import from 'next-i18next'",
+					},
+				],
+			},
+		],
 	},
 	overrides: [
 		{

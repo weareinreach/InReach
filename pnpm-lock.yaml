@@ -115,6 +115,7 @@ importers:
       '@types/node': 18.15.3
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
+      '@types/umami': 0.1.0
       '@typescript-eslint/eslint-plugin': 5.55.0
       '@typescript-eslint/parser': 5.55.0
       '@weareinreach/api': 0.100.0
@@ -128,6 +129,7 @@ importers:
       commander: 10.0.0
       dayjs: 1.11.7
       dotenv: 16.0.3
+      embla-carousel-autoplay: 7.1.0
       embla-carousel-react: 7.1.0
       eslint: 8.36.0
       eslint-plugin-i18next: 6.0.0-6
@@ -145,6 +147,7 @@ importers:
       next: 13.2.4
       next-auth: 4.20.1
       next-i18next: 13.2.2
+      next-seo: 5.15.0
       nextjs-routes: 1.0.8
       prettier: 2.8.4
       react: 18.2.0
@@ -193,6 +196,7 @@ importers:
       '@weareinreach/ui': link:../../packages/ui
       axios: 1.3.4
       dayjs: 1.11.7
+      embla-carousel-autoplay: 7.1.0_embla-carousel@7.1.0
       embla-carousel-react: 7.1.0_react@18.2.0
       i18next: 22.4.11
       i18next-browser-languagedetector: 7.0.1
@@ -206,6 +210,7 @@ importers:
       next: 13.2.4_hrdbe576m4w26u2yfpqpvbxyky
       next-auth: 4.20.1_ld2jel3hspngo3u5lti2kgl2sq
       next-i18next: 13.2.2_rs3hrwqry4ik6k7lmsw4c7myjy
+      next-seo: 5.15.0_ld2jel3hspngo3u5lti2kgl2sq
       nextjs-routes: 1.0.8_next@13.2.4
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -222,6 +227,7 @@ importers:
       '@types/node': 18.15.3
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
+      '@types/umami': 0.1.0
       '@typescript-eslint/eslint-plugin': 5.55.0_342y7v4tc7ytrrysmit6jo4wri
       '@typescript-eslint/parser': 5.55.0_vgl77cfdswitgr47lm5swmv43m
       '@weareinreach/config': link:../../packages/config
@@ -8727,6 +8733,10 @@ packages:
     resolution: {integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==}
     dev: true
 
+  /@types/umami/0.1.0:
+    resolution: {integrity: sha512-nsrcnBdKXTP/koCwL3c+ywQG0lk+uqNo74oIe0FHC109aO4vZoXL0eSQqkUdWa9Hwc3ssFgJINBBCe0MZVYUwg==}
+    dev: true
+
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
 
@@ -11297,6 +11307,14 @@ packages:
 
   /electron-to-chromium/1.4.289:
     resolution: {integrity: sha512-relLdMfPBxqGCxy7Gyfm1HcbRPcFUJdlgnCPVgQ23sr1TvUrRJz0/QPoGP0+x41wOVSTN/Wi3w6YDgHiHJGOzg==}
+
+  /embla-carousel-autoplay/7.1.0_embla-carousel@7.1.0:
+    resolution: {integrity: sha512-nYfgSGn3ek44OzwO0t/Ptuxq4PNPD5l7Y9X7JjLYI/DN1uGjqxz9L73YYqR6YCRDnTYJ88s9fep48dzBnSG4vQ==}
+    peerDependencies:
+      embla-carousel: 7.1.0
+    dependencies:
+      embla-carousel: 7.1.0
+    dev: false
 
   /embla-carousel-react/7.1.0_react@18.2.0:
     resolution: {integrity: sha512-tbYRPRZSDNd2QLNqYDcArAakGIxtUbhS7tkP0dGXktXHGgcX+3ji3VrOUTOftBiujZrMV8kRxtrRUe/1soloIQ==}
@@ -15888,6 +15906,18 @@ packages:
       next: 13.2.4_hrdbe576m4w26u2yfpqpvbxyky
       react: 18.2.0
     dev: true
+
+  /next-seo/5.15.0_ld2jel3hspngo3u5lti2kgl2sq:
+    resolution: {integrity: sha512-LGbcY91yDKGMb7YI+28n3g+RuChUkt6pXNpa8FkfKkEmNiJkeRDEXTnnjVtwT9FmMhG6NH8qwHTelGrlYm9rgg==}
+    peerDependencies:
+      next: ^8.1.1-canary.54 || >=9.0.0 || >=13
+      react: '>=16.0.0 || >=18'
+      react-dom: '>=16.0.0 || >=18'
+    dependencies:
+      next: 13.2.4_hrdbe576m4w26u2yfpqpvbxyky
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
 
   /next/13.2.4_hrdbe576m4w26u2yfpqpvbxyky:
     resolution: {integrity: sha512-g1I30317cThkEpvzfXujf0O4wtaQHtDCLhlivwlTJ885Ld+eOgcz7r3TGQzeU+cSRoNHtD8tsJgzxVdYojFssw==}

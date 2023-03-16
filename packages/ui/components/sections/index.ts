@@ -1,6 +1,8 @@
 // codegen:start {preset: barrel, include: ./*.tsx, exclude: ./*.stories.tsx}
+export * from './CallOut'
 export * from './Contact'
 export * from './Footer'
+export * from './Hero'
 export * from './ListingBasicInfo'
 export * from './LocationCard'
 export * from './Navbar'
