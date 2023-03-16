@@ -1,6 +1,3 @@
-// import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-// import { GetServerSidePropsContext } from 'next'
-
 import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
@@ -15,6 +12,7 @@ import { Work_Sans } from 'next/font/google'
 import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { appWithTranslation } from 'next-i18next'
+import { DefaultSeo, DefaultSeoProps } from 'next-seo'
 
 import { api } from '~app/utils/api'
 
@@ -22,8 +20,37 @@ import nextI18nConfig from '../../next-i18next.config.mjs'
 
 const fontWorkSans = Work_Sans({ subsets: ['latin'] })
 
-export type NextPageWithoutGrid<P = {}, IP = P> = NextPage<P, IP> & { omitGrid?: boolean }
-type AppPropsWithGridSwitch = AppProps & { Component: NextPageWithoutGrid; session: Session }
+const defaultSEO = {
+	titleTemplate: '%s | InReach',
+	defaultTitle: 'InReach',
+	additionalLinkTags: [
+		{
+			rel: 'icon',
+			href: '/favicon-16x16.png',
+			sizes: '16x16',
+		},
+		{
+			rel: 'icon',
+			href: '/favicon-32x32.png',
+			sizes: '32x32',
+		},
+		{
+			rel: 'icon',
+			href: '/favicon-96x96.png',
+			sizes: '96x96',
+		},
+		{
+			rel: 'apple-touch-icon',
+			href: '/apple-icon-120x120.png',
+			sizes: '120x120',
+		},
+		{
+			rel: 'apple-touch-icon',
+			href: '/apple-icon-180x180.png',
+			sizes: '180x180',
+		},
+	],
+} satisfies DefaultSeoProps
 
 const MyApp = (appProps: AppPropsWithGridSwitch) => {
 	const {
@@ -41,6 +68,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 
 	return (
 		<SessionProvider session={session}>
+			<DefaultSeo {...defaultSEO} />
 			<MantineProvider
 				withGlobalStyles
 				withNormalizeCSS
@@ -60,3 +88,6 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 }
 
 export default api.withTRPC(appWithTranslation(MyApp, nextI18nConfig))
+
+export type NextPageWithoutGrid<P = {}, IP = P> = NextPage<P, IP> & { omitGrid?: boolean }
+type AppPropsWithGridSwitch = AppProps & { Component: NextPageWithoutGrid; session: Session }
