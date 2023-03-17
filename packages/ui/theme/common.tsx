@@ -550,6 +550,12 @@ export const commonTheme = {
 					},
 				} satisfies Styles<ModalStylesNames>),
 		},
+		PaginationRoot: {
+			defaultProps: (theme) => ({
+				siblings: 0,
+				color: theme.other.colors.secondary.white,
+			}),
+		},
 		Paper: {
 			styles: (theme) => ({
 				root: {
