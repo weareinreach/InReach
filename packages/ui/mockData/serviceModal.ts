@@ -112,7 +112,56 @@ export const mockServiceData = {
 			],
 		},
 	],
-	hours: [],
+	hours: [
+		{
+			start: new Date('2023-03-13T08:30:00'),
+			end: new Date('2023-03-13T12:30:00'),
+			dayIndex: 1,
+			closed: false,
+		},
+		{
+			start: new Date('2023-03-13T14:30:00'),
+			end: new Date('2023-03-13T18:30:00'),
+			dayIndex: 1,
+			closed: false,
+		},
+		{
+			start: new Date(2023, 3, 14),
+			end: new Date(2023, 3, 14),
+			dayIndex: 2,
+			closed: false,
+		},
+		{
+			start: new Date(2023, 3, 15),
+			end: new Date(2023, 3, 15),
+			dayIndex: 3,
+			closed: false,
+		},
+		{
+			start: new Date(2023, 3, 16),
+			end: new Date(2023, 3, 16),
+			dayIndex: 4,
+			closed: false,
+		},
+		{
+			start: new Date(2023, 3, 17),
+			end: new Date(2023, 3, 17),
+			dayIndex: 5,
+			closed: false,
+		},
+		{
+			start: new Date(),
+			end: new Date(),
+			dayIndex: 6,
+			closed: true,
+		},
+		{
+			start: new Date(),
+			end: new Date(),
+			dayIndex: 7,
+			closed: true,
+		},
+	],
 	reviews: [],
 	attributes: [
 		{
@@ -154,6 +203,24 @@ export const mockServiceData = {
 		{
 			attribute: {
 				tsKey: 'community.teens',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'community',
+							icon: null,
+						},
+					},
+				],
+			},
+			supplement: [],
+		},
+		{
+			attribute: {
+				tsKey: 'additional.at-capacity',
 				tsNs: 'attribute',
 				icon: null,
 				iconBg: null,
