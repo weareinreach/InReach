@@ -203,7 +203,9 @@
 		"and": "and",
 		"and-x-more": "and {{count}} more",
 		"coming-soon": "Coming soon",
-		"more": "more"
+		"more": "more",
+		"next": "Next",
+		"prev": "Prev"
 	},
 	"your-comments": "Your Comments",
 	"youtube": "YouTube"
