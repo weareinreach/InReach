@@ -1,4 +1,5 @@
 import {
+	Accordion,
 	Checkbox,
 	createStyles,
 	Group,
@@ -13,19 +14,16 @@ import {
 	Skeleton,
 	rem,
 	em,
-	Stack,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 
+import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
-
-import { Button } from './Button'
-
-const RESULT_PLACEHOLDER = 999
+import { useModalProps } from '~ui/modals'
 
 const useAccordionStyles = createStyles((theme) => ({
 	label: {
@@ -36,6 +34,7 @@ const useAccordionStyles = createStyles((theme) => ({
 	},
 	item: {
 		margin: 0,
+		minHeight: rem(48),
 		'&:last-of-type': {
 			marginBottom: rem(40),
 		},
@@ -46,6 +45,9 @@ const useAccordionStyles = createStyles((theme) => ({
 	},
 	control: {
 		padding: `${rem(12)} ${rem(0)}`,
+		...theme.fn.hover({
+			backgroundColor: theme.other.colors.primary.lightGray,
+		}),
 	},
 	panel: {
 		padding: 0,
@@ -72,12 +74,6 @@ const useModalStyles = createStyles((theme) => ({
 			maxHeight: 'none',
 			paddingTop: rem(20),
 		},
-		'&:not(:only-child)': {
-			paddingTop: rem(10),
-			[theme.fn.largerThan('sm')]: {
-				paddingTop: rem(40),
-			},
-		},
 	},
 	title: {
 		padding: `${rem(8)} ${rem(0)} ${rem(8)} ${rem(8)}`,
@@ -101,7 +97,6 @@ const useStyles = createStyles((theme) => ({
 	label: {
 		...theme.other.utilityFonts.utility1,
 	},
-
 	count: {
 		...theme.other.utilityFonts.utility1,
 		background: theme.other.colors.secondary.black,
@@ -116,17 +111,16 @@ const useStyles = createStyles((theme) => ({
 	},
 
 	button: {
-		padding: `${rem(14)} ${rem(20)} ${rem(14)} ${rem(16)}`,
+		padding: `${rem(14)} ${rem(16)}`,
 		backgroundColor: theme.other.colors.secondary.white,
 		borderRadius: rem(8),
 		border: `${theme.other.colors.tertiary.coolGray} ${rem(1)} solid`,
+		height: rem(48),
 	},
 
 	itemParent: {},
 	itemChild: {
-		'&:last-of-type': {
-			marginBottom: rem(40),
-		},
+		marginLeft: rem(40),
 	},
 	uncheck: {
 		color: theme.other.colors.secondary.black,
@@ -145,6 +139,9 @@ const useStyles = createStyles((theme) => ({
 	uncheckDisabled: {
 		textDecoration: 'underline',
 		color: theme.other.colors.secondary.darkGray,
+		'&:hover': {
+			cursor: 'not-allowed',
+		},
 		[`${theme.fn.smallerThan('sm')}, not (orientation: landscape) and (max-height: ${theme.breakpoints.xs})`]:
 			{
 				display: 'none',
@@ -180,18 +177,14 @@ const useStyles = createStyles((theme) => ({
 		width: '100%',
 		height: rem(48),
 	},
-	sectionLabel: {
-		// ...theme.headings.sizes.h3,
-		marginTop: rem(24),
-	},
 }))
 
-export const MoreFilter = ({}) => {
-	const { data: moreFilterOptionData, status } = api.attribute.getFilterOptions.useQuery()
-	const { classes } = useStyles()
+export const ServiceFilter = ({ resultCount }: ServiceFilterProps) => {
+	const { data: serviceOptionData, status } = api.service.getFilterOptions.useQuery()
+	const { classes, cx } = useStyles()
 	const { classes: accordionClasses } = useAccordionStyles()
 	const { classes: modalClasses } = useModalStyles()
-	const { t } = useTranslation(['common', 'attribute'])
+	const { t } = useTranslation(['common', 'services'])
 	const [opened, setOpened] = useState(false)
 	const theme = useMantineTheme()
 
@@ -204,83 +197,107 @@ export const MoreFilter = ({}) => {
 	const viewportHeight = useViewportSize().height + (isLandscape ? (isSmallLandscape ? 40 : 20) : 0)
 	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
 
-	/** TODO: Results will be filtered live as items are selected - need to update the count of results left */
-	const resultCount = RESULT_PLACEHOLDER
+	type ServiceCategory = NonNullable<typeof serviceOptionData>[number]
+	type FilterValue = ServiceCategory['services'][number] & { categoryId: string; checked: boolean }
 
-	type AttributeFilter = NonNullable<typeof moreFilterOptionData>[number]
-	type FilterValue = AttributeFilter & { checked: boolean }
+	const form = useForm<{ [categoryId: string]: FilterValue[] }>()
+	const valueMap = new Map<string, FilterValue[]>()
 
-	const form = useForm<FilterValue[]>({ initialValues: [] })
 	const generateInitialData = () => {
-		if (!moreFilterOptionData) return []
-		const initialValues = moreFilterOptionData.map((filter) => ({
-			...filter,
-			checked: false,
-		}))
+		if (!serviceOptionData) return {}
+		serviceOptionData.forEach((category) => {
+			valueMap.set(
+				category.id,
+				category.services.map((item) => ({ ...item, categoryId: category.id, checked: false }))
+			)
+		})
+		const initialValues = Object.fromEntries(valueMap.entries())
 		return initialValues
 	}
-
 	useEffect(() => {
-		if (moreFilterOptionData && status === 'success') {
+		if (serviceOptionData && status === 'success') {
 			const initialValues = generateInitialData()
 			form.setValues(initialValues)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [moreFilterOptionData, status])
+	}, [serviceOptionData, status])
 
-	if (!moreFilterOptionData) return <Skeleton height={48} width='100%' radius='xs' />
+	if (!serviceOptionData) return <Skeleton height={48} width='100%' radius='xs' />
 
+	const hasAll = (categoryId: string) => {
+		if (!form.values.hasOwnProperty(categoryId)) return false
+		return form.values[categoryId]?.every((item) => item.categoryId === categoryId && item.checked)
+	}
+	const hasSome = (categoryId: string) => {
+		if (!form.values.hasOwnProperty(categoryId)) return false
+		return (
+			!hasAll(categoryId) &&
+			form.values[categoryId]?.some((item) => item.categoryId === categoryId && item.checked)
+		)
+	}
+
+	const toggleCategory = (categoryId: string) => {
+		if (!form.values.hasOwnProperty(categoryId)) return
+		form.setValues({
+			[categoryId]: form.values[categoryId]?.map((value) => ({ ...value, checked: !hasAll(categoryId) })),
+		})
+	}
 	const deselectAll = () => form.setValues(generateInitialData())
 
-	const filterListInclude: JSX.Element[] = []
-	const filterListExclude: JSX.Element[] = []
+	const formObjectEntryArray = Object.entries(form.values)
+	const filterList = formObjectEntryArray.map(([categoryId, services]) => {
+		const checked = hasAll(categoryId)
+		const indeterminate = hasSome(categoryId)
 
-	console.log(form.values)
-	for (const [i, filter] of Object.entries(form.values)) {
-		switch (filter.filterType) {
-			case 'INCLUDE': {
-				filterListInclude.push(
+		const tsKey = serviceOptionData.find((category) => category.id === categoryId)?.tsKey ?? 'error'
+		return (
+			<Accordion.Item value={categoryId} key={categoryId}>
+				<Accordion.Control>{t(tsKey, { ns: 'services' })}</Accordion.Control>
+				<Accordion.Panel>
 					<Checkbox
-						// className={classes.itemChild}
-						label={t(filter.tsKey, { ns: 'attribute' })}
-						key={filter.id}
-						{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
+						checked={checked}
+						indeterminate={indeterminate}
+						label={t('all-service-category', { serviceCategory: `$t(services:${tsKey})` })}
+						transitionDuration={0}
+						onChange={() => toggleCategory(categoryId)}
+						className={classes.itemParent}
 					/>
-				)
-				break
-			}
-			case 'EXCLUDE': {
-				filterListExclude.push(
-					<Checkbox
-						className={classes.itemChild}
-						label={t(filter.tsKey, { ns: 'attribute' })}
-						key={filter.id}
-						{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
-					/>
-				)
-				break
-			}
-		}
-	}
+
+					{services.map((item, index) => {
+						return (
+							<Checkbox
+								className={classes.itemChild}
+								label={t(item.tsKey, { ns: 'services' })}
+								key={item.id}
+								{...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
+							/>
+						)
+					})}
+				</Accordion.Panel>
+			</Accordion.Item>
+		)
+	})
 
 	const selectedItems = (function () {
 		const selected: string[] = []
-		for (const [key, value] of Object.entries(form.values)) {
-			if (value.checked) selected.push(value.id)
+		for (const [_categoryId, services] of Object.entries(form.values)) {
+			services.forEach((service) => {
+				if (service.checked) selected.push(service.id)
+			})
 		}
 		return selected
 	})()
 
 	const selectedCountIcon = <Text className={classes.count}>{selectedItems.length}</Text>
 
-	const TitleBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
-		const FilterDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
+	const ServiceBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
+		const ServicesDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
 			modalTitle ? <Title order={2} mb={0} {...props} /> : <Text className={classes.label} {...props} />
 
 		return (
 			<Group className={modalTitle ? undefined : classes.button} position='apart' noWrap spacing={0}>
 				<Group spacing={8} noWrap>
-					<FilterDisplay>{t('more-filters')}</FilterDisplay>
+					<ServicesDisplay>{t('services')}</ServicesDisplay>
 					{selectedItems.length > 0 ? selectedCountIcon : null}
 				</Group>
 
@@ -304,26 +321,24 @@ export const MoreFilter = ({}) => {
 			<Modal
 				opened={opened}
 				onClose={() => setOpened(false)}
-				title={<TitleBar modalTitle />}
+				title={<ServiceBar modalTitle />}
 				fullScreen={isMobile}
 				classNames={modalClasses}
 				scrollAreaComponent={Modal.NativeScrollArea}
 			>
-				<Stack spacing={24} pb={12}>
+				<Accordion
+					chevron={<Icon icon='carbon:chevron-right' />}
+					transitionDuration={0}
+					classNames={accordionClasses}
+				>
 					<ScrollArea.Autosize
 						classNames={{ viewport: accordionClasses.scrollArea }}
 						mah={scrollAreaMaxHeight}
 					>
-						<Stack className={classes.sectionLabel} spacing={4} mt={0}>
-							<Title order={3}>{t('include')}</Title>
-							{filterListInclude}
-						</Stack>
-						<Stack className={classes.sectionLabel} spacing={4}>
-							<Title order={3}>{t('exclude')}</Title>
-							{filterListExclude}
-						</Stack>
+						{filterList}
 					</ScrollArea.Autosize>
-				</Stack>
+				</Accordion>
+
 				<Group className={modalClasses.footer} noWrap>
 					<Button
 						variant='secondary'
@@ -340,8 +355,11 @@ export const MoreFilter = ({}) => {
 			</Modal>
 
 			<UnstyledButton onClick={() => setOpened(true)} w='100%'>
-				<TitleBar />
+				<ServiceBar />
 			</UnstyledButton>
 		</>
 	)
+}
+interface ServiceFilterProps {
+	resultCount?: number
 }
