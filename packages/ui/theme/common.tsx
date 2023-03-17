@@ -233,7 +233,7 @@ export const commonTheme = {
 						padding: `${theme.spacing.xxs} ${theme.spacing.sm}`,
 						textTransform: 'none',
 						// margin: rem(8),
-						marginBottom: rem(8),
+						// marginBottom: rem(8),
 					},
 					inner: {
 						padding: 0,
@@ -374,11 +374,18 @@ export const commonTheme = {
 				},
 			}),
 		},
+		Divider: {
+			defaultProps: (theme) => ({
+				size: rem(1),
+				color: theme.other.colors.tertiary.coolGray,
+			}),
+			variants: variants.Divider,
+		},
 		Grid: {
 			defaultProps: {
 				columns: 12,
-				gutter: 20,
-				gutterXl: 40,
+				gutter: rem(20),
+				gutterXl: rem(40),
 				justify: 'center',
 				my: 0,
 				// align: 'flex-start',
@@ -678,6 +685,11 @@ export const commonTheme = {
 				} satisfies Styles<SwitchStylesNames, SwitchStylesParams>),
 		},
 		SwitchGroup: {
+			styles: (theme) => ({
+				label: {
+					paddingBottom: rem(16),
+				},
+			}),
 			// defaultProps: {
 			// 	orientation: 'vertical',
 			// } satisfies Partial<SwitchGroupProps>,
