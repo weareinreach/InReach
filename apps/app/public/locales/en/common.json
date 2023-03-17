@@ -8,8 +8,10 @@
 	"agree-disclaimer": "By clicking \"{{action}}\" you agree to InReach's <link1>Privacy Policy</link1> and <link2>Terms of Use</link2>.",
 	"alert-message-1": "<strong>COVID-19 policy:</strong> With news and best practices for COVID-19 prevention changing rapidly each day, Whitman-Walker Health continues to update their services to reflect prevention recommendations. Please check their website for the most up-to-date information.",
 	"all-service-category": "All {{serviceCategory}}",
-	"anti-hate-text": "By using InReach, you agree that you will not use this resource information for harmful, hate-based, homophobic, transphobic, xenophobic, and/or racist agendas or commentary.",
-	"anti-hate-title": " ‍️‍️‍🏳️‍🌈 Anti-hate commitment",
+	"anti-hate": {
+		"body": "By using InReach, you agree that you will not use this resource information for harmful, hate-based, homophobic, transphobic, xenophobic, and/or racist agendas or commentary.",
+		"title": "Anti-hate commitment"
+	},
 	"back": "Back",
 	"back-to-dynamic": "Back to <1>{{page}}</1>",
 	"back-to-search": "Back to search",
@@ -45,14 +47,17 @@
 	"facebook": "Facebook",
 	"find-resources": "Find resources",
 	"find-x": "Find {{value}}",
-	"footer-anti-hate": "Anti-hate commitment",
-	"footer-digital-accessibility": "Digital accessibility",
-	"footer-disclaimer": "Disclaimer",
-	"footer-privacy-statement": "Privacy statement",
-	"footer-share-feedback": "Share feedback",
-	"footer-subscribe-newsletter": "Subscribe to our newsletter",
-	"footer-suggest-org": "Suggest an organization",
-	"footer-vetting-process": "Vetting process",
+	"footer": {
+		"anti-hate": "Anti-hate commitment",
+		"digital-accessibility": "Digital accessibility",
+		"disclaimer": "Disclaimer",
+		"privacy-statement": "Privacy statement",
+		"share-feedback": "Share feedback",
+		"subscribe-newsletter": "Subscribe to our newsletter",
+		"suggest-org": "Suggest an organization",
+		"tagline": "Seek LGBTQ+ resources.<br/>\nReach safety.<br/>\nFind belonging.",
+		"vetting-process": "Vetting process"
+	},
 	"forgot-password": "Forgot password?",
 	"form-error-enter-valid-email": "Please enter a valid email address.",
 	"form-error-password-blank": "Password cannot be blank.",
@@ -66,7 +71,6 @@
 	"inreach-copyright": "InReach, Inc. {{year}} • All rights reserved • InReach ❤️ Open Source",
 	"inreach-logo": "InReach logo",
 	"inreach-org": "InReach.org",
-	"inreach-tagline": "Seek LGBTQ+ resources. Reach safety. Find belonging.",
 	"instagram": "Instagram",
 	"lang": "Language",
 	"lang_all-other": "All other languages",
@@ -75,6 +79,10 @@
 	"linkedin": "LinkedIn",
 	"log-in": "Log In",
 	"log-out": "Log Out",
+	"modal-content": {
+		"accessibility": "<stack16>\n<title2>InReach Accessibility Statement</title2>\n<textReg>InReach’s open source technology is built for the diverse LGBTQ+ community, including users with disabilities.</textReg>\n<textReg>The free InReach App is available on web (desktop and mobile), and native iOS and Android. Beginning with the launch of our latest redesign (February 2023), InReach will strive to meet <linkAccessibility>Web Content Accessibility Guidelines (WCAG) level AA criteria.</linkAccessibility></textReg>\n<textReg>At InReach, we strive to make our tech platform accessible for as many users and devices as possible in alignment with our mission to serve all LGBTQ+ people facing discrimination and persecution.</textReg>",
+		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>The InReach team will do its best to confirm the eligibility and basic facts about service providers listed on this website. However, we cannot guarantee the viability or capabilities of any such providers. Consequently, InReach assumes no responsibility for the actions of providers listed on this website and users who contact any such providers do so at their own risk.</textReg>\n</stack16>"
+	},
 	"more": {
 		"filters": "More filters"
 	},
@@ -191,6 +199,7 @@
 	"visit": "Visit",
 	"website": "Website",
 	"words": {
+		"accept": "Accept",
 		"and": "and",
 		"and-x-more": "and {{count}} more",
 		"coming-soon": "Coming soon",

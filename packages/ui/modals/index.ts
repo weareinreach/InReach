@@ -2,6 +2,7 @@
 export * from './DeleteModal'
 export * from './Example'
 export * from './ForgotPassword'
+export * from './GenericContent'
 export * from './Login'
 export * from './ModalTitle'
 export * from './MoreFilter'
