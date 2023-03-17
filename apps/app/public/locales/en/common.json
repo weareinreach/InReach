@@ -193,6 +193,7 @@
 	"words": {
 		"and": "and",
 		"and-x-more": "and {{count}} more",
+		"coming-soon": "Coming soon",
 		"more": "more"
 	},
 	"your-comments": "Your Comments",
