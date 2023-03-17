@@ -360,15 +360,16 @@ export const orgSearchSelect = {
 							},
 						},
 						select: {
+							category: {
+								select: {
+									tag: true,
+								},
+							},
 							attribute: {
 								select: {
 									tsKey: true,
-									tsNs: true,
-									key: {
-										select: {
-											text: true,
-										},
-									},
+									icon: true,
+									iconBg: true,
 								},
 							},
 						},
@@ -381,6 +382,7 @@ export const orgSearchSelect = {
 	services: selectServCat,
 	locations: {
 		select: {
+			city: true,
 			services: {
 				select: {
 					service: selectServCat,
