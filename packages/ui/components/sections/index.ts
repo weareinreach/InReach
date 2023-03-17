@@ -8,6 +8,7 @@ export * from './LocationCard'
 export * from './Navbar'
 export * from './Photos'
 export * from './Reviews'
+export * from './SearchResultSidebar'
 export * from './ServicesInfo'
 export * from './VisitCard'
 // codegen:end
