@@ -391,7 +391,7 @@ type VerifiedBadgeProps = {
 	lastverified: Date | string
 }
 
-type AttributeTagProps = {
+export type AttributeTagProps = {
 	variant: 'attribute'
 	icon: IconList
 	tsKey: string
