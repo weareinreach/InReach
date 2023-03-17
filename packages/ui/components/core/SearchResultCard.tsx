@@ -1,17 +1,36 @@
-import { Title, Text, Group, Stack, Divider, useMantineTheme } from '@mantine/core'
+import { Title, Text, Group, Stack, Divider, useMantineTheme, createStyles } from '@mantine/core'
+import { useHover } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { useCustomVariant } from '~ui/hooks'
 
 import { ActionButtons } from './ActionButtons'
 import { BadgeGroup, type CustomBadgeProps } from './Badge'
+import { Link } from './Link'
+
+const useStyles = createStyles((theme) => ({
+	cardBody: {
+		'&:hover': {
+			backgroundColor: theme.other.colors.primary.lightGray,
+		},
+	},
+	hoverText: {
+		'&[data-hovered]': {
+			textDecoration: 'underline',
+		},
+	},
+}))
 
 export const SearchResultCard = ({ result }: SearchResultCardProps) => {
 	const { attributes, description, slug, name, services, locations } = result
 	const { t } = useTranslation(['common', slug])
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
+	const router = useRouter()
+	const { classes } = useStyles()
+	const { hovered, ref: hoverRef } = useHover()
 	const leaderBadges: CustomBadgeProps[] = attributes.orgLeader.map(({ icon, iconBg, tsKey }) => ({
 		variant: 'leader',
 		icon: icon ?? '',
@@ -54,21 +73,25 @@ export const SearchResultCard = ({ result }: SearchResultCardProps) => {
 
 	return (
 		<>
-			<Stack spacing={16}>
-				<Stack spacing={12}>
-					<Group position='apart' mb={-12}>
-						<Group>
-							<Title order={2}>{name}</Title>
-							<BadgeGroup badges={leaderBadges} />
+			<Link href={{ pathname: '/org/[slug]', query: { slug } }} variant={variants.Link.card}>
+				<Stack spacing={16} ref={hoverRef}>
+					<Stack spacing={12}>
+						<Group position='apart' mb={-12}>
+							<Group>
+								<Title order={2} className={classes.hoverText} data-hovered={hovered ? hovered : undefined}>
+									{name}
+								</Title>
+								<BadgeGroup badges={leaderBadges} />
+							</Group>
+							<ActionButtons iconKey='save' />
 						</Group>
-						<ActionButtons iconKey='save' />
-					</Group>
-					<Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text>
-					{description && <Text>{t(description.key, { ns: slug, defaultValue: description.text })}</Text>}
+						<Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text>
+						{description && <Text>{t(description.key, { ns: slug, defaultValue: description.text })}</Text>}
+					</Stack>
+					<BadgeGroup badges={focusBadges} />
+					<BadgeGroup badges={serviceTags} />
 				</Stack>
-				<BadgeGroup badges={focusBadges} />
-				<BadgeGroup badges={serviceTags} />
-			</Stack>
+			</Link>
 			<Divider my={40} />
 		</>
 	)
