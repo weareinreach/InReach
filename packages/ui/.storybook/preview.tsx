@@ -6,7 +6,7 @@ import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
 import { Router } from 'next/router'
 
-import { WithI18n, WithMantine, WithTRPC } from './decorators'
+import { WithI18n, WithMantine, WithTRPC, Layouts, type LayoutsDecorator } from './decorators'
 import { i18n } from './i18next'
 import authStates from './mockAuthStates'
 import { Viewports } from './types'
@@ -72,7 +72,7 @@ export const globalTypes = {
 	},
 }
 
-export const decorators = [WithMantine, WithI18n, mswDecorator, WithTRPC]
+export const decorators = [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC]
 
 declare module '@storybook/react' {
 	export interface Parameters {
@@ -89,9 +89,10 @@ declare module '@storybook/react' {
 			type: 'figma'
 			url: `https://${string}`
 		}
-		layout?: 'centered' | 'fullscreen' | 'padded'
 		msw?: RequestHandler[] | { handlers: RequestHandler[] | Record<string, RequestHandler> }
 		nextAuthMock?: { session: keyof typeof authStates }
 		badges?: BADGE[]
+		layout?: 'centered' | 'fullscreen' | 'padded'
+		layoutWrapper?: LayoutsDecorator
 	}
 }
