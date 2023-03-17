@@ -10,6 +10,7 @@ import { LoginModalBody } from './Login'
 import { PrivacyStatementModalBody } from './PrivacyStatement'
 import { QuickPromotionModalBody } from './QuickPromotion'
 import { ReviewModalBody } from './Review'
+import { ServiceModalBody } from './Service'
 
 const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
 	login: LoginModalBody,
@@ -18,6 +19,7 @@ const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
 	review: ReviewModalBody,
 	forgotPassword: ForgotPasswordModalBody,
 	privacyStatement: PrivacyStatementModalBody,
+	service: ServiceModalBody,
 } as const
 
 export const useModalProps = () => {
