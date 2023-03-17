@@ -21,7 +21,7 @@ import {
 	FormServiceProvider,
 } from './fields'
 import { ModalTitle } from '../ModalTitle'
-import { openPrivacyStatementModal } from '../PrivacyStatement'
+import { PrivacyStatementModal } from '../PrivacyStatement'
 
 type RichTranslateProps = {
 	i18nKey: string
@@ -136,14 +136,9 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 					}}
 					components={{
 						link1: (
-							<Link
-								key={0}
-								external
-								onClick={() => openPrivacyStatementModal()}
-								variant={variants.Link.inheritStyle}
-							>
+							<PrivacyStatementModal component={Link} key={0} variant={variants.Link.inheritStyle}>
 								Privacy Policy
-							</Link>
+							</PrivacyStatementModal>
 						),
 						link2: (
 							<Link
