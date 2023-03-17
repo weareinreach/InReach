@@ -27,7 +27,7 @@ export default {
 			],
 			control: 'select',
 		},
-		color: {
+		iconBg: {
 			control: {
 				type: 'color',
 				if: {
@@ -112,7 +112,7 @@ export const Attribute = {
 	args: {
 		variant: 'attribute',
 		icon: 'carbon:piggy-bank',
-		tsKey: 'cost-cost-free',
+		tsKey: 'cost.cost-free',
 		tsNs: 'attribute',
 	},
 	argTypes: {
@@ -143,7 +143,7 @@ export const Attribute = {
 export const Community = {
 	args: {
 		icon: '✊🏿',
-		tsKey: 'srvfocus-bipoc-comm',
+		tsKey: 'srvfocus.bipoc-comm',
 		variant: 'community',
 	},
 	parameters: {
@@ -162,17 +162,17 @@ export const CommunityGroup = {
 		badges: [
 			{
 				icon: '✊🏿',
-				tsKey: 'srvfocus-bipoc-comm',
+				tsKey: 'srvfocus.bipoc-comm',
 				variant: 'community',
 			},
 			{
 				icon: '💛',
-				tsKey: 'srvfocus-hiv-comm',
+				tsKey: 'srvfocus.hiv-comm',
 				variant: 'community',
 			},
 			{
 				icon: '🗣',
-				tsKey: 'srvfocus-spanish-speakers',
+				tsKey: 'srvfocus.spanish-speakers',
 				variant: 'community',
 			},
 		],
@@ -183,9 +183,9 @@ export const CommunityGroup = {
 export const Leader = {
 	args: {
 		variant: 'leader',
-		color: theme.other!.colors.tertiary.lightBlue,
+		iconBg: theme.other!.colors.tertiary.lightBlue,
 		icon: '️‍️‍🌎',
-		tsKey: 'immigrant-led',
+		tsKey: 'orgleader.immigrant-led',
 		minify: false,
 	},
 	argTypes: {
@@ -208,9 +208,9 @@ export const Leader = {
 export const LeaderMini = {
 	args: {
 		variant: 'leader',
-		color: theme.other!.colors.tertiary.orange,
+		iconBg: theme.other!.colors.tertiary.orange,
 		icon: '️‍️‍✊🏿',
-		tsKey: 'black-led',
+		tsKey: 'orgleader.black-led',
 		minify: true,
 	},
 	argTypes: {

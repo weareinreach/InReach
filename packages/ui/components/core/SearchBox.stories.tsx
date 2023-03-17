@@ -32,6 +32,11 @@ export default {
 			}),
 		],
 	},
+	render: (args) => (
+		<div style={{ minWidth: '600px' }}>
+			<SearchBoxComp {...args} />
+		</div>
+	),
 } as Meta<typeof SearchBoxComp>
 
 export const ByLocation = {

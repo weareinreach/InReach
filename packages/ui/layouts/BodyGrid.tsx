@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 
 export const BodyGrid = ({ children, className, ...others }: GridProps) => {
 	return (
-		<Container fluid className={className}>
+		<Container fluid className={className} mt={40}>
 			<Grid {...others}>{children}</Grid>
 		</Container>
 	)
