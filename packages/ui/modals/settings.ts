@@ -7,7 +7,6 @@ import { commonTheme as theme } from '~ui/theme'
 import { DeleteModalBody } from './DeleteModal'
 import { ForgotPasswordModalBody } from './ForgotPassword'
 import { LoginModalBody } from './Login'
-import { PrivacyStatementModalBody } from './PrivacyStatement'
 import { QuickPromotionModalBody } from './QuickPromotion'
 import { ReviewModalBody } from './Review'
 
