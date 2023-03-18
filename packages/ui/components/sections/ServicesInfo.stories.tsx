@@ -27,7 +27,7 @@ export default {
 		msw: [
 			getTRPCMock({
 				path: ['service', 'getParentName'],
-				response: { name: 'Organization/Location name' },
+				response: { name: 'Organization name' },
 			}),
 			getTRPCMock({
 				path: ['service', 'byId'],
