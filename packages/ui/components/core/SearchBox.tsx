@@ -11,6 +11,7 @@ import {
 import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
+import { type DefaultTFuncReturn } from 'i18next'
 import { useRouter } from 'next/router'
 import { useTranslation, Trans } from 'next-i18next'
 import { forwardRef, useState } from 'react'
@@ -28,7 +29,7 @@ const useStyles = createStyles((theme) => ({
 			borderColor: theme.other.colors.secondary.black,
 			backgroundColor: theme.other.colors.secondary.white,
 		},
-		minWidth: rem(600),
+		maxWidth: rem(636),
 	},
 	autocompleteWrapper: {
 		padding: 0,
@@ -74,7 +75,7 @@ const useStyles = createStyles((theme) => ({
 /** Most of Google's autocomplete language options are only the two letter variants */
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
-export const SearchBox = ({ type }: SearchBoxProps) => {
+export const SearchBox = ({ type, label }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const { t } = useTranslation()
 	const router = useRouter()
@@ -137,13 +138,13 @@ export const SearchBox = ({ type }: SearchBoxProps) => {
 	const fieldRole = (
 		isOrgSearch
 			? {
-					placeholder: `${t('search-box-organization-placeholder')}`,
+					placeholder: `${t('search.organization-placeholder')}`,
 					rightSection: rightIcon,
 					icon: <Icon icon='carbon:search' className={classes.leftIcon} />,
 					variant: 'default',
 			  }
 			: {
-					placeholder: `${t('search-box-location-placeholder')}`,
+					placeholder: `${t('search.location-placeholder')}`,
 					rightSection: rightIcon,
 					icon: <Icon icon='carbon:location-filled' className={classes.leftIcon} />,
 					variant: 'filled',
@@ -186,7 +187,7 @@ export const SearchBox = ({ type }: SearchBoxProps) => {
 		return (
 			<div className={classes.itemComponent} onClick={() => router.push('/suggest')}>
 				<Text className={classes.unmatchedText}>
-					<Trans i18nKey='search-box-suggest-resource' t={t}>
+					<Trans i18nKey='search.suggest-resource' t={t}>
 						Can’t find it? <u>Suggest an organization</u> you think should be included.
 					</Trans>
 				</Text>
@@ -237,6 +238,7 @@ export const SearchBox = ({ type }: SearchBoxProps) => {
 			dropdownPosition='bottom'
 			radius='xl'
 			onItemSubmit={selectionHandler}
+			label={label}
 			{...fieldRole}
 			{...form.getInputProps('search')}
 		/>
@@ -245,6 +247,7 @@ export const SearchBox = ({ type }: SearchBoxProps) => {
 
 type SearchBoxProps = {
 	type: 'location' | 'organization'
+	label?: string | DefaultTFuncReturn
 }
 type FormValues = {
 	search: string

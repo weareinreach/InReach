@@ -13,7 +13,7 @@ import { useCustomVariant } from '~ui/hooks'
 
 import { openForgotPasswordModal } from './ForgotPassword'
 import { ModalTitle, ModalTitleProps } from './ModalTitle'
-import { openPrivacyStatementModal } from './PrivacyStatement'
+import { PrivacyStatementModal } from './PrivacyStatement'
 import { SignupModalLauncher } from './SignUp'
 
 export const LoginModalBody = ({ context, id, innerProps }: ContextModalProps<{}>) => {
@@ -64,14 +64,9 @@ export const LoginModalBody = ({ context, id, innerProps }: ContextModalProps<{}
 					}}
 					components={{
 						link1: (
-							<Link
-								key={0}
-								external
-								onClick={() => openPrivacyStatementModal()}
-								variant={variants.Link.inheritStyle}
-							>
+							<PrivacyStatementModal component={Link} key={0} variant={variants.Link.inheritStyle}>
 								Privacy Policy
-							</Link>
+							</PrivacyStatementModal>
 						),
 						link2: (
 							<Link

@@ -5,14 +5,20 @@ export const SearchDetailsOutput = z
 		id: z.string(),
 		name: z.string(),
 		slug: z.string(),
+		distance: z.number(), // injected
+		unit: z.enum(['km', 'mi']), // injected
 		attributes: z
 			.object({
 				attribute: z.object({
 					categories: z
 						.object({
 							attribute: z.object({
-								tsNs: z.string(),
 								tsKey: z.string(),
+								icon: z.string().nullable(),
+								iconBg: z.string().nullable(),
+							}),
+							category: z.object({
+								tag: z.string(),
 							}),
 						})
 						.array(),
@@ -43,6 +49,7 @@ export const SearchDetailsOutput = z
 			.array(),
 		locations: z
 			.object({
+				city: z.string(),
 				services: z
 					.object({
 						service: z.object({
@@ -65,31 +72,39 @@ export const SearchDetailsOutput = z
 	})
 	.array()
 	.transform((data) => {
-		const result = data.map(({ id, name, attributes, description, locations, services, slug }) => {
+		const result = data.map(({ attributes, description, locations, services, ...rest }) => {
 			const servCombined = new Set<string>()
 
 			services.forEach(({ services }) =>
 				services.forEach(({ tag }) => servCombined.add(JSON.stringify(tag.category)))
 			)
-
-			locations.forEach(({ services }) =>
+			const locationCities: string[] = []
+			locations.forEach(({ services, city }) => {
+				locationCities.push(city)
 				services.forEach(({ service }) =>
 					service.services.forEach(({ tag }) => servCombined.add(JSON.stringify(tag.category)))
 				)
-			)
+			})
 			const desc = description
 				? { key: description.key, ns: description.ns, text: description.tsKey.text }
 				: null
 
+			const flatAttributes = attributes.map(({ attribute }) => attribute)
+			const orgLeader = flatAttributes
+				.filter(({ categories }) =>
+					categories.some(({ category }) => category.tag === 'organization-leadership')
+				)
+				.flatMap(({ categories }) => categories.map(({ attribute }) => attribute))
+			const orgFocus = flatAttributes
+				.filter(({ categories }) => categories.some(({ category }) => category.tag === 'organization-focus'))
+				.flatMap(({ categories }) => categories.map(({ attribute }) => attribute))
+
 			return {
-				id,
-				name,
-				slug,
+				...rest,
 				description: desc,
-				attributes: attributes.flatMap(({ attribute }) =>
-					attribute.categories.map(({ attribute }) => attribute)
-				),
+				attributes: { orgLeader, orgFocus },
 				services: Array.from(servCombined).map((item) => JSON.parse(item) as ServCat),
+				locations: locationCities,
 			}
 		})
 		return result
@@ -105,12 +120,18 @@ type SearchReturn = {
 	id: string
 	name: string
 	slug: string
+	distance: number
+	unit: 'km' | 'mi'
 	attributes: {
 		attribute: {
 			categories: {
 				attribute: {
-					tsNs: string
 					tsKey: string
+					icon: string | null
+					iconBg: string | null
+				}
+				category: {
+					tag: string
 				}
 			}[]
 		}
@@ -131,6 +152,7 @@ type SearchReturn = {
 		}[]
 	}[]
 	locations: {
+		city: string
 		services: {
 			service: {
 				services: {

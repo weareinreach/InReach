@@ -2,6 +2,7 @@ import { Anchor } from './Anchor'
 import { Badge } from './Badge'
 import { Button } from './Button'
 import { Card } from './Card'
+import { Divider } from './Divider'
 import { List } from './List'
 import { Skeleton } from './Skeleton'
 import { Text } from './Text'
@@ -12,6 +13,7 @@ export const variants = {
 	Badge,
 	Button,
 	Card,
+	Divider,
 	List,
 	Skeleton,
 	Text,
@@ -23,9 +25,12 @@ export const variantNames: VariantNames = {
 		inline: 'inline',
 		inlineInverted: 'inlineInverted',
 		inlineInvertedUtil1: 'inlineInvertedUtil1',
+		inlineInvertedUtil2: 'inlineInvertedUtil2',
 		inheritStyle: 'inheritStyle',
 		block: 'block',
 		inlineUtil1: 'inlineUtil1',
+		card: 'card',
+		pagination: 'pagination',
 	},
 	Badge: {
 		community: 'community',
@@ -48,6 +53,9 @@ export const variantNames: VariantNames = {
 	},
 	Card: {
 		hoverCoolGray: 'hoverCoolGray',
+	},
+	Divider: {
+		dot: 'dot',
 	},
 	List: {
 		inline: 'inline',

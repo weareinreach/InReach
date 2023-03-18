@@ -27,7 +27,7 @@ export const Navbar = () => {
 
 	return (
 		<>
-			<Container className={classes.desktopNav}>
+			<Container className={classes.desktopNav} fluid maw='100%'>
 				<Flex justify='space-between' align='center'>
 					<Link href='/' target='_self'>
 						<Image

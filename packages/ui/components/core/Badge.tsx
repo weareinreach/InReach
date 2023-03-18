@@ -186,7 +186,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 			switch (props.variant) {
 				case 'leader': {
 					return (
-						<ColorSwatch color={props.color} radius={24} size={24}>
+						<ColorSwatch color={props.iconBg} radius={24} size={24}>
 							<span>{props.icon}</span>
 						</ColorSwatch>
 					)
@@ -331,7 +331,7 @@ export const BadgeGroup = ({ badges, withSeparator = false }: BadgeGroupProps) =
 			<Badge {...item} />
 		</List.Item>
 	))
-
+	// TODO: [IN-796] Update Group separator to use <Divider/>
 	return (
 		<List variant={withSeparator ? variants.List.inlineBullet : variants.List.inline} m={0}>
 			{badgeList}
@@ -375,7 +375,7 @@ type BadgeVariants = (theme: MantineTheme, params: BadgeStylesParams) => CustomB
 type LeaderBadgeProps = {
 	variant: 'leader'
 	/** Background color for icon */
-	color: string
+	iconBg: string
 	/** Unicode emoji string */
 	icon: string
 	/** I18n translation key */

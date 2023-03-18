@@ -4,6 +4,18 @@ const config = {
 	extends: ['./base.js', 'next/core-web-vitals', 'prettier'],
 	rules: {
 		'@next/next/no-html-link-for-pages': 'off',
+		'no-restricted-imports': [
+			'error',
+			{
+				paths: [
+					{
+						name: 'next-i18next/serverSideTranslations',
+						importNames: ['serverSideTranslations'],
+						message: "Please import 'getServerSideTranslations' from '~app/utils/i18n'",
+					},
+				],
+			},
+		],
 	},
 	parserOptions: {
 		babelOptions: {

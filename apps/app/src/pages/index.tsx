@@ -15,7 +15,7 @@ import { trpcServerClient } from '@weareinreach/api/trpc'
 import { Link, UserReview } from '@weareinreach/ui/components/core'
 import { Hero, CallOut } from '@weareinreach/ui/components/sections'
 import { useCustomVariant } from '@weareinreach/ui/hooks'
-import { openPrivacyStatementModal } from '@weareinreach/ui/modals/PrivacyStatement'
+import { PrivacyStatementModal } from '@weareinreach/ui/modals/PrivacyStatement'
 import Autoplay from 'embla-carousel-autoplay'
 import { type GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
@@ -108,7 +108,7 @@ const CardTranslation = ({ i18nKey, t }: { i18nKey: string; t: TFunction }) => {
 						.
 					</Link>
 				),
-				LinkSafety: <Link onClick={() => openPrivacyStatementModal()} {...linkProps}></Link>,
+				LinkSafety: <PrivacyStatementModal component={Link} {...linkProps}></PrivacyStatementModal>,
 			}}
 		/>
 	)
