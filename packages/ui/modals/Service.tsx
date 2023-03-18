@@ -6,6 +6,7 @@ import { Interval, DateTime } from 'luxon'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
+import { Icon } from 'icon'
 import {
 	AlertMessage,
 	Badge,
@@ -54,6 +55,12 @@ export const ServiceModalBody = ({ innerProps }: ContextModalProps<{ serviceId: 
 		return <ul className={classes.ul}>{listItems}</ul>
 	}
 
+	const ModalText = ({ children }: ModalTextprops) => (
+		<Text component='p' className={classes.blackText}>
+			{children}
+		</Text>
+	)
+
 	const SubSection = ({ title, children, li }: subsectionProps) => {
 		let display = children
 
@@ -62,7 +69,7 @@ export const ServiceModalBody = ({ innerProps }: ContextModalProps<{ serviceId: 
 		return (
 			<Stack spacing={12}>
 				{title && <Title order={3}>{t(`service.${title}`)}</Title>}
-				<div>{display}</div>
+				{display}
 			</Stack>
 		)
 	}
@@ -133,11 +140,7 @@ export const ServiceModalBody = ({ innerProps }: ContextModalProps<{ serviceId: 
 				return interval.isValid ? range : null
 			})
 			if (entry[0] === null) return
-			formatHours.push(
-				<Text component='p' className={classes.blackText}>
-					{entry.filter(Boolean).join(' & ')}
-				</Text>
-			)
+			formatHours.push(<ModalText>{entry.filter(Boolean).join(' & ')}</ModalText>)
 		})
 
 		const timeZone = <Text className={classes.timezone}>{`${DateTime.local().zoneName}`}</Text>
@@ -162,11 +165,7 @@ export const ServiceModalBody = ({ innerProps }: ContextModalProps<{ serviceId: 
 						const { access_type, access_value } = json as SupplementData
 
 						if (access_type === 'publicTransit')
-							details[access_type].push(
-								<Text component='p' className={classes.blackText}>
-									{t(text!.key)}
-								</Text>
-							)
+							details[access_type].push(<ModalText>{t(text!.key) as string}</ModalText>)
 
 						const accessKey = CONTACTS.find((category) => category === access_type)
 						if (accessKey) details[accessKey] ||= <Text>{access_value}</Text>
@@ -188,10 +187,12 @@ export const ServiceModalBody = ({ innerProps }: ContextModalProps<{ serviceId: 
 
 		const attributeCategories: Attributes = {
 			community: [],
+			cost: [],
 			lang: [],
 			srvFocus: [],
 			eligibility: {
 				requirements: [],
+				freeText: [],
 			},
 			misc: [],
 			miscWithIcons: [],
@@ -214,22 +215,57 @@ export const ServiceModalBody = ({ innerProps }: ContextModalProps<{ serviceId: 
 						break
 					}
 					case 'srvFocus': {
-						subsections[namespace].push(
-							<Text className={classes.blackText} component='p'>
-								{t(tsKey)}
-							</Text>
-						)
+						subsections[namespace].push(<ModalText>{t(tsKey) as string}</ModalText>)
 						break
 					}
+					// Ask Joe about the suplemement's data.json format for services with prices
 					case 'cost': {
-						// Ask Joe the suplemement's data.json format for the cost
-						subsections[namespace] = tsKey
+						const costDetails: costDetails = { description: [] }
+
+						supplement.forEach(({ text, data }) => {
+							if (text) {
+								const { ns, key } = text
+								costDetails.description.push(<ModalText>{t(`${ns}.${key}`) as string}</ModalText>)
+							}
+							if (data) {
+								const { json } = data as Prisma.JsonObject
+								const { price } = json as { price: number }
+								costDetails.price = price
+							}
+						})
+
+						const { price, description } = costDetails
+
+						subsections[namespace].push(
+							<Group spacing='sm'>
+								<Icon icon='carbon:piggy-bank' />
+								<Text>{price || t(tsKey)}</Text>
+							</Group>
+						)
+
+						if (description.length > 0)
+							subsections[namespace].push(<SubSection title='cost-details'>{description}</SubSection>)
 						break
 					}
 					case 'eligibility': {
-						tsKey.includes('elig-age')
-							? (subsections[namespace]['age'] = <Text>{tsKey}</Text>) //Ask Joe the key names in data.json supplement for cost prices
-							: subsections[namespace]['requirements'].push(t(tsKey))
+						if (tsKey.includes('elig-age')) {
+							supplement.forEach(({ data }) => {
+								const { json } = data as Prisma.JsonObject
+								const { min, max } = json as { min?: number; max?: number }
+								const ageRange = t('service.age.range', {
+									min: min || t('service.age.min'),
+									max: max || t('service.age.max'),
+									separator: min && max ? ' — ' : undefined,
+								})
+								subsections[namespace]['age'] = <ModalText>{ageRange}</ModalText>
+							})
+						} else if (tsKey.includes('other-describe')) {
+							supplement.forEach(({ text }) => {
+								const { ns, key } = text as { ns: string; key: string }
+								subsections[namespace]['freeText'].push(<ModalText>{t(`${ns}.${key}`) as string}</ModalText>)
+							})
+						} else subsections[namespace]['requirements'].push(t(tsKey))
+
 						break
 					}
 					case 'lang': {
@@ -276,21 +312,15 @@ export const ServiceModalBody = ({ innerProps }: ContextModalProps<{ serviceId: 
 
 		if (srvFocus.length > 0) clientsServed.push(<SubSection title='target-population'>{srvFocus}</SubSection>)
 
-		const costs: JSX.Element[] = []
-
-		if (cost && cost.length > 0)
-			costs.push(
-				<SubSection>
-					<Group>{cost}</Group>
-				</SubSection>
-			)
-
 		const eligDisplay: JSX.Element[] = []
 
-		if (eligibility.age) eligDisplay.push(<SubSection title='age'>{eligibility.age}</SubSection>)
+		if (eligibility.age) eligDisplay.push(<SubSection title='ages'>{eligibility.age}</SubSection>)
 
 		if (eligibility.requirements.length > 0)
 			eligDisplay.push(<SubSection title='requirements' li={eligibility.requirements} />)
+
+		if (eligibility.freeText.length > 0)
+			eligDisplay.push(<SubSection title='additional-info'>{eligibility.freeText}</SubSection>)
 
 		const languages = lang.length === 0 ? undefined : <SubSection title='languages' li={lang} />
 
@@ -312,11 +342,11 @@ export const ServiceModalBody = ({ innerProps }: ContextModalProps<{ serviceId: 
 				<div>{allServices}</div>
 				<SectionDivider title='get-help'>{getHelp}</SectionDivider>
 				<SectionDivider title='clients-served'>{clientsServed}</SectionDivider>
-				<SectionDivider title='cost'>{costs}</SectionDivider>
+				<SectionDivider title='cost'>{cost.length > 0 ? cost : undefined}</SectionDivider>
 				<SectionDivider title='eligibility'>{eligDisplay}</SectionDivider>
 				<SectionDivider title='languages'>{languages}</SectionDivider>
 				<SectionDivider title='additional-info'>{extraInfo}</SectionDivider>
-				<SectionDivider title='transit-directions'></SectionDivider>
+				<SectionDivider title='transit-directions'>{publicTransit}</SectionDivider>
 			</Stack>
 		)
 	}
@@ -380,7 +410,7 @@ type Attributes = {
 	directEmail?: string
 	directPhone?: string
 	directWebsite?: string
-	cost?: string
+	cost: JSX.Element[]
 	lang: string[]
 	community: CommunityTagProps[]
 	srvFocus: JSX.Element[]
@@ -388,6 +418,7 @@ type Attributes = {
 	eligibility: {
 		age?: JSX.Element
 		requirements: string[]
+		freeText: JSX.Element[]
 	}
 	misc: string[]
 	miscWithIcons: AttributeTagProps[]
@@ -409,4 +440,13 @@ type Language = {
 type SupplementData = {
 	access_type: string
 	access_value: string
+}
+
+type costDetails = {
+	price?: number
+	description: JSX.Element[]
+}
+
+type ModalTextprops = {
+	children: JSX.Element | string
 }
