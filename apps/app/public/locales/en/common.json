@@ -145,7 +145,12 @@
 		"cost":"Cost",
 		"cost-details":"Cost details",
 		"eligibility":"Eligibility requirements",
-		"age":"Eligible age",
+		"ages":"Eligible age",
+		"age":{
+			"range": "{{min}}{{separator}}{{max}}",
+			"min": "Up to ",
+			"max": " and older"
+		},
 		"requirements":"Requirements",
 		"additional-info":"Additional eligibility information",
 		"languages":"Languages",
