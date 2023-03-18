@@ -17,7 +17,6 @@ const contextModalDefinitions: Record<string, FC<ContextModalProps<any>>> = {
 	delete: DeleteModalBody,
 	review: ReviewModalBody,
 	forgotPassword: ForgotPasswordModalBody,
-	privacyStatement: PrivacyStatementModalBody,
 } as const
 
 export const useModalProps = () => {

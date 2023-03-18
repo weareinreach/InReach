@@ -30,7 +30,7 @@ export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
 				output.push({
 					variant: 'leader',
 					icon: entry.attribute.icon ?? '',
-					color: entry.attribute.iconBg ?? '#FFF',
+					iconBg: entry.attribute.iconBg ?? '#FFF',
 					tsKey: entry.attribute.tsKey,
 				})
 			)

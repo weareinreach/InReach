@@ -90,17 +90,32 @@ export const queries = defineRouter({
 		}
 	}),
 	searchDistance: publicProcedure.input(distSearch).query(async ({ ctx, input }) => {
-		const { lat, lon, dist, unit } = input
-		// TODO: Merge in getSearchDetails
-		// TODO: Return distances in same unit as searched
-
+		const { lat, lon, dist, unit, skip, take } = input
 		// Convert to meters
 		const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
-
 		const serviceAreas = await getCoveredAreas({ lat, lon }, ctx)
 		const orgs = await searchOrgByDistance({ lat, lon, searchRadius }, ctx)
+		const resultIds = orgs.map(({ id }) => id)
+		const resultCount = await ctx.prisma.organization.count({ where: { id: { in: resultIds } } })
+		const results = await ctx.prisma.organization.findMany({
+			where: {
+				id: {
+					in: resultIds,
+				},
+				...isPublic,
+			},
+			select: orgSearchSelect,
+			skip,
+			take,
+		})
 
-		return { orgs, serviceAreas }
+		const orderedResults: ((typeof results)[number] & { distance: number; unit: 'km' | 'mi' })[] = []
+		orgs.forEach(({ id, distMeters }) => {
+			const distance = unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934
+			const sort = results.find((result) => result.id === id)
+			if (sort) orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit })
+		})
+		return { orgs: SearchDetailsOutput.parse(orderedResults), serviceAreas, resultCount }
 	}),
 	getSearchDetails: publicProcedure.input(idArray).query(async ({ ctx, input }) => {
 		try {
@@ -112,7 +127,8 @@ export const queries = defineRouter({
 					...isPublic,
 				},
 				select: orgSearchSelect,
-			}) //satisfies SearchDetailsResultInput
+			})
+
 			const orderedResults: typeof results = []
 			input.ids.forEach((id) => {
 				const sort = results.find((result) => result.id === id)

@@ -1,22 +1,19 @@
 import { Center } from '@mantine/core'
 import { Meta } from '@storybook/react'
 
-import { Button } from '~ui/components/core'
+import { Button, Link } from '~ui/components/core'
 
-import { openPrivacyStatementModal } from './PrivacyStatement'
-
-const ModalTemplate = () => {
-	return (
-		<Center maw='100vw' h='100vh'>
-			<Button onClick={openPrivacyStatementModal}>Open Modal</Button>
-		</Center>
-	)
-}
+import { PrivacyStatementModal } from './PrivacyStatement'
 
 export default {
 	title: 'Modals/Privacy Statement',
-	component: ModalTemplate,
-	parameters: { layout: 'fullscreen' },
-} satisfies Meta<typeof ModalTemplate>
+	component: PrivacyStatementModal,
+	parameters: { layout: 'fullscreen', layoutWrapper: 'centeredHalf' },
+	args: {
+		component: Link,
+		children: 'Open Privacy Statement',
+		variant: 'inlineInvertedUtil1',
+	},
+} satisfies Meta<typeof PrivacyStatementModal>
 
 export const Modal = {}

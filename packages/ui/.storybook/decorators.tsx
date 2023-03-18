@@ -1,4 +1,4 @@
-import { MantineProvider, TypographyStylesProvider, MantineProviderProps } from '@mantine/core'
+import { MantineProvider, MantineProviderProps, Center, Grid } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 import { StoryContext, StoryFn } from '@storybook/react'
@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { devtoolsLink } from 'trpc-client-devtools-link'
 
+import { BodyGrid } from '~ui/layouts/BodyGrid'
 import { trpc, StorybookTRPC } from '~ui/lib/trpcClient'
 import { useModalProps } from '~ui/modals/settings'
 import { storybookTheme } from '~ui/theme/storybook'
@@ -93,3 +94,45 @@ export const WithTRPC = (Story: StoryFn) => {
 		</storybookTRPC.Provider>
 	)
 }
+
+export const Layouts = (Story: StoryFn, context: StoryContext) => {
+	const { layoutWrapper } = context.parameters
+
+	if (!layoutWrapper) return <Story />
+
+	switch (layoutWrapper) {
+		case 'centeredFullscreen': {
+			return (
+				<Center h='100vh'>
+					<Story />
+				</Center>
+			)
+		}
+		case 'centeredHalf': {
+			return (
+				<Center h='50vh'>
+					<Story />
+				</Center>
+			)
+		}
+		case 'gridSingle': {
+			return (
+				<BodyGrid pt={16}>
+					<Grid.Col>
+						<Story />
+					</Grid.Col>
+				</BodyGrid>
+			)
+		}
+		case 'gridDouble': {
+			return (
+				<BodyGrid pt={16}>
+					<Grid.Col xs={12} sm={8}>
+						<Story />
+					</Grid.Col>
+				</BodyGrid>
+			)
+		}
+	}
+}
+export type LayoutsDecorator = 'centeredFullscreen' | 'centeredHalf' | 'gridSingle' | 'gridDouble'

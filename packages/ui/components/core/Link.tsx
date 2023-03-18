@@ -24,8 +24,8 @@ export const Link = ({ children, href, external, ...rest }: Props) => {
 	)
 }
 
-type InternalLink = LinkProps['href']
-type ExternalLink = `${(typeof externalPrefixes)[number]}${string}`
+export type InternalLink = LinkProps['href']
+export type ExternalLink = `${(typeof externalPrefixes)[number]}${string}`
 
 interface Props extends Omit<LinkProps, 'href'> {
 	href?: InternalLink | ExternalLink
