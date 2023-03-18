@@ -148,6 +148,31 @@
 		"suggest-resource": "Can’t find it? <1>Suggest an organization</1> you think should be included."
 	},
 	"send-email": "Send email",
+	"service":{
+		"at-capacity": "<strong>This service is currently unable to take new clients.</strong>",
+		"get-help":"Get help",
+		"phone":"Direct phone",
+		"email":"Direct email",
+		"website":"Direct website",
+		"hours":"Service hours",
+		"clients-served": "Clients served",
+		"community-focus":"LGBTQ+ community focus",
+		"target-population":"Target population",
+		"cost":"Cost",
+		"cost-details":"Cost details",
+		"eligibility":"Eligibility requirements",
+		"ages":"Eligible age",
+		"age":{
+			"range": "{{min}}{{separator}}{{max}}",
+			"min": "Up to ",
+			"max": " and older"
+		},
+		"requirements":"Requirements",
+		"additional-info":"Additional eligibility information",
+		"languages":"Languages",
+		"extra-info":"Additional information",
+		"transit-directions":"Public transit directions"
+	},
 	"services": "Services",
 	"settings": "Settings",
 	"share": "Share",

@@ -391,7 +391,7 @@ type VerifiedBadgeProps = {
 	lastverified: Date | string
 }
 
-type AttributeTagProps = {
+export type AttributeTagProps = {
 	variant: 'attribute'
 	icon: IconList
 	tsKey: string
@@ -399,7 +399,7 @@ type AttributeTagProps = {
 	tProps?: Omit<TOptionsBase, 'ns'>
 }
 
-type CommunityTagProps = {
+export type CommunityTagProps = {
 	variant: 'community'
 	icon: string
 	tsKey: string

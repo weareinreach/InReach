@@ -425,6 +425,7 @@ export const attributeData: AttributeData = [
 			{ key: 'accessLocation', name: 'Access Instructions - Location', requireData: true },
 			{ key: 'accessPhone', name: 'Access Instructions - Phone', requireData: true },
 			{ key: 'accessText', name: 'Access Instructions - Text', requireText: true },
+			{ key: 'accessPublicTransit', name: 'Access Instructions - Public Transit', requireText: true },
 		],
 	},
 	{
