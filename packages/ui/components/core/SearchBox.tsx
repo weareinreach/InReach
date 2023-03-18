@@ -29,7 +29,7 @@ const useStyles = createStyles((theme) => ({
 			borderColor: theme.other.colors.secondary.black,
 			backgroundColor: theme.other.colors.secondary.white,
 		},
-		// minWidth: rem(600),
+		maxWidth: rem(636),
 	},
 	autocompleteWrapper: {
 		padding: 0,

@@ -139,7 +139,7 @@ export const Hero = () => {
 					}}
 				/>
 			</Group>
-			<Group maw={636}>
+			<Group maw={636} w='100%'>
 				<SearchBox type='location' />
 			</Group>
 		</Stack>
