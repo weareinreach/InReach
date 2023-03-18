@@ -60,7 +60,6 @@ export const SearchResultCard = ({ result }: SearchResultCardProps) => {
 			}
 			case amount === 3: {
 				const commas = cities.slice(0, 2)
-				console.log(commas)
 				return [commas.join(', '), cities[2]].join(` ${t('words.and')} `)
 			}
 			case amount > 3: {

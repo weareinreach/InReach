@@ -1,7 +1,7 @@
 /* eslint-disable i18next/no-literal-string */
 import { Grid, Group } from '@mantine/core'
 import { trpcServerClient } from '@weareinreach/api/trpc'
-import { SearchResultCard, SearchBox } from '@weareinreach/ui/components/core'
+import { SearchResultCard, SearchBox, Pagination } from '@weareinreach/ui/components/core'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections'
 import { ServiceFilter } from '@weareinreach/ui/modals'
 import { GetServerSideProps } from 'next'
@@ -12,6 +12,7 @@ import { Suspense } from 'react'
 import { z } from 'zod'
 
 import { api } from '~app/utils/api'
+import { SEARCH_RESULT_PAGE_SIZE, getSearchResultPageCount } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
 const ParamSchema = z.tuple([
@@ -21,17 +22,19 @@ const ParamSchema = z.tuple([
 	z.coerce.number().describe('distance'),
 	z.literal('mi').or(z.literal('km')).describe(`'mi' or 'km'`),
 ])
+const PageIndexSchema = z.coerce.number().default(1)
 
 const SearchResults = () => {
 	const { query, locale } = useRouter<'/search/[...params]'>()
 	const queryClient = api.useContext()
 	const { t } = useTranslation(['services'])
 	const queryParams = ParamSchema.safeParse(query.params)
-
+	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
+	const take = SEARCH_RESULT_PAGE_SIZE
 	if (!queryParams.success) return <>Error</>
 
 	const [_searchType, lon, lat, dist, unit] = queryParams.data
-	const { data, isSuccess } = api.organization.searchDistance.useQuery({ lat, lon, dist, unit })
+	const { data, isSuccess } = api.organization.searchDistance.useQuery({ lat, lon, dist, unit, skip, take })
 
 	const resultList =
 		data?.orgs && isSuccess
@@ -52,6 +55,7 @@ const SearchResults = () => {
 			</Grid.Col>
 			<Grid.Col sm={8}>
 				<Suspense fallback={<h1>Loader goes here</h1>}>{resultList}</Suspense>
+				<Pagination total={getSearchResultPageCount(data?.resultCount)} />
 			</Grid.Col>
 		</>
 	)
@@ -62,10 +66,15 @@ export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/search/[..
 	query,
 }) => {
 	const [_searchType, lon, lat, dist, unit] = ParamSchema.parse(query.params)
-
+	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
+	const take = SEARCH_RESULT_PAGE_SIZE
 	const ssg = await trpcServerClient()
+	const nextPage = PageIndexSchema.parse(query.page) * SEARCH_RESULT_PAGE_SIZE
 
-	await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit })
+	await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take })
+	await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip: nextPage, take })
+	await ssg.service.getFilterOptions.prefetch()
+	await ssg.attribute.getFilterOptions.prefetch()
 
 	const props = {
 		trpcState: ssg.dehydrate(),

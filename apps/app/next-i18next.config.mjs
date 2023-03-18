@@ -92,7 +92,7 @@ const config = {
 
 	fallbackLng: ['en'],
 	reloadOnPrerender: process.env.NODE_ENV !== 'production',
-	debug: process.env.NODE_ENV !== 'production', //&& !!process.env.NEXT_VERBOSE,
+	debug: process.env.NODE_ENV !== 'production' && isBrowser, //&& !!process.env.NEXT_VERBOSE,
 	partialBundledLanguages: true,
 	nonExplicitSupportedLngs: true,
 	cleanCode: true,

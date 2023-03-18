@@ -17,8 +17,6 @@ import { useCustomVariant } from '~ui/hooks'
 
 import { Link } from './Link'
 
-const PAGE_SIZE = 10
-
 const useStyles = createStyles((theme) => ({
 	paginationItem: {
 		height: rem(24),
@@ -26,12 +24,8 @@ const useStyles = createStyles((theme) => ({
 		textAlign: 'center',
 	},
 	paginationActive: {
-		// ...theme.other.utilityFonts.utility1,
-		// border: `0 solid ${theme.other.colors.secondary.black}`,
 		borderBottom: `${rem(2)} solid ${theme.other.colors.secondary.black}`,
-		// borderStyle: 'solid',
 		borderRadius: 0,
-		// borderColor: theme.other.colors.secondary.black,
 	},
 }))
 
@@ -43,12 +37,14 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 	const [page, setPage] = useState(currentPage)
 	const { classes, cx } = useStyles()
 
-	const pageChangeHandler = (page: number) => setPage(page)
-	router.push({ query: { page: page.toString() } })
+	const pageChangeHandler = (page: number) => {
+		setPage(page)
+		router.push({ query: { page: page.toString(), params: router.query.params } })
+	}
 
 	const paginationController = usePagination({
 		total: props.total,
-		// onChange: (page) => pageChangeHandler(page),
+		onChange: (page) => pageChangeHandler(page),
 		boundaries: 1,
 		siblings: 1,
 	})
