@@ -218,6 +218,7 @@ export const mockServiceData = {
 			},
 			supplement: [],
 		},
+
 		{
 			attribute: {
 				tsKey: 'additional.at-capacity',
@@ -322,6 +323,55 @@ export const mockServiceData = {
 					data: null,
 				},
 			],
+		},
+		{
+			attribute: {
+				tsKey: 'eligibility.elig-age',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'eligibility',
+							icon: null,
+						},
+					},
+				],
+			},
+			supplement: [
+				{
+					country: null,
+					language: null,
+					text: null,
+					govDist: null,
+					boolean: null,
+					data: {
+						json: {
+							min: 18,
+						},
+					},
+				},
+			],
+		},
+		{
+			attribute: {
+				tsKey: 'cost.cost-fees',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'cost',
+							icon: null,
+						},
+					},
+				],
+			},
+			supplement: [],
 		},
 	],
 	phones: [],
