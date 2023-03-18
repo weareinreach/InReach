@@ -19,7 +19,7 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@aws-sdk/client-s3": "3.293.0",
+		"@aws-sdk/client-s3": "3.294.0",
 		"@crowdin/crowdin-api-client": "1.22.1",
 		"@crowdin/ota-client": "0.7.0",
 		"@emotion/react": "11.10.6",
@@ -40,7 +40,7 @@
 		"@mantine/tiptap": "6.0.2",
 		"@mantine/utils": "6.0.2",
 		"@next/bundle-analyzer": "13.2.4",
-		"@tanstack/react-query": "4.26.1",
+		"@tanstack/react-query": "4.27.0",
 		"@tiptap/extension-link": "2.0.0-beta.220",
 		"@tiptap/react": "2.0.0-beta.220",
 		"@tiptap/starter-kit": "2.0.0-beta.220",
@@ -57,7 +57,7 @@
 		"dayjs": "1.11.7",
 		"embla-carousel-autoplay": "7.1.0",
 		"embla-carousel-react": "7.1.0",
-		"i18next": "22.4.11",
+		"i18next": "22.4.12",
 		"i18next-browser-languagedetector": "7.0.1",
 		"i18next-chained-backend": "4.2.0",
 		"i18next-http-backend": "2.2.0",
@@ -79,7 +79,7 @@
 	"devDependencies": {
 		"@playwright/test": "1.31.2",
 		"@prisma/nextjs-monorepo-workaround-plugin": "4.11.0",
-		"@tanstack/react-query-devtools": "4.26.1",
+		"@tanstack/react-query-devtools": "4.27.0",
 		"@total-typescript/ts-reset": "0.4.2",
 		"@types/eslint": "8.21.2",
 		"@types/flat": "5.0.2",
