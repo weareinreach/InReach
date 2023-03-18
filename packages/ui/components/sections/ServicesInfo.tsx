@@ -1,5 +1,4 @@
 import { Stack, Text, Card, Group, createStyles, rem } from '@mantine/core'
-import { modals } from '@mantine/modals'
 import { type ApiOutput } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
 import { useRouter } from 'next/router'
@@ -49,31 +48,25 @@ const ServiceSection = ({ category, services }: ServiceSectionProps) => {
 	const breadCrumbProps = parent?.name
 		? ({ option: 'back', backTo: 'dynamicText', backToText: parent.name } as const)
 		: ({ option: 'back', backTo: 'none' } as const)
-	const modalOpen = (serviceId: string) =>
-		modals.open(
-			ServiceModal({
-				title: { breadcrumb: breadCrumbProps, icons: ['share', 'save'] },
-				body: { serviceId },
-			})
-		)
 	api.service.byId.useQuery({ id: preloadService }, { enabled: preloadService !== '' })
 	return (
 		<Stack spacing={0}>
 			<Badge variant='service' tsKey={category} />
 			{services.map((service) => (
-				<Group
+				<ServiceModal
 					key={service.id}
+					serviceId={service.id}
+					component={Group}
 					position='apart'
 					noWrap
 					className={classes.group}
-					onClick={() => modalOpen(service.id)}
 					onMouseOver={() => setPreloadService(service.id)}
 				>
 					<Text variant={variants.Text.utility1}>
 						{t(service.tsKey ?? '', { ns: slug, defaultValue: service.defaultText }) as string}
 					</Text>
 					<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
-				</Group>
+				</ServiceModal>
 			))}
 		</Stack>
 	)
