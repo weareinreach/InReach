@@ -920,11 +920,13 @@ model Attribute {
   attachedLocations     LocationAttribute[]
   attachedUsers         UserAttribute[]
 
-  requireText     Boolean @default(false)
-  requireLanguage Boolean @default(false)
-  requireCountry  Boolean @default(false)
-  requireBoolean  Boolean @default(false)
-  requireData     Boolean @default(false)
+  requireText       Boolean                        @default(false)
+  requireLanguage   Boolean                        @default(false)
+  requireCountry    Boolean                        @default(false)
+  requireBoolean    Boolean                        @default(false)
+  requireData       Boolean                        @default(false)
+  requireDataSchema AttributeSupplementDataSchema? @relation(fields: [requiredSchemaId], references: [id])
+  requiredSchemaId  String?
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -985,6 +987,19 @@ model AttributeSupplement {
   @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId])
   @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId])
   @@index([userAttributeAttributeId, userAttributeUserId])
+}
+
+model AttributeSupplementDataSchema {
+  id         String @id @default(cuid())
+  tag        String @unique
+  name       String
+  definition Json
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  auditLogs     AuditLog[]
+  internalNotes InternalNote[]
+  Attribute     Attribute[]
 }
 
 model ServiceCategory {
@@ -1433,69 +1448,71 @@ model InternalNote {
   legacyId String? @unique /// old ID from MongoDB
   text     String
 
-  attribute                Attribute?            @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId              String?
-  attributeCategory        AttributeCategory?    @relation(fields: [attributeCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeCategoryId      String?
+  attribute                       Attribute?                     @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeId                     String?
+  attributeCategory               AttributeCategory?             @relation(fields: [attributeCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeCategoryId             String?
   // attributeRecord          AttributeRecord?      @relation(fields: [attributeRecordId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   // attributeRecordId        String?
-  attributeSupplement      AttributeSupplement?  @relation(fields: [attributeSupplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeSupplementId    String?
-  country                  Country?              @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  countryId                String?
-  govDist                  GovDist?              @relation(fields: [govDistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  govDistId                String?
-  govDistType              GovDistType?          @relation(fields: [govDistTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  govDistTypeId            String?
-  language                 Language?             @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  languageId               String?
-  organization             Organization?         @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  organizationId           String?
-  orgEmail                 OrgEmail?             @relation(fields: [orgEmailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgEmailId               String?
-  orgHours                 OrgHours?             @relation(fields: [orgHoursId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgHoursId               String?
-  orgLocation              OrgLocation?          @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgLocationId            String?
-  orgPhone                 OrgPhone?             @relation(fields: [orgPhoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgPhoneId               String?
-  orgPhoto                 OrgPhoto?             @relation(fields: [orgPhotoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgPhotoId               String?
-  orgReview                OrgReview?            @relation(fields: [orgReviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgReviewId              String?
-  orgService               OrgService?           @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgServiceId             String?
-  orgSocialMedia           OrgSocialMedia?       @relation(fields: [orgSocialMediaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgSocialMediaId         String?
-  orgWebsite               OrgWebsite?           @relation(fields: [orgWebsiteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  orgWebsiteId             String?
-  outsideApi               OutsideAPI?           @relation(fields: [outsideApiId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  outsideApiId             String?
-  outsideAPIService        OutsideAPIService?    @relation(fields: [outsideAPIServiceService], references: [service], onDelete: Cascade, onUpdate: Cascade)
-  outsideAPIServiceService String?
-  permission               Permission?           @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  permissionId             String?
-  phoneType                PhoneType?            @relation(fields: [phoneTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  phoneTypeId              String?
-  serviceAccess            ServiceAccess?        @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceAccessId          String?
+  attributeSupplement             AttributeSupplement?           @relation(fields: [attributeSupplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeSupplementId           String?
+  attributeSupplementDataSchema   AttributeSupplementDataSchema? @relation(fields: [attributeSupplementDataSchemaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeSupplementDataSchemaId String?
+  country                         Country?                       @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId                       String?
+  govDist                         GovDist?                       @relation(fields: [govDistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  govDistId                       String?
+  govDistType                     GovDistType?                   @relation(fields: [govDistTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  govDistTypeId                   String?
+  language                        Language?                      @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  languageId                      String?
+  organization                    Organization?                  @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  organizationId                  String?
+  orgEmail                        OrgEmail?                      @relation(fields: [orgEmailId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgEmailId                      String?
+  orgHours                        OrgHours?                      @relation(fields: [orgHoursId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgHoursId                      String?
+  orgLocation                     OrgLocation?                   @relation(fields: [orgLocationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgLocationId                   String?
+  orgPhone                        OrgPhone?                      @relation(fields: [orgPhoneId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgPhoneId                      String?
+  orgPhoto                        OrgPhoto?                      @relation(fields: [orgPhotoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgPhotoId                      String?
+  orgReview                       OrgReview?                     @relation(fields: [orgReviewId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgReviewId                     String?
+  orgService                      OrgService?                    @relation(fields: [orgServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgServiceId                    String?
+  orgSocialMedia                  OrgSocialMedia?                @relation(fields: [orgSocialMediaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgSocialMediaId                String?
+  orgWebsite                      OrgWebsite?                    @relation(fields: [orgWebsiteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  orgWebsiteId                    String?
+  outsideApi                      OutsideAPI?                    @relation(fields: [outsideApiId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  outsideApiId                    String?
+  outsideAPIService               OutsideAPIService?             @relation(fields: [outsideAPIServiceService], references: [service], onDelete: Cascade, onUpdate: Cascade)
+  outsideAPIServiceService        String?
+  permission                      Permission?                    @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  permissionId                    String?
+  phoneType                       PhoneType?                     @relation(fields: [phoneTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  phoneTypeId                     String?
+  serviceAccess                   ServiceAccess?                 @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceAccessId                 String?
   // serviceArea              ServiceArea?          @relation(fields: [serviceAreaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   // serviceAreaId            String?
-  serviceCategory          ServiceCategory?      @relation(fields: [serviceCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceCategoryId        String?
-  serviceTag               ServiceTag?           @relation(fields: [serviceTagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceTagId             String?
-  socialMediaLink          SocialMediaLink?      @relation(fields: [socialMediaLinkId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  socialMediaLinkId        String?
-  socialMediaService       SocialMediaService?   @relation(fields: [socialMediaServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  socialMediaServiceId     String?
-  source                   Source?               @relation(fields: [sourceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  sourceId                 String?
-  translation              TranslationKey?       @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: Cascade, onUpdate: Cascade)
-  translationKey           String?
-  translationNs            String?
-  translationNamespace     TranslationNamespace? @relation(fields: [translationNamespaceName], references: [name], onDelete: Cascade, onUpdate: Cascade)
-  translationNamespaceName String?
+  serviceCategory                 ServiceCategory?               @relation(fields: [serviceCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceCategoryId               String?
+  serviceTag                      ServiceTag?                    @relation(fields: [serviceTagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceTagId                    String?
+  socialMediaLink                 SocialMediaLink?               @relation(fields: [socialMediaLinkId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  socialMediaLinkId               String?
+  socialMediaService              SocialMediaService?            @relation(fields: [socialMediaServiceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  socialMediaServiceId            String?
+  source                          Source?                        @relation(fields: [sourceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  sourceId                        String?
+  translation                     TranslationKey?                @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: Cascade, onUpdate: Cascade)
+  translationKey                  String?
+  translationNs                   String?
+  translationNamespace            TranslationNamespace?          @relation(fields: [translationNamespaceName], references: [name], onDelete: Cascade, onUpdate: Cascade)
+  translationNamespaceName        String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -1515,104 +1532,106 @@ model AuditLog {
   to        Json
   operation AuditLogOperation
 
-  Account                              Account?                @relation(fields: [accountId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  Account                              Account?                       @relation(fields: [accountId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   accountId                            String?
-  Attribute                            Attribute?              @relation(fields: [attributeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  Attribute                            Attribute?                     @relation(fields: [attributeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   attributeId                          String?
-  AttributeCategory                    AttributeCategory?      @relation(fields: [attributeCategoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  AttributeCategory                    AttributeCategory?             @relation(fields: [attributeCategoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   attributeCategoryId                  String?
-  AttributeSupplement                  AttributeSupplement?    @relation(fields: [attributeSupplementId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  AttributeSupplement                  AttributeSupplement?           @relation(fields: [attributeSupplementId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   attributeSupplementId                String?
-  Country                              Country?                @relation(fields: [countryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  AttributeSupplementDataSchema        AttributeSupplementDataSchema? @relation(fields: [attributeSupplementDataSchemaId], references: [id])
+  attributeSupplementDataSchemaId      String?
+  Country                              Country?                       @relation(fields: [countryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   countryId                            String?
-  FieldVisibility                      FieldVisibility?        @relation(fields: [fieldVisibilityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  FieldVisibility                      FieldVisibility?               @relation(fields: [fieldVisibilityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   fieldVisibilityId                    String?
-  FreeText                             FreeText?               @relation(fields: [freeTextId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  FreeText                             FreeText?                      @relation(fields: [freeTextId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   freeTextId                           String?
-  GovDist                              GovDist?                @relation(fields: [govDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  GovDist                              GovDist?                       @relation(fields: [govDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   govDistId                            String?
-  GovDistType                          GovDistType?            @relation(fields: [govDistTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  GovDistType                          GovDistType?                   @relation(fields: [govDistTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   govDistTypeId                        String?
-  InternalNote                         InternalNote?           @relation(fields: [internalNoteId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  InternalNote                         InternalNote?                  @relation(fields: [internalNoteId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   internalNoteId                       String?
-  Language                             Language?               @relation(fields: [languageId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  Language                             Language?                      @relation(fields: [languageId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   languageId                           String?
-  LocationPermission                   LocationPermission?     @relation(fields: [locationPermissionUserId, locationPermissionPermissionId, locationPermissionOrgLocationId], references: [userId, permissionId, orgLocationId], onDelete: SetNull, onUpdate: Cascade)
+  LocationPermission                   LocationPermission?            @relation(fields: [locationPermissionUserId, locationPermissionPermissionId, locationPermissionOrgLocationId], references: [userId, permissionId, orgLocationId], onDelete: SetNull, onUpdate: Cascade)
   locationPermissionUserId             String?
   locationPermissionPermissionId       String?
   locationPermissionOrgLocationId      String?
-  Organization                         Organization?           @relation(fields: [organizationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  Organization                         Organization?                  @relation(fields: [organizationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   organizationId                       String?
-  OrganizationPermission               OrganizationPermission? @relation(fields: [organizationPermissionUserId, organizationPermissionPermissionId, organizationPermissionOrganizationId], references: [userId, permissionId, organizationId], onDelete: SetNull, onUpdate: Cascade)
+  OrganizationPermission               OrganizationPermission?        @relation(fields: [organizationPermissionUserId, organizationPermissionPermissionId, organizationPermissionOrganizationId], references: [userId, permissionId, organizationId], onDelete: SetNull, onUpdate: Cascade)
   organizationPermissionUserId         String?
   organizationPermissionPermissionId   String?
   organizationPermissionOrganizationId String?
-  OrgEmail                             OrgEmail?               @relation(fields: [orgEmailId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  OrgEmail                             OrgEmail?                      @relation(fields: [orgEmailId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgEmailId                           String?
-  OrgHours                             OrgHours?               @relation(fields: [orgHoursId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  OrgHours                             OrgHours?                      @relation(fields: [orgHoursId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgHoursId                           String?
-  OrgLocation                          OrgLocation?            @relation(fields: [orgLocationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  OrgLocation                          OrgLocation?                   @relation(fields: [orgLocationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgLocationId                        String?
-  OrgPhone                             OrgPhone?               @relation(fields: [orgPhoneId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  OrgPhone                             OrgPhone?                      @relation(fields: [orgPhoneId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgPhoneId                           String?
-  OrgPhoto                             OrgPhoto?               @relation(fields: [orgPhotoId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  OrgPhoto                             OrgPhoto?                      @relation(fields: [orgPhotoId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgPhotoId                           String?
-  OrgReview                            OrgReview?              @relation(fields: [orgReviewId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  OrgReview                            OrgReview?                     @relation(fields: [orgReviewId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgReviewId                          String?
-  OrgService                           OrgService?             @relation(fields: [orgServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  OrgService                           OrgService?                    @relation(fields: [orgServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgServiceId                         String?
-  OrgSocialMedia                       OrgSocialMedia?         @relation(fields: [orgSocialMediaId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  OrgSocialMedia                       OrgSocialMedia?                @relation(fields: [orgSocialMediaId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgSocialMediaId                     String?
-  OrgWebsite                           OrgWebsite?             @relation(fields: [orgWebsiteId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  OrgWebsite                           OrgWebsite?                    @relation(fields: [orgWebsiteId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgWebsiteId                         String?
-  OutsideAPI                           OutsideAPI?             @relation(fields: [outsideAPIId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  OutsideAPI                           OutsideAPI?                    @relation(fields: [outsideAPIId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   outsideAPIId                         String?
-  OutsideAPIService                    OutsideAPIService?      @relation(fields: [outsideAPIServiceService], references: [service], onDelete: SetNull, onUpdate: Cascade)
+  OutsideAPIService                    OutsideAPIService?             @relation(fields: [outsideAPIServiceService], references: [service], onDelete: SetNull, onUpdate: Cascade)
   outsideAPIServiceService             String?
-  Permission                           Permission?             @relation(fields: [permissionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  Permission                           Permission?                    @relation(fields: [permissionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   permissionId                         String?
-  PhoneType                            PhoneType?              @relation(fields: [phoneTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  PhoneType                            PhoneType?                     @relation(fields: [phoneTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   phoneTypeId                          String?
-  ServiceAccess                        ServiceAccess?          @relation(fields: [serviceAccessId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  ServiceAccess                        ServiceAccess?                 @relation(fields: [serviceAccessId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   serviceAccessId                      String?
-  ServiceArea                          ServiceArea?            @relation(fields: [serviceAreaId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  ServiceArea                          ServiceArea?                   @relation(fields: [serviceAreaId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   serviceAreaId                        String?
-  ServiceCategory                      ServiceCategory?        @relation(fields: [serviceCategoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  ServiceCategory                      ServiceCategory?               @relation(fields: [serviceCategoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   serviceCategoryId                    String?
-  ServiceTag                           ServiceTag?             @relation(fields: [serviceTagId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  ServiceTag                           ServiceTag?                    @relation(fields: [serviceTagId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   serviceTagId                         String?
-  SocialMediaLink                      SocialMediaLink?        @relation(fields: [socialMediaLinkId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  SocialMediaLink                      SocialMediaLink?               @relation(fields: [socialMediaLinkId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   socialMediaLinkId                    String?
-  SocialMediaService                   SocialMediaService?     @relation(fields: [socialMediaServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  SocialMediaService                   SocialMediaService?            @relation(fields: [socialMediaServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   socialMediaServiceId                 String?
-  Source                               Source?                 @relation(fields: [sourceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  Source                               Source?                        @relation(fields: [sourceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   sourceId                             String?
-  TranslatedReview                     TranslatedReview?       @relation(fields: [translatedReviewId], references: [id])
+  TranslatedReview                     TranslatedReview?              @relation(fields: [translatedReviewId], references: [id])
   translatedReviewId                   String?
-  Translation                          TranslationKey?         @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: SetNull, onUpdate: Cascade)
+  Translation                          TranslationKey?                @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: SetNull, onUpdate: Cascade)
   translationKey                       String?
   translationNs                        String?
-  TranslationNamespace                 TranslationNamespace?   @relation(fields: [translationNamespaceName], references: [name], onDelete: SetNull, onUpdate: Cascade)
+  TranslationNamespace                 TranslationNamespace?          @relation(fields: [translationNamespaceName], references: [name], onDelete: SetNull, onUpdate: Cascade)
   translationNamespaceName             String?
-  User                                 User?                   @relation("AuditLogEntry", fields: [userId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  User                                 User?                          @relation("AuditLogEntry", fields: [userId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userId                               String?
-  UserCommunity                        UserCommunity?          @relation(fields: [userCommunityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  UserCommunity                        UserCommunity?                 @relation(fields: [userCommunityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userCommunityId                      String?
-  UserEthnicity                        UserEthnicity?          @relation(fields: [userEthnicityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  UserEthnicity                        UserEthnicity?                 @relation(fields: [userEthnicityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userEthnicityId                      String?
-  UserImmigration                      UserImmigration?        @relation(fields: [userImmigrationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  UserImmigration                      UserImmigration?               @relation(fields: [userImmigrationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userImmigrationId                    String?
-  UserMail                             UserMail?               @relation(fields: [userMailId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  UserMail                             UserMail?                      @relation(fields: [userMailId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userMailId                           String?
-  UserRole                             UserRole?               @relation(fields: [userRoleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  UserRole                             UserRole?                      @relation(fields: [userRoleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userRoleId                           String?
-  UserSavedList                        UserSavedList?          @relation(fields: [userSavedListId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  UserSavedList                        UserSavedList?                 @relation(fields: [userSavedListId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userSavedListId                      String?
-  UserSOGIdentity                      UserSOGIdentity?        @relation(fields: [userSOGIdentityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  UserSOGIdentity                      UserSOGIdentity?               @relation(fields: [userSOGIdentityId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userSOGIdentityId                    String?
-  UserTitle                            UserTitle?              @relation(fields: [userTitleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  UserTitle                            UserTitle?                     @relation(fields: [userTitleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userTitleId                          String?
-  UserType                             UserType?               @relation(fields: [userTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  UserType                             UserType?                      @relation(fields: [userTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   userTypeId                           String?
 
   //@@schema("system")

@@ -6,6 +6,7 @@ export const idPrefix = {
 	attribute: 'attr',
 	attributeCategory: 'attc',
 	attributeSupplement: 'atts',
+	attributeSupplementDataSchema: 'asds',
 	auditLog: 'audt',
 	country: 'ctry',
 	fieldVisibility: 'fviz',

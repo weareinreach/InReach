@@ -1,5 +1,5 @@
 import { prisma, Prisma, generateId, slug } from '~db/index'
-import { attributeData, namespaces } from '~db/seed/data/'
+import { attributeData, namespaces, supplementDataSchemas } from '~db/seed/data/'
 import { Log, iconList } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/starterData'
@@ -139,9 +139,14 @@ export const seedAttributes = async (task: ListrTask) => {
 		data: data.link,
 		skipDuplicates: true,
 	})
+	const schemaResult = await prisma.attributeSupplementDataSchema.createMany({
+		data: supplementDataSchemas,
+		skipDuplicates: true,
+	})
 
 	log(`Attribute category records added: ${categoryResult.count}`, 'create')
 	log(`Attribute records added: ${attributeResult.count}`, 'create')
+	log(`Attribute supplement data schema records added: ${schemaResult.count}`, 'create')
 	log(`Translation keys added: ${translateResult.count}`, 'create')
 	log(`Attribute to Category links added: ${linkResult.count}`, 'create')
 	task.title = `Attribute Categories & Tags (${categoryResult.count} categories, ${attributeResult.count} attributes, ${translateResult.count} translation keys, ${linkResult.count} links)`

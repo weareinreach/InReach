@@ -480,3 +480,41 @@ export const attributeData: AttributeData = [
 		],
 	},
 ]
+
+export const supplementDataSchemas: Prisma.AttributeSupplementDataSchemaCreateManyInput[] = [
+	{
+		name: 'Number Range',
+		tag: 'num-min-max',
+		definition: {
+			min: 'number',
+			max: 'number',
+		},
+	},
+	{
+		name: 'Minimum',
+		tag: 'num-min',
+		definition: {
+			min: 'number',
+		},
+	},
+	{
+		name: 'Maximum',
+		tag: 'num-max',
+		definition: {
+			max: 'number',
+		},
+	},
+	{
+		name: 'Currency',
+		tag: 'currency',
+		definition: {
+			amount: 'number',
+			currency: 'string',
+		},
+	},
+	{
+		name: 'Incompatible Information',
+		tag: 'incompatible',
+		definition: 'any',
+	},
+]

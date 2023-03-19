@@ -9,19 +9,20 @@ const numMinMax = z.object({
 	max: z.number(),
 })
 
+const numMin = z.object({
+	type: z.literal('num-min'),
+	min: z.number(),
+})
+const numMax = z.object({
+	type: z.literal('num-max'),
+	max: z.number(),
+})
+
 const number = z.object({
 	/** Single number */
 	type: z.literal('number'),
 	num: z.number(),
 })
-
-const freeTextRecord = z.record(z.string().regex(/^[a-z]{2}$|^[a-z]{2}-[A-Z]{2}$/gm), z.string())
-const freeTextTranslated = z
-	.object({
-		/** Free text - must be translated here - will not flow to CrowdIn */
-		type: z.literal('free-text-translated'),
-	})
-	.catchall(freeTextRecord)
 
 const incompatible = z
 	.object({
@@ -33,12 +34,13 @@ const incompatible = z
 /**
  * Supplemental information for attribute
  *
- * @param type - `num-min-max`, `number`, `free-text-translated`, or `incompatible`
+ * @param type - `num-min-max`, `num-min`, `num-max`, `number`, or `incompatible`
  */
-export const AttributeSupplementDataSchema = z.discriminatedUnion('type', [
+export const AttributeSupplementDataSchemas = z.discriminatedUnion('type', [
 	numMinMax,
+	numMin,
+	numMax,
 	number,
-	freeTextTranslated,
 	incompatible,
 ])
-export type AttributeSupplementData = z.infer<typeof AttributeSupplementDataSchema>
+export type AttributeSupplementData = z.infer<typeof AttributeSupplementDataSchemas>
