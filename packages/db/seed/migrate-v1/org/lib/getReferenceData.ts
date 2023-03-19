@@ -74,7 +74,7 @@ const getServiceAreas = async () => {
 	const country = await prisma.country.findMany({
 		where: {
 			cca2: {
-				in: ['CA', 'MX', 'US', 'PR', 'VI', 'GU'],
+				in: ['CA', 'MX', 'US', 'PR', 'VI', 'GU', 'AS', 'MP', 'MH', 'PW'],
 			},
 		},
 		select: {
