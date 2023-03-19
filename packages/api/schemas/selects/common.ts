@@ -112,12 +112,7 @@ export const attributes = {
 						nativeName: true,
 					},
 				},
-				text: {
-					select: {
-						ns: true,
-						key: true,
-					},
-				},
+				text: freeText,
 				govDist: govDistWithoutGeo,
 				boolean: true,
 				data: true,
