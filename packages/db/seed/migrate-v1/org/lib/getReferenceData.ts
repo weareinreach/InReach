@@ -52,7 +52,10 @@ const getAttributeList = async () => {
 		}))
 	)
 	const attributeMap = new Map(
-		flatResults.map(({ category, tag, ...rest }) => [`${category}-${tag}`, { category, tag, ...rest }])
+		flatResults.flatMap(({ category, tag, ...rest }) => [
+			[tag, { category, tag, ...rest }],
+			[`${category}-${tag}`, { category, tag, ...rest }],
+		])
 	)
 
 	return attributeMap

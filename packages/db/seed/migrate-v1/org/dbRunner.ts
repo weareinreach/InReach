@@ -65,7 +65,7 @@ export const interactiveRun = async (task: ListrTask) => {
 			writeOutDiff()
 		},
 		{
-			timeout: 360_000,
+			timeout: 720_000,
 		}
 	)
 }

@@ -1,8 +1,9 @@
+import { slug } from '~db/lib/slugGen'
 import { namespaces } from '~db/seed/data'
 
 export const generateKey: GenerateKey<KeyType> = (params) => {
 	const { type, keyPrefix, text } = params
-	if (!text || !keyPrefix) {
+	if (!text || (!keyPrefix && type !== 'phoneType')) {
 		return {
 			ns: undefined,
 			key: undefined,
@@ -33,11 +34,15 @@ export const generateKey: GenerateKey<KeyType> = (params) => {
 			key = `${keyPrefix}.attribute.${params.suppId}`
 			break
 		}
+		case 'phoneType': {
+			ns = namespaces.phoneType
+			key = slug(text)
+		}
 	}
 	return { ns, key, text: text?.trim() }
 }
 
-export type KeyType = 'desc' | 'svc' | 'attrSupp'
+export type KeyType = 'desc' | 'svc' | 'attrSupp' | 'phoneType'
 type DescKey = {
 	type: 'desc'
 	keyPrefix: string | undefined
@@ -56,8 +61,19 @@ type AttrSuppKey = {
 	text: string | undefined
 	suppId: string
 }
+type PhoneTypeKey = {
+	type: 'phoneType'
+	keyPrefix?: string | undefined
+	text: string | undefined
+}
 export type GenerateKey<T> = (
-	params: T extends 'desc' ? DescKey : T extends 'svc' ? SvcKey : AttrSuppKey
+	params: T extends 'desc'
+		? DescKey
+		: T extends 'phoneType'
+		? PhoneTypeKey
+		: T extends 'svc'
+		? SvcKey
+		: AttrSuppKey
 ) => {
 	key: string | undefined
 	ns: string | undefined
