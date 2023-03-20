@@ -45,6 +45,7 @@ export const attributeData: AttributeData = [
 				key: 'geo-public-transit-description',
 				name: 'Public transit / specific directions',
 				description: 'Written description of public transit services',
+				requireText: true,
 			},
 			{
 				key: 'time-walk-in',
@@ -57,6 +58,7 @@ export const attributeData: AttributeData = [
 				filterType: 'INCLUDE',
 				showOnLocation: true,
 				icon: 'carbon:accessibility',
+				requireBoolean: true,
 			},
 			{
 				key: 'religiously-affiliated',
@@ -387,6 +389,7 @@ export const attributeData: AttributeData = [
 				key: 'other-describe',
 				name: 'Other (free text description)',
 				description: 'Free text description',
+				requireText: true,
 			},
 		],
 	},

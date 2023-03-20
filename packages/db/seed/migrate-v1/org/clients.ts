@@ -29,6 +29,7 @@ import {
 	UserToOrganization,
 	OrganizationEmail,
 	OrganizationPhone,
+	PhoneType,
 } from '~db/index'
 import { BatchNames } from '~db/seed/migrate-v1/org/outData'
 import { ZodFindMany, ZodInputs } from '~db/seed/migrate-v1/org/zod'
@@ -38,6 +39,8 @@ const clientopt = { skipDuplicates: true }
 export const migrateClient: MigrationClient = {
 	translationKey: (client, data) => client.translationKey.createMany({ data, ...clientopt }),
 	freeText: (client, data) => client.freeText.createMany({ data, ...clientopt }),
+	phoneType: (client, data) => client.phoneType.createMany({ data, ...clientopt }),
+
 	orgLocation: (client, data) => client.orgLocation.createMany({ data, ...clientopt }),
 	orgPhone: (client, data) => client.orgPhone.createMany({ data, ...clientopt }),
 	orgEmail: (client, data) => client.orgEmail.createMany({ data, ...clientopt }),
@@ -70,6 +73,7 @@ export const migrateClient: MigrationClient = {
 export const queryClient: QueryClient = {
 	translationKey: (client, args) => client.translationKey.findMany(args),
 	freeText: (client, args) => client.freeText.findMany(args),
+	phoneType: (client, args) => client.phoneType.findMany(args),
 	orgLocation: (client, args) => client.orgLocation.findMany(args),
 	orgPhone: (client, args) => client.orgPhone.findMany(args),
 	orgEmail: (client, args) => client.orgEmail.findMany(args),
@@ -125,6 +129,7 @@ export const getClient: GetClient = (batchName) => {
 type PrismaSchemas = {
 	translationKey: TranslationKey
 	freeText: FreeText
+	phoneType: PhoneType
 	orgLocation: OrgLocation
 	orgPhone: OrgPhone
 	orgEmail: OrgEmail
