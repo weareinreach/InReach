@@ -16,7 +16,7 @@
 	},
 	"dependencies": {
 		"@googlemaps/google-maps-services-js": "3.3.27",
-		"@tanstack/react-query": "4.27.0",
+		"@tanstack/react-query": "4.28.0",
 		"@terraformer/wkt": "2.1.2",
 		"@trpc/client": "10.16.0",
 		"@trpc/next": "10.16.0",
@@ -36,7 +36,7 @@
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
-		"@types/eslint": "8.21.2",
+		"@types/eslint": "8.21.3",
 		"@types/node": "18.15.3",
 		"@types/prettier": "2.7.2",
 		"@types/terraformer__wkt": "2.0.0",
@@ -47,7 +47,7 @@
 		"just-capitalize": "3.2.0",
 		"listr2": "5.0.8",
 		"next": "13.2.4",
-		"prettier": "2.8.4",
+		"prettier": "2.8.5",
 		"prisma": "4.11.0",
 		"trpc-client-devtools-link": "0.2.1-next",
 		"tslog": "4.8.2",
@@ -56,5 +56,5 @@
 	"peerDependencies": {
 		"next": ">=13"
 	},
-	"packageManager": "pnpm@7.29.3"
+	"packageManager": "pnpm@7.30.0"
 }
