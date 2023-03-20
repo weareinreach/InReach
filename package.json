@@ -44,7 +44,7 @@
 	"dependencies": {
 		"@changesets/cli": "2.26.0",
 		"@manypkg/cli": "0.20.0",
-		"@types/eslint": "8.21.2",
+		"@types/eslint": "8.21.3",
 		"@types/node": "18.15.3",
 		"@types/prettier": "2.7.2",
 		"@weareinreach/config": "0.100.0",
@@ -52,7 +52,7 @@
 		"boxen": "7.0.2",
 		"husky": "8.0.3",
 		"lint-staged": "13.2.0",
-		"prettier": "2.8.4",
+		"prettier": "2.8.5",
 		"prettier-plugin-jsdoc": "0.4.2",
 		"prettier-plugin-packagejson": "2.4.3",
 		"prettier-plugin-prisma": "4.10.0",
@@ -61,7 +61,7 @@
 		"typescript": "5.0.2",
 		"typesync": "0.10.0"
 	},
-	"packageManager": "pnpm@7.29.3",
+	"packageManager": "pnpm@7.30.0",
 	"engines": {
 		"node": "^18",
 		"pnpm": "^7"
