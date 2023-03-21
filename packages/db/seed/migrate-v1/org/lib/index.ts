@@ -7,5 +7,6 @@ export * from './getReferenceData'
 export * from './parseSchedule'
 export * from './serviceAccess'
 export * from './serviceTagMap'
+export * from './tagDataMaps'
 export * from './uniqueSlug'
 // codegen:end
