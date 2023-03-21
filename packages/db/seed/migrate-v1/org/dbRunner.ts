@@ -2,7 +2,7 @@
 
 import superjson from 'superjson'
 
-import { readFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 
 import { prisma } from '~db/index'
 import { Log, iconList, updateGeo } from '~db/seed/lib'
@@ -42,6 +42,7 @@ export const interactiveRun = async (task: ListrTask) => {
 				log(`Running batches for ${description}. Generated records: ${submittedTotal}`, 'gear')
 				while (fileData.length) {
 					const batchData = fileData.splice(0, batchSize)
+					writeFileSync('batch.json', JSON.stringify(batchData))
 					const result = await client(tx, batchData)
 					records += result.count
 					const skipped = batchData.length - result.count

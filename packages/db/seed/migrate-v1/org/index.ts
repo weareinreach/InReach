@@ -27,7 +27,7 @@ export const runMigrateOrgs = async (task: ListrTask) =>
 				title: 'Generate supplemental organization records',
 				task: async (_ctx, task): Promise<Listr> => generateRecords(task),
 				...taskOptions,
-				skip: false,
+				// skip: true,
 			},
 			{
 				title: 'Run batch insertions',

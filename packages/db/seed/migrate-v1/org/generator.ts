@@ -484,7 +484,7 @@ export const generateRecords = async (task: ListrTask) => {
 					const id = getId(['orgPhone', createdAt], phone._id.$oid)
 					newPhoneMap.set(phone._id.$oid, id)
 					let phoneTypeId: string | undefined
-					if (typeof phone.phone_type === 'string') {
+					if (typeof phone.phone_type === 'string' && phone.phone_type !== '') {
 						const { phone_type, phone_type_ES, phone_type_es } = phone
 						if (phoneTypeMap.has(slugGenerator(phone_type))) {
 							phoneTypeId = phoneTypeMap.get(slugGenerator(phone_type))
@@ -557,7 +557,7 @@ export const generateRecords = async (task: ListrTask) => {
 					log(`🛠️ [${count}/${org.emails.length}] Email: ${email.title ?? email._id.$oid}`)
 					const id = getId(['orgEmail', createdAt], email._id.$oid)
 					let descriptionId: string | undefined
-					if (typeof email.title === 'string') {
+					if (typeof email.title === 'string' && email.title !== '') {
 						descriptionId = generateId('freeText', createdAt)
 						const { key, ns, text } = generateKey({
 							type: 'desc',
@@ -565,6 +565,13 @@ export const generateRecords = async (task: ListrTask) => {
 							text: email.title,
 						})
 						if (key && ns && text) {
+							data.translationKey.add({
+								key,
+								ns,
+								text,
+								createdAt,
+								updatedAt,
+							})
 							data.freeText.add({
 								id: descriptionId,
 								key,
