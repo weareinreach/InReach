@@ -77,7 +77,7 @@
 		"listr2": "5.0.8",
 		"luxon": "3.3.0",
 		"mongoback": "3.0.6",
-		"prettier": "2.8.5",
+		"prettier": "2.8.6",
 		"prisma": "4.11.0",
 		"prisma-dbml-generator": "0.10.0",
 		"prisma-query-inspector": "1.4.4",
