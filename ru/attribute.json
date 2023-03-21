@@ -83,9 +83,9 @@
 	},
 	"orgleader": {
 		"bipoc-led": "BIPOC Led",
-		"black-led": "Black-led",
+		"black-led": "Чёрный",
 		"CATEGORYNAME": "Руководство Организации",
-		"immigrant-led": "Immigrant-led",
+		"immigrant-led": "Иммигранты",
 		"trans-led": "Транс Led"
 	},
 	"serviceaccess": {
@@ -96,7 +96,7 @@
 		"accessphone": "Инструкции доступа - Телефон",
 		"accesstext": "Инструкции доступа - Текст",
 		"CATEGORYNAME": "Инструкции для доступа к сервису",
-		"accesspublictransit": "Access Instructions - Public Transit"
+		"accesspublictransit": "Инструкции по доступу - общественный транзит"
 	},
 	"srvfocus": {
 		"asylum-seekers": "Искатели убежища",
@@ -114,7 +114,7 @@
 		"trans-youth-focus": "Транс Молодежь"
 	},
 	"sys": {
-		"CATEGORYNAME": "System",
+		"CATEGORYNAME": "Система",
 		"incompatible-info": "Несовместимая информация"
 	},
 	"userlawpractice": {
