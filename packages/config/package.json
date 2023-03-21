@@ -20,7 +20,7 @@
 		"znv": "0.3.2"
 	},
 	"devDependencies": {
-		"@types/node": "18.15.3",
+		"@types/node": "18.15.5",
 		"@weareinreach/eslint-config": "0.100.0",
 		"next-i18next": "13.2.2",
 		"typescript": "5.0.2"
