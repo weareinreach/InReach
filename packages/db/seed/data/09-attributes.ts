@@ -45,6 +45,7 @@ export const attributeData: AttributeData = [
 				key: 'geo-public-transit-description',
 				name: 'Public transit / specific directions',
 				description: 'Written description of public transit services',
+				requireText: true,
 			},
 			{
 				key: 'time-walk-in',
@@ -57,6 +58,7 @@ export const attributeData: AttributeData = [
 				filterType: 'INCLUDE',
 				showOnLocation: true,
 				icon: 'carbon:accessibility',
+				requireBoolean: true,
 			},
 			{
 				key: 'religiously-affiliated',
@@ -387,6 +389,7 @@ export const attributeData: AttributeData = [
 				key: 'other-describe',
 				name: 'Other (free text description)',
 				description: 'Free text description',
+				requireText: true,
 			},
 		],
 	},
@@ -478,5 +481,43 @@ export const attributeData: AttributeData = [
 			{ key: 'friend-family', name: 'N/A (Looking on behalf of friends/family)' },
 			{ key: 'servpro-other', name: 'Other (please specify)', requireData: true },
 		],
+	},
+]
+
+export const supplementDataSchemas: Prisma.AttributeSupplementDataSchemaCreateManyInput[] = [
+	{
+		name: 'Number Range',
+		tag: 'num-min-max',
+		definition: {
+			min: 'number',
+			max: 'number',
+		},
+	},
+	{
+		name: 'Minimum',
+		tag: 'num-min',
+		definition: {
+			min: 'number',
+		},
+	},
+	{
+		name: 'Maximum',
+		tag: 'num-max',
+		definition: {
+			max: 'number',
+		},
+	},
+	{
+		name: 'Currency',
+		tag: 'currency',
+		definition: {
+			amount: 'number',
+			currency: 'string',
+		},
+	},
+	{
+		name: 'Incompatible Information',
+		tag: 'incompatible',
+		definition: 'any',
 	},
 ]

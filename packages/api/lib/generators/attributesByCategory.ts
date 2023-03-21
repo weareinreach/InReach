@@ -27,6 +27,7 @@ export const generateAttributesByCategory = async (task: ListrTask) => {
 							tsNs: true,
 							showOnLocation: true,
 							filterType: true,
+							iconBg: true,
 						},
 					},
 				},

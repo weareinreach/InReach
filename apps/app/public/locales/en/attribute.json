@@ -82,11 +82,11 @@
 		"lang-offered": "Specific languages offered"
 	},
 	"orgleader": {
-		"bipoc-led": "BIPOC Led",
-		"black-led": "Black Led",
+		"bipoc-led": "BIPOC-led",
+		"black-led": "Black-led",
 		"CATEGORYNAME": "Organization Leadership",
-		"immigrant-led": "Immigrant Led",
-		"trans-led": "Trans Led"
+		"immigrant-led": "Immigrant-led",
+		"trans-led": "Transgender-led"
 	},
 	"serviceaccess": {
 		"accessemail": "Access Instructions - Email",
@@ -95,7 +95,8 @@
 		"accesslocation": "Access Instructions - Location",
 		"accessphone": "Access Instructions - Phone",
 		"accesstext": "Access Instructions - Text",
-		"CATEGORYNAME": "Service Access Instructions"
+		"CATEGORYNAME": "Service Access Instructions",
+		"accesspublictransit": "Access Instructions - Public Transit"
 	},
 	"srvfocus": {
 		"asylum-seekers": "Asylum Seekers",

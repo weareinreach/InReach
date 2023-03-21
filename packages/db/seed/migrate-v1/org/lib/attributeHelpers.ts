@@ -1,5 +1,9 @@
-import { TagHelper } from '~db/seed/migrate-v1/org/generator'
+import { z } from 'zod'
 
+import { tagDataMaps } from './tagDataMaps'
+
+import { TagHelper } from '~db/seed/migrate-v1/org/generator'
+import { type InputJsonValueType } from '~db/zod_util/prismaJson'
 /**
  * It takes a value, converts it to a string, converts that string to lowercase, and then returns true if the
  * string is "yes" or "true", false if it's "no" or "false", and undefined if it's "unknown"
@@ -66,6 +70,7 @@ export const tagCheck: TagCheck = ({ tag, value, helpers }) => {
 	const speakerRegex = /community-(.+)-speakers/i
 	const langRegex = /lang-(.+)/i
 	const areaRegex = /service-(?:county|national|state)-(.+)/i
+	const ageRegex = /elig-age.*/i
 
 	/**
 	 * It creates a new object with a type of `unknown` and an attribute of `incompatible-info` and a data
@@ -95,6 +100,57 @@ export const tagCheck: TagCheck = ({ tag, value, helpers }) => {
 
 	/* Parsing the tag and determining what type of attribute it is. */
 	switch (true) {
+		case tag === 'elig-description' && typeof value === 'string': {
+			servAttribute = attributeList.get('other-describe')
+			data = {
+				text: value as string,
+			}
+			break
+		}
+		case ageRegex.test(tag): {
+			servAttribute = attributeList.get('elig-age')
+			switch (tag) {
+				case 'elig-age-or-over': {
+					const ageParse = z.coerce.number().safeParse(value)
+					const ageData = ageParse.success ? { min: ageParse.data } : tagDataMaps.minAge.get(value)
+					if (ageData === undefined) {
+						return incompatible(tag)
+					}
+					data = { data: ageData }
+					break
+				}
+				case 'elig-age-or-under (value = #)':
+				case 'elig-age-or-under': {
+					const ageParse = z.coerce.number().safeParse(value)
+					const ageData = ageParse.success ? { min: ageParse.data } : tagDataMaps.maxAge.get(value)
+					if (ageData === undefined) {
+						return incompatible(tag)
+					}
+					data = { data: ageData }
+					break
+				}
+				default: {
+					const range = tagDataMaps.range.get(value)
+					if (range) {
+						data = { data: range }
+						break
+					}
+					const ageSplit = typeof value === 'string' ? value.split('-') : undefined
+					const ageParse = z.tuple([z.coerce.number(), z.coerce.number()]).safeParse(ageSplit)
+					if (!ageParse.success) {
+						return incompatible(tag)
+					}
+					data = {
+						data: {
+							min: ageParse.data[0],
+							max: ageParse.data[1],
+						},
+					}
+				}
+			}
+
+			break
+		}
 		/* Full tag match */
 		case attributeList.get(tag) !== undefined: {
 			servAttribute = attributeList.get(tag) as AttributeRecord
@@ -180,6 +236,7 @@ type AttributeData = {
 	boolean?: boolean
 	text?: string
 	language?: string
+	data?: InputJsonValueType
 } & Record<string, string | boolean | number | undefined | Record<string, string | number | boolean>>
 type AttributeReturnService = {
 	attribute: NonNullable<AttributeRecord>
