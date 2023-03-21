@@ -1283,6 +1283,8 @@ model Language {
 model TranslationNamespace {
   name String @id
 
+  crowdinId Int?
+
   keys TranslationKey[]
 
   attributeCategories AttributeCategory[]
@@ -1309,6 +1311,8 @@ model TranslationKey {
   /// Associated namespace
   namespace TranslationNamespace @relation(fields: [ns], references: [name], onDelete: Cascade, onUpdate: Cascade)
   ns        String
+
+  crowdinId Int?
 
   // to manage plurals & ordinals
   plural       TranslationPlurals @default(SINGLE)
