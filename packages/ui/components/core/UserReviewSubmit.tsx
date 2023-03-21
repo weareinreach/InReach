@@ -1,9 +1,9 @@
-import { Stack, Text, createStyles, Rating, Textarea, useMantineTheme, Paper, Grid } from '@mantine/core'
+import { Stack, Rating, Textarea, useMantineTheme, Paper } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { ApiInput } from '@weareinreach/api'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
 
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -24,7 +24,7 @@ const ReviewSchema = z.object({
 	reviewText: z.string().optional(),
 })
 
-export const UserReviewSubmit = () => {
+export const UserReviewSubmit = ({ type = 'body' }: ReviewSubmitProps) => {
 	const { t } = useTranslation()
 	const theme = useMantineTheme()
 	const { query: rawQuery } = useRouter()
@@ -48,35 +48,52 @@ export const UserReviewSubmit = () => {
 		if (status === 'success' && orgQuery?.id) form.setFieldValue('organizationId', orgQuery.id)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [status, orgQuery?.id])
-	return (
-		<Grid.Col sm={8}>
-			<Paper withBorder radius='lg' p={theme.spacing.lg}>
-				<form
-					onSubmit={form.onSubmit((values) => {
-						submitReview.mutate(values)
-					}, console.log)}
-				>
-					<Stack align='flex-start' spacing='xl'>
-						<UserAvatar useLoggedIn={true} subheading={null} />
-						<Rating {...form.getInputProps('rating')} />
-						<Stack spacing={10} w='100%'>
-							<Textarea
-								label=<Text fw={theme.other.fontWeight.semibold}>{t('review-resource')}</Text>
-								placeholder={t('enter-review')!}
-								{...form.getInputProps('reviewText')}
-							/>
-							<Text size={14} color={theme.other.colors.secondary.darkGray}>
-								{t('review-note')}
-							</Text>
-						</Stack>
-						<Button variant='primary' type='submit'>
-							{t('submit-review')}
-						</Button>
-					</Stack>
-				</form>
-			</Paper>
-		</Grid.Col>
+
+	const isBody = type === 'body'
+
+	const component = (
+		<form
+			onSubmit={form.onSubmit((values) => {
+				submitReview.mutate(values)
+			}, console.log)}
+		>
+			<Stack align='flex-start' spacing='xl'>
+				<UserAvatar useLoggedIn={true} />
+				<Rating {...form.getInputProps('rating')} />
+				<Textarea
+					label={t('review-resource')}
+					placeholder={t('enter-review')!}
+					description={t('review-note')}
+					{...form.getInputProps('reviewText')}
+				/>
+				<Button variant={isBody ? 'primary' : 'primary-icon'} fullWidth={!isBody} type='submit'>
+					{t('submit-review')}
+				</Button>
+			</Stack>
+		</form>
 	)
+
+	switch (type) {
+		case 'modal': {
+			return component
+		}
+		case 'body': {
+			return (
+				<Paper withBorder radius='lg' p={theme.spacing.lg}>
+					{component}
+				</Paper>
+			)
+		}
+	}
 }
 
 type FormFields = ApiInput['review']['create']
+
+type ReviewSubmitProps = {
+	/**
+	 * Is this being used in a page body or in a modal?
+	 *
+	 * Page body will add a Grid.Col wrapper
+	 */
+	type?: 'body' | 'modal'
+}

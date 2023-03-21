@@ -275,4 +275,29 @@ export const savedListRouter = defineRouter({
 			handleError(error)
 		}
 	}),
+	isSaved: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		if (!ctx.session?.user.id) return false
+
+		const result = await ctx.prisma.userSavedList.findMany({
+			where: {
+				AND: [
+					{ ownedById: ctx.session.user.id },
+					{
+						OR: [
+							{
+								organizations: { some: { organizationId: input } },
+								services: { some: { serviceId: input } },
+							},
+						],
+					},
+				],
+			},
+			select: {
+				id: true,
+				name: true,
+			},
+		})
+		if (!result.length) return false
+		return result
+	}),
 })

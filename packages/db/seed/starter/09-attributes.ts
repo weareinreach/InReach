@@ -1,5 +1,5 @@
 import { prisma, Prisma, generateId, slug } from '~db/index'
-import { attributeData, namespaces } from '~db/seed/data/'
+import { attributeData, namespaces, supplementDataSchemas } from '~db/seed/data/'
 import { Log, iconList } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/starterData'
@@ -41,11 +41,12 @@ export const seedAttributes = async (task: ListrTask) => {
 		log(`(${x + 1}/${attributeData.length}) Prepare Attribute Category: ${category.name}`, 'generate')
 
 		const catTag = slug(category.name)
+		const catKey = `${slug(category.ns)}.CATEGORYNAME`
 		const categoryId = categoryMap.get(catTag) ?? generateId('attributeCategory')
 
 		if (!categoryMap.has(catTag)) {
 			data.translate.push({
-				key: catTag,
+				key: catKey,
 				ns,
 				text: category.name,
 			})
@@ -75,11 +76,13 @@ export const seedAttributes = async (task: ListrTask) => {
 				requireData,
 				requireText,
 				filterType,
+				icon,
+				iconBg,
 			} = record
 			log(`[${idx + 1}/${category.attributes.length}] Prepare Attribute: ${name}`, 'generate', true)
 
 			idx++
-			const key = slug(`${category.ns}-${keyTag}`)
+			const key = `${slug(category.ns)}.${slug(keyTag)}`
 			const attributeId = attributeMap.get(name) ?? generateId('attribute')
 
 			if (!attributeMap.has(name)) {
@@ -103,6 +106,8 @@ export const seedAttributes = async (task: ListrTask) => {
 					tsKey: key,
 					tsNs: ns,
 					filterType,
+					icon,
+					iconBg,
 				})
 
 				log(`[${tag}] Generated attribute definition`, 'generate', true)
@@ -134,9 +139,14 @@ export const seedAttributes = async (task: ListrTask) => {
 		data: data.link,
 		skipDuplicates: true,
 	})
+	const schemaResult = await prisma.attributeSupplementDataSchema.createMany({
+		data: supplementDataSchemas,
+		skipDuplicates: true,
+	})
 
 	log(`Attribute category records added: ${categoryResult.count}`, 'create')
 	log(`Attribute records added: ${attributeResult.count}`, 'create')
+	log(`Attribute supplement data schema records added: ${schemaResult.count}`, 'create')
 	log(`Translation keys added: ${translateResult.count}`, 'create')
 	log(`Attribute to Category links added: ${linkResult.count}`, 'create')
 	task.title = `Attribute Categories & Tags (${categoryResult.count} categories, ${attributeResult.count} attributes, ${translateResult.count} translation keys, ${linkResult.count} links)`

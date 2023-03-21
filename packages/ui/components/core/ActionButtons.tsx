@@ -1,4 +1,5 @@
-import { Button, createStyles, Menu, Text, useMantineTheme } from '@mantine/core'
+import { Button, createStyles, Menu, Text, useMantineTheme, rem } from '@mantine/core'
+import { DefaultTFuncReturn } from 'i18next'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
@@ -23,7 +24,7 @@ export const actionButtonIcons = {
 		useMenu: true,
 	},
 } as const
-
+// TODO: [IN-786] Associate ActionButton click actions
 const actions = {
 	delete: () => {
 		console.log('delete')
@@ -59,36 +60,38 @@ const useStyles = createStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
-		minWidth: 48,
-		height: 48,
-		padding: 12,
-		gap: 8,
+		minWidth: rem(48),
+		height: rem(48),
+		padding: rem(12),
+		gap: rem(8),
 		backgroundColor: theme.other.colors.secondary.white,
-		'&:hover': {
+		'&:not([data-disabled])': theme.fn.hover({
 			backgroundColor: theme.other.colors.primary.lightGray,
-		},
+		}),
 	},
 	buttonPressed: {
 		display: 'flex',
 		flexDirection: 'row',
 		alignItems: 'center',
-		minWidth: 48,
-		height: 48,
-		padding: 12,
-		gap: 8,
+		minWidth: rem(48),
+		height: rem(48),
+		padding: rem(12),
+		gap: rem(8),
 		backgroundColor: theme.other.colors.primary.lightGray,
-		'&:hover': {
+		'&:not([data-disabled])': theme.fn.hover({
 			backgroundColor: theme.other.colors.primary.lightGray,
-		},
+		}),
 	},
 	icon: {},
 	text: {
 		fontWeight: theme.other.fontWeight.semibold,
-		marginLeft: 8,
+		marginLeft: rem(8),
 	},
 	dropdown: {
 		background: theme.other.colors.secondary.black,
 		borderRadius: theme.radius.md,
+		paddingTop: rem(2),
+		paddingBottom: rem(2),
 	},
 	item: {
 		color: 'white',
@@ -103,7 +106,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 /** Used to display the action buttons when viewing an organization/location/service. */
-export const ActionButtons = ({ iconKey, omitLabel = false }: Props) => {
+export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu, children }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation()
@@ -114,7 +117,13 @@ export const ActionButtons = ({ iconKey, omitLabel = false }: Props) => {
 
 	const [opened, setOpened] = useState(false)
 
-	const overflowMenuItems = Object.entries(overFlowItems).map(([key, item]) => (
+	let filteredOverflowItems = Object.entries(overFlowItems)
+
+	if (outsideMoreMenu)
+		/* Keep overFlowItems where the key is not in outsideMoreMenu array */
+		filteredOverflowItems = filteredOverflowItems.filter(([key, item]) => !outsideMoreMenu.includes(key))
+
+	const overflowMenuItems = filteredOverflowItems.map(([key, item]) => (
 		<Menu.Item key={key} value={key} icon={<Icon icon={item.icon} />} onClick={actions[item.labelKey]}>
 			{t(item.labelKey)}
 		</Menu.Item>
@@ -152,7 +161,7 @@ export const ActionButtons = ({ iconKey, omitLabel = false }: Props) => {
 				width={24}
 			/>
 			{!omitLabel && 'labelKey' in iconRender && (
-				<Text className={classes.text}>{t(iconRender.labelKey)}</Text>
+				<Text className={classes.text}>{children ? children : t(iconRender.labelKey, { count: 1 })}</Text>
 			)}
 		</Button>
 	)
@@ -165,7 +174,7 @@ export const ActionButtons = ({ iconKey, omitLabel = false }: Props) => {
 		</Menu>
 	)
 
-	return <>{'useMenu' in iconRender ? <>{menuComponent}</> : <>{buttonComponent}</>}</>
+	return 'useMenu' in iconRender ? menuComponent : buttonComponent
 }
 
 type Props = {
@@ -176,4 +185,7 @@ type Props = {
 	iconKey: keyof typeof actionButtonIcons
 	/** Display icon only */
 	omitLabel?: boolean
+	/** Specify which buttons will be displayed in the 'more' dropdown menu */
+	outsideMoreMenu?: string[]
+	children?: string | DefaultTFuncReturn
 }

@@ -3,17 +3,18 @@ import {
 	Text,
 	createStyles,
 	Group,
-	InputVariant,
-	SelectItemProps,
 	ScrollArea,
 	ScrollAreaProps,
+	AutocompleteProps,
+	rem,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
+import { type DefaultTFuncReturn } from 'i18next'
 import { useRouter } from 'next/router'
 import { useTranslation, Trans } from 'next-i18next'
-import { forwardRef, useEffect, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import reactStringReplace from 'react-string-replace'
 
 import { Icon } from '~ui/icon'
@@ -28,17 +29,17 @@ const useStyles = createStyles((theme) => ({
 			borderColor: theme.other.colors.secondary.black,
 			backgroundColor: theme.other.colors.secondary.white,
 		},
-		minWidth: '600px',
+		maxWidth: rem(636),
 	},
 	autocompleteWrapper: {
 		padding: 0,
-		borderBottom: `1px solid ${theme.other.colors.tertiary.coolGray}`,
+		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
 	},
 	emptyLocation: {
 		backgroundColor: theme.other.colors.primary.lightGray,
 	},
 	rightIcon: {
-		minWidth: '150px',
+		minWidth: rem(150),
 		'&:hover': {
 			cursor: 'pointer',
 		},
@@ -47,11 +48,11 @@ const useStyles = createStyles((theme) => ({
 		color: theme.other.colors.secondary.black,
 	},
 	itemComponent: {
-		borderBottom: `1px solid ${theme.other.colors.tertiary.coolGray}`,
-		padding: `${theme.spacing.sm}px ${theme.spacing.xl}px`,
+		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
+		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
 		alignItems: 'center',
 		'&:hover': {
-			backgroundColor: theme.other.colors.tertiary.coolGray,
+			backgroundColor: theme.other.colors.primary.lightGray,
 			cursor: 'pointer',
 		},
 		'&:last-child': {
@@ -74,7 +75,7 @@ const useStyles = createStyles((theme) => ({
 /** Most of Google's autocomplete language options are only the two letter variants */
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
-export const SearchBox = ({ type }: SearchBoxProps) => {
+export const SearchBox = ({ type, label }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const { t } = useTranslation()
 	const router = useRouter()
@@ -132,21 +133,23 @@ export const SearchBox = ({ type }: SearchBoxProps) => {
 				<Text>{t('clear')}</Text>
 				<Icon icon='carbon:close' />
 			</Group>
-		) : null
+		) : undefined
 
-	const fieldRole = isOrgSearch
-		? {
-				placeholder: t('search-box-organization-placeholder'),
-				rightIcon,
-				leftIcon: <Icon icon='carbon:search' className={classes.leftIcon} />,
-				variant: 'default' as InputVariant,
-		  }
-		: {
-				placeholder: t('search-box-location-placeholder'),
-				rightIcon,
-				leftIcon: <Icon icon='carbon:location-filled' className={classes.leftIcon} />,
-				variant: 'filled' as InputVariant,
-		  }
+	const fieldRole = (
+		isOrgSearch
+			? {
+					placeholder: `${t('search.organization-placeholder')}`,
+					rightSection: rightIcon,
+					icon: <Icon icon='carbon:search' className={classes.leftIcon} />,
+					variant: 'default',
+			  }
+			: {
+					placeholder: `${t('search.location-placeholder')}`,
+					rightSection: rightIcon,
+					icon: <Icon icon='carbon:location-filled' className={classes.leftIcon} />,
+					variant: 'filled',
+			  }
+	) satisfies Partial<AutocompleteProps>
 
 	const matchText = (result: string, textToMatch: string) => {
 		const matcher = new RegExp(`(${textToMatch})`, 'ig')
@@ -184,7 +187,7 @@ export const SearchBox = ({ type }: SearchBoxProps) => {
 		return (
 			<div className={classes.itemComponent} onClick={() => router.push('/suggest')}>
 				<Text className={classes.unmatchedText}>
-					<Trans i18nKey='search-box-suggest-resource' t={t}>
+					<Trans i18nKey='search.suggest-resource' t={t}>
 						Can’t find it? <u>Suggest an organization</u> you think should be included.
 					</Trans>
 				</Text>
@@ -231,14 +234,12 @@ export const SearchBox = ({ type }: SearchBoxProps) => {
 			}}
 			itemComponent={AutoCompleteItem}
 			dropdownComponent={isOrgSearch ? ResultContainer : undefined}
-			variant={fieldRole.variant}
-			placeholder={fieldRole.placeholder}
 			data={results}
-			icon={fieldRole.leftIcon}
 			dropdownPosition='bottom'
 			radius='xl'
 			onItemSubmit={selectionHandler}
-			rightSection={fieldRole.rightIcon}
+			label={label}
+			{...fieldRole}
 			{...form.getInputProps('search')}
 		/>
 	)
@@ -246,6 +247,7 @@ export const SearchBox = ({ type }: SearchBoxProps) => {
 
 type SearchBoxProps = {
 	type: 'location' | 'organization'
+	label?: string | DefaultTFuncReturn
 }
 type FormValues = {
 	search: string

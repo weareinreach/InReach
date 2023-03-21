@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 import { handleError } from '~api/lib'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
@@ -9,7 +11,7 @@ import { organizationInclude, orgSearchSelect } from '~api/schemas/selects/org'
 export const queries = defineRouter({
 	getById: publicProcedure.input(id).query(async ({ ctx, input }) => {
 		try {
-			const { select } = organizationInclude
+			const { select } = organizationInclude(ctx)
 			const org = await ctx.prisma.organization.findUniqueOrThrow({
 				where: {
 					id: input.id,
@@ -17,7 +19,14 @@ export const queries = defineRouter({
 				},
 				select,
 			})
-			return org
+			const { allowedEditors, ...orgData } = org
+			const reformatted = {
+				...orgData,
+				isClaimed: Boolean(allowedEditors.length),
+				services: org.services.map((serv) => ({ service: serv })),
+			}
+
+			return reformatted
 		} catch (error) {
 			handleError(error)
 		}
@@ -25,7 +34,7 @@ export const queries = defineRouter({
 	getBySlug: publicProcedure.input(slug).query(async ({ ctx, input }) => {
 		try {
 			const { slug } = input
-			const { select } = organizationInclude
+			const { select } = organizationInclude(ctx)
 			const org = await ctx.prisma.organization.findUniqueOrThrow({
 				where: {
 					slug,
@@ -33,7 +42,14 @@ export const queries = defineRouter({
 				},
 				select,
 			})
-			return org
+			const { allowedEditors, ...orgData } = org
+			const reformatted = {
+				...orgData,
+				isClaimed: Boolean(allowedEditors.length),
+				services: org.services.map((serv) => ({ service: serv })),
+			}
+
+			return reformatted
 		} catch (error) {
 			handleError(error)
 		}
@@ -74,17 +90,32 @@ export const queries = defineRouter({
 		}
 	}),
 	searchDistance: publicProcedure.input(distSearch).query(async ({ ctx, input }) => {
-		const { lat, lon, dist, unit } = input
-		// TODO: Merge in getSearchDetails
-		// TODO: Return distances in same unit as searched
-
+		const { lat, lon, dist, unit, skip, take } = input
 		// Convert to meters
 		const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
-
 		const serviceAreas = await getCoveredAreas({ lat, lon }, ctx)
 		const orgs = await searchOrgByDistance({ lat, lon, searchRadius }, ctx)
+		const resultIds = orgs.map(({ id }) => id)
+		const resultCount = await ctx.prisma.organization.count({ where: { id: { in: resultIds } } })
+		const results = await ctx.prisma.organization.findMany({
+			where: {
+				id: {
+					in: resultIds,
+				},
+				...isPublic,
+			},
+			select: orgSearchSelect,
+			skip,
+			take,
+		})
 
-		return { orgs, serviceAreas }
+		const orderedResults: ((typeof results)[number] & { distance: number; unit: 'km' | 'mi' })[] = []
+		orgs.forEach(({ id, distMeters }) => {
+			const distance = unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934
+			const sort = results.find((result) => result.id === id)
+			if (sort) orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit })
+		})
+		return { orgs: SearchDetailsOutput.parse(orderedResults), serviceAreas, resultCount }
 	}),
 	getSearchDetails: publicProcedure.input(idArray).query(async ({ ctx, input }) => {
 		try {
@@ -96,7 +127,8 @@ export const queries = defineRouter({
 					...isPublic,
 				},
 				select: orgSearchSelect,
-			}) //satisfies SearchDetailsResultInput
+			})
+
 			const orderedResults: typeof results = []
 			input.ids.forEach((id) => {
 				const sort = results.find((result) => result.id === id)
@@ -106,5 +138,42 @@ export const queries = defineRouter({
 		} catch (error) {
 			handleError(error)
 		}
+	}),
+	getNameFromSlug: publicProcedure.input(z.string()).query(
+		async ({ ctx, input }) =>
+			await ctx.prisma.organization.findUniqueOrThrow({
+				where: {
+					slug: input,
+				},
+				select: {
+					name: true,
+				},
+			})
+	),
+	isSaved: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		if (!ctx.session?.user.id) return false
+
+		const listEntries = await ctx.prisma.savedOrganization.findMany({
+			where: {
+				list: {
+					ownedById: ctx.session.user.id,
+				},
+				organization: {
+					slug: input,
+				},
+			},
+			select: {
+				list: {
+					select: {
+						id: true,
+						name: true,
+					},
+				},
+			},
+		})
+
+		if (!listEntries.length) return false
+		const lists = listEntries.map(({ list }) => list)
+		return lists
 	}),
 })

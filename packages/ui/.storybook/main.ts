@@ -27,6 +27,7 @@ const config: StorybookConfig = {
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
 		'storybook-addon-pseudo-states',
+		// 'css-chaos-addon',
 		'storybook-addon-swc',
 		// {
 		// 	name: 'storybook-addon-swc',
@@ -59,14 +60,6 @@ const config: StorybookConfig = {
 	features: {
 		buildStoriesJson: true,
 	},
-	refs: {
-		// chromatic: {
-		// 	// The title of your Storybook
-		// 	title: 'InReach Design System',
-		// 	// The url provided by Chromatic when it was published
-		// 	url: 'https://dev--632cabf2eef8a2954cd3cbc6.chromatic.com',
-		// },
-	},
 	typescript: {
 		check: false,
 		reactDocgen: process.env.SKIP_DOCS ? false : 'react-docgen-typescript',
@@ -94,7 +87,7 @@ const config: StorybookConfig = {
 					),
 					// '@weareinreach/api': path.resolve(__dirname, '../../api'),
 					'next-i18next': 'react-i18next',
-					'@next/font': 'storybook-nextjs-font-loader',
+					// 'next/font': 'storybook-nextjs-font-loader',
 				},
 				roots: [path.resolve(__dirname, '../../../apps/app/public')],
 				fallback: {

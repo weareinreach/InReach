@@ -1,10 +1,11 @@
-import { Stack, Text, Group, createStyles, useMantineTheme, Skeleton, Grid } from '@mantine/core'
+import { Stack, Text, Group, createStyles, useMantineTheme, Skeleton, rem } from '@mantine/core'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
+import { useTranslation } from 'next-i18next'
 import { useState, useRef, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
 
-import { Icon } from '~ui/icon'
+import { useCustomVariant } from '~ui/hooks'
 
+import { Badge } from './Badge'
 import { UserAvatar } from './UserAvatar'
 
 const useStyles = createStyles((theme) => ({
@@ -15,8 +16,8 @@ const useStyles = createStyles((theme) => ({
 		},
 	},
 	reviewText: {
-		paddingTop: theme.spacing.xl,
-		paddingBottom: theme.spacing.xl,
+		paddingTop: rem(24),
+		paddingBottom: rem(16),
 	},
 }))
 const isTextTruncated = (event: HTMLParagraphElement | null) => {
@@ -32,6 +33,7 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 	const [initialLoad, setInitialLoad] = useState(true)
 	const reviewTextRef = useRef<HTMLParagraphElement | null>(null)
 	const theme = useMantineTheme()
+	const variants = useCustomVariant()
 	const { classes } = useStyles()
 	const viewportSize = useViewportSize()
 	const { t, ready } = useTranslation()
@@ -54,32 +56,31 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 
 	if (initialLoad || forceLoading || !ready) {
 		return (
-			<Grid.Col sm={8}>
-				<Stack spacing='xl'>
-					<UserAvatar loading={true} />
-					<Stack className={classes.reviewText} spacing={8}>
-						<Skeleton />
-						<Skeleton />
-						<Skeleton width={100} mt={4} />
-					</Stack>
-					<Group sx={!verifiedUser ? { display: 'none' } : undefined} spacing={8}>
-						<Skeleton height={20} circle />
-						<Skeleton width={200} />
-					</Group>
+			<Stack spacing='xl' w='100%'>
+				<UserAvatar loading={true} />
+				<Stack className={classes.reviewText} spacing={8}>
+					<Skeleton variant={variants.Skeleton.text} width='100%' />
+					<Skeleton variant={variants.Skeleton.text} width='100%' />
+					<Skeleton variant={variants.Skeleton.text} width={100} mt={4} />
 				</Stack>
-			</Grid.Col>
+				{verifiedUser ? (
+					<Group spacing={8}>
+						<Skeleton height={20} circle />
+						<Skeleton variant={variants.Skeleton.utilitySm} width={200} />
+					</Group>
+				) : null}
+			</Stack>
 		)
 	}
 
 	return (
-		<Grid.Col sm={8}>
-			<Stack spacing={0}>
-				<UserAvatar user={user} subheading={reviewDate} />
-				<Stack className={classes.reviewText} spacing={0}>
-					<Text ref={reviewTextRef} lineClamp={lineClamp} component='p'>{`"${reviewText}"`}</Text>
+		<Stack spacing={0} align='flex-start'>
+			<UserAvatar user={user} subheading={reviewDate} />
+			<Stack className={classes.reviewText} spacing={0}>
+				<Text ref={reviewTextRef} lineClamp={lineClamp} component='p' m={0}>{`"${reviewText}"`}</Text>
+				{showMoreLink ? (
 					<Text
 						td='underline'
-						sx={!showMoreLink ? { display: 'none' } : undefined}
 						className={classes.showMore}
 						weight={theme.other.fontWeight.semibold}
 						onClick={() => {
@@ -88,15 +89,10 @@ export const UserReview = ({ user, reviewText, reviewDate, verifiedUser, forceLo
 					>
 						{showMoreText}
 					</Text>
-				</Stack>
-				{verifiedUser && (
-					<Group spacing={theme.spacing.xs}>
-						<Icon icon='carbon:checkmark-filled' height={20} color={theme.other.colors.primary.allyGreen} />
-						<Text color={theme.other.colors.secondary.darkGray}>{t('in-reach-verified-reviewer')}</Text>
-					</Group>
-				)}
+				) : null}
 			</Stack>
-		</Grid.Col>
+			{verifiedUser && <Badge variant='verifiedReviewer' />}
+		</Stack>
 	)
 }
 
@@ -110,6 +106,6 @@ type Props = {
 }
 
 type UserProps = {
-	image?: string
-	name?: string
+	image?: string | null
+	name?: string | null
 }

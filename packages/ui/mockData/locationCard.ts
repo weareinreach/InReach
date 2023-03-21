@@ -23,50 +23,68 @@ export const locationMock = {
 	websites: [],
 	phones: [],
 	photos: [],
+	hours: [],
 	reviews: [],
 	services: [
 		{
 			service: {
+				serviceName: {
+					key: 'whitman-walker-health.osvc_01GVH3VEVSNF9NH79R7HC9FHY6.name',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Get HIV care for newly diagnosed patients',
+					},
+				},
 				description: {
-					key: 'whitman-walker-health.osvc_01GSKV973TWEVJWHKJ61Y57773.desc',
-					ns: 'org-service',
+					key: 'whitman-walker-health.osvc_01GVH3VEVSNF9NH79R7HC9FHY6.description',
+					ns: 'org-data',
+					tsKey: {
+						text: "Whitman-Walker's Red Carpet program is their HIV Specialty Care program for people newly diagnosed with HIV or new to HIV care. Red Carpet is their way of connecting people living with HIV to medical care in a smooth and fast transition that fits easily into daily life. If you have insurance, please call us at 202.745.7000 and mention “Red Carpet.” Their staff will let you know whether they accept your insurance plan and will help you schedule an appointment. If you do not have insurance, please contact their Public Benefits & Insurance Navigation team at 202.745.6151.",
+					},
 				},
 				hours: [],
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'community-hiv-aids',
+							tsKey: 'community.hiv-aids',
 							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [],
 					},
 					{
 						attribute: {
-							tsKey: 'lang-lang-offered',
+							tsKey: 'sys.incompatible-info',
 							tsNs: 'attribute',
-						},
-						supplement: [
-							{
-								country: null,
-								language: {
-									languageName: 'English',
-									nativeName: 'English',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'system',
+										icon: null,
+									},
 								},
-								text: null,
-								data: null,
-							},
-						],
-					},
-					{
-						attribute: {
-							tsKey: 'sys-incompatible-info',
-							tsNs: 'attribute',
+							],
 						},
 						supplement: [
 							{
 								country: null,
 								language: null,
 								text: null,
+								govDist: null,
+								boolean: null,
 								data: {
 									json: [
 										{
@@ -97,6 +115,36 @@ export const locationMock = {
 							},
 						],
 					},
+					{
+						attribute: {
+							tsKey: 'lang.lang-offered',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'languages',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [
+							{
+								country: null,
+								language: {
+									languageName: 'English',
+									nativeName: 'English',
+								},
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
+					},
 				],
 				serviceAreas: [
 					{
@@ -119,6 +167,9 @@ export const locationMock = {
 				services: [
 					{
 						tag: {
+							name: 'HIV and sexual health',
+							tsKey: 'medical.hiv-and-sexual-health',
+							tsNs: 'services',
 							category: {
 								tsKey: 'medical.CATEGORYNAME',
 								tsNs: 'services',
@@ -132,17 +183,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accesslocation',
+									tsKey: 'serviceaccess.accesslocation',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV973TF5J3AS84GJQDQXJA',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNABVVEQER6F1YDHN7176',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Located at the Whitman-Walker location. Please call.',
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -151,6 +218,8 @@ export const locationMock = {
 												access_type: 'location',
 												access_value: '1525 14th St, NW Washington, DC 20005',
 												instructions: 'Located at the Whitman-Walker location. Please call.',
+												access_value_ES: '1525 14th St, NW Washington, DC 20005',
+												instructions_ES: 'Ubicado en la ubicación de Whitman-Walker. Por favor llama.',
 											},
 										},
 									},
@@ -162,17 +231,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accesslocation',
+									tsKey: 'serviceaccess.accesslocation',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV973VAA46AMHEEJ5KWYVM',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNABW7KQJEF273S43WEEH',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Located at the Max Robinson Center. Call to make an appointment.',
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -181,6 +266,8 @@ export const locationMock = {
 												access_type: 'location',
 												access_value: '2301 MLK Jr., Ave. SE Washington DC 20020',
 												instructions: 'Located at the Max Robinson Center. Call to make an appointment.',
+												access_value_ES: '2301 MLK Jr., Ave. SE Washington DC 20020',
+												instructions_ES: 'Ubicado en el Centro Max Robinson. Llama para hacer una cita.',
 											},
 										},
 									},
@@ -192,17 +279,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accesslink',
+									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV973V7XFD5Q3A3EK0WQGP',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNABWE903JYJ4MWE3CTNH',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Visit the webpage for more information.',
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -211,6 +314,8 @@ export const locationMock = {
 												access_type: 'link',
 												access_value: 'https://www.whitman-walker.org/care-program/hiv-care/',
 												instructions: 'Visit the webpage for more information.',
+												access_value_ES: 'https://www.whitman-walker.org/care-program/hiv-care/',
+												instructions_ES: 'Visita la página web para obtener más información.',
 											},
 										},
 									},
@@ -239,50 +344,69 @@ export const locationMock = {
 					},
 				],
 				emails: [],
+				userLists: [],
+				id: 'osvc_01GVH3VEVSNF9NH79R7HC9FHY6',
 			},
 		},
 		{
 			service: {
+				serviceName: {
+					key: 'whitman-walker-health.osvc_01GVH3VEW2ND36DB0XWAH1PQY0.name',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Get dental health services for HIV-positive individuals',
+					},
+				},
 				description: {
-					key: 'whitman-walker-health.osvc_01GSKV9742T9207X6DMR5EHGKB.desc',
-					ns: 'org-service',
+					key: 'whitman-walker-health.osvc_01GVH3VEW2ND36DB0XWAH1PQY0.description',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Whitman-Walker Health offers preventive and restorative dental health services including dental exam, teeth cleaning, mouth guard, orthodontics, prosthodontics, restorative treatment, root canal, scaling and root planing, tooth extraction, teeth whitening.',
+					},
 				},
 				hours: [],
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'community-hiv-aids',
+							tsKey: 'community.hiv-aids',
 							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [],
 					},
 					{
 						attribute: {
-							tsKey: 'lang-lang-offered',
+							tsKey: 'sys.incompatible-info',
 							tsNs: 'attribute',
-						},
-						supplement: [
-							{
-								country: null,
-								language: {
-									languageName: 'English',
-									nativeName: 'English',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'system',
+										icon: null,
+									},
 								},
-								text: null,
-								data: null,
-							},
-						],
-					},
-					{
-						attribute: {
-							tsKey: 'sys-incompatible-info',
-							tsNs: 'attribute',
+							],
 						},
 						supplement: [
 							{
 								country: null,
 								language: null,
 								text: null,
+								govDist: null,
+								boolean: null,
 								data: {
 									json: [
 										{
@@ -314,6 +438,36 @@ export const locationMock = {
 							},
 						],
 					},
+					{
+						attribute: {
+							tsKey: 'lang.lang-offered',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'languages',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [
+							{
+								country: null,
+								language: {
+									languageName: 'English',
+									nativeName: 'English',
+								},
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
+					},
 				],
 				serviceAreas: [
 					{
@@ -336,6 +490,9 @@ export const locationMock = {
 				services: [
 					{
 						tag: {
+							name: 'Dental care',
+							tsKey: 'medical.dental-care',
+							tsNs: 'services',
 							category: {
 								tsKey: 'medical.CATEGORYNAME',
 								tsNs: 'services',
@@ -349,17 +506,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accessphone',
+									tsKey: 'serviceaccess.accessphone',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV9742050VYZEX8775DS3Z',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNAC37R59WJV0PX2BE99F',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Call to make a dental appointment.',
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -368,6 +541,8 @@ export const locationMock = {
 												access_type: 'phone',
 												access_value: ' 202-745-7000',
 												instructions: 'Call to make a dental appointment. ',
+												access_value_ES: ' 202-745-7000',
+												instructions_ES: 'Llama para hacer una cita dental.',
 											},
 										},
 									},
@@ -379,17 +554,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accesslink',
+									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV97420TM4JR5JQ9989Z8B',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNAC40GBD14WSYTPJ6BCH',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Check the website for details on specific dental services.',
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -398,6 +589,9 @@ export const locationMock = {
 												access_type: 'link',
 												access_value: 'https://www.whitman-walker.org/dental-health',
 												instructions: 'Check the website for details on specific dental services.',
+												access_value_ES: 'https://www.whitman-walker.org/dental-health',
+												instructions_ES:
+													'Visita el sitio web para obtener detalles sobre servicios dentales específicos.',
 											},
 										},
 									},
@@ -434,130 +628,271 @@ export const locationMock = {
 							email: 'appointments@whitman-walker.org',
 							legacyDesc: 'Schedule An Appointment ',
 							description: null,
+							primary: true,
 						},
 					},
 				],
+				userLists: [],
+				id: 'osvc_01GVH3VEW2ND36DB0XWAH1PQY0',
 			},
 		},
 		{
 			service: {
+				serviceName: {
+					key: 'whitman-walker-health.osvc_01GVH3VEW3CZ8P9VS6A5MA0R7Z.name',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Receive behavioral health services',
+					},
+				},
 				description: {
-					key: 'whitman-walker-health.osvc_01GSKV97439FQYEMMV1ST1J4RN.desc',
-					ns: 'org-service',
+					key: 'whitman-walker-health.osvc_01GVH3VEW3CZ8P9VS6A5MA0R7Z.description',
+					ns: 'org-data',
+					tsKey: {
+						text: "Whitman-Walker's Behavioral Health programs include peer support, substance use treatment, psychotherapy, psychiatry, and gender affirming assessment. They offer services to adults and youth. The behavioral healthcare team includes licensed psychotherapists (social workers, professional counselors, and marriage and family therapists, psychologists), psychiatric providers (medical doctors and nurse practitioners), and highly trained peers and graduate interns. The assessment and referral process will get you started and will help them determine together which services are right for you.",
+					},
 				},
 				hours: [],
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'community-adults',
+							tsKey: 'community.adults',
 							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-bisexual',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-gay',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-gender-nonconforming',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-hiv-aids',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-lesbian',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-lgbtq-youth',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-nonbinary',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-queer',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-teens',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-transgender',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-trans-youth',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'lang-lang-offered',
-							tsNs: 'attribute',
-						},
-						supplement: [
-							{
-								country: null,
-								language: {
-									languageName: 'English',
-									nativeName: 'English',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
 								},
-								text: null,
-								data: null,
-							},
-						],
+							],
+						},
+						supplement: [],
 					},
 					{
 						attribute: {
-							tsKey: 'sys-incompatible-info',
+							tsKey: 'community.bisexual',
 							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.gender-nonconforming',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.hiv-aids',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.gay',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.lesbian',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.lgbtq-youth',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.nonbinary',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.queer',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.teens',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.trans-youth',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'community.transgender',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'sys.incompatible-info',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'system',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [
 							{
 								country: null,
 								language: null,
 								text: null,
+								govDist: null,
+								boolean: null,
 								data: {
 									json: [
 										{
@@ -585,6 +920,36 @@ export const locationMock = {
 							},
 						],
 					},
+					{
+						attribute: {
+							tsKey: 'lang.lang-offered',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'languages',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [
+							{
+								country: null,
+								language: {
+									languageName: 'English',
+									nativeName: 'English',
+								},
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
+					},
 				],
 				serviceAreas: [
 					{
@@ -607,6 +972,9 @@ export const locationMock = {
 				services: [
 					{
 						tag: {
+							name: 'Support groups',
+							tsKey: 'mental-health.support-groups',
+							tsNs: 'services',
 							category: {
 								tsKey: 'mental-health.CATEGORYNAME',
 								tsNs: 'services',
@@ -616,6 +984,9 @@ export const locationMock = {
 					},
 					{
 						tag: {
+							name: 'Private therapy and counseling',
+							tsKey: 'mental-health.private-therapy-and-counseling',
+							tsNs: 'services',
 							category: {
 								tsKey: 'mental-health.CATEGORYNAME',
 								tsNs: 'services',
@@ -629,17 +1000,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accesslink',
+									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV97432VN90BJV978SG3RM',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNAC5E8ZD1NMHV0C76PHA',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Visit the website for more information and a full list of services.',
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -648,6 +1035,9 @@ export const locationMock = {
 												access_type: 'link',
 												access_value: 'https://www.whitman-walker.org/behavioral-health/',
 												instructions: 'Visit the website for more information and a full list of services.',
+												access_value_ES: 'https://www.whitman-walker.org/behavioral-health/',
+												instructions_ES:
+													'Visita el sitio web para obtener más información y una lista completa de servicios.',
 											},
 										},
 									},
@@ -659,57 +1049,87 @@ export const locationMock = {
 				reviews: [],
 				phones: [],
 				emails: [],
+				userLists: [],
+				id: 'osvc_01GVH3VEW3CZ8P9VS6A5MA0R7Z',
 			},
 		},
 		{
 			service: {
+				serviceName: {
+					key: 'whitman-walker-health.osvc_01GVH3VEWHDC6F5FCQHB0H5GD6.name',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Get gender affirming hormone therapy',
+					},
+				},
 				description: {
-					key: 'whitman-walker-health.osvc_01GSKV974DKH1RTA3MQ4JZKEFA.desc',
-					ns: 'org-service',
+					key: 'whitman-walker-health.osvc_01GVH3VEWHDC6F5FCQHB0H5GD6.description',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Your medical provider (e.g. a doctor, nurse practitioner or physician assistant) will work with you to understand your goals and needs before prescribing medication. Whitman-Walker will follow an informed consent model for gender affirming hormone therapy with people ages 18+. If someone is working with them who is under the age of 18, Whitman-Walker will require a mental health assessment as well as parental or guardian consent.',
+					},
 				},
 				hours: [],
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'community-transgender',
+							tsKey: 'community.trans-youth',
 							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community-trans-youth',
-							tsNs: 'attribute',
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'lang-lang-offered',
-							tsNs: 'attribute',
-						},
-						supplement: [
-							{
-								country: null,
-								language: {
-									languageName: 'English',
-									nativeName: 'English',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
 								},
-								text: null,
-								data: null,
-							},
-						],
+							],
+						},
+						supplement: [],
 					},
 					{
 						attribute: {
-							tsKey: 'sys-incompatible-info',
+							tsKey: 'community.transgender',
 							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'sys.incompatible-info',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'system',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [
 							{
 								country: null,
 								language: null,
 								text: null,
+								govDist: null,
+								boolean: null,
 								data: {
 									json: [
 										{
@@ -750,6 +1170,36 @@ export const locationMock = {
 							},
 						],
 					},
+					{
+						attribute: {
+							tsKey: 'lang.lang-offered',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'languages',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [
+							{
+								country: null,
+								language: {
+									languageName: 'English',
+									nativeName: 'English',
+								},
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
+					},
 				],
 				serviceAreas: [
 					{
@@ -772,6 +1222,9 @@ export const locationMock = {
 				services: [
 					{
 						tag: {
+							name: 'Trans Health - Hormone Therapy',
+							tsKey: 'medical.trans-health-hormone-therapy',
+							tsNs: 'services',
 							category: {
 								tsKey: 'medical.CATEGORYNAME',
 								tsNs: 'services',
@@ -785,17 +1238,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accessphone',
+									tsKey: 'serviceaccess.accessphone',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974DY902DYR7N2CZF4QW',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNACAC6191GM2HGQSQDJZ',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Call for more information about their Gender Affirming Services.',
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -804,6 +1273,9 @@ export const locationMock = {
 												access_type: 'phone',
 												access_value: '202-797-4457',
 												instructions: 'Call for more information about their Gender Affirming Services.',
+												access_value_ES: '202-797-4457',
+												instructions_ES:
+													'Llama para obtener más información sobre sus servicios de afirmación de género.',
 											},
 										},
 									},
@@ -815,17 +1287,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accesslink',
+									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974DTD839E5A94C899Q3',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNACB3VXFJTM2E2V5YMM2',
+											ns: 'org-data',
+											tsKey: {
+												text: "Visit the website to learn more about Whitman-Walker Health's gender affirming hormone therapy.",
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -836,6 +1324,10 @@ export const locationMock = {
 													'https://www.whitman-walker.org/care-program/transgender-care-hormone-therapy-ht-hrt',
 												instructions:
 													"Visit the website to learn more about Whitman-Walker Health's gender affirming hormone therapy. ",
+												access_value_ES:
+													'https://www.whitman-walker.org/care-program/transgender-care-hormone-therapy-ht-hrt',
+												instructions_ES:
+													'Visita el sitio web para obtener más información sobre la terapia hormonal de afirmación de género de Whitman-Walker Health.',
 											},
 										},
 									},
@@ -847,17 +1339,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accessemail',
+									tsKey: 'serviceaccess.accessemail',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974D47QBSHEERVMHPTB5',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNACB2KY5GE6K9V2PCRDT',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Email for more information about their Gender Affirming Services.',
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -866,6 +1374,9 @@ export const locationMock = {
 												access_type: 'email',
 												access_value: 'Transhealth@whitman-walker.org',
 												instructions: 'Email for more information about their Gender Affirming Services.',
+												access_value_ES: 'Transhealth@whitman-walker.org',
+												instructions_ES:
+													'Envía un correo electrónico para obtener más información sobre sus servicios de afirmación de género.',
 											},
 										},
 									},
@@ -877,17 +1388,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accesslocation',
+									tsKey: 'serviceaccess.accesslocation',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974D767RB2H3XKPWH98A',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNACB1QRE0VMGQCQ2MEAD',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Gender affirming hormone therapy services are offered at the Whitman-Walker at 1525 and Max Robinson Center locations.',
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -898,6 +1425,9 @@ export const locationMock = {
 													'Whitman-Walker at 1525\n1525 14th St, NW Washington, DC 20005\n\nand\n\nMax Robinson Center\n2301 MLK Jr., Ave. SE Washington DC 20020',
 												instructions:
 													'Gender affirming hormone therapy services are offered at the Whitman-Walker at 1525 and Max Robinson Center locations. ',
+												access_value_ES: 'Whitman-Walker at 1525\n1525 14th St, NW Washington, DC 20005\n',
+												instructions_ES:
+													'Los servicios de terapia hormonal de afirmación de género se ofrecen en las ubicaciones de Whitman-Walker en 1525 y Max Robinson Center.',
 											},
 										},
 									},
@@ -934,30 +1464,65 @@ export const locationMock = {
 							email: 'Transhealth@whitman-walker.org',
 							legacyDesc: 'Gender Affirming Services',
 							description: null,
+							primary: false,
 						},
 					},
 				],
+				userLists: [],
+				id: 'osvc_01GVH3VEWHDC6F5FCQHB0H5GD6',
 			},
 		},
 		{
 			service: {
+				serviceName: {
+					key: 'whitman-walker-health.osvc_01GVH3VEWK33YAKZMQ2W3GT4QK.name',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Access PEP and PrEP',
+					},
+				},
 				description: {
-					key: 'whitman-walker-health.osvc_01GSKV974EC3S5D0K87BC62R1M.desc',
-					ns: 'org-service',
+					key: 'whitman-walker-health.osvc_01GVH3VEWK33YAKZMQ2W3GT4QK.description',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Whitman-Walker offers access to both PEP and PrEP. PEP is a 28-day course of medication that should be used only in emergency situations and must be started within 72 hours after a recent, possible exposure to HIV. If you think you’ve recently been exposed to HIV during sex or through sharing needles and works to prepare drugs, or if you’ve been sexually assaulted, please call them at 202.797.4439 right away. “PrEP” stands for Pre-Exposure Prophylaxis. It is an FDA-approved once-a-day prevention pill for people who don’t have HIV but who have a greater exposure to HIV through sex or other behaviors. When taken every day, PrEP is up to 99% effective at preventing an HIV infection that is transmitted through sex. PrEP does not prevent other STIs or pregnancy. You can use PrEP with other prevention methods, like condoms, to offer more protection as PrEP. For PrEP to work effectively, people who use it must take it every day as prescribed and follow up with their doctor or medical team member every 3 months for routine screening and discussion of barriers to adherence.',
+					},
 				},
 				hours: [],
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'community-hiv-aids',
+							tsKey: 'community.hiv-aids',
 							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'community',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [],
 					},
 					{
 						attribute: {
-							tsKey: 'lang-lang-offered',
+							tsKey: 'lang.lang-offered',
 							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'languages',
+										icon: null,
+									},
+								},
+							],
 						},
 						supplement: [
 							{
@@ -967,6 +1532,8 @@ export const locationMock = {
 									nativeName: 'English',
 								},
 								text: null,
+								govDist: null,
+								boolean: null,
 								data: null,
 							},
 						],
@@ -993,6 +1560,9 @@ export const locationMock = {
 				services: [
 					{
 						tag: {
+							name: 'HIV and sexual health',
+							tsKey: 'medical.hiv-and-sexual-health',
+							tsNs: 'services',
 							category: {
 								tsKey: 'medical.CATEGORYNAME',
 								tsNs: 'services',
@@ -1006,17 +1576,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accesslink',
+									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974F61K6BZXGKH30137N',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNACC9C6R4HYCYEXTFP11',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Visit the link to learn more about PrEP and access services.',
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -1025,6 +1611,9 @@ export const locationMock = {
 												access_type: 'link',
 												access_value: 'https://www.whitman-walker.org/care-program/prep/',
 												instructions: 'Visit the link to learn more about PrEP and access services.',
+												access_value_ES: 'https://www.whitman-walker.org/care-program/prep/',
+												instructions_ES:
+													'Visita el enlace para obtener más información sobre PrEP y acceder a los servicios.',
 											},
 										},
 									},
@@ -1036,17 +1625,33 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
-									tsKey: 'serviceaccess-accesslink',
+									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
 								},
 								supplement: [
 									{
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GSKV974FWT0QER9B8K2VA24K',
-											ns: 'org-service',
+											key: 'whitman-walker-health.attribute.atts_01GVXZNACCDWPHW3FQKEV1P6PK',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Visit the link to learn more about PEP and access services.',
+											},
 										},
+										govDist: null,
+										boolean: null,
 										data: {
 											json: {
 												_id: {
@@ -1055,6 +1660,9 @@ export const locationMock = {
 												access_type: 'link',
 												access_value: 'https://www.whitman-walker.org/care-program/pep/',
 												instructions: 'Visit the link to learn more about PEP and access services.',
+												access_value_ES: 'https://www.whitman-walker.org/care-program/pep/',
+												instructions_ES:
+													'Visita el enlace para obtener más información sobre PEP y acceder a los servicios.',
 											},
 										},
 									},
@@ -1066,6 +1674,8 @@ export const locationMock = {
 				reviews: [],
 				phones: [],
 				emails: [],
+				userLists: [],
+				id: 'osvc_01GVH3VEWK33YAKZMQ2W3GT4QK',
 			},
 		},
 	],
@@ -1079,4 +1689,5 @@ export const locationMock = {
 	primary: true,
 	longitude: -77.032,
 	latitude: 38.91,
+	id: 'oloc_01GVH3VEVBERFNA9PHHJYEBGA3',
 } satisfies LocationCardProps['location']

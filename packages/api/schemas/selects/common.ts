@@ -9,6 +9,11 @@ export const freeText = {
 	select: {
 		key: true,
 		ns: true,
+		tsKey: {
+			select: {
+				text: true,
+			},
+		},
 	},
 } satisfies Prisma.FreeTextArgs
 
@@ -69,23 +74,33 @@ export const attributes = {
 	where: {
 		attribute: {
 			active: true,
+			categories: {
+				some: {
+					category: {
+						active: true,
+					},
+				},
+			},
 		},
 	},
 	select: {
 		attribute: {
 			select: {
+				tsKey: true,
+				tsNs: true,
+				icon: true,
+				iconBg: true,
+				showOnLocation: true,
 				categories: {
 					select: {
 						category: {
 							select: {
-								ns: true,
 								tag: true,
+								icon: true,
 							},
 						},
 					},
 				},
-				tsKey: true,
-				tsNs: true,
 			},
 		},
 		supplement: {
@@ -97,12 +112,8 @@ export const attributes = {
 						nativeName: true,
 					},
 				},
-				text: {
-					select: {
-						ns: true,
-						key: true,
-					},
-				},
+				text: freeText,
+				govDist: govDistWithoutGeo,
 				boolean: true,
 				data: true,
 			},

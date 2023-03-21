@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { StorybookGrid } from '~ui/layouts/BodyGrid'
+import { StorybookGridDouble } from '~ui/layouts/BodyGrid'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
 import { UserReviewSubmit as UserReviewPromptCompnt } from './UserReviewSubmit'
@@ -43,7 +43,7 @@ export default {
 		},
 	},
 	args: {},
-	decorators: [StorybookGrid],
+	decorators: [StorybookGridDouble],
 } satisfies Meta<typeof UserReviewPromptCompnt>
 
 type StoryDef = StoryObj<typeof UserReviewPromptCompnt>

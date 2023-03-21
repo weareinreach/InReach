@@ -1,6 +1,13 @@
 import { type ApiOutput } from '@weareinreach/api'
 
 export const mockServiceData = {
+	serviceName: {
+		key: 'larkin-street-youth-services.osvc_01GVH3VDMSN34BACQDMY6S5GPM.name',
+		ns: 'org-data',
+		tsKey: {
+			text: 'Get education and employment services for youth ages 24 and under',
+		},
+	},
 	services: [
 		{
 			tag: {
@@ -21,7 +28,7 @@ export const mockServiceData = {
 			districts: [
 				{
 					govDist: {
-						id: 'gdst_01GSKV71FAE5WQ4S7CPMCABW1F',
+						id: 'gdst_01GVXZM7HZ4YR0DNSYHST80GXS',
 						name: 'California',
 						slug: 'us-california',
 						iso: 'US-CA',
@@ -29,7 +36,7 @@ export const mockServiceData = {
 						country: {
 							cca2: 'US',
 							cca3: 'USA',
-							id: 'ctry_01GSKV6PZ0GFFX5TBZA6AJ3F8T',
+							id: 'ctry_01GVXZJT2JD3E5HN892PH78C2C',
 							name: 'United States',
 							dialCode: null,
 							flag: '🇺🇸',
@@ -50,7 +57,7 @@ export const mockServiceData = {
 				},
 				{
 					govDist: {
-						id: 'gdst_01GSKV71NACRZEKSRA3RNBWANK',
+						id: 'gdst_01GVXZM7KJEJ4JAZ9T3BB8TAKP',
 						name: 'San Francisco',
 						slug: 'us-california-san-francisco-county',
 						iso: null,
@@ -58,7 +65,7 @@ export const mockServiceData = {
 						country: {
 							cca2: 'US',
 							cca3: 'USA',
-							id: 'ctry_01GSKV6PZ0GFFX5TBZA6AJ3F8T',
+							id: 'ctry_01GVXZJT2JD3E5HN892PH78C2C',
 							name: 'United States',
 							dialCode: null,
 							flag: '🇺🇸',
@@ -75,7 +82,7 @@ export const mockServiceData = {
 						tsKey: 'us-california-san-francisco-county',
 						tsNs: 'gov-dist',
 						parent: {
-							id: 'gdst_01GSKV71FAE5WQ4S7CPMCABW1F',
+							id: 'gdst_01GVXZM7HZ4YR0DNSYHST80GXS',
 							name: 'California',
 							slug: 'us-california',
 							iso: 'US-CA',
@@ -83,7 +90,7 @@ export const mockServiceData = {
 							country: {
 								cca2: 'US',
 								cca3: 'USA',
-								id: 'ctry_01GSKV6PZ0GFFX5TBZA6AJ3F8T',
+								id: 'ctry_01GVXZJT2JD3E5HN892PH78C2C',
 								name: 'United States',
 								dialCode: null,
 								flag: '🇺🇸',
@@ -110,93 +117,80 @@ export const mockServiceData = {
 	attributes: [
 		{
 			attribute: {
+				tsKey: 'community.homeless',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
 				categories: [
 					{
 						category: {
-							ns: 'attribute',
 							tag: 'community',
+							icon: null,
 						},
 					},
 				],
-				tsKey: 'community-homeless',
-				tsNs: 'attribute',
 			},
 			supplement: [],
 		},
 		{
 			attribute: {
+				tsKey: 'community.lgbtq-youth',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
 				categories: [
 					{
 						category: {
-							ns: 'attribute',
 							tag: 'community',
+							icon: null,
 						},
 					},
 				],
-				tsKey: 'community-lgbtq-youth',
-				tsNs: 'attribute',
 			},
 			supplement: [],
 		},
 		{
 			attribute: {
+				tsKey: 'community.teens',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
 				categories: [
 					{
 						category: {
-							ns: 'attribute',
 							tag: 'community',
+							icon: null,
 						},
 					},
 				],
-				tsKey: 'community-teens',
-				tsNs: 'attribute',
 			},
 			supplement: [],
 		},
 		{
 			attribute: {
-				categories: [
-					{
-						category: {
-							ns: 'attribute',
-							tag: 'languages',
-						},
-					},
-				],
-				tsKey: 'lang-lang-offered',
+				tsKey: 'sys.incompatible-info',
 				tsNs: 'attribute',
-			},
-			supplement: [
-				{
-					country: null,
-					language: {
-						languageName: 'English',
-						nativeName: 'English',
-					},
-					text: null,
-					boolean: null,
-					data: null,
-				},
-			],
-		},
-		{
-			attribute: {
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
 				categories: [
 					{
 						category: {
-							ns: 'attribute',
 							tag: 'system',
+							icon: null,
 						},
 					},
 				],
-				tsKey: 'sys-incompatible-info',
-				tsNs: 'attribute',
 			},
 			supplement: [
 				{
 					country: null,
 					language: null,
 					text: null,
+					govDist: null,
 					boolean: null,
 					data: {
 						json: [
@@ -232,6 +226,36 @@ export const mockServiceData = {
 				},
 			],
 		},
+		{
+			attribute: {
+				tsKey: 'lang.lang-offered',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'languages',
+							icon: null,
+						},
+					},
+				],
+			},
+			supplement: [
+				{
+					country: null,
+					language: {
+						languageName: 'English',
+						nativeName: 'English',
+					},
+					text: null,
+					govDist: null,
+					boolean: null,
+					data: null,
+				},
+			],
+		},
 	],
 	phones: [],
 	emails: [],
@@ -240,25 +264,32 @@ export const mockServiceData = {
 			attributes: [
 				{
 					attribute: {
+						tsKey: 'serviceaccess.accesslocation',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
 						categories: [
 							{
 								category: {
-									ns: 'attribute',
 									tag: 'service-access-instructions',
+									icon: null,
 								},
 							},
 						],
-						tsKey: 'serviceaccess-accesslocation',
-						tsNs: 'attribute',
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: {
-								ns: 'org-service',
-								key: 'larkin-street-youth-services.attribute.atts_01GSKV960T544W381KPN759PP2',
+								key: 'larkin-street-youth-services.attribute.atts_01GVXZN9E07W1E9QB5XTFC7Z5W',
+								ns: 'org-data',
+								tsKey: {
+									text: 'The above are drop-in service hours for education. Drop-in hours for employment services are Monday, Tuesday: 10 a.m. to noon, and 2:30 to 4:30 p.m. Wednesday: 10 a.m. to noon, and 1 to 2 p.m. Thursday: 10 a.m. to noon, and 1 to 3 p.m. Friday: 10 a.m. to 1 p.m.',
+								},
 							},
+							govDist: null,
 							boolean: null,
 							data: {
 								json: {
@@ -282,25 +313,32 @@ export const mockServiceData = {
 			attributes: [
 				{
 					attribute: {
+						tsKey: 'serviceaccess.accessphone',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
 						categories: [
 							{
 								category: {
-									ns: 'attribute',
 									tag: 'service-access-instructions',
+									icon: null,
 								},
 							},
 						],
-						tsKey: 'serviceaccess-accessphone',
-						tsNs: 'attribute',
 					},
 					supplement: [
 						{
 							country: null,
 							language: null,
 							text: {
-								ns: 'org-service',
-								key: 'larkin-street-youth-services.attribute.atts_01GSKV960T0Y3DBA04QZE0HR0W',
+								key: 'larkin-street-youth-services.attribute.atts_01GVXZN9E1GH84KYBBE383GYN0',
+								ns: 'org-data',
+								tsKey: {
+									text: 'Call for more information.',
+								},
 							},
+							govDist: null,
 							boolean: null,
 							data: {
 								json: {
@@ -330,7 +368,7 @@ export const mockServiceData = {
 				postCode: '94109',
 				primary: true,
 				govDist: {
-					id: 'gdst_01GSKV71FAE5WQ4S7CPMCABW1F',
+					id: 'gdst_01GVXZM7HZ4YR0DNSYHST80GXS',
 					name: 'California',
 					slug: 'us-california',
 					iso: 'US-CA',
@@ -338,7 +376,7 @@ export const mockServiceData = {
 					country: {
 						cca2: 'US',
 						cca3: 'USA',
-						id: 'ctry_01GSKV6PZ0GFFX5TBZA6AJ3F8T',
+						id: 'ctry_01GVXZJT2JD3E5HN892PH78C2C',
 						name: 'United States',
 						dialCode: null,
 						flag: '🇺🇸',
@@ -359,7 +397,7 @@ export const mockServiceData = {
 				country: {
 					cca2: 'US',
 					cca3: 'USA',
-					id: 'ctry_01GSKV6PZ0GFFX5TBZA6AJ3F8T',
+					id: 'ctry_01GVXZJT2JD3E5HN892PH78C2C',
 					name: 'United States',
 					dialCode: null,
 					flag: '🇺🇸',
@@ -373,4 +411,14 @@ export const mockServiceData = {
 			},
 		},
 	],
+	id: 'osvc_01GVH3VDMSN34BACQDMY6S5GPM',
+	createdAt: new Date('2020-03-27T18:54:17.534Z'),
+	updatedAt: new Date('2022-10-25T11:28:34.601Z'),
+	description: {
+		key: 'larkin-street-youth-services.osvc_01GVH3VDMSN34BACQDMY6S5GPM.description',
+		ns: 'org-data',
+		tsKey: {
+			text: 'Larkin Street Academy Services offers job readiness, college readiness, computer classes, job placement and retention, internships, tutoring, GED tutoring and classes, secondary and post-secondary school enrollment and support, mindfulness, visual and performing arts. Offices are open Monday through Thursday, 9:00 AM - 16:00 PM, appointments only.',
+		},
+	},
 } satisfies ApiOutput['service']['byId']

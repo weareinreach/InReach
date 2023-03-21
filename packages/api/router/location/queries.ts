@@ -1,8 +1,9 @@
 import { TRPCError } from '@trpc/server'
+import { z } from 'zod'
 
 import { defineRouter, publicProcedure, handleError } from '~api/lib'
 import { id, orgId } from '~api/schemas/common'
-import { isPublic } from '~api/schemas/selects/common'
+import { freeText, isPublic } from '~api/schemas/selects/common'
 import { orgLocationInclude } from '~api/schemas/selects/org'
 
 export const queries = defineRouter({
@@ -13,7 +14,7 @@ export const queries = defineRouter({
 					id: input.id,
 					...isPublic,
 				},
-				...orgLocationInclude,
+				select: { ...orgLocationInclude(ctx).select, description: freeText },
 			})
 			return location
 		} catch (error) {
@@ -34,4 +35,11 @@ export const queries = defineRouter({
 			handleError(error)
 		}
 	}),
+	getNameById: publicProcedure.input(z.string()).query(
+		async ({ ctx, input }) =>
+			await ctx.prisma.orgLocation.findUniqueOrThrow({
+				where: { id: input },
+				select: { name: true },
+			})
+	),
 })

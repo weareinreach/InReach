@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { StorybookGrid } from '~ui/layouts/BodyGrid'
+import { StorybookGridDouble } from '~ui/layouts/BodyGrid'
 
 import { AlertMessage as AlertMessageCompnent } from './AlertMessage'
 
@@ -14,7 +14,7 @@ const Story = {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=212%3A8848&t=sleVeGl2lJv7Df18-4',
 		},
 	},
-	decorators: [StorybookGrid],
+	decorators: [StorybookGridDouble],
 } satisfies Meta<typeof AlertMessageCompnent>
 export default Story
 

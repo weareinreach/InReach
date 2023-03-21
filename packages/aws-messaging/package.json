@@ -19,19 +19,19 @@
 		"package": "cd dist && zip -r bundle.zip *"
 	},
 	"dependencies": {
-		"@aws-lambda-powertools/logger": "1.5.1"
+		"@aws-lambda-powertools/logger": "1.7.0"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.111",
-		"@types/eslint": "8.21.1",
-		"@types/node": "18.14.2",
+		"@types/aws-lambda": "8.10.114",
+		"@types/eslint": "8.21.3",
+		"@types/node": "18.15.5",
 		"@types/prettier": "2.7.2",
 		"@vercel/ncc": "0.36.1",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
-		"eslint": "8.35.0",
-		"prettier": "2.8.4",
-		"typescript": "4.9.5"
+		"eslint": "8.36.0",
+		"prettier": "2.8.5",
+		"typescript": "5.0.2"
 	}
 }

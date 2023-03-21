@@ -1,57 +1,34 @@
-import { Text, createStyles, useMantineTheme, Anchor } from '@mantine/core'
+import { Anchor, Variants } from '@mantine/core'
 import NextLink, { type LinkProps } from 'next/link'
 
-const useStyles = createStyles((theme) => ({
-	link: {
-		color: `${theme.other.colors.secondary.black} !important`,
-		paddingBottom: theme.spacing.sm,
-		paddingTop: theme.spacing.sm,
-		paddingLeft: theme.spacing.xs,
-		paddingRight: theme.spacing.xs,
-		borderRadius: theme.spacing.sm,
-		textDecoration: 'underline !important',
+const externalPrefixes = ['http', 'tel:', 'mailto:'] as const
 
-		'&:hover': {
-			backgroundColor: theme.other.colors.primary.lightGray,
-			textDecoration: 'none !important',
-		},
-	},
-	text: {},
-}))
+export const isExternal = (href: unknown): href is ExternalLink => {
+	const regex = new RegExp(`${externalPrefixes.map((prefix) => `(?:${prefix})|`)}`)
+	return Boolean(typeof href === 'string' && regex.test(href))
+}
 
-export const Link = ({ children, href, ...rest }: Props) => {
-	const { classes } = useStyles()
-	const theme = useMantineTheme()
-
-	if (typeof href === 'string' && href.substring(0, 3) === 'http') {
+export const Link = ({ children, href, external, ...rest }: Props) => {
+	if (external === true || href === undefined || isExternal(href)) {
 		return (
-			<Anchor
-				component='a'
-				href={href}
-				className={classes.link}
-				fw={theme.other.fontWeight.semibold}
-				variant='link'
-				{...rest}
-			>
+			<Anchor component='a' href={href as string} target='_blank' {...rest}>
 				{children}
 			</Anchor>
 		)
 	}
 
 	return (
-		<Text
-			component={NextLink}
-			href={href}
-			className={classes.link}
-			fw={theme.other.fontWeight.semibold}
-			variant='link'
-			{...rest}
-		>
+		<Anchor component={NextLink} href={href} {...rest}>
 			{children}
-		</Text>
+		</Anchor>
 	)
 }
 
+export type InternalLink = LinkProps['href']
+export type ExternalLink = `${(typeof externalPrefixes)[number]}${string}`
+
 interface Props extends Omit<LinkProps, 'href'> {
-	href: LinkProps['href'] | `http${string}`
+	href?: InternalLink | ExternalLink
+	external?: boolean
+	variant?: Variants<'inline' | 'inlineInverted'>
 }

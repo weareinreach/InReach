@@ -1,11 +1,13 @@
 import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { translatedLangs, LocaleCodes } from '@weareinreach/api/generated/languages'
 import { RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
+import { Router } from 'next/router'
 
-import { WithI18n, WithMantine, WithTRPC } from './decorators'
-import { i18n, CustomLocales } from './i18next'
+import { WithI18n, WithMantine, WithTRPC, Layouts, type LayoutsDecorator } from './decorators'
+import { i18n } from './i18next'
 import authStates from './mockAuthStates'
 import { Viewports } from './types'
 
@@ -65,25 +67,19 @@ export const globalTypes = {
 		defaultValue: 'en',
 		toolbar: {
 			icon: 'globe',
-			items: [
-				{ value: 'en', right: '🇺🇸', title: 'English' },
-				// { value: 'fr', right: '🇫🇷', title: 'Français' },
-				{ value: 'es', right: '🇪🇸', title: 'Español' },
-				// { value: 'zh', right: '🇨🇳', title: '中文' },
-				// { value: 'kr', right: '🇰🇷', title: '한국어' },
-			],
+			items: translatedLangs.map((lang) => ({ value: lang.localeCode, title: lang.languageName })),
 		},
 	},
 }
 
-export const decorators = [WithMantine, WithI18n, mswDecorator, WithTRPC]
+export const decorators = [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC]
 
 declare module '@storybook/react' {
 	export interface Parameters {
 		nextjs?: {
-			router?: Partial<BaseRouter>
+			router?: Partial<BaseRouter & { push: Router['push'] }>
 		}
-		locale?: CustomLocales[number]
+		locale?: LocaleCodes
 		i18n?: typeof i18n
 		viewport?: {
 			viewports?: typeof INITIAL_VIEWPORTS
@@ -93,9 +89,10 @@ declare module '@storybook/react' {
 			type: 'figma'
 			url: `https://${string}`
 		}
-		layout?: 'centered' | 'fullscreen' | 'padded'
 		msw?: RequestHandler[] | { handlers: RequestHandler[] | Record<string, RequestHandler> }
 		nextAuthMock?: { session: keyof typeof authStates }
 		badges?: BADGE[]
+		layout?: 'centered' | 'fullscreen' | 'padded'
+		layoutWrapper?: LayoutsDecorator
 	}
 }

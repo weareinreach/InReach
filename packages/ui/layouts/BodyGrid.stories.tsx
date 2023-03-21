@@ -19,17 +19,14 @@ const Story: Meta<typeof BodyGridComponent> = {
 export const BodyGrid: StoryObj<typeof BodyGridComponent> = {
 	render: () => {
 		const columns = []
-		for (let i = 0; i < 12; i++) {
+		for (let i = 0; i < 6; i++) {
 			columns.push(
-				<Grid.Col md={6}>
+				<Grid.Col>
 					<Box
 						sx={(theme) => ({
 							backgroundColor: theme.other.colors.tertiary.lightBlue,
-							height: 250,
+							height: '35vh',
 							textAlign: 'center',
-							[theme.fn.largerThan('md')]: {
-								height: '95vh',
-							},
 						})}
 					>
 						{i + 1}

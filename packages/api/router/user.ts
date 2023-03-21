@@ -1,5 +1,5 @@
-import { createCognitoUser } from '@weareinreach/auth'
-import { type Prisma } from '@weareinreach/db'
+import { createCognitoUser, forgotPassword } from '@weareinreach/auth'
+import { z } from 'zod'
 
 import { handleError } from '~api/lib'
 import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
@@ -12,14 +12,13 @@ import {
 
 export const userRouter = defineRouter({
 	create: publicProcedure.input(CreateUser).mutation(async ({ ctx, input }) => {
+		// TODO: [IN-793] Alter signup input to match with Signup Flow data.
 		try {
 			const newUser = await ctx.prisma.$transaction(async (tx) => {
 				const user = await tx.user.create(input.prisma)
 				const cognitoUser = await createCognitoUser(input.cognito)
-				return {
-					user,
-					cognitoUser,
-				}
+				if (user.id && cognitoUser) return { success: true }
+				return { success: false }
 			})
 			return newUser
 		} catch (error) {
@@ -124,4 +123,11 @@ export const userRouter = defineRouter({
 			handleError(error)
 		}
 	}),
+	resetPassword: publicProcedure
+		.input(z.object({ email: z.string().email() }))
+		.mutation(async ({ input }) => {
+			const response = await forgotPassword(input.email)
+
+			return response
+		}),
 })

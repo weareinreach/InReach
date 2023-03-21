@@ -20,6 +20,7 @@ type InitialData = {
 export type OutData = {
 	translationKey: Set<Prisma.TranslationKeyCreateManyInput>
 	freeText: Set<Prisma.FreeTextCreateManyInput>
+	phoneType: Set<Prisma.PhoneTypeCreateManyInput>
 	orgLocation: Set<Prisma.OrgLocationCreateManyInput>
 	orgPhone: Set<Prisma.OrgPhoneCreateManyInput>
 	orgEmail: Set<Prisma.OrgEmailCreateManyInput>
@@ -45,6 +46,8 @@ export type OutData = {
 	userToOrganization: Set<Prisma.UserToOrganizationCreateManyInput>
 	userPermission: Set<Prisma.UserPermissionCreateManyInput>
 	organizationPermission: Set<Prisma.OrganizationPermissionCreateManyInput>
+	organizationEmail: Set<Prisma.OrganizationEmailCreateManyInput>
+	organizationPhone: Set<Prisma.OrganizationPhoneCreateManyInput>
 }
 type SetType<T> = T extends Set<infer R> ? R : T
 export type OutDataRaw = {
@@ -64,6 +67,7 @@ export const initialData: InitialData = {
 export const data: OutData = {
 	translationKey: new Set(),
 	freeText: new Set(),
+	phoneType: new Set(),
 	orgLocation: new Set(),
 	orgPhone: new Set(),
 	orgEmail: new Set(),
@@ -89,6 +93,8 @@ export const data: OutData = {
 	userToOrganization: new Set(),
 	userPermission: new Set(),
 	organizationPermission: new Set(),
+	organizationEmail: new Set(),
+	organizationPhone: new Set(),
 } as const
 
 export type BatchNames = Readonly<keyof OutData>
@@ -96,6 +102,7 @@ export type BatchNames = Readonly<keyof OutData>
 export const batchNameMap = new Map<BatchNames, string>([
 	['translationKey', 'Translation keys'],
 	['freeText', 'Free text link records'],
+	['phoneType', 'Phone Types'],
 	['orgLocation', 'Organization locations'],
 	['orgPhone', 'Phone records'],
 	['orgEmail', 'Email records'],
@@ -114,6 +121,8 @@ export const batchNameMap = new Map<BatchNames, string>([
 
 	['orgServicePhone', 'Phone -> Organization links'],
 	['orgServiceEmail', 'Email -> Organization links'],
+	['organizationEmail', 'Email -> Organization links'],
+	['organizationPhone', 'Phone -> Organization links'],
 	['orgLocationService', 'Service -> Location links'],
 	['orgServiceTag', 'Tag -> Service links'],
 	['organizationAttribute', 'Attribute -> Organization links'],

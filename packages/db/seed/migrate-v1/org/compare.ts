@@ -89,6 +89,8 @@ export const compare: Compare = async (tx, input, batchName: BatchNames) => {
 		case 'serviceArea': {
 			const inData = input as ZodInput<typeof batchName>[]
 			const where = { id: { in: inData.map((item) => item.id as string) } }
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
 			const results = await queryClient[batchName](tx, { where, select: { id: true } })
 			const flatResults = results.map((x) => x.id)
 			const diff = inData.filter((item) => !flatResults.includes(item.id))

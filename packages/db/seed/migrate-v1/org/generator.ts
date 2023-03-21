@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
+// #region Imports
 import { geojsonToWKT } from '@terraformer/wkt'
-import { flatten } from 'flat'
+import { flatten, unflatten } from 'flat'
 import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js'
 import { DateTime } from 'luxon'
 import prettier from 'prettier'
@@ -16,11 +16,19 @@ import path from 'path'
 
 import { dayMap, hoursMap, hoursMeta } from '~db/datastore/v1/helpers/hours'
 import { OrganizationsJSONCollection } from '~db/datastore/v1/mongodb/output-types/organizations'
-import { SourceType, JsonInputOrNull, JsonInputOrNullSuperJSON, prisma, generateId } from '~db/index'
+import {
+	SourceType,
+	JsonInputOrNull,
+	JsonInputOrNullSuperJSON,
+	prisma,
+	generateId,
+	slug as slugGenerator,
+} from '~db/index'
 import { createPoint } from '~db/lib/createPoint'
 import { Log, iconList } from '~db/seed/lib'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
+import { idMap, writeIdMap } from '~db/seed/migrate-v1/idMap'
 import {
 	AttributeListMap,
 	CountryNameMap,
@@ -48,15 +56,16 @@ import {
 	writeBatches,
 } from '~db/seed/migrate-v1/org/outData'
 
-// const consoleWidth = process.stdout.columns - 10
+// #endregion
 
+// #region Supporting Vars/functions
 export const generatedDir = `${path.resolve(__dirname, '../_generated')}/`
 export const rollbackFile = `${outputDir}rollback.json`
 export const isSuccess = (param: unknown) => (param ? `✅` : `❌`)
 
 const pluralRecord = (array: unknown[]) => (array.length === 1 ? 'record' : 'records')
 
-export const translatedStrings = new Map<string, string>()
+export const translatedStrings: Record<string, Map<string, string>> = {}
 /**
  * It takes a key and a translated string, and if both are defined, it adds the key and translated string to
  * the `translatedStrings` map
@@ -65,17 +74,25 @@ export const translatedStrings = new Map<string, string>()
  * @param {string | undefined} translatedString - The translated string.
  * @param [log] - A function that logs a message to the console.
  */
-const exportTranslation = (
-	key: string | undefined,
-	translatedString: string | undefined,
-	log?: (message: string) => void
-): void => {
-	if (key && translatedString) {
-		translatedStrings.set(key, translatedString)
+const exportTranslation = (props: ExportTranslationProps): void => {
+	const { ns, key, text, log } = props
+	if (key && text && ns) {
+		if (translatedStrings[ns] === undefined) {
+			translatedStrings[ns] = new Map<string, string>([[key, text]])
+		} else {
+			translatedStrings[ns]?.set(key, text)
+		}
 		if (log) {
 			log(`🗣️ Translation exported: ${key}`)
 		}
 	}
+}
+
+type ExportTranslationProps = {
+	ns: string | undefined
+	key: string | undefined
+	text: string | undefined
+	log?: (message: string) => void
 }
 
 const unsupportedMap = new Map<string, unknown[]>()
@@ -132,6 +149,19 @@ const generateKey: GenerateKey<KeyType> = (params) => {
 
 export const slugSet = new Set<string>()
 
+const getId = (idGen: Parameters<typeof generateId>, legacyId?: string) => {
+	const existingId = legacyId ? idMap.get(legacyId) : undefined
+
+	if (existingId) return existingId
+	const newId = generateId(...idGen)
+	if (legacyId) idMap.set(legacyId, newId)
+	return newId
+}
+
+const phoneTypeMap = new Map<string, string>()
+
+// #endregion
+
 /**
  * It reads the organizations.json file, generates a slug for each organization, creates a translation key for
  * the organization description, and creates a new organization record in the database
@@ -140,6 +170,7 @@ export const slugSet = new Set<string>()
  *   task title and output.
  * @returns A listr task
  */
+// #region Initial Org Creation
 export const migrateOrgs = async (task: ListrTask) => {
 	const orgs: OrganizationsJSONCollection[] = JSON.parse(
 		fs.readFileSync('./datastore/v1/mongodb/output/organizations.json', 'utf-8')
@@ -215,9 +246,9 @@ export const migrateOrgs = async (task: ListrTask) => {
 				log(
 					`🗣️ Organization description. Namespace: ${descriptionNs}, Key: ${descriptionKey}, Org free text: ${id}`
 				)
-				exportTranslation(descriptionKey, org.description_ES, log)
+				exportTranslation({ ns, key, text: org.description_ES, log })
 			}
-			const id = generateId('organization', createdAt)
+			const id = getId(['organization', createdAt], org._id.$oid)
 			organization.add({
 				id,
 				name: org.name,
@@ -281,8 +312,10 @@ export const migrateOrgs = async (task: ListrTask) => {
 		},
 	])
 }
+// #endregion
 
 export const generateRecords = async (task: ListrTask) => {
+	// #region Setup
 	const orgs: OrganizationsJSONCollection[] = JSON.parse(
 		fs.readFileSync('./datastore/v1/mongodb/output/organizations.json', 'utf-8')
 	)
@@ -341,7 +374,7 @@ export const generateRecords = async (task: ListrTask) => {
 		}
 		log(`🏗️ Organization ID map created with ${orgIdMap.size} records.`)
 	}
-
+	// #endregion
 	/* Loop over orgs again to create supplemental records.*/
 	const generate = (task: ListrTask) => {
 		log(`🛠️ Generating linked records...`)
@@ -365,6 +398,7 @@ export const generateRecords = async (task: ListrTask) => {
 				continue
 			}
 			/* Generate location records */
+			// #region Location
 			if (!org.locations.length) {
 				log(`🤷 SKIPPING Location records for ${org.name}: No locations`)
 			} else {
@@ -379,7 +413,7 @@ export const generateRecords = async (task: ListrTask) => {
 						continue
 					}
 					log(`🛠️ [${count}/${org.locations.length}] Location: ${location.name ?? location._id.$oid}`)
-					const locId = generateId('orgLocation', createdAt)
+					const locId = getId(['orgLocation', createdAt], location._id.$oid)
 					const [longitude, latitude] = location.geolocation.coordinates.map(
 						(x) => +parseFloat(x.$numberDecimal).toFixed(3)
 					)
@@ -416,8 +450,10 @@ export const generateRecords = async (task: ListrTask) => {
 					}: ${countLoc} generated, ${skipLoc} skipped.`
 				)
 			}
+			// #endregion
 
 			/* Generate phone records */
+			//#region Phone Records
 			if (!org.phones.length) {
 				log(`🤷 SKIPPING Phone records for ${org.name}: No phone numbers`)
 			} else {
@@ -434,7 +470,7 @@ export const generateRecords = async (task: ListrTask) => {
 						continue
 					}
 					log(`🛠️ [${count}/${org.phones.length}] Phone number: ${phone.phone_type ?? phone._id.$oid}`)
-					const countryCodes = ['US', 'CA', 'MX', 'PR', 'VI'] as const
+					const countryCodes = ['CA', 'MX', 'US', 'PR', 'VI', 'GU', 'AS', 'MP', 'MH', 'PW'] as const
 					let phoneData: PhoneNumber | undefined
 					for (const country of countryCodes) {
 						phoneData = parsePhoneNumber(phone.digits, country)
@@ -445,12 +481,38 @@ export const generateRecords = async (task: ListrTask) => {
 					const countryId = countryMap.get(phoneData?.country ?? 'US')
 					if (!countryId) throw new Error('Unable to retrieve Country ID')
 					const migrationReview = phoneData ? true : undefined
-					const id = generateId('orgPhone', createdAt)
+					const id = getId(['orgPhone', createdAt], phone._id.$oid)
 					newPhoneMap.set(phone._id.$oid, id)
+					let phoneTypeId: string | undefined
+					if (typeof phone.phone_type === 'string' && phone.phone_type !== '') {
+						const { phone_type, phone_type_ES, phone_type_es } = phone
+						if (phoneTypeMap.has(slugGenerator(phone_type))) {
+							phoneTypeId = phoneTypeMap.get(slugGenerator(phone_type))
+						} else {
+							phoneTypeId = generateId('phoneType', createdAt)
+							const { key, ns, text } = generateKey({ type: 'phoneType', text: phone_type })
+							if (key && ns && text) {
+								data.translationKey.add({
+									key,
+									ns,
+									text,
+								})
+								if (phone_type_ES || phone_type_es) {
+									exportTranslation({ key, ns, text: phone_type_ES || phone_type_es, log })
+								}
+								data.phoneType.add({
+									id: phoneTypeId,
+									tsKey: key,
+									tsNs: ns,
+									type: text,
+								})
+								phoneTypeMap.set(slugGenerator(phone_type), phoneTypeId)
+							}
+						}
+					}
 					data.orgPhone.add({
 						id,
 						legacyId: phone._id.$oid,
-						organizationId: orgId,
 						countryId,
 						number: phoneData?.nationalNumber ?? phone.digits,
 						ext: phoneData?.ext,
@@ -460,17 +522,23 @@ export const generateRecords = async (task: ListrTask) => {
 						createdAt,
 						updatedAt,
 						migrationReview,
+						phoneTypeId,
 					})
 					rollback.orgPhone.add(id)
-
+					data.organizationPhone.add({
+						organizationId: orgId,
+						phoneId: id,
+					})
 					countPhone++
 				}
 				log(
 					`🛠️ Phone ${pluralRecord(org.phones)} for ${org.name}: ${countPhone} generated, ${skipLoc} skipped`
 				)
 			}
+			//#endregion
 
 			/* Generate email records */
+			// #region Email Records
 			if (!org.emails.length) {
 				log(`🤷 SKIPPING Email records for ${org.name}: No email addresses`)
 			} else {
@@ -487,12 +555,40 @@ export const generateRecords = async (task: ListrTask) => {
 						continue
 					}
 					log(`🛠️ [${count}/${org.emails.length}] Email: ${email.title ?? email._id.$oid}`)
-					const id = generateId('orgEmail', createdAt)
+					const id = getId(['orgEmail', createdAt], email._id.$oid)
+					let descriptionId: string | undefined
+					if (typeof email.title === 'string' && email.title !== '') {
+						descriptionId = generateId('freeText', createdAt)
+						const { key, ns, text } = generateKey({
+							type: 'desc',
+							keyPrefix: `${orgSlug}.${id}`,
+							text: email.title,
+						})
+						if (key && ns && text) {
+							data.translationKey.add({
+								key,
+								ns,
+								text,
+								createdAt,
+								updatedAt,
+							})
+							data.freeText.add({
+								id: descriptionId,
+								key,
+								ns,
+								createdAt,
+								updatedAt,
+							})
+							if (email.title_ES || email.title_es) {
+								exportTranslation({ key, ns, text: email.title_ES || email.title_es, log })
+							}
+						}
+					}
+
 					newEmailMap.set(email._id.$oid, id)
 					data.orgEmail.add({
 						id,
 						email: email.email,
-						orgId,
 						legacyId: email._id.$oid,
 						firstName: email.first_name === '' ? undefined : email.first_name ?? undefined,
 						lastName: email.last_name === '' ? undefined : email.last_name ?? undefined,
@@ -501,8 +597,13 @@ export const generateRecords = async (task: ListrTask) => {
 						published: email.show_on_organization ?? false,
 						createdAt,
 						updatedAt,
+						descriptionId,
 					})
 					rollback.orgEmail.add(id)
+					data.organizationEmail.add({
+						organizationId: orgId,
+						orgEmailId: id,
+					})
 					countEmail++
 				}
 				log(
@@ -511,8 +612,10 @@ export const generateRecords = async (task: ListrTask) => {
 					}: ${countEmail} generated, ${skipEmail} skipped`
 				)
 			}
+			// #endregion
 
 			/* Generate website records */
+			// #region Websites
 			if (!org.website && !org.website_ES) {
 				log(`🤷 SKIPPING Website records for ${org.name}: No websites`)
 			} else {
@@ -558,8 +661,10 @@ export const generateRecords = async (task: ListrTask) => {
 				}
 				log(`🛠️ Website ${pluralRecord(sites)} for ${org.name}: ${countWebsite} generated, 0 skipped`)
 			}
+			// #endregion
 
 			/* Generate Social Media Records */
+			// #region Social Media
 			if (!org.social_media || !org.social_media.length) {
 				log(`🤷 SKIPPING Social Media records for ${org.name}: No profiles`)
 			} else {
@@ -581,7 +686,7 @@ export const generateRecords = async (task: ListrTask) => {
 						continue
 					}
 					log(`🛠️ [${count}/${org.social_media.length}] Social Media: ${servLookup}`)
-					const id = generateId('orgSocialMedia', createdAt)
+					const id = getId(['orgSocialMedia', createdAt], social._id.$oid)
 					data.orgSocialMedia.add({
 						id,
 						organizationId: orgId,
@@ -601,8 +706,10 @@ export const generateRecords = async (task: ListrTask) => {
 					}: ${countSocial} generated, ${skipSocial} skipped`
 				)
 			}
+			// #endregion
 
 			/* Generate Photo & Outside API Connection Records */
+			// #region Photos/Outside API
 			if (!org.photos || !org.photos.length) {
 				log(`🤷 SKIPPING Photo records for ${org.name}: No photos`)
 			} else {
@@ -645,8 +752,10 @@ export const generateRecords = async (task: ListrTask) => {
 					}: ${countPhoto} generated, ${skipPhoto} skipped`
 				)
 			}
+			// #endregion
 
 			/* Generate Hours records */
+			// #region Operating Hours
 			if (!org.schedules.length) {
 				log(`🤷 SKIPPING Hours records for ${org.name}: No schedules`)
 			} else {
@@ -707,10 +816,12 @@ export const generateRecords = async (task: ListrTask) => {
 					}: ${totalRecordsGenerated} generated from ${countHours} schedules, ${skipHours} skipped`
 				)
 			}
+			// #endregion
 
 			let orgServiceAreaCreated = false
 			let serviceAreaId: string | undefined = undefined
 			/* Generate Org Attributes */
+			// #region Org Attributes
 			if (!org.properties || !Object.keys(org.properties).length) {
 				log(`🤷 SKIPPING Attribute records for ${org.name}: No attributes attached to organization`)
 			} else {
@@ -820,8 +931,32 @@ export const generateRecords = async (task: ListrTask) => {
 										})
 										rollback.translationKey.add(key)
 										rollback.attributeSupplement.add(suppId)
+										if (typeof org.properties[`${tag}_ES`] === 'string') {
+											exportTranslation({
+												key,
+												ns,
+												text: org.properties[`${tag}_ES`] as string,
+												log,
+											})
+										}
 										// supplementId = suppId
 									}
+									break
+								}
+								case attrRecord.requireData: {
+									if (!attrData?.data) break
+									log(`🛠️ Attribute data supplement. Keys: ${Object.keys(attrData.data).join(', ')}`)
+									supplements++
+									const id = generateId('attributeSupplement', createdAt)
+									data.attributeSupplement.add({
+										...attrBase,
+										id,
+										data: attrData.data,
+										organizationAttributeAttributeId: attrRecord.id,
+										organizationAttributeOrganizationId: organizationId,
+									})
+									rollback.attributeSupplement.add(id)
+									// supplementId = id
 									break
 								}
 							}
@@ -900,8 +1035,10 @@ export const generateRecords = async (task: ListrTask) => {
 					} ${unsupportedAttributes.length === 1 ? 'Unsupported attribute' : 'Unsupported attributes'}`
 				)
 			}
+			// #endregion
 
 			/* Generate Services */
+			// #region Services
 			if (!org.services.length) {
 				log(`🤷 SKIPPING Service records for ${org.name}: No services listed`)
 			} else {
@@ -912,7 +1049,7 @@ export const generateRecords = async (task: ListrTask) => {
 				for (const service of org.services) {
 					let accessCount = 0
 					const count = counter + skips + 1
-					const serviceId = generateId('orgService', createdAt)
+					const serviceId = getId(['orgService', createdAt], service._id.$oid)
 					log(`🛠️ [${count}/${org.services.length}] Service: ${service.name}`)
 					const {
 						key: descriptionKey,
@@ -941,7 +1078,7 @@ export const generateRecords = async (task: ListrTask) => {
 						descriptionId = id
 
 						log(`🗣️ Service description. Namespace: ${ns}, Key: ${key}, Free Text: ${id}`)
-						exportTranslation(descriptionKey, service.description_ES, log)
+						exportTranslation({ ns, key, text: service.description_ES, log })
 					}
 
 					if (service.access_instructions.length) {
@@ -949,6 +1086,7 @@ export const generateRecords = async (task: ListrTask) => {
 					}
 
 					/* Access Instruction records*/
+					// #region Access Instructions
 					for (const access of service.access_instructions) {
 						const accessId = generateId('serviceAccess', createdAt)
 						const attributeSuppId = generateId('attributeSupplement', createdAt)
@@ -978,7 +1116,7 @@ export const generateRecords = async (task: ListrTask) => {
 								data.freeText.add({ id: freeTextId, key, ns, createdAt, updatedAt })
 								rollback.translationKey.add(key)
 								log(`🗣️ Service access instructions. Namespace: ${ns}, Key: ${key}, Free text: ${freeTextId}`)
-								exportTranslation(freeTextId, access.instructions_ES, log)
+								exportTranslation({ ns, key, text: access.instructions_ES, log })
 								textId = freeTextId
 							}
 						}
@@ -1007,11 +1145,39 @@ export const generateRecords = async (task: ListrTask) => {
 						log(`\t🔑 Service Access Instruction: '${access.instructions?.trim() ?? access._id.$oid}'`)
 						accessCount++
 					}
+					// #endregion
+
+					// #region Service Title
+					const servNameTextId = generateId('freeText')
+					if (service.name) {
+						const { key, ns, text } = generateKey({
+							type: 'svc',
+							keyPrefix: orgSlug,
+							servId: serviceId,
+							subtype: 'name',
+							text: service.name,
+						})
+						if (text && key && ns) {
+							data.translationKey.add({
+								key,
+								ns,
+								text,
+								createdAt,
+								updatedAt,
+							})
+							data.freeText.add({ id: servNameTextId, key, ns, createdAt, updatedAt })
+							if (service.name_ES) {
+								exportTranslation({ ns, key, text: service.name_ES, log })
+							}
+						}
+					}
+					// #endregion
 
 					/* Basic Service Record*/
 					data.orgService.add({
 						id: serviceId,
 						descriptionId,
+						serviceNameId: service.name ? servNameTextId : undefined,
 						createdAt,
 						updatedAt,
 						legacyId: service._id.$oid,
@@ -1023,6 +1189,7 @@ export const generateRecords = async (task: ListrTask) => {
 					rollback.orgService.add(serviceId)
 
 					/* Generate Service Attributes */
+					// #region Service Attributes
 					let serviceAreaCreated = false
 					let serviceAreaId: string | undefined = undefined
 					if (!service.properties || !Object.keys(service.properties).length) {
@@ -1136,7 +1303,25 @@ export const generateRecords = async (task: ListrTask) => {
 												serviceAttributeOrgServiceId: serviceId,
 											})
 											rollback.attributeSupplement.add(suppId)
+											if (typeof service.properties[`${tag}_ES`] === 'string') {
+												exportTranslation({ key, ns, text: service.properties[`${tag}_ES`] as string, log })
+											}
 											// supplementId = suppId
+											break
+										}
+										case attrRecord.requireData: {
+											if (!attrData?.data) break
+											log(`🛠️ Attribute data supplement. Keys: ${Object.keys(attrData.data).join(', ')}`)
+											supplements++
+											const id = generateId('attributeSupplement', createdAt)
+											data.attributeSupplement.add({
+												...attrBase,
+												id,
+												data: attrData.data,
+												serviceAttributeAttributeId: attrRecord.id,
+												serviceAttributeOrgServiceId: serviceId,
+											})
+											rollback.attributeSupplement.add(id)
 											break
 										}
 									}
@@ -1216,8 +1401,10 @@ export const generateRecords = async (task: ListrTask) => {
 							} ${unsupportedAttributes.length === 1 ? 'Unsupported attribute' : 'Unsupported attributes'}`
 						)
 					}
+					// #endregion
 
 					/* Generate Service Tags */
+					// #region Service Tags
 					if (!service.tags || !Object.keys(service.tags).length) {
 						log(`🤷 SKIPPING Attribute records for ${service.name}: No tags attached to service`)
 					} else {
@@ -1259,6 +1446,7 @@ export const generateRecords = async (task: ListrTask) => {
 							}. Invalid tags skipped: ${skips}`
 						)
 					}
+					// #endregion
 
 					/* Connect to existing records, if they exist.*/
 					const email = newEmailMap.get(service.email_id ?? '')
@@ -1283,8 +1471,10 @@ export const generateRecords = async (task: ListrTask) => {
 					counter++
 				}
 			}
+			// #endregion
 
 			/* Generate user permissions */
+			// #region Associated Users
 
 			const permissionId = permissionMap.get('editSingleOrg')
 
@@ -1321,8 +1511,10 @@ export const generateRecords = async (task: ListrTask) => {
 					counter++
 				}
 			}
-			orgCount++
+			// #endregion
 
+			// #region Loop controller
+			orgCount++
 			// if (orgCount === 1) break
 			if (orgCount % batchSize === 0 || orgCount === initialData.organization.size) {
 				batchCounter++
@@ -1332,13 +1524,23 @@ export const generateRecords = async (task: ListrTask) => {
 				writeBatches(task)
 			}
 			// if (batchCounter === 1) break
+			// #endregion
 		}
 
+		// #region Final file writeout
 		const formatJson = (data: string) => prettier.format(data, { ...prettierOpts, parser: 'json-stringify' })
 
-		const translationsOut = Object.fromEntries(translatedStrings)
-		log(`🛠️ Generating translation JSON file (${translatedStrings.size} translations)`)
-		fs.writeFileSync(`${generatedDir}es-migration.json`, formatJson(JSON.stringify(translationsOut)))
+		const translationDir = path.resolve(__dirname, '../_generated/translations')
+		for (const ns in translatedStrings) {
+			const stringMap = translatedStrings[ns] !== undefined ? translatedStrings[ns] : null
+			if (!stringMap) {
+				log(`🤷 SKIPPING translation JSON file for ${ns}: Object was undefined`)
+				continue
+			}
+			const translationsOut = unflatten(Object.fromEntries(stringMap))
+			log(`🛠️ Generating translation JSON file for ${ns} (${stringMap.size} translations)`)
+			fs.writeFileSync(`${translationDir}/${ns}.json`, formatJson(JSON.stringify(translationsOut)))
+		}
 
 		log(`🛠️ Generating unsupported attribute JSON file (${unsupportedMap.size} attributes)`)
 		const unsupportedAttOut = Object.fromEntries(unsupportedMap)
@@ -1346,6 +1548,9 @@ export const generateRecords = async (task: ListrTask) => {
 			`${generatedDir}unsupportedAttributes.json`,
 			formatJson(JSON.stringify(unsupportedAttOut))
 		)
+
+		log(`✍️ Writing ID Map file`)
+		writeIdMap()
 
 		log(`✍️ Writing rollback file`)
 		fs.writeFileSync(rollbackFile, superjson.stringify(rollback))
@@ -1355,6 +1560,7 @@ export const generateRecords = async (task: ListrTask) => {
 				log(`${value} generated: ${batchCount.get(key) ?? 0}`, 'gear')
 			}
 		}
+		// #endregion
 	}
 
 	return task.newListr([

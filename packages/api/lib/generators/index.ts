@@ -2,6 +2,8 @@
 import { Listr, ListrRenderer, ListrTaskWrapper } from 'listr2'
 
 import { generateAttributeCategories } from './attributeCategory'
+import { generateAttributesByCategory } from './attributesByCategory'
+import { generateLanguageFiles } from './langs'
 import { generatePermissions } from './permission'
 import { generateServiceCategories } from './serviceCategory'
 import { generateUserRoles } from './userRole'
@@ -38,8 +40,20 @@ const tasks = new Listr<Context>(
 			skip: !process.env.DATABASE_URL,
 		},
 		{
+			title: 'Attributes By Category',
+			task: async (_ctx, task): Promise<void> => generateAttributesByCategory(task),
+			options: renderOptions,
+			skip: !process.env.DATABASE_URL,
+		},
+		{
 			title: 'Service Categories',
 			task: async (_ctx, task): Promise<void> => generateServiceCategories(task),
+			options: renderOptions,
+			skip: !process.env.DATABASE_URL,
+		},
+		{
+			title: 'Language lists',
+			task: async (_ctx, task): Promise<void> => generateLanguageFiles(task),
 			options: renderOptions,
 			skip: !process.env.DATABASE_URL,
 		},

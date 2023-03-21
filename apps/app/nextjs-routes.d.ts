@@ -7,13 +7,15 @@
 declare module "nextjs-routes" {
   export type Route =
     | DynamicRoute<"/api/auth/[...nextauth]", { "nextauth": string[] }>
+    | StaticRoute<"/api/i18n/load">
+    | StaticRoute<"/api/i18n/webhook">
     | StaticRoute<"/api/panel">
     | DynamicRoute<"/api/trpc/[trpc]", { "trpc": string }>
     | StaticRoute<"/api/trpc-playground">
-    | StaticRoute<"/datatest">
     | StaticRoute<"/">
     | DynamicRoute<"/org/[slug]/[orgLocationId]", { "slug": string; "orgLocationId": string }>
     | DynamicRoute<"/org/[slug]", { "slug": string }>
+    | StaticRoute<"/profile">
     | DynamicRoute<"/search/[...params]", { "params": string[] }>
     | StaticRoute<"/search">
     | StaticRoute<"/suggest">;
@@ -41,12 +43,10 @@ declare module "nextjs-routes" {
 
   export type Locale = 
     | "en"
-    | "en-US"
-    | "en-CA"
-    | "en-MX"
     | "es"
-    | "es-US"
-    | "es-MX";
+    | "fr"
+    | "ar"
+    | "ru";
 
   /**
    * A typesafe utility function for generating paths in your application.
@@ -124,12 +124,10 @@ declare module "next/router" {
         locale: Locale;
         locales: [
           "en",
-          "en-US",
-          "en-CA",
-          "en-MX",
           "es",
-          "es-US",
-          "es-MX"
+          "fr",
+          "ar",
+          "ru"
         ];
         push(
           url: Route | StaticRoute | Query,

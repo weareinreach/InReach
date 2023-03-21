@@ -27,6 +27,9 @@ import {
 	TranslationKey,
 	UserPermission,
 	UserToOrganization,
+	OrganizationEmail,
+	OrganizationPhone,
+	PhoneType,
 } from '~db/index'
 import { BatchNames } from '~db/seed/migrate-v1/org/outData'
 import { ZodFindMany, ZodInputs } from '~db/seed/migrate-v1/org/zod'
@@ -36,6 +39,8 @@ const clientopt = { skipDuplicates: true }
 export const migrateClient: MigrationClient = {
 	translationKey: (client, data) => client.translationKey.createMany({ data, ...clientopt }),
 	freeText: (client, data) => client.freeText.createMany({ data, ...clientopt }),
+	phoneType: (client, data) => client.phoneType.createMany({ data, ...clientopt }),
+
 	orgLocation: (client, data) => client.orgLocation.createMany({ data, ...clientopt }),
 	orgPhone: (client, data) => client.orgPhone.createMany({ data, ...clientopt }),
 	orgEmail: (client, data) => client.orgEmail.createMany({ data, ...clientopt }),
@@ -61,11 +66,14 @@ export const migrateClient: MigrationClient = {
 	userToOrganization: (client, data) => client.userToOrganization.createMany({ data, ...clientopt }),
 	userPermission: (client, data) => client.userPermission.createMany({ data, ...clientopt }),
 	organizationPermission: (client, data) => client.organizationPermission.createMany({ data, ...clientopt }),
+	organizationEmail: (client, data) => client.organizationEmail.createMany({ data, ...clientopt }),
+	organizationPhone: (client, data) => client.organizationPhone.createMany({ data, ...clientopt }),
 }
 
 export const queryClient: QueryClient = {
 	translationKey: (client, args) => client.translationKey.findMany(args),
 	freeText: (client, args) => client.freeText.findMany(args),
+	phoneType: (client, args) => client.phoneType.findMany(args),
 	orgLocation: (client, args) => client.orgLocation.findMany(args),
 	orgPhone: (client, args) => client.orgPhone.findMany(args),
 	orgEmail: (client, args) => client.orgEmail.findMany(args),
@@ -91,6 +99,8 @@ export const queryClient: QueryClient = {
 	userToOrganization: (client, args) => client.userToOrganization.findMany(args),
 	userPermission: (client, args) => client.userPermission.findMany(args),
 	organizationPermission: (client, args) => client.organizationPermission.findMany(args),
+	organizationEmail: (client, args) => client.organizationEmail.findMany(args),
+	organizationPhone: (client, args) => client.organizationPhone.findMany(args),
 }
 export type QueryClient = {
 	[K in BatchNames]: (
@@ -119,6 +129,7 @@ export const getClient: GetClient = (batchName) => {
 type PrismaSchemas = {
 	translationKey: TranslationKey
 	freeText: FreeText
+	phoneType: PhoneType
 	orgLocation: OrgLocation
 	orgPhone: OrgPhone
 	orgEmail: OrgEmail
@@ -144,4 +155,6 @@ type PrismaSchemas = {
 	userToOrganization: UserToOrganization
 	userPermission: UserPermission
 	organizationPermission: OrganizationPermission
+	organizationEmail: OrganizationEmail
+	organizationPhone: OrganizationPhone
 }

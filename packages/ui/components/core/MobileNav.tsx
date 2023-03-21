@@ -1,4 +1,4 @@
-import { createStyles, Tabs } from '@mantine/core'
+import { createStyles, Tabs, rem } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
@@ -10,28 +10,27 @@ const useStyles = createStyles((theme) => ({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'center',
-		padding: [12, 0, 8, 0],
-		gap: '12px',
-		// position: 'absolute',
-		width: '75px',
-		height: '70px',
+		padding: `${rem(12)} ${rem(0)} ${rem(8)} ${rem(0)}`,
+		gap: rem(12),
+		width: rem(75),
+		height: rem(70),
 		color: theme.other.colors.secondary.darkGray,
 		borderTop: 0,
-
 		'&:hover': {
-			backgroundColor: theme.other.colors.secondary.white,
+			backgroundColor: 'transparent',
 		},
-		'&[data-active]': {
+		'&[data-active] > .mantine-Tabs-tabLabel': {
 			color: theme.other.colors.secondary.black,
 			borderTop: 0,
-			fontWeight: theme.other.fontWeight.semibold,
-			'& .mantine-Tabs-tabLabel': {
-				fontWeight: theme.other.fontWeight.semibold,
-			},
+			fontWeight: theme.other.fontWeight.bold,
 
 			'&[data-active]:hover': {
-				backgroundColor: theme.other.colors.secondary.white,
+				backgroundColor: 'transparent',
 			},
+		},
+		['&[data-active] > .mantine-Tabs-tabIcon']: {
+			stroke: theme.other.colors.secondary.black,
+			strokeWidth: rem(1),
 		},
 	},
 	tabLabel: {
@@ -41,13 +40,22 @@ const useStyles = createStyles((theme) => ({
 	tabsList: {
 		borderTop: 0,
 		flexWrap: 'nowrap',
-		height: 70,
+		height: rem(70),
 		justifyContent: 'space-around',
 	},
+	tabIcon: {
+		'&:not(:only-child)': {
+			margin: 0,
+		},
+	},
 	root: {
-		position: 'absolute',
+		position: 'fixed',
 		bottom: 0,
+		left: 0,
+		right: 0,
 		width: '100%',
+		zIndex: 20,
+		backgroundColor: theme.other.colors.secondary.white,
 	},
 }))
 
@@ -60,7 +68,7 @@ export const navItems = {
 
 export const MobileNav = () => {
 	const { classes } = useStyles()
-	const { t } = useTranslation()
+	const { t } = useTranslation('common')
 	const router = useRouter()
 
 	const tabs = Object.entries(navItems).map(([key, item]) => (

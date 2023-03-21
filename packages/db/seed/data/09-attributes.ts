@@ -4,6 +4,8 @@ type AttributeItem = Omit<Prisma.AttributeCreateManyInput, 'tsKey' | 'tsNs' | 't
 	// name: string
 	description?: string
 	key: string
+	icon?: string
+	iconBg?: string
 	// requireLanguage?: boolean
 	// requireCountry?: boolean
 	// requireData?: boolean
@@ -43,6 +45,7 @@ export const attributeData: AttributeData = [
 				key: 'geo-public-transit-description',
 				name: 'Public transit / specific directions',
 				description: 'Written description of public transit services',
+				requireText: true,
 			},
 			{
 				key: 'time-walk-in',
@@ -51,13 +54,23 @@ export const attributeData: AttributeData = [
 			},
 			{
 				key: 'wheelchair-accessible',
-				name: 'Is wheelchair accessible',
+				name: 'Accessible',
 				filterType: 'INCLUDE',
+				showOnLocation: true,
+				icon: 'carbon:accessibility',
+				requireBoolean: true,
 			},
 			{
 				key: 'religiously-affiliated',
 				name: 'Is religiously affiliated',
 				filterType: 'EXCLUDE',
+			},
+			{
+				key: 'offers-remote-services',
+				name: 'Remote',
+				filterType: 'INCLUDE',
+				showOnLocation: true,
+				icon: 'carbon:globe',
 			},
 		],
 	},
@@ -372,6 +385,12 @@ export const attributeData: AttributeData = [
 					'If the service requires a referral from another service provider from new/potential clients in order to access"',
 				filterType: 'EXCLUDE',
 			},
+			{
+				key: 'other-describe',
+				name: 'Other (free text description)',
+				description: 'Free text description',
+				requireText: true,
+			},
 		],
 	},
 	{
@@ -409,34 +428,96 @@ export const attributeData: AttributeData = [
 			{ key: 'accessLocation', name: 'Access Instructions - Location', requireData: true },
 			{ key: 'accessPhone', name: 'Access Instructions - Phone', requireData: true },
 			{ key: 'accessText', name: 'Access Instructions - Text', requireText: true },
+			{ key: 'accessPublicTransit', name: 'Access Instructions - Public Transit', requireText: true },
 		],
 	},
 	{
 		name: 'Organization Leadership',
 		ns: 'orgLeader',
 		attributes: [
-			{ key: 'bipoc-led', name: 'BIPOC Led' },
-			{ key: 'black-led', name: 'Black Led' },
-			{ key: 'immigrant-led', name: 'Immigrant Led' },
-			{ key: 'trans-led', name: 'Trans Led' },
+			{ key: 'bipoc-led', name: 'BIPOC-led', icon: '🤎', iconBg: '#F1DD7F' },
+			{ key: 'black-led', name: 'Black-led', icon: '️‍️‍✊🏿', iconBg: '#C77E54' },
+			{ key: 'immigrant-led', name: 'Immigrant-led', icon: '️‍️‍🌎', iconBg: '#79ADD7' },
+			{ key: 'trans-led', name: 'Transgender-led', icon: '️‍🏳️‍⚧️', iconBg: '#D4A1BA' },
 		],
 	},
 	{
 		name: 'Service Focus',
 		ns: 'srvFocus',
 		attributes: [
-			{ key: 'bipoc-comm', name: 'BIPOC Community' },
-			{ key: 'immigrant-comm', name: 'Immigrant Community' },
-			{ key: 'asylum-seekers', name: 'Asylum Seekers' },
-			{ key: 'resettled-refugees', name: 'Resettled Refugees' },
-			{ key: 'trans-comm', name: 'Trans Community' },
-			{ key: 'trans-youth-focus', name: 'Trans Youth' },
-			{ key: 'trans-masc', name: 'Trans Men/Transmasculine' },
-			{ key: 'trans-fem', name: 'Trans Women/Transfeminine' },
-			{ key: 'gender-nc', name: 'Gender non-conforming' },
-			{ key: 'lgbtq-youth-focus', name: 'LGBTQ+ Youth' },
-			{ key: 'spanish-speakers', name: 'Spanish Speakers' },
-			{ key: 'hiv-comm', name: 'HIV Community' },
+			{ key: 'bipoc-comm', name: 'BIPOC Community', icon: '️‍️‍✊🏿' },
+			{ key: 'immigrant-comm', name: 'Immigrant Community', icon: '️‍️‍🌎' },
+			{ key: 'asylum-seekers', name: 'Asylum Seekers', icon: '️‍️‍🌎' },
+			{ key: 'resettled-refugees', name: 'Resettled Refugees', icon: '️‍️‍🌎' },
+			{ key: 'trans-comm', name: 'Trans Community', icon: '🏳️‍⚧️' },
+			{ key: 'trans-youth-focus', name: 'Trans Youth', icon: '🌱' },
+			{ key: 'trans-masc', name: 'Trans Men/Transmasculine', icon: '🏳️‍⚧️' },
+			{ key: 'trans-fem', name: 'Trans Women/Transfeminine', icon: '🏳️‍⚧️' },
+			{ key: 'gender-nc', name: 'Gender non-conforming', icon: '🏳️‍⚧️' },
+			{ key: 'lgbtq-youth-focus', name: 'LGBTQ+ Youth', icon: '🌱' },
+			{ key: 'spanish-speakers', name: 'Spanish Speakers', icon: '🗣️' },
+			{ key: 'hiv-comm', name: 'HIV Community', icon: '💛' },
 		],
+	},
+	{
+		name: 'Law Practice Options',
+		ns: 'userLawPractice',
+		attributes: [
+			{ key: 'corp-law-firm', name: 'Corporate law firm' },
+			{ key: 'legal-nonprofit', name: 'Legal non-profit' },
+			{ key: 'law-school-clinic', name: 'Law school student clinic' },
+			{ key: 'law-other', name: 'Other (please specify)', requireData: true },
+		],
+	},
+	{
+		name: 'Service Provider Options',
+		ns: 'userServiceProvider',
+		attributes: [
+			{ key: 'healthcare', name: 'Healthcare provider' },
+			{ key: 'govt-agency', name: 'Government agency' },
+			{ key: 'nonprofit', name: 'Non-profit' },
+			{ key: 'grassroots-direct', name: 'Grassroots Direct Service Organization' },
+			{ key: 'student-club', name: 'Student club' },
+			{ key: 'friend-family', name: 'N/A (Looking on behalf of friends/family)' },
+			{ key: 'servpro-other', name: 'Other (please specify)', requireData: true },
+		],
+	},
+]
+
+export const supplementDataSchemas: Prisma.AttributeSupplementDataSchemaCreateManyInput[] = [
+	{
+		name: 'Number Range',
+		tag: 'num-min-max',
+		definition: {
+			min: 'number',
+			max: 'number',
+		},
+	},
+	{
+		name: 'Minimum',
+		tag: 'num-min',
+		definition: {
+			min: 'number',
+		},
+	},
+	{
+		name: 'Maximum',
+		tag: 'num-max',
+		definition: {
+			max: 'number',
+		},
+	},
+	{
+		name: 'Currency',
+		tag: 'currency',
+		definition: {
+			amount: 'number',
+			currency: 'string',
+		},
+	},
+	{
+		name: 'Incompatible Information',
+		tag: 'incompatible',
+		definition: 'any',
 	},
 ]

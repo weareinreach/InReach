@@ -12,20 +12,30 @@ const google = new Client()
 
 export const geoRouter = defineRouter({
 	autocomplete: publicProcedure
-		.input(z.object({ search: z.string(), locale: z.string().optional() }))
+		.input(
+			z.object({
+				search: z.string(),
+				locale: z.string().optional(),
+				cityOnly: z.boolean().default(false).optional(),
+			})
+		)
 		.query(async ({ input }) => {
-			const { data } = await google.placeAutocomplete({
-				params: {
-					key: process.env.GOOGLE_PLACES_API_KEY as string,
-					input: input.search,
-					language: input.locale,
-					types: [
+			const types = input.cityOnly
+				? ['(cities)']
+				: ([
 						'administrative_area_level_2',
 						'administrative_area_level_3',
 						'neighborhood',
 						'locality',
 						'colloquial_area',
-					] as unknown as PlaceAutocompleteType,
+				  ] as unknown as PlaceAutocompleteType)
+
+			const { data } = await google.placeAutocomplete({
+				params: {
+					key: process.env.GOOGLE_PLACES_API_KEY as string,
+					input: input.search,
+					language: input.locale,
+					types,
 					locationbias: 'ipbias',
 				},
 			} as PlaceAutocompleteRequest)

@@ -6,6 +6,10 @@
 			"cache": false,
 			"inputs": ["prisma/schema.prisma"]
 		},
+		"db:run-seed": {
+			"cache": false,
+			"dependsOn": ["download:seedData"]
+		},
 		"download:seedData": {
 			"outputs": ["seed/data/downloaded/*.json"]
 		},

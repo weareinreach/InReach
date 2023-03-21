@@ -52,7 +52,10 @@ const getAttributeList = async () => {
 		}))
 	)
 	const attributeMap = new Map(
-		flatResults.map(({ category, tag, ...rest }) => [`${category}-${tag}`, { category, tag, ...rest }])
+		flatResults.flatMap(({ category, tag, ...rest }) => [
+			[tag, { category, tag, ...rest }],
+			[`${category}-${tag}`, { category, tag, ...rest }],
+		])
 	)
 
 	return attributeMap
@@ -74,7 +77,7 @@ const getServiceAreas = async () => {
 	const country = await prisma.country.findMany({
 		where: {
 			cca2: {
-				in: ['CA', 'MX', 'US', 'PR', 'VI', 'GU'],
+				in: ['CA', 'MX', 'US', 'PR', 'VI', 'GU', 'AS', 'MP', 'MH', 'PW'],
 			},
 		},
 		select: {

@@ -15,10 +15,19 @@ export default {
 	},
 	argTypes: {
 		variant: {
-			options: ['commmunity', 'service', 'leader', 'verified', 'claimed', 'unclaimed', 'attribute'],
+			options: [
+				'commmunity',
+				'service',
+				'leader',
+				'verified',
+				'claimed',
+				'unclaimed',
+				'attribute',
+				'verifiedUser',
+			],
 			control: 'select',
 		},
-		color: {
+		iconBg: {
 			control: {
 				type: 'color',
 				if: {
@@ -59,7 +68,7 @@ export default {
 				},
 			},
 		},
-		lastVerifiedDate: {
+		lastverified: {
 			control: {
 				if: {
 					arg: 'variant',
@@ -103,7 +112,7 @@ export const Attribute = {
 	args: {
 		variant: 'attribute',
 		icon: 'carbon:piggy-bank',
-		tsKey: 'cost-cost-free',
+		tsKey: 'cost.cost-free',
 		tsNs: 'attribute',
 	},
 	argTypes: {
@@ -134,7 +143,7 @@ export const Attribute = {
 export const Community = {
 	args: {
 		icon: '✊🏿',
-		tsKey: 'srvfocus-bipoc-comm',
+		tsKey: 'srvfocus.bipoc-comm',
 		variant: 'community',
 	},
 	parameters: {
@@ -153,17 +162,17 @@ export const CommunityGroup = {
 		badges: [
 			{
 				icon: '✊🏿',
-				tsKey: 'srvfocus-bipoc-comm',
+				tsKey: 'srvfocus.bipoc-comm',
 				variant: 'community',
 			},
 			{
 				icon: '💛',
-				tsKey: 'srvfocus-hiv-comm',
+				tsKey: 'srvfocus.hiv-comm',
 				variant: 'community',
 			},
 			{
 				icon: '🗣',
-				tsKey: 'srvfocus-spanish-speakers',
+				tsKey: 'srvfocus.spanish-speakers',
 				variant: 'community',
 			},
 		],
@@ -174,9 +183,9 @@ export const CommunityGroup = {
 export const Leader = {
 	args: {
 		variant: 'leader',
-		color: theme.other!.colors.tertiary.lightBlue,
+		iconBg: theme.other!.colors.tertiary.lightBlue,
 		icon: '️‍️‍🌎',
-		tsKey: 'immigrant-led',
+		tsKey: 'orgleader.immigrant-led',
 		minify: false,
 	},
 	argTypes: {
@@ -199,9 +208,9 @@ export const Leader = {
 export const LeaderMini = {
 	args: {
 		variant: 'leader',
-		color: theme.other!.colors.tertiary.orange,
+		iconBg: theme.other!.colors.tertiary.orange,
 		icon: '️‍️‍✊🏿',
-		tsKey: 'black-led',
+		tsKey: 'orgleader.black-led',
 		minify: true,
 	},
 	argTypes: {
@@ -253,6 +262,7 @@ export const ServiceGroup = {
 				variant: 'service',
 			},
 		],
+		withSeparator: false,
 	},
 	...groupParams,
 } satisfies GroupStory
@@ -260,11 +270,11 @@ export const ServiceGroup = {
 export const Verified = {
 	args: {
 		variant: 'verified',
-		lastVerifiedDate: new Date(2023, 1, 15),
+		lastverified: new Date(2023, 1, 15),
 	},
 	parameters: {
 		controls: {
-			include: ['lastVerifiedDate', 'variant'],
+			include: ['lastverified', 'variant'],
 		},
 	},
 } satisfies StoryDef
@@ -294,6 +304,17 @@ export const Unclaimed = {
 export const PrivatePractice = {
 	args: {
 		variant: 'privatePractice',
+	},
+	parameters: {
+		controls: {
+			include: ['variant'],
+		},
+	},
+} satisfies StoryDef
+
+export const VerifiedReviewer = {
+	args: {
+		variant: 'verifiedReviewer',
 	},
 	parameters: {
 		controls: {
