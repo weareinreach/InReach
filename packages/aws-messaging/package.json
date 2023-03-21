@@ -19,12 +19,12 @@
 		"package": "cd dist && zip -r bundle.zip *"
 	},
 	"dependencies": {
-		"@aws-lambda-powertools/logger": "1.6.0"
+		"@aws-lambda-powertools/logger": "1.7.0"
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.114",
 		"@types/eslint": "8.21.3",
-		"@types/node": "18.15.3",
+		"@types/node": "18.15.5",
 		"@types/prettier": "2.7.2",
 		"@vercel/ncc": "0.36.1",
 		"@weareinreach/config": "0.100.0",
