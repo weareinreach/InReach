@@ -147,29 +147,29 @@
 	},
 	"send-email": "إرسال بريد إلكتروني",
 	"service": {
+		"additional-info": "معلومات إضافية عن الأهلية",
+		"age": {
+			"max": " وأقدم",
+			"min": "حتى ",
+			"range": "{{min}}{{separator}}{{max}}"
+		},
+		"ages": "السن المؤهلة",
 		"at-capacity": "<strong>هذه الخدمة غير قادرة حاليا على أخذ عملاء جدد.</strong>",
-		"get-help": "الحصول على المساعدة",
-		"phone": "الهاتف المباشر",
-		"email": "البريد الإلكتروني المباشر",
-		"website": "موقع مباشر",
-		"hours": "ساعات الخدمة",
 		"clients-served": "العملاء الذين يخدمون",
 		"community-focus": "التركيز المجتمعي LGBTQ+",
-		"target-population": "Target population",
 		"cost": "التكلفة",
 		"cost-details": "تفاصيل التكلفة",
 		"eligibility": "شروط الأهلية",
-		"ages": "السن المؤهلة",
-		"age": {
-			"range": "{{min}}{{separator}}{{max}}",
-			"min": "حتى ",
-			"max": " وأقدم"
-		},
-		"requirements": "المتطلبات",
-		"additional-info": "معلومات إضافية عن الأهلية",
-		"languages": "اللغات",
+		"email": "البريد الإلكتروني المباشر",
 		"extra-info": "معلومات إضافية",
-		"transit-directions": "اتجاهات النقل العام"
+		"get-help": "الحصول على المساعدة",
+		"hours": "ساعات الخدمة",
+		"languages": "اللغات",
+		"phone": "الهاتف المباشر",
+		"requirements": "المتطلبات",
+		"target-population": "Target population",
+		"transit-directions": "اتجاهات النقل العام",
+		"website": "موقع مباشر"
 	},
 	"services": "الخدمات",
 	"settings": "الإعدادات",
@@ -221,12 +221,16 @@
 	"website": "الموقع",
 	"words": {
 		"accept": "قبول",
+		"account": "حساب",
 		"and": "و",
 		"and-x-more": "و {{count}} المزيد",
 		"coming-soon": "قريباً",
 		"more": "المزيد",
 		"next": "التالي",
-		"prev": "المسبق"
+		"prev": "المسبق",
+		"saved": "محفوظ",
+		"search": "البحث",
+		"support": "Support"
 	},
 	"your-comments": "تعليقاتك",
 	"youtube": "يوتيوب",
