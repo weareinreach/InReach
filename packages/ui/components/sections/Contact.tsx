@@ -70,7 +70,7 @@ const Item = ({ heading, href, subheading }: { heading: string; href: string; su
 }
 
 const ItemListWithSubtext = (props: SubtextList) => {
-	const { role, dataType, data, t } = props
+	const { role, dataType, data, t, slug } = props
 	const items: ReactNode[] = []
 	if (!data.length) return null
 
@@ -83,7 +83,7 @@ const ItemListWithSubtext = (props: SubtextList) => {
 				const parsedPhone = parsePhoneNumber(phone.number, phone.country.cca2 as CountryCode)
 				if (!parsedPhone) continue
 				const phoneNumber = parsedPhone.formatNational()
-				const desc = phone.phoneType?.tsKey ? t(phone.phoneType.tsKey) : undefined
+				const desc = phone.phoneType?.tsKey ? t(phone.phoneType.tsKey, { ns: 'phone-type' }) : undefined
 				const href = parsedPhone.getURI()
 				const itemProps = { heading: phoneNumber, href, subheading: desc }
 				const item = <Item key={phone.number} {...itemProps} />
@@ -100,7 +100,7 @@ const ItemListWithSubtext = (props: SubtextList) => {
 					const desc = email.title
 						? t(email.title.tsKey)
 						: email.description?.key
-						? t(email.description.key, { defaultText: email.description.tsKey.text })
+						? t(email.description.key, { defaultValue: email.description.tsKey.text, ns: slug })
 						: undefined
 					const href = `mailto:${email.email}`
 
@@ -123,7 +123,7 @@ const ItemListWithSubtext = (props: SubtextList) => {
 export const ContactSection = (props: ContactSectionProps) => {
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 	const { slug } = router.query
-	const { t } = useTranslation(['common', slug])
+	const { t } = useTranslation(['common', slug, 'phone-type'])
 	const { role } = props
 	const { isMobile } = useScreenSize()
 	const { emails, phones, socialMedia, websites } = props.data
@@ -138,8 +138,8 @@ export const ContactSection = (props: ContactSectionProps) => {
 		<Stack spacing={isMobile ? 32 : 40}>
 			<Title order={2}>{t('contact')}</Title>
 			<WebsiteList role={role} websites={websites} t={t} />
-			<ItemListWithSubtext role={role} dataType='phone' data={phones} t={t} />
-			<ItemListWithSubtext role={role} dataType='email' data={emails} t={t} />
+			<ItemListWithSubtext role={role} dataType='phone' data={phones} t={t} slug={slug} />
+			<ItemListWithSubtext role={role} dataType='email' data={emails} t={t} slug={slug} />
 			<SocialLink.Group links={socialLinks} header />
 		</Stack>
 	)
@@ -192,11 +192,13 @@ type PhoneList = {
 	dataType: 'phone'
 	data: PageQueryResult['phones'] | Location['phones']
 	t: TFunction
+	slug: string
 }
 type EmailList = {
 	role: SectionRole
 	dataType: 'email'
 	data: PageQueryResult['emails'] | Location['emails']
 	t: TFunction
+	slug: string
 }
 type SubtextList = PhoneList | EmailList
