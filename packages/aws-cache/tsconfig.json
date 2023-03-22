@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"target": "es2020",
+		"strict": true,
+		"preserveConstEnums": true,
+		"noEmit": false,
+		"sourceMap": false,
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": false,
+		"outDir": "dist/"
+	}
+}

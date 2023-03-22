@@ -4,6 +4,13 @@ on:
   push:
     paths:
       - 'apps/app/public/locales/en/*.json'
+  pull_request:
+    types:
+      - closed
+    branches-ignore:
+      - dev
+      - main
+      - l10n*
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.ref || github.ref }}
   cancel-in-progress: true
@@ -25,7 +32,8 @@ jobs:
           flags: gi
           replacement: IN-xxx
 
-      - name: crowdin action
+      - name: Upload to Crowdin
+        if: github.event_name != 'pull_request'
         uses: crowdin/github-action@840b586cf1214a04c4701d90f9100f9766d7390d # v1.7.1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
@@ -40,3 +48,16 @@ jobs:
           pull_request_labels: "translations, kodiak: merge.method = 'squash'"
           pull_request_base_branch_name: ${{ github.ref_name }}
           crowdin_branch_name: ${{ github.ref_name }}
+
+      - name: Delete Crowdin Branch
+        if: github.event_name == 'pull_request'
+        uses: crowdin/github-action@840b586cf1214a04c4701d90f9100f9766d7390d # v1.7.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+        with:
+          upload_sources: false
+          upload_translations: false
+          download_translations: false
+          create_pull_request: false
+          delete_crowdin_branch: ${{ github.ref_name }}

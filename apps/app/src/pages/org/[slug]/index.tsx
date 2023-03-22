@@ -136,7 +136,7 @@ export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/org/[slug]
 	await ssg.organization.getBySlug.prefetch({ slug })
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', slug])),
+		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
 	}
 
 	return {

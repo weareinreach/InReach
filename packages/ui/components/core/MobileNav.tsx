@@ -60,10 +60,10 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const navItems = {
-	search: { icon: 'carbon:search', labelKey: 'search', href: '/search' },
-	saved: { icon: 'carbon:favorite', labelKey: 'saved', href: '/' },
-	account: { icon: 'carbon:user', labelKey: 'account', href: '/' },
-	support: { icon: 'carbon:help', labelKey: 'support', href: '/' },
+	search: { icon: 'carbon:search', labelKey: 'words.search', href: '/search' },
+	saved: { icon: 'carbon:favorite', labelKey: 'words.saved', href: '/' },
+	account: { icon: 'carbon:user', labelKey: 'words.account', href: '/' },
+	support: { icon: 'carbon:help', labelKey: 'words.support', href: '/' },
 } as const
 
 export const MobileNav = () => {
