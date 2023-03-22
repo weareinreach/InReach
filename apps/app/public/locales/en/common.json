@@ -149,29 +149,29 @@
 	},
 	"send-email": "Send email",
 	"service": {
+		"additional-info": "Additional eligibility information",
+		"age": {
+			"max": " and older",
+			"min": "Up to ",
+			"range": "{{min}}{{separator}}{{max}}"
+		},
+		"ages": "Eligible age",
 		"at-capacity": "<strong>This service is currently unable to take new clients.</strong>",
-		"get-help": "Get help",
-		"phone": "Direct phone",
-		"email": "Direct email",
-		"website": "Direct website",
-		"hours": "Service hours",
 		"clients-served": "Clients served",
 		"community-focus": "LGBTQ+ community focus",
-		"target-population": "Target population",
 		"cost": "Cost",
 		"cost-details": "Cost details",
 		"eligibility": "Eligibility requirements",
-		"ages": "Eligible age",
-		"age": {
-			"range": "{{min}}{{separator}}{{max}}",
-			"min": "Up to ",
-			"max": " and older"
-		},
-		"requirements": "Requirements",
-		"additional-info": "Additional eligibility information",
-		"languages": "Languages",
+		"email": "Direct email",
 		"extra-info": "Additional information",
-		"transit-directions": "Public transit directions"
+		"get-help": "Get help",
+		"hours": "Service hours",
+		"languages": "Languages",
+		"phone": "Direct phone",
+		"requirements": "Requirements",
+		"target-population": "Target population",
+		"transit-directions": "Public transit directions",
+		"website": "Direct website"
 	},
 	"services": "Services",
 	"settings": "Settings",
@@ -225,12 +225,16 @@
 	"website": "Website",
 	"words": {
 		"accept": "Accept",
+		"account": "Account",
 		"and": "and",
 		"and-x-more": "and {{count}} more",
 		"coming-soon": "Coming soon",
 		"more": "more",
 		"next": "Next",
-		"prev": "Prev"
+		"prev": "Prev",
+		"saved": "Saved",
+		"search": "Search",
+		"support": "Support"
 	},
 	"your-comments": "Your Comments",
 	"youtube": "YouTube"
