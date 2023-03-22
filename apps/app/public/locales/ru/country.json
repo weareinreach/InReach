@@ -323,9 +323,9 @@
 	"COG": {
 		"name": "Республика Конго",
 		"demonym_one": "Congolese",
-		"demonym_few": "Congolese",
-		"demonym_many": "Congolese",
-		"demonym_other": "Congolese"
+		"demonym_few": "Congoleses",
+		"demonym_many": "Congoleses",
+		"demonym_other": "Congoleses"
 	},
 	"COK": {
 		"name": "Острова Кука",
@@ -935,9 +935,9 @@
 	"MAC": {
 		"name": "Макао",
 		"demonym_one": "Китайский",
-		"demonym_few": "Китайский",
-		"demonym_many": "Китайский",
-		"demonym_other": "Китайский"
+		"demonym_few": "Китайцы",
+		"demonym_many": "Китайцы",
+		"demonym_other": "Китайцы"
 	},
 	"MAF": {
 		"name": "Сен-Мартен",

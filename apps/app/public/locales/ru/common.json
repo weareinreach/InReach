@@ -145,29 +145,29 @@
 	},
 	"send-email": "Отправить email",
 	"service": {
+		"additional-info": "Дополнительная информация о праве доступа",
+		"age": {
+			"max": " и старше",
+			"min": "Вверх ",
+			"range": "{{min}}{{separator}}{{max}}"
+		},
+		"ages": "Право на возраст",
 		"at-capacity": "<strong>В настоящее время эта служба не может принимать новых клиентов.</strong>",
-		"get-help": "Получить помощь",
-		"phone": "Прямой телефон",
-		"email": "Прямая почта",
-		"website": "Прямой сайт",
-		"hours": "Время обслуживания",
 		"clients-served": "Клиенты обслуживаются",
 		"community-focus": "Фокус сообщества LGBTQ+",
-		"target-population": "Target population",
 		"cost": "Затраты",
 		"cost-details": "Подробнее о стоимости",
 		"eligibility": "Требования в отношении приемлемости",
-		"ages": "Право на возраст",
-		"age": {
-			"range": "{{min}}{{separator}}{{max}}",
-			"min": "Вверх ",
-			"max": " и старше"
-		},
-		"requirements": "Требования",
-		"additional-info": "Дополнительная информация о праве доступа",
-		"languages": "Языки",
+		"email": "Прямая почта",
 		"extra-info": "Дополнительная информация",
-		"transit-directions": "Направления государственного транзита"
+		"get-help": "Получить помощь",
+		"hours": "Время обслуживания",
+		"languages": "Языки",
+		"phone": "Прямой телефон",
+		"requirements": "Требования",
+		"target-population": "Target population",
+		"transit-directions": "Направления государственного транзита",
+		"website": "Прямой сайт"
 	},
 	"services": "Услуги",
 	"settings": "Настройки",
@@ -219,12 +219,16 @@
 	"website": "Сайт",
 	"words": {
 		"accept": "Принять",
+		"account": "Аккаунт",
 		"and": "и",
 		"and-x-more": "и еще {{count}}",
 		"coming-soon": "Скоро появится",
 		"more": "больше",
 		"next": "Следующий",
-		"prev": "Предыдущий"
+		"prev": "Предыдущий",
+		"saved": "Сохранено",
+		"search": "Искать",
+		"support": "Support"
 	},
 	"your-comments": "Ваши комментарии",
 	"youtube": "YouTube",

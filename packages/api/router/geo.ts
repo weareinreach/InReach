@@ -27,7 +27,7 @@ export const geoRouter = defineRouter({
 						'administrative_area_level_3',
 						'neighborhood',
 						'locality',
-						'colloquial_area',
+						'postal_code',
 				  ] as unknown as PlaceAutocompleteType)
 
 			const { data } = await google.placeAutocomplete({

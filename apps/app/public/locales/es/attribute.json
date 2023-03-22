@@ -83,9 +83,9 @@
 	},
 	"orgleader": {
 		"bipoc-led": "Led BIPOC",
-		"black-led": "Black-led",
+		"black-led": "Led Negro",
 		"CATEGORYNAME": "Líder de la organización",
-		"immigrant-led": "Immigrant-led",
+		"immigrant-led": "Led Inmigrante",
 		"trans-led": "Trans Led"
 	},
 	"serviceaccess": {
@@ -96,7 +96,7 @@
 		"accessphone": "Instrucciones de acceso - Teléfono",
 		"accesstext": "Instrucciones de Acceso - Texto",
 		"CATEGORYNAME": "Instrucciones de acceso al servicio",
-		"accesspublictransit": "Access Instructions - Public Transit"
+		"accesspublictransit": "Instrucciones de acceso - Tránsito público"
 	},
 	"srvfocus": {
 		"asylum-seekers": "Buscadores de asilo",
@@ -114,7 +114,7 @@
 		"trans-youth-focus": "Trans Youth"
 	},
 	"sys": {
-		"CATEGORYNAME": "System",
+		"CATEGORYNAME": "Sistema",
 		"incompatible-info": "Información incompatible"
 	},
 	"userlawpractice": {
