@@ -143,29 +143,29 @@
 	},
 	"send-email": "Enviar email",
 	"service": {
+		"additional-info": "Información adicional de elegibilidad",
+		"age": {
+			"max": " y anteriores",
+			"min": "Hasta ",
+			"range": "{{min}}{{separator}}{{max}}"
+		},
+		"ages": "Edad elegible",
 		"at-capacity": "<strong>Este servicio no puede recibir nuevos clientes.</strong>",
-		"get-help": "Obtener ayuda",
-		"phone": "Teléfono directo",
-		"email": "Email directo",
-		"website": "Sitio web directo",
-		"hours": "Horas de servicio",
 		"clients-served": "Clientes atendidos",
 		"community-focus": "Enfoque comunitario LGBTQ+",
-		"target-population": "Target population",
 		"cost": "Costo",
 		"cost-details": "Detalles de costo",
 		"eligibility": "Requisitos de elegibilidad",
-		"ages": "Edad elegible",
-		"age": {
-			"range": "{{min}}{{separator}}{{max}}",
-			"min": "Hasta ",
-			"max": " y anteriores"
-		},
-		"requirements": "Requisitos",
-		"additional-info": "Información adicional de elegibilidad",
-		"languages": "Idiomas",
+		"email": "Email directo",
 		"extra-info": "Información adicional",
-		"transit-directions": "Direcciones de tránsito públicas"
+		"get-help": "Obtener ayuda",
+		"hours": "Horas de servicio",
+		"languages": "Idiomas",
+		"phone": "Teléfono directo",
+		"requirements": "Requisitos",
+		"target-population": "Target population",
+		"transit-directions": "Direcciones de tránsito públicas",
+		"website": "Sitio web directo"
 	},
 	"services": "Servicios",
 	"settings": "Ajustes",
@@ -217,12 +217,16 @@
 	"website": "Sitio web",
 	"words": {
 		"accept": "Aceptar",
+		"account": "Cuenta",
 		"and": "y",
 		"and-x-more": "y {{count}} más",
 		"coming-soon": "Próximamente",
 		"more": "más",
 		"next": "Siguiente",
-		"prev": "Anterior"
+		"prev": "Anterior",
+		"saved": "Guardado",
+		"search": "Buscar",
+		"support": "Support"
 	},
 	"your-comments": "Tus comentarios",
 	"youtube": "YouTube",
