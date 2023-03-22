@@ -103,7 +103,7 @@
 		"i18next-intervalplural-postprocessor": "3.0.0",
 		"luxon": "3.3.0",
 		"merge-anything": "5.1.4",
-		"msw": "1.1.1",
+		"msw": "1.2.0",
 		"msw-storybook-addon": "1.8.0",
 		"next": "13.2.4",
 		"next-auth": "4.20.1",
