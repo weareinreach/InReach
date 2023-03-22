@@ -13,6 +13,8 @@ import LocalStorageBackend from 'i18next-localstorage-backend'
 import MultiBackend from 'i18next-multiload-backend-adapter'
 import { z } from 'zod'
 
+import path from 'path'
+
 export const namespaces = [
 	'attribute',
 	'common',
@@ -89,7 +91,7 @@ const config = {
 		locales: ['en', 'es', 'fr', 'ar', 'ru'], // ['en', 'en-US', 'en-CA', 'en-MX', 'es', 'es-US', 'es-MX'],
 	},
 	defaultNS: 'common',
-
+	localePath: path.resolve('./public/locales'),
 	fallbackLng: ['en'],
 	reloadOnPrerender: process.env.NODE_ENV !== 'production',
 	debug: process.env.NODE_ENV !== 'production' && isBrowser, //&& !!process.env.NEXT_VERBOSE,

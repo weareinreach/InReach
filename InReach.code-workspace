@@ -61,6 +61,10 @@
 			"path": "./packages/aws-messaging"
 		},
 		{
+			"name": "📦 AWS i18n Cache (@weareinreach/aws-i18n-cache)",
+			"path": "./packages/aws-cache"
+		},
+		{
 			"name": "✨ InReach (root)",
 			"path": "./"
 		},
@@ -218,5 +222,107 @@
 		"typescript.preferences.importModuleSpecifier": "relative",
 		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
 		"typescript.workspaceSymbols.scope": "allOpenProjects"
+	},
+	"launch": {
+		"configurations": [
+			{
+				"type": "aws-sam",
+				"request": "direct-invoke",
+				"name": "i18n-cache:HelloWorldFunction (nodejs18.x)",
+				"invokeTarget": {
+					"target": "template",
+					"templatePath": "/Users/joe/GitHub/InReach/monorepo/packages/aws-cache/i18n-cache/template.yaml",
+					"logicalId": "HelloWorldFunction"
+				},
+				"lambda": {
+					"payload": {},
+					"environmentVariables": {},
+					"runtime": "nodejs18.x"
+				}
+			},
+			{
+				"type": "aws-sam",
+				"request": "direct-invoke",
+				"name": "API i18n-cache:HelloWorldFunction (nodejs18.x)",
+				"invokeTarget": {
+					"target": "api",
+					"templatePath": "/Users/joe/GitHub/InReach/monorepo/packages/aws-cache/i18n-cache/template.yaml",
+					"logicalId": "HelloWorldFunction"
+				},
+				"api": {
+					"path": "/hello",
+					"httpMethod": "get",
+					"payload": {
+						"json": {}
+					}
+				},
+				"lambda": {
+					"runtime": "nodejs18.x"
+				}
+			},
+			{
+				"name": "Launch Chrome",
+				"request": "launch",
+				"type": "chrome",
+				"url": "http://localhost:3000",
+				"webRoot": "${workspaceFolder}"
+			},
+			{
+				"name": "Attach by Process ID",
+				"processId": "${command:PickProcess}",
+				"request": "attach",
+				"skipFiles": ["<node_internals>/**/*", "${workspaceFolder}/node_modules/**/*"],
+				"type": "node",
+				"autoAttachChildProcesses": true,
+				"restart": true
+			},
+			{
+				"name": "Attach to :9229",
+				"port": 9229,
+				"request": "attach",
+				"skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**/*"],
+				"type": "node",
+				"autoAttachChildProcesses": true,
+				"restart": true
+			},
+			{
+				"disableNetworkCache": true,
+				"name": "Launch Brave",
+				"port": 9222,
+				"request": "launch",
+				"runtimeArgs": ["--user-data-dir=/Users/joe/.brave-dev-profile"],
+				"runtimeExecutable": "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
+				"type": "chrome",
+				"url": "http://localhost:3000",
+				"userDataDir": true,
+				"webRoot": "${workspaceFolder}",
+				"sourceMaps": true
+			},
+			{
+				"command": "pnpm dev",
+				"name": "pnpm dev",
+				"request": "launch",
+				"serverReadyAction": {
+					"action": "startDebugging",
+					"name": "Launch Brave",
+					"pattern": "http://localhost:([0-9]+)"
+				},
+				"skipFiles": ["<node_internals>/**/*", "${workspaceFolder}/node_modules/**/*"],
+				"sourceMaps": true,
+				"type": "node-terminal"
+			},
+			{
+				"command": "yarn dev",
+				"name": "yarn dev",
+				"request": "launch",
+				"serverReadyAction": {
+					"action": "debugWithChrome",
+					"pattern": "(?:(.*?\bserver.*ready\b)|(.*?\bready.*server\b)).*(\bhttps?://.+\b)",
+					"uriFormat": "%s"
+				},
+				"sourceMaps": true,
+				"type": "node-terminal"
+			}
+		]
 	}
 }

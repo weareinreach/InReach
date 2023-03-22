@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  i18n-cache
+
+  Sample SAM Template for i18n-cache
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Runtime: nodejs18.x
+    CodeUri: ./dist/
+    Timeout: 5
+    Architectures:
+      - x86_64
+    VpcConfig:
+      SecurityGroupIds:
+        - sg-0d40b85981e585a02
+      SubnetIds:
+        - subnet-0c7a3b13ad25c2fa3
+        - subnet-0d16fa875cca55289
+    Environment:
+      Variables:
+        REDIS_URL: redis://master.inreach-cache.ub7are.use1.cache.amazonaws.com:6379
+
+Resources:
+  i18nCacheReadFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      Handler: index.readHandler
+      FunctionUrlConfig:
+        AuthType: AWS_IAM
+
+  i18nCacheWriteFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      Handler: index.writeHandler
+      FunctionUrlConfig:
+        AuthType: AWS_IAM
+
+Outputs:
+  i18nCacheReadURL:
+    Description: 'Cache read URL endpoint'
+    Value: !GetAtt i18nCacheReadFunctionUrl.FunctionUrl
+  i18nCacheReadFunction:
+    Description: 'Cache Read Lambda Function ARN'
+    Value: !GetAtt i18nCacheReadFunction.Arn
+  i18nCacheReadFunctionIamRole:
+    Description: 'Implicit IAM Role created for Cache Read function'
+    Value: !GetAtt i18nCacheReadFunctionRole.Arn
+  i18nCacheWriteURL:
+    Description: 'Cache write URL endpoint'
+    Value: !GetAtt i18nCacheWriteFunctionUrl.FunctionUrl
+  i18nCacheWriteFunction:
+    Description: 'Cache Write Lambda Function ARN'
+    Value: !GetAtt i18nCacheWriteFunction.Arn
+  i18nCacheWriteFunctionIamRole:
+    Description: 'Implicit IAM Role created for Cache Write function'
+    Value: !GetAtt i18nCacheWriteFunctionRole.Arn

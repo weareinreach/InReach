@@ -1,0 +1,42 @@
+# More information about the configuration file can be found here:
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
+version = 0.1
+
+[default]
+	[default.global]
+		[default.global.parameters]
+			stack_name = "i18n-cache"
+
+[default.build]
+	[default.build.parameters]
+		cached   = true
+		parallel = true
+
+[default.validate]
+	[default.validate.parameters]
+		lint = true
+
+[default.deploy]
+	[default.deploy.parameters]
+		capabilities       = "CAPABILITY_IAM"
+		confirm_changeset  = true
+		image_repositories = []
+		region             = "us-east-1"
+		s3_bucket          = "aws-sam-cli-managed-default-samclisourcebucket-i42qqmsezts8"
+		s3_prefix          = "i18n-cache"
+
+[default.package]
+	[default.package.parameters]
+		resolve_s3 = true
+
+[default.sync]
+	[default.sync.parameters]
+		watch = true
+
+[default.local_start_api]
+	[default.local_start_api.parameters]
+		warm_containers = "EAGER"
+
+[default.local_start_lambda]
+	[default.local_start_lambda.parameters]
+		warm_containers = "EAGER"

@@ -111,7 +111,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params })
 	await ssg.location.getById.prefetch({ id: orgLocationId })
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', slug])),
+		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
 	}
 
 	return {
