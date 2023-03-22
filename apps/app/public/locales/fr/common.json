@@ -143,29 +143,29 @@
 	},
 	"send-email": "Envoyer un e-mail",
 	"service": {
+		"additional-info": "Informations supplémentaires sur l'éligibilité",
+		"age": {
+			"max": " et plus vieux",
+			"min": "Jusqu'à ",
+			"range": "{{min}}{{separator}}{{max}}"
+		},
+		"ages": "Âge éligible",
 		"at-capacity": "<strong>Ce service est actuellement incapable de prendre de nouveaux clients.</strong>",
-		"get-help": "Obtenir de l'aide",
-		"phone": "Téléphone direct",
-		"email": "E-mail direct",
-		"website": "Site Web direct",
-		"hours": "Heures de service",
 		"clients-served": "Clients servis",
 		"community-focus": "Centre communautaire LGBTQ+",
-		"target-population": "Target population",
 		"cost": "Coûts",
 		"cost-details": "Détails du coût",
 		"eligibility": "Exigences d'admissibilité",
-		"ages": "Âge éligible",
-		"age": {
-			"range": "{{min}}{{separator}}{{max}}",
-			"min": "Jusqu'à ",
-			"max": " et plus vieux"
-		},
-		"requirements": "Exigences",
-		"additional-info": "Informations supplémentaires sur l'éligibilité",
-		"languages": "Langues",
+		"email": "E-mail direct",
 		"extra-info": "Informations complémentaires",
-		"transit-directions": "Directions de transport en commun"
+		"get-help": "Obtenir de l'aide",
+		"hours": "Heures de service",
+		"languages": "Langues",
+		"phone": "Téléphone direct",
+		"requirements": "Exigences",
+		"target-population": "Target population",
+		"transit-directions": "Directions de transport en commun",
+		"website": "Site Web direct"
 	},
 	"services": "Services",
 	"settings": "Réglages",
@@ -217,12 +217,16 @@
 	"website": "Site Web",
 	"words": {
 		"accept": "Accepter",
+		"account": "Compte client",
 		"and": "et",
 		"and-x-more": "et {{count}} de plus",
 		"coming-soon": "Bientôt disponible",
 		"more": "plus",
 		"next": "Suivant",
-		"prev": "Précédent"
+		"prev": "Précédent",
+		"saved": "Enregistré",
+		"search": "Chercher",
+		"support": "Support"
 	},
 	"your-comments": "Vos commentaires",
 	"youtube": "YouTube",
