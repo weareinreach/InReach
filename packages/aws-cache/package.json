@@ -1,0 +1,41 @@
+{
+	"name": "@weareinreach/aws-i18n-cache",
+	"version": "0.100.0",
+	"description": "Lambda for AWS ElastiCache",
+	"license": "GPL-3.0-only",
+	"main": "dist/index.js",
+	"source": "src/index.ts",
+	"scripts": {
+		"build:aws": "pnpm clean:dist && pnpm bundle",
+		"bundle": "ncc build ./src/index.ts -s -m -a ",
+		"clean:dist": "rm -fr dist",
+		"clean:node": "rm -rf ./node_modules/ || true",
+		"deploy:aws": "pnpm build:aws && sam deploy",
+		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
+		"preinstall": "npx only-allow pnpm",
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix ."
+	},
+	"dependencies": {
+		"@aws-lambda-powertools/logger": "1.7.0",
+		"flat": "5.0.2",
+		"ioredis": "5.3.1",
+		"tslog": "4.8.2",
+		"zod": "3.21.4"
+	},
+	"devDependencies": {
+		"@types/aws-lambda": "8.10.114",
+		"@types/eslint": "8.21.3",
+		"@types/flat": "5.0.2",
+		"@types/node": "18.15.5",
+		"@types/prettier": "2.7.2",
+		"@vercel/ncc": "0.36.1",
+		"@weareinreach/config": "0.100.0",
+		"@weareinreach/eslint-config": "0.100.0",
+		"aws-lambda": "1.0.7",
+		"esbuild": "0.17.12",
+		"eslint": "8.36.0",
+		"prettier": "2.8.6",
+		"typescript": "5.0.2"
+	}
+}
