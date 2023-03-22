@@ -10,7 +10,7 @@ files:
   [
     {
       source: '/apps/app/public/locales/en/*.json',
-      translation: '/%locale%/%original_file_name%',
+      translation: '/apps/app/public/locales/%locale%/%original_file_name%',
       type: i18next_json,
       update_option: 'update_as_unapproved',
       export_only_approved: true,
@@ -21,9 +21,3 @@ pull_request_labels:
   - translations
   - "kodiak: merge.method = 'squash'"
 pull_request_title: 'chore(i18n): Updated translations from Crowdin'
-# export_languages:
-#   - 'en-US'
-#   - 'en-CA'
-#   - 'es'
-#   - 'es-US'
-#   - 'es-MX'
