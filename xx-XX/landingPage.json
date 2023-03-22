@@ -1,0 +1,48 @@
+{
+	"call-out": {
+		"hear-from-users": "crwdns792892:0crwdne792892:0",
+		"who-we-are": "crwdns792896:0crwdne792896:0"
+	},
+	"hero": {
+		"community": {
+			"0": "crwdns792898:0crwdne792898:0",
+			"1": "crwdns792902:0crwdne792902:0",
+			"2": "crwdns792904:0crwdne792904:0",
+			"3": "crwdns792906:0crwdne792906:0",
+			"4": "crwdns792908:0crwdne792908:0",
+			"5": "crwdns792912:0crwdne792912:0",
+			"6": "crwdns792914:0crwdne792914:0",
+			"7": "crwdns792916:0crwdne792916:0"
+		},
+		"find-resources": "crwdns792920:0crwdne792920:0",
+		"heading": "crwdns792922:0crwdne792922:0",
+		"services": {
+			"0": "crwdns792924:0crwdne792924:0",
+			"1": "crwdns792926:0crwdne792926:0",
+			"2": "crwdns792930:0crwdne792930:0",
+			"3": "crwdns792932:0crwdne792932:0",
+			"4": "crwdns792934:0crwdne792934:0",
+			"5": "crwdns792936:0crwdne792936:0",
+			"6": "crwdns792940:0crwdne792940:0",
+			"7": "crwdns792942:0crwdne792942:0",
+			"8": "crwdns792944:0crwdne792944:0",
+			"9": "crwdns792948:0crwdne792948:0",
+			"10": "crwdns792950:0crwdne792950:0",
+			"11": "crwdns792952:0crwdne792952:0",
+			"12": "crwdns792954:0crwdne792954:0",
+			"13": "crwdns792958:0crwdne792958:0",
+			"14": "crwdns792960:0crwdne792960:0",
+			"15": "crwdns792962:0crwdne792962:0",
+			"16": "crwdns792966:0crwdne792966:0",
+			"17": "crwdns792968:0crwdne792968:0"
+		},
+		"subheading": "crwdns792970:0crwdne792970:0"
+	},
+	"values": {
+		"free": "crwdns792974:0crwdne792974:0",
+		"innovative": "crwdns792976:0crwdne792976:0",
+		"intersectional": "crwdns792978:0crwdne792978:0",
+		"our-values": "crwdns792980:0crwdne792980:0",
+		"safety-first": "crwdns792984:0crwdne792984:0"
+	}
+}
