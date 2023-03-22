@@ -41,5 +41,5 @@
 	"type-provider": "Fournisseur de services",
 	"type-seeker": "Chercheur de ressources",
 	"type-sysadmin": "Administrateur du système",
-	"type-system": "Utilisateur système"
+	"type-system": "Système"
 }
