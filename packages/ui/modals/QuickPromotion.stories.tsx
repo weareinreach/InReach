@@ -1,22 +1,18 @@
-import { Center } from '@mantine/core'
 import { Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
 
-import { openQuickPromotionModal } from './QuickPromotion'
-
-const ModalTemplate = () => {
-	return (
-		<Center maw='100vw' h='100vh'>
-			<Button onClick={openQuickPromotionModal}>Open Modal</Button>
-		</Center>
-	)
-}
+import { QuickPromotionModal } from './QuickPromotion'
 
 export default {
 	title: 'Modals/Quick Promotion',
-	component: ModalTemplate,
-	parameters: { layout: 'fullscreen' },
-} satisfies Meta<typeof ModalTemplate>
+	component: QuickPromotionModal,
+	parameters: { layout: 'fullscreen', layoutWrapper: 'centeredHalf' },
+	args: {
+		component: Button,
+		children: 'Open Quick Promotion',
+		variant: 'inlineInvertedUtil1',
+	},
+} satisfies Meta<typeof QuickPromotionModal>
 
 export const Modal = {}
