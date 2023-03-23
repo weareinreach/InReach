@@ -1,6 +1,8 @@
 import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
+import { type Preview } from '@storybook/react'
 import { translatedLangs, LocaleCodes } from '@weareinreach/api/generated/languages'
+import dotenv from 'dotenv'
 import { RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
@@ -12,6 +14,8 @@ import authStates from './mockAuthStates'
 import { Viewports } from './types'
 
 import './font.css'
+
+dotenv.config({ path: '../../../.env' })
 
 initializeMsw({
 	serviceWorker: {
@@ -31,48 +35,50 @@ initializeMsw({
 	},
 })
 
-export const parameters = {
-	actions: { argTypesRegex: '^on[A-Z].*' },
-	layout: 'centered',
-	controls: {
-		matchers: {
-			color: /(background|color)$/i,
-			date: /Date$/,
+const preview: Preview = {
+	parameters: {
+		actions: { argTypesRegex: '^on[A-Z].*' },
+		layout: 'centered',
+		controls: {
+			matchers: {
+				color: /(background|color)$/i,
+				date: /Date$/,
+			},
+			expanded: true,
+			sort: 'requiredFirst',
+			hideNoControlsWarning: true,
 		},
-		expanded: true,
-		sort: 'requiredFirst',
-		hideNoControlsWarning: true,
-	},
-	docs: {
-		source: {
-			type: 'dynamic',
-			excludeDecorators: true,
+		docs: {
+			source: {
+				type: 'dynamic',
+				excludeDecorators: true,
+			},
+		},
+		i18n,
+		viewport: {
+			viewports: INITIAL_VIEWPORTS,
+		},
+		chromatic: {
+			delay: 1000,
+		},
+		pseudo: {
+			rootElement: 'storybook-root',
 		},
 	},
-	i18n,
-	viewport: {
-		viewports: INITIAL_VIEWPORTS,
+	globalTypes: {
+		locale: {
+			name: 'Locale',
+			description: 'Internationalization locale',
+			defaultValue: 'en',
+			toolbar: {
+				icon: 'globe',
+				items: translatedLangs.map((lang) => ({ value: lang.localeCode, title: lang.languageName })),
+			},
+		},
 	},
-	chromatic: {
-		delay: 1000,
-	},
-	pseudo: {
-		rootElement: 'storybook-root',
-	},
+	decorators: [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC],
 }
-export const globalTypes = {
-	locale: {
-		name: 'Locale',
-		description: 'Internationalization locale',
-		defaultValue: 'en',
-		toolbar: {
-			icon: 'globe',
-			items: translatedLangs.map((lang) => ({ value: lang.localeCode, title: lang.languageName })),
-		},
-	},
-}
-
-export const decorators = [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC]
+export default preview
 
 declare module '@storybook/react' {
 	export interface Parameters {
