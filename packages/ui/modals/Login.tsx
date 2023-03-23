@@ -11,7 +11,7 @@ import { z } from 'zod'
 import { Button, Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
 
-import { openForgotPasswordModal } from './ForgotPassword'
+import { ForgotPasswordModal } from './ForgotPassword'
 import { ModalTitle, ModalTitleProps } from './ModalTitle'
 import { PrivacyStatementModal } from './PrivacyStatement'
 import { SignupModalLauncher } from './SignUp'
@@ -82,7 +82,7 @@ export const LoginModalBody = ({ context, id, innerProps }: ContextModalProps<{}
 				/>
 			</Text>
 			<Stack spacing={0} align='center'>
-				<Link external onClick={() => openForgotPasswordModal()}>
+				<Link external onClick={() => ForgotPasswordModal()}>
 					{t('forgot-password')}
 				</Link>
 				<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
