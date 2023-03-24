@@ -2,7 +2,6 @@ import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
 import { translatedLangs, LocaleCodes } from '@weareinreach/api/generated/languages'
-import dotenv from 'dotenv'
 import { RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
@@ -14,8 +13,6 @@ import authStates from './mockAuthStates'
 import { Viewports } from './types'
 
 import './font.css'
-
-dotenv.config({ path: '../../../.env' })
 
 initializeMsw({
 	serviceWorker: {
