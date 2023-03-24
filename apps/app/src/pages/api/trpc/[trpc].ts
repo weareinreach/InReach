@@ -1,5 +1,8 @@
 import { createNextApiHandler } from '@trpc/server/adapters/next'
 import { appRouter, createContext } from '@weareinreach/api'
+import { Logger } from 'tslog'
+
+const log = new Logger({ name: 'tRPC', type: 'json' })
 
 /* Creating a handler for the tRPC endpoint. */
 export default createNextApiHandler({
@@ -11,5 +14,5 @@ export default createNextApiHandler({
 			? ({ path, error, type }) => {
 					console.error(`❌ tRPC ${type} failed on ${path}: ${error}`)
 			  }
-			: undefined,
+			: ({ path, error, type }) => log.error({ type, path, error }),
 })
