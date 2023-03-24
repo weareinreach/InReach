@@ -13,8 +13,6 @@ import {
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { openContextModal } from '@mantine/modals'
-import { ContextModalProps } from '@mantine/modals/lib/context'
 import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
 import { z } from 'zod'

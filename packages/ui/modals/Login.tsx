@@ -12,8 +12,6 @@ import {
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { openContextModal } from '@mantine/modals'
-import { ContextModalProps } from '@mantine/modals/lib/context'
 import { signIn } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
@@ -23,7 +21,7 @@ import { Button, Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
 
 import { ForgotPasswordModal } from './ForgotPassword'
-import { ModalTitle, ModalTitleProps } from './ModalTitle'
+import { ModalTitle } from './ModalTitle'
 import { PrivacyStatementModal } from './PrivacyStatement'
 import { SignupModalLauncher } from './SignUp'
 
