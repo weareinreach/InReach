@@ -20,6 +20,7 @@ import {
 	FormLawPractice,
 	FormServiceProvider,
 } from './fields'
+import { LoginModalLauncher } from '../Login'
 import { ModalTitle } from '../ModalTitle'
 import { PrivacyStatementModal } from '../PrivacyStatement'
 
@@ -52,7 +53,11 @@ export const RichTranslate = ({ stateSetter, ...props }: RichTranslateProps) => 
 						.
 					</Text>
 				),
-				loginLink: <Link external>.</Link>,
+				loginLink: (
+					<LoginModalLauncher external component={Link} key={0} variant={variants.Link.inheritStyle}>
+						.
+					</LoginModalLauncher>
+				),
 				button: (
 					<Button
 						variant='secondary-icon'
