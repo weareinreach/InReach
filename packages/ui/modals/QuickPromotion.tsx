@@ -1,7 +1,7 @@
 import { Text, Title, Stack, type ButtonProps, Modal, Box, createPolymorphicComponent } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation, Trans } from 'next-i18next'
-import { forwardRef, useState } from 'react'
+import { forwardRef } from 'react'
 
 import { Button, Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'

@@ -112,9 +112,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 			{/* <UnstyledButton onClick={() => openLoginModal()}>
 				<Text className={classes.navText}>{t('log-in')}</Text>
 			</UnstyledButton> */}
-			<LoginModalLauncher className={classes.navText} component={Button}>
-				{t('log-in')}
-			</LoginModalLauncher>
+			<LoginModalLauncher component={Button}>{t('log-in')}</LoginModalLauncher>
 			<SignupModalLauncher component={Button}>{t('sign-up-free')}</SignupModalLauncher>
 			{/* <Button onClick={() => openSignUpModal()}>{t('sign-up-free')}</Button> */}
 		</Group>
