@@ -2080,4 +2080,5 @@ export const iconList = [
 	'carbon:letter-aa-large',
 	'carbon:sunny',
 	'simple-icons:tiktok',
+	'ph:map-pin-fill',
 ] as const

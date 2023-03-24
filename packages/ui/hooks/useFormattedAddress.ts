@@ -18,7 +18,7 @@ const AddressSchema = z.object({
 	}),
 })
 
-export const useFormattedAddressParts = (location?: Location) => {
+export const useFormattedAddressParts = (location?: UseFormattedAddressProps) => {
 	const { t } = useTranslation()
 	const addressParts = AddressSchema.safeParse(location)
 	if (!addressParts.success) return null
@@ -41,10 +41,12 @@ export const useFormattedAddressParts = (location?: Location) => {
 
 	return formattedAddress
 }
-export const useFormattedAddress = (location?: Location) => {
+export const useFormattedAddress = (location?: UseFormattedAddressProps) => {
 	const address = useFormattedAddressParts(location)
 	if (Array.isArray(address)) return address.join(', ')
 	return address
 }
 
-type Location = Partial<NonNullable<ApiOutput['organization']['getBySlug']>['locations'][number]>
+export type UseFormattedAddressProps = Partial<
+	NonNullable<ApiOutput['organization']['getBySlug']>['locations'][number]
+>
