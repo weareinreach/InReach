@@ -159,6 +159,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 			if (serviceName) name = <Title order={2}>{serviceName.tsKey.text}</Title>
 
+			let orgTimezone: string | null = null
 			const allServices = services.map(({ tag }) => (
 				<Badge key={tag.tsKey} variant='service' tsKey={tag.tsKey} />
 			))
@@ -166,7 +167,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 			const formatHours: JSX.Element[] = []
 
 			const hourMap = new Map<number, Set<(typeof hours)[number]>>()
-
+			const { weekYear, weekNumber } = DateTime.now()
 			for (const entry of hours) {
 				const daySet = hourMap.get(entry.dayIndex)
 				if (!daySet) {
@@ -177,11 +178,15 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 			}
 
 			hourMap.forEach((value, key) => {
-				const entry = [...value].map(({ start, end, dayIndex: weekday, closed }, idx) => {
-					const open = DateTime.fromJSDate(start).set({ weekday })
-					const close = DateTime.fromJSDate(end).set({ weekday })
+				const entry = [...value].map(({ start, end, dayIndex: weekday, closed, tz }, idx) => {
+					const zone = tz ?? undefined
+					const open = DateTime.fromJSDate(start, { zone }).set({ weekday, weekNumber, weekYear })
+					const close = DateTime.fromJSDate(end, { zone }).set({ weekday, weekNumber, weekYear })
 					const interval = Interval.fromDateTimes(open, close)
 
+					if (!orgTimezone && zone) {
+						orgTimezone = open.toFormat('ZZZZZ (ZZZZ)', { locale: i18n.language })
+					}
 					if (closed) return null
 
 					if (idx === 0) {
@@ -206,7 +211,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 				formatHours.push(<ModalText>{entry.filter(Boolean).join(' & ')}</ModalText>)
 			})
 
-			const timeZone = <Text className={classes.timezone}>{`${DateTime.local().zoneName}`}</Text>
+			const timeZone = <Text className={classes.timezone}>{orgTimezone}</Text>
 
 			const serviceHours =
 				formatHours.length > 0 ? (
