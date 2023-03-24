@@ -65,6 +65,7 @@ const hoursSelect = {
 		start: true,
 		end: true,
 		closed: true,
+		tz: true,
 	},
 } satisfies Prisma.Organization$hoursArgs | Prisma.OrgLocation$hoursArgs
 const orgEmailInclude = {
