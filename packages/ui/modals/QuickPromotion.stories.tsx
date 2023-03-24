@@ -10,7 +10,7 @@ export default {
 	parameters: { layout: 'fullscreen', layoutWrapper: 'centeredHalf' },
 	args: {
 		component: Button,
-		children: 'Open Quick Promotion',
+		children: 'Open Quick Promotion Modal',
 		variant: 'inlineInvertedUtil1',
 	},
 } satisfies Meta<typeof QuickPromotionModal>

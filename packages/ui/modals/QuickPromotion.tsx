@@ -1,21 +1,12 @@
-import {
-	Button,
-	Text,
-	Title,
-	Stack,
-	type ButtonProps,
-	Modal,
-	Box,
-	createPolymorphicComponent,
-} from '@mantine/core'
+import { Text, Title, Stack, type ButtonProps, Modal, Box, createPolymorphicComponent } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation, Trans } from 'next-i18next'
-import { forwardRef } from 'react'
+import { forwardRef, useState } from 'react'
 
-import { Link } from '~ui/components/core'
+import { Button, Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
 
-import { openLoginModal } from './Login'
+import { LoginModalLauncher } from './Login'
 import { ModalTitle } from './ModalTitle'
 import { SignupModalLauncher } from './SignUp'
 
@@ -49,13 +40,10 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 								}}
 							/>
 						</Stack>
-						<Button onClick={() => openLoginModal()} variant='primary-icon' fullWidth>
+						<LoginModalLauncher component={Button} fullWidth>
 							{t('log-in')}
-						</Button>
+						</LoginModalLauncher>
 						<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
-						{/* <Link external onClick={() => openSignUpModal()}>
-					{t('dont-have-account')}
-				</Link> */}
 					</Stack>
 				</Modal>
 				<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />

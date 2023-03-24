@@ -24,7 +24,7 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { ModalTitle } from './ModalTitle'
 
-export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModalProps>(
+export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModalBodyProps>(
 	(props, ref) => {
 		const { t } = useTranslation(['common'])
 		const EmailSchema = z.object({
@@ -83,11 +83,11 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 
 ForgotPasswordModalBody.displayName = 'ForgotPasswordModal'
 
-export const ForgotPasswordModal = createPolymorphicComponent<'button', ForgotPasswordModalProps>(
+export const ForgotPasswordModal = createPolymorphicComponent<'button', ForgotPasswordModalBodyProps>(
 	ForgotPasswordModalBody
 )
 
-export interface ForgotPasswordModalProps extends ButtonProps {}
+export interface ForgotPasswordModalBodyProps extends ButtonProps {}
 
 type FormProps = {
 	email: string

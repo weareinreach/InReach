@@ -25,7 +25,7 @@ import { ModalTitle } from './ModalTitle'
 import { PrivacyStatementModal } from './PrivacyStatement'
 import { SignupModalLauncher } from './SignUp'
 
-export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalProps>((props, ref) => {
+export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>((props, ref) => {
 	const { t } = useTranslation(['common'])
 	const [loginError, setLoginError] = useState(false)
 	const [opened, handler] = useDisclosure(false)
@@ -97,9 +97,7 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalProps>((pr
 						/>
 					</Text>
 					<Stack spacing={0} align='center'>
-						<Link external onClick={() => ForgotPasswordModal()}>
-							{t('forgot-password')}
-						</Link>
+						<ForgotPasswordModal component={Link}>{t('forgot-password')}</ForgotPasswordModal>
 						<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
 						{/* <Link external onClick={() => openSignUpModal()}>
 					{t('dont-have-account')}
@@ -111,11 +109,12 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalProps>((pr
 		</>
 	)
 })
+
 LoginModalBody.displayName = 'LoginModal'
 
-export const LoginModal = createPolymorphicComponent<'button', LoginModalProps>(LoginModalBody)
+export const LoginModalLauncher = createPolymorphicComponent<'button', LoginModalBodyProps>(LoginModalBody)
 
-export interface LoginModalProps extends ButtonProps {}
+export interface LoginModalBodyProps extends ButtonProps {}
 
 type LoginFormProps = {
 	email: string
