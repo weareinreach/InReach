@@ -54,7 +54,7 @@ export const attrSuppDataMiddleware: Prisma.Middleware = async (params, next) =>
 			let result = await next(params)
 			if (Array.isArray(result)) {
 				result = result.map((record) =>
-					record.data ? { ...record, data: processData(record.data, action) } : record
+					Object.hasOwn(record, 'data') ? { ...record, data: processData(record.data, action) } : record
 				)
 			} else if (result.data) {
 				result.data = processData(result.data, action)

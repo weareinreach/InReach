@@ -37,6 +37,7 @@
 	"dependencies": {
 		"@prisma/client": "4.11.0",
 		"superjson": "1.12.2",
+		"tslog": "4.8.2",
 		"ulid": "2.3.0",
 		"zod": "3.21.4"
 	},

@@ -2,12 +2,14 @@
 /* eslint-disable node/no-process-env */
 import { PrismaClient, Prisma } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
+import { Logger } from 'tslog'
 
 import { attrSuppDataMiddleware } from './lib/attrSuppDataMiddleware'
 import { generateId } from './lib/idGen'
 
 import { idMiddleware } from '~db/lib/idMiddleware'
 
+const log = new Logger({ name: 'prisma', type: 'json' })
 declare global {
 	// allow global `var` declarations
 	// eslint-disable-next-line no-var
@@ -22,7 +24,10 @@ const clientOptions = {
 					{ level: 'error', emit: 'stdout' },
 					{ level: 'warn', emit: 'stdout' },
 			  ]
-			: ['error'],
+			: [
+					{ level: 'error', emit: 'event' },
+					{ level: 'warn', emit: 'event' },
+			  ],
 } satisfies Prisma.PrismaClientOptions
 
 const prisma = global.prisma || new PrismaClient(clientOptions)
@@ -30,7 +35,7 @@ const prisma = global.prisma || new PrismaClient(clientOptions)
 prisma.$use(idMiddleware)
 prisma.$use(attrSuppDataMiddleware)
 
-const log = createPrismaQueryEventHandler({
+const queryLogger = createPrismaQueryEventHandler({
 	queryDuration: true,
 	format: true,
 	indent: undefined,
@@ -38,7 +43,9 @@ const log = createPrismaQueryEventHandler({
 })
 
 if (!global.prisma) {
-	prisma.$on('query', log)
+	prisma.$on('query', queryLogger)
+	prisma.$on('error', log.error)
+	prisma.$on('warn', log.warn)
 }
 
 if (process.env.NODE_ENV !== 'production') {
