@@ -3,6 +3,7 @@
 import { PrismaClient, Prisma } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 
+import { attrSuppDataMiddleware } from './lib/attrSuppDataMiddleware'
 import { generateId } from './lib/idGen'
 
 import { idMiddleware } from '~db/lib/idMiddleware'
@@ -27,6 +28,7 @@ const clientOptions = {
 const prisma = global.prisma || new PrismaClient(clientOptions)
 
 prisma.$use(idMiddleware)
+prisma.$use(attrSuppDataMiddleware)
 
 const log = createPrismaQueryEventHandler({
 	queryDuration: true,
