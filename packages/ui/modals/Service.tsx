@@ -11,7 +11,7 @@ import {
 	ButtonProps,
 } from '@mantine/core'
 import { useMediaQuery, useDisclosure } from '@mantine/hooks'
-import { transformer, SuperJSONResult } from '@weareinreach/api/lib/transformer'
+import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
 import { Interval, DateTime } from 'luxon'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -228,8 +228,9 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 			const { publicTransit, ...contacts } = accessDetails.reduce((details, { attributes }) => {
 				attributes.forEach(({ supplement }) => {
 					supplement.forEach(({ data, text }) => {
-						if (data) {
-							const { access_type, access_value } = transformer.parse<SupplementData>(JSON.stringify(data))
+						const parsed = supplementSchema.accessInstructions.safeParse(data)
+						if (parsed.success) {
+							const { access_type, access_value } = parsed.data
 
 							if (access_type === 'publicTransit')
 								details[access_type].push(<ModalText>{t(text!.key) as string}</ModalText>)
@@ -296,8 +297,9 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 										<ModalText>{t(`${ns}.${key}`, { ns: 'attribute' }) as string}</ModalText>
 									)
 								}
-								if (data) {
-									const { price } = transformer.parse<{ price: number }>(JSON.stringify(data))
+								const parsed = supplementSchema.cost.safeParse(data)
+								if (parsed.success) {
+									const { cost: price } = parsed.data
 									costDetails.price = price
 								}
 							})
@@ -318,7 +320,9 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 						case 'eligibility': {
 							if (tsKey.includes('elig-age')) {
 								supplement.forEach(({ data }) => {
-									const { min, max } = transformer.parse<{ min?: number; max?: number }>(JSON.stringify(data))
+									const parsed = supplementSchema.age.safeParse(data)
+									if (!parsed.success) return
+									const { min, max } = parsed.data
 									const ageRange = t('service.age.range', {
 										min: min || t('service.age.min'),
 										max: max || t('service.age.max'),
