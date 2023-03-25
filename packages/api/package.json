@@ -37,7 +37,7 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "8.21.3",
-		"@types/node": "18.15.5",
+		"@types/node": "18.15.8",
 		"@types/prettier": "2.7.2",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "0.100.0",
@@ -47,7 +47,7 @@
 		"just-capitalize": "3.2.0",
 		"listr2": "5.0.8",
 		"next": "13.2.4",
-		"prettier": "2.8.6",
+		"prettier": "2.8.7",
 		"prisma": "4.11.0",
 		"trpc-client-devtools-link": "0.2.1-next",
 		"tslog": "4.8.2",
@@ -56,5 +56,5 @@
 	"peerDependencies": {
 		"next": ">=13"
 	},
-	"packageManager": "pnpm@7.30.1"
+	"packageManager": "pnpm@7.30.3"
 }
