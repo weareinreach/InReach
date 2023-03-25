@@ -4,16 +4,16 @@ generator client {
   // binaryTargets   = ["native", "rhel-openssl-1.0.x"]
 }
 
-// generator zod {
-//   provider                         = "zod-prisma-types"
-//   output                           = "../zod-schemas"
-//   useMultipleFiles                 = true
-//   createModelTypes                 = true
-//   createOptionalDefaultValuesTypes = true
-//   writeNullishInModelTypes         = true
-//   addInputTypeValidation           = false
-//   createInputTypes                 = false
-// }
+generator zod {
+  provider                 = "zod-prisma-types"
+  output                   = "../zod-schemas"
+  useMultipleFiles         = true
+  createModelTypes         = true
+  createInputTypes         = false
+  writeNullishInModelTypes = true
+  addInputTypeValidation   = false
+  addSelectType            = false
+}
 
 // generator dbml {
 //   provider              = "prisma-dbml-generator"
@@ -943,12 +943,11 @@ enum FilterType {
   EXCLUDE
 }
 
-/// @zod.import(["import { AttributeSupplementDataSchema } from '../../zod_util/attributeSupplement'"])
 model AttributeSupplement {
   id     String  @id @default(cuid())
   active Boolean @default(true)
 
-  data    Json? /// @zod.custom.use(AttributeSupplementDataSchema)
+  data    Json?
   boolean Boolean?
 
   country    Country?  @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
