@@ -97,6 +97,7 @@ const serviceSelect = z
 							start: true,
 							end: true,
 							closed: true,
+							tz: true,
 						},
 				  }
 				: undefined,
