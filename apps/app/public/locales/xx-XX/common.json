@@ -79,6 +79,10 @@
 	"linkedin": "crwdns356016:0crwdne356016:0",
 	"log-in": "crwdns7562:0crwdne7562:0",
 	"log-out": "crwdns7564:0crwdne7564:0",
+	"login": {
+		"error-generic": "crwdns902772:0crwdne902772:0",
+		"error-username-password": "crwdns902774:0crwdne902774:0"
+	},
 	"modal-content": {
 		"accessibility": "crwdns781842:0crwdne781842:0",
 		"disclaimer": "crwdns781844:0crwdne781844:0"
