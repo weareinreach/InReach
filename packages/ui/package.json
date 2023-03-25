@@ -90,7 +90,7 @@
 		"@types/google.maps": "3.52.3",
 		"@types/luxon": "3.2.0",
 		"@types/node": "18.15.5",
-		"@types/react": "18.0.28",
+		"@types/react": "18.0.29",
 		"@types/react-dom": "18.0.11",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/config": "0.100.0",
