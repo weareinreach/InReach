@@ -79,6 +79,10 @@
 	"linkedin": "LinkedIn",
 	"log-in": "Iniciar sesión",
 	"log-out": "Cerrar sesión",
+	"login": {
+		"error-generic": "Algo salió mal, por favor inténtalo de nuevo.",
+		"error-username-password": "Nombre de usuario o contraseña incorrectos."
+	},
 	"modal-content": {
 		"accessibility": "<stack16>\n<title2>Declaración de accesibilidad alcanzado</title2>\n<textReg>La tecnología de código abierto de InReach está construida para la diversa comunidad LGBTQ+. incluyendo usuarios con discapacidades.</textReg>\n<textReg>La aplicación InReach gratuita está disponible en la web (escritorio y móvil), e iOS nativo y Android. Empezando con el lanzamiento de nuestro último rediseño (febrero de 2023), InReach se esforzará por cumplir con <linkAccessibility>Directrices de Accesibilidad al Contenido Web (WCAG) criterios AA.</linkAccessibility></textReg>\n<textReg>en InReach, nos esforzamos por hacer que nuestra plataforma tecnológica sea accesible para el mayor número posible de usuarios y dispositivos en línea con nuestra misión de servir a todas las personas LGBTQ+ que sufren discriminación y persecución.</textReg>",
 		"disclaimer": "<stack16>\n<title2>Aviso de responsabilidad de InReach</title2>\n<textReg>El equipo de InReach hará todo lo posible para confirmar la elegibilidad y los datos básicos sobre los proveedores de servicios listados en este sitio web. Sin embargo, no podemos garantizar la viabilidad o capacidad de ninguno de estos proveedores. En consecuencia, InReach no asume ninguna responsabilidad por las acciones de los proveedores listados en este sitio web y los usuarios que se pongan en contacto con dichos proveedores lo hacen bajo su propio riesgo.</textReg>\n</stack16>"
