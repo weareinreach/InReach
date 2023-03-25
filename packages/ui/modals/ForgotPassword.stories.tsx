@@ -1,26 +1,13 @@
-import { Center } from '@mantine/core'
 import { Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
-import { csrf, providers, signin, cognito } from '~ui/mockData/login'
 
-import { openForgotPasswordModal } from './ForgotPassword'
+import { ForgotPasswordModal } from './ForgotPassword'
 import { getTRPCMock } from '../lib/getTrpcMock'
-
-/** Define the modal to display here. */
-// const modalToDisplay = LoginModal()
-
-const ModalTemplate = () => {
-	return (
-		<Center maw='100vw' h='100vh'>
-			<Button onClick={() => openForgotPasswordModal()}>Open Modal</Button>
-		</Center>
-	)
-}
 
 export default {
 	title: 'Modals/Forgot Password',
-	component: ModalTemplate,
+	component: ForgotPasswordModal,
 	parameters: {
 		msw: [
 			getTRPCMock({
@@ -34,7 +21,13 @@ export default {
 			}),
 		],
 		layout: 'fullscreen',
+		layoutWrapper: 'centeredHalf',
 	},
-} satisfies Meta<typeof ModalTemplate>
+	args: {
+		component: Button,
+		children: 'Open Forgot Password Modal',
+		variant: 'inlineInvertedUtil1',
+	},
+} satisfies Meta<typeof ForgotPasswordModal>
 
 export const Modal = {}

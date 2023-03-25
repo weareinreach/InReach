@@ -1,11 +1,21 @@
-import { createStyles, PasswordInput, Group, Text, TextInput, rem } from '@mantine/core'
-import { closeModal, openContextModal } from '@mantine/modals'
-import { ContextModalProps } from '@mantine/modals/lib/context'
+import {
+	type ButtonProps,
+	Modal,
+	Box,
+	createPolymorphicComponent,
+	createStyles,
+	PasswordInput,
+	Group,
+	Text,
+	rem,
+} from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
+import { forwardRef } from 'react'
 
 import { Button } from '~ui/components/core'
 
-import { ModalTitle, ModalTitleProps } from './ModalTitle'
+import { ModalTitle } from './ModalTitle'
 
 const useStyles = createStyles((theme) => ({
 	container: {
@@ -31,53 +41,54 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const DeleteModalBody = ({ context, id, innerProps }: ContextModalProps<{}>) => {
+export const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((props, ref) => {
 	const { t } = useTranslation(['common'])
 	const { classes } = useStyles()
+	const [opened, handler] = useDisclosure(false)
 	const deleteAccount = async (email: string, password: string) => {
 		//TODO: [IN-784] add delete action here
 		console.log('called delete account')
 	}
 
+	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+
 	return (
-		<Group className={classes.container}>
-			<Text className={classes.heading}>{t('delete-account', { ns: 'common' })}</Text>
-			<Text className={classes.subHeading}>{t('delete-account-password', { ns: 'common' })}</Text>
-			<PasswordInput
-				label={t('password', { ns: 'common' })}
-				placeholder={t('enter-password-placeholder', { ns: 'common' }) ?? ''}
-				required
-				className={classes.input}
-			/>
-			<Button
-				variant='accent'
-				className={classes.button}
-				onClick={async () => await deleteAccount('test@email.com', 'good')}
-			>
-				{t('delete', { ns: 'common' })}
-			</Button>
-			<Button
-				variant='secondary'
-				className={classes.button}
-				onClick={() => {
-					closeModal(id)
-				}}
-			>
-				{t('cancel', { ns: 'common' })}
-			</Button>
-		</Group>
+		<>
+			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
+				<Group className={classes.container}>
+					<Text className={classes.heading}>{t('delete-account', { ns: 'common' })}</Text>
+					<Text className={classes.subHeading}>{t('delete-account-password', { ns: 'common' })}</Text>
+					<PasswordInput
+						label={t('password', { ns: 'common' })}
+						placeholder={t('enter-password-placeholder', { ns: 'common' }) ?? ''}
+						required
+						className={classes.input}
+					/>
+					<Button
+						variant='accent'
+						className={classes.button}
+						onClick={async () => await deleteAccount('test@email.com', 'good')}
+					>
+						{t('delete', { ns: 'common' })}
+					</Button>
+					<Button
+						variant='secondary'
+						className={classes.button}
+						onClick={() => {
+							handler.close()
+						}}
+					>
+						{t('cancel', { ns: 'common' })}
+					</Button>
+				</Group>
+			</Modal>
+			<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
+		</>
 	)
-}
+})
 
-const modalTitle = <ModalTitle breadcrumb={{ option: 'close' }} />
+DeleteModalBody.displayName = 'DeleteModal'
 
-export const openDeleteAccountModal = () =>
-	openContextModal({
-		modal: 'delete',
-		title: modalTitle,
-		innerProps: {},
-	})
+export const DeleteModal = createPolymorphicComponent<'button', DeleteModalProps>(DeleteModalBody)
 
-type DeleteModalProps = {
-	title: ModalTitleProps
-}
+export interface DeleteModalProps extends ButtonProps {}

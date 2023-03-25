@@ -1,30 +1,28 @@
-import { createStyles, Space } from '@mantine/core'
-import { openContextModal } from '@mantine/modals'
-import { ContextModalProps } from '@mantine/modals/lib/context'
+import { type ButtonProps, Modal, Box, createPolymorphicComponent, Space } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { forwardRef } from 'react'
 
-import { ModalTitle, ModalTitleProps } from './ModalTitle'
+import { ModalTitle } from './ModalTitle'
 import { UserReviewSubmit } from '../components/core/UserReviewSubmit'
 
-const useStyles = createStyles((theme) => ({}))
+export const ReviewModalBody = forwardRef<HTMLButtonElement, ReviewModalProps>((props, ref) => {
+	const [opened, handler] = useDisclosure(false)
 
-export const ReviewModalBody = ({ context, id, innerProps }: ContextModalProps<{}>) => {
+	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+
 	return (
 		<>
-			<Space h={40} />
-			<UserReviewSubmit type='modal' />
+			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
+				<Space h={40} />
+				<UserReviewSubmit type='modal' />
+			</Modal>
+			<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
 		</>
 	)
-}
+})
 
-const modalTitle = <ModalTitle breadcrumb={{ option: 'close' }} />
+ReviewModalBody.displayName = 'ReviewModal'
 
-export const openReviewModal = () =>
-	openContextModal({
-		modal: 'review',
-		title: modalTitle,
-		innerProps: {},
-	})
+export const ReviewModal = createPolymorphicComponent<'button', ReviewModalProps>(ReviewModalBody)
 
-type ReviewModalProps = {
-	title: ModalTitleProps
-}
+export interface ReviewModalProps extends ButtonProps {}
