@@ -1,24 +1,16 @@
-import { Center } from '@mantine/core'
 import { Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
-import { openReviewModal } from './Review'
-// import { UserReviewSubmit } from '../components/core/UserReviewSubmit'
-
-const ModalTemplate = () => {
-	return (
-		<Center maw='100vw' h='100vh'>
-			<Button onClick={openReviewModal}>Open Modal</Button>
-		</Center>
-	)
-}
+import { ReviewModal } from './Review'
 
 export default {
 	title: 'Modals/Review',
-	component: ModalTemplate,
+	component: ReviewModal,
 	parameters: {
+		layout: 'fullscreen',
+		layoutWrapper: 'centeredHalf',
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]',
@@ -46,9 +38,13 @@ export default {
 				}),
 			],
 		},
-		layout: 'fullscreen',
 	},
-} satisfies Meta<typeof ModalTemplate>
+	args: {
+		component: Button,
+		children: 'Open Review Modal',
+		variant: 'inlineInvertedUtil1',
+	},
+} satisfies Meta<typeof ReviewModal>
 
 export const Modal = {
 	parameters: {

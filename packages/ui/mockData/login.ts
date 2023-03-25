@@ -1,6 +1,8 @@
 import { action } from '@storybook/addon-actions'
 import { rest } from 'msw'
 
+import querystring from 'querystring'
+
 const providerResponse = {
 	cognito: {
 		id: 'cognito',
@@ -29,8 +31,9 @@ export const signin = () =>
 
 export const cognito = () =>
 	rest.post('/api/auth/callback/cognito', async (req, res, ctx) => {
-		const data = new URLSearchParams(await req.text())
-		const password = data.get('password')
+		const body = await req.text()
+		const data = querystring.parse(body)
+		const { password } = data
 
 		if (password === 'good') {
 			action('Login with good credentials')()

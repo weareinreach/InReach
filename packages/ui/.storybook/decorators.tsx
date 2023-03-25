@@ -11,7 +11,6 @@ import { devtoolsLink } from 'trpc-client-devtools-link'
 
 import { BodyGrid } from '~ui/layouts/BodyGrid'
 import { trpc, StorybookTRPC } from '~ui/lib/trpcClient'
-import { useModalProps } from '~ui/modals/settings'
 import { storybookTheme } from '~ui/theme/storybook'
 
 import { i18n } from './i18next'
@@ -26,7 +25,7 @@ export const WithMantine = (Story: StoryFn) => {
 	return (
 		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
 			{/* <TypographyStylesProvider> */}
-			<ModalsProvider {...useModalProps()}>
+			<ModalsProvider>
 				<Notifications />
 				<Story />
 			</ModalsProvider>

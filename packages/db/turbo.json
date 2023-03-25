@@ -2,6 +2,10 @@
 	"$schema": "https://turbo.build/schema.json",
 	"extends": ["//"],
 	"pipeline": {
+		"db:deploy": {
+			"cache": false,
+			"dependsOn": ["db:generate"]
+		},
 		"db:generate": {
 			"cache": false,
 			"inputs": ["prisma/schema.prisma"]

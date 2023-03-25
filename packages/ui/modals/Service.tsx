@@ -11,7 +11,7 @@ import {
 	ButtonProps,
 } from '@mantine/core'
 import { useMediaQuery, useDisclosure } from '@mantine/hooks'
-import { transformer, SuperJSONResult } from '@weareinreach/api/lib/transformer'
+import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
 import { Interval, DateTime } from 'luxon'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -159,6 +159,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 			if (serviceName) name = <Title order={2}>{serviceName.tsKey.text}</Title>
 
+			let orgTimezone: string | null = null
 			const allServices = services.map(({ tag }) => (
 				<Badge key={tag.tsKey} variant='service' tsKey={tag.tsKey} />
 			))
@@ -166,7 +167,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 			const formatHours: JSX.Element[] = []
 
 			const hourMap = new Map<number, Set<(typeof hours)[number]>>()
-
+			const { weekYear, weekNumber } = DateTime.now()
 			for (const entry of hours) {
 				const daySet = hourMap.get(entry.dayIndex)
 				if (!daySet) {
@@ -177,11 +178,15 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 			}
 
 			hourMap.forEach((value, key) => {
-				const entry = [...value].map(({ start, end, dayIndex: weekday, closed }, idx) => {
-					const open = DateTime.fromJSDate(start).set({ weekday })
-					const close = DateTime.fromJSDate(end).set({ weekday })
+				const entry = [...value].map(({ start, end, dayIndex: weekday, closed, tz }, idx) => {
+					const zone = tz ?? undefined
+					const open = DateTime.fromJSDate(start, { zone }).set({ weekday, weekNumber, weekYear })
+					const close = DateTime.fromJSDate(end, { zone }).set({ weekday, weekNumber, weekYear })
 					const interval = Interval.fromDateTimes(open, close)
 
+					if (!orgTimezone && zone) {
+						orgTimezone = open.toFormat('ZZZZZ (ZZZZ)', { locale: i18n.language })
+					}
 					if (closed) return null
 
 					if (idx === 0) {
@@ -206,7 +211,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 				formatHours.push(<ModalText>{entry.filter(Boolean).join(' & ')}</ModalText>)
 			})
 
-			const timeZone = <Text className={classes.timezone}>{`${DateTime.local().zoneName}`}</Text>
+			const timeZone = <Text className={classes.timezone}>{orgTimezone}</Text>
 
 			const serviceHours =
 				formatHours.length > 0 ? (
@@ -223,8 +228,9 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 			const { publicTransit, ...contacts } = accessDetails.reduce((details, { attributes }) => {
 				attributes.forEach(({ supplement }) => {
 					supplement.forEach(({ data, text }) => {
-						if (data) {
-							const { access_type, access_value } = transformer.parse<SupplementData>(JSON.stringify(data))
+						const parsed = supplementSchema.accessInstructions.safeParse(data)
+						if (parsed.success) {
+							const { access_type, access_value } = parsed.data
 
 							if (access_type === 'publicTransit')
 								details[access_type].push(<ModalText>{t(text!.key) as string}</ModalText>)
@@ -291,8 +297,9 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 										<ModalText>{t(`${ns}.${key}`, { ns: 'attribute' }) as string}</ModalText>
 									)
 								}
-								if (data) {
-									const { price } = transformer.parse<{ price: number }>(JSON.stringify(data))
+								const parsed = supplementSchema.cost.safeParse(data)
+								if (parsed.success) {
+									const { cost: price } = parsed.data
 									costDetails.price = price
 								}
 							})
@@ -313,7 +320,9 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 						case 'eligibility': {
 							if (tsKey.includes('elig-age')) {
 								supplement.forEach(({ data }) => {
-									const { min, max } = transformer.parse<{ min?: number; max?: number }>(JSON.stringify(data))
+									const parsed = supplementSchema.age.safeParse(data)
+									if (!parsed.success) return
+									const { min, max } = parsed.data
 									const ageRange = t('service.age.range', {
 										min: min || t('service.age.min'),
 										max: max || t('service.age.max'),

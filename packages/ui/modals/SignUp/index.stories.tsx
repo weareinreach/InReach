@@ -6,17 +6,6 @@ import { Button } from '~ui/components/core'
 import { SignupModalLauncher } from '.'
 import { getTRPCMock } from '../../lib/getTrpcMock'
 
-/** Define the modal to display here. */
-// const modalToDisplay = LoginModal()
-
-// const ModalTemplate = () => {
-// 	return (
-// 		<Center maw='100vw' h='100vh'>
-// 			<Button onClick={openLoginModal}>Open Modal</Button>
-// 		</Center>
-// 	)
-// }
-
 export default {
 	title: 'Modals/Sign Up',
 	component: SignupModalLauncher,
@@ -84,7 +73,7 @@ export default {
 	},
 	args: {
 		component: Button,
-		children: 'Launch Modal',
+		children: 'Launch Signup Modal',
 	},
 	render: (args) => (
 		<Center h='50vh'>

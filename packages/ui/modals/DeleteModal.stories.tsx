@@ -1,22 +1,18 @@
-import { Center } from '@mantine/core'
 import { Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
 
-import { openDeleteAccountModal } from './DeleteModal'
-
-const ModalTemplate = () => {
-	return (
-		<Center maw='100vw' h='100vh'>
-			<Button onClick={openDeleteAccountModal}>Open Modal</Button>
-		</Center>
-	)
-}
+import { DeleteModal } from './DeleteModal'
 
 export default {
 	title: 'Modals/Delete Account',
-	component: ModalTemplate,
-	parameters: { layout: 'fullscreen' },
-} satisfies Meta<typeof ModalTemplate>
+	component: DeleteModal,
+	parameters: { layout: 'fullscreen', layoutWrapper: 'centeredHalf' },
+	args: {
+		component: Button,
+		children: 'Open Delete Account Modal',
+		variant: 'inlineInvertedUtil1',
+	},
+} satisfies Meta<typeof DeleteModal>
 
 export const Modal = {}

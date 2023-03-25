@@ -4,7 +4,6 @@ import { Notifications } from '@mantine/notifications'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Navbar, Footer } from '@weareinreach/ui/components/sections'
 import { BodyGrid } from '@weareinreach/ui/layouts/BodyGrid'
-import { useModalProps } from '@weareinreach/ui/modals'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 import { NextPage } from 'next'
 import { type AppProps } from 'next/app'
@@ -75,7 +74,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 				theme={{ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }}
 				emotionCache={appCache}
 			>
-				<ModalsProvider {...useModalProps()}>
+				<ModalsProvider>
 					<Navbar />
 					{PageContent}
 					<Footer />
