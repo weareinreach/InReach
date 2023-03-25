@@ -1,5 +1,6 @@
 import { Modal, Box, type ButtonProps, Text, Title, Stack } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
+import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { useTranslation, Trans } from 'next-i18next'
@@ -28,8 +29,13 @@ type RichTranslateProps = {
 	i18nKey: string
 	values?: Record<string, any>
 	stateSetter?: Dispatch<SetStateAction<string | null>>
+	handler?: {
+		open: () => void
+		close: () => void
+		toggle: () => void
+	}
 }
-export const RichTranslate = ({ stateSetter, ...props }: RichTranslateProps) => {
+export const RichTranslate = ({ stateSetter, handler, ...props }: RichTranslateProps) => {
 	const { t } = useTranslation()
 	const variants = useCustomVariant()
 
@@ -54,7 +60,13 @@ export const RichTranslate = ({ stateSetter, ...props }: RichTranslateProps) => 
 					</Text>
 				),
 				loginLink: (
-					<LoginModalLauncher external component={Link} key={0} variant={variants.Link.inheritStyle}>
+					<LoginModalLauncher
+						external
+						component={Link}
+						key={0}
+						variant={variants.Link.inheritStyle}
+						// onClick={() => handler.close()}
+					>
 						.
 					</LoginModalLauncher>
 				),
@@ -78,7 +90,7 @@ export const RichTranslate = ({ stateSetter, ...props }: RichTranslateProps) => 
 export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((props, ref) => {
 	const { t } = useTranslation('common')
 	const { isMobile } = useScreenSize()
-	const [opened, setOpened] = useState(false)
+	const [opened, handler] = useDisclosure(false)
 	const [stepOption, setStepOption] = useState<string | null>(null)
 	const [successMessage, setSuccessMessage] = useState(false)
 	const variants = useCustomVariant()
@@ -111,7 +123,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 
 	const breadcrumbProps: ModalTitleBreadcrumb =
 		stepOption === null || successMessage
-			? { option: 'close', onClick: () => setOpened(false) }
+			? { option: 'close', onClick: () => handler.close() }
 			: { option: 'back', backTo: 'none', onClick: () => setStepOption(null) }
 
 	const titleRightSideProps = successMessage
@@ -119,7 +131,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 		: t('step-x-y', { ns: 'common', x: stepOption ? 2 : 1, y: 2 })
 	const modalTitle = <ModalTitle breadcrumb={breadcrumbProps} rightText={titleRightSideProps} />
 
-	const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={setStepOption} />
+	const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={setStepOption} handler={handler} />
 
 	const submitHandler = () => {
 		if (form.isValid()) {
@@ -209,7 +221,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 
 	const signupBody = (
 		<>
-			<RichTranslate i18nKey='sign-up-header' />
+			<RichTranslate i18nKey='sign-up-header' handler={handler} />
 			{stepOption === null ? step1 : step2()}
 		</>
 	)
@@ -240,7 +252,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 				title={modalTitle}
 				scrollAreaComponent={Modal.NativeScrollArea}
 				opened={opened}
-				onClose={() => setOpened(false)}
+				onClose={() => handler.close()}
 				fullScreen={isMobile}
 				zIndex={500}
 			>
@@ -250,14 +262,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 					</Stack>
 				</SignUpFormProvider>
 			</Modal>
-			<Box
-				component='button'
-				ref={ref}
-				onClick={() => {
-					setOpened(true)
-				}}
-				{...props}
-			/>
+			<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
 		</>
 	)
 })
