@@ -26,6 +26,7 @@ export const VisitCard = (props: VisitCardProps) => {
 	const hourDisplay: JSX.Element[] = []
 
 	const hourMap = new Map<number, Set<(typeof location.hours)[number]>>()
+	let timezone: string | null = null
 
 	for (const entry of location.hours) {
 		const daySet = hourMap.get(entry.dayIndex)
@@ -35,11 +36,16 @@ export const VisitCard = (props: VisitCardProps) => {
 			hourMap.set(entry.dayIndex, new Set([...daySet, entry]))
 		}
 	}
+	const { weekYear, weekNumber } = DateTime.now()
 	hourMap.forEach((value, key) => {
-		const entry = [...value].map(({ start, end, dayIndex: weekday }, idx) => {
-			const open = DateTime.fromJSDate(start).set({ weekday })
-			const close = DateTime.fromJSDate(end).set({ weekday })
+		const entry = [...value].map(({ start, end, dayIndex: weekday, tz }, idx) => {
+			const zone = tz ?? undefined
+			const open = DateTime.fromJSDate(start, { zone }).set({ weekday, weekNumber, weekYear })
+			const close = DateTime.fromJSDate(end, { zone }).set({ weekday, weekNumber, weekYear })
 			const interval = Interval.fromDateTimes(open, close)
+			if (!timezone && zone) {
+				timezone = open.toFormat('ZZZZZ (ZZZZ)', { locale: i18n.language })
+			}
 
 			if (idx === 0) {
 				const range = interval
@@ -80,7 +86,7 @@ export const VisitCard = (props: VisitCardProps) => {
 				<Stack spacing={12}>
 					<div>
 						<Title order={3}>{t('hours')}</Title>
-						<Text variant={variants.Text.utility4darkGray}>Timezone goes here</Text>
+						<Text variant={variants.Text.utility4darkGray}>{timezone}</Text>
 					</div>
 					<List listStyleType='none'>{hourDisplay}</List>
 				</Stack>

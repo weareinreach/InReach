@@ -18,6 +18,7 @@
 		"clean:node": {
 			"cache": false
 		},
+		"db:deploy": {},
 		"db:generate": {},
 		"deploy:aws": {},
 		"dev": {
