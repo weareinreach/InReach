@@ -30,6 +30,12 @@ const incompatible = z
 		type: z.literal('incompatible'),
 	})
 	.catchall(z.record(z.any()))
+const accessInstructions = z.object({
+	type: z.literal('accessInstructions'),
+	access_value: z.string().nullish(),
+	access_type: z.enum(['email', 'file', 'link', 'location', 'other', 'phone', '']),
+	instructions: z.string(),
+})
 
 /**
  * Supplemental information for attribute
@@ -42,5 +48,6 @@ export const AttributeSupplementDataSchemas = z.discriminatedUnion('type', [
 	numMax,
 	number,
 	incompatible,
+	accessInstructions,
 ])
 export type AttributeSupplementData = z.infer<typeof AttributeSupplementDataSchemas>

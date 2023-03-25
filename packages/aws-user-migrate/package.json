@@ -7,7 +7,7 @@
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"scripts": {
-		"aws:db:generate": "prisma generate --schema ../db/prisma/schema.prisma",
+		"aws:db:generate": "prisma generate --schema ../db/prisma/schema.prisma --data-proxy",
 		"build:aws": "./build.sh",
 		"bundle": "ncc build ./src/index.ts -s  -a -d",
 		"clean:dist": "rm -fr dist",

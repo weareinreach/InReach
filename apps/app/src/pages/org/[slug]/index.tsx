@@ -2,7 +2,7 @@
 import { Grid, Stack, Tabs, Image } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { trpcServerClient } from '@weareinreach/api/trpc'
-import { Toolbar } from '@weareinreach/ui/components/core'
+import { Toolbar, GoogleMap } from '@weareinreach/ui/components/core'
 import {
 	ContactSection,
 	ServicesInfoCard,
@@ -80,12 +80,11 @@ const OrganizationPage: NextPage = () => {
 		locations?.length === 1 ? (
 			<>{locations[0] && <VisitCard location={locations[0]} />}</>
 		) : (
-			<Stack ref={ref}>
-				<Image
-					src={`http://via.placeholder.com/${Math.floor(width)}x${Math.floor(width * 1.185)}`}
-					alt='map placeholder'
-				/>
-			</Stack>
+			locations.length && (
+				<Stack ref={ref} miw='100%'>
+					{width && <GoogleMap marker={locations} width={width} height={Math.floor(width * 1.185)} />}
+				</Stack>
+			)
 		)
 
 	return (

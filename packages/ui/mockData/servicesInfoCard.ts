@@ -392,7 +392,43 @@ export const servicesMock = [
 					text: 'Whitman-Walker offers a wide variety of gender affirming services, including: Gender Affirming Hormone Therapy; Trans Care Navigation; Care Navigation; HIV & STI Testing and Counseling; HIV Specialty Care; Gynecology; Breast Health Initiative; Name and Gender Change; and Gender Affirming Counseling & Assessment.',
 				},
 			},
-			hours: [],
+			hours: [
+				{
+					dayIndex: 1,
+					start: new Date('1970-01-01T12:30:00.000Z'),
+					end: new Date('1970-01-01T21:30:00.000Z'),
+					closed: false,
+					tz: 'America/New_York',
+				},
+				{
+					dayIndex: 2,
+					start: new Date('1970-01-01T12:30:00.000Z'),
+					end: new Date('1970-01-01T21:30:00.000Z'),
+					closed: false,
+					tz: 'America/New_York',
+				},
+				{
+					dayIndex: 3,
+					start: new Date('1970-01-01T12:30:00.000Z'),
+					end: new Date('1970-01-01T21:30:00.000Z'),
+					closed: false,
+					tz: 'America/New_York',
+				},
+				{
+					dayIndex: 4,
+					start: new Date('1970-01-01T12:30:00.000Z'),
+					end: new Date('1970-01-01T21:30:00.000Z'),
+					closed: false,
+					tz: 'America/New_York',
+				},
+				{
+					dayIndex: 5,
+					start: new Date('1970-01-01T12:30:00.000Z'),
+					end: new Date('1970-01-01T21:00:00.000Z'),
+					closed: false,
+					tz: 'America/New_York',
+				},
+			],
 			attributes: [
 				{
 					attribute: {
