@@ -43,8 +43,8 @@
 	"devDependencies": {
 		"@next/bundle-analyzer": "13.2.4",
 		"@types/eslint": "8.21.3",
-		"@types/node": "18.15.5",
-		"@types/react": "18.0.28",
+		"@types/node": "18.15.8",
+		"@types/react": "18.0.29",
 		"@types/react-dom": "18.0.11",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
