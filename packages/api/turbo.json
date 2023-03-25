@@ -4,7 +4,7 @@
 	"pipeline": {
 		"generate:data": {
 			"cache": false,
-			"dependsOn": ["^db:generate"],
+			"dependsOn": ["^db:generate", "^db:deploy"],
 			"env": ["DATABASE_URL"],
 			"outputs": ["./generated/**"]
 		}
