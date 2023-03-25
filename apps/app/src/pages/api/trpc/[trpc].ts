@@ -14,5 +14,7 @@ export default createNextApiHandler({
 			? ({ path, error, type }) => {
 					log.error(`❌ tRPC ${type} failed on ${path}: ${error}`)
 			  }
-			: ({ path, error, type }) => log.error({ type, path, error }),
+			: typeof window === 'undefined'
+			? ({ path, error, type }) => log.error({ type, path, error })
+			: undefined,
 })
