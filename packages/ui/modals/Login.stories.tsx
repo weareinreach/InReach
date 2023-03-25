@@ -3,11 +3,11 @@ import { Meta } from '@storybook/react'
 import { Button } from '~ui/components/core'
 import { csrf, providers, signin, cognito } from '~ui/mockData/login'
 
-import { LoginModalBody } from './Login'
+import { LoginModalLauncher } from './Login'
 
 export default {
 	title: 'Modals/Login',
-	component: LoginModalBody,
+	component: LoginModalLauncher,
 	parameters: {
 		docs: {
 			description: {
@@ -23,6 +23,6 @@ export default {
 		children: 'Open Login Modal',
 		variant: 'inlineInvertedUtil1',
 	},
-} satisfies Meta<typeof LoginModalBody>
+} satisfies Meta<typeof LoginModalLauncher>
 
 export const Modal = {}
