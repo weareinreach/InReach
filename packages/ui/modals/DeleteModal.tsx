@@ -87,7 +87,7 @@ export const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((
 	)
 })
 
-DeleteModalBody.displayName = 'DeletenModal'
+DeleteModalBody.displayName = 'DeleteModal'
 
 export const DeleteModal = createPolymorphicComponent<'button', DeleteModalProps>(DeleteModalBody)
 

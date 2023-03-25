@@ -1,7 +1,6 @@
 import { Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
-import { csrf, providers, signin, cognito } from '~ui/mockData/login'
 
 import { ForgotPasswordModal } from './ForgotPassword'
 import { getTRPCMock } from '../lib/getTrpcMock'

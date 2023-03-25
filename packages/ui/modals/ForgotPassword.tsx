@@ -28,11 +28,14 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 	(props, ref) => {
 		const { t } = useTranslation(['common'])
 		const EmailSchema = z.object({
-			email: z.string().email({ message: t('error-enter-valid-email') as string }),
+			email: z.string().email({ message: t('form-error-enter-valid-email') as string }),
 		})
-		const form = useForm<FormProps>({
+		const passwordResetForm = useForm<FormProps>({
 			validate: zodResolver(EmailSchema),
 			validateInputOnBlur: true,
+			initialValues: {
+				email: '',
+			},
 		})
 		const variants = useCustomVariant()
 		const theme = useMantineTheme()
@@ -48,7 +51,6 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 				<Text variant={variants.Text.utility3}>{t('email-sent')}</Text>
 			</Group>
 		)
-		console.log('valid?', form.isValid())
 		// TODO: Add 'shake' animation on invalid submit attempt
 		return (
 			<>
@@ -60,16 +62,16 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 							label={t('email')}
 							placeholder={t('enter-email-placeholder') as string}
 							required
-							{...form.getInputProps('email')}
+							{...passwordResetForm.getInputProps('email')}
 							description={pwResetHandler.isSuccess ? successMessage : undefined}
 						/>
 						<Button
-							onClick={() => pwResetHandler.mutate(form.values)}
+							onClick={() => pwResetHandler.mutate(passwordResetForm.values)}
 							variant='primary-icon'
 							fullWidth
 							loaderPosition='center'
 							loading={pwResetHandler.isLoading}
-							disabled={!form.isValid()}
+							disabled={!passwordResetForm.isValid()}
 						>
 							{t('send-email')}
 						</Button>

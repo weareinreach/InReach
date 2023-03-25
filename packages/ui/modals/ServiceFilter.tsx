@@ -23,7 +23,6 @@ import { useEffect, useState } from 'react'
 import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
-import { useModalProps } from '~ui/modals'
 
 const useAccordionStyles = createStyles((theme) => ({
 	label: {
