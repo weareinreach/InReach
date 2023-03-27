@@ -700,7 +700,7 @@ importers:
       eslint-plugin-node: 11.1.0
       eslint-plugin-react: 7.32.2
       eslint-plugin-storybook: 0.6.11
-      eslint-plugin-turbo: 0.0.10
+      eslint-plugin-turbo: 1.8.6
       next: 13.2.4
       typescript: 5.0.2
     devDependencies:
@@ -721,7 +721,7 @@ importers:
       eslint-plugin-node: 11.1.0_45p4dc3r2kwi3h2jyimmny42ju_eslint@8.36.0
       eslint-plugin-react: 7.32.2_eslint@8.36.0
       eslint-plugin-storybook: 0.6.11_j4766f7ecgqbon3u7zlxn5zszu
-      eslint-plugin-turbo: 0.0.10_eslint@8.36.0
+      eslint-plugin-turbo: 1.8.6_eslint@8.36.0
       next: 13.2.4_hrdbe576m4w26u2yfpqpvbxyky
       typescript: 5.0.2
 
@@ -12144,8 +12144,8 @@ packages:
       - typescript
     dev: true
 
-  /eslint-plugin-turbo/0.0.10_eslint@8.36.0:
-    resolution: {integrity: sha512-T7QRwF4rjBQCJD9AHLHn9ShtHCHNkfIZW5Oio92WtQYhoU5jZCU3ynU+ONFXLuvoUx4dJ19WergIyHL+DwL2+g==}
+  /eslint-plugin-turbo/1.8.6_eslint@8.36.0:
+    resolution: {integrity: sha512-LieXzur+4XtIsLst8GdupTMhvGn2ebFetG3AVErh2jHBy1EobPHbatjcdNZQMy5EsdG35axQVB8KFF3jo4u+OQ==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
