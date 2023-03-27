@@ -12,6 +12,11 @@ export default {
 	parameters: {
 		layout: 'fullscreen',
 	},
+	argTypes: {
+		loading: {
+			type: 'boolean',
+		},
+	},
 } satisfies Meta<typeof SearchResultCard>
 
 export const SingleResult = {
@@ -28,4 +33,9 @@ export const MultipleResults = {
 			))}
 		</>
 	),
+}
+export const SingleLoading = {
+	args: {
+		loading: true,
+	},
 }

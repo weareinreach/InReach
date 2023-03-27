@@ -1,4 +1,4 @@
-import { Title, Text, Group, Stack, Divider, createStyles } from '@mantine/core'
+import { Title, Text, Group, Stack, Divider, createStyles, Skeleton } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
@@ -22,7 +22,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const SearchResultCard = ({ result }: SearchResultCardProps) => {
+const SearchResultData = ({ result }: SearchResultHasData) => {
 	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories } = result
 	const { t } = useTranslation(['common', slug])
 	const variants = useCustomVariant()
@@ -93,6 +93,48 @@ export const SearchResultCard = ({ result }: SearchResultCardProps) => {
 	)
 }
 
-export type SearchResultCardProps = {
+const SearchResultLoading = () => {
+	const variants = useCustomVariant()
+	return (
+		<>
+			<Stack spacing={16}>
+				<Stack spacing={12}>
+					<Group position='apart'>
+						<Skeleton variant={variants.Skeleton.h2} w='80%' />
+						<ActionButtons.Loading />
+					</Group>
+					<Skeleton variant={variants.Skeleton.utility} w='25%' />
+					<Stack>
+						<Skeleton variant={variants.Skeleton.text} w='100%' />
+						<Skeleton variant={variants.Skeleton.text} w='100%' />
+						<Skeleton variant={variants.Skeleton.text} w='100%' />
+						<Skeleton variant={variants.Skeleton.text} w='60%' />
+					</Stack>
+				</Stack>
+				<Group spacing={16}>
+					<Skeleton h={32} w={75} />
+					<Skeleton h={32} w={75} />
+					<Skeleton h={32} w={75} />
+				</Group>
+			</Stack>
+			<Divider my={40} />
+		</>
+	)
+}
+
+export const SearchResultCard = (props: SearchResultCardProps) =>
+	props.loading ? <SearchResultLoading /> : <SearchResultData {...props} />
+
+export type SearchResultCardProps = SearchResultHasData | SearchResultLoading
+// {
+// 	result: NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
+// }
+
+type SearchResultHasData = {
 	result: NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
+	loading?: false
+}
+type SearchResultLoading = {
+	loading: true
+	result?: never
 }

@@ -36,6 +36,9 @@ const SearchResults = () => {
 	const [error, setError] = useState(false)
 	const [data, setData] = useState<ApiOutput['organization']['searchDistance']>()
 	const [resultCount, setResultCount] = useState(0)
+	const [resultDisplay, setResultDisplay] = useState<JSX.Element[]>(
+		Array.from({ length: 10 }, (x, i) => <SearchResultCard key={i} loading />)
+	)
 
 	if (!queryParams.success) setError(true)
 	const [_searchType, lon, lat, dist, unit] = queryParams.success
@@ -63,12 +66,15 @@ const SearchResults = () => {
 		}
 	}, [searchQuery.data])
 
-	const resultList =
-		data?.orgs && isSuccess
-			? data.orgs.map((result) => {
+	useEffect(() => {
+		if (data) {
+			setResultDisplay(
+				data.orgs.map((result) => {
 					return <SearchResultCard key={result.id} result={result} />
-			  })
-			: null
+				})
+			)
+		}
+	}, [data])
 
 	if (error) return <>Error</>
 
@@ -85,7 +91,7 @@ const SearchResults = () => {
 			</Grid.Col>
 			<Grid.Col sm={8}>
 				{/* <Suspense fallback={<h1>Loader goes here</h1>}> */}
-				{resultList}
+				{resultDisplay}
 				{/* </Suspense> */}
 				<Pagination total={getSearchResultPageCount(data?.resultCount)} />
 			</Grid.Col>
