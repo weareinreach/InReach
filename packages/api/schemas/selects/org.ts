@@ -343,52 +343,111 @@ const selectServCat = {
 		},
 	},
 }
-
-export const orgSearchSelect = {
-	id: true,
-	name: true,
-	slug: true,
-	attributes: {
-		select: {
-			attribute: {
-				select: {
-					categories: {
-						where: {
-							category: {
-								tag: {
-									in: ['organization-leadership', 'organization-focus'],
-								},
-							},
-						},
-						select: {
-							category: {
-								select: {
-									tag: true,
-								},
-							},
-							attribute: {
-								select: {
-									tsKey: true,
-									icon: true,
-									iconBg: true,
-								},
-							},
-						},
+const selectAttrib = {
+	where: {
+		attribute: {
+			active: true,
+			categories: {
+				some: {
+					category: {
+						OR: [{ tag: 'organization-leadership' }, { tag: 'organization-focus' }],
 					},
 				},
 			},
 		},
 	},
+	select: {
+		attribute: {
+			select: {
+				id: true,
+				tsKey: true,
+				icon: true,
+				iconBg: true,
+				categories: {
+					where: { category: { active: true } },
+					select: { category: { select: { tag: true } } },
+				},
+			},
+		},
+		// supplement: {
+		// 	where: {
+		// 		active: true,
+		// 	},
+		// 	select: {
+		// 		id: true,
+		// 		boolean: true,
+		// 		countryId: true,
+		// 		languageId: true,
+		// 		govDistId: true,
+		// 		text: {
+		// 			select: {
+		// 				key: true,
+		// 				ns: true,
+		// 				tsKey: { select: { text: true } },
+		// 			},
+		// 		},
+		// 		data: true,
+		// 	},
+		// },
+	},
+} satisfies {
+	select: Prisma.OrganizationAttributeSelect | Prisma.ServiceAttributeSelect
+	where: Prisma.OrganizationAttributeWhereInput | Prisma.ServiceAttributeWhereInput
+}
+const selectServ = {
+	select: {
+		services: {
+			where: {
+				tag: {
+					active: true,
+					category: {
+						active: true,
+					},
+				},
+			},
+			select: {
+				tag: {
+					select: {
+						id: true,
+						tsKey: true,
+						tsNs: true,
+						category: {
+							select: {
+								id: true,
+								tsKey: true,
+								tsNs: true,
+							},
+						},
+					},
+				},
+				service: {
+					select: {
+						attributes: selectAttrib,
+					},
+				},
+			},
+		},
+	},
+} satisfies { select: Prisma.OrgServiceSelect }
+
+export const orgSearchSelect = {
+	id: true,
+	name: true,
+	slug: true,
+	attributes: selectAttrib,
 	description: freeText,
-	services: selectServCat,
+	services: selectServ,
 	locations: {
 		select: {
 			city: true,
+			latitude: true,
+			longitude: true,
 			services: {
 				select: {
-					service: selectServCat,
+					service: selectServ,
 				},
 			},
+			attributes: selectAttrib,
 		},
 	},
 } satisfies Prisma.OrganizationSelect
