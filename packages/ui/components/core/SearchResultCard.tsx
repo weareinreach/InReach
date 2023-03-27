@@ -1,7 +1,6 @@
-import { Title, Text, Group, Stack, Divider, useMantineTheme, createStyles } from '@mantine/core'
+import { Title, Text, Group, Stack, Divider, createStyles } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
-import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { useCustomVariant } from '~ui/hooks'
@@ -24,14 +23,12 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const SearchResultCard = ({ result }: SearchResultCardProps) => {
-	const { attributes, description, slug, name, services, locations } = result
+	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories } = result
 	const { t } = useTranslation(['common', slug])
 	const variants = useCustomVariant()
-	const theme = useMantineTheme()
-	const router = useRouter()
 	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
-	const leaderBadges: CustomBadgeProps[] = attributes.orgLeader.map(({ icon, iconBg, tsKey }) => ({
+	const leaderBadges: CustomBadgeProps[] = orgLeader.map(({ icon, iconBg, tsKey }) => ({
 		variant: 'leader',
 		icon: icon ?? '',
 		iconBg: iconBg ?? '#FFFFFF',
@@ -39,12 +36,12 @@ export const SearchResultCard = ({ result }: SearchResultCardProps) => {
 		minify: true,
 		hideBg: true,
 	}))
-	const focusBadges: CustomBadgeProps[] = attributes.orgFocus.map(({ icon, tsKey }) => ({
+	const focusBadges: CustomBadgeProps[] = orgFocus.map(({ icon, tsKey }) => ({
 		variant: 'community',
 		icon: icon ?? '',
 		tsKey,
 	}))
-	const serviceTags: CustomBadgeProps[] = services.map(({ tsKey }) => ({
+	const serviceTags: CustomBadgeProps[] = serviceCategories.map(({ tsKey }) => ({
 		variant: 'service',
 		tsKey,
 	}))

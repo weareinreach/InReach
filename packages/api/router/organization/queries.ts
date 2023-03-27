@@ -3,10 +3,12 @@ import { z } from 'zod'
 import { handleError } from '~api/lib'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
-import { id, searchTerm, slug, distSearch, idArray } from '~api/schemas/common'
-import { SearchDetailsOutput } from '~api/schemas/outputTransform/org'
+import { prismaDistSearchDetails } from '~api/prisma/org'
+import { id, searchTerm, slug, idArray } from '~api/schemas/common'
+import { serviceFilter, attributeFilter } from '~api/schemas/filters/org'
+import { distSearch } from '~api/schemas/org/search'
 import { isPublic } from '~api/schemas/selects/common'
-import { organizationInclude, orgSearchSelect } from '~api/schemas/selects/org'
+import { organizationInclude } from '~api/schemas/selects/org'
 
 export const queries = defineRouter({
 	getById: publicProcedure.input(id).query(async ({ ctx, input }) => {
@@ -90,24 +92,24 @@ export const queries = defineRouter({
 		}
 	}),
 	searchDistance: publicProcedure.input(distSearch).query(async ({ ctx, input }) => {
-		const { lat, lon, dist, unit, skip, take } = input
+		const { lat, lon, dist, unit, skip, take, services, attributes } = input
 		// Convert to meters
 		const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
 		const serviceAreas = await getCoveredAreas({ lat, lon }, ctx)
 		const orgs = await searchOrgByDistance({ lat, lon, searchRadius }, ctx)
 		const resultIds = orgs.map(({ id }) => id)
-		const resultCount = await ctx.prisma.organization.count({ where: { id: { in: resultIds } } })
-		const results = await ctx.prisma.organization.findMany({
-			where: {
-				id: {
-					in: resultIds,
-				},
-				...isPublic,
+
+		const resultDetailWhere = {
+			id: {
+				in: resultIds,
 			},
-			select: orgSearchSelect,
-			skip,
-			take,
-		})
+			...attributeFilter(attributes),
+			...serviceFilter(services),
+			...isPublic,
+		}
+		const resultCount = await ctx.prisma.organization.count({ where: resultDetailWhere })
+
+		const results = await prismaDistSearchDetails({ ctx, input: { ...input, resultIds } })
 
 		const orderedResults: ((typeof results)[number] & { distance: number; unit: 'km' | 'mi' })[] = []
 		orgs.forEach(({ id, distMeters }) => {
@@ -115,29 +117,7 @@ export const queries = defineRouter({
 			const sort = results.find((result) => result.id === id)
 			if (sort) orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit })
 		})
-		return { orgs: SearchDetailsOutput.parse(orderedResults), serviceAreas, resultCount }
-	}),
-	getSearchDetails: publicProcedure.input(idArray).query(async ({ ctx, input }) => {
-		try {
-			const results = await ctx.prisma.organization.findMany({
-				where: {
-					id: {
-						in: input.ids,
-					},
-					...isPublic,
-				},
-				select: orgSearchSelect,
-			})
-
-			const orderedResults: typeof results = []
-			input.ids.forEach((id) => {
-				const sort = results.find((result) => result.id === id)
-				if (sort) orderedResults.push(sort)
-			})
-			return SearchDetailsOutput.parse(orderedResults)
-		} catch (error) {
-			handleError(error)
-		}
+		return { orgs: orderedResults, serviceAreas, resultCount }
 	}),
 	getNameFromSlug: publicProcedure.input(z.string()).query(
 		async ({ ctx, input }) =>

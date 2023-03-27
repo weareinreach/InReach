@@ -16,14 +16,14 @@ export default {
 
 export const SingleResult = {
 	args: {
-		result: searchResultsMock[0],
+		result: searchResultsMock.orgs[0],
 	},
 }
 
 export const MultipleResults = {
 	render: () => (
 		<>
-			{searchResultsMock.map((result) => (
+			{searchResultsMock.orgs.map((result) => (
 				<SearchResultCard key={result.id} result={result} />
 			))}
 		</>
