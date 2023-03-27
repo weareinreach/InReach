@@ -66,7 +66,9 @@ export const variantNames: VariantNames = {
 	},
 	Skeleton: {
 		text: 'text',
+		/** Utility 1 & 2 */
 		utility: 'utility',
+		/** Utility 3 & 4 */
 		utilitySm: 'utilitySm',
 		h1: 'h1',
 		h2: 'h2',

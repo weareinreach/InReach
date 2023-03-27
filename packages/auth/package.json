@@ -22,7 +22,7 @@
 	"devDependencies": {
 		"@types/eslint": "8.21.3",
 		"@types/node": "18.15.8",
-		"@types/react": "18.0.29",
+		"@types/react": "18.0.30",
 		"@types/react-dom": "18.0.11",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/db": "0.100.0",

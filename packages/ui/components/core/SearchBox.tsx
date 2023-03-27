@@ -7,6 +7,7 @@ import {
 	ScrollAreaProps,
 	AutocompleteProps,
 	rem,
+	Loader,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
@@ -14,7 +15,7 @@ import { type ApiOutput } from '@weareinreach/api'
 import { type DefaultTFuncReturn } from 'i18next'
 import { useRouter } from 'next/router'
 import { useTranslation, Trans } from 'next-i18next'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useState, useEffect, Dispatch, SetStateAction } from 'react'
 import reactStringReplace from 'react-string-replace'
 
 import { Icon } from '~ui/icon'
@@ -75,13 +76,14 @@ const useStyles = createStyles((theme) => ({
 /** Most of Google's autocomplete language options are only the two letter variants */
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
-export const SearchBox = ({ type, label }: SearchBoxProps) => {
+export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const { t } = useTranslation()
 	const router = useRouter()
 	const form = useForm<FormValues>({ initialValues: { search: '' } })
 	const [search] = useDebouncedValue(form.values.search, 400)
 	const [locationSearch, setLocationSearch] = useState('')
+	const { isLoading, setLoading } = loadingManager
 	const isOrgSearch = type === 'organization'
 
 	// tRPC functions
@@ -107,7 +109,7 @@ export const SearchBox = ({ type, label }: SearchBoxProps) => {
 			const DEFAULT_RADIUS = 50
 			const DEFAULT_UNIT = 'mi'
 			if (!data.result) return
-			return router.push({
+			router.push({
 				pathname: '/search/[...params]',
 				query: {
 					params: [
@@ -127,13 +129,14 @@ export const SearchBox = ({ type, label }: SearchBoxProps) => {
 		return data ?? []
 	})()
 
-	const rightIcon =
-		form.values.search.length > 0 ? (
-			<Group spacing={4} className={classes.rightIcon} onClick={() => form.reset()}>
-				<Text>{t('clear')}</Text>
-				<Icon icon='carbon:close' />
-			</Group>
-		) : undefined
+	const rightIcon = isLoading ? (
+		<Loader size={24} />
+	) : form.values.search.length > 0 ? (
+		<Group spacing={4} className={classes.rightIcon} onClick={() => form.reset()}>
+			<Text>{t('clear')}</Text>
+			<Icon icon='carbon:close' />
+		</Group>
+	) : undefined
 
 	const fieldRole = (
 		isOrgSearch
@@ -211,17 +214,26 @@ export const SearchBox = ({ type, label }: SearchBoxProps) => {
 	// org search: route to org page.
 	// location search: pass placeId to tRPC (geo.geoByPlaceId), which will redirect to search after coordinates are fetched
 	const selectionHandler = (item: AutocompleteItem) => {
+		setLoading(true)
 		if (isOrgSearch) {
-			if (!item.slug) return
-			return router.push({
+			if (!item.slug) {
+				setLoading(false)
+				return
+			}
+			router.push({
 				pathname: '/org/[slug]',
 				query: {
 					slug: item.slug,
 				},
 			})
+			setLoading(false)
+		} else {
+			if (!item.placeId) {
+				setLoading(false)
+				return
+			}
+			setLocationSearch(item.placeId)
 		}
-		if (!item.placeId) return
-		setLocationSearch(item.placeId)
 	}
 
 	return (
@@ -238,6 +250,7 @@ export const SearchBox = ({ type, label }: SearchBoxProps) => {
 			dropdownPosition='bottom'
 			radius='xl'
 			onItemSubmit={selectionHandler}
+			disabled={isLoading}
 			label={label}
 			{...fieldRole}
 			{...form.getInputProps('search')}
@@ -248,6 +261,10 @@ export const SearchBox = ({ type, label }: SearchBoxProps) => {
 type SearchBoxProps = {
 	type: 'location' | 'organization'
 	label?: string | DefaultTFuncReturn
+	loadingManager: {
+		setLoading: Dispatch<SetStateAction<boolean>>
+		isLoading: boolean
+	}
 }
 type FormValues = {
 	search: string
