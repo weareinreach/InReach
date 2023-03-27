@@ -1,7 +1,8 @@
-import { Grid } from '@mantine/core'
+import { action } from '@storybook/addon-actions'
 import { Meta } from '@storybook/react'
+import { useState, useEffect } from 'react'
 
-import { StorybookGrid } from '~ui/layouts/BodyGrid'
+import { StorybookGridDouble } from '~ui/layouts/BodyGrid'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { moreFilterMock } from '~ui/mockData/moreFilter'
 
@@ -26,12 +27,14 @@ export default {
 		},
 		layout: 'fullscreen',
 	},
-	decorators: [StorybookGrid],
-	render: () => (
-		<Grid.Col span={6} sm={6}>
-			<MoreFilter />
-		</Grid.Col>
-	),
+	decorators: [StorybookGridDouble],
+	render: function Render(args) {
+		const [filter, setFilter] = useState<string[]>([])
+		useEffect(() => {
+			action('Set service filter')(filter)
+		}, [filter])
+		return <MoreFilter {...args} stateHandler={setFilter} />
+	},
 } as Meta<typeof MoreFilter>
 
 export const MoreFilterExample = {}
