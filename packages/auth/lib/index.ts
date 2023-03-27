@@ -6,5 +6,6 @@ export * from './constants'
 export * from './createUser'
 export * from './forgotPassword'
 export * from './genUserSession'
+export * from './getBaseUrl'
 export * from './verifyUser'
 // codegen:end

@@ -1,3 +1,5 @@
+/* eslint-disable node/no-process-env */
+/* eslint-disable turbo/no-undeclared-env-vars */
 import { prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
@@ -8,6 +10,7 @@ import {
 	NEXTAUTH_PROVIDER,
 	NEXTAUTH_PROVIDER_TYPE,
 } from './constants'
+import { getBaseUrl } from './getBaseUrl'
 
 const CreateUserSchema = z.object({
 	email: z.string().email(),
@@ -41,6 +44,7 @@ export const createCognitoUser = async (data: CreateCognitoUserParams) => {
 				Value: email,
 			},
 		],
+		ClientMetadata: { baseUrl: getBaseUrl() },
 	})
 	if (response.UserSub) {
 		await prisma.account.create({
