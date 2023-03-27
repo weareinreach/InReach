@@ -2,12 +2,29 @@
 /* eslint-disable node/no-process-env */
 import { ApiInput, ApiOutput } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
-import { rest } from 'msw'
+import { RestRequest, rest } from 'msw'
 
 import path from 'path'
+import querystring from 'querystring'
 
 import { getBaseUrl } from './trpcClient'
 import { jsonRpcSuccessResponse } from './trpcResponse'
+
+const getReqData = async (req: RestRequest) => {
+	if (req.method === 'POST') {
+		const body = await req.text()
+		const data = querystring.parse(body)
+		return JSON.stringify(data)
+	}
+	const query = req.url.search.charAt(0) === '?' ? req.url.search.substr(1) : req.url.search
+	const parsed = querystring.parse(query)
+	if (parsed.input) {
+		if (Array.isArray(parsed.input)) return parsed.input[0] ?? ''
+		return parsed.input
+	}
+	return JSON.stringify(parsed)
+}
+
 /**
  * Mocks a TRPC endpoint and returns a msw handler for Storybook. Only supports routes with two levels. The
  * path and response is fully typed and infers the type from your routes file.
@@ -36,10 +53,9 @@ export const getTRPCMock = <
 
 	if (typeof endpoint.response === 'function') {
 		const { response } = endpoint
-		return fn(route, (req, res, ctx) => {
-			const input = req.url.searchParams.getAll('input')[0] ?? '{}'
-			const adjInput = JSON.stringify(JSON.parse(input)['0'])
-			const transformed = transformer.parse<ApiInput[K1][K2]>(adjInput)
+		return fn(route, async (req, res, ctx) => {
+			const data = await getReqData(req)
+			const transformed = transformer.parse<ApiInput[K1][K2]>(data)
 			return res(ctx.delay(), ctx.json(jsonRpcSuccessResponse(response(transformed))))
 		})
 	}

@@ -345,6 +345,7 @@ importers:
       '@weareinreach/eslint-config': 0.100.0
       dotenv-cli: 7.1.0
       eslint: 8.36.0
+      geolib: 3.3.3
       just-capitalize: 3.2.0
       just-diff: 6.0.0
       just-flush: 2.3.0
@@ -373,6 +374,7 @@ importers:
       '@trpc/server': 10.18.0
       '@weareinreach/auth': link:../auth
       '@weareinreach/db': link:../db
+      geolib: 3.3.3
       just-diff: 6.0.0
       just-flush: 2.3.0
       just-intersect: 4.3.0
