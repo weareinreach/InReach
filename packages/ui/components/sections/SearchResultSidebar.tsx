@@ -7,7 +7,11 @@ import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { MoreFilter } from '~ui/modals'
 
-export const SearchResultSidebar = ({ resultCount, stateHandler }: SearchResultSidebarProps) => {
+export const SearchResultSidebar = ({
+	resultCount,
+	stateHandler,
+	loadingManager,
+}: SearchResultSidebarProps) => {
 	const { t } = useTranslation('common')
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
@@ -34,7 +38,7 @@ export const SearchResultSidebar = ({ resultCount, stateHandler }: SearchResultS
 			</Switch.Group>
 
 			<Divider />
-			<SearchBox type='organization' label={t('search.look-up-org')} />
+			<SearchBox type='organization' label={t('search.look-up-org')} loadingManager={loadingManager} />
 			<Divider />
 			<MoreFilter
 				component={Button}
@@ -53,4 +57,8 @@ export const SearchResultSidebar = ({ resultCount, stateHandler }: SearchResultS
 interface SearchResultSidebarProps {
 	resultCount?: number
 	stateHandler: Dispatch<SetStateAction<string[]>>
+	loadingManager: {
+		setLoading: Dispatch<SetStateAction<boolean>>
+		isLoading: boolean
+	}
 }

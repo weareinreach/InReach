@@ -1,5 +1,5 @@
 /* eslint-disable i18next/no-literal-string */
-import { Grid, Group } from '@mantine/core'
+import { Grid, Group, Space } from '@mantine/core'
 import { trpcServerClient, type ApiOutput } from '@weareinreach/api/trpc'
 import { SearchResultCard, SearchBox, Pagination } from '@weareinreach/ui/components/core'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections'
@@ -8,7 +8,7 @@ import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
-import { Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { z } from 'zod'
 
 import { api } from '~app/utils/api'
@@ -39,6 +39,7 @@ const SearchResults = () => {
 	const [resultDisplay, setResultDisplay] = useState<JSX.Element[]>(
 		Array.from({ length: 10 }, (x, i) => <SearchResultCard key={i} loading />)
 	)
+	const [loadingPage, setLoadingPage] = useState(false)
 
 	if (!queryParams.success) setError(true)
 	const [_searchType, lon, lat, dist, unit] = queryParams.success
@@ -63,6 +64,7 @@ const SearchResults = () => {
 		if (searchQuery.data) {
 			setResultCount(searchQuery.data.resultCount)
 			setData(searchQuery.data)
+			setLoadingPage(false)
 		}
 	}, [searchQuery.data])
 
@@ -82,18 +84,26 @@ const SearchResults = () => {
 		<>
 			<Grid.Col sm={12}>
 				<Group spacing={20} noWrap w='100%'>
-					<SearchBox type='location' />
+					<SearchBox
+						type='location'
+						loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
+					/>
 					<ServiceFilter resultCount={resultCount} stateHandler={setFilteredServices} />
 				</Group>
 			</Grid.Col>
 			<Grid.Col>
-				<SearchResultSidebar resultCount={resultCount} stateHandler={setFilteredAttributes} />
+				<SearchResultSidebar
+					resultCount={resultCount}
+					stateHandler={setFilteredAttributes}
+					loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
+				/>
 			</Grid.Col>
 			<Grid.Col sm={8}>
 				{/* <Suspense fallback={<h1>Loader goes here</h1>}> */}
 				{resultDisplay}
 				{/* </Suspense> */}
 				<Pagination total={getSearchResultPageCount(data?.resultCount)} />
+				<Space h={40} />
 			</Grid.Col>
 		</>
 	)

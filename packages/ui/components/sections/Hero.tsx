@@ -118,6 +118,7 @@ const RevolvingBox = ({ role, t }: RevolvingBoxProps) => {
 export const Hero = () => {
 	const { t } = useTranslation('landingPage')
 	const { classes } = useHeroStyles()
+	const [isLoading, setLoading] = useState(false)
 
 	return (
 		<Stack spacing={32} align='center' className={classes.stack}>
@@ -140,7 +141,7 @@ export const Hero = () => {
 				/>
 			</Group>
 			<Group maw={636} w='100%'>
-				<SearchBox type='location' />
+				<SearchBox type='location' loadingManager={{ isLoading, setLoading }} />
 			</Group>
 		</Stack>
 	)
