@@ -67,7 +67,6 @@ export const getTRPCMock = <
 	return fn(route, async (req, res, ctx) => {
 		const data = await getReqData(req)
 		const transformed = transformer.parse<ApiInput[K1][K2]>(data)
-		console.log(data, transformed)
 		trpcRequest(transformed)
 		return res(ctx.delay(), ctx.json(jsonRpcSuccessResponse(endpoint.response)))
 	})
