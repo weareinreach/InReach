@@ -11,4 +11,5 @@ export * from './QuickPromotion'
 export * from './Review'
 export * from './Service'
 export * from './ServiceFilter'
+export * from './UserSurvey'
 // codegen:end
