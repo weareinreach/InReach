@@ -1,7 +1,14 @@
 {
 	"extends": "@weareinreach/config/tsconfig/base.json",
 	"compilerOptions": {
-		"baseUrl": "."
+		"baseUrl": ".",
+		"paths": {
+			"~ui/*": ["./*"],
+			"~api/*": ["../../packages/api/*"],
+			"~app/*": ["../../apps/app/src/*"],
+			"~auth/*": ["../../packages/auth/*"],
+			"~db/*": ["../../packages/db/*"]
+		}
 	},
 	"include": [
 		"./**/*.ts",
