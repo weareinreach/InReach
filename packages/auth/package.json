@@ -41,5 +41,5 @@
 		"react": "^18",
 		"react-dom": "^18"
 	},
-	"packageManager": "pnpm@7.30.5"
+	"packageManager": "pnpm@8.0.0"
 }
