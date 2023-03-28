@@ -4,8 +4,6 @@ import { MouseEventHandler } from 'react'
 
 import { Icon } from '~ui/icon'
 
-import { PageLoadProgress } from './PageLoadProgress'
-
 const useStyles = createStyles((theme) => ({
 	root: {
 		// height: '40px',
