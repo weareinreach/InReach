@@ -1,4 +1,13 @@
-import { Text, Title, Stack, Modal, Box, type ButtonProps, createPolymorphicComponent } from '@mantine/core'
+import {
+	Text,
+	Title,
+	Stack,
+	Modal,
+	Box,
+	Group,
+	type ButtonProps,
+	createPolymorphicComponent,
+} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation, Trans } from 'next-i18next'
 import { forwardRef, useState } from 'react'
@@ -40,6 +49,10 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 					</Stack>
 					<PrivacyStatementModal component={Link}>{t('privacy-policy')}</PrivacyStatementModal>
 				</Stack>
+				<Group>
+					<Button>Not Right Now</Button>
+					<Button>Start Survey</Button>
+				</Group>
 			</Modal>
 			<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
 		</>
