@@ -1,13 +1,15 @@
-import { createCognitoUser, forgotPassword } from '@weareinreach/auth'
+import { createCognitoUser, forgotPassword, confirmAccount, resetPassword } from '@weareinreach/auth'
 import { z } from 'zod'
 
-import { handleError } from '~api/lib'
+import { handleError, decodeUrl } from '~api/lib'
 import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
 import {
 	AdminCreateUser,
 	CreateUser,
 	CreateUserSurvey,
 	type AdminCreateUserInput,
+	CognitoBase64,
+	ResetPassword,
 } from '~api/schemas/create/user'
 
 export const userRouter = defineRouter({
@@ -123,11 +125,21 @@ export const userRouter = defineRouter({
 			handleError(error)
 		}
 	}),
-	resetPassword: publicProcedure
+	forgotPassword: publicProcedure
 		.input(z.object({ email: z.string().email() }))
 		.mutation(async ({ input }) => {
 			const response = await forgotPassword(input.email)
 
 			return response
 		}),
+	confirmAccount: publicProcedure.input(CognitoBase64).mutation(async ({ input }) => {
+		const { code, email } = input
+		const response = await confirmAccount(email, code)
+		return response
+	}),
+	resetPassword: publicProcedure.input(ResetPassword).mutation(async ({ input }) => {
+		const { code, password, email } = input
+		const response = await resetPassword({ code, email, password })
+		return response
+	}),
 })

@@ -11,7 +11,7 @@ export default {
 	parameters: {
 		msw: [
 			getTRPCMock({
-				path: ['user', 'resetPassword'],
+				path: ['user', 'forgotPassword'],
 				type: 'mutation',
 				response: {
 					CodeDeliveryDetails: {

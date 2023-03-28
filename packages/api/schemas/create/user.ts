@@ -2,6 +2,7 @@ import { Prisma, generateId } from '@weareinreach/db'
 import { z } from 'zod'
 
 import { userTypes } from '~api/generated/userType'
+import { decodeUrl } from '~api/lib'
 import { idString, CreationBase, id, slug } from '~api/schemas/common'
 import {
 	connectOne,
@@ -205,3 +206,16 @@ export const CreateUserSurvey = z
 			})
 		}
 	)
+
+export const CognitoBase64 = z
+	.object({
+		data: z.string(),
+	})
+	.transform(({ data }) => decodeUrl(data))
+
+export const ResetPassword = z
+	.object({
+		data: z.string(),
+		password: z.string(),
+	})
+	.transform(({ data, password }) => ({ password, ...decodeUrl(data) }))

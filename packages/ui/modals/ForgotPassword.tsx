@@ -39,7 +39,7 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 		})
 		const variants = useCustomVariant()
 		const theme = useMantineTheme()
-		const pwResetHandler = api.user.resetPassword.useMutation()
+		const pwResetHandler = api.user.forgotPassword.useMutation()
 
 		const [opened, handler] = useDisclosure(false)
 
