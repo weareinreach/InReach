@@ -16,6 +16,8 @@ const CreateUserSchema = z.object({
 	email: z.string().email(),
 	password: z.string(),
 	databaseId: z.string(),
+	subject: z.string().default('Confirm your account'),
+	message: z.string().default('Click the following link to confirm your account:'),
 })
 
 /**
@@ -27,7 +29,7 @@ const CreateUserSchema = z.object({
 export const createCognitoUser = async (data: CreateCognitoUserParams) => {
 	const validatedData = CreateUserSchema.parse(data)
 
-	const { email, password, databaseId } = validatedData
+	const { email, password, databaseId, message, subject } = validatedData
 
 	const response = await cognito.signUp({
 		ClientId: ClientId,
@@ -44,7 +46,7 @@ export const createCognitoUser = async (data: CreateCognitoUserParams) => {
 				Value: email,
 			},
 		],
-		ClientMetadata: { baseUrl: getBaseUrl() },
+		ClientMetadata: { baseUrl: getBaseUrl(), message, subject },
 	})
 	if (response.UserSub) {
 		await prisma.account.create({
