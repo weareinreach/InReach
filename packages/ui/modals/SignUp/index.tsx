@@ -154,7 +154,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 					components={{
 						link1: (
 							<PrivacyStatementModal component={Link} key={0} variant={variants.Link.inheritStyle}>
-								Privacy Policy
+								{t('privacy-policy')}
 							</PrivacyStatementModal>
 						),
 						link2: (
