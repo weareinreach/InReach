@@ -9,6 +9,7 @@ import {
 	createPolymorphicComponent,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
 import { useRouter } from 'next/router'
 import { useTranslation, Trans } from 'next-i18next'
 import { forwardRef, useState, useEffect } from 'react'
@@ -21,6 +22,17 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { LoginModalLauncher } from './Login'
 import { ModalTitle } from './ModalTitle'
 
+const isRecord = (data: unknown) => z.record(z.any()).safeParse(data).success
+const CognitoBase64 = z.string().refine((data) => {
+	try {
+		const obj = decodeUrl(data)
+		return isRecord(decodeUrl(data))
+	} catch (error) {
+		console.error(error)
+		return false
+	}
+})
+
 export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalBodyProps>(
 	(props, ref) => {
 		const { t } = useTranslation(['common'])
@@ -28,18 +40,20 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 		const autoOpen = Boolean(router.query['c'])
 		const variants = useCustomVariant()
 		const [success, setSuccess] = useState(false)
+		const [error, setError] = useState(!CognitoBase64.safeParse(router.query['c']).success)
 		const verifyAccount = api.user.confirmAccount.useMutation({
 			onSuccess: () => setSuccess(true),
+			onError: () => setError(true),
 		})
 		const DataSchema = z.string().default('')
 		const [opened, handler] = useDisclosure(autoOpen)
 
 		useEffect(() => {
-			if (!success && !verifyAccount.isLoading) {
+			if (!success && !verifyAccount.isLoading && opened && !error) {
 				verifyAccount.mutate({ data: DataSchema.parse(router.query['c']) })
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [success, verifyAccount.isLoading])
+		}, [success, verifyAccount.isLoading, opened, error])
 
 		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
 
@@ -72,11 +86,25 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 				/>
 			</Stack>
 		)
+		const bodyError = (
+			<Stack align='center' spacing={24}>
+				<Stack spacing={0} align='center'>
+					<Title order={1}>🫣</Title>
+					<Title order={2}>{t('errors.oh-no')}</Title>
+				</Stack>
+				<Trans
+					i18nKey='errors.try-again-text'
+					components={{
+						Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
+					}}
+				/>
+			</Stack>
+		)
 
 		return (
 			<>
 				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
-					{success ? bodySuccess : bodyWorking}
+					{success ? bodySuccess : error ? bodyError : bodyWorking}
 				</Modal>
 				{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
 			</>

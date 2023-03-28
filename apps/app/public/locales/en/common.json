@@ -48,6 +48,10 @@
 	"enter-email-placeholder": "Enter email address...",
 	"enter-password-placeholder": "Enter password...",
 	"enter-review": "Enter your review...",
+	"errors": {
+		"oh-no": "Oh no!",
+		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
+	},
 	"exclude": "Exclude",
 	"facebook": "Facebook",
 	"find-resources": "Find resources",

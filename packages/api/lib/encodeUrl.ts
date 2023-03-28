@@ -6,7 +6,13 @@ export const encodeUrl = (email: string, databaseId: string, code: string) => {
 	return buff.toString('base64url')
 }
 export const decodeUrl = (base64: string) => {
-	const buff = Buffer.from(base64, 'base64url')
-	const schema = z.object({ email: z.string(), databaseId: z.string(), code: z.string() })
-	return schema.parse(JSON.parse(buff.toString('utf-8')))
+	try {
+		const buff = Buffer.from(base64, 'base64url')
+		const schema = z.object({ email: z.string(), databaseId: z.string(), code: z.string() })
+		return schema.parse(JSON.parse(buff.toString('utf-8')))
+	} catch (err) {
+		const buff = atob(base64)
+		const schema = z.object({ email: z.string(), databaseId: z.string(), code: z.string() })
+		return schema.parse(JSON.parse(buff))
+	}
 }
