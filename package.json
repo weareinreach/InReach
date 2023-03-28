@@ -50,6 +50,7 @@
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"boxen": "7.0.2",
+		"dotenv": "16.0.3",
 		"husky": "8.0.3",
 		"lint-staged": "13.2.0",
 		"prettier": "2.8.7",
