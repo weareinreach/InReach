@@ -4,6 +4,8 @@ import { MouseEventHandler } from 'react'
 
 import { Icon } from '~ui/icon'
 
+import { PageLoadProgress } from './PageLoadProgress'
+
 const useStyles = createStyles((theme) => ({
 	root: {
 		// height: '40px',
@@ -50,7 +52,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 					case 'dynamicText': {
 						const page = props.backToText
 						return (
-							<Trans i18nKey='back-to-dynamic' ns='common' values={{ page }}>
+							<Trans i18nKey='back-to-dynamic' ns='common' values={{ page }} shouldUnescape={true}>
 								Back to <span style={{ textDecoration: 'underline' }}>{page}</span>
 							</Trans>
 						)
