@@ -19,6 +19,10 @@
 	"claimed": "Reclamado",
 	"clear": "Claro",
 	"close": "Cerrar",
+	"confirm-account": {
+		"message": "Haga clic en el siguiente enlace para confirmar su cuenta:",
+		"subject": "Confirme su cuenta"
+	},
 	"connect": "Conectar",
 	"contact": "Contacto",
 	"contact-us": "Contáctenos",
@@ -103,6 +107,8 @@
 	"phone": "Teléfono",
 	"photo-count_interval": "(0)[No hay fotos aún.];(1)[{{count}} foto];(2-inf)[{{count}} fotos]",
 	"photo_interval": "(0)[Aún no hay fotos];(3-inf)[{{count}} fotos];",
+	"photo_one": "Foto",
+	"photo_other": "Fotos",
 	"powered-by-vercel": "Desarrollado por Vercel",
 	"prefer-not-to-say": "Preferirse a no decir",
 	"print": "Imprimir",
@@ -133,9 +139,13 @@
 	"resource-saved": "Recurso guardado.",
 	"resources": "Recursos",
 	"review-count_interval": "(0)[Sin reseñas];",
+	"review-count_one": "{{count}} reseña",
+	"review-count_other": "{{count}} valoraciones",
 	"review-not-empty": "La revisión no puede estar vacía",
 	"review-note": "Su calificación no se grabará hasta que introduzca una reseña y haga clic en \"Enviar\".",
 	"review-resource": "Revisar este recurso",
+	"review_one": "Review",
+	"review_other": "Reviews",
 	"safety-exit": "Salida de seguridad",
 	"save": "Guardar",
 	"saved": "Guardado",
@@ -218,6 +228,8 @@
 	"verified-information": "Información verificada",
 	"verified-information-detail": "La información de esta página fue actualizada por última vez {{dateString}}. El alcance prioriza la exactitud y la seguridad del usuario, y actualiza toda la información al menos una vez cada 6 meses. Para más información sobre nuestro proceso de veterinario, por favor visite nuestra página del Proceso de Verificación .",
 	"view-list": "Ver lista",
+	"view-x-result_one": "Ver {{count}} resultados",
+	"view-x-result_other": "Ver {{count}} resultados",
 	"visit": "Visita",
 	"website": "Sitio web",
 	"words": {
@@ -234,13 +246,5 @@
 		"support": "Support"
 	},
 	"your-comments": "Tus comentarios",
-	"youtube": "YouTube",
-	"photo_one": "Foto",
-	"photo_other": "Fotos",
-	"review-count_one": "{{count}} reseña",
-	"review-count_other": "{{count}} valoraciones",
-	"review_one": "Review",
-	"review_other": "Reviews",
-	"view-x-result_one": "Ver {{count}} resultados",
-	"view-x-result_other": "Ver {{count}} resultados"
+	"youtube": "YouTube"
 }

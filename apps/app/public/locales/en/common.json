@@ -19,6 +19,10 @@
 	"claimed": "Claimed",
 	"clear": "Clear",
 	"close": "Close",
+	"confirm-account": {
+		"message": "Click the following link to confirm your account:",
+		"subject": "Confirm your account"
+	},
 	"connect": "Connect",
 	"contact": "Contact",
 	"contact-us": "Contact Us",
