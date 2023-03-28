@@ -2,10 +2,8 @@
 import {
 	Stack,
 	Text,
-	TextInput,
 	Title,
 	useMantineTheme,
-	Group,
 	type ButtonProps,
 	Modal,
 	Box,
@@ -120,7 +118,7 @@ export const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswor
 		const router = useRouter()
 		const autoOpen = Boolean(router.query['r'])
 		const variants = useCustomVariant()
-		const [success, setSuccess] = useState(true)
+		const [success, setSuccess] = useState(false)
 		const FormSchema = z
 			.object({
 				password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
