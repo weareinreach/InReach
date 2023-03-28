@@ -46,6 +46,7 @@ export const getTRPCMock = <
 	path: [K1, K2]
 	response: O
 	type?: 'query' | 'mutation'
+	delay?: number
 }) => {
 	const fn = endpoint.type === 'mutation' ? rest.post : rest.get
 
@@ -60,7 +61,7 @@ export const getTRPCMock = <
 			const data = await getReqData(req)
 			const transformed = transformer.parse<ApiInput[K1][K2]>(data)
 			trpcRequest(transformed)
-			return res(ctx.delay(), ctx.json(jsonRpcSuccessResponse(response(transformed))))
+			return res(ctx.delay(endpoint.delay), ctx.json(jsonRpcSuccessResponse(response(transformed))))
 		})
 	}
 
@@ -68,6 +69,6 @@ export const getTRPCMock = <
 		const data = await getReqData(req)
 		const transformed = transformer.parse<ApiInput[K1][K2]>(data)
 		trpcRequest(transformed)
-		return res(ctx.delay(), ctx.json(jsonRpcSuccessResponse(endpoint.response)))
+		return res(ctx.delay(endpoint.delay), ctx.json(jsonRpcSuccessResponse(endpoint.response)))
 	})
 }
