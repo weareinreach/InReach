@@ -34,14 +34,16 @@ export const InstantFeedback = ({ displayTextKey, link }: NotificationInnerProps
 			<Text color={theme.other.colors.secondary.white} fw={theme.other.fontWeight.semibold}>
 				{t(displayTextKey)}
 			</Text>
-			<Text
-				component={Link}
-				href={link.href}
-				style={{ color: theme.other.colors.tertiary.lightBlue }}
-				fw={theme.other.fontWeight.semibold}
-			>
-				{t(link.textKey)}
-			</Text>
+			{link && (
+				<Text
+					component={Link}
+					href={link.href}
+					style={{ color: theme.other.colors.tertiary.lightBlue }}
+					fw={theme.other.fontWeight.semibold}
+				>
+					{t(link.textKey)}
+				</Text>
+			)}
 		</Group>
 	)
 }
@@ -87,7 +89,7 @@ export type UseNotificationProps = {
 	 * @param href - URL
 	 * @param textKey - I18Next translation key
 	 */
-	link: {
+	link?: {
 		/** URL */
 		href: LinkProps['href']
 		/** I18Next translation key */
