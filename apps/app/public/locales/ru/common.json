@@ -114,6 +114,10 @@
 	"password-req-number": "Включает число",
 	"password-req-special": "Включает специальный символ",
 	"password-req-uppercase": "Включает заглавную букву",
+	"password-reset": {
+		"email-body": "Нажмите на следующую ссылку, чтобы сбросить пароль:",
+		"email-subject": "Сброс пароля"
+	},
 	"password-reset-success": "<Text>Пожалуйста, <LoginModal>войдите</LoginModal> используя ваш новый пароль.</Text>",
 	"password-saved": "Пароль сохранен!",
 	"phone": "Телефон",
