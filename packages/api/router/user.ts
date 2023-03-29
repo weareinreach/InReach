@@ -156,7 +156,7 @@ export const userRouter = defineRouter({
 			},
 		})
 		return { community, ethnicity, immigration, sog }
-  }),
+	}),
 	forgotPassword: publicProcedure.input(ForgotPassword).mutation(async ({ input }) => {
 		const response = await forgotPassword(input)
 		return response
