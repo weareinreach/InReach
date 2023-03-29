@@ -24,7 +24,7 @@ import { useTranslation } from 'next-i18next'
 import { useState, forwardRef } from 'react'
 
 import { QuickPromotionModal, ReviewModal } from 'modals'
-import { Icon, IconList } from '~ui/icon'
+import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useNewNotification } from '../../hooks'
@@ -58,7 +58,7 @@ export const actionButtonIcons = {
  * @param data.serviceId - String | undefined
  * @returns JSX.Element
  */
-const NewListModal = ({ data, ...props }: NewListModalProps) => {
+const NewListModal = ({ data }: NewListModalProps) => {
 	const { t } = useTranslation()
 	const [opened, handler] = useDisclosure(false)
 	const form = useForm({
@@ -69,7 +69,10 @@ const NewListModal = ({ data, ...props }: NewListModalProps) => {
 	})
 
 	const savedInList = useNewNotification({ icon: 'info', displayTextKey: t('saved-in-list') as string })
-	const errorSaving = useNewNotification({ icon: 'warning', displayTextKey: t('error-saving') as string })
+	const errorSaving = useNewNotification({
+		icon: 'warning',
+		displayTextKey: t('error-saving-in-list') as string,
+	})
 
 	const { mutate, isError, isSuccess, reset } = api.savedList.createAndSaveItem.useMutation()
 
@@ -93,7 +96,7 @@ const NewListModal = ({ data, ...props }: NewListModalProps) => {
 		<>
 			<Modal opened={opened} onClose={() => handler.close()}>
 				<form onSubmit={submit}>
-					<TextInput placeholder={t('service-list-name') as string} {...form.getInputProps('listName')} />
+					<TextInput placeholder={t('new-list-name') as string} {...form.getInputProps('listName')} />
 					<Button type='submit'>{t('create-list')}</Button>
 				</form>
 			</Modal>
@@ -117,8 +120,14 @@ const SaveItem = ({ data, name }: AlterListProps) => {
 	const { t } = useTranslation()
 	const { mutate, isSuccess, isError, reset } = api.savedList.saveItem.useMutation()
 
-	const savedInList = useNewNotification({ icon: 'info', displayTextKey: t('saved-in-list') as string })
-	const errorSaving = useNewNotification({ icon: 'warning', displayTextKey: t('error-saving') as string })
+	const savedInList = useNewNotification({
+		icon: 'info',
+		displayTextKey: t('saved-in-list', { name: name }) as string,
+	})
+	const errorSaving = useNewNotification({
+		icon: 'warning',
+		displayTextKey: t('error-saving-in-list') as string,
+	})
 
 	if (isSuccess) {
 		savedInList()
@@ -146,59 +155,61 @@ const SaveItem = ({ data, name }: AlterListProps) => {
  *
  * @returns Polymorphic button component
  */
-const SavePolymorphic = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-	const { t } = useTranslation()
-	const saveLists = api.savedList.getAll.useQuery()
-	const { classes } = useStyles()
-	const [opened, setOpened] = useState(false)
+const SavePolymorphic = forwardRef<HTMLButtonElement, PolymorphicProps>(
+	({ serviceId, organizationId, ...props }, ref) => {
+		const { t } = useTranslation()
+		const saveLists = api.savedList.getAll.useQuery()
+		const { classes } = useStyles()
+		const [opened, setOpened] = useState(false)
 
-	// ADD CORRECT INFORMATION TO ORGANIZATION ID
-	const createNewList = <NewListModal data={{ name: '', organizationId: '' }} />
+		const data = organizationId ? { organizationId } : { serviceId }
 
-	let saveMenuItems: JSX.Element | JSX.Element[] = (
-		<Menu.Item>
-			<Center>
-				<Loader />
-			</Center>
-		</Menu.Item>
-	)
+		const createNewList = <NewListModal data={{ name: '', ...data }} />
 
-	if (saveLists.isError)
-		saveMenuItems = (
-			<Menu.Item onClick={() => saveLists.refetch()} closeMenuOnClick={false}>
-				<Center>{t('retry')}</Center>
+		let saveMenuItems: JSX.Element | JSX.Element[] = (
+			<Menu.Item>
+				<Center>
+					<Loader />
+				</Center>
 			</Menu.Item>
 		)
 
-	if (saveLists.status === 'success' && saveLists.data)
-		saveMenuItems = saveLists.data.map(({ id, name }) => (
-			// ADD CORRECT INFORMATION TO serviceId
-			<SaveItem key={id} data={{ id, serviceId: '' }} name={name} />
-		))
+		if (saveLists.isError)
+			saveMenuItems = (
+				<Menu.Item onClick={() => saveLists.refetch()} closeMenuOnClick={false}>
+					<Center>{t('retry')}</Center>
+				</Menu.Item>
+			)
 
-	return (
-		<Menu
-			position='bottom-start'
-			opened={opened}
-			onClose={() => {
-				setOpened(false)
-			}}
-			onOpen={() => {
-				setOpened(true)
-			}}
-			classNames={classes}
-			keepMounted
-		>
-			<Menu.Target>
-				<Box component='button' ref={ref} {...props} />
-			</Menu.Target>
-			<Menu.Dropdown>
-				{createNewList}
-				{saveMenuItems}
-			</Menu.Dropdown>
-		</Menu>
-	)
-})
+		if (saveLists.status === 'success' && saveLists.data)
+			saveMenuItems = saveLists.data.map(({ id, name }) => (
+				<SaveItem key={id} data={{ id, ...data }} name={name} />
+			))
+
+		return (
+			<Menu
+				position='bottom-start'
+				opened={opened}
+				onClose={() => {
+					setOpened(false)
+				}}
+				onOpen={() => {
+					setOpened(true)
+				}}
+				classNames={classes}
+				keepMounted
+			>
+				<Menu.Target>
+					<Box component='button' ref={ref} {...props} />
+				</Menu.Target>
+				<Menu.Dropdown>
+					{createNewList}
+					{saveMenuItems}
+				</Menu.Dropdown>
+			</Menu>
+		)
+	}
+)
 
 SavePolymorphic.displayName = 'SaveButton'
 
@@ -240,86 +251,90 @@ const ShareLink = createPolymorphicComponent<'button', ButtonProps>(CopyToClipBo
  *
  * @returns Polymorphic button component
  */
-const UnsaveItemBody = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-	const { classes } = useStyles()
-	const { t } = useTranslation()
-	const data = {
-		id: '',
-		organizationId: '',
-	}
-	const savedInLists = api.savedList.isSaved.useQuery(data.organizationId)
-	const unsave = api.savedList.deleteItem.useMutation()
-	const [opened, setOpened] = useState(false)
+const UnsaveItemBody = forwardRef<HTMLButtonElement, PolymorphicProps>(
+	({ serviceId, organizationId, ...props }, ref) => {
+		const { classes } = useStyles()
+		const { t } = useTranslation()
 
-	const removedFromList = useNewNotification({
-		icon: 'info',
-		displayTextKey: t('removed-from-list') as string,
-	})
-	const errorRemoving = useNewNotification({ icon: 'warning', displayTextKey: t('error-removing') as string })
+		const data = organizationId ? { organizationId } : { serviceId }
+		const savedInLists = api.savedList.isSaved.useQuery(organizationId || serviceId)
+		const unsave = api.savedList.deleteItem.useMutation()
+		const [opened, setOpened] = useState(false)
 
-	if (unsave.isSuccess) {
-		unsave.reset()
-		removedFromList()
-	}
+		const removedFromList = useNewNotification({
+			icon: 'info',
+			displayTextKey: t('removed-from-list') as string,
+		})
+		const errorRemoving = useNewNotification({
+			icon: 'warning',
+			displayTextKey: t('error-removing-from-list') as string,
+		})
 
-	if (unsave.isError) {
-		unsave.reset()
-		errorRemoving()
-	}
-
-	if (savedInLists.isSuccess && savedInLists.data) {
-		if (savedInLists.data.length === 1) {
-			return (
-				<Box
-					onClick={() => {
-						unsave.mutate(data)
-					}}
-					component='button'
-					ref={ref}
-					{...props}
-				/>
-			)
-		} else {
-			const listItems = savedInLists.data.map(({ name, id }) => (
-				<Menu.Item
-					key={id}
-					onClick={() => {
-						unsave.mutate({ id: id })
-					}}
-				>
-					{name}
-				</Menu.Item>
-			))
-			return (
-				<Menu
-					position='bottom-start'
-					opened={opened}
-					onClose={() => {
-						setOpened(false)
-					}}
-					onOpen={() => {
-						setOpened(true)
-					}}
-					classNames={classes}
-					keepMounted
-				>
-					<Menu.Target>
-						<Box component='button' ref={ref} {...props} />
-					</Menu.Target>
-					<Menu.Dropdown>{listItems}</Menu.Dropdown>
-				</Menu>
-			)
+		if (unsave.isSuccess) {
+			unsave.reset()
+			removedFromList()
 		}
-	}
 
-	return (
-		<Box component='button' ref={ref} {...props}>
-			<Center>
-				<Loader />
-			</Center>
-		</Box>
-	)
-})
+		if (unsave.isError) {
+			unsave.reset()
+			errorRemoving()
+		}
+
+		if (savedInLists.isSuccess && savedInLists.data) {
+			if (savedInLists.data.length === 1 && savedInLists.data[0]) {
+				const { id } = savedInLists.data[0]
+				return (
+					<Box
+						onClick={() => {
+							unsave.mutate({ id, ...data })
+						}}
+						component='button'
+						ref={ref}
+						{...props}
+					/>
+				)
+			} else {
+				const listItems = savedInLists.data.map(({ name, id }) => (
+					<Menu.Item
+						key={id}
+						onClick={() => {
+							unsave.mutate({ id, ...data })
+						}}
+					>
+						{name}
+					</Menu.Item>
+				))
+				return (
+					<Menu
+						position='bottom-start'
+						opened={opened}
+						onClose={() => {
+							setOpened(false)
+						}}
+						onOpen={() => {
+							setOpened(true)
+						}}
+						classNames={classes}
+						keepMounted
+					>
+						<Menu.Target>
+							<Box component='button' ref={ref} {...props} />
+						</Menu.Target>
+						<Menu.Dropdown>{listItems}</Menu.Dropdown>
+					</Menu>
+				)
+			}
+		}
+
+		return (
+			<Box component='button' ref={ref} {...props}>
+				<Center>
+					<Loader />
+				</Center>
+			</Box>
+		)
+	}
+)
 
 UnsaveItemBody.displayName = 'UnsaveItem'
 
@@ -381,7 +396,8 @@ const useActions = () => {
 	}
 
 	return {
-		delete: generic(QuickPromotionModal), // TODO: assign behaviour to delete button
+		// TODO: assign behaviour to delete button
+		delete: generic(QuickPromotionModal),
 		more: generic(createPolymorphicComponent<'button', ButtonProps>(Button)),
 		print: generic(PrintButton),
 		review: generic(ReviewModal),
@@ -442,7 +458,13 @@ const useStyles = createStyles((theme) => ({
 }))
 
 /** Used to display the action buttons when viewing an organization/location/service. */
-export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu, children }: Props) => {
+export const ActionButtons = ({
+	iconKey,
+	omitLabel = false,
+	serviceId,
+	outsideMoreMenu,
+	children,
+}: Props) => {
 	const { data: session } = useSession()
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
@@ -451,6 +473,8 @@ export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu, chi
 	const { more: _, ...overFlowItems } = actionButtonIcons
 	const actions = useActions()
 	const [opened, setOpened] = useState(false)
+	const { query: rawQuery } = useRouter()
+	const { organizationId } = rawQuery
 
 	let filteredOverflowItems = Object.entries(overFlowItems)
 
@@ -465,7 +489,9 @@ export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu, chi
 				{t(item.labelKey)}
 			</Group>
 		)
-		return actions[key as keyof typeof actionButtonIcons]({ isMenu: true, children })
+		const props = serviceId ? { organizationId: organizationId as string, serviceId } : undefined
+
+		return actions[key as keyof typeof actionButtonIcons]({ isMenu: true, children, props })
 	})
 
 	const menuThings = overflowMenuItems
@@ -495,19 +521,17 @@ export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu, chi
 
 	/** The menu component */
 	const menuComponent = (
-		<>
-			<Menu
-				position='bottom-start'
-				opened={opened}
-				onChange={setOpened}
-				zIndex={200}
-				classNames={classes}
-				keepMounted
-			>
-				<Menu.Target>{buttonComponent}</Menu.Target>
-				<Menu.Dropdown>{menuThings}</Menu.Dropdown>
-			</Menu>
-		</>
+		<Menu
+			position='bottom-start'
+			opened={opened}
+			onChange={setOpened}
+			zIndex={200}
+			classNames={classes}
+			keepMounted
+		>
+			<Menu.Target>{buttonComponent}</Menu.Target>
+			<Menu.Dropdown>{menuThings}</Menu.Dropdown>
+		</Menu>
 	)
 
 	if ((iconKey === 'saved' || iconKey === 'save') && !session) return buttonComponent
@@ -527,8 +551,7 @@ type Props = {
 	outsideMoreMenu?: string[]
 	children?: string | DefaultTFuncReturn
 	/** Information for save button */
-	saveOrg?: string
-	saveService?: string
+	serviceId?: string
 }
 
 type NewListModalProps = {
@@ -542,10 +565,12 @@ type UserListMutation = {
 
 type AlterListProps = UserListMutation & ButtonProps
 
-type Polymorphic = typeof QuickPromotionModal | typeof ReviewModal
+type Polymorphic = typeof QuickPromotionModal | typeof ReviewModal | typeof SaveButton
+
+type PolymorphicProps = ButtonProps & { serviceId: string; organizationId?: string }
 
 type Generic = {
 	children: JSX.Element
 	isMenu?: boolean
-	props?: ButtonProps
+	props?: ButtonProps | PolymorphicProps
 }
