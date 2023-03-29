@@ -613,6 +613,18 @@ export const attributesByCategory = [
 					iconBg: null,
 				},
 			},
+			{
+				attribute: {
+					id: 'attr_01GWQSFCG4D8KPCE5FTJR18K81',
+					icon: '🏳️‍⚧️',
+					tag: 'transgender-comm',
+					tsKey: 'srvfocus.transgender',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
 		],
 	},
 	{

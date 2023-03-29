@@ -909,6 +909,9 @@ model Attribute {
 
   categories AttributeToCategory[]
 
+  children AttributeNesting[] @relation("attribParentToChild")
+  parents  AttributeNesting[] @relation("attribChildToParent")
+
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
   tsNs  String
@@ -1165,6 +1168,8 @@ model Country {
 
   // List of administrative subdivisions
   govDist GovDist[]
+
+  activeForOrgs Boolean?
 
   /// Tables using Country
   attributeSupplements  AttributeSupplement[]
@@ -2039,6 +2044,18 @@ model ServiceAreaDist {
 // Attributes
 //
 
+/// Nesting attributes
+model AttributeNesting {
+  child    Attribute @relation("attribChildToParent", fields: [childId], references: [id])
+  childId  String
+  parent   Attribute @relation("attribParentToChild", fields: [parentId], references: [id])
+  parentId String
+
+  linkedAt DateTime @default(now())
+
+  @@id([parentId, childId])
+}
+
 /// Link attributes to users
 model UserAttribute {
   user        User                  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -2046,8 +2063,6 @@ model UserAttribute {
   attribute   Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId String
   supplement  AttributeSupplement[]
-  //supplement     AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  //supplementId   String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2062,8 +2077,6 @@ model OrganizationAttribute {
   attribute      Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId    String
   supplement     AttributeSupplement[]
-  //supplement     AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  //supplementId   String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2078,8 +2091,6 @@ model LocationAttribute {
   attribute   Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId String
   supplement  AttributeSupplement[]
-  // supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // supplementId String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2094,8 +2105,6 @@ model ServiceAttribute {
   attribute    Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId  String
   supplement   AttributeSupplement[]
-  // supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // supplementId String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2110,8 +2119,6 @@ model ServiceAccessAttribute {
   attribute       Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId     String
   supplement      AttributeSupplement[]
-  // supplement      AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // supplementId    String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2156,6 +2163,15 @@ model ServiceTagDefaultAttribute {
   //@@schema("relation")
 
   @@id([attributeId, serviceId])
+}
+
+model DataMigration {
+  id          String   @id @default(cuid())
+  jobId       String   @unique
+  title       String
+  description String?
+  createdBy   String
+  appliedAt   DateTime @default(now())
 }
 
 view orgsearchresults {

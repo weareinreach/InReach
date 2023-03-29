@@ -9,6 +9,7 @@ export const idPrefix = {
 	attributeSupplementDataSchema: 'asds',
 	auditLog: 'audt',
 	country: 'ctry',
+	dataMigration: 'data',
 	fieldVisibility: 'fviz',
 	freeText: 'ftxt',
 	govDist: 'gdst',
@@ -115,4 +116,5 @@ const excludedTables = [
 	'OrganizationPhone',
 	'OrganizationEmail',
 	'UserAttribute',
+	'AttributeNesting',
 ] as const // satisfies Prisma.ModelName[]

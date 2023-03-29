@@ -3,7 +3,7 @@
 	"extends": ["//"],
 	"pipeline": {
 		"build": {
-			"dependsOn": ["^build", "^db:generate", "^generate:data", "^db:deploy"],
+			"dependsOn": ["^build", "^db:generate", "^generate:data", "^db:deploy", "^db:dataMigrate"],
 			"env": [
 				"DATABASE_URL",
 				"DB_DIRECT_URL",
