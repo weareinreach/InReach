@@ -7,16 +7,17 @@
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"scripts": {
-		"build:aws": "pnpm clean:dist && pnpm bundle && pnpm package",
-		"bundle": "ncc build ./src/index.ts -s -m -a",
-		"clean:dist": "rm -fr dist",
+		"build:aws": "pnpm clean:dist && pnpm bundle",
+		"bundle": "ncc build ./src/index.ts -s -a",
+		"clean:dist": "rm -fr dist && rm bundle.zip || true",
 		"clean:node": "rm -rf ./node_modules/ || true",
-		"deploy:aws": "aws lambda update-function-code --function-name cognito-messaging --zip-file fileb://dist/bundle.zip",
+		"deploy:aws": "sam deploy",
+		"deploy:aws:old": "aws lambda update-function-code --function-name cognito-messaging --zip-file fileb://bundle.zip",
 		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
-		"package": "cd dist && zip -r bundle.zip *"
+		"package": "cd dist && zip -r ../bundle.zip *"
 	},
 	"dependencies": {
 		"@aws-lambda-powertools/logger": "1.7.0"
@@ -24,13 +25,13 @@
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.114",
 		"@types/eslint": "8.21.3",
-		"@types/node": "18.15.10",
+		"@types/node": "18.15.11",
 		"@types/prettier": "2.7.2",
 		"@vercel/ncc": "0.36.1",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
-		"eslint": "8.36.0",
+		"eslint": "8.37.0",
 		"prettier": "2.8.7",
 		"typescript": "5.0.2"
 	}

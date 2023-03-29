@@ -4,7 +4,7 @@ import Credentials from 'next-auth/providers/credentials'
 
 import { type AuthSuccess } from '~auth/lib/cognitoClient'
 import { decodeCognitoJwt } from '~auth/lib/cognitoJwt'
-import { verifyUser, CognitoSessionSchema } from '~auth/lib/verifyUser'
+import { userLogin, CognitoSessionSchema } from '~auth/lib/userLogin'
 
 export const cognitoCredentialProvider: Provider = Credentials({
 	id: 'cognito',
@@ -17,7 +17,7 @@ export const cognitoCredentialProvider: Provider = Credentials({
 	authorize: async (credentials, req) => {
 		if (!credentials?.email || !credentials?.password) return null
 		try {
-			const cognitoSession = await verifyUser(credentials.email, credentials.password)
+			const cognitoSession = await userLogin(credentials.email, credentials.password)
 			if (cognitoSession.success) {
 				const { session } = cognitoSession as AuthSuccess
 

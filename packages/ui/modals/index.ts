@@ -1,4 +1,5 @@
 // codegen:start {preset: barrel, include: ./*.ts*, exclude: ./*.stories.tsx}
+export * from './AccountVerified'
 export * from './DeleteModal'
 export * from './Example'
 export * from './ForgotPassword'
@@ -8,6 +9,7 @@ export * from './ModalTitle'
 export * from './MoreFilter'
 export * from './PrivacyStatement'
 export * from './QuickPromotion'
+export * from './ResetPassword'
 export * from './Review'
 export * from './Service'
 export * from './ServiceFilter'

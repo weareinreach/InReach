@@ -17,26 +17,26 @@
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
-		"package": "pnpm prune-clients && cd dist && zip -r bundle.zip *",
+		"package": "cd dist && zip -r bundle.zip *",
 		"prune-clients": "find ./dist/client -type f -not -name '*rhel*' -delete -print"
 	},
 	"dependencies": {
 		"@aws-lambda-powertools/logger": "1.7.0",
-		"@prisma/client": "4.11.0",
+		"@prisma/client": "4.12.0",
 		"@weareinreach/db": "0.100.0"
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.114",
 		"@types/eslint": "8.21.3",
-		"@types/node": "18.15.10",
+		"@types/node": "18.15.11",
 		"@types/prettier": "2.7.2",
 		"@vercel/ncc": "0.36.1",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
-		"eslint": "8.36.0",
+		"eslint": "8.37.0",
 		"prettier": "2.8.7",
-		"prisma": "4.11.0",
+		"prisma": "4.12.0",
 		"typescript": "5.0.2"
 	}
 }

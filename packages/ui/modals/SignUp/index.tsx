@@ -117,6 +117,9 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 			language: router.locale,
 			searchLocation: '',
 			locationOptions: [],
+			userType: 'seeker',
+			cognitoSubject: t('confirm-account.subject') as string,
+			cognitoMessage: t('confirm-account.message') as string,
 		},
 		validateInputOnBlur: true,
 	})
@@ -135,8 +138,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 
 	const submitHandler = () => {
 		if (form.isValid()) {
-			const result = signUpAction.mutate(form.values)
-			console.log(result)
+			signUpAction.mutate(form.values)
 		}
 	}
 
@@ -188,6 +190,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 				langSelect = true
 				location = true
 				lawPractice = true
+				form.setFieldValue('userType', 'provider')
 				break
 			}
 			case 'servpro': {
@@ -196,12 +199,14 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 				langSelect = true
 				location = true
 				servProvider = true
+				form.setFieldValue('userType', 'provider')
 				break
 			}
 			case 'lcr': {
 				nameContext = 'full'
 				langSelect = true
 				location = true
+				form.setFieldValue('userType', 'lcr')
 			}
 		}
 

@@ -6,8 +6,7 @@ import { Logger } from 'tslog'
 
 import { attrSuppDataMiddleware } from './lib/attrSuppDataMiddleware'
 import { generateId } from './lib/idGen'
-
-import { idMiddleware } from '~db/lib/idMiddleware'
+import { idMiddleware } from './lib/idMiddleware'
 
 const log = new Logger({ name: 'prisma', type: 'json' })
 declare global {
