@@ -112,6 +112,10 @@
 	"password-req-number": "Includes number",
 	"password-req-special": "Includes special character",
 	"password-req-uppercase": "Includes uppercase letter",
+	"password-reset": {
+		"email-body": "Click the following link to reset your password:",
+		"email-subject": "Reset your password"
+	},
 	"password-reset-success": "<Text>Please <LoginModal>login</LoginModal> using your new password.</Text>",
 	"password-saved": "Password saved!",
 	"phone": "Phone",
