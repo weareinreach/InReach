@@ -28,6 +28,7 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       Handler: index.readHandler
+      FunctionName: 'i18n-cache-read'
       FunctionUrlConfig:
         AuthType: AWS_IAM
 
@@ -35,6 +36,7 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       Handler: index.writeHandler
+      FunctionName: 'i18n-cache-write'
       FunctionUrlConfig:
         AuthType: AWS_IAM
 
