@@ -112,6 +112,10 @@
 	"password-req-number": "Comprend le numéro",
 	"password-req-special": "Comprend un caractère spécial",
 	"password-req-uppercase": "Inclut une lettre en majuscule",
+	"password-reset": {
+		"email-body": "Cliquez sur le lien suivant pour réinitialiser votre mot de passe :",
+		"email-subject": "Réinitialiser votre mot de passe"
+	},
 	"password-reset-success": "<Text>Veuillez <LoginModal>vous connecter</LoginModal> en utilisant votre nouveau mot de passe.</Text>",
 	"password-saved": "Mot de passe enregistré !",
 	"phone": "Téléphone",
