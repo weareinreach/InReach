@@ -12,6 +12,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { modals } from '@mantine/modals'
 import { useTranslation, Trans } from 'next-i18next'
 import { forwardRef, useState } from 'react'
+import { string } from 'zod'
 
 import { Button, Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
@@ -26,6 +27,15 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const [opened, handler] = useDisclosure(false)
 
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => modals.closeAll() }} />
+
+	const createModalTitleXY = (step: number) => (
+		<ModalTitle
+			breadcrumb={{ option: 'close', onClick: () => modals.closeAll() }}
+			rightText={t('step-x-y', { ns: 'common', x: step, y: 5 })}
+		/>
+	)
+
+	const labels = { confirm: `${t('words.next')}`, cancel: `${t('back')}` }
 
 	const userSurveyStartPage = (
 		<Stack align='center' spacing={24}>
@@ -71,33 +81,33 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 							children: userSurveyStartPage,
 							onConfirm: () =>
 								modals.openConfirmModal({
-									title: modalTitle,
-									labels: { confirm: 'Next', cancel: '' },
+									title: createModalTitleXY(1),
+									labels: { confirm: `${t('words.next')}`, cancel: '' },
 									closeOnConfirm: false,
 									cancelProps: { style: { display: 'none' } },
 									children: question1,
 									onConfirm: () =>
 										modals.openConfirmModal({
-											title: modalTitle,
-											labels: { confirm: 'Next', cancel: 'Back' },
+											title: createModalTitleXY(2),
+											labels: labels,
 											closeOnConfirm: false,
 											children: question2,
 											onConfirm: () =>
 												modals.openConfirmModal({
-													title: modalTitle,
-													labels: { confirm: 'Next', cancel: 'Back' },
+													title: createModalTitleXY(3),
+													labels: labels,
 													closeOnConfirm: false,
 													children: question3,
 													onConfirm: () =>
 														modals.openConfirmModal({
-															title: modalTitle,
-															labels: { confirm: 'Next', cancel: 'Back' },
+															title: createModalTitleXY(4),
+															labels: labels,
 															closeOnConfirm: false,
 															children: question4,
 															onConfirm: () =>
 																modals.openConfirmModal({
-																	title: modalTitle,
-																	labels: { confirm: 'Next', cancel: 'Back' },
+																	title: createModalTitleXY(5),
+																	labels: labels,
 																	closeOnConfirm: false,
 																	children: question5,
 																	onConfirm: () =>
