@@ -37,8 +37,8 @@ const CreateUserBase = {
 	/** Requires either `id` or `slug` */
 	currentGovDist: z.union([id, slug]).optional(),
 	userType: z.string().default('seeker'),
-	cognitoMessage: z.string().optional(),
-	cogintoSubject: z.string().optional(),
+	cognitoMessage: z.string().default('Confirm your account'),
+	cogintoSubject: z.string().default('Click the following link to confirm your account:'),
 }
 
 export const CreateUser = z
@@ -107,7 +107,7 @@ export const AdminCreateUser = () => {
 		z.object({ ...CreateUserBase, ...adminCreateFields })
 	)
 	const dataParser = parser.transform(({ actorId, data, operation }) => {
-		const { id, name, email, password, image } = data
+		const { id, name, email, password, image, cogintoSubject, cognitoMessage } = data
 		const [permissions, permissionLogs] = linkManyWithAudit(data?.permissions, actorId)
 		const [orgPermission, orgPermissionLogs] = linkManyWithAudit(data?.orgPermission, actorId, {
 			auditDataKeys: ['authorized'],
@@ -152,7 +152,13 @@ export const AdminCreateUser = () => {
 				},
 				select: { id: true },
 			}),
-			cognito: { databaseId: id, email, password },
+			cognito: {
+				databaseId: id,
+				email,
+				password,
+				message: data.cognitoMessage,
+				subject: data.cogintoSubject,
+			},
 		}
 	})
 	return { dataParser, inputSchema }
@@ -221,3 +227,15 @@ export const ResetPassword = z
 		password: z.string(),
 	})
 	.transform(({ data, password, code }) => ({ password, code, ...decodeUrl(data) }))
+
+export const ForgotPassword = z
+	.object({
+		email: z.string().email(),
+		cognitoMessage: z.string(),
+		cognitoSubject: z.string(),
+	})
+	.transform(({ email, cognitoMessage, cognitoSubject }) => ({
+		email,
+		subject: cognitoSubject,
+		message: cognitoMessage,
+	}))
