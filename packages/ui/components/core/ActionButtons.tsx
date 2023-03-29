@@ -442,7 +442,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 /** Used to display the action buttons when viewing an organization/location/service. */
-export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu, children, ...props }: Props) => {
+export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu, children }: Props) => {
 	const { data: session } = useSession()
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
