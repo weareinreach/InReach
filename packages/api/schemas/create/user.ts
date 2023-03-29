@@ -210,12 +210,14 @@ export const CreateUserSurvey = z
 export const CognitoBase64 = z
 	.object({
 		data: z.string(),
+		code: z.string(),
 	})
-	.transform(({ data }) => decodeUrl(data))
+	.transform(({ data, code }) => ({ code, ...decodeUrl(data) }))
 
 export const ResetPassword = z
 	.object({
 		data: z.string(),
+		code: z.string(),
 		password: z.string(),
 	})
-	.transform(({ data, password }) => ({ password, ...decodeUrl(data) }))
+	.transform(({ data, password, code }) => ({ password, code, ...decodeUrl(data) }))

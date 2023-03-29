@@ -29,10 +29,10 @@ import { LoginModalLauncher } from './Login'
 import { ModalTitle } from './ModalTitle'
 
 const isRecord = (data: unknown) => z.record(z.any()).safeParse(data).success
-const CognitoBase64 = z.string().refine((data) => {
+const UrlParams = z.object({ r: z.string(), code: z.string() }).refine((data) => {
 	try {
-		const obj = decodeUrl(data)
-		return isRecord(decodeUrl(data))
+		const obj = decodeUrl(data.r)
+		return isRecord(obj)
 	} catch (error) {
 		console.error(error)
 		return false
@@ -131,7 +131,7 @@ export const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswor
 		const autoOpen = Boolean(router.query['r'])
 		const variants = useCustomVariant()
 		const [success, setSuccess] = useState(false)
-		const [error, setError] = useState(!CognitoBase64.safeParse(router.query['r']).success)
+		const [error, setError] = useState(!UrlParams.safeParse(router.query).success)
 		const FormSchema = z
 			.object({
 				password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
@@ -150,6 +150,7 @@ export const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswor
 			validateInputOnBlur: true,
 			initialValues: {
 				data: DataSchema.parse(router.query['r']),
+				code: DataSchema.parse(router.query['code']),
 				password: '',
 				confirmPassword: '',
 			},
@@ -244,6 +245,7 @@ export interface ResetPasswordModalBodyProps extends ButtonProps {}
 
 type FormProps = {
 	data: string
+	code: string
 	password: string
 	confirmPassword: string
 }

@@ -23,10 +23,10 @@ import { LoginModalLauncher } from './Login'
 import { ModalTitle } from './ModalTitle'
 
 const isRecord = (data: unknown) => z.record(z.any()).safeParse(data).success
-const CognitoBase64 = z.string().refine((data) => {
+const UrlParams = z.object({ c: z.string(), code: z.string() }).refine((data) => {
 	try {
-		const obj = decodeUrl(data)
-		return isRecord(decodeUrl(data))
+		const obj = decodeUrl(data.c)
+		return isRecord(obj)
 	} catch (error) {
 		console.error(error)
 		return false
@@ -40,7 +40,7 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 		const autoOpen = Boolean(router.query['c'])
 		const variants = useCustomVariant()
 		const [success, setSuccess] = useState(false)
-		const [error, setError] = useState(!CognitoBase64.safeParse(router.query['c']).success)
+		const [error, setError] = useState(!UrlParams.safeParse(router.query).success)
 		const verifyAccount = api.user.confirmAccount.useMutation({
 			onSuccess: () => setSuccess(true),
 			onError: () => setError(true),
@@ -50,7 +50,7 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 
 		useEffect(() => {
 			if (!success && !verifyAccount.isLoading && opened && !error) {
-				verifyAccount.mutate({ data: DataSchema.parse(router.query['c']) })
+				verifyAccount.mutate(UrlParams.transform(({ c, code }) => ({ data: c, code })).parse(router.query))
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [success, verifyAccount.isLoading, opened, error])

@@ -19,7 +19,8 @@ export default {
 		nextjs: {
 			router: {
 				query: {
-					r: 'eyJlbWFpbCI6InVzZXJAZW1haWwuY29tIiwiZGF0YWJhc2VJZCI6InVzZXJfTE9OR2lkU1RSSU5HZnJvbURCIiwiY29kZSI6IjEyMzQ1NiJ9',
+					r: 'eyJlbWFpbCI6InVzZXJAZW1haWwuY29tIiwiZGF0YWJhc2VJZCI6InVzZXJfTE9OR2lkU1RSSU5HZnJvbURCIn0',
+					code: '123456',
 				},
 			},
 		},
