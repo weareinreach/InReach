@@ -1,6 +1,6 @@
+import { prisma } from '@weareinreach/db'
 import { UserMigrationTriggerEvent, UserMigrationTriggerHandler } from 'aws-lambda'
 
-import { prisma } from './client'
 import { getUser } from './getUser'
 import { logger } from './logger'
 import { verifyUser } from './verifyUser'

@@ -2,6 +2,7 @@ import { Prisma, generateId } from '@weareinreach/db'
 import { z } from 'zod'
 
 import { userTypes } from '~api/generated/userType'
+import { decodeUrl } from '~api/lib'
 import { idString, CreationBase, id, slug } from '~api/schemas/common'
 import {
 	connectOne,
@@ -22,7 +23,7 @@ const CreateUserBase = {
 	active: z.boolean().optional(),
 	currentCity: z.string().optional(),
 	/** Defaults to `en` */
-	langPref: z.string().default('en'),
+	language: z.string().default('en'),
 	/**
 	 * Requires either `id`, `cca2`, or `cca3`
 	 *
@@ -35,13 +36,16 @@ const CreateUserBase = {
 		.optional(),
 	/** Requires either `id` or `slug` */
 	currentGovDist: z.union([id, slug]).optional(),
+	userType: z.string().default('seeker'),
+	cognitoMessage: z.string().optional(),
+	cogintoSubject: z.string().optional(),
 }
 
 export const CreateUser = z
 	.object(CreateUserBase)
 	.transform(({ id, name, email, password, image, active, currentCity, ...data }) => {
-		const userType = connectOneRequired({ type: 'seeker' })
-		const langPref = connectOne({ localeCode: data.langPref })
+		const userType = connectOneRequired({ type: data.userType })
+		const langPref = connectOne({ localeCode: data.language })
 		const currentCountry = connectOne(data.currentCountry)
 		const currentGovDist = connectOne(data.currentGovDist)
 		const record = {
@@ -69,7 +73,13 @@ export const CreateUser = z
 				select: { id: true },
 			}),
 
-			cognito: { databaseId: id, email, password },
+			cognito: {
+				databaseId: id,
+				email,
+				password,
+				message: data.cognitoMessage,
+				subject: data.cogintoSubject,
+			},
 		}
 	})
 
@@ -109,7 +119,7 @@ export const AdminCreateUser = () => {
 		)
 		const [roles, rolesLogs] = linkManyWithAudit(data?.roles, actorId)
 		const userType = connectOneRequired({ type: data.userType })
-		const langPref = connectOne({ localeCode: data.langPref })
+		const langPref = connectOne({ localeCode: data.language })
 
 		const scalarData = {
 			id,
@@ -196,3 +206,18 @@ export const CreateUserSurvey = z
 			})
 		}
 	)
+
+export const CognitoBase64 = z
+	.object({
+		data: z.string(),
+		code: z.string(),
+	})
+	.transform(({ data, code }) => ({ code, ...decodeUrl(data) }))
+
+export const ResetPassword = z
+	.object({
+		data: z.string(),
+		code: z.string(),
+		password: z.string(),
+	})
+	.transform(({ data, password, code }) => ({ password, code, ...decodeUrl(data) }))

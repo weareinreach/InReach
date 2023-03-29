@@ -15,6 +15,7 @@ import { trpcServerClient } from '@weareinreach/api/trpc'
 import { Link, UserReview } from '@weareinreach/ui/components/core'
 import { Hero, CallOut } from '@weareinreach/ui/components/sections'
 import { useCustomVariant } from '@weareinreach/ui/hooks'
+import { AccountVerifyModal, ResetPasswordModal } from '@weareinreach/ui/modals'
 import { PrivacyStatementModal } from '@weareinreach/ui/modals/PrivacyStatement'
 import Autoplay from 'embla-carousel-autoplay'
 import { type GetServerSidePropsContext } from 'next'
@@ -244,6 +245,8 @@ const Home: NextPageWithoutGrid = () => {
 					</Grid>
 				</Container>
 			</CallOut>
+			<AccountVerifyModal />
+			<ResetPasswordModal />
 		</>
 	)
 }

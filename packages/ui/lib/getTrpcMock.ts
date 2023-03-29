@@ -1,5 +1,6 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
+import { action } from '@storybook/addon-actions'
 import { ApiInput, ApiOutput } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
 import { RestRequest, rest } from 'msw'
@@ -13,8 +14,7 @@ import { jsonRpcSuccessResponse } from './trpcResponse'
 const getReqData = async (req: RestRequest) => {
 	if (req.method === 'POST') {
 		const body = await req.text()
-		const data = querystring.parse(body)
-		return JSON.stringify(data)
+		return body
 	}
 	const query = req.url.search.charAt(0) === '?' ? req.url.search.substr(1) : req.url.search
 	const parsed = querystring.parse(query)
@@ -46,8 +46,12 @@ export const getTRPCMock = <
 	path: [K1, K2]
 	response: O
 	type?: 'query' | 'mutation'
+	delay?: number
 }) => {
 	const fn = endpoint.type === 'mutation' ? rest.post : rest.get
+
+	const type = endpoint.type === 'mutation' ? 'mutation' : 'query'
+	const trpcRequest = action(`tRPC Request (${type})`)
 
 	const route = path.join(getBaseUrl(), '/trpc/', endpoint.path[0] + '.' + (endpoint.path[1] as string))
 
@@ -56,11 +60,15 @@ export const getTRPCMock = <
 		return fn(route, async (req, res, ctx) => {
 			const data = await getReqData(req)
 			const transformed = transformer.parse<ApiInput[K1][K2]>(data)
-			return res(ctx.delay(), ctx.json(jsonRpcSuccessResponse(response(transformed))))
+			trpcRequest(transformed)
+			return res(ctx.delay(endpoint.delay), ctx.json(jsonRpcSuccessResponse(response(transformed))))
 		})
 	}
 
-	return fn(route, (req, res, ctx) => {
-		return res(ctx.delay(), ctx.json(jsonRpcSuccessResponse(endpoint.response)))
+	return fn(route, async (req, res, ctx) => {
+		const data = await getReqData(req)
+		const transformed = transformer.parse<ApiInput[K1][K2]>(data)
+		trpcRequest(transformed)
+		return res(ctx.delay(endpoint.delay), ctx.json(jsonRpcSuccessResponse(endpoint.response)))
 	})
 }

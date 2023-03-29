@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Cognito custom messaging.
+
+Globals:
+  Function:
+    Runtime: nodejs18.x
+    CodeUri: ./dist/
+    Timeout: 5
+    Architectures:
+      - x86_64
+
+Resources:
+  cognitomessaging:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: index.handler
+      FunctionName: 'cognito-messaging'
+      MemorySize: 128
+      Role: >-
+        arn:aws:iam::142495371698:role/service-role/cognito-messaging-role-icuffany

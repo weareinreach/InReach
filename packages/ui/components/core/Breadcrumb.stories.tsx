@@ -38,3 +38,10 @@ export const BackToDynamic = {
 		backToText: 'Sample Organization Name',
 	},
 } satisfies StoryDef
+export const BackToDynamicWithSpecialCharacters = {
+	args: {
+		option: 'back',
+		backTo: 'dynamicText',
+		backToText: "Sample Organization Name with special characters' % - *",
+	},
+} satisfies StoryDef
