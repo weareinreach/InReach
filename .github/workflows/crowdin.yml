@@ -31,6 +31,14 @@ jobs:
           regex: IN-\d+
           flags: gi
           replacement: IN-xxx
+      - name: Sanitize github branch name
+        id: sanitizebranch
+        uses: ashley-taylor/regex-property-action@eeec905bf940ec1c65ff777402c57f786368d9bc # v1.4
+        with:
+          value: ${{ github.ref_name }}
+          regex: '[\\/:*?"<>|>]'
+          flags: gi
+          replacement: '_'
 
       - name: Upload to Crowdin
         if: github.event_name != 'pull_request'
@@ -47,7 +55,7 @@ jobs:
           pull_request_title: 'chore(i18n): Updated translations from Crowdin'
           pull_request_labels: "translations, kodiak: merge.method = 'squash'"
           pull_request_base_branch_name: ${{ github.ref_name }}
-          crowdin_branch_name: ${{ github.ref_name }}
+          crowdin_branch_name: ${{ steps.sanitizebranch.outputs.value }}
 
       - name: Delete Crowdin Branch
         if: github.event_name == 'pull_request'
@@ -60,4 +68,4 @@ jobs:
           upload_translations: false
           download_translations: false
           create_pull_request: false
-          delete_crowdin_branch: ${{ github.ref_name }}
+          delete_crowdin_branch: ${{ steps.sanitizebranch.outputs.value }}
