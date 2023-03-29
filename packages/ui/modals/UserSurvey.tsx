@@ -9,6 +9,7 @@ import {
 	createPolymorphicComponent,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { modals } from '@mantine/modals'
 import { useTranslation, Trans } from 'next-i18next'
 import { forwardRef, useState } from 'react'
 
@@ -25,36 +26,501 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
 
+	const userSurveyStartPage = (
+		<Stack align='center' spacing={24}>
+			<Stack align='center' spacing={16}>
+				<Trans
+					i18nKey='user-survey-heading'
+					components={{
+						emojiLg: <Text fz={40}>.</Text>,
+						title: <Title>.</Title>,
+						textDarkGray: <Text variant={variants.Text.darkGray}>.</Text>,
+					}}
+				/>
+			</Stack>
+			<Stack align='center' spacing={14}>
+				<Trans
+					i18nKey='user-survey-body'
+					components={{
+						textUtility1: <Text variant={variants.Text.utility1}>.</Text>,
+					}}
+				/>
+			</Stack>
+			<PrivacyStatementModal component={Link}>{t('privacy-policy')}</PrivacyStatementModal>
+		</Stack>
+	)
+
+	const question1 = <Text size='sm'>user survey first question goes here</Text>
+	const question2 = <Text size='sm'>user survey second question goes here</Text>
+	const question3 = <Text size='sm'>user survey third question goes here</Text>
+	const question4 = <Text size='sm'>user survey fourth question goes here</Text>
+	const question5 = <Text size='sm'>user survey fifth question goes here</Text>
+	const thankYou = <Text size='sm'>user survey thank you page goes here</Text>
+
 	return (
 		<>
-			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
-				<Stack align='center' spacing={24}>
-					<Stack align='center' spacing={16}>
-						<Trans
-							i18nKey='user-survey-heading'
-							components={{
-								emojiLg: <Text fz={40}>.</Text>,
-								title: <Title>.</Title>,
-								textDarkGray: <Text variant={variants.Text.darkGray}>.</Text>,
-							}}
-						/>
-					</Stack>
-					<Stack align='center' spacing={14}>
-						<Trans
-							i18nKey='user-survey-body'
-							components={{
-								textUtility1: <Text variant={variants.Text.utility1}>.</Text>,
-							}}
-						/>
-					</Stack>
-					<PrivacyStatementModal component={Link}>{t('privacy-policy')}</PrivacyStatementModal>
-				</Stack>
-				<Group>
-					<Button>Not Right Now</Button>
-					<Button>Start Survey</Button>
-				</Group>
-			</Modal>
-			<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
+			<Group position='center'>
+				{/* This button opens the survey modal */}
+				<Button
+					onClick={() =>
+						modals.openConfirmModal({
+							title: modalTitle,
+							closeOnConfirm: false,
+							labels: { confirm: 'Start Survey', cancel: 'Not Now' },
+							children: userSurveyStartPage,
+							onConfirm: () =>
+								modals.openConfirmModal({
+									title: modalTitle,
+									labels: { confirm: 'Next', cancel: 'Skip' },
+									closeOnConfirm: false,
+									children: question1,
+									onConfirm: () =>
+										modals.openConfirmModal({
+											title: modalTitle,
+											labels: { confirm: 'Next', cancel: 'Skip' },
+											closeOnConfirm: false,
+											children: question2,
+											onConfirm: () =>
+												modals.openConfirmModal({
+													title: modalTitle,
+													labels: { confirm: 'Next', cancel: 'Skip' },
+													children: question3,
+													onConfirm: () =>
+														modals.openConfirmModal({
+															title: modalTitle,
+															labels: { confirm: 'Next', cancel: 'Skip' },
+															children: question4,
+															onConfirm: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+															onCancel: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+														}),
+													onCancel: () =>
+														modals.openConfirmModal({
+															title: modalTitle,
+															labels: { confirm: 'Next', cancel: 'Skip' },
+															children: question4,
+															onConfirm: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+															onCancel: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+														}),
+												}),
+											onCancel: () =>
+												modals.openConfirmModal({
+													title: modalTitle,
+													labels: { confirm: 'Next', cancel: 'Skip' },
+													children: question3,
+													onConfirm: () =>
+														modals.openConfirmModal({
+															title: modalTitle,
+															labels: { confirm: 'Next', cancel: 'Skip' },
+															children: question4,
+															onConfirm: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+															onCancel: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+														}),
+													onCancel: () =>
+														modals.openConfirmModal({
+															title: modalTitle,
+															labels: { confirm: 'Next', cancel: 'Skip' },
+															children: question4,
+															onConfirm: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+															onCancel: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+														}),
+												}),
+										}),
+									onCancel: () =>
+										modals.openConfirmModal({
+											title: modalTitle,
+											labels: { confirm: 'Next', cancel: 'Skip' },
+											closeOnConfirm: false,
+											children: question2,
+											onConfirm: () =>
+												modals.openConfirmModal({
+													title: modalTitle,
+													labels: { confirm: 'Next', cancel: 'Skip' },
+													children: question3,
+													onConfirm: () =>
+														modals.openConfirmModal({
+															title: modalTitle,
+															labels: { confirm: 'Next', cancel: 'Skip' },
+															children: question4,
+															onConfirm: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+															onCancel: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+														}),
+													onCancel: () =>
+														modals.openConfirmModal({
+															title: modalTitle,
+															labels: { confirm: 'Next', cancel: 'Skip' },
+															children: question4,
+															onConfirm: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+															onCancel: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+														}),
+												}),
+											onCancel: () =>
+												modals.openConfirmModal({
+													title: modalTitle,
+													labels: { confirm: 'Next', cancel: 'Skip' },
+													children: question3,
+													onConfirm: () =>
+														modals.openConfirmModal({
+															title: modalTitle,
+															labels: { confirm: 'Next', cancel: 'Skip' },
+															children: question4,
+															onConfirm: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+															onCancel: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+														}),
+													onCancel: () =>
+														modals.openConfirmModal({
+															title: modalTitle,
+															labels: { confirm: 'Next', cancel: 'Skip' },
+															children: question4,
+															onConfirm: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+															onCancel: () =>
+																modals.openConfirmModal({
+																	title: modalTitle,
+																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	children: question5,
+																	onConfirm: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																	onCancel: () =>
+																		modals.openConfirmModal({
+																			title: modalTitle,
+																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			children: thankYou,
+																			onConfirm: modals.closeAll,
+																			onCancel: modals.closeAll,
+																		}),
+																}),
+														}),
+												}),
+										}),
+								}),
+							onCancel: modals.closeAll,
+						})
+					}
+				>
+					Open User Survey Modal
+				</Button>
+			</Group>
+			{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
 		</>
 	)
 })
