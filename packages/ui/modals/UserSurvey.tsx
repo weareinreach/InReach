@@ -73,27 +73,35 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 									title: modalTitle,
 									labels: { confirm: 'Next', cancel: 'Skip' },
 									closeOnConfirm: false,
+									closeOnCancel: false,
 									children: question1,
 									onConfirm: () =>
 										modals.openConfirmModal({
 											title: modalTitle,
 											labels: { confirm: 'Next', cancel: 'Skip' },
 											closeOnConfirm: false,
+											closeOnCancel: false,
 											children: question2,
 											onConfirm: () =>
 												modals.openConfirmModal({
 													title: modalTitle,
 													labels: { confirm: 'Next', cancel: 'Skip' },
+													closeOnConfirm: false,
+													closeOnCancel: false,
 													children: question3,
 													onConfirm: () =>
 														modals.openConfirmModal({
 															title: modalTitle,
 															labels: { confirm: 'Next', cancel: 'Skip' },
+															closeOnConfirm: false,
+															closeOnCancel: false,
 															children: question4,
 															onConfirm: () =>
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -116,6 +124,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -139,11 +149,15 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 														modals.openConfirmModal({
 															title: modalTitle,
 															labels: { confirm: 'Next', cancel: 'Skip' },
+															closeOnConfirm: false,
+															closeOnCancel: false,
 															children: question4,
 															onConfirm: () =>
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -166,6 +180,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -190,16 +206,22 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 												modals.openConfirmModal({
 													title: modalTitle,
 													labels: { confirm: 'Next', cancel: 'Skip' },
+													closeOnConfirm: false,
+													closeOnCancel: false,
 													children: question3,
 													onConfirm: () =>
 														modals.openConfirmModal({
 															title: modalTitle,
 															labels: { confirm: 'Next', cancel: 'Skip' },
+															closeOnConfirm: false,
+															closeOnCancel: false,
 															children: question4,
 															onConfirm: () =>
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -245,11 +267,15 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 														modals.openConfirmModal({
 															title: modalTitle,
 															labels: { confirm: 'Next', cancel: 'Skip' },
+															closeOnConfirm: false,
+															closeOnCancel: false,
 															children: question4,
 															onConfirm: () =>
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -272,6 +298,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -298,21 +326,28 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 											title: modalTitle,
 											labels: { confirm: 'Next', cancel: 'Skip' },
 											closeOnConfirm: false,
+											closeOnCancel: false,
 											children: question2,
 											onConfirm: () =>
 												modals.openConfirmModal({
 													title: modalTitle,
 													labels: { confirm: 'Next', cancel: 'Skip' },
+													closeOnConfirm: false,
+													closeOnCancel: false,
 													children: question3,
 													onConfirm: () =>
 														modals.openConfirmModal({
 															title: modalTitle,
 															labels: { confirm: 'Next', cancel: 'Skip' },
+															closeOnConfirm: false,
+															closeOnCancel: false,
 															children: question4,
 															onConfirm: () =>
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -335,6 +370,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -358,11 +395,15 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 														modals.openConfirmModal({
 															title: modalTitle,
 															labels: { confirm: 'Next', cancel: 'Skip' },
+															closeOnConfirm: false,
+															closeOnCancel: false,
 															children: question4,
 															onConfirm: () =>
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -385,6 +426,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -409,16 +452,22 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 												modals.openConfirmModal({
 													title: modalTitle,
 													labels: { confirm: 'Next', cancel: 'Skip' },
+													closeOnConfirm: false,
+													closeOnCancel: false,
 													children: question3,
 													onConfirm: () =>
 														modals.openConfirmModal({
 															title: modalTitle,
 															labels: { confirm: 'Next', cancel: 'Skip' },
+															closeOnConfirm: false,
+															closeOnCancel: false,
 															children: question4,
 															onConfirm: () =>
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -441,6 +490,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -464,11 +515,15 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 														modals.openConfirmModal({
 															title: modalTitle,
 															labels: { confirm: 'Next', cancel: 'Skip' },
+															closeOnConfirm: false,
+															closeOnCancel: false,
 															children: question4,
 															onConfirm: () =>
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
@@ -491,6 +546,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 																modals.openConfirmModal({
 																	title: modalTitle,
 																	labels: { confirm: 'Next', cancel: 'Skip' },
+																	closeOnConfirm: false,
+																	closeOnCancel: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
