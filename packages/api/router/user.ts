@@ -130,4 +130,33 @@ export const userRouter = defineRouter({
 
 			return response
 		}),
+	surveyOptions: publicProcedure.query(async ({ ctx }) => {
+		const commonSelect = { id: true, tsKey: true, tsNs: true }
+
+		const immigration = await ctx.prisma.userImmigration.findMany({
+			select: {
+				...commonSelect,
+				status: true,
+			},
+		})
+		const sog = await ctx.prisma.userSOGIdentity.findMany({
+			select: {
+				...commonSelect,
+				identifyAs: true,
+			},
+		})
+		const ethnicity = await ctx.prisma.userEthnicity.findMany({
+			select: {
+				...commonSelect,
+				ethnicity: true,
+			},
+		})
+		const community = await ctx.prisma.userCommunity.findMany({
+			select: {
+				...commonSelect,
+				community: true,
+			},
+		})
+		return { community, ethnicity, immigration, sog }
+	}),
 })
