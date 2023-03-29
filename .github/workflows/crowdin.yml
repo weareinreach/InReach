@@ -33,7 +33,7 @@ jobs:
         id: sanitizebranch
         uses: ashley-taylor/regex-property-action@eeec905bf940ec1c65ff777402c57f786368d9bc # v1.4
         with:
-          value: ${{ github.ref_name }}
+          value: ${{ github.head_ref || github.ref_name}}
           regex: '[\\/:*?"<>|>]'
           flags: gi
           replacement: '_'
