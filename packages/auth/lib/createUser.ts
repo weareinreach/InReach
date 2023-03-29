@@ -49,15 +49,17 @@ export const createCognitoUser = async (data: CreateCognitoUserParams) => {
 		ClientMetadata: { baseUrl: getBaseUrl(), message, subject },
 	})
 	if (response.UserSub) {
-		await prisma.account.create({
-			data: {
-				provider: NEXTAUTH_PROVIDER,
-				providerAccountId: response.UserSub,
-				type: NEXTAUTH_PROVIDER_TYPE,
-				userId: databaseId,
+		return {
+			prismaAccount: {
+				data: {
+					provider: NEXTAUTH_PROVIDER,
+					providerAccountId: response.UserSub,
+					type: NEXTAUTH_PROVIDER_TYPE,
+					userId: databaseId,
+				},
 			},
-		})
-		return response.UserSub
+			cognitoId: response.UserSub,
+		}
 	}
 }
 

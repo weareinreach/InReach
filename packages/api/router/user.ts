@@ -18,9 +18,11 @@ export const userRouter = defineRouter({
 		try {
 			const newUser = await ctx.prisma.$transaction(async (tx) => {
 				const user = await tx.user.create(input.prisma)
+				if (user.id !== input.cognito.databaseId) throw new Error('Database ID mismatch')
 				const cognitoUser = await createCognitoUser(input.cognito)
-				if (user.id && cognitoUser) return { success: true }
-				return { success: false }
+				if (cognitoUser?.prismaAccount) await tx.account.create(cognitoUser.prismaAccount)
+
+				if (user.id && cognitoUser?.cognitoId) return { success: true }
 			})
 			return newUser
 		} catch (error) {
