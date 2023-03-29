@@ -4,9 +4,9 @@ import { PrismaClient, Prisma } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 import { Logger } from 'tslog'
 
-import { attrSuppDataMiddleware } from './lib/attrSuppDataMiddleware'
 import { generateId } from './lib/idGen'
 import { idMiddleware } from './lib/idMiddleware'
+import { superjsonMiddleware } from './lib/superjsonMiddleware'
 
 const log = new Logger({ name: 'prisma', type: 'json' })
 declare global {
@@ -32,7 +32,7 @@ const clientOptions = {
 const prisma = global.prisma || new PrismaClient(clientOptions)
 
 prisma.$use(idMiddleware)
-prisma.$use(attrSuppDataMiddleware)
+prisma.$use(superjsonMiddleware)
 
 const queryLogger = createPrismaQueryEventHandler({
 	queryDuration: true,
