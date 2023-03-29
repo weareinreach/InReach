@@ -112,6 +112,10 @@
 	"password-req-number": "crwdns608574:0crwdne608574:0",
 	"password-req-special": "crwdns608576:0crwdne608576:0",
 	"password-req-uppercase": "crwdns608578:0crwdne608578:0",
+	"password-reset": {
+		"email-body": "crwdns1039646:0crwdne1039646:0",
+		"email-subject": "crwdns1039650:0crwdne1039650:0"
+	},
 	"password-reset-success": "crwdns967426:0crwdne967426:0",
 	"password-saved": "crwdns967428:0crwdne967428:0",
 	"phone": "crwdns518354:0crwdne518354:0",
