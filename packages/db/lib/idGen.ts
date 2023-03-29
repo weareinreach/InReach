@@ -36,6 +36,7 @@ export const idPrefix = {
 	socialMediaLink: 'smdl',
 	socialMediaService: 'smsv',
 	source: 'srce',
+	suggestion: 'sugg',
 	translatedReview: 'revt',
 	user: 'user',
 	userCommunity: 'ucom',

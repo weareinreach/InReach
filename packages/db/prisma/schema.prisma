@@ -420,6 +420,8 @@ model Organization {
   source   Source @relation(fields: [sourceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   sourceId String
 
+  suggestions Suggestion[]
+
   // attachments
   userLists       SavedOrganization[]
   // Users associated with organization (staff)
@@ -1121,6 +1123,19 @@ enum SourceType {
   //@@schema("system")
 }
 
+model Suggestion {
+  id String @id @default(cuid())
+
+  data           Json
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  auditLogs     AuditLog[]
+  internalNotes InternalNote[]
+}
+
 /// Country metadata
 /// @zod.import(["import {Geometry} from '../../zod_util'"])
 model Country {
@@ -1512,6 +1527,8 @@ model InternalNote {
   socialMediaServiceId            String?
   source                          Source?                        @relation(fields: [sourceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   sourceId                        String?
+  suggestion                      Suggestion?                    @relation(fields: [suggestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  suggestionId                    String?
   translation                     TranslationKey?                @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: Cascade, onUpdate: Cascade)
   translationKey                  String?
   translationNs                   String?
@@ -1610,6 +1627,8 @@ model AuditLog {
   socialMediaServiceId                 String?
   Source                               Source?                        @relation(fields: [sourceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   sourceId                             String?
+  Suggestion                           Suggestion?                    @relation(fields: [suggestionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  suggestionId                         String?
   TranslatedReview                     TranslatedReview?              @relation(fields: [translatedReviewId], references: [id])
   translatedReviewId                   String?
   Translation                          TranslationKey?                @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: SetNull, onUpdate: Cascade)
