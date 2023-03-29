@@ -100,9 +100,10 @@ export const VisitCard = (props: VisitCardProps) => {
 					icon={isAccessible ? 'carbon:accessibility' : 'carbon:warning'}
 					style={{ marginLeft: 0 }}
 				/>
+				{/* TODO: [IN-807] Validate accessibility data points before enabling.
 				<Text variant={variants.Text.utility2}>
 					{t('accessible-building', { context: `${isAccessible}` })}
-				</Text>
+				</Text> */}
 			</Stack>
 		</Stack>
 	)
