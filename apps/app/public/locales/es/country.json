@@ -233,7 +233,7 @@
 	"COG": {
 		"name": "República del Congo",
 		"demonym_one": "Congolese",
-		"demonym_other": "Congoleses"
+		"demonym_other": "Congolese"
 	},
 	"COK": {
 		"name": "Islas Cook",
@@ -671,7 +671,7 @@
 	"MAC": {
 		"name": "Macao",
 		"demonym_one": "Chino",
-		"demonym_other": "Chinos"
+		"demonym_other": "Chino"
 	},
 	"MAF": {
 		"name": "San Martín",
