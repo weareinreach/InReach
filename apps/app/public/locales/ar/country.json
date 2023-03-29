@@ -412,12 +412,12 @@
 	},
 	"COG": {
 		"name": "جمهورية الكونغو الديمقراطية",
-		"demonym_zero": "Congoleses",
+		"demonym_zero": "Congolese",
 		"demonym_one": "Congolese",
-		"demonym_two": "Congoleses",
-		"demonym_few": "Congoleses",
-		"demonym_many": "Congoleses",
-		"demonym_other": "Congoleses"
+		"demonym_two": "Congolese",
+		"demonym_few": "Congolese",
+		"demonym_many": "Congolese",
+		"demonym_other": "Congolese"
 	},
 	"COK": {
 		"name": "جزر كوك",
@@ -1198,12 +1198,12 @@
 	},
 	"MAC": {
 		"name": "ماكاو",
-		"demonym_zero": "الصينيون",
+		"demonym_zero": "الصينية",
 		"demonym_one": "الصينية",
-		"demonym_two": "الصينيون",
-		"demonym_few": "الصينيون",
-		"demonym_many": "الصينيون",
-		"demonym_other": "الصينيون"
+		"demonym_two": "الصينية",
+		"demonym_few": "الصينية",
+		"demonym_many": "الصينية",
+		"demonym_other": "الصينية"
 	},
 	"MAF": {
 		"name": "سانت مارتن",

@@ -30,7 +30,7 @@ i18n
 	.init<HttpBackendOptions>({
 		...config,
 		debug: true,
-		lng: 'en',
+		// lng: 'en',
 		backend: {
 			loadPath: '/public/locales/{{lng}}/{{ns}}.json',
 			// loadPath: 'https://inreach-locale.s3.amazonaws.com/dev/{{ns}}+({{lng}}).json',

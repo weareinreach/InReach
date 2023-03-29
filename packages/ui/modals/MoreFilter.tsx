@@ -21,7 +21,7 @@ import { useForm } from '@mantine/form'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState, forwardRef, MouseEventHandler } from 'react'
+import { useEffect, useState, forwardRef, MouseEventHandler, Dispatch, SetStateAction } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
@@ -207,7 +207,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>((props, re
 	const viewportHeight = useViewportSize().height + (isLandscape ? (isSmallLandscape ? 40 : 20) : 0)
 	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
 
-	const { resultCount } = props
+	const { resultCount, stateHandler } = props
 
 	type AttributeFilter = NonNullable<typeof moreFilterOptionData>[number]
 	type FilterValue = AttributeFilter & { checked: boolean }
@@ -229,6 +229,14 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>((props, re
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [moreFilterOptionData, status])
+
+	useEffect(() => {
+		const selectedItems: string[] = []
+		Object.values(form.values).forEach(({ checked, id }) => {
+			if (checked) selectedItems.push(id)
+		})
+		stateHandler(selectedItems)
+	}, [form.values, stateHandler])
 
 	if (!moreFilterOptionData) return <Skeleton height={48} width='100%' radius='xs' />
 
@@ -358,4 +366,5 @@ export const MoreFilter = createPolymorphicComponent<'button', MoreFilterProps>(
 
 interface MoreFilterProps extends UnstyledButtonProps {
 	resultCount?: number
+	stateHandler: Dispatch<SetStateAction<string[]>>
 }

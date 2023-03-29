@@ -18,7 +18,7 @@ import {
 import { useForm } from '@mantine/form'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
@@ -178,7 +178,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const ServiceFilter = ({ resultCount }: ServiceFilterProps) => {
+export const ServiceFilter = ({ resultCount, stateHandler }: ServiceFilterProps) => {
 	const { data: serviceOptionData, status } = api.service.getFilterOptions.useQuery()
 	const { classes, cx } = useStyles()
 	const { classes: accordionClasses } = useAccordionStyles()
@@ -220,6 +220,16 @@ export const ServiceFilter = ({ resultCount }: ServiceFilterProps) => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [serviceOptionData, status])
+
+	useEffect(() => {
+		const selectedItems: string[] = []
+		Object.values(form.values).forEach((category) => {
+			category.forEach(({ checked, id }) => {
+				if (checked) selectedItems.push(id)
+			})
+		})
+		stateHandler(selectedItems)
+	}, [form.values, stateHandler])
 
 	if (!serviceOptionData) return <Skeleton height={48} width='100%' radius='xs' />
 
@@ -361,4 +371,5 @@ export const ServiceFilter = ({ resultCount }: ServiceFilterProps) => {
 }
 interface ServiceFilterProps {
 	resultCount?: number
+	stateHandler: Dispatch<SetStateAction<string[]>>
 }

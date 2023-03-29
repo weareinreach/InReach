@@ -9,6 +9,7 @@ import {
 	Menu,
 	Group,
 	Modal,
+	Skeleton,
 	Text,
 	TextInput,
 	useMantineTheme,
@@ -71,7 +72,7 @@ const NewListModal = ({ data }: NewListModalProps) => {
 	const savedInList = useNewNotification({ icon: 'info', displayTextKey: t('saved-in-list') as string })
 	const errorSaving = useNewNotification({
 		icon: 'warning',
-		displayTextKey: t('error-saving-in-list') as string,
+		displayTextKey: t('errors.saving-in-list') as string,
 	})
 
 	const { mutate, isError, isSuccess, reset } = api.savedList.createAndSaveItem.useMutation()
@@ -126,7 +127,7 @@ const SaveItem = ({ data, name }: AlterListProps) => {
 	})
 	const errorSaving = useNewNotification({
 		icon: 'warning',
-		displayTextKey: t('error-saving-in-list') as string,
+		displayTextKey: t('errors.saving-in-list') as string,
 	})
 
 	if (isSuccess) {
@@ -267,7 +268,7 @@ const UnsaveItemBody = forwardRef<HTMLButtonElement, PolymorphicProps>(
 		})
 		const errorRemoving = useNewNotification({
 			icon: 'warning',
-			displayTextKey: t('error-removing-from-list') as string,
+			displayTextKey: t('errors.removing-from-list') as string,
 		})
 
 		if (unsave.isSuccess) {
@@ -538,6 +539,9 @@ export const ActionButtons = ({
 
 	return 'useMenu' in iconRender ? menuComponent : buttonComponent
 }
+const Loading = () => <Skeleton h={22} w={70} radius={8} />
+
+ActionButtons.Loading = Loading
 
 type Props = {
 	/**

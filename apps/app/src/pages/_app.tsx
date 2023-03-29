@@ -2,6 +2,7 @@ import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { PageLoadProgress } from '@weareinreach/ui/components/core/PageLoadProgress'
 import { Navbar, Footer } from '@weareinreach/ui/components/sections'
 import { BodyGrid } from '@weareinreach/ui/layouts/BodyGrid'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
@@ -75,6 +76,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 				emotionCache={appCache}
 			>
 				<ModalsProvider>
+					<PageLoadProgress />
 					<Navbar />
 					{PageContent}
 					<Footer />

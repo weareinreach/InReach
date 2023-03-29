@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { cognito, parseAuthResponse, type AuthResult, ClientId, generateHash } from './cognitoClient'
 
-export const verifyUser: VerifyUser = async (email, password) => {
+export const userLogin: UserLogin = async (email, password) => {
 	const response = await cognito.initiateAuth({
 		AuthFlow: AuthFlowType.USER_PASSWORD_AUTH,
 		ClientId,
@@ -16,7 +16,7 @@ export const verifyUser: VerifyUser = async (email, password) => {
 	return await parseAuthResponse(response, email)
 }
 
-type VerifyUser = (email: string, password: string) => Promise<AuthResult>
+type UserLogin = (email: string, password: string) => Promise<AuthResult>
 
 export const CognitoSessionSchema = z.object({
 	AccessToken: z.string(),

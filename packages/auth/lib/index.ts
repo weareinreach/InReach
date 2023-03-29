@@ -2,9 +2,12 @@
 export * from './changePassword'
 export * from './cognitoClient'
 export * from './cognitoJwt'
+export * from './confirmAccount'
 export * from './constants'
 export * from './createUser'
 export * from './forgotPassword'
 export * from './genUserSession'
-export * from './verifyUser'
+export * from './getBaseUrl'
+export * from './resetPassword'
+export * from './userLogin'
 // codegen:end

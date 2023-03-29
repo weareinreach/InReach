@@ -20,4 +20,5 @@ files:
 pull_request_labels:
   - translations
   - "kodiak: merge.method = 'squash'"
+  - automerge
 pull_request_title: 'chore(i18n): Updated translations from Crowdin'
