@@ -19,6 +19,11 @@
 	"claimed": "Réclamé",
 	"clear": "Nettoyer",
 	"close": "Fermer",
+	"confirm-account": {
+		"click-verify": "Cliquez ici pour vérifier votre confirmation de compte InReach",
+		"message": "Cliquez sur le lien suivant pour confirmer votre compte :",
+		"subject": "Confirmez votre compte"
+	},
 	"connect": "Connecter",
 	"contact": "Contacter",
 	"contact-us": "Contactez-nous",
@@ -43,6 +48,10 @@
 	"enter-email-placeholder": "Entrez une adresse e-mail...",
 	"enter-password-placeholder": "Entrez le mot de passe...",
 	"enter-review": "Entrez votre commentaire...",
+	"errors": {
+		"oh-no": "Oh no!",
+		"try-again-text": "<Text>Une erreur s'est produite ! Veuillez réessayer.</Text>"
+	},
 	"exclude": "Exclure",
 	"facebook": "Facebook",
 	"find-resources": "Trouver des ressources",
@@ -77,6 +86,7 @@
 	"lang_choose": "Veuillez choisir une langue",
 	"lang_common": "Langues courantes",
 	"linkedin": "LinkedIn",
+	"loading-page": "Chargement de la page...",
 	"log-in": "Se connecter",
 	"log-out": "Déconnexion",
 	"login": {
@@ -94,11 +104,16 @@
 	"none-apply": "Rien de tout cela ne s'applique à moi",
 	"other-specify": "Autre (merci de préciser)",
 	"password": "Mot de passe",
+	"password-confirm": "Confirmer le mot de passe",
+	"password-error-match": "Les mots de passe doivent correspondre",
+	"password-reenter-placeholder": "Entrez à nouveau votre mot de passe...",
 	"password-req-length": "Comprend au moins 8 caractères",
 	"password-req-lowercase": "Inclut une lettre minuscule",
 	"password-req-number": "Comprend le numéro",
 	"password-req-special": "Comprend un caractère spécial",
 	"password-req-uppercase": "Inclut une lettre en majuscule",
+	"password-reset-success": "<Text>Veuillez <LoginModal>vous connecter</LoginModal> en utilisant votre nouveau mot de passe.</Text>",
+	"password-saved": "Mot de passe enregistré !",
 	"phone": "Téléphone",
 	"photo-count_interval": "(0)[Aucune photo.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"photo_interval": "(0)[Aucune photo];(3-inf)[{{count}} photos];",
@@ -216,6 +231,11 @@
 	"user-avatar": "Avatar de l'utilisateur",
 	"verified-information": "Informations vérifiées",
 	"verified-information-detail": "Les informations sur cette page ont été mises à jour pour la dernière fois {{dateString}}. InReach donne la priorité à la précision et à la sécurité des utilisateurs, et met à jour toutes les informations au moins une fois tous les 6 mois. Pour de plus amples renseignements sur notre processus de vérification, veuillez consulter notre page Processus de vérification .",
+	"verify-account": {
+		"verified": "Compte vérifié !",
+		"verified-body": "<Text>Votre compte a été vérifié ! Veuillez <LoginModal>vous connecter</LoginModal> pour commencer à utiliser les fonctionnalités supplémentaires d'InReach.",
+		"verifying": "Vérification du compte..."
+	},
 	"view-list": "Voir la liste",
 	"visit": "Visiter",
 	"website": "Site Web",
@@ -227,6 +247,7 @@
 		"coming-soon": "Bientôt disponible",
 		"more": "plus",
 		"next": "Suivant",
+		"please-wait": "Veuillez patienter...",
 		"prev": "Précédent",
 		"saved": "Enregistré",
 		"search": "Chercher",

@@ -33,17 +33,11 @@ export const pagination = {
 	skip: z.number().optional(),
 	take: z.number().optional(),
 }
-const coordItems = {
+export const coordItems = {
 	lat: z.number().gte(-90).lte(90),
 	lon: z.number().gte(-180).lte(180),
 }
 export const coord = z.object(coordItems)
-export const distSearch = z.object({
-	...coordItems,
-	dist: z.number(),
-	unit: z.enum(['mi', 'km']),
-	...pagination,
-})
 export const reviewAvgId = z
 	.object({ organizationId: idString, orgServiceId: idString, orgLocationId: idString })
 	.partial()

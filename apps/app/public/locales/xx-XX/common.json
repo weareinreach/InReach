@@ -19,6 +19,11 @@
 	"claimed": "crwdns281716:0crwdne281716:0",
 	"clear": "crwdns222500:0crwdne222500:0",
 	"close": "crwdns92524:0crwdne92524:0",
+	"confirm-account": {
+		"click-verify": "crwdns967410:0crwdne967410:0",
+		"message": "crwdns967412:0crwdne967412:0",
+		"subject": "crwdns967414:0crwdne967414:0"
+	},
 	"connect": "crwdns654438:0crwdne654438:0",
 	"contact": "crwdns518352:0crwdne518352:0",
 	"contact-us": "crwdns239080:0crwdne239080:0",
@@ -43,6 +48,10 @@
 	"enter-email-placeholder": "crwdns578210:0crwdne578210:0",
 	"enter-password-placeholder": "crwdns503420:0crwdne503420:0",
 	"enter-review": "crwdns165518:0crwdne165518:0",
+	"errors": {
+		"oh-no": "crwdns967416:0crwdne967416:0",
+		"try-again-text": "crwdns967418:0crwdne967418:0"
+	},
 	"exclude": "crwdns473562:0crwdne473562:0",
 	"facebook": "crwdns239086:0crwdne239086:0",
 	"find-resources": "crwdns608550:0crwdne608550:0",
@@ -77,6 +86,7 @@
 	"lang_choose": "crwdns608566:0crwdne608566:0",
 	"lang_common": "crwdns608568:0crwdne608568:0",
 	"linkedin": "crwdns239090:0crwdne239090:0",
+	"loading-page": "crwdns924310:0crwdne924310:0",
 	"log-in": "crwdns44126:0crwdne44126:0",
 	"log-out": "crwdns44124:0crwdne44124:0",
 	"login": {
@@ -94,11 +104,16 @@
 	"none-apply": "crwdns8200:0crwdne8200:0",
 	"other-specify": "crwdns8202:0crwdne8202:0",
 	"password": "crwdns503422:0crwdne503422:0",
+	"password-confirm": "crwdns967420:0crwdne967420:0",
+	"password-error-match": "crwdns967422:0crwdne967422:0",
+	"password-reenter-placeholder": "crwdns967424:0crwdne967424:0",
 	"password-req-length": "crwdns608570:0crwdne608570:0",
 	"password-req-lowercase": "crwdns608572:0crwdne608572:0",
 	"password-req-number": "crwdns608574:0crwdne608574:0",
 	"password-req-special": "crwdns608576:0crwdne608576:0",
 	"password-req-uppercase": "crwdns608578:0crwdne608578:0",
+	"password-reset-success": "crwdns967426:0crwdne967426:0",
+	"password-saved": "crwdns967428:0crwdne967428:0",
 	"phone": "crwdns518354:0crwdne518354:0",
 	"photo-count_interval": "crwdns639274:0{{count}}crwdnd639274:0{{count}}crwdne639274:0",
 	"photo_interval": "crwdns639276:0{{count}}crwdne639276:0",
@@ -216,6 +231,11 @@
 	"user-avatar": "crwdns44120:0crwdne44120:0",
 	"verified-information": "crwdns100612:0crwdne100612:0",
 	"verified-information-detail": "crwdns100614:0{{dateString}}crwdne100614:0",
+	"verify-account": {
+		"verified": "crwdns967430:0crwdne967430:0",
+		"verified-body": "crwdns967432:0crwdne967432:0",
+		"verifying": "crwdns967434:0crwdne967434:0"
+	},
 	"view-list": "crwdns157358:0crwdne157358:0",
 	"visit": "crwdns548256:0crwdne548256:0",
 	"website": "crwdns518358:0crwdne518358:0",
@@ -227,6 +247,7 @@
 		"coming-soon": "crwdns685040:0crwdne685040:0",
 		"more": "crwdns685042:0crwdne685042:0",
 		"next": "crwdns685044:0crwdne685044:0",
+		"please-wait": "crwdns967436:0crwdne967436:0",
 		"prev": "crwdns685046:0crwdne685046:0",
 		"saved": "crwdns816608:0crwdne816608:0",
 		"search": "crwdns816610:0crwdne816610:0",

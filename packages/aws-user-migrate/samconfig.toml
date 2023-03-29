@@ -1,0 +1,9 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "user-migrate"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-i42qqmsezts8"
+s3_prefix = "user-migrate"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

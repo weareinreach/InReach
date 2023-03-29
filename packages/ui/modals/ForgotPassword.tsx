@@ -35,11 +35,13 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 			validateInputOnBlur: true,
 			initialValues: {
 				email: '',
+				cognitoSubject: t('password-reset.email-subject') as string,
+				cognitoMessage: t('password-reset.email-body') as string,
 			},
 		})
 		const variants = useCustomVariant()
 		const theme = useMantineTheme()
-		const pwResetHandler = api.user.resetPassword.useMutation()
+		const pwResetHandler = api.user.forgotPassword.useMutation()
 
 		const [opened, handler] = useDisclosure(false)
 
@@ -93,4 +95,6 @@ export interface ForgotPasswordModalBodyProps extends ButtonProps {}
 
 type FormProps = {
 	email: string
+	cognitoSubject: string
+	cognitoMessage: string
 }

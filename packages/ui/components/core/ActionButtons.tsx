@@ -514,6 +514,9 @@ export const ActionButtons = ({ iconKey, omitLabel = false, outsideMoreMenu, chi
 
 	return 'useMenu' in iconRender ? menuComponent : buttonComponent
 }
+const Loading = () => <Skeleton h={22} w={70} radius={8} />
+
+ActionButtons.Loading = Loading
 
 type Props = {
 	/**

@@ -117,11 +117,7 @@ const config: StorybookConfig = {
 					vm: false,
 					zlib: false,
 				},
-				plugins: [
-					new TsconfigPathsPlugin({
-						extensions: config.resolve?.extensions,
-					}),
-				],
+				plugins: [new TsconfigPathsPlugin()],
 			},
 		}
 		const mergedConfig = merge(config, configAdditions)

@@ -12,20 +12,30 @@ export default {
 	parameters: {
 		layout: 'fullscreen',
 	},
+	argTypes: {
+		loading: {
+			type: 'boolean',
+		},
+	},
 } satisfies Meta<typeof SearchResultCard>
 
 export const SingleResult = {
 	args: {
-		result: searchResultsMock[0],
+		result: searchResultsMock.orgs[0],
 	},
 }
 
 export const MultipleResults = {
 	render: () => (
 		<>
-			{searchResultsMock.map((result) => (
+			{searchResultsMock.orgs.map((result) => (
 				<SearchResultCard key={result.id} result={result} />
 			))}
 		</>
 	),
+}
+export const SingleLoading = {
+	args: {
+		loading: true,
+	},
 }

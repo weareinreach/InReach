@@ -1,13 +1,16 @@
-import { createCognitoUser, forgotPassword } from '@weareinreach/auth'
+import { createCognitoUser, forgotPassword, confirmAccount, resetPassword } from '@weareinreach/auth'
 import { z } from 'zod'
 
-import { handleError } from '~api/lib'
+import { handleError, decodeUrl } from '~api/lib'
 import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
 import {
 	AdminCreateUser,
 	CreateUser,
 	CreateUserSurvey,
 	type AdminCreateUserInput,
+	CognitoBase64,
+	ResetPassword,
+	ForgotPassword,
 } from '~api/schemas/create/user'
 
 export const userRouter = defineRouter({
@@ -16,9 +19,11 @@ export const userRouter = defineRouter({
 		try {
 			const newUser = await ctx.prisma.$transaction(async (tx) => {
 				const user = await tx.user.create(input.prisma)
+				if (user.id !== input.cognito.databaseId) throw new Error('Database ID mismatch')
 				const cognitoUser = await createCognitoUser(input.cognito)
-				if (user.id && cognitoUser) return { success: true }
-				return { success: false }
+				if (cognitoUser?.prismaAccount) await tx.account.create(cognitoUser.prismaAccount)
+
+				if (user.id && cognitoUser?.cognitoId) return { success: true }
 			})
 			return newUser
 		} catch (error) {
@@ -123,11 +128,18 @@ export const userRouter = defineRouter({
 			handleError(error)
 		}
 	}),
-	resetPassword: publicProcedure
-		.input(z.object({ email: z.string().email() }))
-		.mutation(async ({ input }) => {
-			const response = await forgotPassword(input.email)
-
-			return response
-		}),
+	forgotPassword: publicProcedure.input(ForgotPassword).mutation(async ({ input }) => {
+		const response = await forgotPassword(input)
+		return response
+	}),
+	confirmAccount: publicProcedure.input(CognitoBase64).mutation(async ({ input }) => {
+		const { code, email } = input
+		const response = await confirmAccount(email, code)
+		return response
+	}),
+	resetPassword: publicProcedure.input(ResetPassword).mutation(async ({ input }) => {
+		const { code, password, email } = input
+		const response = await resetPassword({ code, email, password })
+		return response
+	}),
 })

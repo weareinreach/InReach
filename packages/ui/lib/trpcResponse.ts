@@ -27,7 +27,7 @@ export type RpcErrorResponse = {
 // According to JSON-RPC 2.0 and tRPC documentation.
 // https://trpc.io/docs/rpc
 export const jsonRpcSuccessResponse = <T = unknown>(data: T): RpcSuccessResponse<T> => {
-	const recordAction = action('tRPC Success')
+	const recordAction = action('tRPC Response (success)')
 	recordAction(data)
 	return {
 		result: {
@@ -45,7 +45,7 @@ type ErrorInput<K1 extends keyof ApiInput, K2 extends keyof ApiInput[K1]> = {
 export const jsonRpcErrorResponse = <K1 extends keyof ApiInput, K2 extends keyof ApiInput[K1]>(
 	error: ErrorInput<K1, K2>
 ): RpcErrorResponse => {
-	const recordAction = action('tRPC Error')
+	const recordAction = action('tRPC Response (failure/error)')
 	recordAction(error)
 	const { message, code, path } = error
 
