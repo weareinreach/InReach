@@ -17,6 +17,9 @@ interface SignUpFormValues {
 	}[]
 	lawPractice?: string
 	servProvider?: string
+	userType: 'seeker' | 'provider' | 'lcr'
+	cognitoMessage?: string
+	cognitoSubject?: string
 }
 
 export const [SignUpFormProvider, useSignUpFormContext, useSignUpForm] = createFormContext<SignUpFormValues>()

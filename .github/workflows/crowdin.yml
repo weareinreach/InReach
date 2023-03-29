@@ -8,12 +8,9 @@ on:
     types:
       - closed
     branches-ignore:
-      - dev
+      # - dev
       - main
       - l10n*
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.ref || github.ref }}
-  cancel-in-progress: true
 
 jobs:
   synchronize-with-crowdin:
@@ -32,6 +29,15 @@ jobs:
           flags: gi
           replacement: IN-xxx
 
+      - name: Sanitize github branch name
+        id: sanitizebranch
+        uses: ashley-taylor/regex-property-action@eeec905bf940ec1c65ff777402c57f786368d9bc # v1.4
+        with:
+          value: ${{ github.ref_name }}
+          regex: '[\\/:*?"<>|>]'
+          flags: gi
+          replacement: '_'
+
       - name: Upload to Crowdin
         if: github.event_name != 'pull_request'
         uses: crowdin/github-action@840b586cf1214a04c4701d90f9100f9766d7390d # v1.7.1
@@ -47,7 +53,7 @@ jobs:
           pull_request_title: 'chore(i18n): Updated translations from Crowdin'
           pull_request_labels: "translations, kodiak: merge.method = 'squash'"
           pull_request_base_branch_name: ${{ github.ref_name }}
-          crowdin_branch_name: ${{ github.ref_name }}
+          crowdin_branch_name: ${{ steps.sanitizebranch.outputs.value }}
 
       - name: Delete Crowdin Branch
         if: github.event_name == 'pull_request'
@@ -60,4 +66,4 @@ jobs:
           upload_translations: false
           download_translations: false
           create_pull_request: false
-          delete_crowdin_branch: ${{ github.ref_name }}
+          delete_crowdin_branch: ${{ steps.sanitizebranch.outputs.value }}

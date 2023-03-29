@@ -17,7 +17,7 @@
 		"preinstall": "npx only-allow pnpm",
 		"lint": "eslint --cache .",
 		"lint:fix": "eslint --cache --fix .",
-		"package": "pnpm prune-clients && cd dist && zip -r bundle.zip *",
+		"package": "cd dist && zip -r bundle.zip *",
 		"prune-clients": "find ./dist/client -type f -not -name '*rhel*' -delete -print"
 	},
 	"dependencies": {

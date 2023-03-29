@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Cognito user migration script.
+
+Globals:
+  Function:
+    Runtime: nodejs18.x
+    CodeUri: ./dist/
+    Timeout: 60
+    MemorySize: 512
+    Architectures:
+      - x86_64
+
+Resources:
+  usermigrate:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      FunctionName: 'cognito-user-migrate'
+      Handler: index.handler
+      Role: arn:aws:iam::142495371698:role/cognito-migration-lambda
+      Environment:
+        Variables:
+          DATABASE_URL: '{{resolve:ssm:/prod/prismaproxy}}'

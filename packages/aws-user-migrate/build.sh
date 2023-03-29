@@ -10,11 +10,11 @@ rm bundle.zip || true
 pnpm bundle
 
 # Delete other prisma clients
-find dist/client -type f -not -name '*rhel*' -delete -print
+# find dist/client -type f -not -name '*rhel*' -delete -print
 
 # Prisma expects the client in '.prisma/client/'
 
-mv dist/client/* dist/
+# mv dist/client/* dist/
 
 cd dist
 zip -r ../bundle.zip *

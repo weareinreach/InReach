@@ -1,6 +1,7 @@
+import { Prisma, prisma } from '@weareinreach/db'
+
 import crypto from 'crypto'
 
-import { Prisma, prisma } from './client'
 import { logger } from './logger'
 
 type VerifyUser = (email: string, password: string) => Promise<VerifyUserReturn>
