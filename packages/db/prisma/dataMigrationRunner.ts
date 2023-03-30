@@ -4,7 +4,9 @@ import { job20220329 } from './data-migrations'
 
 const renderOptions = {
 	bottomBar: 10,
-}
+	persistentOutput: true,
+	showTimer: true,
+} satisfies ListrJob['options']
 const injectOptions = (job: ListrJob) => ({ ...job, renderOptions })
 
 const jobs = new Listr<Context>([injectOptions(job20220329)], {
@@ -14,7 +16,6 @@ const jobs = new Listr<Context>([injectOptions(job20220329)], {
 		collapseErrors: false,
 		formatOutput: 'wrap',
 	},
-	collectErrors: 'full',
 	nonTTYRendererOptions: {
 		useIcons: true,
 	},

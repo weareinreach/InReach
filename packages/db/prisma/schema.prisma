@@ -2046,9 +2046,10 @@ model ServiceAreaDist {
 
 /// Nesting attributes
 model AttributeNesting {
-  child    Attribute @relation("attribChildToParent", fields: [childId], references: [id])
-  childId  String
-  parent   Attribute @relation("attribParentToChild", fields: [parentId], references: [id])
+  child   Attribute @relation("attribChildToParent", fields: [childId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  childId String
+
+  parent   Attribute @relation("attribParentToChild", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   parentId String
 
   linkedAt DateTime @default(now())

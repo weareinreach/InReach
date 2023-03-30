@@ -11,6 +11,7 @@ import { generateUserTypes } from './userType'
 
 const renderOptions = {
 	bottomBar: 10,
+	showTimer: true,
 }
 
 const tasks = new Listr<Context>(
@@ -60,6 +61,15 @@ const tasks = new Listr<Context>(
 	],
 	{
 		exitOnError: false,
+		nonTTYRendererOptions: {
+			useIcons: true,
+			showTimer: true,
+		},
+		rendererOptions: {
+			showTimer: true,
+			collapseErrors: false,
+			formatOutput: 'wrap',
+		},
 	}
 )
 

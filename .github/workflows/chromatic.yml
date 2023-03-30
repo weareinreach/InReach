@@ -19,6 +19,7 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       CI: true
       OVERRIDE_CI: true
+      FORCE_COLOR: true
     runs-on: ubuntu-latest
     defaults:
       run:

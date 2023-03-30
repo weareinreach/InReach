@@ -1,5 +1,3 @@
-import flush from 'just-flush'
-
 import { prisma, Prisma } from '~db/index'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
 import { jobPreRunner, type JobDef } from '~db/prisma/jobPreRun'
@@ -21,6 +19,22 @@ const nestServices = [
 	},
 	{
 		parent: 'srvfocus.lgbtq-youth-focus',
+		child: 'srvfocus.trans-youth-focus',
+	},
+	{
+		parent: 'srvfocus.trans-comm',
+		child: 'srvfocus.gender-nc',
+	},
+	{
+		parent: 'srvfocus.trans-comm',
+		child: 'srvfocus.trans-masc',
+	},
+	{
+		parent: 'srvfocus.trans-comm',
+		child: 'srvfocus.trans-fem',
+	},
+	{
+		parent: 'srvfocus.trans-comm',
 		child: 'srvfocus.trans-youth-focus',
 	},
 ]
@@ -48,82 +62,8 @@ const job: ListrTask = async (_ctx, task) => {
 
 	const nestUpdate = await prisma.attributeNesting.createMany({ data: nestLinkData, skipDuplicates: true })
 
-	const transChildren = [
-		'srvfocus.gender-nc',
-		'srvfocus.trans-masc',
-		'srvfocus.trans-fem',
-		'srvfocus.trans-youth-focus',
-	]
-	const { id: srvFocusCat } = await prisma.attributeCategory.findUniqueOrThrow({
-		where: { tag: 'service-focus' },
-	})
-
-	const createTransParent = await prisma.attribute.upsert({
-		where: {
-			tag: 'transgender-comm',
-		},
-		create: {
-			tag: 'transgender-comm',
-			name: 'Transgender community',
-			icon: '🏳️‍⚧️',
-			categories: {
-				createMany: {
-					data: [{ categoryId: srvFocusCat }],
-					skipDuplicates: true,
-				},
-			},
-			key: {
-				connectOrCreate: {
-					where: { ns_key: { key: 'srvfocus.transgender', ns: 'attribute' } },
-					create: { key: 'srvfocus.transgender', text: 'Transgender community', ns: 'attribute' },
-				},
-			},
-			children: {
-				createMany: {
-					data: flush(
-						transChildren.map((tsKey) => {
-							const attrib = attributes.find(({ tsKey: key }) => key === tsKey)
-							if (!attrib) return
-							return { childId: attrib?.id }
-						})
-					),
-					skipDuplicates: true,
-				},
-			},
-		},
-		update: {
-			name: 'Transgender community',
-			icon: '🏳️‍⚧️',
-			categories: {
-				createMany: {
-					data: [{ categoryId: srvFocusCat }],
-					skipDuplicates: true,
-				},
-			},
-			key: {
-				connectOrCreate: {
-					where: { ns_key: { key: 'srvfocus.transgender', ns: 'attribute' } },
-					create: { key: 'srvfocus.transgender', text: 'Transgender community', ns: 'attribute' },
-				},
-			},
-			children: {
-				createMany: {
-					data: flush(
-						transChildren.map((tsKey) => {
-							const attrib = attributes.find(({ tsKey: key }) => key === tsKey)
-							if (!attrib) return
-							return { childId: attrib?.id }
-						})
-					),
-					skipDuplicates: true,
-				},
-			},
-		},
-	})
-
 	task.output = `Country updates: ${countryUpdate.count}`
 	task.output = `Attributes nested: ${nestUpdate.count}`
-	task.output = `Attribute parent created: ${createTransParent.id}`
 }
 
 export const job20220329 = {
