@@ -33,6 +33,9 @@ export const Toolbar = ({ saved = false, breadcrumbProps }: Props) => {
 	// If 'saved' do not display 'save' button and viceversa
 	inToolbar.push(saved ? 'save' : 'saved')
 
+	// No delete button in toolbar
+	inToolbar.push('delete')
+
 	return (
 		<Group position='apart' align='center' w='100%' noWrap className={classes.toolbar}>
 			<Breadcrumb {...breadcrumbProps} />
