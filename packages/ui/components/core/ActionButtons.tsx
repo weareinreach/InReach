@@ -163,7 +163,7 @@ const SavePolymorphic = forwardRef<HTMLButtonElement, PolymorphicProps>(
 		const { classes } = useStyles()
 		const [opened, setOpened] = useState(false)
 
-		const data = organizationId ? { organizationId } : { serviceId }
+		const data = serviceId ? { serviceId } : { organizationId }
 
 		const createNewList = <NewListModal data={{ name: '', ...data }} />
 
@@ -257,8 +257,8 @@ const UnsaveItemBody = forwardRef<HTMLButtonElement, PolymorphicProps>(
 		const { classes } = useStyles()
 		const { t } = useTranslation()
 
-		const data = organizationId ? { organizationId } : { serviceId }
-		const savedInLists = api.savedList.isSaved.useQuery(organizationId || serviceId)
+		const data = serviceId ? { serviceId } : { organizationId }
+		const savedInLists = api.savedList.isSaved.useQuery(serviceId || organizationId)
 		const unsave = api.savedList.deleteItem.useMutation()
 		const [opened, setOpened] = useState(false)
 
@@ -477,6 +477,8 @@ export const ActionButtons = ({
 	const { query: rawQuery } = useRouter()
 	const { organizationId } = rawQuery
 
+	const orgOrServiceId = serviceId ? { organizationId: organizationId as string, serviceId } : undefined
+
 	let filteredOverflowItems = Object.entries(overFlowItems)
 
 	if (outsideMoreMenu)
@@ -490,9 +492,8 @@ export const ActionButtons = ({
 				{t(item.labelKey)}
 			</Group>
 		)
-		const props = serviceId ? { organizationId: organizationId as string, serviceId } : undefined
 
-		return actions[key as keyof typeof actionButtonIcons]({ isMenu: true, children, props })
+		return actions[key as keyof typeof actionButtonIcons]({ isMenu: true, children, ...orgOrServiceId })
 	})
 
 	const menuThings = overflowMenuItems
@@ -500,6 +501,7 @@ export const ActionButtons = ({
 	const buttonProps = {
 		className: opened ? classes.buttonPressed : classes.button,
 		radius: 'md',
+		...orgOrServiceId,
 	}
 
 	/** The button component */
@@ -571,7 +573,7 @@ type AlterListProps = UserListMutation & ButtonProps
 
 type Polymorphic = typeof QuickPromotionModal | typeof ReviewModal | typeof SaveButton
 
-type PolymorphicProps = ButtonProps & { serviceId: string; organizationId?: string }
+type PolymorphicProps = ButtonProps & { serviceId?: string; organizationId: string }
 
 type Generic = {
 	children: JSX.Element
