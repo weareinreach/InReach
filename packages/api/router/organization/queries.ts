@@ -156,4 +156,45 @@ export const queries = defineRouter({
 		const lists = listEntries.map(({ list }) => list)
 		return lists
 	}),
+	suggestionOptions: publicProcedure.query(async ({ ctx }) => {
+		const countries = await ctx.prisma.country.findMany({
+			where: { activeForOrgs: true },
+			select: { id: true, tsKey: true, tsNs: true },
+			orderBy: { tsKey: 'desc' },
+		})
+		const serviceTypes = await ctx.prisma.serviceCategory.findMany({
+			where: { active: true },
+			select: { id: true, tsKey: true, tsNs: true },
+			orderBy: { tsKey: 'asc' },
+		})
+		const communities = await ctx.prisma.attribute.findMany({
+			where: {
+				categories: { some: { category: { tag: 'service-focus' } } },
+				parents: { none: {} },
+			},
+			select: {
+				id: true,
+				tsNs: true,
+				tsKey: true,
+				children: {
+					select: {
+						child: { select: { id: true, tsNs: true, tsKey: true } },
+					},
+				},
+			},
+			orderBy: { tsKey: 'asc' },
+		})
+		return {
+			countries: countries.map((record) => ({ ...record, checked: false })),
+			serviceTypes: serviceTypes.map((record) => ({ ...record, checked: false })),
+			communities: communities.map(({ children, ...record }) => {
+				const newChildren = children.map(({ child }) => ({
+					...child,
+					parentId: record.id,
+					checked: false,
+				}))
+				return { ...record, children: newChildren, checked: false }
+			}),
+		}
+	}),
 })

@@ -14,12 +14,12 @@ export const Button = {
 		}),
 		inner: {
 			color: theme.other.colors.secondary.white,
-			label: {
-				left: `calc(${theme.spacing.md} * 2)`,
-			},
-			leftIcon: {
-				display: 'none',
-			},
+		},
+		label: {
+			left: `calc(${theme.spacing.md} * 2)`,
+		},
+		leftIcon: {
+			display: 'none',
 		},
 	}),
 	secondarySm: (theme) => ({
@@ -36,12 +36,12 @@ export const Button = {
 		},
 		inner: {
 			color: theme.other.colors.secondary.black,
-			label: {
-				left: `calc(${theme.spacing.md} * 2)`,
-			},
-			leftIcon: {
-				display: 'none',
-			},
+		},
+		label: {
+			left: `calc(${theme.spacing.md} * 2)`,
+		},
+		leftIcon: {
+			display: 'none',
 		},
 	}),
 	accent: (theme) => ({
@@ -56,12 +56,12 @@ export const Button = {
 		},
 		inner: {
 			color: theme.other.colors.secondary.white,
-			label: {
-				left: `calc(${theme.spacing.md} * 2)`,
-			},
-			leftIcon: {
-				display: 'none',
-			},
+		},
+		label: {
+			left: `calc(${theme.spacing.md} * 2)`,
+		},
+		leftIcon: {
+			display: 'none',
 		},
 	}),
 	primaryLg: (theme) => ({
