@@ -155,7 +155,15 @@ export const userRouter = defineRouter({
 				community: true,
 			},
 		})
-		return { community, ethnicity, immigration, sog }
+		const countries = await ctx.prisma.country.findMany({
+			select: {
+				cca2: true,
+				id: true,
+				tsKey: true,
+				tsNs: true,
+			},
+		})
+		return { community, countries, ethnicity, immigration, sog }
 	}),
 	forgotPassword: publicProcedure.input(ForgotPassword).mutation(async ({ input }) => {
 		const response = await forgotPassword(input)
