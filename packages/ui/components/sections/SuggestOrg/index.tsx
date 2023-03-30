@@ -3,26 +3,24 @@ import {
 	Text,
 	Radio,
 	TextInput,
-	Checkbox,
-	Modal,
 	Stack,
 	Autocomplete,
 	createStyles,
 	rem,
 	Divider,
 	Button,
-	type StackProps,
 } from '@mantine/core'
-import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
+import { useDebouncedValue } from '@mantine/hooks'
+import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
 import { ComponentPropsWithRef, forwardRef, useState } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
-import { ModalTitle } from '~ui/modals'
 
-import { SuggestionFormProvider, useForm, useFormContext } from './context'
+import { SuggestionFormProvider, useForm } from './context'
+import { ServiceTypes } from './modals'
 
 // import { Button } from '../core'
 
@@ -75,6 +73,20 @@ export const SuggestOrg = () => {
 			searchLocation: '',
 			locationOptions: [],
 			formOptions: { countries: [], serviceTypes: [], communities: [] },
+			data: {
+				countryId: undefined,
+				orgName: undefined,
+				orgWebsite: undefined,
+				orgAddress: {
+					street1: undefined,
+					street2: undefined,
+					city: undefined,
+					govDist: undefined,
+					postCode: undefined,
+				},
+				serviceCategories: [],
+				communityFocus: [],
+			},
 		},
 	})
 	const { classes: locationClasses } = useLocationStyles()
@@ -84,8 +96,6 @@ export const SuggestOrg = () => {
 	const [locationSearch, setLocationSearch] = useState('')
 	const [loading, setLoading] = useState(true)
 	const [locSearchInput] = useDebouncedValue(form.values.searchLocation, 400)
-	const [servOpened, servHandler] = useDisclosure(false)
-	const [commOpened, commHandler] = useDisclosure(false)
 
 	const { data: formOptions } = api.organization.suggestionOptions.useQuery(undefined, {
 		onSuccess: (data) => {
@@ -112,65 +122,22 @@ export const SuggestOrg = () => {
 	api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: Boolean(locationSearch) && locationSearch !== '',
 		onSuccess: ({ result }) => {
-			if (result)
-				form.setValues({
-					data: {
-						orgAddress: {
-							city: result.city,
-						},
-					},
-				})
+			if (result) form.setValues({ data: { orgAddress: { city: result.city } } })
 		},
 	})
 
 	if (loading) return null
-	console.log(formOptions, form.values.formOptions)
 	const countrySelections = Array.isArray(form.values.formOptions?.countries)
 		? form.values.formOptions?.countries.map(({ id, tsKey, tsNs }, i) => (
 				<Radio
 					key={id}
 					label={t(tsKey, { ns: tsNs })}
-					{...form.getInputProps(`formOptions.countries.${i}`)}
+					{...form.getInputProps(`formOptions.countries.${i}.id`)}
 				/>
 		  ))
 		: null
 
-	const ModalHeader = <ModalTitle breadcrumb={{ option: 'close' }} />
 	console.log(form.values)
-	const ServiceTypeModal = () => {
-		const formContext = useFormContext()
-		const options = Array.isArray(form.values.formOptions?.serviceTypes)
-			? form.values.formOptions?.serviceTypes.map((item, i) => {
-					const inputProps = formContext.getInputProps(`formOptions.serviceTypes.${i}.checked`, {
-						type: 'checkbox',
-					})
-
-					return (
-						<Checkbox
-							key={item.id}
-							label={t(item.tsKey, { ns: item.tsNs })}
-							{...formContext.getInputProps(`formOptions.serviceTypes.${i}.checked`, { type: 'checkbox' })}
-						/>
-					)
-			  })
-			: null
-
-		return (
-			<Stack spacing={24}>
-				<Stack spacing={16}>
-					<Title order={2}>{t('modal.service-types-title')}</Title>
-					<Text variant={variants.Text.darkGray}>{t('modal.service-types-sub')}</Text>
-				</Stack>
-				<Stack spacing={0}>
-					<Checkbox.Group>{options}</Checkbox.Group>
-				</Stack>
-				<Stack spacing={20}>
-					<Divider mt={16} />
-					<Button variant={variants.Button.primaryLg}>{t('form.btn-save-changes')}</Button>
-				</Stack>
-			</Stack>
-		)
-	}
 
 	return (
 		<SuggestionFormProvider form={form}>
@@ -185,7 +152,12 @@ export const SuggestOrg = () => {
 						<Title order={2}>{t('body.required-info')}</Title>
 						<Text>{t('body.accept-country')}</Text>
 					</Stack>
-					<Radio.Group name='country' label={t('form.org-country')} withAsterisk>
+					<Radio.Group
+						name='country'
+						label={t('form.org-country')}
+						withAsterisk
+						{...form.getInputProps('data.countryId')}
+					>
 						<Stack spacing={0}>{countrySelections}</Stack>
 					</Radio.Group>
 					<TextInput
@@ -214,28 +186,37 @@ export const SuggestOrg = () => {
 						}}
 						{...form.getInputProps('searchLocation')}
 					/>
-					<Stack spacing={0}>
-						<Text variant={variants.Text.utility1}>{t('form.service-types')}</Text>
-						<Button variant={variants.Button.secondarySm} onClick={() => servHandler.open()}>
-							{t('form.btn-service')}
-						</Button>
-					</Stack>{' '}
+					<ServiceTypes />
 					<Stack spacing={0}>
 						<Text variant={variants.Text.utility1}>{t('form.community-focus')}</Text>
 						<Button variant={variants.Button.secondarySm}>{t('form.btn-community')}</Button>
 					</Stack>
 				</Stack>
-				<Modal
-					opened={servOpened}
-					onClose={() => servHandler.close()}
-					title={ModalHeader}
-					scrollAreaComponent={Modal.NativeScrollArea}
-				>
-					<ServiceTypeModal />
-				</Modal>
 			</Stack>
 		</SuggestionFormProvider>
 	)
+}
+interface SuggestionForm {
+	data?: {
+		countryId?: string
+		orgName?: string
+		orgWebsite?: string
+		orgAddress?: {
+			street1?: string
+			street2?: string
+			city?: string
+			govDist?: string
+			postCode?: string
+		}
+		serviceCategories?: string[]
+		communityFocus?: string[]
+	}
+	searchLocation: string
+	locationOptions: {
+		value: string
+		placeId: string
+	}[]
+	formOptions: ApiOutput['organization']['suggestionOptions']
 }
 
 interface ItemProps extends ComponentPropsWithRef<'div'> {

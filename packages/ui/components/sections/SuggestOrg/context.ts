@@ -15,7 +15,7 @@ interface SuggestionForm {
 			postCode?: string
 		}
 		serviceCategories?: string[]
-		comunityFocus?: string[]
+		communityFocus?: string[]
 	}
 	searchLocation: string
 	locationOptions: {
