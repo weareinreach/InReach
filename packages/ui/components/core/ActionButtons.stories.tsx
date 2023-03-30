@@ -42,9 +42,9 @@ export default {
 			],
 		},
 	},
-	render: ({ iconKey }) => (
+	render: ({ iconKey, serviceId }) => (
 		<div>
-			<ActionButtonsComponent iconKey={iconKey} />
+			<ActionButtonsComponent iconKey={iconKey} serviceId={serviceId} />
 		</div>
 	),
 } satisfies Meta<typeof ActionButtonsComponent>
