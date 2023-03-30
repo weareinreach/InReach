@@ -20,7 +20,7 @@
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
-		"@types/eslint": "8.21.3",
+		"@types/eslint": "8.37.0",
 		"@types/node": "18.15.11",
 		"@types/react": "18.0.31",
 		"@types/react-dom": "18.0.11",
@@ -41,5 +41,5 @@
 		"react": "^18",
 		"react-dom": "^18"
 	},
-	"packageManager": "pnpm@8.0.0"
+	"packageManager": "pnpm@8.1.0"
 }
