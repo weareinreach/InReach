@@ -7,11 +7,11 @@ import { ActionButtons, Breadcrumb, ModalTitleBreadcrumb } from '~ui/components/
 import { useCustomVariant } from '~ui/hooks'
 
 export const ModalTitle = (props: ModalTitleProps) => {
-	const { breadcrumb, icons, rightText } = props
+	const { breadcrumb, icons, rightText, serviceId } = props
 	const { t } = useTranslation()
 	const variants = useCustomVariant()
 	const iconMap = {
-		save: <ActionButtons key='modal-title-save' iconKey='save' omitLabel />,
+		save: <ActionButtons key='modal-title-save' iconKey='save' omitLabel serviceId={serviceId} />,
 		share: <ActionButtons key='modal-title-share' iconKey='share' omitLabel />,
 	} as const
 
@@ -44,4 +44,5 @@ export type ModalTitleProps = {
 	breadcrumb: ModalTitleBreadcrumb
 	icons?: ('save' | 'share')[]
 	rightText?: string | DefaultTFuncReturn
+	serviceId?: string
 }
