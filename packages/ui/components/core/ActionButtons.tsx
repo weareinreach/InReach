@@ -458,7 +458,14 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-/** Used to display the action buttons when viewing an organization/location/service. */
+/**
+ * Used to display the action buttons when viewing an organization/location/service.
+ *
+ * When using the save or unsave buttons for services, you need to pass the serviceId prop.
+ *
+ * When trying to save or unsave an organization, the component parses the current URL to find the
+ * organization's id, so you don't need to pass it as a prop.
+ */
 export const ActionButtons = ({
 	iconKey,
 	omitLabel = false,
@@ -466,7 +473,6 @@ export const ActionButtons = ({
 	outsideMoreMenu,
 	children,
 }: Props) => {
-	const { data: session } = useSession()
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation()
@@ -536,8 +542,6 @@ export const ActionButtons = ({
 			<Menu.Dropdown>{menuThings}</Menu.Dropdown>
 		</Menu>
 	)
-
-	if ((iconKey === 'saved' || iconKey === 'save') && !session) return buttonComponent
 
 	return 'useMenu' in iconRender ? menuComponent : buttonComponent
 }
