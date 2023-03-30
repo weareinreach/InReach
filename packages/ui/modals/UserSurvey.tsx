@@ -77,7 +77,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						modals.openConfirmModal({
 							title: modalTitle,
 							closeOnConfirm: false,
-							labels: { confirm: 'Start Survey', cancel: 'Not Now' },
+							labels: { confirm: `${t('survey.start-survey')}`, cancel: `${t('survey.not-right-now')}` },
 							children: userSurveyStartPage,
 							onConfirm: () =>
 								modals.openConfirmModal({
@@ -107,16 +107,19 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 															onConfirm: () =>
 																modals.openConfirmModal({
 																	title: createModalTitleXY(5),
-																	labels: labels,
+																	labels: { confirm: `${t('survey.finish')}`, cancel: `${t('back')}` },
 																	closeOnConfirm: false,
 																	children: question5,
 																	onConfirm: () =>
 																		modals.openConfirmModal({
 																			title: modalTitle,
-																			labels: { confirm: 'Go to Profile', cancel: 'Go to Search' },
+																			labels: {
+																				confirm: `${t('go-to-x', t('profile'))}`,
+																				cancel: `${t('go-to-x', t('words.search'))}`,
+																			},
 																			children: thankYou,
-																			onConfirm: modals.closeAll,
-																			onCancel: modals.closeAll,
+																			onConfirm: modals.closeAll /*add action to go to Profile*/,
+																			onCancel: modals.closeAll /*add action to go to Search*/,
 																		}),
 																}),
 														}),

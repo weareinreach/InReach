@@ -235,6 +235,11 @@
 	"subscribe-to-newsletter": "Subscribe to Newsletter",
 	"suggest-a-resource": "Suggest a Resource",
 	"support": "Support",
+	"survey": {
+		"finish": "Finish",
+		"not-right-now": "Not right now",
+		"start-survey": "Start Survey"
+	},
 	"take-action": "Take Action",
 	"twitter": "Twitter",
 	"uncheck-all": "Uncheck all",
