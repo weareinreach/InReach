@@ -3,6 +3,8 @@ import { type ApiOutput } from '@weareinreach/api'
 export const geoByPlaceIdCityState = {
 	status: 'OK',
 	result: {
+		streetNumber: undefined,
+		streetName: undefined,
 		city: 'New York',
 		country: 'US',
 		govDist: 'NY',

@@ -78,18 +78,26 @@ export const geocodeResponse = z
 	.transform(({ results, ...data }) => {
 		const result = results[0]
 		if (!result) return { result: undefined, ...data }
+
+		const streetNumberResult = result?.address_components.find(({ types }) => types.includes('street_number'))
+		const streetResult = result?.address_components.find(({ types }) => types.includes('route'))
 		const cityResult = result?.address_components.find(({ types }) => types.includes('locality'))
 		const govDistResult = result?.address_components.find(({ types }) =>
 			types.includes('administrative_area_level_1')
 		)
 		const countryResult = result?.address_components.find(({ types }) => types.includes('country'))
-
-		const { long_name: city } = cityResult ?? { long_name: undefined }
-		const { short_name: govDist } = govDistResult ?? { short_name: undefined }
-		const { short_name: country } = countryResult ?? { short_name: undefined }
+		const undefS = { short_name: undefined }
+		const undefL = { long_name: undefined }
+		const { short_name: streetNumber } = streetNumberResult ?? undefS
+		const { long_name: streetName } = streetResult ?? undefL
+		const { long_name: city } = cityResult ?? undefL
+		const { short_name: govDist } = govDistResult ?? undefS
+		const { short_name: country } = countryResult ?? undefS
 		return {
 			result: {
 				geometry: result.geometry,
+				streetNumber,
+				streetName,
 				city,
 				govDist,
 				country,

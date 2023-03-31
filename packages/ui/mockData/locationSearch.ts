@@ -185,6 +185,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -196,6 +198,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -210,6 +214,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -221,6 +227,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -232,6 +240,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -243,6 +253,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -254,6 +266,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -265,6 +279,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -276,6 +292,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -287,6 +305,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -301,6 +321,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -312,6 +334,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -323,6 +347,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -337,6 +363,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -348,6 +376,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -359,6 +389,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -373,6 +405,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -387,6 +421,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -401,6 +437,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -412,6 +450,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -423,6 +463,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -434,6 +476,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -445,6 +489,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -456,6 +502,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 		{
 			geometry: {
@@ -467,6 +515,8 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
 		},
 	],
 }

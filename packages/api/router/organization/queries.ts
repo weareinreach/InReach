@@ -176,6 +176,7 @@ export const queries = defineRouter({
 				id: true,
 				tsNs: true,
 				tsKey: true,
+				icon: true,
 				children: {
 					select: {
 						child: { select: { id: true, tsNs: true, tsKey: true } },
@@ -185,15 +186,14 @@ export const queries = defineRouter({
 			orderBy: { tsKey: 'asc' },
 		})
 		return {
-			countries: countries.map((record) => ({ ...record, checked: false })),
-			serviceTypes: serviceTypes.map((record) => ({ ...record, checked: false })),
+			countries,
+			serviceTypes,
 			communities: communities.map(({ children, ...record }) => {
 				const newChildren = children.map(({ child }) => ({
 					...child,
 					parentId: record.id,
-					checked: false,
 				}))
-				return { ...record, children: newChildren, checked: false }
+				return { ...record, children: newChildren }
 			}),
 		}
 	}),
