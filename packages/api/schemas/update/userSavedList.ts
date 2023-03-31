@@ -26,9 +26,10 @@ export const SaveItem = () => {
 				services,
 				auditLogs: createMany([orgLog, servLog]),
 			},
-			include: {
-				services: true,
-				organizations: true,
+			select: {
+				services: { select: { serviceId: true } },
+				organizations: { select: { organizationId: true } },
+				id: true,
 			},
 		})
 	})

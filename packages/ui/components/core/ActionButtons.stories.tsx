@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
+import { getAll, saveItem, createAndSave } from '~ui/mockData/savedList'
 
 import { ActionButtons as ActionButtonsComponent } from './ActionButtons'
 
@@ -38,6 +39,20 @@ export default {
 					response: {
 						id: 'orev_NEWREVIEWID',
 					},
+				}),
+				getTRPCMock({
+					path: ['savedList', 'getAll'],
+					response: getAll,
+				}),
+				getTRPCMock({
+					path: ['savedList', 'saveItem'],
+					type: 'mutation',
+					response: saveItem,
+				}),
+				getTRPCMock({
+					path: ['savedList', 'createAndSaveItem'],
+					type: 'mutation',
+					response: createAndSave,
 				}),
 			],
 		},
