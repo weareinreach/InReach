@@ -9,12 +9,16 @@ import {
 	rem,
 	Divider,
 	Button,
+	Space,
 } from '@mantine/core'
+import { zodResolver } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
-import { useTranslation } from 'next-i18next'
+import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
+import { useTranslation, Trans } from 'next-i18next'
 import { ComponentPropsWithRef, forwardRef, useState } from 'react'
 
+import { Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -67,27 +71,16 @@ const SelectItemTwoLines = forwardRef<HTMLDivElement, ItemProps>(({ label, descr
 })
 SelectItemTwoLines.displayName = 'Selection Item'
 
+interface OrgExistsErrorProps {
+	queryResult: ApiOutput['organization']['checkForExisting']
+}
+
 export const SuggestOrg = () => {
+	// const suggestOrgApi = api.organization.
+
 	const form = useForm({
-		initialValues: {
-			searchLocation: '',
-			locationOptions: [],
-			formOptions: { countries: [], serviceTypes: [], communities: [] },
-			data: {
-				countryId: undefined,
-				orgName: undefined,
-				orgWebsite: undefined,
-				orgAddress: {
-					street1: undefined,
-					street2: undefined,
-					city: undefined,
-					govDist: undefined,
-					postCode: undefined,
-				},
-				serviceCategories: [],
-				communityFocus: [],
-			},
-		},
+		validate: zodResolver(SuggestionSchema),
+		validateInputOnBlur: true,
 	})
 	const { classes: locationClasses } = useLocationStyles()
 	const { t, i18n } = useTranslation(['suggestOrg', 'country', 'services', 'attribute'])
@@ -96,8 +89,11 @@ export const SuggestOrg = () => {
 	const [locationSearch, setLocationSearch] = useState('')
 	const [loading, setLoading] = useState(true)
 	const [locSearchInput] = useDebouncedValue(form.values.searchLocation, 400)
+	const [orgName, setOrgName] = useState<string>()
 
-	const { data: formOptions } = api.organization.suggestionOptions.useQuery(undefined, {
+	const countrySelected = Boolean(form.values.countryId)
+
+	api.organization.suggestionOptions.useQuery(undefined, {
 		onSuccess: (data) => {
 			form.setValues({ formOptions: data })
 			setLoading(false)
@@ -122,7 +118,58 @@ export const SuggestOrg = () => {
 	api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: Boolean(locationSearch) && locationSearch !== '',
 		onSuccess: ({ result }) => {
-			if (result) form.setValues({ data: { orgAddress: { city: result.city } } })
+			if (result)
+				form.setFieldValue('orgAddress', {
+					street1: `${result.streetNumber} ${result.streetName}`,
+					city: result.city,
+					govDist: result.govDist,
+					postCode: result.postCode,
+				})
+		},
+	})
+
+	const OrgExistsError = ({ queryResult }: OrgExistsErrorProps) => {
+		const variants = useCustomVariant()
+		if (!queryResult) return null
+		const { name, published, slug } = queryResult
+		const key = published ? 'form.error-exists-active' : 'form.error-exists-inactive'
+		return (
+			<>
+				<Trans
+					i18nKey={key}
+					ns='suggestOrg'
+					values={{ org: name }}
+					components={{
+						Link: (
+							<Link href={{ pathname: '/org/[slug]', query: { slug } }} variant={variants.Link.inheritStyle}>
+								.
+							</Link>
+						),
+					}}
+				/>
+				<Space h={8} />
+				<Trans
+					i18nKey='form.error-exists-dismiss'
+					ns='suggestOrg'
+					components={{
+						Dismiss: (
+							<Link variant={variants.Link.inheritStyle} onClick={() => form.clearFieldError('orgName')}>
+								.
+							</Link>
+						),
+					}}
+				/>
+			</>
+		)
+	}
+	api.organization.checkForExisting.useQuery(orgName ?? '', {
+		enabled: Boolean(orgName && orgName !== ''),
+		onSuccess: (data) => {
+			if (!data) {
+				form.clearFieldError('orgName')
+			} else {
+				form.setFieldError('orgName', <OrgExistsError queryResult={data} />)
+			}
 		},
 	})
 
@@ -136,8 +183,6 @@ export const SuggestOrg = () => {
 				/>
 		  ))
 		: null
-
-	// console.log(form.values)
 
 	return (
 		<SuggestionFormProvider form={form}>
@@ -155,20 +200,25 @@ export const SuggestOrg = () => {
 					<Radio.Group
 						name='country'
 						label={t('form.org-country')}
+						required
 						withAsterisk
-						{...form.getInputProps('data.countryId')}
+						{...form.getInputProps('countryId')}
 					>
 						<Stack spacing={0}>{countrySelections}</Stack>
 					</Radio.Group>
 					<TextInput
 						label={t('form.org-name')}
 						placeholder={t('form.placeholder-name') as string}
-						{...form.getInputProps('data.orgName')}
+						required
+						disabled={!countrySelected}
+						{...form.getInputProps('orgName')}
+						onBlur={(e) => setOrgName(e.target.value)}
 					/>
 					<TextInput
 						label={t('form.org-website')}
 						placeholder={t('form.placeholder-website') as string}
-						{...form.getInputProps('data.orgWebsite')}
+						disabled={!countrySelected}
+						{...form.getInputProps('orgWebsite')}
 					/>
 				</Stack>
 				<Divider />
@@ -177,20 +227,26 @@ export const SuggestOrg = () => {
 					<Autocomplete
 						itemComponent={SelectItemTwoLines}
 						classNames={{ itemsWrapper: locationClasses.autocompleteWrapper }}
-						data={form.values.locationOptions}
+						data={form.values.locationOptions ?? []}
 						label={t('form.org-address')}
 						icon={<Icon icon='carbon:search' className={locationClasses.leftIcon} />}
 						placeholder={t('form.placeholder-address') as string}
+						disabled={!countrySelected}
 						onItemSubmit={(e) => {
 							setLocationSearch(e.placeId)
 						}}
 						{...form.getInputProps('searchLocation')}
 					/>
-					<ServiceTypes />
-					<Communities />
+					<ServiceTypes disabled={!countrySelected} />
+					<Communities disabled={!countrySelected} />
 					<Divider />
 					<Stack spacing={16} align='center'>
-						<Button w='fit-content' variant={variants.Button.primaryLg}>
+						<Button
+							w='fit-content'
+							variant={variants.Button.primaryLg}
+							disabled={!form.isValid()}
+							type='submit'
+						>
 							{t('form.btn-submit')}
 						</Button>
 						<Text variant={variants.Text.utility4}>{t('body.subject-review')}</Text>
@@ -199,28 +255,6 @@ export const SuggestOrg = () => {
 			</Stack>
 		</SuggestionFormProvider>
 	)
-}
-interface SuggestionForm {
-	data?: {
-		countryId?: string
-		orgName?: string
-		orgWebsite?: string
-		orgAddress?: {
-			street1?: string
-			street2?: string
-			city?: string
-			govDist?: string
-			postCode?: string
-		}
-		serviceCategories?: string[]
-		communityFocus?: string[]
-	}
-	searchLocation: string
-	locationOptions: {
-		value: string
-		placeId: string
-	}[]
-	formOptions: ApiOutput['organization']['suggestionOptions']
 }
 
 interface ItemProps extends ComponentPropsWithRef<'div'> {

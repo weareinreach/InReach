@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react'
 
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { geoAutocompleteCityState, geoByPlaceIdCityState } from '~ui/mockData/geo'
-import { suggestionOptions } from '~ui/mockData/suggestOrg'
+import { geoAutocompleteFullAddress, geocodeFullAddress } from '~ui/mockData/geo'
+import { suggestionOptions, existingOrg } from '~ui/mockData/suggestOrg'
 
 import { SuggestOrg } from '.'
 
@@ -16,15 +16,19 @@ export default {
 			getTRPCMock({
 				path: ['geo', 'autocomplete'],
 				type: 'query',
-				response: geoAutocompleteCityState,
+				response: geoAutocompleteFullAddress,
 			}),
 			getTRPCMock({
 				path: ['geo', 'geoByPlaceId'],
-				response: geoByPlaceIdCityState,
+				response: geocodeFullAddress,
 			}),
 			getTRPCMock({
 				path: ['organization', 'suggestionOptions'],
 				response: suggestionOptions,
+			}),
+			getTRPCMock({
+				path: ['organization', 'checkForExisting'],
+				response: (input) => existingOrg(input),
 			}),
 		],
 	},

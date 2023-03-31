@@ -7,7 +7,11 @@ import { ModalTitle } from '~ui/modals'
 
 import { useFormContext } from './context'
 
-export const ServiceTypes = () => {
+interface ModalProps {
+	disabled: boolean
+}
+
+export const ServiceTypes = ({ disabled }: ModalProps) => {
 	const form = useFormContext()
 	const variants = useCustomVariant()
 	const [open, handler] = useDisclosure(false)
@@ -36,7 +40,7 @@ export const ServiceTypes = () => {
 						<Text variant={variants.Text.darkGray}>{t('modal.service-types-sub')}</Text>
 					</Stack>
 					<Stack spacing={0}>
-						<Checkbox.Group {...form.getInputProps('data.serviceCategories')}>{options}</Checkbox.Group>
+						<Checkbox.Group {...form.getInputProps('serviceCategories')}>{options}</Checkbox.Group>
 					</Stack>
 					<Stack spacing={20}>
 						<Divider mt={16} />
@@ -48,7 +52,12 @@ export const ServiceTypes = () => {
 			</Modal>
 			<Stack spacing={16}>
 				<Text variant={variants.Text.utility1}>{t('form.service-types')}</Text>
-				<Button variant={variants.Button.secondarySm} onClick={() => handler.open()} w='fit-content'>
+				<Button
+					variant={variants.Button.secondarySm}
+					disabled={disabled}
+					onClick={() => handler.open()}
+					w='fit-content'
+				>
 					{t('form.btn-service')}
 				</Button>
 			</Stack>
@@ -56,12 +65,12 @@ export const ServiceTypes = () => {
 	)
 }
 
-export const Communities = () => {
+export const Communities = ({ disabled }: ModalProps) => {
 	const form = useFormContext()
 	const variants = useCustomVariant()
 	const [open, handler] = useDisclosure(false)
 	const { t } = useTranslation(['suggestOrg', 'attribute'])
-	const selectedCurr = form.values.data?.communityFocus ?? []
+	const selectedCurr = form.values.communityFocus ?? []
 	const childRecords = form.values.formOptions.communities.flatMap(({ children }) => children)
 	const unique = (ids: string[]) => [...new Set(ids)]
 	const hasChildren = (parentId: string) =>
@@ -97,12 +106,12 @@ export const Communities = () => {
 			//  all selected -> deselect all
 			console.log('toggle all')
 			form.setFieldValue(
-				'data.communityFocus',
+				'communityFocus',
 				selectedCurr.filter((id) => !childIds.includes(id))
 			)
 			return
 		}
-		form.setFieldValue('data.communityFocus', unique([...selectedCurr, ...childIds]))
+		form.setFieldValue('communityFocus', unique([...selectedCurr, ...childIds]))
 		return
 	}
 
@@ -112,43 +121,44 @@ export const Communities = () => {
 					const indeterminate = selectedChildren(item.id)
 					const checked = selectedChildren(item.id, true)
 					return (
-						<>
+						<div key={`${item.id}-${par}`}>
 							<Checkbox
-								key={item.id}
 								label={`${item.icon} ${t(item.tsKey, { ns: item.tsNs })}`}
 								indeterminate={indeterminate}
 								checked={checked}
 								onClick={() => toggleCategory(item.id)}
+								onChange={() => {}}
 							/>
 							<Checkbox.Group
-								{...form.getInputProps('data.communityFocus')}
+								{...form.getInputProps('communityFocus')}
 								inputContainer={(children) => <Stack spacing={4}>{children}</Stack>}
 							>
 								{item.children.map((child, i) => (
 									<Checkbox
-										key={`${child.id}-${i}`}
+										key={`${child.id}-${par}-${i}`}
 										label={t(child.tsKey, { ns: child.tsNs })}
 										pl={40}
 										{...form.getInputProps(`formOptions.communities.${par}.children.${i}.id`)}
 									/>
 								))}
 							</Checkbox.Group>
-						</>
+						</div>
 					)
 				}
 
 				return (
-					<Checkbox.Group
-						key={item.id}
-						{...form.getInputProps('data.communityFocus')}
-						inputContainer={(children) => <Stack spacing={4}>{children}</Stack>}
-					>
-						<Checkbox
-							key={item.id}
-							label={`${item.icon} ${t(item.tsKey, { ns: item.tsNs })}`}
-							{...form.getInputProps(`formOptions.communities.${par}.id`)}
-						/>
-					</Checkbox.Group>
+					<div key={`${item.id}-${par}`}>
+						<Checkbox.Group
+							{...form.getInputProps('communityFocus')}
+							inputContainer={(children) => <Stack spacing={4}>{children}</Stack>}
+						>
+							<Checkbox
+								key={`${item.id}-${par}-item`}
+								label={`${item.icon} ${t(item.tsKey, { ns: item.tsNs })}`}
+								{...form.getInputProps(`formOptions.communities.${par}.id`)}
+							/>
+						</Checkbox.Group>
+					</div>
 				)
 		  })
 		: null
@@ -177,7 +187,12 @@ export const Communities = () => {
 			</Modal>
 			<Stack spacing={16}>
 				<Text variant={variants.Text.utility1}>{t('form.community-focus')}</Text>
-				<Button variant={variants.Button.secondarySm} onClick={() => handler.open()} w='fit-content'>
+				<Button
+					variant={variants.Button.secondarySm}
+					disabled={disabled}
+					onClick={() => handler.open()}
+					w='fit-content'
+				>
 					{t('form.btn-community')}
 				</Button>
 			</Stack>
