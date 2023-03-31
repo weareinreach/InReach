@@ -63,3 +63,5 @@ _generated/*
 !_generated/.gitkeep
 
 .serverless
+
+packages/db/backup

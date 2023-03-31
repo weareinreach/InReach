@@ -4,7 +4,8 @@ import { checkPermissions } from './'
 import { t } from '../initTRPC'
 
 export const isAuthed = t.middleware(({ ctx, meta, next }) => {
-	if (!ctx.session || !ctx.session.user || !checkPermissions(meta, ctx)) {
+	console.log(ctx.session, meta)
+	if (!ctx.session || !ctx.session.user || (meta && !checkPermissions(meta, ctx))) {
 		return reject()
 	}
 	return next({

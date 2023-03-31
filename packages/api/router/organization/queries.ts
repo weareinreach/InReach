@@ -2,13 +2,15 @@ import { z } from 'zod'
 
 import { handleError } from '~api/lib'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
-import { defineRouter, publicProcedure } from '~api/lib/trpc'
+import { defineRouter, publicProcedure, protectedProcedure } from '~api/lib/trpc'
 import { prismaDistSearchDetails } from '~api/prisma/org'
-import { id, searchTerm, slug, idArray } from '~api/schemas/common'
+import { id, searchTerm, slug } from '~api/schemas/common'
 import { serviceFilter, attributeFilter } from '~api/schemas/filters/org'
 import { distSearch } from '~api/schemas/org/search'
 import { isPublic } from '~api/schemas/selects/common'
 import { organizationInclude } from '~api/schemas/selects/org'
+
+import { uniqueSlug } from './lib'
 
 export const queries = defineRouter({
 	getById: publicProcedure.input(id).query(async ({ ctx, input }) => {
@@ -155,5 +157,70 @@ export const queries = defineRouter({
 		if (!listEntries.length) return false
 		const lists = listEntries.map(({ list }) => list)
 		return lists
+	}),
+	suggestionOptions: publicProcedure.query(async ({ ctx }) => {
+		const countries = await ctx.prisma.country.findMany({
+			where: { activeForOrgs: true },
+			select: { id: true, tsKey: true, tsNs: true },
+			orderBy: { tsKey: 'desc' },
+		})
+		const serviceTypes = await ctx.prisma.serviceCategory.findMany({
+			where: { active: true },
+			select: { id: true, tsKey: true, tsNs: true },
+			orderBy: { tsKey: 'asc' },
+		})
+		const communities = await ctx.prisma.attribute.findMany({
+			where: {
+				categories: { some: { category: { tag: 'service-focus' } } },
+				parents: { none: {} },
+			},
+			select: {
+				id: true,
+				tsNs: true,
+				tsKey: true,
+				icon: true,
+				children: {
+					select: {
+						child: { select: { id: true, tsNs: true, tsKey: true } },
+					},
+				},
+			},
+			orderBy: { tsKey: 'asc' },
+		})
+		return {
+			countries,
+			serviceTypes,
+			communities: communities.map(({ children, ...record }) => {
+				const newChildren = children.map(({ child }) => ({
+					...child,
+					parentId: record.id,
+				}))
+				return { ...record, children: newChildren }
+			}),
+		}
+	}),
+	checkForExisting: publicProcedure.input(z.string().trim()).query(async ({ ctx, input }) => {
+		const result = await ctx.prisma.organization.findFirst({
+			where: {
+				name: {
+					contains: input,
+					mode: 'insensitive',
+				},
+			},
+			select: {
+				name: true,
+				slug: true,
+				published: true,
+			},
+		})
+		return result
+	}),
+	generateSlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		try {
+			const slug = await uniqueSlug(ctx, input)
+			return slug
+		} catch (error) {
+			handleError(error)
+		}
 	}),
 })

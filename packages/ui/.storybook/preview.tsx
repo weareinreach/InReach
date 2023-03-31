@@ -7,7 +7,7 @@ import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
 import { Router } from 'next/router'
 
-import { WithI18n, WithMantine, WithTRPC, Layouts, type LayoutsDecorator } from './decorators'
+import { WithI18n, WithMantine, WithTRPC, Layouts, WithStrictMode, type LayoutsDecorator } from './decorators'
 import { i18n } from './i18next'
 import authStates from './mockAuthStates'
 import { Viewports } from './types'
@@ -73,7 +73,7 @@ const preview: Preview = {
 			},
 		},
 	},
-	decorators: [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC],
+	decorators: [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC, WithStrictMode],
 }
 export default preview
 
@@ -97,5 +97,6 @@ declare module '@storybook/react' {
 		badges?: BADGE[]
 		layout?: 'centered' | 'fullscreen' | 'padded'
 		layoutWrapper?: LayoutsDecorator
+		disableStrictMode?: boolean
 	}
 }

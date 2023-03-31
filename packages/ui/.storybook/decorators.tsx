@@ -5,7 +5,7 @@ import { StoryContext, StoryFn } from '@storybook/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpLink, loggerLink } from '@trpc/client'
 import { transformer } from '@weareinreach/api/lib/transformer'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, StrictMode } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { devtoolsLink } from 'trpc-client-devtools-link'
 
@@ -134,4 +134,13 @@ export const Layouts = (Story: StoryFn, context: StoryContext) => {
 		}
 	}
 }
+export const WithStrictMode = (Story: StoryFn, context: StoryContext) =>
+	context.parameters.disableStrictMode ? (
+		<Story />
+	) : (
+		<StrictMode>
+			<Story />
+		</StrictMode>
+	)
+WithStrictMode.displayName = 'StrictModeWrapper'
 export type LayoutsDecorator = 'centeredFullscreen' | 'centeredHalf' | 'gridSingle' | 'gridDouble'

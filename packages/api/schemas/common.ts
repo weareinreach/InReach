@@ -28,7 +28,7 @@ export const orgIdServiceId = z.object({ orgId: z.string(), serviceId: z.string(
 export const orgIdLocationId = z.object({ orgId: z.string(), locationId: z.string() })
 export const slug = z.object({ slug: z.string() })
 export const nanoIdUrl = z.string().regex(nanoUrlRegex)
-export const searchTerm = z.object({ search: z.string() })
+export const searchTerm = z.object({ search: z.string().trim() })
 export const pagination = {
 	skip: z.number().optional(),
 	take: z.number().optional(),
