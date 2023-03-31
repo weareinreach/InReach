@@ -241,7 +241,6 @@ export const FormLocation = () => {
 				form.setValues({ location: { city: result.city, govDist: result.govDist, country: result.country } })
 		},
 	})
-	console.log(form.values)
 	return (
 		<Autocomplete
 			itemComponent={SelectItemSingleLine}
@@ -249,7 +248,6 @@ export const FormLocation = () => {
 			data={form.values.locationOptions}
 			label={t('current-location')}
 			onItemSubmit={(e) => {
-				console.log(e)
 				setLocationSearch(e.placeId)
 			}}
 			{...form.getInputProps('searchLocation')}
