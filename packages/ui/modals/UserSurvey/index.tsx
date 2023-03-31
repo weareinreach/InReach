@@ -1,4 +1,4 @@
-import { Modal, Box, type ButtonProps, Text, Title, Stack } from '@mantine/core'
+import { Modal, Box, type ButtonProps, Group, Text, Title, Stack } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
@@ -91,7 +91,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const { t } = useTranslation('common')
 	const { isMobile } = useScreenSize()
 	const [opened, handler] = useDisclosure(false)
-	const [stepOption, setStepOption] = useState<string | null>(null)
+	const [stepOption, setStepOption] = useState<string | null>('step1')
+	const [step, setStep] = useState<number>(1)
 	const [successMessage, setSuccessMessage] = useState(false)
 	const variants = useCustomVariant()
 	const UserSurveyAction = api.user.create.useMutation({
@@ -127,14 +128,148 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const breadcrumbProps: ModalTitleBreadcrumb =
 		stepOption === null || successMessage
 			? { option: 'close', onClick: () => handler.close() }
-			: { option: 'back', backTo: 'none', onClick: () => setStepOption(null) }
+			: {
+					option: 'back',
+					backTo: 'none',
+					onClick: () => {
+						setStep(1)
+						setStepOption(null)
+					},
+			  }
 
-	const titleRightSideProps = successMessage
-		? undefined
-		: t('step-x-y', { ns: 'common', x: stepOption ? 2 : 1, y: 2 })
+	const titleRightSideProps = successMessage ? undefined : t('step-x-y', { ns: 'common', x: step, y: 5 })
 	const modalTitle = <ModalTitle breadcrumb={breadcrumbProps} rightText={titleRightSideProps} />
 
-	const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={setStepOption} handler={handler} />
+	// const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={setStepOption} handler={handler} />
+	const step1 = () => {
+		return (
+			<Group position='center'>
+				<Text>question 1 goes here</Text>
+				<Button
+					onClick={() => {
+						setStepOption('step2')
+						setStep(2)
+						console.log('quesion 1 skip button')
+					}}
+				>
+					Skip
+				</Button>
+				<Button
+					onClick={() => {
+						setStepOption('step2')
+						setStep(2)
+						console.log('quesion 1 skip button')
+					}}
+				>
+					Next
+				</Button>
+			</Group>
+		)
+	}
+
+	const step2 = () => {
+		return (
+			<Group position='center'>
+				<Text>question 2 goes here</Text>
+				<Button
+					onClick={() => {
+						setStepOption('step3')
+						setStep(3)
+						console.log('quesion 2 skip button')
+					}}
+				>
+					Skip
+				</Button>
+				<Button
+					onClick={() => {
+						setStepOption('step3')
+						setStep(3)
+						console.log('quesion 2 skip button')
+					}}
+				>
+					Next
+				</Button>
+			</Group>
+		)
+	}
+
+	const step3 = () => {
+		return (
+			<Group position='center'>
+				<Text>question 3 goes here</Text>
+				<Button
+					onClick={() => {
+						setStepOption('step4')
+						setStep(4)
+						console.log('quesion 3 skip button')
+					}}
+				>
+					Skip
+				</Button>
+				<Button
+					onClick={() => {
+						setStepOption('step4')
+						setStep(4)
+						console.log('quesion 3 skip button')
+					}}
+				>
+					Next
+				</Button>
+			</Group>
+		)
+	}
+
+	const step4 = () => {
+		return (
+			<Group position='center'>
+				<Text>question 4 goes here</Text>
+				<Button
+					onClick={() => {
+						setStepOption('step5')
+						setStep(5)
+						console.log('quesion 4 skip button')
+					}}
+				>
+					Skip
+				</Button>
+				<Button
+					onClick={() => {
+						setStepOption('step5')
+						setStep(5)
+						console.log('quesion 4 skip button')
+					}}
+				>
+					Next
+				</Button>
+			</Group>
+		)
+	}
+
+	const step5 = () => {
+		return (
+			<Group position='center'>
+				<Text>question 5 goes here</Text>
+				<Button
+					onClick={() => {
+						setStepOption('step6')
+						setSuccessMessage(true)
+						console.log('quesion 5 skip button')
+					}}
+				>
+					Skip
+				</Button>
+				<Button
+					onClick={() => {
+						setStepOption('step6')
+						setSuccessMessage(true)
+						console.log('quesion 5 skip button')
+					}}
+				>
+					Finish
+				</Button>
+			</Group>
+		)
+	}
 
 	const submitHandler = () => {
 		if (form.isValid()) {
@@ -152,71 +287,81 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		</>
 	)
 
-	const step2 = () => {
-		let nameContext: 'alias' | 'full' = 'alias'
-		let emailContext: 'professional' | 'student-pro' | undefined = undefined
-		let langSelect = false
-		let location = false
-		let lawPractice = false
-		let servProvider = false
+	// const step2 = () => {
+	// 	let nameContext: 'alias' | 'full' = 'alias'
+	// 	let emailContext: 'professional' | 'student-pro' | undefined = undefined
+	// 	let langSelect = false
+	// 	let location = false
+	// 	let lawPractice = false
+	// 	let servProvider = false
 
-		switch (stepOption) {
-			case 'law': {
-				nameContext = 'full'
-				emailContext = 'student-pro'
-				langSelect = true
-				location = true
-				lawPractice = true
-				form.setFieldValue('userType', 'provider')
-				break
+	// 	switch (stepOption) {
+	// 		case 'law': {
+	// 			nameContext = 'full'
+	// 			emailContext = 'student-pro'
+	// 			langSelect = true
+	// 			location = true
+	// 			lawPractice = true
+	// 			form.setFieldValue('userType', 'provider')
+	// 			break
+	// 		}
+	// 		case 'servpro': {
+	// 			nameContext = 'full'
+	// 			emailContext = 'professional'
+	// 			langSelect = true
+	// 			location = true
+	// 			servProvider = true
+	// 			form.setFieldValue('userType', 'provider')
+	// 			break
+	// 		}
+	// 		case 'lcr': {
+	// 			nameContext = 'full'
+	// 			langSelect = true
+	// 			location = true
+	// 			form.setFieldValue('userType', 'lcr')
+	// 		}
+	// 	}
+
+	// 	return (
+	// 		<Stack>
+	// 			<FormName tContext={nameContext} />
+	// 			<FormEmail tContext={emailContext} />
+	// 			<FormPassword />
+	// 			{langSelect && <LanguageSelect />}
+	// 			{location && <FormLocation />}
+	// 			{lawPractice && <FormLawPractice />}
+	// 			{servProvider && <FormServiceProvider />}
+	// 			{UserSurveyButton}
+	// 		</Stack>
+	// 	)
+	// }
+
+	const getQuestion = (q: any) => {
+		switch (q) {
+			case 'step1': {
+				return step1()
 			}
-			case 'servpro': {
-				nameContext = 'full'
-				emailContext = 'professional'
-				langSelect = true
-				location = true
-				servProvider = true
-				form.setFieldValue('userType', 'provider')
-				break
+			case 'step2': {
+				return step2()
 			}
-			case 'lcr': {
-				nameContext = 'full'
-				langSelect = true
-				location = true
-				form.setFieldValue('userType', 'lcr')
+			case 'step3': {
+				return step3()
 			}
+			case 'step4': {
+				return step4()
+			}
+			case 'step5': {
+				return step5()
+			}
+			default:
+				return step1()
 		}
-
-		return (
-			<Stack>
-				<FormName tContext={nameContext} />
-				<FormEmail tContext={emailContext} />
-				<FormPassword />
-				{langSelect && <LanguageSelect />}
-				{location && <FormLocation />}
-				{lawPractice && <FormLawPractice />}
-				{servProvider && <FormServiceProvider />}
-				{UserSurveyButton}
-			</Stack>
-		)
 	}
-
-	const step3 = () => {
-		return <div>question 3 goes here</div>
-	}
-
-	const step4 = () => {
-		return <div>question 4 goes here</div>
-	}
-
-	const step5 = () => {
-		return <div>question 5 goes here</div>
-	}
-
 	const UserSurveyBody = (
 		<>
-			<RichTranslate i18nKey='sign-up-header' handler={handler} />
-			{stepOption === null ? step1 : step2()}
+			{/* <RichTranslate i18nKey='sign-up-header' handler={handler} /> */}
+			{/* {stepOption === 'step1' ? step1() : step2()} */}
+			{getQuestion(stepOption)}
 		</>
 	)
 
