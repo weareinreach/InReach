@@ -41,7 +41,7 @@ export const actionButtonIcons = {
 	},
 	share: { icon: 'carbon:share', labelKey: 'share' },
 	print: { icon: 'carbon:printer', labelKey: 'print' },
-	review: { icon: 'carbon:star', labelKey: 'review' },
+	review: { icon: 'carbon:star', labelKey: 'review_one' },
 	delete: { icon: 'carbon:delete', labelKey: 'delete' },
 	more: {
 		icon: 'carbon:overflow-menu-horizontal',
@@ -69,10 +69,13 @@ const NewListModal = ({ data }: NewListModalProps) => {
 		},
 	})
 
-	const savedInList = useNewNotification({ icon: 'info', displayTextKey: t('saved-in-list') as string })
+	const savedInList = useNewNotification({
+		icon: 'info',
+		displayText: t('saved-in-list', { name: form.values.listName }),
+	})
 	const errorSaving = useNewNotification({
 		icon: 'warning',
-		displayTextKey: t('errors.saving-in-list') as string,
+		displayText: t('errors.saving-in-list'),
 	})
 
 	const { mutate, isError, isSuccess, reset } = api.savedList.createAndSaveItem.useMutation()
@@ -119,25 +122,20 @@ const NewListModal = ({ data }: NewListModalProps) => {
  */
 const SaveItem = ({ data, name }: AlterListProps) => {
 	const { t } = useTranslation()
-	const { mutate, isSuccess, isError, reset } = api.savedList.saveItem.useMutation()
 
 	const savedInList = useNewNotification({
 		icon: 'info',
-		displayTextKey: t('saved-in-list', { name: name }) as string,
+		displayText: t('saved-in-list', { name: name }),
 	})
 	const errorSaving = useNewNotification({
 		icon: 'warning',
-		displayTextKey: t('errors.saving-in-list') as string,
+		displayText: t('errors.saving-in-list'),
 	})
 
-	if (isSuccess) {
-		savedInList()
-	}
-
-	if (isError) {
-		errorSaving()
-		reset()
-	}
+	const { mutate, isSuccess, isError, reset } = api.savedList.saveItem.useMutation({
+		onSuccess: savedInList,
+		onError: errorSaving,
+	})
 
 	return (
 		<Menu.Item
@@ -159,7 +157,7 @@ const SaveItem = ({ data, name }: AlterListProps) => {
 const SavePolymorphic = forwardRef<HTMLButtonElement, PolymorphicProps>(
 	({ serviceId, organizationId, ...props }, ref) => {
 		const { t } = useTranslation()
-		const saveLists = api.savedList.getAll.useQuery()
+		const saveLists = api.savedList.getAll.useQuery(undefined, { refetchOnWindowFocus: false })
 		const { classes } = useStyles()
 		const [opened, setOpened] = useState(false)
 
@@ -225,7 +223,7 @@ const CopyToClipBoard = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) 
 	const { t } = useTranslation()
 	const { basePath, asPath, locale } = useRouter()
 	const clipboard = useClipboard({ timeout: 500 })
-	const copiedToClipboard = useNewNotification({ icon: 'info', displayTextKey: t('link-copied') as string })
+	const copiedToClipboard = useNewNotification({ icon: 'info', displayText: t('link-copied') })
 
 	const handleCopy = () => {
 		const href = `${basePath}${asPath}${locale}`
@@ -264,11 +262,11 @@ const UnsaveItemBody = forwardRef<HTMLButtonElement, PolymorphicProps>(
 
 		const removedFromList = useNewNotification({
 			icon: 'info',
-			displayTextKey: t('removed-from-list') as string,
+			displayText: t('removed-from-list'),
 		})
 		const errorRemoving = useNewNotification({
 			icon: 'warning',
-			displayTextKey: t('errors.removing-from-list') as string,
+			displayText: t('errors.removing-from-list'),
 		})
 
 		if (unsave.isSuccess) {
@@ -493,8 +491,8 @@ export const ActionButtons = ({
 
 	const overflowMenuItems = filteredOverflowItems.map(([key, item]) => {
 		const children = (
-			<Group>
-				<Icon icon={item.icon} />
+			<Group key={key}>
+				<Icon key={key} icon={item.icon} />
 				{t(item.labelKey)}
 			</Group>
 		)
