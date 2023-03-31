@@ -1,6 +1,5 @@
 /* eslint-disable node/no-process-env */
 /* eslint-disable turbo/no-undeclared-env-vars */
-import { prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
 import { ClientId, cognito, generateHash } from './cognitoClient'
@@ -63,5 +62,10 @@ export const createCognitoUser = async (data: CreateCognitoUserParams) => {
 	}
 }
 
-type CreateCognitoUser = (data: CreateCognitoUserParams) => Promise<unknown>
-type CreateCognitoUserParams = { email: string; password: string; databaseId: string }
+type CreateCognitoUserParams = {
+	email: string
+	password: string
+	databaseId: string
+	subject: string
+	message: string
+}

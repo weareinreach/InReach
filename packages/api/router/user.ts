@@ -10,6 +10,7 @@ import {
 	type AdminCreateUserInput,
 	CognitoBase64,
 	ResetPassword,
+	ForgotPassword,
 } from '~api/schemas/create/user'
 
 export const userRouter = defineRouter({
@@ -127,13 +128,10 @@ export const userRouter = defineRouter({
 			handleError(error)
 		}
 	}),
-	forgotPassword: publicProcedure
-		.input(z.object({ email: z.string().email() }))
-		.mutation(async ({ input }) => {
-			const response = await forgotPassword(input.email)
-
-			return response
-		}),
+	forgotPassword: publicProcedure.input(ForgotPassword).mutation(async ({ input }) => {
+		const response = await forgotPassword(input)
+		return response
+	}),
 	confirmAccount: publicProcedure.input(CognitoBase64).mutation(async ({ input }) => {
 		const { code, email } = input
 		const response = await confirmAccount(email, code)
