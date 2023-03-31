@@ -2,13 +2,15 @@ import { z } from 'zod'
 
 import { handleError } from '~api/lib'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
-import { defineRouter, publicProcedure } from '~api/lib/trpc'
+import { defineRouter, publicProcedure, protectedProcedure } from '~api/lib/trpc'
 import { prismaDistSearchDetails } from '~api/prisma/org'
-import { id, searchTerm, slug, idArray } from '~api/schemas/common'
+import { id, searchTerm, slug } from '~api/schemas/common'
 import { serviceFilter, attributeFilter } from '~api/schemas/filters/org'
 import { distSearch } from '~api/schemas/org/search'
 import { isPublic } from '~api/schemas/selects/common'
 import { organizationInclude } from '~api/schemas/selects/org'
+
+import { uniqueSlug } from './lib'
 
 export const queries = defineRouter({
 	getById: publicProcedure.input(id).query(async ({ ctx, input }) => {
@@ -212,5 +214,13 @@ export const queries = defineRouter({
 			},
 		})
 		return result
+	}),
+	generateSlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		try {
+			const slug = await uniqueSlug(ctx, input)
+			return slug
+		} catch (error) {
+			handleError(error)
+		}
 	}),
 })
