@@ -143,131 +143,151 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	// const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={setStepOption} handler={handler} />
 	const step1 = () => {
 		return (
-			<Group position='center'>
-				<Text>question 1 goes here</Text>
-				<Button
-					onClick={() => {
-						setStepOption('step2')
-						setStep(2)
-						console.log('quesion 1 skip button')
-					}}
-				>
-					Skip
-				</Button>
-				<Button
-					onClick={() => {
-						setStepOption('step2')
-						setStep(2)
-						console.log('quesion 1 skip button')
-					}}
-				>
-					Next
-				</Button>
-			</Group>
+			<>
+				<Title order={2}>Question title</Title>
+				<Text variant={variants.Text.darkGray}>question sub-title</Text>
+				<Text>answer options</Text>
+				<Group position='center'>
+					<Button
+						onClick={() => {
+							setStepOption('step2')
+							setStep(2)
+							console.log('quesion 1 skip button')
+						}}
+					>
+						Skip
+					</Button>
+					<Button
+						onClick={() => {
+							setStepOption('step2')
+							setStep(2)
+							console.log('quesion 1 skip button')
+						}}
+					>
+						Next
+					</Button>
+				</Group>
+			</>
 		)
 	}
 
 	const step2 = () => {
 		return (
-			<Group position='center'>
-				<Text>question 2 goes here</Text>
-				<Button
-					onClick={() => {
-						setStepOption('step3')
-						setStep(3)
-						console.log('quesion 2 skip button')
-					}}
-				>
-					Skip
-				</Button>
-				<Button
-					onClick={() => {
-						setStepOption('step3')
-						setStep(3)
-						console.log('quesion 2 skip button')
-					}}
-				>
-					Next
-				</Button>
-			</Group>
+			<>
+				<Title order={2}>Question title</Title>
+				<Text variant={variants.Text.darkGray}>question sub-title</Text>
+				<Text>answer options</Text>
+				<Group position='center'>
+					<Button
+						onClick={() => {
+							setStepOption('step3')
+							setStep(3)
+							console.log('quesion 2 skip button')
+						}}
+					>
+						Skip
+					</Button>
+					<Button
+						onClick={() => {
+							setStepOption('step3')
+							setStep(3)
+							console.log('quesion 2 skip button')
+						}}
+					>
+						Next
+					</Button>
+				</Group>
+			</>
 		)
 	}
 
 	const step3 = () => {
 		return (
-			<Group position='center'>
-				<Text>question 3 goes here</Text>
-				<Button
-					onClick={() => {
-						setStepOption('step4')
-						setStep(4)
-						console.log('quesion 3 skip button')
-					}}
-				>
-					Skip
-				</Button>
-				<Button
-					onClick={() => {
-						setStepOption('step4')
-						setStep(4)
-						console.log('quesion 3 skip button')
-					}}
-				>
-					Next
-				</Button>
-			</Group>
+			<>
+				<Title order={2}>Question title</Title>
+				<Text variant={variants.Text.darkGray}>question sub-title</Text>
+				<Text>answer options</Text>
+				<Group position='center'>
+					<Button
+						onClick={() => {
+							setStepOption('step4')
+							setStep(4)
+							console.log('quesion 3 skip button')
+						}}
+					>
+						Skip
+					</Button>
+					<Button
+						onClick={() => {
+							setStepOption('step4')
+							setStep(4)
+							console.log('quesion 3 skip button')
+						}}
+					>
+						Next
+					</Button>
+				</Group>
+			</>
 		)
 	}
 
 	const step4 = () => {
 		return (
-			<Group position='center'>
-				<Text>question 4 goes here</Text>
-				<Button
-					onClick={() => {
-						setStepOption('step5')
-						setStep(5)
-						console.log('quesion 4 skip button')
-					}}
-				>
-					Skip
-				</Button>
-				<Button
-					onClick={() => {
-						setStepOption('step5')
-						setStep(5)
-						console.log('quesion 4 skip button')
-					}}
-				>
-					Next
-				</Button>
-			</Group>
+			<>
+				<Title order={2}>Question title</Title>
+				<Text variant={variants.Text.darkGray}>question sub-title</Text>
+				<Text>answer options</Text>
+				<Group position='center'>
+					<Button
+						onClick={() => {
+							setStepOption('step5')
+							setStep(5)
+							console.log('quesion 4 skip button')
+						}}
+					>
+						Skip
+					</Button>
+					<Button
+						onClick={() => {
+							setStepOption('step5')
+							setStep(5)
+							console.log('quesion 4 skip button')
+						}}
+					>
+						Next
+					</Button>
+				</Group>
+			</>
 		)
 	}
 
 	const step5 = () => {
 		return (
-			<Group position='center'>
-				<Text>question 5 goes here</Text>
-				<Button
-					onClick={() => {
-						setStepOption('step6')
-						setSuccessMessage(true)
-						console.log('quesion 5 skip button')
-					}}
-				>
-					Skip
-				</Button>
-				<Button
-					onClick={() => {
-						setStepOption('step6')
-						setSuccessMessage(true)
-						console.log('quesion 5 skip button')
-					}}
-				>
-					Finish
-				</Button>
-			</Group>
+			<>
+				<Title order={2}>Question title</Title>
+				<Text variant={variants.Text.darkGray}>question sub-title</Text>
+				<Text>answer options</Text>
+				<Group position='center'>
+					<Button
+						onClick={() => {
+							setStepOption('step6')
+							setSuccessMessage(true)
+							console.log('quesion 5 skip button')
+						}}
+					>
+						Skip
+					</Button>
+					<Button
+						onClick={() => {
+							setStepOption('step6')
+							setSuccessMessage(true)
+							console.log('quesion 5 skip button')
+						}}
+					>
+						Finish
+					</Button>
+				</Group>
+			</>
 		)
 	}
 
