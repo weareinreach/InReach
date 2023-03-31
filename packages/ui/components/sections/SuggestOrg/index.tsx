@@ -20,7 +20,7 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { SuggestionFormProvider, useForm } from './context'
-import { ServiceTypes } from './modals'
+import { ServiceTypes, Communities } from './modals'
 
 // import { Button } from '../core'
 
@@ -137,7 +137,7 @@ export const SuggestOrg = () => {
 		  ))
 		: null
 
-	console.log(form.values)
+	// console.log(form.values)
 
 	return (
 		<SuggestionFormProvider form={form}>
@@ -187,9 +187,13 @@ export const SuggestOrg = () => {
 						{...form.getInputProps('searchLocation')}
 					/>
 					<ServiceTypes />
-					<Stack spacing={0}>
-						<Text variant={variants.Text.utility1}>{t('form.community-focus')}</Text>
-						<Button variant={variants.Button.secondarySm}>{t('form.btn-community')}</Button>
+					<Communities />
+					<Divider />
+					<Stack spacing={16} align='center'>
+						<Button w='fit-content' variant={variants.Button.primaryLg}>
+							{t('form.btn-submit')}
+						</Button>
+						<Text variant={variants.Text.utility4}>{t('body.subject-review')}</Text>
 					</Stack>
 				</Stack>
 			</Stack>

@@ -17,6 +17,7 @@ interface SuggestionForm {
 		serviceCategories?: string[]
 		communityFocus?: string[]
 	}
+	communityParent?: string[]
 	searchLocation: string
 	locationOptions: {
 		value: string
