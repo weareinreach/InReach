@@ -19,7 +19,6 @@ import { useCustomVariant } from '~ui/hooks'
 
 import { ModalTitle } from './ModalTitle'
 import { PrivacyStatementModal } from './PrivacyStatement'
-import { PrimaryDisabled } from '../components/core/Button.stories'
 
 export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyProps>((props, ref) => {
 	const { t } = useTranslation(['common'])

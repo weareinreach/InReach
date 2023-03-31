@@ -13,6 +13,5 @@ export * from './ResetPassword'
 export * from './Review'
 export * from './Service'
 export * from './ServiceFilter'
-export * from './UserSurvey_org'
 export * from './UserSurvey'
 // codegen:end
