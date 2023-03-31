@@ -28,7 +28,10 @@
 	"modal": {
 		"community-sub": "Does this organization provide service(s) focused on specific LGBTQ+ communities? Please select all that apply.",
 		"community-title": "LGBTQ+ community focus(es)",
+		"dismiss": "Dismiss",
 		"service-types-sub": "What type(s) of service(s) does this organization provide? Please select all that apply.",
-		"service-types-title": "Service types"
+		"service-types-title": "Service types",
+		"thank-you": "Thank you for submitting {{org}}!",
+		"thank-you-sub": "Our team will review your submission, verify the information, and publish the organization on InReach if it meets our criteria."
 	}
 }

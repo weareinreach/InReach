@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { geoAutocompleteFullAddress, geocodeFullAddress } from '~ui/mockData/geo'
+import { geoAutocompleteFullAddress, getFullAddress } from '~ui/mockData/geo'
 import { suggestionOptions, existingOrg } from '~ui/mockData/suggestOrg'
 
 import { SuggestOrg } from '.'
@@ -20,7 +20,7 @@ export default {
 			}),
 			getTRPCMock({
 				path: ['geo', 'geoByPlaceId'],
-				response: geocodeFullAddress,
+				response: (input) => getFullAddress(input),
 			}),
 			getTRPCMock({
 				path: ['organization', 'suggestionOptions'],
@@ -29,6 +29,15 @@ export default {
 			getTRPCMock({
 				path: ['organization', 'checkForExisting'],
 				response: (input) => existingOrg(input),
+			}),
+			getTRPCMock({
+				path: ['organization', 'createNewSuggestion'],
+				type: 'mutation',
+				response: { id: 'sugg_LKSDJFIOW156AWER15' },
+			}),
+			getTRPCMock({
+				path: ['organization', 'generateSlug'],
+				response: 'this-is-a-generated-slug',
 			}),
 		],
 	},
