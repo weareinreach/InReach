@@ -116,6 +116,10 @@
 	"password-req-number": "يشمل الرقم",
 	"password-req-special": "يتضمن حرف خاص",
 	"password-req-uppercase": "يتضمن حرف كبير",
+	"password-reset": {
+		"email-body": "انقر على الرابط التالي لإعادة تعيين كلمة المرور الخاصة بك:",
+		"email-subject": "إعادة تعيين كلمة المرور"
+	},
 	"password-reset-success": "<Text>الرجاء <LoginModal>تسجيل الدخول</LoginModal> باستخدام كلمة المرور الجديدة.</Text>",
 	"password-saved": "تم حفظ كلمة المرور!",
 	"phone": "الهاتف",
