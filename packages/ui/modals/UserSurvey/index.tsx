@@ -152,7 +152,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						onClick={() => {
 							setStepOption('step2')
 							setStep(2)
-							console.log('quesion 1 skip button')
 						}}
 					>
 						Skip
@@ -161,7 +160,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						onClick={() => {
 							setStepOption('step2')
 							setStep(2)
-							console.log('quesion 1 skip button')
 						}}
 					>
 						Next
@@ -182,7 +180,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						onClick={() => {
 							setStepOption('step3')
 							setStep(3)
-							console.log('quesion 2 skip button')
 						}}
 					>
 						Skip
@@ -191,7 +188,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						onClick={() => {
 							setStepOption('step3')
 							setStep(3)
-							console.log('quesion 2 skip button')
 						}}
 					>
 						Next
@@ -212,7 +208,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						onClick={() => {
 							setStepOption('step4')
 							setStep(4)
-							console.log('quesion 3 skip button')
 						}}
 					>
 						Skip
@@ -221,7 +216,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						onClick={() => {
 							setStepOption('step4')
 							setStep(4)
-							console.log('quesion 3 skip button')
 						}}
 					>
 						Next
@@ -242,7 +236,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						onClick={() => {
 							setStepOption('step5')
 							setStep(5)
-							console.log('quesion 4 skip button')
 						}}
 					>
 						Skip
@@ -251,7 +244,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						onClick={() => {
 							setStepOption('step5')
 							setStep(5)
-							console.log('quesion 4 skip button')
 						}}
 					>
 						Next
@@ -272,7 +264,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						onClick={() => {
 							setStepOption('step6')
 							setSuccessMessage(true)
-							console.log('quesion 5 skip button')
 						}}
 					>
 						Skip
@@ -281,7 +272,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						onClick={() => {
 							setStepOption('step6')
 							setSuccessMessage(true)
-							console.log('quesion 5 skip button')
 						}}
 					>
 						Finish
