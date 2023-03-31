@@ -112,6 +112,10 @@
 	"password-req-number": "Incluye número",
 	"password-req-special": "Incluye carácter especial",
 	"password-req-uppercase": "Incluye letras mayúsculas",
+	"password-reset": {
+		"email-body": "Haga clic en el siguiente enlace para restablecer su contraseña:",
+		"email-subject": "Restablecer su contraseña"
+	},
 	"password-reset-success": "<Text>Por favor <LoginModal>iniciar sesión</LoginModal> usando su nueva contraseña.</Text>",
 	"password-saved": "¡Contraseña guardada!",
 	"phone": "Teléfono",
