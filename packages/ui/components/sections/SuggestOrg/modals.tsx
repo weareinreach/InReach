@@ -71,11 +71,10 @@ export const Communities = ({ disabled }: ModalProps) => {
 	const [open, handler] = useDisclosure(false)
 	const { t } = useTranslation(['suggestOrg', 'attribute'])
 	const selectedCurr = form.values.communityFocus ?? []
-	const childRecords = form.values.formOptions.communities.flatMap(({ children }) => children)
+	const childRecords = form.values.formOptions?.communities.flatMap(({ children }) => children)
 	const unique = (ids: string[]) => [...new Set(ids)]
 	const hasChildren = (parentId: string) =>
 		form.values.formOptions.communities.find(({ id, children }) => id === parentId && children.length)
-	const valueMap = new Map(childRecords.map(({ id }) => [id, false]))
 
 	const getChildIds = (parentId: string) => {
 		const parentRecord = form.values.formOptions.communities.find(({ id }) => id === parentId)

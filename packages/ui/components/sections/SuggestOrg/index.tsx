@@ -17,7 +17,7 @@ import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
 import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
 import { useTranslation, Trans } from 'next-i18next'
-import { ComponentPropsWithRef, forwardRef, useState } from 'react'
+import { ComponentPropsWithRef, forwardRef, useState, useEffect } from 'react'
 
 import { Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
@@ -97,11 +97,17 @@ export const SuggestOrg = () => {
 	const [generateSlug, setGenerateSlug] = useState(false)
 
 	const countrySelected = Boolean(form.values.countryId)
-
-	const { data: formOptions } = api.organization.suggestionOptions.useQuery(undefined, {
+	console.log('form values', form.values)
+	console.log('form valid?', form.isValid(), form.errors)
+	const {
+		data: formOptions,
+		isLoading,
+		isSuccess,
+	} = api.organization.suggestionOptions.useQuery(undefined, {
 		onSuccess: (data) => {
+			console.log('suggestion load')
 			form.setValues({ formOptions: data })
-			setLoading(false)
+			// setLoading(false)
 		},
 	})
 
@@ -192,6 +198,14 @@ export const SuggestOrg = () => {
 		},
 	})
 
+	useEffect(() => {
+		if (loading && formOptions && isSuccess && !isLoading) {
+			form.setValues({ formOptions })
+			setLoading(false)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [loading, formOptions, isSuccess, isLoading])
+
 	if (loading) return null
 	const countrySelections = Array.isArray(form.values.formOptions?.countries)
 		? form.values.formOptions?.countries.map(({ id, tsKey, tsNs }, i) => (
@@ -206,7 +220,7 @@ export const SuggestOrg = () => {
 	return (
 		<SuggestionFormProvider form={form}>
 			<form onSubmit={form.onSubmit(() => suggestOrgApi.mutate(form.values))}>
-				<Stack spacing={40}>
+				<Stack spacing={40} pb={40}>
 					<Stack spacing={24}>
 						<Title order={1}>{t('body.suggest-org')}</Title>
 						<Text>{t('body.intro-text')}</Text>
