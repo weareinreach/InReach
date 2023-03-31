@@ -187,6 +187,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -200,6 +201,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -216,6 +218,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -229,6 +232,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -242,6 +246,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -255,6 +260,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -268,6 +274,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -281,6 +288,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -294,6 +302,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -307,6 +316,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -323,6 +333,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -336,6 +347,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -349,6 +361,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -365,6 +378,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -378,6 +392,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -391,6 +406,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -407,6 +423,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -423,6 +440,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -439,6 +457,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -452,6 +471,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -465,6 +485,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -478,6 +499,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -491,6 +513,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -504,6 +527,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -517,6 +541,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			postCode: undefined,
 		},
 	],
 }

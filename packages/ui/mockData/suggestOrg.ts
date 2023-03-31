@@ -1,3 +1,5 @@
+import { type ApiOutput } from '@weareinreach/api'
+
 export const suggestionOptions = {
 	countries: [
 		{
@@ -177,4 +179,17 @@ export const suggestionOptions = {
 			],
 		},
 	],
+} satisfies ApiOutput['organization']['suggestionOptions']
+
+export const existingOrg = (input: string): ApiOutput['organization']['checkForExisting'] => {
+	const name = 'Existing Organization'
+	const regex = new RegExp(`.*${input}.*`, 'gi')
+	if (regex.test(name)) {
+		return {
+			name,
+			published: true,
+			slug: 'existing-org',
+		}
+	}
+	return null
 }

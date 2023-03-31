@@ -1,22 +1,23 @@
 import { createFormContext } from '@mantine/form'
 import { type ApiOutput } from '@weareinreach/api'
+import { z } from 'zod'
 
 export const [SuggestionFormProvider, useFormContext, useForm] = createFormContext<SuggestionForm>()
 interface SuggestionForm {
-	data?: {
-		countryId?: string
-		orgName?: string
-		orgWebsite?: string
-		orgAddress?: {
-			street1?: string
-			street2?: string
-			city?: string
-			govDist?: string
-			postCode?: string
-		}
-		serviceCategories?: string[]
-		communityFocus?: string[]
+	//data for submission
+	countryId: string | null
+	orgName: string | null
+	orgWebsite: string | null
+	orgAddress: {
+		street1?: string | null
+		city?: string | null
+		govDist?: string | null
+		postCode?: string | null
 	}
+	serviceCategories?: string[]
+	communityFocus?: string[]
+
+	//supportive data
 	communityParent?: string[]
 	searchLocation: string
 	locationOptions: {

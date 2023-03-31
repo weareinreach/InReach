@@ -1,3 +1,4 @@
+import { PlaceType2, GeocodingAddressComponentType } from '@googlemaps/google-maps-services-js'
 import { z } from 'zod'
 
 export const autocompleteResponse = z
@@ -36,8 +37,6 @@ const coordinates = z.object({
 	lng: z.number(),
 })
 
-const addressParts = ['locality', 'administrative_area_level_1', 'country'] as const
-
 export const geocodeResponse = z
 	.object({
 		results: z
@@ -59,7 +58,7 @@ export const geocodeResponse = z
 					.object({
 						long_name: z.string(),
 						short_name: z.string(),
-						types: z.string().array(),
+						types: z.union([z.nativeEnum(GeocodingAddressComponentType), z.nativeEnum(PlaceType2)]).array(),
 					})
 					.array(),
 			})
@@ -79,20 +78,20 @@ export const geocodeResponse = z
 		const result = results[0]
 		if (!result) return { result: undefined, ...data }
 
-		const streetNumberResult = result?.address_components.find(({ types }) => types.includes('street_number'))
-		const streetResult = result?.address_components.find(({ types }) => types.includes('route'))
-		const cityResult = result?.address_components.find(({ types }) => types.includes('locality'))
-		const govDistResult = result?.address_components.find(({ types }) =>
-			types.includes('administrative_area_level_1')
-		)
-		const countryResult = result?.address_components.find(({ types }) => types.includes('country'))
-		const undefS = { short_name: undefined }
-		const undefL = { long_name: undefined }
-		const { short_name: streetNumber } = streetNumberResult ?? undefS
-		const { long_name: streetName } = streetResult ?? undefL
-		const { long_name: city } = cityResult ?? undefL
-		const { short_name: govDist } = govDistResult ?? undefS
-		const { short_name: country } = countryResult ?? undefS
+		const getAddressPart = (part: GeocodingAddressComponentType | PlaceType2) =>
+			result.address_components.find(({ types }) => types.includes(part)) ?? {
+				short_name: undefined,
+				long_name: undefined,
+				types: [],
+			}
+
+		const { short_name: streetNumber } = getAddressPart(GeocodingAddressComponentType.street_number)
+		const { long_name: streetName } = getAddressPart(PlaceType2.route)
+		const { long_name: city } = getAddressPart(PlaceType2.locality)
+		const { short_name: govDist } = getAddressPart(PlaceType2.administrative_area_level_1)
+		const { short_name: postCode } = getAddressPart(PlaceType2.postal_code)
+		const { short_name: country } = getAddressPart(PlaceType2.country)
+
 		return {
 			result: {
 				geometry: result.geometry,
@@ -100,6 +99,7 @@ export const geocodeResponse = z
 				streetName,
 				city,
 				govDist,
+				postCode,
 				country,
 			},
 			...data,

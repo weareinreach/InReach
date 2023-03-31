@@ -197,4 +197,20 @@ export const queries = defineRouter({
 			}),
 		}
 	}),
+	checkForExisting: publicProcedure.input(z.string().trim()).query(async ({ ctx, input }) => {
+		const result = await ctx.prisma.organization.findFirst({
+			where: {
+				name: {
+					contains: input,
+					mode: 'insensitive',
+				},
+			},
+			select: {
+				name: true,
+				slug: true,
+				published: true,
+			},
+		})
+		return result
+	}),
 })
