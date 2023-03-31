@@ -28,9 +28,9 @@
 		"@mantine/prism": "6.0.5",
 		"@mantine/spotlight": "6.0.5",
 		"@mantine/tiptap": "6.0.5",
-		"@tiptap/extension-link": "2.0.0",
-		"@tiptap/react": "2.0.0",
-		"@tiptap/starter-kit": "2.0.0",
+		"@tiptap/extension-link": "2.0.1",
+		"@tiptap/react": "2.0.1",
+		"@tiptap/starter-kit": "2.0.1",
 		"@weareinreach/ui": "0.100.0",
 		"dayjs": "1.11.7",
 		"embla-carousel-react": "7.1.0",
@@ -49,6 +49,6 @@
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"eslint": "8.37.0",
-		"typescript": "5.0.2"
+		"typescript": "5.0.3"
 	}
 }
