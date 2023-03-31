@@ -238,7 +238,9 @@
 	"survey": {
 		"finish": "Finish",
 		"not-right-now": "Not right now",
-		"start-survey": "Start Survey"
+		"start-survey": "Start Survey",
+		"thank-you": "Thank you!",
+		"thank-you-message": "The information you shared helps us to improve our product."
 	},
 	"take-action": "Take Action",
 	"twitter": "Twitter",
