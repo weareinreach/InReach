@@ -2,6 +2,7 @@ import { Center } from '@mantine/core'
 import { Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
+import { surveyOptions } from '~ui/mockData/surveyOptions'
 
 import { UserSurveyModalLauncher } from '.'
 import { getTRPCMock } from '../../lib/getTrpcMock'
@@ -68,6 +69,11 @@ export default {
 				response: {
 					success: true,
 				},
+			}),
+			getTRPCMock({
+				path: ['user', 'surveyOptions'],
+				type: 'query',
+				response: { ...surveyOptions },
 			}),
 		],
 	},

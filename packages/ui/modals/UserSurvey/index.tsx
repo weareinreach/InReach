@@ -1,4 +1,16 @@
-import { Modal, Box, type ButtonProps, Group, Text, Title, Stack, TextInput } from '@mantine/core'
+import {
+	Modal,
+	Box,
+	type ButtonProps,
+	Checkbox,
+	Group,
+	Radio,
+	Text,
+	Title,
+	Stack,
+	TextInput,
+	Grid,
+} from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
@@ -88,6 +100,7 @@ import { ModalTitle } from '../ModalTitle'
 // }
 
 export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyProps>((props, ref) => {
+	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
 	const { t } = useTranslation('common')
 	const { isMobile } = useScreenSize()
 	const [opened, handler] = useDisclosure(false)
@@ -100,6 +113,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 			setSuccessMessage(true)
 		},
 	})
+
+	console.log(surveyOptions)
 	const router = useRouter()
 
 	const UserSurveySchema = z
@@ -169,7 +184,20 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 			<>
 				<Title order={2}>{t('survey.question-1-title')}</Title>
 				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
-				<Text>answer options</Text>
+				<Radio.Group value='selected'>
+					<Stack>
+						{surveyOptions?.immigration.map((item, index) => {
+							return (
+								<Radio
+									label={t(item.tsKey, { ns: 'user' })}
+									key={item.id}
+									value={item.id}
+									// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
+								/>
+							)
+						})}
+					</Stack>
+				</Radio.Group>
 				<Group position='center'>
 					<Button
 						onClick={() => {
@@ -197,7 +225,20 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 			<>
 				<Title order={2}>{t('survey.question-2-title')}</Title>
 				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
-				<Text>answer options</Text>
+				<Radio.Group value='selected'>
+					<Stack>
+						{surveyOptions?.countries.map((item, index) => {
+							return (
+								<Radio
+									label={t(item.tsKey, { ns: 'user' })}
+									key={item.id}
+									value={item.id}
+									// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
+								/>
+							)
+						})}
+					</Stack>
+				</Radio.Group>
 				<Group position='center'>
 					<Button
 						onClick={() => {
@@ -225,7 +266,22 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 			<>
 				<Title order={2}>{t('survey.question-3-title')}</Title>
 				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
-				<Text>answer options</Text>
+				<Checkbox.Group>
+					<Stack>
+						{surveyOptions?.sog.map((item, index) => {
+							return (
+								<Checkbox
+									value={item.id}
+									checked={false}
+									label={t(item.tsKey, { ns: 'user' })}
+									key={item.id}
+
+									// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
+								/>
+							)
+						})}
+					</Stack>
+				</Checkbox.Group>
 				<Group position='center'>
 					<Button
 						onClick={() => {
@@ -253,7 +309,22 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 			<>
 				<Title order={2}>{t('survey.question-4-title')}</Title>
 				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
-				<Text>answer options</Text>
+				<Checkbox.Group>
+					<Stack>
+						{surveyOptions?.ethnicity.map((item, index) => {
+							return (
+								<Checkbox
+									value={item.id}
+									checked={false}
+									label={t(item.tsKey, { ns: 'user' })}
+									key={item.id}
+
+									// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
+								/>
+							)
+						})}
+					</Stack>
+				</Checkbox.Group>
 				<Group position='center'>
 					<Button
 						onClick={() => {
