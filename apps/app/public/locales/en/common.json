@@ -240,7 +240,13 @@
 		"not-right-now": "Not right now",
 		"start-survey": "Start Survey",
 		"thank-you": "Thank you!",
-		"thank-you-message": "The information you shared helps us to improve our product."
+		"thank-you-message": "The information you shared helps us to improve our product.",
+		"question-subtitle": "Your answers are anonymous.",
+		"question-1-title": "How would you describe yourself?",
+		"question-2-title": "What is your country of origin?",
+		"question-3-title": "How do you identify?",
+		"question-4-title": "What is your ethnicity/race?",
+		"question-5-title": "How old are you?"
 	},
 	"take-action": "Take Action",
 	"twitter": "Twitter",

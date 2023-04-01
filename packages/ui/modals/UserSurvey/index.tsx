@@ -144,8 +144,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const step1 = () => {
 		return (
 			<>
-				<Title order={2}>Question title</Title>
-				<Text variant={variants.Text.darkGray}>question sub-title</Text>
+				<Title order={2}>{t('survey.question-1-title')}</Title>
+				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
 				<Text>answer options</Text>
 				<Group position='center'>
 					<Button
@@ -172,8 +172,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const step2 = () => {
 		return (
 			<>
-				<Title order={2}>Question title</Title>
-				<Text variant={variants.Text.darkGray}>question sub-title</Text>
+				<Title order={2}>{t('survey.question-2-title')}</Title>
+				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
 				<Text>answer options</Text>
 				<Group position='center'>
 					<Button
@@ -200,8 +200,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const step3 = () => {
 		return (
 			<>
-				<Title order={2}>Question title</Title>
-				<Text variant={variants.Text.darkGray}>question sub-title</Text>
+				<Title order={2}>{t('survey.question-3-title')}</Title>
+				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
 				<Text>answer options</Text>
 				<Group position='center'>
 					<Button
@@ -228,8 +228,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const step4 = () => {
 		return (
 			<>
-				<Title order={2}>Question title</Title>
-				<Text variant={variants.Text.darkGray}>question sub-title</Text>
+				<Title order={2}>{t('survey.question-4-title')}</Title>
+				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
 				<Text>answer options</Text>
 				<Group position='center'>
 					<Button
@@ -256,8 +256,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const step5 = () => {
 		return (
 			<>
-				<Title order={2}>Question title</Title>
-				<Text variant={variants.Text.darkGray}>question sub-title</Text>
+				<Title order={2}>{t('survey.question-5-title')}</Title>
+				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
 				<Text>answer options</Text>
 				<Group position='center'>
 					<Button
