@@ -1,4 +1,4 @@
-import { Modal, Box, type ButtonProps, Group, Text, Title, Stack } from '@mantine/core'
+import { Modal, Box, type ButtonProps, Group, Text, Title, Stack, TextInput } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
@@ -15,77 +15,77 @@ import { UserSurveyFormProvider, useUserSurveyForm } from './context'
 import {
 	FormEmail,
 	FormName,
-	FormPassword,
+	// FormPassword,
 	LanguageSelect,
 	FormLocation,
 	FormLawPractice,
 	FormServiceProvider,
+	FormBirthyear,
 } from './fields'
 import { LoginModalLauncher } from '../Login'
 import { ModalTitle } from '../ModalTitle'
-import { PrivacyStatementModal } from '../PrivacyStatement'
 
-type RichTranslateProps = {
-	i18nKey: string
-	values?: Record<string, any>
-	stateSetter?: Dispatch<SetStateAction<string | null>>
-	handler?: {
-		open: () => void
-		close: () => void
-		toggle: () => void
-	}
-}
-export const RichTranslate = ({ stateSetter, handler, ...props }: RichTranslateProps) => {
-	const { t } = useTranslation()
-	const variants = useCustomVariant()
+// type RichTranslateProps = {
+// 	i18nKey: string
+// 	values?: Record<string, any>
+// 	stateSetter?: Dispatch<SetStateAction<string | null>>
+// 	handler?: {
+// 		open: () => void
+// 		close: () => void
+// 		toggle: () => void
+// 	}
+// }
+// export const RichTranslate = ({ stateSetter, handler, ...props }: RichTranslateProps) => {
+// 	const { t } = useTranslation()
+// 	const variants = useCustomVariant()
 
-	return (
-		<Trans
-			tOptions={{
-				returnObjects: true,
-				joinArrays: '',
-			}}
-			t={t}
-			components={{
-				emojiLg: <Text fz={40}>.</Text>,
-				title2: <Title order={2}>.</Title>,
-				title3: (
-					<Title order={3} ta='center'>
-						.
-					</Title>
-				),
-				textDarkGray: (
-					<Text variant={variants.Text.darkGray} ta='center'>
-						.
-					</Text>
-				),
-				loginLink: (
-					<LoginModalLauncher
-						external
-						component={Link}
-						key={0}
-						variant={variants.Link.inheritStyle}
-						// onClick={() => handler.close()}
-					>
-						.
-					</LoginModalLauncher>
-				),
-				button: (
-					<Button
-						variant='secondary-icon'
-						onClick={
-							stateSetter ? (e) => stateSetter(e.currentTarget.getAttribute('data-option')) : undefined
-						}
-					>
-						.
-					</Button>
-				),
-				group: <Stack align='center'>.</Stack>,
-			}}
-			{...props}
-		/>
-	)
-}
+// 	return (
+// 		<Trans
+// 			tOptions={{
+// 				returnObjects: true,
+// 				joinArrays: '',
+// 			}}
+// 			t={t}
+// 			components={{
+// 				emojiLg: <Text fz={40}>.</Text>,
+// 				title2: <Title order={2}>.</Title>,
+// 				title3: (
+// 					<Title order={3} ta='center'>
+// 						.
+// 					</Title>
+// 				),
+// 				textDarkGray: (
+// 					<Text variant={variants.Text.darkGray} ta='center'>
+// 						.
+// 					</Text>
+// 				),
+// 				loginLink: (
+// 					<LoginModalLauncher
+// 						external
+// 						component={Link}
+// 						key={0}
+// 						variant={variants.Link.inheritStyle}
+// 						// onClick={() => handler.close()}
+// 					>
+// 						.
+// 					</LoginModalLauncher>
+// 				),
+// 				button: (
+// 					<Button
+// 						variant='secondary-icon'
+// 						onClick={
+// 							stateSetter ? (e) => stateSetter(e.currentTarget.getAttribute('data-option')) : undefined
+// 						}
+// 					>
+// 						.
+// 					</Button>
+// 				),
+// 				group: <Stack align='center'>.</Stack>,
+// 			}}
+// 			{...props}
+// 		/>
+// 	)
+// }
 
 export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyProps>((props, ref) => {
 	const { t } = useTranslation('common')
@@ -95,20 +95,33 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const [step, setStep] = useState<number>(1)
 	const [successMessage, setSuccessMessage] = useState(false)
 	const variants = useCustomVariant()
-	const UserSurveyAction = api.user.create.useMutation({
+	const UserSurveyAction = api.user.submitSurvey.useMutation({
 		onSuccess: () => {
 			setSuccessMessage(true)
 		},
 	})
 	const router = useRouter()
 
-	const UserSurveySchema = z.object({
-		name: z.string(),
-		email: z.string().email({ message: t('form-error-enter-valid-email') as string }),
-		password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
-			message: t('form-error-password-req') as string,
-		}),
-	})
+	const UserSurveySchema = z
+		.object({
+			name: z.string(),
+			email: z.string().email({ message: t('form-error-enter-valid-email') as string }),
+			password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
+				message: t('form-error-password-req') as string,
+			}),
+			birthYear: z.number(),
+			reasonForJoin: z.string(),
+			communityIds: z.array(z.string()),
+			ethnicityIds: z.array(z.string()),
+			identifyIds: z.array(z.string()),
+			countryOriginId: z.string(),
+			immigrationId: z.string(),
+			currentCity: z.string(),
+			currentGovDistId: z.string(),
+			currentCountryId: z.string(),
+		})
+		.partial()
+
 	const form = useUserSurveyForm({
 		validate: zodResolver(UserSurveySchema),
 		initialValues: {
@@ -121,6 +134,16 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 			userType: 'seeker',
 			cognitoSubject: t('confirm-account.subject') as string,
 			cognitoMessage: t('confirm-account.message') as string,
+			// birthYear: 0,
+			reasonForJoin: '',
+			communityIds: [],
+			ethnicityIds: [],
+			identifyIds: [],
+			countryOriginId: '',
+			immigrationId: '',
+			currentCity: '',
+			currentGovDistId: '',
+			currentCountryId: '',
 		},
 		validateInputOnBlur: true,
 	})
@@ -154,7 +177,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 							setStep(2)
 						}}
 					>
-						Skip
+						{t('words.skip')}
 					</Button>
 					<Button
 						onClick={() => {
@@ -162,7 +185,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 							setStep(2)
 						}}
 					>
-						Next
+						{t('words.next')}
 					</Button>
 				</Group>
 			</>
@@ -182,7 +205,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 							setStep(3)
 						}}
 					>
-						Skip
+						{t('words.skip')}
 					</Button>
 					<Button
 						onClick={() => {
@@ -190,7 +213,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 							setStep(3)
 						}}
 					>
-						Next
+						{t('words.next')}
 					</Button>
 				</Group>
 			</>
@@ -210,7 +233,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 							setStep(4)
 						}}
 					>
-						Skip
+						{t('words.skip')}
 					</Button>
 					<Button
 						onClick={() => {
@@ -218,7 +241,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 							setStep(4)
 						}}
 					>
-						Next
+						{t('words.next')}
 					</Button>
 				</Group>
 			</>
@@ -238,7 +261,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 							setStep(5)
 						}}
 					>
-						Skip
+						{t('words.skip')}
 					</Button>
 					<Button
 						onClick={() => {
@@ -246,7 +269,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 							setStep(5)
 						}}
 					>
-						Next
+						{t('words.next')}
 					</Button>
 				</Group>
 			</>
@@ -258,7 +281,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 			<>
 				<Title order={2}>{t('survey.question-5-title')}</Title>
 				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
-				<Text>answer options</Text>
+				<FormBirthyear />
 				<Group position='center'>
 					<Button
 						onClick={() => {
@@ -266,7 +289,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 							setSuccessMessage(true)
 						}}
 					>
-						Skip
+						{t('words.skip')}
 					</Button>
 					<Button
 						onClick={() => {
@@ -274,7 +297,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 							setSuccessMessage(true)
 						}}
 					>
-						Finish
+						{t('survey.finish')}
 					</Button>
 				</Group>
 			</>

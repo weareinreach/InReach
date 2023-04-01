@@ -4,6 +4,7 @@ import {
 	Popover,
 	Progress,
 	TextInput,
+	NumberInput,
 	useMantineTheme,
 	Text,
 	Select,
@@ -17,6 +18,7 @@ import { attributesByCategory } from '@weareinreach/api/generated/attributesByCa
 import { languageList } from '@weareinreach/api/generated/languages'
 import { useTranslation } from 'next-i18next'
 import { ComponentPropsWithRef, forwardRef, useState } from 'react'
+import { number } from 'zod'
 
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
@@ -104,15 +106,15 @@ export const FormEmail = ({ tContext }: { tContext?: 'professional' | 'student-p
 	)
 }
 
-export const FormPassword = () => {
+export const FormBirthyear = () => {
 	const { t } = useTranslation('common')
 	const form = useUserSurveyFormContext()
 	const theme = useMantineTheme()
-	type PasswordRequirementProps = {
+	type BirthyearRequirementProps = {
 		meets: boolean
 		label: string
 	}
-	const PasswordRequirement = ({ meets, label }: PasswordRequirementProps) => {
+	const BirthyearRequirement = ({ meets, label }: BirthyearRequirementProps) => {
 		const { t } = useTranslation('common')
 		const theme = useMantineTheme()
 		const variants = useCustomVariant()
@@ -132,55 +134,64 @@ export const FormPassword = () => {
 			</Text>
 		)
 	}
-	const passwordRequirements = [
-		{ re: /[0-9]/, label: 'password-req-number' },
-		{ re: /[a-z]/, label: 'password-req-lowercase' },
-		{ re: /[A-Z]/, label: 'password-req-uppercase' },
-		{ re: /[$&+,:;=?@#|'<>.^*()%!-]/, label: 'password-req-special' },
-	]
-	const passwordStrength = (password: string) => {
-		let multiplier = password.length > 5 ? 0 : 1
+	const BirthyearRequirements = [{ re: /[0-9]/, label: 'survey.birthyear-req-length' }]
+	const BirthyearStrength = (birthYear: number) => {
+		let multiplier = birthYear?.toString().length == 4 ? 0 : 1
 
-		passwordRequirements.forEach((requirement) => {
-			if (!requirement.re.test(password)) {
+		BirthyearRequirements.forEach((requirement) => {
+			if (!requirement.re.test(birthYear?.toString())) {
 				multiplier += 1
 			}
 		})
 
-		return Math.max(100 - (100 / (passwordRequirements.length + 1)) * multiplier, 10)
+		return Math.max(100 - (100 / (BirthyearRequirements.length + 1)) * multiplier, 10)
 	}
-	const pwChecks = passwordRequirements.map((requirement, index) => (
-		<PasswordRequirement
+	const birthYearChecks = BirthyearRequirements.map((requirement, index) => (
+		<BirthyearRequirement
 			key={index}
 			label={requirement.label}
-			meets={requirement.re.test(form.values.password)}
+			meets={requirement.re.test(form.values.birthYear?.toString())}
 		/>
 	))
-	const pwStrength = passwordStrength(form.values.password)
-	const pwMeterColor =
-		pwStrength === 100
+	const birthYearStrength = BirthyearStrength(form.values.birthYear)
+	const birthYearMeterColor =
+		birthYearStrength === 100
 			? theme.other.colors.primary.allyGreen
-			: pwStrength > 50
+			: birthYearStrength > 50
 			? theme.other.colors.tertiary.yellow
 			: theme.other.colors.tertiary.red
-	const [pwPopover, setPwPopover] = useState(false)
+	const [birthYearPopover, setbirthYearPopover] = useState(false)
 
 	return (
-		<Popover opened={pwPopover} position='bottom' width='target' transitionProps={{ transition: 'pop' }}>
+		<Popover
+			opened={birthYearPopover}
+			position='bottom'
+			width='target'
+			transitionProps={{ transition: 'pop' }}
+		>
 			<Popover.Target>
-				<PasswordInput
-					required
-					label={t('password')}
-					placeholder={t('enter-password-placeholder') as string}
-					{...form.getInputProps('password')}
-					onFocusCapture={() => setPwPopover(true)}
-					onBlurCapture={() => setPwPopover(false)}
+				<NumberInput
+					hideControls
+					label={t('survey.question-5-label')}
+					placeholder={t('survey.question-5-placeholder') as string}
+					{...form.getInputProps('birthYear')}
+					onFocusCapture={() => setbirthYearPopover(true)}
+					onBlurCapture={() => setbirthYearPopover(false)}
 				/>
 			</Popover.Target>
 			<Popover.Dropdown>
-				<Progress color={pwMeterColor} value={pwStrength} size={5} mb='xs' />
-				<PasswordRequirement label='password-req-length' meets={form.values.password.length >= 8} />
-				{pwChecks}
+				<Progress color={birthYearMeterColor} value={birthYearStrength} size={5} mb='xs' />
+				<BirthyearRequirement
+					label={t('survey.birthyear-req-value', {
+						year1: new Date().getFullYear() - 100,
+						year2: new Date().getFullYear(),
+					})}
+					meets={
+						form.values.birthYear >= new Date().getFullYear() - 100 &&
+						form.values.birthYear <= new Date().getFullYear()
+					}
+				/>
+				{birthYearChecks}
 			</Popover.Dropdown>
 		</Popover>
 	)

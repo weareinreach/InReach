@@ -73,7 +73,7 @@ export default {
 	},
 	args: {
 		component: Button,
-		children: 'Launch UserSurvey Modal',
+		children: 'Launch User Survey Modal',
 	},
 	render: (args) => (
 		<Center h='50vh'>

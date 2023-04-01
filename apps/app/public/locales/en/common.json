@@ -244,9 +244,14 @@
 		"question-subtitle": "Your answers are anonymous.",
 		"question-1-title": "How would you describe yourself?",
 		"question-2-title": "What is your country of origin?",
+		"question-2-placeholder": "Enter country...",
 		"question-3-title": "How do you identify?",
 		"question-4-title": "What is your ethnicity/race?",
-		"question-5-title": "How old are you?"
+		"question-5-title": "How old are you?",
+		"question-5-label": "Year of birth",
+		"question-5-placeholder": "Enter your birth year...",
+		"birthyear-req-length": "Year must be 4 digits, i.e 2005",
+		"birthyear-req-value": "Year must be between {{year1}} and {{year2}}"
 	},
 	"take-action": "Take Action",
 	"twitter": "Twitter",
@@ -279,6 +284,7 @@
 		"prev": "Prev",
 		"saved": "Saved",
 		"search": "Search",
+		"skip": "Skip",
 		"support": "Support"
 	},
 	"your-comments": "Your Comments",
