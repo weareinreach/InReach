@@ -10,6 +10,7 @@ import {
 	Title,
 	Stack,
 	rem,
+	ScrollArea,
 } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -36,6 +37,12 @@ const useStyles = createStyles((theme) => ({
 	},
 	skipNext: {
 		width: '50%',
+	},
+	answerContainer: {
+		height: '322px',
+	},
+	scroll: {
+		width: '100%',
 	},
 }))
 
@@ -145,20 +152,23 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		return (
 			<>
 				{titleSubtitle('survey.question-1-title', 'survey.question-subtitle')}
-				<Radio.Group value='selected'>
-					<Stack>
-						{surveyOptions?.immigration.map((item, index) => {
-							return (
-								<Radio
-									label={t(item.tsKey, { ns: 'user' })}
-									key={item.id}
-									value={item.id}
-									// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
-								/>
-							)
-						})}
-					</Stack>
-				</Radio.Group>
+				<ScrollArea h={332} offsetScrollbars className={classes.scroll}>
+					<Radio.Group value='selected' className={classes.answerContainer}>
+						<Stack>
+							{surveyOptions?.immigration.map((item, index) => {
+								return (
+									<Radio
+										label={t(item.tsKey, { ns: 'user' })}
+										key={item.id}
+										value={item.id}
+										// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
+									/>
+								)
+							})}
+						</Stack>
+					</Radio.Group>
+				</ScrollArea>
+
 				{modalButtons(2)}
 			</>
 		)
@@ -168,20 +178,22 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		return (
 			<>
 				{titleSubtitle('survey.question-2-title', 'survey.question-subtitle')}
-				<Radio.Group value='selected'>
-					<Stack>
-						{surveyOptions?.countries.map((item, index) => {
-							return (
-								<Radio
-									label={t(item.tsKey, { ns: 'user' })}
-									key={item.id}
-									value={item.id}
-									// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
-								/>
-							)
-						})}
-					</Stack>
-				</Radio.Group>
+				<ScrollArea h={332} offsetScrollbars className={classes.scroll}>
+					<Radio.Group value='selected' className={classes.answerContainer}>
+						<Stack>
+							{surveyOptions?.countries.map((item, index) => {
+								return (
+									<Radio
+										label={t(item.tsKey, { ns: 'user' })}
+										key={item.id}
+										value={item.id}
+										// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
+									/>
+								)
+							})}
+						</Stack>
+					</Radio.Group>
+				</ScrollArea>
 				{modalButtons(3)}
 			</>
 		)
@@ -191,22 +203,24 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		return (
 			<>
 				{titleSubtitle('survey.question-3-title', 'survey.question-subtitle')}
-				<Checkbox.Group>
-					<Stack>
-						{surveyOptions?.sog.map((item, index) => {
-							return (
-								<Checkbox
-									value={item.id}
-									checked={false}
-									label={t(item.tsKey, { ns: 'user' })}
-									key={item.id}
+				<ScrollArea h={332} offsetScrollbars className={classes.scroll}>
+					<Checkbox.Group className={classes.answerContainer}>
+						<Stack>
+							{surveyOptions?.sog.map((item, index) => {
+								return (
+									<Checkbox
+										value={item.id}
+										checked={false}
+										label={t(item.tsKey, { ns: 'user' })}
+										key={item.id}
 
-									// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
-								/>
-							)
-						})}
-					</Stack>
-				</Checkbox.Group>
+										// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
+									/>
+								)
+							})}
+						</Stack>
+					</Checkbox.Group>
+				</ScrollArea>
 				{modalButtons(4)}
 			</>
 		)
@@ -216,22 +230,24 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		return (
 			<>
 				{titleSubtitle('survey.question-4-title', 'survey.question-subtitle')}
-				<Checkbox.Group>
-					<Stack>
-						{surveyOptions?.ethnicity.map((item, index) => {
-							return (
-								<Checkbox
-									value={item.id}
-									checked={false}
-									label={t(item.tsKey, { ns: 'user' })}
-									key={item.id}
+				<ScrollArea h={332} offsetScrollbars className={classes.scroll}>
+					<Checkbox.Group className={classes.answerContainer}>
+						<Stack>
+							{surveyOptions?.ethnicity.map((item, index) => {
+								return (
+									<Checkbox
+										value={item.id}
+										checked={false}
+										label={t(item.tsKey, { ns: 'user' })}
+										key={item.id}
 
-									// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
-								/>
-							)
-						})}
-					</Stack>
-				</Checkbox.Group>
+										// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
+									/>
+								)
+							})}
+						</Stack>
+					</Checkbox.Group>
+				</ScrollArea>
 				{modalButtons(5)}
 			</>
 		)

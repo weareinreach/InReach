@@ -55,6 +55,12 @@ const useSelectItemStyles = createStyles((theme) => ({
 	},
 }))
 
+const useStyles = createStyles((theme) => ({
+	answerContainer: {
+		height: '336px',
+	},
+}))
+
 const SelectItemSingleLine = forwardRef<HTMLDivElement, SingleItemSelectProps>(
 	({ label, ...others }, ref) => {
 		const variants = useCustomVariant()
@@ -82,6 +88,7 @@ SelectItemTwoLines.displayName = 'Selection Item'
 
 export const FormBirthyear = () => {
 	const { t } = useTranslation('common')
+	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 	const theme = useMantineTheme()
 	type BirthyearRequirementProps = {
@@ -143,7 +150,7 @@ export const FormBirthyear = () => {
 			width='target'
 			transitionProps={{ transition: 'pop' }}
 		>
-			<Popover.Target>
+			<Popover.Target className={classes.answerContainer}>
 				<NumberInput
 					label={t('survey.question-5-label')}
 					placeholder={t('survey.question-5-placeholder') as string}
