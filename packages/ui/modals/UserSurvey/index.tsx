@@ -5,7 +5,7 @@ import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { useTranslation, Trans } from 'next-i18next'
 import { useState, forwardRef, Dispatch, SetStateAction } from 'react'
-import { z } from 'zod'
+import { string, z } from 'zod'
 
 import { Link, Button, ModalTitleBreadcrumb } from '~ui/components/core'
 import { useScreenSize, useCustomVariant } from '~ui/hooks'
@@ -80,11 +80,59 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const titleRightSideProps = successMessage ? undefined : t('step-x-y', { ns: 'common', x: step, y: 5 })
 	const modalTitle = <ModalTitle breadcrumb={breadcrumbProps} rightText={titleRightSideProps} />
 
+	const modalButtons = (stepNumber: number) => {
+		return (
+			<Group position='center'>
+				<Button
+					onClick={() => {
+						setStep(stepNumber)
+					}}
+				>
+					{t('words.skip')}
+				</Button>
+				<Button
+					onClick={() => {
+						setStep(stepNumber)
+					}}
+				>
+					{t('words.next')}
+				</Button>
+			</Group>
+		)
+	}
+
+	const modalButtonsFinish = (
+		<Group position='center'>
+			<Button
+				onClick={() => {
+					setSuccessMessage(true)
+				}}
+			>
+				{t('words.skip')}
+			</Button>
+			<Button
+				onClick={() => {
+					setSuccessMessage(true)
+				}}
+			>
+				{t('survey.finish')}
+			</Button>
+		</Group>
+	)
+
+	const titleSubtitle = (t1: string, t2: string) => {
+		return (
+			<>
+				<Title order={2}>{t(t1)}</Title>
+				<Text variant={variants.Text.darkGray}>{t(t2)}</Text>
+			</>
+		)
+	}
+
 	const step1 = () => {
 		return (
 			<>
-				<Title order={2}>{t('survey.question-1-title')}</Title>
-				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
+				{titleSubtitle('survey.question-1-title', 'survey.question-subtitle')}
 				<Radio.Group value='selected'>
 					<Stack>
 						{surveyOptions?.immigration.map((item, index) => {
@@ -99,24 +147,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						})}
 					</Stack>
 				</Radio.Group>
-				<Group position='center'>
-					<Button
-						onClick={() => {
-							setStepOption('step2')
-							setStep(2)
-						}}
-					>
-						{t('words.skip')}
-					</Button>
-					<Button
-						onClick={() => {
-							setStepOption('step2')
-							setStep(2)
-						}}
-					>
-						{t('words.next')}
-					</Button>
-				</Group>
+				{modalButtons(2)}
 			</>
 		)
 	}
@@ -124,8 +155,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const step2 = () => {
 		return (
 			<>
-				<Title order={2}>{t('survey.question-2-title')}</Title>
-				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
+				{titleSubtitle('survey.question-2-title', 'survey.question-subtitle')}
 				<Radio.Group value='selected'>
 					<Stack>
 						{surveyOptions?.countries.map((item, index) => {
@@ -140,24 +170,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						})}
 					</Stack>
 				</Radio.Group>
-				<Group position='center'>
-					<Button
-						onClick={() => {
-							setStepOption('step3')
-							setStep(3)
-						}}
-					>
-						{t('words.skip')}
-					</Button>
-					<Button
-						onClick={() => {
-							setStepOption('step3')
-							setStep(3)
-						}}
-					>
-						{t('words.next')}
-					</Button>
-				</Group>
+				{modalButtons(3)}
 			</>
 		)
 	}
@@ -165,8 +178,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const step3 = () => {
 		return (
 			<>
-				<Title order={2}>{t('survey.question-3-title')}</Title>
-				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
+				{titleSubtitle('survey.question-3-title', 'survey.question-subtitle')}
 				<Checkbox.Group>
 					<Stack>
 						{surveyOptions?.sog.map((item, index) => {
@@ -183,24 +195,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						})}
 					</Stack>
 				</Checkbox.Group>
-				<Group position='center'>
-					<Button
-						onClick={() => {
-							setStepOption('step4')
-							setStep(4)
-						}}
-					>
-						{t('words.skip')}
-					</Button>
-					<Button
-						onClick={() => {
-							setStepOption('step4')
-							setStep(4)
-						}}
-					>
-						{t('words.next')}
-					</Button>
-				</Group>
+				{modalButtons(4)}
 			</>
 		)
 	}
@@ -208,8 +203,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const step4 = () => {
 		return (
 			<>
-				<Title order={2}>{t('survey.question-4-title')}</Title>
-				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
+				{titleSubtitle('survey.question-4-title', 'survey.question-subtitle')}
 				<Checkbox.Group>
 					<Stack>
 						{surveyOptions?.ethnicity.map((item, index) => {
@@ -226,24 +220,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 						})}
 					</Stack>
 				</Checkbox.Group>
-				<Group position='center'>
-					<Button
-						onClick={() => {
-							setStepOption('step5')
-							setStep(5)
-						}}
-					>
-						{t('words.skip')}
-					</Button>
-					<Button
-						onClick={() => {
-							setStepOption('step5')
-							setStep(5)
-						}}
-					>
-						{t('words.next')}
-					</Button>
-				</Group>
+				{modalButtons(5)}
 			</>
 		)
 	}
@@ -251,27 +228,9 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const step5 = () => {
 		return (
 			<>
-				<Title order={2}>{t('survey.question-5-title')}</Title>
-				<Text variant={variants.Text.darkGray}>{t('survey.question-subtitle')}</Text>
+				{titleSubtitle('survey.question-5-title', 'survey.question-subtitle')}
 				<FormBirthyear />
-				<Group position='center'>
-					<Button
-						onClick={() => {
-							setStepOption('step6')
-							setSuccessMessage(true)
-						}}
-					>
-						{t('words.skip')}
-					</Button>
-					<Button
-						onClick={() => {
-							setStepOption('step6')
-							setSuccessMessage(true)
-						}}
-					>
-						{t('survey.finish')}
-					</Button>
-				</Group>
+				{modalButtonsFinish}
 			</>
 		)
 	}
@@ -292,28 +251,28 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		</>
 	)
 
-	const getQuestion = (q: any) => {
+	const getQuestion = (q: number) => {
 		switch (q) {
-			case 'step1': {
+			case 1: {
 				return step1()
 			}
-			case 'step2': {
+			case 2: {
 				return step2()
 			}
-			case 'step3': {
+			case 3: {
 				return step3()
 			}
-			case 'step4': {
+			case 4: {
 				return step4()
 			}
-			case 'step5': {
+			case 5: {
 				return step5()
 			}
 			default:
 				return step1()
 		}
 	}
-	const UserSurveyBody = <>{getQuestion(stepOption)}</>
+	const UserSurveyBody = <>{getQuestion(step)}</>
 
 	const successBody = (
 		<>
