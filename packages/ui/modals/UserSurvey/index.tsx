@@ -1,4 +1,16 @@
-import { Modal, Box, type ButtonProps, Checkbox, Group, Radio, Text, Title, Stack } from '@mantine/core'
+import {
+	Modal,
+	Box,
+	type ButtonProps,
+	Checkbox,
+	createStyles,
+	Group,
+	Radio,
+	Text,
+	Title,
+	Stack,
+	rem,
+} from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
@@ -13,7 +25,19 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { UserSurveyFormProvider, useUserSurveyForm } from './context'
 import { FormBirthyear } from './fields'
+import { SecondaryWithIcon } from '../../components/core/Button.stories'
 import { ModalTitle } from '../ModalTitle'
+
+const useStyles = createStyles((theme) => ({
+	btnGroup: {
+		width: '100%',
+		paddingTop: rem(20),
+		borderTop: `solid ${rem(1)} ${theme.other.colors.primary.lightGray}`,
+	},
+	skipNext: {
+		width: '50%',
+	},
+}))
 
 export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyProps>((props, ref) => {
 	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
@@ -24,6 +48,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const [step, setStep] = useState<number>(1)
 	const [successMessage, setSuccessMessage] = useState(false)
 	const variants = useCustomVariant()
+	const { classes } = useStyles()
 	const UserSurveyAction = api.user.submitSurvey.useMutation({
 		onSuccess: () => {
 			setSuccessMessage(true)
@@ -82,43 +107,30 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 
 	const modalButtons = (stepNumber: number) => {
 		return (
-			<Group position='center'>
+			<Group position='center' className={classes.btnGroup} noWrap>
 				<Button
+					className={classes.skipNext}
+					variant={'secondary-icon'}
 					onClick={() => {
-						setStep(stepNumber)
+						//TODO replace setSuccessMessage with survey submit action
+						stepNumber === 6 ? setSuccessMessage(true) : setStep(stepNumber)
 					}}
 				>
 					{t('words.skip')}
 				</Button>
 				<Button
+					className={classes.skipNext}
+					variant={'primary-icon'}
 					onClick={() => {
-						setStep(stepNumber)
+						//TODO replace setSuccessMessage with survey submit action
+						stepNumber === 6 ? setSuccessMessage(true) : setStep(stepNumber)
 					}}
 				>
-					{t('words.next')}
+					{stepNumber === 6 ? t('survey.finish') : t('words.next')}
 				</Button>
 			</Group>
 		)
 	}
-
-	const modalButtonsFinish = (
-		<Group position='center'>
-			<Button
-				onClick={() => {
-					setSuccessMessage(true)
-				}}
-			>
-				{t('words.skip')}
-			</Button>
-			<Button
-				onClick={() => {
-					setSuccessMessage(true)
-				}}
-			>
-				{t('survey.finish')}
-			</Button>
-		</Group>
-	)
 
 	const titleSubtitle = (t1: string, t2: string) => {
 		return (
@@ -230,7 +242,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 			<>
 				{titleSubtitle('survey.question-5-title', 'survey.question-subtitle')}
 				<FormBirthyear />
-				{modalButtonsFinish}
+				{modalButtons(6)}
 			</>
 		)
 	}
@@ -242,13 +254,9 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	}
 
 	const UserSurveyButton = (
-		<>
-			<Button onClick={submitHandler}>Skip</Button>
-			<Button onClick={submitHandler}>Next</Button>
-			<Button disabled={!form.isValid()} onClick={submitHandler} loading={UserSurveyAction.isLoading}>
-				{t('sign-up')}
-			</Button>
-		</>
+		<Button disabled={!form.isValid()} onClick={submitHandler} loading={UserSurveyAction.isLoading}>
+			{t('sign-up')}
+		</Button>
 	)
 
 	const getQuestion = (q: number) => {
@@ -272,7 +280,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 				return step1()
 		}
 	}
-	const UserSurveyBody = <>{getQuestion(step)}</>
+	const UserSurveyBody = getQuestion(step)
 
 	const successBody = (
 		<>
