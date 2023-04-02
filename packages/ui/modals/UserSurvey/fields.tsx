@@ -80,32 +80,6 @@ const SelectItemTwoLines = forwardRef<HTMLDivElement, ItemProps>(({ label, descr
 })
 SelectItemTwoLines.displayName = 'Selection Item'
 
-export const FormName = ({ tContext }: { tContext: 'alias' | 'full' }) => {
-	const { t } = useTranslation('common')
-	const form = useUserSurveyFormContext()
-	return (
-		<TextInput
-			required
-			label={t('sign-up-name', { context: tContext })}
-			description={tContext === 'alias' ? t('sign-up-name-use-any') : undefined}
-			placeholder={t('sign-up-placeholder-name', { context: tContext }) as string}
-			{...form.getInputProps('name')}
-		/>
-	)
-}
-export const FormEmail = ({ tContext }: { tContext?: 'professional' | 'student-pro' }) => {
-	const { t } = useTranslation('common')
-	const form = useUserSurveyFormContext()
-	return (
-		<TextInput
-			required
-			label={t('email', { context: tContext })}
-			placeholder={t('enter-email-placeholder') as string}
-			{...form.getInputProps('email')}
-		/>
-	)
-}
-
 export const FormBirthyear = () => {
 	const { t } = useTranslation('common')
 	const form = useUserSurveyFormContext()
@@ -171,7 +145,6 @@ export const FormBirthyear = () => {
 		>
 			<Popover.Target>
 				<NumberInput
-					hideControls
 					label={t('survey.question-5-label')}
 					placeholder={t('survey.question-5-placeholder') as string}
 					{...form.getInputProps('birthYear')}
@@ -202,115 +175,8 @@ interface ItemProps extends ComponentPropsWithRef<'div'> {
 	description: string
 }
 
-export const LanguageSelect = () => {
-	const { t } = useTranslation('common')
-	const form = useUserSurveyFormContext()
-	// BUG: [IN-792] Search should also search by Native Name
-	const groupedLangs = languageList.map(({ common, ...lang }) => ({
-		...lang,
-		group: t('lang', { context: common ? 'common' : 'all-other' }),
-	}))
-
-	return (
-		<Select
-			label={t('lang', { context: 'choose' })}
-			data={groupedLangs}
-			searchable
-			itemComponent={SelectItemTwoLines}
-			{...form.getInputProps('language')}
-		/>
-	)
-}
-
-export const FormLocation = () => {
-	const { t, i18n } = useTranslation('common')
-	const form = useUserSurveyFormContext()
-	const variants = useCustomVariant()
-	const { classes } = useLocationStyles()
-	const [locationSearch, setLocationSearch] = useState('')
-	const [search] = useDebouncedValue(form.values.searchLocation, 400)
-	const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
-	api.geo.autocomplete.useQuery(
-		{ search, locale: simpleLocale(i18n.language), cityOnly: true },
-		{
-			enabled: search !== '',
-			onSuccess: ({ results }) =>
-				form.setValues({
-					locationOptions: results.map((result) => ({
-						value: `${result.value}, ${result.subheading}`,
-						label: `${result.value}, ${result.subheading}`,
-						placeId: result.placeId,
-					})),
-				}),
-			refetchOnWindowFocus: false,
-		}
-	)
-	api.geo.geoByPlaceId.useQuery(locationSearch, {
-		enabled: locationSearch !== '',
-		onSuccess: ({ result }) => {
-			if (result)
-				form.setValues({ location: { city: result.city, govDist: result.govDist, country: result.country } })
-		},
-	})
-	console.log(form.values)
-	return (
-		<Autocomplete
-			itemComponent={SelectItemSingleLine}
-			classNames={{ itemsWrapper: classes.autocompleteWrapper }}
-			data={form.values.locationOptions}
-			label={t('current-location')}
-			onItemSubmit={(e) => {
-				console.log(e)
-				setLocationSearch(e.placeId)
-			}}
-			{...form.getInputProps('searchLocation')}
-		/>
-	)
-}
 type SingleItemSelectProps = {
 	value: string
 	label: string
 	placeId?: string
-}
-
-export const FormLawPractice = () => {
-	const { t } = useTranslation(['common', 'attribute'])
-	const form = useUserSurveyFormContext()
-
-	const options = attributesByCategory.find((item) => item.tag === 'law-practice-options')
-	const selectItems =
-		options?.attributes.map((item) => ({
-			label: t(item.attribute.tsKey, { ns: item.attribute.tsNs }),
-			value: item.attribute.id,
-		})) ?? []
-
-	return (
-		<Select
-			label={t('sign-up-select-law-practice')}
-			data={selectItems}
-			itemComponent={SelectItemSingleLine}
-			{...form.getInputProps('lawPractice')}
-		/>
-	)
-}
-
-export const FormServiceProvider = () => {
-	const { t } = useTranslation(['common', 'attribute'])
-	const form = useUserSurveyFormContext()
-
-	const options = attributesByCategory.find((item) => item.tag === 'service-provider-options')
-	const selectItems =
-		options?.attributes.map((item) => ({
-			label: t(item.attribute.tsKey, { ns: item.attribute.tsNs }),
-			value: item.attribute.id,
-		})) ?? []
-
-	return (
-		<Select
-			label={t('sign-up-select-service-provider')}
-			data={selectItems}
-			itemComponent={SelectItemSingleLine}
-			{...form.getInputProps('servProvider')}
-		/>
-	)
 }

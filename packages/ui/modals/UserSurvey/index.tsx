@@ -1,16 +1,4 @@
-import {
-	Modal,
-	Box,
-	type ButtonProps,
-	Checkbox,
-	Group,
-	Radio,
-	Text,
-	Title,
-	Stack,
-	TextInput,
-	Grid,
-} from '@mantine/core'
+import { Modal, Box, type ButtonProps, Checkbox, Group, Radio, Text, Title, Stack } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
@@ -24,80 +12,8 @@ import { useScreenSize, useCustomVariant } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { UserSurveyFormProvider, useUserSurveyForm } from './context'
-import {
-	FormEmail,
-	FormName,
-	// FormPassword,
-	LanguageSelect,
-	FormLocation,
-	FormLawPractice,
-	FormServiceProvider,
-	FormBirthyear,
-} from './fields'
-import { LoginModalLauncher } from '../Login'
+import { FormBirthyear } from './fields'
 import { ModalTitle } from '../ModalTitle'
-
-// type RichTranslateProps = {
-// 	i18nKey: string
-// 	values?: Record<string, any>
-// 	stateSetter?: Dispatch<SetStateAction<string | null>>
-// 	handler?: {
-// 		open: () => void
-// 		close: () => void
-// 		toggle: () => void
-// 	}
-// }
-// export const RichTranslate = ({ stateSetter, handler, ...props }: RichTranslateProps) => {
-// 	const { t } = useTranslation()
-// 	const variants = useCustomVariant()
-
-// 	return (
-// 		<Trans
-// 			tOptions={{
-// 				returnObjects: true,
-// 				joinArrays: '',
-// 			}}
-// 			t={t}
-// 			components={{
-// 				emojiLg: <Text fz={40}>.</Text>,
-// 				title2: <Title order={2}>.</Title>,
-// 				title3: (
-// 					<Title order={3} ta='center'>
-// 						.
-// 					</Title>
-// 				),
-// 				textDarkGray: (
-// 					<Text variant={variants.Text.darkGray} ta='center'>
-// 						.
-// 					</Text>
-// 				),
-// 				loginLink: (
-// 					<LoginModalLauncher
-// 						external
-// 						component={Link}
-// 						key={0}
-// 						variant={variants.Link.inheritStyle}
-// 						// onClick={() => handler.close()}
-// 					>
-// 						.
-// 					</LoginModalLauncher>
-// 				),
-// 				button: (
-// 					<Button
-// 						variant='secondary-icon'
-// 						onClick={
-// 							stateSetter ? (e) => stateSetter(e.currentTarget.getAttribute('data-option')) : undefined
-// 						}
-// 					>
-// 						.
-// 					</Button>
-// 				),
-// 				group: <Stack align='center'>.</Stack>,
-// 			}}
-// 			{...props}
-// 		/>
-// 	)
-// }
 
 export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyProps>((props, ref) => {
 	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
@@ -119,11 +35,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 
 	const UserSurveySchema = z
 		.object({
-			name: z.string(),
-			email: z.string().email({ message: t('form-error-enter-valid-email') as string }),
-			password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
-				message: t('form-error-password-req') as string,
-			}),
 			birthYear: z.number(),
 			reasonForJoin: z.string(),
 			communityIds: z.array(z.string()),
@@ -140,15 +51,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const form = useUserSurveyForm({
 		validate: zodResolver(UserSurveySchema),
 		initialValues: {
-			email: '',
-			name: '',
-			password: '',
-			language: router.locale,
-			searchLocation: '',
-			locationOptions: [],
-			userType: 'seeker',
-			cognitoSubject: t('confirm-account.subject') as string,
-			cognitoMessage: t('confirm-account.message') as string,
 			// birthYear: 0,
 			reasonForJoin: '',
 			communityIds: [],
@@ -178,7 +80,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const titleRightSideProps = successMessage ? undefined : t('step-x-y', { ns: 'common', x: step, y: 5 })
 	const modalTitle = <ModalTitle breadcrumb={breadcrumbProps} rightText={titleRightSideProps} />
 
-	// const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={setStepOption} handler={handler} />
 	const step1 = () => {
 		return (
 			<>
@@ -391,55 +292,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		</>
 	)
 
-	// const step2 = () => {
-	// 	let nameContext: 'alias' | 'full' = 'alias'
-	// 	let emailContext: 'professional' | 'student-pro' | undefined = undefined
-	// 	let langSelect = false
-	// 	let location = false
-	// 	let lawPractice = false
-	// 	let servProvider = false
-
-	// 	switch (stepOption) {
-	// 		case 'law': {
-	// 			nameContext = 'full'
-	// 			emailContext = 'student-pro'
-	// 			langSelect = true
-	// 			location = true
-	// 			lawPractice = true
-	// 			form.setFieldValue('userType', 'provider')
-	// 			break
-	// 		}
-	// 		case 'servpro': {
-	// 			nameContext = 'full'
-	// 			emailContext = 'professional'
-	// 			langSelect = true
-	// 			location = true
-	// 			servProvider = true
-	// 			form.setFieldValue('userType', 'provider')
-	// 			break
-	// 		}
-	// 		case 'lcr': {
-	// 			nameContext = 'full'
-	// 			langSelect = true
-	// 			location = true
-	// 			form.setFieldValue('userType', 'lcr')
-	// 		}
-	// 	}
-
-	// 	return (
-	// 		<Stack>
-	// 			<FormName tContext={nameContext} />
-	// 			<FormEmail tContext={emailContext} />
-	// 			<FormPassword />
-	// 			{langSelect && <LanguageSelect />}
-	// 			{location && <FormLocation />}
-	// 			{lawPractice && <FormLawPractice />}
-	// 			{servProvider && <FormServiceProvider />}
-	// 			{UserSurveyButton}
-	// 		</Stack>
-	// 	)
-	// }
-
 	const getQuestion = (q: any) => {
 		switch (q) {
 			case 'step1': {
@@ -461,13 +313,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 				return step1()
 		}
 	}
-	const UserSurveyBody = (
-		<>
-			{/* <RichTranslate i18nKey='sign-up-header' handler={handler} /> */}
-			{/* {stepOption === 'step1' ? step1() : step2()} */}
-			{getQuestion(stepOption)}
-		</>
-	)
+	const UserSurveyBody = <>{getQuestion(stepOption)}</>
 
 	const successBody = (
 		<>
