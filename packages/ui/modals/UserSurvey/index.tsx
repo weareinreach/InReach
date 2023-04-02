@@ -51,7 +51,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const form = useUserSurveyForm({
 		validate: zodResolver(UserSurveySchema),
 		initialValues: {
-			// birthYear: 0,
+			birthYear: undefined,
 			reasonForJoin: '',
 			communityIds: [],
 			ethnicityIds: [],
