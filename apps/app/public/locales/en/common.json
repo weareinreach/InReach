@@ -250,8 +250,7 @@
 		"question-5-title": "How old are you?",
 		"question-5-label": "Year of birth",
 		"question-5-placeholder": "Enter your birth year...",
-		"birthyear-req-length": "Year must be 4 digits, i.e 2005",
-		"birthyear-req-value": "Year must be between {{year1}} and {{year2}}"
+		"birthyear-req-value": "Year must be between {{year1}} and {{year2}}, i.e 2005"
 	},
 	"take-action": "Take Action",
 	"twitter": "Twitter",

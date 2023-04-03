@@ -26,7 +26,6 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { UserSurveyFormProvider, useUserSurveyForm } from './context'
 import { FormBirthyear } from './fields'
-import { SecondaryWithIcon } from '../../components/core/Button.stories'
 import { ModalTitle } from '../ModalTitle'
 
 const useStyles = createStyles((theme) => ({
@@ -62,7 +61,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		},
 	})
 
-	console.log(surveyOptions)
 	const router = useRouter()
 
 	const UserSurveySchema = z
@@ -74,32 +72,40 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 			identifyIds: z.array(z.string()),
 			countryOriginId: z.string(),
 			immigrationId: z.string(),
-			currentCity: z.string(),
-			currentGovDistId: z.string(),
-			currentCountryId: z.string(),
 		})
 		.partial()
 
 	const form = useUserSurveyForm({
 		validate: zodResolver(UserSurveySchema),
 		initialValues: {
-			birthYear: undefined,
+			birthYear: '',
 			reasonForJoin: '',
 			communityIds: [],
 			ethnicityIds: [],
 			identifyIds: [],
 			countryOriginId: '',
 			immigrationId: '',
-			currentCity: '',
-			currentGovDistId: '',
-			currentCountryId: '',
 		},
 		validateInputOnBlur: true,
 	})
 
+	const submitHandler = () => {
+		console.log(form.values)
+		setSuccessMessage(true)
+		//TODO call UserSurveyAction
+		UserSurveyAction.mutate(form.values)
+	}
+
 	const breadcrumbProps: ModalTitleBreadcrumb =
 		stepOption === null || successMessage
-			? { option: 'close', onClick: () => handler.close() }
+			? {
+					option: 'close',
+					onClick: () => {
+						setStep(1)
+						setStepOption(null)
+						handler.close()
+					},
+			  }
 			: {
 					option: 'back',
 					backTo: 'none',
@@ -115,25 +121,11 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const modalButtons = (stepNumber: number) => {
 		return (
 			<Group position='center' className={classes.btnGroup} noWrap>
-				<Button
-					className={classes.skipNext}
-					variant={'secondary-icon'}
-					onClick={() => {
-						//TODO replace setSuccessMessage with survey submit action
-						stepNumber === 6 ? setSuccessMessage(true) : setStep(stepNumber)
-					}}
-				>
+				<Button className={classes.skipNext} variant={'secondary-icon'} onClick={() => setStep(stepNumber)}>
 					{t('words.skip')}
 				</Button>
-				<Button
-					className={classes.skipNext}
-					variant={'primary-icon'}
-					onClick={() => {
-						//TODO replace setSuccessMessage with survey submit action
-						stepNumber === 6 ? setSuccessMessage(true) : setStep(stepNumber)
-					}}
-				>
-					{stepNumber === 6 ? t('survey.finish') : t('words.next')}
+				<Button className={classes.skipNext} variant={'primary-icon'} onClick={() => setStep(stepNumber)}>
+					{t('words.next')}
 				</Button>
 			</Group>
 		)
@@ -152,7 +144,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		return (
 			<>
 				{titleSubtitle('survey.question-1-title', 'survey.question-subtitle')}
-				<ScrollArea h={332} offsetScrollbars className={classes.scroll}>
+				<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 					<Radio.Group value='selected' className={classes.answerContainer}>
 						<Stack>
 							{surveyOptions?.immigration.map((item, index) => {
@@ -178,7 +170,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		return (
 			<>
 				{titleSubtitle('survey.question-2-title', 'survey.question-subtitle')}
-				<ScrollArea h={332} offsetScrollbars className={classes.scroll}>
+				<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 					<Radio.Group value='selected' className={classes.answerContainer}>
 						<Stack>
 							{surveyOptions?.countries.map((item, index) => {
@@ -203,7 +195,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		return (
 			<>
 				{titleSubtitle('survey.question-3-title', 'survey.question-subtitle')}
-				<ScrollArea h={332} offsetScrollbars className={classes.scroll}>
+				<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 					<Checkbox.Group className={classes.answerContainer}>
 						<Stack>
 							{surveyOptions?.sog.map((item, index) => {
@@ -230,7 +222,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		return (
 			<>
 				{titleSubtitle('survey.question-4-title', 'survey.question-subtitle')}
-				<ScrollArea h={332} offsetScrollbars className={classes.scroll}>
+				<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 					<Checkbox.Group className={classes.answerContainer}>
 						<Stack>
 							{surveyOptions?.ethnicity.map((item, index) => {
@@ -258,15 +250,26 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 			<>
 				{titleSubtitle('survey.question-5-title', 'survey.question-subtitle')}
 				<FormBirthyear />
-				{modalButtons(6)}
+				<Group position='center' className={classes.btnGroup} noWrap>
+					<Button
+						className={classes.skipNext}
+						variant={'secondary-icon'}
+						onClick={submitHandler}
+						loading={UserSurveyAction.isLoading}
+					>
+						{t('words.skip')}
+					</Button>
+					<Button
+						className={classes.skipNext}
+						variant={'primary-icon'}
+						onClick={submitHandler}
+						loading={UserSurveyAction.isLoading}
+					>
+						{t('survey.finish')}
+					</Button>
+				</Group>
 			</>
 		)
-	}
-
-	const submitHandler = () => {
-		if (form.isValid()) {
-			UserSurveyAction.mutate(form.values)
-		}
 	}
 
 	const UserSurveyButton = (

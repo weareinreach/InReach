@@ -4,6 +4,7 @@ import {
 	Popover,
 	Progress,
 	TextInput,
+	Checkbox,
 	NumberInput,
 	useMantineTheme,
 	Text,
@@ -91,89 +92,22 @@ export const FormBirthyear = () => {
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 	const theme = useMantineTheme()
-	type BirthyearRequirementProps = {
-		meets: boolean
-		label: string
-	}
-	const BirthyearRequirement = ({ meets, label }: BirthyearRequirementProps) => {
-		const { t } = useTranslation('common')
-		const theme = useMantineTheme()
-		const variants = useCustomVariant()
-		return (
-			<Text
-				variant={variants.Text.utility4}
-				color={meets ? theme.other.colors.primary.lightGray : theme.other.colors.tertiary.red}
-				sx={{ display: 'flex', alignItems: 'center' }}
-				mt={8}
-			>
-				{meets ? (
-					<Icon icon='carbon:checkmark-filled' height={20} color={theme.other.colors.primary.allyGreen} />
-				) : (
-					<Icon icon='carbon:warning-filled' height={20} color={theme.other.colors.tertiary.red} />
-				)}
-				<Box ml={10}>{t(label, { ns: 'common' })}</Box>
-			</Text>
-		)
-	}
-	const BirthyearRequirements = [{ re: /[0-9]/, label: 'survey.birthyear-req-length' }]
-	const BirthyearStrength = (birthYear: number) => {
-		let multiplier = birthYear?.toString().length == 4 ? 0 : 1
 
-		BirthyearRequirements.forEach((requirement) => {
-			if (!requirement.re.test(birthYear?.toString())) {
-				multiplier += 1
-			}
-		})
-
-		return Math.max(100 - (100 / (BirthyearRequirements.length + 1)) * multiplier, 10)
-	}
-	const birthYearChecks = BirthyearRequirements.map((requirement, index) => (
-		<BirthyearRequirement
-			key={index}
-			label={requirement.label}
-			meets={requirement.re.test(form.values.birthYear?.toString())}
-		/>
-	))
-	const birthYearStrength = BirthyearStrength(form.values.birthYear)
-	const birthYearMeterColor =
-		birthYearStrength === 100
-			? theme.other.colors.primary.allyGreen
-			: birthYearStrength > 50
-			? theme.other.colors.tertiary.yellow
-			: theme.other.colors.tertiary.red
-	const [birthYearPopover, setbirthYearPopover] = useState(false)
+	const maxYear = new Date().getFullYear()
+	const minYear = maxYear - 100
 
 	return (
-		<Popover
-			opened={birthYearPopover}
-			position='bottom'
-			width='target'
-			transitionProps={{ transition: 'pop' }}
-		>
-			<Popover.Target className={classes.answerContainer}>
-				<NumberInput
-					label={t('survey.question-5-label')}
-					placeholder={t('survey.question-5-placeholder') as string}
-					{...form.getInputProps('birthYear')}
-					onFocusCapture={() => setbirthYearPopover(true)}
-					onBlurCapture={() => setbirthYearPopover(false)}
-				/>
-			</Popover.Target>
-			<Popover.Dropdown>
-				<Progress color={birthYearMeterColor} value={birthYearStrength} size={5} mb='xs' />
-				<BirthyearRequirement
-					label={t('survey.birthyear-req-value', {
-						year1: new Date().getFullYear() - 100,
-						year2: new Date().getFullYear(),
-					})}
-					meets={
-						form.values.birthYear >= new Date().getFullYear() - 100 &&
-						form.values.birthYear <= new Date().getFullYear()
-					}
-				/>
-				{birthYearChecks}
-			</Popover.Dropdown>
-		</Popover>
+		<NumberInput
+			className={classes.answerContainer}
+			label={t('survey.question-5-label')}
+			defaultValue=''
+			hideControls
+			min={minYear}
+			max={maxYear}
+			placeholder={t('survey.question-5-placeholder') as string}
+			{...form.getInputProps('birthYear')}
+			error={t('survey.birthyear-req-value', { year1: minYear, year2: maxYear }) as string}
+		/>
 	)
 }
 

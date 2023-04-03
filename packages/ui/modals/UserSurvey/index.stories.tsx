@@ -18,6 +18,13 @@ export default {
 				type: 'query',
 				response: { ...surveyOptions },
 			}),
+			getTRPCMock({
+				path: ['user', 'submitSurvey'],
+				type: 'mutation',
+				response: {
+					success: true,
+				},
+			}),
 		],
 	},
 	args: {
