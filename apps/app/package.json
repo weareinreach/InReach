@@ -23,7 +23,7 @@
 		"@aws-sdk/client-s3": "3.304.0",
 		"@aws-sdk/signature-v4": "3.303.0",
 		"@crowdin/crowdin-api-client": "1.22.1",
-		"@crowdin/ota-client": "0.7.0",
+		"@crowdin/ota-client": "1.0.0",
 		"@emotion/react": "11.10.6",
 		"@emotion/server": "11.10.0",
 		"@iconify/react": "4.1.0",
