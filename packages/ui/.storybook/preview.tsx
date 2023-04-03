@@ -9,7 +9,15 @@ import { BaseRouter } from 'next/dist/shared/lib/router/router'
 import { Router } from 'next/router'
 import React from 'react'
 
-import { WithI18n, WithMantine, WithTRPC, Layouts, WithStrictMode, type LayoutsDecorator } from './decorators'
+import {
+	WithI18n,
+	WithMantine,
+	WithTRPC,
+	Layouts,
+	WithStrictMode,
+	type LayoutsDecorator,
+	WithWhyDidYouRender,
+} from './decorators'
 import { i18n } from './i18next'
 import authStates from './mockAuthStates'
 import { Viewports } from './types'
@@ -17,17 +25,11 @@ import { Viewports } from './types'
 import './font.css'
 
 initializeMsw({
-	serviceWorker: {
-		// options: {
-		// 	scope: '/trpc',
-		// },
-	},
 	onUnhandledRequest: ({ method, url }) => {
 		if (url.pathname.startsWith('/trpc' || '/api')) {
 			console.error(`Unhandled ${method} request to ${url}.
 
         This exception has been only logged in the console, however, it's strongly recommended to resolve this error as you don't want unmocked data in Storybook stories.
-
         If you wish to mock an error response, please refer to this guide: https://mswjs.io/docs/recipes/mocking-error-responses
       `)
 		}
@@ -35,6 +37,7 @@ initializeMsw({
 })
 whyDidYouRender(React, {
 	trackAllPureComponents: true,
+	// collapseGroups: true,
 })
 
 const preview: Preview = {
@@ -78,7 +81,7 @@ const preview: Preview = {
 			},
 		},
 	},
-	decorators: [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC, WithStrictMode],
+	decorators: [WithWhyDidYouRender, Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC, WithStrictMode],
 }
 export default preview
 
@@ -103,5 +106,6 @@ declare module '@storybook/react' {
 		layout?: 'centered' | 'fullscreen' | 'padded'
 		layoutWrapper?: LayoutsDecorator
 		disableStrictMode?: boolean
+		disableWhyDidYouRender?: boolean
 	}
 }
