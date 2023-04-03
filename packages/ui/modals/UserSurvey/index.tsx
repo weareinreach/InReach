@@ -1,31 +1,18 @@
-import {
-	Modal,
-	Box,
-	type ButtonProps,
-	Checkbox,
-	createStyles,
-	Group,
-	Radio,
-	Text,
-	Title,
-	Stack,
-	rem,
-	ScrollArea,
-} from '@mantine/core'
+import { Modal, Box, type ButtonProps, createStyles, Group, Text, Title, Stack, rem } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
-import { useTranslation, Trans } from 'next-i18next'
+import { useTranslation } from 'next-i18next'
 import { useState, forwardRef, Dispatch, SetStateAction } from 'react'
-import { string, z } from 'zod'
+import { z } from 'zod'
 
-import { Link, Button, ModalTitleBreadcrumb } from '~ui/components/core'
+import { Button, ModalTitleBreadcrumb } from '~ui/components/core'
 import { useScreenSize, useCustomVariant } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { UserSurveyFormProvider, useUserSurveyForm } from './context'
-import { FormBirthyear } from './fields'
+import { FormBirthyear, FormCountries, FormIdentity, FormImmigration, FormEthnicity } from './fields'
 import { ModalTitle } from '../ModalTitle'
 
 const useStyles = createStyles((theme) => ({
@@ -37,16 +24,9 @@ const useStyles = createStyles((theme) => ({
 	skipNext: {
 		width: '50%',
 	},
-	answerContainer: {
-		height: '322px',
-	},
-	scroll: {
-		width: '100%',
-	},
 }))
 
 export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyProps>((props, ref) => {
-	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
 	const { t } = useTranslation('common')
 	const { isMobile } = useScreenSize()
 	const [opened, handler] = useDisclosure(false)
@@ -131,175 +111,78 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		)
 	}
 
-	const titleSubtitle = (t1: string, t2: string) => {
-		return (
-			<>
-				<Title order={2}>{t(t1)}</Title>
-				<Text variant={variants.Text.darkGray}>{t(t2)}</Text>
-			</>
-		)
-	}
-
-	const step1 = () => {
-		return (
-			<>
-				{titleSubtitle('survey.question-1-title', 'survey.question-subtitle')}
-				<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
-					<Radio.Group value='selected' className={classes.answerContainer}>
-						<Stack>
-							{surveyOptions?.immigration.map((item, index) => {
-								return (
-									<Radio
-										label={t(item.tsKey, { ns: 'user' })}
-										key={item.id}
-										value={item.id}
-										// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
-									/>
-								)
-							})}
-						</Stack>
-					</Radio.Group>
-				</ScrollArea>
-
-				{modalButtons(2)}
-			</>
-		)
-	}
-
-	const step2 = () => {
-		return (
-			<>
-				{titleSubtitle('survey.question-2-title', 'survey.question-subtitle')}
-				<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
-					<Radio.Group value='selected' className={classes.answerContainer}>
-						<Stack>
-							{surveyOptions?.countries.map((item, index) => {
-								return (
-									<Radio
-										label={t(item.tsKey, { ns: 'user' })}
-										key={item.id}
-										value={item.id}
-										// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
-									/>
-								)
-							})}
-						</Stack>
-					</Radio.Group>
-				</ScrollArea>
-				{modalButtons(3)}
-			</>
-		)
-	}
-
-	const step3 = () => {
-		return (
-			<>
-				{titleSubtitle('survey.question-3-title', 'survey.question-subtitle')}
-				<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
-					<Checkbox.Group className={classes.answerContainer}>
-						<Stack>
-							{surveyOptions?.sog.map((item, index) => {
-								return (
-									<Checkbox
-										value={item.id}
-										checked={false}
-										label={t(item.tsKey, { ns: 'user' })}
-										key={item.id}
-
-										// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
-									/>
-								)
-							})}
-						</Stack>
-					</Checkbox.Group>
-				</ScrollArea>
-				{modalButtons(4)}
-			</>
-		)
-	}
-
-	const step4 = () => {
-		return (
-			<>
-				{titleSubtitle('survey.question-4-title', 'survey.question-subtitle')}
-				<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
-					<Checkbox.Group className={classes.answerContainer}>
-						<Stack>
-							{surveyOptions?.ethnicity.map((item, index) => {
-								return (
-									<Checkbox
-										value={item.id}
-										checked={false}
-										label={t(item.tsKey, { ns: 'user' })}
-										key={item.id}
-
-										// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
-									/>
-								)
-							})}
-						</Stack>
-					</Checkbox.Group>
-				</ScrollArea>
-				{modalButtons(5)}
-			</>
-		)
-	}
-
-	const step5 = () => {
-		return (
-			<>
-				{titleSubtitle('survey.question-5-title', 'survey.question-subtitle')}
-				<FormBirthyear />
-				<Group position='center' className={classes.btnGroup} noWrap>
-					<Button
-						className={classes.skipNext}
-						variant={'secondary-icon'}
-						onClick={submitHandler}
-						loading={UserSurveyAction.isLoading}
-					>
-						{t('words.skip')}
-					</Button>
-					<Button
-						className={classes.skipNext}
-						variant={'primary-icon'}
-						onClick={submitHandler}
-						loading={UserSurveyAction.isLoading}
-					>
-						{t('survey.finish')}
-					</Button>
-				</Group>
-			</>
-		)
-	}
-
-	const UserSurveyButton = (
-		<Button disabled={!form.isValid()} onClick={submitHandler} loading={UserSurveyAction.isLoading}>
-			{t('sign-up')}
-		</Button>
+	const modalSubmitBtn = (
+		<Group position='center' className={classes.btnGroup} noWrap>
+			<Button
+				className={classes.skipNext}
+				variant={'secondary-icon'}
+				onClick={submitHandler}
+				loading={UserSurveyAction.isLoading}
+			>
+				{t('words.skip')}
+			</Button>
+			<Button
+				className={classes.skipNext}
+				variant={'primary-icon'}
+				onClick={submitHandler}
+				loading={UserSurveyAction.isLoading}
+			>
+				{t('survey.finish')}
+			</Button>
+		</Group>
 	)
 
-	const getQuestion = (q: number) => {
+	const userSurveyBody = (q: number) => {
 		switch (q) {
 			case 1: {
-				return step1()
+				return (
+					<>
+						<FormImmigration />
+						{modalButtons(2)}
+					</>
+				)
 			}
 			case 2: {
-				return step2()
+				return (
+					<>
+						<FormCountries />
+						{modalButtons(3)}
+					</>
+				)
 			}
 			case 3: {
-				return step3()
+				return (
+					<>
+						<FormIdentity />
+						{modalButtons(4)}
+					</>
+				)
 			}
 			case 4: {
-				return step4()
+				return (
+					<>
+						<FormEthnicity />
+						{modalButtons(5)}
+					</>
+				)
 			}
 			case 5: {
-				return step5()
+				return (
+					<>
+						<FormBirthyear />
+						{modalSubmitBtn}
+					</>
+				)
 			}
 			default:
-				return step1()
+				return (
+					<>
+						<FormImmigration />
+						{modalButtons(2)}
+					</>
+				)
 		}
 	}
-	const UserSurveyBody = getQuestion(step)
 
 	const successBody = (
 		<>
@@ -319,7 +202,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		if (successMessage) {
 			return successBody
 		}
-		return UserSurveyBody
+		return userSurveyBody(step)
 	}
 
 	return (
