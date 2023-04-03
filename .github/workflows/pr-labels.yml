@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🏷 Verify PR has a valid label
-        uses: mheap/github-action-required-labels@179af849240d834567e1a3d6dc781575eede757c # v3
+        uses: mheap/github-action-required-labels@422e4c352ef83db91089e6acfbf09d8725e08abc # v4
         with:
           labels: "breaking-change, bugfix, documentation, enhancement, refactor, performance, new-feature, maintenance, ci, dependencies, translations, changelog-ignore"
           mode: minimum
