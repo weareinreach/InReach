@@ -33,7 +33,7 @@
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
-		"esbuild": "0.17.14",
+		"esbuild": "0.17.15",
 		"eslint": "8.37.0",
 		"prettier": "2.8.7",
 		"typescript": "5.0.3"
