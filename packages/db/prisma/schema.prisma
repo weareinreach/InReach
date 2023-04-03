@@ -420,6 +420,8 @@ model Organization {
   source   Source @relation(fields: [sourceId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   sourceId String
 
+  suggestions Suggestion[]
+
   // attachments
   userLists       SavedOrganization[]
   // Users associated with organization (staff)
@@ -907,6 +909,9 @@ model Attribute {
 
   categories AttributeToCategory[]
 
+  children AttributeNesting[] @relation("attribParentToChild")
+  parents  AttributeNesting[] @relation("attribChildToParent")
+
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
   tsNs  String
@@ -1121,6 +1126,20 @@ enum SourceType {
   //@@schema("system")
 }
 
+model Suggestion {
+  id String @id @default(cuid())
+
+  data           Json
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
+  handled        Boolean?
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  auditLogs     AuditLog[]
+  internalNotes InternalNote[]
+}
+
 /// Country metadata
 /// @zod.import(["import {Geometry} from '../../zod_util'"])
 model Country {
@@ -1150,6 +1169,8 @@ model Country {
 
   // List of administrative subdivisions
   govDist GovDist[]
+
+  activeForOrgs Boolean?
 
   /// Tables using Country
   attributeSupplements  AttributeSupplement[]
@@ -1512,6 +1533,8 @@ model InternalNote {
   socialMediaServiceId            String?
   source                          Source?                        @relation(fields: [sourceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   sourceId                        String?
+  suggestion                      Suggestion?                    @relation(fields: [suggestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  suggestionId                    String?
   translation                     TranslationKey?                @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: Cascade, onUpdate: Cascade)
   translationKey                  String?
   translationNs                   String?
@@ -1610,6 +1633,8 @@ model AuditLog {
   socialMediaServiceId                 String?
   Source                               Source?                        @relation(fields: [sourceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   sourceId                             String?
+  Suggestion                           Suggestion?                    @relation(fields: [suggestionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  suggestionId                         String?
   TranslatedReview                     TranslatedReview?              @relation(fields: [translatedReviewId], references: [id])
   translatedReviewId                   String?
   Translation                          TranslationKey?                @relation(fields: [translationKey, translationNs], references: [key, ns], onDelete: SetNull, onUpdate: Cascade)
@@ -2020,6 +2045,19 @@ model ServiceAreaDist {
 // Attributes
 //
 
+/// Nesting attributes
+model AttributeNesting {
+  child   Attribute @relation("attribChildToParent", fields: [childId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  childId String
+
+  parent   Attribute @relation("attribParentToChild", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  parentId String
+
+  linkedAt DateTime @default(now())
+
+  @@id([parentId, childId])
+}
+
 /// Link attributes to users
 model UserAttribute {
   user        User                  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -2027,8 +2065,6 @@ model UserAttribute {
   attribute   Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId String
   supplement  AttributeSupplement[]
-  //supplement     AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  //supplementId   String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2043,8 +2079,6 @@ model OrganizationAttribute {
   attribute      Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId    String
   supplement     AttributeSupplement[]
-  //supplement     AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  //supplementId   String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2059,8 +2093,6 @@ model LocationAttribute {
   attribute   Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId String
   supplement  AttributeSupplement[]
-  // supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // supplementId String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2075,8 +2107,6 @@ model ServiceAttribute {
   attribute    Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId  String
   supplement   AttributeSupplement[]
-  // supplement   AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // supplementId String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2091,8 +2121,6 @@ model ServiceAccessAttribute {
   attribute       Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeId     String
   supplement      AttributeSupplement[]
-  // supplement      AttributeSupplement? @relation(fields: [supplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // supplementId    String?              @unique
 
   linkedAt DateTime @default(now())
   //@@schema("relation")
@@ -2137,6 +2165,15 @@ model ServiceTagDefaultAttribute {
   //@@schema("relation")
 
   @@id([attributeId, serviceId])
+}
+
+model DataMigration {
+  id          String   @id @default(cuid())
+  jobId       String   @unique
+  title       String
+  description String?
+  createdBy   String
+  appliedAt   DateTime @default(now())
 }
 
 view orgsearchresults {

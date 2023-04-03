@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@next/eslint-plugin-next": "13.2.4",
-		"@tanstack/eslint-plugin-query": "4.27.0",
+		"@tanstack/eslint-plugin-query": "4.29.0",
 		"@types/eslint": "8.37.0",
 		"@types/node": "18.15.11",
 		"@typescript-eslint/eslint-plugin": "5.57.0",
@@ -33,7 +33,7 @@
 		"eslint-plugin-storybook": "0.6.11",
 		"eslint-plugin-turbo": "1.8.8",
 		"next": "13.2.4",
-		"typescript": "5.0.2"
+		"typescript": "5.0.3"
 	},
 	"peerDependencies": {
 		"eslint": ">=8",
