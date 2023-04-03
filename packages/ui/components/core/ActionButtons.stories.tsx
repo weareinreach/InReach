@@ -56,6 +56,9 @@ export default {
 				}),
 			],
 		},
+		whyDidYouRender: {
+			collapseGroups: true,
+		},
 	},
 	render: ({ iconKey, serviceId }) => (
 		<div>
