@@ -253,8 +253,8 @@ importers:
         specifier: 13.2.2
         version: 13.2.2(i18next@22.4.14)(next@13.2.4)(react-i18next@12.2.0)(react@18.2.0)
       next-seo:
-        specifier: 5.15.0
-        version: 5.15.0(next@13.2.4)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 6.0.0
+        version: 6.0.0(next@13.2.4)(react-dom@18.2.0)(react@18.2.0)
       nextjs-routes:
         specifier: 1.0.9
         version: 1.0.9(next@13.2.4)
@@ -16540,8 +16540,8 @@ packages:
       react: 18.2.0
     dev: true
 
-  /next-seo@5.15.0(next@13.2.4)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-LGbcY91yDKGMb7YI+28n3g+RuChUkt6pXNpa8FkfKkEmNiJkeRDEXTnnjVtwT9FmMhG6NH8qwHTelGrlYm9rgg==}
+  /next-seo@6.0.0(next@13.2.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-jKKt1p1z4otMA28AyeoAONixVjdYmgFCWwpEFtu+DwRHQDllVX3RjtyXbuCQiUZEfQ9rFPBpAI90vDeLZlMBdg==}
     peerDependencies:
       next: ^8.1.1-canary.54 || >=9.0.0 || >=13
       react: '>=16.0.0 || >=18'
