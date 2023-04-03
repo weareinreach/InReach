@@ -78,7 +78,7 @@
 		"just-capitalize": "3.2.0",
 		"just-flush": "2.3.0",
 		"langs": "2.0.0",
-		"libphonenumber-js": "1.10.24",
+		"libphonenumber-js": "1.10.26",
 		"listr2": "5.0.8",
 		"luxon": "3.3.0",
 		"mongoback": "3.0.6",
@@ -95,7 +95,7 @@
 		"tsx": "3.12.6",
 		"type-fest": "3.7.2",
 		"typescript": "5.0.3",
-		"zod-prisma-types": "2.5.3"
+		"zod-prisma-types": "2.5.4"
 	},
 	"prisma": {
 		"seed": "turbo run db:run-seed"
