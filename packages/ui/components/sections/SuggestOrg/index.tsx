@@ -97,17 +97,14 @@ export const SuggestOrg = () => {
 	const [generateSlug, setGenerateSlug] = useState(false)
 
 	const countrySelected = Boolean(form.values.countryId)
-	console.log('form values', form.values)
-	console.log('form valid?', form.isValid(), form.errors)
+
 	const {
 		data: formOptions,
 		isLoading,
 		isSuccess,
 	} = api.organization.suggestionOptions.useQuery(undefined, {
 		onSuccess: (data) => {
-			console.log('suggestion load')
 			form.setValues({ formOptions: data })
-			// setLoading(false)
 		},
 	})
 
@@ -321,7 +318,6 @@ export const SuggestOrg = () => {
 		</SuggestionFormProvider>
 	)
 }
-
 interface ItemProps extends ComponentPropsWithRef<'div'> {
 	label: string
 	description: string

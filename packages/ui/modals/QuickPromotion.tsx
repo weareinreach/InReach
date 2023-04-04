@@ -20,11 +20,11 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 		const [opened, handler] = useDisclosure(autoLaunch && status === 'unauthenticated')
 		const router = useRouter()
 		useEffect(() => {
-			if (!session && status === 'unauthenticated') {
+			if (autoLaunch && !session && status === 'unauthenticated') {
 				handler.open()
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [session, status])
+		}, [session, status, autoLaunch])
 
 		const titleProps = (
 			noClose
