@@ -58,5 +58,5 @@
 	"peerDependencies": {
 		"next": ">=13"
 	},
-	"packageManager": "pnpm@8.1.0"
+	"packageManager": "pnpm@8.1.1"
 }
