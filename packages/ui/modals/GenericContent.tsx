@@ -3,10 +3,10 @@ import { useDisclosure } from '@mantine/hooks'
 import { useTranslation, Trans } from 'next-i18next'
 import { forwardRef, type ReactNode } from 'react'
 
-import { AntiHateMessage, Button, Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
 
 import { ModalTitle } from './ModalTitle'
+import { AntiHateMessage, Button, Link } from '../components/core'
 
 const TransContent = ({ i18nKey }: { i18nKey: string }) => {
 	const variants = useCustomVariant()
