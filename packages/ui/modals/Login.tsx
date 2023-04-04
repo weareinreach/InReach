@@ -19,7 +19,7 @@ import { forwardRef, useState } from 'react'
 import { z } from 'zod'
 
 import { Button, Link } from '~ui/components/core'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useShake } from '~ui/hooks'
 
 import { ForgotPasswordModal } from './ForgotPassword'
 import { ModalTitle } from './ModalTitle'
@@ -31,6 +31,7 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 	const [loginError, setLoginError] = useState(false)
 	const [errorMessage, setErrorMessage] = useState<string | DefaultTFuncReturn | undefined>()
 	const [opened, handler] = useDisclosure(false)
+	const { animateCSS, fireEvent } = useShake({ variant: 1 })
 
 	const loginErrors = new Map([[401, t('login.error-username-password')]])
 
@@ -43,10 +44,6 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 	const form = useForm<LoginFormProps>({
 		validate: zodResolver(LoginSchema),
 		validateInputOnBlur: true,
-		initialValues: {
-			email: '',
-			password: '',
-		},
 	})
 	const variants = useCustomVariant()
 	const loginHandle = async (email: string, password: string) => {
@@ -56,6 +53,7 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 			setLoginError(true)
 			const message = loginErrors.get(result.status)
 			setErrorMessage(message ?? t('login.error-generic'))
+			fireEvent()
 		}
 		if (result?.ok) {
 			handler.close()
@@ -64,7 +62,7 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 
 	return (
 		<>
-			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
+			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} className={animateCSS}>
 				<Stack align='center' spacing={24}>
 					<Title order={2}>{t('log-in')}</Title>
 					<TextInput
