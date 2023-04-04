@@ -14,6 +14,7 @@ import {
 	createStyles,
 	rem,
 } from '@mantine/core'
+import { identity } from '@mantine/core/lib/Box/style-system-props/value-getters/get-default-value'
 import { useDebouncedValue } from '@mantine/hooks'
 import { attributesByCategory } from '@weareinreach/api/generated/attributesByCategory'
 import { languageList } from '@weareinreach/api/generated/languages'
@@ -121,21 +122,18 @@ export const FormIdentity = () => {
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 
+	const handleCheckboxChange = (event: []) => {
+		form.setFieldValue('identifyIds', event)
+	}
+
 	return (
 		<>
 			{TitleSubtitle('survey.question-3-title', 'survey.question-subtitle')}
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
-				<Checkbox.Group className={classes.answerContainer}>
+				<Checkbox.Group onChange={handleCheckboxChange} className={classes.answerContainer}>
 					{surveyOptions?.sog.map((item, index) => {
 						return (
-							<Checkbox
-								value={item.id}
-								checked={false}
-								label={t(item.tsKey, { ns: 'user' })}
-								key={item.id}
-
-								// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
-							/>
+							<Checkbox value={item.id} checked={false} label={t(item.tsKey, { ns: 'user' })} key={item.id} />
 						)
 					})}
 				</Checkbox.Group>
