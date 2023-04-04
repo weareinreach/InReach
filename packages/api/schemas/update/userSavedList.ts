@@ -74,9 +74,15 @@ export const DeleteSavedItem = () => {
 				services,
 				auditLogs: createMany([orgLog, servLog]),
 			},
-			include: {
-				services: true,
-				organizations: true,
+			select: {
+				id: true,
+				name: true,
+				organizations: {
+					select: { organizationId: true },
+				},
+				services: {
+					select: { serviceId: true },
+				},
 			},
 		})
 	})
