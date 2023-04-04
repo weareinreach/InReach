@@ -15,6 +15,26 @@ export default {
 		},
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
+		msw: [
+			getTRPCMock({
+				path: ['organization', 'getIdFromSlug'],
+				type: 'query',
+				response: {
+					id: 'orgn_ORGANIZATIONID',
+				},
+			}),
+			getTRPCMock({
+				path: ['review', 'create'],
+				type: 'mutation',
+				response: {
+					id: 'orev_NEWREVIEWID',
+				},
+			}),
+			getTRPCMock({
+				path: ['savedList', 'getAll'],
+				response: getAll,
+			}),
+		],
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]',
@@ -24,47 +44,7 @@ export default {
 				},
 			},
 		},
-		msw: {
-			handlers: [
-				getTRPCMock({
-					path: ['organization', 'getIdFromSlug'],
-					type: 'query',
-					response: {
-						id: 'orgn_ORGANIZATIONID',
-					},
-				}),
-				getTRPCMock({
-					path: ['review', 'create'],
-					type: 'mutation',
-					response: {
-						id: 'orev_NEWREVIEWID',
-					},
-				}),
-				getTRPCMock({
-					path: ['savedList', 'getAll'],
-					response: getAll,
-				}),
-				getTRPCMock({
-					path: ['savedList', 'saveItem'],
-					type: 'mutation',
-					response: saveItem,
-				}),
-				getTRPCMock({
-					path: ['savedList', 'createAndSaveItem'],
-					type: 'mutation',
-					response: createAndSave,
-				}),
-			],
-		},
-		whyDidYouRender: {
-			collapseGroups: true,
-		},
 	},
-	render: ({ iconKey, serviceId }) => (
-		<div>
-			<ActionButtonsComponent iconKey={iconKey} serviceId={serviceId} />
-		</div>
-	),
 } satisfies Meta<typeof ActionButtonsComponent>
 
 type StoryDef = StoryObj<typeof ActionButtonsComponent>
@@ -91,9 +71,92 @@ export const SaveLoggedOut = {
 	},
 } satisfies StoryDef
 
-export const Saved = {
+export const SavedToSingleList = {
 	args: {
-		iconKey: 'saved',
+		iconKey: 'save',
+	},
+	parameters: {
+		nextAuthMock: {
+			session: 'userPic',
+		},
+		msw: [
+			getTRPCMock({
+				path: ['savedList', 'isSaved'],
+				response: [
+					{
+						id: 'listId',
+						name: 'List Name',
+					},
+				],
+			}),
+			getTRPCMock({
+				path: ['savedList', 'getAll'],
+				response: getAll,
+			}),
+			getTRPCMock({
+				path: ['savedList', 'deleteItem'],
+				type: 'mutation',
+				response: {
+					id: 'listId',
+					name: 'list name',
+					organizations: [],
+					services: [],
+				},
+			}),
+			getTRPCMock({
+				path: ['organization', 'getIdFromSlug'],
+				type: 'query',
+				response: {
+					id: 'orgn_ORGANIZATIONID',
+				},
+			}),
+		],
+	},
+} satisfies StoryDef
+export const SavedToMultipleLists = {
+	args: {
+		iconKey: 'save',
+	},
+	parameters: {
+		nextAuthMock: {
+			session: 'userPic',
+		},
+		msw: [
+			getTRPCMock({
+				path: ['savedList', 'isSaved'],
+				response: [
+					{
+						id: 'listId1',
+						name: 'List Name 1',
+					},
+					{
+						id: 'listId2',
+						name: 'List Name 2',
+					},
+				],
+			}),
+			getTRPCMock({
+				path: ['savedList', 'getAll'],
+				response: getAll,
+			}),
+			getTRPCMock({
+				path: ['savedList', 'deleteItem'],
+				type: 'mutation',
+				response: {
+					id: 'listId',
+					name: 'list name',
+					organizations: [],
+					services: [],
+				},
+			}),
+			getTRPCMock({
+				path: ['organization', 'getIdFromSlug'],
+				type: 'query',
+				response: {
+					id: 'orgn_ORGANIZATIONID',
+				},
+			}),
+		],
 	},
 } satisfies StoryDef
 export const Share = {
