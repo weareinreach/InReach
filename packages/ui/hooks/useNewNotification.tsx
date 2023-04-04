@@ -24,6 +24,8 @@ export const iconList = {
 	heartEmpty: { code: 'carbon:favorite', color: undefined },
 	info: { code: 'carbon:information-filled', color: commonTheme.other?.colors.secondary.cornflower },
 	warning: { code: 'carbon:warning-filled', color: commonTheme.other?.colors.tertiary.red },
+	added: { code: 'carbon:add-filled', color: undefined },
+	deleted: { code: 'carbon:delete', color: undefined },
 } as const
 
 export const InstantFeedback = ({ displayText, link }: NotificationInnerProps) => {
