@@ -2,22 +2,12 @@ import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
 import { translatedLangs, LocaleCodes } from '@weareinreach/api/generated/languages'
-// import whyDidYouRender from '@welldone-software/why-did-you-render'
-import { RequestHandler } from 'msw'
+import { type RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
 import { Router } from 'next/router'
-// import React from 'react'
 
-import {
-	WithI18n,
-	WithMantine,
-	WithTRPC,
-	Layouts,
-	WithStrictMode,
-	type LayoutsDecorator,
-	WithWhyDidYouRender,
-} from './decorators'
+import { WithI18n, WithMantine, WithTRPC, Layouts, WithStrictMode, type LayoutsDecorator } from './decorators'
 import { i18n } from './i18next'
 import authStates from './mockAuthStates'
 import { Viewports } from './types'

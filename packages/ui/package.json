@@ -95,7 +95,6 @@
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
-		"@welldone-software/why-did-you-render": "7.0.1",
 		"babel-loader": "9.1.2",
 		"chromatic": "6.17.2",
 		"css-chaos-addon": "0.0.5",

@@ -143,11 +143,5 @@ export const WithStrictMode = (Story: StoryFn, context: StoryContext) =>
 		</StrictMode>
 	)
 WithStrictMode.displayName = 'StrictModeWrapper'
-export const WithWhyDidYouRender = (Story: StoryFn, context: StoryContext) => {
-	if (context.component) {
-		// @ts-expect-error
-		context.component.whyDidYouRender = !context.parameters.disableWhyDidYouRender
-	}
-	return <Story />
-}
+
 export type LayoutsDecorator = 'centeredFullscreen' | 'centeredHalf' | 'gridSingle' | 'gridDouble'
