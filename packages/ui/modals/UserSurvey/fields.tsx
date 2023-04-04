@@ -150,21 +150,18 @@ export const FormEthnicity = () => {
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 
+	const handleCheckboxChange = (event: []) => {
+		form.setFieldValue('ethnicityIds', event)
+	}
+
 	return (
 		<>
 			{TitleSubtitle('survey.question-4-title', 'survey.question-subtitle')}
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
-				<Checkbox.Group className={classes.answerContainer}>
+				<Checkbox.Group onChange={handleCheckboxChange} className={classes.answerContainer}>
 					{surveyOptions?.ethnicity.map((item, index) => {
 						return (
-							<Checkbox
-								value={item.id}
-								checked={false}
-								label={t(item.tsKey, { ns: 'user' })}
-								key={item.id}
-
-								// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
-							/>
+							<Checkbox value={item.id} checked={false} label={t(item.tsKey, { ns: 'user' })} key={item.id} />
 						)
 					})}
 				</Checkbox.Group>
