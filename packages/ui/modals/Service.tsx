@@ -93,6 +93,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 							onClick: () => handler.close(),
 						}}
 						icons={icons}
+						serviceId={serviceId}
 					/>
 				)
 
@@ -411,7 +412,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 			return (
 				<>
-					<Modal title={<ServiceModalTitle />} opened={opened} onClose={() => handler.close()}>
+					<Modal title={<ServiceModalTitle />} opened={opened} onClose={() => handler.close()} zIndex={100}>
 						<Stack spacing={24}>
 							{atCapacity}
 							{name}

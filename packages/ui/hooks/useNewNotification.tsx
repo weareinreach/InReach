@@ -1,5 +1,6 @@
 import { Group, Text, createStyles, useMantineTheme } from '@mantine/core'
 import { showNotification, NotificationProps } from '@mantine/notifications'
+import { DefaultTFuncReturn } from 'i18next'
 import Link, { type LinkProps } from 'next/link'
 import { useTranslation } from 'next-i18next'
 
@@ -23,25 +24,29 @@ export const iconList = {
 	heartEmpty: { code: 'carbon:favorite', color: undefined },
 	info: { code: 'carbon:information-filled', color: commonTheme.other?.colors.secondary.cornflower },
 	warning: { code: 'carbon:warning-filled', color: commonTheme.other?.colors.tertiary.red },
+	added: { code: 'carbon:add-filled', color: undefined },
+	deleted: { code: 'carbon:delete', color: undefined },
 } as const
 
-export const InstantFeedback = ({ displayTextKey, link }: NotificationInnerProps) => {
+export const InstantFeedback = ({ displayText, link }: NotificationInnerProps) => {
 	const { t } = useTranslation()
 	const theme = useMantineTheme()
 
 	return (
 		<Group position='apart' spacing='lg'>
 			<Text color={theme.other.colors.secondary.white} fw={theme.other.fontWeight.semibold}>
-				{t(displayTextKey)}
+				{displayText}
 			</Text>
-			<Text
-				component={Link}
-				href={link.href}
-				style={{ color: theme.other.colors.tertiary.lightBlue }}
-				fw={theme.other.fontWeight.semibold}
-			>
-				{t(link.textKey)}
-			</Text>
+			{link && (
+				<Text
+					component={Link}
+					href={link.href}
+					style={{ color: theme.other.colors.tertiary.lightBlue }}
+					fw={theme.other.fontWeight.semibold}
+				>
+					{link.text}
+				</Text>
+			)}
 		</Group>
 	)
 }
@@ -79,18 +84,18 @@ type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 export type NotificationInnerProps = Optional<UseNotificationProps, 'icon'>
 
 export type UseNotificationProps = {
-	/** I18Next translation key */
-	displayTextKey: string
+	/** Text to display */
+	displayText: string | DefaultTFuncReturn
 	/** Display icon */
 	icon: keyof typeof iconList
 	/**
 	 * @param href - URL
-	 * @param textKey - I18Next translation key
+	 * @param text - Text to display
 	 */
-	link: {
+	link?: {
 		/** URL */
 		href: LinkProps['href']
-		/** I18Next translation key */
-		textKey: string
+		/** Text to display */
+		text: string | DefaultTFuncReturn
 	}
 }

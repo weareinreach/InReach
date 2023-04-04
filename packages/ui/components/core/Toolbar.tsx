@@ -14,12 +14,12 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const Toolbar = ({ saved = false, breadcrumbProps }: Props) => {
+export const Toolbar = ({ saved = false, breadcrumbProps, ...ids }: Props) => {
 	const theme = useMantineTheme()
 	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 	const { width } = useViewportSize()
 	const { classes } = useStyles()
-	const buttons = ['review', 'share', saved ? 'saved' : 'save']
+	const buttons = ['review', 'share', 'save']
 
 	const buttonsInViewPort = isMobile ? Math.ceil((width - BREACRUMB_WIDTH) / MIN_BUTTON_WIDTH) % 3 : 4
 
@@ -30,15 +30,18 @@ export const Toolbar = ({ saved = false, breadcrumbProps }: Props) => {
 		<ActionButtons key={button} iconKey={button as keyof typeof actionButtonIcons} omitLabel={isMobile} />
 	))
 
-	// If 'saved' do not display 'save' button and viceversa
-	inToolbar.push(saved ? 'save' : 'saved')
+	// If organization is not saved do not display saved button
+	if (!saved) inToolbar.push('saved')
+
+	// No delete button in toolbar
+	inToolbar.push('delete')
 
 	return (
 		<Group position='apart' align='center' w='100%' noWrap className={classes.toolbar}>
 			<Breadcrumb {...breadcrumbProps} />
 			<Group noWrap spacing={0}>
 				{displayButtons}
-				<ActionButtons iconKey='more' outsideMoreMenu={inToolbar} />
+				<ActionButtons iconKey='more' outsideMoreMenu={inToolbar} {...ids} />
 			</Group>
 		</Group>
 	)
@@ -47,4 +50,6 @@ export const Toolbar = ({ saved = false, breadcrumbProps }: Props) => {
 type Props = {
 	saved: boolean
 	breadcrumbProps: BreadcrumbProps
+	organizationId: string
+	serviceId?: string
 }

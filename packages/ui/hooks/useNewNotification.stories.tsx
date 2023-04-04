@@ -13,8 +13,8 @@ import { Button } from '../components/core'
 import { Icon } from '../icon'
 
 /** It takes in a props object, and returns a function that shows a notification with the props */
-const StoryDemo = ({ icon = 'heartFilled', displayTextKey, link }: UseNotificationProps) => {
-	const showNotification = useNewNotification({ icon, displayTextKey, link })
+const StoryDemo = ({ icon = 'heartFilled', displayText, link }: UseNotificationProps) => {
+	const showNotification = useNewNotification({ icon, displayText, link })
 
 	return (
 		<>
@@ -51,11 +51,11 @@ const Story: Meta<Story> = {
 		},
 	},
 	args: {
-		displayTextKey: 'resource-saved',
+		displayText: 'Resource saved',
 		icon: 'heartFilled',
 		link: {
 			href: '/',
-			textKey: 'view-list',
+			text: 'View List',
 		},
 	},
 }
