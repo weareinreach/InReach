@@ -54,18 +54,25 @@ export const FormImmigration = () => {
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 
+	const [selectedId, setSelectedId] = useState('')
+
+	const handleRadioChange = (event: string) => {
+		form.setFieldValue('immigrationId', event)
+		setSelectedId(event)
+	}
+
 	return (
 		<>
 			{TitleSubtitle('survey.question-1-title', 'survey.question-subtitle')}
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
-				<Radio.Group value='selected' className={classes.answerContainer}>
+				<Radio.Group value={selectedId} onChange={handleRadioChange} className={classes.answerContainer}>
 					{surveyOptions?.immigration.map((item, index) => {
 						return (
 							<Radio
 								label={t(item.tsKey, { ns: 'user' })}
 								key={item.id}
 								value={item.id}
-								// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
+								checked={selectedId === item.id}
 							/>
 						)
 					})}

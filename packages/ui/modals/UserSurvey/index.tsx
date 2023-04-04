@@ -69,6 +69,8 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		validateInputOnBlur: true,
 	})
 
+	console.log(form)
+
 	const submitHandler = () => {
 		console.log(form.values)
 		setSuccessMessage(true)
@@ -101,10 +103,22 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const modalButtons = (stepNumber: number) => {
 		return (
 			<Group position='center' className={classes.btnGroup} noWrap>
-				<Button className={classes.skipNext} variant={'secondary-icon'} onClick={() => setStep(stepNumber)}>
+				<Button
+					className={classes.skipNext}
+					variant={'secondary-icon'}
+					onClick={() => {
+						setStep(stepNumber)
+					}}
+				>
 					{t('words.skip')}
 				</Button>
-				<Button className={classes.skipNext} variant={'primary-icon'} onClick={() => setStep(stepNumber)}>
+				<Button
+					className={classes.skipNext}
+					variant={'primary-icon'}
+					onClick={() => {
+						setStep(stepNumber)
+					}}
+				>
 					{t('words.next')}
 				</Button>
 			</Group>
