@@ -14,7 +14,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const Toolbar = ({ saved = false, breadcrumbProps }: Props) => {
+export const Toolbar = ({ saved = false, breadcrumbProps, ...ids }: Props) => {
 	const theme = useMantineTheme()
 	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 	const { width } = useViewportSize()
@@ -41,7 +41,7 @@ export const Toolbar = ({ saved = false, breadcrumbProps }: Props) => {
 			<Breadcrumb {...breadcrumbProps} />
 			<Group noWrap spacing={0}>
 				{displayButtons}
-				<ActionButtons iconKey='more' outsideMoreMenu={inToolbar} />
+				<ActionButtons iconKey='more' outsideMoreMenu={inToolbar} {...ids} />
 			</Group>
 		</Group>
 	)
@@ -50,4 +50,6 @@ export const Toolbar = ({ saved = false, breadcrumbProps }: Props) => {
 type Props = {
 	saved: boolean
 	breadcrumbProps: BreadcrumbProps
+	organizationId: string
+	serviceId?: string
 }

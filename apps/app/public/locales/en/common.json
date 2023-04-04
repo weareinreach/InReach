@@ -32,10 +32,8 @@
 		"result_other": "{{count}} results"
 	},
 	"country-select": "Choose a country",
-	"create-list": "Create list",
 	"create-new-list": "Create new list",
 	"current-location": "Current location",
-	"delete": "Delete",
 	"delete-account": "Delete your account?",
 	"delete-account-password": "Enter your account password to confirm.",
 	"disclaimer": "Disclaimer",
@@ -51,9 +49,7 @@
 	"enter-review": "Enter your review...",
 	"errors": {
 		"oh-no": "Oh no!",
-		"try-again-text": "<Text>Something went wrong! Please try again.</Text>",
-		"removing-from-list": "Error removing from list",
-		"saving-in-list": "Error saving to list"
+		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
 	"exclude": "Exclude",
 	"facebook": "Facebook",
@@ -90,6 +86,20 @@
 	"lang_common": "Common languages",
 	"link-copied": "Link copied to clipboard",
 	"linkedin": "LinkedIn",
+	"list": {
+		"added": "Resource saved to list: {{name}}",
+		"create-new": "Create new list",
+		"create-new-sub": "Your lists of saved resources are only visible to you and anyone you share them with.",
+		"create-new-sub2": "Name your list by category, day of the week, or whomever this list is for.",
+		"created": "New list created: {{name}}",
+		"error-add": "Error saving to list",
+		"error-name-not-blank": "List name cannot be blank",
+		"error-remove": "Error removing from list",
+		"name": "List name",
+		"new-list-placeholder": "Enter list name...",
+		"removedMulti": "Resource removed from list: {{name}}",
+		"removedSingle": "Resource removed from list"
+	},
 	"loading-page": "Loading Page...",
 	"log-in": "Log In",
 	"log-out": "Log Out",
@@ -104,8 +114,6 @@
 	"more": {
 		"filters": "More filters"
 	},
-	"new-list-name": "New list's name",
-	"new-list-name-invalid": "List name cannot be blank",
 	"no-reviews": "No reviews yet",
 	"none-apply": "None of these apply to me",
 	"other-specify": "Other (please specify)",
@@ -131,7 +139,6 @@
 	"photo_other": "Photos",
 	"powered-by-vercel": "Powered by Vercel",
 	"prefer-not-to-say": "Prefer not to say",
-	"print": "Print",
 	"privacy-statement": "Privacy Statement",
 	"privacy-statement-body": [
 		"<emojiLg>🔒</emojiLg>",
@@ -154,7 +161,6 @@
 	"questions": "Questions?",
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
-  "removed-from-list": "Removed from list",
 	"reset-password": "Reset your password",
 	"reset-password-message": "We will send you an email to reset your password",
 	"resource-saved": "Resource saved.",
@@ -171,7 +177,6 @@
 	"safety-exit": "Safety exit",
 	"save": "Save",
 	"saved": "Saved",
-	"saved-in-list": "Saved to list {{name}}",
 	"saved-lists": "Saved Lists",
 	"search": {
 		"location-placeholder": "Enter state, city, or zip code...",
@@ -207,7 +212,6 @@
 	},
 	"services": "Services",
 	"settings": "Settings",
-	"share": "Share",
 	"share-feedback": "Share Feedback",
 	"show-less": "Show less",
 	"show-more": "Show more",
@@ -266,12 +270,17 @@
 		"and": "and",
 		"and-x-more": "and {{count}} more",
 		"coming-soon": "Coming soon",
+		"delete": "Delete",
 		"more": "more",
 		"next": "Next",
 		"please-wait": "Please wait...",
 		"prev": "Prev",
+		"print": "Print",
+		"review": "Review",
+		"save": "Save",
 		"saved": "Saved",
 		"search": "Search",
+		"share": "Share",
 		"support": "Support"
 	},
 	"your-comments": "Your Comments",
