@@ -2,12 +2,12 @@ import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
 import { translatedLangs, LocaleCodes } from '@weareinreach/api/generated/languages'
-import whyDidYouRender from '@welldone-software/why-did-you-render'
+// import whyDidYouRender from '@welldone-software/why-did-you-render'
 import { RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
 import { Router } from 'next/router'
-import React from 'react'
+// import React from 'react'
 
 import {
 	WithI18n,
@@ -35,10 +35,10 @@ initializeMsw({
 		}
 	},
 })
-whyDidYouRender(React, {
-	trackAllPureComponents: true,
-	// collapseGroups: true,
-})
+// whyDidYouRender(React, {
+// 	trackAllPureComponents: true,
+// 	// collapseGroups: true,
+// })
 
 const preview: Preview = {
 	parameters: {
@@ -81,7 +81,7 @@ const preview: Preview = {
 			},
 		},
 	},
-	decorators: [WithWhyDidYouRender, Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC, WithStrictMode],
+	decorators: [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC, WithStrictMode],
 }
 export default preview
 
