@@ -19,7 +19,7 @@ export const savedListRouter = defineRouter({
 				where: {
 					ownedById: ctx.session.user.id,
 				},
-				include: {
+				select: {
 					_count: {
 						select: {
 							organizations: true,
@@ -27,6 +27,8 @@ export const savedListRouter = defineRouter({
 							sharedWith: true,
 						},
 					},
+					id: true,
+					name: true,
 				},
 			})
 			return lists

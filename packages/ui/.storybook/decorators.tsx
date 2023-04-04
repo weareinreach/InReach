@@ -143,4 +143,5 @@ export const WithStrictMode = (Story: StoryFn, context: StoryContext) =>
 		</StrictMode>
 	)
 WithStrictMode.displayName = 'StrictModeWrapper'
+
 export type LayoutsDecorator = 'centeredFullscreen' | 'centeredHalf' | 'gridSingle' | 'gridDouble'

@@ -2,6 +2,8 @@ import { Center } from '@mantine/core'
 import { action } from '@storybook/addon-actions'
 import { Meta, StoryObj } from '@storybook/react'
 
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
+
 import { Toolbar } from './Toolbar'
 
 export default {
@@ -11,6 +13,33 @@ export default {
 		design: {
 			type: 'figma',
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=309%3A5895',
+		},
+		nextjs: {
+			router: {
+				pathname: '/org/[slug]',
+				asPath: '/org/mockOrg',
+				query: {
+					slug: 'mockOrg',
+				},
+			},
+		},
+		msw: {
+			handlers: [
+				getTRPCMock({
+					path: ['organization', 'getIdFromSlug'],
+					type: 'query',
+					response: {
+						id: 'orgn_ORGANIZATIONID',
+					},
+				}),
+				getTRPCMock({
+					path: ['review', 'create'],
+					type: 'mutation',
+					response: {
+						id: 'orev_NEWREVIEWID',
+					},
+				}),
+			],
 		},
 		layout: 'fullscreen',
 	},
