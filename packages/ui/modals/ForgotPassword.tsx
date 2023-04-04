@@ -9,9 +9,7 @@ import {
 	type ButtonProps,
 	Modal,
 	Box,
-	createStyles,
 	createPolymorphicComponent,
-	keyframes,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -20,26 +18,11 @@ import { forwardRef } from 'react'
 import { z } from 'zod'
 
 import { Button } from '~ui/components/core'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useShake } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { ModalTitle } from './ModalTitle'
-
-const shakeAnimation = keyframes({
-	'0%': { transform: 'rotate(0deg)' },
-	'20%': { transform: 'rotate(5deg)' },
-	'40%': { transform: 'rotate(0deg)' },
-	'60%': { transform: 'rotate(-5deg) ' },
-	'100%': { transform: 'rotate(0deg)' },
-})
-
-const useStyles = createStyles(() => ({
-	shake: {
-		animation: `${shakeAnimation} 0.25s linear`,
-		animationIterationCount: 2,
-	},
-}))
 
 export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModalBodyProps>(
 	(props, ref) => {
@@ -56,15 +39,11 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 				cognitoMessage: t('password-reset.email-body') as string,
 			},
 		})
-		const { classes, cx } = useStyles()
 		const variants = useCustomVariant()
 		const theme = useMantineTheme()
 		const pwResetHandler = api.user.forgotPassword.useMutation()
-
+		const { animateCSS, fireEvent } = useShake({ variant: 1 })
 		const [opened, handler] = useDisclosure(false)
-
-		const formError = Object.keys(passwordResetForm.errors).length > 0
-		const submitError = pwResetHandler.isError
 
 		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
 
@@ -74,14 +53,18 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 				<Text variant={variants.Text.utility3}>{t('email-sent')}</Text>
 			</Group>
 		)
+
+		const submitHandler = () => {
+			if (passwordResetForm.isValid()) {
+				pwResetHandler.mutate(passwordResetForm.values)
+			} else {
+				fireEvent()
+			}
+		}
+
 		return (
 			<>
-				<Modal
-					classNames={{ content: cx({ [classes.shake]: formError || submitError }) }}
-					title={modalTitle}
-					opened={opened}
-					onClose={() => handler.close()}
-				>
+				<Modal className={animateCSS} title={modalTitle} opened={opened} onClose={() => handler.close()}>
 					<Stack align='center' spacing={24}>
 						<Title order={2}>{t('reset-password')}</Title>
 						<Text variant={variants.Text.utility4darkGray}>{t('reset-password-message')}</Text>
@@ -93,12 +76,12 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 							description={pwResetHandler.isSuccess ? successMessage : undefined}
 						/>
 						<Button
-							onClick={() => pwResetHandler.mutate(passwordResetForm.values)}
+							onClick={() => submitHandler()}
 							variant='primary-icon'
 							fullWidth
 							loaderPosition='center'
 							loading={pwResetHandler.isLoading}
-							disabled={!passwordResetForm.isValid()}
+							// disabled={!passwordResetForm.isValid()}
 						>
 							{t('send-email')}
 						</Button>

@@ -1,6 +1,6 @@
 import { createStyles } from '@mantine/core'
 import { useEventListener, useTimeout } from '@mantine/hooks'
-import { MutableRefObject, useState } from 'react'
+import { useState } from 'react'
 
 import { shake } from '~ui/theme/animation'
 
