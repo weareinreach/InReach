@@ -146,7 +146,7 @@ const ListItem = ({ data, name, action }: ListMenuProps) => {
 }
 
 export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps>(
-	({ omitLabel, serviceId, organizationId, ...rest }, ref) => {
+	({ omitLabel, serviceId, organizationId, isMenu, ...rest }, ref) => {
 		const [isSaved, setIsSaved] = useState(false)
 		const [opened, setOpened] = useState(false)
 		const [singleListId, setSingleListId] = useState<string | undefined>()
@@ -223,18 +223,28 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 			onSuccess: deletedInList,
 			onError: errorRemoving,
 		})
-		const ButtonInner = (
+
+		let ButtonInner = (
 			<>
 				<Icon
 					icon={buttonIcon}
-					color={theme.other.colors.secondary.black}
+					color={theme.other.colors.secondary[isMenu ? 'white' : 'black']}
 					className={classes.icon}
-					height={24}
-					width={24}
+					{...(isMenu ? {} : { height: 24, width: 24 })}
 				/>
-				{!omitLabel && <Text className={classes.text}>{t(isSaved ? 'words.saved' : 'words.save')}</Text>}
+				{!omitLabel && (
+					<Text
+						fw={isMenu ? 500 : undefined}
+						color={theme.other.colors.secondary[isMenu ? 'white' : 'black']}
+						className={isMenu ? undefined : classes.text}
+					>
+						{t(isSaved ? 'words.saved' : 'words.save')}
+					</Text>
+				)}
 			</>
 		)
+
+		if (isMenu) ButtonInner = <Group>{ButtonInner}</Group>
 
 		// BUG: [IN-808] "Save" not receving correct styles when it's in the overflow menu.
 		if (sessionStatus !== 'authenticated') {
@@ -259,9 +269,16 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 			)
 		}
 		return (
-			<Menu position='bottom-start' opened={opened} onChange={setOpened} classNames={classes} keepMounted>
+			<Menu
+				position='bottom-start'
+				opened={opened}
+				onOpen={() => setOpened(true)}
+				onClose={() => setOpened(false)}
+				classNames={classes}
+				keepMounted
+			>
 				<Menu.Target>
-					<Box ref={ref} component={Button} {...rest}>
+					<Box ref={ref} component={Menu.Item} {...rest}>
 						{ButtonInner}
 					</Box>
 				</Menu.Target>
@@ -332,7 +349,7 @@ const useActions = () => {
 		const action = ({ isMenu, children, props }: Generic) => {
 			if (isMenu)
 				return (
-					<Component component={Menu.Item} className={classes.item} {...props}>
+					<Component component={Menu.Item} className={classes.item} {...{ isMenu, ...props }}>
 						{children}
 					</Component>
 				)
@@ -483,6 +500,7 @@ type Generic = {
 export interface SaveToggleButtonProps extends Omit<ActionButtonProps, 'children' | 'iconKey'> {
 	organizationId?: string
 	serviceId?: string
+	isMenu?: boolean
 }
 
 type ListMenuProps = SaveMenuProps | DeleteMenuProps
