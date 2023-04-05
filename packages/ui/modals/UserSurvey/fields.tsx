@@ -5,6 +5,8 @@ import {
 	NumberInput,
 	Radio,
 	ScrollArea,
+	Group,
+	Avatar,
 	useMantineTheme,
 	Title,
 	Text,
@@ -23,9 +25,52 @@ import { ComponentPropsWithRef, forwardRef, useState } from 'react'
 import { number } from 'zod'
 
 import { useCustomVariant } from '~ui/hooks'
+import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useUserSurveyFormContext } from './context'
+
+const useLocationStyles = createStyles((theme) => ({
+	autocompleteWrapper: {
+		padding: 0,
+		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
+	},
+}))
+
+// const useSelectItemStyles = createStyles((theme) => ({
+// 	singleLine: {
+// 		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
+// 		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
+// 		alignItems: 'center',
+// 		'&:hover': {
+// 			backgroundColor: theme.other.colors.primary.lightGray,
+// 			cursor: 'pointer',
+// 		},
+// 		'&:last-child': {
+// 			borderBottom: 'none',
+// 		},
+// 	},
+// 	twoLines: {
+// 		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
+// 		'&:hover': {
+// 			backgroundColor: theme.other.colors.primary.lightGray,
+// 			cursor: 'pointer',
+// 		},
+// 	},
+// }))
+
+// const SelectItemSingleLine = forwardRef<HTMLDivElement, SingleItemSelectProps>(
+// 	({ label, ...others }, ref) => {
+// 		const variants = useCustomVariant()
+// 		const { classes } = useSelectItemStyles()
+// 		return (
+// 			<div className={classes.singleLine} ref={ref} {...others}>
+// 				<Text variant={variants.Text.utility2}>{label}</Text>
+// 			</div>
+// 		)
+// 	}
+// )
+// SelectItemSingleLine.displayName = 'Selection Item'
 
 const useStyles = createStyles((theme) => ({
 	answerContainer: {
@@ -85,30 +130,51 @@ export const FormImmigration = () => {
 //immigration component end
 
 //countries component start
-export const FormCountries = () => {
+interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
+	cca2: string
+	id: string
+	tsKey: string
+}
+
+/* eslint-disable react/display-name */
+const SelectItem = forwardRef<HTMLDivElement, ItemProps>(({ cca2, id, tsKey, ...others }: ItemProps, ref) => (
+	<div ref={ref} {...others}>
+		<div>
+			<Text size='sm'>{tsKey}</Text>
+		</div>
+	</div>
+))
+
+export const FormCountry = () => {
 	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
 	const { t } = useTranslation('common')
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 
+	const countryData = surveyOptions?.countries.map(function (ele) {
+		return { ...ele, value: ele.tsKey, label: ele.tsKey }
+	})
+
+	const handleCountrySelect = (event: string) => {
+		let countryObj = countryData?.find((item) => item.tsKey === event)
+		form.setFieldValue('countryOriginId', countryObj?.id)
+	}
+
 	return (
 		<>
 			{TitleSubtitle('survey.question-2-title', 'survey.question-subtitle')}
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
-				<Radio.Group value='selected' className={classes.answerContainer}>
-					<Stack>
-						{surveyOptions?.countries.map((item, index) => {
-							return (
-								<Radio
-									label={t(item.tsKey, { ns: 'user' })}
-									key={item.id}
-									value={item.id}
-									// {...form.getInputProps(`${categoryId}.${index}.checked`, { type: 'checkbox' })}
-								/>
-							)
-						})}
-					</Stack>
-				</Radio.Group>
+				<Select
+					placeholder='Search'
+					itemComponent={SelectItem}
+					icon={<Icon icon='carbon:search' />}
+					data={countryData}
+					searchable
+					maxDropdownHeight={325}
+					dropdownComponent='div'
+					filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
+					onChange={handleCountrySelect}
+				/>
 			</ScrollArea>
 		</>
 	)
@@ -191,8 +257,8 @@ export const FormBirthyear = () => {
 				min={minYear}
 				max={maxYear}
 				placeholder={t('survey.question-5-placeholder') as string}
-				{...form.getInputProps('birthYear')}
 				error={t('survey.birthyear-req-value', { year1: minYear, year2: maxYear }) as string}
+				{...form.getInputProps('birthYear')}
 			/>
 		</>
 	)

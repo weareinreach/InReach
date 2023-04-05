@@ -12,7 +12,7 @@ import { useScreenSize, useCustomVariant } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { UserSurveyFormProvider, useUserSurveyForm } from './context'
-import { FormBirthyear, FormCountries, FormIdentity, FormImmigration, FormEthnicity } from './fields'
+import { FormBirthyear, FormCountry, FormIdentity, FormImmigration, FormEthnicity } from './fields'
 import { ModalTitle } from '../ModalTitle'
 
 const useStyles = createStyles((theme) => ({
@@ -159,7 +159,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 			case 2: {
 				return (
 					<>
-						<FormCountries />
+						<FormCountry />
 						{modalButtons(3)}
 					</>
 				)
