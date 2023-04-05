@@ -63,10 +63,6 @@ const job: ListrTask = async (_ctx, task) => {
 					skipDuplicates: true,
 				})
 				task.output = `OrgLocationService: ${services.count}`
-				const areas = await Promise.all(serviceAreas.map((args) => tx.serviceArea.updateMany(args)))
-				task.output = `ServiceAreas: ${areas.length}`
-				const hours = await Promise.all(orgHours.map((args) => tx.orgHours.updateMany(args)))
-				task.output = `OrgHours: ${hours.length}`
 				task.output = `Committing transactions...`
 			} catch (error) {
 				console.error(error)
@@ -74,6 +70,11 @@ const job: ListrTask = async (_ctx, task) => {
 		},
 		{ timeout: 300_000 }
 	)
+	task.output = `Processing updates...`
+	const areas = await prisma.$transaction(serviceAreas.map((args) => prisma.serviceArea.updateMany(args)))
+	task.output = `ServiceAreas: ${areas.length}`
+	const hours = await prisma.$transaction(orgHours.map((args) => prisma.orgHours.updateMany(args)))
+	task.output = `OrgHours: ${hours.length}`
 }
 
 // export job - this must be unique
