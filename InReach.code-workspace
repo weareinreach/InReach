@@ -226,41 +226,6 @@
 	"launch": {
 		"configurations": [
 			{
-				"type": "aws-sam",
-				"request": "direct-invoke",
-				"name": "i18n-cache:HelloWorldFunction (nodejs18.x)",
-				"invokeTarget": {
-					"target": "template",
-					"templatePath": "/Users/joe/GitHub/InReach/monorepo/packages/aws-cache/i18n-cache/template.yaml",
-					"logicalId": "HelloWorldFunction"
-				},
-				"lambda": {
-					"payload": {},
-					"environmentVariables": {},
-					"runtime": "nodejs18.x"
-				}
-			},
-			{
-				"type": "aws-sam",
-				"request": "direct-invoke",
-				"name": "API i18n-cache:HelloWorldFunction (nodejs18.x)",
-				"invokeTarget": {
-					"target": "api",
-					"templatePath": "/Users/joe/GitHub/InReach/monorepo/packages/aws-cache/i18n-cache/template.yaml",
-					"logicalId": "HelloWorldFunction"
-				},
-				"api": {
-					"path": "/hello",
-					"httpMethod": "get",
-					"payload": {
-						"json": {}
-					}
-				},
-				"lambda": {
-					"runtime": "nodejs18.x"
-				}
-			},
-			{
 				"name": "Launch Chrome",
 				"request": "launch",
 				"type": "chrome",
