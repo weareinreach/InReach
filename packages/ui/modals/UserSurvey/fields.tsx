@@ -37,40 +37,27 @@ const useLocationStyles = createStyles((theme) => ({
 	},
 }))
 
-// const useSelectItemStyles = createStyles((theme) => ({
-// 	singleLine: {
-// 		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-// 		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
-// 		alignItems: 'center',
-// 		'&:hover': {
-// 			backgroundColor: theme.other.colors.primary.lightGray,
-// 			cursor: 'pointer',
-// 		},
-// 		'&:last-child': {
-// 			borderBottom: 'none',
-// 		},
-// 	},
-// 	twoLines: {
-// 		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
-// 		'&:hover': {
-// 			backgroundColor: theme.other.colors.primary.lightGray,
-// 			cursor: 'pointer',
-// 		},
-// 	},
-// }))
-
-// const SelectItemSingleLine = forwardRef<HTMLDivElement, SingleItemSelectProps>(
-// 	({ label, ...others }, ref) => {
-// 		const variants = useCustomVariant()
-// 		const { classes } = useSelectItemStyles()
-// 		return (
-// 			<div className={classes.singleLine} ref={ref} {...others}>
-// 				<Text variant={variants.Text.utility2}>{label}</Text>
-// 			</div>
-// 		)
-// 	}
-// )
-// SelectItemSingleLine.displayName = 'Selection Item'
+const useSelectItemStyles = createStyles((theme) => ({
+	singleLine: {
+		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
+		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
+		alignItems: 'center',
+		'&:hover': {
+			backgroundColor: theme.other.colors.primary.lightGray,
+			cursor: 'pointer',
+		},
+		'&:last-child': {
+			borderBottom: 'none',
+		},
+	},
+	twoLines: {
+		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
+		'&:hover': {
+			backgroundColor: theme.other.colors.primary.lightGray,
+			cursor: 'pointer',
+		},
+	},
+}))
 
 const useStyles = createStyles((theme) => ({
 	answerContainer: {
@@ -137,13 +124,19 @@ interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 /* eslint-disable react/display-name */
-const SelectItem = forwardRef<HTMLDivElement, ItemProps>(({ cca2, id, tsKey, ...others }: ItemProps, ref) => (
-	<div ref={ref} {...others}>
-		<div>
-			<Text size='sm'>{tsKey}</Text>
+const SelectItem = forwardRef<HTMLDivElement, ItemProps>(({ cca2, id, tsKey, ...others }: ItemProps, ref) => {
+	const variants = useCustomVariant()
+	const { classes } = useSelectItemStyles()
+
+	return (
+		<div className={classes.singleLine} ref={ref} {...others}>
+			<Text variant={variants.Text.utility2} size='sm'>
+				{tsKey}
+			</Text>
 		</div>
-	</div>
-))
+	)
+})
+SelectItem.displayName = 'Selection Item'
 
 export const FormCountry = () => {
 	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
@@ -165,13 +158,14 @@ export const FormCountry = () => {
 			{TitleSubtitle('survey.question-2-title', 'survey.question-subtitle')}
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 				<Select
-					placeholder='Search'
+					placeholder='Enter country...'
 					itemComponent={SelectItem}
 					icon={<Icon icon='carbon:search' />}
 					data={countryData}
 					searchable
 					maxDropdownHeight={325}
 					dropdownComponent='div'
+					styles={{ rightSection: { display: 'none' } }}
 					filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
 					onChange={handleCountrySelect}
 				/>
