@@ -24,7 +24,9 @@ import { useState, forwardRef, ComponentType } from 'react'
 import { useNewNotification } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
-import { QuickPromotionModal, ReviewModal, CreateNewList } from '~ui/modals'
+import { CreateNewList } from '~ui/modals/CreateNewList'
+import { QuickPromotionModal } from '~ui/modals/QuickPromotion'
+import { ReviewModal } from '~ui/modals/Review'
 
 const useStyles = createStyles((theme) => ({
 	button: {

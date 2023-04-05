@@ -4,4 +4,5 @@ export * from './useCustomVariant'
 export * from './useFormattedAddress'
 export * from './useNewNotification'
 export * from './useScreenSize'
+export * from './useShake'
 // codegen:end
