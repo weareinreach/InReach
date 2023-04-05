@@ -3,6 +3,8 @@
 export * from './useCustomVariant'
 export * from './useFormattedAddress'
 export * from './useNewNotification'
+export * from './usePhoneNumber'
 export * from './useScreenSize'
 export * from './useShake'
+export * from './useSlug'
 // codegen:end

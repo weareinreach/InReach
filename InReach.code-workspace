@@ -220,7 +220,8 @@
 		},
 		"tms.stringsCompletionFileExtensions": "ts,tsx,json",
 		"typescript.preferences.importModuleSpecifier": "relative",
-		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
+		"typescript.tsdk": "🚀 InReach App (@weareinreach/app)/node_modules/typescript/lib",
+		"typescript.enablePromptUseWorkspaceTsdk": true,
 		"typescript.workspaceSymbols.scope": "allOpenProjects"
 	},
 	"launch": {
