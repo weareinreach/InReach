@@ -71,7 +71,6 @@
 	"form-error-password-blank": "Password cannot be blank.",
 	"form-error-password-req": "Your password does not meet requirements, please try again.",
 	"go-to-x": "Go to {{value}}",
-	"hours": "Hours",
 	"in-reach-user": "InReach User",
 	"in-reach-verified-reviewer": "InReach Verified Reviewer",
 	"include": "Include",
@@ -271,6 +270,7 @@
 		"and-x-more": "and {{count}} more",
 		"coming-soon": "Coming soon",
 		"delete": "Delete",
+		"hours": "Hours",
 		"more": "more",
 		"next": "Next",
 		"please-wait": "Please wait...",
@@ -280,6 +280,7 @@
 		"save": "Save",
 		"saved": "Saved",
 		"search": "Search",
+		"service-hours": "Service hours",
 		"share": "Share",
 		"support": "Support"
 	},
