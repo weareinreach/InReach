@@ -550,6 +550,8 @@ model OrgWebsite {
   description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   descriptionId String?   @unique
   isPrimary     Boolean   @default(false)
+  deleted       Boolean   @default(false)
+  published     Boolean   @default(true)
 
   organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   organizationId String?

@@ -1,13 +1,20 @@
 import { Listr, ListrTask as ListrTaskObj, ListrDefaultRenderer, ListrTaskWrapper } from 'listr2'
 
-import { job20220329, job20220330, job20220404, job20230404b } from './data-migrations'
+import {
+	job20220329,
+	job20220330,
+	job20220404,
+	job20230404b,
+	job20230405,
+	job20230405b,
+} from './data-migrations'
 
 /**
  * Job Queue
  *
  * Add new jobs to the end of this array.
  */
-const jobList = [job20220329, job20220330, job20220404, job20230404b]
+const jobList = [job20220329, job20220330, job20220404, job20230404b, job20230405, job20230405b]
 
 /**
  * Job Runner
@@ -33,7 +40,9 @@ const jobs = new Listr<Context>(
 		},
 		nonTTYRendererOptions: {
 			useIcons: true,
+			showTimer: true,
 		},
+		exitOnError: false,
 	}
 )
 
