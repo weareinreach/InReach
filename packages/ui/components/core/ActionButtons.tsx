@@ -248,6 +248,12 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 
 		// BUG: [IN-808] "Save" not receving correct styles when it's in the overflow menu.
 		if (sessionStatus !== 'authenticated') {
+			if (isMenu)
+				return (
+					<QuickPromotionModal ref={ref} component={Menu.Item} className={classes.icon} radius='md'>
+						{ButtonInner}
+					</QuickPromotionModal>
+				)
 			return (
 				<QuickPromotionModal ref={ref} component={Button} className={classes.button} radius='md'>
 					{ButtonInner}
@@ -259,7 +265,7 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 			return (
 				<Box ref={ref} {...rest}>
 					<Button
-						className={classes.button}
+						className={isMenu ? classes.icon : classes.button}
 						radius='md'
 						onClick={() => removeItem.mutate({ id: singleListId, organizationId, serviceId })}
 					>
@@ -278,7 +284,7 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 				keepMounted
 			>
 				<Menu.Target>
-					<Box ref={ref} component={Menu.Item} {...rest}>
+					<Box ref={ref} component={Button} {...rest}>
 						{ButtonInner}
 					</Box>
 				</Menu.Target>
