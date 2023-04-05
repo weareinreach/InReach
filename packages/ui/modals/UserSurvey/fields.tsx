@@ -21,8 +21,8 @@ import { useDebouncedValue } from '@mantine/hooks'
 import { attributesByCategory } from '@weareinreach/api/generated/attributesByCategory'
 import { languageList } from '@weareinreach/api/generated/languages'
 import { useTranslation } from 'next-i18next'
-import { ComponentPropsWithRef, forwardRef, useState } from 'react'
-import { number } from 'zod'
+import { ComponentPropsWithRef, forwardRef, useState, startTransition } from 'react'
+import { number, string } from 'zod'
 
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
@@ -121,22 +121,25 @@ interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
 	cca2: string
 	id: string
 	tsKey: string
+	tsNs: string
 }
 
 /* eslint-disable react/display-name */
-const SelectItem = forwardRef<HTMLDivElement, ItemProps>(({ cca2, id, tsKey, ...others }: ItemProps, ref) => {
-	const variants = useCustomVariant()
-	const { classes } = useSelectItemStyles()
+const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
+	({ cca2, id, tsKey, tsNs, ...others }: ItemProps, ref) => {
+		const variants = useCustomVariant()
+		const { classes } = useSelectItemStyles()
 
-	return (
-		<div className={classes.singleLine} ref={ref} {...others}>
-			<Text variant={variants.Text.utility2} size='sm'>
-				{tsKey}
-			</Text>
-		</div>
-	)
-})
-SelectItem.displayName = 'Selection Item'
+		return (
+			<div className={classes.singleLine} ref={ref} {...others}>
+				<Text variant={variants.Text.utility2} size='sm'>
+					{tsKey}
+				</Text>
+			</div>
+		)
+	}
+)
+// SelectItem.displayName = 'Selection Item'
 
 export const FormCountry = () => {
 	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
@@ -149,6 +152,7 @@ export const FormCountry = () => {
 	})
 
 	const handleCountrySelect = (event: string) => {
+		console.log(event)
 		let countryObj = countryData?.find((item) => item.tsKey === event)
 		form.setFieldValue('countryOriginId', countryObj?.id)
 	}
@@ -158,7 +162,7 @@ export const FormCountry = () => {
 			{TitleSubtitle('survey.question-2-title', 'survey.question-subtitle')}
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 				<Select
-					placeholder={t('survey.question-2-placeholder')}
+					placeholder={t('survey.question-2-placeholder') as string}
 					itemComponent={SelectItem}
 					icon={<Icon icon='carbon:search' />}
 					data={countryData}
