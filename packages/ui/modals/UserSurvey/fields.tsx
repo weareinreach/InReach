@@ -158,7 +158,7 @@ export const FormCountry = () => {
 			{TitleSubtitle('survey.question-2-title', 'survey.question-subtitle')}
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 				<Select
-					placeholder='Enter country...'
+					placeholder={t('survey.question-2-placeholder')}
 					itemComponent={SelectItem}
 					icon={<Icon icon='carbon:search' />}
 					data={countryData}
