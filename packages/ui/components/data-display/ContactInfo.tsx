@@ -21,28 +21,24 @@ const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
 		const dialURL = parsedPhone.getURI()
 		const phoneNumber = parsedPhone.formatNational()
 		if (direct) {
-			if (primary) {
-				return (
-					<Stack spacing={4}>
-						<Title order={3}>{t('direct.phone')}</Title>
-						{isExternal(dialURL) ? (
-							<Link external href={dialURL} variant={variants.Link.inlineInverted}>
-								{phoneNumber}
-							</Link>
-						) : (
-							<Text>{phoneNumber}</Text>
-						)}
-					</Stack>
-				)
-			} else {
-				continue
-			}
+			return (
+				<Stack spacing={12}>
+					<Title order={3}>{t('direct.phone')}</Title>
+					{isExternal(dialURL) ? (
+						<Link external href={dialURL} variant={variants.Link.inlineInverted}>
+							{phoneNumber}
+						</Link>
+					) : (
+						<Text>{phoneNumber}</Text>
+					)}
+				</Stack>
+			)
 		}
 		if (locationOnly && !showLocationOnly) continue
 		const desc = phoneType?.tsKey ? t(phoneType.tsKey, { ns: 'phone-type' }) : undefined
 
 		const item = (
-			<Stack spacing={4} key={k}>
+			<Stack spacing={12} key={k}>
 				{isExternal(dialURL) ? (
 					<Link external href={dialURL} variant={variants.Link.inlineInverted}>
 						{phoneNumber}
@@ -87,18 +83,14 @@ const Emails = ({ data, direct, locationOnly, serviceOnly }: EmailsProps) => {
 		const href = `mailto:${address}`
 		if (!isExternal(href)) continue
 		if (direct) {
-			if (primary) {
-				return (
-					<Stack spacing={4}>
-						<Title order={3}>{t('direct.email')}</Title>
-						<Link external href={href} variant={variants.Link.inlineInverted}>
-							{address}
-						</Link>
-					</Stack>
-				)
-			} else {
-				continue
-			}
+			return (
+				<Stack spacing={12}>
+					<Title order={3}>{t('direct.email')}</Title>
+					<Link external href={href} variant={variants.Link.inlineInverted}>
+						{address}
+					</Link>
+				</Stack>
+			)
 		}
 		const desc = title
 			? t(title.tsKey, { ns: 'user-title' })
@@ -143,18 +135,14 @@ const Websites = ({ data, direct, locationOnly, websiteDesc }: WebsitesProps) =>
 		if (locationOnly && !orgLocationOnly) continue
 
 		if (direct) {
-			if (isPrimary) {
-				return (
-					<Stack spacing={4}>
-						<Title order={3}>{t('direct.website')}</Title>
-						<Link external href={url} variant={variants.Link.inlineInverted}>
-							{urlBase}
-						</Link>
-					</Stack>
-				)
-			} else {
-				continue
-			}
+			return (
+				<Stack spacing={12}>
+					<Title order={3}>{t('direct.website')}</Title>
+					<Link external href={url} variant={variants.Link.inlineInverted}>
+						{urlBase}
+					</Link>
+				</Stack>
+			)
 		}
 
 		const desc = websiteDesc
@@ -200,16 +188,17 @@ const SocialMedia = ({ data }: SocialMediaProps) => {
 export const ContactInfo = ({
 	data,
 	order = ['website', 'phone', 'email', 'socialMedia'],
+	gap = 24,
 	...commonProps
 }: ContactInfoProps) => {
 	const sections: ContactMap = {
-		website: <Websites data={data.websites} {...commonProps} />,
-		phone: <PhoneNumbers data={data.phones} {...commonProps} />,
-		email: <Emails data={data.emails} {...commonProps} />,
-		socialMedia: <SocialMedia data={data.socialMedia} />,
+		website: <Websites data={data.websites ?? []} {...commonProps} />,
+		phone: <PhoneNumbers data={data.phones ?? []} {...commonProps} />,
+		email: <Emails data={data.emails ?? []} {...commonProps} />,
+		socialMedia: <SocialMedia data={data.socialMedia ?? []} />,
 	}
 
-	return <>{order.map((item) => sections[item])}</>
+	return <Stack spacing={gap}>{order.map((item) => sections[item])}</Stack>
 }
 
 type ContactSections = 'phone' | 'email' | 'website' | 'socialMedia'
@@ -218,7 +207,7 @@ type ContactMap = {
 	[K in ContactSections]: JSX.Element
 }
 
-interface ContactInfoProps extends CommonProps {
+export interface ContactInfoProps extends CommonProps {
 	data: {
 		websites: WebsitesProps['data']
 		phones: PhoneNumbersProps['data']
@@ -226,6 +215,7 @@ interface ContactInfoProps extends CommonProps {
 		socialMedia: SocialMediaProps['data']
 	}
 	order?: ContactSections[]
+	gap?: number
 }
 
 interface CommonProps {
