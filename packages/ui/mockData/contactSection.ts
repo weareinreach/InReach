@@ -17,6 +17,8 @@ export const contactMock = {
 					},
 				},
 				title: null,
+				locationOnly: false,
+				serviceOnly: false,
 			},
 		},
 	],
