@@ -28,9 +28,9 @@ patchedDependencies:
   iso-google-locales@3.0.4:
     hash: ltnamflm7ayajalculwqyezjya
     path: patches/iso-google-locales@3.0.4.patch
-  trpc-panel@1.2.8:
-    hash: sftd6wakcimwnpfmzciflr33te
-    path: patches/trpc-panel@1.2.8.patch
+  trpc-panel@1.2.9:
+    hash: iqpx5gkbp7ja4xjrzl4yb3b6k4
+    path: patches/trpc-panel@1.2.9.patch
 
 importers:
 
@@ -341,8 +341,8 @@ importers:
         specifier: 0.2.1-next
         version: 0.2.1-next(@trpc/client@10.18.0)(@trpc/server@10.18.0)
       trpc-panel:
-        specifier: 1.2.8
-        version: 1.2.8(patch_hash=sftd6wakcimwnpfmzciflr33te)(@trpc/server@10.18.0)(zod@3.21.4)
+        specifier: 1.2.9
+        version: 1.2.9(patch_hash=iqpx5gkbp7ja4xjrzl4yb3b6k4)(@trpc/server@10.18.0)(zod@3.21.4)
       trpc-playground:
         specifier: 1.0.4
         version: 1.0.4(@trpc/server@10.18.0)(@types/node@18.15.11)(typescript@5.0.3)(zod@3.21.4)
@@ -19878,8 +19878,8 @@ packages:
       superjson: 1.12.2
     dev: true
 
-  /trpc-panel@1.2.8(patch_hash=sftd6wakcimwnpfmzciflr33te)(@trpc/server@10.18.0)(zod@3.21.4):
-    resolution: {integrity: sha512-jaBP1g9sajHtq3Wx+G3DOSsCtekwyDnWEBCspNQpQERXrk47TyZaMw68cRTXQno6bHD0SrS/i7NTm9wS5lfR8g==}
+  /trpc-panel@1.2.9(patch_hash=iqpx5gkbp7ja4xjrzl4yb3b6k4)(@trpc/server@10.18.0)(zod@3.21.4):
+    resolution: {integrity: sha512-NXTm7xHpIVUNTIkCzsHlykNiDGQE5STf4dPeEZLyVaS85jVTgyul78X83/Odb54EImm/38Ob8HQ/KjIACo5DMg==}
     peerDependencies:
       '@trpc/server': ^10.0.0
       zod: ^3.19.1
