@@ -7,6 +7,7 @@ import {
 	job20230404b,
 	job20230405,
 	job20230405b,
+	job20230406,
 } from './data-migrations'
 
 /**
@@ -14,7 +15,7 @@ import {
  *
  * Add new jobs to the end of this array.
  */
-const jobList = [job20220329, job20220330, job20220404, job20230404b, job20230405, job20230405b]
+const jobList = [job20220329, job20220330, job20220404, job20230404b, job20230405, job20230405b, job20230406]
 
 /**
  * Job Runner
@@ -27,14 +28,11 @@ const renderOptions = {
 	persistentOutput: true,
 	showTimer: true,
 } satisfies ListrJob['options']
-const injectOptions = (job: ListrJob) => ({ ...job, renderOptions })
+const injectOptions = (job: ListrJob): ListrJob => ({ ...job, options: renderOptions })
 const jobs = new Listr<Context>(
 	jobList.map((job) => injectOptions(job)),
 	{
 		rendererOptions: {
-			collapse: false,
-			collapseErrors: false,
-			collapseSkips: false,
 			showTimer: true,
 			formatOutput: 'wrap',
 		},
@@ -42,6 +40,7 @@ const jobs = new Listr<Context>(
 			useIcons: true,
 			showTimer: true,
 		},
+
 		exitOnError: false,
 	}
 )

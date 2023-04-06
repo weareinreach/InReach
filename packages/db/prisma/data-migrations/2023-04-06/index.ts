@@ -1,4 +1,9 @@
-import { prisma } from '~db/index'
+import { z } from 'zod'
+
+import fs from 'fs'
+import path from 'path'
+
+import { prisma, Prisma } from '~db/index'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
 import { jobPreRunner, type JobDef } from '~db/prisma/jobPreRun'
 
@@ -11,14 +16,22 @@ const jobDef: JobDef = {
 
 const isSuccess = (criteria: unknown) => (criteria ? '✅' : '❎')
 
+const CostDescSchema = z
+	.object({
+		id: z.string(),
+		data: z.string(),
+		slug: z.string(),
+	})
+	.array()
+
+const BATCH_SIZE = 500
+
 const job: ListrTask = async (_ctx, task) => {
 	/** Do not edit this part - this ensures that jobs are only run once */
 	const runJob = await jobPreRunner(jobDef)
 	if (!runJob) {
 		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
 	}
-	/** Start defining your data migration from here. */
-
 	const updateDesc = await prisma.attribute.update({
 		where: {
 			tag: 'other-describe',
@@ -36,6 +49,41 @@ const job: ListrTask = async (_ctx, task) => {
 		},
 	})
 	task.output = `${isSuccess(costIcons.count)} Update icons for "cost" attributes (${costIcons.count})`
+
+	const costDescRaw = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'costDesc.json'), 'utf-8'))
+	const parsedCostDesc = CostDescSchema.parse(costDescRaw)
+	const costDescUpdates = parsedCostDesc.map(({ data: text, id, slug }) => {
+		const key = `${slug}.attribute.${id}`
+		const ns = 'org-data'
+		return prisma.attributeSupplement.update({
+			where: { id },
+			data: {
+				text: {
+					upsert: {
+						create: { tsKey: { create: { key, text, ns } } },
+						update: { tsKey: { update: { text } } },
+					},
+				},
+				data: Prisma.JsonNull,
+			},
+		})
+	})
+	let i = 1
+	let ttl = 0
+	const totalBatches = Math.ceil(costDescUpdates.length / BATCH_SIZE)
+	task.output = `Generated batch for Cost supplement updates: ${costDescUpdates.length} records`
+	task.output = `Running batches...`
+
+	while (costDescUpdates.length) {
+		const currentBatch = costDescUpdates.splice(0, BATCH_SIZE)
+		const batchResult = await prisma.$transaction(currentBatch)
+		task.output = `[${i}/${totalBatches}] ${isSuccess(batchResult.length)} Records updated: ${
+			batchResult.length
+		}`
+		ttl += batchResult.length
+		i++
+	}
+	task.output = `Cost attribute supplement records updated: ${ttl}`
 }
 
 /**
