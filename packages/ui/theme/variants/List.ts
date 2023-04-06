@@ -48,7 +48,7 @@ export const List = {
 	inlineBullet: (theme) => ({
 		root: {
 			display: 'flex',
-			gap: rem(8),
+			gap: rem(16),
 			flexWrap: 'wrap',
 		},
 		item: {
@@ -70,10 +70,14 @@ export const List = {
 		},
 	}),
 	inline: (theme) => ({
+		root: {
+			display: 'flex',
+			gap: rem(16),
+			flexWrap: 'wrap',
+		},
 		item: {
 			display: 'inline-block',
 			listStyle: 'none',
-			marginRight: rem(16),
 		},
 	}),
 	textDarkGray: (theme) => ({
