@@ -122,37 +122,37 @@ interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
 	id: string
 	tsKey: string
 	tsNs: string
+	label: string
 }
 
-/* eslint-disable react/display-name */
 const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
-	({ cca2, id, tsKey, tsNs, ...others }: ItemProps, ref) => {
+	({ cca2, id, tsKey, tsNs, label, ...others }: ItemProps, ref) => {
+		const { t } = useTranslation('country')
 		const variants = useCustomVariant()
 		const { classes } = useSelectItemStyles()
 
 		return (
 			<div className={classes.singleLine} ref={ref} {...others}>
 				<Text variant={variants.Text.utility2} size='sm'>
-					{tsKey}
+					{t(label, { ns: 'country' })}
 				</Text>
 			</div>
 		)
 	}
 )
-// SelectItem.displayName = 'Selection Item'
+SelectItem.displayName = 'Selection Item'
 
 export const FormCountry = () => {
 	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
-	const { t } = useTranslation('common')
+	const { t } = useTranslation(['common', 'country'])
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 
 	const countryData = surveyOptions?.countries.map(function (ele) {
-		return { ...ele, value: ele.tsKey, label: ele.tsKey }
+		return { ...ele, value: t(ele.tsKey, { ns: 'coutnry' }), label: t(ele.tsKey, { ns: 'country' }) }
 	})
 
 	const handleCountrySelect = (event: string) => {
-		console.log(event)
 		let countryObj = countryData?.find((item) => item.tsKey === event)
 		form.setFieldValue('countryOriginId', countryObj?.id)
 	}
@@ -170,7 +170,10 @@ export const FormCountry = () => {
 					maxDropdownHeight={325}
 					dropdownComponent='div'
 					styles={{ rightSection: { display: 'none' } }}
-					filter={(value, item) => item.label.toLowerCase().includes(value.toLowerCase().trim())}
+					filter={(value, item) =>
+						item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
+						item.tsKey.toLowerCase().includes(value.toLowerCase().trim())
+					}
 					onChange={handleCountrySelect}
 				/>
 			</ScrollArea>

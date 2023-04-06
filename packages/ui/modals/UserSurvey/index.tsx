@@ -27,7 +27,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyProps>((props, ref) => {
-	const { t } = useTranslation('common')
+	const { t } = useTranslation(['common', 'country'])
 	const { isMobile } = useScreenSize()
 	const [opened, handler] = useDisclosure(false)
 	const [stepOption, setStepOption] = useState<string | null>('step1')
