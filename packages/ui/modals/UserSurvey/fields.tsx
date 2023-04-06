@@ -21,6 +21,7 @@ import { useUserSurveyFormContext } from './context'
 
 const useSelectItemStyles = createStyles((theme) => ({
 	singleLine: {
+		checkIcon: { backgroundColor: 'black' },
 		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
 		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
 		alignItems: 'center',
@@ -99,25 +100,52 @@ export const FormImmigration = () => {
 //immigration component end
 
 //countries component start
+// interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
+// 	cca2: string
+// 	id: string
+// 	tsKey: string
+// 	tsNs: string
+// 	label: string
+// }
+
+// const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
+// 	({ cca2, id, tsKey, tsNs, label, ...others }: ItemProps, ref) => {
+// 		const { t } = useTranslation('country')
+// 		const variants = useCustomVariant()
+// 		const { classes } = useSelectItemStyles()
+
+// 		return (
+// 			<div className={classes.singleLine} ref={ref} {...others}>
+// 				<Text variant={variants.Text.utility2} size='sm'>
+// 					{t(label, { ns: 'country' })}
+// 				</Text>
+// 			</div>
+// 		)
+// 	}
+// )
+// SelectItem.displayName = 'Selection Item'
+
 interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
 	cca2: string
 	id: string
 	tsKey: string
 	tsNs: string
 	label: string
+	selected?: boolean
 }
 
 const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
-	({ cca2, id, tsKey, tsNs, label, ...others }: ItemProps, ref) => {
+	({ cca2, id, tsKey, tsNs, label, selected, ...others }: ItemProps, ref) => {
 		const { t } = useTranslation('country')
 		const variants = useCustomVariant()
 		const { classes } = useSelectItemStyles()
 
 		return (
-			<div className={classes.singleLine} ref={ref} {...others}>
+			<div className={`${classes.singleLine} ${selected ? classes.selected : ''}`} ref={ref} {...others}>
 				<Text variant={variants.Text.utility2} size='sm'>
 					{t(label, { ns: 'country' })}
 				</Text>
+				{selected && <Icon icon='carbon:checkmark' className={classes.checkIcon} />}
 			</div>
 		)
 	}
@@ -151,7 +179,14 @@ export const FormCountry = () => {
 					searchable
 					maxDropdownHeight={325}
 					dropdownComponent='div'
-					styles={{ rightSection: { display: 'none' } }}
+					// styles={{ rightSection: { display: 'none' } }}
+					styles={{
+						root: { borderLeft: 'none', borderRight: 'none' },
+						dropdown: { borderLeft: 'none', borderRight: 'none', borderRadius: 0 },
+						item: { borderBottom: '1px solid #EAEAEA' },
+						// selected: { backgroundColor: '#EAEAEA' },
+						rightSection: { display: 'none' },
+					}}
 					filter={(value, item) =>
 						item &&
 						item.label &&
