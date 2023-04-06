@@ -8,7 +8,7 @@ import { NullableJsonValue } from '../zod-schemas'
 
 const MODELS_TO_RUN: Prisma.ModelName[] = ['AttributeSupplement', 'Suggestion']
 
-const logger = new Logger({ name: 'SuperJSON middleware' })
+const logger = new Logger({ name: 'SuperJSON middleware', minLevel: 3 })
 
 const ResultSchema = z
 	.object({
@@ -100,7 +100,7 @@ export const superjsonMiddleware: Prisma.Middleware = async (params, next) => {
 				args.data.data = processWrite(args.data.data)
 			}
 			const end = Date.now()
-			logger.info(`SuperJSON Middleware: ${action} ${end - start}ms (Array)`)
+			logger.trace(`SuperJSON Middleware: ${action} ${end - start}ms (Array)`)
 			return next({ ...params, args })
 		} else if (actions.read.includes(action)) {
 			let result = await next(params)
@@ -114,7 +114,7 @@ export const superjsonMiddleware: Prisma.Middleware = async (params, next) => {
 				result.data = processData(result.data, action)
 			}
 			const end = Date.now()
-			logger.info(`SuperJSON Middleware: ${action} ${end - start}ms`)
+			logger.trace(`SuperJSON Middleware: ${action} ${end - start}ms`)
 			return result
 		}
 	}
