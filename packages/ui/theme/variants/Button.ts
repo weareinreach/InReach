@@ -14,12 +14,12 @@ export const Button = {
 		}),
 		inner: {
 			color: theme.other.colors.secondary.white,
-			label: {
-				left: `calc(${theme.spacing.md} * 2)`,
-			},
-			leftIcon: {
-				display: 'none',
-			},
+		},
+		label: {
+			left: `calc(${theme.spacing.md} * 2)`,
+		},
+		leftIcon: {
+			display: 'none',
 		},
 	}),
 	secondarySm: (theme) => ({
@@ -29,19 +29,21 @@ export const Button = {
 			height: `calc(${theme.spacing.lg} * 2)`,
 			border: theme.other.border.default,
 			borderColor: theme.other.colors.tertiary.coolGray,
-			backgroundColor: theme.other.colors.secondary.white,
+			backgroundColor: `${theme.other.colors.secondary.white} !important`,
+			// backgroundColor: `${theme.other.colors.secondary.white}`,
 			'&:not([data-disabled])': theme.fn.hover({
 				backgroundColor: theme.other.colors.primary.lightGray,
 			}),
 		},
 		inner: {
-			color: theme.other.colors.secondary.black,
-			label: {
-				left: `calc(${theme.spacing.md} * 2)`,
-			},
-			leftIcon: {
-				display: 'none',
-			},
+			// color: theme.other.colors.secondary.black,
+			color: `${theme.other.colors.secondary.black} !important`,
+		},
+		label: {
+			left: `calc(${theme.spacing.md} * 2)`,
+		},
+		leftIcon: {
+			display: 'none',
 		},
 	}),
 	accent: (theme) => ({
@@ -56,12 +58,12 @@ export const Button = {
 		},
 		inner: {
 			color: theme.other.colors.secondary.white,
-			label: {
-				left: `calc(${theme.spacing.md} * 2)`,
-			},
-			leftIcon: {
-				display: 'none',
-			},
+		},
+		label: {
+			left: `calc(${theme.spacing.md} * 2)`,
+		},
+		leftIcon: {
+			display: 'none',
 		},
 	}),
 	primaryLg: (theme) => ({

@@ -17,11 +17,14 @@ export const geoRouter = defineRouter({
 				search: z.string(),
 				locale: z.string().optional(),
 				cityOnly: z.boolean().default(false).optional(),
+				fullAddress: z.boolean().default(false).optional(),
 			})
 		)
 		.query(async ({ input }) => {
 			const types = input.cityOnly
 				? ['(cities)']
+				: input.fullAddress
+				? ['address']
 				: ([
 						'administrative_area_level_2',
 						'administrative_area_level_3',

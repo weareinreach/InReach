@@ -8,6 +8,7 @@
 		"clean:export": "rm -rf ./datastore/v1/mongodb/{output,output-types}/* || true",
 		"clean:node": "rm -rf ./node_modules/ || true",
 		"clean:zod": "rm -rf ./zod-schemas/* || true",
+		"db:dataMigrate": "pnpm with-env tsx ./prisma/dataMigrationRunner.ts",
 		"db:deploy": "pnpm with-env prisma migrate deploy",
 		"db:generate": "pnpm clean:zod && pnpm with-env prisma generate && prisma -v",
 		"db:generate:aws": "pnpm install && pnpm with-env prisma generate",
@@ -56,7 +57,7 @@
 		"@types/inquirer": "9.0.3",
 		"@types/iso-3166-2": "1.0.0",
 		"@types/langs": "2.0.1",
-		"@types/luxon": "3.2.0",
+		"@types/luxon": "3.3.0",
 		"@types/node": "18.15.11",
 		"@types/recursive-readdir": "2.2.1",
 		"@types/terraformer__wkt": "2.0.0",
@@ -75,8 +76,9 @@
 		"iso-3166-2": "1.0.0",
 		"iso-google-locales": "3.0.4",
 		"just-capitalize": "3.2.0",
+		"just-flush": "2.3.0",
 		"langs": "2.0.0",
-		"libphonenumber-js": "1.10.24",
+		"libphonenumber-js": "1.10.26",
 		"listr2": "5.0.8",
 		"luxon": "3.3.0",
 		"mongoback": "3.0.6",
@@ -92,8 +94,8 @@
 		"tiny-invariant": "1.3.1",
 		"tsx": "3.12.6",
 		"type-fest": "3.7.2",
-		"typescript": "5.0.2",
-		"zod-prisma-types": "2.5.3"
+		"typescript": "5.0.3",
+		"zod-prisma-types": "2.5.4"
 	},
 	"prisma": {
 		"seed": "turbo run db:run-seed"

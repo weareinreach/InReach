@@ -185,6 +185,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -196,6 +199,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -210,6 +216,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -221,6 +230,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -232,6 +244,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -243,6 +258,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -254,6 +272,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -265,6 +286,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -276,6 +300,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -287,6 +314,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -301,6 +331,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -312,6 +345,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -323,6 +359,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -337,6 +376,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -348,6 +390,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -359,6 +404,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -373,6 +421,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -387,6 +438,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -401,6 +455,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -412,6 +469,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -423,6 +483,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -434,6 +497,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -445,6 +511,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -456,6 +525,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 		{
 			geometry: {
@@ -467,6 +539,9 @@ const locationSearchMockData = {
 			city: '',
 			govDist: '',
 			country: '',
+			streetNumber: undefined,
+			streetName: undefined,
+			postCode: undefined,
 		},
 	],
 }
