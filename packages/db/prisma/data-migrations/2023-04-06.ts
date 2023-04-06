@@ -27,8 +27,15 @@ const job: ListrTask = async (_ctx, task) => {
 			intDesc: 'Used for "Target Population" in Service modal',
 		},
 	})
+	task.output = `${isSuccess(updateDesc)} Update description for "eligibility.other-describe"`
 
-	task.output = `${isSuccess(updateDesc)} Update description for "eligibility.other-describe" `
+	const costIcons = await prisma.attribute.updateMany({
+		where: { tag: { in: ['cost-free', 'cost-fees'] } },
+		data: {
+			icon: 'carbon:piggy-bank',
+		},
+	})
+	task.output = `${isSuccess(costIcons.count)} Update icons for "cost" attributes (${costIcons.count})`
 }
 
 /**

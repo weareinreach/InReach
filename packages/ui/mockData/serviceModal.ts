@@ -231,7 +231,7 @@ export const mockServiceData = {
 			attribute: {
 				tsKey: 'cost.cost-free',
 				tsNs: 'attribute',
-				icon: null,
+				icon: 'carbon:piggy-bank',
 				iconBg: null,
 				showOnLocation: null,
 				categories: [
