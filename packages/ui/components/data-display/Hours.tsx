@@ -9,14 +9,14 @@ const labelKeys = {
 	service: 'words.service-hours',
 } as const
 
-export const Hours = ({ data, label }: HoursProps) => {
+export const Hours = ({ data, label = 'regular' }: HoursProps) => {
 	const { t, i18n } = useTranslation('common')
 	const variants = useCustomVariant()
 	const hourDisplay: JSX.Element[] = []
 
 	if (!data) return null
 
-	const labelKey = labelKeys[label ?? 'regular']
+	const labelKey = labelKeys[label]
 
 	const hourMap = new Map<number, Set<NonNullable<HoursProps['data']>[number]>>()
 	let timezone: string | null = null
