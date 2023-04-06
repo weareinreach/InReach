@@ -1,41 +1,23 @@
 import {
-	Box,
-	TextInput,
 	Checkbox,
 	NumberInput,
 	Radio,
 	ScrollArea,
-	Group,
-	Avatar,
 	useMantineTheme,
 	Title,
 	Text,
 	Select,
-	Stack,
-	Autocomplete,
 	createStyles,
 	rem,
 } from '@mantine/core'
-import { identity } from '@mantine/core/lib/Box/style-system-props/value-getters/get-default-value'
-import { useDebouncedValue } from '@mantine/hooks'
-import { attributesByCategory } from '@weareinreach/api/generated/attributesByCategory'
-import { languageList } from '@weareinreach/api/generated/languages'
 import { useTranslation } from 'next-i18next'
-import { ComponentPropsWithRef, forwardRef, useState, startTransition } from 'react'
-import { number, string } from 'zod'
+import { forwardRef, useState } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useUserSurveyFormContext } from './context'
-
-const useLocationStyles = createStyles((theme) => ({
-	autocompleteWrapper: {
-		padding: 0,
-		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
-	},
-}))
 
 const useSelectItemStyles = createStyles((theme) => ({
 	singleLine: {
@@ -144,7 +126,7 @@ SelectItem.displayName = 'Selection Item'
 
 export const FormCountry = () => {
 	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
-	const { t } = useTranslation(['common', 'country'])
+	const { t } = useTranslation('common')
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 
