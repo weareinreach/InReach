@@ -58,7 +58,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const form = useUserSurveyForm({
 		validate: zodResolver(UserSurveySchema),
 		initialValues: {
-			birthYear: '',
+			birthYear: undefined,
 			reasonForJoin: '',
 			communityIds: [],
 			ethnicityIds: [],
@@ -69,10 +69,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		validateInputOnBlur: true,
 	})
 
-	console.log(form.values)
-
 	const submitHandler = () => {
-		console.log(form.values)
 		setSuccessMessage(true)
 		//TODO call UserSurveyAction
 		UserSurveyAction.mutate(form.values)

@@ -237,12 +237,12 @@ export const FormBirthyear = () => {
 			<NumberInput
 				className={classes.answerContainer}
 				label={t('survey.question-5-label')}
+				description={t('survey.birthyear-req-value', { year1: minYear, year2: maxYear }) as string}
 				defaultValue=''
 				hideControls
 				min={minYear}
 				max={maxYear}
 				placeholder={t('survey.question-5-placeholder') as string}
-				error={t('survey.birthyear-req-value', { year1: minYear, year2: maxYear }) as string}
 				{...form.getInputProps('birthYear')}
 			/>
 		</>
