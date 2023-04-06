@@ -21,9 +21,7 @@ export default {
 			getTRPCMock({
 				path: ['user', 'submitSurvey'],
 				type: 'mutation',
-				response: {
-					success: true,
-				},
+				response: 'not a real id',
 			}),
 		],
 	},

@@ -36,8 +36,13 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
 	const UserSurveyAction = api.user.submitSurvey.useMutation({
-		onSuccess: () => {
+		onSuccess: (data) => {
 			setSuccessMessage(true)
+			console.log(data)
+		},
+		onError: (error) => {
+			//add something here - refer to AccountVerified error body
+			console.log(console.error())
 		},
 	})
 
@@ -70,7 +75,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	})
 
 	const submitHandler = () => {
-		setSuccessMessage(true)
+		// setSuccessMessage(true)
 		//TODO call UserSurveyAction
 		UserSurveyAction.mutate(form.values)
 	}
