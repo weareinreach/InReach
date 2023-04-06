@@ -189,17 +189,15 @@
 	"send-email": "Send email",
 	"service": {
 		"additional-info": "Additional eligibility information",
-		"age": {
-			"max": " and older",
-			"min": "Up to ",
-			"range": "{{min}}{{separator}}{{max}}"
-		},
 		"ages": "Eligible age",
 		"at-capacity": "<strong>This service is currently unable to take new clients.</strong>",
 		"clients-served": "Clients served",
 		"community-focus": "LGBTQ+ community focus",
 		"cost": "Cost",
 		"cost-details": "Cost details",
+		"elig-age_max": "Under {{max}}",
+		"elig-age_min": "{{min}} and older",
+		"elig-age_range": "{{min}} - {{max}}",
 		"eligibility": "Eligibility requirements",
 		"extra-info": "Additional information",
 		"get-help": "Get help",

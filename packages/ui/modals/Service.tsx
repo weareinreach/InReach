@@ -14,7 +14,7 @@ import { useMediaQuery, useDisclosure } from '@mantine/hooks'
 import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { forwardRef } from 'react'
+import { forwardRef, type ReactNode } from 'react'
 
 import {
 	AlertMessage,
@@ -24,6 +24,7 @@ import {
 	type AttributeTagProps,
 } from '~ui/components/core'
 import { Hours, ContactInfo, type ContactInfoProps } from '~ui/components/data-display'
+import { useSlug } from '~ui/hooks'
 import { Icon, type IconList } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -60,8 +61,7 @@ const CONTACTS = ['phone', 'email', 'website'] as const
 
 export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 	({ serviceId, ...props }, ref) => {
-		const router = useRouter()
-		const slug = router.query.slug as string
+		const slug = useSlug()
 		const { data, status } = api.service.byId.useQuery({ id: serviceId })
 		const { t, i18n } = useTranslation(['common', 'attribute', slug])
 		const { classes } = useStyles()
@@ -72,7 +72,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 			const theme = useMantineTheme()
 			const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 			const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
-			const { slug, orgLocationId } = router.query
+			const { orgLocationId } = router.query
 			const apiQuery = typeof orgLocationId === 'string' ? { orgLocationId } : { slug }
 			const { data, status } = api.service.getParentName.useQuery(apiQuery)
 
@@ -163,11 +163,6 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 		if (data && status === 'success') {
 			const { serviceName, services, hours, accessDetails, attributes, description, locations } = data
-
-			let name: JSX.Element | undefined
-
-			if (serviceName) name = <Title order={2}>{serviceName.tsKey.text}</Title>
-
 			const allServices = services.map(({ tag }) => (
 				<Badge key={tag.tsKey} variant='service' tsKey={tag.tsKey} />
 			))
@@ -180,14 +175,12 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 						const parsed = supplementSchema.accessInstructions.safeParse(data)
 						if (parsed.success) {
 							const { access_type, access_value } = parsed.data
-							console.log(parsed.data)
 							switch (access_type) {
 								case 'publicTransit': {
 									details[access_type].push(<ModalText>{t(text!.key) as string}</ModalText>)
 									break
 								}
 								case 'email': {
-									console.log('email', parsed.data)
 									contactData.emails.push({
 										email: {
 											title: null,
@@ -204,10 +197,8 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 									break
 								}
 								case 'phone': {
-									console.log('phone', parsed.data)
 									const country = locations.find(({ location }) => Boolean(location.country))?.location
 										.country
-									console.log(country)
 									if (!country) break
 									contactData.phones.push({
 										phone: {
@@ -243,21 +234,13 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 				return details
 			}, baseDetails)
 
-			const availableContacts = Object.entries(contacts)
-				.filter(([key, value]) => value)
-				.map(([key, value]) => {
-					return (
-						<SubSection key={key} title={key}>
-							{value}
-						</SubSection>
-					)
-				})
-
 			const attributeCategories: Attributes = {
-				community: [],
 				cost: [],
 				lang: [],
-				srvFocus: [],
+				clientsServed: {
+					srvfocus: [],
+					targetPop: [],
+				},
 				eligibility: {
 					requirements: [],
 					freeText: [],
@@ -266,8 +249,8 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 				miscWithIcons: [],
 			}
 
-			const { eligibility, community, srvFocus, cost, lang, misc, miscWithIcons, atCapacity } =
-				attributes.reduce((subsections, { attribute, supplement }) => {
+			const { eligibility, clientsServed, cost, lang, misc, miscWithIcons, atCapacity } = attributes.reduce(
+				(subsections, { attribute, supplement }) => {
 					const { tsKey, icon, tsNs } = attribute
 					/*
 					Since the tsKeys follow a sort of pattern with the namespace being the first part of the
@@ -278,14 +261,51 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 					const namespace = tsKey.split('.').shift() as string
 
 					switch (namespace) {
-						case 'community': {
-							subsections[namespace].push({ tsKey, icon: icon as string, variant: namespace })
+						/** Clients served */
+						case 'srvfocus': {
+							console.log(attribute)
+							if (typeof icon === 'string') {
+								subsections.clientsServed[namespace].push({ icon, tsKey, variant: 'community' })
+							}
 							break
 						}
-						case 'srvFocus': {
-							subsections[namespace].push(<ModalText>{t(tsKey) as string}</ModalText>)
+						/** Target Population & Eligibility Requirements */
+						case 'eligibility': {
+							const type = tsKey.split('.').pop() as string
+							switch (type) {
+								case 'elig-age': {
+									for (const { data } of supplement) {
+										const parsed = supplementSchema.age.safeParse(data)
+										if (!parsed.success) continue
+										const { min, max } = parsed.data
+										const context = min && max ? 'range' : min ? 'min' : 'max'
+										subsections[namespace]['age'] = (
+											<ModalText key={min ?? max}>
+												{t('service.elig-age', { ns: 'common', context, min, max })}
+											</ModalText>
+										)
+									}
+									break
+								}
+								case 'other-describe': {
+									for (const { text } of supplement) {
+										if (!text) continue
+										const splitKey = text.key.split('.')
+										const ns = splitKey.splice(0, 1)
+										const key = splitKey.join('.')
+										const defaultValue = text.tsKey.text
+										subsections.clientsServed.targetPop.push(
+											<ModalText key={key}>{t(key, { ns, defaultValue })}</ModalText>
+										)
+									}
+
+									break
+								}
+							}
+
 							break
 						}
+
 						// Ask Joe about the suplemement's data.json format for services with prices
 						case 'cost': {
 							const costDetails: costDetails = { description: [] }
@@ -317,30 +337,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 								subsections[namespace].push(<SubSection title='cost-details'>{description}</SubSection>)
 							break
 						}
-						case 'eligibility': {
-							if (tsKey.includes('elig-age')) {
-								supplement.forEach(({ data }) => {
-									const parsed = supplementSchema.age.safeParse(data)
-									if (!parsed.success) return
-									const { min, max } = parsed.data
-									const ageRange = t('service.age.range', {
-										min: min || t('service.age.min'),
-										max: max || t('service.age.max'),
-										separator: min && max ? ' — ' : undefined,
-									})
-									subsections[namespace]['age'] = <ModalText>{ageRange}</ModalText>
-								})
-							} else if (tsKey.includes('other-describe')) {
-								supplement.forEach(({ text }) => {
-									const { ns, key } = text as { ns: string; key: string }
-									subsections[namespace]['freeText'].push(
-										<ModalText>{t(`${ns}.${key}`) as string}</ModalText>
-									)
-								})
-							} else subsections[namespace]['requirements'].push(t(tsKey))
 
-							break
-						}
 						case 'lang': {
 							supplement.forEach(({ language }) => {
 								const { languageName } = language as Language
@@ -370,20 +367,9 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 						}
 					}
 					return subsections
-				}, attributeCategories)
-
-			console.log(contactData)
-			const clientsServed: JSX.Element[] = []
-
-			if (community.length > 0)
-				clientsServed.push(
-					<SubSection title='community-focus'>
-						<BadgeGroup badges={community} withSeparator={false} />
-					</SubSection>
-				)
-
-			if (srvFocus.length > 0)
-				clientsServed.push(<SubSection title='target-population'>{srvFocus}</SubSection>)
+				},
+				attributeCategories
+			)
 
 			const eligDisplay: JSX.Element[] = []
 
@@ -428,7 +414,16 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 								<ContactInfo data={contactData} direct order={['phone', 'email', 'website']} />
 								<Hours data={hours} label='service' />
 							</SectionDivider>
-							<SectionDivider title='clients-served'>{clientsServed}</SectionDivider>
+							<SectionDivider title='clients-served'>
+								{Boolean(clientsServed.srvfocus.length) && (
+									<SubSection title='community-focus'>
+										<BadgeGroup badges={clientsServed.srvfocus} withSeparator={false} />
+									</SubSection>
+								)}
+								{Boolean(clientsServed.targetPop.length) && (
+									<SubSection title='community-focus'>{clientsServed.targetPop}</SubSection>
+								)}
+							</SectionDivider>
 							<SectionDivider title='cost'>{cost.length > 0 ? cost : undefined}</SectionDivider>
 							<SectionDivider title='eligibility'>{eligDisplay}</SectionDivider>
 							<SectionDivider title='languages'>{languages}</SectionDivider>
@@ -453,13 +448,13 @@ export interface ServiceModalProps extends ButtonProps {
 
 type subsectionProps = {
 	title?: string
-	children?: JSX.Element[] | JSX.Element
+	children?: ReactNode
 	li?: string[] | string
 }
 
 type sectionProps = {
 	title?: string
-	children?: JSX.Element | JSX.Element[]
+	children?: ReactNode
 }
 
 type Attributes = {
@@ -468,8 +463,10 @@ type Attributes = {
 	directWebsite?: string
 	cost: JSX.Element[]
 	lang: string[]
-	community: CommunityTagProps[]
-	srvFocus: JSX.Element[]
+	clientsServed: {
+		srvfocus: CommunityTagProps[]
+		targetPop: JSX.Element[]
+	}
 	atCapacity?: JSX.Element
 	eligibility: {
 		age?: JSX.Element
@@ -504,5 +501,5 @@ type costDetails = {
 }
 
 type ModalTextprops = {
-	children: JSX.Element | string
+	children: ReactNode
 }
