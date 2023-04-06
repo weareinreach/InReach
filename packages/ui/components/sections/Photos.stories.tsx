@@ -8,6 +8,9 @@ import { PhotosSection } from './Photos'
 export default {
 	title: 'Sections/Photos',
 	component: PhotosSection,
+	parameters: {
+		layout: 'fullscreen',
+	},
 	args: {
 		photos: photosMock,
 	},
