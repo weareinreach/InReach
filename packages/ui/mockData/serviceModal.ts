@@ -157,15 +157,15 @@ export const mockServiceData = {
 	attributes: [
 		{
 			attribute: {
-				tsKey: 'community.homeless',
+				tsKey: 'srvfocus.bipoc-comm',
 				tsNs: 'attribute',
-				icon: null,
+				icon: '️‍️‍✊🏿',
 				iconBg: null,
 				showOnLocation: null,
 				categories: [
 					{
 						category: {
-							tag: 'community',
+							tag: 'service-focus',
 							icon: null,
 						},
 					},
@@ -175,15 +175,15 @@ export const mockServiceData = {
 		},
 		{
 			attribute: {
-				tsKey: 'community.lgbtq-youth',
+				tsKey: 'srvfocus.spanish-speakers',
 				tsNs: 'attribute',
-				icon: null,
+				icon: '🗣️',
 				iconBg: null,
 				showOnLocation: null,
 				categories: [
 					{
 						category: {
-							tag: 'community',
+							tag: 'service-focus',
 							icon: null,
 						},
 					},
@@ -193,7 +193,25 @@ export const mockServiceData = {
 		},
 		{
 			attribute: {
-				tsKey: 'community.teens',
+				tsKey: 'srvfocus.hiv-comm',
+				tsNs: 'attribute',
+				icon: '💛',
+				iconBg: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'service-focus',
+							icon: null,
+						},
+					},
+				],
+			},
+			supplement: [],
+		},
+		{
+			attribute: {
+				tsKey: 'additional.has-confidentiality-policy',
 				tsNs: 'attribute',
 				icon: null,
 				iconBg: null,
@@ -201,13 +219,141 @@ export const mockServiceData = {
 				categories: [
 					{
 						category: {
-							tag: 'community',
+							tag: 'additional-information',
 							icon: null,
 						},
 					},
 				],
 			},
 			supplement: [],
+		},
+		{
+			attribute: {
+				tsKey: 'cost.cost-free',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'cost',
+							icon: null,
+						},
+					},
+				],
+			},
+			supplement: [],
+		},
+		{
+			attribute: {
+				tsKey: 'eligibility.time-appointment-required',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'eligibility-requirements',
+							icon: null,
+						},
+					},
+				],
+			},
+			supplement: [],
+		},
+		{
+			attribute: {
+				tsKey: 'eligibility.elig-age',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'eligibility-requirements',
+							icon: null,
+						},
+					},
+				],
+			},
+			supplement: [
+				{
+					country: null,
+					language: null,
+					text: null,
+					govDist: null,
+					boolean: null,
+					data: {
+						min: 24,
+					},
+				},
+			],
+		},
+		{
+			attribute: {
+				tsKey: 'lang.lang-offered',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'languages',
+							icon: null,
+						},
+					},
+				],
+			},
+			supplement: [
+				{
+					country: null,
+					language: {
+						languageName: 'English',
+						nativeName: 'English',
+					},
+					text: null,
+					govDist: null,
+					boolean: null,
+					data: null,
+				},
+			],
+		},
+		{
+			attribute: {
+				tsKey: 'eligibility.other-describe',
+				tsNs: 'attribute',
+				icon: null,
+				iconBg: null,
+				showOnLocation: null,
+				categories: [
+					{
+						category: {
+							tag: 'eligibility-requirements',
+							icon: null,
+						},
+					},
+				],
+			},
+			supplement: [
+				{
+					country: null,
+					language: null,
+					text: {
+						key: 'lyon-martin-health-services.attribute.atts_01GW2HT8CTSNMQ5246FGF3541R',
+						ns: 'org-data',
+						tsKey: {
+							text: 'LGBTQ+ youth',
+						},
+					},
+					govDist: null,
+					boolean: null,
+					data: null,
+				},
+			],
 		},
 		{
 			attribute: {
@@ -241,58 +387,21 @@ export const mockServiceData = {
 								'community-transitional-age-youth': 'true',
 							},
 							{
-								'elig-age-or-under': '24',
-							},
-							{
-								'cost-free': 'true',
-							},
-							{
 								'action-signup-url': 'http://larkinstreetyouth.org/get-help/#section-education-employment',
 							},
 							{
 								'community-lgbt': 'true',
 							},
 							{
-								'elig-age-or-under (value = #)': 'true',
-							},
-							{
-								'has-confidentiality-policy': 'true',
-							},
-							{
-								'time-appointment-required': 'true',
+								'elig-age-or-under (value = #)': null,
 							},
 						],
-					},
-				},
-			],
-		},
-		{
-			attribute: {
-				tsKey: 'lang.lang-offered',
-				tsNs: 'attribute',
-				icon: null,
-				iconBg: null,
-				showOnLocation: null,
-				categories: [
-					{
-						category: {
-							tag: 'languages',
-							icon: null,
+						meta: {
+							values: {
+								'4.elig-age-or-under (value = #)': ['undefined'],
+							},
 						},
 					},
-				],
-			},
-			supplement: [
-				{
-					country: null,
-					language: {
-						languageName: 'English',
-						nativeName: 'English',
-					},
-					text: null,
-					govDist: null,
-					boolean: null,
-					data: null,
 				},
 			],
 		},
