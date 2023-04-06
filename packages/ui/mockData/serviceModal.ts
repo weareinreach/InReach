@@ -1,4 +1,8 @@
 import { type ApiOutput } from '@weareinreach/api'
+import { transformer, type SuperJSONResult } from '@weareinreach/api/lib/transformer'
+
+const isSuperJSON = (data: unknown): data is SuperJSONResult =>
+	typeof data === 'object' && data !== null && Object.hasOwn(data, 'json')
 
 export const mockServiceData = {
 	serviceName: {
@@ -458,3 +462,26 @@ export const mockServiceData = {
 		},
 	},
 } satisfies ApiOutput['service']['byId']
+
+export const mockServData = () =>
+	({
+		...mockServiceData,
+		attributes: mockServiceData.attributes.map(({ attribute, supplement }) => ({
+			attribute,
+			supplement: supplement.map((supplement) =>
+				isSuperJSON(supplement.data)
+					? { ...supplement, data: transformer.deserialize(supplement.data) }
+					: supplement
+			),
+		})),
+		accessDetails: mockServiceData.accessDetails.map(({ attributes }) => ({
+			attributes: attributes.map(({ attribute, supplement }) => ({
+				attribute,
+				supplement: supplement.map((supplement) =>
+					isSuperJSON(supplement.data)
+						? { ...supplement, data: transformer.deserialize(supplement.data) }
+						: supplement
+				),
+			})),
+		})),
+	} satisfies ApiOutput['service']['byId'])
