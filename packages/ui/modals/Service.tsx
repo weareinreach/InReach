@@ -12,7 +12,6 @@ import {
 } from '@mantine/core'
 import { useMediaQuery, useDisclosure } from '@mantine/hooks'
 import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
-import { Interval, DateTime } from 'luxon'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
@@ -24,6 +23,7 @@ import {
 	type CommunityTagProps,
 	type AttributeTagProps,
 } from '~ui/components/core'
+import { Hours, ContactInfo, type ContactInfoProps } from '~ui/components/data-display'
 import { Icon, type IconList } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -48,10 +48,9 @@ const useStyles = createStyles((theme) => ({
 }))
 
 /**
- * TODO: [IN-797] Service Modal updates - Fix 'at capacity' layout/spacing
+ * TODO: [IN-797] Service Modal updates
  *
- * - Format phone number with'libphonenumber-js'
- * - Convert timezone to standard localized name "Eastern Standard Time"
+ * - Fix 'at capacity' layout/spacing
  * - Community focus to use badges with short name & icon
  * - Cost to use attribute badge
  * - Validate data display against finalized data structure.
@@ -61,8 +60,10 @@ const CONTACTS = ['phone', 'email', 'website'] as const
 
 export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 	({ serviceId, ...props }, ref) => {
+		const router = useRouter()
+		const slug = router.query.slug as string
 		const { data, status } = api.service.byId.useQuery({ id: serviceId })
-		const { t, i18n } = useTranslation(['common', 'attribute'])
+		const { t, i18n } = useTranslation(['common', 'attribute', slug])
 		const { classes } = useStyles()
 		const [opened, handler] = useDisclosure(false)
 
@@ -153,76 +154,23 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 			)
 		}
 
+		const contactData: ContactInfoProps['data'] = {
+			phones: [],
+			emails: [],
+			websites: [],
+			socialMedia: [],
+		}
+
 		if (data && status === 'success') {
-			const { serviceName, services, hours, accessDetails, attributes } = data
+			const { serviceName, services, hours, accessDetails, attributes, description, locations } = data
 
 			let name: JSX.Element | undefined
 
 			if (serviceName) name = <Title order={2}>{serviceName.tsKey.text}</Title>
 
-			let orgTimezone: string | null = null
 			const allServices = services.map(({ tag }) => (
 				<Badge key={tag.tsKey} variant='service' tsKey={tag.tsKey} />
 			))
-
-			const formatHours: JSX.Element[] = []
-
-			const hourMap = new Map<number, Set<(typeof hours)[number]>>()
-			const { weekYear, weekNumber } = DateTime.now()
-			for (const entry of hours) {
-				const daySet = hourMap.get(entry.dayIndex)
-				if (!daySet) {
-					hourMap.set(entry.dayIndex, new Set([entry]))
-				} else {
-					hourMap.set(entry.dayIndex, new Set([...daySet, entry]))
-				}
-			}
-
-			hourMap.forEach((value, key) => {
-				const entry = [...value].map(({ start, end, dayIndex: weekday, closed, tz }, idx) => {
-					const zone = tz ?? undefined
-					const open = DateTime.fromJSDate(start, { zone }).set({ weekday, weekNumber, weekYear })
-					const close = DateTime.fromJSDate(end, { zone }).set({ weekday, weekNumber, weekYear })
-					const interval = Interval.fromDateTimes(open, close)
-
-					if (!orgTimezone && zone) {
-						orgTimezone = open.toFormat('ZZZZZ (ZZZZ)', { locale: i18n.language })
-					}
-					if (closed) return null
-
-					if (idx === 0) {
-						const range = interval
-							.toLocaleString(
-								{ weekday: 'short', hour: 'numeric', minute: 'numeric', formatMatcher: 'best fit' },
-								{ locale: i18n.language }
-							)
-							.split(',')
-							.join('')
-
-						return interval.isValid ? range : null
-					}
-
-					const range = interval.toLocaleString(
-						{ hour: 'numeric', minute: 'numeric' },
-						{ locale: i18n.language }
-					)
-					return interval.isValid ? range : null
-				})
-				if (entry[0] === null) return
-				formatHours.push(<ModalText>{entry.filter(Boolean).join(' & ')}</ModalText>)
-			})
-
-			const timeZone = <Text className={classes.timezone}>{orgTimezone}</Text>
-
-			const serviceHours =
-				formatHours.length > 0 ? (
-					<SubSection title='hours'>
-						<Stack spacing={12}>
-							<div>{timeZone}</div>
-							<div>{formatHours}</div>
-						</Stack>
-					</SubSection>
-				) : undefined
 
 			const baseDetails: accessDetails = { publicTransit: [] }
 
@@ -232,9 +180,60 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 						const parsed = supplementSchema.accessInstructions.safeParse(data)
 						if (parsed.success) {
 							const { access_type, access_value } = parsed.data
-
-							if (access_type === 'publicTransit')
-								details[access_type].push(<ModalText>{t(text!.key) as string}</ModalText>)
+							console.log(parsed.data)
+							switch (access_type) {
+								case 'publicTransit': {
+									details[access_type].push(<ModalText>{t(text!.key) as string}</ModalText>)
+									break
+								}
+								case 'email': {
+									console.log('email', parsed.data)
+									contactData.emails.push({
+										email: {
+											title: null,
+											description: null,
+											email: parsed.data.access_value,
+											legacyDesc: parsed.data.instructions,
+											firstName: null,
+											lastName: null,
+											primary: false,
+											locationOnly: false,
+											serviceOnly: false,
+										},
+									})
+									break
+								}
+								case 'phone': {
+									console.log('phone', parsed.data)
+									const country = locations.find(({ location }) => Boolean(location.country))?.location
+										.country
+									console.log(country)
+									if (!country) break
+									contactData.phones.push({
+										phone: {
+											number: parsed.data.access_value,
+											phoneType: null,
+											country,
+											primary: false,
+											locationOnly: false,
+											ext: null,
+										},
+									})
+									break
+								}
+								case 'link':
+								case 'file': {
+									contactData.websites.push({
+										description: null,
+										id: '',
+										isPrimary: false,
+										languages: [],
+										orgLocationId: null,
+										orgLocationOnly: false,
+										url: parsed.data.access_value,
+									})
+								}
+							}
 
 							const accessKey = CONTACTS.find((category) => category === access_type)
 							if (accessKey) details[accessKey] ||= <Text>{access_value}</Text>
@@ -373,8 +372,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 					return subsections
 				}, attributeCategories)
 
-			const getHelp = serviceHours ? availableContacts.concat(serviceHours) : availableContacts
-
+			console.log(contactData)
 			const clientsServed: JSX.Element[] = []
 
 			if (community.length > 0)
@@ -414,10 +412,22 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 				<>
 					<Modal title={<ServiceModalTitle />} opened={opened} onClose={() => handler.close()} zIndex={100}>
 						<Stack spacing={24}>
-							{atCapacity}
-							{name}
+							<Stack spacing={16}>
+								{atCapacity}
+								{serviceName && (
+									<Title order={2}>
+										{t(serviceName.key, { ns: slug, defaultValue: serviceName.tsKey.text })}
+									</Title>
+								)}
+								{description && (
+									<Text>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
+								)}
+							</Stack>
 							<div>{allServices}</div>
-							<SectionDivider title='get-help'>{getHelp}</SectionDivider>
+							<SectionDivider title='get-help'>
+								<ContactInfo data={contactData} direct order={['phone', 'email', 'website']} />
+								<Hours data={hours} label='service' />
+							</SectionDivider>
 							<SectionDivider title='clients-served'>{clientsServed}</SectionDivider>
 							<SectionDivider title='cost'>{cost.length > 0 ? cost : undefined}</SectionDivider>
 							<SectionDivider title='eligibility'>{eligDisplay}</SectionDivider>
