@@ -149,11 +149,11 @@ export const FormCountry = () => {
 	const form = useUserSurveyFormContext()
 
 	const countryData = surveyOptions?.countries.map(function (ele) {
-		return { ...ele, value: t(ele.tsKey, { ns: 'coutnry' }), label: t(ele.tsKey, { ns: 'country' }) }
-	})
+		return { ...ele, value: t(ele.tsKey, { ns: 'country' }), label: t(ele.tsKey, { ns: 'country' }) }
+	}) as { value: string; label: string; tsKey: string; id: string; tsNs: string; cca2: string }[]
 
 	const handleCountrySelect = (event: string) => {
-		let countryObj = countryData?.find((item) => item.tsKey === event)
+		let countryObj = countryData?.find((item) => item.label === event)
 		form.setFieldValue('countryOriginId', countryObj?.id)
 	}
 
@@ -171,8 +171,10 @@ export const FormCountry = () => {
 					dropdownComponent='div'
 					styles={{ rightSection: { display: 'none' } }}
 					filter={(value, item) =>
-						item.label.toLowerCase().includes(value.toLowerCase().trim()) ||
-						item.tsKey.toLowerCase().includes(value.toLowerCase().trim())
+						item &&
+						item.label &&
+						(item.label.toLowerCase().includes((value || '').toLowerCase().trim()) ||
+							item.tsKey.toLowerCase().includes((value || '').toLowerCase().trim()))
 					}
 					onChange={handleCountrySelect}
 				/>
