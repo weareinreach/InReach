@@ -134,7 +134,7 @@
 	"password-saved": "Password saved!",
 	"phone": "Phone",
 	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
-	"photo_interval": "(0)[No photos yet];(3-inf)[{{count}} photos];",
+	"photo_interval": "(0)[No photos yet];(3-inf)[See all {{count}} photos];",
 	"photo_one": "Photo",
 	"photo_other": "Photos",
 	"powered-by-vercel": "Powered by Vercel",
