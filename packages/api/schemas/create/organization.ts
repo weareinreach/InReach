@@ -1,10 +1,11 @@
-import { Prisma } from '@weareinreach/db'
+import { Prisma, generateId } from '@weareinreach/db'
 import { z } from 'zod'
 
 import { idString, CreationBase } from '~api/schemas/common'
 import { createManyWithAudit } from '~api/schemas/nestedOps'
 
 import { CreateAuditLog } from './auditLog'
+import { SuggestionSchema } from './browserSafe/suggestOrg'
 import { createFreeText } from './freeText'
 import { CreateNestedOrgEmailSchema } from './orgEmail'
 import { CreateNestedOrgLocationSchema } from './orgLocation'
@@ -60,6 +61,41 @@ export const CreateQuickOrgSchema = () => {
 	return { dataParser, inputSchema }
 }
 
+export const CreateOrgSuggestionSchema = () => {
+	const { dataParser: parser, inputSchema } = CreationBase(SuggestionSchema)
+	const dataParser = parser.transform(({ actorId, operation, data }) => {
+		const { countryId, orgName, orgSlug, communityFocus, orgAddress, orgWebsite, serviceCategories } = data
+		const organizationId = generateId('organization')
+
+		return Prisma.validator<Prisma.SuggestionCreateArgs>()({
+			data: {
+				organization: {
+					create: {
+						id: organizationId,
+						name: orgName,
+						slug: orgSlug,
+						source: { connect: { source: 'suggestion' } },
+					},
+				},
+				data: {
+					orgWebsite,
+					orgAddress,
+					countryId,
+					communityFocus,
+					serviceCategories,
+				},
+				auditLogs: CreateAuditLog({ actorId, operation, to: data, organizationId }),
+			},
+			select: {
+				id: true,
+			},
+		})
+	})
+	return { dataParser, inputSchema }
+}
+
 type CreateQuickOrgReturn = ReturnType<typeof CreateQuickOrgSchema>
 export type CreateQuickOrgData = z.infer<CreateQuickOrgReturn['dataParser']>
 export type CreateQuickOrgInput = z.input<CreateQuickOrgReturn['dataParser']>
+type CreateOrgSuggestionReturn = ReturnType<typeof CreateOrgSuggestionSchema>
+export type CreateOrgSuggestionInput = z.input<CreateOrgSuggestionReturn['dataParser']>

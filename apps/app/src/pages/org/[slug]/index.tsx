@@ -48,6 +48,7 @@ const OrganizationPage: NextPage = () => {
 		reviews,
 		locations,
 		isClaimed,
+		id: organizationId,
 	} = data
 
 	const body =
@@ -93,6 +94,7 @@ const OrganizationPage: NextPage = () => {
 				<Toolbar
 					breadcrumbProps={{ option: 'back', backTo: 'search', onClick: () => router.back() }}
 					saved={Boolean(userLists.length)}
+					organizationId={organizationId}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
 					<ListingBasicInfo

@@ -37,7 +37,7 @@
 		"lint:pkg:fix": "manypkg fix",
 		"lint:staged": "lint-staged",
 		"prepare": "tsx ./lib/prepare.ts",
-		"scripts:post-install": "turbo run post-install",
+		"scripts:post-install": "turbo run post-install --continue",
 		"types:check": "turbo type-check",
 		"types:sync": "typesync"
 	},
@@ -56,13 +56,13 @@
 		"prettier": "2.8.7",
 		"prettier-plugin-jsdoc": "0.4.2",
 		"prettier-plugin-packagejson": "2.4.3",
-		"prettier-plugin-prisma": "4.10.0",
+		"prettier-plugin-prisma": "4.12.0",
 		"tsx": "3.12.6",
 		"turbo": "1.8.8",
-		"typescript": "5.0.2",
+		"typescript": "5.0.3",
 		"typesync": "0.10.0"
 	},
-	"packageManager": "pnpm@8.1.0",
+	"packageManager": "pnpm@8.1.1",
 	"engines": {
 		"node": "^18",
 		"pnpm": "^7 || ^8"
