@@ -92,7 +92,8 @@
 		"patchedDependencies": {
 			"eslint-plugin-node@11.1.0": "patches/eslint-plugin-node@11.1.0.patch",
 			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch",
-			"trpc-panel@1.2.13": "patches/trpc-panel@1.2.13.patch"
+			"trpc-panel@1.2.13": "patches/trpc-panel@1.2.13.patch",
+			"@crowdin/ota-client@1.0.0": "patches/@crowdin__ota-client@1.0.0.patch"
 		},
 		"peerDependencyRules": {
 			"allowedVersions": {
