@@ -167,7 +167,7 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 		const buttonIcon = isSaved ? 'carbon:favorite-filled' : 'carbon:favorite'
 
 		api.savedList.isSaved.useQuery(serviceId ?? (organizationId as string), {
-			enabled: sessionStatus === 'authenticated' && Boolean(organizationId),
+			enabled: sessionStatus === 'authenticated' && Boolean(organizationId || serviceId),
 			refetchOnWindowFocus: false,
 			onSuccess: (data) => {
 				setIsSaved(Boolean(data))
@@ -187,6 +187,7 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 		})
 		const savedLists = api.savedList.getAll.useQuery(undefined, {
 			refetchOnWindowFocus: false,
+			enabled: sessionStatus === 'authenticated',
 			onError: () => {
 				if (isSaved) return
 				setMenuChildren(
