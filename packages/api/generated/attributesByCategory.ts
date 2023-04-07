@@ -112,7 +112,7 @@ export const attributesByCategory = [
 			{
 				attribute: {
 					id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
-					icon: null,
+					icon: 'carbon:piggy-bank',
 					tag: 'cost-free',
 					tsKey: 'cost.cost-free',
 					tsNs: 'attribute',
@@ -124,7 +124,7 @@ export const attributesByCategory = [
 			{
 				attribute: {
 					id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
-					icon: null,
+					icon: 'carbon:piggy-bank',
 					tag: 'cost-fees',
 					tsKey: 'cost.cost-fees',
 					tsNs: 'attribute',
