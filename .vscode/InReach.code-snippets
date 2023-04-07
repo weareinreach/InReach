@@ -61,6 +61,24 @@
 		"prefix": "calcCSS",
 		"body": ["`calc(${${1:variable}\\} ${2|- ${rem(0)},+ ${rem(0)},* 0,/ 0|}${3})`"],
 		"description": "Calc CSS"
+	},
+	"Storybook Story": {
+		"prefix": "sbstory",
+		"body": [
+			"import { Meta, StoryObj } from '@storybook/react'",
+			"",
+			"import { ${1:Component} } from './${2:File}'",
+			"",
+			"export default {",
+			"\ttitle: '${3:Story Name}',",
+			"\tcomponent: ${1:Component},",
+			"} satisfies Meta<typeof ${1:Component}>",
+			"",
+			"type StoryDef = StoryObj<typeof ${1:Component}>",
+			"",
+			"export const Default = {} satisfies StoryDef"
+		],
+		"description": "Storybook Story"
 	}
 
 	// Place your ✨ InReach (root) workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
