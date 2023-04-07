@@ -35,13 +35,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	const namespaces = query.ns.split(' ')
 	const langs = query.lng.split(' ')
 	const cacheWriteQueue: WriteCacheArgs[] = []
-	const databaseFile = crowdinOpts.nsFileMap.databaseStrings
 	const otaManifestTimestamp = await crowdinDistTimestamp()
 	const results = new Map<string, object>()
 
 	for (const lang of langs) {
 		log.info('start', lang)
 		if (lang === 'en') continue
+		const databaseFile = crowdinOpts.nsFileMap(lang).databaseStrings
 		const cacheReadReq = await sigV4.sign({
 			method: 'POST',
 			hostname: cacheReadUrl.hostname,
