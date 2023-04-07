@@ -322,7 +322,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 							const { price, description } = costDetails
 							const badgeProps = { icon, tsKey, tsNs, tProps: { price: price ?? undefined } }
-							subsections[namespace].push(<Badge variant='attribute' {...badgeProps} />)
+							subsections[namespace].push(<Badge key={tsKey} variant='attribute' {...badgeProps} />)
 
 							if (description.length > 0)
 								subsections[namespace].push(<SubSection title='cost-details'>{description}</SubSection>)

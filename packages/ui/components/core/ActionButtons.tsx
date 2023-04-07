@@ -426,7 +426,11 @@ export const ActionButtons = ({
 			</Group>
 		)
 
-		return actions[key as keyof typeof actionButtonIcons]({ isMenu: true, children, ...orgOrServiceId })
+		return actions[key as keyof typeof actionButtonIcons]({
+			isMenu: true,
+			children,
+			props: { ...orgOrServiceId, key },
+		})
 	})
 
 	const menuThings = overflowMenuItems
@@ -503,7 +507,7 @@ type PolymorphicProps = ButtonProps & { serviceId?: string; organizationId: stri
 type Generic = {
 	children?: JSX.Element
 	isMenu?: boolean
-	props?: ButtonProps | PolymorphicProps
+	props?: (ButtonProps | PolymorphicProps) & { key?: string }
 }
 
 export interface SaveToggleButtonProps extends Omit<ActionButtonProps, 'children' | 'iconKey'> {
