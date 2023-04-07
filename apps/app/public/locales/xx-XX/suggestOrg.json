@@ -1,0 +1,37 @@
+{
+	"body": {
+		"accept-country": "crwdns1420750:0crwdne1420750:0",
+		"additional-info": "crwdns1420752:0crwdne1420752:0",
+		"intro-text": "crwdns1420754:0crwdne1420754:0",
+		"required-info": "crwdns1420756:0crwdne1420756:0",
+		"subject-review": "crwdns1420758:0crwdne1420758:0",
+		"suggest-org": "crwdns1420760:0crwdne1420760:0"
+	},
+	"form": {
+		"btn-community": "crwdns1420762:0crwdne1420762:0",
+		"btn-save-changes": "crwdns1420764:0crwdne1420764:0",
+		"btn-service": "crwdns1420766:0crwdne1420766:0",
+		"btn-submit": "crwdns1420768:0crwdne1420768:0",
+		"community-focus": "crwdns1420770:0crwdne1420770:0",
+		"error-exists-active": "crwdns1420772:0{{org}}crwdne1420772:0",
+		"error-exists-dismiss": "crwdns1420774:0crwdne1420774:0",
+		"error-exists-inactive": "crwdns1420776:0{{org}}crwdne1420776:0",
+		"org-address": "crwdns1420778:0crwdne1420778:0",
+		"org-country": "crwdns1420780:0crwdne1420780:0",
+		"org-name": "crwdns1420782:0crwdne1420782:0",
+		"org-website": "crwdns1420784:0crwdne1420784:0",
+		"placeholder-address": "crwdns1420786:0crwdne1420786:0",
+		"placeholder-name": "crwdns1420788:0crwdne1420788:0",
+		"placeholder-website": "crwdns1420790:0crwdne1420790:0",
+		"service-types": "crwdns1420792:0crwdne1420792:0"
+	},
+	"modal": {
+		"community-sub": "crwdns1420794:0crwdne1420794:0",
+		"community-title": "crwdns1420796:0crwdne1420796:0",
+		"dismiss": "crwdns1420798:0crwdne1420798:0",
+		"service-types-sub": "crwdns1420800:0crwdne1420800:0",
+		"service-types-title": "crwdns1420802:0crwdne1420802:0",
+		"thank-you": "crwdns1420804:0{{org}}crwdne1420804:0",
+		"thank-you-sub": "crwdns1420806:0crwdne1420806:0"
+	}
+}
