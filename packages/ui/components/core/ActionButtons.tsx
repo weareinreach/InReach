@@ -305,11 +305,13 @@ const SaveButton = createPolymorphicComponent<'button', SaveToggleButtonProps>(S
  *
  * @returns Polymorphic button component
  */
-const CopyToClipBoard = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+const CopyToClipBoard = forwardRef<HTMLButtonElement, PolyButtonProps>((props, ref) => {
 	const { t } = useTranslation()
 	const { asPath } = useRouter()
 	const clipboard = useClipboard({ timeout: 500 })
 	const copiedToClipboard = useNewNotification({ icon: 'info', displayText: t('link-copied') })
+	/** Strip out unused props to prevent react errors */
+	const { organizationId: _org, serviceId: _serv, isMenu: _isMenu, ...restProps } = props
 
 	const handleCopy = () => {
 		const href = `${window.location.origin}${asPath}`
@@ -317,25 +319,27 @@ const CopyToClipBoard = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) 
 		copiedToClipboard()
 	}
 
-	return <Box component='button' ref={ref} onClick={handleCopy} {...props} />
+	return <Box component='button' ref={ref} onClick={handleCopy} {...restProps} />
 })
 
 CopyToClipBoard.displayName = 'CopyToClipboard'
 
-const ShareLink = createPolymorphicComponent<'button', ButtonProps>(CopyToClipBoard)
+const ShareLink = createPolymorphicComponent<'button', PolyButtonProps>(CopyToClipBoard)
 
 /**
  * Polymorphic element, returns a button. When clicked takes a screenshot of the current client view
  *
  * @returns Polymorphic button component
  */
-const PrintBody = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
-	<Box component='button' ref={ref} onClick={() => window.print()} {...props} />
-))
+const PrintBody = forwardRef<HTMLButtonElement, PolyButtonProps>((props, ref) => {
+	/** Strip out unused props to prevent react errors */
+	const { organizationId: _org, serviceId: _serv, isMenu: _isMenu, ...restProps } = props
+	return <Box component='button' ref={ref} onClick={() => window.print()} {...restProps} />
+})
 
 PrintBody.displayName = 'Print'
 
-const PrintButton = createPolymorphicComponent<'button', ButtonProps>(PrintBody)
+const PrintButton = createPolymorphicComponent<'button', PolyButtonProps>(PrintBody)
 
 // TODO: [IN-786] Associate ActionButton click actions
 
@@ -375,7 +379,7 @@ const useActions = () => {
 	return {
 		// TODO: assign behaviour to delete button
 		delete: generic(QuickPromotionModal),
-		more: generic(createPolymorphicComponent<'button', ButtonProps>(Button)),
+		more: generic(createPolymorphicComponent<'button', PolyButtonProps>(Button)),
 		print: generic(PrintButton),
 		review: generic(ReviewModal),
 		save: generic(SaveToggleButton),
@@ -438,7 +442,7 @@ export const ActionButtons = ({
 	const buttonProps = {
 		className: opened ? classes.buttonPressed : classes.button,
 		radius: 'md',
-		...orgOrServiceId,
+		...(menuThings.length ? {} : orgOrServiceId),
 	}
 
 	/** The button component */
@@ -493,6 +497,7 @@ interface ActionButtonProps {
 	children?: string | DefaultTFuncReturn
 	/** Information for save button */
 	serviceId?: string
+	organizationId?: string
 }
 
 type UserListMutation = {
@@ -502,12 +507,15 @@ type UserListMutation = {
 
 type Polymorphic = typeof QuickPromotionModal | typeof ReviewModal | typeof SaveButton
 
-type PolymorphicProps = ButtonProps & { serviceId?: string; organizationId: string }
+type PropAdditions = { serviceId?: string; organizationId: string; key?: string; isMenu?: boolean }
+
+type PolymorphicProps = ButtonProps & PropAdditions
+type PolyButtonProps = ButtonProps & Partial<PropAdditions>
 
 type Generic = {
 	children?: JSX.Element
 	isMenu?: boolean
-	props?: (ButtonProps | PolymorphicProps) & { key?: string }
+	props?: PolyButtonProps | PolymorphicProps
 }
 
 export interface SaveToggleButtonProps extends Omit<ActionButtonProps, 'children' | 'iconKey'> {

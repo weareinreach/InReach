@@ -40,7 +40,7 @@ const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
 		const item = (
 			<Stack spacing={12} key={k}>
 				{isExternal(dialURL) ? (
-					<Link external href={dialURL} variant={variants.Link.inlineInverted}>
+					<Link key={k} external href={dialURL} variant={variants.Link.inlineInverted}>
 						{phoneNumber}
 					</Link>
 				) : (
@@ -100,7 +100,7 @@ const Emails = ({ data, direct, locationOnly, serviceOnly }: EmailsProps) => {
 
 		const item = (
 			<Stack spacing={4} key={k}>
-				<Link external href={href} variant={variants.Link.inlineInverted}>
+				<Link key={k} external href={href} variant={variants.Link.inlineInverted}>
 					{address}
 				</Link>
 				{desc && <Text variant={variants.Text.utility4darkGray}>{desc}</Text>}
@@ -192,10 +192,10 @@ export const ContactInfo = ({
 	...commonProps
 }: ContactInfoProps) => {
 	const sections: ContactMap = {
-		website: <Websites data={data.websites ?? []} {...commonProps} />,
-		phone: <PhoneNumbers data={data.phones ?? []} {...commonProps} />,
-		email: <Emails data={data.emails ?? []} {...commonProps} />,
-		socialMedia: <SocialMedia data={data.socialMedia ?? []} />,
+		website: <Websites key='Websites' data={data.websites ?? []} {...commonProps} />,
+		phone: <PhoneNumbers key='PhoneNumbers' data={data.phones ?? []} {...commonProps} />,
+		email: <Emails key='Emails' data={data.emails ?? []} {...commonProps} />,
+		socialMedia: <SocialMedia key='SocialMedia' data={data.socialMedia ?? []} />,
 	}
 	const items = order.map((item) => sections[item])
 	return <Stack spacing={gap}>{items}</Stack>
