@@ -11,12 +11,12 @@ import {
 	Text,
 	Tooltip,
 	TooltipProps,
-	Group,
+	Divider,
 	rem,
 	List,
 } from '@mantine/core'
 import { PolymorphicComponentProps } from '@mantine/utils'
-import { TOptionsBase } from 'i18next'
+import { type TOptions } from 'i18next'
 import { DateTime } from 'luxon'
 import { merge } from 'merge-anything'
 import { useTranslation } from 'next-i18next'
@@ -326,6 +326,10 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 
 export const BadgeGroup = ({ badges, withSeparator = false }: BadgeGroupProps) => {
 	const variants = useCustomVariant()
+	const theme = useMantineTheme()
+	const separator = (
+		<Divider w={4} size={4} style={{ borderRadius: '50%' }} color={theme.other.colors.secondary.black} />
+	)
 	const badgeList = badges.map((item: CustomBadgeProps, idx, arr) => (
 		<List.Item key={idx}>
 			<Badge {...item} />
@@ -333,7 +337,11 @@ export const BadgeGroup = ({ badges, withSeparator = false }: BadgeGroupProps) =
 	))
 	// TODO: [IN-796] Update Group separator to use <Divider/>
 	return (
-		<List variant={withSeparator ? variants.List.inlineBullet : variants.List.inline} m={0}>
+		<List
+			variant={withSeparator ? variants.List.inlineBullet : variants.List.inline}
+			icon={withSeparator ? separator : undefined}
+			m={0}
+		>
 			{badgeList}
 		</List>
 	)
@@ -396,17 +404,17 @@ export type AttributeTagProps = {
 	icon: IconList
 	tsKey: string
 	tsNs: string
-	tProps?: Omit<TOptionsBase, 'ns'>
+	tProps?: Omit<TOptions, 'ns'>
 }
 
 export type CommunityTagProps = {
 	variant: 'community'
 	icon: string
 	tsKey: string
-	tProps?: Omit<TOptionsBase, 'ns'>
+	tProps?: Omit<TOptions, 'ns'>
 }
-type ServiceTagProps = {
+export type ServiceTagProps = {
 	variant: 'service'
 	tsKey: string
-	tProps?: Omit<TOptionsBase, 'ns'>
+	tProps?: Omit<TOptions, 'ns'>
 }

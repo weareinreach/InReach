@@ -321,6 +321,7 @@ export const attributeData: AttributeData = [
 				name: 'Free of cost',
 				description: 'Services that are free of cost',
 				filterType: 'INCLUDE',
+				icon: 'carbon:piggy-bank',
 			},
 			{
 				key: 'cost-fees',
@@ -328,6 +329,7 @@ export const attributeData: AttributeData = [
 				description:
 					'Enter a # or brief written short description of fees (e.g. "costs offered on a sliding scale"',
 				requireData: true,
+				icon: 'carbon:piggy-bank',
 			},
 		],
 	},
