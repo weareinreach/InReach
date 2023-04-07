@@ -82,7 +82,7 @@ export const locationMock = {
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'community.hiv-aids',
+							tsKey: 'additional.has-confidentiality-policy',
 							tsNs: 'attribute',
 							icon: null,
 							iconBg: null,
@@ -90,7 +90,7 @@ export const locationMock = {
 							categories: [
 								{
 									category: {
-										tag: 'community',
+										tag: 'additional-information',
 										icon: null,
 									},
 								},
@@ -100,7 +100,7 @@ export const locationMock = {
 					},
 					{
 						attribute: {
-							tsKey: 'sys.incompatible-info',
+							tsKey: 'cost.cost-free',
 							tsNs: 'attribute',
 							icon: null,
 							iconBg: null,
@@ -108,7 +108,43 @@ export const locationMock = {
 							categories: [
 								{
 									category: {
-										tag: 'system',
+										tag: 'cost',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'eligibility.time-appointment-required',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'eligibility-requirements',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'eligibility.elig-age',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'eligibility-requirements',
 										icon: null,
 									},
 								},
@@ -122,31 +158,7 @@ export const locationMock = {
 								govDist: null,
 								boolean: null,
 								data: {
-									json: [
-										{
-											'community-lgbt': 'true',
-										},
-										{
-											'cost-free': 'true',
-										},
-										{
-											'lang-all-languages-by-interpreter': null,
-										},
-										{
-											'has-confidentiality-policy': 'true',
-										},
-										{
-											'elig-age-or-over': '13',
-										},
-										{
-											'time-appointment-required': 'true',
-										},
-									],
-									meta: {
-										values: {
-											'2.lang-all-languages-by-interpreter': ['undefined'],
-										},
-									},
+									min: 13,
 								},
 							},
 						],
@@ -178,6 +190,47 @@ export const locationMock = {
 								govDist: null,
 								boolean: null,
 								data: null,
+							},
+						],
+					},
+					{
+						attribute: {
+							tsKey: 'sys.incompatible-info',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'system',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [
+							{
+								country: null,
+								language: null,
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: {
+									json: [
+										{
+											'community-lgbt': 'true',
+										},
+										{
+											'lang-all-languages-by-interpreter': null,
+										},
+									],
+									meta: {
+										values: {
+											'1.lang-all-languages-by-interpreter': ['undefined'],
+										},
+									},
+								},
 							},
 						],
 					},
@@ -238,7 +291,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNABVVEQER6F1YDHN7176',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9F3645YXQX5G69WPR3E',
 											ns: 'org-data',
 											tsKey: {
 												text: 'Located at the Whitman-Walker location. Please call.',
@@ -286,7 +339,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNABW7KQJEF273S43WEEH',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9F3XT7ZP34G152VTPDN',
 											ns: 'org-data',
 											tsKey: {
 												text: 'Located at the Max Robinson Center. Call to make an appointment.',
@@ -334,7 +387,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNABWE903JYJ4MWE3CTNH',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9F46WSJJBV9ZYCCKWTY',
 											ns: 'org-data',
 											tsKey: {
 												text: 'Visit the webpage for more information.',
@@ -371,7 +424,14 @@ export const locationMock = {
 								tsKey: 'USA.name',
 								tsNs: 'country',
 							},
-							phoneType: null,
+							phoneType: {
+								id: 'phtp_01GW2HT9EQW476ZBTYBQN76NT9',
+								type: 'Medical Care/ Appointments',
+								tsKey: 'medical-care-appointments',
+								tsNs: 'phone-type',
+								createdAt: new Date('2023-03-21T17:00:56.475Z'),
+								updatedAt: new Date('2023-03-21T17:00:56.475Z'),
+							},
 							number: '2027457000',
 							ext: null,
 							primary: true,
@@ -404,7 +464,7 @@ export const locationMock = {
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'community.hiv-aids',
+							tsKey: 'additional.has-confidentiality-policy',
 							tsNs: 'attribute',
 							icon: null,
 							iconBg: null,
@@ -412,7 +472,7 @@ export const locationMock = {
 							categories: [
 								{
 									category: {
-										tag: 'community',
+										tag: 'additional-information',
 										icon: null,
 									},
 								},
@@ -422,7 +482,7 @@ export const locationMock = {
 					},
 					{
 						attribute: {
-							tsKey: 'sys.incompatible-info',
+							tsKey: 'eligibility.time-appointment-required',
 							tsNs: 'attribute',
 							icon: null,
 							iconBg: null,
@@ -430,7 +490,25 @@ export const locationMock = {
 							categories: [
 								{
 									category: {
-										tag: 'system',
+										tag: 'eligibility-requirements',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'cost.cost-fees',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'cost',
 										icon: null,
 									},
 								},
@@ -443,34 +521,7 @@ export const locationMock = {
 								text: null,
 								govDist: null,
 								boolean: null,
-								data: {
-									json: [
-										{
-											'community-lgbt': 'true',
-										},
-										{
-											'cost-fees': 'Contact for more information on fees.',
-										},
-										{
-											'elig-description':
-												'Due to COVID-19, please note that at this time their dental services at Whitman-Walker at 1525 14th Street, NW and Max Robinson Center in Anacostia are not accepting new patients, with the exception of patients who are living with HIV and in need of urgent dental care.',
-										},
-										{
-											'has-confidentiality-policy': 'true',
-										},
-										{
-											'time-appointment-required': 'true',
-										},
-										{
-											'lang-all-languages-by-interpreter': null,
-										},
-									],
-									meta: {
-										values: {
-											'5.lang-all-languages-by-interpreter': ['undefined'],
-										},
-									},
-								},
+								data: 'Contact for more information on fees.',
 							},
 						],
 					},
@@ -501,6 +552,80 @@ export const locationMock = {
 								govDist: null,
 								boolean: null,
 								data: null,
+							},
+						],
+					},
+					{
+						attribute: {
+							tsKey: 'eligibility.other-describe',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'eligibility-requirements',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [
+							{
+								country: null,
+								language: null,
+								text: {
+									key: 'whitman-walker-health.attribute.atts_01GW2HT9FCBTTS1SW1NVENDX6G',
+									ns: 'org-data',
+									tsKey: {
+										text: 'Due to COVID-19, please note that at this time their dental services at Whitman-Walker at 1525 14th Street, NW and Max Robinson Center in Anacostia are not accepting new patients, with the exception of patients who are living with HIV and in need of urgent dental care.',
+									},
+								},
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
+					},
+					{
+						attribute: {
+							tsKey: 'sys.incompatible-info',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'system',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [
+							{
+								country: null,
+								language: null,
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: {
+									json: [
+										{
+											'community-lgbt': 'true',
+										},
+										{
+											'lang-all-languages-by-interpreter': null,
+										},
+									],
+									meta: {
+										values: {
+											'1.lang-all-languages-by-interpreter': ['undefined'],
+										},
+									},
+								},
 							},
 						],
 					},
@@ -561,7 +686,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNAC37R59WJV0PX2BE99F',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9FB82602PRFFPWMABZ4',
 											ns: 'org-data',
 											tsKey: {
 												text: 'Call to make a dental appointment.',
@@ -609,7 +734,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNAC40GBD14WSYTPJ6BCH',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9FC3T1FAK1H2R9AVHEN',
 											ns: 'org-data',
 											tsKey: {
 												text: 'Check the website for details on specific dental services.',
@@ -647,7 +772,14 @@ export const locationMock = {
 								tsKey: 'USA.name',
 								tsNs: 'country',
 							},
-							phoneType: null,
+							phoneType: {
+								id: 'phtp_01GW2HT9EQW476ZBTYBQN76NT9',
+								type: 'Medical Care/ Appointments',
+								tsKey: 'medical-care-appointments',
+								tsNs: 'phone-type',
+								createdAt: new Date('2023-03-21T17:00:56.475Z'),
+								updatedAt: new Date('2023-03-21T17:00:56.475Z'),
+							},
 							number: '2027457000',
 							ext: null,
 							primary: true,
@@ -663,8 +795,16 @@ export const locationMock = {
 							lastName: null,
 							email: 'appointments@whitman-walker.org',
 							legacyDesc: 'Schedule An Appointment ',
-							description: null,
+							description: {
+								key: 'whitman-walker-health.oeml_01GVH3VEVDZK28VPR8ETDTVX2V.description',
+								ns: 'org-data',
+								tsKey: {
+									text: 'Schedule An Appointment',
+								},
+							},
 							primary: true,
+							locationOnly: false,
+							serviceOnly: false,
 						},
 					},
 				],
@@ -692,7 +832,7 @@ export const locationMock = {
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'community.adults',
+							tsKey: 'additional.has-confidentiality-policy',
 							tsNs: 'attribute',
 							icon: null,
 							iconBg: null,
@@ -700,7 +840,7 @@ export const locationMock = {
 							categories: [
 								{
 									category: {
-										tag: 'community',
+										tag: 'additional-information',
 										icon: null,
 									},
 								},
@@ -710,7 +850,7 @@ export const locationMock = {
 					},
 					{
 						attribute: {
-							tsKey: 'community.bisexual',
+							tsKey: 'cost.cost-free',
 							tsNs: 'attribute',
 							icon: null,
 							iconBg: null,
@@ -718,7 +858,7 @@ export const locationMock = {
 							categories: [
 								{
 									category: {
-										tag: 'community',
+										tag: 'cost',
 										icon: null,
 									},
 								},
@@ -728,7 +868,7 @@ export const locationMock = {
 					},
 					{
 						attribute: {
-							tsKey: 'community.gender-nonconforming',
+							tsKey: 'eligibility.time-appointment-required',
 							tsNs: 'attribute',
 							icon: null,
 							iconBg: null,
@@ -736,7 +876,7 @@ export const locationMock = {
 							categories: [
 								{
 									category: {
-										tag: 'community',
+										tag: 'eligibility-requirements',
 										icon: null,
 									},
 								},
@@ -746,7 +886,7 @@ export const locationMock = {
 					},
 					{
 						attribute: {
-							tsKey: 'community.hiv-aids',
+							tsKey: 'lang.lang-offered',
 							tsNs: 'attribute',
 							icon: null,
 							iconBg: null,
@@ -754,157 +894,25 @@ export const locationMock = {
 							categories: [
 								{
 									category: {
-										tag: 'community',
+										tag: 'languages',
 										icon: null,
 									},
 								},
 							],
 						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.gay',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'community',
-										icon: null,
-									},
+						supplement: [
+							{
+								country: null,
+								language: {
+									languageName: 'English',
+									nativeName: 'English',
 								},
-							],
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.lesbian',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'community',
-										icon: null,
-									},
-								},
-							],
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.lgbtq-youth',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'community',
-										icon: null,
-									},
-								},
-							],
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.nonbinary',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'community',
-										icon: null,
-									},
-								},
-							],
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.queer',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'community',
-										icon: null,
-									},
-								},
-							],
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.teens',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'community',
-										icon: null,
-									},
-								},
-							],
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.trans-youth',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'community',
-										icon: null,
-									},
-								},
-							],
-						},
-						supplement: [],
-					},
-					{
-						attribute: {
-							tsKey: 'community.transgender',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'community',
-										icon: null,
-									},
-								},
-							],
-						},
-						supplement: [],
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
 					},
 					{
 						attribute: {
@@ -935,54 +943,15 @@ export const locationMock = {
 											'community-lgbt': 'true',
 										},
 										{
-											'has-confidentiality-policy': 'true',
-										},
-										{
-											'time-appointment-required': 'true',
-										},
-										{
 											'lang-all-languages-by-interpreter': null,
-										},
-										{
-											'cost-free': 'true',
 										},
 									],
 									meta: {
 										values: {
-											'3.lang-all-languages-by-interpreter': ['undefined'],
+											'1.lang-all-languages-by-interpreter': ['undefined'],
 										},
 									},
 								},
-							},
-						],
-					},
-					{
-						attribute: {
-							tsKey: 'lang.lang-offered',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'languages',
-										icon: null,
-									},
-								},
-							],
-						},
-						supplement: [
-							{
-								country: null,
-								language: {
-									languageName: 'English',
-									nativeName: 'English',
-								},
-								text: null,
-								govDist: null,
-								boolean: null,
-								data: null,
 							},
 						],
 					},
@@ -1055,7 +1024,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNAC5E8ZD1NMHV0C76PHA',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9FD667CNFY4RBBJ6FAZ',
 											ns: 'org-data',
 											tsKey: {
 												text: 'Visit the website for more information and a full list of services.',
@@ -1109,7 +1078,7 @@ export const locationMock = {
 				attributes: [
 					{
 						attribute: {
-							tsKey: 'community.trans-youth',
+							tsKey: 'additional.has-confidentiality-policy',
 							tsNs: 'attribute',
 							icon: null,
 							iconBg: null,
@@ -1117,7 +1086,7 @@ export const locationMock = {
 							categories: [
 								{
 									category: {
-										tag: 'community',
+										tag: 'additional-information',
 										icon: null,
 									},
 								},
@@ -1127,7 +1096,7 @@ export const locationMock = {
 					},
 					{
 						attribute: {
-							tsKey: 'community.transgender',
+							tsKey: 'eligibility.time-appointment-required',
 							tsNs: 'attribute',
 							icon: null,
 							iconBg: null,
@@ -1135,13 +1104,139 @@ export const locationMock = {
 							categories: [
 								{
 									category: {
-										tag: 'community',
+										tag: 'eligibility-requirements',
 										icon: null,
 									},
 								},
 							],
 						},
 						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'cost.cost-fees',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'cost',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [
+							{
+								country: null,
+								language: null,
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: 'Contact for more information on fees.',
+							},
+						],
+					},
+					{
+						attribute: {
+							tsKey: 'eligibility.req-proof-of-age',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'eligibility-requirements',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'eligibility.req-photo-id',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'eligibility-requirements',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [],
+					},
+					{
+						attribute: {
+							tsKey: 'lang.lang-offered',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'languages',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [
+							{
+								country: null,
+								language: {
+									languageName: 'English',
+									nativeName: 'English',
+								},
+								text: null,
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
+					},
+					{
+						attribute: {
+							tsKey: 'eligibility.other-describe',
+							tsNs: 'attribute',
+							icon: null,
+							iconBg: null,
+							showOnLocation: null,
+							categories: [
+								{
+									category: {
+										tag: 'eligibility-requirements',
+										icon: null,
+									},
+								},
+							],
+						},
+						supplement: [
+							{
+								country: null,
+								language: null,
+								text: {
+									key: 'whitman-walker-health.attribute.atts_01GW2HT9FK6W1R7RR2YKY7EM85',
+									ns: 'org-data',
+									tsKey: {
+										text: 'If someone is working with them who is under the age of 18, they will require a mental health assessment as well as parental or guardian consent.',
+									},
+								},
+								govDist: null,
+								boolean: null,
+								data: null,
+							},
+						],
 					},
 					{
 						attribute: {
@@ -1172,26 +1267,7 @@ export const locationMock = {
 											'community-lgbt': 'true',
 										},
 										{
-											'cost-fees': 'Contact for more information on fees.',
-										},
-										{
-											'elig-description':
-												'If someone is working with them who is under the age of 18, they will require a mental health assessment as well as parental or guardian consent.',
-										},
-										{
-											'has-confidentiality-policy': 'true',
-										},
-										{
 											'lang-all-languages-by-interpreter': null,
-										},
-										{
-											'time-appointment-required': 'true',
-										},
-										{
-											'req-proof-of-age': 'true',
-										},
-										{
-											'req-photo-id': 'true',
 										},
 										{
 											'service-city-district-of-columbia-washington': 'true',
@@ -1199,40 +1275,10 @@ export const locationMock = {
 									],
 									meta: {
 										values: {
-											'4.lang-all-languages-by-interpreter': ['undefined'],
+											'1.lang-all-languages-by-interpreter': ['undefined'],
 										},
 									},
 								},
-							},
-						],
-					},
-					{
-						attribute: {
-							tsKey: 'lang.lang-offered',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'languages',
-										icon: null,
-									},
-								},
-							],
-						},
-						supplement: [
-							{
-								country: null,
-								language: {
-									languageName: 'English',
-									nativeName: 'English',
-								},
-								text: null,
-								govDist: null,
-								boolean: null,
-								data: null,
 							},
 						],
 					},
@@ -1293,7 +1339,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNACAC6191GM2HGQSQDJZ',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9FJVRYRWH7YKD5PSXJQ',
 											ns: 'org-data',
 											tsKey: {
 												text: 'Call for more information about their Gender Affirming Services.',
@@ -1342,7 +1388,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNACB3VXFJTM2E2V5YMM2',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9FJVN6X0NCHDMQRNH1J',
 											ns: 'org-data',
 											tsKey: {
 												text: "Visit the website to learn more about Whitman-Walker Health's gender affirming hormone therapy.",
@@ -1394,7 +1440,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNACB2KY5GE6K9V2PCRDT',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9FK5WYEX857QKM3KM2F',
 											ns: 'org-data',
 											tsKey: {
 												text: 'Email for more information about their Gender Affirming Services.',
@@ -1443,7 +1489,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNACB1QRE0VMGQCQ2MEAD',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9FKR1P5XFFG4QR14FT8',
 											ns: 'org-data',
 											tsKey: {
 												text: 'Gender affirming hormone therapy services are offered at the Whitman-Walker at 1525 and Max Robinson Center locations.',
@@ -1483,7 +1529,14 @@ export const locationMock = {
 								tsKey: 'USA.name',
 								tsNs: 'country',
 							},
-							phoneType: null,
+							phoneType: {
+								id: 'phtp_01GW2HT9ERJ5CFFR7X9R4BMT5T',
+								type: 'Gender Affirming Services',
+								tsKey: 'gender-affirming-services',
+								tsNs: 'phone-type',
+								createdAt: new Date('2023-03-21T17:00:56.475Z'),
+								updatedAt: new Date('2023-03-21T17:00:56.475Z'),
+							},
 							number: '2027974457',
 							ext: null,
 							primary: false,
@@ -1499,8 +1552,16 @@ export const locationMock = {
 							lastName: null,
 							email: 'Transhealth@whitman-walker.org',
 							legacyDesc: 'Gender Affirming Services',
-							description: null,
+							description: {
+								key: 'whitman-walker-health.oeml_01GVH3VEVD5Q45WH8V1KK13EZ8.description',
+								ns: 'org-data',
+								tsKey: {
+									text: 'Gender Affirming Services',
+								},
+							},
 							primary: false,
+							locationOnly: false,
+							serviceOnly: false,
 						},
 					},
 				],
@@ -1526,24 +1587,6 @@ export const locationMock = {
 				},
 				hours: [],
 				attributes: [
-					{
-						attribute: {
-							tsKey: 'community.hiv-aids',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'community',
-										icon: null,
-									},
-								},
-							],
-						},
-						supplement: [],
-					},
 					{
 						attribute: {
 							tsKey: 'lang.lang-offered',
@@ -1631,7 +1674,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNACC9C6R4HYCYEXTFP11',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9FM36V51QJW06D31Q6V',
 											ns: 'org-data',
 											tsKey: {
 												text: 'Visit the link to learn more about PrEP and access services.',
@@ -1680,7 +1723,7 @@ export const locationMock = {
 										country: null,
 										language: null,
 										text: {
-											key: 'whitman-walker-health.attribute.atts_01GVXZNACCDWPHW3FQKEV1P6PK',
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9FM961XSJQGYGES7CVA',
 											ns: 'org-data',
 											tsKey: {
 												text: 'Visit the link to learn more about PEP and access services.',

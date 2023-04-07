@@ -50,24 +50,26 @@ const ServiceSection = ({ category, services }: ServiceSectionProps) => {
 		: ({ option: 'back', backTo: 'none' } as const)
 	api.service.byId.useQuery({ id: preloadService }, { enabled: preloadService !== '' })
 	return (
-		<Stack spacing={0}>
+		<Stack spacing={8}>
 			<Badge variant='service' tsKey={category} />
-			{services.map((service) => (
-				<ServiceModal
-					key={service.id}
-					serviceId={service.id}
-					component={Group}
-					position='apart'
-					noWrap
-					className={classes.group}
-					onMouseOver={() => setPreloadService(service.id)}
-				>
-					<Text variant={variants.Text.utility1}>
-						{t(service.tsKey ?? '', { ns: slug, defaultValue: service.defaultText }) as string}
-					</Text>
-					<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
-				</ServiceModal>
-			))}
+			<Stack spacing={0}>
+				{services.map((service) => (
+					<ServiceModal
+						key={service.id}
+						serviceId={service.id}
+						component={Group}
+						position='apart'
+						noWrap
+						className={classes.group}
+						onMouseOver={() => setPreloadService(service.id)}
+					>
+						<Text variant={variants.Text.utility1}>
+							{t(service.tsKey ?? '', { ns: slug, defaultValue: service.defaultText }) as string}
+						</Text>
+						<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
+					</ServiceModal>
+				))}
+			</Stack>
 		</Stack>
 	)
 }

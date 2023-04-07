@@ -3,8 +3,9 @@
 	"extends": ["//"],
 	"pipeline": {
 		"db:dataMigrate": {
+			"cache": false,
 			"dependsOn": ["db:generate", "db:deploy"],
-			"inputs": ["prisma/data-migrations/*.ts"]
+			"inputs": ["prisma/data-migrations/**/*.ts"]
 		},
 		"db:deploy": {
 			"cache": false,

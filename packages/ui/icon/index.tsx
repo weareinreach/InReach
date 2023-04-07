@@ -7,6 +7,9 @@ export const Icon = (props: CustomIconProps) => {
 	return <Iconify {...props} />
 }
 
+export const isValidIcon = (icon: unknown): icon is IconList =>
+	typeof icon === 'string' && iconList.includes(icon as IconList)
+
 export type IconList = (typeof iconList)[number]
 interface CustomIconifyIconProps extends IconifyIconProps {
 	/** [Search available icons here](https://icon-sets.iconify.design/carbon/) */

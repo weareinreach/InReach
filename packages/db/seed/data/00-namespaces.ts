@@ -10,6 +10,7 @@ export const namespaces = {
 	socialMedia: 'common',
 	user: 'user',
 	orgData: 'org-data',
+	userTitle: 'user-title',
 } as const
 
 /**
