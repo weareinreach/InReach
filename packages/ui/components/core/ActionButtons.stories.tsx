@@ -34,6 +34,24 @@ export default {
 				path: ['savedList', 'getAll'],
 				response: getAll,
 			}),
+			getTRPCMock({
+				path: ['savedList', 'saveItem'],
+				type: 'mutation',
+				response: {
+					id: 'listID',
+					organizations: [],
+					services: [],
+				},
+			}),
+			getTRPCMock({
+				path: ['savedList', 'createAndSaveItem'],
+				type: 'mutation',
+				response: {
+					id: 'listID',
+					organizations: [],
+					services: [],
+				},
+			}),
 		],
 		nextjs: {
 			router: {
