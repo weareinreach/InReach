@@ -9,76 +9,83 @@ export const List = {
 				...theme.other.utilityFonts.utility2,
 				color: theme.other.colors.secondary.darkGray,
 				display: 'flex',
-				columnGap: rem(16),
+				gap: rem(16),
 				flexWrap: 'wrap',
 			},
 			item: {
 				display: 'inline-block',
 				listStyle: 'none',
-				// marginBottom: rem(12),
-				// marginRight: rem(16),
+			},
+			itemIcon: {
+				display: 'none',
 			},
 		} satisfies Styles<ListStylesNames, ListStylesParams>),
 	inlineBulletUtil2: (theme) =>
 		({
 			root: {
 				...theme.other.utilityFonts.utility2,
-				color: theme.other.colors.secondary.darkGray,
 				display: 'flex',
-				gap: rem(8),
+				columnGap: rem(8),
+				rowGap: rem(16),
 				flexWrap: 'wrap',
-				// padding: `${rem(0)} ${rem(8)}`,
+				alignItems: 'center',
+			},
+			item: {
+				'&:first-of-type .mantine-List-itemIcon': {
+					display: 'none',
+				},
+			},
+			itemIcon: {
+				marginTop: 'auto',
+				marginBottom: 'auto',
+				marginRight: rem(8),
+			},
+			itemWrapper: {
+				alignItems: 'center',
+			},
+		} satisfies Styles<ListStylesNames, ListStylesParams>),
+	inlineBullet: (theme) =>
+		({
+			root: {
+				display: 'flex',
+				columnGap: rem(8),
+				rowGap: rem(16),
+				flexWrap: 'wrap',
+				alignItems: 'center',
+			},
+			item: {
+				'&:first-of-type .mantine-List-itemIcon': {
+					display: 'none',
+				},
+			},
+			itemIcon: {
+				marginTop: 'auto',
+				marginBottom: 'auto',
+				marginRight: rem(8),
+			},
+			itemWrapper: {
+				alignItems: 'center',
+			},
+		} satisfies Styles<ListStylesNames, ListStylesParams>),
+	inline: (theme) =>
+		({
+			root: {
+				display: 'flex',
+				gap: rem(16),
+				flexWrap: 'wrap',
 			},
 			item: {
 				display: 'inline-block',
 				listStyle: 'none',
-				'&:not(:first-of-type)::before': {
-					content: `''`,
-					display: 'inline-block',
-					verticalAlign: 'middle',
-					margin: `auto 0`,
-					marginRight: rem(8),
-					width: rem(4),
-					height: rem(4),
-					borderRadius: '50%',
-					backgroundColor: 'currentColor',
-				},
+			},
+			itemIcon: {
+				display: 'none',
 			},
 		} satisfies Styles<ListStylesNames, ListStylesParams>),
-	inlineBullet: (theme) => ({
-		root: {
-			display: 'flex',
-			gap: rem(8),
-			flexWrap: 'wrap',
-		},
-		item: {
-			display: 'inline-block',
-			listStyle: 'none',
-			margin: 0,
-			// marginBottom: rem(12),
-			'&:not(:first-of-type)::before': {
-				content: `''`,
-				display: 'inline-block',
-				verticalAlign: 'middle',
-				marginBottom: '0.5rem',
-				marginRight: rem(8),
-				width: rem(4),
-				height: rem(4),
-				borderRadius: '50%',
-				backgroundColor: 'currentColor',
+	textDarkGray: (theme) =>
+		({
+			item: {
+				color: theme.other.colors.secondary.darkGray,
 			},
-		},
-	}),
-	inline: (theme) => ({
-		item: {
-			display: 'inline-block',
-			listStyle: 'none',
-			marginRight: rem(16),
-		},
-	}),
-	textDarkGray: (theme) => ({
-		item: {
-			color: theme.other.colors.secondary.darkGray,
-		},
-	}),
+		} satisfies Styles<ListStylesNames, ListStylesParams>),
 } satisfies VariantObj
