@@ -197,8 +197,13 @@ export const ContactInfo = ({
 		email: <Emails data={data.emails ?? []} {...commonProps} />,
 		socialMedia: <SocialMedia data={data.socialMedia ?? []} />,
 	}
+	const items = order.map((item) => sections[item])
+	return <Stack spacing={gap}>{items}</Stack>
+}
 
-	return <Stack spacing={gap}>{order.map((item) => sections[item])}</Stack>
+export const hasContactInfo = (data: ContactInfoProps['data']) => {
+	const { websites, phones, emails, socialMedia } = data
+	return Boolean(websites.length || phones.length || emails.length || socialMedia.length)
 }
 
 type ContactSections = 'phone' | 'email' | 'website' | 'socialMedia'
