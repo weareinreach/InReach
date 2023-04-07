@@ -58,6 +58,7 @@ export const Hours = ({ data, label = 'regular' }: HoursProps) => {
 		if (entry[0] === null) return
 		hourDisplay.push(<List.Item>{entry.filter(Boolean).join(' & ')}</List.Item>)
 	})
+	if (!hourDisplay.length) return null
 	return (
 		<Stack spacing={12}>
 			<div>
