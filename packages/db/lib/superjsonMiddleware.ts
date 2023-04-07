@@ -1,9 +1,14 @@
 import { Prisma } from '@prisma/client'
 import superjson from 'superjson'
 import { SuperJSONResult } from 'superjson/dist/types'
+import { Logger } from 'tslog'
 import { z } from 'zod'
 
-import { AttributeSupplementSchema, NullableJsonValue } from '../zod-schemas'
+import { NullableJsonValue } from '../zod-schemas'
+
+const MODELS_TO_RUN: Prisma.ModelName[] = ['AttributeSupplement', 'Suggestion']
+
+const logger = new Logger({ name: 'SuperJSON middleware', minLevel: 3 })
 
 const ResultSchema = z
 	.object({
@@ -12,19 +17,29 @@ const ResultSchema = z
 	.passthrough()
 type Results = z.infer<typeof ResultSchema>
 
-const ArgsSchema = z
+const DataRecord = z
 	.object({
-		data: AttributeSupplementSchema,
+		data: z
+			.object({
+				data: NullableJsonValue,
+			})
+			.passthrough(),
 	})
 	.passthrough()
-type ArgsRecord = z.infer<typeof ArgsSchema>
+type DataRecord = z.infer<typeof DataRecord>
 
-const ArgsSchemaArr = z
+const DataArray = z
 	.object({
-		data: AttributeSupplementSchema.array(),
+		data: z.array(
+			z
+				.object({
+					data: NullableJsonValue,
+				})
+				.passthrough()
+		),
 	})
 	.passthrough()
-type ArgsRecordArr = z.infer<typeof ArgsSchemaArr>
+type DataArray = z.infer<typeof DataArray>
 
 const actions: ActionMap = {
 	readOne: ['delete', 'findFirst', 'findUnique'],
@@ -43,19 +58,24 @@ type ActionMap = {
 const isSuperJSON = (data: unknown): data is SuperJSONResult =>
 	typeof data === 'object' && data !== null && Object.hasOwn(data, 'json')
 
-// const isSuppRecord = (data: unknown): data is z.infer<typeof AttributeSupplementSchema> =>
-// AttributeSupplementSchema.safeParse(data).success
-const isSuppArgs = (args: unknown): args is ArgsRecord => ArgsSchema.safeParse(args).success
-const isSuppArgsArr = (args: unknown): args is ArgsRecordArr => ArgsSchemaArr.safeParse(args).success
 const hasSuppData = (result: unknown): result is Results => ResultSchema.safeParse(result).success
 const hasSuppDataArr = (result: unknown): result is Results[] =>
 	ResultSchema.array().safeParse(result).success
 
+const hasJsonData = (data: unknown): data is DataRecord => DataRecord.safeParse(data).success
+const hasJsonDataArr = (data: unknown): data is DataArray => DataArray.safeParse(data).success
+
 const processRead = (data?: z.infer<typeof NullableJsonValue>) => {
-	if (isSuperJSON(data)) {
-		return superjson.deserialize(data)
+	try {
+		if (isSuperJSON(data)) {
+			return superjson.deserialize(data)
+		}
+		const output = superjson.parse(JSON.stringify(data))
+		return output ?? data
+	} catch (err) {
+		logger.error(err)
+		return data
 	}
-	return superjson.parse(JSON.stringify(data))
 }
 const processWrite = (data?: z.infer<typeof NullableJsonValue>) => {
 	if (data === Prisma.DbNull || data === Prisma.JsonNull) {
@@ -67,20 +87,20 @@ const processWrite = (data?: z.infer<typeof NullableJsonValue>) => {
 const processData = (data: z.infer<typeof NullableJsonValue> | undefined, action: Prisma.PrismaAction) =>
 	actions.read.includes(action) ? processRead(data) : processWrite(data)
 
-export const attrSuppDataMiddleware: Prisma.Middleware = async (params, next) => {
+export const superjsonMiddleware: Prisma.Middleware = async (params, next) => {
 	const start = Date.now()
-	if (params.model === 'AttributeSupplement') {
+	if (params.model && MODELS_TO_RUN.includes(params.model)) {
 		const { args, action } = params
 		if (actions.write.includes(action)) {
-			if (isSuppArgsArr(args)) {
+			if (hasJsonDataArr(args)) {
 				args.data = args.data.map((record) =>
 					record.data ? { ...record, data: processWrite(record.data) } : record
 				)
-			} else if (isSuppArgs(args)) {
+			} else if (hasJsonData(args)) {
 				args.data.data = processWrite(args.data.data)
 			}
 			const end = Date.now()
-			console.log(`Attribute Supplement Middleware: ${action} ${end - start}ms (Array)`)
+			logger.trace(`SuperJSON Middleware: ${action} ${end - start}ms (Array)`)
 			return next({ ...params, args })
 		} else if (actions.read.includes(action)) {
 			let result = await next(params)
@@ -94,7 +114,7 @@ export const attrSuppDataMiddleware: Prisma.Middleware = async (params, next) =>
 				result.data = processData(result.data, action)
 			}
 			const end = Date.now()
-			console.log(`Attribute Supplement Middleware: ${action} ${end - start}ms`)
+			logger.trace(`SuperJSON Middleware: ${action} ${end - start}ms`)
 			return result
 		}
 	}

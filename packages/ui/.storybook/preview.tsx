@@ -2,12 +2,12 @@ import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
 import { translatedLangs, LocaleCodes } from '@weareinreach/api/generated/languages'
-import { RequestHandler } from 'msw'
+import { type RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
 import { Router } from 'next/router'
 
-import { WithI18n, WithMantine, WithTRPC, Layouts, type LayoutsDecorator } from './decorators'
+import { WithI18n, WithMantine, WithTRPC, Layouts, WithStrictMode, type LayoutsDecorator } from './decorators'
 import { i18n } from './i18next'
 import authStates from './mockAuthStates'
 import { Viewports } from './types'
@@ -15,22 +15,20 @@ import { Viewports } from './types'
 import './font.css'
 
 initializeMsw({
-	serviceWorker: {
-		// options: {
-		// 	scope: '/trpc',
-		// },
-	},
 	onUnhandledRequest: ({ method, url }) => {
 		if (url.pathname.startsWith('/trpc' || '/api')) {
 			console.error(`Unhandled ${method} request to ${url}.
 
         This exception has been only logged in the console, however, it's strongly recommended to resolve this error as you don't want unmocked data in Storybook stories.
-
         If you wish to mock an error response, please refer to this guide: https://mswjs.io/docs/recipes/mocking-error-responses
       `)
 		}
 	},
 })
+// whyDidYouRender(React, {
+// 	trackAllPureComponents: true,
+// 	// collapseGroups: true,
+// })
 
 const preview: Preview = {
 	parameters: {
@@ -73,7 +71,7 @@ const preview: Preview = {
 			},
 		},
 	},
-	decorators: [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC],
+	decorators: [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC, WithStrictMode],
 }
 export default preview
 
@@ -97,5 +95,7 @@ declare module '@storybook/react' {
 		badges?: BADGE[]
 		layout?: 'centered' | 'fullscreen' | 'padded'
 		layoutWrapper?: LayoutsDecorator
+		disableStrictMode?: boolean
+		disableWhyDidYouRender?: boolean
 	}
 }

@@ -19,6 +19,7 @@ jobs:
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       CI: true
       OVERRIDE_CI: true
+      FORCE_COLOR: true
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -56,7 +57,7 @@ jobs:
 
       # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
-        uses: chromaui/action@c3d67c7f1fb1b9fecddfb8a82a7022a45aaa382d # v1
+        uses: chromaui/action@d51b84e79d164fbe8fc5bb7175695d88ddd04b72 # v1
         with:
           workingDir: packages/ui
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

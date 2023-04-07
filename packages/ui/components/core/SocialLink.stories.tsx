@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { SocialLink, approvedIcons } from './SocialLink'
+import { SocialLink, socialMediaIcons } from './SocialLink'
 
 export default {
 	title: 'Design System/Social Media Link',
@@ -13,22 +13,10 @@ export default {
 	},
 	argTypes: {
 		icon: {
-			options: Object.keys(approvedIcons),
+			options: Object.keys(socialMediaIcons),
 			type: 'string',
 		},
 	},
-	// render: () => (
-	// 	<Group>
-	// 		<SocialLink icon='facebook' href='#' title='icon' />
-	// 		<SocialLink icon='github' href='#' title='icon' />
-	// 		<SocialLink icon='instagram' href='#' title='icon' />
-	// 		<SocialLink icon='linkedin' href='#' title='icon' />
-	// 		<SocialLink icon='tiktok' href='#' title='icon' />
-	// 		<SocialLink icon='twitter' href='#' title='icon' />
-	// 		<SocialLink icon='youtube' href='#' title='icon' />
-	// 		<SocialLink icon='mail' href='#' title='icon' />
-	// 	</Group>
-	// ),
 } as Meta<typeof SocialLink>
 
 type StoryDef = StoryObj<typeof SocialLink>

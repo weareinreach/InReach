@@ -1,7 +1,12 @@
 {
-	"$schema": "https://turbo.build/schema.json",
+	"$schema": "https://turborepo.org/schema.json",
 	"extends": ["//"],
 	"pipeline": {
+		"db:dataMigrate": {
+			"cache": false,
+			"dependsOn": ["db:generate", "db:deploy"],
+			"inputs": ["prisma/data-migrations/**/*.ts"]
+		},
 		"db:deploy": {
 			"cache": false,
 			"dependsOn": ["db:generate"]

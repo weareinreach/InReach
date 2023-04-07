@@ -36,25 +36,21 @@ export const cognito = () =>
 		const { password } = data
 
 		if (password === 'good') {
-			action('Login with good credentials')()
-			return res(
-				ctx.delay(),
-				ctx.json({
-					url: 'http://localhost:6006/?path=/story/modals-login--modal',
-					status: 200,
-					ok: true,
-				})
-			)
+			const returnData = {
+				url: 'http://localhost:6006/?path=/story/modals-login--modal',
+				status: 200,
+				ok: true,
+				error: undefined,
+			}
+			action('Login with good credentials')(returnData)
+			return res(ctx.delay(), ctx.json(returnData))
 		}
-		action('Login with bad credentials')()
-		return res(
-			ctx.delay(),
-			ctx.status(401),
-			ctx.json({
-				error: 'Incorrect username or password.',
-				ok: false,
-				status: 401,
-				url: 'null',
-			})
-		)
+		const returnData = {
+			error: 'Incorrect username or password.',
+			ok: false,
+			status: 401,
+			url: null,
+		}
+		action('Login with bad credentials')(returnData)
+		return res(ctx.delay(), ctx.status(401), ctx.json(returnData))
 	})

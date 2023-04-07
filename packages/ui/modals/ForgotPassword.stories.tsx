@@ -17,6 +17,7 @@ export default {
 					CodeDeliveryDetails: {
 						DeliveryMedium: 'EMAIL',
 					},
+					$metadata: {},
 				},
 			}),
 		],
