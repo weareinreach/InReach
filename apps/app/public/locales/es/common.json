@@ -36,11 +36,15 @@
 	"current-location": "Ubicación actual",
 	"delete-account": "¿Eliminar tu cuenta?",
 	"delete-account-password": "Introduzca la contraseña de su cuenta para confirmar.",
+	"direct": {
+		"email": "Email directo",
+		"phone": "Teléfono directo",
+		"website": "Sitio web directo"
+	},
 	"disclaimer": "Descargo de responsabilidad",
 	"dont-have-account": "¿No tienes una cuenta?",
 	"download-app": "Descargar nuestra aplicación",
 	"edit-profile": "Editar perfil",
-	"email": "E-mail",
 	"email-sent": "Correo enviado.",
 	"email_professional": "Email profesional",
 	"email_student-pro": "Email profesional o estudiante",
@@ -71,7 +75,6 @@
 	"form-error-password-blank": "La contraseña no puede estar vacía.",
 	"form-error-password-req": "Su contraseña no cumple con los requisitos, por favor inténtelo de nuevo.",
 	"go-to-x": "Ir a {{value}}",
-	"hours": "Horas",
 	"in-reach-user": "Alcanzar usuario",
 	"in-reach-verified-reviewer": "Alcanzar revisor verificado",
 	"include": "Incluye",
@@ -132,7 +135,6 @@
 	},
 	"password-reset-success": "<Text>Por favor <LoginModal>iniciar sesión</LoginModal> usando su nueva contraseña.</Text>",
 	"password-saved": "¡Contraseña guardada!",
-	"phone": "Teléfono",
 	"photo-count_interval": "(0)[No hay fotos aún.];(1)[{{count}} foto];(2-inf)[{{count}} fotos]",
 	"photo_interval": "(0)[Aún no hay fotos];(3-inf)[{{count}} fotos];",
 	"powered-by-vercel": "Desarrollado por Vercel",
@@ -181,28 +183,23 @@
 	"send-email": "Enviar email",
 	"service": {
 		"additional-info": "Información adicional de elegibilidad",
-		"age": {
-			"max": " y anteriores",
-			"min": "Hasta ",
-			"range": "{{min}}{{separator}}{{max}}"
-		},
 		"ages": "Edad elegible",
 		"at-capacity": "<strong>Este servicio no puede recibir nuevos clientes.</strong>",
 		"clients-served": "Clientes atendidos",
 		"community-focus": "Enfoque comunitario LGBTQ+",
 		"cost": "Costo",
 		"cost-details": "Detalles de costo",
+		"elig-age_max": "Menos de {{max}}",
+		"elig-age_min": "{{min}} y anteriores",
+		"elig-age_range": "{{min}} - {{max}}",
 		"eligibility": "Requisitos de elegibilidad",
-		"email": "Email directo",
 		"extra-info": "Información adicional",
 		"get-help": "Obtener ayuda",
 		"hours": "Horas de servicio",
 		"languages": "Idiomas",
-		"phone": "Teléfono directo",
 		"requirements": "Requisitos",
 		"target-population": "Target population",
-		"transit-directions": "Direcciones de tránsito públicas",
-		"website": "Sitio web directo"
+		"transit-directions": "Direcciones de tránsito públicas"
 	},
 	"services": "Servicios",
 	"settings": "Ajustes",
@@ -255,7 +252,6 @@
 	},
 	"view-list": "Ver lista",
 	"visit": "Visita",
-	"website": "Sitio web",
 	"words": {
 		"accept": "Aceptar",
 		"account": "Cuenta",
@@ -263,8 +259,11 @@
 		"and-x-more": "y {{count}} más",
 		"coming-soon": "Próximamente",
 		"delete": "Eliminar",
+		"email": "E-mail",
+		"hours": "Horas",
 		"more": "más",
 		"next": "Siguiente",
+		"phone": "Teléfono",
 		"please-wait": "Por favor espere...",
 		"prev": "Anterior",
 		"print": "Imprimir",
@@ -272,6 +271,7 @@
 		"save": "Guardar",
 		"saved": "Guardado",
 		"search": "Buscar",
+		"service-hours": "Horas de servicio",
 		"share": "Compartir",
 		"support": "Support"
 	},
@@ -284,5 +284,7 @@
 	"review_one": "Review",
 	"review_other": "Reviews",
 	"view-x-result_one": "Ver {{count}} resultados",
-	"view-x-result_other": "Ver {{count}} resultados"
+	"view-x-result_other": "Ver {{count}} resultados",
+	"website_one": "Website",
+	"website_other": "Websites"
 }
