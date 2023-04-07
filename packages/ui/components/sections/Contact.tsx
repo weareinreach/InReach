@@ -2,12 +2,14 @@ import { Stack, Title, Card } from '@mantine/core'
 import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
 
-import { ContactInfo } from '~ui/components/data-display'
+import { ContactInfo, hasContactInfo } from '~ui/components/data-display'
 import { useScreenSize } from '~ui/hooks'
 
 export const ContactSection = (props: ContactSectionProps) => {
 	const { t } = useTranslation(['common'])
 	const { isMobile } = useScreenSize()
+
+	if (!hasContactInfo(props.data)) return null
 
 	const body = (
 		<Stack spacing={isMobile ? 32 : 40}>
