@@ -197,12 +197,12 @@ export const LanguageSelect = () => {
 	// BUG: [IN-792] Search should also search by Native Name
 	const groupedLangs = languageList.map(({ common, ...lang }) => ({
 		...lang,
-		group: t('lang', { context: common ? 'common' : 'all-other' }),
+		group: t('language', { context: common ? 'common' : 'all-other' }),
 	}))
 
 	return (
 		<Select
-			label={t('lang', { context: 'choose' })}
+			label={t('language', { context: 'choose' })}
 			data={groupedLangs}
 			searchable
 			itemComponent={SelectItemTwoLines}
