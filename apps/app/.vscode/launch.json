@@ -1,0 +1,14 @@
+{
+	"configurations": [
+		{
+			"disableNetworkCache": true,
+			"name": "Launch Chromium",
+			"port": 9222,
+			"request": "launch",
+			"runtimeExecutable": "/Applications/Chromium.app/Contents/MacOS/Chromium",
+			"type": "chrome",
+			"url": "http://localhost:3000",
+			"userDataDir": false
+		}
+	]
+}
