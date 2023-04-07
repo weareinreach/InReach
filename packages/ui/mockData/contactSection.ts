@@ -17,6 +17,8 @@ export const contactMock = {
 					},
 				},
 				title: null,
+				locationOnly: false,
+				serviceOnly: false,
 			},
 		},
 	],
@@ -108,4 +110,11 @@ export const contactMock = {
 			url: 'https://maps.google.com',
 		},
 	],
+} satisfies ContactSectionProps['data']
+
+export const singleContactMock = {
+	emails: contactMock.emails[0] ? [contactMock.emails[0]] : [],
+	phones: contactMock.phones[0] ? [contactMock.phones[0]] : [],
+	socialMedia: contactMock.socialMedia[0] ? [contactMock.socialMedia[0]] : [],
+	websites: contactMock.websites[0] ? [contactMock.websites[0]] : [],
 } satisfies ContactSectionProps['data']

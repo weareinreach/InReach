@@ -8,7 +8,7 @@ import { generateId } from './lib/idGen'
 import { idMiddleware } from './lib/idMiddleware'
 import { superjsonMiddleware } from './lib/superjsonMiddleware'
 
-const log = new Logger({ name: 'prisma', type: 'json' })
+const log = new Logger({ name: 'prisma' })
 const verboseLogging = Boolean(process.env.NODE_ENV === 'development' && !!process.env.NEXT_VERBOSE)
 declare global {
 	// allow global `var` declarations
@@ -37,8 +37,10 @@ prisma.$use(superjsonMiddleware)
 const queryLogger = createPrismaQueryEventHandler({
 	queryDuration: true,
 	format: true,
-	indent: undefined,
-	linesBetweenQueries: 2,
+	indent: `\t`,
+	// linesBetweenQueries: 2,
+	language: 'pl/sql',
+	logger: (data) => log.info(`\n${data}`),
 })
 
 if (!global.prisma) {
