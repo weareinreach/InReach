@@ -1,4 +1,4 @@
-import { Title, Card, List, Stack, Group } from '@mantine/core'
+import { Title, Card, List, Stack, Group, Divider, useMantineTheme } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
 import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
@@ -16,6 +16,7 @@ export const LocationCard = (props: LocationCardProps) => {
 	const { t } = useTranslation(['gov-dist', 'common'])
 	const { location } = props
 	const { ref: addressRef, height: addressListHeight } = useElementSize()
+	const theme = useMantineTheme()
 
 	const adminArea = location.govDist?.abbrev
 		? location.govDist.abbrev
@@ -43,8 +44,12 @@ export const LocationCard = (props: LocationCardProps) => {
 	const serviceTags = new Set(
 		location.services.flatMap(({ service }) => service.services.map((service) => service.tag.category.tsKey))
 	)
-	const addressListVariant =
-		addressListHeight > 36 ? variants.List.inlineUtil2 : variants.List.inlineBulletUtil2
+	const isAddressSingleLine = addressListHeight > 36
+	const addressListVariant = isAddressSingleLine ? variants.List.inlineUtil2 : variants.List.inlineBulletUtil2
+	const separator = (
+		<Divider w={4} size={4} style={{ borderRadius: '50%' }} color={theme.other.colors.secondary.darkGray} />
+	)
+	const listProps = { variant: addressListVariant, icon: separator, ref: addressRef }
 
 	const attributeTags = location.attributes.filter(({ attribute }) => Boolean(attribute.showOnLocation))
 
@@ -68,7 +73,7 @@ export const LocationCard = (props: LocationCardProps) => {
 			<Stack spacing={32}>
 				<Stack spacing={12}>
 					<Title order={2}>{location.name}</Title>
-					<List variant={addressListVariant} ref={addressRef}>
+					<List {...listProps}>
 						<List.Item>{formattedAddress}</List.Item>
 						{formattedPhone && <List.Item>{formattedPhone}</List.Item>}
 					</List>
