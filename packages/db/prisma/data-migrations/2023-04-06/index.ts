@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { prisma, Prisma } from '~db/index'
+import { batchRunner } from '~db/prisma/batchRunner'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
 import { jobPreRunner, type JobDef } from '~db/prisma/jobPreRun'
 
@@ -23,8 +24,6 @@ const CostDescSchema = z
 		slug: z.string(),
 	})
 	.array()
-
-const BATCH_SIZE = 500
 
 const job: ListrTask = async (_ctx, task) => {
 	/** Do not edit this part - this ensures that jobs are only run once */
@@ -68,22 +67,12 @@ const job: ListrTask = async (_ctx, task) => {
 			},
 		})
 	})
-	let i = 1
-	let ttl = 0
-	const totalBatches = Math.ceil(costDescUpdates.length / BATCH_SIZE)
+
 	task.output = `Generated batch for Cost supplement updates: ${costDescUpdates.length} records`
 	task.output = `Running batches...`
+	const costDescResult = await batchRunner(costDescUpdates, task)
 
-	while (costDescUpdates.length) {
-		const currentBatch = costDescUpdates.splice(0, BATCH_SIZE)
-		const batchResult = await prisma.$transaction(currentBatch)
-		task.output = `[${i}/${totalBatches}] ${isSuccess(batchResult.length)} Records updated: ${
-			batchResult.length
-		}`
-		ttl += batchResult.length
-		i++
-	}
-	task.output = `Cost attribute supplement records updated: ${ttl}`
+	task.output = `Cost attribute supplement records updated: ${costDescResult}`
 }
 
 /**

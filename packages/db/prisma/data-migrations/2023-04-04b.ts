@@ -1,4 +1,5 @@
 import { prisma, Prisma } from '~db/index'
+import { batchRunner } from '~db/prisma/batchRunner'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
 import { jobPreRunner, type JobDef } from '~db/prisma/jobPreRun'
 
@@ -71,10 +72,14 @@ const job: ListrTask = async (_ctx, task) => {
 		{ timeout: 300_000 }
 	)
 	task.output = `Processing updates...`
-	const areas = await prisma.$transaction(serviceAreas.map((args) => prisma.serviceArea.updateMany(args)))
-	task.output = `ServiceAreas: ${areas.length}`
-	const hours = await prisma.$transaction(orgHours.map((args) => prisma.orgHours.updateMany(args)))
-	task.output = `OrgHours: ${hours.length}`
+	const servAreaBatch = serviceAreas.map((args) => prisma.serviceArea.updateMany(args))
+	const orgHoursBatch = orgHours.map((args) => prisma.orgHours.updateMany(args))
+
+	const servAreaResult = await batchRunner(servAreaBatch, task)
+	task.output = `ServiceAreas: ${servAreaResult}`
+
+	const orgHoursResult = await batchRunner(orgHoursBatch, task)
+	task.output = `OrgHours: ${orgHoursResult}`
 }
 
 // export job - this must be unique

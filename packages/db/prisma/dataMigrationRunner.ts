@@ -50,8 +50,6 @@ jobs.run()
 export type Context = {
 	error?: boolean
 }
+export type PassedTask = ListrTaskWrapper<Context, ListrDefaultRenderer>
 export type ListrJob = ListrTaskObj<Context, ListrDefaultRenderer>
-export type ListrTask = (
-	ctx: Context,
-	task: ListrTaskWrapper<Context, ListrDefaultRenderer>
-) => void | Promise<void>
+export type ListrTask = (ctx: Context, task: PassedTask) => void | Promise<void>
