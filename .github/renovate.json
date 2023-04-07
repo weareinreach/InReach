@@ -2,5 +2,12 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"baseBranches": ["dev"],
 	"extends": ["github>weareinreach/renovate-config"],
+	"packageRules": [
+		{
+			"groupName": "patched packages",
+			"matchPackageNames": ["@crowdin/ota-client", "eslint-plugin-node", "iso-google-locales", "trpc-panel"],
+			"matchUpdateTypes": ["major", "minor", "patch"]
+		}
+	],
 	"semanticCommitScope": "{{parentDir}}"
 }
