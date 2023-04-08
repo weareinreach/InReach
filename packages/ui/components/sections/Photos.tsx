@@ -33,14 +33,14 @@ const useStyles = createStyles((theme) => ({
  * @remarks
  * To edit the display size of the images in the carousel remember to change:
  *
- * - `Carousel` component maw prop (line 104).
- * - `carouselImages` const's children (line 79):
+ * - `Carousel` component maw prop.
+ * - `carouselImages` const's children:
  *
  *         + AspectRatio props: ratio, miw (only affects mobile version), maw.
  *
  *         + Image props: width and height.
- * - `modalSize` style (line 18), it only affects the desktop's carousel. This style is passed to the Modal's
- *   classNames prop on line 98.
+ * - `modalSize` style, it only affects the desktop's carousel. This style is passed to the Modal's classNames
+ *   prop.
  *
  * @param photos - An object, or array of objects containing the following keys: src: string, width: number |
  *   null, and height: number | null
@@ -117,7 +117,7 @@ export const PhotosSection = ({ photos }: PhotosSectionProps) => {
 			</Modal>
 			<Stack spacing={isMobile ? 32 : 40} align='flex-start'>
 				<Group h={48}>
-					<Title order={2}>{t('photo', { count: 2 })}</Title>
+					<Title order={2}>{t('photo_other')}</Title>
 				</Group>
 				{photosArray.length > 0 && displayPhotos}
 				<Text
