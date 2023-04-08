@@ -56,7 +56,7 @@ export const Hours = ({ data, label = 'regular' }: HoursProps) => {
 			return interval.isValid ? range : null
 		})
 		if (entry[0] === null) return
-		hourDisplay.push(<List.Item>{entry.filter(Boolean).join(' & ')}</List.Item>)
+		hourDisplay.push(<List.Item key={key}>{entry.filter(Boolean).join(' & ')}</List.Item>)
 	})
 	if (!hourDisplay.length) return null
 	return (
