@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
-import { useScreenSize, useCustomVariant } from '~ui/hooks'
+import { useCustomVariant } from '~ui/hooks'
 
 const useStyles = createStyles((theme) => ({
 	text: {
@@ -75,7 +75,7 @@ export const PhotosSection = ({ photos }: PhotosSectionProps) => {
 	const displayPhotos = (
 		<Group noWrap>
 			{mainDisplay.map(({ src }, i) => (
-				<AspectRatio key={i} miw={160} ratio={1}>
+				<AspectRatio key={src} miw={160} ratio={1}>
 					<Image
 						style={{ cursor: 'pointer' }}
 						onClick={() => {
