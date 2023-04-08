@@ -27,3 +27,9 @@ export const Mobile = {
 		},
 	},
 } satisfies StoryDef
+
+export const NoPhotos = {
+	args: {
+		photos: [],
+	},
+} satisfies StoryDef
