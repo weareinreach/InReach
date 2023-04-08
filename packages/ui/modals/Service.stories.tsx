@@ -1,9 +1,9 @@
-import { Center } from '@mantine/core'
 import { Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { mockServiceData } from '~ui/mockData/serviceModal'
+import { getAll } from '~ui/mockData/savedList'
+import { mockServData } from '~ui/mockData/serviceModal'
 
 import { ServiceModal } from './Service'
 
@@ -17,11 +17,22 @@ export default {
 			getTRPCMock({
 				path: ['service', 'byId'],
 				type: 'query',
-				response: mockServiceData,
+				response: mockServData(),
 			}),
 			getTRPCMock({
 				path: ['service', 'getParentName'],
 				response: { name: 'Organization name' },
+			}),
+			getTRPCMock({
+				path: ['savedList', 'getAll'],
+				response: getAll,
+			}),
+			getTRPCMock({
+				path: ['organization', 'getIdFromSlug'],
+				type: 'query',
+				response: {
+					id: 'orgn_ORGANIZATIONID',
+				},
 			}),
 		],
 		nextjs: {

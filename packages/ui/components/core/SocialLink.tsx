@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 
 import { Icon } from '~ui/icon'
 
-export const approvedIcons = {
+export const socialMediaIcons = {
 	facebook: 'carbon:logo-facebook',
 	instagram: 'carbon:logo-instagram',
 	mail: 'carbon:email',
@@ -13,6 +13,10 @@ export const approvedIcons = {
 	linkedin: 'carbon:logo-linkedin',
 	tiktok: 'simple-icons:tiktok',
 } as const
+
+type SocialMediaIcon = keyof typeof socialMediaIcons
+export const isSocialIcon = (icon: string): icon is SocialMediaIcon =>
+	Object.keys(socialMediaIcons).includes(icon)
 
 const useStyles = createStyles((theme) => ({
 	button: {
@@ -27,7 +31,7 @@ const useStyles = createStyles((theme) => ({
 export const SocialLink = ({ href, icon, title }: SocialLinkProps) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
-	const iconRender = approvedIcons[icon]
+	const iconRender = socialMediaIcons[icon]
 
 	return (
 		<ActionIcon component='a' href={href} target='_blank' title={title} size={32} className={classes.button}>
@@ -58,5 +62,5 @@ type GroupProps = {
 export type SocialLinkProps = {
 	href: string
 	title: string
-	icon: keyof typeof approvedIcons
+	icon: SocialMediaIcon
 }

@@ -86,6 +86,8 @@ const orgEmailInclude = {
 				legacyDesc: true,
 				description: freeText,
 				primary: true,
+				locationOnly: true,
+				serviceOnly: true,
 			},
 		},
 	},
@@ -143,6 +145,7 @@ const languageSelect = {
 } satisfies Prisma.LanguageArgs
 
 const orgWebsiteInclude = {
+	where: isPublic,
 	select: {
 		id: true,
 		description: freeText,

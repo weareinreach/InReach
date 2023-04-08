@@ -2,20 +2,19 @@ import {
 	Title,
 	Text,
 	Stack,
-	Group,
 	Box,
 	createStyles,
 	useMantineTheme,
 	createPolymorphicComponent,
 	Modal,
 	ButtonProps,
+	List,
 } from '@mantine/core'
 import { useMediaQuery, useDisclosure } from '@mantine/hooks'
 import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
-import { Interval, DateTime } from 'luxon'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { forwardRef } from 'react'
+import { forwardRef, type ReactNode } from 'react'
 
 import {
 	AlertMessage,
@@ -23,8 +22,11 @@ import {
 	BadgeGroup,
 	type CommunityTagProps,
 	type AttributeTagProps,
+	type ServiceTagProps,
 } from '~ui/components/core'
-import { Icon, type IconList } from '~ui/icon'
+import { Hours, ContactInfo, type ContactInfoProps, hasContactInfo } from '~ui/components/data-display'
+import { useSlug, getFreeText } from '~ui/hooks'
+import { isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { ModalTitle, ModalTitleProps } from './ModalTitle'
@@ -33,9 +35,6 @@ const useStyles = createStyles((theme) => ({
 	sectionDivider: {
 		backgroundColor: theme.other.colors.primary.lightGray,
 		padding: 12,
-	},
-	ul: {
-		margin: 0,
 	},
 	timezone: {
 		...theme.other.utilityFonts.utility4,
@@ -48,10 +47,9 @@ const useStyles = createStyles((theme) => ({
 }))
 
 /**
- * TODO: [IN-797] Service Modal updates - Fix 'at capacity' layout/spacing
+ * TODO: [IN-797] Service Modal updates
  *
- * - Format phone number with'libphonenumber-js'
- * - Convert timezone to standard localized name "Eastern Standard Time"
+ * - Fix 'at capacity' layout/spacing
  * - Community focus to use badges with short name & icon
  * - Cost to use attribute badge
  * - Validate data display against finalized data structure.
@@ -61,17 +59,18 @@ const CONTACTS = ['phone', 'email', 'website'] as const
 
 export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 	({ serviceId, ...props }, ref) => {
+		const slug = useSlug()
 		const { data, status } = api.service.byId.useQuery({ id: serviceId })
-		const { t, i18n } = useTranslation(['common', 'attribute'])
+		const { t, i18n } = useTranslation(['common', 'attribute', slug])
 		const { classes } = useStyles()
 		const [opened, handler] = useDisclosure(false)
 
 		const ServiceModalTitle = () => {
-			const icons = ['share', 'save'] as ModalTitleProps['icons']
+			const icons = ['share', 'save'] satisfies ModalTitleProps['icons']
 			const theme = useMantineTheme()
 			const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 			const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
-			const { slug, orgLocationId } = router.query
+			const { orgLocationId } = router.query
 			const apiQuery = typeof orgLocationId === 'string' ? { orgLocationId } : { slug }
 			const { data, status } = api.service.getParentName.useQuery(apiQuery)
 
@@ -110,35 +109,30 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 			)
 		}
 
-		const UL = (props: { children: string[] }) => {
-			const listItems = props.children.map((text) => (
-				<li key={text}>
-					<Text>{text}</Text>
-				</li>
-			))
-			return <ul className={classes.ul}>{listItems}</ul>
-		}
-
 		const ModalText = ({ children }: ModalTextprops) => (
 			<Text component='p' className={classes.blackText}>
 				{children}
 			</Text>
 		)
 
-		const SubSection = ({ title, children, li }: subsectionProps) => {
-			let display = children
+		const SubSection = ({ title, children, li }: SubsectionProps) => (
+			<Stack spacing={12}>
+				{title && <Title order={3}>{t(`service.${title}`)}</Title>}
+				{li ? (
+					<List>
+						{typeof li === 'string' ? (
+							<List.Item>{li}</List.Item>
+						) : (
+							li.map((item, i) => <List.Item key={i}>{item}</List.Item>)
+						)}
+					</List>
+				) : (
+					children
+				)}
+			</Stack>
+		)
 
-			if (li) display = <UL>{typeof li === 'string' ? [li] : li}</UL>
-
-			return (
-				<Stack spacing={12}>
-					{title && <Title order={3}>{t(`service.${title}`)}</Title>}
-					{display}
-				</Stack>
-			)
-		}
-
-		const SectionDivider = ({ title, children }: sectionProps) => {
+		const SectionDivider = ({ title, children }: SectionProps) => {
 			if (!children || (Array.isArray(children) && children.length === 0)) return <></>
 
 			return (
@@ -153,88 +147,81 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 			)
 		}
 
+		const contactData: ContactInfoProps['data'] = {
+			phones: [],
+			emails: [],
+			websites: [],
+			socialMedia: [],
+		}
+
 		if (data && status === 'success') {
-			const { serviceName, services, hours, accessDetails, attributes } = data
+			const { serviceName, services, hours, accessDetails, attributes, description, locations } = data
 
-			let name: JSX.Element | undefined
+			const serviceBadges: ServiceTagProps[] = services.map(({ tag }) => ({
+				tsKey: tag.tsKey,
+				variant: 'service',
+			}))
 
-			if (serviceName) name = <Title order={2}>{serviceName.tsKey.text}</Title>
+			const baseDetails: AccessDetails = { publicTransit: [] }
 
-			let orgTimezone: string | null = null
-			const allServices = services.map(({ tag }) => (
-				<Badge key={tag.tsKey} variant='service' tsKey={tag.tsKey} />
-			))
-
-			const formatHours: JSX.Element[] = []
-
-			const hourMap = new Map<number, Set<(typeof hours)[number]>>()
-			const { weekYear, weekNumber } = DateTime.now()
-			for (const entry of hours) {
-				const daySet = hourMap.get(entry.dayIndex)
-				if (!daySet) {
-					hourMap.set(entry.dayIndex, new Set([entry]))
-				} else {
-					hourMap.set(entry.dayIndex, new Set([...daySet, entry]))
-				}
-			}
-
-			hourMap.forEach((value, key) => {
-				const entry = [...value].map(({ start, end, dayIndex: weekday, closed, tz }, idx) => {
-					const zone = tz ?? undefined
-					const open = DateTime.fromJSDate(start, { zone }).set({ weekday, weekNumber, weekYear })
-					const close = DateTime.fromJSDate(end, { zone }).set({ weekday, weekNumber, weekYear })
-					const interval = Interval.fromDateTimes(open, close)
-
-					if (!orgTimezone && zone) {
-						orgTimezone = open.toFormat('ZZZZZ (ZZZZ)', { locale: i18n.language })
-					}
-					if (closed) return null
-
-					if (idx === 0) {
-						const range = interval
-							.toLocaleString(
-								{ weekday: 'short', hour: 'numeric', minute: 'numeric', formatMatcher: 'best fit' },
-								{ locale: i18n.language }
-							)
-							.split(',')
-							.join('')
-
-						return interval.isValid ? range : null
-					}
-
-					const range = interval.toLocaleString(
-						{ hour: 'numeric', minute: 'numeric' },
-						{ locale: i18n.language }
-					)
-					return interval.isValid ? range : null
-				})
-				if (entry[0] === null) return
-				formatHours.push(<ModalText>{entry.filter(Boolean).join(' & ')}</ModalText>)
-			})
-
-			const timeZone = <Text className={classes.timezone}>{orgTimezone}</Text>
-
-			const serviceHours =
-				formatHours.length > 0 ? (
-					<SubSection title='hours'>
-						<Stack spacing={12}>
-							<div>{timeZone}</div>
-							<div>{formatHours}</div>
-						</Stack>
-					</SubSection>
-				) : undefined
-
-			const baseDetails: accessDetails = { publicTransit: [] }
-
-			const { publicTransit, ...contacts } = accessDetails.reduce((details, { attributes }) => {
+			const { publicTransit } = accessDetails.reduce((details, { attributes }) => {
 				attributes.forEach(({ supplement }) => {
 					supplement.forEach(({ data, text }) => {
 						const parsed = supplementSchema.accessInstructions.safeParse(data)
 						if (parsed.success) {
 							const { access_type, access_value } = parsed.data
-
-							if (access_type === 'publicTransit')
-								details[access_type].push(<ModalText>{t(text!.key) as string}</ModalText>)
+							switch (access_type) {
+								case 'publicTransit': {
+									if (!text) break
+									const { key, options } = getFreeText(text)
+									details[access_type].push(<ModalText>{t(key, options)}</ModalText>)
+									break
+								}
+								case 'email': {
+									contactData.emails.push({
+										email: {
+											title: null,
+											description: null,
+											email: parsed.data.access_value,
+											legacyDesc: parsed.data.instructions,
+											firstName: null,
+											lastName: null,
+											primary: false,
+											locationOnly: false,
+											serviceOnly: false,
+										},
+									})
+									break
+								}
+								case 'phone': {
+									const country = locations.find(({ location }) => Boolean(location.country))?.location
+										.country
+									if (!country) break
+									contactData.phones.push({
+										phone: {
+											number: parsed.data.access_value,
+											phoneType: null,
+											country,
+											primary: false,
+											locationOnly: false,
+											ext: null,
+										},
+									})
+									break
+								}
+								case 'link':
+								case 'file': {
+									contactData.websites.push({
+										description: null,
+										id: '',
+										isPrimary: false,
+										languages: [],
+										orgLocationId: null,
+										orgLocationOnly: false,
+										url: parsed.data.access_value,
+									})
+								}
+							}
 
 							const accessKey = CONTACTS.find((category) => category === access_type)
 							if (accessKey) details[accessKey] ||= <Text>{access_value}</Text>
@@ -244,21 +231,13 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 				return details
 			}, baseDetails)
 
-			const availableContacts = Object.entries(contacts)
-				.filter(([key, value]) => value)
-				.map(([key, value]) => {
-					return (
-						<SubSection key={key} title={key}>
-							{value}
-						</SubSection>
-					)
-				})
-
 			const attributeCategories: Attributes = {
-				community: [],
 				cost: [],
 				lang: [],
-				srvFocus: [],
+				clientsServed: {
+					srvfocus: [],
+					targetPop: [],
+				},
 				eligibility: {
 					requirements: [],
 					freeText: [],
@@ -267,8 +246,8 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 				miscWithIcons: [],
 			}
 
-			const { eligibility, community, srvFocus, cost, lang, misc, miscWithIcons, atCapacity } =
-				attributes.reduce((subsections, { attribute, supplement }) => {
+			const { eligibility, clientsServed, cost, lang, misc, miscWithIcons, atCapacity } = attributes.reduce(
+				(subsections, { attribute, supplement }) => {
 					const { tsKey, icon, tsNs } = attribute
 					/*
 					Since the tsKeys follow a sort of pattern with the namespace being the first part of the
@@ -279,72 +258,81 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 					const namespace = tsKey.split('.').shift() as string
 
 					switch (namespace) {
-						case 'community': {
-							subsections[namespace].push({ tsKey, icon: icon as string, variant: namespace })
+						/** Clients served */
+						case 'srvfocus': {
+							console.log(attribute)
+							if (typeof icon === 'string') {
+								subsections.clientsServed[namespace].push({ icon, tsKey, variant: 'community' })
+							}
 							break
 						}
-						case 'srvFocus': {
-							subsections[namespace].push(<ModalText>{t(tsKey) as string}</ModalText>)
+						/** Target Population & Eligibility Requirements */
+						case 'eligibility': {
+							const type = tsKey.split('.').pop() as string
+							switch (type) {
+								case 'elig-age': {
+									for (const { data } of supplement) {
+										const parsed = supplementSchema.age.safeParse(data)
+										if (!parsed.success) continue
+										const { min, max } = parsed.data
+										const context = min && max ? 'range' : min ? 'min' : 'max'
+										subsections[namespace]['age'] = (
+											<ModalText key={min ?? max}>
+												{t('service.elig-age', { ns: 'common', context, min, max })}
+											</ModalText>
+										)
+									}
+									break
+								}
+								case 'other-describe': {
+									for (const { text } of supplement) {
+										if (!text) continue
+										const { key, options } = getFreeText(text)
+										subsections.clientsServed.targetPop.push(
+											<ModalText key={key}>{t(key, options)}</ModalText>
+										)
+									}
+
+									break
+								}
+							}
+
 							break
 						}
+
 						// Ask Joe about the suplemement's data.json format for services with prices
 						case 'cost': {
-							const costDetails: costDetails = { description: [] }
+							if (!isValidIcon(icon)) break
+							const costDetails: CostDetails = { description: [] }
 
 							supplement.forEach(({ text, data }) => {
 								if (text) {
-									const { ns, key } = text
-									costDetails.description.push(
-										<ModalText>{t(`${ns}.${key}`, { ns: 'attribute' }) as string}</ModalText>
-									)
+									const { key, options } = getFreeText(text)
+									costDetails.description.push(<ModalText>{t(key, options)}</ModalText>)
 								}
 								const parsed = supplementSchema.cost.safeParse(data)
 								if (parsed.success) {
-									const { cost: price } = parsed.data
-									costDetails.price = price
+									const { cost, currency } = parsed.data
+									costDetails.price = new Intl.NumberFormat(i18n.language, {
+										style: 'currency',
+										currency: currency ?? undefined,
+									}).format(cost)
 								}
 							})
 
 							const { price, description } = costDetails
-
-							subsections[namespace].push(
-								<Group spacing='sm'>
-									<Icon icon='carbon:piggy-bank' />
-									<Text>{price || t(tsKey)}</Text>
-								</Group>
-							)
+							const badgeProps = { icon, tsKey, tsNs, tProps: { price: price ?? undefined } }
+							subsections[namespace].push(<Badge variant='attribute' {...badgeProps} />)
 
 							if (description.length > 0)
 								subsections[namespace].push(<SubSection title='cost-details'>{description}</SubSection>)
 							break
 						}
-						case 'eligibility': {
-							if (tsKey.includes('elig-age')) {
-								supplement.forEach(({ data }) => {
-									const parsed = supplementSchema.age.safeParse(data)
-									if (!parsed.success) return
-									const { min, max } = parsed.data
-									const ageRange = t('service.age.range', {
-										min: min || t('service.age.min'),
-										max: max || t('service.age.max'),
-										separator: min && max ? ' — ' : undefined,
-									})
-									subsections[namespace]['age'] = <ModalText>{ageRange}</ModalText>
-								})
-							} else if (tsKey.includes('other-describe')) {
-								supplement.forEach(({ text }) => {
-									const { ns, key } = text as { ns: string; key: string }
-									subsections[namespace]['freeText'].push(
-										<ModalText>{t(`${ns}.${key}`) as string}</ModalText>
-									)
-								})
-							} else subsections[namespace]['requirements'].push(t(tsKey))
 
-							break
-						}
 						case 'lang': {
 							supplement.forEach(({ language }) => {
-								const { languageName } = language as Language
+								if (!language) return
+								const { languageName } = language
 								subsections[namespace].push(languageName)
 							})
 							break
@@ -355,14 +343,14 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 									<AlertMessage textKey={'service.at-capacity'} iconKey='information' />
 								)
 							else {
-								icon
+								isValidIcon(icon)
 									? subsections[`miscWithIcons`].push({
 											tsKey,
-											icon: icon as IconList,
+											icon,
 											tsNs,
 											variant: 'attribute',
 									  })
-									: subsections['misc'].push(t(tsKey))
+									: subsections['misc'].push(t(tsKey, { ns: tsNs }))
 								break
 							}
 						}
@@ -371,31 +359,19 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 						}
 					}
 					return subsections
-				}, attributeCategories)
+				},
+				attributeCategories
+			)
 
-			const getHelp = serviceHours ? availableContacts.concat(serviceHours) : availableContacts
+			const eligibilityItems: JSX.Element[] = []
 
-			const clientsServed: JSX.Element[] = []
-
-			if (community.length > 0)
-				clientsServed.push(
-					<SubSection title='community-focus'>
-						<BadgeGroup badges={community} withSeparator={false} />
-					</SubSection>
-				)
-
-			if (srvFocus.length > 0)
-				clientsServed.push(<SubSection title='target-population'>{srvFocus}</SubSection>)
-
-			const eligDisplay: JSX.Element[] = []
-
-			if (eligibility.age) eligDisplay.push(<SubSection title='ages'>{eligibility.age}</SubSection>)
+			if (eligibility.age) eligibilityItems.push(<SubSection title='ages'>{eligibility.age}</SubSection>)
 
 			if (eligibility.requirements.length > 0)
-				eligDisplay.push(<SubSection title='requirements' li={eligibility.requirements} />)
+				eligibilityItems.push(<SubSection title='requirements' li={eligibility.requirements} />)
 
 			if (eligibility.freeText.length > 0)
-				eligDisplay.push(<SubSection title='additional-info'>{eligibility.freeText}</SubSection>)
+				eligibilityItems.push(<SubSection title='additional-info'>{eligibility.freeText}</SubSection>)
 
 			const languages = lang.length === 0 ? undefined : <SubSection title='languages' li={lang} />
 
@@ -414,13 +390,40 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 				<>
 					<Modal title={<ServiceModalTitle />} opened={opened} onClose={() => handler.close()} zIndex={100}>
 						<Stack spacing={24}>
-							{atCapacity}
-							{name}
-							<div>{allServices}</div>
-							<SectionDivider title='get-help'>{getHelp}</SectionDivider>
-							<SectionDivider title='clients-served'>{clientsServed}</SectionDivider>
-							<SectionDivider title='cost'>{cost.length > 0 ? cost : undefined}</SectionDivider>
-							<SectionDivider title='eligibility'>{eligDisplay}</SectionDivider>
+							<Stack spacing={16}>
+								{atCapacity}
+								{serviceName && (
+									<Title order={2}>
+										{t(serviceName.key, { ns: slug, defaultValue: serviceName.tsKey.text })}
+									</Title>
+								)}
+								{description && (
+									<Text>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
+								)}
+							</Stack>
+							<BadgeGroup badges={serviceBadges} />
+							{(hasContactInfo(contactData) || Boolean(hours.length)) && (
+								<SectionDivider title='get-help'>
+									{hasContactInfo(contactData) && (
+										<ContactInfo data={contactData} direct order={['phone', 'email', 'website']} />
+									)}
+									{Boolean(hours.length) && <Hours data={hours} label='service' />}
+								</SectionDivider>
+							)}
+							{(Boolean(clientsServed.srvfocus.length) || Boolean(clientsServed.targetPop.length)) && (
+								<SectionDivider title='clients-served'>
+									{Boolean(clientsServed.srvfocus.length) && (
+										<SubSection title='community-focus'>
+											<BadgeGroup badges={clientsServed.srvfocus} withSeparator={false} />
+										</SubSection>
+									)}
+									{Boolean(clientsServed.targetPop.length) && (
+										<SubSection title='target-population'>{clientsServed.targetPop}</SubSection>
+									)}
+								</SectionDivider>
+							)}
+							<SectionDivider title='cost'>{cost}</SectionDivider>
+							<SectionDivider title='eligibility'>{eligibilityItems}</SectionDivider>
 							<SectionDivider title='languages'>{languages}</SectionDivider>
 							<SectionDivider title='additional-info'>{extraInfo}</SectionDivider>
 							<SectionDivider title='transit-directions'>{publicTransit}</SectionDivider>
@@ -441,15 +444,15 @@ export interface ServiceModalProps extends ButtonProps {
 	serviceId: string
 }
 
-type subsectionProps = {
+type SubsectionProps = {
 	title?: string
-	children?: JSX.Element[] | JSX.Element
+	children?: ReactNode
 	li?: string[] | string
 }
 
-type sectionProps = {
+type SectionProps = {
 	title?: string
-	children?: JSX.Element | JSX.Element[]
+	children?: ReactNode
 }
 
 type Attributes = {
@@ -458,8 +461,10 @@ type Attributes = {
 	directWebsite?: string
 	cost: JSX.Element[]
 	lang: string[]
-	community: CommunityTagProps[]
-	srvFocus: JSX.Element[]
+	clientsServed: {
+		srvfocus: CommunityTagProps[]
+		targetPop: JSX.Element[]
+	}
 	atCapacity?: JSX.Element
 	eligibility: {
 		age?: JSX.Element
@@ -470,7 +475,7 @@ type Attributes = {
 	miscWithIcons: AttributeTagProps[]
 }
 
-type accessDetails = {
+type AccessDetails = {
 	phone?: JSX.Element
 	email?: JSX.Element
 	website?: JSX.Element
@@ -478,21 +483,11 @@ type accessDetails = {
 	publicTransit: JSX.Element[]
 }
 
-type Language = {
-	languageName: string
-	nativeName: string
-}
-
-type SupplementData = {
-	access_type: string
-	access_value: string
-}
-
-type costDetails = {
-	price?: number
+type CostDetails = {
+	price?: number | string
 	description: JSX.Element[]
 }
 
 type ModalTextprops = {
-	children: JSX.Element | string
+	children: ReactNode
 }
