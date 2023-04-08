@@ -26,13 +26,17 @@ export const contactMock = {
 		{
 			phone: {
 				country: {
-					flag: '🇺🇸',
-					dialCode: null,
 					cca2: 'US',
+					cca3: 'USA',
+					id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+					name: 'United States',
+					dialCode: null,
+					flag: '🇺🇸',
 					tsKey: 'USA.name',
 					tsNs: 'country',
 				},
 				phoneType: null,
+				phoneLangs: [],
 				number: '2025551234',
 				ext: null,
 				primary: true,

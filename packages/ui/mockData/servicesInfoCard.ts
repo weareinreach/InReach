@@ -21,6 +21,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 						tsKey: 'additional.has-confidentiality-policy',
 						tsNs: 'attribute',
 						icon: null,
@@ -39,6 +40,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV4TM7H5V6FHWA7S9JK',
 						tsKey: 'additional.time-walk-in',
 						tsNs: 'attribute',
 						icon: null,
@@ -57,9 +59,10 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
 						tsKey: 'cost.cost-free',
 						tsNs: 'attribute',
-						icon: null,
+						icon: 'carbon:piggy-bank',
 						iconBg: null,
 						showOnLocation: null,
 						categories: [
@@ -75,6 +78,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -91,6 +95,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F15B2HJK144B3NZHQK',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -105,6 +110,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
 						icon: null,
@@ -121,6 +127,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F13VVJCJ8W2WE86R6N',
 							country: null,
 							language: null,
 							text: null,
@@ -182,6 +189,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -198,6 +206,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F0SPS3EBCQ710RCNTA',
 									country: null,
 									language: null,
 									text: {
@@ -232,6 +241,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -248,6 +258,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F0638MD74PJ3SCWNXC',
 									country: null,
 									language: null,
 									text: {
@@ -282,6 +293,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -298,6 +310,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F01W2M7FBSKSXAQ9R4',
 									country: null,
 									language: null,
 									text: {
@@ -332,6 +345,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 								tsKey: 'serviceaccess.accessphone',
 								tsNs: 'attribute',
 								icon: null,
@@ -348,6 +362,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F09GFRWM3JK2A43AWG',
 									country: null,
 									language: null,
 									text: {
@@ -384,19 +399,19 @@ export const servicesMock = [
 				{
 					phone: {
 						country: {
-							flag: '🇺🇸',
-							dialCode: null,
 							cca2: 'US',
+							cca3: 'USA',
+							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+							name: 'United States',
+							dialCode: null,
+							flag: '🇺🇸',
 							tsKey: 'USA.name',
 							tsNs: 'country',
 						},
+						phoneLangs: [],
 						phoneType: {
-							id: 'phtp_01GW2HT9EQW476ZBTYBQN76NT9',
-							type: 'Medical Care/ Appointments',
 							tsKey: 'medical-care-appointments',
 							tsNs: 'phone-type',
-							createdAt: new Date('2023-03-21T17:00:56.475Z'),
-							updatedAt: new Date('2023-03-21T17:00:56.475Z'),
 						},
 						number: '2027457000',
 						ext: null,
@@ -430,6 +445,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 						tsKey: 'additional.has-confidentiality-policy',
 						tsNs: 'attribute',
 						icon: null,
@@ -448,6 +464,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
 						tsKey: 'eligibility.time-appointment-required',
 						tsNs: 'attribute',
 						icon: null,
@@ -466,9 +483,10 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
 						tsKey: 'cost.cost-fees',
 						tsNs: 'attribute',
-						icon: null,
+						icon: 'carbon:piggy-bank',
 						iconBg: null,
 						showOnLocation: null,
 						categories: [
@@ -482,17 +500,25 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F29SAQ5XNN2Q9K4ZC0',
 							country: null,
 							language: null,
-							text: null,
+							text: {
+								key: 'whitman-walker-health.attribute.atts_01GW2HT9F29SAQ5XNN2Q9K4ZC0',
+								ns: 'org-data',
+								tsKey: {
+									text: 'Contact for more information on fees.',
+								},
+							},
 							govDist: null,
 							boolean: null,
-							data: 'Contact for more information on fees.',
+							data: null,
 						},
 					],
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -509,6 +535,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F3HSS3N7KA1F1QB1PZ',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -523,6 +550,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJDKVF1HV7559CNZCY',
 						tsKey: 'eligibility.other-describe',
 						tsNs: 'attribute',
 						icon: null,
@@ -539,6 +567,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F2K3KC3P4649R3Q0G7',
 							country: null,
 							language: null,
 							text: {
@@ -556,6 +585,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
 						icon: null,
@@ -572,6 +602,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F3KQS8A70EV2591ZTY',
 							country: null,
 							language: null,
 							text: null,
@@ -681,6 +712,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 								tsKey: 'serviceaccess.accessphone',
 								tsNs: 'attribute',
 								icon: null,
@@ -697,6 +729,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F18KAE459BH3RBS9WM',
 									country: null,
 									language: null,
 									text: {
@@ -730,6 +763,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -746,6 +780,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F2A8ET62KSWFPDA6C9',
 									country: null,
 									language: null,
 									text: {
@@ -780,6 +815,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW',
 								tsKey: 'serviceaccess.accessemail',
 								tsNs: 'attribute',
 								icon: null,
@@ -796,6 +832,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F21SZHDQ5VBKDVNNS5',
 									country: null,
 									language: null,
 									text: {
@@ -831,19 +868,19 @@ export const servicesMock = [
 				{
 					phone: {
 						country: {
-							flag: '🇺🇸',
-							dialCode: null,
 							cca2: 'US',
+							cca3: 'USA',
+							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+							name: 'United States',
+							dialCode: null,
+							flag: '🇺🇸',
 							tsKey: 'USA.name',
 							tsNs: 'country',
 						},
+						phoneLangs: [],
 						phoneType: {
-							id: 'phtp_01GW2HT9ERJ5CFFR7X9R4BMT5T',
-							type: 'Gender Affirming Services',
 							tsKey: 'gender-affirming-services',
 							tsNs: 'phone-type',
-							createdAt: new Date('2023-03-21T17:00:56.475Z'),
-							updatedAt: new Date('2023-03-21T17:00:56.475Z'),
 						},
 						number: '2027974457',
 						ext: null,
@@ -897,6 +934,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 						tsKey: 'additional.has-confidentiality-policy',
 						tsNs: 'attribute',
 						icon: null,
@@ -915,9 +953,10 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
 						tsKey: 'cost.cost-free',
 						tsNs: 'attribute',
-						icon: null,
+						icon: 'carbon:piggy-bank',
 						iconBg: null,
 						showOnLocation: null,
 						categories: [
@@ -933,6 +972,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
 						tsKey: 'eligibility.time-appointment-required',
 						tsNs: 'attribute',
 						icon: null,
@@ -951,6 +991,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
 						tsKey: 'eligibility.elig-age',
 						tsNs: 'attribute',
 						icon: null,
@@ -967,6 +1008,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F4BTH28ZQDRPH5PE16',
 							country: null,
 							language: null,
 							text: null,
@@ -980,6 +1022,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -996,6 +1039,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F4V12HEJRMBBKSSRB5',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -1010,6 +1054,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
 						icon: null,
@@ -1026,6 +1071,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F4FM69MC7Y8RAED87F',
 							country: null,
 							language: null,
 							text: null,
@@ -1087,6 +1133,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -1103,6 +1150,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F3645YXQX5G69WPR3E',
 									country: null,
 									language: null,
 									text: {
@@ -1135,6 +1183,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -1151,6 +1200,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F3XT7ZP34G152VTPDN',
 									country: null,
 									language: null,
 									text: {
@@ -1183,6 +1233,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -1199,6 +1250,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F46WSJJBV9ZYCCKWTY',
 									country: null,
 									language: null,
 									text: {
@@ -1233,19 +1285,19 @@ export const servicesMock = [
 				{
 					phone: {
 						country: {
-							flag: '🇺🇸',
-							dialCode: null,
 							cca2: 'US',
+							cca3: 'USA',
+							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+							name: 'United States',
+							dialCode: null,
+							flag: '🇺🇸',
 							tsKey: 'USA.name',
 							tsNs: 'country',
 						},
+						phoneLangs: [],
 						phoneType: {
-							id: 'phtp_01GW2HT9EQW476ZBTYBQN76NT9',
-							type: 'Medical Care/ Appointments',
 							tsKey: 'medical-care-appointments',
 							tsNs: 'phone-type',
-							createdAt: new Date('2023-03-21T17:00:56.475Z'),
-							updatedAt: new Date('2023-03-21T17:00:56.475Z'),
 						},
 						number: '2027457000',
 						ext: null,
@@ -1279,6 +1331,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 						tsKey: 'additional.has-confidentiality-policy',
 						tsNs: 'attribute',
 						icon: null,
@@ -1297,9 +1350,10 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
 						tsKey: 'cost.cost-free',
 						tsNs: 'attribute',
-						icon: null,
+						icon: 'carbon:piggy-bank',
 						iconBg: null,
 						showOnLocation: null,
 						categories: [
@@ -1315,6 +1369,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
 						tsKey: 'eligibility.elig-age',
 						tsNs: 'attribute',
 						icon: null,
@@ -1331,6 +1386,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F6H5R8TAQX1GWMDQRW',
 							country: null,
 							language: null,
 							text: null,
@@ -1345,6 +1401,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -1361,6 +1418,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F6RZENAE7HKCTJQ612',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -1375,6 +1433,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
 						icon: null,
@@ -1391,6 +1450,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F7HQBPVYACYSGZMQ0R',
 							country: null,
 							language: null,
 							text: null,
@@ -1475,6 +1535,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 								tsKey: 'serviceaccess.accessphone',
 								tsNs: 'attribute',
 								icon: null,
@@ -1491,6 +1552,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F5WNAVZAWXHX3NWQDM',
 									country: null,
 									language: null,
 									text: {
@@ -1524,6 +1586,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -1540,6 +1603,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F5TD2Z8WMVBQNJ9KSG',
 									country: null,
 									language: null,
 									text: {
@@ -1572,6 +1636,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -1588,6 +1653,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F5WT5XMR933BSV4DB6',
 									country: null,
 									language: null,
 									text: {
@@ -1622,19 +1688,19 @@ export const servicesMock = [
 				{
 					phone: {
 						country: {
-							flag: '🇺🇸',
-							dialCode: null,
 							cca2: 'US',
+							cca3: 'USA',
+							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+							name: 'United States',
+							dialCode: null,
+							flag: '🇺🇸',
 							tsKey: 'USA.name',
 							tsNs: 'country',
 						},
+						phoneLangs: [],
 						phoneType: {
-							id: 'phtp_01GW2HT9ER3S9J1Y0YBNSHKEGG',
-							type: 'Max Robinson Center HIV/STI & Pregnancy Testing',
 							tsKey: 'max-robinson-center-hivsti-and-pregnancy-testing',
 							tsNs: 'phone-type',
-							createdAt: new Date('2023-03-21T17:00:56.475Z'),
-							updatedAt: new Date('2023-03-21T17:00:56.475Z'),
 						},
 						number: '2025439355',
 						ext: null,
@@ -1668,6 +1734,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 						tsKey: 'additional.has-confidentiality-policy',
 						tsNs: 'attribute',
 						icon: null,
@@ -1686,9 +1753,10 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
 						tsKey: 'cost.cost-free',
 						tsNs: 'attribute',
-						icon: null,
+						icon: 'carbon:piggy-bank',
 						iconBg: null,
 						showOnLocation: null,
 						categories: [
@@ -1704,6 +1772,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
 						tsKey: 'eligibility.time-appointment-required',
 						tsNs: 'attribute',
 						icon: null,
@@ -1722,6 +1791,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
 						tsKey: 'eligibility.elig-age',
 						tsNs: 'attribute',
 						icon: null,
@@ -1738,6 +1808,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F8YBG3RW555BEJPX43',
 							country: null,
 							language: null,
 							text: null,
@@ -1752,6 +1823,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -1768,6 +1840,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F8XBZ50671RY07JEYA',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -1782,6 +1855,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJDKVF1HV7559CNZCY',
 						tsKey: 'eligibility.other-describe',
 						tsNs: 'attribute',
 						icon: null,
@@ -1798,6 +1872,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F8VANEYDQF7J5F1GEH',
 							country: null,
 							language: null,
 							text: {
@@ -1815,6 +1890,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
 						icon: null,
@@ -1831,6 +1907,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9F8EJ5ANBZBJFGCM48T',
 							country: null,
 							language: null,
 							text: null,
@@ -1919,6 +1996,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW',
 								tsKey: 'serviceaccess.accessemail',
 								tsNs: 'attribute',
 								icon: null,
@@ -1935,6 +2013,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F7E3JJCMG6YYP8QY5A',
 									country: null,
 									language: null,
 									text: {
@@ -1968,6 +2047,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -1984,6 +2064,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F7FVQRS3EQSK98K956',
 									country: null,
 									language: null,
 									text: {
@@ -2061,6 +2142,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 						tsKey: 'additional.has-confidentiality-policy',
 						tsNs: 'attribute',
 						icon: null,
@@ -2079,6 +2161,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -2095,6 +2178,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FBBGA9C2Z7CNW80T59',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -2109,6 +2193,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
 						icon: null,
@@ -2125,6 +2210,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FB41ACRT97YFGV6RMK',
 							country: null,
 							language: null,
 							text: null,
@@ -2297,6 +2383,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 								tsKey: 'serviceaccess.accessphone',
 								tsNs: 'attribute',
 								icon: null,
@@ -2313,6 +2400,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F94A2CZJA09MNFDGA1',
 									country: null,
 									language: null,
 									text: {
@@ -2347,6 +2435,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -2363,6 +2452,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F9DGM8BZDP5DT29AHR',
 									country: null,
 									language: null,
 									text: {
@@ -2397,6 +2487,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -2413,6 +2504,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F9EEESTJ3PGNGFRRFK',
 									country: null,
 									language: null,
 									text: {
@@ -2447,6 +2539,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 								tsKey: 'serviceaccess.accessphone',
 								tsNs: 'attribute',
 								icon: null,
@@ -2463,6 +2556,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9F9NJXJYDCW6JZH6QPE',
 									country: null,
 									language: null,
 									text: {
@@ -2497,6 +2591,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -2513,6 +2608,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FAQYSYMCBGY2372PPK',
 									country: null,
 									language: null,
 									text: {
@@ -2548,6 +2644,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -2564,6 +2661,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FAZTE919W36R7TJEN0',
 									country: null,
 									language: null,
 									text: {
@@ -2600,19 +2698,19 @@ export const servicesMock = [
 				{
 					phone: {
 						country: {
-							flag: '🇺🇸',
-							dialCode: null,
 							cca2: 'US',
+							cca3: 'USA',
+							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+							name: 'United States',
+							dialCode: null,
+							flag: '🇺🇸',
 							tsKey: 'USA.name',
 							tsNs: 'country',
 						},
+						phoneLangs: [],
 						phoneType: {
-							id: 'phtp_01GW2HT9ERJTEV19RYZ2DV1X1D',
-							type: 'Legal Services Program',
 							tsKey: 'legal-services-program',
 							tsNs: 'phone-type',
-							createdAt: new Date('2023-03-21T17:00:56.475Z'),
-							updatedAt: new Date('2023-03-21T17:00:56.475Z'),
 						},
 						number: '2029397630',
 						ext: null,
@@ -2666,6 +2764,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 						tsKey: 'additional.has-confidentiality-policy',
 						tsNs: 'attribute',
 						icon: null,
@@ -2684,6 +2783,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
 						tsKey: 'eligibility.time-appointment-required',
 						tsNs: 'attribute',
 						icon: null,
@@ -2702,9 +2802,10 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
 						tsKey: 'cost.cost-fees',
 						tsNs: 'attribute',
-						icon: null,
+						icon: 'carbon:piggy-bank',
 						iconBg: null,
 						showOnLocation: null,
 						categories: [
@@ -2718,17 +2819,25 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FCP3N9GE0XX4JK8TC0',
 							country: null,
 							language: null,
-							text: null,
+							text: {
+								key: 'whitman-walker-health.attribute.atts_01GW2HT9FCP3N9GE0XX4JK8TC0',
+								ns: 'org-data',
+								tsKey: {
+									text: 'Contact for more information on fees.',
+								},
+							},
 							govDist: null,
 							boolean: null,
-							data: 'Contact for more information on fees.',
+							data: null,
 						},
 					],
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -2745,6 +2854,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FCJ2DFW4SW2QPV7JBZ',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -2759,6 +2869,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJDKVF1HV7559CNZCY',
 						tsKey: 'eligibility.other-describe',
 						tsNs: 'attribute',
 						icon: null,
@@ -2775,6 +2886,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FCBTTS1SW1NVENDX6G',
 							country: null,
 							language: null,
 							text: {
@@ -2792,6 +2904,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
 						icon: null,
@@ -2808,6 +2921,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FCGKS23KNM319BY46Y',
 							country: null,
 							language: null,
 							text: null,
@@ -2869,6 +2983,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 								tsKey: 'serviceaccess.accessphone',
 								tsNs: 'attribute',
 								icon: null,
@@ -2885,6 +3000,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FB82602PRFFPWMABZ4',
 									country: null,
 									language: null,
 									text: {
@@ -2917,6 +3033,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -2933,6 +3050,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FC3T1FAK1H2R9AVHEN',
 									country: null,
 									language: null,
 									text: {
@@ -2968,19 +3086,19 @@ export const servicesMock = [
 				{
 					phone: {
 						country: {
-							flag: '🇺🇸',
-							dialCode: null,
 							cca2: 'US',
+							cca3: 'USA',
+							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+							name: 'United States',
+							dialCode: null,
+							flag: '🇺🇸',
 							tsKey: 'USA.name',
 							tsNs: 'country',
 						},
+						phoneLangs: [],
 						phoneType: {
-							id: 'phtp_01GW2HT9EQW476ZBTYBQN76NT9',
-							type: 'Medical Care/ Appointments',
 							tsKey: 'medical-care-appointments',
 							tsNs: 'phone-type',
-							createdAt: new Date('2023-03-21T17:00:56.475Z'),
-							updatedAt: new Date('2023-03-21T17:00:56.475Z'),
 						},
 						number: '2027457000',
 						ext: null,
@@ -3034,6 +3152,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 						tsKey: 'additional.has-confidentiality-policy',
 						tsNs: 'attribute',
 						icon: null,
@@ -3052,9 +3171,10 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
 						tsKey: 'cost.cost-free',
 						tsNs: 'attribute',
-						icon: null,
+						icon: 'carbon:piggy-bank',
 						iconBg: null,
 						showOnLocation: null,
 						categories: [
@@ -3070,6 +3190,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
 						tsKey: 'eligibility.time-appointment-required',
 						tsNs: 'attribute',
 						icon: null,
@@ -3088,6 +3209,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -3104,6 +3226,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FD8RFFX8T6FZWTSE8P',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -3118,6 +3241,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
 						icon: null,
@@ -3134,6 +3258,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FDGDY99PV0J6G8RMZX',
 							country: null,
 							language: null,
 							text: null,
@@ -3207,6 +3332,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -3223,6 +3349,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FD667CNFY4RBBJ6FAZ',
 									country: null,
 									language: null,
 									text: {
@@ -3280,6 +3407,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 						tsKey: 'additional.has-confidentiality-policy',
 						tsNs: 'attribute',
 						icon: null,
@@ -3298,9 +3426,10 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
 						tsKey: 'cost.cost-free',
 						tsNs: 'attribute',
-						icon: null,
+						icon: 'carbon:piggy-bank',
 						iconBg: null,
 						showOnLocation: null,
 						categories: [
@@ -3316,6 +3445,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -3332,6 +3462,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FG0SFR8CEEEG8E91HG',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -3346,6 +3477,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJDKVF1HV7559CNZCY',
 						tsKey: 'eligibility.other-describe',
 						tsNs: 'attribute',
 						icon: null,
@@ -3362,6 +3494,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FG341HCE9SC4GXF5MH',
 							country: null,
 							language: null,
 							text: {
@@ -3379,6 +3512,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
 						icon: null,
@@ -3395,6 +3529,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FGT388BAV2Z95E4CEA',
 							country: null,
 							language: null,
 							text: null,
@@ -3459,6 +3594,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 								tsKey: 'serviceaccess.accessphone',
 								tsNs: 'attribute',
 								icon: null,
@@ -3475,6 +3611,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FEHGTRRPZ1QKKHJQDK',
 									country: null,
 									language: null,
 									text: {
@@ -3509,6 +3646,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW',
 								tsKey: 'serviceaccess.accessemail',
 								tsNs: 'attribute',
 								icon: null,
@@ -3525,6 +3663,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FE5ARCNCQHREG91V57',
 									country: null,
 									language: null,
 									text: {
@@ -3558,6 +3697,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -3574,6 +3714,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FED18Z3Z73Y8T0E7T9',
 									country: null,
 									language: null,
 									text: {
@@ -3608,6 +3749,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -3624,6 +3766,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FF3NQTQ8WVYQTE8GEQ',
 									country: null,
 									language: null,
 									text: {
@@ -3658,6 +3801,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -3674,6 +3818,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FFC3WAGRM15ENKEH44',
 									country: null,
 									language: null,
 									text: {
@@ -3709,6 +3854,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -3725,6 +3871,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FFVMJFP7CZ1D1P8KEY',
 									country: null,
 									language: null,
 									text: {
@@ -3761,19 +3908,19 @@ export const servicesMock = [
 				{
 					phone: {
 						country: {
-							flag: '🇺🇸',
-							dialCode: null,
 							cca2: 'US',
+							cca3: 'USA',
+							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+							name: 'United States',
+							dialCode: null,
+							flag: '🇺🇸',
 							tsKey: 'USA.name',
 							tsNs: 'country',
 						},
+						phoneLangs: [],
 						phoneType: {
-							id: 'phtp_01GW2HT9ERJTEV19RYZ2DV1X1D',
-							type: 'Legal Services Program',
 							tsKey: 'legal-services-program',
 							tsNs: 'phone-type',
-							createdAt: new Date('2023-03-21T17:00:56.475Z'),
-							updatedAt: new Date('2023-03-21T17:00:56.475Z'),
 						},
 						number: '2029397630',
 						ext: null,
@@ -3827,6 +3974,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 						tsKey: 'additional.has-confidentiality-policy',
 						tsNs: 'attribute',
 						icon: null,
@@ -3845,9 +3993,10 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
 						tsKey: 'cost.cost-free',
 						tsNs: 'attribute',
-						icon: null,
+						icon: 'carbon:piggy-bank',
 						iconBg: null,
 						showOnLocation: null,
 						categories: [
@@ -3863,6 +4012,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
 						tsKey: 'eligibility.time-appointment-required',
 						tsNs: 'attribute',
 						icon: null,
@@ -3881,9 +4031,10 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
 						tsKey: 'cost.cost-fees',
 						tsNs: 'attribute',
-						icon: null,
+						icon: 'carbon:piggy-bank',
 						iconBg: null,
 						showOnLocation: null,
 						categories: [
@@ -3897,17 +4048,25 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FHDJG98PD82333SEV0',
 							country: null,
 							language: null,
-							text: null,
+							text: {
+								key: 'whitman-walker-health.attribute.atts_01GW2HT9FHDJG98PD82333SEV0',
+								ns: 'org-data',
+								tsKey: {
+									text: 'The vaccine will be free.',
+								},
+							},
 							govDist: null,
 							boolean: null,
-							data: 'The vaccine will be free.',
+							data: null,
 						},
 					],
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -3924,6 +4083,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FH7QPW00YKZNPK4CTY',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -3938,6 +4098,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
 						icon: null,
@@ -3954,6 +4115,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FJ1SWH3ARN7W7G83X0',
 							country: null,
 							language: null,
 							text: null,
@@ -4015,6 +4177,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 								tsKey: 'serviceaccess.accessphone',
 								tsNs: 'attribute',
 								icon: null,
@@ -4031,6 +4194,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FGCEKNHH2JX814JZNX',
 									country: null,
 									language: null,
 									text: {
@@ -4063,6 +4227,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 								tsKey: 'serviceaccess.accessphone',
 								tsNs: 'attribute',
 								icon: null,
@@ -4079,6 +4244,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FHA4WJG4WAD6V75V9W',
 									country: null,
 									language: null,
 									text: {
@@ -4113,6 +4279,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -4129,6 +4296,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FHVJFJBZP4EX2Q02D6',
 									country: null,
 									language: null,
 									text: {
@@ -4165,19 +4333,19 @@ export const servicesMock = [
 				{
 					phone: {
 						country: {
-							flag: '🇺🇸',
-							dialCode: null,
 							cca2: 'US',
+							cca3: 'USA',
+							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+							name: 'United States',
+							dialCode: null,
+							flag: '🇺🇸',
 							tsKey: 'USA.name',
 							tsNs: 'country',
 						},
+						phoneLangs: [],
 						phoneType: {
-							id: 'phtp_01GW2HT9ESXAWVSVXDZB0ZJPFZ',
-							type: 'COVID-19 Vaccine Appointments',
 							tsKey: 'covid-19-vaccine-appointments',
 							tsNs: 'phone-type',
-							createdAt: new Date('2023-03-21T17:00:56.475Z'),
-							updatedAt: new Date('2023-03-21T17:00:56.475Z'),
 						},
 						number: '2022072480',
 						ext: null,
@@ -4211,6 +4379,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 						tsKey: 'additional.has-confidentiality-policy',
 						tsNs: 'attribute',
 						icon: null,
@@ -4229,6 +4398,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
 						tsKey: 'eligibility.time-appointment-required',
 						tsNs: 'attribute',
 						icon: null,
@@ -4247,9 +4417,10 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
 						tsKey: 'cost.cost-fees',
 						tsNs: 'attribute',
-						icon: null,
+						icon: 'carbon:piggy-bank',
 						iconBg: null,
 						showOnLocation: null,
 						categories: [
@@ -4263,17 +4434,25 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FKYRTJ0QZ2G84NZ33S',
 							country: null,
 							language: null,
-							text: null,
+							text: {
+								key: 'whitman-walker-health.attribute.atts_01GW2HT9FKYRTJ0QZ2G84NZ33S',
+								ns: 'org-data',
+								tsKey: {
+									text: 'Contact for more information on fees.',
+								},
+							},
 							govDist: null,
 							boolean: null,
-							data: 'Contact for more information on fees.',
+							data: null,
 						},
 					],
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVH0GQK0GAJR5D952V3',
 						tsKey: 'eligibility.req-proof-of-age',
 						tsNs: 'attribute',
 						icon: null,
@@ -4292,6 +4471,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVHZ599M48CMSPGDCSC',
 						tsKey: 'eligibility.req-photo-id',
 						tsNs: 'attribute',
 						icon: null,
@@ -4310,6 +4490,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -4326,6 +4507,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FK3E82QQ2H17GBS476',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -4340,6 +4522,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJDKVF1HV7559CNZCY',
 						tsKey: 'eligibility.other-describe',
 						tsNs: 'attribute',
 						icon: null,
@@ -4356,6 +4539,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FK6W1R7RR2YKY7EM85',
 							country: null,
 							language: null,
 							text: {
@@ -4373,6 +4557,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
 						icon: null,
@@ -4389,6 +4574,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FME78R743MNP9H9HCG',
 							country: null,
 							language: null,
 							text: null,
@@ -4453,6 +4639,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 								tsKey: 'serviceaccess.accessphone',
 								tsNs: 'attribute',
 								icon: null,
@@ -4469,6 +4656,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FJVRYRWH7YKD5PSXJQ',
 									country: null,
 									language: null,
 									text: {
@@ -4502,6 +4690,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -4518,6 +4707,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FJVN6X0NCHDMQRNH1J',
 									country: null,
 									language: null,
 									text: {
@@ -4554,6 +4744,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW',
 								tsKey: 'serviceaccess.accessemail',
 								tsNs: 'attribute',
 								icon: null,
@@ -4570,6 +4761,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FK5WYEX857QKM3KM2F',
 									country: null,
 									language: null,
 									text: {
@@ -4603,6 +4795,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
 								icon: null,
@@ -4619,6 +4812,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FKR1P5XFFG4QR14FT8',
 									country: null,
 									language: null,
 									text: {
@@ -4656,19 +4850,19 @@ export const servicesMock = [
 				{
 					phone: {
 						country: {
-							flag: '🇺🇸',
-							dialCode: null,
 							cca2: 'US',
+							cca3: 'USA',
+							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+							name: 'United States',
+							dialCode: null,
+							flag: '🇺🇸',
 							tsKey: 'USA.name',
 							tsNs: 'country',
 						},
+						phoneLangs: [],
 						phoneType: {
-							id: 'phtp_01GW2HT9ERJ5CFFR7X9R4BMT5T',
-							type: 'Gender Affirming Services',
 							tsKey: 'gender-affirming-services',
 							tsNs: 'phone-type',
-							createdAt: new Date('2023-03-21T17:00:56.475Z'),
-							updatedAt: new Date('2023-03-21T17:00:56.475Z'),
 						},
 						number: '2027974457',
 						ext: null,
@@ -4722,6 +4916,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -4738,6 +4933,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FNB2D3N8VJ8SMB7GE9',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -4788,6 +4984,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -4804,6 +5001,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FM36V51QJW06D31Q6V',
 									country: null,
 									language: null,
 									text: {
@@ -4837,6 +5035,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -4853,6 +5052,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FM961XSJQGYGES7CVA',
 									country: null,
 									language: null,
 									text: {
@@ -4910,6 +5110,7 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVHEVX4PMNN077ASQMG',
 						tsKey: 'eligibility.req-proof-of-income',
 						tsNs: 'attribute',
 						icon: null,
@@ -4928,6 +5129,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVHGMVCAY1G5BWF1PFB',
 						tsKey: 'eligibility.req-proof-of-residence',
 						tsNs: 'attribute',
 						icon: null,
@@ -4946,6 +5148,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVHZ599M48CMSPGDCSC',
 						tsKey: 'eligibility.req-photo-id',
 						tsNs: 'attribute',
 						icon: null,
@@ -4964,6 +5167,7 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
@@ -4980,6 +5184,7 @@ export const servicesMock = [
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT9FP9EY8JT9TP19P9P3G',
 							country: null,
 							language: {
 								languageName: 'English',
@@ -5030,6 +5235,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
 								icon: null,
@@ -5046,6 +5252,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FN6GJVMKPTD4EKNKRT',
 									country: null,
 									language: null,
 									text: {
@@ -5080,6 +5287,7 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 								tsKey: 'serviceaccess.accessphone',
 								tsNs: 'attribute',
 								icon: null,
@@ -5096,6 +5304,7 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
+									id: 'atts_01GW2HT9FNFHZQY1GK71C2001B',
 									country: null,
 									language: null,
 									text: {
