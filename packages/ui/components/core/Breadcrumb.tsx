@@ -7,7 +7,7 @@ import { Icon } from '~ui/icon'
 const useStyles = createStyles((theme) => ({
 	root: {
 		// height: '40px',
-		width: 'auto',
+		maxWidth: '100%',
 		padding: `calc(${theme.spacing.sm} - ${rem(2)}) ${theme.spacing.xs}`,
 		color: theme.other.colors.secondary.black,
 		backgroundColor: theme.other.colors.secondary.white,
@@ -22,6 +22,7 @@ const useStyles = createStyles((theme) => ({
 		height: rem(24),
 		marginRight: theme.spacing.xs,
 	},
+	buttonText: {},
 }))
 
 export const Breadcrumb = (props: BreadcrumbProps) => {
@@ -42,17 +43,21 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 			case 'back': {
 				switch (props.backTo) {
 					case 'search': {
-						return t('back-to-search')
+						return t('breadcrumb.back-to-search')
 					}
 					case 'none': {
-						return t('back')
+						return t('words.back')
 					}
 					case 'dynamicText': {
 						const page = props.backToText
 						return (
-							<Trans i18nKey='back-to-dynamic' ns='common' values={{ page }} shouldUnescape={true}>
-								Back to <span style={{ textDecoration: 'underline' }}>{page}</span>
-							</Trans>
+							<Trans
+								i18nKey='breadcrumb.back-to-dynamic'
+								ns='common'
+								values={{ page }}
+								shouldUnescape={true}
+								components={{ u: <u>.</u> }}
+							/>
 						)
 					}
 				}
@@ -71,7 +76,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 			onClick={props.onClick}
 			leftIcon={<Icon icon={iconRender} height={24} color={theme.other.colors.secondary.black} />}
 		>
-			<Text size='md' fw={theme.other.fontWeight.semibold}>
+			<Text size='md' fw={theme.other.fontWeight.semibold} truncate>
 				{childrenRender}
 			</Text>
 		</Button>

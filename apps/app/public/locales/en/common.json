@@ -12,9 +12,10 @@
 		"body": "By using InReach, you agree that you will not use this resource information for harmful, hate-based, homophobic, transphobic, xenophobic, and/or racist agendas or commentary.",
 		"title": "Anti-hate commitment"
 	},
-	"back": "Back",
-	"back-to-dynamic": "Back to <1>{{page}}</1>",
-	"back-to-search": "Back to search",
+	"breadcrumb": {
+		"back-to-dynamic": "Back to <u>{{page}}</u>",
+		"back-to-search": "Back to search"
+	},
 	"cancel": "Cancel",
 	"claimed": "Claimed",
 	"clear": "Clear",
@@ -267,6 +268,7 @@
 		"account": "Account",
 		"and": "and",
 		"and-x-more": "and {{count}} more",
+		"back": "Back",
 		"coming-soon": "Coming soon",
 		"delete": "Delete",
 		"email": "Email",
