@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react'
 
 import { StorybookGridDouble } from '~ui/layouts'
-import { searchResultsMock } from '~ui/mockData/searchResults'
+import { searchResultsMock, searchResultLongTitle } from '~ui/mockData/searchResults'
 
 import { SearchResultCard } from './SearchResultCard'
 
@@ -22,6 +22,11 @@ export default {
 export const SingleResult = {
 	args: {
 		result: searchResultsMock.orgs[0],
+	},
+}
+export const SingleResultWithLongName = {
+	args: {
+		result: searchResultLongTitle,
 	},
 }
 

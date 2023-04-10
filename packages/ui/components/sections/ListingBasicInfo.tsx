@@ -20,7 +20,9 @@ export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
 		attribute.categories.some(({ category }) => category.tag === 'organization-leadership')
 	)
 	const focusedCommunities = attributes.filter(({ attribute }) =>
-		attribute.categories.some(({ category }) => category.tag === 'service-focus')
+		attribute.categories.some(
+			({ category }) => category.tag === 'service-focus' && attribute._count.parents === 0
+		)
 	)
 
 	const infoBadges = () => {

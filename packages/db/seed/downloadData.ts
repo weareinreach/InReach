@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Listr, ListrRenderer, ListrTaskWrapper } from 'listr2'
+import { Listr, ListrRenderer, ListrTaskWrapper, PRESET_TIMER } from 'listr2'
 
 import fs from 'fs'
 import path from 'path'
@@ -57,8 +57,7 @@ export const task = new Listr(
 	],
 	{
 		rendererOptions: {
-			showTimer: true,
-			collapse: false,
+			timer: PRESET_TIMER,
 		},
 		exitOnError: false,
 	}

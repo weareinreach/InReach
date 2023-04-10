@@ -32,6 +32,7 @@ export const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewLis
 		const variants = useCustomVariant()
 		const theme = useMantineTheme()
 		const [opened, handler] = useDisclosure(false)
+		const utils = api.useContext()
 		const form = useForm<FormProps>({
 			validate: zodResolver(FormSchema),
 			validateInputOnBlur: true,
@@ -43,19 +44,22 @@ export const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewLis
 		})
 		const resourceSavedNotification = useNewNotification({
 			icon: 'heartFilled',
-			displayText: t('list.added', { name: props.resourceName }),
+			displayText: t('list.added', { name: form.values.name }),
 		})
 
 		const createListOnly = api.savedList.create.useMutation({
 			onSuccess: () => {
 				newListNotification()
+				utils.savedList.getAll.invalidate()
 				handler.close()
 			},
 		})
 		const createListAndSaveItem = api.savedList.createAndSaveItem.useMutation({
-			onSuccess: () => {
+			onSuccess: (_, { organizationId, serviceId }) => {
 				newListNotification()
 				resourceSavedNotification()
+				utils.savedList.getAll.invalidate()
+				utils.savedList.isSaved.invalidate(serviceId ?? organizationId)
 				handler.close()
 			},
 		})
@@ -110,19 +114,14 @@ export const CreateNewList = createPolymorphicComponent<'button', CreateNewListM
 	CreateNewListModalBody
 )
 
-export type CreateNewListModalBodyProps = SaveOrg | SaveService | SaveNone
+export type CreateNewListModalBodyProps = CreateAndSave | CreateOnly
 
-interface SaveOrg extends ButtonProps {
-	organizationId: string
-	serviceId?: string
-	resourceName: string
-}
-interface SaveService extends ButtonProps {
+interface CreateAndSave extends ButtonProps {
 	organizationId?: string
-	serviceId: string
-	resourceName: string
+	serviceId?: string
+	resourceName?: string
 }
-interface SaveNone extends ButtonProps {
+interface CreateOnly extends ButtonProps {
 	organizationId?: never
 	serviceId?: never
 	resourceName?: never

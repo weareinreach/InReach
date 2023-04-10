@@ -1,7 +1,6 @@
 import { Menu, Text, Flex, UnstyledButton, createStyles, UnstyledButtonProps, rem } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { Locale } from 'nextjs-routes'
 import { forwardRef } from 'react'
 import { translatedLangs, LocaleCodes } from '~api/generated/languages'
 
@@ -58,7 +57,7 @@ export const LangPicker = () => {
 	const langHandler = (newLocale: LocaleCodes) => {
 		const { pathname, asPath, query } = router
 		i18n.changeLanguage(newLocale)
-		router.push({ pathname, query }, asPath, { locale: newLocale })
+		router.replace({ pathname, query }, asPath, { locale: newLocale })
 	}
 
 	return (

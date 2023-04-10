@@ -13,26 +13,27 @@ export const crowdinApi =
 	})
 export const crowdinOta = new OtaClient(crowdinOpts.hash, {
 	enterpriseOrganizationDomain: 'inreach',
+	disableJsonDeepMerge: true,
 })
 
-export const crowdinProjId = 12 as const
-export const crowdinBranch = {
-	main: 30,
-	dev: 32,
-	database: 790,
-	'database-draft': 792,
+export const crowdinVars = {
+	projectId: 12,
+	branch: {
+		main: 30,
+		dev: 32,
+		database: 790,
+		'database-draft': 792,
+	},
 } as const
 
 export const fetchCrowdinFile = async (file: string, lang: string) => {
 	crowdinOta.setCurrentLocale(lang)
-	const data = await crowdinOta.getFileTranslations(file)
-	return data
+	return await crowdinOta.getFileTranslations(file)
 }
 
-export const fetchCrowdinDbKey = async (ns: string, file: string, lang: string) => {
-	const strings = await crowdinOta.getStringByKey(ns, lang)
-	return { [ns]: strings }
-}
+export const fetchCrowdinDbKey = async (ns: string, file: string, lang: string) => ({
+	[ns]: await crowdinOta.getStringByKey(ns, lang),
+})
 
 export const crowdinDistTimestamp = async () => await crowdinOta.getManifestTimestamp()
 

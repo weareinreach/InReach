@@ -1,7 +1,7 @@
 {
 	"additional": {
-		"at-capacity": "على السعة",
 		"CATEGORYNAME": "معلومات إضافية",
+		"at-capacity": "على السعة",
 		"geo-near-public-transit": "المواصلات العامة القريبة",
 		"geo-public-transit-description": "النقل العام / اتجاهات محددة",
 		"has-confidentiality-policy": "لديه سياسة سرية",
@@ -11,6 +11,7 @@
 		"wheelchair-accessible": "متيسر"
 	},
 	"community": {
+		"CATEGORYNAME": "المجتمع",
 		"adults": "يُعرَّف مصطلح \"البالغ\" بأنه 18 سنة أو أكثر",
 		"africa-immigrant": "الفرص التي تخدم البلدان الأفريقية",
 		"african-american": "الفرص التي تخدم مجتمع الأمريكيين من أصل أفريقي",
@@ -22,7 +23,6 @@
 		"bipoc": "الفرص التي تخدم السود والسكان الأصليين والألوان",
 		"bisexual": "الفرص التي تخدم مجتمع المثليين",
 		"black": "الفرص التي تخدم جماعة السود",
-		"CATEGORYNAME": "المجتمع",
 		"citizens": "مواطنو {{country}}",
 		"conversion-therapy-survivors": "الفرص التي تخدم الناجين من العلاج التحويلي",
 		"daca-recipient-seeker": "الفرص التي تخدم الأحلام (مستقبلو DACA)",
@@ -50,11 +50,11 @@
 		"seniors": "'كبار` يعرَّف بأنه 65 سنة أو أكثر",
 		"sex-workers": "الفرص التي تخدم المشتغلين بالجنس",
 		"teens": "\"المراهق\" يعرَّف بأنه يتراوح عمره بين 12 و18 سنة",
+		"trans-youth": "الفرص التي تخدم الشباب العابرين",
+		"trans-youth-caregivers": "الفرص التي تخدم مقدمي الرعاية للشباب العابرين",
 		"transfeminine": "الفرص التي تخدم مجتمع ترانسفينسين",
 		"transgender": "الفرص التي تخدم مجتمع المحولين جنسيا (للمجتمعات غير المطابقة أو غير الثنائية، وتستخدم الخصائص غير المطابقة للجنسين أو غير الثنائية)",
 		"transmasculine": "الفرص التي تخدم مجتمع الذكور",
-		"trans-youth": "الفرص التي تخدم الشباب العابرين",
-		"trans-youth-caregivers": "الفرص التي تخدم مقدمي الرعاية للشباب العابرين",
 		"unaccompanied-minors": "الفرص المتاحة لخدمة القصّر غير المصحوبين",
 		"undocumented": "الفرص المتاحة للمهاجرين الذين لا يحملون وثائق رسمية"
 	},
@@ -76,32 +76,32 @@
 		"time-appointment-required": "التعيين الزمني مطلوب"
 	},
 	"lang": {
+		"CATEGORYNAME": "اللغات",
 		"all-languages-by-interpreter": "جميع اللغات عن طريق المترجم الشفوي",
 		"american-sign-language": "لغة الإشارة الأمريكية",
-		"CATEGORYNAME": "اللغات",
 		"lang-offered": "اللغات المحددة المعروضة"
 	},
 	"orgleader": {
+		"CATEGORYNAME": "قيادة المنظمة",
 		"bipoc-led": "بيبوك تحت القيادة",
 		"black-led": "زجاج أسود",
-		"CATEGORYNAME": "قيادة المنظمة",
 		"immigrant-led": "المهاجر الذي يقوده",
 		"trans-led": "عبر الزعامة"
 	},
 	"serviceaccess": {
+		"CATEGORYNAME": "تعليمات الوصول إلى الخدمة",
 		"accessemail": "تعليمات الوصول - البريد الإلكتروني",
 		"accessfile": "تعليمات الوصول - ملف",
 		"accesslink": "تعليمات الوصول - رابط",
 		"accesslocation": "تعليمات الوصول - الموقع",
 		"accessphone": "تعليمات الوصول - الهاتف",
-		"accesstext": "تعليمات الوصول - النص",
-		"CATEGORYNAME": "تعليمات الوصول إلى الخدمة",
-		"accesspublictransit": "تعليمات الوصول - النقل العام"
+		"accesspublictransit": "تعليمات الوصول - النقل العام",
+		"accesstext": "تعليمات الوصول - النص"
 	},
 	"srvfocus": {
+		"CATEGORYNAME": "تركيز الخدمة",
 		"asylum-seekers": "ملتمسو اللجوء",
 		"bipoc-comm": "مجتمع BIPOC",
-		"CATEGORYNAME": "تركيز الخدمة",
 		"gender-nc": "عدم مطابقة نوع الجنس",
 		"hiv-comm": "مجتمع فيروس نقص المناعة البشرية",
 		"immigrant-comm": "جالية المهاجرين",
@@ -120,10 +120,10 @@
 	"userlawpractice": {
 		"CATEGORYNAME": "خيارات الممارسة القانونية",
 		"corp-law-firm": "مكتب محاماة الشركات",
+		"law-other": "أخرى (يرجى التحديد)",
 		"law-school-clinic": "عيادة طلاب كلية الحقوق",
 		"legal-nonprofit": "غير الربحية القانونية",
-		"other": "أخرى (يرجى التحديد)",
-		"law-other": "أخرى (يرجى التحديد)"
+		"other": "أخرى (يرجى التحديد)"
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "خيارات موفر الخدمة",

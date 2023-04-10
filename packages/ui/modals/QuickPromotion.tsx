@@ -65,7 +65,17 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 						<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
 					</Stack>
 				</Modal>
-				{!autoLaunch && <Box component='button' ref={ref} onClick={() => handler.open()} {...props} />}
+				{!autoLaunch && (
+					<Box
+						component='button'
+						ref={ref}
+						onClick={(e) => {
+							e.stopPropagation()
+							handler.open()
+						}}
+						{...props}
+					/>
+				)}
 			</>
 		)
 	}
