@@ -8,9 +8,11 @@ export const batchRunner: BatchRunner = async (batch, task) => {
 	let i = 1
 	let ttl = 0
 	const totalBatches = Math.ceil(batch.length / BATCH_SIZE)
+	task.output = `Batch runner: ${batch.length} total transactions will be split in to ${totalBatches} batches`
 
 	while (batch.length) {
 		const currentBatch = batch.splice(0, BATCH_SIZE)
+		task.output = `[${i}/${totalBatches}] Processing records ${ttl + 1} - ${ttl + currentBatch.length}`
 		const batchResult = await prisma.$transaction(currentBatch)
 		task.output = `[${i}/${totalBatches}] ${isSuccess(batchResult.length)} Records processed: ${
 			batchResult.length
