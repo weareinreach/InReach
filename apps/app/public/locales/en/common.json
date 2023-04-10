@@ -5,6 +5,9 @@
 	"account": "Account",
 	"add": "Add {{item}}",
 	"address": "Address",
+	"adjective": {
+		"organization": "{{adjective}} organization"
+	},
 	"agree-disclaimer": "By clicking \"{{action}}\" you agree to InReach's <link1>Privacy Policy</link1> and <link2>Terms of Use</link2>.",
 	"alert-message-1": "<strong>COVID-19 policy:</strong> With news and best practices for COVID-19 prevention changing rapidly each day, Whitman-Walker Health continues to update their services to reflect prevention recommendations. Please check their website for the most up-to-date information.",
 	"all-service-category": "All {{serviceCategory}}",

@@ -275,7 +275,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 			switch (props.variant) {
 				case 'leader': {
 					return {
-						label: t(`${props.tsKey}-org`, { ns: 'attribute' }),
+						label: t('adjective.organization', { ns: 'common', adjective: `$t(attribute:${props.tsKey})` }), //t(props.tsKey, { ns: 'attribute' }),
 						disabled: !props.minify,
 					}
 				}
