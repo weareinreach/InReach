@@ -100,6 +100,12 @@ export const attributes = {
 						},
 					},
 				},
+				_count: {
+					select: {
+						parents: true,
+						children: true,
+					},
+				},
 			},
 		},
 		supplement: {

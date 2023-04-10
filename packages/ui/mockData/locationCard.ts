@@ -65,6 +65,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -84,6 +88,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -103,6 +111,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -122,6 +134,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -153,6 +169,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -185,6 +205,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -264,6 +288,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -314,6 +342,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -364,6 +396,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -466,6 +502,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -485,6 +525,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -504,6 +548,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -539,6 +587,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -571,6 +623,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -606,6 +662,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -685,6 +745,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -735,6 +799,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -858,6 +926,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -877,6 +949,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -896,6 +972,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -915,6 +995,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -947,6 +1031,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -1038,6 +1126,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -1113,6 +1205,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -1132,6 +1228,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -1151,6 +1251,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -1186,6 +1290,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -1205,6 +1313,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [],
 					},
@@ -1224,6 +1336,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -1256,6 +1372,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -1291,6 +1411,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -1373,6 +1497,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -1424,6 +1552,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -1478,6 +1610,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -1529,6 +1665,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -1654,6 +1794,10 @@ export const locationMock = {
 									},
 								},
 							],
+							_count: {
+								parents: 0,
+								children: 0,
+							},
 						},
 						supplement: [
 							{
@@ -1722,6 +1866,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -1773,6 +1921,10 @@ export const locationMock = {
 											},
 										},
 									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
 								},
 								supplement: [
 									{
@@ -1817,6 +1969,7 @@ export const locationMock = {
 	],
 	serviceAreas: [],
 	socialMedia: [],
+	description: null,
 	name: 'Whitman-Walker 1525',
 	street1: '1525 14th St. NW ',
 	street2: '',
@@ -1826,5 +1979,4 @@ export const locationMock = {
 	longitude: -77.032,
 	latitude: 38.91,
 	id: 'oloc_01GVH3VEVBERFNA9PHHJYEBGA3',
-	description: null,
 } satisfies LocationCardProps['location']

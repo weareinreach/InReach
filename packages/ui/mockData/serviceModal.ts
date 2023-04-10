@@ -4,6 +4,9 @@ import { transformer, type SuperJSONResult } from '@weareinreach/api/lib/transfo
 const isSuperJSON = (data: unknown): data is SuperJSONResult =>
 	typeof data === 'object' && data !== null && Object.hasOwn(data, 'json')
 
+// http://localhost:3000/api/panel
+// service.byId: osvc_01GVH3VDMSN34BACQDMY6S5GPM
+
 export const mockServiceData = {
 	serviceName: {
 		key: 'larkin-street-youth-services.osvc_01GVH3VDMSN34BACQDMY6S5GPM.name',
@@ -129,6 +132,10 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [],
 		},
@@ -148,6 +155,10 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [],
 		},
@@ -167,6 +178,10 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [],
 		},
@@ -186,6 +201,10 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [
 				{
@@ -217,6 +236,10 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [
 				{
@@ -249,6 +272,10 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [
 				{
@@ -307,6 +334,10 @@ export const mockServiceData = {
 								},
 							},
 						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
 					},
 					supplement: [
 						{
@@ -358,6 +389,10 @@ export const mockServiceData = {
 								},
 							},
 						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
 					},
 					supplement: [
 						{

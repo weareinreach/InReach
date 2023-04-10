@@ -268,7 +268,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 					switch (namespace) {
 						/** Clients served */
 						case 'srvfocus': {
-							if (typeof icon === 'string') {
+							if (typeof icon === 'string' && attribute._count.parents === 0) {
 								subsections.clientsServed[namespace].push({ icon, tsKey, variant: 'community' })
 							}
 							break
@@ -306,8 +306,6 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 							break
 						}
-
-						// Ask Joe about the suplemement's data.json format for services with prices
 						case 'cost': {
 							if (!isValidIcon(icon)) break
 							const costDetails: CostDetails = { description: [] }
