@@ -60,7 +60,6 @@
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
 	"exclude": "Exclude",
-	"facebook": "Facebook",
 	"find-resources": "Find resources",
 	"find-x": "Find {{value}}",
 	"footer": {
@@ -86,13 +85,11 @@
 	"inreach-copyright": "InReach, Inc. {{year}} • All rights reserved • InReach ❤️ Open Source",
 	"inreach-logo": "InReach logo",
 	"inreach-org": "InReach.org",
-	"instagram": "Instagram",
 	"language": "Language",
 	"language_all-other": "All other languages",
 	"language_choose": "Please choose a language",
 	"language_common": "Common languages",
 	"link-copied": "Link copied to clipboard",
-	"linkedin": "LinkedIn",
 	"list": {
 		"added": "Resource saved to list: {{name}}",
 		"create-new": "Create new list",
@@ -232,7 +229,17 @@
 	"sign-up-select-law-practice": "Where do you practice law?",
 	"sign-up-select-service-provider": "Where do you work or volunteer?",
 	"sign-up-success": "You've signed up for an account!",
-	"social": "Social",
+	"social": {
+		"email": "Email",
+		"facebook": "Facebook",
+		"github": "GitHub",
+		"group-header": "Social",
+		"instagram": "Instagram",
+		"linkedin": "LinkedIn",
+		"tiktok": "TikTok",
+		"twitter": "Twitter",
+		"youtube": "YouTube"
+	},
 	"sort": {
 		"bipoc": "BIPOC community",
 		"by-lgbtq-focus": "Sort by LGBTQ+ community focus",
@@ -249,7 +256,6 @@
 	"suggest-a-resource": "Suggest a Resource",
 	"support": "Support",
 	"take-action": "Take Action",
-	"twitter": "Twitter",
 	"uncheck-all": "Uncheck all",
 	"unclaimed": "Unclaimed",
 	"user-avatar": "User avatar",
@@ -290,6 +296,5 @@
 		"share": "Share",
 		"support": "Support"
 	},
-	"your-comments": "Your Comments",
-	"youtube": "YouTube"
+	"your-comments": "Your Comments"
 }
