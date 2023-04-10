@@ -7,7 +7,7 @@ import { prisma, Prisma, generateId } from '~db/index'
 import { batchRunner } from '~db/prisma/batchRunner'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
 import { jobPreRunner, type JobDef } from '~db/prisma/jobPreRun'
-import { namespaces } from '~db/seed/data'
+import { namespaces } from '~db/seed/data/00-namespaces'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {
