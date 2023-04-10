@@ -1,4 +1,10 @@
-import { Listr, ListrTask as ListrTaskObj, ListrDefaultRenderer, ListrTaskWrapper } from 'listr2'
+import {
+	Listr,
+	ListrTask as ListrTaskObj,
+	ListrDefaultRenderer,
+	ListrTaskWrapper,
+	PRESET_TIMER,
+} from 'listr2'
 
 import {
 	job20220329,
@@ -38,19 +44,19 @@ const jobList = [
 const renderOptions = {
 	bottomBar: 10,
 	persistentOutput: true,
-	showTimer: true,
+	timer: PRESET_TIMER,
 } satisfies ListrJob['options']
 const injectOptions = (job: ListrJob): ListrJob => ({ ...job, options: renderOptions })
 const jobs = new Listr<Context>(
 	jobList.map((job) => injectOptions(job)),
 	{
 		rendererOptions: {
-			showTimer: true,
 			formatOutput: 'wrap',
+			timer: PRESET_TIMER,
+			suffixSkips: true,
 		},
-		nonTTYRendererOptions: {
-			useIcons: true,
-			showTimer: true,
+		fallbackRendererOptions: {
+			timer: PRESET_TIMER,
 		},
 
 		exitOnError: false,
