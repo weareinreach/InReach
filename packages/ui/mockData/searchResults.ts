@@ -314,3 +314,51 @@ export const searchResultsMock = {
 	},
 	resultCount: 72,
 } satisfies ApiOutput['organization']['searchDistance']
+
+export const searchResultLongTitle = {
+	id: 'orgn_01GVH3V43QAKQH440MP6TWWD0X',
+	name: 'The George Washington University Immigration Clinic With Some Extra Long Text To Test Wrapping',
+	slug: 'the-george-washington-university-immigration-clinic',
+	description: {
+		key: 'the-george-washington-university-immigration-clinic.description',
+		ns: 'org-data',
+		text: 'The George Washington University Immigration Clinic represents clients from around the world on immigration law matters, including removal proceedings and petitions for affirmative asylum. The clinic accepts removal cases scheduled in the Arlington Immigration Court and affirmative asylum cases, as well as deportation or removal proceedings involving cancellation of removal, temporary protected status, or criminal issues.',
+	},
+	serviceCategories: [
+		{ id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX', tsKey: 'legal.CATEGORYNAME', tsNs: 'services' },
+	],
+	orgLeader: [
+		{
+			tsKey: 'orgleader.bipoc-led',
+			icon: '🤎',
+			iconBg: '#F1DD7F',
+			id: '',
+			category: {
+				tag: 'organization-leadership',
+			},
+		},
+	],
+	orgFocus: [
+		{
+			tsKey: 'srvfocus.bipoc-comm',
+			icon: '️‍️‍✊🏿',
+			iconBg: null,
+			id: '',
+			category: {
+				tag: 'organization-focus',
+			},
+		},
+		{
+			tsKey: 'srvfocus.gender-nc',
+			icon: '🏳️‍⚧️',
+			iconBg: null,
+			id: '',
+			category: {
+				tag: 'organization-focus',
+			},
+		},
+	],
+	locations: ['Washington'],
+	distance: 8.52,
+	unit: 'mi',
+} satisfies ApiOutput['organization']['searchDistance']['orgs'][number]

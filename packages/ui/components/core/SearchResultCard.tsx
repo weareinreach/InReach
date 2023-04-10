@@ -1,4 +1,4 @@
-import { Box, Title, Text, Group, Stack, Divider, createStyles, Skeleton } from '@mantine/core'
+import { Box, Title, Text, Group, Stack, Divider, createStyles, Skeleton, Space } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
@@ -73,13 +73,12 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 				<Link href={{ pathname: '/org/[slug]', query: { slug } }} variant={variants.Link.card}>
 					<Stack spacing={16} ref={hoverRef}>
 						<Stack spacing={12}>
-							<Group position='apart' mb={-12}>
-								<Group>
-									<Title order={2} className={classes.hoverText} data-hovered={hovered ? hovered : undefined}>
-										{name}
-									</Title>
+							<Group maw='85%'>
+								<Title order={2} className={classes.hoverText} data-hovered={hovered ? hovered : undefined}>
+									{name}
+									<Space w={4} display='inline-block' />
 									<BadgeGroup badges={leaderBadges} />
-								</Group>
+								</Title>
 							</Group>
 							<Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text>
 							{description && <Text>{t(description.key, { ns: slug, defaultValue: description.text })}</Text>}
