@@ -12,6 +12,7 @@ import {
 	Group,
 } from '@mantine/core'
 import { trpcServerClient } from '@weareinreach/api/trpc'
+import { getServerSession } from '@weareinreach/auth'
 import { Link, UserReview } from '@weareinreach/ui/components/core'
 import { Hero, CallOut } from '@weareinreach/ui/components/sections'
 import { useCustomVariant } from '@weareinreach/ui/hooks'
@@ -251,13 +252,14 @@ const Home: NextPageWithoutGrid = () => {
 	)
 }
 
-export const getServerSideProps = async ({ locale }: GetServerSidePropsContext) => {
+export const getServerSideProps = async ({ locale, req, res }: GetServerSidePropsContext) => {
 	const ssg = await trpcServerClient()
-
+	const session = await getServerSession({ req, res })
 	await ssg.review.getByIds.prefetch(featuredReviews)
 
 	return {
 		props: {
+			session,
 			trpcState: ssg.dehydrate(),
 			...(await getServerSideTranslations(locale, ['common', 'landingPage'])),
 		},
