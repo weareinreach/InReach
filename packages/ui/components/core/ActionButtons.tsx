@@ -110,6 +110,7 @@ export const actionButtonIcons = {
  */
 const ListItem = ({ data, name, action }: ListMenuProps) => {
 	const { t } = useTranslation()
+	const utils = api.useContext()
 
 	const savedInList = useNewNotification({
 		icon: 'heartFilled',
@@ -129,11 +130,17 @@ const ListItem = ({ data, name, action }: ListMenuProps) => {
 	})
 
 	const saveItem = api.savedList.saveItem.useMutation({
-		onSuccess: savedInList,
+		onSuccess: (_, { organizationId, serviceId }) => {
+			savedInList()
+			utils.savedList.isSaved.invalidate(serviceId ?? organizationId)
+		},
 		onError: errorSaving,
 	})
 	const removeItem = api.savedList.deleteItem.useMutation({
-		onSuccess: deletedInList,
+		onSuccess: (_, { organizationId, serviceId }) => {
+			deletedInList()
+			utils.savedList.isSaved.invalidate(serviceId ?? organizationId)
+		},
 		onError: errorRemoving,
 	})
 	const clickHandler = () => {
@@ -164,6 +171,7 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 		const { status: sessionStatus } = useSession()
 		const { t } = useTranslation('common')
 		const theme = useMantineTheme()
+		const utils = api.useContext()
 		const buttonIcon = isSaved ? 'carbon:favorite-filled' : 'carbon:favorite'
 
 		api.savedList.isSaved.useQuery(serviceId ?? (organizationId as string), {
@@ -181,7 +189,9 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 					return
 				}
 				setMenuChildren(
-					data.map(({ id, name }) => <ListItem key={id} data={{ id, ...data }} action='delete' name={name} />)
+					data.map(({ id, name }) => (
+						<ListItem key={id} data={{ id, serviceId, organizationId }} action='delete' name={name} />
+					))
 				)
 			},
 		})
@@ -201,15 +211,22 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 				setMenuChildren(
 					data ? (
 						[
-							<CreateNewList key='newItem' component={Menu.Item}>
+							<CreateNewList
+								key='newItem'
+								component={Menu.Item}
+								organizationId={organizationId}
+								serviceId={serviceId}
+							>
 								{t('list.create-new')}
 							</CreateNewList>,
 							...data.map(({ id, name }) => (
-								<ListItem key={id} data={{ id, ...data }} action='save' name={name} />
+								<ListItem key={id} data={{ id, serviceId, organizationId }} action='save' name={name} />
 							)),
 						]
 					) : (
-						<CreateNewList component={Menu.Item}>{t('list.create-new')}</CreateNewList>
+						<CreateNewList component={Menu.Item} organizationId={organizationId} serviceId={serviceId}>
+							{t('list.create-new')}
+						</CreateNewList>
 					)
 				)
 			},
@@ -223,7 +240,12 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 			displayText: t('list.error-remove'),
 		})
 		const removeItem = api.savedList.deleteItem.useMutation({
-			onSuccess: deletedInList,
+			onSuccess: () => {
+				deletedInList()
+				utils.savedList.isSaved.invalidate(serviceId ?? organizationId)
+				setIsSaved(false)
+				utils.savedList.getAll.invalidate()
+			},
 			onError: errorRemoving,
 		})
 
@@ -278,14 +300,7 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 			)
 		}
 		return (
-			<Menu
-				position='bottom-start'
-				opened={opened}
-				onOpen={() => setOpened(true)}
-				onClose={() => setOpened(false)}
-				classNames={classes}
-				keepMounted
-			>
+			<Menu position='bottom-start' opened={opened} onChange={setOpened} classNames={classes} keepMounted>
 				<Menu.Target>
 					<Box ref={ref} component={Button} {...rest}>
 						{ButtonInner}
@@ -399,6 +414,7 @@ export const ActionButtons = ({
 	iconKey,
 	omitLabel = false,
 	serviceId,
+	organizationId,
 	outsideMoreMenu,
 	children,
 }: ActionButtonProps) => {
@@ -412,9 +428,14 @@ export const ActionButtons = ({
 	const { query: rawQuery } = useRouter()
 	const { slug } = rawQuery
 
-	const { data: orgQuery } = api.organization.getIdFromSlug.useQuery({ slug: slug as string })
+	const { data: orgQuery } = api.organization.getIdFromSlug.useQuery(
+		{ slug: slug as string },
+		{ enabled: typeof slug === 'string' }
+	)
 
-	const orgOrServiceId = { organizationId: orgQuery?.id ?? '', serviceId }
+	const orgId = orgQuery?.id || organizationId
+
+	const orgOrServiceId = { organizationId: orgId ?? '', serviceId }
 
 	let filteredOverflowItems = Object.entries(overFlowItems)
 
@@ -442,7 +463,7 @@ export const ActionButtons = ({
 	const buttonProps = {
 		className: opened ? classes.buttonPressed : classes.button,
 		radius: 'md',
-		...(menuThings.length ? {} : orgOrServiceId),
+		...orgOrServiceId,
 	}
 
 	/** The button component */
