@@ -5,6 +5,9 @@
 	"account": "Cuenta",
 	"add": "Añadir {{item}}",
 	"address": "Dirección",
+	"adjective": {
+		"organization": "{{adjective}} organización"
+	},
 	"agree-disclaimer": "Al hacer clic en \"{{action}}\" aceptas la <link1>Política de Privacidad</link1> y <link2>Términos de Uso</link2> de InReach.",
 	"alert-message-1": "<strong>Política COVID-19:</strong> Con noticias y buenas prácticas para la prevención COVID-19 cambiando rápidamente cada día Whitman-Walker Health continúa actualizando sus servicios para reflejar las recomendaciones de prevención. Consulte su página web para obtener la información más actualizada.",
 	"all-service-category": "Todos {{serviceCategory}}",
@@ -12,9 +15,10 @@
 		"body": "Al usar InReach, usted acepta que no usará esta información de recursos para agendas o comentarios nocivos, basados en el odio, homofóbicos, transfóbicos, xenofóbicos y/o racistas.",
 		"title": "Compromiso antiodio"
 	},
-	"back": "Atrás",
-	"back-to-dynamic": "Volver a <1>{{page}}</1>",
-	"back-to-search": "Volver a buscar",
+	"breadcrumb": {
+		"back-to-dynamic": "Volver a <u>{{page}}</u>",
+		"back-to-search": "Volver a buscar"
+	},
 	"cancel": "Cancelar",
 	"claimed": "Reclamado",
 	"clear": "Claro",
@@ -56,7 +60,6 @@
 		"try-again-text": "<Text>¡Algo salió mal! Por favor, inténtalo de nuevo.</Text>"
 	},
 	"exclude": "Excluir",
-	"facebook": "Facebook",
 	"find-resources": "Encontrar recursos",
 	"find-x": "Encuentra {{value}}",
 	"footer": {
@@ -82,13 +85,11 @@
 	"inreach-copyright": "InReach, Inc. {{year}} • Todos los derechos reservados • Alcance ❤️ Open Source",
 	"inreach-logo": "InReach logo",
 	"inreach-org": "InReach.org",
-	"instagram": "Instagrama",
 	"language": "Idioma",
 	"language_all-other": "Todos los demás idiomas",
 	"language_choose": "Por favor, elige un idioma",
 	"language_common": "Idiomas comunes",
 	"link-copied": "Enlace copiado al portapapeles",
-	"linkedin": "LinkedIn",
 	"list": {
 		"added": "Recurso guardado en la lista: {{name}}",
 		"create-new": "Crear nueva lista",
@@ -119,6 +120,7 @@
 	},
 	"no-reviews": "Aún no hay reseñas",
 	"none-apply": "Ninguno de estos se aplica a mí",
+	"org-image": "Foto de la organización",
 	"other-specify": "Other (specify)",
 	"password": "Contraseña",
 	"password-confirm": "Confirmar contraseña",
@@ -222,7 +224,17 @@
 	"sign-up-select-law-practice": "¿Dónde se practica la ley?",
 	"sign-up-select-service-provider": "¿Dónde trabajas o voluntario?",
 	"sign-up-success": "¡Te has registrado en una cuenta!",
-	"social": "Social",
+	"social": {
+		"email": "E-mail",
+		"facebook": "Facebook",
+		"github": "GitHub",
+		"group-header": "Social",
+		"instagram": "Instagrama",
+		"linkedin": "LinkedIn",
+		"tiktok": "TikTok",
+		"twitter": "Twitter",
+		"youtube": "YouTube"
+	},
 	"sort": {
 		"bipoc": "Comunidad BIPOC",
 		"by-lgbtq-focus": "Ordenar por enfoque comunitario LGBTQ+",
@@ -239,7 +251,6 @@
 	"suggest-a-resource": "Sugerir un Recurso",
 	"support": "Support",
 	"take-action": "Realizar acción",
-	"twitter": "Twitter",
 	"uncheck-all": "Desmarcar todo",
 	"unclaimed": "Sin reclamar",
 	"user-avatar": "Avatar de usuario",
@@ -257,6 +268,7 @@
 		"account": "Cuenta",
 		"and": "y",
 		"and-x-more": "y {{count}} más",
+		"back": "Atrás",
 		"coming-soon": "Próximamente",
 		"delete": "Eliminar",
 		"email": "E-mail",
@@ -276,7 +288,6 @@
 		"support": "Support"
 	},
 	"your-comments": "Tus comentarios",
-	"youtube": "YouTube",
 	"photo_one": "Foto",
 	"photo_other": "Fotos",
 	"review-count_one": "{{count}} reseña",
