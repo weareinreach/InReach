@@ -5,6 +5,9 @@
 	"account": "crwdns355898:0crwdne355898:0",
 	"add": "crwdns781758:0{{item}}crwdne781758:0",
 	"address": "crwdns781760:0crwdne781760:0",
+	"adjective": {
+		"organization": "crwdns1473237:0{{adjective}}crwdne1473237:0"
+	},
 	"agree-disclaimer": "crwdns781762:0{{action}}crwdne781762:0",
 	"alert-message-1": "crwdns355900:0crwdne355900:0",
 	"all-service-category": "crwdns355904:0{{serviceCategory}}crwdne355904:0",
@@ -12,9 +15,10 @@
 		"body": "crwdns781764:0crwdne781764:0",
 		"title": "crwdns781766:0crwdne781766:0"
 	},
-	"back": "crwdns355916:0crwdne355916:0",
-	"back-to-dynamic": "crwdns355920:0{{page}}crwdne355920:0",
-	"back-to-search": "crwdns355924:0crwdne355924:0",
+	"breadcrumb": {
+		"back-to-dynamic": "crwdns1473239:0{{page}}crwdne1473239:0",
+		"back-to-search": "crwdns1473241:0crwdne1473241:0"
+	},
 	"cancel": "crwdns781768:0crwdne781768:0",
 	"claimed": "crwdns355928:0crwdne355928:0",
 	"clear": "crwdns355930:0crwdne355930:0",
@@ -56,7 +60,6 @@
 		"try-again-text": "crwdns1031586:0crwdne1031586:0"
 	},
 	"exclude": "crwdns781796:0crwdne781796:0",
-	"facebook": "crwdns355960:0crwdne355960:0",
 	"find-resources": "crwdns781798:0crwdne781798:0",
 	"find-x": "crwdns781800:0{{value}}crwdne781800:0",
 	"footer": {
@@ -82,13 +85,11 @@
 	"inreach-copyright": "crwdns355996:0{{year}}crwdne355996:0",
 	"inreach-logo": "crwdns356000:0crwdne356000:0",
 	"inreach-org": "crwdns356004:0crwdne356004:0",
-	"instagram": "crwdns356012:0crwdne356012:0",
 	"language": "crwdns1399016:0crwdne1399016:0",
 	"language_all-other": "crwdns1399018:0crwdne1399018:0",
 	"language_choose": "crwdns1399020:0crwdne1399020:0",
 	"language_common": "crwdns1399022:0crwdne1399022:0",
 	"link-copied": "crwdns1399024:0crwdne1399024:0",
-	"linkedin": "crwdns356016:0crwdne356016:0",
 	"list": {
 		"added": "crwdns1399026:0{{name}}crwdne1399026:0",
 		"create-new": "crwdns1399028:0crwdne1399028:0",
@@ -119,6 +120,7 @@
 	},
 	"no-reviews": "crwdns356024:0crwdne356024:0",
 	"none-apply": "crwdns7574:0crwdne7574:0",
+	"org-image": "crwdns1473243:0crwdne1473243:0",
 	"other-specify": "crwdns7576:0crwdne7576:0",
 	"password": "crwdns781848:0crwdne781848:0",
 	"password-confirm": "crwdns1031588:0crwdne1031588:0",
@@ -222,7 +224,17 @@
 	"sign-up-select-law-practice": "crwdns781988:0crwdne781988:0",
 	"sign-up-select-service-provider": "crwdns781990:0crwdne781990:0",
 	"sign-up-success": "crwdns781992:0crwdne781992:0",
-	"social": "crwdns781994:0crwdne781994:0",
+	"social": {
+		"email": "crwdns1473245:0crwdne1473245:0",
+		"facebook": "crwdns1473247:0crwdne1473247:0",
+		"github": "crwdns1473249:0crwdne1473249:0",
+		"group-header": "crwdns1473251:0crwdne1473251:0",
+		"instagram": "crwdns1473253:0crwdne1473253:0",
+		"linkedin": "crwdns1473255:0crwdne1473255:0",
+		"tiktok": "crwdns1473257:0crwdne1473257:0",
+		"twitter": "crwdns1473259:0crwdne1473259:0",
+		"youtube": "crwdns1473261:0crwdne1473261:0"
+	},
 	"sort": {
 		"bipoc": "crwdns781996:0crwdne781996:0",
 		"by-lgbtq-focus": "crwdns781998:0crwdne781998:0",
@@ -239,7 +251,6 @@
 	"suggest-a-resource": "crwdns782014:0crwdne782014:0",
 	"support": "crwdns356124:0crwdne356124:0",
 	"take-action": "crwdns782016:0crwdne782016:0",
-	"twitter": "crwdns356128:0crwdne356128:0",
 	"uncheck-all": "crwdns356130:0crwdne356130:0",
 	"unclaimed": "crwdns356134:0crwdne356134:0",
 	"user-avatar": "crwdns7586:0crwdne7586:0",
@@ -257,6 +268,7 @@
 		"account": "crwdns838138:0crwdne838138:0",
 		"and": "crwdns782024:0crwdne782024:0",
 		"and-x-more": "crwdns782026:0{{count}}crwdne782026:0",
+		"back": "crwdns1473263:0crwdne1473263:0",
 		"coming-soon": "crwdns782028:0crwdne782028:0",
 		"delete": "crwdns1399062:0crwdne1399062:0",
 		"email": "crwdns1399064:0crwdne1399064:0",
@@ -276,7 +288,6 @@
 		"support": "crwdns838144:0crwdne838144:0"
 	},
 	"your-comments": "crwdns7588:0crwdne7588:0",
-	"youtube": "crwdns356158:0crwdne356158:0",
 	"photo_one": "crwdns781866:1crwdne781866:1",
 	"photo_other": "crwdns781866:5crwdne781866:5",
 	"review-count_one": "crwdns356062:1{{count}}crwdne356062:1",
