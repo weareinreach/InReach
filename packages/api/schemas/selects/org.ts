@@ -252,6 +252,7 @@ export const orgLocationInclude = (ctx: Context) =>
 			services: orgLocationServiceInclude(ctx),
 			serviceAreas: serviceAreaInclude,
 			socialMedia: orgSocialMediaInclude,
+			description: freeText,
 			name: true,
 			street1: true,
 			street2: true,

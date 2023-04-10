@@ -1,5 +1,9 @@
 import { type ServicesInfoCardProps } from '~ui/components/sections'
 
+// http://localhost:3000/api/panel
+// organization.getById: orgn_01GVH3V408N0YS7CDYAH3F2BMH
+// copy value from `services` key
+
 export const servicesMock = [
 	{
 		service: {
@@ -409,9 +413,13 @@ export const servicesMock = [
 							tsNs: 'country',
 						},
 						phoneLangs: [],
-						phoneType: {
-							tsKey: 'medical-care-appointments',
-							tsNs: 'phone-type',
+						phoneType: null,
+						description: {
+							key: 'whitman-walker-health.ophn_01GVH3VEVCFKT3NWQ79STYVDKR.description',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Medical Care/ Appointments',
+							},
 						},
 						number: '2027457000',
 						ext: null,
@@ -878,9 +886,13 @@ export const servicesMock = [
 							tsNs: 'country',
 						},
 						phoneLangs: [],
-						phoneType: {
-							tsKey: 'gender-affirming-services',
-							tsNs: 'phone-type',
+						phoneType: null,
+						description: {
+							key: 'whitman-walker-health.ophn_01GVH3VEVCQW5N7R8YEV06D3AZ.description',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Gender Affirming Services',
+							},
 						},
 						number: '2027974457',
 						ext: null,
@@ -1295,9 +1307,13 @@ export const servicesMock = [
 							tsNs: 'country',
 						},
 						phoneLangs: [],
-						phoneType: {
-							tsKey: 'medical-care-appointments',
-							tsNs: 'phone-type',
+						phoneType: null,
+						description: {
+							key: 'whitman-walker-health.ophn_01GVH3VEVCFKT3NWQ79STYVDKR.description',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Medical Care/ Appointments',
+							},
 						},
 						number: '2027457000',
 						ext: null,
@@ -1698,9 +1714,13 @@ export const servicesMock = [
 							tsNs: 'country',
 						},
 						phoneLangs: [],
-						phoneType: {
-							tsKey: 'max-robinson-center-hivsti-and-pregnancy-testing',
-							tsNs: 'phone-type',
+						phoneType: null,
+						description: {
+							key: 'whitman-walker-health.ophn_01GVH3VEVCDEFMAGG3SAJVWJFQ.description',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Max Robinson Center HIV/STI & Pregnancy Testing',
+							},
 						},
 						number: '2025439355',
 						ext: null,
@@ -2708,9 +2728,13 @@ export const servicesMock = [
 							tsNs: 'country',
 						},
 						phoneLangs: [],
-						phoneType: {
-							tsKey: 'legal-services-program',
-							tsNs: 'phone-type',
+						phoneType: null,
+						description: {
+							key: 'whitman-walker-health.ophn_01GVH3VEVCE8GNAJ7NJ9FYKME5.description',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Legal Services Program',
+							},
 						},
 						number: '2029397630',
 						ext: null,
@@ -3096,9 +3120,13 @@ export const servicesMock = [
 							tsNs: 'country',
 						},
 						phoneLangs: [],
-						phoneType: {
-							tsKey: 'medical-care-appointments',
-							tsNs: 'phone-type',
+						phoneType: null,
+						description: {
+							key: 'whitman-walker-health.ophn_01GVH3VEVCFKT3NWQ79STYVDKR.description',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Medical Care/ Appointments',
+							},
 						},
 						number: '2027457000',
 						ext: null,
@@ -3918,9 +3946,13 @@ export const servicesMock = [
 							tsNs: 'country',
 						},
 						phoneLangs: [],
-						phoneType: {
-							tsKey: 'legal-services-program',
-							tsNs: 'phone-type',
+						phoneType: null,
+						description: {
+							key: 'whitman-walker-health.ophn_01GVH3VEVCE8GNAJ7NJ9FYKME5.description',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Legal Services Program',
+							},
 						},
 						number: '2029397630',
 						ext: null,
@@ -4343,9 +4375,13 @@ export const servicesMock = [
 							tsNs: 'country',
 						},
 						phoneLangs: [],
-						phoneType: {
-							tsKey: 'covid-19-vaccine-appointments',
-							tsNs: 'phone-type',
+						phoneType: null,
+						description: {
+							key: 'whitman-walker-health.ophn_01GVH3VEVDSJTN1379Y17FNP28.description',
+							ns: 'org-data',
+							tsKey: {
+								text: 'COVID-19 Vaccine Appointments',
+							},
 						},
 						number: '2022072480',
 						ext: null,
@@ -4860,9 +4896,13 @@ export const servicesMock = [
 							tsNs: 'country',
 						},
 						phoneLangs: [],
-						phoneType: {
-							tsKey: 'gender-affirming-services',
-							tsNs: 'phone-type',
+						phoneType: null,
+						description: {
+							key: 'whitman-walker-health.ophn_01GVH3VEVCQW5N7R8YEV06D3AZ.description',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Gender Affirming Services',
+							},
 						},
 						number: '2027974457',
 						ext: null,

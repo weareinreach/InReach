@@ -142,6 +142,7 @@ export const phoneSelectPublic = {
 						tsNs: true,
 					},
 				},
+				description: freeText,
 				number: true,
 				ext: true,
 				primary: true,

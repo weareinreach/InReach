@@ -212,6 +212,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 											locationOnly: false,
 											ext: null,
 											phoneLangs: [],
+											description: null,
 										},
 									})
 									break

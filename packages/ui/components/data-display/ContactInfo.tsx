@@ -9,12 +9,13 @@ const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
 	const output: JSX.Element[] = []
 	const { t } = useTranslation(['common', 'phone-type'])
 	const variants = useCustomVariant()
+	const slug = useSlug()
 	let k = 0
 
 	if (!data.length) return null
 
 	for (const { phone } of data) {
-		const { country, ext, locationOnly: showLocationOnly, number, phoneType, primary } = phone
+		const { country, ext, locationOnly: showLocationOnly, number, phoneType, primary, description } = phone
 		const parsedPhone = parsePhoneNumber(number, country.cca2)
 		if (!parsedPhone) continue
 		if (ext) parsedPhone.setExt(ext)
@@ -35,7 +36,11 @@ const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
 			)
 		}
 		if (locationOnly && !showLocationOnly) continue
-		const desc = phoneType?.tsKey ? t(phoneType.tsKey, { ns: 'phone-type' }) : undefined
+		const desc = description
+			? t(description.key, { ns: slug, defaultValue: description.tsKey.text })
+			: phoneType?.tsKey
+			? t(phoneType.tsKey, { ns: 'phone-type' })
+			: undefined
 
 		const item = (
 			<Stack spacing={12} key={k}>

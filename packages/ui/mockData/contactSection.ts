@@ -36,6 +36,13 @@ export const contactMock = {
 					tsNs: 'country',
 				},
 				phoneType: null,
+				description: {
+					key: 'phone-desc-key',
+					ns: 'org-data',
+					tsKey: {
+						text: 'Phone description text',
+					},
+				},
 				phoneLangs: [],
 				number: '2025551234',
 				ext: null,
