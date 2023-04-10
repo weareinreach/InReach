@@ -5,6 +5,9 @@
 	"account": "حساب",
 	"add": "إضافة {{item}}",
 	"address": "العنوان",
+	"adjective": {
+		"organization": "{{adjective}} منظمة"
+	},
 	"agree-disclaimer": "بالضغط على \"{{action}}\" أنت توافق على <link1>سياسة الخصوصية لـ InReach</link1> و <link2>شروط الاستخدام</link2>.",
 	"alert-message-1": "<strong>سياسة COVID-19:</strong> مع الأخبار وأفضل الممارسات لمنع COVID-19 تتغير بسرعة كل يوم. وتواصل منظمة صحة ويتمان ووكر تحديث خدماتها لتعكس التوصيات المتعلقة بالوقاية. يرجى التحقق من موقعهم على الإنترنت للحصول على أحدث المعلومات.",
 	"all-service-category": "جميع {{serviceCategory}}",
@@ -12,9 +15,10 @@
 		"body": "باستخدام InReach، فإنك توافق على أنك لن تستخدم معلومات الموارد هذه لجداول أعمال أو تعليقات ضارة أو قائمة على الكراهية أو كراهية المثليين أو التغاضي عن الخوف أو كره الأجانب و/أو العنصرية.",
 		"title": "الالتزام بمقاومة الكراهية"
 	},
-	"back": "الرجوع",
-	"back-to-dynamic": "العودة إلى <1>{{page}}</1>",
-	"back-to-search": "العودة إلى البحث",
+	"breadcrumb": {
+		"back-to-dynamic": "العودة إلى <u>{{page}}</u>",
+		"back-to-search": "العودة إلى البحث"
+	},
 	"cancel": "إلغاء",
 	"claimed": "مطالب",
 	"clear": "مسح",
@@ -60,7 +64,6 @@
 		"try-again-text": "<Text>حدث خطأ ما! الرجاء المحاولة مرة أخرى</Text>"
 	},
 	"exclude": "استبعاد",
-	"facebook": "فيسبوك",
 	"find-resources": "البحث عن الموارد",
 	"find-x": "البحث عن {{value}}",
 	"footer": {
@@ -86,13 +89,11 @@
 	"inreach-copyright": "InReach, Inc. {{year}} • جميع الحقوق محفوظة • InReach ❤️ مفتوح المصدر",
 	"inreach-logo": "InReach logo",
 	"inreach-org": "InReach.org",
-	"instagram": "إنستجرام",
 	"language": "اللغة",
 	"language_all-other": "جميع اللغات الأخرى",
 	"language_choose": "الرجاء اختيار لغة",
 	"language_common": "اللغات المشتركة",
 	"link-copied": "تم نسخ الرابط إلى الحافظة",
-	"linkedin": "LinkedIn",
 	"list": {
 		"added": "تم حفظ المصدر في القائمة: {{name}}",
 		"create-new": "إنشاء قائمة جديدة",
@@ -123,6 +124,7 @@
 	},
 	"no-reviews": "لا توجد تعليقات بعد",
 	"none-apply": "لا ينطبق علي أي من هذه",
+	"org-image": "صورة المنظمة",
 	"other-specify": "أخرى (يرجى التحديد)",
 	"password": "كلمة المرور",
 	"password-confirm": "تأكيد كلمة المرور",
@@ -226,7 +228,17 @@
 	"sign-up-select-law-practice": "أين تمارس القانون؟",
 	"sign-up-select-service-provider": "أين تعمل أو تطوع؟",
 	"sign-up-success": "لقد قمت بالتسجيل للحصول على حساب!",
-	"social": "إجتماعي",
+	"social": {
+		"email": "البريد الإلكتروني",
+		"facebook": "فيسبوك",
+		"github": "GitHub",
+		"group-header": "إجتماعي",
+		"instagram": "إنستجرام",
+		"linkedin": "LinkedIn",
+		"tiktok": "TikTok",
+		"twitter": "تويتر",
+		"youtube": "يوتيوب"
+	},
 	"sort": {
 		"bipoc": "مجتمع BIPOC",
 		"by-lgbtq-focus": "الترتيب حسب التركيز المجتمعي LGBTQ+",
@@ -243,7 +255,6 @@
 	"suggest-a-resource": "اقتراح مورد",
 	"support": "Support",
 	"take-action": "اتخاذ إجراء",
-	"twitter": "تويتر",
 	"uncheck-all": "إلغاء تحديد الكل",
 	"unclaimed": "غير مطالب",
 	"user-avatar": "صورة المستخدم",
@@ -261,6 +272,7 @@
 		"account": "حساب",
 		"and": "و",
 		"and-x-more": "و {{count}} المزيد",
+		"back": "الرجوع",
 		"coming-soon": "قريباً",
 		"delete": "حذف",
 		"email": "البريد الإلكتروني",
@@ -280,7 +292,6 @@
 		"support": "Support"
 	},
 	"your-comments": "تعليقاتك",
-	"youtube": "يوتيوب",
 	"photo_zero": "الصور",
 	"photo_one": "صورة",
 	"photo_two": "الصور",
