@@ -154,6 +154,7 @@ export const SuggestOrg = () => {
 							</Link>
 						),
 					}}
+					shouldUnescape={true}
 				/>
 				<Space h={8} />
 				<Trans

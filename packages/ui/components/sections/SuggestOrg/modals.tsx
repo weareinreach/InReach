@@ -103,7 +103,6 @@ export const Communities = ({ disabled }: ModalProps) => {
 		const childIds = getChildIds(parentId)
 		if (selectedChildren(parentId, true)) {
 			//  all selected -> deselect all
-			console.log('toggle all')
 			form.setFieldValue(
 				'communityFocus',
 				selectedCurr.filter((id) => !childIds.includes(id))
