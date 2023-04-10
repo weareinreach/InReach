@@ -317,7 +317,7 @@ const selectAttrib = {
 			categories: {
 				some: {
 					category: {
-						OR: [{ tag: 'organization-leadership' }, { tag: 'organization-focus' }],
+						OR: [{ tag: 'organization-leadership' }, { tag: 'service-focus' }],
 					},
 				},
 			},
@@ -330,6 +330,7 @@ const selectAttrib = {
 				tsKey: true,
 				icon: true,
 				iconBg: true,
+				_count: { select: { parents: true } },
 				categories: {
 					where: { category: { active: true } },
 					select: { category: { select: { tag: true } } },
