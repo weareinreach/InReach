@@ -2,7 +2,13 @@
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
-import { Listr, ListrTask as ListrBaseTask, ListrDefaultRenderer, ListrTaskWrapper, Logger } from 'listr2'
+import {
+	Listr,
+	ListrTask as ListrBaseTask,
+	ListrDefaultRenderer,
+	ListrTaskWrapper,
+	PRESET_TIMER,
+} from 'listr2'
 
 import { migrateLog } from '~db/seed/logger'
 import { runMigrateOrgs } from '~db/seed/migrate-v1/org'
@@ -10,12 +16,10 @@ import { runMigrateOrgs } from '~db/seed/migrate-v1/org'
 import { runMigrateReviews } from '~db/seed/migrate-v1/reviews'
 import { migrateUsers } from '~db/seed/migrate-v1/users'
 
-const logger = new Logger({ useIcons: true })
-
 const taskOptions: Omit<ListrTaskDef, 'title' | 'task'> = {
 	options: {
 		bottomBar: 20,
-		showTimer: true,
+		timer: PRESET_TIMER,
 	},
 }
 async function run() {
@@ -48,7 +52,7 @@ async function run() {
 				formatOutput: 'wrap',
 				clearOutput: false,
 				showSubtasks: true,
-				showTimer: true,
+				timer: PRESET_TIMER,
 				showErrorMessage: true,
 				// collapse: false,
 			},
@@ -60,7 +64,6 @@ async function run() {
 	} catch (error) {
 		migrateLog.log('top level catch')
 		migrateLog.error(error)
-		logger.fail(JSON.stringify(error))
 		throw error
 	}
 }

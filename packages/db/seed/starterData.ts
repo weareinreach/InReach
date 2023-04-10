@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Listr, ListrRenderer, ListrTaskWrapper } from 'listr2'
+import { Listr, ListrRenderer, ListrTaskWrapper, PRESET_TIMER } from 'listr2'
 
 import {
 	seedAttributes,
@@ -118,8 +118,7 @@ const tasks = new Listr<Context>(
 	],
 	{
 		rendererOptions: {
-			collapse: false,
-			showTimer: true,
+			timer: PRESET_TIMER,
 		},
 	}
 )
