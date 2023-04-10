@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/require-await */
-import { Listr } from 'listr2'
+import { Listr, PRESET_TIMER } from 'listr2'
 
 import { interactiveRun, updateGeoTask } from './dbRunner'
 import { generateRecords, migrateOrgs } from './generator'
@@ -10,7 +10,7 @@ import { ListrTask, ListrTaskDef } from '~db/seed/migrate-v1'
 const taskOptions: Omit<ListrTaskDef, 'title' | 'task'> = {
 	options: {
 		bottomBar: 20,
-		showTimer: true,
+		timer: PRESET_TIMER,
 	},
 	// skip: true,
 }
