@@ -8,6 +8,7 @@ import {
 	job20230405,
 	job20230405b,
 	job20230406,
+	job20230410,
 } from './data-migrations'
 
 /**
@@ -15,7 +16,16 @@ import {
  *
  * Add new jobs to the end of this array.
  */
-const jobList = [job20220329, job20220330, job20220404, job20230404b, job20230405, job20230405b, job20230406]
+const jobList = [
+	job20220329,
+	job20220330,
+	job20220404,
+	job20230404b,
+	job20230405,
+	job20230405b,
+	job20230406,
+	job20230410,
+]
 
 /**
  * Job Runner

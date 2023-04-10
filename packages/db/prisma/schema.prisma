@@ -497,6 +497,9 @@ model OrgPhone {
   phoneType   PhoneType? @relation(fields: [phoneTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   phoneTypeId String?
 
+  description   FreeText? @relation(fields: [descriptionId], references: [id])
+  descriptionId String?   @unique
+
   associatedUsers UserToOrganization[]
 
   /// associated only with location and not overall organization (for large orgs w/ multiple locations)
@@ -711,6 +714,7 @@ model FreeText {
   AttributeSupplement AttributeSupplement?
   OrgEmail            OrgEmail?
   OrgServiceName      OrgService?          @relation("OrgServiceName")
+  OrgPhone            OrgPhone?
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
