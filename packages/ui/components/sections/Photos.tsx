@@ -127,7 +127,8 @@ export const PhotosSection = ({ photos }: PhotosSectionProps) => {
 						photosArray.length > 0 && open()
 					}}
 				>
-					{t('photo_interval', { count: photosArray.length, postProcess: 'interval' })}
+					{(photosArray.length === 0 || photosArray.length > mainImages) &&
+						t('photo_interval', { count: photosArray.length, postProcess: 'interval' })}
 				</Text>
 			</Stack>
 		</>

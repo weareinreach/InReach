@@ -138,7 +138,7 @@
 	"password-reset-success": "<Text>Please <LoginModal>login</LoginModal> using your new password.</Text>",
 	"password-saved": "Password saved!",
 	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
-	"photo_interval": "(0)[No photos yet];(3-inf)[See all {{count}} photos];",
+	"photo_interval": "(0)[No photos yet];(2-inf)[See all {{count}} photos];",
 	"photo_one": "Photo",
 	"photo_other": "Photos",
 	"powered-by-vercel": "Powered by Vercel",
