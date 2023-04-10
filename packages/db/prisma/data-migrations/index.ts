@@ -6,4 +6,6 @@ export * from './2023-04-04b'
 export * from './2023-04-05'
 export * from './2023-04-05b/index'
 export * from './2023-04-06/index'
+export * from './2023-04-10/index'
+export * from './2023-04-10b'
 // codegen:end

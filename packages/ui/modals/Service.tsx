@@ -121,9 +121,15 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 				{li ? (
 					<List>
 						{typeof li === 'string' ? (
-							<List.Item>{li}</List.Item>
+							<List.Item>
+								<Text>{li}</Text>
+							</List.Item>
 						) : (
-							li.map((item, i) => <List.Item key={i}>{item}</List.Item>)
+							li.map((item, i) => (
+								<List.Item key={i}>
+									<Text key={i}>{item}</Text>
+								</List.Item>
+							))
 						)}
 					</List>
 				) : (
@@ -166,7 +172,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 			const { publicTransit } = accessDetails.reduce((details, { attributes }) => {
 				attributes.forEach(({ supplement }) => {
-					supplement.forEach(({ data, text }) => {
+					supplement.forEach(({ data, text, id }) => {
 						const parsed = supplementSchema.accessInstructions.safeParse(data)
 						if (parsed.success) {
 							const { access_type, access_value } = parsed.data
@@ -174,7 +180,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 								case 'publicTransit': {
 									if (!text) break
 									const { key, options } = getFreeText(text)
-									details[access_type].push(<ModalText>{t(key, options)}</ModalText>)
+									details[access_type].push(<ModalText key={id}>{t(key, options)}</ModalText>)
 									break
 								}
 								case 'email': {
@@ -205,6 +211,8 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 											primary: false,
 											locationOnly: false,
 											ext: null,
+											phoneLangs: [],
+											description: null,
 										},
 									})
 									break
@@ -224,7 +232,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 							}
 
 							const accessKey = CONTACTS.find((category) => category === access_type)
-							if (accessKey) details[accessKey] ||= <Text>{access_value}</Text>
+							if (accessKey) details[accessKey] ||= <Text key={id}>{access_value}</Text>
 						}
 					})
 				})
@@ -248,7 +256,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 			const { eligibility, clientsServed, cost, lang, misc, miscWithIcons, atCapacity } = attributes.reduce(
 				(subsections, { attribute, supplement }) => {
-					const { tsKey, icon, tsNs } = attribute
+					const { tsKey, icon, tsNs, id } = attribute
 					/*
 					Since the tsKeys follow a sort of pattern with the namespace being the first part of the
 					string before the '.', would it be alright to check for the category that way?
@@ -260,8 +268,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 					switch (namespace) {
 						/** Clients served */
 						case 'srvfocus': {
-							console.log(attribute)
-							if (typeof icon === 'string') {
+							if (typeof icon === 'string' && attribute._count.parents === 0) {
 								subsections.clientsServed[namespace].push({ icon, tsKey, variant: 'community' })
 							}
 							break
@@ -271,13 +278,13 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 							const type = tsKey.split('.').pop() as string
 							switch (type) {
 								case 'elig-age': {
-									for (const { data } of supplement) {
+									for (const { data, id } of supplement) {
 										const parsed = supplementSchema.age.safeParse(data)
 										if (!parsed.success) continue
 										const { min, max } = parsed.data
 										const context = min && max ? 'range' : min ? 'min' : 'max'
 										subsections[namespace]['age'] = (
-											<ModalText key={min ?? max}>
+											<ModalText key={id}>
 												{t('service.elig-age', { ns: 'common', context, min, max })}
 											</ModalText>
 										)
@@ -285,11 +292,11 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 									break
 								}
 								case 'other-describe': {
-									for (const { text } of supplement) {
+									for (const { text, id } of supplement) {
 										if (!text) continue
 										const { key, options } = getFreeText(text)
 										subsections.clientsServed.targetPop.push(
-											<ModalText key={key}>{t(key, options)}</ModalText>
+											<ModalText key={id}>{t(key, options)}</ModalText>
 										)
 									}
 
@@ -299,16 +306,14 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 							break
 						}
-
-						// Ask Joe about the suplemement's data.json format for services with prices
 						case 'cost': {
 							if (!isValidIcon(icon)) break
 							const costDetails: CostDetails = { description: [] }
 
-							supplement.forEach(({ text, data }) => {
+							supplement.forEach(({ text, data, id }) => {
 								if (text) {
 									const { key, options } = getFreeText(text)
-									costDetails.description.push(<ModalText>{t(key, options)}</ModalText>)
+									costDetails.description.push(<ModalText key={id}>{t(key, options)}</ModalText>)
 								}
 								const parsed = supplementSchema.cost.safeParse(data)
 								if (parsed.success) {
@@ -322,10 +327,14 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 							const { price, description } = costDetails
 							const badgeProps = { icon, tsKey, tsNs, tProps: { price: price ?? undefined } }
-							subsections[namespace].push(<Badge variant='attribute' {...badgeProps} />)
+							subsections[namespace].push(<Badge key={id} variant='attribute' {...badgeProps} />)
 
 							if (description.length > 0)
-								subsections[namespace].push(<SubSection title='cost-details'>{description}</SubSection>)
+								subsections[namespace].push(
+									<SubSection key={id} title='cost-details'>
+										{description}
+									</SubSection>
+								)
 							break
 						}
 
@@ -365,13 +374,22 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 			const eligibilityItems: JSX.Element[] = []
 
-			if (eligibility.age) eligibilityItems.push(<SubSection title='ages'>{eligibility.age}</SubSection>)
+			if (eligibility.age)
+				eligibilityItems.push(
+					<SubSection key='ages' title='ages'>
+						{eligibility.age}
+					</SubSection>
+				)
 
 			if (eligibility.requirements.length > 0)
-				eligibilityItems.push(<SubSection title='requirements' li={eligibility.requirements} />)
+				eligibilityItems.push(<SubSection key='req' title='requirements' li={eligibility.requirements} />)
 
 			if (eligibility.freeText.length > 0)
-				eligibilityItems.push(<SubSection title='additional-info'>{eligibility.freeText}</SubSection>)
+				eligibilityItems.push(
+					<SubSection key='addtnl' title='additional-info'>
+						{eligibility.freeText}
+					</SubSection>
+				)
 
 			const languages = lang.length === 0 ? undefined : <SubSection title='languages' li={lang} />
 
@@ -379,12 +397,12 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 			if (miscWithIcons.length > 0)
 				extraInfo.push(
-					<SubSection>
+					<SubSection key='miscbadges'>
 						<BadgeGroup badges={miscWithIcons} withSeparator={false} />
 					</SubSection>
 				)
 
-			if (misc.length > 0) extraInfo.push(<SubSection title='additional-info' li={misc} />)
+			if (misc.length > 0) extraInfo.push(<SubSection key='misc' title='additional-info' li={misc} />)
 
 			return (
 				<>

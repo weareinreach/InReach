@@ -227,22 +227,31 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 			}
 		})()
 
+		let passedBadgeProps: BadgeProps = others
 		const children = (() => {
 			switch (props.variant) {
 				case 'leader': {
-					return props.minify ? null : <Text fw={500}>{t(props.tsKey, { ns: 'attribute' })}</Text>
+					const { tsKey, minify, hideBg: _, variant: _variant, ...rest } = props
+					passedBadgeProps = rest
+					return minify ? null : <Text fw={500}>{t(tsKey, { ns: 'attribute' })}</Text>
 				}
 				case 'verified': {
 					return <Text>{t('verified-information')}</Text>
 				}
 				case 'attribute': {
-					return <Text>{t(props.tsKey, { ns: props.tsNs, ...props.tProps })}</Text>
+					const { tsKey, tsNs, tProps, variant: _variant, ...rest } = props
+					passedBadgeProps = rest
+					return <Text>{t(tsKey, { ns: tsNs, ...tProps })}</Text>
 				}
 				case 'community': {
-					return t(props.tsKey, { ns: 'attribute', ...props.tProps })
+					const { tsKey, tProps, variant: _variant, ...rest } = props
+					passedBadgeProps = rest
+					return t(tsKey, { ns: 'attribute', ...tProps })
 				}
 				case 'service': {
-					return t(props.tsKey, { ns: 'services', ...props.tProps })
+					const { tsKey, tProps, variant: _variant, ...rest } = props
+					passedBadgeProps = rest
+					return t(tsKey, { ns: 'services', ...tProps })
 				}
 				case 'claimed': {
 					return <Text>{t('claimed')}</Text>
@@ -266,7 +275,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 			switch (props.variant) {
 				case 'leader': {
 					return {
-						label: t(`${props.tsKey}-org`, { ns: 'attribute' }),
+						label: t('adjective.organization', { ns: 'common', adjective: `$t(attribute:${props.tsKey})` }), //t(props.tsKey, { ns: 'attribute' }),
 						disabled: !props.minify,
 					}
 				}
@@ -307,7 +316,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				leftSection={leftSection}
 				w='fit-content'
 				{...styleDataProps}
-				{...others}
+				{...passedBadgeProps}
 			>
 				{children}
 			</MantineBadge>
@@ -335,7 +344,7 @@ export const BadgeGroup = ({ badges, withSeparator = false }: BadgeGroupProps) =
 			<Badge {...item} />
 		</List.Item>
 	))
-	// TODO: [IN-796] Update Group separator to use <Divider/>
+
 	return (
 		<List
 			variant={withSeparator ? variants.List.inlineBullet : variants.List.inline}
