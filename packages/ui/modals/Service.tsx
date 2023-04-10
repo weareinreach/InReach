@@ -267,7 +267,6 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 					switch (namespace) {
 						/** Clients served */
 						case 'srvfocus': {
-							console.log(attribute)
 							if (typeof icon === 'string') {
 								subsections.clientsServed[namespace].push({ icon, tsKey, variant: 'community' })
 							}
