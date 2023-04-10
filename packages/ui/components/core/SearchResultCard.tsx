@@ -1,4 +1,4 @@
-import { Title, Text, Group, Stack, Divider, createStyles, Skeleton } from '@mantine/core'
+import { Box, Title, Text, Group, Stack, Divider, createStyles, Skeleton, Space } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
@@ -69,25 +69,28 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 
 	return (
 		<>
-			<Link href={{ pathname: '/org/[slug]', query: { slug } }} variant={variants.Link.card}>
-				<Stack spacing={16} ref={hoverRef}>
-					<Stack spacing={12}>
-						<Group position='apart' mb={-12}>
-							<Group>
+			<Box style={{ position: 'relative' }}>
+				<Link href={{ pathname: '/org/[slug]', query: { slug } }} variant={variants.Link.card}>
+					<Stack spacing={16} ref={hoverRef}>
+						<Stack spacing={12}>
+							<Group maw='85%'>
 								<Title order={2} className={classes.hoverText} data-hovered={hovered ? hovered : undefined}>
 									{name}
+									<Space w={4} display='inline-block' />
+									<BadgeGroup badges={leaderBadges} />
 								</Title>
-								<BadgeGroup badges={leaderBadges} />
 							</Group>
-							<ActionButtons iconKey='save' />
-						</Group>
-						<Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text>
-						{description && <Text>{t(description.key, { ns: slug, defaultValue: description.text })}</Text>}
+							<Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text>
+							{description && <Text>{t(description.key, { ns: slug, defaultValue: description.text })}</Text>}
+						</Stack>
+						<BadgeGroup badges={focusBadges} />
+						<BadgeGroup badges={serviceTags} />
 					</Stack>
-					<BadgeGroup badges={focusBadges} />
-					<BadgeGroup badges={serviceTags} />
-				</Stack>
-			</Link>
+				</Link>
+				<Box style={{ position: 'absolute', top: 0, right: 0 }}>
+					<ActionButtons iconKey='save' organizationId={result.id} />
+				</Box>
+			</Box>
 			<Divider my={40} />
 		</>
 	)

@@ -23,19 +23,19 @@ type StoryDef = StoryObj<typeof SocialLink>
 type StoryGroupDef = StoryObj<typeof SocialLink.Group>
 
 export const Button = {
-	args: { icon: 'facebook', href: '#', title: 'icon' },
+	args: { icon: 'facebook', href: '#' },
 } satisfies StoryDef
 export const Group = {
 	args: {
 		links: [
-			{ icon: 'facebook', href: '#', title: 'icon' },
-			{ icon: 'github', href: '#', title: 'icon' },
-			{ icon: 'instagram', href: '#', title: 'icon' },
-			{ icon: 'linkedin', href: '#', title: 'icon' },
-			{ icon: 'tiktok', href: '#', title: 'icon' },
-			{ icon: 'twitter', href: '#', title: 'icon' },
-			{ icon: 'youtube', href: '#', title: 'icon' },
-			{ icon: 'mail', href: '#', title: 'icon' },
+			{ icon: 'facebook', href: '#' },
+			{ icon: 'github', href: '#' },
+			{ icon: 'instagram', href: '#' },
+			{ icon: 'linkedin', href: '#' },
+			{ icon: 'tiktok', href: '#' },
+			{ icon: 'twitter', href: '#' },
+			{ icon: 'youtube', href: '#' },
+			{ icon: 'email', href: '#' },
 		],
 		header: true,
 	},

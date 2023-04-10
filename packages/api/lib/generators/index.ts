@@ -1,5 +1,5 @@
 /* eslint-disable node/no-process-env */
-import { Listr, ListrRenderer, ListrTaskWrapper } from 'listr2'
+import { Listr, ListrRenderer, ListrTaskWrapper, PRESET_TIMER } from 'listr2'
 
 import { generateAttributeCategories } from './attributeCategory'
 import { generateAttributesByCategory } from './attributesByCategory'
@@ -11,7 +11,7 @@ import { generateUserTypes } from './userType'
 
 const renderOptions = {
 	bottomBar: 10,
-	showTimer: true,
+	timer: PRESET_TIMER,
 }
 
 const tasks = new Listr<Context>(
@@ -61,12 +61,11 @@ const tasks = new Listr<Context>(
 	],
 	{
 		exitOnError: false,
-		nonTTYRendererOptions: {
-			useIcons: true,
-			showTimer: true,
+		fallbackRendererOptions: {
+			timer: PRESET_TIMER,
 		},
 		rendererOptions: {
-			showTimer: true,
+			timer: PRESET_TIMER,
 			collapseErrors: false,
 			formatOutput: 'wrap',
 		},
