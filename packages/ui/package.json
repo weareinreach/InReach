@@ -37,7 +37,7 @@
 		"@emotion/react": "11.10.6",
 		"@emotion/server": "11.10.0",
 		"@faker-js/faker": "7.6.0",
-		"@geometricpanda/storybook-addon-badges": "1.1.1",
+		"@geometricpanda/storybook-addon-badges": "2.0.0",
 		"@iconify-json/carbon": "1.1.16",
 		"@iconify-json/ph": "1.1.5",
 		"@iconify-json/simple-icons": "1.1.49",
