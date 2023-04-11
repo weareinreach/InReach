@@ -1223,6 +1223,7 @@ model GovDist {
   geo     Unsupported("Geometry(GEOMETRY,4326)")?
   geoJSON Json? /// @zod.custom.use(Geometry)
   geoWKT  String?
+  active  Boolean?                                @default(true)
 
   country   Country @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   countryId String

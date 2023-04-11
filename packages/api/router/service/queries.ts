@@ -3,6 +3,7 @@ import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
 import { defineRouter, publicProcedure, handleError, protectedProcedure } from '~api/lib'
+import { serviceAreaSelect } from '~api/schemas/selects/location'
 import {
 	serviceById,
 	serviceByLocationId,
@@ -113,4 +114,17 @@ export const queries = defineRouter({
 				}
 			}
 		}),
+	getAllServiceAreas: publicProcedure.input(z.string().optional()).query(async ({ ctx, input }) => {
+		const data = await ctx.prisma.country.findMany({
+			where: {
+				cca2: input,
+				activeForOrgs: true,
+			},
+			select: serviceAreaSelect,
+			orderBy: {
+				cca2: 'asc',
+			},
+		})
+		return data
+	}),
 })
