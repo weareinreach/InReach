@@ -10,7 +10,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: github/privileged-requester@v1
+      - uses: github/privileged-requester@v1.0.0
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
           robotUserToken: ${{ secrets.GH_ACT_PAT }}
