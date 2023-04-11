@@ -582,6 +582,9 @@ importers:
       trpc-client-devtools-link:
         specifier: 0.2.1-next
         version: 0.2.1-next(@trpc/client@10.19.1)(@trpc/server@10.19.1)
+      trpc-panel:
+        specifier: 1.2.13
+        version: 1.2.13(patch_hash=hyw2gnr6vpn5i2rz6cl32gbsg4)(@trpc/server@10.19.1)(zod@3.21.4)
       tslog:
         specifier: 4.8.2
         version: 4.8.2

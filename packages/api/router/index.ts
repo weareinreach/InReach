@@ -2,6 +2,7 @@ import { defineRouter } from '~api/lib/trpc'
 
 import { attributeRouter } from './attribute'
 import { authRouter } from './auth'
+import { fieldOptRouter } from './fieldOpt'
 import { geoRouter } from './geo'
 import { locationRouter } from './location'
 import { orgRouter } from './organization'
@@ -14,6 +15,7 @@ import { userRouter } from './user'
 export const appRouter = defineRouter({
 	attribute: attributeRouter,
 	auth: authRouter,
+	fieldOpt: fieldOptRouter,
 	geo: geoRouter,
 	location: locationRouter,
 	organization: orgRouter,

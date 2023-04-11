@@ -8,7 +8,7 @@ import { type Meta, t } from '../initTRPC'
 export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 	try {
 		/** No permissions submitted, throw error */
-		if (typeof meta === 'undefined')
+		if (typeof meta?.hasPerm === 'undefined')
 			throw new TRPCError({
 				code: 'INTERNAL_SERVER_ERROR',
 				message: 'Invalid procedure configuration, missing permission requirements.',
