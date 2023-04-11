@@ -4,7 +4,6 @@ import { PrismaClient, Prisma } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 import { Logger } from 'tslog'
 
-import { generateId } from './lib/idGen'
 import { idMiddleware } from './lib/idMiddleware'
 import { superjsonMiddleware } from './lib/superjsonMiddleware'
 
@@ -61,4 +60,6 @@ export * from './zod_util'
 
 export { slug } from './lib/slugGen'
 export { createPoint } from './lib/createPoint'
-export { prisma, generateId }
+export { generateFreeText } from './lib/generateFreeText'
+export { generateId } from './lib/idGen'
+export { prisma }
