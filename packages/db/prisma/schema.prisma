@@ -2246,16 +2246,20 @@ view geometry_columns {
   @@ignore
 }
 
-view attributeandcategory {
-  attributeid  String @unique
-  attributetag String
-  categoryid   String
-  categorytag  String
-}
+view AttributesByCategory {
+  categoryId      String
+  categoryName    String
+  attributeId     String
+  attributeName   String
+  attributeKey    String
+  attributeNs     String
+  icon            String?
+  requireText     Boolean
+  requireLanguage Boolean
+  requireCountry  Boolean
+  requireBoolean  Boolean
+  requireData     Boolean
 
-view servicetagcategory {
-  tagid        String @unique
-  tagname      String
-  categoryid   String
-  categoryname String
+  @@unique([categoryId, attributeId])
+  @@map("attributes_by_category")
 }
