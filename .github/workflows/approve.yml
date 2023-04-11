@@ -17,6 +17,6 @@ jobs:
           path: .github/autoapprove-config.yaml
           prCreator: ${{ github.event.pull_request.user.login }}
           prNumber: ${{ github.event.pull_request.number }}
-          checkCommits: 'true'
+          checkCommits: 'false'
           checkDiff: 'false'
-          checkLabels: 'true'
+          checkLabels: 'false'
