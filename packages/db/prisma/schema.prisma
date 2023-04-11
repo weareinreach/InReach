@@ -1074,6 +1074,7 @@ model PhoneType {
   id             String     @id @default(cuid())
   type           String     @unique
   attachedPhones OrgPhone[]
+  active         Boolean    @default(true)
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String

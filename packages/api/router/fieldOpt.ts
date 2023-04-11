@@ -24,4 +24,16 @@ export const fieldOptRouter = defineRouter({
 			})
 			return data
 		}),
+	getPhoneTypes: publicProcedure.query(
+		async ({ ctx }) =>
+			await ctx.prisma.phoneType.findMany({
+				where: { active: true },
+				select: {
+					id: true,
+					tsKey: true,
+					tsNs: true,
+				},
+				orderBy: { type: 'asc' },
+			})
+	),
 })
