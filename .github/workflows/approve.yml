@@ -1,0 +1,22 @@
+name: 'PR Auto Approve'
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: github/privileged-requester
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+          robotUserToken: ${{ secrets.GH_ACT_PAT }}
+          path: .github/autoapprove-config.yaml
+          prCreator: ${{ github.event.pull_request.user.login }}
+          prNumber: ${{ github.event.pull_request.number }}
+          checkCommits: 'true'
+          checkDiff: 'false'
+          checkLabels: 'true'
