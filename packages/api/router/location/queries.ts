@@ -14,7 +14,7 @@ export const queries = defineRouter({
 					id: input.id,
 					...isPublic,
 				},
-				select: { ...orgLocationInclude(ctx).select, description: freeText },
+				select: orgLocationInclude(ctx).select,
 			})
 			return location
 		} catch (error) {
@@ -28,6 +28,7 @@ export const queries = defineRouter({
 					orgId: input.orgId,
 					...isPublic,
 				},
+				select: orgLocationInclude(ctx).select,
 			})
 			if (locations.length === 0) throw new TRPCError({ code: 'NOT_FOUND' })
 			return locations

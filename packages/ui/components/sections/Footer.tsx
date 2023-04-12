@@ -57,7 +57,7 @@ export const Footer = () => {
 	const variants = useCustomVariant()
 	const linkVar = { variant: variants.Link.inlineInvertedUtil1 }
 	const support = [
-		<Link key={0} href='/suggest' {...linkVar}>
+		<Link key={0} href='/suggest' target='_self' {...linkVar}>
 			{t('footer.suggest-org')}
 		</Link>,
 		<Link key={1} href='https://www.surveymonkey.com/r/96QD8ZQ' external {...linkVar}>
@@ -129,24 +129,16 @@ export const Footer = () => {
 						<Text fw={600}>{t('connect')}</Text>
 						{connect}
 						<Group noWrap className={classes.iconGroup}>
-							<SocialLink icon='facebook' href='https://www.facebook.com/weareinreach' title='Facebook' />
-							<SocialLink icon='twitter' href='https://twitter.com/weareinreach' title='Twitter' />
-							<SocialLink
-								icon='linkedin'
-								href='https://www.linkedin.com/company/weareinreach'
-								title='LinkedIn'
-							/>
-							<SocialLink icon='instagram' href='https://www.instagram.com/weareinreach' title='Instagram' />
+							<SocialLink icon='facebook' href='https://www.facebook.com/weareinreach' />
+							<SocialLink icon='twitter' href='https://twitter.com/weareinreach' />
+							<SocialLink icon='linkedin' href='https://www.linkedin.com/company/weareinreach' />
+							<SocialLink icon='instagram' href='https://www.instagram.com/weareinreach' />
 						</Group>
 						<Group noWrap className={classes.iconGroup} pb='24px'>
-							<SocialLink
-								icon='youtube'
-								href='https://www.youtube.com/channel/UCJsVS5-0ymo40mRjCe4BIHA'
-								title='YouTube'
-							/>
-							<SocialLink icon='tiktok' href='https://www.tiktok.com/@weareinreach' title='TikTok' />
-							<SocialLink icon='github' href='https://github.com/weareinreach' title='GitHub' />
-							<SocialLink icon='mail' href='https://inreach.org/contact/' title={t('email')} />
+							<SocialLink icon='youtube' href='https://www.youtube.com/channel/UCJsVS5-0ymo40mRjCe4BIHA' />
+							<SocialLink icon='tiktok' href='https://www.tiktok.com/@weareinreach' />
+							<SocialLink icon='github' href='https://github.com/weareinreach' />
+							<SocialLink icon='email' href='https://inreach.org/contact/' />
 						</Group>
 					</Stack>
 				</Grid.Col>

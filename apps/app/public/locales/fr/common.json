@@ -5,6 +5,9 @@
 	"account": "Compte client",
 	"add": "Ajouter {{item}}",
 	"address": "Adresses",
+	"adjective": {
+		"organization": "{{adjective}} organisation"
+	},
 	"agree-disclaimer": "En cliquant sur \"{{action}}\", vous acceptez la <link1>Politique de confidentialité d'InReach</link1> et les <link2>Conditions d'utilisation</link2>.",
 	"alert-message-1": "<strong>Politique COVID-19 :</strong> Avec des nouvelles et des meilleures pratiques pour la prévention COVID-19 changeant rapidement chaque jour, Santé Whitman-Walker continue de mettre à jour ses services afin de refléter les recommandations de prévention. Veuillez consulter leur site Web pour obtenir les informations les plus à jour.",
 	"all-service-category": "Tous les {{serviceCategory}}",
@@ -12,9 +15,10 @@
 		"body": "En utilisant InReach, vous convenez que vous n'utiliserez pas ces informations à des fins malveillantes, haineuses, homophobes, transphobiques, xénophobes et/ou racistes.",
 		"title": "Engagement anti-haine"
 	},
-	"back": "Précédent",
-	"back-to-dynamic": "Retour à <1>{{page}}</1>",
-	"back-to-search": "Retour à la recherche",
+	"breadcrumb": {
+		"back-to-dynamic": "Retour à <u>{{page}}</u>",
+		"back-to-search": "Retour à la recherche"
+	},
 	"cancel": "Abandonner",
 	"claimed": "Réclamé",
 	"clear": "Nettoyer",
@@ -56,7 +60,6 @@
 		"try-again-text": "<Text>Une erreur s'est produite ! Veuillez réessayer.</Text>"
 	},
 	"exclude": "Exclure",
-	"facebook": "Facebook",
 	"find-resources": "Trouver des ressources",
 	"find-x": "Trouver {{value}}",
 	"footer": {
@@ -82,13 +85,11 @@
 	"inreach-copyright": "InReach, Inc. {{year}} • Tous droits réservés • InReach ❤️ Open Source",
 	"inreach-logo": "InReach logo",
 	"inreach-org": "InReach.org",
-	"instagram": "Instagram",
 	"language": "Langue",
 	"language_all-other": "Toutes les autres langues",
 	"language_choose": "Veuillez choisir une langue",
 	"language_common": "Langues courantes",
 	"link-copied": "Lien copié dans le presse-papiers",
-	"linkedin": "LinkedIn",
 	"list": {
 		"added": "Ressource enregistrée dans la liste: {{name}}",
 		"create-new": "Créer une nouvelle liste",
@@ -119,6 +120,7 @@
 	},
 	"no-reviews": "Aucun commentaire pour le moment",
 	"none-apply": "Rien de tout cela ne s'applique à moi",
+	"org-image": "Photo de l'organisation",
 	"other-specify": "Autre (merci de préciser)",
 	"password": "Mot de passe",
 	"password-confirm": "Confirmer le mot de passe",
@@ -222,7 +224,17 @@
 	"sign-up-select-law-practice": "Où pratiquez vous le droit ?",
 	"sign-up-select-service-provider": "Où travaillez-vous ou donnez-vous du bénévolat?",
 	"sign-up-success": "Vous avez créé un compte !",
-	"social": "Réseaux sociaux",
+	"social": {
+		"email": "Courriel",
+		"facebook": "Facebook",
+		"github": "GitHub",
+		"group-header": "Réseaux sociaux",
+		"instagram": "Instagram",
+		"linkedin": "LinkedIn",
+		"tiktok": "TikTok",
+		"twitter": "Twitter",
+		"youtube": "YouTube"
+	},
 	"sort": {
 		"bipoc": "Communauté BIPOC",
 		"by-lgbtq-focus": "Trier par priorité communautaire LGBTQ+",
@@ -239,7 +251,6 @@
 	"suggest-a-resource": "Suggérer une ressource",
 	"support": "Support",
 	"take-action": "Prendre des mesures",
-	"twitter": "Twitter",
 	"uncheck-all": "Décocher tout",
 	"unclaimed": "Non réclamé",
 	"user-avatar": "Avatar de l'utilisateur",
@@ -257,6 +268,7 @@
 		"account": "Compte client",
 		"and": "et",
 		"and-x-more": "et {{count}} de plus",
+		"back": "Précédent",
 		"coming-soon": "Bientôt disponible",
 		"delete": "Supprimez",
 		"email": "Courriel",
@@ -276,7 +288,6 @@
 		"support": "Support"
 	},
 	"your-comments": "Vos commentaires",
-	"youtube": "YouTube",
 	"photo_one": "Photo",
 	"photo_other": "Photos",
 	"review-count_one": "{{count}} avis",

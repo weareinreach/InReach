@@ -49,10 +49,10 @@ const config: StorybookConfig = {
 	framework: {
 		name: '@storybook/nextjs',
 		options: {
-			builder: {
-				// lazyCompilation: true,
-				// fsCache: true,
-			},
+			// builder: {
+			// 	// lazyCompilation: true,
+			// 	// fsCache: true,
+			// },
 			nextConfigPath: path.resolve(__dirname, '../../../apps/app/next.config.mjs'),
 			fastRefresh: true,
 		},

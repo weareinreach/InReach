@@ -27,8 +27,6 @@ export const countryWithoutGeo = {
 		flag: true,
 		tsKey: true,
 		tsNs: true,
-		demonymKey: true,
-		demonymNs: true,
 	},
 }
 export const govDistWithoutGeo = {
@@ -86,6 +84,7 @@ export const attributes = {
 	select: {
 		attribute: {
 			select: {
+				id: true,
 				tsKey: true,
 				tsNs: true,
 				icon: true,
@@ -101,10 +100,17 @@ export const attributes = {
 						},
 					},
 				},
+				_count: {
+					select: {
+						parents: true,
+						children: true,
+					},
+				},
 			},
 		},
 		supplement: {
 			select: {
+				id: true,
 				country: countryWithoutGeo,
 				language: {
 					select: {
@@ -142,9 +148,12 @@ export const phoneSelectPublic = {
 						tsNs: true,
 					},
 				},
+				description: freeText,
 				number: true,
 				ext: true,
+				primary: true,
+				locationOnly: true,
 			},
 		},
 	},
-}
+} satisfies Prisma.OrgService$phonesArgs

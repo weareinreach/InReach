@@ -110,6 +110,7 @@ export const actionButtonIcons = {
  */
 const ListItem = ({ data, name, action }: ListMenuProps) => {
 	const { t } = useTranslation()
+	const utils = api.useContext()
 
 	const savedInList = useNewNotification({
 		icon: 'heartFilled',
@@ -129,11 +130,17 @@ const ListItem = ({ data, name, action }: ListMenuProps) => {
 	})
 
 	const saveItem = api.savedList.saveItem.useMutation({
-		onSuccess: savedInList,
+		onSuccess: (_, { organizationId, serviceId }) => {
+			savedInList()
+			utils.savedList.isSaved.invalidate(serviceId ?? organizationId)
+		},
 		onError: errorSaving,
 	})
 	const removeItem = api.savedList.deleteItem.useMutation({
-		onSuccess: deletedInList,
+		onSuccess: (_, { organizationId, serviceId }) => {
+			deletedInList()
+			utils.savedList.isSaved.invalidate(serviceId ?? organizationId)
+		},
 		onError: errorRemoving,
 	})
 	const clickHandler = () => {
@@ -164,10 +171,11 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 		const { status: sessionStatus } = useSession()
 		const { t } = useTranslation('common')
 		const theme = useMantineTheme()
+		const utils = api.useContext()
 		const buttonIcon = isSaved ? 'carbon:favorite-filled' : 'carbon:favorite'
 
 		api.savedList.isSaved.useQuery(serviceId ?? (organizationId as string), {
-			enabled: sessionStatus === 'authenticated' && Boolean(organizationId),
+			enabled: sessionStatus === 'authenticated' && Boolean(organizationId || serviceId),
 			refetchOnWindowFocus: false,
 			onSuccess: (data) => {
 				setIsSaved(Boolean(data))
@@ -181,12 +189,15 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 					return
 				}
 				setMenuChildren(
-					data.map(({ id, name }) => <ListItem key={id} data={{ id, ...data }} action='delete' name={name} />)
+					data.map(({ id, name }) => (
+						<ListItem key={id} data={{ id, serviceId, organizationId }} action='delete' name={name} />
+					))
 				)
 			},
 		})
 		const savedLists = api.savedList.getAll.useQuery(undefined, {
 			refetchOnWindowFocus: false,
+			enabled: sessionStatus === 'authenticated',
 			onError: () => {
 				if (isSaved) return
 				setMenuChildren(
@@ -200,15 +211,22 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 				setMenuChildren(
 					data ? (
 						[
-							<CreateNewList key='newItem' component={Menu.Item}>
+							<CreateNewList
+								key='newItem'
+								component={Menu.Item}
+								organizationId={organizationId}
+								serviceId={serviceId}
+							>
 								{t('list.create-new')}
 							</CreateNewList>,
 							...data.map(({ id, name }) => (
-								<ListItem key={id} data={{ id, ...data }} action='save' name={name} />
+								<ListItem key={id} data={{ id, serviceId, organizationId }} action='save' name={name} />
 							)),
 						]
 					) : (
-						<CreateNewList component={Menu.Item}>{t('list.create-new')}</CreateNewList>
+						<CreateNewList component={Menu.Item} organizationId={organizationId} serviceId={serviceId}>
+							{t('list.create-new')}
+						</CreateNewList>
 					)
 				)
 			},
@@ -222,7 +240,12 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 			displayText: t('list.error-remove'),
 		})
 		const removeItem = api.savedList.deleteItem.useMutation({
-			onSuccess: deletedInList,
+			onSuccess: () => {
+				deletedInList()
+				utils.savedList.isSaved.invalidate(serviceId ?? organizationId)
+				setIsSaved(false)
+				utils.savedList.getAll.invalidate()
+			},
 			onError: errorRemoving,
 		})
 
@@ -277,14 +300,7 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 			)
 		}
 		return (
-			<Menu
-				position='bottom-start'
-				opened={opened}
-				onOpen={() => setOpened(true)}
-				onClose={() => setOpened(false)}
-				classNames={classes}
-				keepMounted
-			>
+			<Menu position='bottom-start' opened={opened} onChange={setOpened} classNames={classes} keepMounted>
 				<Menu.Target>
 					<Box ref={ref} component={Button} {...rest}>
 						{ButtonInner}
@@ -304,11 +320,13 @@ const SaveButton = createPolymorphicComponent<'button', SaveToggleButtonProps>(S
  *
  * @returns Polymorphic button component
  */
-const CopyToClipBoard = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+const CopyToClipBoard = forwardRef<HTMLButtonElement, PolyButtonProps>((props, ref) => {
 	const { t } = useTranslation()
 	const { asPath } = useRouter()
 	const clipboard = useClipboard({ timeout: 500 })
 	const copiedToClipboard = useNewNotification({ icon: 'info', displayText: t('link-copied') })
+	/** Strip out unused props to prevent react errors */
+	const { organizationId: _org, serviceId: _serv, isMenu: _isMenu, ...restProps } = props
 
 	const handleCopy = () => {
 		const href = `${window.location.origin}${asPath}`
@@ -316,25 +334,27 @@ const CopyToClipBoard = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) 
 		copiedToClipboard()
 	}
 
-	return <Box component='button' ref={ref} onClick={handleCopy} {...props} />
+	return <Box component='button' ref={ref} onClick={handleCopy} {...restProps} />
 })
 
 CopyToClipBoard.displayName = 'CopyToClipboard'
 
-const ShareLink = createPolymorphicComponent<'button', ButtonProps>(CopyToClipBoard)
+const ShareLink = createPolymorphicComponent<'button', PolyButtonProps>(CopyToClipBoard)
 
 /**
  * Polymorphic element, returns a button. When clicked takes a screenshot of the current client view
  *
  * @returns Polymorphic button component
  */
-const PrintBody = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
-	<Box component='button' ref={ref} onClick={() => window.print()} {...props} />
-))
+const PrintBody = forwardRef<HTMLButtonElement, PolyButtonProps>((props, ref) => {
+	/** Strip out unused props to prevent react errors */
+	const { organizationId: _org, serviceId: _serv, isMenu: _isMenu, ...restProps } = props
+	return <Box component='button' ref={ref} onClick={() => window.print()} {...restProps} />
+})
 
 PrintBody.displayName = 'Print'
 
-const PrintButton = createPolymorphicComponent<'button', ButtonProps>(PrintBody)
+const PrintButton = createPolymorphicComponent<'button', PolyButtonProps>(PrintBody)
 
 // TODO: [IN-786] Associate ActionButton click actions
 
@@ -374,7 +394,7 @@ const useActions = () => {
 	return {
 		// TODO: assign behaviour to delete button
 		delete: generic(QuickPromotionModal),
-		more: generic(createPolymorphicComponent<'button', ButtonProps>(Button)),
+		more: generic(createPolymorphicComponent<'button', PolyButtonProps>(Button)),
 		print: generic(PrintButton),
 		review: generic(ReviewModal),
 		save: generic(SaveToggleButton),
@@ -394,6 +414,7 @@ export const ActionButtons = ({
 	iconKey,
 	omitLabel = false,
 	serviceId,
+	organizationId,
 	outsideMoreMenu,
 	children,
 }: ActionButtonProps) => {
@@ -407,9 +428,14 @@ export const ActionButtons = ({
 	const { query: rawQuery } = useRouter()
 	const { slug } = rawQuery
 
-	const { data: orgQuery } = api.organization.getIdFromSlug.useQuery({ slug: slug as string })
+	const { data: orgQuery } = api.organization.getIdFromSlug.useQuery(
+		{ slug: slug as string },
+		{ enabled: typeof slug === 'string' }
+	)
 
-	const orgOrServiceId = { organizationId: orgQuery?.id ?? '', serviceId }
+	const orgId = orgQuery?.id || organizationId
+
+	const orgOrServiceId = { organizationId: orgId ?? '', serviceId }
 
 	let filteredOverflowItems = Object.entries(overFlowItems)
 
@@ -425,7 +451,11 @@ export const ActionButtons = ({
 			</Group>
 		)
 
-		return actions[key as keyof typeof actionButtonIcons]({ isMenu: true, children, ...orgOrServiceId })
+		return actions[key as keyof typeof actionButtonIcons]({
+			isMenu: true,
+			children,
+			props: { ...orgOrServiceId, key },
+		})
 	})
 
 	const menuThings = overflowMenuItems
@@ -488,6 +518,7 @@ interface ActionButtonProps {
 	children?: string | DefaultTFuncReturn
 	/** Information for save button */
 	serviceId?: string
+	organizationId?: string
 }
 
 type UserListMutation = {
@@ -497,12 +528,15 @@ type UserListMutation = {
 
 type Polymorphic = typeof QuickPromotionModal | typeof ReviewModal | typeof SaveButton
 
-type PolymorphicProps = ButtonProps & { serviceId?: string; organizationId: string }
+type PropAdditions = { serviceId?: string; organizationId: string; key?: string; isMenu?: boolean }
+
+type PolymorphicProps = ButtonProps & PropAdditions
+type PolyButtonProps = ButtonProps & Partial<PropAdditions>
 
 type Generic = {
 	children?: JSX.Element
 	isMenu?: boolean
-	props?: ButtonProps | PolymorphicProps
+	props?: PolyButtonProps | PolymorphicProps
 }
 
 export interface SaveToggleButtonProps extends Omit<ActionButtonProps, 'children' | 'iconKey'> {
