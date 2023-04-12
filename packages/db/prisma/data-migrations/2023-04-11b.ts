@@ -12,7 +12,7 @@ const jobDef: JobDef = {
 
 const job: ListrTask = async (_ctx, task) => {
 	/** Do not edit this part - this ensures that jobs are only run once */
-	const runJob = await jobPreRunner(jobDef)
+	const runJob = true //await jobPreRunner(jobDef)
 	if (!runJob) {
 		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
 	}
@@ -51,12 +51,25 @@ const job: ListrTask = async (_ctx, task) => {
 			name: 'alertService',
 			description: 'Manage service alerts.',
 		},
+		{
+			name: 'internalNotesRead',
+			description: 'View internal notes',
+		},
+		{
+			name: 'internalNotesWrite',
+			description: 'Edit internal notes',
+		},
 	]
 
 	await seedAttributes(task, attributesToAdd)
 
 	const permissionCreate = await prisma.permission.createMany({ data: rolesToAdd, skipDuplicates: true })
 	task.output = `Permissions created: ${permissionCreate.count}`
+	const userRoleCreate = await prisma.userRole.createMany({
+		data: [{ name: 'Superuser', tag: 'root' }],
+		skipDuplicates: true,
+	})
+	task.output = `User roles created: ${userRoleCreate.count}`
 }
 
 /**

@@ -38,6 +38,8 @@ export const permissions = [
 	'alertOrg',
 	'alertLoc',
 	'alertService',
+	'internalNotesRead',
+	'internalNotesWrite',
 ] as const
 
 export type Permission = (typeof permissions)[number]
