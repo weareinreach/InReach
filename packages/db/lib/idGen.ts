@@ -119,4 +119,5 @@ const excludedTables = [
 	'AttributeNesting',
 	'ServiceTagNesting',
 	'ServiceTagCountry',
+	'AttributesByCategory',
 ] as const // satisfies Prisma.ModelName[]
