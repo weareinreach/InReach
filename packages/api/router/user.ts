@@ -1,4 +1,12 @@
-import { createCognitoUser, forgotPassword, confirmAccount, resetPassword } from '@weareinreach/auth'
+import { TRPCError } from '@trpc/server'
+import {
+	createCognitoUser,
+	forgotPassword,
+	confirmAccount,
+	resetPassword,
+	userLogin,
+	deleteAccount,
+} from '@weareinreach/auth'
 import { z } from 'zod'
 
 import { handleError, decodeUrl } from '~api/lib'
@@ -141,5 +149,22 @@ export const userRouter = defineRouter({
 		const { code, password, email } = input
 		const response = await resetPassword({ code, email, password })
 		return response
+	}),
+	deleteAccount: protectedProcedure.input(z.string()).mutation(async ({ input, ctx }) => {
+		const { email } = ctx.session.user
+		const cognitoSession = await userLogin(email, input)
+		if (cognitoSession.success) {
+			const successful = await ctx.prisma.$transaction(async (tx) => {
+				await tx.user.update({
+					where: { email },
+					data: { active: false },
+				})
+
+				await deleteAccount(email)
+				return true
+			})
+			if (successful) return true
+		}
+		throw new TRPCError({ code: 'UNAUTHORIZED', message: 'incorrect credentials' })
 	}),
 })
