@@ -168,6 +168,27 @@ importers:
       '@next/bundle-analyzer':
         specifier: 13.3.0
         version: 13.3.0
+      '@opentelemetry/exporter-trace-otlp-http':
+        specifier: 0.37.0
+        version: 0.37.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/instrumentation':
+        specifier: 0.37.0
+        version: 0.37.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/resources':
+        specifier: 1.11.0
+        version: 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/sdk-trace-base':
+        specifier: 1.11.0
+        version: 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/sdk-trace-node':
+        specifier: 1.11.0
+        version: 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/semantic-conventions':
+        specifier: 1.11.0
+        version: 1.11.0
+      '@prisma/instrumentation':
+        specifier: 4.12.0
+        version: 4.12.0
       '@tanstack/react-query':
         specifier: 4.29.1
         version: 4.29.1(react-dom@18.2.0)(react@18.2.0)
@@ -254,7 +275,7 @@ importers:
         version: 3.3.0
       next:
         specifier: 13.3.0
-        version: 13.3.0(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
+        version: 13.3.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 4.22.0
         version: 4.22.0(next@13.3.0)(react-dom@18.2.0)(react@18.2.0)
@@ -435,7 +456,7 @@ importers:
         version: 22.4.14
       next:
         specifier: 13.3.0
-        version: 13.3.0(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
+        version: 13.3.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -572,7 +593,7 @@ importers:
         version: 6.2.0
       next:
         specifier: 13.3.0
-        version: 13.3.0(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
+        version: 13.3.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       prettier:
         specifier: 2.8.7
         version: 2.8.7
@@ -636,7 +657,7 @@ importers:
         version: 8.38.0
       next:
         specifier: 13.3.0
-        version: 13.3.0(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
+        version: 13.3.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 4.22.0
         version: 4.22.0(next@13.3.0)(react-dom@18.2.0)(react@18.2.0)
@@ -818,9 +839,30 @@ importers:
 
   packages/db:
     dependencies:
+      '@opentelemetry/exporter-trace-otlp-http':
+        specifier: 0.37.0
+        version: 0.37.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/instrumentation':
+        specifier: 0.37.0
+        version: 0.37.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/resources':
+        specifier: 1.11.0
+        version: 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/sdk-trace-base':
+        specifier: 1.11.0
+        version: 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/sdk-trace-node':
+        specifier: 1.11.0
+        version: 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/semantic-conventions':
+        specifier: 1.11.0
+        version: 1.11.0
       '@prisma/client':
         specifier: 4.12.0
         version: 4.12.0(prisma@4.12.0)
+      '@prisma/instrumentation':
+        specifier: 4.12.0
+        version: 4.12.0
       superjson:
         specifier: 1.12.2
         version: 1.12.2
@@ -1101,7 +1143,7 @@ importers:
         version: 7.6.0
       '@geometricpanda/storybook-addon-badges':
         specifier: 2.0.0
-        version: 2.0.0(@storybook/blocks@7.0.3)(@storybook/manager-api@7.0.3)(@storybook/preview-api@7.0.3)(@storybook/theming@7.0.3)(@storybook/types@7.0.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 2.0.0(@storybook/blocks@7.0.3)(@storybook/components@7.0.4)(@storybook/core-events@7.0.4)(@storybook/manager-api@7.0.3)(@storybook/preview-api@7.0.3)(@storybook/theming@7.0.3)(@storybook/types@7.0.3)(react-dom@18.2.0)(react@18.2.0)
       '@iconify-json/carbon':
         specifier: 1.1.16
         version: 1.1.16
@@ -1183,6 +1225,12 @@ importers:
       '@storybook/addon-viewport':
         specifier: 7.0.3
         version: 7.0.3(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/components':
+        specifier: 7.0.4
+        version: 7.0.4(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/core-events':
+        specifier: 7.0.4
+        version: 7.0.4
       '@storybook/jest':
         specifier: 0.1.0
         version: 0.1.0
@@ -1284,7 +1332,7 @@ importers:
         version: 6.17.3
       css-chaos-addon:
         specifier: 0.0.5
-        version: 0.0.5(@storybook/addons@6.5.16)(@storybook/api@6.5.16)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 0.0.5(@storybook/addons@6.5.16)(@storybook/api@6.5.16)(@storybook/components@7.0.4)(@storybook/core-events@7.0.4)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0)
       css-loader:
         specifier: 6.7.3
         version: 6.7.3(webpack@5.78.0)
@@ -1365,10 +1413,10 @@ importers:
         version: 7.0.3
       storybook-addon-designs:
         specifier: 7.0.0-beta.2
-        version: 7.0.0-beta.2(@storybook/addon-docs@7.0.3)(@storybook/addons@6.5.16)(@storybook/api@6.5.16)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 7.0.0-beta.2(@storybook/addon-docs@7.0.3)(@storybook/addons@6.5.16)(@storybook/api@6.5.16)(@storybook/components@7.0.4)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0)
       storybook-addon-pseudo-states:
         specifier: 2.0.0
-        version: 2.0.0(@storybook/manager-api@7.0.3)(@storybook/preview-api@7.0.3)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 2.0.0(@storybook/components@7.0.4)(@storybook/core-events@7.0.4)(@storybook/manager-api@7.0.3)(@storybook/preview-api@7.0.3)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0)
       storybook-addon-swc:
         specifier: 1.1.9
         version: 1.1.9(webpack@5.78.0)
@@ -5333,15 +5381,15 @@ packages:
     transitivePeerDependencies:
       - '@types/react'
 
-  /@geometricpanda/storybook-addon-badges@2.0.0(@storybook/blocks@7.0.3)(@storybook/manager-api@7.0.3)(@storybook/preview-api@7.0.3)(@storybook/theming@7.0.3)(@storybook/types@7.0.3)(react-dom@18.2.0)(react@18.2.0):
+  /@geometricpanda/storybook-addon-badges@2.0.0(@storybook/blocks@7.0.3)(@storybook/components@7.0.4)(@storybook/core-events@7.0.4)(@storybook/manager-api@7.0.3)(@storybook/preview-api@7.0.3)(@storybook/theming@7.0.3)(@storybook/types@7.0.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-M1CQabr1/IDG6ku0/+n6kZBvWTCSun7LndkGsaB89nTNaCcflWxflgY2HdcbjblLL8W0iT7QiW9TgWP4kcpn5Q==}
     peerDependencies:
       '@storybook/blocks': ^7.0.0
-      '@storybook/components': ^7.0.0
-      '@storybook/core-events': ^7.0.0
+      '@storybook/components': ^7.0.0 || ^7
+      '@storybook/core-events': ^7.0.0 || ^7
       '@storybook/manager-api': ^7.0.0
       '@storybook/preview-api': ^7.0.0
-      '@storybook/theming': ^7.0.0
+      '@storybook/theming': ^7.0.0 || ^7
       '@storybook/types': ^7.0.0
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
@@ -5352,6 +5400,8 @@ packages:
         optional: true
     dependencies:
       '@storybook/blocks': 7.0.3(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/components': 7.0.4(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/core-events': 7.0.4
       '@storybook/manager-api': 7.0.3(react-dom@18.2.0)(react@18.2.0)
       '@storybook/preview-api': 7.0.3
       '@storybook/theming': 7.0.3(react-dom@18.2.0)(react@18.2.0)
@@ -5964,7 +6014,7 @@ packages:
     dependencies:
       '@mantine/ssr': 6.0.7(@emotion/react@11.10.6)(@emotion/server@11.10.0)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/styles': 6.0.7(@emotion/react@11.10.6)(react-dom@18.2.0)(react@18.2.0)
-      next: 13.3.0(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.3.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
@@ -6441,48 +6491,164 @@ packages:
     resolution: {integrity: sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==}
     dev: true
 
-  /@opentelemetry/api@1.4.0:
-    resolution: {integrity: sha512-IgMK9i3sFGNUqPMbjABm0G26g0QCKCUBfglhQ7rQq6WcxbKfEHRcmwsoER4hZcuYqJgkYn2OeuoJIv7Jsftp7g==}
+  /@opentelemetry/api@1.4.1:
+    resolution: {integrity: sha512-O2yRJce1GOc6PAy3QxFM4NzFiWzvScDC1/5ihYBL6BUEVdq0XMWN01sppE+H6bBXbaFYipjwFLEWLg5PaSOThA==}
     engines: {node: '>=8.0.0'}
-    dev: true
 
-  /@opentelemetry/core@1.9.1(@opentelemetry/api@1.4.0):
-    resolution: {integrity: sha512-6/qon6tw2I8ZaJnHAQUUn4BqhTbTNRS0WP8/bA0ynaX+Uzp/DDbd0NS0Cq6TMlh8+mrlsyqDE7mO50nmv2Yvlg==}
+  /@opentelemetry/context-async-hooks@1.11.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-Ao1z7p+Au7A10SvQ6NCo5h2dAb3cujy+1VUZrd6gZuqMTxADYEWw/yjDbkHM/NAAaBphDGhqNg2MxGYIdgQs8w==}
     engines: {node: '>=14'}
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.5.0'
     dependencies:
-      '@opentelemetry/api': 1.4.0
-      '@opentelemetry/semantic-conventions': 1.9.1
-    dev: true
+      '@opentelemetry/api': 1.4.1
+    dev: false
 
-  /@opentelemetry/resources@1.9.1(@opentelemetry/api@1.4.0):
-    resolution: {integrity: sha512-VqBGbnAfubI+l+yrtYxeLyOoL358JK57btPMJDd3TCOV3mV5TNBmzvOfmesM4NeTyXuGJByd3XvOHvFezLn3rQ==}
+  /@opentelemetry/core@1.11.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-aP1wHSb+YfU0pM63UAkizYPuS4lZxzavHHw5KJfFNN2oWQ79HSm6JR3CzwFKHwKhSzHN8RE9fgP1IdVJ8zmo1w==}
     engines: {node: '>=14'}
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.5.0'
     dependencies:
-      '@opentelemetry/api': 1.4.0
-      '@opentelemetry/core': 1.9.1(@opentelemetry/api@1.4.0)
-      '@opentelemetry/semantic-conventions': 1.9.1
-    dev: true
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/semantic-conventions': 1.11.0
 
-  /@opentelemetry/sdk-trace-base@1.9.1(@opentelemetry/api@1.4.0):
-    resolution: {integrity: sha512-Y9gC5M1efhDLYHeeo2MWcDDMmR40z6QpqcWnPCm4Dmh+RHAMf4dnEBBntIe1dDpor686kyU6JV1D29ih1lZpsQ==}
+  /@opentelemetry/exporter-trace-otlp-http@0.37.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-+oVV/h6UTLMF4IRtCGkLk2kQImMgC0ARFCfz+XXGNksP+awh/NXsDtJ3mHrn8Gtudrf3+pKVe/FWptBRqicm5Q==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': ^1.0.0
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/core': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/otlp-exporter-base': 0.37.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/otlp-transformer': 0.37.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/resources': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/sdk-trace-base': 1.11.0(@opentelemetry/api@1.4.1)
+    dev: false
+
+  /@opentelemetry/instrumentation@0.35.1(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-EZsvXqxenbRTSNsft6LDcrT4pjAiyZOx3rkDNeqKpwZZe6GmZtsXaZZKuDkJtz9fTjOGjDHjZj9/h80Ya9iIJw==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': ^1.3.0
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      require-in-the-middle: 5.2.0
+      semver: 7.3.8
+      shimmer: 1.2.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@opentelemetry/instrumentation@0.37.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-QAHIYTeVHcvP5NcI8r0WbvF5KCojZSzQLO9G73/OpiXLy/t8hIUXHq0nuuSB5zP5dKQ8h9sORi/3suGBNHnsjw==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': ^1.3.0
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      require-in-the-middle: 6.0.0
+      semver: 7.3.8
+      shimmer: 1.2.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@opentelemetry/otlp-exporter-base@0.37.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-dLbv7nr7d14xrHzd+S1eW+RpXh7IC0onktc23pwzETh6J7Ytzf0+QwLV5iRatoNtwPU2hX1VGOipwEnC/BjXxg==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': ^1.0.0
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/core': 1.11.0(@opentelemetry/api@1.4.1)
+    dev: false
+
+  /@opentelemetry/otlp-transformer@0.37.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-cIzV9x2DhJ5gN0mld8OqN+XM95sDiuAJJvXsRjVuz9vu8TSNbbao/QCKNfJLOXqe8l3Ge05nKzQ6Q2gDDEN36w==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.3.0 <1.5.0'
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/core': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/resources': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/sdk-metrics': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/sdk-trace-base': 1.11.0(@opentelemetry/api@1.4.1)
+    dev: false
+
+  /@opentelemetry/propagator-b3@1.11.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-Nnlu2PUSMqB8Lc3OzjznqpwuUdej1LrYYNjHItk9g7jJ9SAjiLdkB1cDALO+xhISTON8VrELh1rh0XIMUts2og==}
     engines: {node: '>=14'}
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.5.0'
     dependencies:
-      '@opentelemetry/api': 1.4.0
-      '@opentelemetry/core': 1.9.1(@opentelemetry/api@1.4.0)
-      '@opentelemetry/resources': 1.9.1(@opentelemetry/api@1.4.0)
-      '@opentelemetry/semantic-conventions': 1.9.1
-    dev: true
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/core': 1.11.0(@opentelemetry/api@1.4.1)
+    dev: false
 
-  /@opentelemetry/semantic-conventions@1.9.1:
-    resolution: {integrity: sha512-oPQdbFDmZvjXk5ZDoBGXG8B4tSB/qW5vQunJWQMFUBp7Xe8O1ByPANueJ+Jzg58esEBegyyxZ7LRmfJr7kFcFg==}
+  /@opentelemetry/propagator-jaeger@1.11.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-/9XDcBnB6Y2INMWACs0UniY+aV7LReMRzPN6Q0SI7SlXZLZPTUnaZt51Tb/TyixjzAkHsj86K27XSCv3ctB2UQ==}
     engines: {node: '>=14'}
-    dev: true
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0 <1.5.0'
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/core': 1.11.0(@opentelemetry/api@1.4.1)
+    dev: false
+
+  /@opentelemetry/resources@1.11.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-y0z2YJTqk0ag+hGT4EXbxH/qPhDe8PfwltYb4tXIEsozgEFfut/bqW7H7pDvylmCjBRMG4NjtLp57V1Ev++brA==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0 <1.5.0'
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/core': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/semantic-conventions': 1.11.0
+
+  /@opentelemetry/sdk-metrics@1.11.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-knuq3pwU0+46FEMdw9Ses+alXL9cbcLUUTdYBBBsaKkqKwoVMHfhBufW7u6YCu4i+47Wg6ZZTN/eGc4LbTbK5Q==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.3.0 <1.5.0'
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/core': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/resources': 1.11.0(@opentelemetry/api@1.4.1)
+      lodash.merge: 4.6.2
+    dev: false
+
+  /@opentelemetry/sdk-trace-base@1.11.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-DV8e5/Qo42V8FMBlQ0Y0Liv6Hl/Pp5bAZ73s7r1euX8w4bpRes1B7ACiA4yujADbWMJxBgSo4fGbi4yjmTMG2A==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0 <1.5.0'
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/core': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/resources': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/semantic-conventions': 1.11.0
+
+  /@opentelemetry/sdk-trace-node@1.11.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-BzcrLl6m10Gc9Za5hNCRAClgpetGd5di5bG4RDChhVfqrecl98ok+BKunWxWxrZUMpXpJqfXteHo0su3SEXvXQ==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0 <1.5.0'
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/context-async-hooks': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/core': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/propagator-b3': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/propagator-jaeger': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/sdk-trace-base': 1.11.0(@opentelemetry/api@1.4.1)
+      semver: 7.3.8
+    dev: false
+
+  /@opentelemetry/semantic-conventions@1.11.0:
+    resolution: {integrity: sha512-fG4D0AktoHyHwGhFGv+PzKrZjxbKJfckJauTJdq2A+ej5cTazmNYjJVAODXXkYyrsI10muMl+B1iO2q1R6Lp+w==}
+    engines: {node: '>=14'}
 
   /@panva/hkdf@1.0.2:
     resolution: {integrity: sha512-MSAs9t3Go7GUkMhpKC44T58DJ5KGk2vBo+h1cqQeqlMfdGkxaVB78ZWpv9gYi/g2fa4sopag9gJsNvS8XGgWJA==}
@@ -6597,8 +6763,8 @@ packages:
   /@prisma/engine-core@4.6.1:
     resolution: {integrity: sha512-JtvdEy9GeGU/xeTYOq3SEN4DiAytHoQty/4pJTZ5vNoGMnu7XF1ToprOCPzyT5oSgm3oQQuwpXMVaebJegwA4Q==}
     dependencies:
-      '@opentelemetry/api': 1.4.0
-      '@opentelemetry/sdk-trace-base': 1.9.1(@opentelemetry/api@1.4.0)
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/sdk-trace-base': 1.11.0(@opentelemetry/api@1.4.1)
       '@prisma/debug': 4.6.1
       '@prisma/engines': 4.6.1
       '@prisma/generator-helper': 4.6.1
@@ -6682,6 +6848,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@prisma/instrumentation@4.12.0:
+    resolution: {integrity: sha512-mSGO0EFWS1nZWBlvHpiV6IodPfbiAXgRw0PmtWJHUDCX+lPgvzSUYkfgeIKfYY/3VvECqAXyzbABDrnwaQgY2A==}
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/instrumentation': 0.35.1(@opentelemetry/api@1.4.1)
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /@prisma/internals@4.6.1:
     resolution: {integrity: sha512-oPE01UMMY5W9PAr+uP0MaHO4o7SD3b7dVqaEuZsj6NRN7jtoKujQXp+zo74BAeqjLJyCiHXhTIReuO9NExiZtg==}
@@ -7556,6 +7731,10 @@ packages:
     resolution: {integrity: sha512-X+78KlKRPfqojOj2j34qpXqcwh5O6/oIhqXB1PORPmoVPuvngSvjqeczJI11g+qEiBbs3l1CkwA/RRGnnuE1ew==}
     dev: true
 
+  /@storybook/channels@7.0.4:
+    resolution: {integrity: sha512-1HT8VM8G72XQ88wGcXVYl2g6OFsglUBW8L7uWWZoh96xWpNViaptaN/4OKwiUrThrc0DbEkAKmhPT3zQ7McoyA==}
+    dev: true
+
   /@storybook/cli@7.0.3:
     resolution: {integrity: sha512-CFEVNygIGrGyRqK+wNGwv56hk9ROXQoQF0OtoXAbASn/6zdT+jcDQMjlw4NFgJFqUeZ96Pw3c6nb5w42plIPmg==}
     hasBin: true
@@ -7625,6 +7804,12 @@ packages:
       '@storybook/global': 5.0.0
     dev: true
 
+  /@storybook/client-logger@7.0.4:
+    resolution: {integrity: sha512-3sEUIt6/ry+RdTpP+6Ic1QqoQh6Pn9ugCaP54Bc0z4wDI+NIJtJ5E2j4bcml/1/l9h9zNlmAAMgpZizm8KtIdA==}
+    dependencies:
+      '@storybook/global': 5.0.0
+    dev: true
+
   /@storybook/codemod@7.0.3:
     resolution: {integrity: sha512-3E065pH56oGJU6wodaB1QahWN8V7avYUnwPy4s80Vs6M/oleEg6cOHmQLSkW+HG2SRxKBgirEEQK50TXSbLXhA==}
     dependencies:
@@ -7656,6 +7841,24 @@ packages:
       '@storybook/global': 5.0.0
       '@storybook/theming': 7.0.3(react-dom@18.2.0)(react@18.2.0)
       '@storybook/types': 7.0.3
+      memoizerific: 1.11.3
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      use-resize-observer: 9.1.0(react-dom@18.2.0)(react@18.2.0)
+      util-deprecate: 1.0.2
+    dev: true
+
+  /@storybook/components@7.0.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-yBw+1NkGlaHo6U7crIlz8g5LFqXugmnS1t4xsxEUQO6b5BdQuQPggwjlkEkHoLW3sg04Sacgb7CvfDWInieuug==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
+    dependencies:
+      '@storybook/client-logger': 7.0.4
+      '@storybook/csf': 0.1.0
+      '@storybook/global': 5.0.0
+      '@storybook/theming': 7.0.4(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/types': 7.0.4
       memoizerific: 1.11.3
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -7704,6 +7907,10 @@ packages:
 
   /@storybook/core-events@7.0.3:
     resolution: {integrity: sha512-r8+pUMf9cQlXMWgZGrBBG9SKK6uWHdb1Lub+vjuAz6I5jXVI/IyfnGbfRPGkLmLynY6NugsAMnjn9oifSBD4cA==}
+    dev: true
+
+  /@storybook/core-events@7.0.4:
+    resolution: {integrity: sha512-3gYyJZdHrf69tGueN7SQCgPxnLYYow8n5BeBcBlehYAutfLOafpd36HPIXSHIvJaLDNUzGqLcFiGub04ts1pJA==}
     dev: true
 
   /@storybook/core-server@7.0.3:
@@ -8067,7 +8274,7 @@ packages:
   /@storybook/react-docgen-typescript-plugin@1.0.6--canary.9.0c3f3b7.0(typescript@5.0.4)(webpack@5.78.0):
     resolution: {integrity: sha512-KUqXC3oa9JuQ0kZJLBhVdS4lOneKTOopnNBK4tUAgoxWQ3u/IjzdueZjFr7gyBrXMoU6duutk3RQR9u8ZpYJ4Q==}
     peerDependencies:
-      typescript: '>= 4.x'
+      typescript: '>= 4.x || ^5'
       webpack: '>= 4 || >=5'
     dependencies:
       debug: 4.3.4
@@ -8274,10 +8481,33 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
+  /@storybook/theming@7.0.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-BahlmB86Q9wlvUT9Otx7vmJ7IAiytCBYyx5uLY3Ypt4JHyh5dT8UI8u4uowor9QW20YdfwPSIdaJwF1qzVuWNg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
+    dependencies:
+      '@emotion/use-insertion-effect-with-fallbacks': 1.0.0(react@18.2.0)
+      '@storybook/client-logger': 7.0.4
+      '@storybook/global': 5.0.0
+      memoizerific: 1.11.3
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: true
+
   /@storybook/types@7.0.3:
     resolution: {integrity: sha512-AafPE2QbEaT+rQn53W1UOcteP1W7iYWt1DbMJZSxXMLYVatjsoirbfMKHy/9S63Whee39CTjOxcXUBYNs+5jCA==}
     dependencies:
       '@storybook/channels': 7.0.3
+      '@types/babel__core': 7.20.0
+      '@types/express': 4.17.17
+      file-system-cache: 2.0.2
+    dev: true
+
+  /@storybook/types@7.0.4:
+    resolution: {integrity: sha512-CRGugXpTJ3K3IGuSyHA+/r2nmZluWkgRBGpbl1OQlGY/vAI7YlrJhLg1Lwf5dp66etUsjZN6d/vJeivNcyD68g==}
+    dependencies:
+      '@storybook/channels': 7.0.4
       '@types/babel__core': 7.20.0
       '@types/express': 4.17.17
       file-system-cache: 2.0.2
@@ -8820,7 +9050,7 @@ packages:
       '@trpc/client': 10.19.1(@trpc/server@10.19.1)
       '@trpc/react-query': 10.19.1(@tanstack/react-query@4.29.1)(@trpc/client@10.19.1)(@trpc/server@10.19.1)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 10.19.1
-      next: 13.3.0(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.3.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
@@ -11333,7 +11563,7 @@ packages:
       '@types/node': '*'
       cosmiconfig: '>=7'
       ts-node: '>=10'
-      typescript: '>=3'
+      typescript: '>=3 || ^5'
     dependencies:
       '@types/node': 16.18.12
       cosmiconfig: 8.1.3
@@ -11348,7 +11578,7 @@ packages:
       '@types/node': '*'
       cosmiconfig: '>=7'
       ts-node: '>=10'
-      typescript: '>=3'
+      typescript: '>=3 || ^5'
     dependencies:
       '@types/node': 18.15.11
       cosmiconfig: 8.1.3
@@ -11456,14 +11686,14 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /css-chaos-addon@0.0.5(@storybook/addons@6.5.16)(@storybook/api@6.5.16)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0):
+  /css-chaos-addon@0.0.5(@storybook/addons@6.5.16)(@storybook/api@6.5.16)(@storybook/components@7.0.4)(@storybook/core-events@7.0.4)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-h9AravpeFHIPAHcYVNyHTph7Jv3GGviiurddlIv2aY3Zu0SwQa567MWBxgZVLc5KhEX4qUCADbuJLycEKsjcGg==}
     peerDependencies:
       '@storybook/addons': ^6.5.8
       '@storybook/api': ^6.5.8
-      '@storybook/components': ^6.5.8
-      '@storybook/core-events': ^6.5.8
-      '@storybook/theming': ^6.5.8
+      '@storybook/components': ^6.5.8 || ^7
+      '@storybook/core-events': ^6.5.8 || ^7
+      '@storybook/theming': ^6.5.8 || ^7
       react: ^16.8.0 || ^17.0.0 || >=18
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
     peerDependenciesMeta:
@@ -11474,6 +11704,8 @@ packages:
     dependencies:
       '@storybook/addons': 6.5.16(react-dom@18.2.0)(react@18.2.0)
       '@storybook/api': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/components': 7.0.4(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/core-events': 7.0.4
       '@storybook/theming': 7.0.3(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -12360,7 +12592,7 @@ packages:
     resolution: {integrity: sha512-6YEwmFBX0VjBd3ODGW9df0Is0FLaRFdMN8eAahQG9CN6LjQ28J8AFr19ngxqMSg7Qv6Uca/3VeeBosJh1bzu0w==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0
-      typescript: '>=3.3.1'
+      typescript: '>=3.3.1 || ^5'
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -13249,7 +13481,7 @@ packages:
     resolution: {integrity: sha512-IN+XTzusCjR5VgntYFgxbxVx3WraPRnKehBFrf00cMSrtUuW9MsG9dhL6MWpY6MkjC3wVwoujfCDgZZCQwbswA==}
     engines: {node: '>=12.13.0', yarn: '>=1.0.0'}
     peerDependencies:
-      typescript: '>3.6.0'
+      typescript: '>3.6.0 || ^5'
       vue-template-compiler: '*'
       webpack: ^5.11.0 || >=5
     peerDependenciesMeta:
@@ -16435,6 +16667,10 @@ packages:
     hasBin: true
     dev: true
 
+  /module-details-from-path@1.0.3:
+    resolution: {integrity: sha512-ySViT69/76t8VhE1xXHK6Ch4NcDd26gx0MzKXLO+F7NOtnqH68d9zF94nT8ZWSxXh8ELOERsnJO/sWt1xZYw5A==}
+    dev: false
+
   /mongo-scanner@3.0.5:
     resolution: {integrity: sha512-dav0LH0Co8qD5tFEcJqstaRHrsSz2Q3HSC3C8lTkR+7B2ZLooehH8LlPtbTH1MRjvk1OU2TK0qxjXvNP5aAWKw==}
     dependencies:
@@ -16516,7 +16752,7 @@ packages:
     hasBin: true
     requiresBuild: true
     peerDependencies:
-      typescript: '>= 4.4.x <= 5.0.x'
+      typescript: '>= 4.4.x <= 5.0.x || ^5'
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -16609,7 +16845,7 @@ packages:
       '@panva/hkdf': 1.0.2
       cookie: 0.5.0
       jose: 4.11.4
-      next: 13.3.0(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.3.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       oauth: 0.9.15
       openid-client: 5.4.0
       preact: 10.12.0
@@ -16633,7 +16869,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       i18next: 22.4.14
       i18next-fs-backend: 2.1.1
-      next: 13.3.0(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.3.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-i18next: 12.2.0(i18next@22.4.14)(react-dom@18.2.0)(react@18.2.0)
 
@@ -16654,7 +16890,7 @@ packages:
       react: '>=16.0.0 || >=18'
       react-dom: '>=16.0.0 || >=18'
     dependencies:
-      next: 13.3.0(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.3.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
@@ -16701,6 +16937,51 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+    dev: true
+
+  /next@13.3.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-OVTw8MpIPa12+DCUkPqRGPS3thlJPcwae2ZL4xti3iBff27goH024xy4q2lhlsdoYiKOi8Kz6uJoLW/GXwgfOA==}
+    engines: {node: '>=14.6.0'}
+    hasBin: true
+    peerDependencies:
+      '@opentelemetry/api': ^1.1.0
+      fibers: '>= 3.1.0'
+      node-sass: ^6.0.0 || ^7.0.0
+      react: ^18.2.0 || >=18
+      react-dom: ^18.2.0 || >=18
+      sass: ^1.3.0
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+      fibers:
+        optional: true
+      node-sass:
+        optional: true
+      sass:
+        optional: true
+    dependencies:
+      '@next/env': 13.3.0
+      '@opentelemetry/api': 1.4.1
+      '@swc/helpers': 0.4.14
+      busboy: 1.6.0
+      caniuse-lite: 1.0.30001451
+      postcss: 8.4.14
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      styled-jsx: 5.1.1(@babel/core@7.21.4)(react@18.2.0)
+    optionalDependencies:
+      '@next/swc-darwin-arm64': 13.3.0
+      '@next/swc-darwin-x64': 13.3.0
+      '@next/swc-linux-arm64-gnu': 13.3.0
+      '@next/swc-linux-arm64-musl': 13.3.0
+      '@next/swc-linux-x64-gnu': 13.3.0
+      '@next/swc-linux-x64-musl': 13.3.0
+      '@next/swc-win32-arm64-msvc': 13.3.0
+      '@next/swc-win32-ia32-msvc': 13.3.0
+      '@next/swc-win32-x64-msvc': 13.3.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
 
   /nextjs-routes@1.0.9(next@13.3.0):
     resolution: {integrity: sha512-vITLm5SzpoYGGgDUmWXjf2GU5oHyc4Oh/b7VdDOTqKudEOWuSk1pluZFIlZ9ogVqVxI28c+U+EQ6KyjZOuZR5g==}
@@ -16708,7 +16989,7 @@ packages:
       next: '*'
     dependencies:
       chokidar: 3.5.3
-      next: 13.3.0(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.3.0(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /nice-try@1.0.5:
@@ -17436,7 +17717,7 @@ packages:
     peerDependencies:
       postcss: ^7.0.0 || ^8.0.1
       ts-node: '>=10'
-      typescript: '>=4'
+      typescript: '>=4 || ^5'
       webpack: ^5.0.0 || >=5
     peerDependenciesMeta:
       ts-node:
@@ -17462,7 +17743,7 @@ packages:
     peerDependencies:
       postcss: ^7.0.0 || ^8.0.1
       ts-node: '>=10'
-      typescript: '>=4'
+      typescript: '>=4 || ^5'
       webpack: ^5.0.0 || >=5
     peerDependenciesMeta:
       ts-node:
@@ -18104,7 +18385,7 @@ packages:
   /react-docgen-typescript@2.2.2(typescript@5.0.4):
     resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}
     peerDependencies:
-      typescript: '>= 4.3.x'
+      typescript: '>= 4.3.x || ^5'
     dependencies:
       typescript: 5.0.4
     dev: true
@@ -18577,6 +18858,28 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /require-in-the-middle@5.2.0:
+    resolution: {integrity: sha512-efCx3b+0Z69/LGJmm9Yvi4cqEdxnoGnxYxGxBghkkTTFeXRtTCmmhO0AnAfHz59k957uTSuy8WaHqOs8wbYUWg==}
+    engines: {node: '>=6'}
+    dependencies:
+      debug: 4.3.4
+      module-details-from-path: 1.0.3
+      resolve: 1.22.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /require-in-the-middle@6.0.0:
+    resolution: {integrity: sha512-+dtWQ7l2lqQDxheaG3jjyN1QI37gEwvzACSgjYi4/C2y+ZTUMeRW8BIOm+9NBKvwaMBUSZfPXVOt1skB0vBkRw==}
+    engines: {node: '>=8.6.0'}
+    dependencies:
+      debug: 4.3.4
+      module-details-from-path: 1.0.3
+      resolve: 1.22.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /require-main-filename@2.0.0:
     resolution: {integrity: sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==}
 
@@ -18962,6 +19265,10 @@ packages:
       rechoir: 0.6.2
     dev: true
 
+  /shimmer@1.2.1:
+    resolution: {integrity: sha512-sQTKC1Re/rM6XyFM6fIAGHRPVGvyXfgzIDvzoq608vM+jeyVD0Tu1E6Np0Kc2zAIFWIj963V2800iF/9LPieQw==}
+    dev: false
+
   /shoetest@1.2.2:
     resolution: {integrity: sha512-iT8kIEFcGfUwo53VUFckm+glTkc0oLycRe+YqU/W4wQuIHGIWc5KMIpDnJVdavKCyEZKQTi8IDq27rDmB09QjA==}
     dependencies:
@@ -19281,14 +19588,14 @@ packages:
     resolution: {integrity: sha512-siT1RiqlfQnGqgT/YzXVUNsom9S0H1OX+dpdGN1xkyYATo4I6sep5NmsRD/40s3IIOvlCq6akxkqG82urIZW1w==}
     dev: true
 
-  /storybook-addon-designs@7.0.0-beta.2(@storybook/addon-docs@7.0.3)(@storybook/addons@6.5.16)(@storybook/api@6.5.16)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0):
+  /storybook-addon-designs@7.0.0-beta.2(@storybook/addon-docs@7.0.3)(@storybook/addons@6.5.16)(@storybook/api@6.5.16)(@storybook/components@7.0.4)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-ljBNmyCJdPTXhiBSfA1S+GBxtMooW2M7nxlt49OoCRH7jcxZOYQdiI8JYQiMF5Ur0MGakbSci0Xm+JzAvcm02g==}
     peerDependencies:
       '@storybook/addon-docs': ^6.4.0 || ^7.0.0
       '@storybook/addons': ^6.4.0 || ^7.0.0
       '@storybook/api': ^6.4.0 || ^7.0.0
-      '@storybook/components': ^6.4.0 || ^7.0.0
-      '@storybook/theming': ^6.4.0 || ^7.0.0
+      '@storybook/components': ^6.4.0 || ^7.0.0 || ^7
+      '@storybook/theming': ^6.4.0 || ^7.0.0 || ^7
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
     peerDependenciesMeta:
@@ -19301,19 +19608,20 @@ packages:
       '@storybook/addon-docs': 7.0.3(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addons': 6.5.16(react-dom@18.2.0)(react@18.2.0)
       '@storybook/api': 6.5.16(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/components': 7.0.4(react-dom@18.2.0)(react@18.2.0)
       '@storybook/theming': 7.0.3(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /storybook-addon-pseudo-states@2.0.0(@storybook/manager-api@7.0.3)(@storybook/preview-api@7.0.3)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0):
+  /storybook-addon-pseudo-states@2.0.0(@storybook/components@7.0.4)(@storybook/core-events@7.0.4)(@storybook/manager-api@7.0.3)(@storybook/preview-api@7.0.3)(@storybook/theming@7.0.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-tLuuwB1k+xFsX8C1fn4G/vJm5wX33jvSLeqTsJgWwI3/AKJUf6Thbg/kg14I2AwN8nqffjun2PzE05Iea23n0w==}
     peerDependencies:
-      '@storybook/components': ^7.0.0
-      '@storybook/core-events': ^7.0.0
+      '@storybook/components': ^7.0.0 || ^7
+      '@storybook/core-events': ^7.0.0 || ^7
       '@storybook/manager-api': ^7.0.0
       '@storybook/preview-api': ^7.0.0
-      '@storybook/theming': ^7.0.0
+      '@storybook/theming': ^7.0.0 || ^7
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18
     peerDependenciesMeta:
@@ -19322,6 +19630,8 @@ packages:
       react-dom:
         optional: true
     dependencies:
+      '@storybook/components': 7.0.4(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/core-events': 7.0.4
       '@storybook/manager-api': 7.0.3(react-dom@18.2.0)(react@18.2.0)
       '@storybook/preview-api': 7.0.3
       '@storybook/theming': 7.0.3(react-dom@18.2.0)(react@18.2.0)
@@ -19970,7 +20280,7 @@ packages:
   /ts-essentials@9.3.0(typescript@5.0.4):
     resolution: {integrity: sha512-XeiCboEyBG8UqXZtXl59bWEi4ZgOqRsogFDI6WDGIF1LmzbYiAkIwjkXN6zZWWl4re/lsOqMlYfe8KA0XiiEPw==}
     peerDependencies:
-      typescript: '>=4.1.0'
+      typescript: '>=4.1.0 || ^5'
     dependencies:
       typescript: 5.0.4
     dev: true
@@ -19982,7 +20292,7 @@ packages:
       '@swc/core': '>=1.2.50'
       '@swc/wasm': '>=1.2.50'
       '@types/node': '*'
-      typescript: '>=2.7'
+      typescript: '>=2.7 || ^5'
     peerDependenciesMeta:
       '@swc/core':
         optional: true
@@ -20063,7 +20373,7 @@ packages:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
     engines: {node: '>= 6'}
     peerDependencies:
-      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta || ^5'
     dependencies:
       tslib: 1.14.1
       typescript: 5.0.4
@@ -21198,7 +21508,7 @@ packages:
   /zod-to-ts@1.1.2(typescript@5.0.4)(zod@3.21.4):
     resolution: {integrity: sha512-IZdM0Ga1l/vQnrNy63aV3qsLNchD0aUYZEtXcyt8A3xA7+erFO0zeImEcUH5qNLA6tXDTjRpcWp0paoVoH/D0A==}
     peerDependencies:
-      typescript: ^4.9.4
+      typescript: ^4.9.4 || ^5
       zod: ^3
     dependencies:
       typescript: 5.0.4

@@ -1,5 +1,9 @@
+/* eslint-disable import/first */
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
+
+// if (process.env.NODE_ENV === 'development') require('./otel')
+
 import { PrismaClient, Prisma } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 import { Logger } from 'tslog'
@@ -62,4 +66,5 @@ export { slug } from './lib/slugGen'
 export { createPoint } from './lib/createPoint'
 export { generateFreeText } from './lib/generateFreeText'
 export { generateId } from './lib/idGen'
+export { PrismaInstrumentation } from '@prisma/instrumentation'
 export { prisma }

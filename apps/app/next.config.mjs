@@ -1,6 +1,8 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 // import { env } from './src/env/server.mjs'
+/* eslint-disable import/first */
+
 import bundleAnalyze from '@next/bundle-analyzer'
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
 import withRoutes from 'nextjs-routes/config'
@@ -9,6 +11,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import i18nConfig from './next-i18next.config.mjs'
+import * as otel from './otel.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -34,7 +37,7 @@ const nextConfig = {
 		// 	'/': ['**swc+core**', '**esbuild**'],
 		// },
 		outputFileTracingRoot: path.join(__dirname, '../../'),
-
+		instrumentationHook: true,
 		// turbotrace: {
 		// 	logDetail: true,
 		// },

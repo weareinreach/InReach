@@ -37,7 +37,14 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
+		"@opentelemetry/exporter-trace-otlp-http": "0.37.0",
+		"@opentelemetry/instrumentation": "0.37.0",
+		"@opentelemetry/resources": "1.11.0",
+		"@opentelemetry/sdk-trace-base": "1.11.0",
+		"@opentelemetry/sdk-trace-node": "1.11.0",
+		"@opentelemetry/semantic-conventions": "1.11.0",
 		"@prisma/client": "4.12.0",
+		"@prisma/instrumentation": "4.12.0",
 		"superjson": "1.12.2",
 		"tslog": "4.8.2",
 		"ulid": "2.3.0",
