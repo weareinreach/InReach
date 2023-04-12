@@ -1493,8 +1493,6 @@ model InternalNote {
   attributeId                     String?
   attributeCategory               AttributeCategory?             @relation(fields: [attributeCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeCategoryId             String?
-  // attributeRecord          AttributeRecord?      @relation(fields: [attributeRecordId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // attributeRecordId        String?
   attributeSupplement             AttributeSupplement?           @relation(fields: [attributeSupplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeSupplementId           String?
   attributeSupplementDataSchema   AttributeSupplementDataSchema? @relation(fields: [attributeSupplementDataSchemaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -1537,8 +1535,6 @@ model InternalNote {
   phoneTypeId                     String?
   serviceAccess                   ServiceAccess?                 @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   serviceAccessId                 String?
-  // serviceArea              ServiceArea?          @relation(fields: [serviceAreaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // serviceAreaId            String?
   serviceCategory                 ServiceCategory?               @relation(fields: [serviceCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   serviceCategoryId               String?
   serviceTag                      ServiceTag?                    @relation(fields: [serviceTagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -2262,4 +2258,15 @@ view AttributesByCategory {
 
   @@unique([categoryId, attributeId])
   @@map("attributes_by_category")
+}
+
+view user_refresh_token {
+  id            String  @unique
+  email         String  @unique
+  refresh_token String?
+}
+
+view user_access_token {
+  id           String  @unique
+  access_token String?
 }
