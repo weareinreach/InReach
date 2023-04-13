@@ -8,7 +8,7 @@ export const List = {
 			root: {
 				...theme.other.utilityFonts.utility2,
 				color: theme.other.colors.secondary.darkGray,
-				display: 'flex',
+				display: 'inline-flex',
 				gap: rem(16),
 				flexWrap: 'wrap',
 			},
@@ -24,7 +24,7 @@ export const List = {
 		({
 			root: {
 				...theme.other.utilityFonts.utility2,
-				display: 'flex',
+				display: 'inline-flex',
 				columnGap: rem(8),
 				rowGap: rem(16),
 				flexWrap: 'wrap',
@@ -47,7 +47,7 @@ export const List = {
 	inlineBullet: (theme) =>
 		({
 			root: {
-				display: 'flex',
+				display: 'inline-flex',
 				columnGap: rem(8),
 				rowGap: rem(16),
 				flexWrap: 'wrap',
@@ -70,7 +70,7 @@ export const List = {
 	inline: (theme) =>
 		({
 			root: {
-				display: 'flex',
+				display: 'inline-flex',
 				gap: rem(16),
 				flexWrap: 'wrap',
 			},

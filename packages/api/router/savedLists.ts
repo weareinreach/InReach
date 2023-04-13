@@ -286,10 +286,8 @@ export const savedListRouter = defineRouter({
 					{ ownedById: ctx.session.user.id },
 					{
 						OR: [
-							{
-								organizations: { some: { organizationId: input } },
-								services: { some: { serviceId: input } },
-							},
+							{ organizations: { some: { organizationId: input } } },
+							{ services: { some: { serviceId: input } } },
 						],
 					},
 				],

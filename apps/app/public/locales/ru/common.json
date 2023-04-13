@@ -5,6 +5,9 @@
 	"account": "Аккаунт",
 	"add": "Добавить {{item}}",
 	"address": "Адрес",
+	"adjective": {
+		"organization": "Организация {{adjective}}"
+	},
 	"agree-disclaimer": "Нажимая кнопку \"{{action}}\" вы соглашаетесь с <link1>политикой конфиденциальности</link1> и <link2>Условиями использования</link2>.",
 	"alert-message-1": "<strong>COVID-19 политика:</strong> Новости и оптимальные методы предотвращения COVID-19 быстро меняются каждый день, Здоровье Whitman-Walker продолжает обновлять свои услуги с учетом рекомендаций по профилактике. Пожалуйста, ознакомьтесь с наиболее актуальной информацией на их сайте.",
 	"all-service-category": "Все {{serviceCategory}}",
@@ -12,9 +15,10 @@
 		"body": "Используя InReach, вы соглашаетесь с тем, что не будете использовать эту информацию для вредоносных, основанных на ненависти, гомофобных, трансфобных, ксенофобных и/или расистских повесток дня или комментариев.",
 		"title": "Обязательства по борьбе с ненавистью"
 	},
-	"back": "Назад",
-	"back-to-dynamic": "Назад к <1>{{page}}</1>",
-	"back-to-search": "Вернуться к поиску",
+	"breadcrumb": {
+		"back-to-dynamic": "Вернуться к <u>{{page}}</u>",
+		"back-to-search": "Вернуться к поиску"
+	},
 	"cancel": "Отмена",
 	"claimed": "Получено",
 	"clear": "Очистить",
@@ -58,7 +62,6 @@
 		"try-again-text": "<Text>Что-то пошло не так! Пожалуйста, попробуйте еще раз.</Text>"
 	},
 	"exclude": "Исключить",
-	"facebook": "Facebook",
 	"find-resources": "Найти ресурсы",
 	"find-x": "Найти {{value}}",
 	"footer": {
@@ -84,13 +87,11 @@
 	"inreach-copyright": "InReach, Inc. {{year}} • Все права защищены • InReach ❤️ Open Source",
 	"inreach-logo": "InReach logo",
 	"inreach-org": "InReach.org",
-	"instagram": "Инстаграмма",
 	"language": "Язык",
 	"language_all-other": "Все другие языки",
 	"language_choose": "Пожалуйста, выберите язык",
 	"language_common": "Общие языки",
 	"link-copied": "Ссылка скопирована в буфер обмена",
-	"linkedin": "LinkedIn",
 	"list": {
 		"added": "Ресурс сохранен в списке: {{name}}",
 		"create-new": "Создать новый список",
@@ -121,6 +122,7 @@
 	},
 	"no-reviews": "Пока нет отзывов",
 	"none-apply": "Никто из них не относится ко мне",
+	"org-image": "Фото организации",
 	"other-specify": "Другое (просьба указать)",
 	"password": "Пароль",
 	"password-confirm": "Подтвердите пароль",
@@ -224,7 +226,17 @@
 	"sign-up-select-law-practice": "Где вы практикуете право?",
 	"sign-up-select-service-provider": "Где вы работаете или волонтеры?",
 	"sign-up-success": "Вы зарегистрировали аккаунт!",
-	"social": "Соцсети",
+	"social": {
+		"email": "Почта",
+		"facebook": "Facebook",
+		"github": "GitHub",
+		"group-header": "Соцсети",
+		"instagram": "Инстаграмма",
+		"linkedin": "LinkedIn",
+		"tiktok": "TikTok",
+		"twitter": "Твиттер",
+		"youtube": "YouTube"
+	},
 	"sort": {
 		"bipoc": "BIPOC сообщество",
 		"by-lgbtq-focus": "Сортировать по LGBTQ+ фокусу сообщества",
@@ -241,7 +253,6 @@
 	"suggest-a-resource": "Предложить ресурс",
 	"support": "Support",
 	"take-action": "Принять действие",
-	"twitter": "Твиттер",
 	"uncheck-all": "Снять все",
 	"unclaimed": "Невостребовано",
 	"user-avatar": "Аватар пользователя",
@@ -259,6 +270,7 @@
 		"account": "Аккаунт",
 		"and": "и",
 		"and-x-more": "и еще {{count}}",
+		"back": "Назад",
 		"coming-soon": "Скоро появится",
 		"delete": "Удалить",
 		"email": "Почта",
@@ -278,7 +290,6 @@
 		"support": "Support"
 	},
 	"your-comments": "Ваши комментарии",
-	"youtube": "YouTube",
 	"photo_one": "Фото",
 	"photo_few": "Фото",
 	"photo_many": "Фото",

@@ -263,14 +263,16 @@ export const ServiceFilter = ({ resultCount, stateHandler }: ServiceFilterProps)
 			<Accordion.Item value={categoryId} key={categoryId}>
 				<Accordion.Control>{t(tsKey, { ns: 'services' })}</Accordion.Control>
 				<Accordion.Panel>
-					<Checkbox
-						checked={checked}
-						indeterminate={indeterminate}
-						label={t('all-service-category', { serviceCategory: `$t(services:${tsKey})` })}
-						transitionDuration={0}
-						onChange={() => toggleCategory(categoryId)}
-						className={classes.itemParent}
-					/>
+					{services.length > 1 && (
+						<Checkbox
+							checked={checked}
+							indeterminate={indeterminate}
+							label={t('all-service-category', { serviceCategory: `$t(services:${tsKey})` })}
+							transitionDuration={0}
+							onChange={() => toggleCategory(categoryId)}
+							className={classes.itemParent}
+						/>
+					)}
 
 					{services.map((item, index) => {
 						return (

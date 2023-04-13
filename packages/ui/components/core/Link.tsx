@@ -18,7 +18,7 @@ export const Link = ({ children, href, external, ...rest }: Props) => {
 	}
 
 	return (
-		<Anchor component={NextLink} href={href} {...rest}>
+		<Anchor component={NextLink} href={href} target='_self' {...rest}>
 			{children}
 		</Anchor>
 	)

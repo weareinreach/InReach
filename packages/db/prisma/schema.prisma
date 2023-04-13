@@ -497,6 +497,9 @@ model OrgPhone {
   phoneType   PhoneType? @relation(fields: [phoneTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   phoneTypeId String?
 
+  description   FreeText? @relation(fields: [descriptionId], references: [id])
+  descriptionId String?   @unique
+
   associatedUsers UserToOrganization[]
 
   /// associated only with location and not overall organization (for large orgs w/ multiple locations)
@@ -581,6 +584,8 @@ model OrgLocation {
   city     String
   postCode String?
   primary  Boolean @default(true)
+
+  mailOnly Boolean?
 
   description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   descriptionId String?   @unique
@@ -709,6 +714,7 @@ model FreeText {
   AttributeSupplement AttributeSupplement?
   OrgEmail            OrgEmail?
   OrgServiceName      OrgService?          @relation("OrgServiceName")
+  OrgPhone            OrgPhone?
 
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -1043,6 +1049,11 @@ model ServiceTag {
   category   ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   categoryId String
 
+  children ServiceTagNesting[] @relation("serviceParentToChild")
+  parents  ServiceTagNesting[] @relation("serviceChildToParent")
+
+  locationRestriction ServiceTagCountry[]
+
   /// Tables referencing ServiceTag
   attachedServices OrgServiceTag[]
 
@@ -1183,6 +1194,7 @@ model Country {
   currentUsers          User[]                @relation("currentCountry")
   surveyCurrentLocation UserSurvey[]          @relation("currentLocation")
   surveyOrigin          UserSurvey[]          @relation("origin")
+  serviceRestrictions   ServiceTagCountry[]
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -2167,6 +2179,29 @@ model ServiceTagDefaultAttribute {
   //@@schema("relation")
 
   @@id([attributeId, serviceId])
+}
+
+model ServiceTagCountry {
+  country   Country    @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  countryId String
+  service   ServiceTag @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceId String
+
+  linkedAt DateTime @default(now())
+
+  @@id([countryId, serviceId])
+}
+
+model ServiceTagNesting {
+  child   ServiceTag @relation("serviceChildToParent", fields: [childId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  childId String
+
+  parent   ServiceTag @relation("serviceParentToChild", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  parentId String
+
+  linkedAt DateTime @default(now())
+
+  @@id([parentId, childId])
 }
 
 model DataMigration {

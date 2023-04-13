@@ -87,7 +87,9 @@ export const prismaDistSearchDetails = async ({ ctx, input }: PrismaSearchDistan
 		const allAttributes = Array.from(attributeMap.values())
 
 		const orgLeader = allAttributes.filter(({ category }) => category.tag === 'organization-leadership')
-		const orgFocus = allAttributes.filter(({ category }) => category.tag === 'organization-focus')
+		const orgFocus = allAttributes.filter(
+			({ category, _count: count }) => category.tag === 'service-focus' && count.parents === 0
+		)
 		const sortedCities = [
 			...new Set(cities.sort(({ dist: distA }, { dist: distB }) => distA - distB).map(({ city }) => city)),
 		]
@@ -125,19 +127,9 @@ type Attribute = {
 	category: {
 		tag: string
 	}
-	// supplement: {
-	// 	id: string
-	// 	boolean: boolean | null
-	// 	countryId: string | null
-	// 	languageId: string | null
-	// 	govDistId: string | null
-	// 	data: Prisma.JsonValue
-	// 	text: {
-	// 		key: string
-	// 		ns: string
-	// 		tsKey: { text: string }
-	// 	} | null
-	// }[]
+	_count: {
+		parents: number
+	}
 }
 type City = {
 	city: string
