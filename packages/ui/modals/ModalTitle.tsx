@@ -1,4 +1,4 @@
-import { Group, Text } from '@mantine/core'
+import { Box, Group, Text } from '@mantine/core'
 import { closeAllModals } from '@mantine/modals'
 import { DefaultTFuncReturn } from 'i18next'
 import { useTranslation } from 'next-i18next'
@@ -26,13 +26,15 @@ export const ModalTitle = (props: ModalTitleProps) => {
 	) : null
 
 	return (
-		<Group position='apart' noWrap>
-			<Breadcrumb
-				onClick={() => {
-					closeAllModals()
-				}}
-				{...breadcrumb}
-			/>
+		<Group position='apart' align='center' noWrap>
+			<Box maw='70%' style={{ overflow: 'hidden' }}>
+				<Breadcrumb
+					onClick={() => {
+						closeAllModals()
+					}}
+					{...breadcrumb}
+				/>
+			</Box>
 			{rightSection}
 		</Group>
 	)

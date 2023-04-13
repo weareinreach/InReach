@@ -4,6 +4,9 @@ import { transformer, type SuperJSONResult } from '@weareinreach/api/lib/transfo
 const isSuperJSON = (data: unknown): data is SuperJSONResult =>
 	typeof data === 'object' && data !== null && Object.hasOwn(data, 'json')
 
+// http://localhost:3000/api/panel
+// service.byId: osvc_01GVH3VDMSN34BACQDMY6S5GPM
+
 export const mockServiceData = {
 	serviceName: {
 		key: 'larkin-street-youth-services.osvc_01GVH3VDMSN34BACQDMY6S5GPM.name',
@@ -32,7 +35,7 @@ export const mockServiceData = {
 			districts: [
 				{
 					govDist: {
-						id: 'gdst_01GVXZM7HZ4YR0DNSYHST80GXS',
+						id: 'gdst_01GW2HJ23GMD17FBJMJWD16PZ1',
 						name: 'California',
 						slug: 'us-california',
 						iso: 'US-CA',
@@ -40,14 +43,12 @@ export const mockServiceData = {
 						country: {
 							cca2: 'US',
 							cca3: 'USA',
-							id: 'ctry_01GVXZJT2JD3E5HN892PH78C2C',
+							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
 							name: 'United States',
 							dialCode: null,
 							flag: '🇺🇸',
 							tsKey: 'USA.name',
 							tsNs: 'country',
-							demonymKey: 'USA.demonym',
-							demonymNs: 'country',
 						},
 						govDistType: {
 							tsKey: 'type-state',
@@ -61,7 +62,7 @@ export const mockServiceData = {
 				},
 				{
 					govDist: {
-						id: 'gdst_01GVXZM7KJEJ4JAZ9T3BB8TAKP',
+						id: 'gdst_01GW2HJ2S1061RNRAT6S4RJN1S',
 						name: 'San Francisco',
 						slug: 'us-california-san-francisco-county',
 						iso: null,
@@ -69,14 +70,12 @@ export const mockServiceData = {
 						country: {
 							cca2: 'US',
 							cca3: 'USA',
-							id: 'ctry_01GVXZJT2JD3E5HN892PH78C2C',
+							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
 							name: 'United States',
 							dialCode: null,
 							flag: '🇺🇸',
 							tsKey: 'USA.name',
 							tsNs: 'country',
-							demonymKey: 'USA.demonym',
-							demonymNs: 'country',
 						},
 						govDistType: {
 							tsKey: 'type-county',
@@ -86,7 +85,7 @@ export const mockServiceData = {
 						tsKey: 'us-california-san-francisco-county',
 						tsNs: 'gov-dist',
 						parent: {
-							id: 'gdst_01GVXZM7HZ4YR0DNSYHST80GXS',
+							id: 'gdst_01GW2HJ23GMD17FBJMJWD16PZ1',
 							name: 'California',
 							slug: 'us-california',
 							iso: 'US-CA',
@@ -94,14 +93,12 @@ export const mockServiceData = {
 							country: {
 								cca2: 'US',
 								cca3: 'USA',
-								id: 'ctry_01GVXZJT2JD3E5HN892PH78C2C',
+								id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
 								name: 'United States',
 								dialCode: null,
 								flag: '🇺🇸',
 								tsKey: 'USA.name',
 								tsNs: 'country',
-								demonymKey: 'USA.demonym',
-								demonymNs: 'country',
 							},
 							govDistType: {
 								tsKey: 'type-state',
@@ -116,101 +113,12 @@ export const mockServiceData = {
 			],
 		},
 	],
-	hours: [
-		{
-			dayIndex: 1,
-			start: new Date('1970-01-01T12:30:00.000Z'),
-			end: new Date('1970-01-01T21:30:00.000Z'),
-			closed: false,
-			tz: 'America/New_York',
-		},
-		{
-			dayIndex: 2,
-			start: new Date('1970-01-01T12:30:00.000Z'),
-			end: new Date('1970-01-01T21:30:00.000Z'),
-			closed: false,
-			tz: 'America/New_York',
-		},
-		{
-			dayIndex: 3,
-			start: new Date('1970-01-01T12:30:00.000Z'),
-			end: new Date('1970-01-01T21:30:00.000Z'),
-			closed: false,
-			tz: 'America/New_York',
-		},
-		{
-			dayIndex: 4,
-			start: new Date('1970-01-01T12:30:00.000Z'),
-			end: new Date('1970-01-01T21:30:00.000Z'),
-			closed: false,
-			tz: 'America/New_York',
-		},
-		{
-			dayIndex: 5,
-			start: new Date('1970-01-01T12:30:00.000Z'),
-			end: new Date('1970-01-01T21:00:00.000Z'),
-			closed: false,
-			tz: 'America/New_York',
-		},
-	],
+	hours: [],
 	reviews: [],
 	attributes: [
 		{
 			attribute: {
-				tsKey: 'srvfocus.bipoc-comm',
-				tsNs: 'attribute',
-				icon: '️‍️‍✊🏿',
-				iconBg: null,
-				showOnLocation: null,
-				categories: [
-					{
-						category: {
-							tag: 'service-focus',
-							icon: null,
-						},
-					},
-				],
-			},
-			supplement: [],
-		},
-		{
-			attribute: {
-				tsKey: 'srvfocus.spanish-speakers',
-				tsNs: 'attribute',
-				icon: '🗣️',
-				iconBg: null,
-				showOnLocation: null,
-				categories: [
-					{
-						category: {
-							tag: 'service-focus',
-							icon: null,
-						},
-					},
-				],
-			},
-			supplement: [],
-		},
-		{
-			attribute: {
-				tsKey: 'srvfocus.hiv-comm',
-				tsNs: 'attribute',
-				icon: '💛',
-				iconBg: null,
-				showOnLocation: null,
-				categories: [
-					{
-						category: {
-							tag: 'service-focus',
-							icon: null,
-						},
-					},
-				],
-			},
-			supplement: [],
-		},
-		{
-			attribute: {
+				id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
 				tsKey: 'additional.has-confidentiality-policy',
 				tsNs: 'attribute',
 				icon: null,
@@ -224,11 +132,16 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [],
 		},
 		{
 			attribute: {
+				id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
 				tsKey: 'cost.cost-free',
 				tsNs: 'attribute',
 				icon: 'carbon:piggy-bank',
@@ -242,11 +155,16 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [],
 		},
 		{
 			attribute: {
+				id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
 				tsKey: 'eligibility.time-appointment-required',
 				tsNs: 'attribute',
 				icon: null,
@@ -260,11 +178,16 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [],
 		},
 		{
 			attribute: {
+				id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
 				tsKey: 'eligibility.elig-age',
 				tsNs: 'attribute',
 				icon: null,
@@ -278,9 +201,14 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [
 				{
+					id: 'atts_01GW2HT8C1J8AQAEHVGANCYRPB',
 					country: null,
 					language: null,
 					text: null,
@@ -294,6 +222,7 @@ export const mockServiceData = {
 		},
 		{
 			attribute: {
+				id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 				tsKey: 'lang.lang-offered',
 				tsNs: 'attribute',
 				icon: null,
@@ -307,9 +236,14 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [
 				{
+					id: 'atts_01GW2HT8C1N900BKNRTY39R58H',
 					country: null,
 					language: {
 						languageName: 'English',
@@ -324,39 +258,7 @@ export const mockServiceData = {
 		},
 		{
 			attribute: {
-				tsKey: 'eligibility.other-describe',
-				tsNs: 'attribute',
-				icon: null,
-				iconBg: null,
-				showOnLocation: null,
-				categories: [
-					{
-						category: {
-							tag: 'eligibility-requirements',
-							icon: null,
-						},
-					},
-				],
-			},
-			supplement: [
-				{
-					country: null,
-					language: null,
-					text: {
-						key: 'lyon-martin-health-services.attribute.atts_01GW2HT8CTSNMQ5246FGF3541R',
-						ns: 'org-data',
-						tsKey: {
-							text: 'LGBTQ+ youth',
-						},
-					},
-					govDist: null,
-					boolean: null,
-					data: null,
-				},
-			],
-		},
-		{
-			attribute: {
+				id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 				tsKey: 'sys.incompatible-info',
 				tsNs: 'attribute',
 				icon: null,
@@ -370,9 +272,14 @@ export const mockServiceData = {
 						},
 					},
 				],
+				_count: {
+					parents: 0,
+					children: 0,
+				},
 			},
 			supplement: [
 				{
+					id: 'atts_01GW2HT8C256BP7P50M1G32GNK',
 					country: null,
 					language: null,
 					text: null,
@@ -413,6 +320,7 @@ export const mockServiceData = {
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 						tsKey: 'serviceaccess.accesslocation',
 						tsNs: 'attribute',
 						icon: null,
@@ -426,13 +334,18 @@ export const mockServiceData = {
 								},
 							},
 						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT8BWQ0WZ804A34QV7P0J',
 							country: null,
 							language: null,
 							text: {
-								key: 'larkin-street-youth-services.attribute.atts_01GVXZN9E07W1E9QB5XTFC7Z5W',
+								key: 'larkin-street-youth-services.attribute.atts_01GW2HT8BWQ0WZ804A34QV7P0J',
 								ns: 'org-data',
 								tsKey: {
 									text: 'The above are drop-in service hours for education. Drop-in hours for employment services are Monday, Tuesday: 10 a.m. to noon, and 2:30 to 4:30 p.m. Wednesday: 10 a.m. to noon, and 1 to 2 p.m. Thursday: 10 a.m. to noon, and 1 to 3 p.m. Friday: 10 a.m. to 1 p.m.',
@@ -462,6 +375,7 @@ export const mockServiceData = {
 			attributes: [
 				{
 					attribute: {
+						id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 						tsKey: 'serviceaccess.accessphone',
 						tsNs: 'attribute',
 						icon: null,
@@ -475,13 +389,18 @@ export const mockServiceData = {
 								},
 							},
 						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
 					},
 					supplement: [
 						{
+							id: 'atts_01GW2HT8BWZG5BTQ57DAQHJZ5Z',
 							country: null,
 							language: null,
 							text: {
-								key: 'larkin-street-youth-services.attribute.atts_01GVXZN9E1GH84KYBBE383GYN0',
+								key: 'larkin-street-youth-services.attribute.atts_01GW2HT8BWZG5BTQ57DAQHJZ5Z',
 								ns: 'org-data',
 								tsKey: {
 									text: 'Call for more information.',
@@ -517,7 +436,7 @@ export const mockServiceData = {
 				postCode: '94109',
 				primary: true,
 				govDist: {
-					id: 'gdst_01GVXZM7HZ4YR0DNSYHST80GXS',
+					id: 'gdst_01GW2HJ23GMD17FBJMJWD16PZ1',
 					name: 'California',
 					slug: 'us-california',
 					iso: 'US-CA',
@@ -525,14 +444,12 @@ export const mockServiceData = {
 					country: {
 						cca2: 'US',
 						cca3: 'USA',
-						id: 'ctry_01GVXZJT2JD3E5HN892PH78C2C',
+						id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
 						name: 'United States',
 						dialCode: null,
 						flag: '🇺🇸',
 						tsKey: 'USA.name',
 						tsNs: 'country',
-						demonymKey: 'USA.demonym',
-						demonymNs: 'country',
 					},
 					govDistType: {
 						tsKey: 'type-state',
@@ -546,14 +463,12 @@ export const mockServiceData = {
 				country: {
 					cca2: 'US',
 					cca3: 'USA',
-					id: 'ctry_01GVXZJT2JD3E5HN892PH78C2C',
+					id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
 					name: 'United States',
 					dialCode: null,
 					flag: '🇺🇸',
 					tsKey: 'USA.name',
 					tsNs: 'country',
-					demonymKey: 'USA.demonym',
-					demonymNs: 'country',
 				},
 				longitude: -122.413,
 				latitude: 37.782,
@@ -561,8 +476,6 @@ export const mockServiceData = {
 		},
 	],
 	id: 'osvc_01GVH3VDMSN34BACQDMY6S5GPM',
-	createdAt: new Date('2020-03-27T18:54:17.534Z'),
-	updatedAt: new Date('2022-10-25T11:28:34.601Z'),
 	description: {
 		key: 'larkin-street-youth-services.osvc_01GVH3VDMSN34BACQDMY6S5GPM.description',
 		ns: 'org-data',

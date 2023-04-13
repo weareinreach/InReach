@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { Context } from '~api/lib'
 
-import { freeText, isPublic, attributes } from './common'
+import { freeText, isPublic, attributes, phoneSelectPublic, countryWithoutGeo } from './common'
 
 type OrgIncludeKeys = z.ZodObject<
 	{
@@ -50,16 +50,6 @@ export const organizationSelect = {
 	published: true,
 	lastVerified: true,
 } satisfies Prisma.OrganizationSelect
-const countryInclude = {
-	select: {
-		cca2: true,
-		cca3: true,
-		tsKey: true,
-		tsNs: true,
-		dialCode: true,
-		flag: true,
-	},
-} satisfies Prisma.CountryArgs
 const hoursSelect = {
 	select: {
 		dayIndex: true,
@@ -92,33 +82,6 @@ const orgEmailInclude = {
 		},
 	},
 } satisfies Prisma.OrgService$emailsArgs | Prisma.Organization$emailsArgs | Prisma.OrgLocation$emailsArgs
-
-const orgPhoneInclude = {
-	where: {
-		phone: isPublic,
-	},
-
-	select: {
-		phone: {
-			select: {
-				country: {
-					select: {
-						flag: true,
-						dialCode: true,
-						cca2: true,
-						tsKey: true,
-						tsNs: true,
-					},
-				},
-				phoneType: true,
-				number: true,
-				ext: true,
-				primary: true,
-				locationOnly: true,
-			},
-		},
-	},
-} satisfies Prisma.Organization$phonesArgs | Prisma.OrgLocation$phonesArgs
 
 const orgSocialMediaInclude = {
 	where: isPublic,
@@ -181,7 +144,7 @@ const govDistInclude = {
 
 const serviceAreaInclude = {
 	select: {
-		countries: { select: { country: countryInclude } },
+		countries: { select: { country: countryWithoutGeo } },
 		districts: { select: { govDist: govDistInclude } },
 	},
 } satisfies Prisma.ServiceAreaArgs
@@ -231,7 +194,7 @@ const orgServiceInclude = (ctx: Context) =>
 			services: orgServiceTagInclude,
 			accessDetails: serviceAccessInclude,
 			reviews: reviewIds,
-			phones: orgPhoneInclude,
+			phones: phoneSelectPublic,
 			emails: orgEmailInclude,
 			userLists: userListSelect(ctx),
 			id: true,
@@ -278,17 +241,18 @@ export const orgLocationInclude = (ctx: Context) =>
 	({
 		select: {
 			govDist: govDistInclude,
-			country: countryInclude,
+			country: countryWithoutGeo,
 			attributes: attributeInclude,
 			emails: orgEmailInclude,
 			websites: orgWebsiteInclude,
-			phones: orgPhoneInclude,
+			phones: phoneSelectPublic,
 			photos: photoSelect,
 			hours: hoursSelect,
 			reviews: reviewIds,
 			services: orgLocationServiceInclude(ctx),
 			serviceAreas: serviceAreaInclude,
 			socialMedia: orgSocialMediaInclude,
+			description: freeText,
 			name: true,
 			street1: true,
 			street2: true,
@@ -307,7 +271,7 @@ export const organizationInclude = (ctx: Context) =>
 			description: freeText,
 			emails: orgEmailInclude,
 			locations: orgLocationInclude(ctx),
-			phones: orgPhoneInclude,
+			phones: phoneSelectPublic,
 			photos: photoSelect,
 			services: orgServiceInclude(ctx),
 			socialMedia: orgSocialMediaInclude,
@@ -354,7 +318,7 @@ const selectAttrib = {
 			categories: {
 				some: {
 					category: {
-						OR: [{ tag: 'organization-leadership' }, { tag: 'organization-focus' }],
+						OR: [{ tag: 'organization-leadership' }, { tag: 'service-focus' }],
 					},
 				},
 			},
@@ -367,6 +331,7 @@ const selectAttrib = {
 				tsKey: true,
 				icon: true,
 				iconBg: true,
+				_count: { select: { parents: true } },
 				categories: {
 					where: { category: { active: true } },
 					select: { category: { select: { tag: true } } },
