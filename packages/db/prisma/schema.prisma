@@ -1567,7 +1567,7 @@ model AuditLog {
   actor     User              @relation("Recorded User", fields: [actorId], references: [id])
   actorId   String
   timestamp DateTime          @default(now())
-  from      Json
+  from      Json?
   to        Json
   operation AuditLogOperation
 
