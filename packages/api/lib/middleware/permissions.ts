@@ -59,7 +59,6 @@ export const isAdmin = t.middleware(({ ctx, meta, next }) => {
 })
 export const isStaff = t.middleware(({ ctx, meta, next }) => {
 	if (!ctx.session || !ctx.session.user) return reject()
-	console.log(ctx.session.user)
 	if (
 		!(
 			checkRole(['dataManager', 'dataAdmin', 'sysadmin', 'system', 'root'], ctx.session?.user.roles) &&

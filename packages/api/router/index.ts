@@ -4,6 +4,7 @@ import { attributeRouter } from './attribute'
 import { authRouter } from './auth'
 import { fieldOptRouter } from './fieldOpt'
 import { geoRouter } from './geo'
+import { internalNoteRouter } from './internalNote'
 import { locationRouter } from './location'
 import { orgRouter } from './organization'
 import { reviewRouter } from './review'
@@ -17,6 +18,7 @@ export const appRouter = defineRouter({
 	auth: authRouter,
 	fieldOpt: fieldOptRouter,
 	geo: geoRouter,
+	internalNote: internalNoteRouter,
 	location: locationRouter,
 	organization: orgRouter,
 	review: reviewRouter,

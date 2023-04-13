@@ -18,6 +18,7 @@ import { nanoUrlRegex } from '~api/lib/nanoIdUrl'
  */
 export const idString = z.string()
 export const idOptional = z.string().optional()
+export const prefixedUlid = z.string().regex(/\w{4}_\w+/)
 export const id = z.object({ id: z.string() })
 export const idArray = z.object({ ids: z.string().array() })
 export const actorId = z.object({ actorId: z.string() })
@@ -28,6 +29,11 @@ export const orgIdServiceId = z.object({ orgId: z.string(), serviceId: z.string(
 export const orgIdLocationId = z.object({ orgId: z.string(), locationId: z.string() })
 export const slug = z.object({ slug: z.string() })
 export const nanoIdUrl = z.string().regex(nanoUrlRegex)
+export const nonEmptyString = z
+	.string()
+	.transform((val) => (String(val).trim() === '' ? undefined : String(val).trim()))
+// .preprocess((val) => (String(val).trim() === '' ? undefined : String(val).trim()), z.string())
+// .optional()
 export const searchTerm = z.object({ search: z.string().trim() })
 export const pagination = {
 	skip: z.number().optional(),
