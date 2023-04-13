@@ -63,7 +63,7 @@ export const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((
 	const deleteAccount = api.user.deleteAccount.useMutation({
 		onSuccess: () => {
 			// Causes error in storybook
-			// signOut()
+			signOut()
 			handler.close()
 			router.push('/')
 		},
