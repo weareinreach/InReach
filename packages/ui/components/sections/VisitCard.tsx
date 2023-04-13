@@ -90,5 +90,5 @@ type LocationResult = NonNullable<ApiOutput['location']['getById']>
 
 export type VisitCardProps = {
 	location: PageQueryResult['locations'][number] | LocationResult
-	published: boolean
+	published?: boolean
 }
