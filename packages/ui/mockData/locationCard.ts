@@ -449,6 +449,13 @@ export const locationMock = {
 							},
 							phoneLangs: [],
 							phoneType: null,
+							description: {
+								key: 'whitman-walker-health.ophn_01GVH3VEVCFKT3NWQ79STYVDKR.description',
+								ns: 'org-data',
+								tsKey: {
+									text: 'Medical Care/ Appointments',
+								},
+							},
 							number: '2027457000',
 							ext: null,
 							primary: true,
@@ -846,6 +853,13 @@ export const locationMock = {
 							},
 							phoneLangs: [],
 							phoneType: null,
+							description: {
+								key: 'whitman-walker-health.ophn_01GVH3VEVCFKT3NWQ79STYVDKR.description',
+								ns: 'org-data',
+								tsKey: {
+									text: 'Medical Care/ Appointments',
+								},
+							},
 							number: '2027457000',
 							ext: null,
 							primary: true,
@@ -1707,6 +1721,13 @@ export const locationMock = {
 							},
 							phoneLangs: [],
 							phoneType: null,
+							description: {
+								key: 'whitman-walker-health.ophn_01GVH3VEVCQW5N7R8YEV06D3AZ.description',
+								ns: 'org-data',
+								tsKey: {
+									text: 'Gender Affirming Services',
+								},
+							},
 							number: '2027974457',
 							ext: null,
 							primary: false,
