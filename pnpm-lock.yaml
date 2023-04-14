@@ -5874,6 +5874,16 @@ packages:
       '@opentelemetry/core': 1.11.0(@opentelemetry/api@1.4.1)
     dev: false
 
+  /@opentelemetry/resources@1.11.0(@opentelemetry/api@1.4.1):
+    resolution: {integrity: sha512-y0z2YJTqk0ag+hGT4EXbxH/qPhDe8PfwltYb4tXIEsozgEFfut/bqW7H7pDvylmCjBRMG4NjtLp57V1Ev++brA==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0 <1.5.0'
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/core': 1.11.0(@opentelemetry/api@1.4.1)
+      '@opentelemetry/semantic-conventions': 1.11.0
+
   /@opentelemetry/sdk-metrics@1.11.0(@opentelemetry/api@1.4.1):
     resolution: {integrity: sha512-knuq3pwU0+46FEMdw9Ses+alXL9cbcLUUTdYBBBsaKkqKwoVMHfhBufW7u6YCu4i+47Wg6ZZTN/eGc4LbTbK5Q==}
     engines: {node: '>=14'}
