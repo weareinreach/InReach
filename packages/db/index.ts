@@ -5,6 +5,7 @@
 // if (process.env.NODE_ENV === 'development') require('./otel')
 
 import { PrismaClient, Prisma } from '@prisma/client'
+import { queryHandler } from 'prisma-query-inspector'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 import { Logger } from 'tslog'
 
@@ -49,6 +50,7 @@ const queryLogger = createPrismaQueryEventHandler({
 if (!global.prisma) {
 	if (verboseLogging) {
 		prisma.$on('query', queryLogger)
+		prisma.$on('query', queryHandler)
 	} else {
 		prisma.$on('error', (event) => log.error(event))
 		prisma.$on('warn', (event) => log.warn(event))

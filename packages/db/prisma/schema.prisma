@@ -5,14 +5,15 @@ generator client {
 }
 
 generator zod {
-  provider                 = "zod-prisma-types"
-  output                   = "../zod-schemas"
-  useMultipleFiles         = true
-  createModelTypes         = true
-  createInputTypes         = false
-  writeNullishInModelTypes = true
-  addInputTypeValidation   = false
-  addSelectType            = false
+  provider               = "zod-prisma-types"
+  output                 = "../zod-schemas"
+  useMultipleFiles       = true
+  createModelTypes       = true
+  createInputTypes       = false
+  createPartialTypes     = true
+  addInputTypeValidation = false
+  addSelectType          = false
+  useDefaultValidators   = false
 }
 
 // generator dbml {
@@ -438,6 +439,7 @@ model Organization {
   //@@schema("org")
 
   @@index([name(sort: Asc)])
+  @@index([id, published, deleted])
 }
 
 /// Organization email contacts - can be general or location specific
@@ -476,6 +478,8 @@ model OrgEmail {
 
   @@index([lastName(sort: Asc), firstName])
   @@index([email])
+  @@index([id, descriptionId])
+  @@index([id, published, deleted])
 }
 
 /// Org phone numbers - can be general or location specific
@@ -515,8 +519,9 @@ model OrgPhone {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([id, published, deleted])
 }
 
 /// Organization's social media links
@@ -543,8 +548,9 @@ model OrgSocialMedia {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([id, published, deleted])
 }
 
 model OrgWebsite {
@@ -569,8 +575,9 @@ model OrgWebsite {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([id, published, deleted])
 }
 
 /// Org location information
@@ -636,8 +643,11 @@ model OrgLocation {
   //@@schema("org")
 
   @@index([geo], type: SpGist)
-  @@index([latitude, longitude])
-  @@index([geoJSON(ops: JsonbPathOps)], type: Gin)
+  @@index([orgId, id])
+  @@index([descriptionId, id])
+  @@index([id, published, deleted])
+  @@index([orgId, id, geo])
+  @@index([geo, id])
 }
 
 /// Organization photos
@@ -659,8 +669,9 @@ model OrgPhoto {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([id, published, deleted])
 }
 
 /// Organization location/service hours
@@ -697,8 +708,11 @@ model OrgHours {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([id, orgLocId])
+  @@index([id, orgServiceId])
+  @@index([id, organizationId])
 }
 
 model FreeText {
@@ -722,6 +736,7 @@ model FreeText {
   //@@schema("org")
 
   @@unique([key, ns])
+  @@index([id, key, ns])
 }
 
 /// Organization's offered services - access instructions & details
@@ -763,6 +778,10 @@ model OrgService {
 
   @@index([organizationId(sort: Asc)])
   @@index([descriptionId])
+  @@index([id, serviceNameId, descriptionId])
+  @@index([id, published, deleted])
+  @@index([id, organizationId])
+  @@index([organizationId, id])
 }
 
 model ServiceArea {
@@ -783,6 +802,10 @@ model ServiceArea {
   auditLogs AuditLog[]
 
   //@@schema("org")
+
+  @@index([organizationId, id])
+  @@index([orgLocationId, id])
+  @@index([orgServiceId, id])
 }
 
 model ServiceAccess {
@@ -799,8 +822,9 @@ model ServiceAccess {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([serviceId, id])
 }
 
 /// User reviews/ratings of organization
@@ -855,6 +879,10 @@ model OrgReview {
 
   @@index([organizationId(sort: Asc)])
   @@index([orgServiceId(sort: Asc)])
+  @@index([id, visible, deleted])
+  @@index([organizationId, id])
+  @@index([orgLocationId, id])
+  @@index([orgServiceId, id])
 }
 
 /// Store machine translations for reviews - save on API calls
@@ -873,7 +901,7 @@ model TranslatedReview {
   updatedAt DateTime   @updatedAt
   auditLogs AuditLog[]
 
-  @@index([reviewId])
+  @@index([reviewId, languageId, id])
 }
 
 /// Additional Properties for Org/Service.
@@ -995,11 +1023,11 @@ model AttributeSupplement {
   userAttributeAttributeId              String?
   userAttributeUserId                   String?
 
-  @@index([locationAttributeAttributeId, locationAttributeLocationId])
-  @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId])
-  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId])
-  @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId])
-  @@index([userAttributeAttributeId, userAttributeUserId])
+  @@index([locationAttributeAttributeId, locationAttributeLocationId, id])
+  @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId, id])
+  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId, id])
+  @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId, id])
+  @@index([userAttributeAttributeId, userAttributeUserId, id])
 }
 
 model AttributeSupplementDataSchema {
@@ -1065,8 +1093,8 @@ model ServiceTag {
 
   @@unique([tsKey, tsNs])
   @@unique([name, categoryId])
-  @@index([tsKey, tsNs])
   @@index([categoryId])
+  @@index([categoryId, id])
 }
 
 /// Phone number descriptors
@@ -1260,6 +1288,8 @@ model GovDist {
   @@index([geo], type: SpGist)
   @@index([countryId])
   @@index([parentId])
+  @@index([countryId, id])
+  @@index([parentId, id])
 }
 
 /// Descriptor of principal administrative districts (state, province, county, etc.)
@@ -2124,6 +2154,7 @@ model ServiceAttribute {
   //@@schema("relation")
 
   @@id([orgServiceId, attributeId])
+  @@index([attributeId, orgServiceId])
 }
 
 /// Link attributes to Service Access instructions
