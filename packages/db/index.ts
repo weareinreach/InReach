@@ -64,7 +64,7 @@ export * from './zod_util'
 
 export { slug } from './lib/slugGen'
 export { createPoint } from './lib/createPoint'
-export { generateFreeText } from './lib/generateFreeText'
+export { generateFreeText, generateNestedFreeText } from './lib/generateFreeText'
 export { generateId } from './lib/idGen'
 export { PrismaInstrumentation } from '@prisma/instrumentation'
 export { prisma }

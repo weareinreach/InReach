@@ -39,6 +39,32 @@ export const generateFreeText = ({ orgSlug, itemId, text, type }: GenerateFreeTe
 		}),
 	}
 }
+export const generateNestedFreeText = ({ orgSlug, itemId, text, type }: GenerateFreeTextParams) => {
+	const key = (() => {
+		switch (type) {
+			case 'orgDesc': {
+				return createKey([orgSlug, 'description'])
+			}
+			case 'attSupp': {
+				invariant(itemId)
+				return createKey([orgSlug, 'attribute', itemId])
+			}
+			case 'svcName': {
+				invariant(itemId)
+				return createKey([orgSlug, itemId, 'name'])
+			}
+			case 'emailDesc':
+			case 'svcDesc': {
+				invariant(itemId)
+				return createKey([orgSlug, itemId, 'description'])
+			}
+		}
+	})()
+	const ns = namespaces.orgData
+	return {
+		create: { tsKey: { create: { key, text, namespace: { connect: { name: ns } } } } },
+	}
+}
 
 type GenerateFreeTextParams = GenerateFreeTextWithItem | GenerateFreeTextWithoutItem
 
