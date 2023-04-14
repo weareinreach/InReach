@@ -1,5 +1,10 @@
 import { defineRouter, handleError, permissionedProcedure } from '~api/lib'
-import { CreateManyOrgLocationSchema, CreateOrgLocationSchema } from '~api/schemas/create/orgLocation'
+import { CreateAuditLog } from '~api/schemas/create/auditLog'
+import {
+	CreateManyOrgLocationSchema,
+	CreateOrgLocationSchema,
+	EditOrgLocationSchema,
+} from '~api/schemas/create/orgLocation'
 
 export const mutations = defineRouter({
 	create: permissionedProcedure
@@ -44,5 +49,26 @@ export const mutations = defineRouter({
 			} catch (error) {
 				handleError(error)
 			}
+		}),
+	update: permissionedProcedure
+		.meta({ hasPerm: ['editAnyLocation'] })
+		.input(EditOrgLocationSchema)
+		.mutation(async ({ ctx, input }) => {
+			const { where, data } = input
+			const updatedRecord = await ctx.prisma.$transaction(async (tx) => {
+				const current = await tx.orgLocation.findUniqueOrThrow({ where })
+				const auditLog = CreateAuditLog({
+					actorId: ctx.session.user.id,
+					operation: 'UPDATE',
+					from: current,
+					to: data,
+				})
+				const update = await tx.orgLocation.update({
+					where,
+					data: { ...data, auditLogs: auditLog },
+				})
+				return update
+			})
+			return updatedRecord
 		}),
 })
