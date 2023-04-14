@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["extendedWhereUnique", "fieldReference", "filteredRelationCount", "fullTextSearch", "postgresqlExtensions", "tracing", "views"]
+  previewFeatures = ["extendedWhereUnique", "fieldReference", "filteredRelationCount", "fullTextSearch", "postgresqlExtensions", "tracing", "views", "jsonProtocol"]
 }
 
 generator zod {
