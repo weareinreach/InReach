@@ -3,8 +3,7 @@ import { defineRouter, handleError, permissionedProcedure } from '~api/lib'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 
 export const orgPhotoRouter = defineRouter({
-	create: permissionedProcedure
-		.meta({ hasPerm: ['editAnyOrg', 'createOrg'] })
+	create: permissionedProcedure('createPhoto')
 		.input(CreateOrgPhotoSchema)
 		.mutation(async ({ ctx, input }) => {
 			const auditLogs = CreateAuditLog({ actorId: ctx.session.user.id, operation: 'CREATE', to: input })
@@ -17,8 +16,7 @@ export const orgPhotoRouter = defineRouter({
 			})
 			return newRecord
 		}),
-	update: permissionedProcedure
-		.meta({ hasPerm: 'editSingleOrg' })
+	update: permissionedProcedure('updatePhoto')
 		.input(UpdateOrgPhotoSchema)
 		.mutation(async ({ input, ctx }) => {
 			const { where, data } = input

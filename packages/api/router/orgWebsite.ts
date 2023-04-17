@@ -3,8 +3,7 @@ import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { CreateOrgWebsiteSchema, UpdateOrgWebsiteSchema } from '~api/schemas/create/orgWebsite'
 
 export const orgWebsiteRouter = defineRouter({
-	create: permissionedProcedure
-		.meta({ hasPerm: ['editAnyOrg', 'createOrg'] })
+	create: permissionedProcedure('createOrgWebsite')
 		.input(CreateOrgWebsiteSchema)
 		.mutation(async ({ ctx, input }) => {
 			const auditLogs = CreateAuditLog({ actorId: ctx.session.user.id, operation: 'CREATE', to: input })
@@ -17,8 +16,7 @@ export const orgWebsiteRouter = defineRouter({
 			})
 			return newRecord
 		}),
-	update: permissionedProcedure
-		.meta({ hasPerm: 'editSingleOrg' })
+	update: permissionedProcedure('updateOrgWebsite')
 		.input(UpdateOrgWebsiteSchema)
 		.mutation(async ({ input, ctx }) => {
 			const { where, data } = input

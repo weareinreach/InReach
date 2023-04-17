@@ -1,4 +1,4 @@
-import { defineRouter, handleError, permissionedProcedure } from '~api/lib'
+import { defineRouter, handleError, permissionedProcedure, getPermissions } from '~api/lib'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import {
 	CreateManyOrgLocationSchema,
@@ -7,8 +7,7 @@ import {
 } from '~api/schemas/create/orgLocation'
 
 export const mutations = defineRouter({
-	create: permissionedProcedure
-		.meta({ hasPerm: 'createLocation' })
+	create: permissionedProcedure('createNewLocation')
 		.input(CreateOrgLocationSchema().inputSchema)
 		.mutation(async ({ ctx, input }) => {
 			try {
@@ -21,8 +20,7 @@ export const mutations = defineRouter({
 				handleError(error)
 			}
 		}),
-	createMany: permissionedProcedure
-		.meta({ hasPerm: 'createLocation' })
+	createMany: permissionedProcedure('createManyNewLocation')
 		.input(CreateManyOrgLocationSchema().inputSchema)
 		.mutation(async ({ ctx, input }) => {
 			try {
@@ -50,8 +48,7 @@ export const mutations = defineRouter({
 				handleError(error)
 			}
 		}),
-	update: permissionedProcedure
-		.meta({ hasPerm: ['editAnyLocation'] })
+	update: permissionedProcedure('updateLocation')
 		.input(EditOrgLocationSchema)
 		.mutation(async ({ ctx, input }) => {
 			const { where, data } = input

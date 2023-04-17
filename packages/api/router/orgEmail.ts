@@ -3,8 +3,7 @@ import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { CreateOrgEmailSchema, UpdateOrgEmailSchema } from '~api/schemas/create/orgEmail'
 
 export const orgEmailRouter = defineRouter({
-	create: permissionedProcedure
-		.meta({ hasPerm: 'editSingleOrg' })
+	create: permissionedProcedure('createNewEmail')
 		.input(CreateOrgEmailSchema)
 		.mutation(async ({ ctx, input }) => {
 			const auditLogs = CreateAuditLog({ actorId: ctx.session.user.id, operation: 'CREATE', to: input })
@@ -17,8 +16,7 @@ export const orgEmailRouter = defineRouter({
 			})
 			return newEmail
 		}),
-	update: permissionedProcedure
-		.meta({ hasPerm: 'editSingleOrg' })
+	update: permissionedProcedure('updateEmail')
 		.input(UpdateOrgEmailSchema)
 		.mutation(async ({ ctx, input }) => {
 			const { where, data } = input

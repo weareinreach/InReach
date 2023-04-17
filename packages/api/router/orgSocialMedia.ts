@@ -3,8 +3,7 @@ import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { CreateOrgSocialSchema, UpdateOrgSocialSchema } from '~api/schemas/create/orgSocialMedia'
 
 export const orgSocialMediaRouter = defineRouter({
-	create: permissionedProcedure
-		.meta({ hasPerm: ['editAnyOrg', 'createOrg'] })
+	create: permissionedProcedure('createNewSocial')
 		.input(CreateOrgSocialSchema)
 		.mutation(async ({ ctx, input }) => {
 			const auditLogs = CreateAuditLog({ actorId: ctx.session.user.id, operation: 'CREATE', to: input })
@@ -17,8 +16,7 @@ export const orgSocialMediaRouter = defineRouter({
 			})
 			return newSocial
 		}),
-	update: permissionedProcedure
-		.meta({ hasPerm: 'editSingleOrg' })
+	update: permissionedProcedure('updateSocialMedia')
 		.input(UpdateOrgSocialSchema)
 		.mutation(async ({ input, ctx }) => {
 			const { where, data } = input

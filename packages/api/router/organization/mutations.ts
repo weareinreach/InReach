@@ -5,12 +5,11 @@ import {
 	CreateQuickOrgSchema,
 	CreateOrgSuggestionSchema,
 	type CreateOrgSuggestionInput,
-	AttachAttribute,
+	AttachOrgAttribute,
 } from '~api/schemas/create/organization'
 
 export const mutations = defineRouter({
-	createNewQuick: permissionedProcedure
-		.meta({ hasPerm: 'createOrg' })
+	createNewQuick: permissionedProcedure('createNewOrgQuick')
 		.input(CreateQuickOrgSchema().inputSchema)
 		.mutation(async ({ ctx, input }) => {
 			try {
@@ -46,13 +45,12 @@ export const mutations = defineRouter({
 				handleError(error)
 			}
 		}),
-	attachAttribute: permissionedProcedure
-		.meta({ hasPerm: ['editTeamOrg', 'editAnyOrg', 'editSingleOrg'] })
-		.input(AttachAttribute().inputSchema)
+	attachAttribute: permissionedProcedure('attachOrgAttributes')
+		.input(AttachOrgAttribute().inputSchema)
 		.mutation(async ({ ctx, input }) => {
 			const inputData = { actorId: ctx.session.user.id, operation: 'LINK', data: input }
 			const { translationKey, freeText, attributeSupplement, organizationAttribute, auditLogs } =
-				AttachAttribute().dataParser.parse(inputData)
+				AttachOrgAttribute().dataParser.parse(inputData)
 
 			const result = await ctx.prisma.$transaction(async (tx) => {
 				const tKey = translationKey ? tx.translationKey.create(translationKey) : undefined
