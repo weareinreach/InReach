@@ -17,7 +17,7 @@ type AttributeCategory = Omit<Prisma.AttributeCategoryCreateManyInput, 'tag'> & 
 	// ns: string
 	attributes: AttributeItem[]
 }
-type AttributeData = AttributeCategory[]
+export type AttributeData = AttributeCategory[]
 
 export const attributeData: AttributeData = [
 	{

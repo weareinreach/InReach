@@ -1,5 +1,5 @@
 import { geojsonToWKT } from '@terraformer/wkt'
-import { Prisma, GeoJSONPointSchema, generateId, createPoint } from '@weareinreach/db'
+import { Prisma, GeoJSONPointSchema, generateId, createPoint, Geometry } from '@weareinreach/db'
 import { z } from 'zod'
 
 import { idString, JsonInputOrNullSuperJSON, MutationBase, MutationBaseArray } from '~api/schemas/common'
@@ -155,3 +155,28 @@ export const CreateOrgLocationSchema = () => {
 
 	return { dataParser, inputSchema }
 }
+
+export const EditOrgLocationSchema = z
+	.object({
+		id: z.string(),
+		data: z
+			.object({
+				legacyId: z.string(),
+				name: z.string(),
+				street1: z.string(),
+				street2: z.string(),
+				city: z.string(),
+				postCode: z.string(),
+				primary: z.boolean(),
+				mailOnly: z.boolean(),
+				longitude: z.number(),
+				latitude: z.number(),
+				geoJSON: Geometry,
+				geoWKT: z.string(),
+				published: z.boolean(),
+				deleted: z.boolean(),
+				checkMigration: z.boolean(),
+			})
+			.partial(),
+	})
+	.transform(({ id, data }) => Prisma.validator<Prisma.OrgLocationUpdateArgs>()({ where: { id }, data }))

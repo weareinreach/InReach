@@ -91,13 +91,13 @@ const transformer = (data: z.output<typeof AuditLogBaseUnion | typeof AuditLogEx
 		case 'CREATE': {
 			return Prisma.validator<Prisma.AuditLogUncheckedCreateInput>()({
 				...data,
-				from: JsonInputOrNullSuperJSON.parse({}),
+				from: Prisma.JsonNull,
 			})
 		}
 		case 'LINK': {
 			return Prisma.validator<Prisma.AuditLogUncheckedCreateInput>()({
 				...data,
-				from: JsonInputOrNullSuperJSON.parse({}),
+				from: Prisma.JsonNull,
 				to: data.to ?? JsonInputOrNullSuperJSON.parse({ linked: true }),
 			})
 		}

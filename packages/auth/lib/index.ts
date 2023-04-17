@@ -9,6 +9,8 @@ export * from './deleteAccount'
 export * from './forgotPassword'
 export * from './genUserSession'
 export * from './getBaseUrl'
+export * from './refreshSession'
 export * from './resetPassword'
 export * from './userLogin'
+export * from './userLogout'
 // codegen:end
