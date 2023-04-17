@@ -22,6 +22,7 @@ export const generateFreeText = ({ orgSlug, itemId, text, type }: GenerateFreeTe
 				invariant(itemId)
 				return createKey([orgSlug, itemId, 'name'])
 			}
+			case 'phoneDesc':
 			case 'emailDesc':
 			case 'svcDesc': {
 				invariant(itemId)
@@ -53,6 +54,7 @@ export const generateNestedFreeText = ({ orgSlug, itemId, text, type }: Generate
 				invariant(itemId)
 				return createKey([orgSlug, itemId, 'name'])
 			}
+			case 'phoneDesc':
 			case 'emailDesc':
 			case 'svcDesc': {
 				invariant(itemId)
@@ -73,7 +75,7 @@ interface GenerateFreeTextBase {
 	orgSlug: string
 }
 interface GenerateFreeTextWithItem extends GenerateFreeTextBase {
-	type: 'attSupp' | 'svcName' | 'svcDesc' | 'emailDesc'
+	type: 'attSupp' | 'svcName' | 'svcDesc' | 'emailDesc' | 'phoneDesc'
 	itemId: string
 }
 interface GenerateFreeTextWithoutItem extends GenerateFreeTextBase {
