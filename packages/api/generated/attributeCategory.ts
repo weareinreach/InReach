@@ -9,6 +9,7 @@ export const attributeCategory = [
 	{ id: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R', tag: 'service-focus', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GW2HHFVRSN3W3GYZZ43WCW24', tag: 'law-practice-options', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GW2HHFVSQWE2Y2RF3DT2VEYX', tag: 'service-provider-options', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GXS3AYEER4CCSX670S9Z84EB', tag: 'alerts', icon: null, ns: 'attribute' },
 ] as const
 
 export type AtttributeCategory = (typeof attributeCategory)[number]

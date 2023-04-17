@@ -1,18 +1,18 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fieldReference", "postgresqlExtensions", "filteredRelationCount", "extendedWhereUnique", "views", "fullTextSearch"]
-  // binaryTargets   = ["native", "rhel-openssl-1.0.x"]
+  previewFeatures = ["extendedWhereUnique", "fieldReference", "filteredRelationCount", "fullTextSearch", "postgresqlExtensions", "tracing", "views", "jsonProtocol"]
 }
 
 generator zod {
-  provider                 = "zod-prisma-types"
-  output                   = "../zod-schemas"
-  useMultipleFiles         = true
-  createModelTypes         = true
-  createInputTypes         = false
-  writeNullishInModelTypes = true
-  addInputTypeValidation   = false
-  addSelectType            = false
+  provider               = "zod-prisma-types"
+  output                 = "../zod-schemas"
+  useMultipleFiles       = true
+  createModelTypes       = true
+  createInputTypes       = false
+  createPartialTypes     = true
+  addInputTypeValidation = false
+  addSelectType          = false
+  useDefaultValidators   = false
 }
 
 // generator dbml {
@@ -28,7 +28,7 @@ datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
   directUrl  = env("DB_DIRECT_URL")
-  extensions = [postgis]
+  extensions = [postgis, pg_stat_statements]
   // schemas    = ["user", "org", "system", "relation"]
 }
 
@@ -438,6 +438,7 @@ model Organization {
   //@@schema("org")
 
   @@index([name(sort: Asc)])
+  @@index([id, published, deleted])
 }
 
 /// Organization email contacts - can be general or location specific
@@ -476,6 +477,8 @@ model OrgEmail {
 
   @@index([lastName(sort: Asc), firstName])
   @@index([email])
+  @@index([id, descriptionId])
+  @@index([id, published, deleted])
 }
 
 /// Org phone numbers - can be general or location specific
@@ -515,8 +518,9 @@ model OrgPhone {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([id, published, deleted])
 }
 
 /// Organization's social media links
@@ -543,8 +547,9 @@ model OrgSocialMedia {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([id, published, deleted])
 }
 
 model OrgWebsite {
@@ -569,8 +574,9 @@ model OrgWebsite {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([id, published, deleted])
 }
 
 /// Org location information
@@ -636,8 +642,11 @@ model OrgLocation {
   //@@schema("org")
 
   @@index([geo], type: SpGist)
-  @@index([latitude, longitude])
-  @@index([geoJSON(ops: JsonbPathOps)], type: Gin)
+  @@index([orgId, id])
+  @@index([descriptionId, id])
+  @@index([id, published, deleted])
+  @@index([orgId, id, geo])
+  @@index([geo, id])
 }
 
 /// Organization photos
@@ -659,8 +668,9 @@ model OrgPhoto {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([id, published, deleted])
 }
 
 /// Organization location/service hours
@@ -697,8 +707,11 @@ model OrgHours {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([id, orgLocId])
+  @@index([id, orgServiceId])
+  @@index([id, organizationId])
 }
 
 model FreeText {
@@ -722,6 +735,7 @@ model FreeText {
   //@@schema("org")
 
   @@unique([key, ns])
+  @@index([id, key, ns])
 }
 
 /// Organization's offered services - access instructions & details
@@ -763,6 +777,10 @@ model OrgService {
 
   @@index([organizationId(sort: Asc)])
   @@index([descriptionId])
+  @@index([id, serviceNameId, descriptionId])
+  @@index([id, published, deleted])
+  @@index([id, organizationId])
+  @@index([organizationId, id])
 }
 
 model ServiceArea {
@@ -783,6 +801,10 @@ model ServiceArea {
   auditLogs AuditLog[]
 
   //@@schema("org")
+
+  @@index([organizationId, id])
+  @@index([orgLocationId, id])
+  @@index([orgServiceId, id])
 }
 
 model ServiceAccess {
@@ -799,8 +821,9 @@ model ServiceAccess {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
-
   //@@schema("org")
+
+  @@index([serviceId, id])
 }
 
 /// User reviews/ratings of organization
@@ -855,6 +878,10 @@ model OrgReview {
 
   @@index([organizationId(sort: Asc)])
   @@index([orgServiceId(sort: Asc)])
+  @@index([id, visible, deleted])
+  @@index([organizationId, id])
+  @@index([orgLocationId, id])
+  @@index([orgServiceId, id])
 }
 
 /// Store machine translations for reviews - save on API calls
@@ -873,7 +900,7 @@ model TranslatedReview {
   updatedAt DateTime   @updatedAt
   auditLogs AuditLog[]
 
-  @@index([reviewId])
+  @@index([reviewId, languageId, id])
 }
 
 /// Additional Properties for Org/Service.
@@ -995,11 +1022,11 @@ model AttributeSupplement {
   userAttributeAttributeId              String?
   userAttributeUserId                   String?
 
-  @@index([locationAttributeAttributeId, locationAttributeLocationId])
-  @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId])
-  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId])
-  @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId])
-  @@index([userAttributeAttributeId, userAttributeUserId])
+  @@index([locationAttributeAttributeId, locationAttributeLocationId, id])
+  @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId, id])
+  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId, id])
+  @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId, id])
+  @@index([userAttributeAttributeId, userAttributeUserId, id])
 }
 
 model AttributeSupplementDataSchema {
@@ -1065,8 +1092,8 @@ model ServiceTag {
 
   @@unique([tsKey, tsNs])
   @@unique([name, categoryId])
-  @@index([tsKey, tsNs])
   @@index([categoryId])
+  @@index([categoryId, id])
 }
 
 /// Phone number descriptors
@@ -1074,6 +1101,7 @@ model PhoneType {
   id             String     @id @default(cuid())
   type           String     @unique
   attachedPhones OrgPhone[]
+  active         Boolean    @default(true)
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -1223,6 +1251,7 @@ model GovDist {
   geo     Unsupported("Geometry(GEOMETRY,4326)")?
   geoJSON Json? /// @zod.custom.use(Geometry)
   geoWKT  String?
+  active  Boolean?                                @default(true)
 
   country   Country @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   countryId String
@@ -1258,6 +1287,8 @@ model GovDist {
   @@index([geo], type: SpGist)
   @@index([countryId])
   @@index([parentId])
+  @@index([countryId, id])
+  @@index([parentId, id])
 }
 
 /// Descriptor of principal administrative districts (state, province, county, etc.)
@@ -1491,8 +1522,6 @@ model InternalNote {
   attributeId                     String?
   attributeCategory               AttributeCategory?             @relation(fields: [attributeCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeCategoryId             String?
-  // attributeRecord          AttributeRecord?      @relation(fields: [attributeRecordId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // attributeRecordId        String?
   attributeSupplement             AttributeSupplement?           @relation(fields: [attributeSupplementId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   attributeSupplementId           String?
   attributeSupplementDataSchema   AttributeSupplementDataSchema? @relation(fields: [attributeSupplementDataSchemaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -1535,8 +1564,6 @@ model InternalNote {
   phoneTypeId                     String?
   serviceAccess                   ServiceAccess?                 @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   serviceAccessId                 String?
-  // serviceArea              ServiceArea?          @relation(fields: [serviceAreaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  // serviceAreaId            String?
   serviceCategory                 ServiceCategory?               @relation(fields: [serviceCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   serviceCategoryId               String?
   serviceTag                      ServiceTag?                    @relation(fields: [serviceTagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -1569,7 +1596,7 @@ model AuditLog {
   actor     User              @relation("Recorded User", fields: [actorId], references: [id])
   actorId   String
   timestamp DateTime          @default(now())
-  from      Json
+  from      Json?
   to        Json
   operation AuditLogOperation
 
@@ -2126,6 +2153,7 @@ model ServiceAttribute {
   //@@schema("relation")
 
   @@id([orgServiceId, attributeId])
+  @@index([attributeId, orgServiceId])
 }
 
 /// Link attributes to Service Access instructions
@@ -2244,16 +2272,31 @@ view geometry_columns {
   @@ignore
 }
 
-view attributeandcategory {
-  attributeid  String @unique
-  attributetag String
-  categoryid   String
-  categorytag  String
+view AttributesByCategory {
+  categoryId      String
+  categoryName    String
+  attributeId     String
+  attributeName   String
+  attributeKey    String
+  attributeNs     String
+  icon            String?
+  requireText     Boolean
+  requireLanguage Boolean
+  requireCountry  Boolean
+  requireBoolean  Boolean
+  requireData     Boolean
+
+  @@unique([categoryId, attributeId])
+  @@map("attributes_by_category")
 }
 
-view servicetagcategory {
-  tagid        String @unique
-  tagname      String
-  categoryid   String
-  categoryname String
+view user_refresh_token {
+  id            String  @unique
+  email         String  @unique
+  refresh_token String?
+}
+
+view user_access_token {
+  id           String  @unique
+  access_token String?
 }
