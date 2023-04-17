@@ -7,6 +7,8 @@ import { geoRouter } from './geo'
 import { internalNoteRouter } from './internalNote'
 import { locationRouter } from './location'
 import { orgEmailRouter } from './orgEmail'
+import { orgPhoneRouter } from './orgPhone'
+import { orgSocialMediaRouter } from './orgSocialMedia'
 import { orgRouter } from './organization'
 import { reviewRouter } from './review'
 import { savedListRouter } from './savedLists'
@@ -23,6 +25,8 @@ export const appRouter = defineRouter({
 	location: locationRouter,
 	organization: orgRouter,
 	orgEmail: orgEmailRouter,
+	orgPhone: orgPhoneRouter,
+	orgSocialMedia: orgSocialMediaRouter,
 	review: reviewRouter,
 	savedList: savedListRouter,
 	service: serviceRouter,
