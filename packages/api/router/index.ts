@@ -7,6 +7,7 @@ import { geoRouter } from './geo'
 import { internalNoteRouter } from './internalNote'
 import { locationRouter } from './location'
 import { orgEmailRouter } from './orgEmail'
+import { orgHoursRouter } from './orgHours'
 import { orgPhoneRouter } from './orgPhone'
 import { orgPhotoRouter } from './orgPhoto'
 import { orgSocialMediaRouter } from './orgSocialMedia'
@@ -26,6 +27,7 @@ export const appRouter = defineRouter({
 	location: locationRouter,
 	organization: orgRouter,
 	orgEmail: orgEmailRouter,
+	orgHours: orgHoursRouter,
 	orgPhone: orgPhoneRouter,
 	orgPhoto: orgPhotoRouter,
 	orgSocialMedia: orgSocialMediaRouter,
