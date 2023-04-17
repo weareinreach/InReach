@@ -5,6 +5,7 @@
 	"account": "Cuenta",
 	"add": "Añadir {{item}}",
 	"address": "Dirección",
+	"address_physical": "Dirección física",
 	"adjective": {
 		"organization": "{{adjective}} organización"
 	},
@@ -163,6 +164,7 @@
 	"questions": "¿Preguntas?",
 	"quick-promo-body": "<textUtility1>💚 Guardar y compartir listas de recursos personalizados</textUtility1>\n<textUtility1>:speech _balloon: Deja calificaciones/opiniones públicas sobre las organizaciones</textUtility1>\n\n<textUtility1>🏠 organizaciones sugeridas en tu área</textUtility1>\n<textUtility1>🔗 Reclame la página de perfil de su organización</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Necesitas iniciar sesión para ahorrar recursos.</title2>\n<textDarkGray>Con una cuenta InReach gratuita puedes desbloquear características adicionales:</textDarkGray>",
+	"remote-services": "Servicios disponibles de forma remota",
 	"reset-password": "Restablecer su contraseña",
 	"reset-password-message": "Te enviaremos un correo electrónico para restablecer tu contraseña",
 	"resource-saved": "Recurso guardado.",
