@@ -1,6 +1,6 @@
 import { defineRouter, handleError, permissionedProcedure } from '~api/lib'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
-import { CreateOrgPhoneSchema, UpdateOrgPhoneSchema } from '~api/schemas/orgPhone'
+import { CreateOrgPhoneSchema, UpdateOrgPhoneSchema } from '~api/schemas/create/orgPhone'
 
 export const orgPhoneRouter = defineRouter({
 	create: permissionedProcedure

@@ -2,8 +2,8 @@ import { Prisma, generateId } from '@weareinreach/db'
 import { DateTime } from 'luxon'
 import { z } from 'zod'
 
-import { CreationManyBase } from './common'
-import { GenerateAuditLog } from './create/auditLog'
+import { GenerateAuditLog } from './auditLog'
+import { CreationManyBase } from '../common'
 
 const CreateOrgHoursBase = z.object({
 	/** Sun 0, Mon 1, Tue 2, Wed 3, Thu 3, Fri 4, Sat 6 */

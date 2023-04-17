@@ -1,6 +1,6 @@
 import { defineRouter, handleError, permissionedProcedure } from '~api/lib'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
-import { CreateOrgWebsiteSchema, UpdateOrgWebsiteSchema } from '~api/schemas/orgWebsite'
+import { CreateOrgWebsiteSchema, UpdateOrgWebsiteSchema } from '~api/schemas/create/orgWebsite'
 
 export const orgWebsiteRouter = defineRouter({
 	create: permissionedProcedure

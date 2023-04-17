@@ -1,6 +1,6 @@
 import { defineRouter, handleError, permissionedProcedure } from '~api/lib'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
-import { CreateOrgSocialSchema, UpdateOrgSocialSchema } from '~api/schemas/orgSocialMedia'
+import { CreateOrgSocialSchema, UpdateOrgSocialSchema } from '~api/schemas/create/orgSocialMedia'
 
 export const orgSocialMediaRouter = defineRouter({
 	create: permissionedProcedure

@@ -1,6 +1,6 @@
 import { defineRouter, handleError, permissionedProcedure } from '~api/lib'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
-import { CreateOrgEmailSchema, UpdateOrgEmailSchema } from '~api/schemas/orgEmail'
+import { CreateOrgEmailSchema, UpdateOrgEmailSchema } from '~api/schemas/create/orgEmail'
 
 export const orgEmailRouter = defineRouter({
 	create: permissionedProcedure
