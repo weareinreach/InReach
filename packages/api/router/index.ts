@@ -8,6 +8,7 @@ import { internalNoteRouter } from './internalNote'
 import { locationRouter } from './location'
 import { orgEmailRouter } from './orgEmail'
 import { orgPhoneRouter } from './orgPhone'
+import { orgPhotoRouter } from './orgPhoto'
 import { orgSocialMediaRouter } from './orgSocialMedia'
 import { orgRouter } from './organization'
 import { reviewRouter } from './review'
@@ -26,6 +27,7 @@ export const appRouter = defineRouter({
 	organization: orgRouter,
 	orgEmail: orgEmailRouter,
 	orgPhone: orgPhoneRouter,
+	orgPhoto: orgPhotoRouter,
 	orgSocialMedia: orgSocialMediaRouter,
 	review: reviewRouter,
 	savedList: savedListRouter,
