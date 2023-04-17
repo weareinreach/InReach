@@ -1,7 +1,6 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import { Client, PlaceAutocompleteType, PlaceAutocompleteRequest } from '@googlemaps/google-maps-services-js'
-import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 import { googleAPIResponseHandler } from '~api/lib/googleHandler'
