@@ -23,6 +23,8 @@ export const VisitCard = (props: VisitCardProps) => {
 	const { ref, width } = useElementSize()
 	const formattedAddress = useFormattedAddress(location)
 
+	if (!published) return <></>
+
 	const isAccessible = location.attributes.some(
 		(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
 	)
@@ -43,10 +45,10 @@ export const VisitCard = (props: VisitCardProps) => {
 		</Stack>
 	)
 
-	const remoteSection = published && remote && (
+	const remoteSection = remote && (
 		<Stack spacing={12}>
 			<Group spacing={6}>
-				<Icon icon={'carbon:globe'} />
+				<Icon width={24} icon={'carbon:globe'} />
 				<Title order={3}>{t(`remote`)}</Title>
 			</Group>
 			<Text>{t(remote.attribute.tsKey)}</Text>
@@ -57,13 +59,7 @@ export const VisitCard = (props: VisitCardProps) => {
 		<Stack spacing={isMobile ? 32 : 40}>
 			<Title order={2}>{t('visit')}</Title>
 			{remoteSection}
-			{published ? (
-				address
-			) : (
-				<Stack spacing={12}>
-					<Text>{t('no-addresses')}</Text>
-				</Stack>
-			)}
+			{address}
 			<Hours data={location.hours} />
 			{/* TODO: [IN-807] Validate accessibility data points before enabling.
 			<Stack spacing={12} align='flex-start'>
