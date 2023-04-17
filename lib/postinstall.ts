@@ -5,9 +5,9 @@
 /* eslint-disable node/no-process-env */
 // @ts-ignore
 const isCi = process.env.CI !== undefined
-const skip = process.env.SKIP_PI !== undefined
 const override = process.env.OVERRIDE_CI !== undefined
-if (!isCi || override || !skip) {
+const skip = process.env.SKIP_PI !== undefined
+if ((!isCi || override) && !skip) {
 	const { execSync } = require('child_process')
 	require('dotenv').config()
 	const dbUrl = process.env.DATABASE_URL

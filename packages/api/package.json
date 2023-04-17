@@ -49,7 +49,7 @@
 		"dotenv-cli": "7.2.1",
 		"eslint": "8.38.0",
 		"just-capitalize": "3.2.0",
-		"listr2": "6.3.0",
+		"listr2": "6.3.1",
 		"next": "13.3.0",
 		"prettier": "2.8.7",
 		"prisma": "4.12.0",
