@@ -1,15 +1,37 @@
-// import { PrismaAdapter } from '@next-auth/prisma-adapter'
 // import { getEnv } from '@weareinreach/config/env'
 import { prisma } from '@weareinreach/db'
-import { User, type NextAuthOptions } from 'next-auth'
+import { JwtInvalidClaimError } from 'aws-jwt-verify/error'
+import { type NextAuthOptions } from 'next-auth'
 
+import { refreshSession, userSignOut, decodeCognitoAccessJwt } from '~auth/lib'
 import { cognitoCredentialProvider } from '~auth/providers/cognito'
 
 export const authOptions: NextAuthOptions = {
 	callbacks: {
 		jwt: async ({ token, user }) => {
-			user && (token.user = user as User)
-			return token
+			const { access_token } = await prisma.user_access_token.findFirstOrThrow({
+				where: { id: token.user?.id ?? user.id },
+			})
+			if (user) {
+				token.user = user
+				return token
+			}
+			try {
+				const jwt = await decodeCognitoAccessJwt(access_token ?? '')
+				if (jwt) {
+					return token
+				} else {
+					throw new Error('Unable to verify token')
+				}
+			} catch (error) {
+				if (error instanceof JwtInvalidClaimError) {
+					const refreshed = await refreshSession(token.user.id)
+					token.user = refreshed
+					return token
+				}
+				console.error(error)
+				throw error
+			}
 		},
 		session: async ({ session, token }) => {
 			if (session.user) {
@@ -28,8 +50,10 @@ export const authOptions: NextAuthOptions = {
 	session: {
 		strategy: 'jwt',
 	},
+	events: {
+		signOut: async ({ token }) => await userSignOut(token.user.id),
+	},
 	// Configure one or more authentication providers
-	// adapter: PrismaAdapter(prisma),
 	providers: [cognitoCredentialProvider],
 	// eslint-disable-next-line node/no-process-env
 	debug: process.env.NODE_ENV === 'development',

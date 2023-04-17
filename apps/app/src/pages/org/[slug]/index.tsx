@@ -93,7 +93,7 @@ const OrganizationPage: NextPage = () => {
 			<Grid.Col sm={8} order={1}>
 				<Toolbar
 					breadcrumbProps={{ option: 'back', backTo: 'search', onClick: () => router.back() }}
-					saved={Boolean(userLists.length)}
+					saved={Boolean(userLists?.length)}
 					organizationId={organizationId}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>

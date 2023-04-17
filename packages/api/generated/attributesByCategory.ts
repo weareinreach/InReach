@@ -79,18 +79,6 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFV5GNC11E5NVN7460QB',
-					icon: null,
-					tag: 'religiously-affiliated',
-					tsKey: 'additional.religiously-affiliated',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: 'EXCLUDE',
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
 					id: 'attr_01GW2HHFV5Q7XN2ZNTYFR1AD3M',
 					icon: 'carbon:globe',
 					tag: 'offers-remote-services',
@@ -743,6 +731,38 @@ export const attributesByCategory = [
 					icon: null,
 					tag: 'friend-family',
 					tsKey: 'userserviceprovider.friend-family',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+		],
+	},
+	{
+		id: 'attc_01GXS3AYEER4CCSX670S9Z84EB',
+		tag: 'alerts',
+		icon: null,
+		ns: 'attribute',
+		attributes: [
+			{
+				attribute: {
+					id: 'attr_01GXS3AYESEMT09DW78G5X396D',
+					icon: 'carbon:information-filled',
+					tag: 'info',
+					tsKey: 'alerts.info',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GXS3AYF9A67KMYVED2ZFG25G',
+					icon: 'carbon:warning-filled',
+					tag: 'warn',
+					tsKey: 'alerts.warn',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,

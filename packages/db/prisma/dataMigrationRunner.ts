@@ -16,6 +16,8 @@ import {
 	job20230406,
 	job20230410,
 	job20230410b,
+	job20230411,
+	job20230411b,
 } from './data-migrations'
 
 /**
@@ -33,6 +35,8 @@ const jobList = [
 	job20230406,
 	job20230410,
 	job20230410b,
+	job20230411,
+	job20230411b,
 ]
 
 /**
