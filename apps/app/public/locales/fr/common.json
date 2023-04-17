@@ -5,6 +5,7 @@
 	"account": "Compte client",
 	"add": "Ajouter {{item}}",
 	"address": "Adresses",
+	"address_physical": "Adresse physique",
 	"adjective": {
 		"organization": "{{adjective}} organisation"
 	},
@@ -163,6 +164,7 @@
 	"questions": "Des questions ?",
 	"quick-promo-body": "<textUtility1>💚 Enregistrez et partagez les listes de ressources personnalisées</textUtility1>\n<textUtility1>💬 Laissez votre évaluation publique sur les organisations</textUtility1>\n<textUtility1>🏠 Suggérer des organisations dans votre région</textUtility1>\n<textUtility1>🔗 Revendiquer la page de profil de votre organisation</textUtility1>",
 	"quick-promo-heading": "<emojiLg>:arc-en-ciel :</emojiLg>\n<title2>Vous devez vous connecter pour économiser des ressources.</title2>\n<textDarkGray>Avec un compte InReach gratuit, vous pouvez débloquer des fonctionnalités supplémentaires :</textDarkGray>",
+	"remote-services": "Services disponibles à distance",
 	"reset-password": "Réinitialiser votre mot de passe",
 	"reset-password-message": "Nous vous enverrons un email pour réinitialiser votre mot de passe",
 	"resource-saved": "Ressource enregistrée.",
