@@ -8,8 +8,8 @@ import { z } from 'zod'
 
 import { Badge, GoogleMap } from '~ui/components/core'
 import { Hours } from '~ui/components/data-display'
-import { useScreenSize, useFormattedAddress } from '~ui/hooks'
-import { Icon } from '~ui/icon'
+import { useScreenSize, useFormattedAddress, useCustomVariant } from '~ui/hooks'
+import { validateIcon } from '~ui/icon'
 
 const Coords = z.object({
 	lat: z.coerce.number(),
@@ -22,22 +22,19 @@ export const VisitCard = (props: VisitCardProps) => {
 	const { t } = useTranslation(['common', 'attribute'])
 	const { ref, width } = useElementSize()
 	const formattedAddress = useFormattedAddress(location)
+	const variants = useCustomVariant()
 
-	if (!published) return <></>
-
-	const isAccessible = location.attributes.some(
-		(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
-	)
-	const coords = Coords.safeParse({
-		lat: location.latitude,
-		lng: location.longitude,
-	})
+	// const isAccessible = location.attributes.some(
+	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
+	// )
 
 	const remote = location.attributes.find(
 		({ attribute: { tsKey } }) => tsKey === 'additional.offers-remote-services'
 	)
 
-	const address = formattedAddress && (
+	if (!published && !remote && !location.hours.length) return null
+
+	const address = formattedAddress && published && (
 		<Stack spacing={12} ref={ref}>
 			<Title order={3}>{t('address', { context: remote ? 'physical' : undefined })}</Title>
 			<Text>{formattedAddress}</Text>
@@ -47,19 +44,21 @@ export const VisitCard = (props: VisitCardProps) => {
 
 	const remoteSection = remote && (
 		<Stack spacing={12}>
-			<Group spacing={6}>
-				<Icon width={24} icon={'carbon:globe'} />
-				<Title order={3}>{t(`remote`)}</Title>
-			</Group>
-			<Text>{t(remote.attribute.tsKey)}</Text>
+			<Badge
+				variant='attribute'
+				tsNs='attribute'
+				tsKey={remote.attribute.tsKey}
+				icon={validateIcon(remote.attribute.icon)}
+			/>
+			<Text variant={variants.Text.utility2}>{t('remote-services')}</Text>
 		</Stack>
 	)
 
 	const body = (
 		<Stack spacing={isMobile ? 32 : 40}>
 			<Title order={2}>{t('visit')}</Title>
-			{remoteSection}
 			{address}
+			{remoteSection}
 			<Hours data={location.hours} />
 			{/* TODO: [IN-807] Validate accessibility data points before enabling.
 			<Stack spacing={12} align='flex-start'>

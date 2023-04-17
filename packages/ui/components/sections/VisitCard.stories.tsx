@@ -7,14 +7,14 @@ import { VisitCard } from './VisitCard'
 
 const remote = {
 	attribute: {
-		id: 'test',
+		id: 'attr_01GW2HHFV5Q7XN2ZNTYFR1AD3M',
 		_count: {
 			children: 0,
 			parents: 0,
 		},
 		tsKey: 'additional.offers-remote-services',
 		tsNs: 'attribute',
-		icon: null,
+		icon: 'carbon:globe',
 		iconBg: null,
 		showOnLocation: null,
 		categories: [
