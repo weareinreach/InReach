@@ -4,7 +4,7 @@
 	"pipeline": {
 		"db:dataMigrate": {
 			"cache": false,
-			"dependsOn": ["db:generate", "db:deploy"],
+			"dependsOn": ["db:generate", "db:deploy", "download:seedData"],
 			"inputs": ["prisma/data-migrations/**/*.ts"]
 		},
 		"db:deploy": {
