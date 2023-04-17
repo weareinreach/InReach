@@ -13,7 +13,7 @@ import { CreateNestedOrgPhoneSchema } from './orgPhone'
 import { CreateNestedOrgSocialMediaSchema } from './orgSocialMedia'
 import { CreateNestedOrgWebsiteSchema } from './orgWebsite'
 
-export const AttachAttribute = () => {
+export const AttachOrgAttribute = () => {
 	const { dataParser: parser, inputSchema } = CreationBase(
 		z.object({
 			orgSlug: z.string(),

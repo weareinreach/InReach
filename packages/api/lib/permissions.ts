@@ -33,7 +33,13 @@ const orgPhoto = {
 
 const orgService = {
 	createOrgService: ['editAnyOrg', 'createOrg'],
+	updateOrgService: ['editAnyOrg'],
+	attachServiceAttribute: ['editAnyOrg', 'createOrg'],
 	attachServiceTags: ['editAnyOrg', 'createOrg'],
+	createServiceArea: ['editAnyOrg', 'createOrg'],
+	linkServiceEmail: ['editAnyOrg', 'createOrg'],
+	linkServicePhone: ['editAnyOrg', 'createOrg'],
+	createAccessInstructions: ['editAnyOrg', 'createOrg'],
 } satisfies PermissionDefs
 
 const orgSocialMedia = {

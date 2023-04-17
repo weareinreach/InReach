@@ -99,6 +99,23 @@ export const CreationManyBase = <T extends z.ZodArray<z.ZodTypeAny>>(schema: T) 
 	}),
 	inputSchema: schema,
 })
+export const CreationOneOrManyBase = <
+	T extends z.ZodUnion<
+		[
+			z.ZodObject<z.ZodRawShape, 'strip', z.ZodTypeAny, z.objectOutputType<z.ZodRawShape, z.ZodTypeAny>>,
+			z.ZodArray<z.ZodTypeAny>
+		]
+	>
+>(
+	schema: T
+) => ({
+	dataParser: z.object({
+		actorId: z.string(),
+		data: schema,
+		operation: z.enum(['CREATE', 'LINK', 'UNLINK']),
+	}),
+	inputSchema: schema,
+})
 
 /** For a createMany or updateMany operation */
 export const MutationBaseArray = <T extends z.ZodRawShape>(
