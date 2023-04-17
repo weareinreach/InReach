@@ -16,7 +16,7 @@
 	},
 	"dependencies": {
 		"@googlemaps/google-maps-services-js": "3.3.28",
-		"@tanstack/react-query": "4.29.1",
+		"@tanstack/react-query": "4.29.3",
 		"@terraformer/wkt": "2.2.0",
 		"@trpc/client": "10.20.0",
 		"@trpc/next": "10.20.0",
@@ -47,7 +47,7 @@
 		"dotenv-cli": "7.2.1",
 		"eslint": "8.38.0",
 		"just-capitalize": "3.2.0",
-		"listr2": "6.2.0",
+		"listr2": "6.3.0",
 		"next": "13.3.0",
 		"prettier": "2.8.7",
 		"prisma": "4.12.0",
