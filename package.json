@@ -57,7 +57,7 @@
 		"prettier-plugin-packagejson": "2.4.3",
 		"prettier-plugin-prisma": "4.12.0",
 		"tsx": "3.12.6",
-		"turbo": "1.9.2",
+		"turbo": "1.9.3",
 		"typescript": "5.0.4",
 		"typesync": "0.10.0"
 	},
