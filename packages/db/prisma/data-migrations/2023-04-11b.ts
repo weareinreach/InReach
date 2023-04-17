@@ -12,7 +12,7 @@ const jobDef: JobDef = {
 
 const job: ListrTask = async (_ctx, task) => {
 	/** Do not edit this part - this ensures that jobs are only run once */
-	const runJob = true //await jobPreRunner(jobDef)
+	const runJob = await jobPreRunner(jobDef)
 	if (!runJob) {
 		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
 	}
