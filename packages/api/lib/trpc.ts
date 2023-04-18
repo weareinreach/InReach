@@ -1,5 +1,6 @@
 import { t } from './initTRPC'
 import { isAdmin, isStaff, isAuthed, hasPermissions } from './middleware'
+import { type PermissionedProcedure, getPermissions } from './permissions'
 
 export const defineRouter = t.router
 export const mergeRouters = t.mergeRouters
@@ -17,4 +18,5 @@ export const adminProcedure = t.procedure.use(isAdmin)
 export const staffProcedure = t.procedure.use(isStaff)
 
 /** Permissioned router */
-export const permissionedProcedure = t.procedure.use(hasPermissions)
+export const permissionedProcedure = (procedure: PermissionedProcedure) =>
+	t.procedure.use(hasPermissions).meta(getPermissions(procedure))

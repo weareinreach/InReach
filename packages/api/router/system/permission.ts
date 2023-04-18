@@ -5,8 +5,7 @@ import { defineRouter, permissionedProcedure } from '~api/lib/trpc'
 import { CreateNew } from '~api/schemas/system/permissions'
 
 export const permissionSubRouter = defineRouter({
-	new: permissionedProcedure
-		.meta({ hasPerm: 'adminPermissions' })
+	new: permissionedProcedure('createPermission')
 		.input(CreateNew().inputSchema)
 		.mutation(async ({ ctx, input }) => {
 			try {

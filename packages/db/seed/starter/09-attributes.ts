@@ -10,7 +10,7 @@ type Data = {
 	attribute: Prisma.AttributeCreateManyInput[]
 	link: Prisma.AttributeToCategoryCreateManyInput[]
 }
-export const seedAttributes = async (task: ListrTask) => {
+export const seedAttributes = async (task: ListrTask, attribData?: typeof attributeData) => {
 	const log: Log = (message, icon?, indent = false) => {
 		const dispIcon = icon ? `${iconList(icon)} ` : ''
 		const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
@@ -37,8 +37,10 @@ export const seedAttributes = async (task: ListrTask) => {
 	}
 	const ns = namespaces.attribute
 
-	for (const category of attributeData) {
-		log(`(${x + 1}/${attributeData.length}) Prepare Attribute Category: ${category.name}`, 'generate')
+	const dataToMap = attribData ?? attributeData
+
+	for (const category of dataToMap) {
+		log(`(${x + 1}/${dataToMap.length}) Prepare Attribute Category: ${category.name}`, 'generate')
 
 		const catTag = slug(category.name)
 		const catKey = `${slug(category.ns)}.CATEGORYNAME`

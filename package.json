@@ -44,7 +44,6 @@
 	"dependencies": {
 		"@changesets/cli": "2.26.1",
 		"@manypkg/cli": "0.20.0",
-		"@types/eslint": "8.37.0",
 		"@types/node": "18.15.11",
 		"@types/prettier": "2.7.2",
 		"@weareinreach/config": "0.100.0",
@@ -58,7 +57,7 @@
 		"prettier-plugin-packagejson": "2.4.3",
 		"prettier-plugin-prisma": "4.12.0",
 		"tsx": "3.12.6",
-		"turbo": "1.9.1",
+		"turbo": "1.9.3",
 		"typescript": "5.0.4",
 		"typesync": "0.10.0"
 	},
@@ -90,13 +89,16 @@
 			"uuid": ">=9.0.0"
 		},
 		"patchedDependencies": {
+			"@crowdin/ota-client@1.0.0": "patches/@crowdin__ota-client@1.0.0.patch",
 			"eslint-plugin-node@11.1.0": "patches/eslint-plugin-node@11.1.0.patch",
 			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch",
-			"trpc-panel@1.2.13": "patches/trpc-panel@1.2.13.patch",
-			"@crowdin/ota-client@1.0.0": "patches/@crowdin__ota-client@1.0.0.patch"
+			"trpc-panel@1.2.13": "patches/trpc-panel@1.2.13.patch"
 		},
 		"peerDependencyRules": {
 			"allowedVersions": {
+				"@storybook/components": "^7",
+				"@storybook/core-events": "^7",
+				"@storybook/theming": "^7",
 				"babel-loader": ">=9",
 				"i18next-browser-languagedetector": ">=7",
 				"i18next-http-backend": ">=2",
@@ -108,6 +110,7 @@
 				"react-dom": ">=18",
 				"react-i18next": ">=12",
 				"sanity": ">=3.0.0-rc.0",
+				"typescript": "^5",
 				"webpack": ">=5"
 			}
 		}

@@ -283,7 +283,10 @@ export const organizationInclude = (ctx: Context) =>
 			userLists: userListSelect(ctx),
 			allowedEditors: {
 				where: { authorized: true },
-				select: { _count: true },
+				select: {
+					// _count: true,
+					userId: true,
+				},
 			},
 			name: true,
 			slug: true,
