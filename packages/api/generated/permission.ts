@@ -35,6 +35,11 @@ export const permissions = [
 	'adminUserImmigration',
 	'adminUserSOG',
 	'adminUserCommunity',
+	'alertOrg',
+	'alertLoc',
+	'alertService',
+	'internalNotesRead',
+	'internalNotesWrite',
 ] as const
 
 export type Permission = (typeof permissions)[number]

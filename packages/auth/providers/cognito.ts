@@ -1,10 +1,7 @@
-import { prisma, type Prisma } from '@weareinreach/db'
 import { type Provider } from 'next-auth/providers'
 import Credentials from 'next-auth/providers/credentials'
 
-import { type AuthSuccess } from '~auth/lib/cognitoClient'
-import { decodeCognitoJwt } from '~auth/lib/cognitoJwt'
-import { userLogin, CognitoSessionSchema } from '~auth/lib/userLogin'
+import { userLogin } from '~auth/lib/userLogin'
 
 export const cognitoCredentialProvider: Provider = Credentials({
 	id: 'cognito',
@@ -18,41 +15,7 @@ export const cognitoCredentialProvider: Provider = Credentials({
 		if (!credentials?.email || !credentials?.password) return null
 		try {
 			const cognitoSession = await userLogin(credentials.email, credentials.password)
-			if (cognitoSession.success) {
-				const { session } = cognitoSession as AuthSuccess
-
-				const parsedSession = CognitoSessionSchema.parse(session)
-				const token = await decodeCognitoJwt('id', parsedSession.IdToken)
-
-				const tokenFields = {
-					access_token: parsedSession.AccessToken,
-					id_token: parsedSession.IdToken,
-					refresh_token: parsedSession.RefreshToken,
-					expires_at: Math.round(Date.now() / 1000) + parsedSession.ExpiresIn,
-					token_type: parsedSession.TokenType,
-				}
-				const lookupFields = {
-					provider: 'cognito',
-					providerAccountId: token.sub,
-				}
-
-				await prisma.user.update({
-					where: { email: credentials.email },
-					data: {
-						accounts: {
-							upsert: {
-								where: { provider_providerAccountId: lookupFields },
-								create: {
-									type: 'credential',
-									...lookupFields,
-									...tokenFields,
-								},
-								update: tokenFields,
-							},
-						},
-					},
-				})
-
+			if (cognitoSession.success === true) {
 				return cognitoSession.user
 			}
 			throw 'placeholder for auth challenge'

@@ -22,6 +22,6 @@ export const CognitoSessionSchema = z.object({
 	AccessToken: z.string(),
 	ExpiresIn: z.number(),
 	IdToken: z.string(),
-	RefreshToken: z.string(),
+	RefreshToken: z.string().optional(),
 	TokenType: z.string(),
 })
