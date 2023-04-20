@@ -45,7 +45,7 @@
 		"@opentelemetry/semantic-conventions": "1.12.0",
 		"@prisma/client": "4.13.0",
 		"@prisma/instrumentation": "4.13.0",
-		"superjson": "1.12.2",
+		"superjson": "1.12.3",
 		"tslog": "4.8.2",
 		"ulid": "2.3.0",
 		"zod": "3.21.4"
