@@ -21,6 +21,7 @@
 		"back-to-search": "Back to search"
 	},
 	"cancel": "Cancel",
+	"can-help-people-in": "Can help people located anywhere in {{location}}",
 	"claimed": "Claimed",
 	"clear": "Clear",
 	"close": "Close",
@@ -182,6 +183,7 @@
 	"review_other": "Reviews",
 	"safety-exit": "Safety exit",
 	"save": "Save",
+	"save-changes": "Save changes",
 	"saved": "Saved",
 	"saved-lists": "Saved Lists",
 	"search": {
