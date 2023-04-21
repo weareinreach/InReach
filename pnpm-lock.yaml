@@ -1051,8 +1051,8 @@ importers:
         specifier: 13.3.0
         version: 13.3.0
       '@tanstack/eslint-plugin-query':
-        specifier: 4.29.0
-        version: 4.29.0
+        specifier: 4.29.4
+        version: 4.29.4
       '@types/eslint':
         specifier: 8.37.0
         version: 8.37.0
@@ -7924,8 +7924,8 @@ packages:
   /@tabler/icons@2.15.0:
     resolution: {integrity: sha512-6fwWrsLOqmeoDPii4O1/tG1lsaNoPigUEx8UrOgTLJ81HazbAy5rfypp7FN9/PGsal4VDU+hevOkaGkE6algTQ==}
 
-  /@tanstack/eslint-plugin-query@4.29.0:
-    resolution: {integrity: sha512-ex+rigzAetqW7vjFA0rqszgPHltI0nbNlsFki4+1b9Kg8Tu6gSSl0M8LJGSvjfnOHsDL5ET3lHHWj+dirdfq5w==}
+  /@tanstack/eslint-plugin-query@4.29.4:
+    resolution: {integrity: sha512-dKWigue+8KV9BaKLq5yUu4wUYCendpvEve8lc3YyD634MQJ/joK7nJXiMfAEHY5Bwnh00Y3ZTBJ6YNtAz4CbVQ==}
     dev: true
 
   /@tanstack/match-sorter-utils@8.8.4:
