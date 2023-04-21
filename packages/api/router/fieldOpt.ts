@@ -36,4 +36,28 @@ export const fieldOptRouter = defineRouter({
 				orderBy: { type: 'asc' },
 			})
 	),
+	attributesByCategory: publicProcedure
+		.input(z.string().or(z.string().array()).optional().describe('categoryName'))
+		.query(async ({ ctx, input }) => {
+			const where = Array.isArray(input)
+				? { categoryName: { in: input } }
+				: typeof input === 'string'
+				? { categoryName: input }
+				: undefined
+			const result = await ctx.prisma.attributesByCategory.findMany({ where })
+			return result
+		}),
+	attributeCategories: publicProcedure.input(z.string().array().optional()).query(
+		async ({ ctx, input }) =>
+			await ctx.prisma.attributeCategory.findMany({
+				where: { active: true, ...(input?.length ? { tag: { in: input } } : {}) },
+				select: {
+					id: true,
+					tag: true,
+					name: true,
+					icon: true,
+					intDesc: true,
+				},
+			})
+	),
 })
