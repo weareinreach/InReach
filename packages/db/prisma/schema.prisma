@@ -905,13 +905,14 @@ model TranslatedReview {
 
 /// Additional Properties for Org/Service.
 model AttributeCategory {
-  id      String  @id @default(cuid())
-  tag     String  @unique
-  name    String  @unique
-  icon    String?
+  id            String         @id @default(cuid())
+  tag           String         @unique
+  name          String         @unique
+  icon          String?
   /// Internal description
-  intDesc String?
-  active  Boolean @default(true)
+  intDesc       String?
+  active        Boolean        @default(true)
+  renderVariant BadgeVariants?
 
   namespace TranslationNamespace @relation(fields: [ns], references: [name], onDelete: Restrict, onUpdate: Cascade)
   ns        String
@@ -924,6 +925,13 @@ model AttributeCategory {
   internalNotes InternalNote[]
 
   //@@schema("system")
+}
+
+enum BadgeVariants {
+  COMMUNITY
+  SERVICE
+  LEADER
+  ATTRIBUTE
 }
 
 model Attribute {
@@ -2275,11 +2283,14 @@ view geometry_columns {
 view AttributesByCategory {
   categoryId      String
   categoryName    String
+  categoryDisplay String
   attributeId     String
   attributeName   String
   attributeKey    String
   attributeNs     String
   icon            String?
+  iconBg          String?
+  badgeRender     BadgeVariants?
   requireText     Boolean
   requireLanguage Boolean
   requireCountry  Boolean
