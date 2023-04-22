@@ -24,7 +24,7 @@ import { useState, forwardRef } from 'react'
 
 import { Icon } from 'icon'
 
-import { Button as CustomButton } from '../components/core'
+import { ModalTitle } from './ModalTitle'
 
 const useStyles = createStyles((theme) => ({
 	borderedBox: {
@@ -43,9 +43,7 @@ const useStyles = createStyles((theme) => ({
 		'&:hover': { backgroundColor: 'inherit' },
 	},
 	ModalContent: {
-		'& > *': {
-			width: '100%',
-		},
+		'& > *': { width: '100%' },
 	},
 	selectSectionWrapper: {
 		'& .mantine-Select-input, & .mantine-Select-input::-webkit-input-placeholder': {
@@ -57,22 +55,6 @@ const useStyles = createStyles((theme) => ({
 		},
 		'& .mantine-Select-rightSection': {
 			justifyContent: 'end',
-		},
-	},
-	button: {
-		...theme.other.utilityFonts.utility1,
-	},
-	customButton: {
-		'&.mantine-Button-root': {
-			padding: '10px 8px',
-			borderColor: 'white',
-		},
-		'& .mantine-Button-inner': {
-			display: 'flex',
-			gap: 4,
-		},
-		'& .mantine-Button-leftIcon': {
-			marginRight: 0,
 		},
 	},
 }))
@@ -135,20 +117,13 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 		</Badge>
 	))
 
-	const BackButton = (
-		<CustomButton
-			onClick={close}
-			className={classes.customButton}
-			variant='secondary-icon'
-			leftIcon={<Icon style={{ margin: 0 }} icon='carbon:close' />}
-		>
-			{t('close')}
-		</CustomButton>
-	)
-
 	return (
 		<>
-			<Modal onClose={close} opened={opened} title={BackButton}>
+			<Modal
+				title={<ModalTitle breadcrumb={{ option: 'close', onClick: () => close() }} />}
+				onClose={close}
+				opened={opened}
+			>
 				<Stack spacing={24} className={classes.ModalContent} align='center'>
 					<Stack align='center'>
 						<Title order={2}>{t('coverage-area')}</Title>
@@ -187,7 +162,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 							</Grid.Col>
 						</Grid>
 					</Stack>
-					<Button className={classes.button} size='lg' radius='md' type='submit' fullWidth>
+					<Button size='lg' radius='md' type='submit' fullWidth>
 						{t('save-changes')}
 					</Button>
 				</Stack>
