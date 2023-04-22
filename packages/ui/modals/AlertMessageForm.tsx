@@ -9,7 +9,6 @@ import {
 	TextInput,
 	Title,
 	createPolymorphicComponent,
-	createStyles,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -17,34 +16,15 @@ import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import z from 'zod'
 
-import { Icon } from 'icon'
-
-import { Button as CustomButton } from '../components/core'
+import { ModalTitle } from './ModalTitle'
 
 const schema = z.object({
 	title: z.string().optional(),
 	text: z.string().min(1, 'no-empty-text'),
 })
 
-const useStyles = createStyles((theme) => ({
-	customButton: {
-		'&.mantine-Button-root': {
-			padding: '10px 8px',
-			borderColor: 'white',
-		},
-		'& .mantine-Button-inner': {
-			display: 'flex',
-			gap: 4,
-		},
-		'& .mantine-Button-leftIcon': {
-			marginRight: 0,
-		},
-	},
-}))
-
 const AlertMessageBody = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 	const { orgName, ...rest } = props
-	const { classes } = useStyles()
 
 	const form = useForm({
 		initialValues: {
@@ -57,20 +37,13 @@ const AlertMessageBody = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 	const { t } = useTranslation()
 	const [opened, { open, close }] = useDisclosure()
 
-	const BackButton = (
-		<CustomButton
-			onClick={close}
-			className={classes.customButton}
-			variant='secondary-icon'
-			leftIcon={<Icon style={{ margin: 0 }} icon='carbon:close' />}
-		>
-			{t('close')}
-		</CustomButton>
-	)
-
 	return (
 		<>
-			<Modal title={BackButton} opened={opened} onClose={close}>
+			<Modal
+				title={<ModalTitle breadcrumb={{ option: 'close', onClick: () => close() }} />}
+				opened={opened}
+				onClose={close}
+			>
 				<Stack spacing={24}>
 					<Stack>
 						<Title ta='center' order={2}>
