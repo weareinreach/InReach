@@ -92,7 +92,7 @@
 			"@crowdin/ota-client@1.0.0": "patches/@crowdin__ota-client@1.0.0.patch",
 			"eslint-plugin-node@11.1.0": "patches/eslint-plugin-node@11.1.0.patch",
 			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch",
-			"trpc-panel@1.3.0": "patches/trpc-panel@1.3.0.patch"
+			"trpc-panel@1.3.2": "patches/trpc-panel@1.3.2.patch"
 		},
 		"peerDependencyRules": {
 			"allowedVersions": {
