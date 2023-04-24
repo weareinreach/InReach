@@ -21,6 +21,7 @@ const job: ListrTask = async (_ctx, task) => {
 		{ where: { tag: { in: ['additional-information', 'cost'] } }, data: { renderVariant: 'ATTRIBUTE' } },
 		{ where: { tag: 'organization-leadership' }, data: { renderVariant: 'LEADER' } },
 		{ where: { tag: 'service-focus' }, data: { renderVariant: 'COMMUNITY' } },
+		{ where: { tag: { in: ['eligibility-requirements', 'languages'] } }, data: { renderVariant: 'LIST' } },
 	]
 
 	const results = await prisma.$transaction(
