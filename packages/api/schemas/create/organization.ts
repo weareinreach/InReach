@@ -1,10 +1,10 @@
-import { Prisma, generateId } from '@weareinreach/db'
+import { Prisma, generateId, generateFreeText } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { idString, CreationBase } from '~api/schemas/common'
+import { idString, CreationBase, InputJsonValue } from '~api/schemas/common'
 import { createManyWithAudit } from '~api/schemas/nestedOps'
 
-import { CreateAuditLog } from './auditLog'
+import { CreateAuditLog, GenerateAuditLog } from './auditLog'
 import { SuggestionSchema } from './browserSafe/suggestOrg'
 import { createFreeText } from './freeText'
 import { CreateNestedOrgEmailSchema } from './orgEmail'
@@ -12,6 +12,97 @@ import { CreateNestedOrgLocationSchema } from './orgLocation'
 import { CreateNestedOrgPhoneSchema } from './orgPhone'
 import { CreateNestedOrgSocialMediaSchema } from './orgSocialMedia'
 import { CreateNestedOrgWebsiteSchema } from './orgWebsite'
+
+export const AttachOrgAttribute = () => {
+	const { dataParser: parser, inputSchema } = CreationBase(
+		z.object({
+			orgSlug: z.string(),
+			organizationId: z.string(),
+			attributeId: z.string(),
+			supplement: z
+				.object({
+					data: InputJsonValue.optional(),
+					boolean: z.boolean().optional(),
+					countryId: z.string().optional(),
+					govDistId: z.string().optional(),
+					languageId: z.string().optional(),
+					text: z.string().optional(),
+				})
+				.optional(),
+		})
+	)
+
+	const dataParser = parser.transform(({ actorId, operation, data: parsedData }) => {
+		const { orgSlug, organizationId, attributeId, supplement: supplementInput } = parsedData
+
+		const supplementId = supplementInput ? generateId('attributeSupplement') : undefined
+
+		const { freeText, translationKey } =
+			supplementId && supplementInput?.text
+				? generateFreeText({ orgSlug, text: supplementInput.text, type: 'attSupp', itemId: supplementId })
+				: { freeText: undefined, translationKey: undefined }
+
+		const { boolean, countryId, data, govDistId, languageId } = supplementInput ?? {}
+		const auditLogs = new Set<Prisma.AuditLogCreateManyAccountInput>()
+
+		if (freeText && translationKey) {
+			auditLogs.add(
+				GenerateAuditLog({
+					actorId,
+					operation: 'CREATE',
+					freeTextId: freeText.id,
+					to: translationKey,
+					translationKey: translationKey.key,
+				})
+			)
+		}
+
+		const supplementData = supplementInput
+			? { id: supplementId, countryId, boolean, data, govDistId, languageId, textId: freeText?.id }
+			: undefined
+		if (supplementData)
+			auditLogs.add(
+				GenerateAuditLog({
+					actorId,
+					operation: 'CREATE',
+					to: supplementData,
+					attributeSupplementId: supplementData.id,
+					attributeId,
+				})
+			)
+
+		auditLogs.add(
+			GenerateAuditLog({
+				actorId,
+				operation: 'LINK',
+				organizationId,
+				attributeId,
+				attributeSupplementId: supplementData?.id,
+			})
+		)
+
+		return {
+			freeText: freeText ? Prisma.validator<Prisma.FreeTextCreateArgs>()({ data: freeText }) : undefined,
+			translationKey: translationKey
+				? Prisma.validator<Prisma.TranslationKeyCreateArgs>()({ data: translationKey })
+				: undefined,
+			attributeSupplement: supplementData
+				? Prisma.validator<Prisma.AttributeSupplementCreateArgs>()({
+						data: supplementData,
+				  })
+				: undefined,
+			organizationAttribute: Prisma.validator<Prisma.OrganizationAttributeCreateArgs>()({
+				data: {
+					attribute: { connect: { id: attributeId } },
+					organization: { connect: { id: organizationId } },
+					supplement: supplementId ? { connect: { id: supplementId } } : undefined,
+				},
+			}),
+			auditLogs: Array.from(auditLogs.values()),
+		}
+	})
+	return { dataParser, inputSchema }
+}
 
 const CreateOrgBase = {
 	name: z.string(),

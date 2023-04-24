@@ -67,7 +67,8 @@ export const connectOne = <T extends Record<string, any>>(data: T | undefined) =
 		: ({
 				connect: data,
 		  } as const)
-
+export const connectOneId = <T extends string>(id: T | undefined) =>
+	!id ? undefined : ({ connect: { id } } as const)
 export const connectOneRequired = <T extends Record<string, any>>(data: T) =>
 	({
 		connect: data,

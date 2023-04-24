@@ -66,13 +66,13 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 				<Stack align='center' spacing={24}>
 					<Title order={2}>{t('log-in')}</Title>
 					<TextInput
-						label={t('email')}
+						label={t('words.email')}
 						placeholder={t('enter-email-placeholder') as string}
 						required
 						{...form.getInputProps('email')}
 					/>
 					<PasswordInput
-						label={t('password')}
+						label={t('words.password')}
 						placeholder={t('enter-password-placeholder') as string}
 						required
 						error={loginError && errorMessage}
