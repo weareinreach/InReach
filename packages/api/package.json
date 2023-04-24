@@ -50,7 +50,7 @@
 		"eslint": "8.39.0",
 		"just-capitalize": "3.2.0",
 		"listr2": "6.3.1",
-		"next": "13.3.0",
+		"next": "13.3.1",
 		"prettier": "2.8.8",
 		"prisma": "4.13.0",
 		"trpc-client-devtools-link": "0.2.1-next",
