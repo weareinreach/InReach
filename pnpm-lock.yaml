@@ -283,8 +283,8 @@ importers:
         specifier: 6.0.0
         version: 6.0.0(next@13.3.1)(react-dom@18.2.0)(react@18.2.0)
       nextjs-routes:
-        specifier: 1.0.9
-        version: 1.0.9(next@13.3.1)
+        specifier: 2.0.0
+        version: 2.0.0(next@13.3.1)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -1123,8 +1123,8 @@ importers:
         specifier: 1.3.1
         version: 1.3.1
       nextjs-routes:
-        specifier: 1.0.9
-        version: 1.0.9(next@13.3.1)
+        specifier: 2.0.0
+        version: 2.0.0(next@13.3.1)
       probe-image-size:
         specifier: 7.2.3
         version: 7.2.3
@@ -16233,8 +16233,9 @@ packages:
       - '@babel/core'
       - babel-plugin-macros
 
-  /nextjs-routes@1.0.9(next@13.3.1):
-    resolution: {integrity: sha512-vITLm5SzpoYGGgDUmWXjf2GU5oHyc4Oh/b7VdDOTqKudEOWuSk1pluZFIlZ9ogVqVxI28c+U+EQ6KyjZOuZR5g==}
+  /nextjs-routes@2.0.0(next@13.3.1):
+    resolution: {integrity: sha512-1uv789xEIli5jDSIIv5PmlAB19+IWheZzmQXlVjmbS6bUtFbt2PP/8P91P++wRDkQMebV26e65zeMc5RvzfnfA==}
+    hasBin: true
     peerDependencies:
       next: '*'
     dependencies:
