@@ -8,7 +8,7 @@ import { type Meta, t } from '../initTRPC'
 export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 	try {
 		/** No permissions submitted, throw error */
-		if (typeof meta === 'undefined')
+		if (typeof meta?.hasPerm === 'undefined')
 			throw new TRPCError({
 				code: 'INTERNAL_SERVER_ERROR',
 				message: 'Invalid procedure configuration, missing permission requirements.',
@@ -16,6 +16,8 @@ export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 
 		/** Check for session object, error if missing */
 		invariant(ctx.session?.user)
+		/** Check if user is `root`. If so, allow. */
+		if (ctx.session.user.permissions.includes('root')) return true
 
 		/** Check multiple permissions */
 		if (Array.isArray(meta.hasPerm)) {
@@ -46,7 +48,7 @@ export const checkRole = (allowedRoles: string[], userRoles: string[]) => {
 
 export const isAdmin = t.middleware(({ ctx, meta, next }) => {
 	if (!ctx.session || !ctx.session.user) return reject()
-	if (!(checkRole(['dataAdmin', 'sysadmin'], ctx.session?.user.roles) && checkPermissions(meta, ctx)))
+	if (!(checkRole(['dataAdmin', 'sysadmin', 'root'], ctx.session?.user.roles) && checkPermissions(meta, ctx)))
 		return reject()
 
 	return next({
@@ -59,7 +61,7 @@ export const isStaff = t.middleware(({ ctx, meta, next }) => {
 	if (!ctx.session || !ctx.session.user) return reject()
 	if (
 		!(
-			checkRole(['dataManager', 'dataAdmin', 'sysadmin', 'system'], ctx.session?.user.roles) &&
+			checkRole(['dataManager', 'dataAdmin', 'sysadmin', 'system', 'root'], ctx.session?.user.roles) &&
 			checkPermissions(meta, ctx)
 		)
 	)

@@ -1,0 +1,23 @@
+name: 'PR Auto Approve'
+on:
+  pull_request:
+    types: [review_requested]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: github/privileged-requester@c124d56612a42b75bfa9984b21d1af9fa0ca7186 # v1.0.0
+        if: ${{ github.event.requested_reviewer.login == 'InReach-svc'}}
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+          robotUserToken: ${{ secrets.GH_ACT_PAT }}
+          path: .github/autoapprove-config.yaml
+          prCreator: ${{ github.event.pull_request.user.login }}
+          prNumber: ${{ github.event.pull_request.number }}
+          checkCommits: 'false'
+          checkDiff: 'false'
+          checkLabels: 'false'

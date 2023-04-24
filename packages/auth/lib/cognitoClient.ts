@@ -6,12 +6,15 @@ import {
 	ChallengeNameType,
 } from '@aws-sdk/client-cognito-identity-provider'
 import { getEnv } from '@weareinreach/config/env'
+import { prisma } from '@weareinreach/db'
 import { type User } from 'next-auth'
 import invariant from 'tiny-invariant'
 
 import { createHmac } from 'crypto'
 
+import { decodeCognitoIdJwt } from './cognitoJwt'
 import { generateUserSession } from './genUserSession'
+import { CognitoSessionSchema } from './userLogin'
 
 export const cognito = new CognitoIdentityProvider({
 	credentials: {
@@ -38,19 +41,36 @@ export const parseAuthResponse: AuthResponse = async (response, email) => {
 	const isChallenge = (name: string | undefined): name is ChallengeNameType =>
 		Object.values(ChallengeNameType).includes(name as ChallengeNameType)
 	if (response.AuthenticationResult) {
-		// const userInfo = await cognito.getUser({ AccessToken: response.AuthenticationResult.AccessToken })
-		// console.log('userInfo', userInfo)
-		// if (!userInfo.UserAttributes) throw new Error('Unable to get Id')
-		// const { Value: userId } = userInfo.UserAttributes.find(
-		// 	(x) => x.Name === 'custom:id' && Boolean(x.Value)
-		// ) ?? { Value: undefined }
-		// if (!userId) throw new Error('Unable to get Id')
+		const parsedSession = CognitoSessionSchema.parse(response.AuthenticationResult)
+		const id = await decodeCognitoIdJwt(parsedSession.IdToken)
+		const tokenFields = {
+			access_token: parsedSession.AccessToken,
+			id_token: parsedSession.IdToken,
+			refresh_token: parsedSession.RefreshToken,
+			expires_at: Math.round(Date.now() / 1000) + parsedSession.ExpiresIn,
+			token_type: parsedSession.TokenType,
+		}
 
+		const lookupFields = {
+			provider_providerAccountId: {
+				provider: 'cognito',
+				providerAccountId: id.sub,
+			},
+		}
+		await prisma.account.upsert({
+			where: lookupFields,
+			create: {
+				type: 'credential',
+				userId: id['custom:id'],
+				...lookupFields.provider_providerAccountId,
+				...tokenFields,
+			},
+			update: tokenFields,
+		})
 		return {
 			success: true,
 			session: response.AuthenticationResult,
 			user: await generateUserSession(email),
-			//user: await generateUserSession(userId),
 		}
 	}
 	if (isChallenge(response.ChallengeName)) {

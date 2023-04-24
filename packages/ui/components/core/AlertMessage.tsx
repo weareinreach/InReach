@@ -35,6 +35,8 @@ const useStyles = createStyles((theme) => ({
 export const alertTypeIcon = {
 	information: { icon: 'carbon:information-filled' },
 	warning: { icon: 'carbon:warning-filled' },
+	'carbon:information-filled': { icon: 'carbon:information-filled' },
+	'carbon:warning-filled': { icon: 'carbon:warning-filled' },
 } as const
 
 /** Used to display an alert message on an organization/location/service. */

@@ -6,6 +6,7 @@ export const userRoles = [
 	'data-administrator',
 	'system-administrator',
 	'system-user',
+	'root',
 ] as const
 
 export const userRolesWithId = [
@@ -16,6 +17,7 @@ export const userRolesWithId = [
 	{ id: 'urle_00000000008SXEBASAJSP8FF3J', tag: 'data-administrator' },
 	{ id: 'urle_00000000001D02PYCYKHT029HR', tag: 'system-administrator' },
 	{ id: 'urle_0000000000568E6GHB0ETGKNYG', tag: 'system-user' },
+	{ id: 'urle_01GXVAVJHNARFQ1T0MZHTG5XQE', tag: 'root' },
 ] as const
 
 export type UserRoleTags = (typeof userRoles)[number]
