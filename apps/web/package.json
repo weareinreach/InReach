@@ -38,14 +38,14 @@
 		"next": "13.3.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"react-i18next": "12.2.1"
+		"react-i18next": "12.2.2"
 	},
 	"devDependencies": {
 		"@next/bundle-analyzer": "13.3.1",
 		"@types/eslint": "8.37.0",
 		"@types/node": "18.16.0",
-		"@types/react": "18.0.38",
-		"@types/react-dom": "18.0.11",
+		"@types/react": "18.2.0",
+		"@types/react-dom": "18.2.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"eslint": "8.39.0",
