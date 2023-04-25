@@ -225,7 +225,7 @@ type AttributeRecord = {
 	tag: string
 	category: string
 	requireBoolean: boolean
-	requireCountry: boolean
+	requireGeo: boolean
 	requireData: boolean
 	requireLanguage: boolean
 	requireText: boolean
