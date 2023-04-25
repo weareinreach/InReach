@@ -2297,6 +2297,7 @@ view AttributesByCategory {
   requireGeo      Boolean
   requireBoolean  Boolean
   requireData     Boolean
+  dataSchema      Json?
 
   @@unique([categoryId, attributeId])
   @@map("attributes_by_category")
