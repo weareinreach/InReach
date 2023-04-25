@@ -4,7 +4,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { useTranslation, Trans } from 'next-i18next'
-import { useState, forwardRef, Dispatch, SetStateAction } from 'react'
+import { useState, forwardRef } from 'react'
 import { z } from 'zod'
 
 import { Link, Button, ModalTitleBreadcrumb } from '~ui/components/core'
@@ -28,7 +28,7 @@ import { PrivacyStatementModal } from '../PrivacyStatement'
 type RichTranslateProps = {
 	i18nKey: string
 	values?: Record<string, any>
-	stateSetter?: Dispatch<SetStateAction<string | null>>
+	stateSetter?: (userType: string | null) => void
 	handler?: {
 		open: () => void
 		close: () => void
@@ -124,6 +124,15 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 		validateInputOnBlur: true,
 	})
 
+	const userTypeChange = (step: string | null) => {
+		if (step) {
+			setStepOption(step)
+			if (['law', 'servpro'].includes(step)) form.setFieldValue('userType', 'provider')
+			else if (step === 'lcr') form.setFieldValue('userType', 'lcr')
+			else if (step === 'myself') form.setFieldValue('userType', 'seeker')
+		}
+	}
+
 	const breadcrumbProps: ModalTitleBreadcrumb =
 		stepOption === null || successMessage
 			? { option: 'close', onClick: () => handler.close() }
@@ -134,7 +143,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 		: t('step-x-y', { ns: 'common', x: stepOption ? 2 : 1, y: 2 })
 	const modalTitle = <ModalTitle breadcrumb={breadcrumbProps} rightText={titleRightSideProps} />
 
-	const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={setStepOption} handler={handler} />
+	const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={userTypeChange} handler={handler} />
 
 	const submitHandler = () => {
 		if (form.isValid()) {
@@ -183,30 +192,30 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 		let lawPractice = false
 		let servProvider = false
 
-		switch (stepOption) {
-			case 'law': {
-				nameContext = 'full'
-				emailContext = 'student-pro'
-				langSelect = true
-				location = true
-				lawPractice = true
-				form.setFieldValue('userType', 'provider')
-				break
-			}
-			case 'servpro': {
-				nameContext = 'full'
-				emailContext = 'professional'
-				langSelect = true
-				location = true
-				servProvider = true
-				form.setFieldValue('userType', 'provider')
-				break
-			}
-			case 'lcr': {
-				nameContext = 'full'
-				langSelect = true
-				location = true
-				form.setFieldValue('userType', 'lcr')
+		console.log(stepOption, form.values.userType)
+		if (stepOption !== form.values.userType) {
+			switch (stepOption) {
+				case 'law': {
+					nameContext = 'full'
+					emailContext = 'student-pro'
+					langSelect = true
+					location = true
+					lawPractice = true
+					break
+				}
+				case 'servpro': {
+					nameContext = 'full'
+					emailContext = 'professional'
+					langSelect = true
+					location = true
+					servProvider = true
+					break
+				}
+				case 'lcr': {
+					nameContext = 'full'
+					langSelect = true
+					location = true
+				}
 			}
 		}
 
