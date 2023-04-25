@@ -15,8 +15,8 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@googlemaps/google-maps-services-js": "3.3.28",
-		"@tanstack/react-query": "4.29.3",
+		"@googlemaps/google-maps-services-js": "3.3.29",
+		"@tanstack/react-query": "4.29.5",
 		"@terraformer/wkt": "2.2.0",
 		"@trpc/client": "10.21.1",
 		"@trpc/next": "10.21.1",
