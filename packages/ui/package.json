@@ -22,6 +22,7 @@
 	},
 	"dependencies": {
 		"@react-google-maps/api": "2.18.1",
+		"alex": "11.0.0",
 		"geolib": "3.3.3",
 		"libphonenumber-js": "1.10.28",
 		"localized-address-format": "1.3.1",
