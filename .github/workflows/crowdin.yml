@@ -40,7 +40,7 @@ jobs:
 
       - name: Upload to Crowdin
         if: github.event_name != 'pull_request'
-        uses: crowdin/github-action@840b586cf1214a04c4701d90f9100f9766d7390d # v1.7.1
+        uses: crowdin/github-action@3cabba4ddfd0579a1236b3fb68405236dc489ccc # v1.8.0
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
@@ -57,7 +57,7 @@ jobs:
 
       - name: Delete Crowdin Branch
         if: github.event_name == 'pull_request'
-        uses: crowdin/github-action@840b586cf1214a04c4701d90f9100f9766d7390d # v1.7.1
+        uses: crowdin/github-action@3cabba4ddfd0579a1236b3fb68405236dc489ccc # v1.8.0
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
