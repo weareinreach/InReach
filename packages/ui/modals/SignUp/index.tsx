@@ -125,12 +125,12 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 	})
 
 	const userTypeChange = (step: string | null) => {
-		if (step) {
-			setStepOption(step)
-			if (['law', 'servpro'].includes(step)) form.setFieldValue('userType', 'provider')
-			else if (step === 'lcr') form.setFieldValue('userType', 'lcr')
-			else form.setFieldValue('userType', 'seeker')
-		}
+		if (!step) return
+
+		setStepOption(step)
+		if (['law', 'servpro'].includes(step)) form.setFieldValue('userType', 'provider')
+		else if (step === 'lcr') form.setFieldValue('userType', 'lcr')
+		else form.setFieldValue('userType', 'seeker')
 	}
 
 	const breadcrumbProps: ModalTitleBreadcrumb =
@@ -192,29 +192,27 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 		let lawPractice = false
 		let servProvider = false
 
-		if (stepOption !== form.values.userType) {
-			switch (stepOption) {
-				case 'law': {
-					nameContext = 'full'
-					emailContext = 'student-pro'
-					langSelect = true
-					location = true
-					lawPractice = true
-					break
-				}
-				case 'servpro': {
-					nameContext = 'full'
-					emailContext = 'professional'
-					langSelect = true
-					location = true
-					servProvider = true
-					break
-				}
-				case 'lcr': {
-					nameContext = 'full'
-					langSelect = true
-					location = true
-				}
+		switch (stepOption) {
+			case 'law': {
+				nameContext = 'full'
+				emailContext = 'student-pro'
+				langSelect = true
+				location = true
+				lawPractice = true
+				break
+			}
+			case 'servpro': {
+				nameContext = 'full'
+				emailContext = 'professional'
+				langSelect = true
+				location = true
+				servProvider = true
+				break
+			}
+			case 'lcr': {
+				nameContext = 'full'
+				langSelect = true
+				location = true
 			}
 		}
 
