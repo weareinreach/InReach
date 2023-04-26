@@ -1,3 +1,4 @@
+import flush from 'just-flush'
 import { z } from 'zod'
 
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
@@ -48,7 +49,7 @@ export const fieldOptRouter = defineRouter({
 				where,
 				orderBy: [{ categoryName: 'asc' }, { attributeName: 'asc' }],
 			})
-			return result
+			return result.map((item) => flush(item))
 		}),
 	attributeCategories: publicProcedure.input(z.string().array().optional()).query(
 		async ({ ctx, input }) =>

@@ -7,6 +7,7 @@ import {
 	Select,
 	Group,
 	Text,
+	Radio,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -32,7 +33,7 @@ const formDataSchema = z.object({
 			govDist: z.string().optional(),
 			language: z.string().optional(),
 			text: z.string().optional(),
-			boolean: z.boolean().optional(),
+			boolean: z.coerce.boolean().optional(),
 			data: JsonInputOrNull.optional(),
 		})
 		.array(),
@@ -40,8 +41,9 @@ const formDataSchema = z.object({
 
 const SelectionItem = forwardRef<HTMLDivElement, SelectionItemProps>(({ icon, label, ...others }, ref) => {
 	const { t } = useTranslation(['attribute'])
+	const { requireBoolean, requireGeo, requireData, requireLanguage, requireText, ...props } = others
 	return (
-		<div ref={ref} {...others}>
+		<div ref={ref} {...props}>
 			<Group
 				sx={(theme) => ({
 					alignItems: 'center',
@@ -68,20 +70,28 @@ interface SelectionItemProps extends ComponentPropsWithoutRef<'div'> {
 	label: string
 }
 
+const supplementFields = {
+	boolean: false,
+	geo: false,
+	language: false,
+	text: false,
+	data: false,
+} as const
+type SupplementFieldsNeeded = { [K in keyof typeof supplementFields]: boolean }
+
 const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 	({ restrictCategories, ...props }, ref) => {
 		const { t } = useTranslation(['attribute'])
 		const [opened, handler] = useDisclosure(false)
 		const [attrCat, setAttrCat] = useState<string | undefined>()
-		const [suppData, setSuppData] = useState<object | undefined>()
-		const [dataSchema, setDataSchema] = useState<object | undefined>()
+		const [supplements, setSupplements] = useState<SupplementFieldsNeeded>(supplementFields)
 		const form = useForm<FormData>({
-			initialValues: { attributes: [], categories: [], selected: [] },
+			initialValues: { attributes: [], categories: [], selected: [], supplement: undefined },
 			validate: zodResolver(formDataSchema),
 		})
-		const utils = api.useContext()
 		const selectAttrRef = useRef<HTMLInputElement>(null)
-
+		// #region tRPC
+		const utils = api.useContext()
 		const { data: categories, isSuccess: categorySuccess } = api.fieldOpt.attributeCategories.useQuery(
 			restrictCategories,
 			{
@@ -137,41 +147,43 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				},
 			}
 		)
-		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+		// #endregion
 
+		// #region Handlers
 		const selectHandler = (e: string | null) => {
 			if (e === null) return
 
 			const item = form.values.attributes?.find(({ value }) => value === e)
+
 			if (item) {
 				const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
+				/** Check if supplemental info required */
 				if (requireBoolean || requireGeo || requireData || requireLanguage || requireText) {
+					console.log('eval handler', form.values.supplement)
 					const { boolean, countryId, govDistId, languageId, text, data } = form.values.supplement ?? {}
-					if (
-						(requireBoolean && boolean) ||
-						(requireGeo && (countryId || govDistId)) ||
-						(requireLanguage && languageId) ||
-						(requireText && text) ||
-						(requireData && data)
-					) {
-						const { value, label, icon, iconBg, variant } = item
-						form.setFieldValue('selected', [
-							...form.values.selected,
-							{ value, label, icon, iconBg, variant, countryId, govDistId, languageId, text, boolean, data },
-						])
-						form.setFieldValue(
-							'attributes',
-							form.values.attributes?.filter(({ value }) => value !== e)
-						)
-					}
-					form.setFieldValue('supplement', {
-						attributeId: item.value,
-						schema: requireData ? item.dataSchema : undefined,
-					})
+					/** Handle if supplemental info is provided */
 
-					return
+					if (!form.values.supplement) {
+						console.log('init supp handler')
+						const suppRequired: SupplementFieldsNeeded = {
+							boolean: requireBoolean ?? false,
+							geo: requireGeo ?? false,
+							language: requireLanguage ?? false,
+							text: requireText ?? false,
+							data: requireData ?? false,
+						}
+						setSupplements(suppRequired)
+
+						form.setFieldValue('supplement', {
+							attributeId: item.value,
+							schema: requireData ? item.dataSchema : undefined,
+						})
+
+						return
+					}
 				}
-				form.setFieldValue('selected', [...form.values.selected, item])
+				const { label, value, icon, iconBg, variant } = item
+				form.setFieldValue('selected', [...form.values.selected, { label, value, icon, iconBg, variant }])
 				form.setFieldValue(
 					'attributes',
 					form.values.attributes?.filter(({ value }) => value !== e)
@@ -179,6 +191,47 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				selectAttrRef.current && (selectAttrRef.current.value = '')
 			}
 		}
+		const handleSupplement = (e: NonNullable<FormData['supplement']>) => {
+			const item = form.values.attributes?.find(({ value }) => value === e.attributeId)
+			if (!item) return
+			const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
+			const { boolean, countryId, govDistId, languageId, text, data } = e ?? {}
+			if (
+				(requireBoolean && boolean !== undefined) ||
+				(requireGeo && (countryId || govDistId)) ||
+				(requireLanguage && languageId) ||
+				(requireText && text) ||
+				(requireData && data)
+			) {
+				console.log('handler after supp')
+				const { value, label, icon, iconBg, variant } = item
+				setSupplements(supplementFields)
+				form.setValues({
+					selected: [
+						...form.values.selected,
+						{
+							value,
+							label,
+							icon,
+							iconBg,
+							variant,
+							countryId,
+							govDistId,
+							languageId,
+							text,
+							boolean,
+							data,
+						},
+					],
+					attributes: form.values.attributes?.filter(({ value }) => value !== e.attributeId),
+					supplement: undefined,
+				})
+
+				// clear out supplement store
+				return
+			}
+		}
+
 		const removeHandler = (e: string) => {
 			form.setFieldValue(
 				'selected',
@@ -186,7 +239,10 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			)
 			utils.fieldOpt.attributesByCategory.invalidate()
 		}
+		// #endregion
 
+		// #region Title & Selected items display
+		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
 		const selectedItems = form.values.selected?.map(({ label, icon, variant, value, iconBg }) => {
 			switch (variant) {
 				case 'ATTRIBUTE': {
@@ -223,13 +279,44 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				}
 			}
 		})
+		// #endregion
+
+		// #region Supplement data entry
+		const SuppBoolean = () => (
+			<Radio.Group
+				value={
+					form.values.supplement?.boolean === undefined
+						? undefined
+						: form.values.supplement.boolean
+						? 'true'
+						: 'false'
+				}
+				onChange={(e) => {
+					// form.setFieldValue('supplement.boolean', e === 'true' ? true : false)
+					form.values.supplement?.attributeId &&
+						handleSupplement({
+							attributeId: form.values.supplement.attributeId,
+							boolean: e === 'true' ? true : false,
+						})
+				}}
+			>
+				<Group>
+					<Radio value='true' label='True/Yes' />
+					<Radio value='false' label='False/No' />
+				</Group>
+			</Radio.Group>
+		)
+		console.log(supplements)
+		console.log(form.values)
+		//#endregion
 
 		/** Validate supplement data against defined JSON schema */
 		useEffect(() => {
-			if (suppData && dataSchema) {
+			const { data, schema } = form.values.supplement ?? {}
+			if (data && schema) {
 				const ajv = new Ajv()
-				const validate = ajv.compile(dataSchema)
-				const validData = validate(suppData)
+				const validate = ajv.compile(schema)
+				const validData = validate(data)
 				if (!validData && validate.errors) {
 					form.setFieldError(
 						'supplement.data',
@@ -238,7 +325,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				}
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [suppData, dataSchema])
+		}, [form.values.supplement])
 
 		return (
 			<>
@@ -265,6 +352,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								onChange={selectHandler}
 							/>
 						</Stack>
+						{supplements.boolean && <SuppBoolean />}
 					</Stack>
 				</Modal>
 				<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
@@ -281,6 +369,7 @@ export interface AttributeModalProps extends ButtonProps {
 }
 
 interface FormData {
+	/** Data to get submitted back to API */
 	selected: {
 		value: string
 		label: string
@@ -294,6 +383,7 @@ interface FormData {
 		boolean?: boolean
 		data?: object
 	}[]
+	/** Store for when supplemental info needed */
 	supplement?: {
 		attributeId: string
 		boolean?: boolean
@@ -304,6 +394,7 @@ interface FormData {
 		data?: object
 		schema?: object
 	}
+	/** API data (selection items) */
 	categories: {
 		value: string
 		label: string
