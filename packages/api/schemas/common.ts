@@ -49,7 +49,7 @@ export const reviewAvgId = z
 	.partial()
 
 // Prisma JSON helpers
-export { InputJsonValue, JsonNullValueInputSchema, type InputJsonValueType }
+export { InputJsonValue, JsonNullValueInputSchema, type InputJsonValueType, JsonInputOrNull }
 /** Prisma JSON type serialized via SuperJSON */
 export const JsonInputOrNullSuperJSON = z.preprocess((data) => superjson.serialize(data), JsonInputOrNull)
 

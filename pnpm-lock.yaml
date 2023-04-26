@@ -1127,6 +1127,9 @@ importers:
       '@react-google-maps/api':
         specifier: 2.18.1
         version: 2.18.1(react-dom@18.2.0)(react@18.2.0)
+      ajv:
+        specifier: 8.12.0
+        version: 8.12.0
       alex:
         specifier: 11.0.0
         version: 11.0.0
@@ -11566,7 +11569,6 @@ packages:
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
       uri-js: 4.4.1
-    dev: true
 
   /alex@11.0.0:
     resolution:
@@ -19668,11 +19670,7 @@ packages:
     dev: true
 
   /json-schema-traverse@1.0.0:
-    resolution:
-      {
-        integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==,
-      }
-    dev: true
+    resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
 
   /json-stable-stringify-without-jsonify@1.0.1:
     resolution:
@@ -22123,7 +22121,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
-    dev: true
 
   /next@13.3.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-sod7HeokBSvH5QV0KB+pXeLfcXUlLrGnVUXxHpmhilQ+nQYT3Im2O8DswD5e4uqbR8Pvdu9pcWgb1CbXZQZlmQ==}
@@ -24188,12 +24185,8 @@ packages:
     dev: true
 
   /punycode@2.3.0:
-    resolution:
-      {
-        integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==,
-      }
-    engines: { node: '>=6' }
-    dev: true
+    resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
+    engines: {node: '>=6'}
 
   /pupa@3.1.0:
     resolution:
@@ -25206,12 +25199,8 @@ packages:
     engines: { node: '>=0.10.0' }
 
   /require-from-string@2.0.2:
-    resolution:
-      {
-        integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==,
-      }
-    engines: { node: '>=0.10.0' }
-    dev: true
+    resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
+    engines: {node: '>=0.10.0'}
 
   /require-in-the-middle@5.2.0:
     resolution:
@@ -28206,7 +28195,6 @@ packages:
       }
     dependencies:
       punycode: 2.3.0
-    dev: true
 
   /urijs@1.19.11:
     resolution:

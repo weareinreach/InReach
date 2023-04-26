@@ -8,11 +8,14 @@ import {
 	Group,
 	Text,
 } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { type ApiOutput } from '@weareinreach/api'
+import { JsonInputOrNull } from '@weareinreach/api/schemas/common'
+import Ajv from 'ajv'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, useState, useRef, type ComponentPropsWithoutRef } from 'react'
+import { forwardRef, useEffect, useState, useRef, type ComponentPropsWithoutRef } from 'react'
+import { z } from 'zod'
 
 import { Badge } from '~ui/components/core/Badge'
 import { useCustomVariant } from '~ui/hooks'
@@ -20,6 +23,20 @@ import { Icon, isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { ModalTitle } from '../ModalTitle'
+
+const formDataSchema = z.object({
+	selected: z
+		.object({
+			value: z.string(),
+			country: z.string().optional(),
+			govDist: z.string().optional(),
+			language: z.string().optional(),
+			text: z.string().optional(),
+			boolean: z.boolean().optional(),
+			data: JsonInputOrNull.optional(),
+		})
+		.array(),
+})
 
 const SelectionItem = forwardRef<HTMLDivElement, SelectionItemProps>(({ icon, label, ...others }, ref) => {
 	const { t } = useTranslation(['attribute'])
@@ -56,7 +73,12 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		const { t } = useTranslation(['attribute'])
 		const [opened, handler] = useDisclosure(false)
 		const [attrCat, setAttrCat] = useState<string | undefined>()
-		const form = useForm<FormData>({ initialValues: { attributes: [], categories: [], selected: [] } })
+		const [suppData, setSuppData] = useState<object | undefined>()
+		const [dataSchema, setDataSchema] = useState<object | undefined>()
+		const form = useForm<FormData>({
+			initialValues: { attributes: [], categories: [], selected: [] },
+			validate: zodResolver(formDataSchema),
+		})
 		const utils = api.useContext()
 		const selectAttrRef = useRef<HTMLInputElement>(null)
 
@@ -91,7 +113,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 							iconBg,
 							badgeRender,
 							requireBoolean,
-							requireCountry,
+							requireGeo,
 							requireData,
 							requireLanguage,
 							requireText,
@@ -102,7 +124,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 							iconBg: iconBg ?? undefined,
 							variant: badgeRender ?? undefined,
 							requireBoolean,
-							requireCountry,
+							requireGeo,
 							requireData,
 							requireLanguage,
 							requireText,
@@ -122,9 +144,33 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 
 			const item = form.values.attributes?.find(({ value }) => value === e)
 			if (item) {
-				const { requireBoolean, requireCountry, requireData, requireLanguage, requireText } = item
-				if (requireBoolean || requireCountry || requireData || requireLanguage || requireText) return
+				const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
+				if (requireBoolean || requireGeo || requireData || requireLanguage || requireText) {
+					const { boolean, countryId, govDistId, languageId, text, data } = form.values.supplement ?? {}
+					if (
+						(requireBoolean && boolean) ||
+						(requireGeo && (countryId || govDistId)) ||
+						(requireLanguage && languageId) ||
+						(requireText && text) ||
+						(requireData && data)
+					) {
+						const { value, label, icon, iconBg, variant } = item
+						form.setFieldValue('selected', [
+							...form.values.selected,
+							{ value, label, icon, iconBg, variant, countryId, govDistId, languageId, text, boolean, data },
+						])
+						form.setFieldValue(
+							'attributes',
+							form.values.attributes?.filter(({ value }) => value !== e)
+						)
+					}
+					form.setFieldValue('supplement', {
+						attributeId: item.value,
+						schema: requireData ? item.dataSchema : undefined,
+					})
 
+					return
+				}
 				form.setFieldValue('selected', [...form.values.selected, item])
 				form.setFieldValue(
 					'attributes',
@@ -178,6 +224,22 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			}
 		})
 
+		/** Validate supplement data against defined JSON schema */
+		useEffect(() => {
+			if (suppData && dataSchema) {
+				const ajv = new Ajv()
+				const validate = ajv.compile(dataSchema)
+				const validData = validate(suppData)
+				if (!validData && validate.errors) {
+					form.setFieldError(
+						'supplement.data',
+						validate.errors.map(({ message }) => message)
+					)
+				}
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [suppData, dataSchema])
+
 		return (
 			<>
 				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
@@ -225,13 +287,23 @@ interface FormData {
 		icon?: string
 		iconBg?: string
 		variant?: ApiOutput['fieldOpt']['attributesByCategory'][0]['badgeRender']
-		country?: string
-		govDist?: string
-		language?: string
+		countryId?: string
+		govDistId?: string
+		languageId?: string
 		text?: string
 		boolean?: boolean
 		data?: object
 	}[]
+	supplement?: {
+		attributeId: string
+		boolean?: boolean
+		countryId?: string
+		govDistId?: string
+		languageId?: string
+		text?: string
+		data?: object
+		schema?: object
+	}
 	categories: {
 		value: string
 		label: string
@@ -244,8 +316,9 @@ interface FormData {
 		variant?: ApiOutput['fieldOpt']['attributesByCategory'][0]['badgeRender']
 		requireText?: boolean
 		requireLanguage?: boolean
-		requireCountry?: boolean
+		requireGeo?: boolean
 		requireBoolean?: boolean
 		requireData?: boolean
+		dataSchema?: object
 	}[]
 }
