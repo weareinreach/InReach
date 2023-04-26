@@ -41,7 +41,7 @@
 	"devDependencies": {
 		"@types/eslint": "8.37.0",
 		"@types/luxon": "3.3.0",
-		"@types/node": "18.16.0",
+		"@types/node": "18.16.1",
 		"@types/prettier": "2.7.2",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "0.100.0",
