@@ -129,7 +129,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 			setStepOption(step)
 			if (['law', 'servpro'].includes(step)) form.setFieldValue('userType', 'provider')
 			else if (step === 'lcr') form.setFieldValue('userType', 'lcr')
-			else if (step === 'myself') form.setFieldValue('userType', 'seeker')
+			else form.setFieldValue('userType', 'seeker')
 		}
 	}
 
@@ -192,7 +192,6 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 		let lawPractice = false
 		let servProvider = false
 
-		console.log(stepOption, form.values.userType)
 		if (stepOption !== form.values.userType) {
 			switch (stepOption) {
 				case 'law': {

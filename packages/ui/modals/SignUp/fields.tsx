@@ -263,21 +263,39 @@ type SingleItemSelectProps = {
 export const FormLawPractice = () => {
 	const { t } = useTranslation(['common', 'attribute'])
 	const form = useSignUpFormContext()
+	let otherOption: string | undefined
 
 	const options = attributesByCategory.find((item) => item.tag === 'law-practice-options')
 	const selectItems =
-		options?.attributes.map((item) => ({
-			label: t(item.attribute.tsKey, { ns: item.attribute.tsNs }),
-			value: item.attribute.id,
-		})) ?? []
+		options?.attributes.map((item) => {
+			if (item.attribute.tag === 'law-other') otherOption = item.attribute.id
+
+			return {
+				label: t(item.attribute.tsKey, { ns: item.attribute.tsNs }),
+				value: item.attribute.id,
+			}
+		}) ?? []
+
+	const selectedOther = form.values.lawPractice === otherOption
+
+	if (form.values.otherLawPractice && !selectedOther) form.setFieldValue('otherLawPractice', undefined)
 
 	return (
-		<Select
-			label={t('sign-up-select-law-practice')}
-			data={selectItems}
-			itemComponent={SelectItemSingleLine}
-			{...form.getInputProps('lawPractice')}
-		/>
+		<>
+			<Select
+				label={t('sign-up-select-law-practice')}
+				data={selectItems}
+				itemComponent={SelectItemSingleLine}
+				{...form.getInputProps('lawPractice')}
+			/>
+			{selectedOther && (
+				<TextInput
+					label={t('law-practice-other')}
+					placeholder={t('law-practice-other-placeholder') as string}
+					{...form.getInputProps('otherLawPractice')}
+				/>
+			)}
+		</>
 	)
 }
 
