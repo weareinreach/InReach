@@ -1,6 +1,6 @@
 import { prisma } from '@weareinreach/db'
 import dotenv from 'dotenv'
-import { unflatten } from 'flat'
+import { unflatten, flatten } from 'flat'
 import prettier from 'prettier'
 
 import fs from 'fs'
@@ -13,15 +13,12 @@ dotenv.config()
 
 type Output = Record<string, string | Record<string, string>>
 
-const isOutput = (data: unknown): data is Output => {
-	return typeof data === 'object'
-}
+const isOutput = (data: unknown): data is Output => typeof data === 'object'
 
-const countKeys = (obj: Output): number =>
-	Object.keys(obj).reduce((acc, curr) => {
-		if (typeof obj[curr] === 'object') return acc + countKeys(obj[curr] as Output)
-		else return ++acc
-	}, 0)
+const isObject = (data: unknown): data is Record<string, string> =>
+	typeof data === 'object' && !Array.isArray(data)
+
+const countKeys = (obj: Output): number => Object.keys(flatten(obj)).length
 
 export const generateTranslationKeys = async (task: ListrTask) => {
 	const prettierOpts = (await prettier.resolveConfig(__dirname)) ?? undefined
@@ -43,11 +40,12 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 	})
 	let logMessage = ''
 	let i = 0
+	task.output = `Fetched ${data.length} namespaces from DB`
 	for (const namespace of data) {
 		const outputData: Output = {}
 		for (const item of namespace.keys) {
-			if (item.plural !== 'SINGLE' && typeof item.pluralValues === 'object') {
-				for (const [key, value] of Object.entries(item.pluralValues as object)) {
+			if (item.interpolation && isObject(item.interpolationValues)) {
+				for (const [key, value] of Object.entries(item.interpolationValues)) {
 					if (typeof value !== 'string') throw new Error('Invalid nested plural item')
 					outputData[`${item.key}_${key}`] = value
 				}
@@ -57,14 +55,13 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 		}
 		const filename = `${localePath}/${namespace.name}.json`
 		// eslint-disable-next-line prefer-const
-		let existingFile = {}
+		let existingFile: unknown = {}
 		if (fs.existsSync(filename)) {
-			existingFile = JSON.parse(fs.readFileSync(filename, 'utf-8')) as {}
-			if (!isOutput(existingFile)) throw new Error("tried to load file, but it's empty")
+			existingFile = flatten(JSON.parse(fs.readFileSync(filename, 'utf-8')))
 		}
+		if (!isOutput(existingFile)) throw new Error("tried to load file, but it's empty")
 		// const existingLength = Object.keys(existingFile).length
 		const existingLength = countKeys(existingFile)
-
 		let outputFile: Output = unflatten(Object.assign(existingFile, outputData), { overwrite: true })
 		outputFile = Object.keys(outputFile)
 			.sort()
@@ -74,15 +71,14 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 			}, {})
 
 		const newKeys = countKeys(outputFile) - existingLength
-
 		logMessage = `${filename} generated with ${newKeys} new ${newKeys === 1 ? 'key' : 'keys'}.`
 
-		const formattedOutput = prettier.format(JSON.stringify(outputFile, null, 2), {
+		const formattedOutput = prettier.format(JSON.stringify(outputFile), {
 			...prettierOpts,
 			parser: 'json',
 		})
-
 		fs.writeFileSync(filename, formattedOutput)
+
 		task.output = logMessage
 		i++
 	}

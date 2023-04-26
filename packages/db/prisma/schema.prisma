@@ -1390,8 +1390,8 @@ model TranslationKey {
   crowdinId Int?
 
   // to manage plurals & ordinals
-  plural       TranslationPlurals @default(SINGLE)
-  pluralValues Json?
+  interpolation       InterpolationOptions?
+  interpolationValues Json?
 
   /// Associated tables
   attribute          Attribute?
@@ -1422,8 +1422,7 @@ model TranslationKey {
   @@id([ns, key])
 }
 
-enum TranslationPlurals {
-  SINGLE
+enum InterpolationOptions {
   PLURAL
   ORDINAL
   CONTEXT
@@ -2282,22 +2281,23 @@ view geometry_columns {
 }
 
 view AttributesByCategory {
-  categoryId      String
-  categoryName    String
-  categoryDisplay String
-  attributeId     String
-  attributeName   String
-  attributeKey    String
-  attributeNs     String
-  icon            String?
-  iconBg          String?
-  badgeRender     AttributeRender?
-  requireText     Boolean
-  requireLanguage Boolean
-  requireGeo      Boolean
-  requireBoolean  Boolean
-  requireData     Boolean
-  dataSchema      Json?
+  categoryId          String
+  categoryName        String
+  categoryDisplay     String
+  attributeId         String
+  attributeName       String
+  attributeKey        String
+  attributeNs         String
+  interpolationValues Json?
+  icon                String?
+  iconBg              String?
+  badgeRender         AttributeRender?
+  requireText         Boolean
+  requireLanguage     Boolean
+  requireGeo          Boolean
+  requireBoolean      Boolean
+  requireData         Boolean
+  dataSchema          Json?
 
   @@unique([categoryId, attributeId])
   @@map("attributes_by_category")
