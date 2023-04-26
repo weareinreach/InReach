@@ -90,6 +90,8 @@
 	"language_all-other": "All other languages",
 	"language_choose": "Please choose a language",
 	"language_common": "Common languages",
+	"law-practice-other": "Legal practice area",
+	"law-practice-other-placeholder": "Please specify your legal practice area",
 	"link-copied": "Link copied to clipboard",
 	"list": {
 		"added": "Resource saved to list: {{name}}",
