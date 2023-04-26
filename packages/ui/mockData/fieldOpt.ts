@@ -2,6 +2,27 @@ import { type ApiOutput, type ApiInput } from '@weareinreach/api'
 
 export const attributeCategories = [
 	{
+		id: 'attc_01GW2HHFV3DJ380F351SKB0B74',
+		tag: 'additional-information',
+		name: 'Additional Information',
+		icon: null,
+		intDesc: 'Misc',
+	},
+	{
+		id: 'attc_01GXS3AYEER4CCSX670S9Z84EB',
+		tag: 'alerts',
+		name: 'Alerts',
+		icon: null,
+		intDesc: 'Alert messages',
+	},
+	{
+		id: 'attc_01GW2HHFVFKNMYPN8F86M0H576',
+		tag: 'cost',
+		name: 'Cost',
+		icon: null,
+		intDesc: null,
+	},
+	{
 		id: 'attc_01GW2HHFVGHPW1Y72SA8377623',
 		tag: 'eligibility-requirements',
 		name: 'Eligibility Requirements',
@@ -16,51 +37,9 @@ export const attributeCategories = [
 		intDesc: null,
 	},
 	{
-		id: 'attc_01GW2HHFVKM2PSHFWVFM0TWX1P',
-		tag: 'system',
-		name: 'System',
-		icon: null,
-		intDesc: null,
-	},
-	{
-		id: 'attc_01GW2HHFVKAMMGPD71H90XRJ38',
-		tag: 'service-access-instructions',
-		name: 'Service Access Instructions',
-		icon: null,
-		intDesc: null,
-	},
-	{
 		id: 'attc_01GW2HHFVRSN3W3GYZZ43WCW24',
 		tag: 'law-practice-options',
 		name: 'Law Practice Options',
-		icon: null,
-		intDesc: null,
-	},
-	{
-		id: 'attc_01GW2HHFVSQWE2Y2RF3DT2VEYX',
-		tag: 'service-provider-options',
-		name: 'Service Provider Options',
-		icon: null,
-		intDesc: null,
-	},
-	{
-		id: 'attc_01GXS3AYEER4CCSX670S9Z84EB',
-		tag: 'alerts',
-		name: 'Alerts',
-		icon: null,
-		intDesc: 'Alert messages',
-	},
-	{
-		id: 'attc_01GW2HHFV3DJ380F351SKB0B74',
-		tag: 'additional-information',
-		name: 'Additional Information',
-		icon: null,
-		intDesc: 'Misc',
-	},
-	{
-		id: 'attc_01GW2HHFVFKNMYPN8F86M0H576',
-		tag: 'cost',
-		name: 'Cost',
 		icon: null,
 		intDesc: null,
 	},
@@ -72,9 +51,30 @@ export const attributeCategories = [
 		intDesc: null,
 	},
 	{
+		id: 'attc_01GW2HHFVKAMMGPD71H90XRJ38',
+		tag: 'service-access-instructions',
+		name: 'Service Access Instructions',
+		icon: null,
+		intDesc: null,
+	},
+	{
 		id: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
 		tag: 'service-focus',
 		name: 'Service Focus',
+		icon: null,
+		intDesc: null,
+	},
+	{
+		id: 'attc_01GW2HHFVSQWE2Y2RF3DT2VEYX',
+		tag: 'service-provider-options',
+		name: 'Service Provider Options',
+		icon: null,
+		intDesc: null,
+	},
+	{
+		id: 'attc_01GW2HHFVKM2PSHFWVFM0TWX1P',
+		tag: 'system',
+		name: 'System',
 		icon: null,
 		intDesc: null,
 	},
@@ -97,6 +97,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFV3DJ380F351SKB0B74',
@@ -114,6 +115,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFV3DJ380F351SKB0B74',
@@ -131,6 +133,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFV3DJ380F351SKB0B74',
@@ -148,6 +151,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFV3DJ380F351SKB0B74',
@@ -165,6 +169,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFV3DJ380F351SKB0B74',
@@ -182,6 +187,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFV3DJ380F351SKB0B74',
@@ -199,6 +205,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GXS3AYEER4CCSX670S9Z84EB',
@@ -216,6 +223,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GXS3AYEER4CCSX670S9Z84EB',
@@ -233,6 +241,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVFKNMYPN8F86M0H576',
@@ -250,6 +259,41 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchema: {
+			anyOf: [
+				{
+					type: 'object',
+					required: ['min'],
+					properties: {
+						min: {
+							type: 'number',
+						},
+					},
+				},
+				{
+					type: 'object',
+					required: ['max'],
+					properties: {
+						max: {
+							type: 'number',
+						},
+					},
+				},
+				{
+					type: 'object',
+					required: ['min', 'max'],
+					properties: {
+						max: {
+							type: 'number',
+						},
+						min: {
+							type: 'number',
+						},
+					},
+				},
+			],
+			$schema: 'http://json-schema.org/draft-07/schema#',
+		},
 	},
 	{
 		categoryId: 'attc_01GW2HHFVFKNMYPN8F86M0H576',
@@ -267,6 +311,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVGHPW1Y72SA8377623',
@@ -284,6 +329,41 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchema: {
+			anyOf: [
+				{
+					type: 'object',
+					required: ['min'],
+					properties: {
+						min: {
+							type: 'number',
+						},
+					},
+				},
+				{
+					type: 'object',
+					required: ['max'],
+					properties: {
+						max: {
+							type: 'number',
+						},
+					},
+				},
+				{
+					type: 'object',
+					required: ['min', 'max'],
+					properties: {
+						max: {
+							type: 'number',
+						},
+						min: {
+							type: 'number',
+						},
+					},
+				},
+			],
+			$schema: 'http://json-schema.org/draft-07/schema#',
+		},
 	},
 	{
 		categoryId: 'attc_01GW2HHFVGHPW1Y72SA8377623',
@@ -301,6 +381,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVGHPW1Y72SA8377623',
@@ -318,6 +399,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVGHPW1Y72SA8377623',
@@ -335,6 +417,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVGHPW1Y72SA8377623',
@@ -352,6 +435,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVGHPW1Y72SA8377623',
@@ -369,6 +453,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVGHPW1Y72SA8377623',
@@ -386,6 +471,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVGHPW1Y72SA8377623',
@@ -403,6 +489,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVGHPW1Y72SA8377623',
@@ -420,6 +507,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVJQQ68XGSBXM976BDF',
@@ -437,6 +525,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVJQQ68XGSBXM976BDF',
@@ -454,6 +543,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVJQQ68XGSBXM976BDF',
@@ -471,6 +561,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVRSN3W3GYZZ43WCW24',
@@ -488,6 +579,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVRSN3W3GYZZ43WCW24',
@@ -505,6 +597,16 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchema: {
+			type: 'object',
+			$schema: 'http://json-schema.org/draft-07/schema#',
+			required: ['other'],
+			properties: {
+				other: {
+					type: 'string',
+				},
+			},
+		},
 	},
 	{
 		categoryId: 'attc_01GW2HHFVRSN3W3GYZZ43WCW24',
@@ -522,6 +624,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVRSN3W3GYZZ43WCW24',
@@ -539,6 +642,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVMNHV2ZS5875JWCRJ7',
@@ -556,6 +660,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVMNHV2ZS5875JWCRJ7',
@@ -573,6 +678,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVMNHV2ZS5875JWCRJ7',
@@ -590,6 +696,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVMNHV2ZS5875JWCRJ7',
@@ -607,6 +714,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVKAMMGPD71H90XRJ38',
@@ -624,6 +732,23 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchema: {
+			type: 'object',
+			$schema: 'http://json-schema.org/draft-07/schema#',
+			required: ['access_type', 'instructions'],
+			properties: {
+				access_type: {
+					enum: ['email', 'file', 'link', 'location', 'other', 'phone'],
+					type: 'string',
+				},
+				access_value: {
+					type: ['string', 'null'],
+				},
+				instructions: {
+					type: 'string',
+				},
+			},
+		},
 	},
 	{
 		categoryId: 'attc_01GW2HHFVKAMMGPD71H90XRJ38',
@@ -641,6 +766,23 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchema: {
+			type: 'object',
+			$schema: 'http://json-schema.org/draft-07/schema#',
+			required: ['access_type', 'instructions'],
+			properties: {
+				access_type: {
+					enum: ['email', 'file', 'link', 'location', 'other', 'phone'],
+					type: 'string',
+				},
+				access_value: {
+					type: ['string', 'null'],
+				},
+				instructions: {
+					type: 'string',
+				},
+			},
+		},
 	},
 	{
 		categoryId: 'attc_01GW2HHFVKAMMGPD71H90XRJ38',
@@ -658,6 +800,23 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchema: {
+			type: 'object',
+			$schema: 'http://json-schema.org/draft-07/schema#',
+			required: ['access_type', 'instructions'],
+			properties: {
+				access_type: {
+					enum: ['email', 'file', 'link', 'location', 'other', 'phone'],
+					type: 'string',
+				},
+				access_value: {
+					type: ['string', 'null'],
+				},
+				instructions: {
+					type: 'string',
+				},
+			},
+		},
 	},
 	{
 		categoryId: 'attc_01GW2HHFVKAMMGPD71H90XRJ38',
@@ -675,6 +834,23 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchema: {
+			type: 'object',
+			$schema: 'http://json-schema.org/draft-07/schema#',
+			required: ['access_type', 'instructions'],
+			properties: {
+				access_type: {
+					enum: ['email', 'file', 'link', 'location', 'other', 'phone'],
+					type: 'string',
+				},
+				access_value: {
+					type: ['string', 'null'],
+				},
+				instructions: {
+					type: 'string',
+				},
+			},
+		},
 	},
 	{
 		categoryId: 'attc_01GW2HHFVKAMMGPD71H90XRJ38',
@@ -692,6 +868,23 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchema: {
+			type: 'object',
+			$schema: 'http://json-schema.org/draft-07/schema#',
+			required: ['access_type', 'instructions'],
+			properties: {
+				access_type: {
+					enum: ['email', 'file', 'link', 'location', 'other', 'phone'],
+					type: 'string',
+				},
+				access_value: {
+					type: ['string', 'null'],
+				},
+				instructions: {
+					type: 'string',
+				},
+			},
+		},
 	},
 	{
 		categoryId: 'attc_01GW2HHFVKAMMGPD71H90XRJ38',
@@ -709,6 +902,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVKAMMGPD71H90XRJ38',
@@ -726,6 +920,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -743,6 +938,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -760,6 +956,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -777,6 +974,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -794,6 +992,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -811,6 +1010,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -828,6 +1028,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -845,6 +1046,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -862,6 +1064,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -879,6 +1082,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -896,6 +1100,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -913,6 +1118,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVNXMNJNV47BF2BPM1R',
@@ -930,6 +1136,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVSQWE2Y2RF3DT2VEYX',
@@ -947,6 +1154,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVSQWE2Y2RF3DT2VEYX',
@@ -964,6 +1172,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVSQWE2Y2RF3DT2VEYX',
@@ -981,6 +1190,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVSQWE2Y2RF3DT2VEYX',
@@ -998,6 +1208,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVSQWE2Y2RF3DT2VEYX',
@@ -1015,6 +1226,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVSQWE2Y2RF3DT2VEYX',
@@ -1032,6 +1244,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: false,
+		dataSchema: null,
 	},
 	{
 		categoryId: 'attc_01GW2HHFVKM2PSHFWVFM0TWX1P',
@@ -1049,6 +1262,14 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchema: {
+			type: 'array',
+			items: {
+				type: 'object',
+				additionalProperties: {},
+			},
+			$schema: 'http://json-schema.org/draft-07/schema#',
+		},
 	},
 ] satisfies ApiOutput['fieldOpt']['attributesByCategory']
 
