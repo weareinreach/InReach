@@ -23,7 +23,7 @@
 		"@types/eslint": "8.37.0",
 		"@types/node": "18.16.0",
 		"@types/react": "18.2.0",
-		"@types/react-dom": "18.2.0",
+		"@types/react-dom": "18.2.1",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
