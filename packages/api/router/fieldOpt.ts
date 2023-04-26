@@ -44,7 +44,10 @@ export const fieldOptRouter = defineRouter({
 				: typeof input === 'string'
 				? { categoryName: input }
 				: undefined
-			const result = await ctx.prisma.attributesByCategory.findMany({ where })
+			const result = await ctx.prisma.attributesByCategory.findMany({
+				where,
+				orderBy: [{ categoryName: 'asc' }, { attributeName: 'asc' }],
+			})
 			return result
 		}),
 	attributeCategories: publicProcedure.input(z.string().array().optional()).query(
@@ -58,6 +61,57 @@ export const fieldOptRouter = defineRouter({
 					icon: true,
 					intDesc: true,
 				},
+				orderBy: { tag: 'asc' },
 			})
 	),
+	languages: publicProcedure
+		.input(z.object({ activelyTranslated: z.boolean(), localeCode: z.string() }).partial().optional())
+		.query(
+			async ({ ctx, input }) =>
+				await ctx.prisma.language.findMany({
+					where: input,
+					select: {
+						id: true,
+						languageName: true,
+						localeCode: true,
+						iso6392: true,
+						nativeName: true,
+						activelyTranslated: true,
+					},
+					orderBy: { languageName: 'asc' },
+				})
+		),
+	countries: publicProcedure
+		.input(
+			z
+				.object({
+					where: z.object({ activeForOrgs: z.boolean(), cca2: z.string() }),
+					includeGeo: z.object({ wkt: z.boolean().default(false), json: z.boolean().default(false) }),
+				})
+				.deepPartial()
+				.optional()
+		)
+		.query(async ({ ctx, input }) => {
+			const { where, includeGeo } = input ?? {}
+			const result = await ctx.prisma.country.findMany({
+				where,
+				select: {
+					id: true,
+					cca2: true,
+					name: true,
+					dialCode: true,
+					flag: true,
+					tsKey: true,
+					tsNs: true,
+					activeForOrgs: true,
+					geoJSON: includeGeo?.json,
+					geoWKT: includeGeo?.wkt,
+				},
+				orderBy: {
+					name: 'asc',
+				},
+			})
+
+			return result
+		}),
 })
