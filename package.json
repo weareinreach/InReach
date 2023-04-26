@@ -70,6 +70,7 @@
 		"overrides": {
 			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
 			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
+			"axe-core": "^4.7.0",
 			"chokidar": ">=3.0.0",
 			"eslint-plugin-turbo@0.0.9": "0.0.8",
 			"glob-parent@<5.1.2": ">=5.1.2",

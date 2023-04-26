@@ -7,20 +7,7 @@ import { initReactI18next } from 'react-i18next'
 
 import config from '../next-i18next.config'
 
-const ns = [
-	'attribute',
-	'common',
-	// 'country',
-	// 'footer',
-	// 'gov-dist',
-	// 'nav',
-	// 'org-description',
-	// 'orv-service',
-	'phone-type',
-	'services',
-	'socialMedia',
-	'user',
-]
+const ns = ['attribute', 'common', 'phone-type', 'services', 'user']
 
 i18n
 	.use(intervalPlural)

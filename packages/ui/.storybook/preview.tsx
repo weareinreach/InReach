@@ -56,9 +56,9 @@ const preview: Preview = {
 		chromatic: {
 			delay: 1000,
 		},
-		pseudo: {
-			rootElement: 'storybook-root',
-		},
+		// pseudo: {
+		// 	rootElement: 'storybook-root',
+		// },
 	},
 	globalTypes: {
 		locale: {
@@ -70,6 +70,7 @@ const preview: Preview = {
 				items: translatedLangs.map((lang) => ({ value: lang.localeCode, title: lang.languageName })),
 			},
 		},
+		pseudo: {},
 	},
 	decorators: [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC, WithStrictMode],
 }
@@ -97,5 +98,15 @@ declare module '@storybook/react' {
 		layoutWrapper?: LayoutsDecorator
 		disableStrictMode?: boolean
 		disableWhyDidYouRender?: boolean
+		pseudo?: Partial<Record<PseudoStates, string | string[] | boolean>> & { rootElement?: string }
 	}
 }
+type PseudoStates =
+	| 'hover'
+	| 'active'
+	| 'focusVisible'
+	| 'focusWithin'
+	| 'focus'
+	| 'visited'
+	| 'link'
+	| 'target'
