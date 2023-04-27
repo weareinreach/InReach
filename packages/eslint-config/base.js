@@ -5,6 +5,7 @@ const config = {
 	plugins: ['codegen', 'turbo', 'node', '@tanstack/query'],
 	extends: ['plugin:turbo/recommended', 'plugin:@tanstack/eslint-plugin-query/recommended'],
 	rules: {
+		'no-duplicate-imports': 'off',
 		'node/no-process-env': 'warn',
 		'react/jsx-key': 'off',
 		'codegen/codegen': 'error',
@@ -61,6 +62,19 @@ const config = {
 	ignorePatterns: ['!.*', '**/node_modules/**', 'dist/', '.next/'],
 	settings: {
 		'import/extensions': ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.mts', '.tsx'],
+		'import/resolver': {
+			typescript: true,
+			node: true,
+			alwaysTryTypes: true,
+			project: ['packages/*/tsconfig.json', 'apps/*/tsconfig.json'],
+		},
+		'import/parsers': {
+			'@typescript-eslint/parser': ['.ts', '.tsx'],
+		},
+		'import/cache': {
+			lifetime: 10,
+		},
+		'import/internal-regex': '^@weareinreach/',
 	},
 	env: {
 		node: true,
