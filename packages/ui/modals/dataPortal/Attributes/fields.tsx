@@ -1,6 +1,7 @@
 import { Radio, Group, Stack, TextInput } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { MouseEventHandler } from 'react'
+import { type LiteralUnion, type TupleToUnion } from 'type-fest'
 
 import { Button } from '~ui/components/core/Button'
 
@@ -43,4 +44,31 @@ export const SuppText = ({ handler }: SuppTextProps) => {
 }
 interface SuppTextProps {
 	handler: MouseEventHandler<HTMLButtonElement>
+}
+
+const dataSchemas = ['numMinMaxOrRange', 'numRange', 'numMin', 'numMax', 'number'] as const
+type DataSchema = TupleToUnion<typeof dataSchemas>
+
+const isDataSchema = (schema: string): schema is DataSchema => dataSchemas.includes(schema as DataSchema)
+
+export const SuppData = ({ handler, schema }: SuppDataProps) => {
+	const form = useFormContext()
+	if (!isDataSchema(schema)) throw new Error('Invalid schema')
+
+	const body = (() => {
+		switch (schema) {
+			case 'numMax':
+			case 'numMin':
+			case 'number': {
+				const label = schema === 'numMax' ? 'Max' : schema === 'numMin' ? 'Min' : 'Amount'
+				return <TextInput label={label} />
+			}
+		}
+	})()
+
+	return <Group></Group>
+}
+interface SuppDataProps {
+	handler: MouseEventHandler<HTMLButtonElement>
+	schema: LiteralUnion<DataSchema, string>
 }

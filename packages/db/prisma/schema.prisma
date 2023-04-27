@@ -1043,6 +1043,7 @@ model AttributeSupplementDataSchema {
   tag        String @unique
   name       String
   definition Json
+  // entryComponent String?
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
