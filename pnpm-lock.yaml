@@ -625,6 +625,9 @@ importers:
       tslog:
         specifier: 4.8.2
         version: 4.8.2
+      type-fest:
+        specifier: 3.9.0
+        version: 3.9.0
       typescript:
         specifier: 5.0.4
         version: 5.0.4

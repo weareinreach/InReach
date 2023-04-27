@@ -68,6 +68,11 @@ SelectionItem.displayName = 'SelectionItem'
 interface SelectionItemProps extends ComponentPropsWithoutRef<'div'> {
 	icon?: string
 	label: string
+	requireBoolean: boolean
+	requireGeo: boolean
+	requireData: boolean
+	requireLanguage: boolean
+	requireText: boolean
 }
 
 const supplementFields = {

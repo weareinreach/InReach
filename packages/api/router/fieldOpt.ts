@@ -1,4 +1,6 @@
+import { type AttributesByCategory } from '@weareinreach/db'
 import flush from 'just-flush'
+import { SetOptional } from 'type-fest'
 import { z } from 'zod'
 
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
@@ -49,7 +51,12 @@ export const fieldOptRouter = defineRouter({
 				where,
 				orderBy: [{ categoryName: 'asc' }, { attributeName: 'asc' }],
 			})
-			return result.map((item) => flush(item))
+			type FlushedAttributesByCategory = SetOptional<
+				AttributesByCategory,
+				'interpolationValues' | 'icon' | 'iconBg' | 'badgeRender' | 'dataSchema'
+			>
+			const flushedResults = result.map((item) => flush(item)) as FlushedAttributesByCategory[]
+			return flushedResults
 		}),
 	attributeCategories: publicProcedure.input(z.string().array().optional()).query(
 		async ({ ctx, input }) =>
