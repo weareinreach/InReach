@@ -4,7 +4,7 @@ import { Button } from '~ui/components/core'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { queryAttributeCategories, queryAttributesByCategory } from '~ui/mockData/fieldOpt'
 
-import { AttributeModal } from './Attributes'
+import { AttributeModal } from './index'
 
 export default {
 	title: 'Data Portal/Modals/Attributes',

@@ -8,22 +8,24 @@ import {
 	Group,
 	Text,
 	Radio,
+	TextInput,
 } from '@mantine/core'
-import { useForm, zodResolver } from '@mantine/form'
+import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { type ApiOutput } from '@weareinreach/api'
-import { JsonInputOrNull } from '@weareinreach/api/schemas/common'
 import Ajv from 'ajv'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useEffect, useState, useRef, type ComponentPropsWithoutRef } from 'react'
 import { z } from 'zod'
+import { JsonInputOrNull } from '@weareinreach/api/schemas/common'
 
 import { Badge } from '~ui/components/core/Badge'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon, isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { ModalTitle } from '../ModalTitle'
+import { useForm, type FormData, AttributeModalFormProvider } from './context'
+import { SuppBoolean, SuppText } from './fields'
+import { ModalTitle } from '../../ModalTitle'
 
 const formDataSchema = z.object({
 	selected: z
@@ -86,11 +88,11 @@ type SupplementFieldsNeeded = { [K in keyof typeof supplementFields]: boolean }
 
 const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 	({ restrictCategories, ...props }, ref) => {
-		const { t } = useTranslation(['attribute'])
+		const { t } = useTranslation(['attribute', 'common'])
 		const [opened, handler] = useDisclosure(false)
 		const [attrCat, setAttrCat] = useState<string | undefined>()
 		const [supplements, setSupplements] = useState<SupplementFieldsNeeded>(supplementFields)
-		const form = useForm<FormData>({
+		const form = useForm({
 			initialValues: { attributes: [], categories: [], selected: [], supplement: undefined },
 			validate: zodResolver(formDataSchema),
 		})
@@ -286,35 +288,6 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		})
 		// #endregion
 
-		// #region Supplement data entry
-		const SuppBoolean = () => (
-			<Radio.Group
-				value={
-					form.values.supplement?.boolean === undefined
-						? undefined
-						: form.values.supplement.boolean
-						? 'true'
-						: 'false'
-				}
-				onChange={(e) => {
-					// form.setFieldValue('supplement.boolean', e === 'true' ? true : false)
-					form.values.supplement?.attributeId &&
-						handleSupplement({
-							attributeId: form.values.supplement.attributeId,
-							boolean: e === 'true' ? true : false,
-						})
-				}}
-			>
-				<Group>
-					<Radio value='true' label='True/Yes' />
-					<Radio value='false' label='False/No' />
-				</Group>
-			</Radio.Group>
-		)
-		console.log(supplements)
-		console.log(form.values)
-		//#endregion
-
 		/** Validate supplement data against defined JSON schema */
 		useEffect(() => {
 			const { data, schema } = form.values.supplement ?? {}
@@ -335,30 +308,53 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		return (
 			<>
 				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
-					<Stack>
-						<Group>{selectedItems}</Group>
+					<AttributeModalFormProvider form={form}>
 						<Stack>
-							{form.values.categories?.length && (
+							<Group>{selectedItems}</Group>
+							<Stack>
+								{form.values.categories?.length && (
+									<Select
+										data={form.values.categories}
+										onChange={(e) => (e ? setAttrCat(e) : undefined)}
+										withinPortal
+										searchable
+									/>
+								)}
 								<Select
-									data={form.values.categories}
-									onChange={(e) => (e ? setAttrCat(e) : undefined)}
+									data={form.values.attributes}
+									disabled={!Boolean(form.values.attributes?.length)}
 									withinPortal
-									searchable
+									itemComponent={SelectionItem}
+									searchable={form.values.attributes?.length > 10}
+									ref={selectAttrRef}
+									// {...form.getInputProps('selected')}
+									onChange={selectHandler}
+								/>
+							</Stack>
+							{supplements.boolean && (
+								<SuppBoolean
+									handler={(e) => {
+										form.values.supplement?.attributeId &&
+											handleSupplement({
+												attributeId: form.values.supplement.attributeId,
+												boolean: e === 'true' ? true : false,
+											})
+									}}
 								/>
 							)}
-							<Select
-								data={form.values.attributes}
-								disabled={!Boolean(form.values.attributes?.length)}
-								withinPortal
-								itemComponent={SelectionItem}
-								searchable={form.values.attributes?.length > 10}
-								ref={selectAttrRef}
-								// {...form.getInputProps('selected')}
-								onChange={selectHandler}
-							/>
+							{supplements.text && (
+								<SuppText
+									handler={() =>
+										form.values.supplement?.attributeId &&
+										handleSupplement({
+											attributeId: form.values.supplement.attributeId,
+											text: form.values.supplement?.text,
+										})
+									}
+								/>
+							)}
 						</Stack>
-						{supplements.boolean && <SuppBoolean />}
-					</Stack>
+					</AttributeModalFormProvider>
 				</Modal>
 				<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
 			</>
@@ -371,50 +367,4 @@ export const AttributeModal = createPolymorphicComponent<'button', AttributeModa
 
 export interface AttributeModalProps extends ButtonProps {
 	restrictCategories?: string[]
-}
-
-interface FormData {
-	/** Data to get submitted back to API */
-	selected: {
-		value: string
-		label: string
-		icon?: string
-		iconBg?: string
-		variant?: ApiOutput['fieldOpt']['attributesByCategory'][0]['badgeRender']
-		countryId?: string
-		govDistId?: string
-		languageId?: string
-		text?: string
-		boolean?: boolean
-		data?: object
-	}[]
-	/** Store for when supplemental info needed */
-	supplement?: {
-		attributeId: string
-		boolean?: boolean
-		countryId?: string
-		govDistId?: string
-		languageId?: string
-		text?: string
-		data?: object
-		schema?: object
-	}
-	/** API data (selection items) */
-	categories: {
-		value: string
-		label: string
-	}[]
-	attributes: {
-		value: string
-		label: string
-		icon?: string
-		iconBg?: string
-		variant?: ApiOutput['fieldOpt']['attributesByCategory'][0]['badgeRender']
-		requireText?: boolean
-		requireLanguage?: boolean
-		requireGeo?: boolean
-		requireBoolean?: boolean
-		requireData?: boolean
-		dataSchema?: object
-	}[]
 }
