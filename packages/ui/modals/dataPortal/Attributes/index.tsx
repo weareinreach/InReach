@@ -91,6 +91,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		const { t } = useTranslation(['attribute', 'common'])
 		const [opened, handler] = useDisclosure(false)
 		const [attrCat, setAttrCat] = useState<string | undefined>()
+		const [selectedAttr, setSelectedAttr] = useState<string | undefined>()
 		const [supplements, setSupplements] = useState<SupplementFieldsNeeded>(supplementFields)
 		const form = useForm({
 			initialValues: { attributes: [], categories: [], selected: [], supplement: undefined },
@@ -167,9 +168,9 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		// #region Handlers
 		const selectHandler = (e: string | null) => {
 			if (e === null) return
-
+			setSelectedAttr(e)
 			const item = form.values.attributes?.find(({ value }) => value === e)
-
+			form.setFieldValue('supplement', undefined)
 			if (item) {
 				const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
 				/** Check if supplemental info required */
@@ -178,25 +179,25 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 					const { boolean, countryId, govDistId, languageId, text, data } = form.values.supplement ?? {}
 					/** Handle if supplemental info is provided */
 
-					if (!form.values.supplement) {
-						console.log('init supp handler', item)
-						const suppRequired: SupplementFieldsNeeded = {
-							boolean: requireBoolean ?? false,
-							geo: requireGeo ?? false,
-							language: requireLanguage ?? false,
-							text: requireText ?? false,
-							data: requireData ?? false,
-						}
-						setSupplements(suppRequired)
-
-						form.setFieldValue('supplement', {
-							attributeId: item.value,
-							schema: requireData ? item.dataSchema : undefined,
-							schemaName: requireData ? item.dataSchemaName : undefined,
-						})
-
-						return
+					// if (!form.values.supplement) {
+					console.log('init supp handler', item)
+					const suppRequired: SupplementFieldsNeeded = {
+						boolean: requireBoolean ?? false,
+						geo: requireGeo ?? false,
+						language: requireLanguage ?? false,
+						text: requireText ?? false,
+						data: requireData ?? false,
 					}
+					setSupplements(suppRequired)
+
+					form.setFieldValue('supplement', {
+						attributeId: item.value,
+						schema: requireData ? item.dataSchema : undefined,
+						schemaName: requireData ? item.dataSchemaName : undefined,
+					})
+
+					return
+					// }
 				}
 				const { label, value, icon, iconBg, variant, tKey } = item
 				form.setFieldValue('selected', [
@@ -328,7 +329,13 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								{form.values.categories?.length && (
 									<Select
 										data={form.values.categories}
-										onChange={(e) => (e ? setAttrCat(e) : undefined)}
+										onChange={(e) => {
+											if (!e) return
+
+											if (selectAttrRef.current?.value) selectAttrRef.current.value = ''
+
+											setAttrCat(e)
+										}}
 										withinPortal
 										searchable
 									/>
@@ -340,6 +347,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 									itemComponent={SelectionItem}
 									searchable={form.values.attributes?.length > 10}
 									ref={selectAttrRef}
+									clearable
 									// {...form.getInputProps('selected')}
 									onChange={selectHandler}
 								/>
