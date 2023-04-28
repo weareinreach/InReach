@@ -27,8 +27,8 @@ export interface FormData {
 		languageId?: string
 		text?: string
 		data?: object
-		schemaName?: string
-		schema?: object
+		schemaName?: ApiOutput['fieldOpt']['attributesByCategory'][0]['dataSchemaName']
+		schema?: ApiOutput['fieldOpt']['attributesByCategory'][0]['dataSchema']
 	}
 	/** API data (selection items) */
 	categories: {
@@ -46,7 +46,7 @@ export interface FormData {
 		requireGeo?: boolean
 		requireBoolean?: boolean
 		requireData?: boolean
-		dataSchemaName?: string
-		dataSchema?: object
+		dataSchemaName?: ApiOutput['fieldOpt']['attributesByCategory'][0]['dataSchemaName']
+		dataSchema?: ApiOutput['fieldOpt']['attributesByCategory'][0]['dataSchema']
 	}[]
 }

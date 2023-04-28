@@ -55,7 +55,9 @@ export const fieldOptRouter = defineRouter({
 				AttributesByCategory,
 				'interpolationValues' | 'icon' | 'iconBg' | 'badgeRender' | 'dataSchema' | 'dataSchemaName'
 			>
-			const flushedResults = result.map((item) => flush(item)) as FlushedAttributesByCategory[]
+			const flushedResults = result.map((item) =>
+				flush<FlushedAttributesByCategory>(item)
+			) as FlushedAttributesByCategory[]
 			return flushedResults
 		}),
 	attributeCategories: publicProcedure.input(z.string().array().optional()).query(

@@ -54,19 +54,29 @@ const isDataSchema = (schema: string): schema is DataSchema => dataSchemas.inclu
 export const SuppData = ({ handler, schema }: SuppDataProps) => {
 	const form = useFormContext()
 	if (!isDataSchema(schema)) throw new Error('Invalid schema')
-
+	console.log('SuppData')
 	const body = (() => {
 		switch (schema) {
 			case 'numMax':
 			case 'numMin':
 			case 'number': {
 				const label = schema === 'numMax' ? 'Max' : schema === 'numMin' ? 'Min' : 'Amount'
-				return <TextInput label={label} />
+				const key = schema === 'numMax' ? 'max' : schema === 'numMin' ? 'min' : 'number'
+				return <TextInput label={label} {...form.getInputProps(`supplement.data.${key}`)} />
+			}
+			case 'numRange':
+			case 'numMinMaxOrRange': {
+				return (
+					<Group>
+						<TextInput w='25%' label='Min' {...form.getInputProps(`supplement.data.min`)} />
+						<TextInput w='25%' label='Max' {...form.getInputProps(`supplement.data.max`)} />
+					</Group>
+				)
 			}
 		}
 	})()
 
-	return <Group></Group>
+	return <Group>{body}</Group>
 }
 interface SuppDataProps {
 	handler: MouseEventHandler<HTMLButtonElement>

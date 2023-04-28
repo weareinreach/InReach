@@ -24,7 +24,7 @@ import { Icon, isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useForm, type FormData, AttributeModalFormProvider } from './context'
-import { SuppBoolean, SuppText } from './fields'
+import { SuppBoolean, SuppText, SuppData } from './fields'
 import { ModalTitle } from '../../ModalTitle'
 
 const formDataSchema = z.object({
@@ -126,6 +126,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 						({
 							attributeId,
 							attributeKey,
+							interpolationValues,
 							icon,
 							iconBg,
 							badgeRender,
@@ -134,9 +135,14 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 							requireData,
 							requireLanguage,
 							requireText,
+							dataSchemaName,
+							dataSchema,
+							attributeName,
 						}) => ({
 							value: attributeId,
-							label: t(attributeKey, { ns: 'attribute' }),
+							label: attributeName,
+							tKey: attributeKey,
+							interpolationValues,
 							icon: icon ?? undefined,
 							iconBg: iconBg ?? undefined,
 							variant: badgeRender ?? undefined,
@@ -145,6 +151,8 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 							requireData,
 							requireLanguage,
 							requireText,
+							dataSchemaName,
+							dataSchema,
 						})
 					)
 					form.setFieldValue(
@@ -171,7 +179,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 					/** Handle if supplemental info is provided */
 
 					if (!form.values.supplement) {
-						console.log('init supp handler')
+						console.log('init supp handler', item)
 						const suppRequired: SupplementFieldsNeeded = {
 							boolean: requireBoolean ?? false,
 							geo: requireGeo ?? false,
@@ -184,13 +192,17 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 						form.setFieldValue('supplement', {
 							attributeId: item.value,
 							schema: requireData ? item.dataSchema : undefined,
+							schemaName: requireData ? item.dataSchemaName : undefined,
 						})
 
 						return
 					}
 				}
-				const { label, value, icon, iconBg, variant } = item
-				form.setFieldValue('selected', [...form.values.selected, { label, value, icon, iconBg, variant }])
+				const { label, value, icon, iconBg, variant, tKey } = item
+				form.setFieldValue('selected', [
+					...form.values.selected,
+					{ label, value, icon, iconBg, variant, tKey },
+				])
 				form.setFieldValue(
 					'attributes',
 					form.values.attributes?.filter(({ value }) => value !== e)
@@ -211,7 +223,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				(requireData && data)
 			) {
 				console.log('handler after supp')
-				const { value, label, icon, iconBg, variant } = item
+				const { value, label, icon, iconBg, variant, tKey } = item
 				setSupplements(supplementFields)
 				form.setValues({
 					selected: [
@@ -228,6 +240,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 							text,
 							boolean,
 							data,
+							tKey,
 						},
 					],
 					attributes: form.values.attributes?.filter(({ value }) => value !== e.attributeId),
@@ -250,12 +263,12 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 
 		// #region Title & Selected items display
 		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
-		const selectedItems = form.values.selected?.map(({ label, icon, variant, value, iconBg }) => {
+		const selectedItems = form.values.selected?.map(({ label, icon, variant, value, iconBg, tKey }) => {
 			switch (variant) {
 				case 'ATTRIBUTE': {
 					return (
 						<Group key={value} spacing={4}>
-							<Badge variant='attribute' tsNs='attribute' tsKey={label} icon={icon ?? ''} />
+							<Badge variant='attribute' tsNs='attribute' tsKey={tKey} icon={icon ?? ''} />
 							<Icon icon='carbon:close-filled' onClick={() => removeHandler(value)} />
 						</Group>
 					)
@@ -263,7 +276,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				case 'COMMUNITY': {
 					return (
 						<Group key={value} spacing={4}>
-							<Badge variant='community' tsKey={label} icon={icon ?? ''} />
+							<Badge variant='community' tsKey={tKey} icon={icon ?? ''} />
 							<Icon icon='carbon:close-filled' onClick={() => removeHandler(value)} />
 						</Group>
 					)
@@ -271,7 +284,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				case 'LEADER': {
 					return (
 						<Group key={value} spacing={4}>
-							<Badge variant='leader' tsKey={label} icon={icon ?? ''} iconBg={iconBg ?? ''} />
+							<Badge variant='leader' tsKey={tKey} icon={icon ?? ''} iconBg={iconBg ?? ''} />
 							<Icon icon='carbon:close-filled' onClick={() => removeHandler(value)} />
 						</Group>
 					)
@@ -279,7 +292,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				case 'LIST': {
 					return (
 						<Group key={value} spacing={4}>
-							<Text>{t(label)}</Text>
+							<Text>{t(tKey)}</Text>
 							<Icon icon='carbon:close-filled' onClick={() => removeHandler(value)} />
 						</Group>
 					)
@@ -293,7 +306,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			const { data, schema } = form.values.supplement ?? {}
 			if (data && schema) {
 				const ajv = new Ajv()
-				const validate = ajv.compile(schema)
+				const validate = ajv.compile(schema as object)
 				const validData = validate(data)
 				if (!validData && validate.errors) {
 					form.setFieldError(
@@ -304,7 +317,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [form.values.supplement])
-
+		console.log(form.values)
 		return (
 			<>
 				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
@@ -352,6 +365,9 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 										})
 									}
 								/>
+							)}
+							{supplements.data && form.values.supplement?.schemaName && (
+								<SuppData handler={() => {}} schema={form.values.supplement.schemaName} />
 							)}
 						</Stack>
 					</AttributeModalFormProvider>
