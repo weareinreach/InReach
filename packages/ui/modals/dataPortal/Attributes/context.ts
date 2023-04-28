@@ -27,6 +27,7 @@ export interface FormData {
 		languageId?: string
 		text?: string
 		data?: object
+		schemaName?: string
 		schema?: object
 	}
 	/** API data (selection items) */
@@ -45,6 +46,7 @@ export interface FormData {
 		requireGeo?: boolean
 		requireBoolean?: boolean
 		requireData?: boolean
+		dataSchemaName?: string
 		dataSchema?: object
 	}[]
 }

@@ -237,6 +237,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchemaName: 'numMinMaxOrRange',
 		dataSchema: {
 			anyOf: [
 				{
@@ -308,6 +309,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchemaName: 'numMinMaxOrRange',
 		dataSchema: {
 			anyOf: [
 				{
@@ -536,6 +538,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchemaName: 'otherDescribe',
 		dataSchema: {
 			type: 'object',
 			$schema: 'http://json-schema.org/draft-07/schema#',
@@ -656,6 +659,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchemaName: 'accessInstructions',
 		dataSchema: {
 			type: 'object',
 			$schema: 'http://json-schema.org/draft-07/schema#',
@@ -687,6 +691,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchemaName: 'accessInstructions',
 		dataSchema: {
 			type: 'object',
 			$schema: 'http://json-schema.org/draft-07/schema#',
@@ -718,6 +723,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchemaName: 'accessInstructions',
 		dataSchema: {
 			type: 'object',
 			$schema: 'http://json-schema.org/draft-07/schema#',
@@ -749,6 +755,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchemaName: 'accessInstructions',
 		dataSchema: {
 			type: 'object',
 			$schema: 'http://json-schema.org/draft-07/schema#',
@@ -780,6 +787,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchemaName: 'accessInstructions',
 		dataSchema: {
 			type: 'object',
 			$schema: 'http://json-schema.org/draft-07/schema#',
@@ -1115,6 +1123,7 @@ export const attributesByCategory = [
 		requireGeo: false,
 		requireBoolean: false,
 		requireData: true,
+		dataSchemaName: 'incompatible',
 		dataSchema: {
 			type: 'array',
 			items: {

@@ -53,7 +53,7 @@ export const fieldOptRouter = defineRouter({
 			})
 			type FlushedAttributesByCategory = SetOptional<
 				AttributesByCategory,
-				'interpolationValues' | 'icon' | 'iconBg' | 'badgeRender' | 'dataSchema'
+				'interpolationValues' | 'icon' | 'iconBg' | 'badgeRender' | 'dataSchema' | 'dataSchemaName'
 			>
 			const flushedResults = result.map((item) => flush(item)) as FlushedAttributesByCategory[]
 			return flushedResults
