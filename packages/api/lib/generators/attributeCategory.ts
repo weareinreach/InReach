@@ -12,6 +12,9 @@ export const generateAttributeCategories = async (task: ListrTask) => {
 			icon: true,
 			ns: true,
 		},
+		orderBy: {
+			tag: 'asc',
+		},
 	})
 
 	const out = `

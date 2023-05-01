@@ -1,8 +1,8 @@
-import { generateReviews, orgReviews } from './generator'
-
 import { prisma } from '~db/index'
 import { migrateLog } from '~db/seed/logger'
 import { ListrTask } from '~db/seed/migrate-v1'
+
+import { generateReviews, orgReviews } from './generator'
 
 const renderOptions = {
 	bottomBar: 10,

@@ -1,7 +1,7 @@
 // import { getEnv } from '@weareinreach/config/env'
-import { prisma } from '@weareinreach/db'
 import { JwtInvalidClaimError } from 'aws-jwt-verify/error'
 import { type NextAuthOptions } from 'next-auth'
+import { prisma } from '@weareinreach/db'
 
 import { refreshSession, userSignOut, decodeCognitoAccessJwt } from '~auth/lib'
 import { cognitoCredentialProvider } from '~auth/providers/cognito'

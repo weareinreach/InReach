@@ -1,6 +1,6 @@
 import { TRPCError } from '@trpc/server'
-import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
+import { Prisma } from '@weareinreach/db'
 
 import { defineRouter, publicProcedure, handleError, protectedProcedure } from '~api/lib'
 import {
