@@ -7,18 +7,6 @@ export const attributesByCategory = [
 		attributes: [
 			{
 				attribute: {
-					id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
-					icon: null,
-					tag: 'has-confidentiality-policy',
-					tsKey: 'additional.has-confidentiality-policy',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: 'INCLUDE',
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
 					id: 'attr_01GW2HHFV3YJ2AWADHVKG79BQ0',
 					icon: null,
 					tag: 'at-capacity',
@@ -55,6 +43,30 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
+					id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
+					icon: null,
+					tag: 'has-confidentiality-policy',
+					tsKey: 'additional.has-confidentiality-policy',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: 'INCLUDE',
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFV5Q7XN2ZNTYFR1AD3M',
+					icon: 'carbon:globe',
+					tag: 'offers-remote-services',
+					tsKey: 'additional.offers-remote-services',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: 'INCLUDE',
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
 					id: 'attr_01GW2HHFV4TM7H5V6FHWA7S9JK',
 					icon: null,
 					tag: 'time-walk-in',
@@ -77,15 +89,35 @@ export const attributesByCategory = [
 					iconBg: null,
 				},
 			},
+		],
+	},
+	{
+		id: 'attc_01GXS3AYEER4CCSX670S9Z84EB',
+		tag: 'alerts',
+		icon: null,
+		ns: 'attribute',
+		attributes: [
 			{
 				attribute: {
-					id: 'attr_01GW2HHFV5Q7XN2ZNTYFR1AD3M',
-					icon: 'carbon:globe',
-					tag: 'offers-remote-services',
-					tsKey: 'additional.offers-remote-services',
+					id: 'attr_01GXS3AYESEMT09DW78G5X396D',
+					icon: 'carbon:information-filled',
+					tag: 'info',
+					tsKey: 'alerts.info',
 					tsNs: 'attribute',
 					showOnLocation: null,
-					filterType: 'INCLUDE',
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GXS3AYF9A67KMYVED2ZFG25G',
+					icon: 'carbon:warning-filled',
+					tag: 'warn',
+					tsKey: 'alerts.warn',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
 					iconBg: null,
 				},
 			},
@@ -99,18 +131,6 @@ export const attributesByCategory = [
 		attributes: [
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
-					icon: 'carbon:piggy-bank',
-					tag: 'cost-free',
-					tsKey: 'cost.cost-free',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: 'INCLUDE',
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
 					id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
 					icon: 'carbon:piggy-bank',
 					tag: 'cost-fees',
@@ -118,6 +138,18 @@ export const attributesByCategory = [
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
+					icon: 'carbon:piggy-bank',
+					tag: 'cost-free',
+					tsKey: 'cost.cost-free',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: 'INCLUDE',
 					iconBg: null,
 				},
 			},
@@ -143,10 +175,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
+					id: 'attr_01GW2HHFVJDKVF1HV7559CNZCY',
 					icon: null,
-					tag: 'time-appointment-required',
-					tsKey: 'eligibility.time-appointment-required',
+					tag: 'other-describe',
+					tsKey: 'eligibility.other-describe',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -227,10 +259,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVJDKVF1HV7559CNZCY',
+					id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
 					icon: null,
-					tag: 'other-describe',
-					tsKey: 'eligibility.other-describe',
+					tag: 'time-appointment-required',
+					tsKey: 'eligibility.time-appointment-required',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -259,18 +291,6 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
-					icon: null,
-					tag: 'lang-offered',
-					tsKey: 'lang.lang-offered',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
 					id: 'attr_01GW2HHFVJF09GXY5N5CKMSANJ',
 					icon: null,
 					tag: 'american-sign-language',
@@ -281,24 +301,128 @@ export const attributesByCategory = [
 					iconBg: null,
 				},
 			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
+					icon: null,
+					tag: 'lang-offered',
+					tsKey: 'lang.lang-offered',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
 		],
 	},
 	{
-		id: 'attc_01GW2HHFVKM2PSHFWVFM0TWX1P',
-		tag: 'system',
+		id: 'attc_01GW2HHFVRSN3W3GYZZ43WCW24',
+		tag: 'law-practice-options',
 		icon: null,
 		ns: 'attribute',
 		attributes: [
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
+					id: 'attr_01GW2HHFVRH531R2HAV8DMDZSC',
 					icon: null,
-					tag: 'incompatible-info',
-					tsKey: 'sys.incompatible-info',
+					tag: 'corp-law-firm',
+					tsKey: 'userlawpractice.corp-law-firm',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
 					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVSE2074QZJ4SKEW74J',
+					icon: null,
+					tag: 'law-other',
+					tsKey: 'userlawpractice.law-other',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVRS8XEJ3TJBBEQJ707',
+					icon: null,
+					tag: 'law-school-clinic',
+					tsKey: 'userlawpractice.law-school-clinic',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVRFPRQCQHNJA6BM3XP',
+					icon: null,
+					tag: 'legal-nonprofit',
+					tsKey: 'userlawpractice.legal-nonprofit',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+		],
+	},
+	{
+		id: 'attc_01GW2HHFVMNHV2ZS5875JWCRJ7',
+		tag: 'organization-leadership',
+		icon: null,
+		ns: 'attribute',
+		attributes: [
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVNPKMHYK12DDRVC1VJ',
+					icon: '🤎',
+					tag: 'bipoc-led',
+					tsKey: 'orgleader.bipoc-led',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: '#F1DD7F',
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVN3JX2J7REFFT5NAMS',
+					icon: '️‍️‍✊🏿',
+					tag: 'black-led',
+					tsKey: 'orgleader.black-led',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: '#C77E54',
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVNHMF72WHVKRF6W4TA',
+					icon: '️‍️‍🌎',
+					tag: 'immigrant-led',
+					tsKey: 'orgleader.immigrant-led',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: '#79ADD7',
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVN3RYX9JMXDZSQZM70',
+					icon: '️‍🏳️‍⚧️',
+					tag: 'trans-led',
+					tsKey: 'orgleader.trans-led',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: '#D4A1BA',
 				},
 			},
 		],
@@ -371,18 +495,6 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVMMF19AX2KPBTMV6P3',
-					icon: null,
-					tag: 'accesstext',
-					tsKey: 'serviceaccess.accesstext',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
 					id: 'attr_01GW2HHFVMSX7T1WDNZ5QEHKWT',
 					icon: null,
 					tag: 'accesspublictransit',
@@ -393,60 +505,16 @@ export const attributesByCategory = [
 					iconBg: null,
 				},
 			},
-		],
-	},
-	{
-		id: 'attc_01GW2HHFVMNHV2ZS5875JWCRJ7',
-		tag: 'organization-leadership',
-		icon: null,
-		ns: 'attribute',
-		attributes: [
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVNPKMHYK12DDRVC1VJ',
-					icon: '🤎',
-					tag: 'bipoc-led',
-					tsKey: 'orgleader.bipoc-led',
+					id: 'attr_01GW2HHFVMMF19AX2KPBTMV6P3',
+					icon: null,
+					tag: 'accesstext',
+					tsKey: 'serviceaccess.accesstext',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
-					iconBg: '#F1DD7F',
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVN3JX2J7REFFT5NAMS',
-					icon: '️‍️‍✊🏿',
-					tag: 'black-led',
-					tsKey: 'orgleader.black-led',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: '#C77E54',
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVNHMF72WHVKRF6W4TA',
-					icon: '️‍️‍🌎',
-					tag: 'immigrant-led',
-					tsKey: 'orgleader.immigrant-led',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: '#79ADD7',
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVN3RYX9JMXDZSQZM70',
-					icon: '️‍🏳️‍⚧️',
-					tag: 'trans-led',
-					tsKey: 'orgleader.trans-led',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: '#D4A1BA',
+					iconBg: null,
 				},
 			},
 		],
@@ -457,30 +525,6 @@ export const attributesByCategory = [
 		icon: null,
 		ns: 'attribute',
 		attributes: [
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVN72D7XEBZZJXCJQXQ',
-					icon: '️‍️‍✊🏿',
-					tag: 'bipoc-comm',
-					tsKey: 'srvfocus.bipoc-comm',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
-					icon: '️‍️‍🌎',
-					tag: 'immigrant-comm',
-					tsKey: 'srvfocus.immigrant-comm',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
 			{
 				attribute: {
 					id: 'attr_01GW2HHFVPCVX8F3B7M30ZJEHW',
@@ -495,58 +539,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVPJERY0GS9D7F56A23',
-					icon: '️‍️‍🌎',
-					tag: 'resettled-refugees',
-					tsKey: 'srvfocus.resettled-refugees',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVPSYBCYF37B44WP6CZ',
-					icon: '🏳️‍⚧️',
-					tag: 'trans-comm',
-					tsKey: 'srvfocus.trans-comm',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVQVEGH6W3A2ANH1QZE',
-					icon: '🌱',
-					tag: 'trans-youth-focus',
-					tsKey: 'srvfocus.trans-youth-focus',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVQEFWW42MBAD64BWXZ',
-					icon: '🏳️‍⚧️',
-					tag: 'trans-masc',
-					tsKey: 'srvfocus.trans-masc',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVQX4M8DY1FSAYSJSSK',
-					icon: '🏳️‍⚧️',
-					tag: 'trans-fem',
-					tsKey: 'srvfocus.trans-fem',
+					id: 'attr_01GW2HHFVN72D7XEBZZJXCJQXQ',
+					icon: '️‍️‍✊🏿',
+					tag: 'bipoc-comm',
+					tsKey: 'srvfocus.bipoc-comm',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -567,10 +563,46 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
+					id: 'attr_01GW2HHFVRMQFJ9AMA633SQQGV',
+					icon: '💛',
+					tag: 'hiv-comm',
+					tsKey: 'srvfocus.hiv-comm',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
+					icon: '️‍️‍🌎',
+					tag: 'immigrant-comm',
+					tsKey: 'srvfocus.immigrant-comm',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
 					id: 'attr_01GW2HHFVQCZPA3Z5GW6J3MQHW',
 					icon: '🌱',
 					tag: 'lgbtq-youth-focus',
 					tsKey: 'srvfocus.lgbtq-youth-focus',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVPJERY0GS9D7F56A23',
+					icon: '️‍️‍🌎',
+					tag: 'resettled-refugees',
+					tsKey: 'srvfocus.resettled-refugees',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -591,30 +623,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVRMQFJ9AMA633SQQGV',
-					icon: '💛',
-					tag: 'hiv-comm',
-					tsKey: 'srvfocus.hiv-comm',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-		],
-	},
-	{
-		id: 'attc_01GW2HHFVRSN3W3GYZZ43WCW24',
-		tag: 'law-practice-options',
-		icon: null,
-		ns: 'attribute',
-		attributes: [
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVRH531R2HAV8DMDZSC',
-					icon: null,
-					tag: 'corp-law-firm',
-					tsKey: 'userlawpractice.corp-law-firm',
+					id: 'attr_01GW2HHFVPSYBCYF37B44WP6CZ',
+					icon: '🏳️‍⚧️',
+					tag: 'trans-comm',
+					tsKey: 'srvfocus.trans-comm',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -623,10 +635,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVRFPRQCQHNJA6BM3XP',
-					icon: null,
-					tag: 'legal-nonprofit',
-					tsKey: 'userlawpractice.legal-nonprofit',
+					id: 'attr_01GW2HHFVQX4M8DY1FSAYSJSSK',
+					icon: '🏳️‍⚧️',
+					tag: 'trans-fem',
+					tsKey: 'srvfocus.trans-fem',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -635,10 +647,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVRS8XEJ3TJBBEQJ707',
-					icon: null,
-					tag: 'law-school-clinic',
-					tsKey: 'userlawpractice.law-school-clinic',
+					id: 'attr_01GW2HHFVQEFWW42MBAD64BWXZ',
+					icon: '🏳️‍⚧️',
+					tag: 'trans-masc',
+					tsKey: 'srvfocus.trans-masc',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -647,10 +659,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVSE2074QZJ4SKEW74J',
-					icon: null,
-					tag: 'law-other',
-					tsKey: 'userlawpractice.law-other',
+					id: 'attr_01GW2HHFVQVEGH6W3A2ANH1QZE',
+					icon: '🌱',
+					tag: 'trans-youth-focus',
+					tsKey: 'srvfocus.trans-youth-focus',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -667,10 +679,10 @@ export const attributesByCategory = [
 		attributes: [
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVSPXWJJPFG9DKXESEK',
+					id: 'attr_01GW2HHFVTMFN73X6NVR0M9BZJ',
 					icon: null,
-					tag: 'healthcare',
-					tsKey: 'userserviceprovider.healthcare',
+					tag: 'friend-family',
+					tsKey: 'userserviceprovider.friend-family',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -691,10 +703,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVTTZ83PZR61M37R8R7',
+					id: 'attr_01GW2HHFVTMVQ7W2X26ZRK81FR',
 					icon: null,
-					tag: 'nonprofit',
-					tsKey: 'userserviceprovider.nonprofit',
+					tag: 'grassroots-direct',
+					tsKey: 'userserviceprovider.grassroots-direct',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -703,10 +715,22 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVTMVQ7W2X26ZRK81FR',
+					id: 'attr_01GW2HHFVSPXWJJPFG9DKXESEK',
 					icon: null,
-					tag: 'grassroots-direct',
-					tsKey: 'userserviceprovider.grassroots-direct',
+					tag: 'healthcare',
+					tsKey: 'userserviceprovider.healthcare',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVTTZ83PZR61M37R8R7',
+					icon: null,
+					tag: 'nonprofit',
+					tsKey: 'userserviceprovider.nonprofit',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -725,44 +749,20 @@ export const attributesByCategory = [
 					iconBg: null,
 				},
 			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVTMFN73X6NVR0M9BZJ',
-					icon: null,
-					tag: 'friend-family',
-					tsKey: 'userserviceprovider.friend-family',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
 		],
 	},
 	{
-		id: 'attc_01GXS3AYEER4CCSX670S9Z84EB',
-		tag: 'alerts',
+		id: 'attc_01GW2HHFVKM2PSHFWVFM0TWX1P',
+		tag: 'system',
 		icon: null,
 		ns: 'attribute',
 		attributes: [
 			{
 				attribute: {
-					id: 'attr_01GXS3AYESEMT09DW78G5X396D',
-					icon: 'carbon:information-filled',
-					tag: 'info',
-					tsKey: 'alerts.info',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01GXS3AYF9A67KMYVED2ZFG25G',
-					icon: 'carbon:warning-filled',
-					tag: 'warn',
-					tsKey: 'alerts.warn',
+					id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
+					icon: null,
+					tag: 'incompatible-info',
+					tsKey: 'sys.incompatible-info',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,

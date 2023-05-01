@@ -8,6 +8,7 @@ export const generatePermissions = async (task: ListrTask) => {
 		select: {
 			name: true,
 		},
+		orderBy: { name: 'asc' },
 	})
 	const permArray = permissions.map((perm) => perm.name)
 

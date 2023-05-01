@@ -9,6 +9,7 @@ export const generateUserTypes = async (task: ListrTask) => {
 			id: true,
 			type: true,
 		},
+		orderBy: { type: 'asc' },
 	})
 
 	const typeNames = userTypes.map((record) => record.type)
