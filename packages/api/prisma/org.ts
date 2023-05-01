@@ -1,5 +1,5 @@
-import { Prisma } from '@weareinreach/db'
 import { getDistance } from 'geolib'
+import { Prisma } from '@weareinreach/db'
 
 import { Context } from '~api/lib'
 import { attributeFilter, serviceFilter } from '~api/schemas/filters'

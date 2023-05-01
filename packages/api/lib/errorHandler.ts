@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server'
-import { Prisma } from '@weareinreach/db'
 import { Logger } from 'tslog'
 import { ZodError } from 'zod'
+import { Prisma } from '@weareinreach/db'
 
 import { PRISMA_ERROR_CODES } from './prismaErrorCodes'
 

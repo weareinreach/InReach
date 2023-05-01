@@ -1,6 +1,11 @@
 /* eslint-disable i18next/no-literal-string */
 import { Grid, Stack, Tabs, Image } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
+import { GetServerSideProps, NextPage } from 'next'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
+import { type RoutedQuery } from 'nextjs-routes'
+import { useState, useEffect } from 'react'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { Toolbar, GoogleMap } from '@weareinreach/ui/components/core'
 import {
@@ -12,11 +17,6 @@ import {
 	ListingBasicInfo,
 	LocationCard,
 } from '@weareinreach/ui/components/sections'
-import { GetServerSideProps, NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import { type RoutedQuery } from 'nextjs-routes'
-import { useState, useEffect } from 'react'
 
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'

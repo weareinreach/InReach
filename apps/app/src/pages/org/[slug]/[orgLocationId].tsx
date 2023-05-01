@@ -1,4 +1,9 @@
 import { Grid, Stack, Tabs, Image } from '@mantine/core'
+import { GetServerSideProps, NextPage } from 'next'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
+import { useState, useEffect } from 'react'
+import { z } from 'zod'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { Toolbar } from '@weareinreach/ui/components/core'
 import {
@@ -10,11 +15,6 @@ import {
 	ListingBasicInfo,
 	LocationCard,
 } from '@weareinreach/ui/components/sections'
-import { GetServerSideProps, NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import { useState, useEffect } from 'react'
-import { z } from 'zod'
 
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'

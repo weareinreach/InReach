@@ -3,8 +3,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import invariant from 'tiny-invariant'
 
-import { Schedule } from '~db/datastore/v1/mongodb/output-types/organizations'
 import { HoursHelper } from '~db/seed/migrate-v1/org/generator'
+
+import { Schedule } from '~db/datastore/v1/mongodb/output-types/organizations'
 
 export const parseSchedule = (schedule: Schedule, helpers: HoursHelper) => {
 	const { dayMap, hoursMap, hoursMeta } = helpers
