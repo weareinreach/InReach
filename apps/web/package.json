@@ -35,13 +35,13 @@
 		"dayjs": "1.11.7",
 		"embla-carousel-react": "7.1.0",
 		"i18next": "22.4.15",
-		"next": "13.3.1",
+		"next": "13.3.4",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-i18next": "12.2.2"
 	},
 	"devDependencies": {
-		"@next/bundle-analyzer": "13.3.1",
+		"@next/bundle-analyzer": "13.3.4",
 		"@types/eslint": "8.37.0",
 		"@types/node": "18.16.1",
 		"@types/react": "18.2.0",
