@@ -1,8 +1,8 @@
 import invariant from 'tiny-invariant'
 
-import { namespaces } from './00-namespaces'
-
 import { slug, generateId, Prisma } from '~db/index'
+
+import { namespaces } from './00-namespaces'
 
 export const userEmail = 'inreach_svc@inreach.org'
 export const localeCode = 'en'

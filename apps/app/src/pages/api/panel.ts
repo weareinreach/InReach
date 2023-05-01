@@ -1,7 +1,7 @@
-import { appRouter } from '@weareinreach/api'
-import { getEnv } from '@weareinreach/config/env'
 import { type NextApiRequest, type NextApiResponse } from 'next'
 import { renderTrpcPanel } from 'trpc-panel'
+import { appRouter } from '@weareinreach/api'
+import { getEnv } from '@weareinreach/config/env'
 
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
 	if (getEnv('NODE_ENV') === 'development') {

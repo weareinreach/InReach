@@ -14,8 +14,6 @@ import invariant from 'tiny-invariant'
 import fs from 'fs'
 import path from 'path'
 
-import { dayMap, hoursMap, hoursMeta } from '~db/datastore/v1/helpers/hours'
-import { OrganizationsJSONCollection } from '~db/datastore/v1/mongodb/output-types/organizations'
 import {
 	SourceType,
 	JsonInputOrNull,
@@ -55,6 +53,9 @@ import {
 	rollback,
 	writeBatches,
 } from '~db/seed/migrate-v1/org/outData'
+
+import { dayMap, hoursMap, hoursMeta } from '~db/datastore/v1/helpers/hours'
+import { OrganizationsJSONCollection } from '~db/datastore/v1/mongodb/output-types/organizations'
 
 // #endregion
 

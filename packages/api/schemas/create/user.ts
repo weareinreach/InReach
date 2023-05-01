@@ -1,5 +1,5 @@
-import { Prisma, generateId } from '@weareinreach/db'
 import { z } from 'zod'
+import { Prisma, generateId } from '@weareinreach/db'
 
 import { userTypes } from '~api/generated/userType'
 import { decodeUrl } from '~api/lib'
