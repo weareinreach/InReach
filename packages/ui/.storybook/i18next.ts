@@ -1,9 +1,9 @@
-import { locales } from '@weareinreach/api/generated/languages'
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import HttpApi, { HttpBackendOptions } from 'i18next-http-backend'
 import intervalPlural from 'i18next-intervalplural-postprocessor'
 import { initReactI18next } from 'react-i18next'
+import { locales } from '@weareinreach/api/generated/languages'
 
 import config from '../next-i18next.config'
 

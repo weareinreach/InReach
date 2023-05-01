@@ -1,7 +1,7 @@
-import { prisma } from '@weareinreach/db'
 import dotenv from 'dotenv'
 import { unflatten, flatten } from 'flat'
 import prettier from 'prettier'
+import { prisma } from '@weareinreach/db'
 
 import fs from 'fs'
 
