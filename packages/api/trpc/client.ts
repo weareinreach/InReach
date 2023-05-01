@@ -2,8 +2,8 @@
 import { httpBatchLink, loggerLink } from '@trpc/client'
 import { createTRPCNext, WithTRPCConfig } from '@trpc/next'
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
-import { getEnv } from '@weareinreach/config/env'
 import { devtoolsLink } from 'trpc-client-devtools-link'
+import { getEnv } from '@weareinreach/config/env'
 
 import { transformer } from '../lib/transformer'
 import { type AppRouter } from '../router'

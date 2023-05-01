@@ -30,7 +30,7 @@ const getAttributeList = async () => {
 			id: true,
 			tag: true,
 			requireBoolean: true,
-			requireCountry: true,
+			requireGeo: true,
 			requireData: true,
 			requireLanguage: true,
 			requireText: true,

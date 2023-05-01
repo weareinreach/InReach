@@ -11,6 +11,11 @@ import {
 	rem,
 	Group,
 } from '@mantine/core'
+import Autoplay from 'embla-carousel-autoplay'
+import { type GetServerSidePropsContext } from 'next'
+import Head from 'next/head'
+import { useTranslation, Trans, TFunction } from 'next-i18next'
+import { useRef, useState } from 'react'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { getServerSession } from '@weareinreach/auth'
 import { Link, UserReview } from '@weareinreach/ui/components/core'
@@ -18,11 +23,6 @@ import { Hero, CallOut } from '@weareinreach/ui/components/sections'
 import { useCustomVariant } from '@weareinreach/ui/hooks'
 import { AccountVerifyModal, ResetPasswordModal } from '@weareinreach/ui/modals'
 import { PrivacyStatementModal } from '@weareinreach/ui/modals/PrivacyStatement'
-import Autoplay from 'embla-carousel-autoplay'
-import { type GetServerSidePropsContext } from 'next'
-import Head from 'next/head'
-import { useTranslation, Trans, TFunction } from 'next-i18next'
-import { useRef, useState } from 'react'
 
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'

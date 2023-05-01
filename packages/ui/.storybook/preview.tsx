@@ -1,11 +1,11 @@
 import { BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
-import { translatedLangs, LocaleCodes } from '@weareinreach/api/generated/languages'
 import { type RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { BaseRouter } from 'next/dist/shared/lib/router/router'
 import { Router } from 'next/router'
+import { translatedLangs, LocaleCodes } from '@weareinreach/api/generated/languages'
 
 import { WithI18n, WithMantine, WithTRPC, Layouts, WithStrictMode, type LayoutsDecorator } from './decorators'
 import { i18n } from './i18next'
@@ -56,9 +56,9 @@ const preview: Preview = {
 		chromatic: {
 			delay: 1000,
 		},
-		pseudo: {
-			rootElement: 'storybook-root',
-		},
+		// pseudo: {
+		// 	rootElement: 'storybook-root',
+		// },
 	},
 	globalTypes: {
 		locale: {
@@ -70,6 +70,7 @@ const preview: Preview = {
 				items: translatedLangs.map((lang) => ({ value: lang.localeCode, title: lang.languageName })),
 			},
 		},
+		pseudo: {},
 	},
 	decorators: [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC, WithStrictMode],
 }
@@ -97,5 +98,16 @@ declare module '@storybook/react' {
 		layoutWrapper?: LayoutsDecorator
 		disableStrictMode?: boolean
 		disableWhyDidYouRender?: boolean
+		pseudo?: Partial<Record<PseudoStates, string | string[] | boolean>> & { rootElement?: string }
+		rqDevtools?: boolean
 	}
 }
+type PseudoStates =
+	| 'hover'
+	| 'active'
+	| 'focusVisible'
+	| 'focusWithin'
+	| 'focus'
+	| 'visited'
+	| 'link'
+	| 'target'

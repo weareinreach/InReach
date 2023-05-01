@@ -72,7 +72,7 @@ export const seedAttributes = async (task: ListrTask, attribData?: typeof attrib
 			const {
 				name,
 				description: intDesc,
-				requireCountry,
+				requireGeo,
 				key: keyTag,
 				requireLanguage,
 				requireData,
@@ -102,7 +102,7 @@ export const seedAttributes = async (task: ListrTask, attribData?: typeof attrib
 					tag,
 					intDesc,
 					requireData,
-					requireCountry,
+					requireGeo,
 					requireLanguage,
 					requireText,
 					tsKey: key,

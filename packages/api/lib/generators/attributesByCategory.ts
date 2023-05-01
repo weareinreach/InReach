@@ -31,8 +31,10 @@ export const generateAttributesByCategory = async (task: ListrTask) => {
 						},
 					},
 				},
+				orderBy: { attribute: { tag: 'asc' } },
 			},
 		},
+		orderBy: { tag: 'asc' },
 	})
 
 	const out = `

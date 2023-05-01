@@ -1,6 +1,6 @@
-import { Prisma, generateId, generateNestedFreeText, generateFreeText } from '@weareinreach/db'
 import flush from 'just-flush'
 import { z } from 'zod'
+import { Prisma, generateId, generateNestedFreeText, generateFreeText } from '@weareinreach/db'
 
 import { CreationBase, CreationManyBase, InputJsonValue, CreationOneOrManyBase } from '~api/schemas/common'
 

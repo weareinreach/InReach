@@ -3,16 +3,18 @@
 	"extends": ["//"],
 	"pipeline": {
 		"db:dataMigrate": {
-			"cache": false,
-			"dependsOn": ["db:generate", "db:deploy", "download:seedData"],
-			"inputs": ["prisma/data-migrations/**/*.ts"]
+			"dependsOn": ["download:seedData", "db:generate", "db:deploy"],
+			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
+			"inputs": ["prisma/data-migrations/**/*.ts", "prisma/dataMigrationRunner.ts"]
 		},
 		"db:deploy": {
-			"cache": false,
-			"dependsOn": ["db:generate"]
+			"dependsOn": ["db:generate"],
+			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
+			"inputs": ["prisma/migrations/**/*"]
 		},
 		"db:generate": {
 			"cache": false,
+			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
 			"inputs": ["prisma/schema.prisma"]
 		},
 		"db:run-seed": {

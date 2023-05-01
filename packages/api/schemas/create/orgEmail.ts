@@ -1,6 +1,6 @@
+import { z } from 'zod'
 import { Prisma, generateId, generateNestedFreeText, slug } from '@weareinreach/db'
 import { namespaces } from '@weareinreach/db/seed/data/00-namespaces'
-import { z } from 'zod'
 
 export const CreateOrgEmailSchema = z
 	.object({
