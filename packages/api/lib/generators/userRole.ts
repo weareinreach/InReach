@@ -9,6 +9,7 @@ export const generateUserRoles = async (task: ListrTask) => {
 			id: true,
 			tag: true,
 		},
+		orderBy: { tag: 'asc' },
 	})
 
 	const roleNames = roles.map((role) => role.tag)
