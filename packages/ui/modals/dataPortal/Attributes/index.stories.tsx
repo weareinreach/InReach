@@ -2,7 +2,7 @@ import { Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { queryAttributeCategories, queryAttributesByCategory } from '~ui/mockData/fieldOpt'
+import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'
 
 import { AttributeModal } from './index'
 
@@ -12,16 +12,8 @@ export default {
 	parameters: {
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
-		msw: [
-			getTRPCMock({
-				path: ['fieldOpt', 'attributeCategories'],
-				response: (input) => queryAttributeCategories(input),
-			}),
-			getTRPCMock({
-				path: ['fieldOpt', 'attributesByCategory'],
-				response: (input) => queryAttributesByCategory(input),
-			}),
-		],
+		msw: [...allFieldOptHandlers],
+		rqDevtools: true,
 	},
 	args: {
 		component: Button,

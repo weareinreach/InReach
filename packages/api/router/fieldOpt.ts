@@ -96,7 +96,7 @@ export const fieldOptRouter = defineRouter({
 			z
 				.object({
 					where: z.object({ activeForOrgs: z.boolean(), cca2: z.string() }),
-					includeGeo: z.object({ wkt: z.boolean().default(false), json: z.boolean().default(false) }),
+					includeGeo: z.object({ wkt: z.boolean(), json: z.boolean() }),
 				})
 				.deepPartial()
 				.optional()
@@ -114,14 +114,14 @@ export const fieldOptRouter = defineRouter({
 					tsKey: true,
 					tsNs: true,
 					activeForOrgs: true,
-					geoJSON: includeGeo?.json,
-					geoWKT: includeGeo?.wkt,
+					geoJSON: includeGeo?.json ?? false,
+					geoWKT: includeGeo?.wkt ?? false,
 				},
 				orderBy: {
 					name: 'asc',
 				},
 			})
-
-			return result
+			type CountryResult = SetOptional<(typeof result)[number], 'geoJSON' | 'geoWKT'>[]
+			return result as CountryResult
 		}),
 })
