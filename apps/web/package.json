@@ -13,7 +13,7 @@
 	},
 	"dependencies": {
 		"@crowdin/ota-client": "1.0.0",
-		"@emotion/react": "11.10.6",
+		"@emotion/react": "11.10.8",
 		"@emotion/server": "11.10.0",
 		"@mantine/carousel": "6.0.9",
 		"@mantine/core": "6.0.9",
@@ -43,7 +43,7 @@
 	"devDependencies": {
 		"@next/bundle-analyzer": "13.3.4",
 		"@types/eslint": "8.37.0",
-		"@types/node": "18.16.1",
+		"@types/node": "18.16.3",
 		"@types/react": "18.2.0",
 		"@types/react-dom": "18.2.1",
 		"@weareinreach/config": "0.100.0",
