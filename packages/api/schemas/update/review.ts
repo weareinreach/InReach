@@ -1,5 +1,5 @@
-import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
+import { Prisma } from '@weareinreach/db'
 
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 

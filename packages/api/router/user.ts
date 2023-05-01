@@ -1,4 +1,5 @@
 import { TRPCError } from '@trpc/server'
+import { z } from 'zod'
 import {
 	createCognitoUser,
 	forgotPassword,
@@ -7,7 +8,6 @@ import {
 	userLogin,
 	deleteAccount,
 } from '@weareinreach/auth'
-import { z } from 'zod'
 
 import { handleError, decodeUrl } from '~api/lib'
 import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'

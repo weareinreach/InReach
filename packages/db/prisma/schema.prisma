@@ -905,13 +905,14 @@ model TranslatedReview {
 
 /// Additional Properties for Org/Service.
 model AttributeCategory {
-  id      String  @id @default(cuid())
-  tag     String  @unique
-  name    String  @unique
-  icon    String?
+  id            String           @id @default(cuid())
+  tag           String           @unique
+  name          String           @unique
+  icon          String?
   /// Internal description
-  intDesc String?
-  active  Boolean @default(true)
+  intDesc       String?
+  active        Boolean          @default(true)
+  renderVariant AttributeRender?
 
   namespace TranslationNamespace @relation(fields: [ns], references: [name], onDelete: Restrict, onUpdate: Cascade)
   ns        String
@@ -924,6 +925,14 @@ model AttributeCategory {
   internalNotes InternalNote[]
 
   //@@schema("system")
+}
+
+enum AttributeRender {
+  COMMUNITY
+  SERVICE
+  LEADER
+  ATTRIBUTE
+  LIST
 }
 
 model Attribute {
@@ -963,7 +972,7 @@ model Attribute {
 
   requireText       Boolean                        @default(false)
   requireLanguage   Boolean                        @default(false)
-  requireCountry    Boolean                        @default(false)
+  requireGeo        Boolean                        @default(false)
   requireBoolean    Boolean                        @default(false)
   requireData       Boolean                        @default(false)
   requireDataSchema AttributeSupplementDataSchema? @relation(fields: [requiredSchemaId], references: [id])
@@ -1034,6 +1043,7 @@ model AttributeSupplementDataSchema {
   tag        String @unique
   name       String
   definition Json
+  // entryComponent String?
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -1381,8 +1391,8 @@ model TranslationKey {
   crowdinId Int?
 
   // to manage plurals & ordinals
-  plural       TranslationPlurals @default(SINGLE)
-  pluralValues Json?
+  interpolation       InterpolationOptions?
+  interpolationValues Json?
 
   /// Associated tables
   attribute          Attribute?
@@ -1413,8 +1423,7 @@ model TranslationKey {
   @@id([ns, key])
 }
 
-enum TranslationPlurals {
-  SINGLE
+enum InterpolationOptions {
   PLURAL
   ORDINAL
   CONTEXT
@@ -2273,18 +2282,24 @@ view geometry_columns {
 }
 
 view AttributesByCategory {
-  categoryId      String
-  categoryName    String
-  attributeId     String
-  attributeName   String
-  attributeKey    String
-  attributeNs     String
-  icon            String?
-  requireText     Boolean
-  requireLanguage Boolean
-  requireCountry  Boolean
-  requireBoolean  Boolean
-  requireData     Boolean
+  categoryId          String
+  categoryName        String
+  categoryDisplay     String
+  attributeId         String
+  attributeName       String
+  attributeKey        String
+  attributeNs         String
+  interpolationValues Json?
+  icon                String?
+  iconBg              String?
+  badgeRender         AttributeRender?
+  requireText         Boolean
+  requireLanguage     Boolean
+  requireGeo          Boolean
+  requireBoolean      Boolean
+  requireData         Boolean
+  dataSchemaName      String?
+  dataSchema          Json?
 
   @@unique([categoryId, attributeId])
   @@map("attributes_by_category")
