@@ -24,7 +24,7 @@ import { Icon, isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useForm, type FormData, AttributeModalFormProvider } from './context'
-import { SuppBoolean, SuppText, SuppData } from './fields'
+import { Supplement } from './fields'
 import { ModalTitle } from '../../ModalTitle'
 
 const formDataSchema = z.object({
@@ -264,7 +264,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 
 		// #region Title & Selected items display
 		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
-		const selectedItems = form.values.selected?.map(({ label, icon, variant, value, iconBg, tKey }) => {
+		const selectedItems = form.values.selected?.map(({ label, icon, variant, value, iconBg, tKey, data }) => {
 			switch (variant) {
 				case 'ATTRIBUTE': {
 					return (
@@ -293,7 +293,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				case 'LIST': {
 					return (
 						<Group key={value} spacing={4}>
-							<Text>{t(tKey)}</Text>
+							<Text>{t(tKey, { ns: 'attribute', context: 'range', ...data })}</Text>
 							<Icon icon='carbon:close-filled' onClick={() => removeHandler(value)} />
 						</Group>
 					)
@@ -331,9 +331,6 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 										data={form.values.categories}
 										onChange={(e) => {
 											if (!e) return
-
-											if (selectAttrRef.current?.value) selectAttrRef.current.value = ''
-
 											setAttrCat(e)
 										}}
 										withinPortal
@@ -353,7 +350,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								/>
 							</Stack>
 							{supplements.boolean && (
-								<SuppBoolean
+								<Supplement.Boolean
 									handler={(e) => {
 										form.values.supplement?.attributeId &&
 											handleSupplement({
@@ -364,7 +361,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								/>
 							)}
 							{supplements.text && (
-								<SuppText
+								<Supplement.Text
 									handler={() =>
 										form.values.supplement?.attributeId &&
 										handleSupplement({
@@ -375,8 +372,30 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								/>
 							)}
 							{supplements.data && form.values.supplement?.schemaName && (
-								<SuppData handler={() => {}} schema={form.values.supplement.schemaName} />
+								<Supplement.Data
+									handler={(data) => {
+										form.values.supplement?.attributeId &&
+											handleSupplement({
+												attributeId: form.values.supplement.attributeId,
+												data,
+											})
+									}}
+									schema={form.values.supplement.schemaName}
+								/>
 							)}
+							{supplements.language && (
+								<Supplement.Language
+									handler={(languageId) => {
+										form.values.supplement?.attributeId &&
+											languageId &&
+											handleSupplement({
+												attributeId: form.values.supplement.attributeId,
+												languageId,
+											})
+									}}
+								/>
+							)}
+							{supplements.geo && <Supplement.Geo handler={() => {}} />}
 						</Stack>
 					</AttributeModalFormProvider>
 				</Modal>

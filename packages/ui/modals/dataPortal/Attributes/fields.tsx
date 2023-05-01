@@ -1,13 +1,15 @@
-import { Radio, Group, Stack, TextInput } from '@mantine/core'
+import { Radio, Group, Stack, TextInput, Select, Text } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { MouseEventHandler } from 'react'
+import { type MouseEventHandler, useEffect, useState, type ComponentPropsWithoutRef, forwardRef } from 'react'
 import { type LiteralUnion, type TupleToUnion } from 'type-fest'
+import { type ApiOutput } from '@weareinreach/api'
 
 import { Button } from '~ui/components/core/Button'
+import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useFormContext } from './context'
 
-export const SuppBoolean = ({ handler }: SuppBooleanProps) => {
+const SuppBoolean = ({ handler }: SuppBooleanProps) => {
 	const form = useFormContext()
 
 	return (
@@ -32,7 +34,7 @@ interface SuppBooleanProps {
 	handler: (value: string) => void
 }
 
-export const SuppText = ({ handler }: SuppTextProps) => {
+const SuppText = ({ handler }: SuppTextProps) => {
 	const form = useFormContext()
 	const { t } = useTranslation('common')
 	return (
@@ -51,10 +53,17 @@ type DataSchema = TupleToUnion<typeof dataSchemas>
 
 const isDataSchema = (schema: string): schema is DataSchema => dataSchemas.includes(schema as DataSchema)
 
-export const SuppData = ({ handler, schema }: SuppDataProps) => {
+const SuppData = ({ handler, schema }: SuppDataProps) => {
 	const form = useFormContext()
+	const { t } = useTranslation('common')
 	if (!isDataSchema(schema)) throw new Error('Invalid schema')
 	console.log('SuppData')
+	useEffect(() => {
+		if (!form.values.supplement?.data) {
+			form.setFieldValue('supplement.data', {})
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [form.values.supplement])
 	const body = (() => {
 		switch (schema) {
 			case 'numMax':
@@ -76,9 +85,180 @@ export const SuppData = ({ handler, schema }: SuppDataProps) => {
 		}
 	})()
 
-	return <Group>{body}</Group>
+	return (
+		<Group>
+			{body}
+			<Button onClick={() => handler(form.values.supplement?.data)}>
+				{t('words.add', { ns: 'common' })}
+			</Button>
+		</Group>
+	)
 }
 interface SuppDataProps {
-	handler: MouseEventHandler<HTMLButtonElement>
+	handler: (data?: object) => void //MouseEventHandler<HTMLButtonElement>
 	schema: LiteralUnion<DataSchema, string>
+}
+
+const SuppLang = ({ handler }: SuppLangProps) => {
+	const form = useFormContext()
+	const { t } = useTranslation('common')
+	const [listOptions, setListOptions] = useState<LangList[] | undefined>()
+	api.fieldOpt.languages.useQuery(undefined, {
+		onSuccess: (data) =>
+			setListOptions(data.map(({ id, languageName }) => ({ value: id, label: languageName }))),
+	})
+	return (
+		<Group>
+			{listOptions && (
+				<Select data={listOptions} searchable {...form.getInputProps('supplement.languageId')} />
+			)}
+			<Button onClick={() => handler(form.values.supplement?.languageId)}>
+				{t('words.add', { ns: 'common' })}
+			</Button>
+		</Group>
+	)
+}
+
+interface SuppLangProps {
+	handler: (value?: string) => void
+}
+interface LangList {
+	value: string
+	label: string
+}
+
+const GeoItem = forwardRef<HTMLDivElement, GeoItemProps>(({ flag, label, ...props }, ref) => {
+	return (
+		<div ref={ref} {...props}>
+			<Group>
+				{flag}
+				<Text>{label}</Text>
+			</Group>
+		</div>
+	)
+})
+GeoItem.displayName = 'GeoItem'
+
+const SuppGeo = ({ handler, countryOnly }: SuppGeoProps) => {
+	const form = useFormContext()
+	const { t } = useTranslation(['country', 'gov-dist'])
+	const [primaryList, setPrimaryList] = useState<GeoList[] | undefined>()
+	const [secondaryList, setSecondaryList] = useState<GeoList['districts'] | undefined>()
+	const [tertiaryList, setTertiaryList] = useState<
+		NonNullable<GeoList['districts']>[number]['subDistricts'] | undefined
+	>()
+	const [primarySearch, onPrimarySearch] = useState<string | undefined>()
+	const [secondarySearch, onSecondarySearch] = useState<string | undefined>()
+	const [tertiarySearch, onTertiarySearch] = useState<string | undefined>()
+	api.fieldOpt.countries.useQuery(undefined, {
+		enabled: Boolean(countryOnly),
+		onSuccess: (data) =>
+			setPrimaryList(data.map(({ id, name, flag }) => ({ value: id, label: name, flag: flag ?? undefined }))),
+	})
+	api.fieldOpt.govDistsByCountry.useQuery(undefined, {
+		enabled: !Boolean(countryOnly),
+		onSuccess: (data) => {
+			setPrimaryList(
+				data.map(({ id, tsKey, tsNs, flag, govDist }) => ({
+					value: id,
+					label: t(tsKey, { ns: tsNs }),
+					flag: flag ?? undefined,
+					districts: govDist,
+				}))
+			)
+		},
+	})
+
+	useEffect(() => {
+		if (form.values.supplement?.govDistId && secondaryList) {
+			const secondarySelected = secondaryList.find(({ id }) => id === form.values.supplement?.govDistId)
+			if (secondarySelected && secondarySelected.subDistricts.length) {
+				form.setFieldValue('supplement.subDistId', undefined)
+				onTertiarySearch('')
+				setTertiaryList(secondarySelected.subDistricts)
+			} else if (secondarySelected && !secondarySelected.subDistricts.length) {
+				setTertiaryList(undefined)
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [form.values.supplement?.govDistId])
+
+	useEffect(() => {
+		if (form.values.supplement?.countryId && !countryOnly && primaryList) {
+			const primarySelected = primaryList.find(({ value }) => value === form.values.supplement?.countryId)
+			if (primarySelected && primarySelected.districts?.length) {
+				setSecondaryList(primarySelected.districts)
+			} else if (primarySelected && !primarySelected.districts?.length) {
+				onSecondarySearch('')
+				setSecondaryList(undefined)
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [form.values.supplement?.countryId, countryOnly])
+
+	if (!primaryList) return <>Loading...</>
+	return (
+		<Stack>
+			{primaryList && (
+				<Select
+					data={primaryList}
+					searchable
+					searchValue={primarySearch}
+					onSearchChange={onPrimarySearch}
+					itemComponent={GeoItem}
+					{...form.getInputProps('supplement.countryId')}
+				/>
+			)}
+			{secondaryList && (
+				<Select
+					data={secondaryList.map(({ id, tsKey, tsNs }) => ({
+						value: id,
+						label: t(tsKey, { ns: tsNs }) satisfies string,
+					}))}
+					searchable
+					searchValue={secondarySearch}
+					onSearchChange={onSecondarySearch}
+					itemComponent={GeoItem}
+					{...form.getInputProps('supplement.govDistId')}
+				/>
+			)}
+			{tertiaryList && (
+				<Select
+					data={tertiaryList.map(({ id, tsKey, tsNs }) => ({
+						value: id,
+						label: t(tsKey, { ns: tsNs }) satisfies string,
+					}))}
+					searchable
+					searchValue={tertiarySearch}
+					onSearchChange={onTertiarySearch}
+					itemComponent={GeoItem}
+					{...form.getInputProps('supplement.subDistId')}
+				/>
+			)}
+			<Button onClick={() => handler(form.values.supplement?.govDistId)}>
+				{t('words.add', { ns: 'common' })}
+			</Button>
+		</Stack>
+	)
+}
+interface SuppGeoProps {
+	handler: (value?: string) => void
+	countryOnly?: boolean
+}
+
+interface GeoList {
+	value: string
+	label: string
+	flag?: string
+	districts?: ApiOutput['fieldOpt']['govDistsByCountry'][number]['govDist']
+}
+
+interface GeoItemProps extends ComponentPropsWithoutRef<'div'>, GeoList {}
+
+export const Supplement = {
+	Text: SuppText,
+	Boolean: SuppBoolean,
+	Data: SuppData,
+	Language: SuppLang,
+	Geo: SuppGeo,
 }

@@ -8,6 +8,8 @@ export interface FormData {
 	selected: {
 		value: string
 		label: string
+		tKey: string
+		interpolationValues?: ApiOutput['fieldOpt']['attributesByCategory'][0]['interpolationValues']
 		icon?: string
 		iconBg?: string
 		variant?: ApiOutput['fieldOpt']['attributesByCategory'][0]['badgeRender']
@@ -24,6 +26,7 @@ export interface FormData {
 		boolean?: boolean
 		countryId?: string
 		govDistId?: string
+		subDistId?: string
 		languageId?: string
 		text?: string
 		data?: object
@@ -38,6 +41,8 @@ export interface FormData {
 	attributes: {
 		value: string
 		label: string
+		tKey: string
+		interpolationValues?: ApiOutput['fieldOpt']['attributesByCategory'][0]['interpolationValues']
 		icon?: string
 		iconBg?: string
 		variant?: ApiOutput['fieldOpt']['attributesByCategory'][0]['badgeRender']
