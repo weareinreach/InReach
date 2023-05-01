@@ -55,6 +55,7 @@ const config: StorybookConfig = {
 			// },
 			nextConfigPath: path.resolve(__dirname, '../../../apps/app/next.config.mjs'),
 			fastRefresh: true,
+			strictMode: true,
 		},
 	},
 	features: {

@@ -121,8 +121,8 @@ const upsertDistrictTypes = async (task: ListrTask) => {
 				key,
 				ns,
 				text: name,
-				plural: 'PLURAL',
-				pluralValues: {
+				interpolation: 'PLURAL',
+				interpolationValues: {
 					one: name,
 					other: nameOther,
 				},

@@ -14,10 +14,10 @@ module.exports = {
 		{
 			files: ['**/*.ts?(x)', '**/*.mts'],
 
-			parserOptions: {
-				project: 'tsconfig.json',
-				tsconfigRootDir: __dirname,
-			},
+			// parserOptions: {
+			// 	project: 'tsconfig.json',
+			// 	tsconfigRootDir: __dirname,
+			// },
 		},
 		{
 			files: ['./@types/**/*.ts'],

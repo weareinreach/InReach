@@ -1,0 +1,1520 @@
+[
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Guatemalan\", \"other\": \"Guatemalans\"}",
+		"key": "GTM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Singaporean\", \"other\": \"Singaporeans\"}",
+		"key": "SGP.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Bosnian, Herzegovinian\", \"other\": \"Bosnians, Herzegovinians\"}",
+		"key": "BIH.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Maldivan\", \"other\": \"Maldivans\"}",
+		"key": "MDV.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Latvian\", \"other\": \"Latvians\"}",
+		"key": "LVA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Greek\", \"other\": \"Greeks\"}",
+		"key": "GRC.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Cocos Islander\", \"other\": \"Cocos Islanders\"}",
+		"key": "CCK.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Mahoran\", \"other\": \"Mahorans\"}",
+		"key": "MYT.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Jordanian\", \"other\": \"Jordanians\"}",
+		"key": "JOR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Bangladeshi\", \"other\": \"Bangladeshis\"}",
+		"key": "BGD.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"American Samoan\", \"other\": \"American Samoans\"}",
+		"key": "ASM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Italian\", \"other\": \"Italians\"}",
+		"key": "ITA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Algerian\", \"other\": \"Algerians\"}",
+		"key": "DZA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"French\", \"other\": \"French\"}",
+		"key": "FRA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Bhutanese\", \"other\": \"Bhutanese\"}",
+		"key": "BTN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Sao Tomean\", \"other\": \"Sao Tomeans\"}",
+		"key": "STP.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Nauruan\", \"other\": \"Nauruans\"}",
+		"key": "NRU.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Gabonese\", \"other\": \"Gabonese\"}",
+		"key": "GAB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"New Caledonian\", \"other\": \"New Caledonians\"}",
+		"key": "NCL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Norwegian\", \"other\": \"Norwegians\"}",
+		"key": "NOR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Tuvaluan\", \"other\": \"Tuvaluans\"}",
+		"key": "TUV.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Indian\", \"other\": \"Indians\"}",
+		"key": "IND.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Cambodian\", \"other\": \"Cambodians\"}",
+		"key": "KHM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Mauritian\", \"other\": \"Mauritian\"}",
+		"key": "MUS.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Congolese\", \"other\": \"Congolese\"}",
+		"key": "COD.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Sammarinese\", \"other\": \"Sammarinese\"}",
+		"key": "SMR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Panamanian\", \"other\": \"Panamanians\"}",
+		"key": "PAN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Dutch\", \"other\": \"Dutch\"}",
+		"key": "NLD.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Puerto Rican\", \"other\": \"Puerto Ricans\"}",
+		"key": "PRI.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Nicaraguan\", \"other\": \"Nicaraguans\"}",
+		"key": "NIC.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"French\", \"other\": \"French\"}",
+		"key": "REU.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Sierra Leonean\", \"other\": \"Sierra Leoneans\"}",
+		"key": "SLE.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Barbadian\", \"other\": \"Barbadians\"}",
+		"key": "BRB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Israeli\", \"other\": \"Israelis\"}",
+		"key": "ISR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Sahrawi\", \"other\": \"Sahrawis\"}",
+		"key": "ESH.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Anguillian\", \"other\": \"Anguillians\"}",
+		"key": "AIA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Rwandan\", \"other\": \"Rwandans\"}",
+		"key": "RWA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Turkish\", \"other\": \"Turks\"}",
+		"key": "TUR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Marshallese\", \"other\": \"Marshallese\"}",
+		"key": "MHL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Mozambican\", \"other\": \"Mozambicans\"}",
+		"key": "MOZ.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Nigerian\", \"other\": \"Nigerians\"}",
+		"key": "NGA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Russian\", \"other\": \"Russians\"}",
+		"key": "RUS.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Cuban\", \"other\": \"Cubans\"}",
+		"key": "CUB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Channel Islander\", \"other\": \"Channel Islanders\"}",
+		"key": "JEY.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Virgin Islander\", \"other\": \"Virgin Islanders\"}",
+		"key": "VGB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Costa Rican\", \"other\": \"Costa Ricans\"}",
+		"key": "CRI.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"French\", \"other\": \"French\"}",
+		"key": "SPM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Salvadoran\", \"other\": \"Salvadorans\"}",
+		"key": "SLV.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Cook Islander\", \"other\": \"Cook Islanders\"}",
+		"key": "COK.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Niuean\", \"other\": \"Niueans\"}",
+		"key": "NIU.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Slovene\", \"other\": \"Slovenes\"}",
+		"key": "SVN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Papua New Guinean\", \"other\": \"Papua New Guineans\"}",
+		"key": "PNG.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Honduran\", \"other\": \"Hondurans\"}",
+		"key": "HND.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Chinese\", \"other\": \"Chinese\"}",
+		"key": "MAC.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Portuguese\", \"other\": \"Portuguese\"}",
+		"key": "PRT.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Trinidadian\", \"other\": \"Trinidadians\"}",
+		"key": "TTO.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Gambian\", \"other\": \"Gambians\"}",
+		"key": "GMB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Bamar\", \"other\": \"Bamars\"}",
+		"key": "MMR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Egyptian\", \"other\": \"Egyptians\"}",
+		"key": "EGY.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Lebanese\", \"other\": \"Lebanese\"}",
+		"key": "LBN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Kenyan\", \"other\": \"Kenyans\"}",
+		"key": "KEN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Equatorial Guinean\", \"other\": \"Equatorial Guineans\"}",
+		"key": "GNQ.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Virgin Islander\", \"other\": \"Virgin Islanders\"}",
+		"key": "VIR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Croatian\", \"other\": \"Croatians\"}",
+		"key": "HRV.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"American\", \"other\": \"Americans\"}",
+		"key": "USA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Filipino\", \"other\": \"Filipinos\"}",
+		"key": "PHL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Kazakhstani\", \"other\": \"Kazakhstanis\"}",
+		"key": "KAZ.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Kosovar\", \"other\": \"Kosovars\"}",
+		"key": "UNK.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Argentinean\", \"other\": \"Argentineans\"}",
+		"key": "ARG.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Tadzhik\", \"other\": \"Tadzhiks\"}",
+		"key": "TJK.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Azerbaijani\", \"other\": \"Azerbaijanis\"}",
+		"key": "AZE.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Romanian\", \"other\": \"Romanians\"}",
+		"key": "ROU.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Chilean\", \"other\": \"Chileans\"}",
+		"key": "CHL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Cypriot\", \"other\": \"Cypriots\"}",
+		"key": "CYP.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Cape Verdian\", \"other\": \"Cape Verdians\"}",
+		"key": "CPV.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Bulgarian\", \"other\": \"Bulgarians\"}",
+		"key": "BGR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Uruguayan\", \"other\": \"Uruguayans\"}",
+		"key": "URY.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Macedonian\", \"other\": \"Macedonians\"}",
+		"key": "MKD.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Afghan\", \"other\": \"Afghans\"}",
+		"key": "AFG.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Motswana\", \"other\": \"Batswana\"}",
+		"key": "BWA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Antarctican\", \"other\": \"Antarcticans\"}",
+		"key": "ATA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Canadian\", \"other\": \"Canadians\"}",
+		"key": "CAN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Mauritanian\", \"other\": \"Mauritanians\"}",
+		"key": "MRT.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Qatari\", \"other\": \"Qataris\"}",
+		"key": "QAT.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Spanish\", \"other\": \"Spanish\"}",
+		"key": "ESP.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Yemeni\", \"other\": \"Yemenis\"}",
+		"key": "YEM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Somali\", \"other\": \"Somalis\"}",
+		"key": "SOM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Swedish\", \"other\": \"Swedish\"}",
+		"key": "SWE.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Liechtensteiner\", \"other\": \"Liechtensteiners\"}",
+		"key": "LIE.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"South Georgian South Sandwich Islander\", \"other\": \"South Georgian South Sandwich Islanders\"}",
+		"key": "SGS.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Moroccan\", \"other\": \"Moroccans\"}",
+		"key": "MAR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Malagasy\", \"other\": \"Malagasy\"}",
+		"key": "MDG.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Ukrainian\", \"other\": \"Ukrainians\"}",
+		"key": "UKR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Iranian\", \"other\": \"Iranians\"}",
+		"key": "IRN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Polish\", \"other\": \"Polish\"}",
+		"key": "POL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Chadian\", \"other\": \"Chadians\"}",
+		"key": "TCD.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Ni-Vanuatu\", \"other\": \"Ni-Vanuatu\"}",
+		"key": "VUT.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Palauan\", \"other\": \"Palauans\"}",
+		"key": "PLW.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Peruvian\", \"other\": \"Peruvians\"}",
+		"key": "PER.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Swazi\", \"other\": \"Swazis\"}",
+		"key": "SWZ.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"French\", \"other\": \"French\"}",
+		"key": "MTQ.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Luxembourger\", \"other\": \"Luxembourgers\"}",
+		"key": "LUX.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Djibouti\", \"other\": \"Djibouti\"}",
+		"key": "DJI.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Haitian\", \"other\": \"Haitians\"}",
+		"key": "HTI.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Syrian\", \"other\": \"Syrians\"}",
+		"key": "SYR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Gibraltarian\", \"other\": \"Gibraltarians\"}",
+		"key": "GIB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Mexican\", \"other\": \"Mexicans\"}",
+		"key": "MEX.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Icelander\", \"other\": \"Icelanders\"}",
+		"key": "ISL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Fijian\", \"other\": \"Fijians\"}",
+		"key": "FJI.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"North Korean\", \"other\": \"North Koreans\"}",
+		"key": "PRK.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Solomon Islander\", \"other\": \"Solomon Islanders\"}",
+		"key": "SLB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"American\", \"other\": \"Americans\"}",
+		"key": "UMI.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Guinean\", \"other\": \"Guineans\"}",
+		"key": "GIN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Kittitian or Nevisian\", \"other\": \"Kittitians or Nevisians\"}",
+		"key": "KNA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"French\", \"other\": \"French\"}",
+		"key": "ATF.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Bahraini\", \"other\": \"Bahrainis\"}",
+		"key": "BHR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Lithuanian\", \"other\": \"Lithuanians\"}",
+		"key": "LTU.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Georgian\", \"other\": \"Georgians\"}",
+		"key": "GEO.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Serbian\", \"other\": \"Serbians\"}",
+		"key": "SRB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Central African\", \"other\": \"Central Africans\"}",
+		"key": "CAF.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Malian\", \"other\": \"Malians\"}",
+		"key": "MLI.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Mongolian\", \"other\": \"Mongolians\"}",
+		"key": "MNG.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Dominican\", \"other\": \"Dominicans\"}",
+		"key": "DMA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Greenlandic\", \"other\": \"Greenlanders\"}",
+		"key": "GRL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Ethiopian\", \"other\": \"Ethiopians\"}",
+		"key": "ETH.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Libyan\", \"other\": \"Libyans\"}",
+		"key": "LBY.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Namibian\", \"other\": \"Namibians\"}",
+		"key": "NAM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Moldovan\", \"other\": \"Moldovans\"}",
+		"key": "MDA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Bolivian\", \"other\": \"Bolivians\"}",
+		"key": "BOL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Dominican\", \"other\": \"Dominicans\"}",
+		"key": "DOM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Dutch\", \"other\": \"Dutch\"}",
+		"key": "CUW.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Indonesian\", \"other\": \"Indonesians\"}",
+		"key": "IDN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Belarusian\", \"other\": \"Belarusians\"}",
+		"key": "BLR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Congolese\", \"other\": \"Congolese\"}",
+		"key": "COG.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Liberian\", \"other\": \"Liberians\"}",
+		"key": "LBR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Maltese\", \"other\": \"Maltese\"}",
+		"key": "MLT.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Saint Martin Islander\", \"other\": \"Saint Martin Islanders\"}",
+		"key": "MAF.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"South African\", \"other\": \"South Africans\"}",
+		"key": "ZAF.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Togolese\", \"other\": \"Togolese\"}",
+		"key": "TGO.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Armenian\", \"other\": \"Armenians\"}",
+		"key": "ARM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Albanian\", \"other\": \"Albanians\"}",
+		"key": "ALB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Andorran\", \"other\": \"Andorrans\"}",
+		"key": "AND.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"South Sudanese\", \"other\": \"South Sudanese\"}",
+		"key": "SSD.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Channel Islander\", \"other\": \"Channel Islanders\"}",
+		"key": "GGY.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Emirati\", \"other\": \"Emiratis\"}",
+		"key": "ARE.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Czech\", \"other\": \"Czechs\"}",
+		"key": "CZE.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Guadeloupian\", \"other\": \"Guadeloupians\"}",
+		"key": "GLP.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Grenadian\", \"other\": \"Grenadians\"}",
+		"key": "GRD.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Pakistani\", \"other\": \"Pakistanis\"}",
+		"key": "PAK.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Italian\", \"other\": \"Italians\"}",
+		"key": "VAT.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Wallis and Futuna Islander\", \"other\": \"Wallis and Futuna Islanders\"}",
+		"key": "WLF.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Norwegian\", \"other\": \"Norwegians\"}",
+		"key": "SJM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Cameroonian\", \"other\": \"Cameroonians\"}",
+		"key": "CMR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Jamaican\", \"other\": \"Jamaicans\"}",
+		"key": "JAM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Comoran\", \"other\": \"Comorans\"}",
+		"key": "COM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Falkland Islander\", \"other\": \"Falkland Islanders\"}",
+		"key": "FLK.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Turkmen\", \"other\": \"Turkmenians\"}",
+		"key": "TKM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Bruneian\", \"other\": \"Bruneians\"}",
+		"key": "BRN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Antiguan, Barbudan\", \"other\": \"Antiguans, Barbudans\"}",
+		"key": "ATG.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Ghanaian\", \"other\": \"Ghanaians\"}",
+		"key": "GHA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Kuwaiti\", \"other\": \"Kuwaitis\"}",
+		"key": "KWT.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Eritrean\", \"other\": \"Eritreans\"}",
+		"key": "ERI.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Zimbabwean\", \"other\": \"Zimbabweans\"}",
+		"key": "ZWE.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Tanzanian\", \"other\": \"Tanzanians\"}",
+		"key": "TZA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Estonian\", \"other\": \"Estonians\"}",
+		"key": "EST.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Belizean\", \"other\": \"Belizeans\"}",
+		"key": "BLZ.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Saudi Arabian\", \"other\": \"Saudi Arabians\"}",
+		"key": "SAU.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"New Zealander\", \"other\": \"New Zealanders\"}",
+		"key": "NZL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Turks and Caicos Islander\", \"other\": \"Turks and Caicos Islanders\"}",
+		"key": "TCA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Colombian\", \"other\": \"Colombians\"}",
+		"key": "COL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Malaysian\", \"other\": \"Malaysians\"}",
+		"key": "MYS.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Bermudian\", \"other\": \"Bermudians\"}",
+		"key": "BMU.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Austrian\", \"other\": \"Austrians\"}",
+		"key": "AUT.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Samoan\", \"other\": \"Samoans\"}",
+		"key": "WSM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Ugandan\", \"other\": \"Ugandans\"}",
+		"key": "UGA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Nepalese\", \"other\": \"Nepalese\"}",
+		"key": "NPL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Paraguayan\", \"other\": \"Paraguayans\"}",
+		"key": "PRY.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Australian\", \"other\": \"Australians\"}",
+		"key": "AUS.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Faroese\", \"other\": \"Faroese\"}",
+		"key": "FRO.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"British\", \"other\": \"British\"}",
+		"key": "GBR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Tokelauan\", \"other\": \"Tokelauans\"}",
+		"key": "TKL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Zambian\", \"other\": \"Zambians\"}",
+		"key": "ZMB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Saint Lucian\", \"other\": \"Saint Lucians\"}",
+		"key": "LCA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Manx\", \"other\": \"Manx\"}",
+		"key": "IMN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Kirghiz\", \"other\": \"Kirghiz\"}",
+		"key": "KGZ.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"French Polynesian\", \"other\": \"French Polynesians\"}",
+		"key": "PYF.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Ecuadorean\", \"other\": \"Ecuadoreans\"}",
+		"key": "ECU.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Hong Konger\", \"other\": \"Hong Kongers\"}",
+		"key": "HKG.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"American\", \"other\": \"Americans\"}",
+		"key": "MNP.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"East Timorese\", \"other\": \"East Timorese\"}",
+		"key": "TLS.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Saint Vincentian\", \"other\": \"Saint Vincentians\"}",
+		"key": "VCT.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Vietnamese\", \"other\": \"Vietnamese\"}",
+		"key": "VNM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Heard and McDonald Islander\", \"other\": \"Heard and McDonald Islanders\"}",
+		"key": "HMD.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Irish\", \"other\": \"Irish\"}",
+		"key": "IRL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Finnish\", \"other\": \"Finns\"}",
+		"key": "FIN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Japanese\", \"other\": \"Japanese\"}",
+		"key": "JPN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Indian\", \"other\": \"Indians\"}",
+		"key": "IOT.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Norfolk Islander\", \"other\": \"Norfolk Islanders\"}",
+		"key": "NFK.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Brazilian\", \"other\": \"Brazilians\"}",
+		"key": "BRA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Montenegrin\", \"other\": \"Montenegrins\"}",
+		"key": "MNE.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Guyanese\", \"other\": \"Guyanese\"}",
+		"key": "GUY.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Slovak\", \"other\": \"Slovaks\"}",
+		"key": "SVK.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Guamanian\", \"other\": \"Guamanians\"}",
+		"key": "GUM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Monegasque\", \"other\": \"Monegasques\"}",
+		"key": "MCO.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Chinese\", \"other\": \"Chinese\"}",
+		"key": "CHN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Aruban\", \"other\": \"Arubans\"}",
+		"key": "ABW.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Laotian\", \"other\": \"Laotians\"}",
+		"key": "LAO.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Venezuelan\", \"other\": \"Venezuelans\"}",
+		"key": "VEN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Palestinian\", \"other\": \"Palestinians\"}",
+		"key": "PSE.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"St. Maartener\", \"other\": \"St. Maarteners\"}",
+		"key": "SXM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Hungarian\", \"other\": \"Hungarians\"}",
+		"key": "HUN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"German\", \"other\": \"Germans\"}",
+		"key": "DEU.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Tongan\", \"other\": \"Tongans\"}",
+		"key": "TON.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Iraqi\", \"other\": \"Iraqis\"}",
+		"key": "IRQ.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Thai\", \"other\": \"Thais\"}",
+		"key": "THA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Tunisian\", \"other\": \"Tunisians\"}",
+		"key": "TUN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Burundian\", \"other\": \"Burundians\"}",
+		"key": "BDI.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Swiss\", \"other\": \"Swiss\"}",
+		"key": "CHE.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Ålandish\", \"other\": \"Ålanders\"}",
+		"key": "ALA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Beninese\", \"other\": \"Beninese\"}",
+		"key": "BEN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"I-Kiribati\", \"other\": \"I-Kiribatis\"}",
+		"key": "KIR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Sudanese\", \"other\": \"Sudanese\"}",
+		"key": "SDN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Uzbekistani\", \"other\": \"Uzbekistanis\"}",
+		"key": "UZB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Burkinabe\", \"other\": \"Burkinabes\"}",
+		"key": "BFA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Sri Lankan\", \"other\": \"Sri Lankans\"}",
+		"key": "LKA.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Nigerien\", \"other\": \"Nigeriens\"}",
+		"key": "NER.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Surinamer\", \"other\": \"Surinamers\"}",
+		"key": "SUR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Angolan\", \"other\": \"Angolans\"}",
+		"key": "AGO.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Ivorian\", \"other\": \"Ivorians\"}",
+		"key": "CIV.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Caymanian\", \"other\": \"Caymanians\"}",
+		"key": "CYM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Mosotho\", \"other\": \"Basotho\"}",
+		"key": "LSO.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Montserratian\", \"other\": \"Montserratians\"}",
+		"key": "MSR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Malawian\", \"other\": \"Malawians\"}",
+		"key": "MWI.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Bahamian\", \"other\": \"Bahamians\"}",
+		"key": "BHS.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Guinea-Bissauan\", \"other\": \"Guinea-Bissauans\"}",
+		"key": "GNB.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Saint Barthélemy Islander\", \"other\": \"Saint Barthélemy Islanders\"}",
+		"key": "BLM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Seychellois\", \"other\": \"Seychellois\"}",
+		"key": "SYC.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Christmas Islander\", \"other\": \"Christmas Islanders\"}",
+		"key": "CXR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Micronesian\", \"other\": \"Micronesians\"}",
+		"key": "FSM.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Belgian\", \"other\": \"Belgians\"}",
+		"key": "BEL.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Taiwanese\", \"other\": \"Taiwanese\"}",
+		"key": "TWN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"South Korean\", \"other\": \"South Koreans\"}",
+		"key": "KOR.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Danish\", \"other\": \"Danish\"}",
+		"key": "DNK.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Omani\", \"other\": \"Omanis\"}",
+		"key": "OMN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Pitcairn Islander\", \"other\": \"Pitcairn Islanders\"}",
+		"key": "PCN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"Senegalese\", \"other\": \"Senegalese\"}",
+		"key": "SEN.demonym",
+		"ns": "country"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"state\", \"other\": \"states\"}",
+		"key": "type-state",
+		"ns": "gov-dist"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"district\", \"other\": \"districts\"}",
+		"key": "type-district",
+		"ns": "gov-dist"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"county\", \"other\": \"counties\"}",
+		"key": "type-county",
+		"ns": "gov-dist"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"outlying area\", \"other\": \"outlying areas\"}",
+		"key": "type-outlying-area",
+		"ns": "gov-dist"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"province\", \"other\": \"provinces\"}",
+		"key": "type-province",
+		"ns": "gov-dist"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"territory\", \"other\": \"territories\"}",
+		"key": "type-territory",
+		"ns": "gov-dist"
+	},
+	{
+		"interpolation": "PLURAL",
+		"interpolationValues": "{\"one\": \"city\", \"other\": \"cities\"}",
+		"key": "type-city",
+		"ns": "gov-dist"
+	}
+]

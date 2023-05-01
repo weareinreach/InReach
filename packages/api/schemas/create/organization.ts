@@ -1,5 +1,5 @@
-import { Prisma, generateId, generateFreeText } from '@weareinreach/db'
 import { z } from 'zod'
+import { Prisma, generateId, generateFreeText } from '@weareinreach/db'
 
 import { idString, CreationBase, InputJsonValue } from '~api/schemas/common'
 import { createManyWithAudit } from '~api/schemas/nestedOps'
