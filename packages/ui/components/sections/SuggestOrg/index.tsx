@@ -14,10 +14,10 @@ import {
 } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
-import { type ApiOutput } from '@weareinreach/api'
-import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
 import { useTranslation, Trans } from 'next-i18next'
 import { ComponentPropsWithRef, forwardRef, useState, useEffect } from 'react'
+import { type ApiOutput } from '@weareinreach/api'
+import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
 
 import { Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'

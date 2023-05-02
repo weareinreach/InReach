@@ -68,6 +68,9 @@ jobs:
         run: pnpm lint:fix -- --format github
         if: always()
         id: lint
+        env:
+          ESLINT_APP_ID: ${{ secrets.BOT_APP_ID }}
+          ESLINT_PRIVATE_KEY_BASE64: ${{ secrets.BOT_SECRET_KEY_B64 }}
 
       - name: Format projects
         run: pnpm format

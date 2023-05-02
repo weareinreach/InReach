@@ -12,6 +12,7 @@ const subDistrictSelect = {
 export const serviceAreaSelect = {
 	...common,
 	cca2: true,
+	flag: true,
 	govDist: {
 		where: { isPrimary: true },
 		select: {
