@@ -94,6 +94,8 @@
 	"language_all-other": "جميع اللغات الأخرى",
 	"language_choose": "الرجاء اختيار لغة",
 	"language_common": "اللغات المشتركة",
+	"law-practice-other": "مجال الممارسة القانونية",
+	"law-practice-other-placeholder": "يرجى تحديد مجال ممارستك القانونية",
 	"link-copied": "تم نسخ الرابط إلى الحافظة",
 	"list": {
 		"added": "تم حفظ المصدر في القائمة: {{name}}",
@@ -272,6 +274,7 @@
 	"words": {
 		"accept": "قبول",
 		"account": "حساب",
+		"add": "إضافة",
 		"and": "و",
 		"and-x-more": "و {{count}} المزيد",
 		"back": "الرجوع",
