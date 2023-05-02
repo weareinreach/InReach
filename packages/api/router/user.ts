@@ -144,11 +144,17 @@ export const userRouter = defineRouter({
 				...commonSelect,
 				status: true,
 			},
+			orderBy: {
+				status: 'asc',
+			},
 		})
 		const sog = await ctx.prisma.userSOGIdentity.findMany({
 			select: {
 				...commonSelect,
 				identifyAs: true,
+			},
+			orderBy: {
+				identifyAs: 'asc',
 			},
 		})
 		const ethnicity = await ctx.prisma.userEthnicity.findMany({
@@ -156,19 +162,26 @@ export const userRouter = defineRouter({
 				...commonSelect,
 				ethnicity: true,
 			},
+			orderBy: {
+				ethnicity: 'asc',
+			},
 		})
 		const community = await ctx.prisma.userCommunity.findMany({
 			select: {
 				...commonSelect,
 				community: true,
 			},
+			orderBy: {
+				community: 'asc',
+			},
 		})
 		const countries = await ctx.prisma.country.findMany({
 			select: {
+				...commonSelect,
 				cca2: true,
-				id: true,
-				tsKey: true,
-				tsNs: true,
+			},
+			orderBy: {
+				name: 'asc',
 			},
 		})
 		return { community, countries, ethnicity, immigration, sog }
