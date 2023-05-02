@@ -9,37 +9,37 @@
 	"AFG": {
 		"name": "Афганистан",
 		"demonym_one": "Афганский",
-		"demonym_few": "Afghans",
-		"demonym_many": "Afghans",
-		"demonym_other": "Afghans"
+		"demonym_few": "Афганы",
+		"demonym_many": "Афганы",
+		"demonym_other": "Афганы"
 	},
 	"AGO": {
 		"name": "Ангола",
 		"demonym_one": "Ангольский",
-		"demonym_few": "Angolans",
-		"demonym_many": "Angolans",
-		"demonym_other": "Angolans"
+		"demonym_few": "Ангольцы",
+		"demonym_many": "Ангольцы",
+		"demonym_other": "Ангольцы"
 	},
 	"AIA": {
 		"name": "Anguilla",
 		"demonym_one": "Ангильский",
-		"demonym_few": "Anguillians",
-		"demonym_many": "Anguillians",
-		"demonym_other": "Anguillians"
+		"demonym_few": "Ангилианцы",
+		"demonym_many": "Ангилианцы",
+		"demonym_other": "Ангилианцы"
 	},
 	"ALA": {
 		"name": "А<unk> лендские острова",
 		"demonym_one": "Аландский",
-		"demonym_few": "Ålanders",
-		"demonym_many": "Ålanders",
-		"demonym_other": "Ålanders"
+		"demonym_few": "Аландские острова",
+		"demonym_many": "Аландские острова",
+		"demonym_other": "Аландские острова"
 	},
 	"ALB": {
 		"name": "Албания",
 		"demonym_one": "Албанский",
-		"demonym_few": "Albanians",
-		"demonym_many": "Albanians",
-		"demonym_other": "Albanians"
+		"demonym_few": "Албанцы",
+		"demonym_many": "Албанцы",
+		"demonym_other": "Албанцы"
 	},
 	"AND": {
 		"name": "Andorra",
@@ -65,16 +65,16 @@
 	"ARM": {
 		"name": "Армения",
 		"demonym_one": "Армянский",
-		"demonym_few": "Armenians",
-		"demonym_many": "Armenians",
-		"demonym_other": "Armenians"
+		"demonym_few": "Армяне",
+		"demonym_many": "Армяне",
+		"demonym_other": "Армяне"
 	},
 	"ASM": {
 		"name": "American Samoa",
 		"demonym_one": "Американское Самоа",
-		"demonym_few": "American Samoans",
-		"demonym_many": "American Samoans",
-		"demonym_other": "American Samoans"
+		"demonym_few": "Американское Самоа",
+		"demonym_many": "Американское Самоа",
+		"demonym_other": "Американское Самоа"
 	},
 	"ATA": {
 		"name": "Antarctica",
@@ -93,30 +93,30 @@
 	"ATG": {
 		"name": "Антигуа и Барбуда",
 		"demonym_one": "Антигуан/Барбуд",
-		"demonym_few": "Antiguans, Barbudans",
-		"demonym_many": "Antiguans, Barbudans",
-		"demonym_other": "Antiguans, Barbudans"
+		"demonym_few": "Антигуины/Барбуды",
+		"demonym_many": "Антигуины/Барбуды",
+		"demonym_other": "Антигуины/Барбуды"
 	},
 	"AUS": {
 		"name": "Австралия",
 		"demonym_one": "Австралийский",
-		"demonym_few": "Australians",
-		"demonym_many": "Australians",
-		"demonym_other": "Australians"
+		"demonym_few": "Австралийцы",
+		"demonym_many": "Австралийцы",
+		"demonym_other": "Австралийцы"
 	},
 	"AUT": {
 		"name": "Австрия",
 		"demonym_one": "Австрийский",
-		"demonym_few": "Austrians",
-		"demonym_many": "Austrians",
-		"demonym_other": "Austrians"
+		"demonym_few": "Австрийцы",
+		"demonym_many": "Австрийцы",
+		"demonym_other": "Австрийцы"
 	},
 	"AZE": {
 		"name": "Азербайджан",
 		"demonym_one": "Азербайджан",
-		"demonym_few": "Azerbaijanis",
-		"demonym_many": "Azerbaijanis",
-		"demonym_other": "Azerbaijanis"
+		"demonym_few": "Азербайджанский",
+		"demonym_many": "Азербайджанский",
+		"demonym_other": "Азербайджанский"
 	},
 	"BDI": {
 		"name": "Burundi",
@@ -145,9 +145,9 @@
 	"BFA": {
 		"name": "Буркина-Фасо",
 		"demonym_one": "Буркина-Фасо",
-		"demonym_few": "Burkinabes",
-		"demonym_many": "Burkinabes",
-		"demonym_other": "Burkinabes"
+		"demonym_few": "Буркина-Фасо",
+		"demonym_many": "Буркина-Фасо",
+		"demonym_other": "Буркина-Фасо"
 	},
 	"BGD": {
 		"name": "Бангладеш",
@@ -159,9 +159,9 @@
 	"BGR": {
 		"name": "Болгария",
 		"demonym_one": "Болгарский",
-		"demonym_few": "Bulgarians",
-		"demonym_many": "Bulgarians",
-		"demonym_other": "Bulgarians"
+		"demonym_few": "Болгарцы",
+		"demonym_many": "Болгарцы",
+		"demonym_other": "Болгарцы"
 	},
 	"BHR": {
 		"name": "Bahrain",
@@ -180,30 +180,30 @@
 	"BIH": {
 		"name": "Босния и Герцеговина",
 		"demonym_one": "Боснийский, Герцеговина",
-		"demonym_few": "Bosnians, Herzegovinians",
-		"demonym_many": "Bosnians, Herzegovinians",
-		"demonym_other": "Bosnians, Herzegovinians"
+		"demonym_few": "Боснийцы, руины",
+		"demonym_many": "Боснийцы, руины",
+		"demonym_other": "Боснийцы, руины"
 	},
 	"BLM": {
 		"name": "Сен-Барте́леми",
 		"demonym_one": "Остров Сен-Барте́леми",
-		"demonym_few": "Saint Barthélemy Islanders",
-		"demonym_many": "Saint Barthélemy Islanders",
-		"demonym_other": "Saint Barthélemy Islanders"
+		"demonym_few": "Сент-Барте́леми Острова",
+		"demonym_many": "Сент-Барте́леми Острова",
+		"demonym_other": "Сент-Барте́леми Острова"
 	},
 	"BLR": {
 		"name": "Беларусь",
 		"demonym_one": "Белорусский",
-		"demonym_few": "Belarusians",
-		"demonym_many": "Belarusians",
-		"demonym_other": "Belarusians"
+		"demonym_few": "Белоруссия",
+		"demonym_many": "Белоруссия",
+		"demonym_other": "Белоруссия"
 	},
 	"BLZ": {
 		"name": "Белиз",
 		"demonym_one": "Белизцы",
-		"demonym_few": "Belizeans",
-		"demonym_many": "Belizeans",
-		"demonym_other": "Belizeans"
+		"demonym_few": "Белизцы",
+		"demonym_many": "Белизцы",
+		"demonym_other": "Белизцы"
 	},
 	"BMU": {
 		"name": "Bermuda",
@@ -215,23 +215,23 @@
 	"BOL": {
 		"name": "Bolivia",
 		"demonym_one": "Боливиец",
-		"demonym_few": "Bolivians",
-		"demonym_many": "Bolivians",
-		"demonym_other": "Bolivians"
+		"demonym_few": "Боливийцы",
+		"demonym_many": "Боливийцы",
+		"demonym_other": "Боливийцы"
 	},
 	"BRA": {
 		"name": "Бразилия",
 		"demonym_one": "Бразильский",
-		"demonym_few": "Brazilians",
-		"demonym_many": "Brazilians",
-		"demonym_other": "Brazilians"
+		"demonym_few": "Бразильцы",
+		"demonym_many": "Бразильцы",
+		"demonym_other": "Бразильцы"
 	},
 	"BRB": {
 		"name": "Барбадос",
 		"demonym_one": "Барбадосский",
-		"demonym_few": "Barbadians",
-		"demonym_many": "Barbadians",
-		"demonym_other": "Barbadians"
+		"demonym_few": "Варвары",
+		"demonym_many": "Варвары",
+		"demonym_other": "Варвары"
 	},
 	"BRN": {
 		"name": "Brunei",
@@ -253,23 +253,23 @@
 	"BWA": {
 		"name": "Botswana",
 		"demonym_one": "Motswanas",
-		"demonym_few": "Batswana",
-		"demonym_many": "Batswana",
-		"demonym_other": "Batswana"
+		"demonym_few": "Motswanas",
+		"demonym_many": "Motswanas",
+		"demonym_other": "Motswanas"
 	},
 	"CAF": {
 		"name": "Центральноафриканская Республика",
 		"demonym_one": "Центральноафриканская",
-		"demonym_few": "Central Africans",
-		"demonym_many": "Central Africans",
-		"demonym_other": "Central Africans"
+		"demonym_few": "Центральноафриканцы",
+		"demonym_many": "Центральноафриканцы",
+		"demonym_other": "Центральноафриканцы"
 	},
 	"CAN": {
 		"name": "Канада",
 		"demonym_one": "Канадский",
-		"demonym_few": "Canadians",
-		"demonym_many": "Canadians",
-		"demonym_other": "Canadians"
+		"demonym_few": "Канадцы",
+		"demonym_many": "Канадцы",
+		"demonym_other": "Канадцы"
 	},
 	"CCK": {
 		"name": "Кокосовые Острова (Килинг)",
@@ -378,10 +378,10 @@
 	},
 	"CXR": {
 		"name": "Остров Рождества",
-		"demonym_one": "Рождественские Острова",
-		"demonym_few": "Рождественские Острова",
-		"demonym_many": "Рождественские Острова",
-		"demonym_other": "Рождественские Острова"
+		"demonym_one": "Остров Рождества",
+		"demonym_few": "Острова Рождества",
+		"demonym_many": "Острова Рождества",
+		"demonym_other": "Острова Рождества"
 	},
 	"CYM": {
 		"name": "Каймановы острова",
@@ -498,9 +498,9 @@
 	"FIN": {
 		"name": "Финляндия",
 		"demonym_one": "Финский",
-		"demonym_few": "Finns",
-		"demonym_many": "Finns",
-		"demonym_other": "Finns"
+		"demonym_few": "Финский",
+		"demonym_many": "Финский",
+		"demonym_other": "Финский"
 	},
 	"FJI": {
 		"name": "Fiji",
@@ -631,9 +631,9 @@
 	"GRL": {
 		"name": "Гренландии",
 		"demonym_one": "Гренландия",
-		"demonym_few": "Гренландцы",
-		"demonym_many": "Гренландцы",
-		"demonym_other": "Гренландцы"
+		"demonym_few": "Гренландия",
+		"demonym_many": "Гренландия",
+		"demonym_other": "Гренландия"
 	},
 	"GTM": {
 		"name": "Гватемала",
@@ -661,14 +661,14 @@
 	},
 	"HKG": {
 		"name": "Гонконг",
-		"demonym_one": "Гонконгс",
+		"demonym_one": "Гонконг",
 		"demonym_few": "Гонконгс",
 		"demonym_many": "Гонконгс",
 		"demonym_other": "Гонконгс"
 	},
 	"HMD": {
 		"name": "Острова Херд и Макдональд",
-		"demonym_one": "Херд и острова Макдональд",
+		"demonym_one": "Херд и Остров Макдональд",
 		"demonym_few": "Херд и острова Макдональд",
 		"demonym_many": "Херд и острова Макдональд",
 		"demonym_other": "Херд и острова Макдональд"
@@ -837,9 +837,9 @@
 	"KNA": {
 		"name": "Сент-Китс и Невис",
 		"demonym_one": "Киттитан или Невисиан",
-		"demonym_few": "Киттицианцы или невисанцы",
-		"demonym_many": "Киттицианцы или невисанцы",
-		"demonym_other": "Киттицианцы или невисанцы"
+		"demonym_few": "Киттиан или невисанцы",
+		"demonym_many": "Киттиан или невисанцы",
+		"demonym_other": "Киттиан или невисанцы"
 	},
 	"KOR": {
 		"name": "Южная Корея",
@@ -907,9 +907,9 @@
 	"LSO": {
 		"name": "Lesotho",
 		"demonym_one": "Mosothos",
-		"demonym_few": "Basotho",
-		"demonym_many": "Basotho",
-		"demonym_other": "Basotho"
+		"demonym_few": "Mosothos",
+		"demonym_many": "Mosothos",
+		"demonym_other": "Mosothos"
 	},
 	"LTU": {
 		"name": "Литва",
@@ -1533,9 +1533,9 @@
 	"TKM": {
 		"name": "Turkmenistan",
 		"demonym_one": "Turkmens",
-		"demonym_few": "Туркменцы",
-		"demonym_many": "Туркменцы",
-		"demonym_other": "Туркменцы"
+		"demonym_few": "Turkmens",
+		"demonym_many": "Turkmens",
+		"demonym_other": "Turkmens"
 	},
 	"TLS": {
 		"name": "Timor-Leste",
@@ -1561,16 +1561,16 @@
 	"TUN": {
 		"name": "Tunisia",
 		"demonym_one": "Тунисцы",
-		"demonym_few": "Tunisians",
-		"demonym_many": "Tunisians",
-		"demonym_other": "Tunisians"
+		"demonym_few": "Тунисцы",
+		"demonym_many": "Тунисцы",
+		"demonym_other": "Тунисцы"
 	},
 	"TUR": {
 		"name": "Турция",
 		"demonym_one": "Турецкий",
-		"demonym_few": "Турки",
-		"demonym_many": "Турки",
-		"demonym_other": "Турки"
+		"demonym_few": "Турецкий",
+		"demonym_many": "Турецкий",
+		"demonym_other": "Турецкий"
 	},
 	"TUV": {
 		"name": "Tuvalu",
@@ -1589,9 +1589,9 @@
 	"TZA": {
 		"name": "Tanzania",
 		"demonym_one": "Танзанский",
-		"demonym_few": "Tanzanians",
-		"demonym_many": "Tanzanians",
-		"demonym_other": "Tanzanians"
+		"demonym_few": "Танзанцы",
+		"demonym_many": "Танзанцы",
+		"demonym_other": "Танзанцы"
 	},
 	"UGA": {
 		"name": "Uganda",
@@ -1652,16 +1652,16 @@
 	"VCT": {
 		"name": "Сент-Винсент и Гренадины",
 		"demonym_one": "Сент-Винсент",
-		"demonym_few": "Saint Vincentians",
-		"demonym_many": "Saint Vincentians",
-		"demonym_other": "Saint Vincentians"
+		"demonym_few": "Сент-Винсент",
+		"demonym_many": "Сент-Винсент",
+		"demonym_other": "Сент-Винсент"
 	},
 	"VEN": {
 		"name": "Венесуэла",
 		"demonym_one": "Венесуэльский",
-		"demonym_few": "Venezuelans",
-		"demonym_many": "Venezuelans",
-		"demonym_other": "Venezuelans"
+		"demonym_few": "Венесуэльцы",
+		"demonym_many": "Венесуэльцы",
+		"demonym_other": "Венесуэльцы"
 	},
 	"VGB": {
 		"name": "Британские Виргинские острова",
@@ -1708,9 +1708,9 @@
 	"YEM": {
 		"name": "Йемен",
 		"demonym_one": "Йемен",
-		"demonym_few": "Yemenis",
-		"demonym_many": "Yemenis",
-		"demonym_other": "Yemenis"
+		"demonym_few": "Йемена",
+		"demonym_many": "Йемена",
+		"demonym_other": "Йемена"
 	},
 	"ZAF": {
 		"name": "Южная Африка",
@@ -1722,15 +1722,15 @@
 	"ZMB": {
 		"name": "Zambia",
 		"demonym_one": "Замбиец",
-		"demonym_few": "Zambians",
-		"demonym_many": "Zambians",
-		"demonym_other": "Zambians"
+		"demonym_few": "Замбийцы",
+		"demonym_many": "Замбийцы",
+		"demonym_other": "Замбийцы"
 	},
 	"ZWE": {
 		"name": "Zimbabwe",
 		"demonym_one": "Зимбабве",
-		"demonym_few": "Zimbabweans",
-		"demonym_many": "Zimbabweans",
-		"demonym_other": "Zimbabweans"
+		"demonym_few": "Зимбабве",
+		"demonym_many": "Зимбабве",
+		"demonym_other": "Зимбабве"
 	}
 }
