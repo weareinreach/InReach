@@ -65,7 +65,7 @@ const config = {
 		'import/resolver': {
 			typescript: true,
 			node: true,
-			alwaysTryTypes: true,
+			// alwaysTryTypes: true,
 			project: ['packages/*/tsconfig.json', 'apps/*/tsconfig.json', 'tsconfig.json'],
 		},
 		'import/parsers': {
