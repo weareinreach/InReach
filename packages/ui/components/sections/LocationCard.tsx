@@ -1,10 +1,10 @@
 import { Title, Card, List, Stack, Group, Divider, useMantineTheme } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
-import { type ApiOutput } from '@weareinreach/api'
 import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
 import { formatAddress } from 'localized-address-format'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { type ApiOutput } from '@weareinreach/api'
 
 import { Rating, BadgeGroup } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'

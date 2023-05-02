@@ -1,7 +1,7 @@
-import { ApiOutput } from '@weareinreach/api'
 import { formatAddress } from 'localized-address-format'
 import { useTranslation } from 'next-i18next'
 import { z } from 'zod'
+import { ApiOutput } from '@weareinreach/api'
 
 const AddressSchema = z.object({
 	street1: z.string(),

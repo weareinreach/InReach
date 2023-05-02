@@ -23,7 +23,7 @@ import { useTranslation } from 'next-i18next'
 import { forwardRef, ReactNode } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
-import { Icon, IconList } from '~ui/icon'
+import { Icon, IconList, isValidIcon } from '~ui/icon'
 
 const badgeVariants: BadgeVariants = (theme, params) => {
 	switch (params.variant) {
@@ -197,7 +197,9 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 					)
 				}
 				case 'attribute': {
-					return <Icon icon={props.icon} height={24} color={theme.other.colors.secondary.black} />
+					return isValidIcon(props.icon) ? (
+						<Icon icon={props.icon} height={24} color={theme.other.colors.secondary.black} />
+					) : null
 				}
 				case 'community': {
 					return props.icon
@@ -410,7 +412,7 @@ type VerifiedBadgeProps = {
 
 export type AttributeTagProps = {
 	variant: 'attribute'
-	icon: IconList
+	icon: IconList | string
 	tsKey: string
 	tsNs: string
 	tProps?: Omit<TOptions, 'ns'>
