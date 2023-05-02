@@ -12,22 +12,22 @@
 	"AGO": {
 		"name": "Angola",
 		"demonym_one": "Angolais",
-		"demonym_other": "Angolans"
+		"demonym_other": "Angolais"
 	},
 	"AIA": {
 		"name": "Anguilla",
 		"demonym_one": "Anguillan",
-		"demonym_other": "Anguillians"
+		"demonym_other": "Anguillans"
 	},
 	"ALA": {
 		"name": "Iles A<unk> land",
 		"demonym_one": "A<unk> landish",
-		"demonym_other": "Ålanders"
+		"demonym_other": "Les vaisselles"
 	},
 	"ALB": {
 		"name": "Albanie",
 		"demonym_one": "Albanais",
-		"demonym_other": "Albanians"
+		"demonym_other": "Albanais"
 	},
 	"AND": {
 		"name": "Andorra",
@@ -47,12 +47,12 @@
 	"ARM": {
 		"name": "Arménie",
 		"demonym_one": "Arménien",
-		"demonym_other": "Armenians"
+		"demonym_other": "Arméniens"
 	},
 	"ASM": {
 		"name": "American Samoa",
 		"demonym_one": "Samoan américain",
-		"demonym_other": "American Samoans"
+		"demonym_other": "Samoans américains"
 	},
 	"ATA": {
 		"name": "Antarctica",
@@ -67,22 +67,22 @@
 	"ATG": {
 		"name": "Antigua-et-Barbuda",
 		"demonym_one": "Antiguan/Barbudan",
-		"demonym_other": "Antiguans, Barbudans"
+		"demonym_other": "Antiguans/Barbudes"
 	},
 	"AUS": {
 		"name": "Australie",
 		"demonym_one": "australien",
-		"demonym_other": "Australians"
+		"demonym_other": "Australiens"
 	},
 	"AUT": {
 		"name": "L'Autriche",
 		"demonym_one": "Autrichien",
-		"demonym_other": "Austrians"
+		"demonym_other": "Autrichiens"
 	},
 	"AZE": {
 		"name": "Azerbaïdjan",
 		"demonym_one": "Azerbaïdjan",
-		"demonym_other": "Azerbaijanis"
+		"demonym_other": "Azerbaïdjanais"
 	},
 	"BDI": {
 		"name": "Burundi",
@@ -105,7 +105,7 @@
 	"BFA": {
 		"name": "Burkina Faso",
 		"demonym_one": "Burkinabés",
-		"demonym_other": "Burkinabes"
+		"demonym_other": "Burkinabés"
 	},
 	"BGD": {
 		"name": "Bangladesh",
@@ -115,7 +115,7 @@
 	"BGR": {
 		"name": "La Bulgarie",
 		"demonym_one": "Bulgare",
-		"demonym_other": "Bulgarians"
+		"demonym_other": "Bulgares"
 	},
 	"BHR": {
 		"name": "Bahrain",
@@ -130,22 +130,22 @@
 	"BIH": {
 		"name": "Bosnie-et-Herzégovine",
 		"demonym_one": "Bosnie-Herzégovine",
-		"demonym_other": "Bosnians, Herzegovinians"
+		"demonym_other": "Bosnie-Herzégovine"
 	},
 	"BLM": {
 		"name": "Saint Barthélemy",
 		"demonym_one": "Île de Saint Barthélemy",
-		"demonym_other": "Saint Barthélemy Islanders"
+		"demonym_other": "Iles de Saint Barthélemy"
 	},
 	"BLR": {
 		"name": "Biélorussie",
 		"demonym_one": "Biélorusse",
-		"demonym_other": "Belarusians"
+		"demonym_other": "Biélorusses"
 	},
 	"BLZ": {
 		"name": "Bélize",
 		"demonym_one": "Bélizéens",
-		"demonym_other": "Belizeans"
+		"demonym_other": "Bélizéens"
 	},
 	"BMU": {
 		"name": "Bermuda",
@@ -155,17 +155,17 @@
 	"BOL": {
 		"name": "Bolivia",
 		"demonym_one": "Bolivien",
-		"demonym_other": "Bolivians"
+		"demonym_other": "Boliviens"
 	},
 	"BRA": {
 		"name": "Le Brésil",
 		"demonym_one": "Brésilien",
-		"demonym_other": "Brazilians"
+		"demonym_other": "Brésiliens"
 	},
 	"BRB": {
 		"name": "Barbade",
 		"demonym_one": "Barbadien",
-		"demonym_other": "Barbadians"
+		"demonym_other": "Barbadiens"
 	},
 	"BRN": {
 		"name": "Brunei",
@@ -183,17 +183,17 @@
 	"BWA": {
 		"name": "Botswana",
 		"demonym_one": "Motswanas",
-		"demonym_other": "Batswana"
+		"demonym_other": "Motswanas"
 	},
 	"CAF": {
 		"name": "République centrafricaine",
 		"demonym_one": "Afrique centrale",
-		"demonym_other": "Central Africans"
+		"demonym_other": "Africains centraux"
 	},
 	"CAN": {
 		"name": "Le Canada",
 		"demonym_one": "Canadien",
-		"demonym_other": "Canadians"
+		"demonym_other": "Canadiennes et Canadiens"
 	},
 	"CCK": {
 		"name": "Îles Cocos (Keeling)",
@@ -272,7 +272,7 @@
 	},
 	"CXR": {
 		"name": "Île de Noël",
-		"demonym_one": "Ile de Noël",
+		"demonym_one": "Île de Noël",
 		"demonym_other": "Iles de Noël"
 	},
 	"CYM": {
@@ -358,7 +358,7 @@
 	"FIN": {
 		"name": "Finlandaise",
 		"demonym_one": "Finlandais",
-		"demonym_other": "Finns"
+		"demonym_other": "Finnois"
 	},
 	"FJI": {
 		"name": "Fiji",
@@ -412,8 +412,8 @@
 	},
 	"GIB": {
 		"name": "Gibraltar",
-		"demonym_one": "Gibraltaire",
-		"demonym_other": "Gibraltariens"
+		"demonym_one": "Gibraltar",
+		"demonym_other": "Gibraltars"
 	},
 	"GIN": {
 		"name": "Guinea",
@@ -601,7 +601,7 @@
 	"KNA": {
 		"name": "Saint-Christophe-et-Niévès",
 		"demonym_one": "Kittitien ou Névisien",
-		"demonym_other": "Kittistes ou Névisiens"
+		"demonym_other": "Kittitian ou Névisiens"
 	},
 	"KOR": {
 		"name": "Corée du Sud",
@@ -651,7 +651,7 @@
 	"LSO": {
 		"name": "Lesotho",
 		"demonym_one": "Mosothos",
-		"demonym_other": "Basotho"
+		"demonym_other": "Mosothos"
 	},
 	"LTU": {
 		"name": "Lituanie",
@@ -895,12 +895,12 @@
 	},
 	"PRI": {
 		"name": "Puerto Rico",
-		"demonym_one": "Porto-Ricains",
+		"demonym_one": "Porto-Ricain",
 		"demonym_other": "Porto-Ricains"
 	},
 	"PRK": {
 		"name": "Corée du Nord",
-		"demonym_one": "Coréens du Nord",
+		"demonym_one": "Nord-Coréen",
 		"demonym_other": "Coréens du Nord"
 	},
 	"PRT": {
@@ -1099,7 +1099,7 @@
 	"TKM": {
 		"name": "Turkmenistan",
 		"demonym_one": "Turkmens",
-		"demonym_other": "Turkmènes"
+		"demonym_other": "Turkmens"
 	},
 	"TLS": {
 		"name": "Timor-Leste",
@@ -1119,7 +1119,7 @@
 	"TUN": {
 		"name": "Tunisia",
 		"demonym_one": "Tunisiens",
-		"demonym_other": "Tunisians"
+		"demonym_other": "Tunisiens"
 	},
 	"TUR": {
 		"name": "La Turquie",
@@ -1139,7 +1139,7 @@
 	"TZA": {
 		"name": "Tanzania",
 		"demonym_one": "Tanzanien",
-		"demonym_other": "Tanzanians"
+		"demonym_other": "Tanzaniens"
 	},
 	"UGA": {
 		"name": "Uganda",
@@ -1184,12 +1184,12 @@
 	"VCT": {
 		"name": "Saint-Vincent-et-les-Grenadines",
 		"demonym_one": "Saint Vincentiens",
-		"demonym_other": "Saint Vincentians"
+		"demonym_other": "Saint Vincentiens"
 	},
 	"VEN": {
 		"name": "Vénézuéla",
 		"demonym_one": "Vénézuélien",
-		"demonym_other": "Venezuelans"
+		"demonym_other": "Vénézuéliens"
 	},
 	"VGB": {
 		"name": "Îles Vierges britanniques",
@@ -1224,7 +1224,7 @@
 	"YEM": {
 		"name": "Yémen",
 		"demonym_one": "Yéménite",
-		"demonym_other": "Yemenis"
+		"demonym_other": "Yéménite"
 	},
 	"ZAF": {
 		"name": "Afrique du Sud",
@@ -1234,11 +1234,11 @@
 	"ZMB": {
 		"name": "Zambia",
 		"demonym_one": "Zambie",
-		"demonym_other": "Zambians"
+		"demonym_other": "Zambiens"
 	},
 	"ZWE": {
 		"name": "Zimbabwe",
 		"demonym_one": "Zimbabwéen",
-		"demonym_other": "Zimbabweans"
+		"demonym_other": "Zimbabwéens"
 	}
 }
