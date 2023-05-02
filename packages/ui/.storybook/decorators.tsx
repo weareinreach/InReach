@@ -57,33 +57,36 @@ export const WithI18n = (Story: StoryFn, context: StoryContext) => {
 const storybookTRPC = trpc as StorybookTRPC
 
 export const WithTRPC = (Story: StoryFn, { parameters }: StoryContext) => {
-	const [queryClient] = useState(() => new QueryClient())
-	const [trpcClient, setTRPCClient] = useState(
-		storybookTRPC.createClient({
-			links: [
-				httpLink({
-					url: '/trpc',
-				}),
-				devtoolsLink({
-					enabled: true,
-				}),
-				loggerLink(),
-			],
-			transformer,
-		})
+	const [queryClient] = useState(
+		() =>
+			new QueryClient({
+				defaultOptions: {
+					queries: {
+						refetchOnWindowFocus: false,
+					},
+				},
+			})
 	)
+
+	const trpcClientOpts = {
+		links: [
+			httpLink({
+				url: '/trpc',
+			}),
+			devtoolsLink({
+				enabled: true,
+			}),
+			loggerLink(),
+		],
+		transformer,
+	}
+
+	const [trpcClient, setTRPCClient] = useState(storybookTRPC.createClient(trpcClientOpts))
 	useEffect(() => {
 		queryClient.clear()
-		const trpc_client = storybookTRPC.createClient({
-			links: [
-				httpLink({
-					url: '/trpc',
-				}),
-			],
-
-			transformer,
-		})
+		const trpc_client = storybookTRPC.createClient(trpcClientOpts)
 		setTRPCClient(trpc_client)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [setTRPCClient, queryClient])
 
 	return (
