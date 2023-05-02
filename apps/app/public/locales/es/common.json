@@ -90,6 +90,8 @@
 	"language_all-other": "Todos los demás idiomas",
 	"language_choose": "Por favor, elige un idioma",
 	"language_common": "Idiomas comunes",
+	"law-practice-other": "Área de prácticas legales",
+	"law-practice-other-placeholder": "Por favor especifique su área de práctica legal",
 	"link-copied": "Enlace copiado al portapapeles",
 	"list": {
 		"added": "Recurso guardado en la lista: {{name}}",
@@ -268,6 +270,7 @@
 	"words": {
 		"accept": "Aceptar",
 		"account": "Cuenta",
+		"add": "Añadir",
 		"and": "y",
 		"and-x-more": "y {{count}} más",
 		"back": "Atrás",
