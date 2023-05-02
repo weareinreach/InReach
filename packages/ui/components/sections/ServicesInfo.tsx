@@ -1,9 +1,9 @@
 import { Stack, Text, Card, Group, createStyles, rem } from '@mantine/core'
-import { type ApiOutput } from '@weareinreach/api'
-import { transformer } from '@weareinreach/api/lib/transformer'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
+import { type ApiOutput } from '@weareinreach/api'
+import { transformer } from '@weareinreach/api/lib/transformer'
 
 import { Badge } from '~ui/components/core'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'

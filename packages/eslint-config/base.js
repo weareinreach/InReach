@@ -63,10 +63,11 @@ const config = {
 	settings: {
 		'import/extensions': ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.mts', '.tsx'],
 		'import/resolver': {
-			typescript: true,
 			node: true,
-			alwaysTryTypes: true,
-			project: ['packages/*/tsconfig.json', 'apps/*/tsconfig.json'],
+			typescript: {
+				alwaysTryTypes: true,
+				project: ['packages/*/tsconfig.json', 'apps/*/tsconfig.json', 'tsconfig.json'],
+			},
 		},
 		'import/parsers': {
 			'@typescript-eslint/parser': ['.ts', '.tsx'],
