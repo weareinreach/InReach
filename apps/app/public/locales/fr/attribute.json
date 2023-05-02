@@ -1,17 +1,22 @@
 {
 	"additional": {
-		"CATEGORYNAME": "Informations supplémentaires",
 		"at-capacity": "À la capacité",
+		"CATEGORYNAME": "Informations supplémentaires",
 		"geo-near-public-transit": "Près des transports en commun",
 		"geo-public-transit-description": "Transports publics / directions spécifiques",
 		"has-confidentiality-policy": "A une politique de confidentialité",
 		"offers-remote-services": "Distante",
 		"religiously-affiliated": "Est religieusement affilié",
 		"time-walk-in": "A des heures de marche",
-		"wheelchair-accessible": "Accessible"
+		"wheelchair-accessible_true": "Accessible",
+		"wheelchair-accessible_false": "Non Accessible"
+	},
+	"alerts": {
+		"CATEGORYNAME": "Alertes",
+		"info": "Alerte informative",
+		"warn": "Alerte d'avertissement"
 	},
 	"community": {
-		"CATEGORYNAME": "Communauté",
 		"adults": "\"adulte\" défini comme étant âgé de 18 ans ou plus",
 		"africa-immigrant": "Opportunités au service des pays africains",
 		"african-american": "Opportunités au service de la communauté africaine américaine",
@@ -23,6 +28,7 @@
 		"bipoc": "Possibilités au service du noir, de l'indigène et des gens de couleur",
 		"bisexual": "Opportunités au service de la communauté bisexuelle",
 		"black": "Opportunités au service de la Communauté Noire",
+		"CATEGORYNAME": "Communauté",
 		"citizens": "Citoyens de {{country}}",
 		"conversion-therapy-survivors": "Opportunités au service des survivants de la thérapie de conversion",
 		"daca-recipient-seeker": "Opportunités au service des Dreamers (destinataires DACA)",
@@ -50,11 +56,11 @@
 		"seniors": "\"senior\" défini comme étant âgé de 65 ans ou plus",
 		"sex-workers": "Opportunités au service des professionnel(le)s du sexe",
 		"teens": "\"adolescent\" défini comme âgé de 12-18 ans",
-		"trans-youth": "Opportunités au service des jeunes Trans",
-		"trans-youth-caregivers": "Opportunités au service des soignants de la jeunesse Trans",
 		"transfeminine": "Opportunités au service de la communauté transféminine",
 		"transgender": "Les opportunités qui servent la communauté transsexuelle (pour les communautés non conformes ou non binaires, utilisez les propriétés non conformes ou non binaires)",
 		"transmasculine": "Opportunités au service de la communauté trasmasculine",
+		"trans-youth": "Opportunités au service des jeunes Trans",
+		"trans-youth-caregivers": "Opportunités au service des soignants de la jeunesse Trans",
 		"unaccompanied-minors": "Possibilités au service des mineurs non accompagnés",
 		"undocumented": "Opportunités au service des immigrés sans papiers"
 	},
@@ -65,7 +71,9 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Exigences d'éligibilité",
-		"elig-age": "Éligibilité à l'âge",
+		"elig-age_max": "En dessous de {{max}}",
+		"elig-age_min": "{{min}} et plus",
+		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Autre (description du texte libre)",
 		"req-medical-insurance": "Nécessite une assurance médicale",
 		"req-photo-id": "OBLIGATOIRE UNE pièce d'identité avec photo",
@@ -76,32 +84,32 @@
 		"time-appointment-required": "Rendez-vous requis"
 	},
 	"lang": {
-		"CATEGORYNAME": "Langues",
 		"all-languages-by-interpreter": "Toutes les langues via l'interprète",
 		"american-sign-language": "Langue des signes américaine",
+		"CATEGORYNAME": "Langues",
 		"lang-offered": "Langues spécifiques proposées"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "Leadership de l'organisation",
 		"bipoc-led": "Led BIPOC",
 		"black-led": "Led noir",
+		"CATEGORYNAME": "Leadership de l'organisation",
 		"immigrant-led": "Led Immigrant",
 		"trans-led": "Led Trans"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "Instructions d'accès au service",
 		"accessemail": "Instructions d'accès - Email",
 		"accessfile": "Instructions d'accès - Fichier",
 		"accesslink": "Instructions d'accès - Lien",
 		"accesslocation": "Instructions d'accès - Lieu",
 		"accessphone": "Instructions d'accès - Téléphone",
 		"accesspublictransit": "Instructions d'accès - Transports publics",
-		"accesstext": "Instructions d'accès - Texte"
+		"accesstext": "Instructions d'accès - Texte",
+		"CATEGORYNAME": "Instructions d'accès au service"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "Focus sur le service",
 		"asylum-seekers": "Chercheurs d’asile",
 		"bipoc-comm": "Communauté BIPOC",
+		"CATEGORYNAME": "Focus sur le service",
 		"gender-nc": "Sexe non conforme",
 		"hiv-comm": "Communauté du VIH",
 		"immigrant-comm": "Communauté immigrée",
@@ -122,8 +130,7 @@
 		"corp-law-firm": "Cabinet d'avocats des sociétés",
 		"law-other": "Autre (merci de préciser)",
 		"law-school-clinic": "Clinique étudiante en faculté de droit",
-		"legal-nonprofit": "Juridique sans but lucratif",
-		"other": "Autre (merci de préciser)"
+		"legal-nonprofit": "Juridique sans but lucratif"
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "Options du fournisseur de services",
