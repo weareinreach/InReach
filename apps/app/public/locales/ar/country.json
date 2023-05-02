@@ -37,12 +37,12 @@
 	},
 	"ALA": {
 		"name": "جزر آلاند",
-		"demonym_zero": "هبوط",
+		"demonym_zero": "الهبوط",
 		"demonym_one": "الهبوط",
-		"demonym_two": "هبوط",
-		"demonym_few": "هبوط",
-		"demonym_many": "هبوط",
-		"demonym_other": "هبوط"
+		"demonym_two": "الهبوط",
+		"demonym_few": "الهبوط",
+		"demonym_many": "الهبوط",
+		"demonym_other": "الهبوط"
 	},
 	"ALB": {
 		"name": "ألبانيا",
@@ -118,12 +118,12 @@
 	},
 	"ATG": {
 		"name": "أنتيغوا وبربودا",
-		"demonym_zero": "أنتيغوا وبربودا",
+		"demonym_zero": "أنتيغواي/وبربودا",
 		"demonym_one": "أنتيغوا وبربودا",
-		"demonym_two": "أنتيغوا وبربودا",
-		"demonym_few": "أنتيغوا وبربودا",
-		"demonym_many": "أنتيغوا وبربودا",
-		"demonym_other": "أنتيغوا وبربودا"
+		"demonym_two": "أنتيغواي/وبربودا",
+		"demonym_few": "أنتيغواي/وبربودا",
+		"demonym_many": "أنتيغواي/وبربودا",
+		"demonym_other": "أنتيغواي/وبربودا"
 	},
 	"AUS": {
 		"name": "أستراليا",
@@ -322,30 +322,30 @@
 	},
 	"BWA": {
 		"name": "Botswana",
-		"demonym_zero": "Batswana",
+		"demonym_zero": "Motswanas",
 		"demonym_one": "Motswanas",
-		"demonym_two": "Batswana",
-		"demonym_few": "Batswana",
-		"demonym_many": "Batswana",
-		"demonym_other": "Batswana"
+		"demonym_two": "Motswanas",
+		"demonym_few": "Motswanas",
+		"demonym_many": "Motswanas",
+		"demonym_other": "Motswanas"
 	},
 	"CAF": {
 		"name": "جمهورية أفريقيا الوسطى",
-		"demonym_zero": "Central Africans",
+		"demonym_zero": "سكان أفريقيا الوسطى",
 		"demonym_one": "جمهورية أفريقيا الوسطى",
-		"demonym_two": "Central Africans",
-		"demonym_few": "Central Africans",
-		"demonym_many": "Central Africans",
-		"demonym_other": "Central Africans"
+		"demonym_two": "سكان أفريقيا الوسطى",
+		"demonym_few": "سكان أفريقيا الوسطى",
+		"demonym_many": "سكان أفريقيا الوسطى",
+		"demonym_other": "سكان أفريقيا الوسطى"
 	},
 	"CAN": {
 		"name": "كندا",
-		"demonym_zero": "Canadians",
+		"demonym_zero": "الكنديون",
 		"demonym_one": "كندي",
-		"demonym_two": "Canadians",
-		"demonym_few": "Canadians",
-		"demonym_many": "Canadians",
-		"demonym_other": "Canadians"
+		"demonym_two": "الكنديون",
+		"demonym_few": "الكنديون",
+		"demonym_many": "الكنديون",
+		"demonym_other": "الكنديون"
 	},
 	"CCK": {
 		"name": "جزر كوكوس (كيلينغ)",
@@ -484,12 +484,12 @@
 	},
 	"CXR": {
 		"name": "جزيرة عيد الميلاد",
-		"demonym_zero": "سكان جزر عيد الميلاد",
+		"demonym_zero": "جزر الكريسماس",
 		"demonym_one": "جزيرة عيد الميلاد",
-		"demonym_two": "سكان جزر عيد الميلاد",
-		"demonym_few": "سكان جزر عيد الميلاد",
-		"demonym_many": "سكان جزر عيد الميلاد",
-		"demonym_other": "سكان جزر عيد الميلاد"
+		"demonym_two": "جزر الكريسماس",
+		"demonym_few": "جزر الكريسماس",
+		"demonym_many": "جزر الكريسماس",
+		"demonym_other": "جزر الكريسماس"
 	},
 	"CYM": {
 		"name": "جزر كايمان",
@@ -637,12 +637,12 @@
 	},
 	"FIN": {
 		"name": "فنلندا",
-		"demonym_zero": "Finns",
+		"demonym_zero": "الفنلنديون",
 		"demonym_one": "الفنلندية",
-		"demonym_two": "Finns",
-		"demonym_few": "Finns",
-		"demonym_many": "Finns",
-		"demonym_other": "Finns"
+		"demonym_two": "الفنلنديون",
+		"demonym_few": "الفنلنديون",
+		"demonym_many": "الفنلنديون",
+		"demonym_other": "الفنلنديون"
 	},
 	"FJI": {
 		"name": "Fiji",
@@ -736,12 +736,12 @@
 	},
 	"GIB": {
 		"name": "جبل طارق",
-		"demonym_zero": "سكان جبل طارق",
+		"demonym_zero": "جبل طارق",
 		"demonym_one": "جبل طارق",
-		"demonym_two": "سكان جبل طارق",
-		"demonym_few": "سكان جبل طارق",
-		"demonym_many": "سكان جبل طارق",
-		"demonym_other": "سكان جبل طارق"
+		"demonym_two": "جبل طارق",
+		"demonym_few": "جبل طارق",
+		"demonym_many": "جبل طارق",
+		"demonym_other": "جبل طارق"
 	},
 	"GIN": {
 		"name": "Guinea",
@@ -808,12 +808,12 @@
 	},
 	"GRL": {
 		"name": "غرينلاند",
-		"demonym_zero": "غرينلاند",
+		"demonym_zero": "غرينلانديك",
 		"demonym_one": "غرينلاندية",
-		"demonym_two": "غرينلاند",
-		"demonym_few": "غرينلاند",
-		"demonym_many": "غرينلاند",
-		"demonym_other": "غرينلاند"
+		"demonym_two": "غرينلانديك",
+		"demonym_few": "غرينلانديك",
+		"demonym_many": "غرينلانديك",
+		"demonym_other": "غرينلانديك"
 	},
 	"GTM": {
 		"name": "غواتيمالا",
@@ -1072,12 +1072,12 @@
 	},
 	"KNA": {
 		"name": "سانت كيتس ونيفيس",
-		"demonym_zero": "الكتيتيتيون أو النيفيزيون",
+		"demonym_zero": "الكيتية أو النفيسية",
 		"demonym_one": "كيتيتي أو نيفيسي",
-		"demonym_two": "الكتيتيتيون أو النيفيزيون",
-		"demonym_few": "الكتيتيتيون أو النيفيزيون",
-		"demonym_many": "الكتيتيتيون أو النيفيزيون",
-		"demonym_other": "الكتيتيتيون أو النيفيزيون"
+		"demonym_two": "الكيتية أو النفيسية",
+		"demonym_few": "الكيتية أو النفيسية",
+		"demonym_many": "الكيتية أو النفيسية",
+		"demonym_other": "الكيتية أو النفيسية"
 	},
 	"KOR": {
 		"name": "كوريا الجنوبية",
@@ -1162,12 +1162,12 @@
 	},
 	"LSO": {
 		"name": "Lesotho",
-		"demonym_zero": "Basotho",
+		"demonym_zero": "Mosothos",
 		"demonym_one": "Mosothos",
-		"demonym_two": "Basotho",
-		"demonym_few": "Basotho",
-		"demonym_many": "Basotho",
-		"demonym_other": "Basotho"
+		"demonym_two": "Mosothos",
+		"demonym_few": "Mosothos",
+		"demonym_many": "Mosothos",
+		"demonym_other": "Mosothos"
 	},
 	"LTU": {
 		"name": "ليتوانيا",
@@ -1966,12 +1966,12 @@
 	},
 	"TKM": {
 		"name": "Turkmenistan",
-		"demonym_zero": "التركمانيون",
+		"demonym_zero": "Turkmens",
 		"demonym_one": "Turkmens",
-		"demonym_two": "التركمانيون",
-		"demonym_few": "التركمانيون",
-		"demonym_many": "التركمانيون",
-		"demonym_other": "التركمانيون"
+		"demonym_two": "Turkmens",
+		"demonym_few": "Turkmens",
+		"demonym_many": "Turkmens",
+		"demonym_other": "Turkmens"
 	},
 	"TLS": {
 		"name": "Timor-Leste",
@@ -2002,12 +2002,12 @@
 	},
 	"TUN": {
 		"name": "Tunisia",
-		"demonym_zero": "Tunisians",
+		"demonym_zero": "تونسيون",
 		"demonym_one": "تونسيون",
-		"demonym_two": "Tunisians",
-		"demonym_few": "Tunisians",
-		"demonym_many": "Tunisians",
-		"demonym_other": "Tunisians"
+		"demonym_two": "تونسيون",
+		"demonym_few": "تونسيون",
+		"demonym_many": "تونسيون",
+		"demonym_other": "تونسيون"
 	},
 	"TUR": {
 		"name": "تركيا",
@@ -2038,12 +2038,12 @@
 	},
 	"TZA": {
 		"name": "Tanzania",
-		"demonym_zero": "Tanzanians",
+		"demonym_zero": "التنزانيون",
 		"demonym_one": "التنزانية",
-		"demonym_two": "Tanzanians",
-		"demonym_few": "Tanzanians",
-		"demonym_many": "Tanzanians",
-		"demonym_other": "Tanzanians"
+		"demonym_two": "التنزانيون",
+		"demonym_few": "التنزانيون",
+		"demonym_many": "التنزانيون",
+		"demonym_other": "التنزانيون"
 	},
 	"UGA": {
 		"name": "Uganda",
@@ -2191,12 +2191,12 @@
 	},
 	"YEM": {
 		"name": "اليمن",
-		"demonym_zero": "Yemenis",
+		"demonym_zero": "اليمنيون",
 		"demonym_one": "اليمنية",
-		"demonym_two": "Yemenis",
-		"demonym_few": "Yemenis",
-		"demonym_many": "Yemenis",
-		"demonym_other": "Yemenis"
+		"demonym_two": "اليمنيون",
+		"demonym_few": "اليمنيون",
+		"demonym_many": "اليمنيون",
+		"demonym_other": "اليمنيون"
 	},
 	"ZAF": {
 		"name": "جنوب أفريقيا",
@@ -2209,12 +2209,12 @@
 	},
 	"ZMB": {
 		"name": "Zambia",
-		"demonym_zero": "Zambians",
+		"demonym_zero": "الزامبيين",
 		"demonym_one": "زامبيا",
-		"demonym_two": "Zambians",
-		"demonym_few": "Zambians",
-		"demonym_many": "Zambians",
-		"demonym_other": "Zambians"
+		"demonym_two": "الزامبيين",
+		"demonym_few": "الزامبيين",
+		"demonym_many": "الزامبيين",
+		"demonym_other": "الزامبيين"
 	},
 	"ZWE": {
 		"name": "Zimbabwe",
