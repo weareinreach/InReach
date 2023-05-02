@@ -1,6 +1,6 @@
 import { Stack, Text, Title } from '@mantine/core'
-import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
+import { type ApiOutput } from '@weareinreach/api'
 
 import { Link, isExternal, SocialLink, SocialLinkProps, isSocialIcon } from '~ui/components/core'
 import { parsePhoneNumber, useSlug, useCustomVariant } from '~ui/hooks'

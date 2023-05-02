@@ -1,6 +1,6 @@
-import { type DB } from '@weareinreach/api/prisma/types'
 import { TOptions, DefaultTFuncReturn } from 'i18next'
 import { useTranslation } from 'next-i18next'
+import { type DB } from '@weareinreach/api/prisma/types'
 
 export const getFreeText: GetFreeText = (freeTextRecord, tOptions) => {
 	const { key: dbKey, tsKey } = freeTextRecord
