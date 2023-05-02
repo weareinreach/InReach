@@ -2,9 +2,9 @@
 /* eslint-disable node/no-process-env */
 import { Title, Card, Stack, Group, Text } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
-import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
 import { z } from 'zod'
+import { type ApiOutput } from '@weareinreach/api'
 
 import { Badge, GoogleMap } from '~ui/components/core'
 import { Hours } from '~ui/components/data-display'
