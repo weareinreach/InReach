@@ -92,6 +92,8 @@
 	"language_all-other": "Все другие языки",
 	"language_choose": "Пожалуйста, выберите язык",
 	"language_common": "Общие языки",
+	"law-practice-other": "Область правовой практики",
+	"law-practice-other-placeholder": "Пожалуйста, укажите область юридической практики",
 	"link-copied": "Ссылка скопирована в буфер обмена",
 	"list": {
 		"added": "Ресурс сохранен в списке: {{name}}",
@@ -270,6 +272,7 @@
 	"words": {
 		"accept": "Принять",
 		"account": "Аккаунт",
+		"add": "Добавить",
 		"and": "и",
 		"and-x-more": "и еще {{count}}",
 		"back": "Назад",
