@@ -19,6 +19,7 @@ import { z } from 'zod'
 import { JsonInputOrNull } from '@weareinreach/api/schemas/common'
 
 import { Badge } from '~ui/components/core/Badge'
+import { Button } from '~ui/components/core/Button'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon, isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -163,6 +164,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				},
 			}
 		)
+		const saveAttributes = api.organization.attachAttribute.useMutation()
 		// #endregion
 
 		// #region Handlers
@@ -216,6 +218,8 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			if (!item) return
 			const { requireBoolean, requireGeo, requireData, requireLanguage, requireText } = item
 			const { boolean, countryId, govDistId, languageId, text, data } = e ?? {}
+			console.log('🚀 ~ file: index.tsx:219 ~ handleSupplement ~ e:', e)
+
 			if (
 				(requireBoolean && boolean !== undefined) ||
 				(requireGeo && (countryId || govDistId)) ||
@@ -260,6 +264,11 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			)
 			utils.fieldOpt.attributesByCategory.invalidate()
 		}
+
+		const submitHandler = () => {
+			//TODO: [IN-871] Create submit handler - convert tRPC organization.attachAttribute to be able to handle multiple items & accept org, serv, loc
+		}
+
 		// #endregion
 
 		// #region Title & Selected items display
@@ -319,6 +328,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [form.values.supplement])
 		console.log(form.values)
+		const needsSupplement = Object.values(supplements).includes(true)
 		return (
 			<>
 				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
@@ -395,7 +405,16 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 									}}
 								/>
 							)}
-							{supplements.geo && <Supplement.Geo handler={() => {}} />}
+							{supplements.geo && (
+								<Supplement.Geo
+									handler={(data) => {
+										form.values.supplement?.attributeId &&
+											data &&
+											handleSupplement({ attributeId: form.values.supplement.attributeId, ...data })
+									}}
+								/>
+							)}
+							{!needsSupplement && <Button>{t('words.save', { ns: 'common' })}</Button>}
 						</Stack>
 					</AttributeModalFormProvider>
 				</Modal>

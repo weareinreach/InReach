@@ -150,12 +150,12 @@ const SuppGeo = ({ handler, countryOnly }: SuppGeoProps) => {
 	const [primarySearch, onPrimarySearch] = useState<string | undefined>()
 	const [secondarySearch, onSecondarySearch] = useState<string | undefined>()
 	const [tertiarySearch, onTertiarySearch] = useState<string | undefined>()
-	api.fieldOpt.countries.useQuery(undefined, {
+	const countries = api.fieldOpt.countries.useQuery(undefined, {
 		enabled: Boolean(countryOnly),
 		onSuccess: (data) =>
 			setPrimaryList(data.map(({ id, name, flag }) => ({ value: id, label: name, flag: flag ?? undefined }))),
 	})
-	api.fieldOpt.govDistsByCountry.useQuery(undefined, {
+	const govDists = api.fieldOpt.govDistsByCountry.useQuery(undefined, {
 		enabled: !Boolean(countryOnly),
 		onSuccess: (data) => {
 			setPrimaryList(
@@ -196,7 +196,7 @@ const SuppGeo = ({ handler, countryOnly }: SuppGeoProps) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form.values.supplement?.countryId, countryOnly])
 
-	if (!primaryList) return <>Loading...</>
+	if (!primaryList && !countries.isSuccess) return <>Loading...</>
 	return (
 		<Stack>
 			{primaryList && (
@@ -235,14 +235,19 @@ const SuppGeo = ({ handler, countryOnly }: SuppGeoProps) => {
 					{...form.getInputProps('supplement.subDistId')}
 				/>
 			)}
-			<Button onClick={() => handler(form.values.supplement?.govDistId)}>
+			<Button
+				onClick={() => {
+					const { govDistId, countryId } = form.values.supplement ?? {}
+					handler(govDistId ? { govDistId } : { countryId })
+				}}
+			>
 				{t('words.add', { ns: 'common' })}
 			</Button>
 		</Stack>
 	)
 }
 interface SuppGeoProps {
-	handler: (value?: string) => void
+	handler: (value?: { govDistId?: string; countryId?: string }) => void
 	countryOnly?: boolean
 }
 
