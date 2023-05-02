@@ -66,7 +66,7 @@ const config = {
 			typescript: true,
 			node: true,
 			alwaysTryTypes: true,
-			project: ['packages/*/tsconfig.json', 'apps/*/tsconfig.json'],
+			project: ['packages/*/tsconfig.json', 'apps/*/tsconfig.json', 'tsconfig.json'],
 		},
 		'import/parsers': {
 			'@typescript-eslint/parser': ['.ts', '.tsx'],
