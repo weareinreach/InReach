@@ -90,6 +90,8 @@
 	"language_all-other": "Toutes les autres langues",
 	"language_choose": "Veuillez choisir une langue",
 	"language_common": "Langues courantes",
+	"law-practice-other": "Zone de pratique juridique",
+	"law-practice-other-placeholder": "Veuillez spécifier votre zone de pratique juridique",
 	"link-copied": "Lien copié dans le presse-papiers",
 	"list": {
 		"added": "Ressource enregistrée dans la liste: {{name}}",
@@ -268,6 +270,7 @@
 	"words": {
 		"accept": "Accepter",
 		"account": "Compte client",
+		"add": "Ajouter",
 		"and": "et",
 		"and-x-more": "et {{count}} de plus",
 		"back": "Précédent",
