@@ -146,6 +146,7 @@
 		],
 		"eslint.runtime": "node",
 		"eslint.useESLintClass": true,
+		"eslint.workingDirectories": [{ "pattern": "./packages/*/" }, { "pattern": "./apps/*/" }],
 		"explorer.decorations.badges": true,
 		"explorer.expandSingleFolderWorkspaces": false,
 		"explorer.fileNesting.enabled": true,

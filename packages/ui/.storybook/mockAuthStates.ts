@@ -1,5 +1,5 @@
-import { Session } from '@weareinreach/auth'
 import { ulid } from 'ulid'
+import { Session } from '@weareinreach/auth'
 
 const expires = (Date.now() / 1000 + 3600).toString()
 

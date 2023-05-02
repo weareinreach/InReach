@@ -1,10 +1,10 @@
 import { Carousel, Embla, useAnimationOffsetEffect } from '@mantine/carousel'
 import { AspectRatio, Text, Title, Group, Stack, Modal, createStyles, useMantineTheme } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
-import { type ApiOutput } from '@weareinreach/api'
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
+import { type ApiOutput } from '@weareinreach/api'
 
 import { useCustomVariant } from '~ui/hooks'
 

@@ -13,10 +13,10 @@ import {
 	rem,
 } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
-import { attributesByCategory } from '@weareinreach/api/generated/attributesByCategory'
-import { languageList } from '@weareinreach/api/generated/languages'
 import { useTranslation } from 'next-i18next'
 import { ComponentPropsWithRef, forwardRef, useState } from 'react'
+import { attributesByCategory } from '@weareinreach/api/generated/attributesByCategory'
+import { languageList } from '@weareinreach/api/generated/languages'
 
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'

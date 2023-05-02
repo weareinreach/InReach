@@ -1,6 +1,6 @@
 import { Stack, Title, Card } from '@mantine/core'
-import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
+import { type ApiOutput } from '@weareinreach/api'
 
 import { ContactInfo, hasContactInfo } from '~ui/components/data-display'
 import { useScreenSize } from '~ui/hooks'

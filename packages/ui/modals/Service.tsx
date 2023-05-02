@@ -11,10 +11,10 @@ import {
 	List,
 } from '@mantine/core'
 import { useMediaQuery, useDisclosure } from '@mantine/hooks'
-import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode } from 'react'
+import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
 
 import {
 	AlertMessage,

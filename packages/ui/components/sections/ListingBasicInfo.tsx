@@ -1,6 +1,6 @@
 import { Stack, Title, Text } from '@mantine/core'
-import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
+import { type ApiOutput } from '@weareinreach/api'
 
 import { Rating, BadgeGroup, type CustomBadgeProps } from '~ui/components/core'
 import { useFormattedAddress, useCustomVariant } from '~ui/hooks'
