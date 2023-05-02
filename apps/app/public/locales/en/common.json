@@ -146,6 +146,7 @@
 	"photo_other": "Photos",
 	"powered-by-vercel": "Powered by Vercel",
 	"prefer-not-to-say": "Prefer not to say",
+	"privacy-policy": "Privacy policy",
 	"privacy-statement": "Privacy Statement",
 	"privacy-statement-body": [
 		"<emojiLg>🔒</emojiLg>",
@@ -260,10 +261,29 @@
 	"subscribe-to-newsletter": "Subscribe to Newsletter",
 	"suggest-a-resource": "Suggest a Resource",
 	"support": "Support",
+	"survey": {
+		"finish": "Finish",
+		"not-right-now": "Not right now",
+		"start-survey": "Start Survey",
+		"thank-you": "Thank you!",
+		"thank-you-message": "The information you shared helps us to improve our product.",
+		"question-subtitle": "Your answers are anonymous.",
+		"question-1-title": "How would you describe yourself?",
+		"question-2-title": "What is your country of origin?",
+		"question-2-placeholder": "Enter country...",
+		"question-3-title": "How do you identify?",
+		"question-4-title": "What is your ethnicity/race?",
+		"question-5-title": "How old are you?",
+		"question-5-label": "Year of birth",
+		"question-5-placeholder": "Enter your birth year...",
+		"birthyear-req-value": "Year must be between {{year1}} and {{year2}}, i.e 2005"
+	},
 	"take-action": "Take Action",
 	"uncheck-all": "Uncheck all",
 	"unclaimed": "Unclaimed",
 	"user-avatar": "User avatar",
+	"user-survey-body": "<textUtility1>Why do we ask? Understanding our user demographics can help us to quantify our impact, raise funds, and evaluate future product decisions.</textUtility1>\n<textUtility1>Safety-first: Your answers are stored anonymously and not connected to you as an individual user or to your user account.</textUtility1>",
+	"user-survey-heading": "<emojiLg>📋</emojiLg>\n<title>Please take a few minutes to tell us about yourself in our anonymous user survey.</title></textDarkGray>",
 	"verified-information": "Verified information",
 	"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information at least once every 6 months.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
 	"verify-account": {
@@ -301,6 +321,7 @@
 		"search": "Search",
 		"service-hours": "Service hours",
 		"share": "Share",
+		"skip": "Skip",
 		"support": "Support"
 	},
 	"your-comments": "Your Comments"
