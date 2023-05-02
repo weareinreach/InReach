@@ -90,6 +90,8 @@
 	"language_all-other": "crwdns1398988:0crwdne1398988:0",
 	"language_choose": "crwdns1398990:0crwdne1398990:0",
 	"language_common": "crwdns1398992:0crwdne1398992:0",
+	"law-practice-other": "crwdns1789139:0crwdne1789139:0",
+	"law-practice-other-placeholder": "crwdns1789141:0crwdne1789141:0",
 	"link-copied": "crwdns1161158:0crwdne1161158:0",
 	"list": {
 		"added": "crwdns1161160:0{{name}}crwdne1161160:0",
@@ -268,6 +270,7 @@
 	"words": {
 		"accept": "crwdns685034:0crwdne685034:0",
 		"account": "crwdns816606:0crwdne816606:0",
+		"add": "crwdns1773633:0crwdne1773633:0",
 		"and": "crwdns685036:0crwdne685036:0",
 		"and-x-more": "crwdns685038:0{{count}}crwdne685038:0",
 		"back": "crwdns1442511:0crwdne1442511:0",
