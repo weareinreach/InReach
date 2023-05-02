@@ -1,7 +1,7 @@
 import { Box, Title, Text, Group, Stack, Divider, createStyles, Skeleton, Space } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
-import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
+import { type ApiOutput } from '@weareinreach/api'
 
 import { useCustomVariant } from '~ui/hooks'
 
