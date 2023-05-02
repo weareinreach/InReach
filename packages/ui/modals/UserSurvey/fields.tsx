@@ -3,7 +3,6 @@ import {
 	NumberInput,
 	Radio,
 	ScrollArea,
-	useMantineTheme,
 	Title,
 	Text,
 	Select,
@@ -20,11 +19,14 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { useUserSurveyFormContext } from './context'
 
 const useSelectItemStyles = createStyles((theme) => ({
+	checkIcon: { paddingLeft: rem(4), color: theme.other.colors.secondary.black },
+	selected: {},
 	singleLine: {
-		checkIcon: { backgroundColor: 'black' },
 		borderBottom: `${rem(1)} solid ${theme.other.colors.tertiary.coolGray}`,
 		padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
 		alignItems: 'center',
+		display: 'flex',
+
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
 			cursor: 'pointer',
@@ -97,33 +99,6 @@ export const FormImmigration = () => {
 		</>
 	)
 }
-//immigration component end
-
-//countries component start
-// interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
-// 	cca2: string
-// 	id: string
-// 	tsKey: string
-// 	tsNs: string
-// 	label: string
-// }
-
-// const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
-// 	({ cca2, id, tsKey, tsNs, label, ...others }: ItemProps, ref) => {
-// 		const { t } = useTranslation('country')
-// 		const variants = useCustomVariant()
-// 		const { classes } = useSelectItemStyles()
-
-// 		return (
-// 			<div className={classes.singleLine} ref={ref} {...others}>
-// 				<Text variant={variants.Text.utility2} size='sm'>
-// 					{t(label, { ns: 'country' })}
-// 				</Text>
-// 			</div>
-// 		)
-// 	}
-// )
-// SelectItem.displayName = 'Selection Item'
 
 interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
 	cca2: string
@@ -135,17 +110,20 @@ interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
-	({ cca2, id, tsKey, tsNs, label, selected, ...others }: ItemProps, ref) => {
-		const { t } = useTranslation('country')
+	({ cca2, id, tsKey, tsNs, label, selected, ...others }, ref) => {
 		const variants = useCustomVariant()
-		const { classes } = useSelectItemStyles()
+		const { classes, cx } = useSelectItemStyles()
 
 		return (
-			<div className={`${classes.singleLine} ${selected ? classes.selected : ''}`} ref={ref} {...others}>
+			<div
+				className={selected ? cx(classes.singleLine, classes.selected) : classes.singleLine}
+				ref={ref}
+				{...others}
+			>
 				<Text variant={variants.Text.utility2} size='sm'>
-					{t(label, { ns: 'country' })}
+					{label}
 				</Text>
-				{selected && <Icon icon='carbon:checkmark' className={classes.checkIcon} />}
+				{selected && <Icon icon='carbon:checkmark-filled' height={rem(20)} className={classes.checkIcon} />}
 			</div>
 		)
 	}
@@ -153,18 +131,22 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
 SelectItem.displayName = 'Selection Item'
 
 export const FormCountry = () => {
-	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
-	const { t } = useTranslation('common')
+	const [selectOptions, setSelectOptions] = useState<{ label: string; value: string }[]>([])
+	api.user.surveyOptions.useQuery(undefined, {
+		onSuccess: (data) =>
+			setSelectOptions(
+				data.countries.map(({ id, tsKey, tsNs }) => ({
+					value: id,
+					label: t(tsKey, { ns: tsNs }) satisfies string,
+				}))
+			),
+	})
+	const { t } = useTranslation(['common', 'country'])
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 
-	const countryData = surveyOptions?.countries.map(function (ele) {
-		return { ...ele, value: t(ele.tsKey, { ns: 'country' }), label: t(ele.tsKey, { ns: 'country' }) }
-	}) as { value: string; label: string; tsKey: string; id: string; tsNs: string; cca2: string }[]
-
 	const handleCountrySelect = (event: string) => {
-		let countryObj = countryData?.find((item) => item.label === event)
-		form.setFieldValue('countryOriginId', countryObj?.id)
+		form.setFieldValue('countryOriginId', event)
 	}
 
 	return (
@@ -175,7 +157,7 @@ export const FormCountry = () => {
 					placeholder={t('survey.question-2-placeholder') as string}
 					itemComponent={SelectItem}
 					icon={<Icon icon='carbon:search' />}
-					data={countryData}
+					data={selectOptions}
 					searchable
 					maxDropdownHeight={325}
 					dropdownComponent='div'
@@ -263,20 +245,13 @@ export const FormBirthyear = () => {
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
 
-	const maxYear = new Date().getFullYear()
-	const minYear = maxYear - 100
-
 	return (
 		<>
 			{TitleSubtitle('survey.question-5-title', 'survey.question-subtitle')}
 			<NumberInput
 				className={classes.answerContainer}
 				label={t('survey.question-5-label')}
-				description={t('survey.birthyear-req-value', { year1: minYear, year2: maxYear }) as string}
-				defaultValue=''
 				hideControls
-				min={minYear}
-				max={maxYear}
 				placeholder={t('survey.question-5-placeholder') as string}
 				{...form.getInputProps('birthYear')}
 			/>

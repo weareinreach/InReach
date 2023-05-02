@@ -4,11 +4,11 @@ import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useState, forwardRef, Dispatch, SetStateAction } from 'react'
+import { useState, forwardRef } from 'react'
 import { z } from 'zod'
 
 import { Button, ModalTitleBreadcrumb } from '~ui/components/core'
-import { useScreenSize, useCustomVariant } from '~ui/hooks'
+import { useScreenSize, useCustomVariant, useShake } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { UserSurveyFormProvider, useUserSurveyForm } from './context'
@@ -35,22 +35,29 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const [successMessage, setSuccessMessage] = useState(false)
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
+	const { animateCSS, fireEvent: startShake } = useShake({ variant: 1 })
 	const UserSurveyAction = api.user.submitSurvey.useMutation({
 		onSuccess: (data) => {
 			setSuccessMessage(true)
-			console.log(data)
 		},
 		onError: (error) => {
 			//add something here - refer to AccountVerified error body
-			console.log(console.error())
+			console.log(error)
 		},
 	})
 
 	const router = useRouter()
 
+	const maxYear = new Date().getFullYear()
+	const minYear = maxYear - 100
+	const birthYearError = t('survey.birthyear-req-value', { year1: minYear, year2: maxYear }) satisfies string
 	const UserSurveySchema = z
 		.object({
-			birthYear: z.number(),
+			birthYear: z
+				.number({ invalid_type_error: birthYearError })
+				.gte(minYear, { message: birthYearError })
+				.lte(maxYear, { message: birthYearError })
+				.or(z.literal('')),
 			reasonForJoin: z.string(),
 			communityIds: z.array(z.string()),
 			ethnicityIds: z.array(z.string()),
@@ -62,21 +69,22 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 
 	const form = useUserSurveyForm({
 		validate: zodResolver(UserSurveySchema),
-		initialValues: {
-			birthYear: undefined,
-			reasonForJoin: '',
-			communityIds: [],
-			ethnicityIds: [],
-			identifyIds: [],
-			countryOriginId: '',
-			immigrationId: '',
-		},
+		// initialValues: {
+		// 	birthYear: undefined,
+		// 	reasonForJoin: '',
+		// 	communityIds: [],
+		// 	ethnicityIds: [],
+		// 	identifyIds: [],
+		// 	countryOriginId: '',
+		// 	immigrationId: '',
+		// },
 		validateInputOnBlur: true,
 	})
 
 	const submitHandler = () => {
 		// setSuccessMessage(true)
 		//TODO call UserSurveyAction
+		if (!form.isValid()) return startShake()
 		UserSurveyAction.mutate(form.values)
 	}
 
@@ -118,6 +126,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 					className={classes.skipNext}
 					variant={'primary-icon'}
 					onClick={() => {
+						if (!form.isValid()) return startShake()
 						setStep(stepNumber)
 					}}
 				>
@@ -230,6 +239,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 				onClose={() => handler.close()}
 				fullScreen={isMobile}
 				zIndex={500}
+				className={animateCSS}
 			>
 				<UserSurveyFormProvider form={form}>
 					<Stack spacing={24} align='center'>
