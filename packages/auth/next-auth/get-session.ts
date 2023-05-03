@@ -11,5 +11,5 @@ export const getServerSession = async (
 		  }
 		| { req: NextApiRequest; res: NextApiResponse }
 ) => {
-	return await nextauthServerSession(ctx.req, ctx.res, authOptions)
+	return nextauthServerSession(ctx.req, ctx.res, authOptions)
 }

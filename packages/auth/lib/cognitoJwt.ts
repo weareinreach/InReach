@@ -1,5 +1,6 @@
 import { CognitoJwtVerifier } from 'aws-jwt-verify'
 import { z } from 'zod'
+
 import { getEnv } from '@weareinreach/config/env'
 
 const verifier = (tokenUse: 'access' | 'id') =>
@@ -51,4 +52,4 @@ export const decodeCognitoAccessJwt = async (jwt: string) => {
 }
 
 export const decodeCognitoJwt = async (tokenUse: 'access' | 'id', jwt: string) =>
-	await (tokenUse === 'access' ? decodeCognitoAccessJwt(jwt) : decodeCognitoIdJwt(jwt))
+	tokenUse === 'access' ? decodeCognitoAccessJwt(jwt) : decodeCognitoIdJwt(jwt)
