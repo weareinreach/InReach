@@ -1,7 +1,7 @@
 import { Text, Title, Group, Stack } from '@mantine/core'
-import { type ApiOutput } from '@weareinreach/api'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { type ApiOutput } from '@weareinreach/api'
 
 import { UserReview, Rating, ActionButtons } from '~ui/components/core'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'

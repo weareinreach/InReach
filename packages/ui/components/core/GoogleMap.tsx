@@ -2,9 +2,9 @@
 /* eslint-disable node/no-process-env */
 import { Skeleton, rem } from '@mantine/core'
 import { GoogleMap as GMap, useJsApiLoader, Marker, MarkerProps } from '@react-google-maps/api'
-import { ApiOutput } from '@weareinreach/api'
 import { getBounds } from 'geolib'
 import { useCallback, memo } from 'react'
+import { ApiOutput } from '@weareinreach/api'
 
 export const _GoogleMap = ({ height, width, marker }: GoogleMapProps) => {
 	const { isLoaded } = useJsApiLoader({

@@ -140,8 +140,6 @@ export const commonTheme = {
 		xl: rem(20),
 	},
 	headings: {
-		fontFamily:
-			'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
 		fontWeight: 500,
 		sizes: {
 			h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },

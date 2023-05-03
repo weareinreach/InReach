@@ -14,6 +14,7 @@ export const generateServiceCategories = async (task: ListrTask) => {
 			tsKey: true,
 			tsNs: true,
 		},
+		orderBy: { category: 'asc' },
 	})
 
 	const out = `

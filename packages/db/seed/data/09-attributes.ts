@@ -7,7 +7,7 @@ type AttributeItem = Omit<Prisma.AttributeCreateManyInput, 'tsKey' | 'tsNs' | 't
 	icon?: string
 	iconBg?: string
 	// requireLanguage?: boolean
-	// requireCountry?: boolean
+	// requireGeo?: boolean
 	// requireData?: boolean
 	// requireText?: boolean
 }
@@ -88,13 +88,13 @@ export const attributeData: AttributeData = [
 				key: 'asylum-seeker',
 				name: 'Opportunities that serve Asylum seekers from {{country}}',
 				description: 'Opportunities that serve an Asylum seeker of a specific country',
-				requireCountry: true,
+				requireGeo: true,
 			},
 			{
 				key: 'citizens',
 				name: 'Citizens of {{country}}',
 				description: 'Citizens of a specified country',
-				requireCountry: true,
+				requireGeo: true,
 			},
 			{
 				key: 'adults',

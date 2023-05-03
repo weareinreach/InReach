@@ -1,4 +1,5 @@
 import { TRPCError } from '@trpc/server'
+import { z } from 'zod'
 import {
 	createCognitoUser,
 	forgotPassword,
@@ -7,7 +8,6 @@ import {
 	userLogin,
 	deleteAccount,
 } from '@weareinreach/auth'
-import { z } from 'zod'
 
 import { handleError, decodeUrl } from '~api/lib'
 import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
@@ -135,6 +135,56 @@ export const userRouter = defineRouter({
 		} catch (error) {
 			handleError(error)
 		}
+	}),
+	surveyOptions: publicProcedure.query(async ({ ctx }) => {
+		const commonSelect = { id: true, tsKey: true, tsNs: true }
+
+		const immigration = await ctx.prisma.userImmigration.findMany({
+			select: {
+				...commonSelect,
+				status: true,
+			},
+			orderBy: {
+				status: 'asc',
+			},
+		})
+		const sog = await ctx.prisma.userSOGIdentity.findMany({
+			select: {
+				...commonSelect,
+				identifyAs: true,
+			},
+			orderBy: {
+				identifyAs: 'asc',
+			},
+		})
+		const ethnicity = await ctx.prisma.userEthnicity.findMany({
+			select: {
+				...commonSelect,
+				ethnicity: true,
+			},
+			orderBy: {
+				ethnicity: 'asc',
+			},
+		})
+		const community = await ctx.prisma.userCommunity.findMany({
+			select: {
+				...commonSelect,
+				community: true,
+			},
+			orderBy: {
+				community: 'asc',
+			},
+		})
+		const countries = await ctx.prisma.country.findMany({
+			select: {
+				...commonSelect,
+				cca2: true,
+			},
+			orderBy: {
+				name: 'asc',
+			},
+		})
+		return { community, countries, ethnicity, immigration, sog }
 	}),
 	forgotPassword: publicProcedure.input(ForgotPassword).mutation(async ({ input }) => {
 		const response = await forgotPassword(input)
