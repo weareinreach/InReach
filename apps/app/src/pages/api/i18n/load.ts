@@ -71,6 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 							const strings = await fetchCrowdinFile(file, lang)
 							if (strings) cacheWriteQueue.push({ lang, ns, strings })
 							langResult.set(ns, strings)
+							break
 						}
 						default: {
 							const file = databaseFile
@@ -93,7 +94,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				body: JSON.stringify(cacheWriteQueue),
 			})
 
-			const { data: writeRes } = await axios({
+			await axios({
 				...cacheWriteReq,
 				url: cacheWriteUrl.toString(),
 				data: JSON.stringify(cacheWriteQueue),
