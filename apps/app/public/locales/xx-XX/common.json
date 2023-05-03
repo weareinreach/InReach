@@ -90,6 +90,8 @@
 	"language_all-other": "crwdns1398988:0crwdne1398988:0",
 	"language_choose": "crwdns1398990:0crwdne1398990:0",
 	"language_common": "crwdns1398992:0crwdne1398992:0",
+	"law-practice-other": "crwdns1789139:0crwdne1789139:0",
+	"law-practice-other-placeholder": "crwdns1789141:0crwdne1789141:0",
 	"link-copied": "crwdns1161158:0crwdne1161158:0",
 	"list": {
 		"added": "crwdns1161160:0{{name}}crwdne1161160:0",
@@ -142,6 +144,7 @@
 	"photo_interval": "crwdns639276:0{{count}}crwdne639276:0",
 	"powered-by-vercel": "crwdns281802:0crwdne281802:0",
 	"prefer-not-to-say": "crwdns8204:0crwdne8204:0",
+	"privacy-policy": "crwdns1789191:0crwdne1789191:0",
 	"privacy-statement": "crwdns454152:0crwdne454152:0",
 	"privacy-statement-body": [
 		"crwdns578220:0crwdne578220:0",
@@ -252,10 +255,29 @@
 	"subscribe-to-newsletter": "crwdns454156:0crwdne454156:0",
 	"suggest-a-resource": "crwdns454158:0crwdne454158:0",
 	"support": "crwdns141124:0crwdne141124:0",
+	"survey": {
+		"finish": "crwdns1789193:0crwdne1789193:0",
+		"not-right-now": "crwdns1789195:0crwdne1789195:0",
+		"start-survey": "crwdns1789197:0crwdne1789197:0",
+		"thank-you": "crwdns1789199:0crwdne1789199:0",
+		"thank-you-message": "crwdns1789201:0crwdne1789201:0",
+		"question-subtitle": "crwdns1789203:0crwdne1789203:0",
+		"question-1-title": "crwdns1789205:0crwdne1789205:0",
+		"question-2-title": "crwdns1789207:0crwdne1789207:0",
+		"question-2-placeholder": "crwdns1789209:0crwdne1789209:0",
+		"question-3-title": "crwdns1789211:0crwdne1789211:0",
+		"question-4-title": "crwdns1789213:0crwdne1789213:0",
+		"question-5-title": "crwdns1789215:0crwdne1789215:0",
+		"question-5-label": "crwdns1789217:0crwdne1789217:0",
+		"question-5-placeholder": "crwdns1789219:0crwdne1789219:0",
+		"birthyear-req-value": "crwdns1789221:0{{year1}}crwdnd1789221:0{{year2}}crwdne1789221:0"
+	},
 	"take-action": "crwdns454160:0crwdne454160:0",
 	"uncheck-all": "crwdns239106:0crwdne239106:0",
 	"unclaimed": "crwdns281720:0crwdne281720:0",
 	"user-avatar": "crwdns44120:0crwdne44120:0",
+	"user-survey-body": "crwdns1789223:0crwdne1789223:0",
+	"user-survey-heading": "crwdns1789225:0crwdne1789225:0",
 	"verified-information": "crwdns100612:0crwdne100612:0",
 	"verified-information-detail": "crwdns100614:0{{dateString}}crwdne100614:0",
 	"verify-account": {
@@ -268,6 +290,7 @@
 	"words": {
 		"accept": "crwdns685034:0crwdne685034:0",
 		"account": "crwdns816606:0crwdne816606:0",
+		"add": "crwdns1773633:0crwdne1773633:0",
 		"and": "crwdns685036:0crwdne685036:0",
 		"and-x-more": "crwdns685038:0{{count}}crwdne685038:0",
 		"back": "crwdns1442511:0crwdne1442511:0",
@@ -288,6 +311,7 @@
 		"search": "crwdns816610:0crwdne816610:0",
 		"service-hours": "crwdns1290944:0crwdne1290944:0",
 		"share": "crwdns1161194:0crwdne1161194:0",
+		"skip": "crwdns1789227:0crwdne1789227:0",
 		"support": "crwdns816612:0crwdne816612:0"
 	},
 	"your-comments": "crwdns44130:0crwdne44130:0",
