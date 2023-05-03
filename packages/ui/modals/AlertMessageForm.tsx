@@ -1,14 +1,14 @@
 import {
 	Box,
 	Button,
-	ButtonProps,
+	type ButtonProps,
+	createPolymorphicComponent,
 	Modal,
 	Stack,
 	Text,
 	Textarea,
 	TextInput,
 	Title,
-	createPolymorphicComponent,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
