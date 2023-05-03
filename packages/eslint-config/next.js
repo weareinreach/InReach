@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unused-modules */
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
-	extends: ['./base.js', 'next/core-web-vitals', 'prettier'],
+	extends: ['./base.js', 'next/core-web-vitals'],
 	rules: {
 		'@next/next/no-html-link-for-pages': 'off',
 		'no-restricted-imports': [
@@ -30,11 +30,6 @@ const config = {
 			},
 		},
 	],
-	// settings: {
-	// 	next: {
-	// 		rootDir: ['apps/*/'],
-	// 	},
-	// },
 }
 
 module.exports = config
