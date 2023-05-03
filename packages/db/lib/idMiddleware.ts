@@ -1,8 +1,8 @@
-import { Prisma } from '@prisma/client'
+import { type Prisma } from '@prisma/client'
 
 import { generateId, idPrefix, type IdPrefix } from './idGen'
 
-export const idMiddleware: Prisma.Middleware = async (params, next) => {
+export const idMiddleware: Prisma.Middleware = (params, next) => {
 	const { action, model } = params
 	if ((action === 'create' || action === 'createMany' || action === 'upsert') && model !== undefined) {
 		const modelName = model.charAt(0).toLowerCase() + model.slice(1)

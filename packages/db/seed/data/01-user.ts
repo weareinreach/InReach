@@ -1,6 +1,6 @@
 import invariant from 'tiny-invariant'
 
-import { slug, generateId, Prisma } from '~db/index'
+import { generateId, type Prisma, slug } from '~db/index'
 
 import { namespaces } from './00-namespaces'
 

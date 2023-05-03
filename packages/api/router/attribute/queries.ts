@@ -1,7 +1,4 @@
-import { TRPCError } from '@trpc/server'
-import { Prisma } from '@weareinreach/db'
-
-import { defineRouter, publicProcedure, handleError, protectedProcedure } from '~api/lib'
+import { defineRouter, publicProcedure } from '~api/lib'
 
 export const queries = defineRouter({
 	getFilterOptions: publicProcedure.query(async ({ ctx }) => {

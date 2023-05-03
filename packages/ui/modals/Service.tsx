@@ -1,35 +1,35 @@
 import {
-	Title,
-	Text,
-	Stack,
 	Box,
-	createStyles,
-	useMantineTheme,
+	type ButtonProps,
 	createPolymorphicComponent,
-	Modal,
-	ButtonProps,
+	createStyles,
 	List,
+	Modal,
+	Stack,
+	Text,
+	Title,
+	useMantineTheme,
 } from '@mantine/core'
-import { useMediaQuery, useDisclosure } from '@mantine/hooks'
+import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode } from 'react'
-import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
 
+import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
 import {
 	AlertMessage,
+	type AttributeTagProps,
 	Badge,
 	BadgeGroup,
 	type CommunityTagProps,
-	type AttributeTagProps,
 	type ServiceTagProps,
 } from '~ui/components/core'
-import { Hours, ContactInfo, type ContactInfoProps, hasContactInfo } from '~ui/components/data-display'
-import { useSlug, getFreeText } from '~ui/hooks'
+import { ContactInfo, type ContactInfoProps, hasContactInfo, Hours } from '~ui/components/data-display'
+import { getFreeText, useSlug } from '~ui/hooks'
 import { isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { ModalTitle, ModalTitleProps } from './ModalTitle'
+import { ModalTitle, type ModalTitleProps } from './ModalTitle'
 
 const useStyles = createStyles((theme) => ({
 	sectionDivider: {
@@ -360,8 +360,8 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 											variant: 'attribute',
 									  })
 									: subsections['misc'].push(t(tsKey, { ns: tsNs }))
-								break
 							}
+							break
 						}
 						default: {
 							break

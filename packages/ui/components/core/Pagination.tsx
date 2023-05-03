@@ -1,12 +1,12 @@
 import {
+	Anchor,
+	createStyles,
 	Divider,
 	Group,
-	Text,
 	Pagination as MantinePagination,
 	type PaginationProps as MantinePaginationProps,
-	createStyles,
 	rem,
-	Anchor,
+	Text,
 } from '@mantine/core'
 import { usePagination } from '@mantine/hooks'
 import { useRouter } from 'next/router'
@@ -122,4 +122,4 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 })
 Pagination.displayName = 'Pagination'
 
-export interface PaginationProps extends MantinePaginationProps {}
+export type PaginationProps = MantinePaginationProps

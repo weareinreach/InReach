@@ -1,15 +1,15 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
+	Box,
+	type ButtonProps,
+	createPolymorphicComponent,
+	Group,
+	Modal,
 	Stack,
 	Text,
 	TextInput,
 	Title,
 	useMantineTheme,
-	Group,
-	type ButtonProps,
-	Modal,
-	Box,
-	createPolymorphicComponent,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -99,7 +99,7 @@ export const ForgotPasswordModal = createPolymorphicComponent<'button', ForgotPa
 	ForgotPasswordModalBody
 )
 
-export interface ForgotPasswordModalBodyProps extends ButtonProps {}
+export type ForgotPasswordModalBodyProps = ButtonProps
 
 type FormProps = {
 	email: string

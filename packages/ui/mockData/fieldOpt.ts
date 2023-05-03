@@ -1,5 +1,4 @@
-import { type ApiOutput, type ApiInput } from '@weareinreach/api'
-
+import { type ApiInput, type ApiOutput } from '@weareinreach/api'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
 export const attributeCategories = [

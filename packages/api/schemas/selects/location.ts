@@ -1,4 +1,4 @@
-import { Prisma } from '@weareinreach/db'
+import { type Prisma } from '@weareinreach/db'
 
 const common = { id: true, tsKey: true, tsNs: true }
 

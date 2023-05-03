@@ -1,5 +1,6 @@
 import { ulid } from 'ulid'
-import { Session } from '@weareinreach/auth'
+
+import { type Session } from '@weareinreach/auth'
 
 const expires = (Date.now() / 1000 + 3600).toString()
 
@@ -95,7 +96,7 @@ type SessionContext = {
 	status: 'unauthenticated' | 'loading' | 'authenticated'
 } | null
 
-type MockAuth = Record<
+export type MockAuth = Record<
 	string,
 	{
 		title: string

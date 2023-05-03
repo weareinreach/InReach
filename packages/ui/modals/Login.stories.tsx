@@ -1,7 +1,7 @@
-import { Meta } from '@storybook/react'
+import { type Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
-import { csrf, providers, signin, cognito } from '~ui/mockData/login'
+import { cognito, csrf, providers, signin } from '~ui/mockData/login'
 
 import { LoginModalLauncher } from './Login'
 

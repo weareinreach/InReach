@@ -1,6 +1,6 @@
-import { Prisma, prisma } from '~db/index'
+import { type Prisma, prisma } from '~db/index'
 import { migrateLog } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/migrate-v1'
+import { type ListrTask } from '~db/seed/migrate-v1'
 
 export const batchTransact = async (
 	task: ListrTask,

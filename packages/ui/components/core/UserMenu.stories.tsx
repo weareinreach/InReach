@@ -1,7 +1,6 @@
-import { Meta } from '@storybook/react'
-import React from 'react'
+import { type Meta } from '@storybook/react'
 
-import { UserMenu as UserMenuComponent } from './'
+import { UserMenu as UserMenuComponent } from '.'
 
 export default {
 	title: 'Sections/Navbar/User Menu',

@@ -1,16 +1,18 @@
-import { BADGE } from '@geometricpanda/storybook-addon-badges'
+import { type BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
 import { type RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
-import { BaseRouter } from 'next/dist/shared/lib/router/router'
-import { Router } from 'next/router'
-import { translatedLangs, LocaleCodes } from '@weareinreach/api/generated/languages'
+import { type BaseRouter } from 'next/dist/shared/lib/router/router'
+import { type Router } from 'next/router'
 
-import { WithI18n, WithMantine, WithTRPC, Layouts, WithStrictMode, type LayoutsDecorator } from './decorators'
+import { type LocaleCodes, translatedLangs } from '@weareinreach/api/generated/languages'
+
+import { Layouts, type LayoutsDecorator, WithI18n, WithMantine, WithStrictMode, WithTRPC } from './decorators'
 import { i18n } from './i18next'
-import authStates from './mockAuthStates'
-import { Viewports } from './types'
+import { type Viewports } from './types'
+
+import type authStates from './mockAuthStates'
 
 import './font.css'
 

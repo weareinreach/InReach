@@ -4,6 +4,7 @@ import { httpBatchLink, loggerLink } from '@trpc/client'
 import { createTRPCNext } from '@trpc/next'
 import { createTRPCReact } from '@trpc/react-query'
 import { devtoolsLink } from 'trpc-client-devtools-link'
+
 import { type AppRouter } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
 import { getEnv } from '@weareinreach/config/env'

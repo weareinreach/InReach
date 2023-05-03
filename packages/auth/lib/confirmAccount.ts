@@ -1,4 +1,4 @@
-import { cognito, ClientId, generateHash } from './cognitoClient'
+import { ClientId, cognito, generateHash } from './cognitoClient'
 
 export const confirmAccount = async (email: string, code: string) => {
 	const response = await cognito.confirmSignUp({

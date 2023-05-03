@@ -1,16 +1,17 @@
 import {
-	CognitoIdentityProvider,
-	InitiateAuthCommandOutput,
-	RespondToAuthChallengeCommandOutput,
-	AuthenticationResultType,
+	type AuthenticationResultType,
 	ChallengeNameType,
+	CognitoIdentityProvider,
+	type InitiateAuthCommandOutput,
+	type RespondToAuthChallengeCommandOutput,
 } from '@aws-sdk/client-cognito-identity-provider'
 import { type User } from 'next-auth'
 import invariant from 'tiny-invariant'
-import { getEnv } from '@weareinreach/config/env'
-import { prisma } from '@weareinreach/db'
 
 import { createHmac } from 'crypto'
+
+import { getEnv } from '@weareinreach/config/env'
+import { prisma } from '@weareinreach/db'
 
 import { decodeCognitoIdJwt } from './cognitoJwt'
 import { generateUserSession } from './genUserSession'

@@ -1,22 +1,8 @@
-import { Checkbox, Radio, Switch, TextInput, Textarea, Title, Grid, Group, Stack, Space } from '@mantine/core'
-import { Meta } from '@storybook/react'
-import { useTranslation } from 'next-i18next'
+import { Checkbox, Grid, Radio, Space, Stack, Switch, Textarea, TextInput, Title } from '@mantine/core'
+import { type Meta } from '@storybook/react'
 import { useState } from 'react'
 
 import { StorybookGrid } from '~ui/layouts/BodyGrid'
-
-import { Icon } from '../icon'
-
-const Clear = () => {
-	const { t } = useTranslation()
-
-	return (
-		<Group spacing={4}>
-			{t('clear')}
-			<Icon icon='carbon:close' height={20} />
-		</Group>
-	)
-}
 
 const Display = () => {
 	const [switchVal, setSwitchVal] = useState<string[]>(['On'])

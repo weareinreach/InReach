@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { Prisma } from '@weareinreach/db'
 
+import { Prisma } from '@weareinreach/db'
 import { idOptional, JsonInputOrNullSuperJSON } from '~api/schemas/common'
 
 const auditLogLinks = z.object({

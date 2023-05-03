@@ -1,6 +1,5 @@
-import { Container, Grid, GridProps } from '@mantine/core'
-import { StoryFn } from '@storybook/react'
-import { ReactNode } from 'react'
+import { Container, Grid, type GridProps } from '@mantine/core'
+import { type StoryFn } from '@storybook/react'
 
 export const BodyGrid = ({ children, className, ...others }: GridProps) => {
 	return (
@@ -8,10 +7,6 @@ export const BodyGrid = ({ children, className, ...others }: GridProps) => {
 			<Grid {...others}>{children}</Grid>
 		</Container>
 	)
-}
-
-type BodyGridProps = {
-	children: ReactNode
 }
 
 export const StorybookGrid = (Story: StoryFn) => (

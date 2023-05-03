@@ -2,10 +2,10 @@ import { z } from 'zod'
 
 import { handleError } from '~api/lib'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
-import { defineRouter, publicProcedure, protectedProcedure } from '~api/lib/trpc'
+import { defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
 import { prismaDistSearchDetails } from '~api/prisma/org'
 import { id, searchTerm, slug } from '~api/schemas/common'
-import { serviceFilter, attributeFilter } from '~api/schemas/filters/org'
+import { attributeFilter, serviceFilter } from '~api/schemas/filters/org'
 import { distSearch } from '~api/schemas/org/search'
 import { isPublic } from '~api/schemas/selects/common'
 import { organizationInclude } from '~api/schemas/selects/org'
@@ -121,16 +121,15 @@ export const queries = defineRouter({
 		})
 		return { orgs: orderedResults, serviceAreas, resultCount }
 	}),
-	getNameFromSlug: publicProcedure.input(z.string()).query(
-		async ({ ctx, input }) =>
-			await ctx.prisma.organization.findUniqueOrThrow({
-				where: {
-					slug: input,
-				},
-				select: {
-					name: true,
-				},
-			})
+	getNameFromSlug: publicProcedure.input(z.string()).query(async ({ ctx, input }) =>
+		ctx.prisma.organization.findUniqueOrThrow({
+			where: {
+				slug: input,
+			},
+			select: {
+				name: true,
+			},
+		})
 	),
 	isSaved: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
 		if (!ctx.session?.user.id) return false

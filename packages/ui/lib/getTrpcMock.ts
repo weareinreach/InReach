@@ -1,12 +1,13 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import { action } from '@storybook/addon-actions'
-import { RestRequest, rest } from 'msw'
-import { ApiInput, ApiOutput } from '@weareinreach/api'
-import { transformer } from '@weareinreach/api/lib/transformer'
+import { rest, type RestRequest } from 'msw'
 
 import path from 'path'
 import querystring from 'querystring'
+
+import { type ApiInput, type ApiOutput } from '@weareinreach/api'
+import { transformer } from '@weareinreach/api/lib/transformer'
 
 import { getBaseUrl } from './trpcClient'
 import { jsonRpcSuccessResponse } from './trpcResponse'

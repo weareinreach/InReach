@@ -1,4 +1,4 @@
-import { Title, Text, Checkbox, Modal, Stack, Divider, Button } from '@mantine/core'
+import { Button, Checkbox, Divider, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 
@@ -71,7 +71,7 @@ export const Communities = ({ disabled }: ModalProps) => {
 	const [open, handler] = useDisclosure(false)
 	const { t } = useTranslation(['suggestOrg', 'attribute'])
 	const selectedCurr = form.values.communityFocus ?? []
-	const childRecords = form.values.formOptions?.communities.flatMap(({ children }) => children)
+	// const childRecords = form.values.formOptions?.communities.flatMap(({ children }) => children)
 	const unique = (ids: string[]) => [...new Set(ids)]
 	const hasChildren = (parentId: string) =>
 		form.values.formOptions.communities.find(({ id, children }) => id === parentId && children.length)
@@ -125,7 +125,7 @@ export const Communities = ({ disabled }: ModalProps) => {
 								indeterminate={indeterminate}
 								checked={checked}
 								onClick={() => toggleCategory(item.id)}
-								onChange={() => {}}
+								// onChange={() => noop}
 							/>
 							<Checkbox.Group
 								{...form.getInputProps('communityFocus')}

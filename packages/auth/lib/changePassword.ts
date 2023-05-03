@@ -1,6 +1,6 @@
 import { ChallengeNameType } from '@aws-sdk/client-cognito-identity-provider'
 
-import { ClientId, cognito, generateHash, parseAuthResponse, type AuthResult } from './cognitoClient'
+import { type AuthResult, ClientId, cognito, generateHash, parseAuthResponse } from './cognitoClient'
 
 export const changePasswordResponse: ChangePasswordResponse = async (
 	email,
@@ -18,7 +18,7 @@ export const changePasswordResponse: ChangePasswordResponse = async (
 		Session: challengeSession,
 	})
 
-	return await parseAuthResponse(response, email)
+	return parseAuthResponse(response, email)
 }
 
 type ChangePasswordResponse = (

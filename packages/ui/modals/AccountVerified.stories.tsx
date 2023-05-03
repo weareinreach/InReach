@@ -1,6 +1,4 @@
-import { Meta } from '@storybook/react'
-
-import { Button } from '~ui/components/core'
+import { type Meta } from '@storybook/react'
 
 import { AccountVerifyModal } from './AccountVerified'
 import { getTRPCMock } from '../lib/getTrpcMock'
