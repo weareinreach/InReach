@@ -77,7 +77,7 @@ const config = {
 			},
 		],
 		'require-await': 'off',
-		'@typescript-eslint/require-await': 'error',
+		'@typescript-eslint/require-await': 'off',
 		'no-return-await': 'off',
 		'@typescript-eslint/return-await': 'error',
 	},
