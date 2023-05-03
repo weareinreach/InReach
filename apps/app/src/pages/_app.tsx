@@ -2,18 +2,18 @@ import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { NextPage } from 'next'
+import { type NextPage } from 'next'
 import { type AppProps } from 'next/app'
 import { Work_Sans } from 'next/font/google'
 import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { appWithTranslation } from 'next-i18next'
-import { DefaultSeo, DefaultSeoProps } from 'next-seo'
+import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
+
 import { PageLoadProgress } from '@weareinreach/ui/components/core/PageLoadProgress'
-import { Navbar, Footer } from '@weareinreach/ui/components/sections'
+import { Footer, Navbar } from '@weareinreach/ui/components/sections'
 import { BodyGrid } from '@weareinreach/ui/layouts/BodyGrid'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
-
 import { api } from '~app/utils/api'
 
 import nextI18nConfig from '../../next-i18next.config.mjs'
@@ -90,5 +90,5 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 
 export default api.withTRPC(appWithTranslation(MyApp, nextI18nConfig))
 
-export type NextPageWithoutGrid<P = {}, IP = P> = NextPage<P, IP> & { omitGrid?: boolean }
+export type NextPageWithoutGrid<P = unknown, IP = P> = NextPage<P, IP> & { omitGrid?: boolean }
 type AppPropsWithGridSwitch = AppProps & { Component: NextPageWithoutGrid; session: Session }

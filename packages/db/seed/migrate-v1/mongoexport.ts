@@ -4,10 +4,11 @@
 import { type Options as mbOptions, mongoExport } from 'mongoback'
 import { InputData, jsonInputForTargetLanguage, quicktype } from 'quicktype-core'
 import recursive from 'recursive-readdir'
-import { env } from '@weareinreach/config/env'
 
 import fs from 'fs'
 import path from 'path'
+
+import { env } from '@weareinreach/config/env'
 
 const datastore = './datastore/v1/mongodb'
 

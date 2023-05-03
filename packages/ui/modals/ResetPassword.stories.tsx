@@ -1,6 +1,4 @@
-import { Meta } from '@storybook/react'
-
-import { Button } from '~ui/components/core'
+import { type Meta } from '@storybook/react'
 
 import { ResetPasswordModal } from './ResetPassword'
 import { getTRPCMock } from '../lib/getTrpcMock'

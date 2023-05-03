@@ -1,8 +1,8 @@
 import { prisma } from '~db/index'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { jobPreRunner, type JobDef } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
 
-import { schemas, schemaMapping } from './!schemas'
+import { schemaMapping, schemas } from './!schemas'
 /** Define the job metadata here. */
 const jobDef: JobDef = {
 	jobId: '2023-04-25-attrib-supp-schemas',

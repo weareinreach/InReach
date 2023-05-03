@@ -1,6 +1,6 @@
-import { Avatar, Group, Skeleton, Stack, Text, createStyles, useMantineTheme } from '@mantine/core'
+import { Avatar, createStyles, Group, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { DateTime } from 'luxon'
-import { User } from 'next-auth'
+import { type User } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 

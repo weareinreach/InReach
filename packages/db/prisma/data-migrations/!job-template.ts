@@ -1,6 +1,6 @@
 import { prisma } from '~db/index'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { jobPreRunner, type JobDef } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {

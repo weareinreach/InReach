@@ -1,6 +1,10 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
-import { Client, PlaceAutocompleteType, PlaceAutocompleteRequest } from '@googlemaps/google-maps-services-js'
+import {
+	Client,
+	type PlaceAutocompleteRequest,
+	type PlaceAutocompleteType,
+} from '@googlemaps/google-maps-services-js'
 import { z } from 'zod'
 
 import { googleAPIResponseHandler } from '~api/lib/googleHandler'

@@ -1,17 +1,17 @@
-import { Stack, Text, Card, Group, createStyles, rem } from '@mantine/core'
+import { Card, createStyles, Group, rem, Stack, Text } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
+
 import { type ApiOutput } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
-
 import { Badge } from '~ui/components/core'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ServiceModal } from '~ui/modals/Service'
 
-const serviceCat: Record<string, Set<string>> = {}
+// const serviceCat: Record<string, Set<string>> = {}
 let servObj: ServObj = {}
 
 type ServiceSectionProps = {
@@ -83,7 +83,7 @@ type ServItem = {
 }
 
 export const ServicesInfoCard = (props: ServicesInfoCardProps) => {
-	const { t } = useTranslation()
+	// const { t } = useTranslation()
 	const { isMobile } = useScreenSize()
 	const { services } = props
 
@@ -95,7 +95,7 @@ export const ServicesInfoCard = (props: ServicesInfoCardProps) => {
 			if (!items[key]) {
 				items[key] = new Set()
 			}
-			items[key]!.add(
+			items[key]?.add(
 				transformer.stringify({
 					id: service.id,
 					tsNs: service.serviceName?.ns,

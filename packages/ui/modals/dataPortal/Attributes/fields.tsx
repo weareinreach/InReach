@@ -1,9 +1,9 @@
-import { Radio, Group, Stack, TextInput, Select, Text } from '@mantine/core'
+import { Group, Radio, Select, Stack, Text, TextInput } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { type MouseEventHandler, useEffect, useState, type ComponentPropsWithoutRef, forwardRef } from 'react'
+import { type ComponentPropsWithoutRef, forwardRef, type MouseEventHandler, useEffect, useState } from 'react'
 import { type LiteralUnion, type TupleToUnion } from 'type-fest'
-import { type ApiOutput } from '@weareinreach/api'
 
+import { type ApiOutput } from '@weareinreach/api'
 import { Button } from '~ui/components/core/Button'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -155,8 +155,8 @@ const SuppGeo = ({ handler, countryOnly }: SuppGeoProps) => {
 		onSuccess: (data) =>
 			setPrimaryList(data.map(({ id, name, flag }) => ({ value: id, label: name, flag: flag ?? undefined }))),
 	})
-	const govDists = api.fieldOpt.govDistsByCountry.useQuery(undefined, {
-		enabled: !Boolean(countryOnly),
+	api.fieldOpt.govDistsByCountry.useQuery(undefined, {
+		enabled: !countryOnly,
 		onSuccess: (data) => {
 			setPrimaryList(
 				data.map(({ id, tsKey, tsNs, flag, govDist }) => ({

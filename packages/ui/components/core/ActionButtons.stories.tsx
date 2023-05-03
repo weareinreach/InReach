@@ -1,7 +1,7 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { getAll, saveItem, createAndSave } from '~ui/mockData/savedList'
+import { createAndSave, getAll, saveItem } from '~ui/mockData/savedList'
 
 import { ActionButtons as ActionButtonsComponent } from './ActionButtons'
 
@@ -37,20 +37,12 @@ export default {
 			getTRPCMock({
 				path: ['savedList', 'saveItem'],
 				type: 'mutation',
-				response: {
-					id: 'listID',
-					organizations: [],
-					services: [],
-				},
+				response: saveItem,
 			}),
 			getTRPCMock({
 				path: ['savedList', 'createAndSaveItem'],
 				type: 'mutation',
-				response: {
-					id: 'listID',
-					organizations: [],
-					services: [],
-				},
+				response: createAndSave,
 			}),
 		],
 		nextjs: {

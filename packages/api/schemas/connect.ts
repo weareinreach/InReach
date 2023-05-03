@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { Prisma } from '@weareinreach/db'
 
 import { idString } from './common'
 

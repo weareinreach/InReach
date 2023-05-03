@@ -2,10 +2,10 @@ import ISO6391 from 'iso-google-locales'
 import capitalize from 'just-capitalize'
 import * as langSupp from 'langs'
 
-import { Prisma, generateId } from '~db/.'
-import { Log, iconList } from '~db/seed/lib'
+import { generateId, type Prisma } from '~db/.'
+import { iconList, type Log } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/starterData'
+import { type ListrTask } from '~db/seed/starterData'
 
 const activeTranslations = ['en', 'es', 'fr', 'ar', 'ru']
 

@@ -1,4 +1,4 @@
-import { PlaceType2, GeocodingAddressComponentType } from '@googlemaps/google-maps-services-js'
+import { GeocodingAddressComponentType, PlaceType2 } from '@googlemaps/google-maps-services-js'
 import { z } from 'zod'
 
 export const autocompleteResponse = z

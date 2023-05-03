@@ -1,6 +1,6 @@
 import { rem } from '@mantine/core'
 
-import { VariantObj } from '~ui/types/mantine'
+import { type VariantObj } from '~ui/types/mantine'
 
 export const Anchor = {
 	inline: (theme) => ({

@@ -1,30 +1,27 @@
 import {
-	createPolymorphicComponent,
-	type ButtonProps,
-	Modal,
 	Box,
-	Stack,
-	Select,
+	type ButtonProps,
+	createPolymorphicComponent,
 	Group,
+	Modal,
+	Select,
+	Stack,
 	Text,
-	Radio,
-	TextInput,
 } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import Ajv from 'ajv'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, useEffect, useState, useRef, type ComponentPropsWithoutRef } from 'react'
+import { type ComponentPropsWithoutRef, forwardRef, useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
-import { JsonInputOrNull } from '@weareinreach/api/schemas/common'
 
+import { JsonInputOrNull } from '@weareinreach/api/schemas/common'
 import { Badge } from '~ui/components/core/Badge'
 import { Button } from '~ui/components/core/Button'
-import { useCustomVariant } from '~ui/hooks'
 import { Icon, isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { useForm, type FormData, AttributeModalFormProvider } from './context'
+import { AttributeModalFormProvider, type FormData, useForm } from './context'
 import { Supplement } from './fields'
 import { ModalTitle } from '../../ModalTitle'
 
@@ -43,7 +40,6 @@ const formDataSchema = z.object({
 })
 
 const SelectionItem = forwardRef<HTMLDivElement, SelectionItemProps>(({ icon, label, ...others }, ref) => {
-	const { t } = useTranslation(['attribute'])
 	const { requireBoolean, requireGeo, requireData, requireLanguage, requireText, ...props } = others
 	return (
 		<div ref={ref} {...props}>
@@ -101,69 +97,63 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		const selectAttrRef = useRef<HTMLInputElement>(null)
 		// #region tRPC
 		const utils = api.useContext()
-		const { data: categories, isSuccess: categorySuccess } = api.fieldOpt.attributeCategories.useQuery(
-			restrictCategories,
-			{
-				refetchOnWindowFocus: false,
-				onSuccess: (data) => {
-					if (data.length === 1 && data[0]?.tag) {
-						setAttrCat(data[0].tag)
-					} else {
-						form.setFieldValue(
-							'categories',
-							data.map(({ id, icon, intDesc, name, tag }) => ({ value: tag, label: name }))
-						)
-					}
-				},
-			}
-		)
-		const { data: attributes, isSuccess: attributeSuccess } = api.fieldOpt.attributesByCategory.useQuery(
-			attrCat,
-			{
-				enabled: Boolean(attrCat),
-				refetchOnWindowFocus: false,
-				onSuccess: (data) => {
-					const selected = form.values.selected?.map(({ value }) => value) ?? []
-					const items = data.map(
-						({
-							attributeId,
-							attributeKey,
-							interpolationValues,
-							icon,
-							iconBg,
-							badgeRender,
-							requireBoolean,
-							requireGeo,
-							requireData,
-							requireLanguage,
-							requireText,
-							dataSchemaName,
-							dataSchema,
-							attributeName,
-						}) => ({
-							value: attributeId,
-							label: attributeName,
-							tKey: attributeKey,
-							interpolationValues,
-							icon: icon ?? undefined,
-							iconBg: iconBg ?? undefined,
-							variant: badgeRender ?? undefined,
-							requireBoolean,
-							requireGeo,
-							requireData,
-							requireLanguage,
-							requireText,
-							dataSchemaName,
-							dataSchema,
-						})
-					)
+		api.fieldOpt.attributeCategories.useQuery(restrictCategories, {
+			refetchOnWindowFocus: false,
+			onSuccess: (data) => {
+				if (data.length === 1 && data[0]?.tag) {
+					setAttrCat(data[0].tag)
+				} else {
 					form.setFieldValue(
-						'attributes',
-						items.filter(({ value }) => !selected.includes(value))
+						'categories',
+						data.map(({ id, icon, intDesc, name, tag }) => ({ value: tag, label: name }))
 					)
-				},
-			}
-		)
+				}
+			},
+		})
+		api.fieldOpt.attributesByCategory.useQuery(attrCat, {
+			enabled: Boolean(attrCat),
+			refetchOnWindowFocus: false,
+			onSuccess: (data) => {
+				const selected = form.values.selected?.map(({ value }) => value) ?? []
+				const items = data.map(
+					({
+						attributeId,
+						attributeKey,
+						interpolationValues,
+						icon,
+						iconBg,
+						badgeRender,
+						requireBoolean,
+						requireGeo,
+						requireData,
+						requireLanguage,
+						requireText,
+						dataSchemaName,
+						dataSchema,
+						attributeName,
+					}) => ({
+						value: attributeId,
+						label: attributeName,
+						tKey: attributeKey,
+						interpolationValues,
+						icon: icon ?? undefined,
+						iconBg: iconBg ?? undefined,
+						variant: badgeRender ?? undefined,
+						requireBoolean,
+						requireGeo,
+						requireData,
+						requireLanguage,
+						requireText,
+						dataSchemaName,
+						dataSchema,
+					})
+				)
+				form.setFieldValue(
+					'attributes',
+					items.filter(({ value }) => !selected.includes(value))
+				)
+			},
+		})
 		const saveAttributes = api.organization.attachAttribute.useMutation()
 		// #endregion
 
@@ -178,7 +168,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 				/** Check if supplemental info required */
 				if (requireBoolean || requireGeo || requireData || requireLanguage || requireText) {
 					console.log('eval handler', form.values.supplement)
-					const { boolean, countryId, govDistId, languageId, text, data } = form.values.supplement ?? {}
+					// const { boolean, countryId, govDistId, languageId, text, data } = form.values.supplement ?? {}
 					/** Handle if supplemental info is provided */
 
 					// if (!form.values.supplement) {
@@ -349,7 +339,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 								)}
 								<Select
 									data={form.values.attributes}
-									disabled={!Boolean(form.values.attributes?.length)}
+									disabled={!form.values.attributes?.length}
 									withinPortal
 									itemComponent={SelectionItem}
 									searchable={form.values.attributes?.length > 10}

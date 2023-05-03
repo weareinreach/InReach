@@ -108,6 +108,7 @@ export const SearchDetailsOutput = z
 			}
 		})
 		return result
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	}) satisfies z.ZodType<any, any, SearchReturn>
 
 type ServCat = {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-unused-modules */
 const i18nConfig = require('./next-i18next.config.js')
 /** @type {import('next').NextConfig} */

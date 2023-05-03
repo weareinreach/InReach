@@ -1,25 +1,25 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
+	Box,
+	type ButtonProps,
+	createPolymorphicComponent,
+	Modal,
+	PasswordInput,
+	Popover,
+	Progress,
 	Stack,
 	Text,
 	Title,
 	useMantineTheme,
-	type ButtonProps,
-	Modal,
-	Box,
-	Popover,
-	PasswordInput,
-	Progress,
-	createPolymorphicComponent,
 } from '@mantine/core'
-import { UseFormReturnType, useForm, zodResolver } from '@mantine/form'
+import { useForm, type UseFormReturnType, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { useTranslation, Trans } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
 import { z } from 'zod'
-import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
 
+import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
 import { Button, Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
@@ -241,7 +241,7 @@ export const ResetPasswordModal = createPolymorphicComponent<'button', ResetPass
 	ResetPasswordModalBody
 )
 
-export interface ResetPasswordModalBodyProps extends ButtonProps {}
+export type ResetPasswordModalBodyProps = ButtonProps
 
 type FormProps = {
 	data: string

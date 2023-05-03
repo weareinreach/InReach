@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 
 import { StorybookGridDouble } from '~ui/layouts'
 import { photosMock } from '~ui/mockData/photos'
