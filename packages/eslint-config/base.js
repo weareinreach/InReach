@@ -1,8 +1,9 @@
 /* eslint-disable import/no-unused-modules */
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
-	plugins: ['codegen', 'turbo', 'node', '@tanstack/query'],
+	plugins: ['codegen', 'turbo', 'node', 'import', '@tanstack/query'],
 	extends: [
+		'eslint:recommended',
 		'plugin:turbo/recommended',
 		'plugin:@tanstack/eslint-plugin-query/recommended',
 		'plugin:@typescript-eslint/recommended',
@@ -19,7 +20,7 @@ const config = {
 		],
 		'no-unused-vars': 'off',
 		'@typescript-eslint/no-unused-vars': [
-			'warn',
+			'error',
 			{
 				varsIgnorePattern: '^_',
 				args: 'none',

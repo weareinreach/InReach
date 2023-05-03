@@ -2,8 +2,7 @@
 
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
-	plugins: ['import'],
-	extends: ['./base.js', 'eslint:recommended'],
+	extends: ['./base.js'],
 	rules: {
 		'no-useless-catch': 'warn',
 	},
