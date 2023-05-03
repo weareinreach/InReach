@@ -98,7 +98,7 @@
 		"@types/node": "18.16.3",
 		"@types/prettier": "2.7.2",
 		"@types/probe-image-size": "7.2.0",
-		"@types/react": "18.2.1",
+		"@types/react": "18.2.2",
 		"@types/react-dom": "18.2.3",
 		"@weareinreach/api": "0.100.0",
 		"@weareinreach/auth": "0.100.0",
