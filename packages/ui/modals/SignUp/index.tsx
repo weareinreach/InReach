@@ -1,25 +1,25 @@
-import { Modal, Box, type ButtonProps, Text, Title, Stack } from '@mantine/core'
+import { Box, type ButtonProps, Modal, Stack, Text, Title } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
-import { useTranslation, Trans } from 'next-i18next'
-import { useState, forwardRef } from 'react'
+import { Trans, useTranslation } from 'next-i18next'
+import { forwardRef, useState } from 'react'
 import { z } from 'zod'
 
-import { Link, Button, ModalTitleBreadcrumb } from '~ui/components/core'
-import { useScreenSize, useCustomVariant } from '~ui/hooks'
+import { Button, Link, type ModalTitleBreadcrumb } from '~ui/components/core'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { SignUpFormProvider, useSignUpForm } from './context'
 import {
 	FormEmail,
+	FormLawPractice,
+	FormLocation,
 	FormName,
 	FormPassword,
-	LanguageSelect,
-	FormLocation,
-	FormLawPractice,
 	FormServiceProvider,
+	LanguageSelect,
 } from './fields'
 import { LoginModalLauncher } from '../Login'
 import { ModalTitle } from '../ModalTitle'
@@ -27,6 +27,7 @@ import { PrivacyStatementModal } from '../PrivacyStatement'
 
 type RichTranslateProps = {
 	i18nKey: string
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	values?: Record<string, any>
 	stateSetter?: (userType: string | null) => void
 	handler?: {
@@ -282,4 +283,4 @@ SignUpModalBody.displayName = 'SignupModalBody'
 
 export const SignupModalLauncher = createPolymorphicComponent<'button', SignUpModalBodyProps>(SignUpModalBody)
 
-interface SignUpModalBodyProps extends ButtonProps {}
+type SignUpModalBodyProps = ButtonProps

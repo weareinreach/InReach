@@ -1,15 +1,15 @@
 import {
+	Box,
+	type ButtonProps,
+	createPolymorphicComponent,
+	List,
+	Modal,
+	Stack,
 	Text,
 	Title,
-	Stack,
-	List,
-	type ButtonProps,
-	Modal,
-	Box,
-	createPolymorphicComponent,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useTranslation, Trans } from 'next-i18next'
+import { Trans } from 'next-i18next'
 import { forwardRef } from 'react'
 
 import { Link } from '~ui/components/core'
@@ -18,7 +18,6 @@ import { useCustomVariant } from '~ui/hooks'
 import { ModalTitle } from './ModalTitle'
 
 export const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProps>((props, ref) => {
-	const { t } = useTranslation(['common'])
 	const variants = useCustomVariant()
 	const [opened, handler] = useDisclosure(false)
 
@@ -83,4 +82,4 @@ export const PrivacyStatementModal = createPolymorphicComponent<'button', Privac
 	PrivacyStatementModalBody
 )
 
-export interface PrivacyModalProps extends ButtonProps {}
+export type PrivacyModalProps = ButtonProps

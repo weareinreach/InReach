@@ -1,5 +1,5 @@
 import { Tabs as MantineTabs } from '@mantine/core'
-import { Meta } from '@storybook/react'
+import { type Meta } from '@storybook/react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 

@@ -1,5 +1,5 @@
-import { Title, Stack, Grid } from '@mantine/core'
-import { Meta, StoryObj } from '@storybook/react'
+import { Stack, Title } from '@mantine/core'
+import { type Meta, type StoryObj } from '@storybook/react'
 
 import { StorybookGrid } from '~ui/layouts/BodyGrid'
 

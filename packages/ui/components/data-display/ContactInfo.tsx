@@ -1,9 +1,9 @@
 import { Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { type ApiOutput } from '@weareinreach/api'
 
-import { Link, isExternal, SocialLink, SocialLinkProps, isSocialIcon } from '~ui/components/core'
-import { parsePhoneNumber, useSlug, useCustomVariant } from '~ui/hooks'
+import { type ApiOutput } from '@weareinreach/api'
+import { isExternal, isSocialIcon, Link, SocialLink, type SocialLinkProps } from '~ui/components/core'
+import { parsePhoneNumber, useCustomVariant, useSlug } from '~ui/hooks'
 
 const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
 	const output: JSX.Element[] = []
@@ -127,6 +127,7 @@ const Websites = ({ data, direct, locationOnly, websiteDesc }: WebsitesProps) =>
 	const slug = useSlug()
 	const { t } = useTranslation(['common', slug])
 	const variants = useCustomVariant()
+	// eslint-disable-next-line no-useless-escape
 	const domainExtract = /https?:\/\/([^:\/\n?]+)/
 
 	if (!data.length) return null

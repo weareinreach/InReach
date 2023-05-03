@@ -1,6 +1,6 @@
-import { HoverCard, useMantineTheme, Text, Tooltip, Box } from '@mantine/core'
+import { Box, HoverCard, Text, Tooltip, useMantineTheme } from '@mantine/core'
 
-import { useFormattedAddressParts, UseFormattedAddressProps } from '~ui/hooks'
+import { useFormattedAddressParts, type UseFormattedAddressProps } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 
 export const LocationPin = ({ tooltip, $hover }: LocationPinProps) => {

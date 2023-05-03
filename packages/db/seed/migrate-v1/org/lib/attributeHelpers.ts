@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { TagHelper } from '~db/seed/migrate-v1/org/generator'
+import { type TagHelper } from '~db/seed/migrate-v1/org/generator'
 import { type InputJsonValueType } from '~db/zod_util/prismaJson'
 
 import { tagDataMaps } from './tagDataMaps'

@@ -1,4 +1,4 @@
-import { Context } from '../context'
+import { type Context } from '../context'
 
 export const getCoveredDists = async (coords: Coords, ctx: Context) => {
 	const { lat, lon } = coords

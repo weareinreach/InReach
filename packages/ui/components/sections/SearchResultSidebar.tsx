@@ -1,6 +1,6 @@
-import { Text, Switch, Stack, Divider, Skeleton, Overlay, Title, useMantineTheme } from '@mantine/core'
+import { Divider, Overlay, Skeleton, Stack, Switch, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { Dispatch, SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
 import { AntiHateMessage, Button, SearchBox } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'

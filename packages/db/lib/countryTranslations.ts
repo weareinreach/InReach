@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { countries as countryExtra } from 'countries-languages'
+// import { countries as countryExtra } from 'countries-languages'
 import * as langs from 'langs'
 
 const targetLangs = ['es', 'fr', 'ru', 'ar']

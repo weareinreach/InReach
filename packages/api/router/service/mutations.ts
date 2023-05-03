@@ -1,7 +1,7 @@
-import { handleError } from '~api/lib'
 import { defineRouter, permissionedProcedure } from '~api/lib/trpc'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import {
+	AttachServAccess,
 	AttachServAttribute,
 	AttachServiceTags,
 	CreateOrgService,
@@ -9,7 +9,6 @@ import {
 	CreateServiceAreaRefine,
 	LinkServiceEmail,
 	LinkServicePhone,
-	AttachServAccess,
 	UpdateOrgService,
 } from '~api/schemas/create/orgService'
 
@@ -52,11 +51,13 @@ export const mutations = defineRouter({
 				AttachServAttribute().dataParser.parse(inputData)
 
 			const result = await ctx.prisma.$transaction(async (tx) => {
-				const tKey = translationKey ? tx.translationKey.create(translationKey) : undefined
-				const fText = freeText ? tx.freeText.create(freeText) : undefined
-				const aSupp = attributeSupplement ? tx.attributeSupplement.create(attributeSupplement) : undefined
-				const attrLink = tx.serviceAttribute.create(serviceAttribute)
-				const logs = tx.auditLog.createMany({ data: auditLogs, skipDuplicates: true })
+				const tKey = translationKey ? await tx.translationKey.create(translationKey) : undefined
+				const fText = freeText ? await tx.freeText.create(freeText) : undefined
+				const aSupp = attributeSupplement
+					? await tx.attributeSupplement.create(attributeSupplement)
+					: undefined
+				const attrLink = await tx.serviceAttribute.create(serviceAttribute)
+				const logs = await tx.auditLog.createMany({ data: auditLogs, skipDuplicates: true })
 				return {
 					translationKey: tKey,
 					freeText: fText,
@@ -158,12 +159,14 @@ export const mutations = defineRouter({
 				translationKey,
 			} = AttachServAccess().dataParser.parse(inputData)
 			const result = await ctx.prisma.$transaction(async (tx) => {
-				const tKey = translationKey ? tx.translationKey.create(translationKey) : undefined
-				const fText = freeText ? tx.freeText.create(freeText) : undefined
-				const aSupp = attributeSupplement ? tx.attributeSupplement.create(attributeSupplement) : undefined
-				const access = tx.serviceAccess.create(serviceAccess)
-				const attrLink = tx.serviceAccessAttribute.create(serviceAccessAttribute)
-				const logs = tx.auditLog.createMany({ data: auditLogs, skipDuplicates: true })
+				const tKey = translationKey ? await tx.translationKey.create(translationKey) : undefined
+				const fText = freeText ? await tx.freeText.create(freeText) : undefined
+				const aSupp = attributeSupplement
+					? await tx.attributeSupplement.create(attributeSupplement)
+					: undefined
+				const access = await tx.serviceAccess.create(serviceAccess)
+				const attrLink = await tx.serviceAccessAttribute.create(serviceAccessAttribute)
+				const logs = await tx.auditLog.createMany({ data: auditLogs, skipDuplicates: true })
 				return {
 					translationKey: tKey,
 					freeText: fText,

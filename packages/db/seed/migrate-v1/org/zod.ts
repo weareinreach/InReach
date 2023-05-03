@@ -1,7 +1,7 @@
 // import { z } from 'zod'
 
-import { Prisma } from '~db/index'
-import { BatchNames } from '~db/seed/migrate-v1/org/outData'
+import { type Prisma } from '~db/index'
+import { type BatchNames } from '~db/seed/migrate-v1/org/outData'
 // import {
 // 	AttributeSupplementSchema,
 // 	FreeTextSchema,

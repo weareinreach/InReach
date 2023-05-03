@@ -1,9 +1,9 @@
-import { Stack, Title, List } from '@mantine/core'
-import { ModalSettings } from '@mantine/modals/lib/context'
+import { List, Stack, Title } from '@mantine/core'
+import { type ModalSettings } from '@mantine/modals/lib/context'
 
 import { Badge } from '~ui/components/core'
 
-import { ModalTitle, ModalTitleProps } from './ModalTitle'
+import { ModalTitle, type ModalTitleProps } from './ModalTitle'
 
 export const ExampleModalBody = ({ text }: ExampleModalBodyProps) => (
 	<Stack>

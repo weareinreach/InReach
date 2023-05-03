@@ -1,5 +1,6 @@
 import { z } from 'zod'
-import { Prisma, generateId, generateNestedFreeText } from '@weareinreach/db'
+
+import { generateId, generateNestedFreeText, Prisma } from '@weareinreach/db'
 
 import { connectOneId } from '../nestedOps'
 

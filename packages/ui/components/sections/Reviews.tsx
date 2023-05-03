@@ -1,9 +1,9 @@
-import { Text, Title, Group, Stack } from '@mantine/core'
+import { Group, Stack, Text, Title } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { type ApiOutput } from '@weareinreach/api'
 
-import { UserReview, Rating, ActionButtons } from '~ui/components/core'
+import { type ApiOutput } from '@weareinreach/api'
+import { ActionButtons, Rating, UserReview } from '~ui/components/core'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 

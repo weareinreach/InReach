@@ -1,8 +1,8 @@
 import {
 	Listr,
-	ListrTask as ListrTaskObj,
-	ListrDefaultRenderer,
-	ListrTaskWrapper,
+	type ListrDefaultRenderer,
+	type ListrTask as ListrTaskObj,
+	type ListrTaskWrapper,
 	PRESET_TIMER,
 } from 'listr2'
 

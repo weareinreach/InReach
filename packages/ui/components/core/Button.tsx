@@ -1,16 +1,16 @@
 import {
-	Button as MantineButton,
-	ButtonProps,
-	CSSObject,
+	type ButtonProps,
+	type ButtonStylesNames,
 	createStyles,
-	ButtonStylesNames,
-	MantineTheme,
+	type CSSObject,
+	Button as MantineButton,
+	type MantineTheme,
 } from '@mantine/core'
-import { PolymorphicComponentProps } from '@mantine/utils'
+import { type PolymorphicComponentProps } from '@mantine/utils'
 import { merge } from 'merge-anything'
-import { forwardRef, ReactNode } from 'react'
+import { forwardRef, type ReactNode } from 'react'
 
-import { variantNames } from '~ui/theme/variants'
+import { type variantNames } from '~ui/theme/variants'
 
 const buttonVariants: ButtonVariants = (theme, params) => {
 	switch (params.variant) {

@@ -1,5 +1,6 @@
 import { createNextApiHandler } from '@trpc/server/adapters/next'
 import { Logger } from 'tslog'
+
 import { appRouter, createContext } from '@weareinreach/api'
 
 const log = new Logger({ name: 'tRPC', type: 'json' })
