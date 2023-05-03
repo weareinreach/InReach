@@ -1,10 +1,10 @@
 import {
-	TextInput,
-	TextInputProps,
-	Textarea,
-	TextareaProps,
 	createStyles,
-	useMantineTheme,
+	Textarea,
+	type TextareaProps,
+	TextInput,
+	type TextInputProps,
+	type useMantineTheme,
 } from '@mantine/core'
 
 import { useEditFormContext } from './context'
