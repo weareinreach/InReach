@@ -1,18 +1,18 @@
-import { Modal, Box, type ButtonProps, createStyles, Group, Text, Title, Stack, rem } from '@mantine/core'
+import { Box, type ButtonProps, createStyles, Group, Modal, rem, Stack, Text, Title } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useState, forwardRef } from 'react'
+import { forwardRef, useState } from 'react'
 import { z } from 'zod'
 
-import { Button, ModalTitleBreadcrumb } from '~ui/components/core'
-import { useScreenSize, useCustomVariant, useShake } from '~ui/hooks'
+import { Button, type ModalTitleBreadcrumb } from '~ui/components/core'
+import { useCustomVariant, useScreenSize, useShake } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { UserSurveyFormProvider, useUserSurveyForm } from './context'
-import { FormBirthyear, FormCountry, FormIdentity, FormImmigration, FormEthnicity } from './fields'
+import { FormBirthyear, FormCountry, FormEthnicity, FormIdentity, FormImmigration } from './fields'
 import { ModalTitle } from '../ModalTitle'
 
 const useStyles = createStyles((theme) => ({
@@ -258,4 +258,4 @@ export const UserSurveyModalLauncher = createPolymorphicComponent<'button', User
 	UserSurveyModalBody
 )
 
-interface UserSurveyModalBodyProps extends ButtonProps {}
+type UserSurveyModalBodyProps = ButtonProps

@@ -1,4 +1,4 @@
-import { cognito, ClientId, generateHash } from './cognitoClient'
+import { ClientId, cognito, generateHash } from './cognitoClient'
 
 export const resetPassword = async ({ code, email, password }: ResetPasswordParams) => {
 	const response = await cognito.confirmForgotPassword({

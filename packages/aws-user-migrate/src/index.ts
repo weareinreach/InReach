@@ -1,4 +1,5 @@
-import { UserMigrationTriggerEvent, UserMigrationTriggerHandler } from 'aws-lambda'
+import { type UserMigrationTriggerEvent, type UserMigrationTriggerHandler } from 'aws-lambda'
+
 import { prisma } from '@weareinreach/db'
 
 import { getUser } from './getUser'

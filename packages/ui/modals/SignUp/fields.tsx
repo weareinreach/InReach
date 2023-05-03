@@ -1,23 +1,23 @@
 import {
+	Autocomplete,
 	Box,
+	createStyles,
 	PasswordInput,
 	Popover,
 	Progress,
-	TextInput,
-	useMantineTheme,
-	Text,
+	rem,
 	Select,
 	Stack,
-	Autocomplete,
-	createStyles,
-	rem,
+	Text,
+	TextInput,
+	useMantineTheme,
 } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { ComponentPropsWithRef, forwardRef, useState } from 'react'
+import { type ComponentPropsWithRef, forwardRef, useState } from 'react'
+
 import { attributesByCategory } from '@weareinreach/api/generated/attributesByCategory'
 import { languageList } from '@weareinreach/api/generated/languages'
-
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -214,7 +214,6 @@ export const LanguageSelect = () => {
 export const FormLocation = () => {
 	const { t, i18n } = useTranslation('common')
 	const form = useSignUpFormContext()
-	const variants = useCustomVariant()
 	const { classes } = useLocationStyles()
 	const [locationSearch, setLocationSearch] = useState('')
 	const [search] = useDebouncedValue(form.values.searchLocation, 400)

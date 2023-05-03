@@ -1,9 +1,9 @@
 // import { getEnv } from '@weareinreach/config/env'
 import { JwtInvalidClaimError } from 'aws-jwt-verify/error'
 import { type NextAuthOptions } from 'next-auth'
-import { prisma } from '@weareinreach/db'
 
-import { refreshSession, userSignOut, decodeCognitoAccessJwt } from '~auth/lib'
+import { prisma } from '@weareinreach/db'
+import { decodeCognitoAccessJwt, refreshSession, userSignOut } from '~auth/lib'
 import { cognitoCredentialProvider } from '~auth/providers/cognito'
 
 export const authOptions: NextAuthOptions = {
@@ -33,7 +33,7 @@ export const authOptions: NextAuthOptions = {
 				throw error
 			}
 		},
-		session: async ({ session, token }) => {
+		session: ({ session, token }) => {
 			if (session.user) {
 				session.user = token.user
 			}
@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
 		strategy: 'jwt',
 	},
 	events: {
-		signOut: async ({ token }) => await userSignOut(token.user.id),
+		signOut: async ({ token }) => userSignOut(token.user.id),
 	},
 	// Configure one or more authentication providers
 	providers: [cognitoCredentialProvider],

@@ -1,7 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
-import { APIGatewayProxyHandlerV2WithIAMAuthorizer } from 'aws-lambda'
-import { unflatten, flatten } from 'flat'
+import { type APIGatewayProxyHandlerV2WithIAMAuthorizer } from 'aws-lambda'
+import { flatten, unflatten } from 'flat'
 import Redis from 'ioredis'
 import { Logger } from 'tslog'
 import { z } from 'zod'
@@ -22,6 +22,7 @@ const redis = generateRedisClient()
 
 if (redis instanceof Redis) {
 	redis.on('error', (error) => {
+		// @ts-expect-error Error type missing from 'io-redis'
 		if (error.code === 'ECONNREFUSED') {
 			log.error('Redis server refused connection - disabling client.', error)
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -69,7 +70,7 @@ const redisWriteCache = async (data: WriteCacheArgs[]) => {
 		pipeline.hset(key, flatten(strings))
 		pipeline.expire(key, redisTTL)
 	}
-	return await pipeline.exec()
+	return pipeline.exec()
 }
 
 const GetCacheSchema = z.object({

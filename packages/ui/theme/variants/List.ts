@@ -1,6 +1,6 @@
-import { rem, type Styles, type ListStylesNames, type ListStylesParams } from '@mantine/core'
+import { type ListStylesNames, type ListStylesParams, rem, type Styles } from '@mantine/core'
 
-import { VariantObj } from '~ui/types/mantine'
+import { type VariantObj } from '~ui/types/mantine'
 
 export const List = {
 	inlineUtil2: (theme) =>

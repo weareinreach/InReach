@@ -1,4 +1,4 @@
-import { prisma, Prisma } from '~db/.'
+import { prisma, type Prisma } from '~db/.'
 import { type PassedTask } from '~db/prisma/dataMigrationRunner'
 
 const isSuccess = (criteria: unknown) => (criteria ? '✅' : '❎')

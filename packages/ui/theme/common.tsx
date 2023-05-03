@@ -1,54 +1,51 @@
 /* eslint-disable import/consistent-type-specifier-style */
 import {
-	rem,
+	type ActionIconProps,
+	type AvatarProps,
+	type BadgeProps,
+	type BadgeStylesNames,
+	type BadgeStylesParams,
+	type ButtonProps,
+	type CardProps,
+	type CheckboxStylesNames,
+	type CheckboxStylesParams,
+	type ColProps,
+	type CSSObject,
 	em,
-	SkeletonStylesParams,
-	InputWrapperStylesNames,
-	InputWrapperProps,
-	InputWrapperBaseProps,
-	CardProps,
+	type GridProps,
+	type InputStylesNames,
+	type InputStylesParams,
+	type InputWrapperBaseProps,
+	type InputWrapperProps,
+	type InputWrapperStylesNames,
+	type MantineThemeOther,
+	type MantineThemeOverride,
+	type ModalProps,
+	type ModalStylesNames,
+	type RadioStylesNames,
+	type RadioStylesParams,
+	rem,
+	type SkeletonProps,
+	type SkeletonStylesParams,
+	type StackProps,
+	type Styles,
+	type SwitchProps,
+	type SwitchStylesNames,
+	type SwitchStylesParams,
+	type TabsStylesNames,
+	type TabsStylesParams,
+	type TextareaProps,
+	type TitleStylesParams,
+	type TypographyStylesProviderProps,
 } from '@mantine/core'
 import { keys } from '@mantine/utils'
+import React from 'react'
 
 import { Icon } from '~ui/icon'
 
 import { shake } from './animation'
 import { customColors } from './colors'
 import { variants } from './variants'
-
-import type {
-	ModalStylesNames,
-	ActionIconProps,
-	AvatarProps,
-	BadgeProps,
-	ButtonProps,
-	ColProps,
-	MantineThemeOther,
-	MantineThemeOverride,
-	Styles,
-	TabsStylesNames,
-	TabsStylesParams,
-	TitleStylesParams,
-	TypographyStylesProviderProps,
-	BadgeStylesNames,
-	BadgeStylesParams,
-	SkeletonProps,
-	StackProps,
-	CheckboxStylesNames,
-	CheckboxStylesParams,
-	RadioStylesNames,
-	RadioStylesParams,
-	SwitchProps,
-	SwitchStylesNames,
-	SwitchStylesParams,
-	TextareaProps,
-	CSSObject,
-	ModalProps,
-	InputStylesNames,
-	InputStylesParams,
-	GridProps,
-} from '@mantine/core'
-import type React from 'react'
 
 const colors = {
 	primary: {
@@ -842,5 +839,5 @@ export const commonTheme = {
 type ThemeCustomObject = typeof themeCustomObj
 
 declare module '@mantine/core' {
-	export interface MantineThemeOther extends ThemeCustomObject {}
+	export type MantineThemeOther = ThemeCustomObject
 }

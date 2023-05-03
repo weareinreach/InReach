@@ -1,5 +1,5 @@
 import { Center } from '@mantine/core'
-import { Meta } from '@storybook/react'
+import { type Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
 import { surveyOptions } from '~ui/mockData/surveyOptions'

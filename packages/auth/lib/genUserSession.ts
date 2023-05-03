@@ -1,4 +1,5 @@
 import { type User } from 'next-auth'
+
 import { prisma } from '@weareinreach/db'
 
 export const generateUserSession = async (email: string /*id: string*/): Promise<User> => {

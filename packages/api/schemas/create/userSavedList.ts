@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { Prisma } from '@weareinreach/db'
 
+import { Prisma } from '@weareinreach/db'
 import { CreationBase, idString } from '~api/schemas/common'
 import { CreateAuditLog, GenerateAuditLog } from '~api/schemas/create/auditLog'
 

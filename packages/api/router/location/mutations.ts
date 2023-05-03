@@ -1,4 +1,4 @@
-import { defineRouter, handleError, permissionedProcedure, getPermissions } from '~api/lib'
+import { defineRouter, handleError, permissionedProcedure } from '~api/lib'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import {
 	CreateManyOrgLocationSchema,

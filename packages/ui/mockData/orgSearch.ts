@@ -1,4 +1,4 @@
-import { ApiInput, ApiOutput } from '@weareinreach/api'
+import { type ApiInput, type ApiOutput } from '@weareinreach/api'
 
 type SearchInput = ApiInput['organization']['searchName']
 

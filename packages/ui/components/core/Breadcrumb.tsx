@@ -1,6 +1,6 @@
-import { Text, createStyles, useMantineTheme, Button, rem } from '@mantine/core'
+import { Button, createStyles, rem, Text, useMantineTheme } from '@mantine/core'
 import { Trans, useTranslation } from 'next-i18next'
-import { MouseEventHandler } from 'react'
+import { type MouseEventHandler } from 'react'
 
 import { Icon } from '~ui/icon'
 
@@ -62,6 +62,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 					}
 				}
 			}
+			// eslint-disable-next-line no-fallthrough
 			default:
 				return t('close')
 		}

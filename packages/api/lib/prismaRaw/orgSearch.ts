@@ -1,4 +1,4 @@
-import { Context } from '../context'
+import { type Context } from '../context'
 
 export const searchOrgByDistance = async (params: Params, ctx: Context) => {
 	const { lat, lon, searchRadius } = params

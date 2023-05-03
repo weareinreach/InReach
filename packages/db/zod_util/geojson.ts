@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client'
+import { type Prisma } from '@prisma/client'
 import { z } from 'zod'
 
 /** Longitudes are vertical lines that measure east or west of the meridian in Greenwich, England */

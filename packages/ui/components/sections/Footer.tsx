@@ -1,11 +1,11 @@
-import { Title, Grid, Text, Stack, Group, createStyles, rem } from '@mantine/core'
+import { createStyles, Grid, Group, rem, Stack, Text, Title } from '@mantine/core'
 import Image from 'next/image'
-import { useTranslation, Trans } from 'next-i18next'
-import { MouseEventHandler } from 'react'
+import { Trans, useTranslation } from 'next-i18next'
+import { type MouseEventHandler } from 'react'
 
 import InReach from '~ui/assets/inreach.svg'
 import Vercel from '~ui/assets/vercel.svg'
-import { Link, type InternalLink, type ExternalLink } from '~ui/components/core/Link'
+import { type ExternalLink, type InternalLink, Link } from '~ui/components/core/Link'
 import { SocialLink } from '~ui/components/core/SocialLink'
 import { useCustomVariant } from '~ui/hooks'
 import { BodyGrid } from '~ui/layouts'
@@ -53,7 +53,7 @@ const connectLinks: LinkArr = [
 
 export const Footer = () => {
 	const { t } = useTranslation('common')
-	const { classes, cx } = useStyles()
+	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const linkVar = { variant: variants.Link.inlineInvertedUtil1 }
 	const support = [
