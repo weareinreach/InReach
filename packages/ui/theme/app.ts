@@ -1,5 +1,5 @@
 // import { Open_Sans } from '@next/font/google'
-import { MantineThemeOverride } from '@mantine/core'
+import { type MantineThemeOverride } from '@mantine/core'
 
 import { commonTheme } from './common'
 

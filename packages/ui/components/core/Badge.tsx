@@ -1,29 +1,29 @@
 /* eslint-disable react/display-name */
 import {
-	Badge as MantineBadge,
-	BadgeProps,
-	CSSObject,
-	createStyles,
-	BadgeStylesNames,
-	MantineTheme,
+	type BadgeProps,
+	type BadgeStylesNames,
 	ColorSwatch,
-	useMantineTheme,
+	createStyles,
+	type CSSObject,
+	Divider,
+	List,
+	Badge as MantineBadge,
+	type MantineTheme,
+	rem,
 	Text,
 	Tooltip,
-	TooltipProps,
-	Divider,
-	rem,
-	List,
+	type TooltipProps,
+	useMantineTheme,
 } from '@mantine/core'
-import { PolymorphicComponentProps } from '@mantine/utils'
+import { type PolymorphicComponentProps } from '@mantine/utils'
 import { type TOptions } from 'i18next'
 import { DateTime } from 'luxon'
 import { merge } from 'merge-anything'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, ReactNode } from 'react'
+import { forwardRef, type ReactNode } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
-import { Icon, IconList, isValidIcon } from '~ui/icon'
+import { Icon, type IconList, isValidIcon } from '~ui/icon'
 
 const badgeVariants: BadgeVariants = (theme, params) => {
 	switch (params.variant) {

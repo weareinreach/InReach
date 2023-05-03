@@ -1,4 +1,4 @@
-import { ApiOutput } from '@weareinreach/api'
+import { type ApiOutput } from '@weareinreach/api'
 
 export const getAll = [
 	{

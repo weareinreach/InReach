@@ -1,10 +1,6 @@
-import { action } from '@storybook/addon-actions'
-import { addArgs } from '@storybook/preview-api'
-import { Meta } from '@storybook/react'
+import { type Meta } from '@storybook/react'
 
 import { Pagination } from './Pagination'
-
-let currPage = 1
 
 export default {
 	title: 'Design System/Pagination',

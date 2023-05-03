@@ -1,27 +1,34 @@
 import {
+	Box,
 	Checkbox,
 	createStyles,
-	Group,
-	Text,
-	Title,
-	UnstyledButton,
-	Modal,
-	TitleProps,
-	TextProps,
-	ScrollArea,
-	useMantineTheme,
-	Skeleton,
-	rem,
 	em,
+	Group,
+	Modal,
+	rem,
+	ScrollArea,
+	Skeleton,
 	Stack,
-	Box,
-	UnstyledButtonProps,
+	Text,
+	type TextProps,
+	Title,
+	type TitleProps,
+	UnstyledButton,
+	type UnstyledButtonProps,
+	useMantineTheme,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState, forwardRef, MouseEventHandler, Dispatch, SetStateAction } from 'react'
+import {
+	type Dispatch,
+	forwardRef,
+	type MouseEventHandler,
+	type SetStateAction,
+	useEffect,
+	useState,
+} from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
@@ -274,7 +281,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>((props, re
 
 	const selectedItems = (function () {
 		const selected: string[] = []
-		for (const [key, value] of Object.entries(form.values)) {
+		for (const [_key, value] of Object.entries(form.values)) {
 			if (value.checked) selected.push(value.id)
 		}
 		return selected

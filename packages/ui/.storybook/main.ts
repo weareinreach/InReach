@@ -2,7 +2,7 @@
 /* eslint-disable node/no-process-env */
 import { type StorybookConfig } from '@storybook/nextjs'
 import { merge } from 'merge-anything'
-import { PropItem } from 'react-docgen-typescript'
+import { type PropItem } from 'react-docgen-typescript'
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
 
 import * as path from 'path'

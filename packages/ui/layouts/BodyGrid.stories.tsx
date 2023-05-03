@@ -1,5 +1,5 @@
 import { Box, Grid } from '@mantine/core'
-import { Meta, StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 import React from 'react'
 
 import { BodyGrid as BodyGridComponent } from './BodyGrid'

@@ -1,23 +1,23 @@
 import {
 	Autocomplete,
-	Text,
+	type AutocompleteProps,
 	createStyles,
 	Group,
-	ScrollArea,
-	ScrollAreaProps,
-	AutocompleteProps,
-	rem,
 	Loader,
+	rem,
+	ScrollArea,
+	type ScrollAreaProps,
+	Text,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
 import { type DefaultTFuncReturn } from 'i18next'
 import { useRouter } from 'next/router'
-import { useTranslation, Trans } from 'next-i18next'
-import { forwardRef, useState, useEffect, Dispatch, SetStateAction } from 'react'
+import { Trans, useTranslation } from 'next-i18next'
+import { type Dispatch, forwardRef, type SetStateAction, useState } from 'react'
 import reactStringReplace from 'react-string-replace'
-import { type ApiOutput } from '@weareinreach/api'
 
+import { type ApiOutput } from '@weareinreach/api'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
