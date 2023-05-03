@@ -3,24 +3,24 @@ import {
 	Badge,
 	Box,
 	Button,
-	ButtonProps,
+	type ButtonProps,
 	Checkbox,
 	CloseButton,
+	createPolymorphicComponent,
+	createStyles,
 	Divider,
+	Grid,
 	Group,
 	Modal,
-	Grid,
 	Select,
 	Stack,
 	Tabs,
-	Title,
 	Text,
-	createPolymorphicComponent,
-	createStyles,
+	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { useState, forwardRef } from 'react'
+import { forwardRef, useState } from 'react'
 
 import { Icon } from 'icon'
 
