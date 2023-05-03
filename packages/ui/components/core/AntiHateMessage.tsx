@@ -1,4 +1,4 @@
-import { Card, Text, createStyles, Title, Stack } from '@mantine/core'
+import { Card, createStyles, Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 const useStyles = createStyles((theme) => ({

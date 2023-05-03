@@ -1,5 +1,5 @@
-import { Icon as Iconify, IconProps, IconifyIconProps } from '@iconify/react'
-import { SVGProps, RefAttributes } from 'react'
+import { Icon as Iconify, type IconifyIconProps } from '@iconify/react'
+import { type RefAttributes, type SVGProps } from 'react'
 import { type LiteralUnion } from 'type-fest'
 
 import { iconList } from './iconList'

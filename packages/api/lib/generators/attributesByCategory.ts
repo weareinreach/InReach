@@ -1,6 +1,6 @@
 import { prisma } from '@weareinreach/db'
 
-import { ListrTask } from '.'
+import { type ListrTask } from '.'
 import { writeOutput } from './common'
 
 export const generateAttributesByCategory = async (task: ListrTask) => {

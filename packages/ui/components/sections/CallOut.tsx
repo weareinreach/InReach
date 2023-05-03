@@ -1,5 +1,5 @@
-import { createStyles, Grid, rem, Stack } from '@mantine/core'
-import { ReactNode } from 'react'
+import { createStyles, rem, Stack } from '@mantine/core'
+import { type ReactNode } from 'react'
 
 const useStyles = createStyles((theme, { backgroundColor }: { backgroundColor: string }) => ({
 	root: {

@@ -1,4 +1,4 @@
-import { TRPCError } from '@trpc/server'
+import { type TRPCError } from '@trpc/server'
 
 export const PRISMA_ERROR_CODES: Record<string, TRPCError['code']> = {
 	P1000: 'FORBIDDEN', //Authentication failed against database server.'

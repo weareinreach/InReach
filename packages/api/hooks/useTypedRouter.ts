@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { z } from 'zod'
+import { type z } from 'zod'
 
 export const useTypedRouter = <T extends z.Schema>(schema: T) => {
 	const { query, ...router } = useRouter()

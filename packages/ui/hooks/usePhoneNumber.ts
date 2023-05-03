@@ -5,7 +5,7 @@ const isCountryCode = (countryCode: string): countryCode is CountryCode => {
 	return codes.includes(countryCode)
 }
 
-export const parsePhoneNumber = (phoneNumber: string, countryCode: string = 'US') => {
+export const parsePhoneNumber = (phoneNumber: string, countryCode = 'US') => {
 	const country = countryCode.toUpperCase()
 	if (!isCountryCode(country))
 		throw new Error('Invalid country', {
@@ -15,5 +15,5 @@ export const parsePhoneNumber = (phoneNumber: string, countryCode: string = 'US'
 	return parsePhone(phoneNumber, country)
 }
 
-export const usePhoneNumber = (phoneNumber: string, countryCode: string = 'US') =>
+export const usePhoneNumber = (phoneNumber: string, countryCode = 'US') =>
 	parsePhoneNumber(phoneNumber, countryCode)

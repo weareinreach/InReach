@@ -1,6 +1,6 @@
 import { action } from '@storybook/addon-actions'
-import { Meta } from '@storybook/react'
-import { useState, useEffect } from 'react'
+import { type Meta } from '@storybook/react'
+import { useEffect, useState } from 'react'
 
 import { StorybookGridDouble } from '~ui/layouts/BodyGrid'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'

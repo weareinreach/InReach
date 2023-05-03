@@ -1,6 +1,6 @@
-import { Text, Title, Stack, Modal, Box, createPolymorphicComponent, type ButtonProps } from '@mantine/core'
+import { Box, type ButtonProps, createPolymorphicComponent, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { useTranslation, Trans } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'

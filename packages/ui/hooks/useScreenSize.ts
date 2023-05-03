@@ -1,4 +1,4 @@
-import { useMantineTheme, em } from '@mantine/core'
+import { em, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 
 export const useScreenSize = () => {

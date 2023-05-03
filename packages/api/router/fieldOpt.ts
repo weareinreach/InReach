@@ -1,8 +1,8 @@
 import flush from 'just-flush'
-import { SetOptional } from 'type-fest'
+import { type SetOptional } from 'type-fest'
 import { z } from 'zod'
-import { type AttributesByCategory } from '@weareinreach/db'
 
+import { type AttributesByCategory } from '@weareinreach/db'
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
 import { serviceAreaSelect } from '~api/schemas/selects/location'
 
@@ -27,17 +27,16 @@ export const fieldOptRouter = defineRouter({
 			})
 			return data
 		}),
-	getPhoneTypes: publicProcedure.query(
-		async ({ ctx }) =>
-			await ctx.prisma.phoneType.findMany({
-				where: { active: true },
-				select: {
-					id: true,
-					tsKey: true,
-					tsNs: true,
-				},
-				orderBy: { type: 'asc' },
-			})
+	getPhoneTypes: publicProcedure.query(async ({ ctx }) =>
+		ctx.prisma.phoneType.findMany({
+			where: { active: true },
+			select: {
+				id: true,
+				tsKey: true,
+				tsNs: true,
+			},
+			orderBy: { type: 'asc' },
+		})
 	),
 	attributesByCategory: publicProcedure
 		.input(z.string().or(z.string().array()).optional().describe('categoryName'))
@@ -60,36 +59,34 @@ export const fieldOptRouter = defineRouter({
 			) as FlushedAttributesByCategory[]
 			return flushedResults
 		}),
-	attributeCategories: publicProcedure.input(z.string().array().optional()).query(
-		async ({ ctx, input }) =>
-			await ctx.prisma.attributeCategory.findMany({
-				where: { active: true, ...(input?.length ? { tag: { in: input } } : {}) },
-				select: {
-					id: true,
-					tag: true,
-					name: true,
-					icon: true,
-					intDesc: true,
-				},
-				orderBy: { tag: 'asc' },
-			})
+	attributeCategories: publicProcedure.input(z.string().array().optional()).query(async ({ ctx, input }) =>
+		ctx.prisma.attributeCategory.findMany({
+			where: { active: true, ...(input?.length ? { tag: { in: input } } : {}) },
+			select: {
+				id: true,
+				tag: true,
+				name: true,
+				icon: true,
+				intDesc: true,
+			},
+			orderBy: { tag: 'asc' },
+		})
 	),
 	languages: publicProcedure
 		.input(z.object({ activelyTranslated: z.boolean(), localeCode: z.string() }).partial().optional())
-		.query(
-			async ({ ctx, input }) =>
-				await ctx.prisma.language.findMany({
-					where: input,
-					select: {
-						id: true,
-						languageName: true,
-						localeCode: true,
-						iso6392: true,
-						nativeName: true,
-						activelyTranslated: true,
-					},
-					orderBy: { languageName: 'asc' },
-				})
+		.query(async ({ ctx, input }) =>
+			ctx.prisma.language.findMany({
+				where: input,
+				select: {
+					id: true,
+					languageName: true,
+					localeCode: true,
+					iso6392: true,
+					nativeName: true,
+					activelyTranslated: true,
+				},
+				orderBy: { languageName: 'asc' },
+			})
 		),
 	countries: publicProcedure
 		.input(

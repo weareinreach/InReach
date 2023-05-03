@@ -1,7 +1,7 @@
 import { TRPCError } from '@trpc/server'
 import invariant from 'tiny-invariant'
 
-import { reject } from './'
+import { reject } from '.'
 import { type Context } from '../context'
 import { type Meta, t } from '../initTRPC'
 

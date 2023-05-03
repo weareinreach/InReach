@@ -1,4 +1,4 @@
-import { DefaultMantineColor, Tuple } from '@mantine/core'
+import { type DefaultMantineColor, type Tuple } from '@mantine/core'
 
 /**
  * Color shades generated at: https://noeldelgado.github.io/shadowlord/

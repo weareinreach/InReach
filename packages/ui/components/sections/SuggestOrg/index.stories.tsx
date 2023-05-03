@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { geoAutocompleteFullAddress, getFullAddress } from '~ui/mockData/geo'
-import { suggestionOptions, existingOrg } from '~ui/mockData/suggestOrg'
+import { existingOrg, suggestionOptions } from '~ui/mockData/suggestOrg'
 
 import { SuggestOrg } from '.'
 

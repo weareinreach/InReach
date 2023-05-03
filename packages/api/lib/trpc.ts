@@ -1,6 +1,6 @@
 import { t } from './initTRPC'
-import { isAdmin, isStaff, isAuthed, hasPermissions } from './middleware'
-import { type PermissionedProcedure, getPermissions } from './permissions'
+import { hasPermissions, isAdmin, isAuthed, isStaff } from './middleware'
+import { getPermissions, type PermissionedProcedure } from './permissions'
 
 export const defineRouter = t.router
 export const mergeRouters = t.mergeRouters

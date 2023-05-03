@@ -1,6 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
-
-import { StorybookGrid } from '~ui/layouts/BodyGrid'
+import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Footer } from './Footer'
 
@@ -14,7 +12,6 @@ export default {
 		},
 		layout: 'fullscreen',
 	},
-	// decorators: [StorybookGrid],
 } satisfies Meta<typeof Footer>
 
 type StoryDef = StoryObj<typeof Footer>

@@ -1,8 +1,8 @@
-import { Group, useMantineTheme, createStyles, rem } from '@mantine/core'
-import { useViewportSize, useMediaQuery } from '@mantine/hooks'
+import { createStyles, Group, rem, useMantineTheme } from '@mantine/core'
+import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 
-import { ActionButtons, Breadcrumb, BreadcrumbProps } from './'
-import { actionButtonIcons } from './ActionButtons'
+import { ActionButtons, Breadcrumb, type BreadcrumbProps } from '.'
+import { type actionButtonIcons } from './ActionButtons'
 
 const MIN_BUTTON_WIDTH = 55.2
 const BREACRUMB_WIDTH = 162

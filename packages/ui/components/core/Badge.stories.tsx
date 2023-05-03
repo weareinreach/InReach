@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 
 import { commonTheme as theme } from '~ui/theme/common'
 
@@ -183,7 +183,7 @@ export const CommunityGroup = {
 export const Leader = {
 	args: {
 		variant: 'leader',
-		iconBg: theme.other!.colors.tertiary.lightBlue,
+		iconBg: theme.other.colors.tertiary.lightBlue,
 		icon: '️‍️‍🌎',
 		tsKey: 'orgleader.immigrant-led',
 		minify: false,
@@ -208,7 +208,7 @@ export const Leader = {
 export const LeaderMini = {
 	args: {
 		variant: 'leader',
-		iconBg: theme.other!.colors.tertiary.orange,
+		iconBg: theme.other.colors.tertiary.orange,
 		icon: '️‍️‍✊🏿',
 		tsKey: 'orgleader.black-led',
 		minify: true,

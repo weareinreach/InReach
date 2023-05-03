@@ -1,13 +1,13 @@
 import {
 	Checkbox,
+	createStyles,
 	NumberInput,
 	Radio,
-	ScrollArea,
-	Title,
-	Text,
-	Select,
-	createStyles,
 	rem,
+	ScrollArea,
+	Select,
+	Text,
+	Title,
 } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
@@ -67,7 +67,7 @@ export const TitleSubtitle = (t1: string, t2: string) => {
 
 //immigration component start
 export const FormImmigration = () => {
-	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
+	const { data: surveyOptions } = api.user.surveyOptions.useQuery()
 	const { t } = useTranslation('common')
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
@@ -185,7 +185,7 @@ export const FormCountry = () => {
 
 //identity component start
 export const FormIdentity = () => {
-	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
+	const { data: surveyOptions } = api.user.surveyOptions.useQuery()
 	const { t } = useTranslation('common')
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
@@ -213,7 +213,7 @@ export const FormIdentity = () => {
 
 //ethnicity component start
 export const FormEthnicity = () => {
-	const { data: surveyOptions, status } = api.user.surveyOptions.useQuery()
+	const { data: surveyOptions } = api.user.surveyOptions.useQuery()
 	const { t } = useTranslation('common')
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()

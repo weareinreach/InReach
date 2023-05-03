@@ -3,7 +3,7 @@
 import { prisma } from '~db/index'
 import { permissionData } from '~db/seed/data'
 import { logFile } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/starterData'
+import { type ListrTask } from '~db/seed/starterData'
 
 export const seedPermissions = async (task: ListrTask) => {
 	let count = 1

@@ -3,24 +3,24 @@ import {
 	Button,
 	type ButtonProps,
 	Center,
-	createStyles,
 	createPolymorphicComponent,
+	createStyles,
+	Group,
 	Loader,
 	Menu,
-	Group,
+	rem,
 	Skeleton,
 	Text,
 	useMantineTheme,
-	rem,
 } from '@mantine/core'
 import { useClipboard } from '@mantine/hooks'
-import { DefaultTFuncReturn } from 'i18next'
+import { type DefaultTFuncReturn } from 'i18next'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
-import { useState, forwardRef, ComponentType } from 'react'
-import { type ApiInput } from '@weareinreach/api'
+import { type ComponentType, forwardRef, useState } from 'react'
 
+import { type ApiInput } from '@weareinreach/api'
 import { useNewNotification } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -360,7 +360,6 @@ const PrintButton = createPolymorphicComponent<'button', PolyButtonProps>(PrintB
 
 // Previous actions object is now a hook to check user session before using save or saved actions
 const useActions = () => {
-	const { data: session } = useSession()
 	const { classes } = useStyles()
 	/**
 	 * Curried function which accepts a Polymorphic button element as its base param. The inner function returns
@@ -519,11 +518,6 @@ interface ActionButtonProps {
 	/** Information for save button */
 	serviceId?: string
 	organizationId?: string
-}
-
-type UserListMutation = {
-	data: ApiInput['savedList']['saveItem'] | ApiInput['savedList']['deleteItem']
-	name?: string
 }
 
 type Polymorphic = typeof QuickPromotionModal | typeof ReviewModal | typeof SaveButton

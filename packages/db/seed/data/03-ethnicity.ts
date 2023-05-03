@@ -1,7 +1,7 @@
-import { Prisma, generateId } from '~db/index'
-import { Log, iconList } from '~db/seed/lib'
+import { generateId, type Prisma } from '~db/index'
+import { iconList, type Log } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/starterData'
+import { type ListrTask } from '~db/seed/starterData'
 
 import { keySlug, namespaces } from './00-namespaces'
 

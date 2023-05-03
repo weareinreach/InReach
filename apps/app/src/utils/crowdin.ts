@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import Crowdin from '@crowdin/crowdin-api-client'
@@ -28,22 +29,20 @@ export const crowdinVars = {
 
 export const fetchCrowdinFile = async (file: string, lang: string) => {
 	crowdinOta.setCurrentLocale(lang)
-	return await crowdinOta.getFileTranslations(file)
+	return crowdinOta.getFileTranslations(file)
 }
 
 export const fetchCrowdinDbKey = async (ns: string, file: string, lang: string) => ({
 	[ns]: await crowdinOta.getStringByKey(ns, lang),
 })
 
-export const crowdinDistTimestamp = async () => await crowdinOta.getManifestTimestamp()
+export const crowdinDistTimestamp = async () => crowdinOta.getManifestTimestamp()
 
 if (process.env.NODE_ENV !== 'production') {
 	global.crowdinApi = crowdinApi
 	global.crowdinOta = crowdinOta
 }
 declare global {
-	// allow global `var` declarations
-	// eslint-disable-next-line no-var
 	var crowdinApi: Crowdin | undefined
 	var crowdinOta: OtaClient | undefined
 }
