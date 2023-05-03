@@ -1,5 +1,5 @@
 import { Box, Button, Center, Stack } from '@mantine/core'
-import { Meta, StoryObj } from '@storybook/react'
+import { type Meta } from '@storybook/react'
 
 import { useShake, type UseShakeProps } from './useShake'
 

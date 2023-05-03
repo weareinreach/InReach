@@ -1,20 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
+	type ButtonProps,
+	createPolymorphicComponent,
+	Loader,
+	Modal,
 	Stack,
 	Text,
-	Loader,
 	Title,
-	type ButtonProps,
-	Modal,
-	createPolymorphicComponent,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
-import { useTranslation, Trans } from 'next-i18next'
-import { forwardRef, useState, useEffect } from 'react'
+import { Trans, useTranslation } from 'next-i18next'
+import { forwardRef, useEffect, useState } from 'react'
 import { z } from 'zod'
-import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
 
+import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
 import { Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -45,7 +45,7 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 			onSuccess: () => setSuccess(true),
 			onError: () => setError(true),
 		})
-		const DataSchema = z.string().default('')
+		// const DataSchema = z.string().default('')
 		const [opened, handler] = useDisclosure(autoOpen)
 
 		useEffect(() => {
@@ -118,10 +118,4 @@ export const AccountVerifyModal = createPolymorphicComponent<'button', AccountVe
 	AccountVerifyModalBody
 )
 
-export interface AccountVerifyModalBodyProps extends ButtonProps {}
-
-type FormProps = {
-	data: string
-	password: string
-	confirmPassword: string
-}
+export type AccountVerifyModalBodyProps = ButtonProps

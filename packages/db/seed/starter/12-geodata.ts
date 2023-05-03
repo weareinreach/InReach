@@ -9,7 +9,7 @@ import { type Geometry } from 'geojson'
 import iso3166 from 'iso-3166-2'
 import invariant from 'tiny-invariant'
 
-import { prisma, Prisma, generateId } from '~db/index'
+import { generateId, type Prisma, prisma } from '~db/index'
 import {
 	geoCountryData,
 	geoCountyDataPR,
@@ -19,9 +19,9 @@ import {
 	keySlug,
 	namespaces,
 } from '~db/seed/data/'
-import { Log, iconList, updateGeo } from '~db/seed/lib'
+import { iconList, type Log, updateGeo } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/starterData'
+import { type ListrTask } from '~db/seed/starterData'
 
 // import { GeoJSONSchema } from '~db/zod-util';
 

@@ -1,15 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
+	Box,
+	type ButtonProps,
+	createPolymorphicComponent,
+	Modal,
 	Stack,
 	Text,
 	TextInput,
 	Title,
-	useMantineTheme,
-	Group,
-	type ButtonProps,
-	Modal,
-	Box,
-	createPolymorphicComponent,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -30,7 +28,6 @@ export const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewLis
 	(props, ref) => {
 		const { t } = useTranslation('common')
 		const variants = useCustomVariant()
-		const theme = useMantineTheme()
 		const [opened, handler] = useDisclosure(false)
 		const utils = api.useContext()
 		const form = useForm<FormProps>({

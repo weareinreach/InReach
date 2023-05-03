@@ -1,8 +1,9 @@
 /* eslint-disable node/no-process-env */
 import { httpBatchLink, loggerLink } from '@trpc/client'
-import { createTRPCNext, WithTRPCConfig } from '@trpc/next'
-import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import { createTRPCNext, type WithTRPCConfig } from '@trpc/next'
+import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 import { devtoolsLink } from 'trpc-client-devtools-link'
+
 import { getEnv } from '@weareinreach/config/env'
 
 import { transformer } from '../lib/transformer'

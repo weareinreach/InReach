@@ -1,7 +1,7 @@
 import { AuthFlowType } from '@aws-sdk/client-cognito-identity-provider'
 import { z } from 'zod'
 
-import { cognito, parseAuthResponse, type AuthResult, ClientId, generateHash } from './cognitoClient'
+import { type AuthResult, ClientId, cognito, generateHash, parseAuthResponse } from './cognitoClient'
 
 export const userLogin: UserLogin = async (email, password) => {
 	const response = await cognito.initiateAuth({
@@ -13,7 +13,7 @@ export const userLogin: UserLogin = async (email, password) => {
 			SECRET_HASH: generateHash(email),
 		},
 	})
-	return await parseAuthResponse(response, email)
+	return parseAuthResponse(response, email)
 }
 
 type UserLogin = (email: string, password: string) => Promise<AuthResult>

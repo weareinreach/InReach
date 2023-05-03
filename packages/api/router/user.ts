@@ -1,24 +1,24 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+
 import {
-	createCognitoUser,
-	forgotPassword,
 	confirmAccount,
+	createCognitoUser,
+	deleteAccount,
+	forgotPassword,
 	resetPassword,
 	userLogin,
-	deleteAccount,
 } from '@weareinreach/auth'
-
-import { handleError, decodeUrl } from '~api/lib'
+import { handleError } from '~api/lib'
 import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
 import {
 	AdminCreateUser,
-	CreateUser,
-	CreateUserSurvey,
 	type AdminCreateUserInput,
 	CognitoBase64,
-	ResetPassword,
+	CreateUser,
+	CreateUserSurvey,
 	ForgotPassword,
+	ResetPassword,
 } from '~api/schemas/create/user'
 
 export const userRouter = defineRouter({

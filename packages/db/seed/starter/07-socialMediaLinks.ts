@@ -1,8 +1,8 @@
-import { prisma, Prisma, generateId } from '~db/index'
+import { generateId, type Prisma, prisma } from '~db/index'
 import { keySlug, namespaces, socialMediaLinks } from '~db/seed/data'
-import { Log, iconList } from '~db/seed/lib'
+import { iconList, type Log } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/starterData'
+import { type ListrTask } from '~db/seed/starterData'
 
 export const seedSocialMediaLinks = async (task: ListrTask) => {
 	const log: Log = (message, icon?, indent = false) => {

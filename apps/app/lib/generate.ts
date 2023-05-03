@@ -1,6 +1,6 @@
 /* eslint-disable node/no-process-env */
 import { Command } from 'commander'
-import { Listr, ListrContext, ListrRenderer, ListrTaskWrapper } from 'listr2'
+import { Listr, type ListrContext, type ListrRenderer, type ListrTaskWrapper } from 'listr2'
 
 import {
 	// generateFooterLinks,

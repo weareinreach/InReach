@@ -1,7 +1,7 @@
 /* eslint-disable import/consistent-type-specifier-style */
-import type { MantineTheme, ContextStylesParams, Variants, BadgeProps as _BadgeProps } from '@mantine/core'
+import type { BadgeProps as _BadgeProps, ContextStylesParams, MantineTheme } from '@mantine/core'
 
-export type VariantDef<P = any> = (
+export type VariantDef<P = unknown> = (
 	theme: MantineTheme,
 	params: P,
 	context: ContextStylesParams

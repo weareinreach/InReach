@@ -1,4 +1,4 @@
-import { rem, keyframes } from '@mantine/core'
+import { keyframes, rem } from '@mantine/core'
 
 export const shake = {
 	1: keyframes({

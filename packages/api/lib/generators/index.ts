@@ -1,5 +1,5 @@
 /* eslint-disable node/no-process-env */
-import { Listr, ListrRenderer, ListrTaskWrapper, PRESET_TIMER } from 'listr2'
+import { Listr, type ListrRenderer, type ListrTaskWrapper, PRESET_TIMER } from 'listr2'
 
 import { generateAttributeCategories } from './attributeCategory'
 import { generateAttributesByCategory } from './attributesByCategory'

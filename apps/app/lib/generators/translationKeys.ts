@@ -1,11 +1,11 @@
 import dotenv from 'dotenv'
-import { unflatten, flatten } from 'flat'
+import { flatten, unflatten } from 'flat'
 import prettier from 'prettier'
-import { prisma } from '@weareinreach/db'
 
 import fs from 'fs'
 
-import { ListrTask } from 'lib/generate'
+import { prisma } from '@weareinreach/db'
+import { type ListrTask } from 'lib/generate'
 
 const localePath = 'public/locales/en'
 

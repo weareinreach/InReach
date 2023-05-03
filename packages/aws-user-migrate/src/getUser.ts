@@ -6,6 +6,7 @@ type GetUser = (email: string) => Promise<User>
 
 export const getUser: GetUser = async (email) => {
 	try {
+		// eslint-disable-next-line @typescript-eslint/return-await
 		return await prisma.user.findUniqueOrThrow({
 			where: {
 				email,

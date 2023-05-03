@@ -1,4 +1,4 @@
-import { Group, Text, createStyles, LoadingOverlay, Tooltip, rem } from '@mantine/core'
+import { createStyles, Group, LoadingOverlay, rem, Text, Tooltip } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 import { useCustomVariant } from '~ui/hooks'

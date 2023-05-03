@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { cognito, ClientId, generateHash } from './cognitoClient'
+import { ClientId, cognito, generateHash } from './cognitoClient'
 import { getBaseUrl } from './getBaseUrl'
 
 const ForgotPasswordSchema = z.object({

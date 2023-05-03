@@ -1,5 +1,14 @@
-import { DefaultProps, Group, Menu, Selectors, Text, UnstyledButton, createStyles, rem } from '@mantine/core'
-import { useSession, signOut } from 'next-auth/react'
+import {
+	createStyles,
+	type DefaultProps,
+	Group,
+	Menu,
+	rem,
+	type Selectors,
+	Text,
+	UnstyledButton,
+} from '@mantine/core'
+import { signOut, useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
 import { Button } from '~ui/components/core/Button'
@@ -44,7 +53,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	const { data: session, status } = useSession()
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 

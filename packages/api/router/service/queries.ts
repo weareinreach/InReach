@@ -1,8 +1,8 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import { Prisma } from '@weareinreach/db'
 
-import { defineRouter, publicProcedure, handleError, protectedProcedure } from '~api/lib'
+import { type Prisma } from '@weareinreach/db'
+import { defineRouter, handleError, protectedProcedure, publicProcedure } from '~api/lib'
 import {
 	serviceById,
 	serviceByLocationId,
@@ -97,13 +97,13 @@ export const queries = defineRouter({
 
 			switch (true) {
 				case Boolean(slug): {
-					return await ctx.prisma.organization.findUniqueOrThrow({
+					return ctx.prisma.organization.findUniqueOrThrow({
 						where: { slug },
 						select: { name: true },
 					})
 				}
 				case Boolean(orgLocationId): {
-					return await ctx.prisma.orgLocation.findUniqueOrThrow({
+					return ctx.prisma.orgLocation.findUniqueOrThrow({
 						where: { id: orgLocationId },
 						select: { name: true },
 					})

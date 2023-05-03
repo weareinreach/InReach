@@ -1,4 +1,4 @@
-import { Anchor, Variants } from '@mantine/core'
+import { Anchor, type Variants } from '@mantine/core'
 import NextLink, { type LinkProps } from 'next/link'
 
 const externalPrefixes = ['http', 'tel:', 'mailto:'] as const

@@ -1,7 +1,7 @@
-import { Title, List, Stack, Center } from '@mantine/core'
-import { Meta, StoryObj } from '@storybook/react'
+import { List, Stack, Title } from '@mantine/core'
+import { type Meta, type StoryObj } from '@storybook/react'
 
-import { GenericContentModal, type GenericContentModalProps } from './GenericContent'
+import { GenericContentModal } from './GenericContent'
 import { Button, Link } from '../components/core'
 
 export default {
