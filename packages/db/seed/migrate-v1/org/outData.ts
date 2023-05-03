@@ -4,10 +4,10 @@ import invariant from 'tiny-invariant'
 import { existsSync, readFileSync, rmSync, writeFileSync } from 'fs'
 import { resolve } from 'path'
 
-import { Prisma } from '~db/index'
-import { Log, iconList } from '~db/seed/lib'
+import { type Prisma } from '~db/index'
+import { iconList, type Log } from '~db/seed/lib'
 import { migrateLog } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/migrate-v1'
+import { type ListrTask } from '~db/seed/migrate-v1'
 
 export const outputDir = `${resolve(__dirname, '../out')}/`
 

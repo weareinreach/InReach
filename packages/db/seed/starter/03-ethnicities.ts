@@ -1,5 +1,5 @@
 import { prisma } from '~db/index'
-import { Log, iconList } from '~db/seed/lib'
+import { iconList, type Log } from '~db/seed/lib'
 
 import { generateEthnicityRecords } from '../data/03-ethnicity'
 import { logFile } from '../logger'

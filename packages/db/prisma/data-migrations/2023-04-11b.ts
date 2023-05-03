@@ -1,6 +1,6 @@
-import { prisma, Prisma } from '~db/index'
+import { prisma, type Prisma } from '~db/index'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { jobPreRunner, type JobDef } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
 import { type AttributeData } from '~db/seed/data/09-attributes'
 import { seedAttributes } from '~db/seed/starter/09-attributes'
 /** Define the job metadata here. */

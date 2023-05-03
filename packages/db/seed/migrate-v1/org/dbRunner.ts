@@ -5,14 +5,14 @@ import superjson from 'superjson'
 import { readFileSync, writeFileSync } from 'fs'
 
 import { prisma } from '~db/index'
-import { Log, iconList, updateGeo } from '~db/seed/lib'
+import { iconList, type Log, updateGeo } from '~db/seed/lib'
 import { migrateLog } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/migrate-v1'
+import { type ListrTask } from '~db/seed/migrate-v1'
 import { getClient, migrateClient } from '~db/seed/migrate-v1/org/clients'
 // import { compare, writeOutDiff } from '~db/seed/migrate-v1/org/compare'
 // import { rollbackFile } from '~db/seed/migrate-v1/org/generator'
-import { BatchNames, OutData, batchNameMap, getFileName } from '~db/seed/migrate-v1/org/outData'
-import { ZodInputs } from '~db/seed/migrate-v1/org/zod'
+import { batchNameMap, type BatchNames, getFileName, type OutData } from '~db/seed/migrate-v1/org/outData'
+import { type ZodInputs } from '~db/seed/migrate-v1/org/zod'
 
 const batchSize = 10_000
 

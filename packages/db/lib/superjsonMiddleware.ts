@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 import superjson from 'superjson'
-import { SuperJSONResult } from 'superjson/dist/types'
+import { type SuperJSONResult } from 'superjson/dist/types'
 import { Logger } from 'tslog'
 import { z } from 'zod'
 

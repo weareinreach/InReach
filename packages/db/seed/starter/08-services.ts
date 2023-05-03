@@ -1,8 +1,8 @@
-import { prisma, Prisma, generateId, slug } from '~db/index'
+import { generateId, type Prisma, prisma, slug } from '~db/index'
 import { namespaces, serviceData } from '~db/seed/data/'
-import { Log, iconList } from '~db/seed/lib'
+import { iconList, type Log } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/starterData'
+import { type ListrTask } from '~db/seed/starterData'
 
 type Data = {
 	category: Prisma.ServiceCategoryCreateManyInput[]

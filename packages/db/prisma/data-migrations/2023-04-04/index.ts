@@ -3,9 +3,9 @@ import { z } from 'zod'
 import fs from 'fs'
 import path from 'path'
 
-import { prisma, Prisma } from '~db/index'
+import { prisma, type Prisma } from '~db/index'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { jobPreRunner, type JobDef } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
 
 const jobDef: JobDef = {
 	jobId: '2023-04-04-data-load',

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import { generateId, prisma, Prisma, slug } from '~db/index'
-import { genSeedUser, namespaceGen, namespaces, userRoleMap, userTypeMap, userRoleList } from '~db/seed/data'
-import { Log, iconList } from '~db/seed/lib'
+import { generateId, prisma, type Prisma, slug } from '~db/index'
+import { genSeedUser, namespaceGen, namespaces, userRoleList, userRoleMap, userTypeMap } from '~db/seed/data'
+import { iconList, type Log } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/starterData'
+import { type ListrTask } from '~db/seed/starterData'
 
 export const seedSystemUser = async (task: ListrTask) => {
 	try {

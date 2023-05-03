@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { prisma, Prisma } from '~db/index'
+import { prisma, type Prisma } from '~db/index'
 import { namespaces } from '~db/seed/data/00-namespaces'
 import { type Countries, countryData, genDemonymKey } from '~db/seed/data/04-countries'
-import { Log, iconList } from '~db/seed/lib'
+import { iconList, type Log } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
 import { isSuccess } from '~db/seed/migrate-v1/org/generator'
-import { ListrTask } from '~db/seed/starterData'
+import { type ListrTask } from '~db/seed/starterData'
 
 const translationNamespace = namespaces.country
 
