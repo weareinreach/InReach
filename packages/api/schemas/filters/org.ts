@@ -1,4 +1,4 @@
-import { Prisma } from '@weareinreach/db'
+import { type Prisma } from '@weareinreach/db'
 
 const serviceSome = (ids: string[]) => ({ services: { some: { tagId: { in: ids } } } })
 const attribSome = (ids: string[]) => ({ attributes: { some: { attributeId: { in: ids } } } })

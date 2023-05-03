@@ -1,14 +1,15 @@
 import { z } from 'zod'
-import { Prisma } from '@weareinreach/db'
+
+import { type Prisma } from '@weareinreach/db'
 
 import {
 	attributes,
 	countryWithoutGeo,
+	freeText,
 	govDistWithoutGeo,
 	isPublic,
 	languageNames,
 	phoneSelectPublic,
-	freeText,
 } from './common'
 import { idString } from '../common'
 

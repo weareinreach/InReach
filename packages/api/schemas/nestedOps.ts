@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import flush from 'just-flush'
 import omit from 'just-omit'
 import pick from 'just-pick'

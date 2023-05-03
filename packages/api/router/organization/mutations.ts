@@ -1,11 +1,11 @@
 import { handleError } from '~api/lib'
 import { defineRouter, permissionedProcedure, protectedProcedure } from '~api/lib/trpc'
 import {
+	AttachOrgAttribute,
+	type CreateOrgSuggestionInput,
+	CreateOrgSuggestionSchema,
 	type CreateQuickOrgInput,
 	CreateQuickOrgSchema,
-	CreateOrgSuggestionSchema,
-	type CreateOrgSuggestionInput,
-	AttachOrgAttribute,
 } from '~api/schemas/create/organization'
 
 export const mutations = defineRouter({
@@ -53,11 +53,13 @@ export const mutations = defineRouter({
 				AttachOrgAttribute().dataParser.parse(inputData)
 
 			const result = await ctx.prisma.$transaction(async (tx) => {
-				const tKey = translationKey ? tx.translationKey.create(translationKey) : undefined
-				const fText = freeText ? tx.freeText.create(freeText) : undefined
-				const aSupp = attributeSupplement ? tx.attributeSupplement.create(attributeSupplement) : undefined
-				const attrLink = tx.organizationAttribute.create(organizationAttribute)
-				const logs = tx.auditLog.createMany({ data: auditLogs, skipDuplicates: true })
+				const tKey = translationKey ? await tx.translationKey.create(translationKey) : undefined
+				const fText = freeText ? await tx.freeText.create(freeText) : undefined
+				const aSupp = attributeSupplement
+					? await tx.attributeSupplement.create(attributeSupplement)
+					: undefined
+				const attrLink = await tx.organizationAttribute.create(organizationAttribute)
+				const logs = await tx.auditLog.createMany({ data: auditLogs, skipDuplicates: true })
 				return {
 					translationKey: tKey,
 					freeText: fText,

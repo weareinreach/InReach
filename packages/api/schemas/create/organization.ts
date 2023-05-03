@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import { Prisma, generateId, generateFreeText } from '@weareinreach/db'
 
-import { idString, CreationBase, InputJsonValue } from '~api/schemas/common'
+import { generateFreeText, generateId, Prisma } from '@weareinreach/db'
+import { CreationBase, idString, InputJsonValue } from '~api/schemas/common'
 import { createManyWithAudit } from '~api/schemas/nestedOps'
 
 import { CreateAuditLog, GenerateAuditLog } from './auditLog'

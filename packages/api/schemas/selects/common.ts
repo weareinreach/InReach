@@ -1,4 +1,4 @@
-import { Prisma } from '@weareinreach/db'
+import { type Prisma } from '@weareinreach/db'
 
 export const isPublic = {
 	published: true,

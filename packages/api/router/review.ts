@@ -2,9 +2,9 @@ import { z } from 'zod'
 
 import { handleError } from '~api/lib'
 import { defineRouter, protectedProcedure, publicProcedure, staffProcedure } from '~api/lib/trpc'
-import { id, orgId, orgIdLocationId, orgIdServiceId, userId, reviewAvgId } from '~api/schemas/common'
+import { id, orgId, orgIdLocationId, orgIdServiceId, userId } from '~api/schemas/common'
 import { CreateReview, CreateReviewInput } from '~api/schemas/create/review'
-import { ReviewVisibility, ReviewToggleDelete } from '~api/schemas/update/review'
+import { ReviewToggleDelete, ReviewVisibility } from '~api/schemas/update/review'
 
 export const reviewRouter = defineRouter({
 	create: protectedProcedure.input(z.object(CreateReviewInput)).mutation(async ({ ctx, input }) => {
