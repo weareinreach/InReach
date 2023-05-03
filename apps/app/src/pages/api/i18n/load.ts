@@ -3,12 +3,12 @@
 import { Sha256 } from '@aws-crypto/sha256-js'
 import { SignatureV4 } from '@aws-sdk/signature-v4'
 import axios from 'axios'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { type NextApiRequest, type NextApiResponse } from 'next'
 import { Logger } from 'tslog'
 import { z } from 'zod'
 
 import { crowdinOpts } from '~app/data/crowdinOta'
-import { fetchCrowdinFile, fetchCrowdinDbKey, crowdinDistTimestamp } from '~app/utils/crowdin'
+import { crowdinDistTimestamp, fetchCrowdinDbKey, fetchCrowdinFile } from '~app/utils/crowdin'
 
 const QuerySchema = z.object({
 	lng: z.string(),
