@@ -48,7 +48,7 @@
 		"@types/react-dom": "18.2.3",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
-		"eslint": "8.39.0",
+		"eslint": "8.40.0",
 		"typescript": "5.0.4"
 	}
 }
