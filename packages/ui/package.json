@@ -112,7 +112,7 @@
 		"dayjs": "1.11.7",
 		"dotenv": "16.0.3",
 		"embla-carousel-react": "7.1.0",
-		"eslint": "8.39.0",
+		"eslint": "8.40.0",
 		"i18next": "22.4.15",
 		"i18next-browser-languagedetector": "7.0.1",
 		"i18next-http-backend": "2.2.0",
