@@ -107,7 +107,7 @@
 		"commander": "10.0.1",
 		"dotenv": "16.0.3",
 		"eslint": "8.39.0",
-		"eslint-plugin-i18next": "6.0.0",
+		"eslint-plugin-i18next": "6.0.1",
 		"flat": "5.0.2",
 		"listr2": "6.4.2",
 		"prettier": "2.8.8",
