@@ -1,10 +1,21 @@
-import { type Meta } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'
 
+import { PhoneEmailFormProvider, useForm } from './context'
+import { PhoneNumberEntry } from './fields'
 import { PhoneEmailModal } from './index'
+
+const FieldRender = () => {
+	const form = useForm()
+	return (
+		<PhoneEmailFormProvider form={form}>
+			<PhoneNumberEntry />
+		</PhoneEmailFormProvider>
+	)
+}
 
 export default {
 	title: 'Data Portal/Modals/Add Phone or Email',
@@ -21,5 +32,10 @@ export default {
 		variant: 'inlineInvertedUtil1',
 	},
 } satisfies Meta<typeof PhoneEmailModal>
+type StoryDef = StoryObj<typeof PhoneEmailModal>
 
-export const Modal = {}
+export const Modal = {} satisfies StoryDef
+
+export const Fields = {
+	render: FieldRender,
+} satisfies StoryObj<typeof FieldRender>
