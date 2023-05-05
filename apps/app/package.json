@@ -20,7 +20,7 @@
 	},
 	"dependencies": {
 		"@aws-crypto/sha256-js": "4.0.0",
-		"@aws-sdk/client-s3": "3.327.0",
+		"@aws-sdk/client-s3": "3.328.0",
 		"@aws-sdk/signature-v4": "3.310.0",
 		"@crowdin/crowdin-api-client": "1.22.1",
 		"@crowdin/ota-client": "1.0.0",
@@ -106,7 +106,7 @@
 		"@weareinreach/eslint-config": "0.100.0",
 		"commander": "10.0.1",
 		"dotenv": "16.0.3",
-		"eslint": "8.39.0",
+		"eslint": "8.40.0",
 		"eslint-plugin-i18next": "6.0.1",
 		"flat": "5.0.2",
 		"listr2": "6.4.2",
