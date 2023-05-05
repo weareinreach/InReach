@@ -4,12 +4,12 @@ import { Button } from '~ui/components/core'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'
 
-import { PhoneEmailFormProvider, useForm } from './context'
+import { formHookParams, PhoneEmailFormProvider, useForm } from './context'
 import { PhoneNumberEntry } from './fields'
 import { PhoneEmailModal } from './index'
 
 const FieldRender = () => {
-	const form = useForm()
+	const form = useForm(formHookParams)
 	return (
 		<PhoneEmailFormProvider form={form}>
 			<PhoneNumberEntry />
