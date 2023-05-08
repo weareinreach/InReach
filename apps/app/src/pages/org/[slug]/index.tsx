@@ -1,5 +1,5 @@
 /* eslint-disable i18next/no-literal-string */
-import { Grid, Image, Stack, Tabs } from '@mantine/core'
+import { Grid, Stack, Tabs } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { type GetServerSideProps, type NextPage } from 'next'
 import { useRouter } from 'next/router'
