@@ -104,6 +104,7 @@
 		"@weareinreach/api": "0.100.0",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/config": "0.100.0",
+		"@weareinreach/db": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"babel-loader": "9.1.2",
 		"chromatic": "6.17.4",

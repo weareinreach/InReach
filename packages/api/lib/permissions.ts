@@ -1,4 +1,4 @@
-import { type Permission } from '~api/generated/permission'
+import { type Permission } from '@weareinreach/db/generated/permission'
 
 const locations = {
 	createNewLocation: 'createLocation',

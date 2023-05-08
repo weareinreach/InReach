@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
 
-import { type LocaleCodes, translatedLangs } from '~api/generated/languages'
+import { type LocaleCodes, translatedLangs } from '@weareinreach/db/generated/languages'
 import { Icon } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({

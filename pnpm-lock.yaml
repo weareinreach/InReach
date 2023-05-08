@@ -1389,6 +1389,9 @@ importers:
       '@weareinreach/config':
         specifier: 0.100.0
         version: link:../config
+      '@weareinreach/db':
+        specifier: 0.100.0
+        version: link:../db
       '@weareinreach/eslint-config':
         specifier: 0.100.0
         version: link:../eslint-config
