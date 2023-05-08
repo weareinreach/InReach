@@ -14,4 +14,5 @@ export * from './2023-04-21_badge-render-field'
 export * from './2023-04-25_attr-supp-schemas/index'
 export * from './2023-04-26_attr-supp-interpolation/index'
 export * from './2023-05-05_enabled-countries'
+export * from './2023-05-08_permissions'
 // codegen:end

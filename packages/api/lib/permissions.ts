@@ -54,6 +54,7 @@ const orgWebsite = {
 
 const system = {
 	createPermission: 'adminPermissions',
+	getDetails: ['dataPortalBasic'],
 } satisfies PermissionDefs
 
 const permissions = {
