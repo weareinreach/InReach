@@ -15,6 +15,15 @@ generator zod {
   useDefaultValidators   = false
 }
 
+generator kysely {
+  provider = "prisma-kysely"
+
+  // Optionally provide a destination directory for the generated file
+  // and a filename of your choice
+  output   = "../kysely-vercel"
+  fileName = "index.ts"
+}
+
 // generator dbml {
 //   provider              = "prisma-dbml-generator"
 //   output                = "./dbml"

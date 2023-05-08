@@ -1,5 +1,5 @@
 /* eslint-disable i18next/no-literal-string */
-import { Grid, Stack, Tabs } from '@mantine/core'
+import { Grid, Stack, Tabs, Title } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { type GetServerSideProps, type NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -8,6 +8,7 @@ import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
+import { checkServerPermissions } from '@weareinreach/auth'
 import { GoogleMap, Toolbar } from '@weareinreach/ui/components/core'
 import {
 	ContactSection,
@@ -27,7 +28,7 @@ const OrganizationPage: NextPage = () => {
 	const { query } = router
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
-	const { data, isLoading, status } = api.organization.getBySlug.useQuery(query)
+	const { data, status } = api.organization.getBySlug.useQuery(query)
 	const { ref, width } = useElementSize()
 	useEffect(() => {
 		if (data && status === 'success') setLoading(false)
@@ -90,6 +91,7 @@ const OrganizationPage: NextPage = () => {
 
 	return (
 		<>
+			<Title order={1}>EDIT MODE</Title>
 			<Grid.Col sm={8} order={1}>
 				<Toolbar
 					breadcrumbProps={{ option: 'back', backTo: 'search', onClick: () => router.back() }}
@@ -128,14 +130,26 @@ const OrganizationPage: NextPage = () => {
 export const getServerSideProps: GetServerSideProps<
 	Record<string, unknown>,
 	RoutedQuery<'/org/[slug]'>
-> = async ({ locale, params }) => {
+> = async ({ locale, params, req, res }) => {
 	if (!params) return { notFound: true }
 	const { slug } = params
+
+	const session = checkServerPermissions({ ctx: { req, res }, permissions: ['dataPortalBasic'], has: 'some' })
+
+	if (!session) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false,
+			},
+		}
+	}
 
 	const ssg = await trpcServerClient()
 
 	await ssg.organization.getBySlug.prefetch({ slug })
 	const props = {
+		session,
 		trpcState: ssg.dehydrate(),
 		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
 	}

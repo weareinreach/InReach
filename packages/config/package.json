@@ -17,6 +17,7 @@
 		"preinstall": "npx only-allow pnpm"
 	},
 	"dependencies": {
+		"@t3-oss/env-nextjs": "0.2.2",
 		"znv": "0.3.2"
 	},
 	"devDependencies": {
