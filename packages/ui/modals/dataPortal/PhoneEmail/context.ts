@@ -17,6 +17,8 @@ const PhoneEmailSchema = z
 			.string()
 			.refine((data) => Boolean(parsePhoneNumber(data)?.isValid()), { message: 'Invalid phone number' }),
 		phoneCountryId: z.string(),
+		phoneTypeId: z.string().optional(),
+		customPhoneType: z.string().optional(),
 		...commonItems,
 	})
 	.or(
@@ -24,8 +26,7 @@ const PhoneEmailSchema = z
 			emailAddress: z.string(),
 			firstName: z.string().optional(),
 			lastName: z.string().optional(),
-			phoneTypeId: z.string().optional(),
-			customPhoneType: z.string().optional(),
+			emailDesc: z.string().optional(),
 			...commonItems,
 		})
 	)

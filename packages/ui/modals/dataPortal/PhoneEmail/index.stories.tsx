@@ -1,21 +1,9 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
-import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'
 
-import { formHookParams, PhoneEmailFormProvider, useForm } from './context'
-import { PhoneNumberEntry } from './fields'
+import { phoneEmailFieldMocks } from './fields.stories'
 import { PhoneEmailModal } from './index'
-
-const FieldRender = () => {
-	const form = useForm(formHookParams)
-	return (
-		<PhoneEmailFormProvider form={form}>
-			<PhoneNumberEntry />
-		</PhoneEmailFormProvider>
-	)
-}
 
 export default {
 	title: 'Data Portal/Modals/Add Phone or Email',
@@ -23,8 +11,17 @@ export default {
 	parameters: {
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
-		msw: [...allFieldOptHandlers],
+		msw: phoneEmailFieldMocks,
 		rqDevtools: true,
+		nextjs: {
+			router: {
+				pathname: '/org/[slug]/edit',
+				asPath: '/org/mock-org-slug',
+				query: {
+					slug: 'mock-org-slug',
+				},
+			},
+		},
 	},
 	args: {
 		component: Button,
@@ -34,8 +31,14 @@ export default {
 } satisfies Meta<typeof PhoneEmailModal>
 type StoryDef = StoryObj<typeof PhoneEmailModal>
 
-export const Modal = {} satisfies StoryDef
+export const Modal_Phone = {
+	args: {
+		role: 'phone',
+	},
+} satisfies StoryDef
 
-export const Fields = {
-	render: FieldRender,
-} satisfies StoryObj<typeof FieldRender>
+export const Modal_Email = {
+	args: {
+		role: 'email',
+	},
+} satisfies StoryDef
