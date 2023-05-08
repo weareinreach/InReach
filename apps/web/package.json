@@ -13,8 +13,8 @@
 	},
 	"dependencies": {
 		"@crowdin/ota-client": "1.0.0",
-		"@emotion/react": "11.10.8",
-		"@emotion/server": "11.10.0",
+		"@emotion/react": "11.11.0",
+		"@emotion/server": "11.11.0",
 		"@mantine/carousel": "6.0.10",
 		"@mantine/core": "6.0.10",
 		"@mantine/dates": "6.0.10",
@@ -43,7 +43,7 @@
 	"devDependencies": {
 		"@next/bundle-analyzer": "13.4.1",
 		"@types/eslint": "8.37.0",
-		"@types/node": "18.16.4",
+		"@types/node": "18.16.5",
 		"@types/react": "18.2.6",
 		"@types/react-dom": "18.2.4",
 		"@weareinreach/config": "0.100.0",
