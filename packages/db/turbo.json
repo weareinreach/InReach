@@ -24,6 +24,12 @@
 		"download:seedData": {
 			"outputs": ["seed/data/downloaded/*.json"]
 		},
+		"generate:data": {
+			"cache": false,
+			"dependsOn": ["db:dataMigrate"],
+			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
+			"outputs": ["./generated/**"]
+		},
 		"type-check": {}
 	}
 }

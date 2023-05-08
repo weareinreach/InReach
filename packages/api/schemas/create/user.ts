@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { generateId, Prisma } from '@weareinreach/db'
-import { userTypes } from '~api/generated/userType'
+import { userTypes } from '@weareinreach/db/generated/userType'
 import { decodeUrl } from '~api/lib'
 import { CreationBase, id, idString, slug } from '~api/schemas/common'
 import {

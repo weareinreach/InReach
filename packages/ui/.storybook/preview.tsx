@@ -6,7 +6,7 @@ import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
 import { type BaseRouter } from 'next/dist/shared/lib/router/router'
 import { type Router } from 'next/router'
 
-import { type LocaleCodes, translatedLangs } from '@weareinreach/api/generated/languages'
+import { type LocaleCodes, translatedLangs } from '@weareinreach/db/generated/languages'
 
 import { Layouts, type LayoutsDecorator, WithI18n, WithMantine, WithStrictMode, WithTRPC } from './decorators'
 import { i18n } from './i18next'

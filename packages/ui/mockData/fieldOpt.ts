@@ -2840,7 +2840,7 @@ export const countries = [
 		flag: '🇦🇸',
 		tsKey: 'ASM.name',
 		tsNs: 'country',
-		activeForOrgs: null,
+		activeForOrgs: true,
 	},
 	{
 		id: 'ctry_01GW2HHDKDE152HYH5H1TD8CK6',
@@ -3690,7 +3690,7 @@ export const countries = [
 		flag: '🇬🇺',
 		tsKey: 'GUM.name',
 		tsNs: 'country',
-		activeForOrgs: null,
+		activeForOrgs: true,
 	},
 	{
 		id: 'ctry_01GW2HHDK6BPY9VBW9WR5HDVA5',
@@ -4420,7 +4420,7 @@ export const countries = [
 		flag: '🇲🇵',
 		tsKey: 'MNP.name',
 		tsNs: 'country',
-		activeForOrgs: null,
+		activeForOrgs: true,
 	},
 	{
 		id: 'ctry_01GW2HHDKCQX4EJEVCEME3EEBS',
@@ -4580,7 +4580,7 @@ export const countries = [
 		flag: '🇵🇷',
 		tsKey: 'PRI.name',
 		tsNs: 'country',
-		activeForOrgs: null,
+		activeForOrgs: true,
 	},
 	{
 		id: 'ctry_01GW2HHDKA77DT55ZPJ8XKM8P3',
@@ -5170,7 +5170,7 @@ export const countries = [
 		flag: '🇺🇲',
 		tsKey: 'UMI.name',
 		tsNs: 'country',
-		activeForOrgs: null,
+		activeForOrgs: true,
 	},
 	{
 		id: 'ctry_01GW2HHDK9DG12Y7RQMVEE5XSQ',
@@ -5180,7 +5180,7 @@ export const countries = [
 		flag: '🇻🇮',
 		tsKey: 'VIR.name',
 		tsNs: 'country',
-		activeForOrgs: null,
+		activeForOrgs: true,
 	},
 	{
 		id: 'ctry_01GW2HHDKAZYVYFHDZNZDE4HPB',
@@ -7329,6 +7329,34 @@ export const queryGovDistsByCountry = (query: ApiInput['fieldOpt']['govDistsByCo
 	return govDistsByCountry
 }
 
+export const getPhoneTypes = [
+	{
+		id: 'phtp_01GXRXCWJG3F358K8QBX7C08R7',
+		tsKey: 'fax',
+		tsNs: 'phone-type',
+	},
+	{
+		id: 'phtp_01GXRXCWJGZQDYF577AGZASTPQ',
+		tsKey: 'hotline',
+		tsNs: 'phone-type',
+	},
+	{
+		id: 'phtp_01GXRXCWJGNF3JF8DEY1EWP1JW',
+		tsKey: 'office',
+		tsNs: 'phone-type',
+	},
+	{
+		id: 'phtp_01GXRXCWJG7PGQH1A6GGBKATZ4',
+		tsKey: 'sms',
+		tsNs: 'phone-type',
+	},
+	{
+		id: 'phtp_01GXRXCWJGCZFWCHBGFA5AE5YK',
+		tsKey: 'whatsapp',
+		tsNs: 'phone-type',
+	},
+] satisfies ApiOutput['fieldOpt']['getPhoneTypes']
+
 export const allFieldOptHandlers = [
 	getTRPCMock({
 		path: ['fieldOpt', 'attributeCategories'],
@@ -7349,5 +7377,9 @@ export const allFieldOptHandlers = [
 	getTRPCMock({
 		path: ['fieldOpt', 'govDistsByCountry'],
 		response: queryGovDistsByCountry,
+	}),
+	getTRPCMock({
+		path: ['fieldOpt', 'getPhoneTypes'],
+		response: getPhoneTypes,
 	}),
 ]
