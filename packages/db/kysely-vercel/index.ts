@@ -1,4 +1,5 @@
-import type { ColumnType } from 'kysely'
+import { type ColumnType } from 'kysely'
+
 export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 	? ColumnType<S, I | undefined, U>
 	: ColumnType<T, T | undefined, T>
@@ -466,10 +467,7 @@ export type OrgEmail = {
 	deleted: Generated<boolean>
 	titleId: string | null
 	descriptionId: string | null
-	/**
-	 * Associated only with location/service and not overall organization (for large orgs w/ multiple
-	 * locations)
-	 */
+	/** Associated only with location/service and not overall organization (for large orgs w/ multiple locations) */
 	locationOnly: Generated<boolean>
 	serviceOnly: Generated<boolean>
 	createdAt: Generated<Timestamp>
