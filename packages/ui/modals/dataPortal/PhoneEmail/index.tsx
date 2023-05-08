@@ -43,7 +43,7 @@ const PhoneEmailModalBody = forwardRef<HTMLButtonElement, PhoneEmailModalProps>(
 			}
 			case 'phone': {
 				const { phoneNumber: number, phoneCountryId: countryId, phoneTypeId, customPhoneType } = formValues
-				if (!number) return
+				if (!number || !countryId) return
 
 				savePhone.mutate({ orgSlug: slug, data: { number, countryId, phoneTypeId } })
 
