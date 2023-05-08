@@ -20,10 +20,10 @@ import { Badge } from '~ui/components/core/Badge'
 import { Button } from '~ui/components/core/Button'
 import { Icon, isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+import { ModalTitle } from '~ui/modals/ModalTitle'
 
 import { AttributeModalFormProvider, type FormData, useForm } from './context'
 import { Supplement } from './fields'
-import { ModalTitle } from '../../ModalTitle'
 
 const formDataSchema = z.object({
 	selected: z
