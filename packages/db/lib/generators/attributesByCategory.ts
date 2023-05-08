@@ -1,4 +1,4 @@
-import { prisma } from '@weareinreach/db'
+import { prisma } from '~db/.'
 
 import { type ListrTask } from '.'
 import { writeOutput } from './common'
