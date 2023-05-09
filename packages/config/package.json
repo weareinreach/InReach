@@ -17,11 +17,11 @@
 		"preinstall": "npx only-allow pnpm"
 	},
 	"dependencies": {
-		"@t3-oss/env-nextjs": "0.2.2",
+		"@t3-oss/env-nextjs": "0.3.1",
 		"znv": "0.3.2"
 	},
 	"devDependencies": {
-		"@types/node": "18.16.5",
+		"@types/node": "18.16.6",
 		"@weareinreach/eslint-config": "0.100.0",
 		"alex": "11.0.0",
 		"next-i18next": "13.2.2",
