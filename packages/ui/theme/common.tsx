@@ -11,6 +11,8 @@ import {
 	type CheckboxStylesParams,
 	type ColProps,
 	type CSSObject,
+	DrawerProps,
+	type DrawerStylesNames,
 	em,
 	type GridProps,
 	type InputStylesNames,
@@ -375,6 +377,22 @@ export const commonTheme = {
 				color: theme.other.colors.tertiary.coolGray,
 			}),
 			variants: variants.Divider,
+		},
+		Drawer: {
+			styles: (theme) =>
+				({
+					content: {
+						borderRadius: `${rem(32)} ${rem(32)} ${rem(0)} ${rem(0)}`,
+						padding: `${rem(20)} ${rem(0)}`,
+					},
+					header: {
+						borderBottom: `${rem(1)} solid ${theme.other.colors.primary.lightGray}`,
+						padding: `${rem(16)} ${rem(31)} ${rem(16)} ${rem(36)}`,
+					},
+					body: {
+						padding: `${rem(0)} ${rem(36)} ${rem(16)} ${rem(36)}`,
+					},
+				} satisfies Styles<DrawerStylesNames>),
 		},
 		Grid: {
 			defaultProps: {
