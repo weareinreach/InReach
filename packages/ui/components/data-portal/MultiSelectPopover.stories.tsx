@@ -1,9 +1,24 @@
 import { action } from '@storybook/addon-actions'
 import { type Meta, type StoryObj } from '@storybook/react'
+import { useState } from 'react'
 
-import { MultiSelectPopover } from './MultiSelectPopover'
+import { MultiSelectPopover, type MultiSelectPopoverProps } from './MultiSelectPopover'
 
 const checkboxChanged = action('values')
+
+const ComponentWithState = (args: MultiSelectPopoverProps) => {
+	const [value, setValue] = useState(['2'])
+	return (
+		<MultiSelectPopover
+			value={value}
+			onChange={(e) => {
+				setValue(e)
+				checkboxChanged(e)
+			}}
+			{...args}
+		/>
+	)
+}
 
 export default {
 	title: 'Data Portal/Multi Select Popover',
@@ -15,12 +30,9 @@ export default {
 			{ value: '3', label: 'three three three three three three three' },
 			{ value: '4', label: 'four four four four four' },
 		],
-		checkboxGroupProps: {
-			onChange: (val) => checkboxChanged(val),
-			defaultValue: ['2'],
-		},
 		label: 'Dropdown target text',
 	},
+	render: ComponentWithState,
 } satisfies Meta<typeof MultiSelectPopover>
 
 type StoryDef = StoryObj<typeof MultiSelectPopover>

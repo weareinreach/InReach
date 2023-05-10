@@ -1169,6 +1169,9 @@ importers:
       json-schema-to-zod:
         specifier: 0.6.3
         version: 0.6.3
+      just-compare:
+        specifier: 2.3.0
+        version: 2.3.0
       libphonenumber-js:
         specifier: 1.10.30
         version: 1.10.30
@@ -16162,6 +16165,10 @@ packages:
   /just-capitalize@3.2.0:
     resolution: {integrity: sha512-FK8U9A5AHCIGxlEXg3RFJkb9Nz/fS9luJlrfRf0bFBZU6xnIQ6tbwl+HitMJLwCFszZqVaXQcyeoy8/PYABS6A==}
     dev: true
+
+  /just-compare@2.3.0:
+    resolution: {integrity: sha512-6shoR7HDT+fzfL3gBahx1jZG3hWLrhPAf+l7nCwahDdT9XDtosB9kIF0ZrzUp5QY8dJWfQVr5rnsPqsbvflDzg==}
+    dev: false
 
   /just-debounce@1.1.0:
     resolution: {integrity: sha512-qpcRocdkUmf+UTNBYx5w6dexX5J31AKK1OmPwH630a83DdVVUIngk55RSAiIGpQyoH0dlr872VHfPjnQnK1qDQ==}
