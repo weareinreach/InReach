@@ -33,19 +33,37 @@ const PhoneCountrySelectItem = forwardRef<HTMLDivElement, PhoneCountrySelectItem
 PhoneCountrySelectItem.displayName = 'PhoneCountrySelectItem'
 
 const isValidCountry = (country: string): country is CountryCode => isSupportedCountry(country)
-const usePhoneNumberEntryStyles = createStyles((theme) => ({
+const useCountrySelectStyles = createStyles((theme) => ({
 	dropdown: {
 		width: 'fit-content !important',
 		left: 'unset !important',
+		right: 0,
 	},
 	root: {
-		width: rem(96),
+		width: rem(48),
+	},
+	input: {
+		border: 'none',
+		padding: 0,
+		height: '2rem',
+	},
+	rightSection: {
+		paddingRight: 0,
 	},
 }))
+const usePhoneEntryStyles = createStyles((theme) => ({
+	rightSection: {
+		padding: `0 ${rem(4)}`,
+		margin: `${rem(2)} 0`,
+		borderLeft: `1px solid ${theme.other.colors.primary.lightGray}`,
+	},
+}))
+
 export const PhoneNumberEntry = () => {
 	const [countryList, setCountryList] = useState<PhoneCountryItem[]>([])
 	const [selectedCountry, setSelectedCountry] = useState<CountryCode | undefined>()
-	const { classes } = usePhoneNumberEntryStyles()
+	const { classes: countrySelectClasses } = useCountrySelectStyles()
+	const { classes: phoneEntryClasses } = usePhoneEntryStyles()
 
 	const topCountries = ['US', 'CA', 'MX']
 
@@ -87,7 +105,6 @@ export const PhoneNumberEntry = () => {
 			const phoneCountry = phoneFormatter.getNumber()?.country
 			if (phoneCountry && phoneCountry !== selectedCountry) {
 				const countryId = countryList.find(({ data }) => data.cca2 === phoneCountry)?.value
-				console.log('🚀 ~ file: fields.tsx:92 ~ useEffect ~ countryId:', countryId)
 				if (countryId) {
 					setSelectedCountry(phoneCountry)
 					form.setFieldValue('phoneCountryId', countryId)
@@ -99,23 +116,26 @@ export const PhoneNumberEntry = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form.values.phoneNumber])
 
+	const countrySelection = (
+		<Select
+			data={countryList}
+			itemComponent={PhoneCountrySelectItem}
+			classNames={countrySelectClasses}
+			clearable
+			{...form.getInputProps('phoneCountryId')}
+		/>
+	)
+
 	return (
-		<Group noWrap>
-			<Select
-				data={countryList}
-				itemComponent={PhoneCountrySelectItem}
-				// withinPortal
-				clearable
-				classNames={classes}
-				{...form.getInputProps('phoneCountryId')}
-			/>
-			<PhoneInput
-				country={selectedCountry}
-				{...form.getInputProps('phoneNumber')}
-				inputComponent={TextInput}
-			/>
-			{/* <TextInput {...form.getInputProps('phoneNumber')} /> */}
-		</Group>
+		<PhoneInput
+			country={selectedCountry}
+			defaultCountry='US'
+			{...form.getInputProps('phoneNumber')}
+			inputComponent={TextInput}
+			rightSection={countrySelection}
+			rightSectionWidth={56}
+			classNames={phoneEntryClasses}
+		/>
 	)
 }
 

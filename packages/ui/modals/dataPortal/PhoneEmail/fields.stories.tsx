@@ -42,8 +42,6 @@ export default {
 	title: 'Data Portal/Modals/Add Phone or Email/Fields',
 	component: Fragment,
 	parameters: {
-		layout: 'fullscreen',
-		layoutWrapper: 'centeredFullscreen',
 		msw: phoneEmailFieldMocks,
 		rqDevtools: true,
 		controls: {

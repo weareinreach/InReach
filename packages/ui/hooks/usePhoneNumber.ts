@@ -1,9 +1,6 @@
-import parsePhone, { type CountryCode, getCountries } from 'libphonenumber-js'
+import parsePhone, { type CountryCode, getCountries, isSupportedCountry } from 'libphonenumber-js'
 
-const isCountryCode = (countryCode: string): countryCode is CountryCode => {
-	const codes = getCountries() as string[]
-	return codes.includes(countryCode)
-}
+const isCountryCode = (countryCode: string): countryCode is CountryCode => isSupportedCountry(countryCode)
 
 export const parsePhoneNumber = (phoneNumber: string, countryCode = 'US') => {
 	const country = countryCode.toUpperCase()
