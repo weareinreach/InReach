@@ -215,7 +215,7 @@
 	"show-more": "Mostrar más",
 	"sign-up": "Regístrate",
 	"sign-up-free": "Regístrate gratis",
-	"sign-up-header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(sign-up)</title2>\n<textDarkGray>Bienvenido a la primera plataforma tecnológica del mundo que combina a las personas LGBTQ+ con discriminación y persecución con seguridad recursos verificados.</textDarkGray>\n</group>",
+	"sign-up-header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(registro)</title2>\n<textDarkGray>Bienvenido a la primera plataforma tecnológica del mundo que combina a las personas LGBTQ+ con discriminación y persecución con seguridad recursos verificados.</textDarkGray>\n</group>",
 	"sign-up-modal-body": [
 		"<title3>¿Cómo podemos ayudarte?</title3>",
 		"<group>\n<button data-option='myself'>Estoy buscando ayuda para mí</button>\n<button data-option='law'>Soy un abogado o estudiante de derecho</button>\n<button data-option='servpro'>Soy un proveedor de servicios no legal</button>\n<button data-option='lcr'>Soy un revisor de la comunidad local</button>\n</group>",
