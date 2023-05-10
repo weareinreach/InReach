@@ -17,10 +17,10 @@
 		"@googlemaps/google-maps-services-js": "3.3.30",
 		"@tanstack/react-query": "4.29.5",
 		"@terraformer/wkt": "2.2.0",
-		"@trpc/client": "10.25.0",
-		"@trpc/next": "10.25.0",
-		"@trpc/react-query": "10.25.0",
-		"@trpc/server": "10.25.0",
+		"@trpc/client": "10.25.1",
+		"@trpc/next": "10.25.1",
+		"@trpc/react-query": "10.25.1",
+		"@trpc/server": "10.25.1",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"alex": "11.0.0",
@@ -43,7 +43,7 @@
 	"devDependencies": {
 		"@types/eslint": "8.37.0",
 		"@types/luxon": "3.3.0",
-		"@types/node": "18.16.6",
+		"@types/node": "18.16.7",
 		"@types/prettier": "2.7.2",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "0.100.0",
@@ -64,5 +64,5 @@
 	"peerDependencies": {
 		"next": ">=13"
 	},
-	"packageManager": "pnpm@8.4.0"
+	"packageManager": "pnpm@8.5.0"
 }
