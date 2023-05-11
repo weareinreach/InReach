@@ -9,11 +9,10 @@ export const useOrgId = () => {
 	const [slug, setSlug] = useState<string>(pageSlug)
 	const [orgId, setOrgId] = useState<string>()
 	useDebugValue(slug)
-	api.organization.getIdFromSlug.useQuery(
+	const { data, isLoading } = api.organization.getIdFromSlug.useQuery(
 		{ slug },
 		{
 			enabled: Boolean(slug),
-			onSuccess: (data) => setOrgId(data?.id),
 			refetchOnWindowFocus: false,
 		}
 	)
@@ -22,7 +21,11 @@ export const useOrgId = () => {
 		if (pageSlug !== slug) {
 			setSlug(pageSlug)
 		}
-	}, [pageSlug])
+	}, [pageSlug, slug])
+
+	useEffect(() => {
+		if (data && !isLoading && data.id !== orgId) setOrgId(data.id)
+	}, [data, isLoading, orgId])
 
 	return orgId
 }

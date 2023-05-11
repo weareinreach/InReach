@@ -9,7 +9,7 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { forwardRef, useState } from 'react'
+import { forwardRef } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { useSlug } from '~ui/hooks/useSlug'

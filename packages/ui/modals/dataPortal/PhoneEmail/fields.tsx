@@ -5,11 +5,17 @@ import { type ComponentPropsWithoutRef, forwardRef, useEffect, useState } from '
 import PhoneInput from 'react-phone-number-input/input'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { MultiSelectPopover } from '~ui/components/data-portal/MultiSelectPopover'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useOrgId } from '~ui/hooks/useOrgId'
 import { useSlug } from '~ui/hooks/useSlug'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useFormContext } from './context'
+
+// #endregion
+
+// #region flags/attachments
 
 // #region Phone Number Entry
 type CountryList = ApiOutput['fieldOpt']['countries']
@@ -171,7 +177,12 @@ export const PhoneTypeSelect = () => {
 interface BasicSelect {
 	value: string
 	label: string
+	[k: string]: string
 }
+
+const compareArrays = (arr1: unknown[] = [], arr2: unknown[] = []) =>
+	JSON.stringify(arr1.sort()) === JSON.stringify(arr2.sort())
+
 export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 	const form = useFormContext()
 	const [locations, setLocations] = useState<BasicSelect[]>()
@@ -179,31 +190,37 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 	const slug = useSlug()
 	const variants = useCustomVariant()
 	const { t } = useTranslation([slug])
-	const { data: org, isSuccess: orgIdSuccess } = api.organization.getIdFromSlug.useQuery({
-		slug,
-	})
+	const organizationId = useOrgId()
 
-	api.service.getNames.useQuery(
-		{ organizationId: org?.id },
+	const { data: serviceData, isLoading: isServiceLoading } = api.service.getNames.useQuery(
+		{ organizationId },
 		{
-			enabled: orgIdSuccess,
-			onSuccess: (data) =>
-				setServices(
-					data.map(({ id, tsKey, defaultText }) => ({
-						value: id,
-						label: t(tsKey, { ns: slug, defaultValue: defaultText }),
-					}))
-				),
+			enabled: Boolean(organizationId),
+			select: (data) =>
+				data.map(({ id, tsKey, defaultText }) => ({
+					value: id,
+					label: t(tsKey, { ns: slug, defaultValue: defaultText }),
+				})),
 		}
 	)
-	api.location.getNames.useQuery(
-		{ organizationId: org?.id ?? '' },
+	const { data: locationData, isLoading: isLocationLoading } = api.location.getNames.useQuery(
+		{ organizationId: organizationId ?? '' },
 		{
-			enabled: orgIdSuccess,
-			onSuccess: (data) =>
-				setLocations(data.map(({ id, name }) => ({ value: id, label: name ?? 'Missing Name' }))),
+			enabled: Boolean(organizationId),
+			select: (data) => data.map(({ id, name }) => ({ value: id, label: name ?? 'Missing Name' })),
 		}
 	)
+
+	useEffect(() => {
+		if (serviceData && !isServiceLoading && !compareArrays(serviceData, services)) {
+			setServices(serviceData)
+		}
+	}, [serviceData, isServiceLoading, services])
+	useEffect(() => {
+		if (locationData && !isLocationLoading && !compareArrays(locationData, locations)) {
+			setLocations(locationData)
+		}
+	}, [locationData, isLocationLoading, locations])
 
 	return (
 		<Card withBorder>
@@ -229,7 +246,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 				<Stack spacing={0}>
 					<Text variant={variants.Text.utility1}>Show on Locations</Text>
 					{locations && locations.length > 1 ? (
-						<Select data={locations} {...form.getInputProps('orgLocationId')} />
+						<MultiSelectPopover data={locations} label='Locations' {...form.getInputProps('orgLocationId')} />
 					) : (
 						<Text variant={variants.Text.utility4}>xx</Text>
 					)}
@@ -237,7 +254,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 				<Stack spacing={0}>
 					<Text variant={variants.Text.utility1}>Show on Services</Text>
 					{services && services.length > 1 ? (
-						<Select data={services} {...form.getInputProps('orgServiceId')} withinPortal />
+						<MultiSelectPopover data={services} label='Services' {...form.getInputProps('orgServiceId')} />
 					) : (
 						<Text variant={variants.Text.utility4}>xx</Text>
 					)}
