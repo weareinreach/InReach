@@ -4,7 +4,7 @@ import HttpApi, { type HttpBackendOptions } from 'i18next-http-backend'
 import intervalPlural from 'i18next-intervalplural-postprocessor'
 import { initReactI18next } from 'react-i18next'
 
-import { locales } from '@weareinreach/api/generated/languages'
+import { locales } from '@weareinreach/db/generated/languages'
 
 import config from '../next-i18next.config'
 

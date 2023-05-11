@@ -13,8 +13,8 @@
 	},
 	"dependencies": {
 		"@crowdin/ota-client": "1.0.0",
-		"@emotion/react": "11.10.8",
-		"@emotion/server": "11.10.0",
+		"@emotion/react": "11.11.0",
+		"@emotion/server": "11.11.0",
 		"@mantine/carousel": "6.0.10",
 		"@mantine/core": "6.0.10",
 		"@mantine/dates": "6.0.10",
@@ -35,20 +35,20 @@
 		"dayjs": "1.11.7",
 		"embla-carousel-react": "7.1.0",
 		"i18next": "22.4.15",
-		"next": "13.3.4",
+		"next": "13.4.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-i18next": "12.2.2"
 	},
 	"devDependencies": {
-		"@next/bundle-analyzer": "13.3.4",
+		"@next/bundle-analyzer": "13.4.1",
 		"@types/eslint": "8.37.0",
-		"@types/node": "18.16.3",
-		"@types/react": "18.2.5",
-		"@types/react-dom": "18.2.3",
+		"@types/node": "18.16.7",
+		"@types/react": "18.2.6",
+		"@types/react-dom": "18.2.4",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
-		"eslint": "8.39.0",
+		"eslint": "8.40.0",
 		"typescript": "5.0.4"
 	}
 }

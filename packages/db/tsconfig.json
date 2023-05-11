@@ -7,5 +7,5 @@
 		"allowJs": true
 	},
 	"exclude": ["**/node_modules", "./**/.*/"],
-	"include": ["./**/*.ts", "../../@types/**/*.ts"]
+	"include": ["./**/*.ts", "./**/*.js", "./**/*.mjs", "../../@types/**/*.ts"]
 }

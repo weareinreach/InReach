@@ -44,11 +44,11 @@
 	"dependencies": {
 		"@changesets/cli": "2.26.1",
 		"@manypkg/cli": "0.20.0",
-		"@types/node": "18.16.3",
+		"@types/node": "18.16.7",
 		"@types/prettier": "2.7.2",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
-		"boxen": "7.0.2",
+		"boxen": "7.1.0",
 		"dotenv": "16.0.3",
 		"husky": "8.0.3",
 		"lint-staged": "13.2.2",
@@ -61,7 +61,7 @@
 		"typescript": "5.0.4",
 		"typesync": "0.11.0"
 	},
-	"packageManager": "pnpm@8.4.0",
+	"packageManager": "pnpm@8.5.0",
 	"engines": {
 		"node": "^18",
 		"pnpm": "^7 || ^8"
