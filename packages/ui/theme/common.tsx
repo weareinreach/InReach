@@ -11,7 +11,6 @@ import {
 	type CheckboxStylesParams,
 	type ColProps,
 	type CSSObject,
-	DrawerProps,
 	type DrawerStylesNames,
 	em,
 	type GridProps,
@@ -383,7 +382,7 @@ export const commonTheme = {
 				({
 					content: {
 						borderRadius: `${rem(32)} ${rem(32)} ${rem(0)} ${rem(0)}`,
-						padding: `${rem(20)} ${rem(0)}`,
+						padding: `${rem(0)} ${rem(0)}`,
 					},
 					header: {
 						borderBottom: `${rem(1)} solid ${theme.other.colors.primary.lightGray}`,

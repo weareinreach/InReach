@@ -56,7 +56,7 @@ export const MultiSelectPopover = ({ data, label, value, onChange }: MultiSelect
 
 	return (
 		<>
-			<Popover opened={opened} onClose={menuHandler.close}>
+			<Popover opened={opened} onClose={menuHandler.close} trapFocus withinPortal>
 				<Popover.Target>
 					<UnstyledButton onClick={menuHandler.toggle} className={classes.button}>
 						<Group noWrap position='apart' spacing={16}>

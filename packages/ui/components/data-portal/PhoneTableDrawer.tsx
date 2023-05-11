@@ -1,34 +1,47 @@
-import { Box, type ButtonProps, createPolymorphicComponent, Drawer, Table, Text } from '@mantine/core'
+import { Box, type ButtonProps, createPolymorphicComponent, Drawer, Group, Table } from '@mantine/core'
 import { createFormContext } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { ReactTableDevtools } from '@tanstack/react-table-devtools'
-import { forwardRef } from 'react'
+import { forwardRef, type MouseEventHandler } from 'react'
 
+import { Breadcrumb } from '~ui/components/core/Breadcrumb'
+import { Button } from '~ui/components/core/Button'
 import { useOrgId } from '~ui/hooks/useOrgId'
+import { parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
+import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { MultiSelectPopover } from './MultiSelectPopover'
 
 const [FormProvider, useFormContext, useForm] = createFormContext<{ data: PhoneTableColumns[] }>()
 
+const DrawerHeader = ({ closeHandler }: { closeHandler: MouseEventHandler<HTMLButtonElement> }) => (
+	<Group noWrap position='apart' w='100%'>
+		<Breadcrumb option='close' onClick={closeHandler} />
+		<Button variant='primary-icon' leftIcon={<Icon icon='carbon:save' />}>
+			Save
+		</Button>
+	</Group>
+)
+
 export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerProps>((props, ref) => {
 	const [opened, handler] = useDisclosure(false)
 	const form = useForm({ initialValues: { data: [] } })
 	const organizationId = useOrgId()
-	console.log(form.values.data)
+
+	// #region tRPC
 	const { data } = api.orgPhone.get.useQuery(
 		{ organizationId },
 		{
 			enabled: Boolean(organizationId),
 			onSuccess: (data) => {
-				console.log('onSuccess', form.values, data)
 				if (!form.values.data || form.values.data.length === 0) {
-					console.log('set values')
 					form.setValues({
 						data: data.map(
 							({ country, locations, description, organization, services, phoneType, ...record }) => ({
 								...record,
+								country,
 								locations: locations.map(({ id }) => id),
 								services: services.map(({ id }) => id),
 								phoneType: phoneType?.id,
@@ -48,14 +61,24 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 	)
 	const { data: orgLocations } = api.location.getNames.useQuery(
 		{ organizationId: organizationId ?? '' },
-		{ enabled: Boolean(organizationId), initialData: [] }
+		{
+			enabled: Boolean(organizationId),
+			select: (data) => data.map(({ id, name }) => ({ value: id, label: name ?? '' })),
+		}
 	)
+	// #endregion
 
+	// #region React Table Setup
 	const columnHelper = createColumnHelper<PhoneTableColumns>()
 	const columns = [
 		columnHelper.accessor('number', {
 			header: 'Phone Number',
-			cell: (info) => info.getValue(),
+			cell: (info) => {
+				const country = info.row.getValue<string>('country')
+
+				const formattedPhone = parsePhoneNumber(info.getValue(), country)
+				return formattedPhone?.formatInternational()
+			},
 		}),
 		columnHelper.accessor('phoneType', {
 			cell: (info) => info.renderValue(),
@@ -66,48 +89,84 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 					key={info.cell.id}
 					data={orgServices ?? []}
 					label='Services'
-					// checkboxGroupProps={{ ...form.getInputProps(`data.${info.row.index}.services`) }}
-					useFormContextHook={useFormContext}
-					formField={`data.${info.row.index}.services`}
+					{...form.getInputProps(`data.${info.row.index}.services`)}
 				/>
 			),
 		}),
 		columnHelper.accessor('locations', {
-			cell: (info) => info.getValue(),
+			cell: (info) => (
+				<MultiSelectPopover
+					key={info.cell.id}
+					data={orgLocations ?? []}
+					label='Locations'
+					{...form.getInputProps(`data.${info.row.index}.locations`)}
+				/>
+			),
+		}),
+		columnHelper.accessor('country', {
+			enableHiding: true,
 		}),
 	]
 	const table = useReactTable({
 		data: form.values.data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
+		state: {
+			columnVisibility: {
+				country: false,
+			},
+		},
 	})
+	// #endregion
 
 	return (
 		<>
-			<Drawer onClose={handler.close} opened={opened} position='bottom'>
-				<FormProvider form={form}>
-					<Table>
-						<thead>
-							{table.getHeaderGroups().map((headerGroup) => (
-								<tr key={headerGroup.id}>
-									{headerGroup.headers.map((header) => (
-										<th key={header.id}>{flexRender(header.column.columnDef.header, header.getContext())}</th>
+			<FormProvider form={form}>
+				<Drawer.Root
+					onClose={handler.close}
+					opened={opened}
+					position='bottom'
+					// title={<DrawerHeader closeHandler={handler.close} />}
+					// withCloseButton={false}
+				>
+					<Drawer.Overlay />
+					<Drawer.Content>
+						<Drawer.Header>
+							<Group noWrap position='apart' w='100%'>
+								<Breadcrumb option='close' onClick={handler.close} />
+								<Button variant='primary-icon' leftIcon={<Icon icon='carbon:save' />}>
+									Save
+								</Button>
+							</Group>
+						</Drawer.Header>
+						<Drawer.Body>
+							<Table>
+								<thead style={{ position: 'sticky' }}>
+									{table.getHeaderGroups().map((headerGroup) => (
+										<tr key={headerGroup.id}>
+											{headerGroup.headers.map((header) => (
+												<th key={header.id} style={{ width: header.getSize() }}>
+													{flexRender(header.column.columnDef.header, header.getContext())}
+												</th>
+											))}
+										</tr>
 									))}
-								</tr>
-							))}
-						</thead>
-						<tbody>
-							{table.getRowModel().rows.map((row) => (
-								<tr key={row.id}>
-									{row.getVisibleCells().map((cell) => (
-										<td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+								</thead>
+
+								<tbody>
+									{table.getRowModel().rows.map((row) => (
+										<tr key={row.id}>
+											{row.getVisibleCells().map((cell) => (
+												<td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+											))}
+										</tr>
 									))}
-								</tr>
-							))}
-						</tbody>
-					</Table>
-				</FormProvider>
-			</Drawer>
+								</tbody>
+							</Table>
+						</Drawer.Body>
+					</Drawer.Content>
+				</Drawer.Root>
+			</FormProvider>
 
 			<Box component='button' onClick={handler.open} ref={ref} {...props} />
 			<ReactTableDevtools table={table} />
@@ -126,6 +185,7 @@ interface PhoneTableColumns {
 	id: string
 	number: string
 	ext: string | null
+	country: string
 	phoneType?: string | null
 	primary: boolean
 	published: boolean
