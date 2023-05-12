@@ -8,10 +8,12 @@ import * as path from 'path'
 
 const filePattern = '*.stories.@(ts|tsx)'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isDev = process.env.NODE_ENV === 'development'
 
 const config: StorybookConfig = {
-	stories: [`../!(node_modules)/**/${filePattern}`, '../other/**/*.mdx'],
+	// stories: [`../!(node_modules)/**/${filePattern}`, '../other/**/*.mdx'],
+	stories: [`../(components|hooks|icon|layouts|modals|other)/**/${filePattern}`, '../other/**/*.mdx'],
 	staticDirs: [
 		{
 			from: '../../../apps/app/public',
@@ -27,7 +29,7 @@ const config: StorybookConfig = {
 		'storybook-addon-designs',
 		'storybook-addon-pseudo-states',
 		// 'css-chaos-addon',
-		// 'storybook-addon-swc',
+		'storybook-addon-swc',
 		'@storybook/addon-essentials',
 	],
 	framework: {
@@ -110,7 +112,7 @@ const config: StorybookConfig = {
 			stats: {
 				colors: true,
 			},
-			devtool: isDev ? 'eval-source-map' : 'cheap-module-source-map',
+			// devtool: isDev ? 'eval-source-map' : 'cheap-module-source-map',
 		}
 		const mergedConfig = mergeAndConcat(config, configAdditions)
 		return mergedConfig

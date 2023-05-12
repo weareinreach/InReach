@@ -505,6 +505,12 @@ importers:
 
   packages/api:
     dependencies:
+      '@crowdin/crowdin-api-client':
+        specifier: 1.22.1
+        version: 1.22.1
+      '@crowdin/ota-client':
+        specifier: 1.0.0
+        version: 1.0.0(patch_hash=refrge56ym5gomc3tkglzjdymy)
       '@googlemaps/google-maps-services-js':
         specifier: 3.3.30
         version: 3.3.30
