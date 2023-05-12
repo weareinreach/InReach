@@ -85,6 +85,7 @@ export const orgPhoneRouter = defineRouter({
 						},
 					},
 				},
+				orderBy: [{ published: 'desc' }, { deleted: 'desc' }],
 			})
 
 			const transformedResult = result.map(
