@@ -56,7 +56,7 @@
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
-		"@faker-js/faker": "7.6.0",
+		"@faker-js/faker": "8.0.0",
 		"@nuskin/mexico-state-lookup": "2.1.0",
 		"@placemarkio/check-geojson": "0.1.12",
 		"@terraformer/wkt": "2.2.0",
