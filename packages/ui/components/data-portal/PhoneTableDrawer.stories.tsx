@@ -14,7 +14,7 @@ export default {
 	component: PhoneTableDrawer,
 	parameters: {
 		layout: 'fullscreen',
-		layoutWrapper: 'centeredHalf',
+		// layoutWrapper: 'centeredHalf',
 		rqDevtools: true,
 		nextjs: {
 			router: {

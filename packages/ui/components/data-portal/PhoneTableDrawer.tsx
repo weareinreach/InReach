@@ -2,18 +2,28 @@ import {
 	Anchor,
 	Box,
 	type ButtonProps,
+	Checkbox,
 	createPolymorphicComponent,
 	createStyles,
 	Drawer,
 	Group,
+	Radio,
 	rem,
+	Stack,
 	Table,
+	Text,
 } from '@mantine/core'
 import { createFormContext } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import {
+	type CellContext,
+	createColumnHelper,
+	flexRender,
+	getCoreRowModel,
+	useReactTable,
+} from '@tanstack/react-table'
 import { ReactTableDevtools } from '@tanstack/react-table-devtools'
-import { forwardRef } from 'react'
+import { type CSSProperties, forwardRef } from 'react'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
@@ -36,7 +46,26 @@ const useStyles = createStyles((theme) => ({
 		gap: rem(8),
 		alignItems: 'center',
 	},
+	deletedItem: {
+		textDecoration: 'line-through',
+		color: theme.other.colors.secondary.darkGray,
+	},
+	unpublishedItem: {
+		color: theme.other.colors.secondary.darkGray,
+	},
+	devtools: {
+		'& button': { backgroundColor: 'black !important' },
+	},
 }))
+
+const conditionalStyles = (
+	cellContext: CellContext<PhoneTableColumns, unknown>,
+	classes: ReturnType<typeof useStyles>['classes']
+) => {
+	const deleted = cellContext.row.getValue('deleted')
+	const published = cellContext.row.getValue('published')
+	return deleted ? classes.deletedItem : published ? undefined : classes.unpublishedItem
+}
 
 export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerProps>((props, ref) => {
 	const [opened, handler] = useDisclosure(false)
@@ -85,17 +114,51 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 	// #region React Table Setup
 	const columnHelper = createColumnHelper<PhoneTableColumns>()
 	const columns = [
+		columnHelper.accessor('id', {
+			enableHiding: true,
+		}),
 		columnHelper.accessor('number', {
 			header: 'Phone Number',
 			cell: (info) => {
 				const country = info.row.getValue<string>('country')
-
 				const formattedPhone = parsePhoneNumber(info.getValue(), country)
-				return formattedPhone?.formatInternational()
+				return (
+					<Text className={conditionalStyles(info, classes)}>{formattedPhone?.formatInternational()}</Text>
+				)
 			},
 		}),
 		columnHelper.accessor('phoneType', {
 			cell: (info) => info.renderValue(),
+		}),
+		columnHelper.accessor('primary', {
+			cell: (info) => {
+				return (
+					<Radio
+						name='isPrimary'
+						key={info.cell.id}
+						disabled={!info.row.getValue('published') || info.row.getValue('deleted')}
+						checked={form.getInputProps(`data.${info.row.index}.primary`, { type: 'checkbox' }).checked}
+						onChange={(e) => {
+							const newValues = form.values.data.map(({ primary, ...rest }, i) =>
+								info.row.index === i ? { primary: true, ...rest } : { primary: false, ...rest }
+							)
+							form.setValues({ data: newValues })
+						}}
+					/>
+				)
+			},
+		}),
+		columnHelper.accessor('published', {
+			cell: (info) => (
+				<Checkbox
+					key={info.cell.id}
+					disabled={info.row.getValue('deleted')}
+					checked={form.getInputProps(`data.${info.row.index}.published`, { type: 'checkbox' }).checked}
+					onChange={(e) => {
+						form.setFieldValue(`data.${info.row.index}.published`, e.target.checked)
+					}}
+				/>
+			),
 		}),
 		columnHelper.accessor('services', {
 			cell: (info) => (
@@ -103,6 +166,7 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 					key={info.cell.id}
 					data={orgServices ?? []}
 					label='Services'
+					labelClassName={conditionalStyles(info, classes)}
 					{...form.getInputProps(`data.${info.row.index}.services`)}
 				/>
 			),
@@ -113,12 +177,37 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 					key={info.cell.id}
 					data={orgLocations ?? []}
 					label='Locations'
+					labelClassName={conditionalStyles(info, classes)}
 					{...form.getInputProps(`data.${info.row.index}.locations`)}
 				/>
 			),
 		}),
 		columnHelper.accessor('country', {
 			enableHiding: true,
+		}),
+		columnHelper.accessor('deleted', {
+			cell: (info) => {
+				const props = {
+					height: 24,
+					onClick: () => {
+						const currentVals = form.values.data[info.row.index]
+						if (!currentVals) throw new Error('Unable to get current values')
+						const { deleted, published, ...rest } = currentVals
+						const newVals = {
+							deleted: !info.getValue(),
+							published: info.getValue() ? published : false,
+							...rest,
+						}
+						console.log(newVals)
+						form.setFieldValue(`data.${info.row.index}`, newVals)
+					},
+				}
+				return info.getValue() ? (
+					<Icon icon='carbon:result-old' {...props} />
+				) : (
+					<Icon icon='carbon:trash-can' {...props} />
+				)
+			},
 		}),
 	]
 	const table = useReactTable({
@@ -128,10 +217,13 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 		state: {
 			columnVisibility: {
 				country: false,
+				id: false,
 			},
 		},
 	})
 	// #endregion
+
+	console.log(form.values.data)
 
 	return (
 		<>
@@ -182,8 +274,13 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 				</Drawer.Root>
 			</FormProvider>
 
-			<Box component='button' onClick={handler.open} ref={ref} {...props} />
-			<ReactTableDevtools table={table} />
+			<Stack>
+				<Box component='button' onClick={handler.open} ref={ref} {...props} />
+
+				<Group w='100vw'>
+					<ReactTableDevtools table={table} panelProps={{ className: classes.devtools }} />
+				</Group>
+			</Stack>
 		</>
 	)
 })
