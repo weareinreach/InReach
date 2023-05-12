@@ -32,7 +32,10 @@ export default {
 		],
 		label: 'Dropdown target text',
 	},
-	render: ComponentWithState,
+	argTypes: {
+		onChange: { action: 'Updated Values' },
+	},
+	// render: ComponentWithState,
 } satisfies Meta<typeof MultiSelectPopover>
 
 type StoryDef = StoryObj<typeof MultiSelectPopover>

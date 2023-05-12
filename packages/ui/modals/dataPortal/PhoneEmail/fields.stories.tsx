@@ -58,6 +58,7 @@ export default {
 		},
 	},
 	decorators: [FormContextDecorator],
+	excludeStories: ['phoneEmailFieldMocks'],
 } satisfies Meta<typeof Fragment>
 
 export const PhoneNumber = {

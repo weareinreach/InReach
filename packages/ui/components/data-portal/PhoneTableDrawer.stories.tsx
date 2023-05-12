@@ -5,6 +5,7 @@ import { organization } from '~ui/mockData/organization'
 import { location } from '~ui/mockData/orgLocation'
 import { orgPhone } from '~ui/mockData/orgPhone'
 import { service } from '~ui/mockData/orgService'
+import { phoneEmailFieldMocks } from '~ui/modals/dataPortal/PhoneEmail/fields.stories'
 
 import { PhoneTableDrawer } from './PhoneTableDrawer'
 
@@ -24,7 +25,13 @@ export default {
 				},
 			},
 		},
-		msw: [orgPhone.get, organization.getIdFromSlug, service.getNames, location.getNames],
+		msw: [
+			orgPhone.get,
+			organization.getIdFromSlug,
+			service.getNames,
+			location.getNames,
+			...phoneEmailFieldMocks,
+		],
 	},
 	args: {
 		component: Button,

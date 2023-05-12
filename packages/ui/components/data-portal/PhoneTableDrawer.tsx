@@ -1,35 +1,49 @@
-import { Box, type ButtonProps, createPolymorphicComponent, Drawer, Group, Table } from '@mantine/core'
+import {
+	Anchor,
+	Box,
+	type ButtonProps,
+	createPolymorphicComponent,
+	createStyles,
+	Drawer,
+	Group,
+	rem,
+	Table,
+} from '@mantine/core'
 import { createFormContext } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { ReactTableDevtools } from '@tanstack/react-table-devtools'
-import { forwardRef, type MouseEventHandler } from 'react'
+import { forwardRef } from 'react'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useOrgId } from '~ui/hooks/useOrgId'
 import { parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+import { PhoneEmailModal } from '~ui/modals/dataPortal/PhoneEmail'
 
 import { MultiSelectPopover } from './MultiSelectPopover'
 
 const [FormProvider, useFormContext, useForm] = createFormContext<{ data: PhoneTableColumns[] }>()
 
-const DrawerHeader = ({ closeHandler }: { closeHandler: MouseEventHandler<HTMLButtonElement> }) => (
-	<Group noWrap position='apart' w='100%'>
-		<Breadcrumb option='close' onClick={closeHandler} />
-		<Button variant='primary-icon' leftIcon={<Icon icon='carbon:save' />}>
-			Save
-		</Button>
-	</Group>
-)
+const useStyles = createStyles((theme) => ({
+	addButton: {
+		display: 'flex',
+		flexWrap: 'nowrap',
+		padding: `${rem(12)} ${rem(8)}`,
+		gap: rem(8),
+		alignItems: 'center',
+	},
+}))
 
 export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerProps>((props, ref) => {
 	const [opened, handler] = useDisclosure(false)
 	const form = useForm({ initialValues: { data: [] } })
 	const organizationId = useOrgId()
-
+	const variants = useCustomVariant()
+	const { classes } = useStyles()
 	// #region tRPC
 	const { data } = api.orgPhone.get.useQuery(
 		{ organizationId },
@@ -122,21 +136,21 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 	return (
 		<>
 			<FormProvider form={form}>
-				<Drawer.Root
-					onClose={handler.close}
-					opened={opened}
-					position='bottom'
-					// title={<DrawerHeader closeHandler={handler.close} />}
-					// withCloseButton={false}
-				>
+				<Drawer.Root onClose={handler.close} opened={opened} position='bottom'>
 					<Drawer.Overlay />
 					<Drawer.Content>
 						<Drawer.Header>
 							<Group noWrap position='apart' w='100%'>
 								<Breadcrumb option='close' onClick={handler.close} />
-								<Button variant='primary-icon' leftIcon={<Icon icon='carbon:save' />}>
-									Save
-								</Button>
+								<Group>
+									<PhoneEmailModal className={classes.addButton} component={Anchor} role='phone'>
+										<Icon icon='carbon:add' height={24} block />
+										Add new Phone Number
+									</PhoneEmailModal>
+									<Button variant='primary-icon' leftIcon={<Icon icon='carbon:save' />}>
+										Save
+									</Button>
+								</Group>
 							</Group>
 						</Drawer.Header>
 						<Drawer.Body>
