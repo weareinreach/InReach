@@ -7357,29 +7357,31 @@ export const getPhoneTypes = [
 	},
 ] satisfies ApiOutput['fieldOpt']['getPhoneTypes']
 
-export const allFieldOptHandlers = [
-	getTRPCMock({
+export const fieldOptHandlers = {
+	attributeCategories: getTRPCMock({
 		path: ['fieldOpt', 'attributeCategories'],
 		response: (input) => queryAttributeCategories(input),
 	}),
-	getTRPCMock({
+	attributesByCategory: getTRPCMock({
 		path: ['fieldOpt', 'attributesByCategory'],
 		response: (input) => queryAttributesByCategory(input),
 	}),
-	getTRPCMock({
+	languages: getTRPCMock({
 		path: ['fieldOpt', 'languages'],
 		response: (input) => queryLanguages(input),
 	}),
-	getTRPCMock({
+	countries: getTRPCMock({
 		path: ['fieldOpt', 'countries'],
 		response: (input) => queryCountries(input),
 	}),
-	getTRPCMock({
+	govDistsByCountry: getTRPCMock({
 		path: ['fieldOpt', 'govDistsByCountry'],
 		response: queryGovDistsByCountry,
 	}),
-	getTRPCMock({
+	getPhoneTypes: getTRPCMock({
 		path: ['fieldOpt', 'getPhoneTypes'],
 		response: getPhoneTypes,
 	}),
-]
+}
+
+export const allFieldOptHandlers = Object.values(fieldOptHandlers)

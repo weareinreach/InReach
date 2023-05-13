@@ -1,24 +1,6 @@
-import { action } from '@storybook/addon-actions'
 import { type Meta, type StoryObj } from '@storybook/react'
-import { useState } from 'react'
 
-import { MultiSelectPopover, type MultiSelectPopoverProps } from './MultiSelectPopover'
-
-const checkboxChanged = action('values')
-
-const ComponentWithState = (args: MultiSelectPopoverProps) => {
-	const [value, setValue] = useState(['2'])
-	return (
-		<MultiSelectPopover
-			value={value}
-			onChange={(e) => {
-				setValue(e)
-				checkboxChanged(e)
-			}}
-			{...args}
-		/>
-	)
-}
+import { MultiSelectPopover } from './MultiSelectPopover'
 
 export default {
 	title: 'Data Portal/Multi Select Popover',
