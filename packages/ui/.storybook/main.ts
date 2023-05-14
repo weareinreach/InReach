@@ -30,7 +30,7 @@ const config: StorybookConfig = {
 		'storybook-addon-pseudo-states',
 		// 'css-chaos-addon',
 		'storybook-addon-swc',
-		'@storybook/addon-essentials',
+		'@storybook/addon-essentials', // Keep this last
 	],
 	framework: {
 		name: '@storybook/nextjs',

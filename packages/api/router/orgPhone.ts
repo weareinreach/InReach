@@ -69,7 +69,7 @@ export const orgPhoneRouter = defineRouter({
 					deleted: true,
 					primary: true,
 					published: true,
-					country: { select: { cca2: true } },
+					country: { select: { cca2: true, id: true } },
 					description: { select: { tsKey: { select: { text: true } } } },
 					locations: { select: { location: { select: { id: true, name: true } } } },
 					organization: { select: { organization: { select: { id: true, name: true, slug: true } } } },
@@ -89,9 +89,8 @@ export const orgPhoneRouter = defineRouter({
 			})
 
 			const transformedResult = result.map(
-				({ country, description, locations, organization, phoneType, services, ...record }) => ({
+				({ description, locations, organization, phoneType, services, ...record }) => ({
 					...record,
-					country: country.cca2,
 					description: description?.tsKey.text,
 					locations: locations?.map(({ location }) => ({ ...location })),
 					organization: { ...organization?.organization },

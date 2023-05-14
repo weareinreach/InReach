@@ -11,7 +11,7 @@ export const orgPhone = {
 				deleted: false,
 				primary: false,
 				published: true,
-				country: 'US',
+				country: { id: 'ctry_01GW2HHDK9M26M80SG63T21SVH', cca2: 'US' },
 				description: 'Gender Affirming Services',
 				locations: [],
 				organization: {
@@ -38,7 +38,7 @@ export const orgPhone = {
 				deleted: false,
 				primary: true,
 				published: true,
-				country: 'US',
+				country: { id: 'ctry_01GW2HHDK9M26M80SG63T21SVH', cca2: 'US' },
 				description: 'Medical Care/ Appointments',
 				locations: [],
 				organization: {
@@ -69,7 +69,7 @@ export const orgPhone = {
 				deleted: false,
 				primary: false,
 				published: true,
-				country: 'US',
+				country: { id: 'ctry_01GW2HHDK9M26M80SG63T21SVH', cca2: 'US' },
 				description: 'HIV/STI Testing or Sexual Health Appointment',
 				locations: [],
 				organization: {
@@ -87,7 +87,7 @@ export const orgPhone = {
 				deleted: false,
 				primary: false,
 				published: true,
-				country: 'US',
+				country: { id: 'ctry_01GW2HHDK9M26M80SG63T21SVH', cca2: 'US' },
 				description: 'Youth Care',
 				locations: [],
 				organization: {
@@ -105,7 +105,7 @@ export const orgPhone = {
 				deleted: false,
 				primary: false,
 				published: false,
-				country: 'US',
+				country: { id: 'ctry_01GW2HHDK9M26M80SG63T21SVH', cca2: 'US' },
 				description: 'New with HIV',
 				locations: [],
 				organization: {
@@ -123,7 +123,7 @@ export const orgPhone = {
 				deleted: true,
 				primary: false,
 				published: false,
-				country: 'US',
+				country: { id: 'ctry_01GW2HHDK9M26M80SG63T21SVH', cca2: 'US' },
 				description: 'COVID-19 Vaccine Appointments',
 				locations: [],
 				organization: {
