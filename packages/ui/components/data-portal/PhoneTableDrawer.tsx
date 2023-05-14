@@ -11,7 +11,7 @@ import {
 	rem,
 	Stack,
 	Table,
-	Text,
+	TextInput,
 } from '@mantine/core'
 import { createFormContext } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -23,18 +23,17 @@ import {
 	useReactTable,
 } from '@tanstack/react-table'
 import { ReactTableDevtools } from '@tanstack/react-table-devtools'
-import { type CSSProperties, forwardRef } from 'react'
+import { forwardRef } from 'react'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
-import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useOrgId } from '~ui/hooks/useOrgId'
-import { parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { PhoneEmailModal } from '~ui/modals/dataPortal/PhoneEmail'
 
 import { MultiSelectPopover } from './MultiSelectPopover'
+import { PhoneNumberEntry } from './PhoneNumberEntry'
 
 const [FormProvider, useFormContext, useForm] = createFormContext<{ data: PhoneTableColumns[] }>()
 
@@ -71,7 +70,6 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 	const [opened, handler] = useDisclosure(false)
 	const form = useForm({ initialValues: { data: [] } })
 	const organizationId = useOrgId()
-	const variants = useCustomVariant()
 	const { classes } = useStyles()
 	// #region tRPC
 	const { data } = api.orgPhone.get.useQuery(
@@ -114,21 +112,31 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 	// #region React Table Setup
 	const columnHelper = createColumnHelper<PhoneTableColumns>()
 	const columns = [
-		columnHelper.accessor('id', {
-			enableHiding: true,
-		}),
 		columnHelper.accessor('number', {
 			header: 'Phone Number',
 			cell: (info) => {
-				const country = info.row.getValue<string>('country')
-				const formattedPhone = parsePhoneNumber(info.getValue(), country)
 				return (
-					<Text className={conditionalStyles(info, classes)}>{formattedPhone?.formatInternational()}</Text>
+					<PhoneNumberEntry
+						countrySelectProps={form.getInputProps(`data.${info.row.index}.country.id`, { withFocus: false })}
+						phoneEntryProps={{
+							onBlur: (e) => form.getInputProps(`data.${info.row.index}.number`).onChange(e.target.value),
+							setError: (err) => form.setFieldError(`data.${info.row.index}.number`, err),
+							value: form.getInputProps(`data.${info.row.index}.number`).value,
+						}}
+						key={info.cell.id}
+					/>
 				)
 			},
 		}),
 		columnHelper.accessor('phoneType', {
-			cell: (info) => info.renderValue(),
+			cell: (info) => {
+				return (
+					<TextInput
+						{...form.getInputProps(`data.${info.row.index}.phoneType`, { withFocus: false })}
+						key={info.cell.id}
+					/>
+				)
+			},
 		}),
 		columnHelper.accessor('primary', {
 			cell: (info) => {
@@ -182,9 +190,6 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 				/>
 			),
 		}),
-		columnHelper.accessor('country', {
-			enableHiding: true,
-		}),
 		columnHelper.accessor('deleted', {
 			cell: (info) => {
 				const props = {
@@ -214,16 +219,10 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 		data: form.values.data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
-		state: {
-			columnVisibility: {
-				country: false,
-				id: false,
-			},
-		},
 	})
 	// #endregion
 
-	console.log(form.values.data)
+	console.log(form.values.data[0])
 
 	return (
 		<>
@@ -296,7 +295,7 @@ interface PhoneTableColumns {
 	id: string
 	number: string
 	ext: string | null
-	country: string
+	country: { id: string; cca2: string }
 	phoneType?: string | null
 	primary: boolean
 	published: boolean

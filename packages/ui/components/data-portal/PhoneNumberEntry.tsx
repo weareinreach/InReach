@@ -10,18 +10,14 @@ import {
 } from '@mantine/core'
 import { AsYouType, type CountryCode, isSupportedCountry } from 'libphonenumber-js'
 import { type ComponentPropsWithoutRef, forwardRef, useEffect, useState } from 'react'
-import PhoneInput, { type Props as PhoneInputProps } from 'react-phone-number-input/input'
+import PhoneInput, { parsePhoneNumber, type Props as PhoneInputProps } from 'react-phone-number-input/input'
+import { type SetOptional } from 'type-fest'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { isCountryCode } from '~ui/hooks/usePhoneNumber'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-type CountryList = ApiOutput['fieldOpt']['countries']
-interface PhoneCountrySelectItem extends ComponentPropsWithoutRef<'div'>, PhoneCountryItem {}
-interface PhoneCountryItem {
-	label: string
-	value: string
-	data: Pick<CountryList[number], 'name' | 'cca2'>
-}
+const DEFAULT_COUNTRY = 'US'
 
 const PhoneCountrySelectItem = forwardRef<HTMLDivElement, PhoneCountrySelectItem>(
 	({ data, value, label, ...props }, ref) => {
@@ -35,12 +31,11 @@ const PhoneCountrySelectItem = forwardRef<HTMLDivElement, PhoneCountrySelectItem
 )
 PhoneCountrySelectItem.displayName = 'PhoneCountrySelectItem'
 
-const isValidCountry = (country: string): country is CountryCode => isSupportedCountry(country)
 const useCountrySelectStyles = createStyles((theme) => ({
 	dropdown: {
 		width: 'fit-content !important',
 		left: 'unset !important',
-		right: 0,
+		// right: 0,
 	},
 	root: {
 		width: rem(48),
@@ -64,10 +59,14 @@ const usePhoneEntryStyles = createStyles((theme) => ({
 export interface PhoneNumberEntryProps {
 	countrySelectProps: Omit<SelectProps, 'data' | 'itemComponent' | 'classNames' | 'clearable'>
 	phoneEntryProps: Omit<
-		PhoneInputProps<Omit<TextInputProps, 'rightSection' | 'rightSectionWidth' | 'classNames'>>,
+		SetOptional<
+			PhoneInputProps<Omit<TextInputProps, 'rightSection' | 'rightSectionWidth' | 'classNames'>>,
+			'onChange'
+		>,
 		'country' | 'defaultCountry' | 'itemComponent'
 	> & {
 		setError?: (err: string) => void
+		'data-autofocus'?: boolean
 	}
 }
 
@@ -80,7 +79,12 @@ export const PhoneNumberEntry = ({
 	const { classes: countrySelectClasses } = useCountrySelectStyles()
 	const { classes: phoneEntryClasses } = usePhoneEntryStyles()
 
-	const { setError: setPhoneError, ...phoneEntryProps } = allPhoneEntryProps
+	const {
+		setError: setPhoneError,
+		value: phoneValue,
+		onChange: onPhoneChange,
+		...phoneEntryProps
+	} = allPhoneEntryProps
 
 	const topCountries = ['US', 'CA', 'MX']
 
@@ -110,27 +114,29 @@ export const PhoneNumberEntry = ({
 	const phoneFormatter = new AsYouType(selectedCountry)
 	useEffect(() => {
 		const { data } = countryList.find(({ value }) => value === countrySelectProps.value) ?? {}
-		if (data?.cca2 && isValidCountry(data.cca2)) setSelectedCountry(data.cca2)
+		if (data?.cca2 && isCountryCode(data.cca2)) setSelectedCountry(data.cca2)
 		else if (data === undefined) setSelectedCountry(undefined)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [countrySelectProps.value])
 
 	useEffect(() => {
-		if (phoneEntryProps.value) {
-			phoneFormatter.input(phoneEntryProps.value)
+		if (phoneValue) {
+			phoneFormatter.input(phoneValue)
 			const phoneCountry = phoneFormatter.getNumber()?.country
 			if (phoneCountry && phoneCountry !== selectedCountry) {
 				const countryId = countryList.find(({ data }) => data.cca2 === phoneCountry)?.value
-				if (countryId && typeof countrySelectProps.onChange === 'function') {
+				if (countryId) {
 					setSelectedCountry(phoneCountry)
-					countrySelectProps.onChange(countryId)
+					if (countrySelectProps.onChange && typeof countrySelectProps.onChange === 'function') {
+						countrySelectProps.onChange(countryId)
+					}
 				} else if (typeof setPhoneError === 'function') {
 					setPhoneError(`Country not active: ${phoneCountry}`)
 				}
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [phoneEntryProps.value])
+	}, [phoneValue])
 
 	const countrySelection = (
 		<Select
@@ -145,12 +151,22 @@ export const PhoneNumberEntry = ({
 	return (
 		<PhoneInput
 			country={selectedCountry}
-			defaultCountry='US'
+			defaultCountry={DEFAULT_COUNTRY}
 			inputComponent={TextInput}
 			rightSection={countrySelection}
 			rightSectionWidth={56}
 			classNames={phoneEntryClasses}
+			value={parsePhoneNumber(String(phoneValue), DEFAULT_COUNTRY)?.number}
+			onChange={(e) => (onPhoneChange && typeof onPhoneChange === 'function' ? onPhoneChange(e) : undefined)}
 			{...phoneEntryProps}
 		/>
 	)
+}
+
+type CountryList = ApiOutput['fieldOpt']['countries']
+interface PhoneCountrySelectItem extends ComponentPropsWithoutRef<'div'>, PhoneCountryItem {}
+interface PhoneCountryItem {
+	label: string
+	value: string
+	data: Pick<CountryList[number], 'name' | 'cca2'>
 }
