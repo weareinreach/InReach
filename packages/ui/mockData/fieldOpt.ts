@@ -7355,7 +7355,7 @@ export const getPhoneTypes = [
 		tsKey: 'whatsapp',
 		tsNs: 'phone-type',
 	},
-] satisfies ApiOutput['fieldOpt']['getPhoneTypes']
+] satisfies ApiOutput['fieldOpt']['phoneTypes']
 
 export const fieldOptHandlers = {
 	attributeCategories: getTRPCMock({
@@ -7378,8 +7378,8 @@ export const fieldOptHandlers = {
 		path: ['fieldOpt', 'govDistsByCountry'],
 		response: queryGovDistsByCountry,
 	}),
-	getPhoneTypes: getTRPCMock({
-		path: ['fieldOpt', 'getPhoneTypes'],
+	phoneTypes: getTRPCMock({
+		path: ['fieldOpt', 'phoneTypes'],
 		response: getPhoneTypes,
 	}),
 }

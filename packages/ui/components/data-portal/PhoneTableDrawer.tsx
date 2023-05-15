@@ -149,7 +149,7 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 			},
 		}
 	)
-	const { data: phoneTypes } = api.fieldOpt.getPhoneTypes.useQuery(undefined, {
+	const { data: phoneTypes } = api.fieldOpt.phoneTypes.useQuery(undefined, {
 		enabled: Boolean(organizationId),
 		select: (data) => [
 			...data.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) satisfies string })),

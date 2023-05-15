@@ -20,7 +20,7 @@ export const PhoneTypeSelect = () => {
 	const [options, setOptions] = useState<PhoneTypeSelectItem[]>([])
 	const { t } = useTranslation(['phone-type'])
 	const form = useFormContext()
-	api.fieldOpt.getPhoneTypes.useQuery(undefined, {
+	api.fieldOpt.phoneTypes.useQuery(undefined, {
 		onSuccess: (data) =>
 			setOptions(data.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) }))),
 	})
