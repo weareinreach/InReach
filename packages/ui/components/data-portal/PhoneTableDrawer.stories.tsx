@@ -27,6 +27,7 @@ export default {
 		},
 		msw: [
 			orgPhone.get,
+			orgPhone.upsertMany,
 			organization.getIdFromSlug,
 			service.getNames,
 			location.getNames,

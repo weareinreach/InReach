@@ -1,4 +1,6 @@
 import {
+	ActionIcon,
+	type ActionIconProps,
 	Anchor,
 	Box,
 	type ButtonProps,
@@ -7,23 +9,30 @@ import {
 	createStyles,
 	Drawer,
 	Group,
+	Modal,
 	Radio,
 	rem,
+	Select,
 	Stack,
 	Table,
 	TextInput,
+	type TextInputProps,
+	Tooltip,
 } from '@mantine/core'
-import { createFormContext } from '@mantine/form'
+import { createFormContext, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import {
 	type CellContext,
+	type ColumnDef,
 	createColumnHelper,
 	flexRender,
 	getCoreRowModel,
 	useReactTable,
 } from '@tanstack/react-table'
 import { ReactTableDevtools } from '@tanstack/react-table-devtools'
+import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
+import { z } from 'zod'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
@@ -36,6 +45,30 @@ import { MultiSelectPopover } from './MultiSelectPopover'
 import { PhoneNumberEntry } from './PhoneNumberEntry'
 
 const [FormProvider, useFormContext, useForm] = createFormContext<{ data: PhoneTableColumns[] }>()
+
+const transformNullString = (val: string | null) => {
+	if (val === '' || val === 'NULL') return null
+	return val
+}
+
+const FormSchema = z.object({
+	orgSlug: z.string().optional(),
+	data: z
+		.object({
+			id: z.string().optional(),
+			number: z.string(),
+			ext: z.string().nullable().transform(transformNullString),
+			country: z.object({ id: z.string(), cca2: z.string() }),
+			phoneType: z.string().nullable().transform(transformNullString),
+			description: z.string().optional(),
+			primary: z.boolean(),
+			published: z.boolean(),
+			deleted: z.boolean(),
+			locations: z.string().array(),
+			services: z.string().array(),
+		})
+		.array(),
+})
 
 const useStyles = createStyles((theme) => ({
 	addButton: {
@@ -66,12 +99,37 @@ const conditionalStyles = (
 	return deleted ? classes.deletedItem : published ? undefined : classes.unpublishedItem
 }
 
+interface DescriptionEditProps {
+	actionIconProps: ActionIconProps
+	textInputProps: TextInputProps
+}
+const DescriptionEdit = ({ actionIconProps, textInputProps }: DescriptionEditProps) => {
+	const [opened, handler] = useDisclosure(false)
+	return (
+		<>
+			<Modal opened={opened} onClose={handler.close}>
+				<TextInput {...textInputProps} />
+				<Button onClick={handler.close}>Close</Button>
+			</Modal>
+			<ActionIcon {...actionIconProps} onClick={handler.open}>
+				<Icon icon='carbon:edit' />
+			</ActionIcon>
+		</>
+	)
+}
+
 export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerProps>((props, ref) => {
 	const [opened, handler] = useDisclosure(false)
-	const form = useForm({ initialValues: { data: [] } })
-	const {id:organizationId, slug: orgSlug} = useOrgInfo()
+	const form = useForm({
+		initialValues: { data: [] },
+		validate: zodResolver(FormSchema),
+		transformValues: FormSchema.parse,
+	})
+	const { id: organizationId, slug: orgSlug } = useOrgInfo()
 	const { classes } = useStyles()
+	const { t } = useTranslation('phone-type')
 	// #region tRPC
+	const apiUtils = api.useContext()
 	const { data } = api.orgPhone.get.useQuery(
 		{ organizationId },
 		{
@@ -79,25 +137,32 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 			onSuccess: (data) => {
 				if (!form.values.data || form.values.data.length === 0) {
 					form.setValues({
-						data: data.map(
-							({ country, locations, description, organization, services, phoneType, ...record }) => ({
-								...record,
-								country,
-								locations: locations.map(({ id }) => id),
-								services: services.map(({ id }) => id),
-								phoneType: phoneType?.id,
-							})
-						),
+						data: data.map(({ country, locations, organization, services, phoneType, ...record }) => ({
+							...record,
+							country,
+							locations: locations.map(({ id }) => id),
+							services: services.map(({ id }) => id),
+							phoneType: phoneType?.id ?? 'NULL',
+						})),
 					})
 				}
 			},
 		}
 	)
+	const { data: phoneTypes } = api.fieldOpt.getPhoneTypes.useQuery(undefined, {
+		enabled: Boolean(organizationId),
+		select: (data) => [
+			...data.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) satisfies string })),
+			{ value: 'NULL', label: 'Custom...' },
+		],
+		refetchOnWindowFocus: false,
+	})
 	const { data: orgServices } = api.service.getNames.useQuery(
 		{ organizationId },
 		{
 			enabled: Boolean(organizationId),
 			select: (data) => data.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
+			refetchOnWindowFocus: false,
 		}
 	)
 	const { data: orgLocations } = api.location.getNames.useQuery(
@@ -105,8 +170,16 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 		{
 			enabled: Boolean(organizationId),
 			select: (data) => data.map(({ id, name }) => ({ value: id, label: name ?? '' })),
+			refetchOnWindowFocus: false,
 		}
 	)
+	const updatePhones = api.orgPhone.upsertMany.useMutation({
+		onSuccess: () => apiUtils.orgPhone.get.invalidate({ organizationId }),
+	})
+
+	const handleUpdate = () => {
+		updatePhones.mutate({ orgSlug, data: form.getTransformedValues().data })
+	}
 	// #endregion
 
 	// #region React Table Setup
@@ -127,18 +200,55 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 					/>
 				)
 			},
+			size: 200,
 		}),
-		columnHelper.accessor('phoneType', {
+		columnHelper.accessor('ext', {
+			header: 'Extension',
 			cell: (info) => {
 				return (
 					<TextInput
-						{...form.getInputProps(`data.${info.row.index}.phoneType`, { withFocus: false })}
-						key={info.cell.id}
+						{...{
+							value: form.getInputProps(`data.${info.row.index}.ext`, { withFocus: false }).value,
+							onBlur: (e) =>
+								form
+									.getInputProps(`data.${info.row.index}.ext`, { withFocus: false })
+									.onChange(e.target.value),
+						}}
+						w={96}
 					/>
 				)
 			},
+			size: 48,
 		}),
+		columnHelper.accessor('phoneType', {
+			header: 'Description/Type',
+			cell: (info) => {
+				return (
+					<Tooltip
+						label={form.getInputProps(`data.${info.row.index}.description`, { withFocus: false }).value}
+						disabled={info.cell.getValue() !== 'NULL'}
+					>
+						<Group noWrap key={info.cell.id} spacing={4}>
+							<Select
+								data={phoneTypes ?? []}
+								{...form.getInputProps(`data.${info.row.index}.phoneType`, { withFocus: false })}
+							/>
+							<DescriptionEdit
+								textInputProps={{
+									...form.getInputProps(`data.${info.row.index}.description`, { withFocus: false }),
+									label: 'Phone number description',
+								}}
+								actionIconProps={{ disabled: info.cell.getValue() !== 'NULL' }}
+							/>
+						</Group>
+					</Tooltip>
+				)
+			},
+			size: 175,
+		}),
+
 		columnHelper.accessor('primary', {
+			header: 'Primary',
 			cell: (info) => {
 				return (
 					<Radio
@@ -155,8 +265,10 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 					/>
 				)
 			},
+			size: 48,
 		}),
 		columnHelper.accessor('published', {
+			header: 'Published',
 			cell: (info) => (
 				<Checkbox
 					key={info.cell.id}
@@ -167,8 +279,10 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 					}}
 				/>
 			),
+			size: 48,
 		}),
 		columnHelper.accessor('services', {
+			header: 'Services',
 			cell: (info) => (
 				<MultiSelectPopover
 					key={info.cell.id}
@@ -180,6 +294,7 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 			),
 		}),
 		columnHelper.accessor('locations', {
+			header: 'Locations',
 			cell: (info) => (
 				<MultiSelectPopover
 					key={info.cell.id}
@@ -189,8 +304,10 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 					{...form.getInputProps(`data.${info.row.index}.locations`)}
 				/>
 			),
+			size: 150,
 		}),
 		columnHelper.accessor('deleted', {
+			header: 'Delete',
 			cell: (info) => {
 				const props = {
 					height: 24,
@@ -213,8 +330,10 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 					<Icon icon='carbon:trash-can' {...props} />
 				)
 			},
+			size: 48,
 		}),
-	]
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	] satisfies ColumnDef<PhoneTableColumns, any>[]
 	const table = useReactTable({
 		data: form.values.data,
 		columns,
@@ -223,6 +342,7 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 	// #endregion
 
 	console.log(form.values.data[0])
+	console.log(form.getTransformedValues())
 
 	return (
 		<>
@@ -238,7 +358,12 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 										<Icon icon='carbon:add' height={24} block />
 										Add new Phone Number
 									</PhoneEmailModal>
-									<Button variant='primary-icon' leftIcon={<Icon icon='carbon:save' />}>
+									<Button
+										variant='primary-icon'
+										leftIcon={<Icon icon='carbon:save' />}
+										onClick={handleUpdate}
+										loading={updatePhones.isLoading}
+									>
 										Save
 									</Button>
 								</Group>
@@ -292,11 +417,12 @@ export interface PhoneTableDrawerProps extends ButtonProps {
 }
 
 interface PhoneTableColumns {
-	id: string
+	id?: string
 	number: string
 	ext: string | null
 	country: { id: string; cca2: string }
 	phoneType?: string | null
+	description?: string
 	primary: boolean
 	published: boolean
 	deleted: boolean

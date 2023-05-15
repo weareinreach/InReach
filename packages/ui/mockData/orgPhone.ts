@@ -141,4 +141,9 @@ export const orgPhone = {
 			},
 		],
 	}),
+	upsertMany: getTRPCMock({
+		path: ['orgPhone', 'upsertMany'],
+		type: 'mutation',
+		response: (input) => [],
+	}),
 }
