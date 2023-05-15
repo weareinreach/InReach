@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { createPoint, generateId, GeoJSONPointSchema, Geometry, Prisma } from '@weareinreach/db'
 import { idString, JsonInputOrNullSuperJSON, MutationBase, MutationBaseArray } from '~api/schemas/common'
-import { createMany } from '~api/schemas/nestedOps'
+import { createManyRequired } from '~api/schemas/nestedOps'
 
 import { AuditLogSchema } from './auditLog'
 
@@ -103,7 +103,7 @@ export const CreateOrgLocationSchema = () => {
 		const serviceLinks = (
 			!services
 				? undefined
-				: createMany(
+				: createManyRequired(
 						services.map(({ serviceId }) => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', serviceId }))
 							return { serviceId }
@@ -114,7 +114,7 @@ export const CreateOrgLocationSchema = () => {
 		const emailLinks = (
 			!emails
 				? undefined
-				: createMany(
+				: createManyRequired(
 						emails.map(({ orgEmailId }) => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', orgEmailId }))
 							return { orgEmailId }
@@ -124,7 +124,7 @@ export const CreateOrgLocationSchema = () => {
 		const phoneLinks = (
 			!phones
 				? undefined
-				: createMany(
+				: createManyRequired(
 						phones.map(({ phoneId }) => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', phoneId }))
 							return { phoneId }

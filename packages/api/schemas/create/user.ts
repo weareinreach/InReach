@@ -7,8 +7,8 @@ import { CreationBase, id, idString, slug } from '~api/schemas/common'
 import {
 	connectOne,
 	connectOneRequired,
-	createMany,
-	createManyOrUndefined,
+	createManyOptional,
+	createManyRequired,
 	linkManyWithAudit,
 } from '~api/schemas/nestedOps'
 
@@ -138,7 +138,7 @@ export const AdminCreateUser = () => {
 					roles,
 					orgPermission,
 					locationPermission,
-					auditLogs: createMany([
+					auditLogs: createManyRequired([
 						GenerateAuditLog({
 							actorId,
 							operation,
@@ -200,9 +200,9 @@ export const CreateUserSurvey = z
 			return Prisma.validator<Prisma.UserSurveyCreateArgs>()({
 				data: {
 					...rest,
-					communities: createManyOrUndefined(communityId),
-					ethnicities: createManyOrUndefined(ethnicityId),
-					identifiesAs: createManyOrUndefined(sogId),
+					communities: createManyOptional(communityId),
+					ethnicities: createManyOptional(ethnicityId),
+					identifiesAs: createManyOptional(sogId),
 					immigration: connectOne(immigrationId),
 					countryOrigin: connectOne(countryOriginId),
 					currentCountry: connectOne(currentCountryId),
