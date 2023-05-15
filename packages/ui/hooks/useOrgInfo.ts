@@ -4,7 +4,7 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { useSlug } from './useSlug'
 
-export const useOrgId = () => {
+export const useOrgInfo = () => {
 	const pageSlug = useSlug()
 	const [slug, setSlug] = useState<string>(pageSlug)
 	const [orgId, setOrgId] = useState<string>()
@@ -27,5 +27,5 @@ export const useOrgId = () => {
 		if (data && !isLoading && data.id !== orgId) setOrgId(data.id)
 	}, [data, isLoading, orgId])
 
-	return orgId
+	return { id: orgId, slug }
 }

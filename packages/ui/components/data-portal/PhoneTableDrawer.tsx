@@ -27,7 +27,7 @@ import { forwardRef } from 'react'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
-import { useOrgId } from '~ui/hooks/useOrgId'
+import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { PhoneEmailModal } from '~ui/modals/dataPortal/PhoneEmail'
@@ -69,7 +69,7 @@ const conditionalStyles = (
 export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerProps>((props, ref) => {
 	const [opened, handler] = useDisclosure(false)
 	const form = useForm({ initialValues: { data: [] } })
-	const organizationId = useOrgId()
+	const {id:organizationId, slug: orgSlug} = useOrgInfo()
 	const { classes } = useStyles()
 	// #region tRPC
 	const { data } = api.orgPhone.get.useQuery(

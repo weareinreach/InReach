@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { MultiSelectPopover } from '~ui/components/data-portal/MultiSelectPopover'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
-import { useOrgId } from '~ui/hooks/useOrgId'
+import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { useSlug } from '~ui/hooks/useSlug'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -53,7 +53,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 	const slug = useSlug()
 	const variants = useCustomVariant()
 	const { t } = useTranslation([slug])
-	const organizationId = useOrgId()
+	const { id: organizationId } = useOrgInfo()
 
 	const { data: serviceData, isLoading: isServiceLoading } = api.service.getNames.useQuery(
 		{ organizationId },
