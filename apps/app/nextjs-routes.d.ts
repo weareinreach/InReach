@@ -11,6 +11,7 @@ declare module "nextjs-routes" {
   } from "nextjs";
 
   export type Route =
+    | StaticRoute<"/admin/quicklink">
     | DynamicRoute<"/api/auth/[...nextauth]", { "nextauth": string[] }>
     | StaticRoute<"/api/i18n/load">
     | StaticRoute<"/api/i18n/webhook">

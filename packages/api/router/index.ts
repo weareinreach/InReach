@@ -12,6 +12,7 @@ import { orgHoursRouter } from './orgHours'
 import { orgPhoneRouter } from './orgPhone'
 import { orgPhotoRouter } from './orgPhoto'
 import { orgSocialMediaRouter } from './orgSocialMedia'
+import { quickLinkRouter } from './quicklink'
 import { reviewRouter } from './review'
 import { savedListRouter } from './savedLists'
 import { serviceRouter } from './service'
@@ -31,6 +32,7 @@ export const appRouter = defineRouter({
 	orgPhone: orgPhoneRouter,
 	orgPhoto: orgPhotoRouter,
 	orgSocialMedia: orgSocialMediaRouter,
+	quicklink: quickLinkRouter,
 	review: reviewRouter,
 	savedList: savedListRouter,
 	service: serviceRouter,
