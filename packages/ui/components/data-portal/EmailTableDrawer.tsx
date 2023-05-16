@@ -29,7 +29,6 @@ import {
 	getCoreRowModel,
 	useReactTable,
 } from '@tanstack/react-table'
-import { ReactTableDevtools } from '@tanstack/react-table-devtools'
 import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
 import { z } from 'zod'
@@ -43,7 +42,6 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { PhoneEmailModal } from '~ui/modals/dataPortal/PhoneEmail'
 
 import { MultiSelectPopover } from './MultiSelectPopover'
-import { PhoneNumberEntry } from './PhoneNumberEntry'
 
 const [FormProvider, useFormContext, useForm] = createFormContext<{ data: EmailTableColumns[] }>()
 
@@ -61,7 +59,7 @@ const FormSchema = z.object({
 			firstName: z.string().nullable().transform(transformNullString),
 			lastName: z.string().nullable().transform(transformNullString),
 			title: z.string().nullable().transform(transformNullString),
-			description: z.string().nullable(),
+			description: z.string().optional(),
 			primary: z.boolean(),
 			published: z.boolean(),
 			deleted: z.boolean(),
@@ -417,10 +415,6 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 
 			<Stack>
 				<Box component='button' onClick={handler.open} ref={ref} {...props} />
-
-				<Group w='100vw'>
-					<ReactTableDevtools table={table} panelProps={{ className: classes.devtools }} />
-				</Group>
 			</Stack>
 		</>
 	)
@@ -439,7 +433,7 @@ interface EmailTableColumns {
 	firstName?: string | null
 	lastName?: string | null
 	title?: string | null
-	description?: string | null
+	description?: string
 	primary: boolean
 	published: boolean
 	deleted: boolean

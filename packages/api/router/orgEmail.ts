@@ -1,8 +1,20 @@
+import compact from 'just-compact'
 import { z } from 'zod'
 
+import { generateId, generateNestedFreeText } from '@weareinreach/db'
 import { defineRouter, permissionedProcedure } from '~api/lib'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
-import { CreateOrgEmailSchema, UpdateOrgEmailSchema } from '~api/schemas/create/orgEmail'
+import {
+	CreateOrgEmailSchema,
+	UpdateOrgEmailSchema,
+	UpsertManyOrgEmailSchema,
+} from '~api/schemas/create/orgEmail'
+import {
+	connectOneId,
+	connectOrDisconnectId,
+	createManyOptional,
+	diffConnectionsMtoN,
+} from '~api/schemas/nestedOps'
 
 export const orgEmailRouter = defineRouter({
 	create: permissionedProcedure('createNewEmail')
@@ -104,8 +116,78 @@ export const orgEmailRouter = defineRouter({
 			return transformedResult
 		}),
 	upsertMany: permissionedProcedure('updateEmail')
-		.input(z.object({ orgSlug: z.string(), data: z.record(z.any()).array() }))
+		.input(UpsertManyOrgEmailSchema)
 		.mutation(async ({ ctx, input }) => {
-			return []
+			const { orgSlug, data } = input
+
+			const existing = await ctx.prisma.orgEmail.findMany({
+				where: {
+					id: { in: compact(data.map(({ id }) => id)) },
+				},
+				include: { services: true, locations: true },
+			})
+			const upserts = await ctx.prisma.$transaction(
+				data.map(
+					({
+						title,
+						services: servicesArr,
+						locations: locationsArr,
+						description,
+						id: passedId,
+						...record
+					}) => {
+						const before = passedId ? existing.find(({ id }) => id === passedId) : undefined
+						const servicesBefore = before?.services.map(({ serviceId }) => ({ serviceId })) ?? []
+						const locationsBefore = before?.locations.map(({ orgLocationId }) => ({ orgLocationId })) ?? []
+						const auditLogs = CreateAuditLog({
+							actorId: ctx.actorId,
+							operation: before ? 'UPDATE' : 'CREATE',
+							from: before,
+							to: record,
+						})
+						const id = passedId ?? generateId('orgEmail')
+
+						const services = servicesArr.map((serviceId) => ({ serviceId }))
+						const locations = locationsArr.map((orgLocationId) => ({ orgLocationId }))
+
+						return ctx.prisma.orgEmail.upsert({
+							where: { id },
+							create: {
+								id,
+								...record,
+								title: connectOneId(title),
+								services: createManyOptional(services),
+								locations: createManyOptional(locations),
+								auditLogs,
+								description: description
+									? generateNestedFreeText({ orgSlug, text: description, type: 'emailDesc', itemId: id })
+									: undefined,
+							},
+							update: {
+								id,
+								...record,
+								title: connectOrDisconnectId(title),
+								services: diffConnectionsMtoN(services, servicesBefore, 'serviceId'),
+								locations: diffConnectionsMtoN(locations, locationsBefore, 'orgLocationId'),
+								description: description
+									? {
+											upsert: {
+												...generateNestedFreeText({
+													orgSlug,
+													text: description,
+													type: 'emailDesc',
+													itemId: id,
+												}),
+												update: { tsKey: { update: { text: description } } },
+											},
+									  }
+									: undefined,
+								auditLogs,
+							},
+						})
+					}
+				)
+			)
+			return upserts
 		}),
 })
