@@ -1,22 +1,38 @@
 import {
 	createStyles,
+	rem,
 	Textarea,
 	type TextareaProps,
 	TextInput,
 	type TextInputProps,
-	type useMantineTheme,
 } from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
 	...theme.other.utilityFonts,
-	...theme.headings.sizes,
+	...theme.other.headings,
+}))
+const useBaseStyles = createStyles((theme) => ({
+	input: {
+		borderWidth: 0,
+		padding: `${rem(6)} ${rem(8)} !important`,
+		height: 'unset',
+		minHeight: 'unset',
+		'&:focus, &:focus-within': {
+			borderColor: theme.other.colors.secondary.black,
+			borderWidth: rem(1),
+		},
+		'&[data-isDirty=true]': {
+			backgroundColor: theme.other.colors.primary.lightGray,
+		},
+	},
 }))
 
 const useFontSize = ({ fontSize, classNames }: SingleLineTextProps | MultiLineTextProps) => {
 	const { classes } = useStyles()
+	const { classes: baseClasses, cx } = useBaseStyles()
 	return {
-		classNames,
-		input: fontSize ? classes[fontSize as string] : undefined,
+		...classNames,
+		input: fontSize ? cx(classes[fontSize], baseClasses.input) : baseClasses.input,
 	}
 }
 
@@ -28,7 +44,7 @@ const useFontSize = ({ fontSize, classNames }: SingleLineTextProps | MultiLineTe
  * @param props.fontSize - HeadingSizes | utilitySizes
  * @returns JSX.Element
  */
-export const SingleLineTextField = ({ fontSize, ...props }: SingleLineTextProps) => {
+export const InlineTextInput = ({ fontSize, ...props }: SingleLineTextProps) => {
 	const variant = useFontSize({ fontSize, ...props })
 
 	return <TextInput {...props} classNames={variant} />
@@ -42,20 +58,21 @@ export const SingleLineTextField = ({ fontSize, ...props }: SingleLineTextProps)
  * @param props.fontSize - HeadingSizes | utilitySizes
  * @returns JSX.Element
  */
-export const MultiLineTextField = ({ fontSize, ...props }: MultiLineTextProps) => {
+export const InlineTextarea = ({ fontSize, ...props }: MultiLineTextProps) => {
 	const variant = useFontSize({ fontSize, ...props })
 
 	return <Textarea {...props} classNames={variant} />
 }
 
-type headingSizes = keyof ReturnType<typeof useMantineTheme>['headings']['sizes']
-type utilitySizes = keyof ReturnType<typeof useMantineTheme>['other']['utilityFonts']
-type fontSize = headingSizes | utilitySizes
+type FontSizes = keyof ReturnType<typeof useStyles>['classes']
 
 interface SingleLineTextProps extends TextInputProps {
-	fontSize?: fontSize
+	fontSize?: FontSizes
+	/** Flag if background color should change to indicate that the field was edited */
+	'data-isDirty'?: boolean
 }
 
 interface MultiLineTextProps extends TextareaProps {
-	fontSize?: fontSize
+	fontSize?: FontSizes
+	'data-isDirty'?: boolean
 }
