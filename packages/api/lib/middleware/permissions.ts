@@ -1,12 +1,16 @@
 import { TRPCError } from '@trpc/server'
 import invariant from 'tiny-invariant'
 
-import { reject } from '.'
 import { type Context } from '../context'
 import { type Meta, t } from '../initTRPC'
 
+/** Send unauthorized rejection via middleware */
+const reject = () => {
+	throw new TRPCError({ code: 'UNAUTHORIZED' })
+}
 export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 	try {
+		console.log(meta, ctx)
 		/** No permissions submitted, throw error */
 		if (typeof meta?.hasPerm === 'undefined')
 			throw new TRPCError({
@@ -75,6 +79,7 @@ export const isStaff = t.middleware(({ ctx, meta, next }) => {
 })
 
 export const hasPermissions = t.middleware(({ ctx, meta, next }) => {
+	console.log(ctx, meta)
 	if (!ctx.session || !ctx.session.user) return reject()
 
 	if (checkPermissions(meta, ctx))
