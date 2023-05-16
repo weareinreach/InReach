@@ -26,10 +26,10 @@ export const WithMantine = (Story: StoryFn) => {
 	return (
 		<MantineProvider theme={storybookTheme} {...mantineProviderProps}>
 			{/* <TypographyStylesProvider> */}
-			<ModalsProvider>
-				<Notifications />
-				<Story />
-			</ModalsProvider>
+			{/* <ModalsProvider> */}
+			<Notifications />
+			<Story />
+			{/* </ModalsProvider> */}
 			{/* </TypographyStylesProvider> */}
 		</MantineProvider>
 	)

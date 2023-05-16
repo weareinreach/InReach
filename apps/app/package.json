@@ -92,6 +92,7 @@
 		"@prisma/nextjs-monorepo-workaround-plugin": "4.14.0",
 		"@tanstack/react-query-devtools": "4.29.6",
 		"@total-typescript/ts-reset": "0.4.2",
+		"@types/deepmerge": "2.2.0",
 		"@types/eslint": "8.37.0",
 		"@types/flat": "5.0.2",
 		"@types/luxon": "3.3.0",
