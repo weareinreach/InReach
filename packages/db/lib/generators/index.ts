@@ -1,9 +1,17 @@
 /* eslint-disable node/no-process-env */
-import { Listr, type ListrRenderer, type ListrTaskWrapper, PRESET_TIMER } from 'listr2'
+import {
+	Listr,
+	type ListrDefaultRenderer,
+	type ListrRenderer,
+	type ListrTask as ListrTaskObj,
+	type ListrTaskWrapper,
+	PRESET_TIMER,
+} from 'listr2'
 
 import { generateAttributeCategories } from './attributeCategory'
 import { generateAttributesByCategory } from './attributesByCategory'
 import { generateLanguageFiles } from './langs'
+import { generateNamespaces } from './namespaces'
 import { generatePermissions } from './permission'
 import { generateServiceCategories } from './serviceCategory'
 import { generateUserRoles } from './userRole'
@@ -13,51 +21,23 @@ const renderOptions = {
 	bottomBar: 10,
 	timer: PRESET_TIMER,
 }
+const defineJob = (title: string, job: (task: ListrTask) => void): ListrJob => ({
+	title,
+	task: async (_ctx, task): Promise<void> => job(task),
+	options: renderOptions,
+	skip: !process.env.DATABASE_URL,
+})
 
 const tasks = new Listr<Context>(
 	[
-		{
-			title: 'User Permissions',
-			task: async (_ctx, task): Promise<void> => generatePermissions(task),
-			options: renderOptions,
-			skip: !process.env.DATABASE_URL,
-		},
-		{
-			title: 'User Roles',
-			task: async (_ctx, task): Promise<void> => generateUserRoles(task),
-			options: renderOptions,
-			skip: !process.env.DATABASE_URL,
-		},
-		{
-			title: 'User Types',
-			task: async (_ctx, task): Promise<void> => generateUserTypes(task),
-			options: renderOptions,
-			skip: !process.env.DATABASE_URL,
-		},
-		{
-			title: 'Attribute Categories',
-			task: async (_ctx, task): Promise<void> => generateAttributeCategories(task),
-			options: renderOptions,
-			skip: !process.env.DATABASE_URL,
-		},
-		{
-			title: 'Attributes By Category',
-			task: async (_ctx, task): Promise<void> => generateAttributesByCategory(task),
-			options: renderOptions,
-			skip: !process.env.DATABASE_URL,
-		},
-		{
-			title: 'Service Categories',
-			task: async (_ctx, task): Promise<void> => generateServiceCategories(task),
-			options: renderOptions,
-			skip: !process.env.DATABASE_URL,
-		},
-		{
-			title: 'Language lists',
-			task: async (_ctx, task): Promise<void> => generateLanguageFiles(task),
-			options: renderOptions,
-			skip: !process.env.DATABASE_URL,
-		},
+		defineJob('User Permissions', generatePermissions),
+		defineJob('User Roles', generateUserRoles),
+		defineJob('User Types', generateUserTypes),
+		defineJob('Attribute Categories', generateAttributeCategories),
+		defineJob('Attributes By Category', generateAttributesByCategory),
+		defineJob('Service Categories', generateServiceCategories),
+		defineJob('Language lists', generateLanguageFiles),
+		defineJob('Translation Namespaces', generateNamespaces),
 	],
 	{
 		exitOnError: false,
@@ -78,3 +58,4 @@ export type Context = {
 	error?: boolean
 }
 export type ListrTask = ListrTaskWrapper<unknown, typeof ListrRenderer>
+type ListrJob = ListrTaskObj<Context, ListrDefaultRenderer>
