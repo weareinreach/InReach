@@ -1,9 +1,13 @@
-import parsePhone, { type CountryCode, getCountries } from 'libphonenumber-js'
+import parsePhone, { type CountryCode, getCountries, isSupportedCountry } from 'libphonenumber-js'
 
-const isCountryCode = (countryCode: string): countryCode is CountryCode => {
-	const codes = getCountries() as string[]
-	return codes.includes(countryCode)
-}
+/**
+ * Type guard function checks if a given string is a supported country code and returns a boolean value. All
+ * instances of the `countryCode` param passed will be typed as `CountryCode` if a `true` result is returned.
+ *
+ * @param {string} countryCode - A string representing a ISO 3166-2 (two letter) country code.
+ */
+export const isCountryCode = (countryCode: string): countryCode is CountryCode =>
+	isSupportedCountry(countryCode)
 
 export const parsePhoneNumber = (phoneNumber: string, countryCode = 'US') => {
 	const country = countryCode.toUpperCase()

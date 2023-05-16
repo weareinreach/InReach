@@ -1,4 +1,5 @@
 import { type ApiOutput } from '@weareinreach/api'
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
 export const getNames = [
 	{
@@ -68,3 +69,10 @@ export const getNames = [
 		defaultText: 'Get help with navigating health insurance options',
 	},
 ] satisfies ApiOutput['service']['getNames']
+
+export const service = {
+	getNames: getTRPCMock({
+		path: ['service', 'getNames'],
+		response: getNames,
+	}),
+}

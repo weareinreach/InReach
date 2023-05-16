@@ -9,15 +9,16 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { forwardRef, useState } from 'react'
+import { forwardRef } from 'react'
 
 import { Button } from '~ui/components/core/Button'
+import { PhoneNumberEntry } from '~ui/components/data-portal/PhoneNumberEntry'
 import { useSlug } from '~ui/hooks/useSlug'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
 import { formHookParams, PhoneEmailFormProvider, useForm } from './context'
-import { PhoneEmailFlags, PhoneNumberEntry, PhoneTypeSelect } from './fields'
+import { PhoneEmailFlags, PhoneTypeSelect } from './fields'
 
 const PhoneEmailModalBody = forwardRef<HTMLButtonElement, PhoneEmailModalProps>(({ role, ...props }, ref) => {
 	const savePhone = api.orgPhone.create.useMutation()
@@ -43,7 +44,7 @@ const PhoneEmailModalBody = forwardRef<HTMLButtonElement, PhoneEmailModalProps>(
 			}
 			case 'phone': {
 				const { phoneNumber: number, phoneCountryId: countryId, phoneTypeId, customPhoneType } = formValues
-				if (!number) return
+				if (!number || !countryId) return
 
 				savePhone.mutate({ orgSlug: slug, data: { number, countryId, phoneTypeId } })
 
@@ -70,7 +71,13 @@ const PhoneEmailModalBody = forwardRef<HTMLButtonElement, PhoneEmailModalProps>(
 								</>
 							) : (
 								<>
-									<PhoneNumberEntry />
+									<PhoneNumberEntry
+										phoneEntryProps={{
+											...form.getInputProps('phoneNumber'),
+											setError: (err) => form.setFieldError('phoneNumber', err),
+										}}
+										countrySelectProps={form.getInputProps('phoneCountryId')}
+									/>
 									<PhoneTypeSelect />
 								</>
 							)}
