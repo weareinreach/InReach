@@ -1,20 +1,14 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
-import { Title, Card, Stack, Group, Text } from '@mantine/core'
+import { Card, Stack, Text, Title } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
-import { type ApiOutput } from '@weareinreach/api'
 import { useTranslation } from 'next-i18next'
-import { z } from 'zod'
 
+import { type ApiOutput } from '@weareinreach/api'
 import { Badge, GoogleMap } from '~ui/components/core'
 import { Hours } from '~ui/components/data-display'
-import { useScreenSize, useFormattedAddress, useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useFormattedAddress, useScreenSize } from '~ui/hooks'
 import { validateIcon } from '~ui/icon'
-
-const Coords = z.object({
-	lat: z.coerce.number(),
-	lng: z.coerce.number(),
-})
 
 export const VisitCard = (props: VisitCardProps) => {
 	const { isMobile } = useScreenSize()

@@ -1,6 +1,7 @@
-import { Prisma, generateId, generateNestedFreeText, slug } from '@weareinreach/db'
-import { namespaces } from '@weareinreach/db/seed/data/00-namespaces'
 import { z } from 'zod'
+
+import { generateId, generateNestedFreeText, Prisma, slug } from '@weareinreach/db'
+import { namespaces } from '@weareinreach/db/seed/data/00-namespaces'
 
 export const CreateOrgEmailSchema = z
 	.object({
@@ -78,3 +79,22 @@ export const UpdateOrgEmailSchema = z
 			.partial(),
 	})
 	.transform(({ data, id }) => Prisma.validator<Prisma.OrgEmailUpdateArgs>()({ where: { id }, data }))
+
+export const UpsertManyOrgEmailSchema = z.object({
+	orgSlug: z.string(),
+	data: z
+		.object({
+			id: z.string().optional(),
+			email: z.string(),
+			firstName: z.string().nullish(),
+			lastName: z.string().nullish(),
+			title: z.string().nullish(),
+			description: z.string().optional(),
+			primary: z.boolean(),
+			published: z.boolean(),
+			deleted: z.boolean(),
+			locations: z.string().array(),
+			services: z.string().array(),
+		})
+		.array(),
+})

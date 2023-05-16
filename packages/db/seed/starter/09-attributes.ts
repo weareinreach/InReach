@@ -1,8 +1,8 @@
-import { prisma, Prisma, generateId, slug } from '~db/index'
+import { generateId, type Prisma, prisma, slug } from '~db/index'
 import { attributeData, namespaces, supplementDataSchemas } from '~db/seed/data/'
-import { Log, iconList } from '~db/seed/lib'
+import { iconList, type Log } from '~db/seed/lib'
 import { logFile } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/starterData'
+import { type ListrTask } from '~db/seed/starterData'
 
 type Data = {
 	category: Prisma.AttributeCategoryCreateManyInput[]
@@ -72,7 +72,7 @@ export const seedAttributes = async (task: ListrTask, attribData?: typeof attrib
 			const {
 				name,
 				description: intDesc,
-				requireCountry,
+				requireGeo,
 				key: keyTag,
 				requireLanguage,
 				requireData,
@@ -102,7 +102,7 @@ export const seedAttributes = async (task: ListrTask, attribData?: typeof attrib
 					tag,
 					intDesc,
 					requireData,
-					requireCountry,
+					requireGeo,
 					requireLanguage,
 					requireText,
 					tsKey: key,

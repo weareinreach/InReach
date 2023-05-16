@@ -1,6 +1,6 @@
-import { defineRouter, handleError, permissionedProcedure } from '~api/lib'
+import { defineRouter, permissionedProcedure } from '~api/lib'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
-import { CreateOrgHoursSchema, UpdateOrgHoursSchema, CreateManyOrgHours } from '~api/schemas/create/orgHours'
+import { CreateManyOrgHours, CreateOrgHoursSchema, UpdateOrgHoursSchema } from '~api/schemas/create/orgHours'
 
 export const orgHoursRouter = defineRouter({
 	create: permissionedProcedure('createNewHours')

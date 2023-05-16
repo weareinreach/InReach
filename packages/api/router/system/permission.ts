@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { type z } from 'zod'
 
 import { handleError } from '~api/lib'
 import { defineRouter, permissionedProcedure } from '~api/lib/trpc'

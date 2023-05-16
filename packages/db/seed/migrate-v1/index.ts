@@ -4,9 +4,9 @@
 
 import {
 	Listr,
-	ListrTask as ListrBaseTask,
-	ListrDefaultRenderer,
-	ListrTaskWrapper,
+	type ListrTask as ListrBaseTask,
+	type ListrDefaultRenderer,
+	type ListrTaskWrapper,
 	PRESET_TIMER,
 } from 'listr2'
 

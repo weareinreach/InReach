@@ -1,4 +1,4 @@
-import { type ButtonProps, Modal, Box, createPolymorphicComponent, Space } from '@mantine/core'
+import { Box, type ButtonProps, createPolymorphicComponent, Modal, Space } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { forwardRef } from 'react'
 
@@ -25,4 +25,4 @@ ReviewModalBody.displayName = 'ReviewModal'
 
 export const ReviewModal = createPolymorphicComponent<'button', ReviewModalProps>(ReviewModalBody)
 
-export interface ReviewModalProps extends ButtonProps {}
+export type ReviewModalProps = ButtonProps

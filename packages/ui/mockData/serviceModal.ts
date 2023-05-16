@@ -1,5 +1,5 @@
 import { type ApiOutput } from '@weareinreach/api'
-import { transformer, type SuperJSONResult } from '@weareinreach/api/lib/transformer'
+import { type SuperJSONResult, transformer } from '@weareinreach/api/lib/transformer'
 
 const isSuperJSON = (data: unknown): data is SuperJSONResult =>
 	typeof data === 'object' && data !== null && Object.hasOwn(data, 'json')

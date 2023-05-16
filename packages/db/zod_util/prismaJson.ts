@@ -1,7 +1,7 @@
 import superjson from 'superjson'
 import { z } from 'zod'
 
-import { Prisma } from '../'
+import { type Prisma } from '..'
 
 export const InputJsonValue: z.ZodType<Prisma.InputJsonValue> = z.union([
 	z.string(),

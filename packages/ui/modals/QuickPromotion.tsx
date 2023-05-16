@@ -1,11 +1,11 @@
-import { Text, Title, Stack, type ButtonProps, Modal, Box, createPolymorphicComponent } from '@mantine/core'
+import { Box, type ButtonProps, createPolymorphicComponent, Modal, Stack, Text, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
-import { useTranslation, Trans } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useEffect } from 'react'
 
-import { Button, Link, type BreadcrumbProps } from '~ui/components/core'
+import { type BreadcrumbProps, Button, Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
 
 import { LoginModalLauncher } from './Login'

@@ -1,15 +1,18 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import { type StorybookConfig } from '@storybook/nextjs'
-import { merge } from 'merge-anything'
-import { PropItem } from 'react-docgen-typescript'
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin'
+import { mergeAndConcat } from 'merge-anything'
+import { type PropItem } from 'react-docgen-typescript'
 
 import * as path from 'path'
 
 const filePattern = '*.stories.@(ts|tsx)'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const isDev = process.env.NODE_ENV === 'development'
+
 const config: StorybookConfig = {
+	// stories: [`../!(node_modules)/**/${filePattern}`, '../other/**/*.mdx'],
 	stories: [`../(components|hooks|icon|layouts|modals|other)/**/${filePattern}`, '../other/**/*.mdx'],
 	staticDirs: [
 		{
@@ -21,40 +24,24 @@ const config: StorybookConfig = {
 	addons: [
 		'@geometricpanda/storybook-addon-badges',
 		'@storybook/addon-a11y',
-		'@storybook/addon-essentials',
 		'@storybook/addon-interactions',
-		'@storybook/addon-links',
 		'@tomfreudenberg/next-auth-mock/storybook',
 		'storybook-addon-designs',
 		'storybook-addon-pseudo-states',
 		// 'css-chaos-addon',
 		'storybook-addon-swc',
-		// {
-		// 	name: 'storybook-addon-swc',
-		// 	options: {
-		// 		swcLoaderOptions: {
-		// 			jsc: {
-		// 				target: 'es2016',
-		// 			},
-		// 		},
-		// 		swcMinifyOptions: {
-		// 			compress: {
-		// 				ecma: 2016,
-		// 			},
-		// 		},
-		// 	},
-		// },
-		'@storybook/addon-actions', // Keep this one last
+		'@storybook/addon-essentials', // Keep this last
 	],
 	framework: {
 		name: '@storybook/nextjs',
 		options: {
-			// builder: {
-			// 	// lazyCompilation: true,
-			// 	// fsCache: true,
-			// },
+			builder: {
+				lazyCompilation: Boolean(process.env.SB_LAZY),
+				fsCache: Boolean(process.env.SB_CACHE),
+			},
 			nextConfigPath: path.resolve(__dirname, '../../../apps/app/next.config.mjs'),
 			fastRefresh: true,
+			strictMode: true,
 		},
 	},
 	features: {
@@ -62,13 +49,19 @@ const config: StorybookConfig = {
 	},
 	typescript: {
 		check: false,
-		reactDocgen: process.env.SKIP_DOCS ? false : 'react-docgen-typescript',
+		checkOptions: {},
+		reactDocgen: process.env.SB_GEN_DOCS ? 'react-docgen-typescript' : false,
 		reactDocgenTypescriptOptions: {
 			shouldExtractLiteralValuesFromEnum: true,
-			shouldRemoveUndefinedFromOptional: true,
 			shouldExtractValuesFromUnion: false,
+			shouldRemoveUndefinedFromOptional: true,
 			shouldIncludePropTagMap: true,
-			tsconfigPath: path.resolve(__dirname, '../tsconfig.storybook.json'),
+			compilerOptions: {
+				allowSyntheticDefaultImports: false,
+				esModuleInterop: false,
+			},
+			// tsconfigPath: path.resolve(__dirname, '../tsconfig.storybook.json'),
+			exclude: ['node_modules'],
 			propFilter: (prop: PropItem) => {
 				const pathTest = /node_modules\/(?!(?:\.pnpm\/)?@mantine(?!.?styles))/
 				// if (prop.parent && !pathTest.test(prop.parent.fileName)) console.log(prop)
@@ -85,9 +78,7 @@ const config: StorybookConfig = {
 						__dirname,
 						'mockAuthStates.ts'
 					),
-					// '@weareinreach/api': path.resolve(__dirname, '../../api'),
 					'next-i18next': 'react-i18next',
-					// 'next/font': 'storybook-nextjs-font-loader',
 				},
 				roots: [path.resolve(__dirname, '../../../apps/app/public')],
 				fallback: {
@@ -117,10 +108,13 @@ const config: StorybookConfig = {
 					vm: false,
 					zlib: false,
 				},
-				plugins: [new TsconfigPathsPlugin()],
 			},
+			stats: {
+				colors: true,
+			},
+			// devtool: isDev ? 'eval-source-map' : 'cheap-module-source-map',
 		}
-		const mergedConfig = merge(config, configAdditions)
+		const mergedConfig = mergeAndConcat(config, configAdditions)
 		return mergedConfig
 	},
 	docs: {

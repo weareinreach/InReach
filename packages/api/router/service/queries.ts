@@ -1,8 +1,15 @@
 import { TRPCError } from '@trpc/server'
-import { Prisma } from '@weareinreach/db'
+import flush from 'just-flush'
 import { z } from 'zod'
 
-import { defineRouter, publicProcedure, handleError, protectedProcedure } from '~api/lib'
+import { type Prisma } from '@weareinreach/db'
+import {
+	defineRouter,
+	handleError,
+	permissionedProcedure,
+	protectedProcedure,
+	publicProcedure,
+} from '~api/lib'
 import {
 	serviceById,
 	serviceByLocationId,
@@ -97,13 +104,13 @@ export const queries = defineRouter({
 
 			switch (true) {
 				case Boolean(slug): {
-					return await ctx.prisma.organization.findUniqueOrThrow({
+					return ctx.prisma.organization.findUniqueOrThrow({
 						where: { slug },
 						select: { name: true },
 					})
 				}
 				case Boolean(orgLocationId): {
-					return await ctx.prisma.orgLocation.findUniqueOrThrow({
+					return ctx.prisma.orgLocation.findUniqueOrThrow({
 						where: { id: orgLocationId },
 						select: { name: true },
 					})
@@ -112,5 +119,36 @@ export const queries = defineRouter({
 					throw new TRPCError({ code: 'BAD_REQUEST' })
 				}
 			}
+		}),
+	getNames: permissionedProcedure('getDetails')
+		.input(z.object({ organizationId: z.string(), orgLocationId: z.string() }).partial())
+		.query(async ({ ctx, input }) => {
+			const { orgLocationId, organizationId } = input
+
+			if (!orgLocationId && !organizationId) throw new TRPCError({ code: 'BAD_REQUEST' })
+
+			const results = await ctx.prisma.orgService.findMany({
+				where: {
+					organizationId: organizationId,
+					...(orgLocationId
+						? {
+								locations: {
+									some: { orgLocationId },
+								},
+						  }
+						: {}),
+				},
+				select: {
+					id: true,
+					serviceName: { select: { key: true, tsKey: { select: { text: true } } } },
+				},
+			})
+			const transformedResults = flush(
+				results.map(({ id, serviceName }) => {
+					if (!serviceName) return
+					return { id, tsKey: serviceName.key, defaultText: serviceName.tsKey.text }
+				})
+			)
+			return transformedResults
 		}),
 })

@@ -1,24 +1,24 @@
 import {
-	Title,
-	Text,
-	Radio,
-	TextInput,
-	Stack,
 	Autocomplete,
-	createStyles,
-	rem,
-	Divider,
 	Button,
-	Space,
+	createStyles,
+	Divider,
 	Modal,
+	Radio,
+	rem,
+	Space,
+	Stack,
+	Text,
+	TextInput,
+	Title,
 } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
+import { Trans, useTranslation } from 'next-i18next'
+import { type ComponentPropsWithRef, forwardRef, useEffect, useState } from 'react'
+
 import { type ApiOutput } from '@weareinreach/api'
 import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
-import { useTranslation, Trans } from 'next-i18next'
-import { ComponentPropsWithRef, forwardRef, useState, useEffect } from 'react'
-
 import { Link } from '~ui/components/core'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
@@ -26,7 +26,7 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals'
 
 import { SuggestionFormProvider, useForm } from './context'
-import { ServiceTypes, Communities } from './modals'
+import { Communities, ServiceTypes } from './modals'
 
 const useLocationStyles = createStyles((theme) => ({
 	autocompleteWrapper: {

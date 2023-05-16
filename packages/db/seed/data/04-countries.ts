@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Prisma } from '@prisma/client'
+import { type Prisma } from '@prisma/client'
 import axios from 'axios'
 import { countries as countryExtra } from 'countries-languages'
 
@@ -19,9 +19,9 @@ export const countryData = async () => {
 export const genDemonymKey = (country: Countries) => {
 	const demonym: string | undefined = countryExtra[country.cca2]?.demonym
 	if (demonym) {
-		const { plural, pluralValues } = TranslationPluralSchema.parse({
-			plural: 'PLURAL',
-			pluralValues: {
+		const { interpolation, interpolationValues } = TranslationPluralSchema.parse({
+			interpolation: 'PLURAL',
+			interpolationValues: {
 				one: demonym,
 				other: demonym,
 			},
@@ -32,8 +32,8 @@ export const genDemonymKey = (country: Countries) => {
 			ns: namespaces.country,
 			text: demonym,
 			context: `Citizens of ${country.name.common}`,
-			plural,
-			pluralValues,
+			interpolation,
+			interpolationValues,
 		} satisfies Prisma.TranslationKeyCreateManyInput
 
 		return newKey

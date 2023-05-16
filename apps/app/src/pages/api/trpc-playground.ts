@@ -1,8 +1,9 @@
 // pages/api/trpc-playground.ts
+import { type NextApiHandler } from 'next'
+import { nextHandler } from 'trpc-playground/handlers/next'
+
 import { appRouter } from '@weareinreach/api'
 import { getEnv } from '@weareinreach/config/env'
-import { NextApiHandler } from 'next'
-import { nextHandler } from 'trpc-playground/handlers/next'
 
 const setupHandler = nextHandler({
 	router: appRouter,

@@ -1,9 +1,9 @@
-import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { Context } from '~api/lib'
+import { type Prisma } from '@weareinreach/db'
+import { type Context } from '~api/lib'
 
-import { freeText, isPublic, attributes, phoneSelectPublic, countryWithoutGeo } from './common'
+import { attributes, countryWithoutGeo, freeText, isPublic, phoneSelectPublic } from './common'
 
 type OrgIncludeKeys = z.ZodObject<
 	{
@@ -11,9 +11,9 @@ type OrgIncludeKeys = z.ZodObject<
 	},
 	'strip'
 >
-type OrgSelectKeys = {
-	[k in keyof Prisma.OrganizationSelect]: z.infer<typeof boolFalse>
-}
+// type OrgSelectKeys = {
+// 	[k in keyof Prisma.OrganizationSelect]: z.infer<typeof boolFalse>
+// }
 
 const boolFalse = z.boolean().default(false) satisfies z.ZodDefault<z.ZodBoolean>
 
@@ -424,5 +424,5 @@ export const orgSearchSelect = {
 	},
 } satisfies Prisma.OrganizationSelect
 
-type Include<T> = { include: T }
-type Select<T> = { select: T }
+// type Include<T> = { include: T }
+// type Select<T> = { select: T }

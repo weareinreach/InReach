@@ -15,31 +15,31 @@ import fs from 'fs'
 import path from 'path'
 
 import { dayMap, hoursMap, hoursMeta } from '~db/datastore/v1/helpers/hours'
-import { OrganizationsJSONCollection } from '~db/datastore/v1/mongodb/output-types/organizations'
+import { type OrganizationsJSONCollection } from '~db/datastore/v1/mongodb/output-types/organizations'
 import {
-	SourceType,
+	generateId,
 	JsonInputOrNull,
 	JsonInputOrNullSuperJSON,
 	prisma,
-	generateId,
 	slug as slugGenerator,
+	type SourceType,
 } from '~db/index'
 import { createPoint } from '~db/lib/createPoint'
-import { Log, iconList } from '~db/seed/lib'
+import { iconList, type Log } from '~db/seed/lib'
 import { migrateLog } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/migrate-v1'
+import { type ListrTask } from '~db/seed/migrate-v1'
 import { idMap, writeIdMap } from '~db/seed/migrate-v1/idMap'
 import {
-	AttributeListMap,
-	CountryNameMap,
-	DistList,
+	type AttributeListMap,
+	type CountryNameMap,
+	type DistList,
 	type GenerateKey,
-	type KeyType,
-	LanguageMap,
 	getCountryId,
 	getGovDistId,
 	getReferenceData,
 	generateKey as keyGenerator,
+	type KeyType,
+	type LanguageMap,
 	legacyAccessMap,
 	parseSchedule,
 	serviceTagTranslation,

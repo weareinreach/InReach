@@ -1,16 +1,16 @@
-import { Stack, Title, Text } from '@mantine/core'
-import { type ApiOutput } from '@weareinreach/api'
+import { Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
-import { Rating, BadgeGroup, type CustomBadgeProps } from '~ui/components/core'
-import { useFormattedAddress, useCustomVariant } from '~ui/hooks'
+import { type ApiOutput } from '@weareinreach/api'
+import { BadgeGroup, type CustomBadgeProps, Rating } from '~ui/components/core'
+import { useCustomVariant, useFormattedAddress } from '~ui/hooks'
 
 export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
 	const { t } = useTranslation([data.slug])
 	const variants = useCustomVariant()
 	const { attributes, isClaimed, locations, description, slug } = data
 
-	const isMultiLoc = role === 'org' && (locations?.length ?? 0) > 1
+	// const isMultiLoc = role === 'org' && (locations?.length ?? 0) > 1
 	const isSingleLoc = locations?.length === 1
 	const location = isSingleLoc ? locations[0] : undefined
 

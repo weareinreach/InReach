@@ -2,10 +2,10 @@
 	"extends": "@weareinreach/config/tsconfig/base.json",
 	"compilerOptions": {
 		"noImplicitAny": false,
-		"strictNullChecks": true,
 		"baseUrl": "./",
-		"allowJs": true
+		"allowJs": true,
+		"strict": true
 	},
 	"exclude": ["**/node_modules", "./**/.*/"],
-	"include": ["./**/*.ts", "../../@types/**/*.ts"]
+	"include": ["./**/*.ts", "./**/*.js", "./**/*.mjs", "../../@types/**/*.ts"]
 }

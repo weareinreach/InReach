@@ -1,4 +1,4 @@
-import { type Permission } from '~api/generated/permission'
+import { type Permission } from '@weareinreach/db/generated/permission'
 
 const locations = {
 	createNewLocation: 'createLocation',
@@ -22,8 +22,8 @@ const orgHours = {
 } satisfies PermissionDefs
 
 const orgPhone = {
-	createNewEmail: ['editAnyOrg', 'createOrg'],
-	updateEmail: 'editSingleOrg',
+	createNewPhone: ['editAnyOrg', 'createOrg'],
+	updatePhone: 'editSingleOrg',
 } satisfies PermissionDefs
 
 const orgPhoto = {
@@ -54,6 +54,7 @@ const orgWebsite = {
 
 const system = {
 	createPermission: 'adminPermissions',
+	getDetails: ['dataPortalBasic'],
 } satisfies PermissionDefs
 
 const permissions = {

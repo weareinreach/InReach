@@ -1,6 +1,6 @@
-import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
+import { Prisma } from '@weareinreach/db'
 import { idString } from '~api/schemas/common'
 import { connectOne, connectOneRequired } from '~api/schemas/nestedOps'
 

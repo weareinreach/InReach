@@ -1,48 +1,17 @@
 import {
 	Listr,
-	ListrTask as ListrTaskObj,
-	ListrDefaultRenderer,
-	ListrTaskWrapper,
+	type ListrDefaultRenderer,
+	type ListrTask as ListrTaskObj,
+	type ListrTaskWrapper,
 	PRESET_TIMER,
 } from 'listr2'
 
-import {
-	job20220329,
-	job20220330,
-	job20220404,
-	job20230404b,
-	job20230405,
-	job20230405b,
-	job20230406,
-	job20230410,
-	job20230410b,
-	job20230411,
-	job20230411b,
-} from './data-migrations'
-
-/**
- * Job Queue
- *
- * Add new jobs to the end of this array.
- */
-const jobList = [
-	job20220329,
-	job20220330,
-	job20220404,
-	job20230404b,
-	job20230405,
-	job20230405b,
-	job20230406,
-	job20230410,
-	job20230410b,
-	job20230411,
-	job20230411b,
-]
+import * as jobList from './data-migrations'
 
 /**
  * Job Runner
  *
- * You shouldn't need to touch anythign below this.
+ * You shouldn't need to touch anything in this file. All jobs in `data-migrations/index.ts` will be imported.
  */
 
 const renderOptions = {
@@ -52,7 +21,7 @@ const renderOptions = {
 } satisfies ListrJob['options']
 const injectOptions = (job: ListrJob): ListrJob => ({ ...job, options: renderOptions })
 const jobs = new Listr<Context>(
-	jobList.map((job) => injectOptions(job)),
+	Object.values(jobList).map((job) => injectOptions(job)),
 	{
 		rendererOptions: {
 			formatOutput: 'wrap',
@@ -62,7 +31,6 @@ const jobs = new Listr<Context>(
 		fallbackRendererOptions: {
 			timer: PRESET_TIMER,
 		},
-
 		exitOnError: false,
 	}
 )

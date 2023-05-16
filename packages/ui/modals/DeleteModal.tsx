@@ -1,13 +1,13 @@
 import {
-	type ButtonProps,
-	Modal,
 	Box,
+	type ButtonProps,
 	createPolymorphicComponent,
 	createStyles,
-	PasswordInput,
 	Group,
-	Text,
+	Modal,
+	PasswordInput,
 	rem,
+	Text,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -71,7 +71,7 @@ export const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((
 			setError(t(error.message) as string)
 		},
 	})
-	const handleSubmit = async (password: string) => {
+	const handleSubmit = (password: string) => {
 		form.clearErrors()
 		deleteAccount.mutate(password)
 	}
@@ -121,4 +121,4 @@ DeleteModalBody.displayName = 'DeleteModal'
 
 export const DeleteModal = createPolymorphicComponent<'button', DeleteModalProps>(DeleteModalBody)
 
-export interface DeleteModalProps extends ButtonProps {}
+export type DeleteModalProps = ButtonProps

@@ -1,18 +1,18 @@
 /* eslint-disable i18next/no-literal-string */
 import { Grid, Group, Space } from '@mantine/core'
-import { trpcServerClient, type ApiOutput } from '@weareinreach/api/trpc'
-import { SearchResultCard, SearchBox, Pagination } from '@weareinreach/ui/components/core'
-import { SearchResultSidebar } from '@weareinreach/ui/components/sections'
-import { ServiceFilter } from '@weareinreach/ui/modals'
-import { GetServerSideProps } from 'next'
+import { type GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useState } from 'react'
 import { z } from 'zod'
 
+import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
+import { Pagination, SearchBox, SearchResultCard } from '@weareinreach/ui/components/core'
+import { SearchResultSidebar } from '@weareinreach/ui/components/sections'
+import { ServiceFilter } from '@weareinreach/ui/modals'
 import { api } from '~app/utils/api'
-import { SEARCH_RESULT_PAGE_SIZE, getSearchResultPageCount } from '~app/utils/constants'
+import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
 const ParamSchema = z.tuple([
@@ -109,10 +109,10 @@ const SearchResults = () => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/search/[...params]'>> = async ({
-	locale,
-	query,
-}) => {
+export const getServerSideProps: GetServerSideProps<
+	Record<string, unknown>,
+	RoutedQuery<'/search/[...params]'>
+> = async ({ locale, query }) => {
 	const [_searchType, lon, lat, dist, unit] = ParamSchema.parse(query.params)
 	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE

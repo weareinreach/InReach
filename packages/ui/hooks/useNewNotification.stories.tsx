@@ -1,13 +1,13 @@
 import { Notification } from '@mantine/core'
-import { Meta, StoryObj } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 import React from 'react'
 
 import {
-	InstantFeedback,
-	useStyles,
-	useNewNotification,
 	iconList,
-	UseNotificationProps,
+	InstantFeedback,
+	useNewNotification,
+	type UseNotificationProps,
+	useStyles,
 } from './useNewNotification'
 import { Button } from '../components/core'
 import { Icon } from '../icon'

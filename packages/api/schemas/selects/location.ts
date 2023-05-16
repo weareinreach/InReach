@@ -1,4 +1,4 @@
-import { Prisma } from '@weareinreach/db'
+import { type Prisma } from '@weareinreach/db'
 
 const common = { id: true, tsKey: true, tsNs: true }
 
@@ -12,6 +12,7 @@ const subDistrictSelect = {
 export const serviceAreaSelect = {
 	...common,
 	cca2: true,
+	flag: true,
 	govDist: {
 		where: { isPrimary: true },
 		select: {

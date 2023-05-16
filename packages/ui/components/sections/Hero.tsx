@@ -1,7 +1,7 @@
-import { Title, Text, Stack, Box, createStyles, rem, Group, Transition } from '@mantine/core'
+import { Box, createStyles, Group, rem, Stack, Text, Title, Transition } from '@mantine/core'
 import { usePrevious } from '@mantine/hooks'
-import { useTranslation, Trans, TFunction } from 'next-i18next'
-import { useState, useEffect } from 'react'
+import { type TFunction, Trans, useTranslation } from 'next-i18next'
+import { useEffect, useState } from 'react'
 
 import { SearchBox } from '~ui/components/core/SearchBox'
 
@@ -49,7 +49,7 @@ type RevolvingBoxProps = {
 	role: 'services' | 'community'
 	t: TFunction
 }
-type RandomArr = <T extends Array<any>>(arr: T) => T[number]
+type RandomArr = <T extends Array<unknown>>(arr: T) => T[number]
 
 const randomArrMember: RandomArr = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -72,7 +72,7 @@ const RevolvingBox = ({ role, t }: RevolvingBoxProps) => {
 	const outTime = 500
 	const changeTime = 5000
 	useEffect(() => {
-		const timer = setInterval(() => {
+		setInterval(() => {
 			setTransition(false)
 			setTimeout(() => {
 				setColor(randomArrMember(backgroundColors))

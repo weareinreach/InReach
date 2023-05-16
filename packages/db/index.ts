@@ -4,7 +4,7 @@
 
 // if (process.env.NODE_ENV === 'development') require('./otel')
 
-import { PrismaClient, Prisma } from '@prisma/client'
+import { type Prisma, PrismaClient } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 import { Logger } from 'tslog'
 

@@ -2,12 +2,12 @@
 
 import fs from 'fs'
 
-import { CommentsJSONCollection } from '~db/datastore/v1/mongodb/output-types/comments'
-import { RatingsJSONCollection } from '~db/datastore/v1/mongodb/output-types/ratings'
-import { Prisma, prisma, generateId } from '~db/index'
+import { type CommentsJSONCollection } from '~db/datastore/v1/mongodb/output-types/comments'
+import { type RatingsJSONCollection } from '~db/datastore/v1/mongodb/output-types/ratings'
+import { generateId, prisma, type Prisma } from '~db/index'
 import { userEmail } from '~db/seed/data'
 import { migrateLog } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/migrate-v1'
+import { type ListrTask } from '~db/seed/migrate-v1'
 import { idMap, writeIdMap } from '~db/seed/migrate-v1/idMap'
 
 export const orgReviews: Prisma.OrgReviewCreateManyInput[] = []

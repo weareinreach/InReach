@@ -1,23 +1,23 @@
 /* eslint-disable i18next/no-literal-string */
-import { Grid, Stack, Tabs, Image } from '@mantine/core'
+import { Grid, Stack, Tabs } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
-import { trpcServerClient } from '@weareinreach/api/trpc'
-import { Toolbar, GoogleMap } from '@weareinreach/ui/components/core'
-import {
-	ContactSection,
-	ServicesInfoCard,
-	PhotosSection,
-	ReviewSection,
-	VisitCard,
-	ListingBasicInfo,
-	LocationCard,
-} from '@weareinreach/ui/components/sections'
-import { GetServerSideProps, NextPage } from 'next'
+import { type GetServerSideProps, type NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
+import { trpcServerClient } from '@weareinreach/api/trpc'
+import { GoogleMap, Toolbar } from '@weareinreach/ui/components/core'
+import {
+	ContactSection,
+	ListingBasicInfo,
+	LocationCard,
+	PhotosSection,
+	ReviewSection,
+	ServicesInfoCard,
+	VisitCard,
+} from '@weareinreach/ui/components/sections'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
@@ -125,10 +125,10 @@ const OrganizationPage: NextPage = () => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps<{}, RoutedQuery<'/org/[slug]'>> = async ({
-	locale,
-	params,
-}) => {
+export const getServerSideProps: GetServerSideProps<
+	Record<string, unknown>,
+	RoutedQuery<'/org/[slug]'>
+> = async ({ locale, params }) => {
 	if (!params) return { notFound: true }
 	const { slug } = params
 

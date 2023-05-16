@@ -1,7 +1,8 @@
-import { ServerStyles, createStylesServer } from '@mantine/next'
-import { appCache } from '@weareinreach/ui/theme'
-import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document'
+import { createStylesServer, ServerStyles } from '@mantine/next'
+import Document, { type DocumentContext, Head, Html, Main, NextScript } from 'next/document'
 import Script from 'next/script'
+
+import { appCache } from '@weareinreach/ui/theme'
 
 import i18nextConfig from '../../next-i18next.config.mjs'
 

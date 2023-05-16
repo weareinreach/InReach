@@ -1,10 +1,10 @@
-import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
 
+import { Prisma } from '@weareinreach/db'
 import { CreationBase, idString } from '~api/schemas/common'
 import { CreateAuditLog, GenerateAuditLog } from '~api/schemas/create/auditLog'
 
-import { createMany, createOneSeparateLog } from '../nestedOps'
+import { createManyRequired, createOneSeparateLog } from '../nestedOps'
 
 const CreateListSchema = { name: z.string() }
 export const SaveItemSchema = {
@@ -69,7 +69,7 @@ export const CreateListAndEntry = () => {
 					ownedById,
 					organizations,
 					services,
-					auditLogs: createMany([
+					auditLogs: createManyRequired([
 						GenerateAuditLog({ actorId, operation, to: { name, ownedById } }),
 						orgLog,
 						servLog,

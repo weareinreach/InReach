@@ -1,5 +1,5 @@
 import { List, Stack, Text, Title } from '@mantine/core'
-import { Interval, DateTime } from 'luxon'
+import { DateTime, Interval } from 'luxon'
 import { useTranslation } from 'next-i18next'
 
 import { useCustomVariant } from '~ui/hooks'
