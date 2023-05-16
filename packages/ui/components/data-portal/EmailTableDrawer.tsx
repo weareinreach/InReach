@@ -195,6 +195,7 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 								.getInputProps(`data.${info.row.index}.email`, { withFocus: false })
 								.onChange(e.target.value),
 						variant: variants.Input.small,
+						type: 'email',
 					}}
 				/>
 			),

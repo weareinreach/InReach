@@ -19,7 +19,7 @@ const FormContextDecorator = (Story: StoryFn) => {
 	)
 }
 export default {
-	title: 'Data Portal/Phone Number Entry',
+	title: 'Data Portal/Fields/Phone Number Entry',
 	component: PhoneNumberEntry,
 	parameters: {
 		msw: [fieldOptHandlers.countries],
