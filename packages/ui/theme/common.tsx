@@ -110,6 +110,14 @@ const themeCustomObj = {
 			color: colors.secondary.black,
 		},
 	},
+	headings: {
+		h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },
+		h2: { fontSize: rem(24), lineHeight: 1.25, fontWeight: 500 },
+		h3: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		h4: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		h5: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		h6: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+	},
 	border: {
 		default: '1px solid #d9d9d9',
 	},
@@ -139,14 +147,15 @@ export const commonTheme = {
 	},
 	headings: {
 		fontWeight: 500,
-		sizes: {
-			h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },
-			h2: { fontSize: rem(24), lineHeight: 1.25, fontWeight: 500 },
-			h3: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-			h4: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-			h5: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-			h6: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-		},
+		sizes: themeCustomObj.headings,
+		// {
+		// 	h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },
+		// 	h2: { fontSize: rem(24), lineHeight: 1.25, fontWeight: 500 },
+		// 	h3: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// 	h4: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// 	h5: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// 	h6: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// },
 	},
 
 	shadows: {
