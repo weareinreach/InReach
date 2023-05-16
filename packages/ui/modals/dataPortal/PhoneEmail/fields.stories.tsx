@@ -7,7 +7,7 @@ import { getNames as getLocationNames } from '~ui/mockData/orgLocation'
 import { getNames as getServiceNames } from '~ui/mockData/orgService'
 
 import { formHookParams, PhoneEmailFormProvider, useForm } from './context'
-import { PhoneEmailFlags, PhoneNumberEntry, PhoneTypeSelect } from './fields'
+import { PhoneEmailFlags, PhoneTypeSelect } from './fields'
 
 const FormContextDecorator = (Story: StoryFn) => {
 	const form = useForm(formHookParams)
@@ -42,8 +42,6 @@ export default {
 	title: 'Data Portal/Modals/Add Phone or Email/Fields',
 	component: Fragment,
 	parameters: {
-		layout: 'fullscreen',
-		layoutWrapper: 'centeredFullscreen',
 		msw: phoneEmailFieldMocks,
 		rqDevtools: true,
 		controls: {
@@ -60,11 +58,8 @@ export default {
 		},
 	},
 	decorators: [FormContextDecorator],
+	excludeStories: ['phoneEmailFieldMocks'],
 } satisfies Meta<typeof Fragment>
-
-export const PhoneNumber = {
-	render: PhoneNumberEntry,
-} satisfies StoryObj<typeof PhoneNumberEntry>
 
 export const PhoneTypeSelection = {
 	render: PhoneTypeSelect,

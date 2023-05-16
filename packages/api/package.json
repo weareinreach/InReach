@@ -14,6 +14,8 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
+		"@crowdin/crowdin-api-client": "1.22.1",
+		"@crowdin/ota-client": "1.0.0",
 		"@googlemaps/google-maps-services-js": "3.3.30",
 		"@tanstack/react-query": "4.29.5",
 		"@terraformer/wkt": "2.2.0",
@@ -25,6 +27,7 @@
 		"@weareinreach/db": "0.100.0",
 		"alex": "11.0.0",
 		"geolib": "3.3.3",
+		"just-compact": "3.2.0",
 		"just-diff": "6.0.2",
 		"just-diff-apply": "5.5.0",
 		"just-flush": "2.3.0",

@@ -11,6 +11,7 @@ import {
 	type CheckboxStylesParams,
 	type ColProps,
 	type CSSObject,
+	type DrawerStylesNames,
 	em,
 	type GridProps,
 	type InputStylesNames,
@@ -109,6 +110,14 @@ const themeCustomObj = {
 			color: colors.secondary.black,
 		},
 	},
+	headings: {
+		h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },
+		h2: { fontSize: rem(24), lineHeight: 1.25, fontWeight: 500 },
+		h3: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		h4: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		h5: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		h6: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+	},
 	border: {
 		default: '1px solid #d9d9d9',
 	},
@@ -138,14 +147,15 @@ export const commonTheme = {
 	},
 	headings: {
 		fontWeight: 500,
-		sizes: {
-			h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },
-			h2: { fontSize: rem(24), lineHeight: 1.25, fontWeight: 500 },
-			h3: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-			h4: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-			h5: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-			h6: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-		},
+		sizes: themeCustomObj.headings,
+		// {
+		// 	h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },
+		// 	h2: { fontSize: rem(24), lineHeight: 1.25, fontWeight: 500 },
+		// 	h3: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// 	h4: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// 	h5: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// 	h6: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// },
 	},
 
 	shadows: {
@@ -376,6 +386,22 @@ export const commonTheme = {
 			}),
 			variants: variants.Divider,
 		},
+		Drawer: {
+			styles: (theme) =>
+				({
+					content: {
+						borderRadius: `${rem(32)} ${rem(32)} ${rem(0)} ${rem(0)}`,
+						padding: `${rem(0)} ${rem(0)}`,
+					},
+					header: {
+						borderBottom: `${rem(1)} solid ${theme.other.colors.primary.lightGray}`,
+						padding: `${rem(16)} ${rem(31)} ${rem(16)} ${rem(36)}`,
+					},
+					body: {
+						padding: `${rem(0)} ${rem(36)} ${rem(16)} ${rem(36)}`,
+					},
+				} satisfies Styles<DrawerStylesNames>),
+		},
 		Grid: {
 			defaultProps: {
 				columns: 12,
@@ -444,6 +470,7 @@ export const commonTheme = {
 						margin: 0,
 					},
 				} satisfies Styles<InputStylesNames, InputStylesParams>),
+			variants: variants.Input,
 		},
 		InputWrapper: {
 			defaultProps: {
@@ -618,6 +645,9 @@ export const commonTheme = {
 				},
 			}),
 		},
+		Select: {
+			variants: variants.Input,
+		},
 		Skeleton: {
 			defaultProps: (theme) =>
 				({
@@ -751,6 +781,7 @@ export const commonTheme = {
 					paddingRight: theme.spacing.md,
 				},
 			}),
+			variants: variants.Input,
 		},
 		Title: {
 			styles: (theme) =>
@@ -836,8 +867,4 @@ export const commonTheme = {
 	},
 } satisfies MantineThemeOverride
 
-type ThemeCustomObject = typeof themeCustomObj
-
-declare module '@mantine/core' {
-	export type MantineThemeOther = ThemeCustomObject
-}
+export type ThemeCustomObject = typeof themeCustomObj

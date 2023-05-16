@@ -27,6 +27,7 @@ const config = {
 				ignoreRestSiblings: true,
 			},
 		],
+		'@typescript-eslint/no-empty-function': 'off',
 		'no-duplicate-imports': 'off',
 		'node/no-process-env': 'warn',
 		'codegen/codegen': 'error',
@@ -101,7 +102,7 @@ const config = {
 	parserOptions: {
 		project: ['./packages/*/tsconfig.json', './apps/*/tsconfig.json', './tsconfig.json'],
 	},
-	ignorePatterns: ['!.*', '**/node_modules/**', 'dist/', '.next/'],
+	ignorePatterns: ['!.*', 'node_modules', 'dist/', '.next/'],
 	settings: {
 		'import/extensions': ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.mts', '.tsx'],
 		'import/resolver': {
