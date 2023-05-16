@@ -8,7 +8,8 @@
 			"~auth/*": ["packages/auth/*"],
 			"~db/*": ["packages/db/*"],
 			"~ui/*": ["packages/ui/*"]
-		}
+		},
+		"strict": true
 	},
 	"extends": "./packages/config/tsconfig/base.json",
 	"exclude": ["**/node_modules"],
