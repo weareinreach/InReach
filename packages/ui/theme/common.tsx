@@ -461,6 +461,7 @@ export const commonTheme = {
 						margin: 0,
 					},
 				} satisfies Styles<InputStylesNames, InputStylesParams>),
+			variants: variants.Input,
 		},
 		InputWrapper: {
 			defaultProps: {
@@ -635,6 +636,9 @@ export const commonTheme = {
 				},
 			}),
 		},
+		Select: {
+			variants: variants.Input,
+		},
 		Skeleton: {
 			defaultProps: (theme) =>
 				({
@@ -768,6 +772,7 @@ export const commonTheme = {
 					paddingRight: theme.spacing.md,
 				},
 			}),
+			variants: variants.Input,
 		},
 		Title: {
 			styles: (theme) =>
@@ -853,8 +858,4 @@ export const commonTheme = {
 	},
 } satisfies MantineThemeOverride
 
-type ThemeCustomObject = typeof themeCustomObj
-
-declare module '@mantine/core' {
-	export type MantineThemeOther = ThemeCustomObject
-}
+export type ThemeCustomObject = typeof themeCustomObj

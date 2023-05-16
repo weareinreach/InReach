@@ -1181,6 +1181,9 @@ importers:
       just-compare:
         specifier: 2.3.0
         version: 2.3.0
+      just-map-values:
+        specifier: 3.2.0
+        version: 3.2.0
       libphonenumber-js:
         specifier: 1.10.30
         version: 1.10.30
@@ -5819,7 +5822,7 @@ packages:
     dependencies:
       '@mantine/ssr': 6.0.10(@emotion/react@11.11.0)(@emotion/server@11.11.0)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/styles': 6.0.10(@emotion/react@11.11.0)(react-dom@18.2.0)(react@18.2.0)
-      next: 13.4.2(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.2(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
@@ -9106,7 +9109,7 @@ packages:
       '@trpc/client': 10.25.1(@trpc/server@10.25.1)
       '@trpc/react-query': 10.25.1(@tanstack/react-query@4.29.5)(@trpc/client@10.25.1)(@trpc/server@10.25.1)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 10.25.1
-      next: 13.4.2(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.2(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
@@ -16245,6 +16248,10 @@ packages:
     resolution: {integrity: sha512-XdAiJUmfM7VOoBUh7I4xo+0YYuzCPiV0Xf21oAmR+1j6a/P8KxJUCigZDblmURZmkIWffNziY2sbSaHrJbNcuA==}
     dev: false
 
+  /just-map-values@3.2.0:
+    resolution: {integrity: sha512-TyqCKtK3NxiUgOjRYMIKURvBTHesi3XzomDY0QVPZ3rYzLCF+nNq5rSi0B/L5aOd/WMTZo6ukzA4wih4HUbrDg==}
+    dev: false
+
   /just-omit@2.2.0:
     resolution: {integrity: sha512-Js7+HxDOGcB3RhI38Mird/RgyMf3t0DAJFda1QWqqlAKTa36NeSYIufJXxrZUbysFTRcTOFcoMCiFK5FwCoI7Q==}
     dev: false
@@ -17810,7 +17817,7 @@ packages:
       '@panva/hkdf': 1.0.4
       cookie: 0.5.0
       jose: 4.13.2
-      next: 13.4.2(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.2(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
       oauth: 0.9.15
       openid-client: 5.4.0
       preact: 10.13.2
@@ -17834,7 +17841,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       i18next: 22.4.15
       i18next-fs-backend: 2.1.1
-      next: 13.4.2(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.2(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-i18next: 12.2.2(i18next@22.4.15)(react-dom@18.2.0)(react@18.2.0)
 
@@ -17903,7 +17910,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
-    dev: true
 
   /next@13.4.2(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-aNFqLs3a3nTGvLWlO9SUhCuMUHVPSFQC0+tDNGAsDXqx+WJDFSbvc233gOJ5H19SBc7nw36A9LwQepOJ2u/8Kg==}
@@ -17956,7 +17962,7 @@ packages:
       next: '*'
     dependencies:
       chokidar: 3.5.3
-      next: 13.4.2(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.2(@babel/core@7.21.8)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /nice-try@1.0.5:
