@@ -22,8 +22,8 @@ const orgHours = {
 } satisfies PermissionDefs
 
 const orgPhone = {
-	createNewEmail: ['editAnyOrg', 'createOrg'],
-	updateEmail: 'editSingleOrg',
+	createNewPhone: ['editAnyOrg', 'createOrg'],
+	updatePhone: 'editSingleOrg',
 } satisfies PermissionDefs
 
 const orgPhoto = {

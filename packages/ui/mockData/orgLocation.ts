@@ -1,4 +1,5 @@
 import { type ApiOutput } from '@weareinreach/api'
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
 export const getNames = [
 	{
@@ -14,3 +15,10 @@ export const getNames = [
 		name: 'Whitman-Walker (LIZ)',
 	},
 ] satisfies ApiOutput['location']['getNames']
+
+export const location = {
+	getNames: getTRPCMock({
+		path: ['location', 'getNames'],
+		response: getNames,
+	}),
+}

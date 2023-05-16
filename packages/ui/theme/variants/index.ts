@@ -3,6 +3,7 @@ import { Badge } from './Badge'
 import { Button } from './Button'
 import { Card } from './Card'
 import { Divider } from './Divider'
+import { Input } from './Input'
 import { List } from './List'
 import { Skeleton } from './Skeleton'
 import { Text } from './Text'
@@ -14,6 +15,7 @@ export const variants = {
 	Button,
 	Card,
 	Divider,
+	Input,
 	List,
 	Skeleton,
 	Text,
@@ -56,6 +58,9 @@ export const variantNames: VariantNames = {
 	},
 	Divider: {
 		dot: 'dot',
+	},
+	Input: {
+		small: 'small',
 	},
 	List: {
 		inline: 'inline',

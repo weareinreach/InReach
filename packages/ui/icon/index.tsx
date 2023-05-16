@@ -1,4 +1,5 @@
 import { Icon as Iconify, type IconifyIconProps } from '@iconify/react'
+import { createStyles } from '@mantine/core'
 import { type RefAttributes, type SVGProps } from 'react'
 import { type LiteralUnion } from 'type-fest'
 
@@ -12,11 +13,22 @@ export const validateIcon = (icon: unknown): IconList => {
 	return 'carbon:unknown-filled'
 }
 
-export const Icon = ({ icon, ...props }: CustomIconProps) => {
-	return <Iconify icon={validateIcon(icon)} {...props} />
+const useStyles = createStyles((theme, { block }: IconStylesParams) => ({
+	root: {
+		display: block ? 'block' : undefined,
+	},
+}))
+
+export const Icon = ({ icon, block, className, ...props }: CustomIconProps) => {
+	const { classes, cx } = useStyles({ block })
+	return <Iconify icon={validateIcon(icon)} className={cx(classes.root, className)} {...props} />
 }
 export type IconList = (typeof iconList)[number]
-interface CustomIconifyIconProps extends IconifyIconProps {
+interface IconStylesParams {
+	/** Sets `display: 'block'` */
+	block?: boolean
+}
+interface CustomIconifyIconProps extends IconifyIconProps, IconStylesParams {
 	/** [Search available icons here](https://icon-sets.iconify.design/carbon/) */
 	icon: LiteralUnion<IconList, string>
 }
