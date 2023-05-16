@@ -7329,7 +7329,7 @@ export const queryGovDistsByCountry = (query: ApiInput['fieldOpt']['govDistsByCo
 	return govDistsByCountry
 }
 
-export const getPhoneTypes = [
+export const phoneTypes = [
 	{
 		id: 'phtp_01GXRXCWJG3F358K8QBX7C08R7',
 		tsKey: 'fax',
@@ -7357,6 +7357,16 @@ export const getPhoneTypes = [
 	},
 ] satisfies ApiOutput['fieldOpt']['phoneTypes']
 
+export const userTitle = [
+	{
+		id: 'uttl_000000000',
+		title: 'User Title 1',
+	},
+	{
+		id: 'uttl_000000001',
+		title: 'User Title 2',
+	},
+] satisfies ApiOutput['fieldOpt']['userTitle']
 export const fieldOptHandlers = {
 	attributeCategories: getTRPCMock({
 		path: ['fieldOpt', 'attributeCategories'],
@@ -7380,7 +7390,11 @@ export const fieldOptHandlers = {
 	}),
 	phoneTypes: getTRPCMock({
 		path: ['fieldOpt', 'phoneTypes'],
-		response: getPhoneTypes,
+		response: phoneTypes,
+	}),
+	userTitle: getTRPCMock({
+		path: ['fieldOpt', 'userTitle'],
+		response: userTitle,
 	}),
 }
 

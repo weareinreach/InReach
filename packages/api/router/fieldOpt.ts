@@ -121,4 +121,7 @@ export const fieldOptRouter = defineRouter({
 			type CountryResult = SetOptional<(typeof result)[number], 'geoJSON' | 'geoWKT'>[]
 			return result as CountryResult
 		}),
+	userTitle: publicProcedure.query(async ({ ctx }) =>
+		ctx.prisma.userTitle.findMany({ where: { searchable: true }, select: { id: true, title: true } })
+	),
 })
