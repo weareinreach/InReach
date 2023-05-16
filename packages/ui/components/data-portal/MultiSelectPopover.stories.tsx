@@ -3,7 +3,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { MultiSelectPopover } from './MultiSelectPopover'
 
 export default {
-	title: 'Data Portal/Multi Select Popover',
+	title: 'Data Portal/Fields/Multi Select Popover',
 	component: MultiSelectPopover,
 	args: {
 		data: [
