@@ -29,7 +29,6 @@ import {
 	getCoreRowModel,
 	useReactTable,
 } from '@tanstack/react-table'
-import { ReactTableDevtools } from '@tanstack/react-table-devtools'
 import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
 import { z } from 'zod'
@@ -400,10 +399,6 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 
 			<Stack>
 				<Box component='button' onClick={handler.open} ref={ref} {...props} />
-
-				<Group w='100vw'>
-					<ReactTableDevtools table={table} panelProps={{ className: classes.devtools }} />
-				</Group>
 			</Stack>
 		</>
 	)
