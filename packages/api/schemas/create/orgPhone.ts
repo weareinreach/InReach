@@ -84,3 +84,22 @@ export const UpdateOrgPhoneSchema = z
 			.partial(),
 	})
 	.transform(({ data, id }) => Prisma.validator<Prisma.OrgPhoneUpdateArgs>()({ where: { id }, data }))
+
+export const UpsertManyOrgPhoneSchema = z.object({
+	orgSlug: z.string(),
+	data: z
+		.object({
+			id: z.string().optional(),
+			number: z.string(),
+			ext: z.string().nullish(),
+			country: z.object({ id: z.string(), cca2: z.string() }),
+			phoneType: z.string().nullish(),
+			primary: z.boolean(),
+			published: z.boolean(),
+			deleted: z.boolean(),
+			locations: z.string().array(),
+			services: z.string().array(),
+			description: z.string().optional(),
+		})
+		.array(),
+})

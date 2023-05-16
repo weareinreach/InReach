@@ -64,7 +64,7 @@ const SelectItemSingleLine = forwardRef<HTMLDivElement, SingleItemSelectProps>(
 		)
 	}
 )
-SelectItemSingleLine.displayName = 'Selection Item'
+SelectItemSingleLine.displayName = 'SelectItemSingleLine'
 
 const SelectItemTwoLines = forwardRef<HTMLDivElement, ItemProps>(({ label, description, ...others }, ref) => {
 	const variants = useCustomVariant()
@@ -76,7 +76,7 @@ const SelectItemTwoLines = forwardRef<HTMLDivElement, ItemProps>(({ label, descr
 		</Stack>
 	)
 })
-SelectItemTwoLines.displayName = 'Selection Item'
+SelectItemTwoLines.displayName = 'SelectItemTwoLines'
 
 export const FormName = ({ tContext }: { tContext: 'alias' | 'full' }) => {
 	const { t } = useTranslation('common')

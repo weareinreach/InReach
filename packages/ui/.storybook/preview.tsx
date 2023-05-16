@@ -34,7 +34,7 @@ initializeMsw({
 
 const preview: Preview = {
 	parameters: {
-		actions: { argTypesRegex: '^on[A-Z].*' },
+		actions: { argTypesRegex: '^on.*' },
 		layout: 'centered',
 		controls: {
 			matchers: {
@@ -80,6 +80,10 @@ export default preview
 
 declare module '@storybook/react' {
 	export interface Parameters {
+		actions?: {
+			disable?: boolean
+			argTypesRegex?: string | RegExp
+		}
 		nextjs?: {
 			router?: Partial<BaseRouter & { push: Router['push'] }>
 		}

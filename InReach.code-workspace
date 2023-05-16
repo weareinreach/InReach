@@ -163,12 +163,11 @@
 		"explorer.fileNesting.patterns": {
 			"*.tsx": "${capture}.ts, ${capture}.stories.tsx",
 			"*.ts": "${capture}.ts, ${capture}.stories.tsx",
-			"*eslintrc.js": ".eslintignore"
+			"*eslintrc.js": ".eslintignore, .eslintcache"
 		},
 		"files.exclude": {
 			".next/": true,
 			".turbo/": true,
-			"*.eslintcache": true,
 			"*.tsbuildinfo": true,
 			"**/.DS_Store": true,
 			"**/.git": true,
@@ -182,11 +181,17 @@
 			"storybook-static/": true
 		},
 		"files.watcherExclude": {
+			"**/.git/objects/**": true,
+			"**/.git/subtree-cache/**": true,
+			"**/node_modules/*/**": true,
+			"**/.hg/store/**": true,
 			"**/.next/**": true,
 			"**/.vercel/output/**": true,
 			"**/dist/**": true,
 			"**/storybook-static/**": true,
-			"**/zod-schemas/**": true
+			"**/zod-schemas/**": true,
+			"**/.turbo/**": true,
+			"**/generated/**": true
 		},
 		"i18n-ally.annotationInPlace": false,
 		"i18n-ally.defaultNamespace": "common",

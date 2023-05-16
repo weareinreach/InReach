@@ -27,5 +27,25 @@
 		"target": "es2017"
 	},
 	"display": "Default",
-	"include": ["../../@types/**/*.ts"]
+	"include": ["../../@types/**/*.ts"],
+	"references": [
+		{
+			"path": "../../packages/api/*"
+		},
+		{
+			"path": "../../apps/app/src/*"
+		},
+		{
+			"path": "../../packages/auth/*"
+		},
+		{
+			"path": "../../packages/db/*"
+		},
+		{
+			"path": "../../packages/ui/*"
+		},
+		{
+			"path": "../../apps/web/src/*"
+		}
+	]
 }
