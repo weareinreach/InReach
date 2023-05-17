@@ -1,14 +1,14 @@
 import {
 	Box,
 	Button,
-	ButtonProps,
+	type ButtonProps,
+	createPolymorphicComponent,
 	Modal,
 	Stack,
 	Text,
 	Textarea,
 	TextInput,
 	Title,
-	createPolymorphicComponent,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -16,7 +16,7 @@ import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import z from 'zod'
 
-import { ModalTitle } from './ModalTitle'
+import { ModalTitle } from '~ui/modals'
 
 const schema = z.object({
 	title: z.string().optional(),
@@ -45,7 +45,7 @@ const AlertMessageBody = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 				onClose={close}
 			>
 				<Stack spacing={24}>
-					<Stack>
+					<Stack spacing={8}>
 						<Title ta='center' order={2}>
 							{t('alert-message')}
 						</Title>
@@ -67,6 +67,9 @@ const AlertMessageBody = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 							label={t('message_text')}
 							placeholder={t('alert-message-instructions') as string}
 							{...form.getInputProps('text')}
+							minRows={5}
+							maxRows={5}
+							autosize
 						/>
 					</Stack>
 					<Button radius='md' size='lg' color='secondary' disabled={!form.isValid()}>

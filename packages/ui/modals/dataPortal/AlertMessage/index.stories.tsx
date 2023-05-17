@@ -1,11 +1,11 @@
-import { Meta } from '@storybook/react'
+import { type Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
 
-import { AlertMessageModal } from './AlertMessageForm'
+import { AlertMessageModal } from './index'
 
 export default {
-	title: 'Modals/Alert Message Form',
+	title: 'Data Portal/Modals/Alert Message',
 	component: AlertMessageModal,
 	args: {
 		orgName: 'The trevor project',

@@ -1,6 +1,5 @@
 // codegen:start {preset: barrel, include: ./*.ts*, exclude: ./*.stories.tsx}
 export * from './AccountVerified'
-export * from './AlertMessageForm'
 export * from './CreateNewList'
 export * from './DeleteModal'
 export * from './Example'
