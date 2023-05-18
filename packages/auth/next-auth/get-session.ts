@@ -35,11 +35,17 @@ export const checkPermissions = ({ session, permissions, has = 'all' }: CheckPer
 
 interface CheckServerPermissions extends Omit<CheckPermissionsParams, 'session'> {
 	ctx: ServerContext
+	returnNullSession?: boolean
 }
 
-export const checkServerPermissions = async ({ ctx, permissions, has = 'all' }: CheckServerPermissions) => {
+export const checkServerPermissions = async ({
+	ctx,
+	permissions,
+	has = 'all',
+	returnNullSession,
+}: CheckServerPermissions) => {
 	const session = await getServerSession(ctx)
 	const hasPerms = checkPermissions({ session, permissions, has })
 
-	return hasPerms ? session : hasPerms
+	return hasPerms ? session : returnNullSession && session === null ? session : hasPerms
 }

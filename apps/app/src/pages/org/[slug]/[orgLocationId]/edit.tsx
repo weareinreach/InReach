@@ -108,7 +108,11 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params, r
 	const urlParams = z.object({ slug: z.string(), orgLocationId: z.string() }).safeParse(params)
 	if (!urlParams.success) return { notFound: true }
 	const { slug, orgLocationId } = urlParams.data
-	const session = checkServerPermissions({ ctx: { req, res }, permissions: ['dataPortalBasic'], has: 'some' })
+	const session = await checkServerPermissions({
+		ctx: { req, res },
+		permissions: ['dataPortalBasic'],
+		has: 'some',
+	})
 
 	if (!session) {
 		return {
@@ -118,7 +122,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params, r
 			},
 		}
 	}
-	const ssg = await trpcServerClient()
+	const ssg = await trpcServerClient({ session })
 	await ssg.organization.getBySlug.prefetch({ slug })
 	await ssg.location.getById.prefetch({ id: orgLocationId })
 	const props = {

@@ -112,11 +112,11 @@ const SearchResults = () => {
 export const getServerSideProps: GetServerSideProps<
 	Record<string, unknown>,
 	RoutedQuery<'/search/[...params]'>
-> = async ({ locale, query }) => {
+> = async ({ locale, query, req, res }) => {
 	const [_searchType, lon, lat, dist, unit] = ParamSchema.parse(query.params)
 	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
-	const ssg = await trpcServerClient()
+	const ssg = await trpcServerClient({ req, res })
 	const nextPage = PageIndexSchema.parse(query.page) * SEARCH_RESULT_PAGE_SIZE
 
 	await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take })
