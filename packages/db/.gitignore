@@ -21,3 +21,4 @@ prisma/generated
 prisma/dbml
 
 zod-schemas/
+kysely-vercel/

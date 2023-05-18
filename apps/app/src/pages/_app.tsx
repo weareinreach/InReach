@@ -82,7 +82,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 					<Footer />
 					<Notifications />
 				</ModalsProvider>
-				<ReactQueryDevtools initialIsOpen={false} />
+				<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
 			</MantineProvider>
 		</SessionProvider>
 	)
