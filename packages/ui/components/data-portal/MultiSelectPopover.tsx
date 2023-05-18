@@ -58,14 +58,22 @@ export const MultiSelectPopover = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentValues, value])
 
-	useEffect(() => {
-		handleChange()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [currentValues])
+	// useEffect(() => {
+	// 	handleChange()
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [currentValues])
 
 	return (
 		<>
-			<Popover opened={opened} onClose={menuHandler.close} trapFocus withinPortal>
+			<Popover
+				opened={opened}
+				onClose={() => {
+					menuHandler.close()
+					handleChange()
+				}}
+				trapFocus
+				withinPortal
+			>
 				<Popover.Target>
 					<UnstyledButton onClick={menuHandler.toggle} className={classes.button} style={style}>
 						<Group noWrap position='apart' spacing={16}>
