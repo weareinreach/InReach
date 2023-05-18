@@ -1,5 +1,6 @@
-import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
+
+import { Prisma } from '@weareinreach/db'
 
 import { CreationBase } from '../common'
 import { CreateAuditLog } from '../create/auditLog'

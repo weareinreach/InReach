@@ -16,6 +16,7 @@ interface SignUpFormValues {
 		placeId: string
 	}[]
 	lawPractice?: string
+	otherLawPractice?: string
 	servProvider?: string
 	userType: 'seeker' | 'provider' | 'lcr'
 	cognitoMessage?: string

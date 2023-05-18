@@ -1,9 +1,9 @@
-import { Prisma } from '@weareinreach/db'
 import { getDistance } from 'geolib'
 
-import { Context } from '~api/lib'
+import { type Prisma } from '@weareinreach/db'
+import { type Context } from '~api/lib'
 import { attributeFilter, serviceFilter } from '~api/schemas/filters'
-import { DistSearch } from '~api/schemas/org/search'
+import { type DistSearch } from '~api/schemas/org/search'
 import { isPublic } from '~api/schemas/selects/common'
 import { orgSearchSelect } from '~api/schemas/selects/org'
 
@@ -82,7 +82,7 @@ export const prismaDistSearchDetails = async ({ ctx, input }: PrismaSearchDistan
 			? { key: description.key, ns: description.ns, text: description.tsKey.text }
 			: null
 
-		const serviceTags = Array.from(serviceTagMap.values())
+		// const serviceTags = Array.from(serviceTagMap.values())
 		const serviceCategories = Array.from(serviceCategoryMap.values())
 		const allAttributes = Array.from(attributeMap.values())
 

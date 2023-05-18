@@ -3,17 +3,17 @@ import invariant from 'tiny-invariant'
 import fs from 'fs'
 
 import { govDistMap } from '~db/datastore/v1/helpers/locDataMaps'
-import { UsersJSONCollection } from '~db/datastore/v1/mongodb/output-types/users'
+import { type UsersJSONCollection } from '~db/datastore/v1/mongodb/output-types/users'
 import { countryMap } from '~db/datastore/v1/util/countryOrigin'
 import { currentLocationMap } from '~db/datastore/v1/util/currentLocation'
 import { ethnicityMap } from '~db/datastore/v1/util/ethnicity'
 import { immigrationMap } from '~db/datastore/v1/util/immigration'
 import { ageMap } from '~db/datastore/v1/util/userAge'
 import { sogMap } from '~db/datastore/v1/util/userSog'
-import { Prisma, prisma, generateId } from '~db/index'
-import { Log, iconList } from '~db/seed/lib'
+import { generateId, prisma, type Prisma } from '~db/index'
+import { iconList, type Log } from '~db/seed/lib'
 import { migrateLog } from '~db/seed/logger'
-import { ListrTask } from '~db/seed/migrate-v1'
+import { type ListrTask } from '~db/seed/migrate-v1'
 
 const batchSize = 250
 

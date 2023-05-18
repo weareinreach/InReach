@@ -1,54 +1,52 @@
 /* eslint-disable import/consistent-type-specifier-style */
 import {
-	rem,
+	type ActionIconProps,
+	type AvatarProps,
+	type BadgeProps,
+	type BadgeStylesNames,
+	type BadgeStylesParams,
+	type ButtonProps,
+	type CardProps,
+	type CheckboxStylesNames,
+	type CheckboxStylesParams,
+	type ColProps,
+	type CSSObject,
+	type DrawerStylesNames,
 	em,
-	SkeletonStylesParams,
-	InputWrapperStylesNames,
-	InputWrapperProps,
-	InputWrapperBaseProps,
-	CardProps,
+	type GridProps,
+	type InputStylesNames,
+	type InputStylesParams,
+	type InputWrapperBaseProps,
+	type InputWrapperProps,
+	type InputWrapperStylesNames,
+	type MantineThemeOther,
+	type MantineThemeOverride,
+	type ModalProps,
+	type ModalStylesNames,
+	type RadioStylesNames,
+	type RadioStylesParams,
+	rem,
+	type SkeletonProps,
+	type SkeletonStylesParams,
+	type StackProps,
+	type Styles,
+	type SwitchProps,
+	type SwitchStylesNames,
+	type SwitchStylesParams,
+	type TabsStylesNames,
+	type TabsStylesParams,
+	type TextareaProps,
+	type TitleStylesParams,
+	type TypographyStylesProviderProps,
 } from '@mantine/core'
 import { keys } from '@mantine/utils'
+import React from 'react'
 
 import { Icon } from '~ui/icon'
 
 import { shake } from './animation'
 import { customColors } from './colors'
 import { variants } from './variants'
-
-import type {
-	ModalStylesNames,
-	ActionIconProps,
-	AvatarProps,
-	BadgeProps,
-	ButtonProps,
-	ColProps,
-	MantineThemeOther,
-	MantineThemeOverride,
-	Styles,
-	TabsStylesNames,
-	TabsStylesParams,
-	TitleStylesParams,
-	TypographyStylesProviderProps,
-	BadgeStylesNames,
-	BadgeStylesParams,
-	SkeletonProps,
-	StackProps,
-	CheckboxStylesNames,
-	CheckboxStylesParams,
-	RadioStylesNames,
-	RadioStylesParams,
-	SwitchProps,
-	SwitchStylesNames,
-	SwitchStylesParams,
-	TextareaProps,
-	CSSObject,
-	ModalProps,
-	InputStylesNames,
-	InputStylesParams,
-	GridProps,
-} from '@mantine/core'
-import type React from 'react'
 
 const colors = {
 	primary: {
@@ -112,6 +110,14 @@ const themeCustomObj = {
 			color: colors.secondary.black,
 		},
 	},
+	headings: {
+		h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },
+		h2: { fontSize: rem(24), lineHeight: 1.25, fontWeight: 500 },
+		h3: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		h4: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		h5: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		h6: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+	},
 	border: {
 		default: '1px solid #d9d9d9',
 	},
@@ -140,17 +146,16 @@ export const commonTheme = {
 		xl: rem(20),
 	},
 	headings: {
-		fontFamily:
-			'Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
 		fontWeight: 500,
-		sizes: {
-			h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },
-			h2: { fontSize: rem(24), lineHeight: 1.25, fontWeight: 500 },
-			h3: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-			h4: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-			h5: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-			h6: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
-		},
+		sizes: themeCustomObj.headings,
+		// {
+		// 	h1: { fontSize: rem(40), lineHeight: 1.25, fontWeight: 500 },
+		// 	h2: { fontSize: rem(24), lineHeight: 1.25, fontWeight: 500 },
+		// 	h3: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// 	h4: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// 	h5: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// 	h6: { fontSize: rem(16), lineHeight: 1.25, fontWeight: 600 },
+		// },
 	},
 
 	shadows: {
@@ -381,6 +386,22 @@ export const commonTheme = {
 			}),
 			variants: variants.Divider,
 		},
+		Drawer: {
+			styles: (theme) =>
+				({
+					content: {
+						borderRadius: `${rem(32)} ${rem(32)} ${rem(0)} ${rem(0)}`,
+						padding: `${rem(0)} ${rem(0)}`,
+					},
+					header: {
+						borderBottom: `${rem(1)} solid ${theme.other.colors.primary.lightGray}`,
+						padding: `${rem(16)} ${rem(31)} ${rem(16)} ${rem(36)}`,
+					},
+					body: {
+						padding: `${rem(0)} ${rem(36)} ${rem(16)} ${rem(36)}`,
+					},
+				} satisfies Styles<DrawerStylesNames>),
+		},
 		Grid: {
 			defaultProps: {
 				columns: 12,
@@ -449,6 +470,7 @@ export const commonTheme = {
 						margin: 0,
 					},
 				} satisfies Styles<InputStylesNames, InputStylesParams>),
+			variants: variants.Input,
 		},
 		InputWrapper: {
 			defaultProps: {
@@ -623,6 +645,9 @@ export const commonTheme = {
 				},
 			}),
 		},
+		Select: {
+			variants: variants.Input,
+		},
 		Skeleton: {
 			defaultProps: (theme) =>
 				({
@@ -756,6 +781,7 @@ export const commonTheme = {
 					paddingRight: theme.spacing.md,
 				},
 			}),
+			variants: variants.Input,
 		},
 		Title: {
 			styles: (theme) =>
@@ -841,8 +867,4 @@ export const commonTheme = {
 	},
 } satisfies MantineThemeOverride
 
-type ThemeCustomObject = typeof themeCustomObj
-
-declare module '@mantine/core' {
-	export interface MantineThemeOther extends ThemeCustomObject {}
-}
+export type ThemeCustomObject = typeof themeCustomObj

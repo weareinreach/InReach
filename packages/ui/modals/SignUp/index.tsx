@@ -1,25 +1,25 @@
-import { Modal, Box, type ButtonProps, Text, Title, Stack } from '@mantine/core'
+import { Box, type ButtonProps, Modal, Stack, Text, Title } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
-import { useTranslation, Trans } from 'next-i18next'
-import { useState, forwardRef, Dispatch, SetStateAction } from 'react'
+import { Trans, useTranslation } from 'next-i18next'
+import { forwardRef, useState } from 'react'
 import { z } from 'zod'
 
-import { Link, Button, ModalTitleBreadcrumb } from '~ui/components/core'
-import { useScreenSize, useCustomVariant } from '~ui/hooks'
+import { Button, Link, type ModalTitleBreadcrumb } from '~ui/components/core'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { SignUpFormProvider, useSignUpForm } from './context'
 import {
 	FormEmail,
+	FormLawPractice,
+	FormLocation,
 	FormName,
 	FormPassword,
-	LanguageSelect,
-	FormLocation,
-	FormLawPractice,
 	FormServiceProvider,
+	LanguageSelect,
 } from './fields'
 import { LoginModalLauncher } from '../Login'
 import { ModalTitle } from '../ModalTitle'
@@ -27,8 +27,9 @@ import { PrivacyStatementModal } from '../PrivacyStatement'
 
 type RichTranslateProps = {
 	i18nKey: string
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	values?: Record<string, any>
-	stateSetter?: Dispatch<SetStateAction<string | null>>
+	stateSetter?: (userType: string | null) => void
 	handler?: {
 		open: () => void
 		close: () => void
@@ -124,6 +125,15 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 		validateInputOnBlur: true,
 	})
 
+	const userTypeChange = (step: string | null) => {
+		if (!step) return
+
+		setStepOption(step)
+		if (['law', 'servpro'].includes(step)) form.setFieldValue('userType', 'provider')
+		else if (step === 'lcr') form.setFieldValue('userType', 'lcr')
+		else form.setFieldValue('userType', 'seeker')
+	}
+
 	const breadcrumbProps: ModalTitleBreadcrumb =
 		stepOption === null || successMessage
 			? { option: 'close', onClick: () => handler.close() }
@@ -134,7 +144,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 		: t('step-x-y', { ns: 'common', x: stepOption ? 2 : 1, y: 2 })
 	const modalTitle = <ModalTitle breadcrumb={breadcrumbProps} rightText={titleRightSideProps} />
 
-	const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={setStepOption} handler={handler} />
+	const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={userTypeChange} handler={handler} />
 
 	const submitHandler = () => {
 		if (form.isValid()) {
@@ -156,7 +166,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 					components={{
 						link1: (
 							<PrivacyStatementModal component={Link} key={0} variant={variants.Link.inheritStyle}>
-								Privacy Policy
+								{t('privacy-policy')}
 							</PrivacyStatementModal>
 						),
 						link2: (
@@ -190,7 +200,6 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 				langSelect = true
 				location = true
 				lawPractice = true
-				form.setFieldValue('userType', 'provider')
 				break
 			}
 			case 'servpro': {
@@ -199,14 +208,12 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 				langSelect = true
 				location = true
 				servProvider = true
-				form.setFieldValue('userType', 'provider')
 				break
 			}
 			case 'lcr': {
 				nameContext = 'full'
 				langSelect = true
 				location = true
-				form.setFieldValue('userType', 'lcr')
 			}
 		}
 
@@ -276,4 +283,4 @@ SignUpModalBody.displayName = 'SignupModalBody'
 
 export const SignupModalLauncher = createPolymorphicComponent<'button', SignUpModalBodyProps>(SignUpModalBody)
 
-interface SignUpModalBodyProps extends ButtonProps {}
+type SignUpModalBodyProps = ButtonProps

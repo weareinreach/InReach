@@ -6,7 +6,7 @@
 			"cache": false
 		},
 		"build": {
-			"dependsOn": ["^build"],
+			"dependsOn": ["^build", "^build:icons"],
 			"env": ["NODE_ENV"]
 		},
 		"build:aws": {},
@@ -24,7 +24,7 @@
 		"deploy:aws": {},
 		"dev": {
 			"cache": false,
-			"dependsOn": ["^db:generate"],
+			"dependsOn": ["^db:generate", "^db:deploy", "^db:dataMigrate"],
 			"persistent": true
 		},
 		"download:seedData": {},

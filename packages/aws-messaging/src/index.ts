@@ -1,5 +1,5 @@
 import { Logger } from '@aws-lambda-powertools/logger'
-import { Callback, Context, CustomMessageTriggerEvent } from 'aws-lambda'
+import { type Callback, type Context, type CustomMessageTriggerEvent } from 'aws-lambda'
 
 const logger = new Logger({ serviceName: 'cognito-messaging' })
 

@@ -4,16 +4,8 @@
 	"private": true,
 	"license": "GPL-3.0-only",
 	"workspaces": [
-		"apps/app",
-		"apps/web",
-		"packages/api",
-		"packages/auth",
-		"packages/aws-messaging",
-		"packages/aws-user-migrate",
-		"packages/config",
-		"packages/db",
-		"packages/eslint-config",
-		"packages/ui"
+		"apps/*",
+		"packages/*"
 	],
 	"scripts": {
 		"build": "turbo run build",
@@ -44,24 +36,25 @@
 	"dependencies": {
 		"@changesets/cli": "2.26.1",
 		"@manypkg/cli": "0.20.0",
-		"@types/node": "18.16.0",
+		"@types/lint-staged": "13.2.0",
+		"@types/node": "18.16.13",
 		"@types/prettier": "2.7.2",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
-		"boxen": "7.0.2",
+		"boxen": "7.1.0",
 		"dotenv": "16.0.3",
 		"husky": "8.0.3",
-		"lint-staged": "13.2.1",
+		"lint-staged": "13.2.2",
 		"prettier": "2.8.8",
 		"prettier-plugin-jsdoc": "0.4.2",
 		"prettier-plugin-packagejson": "2.4.3",
-		"prettier-plugin-prisma": "4.12.0",
-		"tsx": "3.12.6",
-		"turbo": "1.9.3",
+		"prettier-plugin-prisma": "4.13.0",
+		"tsx": "3.12.7",
+		"turbo": "1.9.8",
 		"typescript": "5.0.4",
-		"typesync": "0.10.0"
+		"typesync": "0.11.0"
 	},
-	"packageManager": "pnpm@8.3.1",
+	"packageManager": "pnpm@8.5.1",
 	"engines": {
 		"node": "^18",
 		"pnpm": "^7 || ^8"
@@ -70,7 +63,9 @@
 		"overrides": {
 			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
 			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
+			"axe-core": "^4.7.0",
 			"chokidar": ">=3.0.0",
+			"eslint-plugin-import": "npm:eslint-plugin-i",
 			"eslint-plugin-turbo@0.0.9": "0.0.8",
 			"glob-parent@<5.1.2": ">=5.1.2",
 			"http-cache-semantics@<=4.1.0": "^4.1.1",
@@ -92,26 +87,25 @@
 			"@crowdin/ota-client@1.0.0": "patches/@crowdin__ota-client@1.0.0.patch",
 			"eslint-plugin-node@11.1.0": "patches/eslint-plugin-node@11.1.0.patch",
 			"iso-google-locales@3.0.4": "patches/iso-google-locales@3.0.4.patch",
-			"trpc-panel@1.3.2": "patches/trpc-panel@1.3.2.patch"
+			"trpc-panel@1.3.4": "patches/trpc-panel@1.3.4.patch"
 		},
 		"peerDependencyRules": {
 			"allowedVersions": {
-				"@storybook/components": "^7",
-				"@storybook/core-events": "^7",
-				"@storybook/theming": "^7",
-				"babel-loader": ">=9",
-				"i18next-browser-languagedetector": ">=7",
-				"i18next-http-backend": ">=2",
-				"listr2": ">=5",
-				"msw": "^1",
-				"next": ">=13",
-				"prisma": ">=4",
-				"react": ">=18",
-				"react-dom": ">=18",
-				"react-i18next": ">=12",
-				"sanity": ">=3.0.0-rc.0",
-				"typescript": "^5",
-				"webpack": ">=5"
+				"@storybook/components": "7",
+				"@storybook/core-events": "7",
+				"@storybook/theming": "7",
+				"babel-loader": "9",
+				"i18next-browser-languagedetector": "7",
+				"i18next-http-backend": "2",
+				"msw": "1",
+				"next": "13",
+				"prisma": "4",
+				"react": "18",
+				"react-dom": "18",
+				"react-i18next": "12",
+				"sanity": "3",
+				"typescript": "5",
+				"webpack": "5"
 			}
 		}
 	}

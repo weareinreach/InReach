@@ -2,23 +2,23 @@ import {
 	Accordion,
 	Checkbox,
 	createStyles,
-	Group,
-	Text,
-	Title,
-	UnstyledButton,
-	Modal,
-	TitleProps,
-	TextProps,
-	ScrollArea,
-	useMantineTheme,
-	Skeleton,
-	rem,
 	em,
+	Group,
+	Modal,
+	rem,
+	ScrollArea,
+	Skeleton,
+	Text,
+	type TextProps,
+	Title,
+	type TitleProps,
+	UnstyledButton,
+	useMantineTheme,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { Icon } from '~ui/icon'
@@ -180,7 +180,7 @@ const useStyles = createStyles((theme) => ({
 
 export const ServiceFilter = ({ resultCount, stateHandler }: ServiceFilterProps) => {
 	const { data: serviceOptionData, status } = api.service.getFilterOptions.useQuery()
-	const { classes, cx } = useStyles()
+	const { classes } = useStyles()
 	const { classes: accordionClasses } = useAccordionStyles()
 	const { classes: modalClasses } = useModalStyles()
 	const { t } = useTranslation(['common', 'services'])
@@ -234,11 +234,11 @@ export const ServiceFilter = ({ resultCount, stateHandler }: ServiceFilterProps)
 	if (!serviceOptionData) return <Skeleton height={48} width='100%' radius='xs' />
 
 	const hasAll = (categoryId: string) => {
-		if (!form.values.hasOwnProperty(categoryId)) return false
+		if (!Object.prototype.hasOwnProperty.call(form.values, categoryId)) return false
 		return form.values[categoryId]?.every((item) => item.categoryId === categoryId && item.checked)
 	}
 	const hasSome = (categoryId: string) => {
-		if (!form.values.hasOwnProperty(categoryId)) return false
+		if (!Object.prototype.hasOwnProperty.call(form.values, categoryId)) return false
 		return (
 			!hasAll(categoryId) &&
 			form.values[categoryId]?.some((item) => item.categoryId === categoryId && item.checked)
@@ -246,7 +246,7 @@ export const ServiceFilter = ({ resultCount, stateHandler }: ServiceFilterProps)
 	}
 
 	const toggleCategory = (categoryId: string) => {
-		if (!form.values.hasOwnProperty(categoryId)) return
+		if (!Object.prototype.hasOwnProperty.call(form.values, categoryId)) return
 		form.setValues({
 			[categoryId]: form.values[categoryId]?.map((value) => ({ ...value, checked: !hasAll(categoryId) })),
 		})

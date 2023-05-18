@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Listr, ListrRenderer, ListrTaskWrapper, PRESET_TIMER } from 'listr2'
+import { Listr, type ListrRenderer, type ListrTaskWrapper, PRESET_TIMER } from 'listr2'
 
 import fs from 'fs'
 import path from 'path'

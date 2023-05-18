@@ -1,17 +1,22 @@
 {
 	"additional": {
-		"CATEGORYNAME": "crwdns988176:0crwdne988176:0",
 		"at-capacity": "crwdns988174:0crwdne988174:0",
+		"CATEGORYNAME": "crwdns988176:0crwdne988176:0",
 		"geo-near-public-transit": "crwdns988178:0crwdne988178:0",
 		"geo-public-transit-description": "crwdns988180:0crwdne988180:0",
 		"has-confidentiality-policy": "crwdns988182:0crwdne988182:0",
 		"offers-remote-services": "crwdns988184:0crwdne988184:0",
 		"religiously-affiliated": "crwdns988186:0crwdne988186:0",
 		"time-walk-in": "crwdns988188:0crwdne988188:0",
-		"wheelchair-accessible": "crwdns988190:0crwdne988190:0"
+		"wheelchair-accessible_true": "crwdns1773635:0crwdne1773635:0",
+		"wheelchair-accessible_false": "crwdns1773637:0crwdne1773637:0"
+	},
+	"alerts": {
+		"CATEGORYNAME": "crwdns1773639:0crwdne1773639:0",
+		"info": "crwdns1773641:0crwdne1773641:0",
+		"warn": "crwdns1773643:0crwdne1773643:0"
 	},
 	"community": {
-		"CATEGORYNAME": "crwdns988214:0crwdne988214:0",
 		"adults": "crwdns988192:0crwdne988192:0",
 		"africa-immigrant": "crwdns988194:0crwdne988194:0",
 		"african-american": "crwdns988196:0crwdne988196:0",
@@ -23,6 +28,7 @@
 		"bipoc": "crwdns988208:0crwdne988208:0",
 		"bisexual": "crwdns988210:0crwdne988210:0",
 		"black": "crwdns988212:0crwdne988212:0",
+		"CATEGORYNAME": "crwdns988214:0crwdne988214:0",
 		"citizens": "crwdns988216:0{{country}}crwdne988216:0",
 		"conversion-therapy-survivors": "crwdns988218:0crwdne988218:0",
 		"daca-recipient-seeker": "crwdns988220:0crwdne988220:0",
@@ -50,11 +56,11 @@
 		"seniors": "crwdns988264:0crwdne988264:0",
 		"sex-workers": "crwdns988266:0crwdne988266:0",
 		"teens": "crwdns988268:0crwdne988268:0",
-		"trans-youth": "crwdns988276:0crwdne988276:0",
-		"trans-youth-caregivers": "crwdns988278:0crwdne988278:0",
 		"transfeminine": "crwdns988270:0crwdne988270:0",
 		"transgender": "crwdns988272:0crwdne988272:0",
 		"transmasculine": "crwdns988274:0crwdne988274:0",
+		"trans-youth": "crwdns988276:0crwdne988276:0",
+		"trans-youth-caregivers": "crwdns988278:0crwdne988278:0",
 		"unaccompanied-minors": "crwdns988280:0crwdne988280:0",
 		"undocumented": "crwdns988282:0crwdne988282:0"
 	},
@@ -65,7 +71,9 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "crwdns988290:0crwdne988290:0",
-		"elig-age": "crwdns988292:0crwdne988292:0",
+		"elig-age_max": "crwdns1773645:0{{max}}crwdne1773645:0",
+		"elig-age_min": "crwdns1773647:0{{min}}crwdne1773647:0",
+		"elig-age_range": "crwdns1773649:0{{min}}crwdnd1773649:0{{max}}crwdne1773649:0",
 		"other-describe": "crwdns988294:0crwdne988294:0",
 		"req-medical-insurance": "crwdns988296:0crwdne988296:0",
 		"req-photo-id": "crwdns988298:0crwdne988298:0",
@@ -76,32 +84,32 @@
 		"time-appointment-required": "crwdns988308:0crwdne988308:0"
 	},
 	"lang": {
-		"CATEGORYNAME": "crwdns988314:0crwdne988314:0",
 		"all-languages-by-interpreter": "crwdns988310:0crwdne988310:0",
 		"american-sign-language": "crwdns988312:0crwdne988312:0",
+		"CATEGORYNAME": "crwdns988314:0crwdne988314:0",
 		"lang-offered": "crwdns988316:0crwdne988316:0"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "crwdns988322:0crwdne988322:0",
 		"bipoc-led": "crwdns988318:0crwdne988318:0",
 		"black-led": "crwdns988320:0crwdne988320:0",
+		"CATEGORYNAME": "crwdns988322:0crwdne988322:0",
 		"immigrant-led": "crwdns988324:0crwdne988324:0",
 		"trans-led": "crwdns988326:0crwdne988326:0"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "crwdns988340:0crwdne988340:0",
 		"accessemail": "crwdns988328:0crwdne988328:0",
 		"accessfile": "crwdns988330:0crwdne988330:0",
 		"accesslink": "crwdns988332:0crwdne988332:0",
 		"accesslocation": "crwdns988334:0crwdne988334:0",
 		"accessphone": "crwdns988336:0crwdne988336:0",
 		"accesspublictransit": "crwdns988342:0crwdne988342:0",
-		"accesstext": "crwdns988338:0crwdne988338:0"
+		"accesstext": "crwdns988338:0crwdne988338:0",
+		"CATEGORYNAME": "crwdns988340:0crwdne988340:0"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "crwdns988348:0crwdne988348:0",
 		"asylum-seekers": "crwdns988344:0crwdne988344:0",
 		"bipoc-comm": "crwdns988346:0crwdne988346:0",
+		"CATEGORYNAME": "crwdns988348:0crwdne988348:0",
 		"gender-nc": "crwdns988350:0crwdne988350:0",
 		"hiv-comm": "crwdns988352:0crwdne988352:0",
 		"immigrant-comm": "crwdns988354:0crwdne988354:0",
@@ -122,8 +130,7 @@
 		"corp-law-firm": "crwdns988376:0crwdne988376:0",
 		"law-other": "crwdns988384:0crwdne988384:0",
 		"law-school-clinic": "crwdns988378:0crwdne988378:0",
-		"legal-nonprofit": "crwdns988380:0crwdne988380:0",
-		"other": "crwdns988382:0crwdne988382:0"
+		"legal-nonprofit": "crwdns988380:0crwdne988380:0"
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "crwdns988386:0crwdne988386:0",

@@ -1,18 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
+	Box,
+	type ButtonProps,
+	createPolymorphicComponent,
+	Modal,
 	PasswordInput,
 	Stack,
 	Text,
 	TextInput,
 	Title,
-	type ButtonProps,
-	Modal,
-	Box,
-	createPolymorphicComponent,
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { DefaultTFuncReturn } from 'i18next'
+import { type DefaultTFuncReturn } from 'i18next'
 import { signIn } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
@@ -79,6 +79,7 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 						{...form.getInputProps('password')}
 					/>
 					<Button
+						// eslint-disable-next-line @typescript-eslint/return-await
 						onClick={async () => await loginHandle(form.values.email, form.values.password)}
 						variant='primary-icon'
 						fullWidth
@@ -126,7 +127,7 @@ LoginModalBody.displayName = 'LoginModal'
 
 export const LoginModalLauncher = createPolymorphicComponent<'button', LoginModalBodyProps>(LoginModalBody)
 
-export interface LoginModalBodyProps extends ButtonProps {}
+export type LoginModalBodyProps = ButtonProps
 
 type LoginFormProps = {
 	email: string

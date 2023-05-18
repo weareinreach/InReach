@@ -1,8 +1,7 @@
-import { Group, Text, createStyles, useMantineTheme } from '@mantine/core'
-import { showNotification, NotificationProps } from '@mantine/notifications'
-import { DefaultTFuncReturn } from 'i18next'
+import { createStyles, Group, Text, useMantineTheme } from '@mantine/core'
+import { type NotificationProps, showNotification } from '@mantine/notifications'
+import { type DefaultTFuncReturn } from 'i18next'
 import Link, { type LinkProps } from 'next/link'
-import { useTranslation } from 'next-i18next'
 
 import { Icon } from '~ui/icon'
 import { commonTheme } from '~ui/theme/common'
@@ -29,7 +28,6 @@ export const iconList = {
 } as const
 
 export const InstantFeedback = ({ displayText, link }: NotificationInnerProps) => {
-	const { t } = useTranslation()
 	const theme = useMantineTheme()
 
 	return (

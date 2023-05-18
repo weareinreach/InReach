@@ -1,15 +1,15 @@
-import { Prisma, generateId } from '@weareinreach/db'
 import { z } from 'zod'
 
-import { userTypes } from '~api/generated/userType'
+import { generateId, Prisma } from '@weareinreach/db'
+import { userTypes } from '@weareinreach/db/generated/userType'
 import { decodeUrl } from '~api/lib'
-import { idString, CreationBase, id, slug } from '~api/schemas/common'
+import { CreationBase, id, idString, slug } from '~api/schemas/common'
 import {
 	connectOne,
 	connectOneRequired,
-	createManyOrUndefined,
+	createManyOptional,
+	createManyRequired,
 	linkManyWithAudit,
-	createMany,
 } from '~api/schemas/nestedOps'
 
 import { CreateAuditLog, GenerateAuditLog } from './auditLog'
@@ -138,7 +138,7 @@ export const AdminCreateUser = () => {
 					roles,
 					orgPermission,
 					locationPermission,
-					auditLogs: createMany([
+					auditLogs: createManyRequired([
 						GenerateAuditLog({
 							actorId,
 							operation,
@@ -200,9 +200,9 @@ export const CreateUserSurvey = z
 			return Prisma.validator<Prisma.UserSurveyCreateArgs>()({
 				data: {
 					...rest,
-					communities: createManyOrUndefined(communityId),
-					ethnicities: createManyOrUndefined(ethnicityId),
-					identifiesAs: createManyOrUndefined(sogId),
+					communities: createManyOptional(communityId),
+					ethnicities: createManyOptional(ethnicityId),
+					identifiesAs: createManyOptional(sogId),
 					immigration: connectOne(immigrationId),
 					countryOrigin: connectOne(countryOriginId),
 					currentCountry: connectOne(currentCountryId),

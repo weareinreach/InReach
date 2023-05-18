@@ -1,23 +1,23 @@
 import {
+	Autocomplete,
 	Box,
+	createStyles,
 	PasswordInput,
 	Popover,
 	Progress,
-	TextInput,
-	useMantineTheme,
-	Text,
+	rem,
 	Select,
 	Stack,
-	Autocomplete,
-	createStyles,
-	rem,
+	Text,
+	TextInput,
+	useMantineTheme,
 } from '@mantine/core'
 import { useDebouncedValue } from '@mantine/hooks'
-import { attributesByCategory } from '@weareinreach/api/generated/attributesByCategory'
-import { languageList } from '@weareinreach/api/generated/languages'
 import { useTranslation } from 'next-i18next'
-import { ComponentPropsWithRef, forwardRef, useState } from 'react'
+import { type ComponentPropsWithRef, forwardRef, useState } from 'react'
 
+import { attributesByCategory } from '@weareinreach/db/generated/attributesByCategory'
+import { languageList } from '@weareinreach/db/generated/languages'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -64,7 +64,7 @@ const SelectItemSingleLine = forwardRef<HTMLDivElement, SingleItemSelectProps>(
 		)
 	}
 )
-SelectItemSingleLine.displayName = 'Selection Item'
+SelectItemSingleLine.displayName = 'SelectItemSingleLine'
 
 const SelectItemTwoLines = forwardRef<HTMLDivElement, ItemProps>(({ label, description, ...others }, ref) => {
 	const variants = useCustomVariant()
@@ -76,7 +76,7 @@ const SelectItemTwoLines = forwardRef<HTMLDivElement, ItemProps>(({ label, descr
 		</Stack>
 	)
 })
-SelectItemTwoLines.displayName = 'Selection Item'
+SelectItemTwoLines.displayName = 'SelectItemTwoLines'
 
 export const FormName = ({ tContext }: { tContext: 'alias' | 'full' }) => {
 	const { t } = useTranslation('common')
@@ -214,7 +214,6 @@ export const LanguageSelect = () => {
 export const FormLocation = () => {
 	const { t, i18n } = useTranslation('common')
 	const form = useSignUpFormContext()
-	const variants = useCustomVariant()
 	const { classes } = useLocationStyles()
 	const [locationSearch, setLocationSearch] = useState('')
 	const [search] = useDebouncedValue(form.values.searchLocation, 400)
@@ -263,21 +262,39 @@ type SingleItemSelectProps = {
 export const FormLawPractice = () => {
 	const { t } = useTranslation(['common', 'attribute'])
 	const form = useSignUpFormContext()
+	let otherOption: string | undefined
 
 	const options = attributesByCategory.find((item) => item.tag === 'law-practice-options')
 	const selectItems =
-		options?.attributes.map((item) => ({
-			label: t(item.attribute.tsKey, { ns: item.attribute.tsNs }),
-			value: item.attribute.id,
-		})) ?? []
+		options?.attributes.map((item) => {
+			if (item.attribute.tag === 'law-other') otherOption = item.attribute.id
+
+			return {
+				label: t(item.attribute.tsKey, { ns: item.attribute.tsNs }),
+				value: item.attribute.id,
+			}
+		}) ?? []
+
+	const selectedOther = form.values.lawPractice === otherOption
+
+	if (form.values.otherLawPractice && !selectedOther) form.setFieldValue('otherLawPractice', undefined)
 
 	return (
-		<Select
-			label={t('sign-up-select-law-practice')}
-			data={selectItems}
-			itemComponent={SelectItemSingleLine}
-			{...form.getInputProps('lawPractice')}
-		/>
+		<>
+			<Select
+				label={t('sign-up-select-law-practice')}
+				data={selectItems}
+				itemComponent={SelectItemSingleLine}
+				{...form.getInputProps('lawPractice')}
+			/>
+			{selectedOther && (
+				<TextInput
+					label={t('law-practice-other')}
+					placeholder={t('law-practice-other-placeholder') as string}
+					{...form.getInputProps('otherLawPractice')}
+				/>
+			)}
+		</>
 	)
 }
 

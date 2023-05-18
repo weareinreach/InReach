@@ -1,9 +1,9 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-import { defineRouter, publicProcedure, handleError } from '~api/lib'
+import { defineRouter, handleError, permissionedProcedure, publicProcedure } from '~api/lib'
 import { id, orgId } from '~api/schemas/common'
-import { freeText, isPublic } from '~api/schemas/selects/common'
+import { isPublic } from '~api/schemas/selects/common'
 import { orgLocationInclude } from '~api/schemas/selects/org'
 
 export const queries = defineRouter({
@@ -36,11 +36,29 @@ export const queries = defineRouter({
 			handleError(error)
 		}
 	}),
-	getNameById: publicProcedure.input(z.string()).query(
-		async ({ ctx, input }) =>
-			await ctx.prisma.orgLocation.findUniqueOrThrow({
-				where: { id: input },
-				select: { name: true },
-			})
+	getNameById: publicProcedure.input(z.string()).query(async ({ ctx, input }) =>
+		ctx.prisma.orgLocation.findUniqueOrThrow({
+			where: { id: input },
+			select: { name: true },
+		})
 	),
+	getNames: permissionedProcedure('getDetails')
+		.input(z.object({ organizationId: z.string() }))
+		.query(async ({ ctx, input }) => {
+			const { organizationId } = input
+
+			if (!organizationId) throw new TRPCError({ code: 'BAD_REQUEST' })
+
+			const results = await ctx.prisma.orgLocation.findMany({
+				where: {
+					organization: { id: organizationId },
+				},
+				select: {
+					id: true,
+					name: true,
+				},
+			})
+
+			return results
+		}),
 })

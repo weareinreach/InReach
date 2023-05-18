@@ -1,6 +1,6 @@
 import { rem } from '@mantine/core'
 
-import { VariantDef, VariantObj } from '~ui/types/mantine'
+import { type VariantDef, type VariantObj } from '~ui/types/mantine'
 
 export const attributeBadge: VariantDef = (theme) => ({
 	inner: {

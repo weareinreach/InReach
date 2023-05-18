@@ -1,7 +1,8 @@
 /* eslint-disable import/consistent-type-specifier-style */
-import type { MantineTheme, ContextStylesParams, Variants, BadgeProps as _BadgeProps } from '@mantine/core'
+import type { ThemeCustomObject } from '../theme'
+import type { BadgeProps as _BadgeProps, ContextStylesParams, MantineTheme } from '@mantine/core'
 
-export type VariantDef<P = any> = (
+export type VariantDef<P = unknown> = (
 	theme: MantineTheme,
 	params: P,
 	context: ContextStylesParams
@@ -9,50 +10,7 @@ export type VariantDef<P = any> = (
 
 export type VariantObj = MantineTheme['components'][string]['variants']
 
-// declare module '@mantine/core' {
-// 	export type BadgeVariants = Variants<
-// 		| 'light'
-// 		| 'filled'
-// 		| 'outline'
-// 		| 'dot'
-// 		| 'gradient'
-// 		| 'community'
-// 		| 'service'
-// 		| 'leader'
-// 		| 'privatePractice'
-// 		| 'claimed'
-// 		| 'unclaimed'
-// 		| 'verified'
-// 		| 'attribute'
-// 	>
-// 	export interface BadgeProps {
-// 		variant?:
-// 			| Variants<'light' | 'filled' | 'outline' | 'dot' | 'gradient'>
-// 			| 'community'
-// 			| 'service'
-// 			| 'leader'
-// 			| 'privatePractice'
-// 			| 'claimed'
-// 			| 'unclaimed'
-// 			| 'verified'
-// 			| 'attribute'
-// 	}
-
-// export interface BadgeProps extends Omit<_BadgeProps, 'variant'> {
-// 	variant?: Variants<
-// 		| 'light'
-// 		| 'filled'
-// 		| 'outline'
-// 		| 'dot'
-// 		| 'gradient'
-// 		| 'community'
-// 		| 'service'
-// 		| 'leader'
-// 		| 'privatePractice'
-// 		| 'claimed'
-// 		| 'unclaimed'
-// 		| 'verified'
-// 		| 'attribute'
-// 	>
-// }
-// }
+declare module '@mantine/core' {
+	// eslint-disable-next-line @typescript-eslint/no-empty-interface
+	export interface MantineThemeOther extends ThemeCustomObject {}
+}

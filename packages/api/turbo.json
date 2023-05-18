@@ -1,12 +1,5 @@
 {
 	"$schema": "https://turbo.build/schema.json",
 	"extends": ["//"],
-	"pipeline": {
-		"generate:data": {
-			"cache": false,
-			"dependsOn": ["^db:generate"],
-			"env": ["DATABASE_URL"],
-			"outputs": ["./generated/**"]
-		}
-	}
+	"pipeline": {}
 }

@@ -1,11 +1,11 @@
-import { Stack, Rating, Textarea, useMantineTheme, Paper } from '@mantine/core'
+import { Paper, Rating, Stack, Textarea, useMantineTheme } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
-import { ApiInput } from '@weareinreach/api'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 import { z } from 'zod'
 
+import { type ApiInput } from '@weareinreach/api'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { Button } from './Button'
@@ -62,7 +62,7 @@ export const UserReviewSubmit = ({ type = 'body' }: ReviewSubmitProps) => {
 				<Rating {...form.getInputProps('rating')} />
 				<Textarea
 					label={t('review-resource')}
-					placeholder={t('enter-review')!}
+					placeholder={t('enter-review') satisfies string}
 					description={t('review-note')}
 					{...form.getInputProps('reviewText')}
 				/>

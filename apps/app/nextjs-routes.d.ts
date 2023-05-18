@@ -11,6 +11,9 @@ declare module "nextjs-routes" {
   } from "nextjs";
 
   export type Route =
+    | StaticRoute<"/admin/quicklink/email">
+    | StaticRoute<"/admin/quicklink">
+    | StaticRoute<"/admin/quicklink/phone">
     | DynamicRoute<"/api/auth/[...nextauth]", { "nextauth": string[] }>
     | StaticRoute<"/api/i18n/load">
     | StaticRoute<"/api/i18n/webhook">
@@ -18,7 +21,9 @@ declare module "nextjs-routes" {
     | DynamicRoute<"/api/trpc/[trpc]", { "trpc": string }>
     | StaticRoute<"/api/trpc-playground">
     | StaticRoute<"/">
+    | DynamicRoute<"/org/[slug]/[orgLocationId]/edit", { "slug": string; "orgLocationId": string }>
     | DynamicRoute<"/org/[slug]/[orgLocationId]", { "slug": string; "orgLocationId": string }>
+    | DynamicRoute<"/org/[slug]/edit", { "slug": string }>
     | DynamicRoute<"/org/[slug]", { "slug": string }>
     | StaticRoute<"/profile">
     | DynamicRoute<"/search/[...params]", { "params": string[] }>

@@ -1,5 +1,4 @@
 import { type ApiOutput } from '@weareinreach/api'
-
 import { type ReviewSectionProps } from '~ui/components/sections'
 
 export const reviewsMock = [

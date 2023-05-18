@@ -1,33 +1,33 @@
-import { Carousel, useAnimationOffsetEffect, type Embla } from '@mantine/carousel'
+import { Carousel, type Embla, useAnimationOffsetEffect } from '@mantine/carousel'
 import {
-	createStyles,
-	useMantineTheme,
-	Title,
-	Text,
 	Card,
-	Stack,
 	Container,
+	createStyles,
 	Grid,
-	rem,
 	Group,
+	rem,
+	Stack,
+	Text,
+	Title,
+	useMantineTheme,
 } from '@mantine/core'
-import { trpcServerClient } from '@weareinreach/api/trpc'
-import { getServerSession } from '@weareinreach/auth'
-import { Link, UserReview } from '@weareinreach/ui/components/core'
-import { Hero, CallOut } from '@weareinreach/ui/components/sections'
-import { useCustomVariant } from '@weareinreach/ui/hooks'
-import { AccountVerifyModal, ResetPasswordModal } from '@weareinreach/ui/modals'
-import { PrivacyStatementModal } from '@weareinreach/ui/modals/PrivacyStatement'
 import Autoplay from 'embla-carousel-autoplay'
 import { type GetServerSidePropsContext } from 'next'
 import Head from 'next/head'
-import { useTranslation, Trans, TFunction } from 'next-i18next'
+import { type TFunction, Trans, useTranslation } from 'next-i18next'
 import { useRef, useState } from 'react'
 
+import { trpcServerClient } from '@weareinreach/api/trpc'
+import { getServerSession } from '@weareinreach/auth'
+import { Link, UserReview } from '@weareinreach/ui/components/core'
+import { CallOut, Hero } from '@weareinreach/ui/components/sections'
+import { useCustomVariant } from '@weareinreach/ui/hooks'
+import { AccountVerifyModal, ResetPasswordModal } from '@weareinreach/ui/modals'
+import { PrivacyStatementModal } from '@weareinreach/ui/modals/PrivacyStatement'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-import { NextPageWithoutGrid } from './_app'
+import { type NextPageWithoutGrid } from './_app'
 
 const useStyles = createStyles((theme) => ({
 	callout1text: {
@@ -253,8 +253,8 @@ const Home: NextPageWithoutGrid = () => {
 }
 
 export const getServerSideProps = async ({ locale, req, res }: GetServerSidePropsContext) => {
-	const ssg = await trpcServerClient()
 	const session = await getServerSession({ req, res })
+	const ssg = await trpcServerClient({ session })
 	await ssg.review.getByIds.prefetch(featuredReviews)
 
 	return {

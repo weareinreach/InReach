@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { Listr, ListrRenderer, ListrTaskWrapper, PRESET_TIMER } from 'listr2'
+import { Listr, type ListrRenderer, type ListrTaskWrapper, PRESET_TIMER } from 'listr2'
 
 import {
 	seedAttributes,
@@ -13,9 +13,9 @@ import {
 	seedLanguages,
 	seedOutsideAPI,
 	seedPermissions,
-	seedSOGIdentity,
 	seedServices,
 	seedSocialMediaLinks,
+	seedSOGIdentity,
 	seedSystemUser,
 	seedTranslationNamespaces,
 	seedUserImmigration,

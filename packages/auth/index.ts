@@ -2,8 +2,7 @@
 import { type DefaultSession, type DefaultUser, type User } from 'next-auth/core/types'
 import { type DefaultJWT } from 'next-auth/jwt'
 
-export { authOptions } from './next-auth/auth-options'
-export { getServerSession } from './next-auth/get-session'
+export { getServerSession, checkPermissions, checkServerPermissions } from './next-auth/get-session'
 
 export type { Session } from 'next-auth'
 

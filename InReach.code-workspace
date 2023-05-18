@@ -142,10 +142,20 @@
 			{
 				"rule": "import/no-extraneous-dependencies",
 				"severity": "off"
-			}
+			},
+			{
+				"rule": "@typescript-eslint/consistent-type-imports",
+				"severity": "off"
+			},
+			{
+				"rule": "@typescript-eslint/no-unused-vars",
+				"severity": "info"
+			},
+			{ "rule": "sort-imports", "severity": "off" }
 		],
 		"eslint.runtime": "node",
 		"eslint.useESLintClass": true,
+		"eslint.workingDirectories": [{ "pattern": "./packages/*/" }, { "pattern": "./apps/*/" }],
 		"explorer.decorations.badges": true,
 		"explorer.expandSingleFolderWorkspaces": false,
 		"explorer.fileNesting.enabled": true,
@@ -153,12 +163,11 @@
 		"explorer.fileNesting.patterns": {
 			"*.tsx": "${capture}.ts, ${capture}.stories.tsx",
 			"*.ts": "${capture}.ts, ${capture}.stories.tsx",
-			"*eslintrc.js": ".eslintignore"
+			"*eslintrc.js": ".eslintignore, .eslintcache"
 		},
 		"files.exclude": {
 			".next/": true,
 			".turbo/": true,
-			"*.eslintcache": true,
 			"*.tsbuildinfo": true,
 			"**/.DS_Store": true,
 			"**/.git": true,
@@ -172,11 +181,17 @@
 			"storybook-static/": true
 		},
 		"files.watcherExclude": {
+			"**/.git/objects/**": true,
+			"**/.git/subtree-cache/**": true,
+			"**/node_modules/*/**": true,
+			"**/.hg/store/**": true,
 			"**/.next/**": true,
 			"**/.vercel/output/**": true,
 			"**/dist/**": true,
 			"**/storybook-static/**": true,
-			"**/zod-schemas/**": true
+			"**/zod-schemas/**": true,
+			"**/.turbo/**": true,
+			"**/generated/**": true
 		},
 		"i18n-ally.annotationInPlace": false,
 		"i18n-ally.defaultNamespace": "common",

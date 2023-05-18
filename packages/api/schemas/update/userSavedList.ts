@@ -1,9 +1,10 @@
-import { Prisma } from '@weareinreach/db'
 import { z } from 'zod'
+
+import { Prisma } from '@weareinreach/db'
 
 import { CreationBase, idString } from '../common'
 import { SaveItemSchema } from '../create/userSavedList'
-import { createOneSeparateLog, createMany, deleteOneSeparateLog } from '../nestedOps'
+import { createManyRequired, createOneSeparateLog, deleteOneSeparateLog } from '../nestedOps'
 
 export const SaveItem = () => {
 	const { dataParser: parser, inputSchema } = CreationBase(z.object(SaveItemSchema))
@@ -24,7 +25,7 @@ export const SaveItem = () => {
 			data: {
 				organizations,
 				services,
-				auditLogs: createMany([orgLog, servLog]),
+				auditLogs: createManyRequired([orgLog, servLog]),
 			},
 			select: {
 				services: { select: { serviceId: true } },
@@ -72,7 +73,7 @@ export const DeleteSavedItem = () => {
 			data: {
 				organizations,
 				services,
-				auditLogs: createMany([orgLog, servLog]),
+				auditLogs: createManyRequired([orgLog, servLog]),
 			},
 			select: {
 				id: true,
@@ -89,4 +90,4 @@ export const DeleteSavedItem = () => {
 	return { dataParser, inputSchema }
 }
 
-export const ShareListUrl = () => {}
+// export const ShareListUrl = () => {}

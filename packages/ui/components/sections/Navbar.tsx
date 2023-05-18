@@ -1,9 +1,9 @@
-import { Flex, Group, createStyles, rem, Container } from '@mantine/core'
+import { Container, createStyles, Flex, Group, rem } from '@mantine/core'
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 
 import InReachLogo from '~ui/assets/inreach.svg'
-import { Button, MobileNav, UserMenu, Link } from '~ui/components/core'
+import { Button, Link, MobileNav, UserMenu } from '~ui/components/core'
 
 const useStyles = createStyles((theme) => ({
 	desktopNav: {
