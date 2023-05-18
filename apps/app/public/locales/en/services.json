@@ -49,11 +49,7 @@
 	"english-classes": "English classes",
 	"family-petitions": "Family Petitions",
 	"financial-assistance": "Financial Assistance",
-	"food": {
-		"food": "Food",
-		"food-assistance": "Food assistance",
-		"CATEGORYNAME": "Food"
-	},
+	"food": { "food": "Food", "food-assistance": "Food assistance", "CATEGORYNAME": "Food" },
 	"gender-affirming-items": "Gender-affirming items",
 	"gender-neutral-bathrooms": "Gender-neutral bathrooms",
 	"haircuts-and-stylists": "Haircuts and stylists",
@@ -102,10 +98,7 @@
 	"lgbtq-centers": "LGBTQ centers",
 	"libraries": "Libraries",
 	"lodging-assistance": "Lodging Assistance",
-	"mail": {
-		"mail": "Mail",
-		"CATEGORYNAME": "Mail"
-	},
+	"mail": { "mail": "Mail", "CATEGORYNAME": "Mail" },
 	"mail-order-services": "Mail Order Services",
 	"medical": {
 		"covid-19-services": "COVID-19 services",
