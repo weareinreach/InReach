@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
+import { getServerSession } from '@weareinreach/auth'
 import { SuggestOrg } from '@weareinreach/ui/components/sections/SuggestOrg'
 import { QuickPromotionModal } from '@weareinreach/ui/modals'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -36,8 +37,9 @@ const SuggestResource = () => {
 
 export default SuggestResource
 
-export const getServerSideProps = async ({ locale }: GetServerSidePropsContext) => {
-	const ssg = await trpcServerClient()
+export const getServerSideProps = async ({ locale, req, res }: GetServerSidePropsContext) => {
+	const session = await getServerSession({ req, res })
+	const ssg = await trpcServerClient({ session })
 
 	await ssg.organization.suggestionOptions.prefetch()
 
