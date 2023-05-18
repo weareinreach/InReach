@@ -5,6 +5,7 @@ import {
 	Center,
 	Checkbox,
 	Group,
+	Loader,
 	Modal,
 	Overlay,
 	Pagination,
@@ -12,6 +13,7 @@ import {
 	Space,
 	Stack,
 	Table,
+	Tabs,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -26,10 +28,11 @@ import {
 	getPaginationRowModel,
 	useReactTable,
 } from '@tanstack/react-table'
-// import { ReactTableDevtools } from '@tanstack/react-table-devtools'
 import compact from 'just-compact'
 import { type GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
+import { type Route } from 'nextjs-routes'
 import { useEffect, useMemo, useState } from 'react'
 
 import { type ApiInput, type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
@@ -39,7 +42,6 @@ import { MultiSelectPopover } from '@weareinreach/ui/components/data-portal/Mult
 import { parsePhoneNumber } from '@weareinreach/ui/hooks/usePhoneNumber'
 import { Icon } from '@weareinreach/ui/icon'
 import { QuickPromotionModal } from '@weareinreach/ui/modals'
-import { ReactTableDevtools } from '@weareinreach/ui/other/ReactQueryDevtools'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
@@ -56,6 +58,7 @@ const QuickLink = () => {
 	const [isSaved, setIsSaved] = useState(false)
 	const [overlay, setOverlay] = useState(sessionStatus === 'unauthenticated')
 	const [modalOpened, modalHandler] = useDisclosure(false)
+	const router = useRouter()
 	const apiUtils = api.useContext()
 	const updatePhones = api.quicklink.updatePhoneData.useMutation({
 		onSuccess: () => {
@@ -64,7 +67,7 @@ const QuickLink = () => {
 		},
 	})
 
-	const { data, isLoading, isFetching } = api.quicklink.getPhoneData.useQuery(
+	const { data, isLoading } = api.quicklink.getPhoneData.useQuery(
 		{
 			limit: RESULTS_PER_PAGE,
 			skip: RESULTS_PER_PAGE * page,
@@ -305,114 +308,114 @@ const QuickLink = () => {
 		getFilteredRowModel: getFilteredRowModel(),
 		manualPagination: true,
 	})
-	if (overlay)
-		return (
-			<>
-				<Space h={400} />
-				<Overlay blur={2}>
-					<QuickPromotionModal autoLaunch noClose />
-				</Overlay>
-			</>
-		)
-
-	if (isLoading || !data || !form.values.data?.length) return <>Loading...</>
-
 	return (
 		<>
-			<Table>
-				<thead style={{ position: 'sticky', top: 0, backgroundColor: 'white', zIndex: 20 }}>
-					{table.getHeaderGroups().map((headerGroup) => (
-						<tr key={headerGroup.id}>
-							{headerGroup.headers.map((header) => (
-								<th key={header.id} style={{ width: header.getSize() }}>
-									{flexRender(header.column.columnDef.header, header.getContext())}
-								</th>
+			<Tabs value={router.pathname} onTabChange={(value) => router.push(value as unknown as Route)}>
+				<Tabs.List>
+					<Tabs.Tab value='/admin/quicklink/phone'>Phone Numbers</Tabs.Tab>
+					<Tabs.Tab value='/admin/quicklink/email'>Email Addresses</Tabs.Tab>
+				</Tabs.List>
+			</Tabs>
+			{isLoading || !data || !form.values.data?.length ? (
+				<Center h='75vh'>
+					<Loader />
+				</Center>
+			) : overlay ? (
+				<>
+					<Space h={400} />
+					<Overlay blur={2}>
+						<QuickPromotionModal autoLaunch noClose />
+					</Overlay>
+				</>
+			) : (
+				<>
+					<Table>
+						<thead style={{ position: 'sticky', top: 0, backgroundColor: 'white', zIndex: 20 }}>
+							{table.getHeaderGroups().map((headerGroup) => (
+								<tr key={headerGroup.id}>
+									{headerGroup.headers.map((header) => (
+										<th key={header.id} style={{ width: header.getSize() }}>
+											{flexRender(header.column.columnDef.header, header.getContext())}
+										</th>
+									))}
+								</tr>
 							))}
-						</tr>
-					))}
-				</thead>
+						</thead>
 
-				<tbody>
-					{table.getRowModel().rows.map((row) => (
-						<tr key={row.id}>
-							{row.getVisibleCells().map((cell) => {
-								return cell.getIsGrouped() ? (
-									<td key={cell.id} colSpan={7}>
-										<Group noWrap onClick={row.getToggleExpandedHandler()}>
-											<ActionIcon>
-												{row.getIsExpanded() ? (
-													<Icon icon='carbon:chevron-down' />
-												) : (
-													<Icon icon='carbon:chevron-right' />
-												)}
-											</ActionIcon>{' '}
-											{flexRender(cell.column.columnDef.cell, cell.getContext())}
-										</Group>
-									</td>
-								) : cell.getIsPlaceholder() ? (
-									<td key={cell.id}></td>
-								) : cell.row.getIsGrouped() ? null : (
-									<td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-								)
-							})}
-						</tr>
-					))}
-				</tbody>
-			</Table>
-			<Group noWrap position='apart' mt={40}>
-				<Pagination
-					onChange={handlePageChange}
-					onNextPage={() => handlePageChange('next')} // table.nextPage()}
-					onPreviousPage={() => handlePageChange('prev')} //table.previousPage()}
-					total={totalPages}
-					value={page + 1}
-				/>
-				<Affix position={{ bottom: rem(64), right: rem(24) }}>
-					<Button
-						variant='primary-icon'
-						leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
-						onClick={handleMutation}
-						loading={updatePhones.isLoading}
-						disabled={!form.isDirty()}
-					>
-						Save
-					</Button>
-				</Affix>
-			</Group>
-			<Modal opened={modalOpened} onClose={modalHandler.close}>
-				<Stack align='center'>
-					There are unsaved changes! If you navigate away from this page, they will be lost!
-					<Group>
-						<Button
-							variant='primary-icon'
-							leftIcon={<Icon icon='carbon:save' />}
-							onClick={handleMutation}
-							// loading={updateEmails.isLoading}
-						>
-							Save
-						</Button>
-						<Button
-							variant='primary-icon'
-							// leftIcon={<Icon icon='carbon:save' />}
-							onClick={() => {
-								handlePageChange(pageAction, true)
-								modalHandler.close()
-							}}
-							// loading={updateEmails.isLoading}
-						>
-							Discard Changes
-						</Button>
+						<tbody>
+							{table.getRowModel().rows.map((row) => (
+								<tr key={row.id}>
+									{row.getVisibleCells().map((cell) => {
+										return cell.getIsGrouped() ? (
+											<td key={cell.id} colSpan={7}>
+												<Group noWrap onClick={row.getToggleExpandedHandler()}>
+													<ActionIcon>
+														{row.getIsExpanded() ? (
+															<Icon icon='carbon:chevron-down' />
+														) : (
+															<Icon icon='carbon:chevron-right' />
+														)}
+													</ActionIcon>{' '}
+													{flexRender(cell.column.columnDef.cell, cell.getContext())}
+												</Group>
+											</td>
+										) : cell.getIsPlaceholder() ? (
+											<td key={cell.id}></td>
+										) : cell.row.getIsGrouped() ? null : (
+											<td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+										)
+									})}
+								</tr>
+							))}
+						</tbody>
+					</Table>
+					<Group noWrap position='apart' mt={40}>
+						<Pagination
+							onChange={handlePageChange}
+							onNextPage={() => handlePageChange('next')} // table.nextPage()}
+							onPreviousPage={() => handlePageChange('prev')} //table.previousPage()}
+							total={totalPages}
+							value={page + 1}
+						/>
+						<Affix position={{ bottom: rem(64), right: rem(24) }}>
+							<Button
+								variant='primary-icon'
+								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
+								onClick={handleMutation}
+								loading={updatePhones.isLoading}
+								disabled={!form.isDirty()}
+							>
+								Save
+							</Button>
+						</Affix>
 					</Group>
-				</Stack>
-			</Modal>
-			<ReactTableDevtools table={table} />
-			{/* <Affix position={{ bottom: 2, left: 52 }}>
-				<ReactTableDevtools
-					table={table}
-					toggleButtonProps={{ style: { margin: 12 } }}
-					containerElement='aside'
-				/>
-			</Affix> */}
+					<Modal opened={modalOpened} onClose={modalHandler.close}>
+						<Stack align='center'>
+							There are unsaved changes! If you navigate away from this page, they will be lost!
+							<Group>
+								<Button
+									variant='primary-icon'
+									leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
+									onClick={handleMutation}
+									loading={updatePhones.isLoading}
+								>
+									Save
+								</Button>
+								<Button
+									variant='primary-icon'
+									// leftIcon={<Icon icon='carbon:save' />}
+									onClick={() => {
+										handlePageChange(pageAction, true)
+										modalHandler.close()
+									}}
+								>
+									Discard Changes
+								</Button>
+							</Group>
+						</Stack>
+					</Modal>
+				</>
+			)}
 		</>
 	)
 }
@@ -440,7 +443,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, req, res 
 	}
 	const ssg = await trpcServerClient({ session })
 	if (session) {
-		await ssg.quicklink.getPhoneData.prefetch({ limit: 20 })
+		await ssg.quicklink.getPhoneData.prefetch({ limit: 20, skip: 0 })
 	}
 
 	return {
