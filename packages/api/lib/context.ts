@@ -4,7 +4,7 @@ import { type CreateNextContextOptions } from '@trpc/server/adapters/next'
 import { getServerSession, type Session } from '@weareinreach/auth'
 import { generateId, prisma } from '@weareinreach/db'
 
-type CreateContextOptions = {
+export type CreateContextOptions = {
 	session: Session | null
 }
 

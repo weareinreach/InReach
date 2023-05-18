@@ -253,8 +253,8 @@ const Home: NextPageWithoutGrid = () => {
 }
 
 export const getServerSideProps = async ({ locale, req, res }: GetServerSidePropsContext) => {
-	const ssg = await trpcServerClient()
 	const session = await getServerSession({ req, res })
+	const ssg = await trpcServerClient({ session })
 	await ssg.review.getByIds.prefetch(featuredReviews)
 
 	return {

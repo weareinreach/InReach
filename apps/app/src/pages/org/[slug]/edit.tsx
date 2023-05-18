@@ -134,7 +134,11 @@ export const getServerSideProps: GetServerSideProps<
 	if (!params) return { notFound: true }
 	const { slug } = params
 
-	const session = checkServerPermissions({ ctx: { req, res }, permissions: ['dataPortalBasic'], has: 'some' })
+	const session = await checkServerPermissions({
+		ctx: { req, res },
+		permissions: ['dataPortalBasic'],
+		has: 'some',
+	})
 
 	if (!session) {
 		return {
@@ -145,7 +149,7 @@ export const getServerSideProps: GetServerSideProps<
 		}
 	}
 
-	const ssg = await trpcServerClient()
+	const ssg = await trpcServerClient({ session })
 
 	await ssg.organization.getBySlug.prefetch({ slug })
 	const props = {
