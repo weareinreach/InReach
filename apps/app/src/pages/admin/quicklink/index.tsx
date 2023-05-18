@@ -1,16 +1,30 @@
 /* eslint-disable i18next/no-literal-string */
 
-import { Stack, Tabs, Title } from '@mantine/core'
+import { Overlay, Stack, Tabs, Title } from '@mantine/core'
 import { type GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 import { type Route } from 'nextjs-routes'
+import { useEffect, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
+import { Icon } from '@weareinreach/ui/icon'
+import { QuickPromotionModal } from '@weareinreach/ui/modals'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
 const QuickLinkIndex = () => {
 	const router = useRouter()
+	const { data: session, status: sessionStatus } = useSession()
+	const [overlay, setOverlay] = useState(sessionStatus === 'unauthenticated')
+
+	useEffect(() => {
+		if (!session && sessionStatus === 'unauthenticated') {
+			setOverlay(true)
+		} else if (session && sessionStatus === 'authenticated') {
+			setOverlay(false)
+		}
+	}, [session, sessionStatus])
 
 	return (
 		<>
@@ -21,8 +35,16 @@ const QuickLinkIndex = () => {
 				</Tabs.List>
 			</Tabs>
 			<Stack h='40vh'>
-				<Title order={2}>Select tab above</Title>
+				<Title order={2} pl={170} pt={20}>
+					<Icon icon='carbon:arrow-up-left' height={48} style={{ paddingRight: 8 }} />
+					Select tab above
+				</Title>
 			</Stack>
+			{overlay && (
+				<Overlay blur={2}>
+					<QuickPromotionModal autoLaunch noClose />
+				</Overlay>
+			)}
 		</>
 	)
 }
