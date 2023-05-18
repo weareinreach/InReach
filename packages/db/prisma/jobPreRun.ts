@@ -1,19 +1,56 @@
+import { ListrTaskEventType } from 'listr2'
+import { DateTime } from 'luxon'
+
+import fs from 'fs'
+import path from 'path'
+
+import { type PassedTask } from './dataMigrationRunner'
 import { prisma } from '..'
 
-export const jobPreRunner = async (jobDef: JobDef) => {
+const getTimestamp = () => DateTime.now().toLocaleString(DateTime.TIME_24_WITH_SECONDS).replaceAll(':', '.')
+
+const logFile = (file: string, output: string) => {
+	const timestamp = DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss')
+	const outFile = path.resolve(__dirname, './migration-logs/', file)
+	const formattedOutput = `[${timestamp}] ${output}\n`
+	fs.writeFileSync(outFile, formattedOutput, { flag: 'a' })
+}
+
+const createLogger = (task: PassedTask, jobId: string) => {
+	const timestamp = getTimestamp()
+	const logFilename = `${jobId}_${timestamp}.log`
+	task.task.on(ListrTaskEventType.OUTPUT, (output) => logFile(logFilename, output))
+}
+
+export const jobPreRunner = async (jobDef: JobDef, task?: PassedTask) => {
 	try {
 		const exists = await prisma.dataMigration.findUnique({
 			where: { jobId: jobDef.jobId },
 			select: { id: true },
 		})
-		if (exists?.id) return false
-		await prisma.dataMigration.create({ data: jobDef })
+		if (exists?.id) {
+			if (task) {
+				return task.skip(`${jobDef.jobId} - Migration has already been run.`)
+			}
+			return false
+		}
+		if (task) {
+			createLogger(task, jobDef.jobId)
+		}
 		return true
 	} catch (err) {
 		return false
 	}
 }
 
+export const jobPostRunner = async (jobDef: JobDef) => {
+	try {
+		await prisma.dataMigration.create({ data: jobDef })
+	} catch (err) {
+		console.error(err)
+		throw err
+	}
+}
 export interface JobDef {
 	jobId: string
 	title: string

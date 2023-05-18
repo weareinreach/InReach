@@ -6,6 +6,9 @@
 	"main": "./index.ts",
 	"scripts": {
 		"clean:export": "rm -rf ./datastore/v1/mongodb/{output,output-types}/* || true",
+		"clean:logs": "pnpm run \"/^clean:logs:.*/\"",
+		"clean:logs:data-migration": "rm -rf ./prisma/migration-logs/*.log",
+		"clean:logs:seed": "rm -rf ./seed/logs/*.log",
 		"clean:node": "rm -rf ./node_modules/ || true",
 		"clean:zod": "rm -rf ./zod-schemas/* || true",
 		"db:dataMigrate": "pnpm with-env tsx ./prisma/dataMigrationRunner.ts",

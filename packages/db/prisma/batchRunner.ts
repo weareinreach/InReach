@@ -24,4 +24,7 @@ export const batchRunner: BatchRunner = async (batch, task) => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type BatchRunner = <T extends Prisma.PrismaPromise<any>[]>(batch: T, task: PassedTask) => Promise<number>
+type BatchRunner = <T extends Prisma.PrismaPromise<any>[]>(
+	batch: T,
+	task: PassedTask | Omit<PassedTask, 'skip' | 'enabled'>
+) => Promise<number>
