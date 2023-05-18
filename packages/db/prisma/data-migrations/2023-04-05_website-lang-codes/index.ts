@@ -5,7 +5,7 @@ import path from 'path'
 
 import { prisma } from '~db/index'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {
@@ -35,10 +35,7 @@ const DataSchema = z
 
 const job: ListrTask = async (_ctx, task) => {
 	/** Do not edit this part - this ensures that jobs are only run once */
-	const runJob = await jobPreRunner(jobDef)
-	if (!runJob) {
-		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
-	}
+	await jobPreRunner(jobDef, task)
 	/** Start defining your data migration from here. */
 	const rawData = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'data.json'), 'utf-8'))
 	const parsed = DataSchema.parse(rawData)
@@ -60,6 +57,11 @@ const job: ListrTask = async (_ctx, task) => {
 	})
 
 	task.output = `Records soft deleted: ${records.count}`
+	/**
+	 * DO NOT REMOVE BELOW - This writes a record to the DB to register that this migration has run
+	 * successfully.
+	 */
+	await jobPostRunner(jobDef)
 }
 
 /**

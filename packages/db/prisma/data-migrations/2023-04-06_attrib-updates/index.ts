@@ -6,7 +6,7 @@ import path from 'path'
 import { prisma, Prisma } from '~db/index'
 import { batchRunner } from '~db/prisma/batchRunner'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {
@@ -27,10 +27,7 @@ const CostDescSchema = z
 
 const job: ListrTask = async (_ctx, task) => {
 	/** Do not edit this part - this ensures that jobs are only run once */
-	const runJob = await jobPreRunner(jobDef)
-	if (!runJob) {
-		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
-	}
+	await jobPreRunner(jobDef, task)
 	const updateDesc = await prisma.attribute.update({
 		where: {
 			tag: 'other-describe',
@@ -73,6 +70,11 @@ const job: ListrTask = async (_ctx, task) => {
 	const costDescResult = await batchRunner(costDescUpdates, task)
 
 	task.output = `Cost attribute supplement records updated: ${costDescResult}`
+	/**
+	 * DO NOT REMOVE BELOW - This writes a record to the DB to register that this migration has run
+	 * successfully.
+	 */
+	await jobPostRunner(jobDef)
 }
 
 /**

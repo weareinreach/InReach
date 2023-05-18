@@ -1,6 +1,6 @@
 import { prisma, type Prisma } from '~db/index'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 const jobDef: JobDef = {
 	jobId: '2023-03-29-attribNest',
@@ -40,10 +40,7 @@ const nestServices = [
 ]
 
 const job: ListrTask = async (_ctx, task) => {
-	const runJob = await jobPreRunner(jobDef)
-	if (!runJob) {
-		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
-	}
+	await jobPreRunner(jobDef, task)
 
 	const countryUpdate = await prisma.country.updateMany({
 		where: { cca2: { in: ['US', 'CA', 'MX'] } },
@@ -64,6 +61,7 @@ const job: ListrTask = async (_ctx, task) => {
 
 	task.output = `Country updates: ${countryUpdate.count}`
 	task.output = `Attributes nested: ${nestUpdate.count}`
+	await jobPostRunner(jobDef)
 }
 
 export const job20220329 = {

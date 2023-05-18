@@ -1,6 +1,6 @@
 import { prisma } from '~db/index'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 const jobDef: JobDef = {
 	jobId: '2023-03-30-addSource',
@@ -9,10 +9,7 @@ const jobDef: JobDef = {
 }
 
 const job: ListrTask = async (_ctx, task) => {
-	const runJob = await jobPreRunner(jobDef)
-	if (!runJob) {
-		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
-	}
+	await jobPreRunner(jobDef, task)
 
 	const newSource = await prisma.source.upsert({
 		where: {
@@ -26,6 +23,8 @@ const job: ListrTask = async (_ctx, task) => {
 	})
 
 	task.output = `Source upserted: ${newSource.id} - ${newSource.source}`
+
+	await jobPostRunner(jobDef)
 }
 
 export const job20220330 = {

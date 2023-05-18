@@ -1,7 +1,7 @@
 import { prisma, type Prisma } from '~db/index'
 import { batchRunner } from '~db/prisma/batchRunner'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 const jobDef: JobDef = {
 	jobId: '2022-04-04-single-location-links',
@@ -10,10 +10,7 @@ const jobDef: JobDef = {
 }
 
 const job: ListrTask = async (_ctx, task) => {
-	const runJob = await jobPreRunner(jobDef)
-	if (!runJob) {
-		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
-	}
+	await jobPreRunner(jobDef, task)
 	const orgs = await prisma.organization.findMany({
 		select: {
 			id: true,
@@ -80,6 +77,8 @@ const job: ListrTask = async (_ctx, task) => {
 
 	const orgHoursResult = await batchRunner(orgHoursBatch, task)
 	task.output = `OrgHours: ${orgHoursResult}`
+
+	await jobPostRunner(jobDef)
 }
 
 // export job - this must be unique

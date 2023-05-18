@@ -5,7 +5,7 @@ import path from 'path'
 
 import { prisma, type Prisma } from '~db/index'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 const jobDef: JobDef = {
 	jobId: '2023-04-04-data-load',
@@ -44,10 +44,7 @@ type Data = z.infer<typeof DataSchema>
 type DataRecord = Data[number]
 
 const job: ListrTask = async (_ctx, task) => {
-	const runJob = await jobPreRunner(jobDef)
-	if (!runJob) {
-		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
-	}
+	await jobPreRunner(jobDef, task)
 	const rawData = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'data.json'), 'utf-8'))
 	const parsedData = DataSchema.parse(rawData)
 
@@ -89,6 +86,8 @@ const job: ListrTask = async (_ctx, task) => {
 	})
 
 	task.output = `Organization Attribute records created: ${result.count}`
+
+	await jobPostRunner(jobDef)
 }
 
 export const job20220404 = {
