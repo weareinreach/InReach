@@ -102,12 +102,12 @@ const OrgLocationPage: NextPage = () => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale, params }) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale, params, req, res }) => {
 	const urlParams = z.object({ slug: z.string(), orgLocationId: z.string() }).safeParse(params)
 	if (!urlParams.success) return { notFound: true }
 	const { slug, orgLocationId } = urlParams.data
 
-	const ssg = await trpcServerClient()
+	const ssg = await trpcServerClient({ req, res })
 	await ssg.organization.getBySlug.prefetch({ slug })
 	await ssg.location.getById.prefetch({ id: orgLocationId })
 	const props = {

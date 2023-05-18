@@ -1,6 +1,6 @@
 import { TRPCError } from '@trpc/server'
 
-import { checkPermissions } from '.'
+import { checkPermissions } from './permissions'
 import { t } from '../initTRPC'
 
 export const isAuthed = t.middleware(({ ctx, meta, next }) => {

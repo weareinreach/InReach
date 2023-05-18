@@ -1,10 +1,13 @@
 import { TRPCError } from '@trpc/server'
 import invariant from 'tiny-invariant'
 
-import { reject } from '.'
 import { type Context } from '../context'
 import { type Meta, t } from '../initTRPC'
 
+/** Send unauthorized rejection via middleware */
+const reject = () => {
+	throw new TRPCError({ code: 'UNAUTHORIZED' })
+}
 export const checkPermissions = (meta: Meta | undefined, ctx: Context) => {
 	try {
 		/** No permissions submitted, throw error */

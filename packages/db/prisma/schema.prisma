@@ -521,7 +521,9 @@ model OrgPhone {
   services     OrgServicePhone[]
   phoneLangs   OrgPhoneLanguage[]
 
+  /// associated only with location/service and not overall organization (for large orgs w/ multiple locations)
   locationOnly Boolean @default(false)
+  serviceOnly  Boolean @default(false)
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt

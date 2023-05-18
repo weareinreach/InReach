@@ -128,11 +128,11 @@ const OrganizationPage: NextPage = () => {
 export const getServerSideProps: GetServerSideProps<
 	Record<string, unknown>,
 	RoutedQuery<'/org/[slug]'>
-> = async ({ locale, params }) => {
+> = async ({ locale, params, req, res }) => {
 	if (!params) return { notFound: true }
 	const { slug } = params
 
-	const ssg = await trpcServerClient()
+	const ssg = await trpcServerClient({ req, res })
 
 	await ssg.organization.getBySlug.prefetch({ slug })
 	const props = {
