@@ -1,17 +1,18 @@
 {
 	"additional": {
-		"CATEGORYNAME": "Additional Information",
 		"at-capacity": "At capacity",
+		"CATEGORYNAME": "Additional Information",
 		"geo-near-public-transit": "Near public transportation",
 		"geo-public-transit-description": "Public transit / specific directions",
 		"has-confidentiality-policy": "Has A Confidentiality Policy",
 		"offers-remote-services": "Remote",
 		"religiously-affiliated": "Is religiously affiliated",
 		"time-walk-in": "Has Walk-In Hours",
-		"wheelchair-accessible": "Accessible"
+		"wheelchair-accessible_true": "Accessible",
+		"wheelchair-accessible_false": "Not Accessible"
 	},
+	"alerts": { "CATEGORYNAME": "Alerts", "info": "Informational Alert", "warn": "Warning Alert" },
 	"community": {
-		"CATEGORYNAME": "Community",
 		"adults": "\"adult\" defined as 18 years or older",
 		"africa-immigrant": "Opportunities that serve those from African countries",
 		"african-american": "Opportunities that serve the African American community",
@@ -23,6 +24,7 @@
 		"bipoc": "Opportunities that serve Black, Indigenous, and People of Color",
 		"bisexual": "Opportunities that serve the Bisexual Community",
 		"black": "Opportunities that serve the Black Community",
+		"CATEGORYNAME": "Community",
 		"citizens": "Citizens of {{country}}",
 		"conversion-therapy-survivors": "Opportunities that serve Conversion Therapy Survivors",
 		"daca-recipient-seeker": "Opportunities that serve Dreamers (DACA recipients)",
@@ -50,22 +52,20 @@
 		"seniors": "\"senior\" defined as 65 years or older",
 		"sex-workers": "Opportunities that serve sex workers",
 		"teens": "\"teen\" defined as 12-18 years old",
-		"trans-youth": "Opportunities that serve Trans youth",
-		"trans-youth-caregivers": "Opportunities that serve Caregivers of Trans youth",
 		"transfeminine": "Opportunities that serve the Transfeminine Community",
 		"transgender": "Opportunities that serve the transgender community (for non-conforming or non-binary communities, use the gender-nonconforming or nonbinary properties)",
 		"transmasculine": "Opportunities that serve the Trasmasculine Community",
+		"trans-youth": "Opportunities that serve Trans youth",
+		"trans-youth-caregivers": "Opportunities that serve Caregivers of Trans youth",
 		"unaccompanied-minors": "Opportunities that serve unaccompanied minors",
 		"undocumented": "Opportunities that serve undocumented immigrants"
 	},
-	"cost": {
-		"CATEGORYNAME": "Cost",
-		"cost-fees": "Incurs a cost",
-		"cost-free": "Free of cost"
-	},
+	"cost": { "CATEGORYNAME": "Cost", "cost-fees": "Incurs a cost", "cost-free": "Free of cost" },
 	"eligibility": {
 		"CATEGORYNAME": "Eligibility Requirements",
-		"elig-age": "Age eligibility",
+		"elig-age_max": "Under {{max}}",
+		"elig-age_min": "{{min}} and older",
+		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Other (free text description)",
 		"req-medical-insurance": "REQUIRES medical insurance",
 		"req-photo-id": "REQUIRES a photo ID",
@@ -76,32 +76,32 @@
 		"time-appointment-required": "Time Appointment Required"
 	},
 	"lang": {
-		"CATEGORYNAME": "Languages",
 		"all-languages-by-interpreter": "All languages via interpreter",
 		"american-sign-language": "American Sign Language",
+		"CATEGORYNAME": "Languages",
 		"lang-offered": "Specific languages offered"
 	},
 	"orgleader": {
-		"CATEGORYNAME": "Organization Leadership",
 		"bipoc-led": "BIPOC-led",
 		"black-led": "Black-led",
+		"CATEGORYNAME": "Organization Leadership",
 		"immigrant-led": "Immigrant-led",
 		"trans-led": "Transgender-led"
 	},
 	"serviceaccess": {
-		"CATEGORYNAME": "Service Access Instructions",
 		"accessemail": "Access Instructions - Email",
 		"accessfile": "Access Instructions - File",
 		"accesslink": "Access Instructions - Link",
 		"accesslocation": "Access Instructions - Location",
 		"accessphone": "Access Instructions - Phone",
 		"accesspublictransit": "Access Instructions - Public Transit",
-		"accesstext": "Access Instructions - Text"
+		"accesstext": "Access Instructions - Text",
+		"CATEGORYNAME": "Service Access Instructions"
 	},
 	"srvfocus": {
-		"CATEGORYNAME": "Service Focus",
 		"asylum-seekers": "Asylum Seekers",
 		"bipoc-comm": "BIPOC Community",
+		"CATEGORYNAME": "Service Focus",
 		"gender-nc": "Gender non-conforming",
 		"hiv-comm": "HIV Community",
 		"immigrant-comm": "Immigrant Community",
@@ -113,17 +113,13 @@
 		"trans-masc": "Trans Men/Transmasculine",
 		"trans-youth-focus": "Trans Youth"
 	},
-	"sys": {
-		"CATEGORYNAME": "System",
-		"incompatible-info": "Incompatible Information"
-	},
+	"sys": { "CATEGORYNAME": "System", "incompatible-info": "Incompatible Information" },
 	"userlawpractice": {
 		"CATEGORYNAME": "Law Practice Options",
 		"corp-law-firm": "Corporate law firm",
 		"law-other": "Other (please specify)",
 		"law-school-clinic": "Law school student clinic",
-		"legal-nonprofit": "Legal non-profit",
-		"other": "Other (please specify)"
+		"legal-nonprofit": "Legal non-profit"
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "Service Provider Options",
