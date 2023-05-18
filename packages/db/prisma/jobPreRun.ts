@@ -16,7 +16,7 @@ const logFile = (file: string, output: string) => {
 	fs.writeFileSync(outFile, formattedOutput, { flag: 'a' })
 }
 
-const createLogger = (task: PassedTask, jobId: string) => {
+export const createLogger = (task: PassedTask, jobId: string) => {
 	const timestamp = getTimestamp()
 	const logFilename = `${jobId}_${timestamp}.log`
 	task.task.on(ListrTaskEventType.OUTPUT, (output) => logFile(logFilename, output))
