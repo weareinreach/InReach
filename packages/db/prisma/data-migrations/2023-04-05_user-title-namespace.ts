@@ -1,6 +1,6 @@
 import { prisma } from '~db/index'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {
@@ -11,8 +11,7 @@ const jobDef: JobDef = {
 
 const job: ListrTask = async (_ctx, task) => {
 	/** Do not edit this part - this ensures that jobs are only run once */
-	const runJob = await jobPreRunner(jobDef)
-	if (!runJob) {
+	if (await jobPreRunner(jobDef, task)) {
 		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
 	}
 	/** Start defining your data migration from here. */
@@ -29,6 +28,11 @@ const job: ListrTask = async (_ctx, task) => {
 	})
 
 	task.output = `Created translation namespace: ${userTitle.name}`
+	/**
+	 * DO NOT REMOVE BELOW - This writes a record to the DB to register that this migration has run
+	 * successfully.
+	 */
+	await jobPostRunner(jobDef)
 }
 
 /**

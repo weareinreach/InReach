@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
 	Listr,
 	type ListrDefaultRenderer,
@@ -32,6 +33,7 @@ const jobs = new Listr<Context>(
 			timer: PRESET_TIMER,
 		},
 		exitOnError: false,
+		forceColor: true,
 	}
 )
 
@@ -42,4 +44,7 @@ export type Context = {
 }
 export type PassedTask = ListrTaskWrapper<Context, ListrDefaultRenderer>
 export type ListrJob = ListrTaskObj<Context, ListrDefaultRenderer>
-export type ListrTask = (ctx: Context, task: PassedTask) => void | Promise<void>
+export type ListrTask = (
+	ctx: Context,
+	task: PassedTask
+) => void | Promise<void | Listr<Context, any, any>> | Listr<Context, any, any>

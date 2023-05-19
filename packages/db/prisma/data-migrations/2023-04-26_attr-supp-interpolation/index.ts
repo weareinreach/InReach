@@ -6,7 +6,7 @@ import path from 'path'
 import { prisma } from '~db/index'
 import { batchRunner } from '~db/prisma/batchRunner'
 import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { type JobDef, jobPreRunner } from '~db/prisma/jobPreRun'
+import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {
@@ -29,8 +29,7 @@ const dataFile = path.resolve(__dirname, 'interpolation.json')
 
 const job: ListrTask = async (_ctx, task) => {
 	/** Do not edit this part - this ensures that jobs are only run once */
-	const runJob = await jobPreRunner(jobDef)
-	if (!runJob) {
+	if (await jobPreRunner(jobDef, task)) {
 		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
 	}
 	/** Start defining your data migration from here. */
@@ -65,6 +64,11 @@ const job: ListrTask = async (_ctx, task) => {
 		},
 	})
 	task.output = `${isSuccess(ageTag)} Update 'Eligible ages' Tag`
+	/**
+	 * DO NOT REMOVE BELOW - This writes a record to the DB to register that this migration has run
+	 * successfully.
+	 */
+	await jobPostRunner(jobDef)
 }
 
 /**
