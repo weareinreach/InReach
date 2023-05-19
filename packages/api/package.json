@@ -26,6 +26,7 @@
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"alex": "11.0.0",
+		"geo-tz": "7.0.7",
 		"geolib": "3.3.3",
 		"just-compact": "3.2.0",
 		"just-diff": "6.0.2",
