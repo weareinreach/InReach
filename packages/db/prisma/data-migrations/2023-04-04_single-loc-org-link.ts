@@ -10,7 +10,9 @@ const jobDef: JobDef = {
 }
 
 const job: ListrTask = async (_ctx, task) => {
-	await jobPreRunner(jobDef, task)
+	if (await jobPreRunner(jobDef, task)) {
+		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
+	}
 	const orgs = await prisma.organization.findMany({
 		select: {
 			id: true,

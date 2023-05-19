@@ -22,24 +22,19 @@ export const createLogger = (task: PassedTask, jobId: string) => {
 	task.task.on(ListrTaskEventType.OUTPUT, (output) => logFile(logFilename, output))
 }
 
-export const jobPreRunner = async (jobDef: JobDef, task?: PassedTask) => {
+export const jobPreRunner = async (jobDef: JobDef, task: PassedTask) => {
 	try {
 		const exists = await prisma.dataMigration.findUnique({
 			where: { jobId: jobDef.jobId },
 			select: { id: true },
 		})
 		if (exists?.id) {
-			if (task) {
-				return task.skip(`${jobDef.jobId} - Migration has already been run.`)
-			}
-			return false
+			return true
 		}
-		if (task) {
-			createLogger(task, jobDef.jobId)
-		}
-		return true
-	} catch (err) {
+		createLogger(task, jobDef.jobId)
 		return false
+	} catch (err) {
+		return true
 	}
 }
 

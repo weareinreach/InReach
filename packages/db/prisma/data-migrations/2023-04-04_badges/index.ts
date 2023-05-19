@@ -44,7 +44,9 @@ type Data = z.infer<typeof DataSchema>
 type DataRecord = Data[number]
 
 const job: ListrTask = async (_ctx, task) => {
-	await jobPreRunner(jobDef, task)
+	if (await jobPreRunner(jobDef, task)) {
+		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
+	}
 	const rawData = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'data.json'), 'utf-8'))
 	const parsedData = DataSchema.parse(rawData)
 

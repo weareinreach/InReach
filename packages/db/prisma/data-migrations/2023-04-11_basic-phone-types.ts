@@ -13,7 +13,9 @@ const jobDef: JobDef = {
 
 const job: ListrTask = async (_ctx, task) => {
 	/** Do not edit this part - this ensures that jobs are only run once */
-	await jobPreRunner(jobDef, task)
+	if (await jobPreRunner(jobDef, task)) {
+		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
+	}
 	/** Start defining your data migration from here. */
 	const itemsToAdd = ['Office', 'Hotline', 'Fax', 'SMS', 'WhatsApp']
 	const translations: Prisma.TranslationKeyCreateManyInput[] = []

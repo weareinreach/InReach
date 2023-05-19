@@ -20,9 +20,7 @@ const jobDef: JobDef = {
 
 const job: ListrTask = async (_ctx, task) => {
 	/** Do not edit this part - this ensures that jobs are only run once */
-	const runJob = await jobPreRunner(jobDef, task)
-	if (!runJob) {
-		task.task.off(ListrTaskEventType.OUTPUT)
+	if (await jobPreRunner(jobDef, task)) {
 		return task.skip(`${jobDef.jobId} - Migration has already been run.`)
 	}
 	/** Start defining your data migration from here. */
