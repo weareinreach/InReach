@@ -159,7 +159,7 @@ export const queries = defineRouter({
 	}),
 	suggestionOptions: publicProcedure.query(async ({ ctx }) => {
 		const countries = await ctx.prisma.country.findMany({
-			where: { activeForOrgs: true },
+			where: { activeForSuggest: true },
 			select: { id: true, tsKey: true, tsNs: true },
 			orderBy: { tsKey: 'desc' },
 		})

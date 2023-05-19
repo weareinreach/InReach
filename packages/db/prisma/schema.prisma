@@ -846,6 +846,9 @@ model OrgReview {
   visible    Boolean @default(true)
   deleted    Boolean @default(false)
 
+  // Is this review in the pool to be featured on the homepage?
+  featured Boolean?
+
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
@@ -1232,7 +1235,8 @@ model Country {
   // List of administrative subdivisions
   govDist GovDist[]
 
-  activeForOrgs Boolean?
+  activeForOrgs    Boolean?
+  activeForSuggest Boolean?
 
   /// Tables using Country
   attributeSupplements  AttributeSupplement[]
