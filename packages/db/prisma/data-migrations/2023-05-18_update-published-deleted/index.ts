@@ -1,4 +1,3 @@
-import { ListrTaskEventType } from 'listr2'
 import { parse } from 'superjson'
 
 import fs from 'fs'

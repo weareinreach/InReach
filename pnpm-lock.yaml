@@ -1037,6 +1037,9 @@ importers:
       just-capitalize:
         specifier: 3.2.0
         version: 3.2.0
+      just-compact:
+        specifier: 3.2.0
+        version: 3.2.0
       just-flush:
         specifier: 2.3.0
         version: 2.3.0
@@ -16222,7 +16225,6 @@ packages:
 
   /just-compact@3.2.0:
     resolution: {integrity: sha512-sOrec92s8U4hzuj8FhbwLYxgvqS+BqGoU+LjgqW0r1MpXLJ7xkKwiFnt5Jr9Se3A62DCJ18+14Jvc1euzmWwbA==}
-    dev: false
 
   /just-compare@2.3.0:
     resolution: {integrity: sha512-6shoR7HDT+fzfL3gBahx1jZG3hWLrhPAf+l7nCwahDdT9XDtosB9kIF0ZrzUp5QY8dJWfQVr5rnsPqsbvflDzg==}
