@@ -4,11 +4,16 @@ import { type PassedTask } from '~db/prisma/dataMigrationRunner'
 const isSuccess = (criteria: unknown) => (criteria ? '✅' : '❎')
 const BATCH_SIZE = 500
 
-export const batchRunner: BatchRunner = async (batch, task) => {
+export const batchRunner: BatchRunner = async (batch, task, batchDescription) => {
 	let i = 1
 	let ttl = 0
 	const totalBatches = Math.ceil(batch.length / BATCH_SIZE)
-	task.output = `Batch runner: ${batch.length} total transactions will be split in to ${totalBatches} batches`
+	if (batchDescription) {
+		task.output = `Running batches for: ${batchDescription}`
+		task.output = `  ${batch.length} total transactions will be split in to ${totalBatches} batches`
+	} else {
+		task.output = `Batch runner: ${batch.length} total transactions will be split in to ${totalBatches} batches`
+	}
 
 	while (batch.length) {
 		const currentBatch = batch.splice(0, BATCH_SIZE)
@@ -24,4 +29,8 @@ export const batchRunner: BatchRunner = async (batch, task) => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type BatchRunner = <T extends Prisma.PrismaPromise<any>[]>(batch: T, task: PassedTask) => Promise<number>
+type BatchRunner = <T extends Prisma.PrismaPromise<any>[]>(
+	batch: T,
+	task: PassedTask | Omit<PassedTask, 'skip' | 'enabled'>,
+	batchDescription?: string
+) => Promise<number>
