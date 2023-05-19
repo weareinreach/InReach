@@ -44,7 +44,7 @@ export const UserAvatar = ({ subheading, user, useLoggedIn = false, loading = fa
 				return (
 					<Text className={classes.subText}>
 						{DateTime.fromJSDate(subheading)
-							.setLocale(i18n.resolvedLanguage)
+							.setLocale(i18n.resolvedLanguage ?? 'en')
 							.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)}
 					</Text>
 				)
