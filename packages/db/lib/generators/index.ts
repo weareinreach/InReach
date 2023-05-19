@@ -21,7 +21,7 @@ const renderOptions = {
 	bottomBar: 10,
 	timer: PRESET_TIMER,
 }
-const defineJob = (title: string, job: (task: ListrTask) => void): ListrJob => ({
+const defineJob = (title: string, job: (task: ListrTask) => void | Promise<void>): ListrJob => ({
 	title,
 	task: async (_ctx, task): Promise<void> => job(task),
 	options: renderOptions,
