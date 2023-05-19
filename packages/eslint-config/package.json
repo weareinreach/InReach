@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@next/eslint-plugin-next": "13.4.2",
-		"@tanstack/eslint-plugin-query": "4.29.4",
+		"@tanstack/eslint-plugin-query": "4.29.8",
 		"@types/eslint": "8.37.0",
 		"@types/eslint-config-prettier": "6.11.0",
 		"@types/node": "18.16.13",
