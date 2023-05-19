@@ -287,7 +287,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						props.lastverified instanceof Date ? props.lastverified : new Date(props.lastverified)
 
 					const dateString = DateTime.fromJSDate(lastVerified)
-						.setLocale(i18n.resolvedLanguage)
+						.setLocale(i18n.resolvedLanguage ?? 'en')
 						.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 					const label = t('verified-information-detail', { dateString })
 					return {
