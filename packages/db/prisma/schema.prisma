@@ -1025,11 +1025,11 @@ model AttributeSupplement {
   internalNotes InternalNote[]
 
   //@@schema("system")
-  locationAttribute      LocationAttribute?      @relation(references: [attributeId, locationId], fields: [locationAttributeAttributeId, locationAttributeLocationId])
-  organizationAttribute  OrganizationAttribute?  @relation(references: [attributeId, organizationId], fields: [organizationAttributeAttributeId, organizationAttributeOrganizationId])
-  serviceAccessAttribute ServiceAccessAttribute? @relation(references: [attributeId, serviceAccessId], fields: [serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId])
-  serviceAttribute       ServiceAttribute?       @relation(references: [attributeId, orgServiceId], fields: [serviceAttributeAttributeId, serviceAttributeOrgServiceId])
-  userAttribute          UserAttribute?          @relation(references: [attributeId, userId], fields: [userAttributeAttributeId, userAttributeUserId])
+  locationAttribute      LocationAttribute?      @relation(references: [attributeId, locationId], fields: [locationAttributeAttributeId, locationAttributeLocationId], onDelete: Cascade)
+  organizationAttribute  OrganizationAttribute?  @relation(references: [attributeId, organizationId], fields: [organizationAttributeAttributeId, organizationAttributeOrganizationId], onDelete: Cascade)
+  serviceAccessAttribute ServiceAccessAttribute? @relation(references: [attributeId, serviceAccessId], fields: [serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId], onDelete: Cascade)
+  serviceAttribute       ServiceAttribute?       @relation(references: [attributeId, orgServiceId], fields: [serviceAttributeAttributeId, serviceAttributeOrgServiceId], onDelete: Cascade)
+  userAttribute          UserAttribute?          @relation(references: [attributeId, userId], fields: [userAttributeAttributeId, userAttributeUserId], onDelete: Cascade)
 
   locationAttributeAttributeId          String?
   locationAttributeLocationId           String?
