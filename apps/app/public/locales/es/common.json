@@ -254,7 +254,7 @@
 	"submit-review": "Enviar reseña",
 	"subscribe-to-newsletter": "Suscribirse al boletín de noticias",
 	"suggest-a-resource": "Sugerir un Recurso",
-	"support": "Support",
+	"support": "Apoyo",
 	"survey": {
 		"finish": "Finalizar",
 		"not-right-now": "No ahora mismo",
@@ -312,7 +312,7 @@
 		"service-hours": "Horas de servicio",
 		"share": "Compartir",
 		"skip": "Saltar",
-		"support": "Support"
+		"support": "Apoyo"
 	},
 	"your-comments": "Tus comentarios",
 	"photo_one": "Foto",
@@ -323,6 +323,6 @@
 	"review_other": "Reviews",
 	"view-x-result_one": "Ver {{count}} resultados",
 	"view-x-result_other": "Ver {{count}} resultados",
-	"website_one": "Website",
-	"website_other": "Websites"
+	"website_one": "Página web",
+	"website_other": "Página web"
 }
