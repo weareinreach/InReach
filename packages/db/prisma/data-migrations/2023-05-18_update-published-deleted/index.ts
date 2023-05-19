@@ -36,7 +36,8 @@ const job: ListrTask = async (_ctx, task) => {
 				// createLogger(parentTask, jobDef)
 				await batchRunner(
 					data.organization.map((args) => prisma.organization.update(args)),
-					parentTask
+					parentTask,
+					'Organization updates'
 				)
 			},
 		},
@@ -45,7 +46,8 @@ const job: ListrTask = async (_ctx, task) => {
 			task: async () =>
 				await batchRunner(
 					data.orgEmail.map((args) => prisma.orgEmail.update(args)),
-					parentTask
+					parentTask,
+					'Email address updates'
 				),
 		},
 		{
@@ -53,7 +55,8 @@ const job: ListrTask = async (_ctx, task) => {
 			task: async () =>
 				await batchRunner(
 					data.orgLocation.map((args) => prisma.orgLocation.update(args)),
-					parentTask
+					parentTask,
+					'Location updates'
 				),
 		},
 		{
@@ -61,7 +64,8 @@ const job: ListrTask = async (_ctx, task) => {
 			task: async () =>
 				await batchRunner(
 					data.orgPhone.map((args) => prisma.orgPhone.update(args)),
-					parentTask
+					parentTask,
+					'Phone number updates'
 				),
 		},
 		{
@@ -69,7 +73,8 @@ const job: ListrTask = async (_ctx, task) => {
 			task: async () =>
 				await batchRunner(
 					data.orgService.map((args) => prisma.orgService.update(args)),
-					parentTask
+					parentTask,
+					'Service entry updates'
 				),
 		},
 		{
