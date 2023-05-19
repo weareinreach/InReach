@@ -1,4 +1,4 @@
-import { defineRouter, publicProcedure } from '~api/lib'
+import { defineRouter, publicProcedure } from '~api/lib/trpc'
 
 export const queries = defineRouter({
 	getFilterOptions: publicProcedure.query(async ({ ctx }) => {
@@ -24,4 +24,5 @@ export const queries = defineRouter({
 
 		return result
 	}),
+	get: permissionedProcedure,
 })

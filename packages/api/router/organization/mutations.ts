@@ -1,4 +1,4 @@
-import { handleError } from '~api/lib'
+import { handleError } from '~api/lib/errorHandler'
 import { defineRouter, permissionedProcedure, protectedProcedure } from '~api/lib/trpc'
 import {
 	AttachOrgAttribute,

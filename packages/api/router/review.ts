@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { handleError } from '~api/lib'
+import { handleError } from '~api/lib/errorHandler'
 import { defineRouter, protectedProcedure, publicProcedure, staffProcedure } from '~api/lib/trpc'
 import { id, orgId, orgIdLocationId, orgIdServiceId, userId } from '~api/schemas/common'
 import { CreateReview, CreateReviewInput } from '~api/schemas/create/review'

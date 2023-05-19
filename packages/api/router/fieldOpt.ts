@@ -2,7 +2,7 @@ import flush from 'just-flush'
 import { type SetOptional } from 'type-fest'
 import { z } from 'zod'
 
-import { type AttributesByCategory } from '@weareinreach/db'
+import { type AttributesByCategory } from '@weareinreach/db/client'
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
 import { serviceAreaSelect } from '~api/schemas/selects/location'
 

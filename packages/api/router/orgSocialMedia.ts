@@ -1,4 +1,4 @@
-import { defineRouter, permissionedProcedure } from '~api/lib'
+import { defineRouter, permissionedProcedure } from '~api/lib/trpc'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { CreateOrgSocialSchema, UpdateOrgSocialSchema } from '~api/schemas/create/orgSocialMedia'
 

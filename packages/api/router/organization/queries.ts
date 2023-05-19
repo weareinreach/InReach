@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { handleError } from '~api/lib'
+import { handleError } from '~api/lib/errorHandler'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
 import { defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
 import { prismaDistSearchDetails } from '~api/prisma/org'

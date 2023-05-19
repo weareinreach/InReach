@@ -1,8 +1,8 @@
 import compact from 'just-compact'
 import { z } from 'zod'
 
-import { generateId, generateNestedFreeText } from '@weareinreach/db'
-import { defineRouter, permissionedProcedure } from '~api/lib'
+import { generateNestedFreeText } from '@weareinreach/db/lib/generateFreeText'
+import { defineRouter, permissionedProcedure } from '~api/lib/trpc'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import {
 	CreateOrgEmailSchema,
@@ -145,7 +145,7 @@ export const orgEmailRouter = defineRouter({
 							from: before,
 							to: record,
 						})
-						const id = passedId ?? generateId('orgEmail')
+						const id = passedId ?? ctx.generateId('orgEmail')
 
 						const services = servicesArr.map((serviceId) => ({ serviceId }))
 						const locations = locationsArr.map((orgLocationId) => ({ orgLocationId }))
