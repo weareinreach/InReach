@@ -1,7 +1,17 @@
-import { Checkbox, createStyles, Group, Popover, rem, ScrollArea, Text, UnstyledButton } from '@mantine/core'
+import {
+	Checkbox,
+	createStyles,
+	Group,
+	LoadingOverlay,
+	Popover,
+	rem,
+	ScrollArea,
+	Text,
+	UnstyledButton,
+} from '@mantine/core'
 import { useDisclosure, useListState } from '@mantine/hooks'
 import compare from 'just-compare'
-import { type CSSProperties, useCallback, useEffect, useMemo } from 'react'
+import { type CSSProperties, useCallback, useMemo } from 'react'
 
 import { Icon } from '~ui/icon'
 
@@ -39,7 +49,11 @@ export const MultiSelectPopover = ({
 	onChange,
 }: MultiSelectPopoverProps) => {
 	const [opened, menuHandler] = useDisclosure()
-	const initialItems = data.map((item) => ({ ...item, checked: value?.includes(item.value) ?? false }))
+	const initialItems = useMemo(
+		() => data?.map((item) => ({ ...item, checked: value?.includes(item.value) ?? false })) ?? [],
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[data]
+	)
 	const [items, itemHandlers] = useListState(initialItems)
 	const selected = items.filter(({ checked }) => checked).length
 	const { classes, cx } = useStyles({ selectedCount: selected, dimmed: Boolean(labelClassName) })
@@ -58,11 +72,6 @@ export const MultiSelectPopover = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [currentValues, value])
 
-	// useEffect(() => {
-	// 	handleChange()
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [currentValues])
-
 	return (
 		<>
 			<Popover
@@ -74,6 +83,7 @@ export const MultiSelectPopover = ({
 				trapFocus
 				withinPortal
 			>
+				<LoadingOverlay visible={data === undefined} />
 				<Popover.Target>
 					<UnstyledButton onClick={menuHandler.toggle} className={classes.button} style={style}>
 						<Group noWrap position='apart' spacing={16}>
@@ -105,7 +115,7 @@ export const MultiSelectPopover = ({
 //)
 MultiSelectPopover.displayName = 'MultiSelectPopover'
 export interface MultiSelectPopoverProps {
-	data: {
+	data?: {
 		value: string
 		label: string
 		[k: string]: string
