@@ -7,20 +7,30 @@ import { defineRouter, publicProcedure } from '~api/lib/trpc'
 import { serviceAreaSelect } from '~api/schemas/selects/location'
 
 export const fieldOptRouter = defineRouter({
-	/** All government districts by country (active for org listings). Gives 2 levels of sub-districts */
+	/** All government districts by country (active for org listings). Gives up to 2 levels of sub-districts */
 	govDistsByCountry: publicProcedure
 		.meta({
 			description:
 				'All government districts by country (active for org listings). Gives 2 levels of sub-districts',
 		})
-		.input(z.string().optional().describe('Country CCA2 code'))
+		.input(
+			z
+				.object({
+					cca2: z.string().optional().describe('Country CCA2 code'),
+					subDistLevels: z
+						.union([z.literal(0), z.literal(1), z.literal(2)])
+						.default(2)
+						.describe('SubDistrict Levels (0-2)'),
+				})
+				.optional()
+		)
 		.query(async ({ ctx, input }) => {
 			const data = await ctx.prisma.country.findMany({
 				where: {
-					cca2: input,
+					cca2: input?.cca2,
 					activeForOrgs: true,
 				},
-				select: serviceAreaSelect,
+				select: serviceAreaSelect(input?.subDistLevels ?? 2),
 				orderBy: {
 					cca2: 'asc',
 				},

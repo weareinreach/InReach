@@ -2,6 +2,7 @@ import { geojsonToWKT } from '@terraformer/wkt'
 import { z } from 'zod'
 
 import { createPoint, generateId, GeoJSONPointSchema, Geometry, Prisma } from '@weareinreach/db'
+import { allAttributes } from '@weareinreach/db/generated/allAttributes'
 import { idString, JsonInputOrNullSuperJSON, MutationBase, MutationBaseArray } from '~api/schemas/common'
 import { createManyRequired } from '~api/schemas/nestedOps'
 
@@ -161,7 +162,6 @@ export const EditOrgLocationSchema = z
 		id: z.string(),
 		data: z
 			.object({
-				legacyId: z.string(),
 				name: z.string(),
 				street1: z.string(),
 				street2: z.string(),
@@ -176,7 +176,52 @@ export const EditOrgLocationSchema = z
 				published: z.boolean(),
 				deleted: z.boolean(),
 				checkMigration: z.boolean(),
+				accessible: z.object({
+					supplementId: z.string().optional(),
+					boolean: z.boolean(),
+				}),
 			})
 			.partial(),
 	})
-	.transform(({ id, data }) => Prisma.validator<Prisma.OrgLocationUpdateArgs>()({ where: { id }, data }))
+	.transform(({ id, data }) => {
+		const { accessible, ...rest } = data
+
+		const accessibleAttrId = allAttributes.find(({ tag }) => tag === 'wheelchair-accessible')?.id
+
+		const updateAccessibility = accessible !== undefined && accessibleAttrId
+
+		return Prisma.validator<Prisma.OrgLocationUpdateArgs>()({
+			where: { id },
+			data: {
+				...rest,
+				...(updateAccessibility
+					? accessible !== null
+						? {
+								attributes: {
+									upsert: {
+										where: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
+										create: {
+											attribute: { connect: { id: accessibleAttrId } },
+											supplement: { create: { boolean: accessible.boolean } },
+										},
+										update: {
+											supplement: {
+												upsert: {
+													where: { id: accessible.supplementId ?? '' },
+													create: { boolean: accessible.boolean },
+													update: { boolean: accessible.boolean },
+												},
+											},
+										},
+									},
+								},
+						  }
+						: {
+								attributes: {
+									delete: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
+								},
+						  }
+					: {}),
+			},
+		})
+	})
