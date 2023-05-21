@@ -105,7 +105,7 @@ const schemaTransform = ({ id, data }: FormSchema) => ({
 })
 
 const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ locationId, ...props }, ref) => {
-	const [opened, handler] = useDisclosure(true)
+	const [opened, handler] = useDisclosure(false)
 	const [_search, setSearch] = useState<string>('')
 	const [search] = useDebouncedValue(_search, 200)
 	const [results, setResults] = useState<ApiOutput['geo']['autocomplete']['results']>()

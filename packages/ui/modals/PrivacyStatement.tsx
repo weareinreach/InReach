@@ -12,7 +12,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { Trans } from 'next-i18next'
 import { forwardRef } from 'react'
 
-import { Link } from '~ui/components/core'
+import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks'
 
 import { ModalTitle } from './ModalTitle'

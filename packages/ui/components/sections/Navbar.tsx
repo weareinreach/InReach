@@ -3,7 +3,10 @@ import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 
 import InReachLogo from '~ui/assets/inreach.svg'
-import { Button, Link, MobileNav, UserMenu } from '~ui/components/core'
+import { Button } from '~ui/components/core/Button'
+import { Link } from '~ui/components/core/Link'
+import { MobileNav } from '~ui/components/core/MobileNav'
+import { UserMenu } from '~ui/components/core/UserMenu'
 
 const useStyles = createStyles((theme) => ({
 	desktopNav: {

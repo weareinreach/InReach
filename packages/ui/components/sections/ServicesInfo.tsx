@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
-import { Badge } from '~ui/components/core'
+import { Badge } from '~ui/components/core/Badge'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'

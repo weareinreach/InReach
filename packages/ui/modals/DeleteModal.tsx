@@ -17,7 +17,7 @@ import { useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
 import { z } from 'zod'
 
-import { Button } from '~ui/components/core'
+import { Button } from '~ui/components/core/Button'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { ModalTitle } from './ModalTitle'

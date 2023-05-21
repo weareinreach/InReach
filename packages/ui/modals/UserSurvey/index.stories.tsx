@@ -1,7 +1,7 @@
 import { Center } from '@mantine/core'
 import { type Meta } from '@storybook/react'
 
-import { Button } from '~ui/components/core'
+import { Button } from '~ui/components/core/Button'
 import { surveyOptions } from '~ui/mockData/surveyOptions'
 
 import { UserSurveyModalLauncher } from '.'
