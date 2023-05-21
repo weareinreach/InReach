@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
-import { Button } from '~ui/components/core'
+import { Button } from '~ui/components/core/Button'
 
 import { phoneEmailFieldMocks } from './fields.stories'
 import { PhoneEmailModal } from './index'

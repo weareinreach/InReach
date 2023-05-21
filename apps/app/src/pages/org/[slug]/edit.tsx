@@ -9,16 +9,15 @@ import { useEffect, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
-import { GoogleMap, Toolbar } from '@weareinreach/ui/components/core'
-import {
-	ContactSection,
-	ListingBasicInfo,
-	LocationCard,
-	PhotosSection,
-	ReviewSection,
-	ServicesInfoCard,
-	VisitCard,
-} from '@weareinreach/ui/components/sections'
+import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
+import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
+import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
+import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
+import { LocationCard } from '@weareinreach/ui/components/sections/LocationCard'
+import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
+import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
+import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
+import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 

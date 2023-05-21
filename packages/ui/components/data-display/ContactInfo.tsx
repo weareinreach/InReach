@@ -2,7 +2,8 @@ import { Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { isExternal, isSocialIcon, Link, SocialLink, type SocialLinkProps } from '~ui/components/core'
+import { isExternal, Link } from '~ui/components/core/Link'
+import { isSocialIcon, SocialLink, type SocialLinkProps } from '~ui/components/core/SocialLink'
 import { parsePhoneNumber, useCustomVariant, useSlug } from '~ui/hooks'
 
 const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {

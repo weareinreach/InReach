@@ -16,14 +16,14 @@ import { useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode } from 'react'
 
 import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
+import { AlertMessage } from '~ui/components/core/AlertMessage'
 import {
-	AlertMessage,
 	type AttributeTagProps,
 	Badge,
 	BadgeGroup,
 	type CommunityTagProps,
 	type ServiceTagProps,
-} from '~ui/components/core'
+} from '~ui/components/core/Badge'
 import { ContactInfo, type ContactInfoProps, hasContactInfo, Hours } from '~ui/components/data-display'
 import { getFreeText, useSlug } from '~ui/hooks'
 import { isValidIcon } from '~ui/icon'

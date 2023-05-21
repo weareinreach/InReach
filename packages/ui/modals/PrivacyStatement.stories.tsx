@@ -1,6 +1,6 @@
 import { type Meta } from '@storybook/react'
 
-import { Link } from '~ui/components/core'
+import { Link } from '~ui/components/core/Link'
 
 import { PrivacyStatementModal } from './PrivacyStatement'
 
