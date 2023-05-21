@@ -600,7 +600,7 @@ model OrgLocation {
   street2  String?
   city     String
   postCode String?
-  primary  Boolean @default(true)
+  primary  Boolean @default(false)
 
   mailOnly Boolean?
 
@@ -616,7 +616,7 @@ model OrgLocation {
   longitude Float?                               @db.Real
   latitude  Float?                               @db.Real
   geo       Unsupported("Geometry(POINT,4326)")?
-  geoJSON   Json /// @zod.custom.use(Geometry)
+  geoJSON   Json? /// @zod.custom.use(Geometry)
   geoWKT    String?
 
   published Boolean    @default(true)
