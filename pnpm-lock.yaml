@@ -546,7 +546,7 @@ importers:
         version: link:../db
       alex:
         specifier: 11.0.0
-        version: 11.0.0(typescript@5.0.4)
+        version: 11.0.0
       geo-tz:
         specifier: 7.0.7
         version: 7.0.7
