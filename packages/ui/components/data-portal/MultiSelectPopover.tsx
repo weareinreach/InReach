@@ -11,7 +11,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure, useListState } from '@mantine/hooks'
 import compare from 'just-compare'
-import { type CSSProperties, useCallback, useMemo } from 'react'
+import { type CSSProperties, useCallback, useEffect, useMemo } from 'react'
 
 import { Icon } from '~ui/icon'
 
@@ -47,6 +47,7 @@ export const MultiSelectPopover = ({
 	style,
 	labelClassName,
 	onChange,
+	fullWidth,
 }: MultiSelectPopoverProps) => {
 	const [opened, menuHandler] = useDisclosure()
 	const initialItems = useMemo(
@@ -54,8 +55,17 @@ export const MultiSelectPopover = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[data]
 	)
+
 	const [items, itemHandlers] = useListState(initialItems)
+	useEffect(() => {
+		if (items.length === 0 && initialItems.length !== 0) {
+			itemHandlers.setState(initialItems)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [initialItems])
+
 	const selected = items.filter(({ checked }) => checked).length
+
 	const { classes, cx } = useStyles({ selectedCount: selected, dimmed: Boolean(labelClassName) })
 
 	const selectedCountIcon = <Text className={classes.count}>{selected}</Text>
@@ -85,7 +95,12 @@ export const MultiSelectPopover = ({
 			>
 				<LoadingOverlay visible={data === undefined} />
 				<Popover.Target>
-					<UnstyledButton onClick={menuHandler.toggle} className={classes.button} style={style}>
+					<UnstyledButton
+						onClick={menuHandler.toggle}
+						className={classes.button}
+						style={style}
+						w={fullWidth ? '100%' : undefined}
+					>
 						<Group noWrap position='apart' spacing={16}>
 							<Group noWrap spacing={8}>
 								{selectedCountIcon}
@@ -125,4 +140,5 @@ export interface MultiSelectPopoverProps {
 	onChange?: (value: string[]) => void
 	style?: CSSProperties
 	labelClassName?: string
+	fullWidth?: boolean
 }
