@@ -2,7 +2,8 @@ import { Box, Group, Text } from '@mantine/core'
 import { closeAllModals } from '@mantine/modals'
 import { type DefaultTFuncReturn } from 'i18next'
 
-import { ActionButtons, Breadcrumb, type ModalTitleBreadcrumb } from '~ui/components/core'
+import { ActionButtons } from '~ui/components/core/ActionButtons'
+import { Breadcrumb, type ModalTitleBreadcrumb } from '~ui/components/core/Breadcrumb'
 import { useCustomVariant } from '~ui/hooks'
 
 export const ModalTitle = (props: ModalTitleProps) => {

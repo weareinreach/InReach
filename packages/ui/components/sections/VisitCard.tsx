@@ -5,8 +5,9 @@ import { useElementSize } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { Badge, GoogleMap } from '~ui/components/core'
-import { Hours } from '~ui/components/data-display'
+import { Badge } from '~ui/components/core/Badge'
+import { GoogleMap } from '~ui/components/core/GoogleMap'
+import { Hours } from '~ui/components/data-display/Hours'
 import { useCustomVariant, useFormattedAddress, useScreenSize } from '~ui/hooks'
 import { validateIcon } from '~ui/icon'
 
