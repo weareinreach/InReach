@@ -9,7 +9,41 @@ const subDistrictSelect = {
 	},
 } satisfies Prisma.GovDistSelect
 
-export const serviceAreaSelect = {
+export const serviceAreaSelect = (subDistrictLevels: 0 | 1 | 2) =>
+	({
+		...common,
+		cca2: true,
+		flag: true,
+		govDist: {
+			where: { isPrimary: true },
+			select: {
+				...common,
+				abbrev: true,
+				govDistType: {
+					select: { tsKey: true, tsNs: true },
+				},
+				subDistricts:
+					subDistrictLevels === 0
+						? false
+						: {
+								select: {
+									...subDistrictSelect,
+									subDistricts:
+										subDistrictLevels === 1
+											? false
+											: {
+													select: subDistrictSelect,
+													orderBy: { name: 'asc' },
+											  },
+								},
+								orderBy: { name: 'asc' },
+						  },
+			},
+			orderBy: { name: 'asc' },
+		},
+	} satisfies Prisma.CountrySelect)
+
+export const serviceAreaSelectNoSub = {
 	...common,
 	cca2: true,
 	flag: true,
@@ -20,16 +54,6 @@ export const serviceAreaSelect = {
 			abbrev: true,
 			govDistType: {
 				select: { tsKey: true, tsNs: true },
-			},
-			subDistricts: {
-				select: {
-					...subDistrictSelect,
-					subDistricts: {
-						select: subDistrictSelect,
-						orderBy: { name: 'asc' },
-					},
-				},
-				orderBy: { name: 'asc' },
 			},
 		},
 		orderBy: { name: 'asc' },

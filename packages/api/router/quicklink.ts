@@ -1,7 +1,7 @@
 import flush from 'just-flush'
 import { z } from 'zod'
 
-import { type Prisma } from '@weareinreach/db'
+import { type Prisma } from '@weareinreach/db/client'
 import { defineRouter, permissionedProcedure } from '~api/lib/trpc'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 

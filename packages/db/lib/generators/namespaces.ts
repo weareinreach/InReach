@@ -1,6 +1,6 @@
-import { prisma } from '~db/.'
+import { prisma } from '~db/client'
+import { type ListrTask } from '~db/lib/generateData'
 
-import { type ListrTask } from '.'
 import { writeOutput } from './common'
 
 export const generateNamespaces = async (task: ListrTask) => {

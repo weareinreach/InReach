@@ -17,6 +17,7 @@ import Head from 'next/head'
 import { type TFunction, Trans, useTranslation } from 'next-i18next'
 import { useRef, useState } from 'react'
 
+import { ms } from '@weareinreach/api/lib/milliseconds'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { getServerSession } from '@weareinreach/auth'
 import { Link, UserReview } from '@weareinreach/ui/components/core'
@@ -116,18 +117,12 @@ const CardTranslation = ({ i18nKey, t }: { i18nKey: string; t: TFunction }) => {
 	)
 }
 
-const featuredReviews = [
-	'orev_01GVDN0TH9Y5YG0GPBYZPJX5MF',
-	'orev_01GVDN0TGTQCA9AVSD3VXWCMXW',
-	'orev_01GVDN0TGV60SY6F6XJJVC9HDN',
-]
-
 const Home: NextPageWithoutGrid = () => {
 	const { t } = useTranslation('landingPage')
 	const theme = useMantineTheme()
 	const { classes, cx } = useStyles()
 	const { classes: carouselStyles } = useCarouselStyles()
-	const { data: reviews } = api.review.getByIds.useQuery(featuredReviews)
+	const { data: reviews } = api.review.getFeatured.useQuery(3, { staleTime: ms.minutes(2) })
 	const [embla, setEmbla] = useState<Embla | null>(null)
 	const autoplay = useRef(Autoplay({ delay: 5000 }))
 	useAnimationOffsetEffect(embla, 5000)
@@ -255,7 +250,7 @@ const Home: NextPageWithoutGrid = () => {
 export const getServerSideProps = async ({ locale, req, res }: GetServerSidePropsContext) => {
 	const session = await getServerSession({ req, res })
 	const ssg = await trpcServerClient({ session })
-	await ssg.review.getByIds.prefetch(featuredReviews)
+	await ssg.review.getFeatured.prefetch(3)
 
 	return {
 		props: {

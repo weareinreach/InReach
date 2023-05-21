@@ -2,7 +2,8 @@ import { type inferAsyncReturnType } from '@trpc/server'
 import { type CreateNextContextOptions } from '@trpc/server/adapters/next'
 
 import { getServerSession, type Session } from '@weareinreach/auth'
-import { generateId, prisma } from '@weareinreach/db'
+import { prisma } from '@weareinreach/db/client'
+import { generateId } from '@weareinreach/db/lib/idGen'
 
 export type CreateContextOptions = {
 	session: Session | null

@@ -1,4 +1,8 @@
-import { defineRouter, permissionedProcedure } from '~api/lib'
+import { TRPCError } from '@trpc/server'
+
+import { getTz } from '~api/lib/getTz'
+import { defineRouter, permissionedProcedure, staffProcedure } from '~api/lib/trpc'
+import { coord } from '~api/schemas/common'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { CreateManyOrgHours, CreateOrgHoursSchema, UpdateOrgHoursSchema } from '~api/schemas/create/orgHours'
 
@@ -56,4 +60,9 @@ export const orgHoursRouter = defineRouter({
 			})
 			return updatedRecord
 		}),
+	getTz: staffProcedure.input(coord).query(({ input }) => {
+		const result = getTz(input)
+		if (!result) throw new TRPCError({ code: 'NOT_FOUND' })
+		return result
+	}),
 })

@@ -2,7 +2,8 @@
 	"extends": "@weareinreach/config/tsconfig/base.json",
 	"compilerOptions": {
 		"baseUrl": ".",
-		"strict": true
+		"strict": true,
+		"plugins": [{ "name": "next" }]
 	},
 	"include": [
 		"./next-env.d.ts",

@@ -7329,6 +7329,1829 @@ export const queryGovDistsByCountry = (query: ApiInput['fieldOpt']['govDistsByCo
 	return govDistsByCountry
 }
 
+const govDistByCountryNoSub = [
+	{
+		id: 'ctry_01GW2HHDK67GZQVGA3NZ8PE5SS',
+		tsKey: 'ASM.name',
+		tsNs: 'country',
+		cca2: 'AS',
+		flag: '🇦🇸',
+		govDist: [],
+	},
+	{
+		id: 'ctry_01GW2HHDKAWXWYHAAESAA5HH94',
+		tsKey: 'CAN.name',
+		tsNs: 'country',
+		cca2: 'CA',
+		flag: '🇨🇦',
+		govDist: [
+			{
+				id: 'gdst_01GW2HKFSK070K54ZRAT3H42C4',
+				tsKey: 'ca-alberta',
+				tsNs: 'gov-dist',
+				abbrev: 'AB',
+				govDistType: {
+					tsKey: 'type-province',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFSMR5V1P769F2G2804N',
+				tsKey: 'ca-british-columbia',
+				tsNs: 'gov-dist',
+				abbrev: 'BC',
+				govDistType: {
+					tsKey: 'type-province',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFSRPH07M2AQSJWESENJ',
+				tsKey: 'ca-manitoba',
+				tsNs: 'gov-dist',
+				abbrev: 'MB',
+				govDistType: {
+					tsKey: 'type-province',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFSRBQ5FXY7ESXTZGR2V',
+				tsKey: 'ca-new-brunswick',
+				tsNs: 'gov-dist',
+				abbrev: 'NB',
+				govDistType: {
+					tsKey: 'type-province',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFSS7E4VCJ3PSAFDZG4A',
+				tsKey: 'ca-newfoundland-and-labrador',
+				tsNs: 'gov-dist',
+				abbrev: 'NL',
+				govDistType: {
+					tsKey: 'type-province',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFSWQPT9JHKMGGN43BRA',
+				tsKey: 'ca-northwest-territories',
+				tsNs: 'gov-dist',
+				abbrev: 'NT',
+				govDistType: {
+					tsKey: 'type-territory',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFSY6D07GJX9M0MT2VWQ',
+				tsKey: 'ca-nova-scotia',
+				tsNs: 'gov-dist',
+				abbrev: 'NS',
+				govDistType: {
+					tsKey: 'type-province',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFSZRAJ76MWQSW5GX6KZ',
+				tsKey: 'ca-nunavut',
+				tsNs: 'gov-dist',
+				abbrev: 'NU',
+				govDistType: {
+					tsKey: 'type-territory',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFTJXFCJ87G5J1XKA6R3',
+				tsKey: 'ca-ontario',
+				tsNs: 'gov-dist',
+				abbrev: 'ON',
+				govDistType: {
+					tsKey: 'type-province',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFTNQQHHFQ9SRDB91SHQ',
+				tsKey: 'ca-prince-edward-island',
+				tsNs: 'gov-dist',
+				abbrev: 'PE',
+				govDistType: {
+					tsKey: 'type-province',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFTNBZ4QT6F6AHNF8H46',
+				tsKey: 'ca-quebec',
+				tsNs: 'gov-dist',
+				abbrev: 'QC',
+				govDistType: {
+					tsKey: 'type-province',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFTR4D2KWGB6G1GJ15PB',
+				tsKey: 'ca-saskatchewan',
+				tsNs: 'gov-dist',
+				abbrev: 'SK',
+				govDistType: {
+					tsKey: 'type-province',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKFTRD0ANP4QTCTQ9VH0J',
+				tsKey: 'ca-yukon',
+				tsNs: 'gov-dist',
+				abbrev: 'YT',
+				govDistType: {
+					tsKey: 'type-territory',
+					tsNs: 'gov-dist',
+				},
+			},
+		],
+	},
+	{
+		id: 'ctry_01GW2HHDKGZ2XQ8Q9D8GX564MJ',
+		tsKey: 'GUM.name',
+		tsNs: 'country',
+		cca2: 'GU',
+		flag: '🇬🇺',
+		govDist: [],
+	},
+	{
+		id: 'ctry_01GW2HHDKFJ4Q7PBTTN4GSMPV0',
+		tsKey: 'MNP.name',
+		tsNs: 'country',
+		cca2: 'MP',
+		flag: '🇲🇵',
+		govDist: [],
+	},
+	{
+		id: 'ctry_01GW2HHDKB9DG2T2YZM5MFFVX9',
+		tsKey: 'MEX.name',
+		tsNs: 'country',
+		cca2: 'MX',
+		flag: '🇲🇽',
+		govDist: [
+			{
+				id: 'gdst_01GW2HKJ7NT27K6BDAV0KE00H0',
+				tsKey: 'mx-aguascalientes',
+				tsNs: 'gov-dist',
+				abbrev: 'Ags.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7NHSPR1AZ1RKJR6VAX',
+				tsKey: 'mx-baja-california',
+				tsNs: 'gov-dist',
+				abbrev: 'B.C.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7PP2TBNC8MQQS02N6S',
+				tsKey: 'mx-baja-california-sur',
+				tsNs: 'gov-dist',
+				abbrev: 'B.C.S.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7PYKWCEPVPG68EDP4F',
+				tsKey: 'mx-campeche',
+				tsNs: 'gov-dist',
+				abbrev: 'Camp.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7QP8FG3WQCWFTQKJC7',
+				tsKey: 'mx-chiapas',
+				tsNs: 'gov-dist',
+				abbrev: 'Chis.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7QGNZ81C60E6AX505R',
+				tsKey: 'mx-chihuahua',
+				tsNs: 'gov-dist',
+				abbrev: 'Chih.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7QDVHS9K3FJGJ3DCVG',
+				tsKey: 'mx-coahuila',
+				tsNs: 'gov-dist',
+				abbrev: 'Coah.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7R844VVGTC4G4TTXE0',
+				tsKey: 'mx-colima',
+				tsNs: 'gov-dist',
+				abbrev: 'Col.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7RG6XAZFVW3KHZEJ5N',
+				tsKey: 'mx-distrito-federal',
+				tsNs: 'gov-dist',
+				abbrev: 'D.F.',
+				govDistType: {
+					tsKey: 'type-district',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7RNCFT58G1MBPDX7RE',
+				tsKey: 'mx-durango',
+				tsNs: 'gov-dist',
+				abbrev: 'Dgo.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7SKC6E0B6N0NY2K6M8',
+				tsKey: 'mx-guanajuato',
+				tsNs: 'gov-dist',
+				abbrev: 'Gto.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7SDMPRET5KPDRK8Y5Y',
+				tsKey: 'mx-guerrero',
+				tsNs: 'gov-dist',
+				abbrev: 'Gro.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7SDVGBXMWX3GN3QNK0',
+				tsKey: 'mx-hidalgo',
+				tsNs: 'gov-dist',
+				abbrev: 'Hgo.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7TRTV31X30NRY0NYX2',
+				tsKey: 'mx-jalisco',
+				tsNs: 'gov-dist',
+				abbrev: 'Jal.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7TH3H6DP8T7X9JD0P7',
+				tsKey: 'mx-mexico',
+				tsNs: 'gov-dist',
+				abbrev: 'Méx.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7TVTPXQXX72QHX8P8T',
+				tsKey: 'mx-michoacan',
+				tsNs: 'gov-dist',
+				abbrev: 'Mich.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7VTQZZ91SN99P0N4ZH',
+				tsKey: 'mx-morelos',
+				tsNs: 'gov-dist',
+				abbrev: 'Mor.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7VAF5NW1VQ7KQ54A4T',
+				tsKey: 'mx-nayarit',
+				tsNs: 'gov-dist',
+				abbrev: 'Nay.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7WVV7V5NA1XP5BD0A7',
+				tsKey: 'mx-nuevo-leon',
+				tsNs: 'gov-dist',
+				abbrev: 'N.L.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7WMZRAAAYWXZ4HV89S',
+				tsKey: 'mx-oaxaca',
+				tsNs: 'gov-dist',
+				abbrev: 'Oax.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7WQS81DVDTGPKDBGYR',
+				tsKey: 'mx-puebla',
+				tsNs: 'gov-dist',
+				abbrev: 'Pue.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7XQWNY7KYE4GFSRVY9',
+				tsKey: 'mx-queretaro',
+				tsNs: 'gov-dist',
+				abbrev: 'Qro.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7X3M2TZXDZ2984KY3V',
+				tsKey: 'mx-quintana-roo',
+				tsNs: 'gov-dist',
+				abbrev: 'Q. Roo.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7X81B6PQNKDGBY35FT',
+				tsKey: 'mx-san-luis-potosi',
+				tsNs: 'gov-dist',
+				abbrev: 'S.L.P.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7XBS59FF133TSA8CX5',
+				tsKey: 'mx-sinaloa',
+				tsNs: 'gov-dist',
+				abbrev: 'Sin.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7YBSH4ANCX20Y2Z153',
+				tsKey: 'mx-sonora',
+				tsNs: 'gov-dist',
+				abbrev: 'Son.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7Y4KN0Y21FFKGM0R36',
+				tsKey: 'mx-tabasco',
+				tsNs: 'gov-dist',
+				abbrev: 'Tab.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7YV4W4HKPX6RX8ZGWD',
+				tsKey: 'mx-tamaulipas',
+				tsNs: 'gov-dist',
+				abbrev: 'Tamps.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7ZQFMCWT4EF2DW9HRC',
+				tsKey: 'mx-tlaxcala',
+				tsNs: 'gov-dist',
+				abbrev: 'Tlax.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7ZPEGHSE8Y0C6AJ2HK',
+				tsKey: 'mx-veracruz',
+				tsNs: 'gov-dist',
+				abbrev: 'Ver.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7ZAFQ34D6TVHT2AJ88',
+				tsKey: 'mx-yucatan',
+				tsNs: 'gov-dist',
+				abbrev: 'Yuc.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKJ7Z862E7R2ENKYPSZPY',
+				tsKey: 'mx-zacatecas',
+				tsNs: 'gov-dist',
+				abbrev: 'Zac.',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+		],
+	},
+	{
+		id: 'ctry_01GW2HHDK7PACTC9GJ2XBMVPKY',
+		tsKey: 'PRI.name',
+		tsNs: 'country',
+		cca2: 'PR',
+		flag: '🇵🇷',
+		govDist: [
+			{
+				id: 'gdst_01GW2HKF7MNPRM44JZ70DZNZ75',
+				tsKey: 'pr-adjuntas',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7QQADN2XEJEGRZGA32',
+				tsKey: 'pr-aguada',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7GDB9A0Y61RH4DE1Y7',
+				tsKey: 'pr-aguadilla',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7MHG9HQGMG6HW76GTY',
+				tsKey: 'pr-aguas-buenas',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7QZYRM5N4YWRDX0D51',
+				tsKey: 'pr-aibonito',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7MJ6N0ZP2EVQW7PKSZ',
+				tsKey: 'pr-anasco',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7ASDCF6MJX1GR7A9WD',
+				tsKey: 'pr-arecibo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7QAWDF8MDJPC4ATW3C',
+				tsKey: 'pr-arroyo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7KWSFQ2BBNE06FBJ8B',
+				tsKey: 'pr-barceloneta',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7AAHGX7T7W6AZJWYAE',
+				tsKey: 'pr-barranquitas',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7K7GQPKHXMAZ353S8Q',
+				tsKey: 'pr-bayamon',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7NB99SEGDAGPWGQ7HH',
+				tsKey: 'pr-cabo-rojo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7BSBYYNEMZ6QVF8227',
+				tsKey: 'pr-caguas',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7E342VRJMB9JBQGCB8',
+				tsKey: 'pr-camuy',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7K6K1YGQMXC75C7FEN',
+				tsKey: 'pr-canovanas',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7B83PQP7G4GY5H1F1Y',
+				tsKey: 'pr-carolina',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7N2795CHTK7B9FMBMT',
+				tsKey: 'pr-catano',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7EJC9Z7Q854T284T8Q',
+				tsKey: 'pr-cayey',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7N4BXQNPGJ2SSB3HZP',
+				tsKey: 'pr-ceiba',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7KNW1P6M0CBTP9DJPH',
+				tsKey: 'pr-ciales',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7ES2899PBSYADF5CGZ',
+				tsKey: 'pr-cidra',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7E1MAS1DCAF251JMS0',
+				tsKey: 'pr-coamo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7C8TEXW0TX7BNR3ZJP',
+				tsKey: 'pr-comerio',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7NM95AMSGKNYVNMX4K',
+				tsKey: 'pr-corozal',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7NJ8N815ZSVQ6PP8F8',
+				tsKey: 'pr-culebra',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7KY7TE0STKHEKB8TCT',
+				tsKey: 'pr-dorado',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7FJX1TV2FACXBDTY8V',
+				tsKey: 'pr-fajardo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7CT97CA6YVEKY451FF',
+				tsKey: 'pr-florida',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7FKYKQ8FJ5EAG5FQGG',
+				tsKey: 'pr-guanica',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7N8X0C9FVKWQRPZ0N5',
+				tsKey: 'pr-guayama',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7FP0SMK1DBEP03CCPT',
+				tsKey: 'pr-guayanilla',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7CPSVHHJVMRV1TCEPH',
+				tsKey: 'pr-guaynabo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7KPB26QY6V5AGPHQCK',
+				tsKey: 'pr-gurabo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7PBJAHMG2YTEB5E6QN',
+				tsKey: 'pr-hatillo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7GKZBEW06ATJGN7YA0',
+				tsKey: 'pr-hormigueros',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7C8PZMQX3ZPA4SQA0R',
+				tsKey: 'pr-humacao',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7QNDYT5EJJSNHV70Q0',
+				tsKey: 'pr-isabela',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7GFWQFZM4W8B6XE278',
+				tsKey: 'pr-jayuya',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7JCH0F0VGDMC9T859G',
+				tsKey: 'pr-juana-diaz',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7KKF2ZRBGWJ65XYB1H',
+				tsKey: 'pr-juncos',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7GJZ9K8JZHNY36F1S1',
+				tsKey: 'pr-lajas',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7GP9242YXKBP7ZY7SZ',
+				tsKey: 'pr-lares',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7DQFZ2RSYBJQ6ZTTSX',
+				tsKey: 'pr-las-marias',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7MZFQQ65W2WV6B3HFJ',
+				tsKey: 'pr-las-piedras',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7P4GF3D9AH52RC8PAB',
+				tsKey: 'pr-loiza',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7G4BFBE603PNE92JZ7',
+				tsKey: 'pr-luquillo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7PWWJXJ0XKJW6BRCQ1',
+				tsKey: 'pr-manati',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7DKTN8REXVNGVAECB8',
+				tsKey: 'pr-maricao',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7GJBK2M8GR9YSWMHM0',
+				tsKey: 'pr-maunabo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7PJWWVN43HSZXECPP4',
+				tsKey: 'pr-mayaguez',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7M2DS24Q59CSHA0DY5',
+				tsKey: 'pr-moca',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7H4FBMYSFFGJZYH0MH',
+				tsKey: 'pr-morovis',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7HJBVR2JFQ1VAWS6JD',
+				tsKey: 'pr-naguabo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7DCSXHCYDJ28QWER0N',
+				tsKey: 'pr-naranjito',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7PQJ4CM33MH3AEM1RA',
+				tsKey: 'pr-orocovis',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7HFBFSHR7JYV7NHF0Z',
+				tsKey: 'pr-patillas',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7MD86ZXFZYAKS2GJNR',
+				tsKey: 'pr-penuelas',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7PV9TMP8VWK93FTV2J',
+				tsKey: 'pr-ponce',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7D4HT3G8QJ6825DV48',
+				tsKey: 'pr-quebradillas',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7HMQPDNKPBKNXDZR6P',
+				tsKey: 'pr-rincon',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7HDC2BETD8TXG8M3N8',
+				tsKey: 'pr-rio-grande',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7PYS8BKRNW15QN0S0D',
+				tsKey: 'pr-sabana-grande',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7MZHTPEG6PYHA6FWFF',
+				tsKey: 'pr-salinas',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7H0Q44P9ERJFFPJBFC',
+				tsKey: 'pr-san-german',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7Q4W804RJYJGSN9YDS',
+				tsKey: 'pr-san-juan',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7DMJDRY12E121NAPY5',
+				tsKey: 'pr-san-lorenzo',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7H2VNGTNFXZW160HHP',
+				tsKey: 'pr-san-sebastian',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7QD21G3Y0R6E0CB8RH',
+				tsKey: 'pr-santa-isabel',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7DCAZN6WSP89JENB8R',
+				tsKey: 'pr-toa-alta',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7J713E50Y0QV06MQXV',
+				tsKey: 'pr-toa-baja',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7M73DDSZHXFGQ590SV',
+				tsKey: 'pr-trujillo-alto',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7QAE0RFPT8NC27V024',
+				tsKey: 'pr-utuado',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7JSS7C4C4QRJHCMTJH',
+				tsKey: 'pr-vega-alta',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7EJNVQWD2TRZT2SH0S',
+				tsKey: 'pr-vega-baja',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7J1ADADNHCE9AWWGTP',
+				tsKey: 'pr-vieques',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7J3GGEMV7WYXFEP5AS',
+				tsKey: 'pr-villalba',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7J0062R97R77JPGEH6',
+				tsKey: 'pr-yabucoa',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKF7JBB2EXCZFTX3V5ABR',
+				tsKey: 'pr-yauco',
+				tsNs: 'gov-dist',
+				abbrev: null,
+				govDistType: {
+					tsKey: 'type-county',
+					tsNs: 'gov-dist',
+				},
+			},
+		],
+	},
+	{
+		id: 'ctry_01GW2HHDKCRS9KW4FG2WR2GG06',
+		tsKey: 'UMI.name',
+		tsNs: 'country',
+		cca2: 'UM',
+		flag: '🇺🇲',
+		govDist: [],
+	},
+	{
+		id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+		tsKey: 'USA.name',
+		tsNs: 'country',
+		cca2: 'US',
+		flag: '🇺🇸',
+		govDist: [
+			{
+				id: 'gdst_01GW2HHY0735M7CQSXR31HP114',
+				tsKey: 'us-alabama',
+				tsNs: 'gov-dist',
+				abbrev: 'AL',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HHZ3C061BT60QBAD8WVJZ',
+				tsKey: 'us-alaska',
+				tsNs: 'gov-dist',
+				abbrev: 'AK',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ0MERT6FW07XV7PZWZWE',
+				tsKey: 'us-arizona',
+				tsNs: 'gov-dist',
+				abbrev: 'AZ',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ1D3W61ZMBGY0FGKY9EC',
+				tsKey: 'us-arkansas',
+				tsNs: 'gov-dist',
+				abbrev: 'AR',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ23GMD17FBJMJWD16PZ1',
+				tsKey: 'us-california',
+				tsNs: 'gov-dist',
+				abbrev: 'CA',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ35FAMD0V0YSSPYPMG46',
+				tsKey: 'us-colorado',
+				tsNs: 'gov-dist',
+				abbrev: 'CO',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ48BS27DYW8W4GNH4P2W',
+				tsKey: 'us-connecticut',
+				tsNs: 'gov-dist',
+				abbrev: 'CT',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ4XTJT4GBEWDBY057B01',
+				tsKey: 'us-delaware',
+				tsNs: 'gov-dist',
+				abbrev: 'DE',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ5A278S2G84AB3N9FCW0',
+				tsKey: 'us-district-of-columbia',
+				tsNs: 'gov-dist',
+				abbrev: 'DC',
+				govDistType: {
+					tsKey: 'type-district',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ5XJRY6B6JNVZ8G8NFJY',
+				tsKey: 'us-florida',
+				tsNs: 'gov-dist',
+				abbrev: 'FL',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ6WC0EDHHCHG998QT3N0',
+				tsKey: 'us-georgia',
+				tsNs: 'gov-dist',
+				abbrev: 'GA',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ7VX37RF69KKXAYE05QN',
+				tsKey: 'us-hawaii',
+				tsNs: 'gov-dist',
+				abbrev: 'HI',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ8HJJWY8F1GKEM5R8QZ4',
+				tsKey: 'us-idaho',
+				tsNs: 'gov-dist',
+				abbrev: 'ID',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJ9GVN301XN2SKRWE8Q3M',
+				tsKey: 'us-illinois',
+				tsNs: 'gov-dist',
+				abbrev: 'IL',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJAD7VVT46D0BHXQRV2WF',
+				tsKey: 'us-indiana',
+				tsNs: 'gov-dist',
+				abbrev: 'IN',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJC4WJWMZA8VDNVVE5RZQ',
+				tsKey: 'us-iowa',
+				tsNs: 'gov-dist',
+				abbrev: 'IA',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJDE344VFWCSNBYYSFDDW',
+				tsKey: 'us-kansas',
+				tsNs: 'gov-dist',
+				abbrev: 'KS',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJF2WCKZ47HGSYQFANCDZ',
+				tsKey: 'us-kentucky',
+				tsNs: 'gov-dist',
+				abbrev: 'KY',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJG2676AX4NRXHWA4PB8B',
+				tsKey: 'us-louisiana',
+				tsNs: 'gov-dist',
+				abbrev: 'LA',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJH13NCXACKZGG242PM97',
+				tsKey: 'us-maine',
+				tsNs: 'gov-dist',
+				abbrev: 'ME',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJHQBKA67H0WWG35J4PV7',
+				tsKey: 'us-maryland',
+				tsNs: 'gov-dist',
+				abbrev: 'MD',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJJGA979WFBS7S7ECK0JK',
+				tsKey: 'us-massachusetts',
+				tsNs: 'gov-dist',
+				abbrev: 'MA',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJK994XZPC3KNCPVST015',
+				tsKey: 'us-michigan',
+				tsNs: 'gov-dist',
+				abbrev: 'MI',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJMBQGM1ZDVR1TJX4N6DY',
+				tsKey: 'us-minnesota',
+				tsNs: 'gov-dist',
+				abbrev: 'MN',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJMYCBT3EWB9XCX2VSMK9',
+				tsKey: 'us-mississippi',
+				tsNs: 'gov-dist',
+				abbrev: 'MS',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJPZYX059W3SHQW8D9F7M',
+				tsKey: 'us-missouri',
+				tsNs: 'gov-dist',
+				abbrev: 'MO',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJQZ5J517QW02C84M80WD',
+				tsKey: 'us-montana',
+				tsNs: 'gov-dist',
+				abbrev: 'MT',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJRVH0VX93NDHEJ0QK158',
+				tsKey: 'us-nebraska',
+				tsNs: 'gov-dist',
+				abbrev: 'NE',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJSQZ19Y230FJHNKHSW89',
+				tsKey: 'us-nevada',
+				tsNs: 'gov-dist',
+				abbrev: 'NV',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJTSK0AMAVYF9QD9GXBAR',
+				tsKey: 'us-new-hampshire',
+				tsNs: 'gov-dist',
+				abbrev: 'NH',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJVFHMQEZZ1AKH9QETVP6',
+				tsKey: 'us-new-jersey',
+				tsNs: 'gov-dist',
+				abbrev: 'NJ',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJW29RXPB0ZW6ZTTPH7DY',
+				tsKey: 'us-new-mexico',
+				tsNs: 'gov-dist',
+				abbrev: 'NM',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJXH936VB5WWAHK8S8X0A',
+				tsKey: 'us-new-york',
+				tsNs: 'gov-dist',
+				abbrev: 'NY',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJY7KQKE8XCP6BM8WC459',
+				tsKey: 'us-north-carolina',
+				tsNs: 'gov-dist',
+				abbrev: 'NC',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HJZG4VMQ7QWQ3MHXG3S8K',
+				tsKey: 'us-north-dakota',
+				tsNs: 'gov-dist',
+				abbrev: 'ND',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HK0N4V9YBGBSQVN4JRKKW',
+				tsKey: 'us-ohio',
+				tsNs: 'gov-dist',
+				abbrev: 'OH',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HK1MBAAXAR655YEESJRB1',
+				tsKey: 'us-oklahoma',
+				tsNs: 'gov-dist',
+				abbrev: 'OK',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HK2PW0GCZATZ6YX9RG8FE',
+				tsKey: 'us-oregon',
+				tsNs: 'gov-dist',
+				abbrev: 'OR',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HK3G7JGSCMVRQERYCRQGY',
+				tsKey: 'us-pennsylvania',
+				tsNs: 'gov-dist',
+				abbrev: 'PA',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HK49A5XQ8ZDFKQSF098SJ',
+				tsKey: 'us-rhode-island',
+				tsNs: 'gov-dist',
+				abbrev: 'RI',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HK51XDFN3Q0ND2NCGBN14',
+				tsKey: 'us-south-carolina',
+				tsNs: 'gov-dist',
+				abbrev: 'SC',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HK5R9S8ZRWG9Z3BPFAXND',
+				tsKey: 'us-south-dakota',
+				tsNs: 'gov-dist',
+				abbrev: 'SD',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HK6H7B5T82KZ82DZSFNR0',
+				tsKey: 'us-tennessee',
+				tsNs: 'gov-dist',
+				abbrev: 'TN',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HK7G3WV9NP68CJ02WPMV7',
+				tsKey: 'us-texas',
+				tsNs: 'gov-dist',
+				abbrev: 'TX',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HK8W4ZDJSZDPWZH2XH023',
+				tsKey: 'us-utah',
+				tsNs: 'gov-dist',
+				abbrev: 'UT',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HK9J2HNR9ZCJJHF8WAGDT',
+				tsKey: 'us-vermont',
+				tsNs: 'gov-dist',
+				abbrev: 'VT',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKADSS3SDS9XJV1WHMTVY',
+				tsKey: 'us-virginia',
+				tsNs: 'gov-dist',
+				abbrev: 'VA',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKC6JBVM1S4P89T664V0A',
+				tsKey: 'us-washington',
+				tsNs: 'gov-dist',
+				abbrev: 'WA',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKD240CAP65TPYPT32MRR',
+				tsKey: 'us-west-virginia',
+				tsNs: 'gov-dist',
+				abbrev: 'WV',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKDJ5VV91D7JP3V6DE3DK',
+				tsKey: 'us-wisconsin',
+				tsNs: 'gov-dist',
+				abbrev: 'WI',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+			{
+				id: 'gdst_01GW2HKEDZ2K9QXJ96SKR44EGV',
+				tsKey: 'us-wyoming',
+				tsNs: 'gov-dist',
+				abbrev: 'WY',
+				govDistType: {
+					tsKey: 'type-state',
+					tsNs: 'gov-dist',
+				},
+			},
+		],
+	},
+	{
+		id: 'ctry_01GW2HHDK9DG12Y7RQMVEE5XSQ',
+		tsKey: 'VIR.name',
+		tsNs: 'country',
+		cca2: 'VI',
+		flag: '🇻🇮',
+		govDist: [],
+	},
+] satisfies ApiOutput['fieldOpt']['govDistsByCountryNoSub']
+export const queryGovDistsByCountryNoSub = (query: ApiInput['fieldOpt']['govDistsByCountryNoSub']) => {
+	if (query) return govDistByCountryNoSub.filter(({ cca2 }) => cca2 === query)
+	return govDistByCountryNoSub
+}
+
 export const phoneTypes = [
 	{
 		id: 'phtp_01GXRXCWJG3F358K8QBX7C08R7',
@@ -7367,7 +9190,7 @@ export const userTitle = [
 		title: 'User Title 2',
 	},
 ] satisfies ApiOutput['fieldOpt']['userTitle']
-export const fieldOptHandlers = {
+export const fieldOpt = {
 	attributeCategories: getTRPCMock({
 		path: ['fieldOpt', 'attributeCategories'],
 		response: (input) => queryAttributeCategories(input),
@@ -7388,6 +9211,10 @@ export const fieldOptHandlers = {
 		path: ['fieldOpt', 'govDistsByCountry'],
 		response: queryGovDistsByCountry,
 	}),
+	govDistsByCountryNoSub: getTRPCMock({
+		path: ['fieldOpt', 'govDistsByCountryNoSub'],
+		response: queryGovDistsByCountryNoSub,
+	}),
 	phoneTypes: getTRPCMock({
 		path: ['fieldOpt', 'phoneTypes'],
 		response: phoneTypes,
@@ -7398,4 +9225,4 @@ export const fieldOptHandlers = {
 	}),
 }
 
-export const allFieldOptHandlers = Object.values(fieldOptHandlers)
+export const allFieldOptHandlers = Object.values(fieldOpt)

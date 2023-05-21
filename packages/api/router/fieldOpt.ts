@@ -2,25 +2,61 @@ import flush from 'just-flush'
 import { type SetOptional } from 'type-fest'
 import { z } from 'zod'
 
-import { type AttributesByCategory } from '@weareinreach/db'
+import { type AttributesByCategory } from '@weareinreach/db/client'
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
-import { serviceAreaSelect } from '~api/schemas/selects/location'
+import { serviceAreaSelect, serviceAreaSelectNoSub } from '~api/schemas/selects/location'
 
 export const fieldOptRouter = defineRouter({
-	/** All government districts by country (active for org listings). Gives 2 levels of sub-districts */
+	/** All government districts by country (active for org listings). Gives up to 2 levels of sub-districts */
 	govDistsByCountry: publicProcedure
 		.meta({
 			description:
 				'All government districts by country (active for org listings). Gives 2 levels of sub-districts',
 		})
-		.input(z.string().optional().describe('Country CCA2 code'))
+		.input(
+			z
+				.object({
+					cca2: z.string().optional().describe('Country CCA2 code'),
+					activeForOrgs: z.boolean().nullish().default(true),
+					activeForSuggest: z.boolean().nullish(),
+				})
+				.optional()
+		)
 		.query(async ({ ctx, input }) => {
 			const data = await ctx.prisma.country.findMany({
 				where: {
-					cca2: input,
-					activeForOrgs: true,
+					cca2: input?.cca2,
+					activeForOrgs: input?.activeForOrgs ?? undefined,
+					activeForSuggest: input?.activeForSuggest ?? undefined,
 				},
-				select: serviceAreaSelect,
+				select: serviceAreaSelect(2),
+				orderBy: {
+					cca2: 'asc',
+				},
+			})
+			return data
+		}),
+	govDistsByCountryNoSub: publicProcedure
+		.meta({
+			description: 'All government districts by country (active for org listings).',
+		})
+		.input(
+			z
+				.object({
+					cca2: z.string().optional().describe('Country CCA2 code'),
+					activeForOrgs: z.boolean().nullish().default(true),
+					activeForSuggest: z.boolean().nullish(),
+				})
+				.optional()
+		)
+		.query(async ({ ctx, input }) => {
+			const data = await ctx.prisma.country.findMany({
+				where: {
+					cca2: input?.cca2,
+					activeForOrgs: input?.activeForOrgs ?? undefined,
+					activeForSuggest: input?.activeForSuggest ?? undefined,
+				},
+				select: serviceAreaSelectNoSub,
 				orderBy: {
 					cca2: 'asc',
 				},
