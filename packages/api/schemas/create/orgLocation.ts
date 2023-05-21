@@ -164,38 +164,42 @@ export const EditOrgLocationSchema = z
 			.object({
 				name: z.string(),
 				street1: z.string(),
-				street2: z.string(),
+				street2: z.string().nullable(),
 				city: z.string(),
-				postCode: z.string(),
+				postCode: z.string().nullable(),
 				primary: z.boolean(),
-				mailOnly: z.boolean(),
-				longitude: z.number(),
-				latitude: z.number(),
+				mailOnly: z.boolean().nullable(),
+				longitude: z.number().nullable(),
+				latitude: z.number().nullable(),
 				geoJSON: Geometry,
-				geoWKT: z.string(),
+				geoWKT: z.string().nullable(),
 				published: z.boolean(),
 				deleted: z.boolean(),
 				checkMigration: z.boolean(),
 				accessible: z.object({
 					supplementId: z.string().optional(),
-					boolean: z.boolean(),
+					boolean: z.boolean().nullish(),
 				}),
+				countryId: z.string().nullable(),
+				govDistId: z.string().nullable(),
+				services: z.string().array(),
 			})
 			.partial(),
 	})
 	.transform(({ id, data }) => {
-		const { accessible, ...rest } = data
+		const { accessible, countryId, govDistId, services, mailOnly, ...rest } = data
 
 		const accessibleAttrId = allAttributes.find(({ tag }) => tag === 'wheelchair-accessible')?.id
 
-		const updateAccessibility = accessible !== undefined && accessibleAttrId
+		const updateAccessibility = accessible?.boolean !== undefined && accessibleAttrId
 
 		return Prisma.validator<Prisma.OrgLocationUpdateArgs>()({
 			where: { id },
 			data: {
 				...rest,
+				mailOnly: mailOnly === false ? null : mailOnly,
 				...(updateAccessibility
-					? accessible !== null
+					? accessible.boolean !== null
 						? {
 								attributes: {
 									upsert: {
@@ -221,6 +225,24 @@ export const EditOrgLocationSchema = z
 									delete: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
 								},
 						  }
+					: {}),
+				...(countryId
+					? {
+							country: { connect: { id: countryId } },
+					  }
+					: {}),
+				...(govDistId
+					? {
+							govDist: { connect: { id: govDistId } },
+					  }
+					: {}),
+				...(services
+					? {
+							services: {
+								createMany: { data: services.map((serviceId) => ({ serviceId })), skipDuplicates: true },
+								deleteMany: { NOT: { serviceId: { in: services } } },
+							},
+					  }
 					: {}),
 			},
 		})

@@ -65,6 +65,7 @@ export const mutations = defineRouter({
 				const update = await tx.orgLocation.update({
 					where,
 					data: { ...data, auditLogs: auditLog },
+					select: { id: true },
 				})
 
 				// if WKT is updated, we need to have the DB update the `geo` column with raw SQL.

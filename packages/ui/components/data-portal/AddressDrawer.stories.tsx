@@ -1,6 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { fieldOpt } from '~ui/mockData/fieldOpt'
 import { geoMocks } from '~ui/mockData/geo'
 import { location } from '~ui/mockData/location'
@@ -31,6 +32,11 @@ export default {
 			organization.getIdFromSlug,
 			service.getNames,
 			location.getAddress,
+			getTRPCMock({
+				path: ['location', 'update'],
+				type: 'mutation',
+				response: { id: 'oloc_00000RECORD22ID' },
+			}),
 		],
 	},
 	args: {

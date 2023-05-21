@@ -19,13 +19,14 @@ import {
 import { useForm, zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
+import filterObject from 'just-filter-object'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useEffect, useState } from 'react'
 import reactStringReplace from 'react-string-replace'
 import { z } from 'zod'
 
-import { ApiInput, type ApiOutput } from '@weareinreach/api'
-import { transformFalseToNull, transformNullString } from '@weareinreach/api/schemas/common'
+import { type ApiOutput } from '@weareinreach/api'
+import { boolOrNull, transformNullString } from '@weareinreach/api/schemas/common'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { isExternal, Link } from '~ui/components/core/Link'
@@ -76,7 +77,7 @@ const FormSchema = z.object({
 			city: z.string(),
 			postCode: z.string().nullable().transform(transformNullString),
 			primary: z.coerce.boolean(),
-			mailOnly: z.coerce.boolean().nullable(),
+			mailOnly: z.boolean().nullable(),
 			longitude: z.coerce.number().nullable(),
 			latitude: z.coerce.number().nullable(),
 			geoWKT: z.string().nullable().transform(transformNullString),
@@ -84,27 +85,24 @@ const FormSchema = z.object({
 			deleted: z.coerce.boolean(),
 			countryId: z.string().nullable(),
 			govDistId: z.string().nullable(),
-			accessible: z.object({
-				supplementId: z.string().optional(),
-				boolean: z.coerce.boolean().nullish(),
-			}),
+			accessible: z
+				.object({
+					supplementId: z.string(),
+					boolean: boolOrNull,
+				})
+				.partial(),
 			services: z.string().array(),
 		})
 		.partial(),
 })
-type FormSchema = z.infer<typeof FormSchema>
 
-interface AutocompleteItem {
-	value: string
-	name?: string
-	subheading?: string
-	placeId?: string
-}
-interface CountryItem {
-	value: string
-	label: string
-	flag: string
-}
+const schemaTransform = ({ id, data }: FormSchema) => ({
+	id,
+	data: {
+		...data,
+		name: data.name === null ? undefined : data.name,
+	},
+})
 
 const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(true)
@@ -114,9 +112,11 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const [govDistOpts, setGovDistOpts] = useState<{ value: string; label: string }[]>([])
 	const [countryOpts, setCountryOpts] = useState<CountryItem[]>([])
 	const [googlePlaceId, setGooglePlaceId] = useState<string>('')
+	const [isSaved, setIsSaved] = useState(false)
 	const form = useForm<FormSchema>({
 		validate: zodResolver(FormSchema),
 		initialValues: { id: '', data: { accessible: {} } },
+		transformValues: FormSchema.transform(schemaTransform).parse,
 	})
 	const { id: organizationId, slug: orgSlug } = useOrgInfo()
 	const { t } = useTranslation(['attribute', 'country', 'gov-dist'])
@@ -132,6 +132,8 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	useEffect(() => {
 		if (data && !isLoading) {
 			form.setValues(data)
+			form.resetDirty()
+			setIsSaved(false)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, isLoading])
@@ -176,6 +178,30 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form.values?.data?.countryId])
+	// #endregion
+
+	// #region Mutation handling
+	const updateLocation = api.location.update.useMutation({
+		onSuccess: () => {
+			apiUtils.location.getAddress.invalidate(locationId ?? '')
+			setIsSaved(true)
+		},
+	})
+	const handleUpdate = () => {
+		const changesOnly = filterObject(form.values.data, (key) => form.isDirty(`data.${key}`))
+
+		updateLocation.mutate(
+			FormSchema.transform(schemaTransform).parse({ id: form.values.id, data: changesOnly })
+		)
+	}
+
+	useEffect(() => {
+		if (isSaved && isSaved === form.isDirty()) {
+			setIsSaved(false)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [form.values.data])
+
 	// #endregion
 
 	// #region Google autocomplete/geocoding
@@ -279,7 +305,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	CountryItem.displayName = 'CountryItem'
 	// #endregion
 
-	console.log(form.values)
 	return (
 		<>
 			<Drawer.Root onClose={handler.close} opened={opened} position='right'>
@@ -290,9 +315,10 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 							<Breadcrumb option='close' onClick={handler.close} />
 							<Button
 								variant='primary-icon'
-								leftIcon={<Icon icon='carbon:save' />}
-								// onClick={handleUpdate}
-								// loading={updateEmails.isLoading}
+								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
+								onClick={handleUpdate}
+								loading={updateLocation.isLoading}
+								disabled={!form.isDirty()}
 							>
 								Save
 							</Button>
@@ -426,4 +452,17 @@ export const AddressDrawer = createPolymorphicComponent<'button', AddressDrawerP
 
 interface AddressDrawerProps extends ButtonProps {
 	locationId?: string
+}
+type FormSchema = z.infer<typeof FormSchema>
+
+interface AutocompleteItem {
+	value: string
+	name?: string
+	subheading?: string
+	placeId?: string
+}
+interface CountryItem {
+	value: string
+	label: string
+	flag: string
 }
