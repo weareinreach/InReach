@@ -45,6 +45,7 @@ export const getServerSideProps = async ({ locale, req, res }: GetServerSideProp
 
 	return {
 		props: {
+			session,
 			trpcState: ssg.dehydrate(),
 			...(await getServerSideTranslations(locale, [
 				'suggestOrg',

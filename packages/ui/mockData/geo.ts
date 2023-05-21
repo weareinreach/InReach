@@ -1,10 +1,12 @@
 import { type ApiOutput } from '@weareinreach/api'
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
 export const geoByPlaceIdCityState = {
 	status: 'OK',
 	result: {
 		streetNumber: undefined,
 		streetName: undefined,
+		street2: undefined,
 		city: 'New York',
 		country: 'US',
 		govDist: 'NY',
@@ -100,6 +102,7 @@ export const getFullAddress = (placeId: string): ApiOutput['geo']['geoByPlaceId'
 				},
 				streetNumber: '1238',
 				streetName: 'Maryland Avenue Southwest',
+				street2: undefined,
 				city: 'Washington',
 				govDist: 'DC',
 				postCode: '20024',
@@ -127,6 +130,7 @@ export const getFullAddress = (placeId: string): ApiOutput['geo']['geoByPlaceId'
 				},
 				streetNumber: '1235',
 				streetName: 'South Clark Street',
+				street2: undefined,
 				city: 'Arlington',
 				govDist: 'VA',
 				postCode: '22202',
@@ -164,6 +168,7 @@ export const getFullAddress = (placeId: string): ApiOutput['geo']['geoByPlaceId'
 				},
 				streetNumber: '1234',
 				streetName: 'Massachusetts Avenue Northwest',
+				street2: undefined,
 				city: 'Washington',
 				govDist: 'DC',
 				postCode: '20005',
@@ -201,6 +206,7 @@ export const getFullAddress = (placeId: string): ApiOutput['geo']['geoByPlaceId'
 				},
 				streetNumber: '1235',
 				streetName: 'W Street Northeast',
+				street2: undefined,
 				city: 'Washington',
 				govDist: 'DC',
 				postCode: '20018',
@@ -238,6 +244,7 @@ export const getFullAddress = (placeId: string): ApiOutput['geo']['geoByPlaceId'
 				},
 				streetNumber: '1234',
 				streetName: '19th Street Northwest',
+				street2: undefined,
 				city: 'Washington',
 				govDist: 'DC',
 				postCode: '20036',
@@ -249,4 +256,17 @@ export const getFullAddress = (placeId: string): ApiOutput['geo']['geoByPlaceId'
 	return Object.keys(data).includes(placeId)
 		? data[placeId as keyof typeof data]
 		: data.ChIJKyDtC7i3t4kRkWca2kUeRuY
+}
+
+export const geoMocks = {
+	autocomplete: getTRPCMock({
+		path: ['geo', 'autocomplete'],
+		type: 'query',
+		response: geoAutocompleteFullAddress,
+	}),
+	geocodeFullAddress: getTRPCMock({
+		path: ['geo', 'geoByPlaceId'],
+		type: 'query',
+		response: getFullAddress,
+	}),
 }

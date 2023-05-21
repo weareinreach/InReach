@@ -773,4 +773,4 @@ export const attributesByCategory = [
 	},
 ] as const
 
-export type AtttributesByCategory = (typeof attributesByCategory)[number]
+export type AttributesByCategory = (typeof attributesByCategory)[number]
