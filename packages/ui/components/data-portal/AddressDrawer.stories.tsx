@@ -1,6 +1,11 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
+import { fieldOpt } from '~ui/mockData/fieldOpt'
+import { geoMocks } from '~ui/mockData/geo'
+import { location } from '~ui/mockData/location'
+import { organization } from '~ui/mockData/organization'
+import { service } from '~ui/mockData/orgService'
 
 import { AddressDrawer } from './AddressDrawer'
 
@@ -19,6 +24,14 @@ export default {
 				},
 			},
 		},
+		msw: [
+			geoMocks.autocomplete,
+			geoMocks.geocodeFullAddress,
+			fieldOpt.govDistsByCountryNoSub,
+			organization.getIdFromSlug,
+			service.getNames,
+			location.getAddress,
+		],
 	},
 	args: {
 		component: Button,
@@ -29,4 +42,9 @@ export default {
 
 type StoryDef = StoryObj<typeof AddressDrawer>
 
-export const Default = {} satisfies StoryDef
+export const WithData = {
+	args: {
+		locationId: 'oloc_01GVH3VEVBERFNA9PHHJYEBGA3',
+	},
+} satisfies StoryDef
+export const WithoutData = {} satisfies StoryDef
