@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { type AttributesByCategory } from '@weareinreach/db/client'
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
-import { serviceAreaSelect } from '~api/schemas/selects/location'
+import { serviceAreaSelect, serviceAreaSelectNoSub } from '~api/schemas/selects/location'
 
 export const fieldOptRouter = defineRouter({
 	/** All government districts by country (active for org listings). Gives up to 2 levels of sub-districts */
@@ -17,10 +17,8 @@ export const fieldOptRouter = defineRouter({
 			z
 				.object({
 					cca2: z.string().optional().describe('Country CCA2 code'),
-					subDistLevels: z
-						.union([z.literal(0), z.literal(1), z.literal(2)])
-						.default(2)
-						.describe('SubDistrict Levels (0-2)'),
+					activeForOrgs: z.boolean().nullish().default(true),
+					activeForSuggest: z.boolean().nullish(),
 				})
 				.optional()
 		)
@@ -28,9 +26,37 @@ export const fieldOptRouter = defineRouter({
 			const data = await ctx.prisma.country.findMany({
 				where: {
 					cca2: input?.cca2,
-					activeForOrgs: true,
+					activeForOrgs: input?.activeForOrgs ?? undefined,
+					activeForSuggest: input?.activeForSuggest ?? undefined,
 				},
-				select: serviceAreaSelect(input?.subDistLevels ?? 2),
+				select: serviceAreaSelect(2),
+				orderBy: {
+					cca2: 'asc',
+				},
+			})
+			return data
+		}),
+	govDistsByCountryNoSub: publicProcedure
+		.meta({
+			description: 'All government districts by country (active for org listings).',
+		})
+		.input(
+			z
+				.object({
+					cca2: z.string().optional().describe('Country CCA2 code'),
+					activeForOrgs: z.boolean().nullish().default(true),
+					activeForSuggest: z.boolean().nullish(),
+				})
+				.optional()
+		)
+		.query(async ({ ctx, input }) => {
+			const data = await ctx.prisma.country.findMany({
+				where: {
+					cca2: input?.cca2,
+					activeForOrgs: input?.activeForOrgs ?? undefined,
+					activeForSuggest: input?.activeForSuggest ?? undefined,
+				},
+				select: serviceAreaSelectNoSub,
 				orderBy: {
 					cca2: 'asc',
 				},

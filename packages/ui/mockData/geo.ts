@@ -1,4 +1,5 @@
 import { type ApiOutput } from '@weareinreach/api'
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
 export const geoByPlaceIdCityState = {
 	status: 'OK',
@@ -255,4 +256,17 @@ export const getFullAddress = (placeId: string): ApiOutput['geo']['geoByPlaceId'
 	return Object.keys(data).includes(placeId)
 		? data[placeId as keyof typeof data]
 		: data.ChIJKyDtC7i3t4kRkWca2kUeRuY
+}
+
+export const geoMocks = {
+	autocomplete: getTRPCMock({
+		path: ['geo', 'autocomplete'],
+		type: 'query',
+		response: geoAutocompleteFullAddress,
+	}),
+	geocodeFullAddress: getTRPCMock({
+		path: ['geo', 'geoByPlaceId'],
+		type: 'query',
+		response: getFullAddress,
+	}),
 }

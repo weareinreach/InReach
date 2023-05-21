@@ -101,12 +101,10 @@ export const queries = defineRouter({
 				id,
 				data: {
 					...rest,
-					accessible: supplementId
-						? {
-								supplementId,
-								boolean,
-						  }
-						: undefined,
+					accessible: {
+						supplementId,
+						boolean,
+					},
 					services: services.map(({ serviceId }) => serviceId),
 				},
 			}
