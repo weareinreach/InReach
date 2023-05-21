@@ -2,7 +2,8 @@ import { Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { BadgeGroup, type CustomBadgeProps, Rating } from '~ui/components/core'
+import { BadgeGroup, type CustomBadgeProps } from '~ui/components/core/Badge'
+import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant, useFormattedAddress } from '~ui/hooks'
 
 export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {

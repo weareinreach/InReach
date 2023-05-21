@@ -5,7 +5,9 @@ import { useSession } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useEffect } from 'react'
 
-import { type BreadcrumbProps, Button, Link } from '~ui/components/core'
+import { type BreadcrumbProps } from '~ui/components/core/Breadcrumb'
+import { Button } from '~ui/components/core/Button'
+import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks'
 
 import { LoginModalLauncher } from './Login'

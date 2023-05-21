@@ -7,7 +7,9 @@ import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
 import { z } from 'zod'
 
-import { Button, Link, type ModalTitleBreadcrumb } from '~ui/components/core'
+import { type ModalTitleBreadcrumb } from '~ui/components/core/Breadcrumb'
+import { Button } from '~ui/components/core/Button'
+import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 

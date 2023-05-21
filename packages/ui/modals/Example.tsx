@@ -1,7 +1,7 @@
 import { List, Stack, Title } from '@mantine/core'
 import { type ModalSettings } from '@mantine/modals/lib/context'
 
-import { Badge } from '~ui/components/core'
+import { Badge } from '~ui/components/core/Badge'
 
 import { ModalTitle, type ModalTitleProps } from './ModalTitle'
 

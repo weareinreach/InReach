@@ -2,7 +2,9 @@ import { Divider, Overlay, Skeleton, Stack, Switch, Text, Title, useMantineTheme
 import { useTranslation } from 'next-i18next'
 import { type Dispatch, type SetStateAction } from 'react'
 
-import { AntiHateMessage, Button, SearchBox } from '~ui/components/core'
+import { AntiHateMessage } from '~ui/components/core/AntiHateMessage'
+import { Button } from '~ui/components/core/Button'
+import { SearchBox } from '~ui/components/core/SearchBox'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { MoreFilter } from '~ui/modals'
