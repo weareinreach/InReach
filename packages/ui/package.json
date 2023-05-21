@@ -146,7 +146,7 @@
 		"trpc-client-devtools-link": "0.2.1-next",
 		"tsconfig-paths-webpack-plugin": "4.0.1",
 		"tsx": "3.12.7",
-		"type-fest": "3.10.0",
+		"type-fest": "3.11.0",
 		"typescript": "5.0.4",
 		"ulid": "2.3.0",
 		"webpack": "5.83.1",
