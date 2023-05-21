@@ -8,8 +8,8 @@ import {
 	forgotPassword,
 	resetPassword,
 	userLogin,
-} from '@weareinreach/auth'
-import { handleError } from '~api/lib'
+} from '@weareinreach/auth/lib'
+import { handleError } from '~api/lib/errorHandler'
 import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
 import {
 	AdminCreateUser,

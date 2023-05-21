@@ -12,4 +12,4 @@ export const attributeCategory = [
 	{ id: 'attc_01GW2HHFVKM2PSHFWVFM0TWX1P', tag: 'system', icon: null, ns: 'attribute' },
 ] as const
 
-export type AtttributeCategory = (typeof attributeCategory)[number]
+export type AttributeCategory = (typeof attributeCategory)[number]

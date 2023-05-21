@@ -1,4 +1,5 @@
 import { GeocodingAddressComponentType, PlaceType2 } from '@googlemaps/google-maps-services-js'
+import compact from 'just-compact'
 import { z } from 'zod'
 
 export const autocompleteResponse = z
@@ -37,6 +38,7 @@ const coordinates = z.object({
 	lng: z.number(),
 })
 
+type AddressPart = GeocodingAddressComponentType | PlaceType2
 export const geocodeResponse = z
 	.object({
 		results: z
@@ -78,25 +80,45 @@ export const geocodeResponse = z
 		const result = results[0]
 		if (!result) return { result: undefined, ...data }
 
-		const getAddressPart = (part: GeocodingAddressComponentType | PlaceType2) =>
-			result.address_components.find(({ types }) => types.includes(part)) ?? {
-				short_name: undefined,
-				long_name: undefined,
-				types: [],
+		const getAddressPart = (part: AddressPart | AddressPart[]) => {
+			if (Array.isArray(part)) {
+				return (
+					result.address_components.find(({ types }) => part.some((val) => types.includes(val))) ?? {
+						short_name: undefined,
+						long_name: undefined,
+						types: [],
+					}
+				)
 			}
+			return (
+				result.address_components.find(({ types }) => types.includes(part)) ?? {
+					short_name: undefined,
+					long_name: undefined,
+					types: [],
+				}
+			)
+		}
 
 		const { short_name: streetNumber } = getAddressPart(GeocodingAddressComponentType.street_number)
 		const { long_name: streetName } = getAddressPart(PlaceType2.route)
-		const { long_name: city } = getAddressPart(PlaceType2.locality)
+		const { long_name: city } = getAddressPart([PlaceType2.locality, PlaceType2.postal_town])
 		const { short_name: govDist } = getAddressPart(PlaceType2.administrative_area_level_1)
 		const { short_name: postCode } = getAddressPart(PlaceType2.postal_code)
 		const { short_name: country } = getAddressPart(PlaceType2.country)
+
+		//second line of an address
+		const { long_name: premise } = getAddressPart(PlaceType2.premise)
+		const { long_name: subpremise } = getAddressPart(PlaceType2.subpremise)
+		const street2 = compact([subpremise, premise]).length
+			? compact([subpremise, premise]).join(', ')
+			: undefined
 
 		return {
 			result: {
 				geometry: result.geometry,
 				streetNumber,
 				streetName,
+				street2,
 				city,
 				govDist,
 				postCode,
