@@ -15,7 +15,7 @@ import { forwardRef, useEffect, useState } from 'react'
 import { z } from 'zod'
 
 import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
-import { Link } from '~ui/components/core'
+import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 

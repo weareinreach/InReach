@@ -6,7 +6,8 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { BadgeGroup, Rating } from '~ui/components/core'
+import { BadgeGroup } from '~ui/components/core/Badge'
+import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant } from '~ui/hooks'
 import { type IconList } from '~ui/icon'
 

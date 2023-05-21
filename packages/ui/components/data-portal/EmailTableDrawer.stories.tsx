@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
-import { Button } from '~ui/components/core'
+import { Button } from '~ui/components/core/Button'
 import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'
 import { organization } from '~ui/mockData/organization'
 import { orgEmail } from '~ui/mockData/orgEmail'
