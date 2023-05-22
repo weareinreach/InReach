@@ -1,7 +1,7 @@
 import { Center } from '@mantine/core'
 import { type Meta } from '@storybook/react'
 
-import { Button } from '~ui/components/core'
+import { Button } from '~ui/components/core/Button'
 import { geoAutocompleteCityState, geoByPlaceIdCityState } from '~ui/mockData/geo'
 
 import { SignupModalLauncher } from '.'

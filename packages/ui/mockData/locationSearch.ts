@@ -187,6 +187,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -201,6 +202,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -218,6 +220,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -232,6 +235,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -246,6 +250,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -260,6 +265,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -274,6 +280,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -288,6 +295,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -302,6 +310,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -316,6 +325,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -333,6 +343,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -347,6 +358,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -361,6 +373,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -378,6 +391,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -392,6 +406,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -406,6 +421,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -423,6 +439,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -440,6 +457,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -457,6 +475,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -471,6 +490,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -485,6 +505,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -499,6 +520,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -513,6 +535,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -527,6 +550,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 		{
@@ -541,6 +565,7 @@ const locationSearchMockData = {
 			country: '',
 			streetNumber: undefined,
 			streetName: undefined,
+			street2: undefined,
 			postCode: undefined,
 		},
 	],

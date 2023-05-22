@@ -16,6 +16,20 @@ export default {
 	},
 	argTypes: {
 		onChange: { action: 'Updated Values' },
+		data: {
+			control: { type: 'radio' },
+			options: ['Has data', 'Loading data'],
+			mapping: {
+				'Has data': [
+					{ value: '1', label: 'one one one one one one one one one one' },
+					{ value: '2', label: 'two two two two two two two' },
+					{ value: '3', label: 'three three three three three three three' },
+					{ value: '4', label: 'four four four four four' },
+				],
+				'Loading data': undefined,
+			},
+			defaultValue: 'Has data',
+		},
 	},
 	// render: ComponentWithState,
 } satisfies Meta<typeof MultiSelectPopover>

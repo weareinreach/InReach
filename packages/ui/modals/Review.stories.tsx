@@ -1,6 +1,6 @@
 import { type Meta } from '@storybook/react'
 
-import { Button } from '~ui/components/core'
+import { Button } from '~ui/components/core/Button'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
 import { ReviewModal } from './Review'

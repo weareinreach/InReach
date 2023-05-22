@@ -1,7 +1,7 @@
 import { openModal } from '@mantine/modals'
 import { type Meta } from '@storybook/react'
 
-import { Button } from '~ui/components/core'
+import { Button } from '~ui/components/core/Button'
 
 import { ExampleModal } from './Example'
 

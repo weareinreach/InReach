@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
-import { Button } from '~ui/components/core'
+import { Button } from '~ui/components/core/Button'
 import { organization } from '~ui/mockData/organization'
 import { location } from '~ui/mockData/orgLocation'
 import { orgPhone } from '~ui/mockData/orgPhone'

@@ -1,6 +1,6 @@
-import { prisma } from '~db/.'
+import { prisma } from '~db/client'
+import { type ListrTask } from '~db/lib/generateData'
 
-import { type ListrTask } from '.'
 import { writeOutput } from './common'
 
 export const generateAttributeCategories = async (task: ListrTask) => {
@@ -21,7 +21,7 @@ export const generateAttributeCategories = async (task: ListrTask) => {
 	export const attributeCategory = ${JSON.stringify(data)} as const
 
 	\n
-	export type AtttributeCategory = typeof attributeCategory[number]
+	export type AttributeCategory = typeof attributeCategory[number]
 
 	`
 	await writeOutput('attributeCategory', out)

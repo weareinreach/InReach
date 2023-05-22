@@ -3,7 +3,9 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { ActionButtons, Rating, UserReview } from '~ui/components/core'
+import { ActionButtons } from '~ui/components/core/ActionButtons'
+import { Rating } from '~ui/components/core/Rating'
+import { UserReview } from '~ui/components/core/UserReview'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 

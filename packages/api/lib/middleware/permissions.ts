@@ -57,6 +57,7 @@ export const isAdmin = t.middleware(({ ctx, meta, next }) => {
 	return next({
 		ctx: {
 			session: { ...ctx.session, user: ctx.session.user },
+			actorId: ctx.session.user.id,
 		},
 	})
 })
@@ -73,6 +74,7 @@ export const isStaff = t.middleware(({ ctx, meta, next }) => {
 	return next({
 		ctx: {
 			session: { ...ctx.session, user: ctx.session.user },
+			actorId: ctx.session.user.id,
 		},
 	})
 })

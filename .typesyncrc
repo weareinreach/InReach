@@ -1,0 +1,5 @@
+{
+	"ignorePackages": [
+		"deepmerge"
+	]
+}

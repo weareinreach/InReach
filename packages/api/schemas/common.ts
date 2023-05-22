@@ -138,3 +138,20 @@ export const MutationBaseArray = <T extends z.ZodRawShape>(
 		})
 		.array(),
 })
+
+export const transformNullString = (val: string | null) => {
+	if (val === '' || val === 'NULL') return null
+	return val
+}
+
+export const transformFalseToNull = (val: boolean | null) => (val ? val : null)
+
+export const boolOrNull = z
+	.enum(['true', 'false', 'null'])
+	.or(z.boolean().nullable())
+	.transform((val) => (val === 'null' || val === null ? null : val === 'true' || val === true ? true : false))
+
+export const trueOrNull = z
+	.enum(['true', 'false', 'null'])
+	.or(z.boolean().nullable())
+	.transform((val) => (val === 'true' || val === true ? true : null))

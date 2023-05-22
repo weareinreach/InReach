@@ -2,14 +2,9 @@ import { TRPCError } from '@trpc/server'
 import flush from 'just-flush'
 import { z } from 'zod'
 
-import { type Prisma } from '@weareinreach/db'
-import {
-	defineRouter,
-	handleError,
-	permissionedProcedure,
-	protectedProcedure,
-	publicProcedure,
-} from '~api/lib'
+import { type Prisma } from '@weareinreach/db/client'
+import { handleError } from '~api/lib/errorHandler'
+import { defineRouter, permissionedProcedure, protectedProcedure, publicProcedure } from '~api/lib/trpc'
 import {
 	serviceById,
 	serviceByLocationId,
