@@ -42,17 +42,25 @@ const DataArray = z
 type DataArray = z.infer<typeof DataArray>
 
 const actions: ActionMap = {
-	readOne: ['delete', 'findFirst', 'findUnique'],
+	readOne: ['delete', 'findFirst', 'findUnique', 'findUniqueOrThrow', 'findFirstOrThrow'],
 	writeOne: ['create', 'update', 'upsert'],
 	readMany: ['deleteMany', 'findMany'],
 	writeMany: ['createMany', 'updateMany'],
-	read: ['delete', 'findFirst', 'findUnique', 'deleteMany', 'findMany'],
+	read: [
+		'delete',
+		'findFirst',
+		'findUnique',
+		'deleteMany',
+		'findMany',
+		'findUniqueOrThrow',
+		'findFirstOrThrow',
+	],
 	write: ['create', 'update', 'upsert', 'createMany', 'updateMany'],
 }
 type ActionKeys = 'read' | 'write' | 'readOne' | 'writeOne' | 'readMany' | 'writeMany'
 
 type ActionMap = {
-	[k in ActionKeys]: Prisma.PrismaAction[]
+	[k in ActionKeys]: (Prisma.PrismaAction | 'findUniqueOrThrow' | 'findFirstOrThrow')[]
 }
 
 const isSuperJSON = (data: unknown): data is SuperJSONResult =>
