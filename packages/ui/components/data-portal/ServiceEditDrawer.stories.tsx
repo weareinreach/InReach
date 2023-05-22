@@ -23,7 +23,13 @@ export default {
 				},
 			},
 		},
-		msw: [organization.getIdFromSlug, service.getNames],
+		msw: [
+			organization.getIdFromSlug,
+			service.getNames,
+			service.forServiceEditDrawer,
+			service.getOptions,
+			fieldOpt.govDistsByCountry,
+		],
 	},
 	args: {
 		component: Button,
