@@ -127,6 +127,67 @@ export const attributes = {
 	},
 } satisfies Prisma.OrgService$attributesArgs
 
+export const attributesByName = (tags: string[]) =>
+	({
+		where: {
+			attribute: {
+				active: true,
+				tag: { in: tags },
+				categories: {
+					some: {
+						category: {
+							active: true,
+						},
+					},
+				},
+			},
+		},
+		select: {
+			attribute: {
+				select: {
+					id: true,
+					tsKey: true,
+					tsNs: true,
+					icon: true,
+					iconBg: true,
+					showOnLocation: true,
+					categories: {
+						select: {
+							category: {
+								select: {
+									tag: true,
+									icon: true,
+								},
+							},
+						},
+					},
+					_count: {
+						select: {
+							parents: true,
+							children: true,
+						},
+					},
+				},
+			},
+			supplement: {
+				select: {
+					id: true,
+					country: countryWithoutGeo,
+					language: {
+						select: {
+							languageName: true,
+							nativeName: true,
+						},
+					},
+					text: freeText,
+					govDist: govDistWithoutGeo,
+					boolean: true,
+					data: true,
+				},
+			},
+		},
+	} satisfies Prisma.OrgService$attributesArgs)
+
 export const languageNames = { select: { languageName: true, nativeName: true } }
 
 export const phoneSelectPublic = {

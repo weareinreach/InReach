@@ -1,11 +1,20 @@
 import { TRPCError } from '@trpc/server'
 import flush from 'just-flush'
+import mapObjectVals from 'just-map-values'
 import { z } from 'zod'
 
 import { type Prisma } from '@weareinreach/db/client'
 import { handleError } from '~api/lib/errorHandler'
-import { defineRouter, permissionedProcedure, protectedProcedure, publicProcedure } from '~api/lib/trpc'
+import { transformer } from '~api/lib/transformer'
 import {
+	defineRouter,
+	permissionedProcedure,
+	protectedProcedure,
+	publicProcedure,
+	staffProcedure,
+} from '~api/lib/trpc'
+import {
+	forServiceDrawer,
 	serviceById,
 	serviceByLocationId,
 	serviceByOrgId,
@@ -22,14 +31,16 @@ export const queries = defineRouter({
 			handleError(error)
 		}
 	}),
-	byOrgId: publicProcedure.input(serviceByOrgId).query(async ({ ctx, input }) => {
-		try {
-			const results = await ctx.prisma.orgService.findMany(input)
-			return results
-		} catch (error) {
-			handleError(error)
-		}
-	}),
+	byOrgId: permissionedProcedure('updateOrgService')
+		.input(serviceByOrgId)
+		.query(async ({ ctx, input }) => {
+			try {
+				const results = await ctx.prisma.orgService.findMany(input)
+				return results
+			} catch (error) {
+				handleError(error)
+			}
+		}),
 	byOrgLocationId: publicProcedure.input(serviceByLocationId).query(async ({ ctx, input }) => {
 		try {
 			const results = await ctx.prisma.orgService.findMany(input)
@@ -145,5 +156,55 @@ export const queries = defineRouter({
 				})
 			)
 			return transformedResults
+		}),
+	forServiceDrawer: permissionedProcedure('updateOrgService')
+		.input(forServiceDrawer)
+		.query(async ({ ctx, input }) => {
+			try {
+				type ServObj = { [k: string]: Set<string> }
+				type ServItem = {
+					id: string
+					name: {
+						tsNs?: string
+						tsKey?: string
+						defaultText?: string
+					}
+					locations: (string | null)[]
+					attributes: { id: string; tsKey: string; tsNs: string }[]
+				}
+
+				const results = await ctx.prisma.orgService.findMany(input)
+				let servObj: ServObj = {}
+				for (const service of results) {
+					servObj = service.services.reduce((items: ServObj, record) => {
+						const key = record.tag.category.tsKey
+						if (!items[key]) {
+							items[key] = new Set()
+						}
+						const itemToAdd = {
+							id: service.id,
+							name: {
+								tsNs: service.serviceName?.ns,
+								tsKey: service.serviceName?.key,
+								defaultText: service.serviceName?.tsKey.text,
+							},
+							locations: service.locations.map(({ location }) => location.name),
+							attributes: service.attributes.map(({ attribute }) => {
+								const { id, tsKey, tsNs } = attribute
+								return { id, tsKey, tsNs }
+							}),
+						} satisfies ServItem
+
+						items[key]?.add(transformer.stringify(itemToAdd))
+						return items
+					}, servObj)
+				}
+				const transformed = mapObjectVals(servObj, (value) =>
+					[...value].map((item) => transformer.parse<ServItem>(item))
+				)
+				return transformed
+			} catch (error) {
+				handleError(error)
+			}
 		}),
 })
