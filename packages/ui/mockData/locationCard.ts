@@ -237,24 +237,22 @@ export const locationMock = {
 						],
 					},
 				],
-				serviceAreas: [
-					{
-						countries: [],
-						districts: [
-							{
-								govDist: {
-									govDistType: {
-										tsNs: 'gov-dist',
-										tsKey: 'type-district',
-									},
-									tsKey: 'us-district-of-columbia',
+				serviceAreas: {
+					countries: [],
+					districts: [
+						{
+							govDist: {
+								govDistType: {
 									tsNs: 'gov-dist',
-									abbrev: 'DC',
+									tsKey: 'type-district',
 								},
+								tsKey: 'us-district-of-columbia',
+								tsNs: 'gov-dist',
+								abbrev: 'DC',
 							},
-						],
-					},
-				],
+						},
+					],
+				},
 				services: [
 					{
 						tag: {
@@ -694,24 +692,22 @@ export const locationMock = {
 						],
 					},
 				],
-				serviceAreas: [
-					{
-						countries: [],
-						districts: [
-							{
-								govDist: {
-									govDistType: {
-										tsNs: 'gov-dist',
-										tsKey: 'type-district',
-									},
-									tsKey: 'us-district-of-columbia',
+				serviceAreas: {
+					countries: [],
+					districts: [
+						{
+							govDist: {
+								govDistType: {
 									tsNs: 'gov-dist',
-									abbrev: 'DC',
+									tsKey: 'type-district',
 								},
+								tsKey: 'us-district-of-columbia',
+								tsNs: 'gov-dist',
+								abbrev: 'DC',
 							},
-						],
-					},
-				],
+						},
+					],
+				},
 				services: [
 					{
 						tag: {
@@ -1063,24 +1059,22 @@ export const locationMock = {
 						],
 					},
 				],
-				serviceAreas: [
-					{
-						countries: [],
-						districts: [
-							{
-								govDist: {
-									govDistType: {
-										tsNs: 'gov-dist',
-										tsKey: 'type-district',
-									},
-									tsKey: 'us-district-of-columbia',
+				serviceAreas: {
+					countries: [],
+					districts: [
+						{
+							govDist: {
+								govDistType: {
 									tsNs: 'gov-dist',
-									abbrev: 'DC',
+									tsKey: 'type-district',
 								},
+								tsKey: 'us-district-of-columbia',
+								tsNs: 'gov-dist',
+								abbrev: 'DC',
 							},
-						],
-					},
-				],
+						},
+					],
+				},
 				services: [
 					{
 						tag: {
@@ -1446,24 +1440,22 @@ export const locationMock = {
 						],
 					},
 				],
-				serviceAreas: [
-					{
-						countries: [],
-						districts: [
-							{
-								govDist: {
-									govDistType: {
-										tsNs: 'gov-dist',
-										tsKey: 'type-district',
-									},
-									tsKey: 'us-district-of-columbia',
+				serviceAreas: {
+					countries: [],
+					districts: [
+						{
+							govDist: {
+								govDistType: {
 									tsNs: 'gov-dist',
-									abbrev: 'DC',
+									tsKey: 'type-district',
 								},
+								tsKey: 'us-district-of-columbia',
+								tsNs: 'gov-dist',
+								abbrev: 'DC',
 							},
-						],
-					},
-				],
+						},
+					],
+				},
 				services: [
 					{
 						tag: {
@@ -1538,6 +1530,61 @@ export const locationMock = {
 						attributes: [
 							{
 								attribute: {
+									id: 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW',
+									tsKey: 'serviceaccess.accessemail',
+									tsNs: 'attribute',
+									icon: null,
+									iconBg: null,
+									showOnLocation: null,
+									categories: [
+										{
+											category: {
+												tag: 'service-access-instructions',
+												icon: null,
+											},
+										},
+									],
+									_count: {
+										parents: 0,
+										children: 0,
+									},
+								},
+								supplement: [
+									{
+										id: 'atts_01GW2HT9FK5WYEX857QKM3KM2F',
+										country: null,
+										language: null,
+										text: {
+											key: 'whitman-walker-health.attribute.atts_01GW2HT9FK5WYEX857QKM3KM2F',
+											ns: 'org-data',
+											tsKey: {
+												text: 'Email for more information about their Gender Affirming Services.',
+											},
+										},
+										govDist: null,
+										boolean: null,
+										data: {
+											json: {
+												_id: {
+													$oid: '5e953b4def07fe001758d6b1',
+												},
+												access_type: 'email',
+												access_value: 'Transhealth@whitman-walker.org',
+												instructions: 'Email for more information about their Gender Affirming Services.',
+												access_value_ES: 'Transhealth@whitman-walker.org',
+												instructions_ES:
+													'Envía un correo electrónico para obtener más información sobre sus servicios de afirmación de género.',
+											},
+										},
+									},
+								],
+							},
+						],
+					},
+					{
+						attributes: [
+							{
+								attribute: {
 									id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 									tsKey: 'serviceaccess.accesslink',
 									tsNs: 'attribute',
@@ -1585,61 +1632,6 @@ export const locationMock = {
 													'https://www.whitman-walker.org/care-program/transgender-care-hormone-therapy-ht-hrt',
 												instructions_ES:
 													'Visita el sitio web para obtener más información sobre la terapia hormonal de afirmación de género de Whitman-Walker Health.',
-											},
-										},
-									},
-								],
-							},
-						],
-					},
-					{
-						attributes: [
-							{
-								attribute: {
-									id: 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW',
-									tsKey: 'serviceaccess.accessemail',
-									tsNs: 'attribute',
-									icon: null,
-									iconBg: null,
-									showOnLocation: null,
-									categories: [
-										{
-											category: {
-												tag: 'service-access-instructions',
-												icon: null,
-											},
-										},
-									],
-									_count: {
-										parents: 0,
-										children: 0,
-									},
-								},
-								supplement: [
-									{
-										id: 'atts_01GW2HT9FK5WYEX857QKM3KM2F',
-										country: null,
-										language: null,
-										text: {
-											key: 'whitman-walker-health.attribute.atts_01GW2HT9FK5WYEX857QKM3KM2F',
-											ns: 'org-data',
-											tsKey: {
-												text: 'Email for more information about their Gender Affirming Services.',
-											},
-										},
-										govDist: null,
-										boolean: null,
-										data: {
-											json: {
-												_id: {
-													$oid: '5e953b4def07fe001758d6b1',
-												},
-												access_type: 'email',
-												access_value: 'Transhealth@whitman-walker.org',
-												instructions: 'Email for more information about their Gender Affirming Services.',
-												access_value_ES: 'Transhealth@whitman-walker.org',
-												instructions_ES:
-													'Envía un correo electrónico para obtener más información sobre sus servicios de afirmación de género.',
 											},
 										},
 									},
@@ -1815,24 +1807,22 @@ export const locationMock = {
 						],
 					},
 				],
-				serviceAreas: [
-					{
-						countries: [],
-						districts: [
-							{
-								govDist: {
-									govDistType: {
-										tsNs: 'gov-dist',
-										tsKey: 'type-district',
-									},
-									tsKey: 'us-district-of-columbia',
+				serviceAreas: {
+					countries: [],
+					districts: [
+						{
+							govDist: {
+								govDistType: {
 									tsNs: 'gov-dist',
-									abbrev: 'DC',
+									tsKey: 'type-district',
 								},
+								tsKey: 'us-district-of-columbia',
+								tsNs: 'gov-dist',
+								abbrev: 'DC',
 							},
-						],
-					},
-				],
+						},
+					],
+				},
 				services: [
 					{
 						tag: {
@@ -1967,7 +1957,7 @@ export const locationMock = {
 			},
 		},
 	],
-	serviceAreas: [],
+	serviceAreas: null,
 	socialMedia: [],
 	description: null,
 	name: 'Whitman-Walker 1525',
