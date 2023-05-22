@@ -134,6 +134,9 @@ const _ServicesDrawer = forwardRef<HTMLButtonElement, ServicesDrawerProps>((prop
 					</Drawer.Body>
 				</Drawer.Content>
 			</Drawer.Root>
+			<Stack>
+				<Box component='button' onClick={handler.open} ref={ref} {...props} />
+			</Stack>
 		</>
 	)
 })
