@@ -16,6 +16,19 @@ export const freeText = {
 		},
 	},
 } satisfies Prisma.FreeTextArgs
+export const freeTextCrowdinId = {
+	select: {
+		id: true,
+		key: true,
+		ns: true,
+		tsKey: {
+			select: {
+				text: true,
+				crowdinId: true,
+			},
+		},
+	},
+} satisfies Prisma.FreeTextArgs
 
 export const countryWithoutGeo = {
 	select: {
