@@ -40,6 +40,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { type ApiInput, type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
 import { Button } from '@weareinreach/ui/components/core/Button'
+import { Link } from '@weareinreach/ui/components/core/Link'
 import { MultiSelectPopover } from '@weareinreach/ui/components/data-portal/MultiSelectPopover'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { Icon } from '@weareinreach/ui/icon'
@@ -146,7 +147,15 @@ const QuickLink = () => {
 		const updated: ApiInput['quicklink']['updateEmailData'][number][] = compact(
 			form.values.data.map((record, i) => {
 				if (form.isDirty(`data.${i}`)) {
-					const { attachedLocations, attachedServices, locationOnly, serviceOnly, orgId, emailId } = record
+					const {
+						attachedLocations,
+						attachedServices,
+						locationOnly,
+						serviceOnly,
+						orgId,
+						emailId,
+						published,
+					} = record
 					const originalRecord = data?.results.find(
 						(original) => orgId === original.orgId && emailId === original.emailId
 					)
@@ -157,6 +166,7 @@ const QuickLink = () => {
 						to: {
 							locationOnly,
 							serviceOnly,
+							published,
 							locations: {
 								add: attachedLocations.filter((loc) => !originalRecord.attachedLocations.includes(loc)),
 								del: originalRecord.attachedLocations.filter((loc) => !attachedLocations.includes(loc)),
@@ -171,6 +181,7 @@ const QuickLink = () => {
 							serviceOnly: originalRecord.serviceOnly,
 							locations: originalRecord.attachedLocations,
 							services: originalRecord.attachedServices,
+							published: originalRecord.published,
 						},
 					}
 				}
@@ -188,7 +199,26 @@ const QuickLink = () => {
 				return [
 					columnHelper.accessor('name', {
 						header: 'Organization',
-						cell: (info) => info.renderValue(),
+						cell: (info) => {
+							const slug = form.values.data[info.row.index]?.slug
+							return (
+								<Group noWrap spacing={8}>
+									<Text variant={variants.Text.utility4}>{info.renderValue()}</Text>
+									{slug !== undefined && (
+										<Link
+											href={{
+												pathname: '/org/[slug]',
+												query: { slug },
+											}}
+											target='_blank'
+											variant={variants.Link.inheritStyle}
+										>
+											<Icon icon='carbon:launch' />
+										</Link>
+									)}
+								</Group>
+							)
+						},
 						getGroupingValue: (row) => row.orgId,
 						size: 40,
 						minSize: 10,
@@ -196,7 +226,18 @@ const QuickLink = () => {
 					}),
 					columnHelper.accessor('email', {
 						header: 'Email',
-						cell: (info) => info.renderValue(),
+						cell: (info) => (
+							<Group noWrap spacing={8}>
+								<Text variant={variants.Text.utility4}>{info.renderValue()}</Text>
+								<Link
+									external
+									href={`https://www.google.com/search?q=${encodeURI(info.getValue())}`}
+									variant={variants.Link.inheritStyle}
+								>
+									<Icon icon='carbon:search' />
+								</Link>
+							</Group>
+						),
 					}),
 					columnHelper.accessor('firstName', {
 						cell: (info) => info.getValue(),
@@ -298,6 +339,23 @@ const QuickLink = () => {
 							),
 						size: 150,
 					}),
+					columnHelper.accessor('published', {
+						header: () => <div style={{ textAlign: 'center' }}>Published?</div>,
+						cell: (info) => {
+							return info.row.getIsGrouped() ? null : (
+								<Center>
+									<Checkbox
+										key={info.cell.id}
+										checked={
+											form.getInputProps(`data.${info.row.index}.published`, { type: 'checkbox' }).checked
+										}
+										onChange={(e) => form.setFieldValue(`data.${info.row.index}.published`, e.target.checked)}
+									/>
+								</Center>
+							)
+						},
+						size: 48,
+					}),
 				]
 			}
 			return []
@@ -369,9 +427,9 @@ const QuickLink = () => {
 								<tr key={row.id}>
 									{row.getVisibleCells().map((cell) => {
 										return cell.getIsGrouped() ? (
-											<td key={cell.id} colSpan={7}>
-												<Group noWrap onClick={row.getToggleExpandedHandler()}>
-													<ActionIcon>
+											<td key={cell.id} colSpan={8}>
+												<Group noWrap>
+													<ActionIcon onClick={row.getToggleExpandedHandler()}>
 														{row.getIsExpanded() ? (
 															<Icon icon='carbon:chevron-down' />
 														) : (

@@ -14,6 +14,7 @@ import {
 	Stack,
 	Table,
 	Tabs,
+	Text,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -38,7 +39,9 @@ import { useEffect, useMemo, useState } from 'react'
 import { type ApiInput, type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
 import { Button } from '@weareinreach/ui/components/core/Button'
+import { Link } from '@weareinreach/ui/components/core/Link'
 import { MultiSelectPopover } from '@weareinreach/ui/components/data-portal/MultiSelectPopover'
+import { useCustomVariant } from '@weareinreach/ui/hooks'
 import { parsePhoneNumber } from '@weareinreach/ui/hooks/usePhoneNumber'
 import { Icon } from '@weareinreach/ui/icon'
 import { QuickPromotionModal } from '@weareinreach/ui/modals'
@@ -60,6 +63,7 @@ const QuickLink = () => {
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const router = useRouter()
 	const apiUtils = api.useContext()
+	const variants = useCustomVariant()
 	const updatePhones = api.quicklink.updatePhoneData.useMutation({
 		onSuccess: () => {
 			setIsSaved(true)
@@ -143,7 +147,15 @@ const QuickLink = () => {
 		const updated: ApiInput['quicklink']['updatePhoneData'][number][] = compact(
 			form.values.data.map((record, i) => {
 				if (form.isDirty(`data.${i}`)) {
-					const { attachedLocations, attachedServices, locationOnly, serviceOnly, orgId, phoneId } = record
+					const {
+						attachedLocations,
+						attachedServices,
+						locationOnly,
+						serviceOnly,
+						orgId,
+						phoneId,
+						published,
+					} = record
 					const originalRecord = data?.results.find(
 						(original) => orgId === original.orgId && phoneId === original.phoneId
 					)
@@ -154,6 +166,7 @@ const QuickLink = () => {
 						to: {
 							locationOnly,
 							serviceOnly,
+							published,
 							locations: {
 								add: attachedLocations.filter((loc) => !originalRecord.attachedLocations.includes(loc)),
 								del: originalRecord.attachedLocations.filter((loc) => !attachedLocations.includes(loc)),
@@ -168,6 +181,7 @@ const QuickLink = () => {
 							serviceOnly: originalRecord.serviceOnly,
 							locations: originalRecord.attachedLocations,
 							services: originalRecord.attachedServices,
+							published: originalRecord.published,
 						},
 					}
 				}
@@ -185,7 +199,26 @@ const QuickLink = () => {
 				return [
 					columnHelper.accessor('name', {
 						header: 'Organization',
-						cell: (info) => info.renderValue(),
+						cell: (info) => {
+							const slug = form.values.data[info.row.index]?.slug
+							return (
+								<Group noWrap spacing={8}>
+									<Text variant={variants.Text.utility4}>{info.renderValue()}</Text>
+									{slug !== undefined && (
+										<Link
+											href={{
+												pathname: '/org/[slug]',
+												query: { slug },
+											}}
+											target='_blank'
+											variant={variants.Link.inheritStyle}
+										>
+											<Icon icon='carbon:launch' />
+										</Link>
+									)}
+								</Group>
+							)
+						},
 						getGroupingValue: (row) => row.orgId,
 						size: 40,
 						minSize: 10,
@@ -196,7 +229,20 @@ const QuickLink = () => {
 						cell: (info) => {
 							const country = form.values.data[info.row.index]?.country.cca2
 							const formattedPhone = parsePhoneNumber(info.getValue() ?? '', country)?.formatNational()
-							return formattedPhone
+							return (
+								<Group noWrap spacing={8}>
+									<Text variant={variants.Text.utility4}>{formattedPhone}</Text>
+									{formattedPhone !== undefined && (
+										<Link
+											external
+											href={`https://www.google.com/search?q=${encodeURI(formattedPhone)}`}
+											variant={variants.Link.inheritStyle}
+										>
+											<Icon icon='carbon:search' />
+										</Link>
+									)}
+								</Group>
+							)
 						},
 					}),
 					columnHelper.accessor('description', {
@@ -280,6 +326,23 @@ const QuickLink = () => {
 							),
 						size: 150,
 					}),
+					columnHelper.accessor('published', {
+						header: () => <div style={{ textAlign: 'center' }}>Published?</div>,
+						cell: (info) => {
+							return info.row.getIsGrouped() ? null : (
+								<Center>
+									<Checkbox
+										key={info.cell.id}
+										checked={
+											form.getInputProps(`data.${info.row.index}.published`, { type: 'checkbox' }).checked
+										}
+										onChange={(e) => form.setFieldValue(`data.${info.row.index}.published`, e.target.checked)}
+									/>
+								</Center>
+							)
+						},
+						size: 48,
+					}),
 				]
 			}
 			return []
@@ -347,9 +410,9 @@ const QuickLink = () => {
 								<tr key={row.id}>
 									{row.getVisibleCells().map((cell) => {
 										return cell.getIsGrouped() ? (
-											<td key={cell.id} colSpan={7}>
-												<Group noWrap onClick={row.getToggleExpandedHandler()}>
-													<ActionIcon>
+											<td key={cell.id} colSpan={8}>
+												<Group noWrap>
+													<ActionIcon onClick={row.getToggleExpandedHandler()}>
 														{row.getIsExpanded() ? (
 															<Icon icon='carbon:chevron-down' />
 														) : (
