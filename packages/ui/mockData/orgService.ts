@@ -297,8 +297,13 @@ export const serviceData = {
 		],
 		serviceAreas: {
 			id: 'svar_01GW2HT9F1JKT1MCAJ3P7XBDHP',
-			countries: [],
-			districts: ['gdst_01GW2HJ5A278S2G84AB3N9FCW0'],
+			countries: ['ctry_01GW2HHDK9M26M80SG63T21SVH'],
+			districts: [
+				'gdst_01GW2HJ5A278S2G84AB3N9FCW0',
+				'gdst_01GW2HHYFH1TDS4HXMJ6EZDCCM',
+				'gdst_01GW2HKJ7PP2TBNC8MQQS02N6S',
+				'gdst_01GW2HKF7GKZBEW06ATJGN7YA0',
+			],
 		},
 		attributes: [
 			{

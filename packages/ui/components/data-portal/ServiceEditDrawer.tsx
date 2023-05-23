@@ -7,6 +7,7 @@ import {
 	Divider,
 	Drawer,
 	Group,
+	List,
 	Modal,
 	rem,
 	Stack,
@@ -17,11 +18,13 @@ import {
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
-import { forwardRef, useEffect, useMemo } from 'react'
+import { useTranslation } from 'next-i18next'
+import { forwardRef, type ReactNode, useEffect, useMemo } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { BadgeGroup, type ServiceTagProps } from '~ui/components/core/Badge'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
+import { useCustomVariant } from '~ui/hooks'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -63,7 +66,8 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		const { id: organizationId, slug: orgSlug } = useOrgInfo()
 		const { classes } = useStyles()
 		const form = useForm<FormData>()
-
+		const variants = useCustomVariant()
+		const { t } = useTranslation(['country', 'gov-dist'])
 		// #region Get existing data/populate form
 		const { data, isLoading } = api.service.forServiceEditDrawer.useQuery(serviceId, {
 			refetchOnWindowFocus: false,
@@ -103,6 +107,91 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		const { data: geoMap } = api.fieldOpt.countryGovDistMap.useQuery(undefined, {
 			refetchOnWindowFocus: false,
 		})
+		const serviceAreas = () => {
+			const serviceAreaObj: Record<string, ReactNode[]> = {}
+			const { countries, districts } = form.values.serviceAreas ?? {}
+			if (!geoMap) return null
+			const countryIdRegex = /^ctry_.*/
+			const distIdRegex = /^gdst_.*/
+
+			if (countries?.length) {
+				for (const country of countries) {
+					const array = serviceAreaObj[country]
+					const countryDetails = geoMap.get(country)
+					if (!countryDetails) continue
+					if (!Array.isArray(array)) {
+						serviceAreaObj[country] = [
+							<List.Item key={country}>
+								<Text variant={variants.Text.utility4}>
+									All of {t(countryDetails.tsKey, { ns: countryDetails.tsNs })}
+								</Text>
+							</List.Item>,
+						]
+					} else {
+						array.push(
+							<List.Item key={country}>
+								<Text variant={variants.Text.utility4}>
+									All of {t(countryDetails.tsKey, { ns: countryDetails.tsNs })}
+								</Text>
+							</List.Item>
+						)
+					}
+				}
+			}
+			if (districts?.length) {
+				for (const district of districts) {
+					const govDist = geoMap.get(district)
+					if (!govDist) continue
+					const country = govDist.parent?.parent?.id ?? govDist.parent?.id ?? ''
+					if (!countryIdRegex.test(country)) continue
+					const array = serviceAreaObj[country]
+					const parent = govDist.parent?.id ?? ''
+					const parentDist = geoMap.get(parent)
+					if (!distIdRegex.test(parent) || !parentDist) {
+						Array.isArray(array)
+							? array.push(
+									<List.Item key={district}>
+										<Text variant={variants.Text.utility4}>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
+									</List.Item>
+							  )
+							: (serviceAreaObj[country] = [
+									<List.Item key={district}>
+										<Text variant={variants.Text.utility4}>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
+									</List.Item>,
+							  ])
+						continue
+					}
+					Array.isArray(array)
+						? array.push(
+								<List.Item key={district}>
+									<Text variant={variants.Text.utility4}>
+										{t(parentDist.tsKey, { ns: parentDist.tsNs })} - {t(govDist.tsKey, { ns: govDist.tsNs })}
+									</Text>
+								</List.Item>
+						  )
+						: (serviceAreaObj[country] = [
+								<List.Item key={district}>
+									<Text variant={variants.Text.utility4}>
+										{t(parentDist.tsKey, { ns: parentDist.tsNs })} - {t(govDist.tsKey, { ns: govDist.tsNs })}
+									</Text>
+								</List.Item>,
+						  ])
+					continue
+				}
+			}
+			return Object.entries(serviceAreaObj).map(([key, value]) => {
+				const country = geoMap.get(key)
+				if (!country) return null
+				return (
+					<Stack key={country.id} spacing={0}>
+						<Title order={3}>{t(country.tsKey, { ns: country.tsNs })}</Title>
+						<List className={classes.badgeGroup} icon={<Icon icon='carbon:checkmark' height={14} />}>
+							{value}
+						</List>
+					</Stack>
+				)
+			})
+		}
 
 		// #endregion
 
@@ -139,6 +228,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 									<Title order={2} className={classes.tealText}>
 										Coverage Area
 									</Title>
+									{serviceAreas()}
 									{/* {Boolean(geoMap?.size) && } */}
 								</Stack>
 								{/* </Card> */}
