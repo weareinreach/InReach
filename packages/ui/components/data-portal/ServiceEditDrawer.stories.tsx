@@ -29,6 +29,7 @@ export default {
 			service.forServiceEditDrawer,
 			service.getOptions,
 			fieldOpt.govDistsByCountry,
+			fieldOpt.countryGovDistMap,
 		],
 	},
 	args: {
