@@ -4,6 +4,7 @@ import { type Prisma } from '@weareinreach/db'
 
 import {
 	attributes,
+	attributesByName,
 	countryWithoutGeo,
 	freeText,
 	govDistWithoutGeo,
@@ -11,7 +12,6 @@ import {
 	languageNames,
 	phoneSelectPublic,
 } from './common'
-import { idString } from '../common'
 
 const defaultSelect = {
 	services: true,
@@ -186,7 +186,7 @@ const serviceSelect = z
 
 export const serviceById = z
 	.object({
-		id: idString,
+		id: z.string(),
 		select: serviceSelect.default(defaultSelect),
 	})
 	.transform(
@@ -201,22 +201,48 @@ export const serviceById = z
 
 export const serviceByOrgId = z
 	.object({
-		organizationId: idString,
-		select: serviceSelect.default(defaultSelect),
+		organizationId: z.string(),
 	})
 	.transform(
-		({ select, organizationId }) =>
+		({ organizationId }) =>
 			({
-				where: {
-					organizationId,
+				where: { organizationId },
+				select: {
+					id: true,
+					attributes: attributesByName(['offers-remote-services']),
+					serviceName: freeText,
+
+					services: {
+						where: { tag: { active: true } },
+						select: {
+							tag: {
+								select: {
+									category: { select: { tsKey: true, tsNs: true } },
+									tsKey: true,
+									tsNs: true,
+									active: true,
+								},
+							},
+						},
+					},
+
+					locations: {
+						where: { location: isPublic },
+						select: {
+							location: {
+								select: {
+									name: true,
+								},
+							},
+						},
+					},
 				},
-				select,
 			} satisfies Prisma.OrgServiceFindManyArgs)
 	)
 
 export const serviceByLocationId = z
 	.object({
-		orgLocationId: idString,
+		orgLocationId: z.string(),
 		select: serviceSelect.optional(),
 	})
 	.transform(
@@ -235,7 +261,7 @@ export const serviceByLocationId = z
 
 export const serviceByUserListId = z
 	.object({
-		listId: idString,
+		listId: z.string(),
 		select: serviceSelect.optional(),
 	})
 	.transform(
@@ -249,5 +275,46 @@ export const serviceByUserListId = z
 					},
 				},
 				select,
+			} satisfies Prisma.OrgServiceFindManyArgs)
+	)
+
+export const forServiceDrawer = z
+	.object({
+		organizationId: z.string(),
+	})
+	.transform(
+		({ organizationId }) =>
+			({
+				where: { organizationId },
+				select: {
+					id: true,
+					attributes: attributesByName(['offers-remote-services']),
+					serviceName: freeText,
+
+					services: {
+						where: { tag: { active: true } },
+						select: {
+							tag: {
+								select: {
+									category: { select: { tsKey: true, tsNs: true, id: true } },
+									tsKey: true,
+									tsNs: true,
+									active: true,
+								},
+							},
+						},
+					},
+
+					locations: {
+						where: { location: isPublic },
+						select: {
+							location: {
+								select: {
+									name: true,
+								},
+							},
+						},
+					},
+				},
 			} satisfies Prisma.OrgServiceFindManyArgs)
 	)

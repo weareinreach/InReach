@@ -1,11 +1,21 @@
 import { TRPCError } from '@trpc/server'
 import flush from 'just-flush'
+import mapObjectVals from 'just-map-values'
 import { z } from 'zod'
 
 import { type Prisma } from '@weareinreach/db/client'
 import { handleError } from '~api/lib/errorHandler'
-import { defineRouter, permissionedProcedure, protectedProcedure, publicProcedure } from '~api/lib/trpc'
+import { transformer } from '~api/lib/transformer'
 import {
+	defineRouter,
+	permissionedProcedure,
+	protectedProcedure,
+	publicProcedure,
+	staffProcedure,
+} from '~api/lib/trpc'
+import { freeTextCrowdinId } from '~api/schemas/selects/common'
+import {
+	forServiceDrawer,
 	serviceById,
 	serviceByLocationId,
 	serviceByOrgId,
@@ -22,14 +32,16 @@ export const queries = defineRouter({
 			handleError(error)
 		}
 	}),
-	byOrgId: publicProcedure.input(serviceByOrgId).query(async ({ ctx, input }) => {
-		try {
-			const results = await ctx.prisma.orgService.findMany(input)
-			return results
-		} catch (error) {
-			handleError(error)
-		}
-	}),
+	byOrgId: permissionedProcedure('updateOrgService')
+		.input(serviceByOrgId)
+		.query(async ({ ctx, input }) => {
+			try {
+				const results = await ctx.prisma.orgService.findMany(input)
+				return results
+			} catch (error) {
+				handleError(error)
+			}
+		}),
 	byOrgLocationId: publicProcedure.input(serviceByLocationId).query(async ({ ctx, input }) => {
 		try {
 			const results = await ctx.prisma.orgService.findMany(input)
@@ -146,4 +158,181 @@ export const queries = defineRouter({
 			)
 			return transformedResults
 		}),
+	forServiceDrawer: permissionedProcedure('updateOrgService')
+		.input(forServiceDrawer)
+		.query(async ({ ctx, input }) => {
+			try {
+				type ServObj = { [k: string]: Set<string> }
+				type ServItem = {
+					id: string
+					name: {
+						tsNs?: string
+						tsKey?: string
+						defaultText?: string
+					}
+					locations: (string | null)[]
+					attributes: { id: string; tsKey: string; tsNs: string }[]
+				}
+
+				const results = await ctx.prisma.orgService.findMany(input)
+				let servObj: ServObj = {}
+				for (const service of results) {
+					servObj = service.services.reduce((items: ServObj, record) => {
+						const key = record.tag.category.tsKey
+						if (!items[key]) {
+							items[key] = new Set()
+						}
+						const itemToAdd = {
+							id: service.id,
+							name: {
+								tsNs: service.serviceName?.ns,
+								tsKey: service.serviceName?.key,
+								defaultText: service.serviceName?.tsKey.text,
+							},
+							locations: service.locations.map(({ location }) => location.name),
+							attributes: service.attributes.map(({ attribute }) => {
+								const { id, tsKey, tsNs } = attribute
+								return { id, tsKey, tsNs }
+							}),
+						} satisfies ServItem
+
+						items[key]?.add(transformer.stringify(itemToAdd))
+						return items
+					}, servObj)
+				}
+				const transformed = mapObjectVals(servObj, (value) =>
+					[...value].map((item) => transformer.parse<ServItem>(item))
+				)
+				return transformed
+			} catch (error) {
+				handleError(error)
+			}
+		}),
+	forServiceEditDrawer: permissionedProcedure('updateOrgService')
+		.input(z.string())
+		.query(async ({ ctx, input }) => {
+			try {
+				const result = await ctx.prisma.orgService.findUniqueOrThrow({
+					where: { id: input },
+					select: {
+						id: true,
+						accessDetails: {
+							select: {
+								id: true,
+								attributes: {
+									select: {
+										attribute: { select: { id: true, tsKey: true, tsNs: true } },
+										supplement: { select: { id: true, text: freeTextCrowdinId, data: true } },
+									},
+								},
+							},
+						},
+						attributes: {
+							select: {
+								attribute: {
+									select: {
+										id: true,
+										tsKey: true,
+										tsNs: true,
+										icon: true,
+										categories: { select: { category: { select: { tag: true } } } },
+									},
+								},
+								supplement: {
+									select: {
+										id: true,
+										active: true,
+										data: true,
+										boolean: true,
+										countryId: true,
+										govDistId: true,
+										languageId: true,
+										text: freeTextCrowdinId,
+									},
+								},
+							},
+						},
+						description: freeTextCrowdinId,
+						phones: { select: { phone: { select: { id: true } } } },
+						emails: { select: { email: { select: { id: true } } } },
+						locations: { select: { location: { select: { id: true } } } },
+						hours: { select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true } },
+						services: { select: { tag: { select: { id: true, categoryId: true } } } },
+						serviceAreas: {
+							select: {
+								id: true,
+								countries: { select: { country: { select: { id: true } } } },
+								districts: { select: { govDist: { select: { id: true } } } },
+							},
+						},
+						published: true,
+						deleted: true,
+						serviceName: freeTextCrowdinId,
+					},
+				})
+				const { attributes, phones, emails, locations, services, serviceAreas, accessDetails, ...rest } =
+					result
+				const transformed = {
+					...rest,
+					phones: phones.map(({ phone }) => phone.id),
+					emails: emails.map(({ email }) => email.id),
+					locations: locations.map(({ location }) => location.id),
+					services: services.map(({ tag }) => ({ id: tag.id, categoryId: tag.categoryId })),
+					serviceAreas: serviceAreas
+						? {
+								id: serviceAreas.id,
+								countries: serviceAreas.countries.map(({ country }) => country.id),
+								districts: serviceAreas.districts.map(({ govDist }) => govDist.id),
+						  }
+						: null,
+					attributes: attributes.map(({ attribute, supplement }) => {
+						const { categories, ...attr } = attribute
+						return {
+							attribute: { ...attr, categories: categories.map(({ category }) => category.tag) },
+							supplement: supplement.map(({ data, ...rest }) => {
+								if (data) {
+									return { ...rest, data: transformer.parse(JSON.stringify(data)) }
+								}
+								return { ...rest, data }
+							}),
+						}
+					}),
+					accessDetails: accessDetails.map(({ id, attributes }) => ({
+						id,
+						attributes: attributes.map(({ attribute, supplement }) => ({
+							attribute,
+							supplement: supplement.map(({ data, ...rest }) => {
+								if (data) {
+									return { ...rest, data: transformer.parse(JSON.stringify(data)) }
+								}
+								return { ...rest, data }
+							}),
+						})),
+					})),
+				}
+
+				return transformed
+			} catch (error) {
+				handleError(error)
+			}
+		}),
+	getOptions: permissionedProcedure('updateOrgService').query(async ({ ctx }) => {
+		const result = await ctx.prisma.serviceTag.findMany({
+			select: {
+				id: true,
+				active: true,
+				tsKey: true,
+				tsNs: true,
+				category: {
+					select: {
+						id: true,
+						active: true,
+						tsKey: true,
+						tsNs: true,
+					},
+				},
+			},
+		})
+		return result
+	}),
 })

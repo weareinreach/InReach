@@ -19,3 +19,4 @@ pnpm-lock.yaml
 .prettierignore
 .DS_Store
 .eslintignore
+prisma/data-migrations/**/*.json
