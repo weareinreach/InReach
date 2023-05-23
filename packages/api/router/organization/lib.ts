@@ -1,6 +1,6 @@
 import slugify from 'slugify'
 
-import { type Context } from '~api/lib'
+import { type Context } from '~api/lib/context'
 
 export const uniqueSlug = async (ctx: Context, name: string, inc?: number): Promise<string> => {
 	try {

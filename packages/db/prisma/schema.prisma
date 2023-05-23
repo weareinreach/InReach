@@ -600,7 +600,7 @@ model OrgLocation {
   street2  String?
   city     String
   postCode String?
-  primary  Boolean @default(true)
+  primary  Boolean @default(false)
 
   mailOnly Boolean?
 
@@ -616,7 +616,7 @@ model OrgLocation {
   longitude Float?                               @db.Real
   latitude  Float?                               @db.Real
   geo       Unsupported("Geometry(POINT,4326)")?
-  geoJSON   Json /// @zod.custom.use(Geometry)
+  geoJSON   Json? /// @zod.custom.use(Geometry)
   geoWKT    String?
 
   published Boolean    @default(true)
@@ -846,6 +846,9 @@ model OrgReview {
   visible    Boolean @default(true)
   deleted    Boolean @default(false)
 
+  // Is this review in the pool to be featured on the homepage?
+  featured Boolean?
+
   user   User   @relation(fields: [userId], references: [id])
   userId String
 
@@ -1025,11 +1028,11 @@ model AttributeSupplement {
   internalNotes InternalNote[]
 
   //@@schema("system")
-  locationAttribute      LocationAttribute?      @relation(references: [attributeId, locationId], fields: [locationAttributeAttributeId, locationAttributeLocationId])
-  organizationAttribute  OrganizationAttribute?  @relation(references: [attributeId, organizationId], fields: [organizationAttributeAttributeId, organizationAttributeOrganizationId])
-  serviceAccessAttribute ServiceAccessAttribute? @relation(references: [attributeId, serviceAccessId], fields: [serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId])
-  serviceAttribute       ServiceAttribute?       @relation(references: [attributeId, orgServiceId], fields: [serviceAttributeAttributeId, serviceAttributeOrgServiceId])
-  userAttribute          UserAttribute?          @relation(references: [attributeId, userId], fields: [userAttributeAttributeId, userAttributeUserId])
+  locationAttribute      LocationAttribute?      @relation(references: [attributeId, locationId], fields: [locationAttributeAttributeId, locationAttributeLocationId], onDelete: Cascade)
+  organizationAttribute  OrganizationAttribute?  @relation(references: [attributeId, organizationId], fields: [organizationAttributeAttributeId, organizationAttributeOrganizationId], onDelete: Cascade)
+  serviceAccessAttribute ServiceAccessAttribute? @relation(references: [attributeId, serviceAccessId], fields: [serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId], onDelete: Cascade)
+  serviceAttribute       ServiceAttribute?       @relation(references: [attributeId, orgServiceId], fields: [serviceAttributeAttributeId, serviceAttributeOrgServiceId], onDelete: Cascade)
+  userAttribute          UserAttribute?          @relation(references: [attributeId, userId], fields: [userAttributeAttributeId, userAttributeUserId], onDelete: Cascade)
 
   locationAttributeAttributeId          String?
   locationAttributeLocationId           String?
@@ -1232,7 +1235,8 @@ model Country {
   // List of administrative subdivisions
   govDist GovDist[]
 
-  activeForOrgs Boolean?
+  activeForOrgs    Boolean?
+  activeForSuggest Boolean?
 
   /// Tables using Country
   attributeSupplements  AttributeSupplement[]

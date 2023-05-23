@@ -2,6 +2,7 @@ import { geojsonToWKT } from '@terraformer/wkt'
 import { z } from 'zod'
 
 import { createPoint, generateId, GeoJSONPointSchema, Geometry, Prisma } from '@weareinreach/db'
+import { allAttributes } from '@weareinreach/db/generated/allAttributes'
 import { idString, JsonInputOrNullSuperJSON, MutationBase, MutationBaseArray } from '~api/schemas/common'
 import { createManyRequired } from '~api/schemas/nestedOps'
 
@@ -161,22 +162,88 @@ export const EditOrgLocationSchema = z
 		id: z.string(),
 		data: z
 			.object({
-				legacyId: z.string(),
 				name: z.string(),
 				street1: z.string(),
-				street2: z.string(),
+				street2: z.string().nullable(),
 				city: z.string(),
-				postCode: z.string(),
+				postCode: z.string().nullable(),
 				primary: z.boolean(),
-				mailOnly: z.boolean(),
-				longitude: z.number(),
-				latitude: z.number(),
+				mailOnly: z.boolean().nullable(),
+				longitude: z.number().nullable(),
+				latitude: z.number().nullable(),
 				geoJSON: Geometry,
-				geoWKT: z.string(),
+				geoWKT: z.string().nullable(),
 				published: z.boolean(),
 				deleted: z.boolean(),
 				checkMigration: z.boolean(),
+				accessible: z.object({
+					supplementId: z.string().optional(),
+					boolean: z.boolean().nullish(),
+				}),
+				countryId: z.string().nullable(),
+				govDistId: z.string().nullable(),
+				services: z.string().array(),
 			})
 			.partial(),
 	})
-	.transform(({ id, data }) => Prisma.validator<Prisma.OrgLocationUpdateArgs>()({ where: { id }, data }))
+	.transform(({ id, data }) => {
+		const { accessible, countryId, govDistId, services, mailOnly, ...rest } = data
+
+		const accessibleAttrId = allAttributes.find(({ tag }) => tag === 'wheelchair-accessible')?.id
+
+		const updateAccessibility = accessible?.boolean !== undefined && accessibleAttrId
+
+		return Prisma.validator<Prisma.OrgLocationUpdateArgs>()({
+			where: { id },
+			data: {
+				...rest,
+				mailOnly: mailOnly === false ? null : mailOnly,
+				...(updateAccessibility
+					? accessible.boolean !== null
+						? {
+								attributes: {
+									upsert: {
+										where: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
+										create: {
+											attribute: { connect: { id: accessibleAttrId } },
+											supplement: { create: { boolean: accessible.boolean } },
+										},
+										update: {
+											supplement: {
+												upsert: {
+													where: { id: accessible.supplementId ?? '' },
+													create: { boolean: accessible.boolean },
+													update: { boolean: accessible.boolean },
+												},
+											},
+										},
+									},
+								},
+						  }
+						: {
+								attributes: {
+									delete: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
+								},
+						  }
+					: {}),
+				...(countryId
+					? {
+							country: { connect: { id: countryId } },
+					  }
+					: {}),
+				...(govDistId
+					? {
+							govDist: { connect: { id: govDistId } },
+					  }
+					: {}),
+				...(services
+					? {
+							services: {
+								createMany: { data: services.map((serviceId) => ({ serviceId })), skipDuplicates: true },
+								deleteMany: { NOT: { serviceId: { in: services } } },
+							},
+					  }
+					: {}),
+			},
+		})
+	})

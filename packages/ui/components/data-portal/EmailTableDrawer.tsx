@@ -33,6 +33,7 @@ import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
 import { z } from 'zod'
 
+import { transformNullString } from '@weareinreach/api/schemas/common'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -44,11 +45,6 @@ import { PhoneEmailModal } from '~ui/modals/dataPortal/PhoneEmail'
 import { MultiSelectPopover } from './MultiSelectPopover'
 
 const [FormProvider, useFormContext, useForm] = createFormContext<{ data: EmailTableColumns[] }>()
-
-const transformNullString = (val: string | null) => {
-	if (val === '' || val === 'NULL') return null
-	return val
-}
 
 const FormSchema = z.object({
 	orgSlug: z.string().optional(),
@@ -356,9 +352,6 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 		getCoreRowModel: getCoreRowModel(),
 	})
 	// #endregion
-
-	console.log(form.values.data[0])
-	console.log(form.getTransformedValues())
 
 	return (
 		<>

@@ -1,7 +1,7 @@
 import flush from 'just-flush'
 import { z } from 'zod'
 
-import { type Prisma } from '@weareinreach/db'
+import { type Prisma } from '@weareinreach/db/client'
 import { defineRouter, permissionedProcedure } from '~api/lib/trpc'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 
@@ -17,6 +17,7 @@ const phoneSelect = {
 				serviceOnly: true,
 				locations: { select: { location: { select: { id: true } } } },
 				services: { select: { service: { select: { id: true } } } },
+				published: true,
 			},
 		},
 	},
@@ -32,7 +33,11 @@ export const quickLinkRouter = defineRouter({
 			const where = {
 				published: true,
 				deleted: false,
-				phones: { some: { phone: { AND: [{ locations: { none: {} } }, { services: { none: {} } }] } } },
+				phones: {
+					some: {
+						phone: { AND: [{ locations: { none: {} } }, { services: { none: {} } }, { published: true }] },
+					},
+				},
 			} satisfies Prisma.OrganizationWhereInput
 
 			const data = await ctx.prisma.organization.findMany({
@@ -40,6 +45,7 @@ export const quickLinkRouter = defineRouter({
 				select: {
 					id: true,
 					name: true,
+					slug: true,
 					locations: {
 						select: {
 							id: true,
@@ -61,7 +67,7 @@ export const quickLinkRouter = defineRouter({
 				skip,
 			})
 			const totalResults = await ctx.prisma.organization.count({ where })
-			const transformedData = data.flatMap(({ locations, phones, services, id, name }) =>
+			const transformedData = data.flatMap(({ locations, phones, services, id, name, slug }) =>
 				phones.map(({ phone }) => {
 					const {
 						description,
@@ -73,6 +79,7 @@ export const quickLinkRouter = defineRouter({
 					return {
 						orgId: id,
 						name,
+						slug,
 						phoneId,
 						...rest,
 						description: description?.tsKey.text,
@@ -99,6 +106,7 @@ export const quickLinkRouter = defineRouter({
 							locationOnly: z.boolean().optional(),
 							locations: z.string().array(),
 							services: z.string().array(),
+							published: z.boolean().optional(),
 						})
 						.partial(),
 					to: z.object({
@@ -106,19 +114,21 @@ export const quickLinkRouter = defineRouter({
 						locationOnly: z.boolean().optional(),
 						locations: z.object({ add: z.string().array(), del: z.string().array() }).partial(),
 						services: z.object({ add: z.string().array(), del: z.string().array() }).partial(),
+						published: z.boolean().optional(),
 					}),
 				})
 				.array()
 		)
 		.mutation(async ({ ctx, input }) => {
 			const updates = input.map(({ id, from, to }) => {
-				const { serviceOnly, locationOnly, locations, services } = to
+				const { serviceOnly, locationOnly, locations, services, published } = to
 				const auditLogs = CreateAuditLog({ actorId: ctx.actorId, operation: 'UPDATE', from, to: flush(to) })
 				return ctx.prisma.orgPhone.update({
 					where: { id },
 					data: {
 						serviceOnly,
 						locationOnly,
+						published,
 						locations: {
 							createMany: locations.add?.length
 								? { data: locations.add.map((orgLocationId) => ({ orgLocationId })), skipDuplicates: true }
@@ -147,7 +157,11 @@ export const quickLinkRouter = defineRouter({
 			const where = {
 				published: true,
 				deleted: false,
-				emails: { some: { email: { AND: [{ locations: { none: {} } }, { services: { none: {} } }] } } },
+				emails: {
+					some: {
+						email: { AND: [{ locations: { none: {} } }, { services: { none: {} } }, { published: true }] },
+					},
+				},
 			} satisfies Prisma.OrganizationWhereInput
 
 			const data = await ctx.prisma.organization.findMany({
@@ -155,6 +169,7 @@ export const quickLinkRouter = defineRouter({
 				select: {
 					id: true,
 					name: true,
+					slug: true,
 					locations: { select: { id: true, name: true } },
 					services: {
 						select: {
@@ -172,6 +187,7 @@ export const quickLinkRouter = defineRouter({
 									lastName: true,
 									locationOnly: true,
 									serviceOnly: true,
+									published: true,
 									description: { select: { tsKey: { select: { text: true } } } },
 									locations: { select: { location: { select: { id: true } } } },
 									services: { select: { service: { select: { id: true } } } },
@@ -185,7 +201,7 @@ export const quickLinkRouter = defineRouter({
 				skip,
 			})
 			const totalResults = await ctx.prisma.organization.count({ where })
-			const transformedData = data.flatMap(({ locations, emails, services, id, name }) =>
+			const transformedData = data.flatMap(({ locations, emails, services, id, name, slug }) =>
 				emails.map(({ email }) => {
 					const {
 						description,
@@ -197,6 +213,7 @@ export const quickLinkRouter = defineRouter({
 					return {
 						orgId: id,
 						name,
+						slug,
 						emailId,
 						...rest,
 						description: description?.tsKey.text,
@@ -221,6 +238,7 @@ export const quickLinkRouter = defineRouter({
 						.object({
 							serviceOnly: z.boolean().optional(),
 							locationOnly: z.boolean().optional(),
+							published: z.boolean().optional(),
 							locations: z.string().array(),
 							services: z.string().array(),
 						})
@@ -228,6 +246,7 @@ export const quickLinkRouter = defineRouter({
 					to: z.object({
 						serviceOnly: z.boolean().optional(),
 						locationOnly: z.boolean().optional(),
+						published: z.boolean().optional(),
 						locations: z.object({ add: z.string().array(), del: z.string().array() }).partial(),
 						services: z.object({ add: z.string().array(), del: z.string().array() }).partial(),
 					}),
@@ -236,13 +255,14 @@ export const quickLinkRouter = defineRouter({
 		)
 		.mutation(async ({ ctx, input }) => {
 			const updates = input.map(({ id, from, to }) => {
-				const { serviceOnly, locationOnly, locations, services } = to
+				const { serviceOnly, locationOnly, locations, services, published } = to
 				const auditLogs = CreateAuditLog({ actorId: ctx.actorId, operation: 'UPDATE', from, to: flush(to) })
 				return ctx.prisma.orgEmail.update({
 					where: { id },
 					data: {
 						serviceOnly,
 						locationOnly,
+						published,
 						locations: {
 							createMany: locations.add?.length
 								? { data: locations.add.map((orgLocationId) => ({ orgLocationId })), skipDuplicates: true }
@@ -260,11 +280,6 @@ export const quickLinkRouter = defineRouter({
 				})
 			})
 			const results = await ctx.prisma.$transaction(updates)
-
-			ctx.prisma.orgLocationService.groupBy({
-				by: ['serviceId'],
-				having: { orgLocationId: { _count: { gte: 2 } } },
-			})
 			return results
 		}),
 })

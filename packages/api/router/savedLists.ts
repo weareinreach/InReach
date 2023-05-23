@@ -1,15 +1,14 @@
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-import { handleError } from '~api/lib'
+import { handleError } from '~api/lib/errorHandler'
 import { nanoUrl } from '~api/lib/nanoIdUrl'
 import { defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
 import { id } from '~api/schemas/common'
+import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { CreateListAndEntry, CreateSavedList } from '~api/schemas/create/userSavedList'
 import { schemas } from '~api/schemas/savedLists'
 import { DeleteSavedItem, SaveItem } from '~api/schemas/update/userSavedList'
-
-import { CreateAuditLog } from '../schemas/create/auditLog'
 
 export const savedListRouter = defineRouter({
 	/** Get all saved lists for logged in user */

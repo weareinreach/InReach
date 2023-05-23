@@ -1,4 +1,6 @@
-import { defineRouter, handleError, permissionedProcedure } from '~api/lib'
+import { handleError } from '~api/lib/errorHandler'
+import { updateGeo } from '~api/lib/prismaRaw/updateGeo'
+import { defineRouter, permissionedProcedure } from '~api/lib/trpc'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import {
 	CreateManyOrgLocationSchema,
@@ -63,7 +65,12 @@ export const mutations = defineRouter({
 				const update = await tx.orgLocation.update({
 					where,
 					data: { ...data, auditLogs: auditLog },
+					select: { id: true },
 				})
+
+				// if WKT is updated, we need to have the DB update the `geo` column with raw SQL.
+				if (data.geoWKT) await updateGeo('orgLocation', where.id, tx)
+
 				return update
 			})
 			return updatedRecord

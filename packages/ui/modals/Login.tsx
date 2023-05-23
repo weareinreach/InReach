@@ -18,7 +18,8 @@ import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
 import { z } from 'zod'
 
-import { Button, Link } from '~ui/components/core'
+import { Button } from '~ui/components/core/Button'
+import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useShake } from '~ui/hooks'
 
 import { ForgotPasswordModal } from './ForgotPassword'

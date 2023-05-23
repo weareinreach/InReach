@@ -1,6 +1,6 @@
 import { type Meta, type StoryFn, type StoryObj } from '@storybook/react'
 
-import { fieldOptHandlers } from '~ui/mockData/fieldOpt'
+import { fieldOpt } from '~ui/mockData/fieldOpt'
 import {
 	formHookParams,
 	PhoneEmailFormProvider,
@@ -22,7 +22,7 @@ export default {
 	title: 'Data Portal/Fields/Phone Number Entry',
 	component: PhoneNumberEntry,
 	parameters: {
-		msw: [fieldOptHandlers.countries],
+		msw: [fieldOpt.countries],
 	},
 	decorators: [FormContextDecorator],
 	render: function Render() {

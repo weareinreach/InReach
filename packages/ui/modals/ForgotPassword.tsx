@@ -17,7 +17,7 @@ import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
 import { z } from 'zod'
 
-import { Button } from '~ui/components/core'
+import { Button } from '~ui/components/core/Button'
 import { useCustomVariant, useShake } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { handleError } from '~api/lib'
+import { handleError } from '~api/lib/errorHandler'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
 import { defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
 import { prismaDistSearchDetails } from '~api/prisma/org'
@@ -159,7 +159,7 @@ export const queries = defineRouter({
 	}),
 	suggestionOptions: publicProcedure.query(async ({ ctx }) => {
 		const countries = await ctx.prisma.country.findMany({
-			where: { activeForOrgs: true },
+			where: { activeForSuggest: true },
 			select: { id: true, tsKey: true, tsNs: true },
 			orderBy: { tsKey: 'desc' },
 		})

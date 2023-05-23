@@ -19,7 +19,7 @@ import { type ComponentPropsWithRef, forwardRef, useEffect, useState } from 'rea
 
 import { type ApiOutput } from '@weareinreach/api'
 import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
-import { Link } from '~ui/components/core'
+import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
