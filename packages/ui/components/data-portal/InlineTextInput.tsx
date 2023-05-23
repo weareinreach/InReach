@@ -13,7 +13,9 @@ const useStyles = createStyles((theme) => ({
 }))
 const useBaseStyles = createStyles((theme) => ({
 	input: {
-		borderWidth: 0,
+		// borderWidth: rem(1),
+		border: `${rem(1)} dashed ${theme.other.colors.secondary.teal}`,
+		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
 		padding: `${rem(6)} ${rem(8)} !important`,
 		height: 'unset',
 		minHeight: 'unset',

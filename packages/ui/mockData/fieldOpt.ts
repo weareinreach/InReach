@@ -1,5 +1,9 @@
+import { z } from 'zod'
+
 import { type ApiInput, type ApiOutput } from '@weareinreach/api'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
+
+import countryGovDistMapData from './json/countryGovDistMap.json'
 
 export const attributeCategories = [
 	{
@@ -9190,6 +9194,29 @@ export const userTitle = [
 		title: 'User Title 2',
 	},
 ] satisfies ApiOutput['fieldOpt']['userTitle']
+
+const countryGovDistBasicItem = {
+	id: z.string(),
+	tsKey: z.string(),
+	tsNs: z.string(),
+}
+
+const countryGovDistMapSchema = z
+	.tuple([
+		z.string(),
+		z.object({
+			...countryGovDistBasicItem,
+			children: z.object(countryGovDistBasicItem).array(),
+			parent: z
+				.object({ ...countryGovDistBasicItem, parent: z.object(countryGovDistBasicItem).optional() })
+				.optional(),
+		}),
+	])
+	.array()
+
+const countryGovDistMap = new Map<string, CountryGovDistMapItem>(
+	countryGovDistMapSchema.parse(countryGovDistMapData)
+)
 export const fieldOpt = {
 	attributeCategories: getTRPCMock({
 		path: ['fieldOpt', 'attributeCategories'],
@@ -9223,6 +9250,24 @@ export const fieldOpt = {
 		path: ['fieldOpt', 'userTitle'],
 		response: userTitle,
 	}),
+	countryGovDistMap: getTRPCMock({
+		path: ['fieldOpt', 'countryGovDistMap'],
+		response: countryGovDistMap,
+	}),
 }
 
 export const allFieldOptHandlers = Object.values(fieldOpt)
+
+interface CountryGovDistMapItemBasic {
+	id: string
+	tsKey: string
+	tsNs: string
+}
+
+interface CountryGovDistMapItem {
+	id: string
+	tsKey: string
+	tsNs: string
+	children: CountryGovDistMapItemBasic[]
+	parent?: CountryGovDistMapItemBasic & { parent?: CountryGovDistMapItemBasic }
+}

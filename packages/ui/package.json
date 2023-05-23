@@ -23,6 +23,7 @@
 	"dependencies": {
 		"@react-google-maps/api": "2.18.1",
 		"@terraformer/wkt": "2.2.0",
+		"@textea/json-viewer": "3.0.0",
 		"@turf/helpers": "6.5.0",
 		"ajv": "8.12.0",
 		"alex": "11.0.0",
