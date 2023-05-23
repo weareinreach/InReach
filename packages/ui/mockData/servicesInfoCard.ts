@@ -25,52 +25,6 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
-						tsKey: 'additional.has-confidentiality-policy',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'additional-information',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFV4TM7H5V6FHWA7S9JK',
-						tsKey: 'additional.time-walk-in',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'additional-information',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
 						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
 						tsKey: 'cost.cost-free',
 						tsNs: 'attribute',
@@ -175,25 +129,69 @@ export const servicesMock = [
 						},
 					],
 				},
-			],
-			serviceAreas: [
 				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
+					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
+						tsKey: 'additional.has-confidentiality-policy',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'additional-information',
+									icon: null,
 								},
-								tsKey: 'us-district-of-columbia',
-								tsNs: 'gov-dist',
-								abbrev: 'DC',
 							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
 						},
-					],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFV4TM7H5V6FHWA7S9JK',
+						tsKey: 'additional.time-walk-in',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'additional-information',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
 				},
 			],
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
+								tsNs: 'gov-dist',
+								tsKey: 'type-district',
+							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
+						},
+					},
+				],
+			},
 			services: [
 				{
 					tag: {
@@ -258,6 +256,62 @@ export const servicesMock = [
 											access_value_ES: '2301 M. Luther King Jr., Washington DC 20020',
 											instructions_ES:
 												'Centro Max Robinson: NO hay pruebas disponibles sin cita previa. Lunes: 08:30-12:30, 13:30-17:30; Martes: 08:30 - 12:30, 13:30 - 17:30; Miércoles: 08:30 - 12:30, 13:30 - 17:30; Jueves: 08:30 - 12:30, 13:30 - 17:30; Viernes: 08:30 - 12:30, 14:15 - 17:30.',
+										},
+									},
+								},
+							],
+						},
+					],
+				},
+				{
+					attributes: [
+						{
+							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
+								tsKey: 'serviceaccess.accessphone',
+								tsNs: 'attribute',
+								icon: null,
+								iconBg: null,
+								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
+								_count: {
+									parents: 0,
+									children: 0,
+								},
+							},
+							supplement: [
+								{
+									id: 'atts_01GW2HT9F09GFRWM3JK2A43AWG',
+									country: null,
+									language: null,
+									text: {
+										key: 'whitman-walker-health.attribute.atts_01GW2HT9F09GFRWM3JK2A43AWG',
+										ns: 'org-data',
+										tsKey: {
+											text: 'Contact the Main Office about services offered in multiple languages upon request.',
+										},
+									},
+									govDist: null,
+									boolean: null,
+									data: {
+										json: {
+											_id: {
+												$oid: '5e7e4bdbd54f1760921a4235',
+											},
+											access_type: 'phone',
+											access_value: '202-745-7000',
+											instructions:
+												'Contact the Main Office about services offered in multiple languages upon request. ',
+											access_value_ES: '202-745-7000',
+											instructions_ES:
+												'Comunícate con la oficina principal sobre los servicios que se ofrecen en varios idiomas si lo solicitas.',
 										},
 									},
 								},
@@ -377,62 +431,6 @@ export const servicesMock = [
 						},
 					],
 				},
-				{
-					attributes: [
-						{
-							attribute: {
-								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
-								tsKey: 'serviceaccess.accessphone',
-								tsNs: 'attribute',
-								icon: null,
-								iconBg: null,
-								showOnLocation: null,
-								categories: [
-									{
-										category: {
-											tag: 'service-access-instructions',
-											icon: null,
-										},
-									},
-								],
-								_count: {
-									parents: 0,
-									children: 0,
-								},
-							},
-							supplement: [
-								{
-									id: 'atts_01GW2HT9F09GFRWM3JK2A43AWG',
-									country: null,
-									language: null,
-									text: {
-										key: 'whitman-walker-health.attribute.atts_01GW2HT9F09GFRWM3JK2A43AWG',
-										ns: 'org-data',
-										tsKey: {
-											text: 'Contact the Main Office about services offered in multiple languages upon request.',
-										},
-									},
-									govDist: null,
-									boolean: null,
-									data: {
-										json: {
-											_id: {
-												$oid: '5e7e4bdbd54f1760921a4235',
-											},
-											access_type: 'phone',
-											access_value: '202-745-7000',
-											instructions:
-												'Contact the Main Office about services offered in multiple languages upon request. ',
-											access_value_ES: '202-745-7000',
-											instructions_ES:
-												'Comunícate con la oficina principal sobre los servicios que se ofrecen en varios idiomas si lo solicitas.',
-										},
-									},
-								},
-							],
-						},
-					],
-				},
 			],
 			reviews: [],
 			phones: [
@@ -487,52 +485,6 @@ export const servicesMock = [
 			},
 			hours: [],
 			attributes: [
-				{
-					attribute: {
-						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
-						tsKey: 'additional.has-confidentiality-policy',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'additional-information',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
-						tsKey: 'eligibility.time-appointment-required',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
 				{
 					attribute: {
 						id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
@@ -607,6 +559,52 @@ export const servicesMock = [
 							data: null,
 						},
 					],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
+						tsKey: 'additional.has-confidentiality-policy',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'additional-information',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
+						tsKey: 'eligibility.time-appointment-required',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
 				},
 				{
 					attribute: {
@@ -695,24 +693,22 @@ export const servicesMock = [
 					],
 				},
 			],
-			serviceAreas: [
-				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
-								},
-								tsKey: 'us-district-of-columbia',
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
 								tsNs: 'gov-dist',
-								abbrev: 'DC',
+								tsKey: 'type-district',
 							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
 						},
-					],
-				},
-			],
+					},
+				],
+			},
 			services: [
 				{
 					tag: {
@@ -1041,29 +1037,6 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
-						tsKey: 'cost.cost-free',
-						tsNs: 'attribute',
-						icon: 'carbon:piggy-bank',
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'cost',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
 						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
 						tsKey: 'eligibility.time-appointment-required',
 						tsNs: 'attribute',
@@ -1084,77 +1057,6 @@ export const servicesMock = [
 						},
 					},
 					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
-						tsKey: 'eligibility.elig-age',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9F4BTH28ZQDRPH5PE16',
-							country: null,
-							language: null,
-							text: null,
-							govDist: null,
-							boolean: null,
-							data: {
-								min: 13,
-							},
-						},
-					],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'languages',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9F4V12HEJRMBBKSSRB5',
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							govDist: null,
-							boolean: null,
-							data: null,
-						},
-					],
 				},
 				{
 					attribute: {
@@ -1203,25 +1105,117 @@ export const servicesMock = [
 						},
 					],
 				},
-			],
-			serviceAreas: [
 				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
+					attribute: {
+						id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
+						tsKey: 'eligibility.elig-age',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
 								},
-								tsKey: 'us-district-of-columbia',
-								tsNs: 'gov-dist',
-								abbrev: 'DC',
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9F4BTH28ZQDRPH5PE16',
+							country: null,
+							language: null,
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: {
+								min: 13,
 							},
 						},
 					],
 				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
+						tsKey: 'cost.cost-free',
+						tsNs: 'attribute',
+						icon: 'carbon:piggy-bank',
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'cost',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9F4V12HEJRMBBKSSRB5',
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
+				},
 			],
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
+								tsNs: 'gov-dist',
+								tsKey: 'type-district',
+							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
+						},
+					},
+				],
+			},
 			services: [
 				{
 					tag: {
@@ -1478,101 +1472,6 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
-						tsKey: 'cost.cost-free',
-						tsNs: 'attribute',
-						icon: 'carbon:piggy-bank',
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'cost',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
-						tsKey: 'eligibility.elig-age',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9F6H5R8TAQX1GWMDQRW',
-							country: null,
-							language: null,
-							text: null,
-							govDist: null,
-							boolean: null,
-							data: {
-								max: 24,
-								min: 13,
-							},
-						},
-					],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'languages',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9F6RZENAE7HKCTJQ612',
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							govDist: null,
-							boolean: null,
-							data: null,
-						},
-					],
-				},
-				{
-					attribute: {
 						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
@@ -1622,8 +1521,103 @@ export const servicesMock = [
 						},
 					],
 				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
+						tsKey: 'eligibility.elig-age',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9F6H5R8TAQX1GWMDQRW',
+							country: null,
+							language: null,
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: {
+								max: 24,
+								min: 13,
+							},
+						},
+					],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
+						tsKey: 'cost.cost-free',
+						tsNs: 'attribute',
+						icon: 'carbon:piggy-bank',
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'cost',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9F6RZENAE7HKCTJQ612',
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
+				},
 			],
-			serviceAreas: [],
+			serviceAreas: null,
 			services: [
 				{
 					tag: {
@@ -1894,147 +1888,6 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
-						tsKey: 'additional.has-confidentiality-policy',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'additional-information',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
-						tsKey: 'cost.cost-free',
-						tsNs: 'attribute',
-						icon: 'carbon:piggy-bank',
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'cost',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
-						tsKey: 'eligibility.time-appointment-required',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
-						tsKey: 'eligibility.elig-age',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9F8YBG3RW555BEJPX43',
-							country: null,
-							language: null,
-							text: null,
-							govDist: null,
-							boolean: null,
-							data: {
-								max: 24,
-								min: 13,
-							},
-						},
-					],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'languages',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9F8XBZ50671RY07JEYA',
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							govDist: null,
-							boolean: null,
-							data: null,
-						},
-					],
-				},
-				{
-					attribute: {
 						id: 'attr_01GW2HHFVJDKVF1HV7559CNZCY',
 						tsKey: 'eligibility.other-describe',
 						tsNs: 'attribute',
@@ -2122,25 +1975,164 @@ export const servicesMock = [
 						},
 					],
 				},
-			],
-			serviceAreas: [
 				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
+					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
+						tsKey: 'additional.has-confidentiality-policy',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'additional-information',
+									icon: null,
 								},
-								tsKey: 'us-district-of-columbia',
-								tsNs: 'gov-dist',
-								abbrev: 'DC',
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
+						tsKey: 'eligibility.time-appointment-required',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
+						tsKey: 'cost.cost-free',
+						tsNs: 'attribute',
+						icon: 'carbon:piggy-bank',
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'cost',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9F8XBZ50671RY07JEYA',
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
+						tsKey: 'eligibility.elig-age',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9F8YBG3RW555BEJPX43',
+							country: null,
+							language: null,
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: {
+								max: 24,
+								min: 13,
 							},
 						},
 					],
 				},
 			],
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
+								tsNs: 'gov-dist',
+								tsKey: 'type-district',
+							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
+						},
+					},
+				],
+			},
 			services: [
 				{
 					tag: {
@@ -2338,29 +2330,6 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
-						tsKey: 'additional.has-confidentiality-policy',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'additional-information',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
 						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
 						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
@@ -2394,6 +2363,29 @@ export const servicesMock = [
 							data: null,
 						},
 					],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
+						tsKey: 'additional.has-confidentiality-policy',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'additional-information',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
 				},
 				{
 					attribute: {
@@ -2446,24 +2438,22 @@ export const servicesMock = [
 					],
 				},
 			],
-			serviceAreas: [
-				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
-								},
-								tsKey: 'us-district-of-columbia',
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
 								tsNs: 'gov-dist',
-								abbrev: 'DC',
+								tsKey: 'type-district',
 							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
 						},
-					],
-				},
-			],
+					},
+				],
+			},
 			services: [
 				{
 					tag: {
@@ -2591,118 +2581,6 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
-								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
-								tsKey: 'serviceaccess.accessphone',
-								tsNs: 'attribute',
-								icon: null,
-								iconBg: null,
-								showOnLocation: null,
-								categories: [
-									{
-										category: {
-											tag: 'service-access-instructions',
-											icon: null,
-										},
-									},
-								],
-								_count: {
-									parents: 0,
-									children: 0,
-								},
-							},
-							supplement: [
-								{
-									id: 'atts_01GW2HT9F94A2CZJA09MNFDGA1',
-									country: null,
-									language: null,
-									text: {
-										key: 'whitman-walker-health.attribute.atts_01GW2HT9F94A2CZJA09MNFDGA1',
-										ns: 'org-data',
-										tsKey: {
-											text: "Call the Whitman-Walker Health's legal team for help with this legal issue. Their intake staff will talk with you over the phone to see if they can help you.",
-										},
-									},
-									govDist: null,
-									boolean: null,
-									data: {
-										json: {
-											_id: {
-												$oid: '5e7e4bdbd54f1760921a4241',
-											},
-											access_type: 'phone',
-											access_value: '202-939-7630',
-											instructions:
-												"Call the Whitman-Walker Health's legal team for help with this legal issue. Their intake staff will talk with you over the phone to see if they can help you. ",
-											access_value_ES: '202-939-7630',
-											instructions_ES:
-												'Llama al equipo legal de Whitman-Walker Health para obtener ayuda con este problema legal. Su personal de admisión hablará contigo por teléfono para ver si pueden ayudarte.',
-										},
-									},
-								},
-							],
-						},
-					],
-				},
-				{
-					attributes: [
-						{
-							attribute: {
-								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
-								tsKey: 'serviceaccess.accesslocation',
-								tsNs: 'attribute',
-								icon: null,
-								iconBg: null,
-								showOnLocation: null,
-								categories: [
-									{
-										category: {
-											tag: 'service-access-instructions',
-											icon: null,
-										},
-									},
-								],
-								_count: {
-									parents: 0,
-									children: 0,
-								},
-							},
-							supplement: [
-								{
-									id: 'atts_01GW2HT9F9DGM8BZDP5DT29AHR',
-									country: null,
-									language: null,
-									text: {
-										key: 'whitman-walker-health.attribute.atts_01GW2HT9F9DGM8BZDP5DT29AHR',
-										ns: 'org-data',
-										tsKey: {
-											text: 'Walk-in appointments are available at Whitman-Walker 1525, Monday through Friday, 9:00 to 17:00.',
-										},
-									},
-									govDist: null,
-									boolean: null,
-									data: {
-										json: {
-											_id: {
-												$oid: '5e7e4bdbd54f1760921a4243',
-											},
-											access_type: 'location',
-											access_value: '1525 14th St, NW Washington, DC 20005',
-											instructions:
-												'Walk-in appointments are available at Whitman-Walker 1525, Monday through Friday, 9:00 to 17:00.',
-											access_value_ES: '1525 14th St, NW Washington, DC 20005',
-											instructions_ES:
-												'Las citas sin cita están disponibles en Whitman-Walker 1525, de lunes a viernes, de 9:00 a 17:00.',
-										},
-									},
-								},
-							],
-						},
-					],
-				},
-				{
-					attributes: [
-						{
-							attribute: {
 								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
 								tsKey: 'serviceaccess.accesslocation',
 								tsNs: 'attribute',
@@ -2804,6 +2682,118 @@ export const servicesMock = [
 											access_value_ES: '202-745-7000',
 											instructions_ES:
 												'Comunícate con la oficina principal sobre los servicios que se ofrecen en varios idiomas si lo solicitas.',
+										},
+									},
+								},
+							],
+						},
+					],
+				},
+				{
+					attributes: [
+						{
+							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
+								tsKey: 'serviceaccess.accessphone',
+								tsNs: 'attribute',
+								icon: null,
+								iconBg: null,
+								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
+								_count: {
+									parents: 0,
+									children: 0,
+								},
+							},
+							supplement: [
+								{
+									id: 'atts_01GW2HT9F94A2CZJA09MNFDGA1',
+									country: null,
+									language: null,
+									text: {
+										key: 'whitman-walker-health.attribute.atts_01GW2HT9F94A2CZJA09MNFDGA1',
+										ns: 'org-data',
+										tsKey: {
+											text: "Call the Whitman-Walker Health's legal team for help with this legal issue. Their intake staff will talk with you over the phone to see if they can help you.",
+										},
+									},
+									govDist: null,
+									boolean: null,
+									data: {
+										json: {
+											_id: {
+												$oid: '5e7e4bdbd54f1760921a4241',
+											},
+											access_type: 'phone',
+											access_value: '202-939-7630',
+											instructions:
+												"Call the Whitman-Walker Health's legal team for help with this legal issue. Their intake staff will talk with you over the phone to see if they can help you. ",
+											access_value_ES: '202-939-7630',
+											instructions_ES:
+												'Llama al equipo legal de Whitman-Walker Health para obtener ayuda con este problema legal. Su personal de admisión hablará contigo por teléfono para ver si pueden ayudarte.',
+										},
+									},
+								},
+							],
+						},
+					],
+				},
+				{
+					attributes: [
+						{
+							attribute: {
+								id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
+								tsKey: 'serviceaccess.accesslocation',
+								tsNs: 'attribute',
+								icon: null,
+								iconBg: null,
+								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
+								_count: {
+									parents: 0,
+									children: 0,
+								},
+							},
+							supplement: [
+								{
+									id: 'atts_01GW2HT9F9DGM8BZDP5DT29AHR',
+									country: null,
+									language: null,
+									text: {
+										key: 'whitman-walker-health.attribute.atts_01GW2HT9F9DGM8BZDP5DT29AHR',
+										ns: 'org-data',
+										tsKey: {
+											text: 'Walk-in appointments are available at Whitman-Walker 1525, Monday through Friday, 9:00 to 17:00.',
+										},
+									},
+									govDist: null,
+									boolean: null,
+									data: {
+										json: {
+											_id: {
+												$oid: '5e7e4bdbd54f1760921a4243',
+											},
+											access_type: 'location',
+											access_value: '1525 14th St, NW Washington, DC 20005',
+											instructions:
+												'Walk-in appointments are available at Whitman-Walker 1525, Monday through Friday, 9:00 to 17:00.',
+											access_value_ES: '1525 14th St, NW Washington, DC 20005',
+											instructions_ES:
+												'Las citas sin cita están disponibles en Whitman-Walker 1525, de lunes a viernes, de 9:00 a 17:00.',
 										},
 									},
 								},
@@ -3000,8 +2990,8 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
-						tsKey: 'additional.has-confidentiality-policy',
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
+						tsKey: 'lang.lang-offered',
 						tsNs: 'attribute',
 						icon: null,
 						iconBg: null,
@@ -3009,7 +2999,7 @@ export const servicesMock = [
 						categories: [
 							{
 								category: {
-									tag: 'additional-information',
+									tag: 'languages',
 									icon: null,
 								},
 							},
@@ -3019,30 +3009,20 @@ export const servicesMock = [
 							children: 0,
 						},
 					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
-						tsKey: 'eligibility.time-appointment-required',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
-									icon: null,
-								},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9FCJ2DFW4SW2QPV7JBZ',
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
 							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
 						},
-					},
-					supplement: [],
+					],
 				},
 				{
 					attribute: {
@@ -3077,42 +3057,6 @@ export const servicesMock = [
 									text: 'Contact for more information on fees.',
 								},
 							},
-							govDist: null,
-							boolean: null,
-							data: null,
-						},
-					],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'languages',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9FCJ2DFW4SW2QPV7JBZ',
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
 							govDist: null,
 							boolean: null,
 							data: null,
@@ -3205,25 +3149,69 @@ export const servicesMock = [
 						},
 					],
 				},
-			],
-			serviceAreas: [
 				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
+					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
+						tsKey: 'additional.has-confidentiality-policy',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'additional-information',
+									icon: null,
 								},
-								tsKey: 'us-district-of-columbia',
-								tsNs: 'gov-dist',
-								abbrev: 'DC',
 							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
 						},
-					],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
+						tsKey: 'eligibility.time-appointment-required',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
 				},
 			],
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
+								tsNs: 'gov-dist',
+								tsKey: 'type-district',
+							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
+						},
+					},
+				],
+			},
 			services: [
 				{
 					tag: {
@@ -3424,29 +3412,6 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
-						tsKey: 'additional.has-confidentiality-policy',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'additional-information',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
 						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
 						tsKey: 'cost.cost-free',
 						tsNs: 'attribute',
@@ -3457,29 +3422,6 @@ export const servicesMock = [
 							{
 								category: {
 									tag: 'cost',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
-						tsKey: 'eligibility.time-appointment-required',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
 									icon: null,
 								},
 							},
@@ -3574,25 +3516,69 @@ export const servicesMock = [
 						},
 					],
 				},
-			],
-			serviceAreas: [
 				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
+					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
+						tsKey: 'additional.has-confidentiality-policy',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'additional-information',
+									icon: null,
 								},
-								tsKey: 'us-district-of-columbia',
-								tsNs: 'gov-dist',
-								abbrev: 'DC',
 							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
 						},
-					],
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
+						tsKey: 'eligibility.time-appointment-required',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
 				},
 			],
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
+								tsNs: 'gov-dist',
+								tsKey: 'type-district',
+							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
+						},
+					},
+				],
+			},
 			services: [
 				{
 					tag: {
@@ -3726,65 +3712,6 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
-						tsKey: 'cost.cost-free',
-						tsNs: 'attribute',
-						icon: 'carbon:piggy-bank',
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'cost',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'languages',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9FG0SFR8CEEEG8E91HG',
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							govDist: null,
-							boolean: null,
-							data: null,
-						},
-					],
-				},
-				{
-					attribute: {
 						id: 'attr_01GW2HHFVJDKVF1HV7559CNZCY',
 						tsKey: 'eligibility.other-describe',
 						tsNs: 'attribute',
@@ -3872,25 +3799,82 @@ export const servicesMock = [
 						},
 					],
 				},
-			],
-			serviceAreas: [
 				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
+					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
+						tsKey: 'cost.cost-free',
+						tsNs: 'attribute',
+						icon: 'carbon:piggy-bank',
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'cost',
+									icon: null,
 								},
-								tsKey: 'us-district-of-columbia',
-								tsNs: 'gov-dist',
-								abbrev: 'DC',
 							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9FG0SFR8CEEEG8E91HG',
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
 						},
 					],
 				},
 			],
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
+								tsNs: 'gov-dist',
+								tsKey: 'type-district',
+							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
+						},
+					},
+				],
+			},
 			services: [
 				{
 					tag: {
@@ -3906,6 +3890,61 @@ export const servicesMock = [
 				},
 			],
 			accessDetails: [
+				{
+					attributes: [
+						{
+							attribute: {
+								id: 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW',
+								tsKey: 'serviceaccess.accessemail',
+								tsNs: 'attribute',
+								icon: null,
+								iconBg: null,
+								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
+								_count: {
+									parents: 0,
+									children: 0,
+								},
+							},
+							supplement: [
+								{
+									id: 'atts_01GW2HT9FE5ARCNCQHREG91V57',
+									country: null,
+									language: null,
+									text: {
+										key: 'whitman-walker-health.attribute.atts_01GW2HT9FE5ARCNCQHREG91V57',
+										ns: 'org-data',
+										tsKey: {
+											text: "Email the Whitman-Walker Health's legal team for help with this legal issue.",
+										},
+									},
+									govDist: null,
+									boolean: null,
+									data: {
+										json: {
+											_id: {
+												$oid: '5e7e4bdbd54f1760921a426e',
+											},
+											access_type: 'email',
+											access_value: '',
+											instructions:
+												"Email the Whitman-Walker Health's legal team for help with this legal issue.",
+											instructions_ES:
+												'Envía un correo electrónico al equipo legal de Whitman-Walker Health para obtener ayuda con este problema legal.',
+										},
+									},
+								},
+							],
+						},
+					],
+				},
 				{
 					attributes: [
 						{
@@ -3955,61 +3994,6 @@ export const servicesMock = [
 											access_value_ES: '202-939-7630',
 											instructions_ES:
 												'Llama al equipo legal de Whitman-Walker Health para obtener ayuda con este problema legal. Su personal de admisión hablará contigo por teléfono para ver si pueden ayudarte.',
-										},
-									},
-								},
-							],
-						},
-					],
-				},
-				{
-					attributes: [
-						{
-							attribute: {
-								id: 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW',
-								tsKey: 'serviceaccess.accessemail',
-								tsNs: 'attribute',
-								icon: null,
-								iconBg: null,
-								showOnLocation: null,
-								categories: [
-									{
-										category: {
-											tag: 'service-access-instructions',
-											icon: null,
-										},
-									},
-								],
-								_count: {
-									parents: 0,
-									children: 0,
-								},
-							},
-							supplement: [
-								{
-									id: 'atts_01GW2HT9FE5ARCNCQHREG91V57',
-									country: null,
-									language: null,
-									text: {
-										key: 'whitman-walker-health.attribute.atts_01GW2HT9FE5ARCNCQHREG91V57',
-										ns: 'org-data',
-										tsKey: {
-											text: "Email the Whitman-Walker Health's legal team for help with this legal issue.",
-										},
-									},
-									govDist: null,
-									boolean: null,
-									data: {
-										json: {
-											_id: {
-												$oid: '5e7e4bdbd54f1760921a426e',
-											},
-											access_type: 'email',
-											access_value: '',
-											instructions:
-												"Email the Whitman-Walker Health's legal team for help with this legal issue.",
-											instructions_ES:
-												'Envía un correo electrónico al equipo legal de Whitman-Walker Health para obtener ayuda con este problema legal.',
 										},
 									},
 								},
@@ -4098,14 +4082,14 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
-									id: 'atts_01GW2HT9FF3NQTQ8WVYQTE8GEQ',
+									id: 'atts_01GW2HT9FFVMJFP7CZ1D1P8KEY',
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GW2HT9FF3NQTQ8WVYQTE8GEQ',
+										key: 'whitman-walker-health.attribute.atts_01GW2HT9FFVMJFP7CZ1D1P8KEY',
 										ns: 'org-data',
 										tsKey: {
-											text: 'Appointments are available at Max Robinson Center Monday through Thursday 08:30-12:30 & 13:30-17:30; and Fridays 08:30-12:30 & 14:15-17:30.',
+											text: 'Appointments are available at Whitman-Walker at LIZ Mondays & Wednesdays 09:00 –12:15 pm & 13:45 – 16:30; Tuesdays & Thursdays 09:00 – 12:15 &  13:45 – 17:30.',
 										},
 									},
 									govDist: null,
@@ -4113,15 +4097,15 @@ export const servicesMock = [
 									data: {
 										json: {
 											_id: {
-												$oid: '5e7e4bdbd54f1760921a4270',
+												$oid: '6220dbf0d99d3c002ee5870b',
 											},
 											access_type: 'location',
-											access_value: '2301 M. Luther King Jr., Washington DC 20020',
+											access_value: '1377 R St, NW, Suite 200 Washington, DC 20009',
 											instructions:
-												'Appointments are available at Max Robinson Center Monday through Thursday 08:30-12:30 & 13:30-17:30; and Fridays 08:30-12:30 & 14:15-17:30.',
-											access_value_ES: '2301 M. Luther King Jr., Washington DC 20020',
+												'Appointments are available at Whitman-Walker at LIZ Mondays & Wednesdays 09:00 –12:15 pm & 13:45 – 16:30; Tuesdays & Thursdays 09:00 – 12:15 &  13:45 – 17:30.',
+											access_value_ES: '1377 R St, NW, Suite 200 Washington, DC 20009',
 											instructions_ES:
-												'Las citas están disponibles en Max Robinson Center de lunes a jueves de 08:30 a 12:30 y de 13:30 a 17:30; y viernes 08:30-12:30 y 14:15-17:30.',
+												'Las citas están disponibles en Whitman-Walker en LIZ los lunes y miércoles de 09:00 a 12:15 y de 13:45 a 16:30; Martes y jueves 09:00 – 12:15 y 13:45 – 17:30.',
 										},
 									},
 								},
@@ -4211,14 +4195,14 @@ export const servicesMock = [
 							},
 							supplement: [
 								{
-									id: 'atts_01GW2HT9FFVMJFP7CZ1D1P8KEY',
+									id: 'atts_01GW2HT9FF3NQTQ8WVYQTE8GEQ',
 									country: null,
 									language: null,
 									text: {
-										key: 'whitman-walker-health.attribute.atts_01GW2HT9FFVMJFP7CZ1D1P8KEY',
+										key: 'whitman-walker-health.attribute.atts_01GW2HT9FF3NQTQ8WVYQTE8GEQ',
 										ns: 'org-data',
 										tsKey: {
-											text: 'Appointments are available at Whitman-Walker at LIZ Mondays & Wednesdays 09:00 –12:15 pm & 13:45 – 16:30; Tuesdays & Thursdays 09:00 – 12:15 &  13:45 – 17:30.',
+											text: 'Appointments are available at Max Robinson Center Monday through Thursday 08:30-12:30 & 13:30-17:30; and Fridays 08:30-12:30 & 14:15-17:30.',
 										},
 									},
 									govDist: null,
@@ -4226,15 +4210,15 @@ export const servicesMock = [
 									data: {
 										json: {
 											_id: {
-												$oid: '6220dbf0d99d3c002ee5870b',
+												$oid: '5e7e4bdbd54f1760921a4270',
 											},
 											access_type: 'location',
-											access_value: '1377 R St, NW, Suite 200 Washington, DC 20009',
+											access_value: '2301 M. Luther King Jr., Washington DC 20020',
 											instructions:
-												'Appointments are available at Whitman-Walker at LIZ Mondays & Wednesdays 09:00 –12:15 pm & 13:45 – 16:30; Tuesdays & Thursdays 09:00 – 12:15 &  13:45 – 17:30.',
-											access_value_ES: '1377 R St, NW, Suite 200 Washington, DC 20009',
+												'Appointments are available at Max Robinson Center Monday through Thursday 08:30-12:30 & 13:30-17:30; and Fridays 08:30-12:30 & 14:15-17:30.',
+											access_value_ES: '2301 M. Luther King Jr., Washington DC 20020',
 											instructions_ES:
-												'Las citas están disponibles en Whitman-Walker en LIZ los lunes y miércoles de 09:00 a 12:15 y de 13:45 a 16:30; Martes y jueves 09:00 – 12:15 y 13:45 – 17:30.',
+												'Las citas están disponibles en Max Robinson Center de lunes a jueves de 08:30 a 12:30 y de 13:30 a 17:30; y viernes 08:30-12:30 y 14:15-17:30.',
 										},
 									},
 								},
@@ -4318,150 +4302,6 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
-						tsKey: 'additional.has-confidentiality-policy',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'additional-information',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
-						tsKey: 'cost.cost-free',
-						tsNs: 'attribute',
-						icon: 'carbon:piggy-bank',
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'cost',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
-						tsKey: 'eligibility.time-appointment-required',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
-						tsKey: 'cost.cost-fees',
-						tsNs: 'attribute',
-						icon: 'carbon:piggy-bank',
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'cost',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9FHDJG98PD82333SEV0',
-							country: null,
-							language: null,
-							text: {
-								key: 'whitman-walker-health.attribute.atts_01GW2HT9FHDJG98PD82333SEV0',
-								ns: 'org-data',
-								tsKey: {
-									text: 'The vaccine will be free.',
-								},
-							},
-							govDist: null,
-							boolean: null,
-							data: null,
-						},
-					],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'languages',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9FH7QPW00YKZNPK4CTY',
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							govDist: null,
-							boolean: null,
-							data: null,
-						},
-					],
-				},
-				{
-					attribute: {
 						id: 'attr_01GW2HHFVK8KPRGKYFSSM5ECPQ',
 						tsKey: 'sys.incompatible-info',
 						tsNs: 'attribute',
@@ -4507,25 +4347,167 @@ export const servicesMock = [
 						},
 					],
 				},
-			],
-			serviceAreas: [
 				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
+					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
+						tsKey: 'additional.has-confidentiality-policy',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'additional-information',
+									icon: null,
 								},
-								tsKey: 'us-district-of-columbia',
-								tsNs: 'gov-dist',
-								abbrev: 'DC',
 							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
+						tsKey: 'eligibility.time-appointment-required',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
+						tsKey: 'cost.cost-free',
+						tsNs: 'attribute',
+						icon: 'carbon:piggy-bank',
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'cost',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9FH7QPW00YKZNPK4CTY',
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
+						tsKey: 'cost.cost-fees',
+						tsNs: 'attribute',
+						icon: 'carbon:piggy-bank',
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'cost',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9FHDJG98PD82333SEV0',
+							country: null,
+							language: null,
+							text: {
+								key: 'whitman-walker-health.attribute.atts_01GW2HT9FHDJG98PD82333SEV0',
+								ns: 'org-data',
+								tsKey: {
+									text: 'The vaccine will be free.',
+								},
+							},
+							govDist: null,
+							boolean: null,
+							data: null,
 						},
 					],
 				},
 			],
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
+								tsNs: 'gov-dist',
+								tsKey: 'type-district',
+							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
+						},
+					},
+				],
+			},
 			services: [
 				{
 					tag: {
@@ -4599,62 +4581,6 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
-								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
-								tsKey: 'serviceaccess.accessphone',
-								tsNs: 'attribute',
-								icon: null,
-								iconBg: null,
-								showOnLocation: null,
-								categories: [
-									{
-										category: {
-											tag: 'service-access-instructions',
-											icon: null,
-										},
-									},
-								],
-								_count: {
-									parents: 0,
-									children: 0,
-								},
-							},
-							supplement: [
-								{
-									id: 'atts_01GW2HT9FHA4WJG4WAD6V75V9W',
-									country: null,
-									language: null,
-									text: {
-										key: 'whitman-walker-health.attribute.atts_01GW2HT9FHA4WJG4WAD6V75V9W',
-										ns: 'org-data',
-										tsKey: {
-											text: 'You can also text Whitman-Walker Health to schedule a vaccine appointment.',
-										},
-									},
-									govDist: null,
-									boolean: null,
-									data: {
-										json: {
-											_id: {
-												$oid: '61fa9e5f706e5300349c36cd',
-											},
-											access_type: 'phone',
-											access_value: '202-978-6123',
-											instructions:
-												'You can also text Whitman-Walker Health to schedule a vaccine appointment.',
-											access_value_ES: '202-978-6123',
-											instructions_ES:
-												'También puedes enviar un mensaje de texto a Whitman-Walker Health para programar una cita para la vacuna.',
-										},
-									},
-								},
-							],
-						},
-					],
-				},
-				{
-					attributes: [
-						{
-							attribute: {
 								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
@@ -4700,6 +4626,62 @@ export const servicesMock = [
 												'https://www.whitman-walker.org/blogs-and-stories/covid-19-vaccine-faq/',
 											instructions_ES:
 												'Consulta el sitio web de Whitman-Walker Health para obtener más información.',
+										},
+									},
+								},
+							],
+						},
+					],
+				},
+				{
+					attributes: [
+						{
+							attribute: {
+								id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
+								tsKey: 'serviceaccess.accessphone',
+								tsNs: 'attribute',
+								icon: null,
+								iconBg: null,
+								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
+								_count: {
+									parents: 0,
+									children: 0,
+								},
+							},
+							supplement: [
+								{
+									id: 'atts_01GW2HT9FHA4WJG4WAD6V75V9W',
+									country: null,
+									language: null,
+									text: {
+										key: 'whitman-walker-health.attribute.atts_01GW2HT9FHA4WJG4WAD6V75V9W',
+										ns: 'org-data',
+										tsKey: {
+											text: 'You can also text Whitman-Walker Health to schedule a vaccine appointment.',
+										},
+									},
+									govDist: null,
+									boolean: null,
+									data: {
+										json: {
+											_id: {
+												$oid: '61fa9e5f706e5300349c36cd',
+											},
+											access_type: 'phone',
+											access_value: '202-978-6123',
+											instructions:
+												'You can also text Whitman-Walker Health to schedule a vaccine appointment.',
+											access_value_ES: '202-978-6123',
+											instructions_ES:
+												'También puedes enviar un mensaje de texto a Whitman-Walker Health para programar una cita para la vacuna.',
 										},
 									},
 								},
@@ -4761,173 +4743,6 @@ export const servicesMock = [
 			},
 			hours: [],
 			attributes: [
-				{
-					attribute: {
-						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
-						tsKey: 'additional.has-confidentiality-policy',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'additional-information',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
-						tsKey: 'eligibility.time-appointment-required',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
-						tsKey: 'cost.cost-fees',
-						tsNs: 'attribute',
-						icon: 'carbon:piggy-bank',
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'cost',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9FKYRTJ0QZ2G84NZ33S',
-							country: null,
-							language: null,
-							text: {
-								key: 'whitman-walker-health.attribute.atts_01GW2HT9FKYRTJ0QZ2G84NZ33S',
-								ns: 'org-data',
-								tsKey: {
-									text: 'Contact for more information on fees.',
-								},
-							},
-							govDist: null,
-							boolean: null,
-							data: null,
-						},
-					],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVH0GQK0GAJR5D952V3',
-						tsKey: 'eligibility.req-proof-of-age',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVHZ599M48CMSPGDCSC',
-						tsKey: 'eligibility.req-photo-id',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
-						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
-						tsKey: 'lang.lang-offered',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'languages',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [
-						{
-							id: 'atts_01GW2HT9FK3E82QQ2H17GBS476',
-							country: null,
-							language: {
-								languageName: 'English',
-								nativeName: 'English',
-							},
-							text: null,
-							govDist: null,
-							boolean: null,
-							data: null,
-						},
-					],
-				},
 				{
 					attribute: {
 						id: 'attr_01GW2HHFVJDKVF1HV7559CNZCY',
@@ -5017,25 +4832,190 @@ export const servicesMock = [
 						},
 					],
 				},
-			],
-			serviceAreas: [
 				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
+					attribute: {
+						id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
+						tsKey: 'additional.has-confidentiality-policy',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'additional-information',
+									icon: null,
 								},
-								tsKey: 'us-district-of-columbia',
-								tsNs: 'gov-dist',
-								abbrev: 'DC',
 							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
+						tsKey: 'eligibility.time-appointment-required',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVH0GQK0GAJR5D952V3',
+						tsKey: 'eligibility.req-proof-of-age',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVHZ599M48CMSPGDCSC',
+						tsKey: 'eligibility.req-photo-id',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
+						tsKey: 'lang.lang-offered',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'languages',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9FK3E82QQ2H17GBS476',
+							country: null,
+							language: {
+								languageName: 'English',
+								nativeName: 'English',
+							},
+							text: null,
+							govDist: null,
+							boolean: null,
+							data: null,
+						},
+					],
+				},
+				{
+					attribute: {
+						id: 'attr_01GW2HHFVGWKWB53HWAAHQ9AAZ',
+						tsKey: 'cost.cost-fees',
+						tsNs: 'attribute',
+						icon: 'carbon:piggy-bank',
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'cost',
+									icon: null,
+								},
+							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
+						},
+					},
+					supplement: [
+						{
+							id: 'atts_01GW2HT9FKYRTJ0QZ2G84NZ33S',
+							country: null,
+							language: null,
+							text: {
+								key: 'whitman-walker-health.attribute.atts_01GW2HT9FKYRTJ0QZ2G84NZ33S',
+								ns: 'org-data',
+								tsKey: {
+									text: 'Contact for more information on fees.',
+								},
+							},
+							govDist: null,
+							boolean: null,
+							data: null,
 						},
 					],
 				},
 			],
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
+								tsNs: 'gov-dist',
+								tsKey: 'type-district',
+							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
+						},
+					},
+				],
+			},
 			services: [
 				{
 					tag: {
@@ -5110,6 +5090,61 @@ export const servicesMock = [
 					attributes: [
 						{
 							attribute: {
+								id: 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW',
+								tsKey: 'serviceaccess.accessemail',
+								tsNs: 'attribute',
+								icon: null,
+								iconBg: null,
+								showOnLocation: null,
+								categories: [
+									{
+										category: {
+											tag: 'service-access-instructions',
+											icon: null,
+										},
+									},
+								],
+								_count: {
+									parents: 0,
+									children: 0,
+								},
+							},
+							supplement: [
+								{
+									id: 'atts_01GW2HT9FK5WYEX857QKM3KM2F',
+									country: null,
+									language: null,
+									text: {
+										key: 'whitman-walker-health.attribute.atts_01GW2HT9FK5WYEX857QKM3KM2F',
+										ns: 'org-data',
+										tsKey: {
+											text: 'Email for more information about their Gender Affirming Services.',
+										},
+									},
+									govDist: null,
+									boolean: null,
+									data: {
+										json: {
+											_id: {
+												$oid: '5e953b4def07fe001758d6b1',
+											},
+											access_type: 'email',
+											access_value: 'Transhealth@whitman-walker.org',
+											instructions: 'Email for more information about their Gender Affirming Services.',
+											access_value_ES: 'Transhealth@whitman-walker.org',
+											instructions_ES:
+												'Envía un correo electrónico para obtener más información sobre sus servicios de afirmación de género.',
+										},
+									},
+								},
+							],
+						},
+					],
+				},
+				{
+					attributes: [
+						{
+							attribute: {
 								id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
 								tsKey: 'serviceaccess.accesslink',
 								tsNs: 'attribute',
@@ -5157,61 +5192,6 @@ export const servicesMock = [
 												'https://www.whitman-walker.org/care-program/transgender-care-hormone-therapy-ht-hrt',
 											instructions_ES:
 												'Visita el sitio web para obtener más información sobre la terapia hormonal de afirmación de género de Whitman-Walker Health.',
-										},
-									},
-								},
-							],
-						},
-					],
-				},
-				{
-					attributes: [
-						{
-							attribute: {
-								id: 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW',
-								tsKey: 'serviceaccess.accessemail',
-								tsNs: 'attribute',
-								icon: null,
-								iconBg: null,
-								showOnLocation: null,
-								categories: [
-									{
-										category: {
-											tag: 'service-access-instructions',
-											icon: null,
-										},
-									},
-								],
-								_count: {
-									parents: 0,
-									children: 0,
-								},
-							},
-							supplement: [
-								{
-									id: 'atts_01GW2HT9FK5WYEX857QKM3KM2F',
-									country: null,
-									language: null,
-									text: {
-										key: 'whitman-walker-health.attribute.atts_01GW2HT9FK5WYEX857QKM3KM2F',
-										ns: 'org-data',
-										tsKey: {
-											text: 'Email for more information about their Gender Affirming Services.',
-										},
-									},
-									govDist: null,
-									boolean: null,
-									data: {
-										json: {
-											_id: {
-												$oid: '5e953b4def07fe001758d6b1',
-											},
-											access_type: 'email',
-											access_value: 'Transhealth@whitman-walker.org',
-											instructions: 'Email for more information about their Gender Affirming Services.',
-											access_value_ES: 'Transhealth@whitman-walker.org',
-											instructions_ES:
-												'Envía un correo electrónico para obtener más información sobre sus servicios de afirmación de género.',
 										},
 									},
 								},
@@ -5387,24 +5367,22 @@ export const servicesMock = [
 					],
 				},
 			],
-			serviceAreas: [
-				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
-								},
-								tsKey: 'us-district-of-columbia',
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
 								tsNs: 'gov-dist',
-								abbrev: 'DC',
+								tsKey: 'type-district',
 							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
 						},
-					],
-				},
-			],
+					},
+				],
+			},
 			services: [
 				{
 					tag: {
@@ -5558,29 +5536,6 @@ export const servicesMock = [
 			attributes: [
 				{
 					attribute: {
-						id: 'attr_01GW2HHFVHEVX4PMNN077ASQMG',
-						tsKey: 'eligibility.req-proof-of-income',
-						tsNs: 'attribute',
-						icon: null,
-						iconBg: null,
-						showOnLocation: null,
-						categories: [
-							{
-								category: {
-									tag: 'eligibility-requirements',
-									icon: null,
-								},
-							},
-						],
-						_count: {
-							parents: 0,
-							children: 0,
-						},
-					},
-					supplement: [],
-				},
-				{
-					attribute: {
 						id: 'attr_01GW2HHFVHGMVCAY1G5BWF1PFB',
 						tsKey: 'eligibility.req-proof-of-residence',
 						tsNs: 'attribute',
@@ -5604,8 +5559,8 @@ export const servicesMock = [
 				},
 				{
 					attribute: {
-						id: 'attr_01GW2HHFVHZ599M48CMSPGDCSC',
-						tsKey: 'eligibility.req-photo-id',
+						id: 'attr_01GW2HHFVHEVX4PMNN077ASQMG',
+						tsKey: 'eligibility.req-proof-of-income',
 						tsNs: 'attribute',
 						icon: null,
 						iconBg: null,
@@ -5661,25 +5616,46 @@ export const servicesMock = [
 						},
 					],
 				},
-			],
-			serviceAreas: [
 				{
-					countries: [],
-					districts: [
-						{
-							govDist: {
-								govDistType: {
-									tsNs: 'gov-dist',
-									tsKey: 'type-district',
+					attribute: {
+						id: 'attr_01GW2HHFVHZ599M48CMSPGDCSC',
+						tsKey: 'eligibility.req-photo-id',
+						tsNs: 'attribute',
+						icon: null,
+						iconBg: null,
+						showOnLocation: null,
+						categories: [
+							{
+								category: {
+									tag: 'eligibility-requirements',
+									icon: null,
 								},
-								tsKey: 'us-district-of-columbia',
-								tsNs: 'gov-dist',
-								abbrev: 'DC',
 							},
+						],
+						_count: {
+							parents: 0,
+							children: 0,
 						},
-					],
+					},
+					supplement: [],
 				},
 			],
+			serviceAreas: {
+				countries: [],
+				districts: [
+					{
+						govDist: {
+							govDistType: {
+								tsNs: 'gov-dist',
+								tsKey: 'type-district',
+							},
+							tsKey: 'us-district-of-columbia',
+							tsNs: 'gov-dist',
+							abbrev: 'DC',
+						},
+					},
+				],
+			},
 			services: [
 				{
 					tag: {

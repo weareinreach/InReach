@@ -415,7 +415,7 @@ model Organization {
   socialMedia   OrgSocialMedia[]
   websites      OrgWebsite[]
   reviews       OrgReview[]
-  serviceAreas  ServiceArea[]
+  serviceAreas  ServiceArea?
   hours         OrgHours[] // for schedules that need to be assigned to locations
   attributes    OrganizationAttribute[]
 
@@ -634,7 +634,7 @@ model OrgLocation {
   phones       OrgLocationPhone[] /// if location specific
   photos       OrgPhoto[]
   services     OrgLocationService[]
-  serviceAreas ServiceArea[]
+  serviceAreas ServiceArea?
   socialMedia  OrgSocialMedia[] /// if location specific
 
   // Outside API connections
@@ -761,7 +761,7 @@ model OrgService {
   serviceNameId String?            @unique
   // Nested data
   services      OrgServiceTag[]
-  serviceAreas  ServiceArea[]
+  serviceAreas  ServiceArea?
   hours         OrgHours[]
   reviews       OrgReview[]
   attributes    ServiceAttribute[]

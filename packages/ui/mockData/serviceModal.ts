@@ -29,12 +29,61 @@ export const mockServiceData = {
 			},
 		},
 	],
-	serviceAreas: [
-		{
-			countries: [],
-			districts: [
-				{
-					govDist: {
+	serviceAreas: {
+		countries: [],
+		districts: [
+			{
+				govDist: {
+					id: 'gdst_01GW2HJ23GMD17FBJMJWD16PZ1',
+					name: 'California',
+					slug: 'us-california',
+					iso: 'US-CA',
+					abbrev: 'CA',
+					country: {
+						cca2: 'US',
+						cca3: 'USA',
+						id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+						name: 'United States',
+						dialCode: null,
+						flag: '🇺🇸',
+						tsKey: 'USA.name',
+						tsNs: 'country',
+					},
+					govDistType: {
+						tsKey: 'type-state',
+						tsNs: 'gov-dist',
+					},
+					isPrimary: true,
+					tsKey: 'us-california',
+					tsNs: 'gov-dist',
+					parent: null,
+				},
+			},
+			{
+				govDist: {
+					id: 'gdst_01GW2HJ2S1061RNRAT6S4RJN1S',
+					name: 'San Francisco',
+					slug: 'us-california-san-francisco-county',
+					iso: null,
+					abbrev: null,
+					country: {
+						cca2: 'US',
+						cca3: 'USA',
+						id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+						name: 'United States',
+						dialCode: null,
+						flag: '🇺🇸',
+						tsKey: 'USA.name',
+						tsNs: 'country',
+					},
+					govDistType: {
+						tsKey: 'type-county',
+						tsNs: 'gov-dist',
+					},
+					isPrimary: false,
+					tsKey: 'us-california-san-francisco-county',
+					tsNs: 'gov-dist',
+					parent: {
 						id: 'gdst_01GW2HJ23GMD17FBJMJWD16PZ1',
 						name: 'California',
 						slug: 'us-california',
@@ -57,62 +106,11 @@ export const mockServiceData = {
 						isPrimary: true,
 						tsKey: 'us-california',
 						tsNs: 'gov-dist',
-						parent: null,
 					},
 				},
-				{
-					govDist: {
-						id: 'gdst_01GW2HJ2S1061RNRAT6S4RJN1S',
-						name: 'San Francisco',
-						slug: 'us-california-san-francisco-county',
-						iso: null,
-						abbrev: null,
-						country: {
-							cca2: 'US',
-							cca3: 'USA',
-							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
-							name: 'United States',
-							dialCode: null,
-							flag: '🇺🇸',
-							tsKey: 'USA.name',
-							tsNs: 'country',
-						},
-						govDistType: {
-							tsKey: 'type-county',
-							tsNs: 'gov-dist',
-						},
-						isPrimary: false,
-						tsKey: 'us-california-san-francisco-county',
-						tsNs: 'gov-dist',
-						parent: {
-							id: 'gdst_01GW2HJ23GMD17FBJMJWD16PZ1',
-							name: 'California',
-							slug: 'us-california',
-							iso: 'US-CA',
-							abbrev: 'CA',
-							country: {
-								cca2: 'US',
-								cca3: 'USA',
-								id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
-								name: 'United States',
-								dialCode: null,
-								flag: '🇺🇸',
-								tsKey: 'USA.name',
-								tsNs: 'country',
-							},
-							govDistType: {
-								tsKey: 'type-state',
-								tsNs: 'gov-dist',
-							},
-							isPrimary: true,
-							tsKey: 'us-california',
-							tsNs: 'gov-dist',
-						},
-					},
-				},
-			],
-		},
-	],
+			},
+		],
+	},
 	hours: [],
 	reviews: [],
 	attributes: [
