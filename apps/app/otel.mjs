@@ -1,31 +1,26 @@
-// Imports
+/* eslint-disable turbo/no-undeclared-env-vars */
+/* eslint-disable node/no-process-env */
+// import { context, trace } from '@opentelemetry/api'
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http'
-import { registerInstrumentations } from '@opentelemetry/instrumentation'
 import { Resource } from '@opentelemetry/resources'
-import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-base'
-import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node'
+import { NodeSDK } from '@opentelemetry/sdk-node'
+import { SimpleSpanProcessor } from '@opentelemetry/sdk-trace-node'
 import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions'
 import { PrismaInstrumentation } from '@prisma/instrumentation'
+import { config } from 'dotenv'
 
-// Configure the trace provider
-const provider = new NodeTracerProvider({
+config({ path: '../../.env' })
+const otelTraceOptions = process.env.OTEL_SERVER ? { url: process.env.OTEL_SERVER } : undefined
+console.log('Initializing OpenTelemetry...')
+
+if (otelTraceOptions) {
+	console.log(`Using custom server: ${otelTraceOptions.url}`)
+}
+const sdk = new NodeSDK({
 	resource: new Resource({
-		[SemanticResourceAttributes.SERVICE_NAME]: 'nextjs',
+		[SemanticResourceAttributes.SERVICE_NAME]: 'inreach-app',
 	}),
-})
-
-// Configure how spans are processed and exported. In this case we're sending spans
-// as we receive them to an OTLP-compatible collector (e.g. Jaeger).
-provider.addSpanProcessor(
-	new SimpleSpanProcessor(new OTLPTraceExporter({ url: 'http://10.42.0.123:4318/v1/traces' }))
-)
-
-// Register your auto-instrumentors
-registerInstrumentations({
-	tracerProvider: provider,
+	spanProcessor: new SimpleSpanProcessor(new OTLPTraceExporter(otelTraceOptions)),
 	instrumentations: [new PrismaInstrumentation({ middleware: true })],
 })
-console.log('nextjs otel')
-
-// Register the provider globally
-provider.register()
+sdk.start()
