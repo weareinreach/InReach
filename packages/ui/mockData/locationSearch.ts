@@ -8,6 +8,8 @@ export const mockAutocomplete = (
 		.filter(({ searchValue }) => searchRegex.test(searchValue))
 		.map(({ searchValue, ...data }) => ({ ...data }))
 
+	if (!results.length) return { results, status: 'ZERO_RESULTS' }
+
 	return { results, status: 'OK' }
 }
 
