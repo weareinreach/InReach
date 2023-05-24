@@ -27,10 +27,6 @@ initializeMsw({
 		}
 	},
 })
-// whyDidYouRender(React, {
-// 	trackAllPureComponents: true,
-// 	// collapseGroups: true,
-// })
 
 const preview: Preview = {
 	parameters: {

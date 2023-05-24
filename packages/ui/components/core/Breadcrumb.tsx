@@ -1,6 +1,6 @@
 import { Button, createStyles, rem, Text, useMantineTheme } from '@mantine/core'
 import { Trans, useTranslation } from 'next-i18next'
-import { type MouseEventHandler } from 'react'
+import { type MouseEventHandler, useMemo } from 'react'
 
 import { Icon } from '~ui/icon'
 
@@ -26,7 +26,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const Breadcrumb = (props: BreadcrumbProps) => {
-	const { option } = props
+	const { option, backTo, backToText, onClick } = props
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
@@ -35,13 +35,13 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 		back: 'carbon:arrow-left',
 	} as const
 	const iconRender = icons[option]
-	const childrenRender = (function () {
+	const childrenRender = useMemo(() => {
 		switch (option) {
 			case 'close': {
 				return t('close')
 			}
 			case 'back': {
-				switch (props.backTo) {
+				switch (backTo) {
 					case 'search': {
 						return t('breadcrumb.back-to-search')
 					}
@@ -49,7 +49,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 						return t('words.back')
 					}
 					case 'dynamicText': {
-						const page = props.backToText
+						const page = backToText
 						return (
 							<Trans
 								i18nKey='breadcrumb.back-to-dynamic'
@@ -66,7 +66,8 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 			default:
 				return t('close')
 		}
-	})()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [option, backTo, backToText])
 
 	return (
 		<Button
@@ -84,25 +85,42 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 	)
 }
 
-export type BreadcrumbProps = BreadcrumbTypes & {
-	onClick: MouseEventHandler<HTMLButtonElement>
+export const isValidBreadcrumbProps = (props: PossibleBreadcrumbProps): props is BreadcrumbProps => {
+	if (props.option === 'close') return true
+	else if (props.option === 'back') {
+		if (props.backTo === 'dynamicText') {
+			if (typeof props.onClick === 'function' && typeof props.backToText === 'string') return true
+		} else if (props.backTo === 'none' || props.backTo === 'search') return true
+	}
+	return false
 }
-export type ModalTitleBreadcrumb = BreadcrumbTypes & {
+type PossibleBreadcrumbProps = {
+	option: string
+	onClick?: MouseEventHandler<HTMLButtonElement>
+	backTo?: string
+	backToText?: string
+}
+export type ModalTitleBreadcrumb = Omit<BreadcrumbProps, 'onClick'> & {
 	onClick?: MouseEventHandler<HTMLButtonElement>
 }
-
-export type BreadcrumbTypes = Close | Back | BackToDynamic
+export type BreadcrumbProps = Close | Back | BackToDynamic
 interface Close {
 	option: 'close'
+	onClick: MouseEventHandler<HTMLButtonElement>
+	backTo?: never
+	backToText?: never
 }
 
 interface Back {
 	option: 'back'
+	onClick?: MouseEventHandler<HTMLButtonElement>
 	backTo: 'search' | 'none'
+	backToText?: never
 }
 
 interface BackToDynamic {
 	option: 'back'
+	onClick?: MouseEventHandler<HTMLButtonElement>
 	backTo: 'dynamicText'
 	backToText: string
 }

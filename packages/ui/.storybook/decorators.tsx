@@ -1,5 +1,5 @@
 import { Center, Grid, MantineProvider, type MantineProviderProps } from '@mantine/core'
-import { ModalsProvider } from '@mantine/modals'
+// import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 import { type StoryContext, type StoryFn } from '@storybook/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -70,13 +70,13 @@ export const WithTRPC = (Story: StoryFn, { parameters }: StoryContext) => {
 
 	const trpcClientOpts = {
 		links: [
-			httpLink({
-				url: '/trpc',
-			}),
 			devtoolsLink({
 				enabled: true,
 			}),
 			loggerLink(),
+			httpLink({
+				url: '/trpc',
+			}),
 		],
 		transformer,
 	}
