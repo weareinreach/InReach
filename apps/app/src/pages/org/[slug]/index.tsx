@@ -1,7 +1,7 @@
 /* eslint-disable i18next/no-literal-string */
 import { Grid, Stack, Tabs } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
-import { type GetServerSideProps, type NextPage } from 'next'
+import { type GetServerSideProps, type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
@@ -124,14 +124,21 @@ const OrganizationPage: NextPage = () => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps<
-	Record<string, unknown>,
-	RoutedQuery<'/org/[slug]'>
-> = async ({ locale, params, req, res }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking', // false or "blocking"
+	}
+}
+
+export const getStaticProps: GetStaticProps<Record<string, unknown>, RoutedQuery<'/org/[slug]'>> = async ({
+	locale,
+	params,
+}) => {
 	if (!params) return { notFound: true }
 	const { slug } = params
 
-	const ssg = await trpcServerClient({ req, res })
+	const ssg = await trpcServerClient({ session: null })
 
 	await ssg.organization.getBySlug.prefetch({ slug })
 	const props = {
@@ -143,5 +150,25 @@ export const getServerSideProps: GetServerSideProps<
 		props,
 	}
 }
+
+// export const getServerSideProps: GetServerSideProps<
+// 	Record<string, unknown>,
+// 	RoutedQuery<'/org/[slug]'>
+// > = async ({ locale, params, req, res }) => {
+// 	if (!params) return { notFound: true }
+// 	const { slug } = params
+
+// 	const ssg = await trpcServerClient({ req, res })
+
+// 	await ssg.organization.getBySlug.prefetch({ slug })
+// 	const props = {
+// 		trpcState: ssg.dehydrate(),
+// 		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
+// 	}
+
+// 	return {
+// 		props,
+// 	}
+// }
 
 export default OrganizationPage

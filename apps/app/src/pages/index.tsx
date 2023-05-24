@@ -12,7 +12,7 @@ import {
 	useMantineTheme,
 } from '@mantine/core'
 import Autoplay from 'embla-carousel-autoplay'
-import { type GetServerSidePropsContext } from 'next'
+import { type GetServerSidePropsContext, type GetStaticProps } from 'next'
 import Head from 'next/head'
 import { type TFunction, Trans, useTranslation } from 'next-i18next'
 import { useRef, useState } from 'react'
@@ -249,19 +249,30 @@ const Home: NextPageWithoutGrid = () => {
 		</>
 	)
 }
+Home.omitGrid = true
 
-export const getServerSideProps = async ({ locale, req, res }: GetServerSidePropsContext) => {
-	const session = await getServerSession({ req, res })
-	const ssg = await trpcServerClient({ session })
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+	const ssg = await trpcServerClient({ session: null })
 	await ssg.review.getFeatured.prefetch(3)
 
 	return {
 		props: {
-			session,
 			trpcState: ssg.dehydrate(),
 			...(await getServerSideTranslations(locale, ['common', 'landingPage'])),
 		},
 	}
 }
-Home.omitGrid = true
+// export const getServerSideProps = async ({ locale, req, res }: GetServerSidePropsContext) => {
+// 	const session = await getServerSession({ req, res })
+// 	const ssg = await trpcServerClient({ session })
+// 	await ssg.review.getFeatured.prefetch(3)
+
+// 	return {
+// 		props: {
+// 			session,
+// 			trpcState: ssg.dehydrate(),
+// 			...(await getServerSideTranslations(locale, ['common', 'landingPage'])),
+// 		},
+// 	}
+// }
 export default Home

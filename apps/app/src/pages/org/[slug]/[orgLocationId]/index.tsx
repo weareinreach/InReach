@@ -1,5 +1,5 @@
 import { Grid, Image, Stack, Tabs } from '@mantine/core'
-import { type GetServerSideProps, type NextPage } from 'next'
+import { type GetServerSideProps, type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
@@ -100,12 +100,18 @@ const OrgLocationPage: NextPage = () => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale, params, req, res }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: 'blocking', // false or "blocking"
+	}
+}
+export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
 	const urlParams = z.object({ slug: z.string(), orgLocationId: z.string() }).safeParse(params)
 	if (!urlParams.success) return { notFound: true }
 	const { slug, orgLocationId } = urlParams.data
 
-	const ssg = await trpcServerClient({ req, res })
+	const ssg = await trpcServerClient({ session: null })
 	await ssg.organization.getBySlug.prefetch({ slug })
 	await ssg.location.getById.prefetch({ id: orgLocationId })
 	const props = {
@@ -117,4 +123,21 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params, r
 		props,
 	}
 }
+// export const getServerSideProps: GetServerSideProps = async ({ locale, params, req, res }) => {
+// 	const urlParams = z.object({ slug: z.string(), orgLocationId: z.string() }).safeParse(params)
+// 	if (!urlParams.success) return { notFound: true }
+// 	const { slug, orgLocationId } = urlParams.data
+
+// 	const ssg = await trpcServerClient({ req, res })
+// 	await ssg.organization.getBySlug.prefetch({ slug })
+// 	await ssg.location.getById.prefetch({ id: orgLocationId })
+// 	const props = {
+// 		trpcState: ssg.dehydrate(),
+// 		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
+// 	}
+
+// 	return {
+// 		props,
+// 	}
+// }
 export default OrgLocationPage
