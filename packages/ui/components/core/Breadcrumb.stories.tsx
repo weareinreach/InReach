@@ -30,6 +30,16 @@ export const BackToSearch = {
 		option: 'back',
 		backTo: 'search',
 	},
+	parameters: {
+		searchContext: {
+			searchState: {
+				params: ['dist', '-77.0368707', '38.9071923', '50', 'mi'],
+				attributes: [],
+				page: '1',
+				services: [],
+			},
+		},
+	},
 } satisfies StoryDef
 export const BackToDynamic = {
 	args: {
