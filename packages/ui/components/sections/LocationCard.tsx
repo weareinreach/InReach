@@ -4,6 +4,7 @@ import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
 import { formatAddress } from 'localized-address-format'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { useEffect } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { BadgeGroup } from '~ui/components/core/Badge'
@@ -56,6 +57,14 @@ export const LocationCard = (props: LocationCardProps) => {
 
 	const hasServices = Boolean(serviceTags.size)
 	const hasAttributes = Boolean(attributeTags.length)
+
+	useEffect(
+		() => {
+			router.prefetch(`/org/${router.query.slug as string}/${location.id}`)
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[location.id]
+	)
 
 	return (
 		<Card

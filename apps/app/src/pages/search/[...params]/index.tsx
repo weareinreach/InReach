@@ -4,7 +4,7 @@ import { type GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
@@ -27,13 +27,14 @@ const ParamSchema = z.tuple([
 const PageIndexSchema = z.coerce.number().default(1)
 
 const SearchResults = () => {
-	const { query, locale } = useRouter<'/search/[...params]'>()
+	const router = useRouter<'/search/[...params]'>()
 	const [filteredServices, setFilteredServices] = useState<string[]>([])
 	const [filteredAttributes, setFilteredAttributes] = useState<string[]>([])
 	const { t } = useTranslation(['services'])
-	const queryParams = ParamSchema.safeParse(query.params)
-	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
+	const queryParams = ParamSchema.safeParse(router.query.params)
+	const skip = (PageIndexSchema.parse(router.query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
+	const apiUtils = api.useContext()
 
 	const [error, setError] = useState(false)
 	const [data, setData] = useState<ApiOutput['organization']['searchDistance']>()
@@ -80,6 +81,29 @@ const SearchResults = () => {
 		}
 	}, [data])
 
+	const nextSkip = useMemo(
+		() => PageIndexSchema.parse(router.query.page) * SEARCH_RESULT_PAGE_SIZE,
+		[router.query.page]
+	)
+	useEffect(() => {
+		if (
+			router.query.page &&
+			PageIndexSchema.parse(router.query.page) < getSearchResultPageCount(data?.resultCount)
+		) {
+			console.log('prefetch')
+			apiUtils.organization.searchDistance.prefetch({
+				lat,
+				lon,
+				dist,
+				unit,
+				skip: nextSkip,
+				take,
+				services: filteredServices,
+				attributes: filteredAttributes,
+			})
+		}
+	})
+
 	if (error) return <>Error</>
 
 	return (
@@ -122,7 +146,7 @@ export const getServerSideProps: GetServerSideProps<
 	const nextPage = PageIndexSchema.parse(query.page) * SEARCH_RESULT_PAGE_SIZE
 
 	await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take })
-	await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip: nextPage, take })
+	// await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip: nextPage, take })
 	await ssg.service.getFilterOptions.prefetch()
 	await ssg.attribute.getFilterOptions.prefetch()
 
