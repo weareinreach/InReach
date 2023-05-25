@@ -19,6 +19,7 @@ import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
+import { useSearchState } from '@weareinreach/ui/providers/SearchState'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
@@ -30,6 +31,7 @@ const OrganizationPage: NextPage = () => {
 	const [loading, setLoading] = useState(true)
 	const { data, isLoading, status } = api.organization.getBySlug.useQuery(query)
 	const { ref, width } = useElementSize()
+	const { searchParams } = useSearchState()
 	useEffect(() => {
 		if (data && status === 'success') setLoading(false)
 	}, [data, status])
@@ -93,7 +95,11 @@ const OrganizationPage: NextPage = () => {
 		<>
 			<Grid.Col sm={8} order={1}>
 				<Toolbar
-					breadcrumbProps={{ option: 'back', backTo: 'search', onClick: () => router.back() }}
+					hideBreadcrumb={searchParams.searchState.params.length === 0}
+					breadcrumbProps={{
+						option: 'back',
+						backTo: 'search',
+					}}
 					saved={Boolean(userLists?.length)}
 					organizationId={organizationId}
 				/>

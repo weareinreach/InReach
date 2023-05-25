@@ -1,8 +1,10 @@
 import { Button, createStyles, rem, Text, useMantineTheme } from '@mantine/core'
+import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import { type MouseEventHandler, useMemo } from 'react'
 
 import { Icon } from '~ui/icon'
+import { useSearchState } from '~ui/providers/SearchState'
 
 const useStyles = createStyles((theme) => ({
 	root: {
@@ -25,11 +27,47 @@ const useStyles = createStyles((theme) => ({
 	buttonText: {},
 }))
 
+const isString = (...args: unknown[]) => args.every((val) => typeof val === 'string')
+
 export const Breadcrumb = (props: BreadcrumbProps) => {
 	const { option, backTo, backToText, onClick } = props
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
+	const router = useRouter()
+	const { searchParams } = useSearchState()
+
+	const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
+		if (typeof onClick === 'function') return onClick(e)
+
+		if (option === 'back') {
+			switch (backTo) {
+				case 'search': {
+					if (searchParams) {
+						const { searchState } = searchParams
+						if (searchState)
+							router.push({
+								pathname: '/search/[...params]',
+								query: searchState,
+							})
+					}
+					break
+				}
+				case 'dynamicText': {
+					if (router.pathname.startsWith('/org/[slug]/[orgLocationId]')) {
+						const { orgLocationId, slug } = router.query
+						if (isString(slug, orgLocationId)) {
+							router.push({
+								pathname: router.pathname.endsWith('/edit') ? '/org/[slug]/edit' : '/org/[slug]',
+								query: { slug },
+							})
+						}
+					}
+				}
+			}
+		}
+	}
+
 	const icons = {
 		close: 'carbon:close',
 		back: 'carbon:arrow-left',
@@ -75,7 +113,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 			classNames={{ root: classes.root, icon: classes.icon }}
 			px={`calc(${theme.spacing.sm} - ${rem(2)})`}
 			py={theme.spacing.xs}
-			onClick={props.onClick}
+			onClick={clickHandler}
 			leftIcon={<Icon icon={iconRender} height={24} color={theme.other.colors.secondary.black} />}
 		>
 			<Text size='md' fw={theme.other.fontWeight.semibold} truncate>
