@@ -2,18 +2,17 @@
 /* eslint-disable node/no-process-env */
 // @ts-check
 /* eslint-disable import/no-unused-modules */
-// @ts-ignore
-// const HttpBackend = require('i18next-http-backend/cjs')
-import { I18nextKeysOnDemand } from '@weareinreach/i18next-keys-ondemand'
 import axios from 'axios'
 import ChainedBackend from 'i18next-chained-backend'
 import HttpBackend from 'i18next-http-backend'
 import intervalPlural from 'i18next-intervalplural-postprocessor'
-import LocalStorageBackend from 'i18next-localstorage-backend'
+// import LocalStorageBackend from 'i18next-localstorage-backend'
 import MultiBackend from 'i18next-multiload-backend-adapter'
 import { z } from 'zod'
 
 import path from 'path'
+
+import { I18nextKeysOnDemand } from '@weareinreach/i18next-keys-ondemand'
 
 export const namespaces = [
 	'attribute',
@@ -94,7 +93,7 @@ const config = {
 	localePath: path.resolve('./public/locales'),
 	fallbackLng: ['en'],
 	reloadOnPrerender: process.env.NODE_ENV !== 'production',
-	debug: process.env.NODE_ENV !== 'production' && isBrowser, //&& !!process.env.NEXT_VERBOSE,
+	debug: process.env.NODE_ENV !== 'production' && isBrowser && !!process.env.NEXT_VERBOSE,
 	partialBundledLanguages: true,
 	nonExplicitSupportedLngs: true,
 	cleanCode: true,

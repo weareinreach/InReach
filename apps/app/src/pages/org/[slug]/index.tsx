@@ -8,6 +8,8 @@ import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
+import { getEnv } from '@weareinreach/config/env'
+import { prisma } from '@weareinreach/db/client'
 import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
@@ -124,10 +126,25 @@ const OrganizationPage: NextPage = () => {
 	)
 }
 
+/**
+ * TODO: [IN-875] Create full loading state and set `fallback` to `true`
+ * https://nextjs.org/docs/pages/api-reference/functions/get-static-paths
+ */
 export const getStaticPaths: GetStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: 'blocking', // false or "blocking"
+	if (getEnv('VERCEL_ENV') === 'production') {
+		const pages = await prisma.organization.findMany({
+			where: { published: true, deleted: false },
+			select: { slug: true },
+		})
+		return {
+			paths: pages.map(({ slug }) => ({ params: { slug } })),
+			fallback: 'blocking', // false or "blocking"
+		}
+	} else {
+		return {
+			paths: [],
+			fallback: 'blocking',
+		}
 	}
 }
 

@@ -1,4 +1,5 @@
 import { Grid, Image, Stack, Tabs } from '@mantine/core'
+import compact from 'just-compact'
 import { type GetServerSideProps, type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -6,6 +7,8 @@ import { useEffect, useState } from 'react'
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
+import { getEnv } from '@weareinreach/config/env'
+import { prisma } from '@weareinreach/db/client'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
@@ -100,10 +103,33 @@ const OrgLocationPage: NextPage = () => {
 	)
 }
 
+/**
+ * TODO: [IN-875] Create full loading state and set `fallback` to `true`
+ * https://nextjs.org/docs/pages/api-reference/functions/get-static-paths
+ */
+
 export const getStaticPaths: GetStaticPaths = async () => {
-	return {
-		paths: [],
-		fallback: 'blocking', // false or "blocking"
+	if (getEnv('VERCEL_ENV') === 'production') {
+		const pages = await prisma.organization.findMany({
+			where: { published: true, deleted: false },
+			select: { slug: true, locations: { select: { id: true }, where: { published: true, deleted: false } } },
+		})
+
+		return {
+			paths: compact(
+				pages.flatMap(({ slug, locations }) => {
+					if (locations.length > 1) {
+						return locations.map((location) => ({ params: { slug: slug, orgLocationId: location.id } }))
+					}
+				})
+			),
+			fallback: 'blocking', // false or "blocking"
+		}
+	} else {
+		return {
+			paths: [],
+			fallback: 'blocking',
+		}
 	}
 }
 export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
