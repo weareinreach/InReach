@@ -148,6 +148,7 @@ export const getStaticProps: GetStaticProps<Record<string, unknown>, RoutedQuery
 
 	return {
 		props,
+		revalidate: 60 * 30, // 30 minutes
 	}
 }
 

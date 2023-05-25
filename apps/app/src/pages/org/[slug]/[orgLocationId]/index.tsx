@@ -121,6 +121,7 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
 
 	return {
 		props,
+		revalidate: 60 * 30, // 30 minutes
 	}
 }
 // export const getServerSideProps: GetServerSideProps = async ({ locale, params, req, res }) => {
