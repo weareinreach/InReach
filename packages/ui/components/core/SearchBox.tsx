@@ -22,6 +22,7 @@ import { type ApiOutput } from '@weareinreach/api'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+import { useSearchState } from '~ui/providers/SearchState'
 
 const useStyles = createStyles((theme) => ({
 	autocompleteContainer: {
@@ -81,7 +82,7 @@ const useStyles = createStyles((theme) => ({
 /** Most of Google's autocomplete language options are only the two letter variants */
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
-export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
+export const SearchBox = ({ type, label, loadingManager, initialValue }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
@@ -91,7 +92,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 	const [locationSearch, setLocationSearch] = useState('')
 	const { isLoading, setLoading } = loadingManager
 	const isOrgSearch = type === 'organization'
-	const apiUtils = api.useContext()
+	const { routeActions } = useSearchState()
 
 	// tRPC functions
 	const { data: orgSearchData, isFetching: orgSearchLoading } = api.organization.searchName.useQuery(
@@ -118,7 +119,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 			(!autocompleteData?.results?.length && autocompleteLoading && search !== '')
 		) {
 			setSearchLoading(true)
-			setResults([{ value: search, fetching: true }])
+			setResults([{ value: search, label: search, fetching: true }])
 		}
 	}, [autocompleteData, autocompleteLoading, search, orgSearchData, orgSearchLoading])
 
@@ -142,6 +143,13 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 		}
 	}, [autocompleteData, autocompleteLoading, search, isOrgSearch, orgSearchData, orgSearchLoading])
 
+	useEffect(() => {
+		if (initialValue && !form.values.search) {
+			form.setFieldValue('search', initialValue)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: locationSearch !== '' && !isOrgSearch,
 		onSuccess: (data) => {
@@ -161,6 +169,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 					],
 				},
 			})
+			setLoading(false)
 		},
 	})
 
@@ -203,7 +212,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 	}
 
 	const AutoCompleteItem = forwardRef<HTMLDivElement, AutocompleteItem>(
-		({ value, fetching, placeId, ...others }: AutocompleteItem, ref) => {
+		({ label, fetching, placeId, ...others }: AutocompleteItem, ref) => {
 			if (fetching)
 				return (
 					<div ref={ref} {...others} className={classes.itemComponent}>
@@ -215,13 +224,13 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 			return isOrgSearch ? (
 				<div ref={ref} {...others} className={classes.itemComponent}>
 					<Text className={classes.unmatchedText} truncate>
-						{matchText(value, form.values.search)}
+						{matchText(label, form.values.search)}
 					</Text>
 				</div>
 			) : (
 				<div ref={ref} {...others} className={classes.itemComponent}>
 					<Text className={classes.locationResult} truncate>
-						{value}
+						{label}
 					</Text>
 					<Text className={classes.unmatchedText} truncate>
 						{others.subheading}
@@ -236,9 +245,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 		return (
 			<div className={classes.itemComponent} onClick={() => router.push('/suggest')}>
 				<Text className={classes.unmatchedText}>
-					<Trans i18nKey='search.suggest-resource' t={t}>
-						Can’t find it? <u>Suggest an organization</u> you think should be included.
-					</Trans>
+					<Trans i18nKey='search.suggest-resource' t={t} />
 				</Text>
 			</div>
 		)
@@ -266,6 +273,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 				setLoading(false)
 				return
 			}
+			routeActions.setSearchTerm(item.value)
 			router.push({
 				pathname: '/org/[slug]',
 				query: {
@@ -278,6 +286,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 				setLoading(false)
 				return
 			}
+			routeActions.setSearchTerm(item.value)
 			setLocationSearch(item.placeId)
 		}
 	}
@@ -314,6 +323,7 @@ type SearchBoxProps = {
 		setLoading: Dispatch<SetStateAction<boolean>>
 		isLoading: boolean
 	}
+	initialValue?: string
 }
 type FormValues = {
 	search: string
@@ -324,6 +334,7 @@ interface AutocompleteItem {
 	value: string
 	name?: string
 	slug?: string
+	label: string
 	subheading?: string
 	placeId?: string
 	fetching?: boolean

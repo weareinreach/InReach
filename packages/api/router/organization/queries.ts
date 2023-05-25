@@ -86,7 +86,7 @@ export const queries = defineRouter({
 					slug: true,
 				},
 			})
-			const shaped = orgIds.map(({ name, ...rest }) => ({ value: name, name, ...rest }))
+			const shaped = orgIds.map(({ name, ...rest }) => ({ value: name, label: name, ...rest }))
 			return shaped
 		} catch (error) {
 			handleError(error)

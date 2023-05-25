@@ -13,6 +13,7 @@ import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
+import { useSearchState } from '@weareinreach/ui/providers/SearchState'
 import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -28,6 +29,13 @@ const PageIndexSchema = z.coerce.number().default(1)
 
 const SearchResults = () => {
 	const router = useRouter<'/search/[...params]'>()
+	const { searchParams, routeActions } = useSearchState()
+
+	useEffect(() => {
+		routeActions.setSearchState(router.query)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	const [filteredServices, setFilteredServices] = useState<string[]>([])
 	const [filteredAttributes, setFilteredAttributes] = useState<string[]>([])
 	const { t } = useTranslation(['services'])
@@ -113,6 +121,7 @@ const SearchResults = () => {
 					<SearchBox
 						type='location'
 						loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
+						initialValue={searchParams.searchTerm}
 					/>
 					<ServiceFilter resultCount={resultCount} stateHandler={setFilteredServices} />
 				</Group>

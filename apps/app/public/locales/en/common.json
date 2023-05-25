@@ -192,7 +192,7 @@
 		"look-up-org": "Look up an organization",
 		"no-results": "No results found. Please try again.",
 		"organization-placeholder": "Enter organization name...",
-		"suggest-resource": "Can’t find it? <1>Suggest an organization</1> you think should be included."
+		"suggest-resource": "Can't find it? <1>Suggest an organization</1> you think should be included."
 	},
 	"send-email": "Send email",
 	"service": {
