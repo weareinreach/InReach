@@ -58,6 +58,7 @@ export const isAdmin = t.middleware(({ ctx, meta, next }) => {
 		ctx: {
 			session: { ...ctx.session, user: ctx.session.user },
 			actorId: ctx.session.user.id,
+			skipCache: true,
 		},
 	})
 })
@@ -75,6 +76,7 @@ export const isStaff = t.middleware(({ ctx, meta, next }) => {
 		ctx: {
 			session: { ...ctx.session, user: ctx.session.user },
 			actorId: ctx.session.user.id,
+			skipCache: true,
 		},
 	})
 })
@@ -87,6 +89,7 @@ export const hasPermissions = t.middleware(({ ctx, meta, next }) => {
 			ctx: {
 				session: { ...ctx.session, user: ctx.session.user },
 				actorId: ctx.session.user.id,
+				skipCache: true,
 			},
 		})
 

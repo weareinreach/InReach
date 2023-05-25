@@ -23,6 +23,7 @@ export const createContextInner = (opts: CreateContextOptions) => {
 		session: opts.session,
 		prisma,
 		generateId,
+		skipCache: false,
 	}
 }
 
@@ -37,9 +38,13 @@ export const createContext = async (opts?: CreateNextContextOptions) => {
 	// Get the session from the server using the unstable_getServerSession wrapper function
 	const session = (req && res && (await getServerSession({ req, res }))) || null
 
-	return createContextInner({
-		session,
-	})
+	return {
+		...createContextInner({
+			session,
+		}),
+		req,
+		res,
+	}
 }
 
 export type Context = inferAsyncReturnType<typeof createContext>
