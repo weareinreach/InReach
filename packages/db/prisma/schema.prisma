@@ -368,7 +368,6 @@ model UserSavedList {
   //@@schema("user")
 
   @@index([ownedById])
-  @@index([sharedLinkKey])
 }
 
 model UserMail {
@@ -787,7 +786,6 @@ model OrgService {
   //@@schema("org")
 
   @@index([organizationId(sort: Asc)])
-  @@index([descriptionId])
   @@index([id, serviceNameId, descriptionId])
   @@index([id, published, deleted])
   @@index([id, organizationId])
@@ -1084,7 +1082,6 @@ model ServiceCategory {
   //@@schema("system")
 
   @@unique([tsKey, tsNs])
-  @@index([tsKey, tsNs])
 }
 
 model ServiceTag {
