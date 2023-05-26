@@ -5,8 +5,8 @@ interface State {
 	searchState: {
 		params: string[]
 		page: string
-		attributes: string[]
-		services: string[]
+		a: string[]
+		s: string[]
 	}
 	searchTerm?: string
 }
@@ -23,8 +23,8 @@ const initialState: State = {
 	searchState: {
 		params: [],
 		page: '',
-		attributes: [],
-		services: [],
+		a: [],
+		s: [],
 	},
 }
 
@@ -36,9 +36,9 @@ const reducer = (state: State, action: Action): State => {
 		case 'SET_PAGE':
 			return { ...state, searchState: { ...state.searchState, page: action.payload } }
 		case 'SET_ATTRIBUTES':
-			return { ...state, searchState: { ...state.searchState, attributes: action.payload } }
+			return { ...state, searchState: { ...state.searchState, a: action.payload } }
 		case 'SET_SERVICES':
-			return { ...state, searchState: { ...state.searchState, services: action.payload } }
+			return { ...state, searchState: { ...state.searchState, s: action.payload } }
 		case 'SET_SEARCHTERM':
 			return { ...state, searchTerm: action.payload }
 		case 'SET_SEARCHSTATE':
@@ -58,11 +58,18 @@ type ActionCreators = {
 	setSearchTerm: DispatchAction<string>
 	setSearchState: DispatchAction<z.input<typeof SearchStateSchema>>
 }
+
+const StringToArray = z
+	.string()
+	.optional()
+	.transform((val) => (val ? [val] : []))
+	.pipe(z.string().array())
+
 const SearchStateSchema = z.object({
 	params: z.string().array(),
 	page: z.string().optional().default('1'),
-	attributes: z.string().array().optional().default([]),
-	services: z.string().array().optional().default([]),
+	a: z.string().array().optional().default([]).or(StringToArray),
+	s: z.string().array().optional().default([]).or(StringToArray),
 })
 
 const StateSchema = z.object({

@@ -34,9 +34,9 @@ export const BackToSearch = {
 		searchContext: {
 			searchState: {
 				params: ['dist', '-77.0368707', '38.9071923', '50', 'mi'],
-				attributes: [],
+				a: [],
 				page: '1',
-				services: [],
+				s: [],
 			},
 		},
 	},

@@ -1,5 +1,6 @@
 /* eslint-disable i18next/no-literal-string */
 import { Grid, Group, Space } from '@mantine/core'
+import compare from 'just-compare'
 import { type GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -56,7 +57,11 @@ const SearchResults = () => {
 	const [_searchType, lon, lat, dist, unit] = queryParams.success
 		? queryParams.data
 		: (['dist', 0, 0, 0, 'mi'] as const)
-	const { isSuccess, ...searchQuery } = api.organization.searchDistance.useQuery(
+	const {
+		isSuccess,
+		isFetching: searchIsFetching,
+		...searchQuery
+	} = api.organization.searchDistance.useQuery(
 		{
 			lat,
 			lon,
@@ -64,8 +69,8 @@ const SearchResults = () => {
 			unit,
 			skip,
 			take,
-			services: filteredServices,
-			attributes: filteredAttributes,
+			services: filteredServices.length ? filteredServices : undefined,
+			attributes: filteredAttributes.length ? filteredAttributes : undefined,
 		},
 		{
 			enabled: queryParams.success,
@@ -89,6 +94,33 @@ const SearchResults = () => {
 		}
 	}, [data])
 
+	useEffect(
+		() => {
+			switch (true) {
+				case !compare(searchParams.searchState.a, filteredAttributes) &&
+					!compare(searchParams.searchState.s, filteredServices): {
+					routeActions.setSearchState({
+						...searchParams.searchState,
+						a: filteredAttributes,
+						s: filteredServices,
+					})
+					break
+				}
+				case !compare(searchParams.searchState.a, filteredAttributes): {
+					routeActions.setAttributes(filteredAttributes)
+					break
+				}
+
+				case !compare(searchParams.searchState.s, filteredServices): {
+					routeActions.setServices(filteredServices)
+					break
+				}
+			}
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[filteredAttributes, filteredServices]
+	)
+
 	const nextSkip = useMemo(
 		() => PageIndexSchema.parse(router.query.page) * SEARCH_RESULT_PAGE_SIZE,
 		[router.query.page]
@@ -98,7 +130,6 @@ const SearchResults = () => {
 			router.query.page &&
 			PageIndexSchema.parse(router.query.page) < getSearchResultPageCount(data?.resultCount)
 		) {
-			console.log('prefetch')
 			apiUtils.organization.searchDistance.prefetch({
 				lat,
 				lon,
@@ -106,8 +137,8 @@ const SearchResults = () => {
 				unit,
 				skip: nextSkip,
 				take,
-				services: filteredServices,
-				attributes: filteredAttributes,
+				services: filteredServices.length ? filteredServices : undefined,
+				attributes: filteredAttributes.length ? filteredAttributes : undefined,
 			})
 		}
 	})
@@ -123,7 +154,11 @@ const SearchResults = () => {
 						loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 						initialValue={searchParams.searchTerm}
 					/>
-					<ServiceFilter resultCount={resultCount} stateHandler={setFilteredServices} />
+					<ServiceFilter
+						resultCount={resultCount}
+						stateHandler={setFilteredServices}
+						isFetching={searchIsFetching}
+					/>
 				</Group>
 			</Grid.Col>
 			<Grid.Col>
@@ -131,6 +166,7 @@ const SearchResults = () => {
 					resultCount={resultCount}
 					stateHandler={setFilteredAttributes}
 					loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
+					isFetching={searchIsFetching}
 				/>
 			</Grid.Col>
 			<Grid.Col sm={8}>
@@ -152,7 +188,7 @@ export const getServerSideProps: GetServerSideProps<
 	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
 	const ssg = await trpcServerClient({ req, res })
-	const nextPage = PageIndexSchema.parse(query.page) * SEARCH_RESULT_PAGE_SIZE
+	// const nextPage = PageIndexSchema.parse(query.page) * SEARCH_RESULT_PAGE_SIZE
 
 	await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take })
 	// await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip: nextPage, take })
