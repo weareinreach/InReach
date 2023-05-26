@@ -109,7 +109,8 @@ const OrgLocationPage: NextPage = () => {
  */
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	if (getEnv('VERCEL_ENV') === 'production') {
+	// eslint-disable-next-line node/no-process-env, turbo/no-undeclared-env-vars
+	if (getEnv('VERCEL_ENV') === 'production' || process.env.PRERENDER === 'true') {
 		const pages = await prisma.organization.findMany({
 			where: { published: true, deleted: false },
 			select: { slug: true, locations: { select: { id: true }, where: { published: true, deleted: false } } },
