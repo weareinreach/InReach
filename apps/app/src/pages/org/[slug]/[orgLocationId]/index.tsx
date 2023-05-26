@@ -139,8 +139,10 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
 	const { slug, orgLocationId } = urlParams.data
 
 	const ssg = await trpcServerClient({ session: null })
-	await ssg.organization.getBySlug.prefetch({ slug })
-	await ssg.location.getById.prefetch({ id: orgLocationId })
+	Promise.allSettled([
+		await ssg.organization.getBySlug.prefetch({ slug }),
+		await ssg.location.getById.prefetch({ id: orgLocationId }),
+	])
 	const props = {
 		trpcState: ssg.dehydrate(),
 		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
