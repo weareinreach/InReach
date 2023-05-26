@@ -32,6 +32,9 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	transpilePackages: ['@weareinreach/ui', '@weareinreach/db', '@weareinreach/auth', '@weareinreach/api'],
+	compiler: {
+		...(process.env.VERCEL_ENV === 'production' ? { removeConsole: { exclude: ['error'] } } : {}),
+	},
 	experimental: {
 		// fontLoaders: [{ loader: 'next/font/google', options: { subsets: ['latin'] } }],
 		outputFileTracingExcludes: {

@@ -4,7 +4,14 @@
 		"baseUrl": ".",
 		"strict": true,
 		"plugins": [{ "name": "next" }],
-		"allowImportingTsExtensions": true
+		"allowImportingTsExtensions": true,
+		"paths": {
+			"~app/*": ["./src/*"],
+			"~api/*": ["../../packages/api/*"],
+			"~auth/*": ["../../packages/auth/*"],
+			"~db/*": ["../../packages/db/*"],
+			"~ui/*": ["../../packages/ui/*"]
+		}
 	},
 	"include": [
 		"./next-env.d.ts",
