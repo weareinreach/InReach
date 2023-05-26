@@ -16,7 +16,8 @@
 		"lint": "next lint",
 		"lint:fix": "next lint --fix",
 		"start": "next start",
-		"type-check": "tsc --noEmit"
+		"type-check": "tsc --noEmit",
+		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
 		"@aws-crypto/sha256-js": "4.0.0",

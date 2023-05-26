@@ -97,8 +97,13 @@ export const queries = defineRouter({
 		const { lat, lon, dist, unit, skip, take, services, attributes } = input
 		// Convert to meters
 		const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
-		const serviceAreas = await getCoveredAreas({ lat, lon }, ctx)
-		const orgs = await searchOrgByDistance({ lat, lon, searchRadius }, ctx)
+		// const serviceAreas = await getCoveredAreas({ lat, lon }, ctx)
+		// const orgs = await searchOrgByDistance({ lat, lon, searchRadius }, ctx)
+
+		const [serviceAreas, orgs] = await Promise.all([
+			getCoveredAreas({ lat, lon }, ctx),
+			searchOrgByDistance({ lat, lon, searchRadius }, ctx),
+		])
 		const resultIds = orgs.map(({ id }) => id)
 
 		const resultDetailWhere = {
@@ -109,9 +114,12 @@ export const queries = defineRouter({
 			...serviceFilter(services),
 			...isPublic,
 		}
-		const resultCount = await ctx.prisma.organization.count({ where: resultDetailWhere })
-
-		const results = await prismaDistSearchDetails({ ctx, input: { ...input, resultIds } })
+		// const resultCount = await ctx.prisma.organization.count({ where: resultDetailWhere })
+		// const results = await prismaDistSearchDetails({ ctx, input: { ...input, resultIds } })
+		const [resultCount, results] = await Promise.all([
+			ctx.prisma.organization.count({ where: resultDetailWhere }),
+			prismaDistSearchDetails({ ctx, input: { ...input, resultIds } }),
+		])
 
 		const orderedResults: ((typeof results)[number] & { distance: number; unit: 'km' | 'mi' })[] = []
 		orgs.forEach(({ id, distMeters }) => {
@@ -158,34 +166,66 @@ export const queries = defineRouter({
 		return lists
 	}),
 	suggestionOptions: publicProcedure.query(async ({ ctx }) => {
-		const countries = await ctx.prisma.country.findMany({
-			where: { activeForSuggest: true },
-			select: { id: true, tsKey: true, tsNs: true },
-			orderBy: { tsKey: 'desc' },
-		})
-		const serviceTypes = await ctx.prisma.serviceCategory.findMany({
-			where: { active: true },
-			select: { id: true, tsKey: true, tsNs: true },
-			orderBy: { tsKey: 'asc' },
-		})
-		const communities = await ctx.prisma.attribute.findMany({
-			where: {
-				categories: { some: { category: { tag: 'service-focus' } } },
-				parents: { none: {} },
-			},
-			select: {
-				id: true,
-				tsNs: true,
-				tsKey: true,
-				icon: true,
-				children: {
-					select: {
-						child: { select: { id: true, tsNs: true, tsKey: true } },
+		// const countries = await ctx.prisma.country.findMany({
+		// 	where: { activeForSuggest: true },
+		// 	select: { id: true, tsKey: true, tsNs: true },
+		// 	orderBy: { tsKey: 'desc' },
+		// })
+		// const serviceTypes = await ctx.prisma.serviceCategory.findMany({
+		// 	where: { active: true },
+		// 	select: { id: true, tsKey: true, tsNs: true },
+		// 	orderBy: { tsKey: 'asc' },
+		// })
+		// const communities = await ctx.prisma.attribute.findMany({
+		// 	where: {
+		// 		categories: { some: { category: { tag: 'service-focus' } } },
+		// 		parents: { none: {} },
+		// 	},
+		// 	select: {
+		// 		id: true,
+		// 		tsNs: true,
+		// 		tsKey: true,
+		// 		icon: true,
+		// 		children: {
+		// 			select: {
+		// 				child: { select: { id: true, tsNs: true, tsKey: true } },
+		// 			},
+		// 		},
+		// 	},
+		// 	orderBy: { tsKey: 'asc' },
+		// })
+
+		const [countries, serviceTypes, communities] = await Promise.all([
+			ctx.prisma.country.findMany({
+				where: { activeForSuggest: true },
+				select: { id: true, tsKey: true, tsNs: true },
+				orderBy: { tsKey: 'desc' },
+			}),
+			ctx.prisma.serviceCategory.findMany({
+				where: { active: true },
+				select: { id: true, tsKey: true, tsNs: true },
+				orderBy: { tsKey: 'asc' },
+			}),
+			ctx.prisma.attribute.findMany({
+				where: {
+					categories: { some: { category: { tag: 'service-focus' } } },
+					parents: { none: {} },
+				},
+				select: {
+					id: true,
+					tsNs: true,
+					tsKey: true,
+					icon: true,
+					children: {
+						select: {
+							child: { select: { id: true, tsNs: true, tsKey: true } },
+						},
 					},
 				},
-			},
-			orderBy: { tsKey: 'asc' },
-		})
+				orderBy: { tsKey: 'asc' },
+			}),
+		])
+
 		return {
 			countries,
 			serviceTypes,
