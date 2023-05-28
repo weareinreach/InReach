@@ -1,4 +1,8 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 overrides:
   '@floating-ui/react-dom-interactions': npm:@floating-ui/react@^0.17.0
@@ -315,6 +319,9 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      react-error-boundary:
+        specifier: 4.0.7
+        version: 4.0.7(react@18.2.0)
       react-i18next:
         specifier: 12.3.1
         version: 12.3.1(i18next@22.5.0)(react-dom@18.2.0)(react@18.2.0)
@@ -1242,6 +1249,9 @@ importers:
       probe-image-size:
         specifier: 7.2.3
         version: 7.2.3
+      react-error-boundary:
+        specifier: 4.0.7
+        version: 4.0.7(react@18.2.0)
       react-phone-number-input:
         specifier: 3.2.23
         version: 3.2.23(react-dom@18.2.0)(react@18.2.0)
@@ -5281,14 +5291,14 @@ packages:
     resolution: {integrity: sha512-M1CQabr1/IDG6ku0/+n6kZBvWTCSun7LndkGsaB89nTNaCcflWxflgY2HdcbjblLL8W0iT7QiW9TgWP4kcpn5Q==}
     peerDependencies:
       '@storybook/blocks': ^7.0.0
-      '@storybook/components': ^7.0.0 || ^7 || 7
-      '@storybook/core-events': ^7.0.0 || ^7 || 7
+      '@storybook/components': ^7.0.0 || 7
+      '@storybook/core-events': ^7.0.0 || 7
       '@storybook/manager-api': ^7.0.0
       '@storybook/preview-api': ^7.0.0
-      '@storybook/theming': ^7.0.0 || ^7 || 7
+      '@storybook/theming': ^7.0.0 || 7
       '@storybook/types': ^7.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18 || 18
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || >=18 || 18
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || 18
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || 18
     peerDependenciesMeta:
       react:
         optional: true
@@ -5413,7 +5423,7 @@ packages:
   /@iconify/react@4.1.0(react@18.2.0):
     resolution: {integrity: sha512-Mf72i3TNNKpKCKxmo7kzqyrUdCgaoljpqtWmtqpqwyxoV4ukhnDsSRNLhf2yBnqGr3cVZsdj/i0FMpXIY0Qk0g==}
     peerDependencies:
-      react: '>=16 || >=18 || 18'
+      react: '>=16 || 18'
     dependencies:
       '@iconify/types': 2.0.0
       react: 18.2.0
@@ -7423,8 +7433,8 @@ packages:
   /@radix-ui/react-presence@1.0.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-A+6XEvN01NfVWiKu38ybawfHsBjWum42MRPnEuqPsBZ4eV7e/7K321B5VgYMPv3Xx5An6o1/l9ZuDBgmcmWK3w==}
     peerDependencies:
-      react: ^16.8 || ^17.0 || ^18.0 || >=18 || 18
-      react-dom: ^16.8 || ^17.0 || ^18.0 || >=18 || 18
+      react: ^16.8 || ^17.0 || ^18.0 || 18
+      react-dom: ^16.8 || ^17.0 || ^18.0 || 18
     dependencies:
       '@babel/runtime': 7.21.0
       '@radix-ui/react-compose-refs': 1.0.0(react@18.2.0)
@@ -7446,8 +7456,8 @@ packages:
   /@radix-ui/react-scroll-area@1.0.2(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-k8VseTxI26kcKJaX0HPwkvlNBPTs56JRdYzcZ/vzrNUkDlvXBy8sMc7WvCpYzZkHgb+hd72VW9MqkqecGtuNgg==}
     peerDependencies:
-      react: ^16.8 || ^17.0 || ^18.0 || >=18 || 18
-      react-dom: ^16.8 || ^17.0 || ^18.0 || >=18 || 18
+      react: ^16.8 || ^17.0 || ^18.0 || 18
+      react-dom: ^16.8 || ^17.0 || ^18.0 || 18
     dependencies:
       '@babel/runtime': 7.21.0
       '@radix-ui/number': 1.0.0
@@ -7465,7 +7475,7 @@ packages:
   /@radix-ui/react-slot@1.0.1(react@18.2.0):
     resolution: {integrity: sha512-avutXAFL1ehGvAXtPquu0YK5oz6ctS474iM3vNGQIkswrVhdrS52e3uoMQBzZhNRAIE0jBnUyXWNmSjGHhCFcw==}
     peerDependencies:
-      react: ^16.8 || ^17.0 || ^18.0 || >=18 || 18
+      react: ^16.8 || ^17.0 || ^18.0 || 18
     dependencies:
       '@babel/runtime': 7.21.0
       '@radix-ui/react-compose-refs': 1.0.0(react@18.2.0)
@@ -7482,7 +7492,7 @@ packages:
   /@radix-ui/react-use-layout-effect@1.0.0(react@18.2.0):
     resolution: {integrity: sha512-6Tpkq+R6LOlmQb1R5NNETLG0B4YP0wc+klfXafpUCj6JGyaUc8il7/kUZ7m59rGbXGczE9Bs+iz2qloqsZBduQ==}
     peerDependencies:
-      react: ^16.8 || ^17.0 || ^18.0 || >=18 || 18
+      react: ^16.8 || ^17.0 || ^18.0 || 18
     dependencies:
       '@babel/runtime': 7.21.0
       react: 18.2.0
@@ -7490,8 +7500,8 @@ packages:
   /@react-google-maps/api@2.18.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-KVlUO/Shh+0g/3egWaKmY0sz6+0QOnYkBGvrBMJbz23519LauA+iJFc4NDCmWNHqD5Vhb/Bkg0kSJgq0Stz3Iw==}
     peerDependencies:
-      react: ^16.8 || ^17 || ^18 || >=18 || 18
-      react-dom: ^16.8 || ^17 || ^18 || >=18 || 18
+      react: ^16.8 || ^17 || ^18 || 18
+      react-dom: ^16.8 || ^17 || ^18 || 18
     dependencies:
       '@googlemaps/js-api-loader': 1.15.1
       '@googlemaps/markerclusterer': 2.0.15
@@ -9079,7 +9089,7 @@ packages:
   /@t3-oss/env-nextjs@0.3.1(typescript@5.0.4)(zod@3.21.4):
     resolution: {integrity: sha512-W1OgOn5xtpdEGraAQesyLzO2aNLRfSJEyK6qjQFfEUnrPbkvB+WxABX2bPMqfn4KJQ8pziLCSdBFiUN8OagqAg==}
     peerDependencies:
-      typescript: '>=4.7.2 || ^5 || 5'
+      typescript: '>=4.7.2 || 5'
       zod: ^3.0.0
     dependencies:
       '@t3-oss/env-core': 0.3.1(typescript@5.0.4)(zod@3.21.4)
@@ -9149,8 +9159,8 @@ packages:
     resolution: {integrity: sha512-t6+8ch6BCsEOMjZ+WG2aWQd+Jy8/YfCIf7e7MWKtIXuqZcwCjyzHPsSeddjgzKalX+gGLlAkIEKcThWuISmqVg==}
     engines: {node: '>=12'}
     peerDependencies:
-      react: '>=16 || >=18 || 18'
-      react-dom: '>=16 || >=18 || 18'
+      react: '>=16 || 18'
+      react-dom: '>=16 || 18'
     dependencies:
       '@tanstack/react-table': 8.0.0-alpha.1(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
@@ -9172,8 +9182,8 @@ packages:
     resolution: {integrity: sha512-yHs2m6lk5J5RNcu2dNtsDGux66wNXZjEgzxos6MRCX8gL+nqxeW3ZglqP6eANN0bGElPnjvqiUHGQvdACOr3Cw==}
     engines: {node: '>=12'}
     peerDependencies:
-      react: '>=16 || >=18 || 18'
-      react-dom: '>=16 || >=18 || 18'
+      react: '>=16 || 18'
+      react-dom: '>=16 || 18'
     dependencies:
       '@tanstack/table-core': 8.9.1
       react: 18.2.0
@@ -9449,8 +9459,8 @@ packages:
     peerDependencies:
       '@tiptap/core': ^2.0.0
       '@tiptap/pm': ^2.0.0
-      react: ^17.0.0 || ^18.0.0 || >=18 || 18
-      react-dom: ^17.0.0 || ^18.0.0 || >=18 || 18
+      react: ^17.0.0 || ^18.0.0 || 18
+      react-dom: ^17.0.0 || ^18.0.0 || 18
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.2)
       '@tiptap/extension-bubble-menu': 2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.2)
@@ -9488,7 +9498,7 @@ packages:
     resolution: {integrity: sha512-fSZJY5rUyj8GIcJI450ZV7FV/CMzpjUUGhPiaRyQo9l7l5mLvrnNe1MymzOnLpgXIkFja+CF/UHFGW807QcwmA==}
     peerDependencies:
       next-auth: ^4.12.3
-      react: ^18 || >=18 || 18
+      react: ^18 || 18
     dependencies:
       next-auth: 4.22.1(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
@@ -15219,7 +15229,7 @@ packages:
   /html-react-parser@1.4.12(react@18.2.0):
     resolution: {integrity: sha512-nqYQzr4uXh67G9ejAG7djupTHmQvSTgjY83zbXLRfKHJ0F06751jXx6WKSFARDdXxCngo2/7H4Rwtfeowql4gQ==}
     peerDependencies:
-      react: 0.14 || 15 || 16 || 17 || 18 || >=18
+      react: 0.14 || 15 || 16 || 17 || 18
     dependencies:
       domhandler: 4.3.1
       html-dom-parser: 1.2.0
@@ -20610,6 +20620,15 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       react-is: 18.1.0
     dev: true
+
+  /react-error-boundary@4.0.7(react@18.2.0):
+    resolution: {integrity: sha512-XyDSL7Uhv3PMs0e1k29cMSnZPSlUCsF7Ci0dtdcpkaWDi9bM2hw6ru2l+PgBhiqilE1ne2XIlsllcaHsn0B6Dw==}
+    peerDependencies:
+      react: '>=16.13.1 || 18'
+    dependencies:
+      '@babel/runtime': 7.21.0
+      react: 18.2.0
+    dev: false
 
   /react-i18next@12.3.1(i18next@22.5.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-5v8E2XjZDFzK7K87eSwC7AJcAkcLt5xYZ4+yTPDAW1i7C93oOY1dnr4BaQM7un4Hm+GmghuiPvevWwlca5PwDA==}
