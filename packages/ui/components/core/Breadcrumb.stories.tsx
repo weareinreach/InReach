@@ -17,18 +17,21 @@ type StoryDef = StoryObj<typeof BreadcrumbCompnent>
 export const Close = {
 	args: {
 		option: 'close',
+		loading: false,
 	},
 } satisfies StoryDef
 export const Back = {
 	args: {
 		option: 'back',
 		backTo: 'none',
+		loading: false,
 	},
 } satisfies StoryDef
 export const BackToSearch = {
 	args: {
 		option: 'back',
 		backTo: 'search',
+		loading: false,
 	},
 	parameters: {
 		searchContext: {
@@ -46,6 +49,7 @@ export const BackToDynamic = {
 		option: 'back',
 		backTo: 'dynamicText',
 		backToText: 'Sample Organization Name',
+		loading: false,
 	},
 	parameters: {
 		nextjs: {
@@ -65,6 +69,7 @@ export const BackToDynamicWithSpecialCharacters = {
 		option: 'back',
 		backTo: 'dynamicText',
 		backToText: "Sample Organization Name with special characters' % - *",
+		loading: false,
 	},
 	parameters: {
 		nextjs: {
@@ -77,5 +82,11 @@ export const BackToDynamicWithSpecialCharacters = {
 				},
 			},
 		},
+	},
+} satisfies StoryDef
+
+export const Loading = {
+	args: {
+		loading: true,
 	},
 } satisfies StoryDef
