@@ -204,10 +204,7 @@ export const commonTheme = {
 			styles: (theme) => ({
 				root: {
 					// color: `${theme.other.colors.secondary.black} !important`,
-					paddingBottom: theme.spacing.sm,
-					paddingTop: theme.spacing.sm,
-					paddingLeft: theme.spacing.xs,
-					paddingRight: theme.spacing.xs,
+					padding: `${rem(10)} ${rem(8)}`,
 					borderRadius: theme.spacing.sm,
 					textDecoration: 'underline',
 					...theme.other.utilityFonts.utility1,
