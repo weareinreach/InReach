@@ -37,7 +37,7 @@
 		"@changesets/cli": "2.26.1",
 		"@manypkg/cli": "0.20.0",
 		"@types/lint-staged": "13.2.0",
-		"@types/node": "18.16.14",
+		"@types/node": "18.16.16",
 		"@types/prettier": "2.7.2",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
@@ -54,7 +54,7 @@
 		"typescript": "5.0.4",
 		"typesync": "0.11.1"
 	},
-	"packageManager": "pnpm@8.5.1",
+	"packageManager": "pnpm@8.6.0",
 	"engines": {
 		"node": "^18",
 		"pnpm": "^7 || ^8"
