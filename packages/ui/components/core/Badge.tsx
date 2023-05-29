@@ -25,6 +25,7 @@ import { forwardRef, type ReactNode } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
 import { Icon, type IconList, isValidIcon } from '~ui/icon'
+import { ClaimOrgModal } from '~ui/modals/ClaimOrg'
 
 const badgeVariants: BadgeVariants = (theme, params) => {
 	switch (params.variant) {
@@ -123,18 +124,11 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 					border: 0,
 					minHeight: rem(24),
 					padding: '0',
-					// alignItems: 'flex-start',
 					lineHeight: 'inherit',
 					borderRadius: 0,
 				},
 				leftSection: {
 					height: rem(24),
-					// '& *': {
-					// 	margin: 0,
-					// },
-					// '& svg': {
-					// 	verticalAlign: 'sub',
-					// },
 				},
 			}
 		}
@@ -145,6 +139,9 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 }
 
 const useVariantStyles = createStyles((theme, params: BadgeStylesParams) => badgeVariants(theme, params))
+const useUnclaimedStyles = createStyles((theme) => ({
+	root: theme.fn.hover({ cursor: 'pointer' }),
+}))
 
 const customVariants = [
 	'community',
@@ -181,6 +178,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 			variant: props.variant ?? 'light',
 			...(props.variant === 'leader' ? { minify: props.minify, hideBg: props.hideBg } : {}),
 		})
+		const { classes: unclaimedClasses } = useUnclaimedStyles()
 		const { variant, classNames, ...others } = props as BadgeProps
 
 		const leftSection = (() => {
@@ -324,6 +322,23 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				{children}
 			</MantineBadge>
 		)
+		if (props.variant === 'unclaimed') {
+			return (
+				<ClaimOrgModal
+					component={MantineBadge}
+					variant={mantineVariant}
+					classNames={merge(classNames, baseClasses)}
+					className={unclaimedClasses.root}
+					ref={ref}
+					leftSection={leftSection}
+					w='fit-content'
+					{...styleDataProps}
+					{...passedBadgeProps}
+				>
+					{children}
+				</ClaimOrgModal>
+			)
+		}
 
 		if (renderTooltip) {
 			return (
