@@ -13,7 +13,7 @@
 		"clean:zod": "rm -rf ./zod-schemas/* || true",
 		"db:dataMigrate": "pnpm with-env tsx ./prisma/dataMigrationRunner.ts",
 		"db:deploy": "pnpm with-env prisma migrate deploy",
-		"db:generate": "PRISMA_GENERATE_DATAPROXY=false pnpm clean:zod && pnpm with-env prisma generate && prisma -v",
+		"db:generate": "pnpm clean:zod && pnpm with-env prisma generate && prisma -v",
 		"db:generate:aws": "pnpm install && pnpm with-env prisma generate",
 		"db:generate:proxy": "pnpm clean:zod && pnpm with-env prisma generate --data-proxy && prisma -v",
 		"db:migrate": "pnpm with-env prisma migrate dev",
