@@ -192,8 +192,9 @@
 	"search": {
 		"location-placeholder": "Enter state, city, or zip code...",
 		"look-up-org": "Look up an organization",
+		"no-results": "No results found. Please try again.",
 		"organization-placeholder": "Enter organization name...",
-		"suggest-resource": "Can’t find it? <1>Suggest an organization</1> you think should be included."
+		"suggest-resource": "Can't find it? <1>Suggest an organization</1> you think should be included."
 	},
 	"send-email": "Send email",
 	"service": {
@@ -264,21 +265,21 @@
 	"suggest-a-resource": "Suggest a Resource",
 	"support": "Support",
 	"survey": {
+		"birthyear-req-value": "Year must be between {{year1}} and {{year2}}, i.e 2005",
 		"finish": "Finish",
 		"not-right-now": "Not right now",
-		"start-survey": "Start Survey",
-		"thank-you": "Thank you!",
-		"thank-you-message": "The information you shared helps us to improve our product.",
-		"question-subtitle": "Your answers are anonymous.",
 		"question-1-title": "How would you describe yourself?",
-		"question-2-title": "What is your country of origin?",
 		"question-2-placeholder": "Enter country...",
+		"question-2-title": "What is your country of origin?",
 		"question-3-title": "How do you identify?",
 		"question-4-title": "What is your ethnicity/race?",
-		"question-5-title": "How old are you?",
 		"question-5-label": "Year of birth",
 		"question-5-placeholder": "Enter your birth year...",
-		"birthyear-req-value": "Year must be between {{year1}} and {{year2}}, i.e 2005"
+		"question-5-title": "How old are you?",
+		"question-subtitle": "Your answers are anonymous.",
+		"start-survey": "Start Survey",
+		"thank-you": "Thank you!",
+		"thank-you-message": "The information you shared helps us to improve our product."
 	},
 	"take-action": "Take Action",
 	"uncheck-all": "Uncheck all",

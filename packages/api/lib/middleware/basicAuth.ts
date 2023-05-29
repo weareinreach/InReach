@@ -12,6 +12,7 @@ export const isAuthed = t.middleware(({ ctx, meta, next }) => {
 			// infers the `session` as non-nullable
 			session: { ...ctx.session, user: ctx.session.user },
 			actorId: ctx.session.user.id,
+			skipCache: true,
 		},
 	})
 })

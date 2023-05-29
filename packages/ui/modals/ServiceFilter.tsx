@@ -17,6 +17,7 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 
@@ -178,7 +179,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const ServiceFilter = ({ resultCount, stateHandler }: ServiceFilterProps) => {
+export const ServiceFilter = ({ resultCount, stateHandler, isFetching }: ServiceFilterProps) => {
 	const { data: serviceOptionData, status } = api.service.getFilterOptions.useQuery()
 	const { classes } = useStyles()
 	const { classes: accordionClasses } = useAccordionStyles()
@@ -186,6 +187,7 @@ export const ServiceFilter = ({ resultCount, stateHandler }: ServiceFilterProps)
 	const { t } = useTranslation(['common', 'services'])
 	const [opened, setOpened] = useState(false)
 	const theme = useMantineTheme()
+	const router = useRouter()
 
 	const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
 	const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: ${em(430)})`)
@@ -201,13 +203,22 @@ export const ServiceFilter = ({ resultCount, stateHandler }: ServiceFilterProps)
 
 	const form = useForm<{ [categoryId: string]: FilterValue[] }>()
 	const valueMap = new Map<string, FilterValue[]>()
+	const preSelected = Array.isArray(router.query.s)
+		? router.query.s
+		: typeof router.query.s === 'string'
+		? [router.query.s]
+		: []
 
-	const generateInitialData = () => {
+	const generateInitialData = (opts?: { clear?: boolean }) => {
 		if (!serviceOptionData) return {}
 		serviceOptionData.forEach((category) => {
 			valueMap.set(
 				category.id,
-				category.services.map((item) => ({ ...item, categoryId: category.id, checked: false }))
+				category.services.map((item) => ({
+					...item,
+					categoryId: category.id,
+					checked: !opts?.clear && preSelected.includes(item.id),
+				}))
 			)
 		})
 		const initialValues = Object.fromEntries(valueMap.entries())
@@ -251,7 +262,7 @@ export const ServiceFilter = ({ resultCount, stateHandler }: ServiceFilterProps)
 			[categoryId]: form.values[categoryId]?.map((value) => ({ ...value, checked: !hasAll(categoryId) })),
 		})
 	}
-	const deselectAll = () => form.setValues(generateInitialData())
+	const deselectAll = () => form.setValues(generateInitialData({ clear: true }))
 
 	const formObjectEntryArray = Object.entries(form.values)
 	const filterList = formObjectEntryArray.map(([categoryId, services]) => {
@@ -359,7 +370,12 @@ export const ServiceFilter = ({ resultCount, stateHandler }: ServiceFilterProps)
 					>
 						{t('uncheck-all')}
 					</Button>
-					<Button variant='primary' className={classes.resultsBtn} onClick={() => setOpened(false)}>
+					<Button
+						variant='primary'
+						className={classes.resultsBtn}
+						onClick={() => setOpened(false)}
+						loading={isFetching}
+					>
 						{t('view-x-result', { count: resultCount })}
 					</Button>
 				</Group>
@@ -374,4 +390,5 @@ export const ServiceFilter = ({ resultCount, stateHandler }: ServiceFilterProps)
 interface ServiceFilterProps {
 	resultCount?: number
 	stateHandler: Dispatch<SetStateAction<string[]>>
+	isFetching?: boolean
 }

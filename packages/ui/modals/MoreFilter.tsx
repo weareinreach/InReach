@@ -20,6 +20,7 @@ import {
 import { useForm } from '@mantine/form'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import {
 	type Dispatch,
@@ -196,177 +197,189 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>((props, ref) => {
-	const { data: moreFilterOptionData, status } = api.attribute.getFilterOptions.useQuery()
-	const { classes } = useStyles()
-	const { classes: accordionClasses } = useAccordionStyles()
-	const { classes: modalClasses } = useModalStyles()
-	const { t } = useTranslation(['common', 'attribute'])
-	const [opened, setOpened] = useState(false)
-	const theme = useMantineTheme()
+const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
+	({ resultCount, stateHandler, isFetching, ...props }, ref) => {
+		const { data: moreFilterOptionData, status } = api.attribute.getFilterOptions.useQuery()
+		const { classes } = useStyles()
+		const { classes: accordionClasses } = useAccordionStyles()
+		const { classes: modalClasses } = useModalStyles()
+		const { t } = useTranslation(['common', 'attribute'])
+		const [opened, setOpened] = useState(false)
+		const theme = useMantineTheme()
+		const router = useRouter()
 
-	const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
-	const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: ${em(430)})`)
-	const isSmallLandscape = useMediaQuery(
-		`(orientation: landscape) and (max-height: ${em(376)}) and (max-width: ${theme.breakpoints.xs})`
-	)
-	const isMobile = isMobileQuery || isLandscape
-	const viewportHeight = useViewportSize().height + (isLandscape ? (isSmallLandscape ? 40 : 20) : 0)
-	const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
+		const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
+		const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: ${em(430)})`)
+		const isSmallLandscape = useMediaQuery(
+			`(orientation: landscape) and (max-height: ${em(376)}) and (max-width: ${theme.breakpoints.xs})`
+		)
+		const isMobile = isMobileQuery || isLandscape
+		const viewportHeight = useViewportSize().height + (isLandscape ? (isSmallLandscape ? 40 : 20) : 0)
+		const scrollAreaMaxHeight = isMobile ? viewportHeight - 210 + 30 : viewportHeight * 0.6 - 88
 
-	const { resultCount, stateHandler } = props
+		type AttributeFilter = NonNullable<typeof moreFilterOptionData>[number]
+		type FilterValue = AttributeFilter & { checked: boolean }
 
-	type AttributeFilter = NonNullable<typeof moreFilterOptionData>[number]
-	type FilterValue = AttributeFilter & { checked: boolean }
+		const form = useForm<FilterValue[]>({ initialValues: [] })
+		const preSelected = Array.isArray(router.query.a)
+			? router.query.a
+			: typeof router.query.a === 'string'
+			? [router.query.a]
+			: []
 
-	const form = useForm<FilterValue[]>({ initialValues: [] })
-	const generateInitialData = () => {
-		if (!moreFilterOptionData) return []
-		const initialValues = moreFilterOptionData.map((filter) => ({
-			...filter,
-			checked: false,
-		}))
-		return initialValues
-	}
-
-	useEffect(() => {
-		if (moreFilterOptionData && status === 'success') {
-			const initialValues = generateInitialData()
-			form.setValues(initialValues)
+		const generateInitialData = (opts?: { clear?: boolean }) => {
+			if (!moreFilterOptionData) return []
+			const initialValues = moreFilterOptionData.map((filter) => ({
+				...filter,
+				checked: !opts?.clear && preSelected.includes(filter.id),
+			}))
+			return initialValues
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [moreFilterOptionData, status])
 
-	useEffect(() => {
-		const selectedItems: string[] = []
-		Object.values(form.values).forEach(({ checked, id }) => {
-			if (checked) selectedItems.push(id)
-		})
-		stateHandler(selectedItems)
-	}, [form.values, stateHandler])
-
-	if (!moreFilterOptionData) return <Skeleton height={48} width='100%' radius='xs' />
-
-	const deselectAll = () => form.setValues(generateInitialData())
-
-	const filterListInclude: JSX.Element[] = []
-	const filterListExclude: JSX.Element[] = []
-
-	for (const [i, filter] of Object.entries(form.values)) {
-		switch (filter.filterType) {
-			case 'INCLUDE': {
-				filterListInclude.push(
-					<Checkbox
-						// className={classes.itemChild}
-						label={t(filter.tsKey, { ns: 'attribute' })}
-						key={filter.id}
-						{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
-					/>
-				)
-				break
+		useEffect(() => {
+			if (moreFilterOptionData && status === 'success') {
+				const initialValues = generateInitialData()
+				form.setValues(initialValues)
 			}
-			case 'EXCLUDE': {
-				filterListExclude.push(
-					<Checkbox
-						className={classes.itemChild}
-						label={t(filter.tsKey, { ns: 'attribute' })}
-						key={filter.id}
-						{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
-					/>
-				)
-				break
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [moreFilterOptionData, status])
+
+		useEffect(() => {
+			const selectedItems: string[] = []
+			Object.values(form.values).forEach(({ checked, id }) => {
+				if (checked) selectedItems.push(id)
+			})
+			stateHandler(selectedItems)
+		}, [form.values, stateHandler])
+
+		if (!moreFilterOptionData) return <Skeleton height={48} width='100%' radius='xs' />
+
+		const deselectAll = () => form.setValues(generateInitialData({ clear: true }))
+
+		const filterListInclude: JSX.Element[] = []
+		const filterListExclude: JSX.Element[] = []
+
+		for (const [i, filter] of Object.entries(form.values)) {
+			switch (filter.filterType) {
+				case 'INCLUDE': {
+					filterListInclude.push(
+						<Checkbox
+							// className={classes.itemChild}
+							label={t(filter.tsKey, { ns: 'attribute' })}
+							key={filter.id}
+							{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
+						/>
+					)
+					break
+				}
+				case 'EXCLUDE': {
+					filterListExclude.push(
+						<Checkbox
+							className={classes.itemChild}
+							label={t(filter.tsKey, { ns: 'attribute' })}
+							key={filter.id}
+							{...form.getInputProps(`${i}.checked`, { type: 'checkbox' })}
+						/>
+					)
+					break
+				}
 			}
 		}
-	}
 
-	const selectedItems = (function () {
-		const selected: string[] = []
-		for (const [_key, value] of Object.entries(form.values)) {
-			if (value.checked) selected.push(value.id)
+		const selectedItems = (function () {
+			const selected: string[] = []
+			for (const [_key, value] of Object.entries(form.values)) {
+				if (value.checked) selected.push(value.id)
+			}
+			return selected
+		})()
+
+		const selectedCountIcon = <Text className={classes.count}>{selectedItems.length}</Text>
+
+		const TitleBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
+			const FilterDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
+				modalTitle ? <Title order={2} mb={0} {...props} /> : <Text className={classes.label} {...props} />
+
+			return (
+				<Group className={modalTitle ? undefined : classes.button} position='apart' noWrap spacing={0}>
+					<Group spacing={8} noWrap>
+						<FilterDisplay>{t('more.filters')}</FilterDisplay>
+						{selectedItems.length > 0 ? selectedCountIcon : null}
+					</Group>
+
+					{modalTitle ? (
+						<Text
+							fw={500}
+							onClick={() => deselectAll()}
+							className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
+						>
+							{t('uncheck-all')}
+						</Text>
+					) : (
+						<Icon icon='carbon:chevron-down' height={24} />
+					)}
+				</Group>
+			)
 		}
-		return selected
-	})()
 
-	const selectedCountIcon = <Text className={classes.count}>{selectedItems.length}</Text>
-
-	const TitleBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
-		const FilterDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
-			modalTitle ? <Title order={2} mb={0} {...props} /> : <Text className={classes.label} {...props} />
+		const DefaultLauncher = (
+			props: UnstyledButtonProps & { onClick: MouseEventHandler<HTMLButtonElement> }
+		) => (
+			<UnstyledButton w='100%' {...props}>
+				<TitleBar />
+			</UnstyledButton>
+		)
 
 		return (
-			<Group className={modalTitle ? undefined : classes.button} position='apart' noWrap spacing={0}>
-				<Group spacing={8} noWrap>
-					<FilterDisplay>{t('more.filters')}</FilterDisplay>
-					{selectedItems.length > 0 ? selectedCountIcon : null}
-				</Group>
+			<>
+				<Modal
+					opened={opened}
+					onClose={() => setOpened(false)}
+					title={<TitleBar modalTitle />}
+					fullScreen={isMobile}
+					classNames={modalClasses}
+					scrollAreaComponent={Modal.NativeScrollArea}
+				>
+					<Stack spacing={24} pb={12}>
+						<ScrollArea.Autosize
+							classNames={{ viewport: accordionClasses.scrollArea }}
+							mah={scrollAreaMaxHeight}
+						>
+							<Stack className={classes.sectionLabel} spacing={4} mt={0}>
+								<Title order={3}>{t('include')}</Title>
+								{filterListInclude}
+							</Stack>
+							<Stack className={classes.sectionLabel} spacing={4}>
+								<Title order={3}>{t('exclude')}</Title>
+								{filterListExclude}
+							</Stack>
+						</ScrollArea.Autosize>
+					</Stack>
+					<Group className={modalClasses.footer} noWrap>
+						<Button
+							variant='secondary'
+							onClick={() => deselectAll()}
+							disabled={selectedItems.length < 1}
+							className={classes.uncheckBtn}
+						>
+							{t('uncheck-all')}
+						</Button>
+						<Button
+							variant='primary'
+							className={classes.resultsBtn}
+							onClick={() => setOpened(false)}
+							loading={isFetching}
+						>
+							{t('view-x-result', { count: resultCount })}
+						</Button>
+					</Group>
+				</Modal>
 
-				{modalTitle ? (
-					<Text
-						fw={500}
-						onClick={() => deselectAll()}
-						className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
-					>
-						{t('uncheck-all')}
-					</Text>
-				) : (
-					<Icon icon='carbon:chevron-down' height={24} />
-				)}
-			</Group>
+				<Box ref={ref} component={DefaultLauncher} onClick={() => setOpened(true)} {...props} />
+			</>
 		)
 	}
-
-	const DefaultLauncher = (
-		props: UnstyledButtonProps & { onClick: MouseEventHandler<HTMLButtonElement> }
-	) => (
-		<UnstyledButton w='100%' {...props}>
-			<TitleBar />
-		</UnstyledButton>
-	)
-
-	return (
-		<>
-			<Modal
-				opened={opened}
-				onClose={() => setOpened(false)}
-				title={<TitleBar modalTitle />}
-				fullScreen={isMobile}
-				classNames={modalClasses}
-				scrollAreaComponent={Modal.NativeScrollArea}
-			>
-				<Stack spacing={24} pb={12}>
-					<ScrollArea.Autosize
-						classNames={{ viewport: accordionClasses.scrollArea }}
-						mah={scrollAreaMaxHeight}
-					>
-						<Stack className={classes.sectionLabel} spacing={4} mt={0}>
-							<Title order={3}>{t('include')}</Title>
-							{filterListInclude}
-						</Stack>
-						<Stack className={classes.sectionLabel} spacing={4}>
-							<Title order={3}>{t('exclude')}</Title>
-							{filterListExclude}
-						</Stack>
-					</ScrollArea.Autosize>
-				</Stack>
-				<Group className={modalClasses.footer} noWrap>
-					<Button
-						variant='secondary'
-						onClick={() => deselectAll()}
-						disabled={selectedItems.length < 1}
-						className={classes.uncheckBtn}
-					>
-						{t('uncheck-all')}
-					</Button>
-					<Button variant='primary' className={classes.resultsBtn} onClick={() => setOpened(false)}>
-						{t('view-x-result', { count: resultCount })}
-					</Button>
-				</Group>
-			</Modal>
-
-			<Box ref={ref} component={DefaultLauncher} onClick={() => setOpened(true)} {...props} />
-		</>
-	)
-})
+)
 MoreFilterBody.displayName = 'MoreFilters'
 
 export const MoreFilter = createPolymorphicComponent<'button', MoreFilterProps>(MoreFilterBody)
@@ -374,4 +387,5 @@ export const MoreFilter = createPolymorphicComponent<'button', MoreFilterProps>(
 interface MoreFilterProps extends UnstyledButtonProps {
 	resultCount?: number
 	stateHandler: Dispatch<SetStateAction<string[]>>
+	isFetching?: boolean
 }

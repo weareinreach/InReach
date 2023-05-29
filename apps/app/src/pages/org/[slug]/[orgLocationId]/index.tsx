@@ -1,11 +1,14 @@
-import { Grid, Image, Stack, Tabs } from '@mantine/core'
-import { type GetServerSideProps, type NextPage } from 'next'
+import { Grid, Skeleton, Stack, Tabs } from '@mantine/core'
+// import compact from 'just-compact'
+import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
+// import { getEnv } from '@weareinreach/config/env'
+// import { prisma } from '@weareinreach/db/client'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
@@ -17,6 +20,30 @@ import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
+const LoadingState = () => (
+	<>
+		<Grid.Col sm={8} order={1}>
+			{/* Toolbar */}
+			<Skeleton h={48} w='100%' radius={8} />
+			<Stack pt={24} align='flex-start' spacing={40}>
+				{/* Listing Basic */}
+				<Skeleton h={260} w='100%' />
+				{/* Body */}
+				<Skeleton h={520} w='100%' />
+				{/* Tab panels */}
+			</Stack>
+		</Grid.Col>
+		<Grid.Col order={2}>
+			<Stack spacing={40}>
+				{/* Contact Card */}
+				<Skeleton h={520} w='100%' />
+				{/* Visit Card  */}
+				<Skeleton h={260} w='100%' />
+			</Stack>
+		</Grid.Col>
+	</>
+)
+
 const OrgLocationPage: NextPage = () => {
 	const { t } = useTranslation()
 	const router = useRouter<'/org/[slug]/[orgLocationId]'>()
@@ -25,21 +52,21 @@ const OrgLocationPage: NextPage = () => {
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const { data: orgData, status: orgDataStatus } = api.organization.getBySlug.useQuery(query)
-	const { data, isLoading, status } = api.location.getById.useQuery({ id: orgLocationId })
+	const { data, status } = api.location.getById.useQuery({ id: orgLocationId })
 	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
 		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
 	})
 	useEffect(() => {
 		if (data && status === 'success' && orgData && orgDataStatus === 'success') setLoading(false)
 	}, [data, status, orgData, orgDataStatus])
-	if (loading || !data || !orgData) return <>Loading</>
+	if (loading || !data || !orgData || router.isFallback) return <LoadingState />
 
 	const { emails, phones, socialMedia, websites, attributes, description, services, photos, reviews } = data
 
-	const locations = (() => {
-		const { street1, street2, city, postCode, govDist, country } = data
-		return [{ street1, street2, city, postCode, govDist, country }]
-	})()
+	// const locations = (() => {
+	// 	const { street1, street2, city, postCode, govDist, country } = data
+	// 	return [{ street1, street2, city, postCode, govDist, country }]
+	// })()
 
 	return (
 		<>
@@ -100,14 +127,44 @@ const OrgLocationPage: NextPage = () => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale, params, req, res }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+	// eslint-disable-next-line node/no-process-env, turbo/no-undeclared-env-vars
+	// if (getEnv('VERCEL_ENV') === 'production' || process.env.PRERENDER === 'true') {
+	// 	const pages = await prisma.organization.findMany({
+	// 		where: { published: true, deleted: false },
+	// 		select: { slug: true, locations: { select: { id: true }, where: { published: true, deleted: false } } },
+	// 	})
+
+	// 	return {
+	// 		paths: compact(
+	// 			pages.flatMap(({ slug, locations }) => {
+	// 				if (locations.length > 1) {
+	// 					return locations.map((location) => ({ params: { slug: slug, orgLocationId: location.id } }))
+	// 				}
+	// 			})
+	// 		),
+	// 		// fallback: 'blocking', // false or "blocking"
+	// 		fallback: true,
+	// 	}
+	// } else {
+	return {
+		paths: [],
+		// fallback: 'blocking',
+		fallback: true,
+	}
+	// }
+}
+export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
 	const urlParams = z.object({ slug: z.string(), orgLocationId: z.string() }).safeParse(params)
 	if (!urlParams.success) return { notFound: true }
 	const { slug, orgLocationId } = urlParams.data
 
-	const ssg = await trpcServerClient({ req, res })
-	await ssg.organization.getBySlug.prefetch({ slug })
-	await ssg.location.getById.prefetch({ id: orgLocationId })
+	const ssg = await trpcServerClient({ session: null })
+	Promise.allSettled([
+		await ssg.organization.getBySlug.prefetch({ slug }),
+		await ssg.organization.getIdFromSlug.prefetch({ slug }),
+		await ssg.location.getById.prefetch({ id: orgLocationId }),
+	])
 	const props = {
 		trpcState: ssg.dehydrate(),
 		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
@@ -115,6 +172,8 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params, r
 
 	return {
 		props,
+		revalidate: 60 * 30, // 30 minutes
 	}
 }
+
 export default OrgLocationPage

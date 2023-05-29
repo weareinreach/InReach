@@ -1,4 +1,4 @@
-import { createStyles, Group, rem, useMantineTheme } from '@mantine/core'
+import { createStyles, Group, rem, Space, useMantineTheme } from '@mantine/core'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 
 import { ActionButtons, Breadcrumb, type BreadcrumbProps } from '.'
@@ -14,7 +14,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const Toolbar = ({ saved = false, breadcrumbProps, ...ids }: Props) => {
+export const Toolbar = ({ saved = false, breadcrumbProps, hideBreadcrumb, ...ids }: Props) => {
 	const theme = useMantineTheme()
 	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 	const { width } = useViewportSize()
@@ -38,7 +38,7 @@ export const Toolbar = ({ saved = false, breadcrumbProps, ...ids }: Props) => {
 
 	return (
 		<Group position='apart' align='center' w='100%' noWrap className={classes.toolbar}>
-			<Breadcrumb {...breadcrumbProps} />
+			{hideBreadcrumb ? <Space w={1} /> : <Breadcrumb {...breadcrumbProps} />}
 			<Group noWrap spacing={0}>
 				{displayButtons}
 				<ActionButtons iconKey='more' outsideMoreMenu={inToolbar} {...ids} />
@@ -52,4 +52,5 @@ type Props = {
 	breadcrumbProps: BreadcrumbProps
 	organizationId: string
 	serviceId?: string
+	hideBreadcrumb?: boolean
 }
