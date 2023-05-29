@@ -9,6 +9,14 @@ export const BodyGrid = ({ children, className, ...others }: GridProps) => {
 	)
 }
 
+export const BodyGridNoTopMargin = ({ children, className, ...others }: GridProps) => {
+	return (
+		<Container fluid className={className}>
+			<Grid {...others}>{children}</Grid>
+		</Container>
+	)
+}
+
 export const StorybookGrid = (Story: StoryFn) => (
 	<BodyGrid pt={16}>
 		<Story />
