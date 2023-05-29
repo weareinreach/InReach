@@ -123,7 +123,7 @@ importers:
         version: 1.0.0(patch_hash=refrge56ym5gomc3tkglzjdymy)
       '@emotion/react':
         specifier: 11.11.0
-        version: 11.11.0(@types/react@18.2.6)(react@18.2.0)
+        version: 11.11.0(@types/react@18.2.7)(react@18.2.0)
       '@emotion/server':
         specifier: 11.11.0
         version: 11.11.0
@@ -135,7 +135,7 @@ importers:
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(embla-carousel-react@7.1.0)(react@18.2.0)
       '@mantine/core':
         specifier: 6.0.11
-        version: 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+        version: 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/dates':
         specifier: 6.0.11
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(dayjs@1.11.7)(react@18.2.0)
@@ -153,7 +153,7 @@ importers:
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/next':
         specifier: 6.0.11
-        version: 6.0.11(@emotion/react@11.11.0)(@emotion/server@11.11.0)(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 6.0.11(@emotion/react@11.11.0)(@emotion/server@11.11.0)(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/notifications':
         specifier: 6.0.11
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(react-dom@18.2.0)(react@18.2.0)
@@ -173,8 +173,8 @@ importers:
         specifier: 6.0.11
         version: 6.0.11(react@18.2.0)
       '@next/bundle-analyzer':
-        specifier: 13.4.3
-        version: 13.4.3
+        specifier: 13.4.4
+        version: 13.4.4
       '@opentelemetry/api':
         specifier: 1.4.1
         version: 1.4.1
@@ -222,7 +222,7 @@ importers:
         version: 10.28.0(@trpc/server@10.28.0)
       '@trpc/next':
         specifier: 10.28.0
-        version: 10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/react-query@10.28.0)(@trpc/server@10.28.0)(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/react-query@10.28.0)(@trpc/server@10.28.0)(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/react-query':
         specifier: 10.28.0
         version: 10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/server@10.28.0)(react-dom@18.2.0)(react@18.2.0)
@@ -299,20 +299,20 @@ importers:
         specifier: 3.3.0
         version: 3.3.0
       next:
-        specifier: 13.4.3
-        version: 13.4.3(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.4
+        version: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 4.22.1
-        version: 4.22.1(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.22.1(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
         specifier: 13.2.2
-        version: 13.2.2(i18next@22.5.0)(next@13.4.3)(react-i18next@12.3.1)(react@18.2.0)
+        version: 13.2.2(i18next@22.5.0)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0)
       next-seo:
         specifier: 6.0.0
-        version: 6.0.0(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 6.0.0(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       nextjs-routes:
         specifier: 1.0.9
-        version: 1.0.9(next@13.4.3)
+        version: 1.0.9(next@13.4.4)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -360,8 +360,8 @@ importers:
         specifier: 2.7.2
         version: 2.7.2
       '@types/react':
-        specifier: 18.2.6
-        version: 18.2.6
+        specifier: 18.2.7
+        version: 18.2.7
       '@types/react-dom':
         specifier: 18.2.4
         version: 18.2.4
@@ -421,7 +421,7 @@ importers:
         version: 1.0.0(patch_hash=refrge56ym5gomc3tkglzjdymy)
       '@emotion/react':
         specifier: 11.11.0
-        version: 11.11.0(@types/react@18.2.6)(react@18.2.0)
+        version: 11.11.0(@types/react@18.2.7)(react@18.2.0)
       '@emotion/server':
         specifier: 11.11.0
         version: 11.11.0
@@ -430,7 +430,7 @@ importers:
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(embla-carousel-react@7.1.0)(react@18.2.0)
       '@mantine/core':
         specifier: 6.0.11
-        version: 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+        version: 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/dates':
         specifier: 6.0.11
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(dayjs@1.11.7)(react@18.2.0)
@@ -448,7 +448,7 @@ importers:
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/next':
         specifier: 6.0.11
-        version: 6.0.11(@emotion/react@11.11.0)(@emotion/server@11.11.0)(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 6.0.11(@emotion/react@11.11.0)(@emotion/server@11.11.0)(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/notifications':
         specifier: 6.0.11
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(react-dom@18.2.0)(react@18.2.0)
@@ -486,8 +486,8 @@ importers:
         specifier: 22.5.0
         version: 22.5.0
       next:
-        specifier: 13.4.3
-        version: 13.4.3(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.4
+        version: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -499,8 +499,8 @@ importers:
         version: 12.3.1(i18next@22.5.0)(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@next/bundle-analyzer':
-        specifier: 13.4.3
-        version: 13.4.3
+        specifier: 13.4.4
+        version: 13.4.4
       '@types/eslint':
         specifier: 8.40.0
         version: 8.40.0
@@ -508,8 +508,8 @@ importers:
         specifier: 18.16.16
         version: 18.16.16
       '@types/react':
-        specifier: 18.2.6
-        version: 18.2.6
+        specifier: 18.2.7
+        version: 18.2.7
       '@types/react-dom':
         specifier: 18.2.4
         version: 18.2.4
@@ -548,7 +548,7 @@ importers:
         version: 10.28.0(@trpc/server@10.28.0)
       '@trpc/next':
         specifier: 10.28.0
-        version: 10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/react-query@10.28.0)(@trpc/server@10.28.0)(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/react-query@10.28.0)(@trpc/server@10.28.0)(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/react-query':
         specifier: 10.28.0
         version: 10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/server@10.28.0)(react-dom@18.2.0)(react@18.2.0)
@@ -653,8 +653,8 @@ importers:
         specifier: 6.6.0
         version: 6.6.0
       next:
-        specifier: 13.4.3
-        version: 13.4.3(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.4
+        version: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       p-queue:
         specifier: 7.3.4
         version: 7.3.4
@@ -705,8 +705,8 @@ importers:
         specifier: 18.16.16
         version: 18.16.16
       '@types/react':
-        specifier: 18.2.6
-        version: 18.2.6
+        specifier: 18.2.7
+        version: 18.2.7
       '@types/react-dom':
         specifier: 18.2.4
         version: 18.2.4
@@ -723,11 +723,11 @@ importers:
         specifier: 8.41.0
         version: 8.41.0
       next:
-        specifier: 13.4.3
-        version: 13.4.3(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.4
+        version: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 4.22.1
-        version: 4.22.1(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.22.1(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -905,7 +905,7 @@ importers:
         version: 11.0.0
       next-i18next:
         specifier: 13.2.2
-        version: 13.2.2(i18next@22.5.0)(next@13.4.3)(react-i18next@12.3.1)(react@18.2.0)
+        version: 13.2.2(i18next@22.5.0)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0)
       typescript:
         specifier: 5.0.4
         version: 5.0.4
@@ -1136,8 +1136,8 @@ importers:
   packages/eslint-config:
     devDependencies:
       '@next/eslint-plugin-next':
-        specifier: 13.4.3
-        version: 13.4.3
+        specifier: 13.4.4
+        version: 13.4.4
       '@tanstack/eslint-plugin-query':
         specifier: 4.29.9
         version: 4.29.9
@@ -1160,8 +1160,8 @@ importers:
         specifier: 8.41.0
         version: 8.41.0
       eslint-config-next:
-        specifier: 13.4.3
-        version: 13.4.3(eslint@8.41.0)(typescript@5.0.4)
+        specifier: 13.4.4
+        version: 13.4.4(eslint@8.41.0)(typescript@5.0.4)
       eslint-config-prettier:
         specifier: 8.8.0
         version: 8.8.0(eslint@8.41.0)
@@ -1193,8 +1193,8 @@ importers:
         specifier: 1.9.9
         version: 1.9.9(eslint@8.41.0)
       next:
-        specifier: 13.4.3
-        version: 13.4.3(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.4
+        version: 13.4.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
       typescript:
         specifier: 5.0.4
         version: 5.0.4
@@ -1245,7 +1245,7 @@ importers:
         version: 1.3.1
       nextjs-routes:
         specifier: 1.0.9
-        version: 1.0.9(next@13.4.3)
+        version: 1.0.9(next@13.4.4)
       probe-image-size:
         specifier: 7.2.3
         version: 7.2.3
@@ -1276,7 +1276,7 @@ importers:
         version: 7.21.5(@babel/core@7.22.1)
       '@emotion/react':
         specifier: 11.11.0
-        version: 11.11.0(@types/react@18.2.6)(react@18.2.0)
+        version: 11.11.0(@types/react@18.2.7)(react@18.2.0)
       '@emotion/server':
         specifier: 11.11.0
         version: 11.11.0
@@ -1309,7 +1309,7 @@ importers:
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(embla-carousel-react@7.1.0)(react@18.2.0)
       '@mantine/core':
         specifier: 6.0.11
-        version: 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+        version: 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/dates':
         specifier: 6.0.11
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(dayjs@1.11.7)(react@18.2.0)
@@ -1327,7 +1327,7 @@ importers:
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/next':
         specifier: 6.0.11
-        version: 6.0.11(@emotion/react@11.11.0)(@emotion/server@11.11.0)(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 6.0.11(@emotion/react@11.11.0)(@emotion/server@11.11.0)(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/notifications':
         specifier: 6.0.11
         version: 6.0.11(@mantine/core@6.0.11)(@mantine/hooks@6.0.11)(react-dom@18.2.0)(react@18.2.0)
@@ -1381,7 +1381,7 @@ importers:
         version: 7.0.18(react-dom@18.2.0)(react@18.2.0)
       '@storybook/nextjs':
         specifier: 7.0.18
-        version: 7.0.18(@babel/core@7.22.1)(@swc/core@1.3.49)(esbuild@0.17.19)(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)(type-fest@3.11.0)(typescript@5.0.4)(webpack@5.84.1)
+        version: 7.0.18(@babel/core@7.22.1)(@swc/core@1.3.49)(esbuild@0.17.19)(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)(type-fest@3.11.0)(typescript@5.0.4)(webpack@5.84.1)
       '@storybook/preview-api':
         specifier: 7.0.18
         version: 7.0.18
@@ -1429,7 +1429,7 @@ importers:
         version: 10.28.0(@trpc/server@10.28.0)
       '@trpc/next':
         specifier: 10.28.0
-        version: 10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/react-query@10.28.0)(@trpc/server@10.28.0)(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/react-query@10.28.0)(@trpc/server@10.28.0)(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/react-query':
         specifier: 10.28.0
         version: 10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/server@10.28.0)(react-dom@18.2.0)(react@18.2.0)
@@ -1458,8 +1458,8 @@ importers:
         specifier: 7.2.0
         version: 7.2.0
       '@types/react':
-        specifier: 18.2.6
-        version: 18.2.6
+        specifier: 18.2.7
+        version: 18.2.7
       '@types/react-dom':
         specifier: 18.2.4
         version: 18.2.4
@@ -1530,17 +1530,17 @@ importers:
         specifier: 1.8.0
         version: 1.8.0(msw@1.2.1)
       next:
-        specifier: 13.4.3
-        version: 13.4.3(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.4
+        version: 13.4.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 4.22.1
-        version: 4.22.1(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.22.1(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
         specifier: 13.2.2
-        version: 13.2.2(i18next@22.5.0)(next@13.4.3)(react-i18next@12.3.1)(react@18.2.0)
+        version: 13.2.2(i18next@22.5.0)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0)
       next-router-mock:
         specifier: 0.9.3
-        version: 0.9.3(next@13.4.3)(react@18.2.0)
+        version: 0.9.3(next@13.4.4)(react@18.2.0)
       postcss-loader:
         specifier: 7.3.2
         version: 7.3.2(postcss@8.4.21)(webpack@5.84.1)
@@ -6043,7 +6043,7 @@ packages:
   /@emotion/memoize@0.8.1:
     resolution: {integrity: sha512-W2P2c/VRW1/1tLox0mVUalvnWXxavmv/Oum2aPsRcoDJuob75FC3Y8FbpfLwUegRcxINtGUMPq0tFCvYNTBXNA==}
 
-  /@emotion/react@11.11.0(@types/react@18.2.6)(react@18.2.0):
+  /@emotion/react@11.11.0(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-ZSK3ZJsNkwfjT3JpDAWJZlrGD81Z3ytNDsxw1LKq1o+xkmO5pnWfr6gmCC8gHEFf3nSSX/09YrG67jybNPxSUw==}
     peerDependencies:
       '@types/react': '*'
@@ -6059,7 +6059,7 @@ packages:
       '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
       '@emotion/utils': 1.2.1
       '@emotion/weak-memoize': 0.3.1
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
 
@@ -6088,7 +6088,7 @@ packages:
   /@emotion/sheet@1.2.2:
     resolution: {integrity: sha512-0QBtGvaqtWi+nx6doRwDdBIzhNdZrXUppvTM4dtZZWEGTXL/XE/yJxLMGlDT1Gt+UHH5IX1n+jkXyytE/av7OA==}
 
-  /@emotion/styled@11.11.0(@emotion/react@11.11.0)(@types/react@18.2.6)(react@18.2.0):
+  /@emotion/styled@11.11.0(@emotion/react@11.11.0)(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-hM5Nnvu9P3midq5aaXj4I+lnSfNi7Pmd4EWk1fOZ3pxookaQTNew6bp4JaCBYM4HVFZF9g7UjJmsUmC2JlxOng==}
     peerDependencies:
       '@emotion/react': ^11.0.0-rc.0
@@ -6101,11 +6101,11 @@ packages:
       '@babel/runtime': 7.21.0
       '@emotion/babel-plugin': 11.11.0
       '@emotion/is-prop-valid': 1.2.1
-      '@emotion/react': 11.11.0(@types/react@18.2.6)(react@18.2.0)
+      '@emotion/react': 11.11.0(@types/react@18.2.7)(react@18.2.0)
       '@emotion/serialize': 1.1.2
       '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
       '@emotion/utils': 1.2.1
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       react: 18.2.0
     dev: false
 
@@ -6963,13 +6963,13 @@ packages:
       embla-carousel-react: ^7.0.0
       react: '>=16.8.0 || 18'
     dependencies:
-      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/hooks': 6.0.11(react@18.2.0)
       '@mantine/utils': 6.0.11(react@18.2.0)
       embla-carousel-react: 7.1.0(react@18.2.0)
       react: 18.2.0
 
-  /@mantine/core@6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0):
+  /@mantine/core@6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-S8koDsh1mlezqoOST7UfNfojKR0FWFIrzN3RkxoHlD7ggawrxeCPjHqk0bfUyKBvDOa2UiDpjWVYYSUtxZqpLw==}
     peerDependencies:
       '@mantine/hooks': 6.0.11
@@ -6983,8 +6983,8 @@ packages:
       '@radix-ui/react-scroll-area': 1.0.2(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-remove-scroll: 2.5.5(@types/react@18.2.6)(react@18.2.0)
-      react-textarea-autosize: 8.3.4(@types/react@18.2.6)(react@18.2.0)
+      react-remove-scroll: 2.5.5(@types/react@18.2.7)(react@18.2.0)
+      react-textarea-autosize: 8.3.4(@types/react@18.2.7)(react@18.2.0)
     transitivePeerDependencies:
       - '@emotion/react'
       - '@types/react'
@@ -6997,7 +6997,7 @@ packages:
       dayjs: '>=1.0.0'
       react: '>=16.8.0 || 18'
     dependencies:
-      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/hooks': 6.0.11(react@18.2.0)
       '@mantine/utils': 6.0.11(react@18.2.0)
       dayjs: 1.11.7
@@ -7011,7 +7011,7 @@ packages:
       react: '>=16.8.0 || 18'
       react-dom: '>=16.8.0 || 18'
     dependencies:
-      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/hooks': 6.0.11(react@18.2.0)
       '@mantine/utils': 6.0.11(react@18.2.0)
       react: 18.2.0
@@ -7042,13 +7042,13 @@ packages:
       react: '>=16.8.0 || 18'
       react-dom: '>=16.8.0 || 18'
     dependencies:
-      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/hooks': 6.0.11(react@18.2.0)
       '@mantine/utils': 6.0.11(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  /@mantine/next@6.0.11(@emotion/react@11.11.0)(@emotion/server@11.11.0)(next@13.4.3)(react-dom@18.2.0)(react@18.2.0):
+  /@mantine/next@6.0.11(@emotion/react@11.11.0)(@emotion/server@11.11.0)(next@13.4.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-/bX7kf7PSvQAf8XtG46ol1GRqXoNt3gj8j4zYJyimUKAivYeM87QeAksdOxrPkOUslUuWunwRfYdJ1QAxZSPwA==}
     peerDependencies:
       next: '*'
@@ -7057,7 +7057,7 @@ packages:
     dependencies:
       '@mantine/ssr': 6.0.11(@emotion/react@11.11.0)(@emotion/server@11.11.0)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/styles': 6.0.11(@emotion/react@11.11.0)(react-dom@18.2.0)(react@18.2.0)
-      next: 13.4.3(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
@@ -7072,7 +7072,7 @@ packages:
       react: '>=16.8.0 || 18'
       react-dom: '>=16.8.0 || 18'
     dependencies:
-      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/hooks': 6.0.11(react@18.2.0)
       '@mantine/utils': 6.0.11(react@18.2.0)
       react: 18.2.0
@@ -7087,7 +7087,7 @@ packages:
       react: '>=16.8.0 || 18'
       react-dom: '>=16.8.0 || 18'
     dependencies:
-      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/hooks': 6.0.11(react@18.2.0)
       '@mantine/utils': 6.0.11(react@18.2.0)
       react: 18.2.0
@@ -7101,7 +7101,7 @@ packages:
       react: '>=16.8.0 || 18'
       react-dom: '>=16.8.0 || 18'
     dependencies:
-      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/hooks': 6.0.11(react@18.2.0)
       '@mantine/utils': 6.0.11(react@18.2.0)
       prism-react-renderer: 1.3.5(react@18.2.0)
@@ -7116,7 +7116,7 @@ packages:
       react: '>=16.8.0 || 18'
       react-dom: '>=16.8.0 || 18'
     dependencies:
-      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/hooks': 6.0.11(react@18.2.0)
       '@mantine/utils': 6.0.11(react@18.2.0)
       react: 18.2.0
@@ -7130,7 +7130,7 @@ packages:
       react: '>=16.8.0 || 18'
       react-dom: '>=16.8.0 || 18'
     dependencies:
-      '@emotion/react': 11.11.0(@types/react@18.2.6)(react@18.2.0)
+      '@emotion/react': 11.11.0(@types/react@18.2.7)(react@18.2.0)
       '@emotion/server': 11.11.0
       '@mantine/styles': 6.0.11(@emotion/react@11.11.0)(react-dom@18.2.0)(react@18.2.0)
       html-react-parser: 1.4.12(react@18.2.0)
@@ -7144,7 +7144,7 @@ packages:
       react: '>=16.8.0 || 18'
       react-dom: '>=16.8.0 || 18'
     dependencies:
-      '@emotion/react': 11.11.0(@types/react@18.2.6)(react@18.2.0)
+      '@emotion/react': 11.11.0(@types/react@18.2.7)(react@18.2.0)
       clsx: 1.1.1
       csstype: 3.1.2
       react: 18.2.0
@@ -7160,7 +7160,7 @@ packages:
       '@tiptap/react': ^2.0.0-beta.202
       react: '>=16.8.0 || 18'
     dependencies:
-      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/core': 6.0.11(@emotion/react@11.11.0)(@mantine/hooks@6.0.11)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/hooks': 6.0.11(react@18.2.0)
       '@mantine/utils': 6.0.11(react@18.2.0)
       '@tabler/icons-react': 2.15.0(react@18.2.0)
@@ -7249,7 +7249,7 @@ packages:
       react: '>=16 || 18'
     dependencies:
       '@types/mdx': 2.0.4
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       react: 18.2.0
     dev: true
 
@@ -7277,7 +7277,7 @@ packages:
       - supports-color
     dev: true
 
-  /@mui/base@5.0.0-beta.2(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0):
+  /@mui/base@5.0.0-beta.2(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-R9R+aqrl1QhZJaO05rhvooqxOaf7SKpQ+EjW80sbP3ticTVmLmrn4YBLQS7/ML+WXdrkrPtqSmKFdSE5Ik3gBQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -7290,10 +7290,10 @@ packages:
     dependencies:
       '@babel/runtime': 7.21.0
       '@emotion/is-prop-valid': 1.2.1
-      '@mui/types': 7.2.4(@types/react@18.2.6)
+      '@mui/types': 7.2.4(@types/react@18.2.7)
       '@mui/utils': 5.13.1(react@18.2.0)
       '@popperjs/core': 2.11.7
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       clsx: 1.2.1
       prop-types: 15.8.1
       react: 18.2.0
@@ -7305,7 +7305,7 @@ packages:
     resolution: {integrity: sha512-aOLCXMCySMFL2WmUhnz+DjF84AoFVu8rn35OsL759HXOZMz8zhEwVf5w/xxkWx7DycM2KXDTgAvYW48nTfqTLA==}
     dev: false
 
-  /@mui/material@5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0):
+  /@mui/material@5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Pfke1l0GG2OJb/Nr10aVr8huoBFcBTdWKV5iFSTEHqf9c2C1ZlyYMISn7ui6X3Gix8vr+hP5kVqH1LAWwQSb6w==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -7323,14 +7323,14 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.21.0
-      '@emotion/react': 11.11.0(@types/react@18.2.6)(react@18.2.0)
-      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.6)(react@18.2.0)
-      '@mui/base': 5.0.0-beta.2(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+      '@emotion/react': 11.11.0(@types/react@18.2.7)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.7)(react@18.2.0)
+      '@mui/base': 5.0.0-beta.2(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       '@mui/core-downloads-tracker': 5.13.2
-      '@mui/system': 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.6)(react@18.2.0)
-      '@mui/types': 7.2.4(@types/react@18.2.6)
+      '@mui/system': 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.7)(react@18.2.0)
+      '@mui/types': 7.2.4(@types/react@18.2.7)
       '@mui/utils': 5.13.1(react@18.2.0)
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       '@types/react-transition-group': 4.4.6
       clsx: 1.2.1
       csstype: 3.1.2
@@ -7341,7 +7341,7 @@ packages:
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
-  /@mui/private-theming@5.13.1(@types/react@18.2.6)(react@18.2.0):
+  /@mui/private-theming@5.13.1(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-HW4npLUD9BAkVppOUZHeO1FOKUJWAwbpy0VQoGe3McUYTlck1HezGHQCfBQ5S/Nszi7EViqiimECVl9xi+/WjQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -7353,7 +7353,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.21.0
       '@mui/utils': 5.13.1(react@18.2.0)
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       prop-types: 15.8.1
       react: 18.2.0
     dev: false
@@ -7373,14 +7373,14 @@ packages:
     dependencies:
       '@babel/runtime': 7.21.0
       '@emotion/cache': 11.11.0
-      '@emotion/react': 11.11.0(@types/react@18.2.6)(react@18.2.0)
-      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.6)(react@18.2.0)
+      '@emotion/react': 11.11.0(@types/react@18.2.7)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.7)(react@18.2.0)
       csstype: 3.1.2
       prop-types: 15.8.1
       react: 18.2.0
     dev: false
 
-  /@mui/system@5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.6)(react@18.2.0):
+  /@mui/system@5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-TPyWmRJPt0JPVxacZISI4o070xEJ7ftxpVtu6LWuYVOUOINlhoGOclam4iV8PDT3EMQEHuUrwU49po34UdWLlw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -7397,20 +7397,20 @@ packages:
         optional: true
     dependencies:
       '@babel/runtime': 7.21.0
-      '@emotion/react': 11.11.0(@types/react@18.2.6)(react@18.2.0)
-      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.6)(react@18.2.0)
-      '@mui/private-theming': 5.13.1(@types/react@18.2.6)(react@18.2.0)
+      '@emotion/react': 11.11.0(@types/react@18.2.7)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.7)(react@18.2.0)
+      '@mui/private-theming': 5.13.1(@types/react@18.2.7)(react@18.2.0)
       '@mui/styled-engine': 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(react@18.2.0)
-      '@mui/types': 7.2.4(@types/react@18.2.6)
+      '@mui/types': 7.2.4(@types/react@18.2.7)
       '@mui/utils': 5.13.1(react@18.2.0)
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       clsx: 1.2.1
       csstype: 3.1.2
       prop-types: 15.8.1
       react: 18.2.0
     dev: false
 
-  /@mui/types@7.2.4(@types/react@18.2.6):
+  /@mui/types@7.2.4(@types/react@18.2.7):
     resolution: {integrity: sha512-LBcwa8rN84bKF+f5sDyku42w1NTxaPgPyYKODsh01U1fVstTClbUoSA96oyRBnSNyEiAVjKm6Gwx9vjR+xyqHA==}
     peerDependencies:
       '@types/react': '*'
@@ -7418,7 +7418,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
     dev: false
 
   /@mui/utils@5.13.1(react@18.2.0):
@@ -7456,92 +7456,92 @@ packages:
       next-auth: ^4
     dependencies:
       '@prisma/client': 4.14.1(prisma@4.14.1)
-      next-auth: 4.22.1(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+      next-auth: 4.22.1(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
-  /@next/bundle-analyzer@13.4.3:
-    resolution: {integrity: sha512-jzWk6eaCFaIXfIswyQQWnR6FN22HpWoSWe3nLa3JCNkNd2ksriJgn86oQyZRxgAPaEbVKQXBp8GZi8e5DrhVJg==}
+  /@next/bundle-analyzer@13.4.4:
+    resolution: {integrity: sha512-OxdqGfzElMjcLDw3XkUTqpEjyB/R2n3sOjiWuOGm414j5hAD2AIcXWv4q6FTN9rERgojrkw+g3z5yeLZgJ3YKg==}
     dependencies:
       webpack-bundle-analyzer: 4.7.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  /@next/env@13.4.3:
-    resolution: {integrity: sha512-pa1ErjyFensznttAk3EIv77vFbfSYT6cLzVRK5jx4uiRuCQo+m2wCFAREaHKIy63dlgvOyMlzh6R8Inu8H3KrQ==}
+  /@next/env@13.4.4:
+    resolution: {integrity: sha512-q/y7VZj/9YpgzDe64Zi6rY1xPizx80JjlU2BTevlajtaE3w1LqweH1gGgxou2N7hdFosXHjGrI4OUvtFXXhGLg==}
 
-  /@next/eslint-plugin-next@13.4.3:
-    resolution: {integrity: sha512-5B0uOnh7wyUY9vNNdIA6NUvWozhrZaTMZOzdirYAefqD0ZBK5C/h3+KMYdCKrR7JrXGvVpWnHtv54b3dCzwICA==}
+  /@next/eslint-plugin-next@13.4.4:
+    resolution: {integrity: sha512-5jnh7q6I15efnjR/rR+/TGTc9hn53g3JTbEjAMjmeQiExKqEUgIXqrHI5zlTNlNyzCPkBB860/ctxXheZaF2Vw==}
     dependencies:
       glob: 7.1.7
     dev: true
 
-  /@next/swc-darwin-arm64@13.4.3:
-    resolution: {integrity: sha512-yx18udH/ZmR4Bw4M6lIIPE3JxsAZwo04iaucEfA2GMt1unXr2iodHUX/LAKNyi6xoLP2ghi0E+Xi1f4Qb8f1LQ==}
+  /@next/swc-darwin-arm64@13.4.4:
+    resolution: {integrity: sha512-xfjgXvp4KalNUKZMHmsFxr1Ug+aGmmO6NWP0uoh4G3WFqP/mJ1xxfww0gMOeMeSq/Jyr5k7DvoZ2Pv+XOITTtw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     optional: true
 
-  /@next/swc-darwin-x64@13.4.3:
-    resolution: {integrity: sha512-Mi8xJWh2IOjryAM1mx18vwmal9eokJ2njY4nDh04scy37F0LEGJ/diL6JL6kTXi0UfUCGbMsOItf7vpReNiD2A==}
+  /@next/swc-darwin-x64@13.4.4:
+    resolution: {integrity: sha512-ZY9Ti1hkIwJsxGus3nlubIkvYyB0gNOYxKrfsOrLEqD0I2iCX8D7w8v6QQZ2H+dDl6UT29oeEUdDUNGk4UEpfg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     optional: true
 
-  /@next/swc-linux-arm64-gnu@13.4.3:
-    resolution: {integrity: sha512-aBvtry4bxJ1xwKZ/LVPeBGBwWVwxa4bTnNkRRw6YffJnn/f4Tv4EGDPaVeYHZGQVA56wsGbtA6nZMuWs/EIk4Q==}
+  /@next/swc-linux-arm64-gnu@13.4.4:
+    resolution: {integrity: sha512-+KZnDeMShYkpkqAvGCEDeqYTRADJXc6SY1jWXz+Uo6qWQO/Jd9CoyhTJwRSxvQA16MoYzvILkGaDqirkRNctyA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     optional: true
 
-  /@next/swc-linux-arm64-musl@13.4.3:
-    resolution: {integrity: sha512-krT+2G3kEsEUvZoYte3/2IscscDraYPc2B+fDJFipPktJmrv088Pei/RjrhWm5TMIy5URYjZUoDZdh5k940Dyw==}
+  /@next/swc-linux-arm64-musl@13.4.4:
+    resolution: {integrity: sha512-evC1twrny2XDT4uOftoubZvW3EG0zs0ZxMwEtu/dDGVRO5n5pT48S8qqEIBGBUZYu/Xx4zzpOkIxx1vpWdE+9A==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     optional: true
 
-  /@next/swc-linux-x64-gnu@13.4.3:
-    resolution: {integrity: sha512-AMdFX6EKJjC0G/CM6hJvkY8wUjCcbdj3Qg7uAQJ7PVejRWaVt0sDTMavbRfgMchx8h8KsAudUCtdFkG9hlEClw==}
+  /@next/swc-linux-x64-gnu@13.4.4:
+    resolution: {integrity: sha512-PX706XcCHr2FfkyhP2lpf+pX/tUvq6/ke7JYnnr0ykNdEMo+sb7cC/o91gnURh4sPYSiZJhsF2gbIqg9rciOHQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     optional: true
 
-  /@next/swc-linux-x64-musl@13.4.3:
-    resolution: {integrity: sha512-jySgSXE48shaLtcQbiFO9ajE9mqz7pcAVLnVLvRIlUHyQYR/WyZdK8ehLs65Mz6j9cLrJM+YdmdJPyV4WDaz2g==}
+  /@next/swc-linux-x64-musl@13.4.4:
+    resolution: {integrity: sha512-TKUUx3Ftd95JlHV6XagEnqpT204Y+IsEa3awaYIjayn0MOGjgKZMZibqarK3B1FsMSPaieJf2FEAcu9z0yT5aA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     optional: true
 
-  /@next/swc-win32-arm64-msvc@13.4.3:
-    resolution: {integrity: sha512-5DxHo8uYcaADiE9pHrg8o28VMt/1kR8voDehmfs9AqS0qSClxAAl+CchjdboUvbCjdNWL1MISCvEfKY2InJ3JA==}
+  /@next/swc-win32-arm64-msvc@13.4.4:
+    resolution: {integrity: sha512-FP8AadgSq4+HPtim7WBkCMGbhr5vh9FePXiWx9+YOdjwdQocwoCK5ZVC3OW8oh3TWth6iJ0AXJ/yQ1q1cwSZ3A==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     optional: true
 
-  /@next/swc-win32-ia32-msvc@13.4.3:
-    resolution: {integrity: sha512-LaqkF3d+GXRA5X6zrUjQUrXm2MN/3E2arXBtn5C7avBCNYfm9G3Xc646AmmmpN3DJZVaMYliMyCIQCMDEzk80w==}
+  /@next/swc-win32-ia32-msvc@13.4.4:
+    resolution: {integrity: sha512-3WekVmtuA2MCdcAOrgrI+PuFiFURtSyyrN1I3UPtS0ckR2HtLqyqmS334Eulf15g1/bdwMteePdK363X/Y9JMg==}
     engines: {node: '>= 10'}
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
     optional: true
 
-  /@next/swc-win32-x64-msvc@13.4.3:
-    resolution: {integrity: sha512-jglUk/x7ZWeOJWlVoKyIAkHLTI+qEkOriOOV+3hr1GyiywzcqfI7TpFSiwC7kk1scOiH7NTFKp8mA3XPNO9bDw==}
+  /@next/swc-win32-x64-msvc@13.4.4:
+    resolution: {integrity: sha512-AHRITu/CrlQ+qzoqQtEMfaTu7GHaQ6bziQln/pVWpOYC1wU+Mq6VQQFlsDtMCnDztPZtppAXdvvbNS7pcfRzlw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -9681,7 +9681,7 @@ packages:
     resolution: {integrity: sha512-dBAnEL4HfxxJmv7LdEYUoZlQbWj9APZNIbOaq0tgF8XkxiIbzqvgB0jhL/9UOrysSDbQWBiCRTu2wOVxedGfmw==}
     dev: true
 
-  /@storybook/nextjs@7.0.18(@babel/core@7.22.1)(@swc/core@1.3.49)(esbuild@0.17.19)(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)(type-fest@3.11.0)(typescript@5.0.4)(webpack@5.84.1):
+  /@storybook/nextjs@7.0.18(@babel/core@7.22.1)(@swc/core@1.3.49)(esbuild@0.17.19)(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)(type-fest@3.11.0)(typescript@5.0.4)(webpack@5.84.1):
     resolution: {integrity: sha512-+iLHPmfoI6sIfm8NhDqWaMYJ9UVycdfYbqN9qqpoYHwvh77GmqzKxNmkqdB3AQlicXBCUvabyV5A7lX9cdEHug==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -9730,7 +9730,7 @@ packages:
       fs-extra: 11.1.1
       image-size: 1.0.2
       loader-utils: 3.2.1
-      next: 13.4.3(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.84.1)
       pnp-webpack-plugin: 1.7.0(typescript@5.0.4)
       postcss: 8.4.21
@@ -10368,9 +10368,9 @@ packages:
       react: ^17 || ^18 || 18
       react-dom: ^17 || ^18 || 18
     dependencies:
-      '@emotion/react': 11.11.0(@types/react@18.2.6)(react@18.2.0)
-      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.6)(react@18.2.0)
-      '@mui/material': 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.6)(react-dom@18.2.0)(react@18.2.0)
+      '@emotion/react': 11.11.0(@types/react@18.2.7)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.0)(@types/react@18.2.7)(react@18.2.0)
+      '@mui/material': 5.13.2(@emotion/react@11.11.0)(@emotion/styled@11.11.0)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
       clsx: 1.2.1
       copy-to-clipboard: 3.3.3
       react: 18.2.0
@@ -10624,7 +10624,7 @@ packages:
       next-auth: ^4.12.3
       react: ^18 || 18
     dependencies:
-      next-auth: 4.22.1(next@13.4.3)(react-dom@18.2.0)(react@18.2.0)
+      next-auth: 4.22.1(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: true
 
@@ -10668,7 +10668,7 @@ packages:
     dependencies:
       '@trpc/server': 10.28.0
 
-  /@trpc/next@10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/react-query@10.28.0)(@trpc/server@10.28.0)(next@13.4.3)(react-dom@18.2.0)(react@18.2.0):
+  /@trpc/next@10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/react-query@10.28.0)(@trpc/server@10.28.0)(next@13.4.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-sD98gQu/vZhXhC4hEPqyQStWhUIgZCWQuE4N//eZodAtb8Lyosg/UUs/Mo6IFAcdjcXKuyMYlu27ZIRjaG3txw==}
     peerDependencies:
       '@tanstack/react-query': ^4.18.0
@@ -10683,7 +10683,7 @@ packages:
       '@trpc/client': 10.28.0(@trpc/server@10.28.0)
       '@trpc/react-query': 10.28.0(@tanstack/react-query@4.29.12)(@trpc/client@10.28.0)(@trpc/server@10.28.0)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 10.28.0
-      next: 13.4.3(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
@@ -10997,7 +10997,7 @@ packages:
   /@types/hoist-non-react-statics@3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       hoist-non-react-statics: 3.3.2
 
   /@types/html-minifier-terser@6.1.0:
@@ -11202,23 +11202,23 @@ packages:
   /@types/react-dom@18.2.4:
     resolution: {integrity: sha512-G2mHoTMTL4yoydITgOGwWdWMVd8sNgyEP85xVmMKAPUBwQWm9wBPQUmvbeF4V3WBY1P7mmL4BkjQ0SqUpf1snw==}
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
     dev: true
 
   /@types/react-is@18.2.0:
     resolution: {integrity: sha512-1vz2yObaQkLL7YFe/pme2cpvDsCwI1WXIfL+5eLz0MI9gFG24Re16RzUsI8t9XZn9ZWvgLNDrJBmrqXJO7GNQQ==}
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
     dev: false
 
   /@types/react-transition-group@4.4.6:
     resolution: {integrity: sha512-VnCdSxfcm08KjsJVQcfBmhEQAPnLB8G08hAxn39azX1qYBQ/5RVQuoHuKIcfKOdncuaUvEpFKFzEvbtIMsfVew==}
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
     dev: false
 
-  /@types/react@18.2.6:
-    resolution: {integrity: sha512-wRZClXn//zxCFW+ye/D2qY65UsYP1Fpex2YXorHc8awoNamkMZSvBxwxdYVInsHOZZd2Ppq8isnSzJL5Mpf8OA==}
+  /@types/react@18.2.7:
+    resolution: {integrity: sha512-ojrXpSH2XFCmHm7Jy3q44nXDyN54+EYKP2lBhJ2bqfyPj6cIUW/FZW/Csdia34NQgq7KYcAlHi5184m4X88+yw==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
@@ -14694,8 +14694,8 @@ packages:
       source-map: 0.6.1
     dev: true
 
-  /eslint-config-next@13.4.3(eslint@8.41.0)(typescript@5.0.4):
-    resolution: {integrity: sha512-1lXwdFi29fKxzeugof/TUE7lpHyJQt5+U4LaUHyvQfHjvsWO77vFNicJv5sX6k0VDVSbnfz0lw+avxI+CinbMg==}
+  /eslint-config-next@13.4.4(eslint@8.41.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-z/PMbm6L0iC/fwISULxe8IVy4DtNqZk2wQY711o35klenq70O6ns82A8yuMVCFjHC0DIyB2lyugesRtuk9u8dQ==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0
       typescript: '>=3.3.1 || 5'
@@ -14703,7 +14703,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@next/eslint-plugin-next': 13.4.3
+      '@next/eslint-plugin-next': 13.4.4
       '@rushstack/eslint-patch': 1.2.0
       '@typescript-eslint/parser': 5.59.8(eslint@8.41.0)(typescript@5.0.4)
       eslint: 8.41.0
@@ -19822,7 +19822,7 @@ packages:
     resolution: {integrity: sha512-md4cGoxuT4T4d/HDOXbrUHkTKrp/vp+m3aOA7XXVYwNsUNMK49g3SQicTSeV5GIz/5QVGAeYRAOlyp9OvlgsYA==}
     engines: {node: '>=10'}
 
-  /next-auth@4.22.1(next@13.4.3)(react-dom@18.2.0)(react@18.2.0):
+  /next-auth@4.22.1(next@13.4.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-NTR3f6W7/AWXKw8GSsgSyQcDW6jkslZLH8AiZa5PQ09w1kR8uHtR9rez/E9gAq/o17+p0JYHE8QjF3RoniiObA==}
     peerDependencies:
       next: ^12.2.5 || ^13 || 13
@@ -19837,7 +19837,7 @@ packages:
       '@panva/hkdf': 1.0.4
       cookie: 0.5.0
       jose: 4.13.2
-      next: 13.4.3(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       oauth: 0.9.15
       openid-client: 5.4.0
       preact: 10.13.2
@@ -19846,7 +19846,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       uuid: 9.0.0
 
-  /next-i18next@13.2.2(i18next@22.5.0)(next@13.4.3)(react-i18next@12.3.1)(react@18.2.0):
+  /next-i18next@13.2.2(i18next@22.5.0)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0):
     resolution: {integrity: sha512-t0WU6K+HJoq2nVQ0n6OiiEZja9GyMqtDSU74FmOafgk4ljns+iZ18bsNJiI8rOUXfFfkW96ea1N7D5kbMyT+PA==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -19861,40 +19861,39 @@ packages:
       hoist-non-react-statics: 3.3.2
       i18next: 22.5.0
       i18next-fs-backend: 2.1.1
-      next: 13.4.3(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-i18next: 12.3.1(i18next@22.5.0)(react-dom@18.2.0)(react@18.2.0)
 
-  /next-router-mock@0.9.3(next@13.4.3)(react@18.2.0):
+  /next-router-mock@0.9.3(next@13.4.4)(react@18.2.0):
     resolution: {integrity: sha512-jl8eFe71LpMVGeBMpoxILkGfEgGY7IfLy8XPyv05/o61p5oQRNpoMmk46VMxRIpt0fI8XcvznBZKpDK6vbYQcQ==}
     peerDependencies:
       next: '>=10.0.0 || 13'
       react: '>=17.0.0 || 18'
     dependencies:
-      next: 13.4.3(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: true
 
-  /next-seo@6.0.0(next@13.4.3)(react-dom@18.2.0)(react@18.2.0):
+  /next-seo@6.0.0(next@13.4.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-jKKt1p1z4otMA28AyeoAONixVjdYmgFCWwpEFtu+DwRHQDllVX3RjtyXbuCQiUZEfQ9rFPBpAI90vDeLZlMBdg==}
     peerDependencies:
       next: ^8.1.1-canary.54 || >=9.0.0 || 13
       react: '>=16.0.0 || 18'
       react-dom: '>=16.0.0 || 18'
     dependencies:
-      next: 13.4.3(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /next@13.4.3(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-FV3pBrAAnAIfOclTvncw9dDohyeuEEXPe5KNcva91anT/rdycWbgtu3IjUj4n5yHnWK8YEPo0vrUecHmnmUNbA==}
+  /next@13.4.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-C5S0ysM0Ily9McL4Jb48nOQHT1BukOWI59uC3X/xCMlYIh9rJZCv7nzG92J6e1cOBqQbKovlpgvHWFmz4eKKEA==}
     engines: {node: '>=16.8.0'}
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
       fibers: '>= 3.1.0'
-      node-sass: ^6.0.0 || ^7.0.0
       react: ^18.2.0 || 18
       react-dom: ^18.2.0 || 18
       sass: ^1.3.0
@@ -19903,12 +19902,10 @@ packages:
         optional: true
       fibers:
         optional: true
-      node-sass:
-        optional: true
       sass:
         optional: true
     dependencies:
-      '@next/env': 13.4.3
+      '@next/env': 13.4.4
       '@swc/helpers': 0.5.1
       busboy: 1.6.0
       caniuse-lite: 1.0.30001478
@@ -19918,28 +19915,27 @@ packages:
       styled-jsx: 5.1.1(@babel/core@7.22.1)(react@18.2.0)
       zod: 3.21.4
     optionalDependencies:
-      '@next/swc-darwin-arm64': 13.4.3
-      '@next/swc-darwin-x64': 13.4.3
-      '@next/swc-linux-arm64-gnu': 13.4.3
-      '@next/swc-linux-arm64-musl': 13.4.3
-      '@next/swc-linux-x64-gnu': 13.4.3
-      '@next/swc-linux-x64-musl': 13.4.3
-      '@next/swc-win32-arm64-msvc': 13.4.3
-      '@next/swc-win32-ia32-msvc': 13.4.3
-      '@next/swc-win32-x64-msvc': 13.4.3
+      '@next/swc-darwin-arm64': 13.4.4
+      '@next/swc-darwin-x64': 13.4.4
+      '@next/swc-linux-arm64-gnu': 13.4.4
+      '@next/swc-linux-arm64-musl': 13.4.4
+      '@next/swc-linux-x64-gnu': 13.4.4
+      '@next/swc-linux-x64-musl': 13.4.4
+      '@next/swc-win32-arm64-msvc': 13.4.4
+      '@next/swc-win32-ia32-msvc': 13.4.4
+      '@next/swc-win32-x64-msvc': 13.4.4
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
     dev: true
 
-  /next@13.4.3(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-FV3pBrAAnAIfOclTvncw9dDohyeuEEXPe5KNcva91anT/rdycWbgtu3IjUj4n5yHnWK8YEPo0vrUecHmnmUNbA==}
+  /next@13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-C5S0ysM0Ily9McL4Jb48nOQHT1BukOWI59uC3X/xCMlYIh9rJZCv7nzG92J6e1cOBqQbKovlpgvHWFmz4eKKEA==}
     engines: {node: '>=16.8.0'}
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
       fibers: '>= 3.1.0'
-      node-sass: ^6.0.0 || ^7.0.0
       react: ^18.2.0 || 18
       react-dom: ^18.2.0 || 18
       sass: ^1.3.0
@@ -19948,12 +19944,10 @@ packages:
         optional: true
       fibers:
         optional: true
-      node-sass:
-        optional: true
       sass:
         optional: true
     dependencies:
-      '@next/env': 13.4.3
+      '@next/env': 13.4.4
       '@opentelemetry/api': 1.4.1
       '@swc/helpers': 0.5.1
       busboy: 1.6.0
@@ -19964,26 +19958,26 @@ packages:
       styled-jsx: 5.1.1(@babel/core@7.22.1)(react@18.2.0)
       zod: 3.21.4
     optionalDependencies:
-      '@next/swc-darwin-arm64': 13.4.3
-      '@next/swc-darwin-x64': 13.4.3
-      '@next/swc-linux-arm64-gnu': 13.4.3
-      '@next/swc-linux-arm64-musl': 13.4.3
-      '@next/swc-linux-x64-gnu': 13.4.3
-      '@next/swc-linux-x64-musl': 13.4.3
-      '@next/swc-win32-arm64-msvc': 13.4.3
-      '@next/swc-win32-ia32-msvc': 13.4.3
-      '@next/swc-win32-x64-msvc': 13.4.3
+      '@next/swc-darwin-arm64': 13.4.4
+      '@next/swc-darwin-x64': 13.4.4
+      '@next/swc-linux-arm64-gnu': 13.4.4
+      '@next/swc-linux-arm64-musl': 13.4.4
+      '@next/swc-linux-x64-gnu': 13.4.4
+      '@next/swc-linux-x64-musl': 13.4.4
+      '@next/swc-win32-arm64-msvc': 13.4.4
+      '@next/swc-win32-ia32-msvc': 13.4.4
+      '@next/swc-win32-x64-msvc': 13.4.4
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
 
-  /nextjs-routes@1.0.9(next@13.4.3):
+  /nextjs-routes@1.0.9(next@13.4.4):
     resolution: {integrity: sha512-vITLm5SzpoYGGgDUmWXjf2GU5oHyc4Oh/b7VdDOTqKudEOWuSk1pluZFIlZ9ogVqVxI28c+U+EQ6KyjZOuZR5g==}
     peerDependencies:
       next: '*'
     dependencies:
       chokidar: 3.5.3
-      next: 13.4.3(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /nice-try@1.0.5:
@@ -21920,7 +21914,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /react-remove-scroll-bar@2.3.4(@types/react@18.2.6)(react@18.2.0):
+  /react-remove-scroll-bar@2.3.4(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-63C4YQBUt0m6ALadE9XV56hV8BgJWDmmTPY758iIJjfQKt2nYwoUrPk0LXRXcB/yIj82T1/Ixfdpdk68LwIB0A==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -21930,12 +21924,12 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       react: 18.2.0
-      react-style-singleton: 2.2.1(@types/react@18.2.6)(react@18.2.0)
+      react-style-singleton: 2.2.1(@types/react@18.2.7)(react@18.2.0)
       tslib: 2.5.0
 
-  /react-remove-scroll@2.5.5(@types/react@18.2.6)(react@18.2.0):
+  /react-remove-scroll@2.5.5(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-ImKhrzJJsyXJfBZ4bzu8Bwpka14c/fQt0k+cyFp/PBhTfyDnU5hjOtM4AG/0AMyy8oKzOTR0lDgJIM7pYXI0kw==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -21945,13 +21939,13 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       react: 18.2.0
-      react-remove-scroll-bar: 2.3.4(@types/react@18.2.6)(react@18.2.0)
-      react-style-singleton: 2.2.1(@types/react@18.2.6)(react@18.2.0)
+      react-remove-scroll-bar: 2.3.4(@types/react@18.2.7)(react@18.2.0)
+      react-style-singleton: 2.2.1(@types/react@18.2.7)(react@18.2.0)
       tslib: 2.5.0
-      use-callback-ref: 1.3.0(@types/react@18.2.6)(react@18.2.0)
-      use-sidecar: 1.1.2(@types/react@18.2.6)(react@18.2.0)
+      use-callback-ref: 1.3.0(@types/react@18.2.7)(react@18.2.0)
+      use-sidecar: 1.1.2(@types/react@18.2.7)(react@18.2.0)
 
   /react-resize-detector@7.1.2(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-zXnPJ2m8+6oq9Nn8zsep/orts9vQv3elrpA+R8XTcW7DVVUJ9vwDwMXaBtykAYjMnkCIaOoK9vObyR7ZgFNlOw==}
@@ -21976,7 +21970,7 @@ packages:
     engines: {node: '>=0.12.0'}
     dev: false
 
-  /react-style-singleton@2.2.1(@types/react@18.2.6)(react@18.2.0):
+  /react-style-singleton@2.2.1(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -21986,13 +21980,13 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       get-nonce: 1.0.1
       invariant: 2.2.4
       react: 18.2.0
       tslib: 2.5.0
 
-  /react-textarea-autosize@8.3.4(@types/react@18.2.6)(react@18.2.0):
+  /react-textarea-autosize@8.3.4(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-CdtmP8Dc19xL8/R6sWvtknD/eCXkQr30dtvC4VmGInhRsfF8X/ihXCq6+9l9qbxmKRiq407/7z5fxE7cVWQNgQ==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -22001,7 +21995,7 @@ packages:
       '@babel/runtime': 7.21.0
       react: 18.2.0
       use-composed-ref: 1.3.0(react@18.2.0)
-      use-latest: 1.2.1(@types/react@18.2.6)(react@18.2.0)
+      use-latest: 1.2.1(@types/react@18.2.7)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
 
@@ -24711,7 +24705,7 @@ packages:
       querystring: 0.2.0
     dev: true
 
-  /use-callback-ref@1.3.0(@types/react@18.2.6)(react@18.2.0):
+  /use-callback-ref@1.3.0(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-3FT9PRuRdbB9HfXhEq35u4oZkvpJ5kuYbpqhCfmiZyReuRgpnhDlbr2ZEnnuS0RrJAPn6l23xjFg9kpDM+Ms7w==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -24721,7 +24715,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       react: 18.2.0
       tslib: 2.5.0
 
@@ -24732,7 +24726,7 @@ packages:
     dependencies:
       react: 18.2.0
 
-  /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.6)(react@18.2.0):
+  /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
     peerDependencies:
       '@types/react': '*'
@@ -24741,10 +24735,10 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       react: 18.2.0
 
-  /use-latest@1.2.1(@types/react@18.2.6)(react@18.2.0):
+  /use-latest@1.2.1(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-xA+AVm/Wlg3e2P/JiItTziwS7FK92LWrDB0p+hgXloIMuVCeJJ8v6f0eeHyPZaJrM+usM1FkFfbNCrJGs8A/zw==}
     peerDependencies:
       '@types/react': '*'
@@ -24753,9 +24747,9 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       react: 18.2.0
-      use-isomorphic-layout-effect: 1.1.2(@types/react@18.2.6)(react@18.2.0)
+      use-isomorphic-layout-effect: 1.1.2(@types/react@18.2.7)(react@18.2.0)
 
   /use-resize-observer@9.1.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-R25VqO9Wb3asSD4eqtcxk8sJalvIOYBqS8MNZlpDSQ4l4xMQxC/J7Id9HoTqPq8FwULIn0PVW+OAqF2dyYbjow==}
@@ -24768,7 +24762,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /use-sidecar@1.1.2(@types/react@18.2.6)(react@18.2.0):
+  /use-sidecar@1.1.2(@types/react@18.2.7)(react@18.2.0):
     resolution: {integrity: sha512-epTbsLuzZ7lPClpz2TyryBfztm7m+28DlEv2ZCQ3MDr5ssiwyOwGH/e5F9CkfWjJ1t4clvI58yF822/GUkjjhw==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -24778,7 +24772,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 18.2.6
+      '@types/react': 18.2.7
       detect-node-es: 1.1.0
       react: 18.2.0
       tslib: 2.5.0
