@@ -30,6 +30,16 @@ export const BackToSearch = {
 		option: 'back',
 		backTo: 'search',
 	},
+	parameters: {
+		searchContext: {
+			searchState: {
+				params: ['dist', '-77.0368707', '38.9071923', '50', 'mi'],
+				a: [],
+				page: '1',
+				s: [],
+			},
+		},
+	},
 } satisfies StoryDef
 export const BackToDynamic = {
 	args: {
@@ -37,11 +47,35 @@ export const BackToDynamic = {
 		backTo: 'dynamicText',
 		backToText: 'Sample Organization Name',
 	},
+	parameters: {
+		nextjs: {
+			router: {
+				pathname: '/org/[slug]/[orgLocationId]',
+				asPath: '/org/sample-organization-name/oloc_000000S4MPL3',
+				query: {
+					slug: 'sample-organization-name',
+					orgLocationId: 'oloc_000000S4MPL3',
+				},
+			},
+		},
+	},
 } satisfies StoryDef
 export const BackToDynamicWithSpecialCharacters = {
 	args: {
 		option: 'back',
 		backTo: 'dynamicText',
 		backToText: "Sample Organization Name with special characters' % - *",
+	},
+	parameters: {
+		nextjs: {
+			router: {
+				pathname: '/org/[slug]/[orgLocationId]/edit',
+				asPath: '/org/sample-organization-name/oloc_000000S4MPL3/edit',
+				query: {
+					slug: 'sample-organization-name',
+					orgLocationId: 'oloc_000000S4MPL3',
+				},
+			},
+		},
 	},
 } satisfies StoryDef

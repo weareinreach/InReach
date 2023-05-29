@@ -1,10 +1,11 @@
 /* eslint-disable i18next/no-literal-string */
 import { Grid, Group, Space } from '@mantine/core'
+import compare from 'just-compare'
 import { type GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
@@ -13,6 +14,7 @@ import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
+import { useSearchState } from '@weareinreach/ui/providers/SearchState'
 import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -27,13 +29,21 @@ const ParamSchema = z.tuple([
 const PageIndexSchema = z.coerce.number().default(1)
 
 const SearchResults = () => {
-	const { query, locale } = useRouter<'/search/[...params]'>()
+	const router = useRouter<'/search/[...params]'>()
+	const { searchParams, routeActions } = useSearchState()
+
+	useEffect(() => {
+		routeActions.setSearchState(router.query)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	const [filteredServices, setFilteredServices] = useState<string[]>([])
 	const [filteredAttributes, setFilteredAttributes] = useState<string[]>([])
 	const { t } = useTranslation(['services'])
-	const queryParams = ParamSchema.safeParse(query.params)
-	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
+	const queryParams = ParamSchema.safeParse(router.query.params)
+	const skip = (PageIndexSchema.parse(router.query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
+	const apiUtils = api.useContext()
 
 	const [error, setError] = useState(false)
 	const [data, setData] = useState<ApiOutput['organization']['searchDistance']>()
@@ -47,7 +57,11 @@ const SearchResults = () => {
 	const [_searchType, lon, lat, dist, unit] = queryParams.success
 		? queryParams.data
 		: (['dist', 0, 0, 0, 'mi'] as const)
-	const { isSuccess, ...searchQuery } = api.organization.searchDistance.useQuery(
+	const {
+		isSuccess,
+		isFetching: searchIsFetching,
+		...searchQuery
+	} = api.organization.searchDistance.useQuery(
 		{
 			lat,
 			lon,
@@ -55,8 +69,8 @@ const SearchResults = () => {
 			unit,
 			skip,
 			take,
-			services: filteredServices,
-			attributes: filteredAttributes,
+			services: filteredServices.length ? filteredServices : undefined,
+			attributes: filteredAttributes.length ? filteredAttributes : undefined,
 		},
 		{
 			enabled: queryParams.success,
@@ -80,6 +94,55 @@ const SearchResults = () => {
 		}
 	}, [data])
 
+	useEffect(
+		() => {
+			switch (true) {
+				case !compare(searchParams.searchState.a, filteredAttributes) &&
+					!compare(searchParams.searchState.s, filteredServices): {
+					routeActions.setSearchState({
+						...searchParams.searchState,
+						a: filteredAttributes,
+						s: filteredServices,
+					})
+					break
+				}
+				case !compare(searchParams.searchState.a, filteredAttributes): {
+					routeActions.setAttributes(filteredAttributes)
+					break
+				}
+
+				case !compare(searchParams.searchState.s, filteredServices): {
+					routeActions.setServices(filteredServices)
+					break
+				}
+			}
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[filteredAttributes, filteredServices]
+	)
+
+	const nextSkip = useMemo(
+		() => PageIndexSchema.parse(router.query.page) * SEARCH_RESULT_PAGE_SIZE,
+		[router.query.page]
+	)
+	useEffect(() => {
+		if (
+			router.query.page &&
+			PageIndexSchema.parse(router.query.page) < getSearchResultPageCount(data?.resultCount)
+		) {
+			apiUtils.organization.searchDistance.prefetch({
+				lat,
+				lon,
+				dist,
+				unit,
+				skip: nextSkip,
+				take,
+				services: filteredServices.length ? filteredServices : undefined,
+				attributes: filteredAttributes.length ? filteredAttributes : undefined,
+			})
+		}
+	})
+
 	if (error) return <>Error</>
 
 	return (
@@ -89,8 +152,13 @@ const SearchResults = () => {
 					<SearchBox
 						type='location'
 						loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
+						initialValue={searchParams.searchTerm}
 					/>
-					<ServiceFilter resultCount={resultCount} stateHandler={setFilteredServices} />
+					<ServiceFilter
+						resultCount={resultCount}
+						stateHandler={setFilteredServices}
+						isFetching={searchIsFetching}
+					/>
 				</Group>
 			</Grid.Col>
 			<Grid.Col>
@@ -98,6 +166,7 @@ const SearchResults = () => {
 					resultCount={resultCount}
 					stateHandler={setFilteredAttributes}
 					loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
+					isFetching={searchIsFetching}
 				/>
 			</Grid.Col>
 			<Grid.Col sm={8}>
@@ -119,12 +188,14 @@ export const getServerSideProps: GetServerSideProps<
 	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
 	const ssg = await trpcServerClient({ req, res })
-	const nextPage = PageIndexSchema.parse(query.page) * SEARCH_RESULT_PAGE_SIZE
+	// const nextPage = PageIndexSchema.parse(query.page) * SEARCH_RESULT_PAGE_SIZE
 
-	await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take })
-	await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip: nextPage, take })
-	await ssg.service.getFilterOptions.prefetch()
-	await ssg.attribute.getFilterOptions.prefetch()
+	await Promise.allSettled([
+		await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take }),
+		// await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip: nextPage, take })
+		await ssg.service.getFilterOptions.prefetch(),
+		await ssg.attribute.getFilterOptions.prefetch(),
+	])
 
 	const props = {
 		trpcState: ssg.dehydrate(),

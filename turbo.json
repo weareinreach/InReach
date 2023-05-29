@@ -1,5 +1,7 @@
 {
 	"$schema": "https://turborepo.org/schema.json",
+	"globalDependencies": ["./packages/config/tsconfig/base.json"],
+	"globalDotEnv": [".env"],
 	"globalEnv": ["NODE_ENV"],
 	"pipeline": {
 		"//#clean": {
@@ -7,7 +9,28 @@
 		},
 		"build": {
 			"dependsOn": ["^build", "^build:icons"],
-			"env": ["NODE_ENV"]
+			"env": [
+				"NODE_ENV",
+				"DATABASE_URL",
+				"DB_DIRECT_URL",
+				"KV_URL",
+				"KV_REST_API_URL",
+				"KV_REST_API_TOKEN",
+				"KV_REST_API_READ_ONLY_TOKEN",
+				"NEXTAUTH_SECRET",
+				"NEXTAUTH_URL",
+				"COGNITO_ACCESS_KEY",
+				"COGNITO_SECRET",
+				"COGNITO_CLIENT_ID",
+				"COGNITO_CLIENT_SECRET",
+				"GOOGLE_PLACES_API_KEY",
+				"NEXT_PUBLIC_GOOGLE_MAPS_API",
+				"CACHE_ACCESS_KEY",
+				"CACHE_SECRET",
+				"CACHE_READ_URL",
+				"CACHE_WRITE_URL",
+				"CROWDIN_TOKEN"
+			]
 		},
 		"build:aws": {},
 		"build:icons": {},

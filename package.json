@@ -54,7 +54,7 @@
 		"typescript": "5.0.4",
 		"typesync": "0.11.1"
 	},
-	"packageManager": "pnpm@8.5.1",
+	"packageManager": "pnpm@8.6.0",
 	"engines": {
 		"node": "^18",
 		"pnpm": "^7 || ^8"
