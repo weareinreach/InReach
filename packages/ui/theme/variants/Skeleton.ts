@@ -33,4 +33,14 @@ export const Skeleton = {
 			height: rem(16 * 1.25),
 		},
 	}),
+	badgeGroup: (theme) => ({
+		root: {
+			height: rem(32),
+		},
+	}),
+	textArea: (theme) => ({
+		root: {
+			height: rem(120),
+		},
+	}),
 } satisfies VariantObj

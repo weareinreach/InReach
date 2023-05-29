@@ -3,6 +3,11 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
+			"~api/*": ["../../packages/api/*"],
+			"~app/*": ["../../apps/app/src/*"],
+			"~auth/*": ["../../packages/auth/*"],
+			"~db/*": ["../../packages/db/*"],
+			"~ui/*": ["../../packages/ui/*"],
 			"~web/*": ["./src/*"]
 		},
 		"strict": true

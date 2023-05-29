@@ -3,7 +3,6 @@
 	"version": "0.100.0",
 	"private": true,
 	"license": "GPL-3.0-only",
-	"main": "index.ts",
 	"files": [
 		"lint-staged/index.js",
 		"lint-staged/next.js",
@@ -18,7 +17,7 @@
 	},
 	"dependencies": {
 		"@t3-oss/env-nextjs": "0.3.1",
-		"znv": "0.3.2"
+		"zod": "3.21.4"
 	},
 	"devDependencies": {
 		"@types/node": "18.16.14",
