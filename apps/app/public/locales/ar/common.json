@@ -188,6 +188,7 @@
 	"search": {
 		"location-placeholder": "أدخل الكود البريدي للولاية، أو المدينة، أو البريد...",
 		"look-up-org": "ابحث عن منظمة",
+		"no-results": "لم يتم العثور على نتائج. الرجاء المحاولة مرة أخرى.",
 		"organization-placeholder": "أدخل اسم المنظمة...",
 		"suggest-resource": "لا يمكن العثور عليه؟ <1>اقترح منظمة</1> تعتقد أنه ينبغي إدراجها."
 	},
@@ -260,21 +261,21 @@
 	"suggest-a-resource": "اقتراح مورد",
 	"support": "Support",
 	"survey": {
+		"birthyear-req-value": "يجب أن يكون العام بين {{year1}} و {{year2}}، أي، 2005",
 		"finish": "إنهاء",
 		"not-right-now": "ليس الآن",
-		"start-survey": "بدء المسح",
-		"thank-you": "شكرا لك!",
-		"thank-you-message": "المعلومات التي شاركتها تساعدنا على تحسين منتجاتنا.",
-		"question-subtitle": "أجوبتك مجهولة.",
 		"question-1-title": "كيف يمكن أن تصف نفسك؟",
-		"question-2-title": "ما هو بلدك الأصلي؟",
 		"question-2-placeholder": "أدخل البلد...",
+		"question-2-title": "ما هو بلدك الأصلي؟",
 		"question-3-title": "كيف يمكنك تحديد هويتك؟",
 		"question-4-title": "ما هو عرقك/عرقك؟",
-		"question-5-title": "ما هو عمرك؟",
 		"question-5-label": "سنة الميلاد",
 		"question-5-placeholder": "أدخل سنة ميلادك...",
-		"birthyear-req-value": "يجب أن يكون العام بين {{year1}} و {{year2}}، أي، 2005"
+		"question-5-title": "ما هو عمرك؟",
+		"question-subtitle": "أجوبتك مجهولة.",
+		"start-survey": "بدء المسح",
+		"thank-you": "شكرا لك!",
+		"thank-you-message": "المعلومات التي شاركتها تساعدنا على تحسين منتجاتنا."
 	},
 	"take-action": "اتخاذ إجراء",
 	"uncheck-all": "إلغاء تحديد الكل",
