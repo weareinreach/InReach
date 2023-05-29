@@ -1,4 +1,4 @@
-import { createStyles, Group, rem, Skeleton, Space, useMantineTheme } from '@mantine/core'
+import { createStyles, Group, rem, Space, useMantineTheme } from '@mantine/core'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 
 import { ActionButtons, Breadcrumb, type BreadcrumbProps } from '.'
@@ -14,13 +14,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const Toolbar = ({
-	saved = false,
-	breadcrumbProps,
-	hideBreadcrumb,
-	loading = false,
-	...ids
-}: ToolbarProps) => {
+export const Toolbar = ({ saved = false, breadcrumbProps, hideBreadcrumb, ...ids }: Props) => {
 	const theme = useMantineTheme()
 	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 	const { width } = useViewportSize()
@@ -42,9 +36,7 @@ export const Toolbar = ({
 	// No delete button in toolbar
 	inToolbar.push('delete')
 
-	return loading || !breadcrumbProps ? (
-		<Skeleton w='100%' h={48} radius={8} />
-	) : (
+	return (
 		<Group position='apart' align='center' w='100%' noWrap className={classes.toolbar}>
 			{hideBreadcrumb ? <Space w={1} /> : <Breadcrumb {...breadcrumbProps} />}
 			<Group noWrap spacing={0}>
@@ -55,21 +47,10 @@ export const Toolbar = ({
 	)
 }
 
-type ToolbarProps = ToolbarWithData | ToolbarLoading
-
-interface ToolbarWithData {
+type Props = {
 	saved: boolean
 	breadcrumbProps: BreadcrumbProps
 	organizationId: string
 	serviceId?: string
 	hideBreadcrumb?: boolean
-	loading?: false
-}
-interface ToolbarLoading {
-	loading: true
-	saved?: never
-	breadcrumbProps?: never
-	organizationId?: never
-	serviceId?: never
-	hideBreadcrumb?: never
 }

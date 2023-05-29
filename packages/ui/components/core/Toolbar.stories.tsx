@@ -48,7 +48,6 @@ export default {
 			option: 'back',
 			backTo: 'search',
 			onClick: () => action('onClick')(''),
-			loading: false,
 		},
 	},
 	render: (args) => (
@@ -61,26 +60,17 @@ export default {
 type StoryDef = StoryObj<typeof Toolbar>
 
 export const NotSaved = {
-	args: { saved: false, loading: false },
+	args: { saved: false },
 } satisfies StoryDef
 
 export const Saved = {
-	args: { saved: true, loading: false },
+	args: { saved: true },
 } satisfies StoryDef
 
 export const SmallVersion = {
-	args: {
-		loading: false,
-	},
 	parameters: {
 		viewport: {
 			defaultViewport: 'iphone6',
 		},
 	},
-} satisfies StoryDef
-
-export const Loading = {
-	args: {
-		loading: true,
-	},
-} satisfies StoryDef
+}

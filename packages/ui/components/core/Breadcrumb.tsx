@@ -1,4 +1,4 @@
-import { Button, createStyles, rem, Skeleton, Text, useMantineTheme } from '@mantine/core'
+import { Button, createStyles, rem, Text, useMantineTheme } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import { type MouseEventHandler, useMemo } from 'react'
@@ -72,7 +72,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 		close: 'carbon:close',
 		back: 'carbon:arrow-left',
 	} as const
-	const iconRender = icons[option ?? 'close']
+	const iconRender = icons[option]
 	const childrenRender = useMemo(() => {
 		switch (option) {
 			case 'close': {
@@ -107,9 +107,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [option, backTo, backToText])
 
-	return props.loading ? (
-		<Skeleton h={48} miw={72} radius={8} />
-	) : (
+	return (
 		<Button
 			variant='subtle'
 			classNames={{ root: classes.root, icon: classes.icon }}
@@ -135,22 +133,20 @@ export const isValidBreadcrumbProps = (props: PossibleBreadcrumbProps): props is
 	return false
 }
 type PossibleBreadcrumbProps = {
-	option?: string
+	option: string
 	onClick?: MouseEventHandler<HTMLButtonElement>
 	backTo?: string
 	backToText?: string
-	loading?: boolean
 }
 export type ModalTitleBreadcrumb = Omit<BreadcrumbProps, 'onClick'> & {
 	onClick?: MouseEventHandler<HTMLButtonElement>
 }
-export type BreadcrumbProps = Close | Back | BackToDynamic | Loading
+export type BreadcrumbProps = Close | Back | BackToDynamic
 interface Close {
 	option: 'close'
 	onClick: MouseEventHandler<HTMLButtonElement>
 	backTo?: never
 	backToText?: never
-	loading?: false
 }
 
 interface Back {
@@ -158,7 +154,6 @@ interface Back {
 	onClick?: MouseEventHandler<HTMLButtonElement>
 	backTo: 'search' | 'none'
 	backToText?: never
-	loading?: false
 }
 
 interface BackToDynamic {
@@ -166,13 +161,4 @@ interface BackToDynamic {
 	onClick?: MouseEventHandler<HTMLButtonElement>
 	backTo: 'dynamicText'
 	backToText: string
-	loading?: false
-}
-
-interface Loading {
-	option?: never
-	onClick?: never
-	backTo?: never
-	backToText?: never
-	loading: true
 }
