@@ -184,6 +184,7 @@
 	"search": {
 		"location-placeholder": "Introduzca el estado, ciudad o código postal...",
 		"look-up-org": "Buscar una organización",
+		"no-results": "No se han encontrado resultados. Vuelva a intentarlo.",
 		"organization-placeholder": "Introduzca el nombre de la organización...",
 		"suggest-resource": "¿No lo encuentras? <1>Sugerir una organización</1> que piensas que debería incluirse."
 	},
@@ -256,21 +257,21 @@
 	"suggest-a-resource": "Sugiere un Recurso",
 	"support": "Apoyo",
 	"survey": {
+		"birthyear-req-value": "El año debe estar entre {{year1}} y {{year2}}, es decir, 2005",
 		"finish": "Finalizar",
 		"not-right-now": "No ahora mismo",
-		"start-survey": "Inicia la encuesta",
-		"thank-you": "¡Gracias!",
-		"thank-you-message": "La información que usted comparte nos ayuda a mejorar nuestro producto.",
-		"question-subtitle": "Tus respuestas son anónimas.",
 		"question-1-title": "¿Cómo te describirías a ti misme?",
-		"question-2-title": "¿Cuál es tu país de origen?",
 		"question-2-placeholder": "Introducir país...",
+		"question-2-title": "¿Cuál es tu país de origen?",
 		"question-3-title": "¿Cómo te identificas?",
 		"question-4-title": "¿Cuál es tu etnicidad/raza?",
-		"question-5-title": "¿Qué edad tienes?",
 		"question-5-label": "Año de nacimiento",
 		"question-5-placeholder": "Introduce tu año de nacimiento...",
-		"birthyear-req-value": "El año debe estar entre {{year1}} y {{year2}}, es decir, 2005"
+		"question-5-title": "¿Qué edad tienes?",
+		"question-subtitle": "Tus respuestas son anónimas.",
+		"start-survey": "Inicia la encuesta",
+		"thank-you": "¡Gracias!",
+		"thank-you-message": "La información que usted comparte nos ayuda a mejorar nuestro producto."
 	},
 	"take-action": "Realizar acción",
 	"uncheck-all": "Desmarcar todo",
