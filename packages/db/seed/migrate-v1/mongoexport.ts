@@ -8,13 +8,11 @@ import recursive from 'recursive-readdir'
 import fs from 'fs'
 import path from 'path'
 
-import { env } from '@weareinreach/config/env'
-
 const datastore = './datastore/v1/mongodb'
 
 const options: mbOptions = {
-	// eslint-disable-next-line turbo/no-undeclared-env-vars
-	uri: env.MONGO_URI,
+	// eslint-disable-next-line turbo/no-undeclared-env-vars, node/no-process-env
+	uri: process.env.MONGO_URI,
 	/** Relative to where `package.json` is */
 	outDir: `${datastore}/output`,
 	collections: ['comments', 'organizations', 'ratings', 'reviews', 'suggestions', 'users'],

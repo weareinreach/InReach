@@ -27,7 +27,8 @@ export const autocompleteResponse = z
 	.transform(({ predictions, ...data }) => ({
 		...data,
 		results: predictions.map((result) => ({
-			value: result.structured_formatting.main_text,
+			value: `${result.structured_formatting.main_text}, ${result.structured_formatting.secondary_text}`,
+			label: result.structured_formatting.main_text,
 			subheading: result.structured_formatting.secondary_text,
 			placeId: result.place_id,
 		})),

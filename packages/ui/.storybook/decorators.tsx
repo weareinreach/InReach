@@ -1,5 +1,5 @@
 import { Center, Grid, MantineProvider, type MantineProviderProps } from '@mantine/core'
-import { ModalsProvider } from '@mantine/modals'
+// import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 import { type StoryContext, type StoryFn } from '@storybook/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -12,6 +12,7 @@ import { devtoolsLink } from 'trpc-client-devtools-link'
 import { transformer } from '@weareinreach/api/lib/transformer'
 import { BodyGrid } from '~ui/layouts/BodyGrid'
 import { type StorybookTRPC, trpc } from '~ui/lib/trpcClient'
+import { SearchStateProvider } from '~ui/providers/SearchState'
 import { storybookTheme } from '~ui/theme/storybook'
 
 import { i18n } from './i18next'
@@ -70,13 +71,13 @@ export const WithTRPC = (Story: StoryFn, { parameters }: StoryContext) => {
 
 	const trpcClientOpts = {
 		links: [
-			httpLink({
-				url: '/trpc',
-			}),
 			devtoolsLink({
 				enabled: true,
 			}),
 			loggerLink(),
+			httpLink({
+				url: '/trpc',
+			}),
 		],
 		transformer,
 	}
@@ -150,3 +151,10 @@ export const WithStrictMode = (Story: StoryFn, context: StoryContext) =>
 WithStrictMode.displayName = 'StrictModeWrapper'
 
 export type LayoutsDecorator = 'centeredFullscreen' | 'centeredHalf' | 'gridSingle' | 'gridDouble'
+
+export const WithSearchState = (Story: StoryFn, { parameters }: StoryContext) => (
+	<SearchStateProvider initState={parameters.searchContext}>
+		<Story />
+	</SearchStateProvider>
+)
+WithSearchState.displayName = 'SearchStateProvider'

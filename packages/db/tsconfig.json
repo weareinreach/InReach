@@ -4,7 +4,15 @@
 		"noImplicitAny": false,
 		"baseUrl": "./",
 		"allowJs": true,
-		"strict": true
+		"strict": true,
+		"paths": {
+			"~api/*": ["../../packages/api/*"],
+			"~app/*": ["../../apps/app/src/*"],
+			"~auth/*": ["../../packages/auth/*"],
+			"~db/*": ["./*"],
+			"~ui/*": ["../../packages/ui/*"],
+			"~web/*": ["../../apps/web/src/*"]
+		}
 	},
 	"exclude": ["**/node_modules", "./**/.*/"],
 	"include": ["./**/*.ts", "./**/*.js", "./**/*.mjs", "../../@types/**/*.ts"]

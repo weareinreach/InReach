@@ -1,10 +1,10 @@
 import { z } from 'zod'
 
-import { coordItems, pagination } from '~api/schemas/common'
+import { coerceCoordItems, coordItems, pagination } from '~api/schemas/common'
 
 export const distSearch = z.object({
-	...coordItems,
-	dist: z.number(),
+	...coerceCoordItems,
+	dist: z.coerce.number(),
 	unit: z.enum(['mi', 'km']),
 	...pagination,
 	services: z.string().array().optional(),

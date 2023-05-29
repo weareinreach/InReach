@@ -311,4 +311,4 @@
 // 			where: UserToOrganizationWhereUniqueInputSchema.parse(input),
 // 		}),
 // }
-export {}
+export type {}
