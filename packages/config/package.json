@@ -20,11 +20,11 @@
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
-		"@types/node": "18.16.14",
+		"@types/node": "18.16.16",
 		"@weareinreach/eslint-config": "0.100.0",
 		"alex": "11.0.0",
 		"next-i18next": "13.2.2",
 		"typescript": "5.0.4"
 	},
-	"packageManager": "pnpm@8.5.1"
+	"packageManager": "pnpm@8.6.0"
 }
