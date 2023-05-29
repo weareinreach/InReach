@@ -184,6 +184,7 @@
 	"search": {
 		"location-placeholder": "Entrez l'état, la ville, ou le code postal...",
 		"look-up-org": "Rechercher une organisation",
+		"no-results": "Aucun résultat trouvé. Veuillez réessayer.",
 		"organization-placeholder": "Entrez le nom de l'organisme...",
 		"suggest-resource": "Vous ne le trouvez pas? <1>Suggérez une organisation</1> vous pensez qu'elle devrait être incluse."
 	},
@@ -256,21 +257,21 @@
 	"suggest-a-resource": "Suggérer une ressource",
 	"support": "Support",
 	"survey": {
+		"birthyear-req-value": "L'année doit être comprise entre {{year1}} et {{year2}}, c'est-à-dire 2005",
 		"finish": "Terminer",
 		"not-right-now": "Pas pour le moment",
-		"start-survey": "Commencer l'enquête",
-		"thank-you": "Merci!",
-		"thank-you-message": "Les informations que vous avez partagées nous aident à améliorer notre produit.",
-		"question-subtitle": "Vos réponses sont anonymes.",
 		"question-1-title": "Comment vous décririez-vous ?",
-		"question-2-title": "Quel est votre pays d'origine?",
 		"question-2-placeholder": "Entrez le pays...",
+		"question-2-title": "Quel est votre pays d'origine?",
 		"question-3-title": "Comment vous identifiez-vous?",
 		"question-4-title": "Quelle est votre ethnicité/course ?",
-		"question-5-title": "Quel âge avez-vous ?",
 		"question-5-label": "Année de naissance",
 		"question-5-placeholder": "Entrez votre année de naissance...",
-		"birthyear-req-value": "L'année doit être comprise entre {{year1}} et {{year2}}, c'est-à-dire 2005"
+		"question-5-title": "Quel âge avez-vous ?",
+		"question-subtitle": "Vos réponses sont anonymes.",
+		"start-survey": "Commencer l'enquête",
+		"thank-you": "Merci!",
+		"thank-you-message": "Les informations que vous avez partagées nous aident à améliorer notre produit."
 	},
 	"take-action": "Prendre des mesures",
 	"uncheck-all": "Décocher tout",
