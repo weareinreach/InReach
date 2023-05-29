@@ -1,5 +1,5 @@
 import { Grid, Skeleton, Stack, Tabs } from '@mantine/core'
-import compact from 'just-compact'
+// import compact from 'just-compact'
 import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react'
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
-import { getEnv } from '@weareinreach/config/env'
-import { prisma } from '@weareinreach/db/client'
+// import { getEnv } from '@weareinreach/config/env'
+// import { prisma } from '@weareinreach/db/client'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
@@ -63,10 +63,10 @@ const OrgLocationPage: NextPage = () => {
 
 	const { emails, phones, socialMedia, websites, attributes, description, services, photos, reviews } = data
 
-	const locations = (() => {
-		const { street1, street2, city, postCode, govDist, country } = data
-		return [{ street1, street2, city, postCode, govDist, country }]
-	})()
+	// const locations = (() => {
+	// 	const { street1, street2, city, postCode, govDist, country } = data
+	// 	return [{ street1, street2, city, postCode, govDist, country }]
+	// })()
 
 	return (
 		<>
@@ -127,37 +127,32 @@ const OrgLocationPage: NextPage = () => {
 	)
 }
 
-/**
- * TODO: [IN-875] Create full loading state and set `fallback` to `true`
- * https://nextjs.org/docs/pages/api-reference/functions/get-static-paths
- */
-
 export const getStaticPaths: GetStaticPaths = async () => {
 	// eslint-disable-next-line node/no-process-env, turbo/no-undeclared-env-vars
-	if (getEnv('VERCEL_ENV') === 'production' || process.env.PRERENDER === 'true') {
-		const pages = await prisma.organization.findMany({
-			where: { published: true, deleted: false },
-			select: { slug: true, locations: { select: { id: true }, where: { published: true, deleted: false } } },
-		})
+	// if (getEnv('VERCEL_ENV') === 'production' || process.env.PRERENDER === 'true') {
+	// 	const pages = await prisma.organization.findMany({
+	// 		where: { published: true, deleted: false },
+	// 		select: { slug: true, locations: { select: { id: true }, where: { published: true, deleted: false } } },
+	// 	})
 
-		return {
-			paths: compact(
-				pages.flatMap(({ slug, locations }) => {
-					if (locations.length > 1) {
-						return locations.map((location) => ({ params: { slug: slug, orgLocationId: location.id } }))
-					}
-				})
-			),
-			// fallback: 'blocking', // false or "blocking"
-			fallback: true,
-		}
-	} else {
-		return {
-			paths: [],
-			// fallback: 'blocking',
-			fallback: true,
-		}
+	// 	return {
+	// 		paths: compact(
+	// 			pages.flatMap(({ slug, locations }) => {
+	// 				if (locations.length > 1) {
+	// 					return locations.map((location) => ({ params: { slug: slug, orgLocationId: location.id } }))
+	// 				}
+	// 			})
+	// 		),
+	// 		// fallback: 'blocking', // false or "blocking"
+	// 		fallback: true,
+	// 	}
+	// } else {
+	return {
+		paths: [],
+		// fallback: 'blocking',
+		fallback: true,
 	}
+	// }
 }
 export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
 	const urlParams = z.object({ slug: z.string(), orgLocationId: z.string() }).safeParse(params)
