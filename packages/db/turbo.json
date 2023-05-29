@@ -14,7 +14,7 @@
 		},
 		"db:generate": {
 			"cache": false,
-			"env": ["DATABASE_URL", "DB_DIRECT_URL", "PRISMA_DATA_PROXY"],
+			"env": ["DATABASE_URL", "DB_DIRECT_URL", "PRISMA_GENERATE_DATAPROXY"],
 			"inputs": ["prisma/schema.prisma"]
 		},
 		"db:run-seed": {
