@@ -1,5 +1,5 @@
 /* eslint-disable i18next/no-literal-string */
-import { Grid, Stack, Tabs } from '@mantine/core'
+import { Grid, Skeleton, Stack, Tabs } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { type GetServerSideProps, type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -23,6 +23,30 @@ import { useSearchState } from '@weareinreach/ui/providers/SearchState'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
+const LoadingState = () => (
+	<>
+		<Grid.Col sm={8} order={1}>
+			{/* Toolbar */}
+			<Skeleton h={48} w='100%' radius={8} />
+			<Stack pt={24} align='flex-start' spacing={40}>
+				{/* Listing Basic */}
+				<Skeleton h={260} w='100%' />
+				{/* Body */}
+				<Skeleton h={520} w='100%' />
+				{/* Tab panels */}
+			</Stack>
+		</Grid.Col>
+		<Grid.Col order={2}>
+			<Stack spacing={40}>
+				{/* Contact Card */}
+				<Skeleton h={520} w='100%' />
+				{/* Visit Card  */}
+				<Skeleton h={260} w='100%' />
+			</Stack>
+		</Grid.Col>
+	</>
+)
+
 const OrganizationPage: NextPage = () => {
 	const { t } = useTranslation()
 	const router = useRouter<'/org/[slug]'>()
@@ -35,7 +59,7 @@ const OrganizationPage: NextPage = () => {
 	useEffect(() => {
 		if (data && status === 'success') setLoading(false)
 	}, [data, status])
-	if (loading || !data) return <>Loading</>
+	if (loading || !data || router.isFallback) return <LoadingState />
 
 	const {
 		emails,
@@ -145,12 +169,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		})
 		return {
 			paths: pages.map(({ slug }) => ({ params: { slug } })),
-			fallback: 'blocking', // false or "blocking"
+			// fallback: 'blocking', // false or "blocking"
+			fallback: true,
 		}
 	} else {
 		return {
 			paths: [],
-			fallback: 'blocking',
+			// fallback: 'blocking',
+			fallback: true,
 		}
 	}
 }
