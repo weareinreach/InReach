@@ -342,7 +342,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 
 		if (renderTooltip) {
 			return (
-				<Tooltip multiline variant={variants.Tooltip.utility1} {...renderTooltip}>
+				<Tooltip multiline variant={variants.Tooltip.utility1} px={16} py={10} {...renderTooltip}>
 					{badge}
 				</Tooltip>
 			)
