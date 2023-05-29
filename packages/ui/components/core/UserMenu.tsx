@@ -62,6 +62,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 	if ((session?.user && status === 'authenticated') || isLoading) {
 		return (
 			<Group noWrap spacing={36}>
+				<LangPicker />
 				<Menu
 					width={260}
 					position='bottom-start'
@@ -105,7 +106,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 						className={classes.navText}
 						style={{ visibility: isLoading ? 'hidden' : undefined }}
 						onClick={(e) => {
-							e.preventDefault()
+							// e.preventDefault()
 							signOut()
 						}}
 					>
@@ -119,7 +120,9 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 		<Group className={cx(className)} noWrap spacing={40}>
 			<LangPicker />
 
-			<LoginModalLauncher component={Button}>{t('log-in')}</LoginModalLauncher>
+			<LoginModalLauncher component={UnstyledButton} className={classes.navText}>
+				{t('log-in')}
+			</LoginModalLauncher>
 			<SignupModalLauncher component={Button}>{t('sign-up-free')}</SignupModalLauncher>
 		</Group>
 	)

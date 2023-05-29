@@ -13,6 +13,7 @@ const useStyles = createStyles((theme) => ({
 		paddingLeft: theme.spacing.xs,
 		paddingRight: theme.spacing.xs,
 		borderRadius: theme.spacing.sm,
+		height: rem(56),
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
 			cursor: 'pointer',
@@ -25,9 +26,7 @@ const useStyles = createStyles((theme) => ({
 		...theme.other.utilityFonts.utility1,
 		color: `${theme.other.colors.secondary.black} !important`,
 		padding: `${rem(16)} ${rem(32)}`,
-	},
-	dropdown: {
-		borderRadius: theme.spacing.sm,
+		...theme.fn.hover({ backgroundColor: theme.other.colors.primary.lightGray, cursor: 'pointer' }),
 	},
 }))
 
@@ -65,8 +64,13 @@ export const LangPicker = () => {
 			trigger='hover'
 			classNames={{
 				item: classes.menuItem,
-				dropdown: classes.dropdown,
 			}}
+			position='bottom-start'
+			transitionProps={{
+				transition: 'scale-y',
+			}}
+			radius='sm'
+			shadow='xs'
 		>
 			<Menu.Target>
 				<MenuTarget activeLang={activeLang} />
