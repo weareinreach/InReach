@@ -59,7 +59,7 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 								}}
 							/>
 						</Stack>
-						<Stack align='center' spacing={14}>
+						<Stack align='center' spacing={16}>
 							<Trans
 								i18nKey='quick-promo-body'
 								components={{
@@ -67,7 +67,7 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 								}}
 							/>
 						</Stack>
-						<LoginModalLauncher component={Button} fullWidth>
+						<LoginModalLauncher component={Button} variant={variants.Button.primaryLg} fullWidth>
 							{t('log-in')}
 						</LoginModalLauncher>
 						<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
