@@ -39,7 +39,10 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 
 	const pageChangeHandler = (page: number) => {
 		setPage(page)
-		router.push({ query: { page: page.toString(), params: router.query.params } })
+		router.replace({ query: { page: page.toString(), params: router.query.params } }, undefined, {
+			shallow: true,
+			scroll: true,
+		})
 	}
 
 	const paginationController = usePagination({
@@ -47,6 +50,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 		onChange: (page) => pageChangeHandler(page),
 		boundaries: 1,
 		siblings: 1,
+		initialPage: currentPage,
 	})
 	const { active: activePage } = paginationController
 
@@ -95,7 +99,7 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 			defaultValue={currentPage}
 			{...props}
 		>
-			<Group ref={ref} spacing={24}>
+			<Group ref={ref} spacing={24} position='apart'>
 				<Items />
 				<Group>
 					<Link

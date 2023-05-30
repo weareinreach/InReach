@@ -29,7 +29,6 @@ const initialState: State = {
 }
 
 const reducer = (state: State, action: Action): State => {
-	console.log(state, action)
 	switch (action.type) {
 		case 'SET_PARAMS':
 			return { ...state, searchState: { ...state.searchState, params: action.payload } }

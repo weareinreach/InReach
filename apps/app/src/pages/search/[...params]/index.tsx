@@ -116,10 +116,14 @@ const SearchResults = () => {
 					routeActions.setServices(filteredServices)
 					break
 				}
+				case searchParams.searchState.page !== router.query.page: {
+					if (typeof router.query.page === 'string') routeActions.setPage(router.query.page)
+					break
+				}
 			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[filteredAttributes, filteredServices]
+		[filteredAttributes, filteredServices, router.query.page]
 	)
 
 	const nextSkip = useMemo(
