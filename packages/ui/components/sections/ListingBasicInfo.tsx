@@ -57,7 +57,7 @@ export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
 
 	const descriptionSection =
 		description && description.key ? (
-			<Text pt={8}>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
+			<Text py={12}>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
 		) : null
 
 	return (
