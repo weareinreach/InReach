@@ -22,6 +22,7 @@ import { useTranslation } from 'next-i18next'
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
 
 import { Button } from '~ui/components/core/Button'
+import { Link } from '~ui/components/core/Link'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -44,7 +45,8 @@ const useAccordionStyles = createStyles((theme) => ({
 		paddingRight: rem(12),
 	},
 	control: {
-		padding: `${rem(12)} ${rem(0)}`,
+		// padding: `${rem(12)} ${rem(0)}`,
+		padding: 0,
 		...theme.fn.hover({
 			backgroundColor: theme.other.colors.primary.lightGray,
 		}),
@@ -127,7 +129,7 @@ const useStyles = createStyles((theme) => ({
 		textDecoration: 'underline',
 		'&:hover': {
 			textDecoration: 'underline',
-
+			backgroundColor: theme.other.colors.primary.lightGray,
 			color: theme.other.colors.secondary.black,
 			cursor: 'pointer',
 		},
@@ -325,13 +327,13 @@ export const ServiceFilter = ({ resultCount, stateHandler, isFetching }: Service
 							{selectedItems.length > 0 ? selectedCountIcon : null}
 						</Group>
 						{selectedItems.length > 0 ? (
-							<Text
+							<Link
 								fw={500}
 								onClick={() => deselectAll()}
-								className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
+								// className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
 							>
 								{t('uncheck-all')}
-							</Text>
+							</Link>
 						) : null}
 					</>
 				) : (
@@ -340,7 +342,11 @@ export const ServiceFilter = ({ resultCount, stateHandler, isFetching }: Service
 							<Icon icon='carbon:building' />
 							<ServicesDisplay>{t('filter-by-service')}</ServicesDisplay>
 						</Group>
-						{selectedItems.length > 0 ? selectedCountIcon : <Icon icon='carbon:chevron-down' height={24} />}
+						{selectedItems.length > 0 ? (
+							selectedCountIcon
+						) : (
+							<Icon icon='carbon:chevron-down' height={24} width={24} />
+						)}
 					</>
 				)}
 			</Group>
@@ -358,7 +364,7 @@ export const ServiceFilter = ({ resultCount, stateHandler, isFetching }: Service
 				scrollAreaComponent={Modal.NativeScrollArea}
 			>
 				<Accordion
-					chevron={<Icon icon='carbon:chevron-right' />}
+					chevron={<Icon icon='carbon:chevron-right' height={24} width={24} />}
 					transitionDuration={0}
 					classNames={accordionClasses}
 				>

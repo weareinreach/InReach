@@ -32,6 +32,7 @@ import {
 } from 'react'
 
 import { Button } from '~ui/components/core/Button'
+import { Link } from '~ui/components/core/Link'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -310,13 +311,13 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 								{selectedItems.length > 0 ? selectedCountIcon : null}
 							</Group>
 							{selectedItems.length > 0 ? (
-								<Text
+								<Link
 									fw={500}
 									onClick={() => deselectAll()}
-									className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
+									// className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
 								>
 									{t('uncheck-all')}
-								</Text>
+								</Link>
 							) : null}
 						</>
 					) : (
@@ -350,17 +351,17 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 					classNames={modalClasses}
 					scrollAreaComponent={Modal.NativeScrollArea}
 				>
-					<Stack spacing={24} pb={12}>
+					<Stack spacing={24}>
 						<ScrollArea.Autosize
 							classNames={{ viewport: accordionClasses.scrollArea }}
 							mah={scrollAreaMaxHeight}
 						>
 							<Stack className={classes.sectionLabel} spacing={4} mt={0}>
-								<Title order={3}>{t('include')}</Title>
+								<Title order={3}>{t('modal-more-options.include')}</Title>
 								{filterListInclude}
 							</Stack>
 							<Stack className={classes.sectionLabel} spacing={4}>
-								<Title order={3}>{t('exclude')}</Title>
+								<Title order={3}>{t('modal-more-options.exclude')}</Title>
 								{filterListExclude}
 							</Stack>
 						</ScrollArea.Autosize>
