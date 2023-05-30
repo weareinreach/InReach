@@ -49,7 +49,7 @@ export const List = {
 			root: {
 				display: 'inline-flex',
 				columnGap: rem(8),
-				rowGap: rem(16),
+				rowGap: rem(12),
 				flexWrap: 'wrap',
 				alignItems: 'center',
 			},
@@ -71,7 +71,7 @@ export const List = {
 		({
 			root: {
 				display: 'inline-flex',
-				gap: rem(16),
+				gap: rem(12),
 				flexWrap: 'wrap',
 			},
 			item: {
