@@ -18,7 +18,7 @@ import {
 import { TimeInput } from '@mantine/dates'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { IconClock } from '@tabler/icons-react'
-import React, { forwardRef, useEffect, useRef, useState } from 'react'
+import { forwardRef, useEffect, useRef, useState } from 'react'
 import timezones from 'timezones-list'
 import { z } from 'zod'
 
@@ -86,7 +86,15 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 	const [tzValue, setTzValue] = useState<string | null>(null)
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
-	const [checked, setChecked] = useState(false)
+	const [checked, setChecked] = useState<{ [key: number]: boolean }>({
+		0: false, // Sunday
+		1: false, // Monday
+		2: false, // Tuesday
+		3: false, // Wednesday
+		4: false, // Thursday
+		5: false, // Friday
+		6: false, // Saturday
+	})
 
 	const handleUpdate = () => {
 		//TODO save to DB instead of sending to console.log
@@ -94,30 +102,56 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		console.log(checked)
 	}
 
-	const timeRangeComponent = (title: string, dayIndex: number) => {
+	const TimeRangeComponent = (title: string, dayIndex: number) => {
+		const [timeRangeGroups, setTimeRangeGroups] = useState<JSX.Element[]>([]) // Define the type for state variable
+
 		const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-			setChecked(event.currentTarget.checked)
+			const { checked } = event.currentTarget
+			setChecked((prevChecked) => {
+				// Reset timeRangeGroups if checked is true
+				if (checked) {
+					setTimeRangeGroups([])
+				}
+				return {
+					...prevChecked,
+					[dayIndex]: checked,
+				}
+			})
 		}
+
+		const handleAddTimeRangeGroup = () => {
+			// Add a new time range group to the state
+			setTimeRangeGroups((prevTimeRangeGroups) => [
+				...prevTimeRangeGroups,
+				<Group key={prevTimeRangeGroups.length}>
+					<TimeInput label='Open time' ref={ref} maw={200} mx='auto' disabled={isCheckboxChecked} />
+					<TimeInput label='Close time' ref={ref} maw={200} mx='auto' disabled={isCheckboxChecked} />
+				</Group>,
+			])
+		}
+
+		const isCheckboxChecked = checked[dayIndex]
 
 		return (
 			<Stack>
-				<Title order={3}>
-					{title} {dayIndex}
-				</Title>
-				<Group>
-					<TimeInput label='Open time' ref={ref} maw={200} mx='auto' />
-					<TimeInput label='Close time' ref={ref} maw={200} mx='auto' />
-					{/* <Checkbox value='1' checked={false} label='Open 24 Hours' /> */}
-					<Checkbox checked={checked} onChange={handleCheckboxChange} label='Open 24 Hours' />
+				<Group position='apart'>
+					<Title order={3}>{title}</Title>
+					<Checkbox checked={isCheckboxChecked} onChange={handleCheckboxChange} label='Open 24 Hours' />
 				</Group>
-				<UnstyledButton className={classes.addNewButton}>
+				<Group>
+					<TimeInput label='Open time' ref={ref} maw={200} mx='auto' disabled={isCheckboxChecked} />
+					<TimeInput label='Close time' ref={ref} maw={200} mx='auto' disabled={isCheckboxChecked} />
+				</Group>
+				{timeRangeGroups} {/* Render the dynamically added HTML when button is clicked*/}
+				<Button variant='secondary' onClick={handleAddTimeRangeGroup} disabled={isCheckboxChecked}>
 					<Group noWrap spacing={8}>
 						<Icon icon='carbon:add' className={classes.addNewText} height={24} />
 						<Text variant={variants.Text.utility2} className={classes.addNewText}>
+							{' '}
 							Add time range
 						</Text>
 					</Group>
-				</UnstyledButton>
+				</Button>
 				<Divider my='sm' />
 			</Stack>
 		)
@@ -155,13 +189,13 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							/>
 							<Divider my='sm' />
 						</Stack>
-						{timeRangeComponent('Sunday', 0)}
-						{timeRangeComponent('Monday', 1)}
-						{timeRangeComponent('Tuesday', 2)}
-						{timeRangeComponent('Wednesday', 3)}
-						{timeRangeComponent('Thursday', 4)}
-						{timeRangeComponent('Friday', 5)}
-						{timeRangeComponent('Saturday', 6)}
+						{TimeRangeComponent('Sunday', 0)}
+						{TimeRangeComponent('Monday', 1)}
+						{TimeRangeComponent('Tuesday', 2)}
+						{TimeRangeComponent('Wednesday', 3)}
+						{TimeRangeComponent('Thursday', 4)}
+						{TimeRangeComponent('Friday', 5)}
+						{TimeRangeComponent('Saturday', 6)}
 					</Drawer.Body>
 				</Drawer.Content>
 			</Drawer.Root>
