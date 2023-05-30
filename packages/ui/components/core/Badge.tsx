@@ -7,6 +7,7 @@ import {
 	type CSSObject,
 	Divider,
 	List,
+	type ListProps,
 	Badge as MantineBadge,
 	type MantineTheme,
 	rem,
@@ -335,7 +336,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 	}
 )
 
-export const BadgeGroup = ({ badges, withSeparator = false }: BadgeGroupProps) => {
+export const BadgeGroup = ({ badges, withSeparator = false, ...props }: BadgeGroupProps) => {
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 	const separator = (
@@ -352,13 +353,14 @@ export const BadgeGroup = ({ badges, withSeparator = false }: BadgeGroupProps) =
 			variant={withSeparator ? variants.List.inlineBullet : variants.List.inline}
 			icon={withSeparator ? separator : undefined}
 			m={0}
+			{...props}
 		>
 			{badgeList}
 		</List>
 	)
 }
 
-type BadgeGroupProps = {
+interface BadgeGroupProps extends Omit<ListProps, 'children'> {
 	badges: CustomBadgeProps[]
 	withSeparator?: boolean
 }

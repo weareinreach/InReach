@@ -1,6 +1,7 @@
 import {
 	Autocomplete,
 	type AutocompleteProps,
+	Center,
 	createStyles,
 	Group,
 	Loader,
@@ -14,12 +15,14 @@ import { useDebouncedValue } from '@mantine/hooks'
 import { type DefaultTFuncReturn } from 'i18next'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { type Dispatch, forwardRef, type SetStateAction, useState } from 'react'
+import { type Dispatch, forwardRef, type SetStateAction, useEffect, useState } from 'react'
 import reactStringReplace from 'react-string-replace'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+import { useSearchState } from '~ui/providers/SearchState'
 
 const useStyles = createStyles((theme) => ({
 	autocompleteContainer: {
@@ -40,7 +43,7 @@ const useStyles = createStyles((theme) => ({
 		backgroundColor: theme.other.colors.primary.lightGray,
 	},
 	rightIcon: {
-		minWidth: rem(150),
+		minWidth: rem(102),
 		'&:hover': {
 			cursor: 'pointer',
 		},
@@ -71,13 +74,17 @@ const useStyles = createStyles((theme) => ({
 		...theme.other.utilityFonts.utility2,
 		display: 'block',
 	},
+	resultContainer: {
+		minWidth: 'fit-content',
+	},
 }))
 
 /** Most of Google's autocomplete language options are only the two letter variants */
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
-export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
+export const SearchBox = ({ type, label, loadingManager, initialValue }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
+	const variants = useCustomVariant()
 	const { t } = useTranslation()
 	const router = useRouter()
 	const form = useForm<FormValues>({ initialValues: { search: '' } })
@@ -85,30 +92,71 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 	const [locationSearch, setLocationSearch] = useState('')
 	const { isLoading, setLoading } = loadingManager
 	const isOrgSearch = type === 'organization'
+	const { routeActions } = useSearchState()
 
 	// tRPC functions
-	api.organization.searchName.useQuery(
+	const { data: orgSearchData, isFetching: orgSearchLoading } = api.organization.searchName.useQuery(
 		{ search },
 		{
 			enabled: search !== '' && isOrgSearch,
-			onSuccess: (data) => form.setValues({ names: data }),
 			refetchOnWindowFocus: false,
 		}
 	)
-	api.geo.autocomplete.useQuery(
+	const { data: autocompleteData, isFetching: autocompleteLoading } = api.geo.autocomplete.useQuery(
 		{ search, locale: simpleLocale(router.locale) },
 		{
 			enabled: search !== '' && !isOrgSearch,
-			onSuccess: ({ results }) => form.setValues({ locations: results }),
 			refetchOnWindowFocus: false,
 		}
 	)
+	const [results, setResults] = useState<AutocompleteItem[]>([])
+	const [noResults, setNoResults] = useState(false)
+	const [searchLoading, setSearchLoading] = useState(false)
+
+	useEffect(() => {
+		if (
+			(!orgSearchData && orgSearchLoading && search !== '') ||
+			(!autocompleteData?.results?.length && autocompleteLoading && search !== '')
+		) {
+			setSearchLoading(true)
+			setResults([{ value: search, label: search, fetching: true }])
+		}
+	}, [autocompleteData, autocompleteLoading, search, orgSearchData, orgSearchLoading])
+
+	useEffect(() => {
+		if (isOrgSearch) {
+			if (orgSearchData && !orgSearchLoading && search !== '') {
+				if (orgSearchData.length === 0) setNoResults(true)
+				setResults(orgSearchData)
+				setSearchLoading(false)
+			}
+		} else {
+			if (autocompleteData && !autocompleteLoading && search !== '') {
+				if (autocompleteData.status === 'ZERO_RESULTS') setNoResults(true)
+				setResults(autocompleteData.results)
+				setSearchLoading(false)
+			}
+		}
+		if (search === '') {
+			setResults([])
+			setNoResults(false)
+		}
+	}, [autocompleteData, autocompleteLoading, search, isOrgSearch, orgSearchData, orgSearchLoading])
+
+	useEffect(() => {
+		if (initialValue && !form.values.search) {
+			form.setFieldValue('search', initialValue)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: locationSearch !== '' && !isOrgSearch,
 		onSuccess: (data) => {
 			const DEFAULT_RADIUS = 50
 			const DEFAULT_UNIT = 'mi'
 			if (!data.result) return
+			// apiUtils.
 			router.push({
 				pathname: '/search/[...params]',
 				query: {
@@ -121,22 +169,21 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 					],
 				},
 			})
+			setLoading(false)
 		},
 	})
 
-	const results = (function () {
-		const data = isOrgSearch ? form.values.names : form.values.locations
-		return data ?? []
-	})()
-
-	const rightIcon = isLoading ? (
-		<Loader size={24} />
-	) : form.values.search.length > 0 ? (
-		<Group spacing={4} className={classes.rightIcon} onClick={() => form.reset()}>
-			<Text>{t('clear')}</Text>
-			<Icon icon='carbon:close' />
-		</Group>
-	) : undefined
+	const rightIcon =
+		isLoading || searchLoading ? (
+			<Group>
+				<Loader size={32} mr={16} />
+			</Group>
+		) : form.values.search.length > 0 ? (
+			<Group spacing={4} noWrap className={classes.rightIcon} onClick={() => form.reset()}>
+				<Text>{t('clear')}</Text>
+				<Icon icon='carbon:close' />
+			</Group>
+		) : undefined
 
 	const fieldRole = (
 		isOrgSearch
@@ -165,17 +212,25 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 	}
 
 	const AutoCompleteItem = forwardRef<HTMLDivElement, AutocompleteItem>(
-		({ value, ...others }: AutocompleteItem, ref) => {
+		({ label, fetching, placeId, ...others }: AutocompleteItem, ref) => {
+			if (fetching)
+				return (
+					<div ref={ref} {...others} className={classes.itemComponent}>
+						<Center>
+							<Loader />
+						</Center>
+					</div>
+				)
 			return isOrgSearch ? (
 				<div ref={ref} {...others} className={classes.itemComponent}>
 					<Text className={classes.unmatchedText} truncate>
-						{matchText(value, form.values.search)}
+						{matchText(label, form.values.search)}
 					</Text>
 				</div>
 			) : (
 				<div ref={ref} {...others} className={classes.itemComponent}>
 					<Text className={classes.locationResult} truncate>
-						{value}
+						{label}
 					</Text>
 					<Text className={classes.unmatchedText} truncate>
 						{others.subheading}
@@ -190,9 +245,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 		return (
 			<div className={classes.itemComponent} onClick={() => router.push('/suggest')}>
 				<Text className={classes.unmatchedText}>
-					<Trans i18nKey='search.suggest-resource' t={t}>
-						Can’t find it? <u>Suggest an organization</u> you think should be included.
-					</Trans>
+					<Trans i18nKey='search.suggest-resource' t={t} />
 				</Text>
 			</div>
 		)
@@ -204,7 +257,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 			return (
 				<ScrollArea viewportRef={ref} style={{ width: '100%', ...style }} {...props}>
 					{children}
-					<SuggestItem />
+					{!orgSearchLoading && <SuggestItem />}
 				</ScrollArea>
 			)
 		}
@@ -220,6 +273,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 				setLoading(false)
 				return
 			}
+			routeActions.setSearchTerm(item.value)
 			router.push({
 				pathname: '/org/[slug]',
 				query: {
@@ -232,6 +286,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 				setLoading(false)
 				return
 			}
+			routeActions.setSearchTerm(item.value)
 			setLocationSearch(item.placeId)
 		}
 	}
@@ -243,6 +298,7 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 					? classes.autocompleteContainer
 					: cx(classes.autocompleteContainer, classes.emptyLocation),
 				itemsWrapper: classes.autocompleteWrapper,
+				dropdown: classes.resultContainer,
 			}}
 			itemComponent={AutoCompleteItem}
 			dropdownComponent={isOrgSearch ? ResultContainer : undefined}
@@ -252,6 +308,8 @@ export const SearchBox = ({ type, label, loadingManager }: SearchBoxProps) => {
 			onItemSubmit={selectionHandler}
 			disabled={isLoading}
 			label={label}
+			withinPortal
+			nothingFound={noResults ? <Text variant={variants.Text.utility1}>{t('search.no-results')}</Text> : null}
 			{...fieldRole}
 			{...form.getInputProps('search')}
 		/>
@@ -265,6 +323,7 @@ type SearchBoxProps = {
 		setLoading: Dispatch<SetStateAction<boolean>>
 		isLoading: boolean
 	}
+	initialValue?: string
 }
 type FormValues = {
 	search: string
@@ -275,6 +334,8 @@ interface AutocompleteItem {
 	value: string
 	name?: string
 	slug?: string
+	label: string
 	subheading?: string
 	placeId?: string
+	fetching?: boolean
 }

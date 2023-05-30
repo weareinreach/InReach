@@ -26,23 +26,27 @@ export const geoByPlaceIdCityState = {
 export const geoAutocompleteCityState = {
 	results: [
 		{
-			value: 'New York',
+			label: 'New York',
 			subheading: 'NY, USA',
+			value: 'New York, NY, USA',
 			placeId: 'ChIJOwg_06VPwokRYv534QaPC8g',
 		},
 		{
-			value: 'Washington D.C.',
+			label: 'Washington D.C.',
 			subheading: 'DC, USA',
+			value: 'Washington D.C., DC, USA',
 			placeId: 'ChIJW-T2Wt7Gt4kRKl2I1CJFUsI',
 		},
 		{
-			value: 'Boston',
+			label: 'Boston',
 			subheading: 'MA, USA',
+			value: 'Boston, MA, USA',
 			placeId: 'ChIJGzE9DS1l44kRoOhiASS_fHg',
 		},
 		{
-			value: 'Atlanta',
+			label: 'Atlanta',
 			subheading: 'GA, USA',
+			value: 'Atlanta, GA, USA',
 			placeId: 'ChIJjQmTaV0E9YgRC2MLmS_e_mY',
 		},
 	],
@@ -53,28 +57,33 @@ export const geoAutocompleteFullAddress = {
 	status: 'OK',
 	results: [
 		{
-			value: '1235 South Clark Street',
+			label: '1235 South Clark Street',
 			subheading: 'Arlington, VA, USA',
+			value: '1235 South Clark Street, Arlington, VA, USA',
 			placeId: 'ChIJcYM1qya3t4kRc74WPRj7sYI',
 		},
 		{
-			value: '1238 Maryland Avenue Southwest',
+			label: '1238 Maryland Avenue Southwest',
 			subheading: 'Washington, DC, USA',
+			value: '1238 Maryland Avenue Southwest, Washington, DC, USA',
 			placeId: 'ChIJb3QAk3W3t4kRutCtFhHp3Ps',
 		},
 		{
-			value: '1234 Massachusetts Avenue Northwest',
+			label: '1234 Massachusetts Avenue Northwest',
 			subheading: 'Washington, DC, USA',
+			value: '1234 Massachusetts Avenue Northwest, Washington, DC, USA',
 			placeId: 'ChIJa_U96pS3t4kRDkcIEZ7AOAY',
 		},
 		{
-			value: '1235 W Street Northeast',
+			label: '1235 W Street Northeast',
 			subheading: 'Washington, DC, USA',
+			value: '1235 W Street Northeast, Washington, DC, USA',
 			placeId: 'ChIJf_V0Hwu4t4kRODyM6gzYgS0',
 		},
 		{
-			value: '1234 19th Street Northwest',
+			label: '1234 19th Street Northwest',
 			subheading: 'Washington, DC, USA',
+			value: '1234 19th Street Northwest, Washington, DC, USA',
 			placeId: 'ChIJKyDtC7i3t4kRkWca2kUeRuY',
 		},
 	],

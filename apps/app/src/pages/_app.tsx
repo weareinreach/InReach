@@ -14,6 +14,7 @@ import { PageLoadProgress } from '@weareinreach/ui/components/core/PageLoadProgr
 import { Footer } from '@weareinreach/ui/components/sections/Footer'
 import { Navbar } from '@weareinreach/ui/components/sections/Navbar'
 import { BodyGrid } from '@weareinreach/ui/layouts/BodyGrid'
+import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 import { api } from '~app/utils/api'
 
@@ -77,11 +78,13 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 				emotionCache={appCache}
 			>
 				<ModalsProvider>
-					<PageLoadProgress />
-					<Navbar />
-					{PageContent}
-					<Footer />
-					<Notifications />
+					<SearchStateProvider>
+						<PageLoadProgress />
+						<Navbar />
+						{PageContent}
+						<Footer />
+						<Notifications />
+					</SearchStateProvider>
 				</ModalsProvider>
 				<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
 			</MantineProvider>

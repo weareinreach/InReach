@@ -18,4 +18,5 @@ export * from './2023-05-08_permissions'
 export * from './2023-05-18_update-published-deleted/index'
 export * from './2023-05-18_user-permissions'
 export * from './2023-05-19_reviews-countries'
+export * from './2023-05-22_add-crowdin-ids/index'
 // codegen:end

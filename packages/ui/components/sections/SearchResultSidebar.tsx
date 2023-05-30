@@ -13,6 +13,7 @@ export const SearchResultSidebar = ({
 	resultCount,
 	stateHandler,
 	loadingManager,
+	isFetching,
 }: SearchResultSidebarProps) => {
 	const { t } = useTranslation('common')
 	const variants = useCustomVariant()
@@ -48,6 +49,7 @@ export const SearchResultSidebar = ({
 				leftIcon={<Icon icon='carbon:settings-adjust' rotate={2} />}
 				resultCount={resultCount}
 				stateHandler={stateHandler}
+				isFetching={isFetching}
 			>
 				{t('more.filters')}
 			</MoreFilter>
@@ -63,4 +65,5 @@ interface SearchResultSidebarProps {
 		setLoading: Dispatch<SetStateAction<boolean>>
 		isLoading: boolean
 	}
+	isFetching?: boolean
 }

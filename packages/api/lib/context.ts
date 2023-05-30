@@ -1,5 +1,6 @@
 import { type inferAsyncReturnType } from '@trpc/server'
 import { type CreateNextContextOptions } from '@trpc/server/adapters/next'
+import { type NextApiRequest, type NextApiResponse } from 'next'
 
 import { getServerSession, type Session } from '@weareinreach/auth'
 import { prisma } from '@weareinreach/db/client'
@@ -7,6 +8,8 @@ import { generateId } from '@weareinreach/db/lib/idGen'
 
 export type CreateContextOptions = {
 	session: Session | null
+	req?: NextApiRequest
+	res?: NextApiResponse
 }
 
 /**
@@ -23,6 +26,9 @@ export const createContextInner = (opts: CreateContextOptions) => {
 		session: opts.session,
 		prisma,
 		generateId,
+		skipCache: false,
+		req: opts.req,
+		res: opts.res,
 	}
 }
 
@@ -37,9 +43,13 @@ export const createContext = async (opts?: CreateNextContextOptions) => {
 	// Get the session from the server using the unstable_getServerSession wrapper function
 	const session = (req && res && (await getServerSession({ req, res }))) || null
 
-	return createContextInner({
-		session,
-	})
+	return {
+		...createContextInner({
+			session,
+			req,
+			res,
+		}),
+	}
 }
 
 export type Context = inferAsyncReturnType<typeof createContext>

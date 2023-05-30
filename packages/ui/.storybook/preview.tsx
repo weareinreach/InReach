@@ -7,8 +7,17 @@ import { type BaseRouter } from 'next/dist/shared/lib/router/router'
 import { type Router } from 'next/router'
 
 import { type LocaleCodes, translatedLangs } from '@weareinreach/db/generated/languages'
+import { type SearchStateContext } from '~ui/providers/SearchState'
 
-import { Layouts, type LayoutsDecorator, WithI18n, WithMantine, WithStrictMode, WithTRPC } from './decorators'
+import {
+	Layouts,
+	type LayoutsDecorator,
+	WithI18n,
+	WithMantine,
+	WithSearchState,
+	WithStrictMode,
+	WithTRPC,
+} from './decorators'
 import { i18n } from './i18next'
 import { type Viewports } from './types'
 
@@ -27,10 +36,6 @@ initializeMsw({
 		}
 	},
 })
-// whyDidYouRender(React, {
-// 	trackAllPureComponents: true,
-// 	// collapseGroups: true,
-// })
 
 const preview: Preview = {
 	parameters: {
@@ -74,7 +79,7 @@ const preview: Preview = {
 		},
 		pseudo: {},
 	},
-	decorators: [Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC, WithStrictMode],
+	decorators: [WithSearchState, Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC, WithStrictMode],
 }
 export default preview
 
@@ -106,6 +111,7 @@ declare module '@storybook/react' {
 		disableWhyDidYouRender?: boolean
 		pseudo?: Partial<Record<PseudoStates, string | string[] | boolean>> & { rootElement?: string }
 		rqDevtools?: boolean
+		searchContext?: SearchStateContext['searchParams']
 	}
 }
 type PseudoStates =

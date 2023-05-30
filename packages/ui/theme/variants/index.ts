@@ -78,6 +78,8 @@ export const variantNames: VariantNames = {
 		h1: 'h1',
 		h2: 'h2',
 		h3: 'h3',
+		badgeGroup: 'badgeGroup',
+		textArea: 'textArea',
 	},
 	Text: {
 		utility1: 'utility1',

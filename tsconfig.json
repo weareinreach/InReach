@@ -2,12 +2,12 @@
 	"compilerOptions": {
 		"baseUrl": "./",
 		"paths": {
-			"~app/*": ["apps/app/*"],
-			"~web/*": ["apps/web/*"],
-			"~api/*": ["packages/api/*"],
-			"~auth/*": ["packages/auth/*"],
-			"~db/*": ["packages/db/*"],
-			"~ui/*": ["packages/ui/*"]
+			"~app/*": ["./apps/app/*"],
+			"~web/*": ["./apps/web/*"],
+			"~api/*": ["./packages/api/*"],
+			"~auth/*": ["./packages/auth/*"],
+			"~db/*": ["./packages/db/*"],
+			"~ui/*": ["./packages/ui/*"]
 		},
 		"strict": true
 	},
