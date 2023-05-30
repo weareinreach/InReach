@@ -1,6 +1,7 @@
 import { Grid, Skeleton, Stack, Tabs } from '@mantine/core'
 // import compact from 'just-compact'
 import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
@@ -70,6 +71,9 @@ const OrgLocationPage: NextPage = () => {
 
 	return (
 		<>
+			<Head>
+				<title>{t('page-title.base', { ns: 'common', title: `${orgData.name} - ${data.name}` })}</title>
+			</Head>
 			<Grid.Col sm={8} order={1}>
 				<Toolbar
 					breadcrumbProps={{

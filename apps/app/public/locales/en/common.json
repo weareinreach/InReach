@@ -129,6 +129,10 @@
 	"none-apply": "None of these apply to me",
 	"org-image": "Organization photo",
 	"other-specify": "Other (please specify)",
+	"page-title": {
+		"base": "{{title}} - InReach",
+		"search-results": "Search Results"
+	},
 	"password": "Password",
 	"password-confirm": "Confirm password",
 	"password-error-match": "Passwords must match",

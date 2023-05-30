@@ -2,6 +2,7 @@
 import { Grid, Skeleton, Stack, Tabs } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
@@ -117,6 +118,9 @@ const OrganizationPage: NextPage = () => {
 
 	return (
 		<>
+			<Head>
+				<title>{t('page-title.base', { ns: 'common', title: data.name })}</title>
+			</Head>
 			<Grid.Col sm={8} order={1}>
 				<Toolbar
 					hideBreadcrumb={searchParams.searchState.params.length === 0}

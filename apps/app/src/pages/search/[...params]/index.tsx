@@ -2,6 +2,7 @@
 import { Grid, Group, Space } from '@mantine/core'
 import compare from 'just-compare'
 import { type GetServerSideProps } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
@@ -147,6 +148,9 @@ const SearchResults = () => {
 
 	return (
 		<>
+			<Head>
+				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
+			</Head>
 			<Grid.Col sm={12}>
 				<Group spacing={20} noWrap w='100%'>
 					<SearchBox
