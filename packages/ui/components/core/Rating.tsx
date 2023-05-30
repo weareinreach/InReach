@@ -1,4 +1,4 @@
-import { createStyles, Group, LoadingOverlay, rem, Text, Tooltip } from '@mantine/core'
+import { createStyles, Group, rem, Skeleton, Text, Tooltip } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 import { useCustomVariant } from '~ui/hooks'
@@ -34,14 +34,15 @@ export const Rating = ({ recordId, hideCount = false, noMargin = false, forceLoa
 			disabled={!hideCount}
 			variant={variants.Tooltip.utility1}
 		>
-			<Group position='center' spacing={5} className={classes.container}>
-				<LoadingOverlay visible={status !== 'success' || Boolean(forceLoading)} overlayBlur={1.75} />
-				<Icon icon='carbon:star-filled' className={classes.icon} height={24} />
-				<Text className={classes.text}>
-					{average === null && hideCount ? '-.-' : average}{' '}
-					{!hideCount && `${t('review-count_interval', { count, postProcess: 'interval' })}`}
-				</Text>
-			</Group>
+			<Skeleton visible={status !== 'success' || Boolean(forceLoading)} className={classes.container}>
+				<Group position='center' spacing={5} className={classes.container}>
+					<Icon icon='carbon:star-filled' className={classes.icon} height={24} />
+					<Text className={classes.text}>
+						{average === null && hideCount ? '-.-' : average}{' '}
+						{!hideCount && `${t('review-count_interval', { count, postProcess: 'interval' })}`}
+					</Text>
+				</Group>
+			</Skeleton>
 		</Tooltip>
 	)
 }
