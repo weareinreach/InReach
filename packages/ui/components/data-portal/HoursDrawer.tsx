@@ -18,7 +18,7 @@ import {
 import { TimeInput } from '@mantine/dates'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { IconClock } from '@tabler/icons-react'
-import { forwardRef, useEffect, useRef, useState } from 'react'
+import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import timezones from 'timezones-list'
 import { z } from 'zod'
 
@@ -86,39 +86,29 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 	const [tzValue, setTzValue] = useState<string | null>(null)
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
+	const [checked, setChecked] = useState(false)
 
 	const handleUpdate = () => {
+		//TODO save to DB instead of sending to console.log
 		console.log(tzValue)
+		console.log(checked)
 	}
 
-	const timeRangeComponent = (title: string) => {
+	const timeRangeComponent = (title: string, dayIndex: number) => {
+		const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+			setChecked(event.currentTarget.checked)
+		}
+
 		return (
 			<Stack>
-				<Title order={3}>{title}</Title>
+				<Title order={3}>
+					{title} {dayIndex}
+				</Title>
 				<Group>
-					<TimeInput
-						label='Open time'
-						ref={ref}
-						rightSection={
-							<ActionIcon onClick={() => ref.current.showPicker()}>
-								<IconClock size='1rem' stroke={1.5} />
-							</ActionIcon>
-						}
-						maw={200}
-						mx='auto'
-					/>
-					<TimeInput
-						label='Close time'
-						ref={ref}
-						rightSection={
-							<ActionIcon onClick={() => ref.current.showPicker()}>
-								<IconClock size='1rem' stroke={1.5} />
-							</ActionIcon>
-						}
-						maw={200}
-						mx='auto'
-					/>
-					<Checkbox value='1' checked={false} label='Open 24 Hours' />
+					<TimeInput label='Open time' ref={ref} maw={200} mx='auto' />
+					<TimeInput label='Close time' ref={ref} maw={200} mx='auto' />
+					{/* <Checkbox value='1' checked={false} label='Open 24 Hours' /> */}
+					<Checkbox checked={checked} onChange={handleCheckboxChange} label='Open 24 Hours' />
 				</Group>
 				<UnstyledButton className={classes.addNewButton}>
 					<Group noWrap spacing={8}>
@@ -165,13 +155,13 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							/>
 							<Divider my='sm' />
 						</Stack>
-						{timeRangeComponent('Sunday')}
-						{timeRangeComponent('Monday')}
-						{timeRangeComponent('Tuesday')}
-						{timeRangeComponent('Wednesday')}
-						{timeRangeComponent('Thursday')}
-						{timeRangeComponent('Friday')}
-						{timeRangeComponent('Saturday')}
+						{timeRangeComponent('Sunday', 0)}
+						{timeRangeComponent('Monday', 1)}
+						{timeRangeComponent('Tuesday', 2)}
+						{timeRangeComponent('Wednesday', 3)}
+						{timeRangeComponent('Thursday', 4)}
+						{timeRangeComponent('Friday', 5)}
+						{timeRangeComponent('Saturday', 6)}
 					</Drawer.Body>
 				</Drawer.Content>
 			</Drawer.Root>
