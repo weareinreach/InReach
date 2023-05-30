@@ -6,9 +6,9 @@ import { useTranslation } from 'next-i18next'
 
 import { Icon } from '~ui/icon'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { avatarSize }: { avatarSize: number }) => ({
 	group: {
-		gap: rem(4),
+		gap: rem(avatarSize >= 48 ? 12 : 4),
 	},
 	name: {
 		...theme.other.utilityFonts.utility1,
@@ -18,13 +18,19 @@ const useStyles = createStyles((theme) => ({
 		color: theme.other.colors.secondary.darkGray,
 	},
 	avatarPlaceholder: {
-		height: rem(40),
-		width: rem(40),
+		height: rem(avatarSize),
+		width: rem(avatarSize),
 	},
 }))
 
-export const UserAvatar = ({ subheading, user, useLoggedIn = false, loading = false }: UserAvatarProps) => {
-	const { classes } = useStyles()
+export const UserAvatar = ({
+	subheading,
+	user,
+	useLoggedIn = false,
+	loading = false,
+	avatarSize = 40,
+}: UserAvatarProps) => {
+	const { classes } = useStyles({ avatarSize })
 	const { t, i18n } = useTranslation()
 	const { data: session, status } = useSession()
 	const theme = useMantineTheme()
@@ -59,7 +65,7 @@ export const UserAvatar = ({ subheading, user, useLoggedIn = false, loading = fa
 	if (showLoadingState) {
 		return (
 			<Group className={classes.group}>
-				<Skeleton height={48} circle />
+				<Skeleton height={avatarSize} circle />
 				<Stack align='flex-start' justify='center' spacing={4}>
 					<Skeleton variant='utility' />
 					{Boolean(subText()) && <Skeleton variant='utility'>{subText()}</Skeleton>}
@@ -101,6 +107,7 @@ interface PropsPassed {
 	user?: Pick<User, 'name' | 'image'>
 	/** Return loading state */
 	loading?: boolean
+	avatarSize?: number
 }
 
 interface PropsSession {
@@ -110,4 +117,5 @@ interface PropsSession {
 	subheading?: Date | string | null
 	user?: undefined
 	loading?: undefined
+	avatarSize?: number
 }
