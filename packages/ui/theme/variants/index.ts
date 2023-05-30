@@ -31,6 +31,7 @@ export const variantNames: VariantNames = {
 		inheritStyle: 'inheritStyle',
 		block: 'block',
 		inlineUtil1: 'inlineUtil1',
+		inlineUtil1darkGray: 'inlineUtil1darkGray',
 		card: 'card',
 		pagination: 'pagination',
 	},
