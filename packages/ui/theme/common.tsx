@@ -362,7 +362,6 @@ export const commonTheme = {
 				root: {
 					margin: '0 auto',
 					padding: `${rem(0)} ${rem(20)}`,
-					marginBottom: rem(100),
 					[theme.fn.largerThan('xs')]: {
 						padding: `${rem(0)} ${rem(32)}`,
 					},

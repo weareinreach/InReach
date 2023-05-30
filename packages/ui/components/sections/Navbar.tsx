@@ -7,7 +7,7 @@ import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { MobileNav } from '~ui/components/core/MobileNav'
 import { UserMenu } from '~ui/components/core/UserMenu'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
 const useStyles = createStyles((theme) => ({
 	desktopNav: {
@@ -29,8 +29,11 @@ export const Navbar = () => {
 	const { t } = useTranslation()
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
+	const { isMobile } = useScreenSize()
 
-	return (
+	return isMobile ? (
+		<MobileNav className={classes.mobileNav} />
+	) : (
 		<>
 			<Container className={classes.desktopNav} fluid maw='100%'>
 				<Flex justify='space-between' align='center' pt={5}>
@@ -45,9 +48,6 @@ export const Navbar = () => {
 					</Group>
 				</Flex>
 			</Container>
-			<div className={classes.mobileNav}>
-				<MobileNav />
-			</div>
 		</>
 	)
 }

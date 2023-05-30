@@ -7,10 +7,9 @@ const useStyles = createStyles((theme, { backgroundColor }: { backgroundColor: s
 		left: 0,
 		right: 0,
 		zIndex: -1,
-		// width: '100vw',
 		overflow: 'visible',
-		padding: `${rem(38)} ${rem(0)}`,
-		[theme.fn.largerThan('sm')]: { padding: `${rem(60)} ${rem(0)}` },
+		padding: `${rem(48)} ${rem(0)}`,
+		[theme.fn.largerThan('sm')]: { padding: `${rem(80)} ${rem(0)}` },
 	},
 }))
 
