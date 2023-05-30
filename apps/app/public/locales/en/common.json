@@ -197,6 +197,7 @@
 	"saved": "Saved",
 	"saved-lists": "Saved Lists",
 	"search": {
+		"include-remote": "Include remote services",
 		"location-placeholder": "Enter state, city, or zip code...",
 		"look-up-org": "Look up an organization",
 		"no-results": "No results found. Please try again.",
@@ -316,6 +317,7 @@
 		"back": "Back",
 		"coming-soon": "Coming soon",
 		"delete": "Delete",
+		"distance": "Distance",
 		"email": "Email",
 		"hours": "Hours",
 		"more": "more",

@@ -28,6 +28,8 @@ import {
 	rem,
 	type SkeletonProps,
 	type SkeletonStylesParams,
+	type SliderProps,
+	type SliderStylesNames,
 	type StackProps,
 	type Styles,
 	type SwitchProps,
@@ -657,6 +659,35 @@ export const commonTheme = {
 				} satisfies Styles<'root', SkeletonStylesParams>),
 
 			variants: variants.Skeleton,
+		},
+		Slider: {
+			defaultProps: (theme) =>
+				({
+					color: theme.other.colors.secondary.black,
+					thumbSize: 12,
+					label: null,
+				} satisfies SliderProps),
+			styles: (theme) =>
+				({
+					bar: {
+						height: rem(2),
+						backgroundColor: theme.other.colors.secondary.black,
+					},
+					track: {
+						height: rem(2),
+					},
+					thumb: {
+						backgroundColor: theme.other.colors.secondary.black,
+						borderColor: `${theme.other.colors.secondary.black} !important`,
+					},
+					mark: {
+						backgroundColor: 'inherit',
+						border: 'none',
+					},
+					markLabel: {
+						color: theme.other.colors.secondary.black,
+					},
+				} satisfies Styles<SliderStylesNames>),
 		},
 		Switch: {
 			defaultProps: {
