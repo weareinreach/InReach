@@ -83,7 +83,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 						<Navbar />
 						{PageContent}
 						<Footer />
-						<Notifications />
+						<Notifications transitionDuration={500} />
 					</SearchStateProvider>
 				</ModalsProvider>
 				<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
