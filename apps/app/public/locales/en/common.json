@@ -65,6 +65,7 @@
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
 	"exclude": "Exclude",
+	"filter-by-service": "Filter by services",
 	"find-resources": "Find resources",
 	"find-x": "Find {{value}}",
 	"footer": {
@@ -123,7 +124,7 @@
 		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>The InReach team will do its best to confirm the eligibility and basic facts about service providers listed on this website. However, we cannot guarantee the viability or capabilities of any such providers. Consequently, InReach assumes no responsibility for the actions of providers listed on this website and users who contact any such providers do so at their own risk.</textReg>\n</stack16>"
 	},
 	"more": {
-		"filters": "More filters"
+		"options": "More options"
 	},
 	"no-reviews": "No reviews yet",
 	"none-apply": "None of these apply to me",

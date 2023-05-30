@@ -124,10 +124,11 @@ const useStyles = createStyles((theme) => ({
 	},
 
 	button: {
-		padding: `${rem(14)} ${rem(20)} ${rem(14)} ${rem(16)}`,
+		padding: `${rem(14)} ${rem(16)}`,
 		backgroundColor: theme.other.colors.secondary.white,
 		borderRadius: rem(8),
 		border: `${theme.other.colors.tertiary.coolGray} ${rem(1)} solid`,
+		height: rem(48),
 	},
 
 	itemParent: {},
@@ -302,21 +303,30 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 
 			return (
 				<Group className={modalTitle ? undefined : classes.button} position='apart' noWrap spacing={0}>
-					<Group spacing={8} noWrap>
-						<FilterDisplay>{t('more.filters')}</FilterDisplay>
-						{selectedItems.length > 0 ? selectedCountIcon : null}
-					</Group>
-
 					{modalTitle ? (
-						<Text
-							fw={500}
-							onClick={() => deselectAll()}
-							className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
-						>
-							{t('uncheck-all')}
-						</Text>
+						<>
+							<Group spacing={8} noWrap>
+								<FilterDisplay>{t('more.options')}</FilterDisplay>
+								{selectedItems.length > 0 ? selectedCountIcon : null}
+							</Group>
+							{selectedItems.length > 0 ? (
+								<Text
+									fw={500}
+									onClick={() => deselectAll()}
+									className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
+								>
+									{t('uncheck-all')}
+								</Text>
+							) : null}
+						</>
 					) : (
-						<Icon icon='carbon:chevron-down' height={24} />
+						<>
+							<Group spacing={8} noWrap position='center' w='100%'>
+								<Icon icon='carbon:settings-adjust' rotate={2} />
+								<FilterDisplay>{t('more.options')}</FilterDisplay>
+							</Group>
+							{selectedItems.length > 0 ? selectedCountIcon : <Icon icon='carbon:chevron-down' height={24} />}
+						</>
 					)}
 				</Group>
 			)
@@ -374,7 +384,6 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 						</Button>
 					</Group>
 				</Modal>
-
 				<Box ref={ref} component={DefaultLauncher} onClick={() => setOpened(true)} {...props} />
 			</>
 		)

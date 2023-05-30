@@ -14,6 +14,7 @@ import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
+import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
 import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 import { useSearchState } from '@weareinreach/ui/providers/SearchState'
 import { api } from '~app/utils/api'
@@ -167,14 +168,22 @@ const SearchResults = () => {
 						stateHandler={setFilteredServices}
 						isFetching={searchIsFetching}
 					/>
+					<MoreFilter
+						// component={Button}
+						// variant={variants.Button.primaryLg}
+						// leftIcon={<Icon icon='carbon:settings-adjust' rotate={2} />}
+						resultCount={resultCount}
+						stateHandler={setFilteredAttributes}
+						isFetching={searchIsFetching}
+					>
+						{t('more.filters')}
+					</MoreFilter>
 				</Group>
 			</Grid.Col>
 			<Grid.Col>
 				<SearchResultSidebar
 					resultCount={resultCount}
-					stateHandler={setFilteredAttributes}
 					loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
-					isFetching={searchIsFetching}
 				/>
 			</Grid.Col>
 			<Grid.Col sm={8}>

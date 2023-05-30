@@ -318,21 +318,30 @@ export const ServiceFilter = ({ resultCount, stateHandler, isFetching }: Service
 
 		return (
 			<Group className={modalTitle ? undefined : classes.button} position='apart' noWrap spacing={0}>
-				<Group spacing={8} noWrap>
-					<ServicesDisplay>{t('services')}</ServicesDisplay>
-					{selectedItems.length > 0 ? selectedCountIcon : null}
-				</Group>
-
 				{modalTitle ? (
-					<Text
-						fw={500}
-						onClick={() => deselectAll()}
-						className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
-					>
-						{t('uncheck-all')}
-					</Text>
+					<>
+						<Group spacing={8} noWrap>
+							<ServicesDisplay>{t('filter-by-service')}</ServicesDisplay>
+							{selectedItems.length > 0 ? selectedCountIcon : null}
+						</Group>
+						{selectedItems.length > 0 ? (
+							<Text
+								fw={500}
+								onClick={() => deselectAll()}
+								className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
+							>
+								{t('uncheck-all')}
+							</Text>
+						) : null}
+					</>
 				) : (
-					<Icon icon='carbon:chevron-down' height={24} />
+					<>
+						<Group spacing={8} noWrap position='center' w='100%'>
+							<Icon icon='carbon:building' />
+							<ServicesDisplay>{t('filter-by-service')}</ServicesDisplay>
+						</Group>
+						{selectedItems.length > 0 ? selectedCountIcon : <Icon icon='carbon:chevron-down' height={24} />}
+					</>
 				)}
 			</Group>
 		)
