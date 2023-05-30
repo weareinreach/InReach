@@ -15,7 +15,7 @@ import { ModalTitle } from './ModalTitle'
 import { SignupModalLauncher } from './SignUp'
 
 export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModalProps>(
-	({ autoLaunch, noClose, ...props }, ref) => {
+	({ autoLaunch, noClose, onClose, ...props }, ref) => {
 		const { t } = useTranslation(['common'])
 		const variants = useCustomVariant()
 		const { data: session, status } = useSession()
@@ -35,7 +35,13 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 						backTo: 'none',
 						onClick: () => router.back(),
 				  }
-				: { option: 'close', onClick: () => handler.close() }
+				: {
+						option: 'close',
+						onClick: () => {
+							if (typeof onClose === 'function') onClose()
+							handler.close()
+						},
+				  }
 		) satisfies BreadcrumbProps
 		const modalTitle = <ModalTitle breadcrumb={titleProps} />
 
@@ -92,4 +98,5 @@ export interface QuickPromotionModalProps extends ButtonProps {
 	/** Automatically launch if no session? */
 	autoLaunch?: boolean
 	noClose?: boolean
+	onClose?: () => void
 }
