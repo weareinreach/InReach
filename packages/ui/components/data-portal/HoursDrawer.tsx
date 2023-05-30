@@ -1,5 +1,5 @@
 import {
-	Autocomplete,
+	ActionIcon,
 	Box,
 	type ButtonProps,
 	Checkbox,
@@ -8,39 +8,26 @@ import {
 	Divider,
 	Drawer,
 	Group,
-	Radio,
 	rem,
 	Select,
 	Stack,
 	Text,
-	TextInput,
 	Title,
 	UnstyledButton,
 } from '@mantine/core'
-import { ActionIcon } from '@mantine/core'
 import { TimeInput } from '@mantine/dates'
-import { useForm, zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { IconClock } from '@tabler/icons-react'
-import compact from 'just-compact'
-import filterObject from 'just-filter-object'
-import { useTranslation } from 'next-i18next'
 import { forwardRef, useEffect, useRef, useState } from 'react'
-import reactStringReplace from 'react-string-replace'
 import timezones from 'timezones-list'
 import { z } from 'zod'
 
-import { title } from 'process'
-
 import { type ApiOutput } from '@weareinreach/api'
-import { boolOrNull, transformNullString } from '@weareinreach/api/schemas/common'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
-import { isExternal, Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
-import { createWktFromLatLng } from '~ui/lib/geotools'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 const useStyles = createStyles((theme) => ({
@@ -53,22 +40,6 @@ const useStyles = createStyles((theme) => ({
 		'&:not(:only-child)': {
 			paddingTop: rem(40),
 		},
-	},
-	unmatchedText: {
-		...theme.other.utilityFonts.utility2,
-		color: theme.other.colors.secondary.darkGray,
-		display: 'block',
-	},
-	secondLine: { ...theme.other.utilityFonts.utility4, color: theme.other.colors.secondary.darkGray },
-	matchedText: {
-		color: theme.other.colors.secondary.black,
-	},
-	radioLabel: {
-		...theme.other.utilityFonts.utility4,
-	},
-	radioButton: {
-		height: rem(16),
-		width: rem(16),
 	},
 	addNewButton: {
 		width: '100%',
@@ -101,32 +72,26 @@ const schemaTransform = ({ id, data }: FormSchema) => ({
 })
 
 const timezoneData = timezones.map((item, index) => {
+	const { tzCode, ...rest } = item
 	return {
-		...item,
+		...rest,
 		key: index,
-		value: item.tzCode,
+		value: tzCode,
 	}
 })
 
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)
-	const [_search, setSearch] = useState<string>('')
-	const [search] = useDebouncedValue(_search, 200)
-	const [results, setResults] = useState<ApiOutput['geo']['autocomplete']['results']>()
 	const [isSaved, setIsSaved] = useState(false)
-	const form = useForm<FormSchema>({
-		validate: zodResolver(FormSchema),
-		initialValues: { id: '', data: { accessible: {} } },
-		transformValues: FormSchema.transform(schemaTransform).parse,
-	})
-	const { id: organizationId, slug: orgSlug } = useOrgInfo()
-	const { t } = useTranslation(['attribute', 'country', 'gov-dist'])
-	const { classes, cx } = useStyles()
+	const [tzValue, setTzValue] = useState<string | null>(null)
+	const { classes } = useStyles()
 	const variants = useCustomVariant()
-	const apiUtils = api.useContext()
+
+	const handleUpdate = () => {
+		console.log(tzValue)
+	}
 
 	const timeRangeComponent = (title: string) => {
-		// const ref = useRef(null)
 		return (
 			<Stack>
 				<Title order={3}>{title}</Title>
@@ -179,6 +144,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							<Button
 								variant='primary-icon'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
+								onClick={handleUpdate}
 							>
 								Save
 							</Button>
@@ -188,6 +154,8 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 						<Stack spacing={24} align='center'>
 							<Title order={2}>Hours</Title>
 							<Select
+								value={tzValue}
+								onChange={setTzValue}
 								label='Select a timezone for this location'
 								placeholder='Search for timezone'
 								searchable
