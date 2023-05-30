@@ -26,7 +26,7 @@ import { getServerSideTranslations } from '~app/utils/i18n'
 
 const LoadingState = () => (
 	<>
-		<Grid.Col sm={8} order={1}>
+		<Grid.Col sm={8} order={1} pb={40}>
 			{/* Toolbar */}
 			<Skeleton h={48} w='100%' radius={8} />
 			<Stack pt={24} align='flex-start' spacing={40}>
@@ -121,7 +121,7 @@ const OrganizationPage: NextPage = () => {
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: data.name })}</title>
 			</Head>
-			<Grid.Col sm={8} order={1}>
+			<Grid.Col sm={8} order={1} pb={40}>
 				<Toolbar
 					hideBreadcrumb={searchParams.searchState.params.length === 0}
 					breadcrumbProps={{

@@ -768,6 +768,7 @@ export const commonTheme = {
 						'&[data-active]:hover': {
 							borderColor: theme.other.colors.secondary.black,
 						},
+						...theme.fn.hover({ backgroundColor: theme.other.colors.primary.lightGray }),
 					},
 					tabLabel: {
 						...theme.other.utilityFonts.utility1,
