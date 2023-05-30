@@ -23,52 +23,77 @@ export const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyMo
 
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
 
+	const components = {
+		emojiLg: <Text fz={40}>.</Text>,
+		title2: <Title order={2}>.</Title>,
+		textDarkGray: <Text variant={variants.Text.darkGray}>.</Text>,
+		textDarkGrayCentered: (
+			<Text align='center' variant={variants.Text.darkGray}>
+				.
+			</Text>
+		),
+		textUtility4: <Text variant={variants.Text.utility4darkGray}>.</Text>,
+		listItem: <List.Item>.</List.Item>,
+		listGroup: (
+			<List withPadding variant={variants.List.textDarkGray}>
+				.
+			</List>
+		),
+		linkUmami: (
+			<Link external href='https://umami.is' variant={variants.Link.inheritStyle}>
+				.
+			</Link>
+		),
+		linkUmamiGDPR: (
+			<Link external href='https://umami.is/docs/faq' variant={variants.Link.inheritStyle}>
+				.
+			</Link>
+		),
+		linkVercel: (
+			<Link
+				external
+				href='https://vercel.com/docs/concepts/speed-insights/privacy-policy'
+				variant={variants.Link.inheritStyle}
+			>
+				.
+			</Link>
+		),
+		linkPolicy: (
+			<Link external href='https://inreach.org/privacy/'>
+				.
+			</Link>
+		),
+	}
+
 	return (
 		<>
 			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
 				<Stack align='center' spacing={16}>
 					<Trans
-						i18nKey='privacy-statement-body'
+						i18nKey='privacy-statement-head'
 						tOptions={{
 							returnObjects: true,
 							joinArrays: '',
 						}}
-						components={{
-							emojiLg: <Text fz={40}>.</Text>,
-							title2: <Title order={2}>.</Title>,
-							textDarkGray: <Text variant={variants.Text.darkGray}>.</Text>,
-							textUtility4: <Text variant={variants.Text.utility4darkGray}>.</Text>,
-							listItem: <List.Item>.</List.Item>,
-							listGroup: (
-								<List withPadding variant={variants.List.textDarkGray}>
-									.
-								</List>
-							),
-							linkUmami: (
-								<Link external href='https://umami.is' variant={variants.Link.inheritStyle}>
-									.
-								</Link>
-							),
-							linkUmamiGDPR: (
-								<Link external href='https://umami.is/docs/faq' variant={variants.Link.inheritStyle}>
-									.
-								</Link>
-							),
-							linkVercel: (
-								<Link
-									external
-									href='https://vercel.com/docs/concepts/analytics/privacy'
-									variant={variants.Link.inheritStyle}
-								>
-									.
-								</Link>
-							),
-							linkPolicy: (
-								<Link external href='https://inreach.org/privacy/'>
-									.
-								</Link>
-							),
+						components={components}
+					/>
+					<Stack spacing={16}>
+						<Trans
+							i18nKey='privacy-statement-body'
+							tOptions={{
+								returnObjects: true,
+								joinArrays: '',
+							}}
+							components={components}
+						/>
+					</Stack>
+					<Trans
+						i18nKey='privacy-statement-foot'
+						tOptions={{
+							returnObjects: true,
+							joinArrays: '',
 						}}
+						components={components}
 					/>
 				</Stack>
 			</Modal>

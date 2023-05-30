@@ -162,11 +162,9 @@
 	"privacy-policy": "Privacy policy",
 	"privacy-statement": "Privacy Statement",
 	"privacy-statement-body": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>Privacy statement</title2>",
-		"<textDarkGray>At InReach, we recognize that preserving online anonymity is a life-or-death issue for many LGBTQ+ people. That's why the free InReach App (our web app, native iOS app, and native Android app) is designed to prioritize protecting users' safety and confidentiality online.</textDarkGray>",
+		"<textDarkGrayCentered>At InReach, we recognize that preserving online anonymity is a life-or-death issue for many LGBTQ+ people. That's why the free InReach App (our web app, native iOS app, and native Android app) is designed to prioritize protecting users' safety and confidentiality online.</textDarkGrayCentered>",
 		"<title2>User demographic data</title2>",
-		"<strong>We do not require any personally identifiable information to use the free InReach App.</strong>",
+		"<textDarkGray><strong>We do not require any personally identifiable information to use the free InReach App.</strong></textDarkGray>",
 		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
 		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
 		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
@@ -174,9 +172,10 @@
 		"<textDarkGray>Understanding our user demographics can help us to quantify our impact, raise funds, and evaluate future product decisions. We appreciate users voluntarily sharing this information with us, and we take these steps to protect your privacy and anonymity.</textDarkGray>",
 		"<textDarkGray><title2>Site usage Analytics</title2></textDarkGray>",
 		"<textDarkGray>InReach uses <linkUmami>Umami</linkUmami>, a privacy-focused alternative to Google Analytics, to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. <linkUmamiGDPR>Umami is GDPR compliant</linkUmamiGDPR> and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
-		"<textDarkGray>InReach also uses Vercel Analytics to analyze web vitals and performance. Vercel Analytics provides site usage information without being tied to, or associated with, any individual visitor or IP address. The recording of data points is anonymous and the Analytics feature does not collect or store information that would enable Vercel to reconstruct a browsing session across pages or identify a user.</textDarkGray>",
-		"<linkPolicy>Read our full privacy policy for more information</linkPolicy>"
+		"<textDarkGray>InReach also uses Vercel Analytics to analyze web vitals and performance. Vercel Analytics provides site usage information without being tied to, or associated with, any individual visitor or IP address. The recording of data points is anonymous and the Analytics feature does not collect or store information that would enable Vercel to reconstruct a browsing session across pages or identify a user.</textDarkGray>"
 	],
+	"privacy-statement-foot": "<linkPolicy>Read our full privacy policy for more information</linkPolicy>",
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Privacy statement</title2>"],
 	"privatePractice": "Private Practice",
 	"profile": "Profile",
 	"questions": "Questions?",
