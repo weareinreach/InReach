@@ -50,6 +50,9 @@ const useStyles = createStyles((theme) => ({
 		}),
 		'&:disabled': theme.fn.hover({ cursor: 'auto' }),
 	},
+	logoutButton: {
+		padding: `${rem(4)} ${rem(12)}`,
+	},
 }))
 
 export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
@@ -61,7 +64,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 
 	if ((session?.user && status === 'authenticated') || isLoading) {
 		return (
-			<Group noWrap spacing={36}>
+			<Group noWrap spacing={28}>
 				<LangPicker />
 				<Menu
 					width={260}
@@ -88,9 +91,9 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 						</UnstyledButton>
 					</Menu.Target>
 					<Menu.Dropdown>
-						<Menu.Item>{t('saved-lists')}</Menu.Item>
-						<Menu.Item>{t('your-comments')}</Menu.Item>
-						<Menu.Item>{t('settings')}</Menu.Item>
+						<Menu.Item>{t('words.saved')}</Menu.Item>
+						<Menu.Item>{t('words.reviews')}</Menu.Item>
+						<Menu.Item>{t('words.settings')}</Menu.Item>
 						<Menu.Item
 							onClick={(e) => {
 								e.preventDefault()
@@ -101,7 +104,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 						</Menu.Item>
 					</Menu.Dropdown>
 				</Menu>
-				<UnstyledButton>
+				<UnstyledButton className={classes.logoutButton}>
 					<Text
 						className={classes.navText}
 						style={{ visibility: isLoading ? 'hidden' : undefined }}

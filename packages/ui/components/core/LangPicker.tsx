@@ -8,10 +8,7 @@ import { Icon } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({
 	menuTarget: {
-		paddingBottom: theme.spacing.sm,
-		paddingTop: theme.spacing.sm,
-		paddingLeft: theme.spacing.xs,
-		paddingRight: theme.spacing.xs,
+		padding: `${rem(4)} ${rem(12)}`,
 		borderRadius: theme.spacing.sm,
 		height: rem(56),
 		'&:hover': {

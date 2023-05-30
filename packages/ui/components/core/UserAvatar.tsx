@@ -1,4 +1,4 @@
-import { Avatar, createStyles, Group, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Avatar, createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { DateTime } from 'luxon'
 import { type User } from 'next-auth'
 import { useSession } from 'next-auth/react'
@@ -8,7 +8,7 @@ import { Icon } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({
 	group: {
-		gap: theme.spacing.md,
+		gap: rem(4),
 	},
 	name: {
 		...theme.other.utilityFonts.utility1,
@@ -16,6 +16,10 @@ const useStyles = createStyles((theme) => ({
 	subText: {
 		...theme.other.utilityFonts.utility2,
 		color: theme.other.colors.secondary.darkGray,
+	},
+	avatarPlaceholder: {
+		height: rem(40),
+		width: rem(40),
 	},
 }))
 
@@ -70,8 +74,12 @@ export const UserAvatar = ({ subheading, user, useLoggedIn = false, loading = fa
 	}
 
 	return (
-		<Group className={classes.group}>
-			<Avatar src={displayData.image} alt={displayData.name ?? (t('user-avatar') as string)}>
+		<Group className={classes.group} align='center'>
+			<Avatar
+				src={displayData.image}
+				alt={displayData.name ?? (t('user-avatar') as string)}
+				classNames={{ root: classes.avatarPlaceholder, placeholder: classes.avatarPlaceholder }}
+			>
 				<Icon icon='carbon:user' height={24} color={theme.other.colors.secondary.darkGray} />
 			</Avatar>
 			<Stack align='flex-start' justify='center' spacing={4}>

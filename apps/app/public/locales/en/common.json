@@ -113,8 +113,8 @@
 		"removedSingle": "Resource removed from list"
 	},
 	"loading-page": "Loading Page...",
-	"log-in": "Log In",
-	"log-out": "Log Out",
+	"log-in": "Log in",
+	"log-out": "Log out",
 	"login": {
 		"error-generic": "Something went wrong, please try again.",
 		"error-username-password": "Incorrect username or password."
@@ -198,7 +198,6 @@
 	"safety-exit": "Safety exit",
 	"save": "Save",
 	"saved": "Saved",
-	"saved-lists": "Saved Lists",
 	"search": {
 		"include-remote": "Include remote services",
 		"location-placeholder": "Enter city or zip code...",
@@ -229,7 +228,6 @@
 		"transit-directions": "Public transit directions"
 	},
 	"services": "Services",
-	"settings": "Settings",
 	"share-feedback": "Share Feedback",
 	"show-less": "Show less",
 	"show-more": "Show more",
@@ -331,13 +329,14 @@
 		"prev": "Prev",
 		"print": "Print",
 		"review": "Review",
+		"reviews": "Reviews",
 		"save": "Save",
 		"saved": "Saved",
 		"search": "Search",
 		"service-hours": "Service hours",
+		"settings": "Settings",
 		"share": "Share",
 		"skip": "Skip",
 		"support": "Support"
-	},
-	"your-comments": "Your Comments"
+	}
 }
