@@ -139,5 +139,5 @@ type SearchResultHasData = {
 }
 type SearchResultLoading = {
 	loading: true
-	result?: never
+	result?: never | NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
 }

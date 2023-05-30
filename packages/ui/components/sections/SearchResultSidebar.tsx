@@ -4,6 +4,7 @@ import { type Dispatch, type SetStateAction } from 'react'
 
 import { AntiHateMessage } from '~ui/components/core/AntiHateMessage'
 import { SearchBox } from '~ui/components/core/SearchBox'
+// import { SearchDistance } from '~ui/components/core/SearchDistance'
 import { useCustomVariant } from '~ui/hooks'
 
 export const SearchResultSidebar = ({ resultCount, loadingManager }: SearchResultSidebarProps) => {
@@ -12,7 +13,7 @@ export const SearchResultSidebar = ({ resultCount, loadingManager }: SearchResul
 	const theme = useMantineTheme()
 
 	return (
-		<Stack spacing={32}>
+		<Stack spacing={32} maw={300}>
 			<Skeleton visible={!resultCount}>
 				<Text variant={variants.Text.utility1}>{t('count.result', { count: resultCount })}</Text>
 			</Skeleton>
@@ -31,10 +32,17 @@ export const SearchResultSidebar = ({ resultCount, loadingManager }: SearchResul
 					</Stack>
 				</Overlay>
 			</Switch.Group>
+			<Divider />
 
-			<Divider />
-			<SearchBox type='organization' label={t('search.look-up-org')} loadingManager={loadingManager} />
-			<Divider />
+			{/* <SearchDistance />
+			<Divider /> */}
+
+			<SearchBox
+				type='organization'
+				label={<Title order={3}>{t('search.look-up-org')}</Title>}
+				loadingManager={loadingManager}
+			/>
+			<Divider mt={-10} />
 
 			<AntiHateMessage />
 		</Stack>

@@ -62,6 +62,7 @@ const SearchResults = () => {
 	const {
 		isSuccess,
 		isFetching: searchIsFetching,
+		isLoading: searchIsLoading,
 		...searchQuery
 	} = api.organization.searchDistance.useQuery(
 		{
@@ -78,23 +79,28 @@ const SearchResults = () => {
 			enabled: queryParams.success,
 		}
 	)
+
 	useEffect(() => {
+		if (loadingPage !== searchIsLoading) {
+			console.log('setLoading', searchIsLoading)
+			setLoadingPage(searchIsLoading)
+		}
 		if (searchQuery.data) {
 			setResultCount(searchQuery.data.resultCount)
 			setData(searchQuery.data)
 			setLoadingPage(false)
 		}
-	}, [searchQuery.data])
+	}, [searchQuery.data, searchIsLoading, loadingPage])
 
 	useEffect(() => {
 		if (data) {
 			setResultDisplay(
 				data.orgs.map((result) => {
-					return <SearchResultCard key={result.id} result={result} />
+					return <SearchResultCard key={result.id} result={result} loading={loadingPage} />
 				})
 			)
 		}
-	}, [data])
+	}, [data, loadingPage])
 
 	useEffect(
 		() => {
@@ -169,9 +175,6 @@ const SearchResults = () => {
 						isFetching={searchIsFetching}
 					/>
 					<MoreFilter
-						// component={Button}
-						// variant={variants.Button.primaryLg}
-						// leftIcon={<Icon icon='carbon:settings-adjust' rotate={2} />}
 						resultCount={resultCount}
 						stateHandler={setFilteredAttributes}
 						isFetching={searchIsFetching}
@@ -187,9 +190,7 @@ const SearchResults = () => {
 				/>
 			</Grid.Col>
 			<Grid.Col sm={8}>
-				{/* <Suspense fallback={<h1>Loader goes here</h1>}> */}
 				{resultDisplay}
-				{/* </Suspense> */}
 				<Pagination total={getSearchResultPageCount(data?.resultCount)} />
 				<Space h={40} />
 			</Grid.Col>

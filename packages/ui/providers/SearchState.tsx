@@ -7,7 +7,7 @@ interface State {
 		page: string
 		a?: string[]
 		s?: string[]
-		extended?: string | boolean
+		extended?: string
 		sort?: string[]
 	}
 	searchTerm?: string
@@ -81,7 +81,7 @@ const SearchStateSchema = z.object({
 	page: z.string().optional().default('1'),
 	a: z.string().array().optional().default([]).or(StringToArray),
 	s: z.string().array().optional().default([]).or(StringToArray),
-	extended: z.string().or(z.boolean()).optional(),
+	extended: z.coerce.string().optional(),
 })
 
 const StateSchema = z.object({
@@ -95,7 +95,7 @@ const createActionCreators = (dispatch: React.Dispatch<Action>): ActionCreators 
 	setAttributes: (payload: string[]) => dispatch({ type: 'SET_ATTRIBUTES', payload }),
 	setServices: (payload: string[]) => dispatch({ type: 'SET_SERVICES', payload }),
 	setSearchTerm: (payload: string) => dispatch({ type: 'SET_SEARCHTERM', payload }),
-	setExtended: (payload: string | boolean) => dispatch({ type: 'SET_EXTENDED', payload: payload.toString() }),
+	setExtended: (payload: string) => dispatch({ type: 'SET_EXTENDED', payload: payload }),
 	setSort: (payload: string[]) => dispatch({ type: 'SET_SORT', payload }),
 	setSearchState: (payload: z.input<typeof SearchStateSchema>) =>
 		dispatch({ type: 'SET_SEARCHSTATE', payload: SearchStateSchema.parse(payload) }),
