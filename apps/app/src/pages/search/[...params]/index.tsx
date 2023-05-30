@@ -162,7 +162,7 @@ const SearchResults = () => {
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
-			<Grid.Col sm={12}>
+			<Grid.Col sm={12} pb={30}>
 				<Group spacing={20} noWrap w='100%'>
 					<SearchBox
 						type='location'
