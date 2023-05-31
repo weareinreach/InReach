@@ -54,7 +54,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 			return {
 				root: {
 					backgroundColor: theme.other.colors.primary.lightGray,
-					border: 'none',
+					borderColor: theme.other.colors.secondary.white,
 				},
 				inner: {
 					fontSize: theme.fontSizes.sm,
