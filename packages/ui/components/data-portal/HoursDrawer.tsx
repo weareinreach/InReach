@@ -95,11 +95,22 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		5: false, // Friday
 		6: false, // Saturday
 	})
+	const [timeValues, setTimeValues] = useState<{
+		[key: number]: { start: Date | null; end: Date | null }
+	}>({
+		0: { start: null, end: null }, // Sunday
+		1: { start: null, end: null }, // Monday
+		2: { start: null, end: null }, // Tuesday
+		3: { start: null, end: null }, // Wednesday
+		4: { start: null, end: null }, // Thursday
+		5: { start: null, end: null }, // Friday
+		6: { start: null, end: null }, // Saturday
+	})
 
 	const handleUpdate = () => {
 		//TODO save to DB instead of sending to console.log
-		console.log(tzValue)
-		console.log(checked)
+		const data = generateDataArray()
+		console.log(data)
 	}
 
 	const TimeRangeComponent = (title: string, dayIndex: number) => {
@@ -107,11 +118,19 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 
 		const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 			const { checked } = event.currentTarget
+
 			setChecked((prevChecked) => {
-				// Reset timeRangeGroups if checked is true
 				if (checked) {
 					setTimeRangeGroups([])
+					setTimeValues((prevTimeValues) => ({
+						...prevTimeValues,
+						[dayIndex]: {
+							start: new Date(1970, 0, 1, 0, 0, 0).toISOString(), // Set start time to 00:00:00
+							end: new Date(1970, 0, 1, 23, 59, 59).toISOString(), // Set end time to 23:59:59
+						},
+					}))
 				}
+
 				return {
 					...prevChecked,
 					[dayIndex]: checked,
@@ -124,10 +143,46 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 			setTimeRangeGroups((prevTimeRangeGroups) => [
 				...prevTimeRangeGroups,
 				<Group key={prevTimeRangeGroups.length}>
-					<TimeInput label='Open time' ref={ref} maw={200} mx='auto' disabled={isCheckboxChecked} />
-					<TimeInput label='Close time' ref={ref} maw={200} mx='auto' disabled={isCheckboxChecked} />
+					<TimeInput
+						label='Open time'
+						ref={ref}
+						maw={200}
+						mx='auto'
+						disabled={isCheckboxChecked}
+						onChange={(event) => handleTimeChange(event, dayIndex, 'start')}
+						name='start'
+					/>
+					<TimeInput
+						label='Close time'
+						ref={ref}
+						maw={200}
+						mx='auto'
+						disabled={isCheckboxChecked}
+						onChange={(event) => handleTimeChange(event, dayIndex, 'end')}
+						name='end'
+					/>
 				</Group>,
 			])
+		}
+
+		const handleTimeChange = (
+			event: React.ChangeEvent<HTMLInputElement>,
+			dayIndex: number,
+			timeType: 'start' | 'end'
+		) => {
+			const { name, value } = event.currentTarget
+			const [hours, minutes] = value.split(':')
+			const date = new Date(1970, 0, 1)
+			date.setUTCHours(parseInt(hours, 10))
+			date.setUTCMinutes(parseInt(minutes, 10), 0, 0)
+
+			setTimeValues((prevTimeValues) => ({
+				...prevTimeValues,
+				[dayIndex]: {
+					...prevTimeValues[dayIndex],
+					[name]: isNaN(date.getTime()) ? null : date.toISOString(),
+				},
+			}))
 		}
 
 		const isCheckboxChecked = checked[dayIndex]
@@ -139,8 +194,24 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 					<Checkbox checked={isCheckboxChecked} onChange={handleCheckboxChange} label='Open 24 Hours' />
 				</Group>
 				<Group>
-					<TimeInput label='Open time' ref={ref} maw={200} mx='auto' disabled={isCheckboxChecked} />
-					<TimeInput label='Close time' ref={ref} maw={200} mx='auto' disabled={isCheckboxChecked} />
+					<TimeInput
+						label='Open time'
+						ref={ref}
+						maw={200}
+						mx='auto'
+						disabled={isCheckboxChecked}
+						onChange={(event) => handleTimeChange(event, dayIndex, 'start')}
+						name='start'
+					/>
+					<TimeInput
+						label='Close time'
+						ref={ref}
+						maw={200}
+						mx='auto'
+						disabled={isCheckboxChecked}
+						onChange={(event) => handleTimeChange(event, dayIndex, 'end')}
+						name='end'
+					/>
 				</Group>
 				{timeRangeGroups} {/* Render the dynamically added HTML when button is clicked*/}
 				<Button variant='secondary' onClick={handleAddTimeRangeGroup} disabled={isCheckboxChecked}>
@@ -155,6 +226,30 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 				<Divider my='sm' />
 			</Stack>
 		)
+	}
+
+	const generateDataArray = () => {
+		const dataArray = Object.entries(timeValues).map(([dayIndex, timeValue]) => {
+			const start = timeValue.start ? convertToUTC(timeValue.start, tzValue) : null
+			const end = timeValue.end ? convertToUTC(timeValue.end, tzValue) : null
+			const closed = !start || !end
+			const tz = tzValue || null
+
+			return {
+				dayIndex: parseInt(dayIndex),
+				start,
+				end,
+				closed,
+				tz,
+			}
+		})
+
+		return dataArray
+	}
+
+	const convertToUTC = (time, tz) => {
+		console.log(time)
+		return time
 	}
 
 	return (
