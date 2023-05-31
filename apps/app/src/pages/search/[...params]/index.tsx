@@ -215,7 +215,6 @@ export const getServerSideProps: GetServerSideProps<
 		ssg.service.getFilterOptions.prefetch(),
 		ssg.attribute.getFilterOptions.prefetch(),
 	])
-	console.log(i18n)
 	const props = {
 		trpcState: ssg.dehydrate(),
 		// ...(await getServerSideTranslations(locale, ['services', 'common', 'attribute'])),
