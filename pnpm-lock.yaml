@@ -91,9 +91,6 @@ importers:
       prettier-plugin-prisma:
         specifier: 4.13.0
         version: 4.13.0(prettier@2.8.8)
-      timezones-list:
-        specifier: 3.0.2
-        version: 3.0.2
       tsx:
         specifier: 3.12.7
         version: 3.12.7
