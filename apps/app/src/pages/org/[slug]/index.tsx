@@ -49,7 +49,7 @@ const LoadingState = () => (
 )
 
 const OrganizationPage: NextPage = () => {
-	const { t } = useTranslation()
+	const { t, i18n } = useTranslation()
 	const router = useRouter<'/org/[slug]'>()
 	const { query } = router
 	const [activeTab, setActiveTab] = useState<string | null>('services')
@@ -58,8 +58,24 @@ const OrganizationPage: NextPage = () => {
 	const { ref, width } = useElementSize()
 	const { searchParams } = useSearchState()
 	useEffect(() => {
-		if (data && status === 'success') setLoading(false)
+		if (data && status === 'success') {
+			setLoading(false)
+			if (data.locations?.length > 1) setActiveTab('locations')
+		}
 	}, [data, status])
+
+	useEffect(() => {
+		if (query.slug)
+			i18n.reloadResources(i18n.resolvedLanguage, [
+				'common',
+				'services',
+				'attribute',
+				'phone-type',
+				query.slug,
+			])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	if (loading || !data || router.isFallback) return <LoadingState />
 
 	const {
@@ -98,11 +114,16 @@ const OrganizationPage: NextPage = () => {
 				</Tabs.Panel>
 			</Tabs>
 		) : (
-			<>
-				{locations.map((location) => (
-					<LocationCard key={location.id} location={location} />
-				))}
-			</>
+			<Tabs w='100%' value={activeTab} onTabChange={setActiveTab}>
+				<Tabs.List>
+					<Tabs.Tab value='locations'>{t('offices-and-locations')}</Tabs.Tab>
+				</Tabs.List>
+				<Stack pt={40} spacing={40}>
+					{locations.map((location) => (
+						<LocationCard key={location.id} location={location} />
+					))}
+				</Stack>
+			</Tabs>
 		)
 
 	const sidebar =
@@ -190,10 +211,16 @@ export const getStaticProps: GetStaticProps<Record<string, unknown>, RoutedQuery
 
 	const ssg = await trpcServerClient({ session: null })
 
-	await ssg.organization.getBySlug.prefetch({ slug })
+	const [i18n] = await Promise.all([
+		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug]),
+		ssg.organization.getBySlug.prefetch({ slug }),
+	])
+	// await ssg.organization.getBySlug.prefetch({ slug })
+
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
+		// ...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
+		...i18n,
 	}
 
 	return {
