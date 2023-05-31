@@ -61,6 +61,7 @@
 		"@trpc/next": "10.28.1",
 		"@trpc/react-query": "10.28.1",
 		"@trpc/server": "10.28.1",
+		"@vercel/analytics": "1.0.1",
 		"@vercel/kv": "0.2.1",
 		"@weareinreach/api": "0.100.0",
 		"@weareinreach/auth": "0.100.0",
