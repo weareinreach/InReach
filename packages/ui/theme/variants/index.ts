@@ -69,6 +69,8 @@ export const variantNames: VariantNames = {
 		inlineBulletUtil2: 'inlineBulletUtil2',
 		inlineUtil2: 'inlineUtil2',
 		textDarkGray: 'textDarkGray',
+		inlineBulletUtil2DarkGray: 'inlineBulletUtil2DarkGray',
+		inlineUtil2DarkGray: 'inlineUtil2DarkGray',
 	},
 	Skeleton: {
 		text: 'text',
