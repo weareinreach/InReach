@@ -1,5 +1,6 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
+import { context, trace } from '@opentelemetry/api'
 import { type NextApiRequest, type NextApiResponse } from 'next'
 import { Logger } from 'tslog'
 import { z } from 'zod'
@@ -12,7 +13,7 @@ const QuerySchema = z.object({
 	lng: z.string(),
 	ns: z.string(),
 })
-
+const tracer = trace.getTracer('inreach-app')
 const log = new Logger({ name: 'i18n Loader' })
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -30,8 +31,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			const databaseFile = crowdinOpts.nsFileMap(lang).databaseStrings
 			const cached = await redisReadCache(namespaces, lang, otaManifestTimestamp)
 			const langResult = new Map<string, object | string>(cached)
-			await Promise.all(
-				namespaces.map(async (ns) => {
+
+			const fetchCrowdin = async (ns: string) => {
+				const crowdinSpan = tracer.startSpan('Crowdin OTA', undefined, context.active())
+				try {
+					crowdinSpan.setAttributes({ ns })
 					switch (true) {
 						case langResult.has(ns): {
 							return
@@ -50,8 +54,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 							langResult.set(ns, strings)
 						}
 					}
-				})
-			)
+				} finally {
+					crowdinSpan.end()
+				}
+			}
+
+			await Promise.all(namespaces.map((ns) => fetchCrowdin(ns)))
 
 			await redisWriteCache(cacheWriteQueue)
 
