@@ -208,16 +208,18 @@ export const getServerSideProps: GetServerSideProps<
 	const ssg = await trpcServerClient({ req, res })
 	// const nextPage = PageIndexSchema.parse(query.page) * SEARCH_RESULT_PAGE_SIZE
 
-	await Promise.allSettled([
-		await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take }),
+	const [i18n] = await Promise.allSettled([
+		getServerSideTranslations(locale, ['services', 'common', 'attribute']),
+		ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take }),
 		// await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip: nextPage, take })
-		await ssg.service.getFilterOptions.prefetch(),
-		await ssg.attribute.getFilterOptions.prefetch(),
+		ssg.service.getFilterOptions.prefetch(),
+		ssg.attribute.getFilterOptions.prefetch(),
 	])
 
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await getServerSideTranslations(locale, ['services', 'common', 'attribute'])),
+		// ...(await getServerSideTranslations(locale, ['services', 'common', 'attribute'])),
+		...i18n,
 	}
 
 	return {
