@@ -39,10 +39,14 @@ export const Pagination = forwardRef<HTMLDivElement, PaginationProps>((props, re
 
 	const pageChangeHandler = (page: number) => {
 		setPage(page)
-		router.replace({ query: { page: page.toString(), params: router.query.params } }, undefined, {
-			shallow: true,
-			scroll: true,
-		})
+		router.replace(
+			{ query: { ...router.query, page: page.toString(), params: router.query.params } },
+			undefined,
+			{
+				shallow: true,
+				scroll: true,
+			}
+		)
 	}
 
 	const paginationController = usePagination({
