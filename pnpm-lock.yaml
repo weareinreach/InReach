@@ -229,6 +229,9 @@ importers:
       '@trpc/server':
         specifier: 10.28.1
         version: 10.28.1
+      '@vercel/kv':
+        specifier: 0.2.1
+        version: 0.2.1
       '@weareinreach/api':
         specifier: 0.100.0
         version: link:../../packages/api
