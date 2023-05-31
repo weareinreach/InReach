@@ -1,4 +1,4 @@
-import { Stack, Text, Title } from '@mantine/core'
+import { Skeleton, Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -7,7 +7,7 @@ import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant, useFormattedAddress } from '~ui/hooks'
 
 export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
-	const { t } = useTranslation([data.slug])
+	const { t, ready: i18nReady } = useTranslation(data.slug)
 	const variants = useCustomVariant()
 	const { attributes, isClaimed, locations, description, slug } = data
 
@@ -57,7 +57,9 @@ export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
 
 	const descriptionSection =
 		description && description.key ? (
-			<Text py={12}>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
+			<Skeleton visible={!i18nReady}>
+				<Text py={12}>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
+			</Skeleton>
 		) : null
 
 	return (

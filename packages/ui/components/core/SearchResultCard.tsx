@@ -22,12 +22,43 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
+const SearchResultLoading = () => {
+	const variants = useCustomVariant()
+	return (
+		<>
+			<Stack spacing={16}>
+				<Stack spacing={12}>
+					<Group position='apart'>
+						<Skeleton variant={variants.Skeleton.h2} w='80%' />
+						<ActionButtons.Loading />
+					</Group>
+					<Skeleton variant={variants.Skeleton.utility} w='25%' />
+					<Stack>
+						<Skeleton variant={variants.Skeleton.text} w='100%' />
+						<Skeleton variant={variants.Skeleton.text} w='100%' />
+						<Skeleton variant={variants.Skeleton.text} w='100%' />
+						<Skeleton variant={variants.Skeleton.text} w='60%' />
+					</Stack>
+				</Stack>
+				<Group spacing={16}>
+					<Skeleton h={32} w={75} />
+					<Skeleton h={32} w={75} />
+					<Skeleton h={32} w={75} />
+				</Group>
+			</Stack>
+			<Divider my={40} />
+		</>
+	)
+}
+
 const SearchResultData = ({ result }: SearchResultHasData) => {
 	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories } = result
-	const { t } = useTranslation(['common', slug])
+	const { t, ready: i18nReady } = useTranslation(['common', slug])
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
+
+	if (!i18nReady) return <SearchResultLoading />
 	const leaderBadges: CustomBadgeProps[] = orgLeader.map(({ icon, iconBg, tsKey }) => ({
 		variant: 'leader',
 		icon: icon ?? '',
@@ -91,35 +122,6 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 					<ActionButtons iconKey='save' organizationId={result.id} />
 				</Box>
 			</Box>
-			<Divider my={40} />
-		</>
-	)
-}
-
-const SearchResultLoading = () => {
-	const variants = useCustomVariant()
-	return (
-		<>
-			<Stack spacing={16}>
-				<Stack spacing={12}>
-					<Group position='apart'>
-						<Skeleton variant={variants.Skeleton.h2} w='80%' />
-						<ActionButtons.Loading />
-					</Group>
-					<Skeleton variant={variants.Skeleton.utility} w='25%' />
-					<Stack>
-						<Skeleton variant={variants.Skeleton.text} w='100%' />
-						<Skeleton variant={variants.Skeleton.text} w='100%' />
-						<Skeleton variant={variants.Skeleton.text} w='100%' />
-						<Skeleton variant={variants.Skeleton.text} w='60%' />
-					</Stack>
-				</Stack>
-				<Group spacing={16}>
-					<Skeleton h={32} w={75} />
-					<Skeleton h={32} w={75} />
-					<Skeleton h={32} w={75} />
-				</Group>
-			</Stack>
 			<Divider my={40} />
 		</>
 	)

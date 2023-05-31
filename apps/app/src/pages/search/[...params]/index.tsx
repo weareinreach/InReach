@@ -149,8 +149,8 @@ const SearchResults = () => {
 				unit,
 				skip: nextSkip,
 				take,
-				services: filteredServices.length ? filteredServices : undefined,
-				attributes: filteredAttributes.length ? filteredAttributes : undefined,
+				...(filteredServices.length ? { services: filteredServices } : {}),
+				...(filteredAttributes.length ? { attributes: filteredAttributes } : {}),
 			})
 		}
 	})
