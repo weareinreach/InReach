@@ -173,7 +173,7 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
 	const props = {
 		trpcState: ssg.dehydrate(),
 		// ...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
-		...i18n,
+		...(i18n.status === 'fulfilled' ? i18n.value : {}),
 	}
 
 	return {

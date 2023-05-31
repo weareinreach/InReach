@@ -211,7 +211,7 @@ export const getStaticProps: GetStaticProps<Record<string, unknown>, RoutedQuery
 
 	const ssg = await trpcServerClient({ session: null })
 
-	const [i18n] = await Promise.all([
+	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug]),
 		ssg.organization.getBySlug.prefetch({ slug }),
 	])
@@ -220,7 +220,7 @@ export const getStaticProps: GetStaticProps<Record<string, unknown>, RoutedQuery
 	const props = {
 		trpcState: ssg.dehydrate(),
 		// ...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
-		...i18n,
+		...(i18n.status === 'fulfilled' ? i18n.value : {}),
 	}
 
 	return {
