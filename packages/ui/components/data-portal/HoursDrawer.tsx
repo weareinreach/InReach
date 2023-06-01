@@ -18,6 +18,7 @@ import {
 import { TimeInput } from '@mantine/dates'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { IconClock } from '@tabler/icons-react'
+import { DateTime, Interval } from 'luxon'
 import { forwardRef, useEffect, useRef, useState } from 'react'
 import timezones from 'timezones-list'
 import { z } from 'zod'
@@ -71,13 +72,34 @@ const schemaTransform = ({ id, data }: FormSchema) => ({
 	},
 })
 
+const tzGroup = [
+	'Pacific/Honolulu',
+	'America/Anchorage',
+	'America/Los_Angeles',
+	'America/Denver',
+	'America/Chicago',
+	'America/New_York',
+]
+
 const timezoneData = timezones.map((item, index) => {
 	const { tzCode, ...rest } = item
 	return {
 		...rest,
 		key: index,
 		value: tzCode,
+		group: tzGroup.includes(tzCode) ? 'North America' : 'Other',
 	}
+})
+
+//the mantine select grouping will set the group order based on the first group value it comes across
+//adding this sort order so the "Most Common" items appear first
+const sortedTimezoneData = timezoneData.sort((a, b) => {
+	if (a.group === 'North America' && b.group === 'Other') {
+		return -1
+	} else if (a.group === 'Other' && b.group === 'North America') {
+		return 1
+	}
+	return 0
 })
 
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
@@ -173,14 +195,18 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 			const { name, value } = event.currentTarget
 			const [hours, minutes] = value.split(':')
 			const date = new Date(1970, 0, 1)
-			date.setUTCHours(parseInt(hours, 10))
-			date.setUTCMinutes(parseInt(minutes, 10), 0, 0)
+			const options = { timeZone: 'America/New_York' }
+			date.setHours(parseInt(hours, 10))
+			date.setMinutes(parseInt(minutes, 10), 0, 0)
+			console.log(date)
+			const utcTime = date.toISOString()
+			console.log(utcTime)
 
 			setTimeValues((prevTimeValues) => ({
 				...prevTimeValues,
 				[dayIndex]: {
 					...prevTimeValues[dayIndex],
-					[name]: isNaN(date.getTime()) ? null : date.toISOString(),
+					[name]: isNaN(date.getTime()) ? null : utcTime,
 				},
 			}))
 		}
@@ -230,8 +256,8 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 
 	const generateDataArray = () => {
 		const dataArray = Object.entries(timeValues).map(([dayIndex, timeValue]) => {
-			const start = timeValue.start ? convertToUTC(timeValue.start, tzValue) : null
-			const end = timeValue.end ? convertToUTC(timeValue.end, tzValue) : null
+			const start = timeValue.start ? timeValue.start : null
+			const end = timeValue.end ? timeValue.end : null
 			const closed = !start || !end
 			const tz = tzValue || null
 
@@ -245,11 +271,6 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		})
 
 		return dataArray
-	}
-
-	const convertToUTC = (time, tz) => {
-		console.log(time)
-		return time
 	}
 
 	return (
@@ -280,7 +301,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 								searchable
 								nothingFound='No options'
 								maxDropdownHeight={280}
-								data={timezoneData}
+								data={sortedTimezoneData}
 							/>
 							<Divider my='sm' />
 						</Stack>
