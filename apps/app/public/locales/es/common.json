@@ -21,6 +21,10 @@
 		"back-to-search": "Volver a buscar"
 	},
 	"cancel": "Cancelar",
+	"claim-org-modal": {
+		"list": "<textUtility1>🔗 Reclama la página de perfil de tu organización y crea confianza con tu audiencia en InReach</textUtility1>\n<textUtility1>✍🏾 Actualiza la información de tu organización en InReach</textUtility1>\n<textUtility1>📨 Invita a otro personal a unirse a tu organización en InReach (¡pronto!</textUtility1>\n<textUtility1>🔑 Obtener acceso a futuras características construidas específicamente para proveedores de servicios afiliados en InReach</textUtility1>",
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>Esta organización aún no ha sido reclamada por un proveedor de servicios.</title2>\n<textDarkGray>Puedes reclamar esta organización como proveedor de servicios:<extDarkGray>"
+	},
 	"claimed": "Reclamado",
 	"clear": "Claro",
 	"close": "Cerrar",
@@ -61,6 +65,7 @@
 		"try-again-text": "<Text>¡Algo salió mal! Por favor, inténtalo de nuevo.</Text>"
 	},
 	"exclude": "Excluir",
+	"filter-by-service": "Filtrar por servicios",
 	"find-resources": "Encuentra recursos",
 	"find-x": "Encuentra {{value}}",
 	"footer": {
@@ -118,13 +123,22 @@
 		"accessibility": "<stack16>\n<title2>Declaración de accesibilidad alcanzado</title2>\n<textReg>La tecnología de código abierto de InReach está construida para la diversa comunidad LGBTQ+. incluyendo usuarios con discapacidades.</textReg>\n<textReg>La aplicación InReach gratuita está disponible en la web (escritorio y móvil), e iOS nativo y Android. Empezando con el lanzamiento de nuestro último rediseño (febrero de 2023), InReach se esforzará por cumplir con <linkAccessibility>Directrices de Accesibilidad al Contenido Web (WCAG) criterios AA.</linkAccessibility></textReg>\n<textReg>en InReach, nos esforzamos por hacer que nuestra plataforma tecnológica sea accesible para el mayor número posible de usuarios y dispositivos en línea con nuestra misión de servir a todas las personas LGBTQ+ que sufren discriminación y persecución.</textReg>",
 		"disclaimer": "<stack16>\n<title2>Aviso de responsabilidad de InReach</title2>\n<textReg>El equipo de InReach hará todo lo posible para confirmar la elegibilidad y los datos básicos sobre los proveedores de servicios listados en este sitio web. Sin embargo, no podemos garantizar la viabilidad o capacidad de ninguno de estos proveedores. En consecuencia, InReach no asume ninguna responsabilidad por las acciones de los proveedores listados en este sitio web y los usuarios que se pongan en contacto con dichos proveedores lo hacen bajo su propio riesgo.</textReg>\n</stack16>"
 	},
+	"modal-more-options": {
+		"exclude": "Excluir recursos que...",
+		"include": "Incluye recursos que..."
+	},
 	"more": {
-		"filters": "Más filtros"
+		"options": "Más opciones"
 	},
 	"no-reviews": "Aún no hay reseñas",
 	"none-apply": "Ninguno de estos se aplica a mí",
+	"offices-and-locations": "Oficiales y Ubicaciones",
 	"org-image": "Foto de la organización",
 	"other-specify": "Other (specify)",
+	"page-title": {
+		"base": "{{title}} - InReach",
+		"search-results": "Resultados de búsqueda"
+	},
 	"password": "Contraseña",
 	"password-confirm": "Confirmar contraseña",
 	"password-error-match": "Las contraseñas deben coincidir",
@@ -157,10 +171,12 @@
 		"<textDarkGray><strong>Toda esta información sensible se almacena de forma anónima y no está conectada a ninguna cuenta de usuarie o usuarie individual.*</strong></textDarkGray>",
 		"<textUtility4>(*La única excepción es el tipo de cuenta de usuario del revisor de la comunidad local, que aprovecha cualquier información demográfica recopilada para mejorar la experiencia y el impacto voluntario de los revisores de la Comunidad Local. Para las cuentas del revisor de la comunidad local, necesitamos ubicación y toda la información demográfica es opcional, pero estaría vinculada a su registro de usuario. Estos datos sólo serían visibles fuera del personal de InReach si el revisor de la comunidad local decide hacerlo visible a través de la configuración de privacidad de su cuenta. Compartir un perfil de cara al público, ayudará a otros usuarios a sentirse más seguros en tus revisiones.)</textUtility4>",
 		"<textDarkGray>Entender nuestra demostración de usuario puede ayudarnos a cuantificar nuestro impacto, recaudar fondos y evaluar futuras decisiones de productos. Agradecemos que los usuarios compartan voluntariamente esta información con nosotros, y tomamos estas medidas para proteger su privacidad y anonimato.</textDarkGray>",
-		"<textDarkGray><title2>Análisis de uso del sitio</title2></textDarkGray>",
-		"<textDarkGray>InReach utiliza <linkUmami>Umami</linkUmami>, una alternativa centrada en la privacidad a Google Analytics, para analizar y rastrear de forma anónima los datos de uso de aplicaciones (e. ., búsquedas de usuarios y otros comportamientos) en la agregación. <linkUmamiGDPR>Umami cumple con el RGP</linkUmamiGDPR> y no recoge ninguna información personal identificable y anonimiza todos los datos recogidos. Los usuarios no pueden ser identificados y nunca se rastrean a través de sitios web.</textDarkGray>",
-		"<textDarkGray>InReach también utiliza Vercel Analytics para analizar vitales y rendimiento web. Vercel Analytics proporciona información sobre el uso del sitio sin estar vinculado o asociado con cualquier visitante o dirección IP. La grabación de puntos de datos es anónima y la función Analytics no recopila ni almacena información que permita a Vercel reconstruir una sesión de navegación a través de páginas o identificar a un usuario.</textDarkGray>",
-		"<linkPolicy>Lee nuestra política de privacidad completa para obtener más información</linkPolicy>"
+		"<textDarkGray><title2>Análisis de uso del sitio</title2></textDarkGray>"
+	],
+	"privacy-statement-foot": "<linkPolicy>Lea nuestra política de privacidad completa para obtener más información</linkPolicy>",
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>Declaración de privacidad</title2>"
 	],
 	"privatePractice": "Práctica privada",
 	"profile": "Perfil",
@@ -180,8 +196,8 @@
 	"safety-exit": "Salida de seguridad",
 	"save": "Guardar",
 	"saved": "Guardado",
-	"saved-lists": "Listas guardadas",
 	"search": {
+		"include-remote": "Incluye servicios remotos",
 		"location-placeholder": "Introduzca el estado, ciudad o código postal...",
 		"look-up-org": "Buscar una organización",
 		"no-results": "No se han encontrado resultados. Vuelva a intentarlo.",
@@ -210,7 +226,6 @@
 		"transit-directions": "Direcciones de tránsito públicas"
 	},
 	"services": "Servicios",
-	"settings": "Ajustes",
 	"share-feedback": "Compartir Comentarios",
 	"show-less": "Mostrar menos",
 	"show-more": "Mostrar más",
@@ -297,6 +312,7 @@
 		"back": "Atrás",
 		"coming-soon": "Próximamente",
 		"delete": "Eliminar",
+		"distance": "Distancia",
 		"email": "E-mail",
 		"hours": "Horas",
 		"more": "más",
@@ -307,15 +323,16 @@
 		"prev": "Anterior",
 		"print": "Imprimir",
 		"review": "Revisión",
+		"reviews": "Reseñas",
 		"save": "Guardar",
 		"saved": "Guardado",
 		"search": "Buscar",
 		"service-hours": "Horas de servicio",
+		"settings": "Ajustes",
 		"share": "Compartir",
 		"skip": "Saltar",
 		"support": "Apoyo"
 	},
-	"your-comments": "Tus comentarios",
 	"photo_one": "Foto",
 	"photo_other": "Fotos",
 	"review-count_one": "{{count}} reseña",
