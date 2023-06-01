@@ -1,5 +1,5 @@
 import { Grid, Overlay } from '@mantine/core'
-import { type GetServerSidePropsContext } from 'next'
+import { type GetStaticPropsContext } from 'next'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
@@ -31,23 +31,19 @@ const SuggestResource = () => {
 
 export default SuggestResource
 
-export const getServerSideProps = async ({ locale, req, res }: GetServerSidePropsContext) => {
-	const session = await getServerSession({ req, res })
-	const ssg = await trpcServerClient({ session })
+export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
+	const ssg = await trpcServerClient({ session: null })
 
-	await ssg.organization.suggestionOptions.prefetch()
+	const [i18n] = await Promise.allSettled([
+		getServerSideTranslations(locale, ['suggestOrg', 'country', 'services', 'attribute', 'common']),
+		ssg.organization.suggestionOptions.prefetch(),
+	])
 
 	return {
 		props: {
-			session,
 			trpcState: ssg.dehydrate(),
-			...(await getServerSideTranslations(locale, [
-				'suggestOrg',
-				'country',
-				'services',
-				'attribute',
-				'common',
-			])),
+			...(i18n.status === 'fulfilled' ? i18n.value : {}),
 		},
+		revalidate: 60 * 60 * 24, // 24 hours
 	}
 }
