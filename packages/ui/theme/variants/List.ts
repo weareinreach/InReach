@@ -7,7 +7,6 @@ export const List = {
 		({
 			root: {
 				...theme.other.utilityFonts.utility2,
-				color: theme.other.colors.secondary.darkGray,
 				display: 'inline-flex',
 				gap: rem(16),
 				flexWrap: 'wrap',
@@ -44,12 +43,54 @@ export const List = {
 				alignItems: 'center',
 			},
 		} satisfies Styles<ListStylesNames, ListStylesParams>),
+	inlineUtil2DarkGray: (theme) =>
+		({
+			root: {
+				...theme.other.utilityFonts.utility2,
+				display: 'inline-flex',
+				gap: rem(16),
+				flexWrap: 'wrap',
+			},
+			item: {
+				display: 'inline-block',
+				listStyle: 'none',
+				color: theme.other.colors.secondary.darkGray,
+			},
+			itemIcon: {
+				display: 'none',
+			},
+		} satisfies Styles<ListStylesNames, ListStylesParams>),
+	inlineBulletUtil2DarkGray: (theme) =>
+		({
+			root: {
+				...theme.other.utilityFonts.utility2,
+				display: 'inline-flex',
+				columnGap: rem(8),
+				rowGap: rem(16),
+				flexWrap: 'wrap',
+				alignItems: 'center',
+			},
+			item: {
+				'&:first-of-type .mantine-List-itemIcon': {
+					display: 'none',
+				},
+				color: theme.other.colors.secondary.darkGray,
+			},
+			itemIcon: {
+				marginTop: 'auto',
+				marginBottom: 'auto',
+				marginRight: rem(8),
+			},
+			itemWrapper: {
+				alignItems: 'center',
+			},
+		} satisfies Styles<ListStylesNames, ListStylesParams>),
 	inlineBullet: (theme) =>
 		({
 			root: {
 				display: 'inline-flex',
 				columnGap: rem(8),
-				rowGap: rem(16),
+				rowGap: rem(12),
 				flexWrap: 'wrap',
 				alignItems: 'center',
 			},
@@ -71,7 +112,7 @@ export const List = {
 		({
 			root: {
 				display: 'inline-flex',
-				gap: rem(16),
+				gap: rem(12),
 				flexWrap: 'wrap',
 			},
 			item: {

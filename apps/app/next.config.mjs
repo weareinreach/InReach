@@ -18,11 +18,11 @@ const __dirname = path.dirname(__filename)
 
 const isVercelActiveDev = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF !== 'dev'
 
-const loadOtel = async () => {
-	if (process.env.NEXT_RUNTIME === 'nodejs') {
-		await import('./otel.mjs')
-	}
-}
+// const loadOtel = async () => {
+// 	if (process.env.NEXT_RUNTIME === 'nodejs') {
+// 		await import('./otel.mjs')
+// 	}
+// }
 
 /* eslint-disable-next-line turbo/no-undeclared-env-vars */
 const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
@@ -41,7 +41,7 @@ const nextConfig = {
 			'*': ['**swc+core**', '**esbuild**'],
 		},
 		outputFileTracingRoot: path.join(__dirname, '../../'),
-		// instrumentationHook: true,
+		instrumentationHook: true,
 		// turbotrace: {
 		// 	logDetail: true,
 		// },
@@ -68,7 +68,7 @@ const nextConfig = {
  * @returns {T}
  */
 function defineNextConfig(config) {
-	loadOtel()
+	// loadOtel()
 	return withBundleAnalyzer(withRoutes()(config))
 }
 

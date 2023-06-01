@@ -15,7 +15,7 @@ import { useDebouncedValue } from '@mantine/hooks'
 import { type DefaultTFuncReturn } from 'i18next'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { type Dispatch, forwardRef, type SetStateAction, useEffect, useState } from 'react'
+import { type Dispatch, forwardRef, type ReactNode, type SetStateAction, useEffect, useState } from 'react'
 import reactStringReplace from 'react-string-replace'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -318,7 +318,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue }: SearchB
 
 type SearchBoxProps = {
 	type: 'location' | 'organization'
-	label?: string | DefaultTFuncReturn
+	label?: string | DefaultTFuncReturn | ReactNode
 	loadingManager: {
 		setLoading: Dispatch<SetStateAction<boolean>>
 		isLoading: boolean
