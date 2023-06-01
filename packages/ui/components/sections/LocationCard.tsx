@@ -47,7 +47,9 @@ export const LocationCard = (props: LocationCardProps) => {
 		location.services.flatMap(({ service }) => service.services.map((service) => service.tag.category.tsKey))
 	)
 	const isAddressSingleLine = addressListHeight > 36
-	const addressListVariant = isAddressSingleLine ? variants.List.inlineUtil2 : variants.List.inlineBulletUtil2
+	const addressListVariant = isAddressSingleLine
+		? variants.List.inlineUtil2DarkGray
+		: variants.List.inlineBulletUtil2DarkGray
 	const separator = (
 		<Divider w={4} size={4} style={{ borderRadius: '50%' }} color={theme.other.colors.secondary.darkGray} />
 	)

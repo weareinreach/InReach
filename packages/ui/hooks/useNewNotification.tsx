@@ -73,6 +73,7 @@ export const useNewNotification = ({ icon, ...others }: UseNotificationProps) =>
 		radius: 'lg',
 		h: 48,
 		classNames: { root: classes.notificationBg, icon: classes.iconBg },
+		autoClose: 5000,
 	}
 	return () => showNotification(notificationProps)
 }

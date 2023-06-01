@@ -1,4 +1,4 @@
-import { Anchor, type Variants } from '@mantine/core'
+import { Anchor, type AnchorProps, type Variants } from '@mantine/core'
 import NextLink, { type LinkProps } from 'next/link'
 
 const externalPrefixes = ['http', 'tel:', 'mailto:'] as const
@@ -27,7 +27,7 @@ export const Link = ({ children, href, external, ...rest }: Props) => {
 export type InternalLink = LinkProps['href']
 export type ExternalLink = `${(typeof externalPrefixes)[number]}${string}`
 
-interface Props extends Omit<LinkProps, 'href'> {
+interface Props extends Omit<LinkProps, 'href' | 'color'>, AnchorProps {
 	href?: InternalLink | ExternalLink
 	external?: boolean
 	variant?: Variants<'inline' | 'inlineInverted'>

@@ -8,7 +8,7 @@ import Vercel from '~ui/assets/vercel.svg'
 import { type ExternalLink, type InternalLink, Link } from '~ui/components/core/Link'
 import { SocialLink } from '~ui/components/core/SocialLink'
 import { useCustomVariant } from '~ui/hooks'
-import { BodyGrid } from '~ui/layouts'
+import { BodyGridNoTopMargin } from '~ui/layouts'
 import { GenericContentModal, PrivacyStatementModal } from '~ui/modals'
 
 const useStyles = createStyles((theme) => ({
@@ -88,8 +88,8 @@ export const Footer = () => {
 
 	return (
 		<div className={classes.background}>
-			<BodyGrid>
-				<Grid.Col xs={12} sm={6} pl={0}>
+			<BodyGridNoTopMargin>
+				<Grid.Col xs={12} sm={6} pl={0} pt={0} pb={0}>
 					<Stack justify='space-between' style={{ height: '100%' }}>
 						<Stack align='start' spacing={24}>
 							<Image
@@ -100,7 +100,6 @@ export const Footer = () => {
 								style={{ marginBottom: 0 }}
 							/>
 							<Title order={2} fw={500}>
-								{/* {t('footer.tagline')} */}
 								<Trans i18nKey='footer.tagline' />
 							</Title>
 							<a href='https://vercel.com/?utm_source=in-reach&utm_campaign=oss' style={{ margin: 0 }}>
@@ -118,13 +117,13 @@ export const Footer = () => {
 						</Text>
 					</Stack>
 				</Grid.Col>
-				<Grid.Col xs={6} sm={3}>
+				<Grid.Col xs={6} sm={3} pt={0} pb={0}>
 					<Stack justify='space-between' style={{ height: '100%' }} align='start' spacing='xl'>
 						<Text fw={600}>{t('support')}</Text>
 						{support}
 					</Stack>
 				</Grid.Col>
-				<Grid.Col xs={6} sm={3} pr={0}>
+				<Grid.Col xs={6} sm={3} pr={0} pt={0} pb={0}>
 					<Stack spacing='xl'>
 						<Text fw={600}>{t('connect')}</Text>
 						{connect}
@@ -142,7 +141,7 @@ export const Footer = () => {
 						</Group>
 					</Stack>
 				</Grid.Col>
-			</BodyGrid>
+			</BodyGridNoTopMargin>
 		</div>
 	)
 }

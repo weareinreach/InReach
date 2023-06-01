@@ -15,7 +15,7 @@ import { ModalTitle } from './ModalTitle'
 import { SignupModalLauncher } from './SignUp'
 
 export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModalProps>(
-	({ autoLaunch, noClose, ...props }, ref) => {
+	({ autoLaunch, noClose, onClose, ...props }, ref) => {
 		const { t } = useTranslation(['common'])
 		const variants = useCustomVariant()
 		const { data: session, status } = useSession()
@@ -35,7 +35,13 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 						backTo: 'none',
 						onClick: () => router.back(),
 				  }
-				: { option: 'close', onClick: () => handler.close() }
+				: {
+						option: 'close',
+						onClick: () => {
+							if (typeof onClose === 'function') onClose()
+							handler.close()
+						},
+				  }
 		) satisfies BreadcrumbProps
 		const modalTitle = <ModalTitle breadcrumb={titleProps} />
 
@@ -53,7 +59,7 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 								}}
 							/>
 						</Stack>
-						<Stack align='center' spacing={14}>
+						<Stack align='center' spacing={16}>
 							<Trans
 								i18nKey='quick-promo-body'
 								components={{
@@ -61,7 +67,7 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 								}}
 							/>
 						</Stack>
-						<LoginModalLauncher component={Button} fullWidth>
+						<LoginModalLauncher component={Button} variant={variants.Button.primaryLg} fullWidth>
 							{t('log-in')}
 						</LoginModalLauncher>
 						<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
@@ -92,4 +98,5 @@ export interface QuickPromotionModalProps extends ButtonProps {
 	/** Automatically launch if no session? */
 	autoLaunch?: boolean
 	noClose?: boolean
+	onClose?: () => void
 }

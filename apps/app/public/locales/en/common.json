@@ -24,6 +24,10 @@
 		"back-to-search": "Back to search"
 	},
 	"cancel": "Cancel",
+	"claim-org-modal": {
+		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach (coming soon!)</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>This organization has not yet been claimed by a service provider.</title2>\n<textDarkGray>You can claim this organization as a service provider to:<\textDarkGray>"
+	},
 	"claimed": "Claimed",
 	"clear": "Clear",
 	"close": "Close",
@@ -64,6 +68,7 @@
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
 	"exclude": "Exclude",
+	"filter-by-service": "Filter by services",
 	"find-resources": "Find resources",
 	"find-x": "Find {{value}}",
 	"footer": {
@@ -111,8 +116,8 @@
 		"removedSingle": "Resource removed from list"
 	},
 	"loading-page": "Loading Page...",
-	"log-in": "Log In",
-	"log-out": "Log Out",
+	"log-in": "Log in",
+	"log-out": "Log out",
 	"login": {
 		"error-generic": "Something went wrong, please try again.",
 		"error-username-password": "Incorrect username or password."
@@ -120,17 +125,26 @@
 	"message_text": "Message text",
 	"message_title": "Message title",
 	"modal-content": {
-		"accessibility": "<stack16>\n<title2>InReach Accessibility Statement</title2>\n<textReg>InReach’s open source technology is built for the diverse LGBTQ+ community, including users with disabilities.</textReg>\n<textReg>The free InReach App is available on web (desktop and mobile), and native iOS and Android. Beginning with the launch of our latest redesign (February 2023), InReach will strive to meet <linkAccessibility>Web Content Accessibility Guidelines (WCAG) level AA criteria.</linkAccessibility></textReg>\n<textReg>At InReach, we strive to make our tech platform accessible for as many users and devices as possible in alignment with our mission to serve all LGBTQ+ people facing discrimination and persecution.</textReg>",
+		"accessibility": "<stack16>\n<title2>Accessibility Statement</title2>\n<textDarkGray>InReach’s open source technology is built for the diverse LGBTQ+ community, including users with disabilities.</textDarkGray>\n<textDarkGray>The free InReach App is available on web (desktop and mobile), and native iOS and Android. Beginning with the launch of our latest redesign (February 2023), InReach will strive to meet <linkAccessibility>Web Content Accessibility Guidelines (WCAG) level AA criteria.</linkAccessibility></textDarkGray>\n<textDarkGray>At InReach, we strive to make our tech platform accessible for as many users and devices as possible in alignment with our mission to serve all LGBTQ+ people facing discrimination and persecution.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>The InReach team will do its best to confirm the eligibility and basic facts about service providers listed on this website. However, we cannot guarantee the viability or capabilities of any such providers. Consequently, InReach assumes no responsibility for the actions of providers listed on this website and users who contact any such providers do so at their own risk.</textReg>\n</stack16>"
 	},
+	"modal-more-options": {
+		"exclude": "Exclude resources that...",
+		"include": "Include resources that..."
+	},
 	"more": {
-		"filters": "More filters"
+		"options": "More options"
 	},
 	"no-reviews": "No reviews yet",
 	"none-apply": "None of these apply to me",
+	"offices-and-locations": "Offices & Locations",
 	"org-image": "Organization photo",
 	"organization": "Organization",
 	"other-specify": "Other (please specify)",
+	"page-title": {
+		"base": "{{title}} - InReach",
+		"search-results": "Search Results"
+	},
 	"password": "Password",
 	"password-confirm": "Confirm password",
 	"password-error-match": "Passwords must match",
@@ -155,11 +169,9 @@
 	"privacy-policy": "Privacy policy",
 	"privacy-statement": "Privacy Statement",
 	"privacy-statement-body": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>Privacy statement</title2>",
-		"<textDarkGray>At InReach, we recognize that preserving online anonymity is a life-or-death issue for many LGBTQ+ people. That's why the free InReach App (our web app, native iOS app, and native Android app) is designed to prioritize protecting users' safety and confidentiality online.</textDarkGray>",
+		"<textDarkGrayCentered>At InReach, we recognize that preserving online anonymity is a life-or-death issue for many LGBTQ+ people. That's why the free InReach App (our web app, native iOS app, and native Android app) is designed to prioritize protecting users' safety and confidentiality online.</textDarkGrayCentered>",
 		"<title2>User demographic data</title2>",
-		"<strong>We do not require any personally identifiable information to use the free InReach App.</strong>",
+		"<textDarkGray><strong>We do not require any personally identifiable information to use the free InReach App.</strong></textDarkGray>",
 		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
 		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
 		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
@@ -167,9 +179,10 @@
 		"<textDarkGray>Understanding our user demographics can help us to quantify our impact, raise funds, and evaluate future product decisions. We appreciate users voluntarily sharing this information with us, and we take these steps to protect your privacy and anonymity.</textDarkGray>",
 		"<textDarkGray><title2>Site usage Analytics</title2></textDarkGray>",
 		"<textDarkGray>InReach uses <linkUmami>Umami</linkUmami>, a privacy-focused alternative to Google Analytics, to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. <linkUmamiGDPR>Umami is GDPR compliant</linkUmamiGDPR> and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
-		"<textDarkGray>InReach also uses Vercel Analytics to analyze web vitals and performance. Vercel Analytics provides site usage information without being tied to, or associated with, any individual visitor or IP address. The recording of data points is anonymous and the Analytics feature does not collect or store information that would enable Vercel to reconstruct a browsing session across pages or identify a user.</textDarkGray>",
-		"<linkPolicy>Read our full privacy policy for more information</linkPolicy>"
+		"<textDarkGray>InReach also uses Vercel Analytics to analyze web vitals and performance. Vercel Analytics provides site usage information without being tied to, or associated with, any individual visitor or IP address. The recording of data points is anonymous and the Analytics feature does not collect or store information that would enable Vercel to reconstruct a browsing session across pages or identify a user.</textDarkGray>"
 	],
+	"privacy-statement-foot": "<linkPolicy>Read our full privacy policy for more information</linkPolicy>",
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Privacy statement</title2>"],
 	"privatePractice": "Private Practice",
 	"profile": "Profile",
 	"questions": "Questions?",
@@ -181,7 +194,7 @@
 	"resource-saved": "Resource saved.",
 	"resources": "Resources",
 	"retry": "Retry",
-	"review-count_interval": "(0)[No reviews];",
+	"review-count_interval": "(0)[No reviews yet];",
 	"review-count_one": "({{count}} review)",
 	"review-count_other": "({{count}} reviews)",
 	"review-not-empty": "Review cannot be empty",
@@ -193,9 +206,9 @@
 	"save": "Save",
 	"save-changes": "Save changes",
 	"saved": "Saved",
-	"saved-lists": "Saved Lists",
 	"search": {
-		"location-placeholder": "Enter state, city, or zip code...",
+		"include-remote": "Include remote services",
+		"location-placeholder": "Enter city or zip code...",
 		"look-up-org": "Look up an organization",
 		"no-results": "No results found. Please try again.",
 		"organization-placeholder": "Enter organization name...",
@@ -223,7 +236,6 @@
 		"transit-directions": "Public transit directions"
 	},
 	"services": "Services",
-	"settings": "Settings",
 	"share-feedback": "Share Feedback",
 	"show-less": "Show less",
 	"show-more": "Show more",
@@ -314,6 +326,7 @@
 		"back": "Back",
 		"coming-soon": "Coming soon",
 		"delete": "Delete",
+		"distance": "Distance",
 		"email": "Email",
 		"hours": "Hours",
 		"more": "more",
@@ -324,13 +337,14 @@
 		"prev": "Prev",
 		"print": "Print",
 		"review": "Review",
+		"reviews": "Reviews",
 		"save": "Save",
 		"saved": "Saved",
 		"search": "Search",
 		"service-hours": "Service hours",
+		"settings": "Settings",
 		"share": "Share",
 		"skip": "Skip",
 		"support": "Support"
-	},
-	"your-comments": "Your Comments"
+	}
 }

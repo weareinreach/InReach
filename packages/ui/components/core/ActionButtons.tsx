@@ -38,6 +38,7 @@ const useStyles = createStyles((theme) => ({
 		padding: rem(12),
 		gap: rem(8),
 		backgroundColor: theme.other.colors.secondary.white,
+		border: 0,
 		borderRadius: rem(8),
 		'&:not([data-disabled])': theme.fn.hover({
 			backgroundColor: theme.other.colors.primary.lightGray,
