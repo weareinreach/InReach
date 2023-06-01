@@ -369,7 +369,7 @@ export const commonTheme = {
 					},
 					[theme.fn.largerThan('sm')]: {
 						padding: `${rem(0)} ${rem(40)}`,
-						marginBottom: 'unset',
+						// marginBottom: 'unset',
 					},
 					[theme.fn.largerThan('lg')]: {
 						padding: `${rem(0)} ${rem(64)}`,

@@ -192,7 +192,6 @@ const SearchResults = () => {
 			<Grid.Col sm={8}>
 				{resultDisplay}
 				<Pagination total={getSearchResultPageCount(data?.resultCount)} />
-				<Space h={40} />
 			</Grid.Col>
 		</>
 	)
