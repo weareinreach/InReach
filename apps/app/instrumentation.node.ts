@@ -12,7 +12,8 @@ import { config } from 'dotenv'
 
 config({ path: '../../.env' })
 const otelTraceOptions = process.env.OTEL_SERVER ? { url: process.env.OTEL_SERVER } : undefined
-console.log('Initializing OpenTelemetry...')
+
+if (!process.env.VERCEL) console.log('Initializing OpenTelemetry...')
 
 if (otelTraceOptions) {
 	console.log(`Using custom server: ${otelTraceOptions.url}`)
