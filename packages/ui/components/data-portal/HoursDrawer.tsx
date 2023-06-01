@@ -92,7 +92,7 @@ const timezoneData = timezones.map((item, index) => {
 })
 
 //the mantine select grouping will set the group order based on the first group value it comes across
-//adding this sort order so the "Most Common" items appear first
+//adding this sort order so the "Most Common" group will appear first
 const sortedTimezoneData = timezoneData.sort((a, b) => {
 	if (a.group === 'North America' && b.group === 'Other') {
 		return -1
@@ -147,8 +147,11 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 					setTimeValues((prevTimeValues) => ({
 						...prevTimeValues,
 						[dayIndex]: {
-							start: new Date(1970, 0, 1, 0, 0, 0).toISOString(), // Set start time to 00:00:00
-							end: new Date(1970, 0, 1, 23, 59, 59).toISOString(), // Set end time to 23:59:59
+							start: DateTime.fromMillis(0).toUTC().toISO(), // Set start time to 1970-01-01T00:00:00.000Z
+							end: DateTime.fromObject(
+								{ year: 1970, month: 1, day: 1, hour: 23, minute: 59, second: 59, millisecond: 0 },
+								{ zone: 'utc' }
+							).toISO(), // Set end time to 1970-01-01T23:59:59.000Z
 						},
 					}))
 				}
@@ -198,9 +201,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 			const options = { timeZone: 'America/New_York' }
 			date.setHours(parseInt(hours, 10))
 			date.setMinutes(parseInt(minutes, 10), 0, 0)
-			console.log(date)
 			const utcTime = date.toISOString()
-			console.log(utcTime)
 
 			setTimeValues((prevTimeValues) => ({
 				...prevTimeValues,
