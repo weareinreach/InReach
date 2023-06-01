@@ -11,8 +11,7 @@
 			"3": "trans hombres",
 			"4": "mujeres trans",
 			"5": "Juventud LGBTQ+",
-			"6": "Personas VIH+",
-			"7": "individuos no binarios"
+			"6": "Personas VIH+"
 		},
 		"find-resources": "Encuentra <Service></Service> verificado durante <Community></Community> con InReach.",
 		"heading": "Encontrar recursos de LGBTQ.",
@@ -20,21 +19,13 @@
 			"0": "atención médica",
 			"1": "asistencia legal",
 			"2": "centros culturales",
-			"3": "Centros LGBTQ",
+			"3": "Educación",
 			"4": "apoyo espiritual",
 			"5": "consejería de carrera",
 			"6": "apoyo educativo",
 			"7": "clases de idioma",
 			"8": "entrenamiento de liderazgo",
-			"9": "vivienda de emergencia",
-			"10": "apoyo de vivienda",
-			"11": "estilistas de pelo",
-			"12": "asesoramiento legal",
-			"13": "servicios de inmigración",
-			"14": "cuidado dental",
-			"15": "líneas directas de soporte",
-			"16": "grupos de apoyo",
-			"17": "servicios de transporte"
+			"9": "vivienda de emergencia"
 		},
 		"subheading": "Bienvenido a la primera plataforma tecnológica del mundo que coincide con TLGBQ+ (transgénero, lesbiano, gay, bisexual, y más identidades) personas que sufren discriminación y persecución con recursos seguros y verificados."
 	},
