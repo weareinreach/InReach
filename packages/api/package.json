@@ -19,15 +19,15 @@
 		"@googlemaps/google-maps-services-js": "3.3.31",
 		"@tanstack/react-query": "4.29.12",
 		"@terraformer/wkt": "2.2.0",
-		"@trpc/client": "10.28.1",
-		"@trpc/next": "10.28.1",
-		"@trpc/react-query": "10.28.1",
-		"@trpc/server": "10.28.1",
+		"@trpc/client": "10.28.2",
+		"@trpc/next": "10.28.2",
+		"@trpc/react-query": "10.28.2",
+		"@trpc/server": "10.28.2",
 		"@weareinreach/auth": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"alex": "11.0.0",
 		"geo-tz": "7.0.7",
-		"geolib": "3.3.3",
+		"geolib": "3.3.4",
 		"just-compact": "3.2.0",
 		"just-diff": "6.0.2",
 		"just-diff-apply": "5.5.0",
@@ -49,7 +49,7 @@
 		"@types/eslint": "8.40.0",
 		"@types/luxon": "3.3.0",
 		"@types/node": "18.16.16",
-		"@types/prettier": "2.7.2",
+		"@types/prettier": "2.7.3",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
@@ -65,7 +65,7 @@
 		"trpc-panel": "1.3.4",
 		"tslog": "4.8.2",
 		"type-fest": "3.11.1",
-		"typescript": "5.0.4"
+		"typescript": "5.1.3"
 	},
 	"peerDependencies": {
 		"next": ">=13"
