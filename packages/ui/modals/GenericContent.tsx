@@ -18,14 +18,19 @@ const TransContent = ({ i18nKey }: { i18nKey: string }) => {
 				title1: <Title order={1}>.</Title>,
 				title2: <Title order={2}>.</Title>,
 				title3: <Title order={3}>.</Title>,
-				textReg: <Text ta='justify'>.</Text>,
+				textReg: <Text ta='center'>.</Text>,
+				textDarkGray: (
+					<Text ta='center' variant={variants.Text.darkGray}>
+						.
+					</Text>
+				),
 				stack16: (
 					<Stack align='center' spacing={16}>
 						.
 					</Stack>
 				),
 				linkAccessibility: (
-					<Link external href='https://www.w3.org/TR/WCAG21/' variant={variants.Link.inlineUtil1}>
+					<Link external href='https://www.w3.org/TR/WCAG21/' variant={variants.Link.inlineUtil1darkGray}>
 						.
 					</Link>
 				),

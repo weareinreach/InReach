@@ -66,7 +66,7 @@ export const navItems = {
 	support: { icon: 'carbon:help', labelKey: 'words.support', href: '/' },
 } as const
 
-export const MobileNav = () => {
+export const MobileNav = ({ className }: { className?: string }) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation('common')
 	const router = useRouter()
@@ -83,7 +83,13 @@ export const MobileNav = () => {
 	}
 
 	return (
-		<Tabs inverted classNames={{ ...classes }} defaultValue='search' onTabChange={switchTab}>
+		<Tabs
+			inverted
+			className={className}
+			classNames={{ ...classes }}
+			defaultValue='search'
+			onTabChange={switchTab}
+		>
 			<Tabs.List position='apart'>{tabs}</Tabs.List>
 		</Tabs>
 	)

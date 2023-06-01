@@ -2,6 +2,7 @@ import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { Analytics } from '@vercel/analytics/react'
 import { type NextPage } from 'next'
 import { type AppProps } from 'next/app'
 import { Work_Sans } from 'next/font/google'
@@ -83,10 +84,11 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 						<Navbar />
 						{PageContent}
 						<Footer />
-						<Notifications />
+						<Notifications transitionDuration={500} />
 					</SearchStateProvider>
 				</ModalsProvider>
 				<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
+				<Analytics />
 			</MantineProvider>
 		</SessionProvider>
 	)

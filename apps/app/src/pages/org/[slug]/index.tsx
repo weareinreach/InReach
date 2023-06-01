@@ -2,6 +2,7 @@
 import { Grid, Skeleton, Stack, Tabs } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
@@ -25,7 +26,7 @@ import { getServerSideTranslations } from '~app/utils/i18n'
 
 const LoadingState = () => (
 	<>
-		<Grid.Col sm={8} order={1}>
+		<Grid.Col sm={8} order={1} pb={40}>
 			{/* Toolbar */}
 			<Skeleton h={48} w='100%' radius={8} />
 			<Stack pt={24} align='flex-start' spacing={40}>
@@ -48,7 +49,7 @@ const LoadingState = () => (
 )
 
 const OrganizationPage: NextPage = () => {
-	const { t } = useTranslation()
+	const { t, i18n } = useTranslation()
 	const router = useRouter<'/org/[slug]'>()
 	const { query } = router
 	const [activeTab, setActiveTab] = useState<string | null>('services')
@@ -57,8 +58,24 @@ const OrganizationPage: NextPage = () => {
 	const { ref, width } = useElementSize()
 	const { searchParams } = useSearchState()
 	useEffect(() => {
-		if (data && status === 'success') setLoading(false)
+		if (data && status === 'success') {
+			setLoading(false)
+			if (data.locations?.length > 1) setActiveTab('locations')
+		}
 	}, [data, status])
+
+	useEffect(() => {
+		if (query.slug)
+			i18n.reloadResources(i18n.resolvedLanguage, [
+				'common',
+				'services',
+				'attribute',
+				'phone-type',
+				query.slug,
+			])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	if (loading || !data || router.isFallback) return <LoadingState />
 
 	const {
@@ -97,11 +114,16 @@ const OrganizationPage: NextPage = () => {
 				</Tabs.Panel>
 			</Tabs>
 		) : (
-			<>
-				{locations.map((location) => (
-					<LocationCard key={location.id} location={location} />
-				))}
-			</>
+			<Tabs w='100%' value={activeTab} onTabChange={setActiveTab}>
+				<Tabs.List>
+					<Tabs.Tab value='locations'>{t('offices-and-locations')}</Tabs.Tab>
+				</Tabs.List>
+				<Stack pt={40} spacing={40}>
+					{locations.map((location) => (
+						<LocationCard key={location.id} location={location} />
+					))}
+				</Stack>
+			</Tabs>
 		)
 
 	const sidebar =
@@ -117,7 +139,10 @@ const OrganizationPage: NextPage = () => {
 
 	return (
 		<>
-			<Grid.Col sm={8} order={1}>
+			<Head>
+				<title>{t('page-title.base', { ns: 'common', title: data.name })}</title>
+			</Head>
+			<Grid.Col sm={8} order={1} pb={40}>
 				<Toolbar
 					hideBreadcrumb={searchParams.searchState.params.length === 0}
 					breadcrumbProps={{
@@ -186,10 +211,16 @@ export const getStaticProps: GetStaticProps<Record<string, unknown>, RoutedQuery
 
 	const ssg = await trpcServerClient({ session: null })
 
-	await ssg.organization.getBySlug.prefetch({ slug })
+	const [i18n] = await Promise.allSettled([
+		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug]),
+		ssg.organization.getBySlug.prefetch({ slug }),
+	])
+	// await ssg.organization.getBySlug.prefetch({ slug })
+
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
+		// ...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
+		...(i18n.status === 'fulfilled' ? i18n.value : {}),
 	}
 
 	return {

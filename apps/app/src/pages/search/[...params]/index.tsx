@@ -2,6 +2,7 @@
 import { Grid, Group, Space } from '@mantine/core'
 import compare from 'just-compare'
 import { type GetServerSideProps } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
@@ -13,6 +14,7 @@ import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
+import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
 import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 import { useSearchState } from '@weareinreach/ui/providers/SearchState'
 import { api } from '~app/utils/api'
@@ -60,6 +62,7 @@ const SearchResults = () => {
 	const {
 		isSuccess,
 		isFetching: searchIsFetching,
+		isLoading: searchIsLoading,
 		...searchQuery
 	} = api.organization.searchDistance.useQuery(
 		{
@@ -76,23 +79,28 @@ const SearchResults = () => {
 			enabled: queryParams.success,
 		}
 	)
+
 	useEffect(() => {
+		if (loadingPage !== searchIsLoading) {
+			console.log('setLoading', searchIsLoading)
+			setLoadingPage(searchIsLoading)
+		}
 		if (searchQuery.data) {
 			setResultCount(searchQuery.data.resultCount)
 			setData(searchQuery.data)
 			setLoadingPage(false)
 		}
-	}, [searchQuery.data])
+	}, [searchQuery.data, searchIsLoading, loadingPage])
 
 	useEffect(() => {
 		if (data) {
 			setResultDisplay(
 				data.orgs.map((result) => {
-					return <SearchResultCard key={result.id} result={result} />
+					return <SearchResultCard key={result.id} result={result} loading={loadingPage} />
 				})
 			)
 		}
-	}, [data])
+	}, [data, loadingPage])
 
 	useEffect(
 		() => {
@@ -115,10 +123,14 @@ const SearchResults = () => {
 					routeActions.setServices(filteredServices)
 					break
 				}
+				case searchParams.searchState.page !== router.query.page: {
+					if (typeof router.query.page === 'string') routeActions.setPage(router.query.page)
+					break
+				}
 			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[filteredAttributes, filteredServices]
+		[filteredAttributes, filteredServices, router.query.page]
 	)
 
 	const nextSkip = useMemo(
@@ -137,8 +149,8 @@ const SearchResults = () => {
 				unit,
 				skip: nextSkip,
 				take,
-				services: filteredServices.length ? filteredServices : undefined,
-				attributes: filteredAttributes.length ? filteredAttributes : undefined,
+				...(filteredServices.length ? { services: filteredServices } : {}),
+				...(filteredAttributes.length ? { attributes: filteredAttributes } : {}),
 			})
 		}
 	})
@@ -147,7 +159,10 @@ const SearchResults = () => {
 
 	return (
 		<>
-			<Grid.Col sm={12}>
+			<Head>
+				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
+			</Head>
+			<Grid.Col sm={12} pb={30}>
 				<Group spacing={20} noWrap w='100%'>
 					<SearchBox
 						type='location'
@@ -159,22 +174,24 @@ const SearchResults = () => {
 						stateHandler={setFilteredServices}
 						isFetching={searchIsFetching}
 					/>
+					<MoreFilter
+						resultCount={resultCount}
+						stateHandler={setFilteredAttributes}
+						isFetching={searchIsFetching}
+					>
+						{t('more.filters')}
+					</MoreFilter>
 				</Group>
 			</Grid.Col>
 			<Grid.Col>
 				<SearchResultSidebar
 					resultCount={resultCount}
-					stateHandler={setFilteredAttributes}
 					loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
-					isFetching={searchIsFetching}
 				/>
 			</Grid.Col>
 			<Grid.Col sm={8}>
-				{/* <Suspense fallback={<h1>Loader goes here</h1>}> */}
 				{resultDisplay}
-				{/* </Suspense> */}
 				<Pagination total={getSearchResultPageCount(data?.resultCount)} />
-				<Space h={40} />
 			</Grid.Col>
 		</>
 	)
@@ -190,16 +207,17 @@ export const getServerSideProps: GetServerSideProps<
 	const ssg = await trpcServerClient({ req, res })
 	// const nextPage = PageIndexSchema.parse(query.page) * SEARCH_RESULT_PAGE_SIZE
 
-	await Promise.allSettled([
-		await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take }),
+	const [i18n] = await Promise.allSettled([
+		getServerSideTranslations(locale, ['services', 'common', 'attribute']),
+		ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take }),
 		// await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip: nextPage, take })
-		await ssg.service.getFilterOptions.prefetch(),
-		await ssg.attribute.getFilterOptions.prefetch(),
+		ssg.service.getFilterOptions.prefetch(),
+		ssg.attribute.getFilterOptions.prefetch(),
 	])
-
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await getServerSideTranslations(locale, ['services', 'common', 'attribute'])),
+		// ...(await getServerSideTranslations(locale, ['services', 'common', 'attribute'])),
+		...(i18n.status === 'fulfilled' ? i18n.value : {}),
 	}
 
 	return {

@@ -1,6 +1,7 @@
 import { Grid, Skeleton, Stack, Tabs } from '@mantine/core'
 // import compact from 'just-compact'
 import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
@@ -70,6 +71,9 @@ const OrgLocationPage: NextPage = () => {
 
 	return (
 		<>
+			<Head>
+				<title>{t('page-title.base', { ns: 'common', title: `${orgData.name} - ${data.name}` })}</title>
+			</Head>
 			<Grid.Col sm={8} order={1}>
 				<Toolbar
 					breadcrumbProps={{
@@ -160,14 +164,16 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
 	const { slug, orgLocationId } = urlParams.data
 
 	const ssg = await trpcServerClient({ session: null })
-	Promise.allSettled([
-		await ssg.organization.getBySlug.prefetch({ slug }),
-		await ssg.organization.getIdFromSlug.prefetch({ slug }),
-		await ssg.location.getById.prefetch({ id: orgLocationId }),
+	const [i18n] = await Promise.allSettled([
+		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug]),
+		ssg.organization.getBySlug.prefetch({ slug }),
+		ssg.organization.getIdFromSlug.prefetch({ slug }),
+		ssg.location.getById.prefetch({ id: orgLocationId }),
 	])
 	const props = {
 		trpcState: ssg.dehydrate(),
-		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
+		// ...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
+		...(i18n.status === 'fulfilled' ? i18n.value : {}),
 	}
 
 	return {

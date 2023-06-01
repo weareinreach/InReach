@@ -5,8 +5,10 @@ interface State {
 	searchState: {
 		params: string[]
 		page: string
-		a: string[]
-		s: string[]
+		a?: string[]
+		s?: string[]
+		extended?: string
+		sort?: string[]
 	}
 	searchTerm?: string
 }
@@ -17,6 +19,8 @@ type Action =
 	| { type: 'SET_ATTRIBUTES'; payload: string[] }
 	| { type: 'SET_SERVICES'; payload: string[] }
 	| { type: 'SET_SEARCHTERM'; payload: string }
+	| { type: 'SET_EXTENDED'; payload: string }
+	| { type: 'SET_SORT'; payload: string[] }
 	| { type: 'SET_SEARCHSTATE'; payload: State['searchState'] }
 
 const initialState: State = {
@@ -25,11 +29,12 @@ const initialState: State = {
 		page: '',
 		a: [],
 		s: [],
+		extended: '',
+		sort: [],
 	},
 }
 
 const reducer = (state: State, action: Action): State => {
-	console.log(state, action)
 	switch (action.type) {
 		case 'SET_PARAMS':
 			return { ...state, searchState: { ...state.searchState, params: action.payload } }
@@ -41,6 +46,10 @@ const reducer = (state: State, action: Action): State => {
 			return { ...state, searchState: { ...state.searchState, s: action.payload } }
 		case 'SET_SEARCHTERM':
 			return { ...state, searchTerm: action.payload }
+		case 'SET_EXTENDED':
+			return { ...state, searchState: { ...state.searchState, extended: action.payload } }
+		case 'SET_SORT':
+			return { ...state, searchState: { ...state.searchState, sort: action.payload } }
 		case 'SET_SEARCHSTATE':
 			return { ...state, searchState: action.payload }
 		default:
@@ -56,6 +65,8 @@ type ActionCreators = {
 	setAttributes: DispatchAction<string[]>
 	setServices: DispatchAction<string[]>
 	setSearchTerm: DispatchAction<string>
+	setExtended: DispatchAction<string>
+	setSort: DispatchAction<string[]>
 	setSearchState: DispatchAction<z.input<typeof SearchStateSchema>>
 }
 
@@ -70,6 +81,7 @@ const SearchStateSchema = z.object({
 	page: z.string().optional().default('1'),
 	a: z.string().array().optional().default([]).or(StringToArray),
 	s: z.string().array().optional().default([]).or(StringToArray),
+	extended: z.coerce.string().optional(),
 })
 
 const StateSchema = z.object({
@@ -83,6 +95,8 @@ const createActionCreators = (dispatch: React.Dispatch<Action>): ActionCreators 
 	setAttributes: (payload: string[]) => dispatch({ type: 'SET_ATTRIBUTES', payload }),
 	setServices: (payload: string[]) => dispatch({ type: 'SET_SERVICES', payload }),
 	setSearchTerm: (payload: string) => dispatch({ type: 'SET_SEARCHTERM', payload }),
+	setExtended: (payload: string) => dispatch({ type: 'SET_EXTENDED', payload: payload }),
+	setSort: (payload: string[]) => dispatch({ type: 'SET_SORT', payload }),
 	setSearchState: (payload: z.input<typeof SearchStateSchema>) =>
 		dispatch({ type: 'SET_SEARCHSTATE', payload: SearchStateSchema.parse(payload) }),
 })
