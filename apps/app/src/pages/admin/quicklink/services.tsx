@@ -29,7 +29,6 @@ import {
 	getPaginationRowModel,
 	useReactTable,
 } from '@tanstack/react-table'
-// import { ReactTableDevtools } from '@tanstack/react-table-devtools'
 import compact from 'just-compact'
 import { type GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
@@ -42,7 +41,7 @@ import { checkServerPermissions } from '@weareinreach/auth'
 import { Button } from '@weareinreach/ui/components/core/Button'
 import { Link } from '@weareinreach/ui/components/core/Link'
 import { MultiSelectPopover } from '@weareinreach/ui/components/data-portal/MultiSelectPopover'
-import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
+import { useCustomVariant } from '@weareinreach/ui/hooks'
 import { Icon } from '@weareinreach/ui/icon'
 import { QuickPromotionModal } from '@weareinreach/ui/modals'
 import { api } from '~app/utils/api'
@@ -64,14 +63,14 @@ const QuickLink = () => {
 	const router = useRouter()
 	const apiUtils = api.useContext()
 	const variants = useCustomVariant()
-	const updateEmails = api.quicklink.updateEmailData.useMutation({
+	const updatePhones = api.quicklink.updateServiceLocationData.useMutation({
 		onSuccess: () => {
 			setIsSaved(true)
-			apiUtils.quicklink.getEmailData.invalidate()
+			apiUtils.quicklink.getServiceLocationData.invalidate()
 		},
 	})
 
-	const { data, isLoading } = api.quicklink.getEmailData.useQuery(
+	const { data, isLoading } = api.quicklink.getServiceLocationData.useQuery(
 		{
 			limit: RESULTS_PER_PAGE,
 			skip: RESULTS_PER_PAGE * page,
@@ -91,13 +90,13 @@ const QuickLink = () => {
 	}, [data, isLoading, page])
 	useEffect(() => {
 		if (page + 1 <= totalPages) {
-			apiUtils.quicklink.getEmailData.prefetch({
+			apiUtils.quicklink.getPhoneData.prefetch({
 				limit: RESULTS_PER_PAGE,
 				skip: RESULTS_PER_PAGE * (page + 1),
 			})
 		}
 		if (page - 1 >= 0) {
-			apiUtils.quicklink.getEmailData.prefetch({
+			apiUtils.quicklink.getPhoneData.prefetch({
 				limit: RESULTS_PER_PAGE,
 				skip: RESULTS_PER_PAGE * (page - 1),
 			})
@@ -107,7 +106,7 @@ const QuickLink = () => {
 
 	useEffect(() => {
 		if (!overlay) {
-			apiUtils.quicklink.getEmailData.prefetch(
+			apiUtils.quicklink.getPhoneData.prefetch(
 				{ limit: RESULTS_PER_PAGE, skip: RESULTS_PER_PAGE * (page + 1) },
 				{}
 			)
@@ -144,42 +143,25 @@ const QuickLink = () => {
 	}
 
 	const handleMutation = () => {
-		const updated: ApiInput['quicklink']['updateEmailData'][number][] = compact(
+		const updated: ApiInput['quicklink']['updateServiceLocationData'][number][] = compact(
 			form.values.data.map((record, i) => {
 				if (form.isDirty(`data.${i}`)) {
-					const {
-						attachedLocations,
-						attachedServices,
-						locationOnly,
-						serviceOnly,
-						orgId,
-						emailId,
-						published,
-					} = record
+					const { attachedServices, orgId, locationId, published } = record
 					const originalRecord = data?.results.find(
-						(original) => orgId === original.orgId && emailId === original.emailId
+						(original) => orgId === original.orgId && locationId === original.locationId
 					)
 					if (!originalRecord) return
 
 					return {
-						id: emailId,
+						id: locationId,
 						to: {
-							locationOnly,
-							serviceOnly,
 							published,
-							locations: {
-								add: attachedLocations.filter((loc) => !originalRecord.attachedLocations.includes(loc)),
-								del: originalRecord.attachedLocations.filter((loc) => !attachedLocations.includes(loc)),
-							},
 							services: {
 								add: attachedServices.filter((svc) => !originalRecord.attachedServices.includes(svc)),
 								del: originalRecord.attachedServices.filter((svc) => !attachedServices.includes(svc)),
 							},
 						},
 						from: {
-							locationOnly: originalRecord.locationOnly,
-							serviceOnly: originalRecord.serviceOnly,
-							locations: originalRecord.attachedLocations,
 							services: originalRecord.attachedServices,
 							published: originalRecord.published,
 						},
@@ -189,7 +171,7 @@ const QuickLink = () => {
 			})
 		)
 		if (updated.length) {
-			updateEmails.mutate(updated)
+			updatePhones.mutate(updated)
 		}
 	}
 
@@ -197,6 +179,7 @@ const QuickLink = () => {
 		() => {
 			if (data?.results.length) {
 				return [
+					columnHelper.accessor('slug', {}),
 					columnHelper.accessor('name', {
 						header: 'Organization',
 						cell: (info) => {
@@ -224,100 +207,15 @@ const QuickLink = () => {
 						minSize: 10,
 						maxSize: 80,
 					}),
-					columnHelper.accessor('email', {
-						header: 'Email',
-						cell: (info) => (
-							<Group noWrap spacing={8}>
-								<Text variant={variants.Text.utility4}>{info.renderValue()}</Text>
-								<Link
-									external
-									href={`https://www.google.com/search?q=${encodeURI(info.getValue())}`}
-									variant={variants.Link.inheritStyle}
-								>
-									<Icon icon='carbon:search' />
-								</Link>
-							</Group>
-						),
-					}),
-					columnHelper.accessor('firstName', {
-						cell: (info) => info.getValue(),
-					}),
-					columnHelper.accessor('lastName', {
-						cell: (info) => info.getValue(),
-					}),
-					columnHelper.accessor('description', {
-						header: 'Description',
+					columnHelper.accessor('locationName', {
+						header: 'Location',
 						cell: (info) => {
-							if (info.row.getValue('firstName') || info.row.getValue('lastName')) {
-								return (
-									<Stack spacing={0}>
-										<Text variant={variants.Text.utility4}>{`${info.row.getValue(
-											'firstName'
-										)} ${info.row.getValue('lastName')}`}</Text>
-										<Text variant={variants.Text.utility4}>{info.getValue()}</Text>
-									</Stack>
-								)
-							}
-
-							return info.renderValue()
-						},
-					}),
-					columnHelper.accessor('locationOnly', {
-						header: () => <div style={{ textAlign: 'center' }}>Location only?</div>,
-						cell: (info) => {
-							return info.row.getIsGrouped() ? null : (
-								<Center>
-									<Checkbox
-										key={info.cell.id}
-										checked={
-											form.getInputProps(`data.${info.row.index}.locationOnly`, { type: 'checkbox' }).checked
-										}
-										onChange={(e) =>
-											form.setFieldValue(`data.${info.row.index}.locationOnly`, e.target.checked)
-										}
-									/>
-								</Center>
+							return (
+								<Group noWrap spacing={8}>
+									<Text variant={variants.Text.utility4}>{info.renderValue()}</Text>
+								</Group>
 							)
 						},
-						size: 48,
-					}),
-					columnHelper.accessor('serviceOnly', {
-						header: () => <div style={{ textAlign: 'center' }}>Service only?</div>,
-						cell: (info) =>
-							info.row.getIsGrouped() ? null : (
-								<Center>
-									<Checkbox
-										key={info.cell.id}
-										checked={
-											form.getInputProps(`data.${info.row.index}.serviceOnly`, { type: 'checkbox' }).checked
-										}
-										onChange={(e) =>
-											form.setFieldValue(`data.${info.row.index}.serviceOnly`, e.target.checked)
-										}
-									/>
-								</Center>
-							),
-						size: 48,
-					}),
-					columnHelper.accessor('attachedLocations', {
-						header: () => <div style={{ textAlign: 'center' }}>Locations</div>,
-						cell: (info) =>
-							info.row.getIsGrouped() ? null : (
-								<Center>
-									<MultiSelectPopover
-										key={info.cell.id}
-										data={
-											form.values.data[info.row.index]?.locations.map(({ id, name }) => ({
-												value: id,
-												label: name ?? `MISSING DESCRIPTION - ${id}`,
-											})) ?? []
-										}
-										label='Locations'
-										{...form.getInputProps(`data.${info.row.index}.attachedLocations`, { withFocus: false })}
-									/>
-								</Center>
-							),
-						size: 150,
 					}),
 					columnHelper.accessor('attachedServices', {
 						header: () => <div style={{ textAlign: 'center' }}>Services</div>,
@@ -338,6 +236,28 @@ const QuickLink = () => {
 								</Center>
 							),
 						size: 150,
+					}),
+					columnHelper.display({
+						id: 'allServices',
+						header: () => <div style={{ textAlign: 'center' }}>Attach All Services</div>,
+						cell: (info) => {
+							const isChecked = form.values.data[info.row.index]?.services.every(({ id }) =>
+								form.values.data[info.row.index]?.attachedServices.includes(id)
+							)
+
+							const handleUpdate = (select: boolean) => {
+								if (select) {
+									form.setFieldValue(
+										`data.${info.row.index}.attachedServices`,
+										form.values.data[info.row.index]?.services.map(({ id }) => id)
+									)
+								} else {
+									form.setFieldValue(`data.${info.row.index}.attachedServices`, [])
+								}
+							}
+
+							return <Checkbox checked={isChecked} onChange={(e) => handleUpdate(e.target.checked)} />
+						},
 					}),
 					columnHelper.accessor('published', {
 						header: () => <div style={{ textAlign: 'center' }}>Published?</div>,
@@ -372,11 +292,9 @@ const QuickLink = () => {
 		initialState: {
 			expanded,
 			grouping: ['name'],
-			columnVisibility: {
-				firstName: false,
-				lastName: false,
-			},
+			columnVisibility: { slug: false },
 		},
+		enableHiding: true,
 		enableGrouping: true,
 		enableExpanding: true,
 		autoResetExpanded: false,
@@ -453,8 +371,8 @@ const QuickLink = () => {
 					<Group noWrap position='apart' mt={40}>
 						<Pagination
 							onChange={handlePageChange}
-							onNextPage={() => handlePageChange('next')}
-							onPreviousPage={() => handlePageChange('prev')}
+							onNextPage={() => handlePageChange('next')} // table.nextPage()}
+							onPreviousPage={() => handlePageChange('prev')} //table.previousPage()}
 							total={totalPages}
 							value={page + 1}
 						/>
@@ -463,7 +381,7 @@ const QuickLink = () => {
 								variant='primary-icon'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 								onClick={handleMutation}
-								loading={updateEmails.isLoading}
+								loading={updatePhones.isLoading}
 								disabled={!form.isDirty()}
 							>
 								Save
@@ -478,12 +396,13 @@ const QuickLink = () => {
 									variant='primary-icon'
 									leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 									onClick={handleMutation}
-									loading={updateEmails.isLoading}
+									loading={updatePhones.isLoading}
 								>
 									Save
 								</Button>
 								<Button
 									variant='primary-icon'
+									// leftIcon={<Icon icon='carbon:save' />}
 									onClick={() => {
 										handlePageChange(pageAction, true)
 										modalHandler.close()
@@ -503,7 +422,7 @@ const QuickLink = () => {
 QuickLink.omitGrid = true
 
 interface FormData {
-	data: ApiOutput['quicklink']['getEmailData']['results']
+	data: ApiOutput['quicklink']['getServiceLocationData']['results']
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ locale, req, res }) => {
@@ -523,7 +442,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, req, res 
 	}
 	const ssg = await trpcServerClient({ session })
 	if (session) {
-		await ssg.quicklink.getEmailData.prefetch({ limit: 20, skip: 0 })
+		await ssg.quicklink.getPhoneData.prefetch({ limit: 20, skip: 0 })
 	}
 
 	return {
