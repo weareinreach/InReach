@@ -13,7 +13,6 @@ export const ReviewModalBody = forwardRef<HTMLButtonElement, ReviewModalProps>((
 	return (
 		<>
 			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
-				<Space h={40} />
 				<UserReviewSubmit type='modal' />
 			</Modal>
 			<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />

@@ -69,7 +69,7 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 						<Title order={2}>{t('reset-password')}</Title>
 						<Text variant={variants.Text.utility4darkGray}>{t('reset-password-message')}</Text>
 						<TextInput
-							label={t('email')}
+							label={t('words.email')}
 							placeholder={t('enter-email-placeholder') as string}
 							required
 							{...passwordResetForm.getInputProps('email')}

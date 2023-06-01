@@ -58,7 +58,7 @@ export const UserReviewSubmit = ({ type = 'body' }: ReviewSubmitProps) => {
 			}, console.log)}
 		>
 			<Stack align='flex-start' spacing='xl'>
-				<UserAvatar useLoggedIn={true} />
+				<UserAvatar useLoggedIn={true} avatarSize={48} />
 				<Rating {...form.getInputProps('rating')} />
 				<Textarea
 					label={t('review-resource')}

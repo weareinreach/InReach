@@ -15,7 +15,14 @@ import {
 import { zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { Trans, useTranslation } from 'next-i18next'
-import { type ComponentPropsWithRef, forwardRef, useEffect, useState } from 'react'
+import {
+	type ComponentPropsWithRef,
+	type Dispatch,
+	forwardRef,
+	type SetStateAction,
+	useEffect,
+	useState,
+} from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
@@ -74,14 +81,20 @@ SelectItemTwoLines.displayName = 'Selection Item'
 interface OrgExistsErrorProps {
 	queryResult: ApiOutput['organization']['checkForExisting']
 }
+interface SuggestOrgProps {
+	authPromptState: {
+		overlay: boolean
+		setOverlay: Dispatch<SetStateAction<boolean>>
+		hasAuth: boolean
+	}
+}
 
-export const SuggestOrg = () => {
+export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const [modalOpen, modalHandler] = useDisclosure(false)
-
+	const { overlay, setOverlay, hasAuth } = authPromptState
 	const suggestOrgApi = api.organization.createNewSuggestion.useMutation({
 		onSuccess: () => modalHandler.open(),
 	})
-
 	const form = useForm({
 		validate: zodResolver(SuggestionSchema),
 		validateInputOnBlur: true,
@@ -203,6 +216,14 @@ export const SuggestOrg = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [loading, formOptions, isSuccess, isLoading])
+
+	useEffect(() => {
+		if (!hasAuth && !overlay && form.values.countryId) {
+			setOverlay(true)
+			form.setFieldValue('countryId', '')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [hasAuth, overlay, form.values.countryId])
 
 	if (loading) return null
 	const countrySelections = Array.isArray(form.values.formOptions?.countries)

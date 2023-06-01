@@ -1,9 +1,12 @@
-import { Card, createStyles, Stack, Text, Title } from '@mantine/core'
+import { Card, createStyles, rem, Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 const useStyles = createStyles((theme) => ({
 	text: {
 		color: theme.other.colors.secondary.darkGray,
+	},
+	card: {
+		padding: `${rem(20)} !important`,
 	},
 }))
 
@@ -20,7 +23,7 @@ export const AntiHateMessage = ({ noCard, stacked }: AntiHateMessageProps) => {
 		<Title order={3}>{`🏳️‍🌈 ${t('anti-hate.title')}`}</Title>
 	)
 	const body = (
-		<Text className={classes.text} component='p' ta={stacked ? 'center' : undefined}>
+		<Text className={classes.text} component='p' m={0} ta={stacked ? 'center' : undefined}>
 			{t('anti-hate.body')}
 		</Text>
 	)
@@ -31,16 +34,16 @@ export const AntiHateMessage = ({ noCard, stacked }: AntiHateMessageProps) => {
 			{body}
 		</Stack>
 	) : (
-		<>
+		<Stack spacing={12}>
 			{title}
 			{body}
-		</>
+		</Stack>
 	)
 
 	return noCard ? (
 		content
 	) : (
-		<Card radius='lg' withBorder p={20}>
+		<Card radius='lg' withBorder classNames={{ root: classes.card }}>
 			{content}
 		</Card>
 	)

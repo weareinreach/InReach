@@ -44,7 +44,7 @@ const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
 			: undefined
 
 		const item = (
-			<Stack spacing={12} key={k}>
+			<Stack spacing={4} key={k}>
 				{isExternal(dialURL) ? (
 					<Link key={k} external href={dialURL} variant={variants.Link.inlineInverted}>
 						{phoneNumber}

@@ -14,7 +14,7 @@ export const ContactSection = (props: ContactSectionProps) => {
 	const body = (
 		<Stack spacing={isMobile ? 32 : 40}>
 			<Title order={2}>{t('contact')}</Title>
-			<ContactInfo data={props.data} />
+			<ContactInfo data={props.data} gap={40} />
 		</Stack>
 	)
 	return isMobile ? body : <Card>{body}</Card>
