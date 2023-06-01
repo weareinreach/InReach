@@ -21,6 +21,10 @@
 		"back-to-search": "crwdns1789677:0crwdne1789677:0"
 	},
 	"cancel": "crwdns1789679:0crwdne1789679:0",
+	"claim-org-modal": {
+		"list": "crwdns1912779:0crwdne1912779:0",
+		"title": "crwdns1912781:0crwdne1912781:0"
+	},
 	"claimed": "crwdns1789681:0crwdne1789681:0",
 	"clear": "crwdns1789683:0crwdne1789683:0",
 	"close": "crwdns1789685:0crwdne1789685:0",
@@ -61,6 +65,7 @@
 		"try-again-text": "crwdns1789739:0crwdne1789739:0"
 	},
 	"exclude": "crwdns1789741:0crwdne1789741:0",
+	"filter-by-service": "crwdns1912783:0crwdne1912783:0",
 	"find-resources": "crwdns1789743:0crwdne1789743:0",
 	"find-x": "crwdns1789745:0{{value}}crwdne1789745:0",
 	"footer": {
@@ -118,13 +123,22 @@
 		"accessibility": "crwdns1789833:0crwdne1789833:0",
 		"disclaimer": "crwdns1789835:0crwdne1789835:0"
 	},
+	"modal-more-options": {
+		"exclude": "crwdns1912785:0crwdne1912785:0",
+		"include": "crwdns1912787:0crwdne1912787:0"
+	},
 	"more": {
-		"filters": "crwdns1789837:0crwdne1789837:0"
+		"options": "crwdns1912789:0crwdne1912789:0"
 	},
 	"no-reviews": "crwdns1789839:0crwdne1789839:0",
 	"none-apply": "crwdns1789841:0crwdne1789841:0",
+	"offices-and-locations": "crwdns1912791:0crwdne1912791:0",
 	"org-image": "crwdns1789843:0crwdne1789843:0",
 	"other-specify": "crwdns1789845:0crwdne1789845:0",
+	"page-title": {
+		"base": "crwdns1912793:0{{title}}crwdne1912793:0",
+		"search-results": "crwdns1912795:0crwdne1912795:0"
+	},
 	"password": "crwdns1789847:0crwdne1789847:0",
 	"password-confirm": "crwdns1789849:0crwdne1789849:0",
 	"password-error-match": "crwdns1789851:0crwdne1789851:0",
@@ -157,10 +171,12 @@
 		"crwdns1789899:0crwdne1789899:0",
 		"crwdns1789901:0crwdne1789901:0",
 		"crwdns1789903:0crwdne1789903:0",
-		"crwdns1789905:0crwdne1789905:0",
-		"crwdns1789907:0crwdne1789907:0",
-		"crwdns1789909:0crwdne1789909:0",
-		"crwdns1789911:0crwdne1789911:0"
+		"crwdns1789905:0crwdne1789905:0"
+	],
+	"privacy-statement-foot": "crwdns1912797:0crwdne1912797:0",
+	"privacy-statement-head": [
+		"crwdns1912799:0crwdne1912799:0",
+		"crwdns1912801:0crwdne1912801:0"
 	],
 	"privatePractice": "crwdns1789913:0crwdne1789913:0",
 	"profile": "crwdns1789915:0crwdne1789915:0",
@@ -180,8 +196,8 @@
 	"safety-exit": "crwdns1789947:0crwdne1789947:0",
 	"save": "crwdns1789949:0crwdne1789949:0",
 	"saved": "crwdns1789951:0crwdne1789951:0",
-	"saved-lists": "crwdns1789953:0crwdne1789953:0",
 	"search": {
+		"include-remote": "crwdns1912803:0crwdne1912803:0",
 		"location-placeholder": "crwdns1789955:0crwdne1789955:0",
 		"look-up-org": "crwdns1789957:0crwdne1789957:0",
 		"no-results": "crwdns1881899:0crwdne1881899:0",
@@ -210,7 +226,6 @@
 		"transit-directions": "crwdns1789999:0crwdne1789999:0"
 	},
 	"services": "crwdns1790001:0crwdne1790001:0",
-	"settings": "crwdns1790003:0crwdne1790003:0",
 	"share-feedback": "crwdns1790005:0crwdne1790005:0",
 	"show-less": "crwdns1790007:0crwdne1790007:0",
 	"show-more": "crwdns1790009:0crwdne1790009:0",
@@ -297,6 +312,7 @@
 		"back": "crwdns1790117:0crwdne1790117:0",
 		"coming-soon": "crwdns1790119:0crwdne1790119:0",
 		"delete": "crwdns1790121:0crwdne1790121:0",
+		"distance": "crwdns1912805:0crwdne1912805:0",
 		"email": "crwdns1790123:0crwdne1790123:0",
 		"hours": "crwdns1790125:0crwdne1790125:0",
 		"more": "crwdns1790127:0crwdne1790127:0",
@@ -307,15 +323,16 @@
 		"prev": "crwdns1790137:0crwdne1790137:0",
 		"print": "crwdns1790139:0crwdne1790139:0",
 		"review": "crwdns1790141:0crwdne1790141:0",
+		"reviews": "crwdns1912807:0crwdne1912807:0",
 		"save": "crwdns1790143:0crwdne1790143:0",
 		"saved": "crwdns1790145:0crwdne1790145:0",
 		"search": "crwdns1790147:0crwdne1790147:0",
 		"service-hours": "crwdns1790149:0crwdne1790149:0",
+		"settings": "crwdns1912809:0crwdne1912809:0",
 		"share": "crwdns1790151:0crwdne1790151:0",
 		"skip": "crwdns1804815:0crwdne1804815:0",
 		"support": "crwdns1790153:0crwdne1790153:0"
 	},
-	"your-comments": "crwdns1790155:0crwdne1790155:0",
 	"photo_one": "crwdns1789877:1crwdne1789877:1",
 	"photo_other": "crwdns1789877:5crwdne1789877:5",
 	"review-count_one": "crwdns1789937:1{{count}}crwdne1789937:1",
