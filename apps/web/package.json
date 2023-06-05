@@ -32,7 +32,7 @@
 		"@tiptap/react": "2.0.3",
 		"@tiptap/starter-kit": "2.0.3",
 		"@weareinreach/ui": "0.100.0",
-		"dayjs": "1.11.7",
+		"dayjs": "1.11.8",
 		"embla-carousel-react": "7.1.0",
 		"i18next": "22.5.0",
 		"next": "13.4.4",
@@ -48,7 +48,7 @@
 		"@types/react-dom": "18.2.4",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
-		"eslint": "8.41.0",
+		"eslint": "8.42.0",
 		"typescript": "5.1.3"
 	}
 }
