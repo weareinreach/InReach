@@ -41,12 +41,12 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@opentelemetry/exporter-trace-otlp-http": "0.39.1",
-		"@opentelemetry/instrumentation": "0.39.1",
-		"@opentelemetry/resources": "1.13.0",
-		"@opentelemetry/sdk-trace-base": "1.13.0",
-		"@opentelemetry/sdk-trace-node": "1.13.0",
-		"@opentelemetry/semantic-conventions": "1.13.0",
+		"@opentelemetry/exporter-trace-otlp-http": "0.40.0",
+		"@opentelemetry/instrumentation": "0.40.0",
+		"@opentelemetry/resources": "1.14.0",
+		"@opentelemetry/sdk-trace-base": "1.14.0",
+		"@opentelemetry/sdk-trace-node": "1.14.0",
+		"@opentelemetry/semantic-conventions": "1.14.0",
 		"@prisma/client": "4.15.0",
 		"@prisma/instrumentation": "4.15.0",
 		"@vercel/kv": "0.2.1",
