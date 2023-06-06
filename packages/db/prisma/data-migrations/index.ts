@@ -20,4 +20,5 @@ export * from './2023-05-18_user-permissions'
 export * from './2023-05-19_reviews-countries'
 export * from './2023-05-22_add-crowdin-ids/index'
 export * from './2023-06-05_1-leaderfocus-attrib/index'
+export * from './2023-06-05_2-add-tags/index'
 // codegen:end
