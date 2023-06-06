@@ -1,5 +1,5 @@
+import { type Location } from '~db/datastore/out-data/2023-06-06/organizations'
 import { govDistMap, missingDistCityMap } from '~db/datastore/v1/helpers/locDataMaps'
-import { type Location } from '~db/datastore/v1/mongodb/output-types/organizations'
 import { type DistMap } from '~db/seed/migrate-v1/org/lib/getReferenceData'
 
 export const getGovDistId = (location: Location, distMap: DistMap) => {

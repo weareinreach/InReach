@@ -107,6 +107,10 @@ export const tagCheck: TagCheck = ({ tag, value, helpers }) => {
 			}
 			break
 		}
+		case tag === 'cost-fees' && typeof value === 'string': {
+			data = { text: value as string }
+			break
+		}
 		case ageRegex.test(tag): {
 			servAttribute = attributeList.get('elig-age')
 			switch (tag) {
