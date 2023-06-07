@@ -1,12 +1,12 @@
 {
 	"abortion-care": {
+		"CATEGORYNAME": "Cuidado del aborto",
 		"abortion-providers": "Proveedores de aborto",
 		"financial-assistance": "Asistencia Financiera",
 		"lodging-assistance": "Asistencia de alojamiento",
 		"mail-order-services": "Servicios de Pedidos por Correo",
 		"mental-health-support": "Apoyo a la salud mental",
-		"travel-assistance": "Asistencia para viajes",
-		"CATEGORYNAME": "Cuidado del aborto"
+		"travel-assistance": "Asistencia para viajes"
 	},
 	"abortion-providers": "Proveedores de aborto",
 	"asylum-application": "Solicitud de asilo",
@@ -15,16 +15,18 @@
 	"citizenship": "Ciudadanía",
 	"clothes": "Ropa",
 	"community-support": {
+		"CATEGORYNAME": "Soporte de la comunidad",
+		"community-social-groups": "Comunidad y grupos sociales",
 		"cultural-centers": "Centros culturales",
 		"lgbtq-centers": "Centros LGBTQ",
 		"reception-services": "Servicios de vigilancia",
+		"reentry-services": "Servicios de reentrada",
 		"spiritual-support": "Soporte Spiritual",
-		"sponsors": "Patrocinadores",
-		"CATEGORYNAME": "Soporte de la comunidad"
+		"sponsors": "Patrocinadores"
 	},
 	"computers-and-internet": {
-		"computers-and-internet": "Ordenadores e Internet",
-		"CATEGORYNAME": "Ordenadores e Internet"
+		"CATEGORYNAME": "Ordenadores e Internet",
+		"computers-and-internet": "Ordenadores e Internet"
 	},
 	"covid-19-services": "Servicios COVID-19",
 	"crime-and-discrimination": "Delincuencia y discriminación",
@@ -34,14 +36,14 @@
 	"deportation-or-removal": "Deportación o eliminación",
 	"drop-in-centers-for-lgbtq-youth": "Centros para jóvenes LGBTQ",
 	"education-and-employment": {
+		"CATEGORYNAME": "Educación y empleo",
 		"career-counseling": "Asesoramiento profesional",
 		"educational-support-for-lgbtq-youth": "Apoyo educativo a la juventud LGBTQ",
 		"english-classes": "Clases de inglés",
 		"language-classes": "Clases de idioma",
 		"leadership-training-and-professional-development": "Capacitación de liderazgo y desarrollo profesional",
 		"libraries": "Bibliotecas",
-		"scholarships": "Becas",
-		"CATEGORYNAME": "Educación y empleo"
+		"scholarships": "Becas"
 	},
 	"educational-support-for-lgbtq-youth": "Apoyo educativo a la juventud LGBTQ",
 	"emergency-housing": "Vivienda de emergencia",
@@ -50,9 +52,9 @@
 	"family-petitions": "Peticiones familiares",
 	"financial-assistance": "Asistencia Financiera",
 	"food": {
+		"CATEGORYNAME": "Comida",
 		"food": "Comida",
-		"food-assistance": "Ayuda alimentaria",
-		"CATEGORYNAME": "Comida"
+		"food-assistance": "Ayuda alimentaria"
 	},
 	"gender-affirming-items": "Objetos de afirmación de género",
 	"gender-neutral-bathrooms": "Baños neutrales de género",
@@ -60,26 +62,27 @@
 	"hiv-and-sexual-health": "VIH y salud sexual",
 	"hotlines": "Líneas de acceso",
 	"housing": {
+		"CATEGORYNAME": "Casita",
 		"drop-in-centers-for-lgbtq-youth": "Centros para jóvenes LGBTQ",
 		"emergency-housing": "Vivienda de emergencia",
 		"housing-information-and-referrals": "Información y referencias de Housing",
 		"short-term-housing": "Vivienda corta",
-		"trans-housing": "Vivienda Trans",
-		"CATEGORYNAME": "Casita"
+		"trans-housing": "Vivienda Trans"
 	},
 	"housing-information-and-referrals": "Información y referencias de Housing",
 	"hygiene": "Higiene",
 	"hygiene-and-clothing": {
+		"CATEGORYNAME": "Higiene y ropa",
 		"clothes": "Ropa",
 		"gender-affirming-items": "Objetos de afirmación de género",
 		"gender-neutral-bathrooms": "Baños neutrales de género",
 		"haircuts-and-stylists": "Peluchos y estilistas",
-		"hygiene": "Higiene",
-		"CATEGORYNAME": "Higiene y ropa"
+		"hygiene": "Higiene"
 	},
 	"immigration-detention": "Detención de inmigrantes",
 	"leadership-training-and-professional-development": "Capacitación de liderazgo y desarrollo profesional",
 	"legal": {
+		"CATEGORYNAME": "Legal",
 		"asylum-application": "Solicitud de asilo",
 		"citizenship": "Ciudadanía",
 		"crime-and-discrimination": "Delincuencia y discriminación",
@@ -95,19 +98,19 @@
 		"residency": "Residencia",
 		"special-immigrant-juvenile-status-sijs": "Estado Especial de Juveniles Inmigrantes (SIJS)",
 		"t-visa": "T Visa",
-		"u-visa": "U Visa",
-		"CATEGORYNAME": "Legal"
+		"u-visa": "U Visa"
 	},
 	"legal-hotlines": "Líneas directas legales",
 	"lgbtq-centers": "Centros LGBTQ",
 	"libraries": "Bibliotecas",
 	"lodging-assistance": "Asistencia de alojamiento",
 	"mail": {
-		"mail": "Correo",
-		"CATEGORYNAME": "Correo"
+		"CATEGORYNAME": "Correo",
+		"mail": "Correo"
 	},
 	"mail-order-services": "Servicios de Pedidos por Correo",
 	"medical": {
+		"CATEGORYNAME": "Médico",
 		"covid-19-services": "Servicios COVID-19",
 		"dental-care": "Cuidado dental",
 		"hiv-and-sexual-health": "VIH y salud sexual",
@@ -120,11 +123,11 @@
 		"trans-health-hormone-and-surgery-letters": "Salud Trans - Letras de hormonas y cirugía",
 		"trans-health-hormone-therapy": "Salud Trans - hormona allá",
 		"trans-health-primary-care": "Salud Trans - Cuidado Primario",
-		"trans-health-speech-therapy": "Salud Trans - Discurso allíampquot;",
-		"CATEGORYNAME": "Médico"
+		"trans-health-speech-therapy": "Salud Trans - Discurso allíampquot;"
 	},
 	"medical-clinics": "Clínicas médicas",
 	"mental-health": {
+		"CATEGORYNAME": "Salud Mental",
 		"bipoc-support-groups": "Grupos de soporte BIPOC",
 		"hotlines": "Líneas de acceso",
 		"private-therapy-and-counseling": "Terapia y consejería privada",
@@ -134,8 +137,7 @@
 		"support-for-caregivers-of-trans-youth": "Apoyo a los cuidadores de los jóvenes trans",
 		"support-for-conversion-therapy-survivors": "Apoyo a los supervivientes de la terapia de conversión",
 		"support-groups": "Grupos de apoyo",
-		"trans-support-groups": "Grupos de soporte Trans",
-		"CATEGORYNAME": "Salud Mental"
+		"trans-support-groups": "Grupos de soporte Trans"
 	},
 	"mental-health-support": "Apoyo a la salud mental",
 	"name-and-gender-change": "Cambio de nombre y género",
@@ -150,8 +152,9 @@
 	"spiritual-support": "Soporte Spiritual",
 	"sponsors": "Patrocinadores",
 	"sports-and-entertainment": {
-		"sports-and-entertainment": "Deportes y Entidad/Entidad",
-		"CATEGORYNAME": "Deportes y Entidad/Entidad"
+		"CATEGORYNAME": "Empresas y actividades",
+		"art-music-literature": "Arte, música y literatura",
+		"sports-and-entertainment": "Deportes y Entidad/Entidad"
 	},
 	"substance-use": "Uso de sustancias",
 	"support-for-caregivers-of-trans-youth": "Apoyo a los cuidadores de los jóvenes trans",
@@ -167,15 +170,15 @@
 	"trans-support-groups": "Grupos de soporte Trans",
 	"transit-passes-and-discounts": "Pases de tránsito y descuentos",
 	"translation-and-interpretation": {
+		"CATEGORYNAME": "Traducción e interpretación",
 		"for-healthcare": "Para la salud",
 		"for-legal-services": "Para servicios legales",
-		"general-translation-and-interpretation": "Traducción e interpretación general",
-		"CATEGORYNAME": "Traducción e interpretación"
+		"general-translation-and-interpretation": "Traducción e interpretación general"
 	},
 	"transportation": {
+		"CATEGORYNAME": "Transportación",
 		"transit-passes-and-discounts": "Pases de tránsito y descuentos",
-		"transportation-assistance": "Asistencia de transporte",
-		"CATEGORYNAME": "Transportación"
+		"transportation-assistance": "Asistencia de transporte"
 	},
 	"transportation-assistance": "Asistencia de transporte",
 	"travel-assistance": "Asistencia para viajes",
