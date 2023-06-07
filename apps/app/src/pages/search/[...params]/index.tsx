@@ -1,5 +1,5 @@
 /* eslint-disable i18next/no-literal-string */
-import { Grid, Group, Space } from '@mantine/core'
+import { createStyles, Grid, Group, MediaQuery, Space } from '@mantine/core'
 import compare from 'just-compare'
 import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
@@ -30,6 +30,22 @@ const ParamSchema = z.tuple([
 ])
 const PageIndexSchema = z.coerce.number().default(1)
 
+const useStyles = createStyles((theme) => ({
+	searchControls: {
+		flexWrap: 'wrap',
+		flexDirection: 'column',
+		[theme.fn.largerThan('sm')]: {
+			flexWrap: 'nowrap',
+			flexDirection: 'row',
+		},
+	},
+	hideMobile: {
+		[theme.fn.smallerThan('sm')]: {
+			display: 'none',
+		},
+	},
+}))
+
 const SearchResults = () => {
 	const router = useRouter<'/search/[...params]'>()
 	const { searchParams, routeActions } = useSearchState()
@@ -46,6 +62,7 @@ const SearchResults = () => {
 	const skip = (PageIndexSchema.parse(router.query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
 	const apiUtils = api.useContext()
+	const { classes } = useStyles()
 
 	const [error, setError] = useState(false)
 	const [data, setData] = useState<ApiOutput['organization']['searchDistance']>()
@@ -163,27 +180,29 @@ const SearchResults = () => {
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
 			<Grid.Col sm={12} pb={30}>
-				<Group spacing={20} noWrap w='100%'>
+				<Group spacing={20} w='100%' className={classes.searchControls}>
 					<SearchBox
 						type='location'
 						loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 						initialValue={searchParams.searchTerm}
 					/>
-					<ServiceFilter
-						resultCount={resultCount}
-						stateHandler={setFilteredServices}
-						isFetching={searchIsFetching}
-					/>
-					<MoreFilter
-						resultCount={resultCount}
-						stateHandler={setFilteredAttributes}
-						isFetching={searchIsFetching}
-					>
-						{t('more.filters')}
-					</MoreFilter>
+					<Group noWrap>
+						<ServiceFilter
+							resultCount={resultCount}
+							stateHandler={setFilteredServices}
+							isFetching={searchIsFetching}
+						/>
+						<MoreFilter
+							resultCount={resultCount}
+							stateHandler={setFilteredAttributes}
+							isFetching={searchIsFetching}
+						>
+							{t('more.filters')}
+						</MoreFilter>
+					</Group>
 				</Group>
 			</Grid.Col>
-			<Grid.Col>
+			<Grid.Col className={classes.hideMobile}>
 				<SearchResultSidebar
 					resultCount={resultCount}
 					loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}

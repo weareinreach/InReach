@@ -1,10 +1,10 @@
-import { Grid, Skeleton, Stack, Tabs } from '@mantine/core'
+import { createStyles, Divider, Grid, Skeleton, Stack, Tabs } from '@mantine/core'
 // import compact from 'just-compact'
 import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
@@ -18,6 +18,7 @@ import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
+import { useScreenSize } from '@weareinreach/ui/hooks/useScreenSize'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
@@ -45,6 +46,15 @@ const LoadingState = () => (
 	</>
 )
 
+const useStyles = createStyles((theme) => ({
+	tabsList: {
+		position: 'sticky',
+		top: 0,
+		zIndex: 10,
+		backgroundColor: theme.other.colors.secondary.white,
+	},
+}))
+
 const OrgLocationPage: NextPage = () => {
 	const { t } = useTranslation()
 	const router = useRouter<'/org/[slug]/[orgLocationId]'>()
@@ -52,11 +62,19 @@ const OrgLocationPage: NextPage = () => {
 	const { slug, orgLocationId } = query
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
+
 	const { data: orgData, status: orgDataStatus } = api.organization.getBySlug.useQuery(query)
 	const { data, status } = api.location.getById.useQuery({ id: orgLocationId })
 	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
 		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
 	})
+	const { isMobile } = useScreenSize()
+	const { classes } = useStyles()
+
+	const servicesRef = useRef<HTMLDivElement>(null)
+	const photosRef = useRef<HTMLDivElement>(null)
+	const reviewsRef = useRef<HTMLDivElement>(null)
+
 	useEffect(() => {
 		if (data && status === 'success' && orgData && orgDataStatus === 'success') setLoading(false)
 	}, [data, status, orgData, orgDataStatus])
@@ -103,30 +121,68 @@ const OrgLocationPage: NextPage = () => {
 							isClaimed: orgData.isClaimed,
 						}}
 					/>
-					<Tabs w='100%' value={activeTab} onTabChange={setActiveTab}>
-						<Tabs.List>
+					{isMobile && (
+						<Stack spacing={40}>
+							<Divider />
+							<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
+							<Divider />
+							<VisitCard location={data} />
+						</Stack>
+					)}
+					<Tabs
+						w='100%'
+						value={activeTab}
+						onTabChange={(tab) => {
+							setActiveTab(tab)
+							switch (tab) {
+								case 'services': {
+									servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
+									break
+								}
+								case 'photos': {
+									photosRef.current?.scrollIntoView({ behavior: 'smooth' })
+									break
+								}
+								case 'reviews': {
+									reviewsRef.current?.scrollIntoView({ behavior: 'smooth' })
+									break
+								}
+							}
+						}}
+					>
+						<Tabs.List className={classes.tabsList}>
 							<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
 							<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
 							<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 						</Tabs.List>
-						<Tabs.Panel value='services'>
-							<ServicesInfoCard services={services} />
-						</Tabs.Panel>
-						<Tabs.Panel value='photos'>
-							<PhotosSection photos={photos} />
-						</Tabs.Panel>
-						<Tabs.Panel value='reviews'>
-							<ReviewSection reviews={reviews} />
-						</Tabs.Panel>
+						{/* <Tabs.Panel value='services'> */}
+						<Stack spacing={40} pt={40}>
+							<div ref={servicesRef}>
+								<ServicesInfoCard services={services} />
+							</div>
+							{/* </Tabs.Panel> */}
+							{/* <Tabs.Panel value='photos'> */}
+							<div ref={photosRef}>
+								<PhotosSection photos={photos} />
+							</div>
+							{/* </Tabs.Panel> */}
+							{/* <Tabs.Panel value='reviews'> */}
+							<div ref={reviewsRef}>
+								<ReviewSection reviews={reviews} />
+							</div>
+							{/* </Tabs.Panel> */}
+						</Stack>
 					</Tabs>
 				</Stack>
 			</Grid.Col>
-			<Grid.Col order={2}>
-				<Stack spacing={40}>
-					<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
-					<VisitCard location={data} />
-				</Stack>
-			</Grid.Col>
+			{!isMobile && (
+				<Grid.Col order={2}>
+					<Stack spacing={40}>
+						<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
+						<VisitCard location={data} />
+					</Stack>
+				</Grid.Col>
+			)}
 		</>
 	)
 }
