@@ -1,4 +1,7 @@
 {
+	"banner": {
+		"redesign": "اقرأ عن اطلاق إعادة تصميم التطبيق على مدونتنا. <Link>اعرف المزيد</Link>"
+	},
 	"call-out": {
 		"hear-from-users": "<Title1>سمع من مستخدمينا</Title1>",
 		"who-we-are": "<Title1>من نحن</Title1>\n<Text>نحن غير ربحية منقولة لزيادة الوصول إلى الأمان، تم التحقق من الموارد لمجتمع LGBTQ+ المتنوع.</Text>\n<Link>اعرف المزيد عننا</Link>"
@@ -15,6 +18,7 @@
 		},
 		"find-resources": "<Text>ابحث عن </Text><Service><Service></Service><Text> ل </Text><Community></Community><Text> مع InReach.</Text>",
 		"heading": "البحث عن موارد LGBTQ",
+		"privacy-disclaimer": "جوابك مجهول وغير متصل بك كمستخدم فردي. اقرأ سياسة الخصوصية الخاصة بنا <Link></Link> لمعرفة المزيد.",
 		"services": {
 			"0": "الرعاية الطبية",
 			"1": "دعم المجتمع",
