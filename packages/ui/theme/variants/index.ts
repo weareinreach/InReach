@@ -94,6 +94,7 @@ export const variantNames: VariantNames = {
 		utility3darkGray: 'utility3darkGray',
 		utility4darkGray: 'utility4darkGray',
 		darkGray: 'darkGray',
+		utility1white: 'utility1white',
 	},
 	Tooltip: {
 		utility1: 'utility1',

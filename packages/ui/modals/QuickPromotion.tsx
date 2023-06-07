@@ -8,7 +8,7 @@ import { forwardRef, useEffect } from 'react'
 import { type BreadcrumbProps } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
 import { LoginModalLauncher } from './Login'
 import { ModalTitle } from './ModalTitle'
@@ -21,6 +21,7 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 		const { data: session, status } = useSession()
 		const [opened, handler] = useDisclosure(autoLaunch && status === 'unauthenticated')
 		const router = useRouter()
+		const { isMobile } = useScreenSize()
 		useEffect(() => {
 			if (autoLaunch && !session && status === 'unauthenticated') {
 				handler.open()
@@ -47,7 +48,12 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 
 		return (
 			<>
-				<Modal title={modalTitle} opened={opened} onClose={() => (noClose ? null : handler.close())}>
+				<Modal
+					title={modalTitle}
+					opened={opened}
+					onClose={() => (noClose ? null : handler.close())}
+					fullScreen={isMobile}
+				>
 					<Stack align='center' spacing={24}>
 						<Stack align='center' spacing={16}>
 							<Trans

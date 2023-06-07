@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { Icon } from '~ui/icon'
+import { useSearchState } from '~ui/providers/SearchState'
 
 const useStyles = createStyles((theme) => ({
 	tab: {
@@ -56,31 +57,31 @@ const useStyles = createStyles((theme) => ({
 		width: '100%',
 		zIndex: 20,
 		backgroundColor: theme.other.colors.secondary.white,
+		boxShadow: `${rem(0)} ${rem(-8)} ${rem(16)} rgba(0, 0, 0, 0.05)`,
 	},
 }))
-
-export const navItems = {
-	search: { icon: 'carbon:search', labelKey: 'words.search', href: '/search' },
-	saved: { icon: 'carbon:favorite', labelKey: 'words.saved', href: '/' },
-	account: { icon: 'carbon:user', labelKey: 'words.account', href: '/' },
-	support: { icon: 'carbon:help', labelKey: 'words.support', href: '/' },
-} as const
 
 export const MobileNav = ({ className }: { className?: string }) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation('common')
 	const router = useRouter()
+	const { searchParams } = useSearchState()
+	//  const navItems = {
+	// 	search: { icon: 'carbon:search', labelKey: 'words.search', href: '/search' },
+	// 	saved: { icon: 'carbon:favorite', labelKey: 'words.saved', href: '/' },
+	// 	account: { icon: 'carbon:user', labelKey: 'words.account', href: '/' },
+	// 	support: { icon: 'carbon:help', labelKey: 'words.support', href: '/' },
+	// } as const
+	// const tabs = Object.entries(navItems).map(([key, item]) => (
+	// 	<Tabs.Tab key={key} value={key} icon={<Icon icon={item.icon} height={20} />}>
+	// 		{t(item.labelKey)}
+	// 	</Tabs.Tab>
+	// ))
 
-	const tabs = Object.entries(navItems).map(([key, item]) => (
-		<Tabs.Tab key={key} value={key} icon={<Icon icon={item.icon} height={20} />}>
-			{t(item.labelKey)}
-		</Tabs.Tab>
-	))
-
-	const switchTab = (tab: string extends NavItems ? NavItems : string | null) => {
-		if (tab === null) return
-		if (Object.keys(navItems).includes(tab)) router.push(navItems[tab as NavItems].href)
-	}
+	// const switchTab = (tab: string extends NavItems ? NavItems : string | null) => {
+	// 	if (tab === null) return
+	// 	if (Object.keys(navItems).includes(tab)) router.push(navItems[tab as NavItems].href)
+	// }
 
 	return (
 		<Tabs
@@ -88,11 +89,56 @@ export const MobileNav = ({ className }: { className?: string }) => {
 			className={className}
 			classNames={{ ...classes }}
 			defaultValue='search'
-			onTabChange={switchTab}
+			onTabChange={(tab) => {
+				switch (tab) {
+					case 'search':
+						if (searchParams.searchState.params.length) {
+							router.push({
+								pathname: '/search/[...params]',
+								query: searchParams.searchState,
+							})
+						} else {
+							router.push('/')
+						}
+						break
+					case 'saved':
+						router.push('/saved')
+						break
+					case 'account':
+						router.push('/account')
+						break
+					case 'support':
+						router.push('/support')
+						break
+					default:
+						console.log(tab)
+				}
+			}}
 		>
-			<Tabs.List position='apart'>{tabs}</Tabs.List>
+			<Tabs.List position='apart'>
+				<Tabs.Tab
+					value='search'
+					icon={
+						<Icon
+							icon={searchParams.searchState.params.length ? 'carbon:search' : 'carbon:home'}
+							height={20}
+						/>
+					}
+				>
+					{t(searchParams.searchState.params.length ? 'words.search' : 'words.home')}
+				</Tabs.Tab>{' '}
+				<Tabs.Tab value='saved' icon={<Icon icon='carbon:favorite' height={20} />}>
+					{t('words.saved')}
+				</Tabs.Tab>
+				<Tabs.Tab value='account' icon={<Icon icon='carbon:user' height={20} />}>
+					{t('words.account')}
+				</Tabs.Tab>
+				<Tabs.Tab value='support' icon={<Icon icon='carbon:help' height={20} />}>
+					{t('words.support')}
+				</Tabs.Tab>
+			</Tabs.List>
 		</Tabs>
 	)
 }
 
-type NavItems = keyof typeof navItems
+// type NavItems = keyof typeof navItems

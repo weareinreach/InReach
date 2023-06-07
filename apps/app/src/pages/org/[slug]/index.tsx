@@ -1,6 +1,6 @@
 /* eslint-disable i18next/no-literal-string */
-import { Grid, Skeleton, Stack, Tabs } from '@mantine/core'
-import { useElementSize } from '@mantine/hooks'
+import { Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
+import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -57,6 +57,8 @@ const OrganizationPage: NextPage = () => {
 	const { data, status } = api.organization.getBySlug.useQuery(query)
 	const { ref, width } = useElementSize()
 	const { searchParams } = useSearchState()
+	const theme = useMantineTheme()
+	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 	useEffect(() => {
 		if (data && status === 'success') {
 			setLoading(false)
@@ -128,12 +130,24 @@ const OrganizationPage: NextPage = () => {
 
 	const sidebar =
 		locations?.length === 1 ? (
-			<>{locations[0] && <VisitCard location={locations[0]} />}</>
+			<>
+				{locations[0] && (
+					<>
+						{isTablet && <Divider />}
+						<VisitCard location={locations[0]} />
+					</>
+				)}
+			</>
 		) : (
-			locations.length && (
-				<Stack ref={ref} miw='100%'>
-					{width && <GoogleMap marker={locations} width={width} height={Math.floor(width * 1.185)} />}
-				</Stack>
+			// Hide google map temporarily for 'sm' breakpoint
+			locations.length &&
+			!isTablet && (
+				<>
+					{isTablet && <Divider />}
+					<Stack ref={ref} miw='100%'>
+						{width && <GoogleMap marker={locations} width={width} height={Math.floor(width * 1.185)} />}
+					</Stack>
+				</>
 			)
 		)
 
@@ -142,7 +156,7 @@ const OrganizationPage: NextPage = () => {
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: data.name })}</title>
 			</Head>
-			<Grid.Col sm={8} order={1} pb={40}>
+			<Grid.Col xs={12} sm={8} order={1} pb={40}>
 				<Toolbar
 					hideBreadcrumb={searchParams.searchState.params.length === 0}
 					breadcrumbProps={{
@@ -166,17 +180,28 @@ const OrganizationPage: NextPage = () => {
 							isClaimed,
 						}}
 					/>
+					{isTablet && (
+						<Stack spacing={40} w='100%'>
+							<Divider />
+							<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
+							{/* </Grid.Col> */}
+							{/* <Grid.Col order={4}> */}
+							{sidebar}
+						</Stack>
+					)}
 					{body}
 				</Stack>
 			</Grid.Col>
-			<Grid.Col order={2}>
-				<Stack spacing={40}>
-					<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
-					{/* </Grid.Col> */}
-					{/* <Grid.Col order={4}> */}
-					{sidebar}
-				</Stack>
-			</Grid.Col>
+			{!isTablet && (
+				<Grid.Col order={2}>
+					<Stack spacing={40}>
+						<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
+						{/* </Grid.Col> */}
+						{/* <Grid.Col order={4}> */}
+						{sidebar}
+					</Stack>
+				</Grid.Col>
+			)}
 		</>
 	)
 }

@@ -97,7 +97,7 @@ export const FormEmail = ({ tContext }: { tContext?: 'professional' | 'student-p
 	return (
 		<TextInput
 			required
-			label={t('email', { context: tContext })}
+			label={t('words.email', { context: tContext })}
 			placeholder={t('enter-email-placeholder') as string}
 			{...form.getInputProps('email')}
 		/>
