@@ -12,14 +12,16 @@ import {
 	Title,
 	useMantineTheme,
 } from '@mantine/core'
+import { getCookie } from 'cookies-next'
 import Autoplay from 'embla-carousel-autoplay'
 import { type GetStaticProps } from 'next'
 import Head from 'next/head'
 import { type TFunction, Trans, useTranslation } from 'next-i18next'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { ms } from '@weareinreach/api/lib/milliseconds'
 import { trpcServerClient } from '@weareinreach/api/trpc'
+import { AntiHatePopup } from '@weareinreach/ui/components/core/AntiHateMessage'
 import { Link } from '@weareinreach/ui/components/core/Link'
 import { UserReview } from '@weareinreach/ui/components/core/UserReview'
 import { CallOut } from '@weareinreach/ui/components/sections/CallOut'
@@ -160,6 +162,12 @@ const Home: NextPageWithoutGrid = () => {
 	const [embla, setEmbla] = useState<Embla | null>(null)
 	const autoplay = useRef(Autoplay({ delay: 5000 }))
 	useAnimationOffsetEffect(embla, 5000)
+
+	// useEffect(()=> {
+	const launchAHpopup = getCookie('inr-ahpop')
+	console.log(launchAHpopup, typeof launchAHpopup)
+	// })
+
 	return (
 		<>
 			<Head>
@@ -301,6 +309,7 @@ const Home: NextPageWithoutGrid = () => {
 			</CallOut>
 			<AccountVerifyModal />
 			<ResetPasswordModal />
+			<AntiHatePopup autoLaunch={!launchAHpopup} />
 		</>
 	)
 }

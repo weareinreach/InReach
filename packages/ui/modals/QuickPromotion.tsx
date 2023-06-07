@@ -21,6 +21,7 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 		const { data: session, status } = useSession()
 		const [opened, handler] = useDisclosure(autoLaunch && status === 'unauthenticated')
 		const router = useRouter()
+		const { isMobile } = useScreenSize()
 		useEffect(() => {
 			if (autoLaunch && !session && status === 'unauthenticated') {
 				handler.open()
@@ -47,7 +48,12 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 
 		return (
 			<>
-				<Modal title={modalTitle} opened={opened} onClose={() => (noClose ? null : handler.close())}>
+				<Modal
+					title={modalTitle}
+					opened={opened}
+					onClose={() => (noClose ? null : handler.close())}
+					fullScreen={isMobile}
+				>
 					<Stack align='center' spacing={24}>
 						<Stack align='center' spacing={16}>
 							<Trans
