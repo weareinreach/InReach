@@ -18,7 +18,7 @@ import { type ListrTask } from '~db/seed/migrate-v1'
 const batchSize = 250
 
 const userData = JSON.parse(
-	fs.readFileSync('./datastore/v1/mongodb/output/users.json', 'utf-8')
+	fs.readFileSync('./datastore/out-data/2023-06-06/users.json', 'utf-8')
 ) as UsersJSONCollection[]
 
 type Data = {

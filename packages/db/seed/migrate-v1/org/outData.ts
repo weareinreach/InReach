@@ -18,6 +18,7 @@ type InitialData = {
 }
 
 export type OutData = {
+	organization: Set<Prisma.OrganizationCreateManyInput>
 	translationKey: Set<Prisma.TranslationKeyCreateManyInput>
 	freeText: Set<Prisma.FreeTextCreateManyInput>
 	phoneType: Set<Prisma.PhoneTypeCreateManyInput>
@@ -65,6 +66,7 @@ export const initialData: InitialData = {
 }
 
 export const data: OutData = {
+	organization: new Set(),
 	translationKey: new Set(),
 	freeText: new Set(),
 	phoneType: new Set(),
@@ -100,6 +102,7 @@ export const data: OutData = {
 export type BatchNames = Readonly<keyof OutData>
 
 export const batchNameMap = new Map<BatchNames, string>([
+	['organization', 'Organization records'],
 	['translationKey', 'Translation keys'],
 	['freeText', 'Free text link records'],
 	['phoneType', 'Phone Types'],
