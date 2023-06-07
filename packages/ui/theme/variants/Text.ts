@@ -44,4 +44,7 @@ export const Text = {
 			color: theme.other.colors.secondary.darkGray,
 		},
 	}),
+	utility1white: (theme) => ({
+		root: { ...theme.other.utilityFonts.utility1, color: theme.other.colors.secondary.white },
+	}),
 } satisfies VariantObj

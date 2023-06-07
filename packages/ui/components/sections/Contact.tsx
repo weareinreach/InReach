@@ -7,7 +7,7 @@ import { useScreenSize } from '~ui/hooks'
 
 export const ContactSection = (props: ContactSectionProps) => {
 	const { t } = useTranslation(['common'])
-	const { isMobile } = useScreenSize()
+	const { isMobile, isTablet } = useScreenSize()
 
 	if (!hasContactInfo(props.data)) return null
 
@@ -17,7 +17,7 @@ export const ContactSection = (props: ContactSectionProps) => {
 			<ContactInfo data={props.data} gap={40} />
 		</Stack>
 	)
-	return isMobile ? body : <Card>{body}</Card>
+	return isTablet || isMobile ? body : <Card>{body}</Card>
 }
 
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>

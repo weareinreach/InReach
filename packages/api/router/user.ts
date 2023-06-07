@@ -9,6 +9,7 @@ import {
 	resetPassword,
 	userLogin,
 } from '@weareinreach/auth/lib'
+import { Prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
 import {
@@ -35,6 +36,9 @@ export const userRouter = defineRouter({
 			})
 			return newUser
 		} catch (error) {
+			if (error instanceof Prisma.PrismaClientKnownRequestError) {
+				if (error.code === 'P2002') throw new TRPCError({ code: 'CONFLICT', message: 'User already exists' })
+			}
 			handleError(error)
 		}
 	}),

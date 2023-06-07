@@ -1,7 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
-import { Card, Stack, Text, Title } from '@mantine/core'
-import { useElementSize } from '@mantine/hooks'
+import { Card, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -18,6 +18,8 @@ export const VisitCard = (props: VisitCardProps) => {
 	const { ref, width } = useElementSize()
 	const formattedAddress = useFormattedAddress(location)
 	const variants = useCustomVariant()
+	const theme = useMantineTheme()
+	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
@@ -72,7 +74,7 @@ export const VisitCard = (props: VisitCardProps) => {
 		</Stack>
 	)
 
-	return isMobile ? body : <Card>{body}</Card>
+	return isTablet ? body : <Card>{body}</Card>
 }
 // TODO: [IN-785] Create variant for Remote/Unpublished address
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>
