@@ -1,6 +1,6 @@
 export const attributeCategory = [
 	{ id: 'attc_01GW2HHFV3DJ380F351SKB0B74', tag: 'additional-information', icon: null, ns: 'attribute' },
-	{ id: 'attc_01GXS3AYEER4CCSX670S9Z84EB', tag: 'alerts', icon: null, ns: 'attribute' },
+	{ id: 'attc_01GYSVX1N9T91BJYSHRDPCHJBS', tag: 'alerts', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GW2HHFVFKNMYPN8F86M0H576', tag: 'cost', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GW2HHFVGHPW1Y72SA8377623', tag: 'eligibility-requirements', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GW2HHFVJQQ68XGSBXM976BDF', tag: 'languages', icon: null, ns: 'attribute' },

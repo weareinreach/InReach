@@ -94,12 +94,12 @@ export const queries = defineRouter({
 						tsNs: true,
 					},
 					orderBy: {
-						tsKey: 'asc',
+						name: 'asc',
 					},
 				},
 			},
 			orderBy: {
-				tsKey: 'asc',
+				category: 'asc',
 			},
 		})
 		return result

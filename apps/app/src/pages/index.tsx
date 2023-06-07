@@ -78,6 +78,7 @@ const useStyles = createStyles((theme) => ({
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
+		textAlign: 'center',
 		[theme.fn.largerThan('sm')]: {
 			marginTop: rem(-40),
 		},
