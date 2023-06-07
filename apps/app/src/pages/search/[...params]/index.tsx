@@ -53,7 +53,6 @@ const SearchResults = () => {
 	const { searchParams, routeActions } = useSearchState()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
-	console.log(isTablet)
 	useEffect(() => {
 		routeActions.setSearchState(router.query)
 		// eslint-disable-next-line react-hooks/exhaustive-deps

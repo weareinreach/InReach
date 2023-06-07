@@ -62,7 +62,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 		pageProps: { session, ...pageProps },
 	} = appProps
 
-	const { isMobile } = useScreenSize()
+	const { isMobile, isTablet } = useScreenSize()
 	const PageContent = Component.omitGrid ? (
 		<Component {...pageProps} />
 	) : (
@@ -85,7 +85,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 						<PageLoadProgress />
 						<Navbar />
 						{PageContent}
-						{isMobile && <Space h={80} />}
+						{isMobile || (isTablet && <Space h={80} />)}
 						<Footer />
 						<Notifications transitionDuration={500} />
 					</SearchStateProvider>

@@ -1,4 +1,5 @@
-import { createStyles, Divider, Grid, Skeleton, Stack, Tabs } from '@mantine/core'
+import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 // import compact from 'just-compact'
 import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import Head from 'next/head'
@@ -62,6 +63,8 @@ const OrgLocationPage: NextPage = () => {
 	const { slug, orgLocationId } = query
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
+	const theme = useMantineTheme()
+	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
 	const { data: orgData, status: orgDataStatus } = api.organization.getBySlug.useQuery(query)
 	const { data, status } = api.location.getById.useQuery({ id: orgLocationId })
@@ -92,7 +95,7 @@ const OrgLocationPage: NextPage = () => {
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: `${orgData.name} - ${data.name}` })}</title>
 			</Head>
-			<Grid.Col sm={8} order={1}>
+			<Grid.Col xs={12} sm={8} order={1}>
 				<Toolbar
 					breadcrumbProps={{
 						option: 'back',
@@ -121,8 +124,8 @@ const OrgLocationPage: NextPage = () => {
 							isClaimed: orgData.isClaimed,
 						}}
 					/>
-					{isMobile && (
-						<Stack spacing={40}>
+					{isTablet && (
+						<Stack spacing={40} w='100%'>
 							<Divider />
 							<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
 							<Divider />
@@ -175,7 +178,7 @@ const OrgLocationPage: NextPage = () => {
 					</Tabs>
 				</Stack>
 			</Grid.Col>
-			{!isMobile && (
+			{!isTablet && (
 				<Grid.Col order={2}>
 					<Stack spacing={40}>
 						<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
