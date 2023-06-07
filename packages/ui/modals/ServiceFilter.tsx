@@ -98,6 +98,9 @@ const useModalStyles = createStyles((theme) => ({
 const useStyles = createStyles((theme) => ({
 	label: {
 		...theme.other.utilityFonts.utility1,
+		[theme.fn.smallerThan('sm')]: {
+			textAlign: 'center',
+		},
 	},
 	count: {
 		...theme.other.utilityFonts.utility1,

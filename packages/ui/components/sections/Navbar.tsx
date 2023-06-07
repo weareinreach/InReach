@@ -29,9 +29,9 @@ export const Navbar = () => {
 	const { t } = useTranslation()
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
-	const { isMobile } = useScreenSize()
+	const { isMobile, isTablet } = useScreenSize()
 
-	return isMobile ? (
+	return isMobile || isTablet ? (
 		<MobileNav className={classes.mobileNav} />
 	) : (
 		<>

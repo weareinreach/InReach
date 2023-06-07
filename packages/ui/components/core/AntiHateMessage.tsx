@@ -1,5 +1,11 @@
-import { Card, createStyles, rem, Stack, Text, Title } from '@mantine/core'
+import { Card, createStyles, Modal, rem, Stack, Text, Title } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { setCookie } from 'cookies-next'
 import { useTranslation } from 'next-i18next'
+
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
+
+import { Button } from './Button'
 
 const useStyles = createStyles((theme) => ({
 	text: {
@@ -46,6 +52,45 @@ export const AntiHateMessage = ({ noCard, stacked }: AntiHateMessageProps) => {
 		<Card radius='lg' withBorder classNames={{ root: classes.card }}>
 			{content}
 		</Card>
+	)
+}
+
+export const AntiHatePopup = ({ autoLaunch }: { autoLaunch: boolean }) => {
+	const [opened, handler] = useDisclosure(autoLaunch)
+	const variants = useCustomVariant()
+	const { t } = useTranslation()
+	const { isMobile } = useScreenSize()
+	const closeHandler = () => {
+		setCookie('inr-ahpop', 'true', { maxAge: 60 * 60 * 24 * 30 })
+		handler.close()
+	}
+
+	return (
+		<Modal
+			opened={opened}
+			onClose={closeHandler}
+			closeOnClickOutside={false}
+			closeOnEscape={false}
+			centered
+			fullScreen={isMobile}
+			styles={(theme) => ({
+				content: {
+					[theme.fn.smallerThan('xs')]: {
+						marginTop: 'auto',
+						marginBottom: 'auto',
+						height: rem(340),
+						borderRadius: `${rem(16)} !important`,
+					},
+				},
+			})}
+		>
+			<Stack spacing={24} align='center'>
+				<AntiHateMessage noCard stacked />
+				<Button variant={variants.Button.primaryLg} onClick={closeHandler} fullWidth>
+					{t('words.accept')}
+				</Button>
+			</Stack>
+		</Modal>
 	)
 }
 

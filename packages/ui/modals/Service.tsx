@@ -64,11 +64,11 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 		const { t, i18n } = useTranslation(['common', 'attribute', slug])
 		const { classes } = useStyles()
 		const [opened, handler] = useDisclosure(false)
+		const theme = useMantineTheme()
+		const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
 		const ServiceModalTitle = () => {
 			const icons = ['share', 'save'] satisfies ModalTitleProps['icons']
-			const theme = useMantineTheme()
-			const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 			const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 			const { orgLocationId } = router.query
 			const apiQuery = typeof orgLocationId === 'string' ? { orgLocationId } : { slug }
@@ -406,7 +406,13 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 			return (
 				<>
-					<Modal title={<ServiceModalTitle />} opened={opened} onClose={() => handler.close()} zIndex={100}>
+					<Modal
+						title={<ServiceModalTitle />}
+						opened={opened}
+						onClose={() => handler.close()}
+						zIndex={100}
+						fullScreen={isMobile}
+					>
 						<Stack spacing={24}>
 							<Stack spacing={16}>
 								{atCapacity}

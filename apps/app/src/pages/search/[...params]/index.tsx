@@ -1,5 +1,6 @@
 /* eslint-disable i18next/no-literal-string */
-import { Grid, Group, Space } from '@mantine/core'
+import { createStyles, Divider, Grid, Group, Skeleton, Text, useMantineTheme } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import compare from 'just-compare'
 import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
@@ -14,6 +15,7 @@ import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
+import { useCustomVariant } from '@weareinreach/ui/hooks'
 import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
 import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 import { useSearchState } from '@weareinreach/ui/providers/SearchState'
@@ -30,10 +32,27 @@ const ParamSchema = z.tuple([
 ])
 const PageIndexSchema = z.coerce.number().default(1)
 
+const useStyles = createStyles((theme) => ({
+	searchControls: {
+		flexWrap: 'wrap',
+		flexDirection: 'column',
+		[theme.fn.largerThan('sm')]: {
+			flexWrap: 'nowrap',
+			flexDirection: 'row',
+		},
+	},
+	hideMobile: {
+		[theme.fn.smallerThan('sm')]: {
+			display: 'none',
+		},
+	},
+}))
+
 const SearchResults = () => {
 	const router = useRouter<'/search/[...params]'>()
 	const { searchParams, routeActions } = useSearchState()
-
+	const theme = useMantineTheme()
+	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 	useEffect(() => {
 		routeActions.setSearchState(router.query)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,11 +60,13 @@ const SearchResults = () => {
 
 	const [filteredServices, setFilteredServices] = useState<string[]>([])
 	const [filteredAttributes, setFilteredAttributes] = useState<string[]>([])
-	const { t } = useTranslation(['services'])
+	const { t } = useTranslation(['services', 'common'])
 	const queryParams = ParamSchema.safeParse(router.query.params)
 	const skip = (PageIndexSchema.parse(router.query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
 	const apiUtils = api.useContext()
+	const { classes } = useStyles()
+	const variants = useCustomVariant()
 
 	const [error, setError] = useState(false)
 	const [data, setData] = useState<ApiOutput['organization']['searchDistance']>()
@@ -162,34 +183,48 @@ const SearchResults = () => {
 			<Head>
 				<title>{t('page-title.base', { ns: 'common', title: '$t(page-title.search-results)' })}</title>
 			</Head>
-			<Grid.Col sm={12} pb={30}>
-				<Group spacing={20} noWrap w='100%'>
-					<SearchBox
-						type='location'
-						loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
-						initialValue={searchParams.searchTerm}
-					/>
-					<ServiceFilter
-						resultCount={resultCount}
-						stateHandler={setFilteredServices}
-						isFetching={searchIsFetching}
-					/>
-					<MoreFilter
-						resultCount={resultCount}
-						stateHandler={setFilteredAttributes}
-						isFetching={searchIsFetching}
-					>
-						{t('more.filters')}
-					</MoreFilter>
+			<Grid.Col xs={12} sm={12} pb={30}>
+				<Group spacing={20} w='100%' className={classes.searchControls}>
+					<Group maw={{ md: '50%', base: '100%' }} w='100%'>
+						<SearchBox
+							type='location'
+							loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
+							initialValue={searchParams.searchTerm}
+						/>
+					</Group>
+					<Group noWrap w={{ base: '100%', md: '50%' }}>
+						<ServiceFilter
+							resultCount={resultCount}
+							stateHandler={setFilteredServices}
+							isFetching={searchIsFetching}
+						/>
+						<MoreFilter
+							resultCount={resultCount}
+							stateHandler={setFilteredAttributes}
+							isFetching={searchIsFetching}
+						>
+							{t('more.filters')}
+						</MoreFilter>
+					</Group>
+					{isTablet && (
+						<>
+							<Divider w='100%' />
+							<Skeleton visible={!resultCount}>
+								<Text variant={variants.Text.utility1}>
+									{t('common:count.result', { count: resultCount })}
+								</Text>
+							</Skeleton>
+						</>
+					)}
 				</Group>
 			</Grid.Col>
-			<Grid.Col>
+			<Grid.Col className={classes.hideMobile}>
 				<SearchResultSidebar
 					resultCount={resultCount}
 					loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
 				/>
 			</Grid.Col>
-			<Grid.Col sm={8}>
+			<Grid.Col xs={12} sm={8} md={8}>
 				{resultDisplay}
 				<Pagination total={getSearchResultPageCount(data?.resultCount)} />
 			</Grid.Col>

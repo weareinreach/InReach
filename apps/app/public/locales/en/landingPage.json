@@ -1,4 +1,7 @@
 {
+	"banner": {
+		"redesign": "Read about the launch of the InReach App redesign on our blog. <Link>Learn more.</Link>"
+	},
 	"call-out": {
 		"hear-from-users": "<Title1>Hear from our users</Title1>",
 		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led nonprofit increasing access to safe, verified resources for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
@@ -15,6 +18,7 @@
 		},
 		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
 		"heading": "Find LGBTQ+ resources.",
+		"privacy-disclaimer": "Your answer is anonymous and not connected to you as an individual user. Read our <Link>privacy policy</Link> to learn more.",
 		"services": {
 			"0": "medical care",
 			"1": "community support",

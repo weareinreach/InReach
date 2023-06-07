@@ -259,6 +259,9 @@ importers:
       axios:
         specifier: 1.4.0
         version: 1.4.0
+      cookies-next:
+        specifier: 2.1.1
+        version: 2.1.1
       dayjs:
         specifier: 1.11.8
         version: 1.11.8
@@ -317,8 +320,8 @@ importers:
         specifier: 4.22.1
         version: 4.22.1(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
-        specifier: 13.3.0
-        version: 13.3.0(i18next@22.5.1)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0)
+        specifier: 13.2.2
+        version: 13.2.2(i18next@22.5.1)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0)
       next-seo:
         specifier: 6.0.0
         version: 6.0.0(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
@@ -922,8 +925,8 @@ importers:
         specifier: 11.0.0
         version: 11.0.0
       next-i18next:
-        specifier: 13.3.0
-        version: 13.3.0(i18next@22.5.1)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0)
+        specifier: 13.2.2
+        version: 13.2.2(i18next@22.5.1)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0)
       typescript:
         specifier: 5.1.3
         version: 5.1.3
@@ -1237,6 +1240,9 @@ importers:
       alex:
         specifier: 11.0.0
         version: 11.0.0
+      cookies-next:
+        specifier: 2.1.1
+        version: 2.1.1
       geolib:
         specifier: 3.3.4
         version: 3.3.4
@@ -1554,8 +1560,8 @@ importers:
         specifier: 4.22.1
         version: 4.22.1(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
-        specifier: 13.3.0
-        version: 13.3.0(i18next@22.5.1)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0)
+        specifier: 13.2.2
+        version: 13.2.2(i18next@22.5.1)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0)
       next-router-mock:
         specifier: 0.9.3
         version: 0.9.3(next@13.4.4)(react@18.2.0)
@@ -7076,7 +7082,7 @@ packages:
     dependencies:
       '@mantine/ssr': 6.0.13(@emotion/react@11.11.0)(@emotion/server@11.11.0)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/styles': 6.0.13(@emotion/react@11.11.0)(react-dom@18.2.0)(react@18.2.0)
-      next: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
@@ -10746,7 +10752,7 @@ packages:
       '@trpc/client': 10.29.1(@trpc/server@10.29.1)
       '@trpc/react-query': 10.29.1(@tanstack/react-query@4.29.12)(@trpc/client@10.29.1)(@trpc/server@10.29.1)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 10.29.1
-      next: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
@@ -10934,7 +10940,6 @@ packages:
 
   /@types/cookie@0.4.1:
     resolution: {integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q==}
-    dev: true
 
   /@types/cors@2.8.13:
     resolution: {integrity: sha512-RG8AStHlUiV5ysZQKq97copd2UmVYw3/pRMLefISZ3S1hK104Cwm7iLQ3fTKx+lsUH2CE8FlLaYeEA2LSeqYUA==}
@@ -11204,7 +11209,6 @@ packages:
 
   /@types/node@16.18.23:
     resolution: {integrity: sha512-XAMpaw1s1+6zM+jn2tmw8MyaRDIJfXxqmIQIS0HfoGYPuf7dUWeiUKopwq13KFX9lEp1+THGtlaaYx39Nxr58g==}
-    dev: true
 
   /@types/node@17.0.45:
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
@@ -13648,11 +13652,18 @@ packages:
   /cookie@0.4.2:
     resolution: {integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==}
     engines: {node: '>= 0.6'}
-    dev: true
 
   /cookie@0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
+
+  /cookies-next@2.1.1:
+    resolution: {integrity: sha512-AZGZPdL1hU3jCjN2UMJTGhLOYzNUN9Gm+v8BdptYIHUdwz397Et1p+sZRfvAl8pKnnmMdX2Pk9xDRKCGBum6GA==}
+    dependencies:
+      '@types/cookie': 0.4.1
+      '@types/node': 16.18.23
+      cookie: 0.4.2
+    dev: false
 
   /copy-anything@3.0.3:
     resolution: {integrity: sha512-fpW2W/BqEzqPp29QS+MwwfisHCQZtiduTe/m8idFo0xbti9fIZ2WVhAsCv4ggFVH3AgCkVdpoOCtQC6gBrdhjw==}
@@ -19918,7 +19929,7 @@ packages:
       '@panva/hkdf': 1.0.4
       cookie: 0.5.0
       jose: 4.13.2
-      next: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
       oauth: 0.9.15
       openid-client: 5.4.0
       preact: 10.13.2
@@ -19927,8 +19938,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       uuid: 9.0.0
 
-  /next-i18next@13.3.0(i18next@22.5.1)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0):
-    resolution: {integrity: sha512-X4kgi51BCOoGdKbv87eZ8OU7ICQDg5IP+T5fNjqDY3os9ea0OKTY4YpAiVFiwcI9XimcUmSPbKO4a9jFUyYSgg==}
+  /next-i18next@13.2.2(i18next@22.5.1)(next@13.4.4)(react-i18next@12.3.1)(react@18.2.0):
+    resolution: {integrity: sha512-t0WU6K+HJoq2nVQ0n6OiiEZja9GyMqtDSU74FmOafgk4ljns+iZ18bsNJiI8rOUXfFfkW96ea1N7D5kbMyT+PA==}
     engines: {node: '>=14'}
     peerDependencies:
       i18next: ^22.0.6
@@ -19942,7 +19953,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       i18next: 22.5.1
       i18next-fs-backend: 2.1.1
-      next: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-i18next: 12.3.1(i18next@22.5.1)(react-dom@18.2.0)(react@18.2.0)
 
@@ -20008,7 +20019,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
-    dev: true
 
   /next@13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-C5S0ysM0Ily9McL4Jb48nOQHT1BukOWI59uC3X/xCMlYIh9rJZCv7nzG92J6e1cOBqQbKovlpgvHWFmz4eKKEA==}
@@ -20058,7 +20068,7 @@ packages:
       next: '*'
     dependencies:
       chokidar: 3.5.3
-      next: 13.4.4(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.4(@babel/core@7.22.1)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /nice-try@1.0.5:

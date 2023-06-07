@@ -14,6 +14,7 @@ import {
 } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
+import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import {
 	type ComponentPropsWithRef,
@@ -108,6 +109,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const [locSearchInput] = useDebouncedValue(form.values.searchLocation, 400)
 	const [orgName, setOrgName] = useState<string>()
 	const [generateSlug, setGenerateSlug] = useState(false)
+	const router = useRouter()
 
 	const countrySelected = Boolean(form.values.countryId)
 
@@ -122,7 +124,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	})
 
 	api.geo.autocomplete.useQuery(
-		{ search: locSearchInput, locale: simpleLocale(i18n.language), fullAddress: true },
+		{ search: locSearchInput, locale: simpleLocale(router.locale), fullAddress: true },
 		{
 			enabled: Boolean(locSearchInput) && locSearchInput !== '',
 			onSuccess: ({ results }) =>
