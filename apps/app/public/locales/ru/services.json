@@ -20,7 +20,9 @@
 		"reception-services": "Услуги приёма",
 		"spiritual-support": "Духовная поддержка",
 		"sponsors": "Спонсоры",
-		"CATEGORYNAME": "Поддержка сообщества"
+		"CATEGORYNAME": "Поддержка сообщества",
+		"community-social-groups": "Сообщество и социальные группы",
+		"reentry-services": "Услуги для повторного ввода"
 	},
 	"computers-and-internet": {
 		"computers-and-internet": "Компьютеры и Интернет",
@@ -151,7 +153,8 @@
 	"sponsors": "Спонсоры",
 	"sports-and-entertainment": {
 		"sports-and-entertainment": "Спорт и развлечения",
-		"CATEGORYNAME": "Спорт и развлечения"
+		"CATEGORYNAME": "Спорт и развлечения",
+		"art-music-literature": "Искусство, музыка и литература"
 	},
 	"substance-use": "Использование вещества",
 	"support-for-caregivers-of-trans-youth": "Оказание поддержки лицам, обеспечивающим уход за детьми в возрасте от 16 лет",
