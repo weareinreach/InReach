@@ -3,17 +3,11 @@
 		"CATEGORYNAME": "Аборт",
 		"abortion-providers": "Поставщики абортов",
 		"financial-assistance": "Финансовая помощь",
-		"lodging-assistance": "Помощь в аренде жилья",
-		"mail-order-services": "Услуги заказа почты",
-		"mental-health-support": "Поддержка психического здоровья",
+		"lodging-assistance": "Помощь в аренде",
+		"mail-order-services": "Сервисы заказа почты",
+		"mental-health-support": "Психическое здоровье",
 		"travel-assistance": "Помощь в организации поездок"
 	},
-	"abortion-providers": "Поставщики абортов",
-	"asylum-application": "Приложение Asylum",
-	"bipoc-support-groups": "Группы поддержки BIPOC",
-	"career-counseling": "Карьерные консультации",
-	"citizenship": "Гражданство",
-	"clothes": "Одежда",
 	"community-support": {
 		"CATEGORYNAME": "Поддержка сообщества",
 		"community-social-groups": "Сообщество и социальные группы",
@@ -22,19 +16,12 @@
 		"reception-services": "Услуги приёма",
 		"reentry-services": "Услуги для повторного ввода",
 		"spiritual-support": "Духовная поддержка",
-		"sponsors": "Спонсоры"
+		"sponsors": "Иммиграционное спонсорство"
 	},
 	"computers-and-internet": {
 		"CATEGORYNAME": "Компьютеры и Интернет",
 		"computers-and-internet": "Компьютеры и Интернет"
 	},
-	"covid-19-services": "Услуги COVID-19",
-	"crime-and-discrimination": "Преступность и дискриминация",
-	"cultural-centers": "Культурные центры",
-	"deferred-action-for-childhood-arrivals-daca": "Отсроченные действия по прибытию в детство (ДАСА)",
-	"dental-care": "Стоматологическая помощь",
-	"deportation-or-removal": "Депортация или удаление",
-	"drop-in-centers-for-lgbtq-youth": "Центры по вывозу молодежи LGBTQ",
 	"education-and-employment": {
 		"CATEGORYNAME": "Образование и занятость",
 		"career-counseling": "Карьерные консультации",
@@ -45,22 +32,11 @@
 		"libraries": "Библиотеки",
 		"scholarships": "Стипендии"
 	},
-	"educational-support-for-lgbtq-youth": "Образовательная поддержка молодежи LGBTQ",
-	"emergency-housing": "Аварийное жилье",
-	"employment-authorization": "Разрешение на занятость",
-	"english-classes": "Курсы английского языка",
-	"family-petitions": "Семейные петиции",
-	"financial-assistance": "Финансовая помощь",
 	"food": {
 		"CATEGORYNAME": "Еда",
 		"food": "Еда",
 		"food-assistance": "Продовольственная помощь"
 	},
-	"gender-affirming-items": "Предметы, подтверждающие гендерный фактор",
-	"gender-neutral-bathrooms": "Гендерно-нейтральные ванные комнаты",
-	"haircuts-and-stylists": "Волосы и стилисты",
-	"hiv-and-sexual-health": "ВИЧ и сексуальное здоровье",
-	"hotlines": "Горячие линии",
 	"housing": {
 		"CATEGORYNAME": "Жилье",
 		"drop-in-centers-for-lgbtq-youth": "Центры по вывозу молодежи LGBTQ",
@@ -69,8 +45,6 @@
 		"short-term-housing": "Краткосрочное жилье",
 		"trans-housing": "Транс жилье"
 	},
-	"housing-information-and-referrals": "Информация о жилье и обращения",
-	"hygiene": "Гигиена",
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "Гигиена и одежда",
 		"clothes": "Одежда",
@@ -79,8 +53,6 @@
 		"haircuts-and-stylists": "Волосы и стилисты",
 		"hygiene": "Гигиена"
 	},
-	"immigration-detention": "Иммиграционное задержание",
-	"leadership-training-and-professional-development": "Подготовка руководящих кадров и профессиональное развитие",
 	"legal": {
 		"CATEGORYNAME": "Юридическая информация",
 		"asylum-application": "Приложение Asylum",
@@ -88,8 +60,8 @@
 		"crime-and-discrimination": "Преступность и дискриминация",
 		"deferred-action-for-childhood-arrivals-daca": "Отсроченные действия по прибытию в детство (ДАСА)",
 		"deportation-or-removal": "Депортация или удаление",
-		"employment-authorization": "Разрешение на занятость",
-		"family-petitions": "Семейные петиции",
+		"employment-authorization": "Разрешение на трудоустройство",
+		"family-petitions": "Ходатайство о семейном положении",
 		"immigration-detention": "Иммиграционное задержание",
 		"legal-advice": "Юридические консультации",
 		"legal-hotlines": "Горячие линии",
@@ -97,18 +69,13 @@
 		"refugee-claim": "Требование беженца",
 		"residency": "Жилье",
 		"special-immigrant-juvenile-status-sijs": "Специальный статус иммигрантов-несовершеннолетних (SIJS)",
-		"t-visa": "T Visa",
-		"u-visa": "U Visa"
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
-	"legal-hotlines": "Горячие линии",
-	"lgbtq-centers": "Центры LGBTQ",
-	"libraries": "Библиотеки",
-	"lodging-assistance": "Помощь в аренде жилья",
 	"mail": {
 		"CATEGORYNAME": "Почта",
 		"mail": "Почта"
 	},
-	"mail-order-services": "Услуги заказа почты",
 	"medical": {
 		"CATEGORYNAME": "Медицинский",
 		"covid-19-services": "Услуги COVID-19",
@@ -119,13 +86,12 @@
 		"physical-evaluations-for-asylum-claim": "Оценка физического характера ходатайств о предоставлении убежища",
 		"physical-evaluations-for-refugee-claim": "Оценка физического состояния претензии беженцев",
 		"trans-health": "Транс здоровья",
-		"trans-health-gender-affirming-surgery": "Trans Health - Поощрение гендерных факторов Хирургии",
-		"trans-health-hormone-and-surgery-letters": "Транс Здоровье - Гормоны и Хирургические письма",
-		"trans-health-hormone-therapy": "Транс Здоровье - Гормоновая Терапия",
-		"trans-health-primary-care": "Трансформация - первичная помощь",
-		"trans-health-speech-therapy": "Транс Здоровье - Речевая Терапия"
+		"trans-health-gender-affirming-surgery": "Противодействие - подтверждение гендерной хирургии",
+		"trans-health-hormone-and-surgery-letters": "Транс здоровье - гормон и письма хирургии",
+		"trans-health-hormone-therapy": "Транс здоровье - гормональная терапия",
+		"trans-health-primary-care": "Противодействие - первичная помощь",
+		"trans-health-speech-therapy": "Транс здоровье - речевая терапия"
 	},
-	"medical-clinics": "Медицинская клиника",
 	"mental-health": {
 		"CATEGORYNAME": "Психическое здоровье",
 		"bipoc-support-groups": "Группы поддержки BIPOC",
@@ -139,36 +105,11 @@
 		"support-groups": "Группы поддержки",
 		"trans-support-groups": "Группы поддержки Trans"
 	},
-	"mental-health-support": "Поддержка психического здоровья",
-	"name-and-gender-change": "Имя и изменения пола",
-	"obgyn-services": "Службы OBGYN",
-	"physical-evaluations-for-refugee-claim": "Оценка физического состояния претензии беженцев",
-	"private-therapy-and-counseling": "Частная терапия и консультирование",
-	"psychological-evaluations-for-asylum-claim": "Психологическая оценка ходатайств о предоставлении убежища",
-	"residency": "Жилье",
-	"scholarships": "Стипендии",
-	"short-term-housing": "Краткосрочное жилье",
-	"special-immigrant-juvenile-status-sijs": "Специальный статус иммигрантов-несовершеннолетних (SIJS)",
-	"spiritual-support": "Духовная поддержка",
-	"sponsors": "Спонсоры",
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Развлечения и мероприятия",
 		"art-music-literature": "Искусство, музыка и литература",
 		"sports-and-entertainment": "Спорт и развлечения"
 	},
-	"substance-use": "Использование вещества",
-	"support-for-caregivers-of-trans-youth": "Оказание поддержки лицам, обеспечивающим уход за детьми в возрасте от 16 лет",
-	"support-for-conversion-therapy-survivors": "Поддержка конверсионной терапии для выживших",
-	"support-groups": "Группы поддержки",
-	"t-visa": "T Visa",
-	"trans-health-gender-affirming-surgery": "Trans Health - Поощрение гендерных факторов Хирургии",
-	"trans-health-hormone-and-surgery-letters": "Транс Здоровье - Гормоны и Хирургические письма",
-	"trans-health-hormone-therapy": "Транс Здоровье - Гормоновая Терапия",
-	"trans-health-primary-care": "Трансформация - первичная помощь",
-	"trans-health-speech-therapy": "Транс Здоровье - Речевая Терапия",
-	"trans-housing": "Транс жилье",
-	"trans-support-groups": "Группы поддержки Trans",
-	"transit-passes-and-discounts": "Транзитные переходы и скидки",
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Перевод и перевод",
 		"for-healthcare": "Здравоохранение",
@@ -179,8 +120,5 @@
 		"CATEGORYNAME": "Транспорт",
 		"transit-passes-and-discounts": "Транзитные переходы и скидки",
 		"transportation-assistance": "Транспортная помощь"
-	},
-	"transportation-assistance": "Транспортная помощь",
-	"travel-assistance": "Помощь в организации поездок",
-	"u-visa": "U Visa"
+	}
 }
