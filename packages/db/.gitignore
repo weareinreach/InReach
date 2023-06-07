@@ -17,9 +17,11 @@ seed/migrate-v1/_generated/*
 !seed/migrate-v1/_generated/.gitkeep
 seed/data/downloaded/*
 !seed/data/downloaded/.gitkeep
+seed/migrate-edits/*.json
 
 prisma/generated
 prisma/dbml
+prisma/data-migrations/**/!*.json
 
 zod-schemas/
 kysely-vercel/

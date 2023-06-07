@@ -21,13 +21,13 @@ export const runMigrateOrgs = async (task: ListrTask) =>
 				title: 'Generate & create base organization records',
 				task: async (_ctx, task): Promise<Listr> => migrateOrgs(task),
 				...taskOptions,
-				// skip: true,
+				skip: true,
 			},
 			{
 				title: 'Generate supplemental organization records',
 				task: async (_ctx, task): Promise<Listr> => generateRecords(task),
 				...taskOptions,
-				// skip: true,
+				skip: true,
 			},
 			{
 				title: 'Run batch insertions',
@@ -41,6 +41,6 @@ export const runMigrateOrgs = async (task: ListrTask) =>
 				...taskOptions,
 				skip: false,
 			},
-		],
-		{ collectErrors: 'full' }
+		]
+		// { collectErrors: 'full' }
 	)
