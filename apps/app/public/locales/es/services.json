@@ -20,7 +20,9 @@
 		"reception-services": "Servicios de vigilancia",
 		"spiritual-support": "Soporte Spiritual",
 		"sponsors": "Patrocinadores",
-		"CATEGORYNAME": "Soporte de la comunidad"
+		"CATEGORYNAME": "Soporte de la comunidad",
+		"community-social-groups": "Comunidad y grupos sociales",
+		"reentry-services": "Servicios de reentrada"
 	},
 	"computers-and-internet": {
 		"computers-and-internet": "Ordenadores e Internet",
@@ -151,7 +153,8 @@
 	"sponsors": "Patrocinadores",
 	"sports-and-entertainment": {
 		"sports-and-entertainment": "Deportes y Entidad/Entidad",
-		"CATEGORYNAME": "Deportes y Entidad/Entidad"
+		"CATEGORYNAME": "Deportes y Entidad/Entidad",
+		"art-music-literature": "Arte, música y literatura"
 	},
 	"substance-use": "Uso de sustancias",
 	"support-for-caregivers-of-trans-youth": "Apoyo a los cuidadores de los jóvenes trans",
