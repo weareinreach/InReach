@@ -1,5 +1,6 @@
 import { Carousel, type Embla, useAnimationOffsetEffect } from '@mantine/carousel'
 import {
+	Box,
 	Card,
 	Container,
 	createStyles,
@@ -11,6 +12,7 @@ import {
 	Title,
 	useMantineTheme,
 } from '@mantine/core'
+import { getCookie } from 'cookies-next'
 import Autoplay from 'embla-carousel-autoplay'
 import { type GetStaticProps } from 'next'
 import Head from 'next/head'
@@ -19,6 +21,7 @@ import { useRef, useState } from 'react'
 
 import { ms } from '@weareinreach/api/lib/milliseconds'
 import { trpcServerClient } from '@weareinreach/api/trpc'
+import { AntiHatePopup } from '@weareinreach/ui/components/core/AntiHateMessage'
 import { Link } from '@weareinreach/ui/components/core/Link'
 import { UserReview } from '@weareinreach/ui/components/core/UserReview'
 import { CallOut } from '@weareinreach/ui/components/sections/CallOut'
@@ -65,6 +68,19 @@ const useStyles = createStyles((theme) => ({
 	cardGroup: {},
 	reviewCard: {
 		border: 'none !important',
+	},
+	banner: {
+		backgroundColor: theme.other.colors.secondary.cornflower,
+		...theme.other.utilityFonts.utility1,
+		color: theme.other.colors.secondary.white,
+		width: '100%',
+		height: rem(52),
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		[theme.fn.largerThan('sm')]: {
+			marginTop: rem(-40),
+		},
 	},
 }))
 
@@ -146,11 +162,34 @@ const Home: NextPageWithoutGrid = () => {
 	const [embla, setEmbla] = useState<Embla | null>(null)
 	const autoplay = useRef(Autoplay({ delay: 5000 }))
 	useAnimationOffsetEffect(embla, 5000)
+
+	// useEffect(()=> {
+	const launchAHpopup = getCookie('inr-ahpop')
+	console.log(launchAHpopup, typeof launchAHpopup)
+	// })
+
 	return (
 		<>
 			<Head>
 				<title>{t('inreach', { ns: 'common' })}</title>
 			</Head>
+			<Box className={classes.banner}>
+				<Text variant={variants.Text.utility1white}>
+					<Trans
+						i18nKey='banner.redesign'
+						ns='landingPage'
+						components={{
+							Link: (
+								<Link
+									external
+									variant={variants.Link.inheritStyle}
+									href='https://inreach.org/introducing-the-redesigned-inreach-app'
+								></Link>
+							),
+						}}
+					/>
+				</Text>
+			</Box>
 			<Container>
 				<Hero />
 			</Container>
@@ -270,6 +309,7 @@ const Home: NextPageWithoutGrid = () => {
 			</CallOut>
 			<AccountVerifyModal />
 			<ResetPasswordModal />
+			<AntiHatePopup autoLaunch={!launchAHpopup} />
 		</>
 	)
 }

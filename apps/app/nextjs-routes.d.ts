@@ -11,6 +11,7 @@ declare module "nextjs-routes" {
   } from "nextjs";
 
   export type Route =
+    | StaticRoute<"/account">
     | StaticRoute<"/admin/quicklink/email">
     | StaticRoute<"/admin/quicklink">
     | StaticRoute<"/admin/quicklink/phone">
@@ -27,9 +28,11 @@ declare module "nextjs-routes" {
     | DynamicRoute<"/org/[slug]/edit", { "slug": string }>
     | DynamicRoute<"/org/[slug]", { "slug": string }>
     | StaticRoute<"/profile">
+    | StaticRoute<"/saved">
     | DynamicRoute<"/search/[...params]", { "params": string[] }>
     | StaticRoute<"/search">
-    | StaticRoute<"/suggest">;
+    | StaticRoute<"/suggest">
+    | StaticRoute<"/support">;
 
   interface StaticRoute<Pathname> {
     pathname: Pathname;
