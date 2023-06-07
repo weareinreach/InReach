@@ -22,6 +22,7 @@
 			"dependsOn": ["download:seedData"]
 		},
 		"download:seedData": {
+			"inputs": ["seed/starterData.ts", "seed/downloadData.ts"],
 			"outputs": ["seed/data/downloaded/*.json"]
 		},
 		"generate:data": {

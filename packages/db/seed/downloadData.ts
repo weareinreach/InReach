@@ -60,6 +60,7 @@ export const task = new Listr(
 			timer: PRESET_TIMER,
 		},
 		exitOnError: false,
+		concurrent: true,
 	}
 )
 
