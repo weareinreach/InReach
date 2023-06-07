@@ -327,6 +327,7 @@ type SearchBoxProps = {
 		isLoading: boolean
 	}
 	initialValue?: string
+	pinToLeft?: boolean
 }
 type FormValues = {
 	search: string
@@ -341,5 +342,4 @@ interface AutocompleteItem {
 	subheading?: string
 	placeId?: string
 	fetching?: boolean
-	pinToLeft?: boolean
 }
