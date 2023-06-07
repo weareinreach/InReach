@@ -6,6 +6,7 @@
 		"geo-public-transit-description": "Public transit / specific directions",
 		"has-confidentiality-policy": "Has A Confidentiality Policy",
 		"offers-remote-services": "Remote",
+		"private-practice": "Private Practice",
 		"religiously-affiliated": "Is religiously affiliated",
 		"time-walk-in": "Has Walk-In Hours",
 		"wheelchair-accessible_false": "Not Accessible",
@@ -94,7 +95,8 @@
 		"bipoc-led": "BIPOC-led",
 		"black-led": "Black-led",
 		"immigrant-led": "Immigrant-led",
-		"trans-led": "Transgender-led"
+		"trans-led": "Transgender-led",
+		"women-led": "Women-led"
 	},
 	"serviceaccess": {
 		"CATEGORYNAME": "Service Access Instructions",
@@ -110,16 +112,21 @@
 		"CATEGORYNAME": "Service Focus",
 		"asylum-seekers": "Asylum Seekers",
 		"bipoc-comm": "BIPOC Community",
+		"caregivers": "Caregivers Community",
+		"disabled": "Disabled Community",
+		"elder": "Focused on Elders",
 		"gender-nc": "Gender Non-Conforming",
 		"hiv-comm": "HIV Community",
 		"immigrant-comm": "Immigrant Community",
+		"incarcerated": "Incarcerated Community",
 		"lgbtq-youth-focus": "LGBTQ+ Youth",
 		"resettled-refugees": "Resettled Refugees",
 		"spanish-speakers": "Spanish Speakers",
 		"trans-comm": "Trans Community",
 		"trans-fem": "Trans Women/Trans Feminine",
 		"trans-masc": "Trans Men/Trans Masculine",
-		"trans-youth-focus": "Trans Youth"
+		"trans-youth-focus": "Trans Youth",
+		"women": "Focused on Women"
 	},
 	"sys": {
 		"CATEGORYNAME": "System",
