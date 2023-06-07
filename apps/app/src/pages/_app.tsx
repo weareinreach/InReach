@@ -1,4 +1,4 @@
-import { MantineProvider } from '@mantine/core'
+import { MantineProvider, Space } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import { Notifications } from '@mantine/notifications'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -14,6 +14,7 @@ import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
 import { PageLoadProgress } from '@weareinreach/ui/components/core/PageLoadProgress'
 import { Footer } from '@weareinreach/ui/components/sections/Footer'
 import { Navbar } from '@weareinreach/ui/components/sections/Navbar'
+import { useScreenSize } from '@weareinreach/ui/hooks/useScreenSize'
 import { BodyGrid } from '@weareinreach/ui/layouts/BodyGrid'
 import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
@@ -61,6 +62,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 		pageProps: { session, ...pageProps },
 	} = appProps
 
+	const { isMobile } = useScreenSize()
 	const PageContent = Component.omitGrid ? (
 		<Component {...pageProps} />
 	) : (
@@ -83,6 +85,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 						<PageLoadProgress />
 						<Navbar />
 						{PageContent}
+						{isMobile && <Space h={80} />}
 						<Footer />
 						<Notifications transitionDuration={500} />
 					</SearchStateProvider>
