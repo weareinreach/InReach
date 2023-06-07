@@ -245,6 +245,9 @@
 	"sign-up-select-law-practice": "¿Dónde se practica la ley?",
 	"sign-up-select-service-provider": "¿Dónde trabajas o voluntario?",
 	"sign-up-success": "¡Te has registrado en una cuenta!",
+	"sign-up-user-exists-body": "Esa dirección de correo electrónico ya está registrada.",
+	"sign-up-user-exists-header": "Puede que ya tenga una cuenta.",
+	"sign-up-verify-email": "Antes de empezar a utilizar su nueva cuenta, debe verificar su dirección de correo electrónico. Compruebe su bandeja de entrada y haga clic en el enlace del mensaje.",
 	"social": {
 		"email": "E-mail",
 		"facebook": "Facebook",
@@ -314,6 +317,7 @@
 		"delete": "Eliminar",
 		"distance": "Distancia",
 		"email": "E-mail",
+		"home": "Inicio",
 		"hours": "Horas",
 		"more": "más",
 		"next": "Siguiente",
