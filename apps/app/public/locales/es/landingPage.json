@@ -1,4 +1,7 @@
 {
+	"banner": {
+		"redesign": "Lee sobre el lanzamiento del rediseño de la aplicación InReach en nuestro blog. <Link>Más información.</Link>"
+	},
 	"call-out": {
 		"hear-from-users": "<Title1>Escuchar a nuestros usuarios</Title1>",
 		"who-we-are": "<Title1>Quien somos</Title1>\n<Text>Somos una organización sin fines de lucro trans-lucrativos que aumenta el acceso a la seguridad recursos verificados para la comunidad LGBTQ+.</Text>\n<Link>Aprende más sobre nosotros</Link>"
@@ -15,6 +18,7 @@
 		},
 		"find-resources": "Encuentra <Service></Service> verificado durante <Community></Community> con InReach.",
 		"heading": "Encontrar recursos de LGBTQ.",
+		"privacy-disclaimer": "Tu respuesta es anónima y no está conectada a ti como usuario individual. Lee nuestra <Link>política de privacidad</Link> para obtener más información.",
 		"services": {
 			"0": "atención médica",
 			"1": "asistencia legal",
