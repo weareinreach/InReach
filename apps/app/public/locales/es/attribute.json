@@ -1,15 +1,16 @@
 {
 	"additional": {
-		"at-capacity": "En capacidad",
 		"CATEGORYNAME": "Información adicional",
+		"at-capacity": "En capacidad",
 		"geo-near-public-transit": "Cerca del transporte público",
 		"geo-public-transit-description": "Tránsito público / direcciones específicas",
 		"has-confidentiality-policy": "Tiene una política de confidencialidad",
 		"offers-remote-services": "Remoto",
 		"religiously-affiliated": "Está afiliado religiosamente",
 		"time-walk-in": "Tiene Horas de Entrada",
+		"wheelchair-accessible_false": "No accesible",
 		"wheelchair-accessible_true": "Accesible",
-		"wheelchair-accessible_false": "No accesible"
+		"private-practice": "Práctica privada"
 	},
 	"alerts": {
 		"CATEGORYNAME": "Alertas",
@@ -17,6 +18,7 @@
 		"warn": "Alerta de advertencia"
 	},
 	"community": {
+		"CATEGORYNAME": "Comunidad",
 		"adults": "\"adulto\" definido como 18 años o más",
 		"africa-immigrant": "Oportunidades que sirven a las de los países africanos",
 		"african-american": "Oportunidades que sirven a la comunidad afroamericana",
@@ -28,14 +30,13 @@
 		"bipoc": "Oportunidades que sirven a negro, indigente y personas de color",
 		"bisexual": "Oportunidades que sirven a la Comunidad Bisexual",
 		"black": "Oportunidades que sirven a la Comunidad Negra",
-		"CATEGORYNAME": "Comunidad",
 		"citizens": "Ciudadanos de {{country}}",
 		"conversion-therapy-survivors": "Oportunidades que sirven a los supervivientes de la conversión",
 		"daca-recipient-seeker": "Oportunidades que sirven a los Dreamers (destinatarios de DACA)",
 		"detained-immigrant": "Oportunidades que sirven a los inmigrantes detenidos",
 		"disabled": "Oportunidades que sirven a la comunidad de discapacitados",
 		"gay": "Oportunidades que sirven a la Comunidad Gay",
-		"gender-nonconforming": "Oportunidades que sirven a la comunidad no conformista de género",
+		"gender-nonconforming": "Oportunidades que sirven a la comunidad inconformista de género",
 		"hiv-aids": "Oportunidades que sirven a la comunidad VIH+ y a la comunidad de riesgo",
 		"homeless": "Oportunidades que sirven a personas sin hogar",
 		"human-trafficking-survivor": "Oportunidades que sirven a los sobrevivientes de la trata de seres humanos",
@@ -56,11 +57,11 @@
 		"seniors": "\"mayor\" definido como 65 años o más",
 		"sex-workers": "Oportunidades que sirven a los profesionales del sexo",
 		"teens": "\"adolescente\" definido como 12-18 años de edad",
-		"transfeminine": "Oportunidades que sirven a la Comunidad Transfeminina",
-		"transgender": "Oportunidades que sirven a la comunidad transgénera (para comunidades no conformes o no binarias, utilice las propiedades no conformes o no binarias)",
-		"transmasculine": "Oportunidades que sirven a la Comunidad Trasmasculina",
 		"trans-youth": "Oportunidades que sirven a la juventud transgénica",
 		"trans-youth-caregivers": "Oportunidades que sirven a los cuidadores de los jóvenes trans",
+		"transfeminine": "Oportunidades que sirven a la Comunidad Trans-Feminina",
+		"transgender": "Oportunidades que sirven a la comunidad transgénera (para comunidades no conformes o no binarias, utilice las propiedades no conformes o no binarias)",
+		"transmasculine": "Oportunidades que sirven a la comunidad tras Masculine",
 		"unaccompanied-minors": "Oportunidades que sirven a menores no acompañados",
 		"undocumented": "Oportunidades que sirven a inmigrantes indocumentados"
 	},
@@ -84,32 +85,33 @@
 		"time-appointment-required": "Cita de tiempo requerida"
 	},
 	"lang": {
+		"CATEGORYNAME": "Idiomas",
 		"all-languages-by-interpreter": "Todos los idiomas a través del intérprete",
 		"american-sign-language": "Idioma de signos Americanos",
-		"CATEGORYNAME": "Idiomas",
 		"lang-offered": "Idiomas específicos ofrecidos"
 	},
 	"orgleader": {
+		"CATEGORYNAME": "Líder de la organización",
 		"bipoc-led": "Led BIPOC",
 		"black-led": "Led Negro",
-		"CATEGORYNAME": "Líder de la organización",
 		"immigrant-led": "Led Inmigrante",
-		"trans-led": "Trans Led"
+		"trans-led": "Trans Led",
+		"women-led": "Mujeres lideradas"
 	},
 	"serviceaccess": {
+		"CATEGORYNAME": "Instrucciones de acceso al servicio",
 		"accessemail": "Instrucciones de Acceso - Email",
 		"accessfile": "Instrucciones de Acceso - Archivo",
 		"accesslink": "Instrucciones de Acceso - Enlace",
 		"accesslocation": "Instrucciones de Acceso - Ubicación",
 		"accessphone": "Instrucciones de acceso - Teléfono",
 		"accesspublictransit": "Instrucciones de acceso - Tránsito público",
-		"accesstext": "Instrucciones de Acceso - Texto",
-		"CATEGORYNAME": "Instrucciones de acceso al servicio"
+		"accesstext": "Instrucciones de Acceso - Texto"
 	},
 	"srvfocus": {
+		"CATEGORYNAME": "Enfoque del servicio",
 		"asylum-seekers": "Buscadores de asilo",
 		"bipoc-comm": "Comunidad BIPOC",
-		"CATEGORYNAME": "Enfoque del servicio",
 		"gender-nc": "Género no conformes",
 		"hiv-comm": "Comunidad del VIH",
 		"immigrant-comm": "Comunidad Inmigrante",
@@ -117,9 +119,14 @@
 		"resettled-refugees": "Refugios Reiniciados",
 		"spanish-speakers": "Altavoz español",
 		"trans-comm": "Comunidad Trans",
-		"trans-fem": "Trans mujeres/transfeminina",
-		"trans-masc": "Trans hombres/Transmasculina",
-		"trans-youth-focus": "Trans Youth"
+		"trans-fem": "Trans Mujer/Trans Feminina",
+		"trans-masc": "Masculina Trans",
+		"trans-youth-focus": "Trans Youth",
+		"caregivers": "Comunidad de cuidadores",
+		"disabled": "Comunidad deshabilitada",
+		"elder": "Centrado en los ancianos",
+		"incarcerated": "Comunidad encarcelada",
+		"women": "Centrado en las mujeres"
 	},
 	"sys": {
 		"CATEGORYNAME": "Sistema",
