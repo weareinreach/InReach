@@ -1,16 +1,16 @@
 {
 	"about-us": "À propos de nous",
-	"accessible-building_false": "Ce bâtiment n'est PAS accessible aux fauteuils roulants",
+	"accessible-building_false": "Ce bâtiment n'est PAS accessible en fauteuil roulant",
 	"accessible-building_true": "Ce bâtiment est accessible en fauteuil roulant",
-	"account": "Compte client",
+	"account": "Compte",
 	"add": "Ajouter {{item}}",
-	"address": "Adresses",
+	"address": "Adresse",
 	"address_physical": "Adresse physique",
 	"adjective": {
-		"organization": "{{adjective}} organisation"
+		"organization": "Organisation {{adjective}}"
 	},
 	"agree-disclaimer": "En cliquant sur \"{{action}}\", vous acceptez la <link1>Politique de confidentialité d'InReach</link1> et les <link2>Conditions d'utilisation</link2>.",
-	"alert-message-1": "<strong>Politique COVID-19 :</strong> Avec des nouvelles et des meilleures pratiques pour la prévention COVID-19 changeant rapidement chaque jour, Santé Whitman-Walker continue de mettre à jour ses services afin de refléter les recommandations de prévention. Veuillez consulter leur site Web pour obtenir les informations les plus à jour.",
+	"alert-message-1": "<strong>Politique COVID-19 :</strong> Avec les nouvelles et les meilleures pratiques pour la prévention COVID-19 changeant rapidement chaque jour, Whitman-Walker Health continue de mettre à jour ses services afin de refléter les recommandations de prévention. Veuillez consulter leur site web pour obtenir les informations les plus à jour.",
 	"all-service-category": "Tous les {{serviceCategory}}",
 	"anti-hate": {
 		"body": "En utilisant InReach, vous convenez que vous n'utiliserez pas ces informations à des fins malveillantes, haineuses, homophobes, transphobiques, xénophobes et/ou racistes.",
@@ -308,7 +308,7 @@
 	"visit": "Visiter",
 	"words": {
 		"accept": "Accepter",
-		"account": "Compte client",
+		"account": "Compte",
 		"add": "Ajouter",
 		"and": "et",
 		"and-x-more": "et {{count}} de plus",
