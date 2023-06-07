@@ -20,7 +20,9 @@
 		"reception-services": "خدمات الاستقبال",
 		"spiritual-support": "الدعم الروحي",
 		"sponsors": "الراعيون",
-		"CATEGORYNAME": "الدعم المجتمعي"
+		"CATEGORYNAME": "الدعم المجتمعي",
+		"community-social-groups": "المجموعات المجتمعية والاجتماعية",
+		"reentry-services": "خدمات العودة"
 	},
 	"computers-and-internet": {
 		"computers-and-internet": "الحواسيب والإنترنت",
@@ -151,7 +153,8 @@
 	"sponsors": "الراعيون",
 	"sports-and-entertainment": {
 		"sports-and-entertainment": "الرياضة والترفيه",
-		"CATEGORYNAME": "الرياضة والترفيه"
+		"CATEGORYNAME": "الرياضة والترفيه",
+		"art-music-literature": "الفن والموسيقى والآداب"
 	},
 	"substance-use": "استخدام المواد",
 	"support-for-caregivers-of-trans-youth": "تقديم الدعم لمقدمي الرعاية للقاصرين من الشباب",
