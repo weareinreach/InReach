@@ -20,7 +20,9 @@
 		"reception-services": "crwdns987898:0crwdne987898:0",
 		"spiritual-support": "crwdns987900:0crwdne987900:0",
 		"sponsors": "crwdns987902:0crwdne987902:0",
-		"CATEGORYNAME": "crwdns987904:0crwdne987904:0"
+		"CATEGORYNAME": "crwdns987904:0crwdne987904:0",
+		"community-social-groups": "crwdns1944511:0crwdne1944511:0",
+		"reentry-services": "crwdns1944513:0crwdne1944513:0"
 	},
 	"computers-and-internet": {
 		"computers-and-internet": "crwdns987906:0crwdne987906:0",
@@ -151,7 +153,8 @@
 	"sponsors": "crwdns988122:0crwdne988122:0",
 	"sports-and-entertainment": {
 		"sports-and-entertainment": "crwdns988124:0crwdne988124:0",
-		"CATEGORYNAME": "crwdns988126:0crwdne988126:0"
+		"CATEGORYNAME": "crwdns988126:0crwdne988126:0",
+		"art-music-literature": "crwdns1944517:0crwdne1944517:0"
 	},
 	"substance-use": "crwdns988128:0crwdne988128:0",
 	"support-for-caregivers-of-trans-youth": "crwdns988130:0crwdne988130:0",
