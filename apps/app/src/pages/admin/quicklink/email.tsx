@@ -397,7 +397,7 @@ const QuickLink = () => {
 					<Tabs.Tab value='/admin/quicklink/services'>Location Services</Tabs.Tab>
 				</Tabs.List>
 			</Tabs>
-			{isLoading || !data || !form.values.data?.length ? (
+			{isLoading ? (
 				<Center h='75vh'>
 					<Loader />
 				</Center>
@@ -408,6 +408,10 @@ const QuickLink = () => {
 						<QuickPromotionModal autoLaunch noClose />
 					</Overlay>
 				</>
+			) : !isLoading && !form.values.data?.length ? (
+				<Center h='75vh'>
+					<Text variant={variants.Text.utility1}>No pending links.</Text>
+				</Center>
 			) : (
 				<>
 					<Table>
