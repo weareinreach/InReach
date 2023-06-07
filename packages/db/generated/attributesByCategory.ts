@@ -67,18 +67,6 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01H273GHADR15DGYH06SSN5XVG',
-					icon: null,
-					tag: 'private-practice',
-					tsKey: 'additional.private-practice',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
 					id: 'attr_01GW2HHFV4TM7H5V6FHWA7S9JK',
 					icon: null,
 					tag: 'time-walk-in',
@@ -97,21 +85,21 @@ export const attributesByCategory = [
 					tsKey: 'additional.wheelchair-accessible',
 					tsNs: 'attribute',
 					showOnLocation: null,
-					filterType: 'INCLUDE',
+					filterType: null,
 					iconBg: null,
 				},
 			},
 		],
 	},
 	{
-		id: 'attc_01GXS3AYEER4CCSX670S9Z84EB',
+		id: 'attc_01GYSVX1N9T91BJYSHRDPCHJBS',
 		tag: 'alerts',
 		icon: null,
 		ns: 'attribute',
 		attributes: [
 			{
 				attribute: {
-					id: 'attr_01GXS3AYESEMT09DW78G5X396D',
+					id: 'attr_01GYSVX1NAMR6RDV6M69H4KN3T',
 					icon: 'carbon:information-filled',
 					tag: 'info',
 					tsKey: 'alerts.info',
@@ -123,7 +111,7 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GXS3AYF9A67KMYVED2ZFG25G',
+					id: 'attr_01GYSVX1NAKP7C6JKJ342ZM35M',
 					icon: 'carbon:warning-filled',
 					tag: 'warn',
 					tsKey: 'alerts.warn',
@@ -437,18 +425,6 @@ export const attributesByCategory = [
 					iconBg: '#D4A1BA',
 				},
 			},
-			{
-				attribute: {
-					id: 'attr_01H273GW0GN44GZ5RK1F51Z1QZ',
-					icon: null,
-					tag: 'women-led',
-					tsKey: 'orgleader.women-led',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
 		],
 	},
 	{
@@ -575,42 +551,6 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01H273G39A14TGHT4DA1T0DW5M',
-					icon: null,
-					tag: 'caregivers-focus',
-					tsKey: 'srvfocus.caregivers',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01H273ETEX43K0BR6FG3G7MZ4S',
-					icon: null,
-					tag: 'disabled-focus',
-					tsKey: 'srvfocus.disabled',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01H273FCJ8NNG1T1BV300CN702',
-					icon: null,
-					tag: 'elder-focus',
-					tsKey: 'srvfocus.elder',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
 					id: 'attr_01GW2HHFVQ7SYGD3KM8WP9X50B',
 					icon: '🏳️‍⚧️',
 					tag: 'gender-nc',
@@ -639,18 +579,6 @@ export const attributesByCategory = [
 					icon: '️‍️‍🌎',
 					tag: 'immigrant-comm',
 					tsKey: 'srvfocus.immigrant-comm',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01H273FPTCFKTVBNK158HE9M42',
-					icon: null,
-					tag: 'incarcerated-focus',
-					tsKey: 'srvfocus.incarcerated',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -735,18 +663,6 @@ export const attributesByCategory = [
 					icon: '🌱',
 					tag: 'trans-youth-focus',
 					tsKey: 'srvfocus.trans-youth-focus',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
-					id: 'attr_01H273DMQ22TVP3RA36M1XWFBA',
-					icon: null,
-					tag: 'women-focus',
-					tsKey: 'srvfocus.women',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,

@@ -71,7 +71,7 @@ const QuickLink = () => {
 		},
 	})
 
-	const { data, isLoading } = api.quicklink.getPhoneData.useQuery(
+	const { data, isLoading, isSuccess } = api.quicklink.getPhoneData.useQuery(
 		{
 			limit: RESULTS_PER_PAGE,
 			skip: RESULTS_PER_PAGE * page,
@@ -380,7 +380,7 @@ const QuickLink = () => {
 					<Tabs.Tab value='/admin/quicklink/services'>Location Services</Tabs.Tab>
 				</Tabs.List>
 			</Tabs>
-			{isLoading || !data || !form.values.data?.length ? (
+			{isLoading ? (
 				<Center h='75vh'>
 					<Loader />
 				</Center>
@@ -391,6 +391,10 @@ const QuickLink = () => {
 						<QuickPromotionModal autoLaunch noClose />
 					</Overlay>
 				</>
+			) : isSuccess && !form.values.data?.length ? (
+				<Center h='75vh'>
+					<Text variant={variants.Text.utility1}>No pending links.</Text>
+				</Center>
 			) : (
 				<>
 					<Table>
