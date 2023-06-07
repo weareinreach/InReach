@@ -31,7 +31,7 @@ export default class _Document extends Document {
 					<Script
 						src='https://stats.inreach.org/umami.js'
 						data-website-id='f228c645-98f3-4928-9d7a-61f65082728b'
-						data-domains='inreach.org'
+						data-domains='app.inreach.org'
 					/>
 				</body>
 			</Html>
