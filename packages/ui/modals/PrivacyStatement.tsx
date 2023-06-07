@@ -13,13 +13,14 @@ import { Trans } from 'next-i18next'
 import { forwardRef } from 'react'
 
 import { Link } from '~ui/components/core/Link'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
 import { ModalTitle } from './ModalTitle'
 
 export const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProps>((props, ref) => {
 	const variants = useCustomVariant()
 	const [opened, handler] = useDisclosure(false)
+	const { isMobile } = useScreenSize()
 
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
 
@@ -67,7 +68,7 @@ export const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyMo
 
 	return (
 		<>
-			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
+			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
 				<Stack align='center' spacing={16}>
 					<Trans
 						i18nKey='privacy-statement-head'
