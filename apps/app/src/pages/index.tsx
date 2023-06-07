@@ -17,7 +17,7 @@ import Autoplay from 'embla-carousel-autoplay'
 import { type GetStaticProps } from 'next'
 import Head from 'next/head'
 import { type TFunction, Trans, useTranslation } from 'next-i18next'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { ms } from '@weareinreach/api/lib/milliseconds'
 import { trpcServerClient } from '@weareinreach/api/trpc'

@@ -8,7 +8,7 @@ import { forwardRef, useEffect } from 'react'
 import { type BreadcrumbProps } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
 import { LoginModalLauncher } from './Login'
 import { ModalTitle } from './ModalTitle'

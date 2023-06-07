@@ -1,6 +1,5 @@
 import { Divider, Flex, Grid, Stack, Title, useMantineTheme } from '@mantine/core'
 import { type GetServerSideProps } from 'next'
-import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
 import { AntiHateMessage } from '@weareinreach/ui/components/core/AntiHateMessage'
@@ -12,7 +11,6 @@ import { GenericContentModal, PrivacyStatementModal } from '~ui/modals'
 
 const SavedLists = () => {
 	const { t } = useTranslation('common')
-	const router = useRouter()
 	const theme = useMantineTheme()
 
 	const variants = useCustomVariant()
