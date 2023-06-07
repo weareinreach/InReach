@@ -9,23 +9,23 @@
 			"1": "immigrés LGBTQ+",
 			"2": "réfugiés LGBTQ+",
 			"3": "hommes trans",
-			"4": "femmes trans",
-			"5": "Jeunesse LGBTQ+",
-			"6": "Personnes séropositives"
+			"4": "la communauté transgenres",
+			"5": "Communautés de BIPOC LGBTQ+",
+			"6": "soignants des jeunes LGBTQ+"
 		},
-		"find-resources": "Trouvez <Service></Service> vérifié pour <Community></Community> avec InReach.",
+		"find-resources": "<Text>Trouvez </Text><Service><Service></Service><Text> vérifié pour </Text><Community></Community><Text> avec InReach.</Text>",
 		"heading": "Trouver des ressources LGBTQ.",
 		"services": {
 			"0": "soins médicaux",
-			"1": "assistance juridique",
-			"2": "centres culturels",
+			"1": "soutien de la communauté",
+			"2": "soins de santé mentale",
 			"3": "éducation",
-			"4": "soutien spirituel",
-			"5": "conseil professionnel",
-			"6": "soutien éducatif",
-			"7": "cours de langue",
-			"8": "formation au leadership",
-			"9": "logement d'urgence"
+			"4": "emploi",
+			"5": "nourriture",
+			"6": "logement",
+			"7": "vêtement",
+			"8": "aide juridique",
+			"9": "Traduction"
 		},
 		"subheading": "Bienvenue sur la première plateforme technologique au monde assortie TLGBQ+ (transsexuel, lesbien, gay, bisexuel, queer et plus d'identités) les personnes confrontées à la discrimination et à la persécution avec des ressources sûres et vérifiées."
 	},
