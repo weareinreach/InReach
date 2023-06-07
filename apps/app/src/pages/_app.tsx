@@ -85,7 +85,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 						<PageLoadProgress />
 						<Navbar />
 						{PageContent}
-						{isMobile || (isTablet && <Space h={80} />)}
+						{(isMobile || isTablet) && <Space h={80} />}
 						<Footer />
 						<Notifications transitionDuration={500} />
 					</SearchStateProvider>

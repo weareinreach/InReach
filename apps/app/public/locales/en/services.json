@@ -1,40 +1,27 @@
 {
 	"abortion-care": {
 		"CATEGORYNAME": "Abortion Care",
-		"abortion-providers": "Abortion Providers",
-		"financial-assistance": "Financial Assistance",
-		"lodging-assistance": "Lodging Assistance",
-		"mail-order-services": "Mail Order Services",
-		"mental-health-support": "Mental Health Support",
-		"travel-assistance": "Travel Assistance"
+		"abortion-providers": "Abortion providers",
+		"financial-assistance": "Financial assistance",
+		"lodging-assistance": "Lodging assistance",
+		"mail-order-services": "Mail order services",
+		"mental-health-support": "Mental health support",
+		"travel-assistance": "Travel assistance"
 	},
-	"abortion-providers": "Abortion Providers",
-	"asylum-application": "Asylum application",
-	"bipoc-support-groups": "BIPOC support groups",
-	"career-counseling": "Career counseling",
-	"citizenship": "Citizenship",
-	"clothes": "Clothes",
 	"community-support": {
 		"CATEGORYNAME": "Community Support",
-		"community-social-groups": "Community & Social Groups",
+		"community-social-groups": "Community and social groups",
 		"cultural-centers": "Cultural centers",
 		"lgbtq-centers": "LGBTQ centers",
 		"reception-services": "Reception services",
 		"reentry-services": "Re-entry services",
-		"spiritual-support": "Spiritual Support",
-		"sponsors": "Sponsors"
+		"spiritual-support": "Spiritual support",
+		"sponsors": "Immigration sponsorship"
 	},
 	"computers-and-internet": {
 		"CATEGORYNAME": "Computers and Internet",
-		"computers-and-internet": "Computers and Internet"
+		"computers-and-internet": "Computers and internet"
 	},
-	"covid-19-services": "COVID-19 services",
-	"crime-and-discrimination": "Crime and discrimination",
-	"cultural-centers": "Cultural centers",
-	"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
-	"dental-care": "Dental care",
-	"deportation-or-removal": "Deportation or removal",
-	"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
 	"education-and-employment": {
 		"CATEGORYNAME": "Education and Employment",
 		"career-counseling": "Career counseling",
@@ -45,22 +32,11 @@
 		"libraries": "Libraries",
 		"scholarships": "Scholarships"
 	},
-	"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
-	"emergency-housing": "Emergency housing",
-	"employment-authorization": "Employment Authorization",
-	"english-classes": "English classes",
-	"family-petitions": "Family Petitions",
-	"financial-assistance": "Financial Assistance",
 	"food": {
 		"CATEGORYNAME": "Food",
 		"food": "Food",
 		"food-assistance": "Food assistance"
 	},
-	"gender-affirming-items": "Gender-affirming items",
-	"gender-neutral-bathrooms": "Gender-neutral bathrooms",
-	"haircuts-and-stylists": "Haircuts and stylists",
-	"hiv-and-sexual-health": "HIV and sexual health",
-	"hotlines": "Hotlines",
 	"housing": {
 		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
@@ -69,8 +45,6 @@
 		"short-term-housing": "Short-term housing",
 		"trans-housing": "Trans housing"
 	},
-	"housing-information-and-referrals": "Housing information and referrals",
-	"hygiene": "Hygiene",
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "Hygiene and Clothing",
 		"clothes": "Clothes",
@@ -79,8 +53,6 @@
 		"haircuts-and-stylists": "Haircuts and stylists",
 		"hygiene": "Hygiene"
 	},
-	"immigration-detention": "Immigration detention",
-	"leadership-training-and-professional-development": "Leadership training and professional development",
 	"legal": {
 		"CATEGORYNAME": "Legal",
 		"asylum-application": "Asylum application",
@@ -88,8 +60,8 @@
 		"crime-and-discrimination": "Crime and discrimination",
 		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
 		"deportation-or-removal": "Deportation or removal",
-		"employment-authorization": "Employment Authorization",
-		"family-petitions": "Family Petitions",
+		"employment-authorization": "Employment authorization",
+		"family-petitions": "Family petitions",
 		"immigration-detention": "Immigration detention",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "Legal hotlines",
@@ -97,18 +69,13 @@
 		"refugee-claim": "Refugee claim",
 		"residency": "Residency",
 		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
-		"t-visa": "T Visa",
-		"u-visa": "U Visa"
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
-	"legal-hotlines": "Legal hotlines",
-	"lgbtq-centers": "LGBTQ centers",
-	"libraries": "Libraries",
-	"lodging-assistance": "Lodging Assistance",
 	"mail": {
 		"CATEGORYNAME": "Mail",
 		"mail": "Mail"
 	},
-	"mail-order-services": "Mail Order Services",
 	"medical": {
 		"CATEGORYNAME": "Medical",
 		"covid-19-services": "COVID-19 services",
@@ -119,13 +86,12 @@
 		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
 		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
 		"trans-health": "Trans health",
-		"trans-health-gender-affirming-surgery": "Trans Health - Gender Affirming Surgery",
-		"trans-health-hormone-and-surgery-letters": "Trans Health - Hormone and Surgery Letters",
-		"trans-health-hormone-therapy": "Trans Health - Hormone Therapy",
-		"trans-health-primary-care": "Trans Health - Primary Care",
-		"trans-health-speech-therapy": "Trans Health - Speech Therapy"
+		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
+		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
+		"trans-health-hormone-therapy": "Trans health - hormone therapy",
+		"trans-health-primary-care": "Trans health - primary care",
+		"trans-health-speech-therapy": "Trans health - speech therapy"
 	},
-	"medical-clinics": "Medical clinics",
 	"mental-health": {
 		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "BIPOC support groups",
@@ -139,36 +105,11 @@
 		"support-groups": "Support groups",
 		"trans-support-groups": "Trans support groups"
 	},
-	"mental-health-support": "Mental Health Support",
-	"name-and-gender-change": "Name and gender change",
-	"obgyn-services": "OBGYN services",
-	"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
-	"private-therapy-and-counseling": "Private therapy and counseling",
-	"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
-	"residency": "Residency",
-	"scholarships": "Scholarships",
-	"short-term-housing": "Short-term housing",
-	"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
-	"spiritual-support": "Spiritual Support",
-	"sponsors": "Sponsors",
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Entertainment & Activities",
-		"art-music-literature": "Art, Music, & Literature",
-		"sports-and-entertainment": "Sports and Entertainment"
+		"CATEGORYNAME": "Entertainment and Activities",
+		"art-music-literature": "Art, music, and literature",
+		"sports-and-entertainment": "Sports and entertainment"
 	},
-	"substance-use": "Substance use",
-	"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
-	"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
-	"support-groups": "Support groups",
-	"t-visa": "T Visa",
-	"trans-health-gender-affirming-surgery": "Trans Health - Gender Affirming Surgery",
-	"trans-health-hormone-and-surgery-letters": "Trans Health - Hormone and Surgery Letters",
-	"trans-health-hormone-therapy": "Trans Health - Hormone Therapy",
-	"trans-health-primary-care": "Trans Health - Primary Care",
-	"trans-health-speech-therapy": "Trans Health - Speech Therapy",
-	"trans-housing": "Trans housing",
-	"trans-support-groups": "Trans support groups",
-	"transit-passes-and-discounts": "Transit passes and discounts",
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "For healthcare",
@@ -179,8 +120,5 @@
 		"CATEGORYNAME": "Transportation",
 		"transit-passes-and-discounts": "Transit passes and discounts",
 		"transportation-assistance": "Transportation assistance"
-	},
-	"transportation-assistance": "Transportation assistance",
-	"travel-assistance": "Travel Assistance",
-	"u-visa": "U Visa"
+	}
 }
