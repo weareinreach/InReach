@@ -6,9 +6,7 @@
 	"add": "Add {{item}}",
 	"address": "Address",
 	"address_physical": "Physical address",
-	"adjective": {
-		"organization": "{{adjective}} organization"
-	},
+	"adjective": { "organization": "{{adjective}} organization" },
 	"agree-disclaimer": "By clicking \"{{action}}\" you agree to InReach's <link1>Privacy Policy</link1> and <link2>Terms of Use</link2>.",
 	"alert-message-1": "<strong>COVID-19 policy:</strong> With news and best practices for COVID-19 prevention changing rapidly each day, Whitman-Walker Health continues to update their services to reflect prevention recommendations. Please check their website for the most up-to-date information.",
 	"all-service-category": "All {{serviceCategory}}",
@@ -16,10 +14,7 @@
 		"body": "By using InReach, you agree that you will not use this resource information for harmful, hate-based, homophobic, transphobic, xenophobic, and/or racist agendas or commentary.",
 		"title": "Anti-hate commitment"
 	},
-	"breadcrumb": {
-		"back-to-dynamic": "Back to <u>{{page}}</u>",
-		"back-to-search": "Back to search"
-	},
+	"breadcrumb": { "back-to-dynamic": "Back to <u>{{page}}</u>", "back-to-search": "Back to search" },
 	"cancel": "Cancel",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach (coming soon!)</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -36,20 +31,13 @@
 	"connect": "Connect",
 	"contact": "Contact",
 	"contact-us": "Contact Us",
-	"count": {
-		"result_one": "{{count}} result",
-		"result_other": "{{count}} results"
-	},
+	"count": { "result_one": "{{count}} result", "result_other": "{{count}} results" },
 	"country-select": "Choose a country",
 	"create-new-list": "Create new list",
 	"current-location": "Current location",
 	"delete-account": "Delete your account?",
 	"delete-account-password": "Enter your account password to confirm.",
-	"direct": {
-		"email": "Direct email",
-		"phone": "Direct phone",
-		"website": "Direct website"
-	},
+	"direct": { "email": "Direct email", "phone": "Direct phone", "website": "Direct website" },
 	"disclaimer": "Disclaimer",
 	"dont-have-account": "Don't have an account?",
 	"download-app": "Download the app",
@@ -60,10 +48,7 @@
 	"enter-email-placeholder": "Enter email address...",
 	"enter-password-placeholder": "Enter password...",
 	"enter-review": "Enter your review...",
-	"errors": {
-		"oh-no": "Oh no!",
-		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
-	},
+	"errors": { "oh-no": "Oh no!", "try-again-text": "<Text>Something went wrong! Please try again.</Text>" },
 	"exclude": "Exclude",
 	"filter-by-service": "Filter by services",
 	"find-resources": "Find resources",
@@ -123,22 +108,14 @@
 		"accessibility": "<stack16>\n<title2>Accessibility Statement</title2>\n<textDarkGray>InReach’s open source technology is built for the diverse LGBTQ+ community, including users with disabilities.</textDarkGray>\n<textDarkGray>The free InReach App is available on web (desktop and mobile), and native iOS and Android. Beginning with the launch of our latest redesign (February 2023), InReach will strive to meet <linkAccessibility>Web Content Accessibility Guidelines (WCAG) level AA criteria.</linkAccessibility></textDarkGray>\n<textDarkGray>At InReach, we strive to make our tech platform accessible for as many users and devices as possible in alignment with our mission to serve all LGBTQ+ people facing discrimination and persecution.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>The InReach team will do its best to confirm the eligibility and basic facts about service providers listed on this website. However, we cannot guarantee the viability or capabilities of any such providers. Consequently, InReach assumes no responsibility for the actions of providers listed on this website and users who contact any such providers do so at their own risk.</textReg>\n</stack16>"
 	},
-	"modal-more-options": {
-		"exclude": "Exclude resources that...",
-		"include": "Include resources that..."
-	},
-	"more": {
-		"options": "More options"
-	},
+	"modal-more-options": { "exclude": "Exclude resources that...", "include": "Include resources that..." },
+	"more": { "options": "More options" },
 	"no-reviews": "No reviews yet",
 	"none-apply": "None of these apply to me",
 	"offices-and-locations": "Offices & Locations",
 	"org-image": "Organization photo",
 	"other-specify": "Other (please specify)",
-	"page-title": {
-		"base": "{{title}} - InReach",
-		"search-results": "Search Results"
-	},
+	"page-title": { "base": "{{title}} - InReach", "search-results": "Search Results" },
 	"password": "Password",
 	"password-confirm": "Confirm password",
 	"password-error-match": "Passwords must match",
