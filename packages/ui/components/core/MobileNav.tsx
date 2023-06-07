@@ -57,6 +57,7 @@ const useStyles = createStyles((theme) => ({
 		width: '100%',
 		zIndex: 20,
 		backgroundColor: theme.other.colors.secondary.white,
+		boxShadow: `${rem(0)} ${rem(-8)} ${rem(16)} rgba(0, 0, 0, 0.05)`,
 	},
 }))
 
@@ -124,7 +125,7 @@ export const MobileNav = ({ className }: { className?: string }) => {
 						/>
 					}
 				>
-					{t(searchParams.searchState.params.length ? 'words.search' : 'words:home')}
+					{t(searchParams.searchState.params.length ? 'words.search' : 'words.home')}
 				</Tabs.Tab>{' '}
 				<Tabs.Tab value='saved' icon={<Icon icon='carbon:favorite' height={20} />}>
 					{t('words.saved')}

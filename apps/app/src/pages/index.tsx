@@ -1,5 +1,6 @@
 import { Carousel, type Embla, useAnimationOffsetEffect } from '@mantine/carousel'
 import {
+	Box,
 	Card,
 	Container,
 	createStyles,
@@ -65,6 +66,19 @@ const useStyles = createStyles((theme) => ({
 	cardGroup: {},
 	reviewCard: {
 		border: 'none !important',
+	},
+	banner: {
+		backgroundColor: theme.other.colors.secondary.cornflower,
+		...theme.other.utilityFonts.utility1,
+		color: theme.other.colors.secondary.white,
+		width: '100%',
+		height: rem(52),
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		[theme.fn.largerThan('sm')]: {
+			marginTop: rem(-40),
+		},
 	},
 }))
 
@@ -151,6 +165,23 @@ const Home: NextPageWithoutGrid = () => {
 			<Head>
 				<title>{t('inreach', { ns: 'common' })}</title>
 			</Head>
+			<Box className={classes.banner}>
+				<Text variant={variants.Text.utility1white}>
+					<Trans
+						i18nKey='banner.redesign'
+						ns='landingPage'
+						components={{
+							Link: (
+								<Link
+									external
+									variant={variants.Link.inheritStyle}
+									href='https://inreach.org/introducing-the-redesigned-inreach-app'
+								></Link>
+							),
+						}}
+					/>
+				</Text>
+			</Box>
 			<Container>
 				<Hero />
 			</Container>
