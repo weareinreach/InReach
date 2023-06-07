@@ -1,4 +1,5 @@
 import { Divider, Overlay, Skeleton, Stack, Switch, Text, Title, useMantineTheme } from '@mantine/core'
+import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { type Dispatch, type SetStateAction } from 'react'
 
@@ -6,6 +7,8 @@ import { AntiHateMessage } from '~ui/components/core/AntiHateMessage'
 import { SearchBox } from '~ui/components/core/SearchBox'
 // import { SearchDistance } from '~ui/components/core/SearchDistance'
 import { useCustomVariant } from '~ui/hooks'
+
+import { Button } from '../core'
 
 export const SearchResultSidebar = ({ resultCount, loadingManager }: SearchResultSidebarProps) => {
 	const { t } = useTranslation('common')
@@ -43,7 +46,9 @@ export const SearchResultSidebar = ({ resultCount, loadingManager }: SearchResul
 				loadingManager={loadingManager}
 			/>
 			<Divider mt={-10} />
-
+			<Button variant={variants.Button.primaryLg} component={Link} href='/suggest'>
+				{t('suggest-a-resource')}
+			</Button>
 			<AntiHateMessage />
 		</Stack>
 	)
