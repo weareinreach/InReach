@@ -13,14 +13,14 @@
 	"alert-message-1": "<strong>Politique COVID-19 :</strong> Avec les nouvelles et les meilleures pratiques pour la prévention COVID-19 changeant rapidement chaque jour, Whitman-Walker Health continue de mettre à jour ses services afin de refléter les recommandations de prévention. Veuillez consulter leur site web pour obtenir les informations les plus à jour.",
 	"all-service-category": "Tous les {{serviceCategory}}",
 	"anti-hate": {
-		"body": "En utilisant InReach, vous convenez que vous n'utiliserez pas ces informations à des fins malveillantes, haineuses, homophobes, transphobiques, xénophobes et/ou racistes.",
+		"body": "En utilisant InReach, vous convenez de ne pas utiliser ces informations à des fins malveillantes, haineuses, homophobes, transphobes, xénophobes et/ou racistes.",
 		"title": "Engagement anti-haine"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Retour à <u>{{page}}</u>",
 		"back-to-search": "Retour à la recherche"
 	},
-	"cancel": "Abandonner",
+	"cancel": "Annuler",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Réclamez la page de profil de votre organisation et faites confiance à votre public sur InReach</textUtility1>\n<textUtility1>✍🏾 Mettez à jour les informations de votre organisation sur InReach</textUtility1>\n<textUtility1>📨 Invitez un autre personnel à rejoindre votre organisation sur InReach (bientôt !</textUtility1>\n<textUtility1>:key : Accédez à des fonctionnalités futures conçues spécifiquement pour les fournisseurs de services affiliés sur InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Cette organisation n'a pas encore été réclamée par un fournisseur de services.</title2>\n<textDarkGray>Vous pouvez réclamer cette organisation en tant que prestataire de services à :<extDarkGray>"
