@@ -245,6 +245,9 @@
 	"sign-up-select-law-practice": "crwdns1790033:0crwdne1790033:0",
 	"sign-up-select-service-provider": "crwdns1790035:0crwdne1790035:0",
 	"sign-up-success": "crwdns1790037:0crwdne1790037:0",
+	"sign-up-user-exists-body": "crwdns2109327:0crwdne2109327:0",
+	"sign-up-user-exists-header": "crwdns2109329:0crwdne2109329:0",
+	"sign-up-verify-email": "crwdns2109331:0crwdne2109331:0",
 	"social": {
 		"email": "crwdns1790039:0crwdne1790039:0",
 		"facebook": "crwdns1790041:0crwdne1790041:0",
@@ -314,6 +317,7 @@
 		"delete": "crwdns1790121:0crwdne1790121:0",
 		"distance": "crwdns1912805:0crwdne1912805:0",
 		"email": "crwdns1790123:0crwdne1790123:0",
+		"home": "crwdns2109333:0crwdne2109333:0",
 		"hours": "crwdns1790125:0crwdne1790125:0",
 		"more": "crwdns1790127:0crwdne1790127:0",
 		"next": "crwdns1790129:0crwdne1790129:0",

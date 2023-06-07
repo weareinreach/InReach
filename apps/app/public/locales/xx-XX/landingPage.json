@@ -1,4 +1,7 @@
 {
+	"banner": {
+		"redesign": "crwdns2109335:0crwdne2109335:0"
+	},
 	"call-out": {
 		"hear-from-users": "crwdns1804227:0crwdne1804227:0",
 		"who-we-are": "crwdns1804229:0crwdne1804229:0"
@@ -15,6 +18,7 @@
 		},
 		"find-resources": "crwdns1804247:0crwdne1804247:0",
 		"heading": "crwdns1804249:0crwdne1804249:0",
+		"privacy-disclaimer": "crwdns2109337:0crwdne2109337:0",
 		"services": {
 			"0": "crwdns1804251:0crwdne1804251:0",
 			"1": "crwdns1804253:0crwdne1804253:0",

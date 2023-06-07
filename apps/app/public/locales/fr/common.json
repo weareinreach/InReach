@@ -245,6 +245,9 @@
 	"sign-up-select-law-practice": "Où pratiquez vous le droit ?",
 	"sign-up-select-service-provider": "Où travaillez-vous ou donnez-vous du bénévolat?",
 	"sign-up-success": "Vous avez créé un compte !",
+	"sign-up-user-exists-body": "Cette adresse e-mail est déjà enregistrée.",
+	"sign-up-user-exists-header": "Vous avez peut-être déjà un compte.",
+	"sign-up-verify-email": "Avant de pouvoir commencer à utiliser votre nouveau compte, vous devez vérifier votre adresse e-mail. Vérifiez votre boîte de réception et cliquez sur le lien dans le message.",
 	"social": {
 		"email": "Courriel",
 		"facebook": "Facebook",
@@ -314,6 +317,7 @@
 		"delete": "Supprimez",
 		"distance": "Distance",
 		"email": "Courriel",
+		"home": "Domicile",
 		"hours": "Heures",
 		"more": "plus",
 		"next": "Suivant",
