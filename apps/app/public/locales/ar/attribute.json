@@ -1,15 +1,16 @@
 {
 	"additional": {
-		"at-capacity": "على السعة",
 		"CATEGORYNAME": "معلومات إضافية",
+		"at-capacity": "على السعة",
 		"geo-near-public-transit": "المواصلات العامة القريبة",
 		"geo-public-transit-description": "النقل العام / اتجاهات محددة",
 		"has-confidentiality-policy": "لديه سياسة سرية",
 		"offers-remote-services": "عن بعد",
+		"private-practice": "تدريب خاص",
 		"religiously-affiliated": "منتسب دينيا",
 		"time-walk-in": "له مباريات في الساعات",
-		"wheelchair-accessible_true": "متيسر",
-		"wheelchair-accessible_false": "لا يمكن الوصول إليها"
+		"wheelchair-accessible_false": "لا يمكن الوصول إليها",
+		"wheelchair-accessible_true": "متيسر"
 	},
 	"alerts": {
 		"CATEGORYNAME": "التنبيهات",
@@ -17,6 +18,7 @@
 		"warn": "تنبيه التحذير"
 	},
 	"community": {
+		"CATEGORYNAME": "المجتمع",
 		"adults": "يُعرَّف مصطلح \"البالغ\" بأنه 18 سنة أو أكثر",
 		"africa-immigrant": "الفرص التي تخدم البلدان الأفريقية",
 		"african-american": "الفرص التي تخدم مجتمع الأمريكيين من أصل أفريقي",
@@ -28,14 +30,13 @@
 		"bipoc": "الفرص التي تخدم السود والسكان الأصليين والألوان",
 		"bisexual": "الفرص التي تخدم مجتمع المثليين",
 		"black": "الفرص التي تخدم جماعة السود",
-		"CATEGORYNAME": "المجتمع",
 		"citizens": "مواطنو {{country}}",
 		"conversion-therapy-survivors": "الفرص التي تخدم الناجين من العلاج التحويلي",
 		"daca-recipient-seeker": "الفرص التي تخدم الأحلام (مستقبلو DACA)",
 		"detained-immigrant": "الفرص التي تخدم المهاجرين المحتجزين",
 		"disabled": "الفرص التي تخدم مجتمع المعوقين",
 		"gay": "الفرص التي تخدم مجتمع المثليين جنسياً",
-		"gender-nonconforming": "الفرص التي تخدم المجتمع المحلي غير المطابق لنوع الجنس",
+		"gender-nonconforming": "الفرص التي تخدم المجتمع المحلي غير المتطابق مع نوع الجنس",
 		"hiv-aids": "الفرص التي تخدم المجتمعات المعرضة لخطر الإصابة بفيروس نقص المناعة البشرية",
 		"homeless": "الفرص التي تخدم الأفراد المشردين",
 		"human-trafficking-survivor": "الفرص التي تخدم الناجين من الاتجار بالبشر",
@@ -56,11 +57,11 @@
 		"seniors": "'كبار` يعرَّف بأنه 65 سنة أو أكثر",
 		"sex-workers": "الفرص التي تخدم المشتغلين بالجنس",
 		"teens": "\"المراهق\" يعرَّف بأنه يتراوح عمره بين 12 و18 سنة",
-		"transfeminine": "الفرص التي تخدم مجتمع ترانسفينسين",
-		"transgender": "الفرص التي تخدم مجتمع المحولين جنسيا (للمجتمعات غير المطابقة أو غير الثنائية، وتستخدم الخصائص غير المطابقة للجنسين أو غير الثنائية)",
-		"transmasculine": "الفرص التي تخدم مجتمع الذكور",
 		"trans-youth": "الفرص التي تخدم الشباب العابرين",
 		"trans-youth-caregivers": "الفرص التي تخدم مقدمي الرعاية للشباب العابرين",
+		"transfeminine": "الفرص التي تخدم المجتمع النسائي العابر",
+		"transgender": "الفرص التي تخدم مجتمع المحولين جنسيا (للمجتمعات غير المطابقة أو غير الثنائية، وتستخدم الخصائص غير المطابقة للجنسين أو غير الثنائية)",
+		"transmasculine": "الفرص التي تخدم مجتمع ذكور تراس",
 		"unaccompanied-minors": "الفرص المتاحة لخدمة القصّر غير المصحوبين",
 		"undocumented": "الفرص المتاحة للمهاجرين الذين لا يحملون وثائق رسمية"
 	},
@@ -84,42 +85,48 @@
 		"time-appointment-required": "التعيين الزمني مطلوب"
 	},
 	"lang": {
+		"CATEGORYNAME": "اللغات",
 		"all-languages-by-interpreter": "جميع اللغات عن طريق المترجم الشفوي",
 		"american-sign-language": "لغة الإشارة الأمريكية",
-		"CATEGORYNAME": "اللغات",
 		"lang-offered": "اللغات المحددة المعروضة"
 	},
 	"orgleader": {
+		"CATEGORYNAME": "قيادة المنظمة",
 		"bipoc-led": "بيبوك تحت القيادة",
 		"black-led": "زجاج أسود",
-		"CATEGORYNAME": "قيادة المنظمة",
 		"immigrant-led": "المهاجر الذي يقوده",
-		"trans-led": "عبر الزعامة"
+		"trans-led": "عبر الزعامة",
+		"women-led": "قيادة المرأة"
 	},
 	"serviceaccess": {
+		"CATEGORYNAME": "تعليمات الوصول إلى الخدمة",
 		"accessemail": "تعليمات الوصول - البريد الإلكتروني",
 		"accessfile": "تعليمات الوصول - ملف",
 		"accesslink": "تعليمات الوصول - رابط",
 		"accesslocation": "تعليمات الوصول - الموقع",
 		"accessphone": "تعليمات الوصول - الهاتف",
 		"accesspublictransit": "تعليمات الوصول - النقل العام",
-		"accesstext": "تعليمات الوصول - النص",
-		"CATEGORYNAME": "تعليمات الوصول إلى الخدمة"
+		"accesstext": "تعليمات الوصول - النص"
 	},
 	"srvfocus": {
+		"CATEGORYNAME": "تركيز الخدمة",
 		"asylum-seekers": "ملتمسو اللجوء",
 		"bipoc-comm": "مجتمع BIPOC",
-		"CATEGORYNAME": "تركيز الخدمة",
-		"gender-nc": "عدم مطابقة نوع الجنس",
+		"caregivers": "مجتمع مقدمي الرعاية",
+		"disabled": "مجتمع معطل",
+		"elder": "التركيز على كبار السن",
+		"gender-nc": "عدم الإشاعة بين الجنسين",
 		"hiv-comm": "مجتمع فيروس نقص المناعة البشرية",
 		"immigrant-comm": "جالية المهاجرين",
+		"incarcerated": "المجتمع المسجون",
 		"lgbtq-youth-focus": "شباب LGBTQ+",
 		"resettled-refugees": "اللاجئين المعاد توطينهم",
 		"spanish-speakers": "المتحدثون الاسبانيون",
 		"trans-comm": "عبر المجتمع",
-		"trans-fem": "عبر النساء/ترانسفينسين",
-		"trans-masc": "عابر للرجال/نقل الألفة",
-		"trans-youth-focus": "الشباب العابرون"
+		"trans-fem": "النساء العابرات",
+		"trans-masc": "عبر الرجال/الذكور",
+		"trans-youth-focus": "الشباب العابرون",
+		"women": "التركيز على المرأة"
 	},
 	"sys": {
 		"CATEGORYNAME": "النظام",
