@@ -1,3 +1,5 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
+/* eslint-disable node/no-process-env */
 import dotenv from 'dotenv'
 import { flatten, unflatten } from 'flat'
 import prettier from 'prettier'
@@ -25,7 +27,7 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 
 	const data = await prisma.translationNamespace.findMany({
 		where: {
-			exportFile: true,
+			exportFile: process.env.EXPORT_ALL ? undefined : true,
 		},
 		include: {
 			keys: {

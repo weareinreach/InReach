@@ -24,7 +24,7 @@
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.115",
+		"@types/aws-lambda": "8.10.116",
 		"@types/eslint": "8.40.0",
 		"@types/flat": "5.0.2",
 		"@types/node": "18.16.16",
@@ -34,7 +34,7 @@
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
 		"esbuild": "0.17.19",
-		"eslint": "8.41.0",
+		"eslint": "8.42.0",
 		"prettier": "2.8.8",
 		"typescript": "5.1.3"
 	}

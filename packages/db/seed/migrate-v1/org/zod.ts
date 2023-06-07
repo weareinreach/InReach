@@ -68,6 +68,7 @@ import { type BatchNames } from '~db/seed/migrate-v1/org/outData'
 // }
 
 type zodInput = {
+	organization: Prisma.OrganizationCreateManyInput
 	translationKey: Prisma.TranslationKeyCreateManyInput
 	freeText: Prisma.FreeTextCreateManyInput
 	phoneType: Prisma.PhoneTypeCreateManyInput
@@ -104,6 +105,7 @@ export type ZodInputs = {
 }
 export type ZodInput<K extends BatchNames> = K extends BatchNames ? zodInput[K] : never
 type zodFindMany = {
+	organization: Prisma.OrganizationFindManyArgs
 	translationKey: Prisma.TranslationKeyFindManyArgs
 	freeText: Prisma.FreeTextFindManyArgs
 	phoneType: Prisma.PhoneTypeFindManyArgs

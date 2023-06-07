@@ -1,6 +1,7 @@
 import {
 	type AttributeSupplement,
 	type FreeText,
+	type Organization,
 	type OrganizationAttribute,
 	type OrganizationEmail,
 	type OrganizationPermission,
@@ -40,6 +41,7 @@ export const migrateClient: MigrationClient = {
 	translationKey: (client, data) => client.translationKey.createMany({ data, ...clientopt }),
 	freeText: (client, data) => client.freeText.createMany({ data, ...clientopt }),
 	phoneType: (client, data) => client.phoneType.createMany({ data, ...clientopt }),
+	organization: (client, data) => client.organization.createMany({ data, ...clientopt }),
 
 	orgLocation: (client, data) => client.orgLocation.createMany({ data, ...clientopt }),
 	orgPhone: (client, data) => client.orgPhone.createMany({ data, ...clientopt }),
@@ -71,6 +73,7 @@ export const migrateClient: MigrationClient = {
 }
 
 export const queryClient: QueryClient = {
+	organization: (client, args) => client.organization.findMany(args),
 	translationKey: (client, args) => client.translationKey.findMany(args),
 	freeText: (client, args) => client.freeText.findMany(args),
 	phoneType: (client, args) => client.phoneType.findMany(args),
@@ -127,6 +130,7 @@ export const getClient: GetClient = (batchName) => {
 }
 
 type PrismaSchemas = {
+	organization: Organization
 	translationKey: TranslationKey
 	freeText: FreeText
 	phoneType: PhoneType

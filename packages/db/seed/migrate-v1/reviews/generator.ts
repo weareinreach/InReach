@@ -28,10 +28,10 @@ export const generateReviews = async (task: ListrTask) => {
 		task.output = message
 	}
 	const ratings: RatingsJSONCollection[] = JSON.parse(
-		fs.readFileSync('./datastore/v1/mongodb/output/ratings.json', 'utf-8')
+		fs.readFileSync('./datastore/out-data/2023-06-06/ratings.json', 'utf-8')
 	)
 	const comments: CommentsJSONCollection[] = JSON.parse(
-		fs.readFileSync('./datastore/v1/mongodb/output/comments.json', 'utf-8')
+		fs.readFileSync('./datastore/out-data/2023-06-06/comments.json', 'utf-8')
 	)
 
 	const orgs = await prisma.organization.findMany({
