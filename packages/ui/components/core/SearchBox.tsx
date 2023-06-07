@@ -77,12 +77,15 @@ const useStyles = createStyles((theme) => ({
 	resultContainer: {
 		minWidth: 'fit-content',
 	},
+	pinToLeft: {
+		left: `0 !important`,
+	},
 }))
 
 /** Most of Google's autocomplete language options are only the two letter variants */
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
-export const SearchBox = ({ type, label, loadingManager, initialValue }: SearchBoxProps) => {
+export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
@@ -298,7 +301,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue }: SearchB
 					? classes.autocompleteContainer
 					: cx(classes.autocompleteContainer, classes.emptyLocation),
 				itemsWrapper: classes.autocompleteWrapper,
-				dropdown: classes.resultContainer,
+				dropdown: pinToLeft ? cx(classes.resultContainer, classes.pinToLeft) : classes.resultContainer,
 			}}
 			itemComponent={AutoCompleteItem}
 			dropdownComponent={isOrgSearch ? ResultContainer : undefined}
@@ -338,4 +341,5 @@ interface AutocompleteItem {
 	subheading?: string
 	placeId?: string
 	fetching?: boolean
+	pinToLeft?: boolean
 }

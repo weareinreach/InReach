@@ -44,6 +44,7 @@ export const SearchResultSidebar = ({ resultCount, loadingManager }: SearchResul
 				type='organization'
 				label={<Title order={3}>{t('search.look-up-org')}</Title>}
 				loadingManager={loadingManager}
+				pinToLeft
 			/>
 			<Divider mt={-10} />
 			{/*  eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
