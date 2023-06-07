@@ -25,7 +25,7 @@ import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from './ModalTitle'
 
 export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModalBodyProps>(
-	({ onClick, ...props }, ref) => {
+	({ props }, ref) => {
 		const { t } = useTranslation(['common'])
 		const EmailSchema = z.object({
 			email: z.string().email({ message: t('form-error-enter-valid-email') as string }),
@@ -93,15 +93,7 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 						</Button>
 					</Stack>
 				</Modal>
-				<Box
-					component='button'
-					ref={ref}
-					onClick={() => {
-						onClick && onClick()
-						handler.open()
-					}}
-					{...props}
-				/>
+				<Box component='button' ref={ref} {...props} />
 			</>
 		)
 	}
