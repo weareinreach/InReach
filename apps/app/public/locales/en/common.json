@@ -209,7 +209,7 @@
 	"search": {
 		"include-remote": "Include remote services",
 		"location-placeholder": "Enter city or zip code...",
-		"look-up-org": "Look up an organization",
+		"look-up-org": "Look up an organization by name",
 		"no-results": "No results found. Please try again.",
 		"organization-placeholder": "Enter organization name...",
 		"suggest-resource": "Can't find it? <1>Suggest an organization</1> you think should be included."
@@ -255,6 +255,9 @@
 	"sign-up-select-law-practice": "Where do you practice law?",
 	"sign-up-select-service-provider": "Where do you work or volunteer?",
 	"sign-up-success": "You've signed up for an account!",
+	"sign-up-user-exists-body": "That email address is already registered.",
+	"sign-up-user-exists-header": "You may already have an account.",
+	"sign-up-verify-email": "Before you can start using your new account, you must verify your email address. Check your inbox and click the link in the message.",
 	"social": {
 		"email": "Email",
 		"facebook": "Facebook",
@@ -328,6 +331,7 @@
 		"delete": "Delete",
 		"distance": "Distance",
 		"email": "Email",
+		"home": "Home",
 		"hours": "Hours",
 		"more": "more",
 		"next": "Next",

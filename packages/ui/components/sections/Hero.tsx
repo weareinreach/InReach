@@ -3,7 +3,10 @@ import { useReducedMotion } from '@mantine/hooks'
 import { type TFunction, Trans, useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 
+import { Link } from '~ui/components/core/Link'
 import { SearchBox } from '~ui/components/core/SearchBox'
+import { useCustomVariant } from '~ui/hooks'
+import { PrivacyStatementModal } from '~ui/modals/PrivacyStatement'
 
 const useBoxStyles = createStyles((theme) => ({
 	base: {
@@ -225,6 +228,7 @@ export const Hero = () => {
 	const { t } = useTranslation('landingPage')
 	const { classes } = useHeroStyles()
 	const [isLoading, setLoading] = useState(false)
+	const variants = useCustomVariant()
 
 	return (
 		<Stack spacing={32} align='center' className={classes.stack}>
@@ -250,9 +254,25 @@ export const Hero = () => {
 					}}
 				/>
 			</Group>
-			<Group maw={636} w='100%'>
-				<SearchBox type='location' loadingManager={{ isLoading, setLoading }} />
-			</Group>
+			<Stack spacing={0} align='center'>
+				<Group maw={636} w='100%'>
+					<SearchBox type='location' loadingManager={{ isLoading, setLoading }} />
+				</Group>
+				<Text variant={variants.Text.utility4darkGray}>
+					<Trans
+						i18nKey='hero.privacy-disclaimer'
+						ns='landingPage'
+						components={{
+							Link: (
+								<PrivacyStatementModal
+									component={Link}
+									variant={variants.Link.inheritStyle}
+								></PrivacyStatementModal>
+							),
+						}}
+					/>
+				</Text>
+			</Stack>
 		</Stack>
 	)
 }

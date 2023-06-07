@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import { type MouseEventHandler, useMemo } from 'react'
 
+import { useScreenSize } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { useSearchState } from '~ui/providers/SearchState'
 
@@ -40,6 +41,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 	const { t } = useTranslation('common')
 	const router = useRouter()
 	const { searchParams } = useSearchState()
+	const { isMobile } = useScreenSize()
 
 	const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		if (typeof onClick === 'function') return onClick(e)
@@ -92,6 +94,9 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 					}
 					case 'dynamicText': {
 						const page = backToText
+						if (isMobile) {
+							return t('words.back')
+						}
 						return (
 							<Trans
 								i18nKey='breadcrumb.back-to-dynamic'
