@@ -1,12 +1,12 @@
 {
 	"abortion-care": {
+		"CATEGORYNAME": "Аборт",
 		"abortion-providers": "Поставщики абортов",
 		"financial-assistance": "Финансовая помощь",
 		"lodging-assistance": "Помощь в аренде жилья",
 		"mail-order-services": "Услуги заказа почты",
 		"mental-health-support": "Поддержка психического здоровья",
-		"travel-assistance": "Помощь в организации поездок",
-		"CATEGORYNAME": "Аборт"
+		"travel-assistance": "Помощь в организации поездок"
 	},
 	"abortion-providers": "Поставщики абортов",
 	"asylum-application": "Приложение Asylum",
@@ -15,16 +15,18 @@
 	"citizenship": "Гражданство",
 	"clothes": "Одежда",
 	"community-support": {
+		"CATEGORYNAME": "Поддержка сообщества",
+		"community-social-groups": "Сообщество и социальные группы",
 		"cultural-centers": "Культурные центры",
 		"lgbtq-centers": "Центры LGBTQ",
 		"reception-services": "Услуги приёма",
+		"reentry-services": "Услуги для повторного ввода",
 		"spiritual-support": "Духовная поддержка",
-		"sponsors": "Спонсоры",
-		"CATEGORYNAME": "Поддержка сообщества"
+		"sponsors": "Спонсоры"
 	},
 	"computers-and-internet": {
-		"computers-and-internet": "Компьютеры и Интернет",
-		"CATEGORYNAME": "Компьютеры и Интернет"
+		"CATEGORYNAME": "Компьютеры и Интернет",
+		"computers-and-internet": "Компьютеры и Интернет"
 	},
 	"covid-19-services": "Услуги COVID-19",
 	"crime-and-discrimination": "Преступность и дискриминация",
@@ -34,14 +36,14 @@
 	"deportation-or-removal": "Депортация или удаление",
 	"drop-in-centers-for-lgbtq-youth": "Центры по вывозу молодежи LGBTQ",
 	"education-and-employment": {
+		"CATEGORYNAME": "Образование и занятость",
 		"career-counseling": "Карьерные консультации",
 		"educational-support-for-lgbtq-youth": "Образовательная поддержка молодежи LGBTQ",
 		"english-classes": "Курсы английского языка",
 		"language-classes": "Классы языка",
 		"leadership-training-and-professional-development": "Подготовка руководящих кадров и профессиональное развитие",
 		"libraries": "Библиотеки",
-		"scholarships": "Стипендии",
-		"CATEGORYNAME": "Образование и занятость"
+		"scholarships": "Стипендии"
 	},
 	"educational-support-for-lgbtq-youth": "Образовательная поддержка молодежи LGBTQ",
 	"emergency-housing": "Аварийное жилье",
@@ -50,9 +52,9 @@
 	"family-petitions": "Семейные петиции",
 	"financial-assistance": "Финансовая помощь",
 	"food": {
+		"CATEGORYNAME": "Еда",
 		"food": "Еда",
-		"food-assistance": "Продовольственная помощь",
-		"CATEGORYNAME": "Еда"
+		"food-assistance": "Продовольственная помощь"
 	},
 	"gender-affirming-items": "Предметы, подтверждающие гендерный фактор",
 	"gender-neutral-bathrooms": "Гендерно-нейтральные ванные комнаты",
@@ -60,26 +62,27 @@
 	"hiv-and-sexual-health": "ВИЧ и сексуальное здоровье",
 	"hotlines": "Горячие линии",
 	"housing": {
+		"CATEGORYNAME": "Жилье",
 		"drop-in-centers-for-lgbtq-youth": "Центры по вывозу молодежи LGBTQ",
 		"emergency-housing": "Аварийное жилье",
 		"housing-information-and-referrals": "Информация о жилье и обращения",
 		"short-term-housing": "Краткосрочное жилье",
-		"trans-housing": "Транс жилье",
-		"CATEGORYNAME": "Жилье"
+		"trans-housing": "Транс жилье"
 	},
 	"housing-information-and-referrals": "Информация о жилье и обращения",
 	"hygiene": "Гигиена",
 	"hygiene-and-clothing": {
+		"CATEGORYNAME": "Гигиена и одежда",
 		"clothes": "Одежда",
 		"gender-affirming-items": "Предметы, подтверждающие гендерный фактор",
 		"gender-neutral-bathrooms": "Гендерно-нейтральные ванные комнаты",
 		"haircuts-and-stylists": "Волосы и стилисты",
-		"hygiene": "Гигиена",
-		"CATEGORYNAME": "Гигиена и одежда"
+		"hygiene": "Гигиена"
 	},
 	"immigration-detention": "Иммиграционное задержание",
 	"leadership-training-and-professional-development": "Подготовка руководящих кадров и профессиональное развитие",
 	"legal": {
+		"CATEGORYNAME": "Юридическая информация",
 		"asylum-application": "Приложение Asylum",
 		"citizenship": "Гражданство",
 		"crime-and-discrimination": "Преступность и дискриминация",
@@ -95,19 +98,19 @@
 		"residency": "Жилье",
 		"special-immigrant-juvenile-status-sijs": "Специальный статус иммигрантов-несовершеннолетних (SIJS)",
 		"t-visa": "T Visa",
-		"u-visa": "U Visa",
-		"CATEGORYNAME": "Юридическая информация"
+		"u-visa": "U Visa"
 	},
 	"legal-hotlines": "Горячие линии",
 	"lgbtq-centers": "Центры LGBTQ",
 	"libraries": "Библиотеки",
 	"lodging-assistance": "Помощь в аренде жилья",
 	"mail": {
-		"mail": "Почта",
-		"CATEGORYNAME": "Почта"
+		"CATEGORYNAME": "Почта",
+		"mail": "Почта"
 	},
 	"mail-order-services": "Услуги заказа почты",
 	"medical": {
+		"CATEGORYNAME": "Медицинский",
 		"covid-19-services": "Услуги COVID-19",
 		"dental-care": "Стоматологическая помощь",
 		"hiv-and-sexual-health": "ВИЧ и сексуальное здоровье",
@@ -120,11 +123,11 @@
 		"trans-health-hormone-and-surgery-letters": "Транс Здоровье - Гормоны и Хирургические письма",
 		"trans-health-hormone-therapy": "Транс Здоровье - Гормоновая Терапия",
 		"trans-health-primary-care": "Трансформация - первичная помощь",
-		"trans-health-speech-therapy": "Транс Здоровье - Речевая Терапия",
-		"CATEGORYNAME": "Медицинский"
+		"trans-health-speech-therapy": "Транс Здоровье - Речевая Терапия"
 	},
 	"medical-clinics": "Медицинская клиника",
 	"mental-health": {
+		"CATEGORYNAME": "Психическое здоровье",
 		"bipoc-support-groups": "Группы поддержки BIPOC",
 		"hotlines": "Горячие линии",
 		"private-therapy-and-counseling": "Частная терапия и консультирование",
@@ -134,8 +137,7 @@
 		"support-for-caregivers-of-trans-youth": "Оказание поддержки лицам, обеспечивающим уход за детьми в возрасте от 16 лет",
 		"support-for-conversion-therapy-survivors": "Поддержка конверсионной терапии для выживших",
 		"support-groups": "Группы поддержки",
-		"trans-support-groups": "Группы поддержки Trans",
-		"CATEGORYNAME": "Психическое здоровье"
+		"trans-support-groups": "Группы поддержки Trans"
 	},
 	"mental-health-support": "Поддержка психического здоровья",
 	"name-and-gender-change": "Имя и изменения пола",
@@ -150,8 +152,9 @@
 	"spiritual-support": "Духовная поддержка",
 	"sponsors": "Спонсоры",
 	"sports-and-entertainment": {
-		"sports-and-entertainment": "Спорт и развлечения",
-		"CATEGORYNAME": "Спорт и развлечения"
+		"CATEGORYNAME": "Развлечения и мероприятия",
+		"art-music-literature": "Искусство, музыка и литература",
+		"sports-and-entertainment": "Спорт и развлечения"
 	},
 	"substance-use": "Использование вещества",
 	"support-for-caregivers-of-trans-youth": "Оказание поддержки лицам, обеспечивающим уход за детьми в возрасте от 16 лет",
@@ -167,15 +170,15 @@
 	"trans-support-groups": "Группы поддержки Trans",
 	"transit-passes-and-discounts": "Транзитные переходы и скидки",
 	"translation-and-interpretation": {
+		"CATEGORYNAME": "Перевод и перевод",
 		"for-healthcare": "Здравоохранение",
 		"for-legal-services": "Правовые услуги",
-		"general-translation-and-interpretation": "Общий перевод и устный перевод",
-		"CATEGORYNAME": "Перевод и перевод"
+		"general-translation-and-interpretation": "Общий перевод и устный перевод"
 	},
 	"transportation": {
+		"CATEGORYNAME": "Транспорт",
 		"transit-passes-and-discounts": "Транзитные переходы и скидки",
-		"transportation-assistance": "Транспортная помощь",
-		"CATEGORYNAME": "Транспорт"
+		"transportation-assistance": "Транспортная помощь"
 	},
 	"transportation-assistance": "Транспортная помощь",
 	"travel-assistance": "Помощь в организации поездок",
