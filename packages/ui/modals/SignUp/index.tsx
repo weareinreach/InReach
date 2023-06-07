@@ -23,6 +23,7 @@ import {
 	FormServiceProvider,
 	LanguageSelect,
 } from './fields'
+import { ForgotPasswordModal } from '../ForgotPassword'
 import { LoginModalLauncher } from '../Login'
 import { ModalTitle } from '../ModalTitle'
 import { PrivacyStatementModal } from '../PrivacyStatement'
@@ -96,10 +97,16 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 	const [opened, handler] = useDisclosure(false)
 	const [stepOption, setStepOption] = useState<string | null>(null)
 	const [successMessage, setSuccessMessage] = useState(false)
+	const [userExists, setUserExists] = useState(false)
 	const variants = useCustomVariant()
 	const signUpAction = api.user.create.useMutation({
 		onSuccess: () => {
 			setSuccessMessage(true)
+		},
+		onError: (error) => {
+			if (error.message === 'User already exists') {
+				setUserExists(true)
+			}
 		},
 	})
 	const router = useRouter()
@@ -244,6 +251,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 		<>
 			<Title order={1}>✅</Title>
 			<Title order={2}>{t('sign-up-success')}</Title>
+			<Text variant={variants.Text.utility1darkGray}>{t('sign-up-verify-email')}</Text>
 			<Button variant={variants.Button.primaryLg} fullWidth onClick={() => router.push('/')}>
 				{t('find-x', { value: '$t(resources, lowercase)' })}
 			</Button>
@@ -252,10 +260,28 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 			</Button>
 		</>
 	)
+	const userExistsBody = (
+		<>
+			<Title order={1}>🧐</Title>
+			<Title order={2}>{t('sign-up-user-exists-header')}</Title>
+			<Text variant={variants.Text.utility1darkGray}>{t('sign-up-user-exists-body')}</Text>
+			<ForgotPasswordModal
+				component={Link}
+				variant={variants.Button.primaryLg}
+
+				// onClick={handler.close}
+			>
+				{t('forgot-password')}
+			</ForgotPasswordModal>
+		</>
+	)
 
 	const modalBody = () => {
 		if (successMessage) {
 			return successBody
+		}
+		if (userExists) {
+			return userExistsBody
 		}
 		return signupBody
 	}
