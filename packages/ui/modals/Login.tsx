@@ -12,7 +12,6 @@ import {
 } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
-import { type DefaultTFuncReturn } from 'i18next'
 import { signIn } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
@@ -20,7 +19,7 @@ import { z } from 'zod'
 
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
-import { useCustomVariant, useShake } from '~ui/hooks'
+import { useCustomVariant, useScreenSize, useShake } from '~ui/hooks'
 
 import { ForgotPasswordModal } from './ForgotPassword'
 import { ModalTitle } from './ModalTitle'
@@ -29,11 +28,10 @@ import { SignupModalLauncher } from './SignUp'
 
 export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>((props, ref) => {
 	const { t } = useTranslation(['common'])
-	const [loginError, setLoginError] = useState(false)
-	const [errorMessage, setErrorMessage] = useState<string | DefaultTFuncReturn | undefined>()
 	const [opened, handler] = useDisclosure(false)
 	const { animateCSS, fireEvent } = useShake({ variant: 1 })
-
+	const [isLoading, setLoading] = useState(false)
+	const { isMobile } = useScreenSize()
 	const loginErrors = new Map([[401, t('login.error-username-password')]])
 
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
@@ -48,22 +46,32 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 	})
 	const variants = useCustomVariant()
 	const loginHandle = async (email: string, password: string) => {
-		if (!form.isValid()) return
-		const result = await signIn('cognito', { email, password, redirect: false })
-		if (result?.error) {
-			setLoginError(true)
-			const message = loginErrors.get(result.status)
-			setErrorMessage(message ?? t('login.error-generic'))
-			fireEvent()
-		}
-		if (result?.ok) {
-			handler.close()
+		try {
+			setLoading(true)
+			if (!form.isValid()) return
+			const result = await signIn('cognito', { email, password, redirect: false })
+			if (result?.error) {
+				const message = loginErrors.get(result.status)
+				form.setFieldError('password', message ?? t('login.error-generic'))
+				fireEvent()
+			}
+			if (result?.ok) {
+				handler.close()
+			}
+		} finally {
+			setLoading(false)
 		}
 	}
 
 	return (
 		<>
-			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} className={animateCSS}>
+			<Modal
+				title={modalTitle}
+				opened={opened}
+				onClose={() => handler.close()}
+				className={animateCSS}
+				fullScreen={isMobile}
+			>
 				<Stack align='center' spacing={24}>
 					<Title order={2}>{t('log-in')}</Title>
 					<TextInput
@@ -76,7 +84,6 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 						label={t('words.password')}
 						placeholder={t('enter-password-placeholder') as string}
 						required
-						error={loginError && errorMessage}
 						{...form.getInputProps('password')}
 					/>
 					<Button
@@ -85,6 +92,7 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 						variant='primary-icon'
 						fullWidth
 						type='submit'
+						loading={isLoading}
 					>
 						{t('log-in')}
 					</Button>

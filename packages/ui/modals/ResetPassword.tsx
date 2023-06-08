@@ -22,7 +22,7 @@ import { z } from 'zod'
 import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -133,6 +133,7 @@ export const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswor
 		const variants = useCustomVariant()
 		const [success, setSuccess] = useState(false)
 		const [error, setError] = useState(!UrlParams.safeParse(router.query).success)
+		const { isMobile } = useScreenSize()
 		const FormSchema = z
 			.object({
 				password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
@@ -227,7 +228,7 @@ export const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswor
 
 		return (
 			<>
-				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
+				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
 					{success ? bodySuccess : error ? bodyError : bodyReset}
 				</Modal>
 				{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
