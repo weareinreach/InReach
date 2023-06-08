@@ -18,6 +18,7 @@ import { forwardRef, useState } from 'react'
 import { z } from 'zod'
 
 import { Button } from '~ui/components/core/Button'
+import { useScreenSize } from '~ui/hooks/useScreenSize'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { ModalTitle } from './ModalTitle'
@@ -59,6 +60,7 @@ export const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((
 		initialValues: { password: '' },
 		validate: zodResolver(schema),
 	})
+	const { isMobile } = useScreenSize()
 
 	const deleteAccount = api.user.deleteAccount.useMutation({
 		onSuccess: () => {
@@ -80,7 +82,7 @@ export const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((
 
 	return (
 		<>
-			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
+			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
 				<form
 					noValidate
 					onSubmit={form.onSubmit(({ password }) => {

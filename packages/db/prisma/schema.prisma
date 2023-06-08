@@ -122,6 +122,8 @@ model User {
   currentCountry   Country?    @relation(name: "currentCountry", fields: [currentCountryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   currentCountryId String?
 
+  signupData Json? // holding for other data items collected @ signup
+
   // Data for AWS Cognito migration
   //  migrated from old DB - once user is migrated to Cognito, legacy fields are cleared, migrateDate is set
   legacyHash  String?
