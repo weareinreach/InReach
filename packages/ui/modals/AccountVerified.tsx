@@ -16,7 +16,7 @@ import { z } from 'zod'
 
 import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
 import { Link } from '~ui/components/core/Link'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { LoginModalLauncher } from './Login'
@@ -47,6 +47,7 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 		})
 		// const DataSchema = z.string().default('')
 		const [opened, handler] = useDisclosure(autoOpen)
+		const { isMobile } = useScreenSize()
 
 		useEffect(() => {
 			if (!success && !verifyAccount.isLoading && opened && !error) {
@@ -103,7 +104,7 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 
 		return (
 			<>
-				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
+				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
 					{success ? bodySuccess : error ? bodyError : bodyWorking}
 				</Modal>
 				{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
