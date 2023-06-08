@@ -1,5 +1,4 @@
 import {
-	ActionIcon,
 	Box,
 	type ButtonProps,
 	Checkbox,
@@ -16,10 +15,10 @@ import {
 	UnstyledButton,
 } from '@mantine/core'
 import { TimeInput } from '@mantine/dates'
+import { zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
-import { IconClock } from '@tabler/icons-react'
 import { DateTime, Interval } from 'luxon'
-import { forwardRef, useEffect, useRef, useState } from 'react'
+import { type ComponentPropsWithRef, forwardRef, useEffect, useState } from 'react'
 import timezones from 'timezones-list'
 import { z } from 'zod'
 
@@ -27,9 +26,10 @@ import { type ApiOutput } from '@weareinreach/api'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
-import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
+
+import { HoursDrawerFormProvider, useForm } from './context'
 
 const useStyles = createStyles((theme) => ({
 	drawerContent: {
@@ -54,13 +54,13 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const FormSchema = z.object({
-	id: z.string(),
 	data: z
 		.object({
-			tz: z.string().nullable(),
 			dayIndex: z.coerce.number().nullable(),
 			start: z.coerce.date().nullable(),
 			end: z.coerce.date().nullable(),
+			close: z.coerce.boolean().nullable(),
+			tz: z.string().nullable(),
 		})
 		.partial(),
 })
@@ -105,6 +105,11 @@ const sortedTimezoneData = timezoneData.sort((a, b) => {
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(false)
 	const [isSaved, setIsSaved] = useState(false)
+	const form = useForm<FormSchema>({
+		validate: zodResolver(FormSchema),
+		initialValues: { data: [] },
+		transformValues: FormSchema.transform(schemaTransform).parse,
+	})
 	const [tzValue, setTzValue] = useState<string | null>(null)
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
@@ -128,7 +133,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		5: { start: null, end: null }, // Friday
 		6: { start: null, end: null }, // Saturday
 	})
-
+	console.log(timeValues)
 	const handleUpdate = () => {
 		//TODO save to DB instead of sending to console.log
 		const data = generateDataArray()
@@ -197,17 +202,14 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		) => {
 			const { name, value } = event.currentTarget
 			const [hours, minutes] = value.split(':')
-			const date = new Date(1970, 0, 1)
-			const options = { timeZone: 'America/New_York' }
-			date.setHours(parseInt(hours, 10))
-			date.setMinutes(parseInt(minutes, 10), 0, 0)
-			const utcTime = date.toISOString()
+
+			const date = new Date(1970, 0, 1, parseInt(hours, 10), parseInt(minutes, 10))
 
 			setTimeValues((prevTimeValues) => ({
 				...prevTimeValues,
 				[dayIndex]: {
 					...prevTimeValues[dayIndex],
-					[name]: isNaN(date.getTime()) ? null : utcTime,
+					[name]: date,
 				},
 			}))
 		}
@@ -255,10 +257,14 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		)
 	}
 
+	const convertTimeToUTC = (timeInput, timezone) => {
+		return timeInput
+	}
+
 	const generateDataArray = () => {
 		const dataArray = Object.entries(timeValues).map(([dayIndex, timeValue]) => {
-			const start = timeValue.start ? timeValue.start : null
-			const end = timeValue.end ? timeValue.end : null
+			const start = timeValue.start ? convertTimeToUTC(timeValue.start, tzValue) : null
+			const end = timeValue.end ? convertTimeToUTC(timeValue.end, tzValue) : null
 			const closed = !start || !end
 			const tz = tzValue || null
 
