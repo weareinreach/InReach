@@ -19,7 +19,7 @@ import { z } from 'zod'
 
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
-import { useCustomVariant, useShake } from '~ui/hooks'
+import { useCustomVariant, useScreenSize, useShake } from '~ui/hooks'
 
 import { ForgotPasswordModal } from './ForgotPassword'
 import { ModalTitle } from './ModalTitle'
@@ -31,7 +31,7 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 	const [opened, handler] = useDisclosure(false)
 	const { animateCSS, fireEvent } = useShake({ variant: 1 })
 	const [isLoading, setLoading] = useState(false)
-
+	const { isMobile } = useScreenSize()
 	const loginErrors = new Map([[401, t('login.error-username-password')]])
 
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
@@ -65,7 +65,13 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 
 	return (
 		<>
-			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} className={animateCSS}>
+			<Modal
+				title={modalTitle}
+				opened={opened}
+				onClose={() => handler.close()}
+				className={animateCSS}
+				fullScreen={isMobile}
+			>
 				<Stack align='center' spacing={24}>
 					<Title order={2}>{t('log-in')}</Title>
 					<TextInput

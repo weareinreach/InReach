@@ -16,7 +16,7 @@ import { forwardRef } from 'react'
 import { z } from 'zod'
 
 import { Button } from '~ui/components/core/Button'
-import { useCustomVariant, useNewNotification } from '~ui/hooks'
+import { useCustomVariant, useNewNotification, useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { ModalTitle } from './ModalTitle'
@@ -30,6 +30,7 @@ export const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewLis
 		const variants = useCustomVariant()
 		const [opened, handler] = useDisclosure(false)
 		const utils = api.useContext()
+		const { isMobile } = useScreenSize()
 		const form = useForm<FormProps>({
 			validate: zodResolver(FormSchema),
 			validateInputOnBlur: true,
@@ -76,7 +77,7 @@ export const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewLis
 
 		return (
 			<>
-				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
+				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
 					<Stack align='center' spacing={24}>
 						<Title order={2}>{t('list.create-new')}</Title>
 						<Text variant={variants.Text.utility4darkGray}>{t('list.create-new-sub')}</Text>
