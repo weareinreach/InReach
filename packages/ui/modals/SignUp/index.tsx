@@ -255,9 +255,9 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 			<Button variant={variants.Button.primaryLg} fullWidth onClick={() => router.push('/')}>
 				{t('find-x', { value: '$t(resources, lowercase)' })}
 			</Button>
-			<Button variant={variants.Button.primaryLg} fullWidth onClick={() => router.push('/profile')}>
+			{/* <Button variant={variants.Button.primaryLg} fullWidth onClick={() => router.push('/profile')}>
 				{t('go-to-x', { value: '$t(profile, lowercase)' })}
-			</Button>
+			</Button> */}
 		</>
 	)
 	const userExistsBody = (
@@ -265,12 +265,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 			<Title order={1}>🧐</Title>
 			<Title order={2}>{t('sign-up-user-exists-header')}</Title>
 			<Text variant={variants.Text.utility1darkGray}>{t('sign-up-user-exists-body')}</Text>
-			<ForgotPasswordModal
-				component={Link}
-				variant={variants.Button.primaryLg}
-
-				// onClick={handler.close}
-			>
+			<ForgotPasswordModal component={Link} variant={variants.Button.primaryLg}>
 				{t('forgot-password')}
 			</ForgotPasswordModal>
 		</>

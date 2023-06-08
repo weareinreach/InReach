@@ -5,6 +5,7 @@ import {
 	type CSSObject,
 	Button as MantineButton,
 	type MantineTheme,
+	rem,
 } from '@mantine/core'
 import { type PolymorphicComponentProps } from '@mantine/utils'
 import { merge } from 'merge-anything'
@@ -122,6 +123,20 @@ const buttonVariants: ButtonVariants = (theme, params) => {
 			return {
 				root: {
 					borderRadius: theme.radius.md,
+					'&[data-loading]': {
+						pointerEvents: 'none',
+
+						'&::before': {
+							content: '""',
+							...theme.fn.cover(rem(-1)),
+							backgroundColor:
+								theme.colorScheme === 'dark'
+									? theme.fn.rgba(theme.colors.dark[7], 0.5)
+									: 'rgba(255, 255, 255, .5)',
+							borderRadius: theme.fn.radius(theme.radius.md),
+							cursor: 'not-allowed',
+						},
+					},
 				},
 				'&:not([data-disabled])': theme.fn.hover({
 					backgroundColor: theme.fn.darken(theme.other.colors.secondary.white, 0.4),
@@ -171,7 +186,6 @@ const customVariants = [
 	'accent-icon',
 ] as const
 
-// eslint-disable-next-line react/display-name
 export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'button', CustomButtonProps>>(
 	(props, ref) => {
 		const isCustom = (customVariants as ReadonlyArray<string>).includes(props.variant ?? 'filled')
@@ -195,6 +209,7 @@ export const Button = forwardRef<HTMLButtonElement, PolymorphicComponentProps<'b
 		)
 	}
 )
+Button.displayName = '@weareinreach/ui/components/core/Button'
 
 interface ButtonStylesParams {
 	variant?: CustomVariants | 'filled' | 'outline'

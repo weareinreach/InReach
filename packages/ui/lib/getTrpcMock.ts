@@ -1,7 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import { action } from '@storybook/addon-actions'
-import { rest, type RestRequest } from 'msw'
+import { rest, type RestHandler, type RestRequest } from 'msw'
 
 import path from 'path'
 import querystring from 'querystring'
@@ -10,7 +10,7 @@ import { type ApiInput, type ApiOutput } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
 
 import { getBaseUrl } from './trpcClient'
-import { jsonRpcSuccessResponse } from './trpcResponse'
+import { type ErrorInput, jsonRpcErrorResponse, jsonRpcSuccessResponse } from './trpcResponse'
 
 const getReqData = async (req: RestRequest) => {
 	if (req.method === 'POST') {
@@ -43,12 +43,10 @@ export const getTRPCMock = <
 	K1 extends keyof ApiInput, // object itself
 	K2 extends keyof ApiInput[K1], // all its keys
 	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2])
->(endpoint: {
-	path: [K1, K2]
-	response: O
-	type?: 'query' | 'mutation'
-	delay?: number
-}) => {
+>(
+	endpoint: TRPCEndpointSuccess<K1, K2, O> | TRPCEndpointError<K1, K2>
+) => {
+	// #region msw handler
 	const fn = endpoint.type === 'mutation' ? rest.post : rest.get
 
 	const type = endpoint.type === 'mutation' ? 'mutation' : 'query'
@@ -73,6 +71,29 @@ export const getTRPCMock = <
 		const data = await getReqData(req)
 		const transformed = transformer.parse<ApiInput[K1][K2]>(data)
 		trpcRequest(transformed)
+		if (endpoint.error) {
+			return res(ctx.delay(endpoint.delay), ctx.json(jsonRpcErrorResponse(endpoint.path, endpoint.error)))
+		}
+
 		return res(ctx.delay(endpoint.delay), ctx.json(jsonRpcSuccessResponse(endpoint.path, endpoint.response)))
 	})
+	// #endregion
+}
+type TRPCEndpointSuccess<
+	K1 extends keyof ApiInput,
+	K2 extends keyof ApiInput[K1],
+	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2])
+> = {
+	path: [K1, K2]
+	response: O
+	error?: never
+	type?: 'query' | 'mutation'
+	delay?: number
+}
+type TRPCEndpointError<K1 extends keyof ApiInput, K2 extends keyof ApiInput[K1]> = {
+	path: [K1, K2]
+	response?: never
+	error: ErrorInput
+	type?: 'query' | 'mutation'
+	delay?: number
 }

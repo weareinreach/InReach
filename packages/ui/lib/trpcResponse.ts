@@ -13,16 +13,18 @@ export type RpcSuccessResponse<Data> = {
 }
 
 export type RpcErrorResponse = {
-	error: {
-		message: string
-		code: number
-		data: {
-			code: string
-			httpStatus: number
-			stack: string
-			path: string //TQuery
-		}
-	}
+	error:
+		| {
+				message: string
+				code: number
+				data: {
+					code: string
+					httpStatus: number
+					stack: string
+					path: string //TQuery
+				}
+		  }
+		| SuperJSONResult
 }
 
 // According to JSON-RPC 2.0 and tRPC documentation.
@@ -40,23 +42,23 @@ export const jsonRpcSuccessResponse = <K1 extends keyof ApiInput, K2 extends key
 	}
 }
 
-type ErrorInput<K1 extends keyof ApiInput, K2 extends keyof ApiInput[K1]> = {
+export type ErrorInput = {
 	code: keyof typeof TRPC_ERROR_CODES_BY_KEY
-	path: [K1, K2]
 	message: string
 }
 
 export const jsonRpcErrorResponse = <K1 extends keyof ApiInput, K2 extends keyof ApiInput[K1]>(
-	error: ErrorInput<K1, K2>
+	path: [K1, K2],
+	error: ErrorInput
 ): RpcErrorResponse => {
-	const recordAction = action(`tRPC Response [${error.path.join('.')}] (failure/error)`)
+	const recordAction = action(`tRPC Response [${path.join('.')}] (failure/error)`)
 	recordAction(error)
-	const { message, code, path } = error
+	const { message, code } = error
 
 	const httpStatus = getHTTPStatusCodeFromError({ code, message, name: code })
 
 	return {
-		error: {
+		error: transformer.serialize({
 			message,
 			code: TRPC_ERROR_CODES_BY_KEY[code],
 			data: {
@@ -65,6 +67,6 @@ export const jsonRpcErrorResponse = <K1 extends keyof ApiInput, K2 extends keyof
 				stack: 'Stacktrace',
 				path: path.join('.'),
 			},
-		},
+		}),
 	}
 }
