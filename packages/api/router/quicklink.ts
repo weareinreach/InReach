@@ -292,7 +292,7 @@ export const quickLinkRouter = defineRouter({
 				published: true,
 				deleted: false,
 				locations: {
-					some: { services: { none: {} } },
+					some: { services: { none: {} }, published: true },
 				},
 			} satisfies Prisma.OrganizationWhereInput
 			const results = await ctx.prisma.organization.findMany({
@@ -329,6 +329,7 @@ export const quickLinkRouter = defineRouter({
 			})
 			const totalResults = await ctx.prisma.organization.count({ where })
 
+			console.log(results)
 			const transformedData = results.flatMap(({ locations, services, id, name, slug }) =>
 				locations.map(({ id: locationId, name: locationName, services: locationServices, published }) => {
 					return {
