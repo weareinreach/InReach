@@ -328,8 +328,6 @@ export const quickLinkRouter = defineRouter({
 				skip,
 			})
 			const totalResults = await ctx.prisma.organization.count({ where })
-
-			console.log(results)
 			const transformedData = results.flatMap(({ locations, services, id, name, slug }) =>
 				locations.map(({ id: locationId, name: locationName, services: locationServices, published }) => {
 					return {

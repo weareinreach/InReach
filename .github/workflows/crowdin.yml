@@ -25,9 +25,9 @@ jobs:
         uses: ashley-taylor/regex-property-action@eeec905bf940ec1c65ff777402c57f786368d9bc # v1.4
         with:
           value: ${{ github.ref_name }}
-          regex: IN-\d+
+          regex: (IN|PLI)-\d+
           flags: gi
-          replacement: IN-xxx
+          replacement: $1-xxx
 
       - name: Sanitize github branch name
         id: sanitizebranch
