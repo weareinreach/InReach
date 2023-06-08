@@ -1,5 +1,5 @@
 import { Center } from '@mantine/core'
-import { type Meta } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core/Button'
 import { geoAutocompleteCityState, geoByPlaceIdCityState } from '~ui/mockData/geo'
@@ -42,4 +42,30 @@ export default {
 	),
 } satisfies Meta<typeof SignupModalLauncher>
 
-export const Modal = {}
+type StoryDef = StoryObj<typeof SignupModalLauncher>
+export const Modal = {} satisfies StoryDef
+
+export const ExistingUser = {
+	parameters: {
+		msw: [
+			getTRPCMock({
+				path: ['user', 'create'],
+				type: 'mutation',
+				error: {
+					code: 'CONFLICT',
+					message: 'User already exists',
+				},
+			}),
+			getTRPCMock({
+				path: ['user', 'forgotPassword'],
+				type: 'mutation',
+				response: {
+					CodeDeliveryDetails: {
+						DeliveryMedium: 'EMAIL',
+					},
+					$metadata: {},
+				},
+			}),
+		],
+	},
+} satisfies StoryDef
