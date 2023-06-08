@@ -63,7 +63,7 @@ const QuickLink = () => {
 	const router = useRouter()
 	const apiUtils = api.useContext()
 	const variants = useCustomVariant()
-	const updatePhones = api.quicklink.updateServiceLocationData.useMutation({
+	const updateServices = api.quicklink.updateServiceLocationData.useMutation({
 		onSuccess: () => {
 			setIsSaved(true)
 			apiUtils.quicklink.getServiceLocationData.invalidate()
@@ -90,13 +90,13 @@ const QuickLink = () => {
 	}, [data, isLoading, page])
 	useEffect(() => {
 		if (page + 1 <= totalPages) {
-			apiUtils.quicklink.getPhoneData.prefetch({
+			apiUtils.quicklink.getServiceLocationData.prefetch({
 				limit: RESULTS_PER_PAGE,
 				skip: RESULTS_PER_PAGE * (page + 1),
 			})
 		}
 		if (page - 1 >= 0) {
-			apiUtils.quicklink.getPhoneData.prefetch({
+			apiUtils.quicklink.getServiceLocationData.prefetch({
 				limit: RESULTS_PER_PAGE,
 				skip: RESULTS_PER_PAGE * (page - 1),
 			})
@@ -106,7 +106,7 @@ const QuickLink = () => {
 
 	useEffect(() => {
 		if (!overlay) {
-			apiUtils.quicklink.getPhoneData.prefetch(
+			apiUtils.quicklink.getServiceLocationData.prefetch(
 				{ limit: RESULTS_PER_PAGE, skip: RESULTS_PER_PAGE * (page + 1) },
 				{}
 			)
@@ -171,7 +171,7 @@ const QuickLink = () => {
 			})
 		)
 		if (updated.length) {
-			updatePhones.mutate(updated)
+			updateServices.mutate(updated)
 		}
 	}
 
@@ -385,7 +385,7 @@ const QuickLink = () => {
 								variant='primary-icon'
 								leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 								onClick={handleMutation}
-								loading={updatePhones.isLoading}
+								loading={updateServices.isLoading}
 								disabled={!form.isDirty()}
 							>
 								Save
@@ -400,7 +400,7 @@ const QuickLink = () => {
 									variant='primary-icon'
 									leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 									onClick={handleMutation}
-									loading={updatePhones.isLoading}
+									loading={updateServices.isLoading}
 								>
 									Save
 								</Button>
@@ -446,7 +446,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, req, res 
 	}
 	const ssg = await trpcServerClient({ session })
 	if (session) {
-		await ssg.quicklink.getPhoneData.prefetch({ limit: 20, skip: 0 })
+		await ssg.quicklink.getServiceLocationData.prefetch({ limit: 20, skip: 0 })
 	}
 
 	return {
