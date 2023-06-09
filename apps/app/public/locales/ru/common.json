@@ -275,7 +275,7 @@
 	"submit-review": "Отправить отзыв",
 	"subscribe-to-newsletter": "Подписаться на рассылку",
 	"suggest-a-resource": "Предложить ресурс",
-	"support": "Support",
+	"support": "Поддержка",
 	"survey": {
 		"birthyear-req-value": "Год должен быть между {{year1}} и {{year2}}, то есть 2005 год",
 		"finish": "Закончить",
@@ -338,7 +338,7 @@
 		"settings": "Настройки",
 		"share": "Поделиться",
 		"skip": "Пропустить",
-		"support": "Support"
+		"support": "Поддержка"
 	},
 	"photo_one": "Фото",
 	"photo_few": "Фото",
@@ -348,10 +348,10 @@
 	"review-count_few": "{{count}} отзывов",
 	"review-count_many": "{{count}} отзывов",
 	"review-count_other": "{{count}} отзывов",
-	"review_one": "Review",
-	"review_few": "Reviews",
-	"review_many": "Reviews",
-	"review_other": "Reviews",
+	"review_one": "Отзыв",
+	"review_few": "Рецензии",
+	"review_many": "Рецензии",
+	"review_other": "Рецензии",
 	"view-x-result_one": "Просмотр результата {{count}}",
 	"view-x-result_few": "Посмотреть {{count}} результаты",
 	"view-x-result_many": "Посмотреть {{count}} результаты",
