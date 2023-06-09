@@ -23,6 +23,12 @@ export const serviceCategory = [
 		tsKey: 'education-and-employment.CATEGORYNAME',
 		tsNs: 'services',
 	},
+	{
+		id: 'svct_01GW2HHEVPE008PHCPNHZDAWMS',
+		category: 'Entertainment and Activities',
+		tsKey: 'sports-and-entertainment.CATEGORYNAME',
+		tsNs: 'services',
+	},
 	{ id: 'svct_01GW2HHEVFXW9YFMK4R95ZHBPV', category: 'Food', tsKey: 'food.CATEGORYNAME', tsNs: 'services' },
 	{
 		id: 'svct_01GW2HHEVF8W7D67CH3NVSQYA6',
@@ -48,12 +54,6 @@ export const serviceCategory = [
 		id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
 		category: 'Mental Health',
 		tsKey: 'mental-health.CATEGORYNAME',
-		tsNs: 'services',
-	},
-	{
-		id: 'svct_01GW2HHEVPE008PHCPNHZDAWMS',
-		category: 'Sports and Entertainment',
-		tsKey: 'sports-and-entertainment.CATEGORYNAME',
 		tsNs: 'services',
 	},
 	{
