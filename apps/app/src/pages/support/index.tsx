@@ -80,7 +80,7 @@ const SavedLists = () => {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 	return {
 		props: {
-			...(await getServerSideTranslations(locale, ['common'])),
+			...(await getServerSideTranslations(locale, ['common', 'attribute'])),
 		},
 	}
 }
