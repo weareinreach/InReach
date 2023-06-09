@@ -60,16 +60,28 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 								i18nKey='quick-promo-heading'
 								components={{
 									emojiLg: <Text fz={40}>.</Text>,
-									title2: <Title order={2}>.</Title>,
-									textDarkGray: <Text variant={variants.Text.darkGray}>.</Text>,
+									title2: (
+										<Title ta='center' order={2}>
+											.
+										</Title>
+									),
+									textDarkGray: (
+										<Text ta='center' variant={variants.Text.darkGray}>
+											.
+										</Text>
+									),
 								}}
 							/>
 						</Stack>
-						<Stack align='center' spacing={16}>
+						<Stack align='center' justify='center' spacing={16}>
 							<Trans
 								i18nKey='quick-promo-body'
 								components={{
-									textUtility1: <Text variant={variants.Text.utility1}>.</Text>,
+									textUtility1: (
+										<Text ta='center' variant={variants.Text.utility1}>
+											.
+										</Text>
+									),
 								}}
 							/>
 						</Stack>
