@@ -156,8 +156,6 @@
 	"password-saved": "¡Contraseña guardada!",
 	"photo-count_interval": "(0)[No hay fotos aún.];(1)[{{count}} foto];(2-inf)[{{count}} fotos]",
 	"photo_interval": "(0)[Aún no hay fotos];(3-inf)[{{count}} fotos];",
-	"photo_one": "Foto",
-	"photo_other": "Fotos",
 	"powered-by-vercel": "Desarrollado por Vercel",
 	"prefer-not-to-say": "Preferencia a no decir",
 	"privacy-policy": "Política de privacidad",
@@ -176,7 +174,10 @@
 		"<textDarkGray><title2>Análisis de uso del sitio</title2></textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Lea nuestra política de privacidad completa para obtener más información</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Declaración de privacidad</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>Declaración de privacidad</title2>"
+	],
 	"privatePractice": "Práctica privada",
 	"profile": "Perfil",
 	"questions": "¿Preguntas?",
@@ -189,13 +190,9 @@
 	"resources": "Recursos",
 	"retry": "Reintentar",
 	"review-count_interval": "(0)[Sin reseñas];",
-	"review-count_one": "{{count}} reseña",
-	"review-count_other": "{{count}} reseñas",
 	"review-not-empty": "La reseña no puede estar vacía",
 	"review-note": "Tu calificación no se grabará hasta que introduzcsa una reseña y hagas clic en \"Enviar\"",
 	"review-resource": "Haz una reseña sobre este recurso",
-	"review_one": "Review",
-	"review_other": "Reviews",
 	"safety-exit": "Salida de seguridad",
 	"save": "Guardar",
 	"saved": "Guardado",
@@ -308,11 +305,7 @@
 		"verifying": "Verificando cuenta..."
 	},
 	"view-list": "Ver lista",
-	"view-x-result_one": "Ver {{count}} resultado",
-	"view-x-result_other": "Ver {{count}} resultados",
 	"visit": "Visita",
-	"website_one": "Página web",
-	"website_other": "Página web",
 	"words": {
 		"accept": "Aceptar",
 		"account": "Cuenta",
@@ -344,5 +337,15 @@
 		"share": "Compartir",
 		"skip": "Saltar",
 		"support": "Apoyo"
-	}
+	},
+	"photo_one": "Foto",
+	"photo_other": "Fotos",
+	"review-count_one": "{{count}} reseña",
+	"review-count_other": "{{count}} reseñas",
+	"review_one": "Review",
+	"review_other": "Reviews",
+	"view-x-result_one": "Ver {{count}} resultado",
+	"view-x-result_other": "Ver {{count}} resultados",
+	"website_one": "Página web",
+	"website_other": "Página web"
 }

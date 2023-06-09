@@ -156,8 +156,6 @@
 	"password-saved": "Mot de passe enregistré !",
 	"photo-count_interval": "(0)[Aucune photo.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"photo_interval": "(0)[Aucune photo];(3-inf)[{{count}} photos];",
-	"photo_one": "Photo",
-	"photo_other": "Photos",
 	"powered-by-vercel": "Propulsé par Vercel",
 	"prefer-not-to-say": "Préférer ne pas dire",
 	"privacy-policy": "Politique de confidentialité",
@@ -176,7 +174,10 @@
 		"<textDarkGray><title2>Analyse d'utilisation du site</title2></textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Lisez notre politique de confidentialité complète pour plus d'informations</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Déclaration de confidentialité</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>Déclaration de confidentialité</title2>"
+	],
 	"privatePractice": "Cabinet médical privé",
 	"profile": "Profil",
 	"questions": "Des questions ?",
@@ -189,13 +190,9 @@
 	"resources": "Ressource",
 	"retry": "Réessayer",
 	"review-count_interval": "(0)[Aucun commentaire];",
-	"review-count_one": "{{count}} avis",
-	"review-count_other": "{{count}} avis",
 	"review-not-empty": "La revue ne peut pas être vide",
 	"review-note": "Votre évaluation ne sera pas enregistrée tant que vous n'aurez pas entré un commentaire et cliquez sur « Soumettre ».",
 	"review-resource": "Revoir cette ressource",
-	"review_one": "Review",
-	"review_other": "Reviews",
 	"safety-exit": "Sortie de sécurité",
 	"save": "Enregistrer",
 	"saved": "Enregistré",
@@ -308,11 +305,7 @@
 		"verifying": "Vérification du compte..."
 	},
 	"view-list": "Voir la liste",
-	"view-x-result_one": "Voir le résultat de {{count}}",
-	"view-x-result_other": "Voir {{count}} résultats",
 	"visit": "Visiter",
-	"website_one": "Website",
-	"website_other": "Websites",
 	"words": {
 		"accept": "Accepter",
 		"account": "Compte",
@@ -344,5 +337,15 @@
 		"share": "Partager",
 		"skip": "Ignorer",
 		"support": "Support"
-	}
+	},
+	"photo_one": "Photo",
+	"photo_other": "Photos",
+	"review-count_one": "{{count}} avis",
+	"review-count_other": "{{count}} avis",
+	"review_one": "Review",
+	"review_other": "Reviews",
+	"view-x-result_one": "Voir le résultat de {{count}}",
+	"view-x-result_other": "Voir {{count}} résultats",
+	"website_one": "Website",
+	"website_other": "Websites"
 }
