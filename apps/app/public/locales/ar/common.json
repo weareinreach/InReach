@@ -366,10 +366,10 @@
 	"view-x-result_few": "عرض نتائج {{count}}",
 	"view-x-result_many": "عرض نتائج {{count}}",
 	"view-x-result_other": "عرض نتائج {{count}}",
-	"website_zero": "Websites",
-	"website_one": "Website",
-	"website_two": "Websites",
-	"website_few": "Websites",
-	"website_many": "Websites",
-	"website_other": "Websites"
+	"website_zero": "مواقع الويب",
+	"website_one": "الموقع الإلكتروني",
+	"website_two": "مواقع الويب",
+	"website_few": "مواقع الويب",
+	"website_many": "مواقع الويب",
+	"website_other": "مواقع الويب"
 }
