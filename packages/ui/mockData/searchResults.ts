@@ -92,7 +92,7 @@ export const searchResultsMock = {
 			description: {
 				key: 'the-wanda-alston-foundation.description',
 				ns: 'org-data',
-				text: "The Wanda Alston Foundation (WAF) is the only housing nonprofit in Washington, D.C. that is solely dedicated to offering pre-independent transitional living and support services to homeless or at-risk LGBTQ youth ages 16-24. The foundation consists of two separate transitional housing programs, Wanda's House and Alston's Place. WAF's mission is to eradicate homelessness and poverty for LGBTQ youth ages 18 to 24, and provides services in the areas of long-term transitional living (up to 18 months), on-site 24/7 staff, case management, educational guidance and support, job training and guidance, and support service referrals.",
+				text: "this organization has Duplicate cities listed in the cities array, however, duplicates should not be shown in the location summary displayed below the organization title. The Wanda Alston Foundation (WAF) is the only housing nonprofit in Washington, D.C. that is solely dedicated to offering pre-independent transitional living and support services to homeless or at-risk LGBTQ youth ages 16-24. The foundation consists of two separate transitional housing programs, Wanda's House and Alston's Place. WAF's mission is to eradicate homelessness and poverty for LGBTQ youth ages 18 to 24, and provides services in the areas of long-term transitional living (up to 18 months), on-site 24/7 staff, case management, educational guidance and support, job training and guidance, and support service referrals.",
 			},
 			serviceCategories: [
 				{
@@ -131,7 +131,7 @@ export const searchResultsMock = {
 					},
 				},
 			],
-			locations: ['Washington'],
+			locations: ['Washington', 'New York', 'washington', 'new York', 'los Angeles'],
 			distance: 5.27,
 			unit: 'mi',
 		},

@@ -320,7 +320,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	return {
 		props: {
 			trpcState: ssg.dehydrate(),
-			...(await getServerSideTranslations(locale, ['common', 'landingPage'])),
+			...(await getServerSideTranslations(locale, ['common', 'landingPage', 'attribute'])),
 		},
 		revalidate: 60 * 60 * 24, // 24 hours
 	}

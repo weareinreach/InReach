@@ -734,7 +734,7 @@ export const allAttributes = [
 	{
 		id: 'attr_01GW2HHFVSE2074QZJ4SKEW74J',
 		tag: 'law-other',
-		name: 'Other (please specify)',
+		name: 'Other',
 		icon: null,
 		iconBg: null,
 		tsNs: 'attribute',
@@ -746,7 +746,7 @@ export const allAttributes = [
 	{
 		id: 'attr_01GW2HHFVRS8XEJ3TJBBEQJ707',
 		tag: 'law-school-clinic',
-		name: 'Law school student clinic',
+		name: 'Law school clinic',
 		icon: null,
 		iconBg: null,
 		tsNs: 'attribute',
@@ -758,7 +758,7 @@ export const allAttributes = [
 	{
 		id: 'attr_01GW2HHFVRFPRQCQHNJA6BM3XP',
 		tag: 'legal-nonprofit',
-		name: 'Legal non-profit',
+		name: 'Legal nonprofit organization',
 		icon: null,
 		iconBg: null,
 		tsNs: 'attribute',
