@@ -3,7 +3,8 @@
 	"compilerOptions": {
 		"baseUrl": "./src",
 		"paths": {
-			"~/*": ["./*"]
+			"~/*": ["./*"],
+			"~db/*": ["../../db/*"]
 		},
 		"target": "es2020",
 		"strict": true,

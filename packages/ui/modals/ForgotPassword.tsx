@@ -18,7 +18,7 @@ import { forwardRef } from 'react'
 import { z } from 'zod'
 
 import { Button } from '~ui/components/core/Button'
-import { useCustomVariant, useShake } from '~ui/hooks'
+import { useCustomVariant, useScreenSize, useShake } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -41,10 +41,10 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 		})
 		const variants = useCustomVariant()
 		const theme = useMantineTheme()
-		const pwResetHandler = api.user.forgotPassword.useMutation()
+		const pwResetHandler = api.user.forgotPassword.useMutation({ onSuccess: () => {} })
 		const { animateCSS, fireEvent } = useShake({ variant: 1 })
 		const [opened, handler] = useDisclosure(false)
-
+		const { isMobile } = useScreenSize()
 		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
 
 		const successMessage = (
@@ -69,7 +69,8 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 					title={modalTitle}
 					opened={opened}
 					onClose={() => handler.close()}
-					styles={(theme) => ({ content: { zIndex: 400 } })}
+					zIndex={550}
+					fullScreen={isMobile}
 				>
 					<Stack align='center' spacing={24}>
 						<Title order={2}>{t('reset-password')}</Title>
@@ -82,18 +83,18 @@ export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPassw
 							description={pwResetHandler.isSuccess ? successMessage : undefined}
 						/>
 						<Button
-							onClick={() => submitHandler()}
+							onClick={() => (pwResetHandler.isSuccess ? handler.close() : submitHandler())}
 							variant='primary-icon'
 							fullWidth
 							loaderPosition='center'
 							loading={pwResetHandler.isLoading}
 							// disabled={!passwordResetForm.isValid()}
 						>
-							{t('send-email')}
+							{t(pwResetHandler.isSuccess ? 'words.close' : 'send-email')}
 						</Button>
 					</Stack>
 				</Modal>
-				<Box component='button' ref={ref} {...props} />
+				<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
 			</>
 		)
 	}

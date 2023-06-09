@@ -164,10 +164,7 @@ const Home: NextPageWithoutGrid = () => {
 	const autoplay = useRef(Autoplay({ delay: 5000 }))
 	useAnimationOffsetEffect(embla, 5000)
 
-	// useEffect(()=> {
 	const launchAHpopup = getCookie('inr-ahpop')
-	console.log(launchAHpopup, typeof launchAHpopup)
-	// })
 
 	return (
 		<>

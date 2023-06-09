@@ -14,10 +14,23 @@ Globals:
 Resources:
   usermigrate:
     Type: 'AWS::Serverless::Function'
+    # Metadata:
+    #   BuildMethod: makefile
     Properties:
       FunctionName: 'cognito-user-migrate'
-      Handler: index.handler
+      Handler: dist/index.handler
       Role: arn:aws:iam::142495371698:role/cognito-migration-lambda
       Environment:
         Variables:
-          DATABASE_URL: '{{resolve:ssm:/prod/prismaproxy}}'
+          DATABASE_URL: '{{resolve:ssm:/prod/inreach-prod}}'
+          DB_DIRECT_URL: '{{resolve:ssm:/prod/inreach-prod}}'
+  # runtimeDepsLayer:
+  #   Type: AWS::Serverless::LayerVersion
+  #   Metadata:
+  #     BuildMethod: makefile
+  #   Properties:
+  #     LayerName: "usermigrate-dependencies"
+  #     ContentUri: ./
+  #     CompatibleRuntimes:
+  #       - nodejs18.x
+  #     RetentionPolicy: Retain

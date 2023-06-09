@@ -5,7 +5,7 @@ import { forwardRef } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
 import { LoginModalLauncher } from './Login'
 import { ModalTitle } from './ModalTitle'
@@ -15,12 +15,12 @@ export const ClaimOrgModalBody = forwardRef<HTMLButtonElement, ClaimOrgModalProp
 	const { t } = useTranslation(['common'])
 	const variants = useCustomVariant()
 	const [opened, handler] = useDisclosure(false)
-
+	const { isMobile } = useScreenSize()
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
 
 	return (
 		<>
-			<Modal title={modalTitle} opened={opened} onClose={handler.close}>
+			<Modal title={modalTitle} opened={opened} onClose={handler.close} fullScreen={isMobile}>
 				<Stack align='center' spacing={24}>
 					<Stack align='center' spacing={16}>
 						<Trans
