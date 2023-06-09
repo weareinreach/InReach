@@ -78,21 +78,34 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 	}))
 
 	const cityList = (cities: string[]) => {
-		const amount = cities.length
+		//check for duplicates and be case insensitive, before switching
+		const dedupedCityList: string[] = []
+		const lowercaseSet: { [key: string]: boolean } = {}
+
+		cities.forEach((value) => {
+			const lowercaseValue = value.toLowerCase()
+			if (!lowercaseSet[lowercaseValue]) {
+				lowercaseSet[lowercaseValue] = true
+				dedupedCityList.push(value)
+			}
+		})
+
+		const amount = dedupedCityList.length
+
 		switch (true) {
 			case amount === 0: {
 				return null
 			}
 			case amount <= 2: {
-				return cities.join(` ${t('words.and')} `)
+				return dedupedCityList.join(` ${t('words.and')} `)
 			}
 			case amount === 3: {
-				const commas = cities.slice(0, 2)
-				return [commas.join(', '), cities[2]].join(` ${t('words.and')} `)
+				const commas = dedupedCityList.slice(0, 2)
+				return [commas.join(', '), dedupedCityList[2]].join(` ${t('words.and')} `)
 			}
 			case amount > 3: {
-				const visibleItems = cities.slice(0, 3)
-				const moreText = `${t('words.and-x-more', { count: cities.length - visibleItems.length })}`
+				const visibleItems = dedupedCityList.slice(0, 3)
+				const moreText = `${t('words.and-x-more', { count: dedupedCityList.length - visibleItems.length })}`
 				return `${visibleItems.join(', ')} ${moreText}`
 			}
 		}
