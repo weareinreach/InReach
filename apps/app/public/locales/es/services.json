@@ -2,9 +2,9 @@
 	"abortion-care": {
 		"CATEGORYNAME": "Cuidado del aborto",
 		"abortion-providers": "Proveedores de aborto",
-		"financial-assistance": "Asistencia Financiera",
+		"financial-assistance": "Ayuda financiera",
 		"lodging-assistance": "Asistencia de alojamiento",
-		"mail-order-services": "Servicios de Pedidos por Correo",
+		"mail-order-services": "Servicios de pedidos por correo",
 		"mental-health-support": "Apoyo a la salud mental",
 		"travel-assistance": "Asistencia para viajes"
 	},
@@ -15,8 +15,8 @@
 		"lgbtq-centers": "Centros LGBTQ",
 		"reception-services": "Servicios de vigilancia",
 		"reentry-services": "Servicios de reentrada",
-		"spiritual-support": "Soporte Spiritual",
-		"sponsors": "Patrocinadores"
+		"spiritual-support": "Soporte espiritual",
+		"sponsors": "Patrocinio de inmigración"
 	},
 	"computers-and-internet": {
 		"CATEGORYNAME": "Ordenadores e Internet",
@@ -69,8 +69,8 @@
 		"refugee-claim": "Reclamo de Refuge",
 		"residency": "Residencia",
 		"special-immigrant-juvenile-status-sijs": "Estado Especial de Juveniles Inmigrantes (SIJS)",
-		"t-visa": "T Visa",
-		"u-visa": "U Visa"
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
 		"CATEGORYNAME": "Correo",
@@ -86,11 +86,11 @@
 		"physical-evaluations-for-asylum-claim": "Evaluaciones físicas de la solicitud de asilo",
 		"physical-evaluations-for-refugee-claim": "Evaluaciones físicas de la demanda de refugiados",
 		"trans-health": "Salud trans",
-		"trans-health-gender-affirming-surgery": "Salud Trans - Cirugía de género",
-		"trans-health-hormone-and-surgery-letters": "Salud Trans - Letras de hormonas y cirugía",
-		"trans-health-hormone-therapy": "Salud Trans - hormona allá",
-		"trans-health-primary-care": "Salud Trans - Cuidado Primario",
-		"trans-health-speech-therapy": "Salud Trans - Discurso allíampquot;"
+		"trans-health-gender-affirming-surgery": "Trans health - cirugía de afirmación de género",
+		"trans-health-hormone-and-surgery-letters": "Salud trans - letras de hormona y cirugía",
+		"trans-health-hormone-therapy": "Salud trans - terapia hormonal",
+		"trans-health-primary-care": "Salud trans - atención primaria",
+		"trans-health-speech-therapy": "Salud trans - terapia de voz"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Salud Mental",
@@ -106,9 +106,9 @@
 		"trans-support-groups": "Grupos de soporte Trans"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Deportes y Entidad/Entidad",
+		"CATEGORYNAME": "Empresas y actividades",
 		"art-music-literature": "Arte, música y literatura",
-		"sports-and-entertainment": "Deportes y Entidad/Entidad"
+		"sports-and-entertainment": "Deportes y entretenimiento"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Traducción e interpretación",

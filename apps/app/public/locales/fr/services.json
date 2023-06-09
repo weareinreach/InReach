@@ -16,7 +16,7 @@
 		"reception-services": "Services de réception",
 		"reentry-services": "Services de ré-entrée",
 		"spiritual-support": "Soutien spirituel",
-		"sponsors": "Sponsors"
+		"sponsors": "Parrainage de l'immigration"
 	},
 	"computers-and-internet": {
 		"CATEGORYNAME": "Ordinateurs et Internet",
@@ -69,8 +69,8 @@
 		"refugee-claim": "Demande de réfugié",
 		"residency": "Résidence",
 		"special-immigrant-juvenile-status-sijs": "Statut spécial des enfants immigrés (SIJS)",
-		"t-visa": "T Visa",
-		"u-visa": "U Visa"
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
 		"CATEGORYNAME": "Courrier",
@@ -86,11 +86,11 @@
 		"physical-evaluations-for-asylum-claim": "Évaluations physiques de la demande d'asile",
 		"physical-evaluations-for-refugee-claim": "Évaluations physiques de la demande d'asile",
 		"trans-health": "Santé des trans",
-		"trans-health-gender-affirming-surgery": "Santé Trans - Chirurgie affermissante du genre",
-		"trans-health-hormone-and-surgery-letters": "Santé Trans - Lettres d'Hormone et de Chirurgie",
-		"trans-health-hormone-therapy": "Santé Trans - Thérapie de l'hormone",
-		"trans-health-primary-care": "Santé Trans - Soins primaires",
-		"trans-health-speech-therapy": "Santé trans - Thérapie vocale"
+		"trans-health-gender-affirming-surgery": "Santé trans - Chirurgie affirmant le sexe",
+		"trans-health-hormone-and-surgery-letters": "Santé trans - lettres hormonales et chirurgicales",
+		"trans-health-hormone-therapy": "Santé trans - thérapie hormonale",
+		"trans-health-primary-care": "Santé des trans - soins primaires",
+		"trans-health-speech-therapy": "Santé trans - thérapie vocale"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Santé mentale",
@@ -106,7 +106,7 @@
 		"trans-support-groups": "Groupes de support Trans"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Sports et divertissement",
+		"CATEGORYNAME": "Divertissement & Activités",
 		"art-music-literature": "Art, Musique et Littérature",
 		"sports-and-entertainment": "Sports et divertissement"
 	},
