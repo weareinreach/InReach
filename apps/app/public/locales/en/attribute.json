@@ -135,9 +135,9 @@
 	"userlawpractice": {
 		"CATEGORYNAME": "Law Practice Options",
 		"corp-law-firm": "Corporate law firm",
-		"law-other": "Other (please specify)",
-		"law-school-clinic": "Law school student clinic",
-		"legal-nonprofit": "Legal non-profit"
+		"law-other": "Other",
+		"law-school-clinic": "Law school clinic",
+		"legal-nonprofit": "Legal nonprofit organization"
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "Service Provider Options",
