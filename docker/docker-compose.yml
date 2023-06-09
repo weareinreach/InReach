@@ -17,6 +17,18 @@ services:
     restart: always
     ports:
       - 8080:8080
+  pgAdmin:
+    image: dpage/pgadmin4
+    pull_policy: always
+    container_name: postgres-pgAdmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: hello@inreach.org
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - 5050:80
 
   redis:
     image: redis:7
@@ -28,5 +40,6 @@ services:
       - cache:/data
 volumes:
   dbdata: {}
+  pgadmin: {}
   cache:
     driver: local

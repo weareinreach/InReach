@@ -3,8 +3,8 @@
 		"CATEGORYNAME": "Аборт",
 		"abortion-providers": "Поставщики абортов",
 		"financial-assistance": "Финансовая помощь",
-		"lodging-assistance": "Помощь в аренде жилья",
-		"mail-order-services": "Услуги заказа почты",
+		"lodging-assistance": "Помощь в аренде",
+		"mail-order-services": "Сервисы заказа почты",
 		"mental-health-support": "Психическое здоровье",
 		"travel-assistance": "Помощь в организации поездок"
 	},
@@ -16,7 +16,7 @@
 		"reception-services": "Услуги приёма",
 		"reentry-services": "Услуги для повторного ввода",
 		"spiritual-support": "Духовная поддержка",
-		"sponsors": "Спонсоры"
+		"sponsors": "Иммиграционное спонсорство"
 	},
 	"computers-and-internet": {
 		"CATEGORYNAME": "Компьютеры и Интернет",
@@ -60,8 +60,8 @@
 		"crime-and-discrimination": "Преступность и дискриминация",
 		"deferred-action-for-childhood-arrivals-daca": "Отсроченные действия по прибытию в детство (ДАСА)",
 		"deportation-or-removal": "Депортация или удаление",
-		"employment-authorization": "Разрешение на занятость",
-		"family-petitions": "Семейные петиции",
+		"employment-authorization": "Разрешение на трудоустройство",
+		"family-petitions": "Ходатайство о семейном положении",
 		"immigration-detention": "Иммиграционное задержание",
 		"legal-advice": "Юридические консультации",
 		"legal-hotlines": "Горячие линии",
@@ -69,8 +69,8 @@
 		"refugee-claim": "Требование беженца",
 		"residency": "Жилье",
 		"special-immigrant-juvenile-status-sijs": "Специальный статус иммигрантов-несовершеннолетних (SIJS)",
-		"t-visa": "T Visa",
-		"u-visa": "U Visa"
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
 		"CATEGORYNAME": "Почта",
@@ -86,11 +86,11 @@
 		"physical-evaluations-for-asylum-claim": "Оценка физического характера ходатайств о предоставлении убежища",
 		"physical-evaluations-for-refugee-claim": "Оценка физического состояния претензии беженцев",
 		"trans-health": "Транс здоровья",
-		"trans-health-gender-affirming-surgery": "Trans Health - Поощрение гендерных факторов Хирургии",
-		"trans-health-hormone-and-surgery-letters": "Транс Здоровье - Гормоны и Хирургические письма",
-		"trans-health-hormone-therapy": "Транс Здоровье - Гормоновая Терапия",
-		"trans-health-primary-care": "Трансформация - первичная помощь",
-		"trans-health-speech-therapy": "Транс Здоровье - Речевая Терапия"
+		"trans-health-gender-affirming-surgery": "Противодействие - подтверждение гендерной хирургии",
+		"trans-health-hormone-and-surgery-letters": "Транс здоровье - гормон и письма хирургии",
+		"trans-health-hormone-therapy": "Транс здоровье - гормональная терапия",
+		"trans-health-primary-care": "Противодействие - первичная помощь",
+		"trans-health-speech-therapy": "Транс здоровье - речевая терапия"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Психическое здоровье",
@@ -106,7 +106,7 @@
 		"trans-support-groups": "Группы поддержки Trans"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Спорт и развлечения",
+		"CATEGORYNAME": "Развлечения и мероприятия",
 		"art-music-literature": "Искусство, музыка и литература",
 		"sports-and-entertainment": "Спорт и развлечения"
 	},
