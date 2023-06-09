@@ -356,8 +356,8 @@
 	"view-x-result_few": "Посмотреть {{count}} результаты",
 	"view-x-result_many": "Посмотреть {{count}} результаты",
 	"view-x-result_other": "Посмотреть {{count}} результаты",
-	"website_one": "Website",
-	"website_few": "Websites",
-	"website_many": "Websites",
-	"website_other": "Websites"
+	"website_one": "Вебсайт",
+	"website_few": "Веб-сайты",
+	"website_many": "Веб-сайты",
+	"website_other": "Веб-сайты"
 }
