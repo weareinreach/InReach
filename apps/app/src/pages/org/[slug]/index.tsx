@@ -1,12 +1,12 @@
 /* eslint-disable i18next/no-literal-string */
-import { Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
+import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 // import { getEnv } from '@weareinreach/config/env'
@@ -48,6 +48,15 @@ const LoadingState = () => (
 	</>
 )
 
+const useStyles = createStyles((theme) => ({
+	tabsList: {
+		position: 'sticky',
+		top: 0,
+		zIndex: 10,
+		backgroundColor: theme.other.colors.secondary.white,
+	},
+}))
+
 const OrganizationPage: NextPage = () => {
 	const { t, i18n } = useTranslation()
 	const router = useRouter<'/org/[slug]'>()
@@ -59,6 +68,12 @@ const OrganizationPage: NextPage = () => {
 	const { searchParams } = useSearchState()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
+
+	const { classes } = useStyles()
+	const servicesRef = useRef<HTMLDivElement>(null)
+	const photosRef = useRef<HTMLDivElement>(null)
+	const reviewsRef = useRef<HTMLDivElement>(null)
+
 	useEffect(() => {
 		if (data && status === 'success') {
 			setLoading(false)
@@ -99,21 +114,49 @@ const OrganizationPage: NextPage = () => {
 
 	const body =
 		locations?.length === 1 ? (
-			<Tabs w='100%' value={activeTab} onTabChange={setActiveTab}>
-				<Tabs.List>
+			<Tabs
+				w='100%'
+				value={activeTab}
+				onTabChange={(tab) => {
+					setActiveTab(tab)
+					switch (tab) {
+						case 'services': {
+							servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
+							break
+						}
+						case 'photos': {
+							photosRef.current?.scrollIntoView({ behavior: 'smooth' })
+							break
+						}
+						case 'reviews': {
+							reviewsRef.current?.scrollIntoView({ behavior: 'smooth' })
+							break
+						}
+					}
+				}}
+			>
+				<Tabs.List className={classes.tabsList}>
 					<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
 					<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
 					<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 				</Tabs.List>
-				<Tabs.Panel value='services'>
-					<ServicesInfoCard services={services} />
-				</Tabs.Panel>
-				<Tabs.Panel value='photos'>
-					<PhotosSection photos={photos} />
-				</Tabs.Panel>
-				<Tabs.Panel value='reviews'>
-					<ReviewSection reviews={reviews} />
-				</Tabs.Panel>
+				{/* <Tabs.Panel value='services'> */}
+				<Stack spacing={40} pt={40}>
+					<div ref={servicesRef}>
+						<ServicesInfoCard services={services} />
+					</div>
+					{/* </Tabs.Panel> */}
+					{/* <Tabs.Panel value='photos'> */}
+					<div ref={photosRef}>
+						<PhotosSection photos={photos} />
+					</div>
+					{/* </Tabs.Panel> */}
+					{/* <Tabs.Panel value='reviews'> */}
+					<div ref={reviewsRef}>
+						<ReviewSection reviews={reviews} />
+					</div>
+					{/* </Tabs.Panel> */}
+				</Stack>
 			</Tabs>
 		) : (
 			<Tabs w='100%' value={activeTab} onTabChange={setActiveTab}>
