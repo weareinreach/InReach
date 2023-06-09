@@ -73,7 +73,7 @@ export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromot
 								}}
 							/>
 						</Stack>
-						<Stack align='center' justify='center' spacing={16}>
+						<Stack align='center' spacing={16}>
 							<Trans
 								i18nKey='quick-promo-body'
 								components={{
