@@ -24,4 +24,5 @@ export * from './2023-06-05_2-add-tags/index'
 export * from './2023-06-06_tags-for-new-orgs/index'
 export * from './2023-06-07_update-tag'
 export * from './2023-06-08_trim-city-whitespace/index'
+export * from './2023-06-08_update-law-practice-opts'
 // codegen:end
