@@ -109,7 +109,7 @@
 		"@types/node": "18.16.16",
 		"@types/prettier": "2.7.3",
 		"@types/probe-image-size": "7.2.0",
-		"@types/react": "18.2.8",
+		"@types/react": "18.2.9",
 		"@types/react-dom": "18.2.4",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/api": "0.100.0",
