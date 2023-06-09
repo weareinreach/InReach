@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
 		"CATEGORYNAME": "رعاية الإجهاض",
-		"abortion-providers": "مزودي خدمات الإجهاض",
+		"abortion-providers": "موفري الإجهاض",
 		"financial-assistance": "المساعدة المالية",
 		"lodging-assistance": "مساعدة السكن",
 		"mail-order-services": "خدمات طلب البريد",
@@ -16,7 +16,7 @@
 		"reception-services": "خدمات الاستقبال",
 		"reentry-services": "خدمات العودة",
 		"spiritual-support": "الدعم الروحي",
-		"sponsors": "الراعيون"
+		"sponsors": "رعاية الهجرة"
 	},
 	"computers-and-internet": {
 		"CATEGORYNAME": "الحواسيب والإنترنت",
@@ -60,7 +60,7 @@
 		"crime-and-discrimination": "دال - الجريمة والتمييز",
 		"deferred-action-for-childhood-arrivals-daca": "الإجراءات المؤجلة لوصول الأطفال",
 		"deportation-or-removal": "الترحيل أو الترحيل",
-		"employment-authorization": "الإذن بالعمل",
+		"employment-authorization": "إذن العمل",
 		"family-petitions": "الالتماسات العائلية",
 		"immigration-detention": "احتجاز المهاجرين",
 		"legal-advice": "الاستشارات القانونية",
@@ -69,8 +69,8 @@
 		"refugee-claim": "طلب اللجوء",
 		"residency": "الإقامة",
 		"special-immigrant-juvenile-status-sijs": "حالة الأحداث الخاصة بالمهاجر",
-		"t-visa": "T Visa",
-		"u-visa": "U Visa"
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
 		"CATEGORYNAME": "البريد",
@@ -86,11 +86,11 @@
 		"physical-evaluations-for-asylum-claim": "التقييمات المادية لطلب اللجوء",
 		"physical-evaluations-for-refugee-claim": "التقييمات المادية لطلب اللجوء",
 		"trans-health": "عبر الصحة",
-		"trans-health-gender-affirming-surgery": "الصحة العابرة - الجراحة المؤكدة للجنسين",
-		"trans-health-hormone-and-surgery-letters": "عبر الصحة - رسائل الهورمون والجراحة",
-		"trans-health-hormone-therapy": "الصحة المباشرة - العلاج الهورمون",
-		"trans-health-primary-care": "الصحة المباشرة - الرعاية الأولية",
-		"trans-health-speech-therapy": "الصحة المباشرة - علاج الكلام"
+		"trans-health-gender-affirming-surgery": "الصحة المباشرة - الجراحة التي تؤكد نوع الجنس",
+		"trans-health-hormone-and-surgery-letters": "عبر الصحة - الهرمون وحروف الجراحة",
+		"trans-health-hormone-therapy": "الصحة العابرة - العلاج بالهرمونات",
+		"trans-health-primary-care": "الرعاية الصحية المباشرة - الرعاية الأولية",
+		"trans-health-speech-therapy": "الصحة العابرة - علاج النطق"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "الصحة النفسية",
@@ -106,7 +106,7 @@
 		"trans-support-groups": "عبر مجموعات الدعم"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "الرياضة والترفيه",
+		"CATEGORYNAME": "الترفيه والأنشطة",
 		"art-music-literature": "الفن والموسيقى والآداب",
 		"sports-and-entertainment": "الرياضة والترفيه"
 	},
