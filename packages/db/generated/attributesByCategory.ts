@@ -323,10 +323,10 @@ export const attributesByCategory = [
 		attributes: [
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVRH531R2HAV8DMDZSC',
+					id: 'attr_01GW2HHFVRFPRQCQHNJA6BM3XP',
 					icon: null,
-					tag: 'corp-law-firm',
-					tsKey: 'userlawpractice.corp-law-firm',
+					tag: 'legal-nonprofit',
+					tsKey: 'userlawpractice.legal-nonprofit',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -335,10 +335,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVSE2074QZJ4SKEW74J',
+					id: 'attr_01GW2HHFVRH531R2HAV8DMDZSC',
 					icon: null,
-					tag: 'law-other',
-					tsKey: 'userlawpractice.law-other',
+					tag: 'corp-law-firm',
+					tsKey: 'userlawpractice.corp-law-firm',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -359,10 +359,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVRFPRQCQHNJA6BM3XP',
+					id: 'attr_01GW2HHFVSE2074QZJ4SKEW74J',
 					icon: null,
-					tag: 'legal-nonprofit',
-					tsKey: 'userlawpractice.legal-nonprofit',
+					tag: 'law-other',
+					tsKey: 'userlawpractice.law-other',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
