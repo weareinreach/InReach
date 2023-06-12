@@ -66,14 +66,14 @@
 		"undocumented": "Oportunidades que sirven a inmigrantes indocumentados"
 	},
 	"cost": {
-		"CATEGORYNAME": "Costo",
+		"CATEGORYNAME": "Precio",
 		"cost-fees": "Incurre un coste",
 		"cost-free": "Gratis"
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Requisitos de elegibilidad",
 		"elig-age_max": "Menos de {{max}}",
-		"elig-age_min": "{{min}} y anteriores",
+		"elig-age_min": "{{min}} y mayor",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Otro (descripción de texto libre)",
 		"req-medical-insurance": "REQUIERE seguro médico",
