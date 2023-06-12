@@ -233,25 +233,26 @@
 	"share-feedback": "Share Feedback",
 	"show-less": "Show less",
 	"show-more": "Show more",
-	"sign-up": "Sign up",
+	"sign-up": {
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, verified resources.</textDarkGray>\n</group>",
+		"modal-body": [
+			"<title3>How can we help you?</title3>",
+			"<group>\n<button data-option='myself'>I need help for myself/loved one</button>\n<button data-option='law'>I am an attorney or law student</button>\n<button data-option='servpro'>I am a non-legal service provider</button>\n<button data-option='lcr'>I am a local community reviewer</button>\n</group>",
+			"<loginLink>Already have an account?</loginLink>"
+		],
+		"name-use-any": "Use whatever name you're comfortable with.",
+		"name_alias": "Name or alias",
+		"name_full": "Full name",
+		"placeholder-name_alias": "Enter name or alias...",
+		"placeholder-name_full": "Enter full name...",
+		"select-law-practice": "Where do you practice law?",
+		"select-service-provider": "Where do you work or volunteer?",
+		"success": "You've signed up for an account!",
+		"user-exists-body": "That email address is already registered.",
+		"user-exists-header": "You may already have an account.",
+		"verify-email": "Before you can start using your new account, you must verify your email address. Check your inbox and click the link in the message."
+	},
 	"sign-up-free": "Sign up for free",
-	"sign-up-header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, verified resources.</textDarkGray>\n</group>",
-	"sign-up-modal-body": [
-		"<title3>How can we help you?</title3>",
-		"<group>\n<button data-option='myself'>I need help for myself/loved one</button>\n<button data-option='law'>I am an attorney or law student</button>\n<button data-option='servpro'>I am a non-legal service provider</button>\n<button data-option='lcr'>I am a local community reviewer</button>\n</group>",
-		"<loginLink>Already have an account?</loginLink>"
-	],
-	"sign-up-name-use-any": "Use whatever name you're comfortable with.",
-	"sign-up-name_alias": "Name or alias",
-	"sign-up-name_full": "Full name",
-	"sign-up-placeholder-name_alias": "Enter name or alias...",
-	"sign-up-placeholder-name_full": "Enter full name...",
-	"sign-up-select-law-practice": "Where do you practice law?",
-	"sign-up-select-service-provider": "Where do you work or volunteer?",
-	"sign-up-success": "You've signed up for an account!",
-	"sign-up-user-exists-body": "That email address is already registered.",
-	"sign-up-user-exists-header": "You may already have an account.",
-	"sign-up-verify-email": "Before you can start using your new account, you must verify your email address. Check your inbox and click the link in the message.",
 	"social": {
 		"email": "Email",
 		"facebook": "Facebook",
@@ -344,6 +345,7 @@
 		"service-hours": "Service hours",
 		"settings": "Settings",
 		"share": "Share",
+		"sign-up": "Sign up",
 		"skip": "Skip",
 		"support": "Support"
 	}

@@ -153,7 +153,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 		: t('step-x-y', { ns: 'common', x: stepOption ? 2 : 1, y: 2 })
 	const modalTitle = <ModalTitle breadcrumb={breadcrumbProps} rightText={titleRightSideProps} />
 
-	const step1 = <RichTranslate i18nKey='sign-up-modal-body' stateSetter={userTypeChange} handler={handler} />
+	const step1 = <RichTranslate i18nKey='sign-up.modal-body' stateSetter={userTypeChange} handler={handler} />
 
 	const submitHandler = () => {
 		if (form.isValid()) {
@@ -164,13 +164,13 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 	const signUpButton = (
 		<>
 			<Button disabled={!form.isValid()} onClick={submitHandler} loading={signUpAction.isLoading}>
-				{t('sign-up')}
+				{t('words.sign-up')}
 			</Button>
 			<Text variant={variants.Text.utility4darkGray}>
 				<Trans
 					i18nKey='agree-disclaimer'
 					values={{
-						action: '$t(sign-up)',
+						action: '$t(words.sign-up)',
 					}}
 					components={{
 						link1: (
@@ -242,7 +242,7 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 
 	const signupBody = (
 		<>
-			<RichTranslate i18nKey='sign-up-header' handler={handler} />
+			<RichTranslate i18nKey='sign-up.header' handler={handler} />
 			{stepOption === null ? step1 : step2()}
 		</>
 	)
@@ -250,8 +250,8 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 	const successBody = (
 		<>
 			<Title order={1}>✅</Title>
-			<Title order={2}>{t('sign-up-success')}</Title>
-			<Text variant={variants.Text.utility1darkGray}>{t('sign-up-verify-email')}</Text>
+			<Title order={2}>{t('sign-up.success')}</Title>
+			<Text variant={variants.Text.utility1darkGray}>{t('sign-up.verify-email')}</Text>
 			<Button variant={variants.Button.primaryLg} fullWidth onClick={() => router.push('/')}>
 				{t('find-x', { value: '$t(resources, lowercase)' })}
 			</Button>
@@ -263,8 +263,8 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 	const userExistsBody = (
 		<>
 			<Title order={1}>🧐</Title>
-			<Title order={2}>{t('sign-up-user-exists-header')}</Title>
-			<Text variant={variants.Text.utility1darkGray}>{t('sign-up-user-exists-body')}</Text>
+			<Title order={2}>{t('sign-up.user-exists-header')}</Title>
+			<Text variant={variants.Text.utility1darkGray}>{t('sign-up.user-exists-body')}</Text>
 			<ForgotPasswordModal component={Link} variant={variants.Button.primaryLg}>
 				{t('forgot-password')}
 			</ForgotPasswordModal>

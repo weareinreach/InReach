@@ -84,9 +84,9 @@ export const FormName = ({ tContext }: { tContext: 'alias' | 'full' }) => {
 	return (
 		<TextInput
 			required
-			label={t('sign-up-name', { context: tContext })}
-			description={tContext === 'alias' ? t('sign-up-name-use-any') : undefined}
-			placeholder={t('sign-up-placeholder-name', { context: tContext }) as string}
+			label={t('sign-up.name', { context: tContext })}
+			description={tContext === 'alias' ? t('sign-up.name-use-any') : undefined}
+			placeholder={t('sign-up.placeholder-name', { context: tContext }) as string}
 			{...form.getInputProps('name')}
 		/>
 	)
@@ -282,7 +282,7 @@ export const FormLawPractice = () => {
 	return (
 		<>
 			<Select
-				label={t('sign-up-select-law-practice')}
+				label={t('sign-up.select-law-practice')}
 				data={selectItems}
 				itemComponent={SelectItemSingleLine}
 				{...form.getInputProps('lawPractice')}
@@ -311,7 +311,7 @@ export const FormServiceProvider = () => {
 
 	return (
 		<Select
-			label={t('sign-up-select-service-provider')}
+			label={t('sign-up.select-service-provider')}
 			data={selectItems}
 			itemComponent={SelectItemSingleLine}
 			{...form.getInputProps('servProvider')}
