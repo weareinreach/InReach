@@ -158,6 +158,7 @@
 	"photo_interval": "(0)[No photos yet];(2-inf)[See all {{count}} photos];",
 	"photo_one": "Photo",
 	"photo_other": "Photos",
+	"please-specify": "Please specify",
 	"powered-by-vercel": "Powered by Vercel",
 	"prefer-not-to-say": "Prefer not to say",
 	"privacy-policy": "Privacy policy",
