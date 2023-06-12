@@ -255,15 +255,17 @@ model UserSurvey {
   birthYear     Int?    @db.SmallInt
   reasonForJoin String?
 
-  communities  SurveyCommunity[]
-  ethnicities  SurveyEthnicity[]
-  identifiesAs SurveySOG[]
+  communities    SurveyCommunity[]
+  ethnicities    SurveyEthnicity[]
+  ethnicityOther String?
+  identifiesAs   SurveySOG[]
 
   countryOrigin   Country? @relation("origin", fields: [countryOriginId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   countryOriginId String?
 
-  immigration   UserImmigration? @relation(fields: [immigrationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  immigrationId String?
+  immigration      UserImmigration? @relation(fields: [immigrationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  immigrationId    String?
+  immigrationOther String?
 
   currentCity      String?
   currentGovDist   GovDist? @relation(fields: [currentGovDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)

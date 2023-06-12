@@ -184,6 +184,8 @@ export const CreateUserSurvey = z
 		currentCity: z.string(),
 		currentGovDistId: idString,
 		currentCountryId: idString,
+		immigrationOther: z.string(),
+		ethnicityOther: z.string(),
 	})
 	.partial()
 	.transform(
