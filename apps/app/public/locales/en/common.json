@@ -188,7 +188,7 @@
 	"resource-saved": "Resource saved.",
 	"resources": "Resources",
 	"retry": "Retry",
-	"review-count_interval": "(0)[No reviews have been submitted for this organization yet. Be the first to share your experience!];",
+	"review-count_interval": "(0)[No reviews yet];",
 	"review-count_one": "({{count}} review)",
 	"review-count_other": "({{count}} reviews)",
 	"review-not-empty": "Review cannot be empty",
