@@ -246,7 +246,7 @@
 	"sign-up-select-service-provider": "¿Dónde trabajas o donde eres voluntario?",
 	"sign-up-success": "¡Te has registrado en una cuenta!",
 	"sign-up-user-exists-body": "Esa dirección de correo electrónico ya está registrada.",
-	"sign-up-user-exists-header": "Puede que ya tenga una cuenta.",
+	"sign-up-user-exists-header": "Es posible que ya tenga una cuenta.",
 	"sign-up-verify-email": "Antes de empezar a utilizar su nueva cuenta, debe verificar su dirección de correo electrónico. Compruebe su bandeja de entrada y haga clic en el enlace del mensaje.",
 	"social": {
 		"email": "E-mail",
@@ -275,7 +275,7 @@
 	"suggest-a-resource": "Sugiere un Recurso",
 	"support": "Apoyo",
 	"survey": {
-		"birthyear-req-value": "El año debe estar entre {{year1}} y {{year2}}, es decir, 2005",
+		"birthyear-req-value": "El año debe estar entre {{year1}} y {{year2}}, por ejemplo, 2005",
 		"finish": "Finalizar",
 		"not-right-now": "No ahora mismo",
 		"question-1-title": "¿Cómo te describirías a ti misme?",
@@ -291,14 +291,14 @@
 		"thank-you": "¡Gracias!",
 		"thank-you-message": "La información que usted comparte nos ayuda a mejorar nuestro producto."
 	},
-	"take-action": "Realizar acción",
+	"take-action": "Tomar acción",
 	"uncheck-all": "Desmarcar todo",
 	"unclaimed": "Sin reclamar",
 	"user-avatar": "Avatar de usuario",
-	"user-survey-body": "<textUtility1>¿Por qué nos preguntamos? Entender nuestros gráficos fotograficos de usuario puede ayudarnos a cuantificar nuestro impacto, recaudar fondos y evaluar futuras decisiones de productos.</textUtility1>\n<textUtility1>Seguridad-primero: Sus respuestas se almacenan de forma anónima y no están conectadas a usted como un usuario individual o a su cuenta de usuario.</textUtility1>",
+	"user-survey-body": "<textUtility1>¿Por qué preguntamos? Entender los datos demograficos de nuestros usuarios puede ayudarnos a cuantificar nuestro impacto, recaudar fondos y evaluar futuras decisiones de productos.</textUtility1>\n<textUtility1>Seguridad-primero: Sus respuestas se almacenan de forma anónima y no están conectadas a usted como un usuario individual o a su cuenta de usuario.</textUtility1>",
 	"user-survey-heading": "<emojiLg>📋</emojiLg>\n<title>Por favor, tómese unos minutos para contarnos acerca de usted en nuestra encuesta de usuario anónima.</title></textDarkGray>",
 	"verified-information": "Información verificada",
-	"verified-information-detail": "La información de esta página fue actualizada por última vez {{dateString}}. El alcance prioriza la exactitud y la seguridad del usuario, y actualiza toda la información al menos una vez cada 6 meses. Para más información sobre nuestro proceso de veterinario, por favor visite nuestra página del Proceso de Verificación .",
+	"verified-information-detail": "La información de esta página fue actualizada por última vez {{dateString}}. InReach prioriza la exactitud y la seguridad del usuario, y actualiza toda la información al menos una vez cada 6 meses. Para más información sobre nuestro proceso de selección, por favor visite nuestra página del Proceso de Verificación en InReach.org.",
 	"verify-account": {
 		"verified": "¡Cuenta Verificada!",
 		"verified-body": "<Text>¡Tu cuenta ha sido verificada! Por favor, <LoginModal>inicia sesión</LoginModal> para empezar a usar las características adicionales de InReach.",
@@ -309,7 +309,7 @@
 	"words": {
 		"accept": "Aceptar",
 		"account": "Cuenta",
-		"add": "Añadir",
+		"add": "Agregar",
 		"and": "y",
 		"and-x-more": "y {{count}} más",
 		"back": "Atrás",
@@ -327,7 +327,7 @@
 		"please-wait": "Por favor espere...",
 		"prev": "Anterior",
 		"print": "Imprimir",
-		"review": "Revisión",
+		"review": "Reseña",
 		"reviews": "Reseñas",
 		"save": "Guardar",
 		"saved": "Guardado",
@@ -347,5 +347,5 @@
 	"view-x-result_one": "Ver {{count}} resultado",
 	"view-x-result_other": "Ver {{count}} resultados",
 	"website_one": "Página web",
-	"website_other": "Página web"
+	"website_other": "Páginas web"
 }
