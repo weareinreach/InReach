@@ -21,7 +21,7 @@ import { useTranslation } from 'next-i18next'
 import { type ComponentType, forwardRef, useState } from 'react'
 
 import { type ApiInput } from '@weareinreach/api'
-import { useNewNotification } from '~ui/hooks'
+import { useNewNotification, useScreenSize } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { CreateNewList } from '~ui/modals/CreateNewList'
@@ -362,6 +362,7 @@ const PrintButton = createPolymorphicComponent<'button', PolyButtonProps>(PrintB
 // Previous actions object is now a hook to check user session before using save or saved actions
 const useActions = () => {
 	const { classes } = useStyles()
+	const isMobile = useScreenSize()
 	/**
 	 * Curried function which accepts a Polymorphic button element as its base param. The inner function returns
 	 * a JSX component.
@@ -427,6 +428,7 @@ export const ActionButtons = ({
 	const [opened, setOpened] = useState(false)
 	const { query: rawQuery } = useRouter()
 	const { slug } = rawQuery
+	const { isMobile, isTablet } = useScreenSize()
 
 	const { data: orgQuery } = api.organization.getIdFromSlug.useQuery(
 		{ slug: slug as string },
@@ -437,7 +439,9 @@ export const ActionButtons = ({
 
 	const orgOrServiceId = { organizationId: orgId ?? '', serviceId }
 
-	let filteredOverflowItems = Object.entries(overFlowItems)
+	let filteredOverflowItems = Object.entries(overFlowItems).filter(
+		([key, item]) => !(isMobile || isTablet) || key !== 'print'
+	)
 
 	if (outsideMoreMenu)
 		/* Keep overFlowItems where the key is not in outsideMoreMenu array */
