@@ -362,7 +362,7 @@ const PrintButton = createPolymorphicComponent<'button', PolyButtonProps>(PrintB
 // Previous actions object is now a hook to check user session before using save or saved actions
 const useActions = () => {
 	const { classes } = useStyles()
-	const isMobile = useScreenSize()
+
 	/**
 	 * Curried function which accepts a Polymorphic button element as its base param. The inner function returns
 	 * a JSX component.
