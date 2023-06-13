@@ -20,7 +20,7 @@
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
-		"@types/node": "18.16.17",
+		"@types/node": "18.16.18",
 		"@weareinreach/eslint-config": "0.100.0",
 		"alex": "11.0.0",
 		"next-i18next": "13.3.0",
