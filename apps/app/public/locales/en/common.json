@@ -19,6 +19,10 @@
 		"body": "By using InReach, you agree that you will not use this resource information for harmful, hate-based, homophobic, transphobic, xenophobic, and/or racist agendas or commentary.",
 		"title": "Anti-hate commitment"
 	},
+	"badge": {
+		"community-tool-tip": "Community served by this organization.",
+		"service-tool-tip": "Service(s) offered by this organization."
+	},
 	"breadcrumb": {
 		"back-to-dynamic": "Back to <u>{{page}}</u>",
 		"back-to-search": "Back to search"
