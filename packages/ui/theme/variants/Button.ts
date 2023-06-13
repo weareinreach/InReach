@@ -78,14 +78,14 @@ export const Button = {
 		root: {
 			border: theme.other.border.default,
 			borderColor: theme.other.colors.tertiary.coolGray,
-			backgroundColor: theme.other.colors.secondary.white,
+			backgroundColor: `${theme.other.colors.secondary.white} !important`,
 			borderRadius: theme.radius.md,
 			'&:not([data-disabled])': theme.fn.hover({
 				backgroundColor: theme.other.colors.primary.lightGray,
 			}),
 		},
 		inner: {
-			color: theme.other.colors.secondary.black,
+			color: `${theme.other.colors.secondary.black} !important`,
 			'&:disabled, &[data-disabled]': {
 				color: theme.other.colors.secondary.darkGray,
 			},

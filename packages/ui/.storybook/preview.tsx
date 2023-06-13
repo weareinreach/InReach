@@ -2,7 +2,7 @@ import { type BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
 import { type RequestHandler } from 'msw'
-import { initialize as initializeMsw, mswDecorator } from 'msw-storybook-addon'
+import { initialize as initializeMsw, mswDecorator, mswLoader } from 'msw-storybook-addon'
 import { type BaseRouter } from 'next/dist/shared/lib/router/router'
 import { type Router } from 'next/router'
 
@@ -79,7 +79,8 @@ const preview: Preview = {
 		},
 		pseudo: {},
 	},
-	decorators: [WithSearchState, Layouts, WithMantine, WithI18n, mswDecorator, WithTRPC, WithStrictMode],
+	decorators: [WithSearchState, Layouts, WithMantine, WithI18n, /* mswDecorator,*/ WithTRPC, WithStrictMode],
+	loaders: [mswLoader],
 }
 export default preview
 

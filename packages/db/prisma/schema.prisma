@@ -167,9 +167,10 @@ model User {
 /// User Role - Contains array of granular permissions
 ///  Internal use
 model UserRole {
-  id   String @id @default(cuid())
-  name String @unique
-  tag  String @unique
+  id     String  @id @default(cuid())
+  name   String  @unique
+  tag    String  @unique
+  active Boolean @default(true)
 
   permissions   RolePermission[]
   usersAssigned AssignedRole[]
@@ -187,6 +188,7 @@ model Permission {
   id          String  @id @default(cuid())
   name        String  @unique
   description String?
+  active      Boolean @default(true)
 
   users UserPermission[]
   roles RolePermission[]
@@ -206,9 +208,10 @@ model Permission {
 /// User Info - account type (seeker, org, lawyer, etc.)
 ///  use shorthand descriptions - front-end displayable text is defined in Translations
 model UserType {
-  id    String @id @default(cuid())
-  type  String @unique
-  users User[]
+  id     String  @id @default(cuid())
+  type   String  @unique
+  users  User[]
+  active Boolean @default(true)
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -231,6 +234,7 @@ model UserTitle {
   email      OrgEmail[]
   orgUsers   UserToOrganization[]
   searchable Boolean              @default(false)
+  active     Boolean              @default(true)
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -251,15 +255,17 @@ model UserSurvey {
   birthYear     Int?    @db.SmallInt
   reasonForJoin String?
 
-  communities  SurveyCommunity[]
-  ethnicities  SurveyEthnicity[]
-  identifiesAs SurveySOG[]
+  communities    SurveyCommunity[]
+  ethnicities    SurveyEthnicity[]
+  ethnicityOther String?
+  identifiesAs   SurveySOG[]
 
   countryOrigin   Country? @relation("origin", fields: [countryOriginId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   countryOriginId String?
 
-  immigration   UserImmigration? @relation(fields: [immigrationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  immigrationId String?
+  immigration      UserImmigration? @relation(fields: [immigrationId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  immigrationId    String?
+  immigrationOther String?
 
   currentCity      String?
   currentGovDist   GovDist? @relation(fields: [currentGovDistId], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -276,6 +282,7 @@ model UserEthnicity {
   ///  use shorthand descriptions - front-end displayable text is defined in Translations
   ethnicity String            @unique
   surveys   SurveyEthnicity[]
+  active    Boolean           @default(true)
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -296,6 +303,7 @@ model UserImmigration {
   ///  use shorthand descriptions - front-end displayable text is defined in Translations
   status  String       @unique
   surveys UserSurvey[]
+  active  Boolean      @default(true)
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -317,6 +325,7 @@ model UserSOGIdentity {
   identifyAs String        @unique
   surveys    SurveySOG[]
   users      UserSOGLink[]
+  active     Boolean       @default(true)
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -337,6 +346,7 @@ model UserCommunity {
   ///  use shorthand descriptions - front-end displayable text is defined in Translations
   community String              @unique
   users     UserCommunityLink[]
+  active    Boolean             @default(true)
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -795,7 +805,8 @@ model OrgService {
 }
 
 model ServiceArea {
-  id String @id @default(cuid())
+  id     String  @id @default(cuid())
+  active Boolean @default(true)
 
   countries ServiceAreaCountry[]
   districts ServiceAreaDist[]
@@ -819,7 +830,8 @@ model ServiceArea {
 }
 
 model ServiceAccess {
-  id String @id @default(cuid())
+  id     String  @id @default(cuid())
+  active Boolean @default(true)
   // the legacyIds are nowhere near unique
   // legacyId String? @unique /// old ID from MongoDB
 
@@ -1053,9 +1065,10 @@ model AttributeSupplement {
 }
 
 model AttributeSupplementDataSchema {
-  id         String @id @default(cuid())
-  tag        String @unique
+  id         String  @id @default(cuid())
+  tag        String  @unique
   name       String
+  active     Boolean @default(true)
   definition Json
   // entryComponent String?
 
@@ -1146,6 +1159,7 @@ model SocialMediaService {
   urlBase  String[]
   logoIcon String
   internal Boolean  @default(false)
+  active   Boolean  @default(true)
 
   organizationUsage OrgSocialMedia[]
   systemUsage       SocialMediaLink[]
@@ -1169,6 +1183,7 @@ model Source {
   id     String     @id @default(cuid())
   source String     @unique
   type   SourceType
+  active Boolean    @default(true)
 
   organizations Organization[]
   users         User[]         @relation("userSource")
@@ -1448,6 +1463,7 @@ model OutsideAPIService {
   description String
   urlPattern  String
   apiKey      String?
+  active      Boolean @default(true)
 
   instances OutsideAPI[]
 
@@ -1463,6 +1479,7 @@ model OutsideAPIService {
 model OutsideAPI {
   id String @id @default(cuid())
 
+  active        Boolean @default(true)
   apiIdentifier String
 
   service     OutsideAPIService @relation(fields: [serviceName], references: [service], onDelete: Restrict, onUpdate: Cascade)
