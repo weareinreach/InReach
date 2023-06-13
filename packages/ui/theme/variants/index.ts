@@ -34,6 +34,7 @@ export const variantNames: VariantNames = {
 		inlineUtil1darkGray: 'inlineUtil1darkGray',
 		card: 'card',
 		pagination: 'pagination',
+		inlineUtil2darkGray: 'inlineUtil2darkGray',
 	},
 	Badge: {
 		community: 'community',

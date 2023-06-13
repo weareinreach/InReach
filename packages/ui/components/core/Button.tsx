@@ -214,12 +214,12 @@ Button.displayName = '@weareinreach/ui/components/core/Button'
 interface ButtonStylesParams {
 	variant?: CustomVariants | 'filled' | 'outline'
 }
-type MantineButtonProps = Pick<
-	ButtonProps,
-	'type' | 'fullWidth' | 'uppercase' | 'loaderProps' | 'loaderPosition'
->
+// type MantineButtonProps = Pick<
+// 	ButtonProps,
+// 	'type' | 'fullWidth' | 'uppercase' | 'loaderProps' | 'loaderPosition'
+// >
 
-interface CustomButtonProps extends MantineButtonProps {
+interface CustomButtonProps extends ButtonProps {
 	/** Button style/design */
 	variant?: CustomVariants | 'filled' | 'outline'
 	/** Label Text */
