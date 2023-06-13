@@ -235,9 +235,22 @@
 	"show-more": "Show more",
 	"sign-up": {
 		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, verified resources.</textDarkGray>\n</group>",
+		"lcr-error1": "Unfortunately, you do not meet the current eligibility requirements to be a Local Community Reviewer.\n<Switch>Click here to create a standard account.</Switch>",
+		"lcr-error2": "You must read & review the <Link><strong>Local Community Reviewer</strong></Link> page.\n<Switch>Click here to create a standard account.</Switch>",
+		"lcr-screen1": "Please select all that apply",
+		"lcr-screen1a": "I have personal lived experience accessing local services in my community.",
+		"lcr-screen1b": "I have experience helping LGBTQ+ clients access local services in my community.",
+		"lcr-screen1c": "I have experience helping LGBTQ+ loved ones/family members access local services in my community.",
+		"lcr-screen1none": "None of these apply to me.",
+		"lcr-screen2": "In which country are you located?",
+		"lcr-screen2a": "United States (including territories)",
+		"lcr-screen2b": "Canada",
+		"lcr-screen2c": "Mexico",
+		"lcr-screen2none": "None of the above",
+		"lcr-screen3": "I have reviewed the <Link><strong>Local Community Reviewer</strong></Link> page on InReach's website and I meet the requirements.",
 		"modal-body": [
-			"<title3>How can we help you?</title3>",
-			"<group>\n<button data-option='myself'>I need help for myself/loved one</button>\n<button data-option='law'>I am an attorney or law student</button>\n<button data-option='servpro'>I am a non-legal service provider</button>\n<button data-option='lcr'>I am a local community reviewer</button>\n</group>",
+			"<title3>What type of account would you like to create?</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
 			"<loginLink>Already have an account?</loginLink>"
 		],
 		"name-use-any": "Use whatever name you're comfortable with.",
@@ -247,6 +260,7 @@
 		"placeholder-name_full": "Enter full name...",
 		"select-law-practice": "Where do you practice law?",
 		"select-service-provider": "Where do you work or volunteer?",
+		"specify-work-volunteer": "Please specify where you work or volunteer",
 		"success": "You've signed up for an account!",
 		"user-exists-body": "That email address is already registered.",
 		"user-exists-header": "You may already have an account.",
@@ -332,6 +346,7 @@
 		"hours": "Hours",
 		"more": "more",
 		"next": "Next",
+		"no": "No",
 		"password": "Password",
 		"phone": "Phone",
 		"please-wait": "Please wait...",
@@ -347,6 +362,7 @@
 		"share": "Share",
 		"sign-up": "Sign up",
 		"skip": "Skip",
-		"support": "Support"
+		"support": "Support",
+		"yes": "Yes"
 	}
 }
