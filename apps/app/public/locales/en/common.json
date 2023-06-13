@@ -16,6 +16,10 @@
 		"body": "By using InReach, you agree that you will not use this resource information for harmful, hate-based, homophobic, transphobic, xenophobic, and/or racist agendas or commentary.",
 		"title": "Anti-hate commitment"
 	},
+	"badge": {
+		"claimed-tool-tip": "This organization has been claimed by a verified representative. <link>Learn more.</link>",
+		"unclaimed-tool-tip":"This organization has not yet been claimed by a representative. <link>Claim this organization</link> to build trust with our community, update your own information, and more."
+	},
 	"breadcrumb": {
 		"back-to-dynamic": "Back to <u>{{page}}</u>",
 		"back-to-search": "Back to search"

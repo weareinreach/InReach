@@ -295,6 +295,24 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						width: label.length > MAX_CHARACTERS ? 600 : 'auto',
 					}
 				}
+				case 'claimed': {
+					const MAX_CHARACTERS = 80
+					const label = t('badge.claimed-tool-tip')
+					return {
+						label,
+						multiline: true,
+						width: label.length > MAX_CHARACTERS ? 600 : 'auto',
+					}
+				}
+				case 'unclaimed': {
+					const MAX_CHARACTERS = 80
+					const label = t('badge.unclaimed-tool-tip')
+					return {
+						label,
+						multiline: true,
+						width: label.length > MAX_CHARACTERS ? 600 : 'auto',
+					}
+				}
 			}
 		})()
 
