@@ -239,6 +239,7 @@ const userListSelect = (ctx: Context) => {
 
 export const orgLocationInclude = (ctx: Context) =>
 	({
+		where: isPublic,
 		select: {
 			govDist: govDistInclude,
 			country: countryWithoutGeo,

@@ -13,22 +13,22 @@
 		"type-check": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@aws-sdk/client-cognito-identity-provider": "3.347.0",
+		"@aws-sdk/client-cognito-identity-provider": "3.350.0",
 		"@next-auth/prisma-adapter": "1.0.7",
 		"aws-jwt-verify": "4.0.0",
 		"tiny-invariant": "1.3.1",
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
-		"@types/eslint": "8.40.0",
-		"@types/node": "18.16.16",
-		"@types/react": "18.2.8",
-		"@types/react-dom": "18.2.4",
+		"@types/eslint": "8.40.1",
+		"@types/node": "18.16.17",
+		"@types/react": "18.2.11",
+		"@types/react-dom": "18.2.5",
 		"@weareinreach/config": "0.100.0",
 		"@weareinreach/db": "0.100.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"eslint": "8.42.0",
-		"next": "13.4.4",
+		"next": "13.4.5",
 		"next-auth": "4.22.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
@@ -41,5 +41,5 @@
 		"react": "^18",
 		"react-dom": "^18"
 	},
-	"packageManager": "pnpm@8.6.1"
+	"packageManager": "pnpm@8.6.2"
 }
