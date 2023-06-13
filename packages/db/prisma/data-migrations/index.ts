@@ -27,4 +27,5 @@ export * from './2023-06-08_trim-city-whitespace/index'
 export * from './2023-06-08_update-law-practice-opts'
 export * from './2023-06-09_duplicate-websites/index'
 export * from './2023-06-12_survey-options'
+export * from './2023-06-13_user-type'
 // codegen:end
