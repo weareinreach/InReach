@@ -3,7 +3,7 @@ import { useHover } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
 import { ActionButtons } from './ActionButtons'
 import { BadgeGroup, type CustomBadgeProps } from './Badge'
@@ -57,6 +57,7 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
+	const isMobile = useScreenSize()
 
 	if (!i18nReady) return <SearchResultLoading />
 	const leaderBadges: CustomBadgeProps[] = orgLeader.map(({ icon, iconBg, tsKey }) => ({
@@ -125,7 +126,9 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 								</Title>
 							</Group>
 							<Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text>
-							{description && <Text>{t(description.key, { ns: slug, defaultValue: description.text })}</Text>}
+							{!isMobile.isMobile && description && (
+								<Text>{t(description.key, { ns: slug, defaultValue: description.text })}</Text>
+							)}
 						</Stack>
 						<BadgeGroup badges={focusBadges} />
 						<BadgeGroup badges={serviceTags} />
