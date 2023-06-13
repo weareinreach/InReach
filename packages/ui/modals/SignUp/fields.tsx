@@ -301,20 +301,38 @@ export const FormLawPractice = () => {
 export const FormServiceProvider = () => {
 	const { t } = useTranslation(['common', 'attribute'])
 	const form = useSignUpFormContext()
+	let otherOption: string | undefined
 
 	const options = attributesByCategory.find((item) => item.tag === 'service-provider-options')
 	const selectItems =
-		options?.attributes.map((item) => ({
-			label: t(item.attribute.tsKey, { ns: item.attribute.tsNs }),
-			value: item.attribute.id,
-		})) ?? []
+		options?.attributes.map((item) => {
+			if (item.attribute.tag === 'serv-other') otherOption = item.attribute.id
+
+			return {
+				label: t(item.attribute.tsKey, { ns: item.attribute.tsNs }),
+				value: item.attribute.id,
+			}
+		}) ?? []
+
+	const selectedOther = form.values.servProvider === otherOption
+
+	if (form.values.otherServProvider && !selectedOther) form.setFieldValue('otherServProvider', undefined)
 
 	return (
-		<Select
-			label={t('sign-up-select-service-provider')}
-			data={selectItems}
-			itemComponent={SelectItemSingleLine}
-			{...form.getInputProps('servProvider')}
-		/>
+		<>
+			<Select
+				label={t('sign-up-select-service-provider')}
+				data={selectItems}
+				itemComponent={SelectItemSingleLine}
+				{...form.getInputProps('servProvider')}
+			/>
+			{selectedOther && (
+				<TextInput
+					label={t('serv-provider-other')}
+					placeholder={t('serv-provider-other-placeholder') as string}
+					{...form.getInputProps('otherServProvider')}
+				/>
+			)}
+		</>
 	)
 }

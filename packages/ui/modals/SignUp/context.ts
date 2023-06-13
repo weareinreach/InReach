@@ -18,6 +18,7 @@ interface SignUpFormValues {
 	lawPractice?: string
 	otherLawPractice?: string
 	servProvider?: string
+	otherServProvider?: string
 	userType: 'seeker' | 'provider' | 'lcr'
 	cognitoMessage?: string
 	cognitoSubject?: string

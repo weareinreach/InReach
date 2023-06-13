@@ -465,8 +465,8 @@ export const attributeData: AttributeData = [
 		name: 'Law Practice Options',
 		ns: 'userLawPractice',
 		attributes: [
-			{ key: 'corp-law-firm', name: 'Corporate law firm' },
 			{ key: 'legal-nonprofit', name: 'Legal nonprofit organization' },
+			{ key: 'corp-law-firm', name: 'Corporate law firm' },
 			{ key: 'law-school-clinic', name: 'Law school clinic' },
 			{ key: 'law-other', name: 'Other', requireData: true },
 		],
@@ -475,13 +475,12 @@ export const attributeData: AttributeData = [
 		name: 'Service Provider Options',
 		ns: 'userServiceProvider',
 		attributes: [
-			{ key: 'healthcare', name: 'Healthcare provider' },
+			{ key: 'nonprofit', name: 'Nonprofit' },
+			{ key: 'community-organization', name: 'Community organization' },
 			{ key: 'govt-agency', name: 'Government agency' },
-			{ key: 'nonprofit', name: 'Non-profit' },
-			{ key: 'grassroots-direct', name: 'Grassroots Direct Service Organization' },
+			{ key: 'healthcare', name: 'Health care clinic/hospital' },
 			{ key: 'student-club', name: 'Student club' },
-			{ key: 'friend-family', name: 'N/A (Looking on behalf of friends/family)' },
-			{ key: 'servpro-other', name: 'Other (please specify)', requireData: true },
+			{ key: 'serv-other', name: 'Other', requireData: true },
 		],
 	},
 ]

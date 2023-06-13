@@ -323,10 +323,10 @@ export const attributesByCategory = [
 		attributes: [
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVRH531R2HAV8DMDZSC',
+					id: 'attr_01GW2HHFVRFPRQCQHNJA6BM3XP',
 					icon: null,
-					tag: 'corp-law-firm',
-					tsKey: 'userlawpractice.corp-law-firm',
+					tag: 'legal-nonprofit',
+					tsKey: 'userlawpractice.legal-nonprofit',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -335,10 +335,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVSE2074QZJ4SKEW74J',
+					id: 'attr_01GW2HHFVRH531R2HAV8DMDZSC',
 					icon: null,
-					tag: 'law-other',
-					tsKey: 'userlawpractice.law-other',
+					tag: 'corp-law-firm',
+					tsKey: 'userlawpractice.corp-law-firm',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -359,10 +359,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVRFPRQCQHNJA6BM3XP',
+					id: 'attr_01GW2HHFVSE2074QZJ4SKEW74J',
 					icon: null,
-					tag: 'legal-nonprofit',
-					tsKey: 'userlawpractice.legal-nonprofit',
+					tag: 'law-other',
+					tsKey: 'userlawpractice.law-other',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -679,10 +679,22 @@ export const attributesByCategory = [
 		attributes: [
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVTMFN73X6NVR0M9BZJ',
+					id: 'attr_01GW2HHFVTTZ83PZR61M37R8R7',
 					icon: null,
-					tag: 'friend-family',
-					tsKey: 'userserviceprovider.friend-family',
+					tag: 'nonprofit',
+					tsKey: 'userserviceprovider.nonprofit',
+					tsNs: 'attribute',
+					showOnLocation: null,
+					filterType: null,
+					iconBg: null,
+				},
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVSVSBFQ700RMJ19ABC',
+					icon: null,
+					tag: 'community-organization',
+					tsKey: 'userserviceprovider.community-organization',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -703,18 +715,6 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVTMVQ7W2X26ZRK81FR',
-					icon: null,
-					tag: 'grassroots-direct',
-					tsKey: 'userserviceprovider.grassroots-direct',
-					tsNs: 'attribute',
-					showOnLocation: null,
-					filterType: null,
-					iconBg: null,
-				},
-			},
-			{
-				attribute: {
 					id: 'attr_01GW2HHFVSPXWJJPFG9DKXESEK',
 					icon: null,
 					tag: 'healthcare',
@@ -727,10 +727,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVTTZ83PZR61M37R8R7',
+					id: 'attr_01GW2HHFVTN6MSCMBW740Y7HN1',
 					icon: null,
-					tag: 'nonprofit',
-					tsKey: 'userserviceprovider.nonprofit',
+					tag: 'student-club',
+					tsKey: 'userserviceprovider.student-club',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
@@ -739,10 +739,10 @@ export const attributesByCategory = [
 			},
 			{
 				attribute: {
-					id: 'attr_01GW2HHFVTN6MSCMBW740Y7HN1',
+					id: 'attr_01GW2HHFVSE2074QZJ4SKEWXYZ',
 					icon: null,
-					tag: 'student-club',
-					tsKey: 'userserviceprovider.student-club',
+					tag: 'serv-other',
+					tsKey: 'userserviceprovider.serv-other',
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,

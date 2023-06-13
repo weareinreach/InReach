@@ -134,18 +134,18 @@
 	},
 	"userlawpractice": {
 		"CATEGORYNAME": "Law Practice Options",
+		"legal-nonprofit": "Legal nonprofit organization",
 		"corp-law-firm": "Corporate law firm",
-		"law-other": "Other",
 		"law-school-clinic": "Law school clinic",
-		"legal-nonprofit": "Legal nonprofit organization"
+		"law-other": "Other"
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "Service Provider Options",
-		"friend-family": "N/A (Looking on behalf of friends/family)",
+		"nonprofit": "Nonprofit",
+		"community-organization": "Community organization",
 		"govt-agency": "Government agency",
-		"grassroots-direct": "Grassroots Direct Service Organization",
-		"healthcare": "Healthcare provider",
-		"nonprofit": "Non-profit",
-		"student-club": "Student club"
+		"healthcare": "Health care clinic/hospital",
+		"student-club": "Student club",
+		"serv-other": "Other"
 	}
 }

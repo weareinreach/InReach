@@ -229,6 +229,8 @@
 		"transit-directions": "Public transit directions"
 	},
 	"services": "Services",
+	"serv-provider-other": "Service area of expertise",
+	"serv-provider-other-placeholder": "Please specify your service area of expertise",
 	"share-feedback": "Share Feedback",
 	"show-less": "Show less",
 	"show-more": "Show more",
