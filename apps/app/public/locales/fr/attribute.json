@@ -59,9 +59,9 @@
 		"teens": "\"adolescent\" défini comme âgé de 12-18 ans",
 		"trans-youth": "Opportunités au service des jeunes Trans",
 		"trans-youth-caregivers": "Opportunités au service des soignants de la jeunesse Trans",
-		"transfeminine": "Opportunités au service de la communauté transféminine",
+		"transfeminine": "Opportunités au service de la communauté des femmes trans",
 		"transgender": "Les opportunités qui servent la communauté transsexuelle (pour les communautés non conformes ou non binaires, utilisez les propriétés non conformes ou non binaires)",
-		"transmasculine": "Opportunités au service de la communauté trasmasculine",
+		"transmasculine": "Opportunités au service de la communauté Tras Masculine",
 		"unaccompanied-minors": "Possibilités au service des mineurs non accompagnés",
 		"undocumented": "Opportunités au service des immigrés sans papiers"
 	},
@@ -141,11 +141,18 @@
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "Options du fournisseur de services",
+		"case-mananger": "Gestionnaire de cas",
+		"community-org": "Volontaire/personnel d'une organisation communautaire",
 		"friend-family": "N/A (Appelé au nom des amis/famille)",
 		"govt-agency": "Agence gouvernementale",
 		"grassroots-direct": "Organisation de Service Direct Grassroots",
 		"healthcare": "Fournisseur de soins de santé",
-		"nonprofit": "Sans but lucratif",
-		"student-club": "Club étudiant"
+		"lawyer": "Avocat",
+		"other": "Autre (merci de préciser)",
+		"paralegal": "Parajuriste ou autre personnel de soutien juridique",
+		"social-worker": "Collaborateur social",
+		"student-club": "Responsable du club étudiant",
+		"teacher": "Professeur",
+		"therapist-counselor": "Thérapeute/Conseiller"
 	}
 }
