@@ -16,6 +16,10 @@
 		"body": "En utilisant InReach, vous convenez de ne pas utiliser ces informations à des fins malveillantes, haineuses, homophobes, transphobes, xénophobes et/ou racistes.",
 		"title": "Engagement anti-haine"
 	},
+	"badge": {
+		"community-tool-tip": "Communauté desservi par cet organisme.",
+		"service-tool-tip": "Service (s) offert(s) par cette organisation."
+	},
 	"breadcrumb": {
 		"back-to-dynamic": "Retour à <u>{{page}}</u>",
 		"back-to-search": "Retour à la recherche"
@@ -156,6 +160,7 @@
 	"password-saved": "Mot de passe enregistré !",
 	"photo-count_interval": "(0)[Aucune photo.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"photo_interval": "(0)[Aucune photo];(3-inf)[{{count}} photos];",
+	"please-specify": "Veuillez spécifier",
 	"powered-by-vercel": "Propulsé par Vercel",
 	"prefer-not-to-say": "Préférer ne pas dire",
 	"privacy-policy": "Politique de confidentialité",
@@ -229,25 +234,40 @@
 	"share-feedback": "Partager vos commentaires",
 	"show-less": "Afficher moins",
 	"show-more": "Afficher plus",
-	"sign-up": "S'inscrire",
+	"sign-up": {
+		"header": "<group>\n<emojiLg>:arc-en-ciel :</emojiLg>\n<title2>$t(mots. ign-up)</title2>\n<textDarkGray>Bienvenue sur la première plateforme technologique du monde qui corresponde aux personnes LGBTQ+ victimes de persécution ou de discrimination avec des ressources sûres et vérifiées.</textDarkGray>\n</group>",
+		"lcr-error1": "Malheureusement, vous ne remplissez pas les conditions d'éligibilité actuelles pour être un examinateur de communauté locale.\n<Switch>Cliquez ici pour créer un compte standard.</Switch>",
+		"lcr-error2": "Vous devez lire et examiner la page <Link><strong>Évaluateur de la communauté locale</strong></Link>.",
+		"lcr-screen1": "Veuillez sélectionner tout ce qui s'applique",
+		"lcr-screen1a": "J'ai une expérience personnelle en accédant à des services locaux dans ma communauté.",
+		"lcr-screen1b": "J'ai de l'expérience en aidant les clients LGBTQ+ à accéder aux services locaux de ma communauté.",
+		"lcr-screen1c": "J'ai de l'expérience en aidant LGBTQ+ à accéder aux services locaux de ma communauté.",
+		"lcr-screen1none": "Rien de tout cela ne s'applique à moi.",
+		"lcr-screen2": "Dans quel pays êtes-vous situé?",
+		"lcr-screen2a": "États-Unis (y compris les territoires)",
+		"lcr-screen2b": "Le Canada",
+		"lcr-screen2c": "Mexique",
+		"lcr-screen2none": "Aucun des éléments ci-dessus",
+		"lcr-screen3": "J'ai vérifié la page <Link><strong>de l'évaluateur local de la communauté</strong></Link> sur le site Web d'InReach et je réponds aux exigences.",
+		"modal-body": [
+			"<title3>Quel type de compte voulez-vous créer ?</title3>",
+			"<group>\n<button data-option='individual'>Individuel</button>\n<button data-option='provider'>Professionnel/Fournisseur</button>\n<button data-option='lcr'>Récapitulatif de la communauté locale</button>\n</group>",
+			"<loginLink>Vous avez déjà un compte ?</loginLink>"
+		],
+		"name-use-any": "Utilisez le nom qui vous convient le mieux.",
+		"name_alias": "Nom ou alias",
+		"name_full": "Nom complet",
+		"placeholder-name_alias": "Entrez le nom ou l'alias...",
+		"placeholder-name_full": "Entrez le nom complet...",
+		"select-law-practice": "Où pratiquez vous le droit ?",
+		"select-service-provider": "Où travaillez-vous ou donnez-vous du bénévolat?",
+		"specify-work-volunteer": "Indiquez où vous travaillez ou bénévole",
+		"success": "Vous avez créé un compte !",
+		"user-exists-body": "Cette adresse e-mail est déjà enregistrée.",
+		"user-exists-header": "Vous avez peut-être déjà un compte.",
+		"verify-email": "Avant de pouvoir commencer à utiliser votre nouveau compte, vous devez vérifier votre adresse e-mail. Vérifiez votre boîte de réception et cliquez sur le lien dans le message."
+	},
 	"sign-up-free": "Inscrivez-vous gratuitement",
-	"sign-up-header": "<group>\n<emojiLg>:arc-en-ciel :</emojiLg>\n<title2>$t(inscription)</title2>\n<textDarkGray>Bienvenue sur la première plateforme technologique du monde associant les personnes LGBTQ+ victimes de discrimination et de persécution en toute sécurité ressources vérifiées.</textDarkGray>\n</group>",
-	"sign-up-modal-body": [
-		"<title3>Comment pouvons-nous vous aider ?</title3>",
-		"<group>\n<button>Je cherche de l'aide pour moi-même</button>\n<button>Je suis avocat ou étudiant en droit</button>\n<button>Je suis un prestataire de services non légal</button>\n<button>Je suis un évaluateur de la communauté locale</button>\n</group>",
-		"<loginLink>Vous avez déjà un compte ?</loginLink>"
-	],
-	"sign-up-name-use-any": "Utilisez le nom qui vous convient le mieux.",
-	"sign-up-name_alias": "Nom ou alias",
-	"sign-up-name_full": "Nom complet",
-	"sign-up-placeholder-name_alias": "Entrez le nom ou l'alias...",
-	"sign-up-placeholder-name_full": "Entrez le nom complet...",
-	"sign-up-select-law-practice": "Où pratiquez vous le droit ?",
-	"sign-up-select-service-provider": "Où travaillez-vous ou donnez-vous du bénévolat?",
-	"sign-up-success": "Vous avez créé un compte !",
-	"sign-up-user-exists-body": "Cette adresse e-mail est déjà enregistrée.",
-	"sign-up-user-exists-header": "Vous avez peut-être déjà un compte.",
-	"sign-up-verify-email": "Avant de pouvoir commencer à utiliser votre nouveau compte, vous devez vérifier votre adresse e-mail. Vérifiez votre boîte de réception et cliquez sur le lien dans le message.",
 	"social": {
 		"email": "Courriel",
 		"facebook": "Facebook",
@@ -277,6 +297,9 @@
 	"survey": {
 		"birthyear-req-value": "L'année doit être comprise entre {{year1}} et {{year2}}, c'est-à-dire 2005",
 		"finish": "Terminer",
+		"launch-item1": "<Bold>Pourquoi demandons-nous ?</Bold> Comprendre la démographie de nos utilisateurs peut nous aider à quantifier notre impact, à recueillir des fonds et à évaluer les décisions futures de nos produits.",
+		"launch-item2": "<Bold>Première sécurité :</Bold> Vos réponses sont stockées de manière anonyme et ne sont pas connectées à vous en tant qu'utilisateur individuel ou à votre compte utilisateur.",
+		"launch-title": "Veuillez prendre quelques minutes pour nous parler de vous dans notre sondage des utilisateurs anonymes.",
 		"not-right-now": "Pas pour le moment",
 		"question-1-title": "Comment vous décririez-vous ?",
 		"question-2-placeholder": "Entrez le pays...",
@@ -295,8 +318,6 @@
 	"uncheck-all": "Décocher tout",
 	"unclaimed": "Non réclamé",
 	"user-avatar": "Avatar de l'utilisateur",
-	"user-survey-body": "<textUtility1>Pourquoi demandons-nous ? La compréhension de la démographie de nos utilisateurs peut nous aider à quantifier notre impact, à recueillir des fonds et à évaluer les décisions futures de nos produits.</textUtility1>\n<textUtility1>Safety-first : Vos réponses sont stockées de manière anonyme et non connectées à vous en tant qu'utilisateur individuel ou à votre compte utilisateur.</textUtility1>",
-	"user-survey-heading": "<emojiLg>📋</emojiLg>\n<title>Veuillez prendre quelques minutes pour nous parler de vous dans notre enquête anonyme.</title></textDarkGray>",
 	"verified-information": "Informations vérifiées",
 	"verified-information-detail": "Les informations sur cette page ont été mises à jour pour la dernière fois {{dateString}}. InReach donne la priorité à la précision et à la sécurité des utilisateurs, et met à jour toutes les informations au moins une fois tous les 6 mois. Pour de plus amples renseignements sur notre processus de vérification, veuillez consulter notre page Processus de vérification .",
 	"verify-account": {
@@ -322,6 +343,7 @@
 		"hours": "Heures",
 		"more": "plus",
 		"next": "Suivant",
+		"no": "Non",
 		"password": "Mot de passe",
 		"phone": "Téléphone",
 		"please-wait": "Veuillez patienter...",
@@ -335,8 +357,10 @@
 		"service-hours": "Heures de service",
 		"settings": "Réglages",
 		"share": "Partager",
+		"sign-up": "S'inscrire",
 		"skip": "Ignorer",
-		"support": "Support"
+		"support": "Support",
+		"yes": "Oui"
 	},
 	"photo_one": "Photo",
 	"photo_other": "Photos",
