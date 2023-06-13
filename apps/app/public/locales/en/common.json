@@ -236,7 +236,7 @@
 	"sign-up": {
 		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, verified resources.</textDarkGray>\n</group>",
 		"lcr-error1": "Unfortunately, you do not meet the current eligibility requirements to be a Local Community Reviewer.\n<Switch>Click here to create a standard account.</Switch>",
-		"lcr-error2": "You must read & review the <Link><strong>Local Community Reviewer</strong></Link> page.\n<Switch>Click here to create a standard account.</Switch>",
+		"lcr-error2": "You must read & review the <Link><strong>Local Community Reviewer</strong></Link> page.",
 		"lcr-screen1": "Please select all that apply",
 		"lcr-screen1a": "I have personal lived experience accessing local services in my community.",
 		"lcr-screen1b": "I have experience helping LGBTQ+ clients access local services in my community.",
