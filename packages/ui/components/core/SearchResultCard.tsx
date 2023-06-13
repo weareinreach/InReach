@@ -118,17 +118,30 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 
 	return (
 		<>
-			<Box style={{ position: 'relative' }}>
-				<Link href={{ pathname: '/org/[slug]', query: { slug } }} variant={variants.Link.card}>
-					<Stack spacing={16} ref={hoverRef}>
+			<Stack spacing={16} ref={hoverRef}>
+				<Stack spacing={12}>
+					<div>
+						<div style={{ float: 'right' }}>
+							<ActionButtons iconKey='save' organizationId={result.id} />
+						</div>
+						<Title order={2} className={classes.hoverText} data-hovered={hovered ? hovered : undefined}>
+							<Link
+								href={{ pathname: '/org/[slug]', query: { slug } }}
+								variant={variants.Link.inheritStyle}
+								td='none'
+							>
+								{name}
+								<Space w={4} display='inline-block' />
+								<BadgeGroup badges={leaderBadges} />
+							</Link>
+						</Title>
+					</div>
+					<Link
+						href={{ pathname: '/org/[slug]', query: { slug } }}
+						variant={variants.Link.inheritStyle}
+						td='none'
+					>
 						<Stack spacing={12}>
-							<Group maw='85%'>
-								<Title order={2} className={classes.hoverText} data-hovered={hovered ? hovered : undefined}>
-									{name}
-									<Space w={4} display='inline-block' />
-									<BadgeGroup badges={leaderBadges} />
-								</Title>
-							</Group>
 							<Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text>
 							{description && (
 								<Text className={classes.description}>
@@ -136,14 +149,11 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 								</Text>
 							)}
 						</Stack>
-						<BadgeGroup badges={focusBadges} />
-						<BadgeGroup badges={serviceTags} />
-					</Stack>
-				</Link>
-				<Box style={{ position: 'absolute', top: 0, right: 0 }}>
-					<ActionButtons iconKey='save' organizationId={result.id} />
-				</Box>
-			</Box>
+					</Link>
+				</Stack>
+				<BadgeGroup badges={focusBadges} />
+				<BadgeGroup badges={serviceTags} />
+			</Stack>
 			<Divider my={40} />
 		</>
 	)
