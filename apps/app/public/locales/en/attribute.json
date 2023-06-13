@@ -36,7 +36,7 @@
 		"detained-immigrant": "Opportunities that serve detained immigrants",
 		"disabled": "Opportunities that serve the disabled community",
 		"gay": "Opportunities that serve the Gay Community",
-		"gender-nonconforming": "Opportunities that serve the Gender non-conforming community",
+		"gender-nonconforming": "Opportunities that serve the Gender nonconforming community",
 		"hiv-aids": "Opportunities that serve the HIV+ and at-risk community",
 		"homeless": "Opportunities that serve homeless individuals",
 		"human-trafficking-survivor": "Opportunities that serve human trafficking survivors",
@@ -59,9 +59,9 @@
 		"teens": "\"teen\" defined as 12-18 years old",
 		"trans-youth": "Opportunities that serve Trans youth",
 		"trans-youth-caregivers": "Opportunities that serve Caregivers of Trans youth",
-		"transfeminine": "Opportunities that serve the Trans Feminine Community",
+		"transfeminine": "Opportunities that serve the Transfeminine Community",
 		"transgender": "Opportunities that serve the transgender community (for non-conforming or non-binary communities, use the gender-nonconforming or nonbinary properties)",
-		"transmasculine": "Opportunities that serve the Tras Masculine Community",
+		"transmasculine": "Opportunities that serve the Trasmasculine Community",
 		"unaccompanied-minors": "Opportunities that serve unaccompanied minors",
 		"undocumented": "Opportunities that serve undocumented immigrants"
 	},
@@ -141,11 +141,18 @@
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "Service Provider Options",
+		"case-mananger": "Case manager",
+		"community-org": "Volunteer/staff at a community organization",
 		"friend-family": "N/A (Looking on behalf of friends/family)",
 		"govt-agency": "Government agency",
 		"grassroots-direct": "Grassroots Direct Service Organization",
 		"healthcare": "Healthcare provider",
-		"nonprofit": "Non-profit",
-		"student-club": "Student club"
+		"lawyer": "Lawyer",
+		"other": "Other (please specify)",
+		"paralegal": "Paralegal or other legal support staff",
+		"social-worker": "Social worker",
+		"student-club": "Student club leader/administrator",
+		"teacher": "Teacher",
+		"therapist-counselor": "Therapist/counselor"
 	}
 }
