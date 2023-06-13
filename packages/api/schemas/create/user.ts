@@ -42,6 +42,7 @@ const CreateUserBase = {
 	lawPractice: z.string().optional(),
 	otherLawPractice: z.string().optional(),
 	servProvider: z.string().optional(),
+	servProviderOther: z.string().optional(),
 }
 
 export const CreateUser = z
@@ -51,7 +52,7 @@ export const CreateUser = z
 		const langPref = connectOne({ localeCode: data.language })
 		const currentCountry = connectOne(data.currentCountry)
 		const currentGovDist = connectOne(data.currentGovDist)
-		const { lawPractice, otherLawPractice, servProvider } = data
+		const { lawPractice, otherLawPractice, servProvider, servProviderOther } = data
 		const record = {
 			id,
 			name,
@@ -62,8 +63,8 @@ export const CreateUser = z
 			currentCity,
 			currentCountry,
 			currentGovDist,
-			...(lawPractice || otherLawPractice || servProvider
-				? { signupData: { lawPractice, otherLawPractice, servProvider } }
+			...(lawPractice || otherLawPractice || servProvider || servProviderOther
+				? { signupData: { lawPractice, otherLawPractice, servProvider, servProviderOther } }
 				: {}),
 		} satisfies Prisma.UserCreateArgs['data']
 
@@ -163,8 +164,8 @@ export const AdminCreateUser = () => {
 				databaseId: id,
 				email,
 				password,
-				message: data.cognitoMessage,
-				subject: data.cogintoSubject,
+				message: cognitoMessage,
+				subject: cogintoSubject,
 			},
 		}
 	})
@@ -184,6 +185,8 @@ export const CreateUserSurvey = z
 		currentCity: z.string(),
 		currentGovDistId: idString,
 		currentCountryId: idString,
+		immigrationOther: z.string(),
+		ethnicityOther: z.string(),
 	})
 	.partial()
 	.transform(

@@ -1,7 +1,9 @@
 import { type Meta } from '@storybook/react'
 
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
+import { surveyOptions } from '~ui/mockData/surveyOptions'
+
 import { AccountVerifyModal } from './AccountVerified'
-import { getTRPCMock } from '../lib/getTrpcMock'
 
 export default {
 	title: 'Modals/Account Verify',
@@ -13,6 +15,16 @@ export default {
 				type: 'mutation',
 				response: { $metadata: {} },
 				delay: 2000,
+			}),
+			getTRPCMock({
+				path: ['user', 'surveyOptions'],
+				type: 'query',
+				response: { ...surveyOptions },
+			}),
+			getTRPCMock({
+				path: ['user', 'submitSurvey'],
+				type: 'mutation',
+				response: 'not a real id',
 			}),
 		],
 		nextjs: {
