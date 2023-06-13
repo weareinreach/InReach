@@ -17,8 +17,8 @@
 		"title": "Anti-hate commitment"
 	},
 	"badge": {
-		"claimed-tool-tip": "This organization has been claimed by a verified representative. <link>Learn more.</link>",
-		"unclaimed-tool-tip":"This organization has not yet been claimed by a representative. <link>Claim this organization</link> to build trust with our community, update your own information, and more."
+		"claimed-tool-tip": "This organization has been claimed by a verified representative. <link1>Learn more.</link1>",
+		"unclaimed-tool-tip":"This organization has not yet been claimed by a representative. <link1>Claim this organization</link1> to build trust with our community, update your own information, and more."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Back to <u>{{page}}</u>",

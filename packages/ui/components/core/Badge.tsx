@@ -20,7 +20,8 @@ import { type PolymorphicComponentProps } from '@mantine/utils'
 import { type TOptions } from 'i18next'
 import { DateTime } from 'luxon'
 import { merge } from 'merge-anything'
-import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
+import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
@@ -297,7 +298,20 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				}
 				case 'claimed': {
 					const MAX_CHARACTERS = 80
-					const label = t('badge.claimed-tool-tip')
+					const label = (
+						<Trans
+							i18nKey='badge.claimed-tool-tip'
+							components={{
+								link1: (
+									<Link
+										external
+										href='https://inreach.org/claimed-organizations/'
+										variant={variants.Link.inheritStyle}
+									/>
+								),
+							}}
+						/>
+					)
 					return {
 						label,
 						multiline: true,
@@ -306,7 +320,14 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				}
 				case 'unclaimed': {
 					const MAX_CHARACTERS = 80
-					const label = t('badge.unclaimed-tool-tip')
+					const label = (
+						<Trans
+							i18nKey='badge.unclaimed-tool-tip'
+							components={{
+								link1: <Link external href='#' variant={variants.Link.inheritStyle} />,
+							}}
+						/>
+					)
 					return {
 						label,
 						multiline: true,
