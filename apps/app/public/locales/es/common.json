@@ -18,7 +18,7 @@
 	},
 	"badge": {
 		"community-tool-tip": "Comunidad atendida por esta organización.",
-		"service-tool-tip": "Servicio(s) ofrecidos por esta organización."
+		"service-tool-tip": "Servicio(s) ofrecido(s) por esta organización."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Volver a <u>{{page}}</u>",
@@ -235,9 +235,9 @@
 	"show-less": "Mostrar menos",
 	"show-more": "Mostrar más",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(palabras. ign-up)</title2>\n<textDarkGray>Bienvenido a la primera plataforma tecnológica del mundo que combina a las personas LGBTQ+ con persecución o discriminación con recursos seguros y verificados.</textDarkGray>\n</group>",
-		"lcr-error1": "Desafortunadamente, no cumple con los requisitos de elegibilidad para ser revisor de la comunidad local.\n<Switch>Haga clic aquí para crear una cuenta estándar.</Switch>",
-		"lcr-error2": "Debe leer y revisar la página <Link><strong>Revisor de comunidad local</strong></Link>.",
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(palabras.sign-up)</title2>\n<textDarkGray>Bienvenido a la primera plataforma tecnológica del mundo que combina a las personas LGBTQ+ con persecución o discriminación con recursos seguros y verificados.</textDarkGray>\n</group>",
+		"lcr-error1": "Desafortunadamente, no cumple con los requisitos de elegibilidad para ser Revisor de la Comunidad Local.\n<Switch>Haga clic aquí para crear una cuenta estándar.</Switch>",
+		"lcr-error2": "Debe leer y revisar la página <Link><strong>Revisor de Comunidad Local</strong></Link>.",
 		"lcr-screen1": "Por favor, seleccione todo lo que aplique",
 		"lcr-screen1a": "Tengo experiencia personal vivida accediendo a los servicios locales en mi comunidad.",
 		"lcr-screen1b": "Tengo experiencia ayudando a los clientes de LGBTQ+ a acceder a los servicios locales de mi comunidad.",
@@ -248,18 +248,18 @@
 		"lcr-screen2b": "Canadá",
 		"lcr-screen2c": "México",
 		"lcr-screen2none": "Ninguna de las anteriores",
-		"lcr-screen3": "He revisado la página de <Link><strong>Revisor de la comunidad local</strong></Link> en el sitio web de InReach y cumplo los requisitos.",
+		"lcr-screen3": "He revisado la página de <Link><strong>Revisor de la Comunidad Local</strong></Link> en el sitio web de InReach y cumplo los requisitos.",
 		"modal-body": [
 			"<title3>¿Qué tipo de cuenta quieres crear?</title3>",
-			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Profesional/Proveedor</button>\n<button data-option='lcr'>Revisor de comunidad local</button>\n</group>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Profesional/Proveedor</button>\n<button data-option='lcr'>Revisor de Comunidad Local</button>\n</group>",
 			"<loginLink>¿Ya tienes una cuenta?</loginLink>"
 		],
 		"name-use-any": "Usa el nombre con el que te sientas cómodo.",
 		"name_alias": "Nombre o alias",
 		"name_full": "Nombre completo",
 		"placeholder-name_alias": "Introduzca nombre o alias...",
-		"placeholder-name_full": "Introduce el nombre completo...",
-		"select-law-practice": "¿Dónde se practica la ley?",
+		"placeholder-name_full": "Introduzca el nombre completo...",
+		"select-law-practice": "¿Dónde practica la ley?",
 		"select-service-provider": "¿Dónde trabajas o voluntario?",
 		"specify-work-volunteer": "Por favor especifique dónde trabaja o voluntario",
 		"success": "¡Te has registrado en una cuenta!",
@@ -297,7 +297,7 @@
 	"survey": {
 		"birthyear-req-value": "El año debe estar entre {{year1}} y {{year2}}, por ejemplo, 2005",
 		"finish": "Finalizar",
-		"launch-item1": "<Bold>¿Por qué nos preguntamos?</Bold> Entender nuestros gráficos fotográficos de usuario puede ayudarnos a cuantificar nuestro impacto, recaudar fondos y evaluar futuras decisiones de productos.",
+		"launch-item1": "<Bold>¿Por qué nos preguntamos?</Bold> Entender nuestros datos demográficos de usuario puede ayudarnos a cuantificar nuestro impacto, recaudar fondos y evaluar futuras decisiones de productos.",
 		"launch-item2": "<Bold>Seguridad-primero:</Bold> Sus respuestas se almacenan de forma anónima y no están conectadas a usted como usuario individual o a su cuenta de usuario.",
 		"launch-title": "Por favor, tómese unos minutos para contarnos acerca de usted en nuestra encuesta de usuario anónima.",
 		"not-right-now": "No ahora mismo",
@@ -343,7 +343,7 @@
 		"hours": "Horas",
 		"more": "más",
 		"next": "Siguiente",
-		"no": "Nu",
+		"no": "No",
 		"password": "Contraseña",
 		"phone": "Teléfono",
 		"please-wait": "Por favor espere...",
