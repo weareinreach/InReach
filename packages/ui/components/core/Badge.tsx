@@ -274,6 +274,16 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 
 		const renderTooltip: Omit<TooltipProps, 'children'> | undefined = (() => {
 			switch (props.variant) {
+				case 'community': {
+					return {
+						label: t('badge.community-tool-tip'),
+					}
+				}
+				case 'service': {
+					return {
+						label: t('badge.service-tool-tip'),
+					}
+				}
 				case 'leader': {
 					return {
 						label: t('adjective.organization', { ns: 'common', adjective: `$t(attribute:${props.tsKey})` }), //t(props.tsKey, { ns: 'attribute' }),
