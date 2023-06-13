@@ -36,7 +36,7 @@
 		"detained-immigrant": "Oportunidades que sirven a los inmigrantes detenidos",
 		"disabled": "Oportunidades que sirven a la comunidad de discapacitados",
 		"gay": "Oportunidades que sirven a la Comunidad Gay",
-		"gender-nonconforming": "Oportunidades que sirven a la comunidad no conformista de género",
+		"gender-nonconforming": "Oportunidades que sirven a la comunidad inconformista de género",
 		"hiv-aids": "Oportunidades que sirven a la comunidad VIH+ y a la comunidad de riesgo",
 		"homeless": "Oportunidades que sirven a personas sin hogar",
 		"human-trafficking-survivor": "Oportunidades que sirven a los sobrevivientes de la trata de seres humanos",
@@ -59,9 +59,9 @@
 		"teens": "\"adolescente\" definido como 12-18 años de edad",
 		"trans-youth": "Oportunidades que sirven a la juventud transgénica",
 		"trans-youth-caregivers": "Oportunidades que sirven a los cuidadores de los jóvenes trans",
-		"transfeminine": "Oportunidades que sirven a la Comunidad Transfeminina",
+		"transfeminine": "Oportunidades que sirven a la Comunidad Trans-Feminina",
 		"transgender": "Oportunidades que sirven a la comunidad transgénera (para comunidades no conformes o no binarias, utilice las propiedades no conformes o no binarias)",
-		"transmasculine": "Oportunidades que sirven a la Comunidad Trasmasculina",
+		"transmasculine": "Oportunidades que sirven a la comunidad tras Masculine",
 		"unaccompanied-minors": "Oportunidades que sirven a menores no acompañados",
 		"undocumented": "Oportunidades que sirven a inmigrantes indocumentados"
 	},
@@ -141,11 +141,18 @@
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "Opciones de proveedor de servicios",
+		"case-mananger": "Gestor de casos",
+		"community-org": "Voluntario/personal en una organización comunitaria",
 		"friend-family": "N/A (Looking en nombre de amigos/familia)",
 		"govt-agency": "Agencia gubernamental",
 		"grassroots-direct": "Organización de servicios directos de base",
 		"healthcare": "Proveedor de asistencia sanitaria",
-		"nonprofit": "Sin ánimo de lucro",
-		"student-club": "Club de estudiantes"
+		"lawyer": "Asalto",
+		"other": "Otra (por favor especifique)",
+		"paralegal": "Personal de apoyo legal u otro tipo",
+		"social-worker": "Trabajador social",
+		"student-club": "Líder/administrador del club de estudiantes",
+		"teacher": "Profesor",
+		"therapist-counselor": "Therapista/consejero"
 	}
 }
