@@ -1,6 +1,4 @@
 {
-	"dataAdmin": "Data Administrator",
-	"dataManager": "Data Manager",
 	"eth-american-indiannative-americanindigenous-person": "American Indian/Native American/Indigenous Person",
 	"eth-asian": "Asian",
 	"eth-biracialmultiracial": "Biracial/Multiracial",
@@ -29,17 +27,15 @@
 	"immigration-asylee": "Asylee (granted asylum)",
 	"immigration-asylum-seeker": "Asylum seeker",
 	"immigration-dreamer": "Dreamer (DACA recipient)",
-	"immigration-immigrant": "Immigrant",
+	"immigration-immigrant": "Other immigrant",
+	"immigration-none": "I do not identify as any of these",
+	"immigration-prefer-not-to-say": "Prefer not to say",
 	"immigration-refugee": "Refugee",
-	"lcr": "Local Community Reviewer",
-	"provider": "Service Provider",
-	"seeker": "Resource Seeker",
-	"sysadmin": "System Administrator",
 	"type-dataadmin": "Data Administrator",
 	"type-datamanager": "Data Manager",
+	"type-individual": "Individual",
 	"type-lcr": "Local Community Reviewer",
 	"type-provider": "Service Provider",
-	"type-seeker": "Resource Seeker",
 	"type-sysadmin": "System Administrator",
 	"type-system": "System User"
 }
