@@ -83,8 +83,6 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	})
 
 	const submitHandler = () => {
-		// setSuccessMessage(true)
-		//TODO call UserSurveyAction
 		if (!form.isValid()) return startShake()
 		UserSurveyAction.mutate(form.values)
 	}
