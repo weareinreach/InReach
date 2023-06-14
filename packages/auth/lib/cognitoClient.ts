@@ -11,7 +11,7 @@ import { z } from 'zod'
 
 import { createHmac } from 'crypto'
 
-import { getEnv } from '@weareinreach/config/env'
+import { getEnv } from '@weareinreach/env'
 import { prisma } from '@weareinreach/db'
 
 import { decodeCognitoIdJwt } from './cognitoJwt'
