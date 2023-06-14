@@ -141,11 +141,18 @@
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "خيارات موفر الخدمة",
+		"case-mananger": "مدير الحالة",
+		"community-org": "متطوعون/موظفون في منظمة مجتمعية",
 		"friend-family": "N/A (النظر نيابة عن الأصدقاء/الأسرة)",
 		"govt-agency": "الوكالة الحكومية",
 		"grassroots-direct": "منظمة الخدمات المباشرة الشعبية",
 		"healthcare": "مقدم الرعاية الصحية",
-		"nonprofit": "غير ربحي",
-		"student-club": "نادي الطلاب"
+		"lawyer": "محام",
+		"other": "أخرى (يرجى التحديد)",
+		"paralegal": "موظفو المساعدة القانونية أو غيرهم من موظفي الدعم القانوني",
+		"social-worker": "أخصائي اجتماعي",
+		"student-club": "قائد/مسؤول النادي الطلابي",
+		"teacher": "المعلم",
+		"therapist-counselor": "أخصائي العلاج/مستشار"
 	}
 }
