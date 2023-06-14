@@ -26,7 +26,7 @@
 		"@weareinreach/db": "0.100.0"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.117",
+		"@types/aws-lambda": "8.10.118",
 		"@types/eslint": "8.40.2",
 		"@types/node": "18.16.18",
 		"@types/prettier": "2.7.3",
