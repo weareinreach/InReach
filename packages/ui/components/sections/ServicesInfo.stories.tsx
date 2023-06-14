@@ -1,9 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { StorybookGridDouble } from '~ui/layouts'
-import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { mockServiceData } from '~ui/mockData/serviceModal'
-import { servicesMock } from '~ui/mockData/servicesInfoCard'
+import { mockService } from '~ui/mockData/service'
 
 import { ServicesInfoCard } from './ServicesInfo'
 
@@ -11,7 +9,7 @@ export default {
 	title: 'Sections/Services Info',
 	component: ServicesInfoCard,
 	args: {
-		services: servicesMock,
+		parentId: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH',
 	},
 	parameters: {
 		layout: 'fullscreen',
@@ -24,17 +22,8 @@ export default {
 				},
 			},
 		},
-		msw: [
-			getTRPCMock({
-				path: ['service', 'getParentName'],
-				response: { name: 'Organization name' },
-			}),
-			getTRPCMock({
-				path: ['service', 'byId'],
-				type: 'query',
-				response: mockServiceData,
-			}),
-		],
+		msw: [mockService.forServiceInfoCard, mockService.getParentName, mockService.byId],
+		rqDevtools: true,
 	},
 	decorators: [StorybookGridDouble],
 } satisfies Meta<typeof ServicesInfoCard>

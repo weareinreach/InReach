@@ -97,3 +97,10 @@ type TRPCEndpointError<K1 extends keyof ApiInput, K2 extends keyof ApiInput[K1]>
 	type?: 'query' | 'mutation'
 	delay?: number
 }
+
+export type MockDataObject<P extends keyof ApiOutput> = {
+	[K in keyof ApiOutput[P]]?: ApiOutput[P][K]
+}
+export type MockHandlerObject<P extends keyof ApiOutput> = {
+	[K in keyof ApiOutput[P]]?: RestHandler
+}

@@ -3,6 +3,7 @@ import flush from 'just-flush'
 import mapObjectVals from 'just-map-values'
 import { z } from 'zod'
 
+import { getIdPrefixRegex, isIdFor } from '@weareinreach/db'
 import { type Prisma } from '@weareinreach/db/client'
 import { handleError } from '~api/lib/errorHandler'
 import { transformer } from '~api/lib/transformer'
@@ -11,9 +12,9 @@ import {
 	permissionedProcedure,
 	protectedProcedure,
 	publicProcedure,
-	staffProcedure,
+	// staffProcedure,
 } from '~api/lib/trpc'
-import { freeTextCrowdinId } from '~api/schemas/selects/common'
+import { freeTextCrowdinId, isPublic } from '~api/schemas/selects/common'
 import {
 	forServiceDrawer,
 	serviceById,
@@ -335,4 +336,43 @@ export const queries = defineRouter({
 		})
 		return result
 	}),
+	forServiceInfoCard: publicProcedure
+		.input(z.string().regex(getIdPrefixRegex('organization', 'orgLocation')))
+		.query(async ({ ctx, input }) => {
+			const result = await ctx.prisma.orgService.findMany({
+				where: {
+					...isPublic,
+					...(isIdFor('organization', input)
+						? { organization: { id: input, ...isPublic } }
+						: { locations: { some: { location: { id: input, ...isPublic } } } }),
+				},
+				select: {
+					id: true,
+					serviceName: { select: { key: true, ns: true, tsKey: { select: { text: true } } } },
+					services: {
+						select: {
+							tag: {
+								select: { tsKey: true, category: { select: { tsKey: true } } },
+							},
+						},
+						where: { tag: { active: true, category: { active: true } } },
+					},
+					attributes: {
+						where: { attribute: { active: true, tag: 'offers-remote-services' } },
+						select: { attributeId: true },
+					},
+				},
+			})
+
+			const transformed = result.map(({ id, serviceName, services, attributes }) => ({
+				id,
+				serviceName: serviceName
+					? { tsKey: serviceName.tsKey, tsNs: serviceName.ns, defaultText: serviceName.tsKey.text }
+					: null,
+				services: [...new Set(services.map(({ tag }) => tag.category.tsKey))],
+				offersRemote: attributes.length > 0,
+			}))
+
+			return transformed
+		}),
 })
