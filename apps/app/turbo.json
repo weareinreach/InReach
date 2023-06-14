@@ -21,10 +21,10 @@
 				"NODE_ENV",
 				"GOOGLE_PLACES_API_KEY",
 				"NEXT_PUBLIC_GOOGLE_MAPS_API",
-				"CACHE_ACCESS_KEY",
-				"CACHE_SECRET",
-				"CACHE_READ_URL",
-				"CACHE_WRITE_URL"
+				"SENTRY_AUTH_TOKEN",
+				"NEXT_PUBLIC_SENTRY_DSN",
+				"SENTRY_PROJECT",
+				"SENTRY_ORG"
 			],
 			"outputs": [".next/**"]
 		},
