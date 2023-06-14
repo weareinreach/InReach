@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { ClientId, cognito, generateHash } from './cognitoClient'
 import { getBaseUrl } from './getBaseUrl'
+import { logger } from './logger'
 
 const ForgotPasswordSchema = z.object({
 	email: z.string().email(),
@@ -11,6 +12,7 @@ const ForgotPasswordSchema = z.object({
 export const forgotPassword = async (data: ForgotPasswordParams) => {
 	const { email, message, subject } = ForgotPasswordSchema.parse(data)
 
+	logger.info('clientId', ClientId)
 	const response = await cognito.forgotPassword({
 		ClientId,
 		Username: email,
@@ -18,7 +20,7 @@ export const forgotPassword = async (data: ForgotPasswordParams) => {
 		ClientMetadata: { baseUrl: getBaseUrl(), message, subject },
 	})
 
-	console.log(response)
+	logger.info(response)
 
 	return response
 }
