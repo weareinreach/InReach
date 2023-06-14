@@ -1,0 +1,1244 @@
+{
+	"ABW": {
+		"name": "Aruba",
+		"demonym_one": "Kiaruba",
+		"demonym_other": "Waaruba"
+	},
+	"AFG": {
+		"name": "Afghanistan",
+		"demonym_one": "Kiafghani",
+		"demonym_other": "Waafghanistan"
+	},
+	"AGO": {
+		"name": "Angola",
+		"demonym_one": "Kiangola",
+		"demonym_other": "Waangola"
+	},
+	"AIA": {
+		"name": "Anguilla",
+		"demonym_one": "Kiangillian",
+		"demonym_other": "Waangillians"
+	},
+	"ALA": {
+		"name": "Visiwa vya Aland",
+		"demonym_one": "Kialandi",
+		"demonym_other": "Ålanders"
+	},
+	"ALB": {
+		"name": "albania",
+		"demonym_one": "Kialbania",
+		"demonym_other": "Waalbania"
+	},
+	"AND": {
+		"name": "Andorra",
+		"demonym_one": "Andorran",
+		"demonym_other": "Andorrans"
+	},
+	"ARE": {
+		"name": "Falme za Kiarabu",
+		"demonym_one": "Emirati",
+		"demonym_other": "Emiratis"
+	},
+	"ARG": {
+		"name": "Ajentina",
+		"demonym_one": "Kiarjentina",
+		"demonym_other": "Waargentina"
+	},
+	"ARM": {
+		"name": "Armenia",
+		"demonym_one": "Kiarmenia",
+		"demonym_other": "Waarmenia"
+	},
+	"ASM": {
+		"name": "Samoa ya Marekani",
+		"demonym_one": "Kisamoa cha Amerika",
+		"demonym_other": "Wasamoa wa Marekani"
+	},
+	"ATA": {
+		"name": "Antarctica",
+		"demonym_one": "Antaktika",
+		"demonym_other": "Antaktika"
+	},
+	"ATF": {
+		"name": "Kifaransa Kusini na Ardhi ya Antarctic",
+		"demonym_one": "Kifaransa",
+		"demonym_other": "Kifaransa"
+	},
+	"ATG": {
+		"name": "Antigua na Barbuda",
+		"demonym_one": "Antiguan, Barbudan",
+		"demonym_other": "Antiguans, Barbudans"
+	},
+	"AUS": {
+		"name": "Australia",
+		"demonym_one": "Wa Australia",
+		"demonym_other": "Waaustralia"
+	},
+	"AUT": {
+		"name": "Austria",
+		"demonym_one": "Mwaustria",
+		"demonym_other": "Waustria"
+	},
+	"AZE": {
+		"name": "Azabajani",
+		"demonym_one": "Kiazabajani",
+		"demonym_other": "Waazerbaijani"
+	},
+	"BDI": {
+		"name": "Burundi",
+		"demonym_one": "Mburundi",
+		"demonym_other": "Waburundi"
+	},
+	"BEL": {
+		"name": "Ubelgiji",
+		"demonym_one": "Ubelgiji",
+		"demonym_other": "Wabelgiji"
+	},
+	"BEN": {
+		"name": "Benin",
+		"demonym_one": "Kibenini",
+		"demonym_other": "Kibenini"
+	},
+	"BES": {
+		"name": "Uholanzi wa Karibiani"
+	},
+	"BFA": {
+		"name": "Burkina Faso",
+		"demonym_one": "Burkinabe",
+		"demonym_other": "Burkinabes"
+	},
+	"BGD": {
+		"name": "Bangladesh",
+		"demonym_one": "Mbangladeshi",
+		"demonym_other": "Wabangladeshi"
+	},
+	"BGR": {
+		"name": "Bulgaria",
+		"demonym_one": "Mbulgaria",
+		"demonym_other": "Wabulgaria"
+	},
+	"BHR": {
+		"name": "Bahrain",
+		"demonym_one": "Bahraini",
+		"demonym_other": "Wabahrain"
+	},
+	"BHS": {
+		"name": "Bahamas",
+		"demonym_one": "Mbahama",
+		"demonym_other": "Wabahamas"
+	},
+	"BIH": {
+		"name": "Bosnia na Herzegovina",
+		"demonym_one": "Kibosnia, Herzegovinian",
+		"demonym_other": "Wabosnia, Herzegovinians"
+	},
+	"BLM": {
+		"name": "Mtakatifu Barthelemy",
+		"demonym_one": "Kisiwa cha Mtakatifu Barthelemy",
+		"demonym_other": "Wakazi wa Visiwa vya Mtakatifu Barthélemy"
+	},
+	"BLR": {
+		"name": "Belarusi",
+		"demonym_one": "Kibelarusi",
+		"demonym_other": "Wabelarusi"
+	},
+	"BLZ": {
+		"name": "Belize",
+		"demonym_one": "Belize",
+		"demonym_other": "Wabelizia"
+	},
+	"BMU": {
+		"name": "Bermuda",
+		"demonym_one": "Mbermudia",
+		"demonym_other": "Waburmuda"
+	},
+	"BOL": {
+		"name": "Bolivia",
+		"demonym_one": "Bolivia",
+		"demonym_other": "Wabolivia"
+	},
+	"BRA": {
+		"name": "Brazili",
+		"demonym_one": "mbrazili",
+		"demonym_other": "Wabrazil"
+	},
+	"BRB": {
+		"name": "Barbados",
+		"demonym_one": "Barbadian",
+		"demonym_other": "Wabados"
+	},
+	"BRN": {
+		"name": "Brunei",
+		"demonym_one": "Mbrunei",
+		"demonym_other": "Wabrunei"
+	},
+	"BTN": {
+		"name": "Bhutan",
+		"demonym_one": "Kibutani",
+		"demonym_other": "Kibutani"
+	},
+	"BVT": {
+		"name": "Kisiwa cha Bouvet"
+	},
+	"BWA": {
+		"name": "Botswana",
+		"demonym_one": "Motswana",
+		"demonym_other": "Batswana"
+	},
+	"CAF": {
+		"name": "Jamhuri ya Afrika ya Kati",
+		"demonym_one": "Afrika ya Kati",
+		"demonym_other": "Waafrika wa Kati"
+	},
+	"CAN": {
+		"name": "Canada",
+		"demonym_one": "Mkanada",
+		"demonym_other": "Wakanada"
+	},
+	"CCK": {
+		"name": "Visiwa vya Cocos (Keeling)",
+		"demonym_one": "Kisiwa cha Cocos",
+		"demonym_other": "Wakazi wa Visiwa vya Cocos"
+	},
+	"CHE": {
+		"name": "Uswizi",
+		"demonym_one": "Uswisi",
+		"demonym_other": "Uswisi"
+	},
+	"CHL": {
+		"name": "Chile",
+		"demonym_one": "Chile",
+		"demonym_other": "Wachile"
+	},
+	"CHN": {
+		"name": "Uchina",
+		"demonym_one": "Kichina",
+		"demonym_other": "Kichina"
+	},
+	"CIV": {
+		"name": "Pwani ya Ivory",
+		"demonym_one": "Kikodivaa",
+		"demonym_other": "Ivory Coast"
+	},
+	"CMR": {
+		"name": "Kamerun",
+		"demonym_one": "Mkameruni",
+		"demonym_other": "Wakameruni"
+	},
+	"COD": {
+		"name": "DR Kongo",
+		"demonym_one": "Kikongo",
+		"demonym_other": "Kikongo"
+	},
+	"COG": {
+		"name": "Jamhuri ya Kongo",
+		"demonym_one": "Kikongo",
+		"demonym_other": "Kikongo"
+	},
+	"COK": {
+		"name": "Visiwa vya Cook",
+		"demonym_one": "Cook Islander",
+		"demonym_other": "Wakazi wa Visiwa vya Cook"
+	},
+	"COL": {
+		"name": "Kolombia",
+		"demonym_one": "Colombia",
+		"demonym_other": "Wakolombia"
+	},
+	"COM": {
+		"name": "Comoros",
+		"demonym_one": "Komoro",
+		"demonym_other": "Wakomoro"
+	},
+	"CPV": {
+		"name": "Cape Verde",
+		"demonym_one": "Cape Verdian",
+		"demonym_other": "Cape Verdi"
+	},
+	"CRI": {
+		"name": "Costa Rica",
+		"demonym_one": "Kosta Rika",
+		"demonym_other": "Wakosta Rica"
+	},
+	"CUB": {
+		"name": "Cuba",
+		"demonym_one": "Cuba",
+		"demonym_other": "Wakuba"
+	},
+	"CUW": {
+		"name": "Curaçao",
+		"demonym_one": "Kiholanzi",
+		"demonym_other": "Kiholanzi"
+	},
+	"CXR": {
+		"name": "Kisiwa cha Krismasi",
+		"demonym_one": "Kisiwa cha Krismasi",
+		"demonym_other": "Wakazi wa Kisiwa cha Krismasi"
+	},
+	"CYM": {
+		"name": "Visiwa vya Cayman",
+		"demonym_one": "ya Kikayman",
+		"demonym_other": "Wakaymani"
+	},
+	"CYP": {
+		"name": "Kupro",
+		"demonym_one": "saipraisi",
+		"demonym_other": "Wasaiprasi"
+	},
+	"CZE": {
+		"name": "Czechia",
+		"demonym_one": "Kicheki",
+		"demonym_other": "Wacheki"
+	},
+	"DEU": {
+		"name": "Ujerumani",
+		"demonym_one": "Mjerumani",
+		"demonym_other": "Wajerumani"
+	},
+	"DJI": {
+		"name": "Djibouti",
+		"demonym_one": "Djibouti",
+		"demonym_other": "Djibouti"
+	},
+	"DMA": {
+		"name": "Dominica",
+		"demonym_one": "Kidominika",
+		"demonym_other": "Wadominika"
+	},
+	"DNK": {
+		"name": "Denmark",
+		"demonym_one": "Kidenishi",
+		"demonym_other": "Kidenishi"
+	},
+	"DOM": {
+		"name": "Jamhuri ya Dominika",
+		"demonym_one": "Kidominika",
+		"demonym_other": "Wadominika"
+	},
+	"DZA": {
+		"name": "Algeria",
+		"demonym_one": "Kialjeria",
+		"demonym_other": "Waaljeria"
+	},
+	"ECU": {
+		"name": "Ekvado",
+		"demonym_one": "Ecuadorean",
+		"demonym_other": "Ecuadores"
+	},
+	"EGY": {
+		"name": "Misri",
+		"demonym_one": "Mmisri",
+		"demonym_other": "Wamisri"
+	},
+	"ERI": {
+		"name": "Eritrea",
+		"demonym_one": "Mweritrea",
+		"demonym_other": "Waeritrea"
+	},
+	"ESH": {
+		"name": "Sahara ya Magharibi",
+		"demonym_one": "Sahrawi",
+		"demonym_other": "Sahrawis"
+	},
+	"ESP": {
+		"name": "Uhispania",
+		"demonym_one": "Kihispania",
+		"demonym_other": "Kihispania"
+	},
+	"EST": {
+		"name": "Estonia",
+		"demonym_one": "Kiestonia",
+		"demonym_other": "Waestonia"
+	},
+	"ETH": {
+		"name": "Ethiopia",
+		"demonym_one": "Kiethiopia",
+		"demonym_other": "Waethiopia"
+	},
+	"FIN": {
+		"name": "Ufini",
+		"demonym_one": "Kifini",
+		"demonym_other": "Wafini"
+	},
+	"FJI": {
+		"name": "Fiji",
+		"demonym_one": "Mfiji",
+		"demonym_other": "Wafiji"
+	},
+	"FLK": {
+		"name": "Visiwa vya Falkland",
+		"demonym_one": "Kisiwa cha Falkland",
+		"demonym_other": "Visiwa vya Falkland"
+	},
+	"FRA": {
+		"name": "Ufaransa",
+		"demonym_one": "Kifaransa",
+		"demonym_other": "Kifaransa"
+	},
+	"FRO": {
+		"name": "Visiwa vya Faroe",
+		"demonym_one": "Mfaroe",
+		"demonym_other": "Mfaroe"
+	},
+	"FSM": {
+		"name": "Micronesia",
+		"demonym_one": "Micronesia",
+		"demonym_other": "Wamicronesia"
+	},
+	"GAB": {
+		"name": "Gabon",
+		"demonym_one": "Mgaboni",
+		"demonym_other": "Mgaboni"
+	},
+	"GBR": {
+		"name": "Uingereza",
+		"demonym_one": "uingereza",
+		"demonym_other": "uingereza"
+	},
+	"GEO": {
+		"name": "Georgia",
+		"demonym_one": "Kijojia",
+		"demonym_other": "Wajojia"
+	},
+	"GGY": {
+		"name": "Guernsey",
+		"demonym_one": "Kisiwa cha Channel",
+		"demonym_other": "Channel Islanders"
+	},
+	"GHA": {
+		"name": "Ghana",
+		"demonym_one": "Mghana",
+		"demonym_other": "Waghana"
+	},
+	"GIB": {
+		"name": "Gibraltar",
+		"demonym_one": "Gibraltarian",
+		"demonym_other": "Wagibraltar"
+	},
+	"GIN": {
+		"name": "Gine",
+		"demonym_one": "Mgine",
+		"demonym_other": "Waginea"
+	},
+	"GLP": {
+		"name": "Guadeloupe",
+		"demonym_one": "Guadeloupian",
+		"demonym_other": "Wa Guadeloupian"
+	},
+	"GMB": {
+		"name": "Gambia",
+		"demonym_one": "Mgambia",
+		"demonym_other": "Wagambia"
+	},
+	"GNB": {
+		"name": "Guinea-Gu",
+		"demonym_one": "Guinea-Bissau",
+		"demonym_other": "Guinea-Bissau"
+	},
+	"GNQ": {
+		"name": "Guinea",
+		"demonym_one": "Guinea ya Ikweta",
+		"demonym_other": "Guinea ya Ikweta"
+	},
+	"GRC": {
+		"name": "Ugiriki",
+		"demonym_one": "Kigiriki",
+		"demonym_other": "Wagiriki"
+	},
+	"GRD": {
+		"name": "Grenada",
+		"demonym_one": "Grenadian",
+		"demonym_other": "watu wa Grenadia"
+	},
+	"GRL": {
+		"name": "Greenland",
+		"demonym_one": "Greenlandic",
+		"demonym_other": "Greenlanders"
+	},
+	"GTM": {
+		"name": "Guatemala",
+		"demonym_one": "Guatemala",
+		"demonym_other": "Wagwatemala"
+	},
+	"GUF": {
+		"name": "Guiana ya Ufaransa"
+	},
+	"GUM": {
+		"name": "Guam",
+		"demonym_one": "Guamania",
+		"demonym_other": "Waguamani"
+	},
+	"GUY": {
+		"name": "Guyana",
+		"demonym_one": "Mguyana",
+		"demonym_other": "Mguyana"
+	},
+	"HKG": {
+		"name": "Hong Kong",
+		"demonym_one": "Hong Kong",
+		"demonym_other": "Hong Kong"
+	},
+	"HMD": {
+		"name": "Kisiwa cha Heard na McDonald Visiwa",
+		"demonym_one": "Heard na McDonald Islander",
+		"demonym_other": "Heard na McDonald Islanders"
+	},
+	"HND": {
+		"name": "Honduras",
+		"demonym_one": "Mhondurasi",
+		"demonym_other": "Wahondurasi"
+	},
+	"HRV": {
+		"name": "Kroatia",
+		"demonym_one": "Mkroeshia",
+		"demonym_other": "Wakroatia"
+	},
+	"HTI": {
+		"name": "Haiti",
+		"demonym_one": "Mhaiti",
+		"demonym_other": "Wahaiti"
+	},
+	"HUN": {
+		"name": "Hungari",
+		"demonym_one": "Mhungaria",
+		"demonym_other": "Wahungari"
+	},
+	"IDN": {
+		"name": "Indonesia",
+		"demonym_one": "Kiindonesia",
+		"demonym_other": "Waindonesia"
+	},
+	"IMN": {
+		"name": "Kisiwa cha Man",
+		"demonym_one": "Manx",
+		"demonym_other": "Manx"
+	},
+	"IND": {
+		"name": "hindi",
+		"demonym_one": "Muhindi",
+		"demonym_other": "Wahindi"
+	},
+	"IOT": {
+		"name": "Wilaya ya Bahari ya Hindi ya Uingereza",
+		"demonym_one": "Muhindi",
+		"demonym_other": "Wahindi"
+	},
+	"IRL": {
+		"name": "Ireland",
+		"demonym_one": "kiairishi",
+		"demonym_other": "kiairishi"
+	},
+	"IRN": {
+		"name": "Irani",
+		"demonym_one": "Kiirani",
+		"demonym_other": "Wairani"
+	},
+	"IRQ": {
+		"name": "Iraki",
+		"demonym_one": "Iraqi",
+		"demonym_other": "Iraqi"
+	},
+	"ISL": {
+		"name": "Iceland",
+		"demonym_one": "Iceland",
+		"demonym_other": "Waisilandi"
+	},
+	"ISR": {
+		"name": "Israeli",
+		"demonym_one": "Israeli",
+		"demonym_other": "Waisraeli"
+	},
+	"ITA": {
+		"name": "Italia",
+		"demonym_one": "Kiitaliano",
+		"demonym_other": "Waitaliano"
+	},
+	"JAM": {
+		"name": "Jamaika",
+		"demonym_one": "Jamaika",
+		"demonym_other": "Wajamaika"
+	},
+	"JEY": {
+		"name": "Jersey",
+		"demonym_one": "Kisiwa cha Channel",
+		"demonym_other": "Channel Islanders"
+	},
+	"JOR": {
+		"name": "Yordani",
+		"demonym_one": "Myordani",
+		"demonym_other": "Wajordani"
+	},
+	"JPN": {
+		"name": "Japan",
+		"demonym_one": "Kijapani",
+		"demonym_other": "Kijapani"
+	},
+	"KAZ": {
+		"name": "Kazakhstan",
+		"demonym_one": "Kazakhstani",
+		"demonym_other": "Kazakhstani"
+	},
+	"KEN": {
+		"name": "Kenya",
+		"demonym_one": "Mkenya",
+		"demonym_other": "Wakenya"
+	},
+	"KGZ": {
+		"name": "Kyrgyzstan",
+		"demonym_one": "Kirghiz",
+		"demonym_other": "Kirghiz"
+	},
+	"KHM": {
+		"name": "Kambodia",
+		"demonym_one": "Mkambodiani",
+		"demonym_other": "Wakambodia"
+	},
+	"KIR": {
+		"name": "Kiribati",
+		"demonym_one": "Kiribati",
+		"demonym_other": "Kiribatis"
+	},
+	"KNA": {
+		"name": "Saint Kitts na Nevis",
+		"demonym_one": "Kittiti au Nevisia",
+		"demonym_other": "Kititi au Wanevisia"
+	},
+	"KOR": {
+		"name": "Korea ya Kusini",
+		"demonym_one": "Korea Kusini",
+		"demonym_other": "Wakorea Kusini"
+	},
+	"KWT": {
+		"name": "Kuwait",
+		"demonym_one": "Mkuwaiti",
+		"demonym_other": "Wakuwaiti"
+	},
+	"LAO": {
+		"name": "Laos",
+		"demonym_one": "Mlaotia",
+		"demonym_other": "Walotia"
+	},
+	"LBN": {
+		"name": "Lebanon",
+		"demonym_one": "Kilebanoni",
+		"demonym_other": "Kilebanoni"
+	},
+	"LBR": {
+		"name": "Liberia",
+		"demonym_one": "Kiliberia",
+		"demonym_other": "Waliberi"
+	},
+	"LBY": {
+		"name": "Libya",
+		"demonym_one": "Kilibya",
+		"demonym_other": "Walibya"
+	},
+	"LCA": {
+		"name": "Mtakatifu Lucia",
+		"demonym_one": "Mtakatifu Lucian",
+		"demonym_other": "Mtakatifu Lucians"
+	},
+	"LIE": {
+		"name": "Liechtenstein",
+		"demonym_one": "Liechtensteiner",
+		"demonym_other": "Liechtensteiners"
+	},
+	"LKA": {
+		"name": "Sri Lanka",
+		"demonym_one": "Sri Lanka",
+		"demonym_other": "Sri Lanka"
+	},
+	"LSO": {
+		"name": "Lesotho",
+		"demonym_one": "Mosotho",
+		"demonym_other": "Basotho"
+	},
+	"LTU": {
+		"name": "Lithuania",
+		"demonym_one": "Mlithuania",
+		"demonym_other": "Kilithuania"
+	},
+	"LUX": {
+		"name": "Luxembourg",
+		"demonym_one": "Luxemburger",
+		"demonym_other": "Luxemburgers"
+	},
+	"LVA": {
+		"name": "Latvia",
+		"demonym_one": "Kilatvia",
+		"demonym_other": "Walatvia"
+	},
+	"MAC": {
+		"name": "Macau",
+		"demonym_one": "Kichina",
+		"demonym_other": "Kichina"
+	},
+	"MAF": {
+		"name": "Mtakatifu Martin",
+		"demonym_one": "Kisiwa cha Mtakatifu Martin",
+		"demonym_other": "Wakazi wa Visiwa vya Mtakatifu Martin"
+	},
+	"MAR": {
+		"name": "Moroko",
+		"demonym_one": "Moroko",
+		"demonym_other": "Wamoroko"
+	},
+	"MCO": {
+		"name": "Monaco",
+		"demonym_one": "Monegasque",
+		"demonym_other": "Monegasques"
+	},
+	"MDA": {
+		"name": "Moldavia",
+		"demonym_one": "Moldova",
+		"demonym_other": "Wamoldova"
+	},
+	"MDG": {
+		"name": "Madagaska",
+		"demonym_one": "kimalagasi",
+		"demonym_other": "kimalagasi"
+	},
+	"MDV": {
+		"name": "Maldives",
+		"demonym_one": "Maldivan",
+		"demonym_other": "Wamaldivi"
+	},
+	"MEX": {
+		"name": "Mexico",
+		"demonym_one": "Mmeksiko",
+		"demonym_other": "Mmeksiko"
+	},
+	"MHL": {
+		"name": "Visiwa vya Marshall",
+		"demonym_one": "ya Marshallese",
+		"demonym_other": "ya Marshallese"
+	},
+	"MKD": {
+		"name": "Makedonia ya Kaskazini",
+		"demonym_one": "Kimasedonia",
+		"demonym_other": "Wamasedonia"
+	},
+	"MLI": {
+		"name": "mali",
+		"demonym_one": "Mmali",
+		"demonym_other": "Wamalia"
+	},
+	"MLT": {
+		"name": "Malta",
+		"demonym_one": "Kimalta",
+		"demonym_other": "Kimalta"
+	},
+	"MMR": {
+		"name": "Myanmar",
+		"demonym_one": "Bamar",
+		"demonym_other": "Bamars"
+	},
+	"MNE": {
+		"name": "Montenegro",
+		"demonym_one": "Kimontenegro",
+		"demonym_other": "Wamontenegro"
+	},
+	"MNG": {
+		"name": "Mongolia",
+		"demonym_one": "Kimongolia",
+		"demonym_other": "Wamongolia"
+	},
+	"MNP": {
+		"name": "Visiwa vya Mariana ya Kaskazini",
+		"demonym_one": "Amerika",
+		"demonym_other": "Wamarekani"
+	},
+	"MOZ": {
+		"name": "Msumbiji",
+		"demonym_one": "Mumsumbiji",
+		"demonym_other": "Msumbiji"
+	},
+	"MRT": {
+		"name": "Mauritania",
+		"demonym_one": "Mmoritania",
+		"demonym_other": "Wamoritania"
+	},
+	"MSR": {
+		"name": "Montserrat",
+		"demonym_one": "Montserratian",
+		"demonym_other": "Montserratians"
+	},
+	"MTQ": {
+		"name": "Martinique",
+		"demonym_one": "Kifaransa",
+		"demonym_other": "Kifaransa"
+	},
+	"MUS": {
+		"name": "Morisi",
+		"demonym_one": "ya Mauritius",
+		"demonym_other": "ya Mauritius"
+	},
+	"MWI": {
+		"name": "Malawi",
+		"demonym_one": "Malawi",
+		"demonym_other": "Wamalawi"
+	},
+	"MYS": {
+		"name": "Malaysia",
+		"demonym_one": "Kimalesia",
+		"demonym_other": "Wamalaysia"
+	},
+	"MYT": {
+		"name": "Mayotte",
+		"demonym_one": "Mahoran",
+		"demonym_other": "Wamahorans"
+	},
+	"NAM": {
+		"name": "Namibia",
+		"demonym_one": "Mnamibia",
+		"demonym_other": "Wanamibia"
+	},
+	"NCL": {
+		"name": "Kaledonia Mpya",
+		"demonym_one": "Kaledonia Mpya",
+		"demonym_other": "Wakaledonia Mpya"
+	},
+	"NER": {
+		"name": "Niger",
+		"demonym_one": "Nigeria",
+		"demonym_other": "Wanigeria"
+	},
+	"NFK": {
+		"name": "Kisiwa cha Norfolk",
+		"demonym_one": "Kisiwa cha Norfolk",
+		"demonym_other": "Wakazi wa Visiwa vya Norfolk"
+	},
+	"NGA": {
+		"name": "Nigeria",
+		"demonym_one": "Kinijeria",
+		"demonym_other": "Wanigeria"
+	},
+	"NIC": {
+		"name": "Nikaragua",
+		"demonym_one": "Kinikaragwa",
+		"demonym_other": "Wanikaragua"
+	},
+	"NIU": {
+		"name": "Niue",
+		"demonym_one": "Niuean",
+		"demonym_other": "Waniue"
+	},
+	"NLD": {
+		"name": "Uholanzi",
+		"demonym_one": "Kiholanzi",
+		"demonym_other": "Kiholanzi"
+	},
+	"NOR": {
+		"name": "Norway",
+		"demonym_one": "Kinorwe",
+		"demonym_other": "Kinorway"
+	},
+	"NPL": {
+		"name": "Nepal",
+		"demonym_one": "Mnepali",
+		"demonym_other": "Mnepali"
+	},
+	"NRU": {
+		"name": "Nauru",
+		"demonym_one": "Nauruan",
+		"demonym_other": "Wanaruguay"
+	},
+	"NZL": {
+		"name": "New Zealand",
+		"demonym_one": "New Zealander",
+		"demonym_other": "New Zealandi"
+	},
+	"OMN": {
+		"name": "oman",
+		"demonym_one": "Omani",
+		"demonym_other": "Omani"
+	},
+	"PAK": {
+		"name": "Pakistan",
+		"demonym_one": "Pakistani",
+		"demonym_other": "Wapakistani"
+	},
+	"PAN": {
+		"name": "Panama",
+		"demonym_one": "Mpanama",
+		"demonym_other": "Wapanda Panama"
+	},
+	"PCN": {
+		"name": "Visiwa vya Pitcairn",
+		"demonym_one": "Kisiwa cha Pitcairn",
+		"demonym_other": "Wakazi wa Visiwa vya Pitcairn"
+	},
+	"PER": {
+		"name": "Peru",
+		"demonym_one": "Peru",
+		"demonym_other": "Waperu"
+	},
+	"PHL": {
+		"name": "Ufilipino",
+		"demonym_one": "Kifilipino",
+		"demonym_other": "Wafilipino"
+	},
+	"PLW": {
+		"name": "Palau",
+		"demonym_one": "Palauan",
+		"demonym_other": "Wapalau"
+	},
+	"PNG": {
+		"name": "Papua Guinea Mpya",
+		"demonym_one": "Papua Guinea Mpya",
+		"demonym_other": "Papua Guinea Mpya"
+	},
+	"POL": {
+		"name": "Poland",
+		"demonym_one": "Kipolishi",
+		"demonym_other": "Kipolishi"
+	},
+	"PRI": {
+		"name": "Puerto Rico",
+		"demonym_one": "Puerto Rican",
+		"demonym_other": "Puerto Rico"
+	},
+	"PRK": {
+		"name": "Korea Kaskazini",
+		"demonym_one": "Korea Kaskazini",
+		"demonym_other": "Wakorea Kaskazini"
+	},
+	"PRT": {
+		"name": "Ureno",
+		"demonym_one": "Kireno",
+		"demonym_other": "Kireno"
+	},
+	"PRY": {
+		"name": "Paragwai",
+		"demonym_one": "Mparagwai",
+		"demonym_other": "Waparagwai"
+	},
+	"PSE": {
+		"name": "Palestina",
+		"demonym_one": "Mpalestina",
+		"demonym_other": "Wapalestina"
+	},
+	"PYF": {
+		"name": "Polynesia ya Ufaransa",
+		"demonym_one": "Polynesia ya Kifaransa",
+		"demonym_other": "Wafaransa Polynesia"
+	},
+	"QAT": {
+		"name": "Katari",
+		"demonym_one": "Qatari",
+		"demonym_other": "Qatari"
+	},
+	"REU": {
+		"name": "Réunion",
+		"demonym_one": "Kifaransa",
+		"demonym_other": "Kifaransa"
+	},
+	"ROU": {
+		"name": "romania",
+		"demonym_one": "Kiromania",
+		"demonym_other": "Warumania"
+	},
+	"RUS": {
+		"name": "Urusi",
+		"demonym_one": "Kirusi",
+		"demonym_other": "Warusi"
+	},
+	"RWA": {
+		"name": "Rwanda",
+		"demonym_one": "Mnyarwanda",
+		"demonym_other": "Wanyarwanda"
+	},
+	"SAU": {
+		"name": "Saudi Arabia",
+		"demonym_one": "Saudi Arabia",
+		"demonym_other": "Waarabu wa Saudi"
+	},
+	"SDN": {
+		"name": "Sudani",
+		"demonym_one": "Kisudani",
+		"demonym_other": "Kisudani"
+	},
+	"SEN": {
+		"name": "Senegal",
+		"demonym_one": "Msenegali",
+		"demonym_other": "Msenegali"
+	},
+	"SGP": {
+		"name": "Singapore",
+		"demonym_one": "Singapore",
+		"demonym_other": "Watu wa Singapore"
+	},
+	"SGS": {
+		"name": "Georgia Kusini",
+		"demonym_one": "Kisiwa cha Sandwich Kusini cha Georgia Kusini",
+		"demonym_other": "Wakazi wa Kisiwa cha Sandwich Kusini mwa Georgia"
+	},
+	"SHN": {
+		"name": "Saint Helena, Ascension na Tristan da Cunha"
+	},
+	"SJM": {
+		"name": "Svalbard na Jan Mayen",
+		"demonym_one": "Kinorwe",
+		"demonym_other": "Kinorway"
+	},
+	"SLB": {
+		"name": "Visiwa vya Solomon",
+		"demonym_one": "Kisiwa cha Sulemani",
+		"demonym_other": "Wakazi wa Visiwa vya Solomon"
+	},
+	"SLE": {
+		"name": "Sierra Leone",
+		"demonym_one": "Sierra Leone",
+		"demonym_other": "Sierra Leone"
+	},
+	"SLV": {
+		"name": "El Salvador",
+		"demonym_one": "Kisalvador",
+		"demonym_other": "Wasalvador"
+	},
+	"SMR": {
+		"name": "San Marino",
+		"demonym_one": "Kisammarine",
+		"demonym_other": "Kisammarine"
+	},
+	"SOM": {
+		"name": "Somalia",
+		"demonym_one": "Kisomali",
+		"demonym_other": "Wasomali"
+	},
+	"SPM": {
+		"name": "Mtakatifu Pierre na Miquelon",
+		"demonym_one": "Kifaransa",
+		"demonym_other": "Kifaransa"
+	},
+	"SRB": {
+		"name": "Serbia",
+		"demonym_one": "Kiserbia",
+		"demonym_other": "Waserbia"
+	},
+	"SSD": {
+		"name": "Sudan Kusini",
+		"demonym_one": "Sudan Kusini",
+		"demonym_other": "Sudan Kusini"
+	},
+	"STP": {
+		"name": "São Tomé na Principe",
+		"demonym_one": "Sao Tomean",
+		"demonym_other": "Sao Tomeans"
+	},
+	"SUR": {
+		"name": "Suriname",
+		"demonym_one": "Surinamer",
+		"demonym_other": "Surinamers"
+	},
+	"SVK": {
+		"name": "Slovakia",
+		"demonym_one": "Mslovaki",
+		"demonym_other": "Kislovakia"
+	},
+	"SVN": {
+		"name": "Kislovenia",
+		"demonym_one": "Kislovenia",
+		"demonym_other": "Kislovenia"
+	},
+	"SWE": {
+		"name": "Uswidi",
+		"demonym_one": "Kiswidi",
+		"demonym_other": "Kiswidi"
+	},
+	"SWZ": {
+		"name": "Eswatini",
+		"demonym_one": "Mswazi",
+		"demonym_other": "Waswahili"
+	},
+	"SXM": {
+		"name": "Mint Maarten",
+		"demonym_one": "Mtakatifu Martener",
+		"demonym_other": "Mtakatifu Marteners"
+	},
+	"SYC": {
+		"name": "Shelisheli",
+		"demonym_one": "Seychellois",
+		"demonym_other": "Seychellois"
+	},
+	"SYR": {
+		"name": "Syria",
+		"demonym_one": "Siria",
+		"demonym_other": "Wasiria"
+	},
+	"TCA": {
+		"name": "Visiwa vya Turks na Caicos",
+		"demonym_one": "Turks na Caicos Islander",
+		"demonym_other": "Waturuki na Visiwa vya Caicos"
+	},
+	"TCD": {
+		"name": "Chadi",
+		"demonym_one": "Mchadi",
+		"demonym_other": "Wachadi"
+	},
+	"TGO": {
+		"name": "Togo",
+		"demonym_one": "Togo",
+		"demonym_other": "Togo"
+	},
+	"THA": {
+		"name": "Thailand",
+		"demonym_one": "Thai",
+		"demonym_other": "Thais"
+	},
+	"TJK": {
+		"name": "Tajikistani",
+		"demonym_one": "Tadzhik",
+		"demonym_other": "Tadzhiks"
+	},
+	"TKL": {
+		"name": "Tokelau",
+		"demonym_one": "Tokelauan",
+		"demonym_other": "Tokelauans"
+	},
+	"TKM": {
+		"name": "Turkmenistan",
+		"demonym_one": "Kiturukimeni",
+		"demonym_other": "Turkmenistan"
+	},
+	"TLS": {
+		"name": "Timor-L",
+		"demonym_one": "Timor ya Mashariki",
+		"demonym_other": "Timor ya Mashariki"
+	},
+	"TON": {
+		"name": "Tonga",
+		"demonym_one": "Mtonga",
+		"demonym_other": "Watongea"
+	},
+	"TTO": {
+		"name": "Trinidad na Tobago",
+		"demonym_one": "ya Trinidad",
+		"demonym_other": "Watinidadia"
+	},
+	"TUN": {
+		"name": "Tunisia",
+		"demonym_one": "Tunisia",
+		"demonym_other": "Watunisia"
+	},
+	"TUR": {
+		"name": "Uturuki",
+		"demonym_one": "Kituruki",
+		"demonym_other": "Waturuki"
+	},
+	"TUV": {
+		"name": "Tuvalu",
+		"demonym_one": "Kituvalu",
+		"demonym_other": "Watuvalu"
+	},
+	"TWN": {
+		"name": "Taiwan",
+		"demonym_one": "Kitaiwani",
+		"demonym_other": "Kitaiwani"
+	},
+	"TZA": {
+		"name": "Tanzania",
+		"demonym_one": "Kitanzania",
+		"demonym_other": "Watanzania"
+	},
+	"UGA": {
+		"name": "Uganda",
+		"demonym_one": "Mganda",
+		"demonym_other": "Waganda"
+	},
+	"UKR": {
+		"name": "Ukraine",
+		"demonym_one": "Mkreni",
+		"demonym_other": "Mukrania"
+	},
+	"UMI": {
+		"name": "Marekani - Visiwa vidogo vya nje",
+		"demonym_one": "Amerika",
+		"demonym_other": "Wamarekani"
+	},
+	"UNK": {
+		"name": "Kosovo",
+		"demonym_one": "Kosovar",
+		"demonym_other": "Kosovars"
+	},
+	"URY": {
+		"name": "Uruguay",
+		"demonym_one": "Uruguai",
+		"demonym_other": "Uruguay"
+	},
+	"USA": {
+		"name": "Marekani",
+		"demonym_one": "Amerika",
+		"demonym_other": "Wamarekani"
+	},
+	"UZB": {
+		"name": "Uzbekistan",
+		"demonym_one": "Uzbekistani",
+		"demonym_other": "Wazbekistan"
+	},
+	"VAT": {
+		"name": "Mji wa Vatikani",
+		"demonym_one": "Kiitaliano",
+		"demonym_other": "Waitaliano"
+	},
+	"VCT": {
+		"name": "Saint Vincent na Grenadines",
+		"demonym_one": "Mtakatifu Vincentian",
+		"demonym_other": "Watakatifu Vincentians"
+	},
+	"VEN": {
+		"name": "Venezuela",
+		"demonym_one": "Venezuela",
+		"demonym_other": "Wavenezuela"
+	},
+	"VGB": {
+		"name": "Visiwa vya Virgin vya Uingereza",
+		"demonym_one": "Virgin Islander",
+		"demonym_other": "Wakazi wa Visiwa vya Virgin"
+	},
+	"VIR": {
+		"name": "Visiwa vya Virgin vya Marekani",
+		"demonym_one": "Virgin Islander",
+		"demonym_other": "Wakazi wa Visiwa vya Virgin"
+	},
+	"VNM": {
+		"name": "Vietnam",
+		"demonym_one": "Kivietinamu",
+		"demonym_other": "Kivietinamu"
+	},
+	"VUT": {
+		"name": "Vanuatu",
+		"demonym_one": "Ni-Vanuatu",
+		"demonym_other": "Ni-Vanuatu"
+	},
+	"WLF": {
+		"name": "Wallis na Futuna",
+		"demonym_one": "Wallis na Futuna Islander",
+		"demonym_other": "Wakazi wa Visiwa vya Wallis na Futuna"
+	},
+	"WSM": {
+		"name": "Samoa",
+		"demonym_one": "Kisamoa",
+		"demonym_other": "Wasamoa"
+	},
+	"YEM": {
+		"name": "Yemeni",
+		"demonym_one": "Myemeni",
+		"demonym_other": "Wayemeni"
+	},
+	"ZAF": {
+		"name": "Afrika Kusini",
+		"demonym_one": "Afrika Kusini",
+		"demonym_other": "Waafrika Kusini"
+	},
+	"ZMB": {
+		"name": "Zambia",
+		"demonym_one": "Mzambia",
+		"demonym_other": "Wazambia"
+	},
+	"ZWE": {
+		"name": "Zimbabwe",
+		"demonym_one": "Mzimbabwe",
+		"demonym_other": "Wazimbabwe"
+	}
+}
