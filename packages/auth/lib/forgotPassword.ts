@@ -18,6 +18,8 @@ export const forgotPassword = async (data: ForgotPasswordParams) => {
 		ClientMetadata: { baseUrl: getBaseUrl(), message, subject },
 	})
 
+	console.log(response)
+
 	return response
 }
 
