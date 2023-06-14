@@ -1,11 +1,11 @@
-import { Card, createStyles, Group, rem, Stack, Text } from '@mantine/core'
+import { Card, createStyles, Group, rem, Skeleton, Stack, Text } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
-import { Badge } from '~ui/components/core/Badge'
+import { Badge, BadgeGroup } from '~ui/components/core/Badge'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -15,7 +15,7 @@ import { ServiceModal } from '~ui/modals/Service'
 let servObj: ServObj = {}
 
 type ServiceSectionProps = {
-	category: string
+	category: string | string[]
 	services: ServItem[]
 }
 
@@ -42,16 +42,21 @@ const ServiceSection = ({ category, services }: ServiceSectionProps) => {
 	const { classes } = useServiceSectionStyles()
 	const apiQuery = typeof orgLocationId === 'string' ? { orgLocationId } : { slug }
 	const { data: parent } = api.service.getParentName.useQuery(apiQuery)
-	const [preloadService, setPreloadService] = useState<string>('')
+
 	const variants = useCustomVariant()
+	const apiUtils = api.useContext()
 
 	const breadCrumbProps = parent?.name
 		? ({ option: 'back', backTo: 'dynamicText', backToText: parent.name } as const)
 		: ({ option: 'back', backTo: 'none' } as const)
-	api.service.byId.useQuery({ id: preloadService }, { enabled: preloadService !== '' })
+	// api.service.byId.useQuery({ id: preloadService }, { enabled: preloadService !== '' })
 	return (
 		<Stack spacing={8}>
-			<Badge variant='service' tsKey={category} />
+			{Array.isArray(category) ? (
+				<BadgeGroup badges={category.map((tsKey) => ({ variant: 'service', tsKey }))} />
+			) : (
+				<Badge variant='service' tsKey={category} />
+			)}
 			<Stack spacing={0}>
 				{services.map((service) => (
 					<ServiceModal
@@ -61,7 +66,7 @@ const ServiceSection = ({ category, services }: ServiceSectionProps) => {
 						position='apart'
 						noWrap
 						className={classes.group}
-						onMouseOver={() => setPreloadService(service.id)}
+						onMouseOver={() => apiUtils.service.byId.prefetch({ id: service.id })}
 					>
 						<Text variant={variants.Text.utility1}>
 							{t(service.tsKey ?? '', { ns: slug, defaultValue: service.defaultText }) as string}
@@ -82,14 +87,23 @@ type ServItem = {
 	defaultText?: string
 }
 
-export const ServicesInfoCard = (props: ServicesInfoCardProps) => {
+export const ServicesInfoCard = ({ parentId }: ServicesInfoCardProps) => {
 	// const { t } = useTranslation()
 	const { isMobile } = useScreenSize()
-	const { services } = props
+	const { data: services, isLoading } = api.service.forServiceInfoCard.useQuery(parentId)
 
+	if (isLoading || !services) {
+		return isMobile ? (
+			<Skeleton visible={true} />
+		) : (
+			<Card>
+				<Skeleton visible={true} />
+			</Card>
+		)
+	}
 	// service can have many tags - narrow down
 
-	for (const { service } of services) {
+	for (const service of services) {
 		servObj = service.services.reduce((items: ServObj, record) => {
 			const key = record.tag.category.tsKey
 			if (!items[key]) {
@@ -120,5 +134,7 @@ export const ServicesInfoCard = (props: ServicesInfoCardProps) => {
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>
 
 export type ServicesInfoCardProps = {
-	services: PageQueryResult['locations'][number]['services'] | PageQueryResult['services']
+	// services: PageQueryResult['locations'][number]['services'] | PageQueryResult['services']
+	/** Can be either an OrganizationID or a LocationID */
+	parentId: string
 }
