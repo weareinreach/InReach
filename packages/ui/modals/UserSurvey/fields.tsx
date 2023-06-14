@@ -7,10 +7,11 @@ import {
 	ScrollArea,
 	Select,
 	Text,
+	TextInput,
 	Title,
 } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useEffect, useRef, useState } from 'react'
 
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
@@ -71,6 +72,7 @@ export const FormImmigration = () => {
 	const { t } = useTranslation('common')
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
+	const otherRef = useRef<HTMLInputElement>(null)
 
 	const [selectedId, setSelectedId] = useState('')
 
@@ -79,21 +81,50 @@ export const FormImmigration = () => {
 		setSelectedId(event)
 	}
 
+	const options = surveyOptions?.immigration
+	const moveToEnd = ['immigration-prefer-not-to-say', 'immigration-immigrant']
+	moveToEnd.forEach((tag) => {
+		if (!options?.length) return
+		const item = options.find(({ tsKey }) => tsKey === tag)
+		if (!item) return
+		const idx = options.indexOf(item)
+		if (item && idx !== -1) {
+			options.splice(idx, 1)
+			options.push(item)
+		}
+	})
+
+	const items = options?.map((item, index) => {
+		return (
+			<Radio
+				label={t(item.tsKey, { ns: 'user' })}
+				key={item.id}
+				value={item.id}
+				checked={selectedId === item.id}
+			/>
+		)
+	})
+
+	useEffect(() => {
+		if (selectedId === 'uimm_01GW2HHHS4G6TA7FVKXBC3NT8M') {
+			otherRef.current?.scrollIntoView({ behavior: 'smooth' })
+		}
+	}, [selectedId])
+
 	return (
 		<>
 			{TitleSubtitle('survey.question-1-title', 'survey.question-subtitle')}
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 				<Radio.Group value={selectedId} onChange={handleRadioChange} className={classes.answerContainer}>
-					{surveyOptions?.immigration.map((item, index) => {
-						return (
-							<Radio
-								label={t(item.tsKey, { ns: 'user' })}
-								key={item.id}
-								value={item.id}
-								checked={selectedId === item.id}
-							/>
-						)
-					})}
+					{items}
+					{selectedId === 'uimm_01GW2HHHS4G6TA7FVKXBC3NT8M' ? (
+						<TextInput
+							label={t('please-specify')}
+							required
+							ref={otherRef}
+							{...form.getInputProps('immigrationOther', { withFocus: false })}
+						/>
+					) : null}
 				</Radio.Group>
 			</ScrollArea>
 		</>
@@ -217,21 +248,47 @@ export const FormEthnicity = () => {
 	const { t } = useTranslation('common')
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
+	const otherRef = useRef<HTMLInputElement>(null)
 
 	const handleCheckboxChange = (event: []) => {
 		form.setFieldValue('ethnicityIds', event)
 	}
+
+	const options = surveyOptions?.ethnicity
+	const moveToEnd = ['eth-prefer-not-to-say', 'eth-other']
+	moveToEnd.forEach((tag) => {
+		if (!options?.length) return
+		const item = options.find(({ tsKey }) => tsKey === tag)
+		if (!item) return
+		const idx = options.indexOf(item)
+		if (item && idx !== -1) {
+			options.splice(idx, 1)
+			options.push(item)
+		}
+	})
+	const items = options?.map((item, index) => {
+		return <Checkbox value={item.id} checked={false} label={t(item.tsKey, { ns: 'user' })} key={item.id} />
+	})
+	useEffect(() => {
+		if (form.values.ethnicityIds?.includes('ueth_0000000000E5KVESBAY6NPGJW3')) {
+			otherRef.current?.scrollIntoView({ behavior: 'smooth' })
+		}
+	}, [form.values.ethnicityIds])
 
 	return (
 		<>
 			{TitleSubtitle('survey.question-4-title', 'survey.question-subtitle')}
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 				<Checkbox.Group onChange={handleCheckboxChange} className={classes.answerContainer}>
-					{surveyOptions?.ethnicity.map((item, index) => {
-						return (
-							<Checkbox value={item.id} checked={false} label={t(item.tsKey, { ns: 'user' })} key={item.id} />
-						)
-					})}
+					{items}
+					{form.values.ethnicityIds?.includes('ueth_0000000000E5KVESBAY6NPGJW3') ? (
+						<TextInput
+							label={t('please-specify')}
+							required
+							ref={otherRef}
+							{...form.getInputProps('ethnicityOther', { withFocus: false })}
+						/>
+					) : null}
 				</Checkbox.Group>
 			</ScrollArea>
 		</>
