@@ -4,7 +4,7 @@ import { createTRPCNext, type WithTRPCConfig } from '@trpc/next'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 import { devtoolsLink } from 'trpc-client-devtools-link'
 
-import { getEnv } from '@weareinreach/config/env'
+import { getEnv } from '@weareinreach/env'
 
 import { transformer } from '../lib/transformer'
 import { type AppRouter } from '../router'
@@ -25,7 +25,8 @@ export const trpcConfig = {
 		loggerLink({
 			enabled: (opts) =>
 				// eslint-disable-next-line node/no-process-env
-				process.env.NODE_ENV === 'development' || (opts.direction === 'down' && opts.result instanceof Error),
+				(process.env.NODE_ENV === 'development' && typeof window !== 'undefined') ||
+				(opts.direction === 'down' && opts.result instanceof Error),
 		}),
 		httpBatchLink({
 			url: `${getBaseUrl()}/api/trpc`,

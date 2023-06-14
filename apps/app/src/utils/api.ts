@@ -5,7 +5,7 @@ import { devtoolsLink } from 'trpc-client-devtools-link'
 
 import { type AppRouter } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
-import { getEnv } from '@weareinreach/config/env'
+import { getEnv } from '@weareinreach/env'
 
 const getBaseUrl = () => {
 	if (typeof window !== 'undefined') return '' // browser should use relative url
@@ -25,7 +25,7 @@ export const api = createTRPCNext<AppRouter>({
 				loggerLink({
 					enabled: (opts) =>
 						// eslint-disable-next-line node/no-process-env
-						process.env.NODE_ENV === 'development' ||
+						(process.env.NODE_ENV === 'development' && typeof window !== 'undefined') ||
 						(opts.direction === 'down' && opts.result instanceof Error),
 				}),
 				httpBatchLink({

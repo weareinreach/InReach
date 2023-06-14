@@ -63,7 +63,7 @@ importers:
         specifier: 2.7.3
         version: 2.7.3
       '@weareinreach/config':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:packages/config
       '@weareinreach/eslint-config':
         specifier: 0.100.0
@@ -209,6 +209,9 @@ importers:
       '@prisma/instrumentation':
         specifier: 4.15.0
         version: 4.15.0
+      '@sentry/nextjs':
+        specifier: 7.55.2
+        version: 7.55.2(next@13.4.5)(react@18.2.0)
       '@tanstack/react-query':
         specifier: 4.29.13
         version: 4.29.13(react-dom@18.2.0)(react@18.2.0)
@@ -243,19 +246,22 @@ importers:
         specifier: 0.2.1
         version: 0.2.1
       '@weareinreach/api':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../../packages/api
       '@weareinreach/auth':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../../packages/auth
       '@weareinreach/db':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../../packages/db
+      '@weareinreach/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       '@weareinreach/i18next-keys-ondemand':
         specifier: 0.3.2
         version: 0.3.2(i18next@22.5.1)
       '@weareinreach/ui':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../../packages/ui
       axios:
         specifier: 1.4.0
@@ -347,6 +353,9 @@ importers:
       react-i18next:
         specifier: 12.3.1
         version: 12.3.1(i18next@22.5.1)(react-dom@18.2.0)(react@18.2.0)
+      tslog:
+        specifier: 4.8.2
+        version: 4.8.2
       zod:
         specifier: 3.21.4
         version: 3.21.4
@@ -397,7 +406,7 @@ importers:
         specifier: 5.59.11
         version: 5.59.11(eslint@8.42.0)(typescript@5.1.3)
       '@weareinreach/config':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../../packages/config
       '@weareinreach/eslint-config':
         specifier: 0.100.0
@@ -429,9 +438,6 @@ importers:
       trpc-playground:
         specifier: 1.0.4
         version: 1.0.4(@trpc/server@10.30.0)(@types/node@18.16.18)(typescript@5.1.3)(zod@3.21.4)
-      tslog:
-        specifier: 4.8.2
-        version: 4.8.2
       typescript:
         specifier: 5.1.3
         version: 5.1.3
@@ -495,8 +501,11 @@ importers:
       '@tiptap/starter-kit':
         specifier: 2.0.3
         version: 2.0.3(@tiptap/pm@2.0.2)
+      '@weareinreach/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       '@weareinreach/ui':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../../packages/ui
       dayjs:
         specifier: 1.11.8
@@ -536,7 +545,7 @@ importers:
         specifier: 18.2.5
         version: 18.2.5
       '@weareinreach/config':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../../packages/config
       '@weareinreach/eslint-config':
         specifier: 0.100.0
@@ -578,11 +587,14 @@ importers:
         specifier: 10.30.0
         version: 10.30.0
       '@weareinreach/auth':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../auth
       '@weareinreach/db':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../db
+      '@weareinreach/env':
+        specifier: workspace:*
+        version: link:../env
       alex:
         specifier: 11.0.0
         version: 11.0.0
@@ -637,6 +649,9 @@ importers:
       tiny-invariant:
         specifier: 1.3.1
         version: 1.3.1
+      tslog:
+        specifier: 4.8.2
+        version: 4.8.2
       zod:
         specifier: 3.21.4
         version: 3.21.4
@@ -657,7 +672,7 @@ importers:
         specifier: 2.0.0
         version: 2.0.0
       '@weareinreach/config':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../config
       '@weareinreach/eslint-config':
         specifier: 0.100.0
@@ -692,9 +707,6 @@ importers:
       trpc-panel:
         specifier: 1.3.4
         version: 1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.30.0)(zod@3.21.4)
-      tslog:
-        specifier: 4.8.2
-        version: 4.8.2
       type-fest:
         specifier: 3.12.0
         version: 3.12.0
@@ -710,12 +722,21 @@ importers:
       '@next-auth/prisma-adapter':
         specifier: 1.0.7
         version: 1.0.7(@prisma/client@4.15.0)(next-auth@4.22.1)
+      '@weareinreach/db':
+        specifier: workspace:*
+        version: link:../db
+      '@weareinreach/env':
+        specifier: workspace:*
+        version: link:../env
       aws-jwt-verify:
         specifier: 4.0.0
         version: 4.0.0
       tiny-invariant:
         specifier: 1.3.1
         version: 1.3.1
+      tslog:
+        specifier: 4.8.2
+        version: 4.8.2
       zod:
         specifier: 3.21.4
         version: 3.21.4
@@ -733,11 +754,8 @@ importers:
         specifier: 18.2.5
         version: 18.2.5
       '@weareinreach/config':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../config
-      '@weareinreach/db':
-        specifier: 0.100.0
-        version: link:../db
       '@weareinreach/eslint-config':
         specifier: 0.100.0
         version: link:../eslint-config
@@ -797,7 +815,7 @@ importers:
         specifier: 0.36.1
         version: 0.36.1
       '@weareinreach/config':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../config
       '@weareinreach/eslint-config':
         specifier: 0.100.0
@@ -840,7 +858,7 @@ importers:
         specifier: 0.36.1
         version: 0.36.1
       '@weareinreach/config':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../config
       '@weareinreach/eslint-config':
         specifier: 0.100.0
@@ -867,7 +885,7 @@ importers:
         specifier: 4.15.0
         version: 4.15.0(prisma@4.15.0)
       '@weareinreach/db':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../db
     devDependencies:
       '@types/aws-lambda':
@@ -886,7 +904,7 @@ importers:
         specifier: 0.36.1
         version: 0.36.1
       '@weareinreach/config':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../config
       '@weareinreach/eslint-config':
         specifier: 0.100.0
@@ -908,13 +926,6 @@ importers:
         version: 5.1.3
 
   packages/config:
-    dependencies:
-      '@t3-oss/env-nextjs':
-        specifier: 0.4.0
-        version: 0.4.0(typescript@5.1.3)(zod@3.21.4)
-      zod:
-        specifier: 3.21.4
-        version: 3.21.4
     devDependencies:
       '@types/node':
         specifier: 18.16.18
@@ -964,6 +975,9 @@ importers:
       '@vercel/postgres-kysely':
         specifier: 0.3.1
         version: 0.3.1(kysely@0.25.0)
+      '@weareinreach/env':
+        specifier: workspace:*
+        version: link:../env
       kysely:
         specifier: 0.25.0
         version: 0.25.0
@@ -1041,7 +1055,7 @@ importers:
         specifier: 2.0.0
         version: 2.0.0
       '@weareinreach/config':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../config
       '@weareinreach/eslint-config':
         specifier: 0.100.0
@@ -1155,6 +1169,19 @@ importers:
         specifier: 3.21.1
         version: 3.21.1(zod@3.21.4)
 
+  packages/env:
+    dependencies:
+      '@t3-oss/env-nextjs':
+        specifier: 0.4.0
+        version: 0.4.0(typescript@5.1.3)(zod@3.21.4)
+      zod:
+        specifier: 3.21.4
+        version: 3.21.4
+    devDependencies:
+      '@weareinreach/config':
+        specifier: workspace:*
+        version: link:../config
+
   packages/eslint-config:
     devDependencies:
       '@next/eslint-plugin-next':
@@ -1235,6 +1262,9 @@ importers:
       '@turf/helpers':
         specifier: 6.5.0
         version: 6.5.0
+      '@weareinreach/env':
+        specifier: workspace:*
+        version: link:../env
       ajv:
         specifier: 8.12.0
         version: 8.12.0
@@ -1492,16 +1522,16 @@ importers:
         specifier: 2.0.0
         version: 2.0.0
       '@weareinreach/api':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../api
       '@weareinreach/auth':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../auth
       '@weareinreach/config':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../config
       '@weareinreach/db':
-        specifier: 0.100.0
+        specifier: workspace:*
         version: link:../db
       '@weareinreach/eslint-config':
         specifier: 0.100.0
@@ -8925,9 +8955,193 @@ packages:
     dependencies:
       type-fest: 2.19.0
 
+  /@rollup/plugin-commonjs@24.0.0(rollup@2.78.0):
+    resolution: {integrity: sha512-0w0wyykzdyRRPHOb0cQt14mIBLujfAv6GgP6g8nvg/iBxEm112t3YPPq+Buqe2+imvElTka+bjNlJ/gB56TD8g==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.68.0||^3.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@rollup/pluginutils': 5.0.2(rollup@2.78.0)
+      commondir: 1.0.1
+      estree-walker: 2.0.2
+      glob: 8.1.0
+      is-reference: 1.2.1
+      magic-string: 0.27.0
+      rollup: 2.78.0
+    dev: false
+
+  /@rollup/pluginutils@5.0.2(rollup@2.78.0):
+    resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@types/estree': 1.0.0
+      estree-walker: 2.0.2
+      picomatch: 2.3.1
+      rollup: 2.78.0
+    dev: false
+
   /@rushstack/eslint-patch@1.2.0:
     resolution: {integrity: sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==}
     dev: true
+
+  /@sentry-internal/tracing@7.55.2:
+    resolution: {integrity: sha512-yBW+R7NfwLrOjpwOJHoOSvGDDoM3ZKod5OKXi7Gd5tYqVm1mCaL0n2/wlNMcGTbPbulLBtgzjoTU1bPJAGhmYw==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry/core': 7.55.2
+      '@sentry/types': 7.55.2
+      '@sentry/utils': 7.55.2
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/browser@7.55.2:
+    resolution: {integrity: sha512-RgA4KOD6t8XHVLm6D2oTh9KW19g3DoQ0QsrUmAq4+giSj2AyDW67VP2V4E72mCZ9Ln9AkNhY0Eh3XuD3opiFQA==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry-internal/tracing': 7.55.2
+      '@sentry/core': 7.55.2
+      '@sentry/replay': 7.55.2
+      '@sentry/types': 7.55.2
+      '@sentry/utils': 7.55.2
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/cli@1.75.2:
+    resolution: {integrity: sha512-CG0CKH4VCKWzEaegouWfCLQt9SFN+AieFESCatJ7zSuJmzF05ywpMusjxqRul6lMwfUhRKjGKOzcRJ1jLsfTBw==}
+    engines: {node: '>= 8'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      https-proxy-agent: 5.0.1
+      mkdirp: 0.5.6
+      node-fetch: 2.6.11
+      progress: 2.0.3
+      proxy-from-env: 1.1.0
+      which: 2.0.2
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
+
+  /@sentry/core@7.55.2:
+    resolution: {integrity: sha512-clzQirownxqADv9+fopyMJTHzaoWedkN2+mi4ro1LxjLgROdXBFurMCC1nT+7cH/xvQ5gMIRkM/y/4gRtKy2Ew==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry/types': 7.55.2
+      '@sentry/utils': 7.55.2
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/integrations@7.55.2:
+    resolution: {integrity: sha512-QgHx7MKMLMx1e5XgQyeUYtZA+xPc7IjS0MaZTpIRehtxD8Fg1tWkOxV4PP2nUXksLjfkoISo0jpYLtuDSCGFTw==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry/types': 7.55.2
+      '@sentry/utils': 7.55.2
+      localforage: 1.10.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/nextjs@7.55.2(next@13.4.5)(react@18.2.0):
+    resolution: {integrity: sha512-YIq/gLMCCdcKmPln5zglWHKwQB8KWGblOJ19t/JuHSyffWXL1x1IYyBYgpdjzn6q0AgwsK4IM6TqTb3ISN8wLQ==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      next: ^10.0.8 || ^11.0 || ^12.0 || ^13.0 || 13
+      react: 16.x || 17.x || 18.x || 18
+      webpack: '>= 4.0.0 || 5'
+    peerDependenciesMeta:
+      webpack:
+        optional: true
+    dependencies:
+      '@rollup/plugin-commonjs': 24.0.0(rollup@2.78.0)
+      '@sentry/core': 7.55.2
+      '@sentry/integrations': 7.55.2
+      '@sentry/node': 7.55.2
+      '@sentry/react': 7.55.2(react@18.2.0)
+      '@sentry/types': 7.55.2
+      '@sentry/utils': 7.55.2
+      '@sentry/webpack-plugin': 1.20.0
+      chalk: 3.0.0
+      next: 13.4.5(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      rollup: 2.78.0
+      stacktrace-parser: 0.1.10
+      tslib: 1.14.1
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
+
+  /@sentry/node@7.55.2:
+    resolution: {integrity: sha512-43lGfMFFUD38Xerc4DqIuQkEOETHCh31JHUTI6r/gXdzmcKpWRscgH4nAcAUoCu+Myrv0fVXsOa12FM4DPfr8A==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry-internal/tracing': 7.55.2
+      '@sentry/core': 7.55.2
+      '@sentry/types': 7.55.2
+      '@sentry/utils': 7.55.2
+      cookie: 0.4.2
+      https-proxy-agent: 5.0.1
+      lru_map: 0.3.3
+      tslib: 1.14.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@sentry/react@7.55.2(react@18.2.0):
+    resolution: {integrity: sha512-7LqM8vQ73boESaOJ9TOmyVKfkUuLHMHU89ltKYsi4s6816Z6cuJ6UcAVUt0Ks4iLzNCVRVJ5OqeY37ge7pEaTA==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      react: 15.x || 16.x || 17.x || 18.x || 18
+    dependencies:
+      '@sentry/browser': 7.55.2
+      '@sentry/types': 7.55.2
+      '@sentry/utils': 7.55.2
+      hoist-non-react-statics: 3.3.2
+      react: 18.2.0
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/replay@7.55.2:
+    resolution: {integrity: sha512-G9iAcI9bvy5X8fvdz0QxF3LJ8oGB0Vxt0iOPdRZYhjIcPbNpE3NaeT6xZlNX1pCcHLroE6BMRF/6TTalcl5Erw==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@sentry/core': 7.55.2
+      '@sentry/types': 7.55.2
+      '@sentry/utils': 7.55.2
+    dev: false
+
+  /@sentry/types@7.55.2:
+    resolution: {integrity: sha512-mAtkA8wvUDrLjAAmy9tjn+NiXcxVz/ltbslTKaIW6JNgVRz5kMt1Ny8RJsgqaZqa4LFP8q+IvWw4Vd91kb57rA==}
+    engines: {node: '>=8'}
+    dev: false
+
+  /@sentry/utils@7.55.2:
+    resolution: {integrity: sha512-Yv9XtbOESdN7bkK2AMrKsmKMF5OOVv5v5hVcOqXtSTw1t2oMAtRjXXqGpUo+TkdTOjeoX6dr19ozVFHaGvqHkw==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry/types': 7.55.2
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/webpack-plugin@1.20.0:
+    resolution: {integrity: sha512-Ssj1mJVFsfU6vMCOM2d+h+KQR7QHSfeIP16t4l20Uq/neqWXZUQ2yvQfe4S3BjdbJXz/X4Rw8Hfy1Sd0ocunYw==}
+    engines: {node: '>= 8'}
+    dependencies:
+      '@sentry/cli': 1.75.2
+      webpack-sources: 3.2.3
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
 
   /@sideway/address@4.1.4:
     resolution: {integrity: sha512-7vwq+rOHVWjyXxVlR76Agnvhy8I9rpzjosTESvmhNeXOXdZZB15Fl+TI9x1SiHZH5Jv2wTGduSxFDIaq0m3DUw==}
@@ -13194,7 +13408,6 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
-    dev: true
 
   /chalk@4.1.1:
     resolution: {integrity: sha512-diHzdDKxcU+bAsUboHLPEDQiw0qEe0qd7SYUn3HgcFlWgbDcfLGswOHYeGrHKzG9z6UYf01d9VFMfZxPM1xZSg==}
@@ -15239,6 +15452,10 @@ packages:
       '@types/estree-jsx': 1.0.0
       '@types/unist': 2.0.6
 
+  /estree-walker@2.0.2:
+    resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
+    dev: false
+
   /esutils@2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
@@ -16793,6 +17010,10 @@ packages:
       queue: 6.0.2
     dev: true
 
+  /immediate@3.0.6:
+    resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
+    dev: false
+
   /import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
     engines: {node: '>=6'}
@@ -17189,6 +17410,12 @@ packages:
     resolution: {integrity: sha512-VRSzKkbMm5jMDoKLbltAkFQ5Qr7VDiTFGXxYFXXowVj387GeGNOCsOH6Msy00SGZ3Fp84b1Naa1psqgcCIEP5Q==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /is-reference@1.2.1:
+    resolution: {integrity: sha512-U82MsXXiFIrjCK4otLT+o2NA2Cd2g5MLoOVXUZjIOhLurrRxpEXzI8O0KZHr3IjLvlAH1kTPYSuqer5T9ZVBKQ==}
+    dependencies:
+      '@types/estree': 1.0.0
+    dev: false
 
   /is-regex@1.1.4:
     resolution: {integrity: sha512-kvRdxDsxZjhzUX07ZnLydzS1TU/TJlTUHHY4YLL87e37oUA49DfkLqgy+VjFocowy29cKvcSiu+kIv728jTTVg==}
@@ -18468,6 +18695,12 @@ packages:
   /libphonenumber-js@1.10.34:
     resolution: {integrity: sha512-p6g4NaQH4gK1gre32+kV14Mk6GPo2EDcPDvjbi+D2ycsPFsN4gVWNbs0itdHLZqByg6YEK8mE7OeP200I/ScTQ==}
 
+  /lie@3.1.1:
+    resolution: {integrity: sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==}
+    dependencies:
+      immediate: 3.0.6
+    dev: false
+
   /lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
     engines: {node: '>=10'}
@@ -18612,6 +18845,12 @@ packages:
     resolution: {integrity: sha512-SFppqq5p42fe2qcZQqqEOiVRXl+WCP1MdT6k7BDEW1j++sp5fIY+/fdRQitvKgB5BrBcmrs5m/L0v2FrU5MY1g==}
     engines: {node: '>=14'}
     dev: true
+
+  /localforage@1.10.0:
+    resolution: {integrity: sha512-14/H1aX7hzBBmmh7sGPd+AOMkkIrHM3Z1PAyGgZigA1H1p5O5ANnMyWzvpAETtG68/dC4pC0ncy3+PPGzXZHPg==}
+    dependencies:
+      lie: 3.1.1
+    dev: false
 
   /localized-address-format@1.3.1:
     resolution: {integrity: sha512-kfwbtrN+VhlWDiEbUDNDLtuweFoe5F69n2qNERzO5tbINKrtdhw643Zgyy8HNjg8iwDxH7qjw9thHPx7G+NwDA==}
@@ -18809,6 +19048,10 @@ packages:
     resolution: {integrity: sha512-65/Jky17UwSb0BuB9V+MyDpsOtXKmYwzhyl+cOa9XUiI4uV2Ouy/2voFP3+al0BjZbJgMBD8FojMpAf+Z+qn4A==}
     engines: {node: 14 || >=16.14}
 
+  /lru_map@0.3.3:
+    resolution: {integrity: sha512-Pn9cox5CsMYngeDbmChANltQl+5pi6XmTrraMSzhPmMBbmgcxmqWry0U3PGapCU1yB4/LqCcom7qhHZiF/jGfQ==}
+    dev: false
+
   /luxon@3.3.0:
     resolution: {integrity: sha512-An0UCfG/rSiqtAIiBPO0Y9/zAnHUZxAMiCpTd5h2smgsj7GGmcenvrvww2cqNA8/4A5ZrD1gJpHN2mIHZQF+Mg==}
     engines: {node: '>=12'}
@@ -18817,6 +19060,13 @@ packages:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
     hasBin: true
     dev: true
+
+  /magic-string@0.27.0:
+    resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.4.15
+    dev: false
 
   /make-dir@2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
@@ -19688,7 +19938,6 @@ packages:
     hasBin: true
     dependencies:
       minimist: 1.2.8
-    dev: true
 
   /mkdirp@1.0.4:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
@@ -22624,6 +22873,14 @@ packages:
       inherits: 2.0.4
     dev: true
 
+  /rollup@2.78.0:
+    resolution: {integrity: sha512-4+YfbQC9QEVvKTanHhIAFVUFSRsezvQF8vFOJwtGfb9Bb+r014S+qryr9PSmw8x6sMnPkmFBGAvIFVQxvJxjtg==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: false
+
   /rollup@3.20.2:
     resolution: {integrity: sha512-3zwkBQl7Ai7MFYQE0y1MeQ15+9jsi7XxfrqwTb/9EK8D9C9+//EBR4M+CuA1KODRaNbFez/lWxA5vhEGZp4MUg==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
@@ -23223,6 +23480,13 @@ packages:
   /stackframe@1.3.4:
     resolution: {integrity: sha512-oeVtt7eWQS+Na6F//S4kJ2K2VbRlS9D43mAlMyVpVWovy9o+jfgH8O9agzANzaiLjclA0oYzUXEM4PurhSUChw==}
     dev: true
+
+  /stacktrace-parser@0.1.10:
+    resolution: {integrity: sha512-KJP1OCML99+8fhOHxwwzyWrlUuVX5GQ0ZpJTd1DFXhdkrvg1szxfHhawXUZ3g9TkXORQd4/WG68jMlQZ2p8wlg==}
+    engines: {node: '>=6'}
+    dependencies:
+      type-fest: 0.7.1
+    dev: false
 
   /standard-as-callback@2.1.0:
     resolution: {integrity: sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A==}
@@ -24062,6 +24326,7 @@ packages:
   /tslog@4.8.2:
     resolution: {integrity: sha512-eAKIRjxfSKYLs06r1wT7oou6Uv9VN6NW9g0JPidBlqQwPBBl5+84dm7r8zSOPVq1kyfEw1P6B3/FLSpZCorAgA==}
     engines: {node: '>=16'}
+    dev: false
 
   /tsutils@3.21.0(typescript@5.1.3):
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
@@ -24211,6 +24476,11 @@ packages:
   /type-fest@0.6.0:
     resolution: {integrity: sha512-q+MB8nYR1KDLrgr4G5yemftpMC7/QLqVndBmEEdqzmNj5dcFOO4Oo8qlwZE3ULT3+Zim1F8Kq4cBnikNhlCMlg==}
     engines: {node: '>=8'}
+
+  /type-fest@0.7.1:
+    resolution: {integrity: sha512-Ne2YiiGN8bmrmJJEuTWTLJR32nh/JdL1+PSicowtNb0WFpn59GK8/lfD61bVtzguz7b3PBt74nxpv/Pw5po5Rg==}
+    engines: {node: '>=8'}
+    dev: false
 
   /type-fest@0.8.1:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
@@ -25019,7 +25289,6 @@ packages:
   /webpack-sources@3.2.3:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
     engines: {node: '>=10.13.0'}
-    dev: true
 
   /webpack-virtual-modules@0.4.6:
     resolution: {integrity: sha512-5tyDlKLqPfMqjT3Q9TAqf2YqjwmnUleZwzJi1A5qXnlBCdj2AtOJ6wAWdglTIDOPgOiOrXeBeFcsQ8+aGQ6QbA==}

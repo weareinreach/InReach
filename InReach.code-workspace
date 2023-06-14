@@ -65,6 +65,10 @@
 			"path": "./packages/aws-cache"
 		},
 		{
+			"name": "📦 Environment Variables (@weareinreach/env)",
+			"path": "./packages/env"
+		},
+		{
 			"name": "✨ InReach (root)",
 			"path": "./"
 		},

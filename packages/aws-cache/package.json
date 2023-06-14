@@ -30,7 +30,7 @@
 		"@types/node": "18.16.18",
 		"@types/prettier": "2.7.3",
 		"@vercel/ncc": "0.36.1",
-		"@weareinreach/config": "0.100.0",
+		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
 		"esbuild": "0.18.2",
