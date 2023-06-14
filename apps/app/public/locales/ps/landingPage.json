@@ -1,0 +1,43 @@
+{
+	"banner": {
+		"redesign": "Read about the launch of the InReach App redesign on our blog. <Link>Learn more.</Link>"
+	},
+	"call-out": {
+		"hear-from-users": "<Title1>زموږ د کاروونکو څخه واورئ</Title1>",
+		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led tech nonprofit increasing resource access for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
+	},
+	"hero": {
+		"community": {
+			"0": "LGBTQ+پناه غوښتونکي",
+			"1": "LGBTQ+کډوال",
+			"2": "LGBTQ+کډوال",
+			"3": "LGBTQ+ځوانان",
+			"4": "د ټرانسجینڈر ټولنه",
+			"5": "LGBTQ+BIPOC ټولنې",
+			"6": "د LGBTQ+ځوانانو ساتونکي"
+		},
+		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"heading": "د LGBTQ+سرچینې ومومئ.",
+		"privacy-disclaimer": "ستاسو ځواب نامعلوم دی او د انفرادي کارونکي په توګه تاسو سره تړاو نلري. د نورو زده کولو لپاره زموږ د <Link>محرمیت پالیسي</Link> ولولئ.",
+		"services": {
+			"0": "طبي پاملرنه",
+			"1": "د ټولنې ملاتړ",
+			"2": "رواني روغتیا پاملرنه",
+			"3": "زده کړه",
+			"4": "کارموندنه",
+			"5": "خواړه",
+			"6": "کور",
+			"7": "کالي",
+			"8": "حقوقي مرسته",
+			"9": "ژباړه"
+		},
+		"subheading": "د نړۍ لومړی ټیک پلیټ فارم ته ښه راغلاست د TLGQ+ (ټرانسجینڈر، لیسبین، همجنس، ابی جنس پرست، کویر او نور پیژندنې) سره هغه خلک چې د خوندي، تایید شوي سرچینو سره د ځورونې یا تبعیض سره مخ دي."
+	},
+	"values": {
+		"free": "<Title2>Free forever 🔑</Title2>\n<Text>Our tech platform is 100% free for everyone to ensure safe help is always InReach.</Text>\n<LinkFree>Donate to help us to keep our platform free.</LinkFree>",
+		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, independently verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice and more.</Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
+		"our-values": "زموږ ارزښتونه",
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
+	}
+}
