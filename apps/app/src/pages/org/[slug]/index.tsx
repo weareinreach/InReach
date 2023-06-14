@@ -9,7 +9,7 @@ import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
-// import { getEnv } from '@weareinreach/config/env'
+// import { getEnv } from '@weareinreach/env'
 // import { prisma } from '@weareinreach/db/client'
 import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'

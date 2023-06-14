@@ -23,15 +23,15 @@
 	"dependencies": {
 		"@aws-lambda-powertools/logger": "1.9.0",
 		"@prisma/client": "4.15.0",
-		"@weareinreach/db": "0.100.0"
+		"@weareinreach/db": "workspace:*"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.117",
+		"@types/aws-lambda": "8.10.118",
 		"@types/eslint": "8.40.2",
 		"@types/node": "18.16.18",
 		"@types/prettier": "2.7.3",
 		"@vercel/ncc": "0.36.1",
-		"@weareinreach/config": "0.100.0",
+		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
 		"eslint": "8.42.0",
