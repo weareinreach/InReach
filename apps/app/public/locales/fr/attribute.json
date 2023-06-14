@@ -141,11 +141,18 @@
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "Options du fournisseur de services",
+		"case-mananger": "Gestionnaire de cas",
+		"community-org": "Volontaire/personnel d'une organisation communautaire",
 		"friend-family": "N/A (Appelé au nom des amis/famille)",
 		"govt-agency": "Agence gouvernementale",
 		"grassroots-direct": "Organisation de Service Direct Grassroots",
 		"healthcare": "Fournisseur de soins de santé",
-		"nonprofit": "Sans but lucratif",
-		"student-club": "Club étudiant"
+		"lawyer": "Avocat",
+		"other": "Autre (merci de préciser)",
+		"paralegal": "Parajuriste ou autre personnel de soutien juridique",
+		"social-worker": "Collaborateur social",
+		"student-club": "Responsable du club étudiant",
+		"teacher": "Professeur",
+		"therapist-counselor": "Thérapeute/Conseiller"
 	}
 }
