@@ -31,6 +31,7 @@
 		"@tiptap/extension-link": "2.0.3",
 		"@tiptap/react": "2.0.3",
 		"@tiptap/starter-kit": "2.0.3",
+		"@weareinreach/env": "workspace:*",
 		"@weareinreach/ui": "workspace:*",
 		"dayjs": "1.11.8",
 		"embla-carousel-react": "7.1.0",

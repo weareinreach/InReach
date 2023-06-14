@@ -69,6 +69,7 @@
 		"@weareinreach/api": "workspace:*",
 		"@weareinreach/auth": "workspace:*",
 		"@weareinreach/db": "workspace:*",
+		"@weareinreach/env": "workspace:*",
 		"@weareinreach/i18next-keys-ondemand": "0.3.2",
 		"@weareinreach/ui": "workspace:*",
 		"axios": "1.4.0",

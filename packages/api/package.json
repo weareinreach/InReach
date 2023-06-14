@@ -25,6 +25,7 @@
 		"@trpc/server": "10.30.0",
 		"@weareinreach/auth": "workspace:*",
 		"@weareinreach/db": "workspace:*",
+		"@weareinreach/env": "workspace:*",
 		"alex": "11.0.0",
 		"geo-tz": "7.0.7",
 		"geolib": "3.3.4",
