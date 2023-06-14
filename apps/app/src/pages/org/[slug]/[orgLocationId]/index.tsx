@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
-// import { getEnv } from '@weareinreach/config/env'
+// import { getEnv } from '@weareinreach/env'
 // import { prisma } from '@weareinreach/db/client'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'

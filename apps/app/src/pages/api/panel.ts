@@ -2,7 +2,7 @@ import { type NextApiRequest, type NextApiResponse } from 'next'
 import { renderTrpcPanel } from 'trpc-panel'
 
 import { appRouter } from '@weareinreach/api'
-import { getEnv } from '@weareinreach/config/env'
+import { getEnv } from '@weareinreach/env'
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {

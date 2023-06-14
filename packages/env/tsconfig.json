@@ -1,0 +1,17 @@
+{
+	"extends": "@weareinreach/config/tsconfig/base.json",
+	"compilerOptions": {
+		"baseUrl": "./",
+		"strict": true,
+		"paths": {
+			"~api/*": ["../../packages/api/*"],
+			"~app/*": ["../../apps/app/src/*"],
+			"~auth/*": ["../../packages/auth/*"],
+			"~db/*": ["../../packages/db/*"],
+			"~ui/*": ["../../packages/ui/*"],
+			"~web/*": ["../../apps/web/src/*"]
+		}
+	},
+	"exclude": ["**/node_modules", "**/.*/"],
+	"include": ["./**/*.ts", "../../@types/**/*.ts"]
+}
