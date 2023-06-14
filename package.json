@@ -72,6 +72,7 @@
 			"http-cache-semantics@<=4.1.0": "^4.1.1",
 			"listr2@<5": ">=5.0.5",
 			"micromatch": ">=4.0.0",
+			"msw@1.2.2": "1.2.1",
 			"node-fetch@<2.6.7": ">=2.6.7",
 			"package-json@<7": "^7.0.0",
 			"react-dom@<18": "^18",
