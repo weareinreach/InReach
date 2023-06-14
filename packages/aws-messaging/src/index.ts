@@ -48,7 +48,7 @@ export const handler = (
 			break
 		}
 		case 'CustomMessage_ForgotPassword': {
-			response.emailSubject = 'Reset your password'
+			response.emailSubject = subject
 			response.emailMessage = `${message} ${resetLink}`
 			break
 		}
