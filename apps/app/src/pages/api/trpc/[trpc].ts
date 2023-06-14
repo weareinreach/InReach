@@ -3,7 +3,7 @@ import { Logger } from 'tslog'
 
 import { appRouter, createContext } from '@weareinreach/api'
 
-const log = new Logger({ name: 'tRPC', type: 'json' })
+const log = new Logger({ name: 'tRPC', type: 'json', hideLogPositionForProduction: true })
 
 /* Creating a handler for the tRPC endpoint. */
 export default createNextApiHandler({

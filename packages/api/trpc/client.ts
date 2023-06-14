@@ -25,7 +25,8 @@ export const trpcConfig = {
 		loggerLink({
 			enabled: (opts) =>
 				// eslint-disable-next-line node/no-process-env
-				process.env.NODE_ENV === 'development' || (opts.direction === 'down' && opts.result instanceof Error),
+				(process.env.NODE_ENV === 'development' && typeof window !== 'undefined') ||
+				(opts.direction === 'down' && opts.result instanceof Error),
 		}),
 		httpBatchLink({
 			url: `${getBaseUrl()}/api/trpc`,
