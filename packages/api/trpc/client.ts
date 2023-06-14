@@ -4,7 +4,7 @@ import { createTRPCNext, type WithTRPCConfig } from '@trpc/next'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 import { devtoolsLink } from 'trpc-client-devtools-link'
 
-import { getEnv } from '@weareinreach/config/env'
+import { getEnv } from '@weareinreach/env'
 
 import { transformer } from '../lib/transformer'
 import { type AppRouter } from '../router'
