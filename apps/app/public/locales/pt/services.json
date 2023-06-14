@@ -1,0 +1,124 @@
+{
+	"abortion-care": {
+		"CATEGORYNAME": "Cuidados com o aborto",
+		"abortion-providers": "Provedores de aborto",
+		"financial-assistance": "Assistência financeira",
+		"lodging-assistance": "Assistência de hospedagem",
+		"mail-order-services": "Serviços de pedidos por correspondência",
+		"mental-health-support": "Apoio à saúde mental",
+		"travel-assistance": "Assistência de viagem"
+	},
+	"community-support": {
+		"CATEGORYNAME": "Suporte comunitário",
+		"community-social-groups": "Grupos comunitários e sociais",
+		"cultural-centers": "Centros culturais",
+		"lgbtq-centers": "Centros LGBTQ",
+		"reception-services": "Serviços de recepção",
+		"reentry-services": "Serviços de reentrada",
+		"spiritual-support": "Apoio espiritual",
+		"sponsors": "Patrocínio de imigração"
+	},
+	"computers-and-internet": {
+		"CATEGORYNAME": "Computadores e Internet",
+		"computers-and-internet": "Computadores e internet"
+	},
+	"education-and-employment": {
+		"CATEGORYNAME": "Educação e emprego",
+		"career-counseling": "Aconselhamento de carreira",
+		"educational-support-for-lgbtq-youth": "Apoio educacional para jovens LGBTQ",
+		"english-classes": "Aulas de inglês",
+		"language-classes": "Aulas de idiomas",
+		"leadership-training-and-professional-development": "Treinamento de liderança e desenvolvimento profissional",
+		"libraries": "Bibliotecas",
+		"scholarships": "Bolsas de estudo"
+	},
+	"food": {
+		"CATEGORYNAME": "Comida",
+		"food": "Comida",
+		"food-assistance": "Assistência alimentar"
+	},
+	"housing": {
+		"CATEGORYNAME": "Habitação",
+		"drop-in-centers-for-lgbtq-youth": "Centros de acolhimento para jovens LGBTQ",
+		"emergency-housing": "Habitação de emergência",
+		"housing-information-and-referrals": "Informações e referências sobre moradia",
+		"short-term-housing": "Habitação de curto prazo",
+		"trans-housing": "Habitação trans"
+	},
+	"hygiene-and-clothing": {
+		"CATEGORYNAME": "Higiene e vestuário",
+		"clothes": "Roupas",
+		"gender-affirming-items": "Itens de afirmação de gênero",
+		"gender-neutral-bathrooms": "Banheiros de gênero neutro",
+		"haircuts-and-stylists": "Cortes de cabelo e estilistas",
+		"hygiene": "Higiene"
+	},
+	"legal": {
+		"CATEGORYNAME": "Legal",
+		"asylum-application": "Pedido de asilo",
+		"citizenship": "Cidadania",
+		"crime-and-discrimination": "Crime e discriminação",
+		"deferred-action-for-childhood-arrivals-daca": "Ação Diferida para Chegadas na Infância (DACA)",
+		"deportation-or-removal": "Deportação ou remoção",
+		"employment-authorization": "Autorização de emprego",
+		"family-petitions": "Petições familiares",
+		"immigration-detention": "Detenção de imigrantes",
+		"legal-advice": "Aconselhamento jurídico",
+		"legal-hotlines": "Linhas diretas jurídicas",
+		"name-and-gender-change": "Mudança de nome e gênero",
+		"refugee-claim": "Pedido de refugiado",
+		"residency": "Residência",
+		"special-immigrant-juvenile-status-sijs": "Status Especial Juvenil de Imigrante (SIJS)",
+		"t-visa": "Visto T",
+		"u-visa": "Visto U"
+	},
+	"mail": {
+		"CATEGORYNAME": "Correio",
+		"mail": "Correio"
+	},
+	"medical": {
+		"CATEGORYNAME": "Médico",
+		"covid-19-services": "Serviços da COVID-19",
+		"dental-care": "Assistência odontológica",
+		"hiv-and-sexual-health": "HIV e saúde sexual",
+		"medical-clinics": "Clínicas médicas",
+		"obgyn-services": "Serviços de obstetrícia",
+		"physical-evaluations-for-asylum-claim": "Avaliações físicas para pedido de asilo",
+		"physical-evaluations-for-refugee-claim": "Avaliações físicas para solicitação de refúgio",
+		"trans-health": "Saúde trans",
+		"trans-health-gender-affirming-surgery": "Saúde trans - cirurgia de afirmação de gênero",
+		"trans-health-hormone-and-surgery-letters": "Saúde trans - cartas sobre hormônios e cirurgias",
+		"trans-health-hormone-therapy": "Saúde trans - terapia hormonal",
+		"trans-health-primary-care": "Saúde trans - atenção primária",
+		"trans-health-speech-therapy": "Saúde trans - terapia da fala"
+	},
+	"mental-health": {
+		"CATEGORYNAME": "Saúde mental",
+		"bipoc-support-groups": "Grupos de apoio do BIPOC",
+		"hotlines": "Linhas diretas",
+		"private-therapy-and-counseling": "Terapia e aconselhamento privados",
+		"psychological-evaluations-for-asylum-claim": "Avaliações psicológicas para pedido de asilo",
+		"psychological-evaluations-for-refugee-claim": "Avaliações psicológicas para solicitação de refúgio",
+		"substance-use": "Uso de substâncias",
+		"support-for-caregivers-of-trans-youth": "Apoio aos cuidadores de jovens trans",
+		"support-for-conversion-therapy-survivors": "Suporte para sobreviventes da terapia de conversão",
+		"support-groups": "Grupos de apoio",
+		"trans-support-groups": "Grupos de apoio trans"
+	},
+	"sports-and-entertainment": {
+		"CATEGORYNAME": "Entretenimento e atividades",
+		"art-music-literature": "Arte, música e literatura",
+		"sports-and-entertainment": "Esportes e entretenimento"
+	},
+	"translation-and-interpretation": {
+		"CATEGORYNAME": "Tradução e interpretação",
+		"for-healthcare": "Para cuidados de saúde",
+		"for-legal-services": "Para serviços jurídicos",
+		"general-translation-and-interpretation": "Tradução e interpretação gerais"
+	},
+	"transportation": {
+		"CATEGORYNAME": "Transporte",
+		"transit-passes-and-discounts": "Passes de transporte público e descontos",
+		"transportation-assistance": "Assistência de transporte"
+	}
+}
