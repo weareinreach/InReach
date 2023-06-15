@@ -1,124 +1,124 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "堕胎护理",
-		"abortion-providers": "堕胎提供者",
-		"financial-assistance": "财务援助",
-		"lodging-assistance": "住宿援助",
-		"mail-order-services": "邮购服务",
-		"mental-health-support": "心理健康支持",
-		"travel-assistance": "旅行援助"
+		"CATEGORYNAME": "Abortion Care",
+		"abortion-providers": "Abortion providers",
+		"financial-assistance": "Financial assistance",
+		"lodging-assistance": "Lodging assistance",
+		"mail-order-services": "Mail order services",
+		"mental-health-support": "Mental health support",
+		"travel-assistance": "Travel assistance"
 	},
 	"community-support": {
-		"CATEGORYNAME": "社区支持",
+		"CATEGORYNAME": "Community Support",
 		"community-social-groups": "社区和社会团体",
-		"cultural-centers": "文化中心",
-		"lgbtq-centers": "LGBTQ 中心",
-		"reception-services": "接待服务",
+		"cultural-centers": "Cultural centers",
+		"lgbtq-centers": "LGBTQ centers",
+		"reception-services": "Reception services",
 		"reentry-services": "再入境服务",
-		"spiritual-support": "精神支持",
-		"sponsors": "移民赞助"
+		"spiritual-support": "Spiritual support",
+		"sponsors": "Immigration sponsorship"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "计算机和互联网",
-		"computers-and-internet": "计算机和互联网"
+		"CATEGORYNAME": "Computers and Internet",
+		"computers-and-internet": "Computers and internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "教育和就业",
-		"career-counseling": "职业咨询",
-		"educational-support-for-lgbtq-youth": "为 LGBTQ 青年提供教育支持",
-		"english-classes": "英语课",
-		"language-classes": "语言课",
-		"leadership-training-and-professional-development": "领导力培训和职业发展",
-		"libraries": "图书馆",
-		"scholarships": "奖学金"
+		"CATEGORYNAME": "Education and Employment",
+		"career-counseling": "Career counseling",
+		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
+		"english-classes": "English classes",
+		"language-classes": "Language classes",
+		"leadership-training-and-professional-development": "Leadership training and professional development",
+		"libraries": "Libraries",
+		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "食物",
-		"food": "食物",
-		"food-assistance": "食物援助"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "住房",
-		"drop-in-centers-for-lgbtq-youth": "LGBTQ 青年救助中心",
-		"emergency-housing": "应急住房",
-		"housing-information-and-referrals": "住房信息和推荐",
-		"short-term-housing": "短期住房",
-		"trans-housing": "变性人住房"
+		"CATEGORYNAME": "Housing",
+		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
+		"emergency-housing": "Emergency housing",
+		"housing-information-and-referrals": "Housing information and referrals",
+		"short-term-housing": "Short-term housing",
+		"trans-housing": "Trans housing"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "卫生和服装",
-		"clothes": "衣服",
-		"gender-affirming-items": "确认性别的项目",
-		"gender-neutral-bathrooms": "不分性别的浴室",
-		"haircuts-and-stylists": "发型师和发型师",
-		"hygiene": "卫生"
+		"CATEGORYNAME": "Hygiene and Clothing",
+		"clothes": "Clothes",
+		"gender-affirming-items": "Gender-affirming items",
+		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
+		"haircuts-and-stylists": "Haircuts and stylists",
+		"hygiene": "Hygiene"
 	},
 	"legal": {
-		"CATEGORYNAME": "合法",
-		"asylum-application": "庇护申请",
-		"citizenship": "公民身份",
-		"crime-and-discrimination": "犯罪和歧视",
-		"deferred-action-for-childhood-arrivals-daca": "儿童入境延期行动 (DACA)",
-		"deportation-or-removal": "驱逐出境或驱逐",
-		"employment-authorization": "就业授权",
-		"family-petitions": "家庭请愿书",
-		"immigration-detention": "移民拘留",
-		"legal-advice": "法律建议",
-		"legal-hotlines": "法律热线",
-		"name-and-gender-change": "姓名和性别变更",
-		"refugee-claim": "难民申请",
-		"residency": "居留权",
-		"special-immigrant-juvenile-status-sijs": "特殊移民少年身份 (SIJS)",
-		"t-visa": "T 签证",
-		"u-visa": "U 签证"
+		"CATEGORYNAME": "Legal",
+		"asylum-application": "Asylum application",
+		"citizenship": "Citizenship",
+		"crime-and-discrimination": "Crime and discrimination",
+		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
+		"deportation-or-removal": "Deportation or removal",
+		"employment-authorization": "Employment authorization",
+		"family-petitions": "Family petitions",
+		"immigration-detention": "Immigration detention",
+		"legal-advice": "Legal advice",
+		"legal-hotlines": "Legal hotlines",
+		"name-and-gender-change": "Name and gender change",
+		"refugee-claim": "Refugee claim",
+		"residency": "Residency",
+		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "邮件",
-		"mail": "邮件"
+		"CATEGORYNAME": "Mail",
+		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "医疗",
-		"covid-19-services": "COVID-19 服务",
-		"dental-care": "牙科保健",
-		"hiv-and-sexual-health": "艾滋病毒和性健康",
-		"medical-clinics": "医疗诊所",
-		"obgyn-services": "妇产科服务",
-		"physical-evaluations-for-asylum-claim": "庇护申请的身体评估",
-		"physical-evaluations-for-refugee-claim": "难民申请的身体评估",
-		"trans-health": "跨性别健康",
-		"trans-health-gender-affirming-surgery": "跨性别健康——性别确认手术",
-		"trans-health-hormone-and-surgery-letters": "跨性别健康——荷尔蒙和手术信",
-		"trans-health-hormone-therapy": "跨性别健康-激素疗法",
-		"trans-health-primary-care": "跨性别健康——初级保健",
-		"trans-health-speech-therapy": "跨性别健康-言语疗法"
+		"CATEGORYNAME": "Medical",
+		"covid-19-services": "COVID-19 services",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV and sexual health",
+		"medical-clinics": "Medical clinics",
+		"obgyn-services": "OBGYN services",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
+		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"trans-health": "Trans health",
+		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
+		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
+		"trans-health-hormone-therapy": "Trans health - hormone therapy",
+		"trans-health-primary-care": "Trans health - primary care",
+		"trans-health-speech-therapy": "Trans health - speech therapy"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "心理健康",
-		"bipoc-support-groups": "BIPOC 支持小组",
-		"hotlines": "热线",
-		"private-therapy-and-counseling": "私人治疗和咨询",
-		"psychological-evaluations-for-asylum-claim": "庇护申请的心理评估",
-		"psychological-evaluations-for-refugee-claim": "对难民申请的心理评估",
-		"substance-use": "物质的使用",
-		"support-for-caregivers-of-trans-youth": "为跨性别青年的护理人员提供支持",
-		"support-for-conversion-therapy-survivors": "为转化疗法幸存者提供支持",
-		"support-groups": "支持团体",
-		"trans-support-groups": "跨性别支持团体"
+		"CATEGORYNAME": "Mental Health",
+		"bipoc-support-groups": "BIPOC support groups",
+		"hotlines": "Hotlines",
+		"private-therapy-and-counseling": "Private therapy and counseling",
+		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
+		"substance-use": "Substance use",
+		"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
+		"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
+		"support-groups": "Support groups",
+		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "娱乐和活动",
+		"CATEGORYNAME": "Entertainment and Activities",
 		"art-music-literature": "艺术、音乐和文学",
-		"sports-and-entertainment": "体育和娱乐"
+		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "笔译和口译",
-		"for-healthcare": "用于医疗保健",
-		"for-legal-services": "用于法律服务",
-		"general-translation-and-interpretation": "一般笔译和口译"
+		"CATEGORYNAME": "Translation and Interpretation",
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "运输",
-		"transit-passes-and-discounts": "过境通行证和折扣",
-		"transportation-assistance": "交通援助"
+		"CATEGORYNAME": "Transportation",
+		"transit-passes-and-discounts": "Transit passes and discounts",
+		"transportation-assistance": "Transportation assistance"
 	}
 }
