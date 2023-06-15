@@ -73,7 +73,7 @@
 	"find-resources": "Maghanap ng mga mapagkukunan",
 	"find-x": "Hanapin ang {{value}}",
 	"footer": {
-		"anti-hate": "Anti-poot na pangako",
+		"anti-hate": "Anti-hate commitment",
 		"digital-accessibility": "Pag-access sa digital",
 		"disclaimer": "Disclaimer",
 		"privacy-statement": "Pahayag ng privacy",
@@ -104,7 +104,7 @@
 	"link-copied": "Kinopya ang link sa clipboard",
 	"list": {
 		"added": "Resource save sa listahan: {{name}}",
-		"create-new": "Lumikha ng bagong listahan",
+		"create-new": "Create new list",
 		"create-new-sub": "Ang iyong mga listahan ng mga naka-save na mapagkukunan ay makikita lamang sa iyo at sinumang ibinabahagi mo sa kanila.",
 		"create-new-sub2": "Pangalanan ang iyong listahan ayon sa kategorya, araw ng linggo, o sinumang para sa listahang ito.",
 		"created": "Nilikha ang bagong listahan: {{name}}",
@@ -154,7 +154,7 @@
 	"password-req-uppercase": "May kasamang uppercase letter",
 	"password-reset": {
 		"email-body": "I-click ang sumusunod na link upang i-reset ang iyong password:",
-		"email-subject": "I-reset ang iyong password"
+		"email-subject": "Reset your password"
 	},
 	"password-reset-success": "<Text>Mangyaring <LoginModal>login</LoginModal> gamit ang iyong bagong password.</Text>",
 	"password-saved": "Naka-save ang password!",
@@ -334,7 +334,7 @@
 		"and": "at",
 		"and-x-more": "at {{count}} higit pa",
 		"back": "Bumalik",
-		"close": "Isara",
+		"close": "Close",
 		"coming-soon": "Malapit na",
 		"delete": "Tanggalin",
 		"distance": "Distansya",
@@ -351,15 +351,15 @@
 		"print": "I-print",
 		"review": "Suriin",
 		"reviews": "Mga Review",
-		"save": "I-save",
-		"saved": "Nai-save",
+		"save": "Save",
+		"saved": "Saved",
 		"search": "Paghahanap",
-		"service-hours": "Oras ng serbisyo",
+		"service-hours": "Service hours",
 		"settings": "Mga Setting",
 		"share": "Ibahagi",
 		"sign-up": "Mag-sign up",
 		"skip": "Laktawan",
-		"support": "Suporta",
+		"support": "Support",
 		"yes": "Oo"
 	},
 	"photo_one": "Larawan",
