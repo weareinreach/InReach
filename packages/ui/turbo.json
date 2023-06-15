@@ -8,7 +8,7 @@
 		},
 		"build:icons": {
 			"inputs": ["./icon/iconList.ts", "./icon/iconCollection.ts"],
-			"outputs": ["./icon/iconList.ts", "./icon/index.tsx"]
+			"outputs": ["./icon/iconList.ts"]
 		},
 		"chromatic": {
 			"dependsOn": ["build"],
