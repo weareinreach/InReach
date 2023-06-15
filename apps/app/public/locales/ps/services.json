@@ -1,124 +1,124 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "د سقط پاملرنه",
-		"abortion-providers": "د سقط چمتو کونکي",
-		"financial-assistance": "مالي مرسته",
-		"lodging-assistance": "د استوګنې مرسته",
-		"mail-order-services": "د میل آرډر خدمتونه",
-		"mental-health-support": "د دماغي روغتیا ملاتړ",
-		"travel-assistance": "د سفر مرسته"
+		"CATEGORYNAME": "Abortion Care",
+		"abortion-providers": "Abortion providers",
+		"financial-assistance": "Financial assistance",
+		"lodging-assistance": "Lodging assistance",
+		"mail-order-services": "Mail order services",
+		"mental-health-support": "Mental health support",
+		"travel-assistance": "Travel assistance"
 	},
 	"community-support": {
-		"CATEGORYNAME": "د ټولنې ملاتړ",
+		"CATEGORYNAME": "Community Support",
 		"community-social-groups": "ټولنه او ټولنیزې ډلې",
-		"cultural-centers": "کلتوري مرکزونه",
-		"lgbtq-centers": "د LGBTQ مرکزونه",
-		"reception-services": "د استقبال خدمتونه",
+		"cultural-centers": "Cultural centers",
+		"lgbtq-centers": "LGBTQ centers",
+		"reception-services": "Reception services",
 		"reentry-services": "د بیا ننوتلو خدمتونه",
-		"spiritual-support": "روحاني ملاتړ",
-		"sponsors": "د مهاجرت سپانسرشپ"
+		"spiritual-support": "Spiritual support",
+		"sponsors": "Immigration sponsorship"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "کمپیوټر او انټرنیټ",
-		"computers-and-internet": "کمپیوټر او انټرنیټ"
+		"CATEGORYNAME": "Computers and Internet",
+		"computers-and-internet": "Computers and internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "ښوونه او روزنه",
-		"career-counseling": "د کیریر مشوره",
-		"educational-support-for-lgbtq-youth": "د LGBTQ ځوانانو لپاره تعلیمي ملاتړ",
-		"english-classes": "انګلیسي ټولګي",
-		"language-classes": "د ژبې ټولګي",
-		"leadership-training-and-professional-development": "د رهبرۍ روزنه او مسلکي پرمختګ",
-		"libraries": "کتابتونونه",
-		"scholarships": "بورسونه"
+		"CATEGORYNAME": "Education and Employment",
+		"career-counseling": "Career counseling",
+		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
+		"english-classes": "English classes",
+		"language-classes": "Language classes",
+		"leadership-training-and-professional-development": "Leadership training and professional development",
+		"libraries": "Libraries",
+		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "خواړه",
-		"food": "خواړه",
-		"food-assistance": "د خوړو مرسته"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "د کور جوړول",
-		"drop-in-centers-for-lgbtq-youth": "د LGBTQ ځوانانو لپاره د ډراپ ان مرکزونه",
-		"emergency-housing": "بيړنۍ کور",
-		"housing-information-and-referrals": "د کور معلومات او راجع کول",
-		"short-term-housing": "لنډمهاله هستوګنه",
-		"trans-housing": "د ټرانس کور"
+		"CATEGORYNAME": "Housing",
+		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
+		"emergency-housing": "Emergency housing",
+		"housing-information-and-referrals": "Housing information and referrals",
+		"short-term-housing": "Short-term housing",
+		"trans-housing": "Trans housing"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "حفظ الصحه او کالي",
-		"clothes": "کالي",
-		"gender-affirming-items": "د جنډر تایید توکي",
-		"gender-neutral-bathrooms": "د جنډر غیر جانبدار تشنابونه",
-		"haircuts-and-stylists": "ویښتان او سټایلسټان",
-		"hygiene": "حفظ الصحه"
+		"CATEGORYNAME": "Hygiene and Clothing",
+		"clothes": "Clothes",
+		"gender-affirming-items": "Gender-affirming items",
+		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
+		"haircuts-and-stylists": "Haircuts and stylists",
+		"hygiene": "Hygiene"
 	},
 	"legal": {
-		"CATEGORYNAME": "قانوني",
-		"asylum-application": "د پناه غوښتنې غوښتنه",
-		"citizenship": "تابعیت",
-		"crime-and-discrimination": "جرم او تبعیض",
-		"deferred-action-for-childhood-arrivals-daca": "د ماشومتوب راتګ لپاره ځنډول شوی عمل (DACA)",
-		"deportation-or-removal": "جلاوطنه یا لرې کول",
-		"employment-authorization": "د کارموندنې واک",
-		"family-petitions": "کورنۍ غوښتنې",
-		"immigration-detention": "د کډوالۍ توقیف",
-		"legal-advice": "حقوقي مشوره",
-		"legal-hotlines": "قانوني هټلاینونه",
-		"name-and-gender-change": "نوم او د جندر بدلون",
-		"refugee-claim": "د کډوالو ادعا",
-		"residency": "د استوګنې ځای",
-		"special-immigrant-juvenile-status-sijs": "د ځانګړي کډوال ځوان حالت (SIJS)",
-		"t-visa": "T ویزه",
-		"u-visa": "U ویزه"
+		"CATEGORYNAME": "Legal",
+		"asylum-application": "Asylum application",
+		"citizenship": "Citizenship",
+		"crime-and-discrimination": "Crime and discrimination",
+		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
+		"deportation-or-removal": "Deportation or removal",
+		"employment-authorization": "Employment authorization",
+		"family-petitions": "Family petitions",
+		"immigration-detention": "Immigration detention",
+		"legal-advice": "Legal advice",
+		"legal-hotlines": "Legal hotlines",
+		"name-and-gender-change": "Name and gender change",
+		"refugee-claim": "Refugee claim",
+		"residency": "Residency",
+		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "میل",
-		"mail": "میل"
+		"CATEGORYNAME": "Mail",
+		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "طبي",
-		"covid-19-services": "د کوویډ - 19 خدمتونه",
-		"dental-care": "د غاښونو پاملرنه",
-		"hiv-and-sexual-health": "HIV او جنسي روغتیا",
-		"medical-clinics": "طبي کلینیکونه",
-		"obgyn-services": "د OBGYN خدمتونه",
-		"physical-evaluations-for-asylum-claim": "د پناه غوښتنې لپاره فزیکي ارزونه",
-		"physical-evaluations-for-refugee-claim": "د کډوالو د ادعا لپاره فزیکي ارزونه",
-		"trans-health": "د ټرانس روغتیا",
-		"trans-health-gender-affirming-surgery": "د ټرانس روغتیا - د جنډر تایید جراحي",
-		"trans-health-hormone-and-surgery-letters": "د ټرانس روغتیا - هورمون او جراحي لیکونه",
-		"trans-health-hormone-therapy": "د ټرانس روغتیا - هورمون درملنه",
-		"trans-health-primary-care": "د ټرانس روغتیا - لومړنۍ پاملرنه",
-		"trans-health-speech-therapy": "د ټرانس روغتیا - د وینا درملنه"
+		"CATEGORYNAME": "Medical",
+		"covid-19-services": "COVID-19 services",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV and sexual health",
+		"medical-clinics": "Medical clinics",
+		"obgyn-services": "OBGYN services",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
+		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"trans-health": "Trans health",
+		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
+		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
+		"trans-health-hormone-therapy": "Trans health - hormone therapy",
+		"trans-health-primary-care": "Trans health - primary care",
+		"trans-health-speech-therapy": "Trans health - speech therapy"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "دماغي روغتیا",
-		"bipoc-support-groups": "د BIPOC ملاتړ ډلې",
-		"hotlines": "هاټ لاینونه",
-		"private-therapy-and-counseling": "شخصي درملنه او مشوره ورکول",
-		"psychological-evaluations-for-asylum-claim": "د پناه غوښتنې لپاره رواني ارزونې",
-		"psychological-evaluations-for-refugee-claim": "د کډوالو د ادعا لپاره رواني ارزونه",
-		"substance-use": "د موادو کارول",
-		"support-for-caregivers-of-trans-youth": "د ټرانس ځوانانو پاملرنې کونکو لپاره ملاتړ",
-		"support-for-conversion-therapy-survivors": "د تبادلې درملنې ژوندي پاتې کیدو لپاره ملاتړ",
-		"support-groups": "د ملاتړ ډلې",
-		"trans-support-groups": "د ټرانس ملاتړ ډلې"
+		"CATEGORYNAME": "Mental Health",
+		"bipoc-support-groups": "BIPOC support groups",
+		"hotlines": "Hotlines",
+		"private-therapy-and-counseling": "Private therapy and counseling",
+		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
+		"substance-use": "Substance use",
+		"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
+		"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
+		"support-groups": "Support groups",
+		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "تفریح او فعالیتونه",
+		"CATEGORYNAME": "Entertainment and Activities",
 		"art-music-literature": "هنر، میوزیک او ادب",
-		"sports-and-entertainment": "سپورت او ساتیري"
+		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "ژباړه او تفسیر",
-		"for-healthcare": "د روغتیا پاملرنې لپاره",
-		"for-legal-services": "د قانوني خدماتو لپاره",
-		"general-translation-and-interpretation": "عمومي ژباړه او تفسیر"
+		"CATEGORYNAME": "Translation and Interpretation",
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "ترانسپورت",
-		"transit-passes-and-discounts": "ټرانزیټ پاسونه او تخفیفونه",
-		"transportation-assistance": "د ترانسپورت مرستې"
+		"CATEGORYNAME": "Transportation",
+		"transit-passes-and-discounts": "Transit passes and discounts",
+		"transportation-assistance": "Transportation assistance"
 	}
 }
