@@ -1,1244 +1,1244 @@
 {
 	"ABW": {
-		"name": "अरूबा",
-		"demonym_one": "अरूबाई",
-		"demonym_other": "अरूबन्स"
+		"name": "Aruba",
+		"demonym_one": "Aruban",
+		"demonym_other": "Arubans"
 	},
 	"AFG": {
-		"name": "अफगानिस्तान",
-		"demonym_one": "अफगान",
-		"demonym_other": "अफगानवासी"
+		"name": "Afghanistan",
+		"demonym_one": "Afghan",
+		"demonym_other": "Afghans"
 	},
 	"AGO": {
-		"name": "अंगोला",
-		"demonym_one": "अंगोला",
-		"demonym_other": "अंगोला"
+		"name": "Angola",
+		"demonym_one": "Angolan",
+		"demonym_other": "Angolans"
 	},
 	"AIA": {
-		"name": "एंगुइला",
-		"demonym_one": "एंगुइलियन",
-		"demonym_other": "एंगुइलियंस"
+		"name": "Anguilla",
+		"demonym_one": "Anguillian",
+		"demonym_other": "Anguillians"
 	},
 	"ALA": {
-		"name": "आलैंड द्वीपसमूह",
-		"demonym_one": "ऑलैंडिश",
-		"demonym_other": "ऑलैंडर्स"
+		"name": "Åland Islands",
+		"demonym_one": "Ålandish",
+		"demonym_other": "Ålanders"
 	},
 	"ALB": {
-		"name": "अल्बानिया",
-		"demonym_one": "अल्बानियाई",
-		"demonym_other": "अल्बानियाई"
+		"name": "Albania",
+		"demonym_one": "Albanian",
+		"demonym_other": "Albanians"
 	},
 	"AND": {
-		"name": "अंडोरा",
-		"demonym_one": "अन्डोरान",
-		"demonym_other": "अंडोरन्स"
+		"name": "Andorra",
+		"demonym_one": "Andorran",
+		"demonym_other": "Andorrans"
 	},
 	"ARE": {
-		"name": "संयुक्त अरब अमीरात",
-		"demonym_one": "अमीराती",
-		"demonym_other": "एमिरेटिस"
+		"name": "United Arab Emirates",
+		"demonym_one": "Emirati",
+		"demonym_other": "Emiratis"
 	},
 	"ARG": {
-		"name": "अर्जेंटीना",
-		"demonym_one": "अर्जेंटीना का रहनेवाला",
-		"demonym_other": "अर्जेंटीनावासी"
+		"name": "Argentina",
+		"demonym_one": "Argentinean",
+		"demonym_other": "Argentineans"
 	},
 	"ARM": {
-		"name": "आर्मेनिया",
-		"demonym_one": "अर्मेनियाई",
-		"demonym_other": "आर्मेनियाई"
+		"name": "Armenia",
+		"demonym_one": "Armenian",
+		"demonym_other": "Armenians"
 	},
 	"ASM": {
-		"name": "अमेरिकन समोआ",
-		"demonym_one": "अमेरिकन समोअन",
-		"demonym_other": "अमेरिकन समोअन"
+		"name": "American Samoa",
+		"demonym_one": "American Samoan",
+		"demonym_other": "American Samoans"
 	},
 	"ATA": {
-		"name": "अंटार्कटिका",
-		"demonym_one": "अंटार्कटिका",
-		"demonym_other": "अंटार्कटिका"
+		"name": "Antarctica",
+		"demonym_one": "Antarctican",
+		"demonym_other": "Antarcticans"
 	},
 	"ATF": {
-		"name": "फ्रांसीसी दक्षिणी और अंटार्कटिक भूमि",
-		"demonym_one": "फ्रेंच",
-		"demonym_other": "फ्रेंच"
+		"name": "French Southern and Antarctic Lands",
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"ATG": {
-		"name": "एंटीगुआ और बारबूडा",
-		"demonym_one": "एंटीगुआन, बारबूडान",
-		"demonym_other": "एंटीगुआंस, बारबूडान"
+		"name": "Antigua and Barbuda",
+		"demonym_one": "Antiguan, Barbudan",
+		"demonym_other": "Antiguans, Barbudans"
 	},
 	"AUS": {
-		"name": "ऑस्ट्रेलिया",
-		"demonym_one": "ऑस्ट्रेलियाई",
-		"demonym_other": "आस्ट्रेलियाई"
+		"name": "Australia",
+		"demonym_one": "Australian",
+		"demonym_other": "Australians"
 	},
 	"AUT": {
-		"name": "ऑस्ट्रिया",
-		"demonym_one": "ऑस्ट्रिया वासी",
-		"demonym_other": "ऑस्ट्रिया का निवासी"
+		"name": "Austria",
+		"demonym_one": "Austrian",
+		"demonym_other": "Austrians"
 	},
 	"AZE": {
-		"name": "अजरबैजान",
-		"demonym_one": "आज़रबाइजानी",
+		"name": "Azerbaijan",
+		"demonym_one": "Azerbaijani",
 		"demonym_other": "Azerbaijanis"
 	},
 	"BDI": {
-		"name": "बुरुंडी",
-		"demonym_one": "बुरुन्डियन",
-		"demonym_other": "बुरुंडियंस"
+		"name": "Burundi",
+		"demonym_one": "Burundian",
+		"demonym_other": "Burundians"
 	},
 	"BEL": {
-		"name": "बेल्जियम",
-		"demonym_one": "बेल्जियन",
-		"demonym_other": "बेल्जियन"
+		"name": "Belgium",
+		"demonym_one": "Belgian",
+		"demonym_other": "Belgians"
 	},
 	"BEN": {
-		"name": "बेनिन",
-		"demonym_one": "बेनीनीज़",
-		"demonym_other": "बेनीनीज़"
+		"name": "Benin",
+		"demonym_one": "Beninese",
+		"demonym_other": "Beninese"
 	},
 	"BES": {
-		"name": "कैरेबियन नीदरलैंड्स"
+		"name": "Caribbean Netherlands"
 	},
 	"BFA": {
-		"name": "बुर्किना फ़ासो",
-		"demonym_one": "बुर्किनाबे",
-		"demonym_other": "बुर्किना बेस"
+		"name": "Burkina Faso",
+		"demonym_one": "Burkinabe",
+		"demonym_other": "Burkinabes"
 	},
 	"BGD": {
-		"name": "बांग्लादेश",
-		"demonym_one": "बांग्लादेशी",
-		"demonym_other": "बांग्लादेशियों"
+		"name": "Bangladesh",
+		"demonym_one": "Bangladeshi",
+		"demonym_other": "Bangladeshis"
 	},
 	"BGR": {
-		"name": "बुल्गारिया",
-		"demonym_one": "बल्गेरियाई",
-		"demonym_other": "बुल्गारियाई"
+		"name": "Bulgaria",
+		"demonym_one": "Bulgarian",
+		"demonym_other": "Bulgarians"
 	},
 	"BHR": {
-		"name": "बहरीन",
-		"demonym_one": "बहरीन",
-		"demonym_other": "बहरीन"
+		"name": "Bahrain",
+		"demonym_one": "Bahraini",
+		"demonym_other": "Bahrainis"
 	},
 	"BHS": {
-		"name": "बहामा",
-		"demonym_one": "बहामियन",
-		"demonym_other": "बहामियंस"
+		"name": "Bahamas",
+		"demonym_one": "Bahamian",
+		"demonym_other": "Bahamians"
 	},
 	"BIH": {
-		"name": "बोस्निया और हर्जेगोविना",
-		"demonym_one": "बोस्नियाई, हर्ज़ेगोविनियन",
-		"demonym_other": "बोस्नियाई, हर्जेगोविनियन"
+		"name": "Bosnia and Herzegovina",
+		"demonym_one": "Bosnian, Herzegovinian",
+		"demonym_other": "Bosnians, Herzegovinians"
 	},
 	"BLM": {
-		"name": "सेंट बार्थेलेमी",
-		"demonym_one": "सेंट बार्थेलेमी आइलैंडर",
-		"demonym_other": "सेंट बार्थेलेमी आइलैंडर्स"
+		"name": "Saint Barthélemy",
+		"demonym_one": "Saint Barthélemy Islander",
+		"demonym_other": "Saint Barthélemy Islanders"
 	},
 	"BLR": {
-		"name": "बेलारूस",
-		"demonym_one": "बेलारूसी",
-		"demonym_other": "बेलारूसवासी"
+		"name": "Belarus",
+		"demonym_one": "Belarusian",
+		"demonym_other": "Belarusians"
 	},
 	"BLZ": {
-		"name": "बेलीज",
-		"demonym_one": "बेलिज़ियन",
-		"demonym_other": "बेलिज़ियन"
+		"name": "Belize",
+		"demonym_one": "Belizean",
+		"demonym_other": "Belizeans"
 	},
 	"BMU": {
-		"name": "बरमूडा",
-		"demonym_one": "बरमूडियन",
-		"demonym_other": "बरमूडियन्स"
+		"name": "Bermuda",
+		"demonym_one": "Bermudian",
+		"demonym_other": "Bermudians"
 	},
 	"BOL": {
-		"name": "बोलीविया",
-		"demonym_one": "बोलीविया",
-		"demonym_other": "बोलिवियन"
+		"name": "Bolivia",
+		"demonym_one": "Bolivian",
+		"demonym_other": "Bolivians"
 	},
 	"BRA": {
-		"name": "ब्राज़ील",
-		"demonym_one": "ब्राजील के",
-		"demonym_other": "ब्राज़िल का"
+		"name": "Brazil",
+		"demonym_one": "Brazilian",
+		"demonym_other": "Brazilians"
 	},
 	"BRB": {
-		"name": "बारबाडोस",
-		"demonym_one": "बारबाडियन",
-		"demonym_other": "बारबाडियन"
+		"name": "Barbados",
+		"demonym_one": "Barbadian",
+		"demonym_other": "Barbadians"
 	},
 	"BRN": {
-		"name": "ब्रुनेई",
-		"demonym_one": "ब्रुनेई",
-		"demonym_other": "ब्रुनेई"
+		"name": "Brunei",
+		"demonym_one": "Bruneian",
+		"demonym_other": "Bruneians"
 	},
 	"BTN": {
-		"name": "भूटान",
-		"demonym_one": "भूटानीज",
-		"demonym_other": "भूटानीज"
+		"name": "Bhutan",
+		"demonym_one": "Bhutanese",
+		"demonym_other": "Bhutanese"
 	},
 	"BVT": {
-		"name": "बौवेट आइलैंड"
+		"name": "Bouvet Island"
 	},
 	"BWA": {
-		"name": "बोत्सवाना",
-		"demonym_one": "मोत्सवाना",
-		"demonym_other": "बत्स्वाना"
+		"name": "Botswana",
+		"demonym_one": "Motswana",
+		"demonym_other": "Batswana"
 	},
 	"CAF": {
-		"name": "सेंट्रल अफ्रीकन रिपब्लिक",
-		"demonym_one": "मध्य अफ़्रीकी",
-		"demonym_other": "मध्य अफ़्रीकी"
+		"name": "Central African Republic",
+		"demonym_one": "Central African",
+		"demonym_other": "Central Africans"
 	},
 	"CAN": {
-		"name": "कनाडा",
-		"demonym_one": "कैनेडियन",
-		"demonym_other": "कनाडाई"
+		"name": "Canada",
+		"demonym_one": "Canadian",
+		"demonym_other": "Canadians"
 	},
 	"CCK": {
-		"name": "कोकोस (कीलिंग) द्वीप",
-		"demonym_one": "कोकोस आइलैंडर",
-		"demonym_other": "कोकोस आइलैंडर्स"
+		"name": "Cocos (Keeling) Islands",
+		"demonym_one": "Cocos Islander",
+		"demonym_other": "Cocos Islanders"
 	},
 	"CHE": {
-		"name": "स्विट्जरलैंड",
-		"demonym_one": "स्विस",
-		"demonym_other": "स्विस"
+		"name": "Switzerland",
+		"demonym_one": "Swiss",
+		"demonym_other": "Swiss"
 	},
 	"CHL": {
-		"name": "चिली",
-		"demonym_one": "चिली के",
-		"demonym_other": "चिली"
+		"name": "Chile",
+		"demonym_one": "Chilean",
+		"demonym_other": "Chileans"
 	},
 	"CHN": {
-		"name": "चीन",
-		"demonym_one": "चीनी",
-		"demonym_other": "चीनी"
+		"name": "China",
+		"demonym_one": "Chinese",
+		"demonym_other": "Chinese"
 	},
 	"CIV": {
-		"name": "आइवरी कोस्ट",
-		"demonym_one": "इवोरियन",
-		"demonym_other": "इवोरियन"
+		"name": "Ivory Coast",
+		"demonym_one": "Ivorian",
+		"demonym_other": "Ivorians"
 	},
 	"CMR": {
-		"name": "कैमरून",
-		"demonym_one": "कैमरून का",
-		"demonym_other": "कैमरूनियन"
+		"name": "Cameroon",
+		"demonym_one": "Cameroonian",
+		"demonym_other": "Cameroonians"
 	},
 	"COD": {
-		"name": "डीआर कांगो",
-		"demonym_one": "कांगो",
-		"demonym_other": "कांगो"
+		"name": "DR Congo",
+		"demonym_one": "Congolese",
+		"demonym_other": "Congolese"
 	},
 	"COG": {
-		"name": "कांगो गणराज्य",
-		"demonym_one": "कांगो",
-		"demonym_other": "कांगो"
+		"name": "Republic of the Congo",
+		"demonym_one": "Congolese",
+		"demonym_other": "Congolese"
 	},
 	"COK": {
-		"name": "कुक आइलैंड्स",
-		"demonym_one": "कुक आइलैंडर",
-		"demonym_other": "कुक आइलैंडर्स"
+		"name": "Cook Islands",
+		"demonym_one": "Cook Islander",
+		"demonym_other": "Cook Islanders"
 	},
 	"COL": {
-		"name": "कोलंबिया",
-		"demonym_one": "कोलम्बियाई",
-		"demonym_other": "कोलंबियाई"
+		"name": "Colombia",
+		"demonym_one": "Colombian",
+		"demonym_other": "Colombians"
 	},
 	"COM": {
-		"name": "कोमोरोज़",
-		"demonym_one": "कोमोरन",
-		"demonym_other": "कोमोरांस"
+		"name": "Comoros",
+		"demonym_one": "Comoran",
+		"demonym_other": "Comorans"
 	},
 	"CPV": {
-		"name": "केप वर्डे",
-		"demonym_one": "केप वर्डियन",
-		"demonym_other": "केप वर्डियन्स"
+		"name": "Cape Verde",
+		"demonym_one": "Cape Verdian",
+		"demonym_other": "Cape Verdians"
 	},
 	"CRI": {
-		"name": "कॉस्टा रीका",
-		"demonym_one": "कॉस्टा रीकन",
-		"demonym_other": "कोस्टा रिकन्स"
+		"name": "Costa Rica",
+		"demonym_one": "Costa Rican",
+		"demonym_other": "Costa Ricans"
 	},
 	"CUB": {
-		"name": "क्यूबा",
-		"demonym_one": "क्यूबाई",
-		"demonym_other": "क्यूबाई"
+		"name": "Cuba",
+		"demonym_one": "Cuban",
+		"demonym_other": "Cubans"
 	},
 	"CUW": {
-		"name": "कुराकाओ",
-		"demonym_one": "डच",
-		"demonym_other": "डच"
+		"name": "Curaçao",
+		"demonym_one": "Dutch",
+		"demonym_other": "Dutch"
 	},
 	"CXR": {
-		"name": "क्रिसमस आइलैंड",
-		"demonym_one": "क्रिसमस आइलैंडर",
-		"demonym_other": "क्रिसमस आइलैंडर्स"
+		"name": "Christmas Island",
+		"demonym_one": "Christmas Islander",
+		"demonym_other": "Christmas Islanders"
 	},
 	"CYM": {
-		"name": "केमैन आइलैंड्स",
-		"demonym_one": "कैमेनियन",
-		"demonym_other": "केमैन"
+		"name": "Cayman Islands",
+		"demonym_one": "Caymanian",
+		"demonym_other": "Caymanians"
 	},
 	"CYP": {
-		"name": "साइप्रस",
-		"demonym_one": "साइप्रसवासी",
+		"name": "Cyprus",
+		"demonym_one": "Cypriot",
 		"demonym_other": "Cypriots"
 	},
 	"CZE": {
-		"name": "चेकिया",
-		"demonym_one": "चेक",
-		"demonym_other": "चेक"
+		"name": "Czechia",
+		"demonym_one": "Czech",
+		"demonym_other": "Czechs"
 	},
 	"DEU": {
-		"name": "जर्मनी",
-		"demonym_one": "जर्मन",
-		"demonym_other": "जर्मनों"
+		"name": "Germany",
+		"demonym_one": "German",
+		"demonym_other": "Germans"
 	},
 	"DJI": {
-		"name": "जिबूती",
-		"demonym_one": "जिबूती",
-		"demonym_other": "जिबूती"
+		"name": "Djibouti",
+		"demonym_one": "Djibouti",
+		"demonym_other": "Djibouti"
 	},
 	"DMA": {
-		"name": "डोमिनिका",
-		"demonym_one": "डोमिनिकन",
-		"demonym_other": "डोमिनिकन"
+		"name": "Dominica",
+		"demonym_one": "Dominican",
+		"demonym_other": "Dominicans"
 	},
 	"DNK": {
-		"name": "डेनमार्क",
-		"demonym_one": "डेनमार्क निवासी",
-		"demonym_other": "डेनमार्क निवासी"
+		"name": "Denmark",
+		"demonym_one": "Danish",
+		"demonym_other": "Danish"
 	},
 	"DOM": {
-		"name": "डोमिनिकन गणराज्य",
-		"demonym_one": "डोमिनिकन",
-		"demonym_other": "डोमिनिकन"
+		"name": "Dominican Republic",
+		"demonym_one": "Dominican",
+		"demonym_other": "Dominicans"
 	},
 	"DZA": {
-		"name": "अल्जीरिया",
-		"demonym_one": "अल्जीरियाई",
-		"demonym_other": "अल्जीरिया"
+		"name": "Algeria",
+		"demonym_one": "Algerian",
+		"demonym_other": "Algerians"
 	},
 	"ECU": {
-		"name": "इक्वेडोर",
-		"demonym_one": "इक्वेडोर",
-		"demonym_other": "इक्वेडोर"
+		"name": "Ecuador",
+		"demonym_one": "Ecuadorean",
+		"demonym_other": "Ecuadoreans"
 	},
 	"EGY": {
-		"name": "मिस्र",
-		"demonym_one": "मिस्र वासी",
-		"demonym_other": "मिस्त्र निवासी"
+		"name": "Egypt",
+		"demonym_one": "Egyptian",
+		"demonym_other": "Egyptians"
 	},
 	"ERI": {
-		"name": "इरिट्रिया",
-		"demonym_one": "एरिट्रियन",
-		"demonym_other": "एरिट्रांस"
+		"name": "Eritrea",
+		"demonym_one": "Eritrean",
+		"demonym_other": "Eritreans"
 	},
 	"ESH": {
-		"name": "पश्चिमी सहारा",
-		"demonym_one": "सहरावी",
-		"demonym_other": "सहराविस"
+		"name": "Western Sahara",
+		"demonym_one": "Sahrawi",
+		"demonym_other": "Sahrawis"
 	},
 	"ESP": {
-		"name": "स्पेन",
-		"demonym_one": "स्पेनिश",
-		"demonym_other": "स्पेनिश"
+		"name": "Spain",
+		"demonym_one": "Spanish",
+		"demonym_other": "Spanish"
 	},
 	"EST": {
-		"name": "एस्टोनिया",
-		"demonym_one": "एस्टोनियावासी",
-		"demonym_other": "एस्टोनियाई"
+		"name": "Estonia",
+		"demonym_one": "Estonian",
+		"demonym_other": "Estonians"
 	},
 	"ETH": {
-		"name": "इथियोपिया",
-		"demonym_one": "इथियोपियाई",
-		"demonym_other": "इथियोपिया"
+		"name": "Ethiopia",
+		"demonym_one": "Ethiopian",
+		"demonym_other": "Ethiopians"
 	},
 	"FIN": {
-		"name": "फिनलैंड",
-		"demonym_one": "फिनिश",
-		"demonym_other": "फिनलैंड वासियों"
+		"name": "Finland",
+		"demonym_one": "Finnish",
+		"demonym_other": "Finns"
 	},
 	"FJI": {
-		"name": "फ़िजी",
-		"demonym_one": "फिजियान",
-		"demonym_other": "फिजी के"
+		"name": "Fiji",
+		"demonym_one": "Fijian",
+		"demonym_other": "Fijians"
 	},
 	"FLK": {
-		"name": "फ़ॉकलैंड द्वीपसमूह",
-		"demonym_one": "फ़ॉकलैंड आइलैंडर",
-		"demonym_other": "फ़ॉकलैंड आइलैंडर्स"
+		"name": "Falkland Islands",
+		"demonym_one": "Falkland Islander",
+		"demonym_other": "Falkland Islanders"
 	},
 	"FRA": {
-		"name": "फ्रांस",
-		"demonym_one": "फ्रेंच",
-		"demonym_other": "फ्रेंच"
+		"name": "France",
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"FRO": {
-		"name": "फरो आइलैंड्स",
-		"demonym_one": "फरोज़",
-		"demonym_other": "फरोज़"
+		"name": "Faroe Islands",
+		"demonym_one": "Faroese",
+		"demonym_other": "Faroese"
 	},
 	"FSM": {
-		"name": "माइक्रोनेशिया",
-		"demonym_one": "माइक्रोनेशियन",
-		"demonym_other": "माइक्रोनेशियन"
+		"name": "Micronesia",
+		"demonym_one": "Micronesian",
+		"demonym_other": "Micronesians"
 	},
 	"GAB": {
-		"name": "गैबॉन",
-		"demonym_one": "गैबोनीज़",
-		"demonym_other": "गैबोनीज़"
+		"name": "Gabon",
+		"demonym_one": "Gabonese",
+		"demonym_other": "Gabonese"
 	},
 	"GBR": {
-		"name": "यूनाइटेड किंगडम",
-		"demonym_one": "ब्रिटिश",
-		"demonym_other": "ब्रिटिश"
+		"name": "United Kingdom",
+		"demonym_one": "British",
+		"demonym_other": "British"
 	},
 	"GEO": {
-		"name": "जॉर्जिया",
-		"demonym_one": "जॉर्जियाई",
-		"demonym_other": "जार्जियाई"
+		"name": "Georgia",
+		"demonym_one": "Georgian",
+		"demonym_other": "Georgians"
 	},
 	"GGY": {
-		"name": "ग्वेर्नसे",
-		"demonym_one": "चैनल आइलैंडर",
-		"demonym_other": "चैनल आइलैंडर्स"
+		"name": "Guernsey",
+		"demonym_one": "Channel Islander",
+		"demonym_other": "Channel Islanders"
 	},
 	"GHA": {
-		"name": "घाना",
-		"demonym_one": "घाना",
-		"demonym_other": "घाना"
+		"name": "Ghana",
+		"demonym_one": "Ghanaian",
+		"demonym_other": "Ghanaians"
 	},
 	"GIB": {
-		"name": "जिब्राल्टर",
-		"demonym_one": "जिब्राल्टेरियन",
-		"demonym_other": "जिब्राल्टेरियन"
+		"name": "Gibraltar",
+		"demonym_one": "Gibraltarian",
+		"demonym_other": "Gibraltarians"
 	},
 	"GIN": {
-		"name": "गिन्नी",
-		"demonym_one": "गिनीयन",
-		"demonym_other": "गिनीयन"
+		"name": "Guinea",
+		"demonym_one": "Guinean",
+		"demonym_other": "Guineans"
 	},
 	"GLP": {
-		"name": "गुआदेलूप",
-		"demonym_one": "गुआदेलूपियन",
-		"demonym_other": "गुआदेलूपियंस"
+		"name": "Guadeloupe",
+		"demonym_one": "Guadeloupian",
+		"demonym_other": "Guadeloupians"
 	},
 	"GMB": {
-		"name": "गाम्बिया",
-		"demonym_one": "गमन",
+		"name": "Gambia",
+		"demonym_one": "Gambian",
 		"demonym_other": "Gambians"
 	},
 	"GNB": {
-		"name": "गिनी-बिसाऊ",
-		"demonym_one": "गिनी-बिसौआन",
-		"demonym_other": "गिनी-बिसाऊंस"
+		"name": "Guinea-Bissau",
+		"demonym_one": "Guinea-Bissauan",
+		"demonym_other": "Guinea-Bissauans"
 	},
 	"GNQ": {
-		"name": "इक्वेटोरियल गिनी",
-		"demonym_one": "इक्वेटोरियल गिनी",
-		"demonym_other": "इक्वेटोरियल गिनी"
+		"name": "Equatorial Guinea",
+		"demonym_one": "Equatorial Guinean",
+		"demonym_other": "Equatorial Guineans"
 	},
 	"GRC": {
-		"name": "ग्रीस",
-		"demonym_one": "ग्रीक",
-		"demonym_other": "यूनानियों"
+		"name": "Greece",
+		"demonym_one": "Greek",
+		"demonym_other": "Greeks"
 	},
 	"GRD": {
-		"name": "ग्रेनेडा",
-		"demonym_one": "ग्रेनेडियन",
-		"demonym_other": "ग्रेनेडियन्स"
+		"name": "Grenada",
+		"demonym_one": "Grenadian",
+		"demonym_other": "Grenadians"
 	},
 	"GRL": {
-		"name": "ग्रीनलैंड",
-		"demonym_one": "ग्रीनलैंडिक",
-		"demonym_other": "ग्रीनलैंडर्स"
+		"name": "Greenland",
+		"demonym_one": "Greenlandic",
+		"demonym_other": "Greenlanders"
 	},
 	"GTM": {
-		"name": "ग्वाटेमाला",
-		"demonym_one": "ग्वाटेमाला",
-		"demonym_other": "ग्वाटेमेलियन"
+		"name": "Guatemala",
+		"demonym_one": "Guatemalan",
+		"demonym_other": "Guatemalans"
 	},
 	"GUF": {
-		"name": "फ़्रेंच गुयाना"
+		"name": "French Guiana"
 	},
 	"GUM": {
-		"name": "गुआम",
-		"demonym_one": "गुआमानियन",
-		"demonym_other": "गुआमानिया"
+		"name": "Guam",
+		"demonym_one": "Guamanian",
+		"demonym_other": "Guamanians"
 	},
 	"GUY": {
-		"name": "गुयाना",
-		"demonym_one": "गुयाना",
-		"demonym_other": "गुयाना"
+		"name": "Guyana",
+		"demonym_one": "Guyanese",
+		"demonym_other": "Guyanese"
 	},
 	"HKG": {
-		"name": "हॉन्ग कॉन्ग",
-		"demonym_one": "हाँग काँग",
-		"demonym_other": "हॉंग कॉंगर्स"
+		"name": "Hong Kong",
+		"demonym_one": "Hong Konger",
+		"demonym_other": "Hong Kongers"
 	},
 	"HMD": {
-		"name": "हर्ड आइलैंड और मैकडोनाल्ड आइलैंड्स",
-		"demonym_one": "हर्ड एंड मैकडोनाल्ड आइलैंडर",
-		"demonym_other": "हर्ड एंड मैकडोनाल्ड आइलैंडर्स"
+		"name": "Heard Island and McDonald Islands",
+		"demonym_one": "Heard and McDonald Islander",
+		"demonym_other": "Heard and McDonald Islanders"
 	},
 	"HND": {
-		"name": "होंडुरास",
-		"demonym_one": "होंडुरन",
-		"demonym_other": "होंडुरांस"
+		"name": "Honduras",
+		"demonym_one": "Honduran",
+		"demonym_other": "Hondurans"
 	},
 	"HRV": {
-		"name": "क्रोएशिया",
-		"demonym_one": "क्रोएशियाई",
-		"demonym_other": "क्रोएशियाई"
+		"name": "Croatia",
+		"demonym_one": "Croatian",
+		"demonym_other": "Croatians"
 	},
 	"HTI": {
-		"name": "हैती",
-		"demonym_one": "हाईटिवासी",
-		"demonym_other": "हैटियन"
+		"name": "Haiti",
+		"demonym_one": "Haitian",
+		"demonym_other": "Haitians"
 	},
 	"HUN": {
-		"name": "हंगरी",
-		"demonym_one": "हंगेरियन",
-		"demonym_other": "हंगरी"
+		"name": "Hungary",
+		"demonym_one": "Hungarian",
+		"demonym_other": "Hungarians"
 	},
 	"IDN": {
-		"name": "इंडोनेशिया",
-		"demonym_one": "इंडोनेशियाई",
-		"demonym_other": "इंडोनेशियाई"
+		"name": "Indonesia",
+		"demonym_one": "Indonesian",
+		"demonym_other": "Indonesians"
 	},
 	"IMN": {
-		"name": "आइल ऑफ़ मैन",
-		"demonym_one": "मैनक्स",
-		"demonym_other": "मैनक्स"
+		"name": "Isle of Man",
+		"demonym_one": "Manx",
+		"demonym_other": "Manx"
 	},
 	"IND": {
-		"name": "इंडिया",
-		"demonym_one": "भारतीय",
-		"demonym_other": "भारतीयों"
+		"name": "India",
+		"demonym_one": "Indian",
+		"demonym_other": "Indians"
 	},
 	"IOT": {
-		"name": "ब्रिटिश हिंद महासागर क्षेत्र",
-		"demonym_one": "भारतीय",
-		"demonym_other": "भारतीयों"
+		"name": "British Indian Ocean Territory",
+		"demonym_one": "Indian",
+		"demonym_other": "Indians"
 	},
 	"IRL": {
-		"name": "आयरलैंड",
-		"demonym_one": "आयरिश",
-		"demonym_other": "आयरिश"
+		"name": "Ireland",
+		"demonym_one": "Irish",
+		"demonym_other": "Irish"
 	},
 	"IRN": {
-		"name": "ईरान",
-		"demonym_one": "ईरानी",
-		"demonym_other": "ईरानियों"
+		"name": "Iran",
+		"demonym_one": "Iranian",
+		"demonym_other": "Iranians"
 	},
 	"IRQ": {
-		"name": "इराक",
-		"demonym_one": "इराकी",
-		"demonym_other": "इराकियों"
+		"name": "Iraq",
+		"demonym_one": "Iraqi",
+		"demonym_other": "Iraqis"
 	},
 	"ISL": {
-		"name": "आइसलैंड",
-		"demonym_one": "आइसलैंडर",
-		"demonym_other": "आइसलैंडर्स"
+		"name": "Iceland",
+		"demonym_one": "Icelander",
+		"demonym_other": "Icelanders"
 	},
 	"ISR": {
-		"name": "इजराइल",
-		"demonym_one": "इजरायली",
-		"demonym_other": "इजरायली"
+		"name": "Israel",
+		"demonym_one": "Israeli",
+		"demonym_other": "Israelis"
 	},
 	"ITA": {
-		"name": "इटली",
-		"demonym_one": "इतालवी",
-		"demonym_other": "इटालियंस"
+		"name": "Italy",
+		"demonym_one": "Italian",
+		"demonym_other": "Italians"
 	},
 	"JAM": {
-		"name": "जमैका",
-		"demonym_one": "जमैका",
-		"demonym_other": "जमैका"
+		"name": "Jamaica",
+		"demonym_one": "Jamaican",
+		"demonym_other": "Jamaicans"
 	},
 	"JEY": {
-		"name": "जर्सी",
-		"demonym_one": "चैनल आइलैंडर",
-		"demonym_other": "चैनल आइलैंडर्स"
+		"name": "Jersey",
+		"demonym_one": "Channel Islander",
+		"demonym_other": "Channel Islanders"
 	},
 	"JOR": {
-		"name": "जॉर्डन",
-		"demonym_one": "जॉर्डन का",
-		"demonym_other": "जार्डन"
+		"name": "Jordan",
+		"demonym_one": "Jordanian",
+		"demonym_other": "Jordanians"
 	},
 	"JPN": {
-		"name": "जापान",
-		"demonym_one": "जापानी",
-		"demonym_other": "जापानी"
+		"name": "Japan",
+		"demonym_one": "Japanese",
+		"demonym_other": "Japanese"
 	},
 	"KAZ": {
-		"name": "कजाखस्तान",
-		"demonym_one": "कज़ाखस्तानी",
-		"demonym_other": "कज़ाखस्तानियों"
+		"name": "Kazakhstan",
+		"demonym_one": "Kazakhstani",
+		"demonym_other": "Kazakhstanis"
 	},
 	"KEN": {
-		"name": "केन्या",
-		"demonym_one": "केन्याई",
-		"demonym_other": "केन्याई"
+		"name": "Kenya",
+		"demonym_one": "Kenyan",
+		"demonym_other": "Kenyans"
 	},
 	"KGZ": {
-		"name": "किर्गिस्तान",
-		"demonym_one": "किर्गिज़",
-		"demonym_other": "किर्गिज़"
+		"name": "Kyrgyzstan",
+		"demonym_one": "Kirghiz",
+		"demonym_other": "Kirghiz"
 	},
 	"KHM": {
-		"name": "कंबोडिया",
-		"demonym_one": "कंबोडिया",
-		"demonym_other": "कंबोडियाई"
+		"name": "Cambodia",
+		"demonym_one": "Cambodian",
+		"demonym_other": "Cambodians"
 	},
 	"KIR": {
-		"name": "किरिबाती",
-		"demonym_one": "I-किरिबाती",
-		"demonym_other": "I-किरीबाटिस"
+		"name": "Kiribati",
+		"demonym_one": "I-Kiribati",
+		"demonym_other": "I-Kiribatis"
 	},
 	"KNA": {
-		"name": "सेंट किट्स एंड नेविस",
-		"demonym_one": "किटिटियन या नेविसियन",
-		"demonym_other": "किटिटियन या नेविसियन"
+		"name": "Saint Kitts and Nevis",
+		"demonym_one": "Kittitian or Nevisian",
+		"demonym_other": "Kittitians or Nevisians"
 	},
 	"KOR": {
-		"name": "दक्षिण कोरिया",
-		"demonym_one": "दक्षिण कोरियाई",
-		"demonym_other": "दक्षिण कोरियाई"
+		"name": "South Korea",
+		"demonym_one": "South Korean",
+		"demonym_other": "South Koreans"
 	},
 	"KWT": {
-		"name": "कुवैत",
-		"demonym_one": "कुवैती",
-		"demonym_other": "कुवैटिस"
+		"name": "Kuwait",
+		"demonym_one": "Kuwaiti",
+		"demonym_other": "Kuwaitis"
 	},
 	"LAO": {
-		"name": "लाओस",
-		"demonym_one": "लाओटियन",
-		"demonym_other": "लाओटियन"
+		"name": "Laos",
+		"demonym_one": "Laotian",
+		"demonym_other": "Laotians"
 	},
 	"LBN": {
-		"name": "लेबनान",
-		"demonym_one": "लेबनानी",
-		"demonym_other": "लेबनानी"
+		"name": "Lebanon",
+		"demonym_one": "Lebanese",
+		"demonym_other": "Lebanese"
 	},
 	"LBR": {
-		"name": "लाइबेरिया",
-		"demonym_one": "लाइबेरिया",
-		"demonym_other": "लाइबेरिया"
+		"name": "Liberia",
+		"demonym_one": "Liberian",
+		"demonym_other": "Liberians"
 	},
 	"LBY": {
-		"name": "लीबिया",
-		"demonym_one": "लीबिया वासी",
-		"demonym_other": "लीबियाई"
+		"name": "Libya",
+		"demonym_one": "Libyan",
+		"demonym_other": "Libyans"
 	},
 	"LCA": {
-		"name": "सैंट लूसिया",
-		"demonym_one": "सैंट लूसियन",
-		"demonym_other": "सैंट लुसियन्स"
+		"name": "Saint Lucia",
+		"demonym_one": "Saint Lucian",
+		"demonym_other": "Saint Lucians"
 	},
 	"LIE": {
-		"name": "लिकटेंस्टीन",
-		"demonym_one": "लिकटेंस्टीनर",
-		"demonym_other": "लिकटेंस्टीनर्स"
+		"name": "Liechtenstein",
+		"demonym_one": "Liechtensteiner",
+		"demonym_other": "Liechtensteiners"
 	},
 	"LKA": {
-		"name": "श्री लंका",
-		"demonym_one": "श्रीलंकाई",
-		"demonym_other": "श्रीलंकाई"
+		"name": "Sri Lanka",
+		"demonym_one": "Sri Lankan",
+		"demonym_other": "Sri Lankans"
 	},
 	"LSO": {
-		"name": "लेसोथो",
-		"demonym_one": "मोसोथो",
-		"demonym_other": "बसोथो"
+		"name": "Lesotho",
+		"demonym_one": "Mosotho",
+		"demonym_other": "Basotho"
 	},
 	"LTU": {
-		"name": "लिथुआनिया",
-		"demonym_one": "लिथुआनियाई",
-		"demonym_other": "लिथुआनियाई"
+		"name": "Lithuania",
+		"demonym_one": "Lithuanian",
+		"demonym_other": "Lithuanians"
 	},
 	"LUX": {
-		"name": "लक्ज़मबर्ग",
-		"demonym_one": "लक्ज़मबर्ग",
-		"demonym_other": "लक्ज़मबर्ग"
+		"name": "Luxembourg",
+		"demonym_one": "Luxembourger",
+		"demonym_other": "Luxembourgers"
 	},
 	"LVA": {
-		"name": "लातविया",
-		"demonym_one": "लातवियाई",
-		"demonym_other": "लातवियाई"
+		"name": "Latvia",
+		"demonym_one": "Latvian",
+		"demonym_other": "Latvians"
 	},
 	"MAC": {
-		"name": "मकाउ",
-		"demonym_one": "चीनी",
-		"demonym_other": "चीनी"
+		"name": "Macau",
+		"demonym_one": "Chinese",
+		"demonym_other": "Chinese"
 	},
 	"MAF": {
-		"name": "सैंट मार्टिन",
-		"demonym_one": "सैंट मार्टिन आइलैंडर",
-		"demonym_other": "सैंट मार्टिन आइलैंडर्स"
+		"name": "Saint Martin",
+		"demonym_one": "Saint Martin Islander",
+		"demonym_other": "Saint Martin Islanders"
 	},
 	"MAR": {
-		"name": "मोरक्को",
-		"demonym_one": "मोरक्को",
-		"demonym_other": "मोरक्को"
+		"name": "Morocco",
+		"demonym_one": "Moroccan",
+		"demonym_other": "Moroccans"
 	},
 	"MCO": {
-		"name": "मोनाको",
-		"demonym_one": "मोनेगास्क",
-		"demonym_other": "मोनेगास्कस"
+		"name": "Monaco",
+		"demonym_one": "Monegasque",
+		"demonym_other": "Monegasques"
 	},
 	"MDA": {
-		"name": "मोल्दोवा",
-		"demonym_one": "मोल्दोवन",
-		"demonym_other": "मोल्दोवन"
+		"name": "Moldova",
+		"demonym_one": "Moldovan",
+		"demonym_other": "Moldovans"
 	},
 	"MDG": {
-		"name": "मेडागास्कर",
-		"demonym_one": "मालागासी",
-		"demonym_other": "मालागासी"
+		"name": "Madagascar",
+		"demonym_one": "Malagasy",
+		"demonym_other": "Malagasy"
 	},
 	"MDV": {
-		"name": "मालदीव",
-		"demonym_one": "मालदीवान",
-		"demonym_other": "मालदीव"
+		"name": "Maldives",
+		"demonym_one": "Maldivan",
+		"demonym_other": "Maldivans"
 	},
 	"MEX": {
-		"name": "मेक्सिको",
-		"demonym_one": "मैक्सिकन",
-		"demonym_other": "मेक्सिको"
+		"name": "Mexico",
+		"demonym_one": "Mexican",
+		"demonym_other": "Mexicans"
 	},
 	"MHL": {
-		"name": "मार्शल आइलैंड्स",
-		"demonym_one": "मार्शलिस",
-		"demonym_other": "मार्शलिस"
+		"name": "Marshall Islands",
+		"demonym_one": "Marshallese",
+		"demonym_other": "Marshallese"
 	},
 	"MKD": {
-		"name": "नार्थ मैसेडोनिया",
-		"demonym_one": "मैसेडोनियन",
-		"demonym_other": "मैसेडोनियन"
+		"name": "North Macedonia",
+		"demonym_one": "Macedonian",
+		"demonym_other": "Macedonians"
 	},
 	"MLI": {
-		"name": "माली",
-		"demonym_one": "मलियान",
-		"demonym_other": "मलियन"
+		"name": "Mali",
+		"demonym_one": "Malian",
+		"demonym_other": "Malians"
 	},
 	"MLT": {
-		"name": "माल्टा",
-		"demonym_one": "मोलतिज़",
-		"demonym_other": "मोलतिज़"
+		"name": "Malta",
+		"demonym_one": "Maltese",
+		"demonym_other": "Maltese"
 	},
 	"MMR": {
-		"name": "म्यांमार",
-		"demonym_one": "बामर",
-		"demonym_other": "बामर्स"
+		"name": "Myanmar",
+		"demonym_one": "Bamar",
+		"demonym_other": "Bamars"
 	},
 	"MNE": {
-		"name": "मोंटेनेग्रो",
-		"demonym_one": "मॉन्टीनीग्रो-निवासी",
-		"demonym_other": "मोंटेनेग्रिन्स"
+		"name": "Montenegro",
+		"demonym_one": "Montenegrin",
+		"demonym_other": "Montenegrins"
 	},
 	"MNG": {
-		"name": "मंगोलिया",
-		"demonym_one": "मंगोलियन",
-		"demonym_other": "मंगोलियाई"
+		"name": "Mongolia",
+		"demonym_one": "Mongolian",
+		"demonym_other": "Mongolians"
 	},
 	"MNP": {
-		"name": "उत्तरी मारियाना द्वीपसमूह",
-		"demonym_one": "अमरिकी",
-		"demonym_other": "अमेरिकियों"
+		"name": "Northern Mariana Islands",
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"MOZ": {
-		"name": "मोजाम्बिक",
-		"demonym_one": "मोजाम्बिक",
-		"demonym_other": "मोजाम्बिक"
+		"name": "Mozambique",
+		"demonym_one": "Mozambican",
+		"demonym_other": "Mozambicans"
 	},
 	"MRT": {
-		"name": "मॉरिटानिया",
-		"demonym_one": "मॉरिटानियन",
-		"demonym_other": "मॉरिटानियन"
+		"name": "Mauritania",
+		"demonym_one": "Mauritanian",
+		"demonym_other": "Mauritanians"
 	},
 	"MSR": {
-		"name": "मोंटेसेराट",
-		"demonym_one": "मोंटसेराटियन",
-		"demonym_other": "मोंटसेराटियन"
+		"name": "Montserrat",
+		"demonym_one": "Montserratian",
+		"demonym_other": "Montserratians"
 	},
 	"MTQ": {
-		"name": "मार्टीनिक",
-		"demonym_one": "फ्रेंच",
-		"demonym_other": "फ्रेंच"
+		"name": "Martinique",
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"MUS": {
-		"name": "मॉरीशस",
-		"demonym_one": "मॉरीशस",
-		"demonym_other": "मॉरीशस"
+		"name": "Mauritius",
+		"demonym_one": "Mauritian",
+		"demonym_other": "Mauritian"
 	},
 	"MWI": {
-		"name": "मलावी",
-		"demonym_one": "मलावियन",
-		"demonym_other": "मलावियन"
+		"name": "Malawi",
+		"demonym_one": "Malawian",
+		"demonym_other": "Malawians"
 	},
 	"MYS": {
-		"name": "मलेशिया",
-		"demonym_one": "मलेशियाई",
-		"demonym_other": "मलेशियाई"
+		"name": "Malaysia",
+		"demonym_one": "Malaysian",
+		"demonym_other": "Malaysians"
 	},
 	"MYT": {
-		"name": "मैयट",
-		"demonym_one": "महोरन",
-		"demonym_other": "महोरन"
+		"name": "Mayotte",
+		"demonym_one": "Mahoran",
+		"demonym_other": "Mahorans"
 	},
 	"NAM": {
-		"name": "नामीबिया",
-		"demonym_one": "नामीबियाई",
-		"demonym_other": "नामीबियाई"
+		"name": "Namibia",
+		"demonym_one": "Namibian",
+		"demonym_other": "Namibians"
 	},
 	"NCL": {
-		"name": "न्यू कैलेडोनिया",
-		"demonym_one": "न्यू कैलेडोनियन",
-		"demonym_other": "न्यू कैलेडोनियन"
+		"name": "New Caledonia",
+		"demonym_one": "New Caledonian",
+		"demonym_other": "New Caledonians"
 	},
 	"NER": {
-		"name": "नाइजर",
-		"demonym_one": "नाइजीरियाई",
-		"demonym_other": "नाइजीरियाई"
+		"name": "Niger",
+		"demonym_one": "Nigerien",
+		"demonym_other": "Nigeriens"
 	},
 	"NFK": {
-		"name": "नॉरफ़ॉक आइलैंड",
-		"demonym_one": "नॉरफ़ॉक आइलैंडर",
-		"demonym_other": "नॉरफ़ॉक आइलैंडर्स"
+		"name": "Norfolk Island",
+		"demonym_one": "Norfolk Islander",
+		"demonym_other": "Norfolk Islanders"
 	},
 	"NGA": {
-		"name": "नाइजीरिया",
-		"demonym_one": "नाइजीरियाई",
-		"demonym_other": "नाइजीरिया"
+		"name": "Nigeria",
+		"demonym_one": "Nigerian",
+		"demonym_other": "Nigerians"
 	},
 	"NIC": {
-		"name": "निकारागुआ",
-		"demonym_one": "निकारागुआन",
-		"demonym_other": "निकारागुआंस"
+		"name": "Nicaragua",
+		"demonym_one": "Nicaraguan",
+		"demonym_other": "Nicaraguans"
 	},
 	"NIU": {
-		"name": "नियू",
-		"demonym_one": "नीयूआन",
-		"demonym_other": "नीयून्स"
+		"name": "Niue",
+		"demonym_one": "Niuean",
+		"demonym_other": "Niueans"
 	},
 	"NLD": {
-		"name": "नीदरलैंड",
-		"demonym_one": "डच",
-		"demonym_other": "डच"
+		"name": "Netherlands",
+		"demonym_one": "Dutch",
+		"demonym_other": "Dutch"
 	},
 	"NOR": {
-		"name": "नॉर्वे",
-		"demonym_one": "नार्वेजियन",
-		"demonym_other": "नार्वेजियन"
+		"name": "Norway",
+		"demonym_one": "Norwegian",
+		"demonym_other": "Norwegians"
 	},
 	"NPL": {
-		"name": "नेपाल",
-		"demonym_one": "नेपाली",
-		"demonym_other": "नेपाली"
+		"name": "Nepal",
+		"demonym_one": "Nepalese",
+		"demonym_other": "Nepalese"
 	},
 	"NRU": {
-		"name": "नाउरू",
-		"demonym_one": "नौरुआन",
-		"demonym_other": "नौरूआंस"
+		"name": "Nauru",
+		"demonym_one": "Nauruan",
+		"demonym_other": "Nauruans"
 	},
 	"NZL": {
-		"name": "न्यूज़ीलैंड",
-		"demonym_one": "न्यूज़ीलैंडर",
-		"demonym_other": "न्यूज़ीलैंडर्स"
+		"name": "New Zealand",
+		"demonym_one": "New Zealander",
+		"demonym_other": "New Zealanders"
 	},
 	"OMN": {
-		"name": "ओमान",
-		"demonym_one": "ओमानी",
-		"demonym_other": "ओमानिस"
+		"name": "Oman",
+		"demonym_one": "Omani",
+		"demonym_other": "Omanis"
 	},
 	"PAK": {
-		"name": "पाकिस्तान",
-		"demonym_one": "पाकिस्तानी",
-		"demonym_other": "पाकिस्तानियों"
+		"name": "Pakistan",
+		"demonym_one": "Pakistani",
+		"demonym_other": "Pakistanis"
 	},
 	"PAN": {
-		"name": "पनामा",
-		"demonym_one": "पनामा का निवासी",
-		"demonym_other": "पनामा का निवासी"
+		"name": "Panama",
+		"demonym_one": "Panamanian",
+		"demonym_other": "Panamanians"
 	},
 	"PCN": {
-		"name": "पिटकेर्न द्वीपसमूह",
-		"demonym_one": "पिटकेर्न आइलैंडर",
-		"demonym_other": "पिटकेर्न आइलैंडर्स"
+		"name": "Pitcairn Islands",
+		"demonym_one": "Pitcairn Islander",
+		"demonym_other": "Pitcairn Islanders"
 	},
 	"PER": {
-		"name": "पेरू",
-		"demonym_one": "पेरूवियन",
-		"demonym_other": "पेरूवियन"
+		"name": "Peru",
+		"demonym_one": "Peruvian",
+		"demonym_other": "Peruvians"
 	},
 	"PHL": {
-		"name": "फिलीपींस",
-		"demonym_one": "फिलिपिनो",
-		"demonym_other": "फिलिपिनोस"
+		"name": "Philippines",
+		"demonym_one": "Filipino",
+		"demonym_other": "Filipinos"
 	},
 	"PLW": {
-		"name": "पलाऊ",
-		"demonym_one": "पलौआन",
+		"name": "Palau",
+		"demonym_one": "Palauan",
 		"demonym_other": "Palauans"
 	},
 	"PNG": {
-		"name": "पापुआ न्यू गिनी",
-		"demonym_one": "पापुआ न्यू गिनी",
-		"demonym_other": "पापुआ न्यू गिनीयन"
+		"name": "Papua New Guinea",
+		"demonym_one": "Papua New Guinean",
+		"demonym_other": "Papua New Guineans"
 	},
 	"POL": {
-		"name": "पोलैंड",
-		"demonym_one": "पोलिश",
-		"demonym_other": "पोलिश"
+		"name": "Poland",
+		"demonym_one": "Polish",
+		"demonym_other": "Polish"
 	},
 	"PRI": {
-		"name": "प्यूर्टो रिको",
-		"demonym_one": "पुएर्तो रीको का",
-		"demonym_other": "प्वेर्टो रिकन्स"
+		"name": "Puerto Rico",
+		"demonym_one": "Puerto Rican",
+		"demonym_other": "Puerto Ricans"
 	},
 	"PRK": {
-		"name": "नार्थ कोरिया",
-		"demonym_one": "उत्तर कोरियाई",
-		"demonym_other": "उत्तर कोरियाई"
+		"name": "North Korea",
+		"demonym_one": "North Korean",
+		"demonym_other": "North Koreans"
 	},
 	"PRT": {
-		"name": "पुर्तगाल",
-		"demonym_one": "पुर्तगाली",
-		"demonym_other": "पुर्तगाली"
+		"name": "Portugal",
+		"demonym_one": "Portuguese",
+		"demonym_other": "Portuguese"
 	},
 	"PRY": {
-		"name": "पराग्वे",
-		"demonym_one": "पैराग्वे संबंधित",
-		"demonym_other": "परागुआयन"
+		"name": "Paraguay",
+		"demonym_one": "Paraguayan",
+		"demonym_other": "Paraguayans"
 	},
 	"PSE": {
-		"name": "पलेस्टाइन",
-		"demonym_one": "फिलिस्तीनी",
-		"demonym_other": "फिलिस्तीनियों"
+		"name": "Palestine",
+		"demonym_one": "Palestinian",
+		"demonym_other": "Palestinians"
 	},
 	"PYF": {
-		"name": "फ़्रेंच पोलिनेशिया",
-		"demonym_one": "फ़्रेंच पॉलिनेशियन",
-		"demonym_other": "फ़्रेंच पॉलिनेशियन"
+		"name": "French Polynesia",
+		"demonym_one": "French Polynesian",
+		"demonym_other": "French Polynesians"
 	},
 	"QAT": {
-		"name": "कतर",
-		"demonym_one": "कतरी",
-		"demonym_other": "कतरी"
+		"name": "Qatar",
+		"demonym_one": "Qatari",
+		"demonym_other": "Qataris"
 	},
 	"REU": {
-		"name": "रियूनियन",
-		"demonym_one": "फ्रेंच",
-		"demonym_other": "फ्रेंच"
+		"name": "Réunion",
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"ROU": {
-		"name": "रोमानिया",
-		"demonym_one": "रोमानियाई",
-		"demonym_other": "रोम देशवासी"
+		"name": "Romania",
+		"demonym_one": "Romanian",
+		"demonym_other": "Romanians"
 	},
 	"RUS": {
-		"name": "रूस",
-		"demonym_one": "रूसी",
-		"demonym_other": "रूसियों"
+		"name": "Russia",
+		"demonym_one": "Russian",
+		"demonym_other": "Russians"
 	},
 	"RWA": {
-		"name": "रवांडा",
-		"demonym_one": "रवांडा",
-		"demonym_other": "रवांडा"
+		"name": "Rwanda",
+		"demonym_one": "Rwandan",
+		"demonym_other": "Rwandans"
 	},
 	"SAU": {
-		"name": "सउदी अरब",
-		"demonym_one": "सऊदी अरेबियन",
-		"demonym_other": "सऊदी अरब"
+		"name": "Saudi Arabia",
+		"demonym_one": "Saudi Arabian",
+		"demonym_other": "Saudi Arabians"
 	},
 	"SDN": {
-		"name": "सूडान",
-		"demonym_one": "सूडानी",
-		"demonym_other": "सूडानी"
+		"name": "Sudan",
+		"demonym_one": "Sudanese",
+		"demonym_other": "Sudanese"
 	},
 	"SEN": {
-		"name": "सेनेगल",
-		"demonym_one": "सेनेगली",
-		"demonym_other": "सेनेगली"
+		"name": "Senegal",
+		"demonym_one": "Senegalese",
+		"demonym_other": "Senegalese"
 	},
 	"SGP": {
-		"name": "सिंगापुर",
-		"demonym_one": "सिंगापुरी",
-		"demonym_other": "सिंगापुरी"
+		"name": "Singapore",
+		"demonym_one": "Singaporean",
+		"demonym_other": "Singaporeans"
 	},
 	"SGS": {
-		"name": "दक्षिण जॉर्जिया",
-		"demonym_one": "साउथ जॉर्जियाई साउथ सैंडविच आइलैंडर",
-		"demonym_other": "साउथ जॉर्जियाई साउथ सैंडविच आइलैंडर्स"
+		"name": "South Georgia",
+		"demonym_one": "South Georgian South Sandwich Islander",
+		"demonym_other": "South Georgian South Sandwich Islanders"
 	},
 	"SHN": {
-		"name": "सेंट हेलेना, असेंशन और ट्रिस्टन दा कुन्हा"
+		"name": "Saint Helena, Ascension and Tristan da Cunha"
 	},
 	"SJM": {
-		"name": "स्वालबार्ड और जान मायेन",
-		"demonym_one": "नार्वेजियन",
-		"demonym_other": "नार्वेजियन"
+		"name": "Svalbard and Jan Mayen",
+		"demonym_one": "Norwegian",
+		"demonym_other": "Norwegians"
 	},
 	"SLB": {
-		"name": "सोलोमन द्वीपसमूह",
-		"demonym_one": "सोलोमन आइलैंडर",
-		"demonym_other": "सोलोमन आइलैंडर्स"
+		"name": "Solomon Islands",
+		"demonym_one": "Solomon Islander",
+		"demonym_other": "Solomon Islanders"
 	},
 	"SLE": {
-		"name": "सियरा लियोन",
-		"demonym_one": "सियरा लियोनियन",
-		"demonym_other": "सियरा लियोनियंस"
+		"name": "Sierra Leone",
+		"demonym_one": "Sierra Leonean",
+		"demonym_other": "Sierra Leoneans"
 	},
 	"SLV": {
-		"name": "अल सल्वाडोर",
-		"demonym_one": "साल्वाडोरन",
-		"demonym_other": "साल्वाडोरन"
+		"name": "El Salvador",
+		"demonym_one": "Salvadoran",
+		"demonym_other": "Salvadorans"
 	},
 	"SMR": {
-		"name": "सैन मारिनो",
-		"demonym_one": "सममरीनीज़",
-		"demonym_other": "सममरीनीज़"
+		"name": "San Marino",
+		"demonym_one": "Sammarinese",
+		"demonym_other": "Sammarinese"
 	},
 	"SOM": {
-		"name": "सोमालिया",
-		"demonym_one": "सोमाली",
-		"demonym_other": "सोमालियाई"
+		"name": "Somalia",
+		"demonym_one": "Somali",
+		"demonym_other": "Somalis"
 	},
 	"SPM": {
-		"name": "सेंट पिएरे और मिकेलॉन",
-		"demonym_one": "फ्रेंच",
-		"demonym_other": "फ्रेंच"
+		"name": "Saint Pierre and Miquelon",
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"SRB": {
-		"name": "सर्बिया",
-		"demonym_one": "सर्बियाई",
-		"demonym_other": "सर्बियाई"
+		"name": "Serbia",
+		"demonym_one": "Serbian",
+		"demonym_other": "Serbians"
 	},
 	"SSD": {
-		"name": "दक्षिण सूडान",
-		"demonym_one": "दक्षिण सूडानी",
-		"demonym_other": "दक्षिण सूडानी"
+		"name": "South Sudan",
+		"demonym_one": "South Sudanese",
+		"demonym_other": "South Sudanese"
 	},
 	"STP": {
-		"name": "साओ टोमे और प्रिंसिपी",
-		"demonym_one": "साओ टोमेन",
-		"demonym_other": "साओ टोमेन्स"
+		"name": "São Tomé and Príncipe",
+		"demonym_one": "Sao Tomean",
+		"demonym_other": "Sao Tomeans"
 	},
 	"SUR": {
-		"name": "सूरीनाम",
-		"demonym_one": "सुरीनामेर",
-		"demonym_other": "सुरिनमेर्स"
+		"name": "Suriname",
+		"demonym_one": "Surinamer",
+		"demonym_other": "Surinamers"
 	},
 	"SVK": {
-		"name": "स्लोवाकिया",
-		"demonym_one": "स्लोवाक",
-		"demonym_other": "स्लोवाक लोगों"
+		"name": "Slovakia",
+		"demonym_one": "Slovak",
+		"demonym_other": "Slovaks"
 	},
 	"SVN": {
-		"name": "स्लोवेनिया",
-		"demonym_one": "स्लोवेनियाई",
-		"demonym_other": "स्लोवेनियाई"
+		"name": "Slovenia",
+		"demonym_one": "Slovene",
+		"demonym_other": "Slovenes"
 	},
 	"SWE": {
-		"name": "स्वीडन",
-		"demonym_one": "स्वीडिश",
-		"demonym_other": "स्वीडिश"
+		"name": "Sweden",
+		"demonym_one": "Swedish",
+		"demonym_other": "Swedish"
 	},
 	"SWZ": {
-		"name": "इस्वातिनी",
-		"demonym_one": "स्वाजी",
-		"demonym_other": "स्वाज़िस"
+		"name": "Eswatini",
+		"demonym_one": "Swazi",
+		"demonym_other": "Swazis"
 	},
 	"SXM": {
-		"name": "सिंट मार्टेन",
-		"demonym_one": "सेंट मार्टनर",
-		"demonym_other": "सेंट मार्टेनर्स"
+		"name": "Sint Maarten",
+		"demonym_one": "St. Maartener",
+		"demonym_other": "St. Maarteners"
 	},
 	"SYC": {
-		"name": "सेचेल्स",
-		"demonym_one": "सेशेलोइस",
-		"demonym_other": "सेशेलोइस"
+		"name": "Seychelles",
+		"demonym_one": "Seychellois",
+		"demonym_other": "Seychellois"
 	},
 	"SYR": {
-		"name": "सीरिया",
-		"demonym_one": "सीरियाई",
-		"demonym_other": "सीरिया"
+		"name": "Syria",
+		"demonym_one": "Syrian",
+		"demonym_other": "Syrians"
 	},
 	"TCA": {
-		"name": "तुर्क और कैकोस द्वीपसमूह",
-		"demonym_one": "तुर्क एंड कैकोस आइलैंडर",
-		"demonym_other": "तुर्क एंड कैकोस आइलैंडर्स"
+		"name": "Turks and Caicos Islands",
+		"demonym_one": "Turks and Caicos Islander",
+		"demonym_other": "Turks and Caicos Islanders"
 	},
 	"TCD": {
-		"name": "काग़ज़ का टुकड़ा",
-		"demonym_one": "चैडियन",
-		"demonym_other": "चैडियन्स"
+		"name": "Chad",
+		"demonym_one": "Chadian",
+		"demonym_other": "Chadians"
 	},
 	"TGO": {
-		"name": "टोगो",
-		"demonym_one": "टोगोलेज़",
-		"demonym_other": "टोगोलेज़"
+		"name": "Togo",
+		"demonym_one": "Togolese",
+		"demonym_other": "Togolese"
 	},
 	"THA": {
-		"name": "थाईलैंड",
-		"demonym_one": "थाई",
-		"demonym_other": "थायस"
+		"name": "Thailand",
+		"demonym_one": "Thai",
+		"demonym_other": "Thais"
 	},
 	"TJK": {
-		"name": "तजाकिस्तान",
-		"demonym_one": "तद्झिक",
-		"demonym_other": "तद्झिक"
+		"name": "Tajikistan",
+		"demonym_one": "Tadzhik",
+		"demonym_other": "Tadzhiks"
 	},
 	"TKL": {
-		"name": "टोकेलाऊ",
-		"demonym_one": "टोकेलौआन",
-		"demonym_other": "टोकेलुआंस"
+		"name": "Tokelau",
+		"demonym_one": "Tokelauan",
+		"demonym_other": "Tokelauans"
 	},
 	"TKM": {
-		"name": "तुर्कमेनिस्तान",
-		"demonym_one": "तुक्रमेन",
-		"demonym_other": "तुर्कमेनिस्तान"
+		"name": "Turkmenistan",
+		"demonym_one": "Turkmen",
+		"demonym_other": "Turkmenians"
 	},
 	"TLS": {
-		"name": "तिमोर-लेस्ते",
-		"demonym_one": "पूर्वी तिमोर",
-		"demonym_other": "पूर्वी तिमोर"
+		"name": "Timor-Leste",
+		"demonym_one": "East Timorese",
+		"demonym_other": "East Timorese"
 	},
 	"TON": {
-		"name": "टोंगा",
-		"demonym_one": "टोंगन",
-		"demonym_other": "टोंगन्स"
+		"name": "Tonga",
+		"demonym_one": "Tongan",
+		"demonym_other": "Tongans"
 	},
 	"TTO": {
-		"name": "त्रिनिदाद और टोबैगो",
-		"demonym_one": "त्रिनिदादिअन",
-		"demonym_other": "त्रिनिदाद"
+		"name": "Trinidad and Tobago",
+		"demonym_one": "Trinidadian",
+		"demonym_other": "Trinidadians"
 	},
 	"TUN": {
-		"name": "ट्यूनीशिया",
-		"demonym_one": "ट्यूनीशियाई",
-		"demonym_other": "ट्यूनीशिया"
+		"name": "Tunisia",
+		"demonym_one": "Tunisian",
+		"demonym_other": "Tunisians"
 	},
 	"TUR": {
-		"name": "तुर्की",
-		"demonym_one": "तुर्की",
-		"demonym_other": "तुर्की का नागरिक"
+		"name": "Turkey",
+		"demonym_one": "Turkish",
+		"demonym_other": "Turks"
 	},
 	"TUV": {
-		"name": "तुवालु",
-		"demonym_one": "तुवालुअन",
-		"demonym_other": "तुवालुअन्स"
+		"name": "Tuvalu",
+		"demonym_one": "Tuvaluan",
+		"demonym_other": "Tuvaluans"
 	},
 	"TWN": {
-		"name": "ताइवान",
-		"demonym_one": "ताइवानी",
-		"demonym_other": "ताइवानी"
+		"name": "Taiwan",
+		"demonym_one": "Taiwanese",
+		"demonym_other": "Taiwanese"
 	},
 	"TZA": {
-		"name": "तंजानिया",
-		"demonym_one": "तंज़ानियाई",
-		"demonym_other": "तंजानिया"
+		"name": "Tanzania",
+		"demonym_one": "Tanzanian",
+		"demonym_other": "Tanzanians"
 	},
 	"UGA": {
-		"name": "युगांडा",
-		"demonym_one": "युगांडा",
-		"demonym_other": "युगांडा"
+		"name": "Uganda",
+		"demonym_one": "Ugandan",
+		"demonym_other": "Ugandans"
 	},
 	"UKR": {
-		"name": "यूक्रेन",
-		"demonym_one": "यूक्रेनी",
-		"demonym_other": "यूक्रेनियन"
+		"name": "Ukraine",
+		"demonym_one": "Ukrainian",
+		"demonym_other": "Ukrainians"
 	},
 	"UMI": {
-		"name": "यूनाइटेड स्टेट्स माइनर आउटलाइंग आइलैंड्स",
-		"demonym_one": "अमरिकी",
-		"demonym_other": "अमेरिकियों"
+		"name": "United States Minor Outlying Islands",
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UNK": {
-		"name": "कोसोवो",
-		"demonym_one": "कोसोवर",
-		"demonym_other": "कोसोवर"
+		"name": "Kosovo",
+		"demonym_one": "Kosovar",
+		"demonym_other": "Kosovars"
 	},
 	"URY": {
-		"name": "उरुग्वे",
-		"demonym_one": "उरुग्वे",
-		"demonym_other": "उरुग्वे"
+		"name": "Uruguay",
+		"demonym_one": "Uruguayan",
+		"demonym_other": "Uruguayans"
 	},
 	"USA": {
-		"name": "संयुक्त राज्य अमेरिका",
-		"demonym_one": "अमरिकी",
-		"demonym_other": "अमेरिकियों"
+		"name": "United States",
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UZB": {
-		"name": "उज़्बेकिस्तान",
-		"demonym_one": "उज़्बेकिस्तानी",
-		"demonym_other": "उज़्बेकिस्तान"
+		"name": "Uzbekistan",
+		"demonym_one": "Uzbekistani",
+		"demonym_other": "Uzbekistanis"
 	},
 	"VAT": {
-		"name": "वैटिकन सिटी",
-		"demonym_one": "इतालवी",
-		"demonym_other": "इटालियंस"
+		"name": "Vatican City",
+		"demonym_one": "Italian",
+		"demonym_other": "Italians"
 	},
 	"VCT": {
-		"name": "सेंट विंसेंट एंड द ग्रेनेडाइंस",
-		"demonym_one": "सेंट विंसेंटियन",
-		"demonym_other": "सेंट विंसेंटियन्स"
+		"name": "Saint Vincent and the Grenadines",
+		"demonym_one": "Saint Vincentian",
+		"demonym_other": "Saint Vincentians"
 	},
 	"VEN": {
-		"name": "वेनेजुएला",
-		"demonym_one": "विनीज़वीलियन",
-		"demonym_other": "विनीज़वीलियन"
+		"name": "Venezuela",
+		"demonym_one": "Venezuelan",
+		"demonym_other": "Venezuelans"
 	},
 	"VGB": {
-		"name": "ब्रिटिश वर्जिन आइलैंड्स",
-		"demonym_one": "वर्जिन आइलैंडर",
-		"demonym_other": "वर्जिन आइलैंडर्स"
+		"name": "British Virgin Islands",
+		"demonym_one": "Virgin Islander",
+		"demonym_other": "Virgin Islanders"
 	},
 	"VIR": {
-		"name": "संयुक्त राज्य अमेरिका वर्जिन द्वीपसमूह",
-		"demonym_one": "वर्जिन आइलैंडर",
-		"demonym_other": "वर्जिन आइलैंडर्स"
+		"name": "United States Virgin Islands",
+		"demonym_one": "Virgin Islander",
+		"demonym_other": "Virgin Islanders"
 	},
 	"VNM": {
-		"name": "वियतनाम",
-		"demonym_one": "वियतनामी",
-		"demonym_other": "वियतनामी"
+		"name": "Vietnam",
+		"demonym_one": "Vietnamese",
+		"demonym_other": "Vietnamese"
 	},
 	"VUT": {
-		"name": "वानुअतु",
-		"demonym_one": "नी-वानुअतु",
-		"demonym_other": "नी-वानुअतु"
+		"name": "Vanuatu",
+		"demonym_one": "Ni-Vanuatu",
+		"demonym_other": "Ni-Vanuatu"
 	},
 	"WLF": {
-		"name": "वालिस और फ़्यूचूना",
-		"demonym_one": "वालिस और फ़्यूचूना आइलैंडर",
-		"demonym_other": "वालिस और फ़्यूचूना आइलैंडर्स"
+		"name": "Wallis and Futuna",
+		"demonym_one": "Wallis and Futuna Islander",
+		"demonym_other": "Wallis and Futuna Islanders"
 	},
 	"WSM": {
-		"name": "समोआ",
-		"demonym_one": "समोआन",
-		"demonym_other": "समोआंस"
+		"name": "Samoa",
+		"demonym_one": "Samoan",
+		"demonym_other": "Samoans"
 	},
 	"YEM": {
-		"name": "यमन",
-		"demonym_one": "येमेनी",
-		"demonym_other": "येमनियों"
+		"name": "Yemen",
+		"demonym_one": "Yemeni",
+		"demonym_other": "Yemenis"
 	},
 	"ZAF": {
-		"name": "दक्षिण अफ़्रीका",
-		"demonym_one": "दक्षिण अफ़्रीकी",
-		"demonym_other": "दक्षिण अफ़्रीकी"
+		"name": "South Africa",
+		"demonym_one": "South African",
+		"demonym_other": "South Africans"
 	},
 	"ZMB": {
-		"name": "जाम्बिया",
-		"demonym_one": "जाम्बिया का बासी",
-		"demonym_other": "जाम्बिया"
+		"name": "Zambia",
+		"demonym_one": "Zambian",
+		"demonym_other": "Zambians"
 	},
 	"ZWE": {
-		"name": "जिम्बाब्वे",
-		"demonym_one": "जिम्बाब्वे",
-		"demonym_other": "जिम्बाब्वे"
+		"name": "Zimbabwe",
+		"demonym_one": "Zimbabwean",
+		"demonym_other": "Zimbabweans"
 	}
 }
