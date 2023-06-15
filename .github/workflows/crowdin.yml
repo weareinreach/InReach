@@ -10,7 +10,7 @@ on:
     branches-ignore:
       # - dev
       - main
-      - l10n*
+      - l10n_**
 
 jobs:
   synchronize-with-crowdin:
@@ -39,7 +39,7 @@ jobs:
           replacement: '_'
 
       - name: Upload to Crowdin
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && !contains(github.ref_name, 'l10n_')
         uses: crowdin/github-action@3133cc916c35590475cf6705f482fb653d8e36e9 # v1.10.0
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
