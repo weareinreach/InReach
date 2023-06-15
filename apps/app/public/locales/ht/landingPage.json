@@ -3,41 +3,41 @@
 		"redesign": "Li sou lansman de InReach App Redesign a sou blog nou an. <Link>Aprann plis.</Link>"
 	},
 	"call-out": {
-		"hear-from-users": "<Title1>Koute itilizatè nou an</Title1>",
-		"who-we-are": "<Title1>Ki moun nou ye</Title1>\n<Text>Nou se yon teknoloji trans-dirije san bi likratif ogmante aksè resous pou divès LGBTQ+kominote a.</Text>\n<Link>Aprann plis bagay sou nou.</Link>"
+		"hear-from-users": "<Title1>Hear from our users</Title1>",
+		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led tech nonprofit increasing resource access for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
 	},
 	"hero": {
 		"community": {
-			"0": "LGBTQ+moun k ap chèche azil",
-			"1": "Imigran LGBTQ+",
-			"2": "LGBTQ+refijye",
-			"3": "LGBTQ+jèn",
-			"4": "kominote a transganr",
-			"5": "LGBTQ+kominote BIPOC",
-			"6": "moun kap bay swen nan LGBTQ+jèn"
+			"0": "LGBTQ+ asylum seekers",
+			"1": "LGBTQ+ immigrants",
+			"2": "LGBTQ+ refugees",
+			"3": "LGBTQ+ youth",
+			"4": "the transgender community",
+			"5": "LGBTQ+ BIPOC communities",
+			"6": "caregivers of LGBTQ+ youth"
 		},
-		"find-resources": "<Text>Jwenn verifye </Text><Service></Service><Text> pou </Text><Community></Community><Text> ak InReach.</Text>",
-		"heading": "Jwenn resous LGBTQ+.",
+		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"heading": "Find LGBTQ+ resources.",
 		"privacy-disclaimer": "Repons ou an anonim epi yo pa konekte ak ou kòm yon itilizatè endividyèl. Li nou an <Link>règleman sou vi prive</Link> yo aprann plis.",
 		"services": {
-			"0": "swen medikal",
-			"1": "sipò kominote",
-			"2": "swen sante mantal",
-			"3": "edikasyon",
-			"4": "travay",
-			"5": "manje",
-			"6": "lojman",
-			"7": "rad",
-			"8": "èd legal",
-			"9": "tradiksyon"
+			"0": "medical care",
+			"1": "community support",
+			"2": "mental health care",
+			"3": "education",
+			"4": "employment",
+			"5": "food",
+			"6": "housing",
+			"7": "clothing",
+			"8": "legal help",
+			"9": "translation"
 		},
-		"subheading": "Byenveni nan premye platfòm teknoloji nan mond lan matche TLGBQ+ (transganr, lèsbyan, masisi, biseksyèl, queer ak plis idantite) moun ki fè fas a pèsekisyon oswa diskriminasyon ak resous ki an sekirite, verifye."
+		"subheading": "Welcome to the world's first tech platform matching TLGBQ+ (transgender, lesbian, gay, bisexual, queer and more identities) people facing persecution or discrimination with safe, verified resources."
 	},
 	"values": {
-		"free": "<Title2>Gratis pou tout tan 🔑</Title2>\n<Text>platfòm teknoloji nou an se 100% gratis pou tout moun asire èd san danje se toujou InREACH.</Text>\n<LinkFree>Fè don pou ede nou kenbe platfòm nou an gratis.</LinkFree>",
-		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>Nou se premye platfòm teknoloji nan mond lan matche LGBTQ+moun ki fè fas a pèsekisyon oswa diskriminasyon ak resous ki an sekirite, poukont verifye.</Text>\n<LinkInnovative>Gade kòd sous nou yo ak kontribye.</LinkInnovative>",
-		"intersectional": "<Title2>Entèseksyonèl ✊🏿‍✊🏾✊🏽</Title2>\n<Text>Nou kwè LGBTQ+egalite mande jistis trans, jistis refijye, jistis rasyal, jistis repwodiktif, jistis langaj ak plis ankò.</Text>\n<LinkIntersect>Aprann plis bagay sou pwosesis revizyon nou an.</LinkIntersect>",
-		"our-values": "Valè nou",
-		"safety-first": "<Title2>Sekirite-premye 🔒</Title2>\n<Text>Nou konnen anonim sou entènèt kapab yon pwoblèm lavi-oswa-lanmò pou LGBTQ+moun. Se poutèt sa App nou an fèt pou pwoteje konfidansyalite ak sekirite itilizatè yo sou entènèt.</Text>\n<LinkSafety>Aprann plis sou règleman sou vi prive nou an.</LinkSafety>"
+		"free": "<Title2>Free forever 🔑</Title2>\n<Text>Our tech platform is 100% free for everyone to ensure safe help is always InReach.</Text>\n<LinkFree>Donate to help us to keep our platform free.</LinkFree>",
+		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, independently verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice and more.</Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
+		"our-values": "Our values",
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
 	}
 }
