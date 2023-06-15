@@ -1,43 +1,43 @@
 {
 	"banner": {
-		"redesign": "Про запуск редизайну InReach App читайте в нашому блозі. <Link>Дізнатися більше.</Link>"
+		"redesign": "Read about the launch of the InReach App redesign on our blog. <Link>Learn more.</Link>"
 	},
 	"call-out": {
-		"hear-from-users": "<Title1>Послухайте від наших користувачів</Title1>",
-		"who-we-are": "<Title1>Хто ми</Title1>\n<Text>Ми є транс-технологічною некомерційною організацією, що збільшує доступ до ресурсів для різноманітної спільноти ЛГБТК +.</Text>\n<Link>Дізнайтеся більше про нас.</Link>"
+		"hear-from-users": "<Title1>Hear from our users</Title1>",
+		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led tech nonprofit increasing resource access for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
 	},
 	"hero": {
 		"community": {
-			"0": "ЛГБТК+шукачі притулку",
-			"1": "ЛГБТК+іммігранти",
-			"2": "Біженці ЛГБТК+",
-			"3": "ЛГБТК+ молодь",
-			"4": "трансгендерна спільнота",
-			"5": "ЛГБТК+ спільноти BIPOC",
-			"6": "вихователі ЛГБТК+ молоді"
+			"0": "LGBTQ+ asylum seekers",
+			"1": "LGBTQ+ immigrants",
+			"2": "LGBTQ+ refugees",
+			"3": "LGBTQ+ youth",
+			"4": "the transgender community",
+			"5": "LGBTQ+ BIPOC communities",
+			"6": "caregivers of LGBTQ+ youth"
 		},
-		"find-resources": "<Text>Знайти перевірено </Text><Service></Service><Text> для </Text><Community></Community><Text> з InReach.</Text>",
-		"heading": "Знайдіть ресурси ЛГБТК +.",
-		"privacy-disclaimer": "Ваша відповідь анонімна і не пов'язана з вами як окремим користувачем. Ознайомтеся з нашою політикою конфіденційності <Link></Link> , щоб дізнатися більше.",
+		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"heading": "Find LGBTQ+ resources.",
+		"privacy-disclaimer": "Your answer is anonymous and not connected to you as an individual user. Read our <Link>privacy policy</Link> to learn more.",
 		"services": {
-			"0": "медична допомога",
-			"1": "підтримка спільноти",
-			"2": "охорона психічного здоров'я",
-			"3": "освіта",
-			"4": "зайнятість",
-			"5": "харчування",
-			"6": "житло",
-			"7": "одяг",
-			"8": "юридична допомога",
-			"9": "переклад"
+			"0": "medical care",
+			"1": "community support",
+			"2": "mental health care",
+			"3": "education",
+			"4": "employment",
+			"5": "food",
+			"6": "housing",
+			"7": "clothing",
+			"8": "legal help",
+			"9": "translation"
 		},
-		"subheading": "Ласкаво просимо на першу в світі технологічну платформу, що відповідає TLGBQ + (трансгендерні, лесбіянки, геї, бісексуальні, квір-та інші ідентичності) людям, які стикаються з переслідуванням чи дискримінацією за допомогою безпечних перевірених ресурсів."
+		"subheading": "Welcome to the world's first tech platform matching TLGBQ+ (transgender, lesbian, gay, bisexual, queer and more identities) people facing persecution or discrimination with safe, verified resources."
 	},
 	"values": {
-		"free": "<Title2>Безкоштовно назавжди 🔑</Title2>\n<Text>Наша технологічна платформа на 100% безкоштовна для всіх, щоб забезпечити безпечну допомогу завжди InReach.</Text>\n<LinkFree>Пожертвуйте, щоб допомогти нам зберегти нашу платформу вільною.</LinkFree>",
+		"free": "<Title2>Free forever 🔑</Title2>\n<Text>Our tech platform is 100% free for everyone to ensure safe help is always InReach.</Text>\n<LinkFree>Donate to help us to keep our platform free.</LinkFree>",
 		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, independently verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
-		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>Ми вважаємо, що LGBTQ+рівність вимагає транс-справедливості, правосуддя для біженців, расової справедливості, репродуктивної справедливості, мовної справедливості тощо.</Text>\n<LinkIntersect>Дізнайтеся більше про наш процес перевірки.</LinkIntersect>",
-		"our-values": "Наші цінності",
-		"safety-first": "<Title2>Безпека перша 🔒</Title2>\n<Text>Ми знаємо, що анонімність в Інтернеті може бути проблемою життя чи смерті для ЛГБТК + людей. Саме тому наш додаток призначений для захисту конфіденційності та безпеки користувачів в Інтернеті.</Text>\n<LinkSafety>Дізнайтеся більше про нашу політику конфіденційності.</LinkSafety>"
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice and more.</Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
+		"our-values": "Our values",
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
 	}
 }
