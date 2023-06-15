@@ -1,0 +1,43 @@
+{
+	"banner": {
+		"redesign": "Soma juu ya uzinduzi wa Upyaji wa Programu ya InReach kwenye blogi yetu. <Link>Jifunze zaidi.</Link>"
+	},
+	"call-out": {
+		"hear-from-users": "<Title1>Sikia kutoka kwa watumiaji wetu</Title1>",
+		"who-we-are": "<Title1>sisi ni nani</Title1>\n<Text>Sisi ni trans-leed tech nonprofit kuongeza upatikanaji wa rasilimali kwa jamii mbalimbali LGBTQ +.</Text>\n<Link>Jifunze zaidi kuhusu sisi.</Link>"
+	},
+	"hero": {
+		"community": {
+			"0": "LGBTQ+wanaotafuta hifadhi",
+			"1": "LGBTQ+wahamiaji",
+			"2": "Wakimbizi wa LGBTQ+",
+			"3": "Vijana wa LGBTQ+",
+			"4": "jamii ya transgender",
+			"5": "Jamii za LGBTQ+BIPOC",
+			"6": "walezi wa vijana wa LGBTQ+"
+		},
+		"find-resources": "<Text>Pata </Text><Service></Service><Text> iliyothibitishwa kwa </Text><Community></Community><Text> na InReach.</Text>",
+		"heading": "Pata rasilimali za LGBTQ +.",
+		"privacy-disclaimer": "Jibu lako halijulikani na halijaunganishwa na wewe kama mtumiaji binafsi. Soma sera yetu ya faragha ya <Link></Link> ili ujifunze zaidi.",
+		"services": {
+			"0": "huduma ya matibabu",
+			"1": "Msaada wa jamii",
+			"2": "huduma ya afya ya akili",
+			"3": "elimu",
+			"4": "ajira",
+			"5": "chakula",
+			"6": "nyumba",
+			"7": "mavazi",
+			"8": "msaada wa kisheria",
+			"9": "tafsiri"
+		},
+		"subheading": "Karibu kwenye jukwaa la kwanza la teknolojia ulimwenguni linalolingana na TLGBQ+ (transgender, lesbium, jinsia mbili, queer na vitambulisho zaidi) watu wanaokabiliwa na mateso au ubaguzi na rasilimali salama, zilizothibitishwa."
+	},
+	"values": {
+		"free": "<Title2>Bure milele 🔑</Title2>\n<Text>Jukwaa letu la teknolojia ni bure kwa 100% kwa kila mtu kuhakikisha msaada salama uko daima katika Reach.</Text>\n<LinkFree>Changia kutusaidia kuweka jukwaa letu bure.</LinkFree>",
+		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, independently verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>Tunaamini usawa wa LGBTQ+unahitaji haki ya trans, haki ya wakimbizi, haki ya rangi, haki ya uzazi, haki ya lugha na zaidi.</Text>\n<LinkIntersect>Jifunze zaidi juu ya mchakato wetu wa kukagua.</LinkIntersect>",
+		"our-values": "Maadili yetu",
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>Tunajua kutokujulikana mtandaoni kunaweza kuwa suala la maisha au kifo kwa watu wa LGBTQ+. Ndio sababu Programu yetu imeundwa kulinda usiri na usalama wa watumiaji mkondoni.</Text>\n<LinkSafety>Jifunze zaidi kuhusu sera yetu ya faragha.</LinkSafety>"
+	}
+}
