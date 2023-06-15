@@ -1,11 +1,11 @@
 {
 	"body": {
 		"accept-country": "Veuillez noter que nous ne pouvons accepter que les organisations situées aux États-Unis, au Mexique et au Canada en ce moment.",
-		"additional-info": "Informations complémentaires",
+		"additional-info": "Additional information",
 		"intro-text": "Merci de votre intérêt à contribuer à l'application InReach ! Utilisez ce formulaire pour suggérer une organisation (par ex. à but non lucratif, organisations locales ou communautaires, systèmes de soins de santé, pratiques privées, etc.) vous pensez qu'il devrait être inclus. C'est ok si vous n'avez pas toutes les informations demandées par le formulaire - il suffit de remplir ce que vous savez, et nous ferons le reste! Nous apprécions votre soumission et vous remercions de nous aider à améliorer l'accès à des ressources sûres et vérifiées pour la communauté LGBTQ+ diversifiée. Toutes les organisations suggérées sont soumises à l'examen par les bénévoles formés d'InReach avant leur publication sur InReach.",
 		"required-info": "Informations requises",
 		"subject-review": "Toutes les organisations suggérées sont soumises à examen par InReach avant publication.",
-		"suggest-org": "Suggérer une organisation"
+		"suggest-org": "Suggest an organization"
 	},
 	"form": {
 		"btn-community": "Ajouter le(s) axe(s) communautaire(s) LGBTQ+",
@@ -21,7 +21,7 @@
 		"org-name": "Nom de l'organisation",
 		"org-website": "Site Web de l'organisation",
 		"placeholder-address": "Entrez l'adresse...",
-		"placeholder-name": "Entrez le nom de l'organisme...",
+		"placeholder-name": "Enter organization name...",
 		"placeholder-website": "Entrez l'URL...",
 		"service-types": "Quels types de service(s) cette organisation offre-t-elle?"
 	},
