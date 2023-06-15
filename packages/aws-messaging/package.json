@@ -23,7 +23,7 @@
 		"@aws-lambda-powertools/logger": "1.9.0"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.118",
+		"@types/aws-lambda": "8.10.119",
 		"@types/eslint": "8.40.2",
 		"@types/node": "18.16.18",
 		"@types/prettier": "2.7.3",
