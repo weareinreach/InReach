@@ -82,7 +82,7 @@
 		"flat": "5.0.2",
 		"i18next": "22.5.1",
 		"i18next-browser-languagedetector": "7.0.2",
-		"i18next-chained-backend": "4.3.0",
+		"i18next-chained-backend": "4.4.0",
 		"i18next-http-backend": "2.2.1",
 		"i18next-intervalplural-postprocessor": "3.0.0",
 		"i18next-localstorage-backend": "4.1.1",
