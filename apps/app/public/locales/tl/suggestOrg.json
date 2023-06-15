@@ -1,37 +1,37 @@
 {
 	"body": {
-		"accept-country": "Mangyaring tandaan na maaari lamang naming tanggapin ang mga organisasyon na matatagpuan sa US, Mexico, at Canada sa oras na ito.",
-		"additional-info": "Karagdagang impormasyon",
-		"intro-text": "Salamat sa iyong interes sa pagbibigay ng kontribusyon sa inReach App! Gamitin ang form na ito upang magmungkahi ng isang samahan (hal. Mga nonprofit, katutubo o mga organisasyon ng komunidad, mga sistema ng pangangalagang pangkalusugan, pribadong kasanayan, atbp.) Sa palagay mo ay dapat isama. Ito ay ok kung wala kang lahat ng impormasyon na hinihiling ng form - punan lamang ang alam mo, at gagawin namin ang natitira! Pinahahalagahan namin ang iyong pagsusumite at salamat sa pagtulong upang madagdagan ang pag-access sa ligtas, na-verify na mga mapagkukunan para sa magkakaibang komunidad ng LGBTQ +. Ang lahat ng mga iminungkahing organisasyon ay napapailalim sa pagsusuri ng mga sinanay na boluntaryo ng inReach bago mailathala sa inReach.",
-		"required-info": "Kinakailangang impormasyon",
-		"subject-review": "Ang lahat ng mga iminungkahing organisasyon ay napapailalim sa pagsusuri ng inReach bago mailathala.",
-		"suggest-org": "Magmungkahi ng isang organisasyon"
+		"accept-country": "Please note that we can only accept organizations located in the U.S., Mexico, and Canada at this time.",
+		"additional-info": "Additional information",
+		"intro-text": "Thank you for your interest in contributing to the InReach App! Use this form to suggest an organization (e.g. nonprofits, grassroots or community organizations, healthcare systems, private practice, etc.) you think should be included. It's ok if you do not have all of the information the form asks for - just fill in what you know, and we'll do the rest! We appreciate your submission and thank you for helping to increase access to safe, verified resources for the diverse LGBTQ+ community. All suggested organizations are subject to review by InReach's trained volunteers before publication on InReach.",
+		"required-info": "Required information",
+		"subject-review": "All suggested organizations are subject to review by InReach before publication.",
+		"suggest-org": "Suggest an organization"
 	},
 	"form": {
-		"btn-community": "Magdagdag ng pokus ng komunidad ng LGBTQ+",
-		"btn-save-changes": "I-save ang mga pagbabago",
-		"btn-service": "Magdagdag ng (mga) uri ng serbisyo",
-		"btn-submit": "Magsumite ng bagong organisasyon",
-		"community-focus": "Nagbibigay ba ang samahang ito ng (mga) serbisyo na nakatuon sa mga tukoy na komunidad ng LGBTQ +?",
-		"error-exists-active": "<Link>{{org}}</Link> ay nakalista na sa inReach. Mangyaring gamitin lamang ang form na ito upang magmungkahi ng mga bagong organisasyon.",
-		"error-exists-dismiss": "<Dismiss>Mag-click dito kung ito ay ibang samahan.</Dismiss>",
-		"error-exists-inactive": "<Link>{{org}}</Link> ay iminungkahi na. Ang aming koponan ay alinman sa nagpapatunay pa rin ng impormasyon o ang samahang ito ay hindi nakakatugon sa lahat ng aming mga kinakailangan.",
-		"org-address": "Address ng samahan",
-		"org-country": "Sa anong bansa matatagpuan ang organisasyon?",
-		"org-name": "Pangalan ng samahan",
-		"org-website": "Website ng samahan",
-		"placeholder-address": "Ipasok ang address...",
-		"placeholder-name": "Ipasok ang pangalan ng samahan...",
-		"placeholder-website": "Ipasok ang URL...",
-		"service-types": "Anong uri ng (mga) serbisyo ang ibinibigay ng samahang ito?"
+		"btn-community": "Add LGBTQ+ community focus(es)",
+		"btn-save-changes": "Save changes",
+		"btn-service": "Add service type(s)",
+		"btn-submit": "Submit new organization",
+		"community-focus": "Does this organization provide service(s) focused on specific LGBTQ+ communities?",
+		"error-exists-active": "<Link>{{org}}</Link> is already listed on InReach. Please only use this form to suggest new organizations.",
+		"error-exists-dismiss": "<Dismiss>Click here if this is a different organization.</Dismiss>",
+		"error-exists-inactive": "<Link>{{org}}</Link> has already been suggested. Our team are either still verifying information or this organization did not meet all of our requirements.",
+		"org-address": "Organization address",
+		"org-country": "In what country is the organization located?",
+		"org-name": "Organization name",
+		"org-website": "Organization website",
+		"placeholder-address": "Enter address...",
+		"placeholder-name": "Enter organization name...",
+		"placeholder-website": "Enter URL...",
+		"service-types": "What type(s) of service(s) does this organization provide?"
 	},
 	"modal": {
-		"community-sub": "Nagbibigay ba ang samahang ito ng (mga) serbisyo na nakatuon sa mga tukoy na komunidad ng LGBTQ +? Mangyaring piliin ang lahat ng nalalapat.",
-		"community-title": "Ang pokus ng komunidad ng LGBTQ+",
-		"dismiss": "Bale-walain",
-		"service-types-sub": "Anong uri ng (mga) serbisyo ang ibinibigay ng samahang ito? Mangyaring piliin ang lahat ng nalalapat.",
-		"service-types-title": "Mga uri ng serbisyo",
+		"community-sub": "Does this organization provide service(s) focused on specific LGBTQ+ communities? Please select all that apply.",
+		"community-title": "LGBTQ+ community focus(es)",
+		"dismiss": "Dismiss",
+		"service-types-sub": "What type(s) of service(s) does this organization provide? Please select all that apply.",
+		"service-types-title": "Service types",
 		"thank-you": "Thank you for submitting {{org}}!",
-		"thank-you-sub": "Susuriin ng aming koponan ang iyong pagsusumite, i-verify ang impormasyon, at i-publish ang samahan sa inReach kung natutugunan nito ang aming pamantayan."
+		"thank-you-sub": "Our team will review your submission, verify the information, and publish the organization on InReach if it meets our criteria."
 	}
 }
