@@ -1,124 +1,124 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "낙태 치료",
-		"abortion-providers": "낙태 제공자",
-		"financial-assistance": "재정 지원",
-		"lodging-assistance": "숙박 지원",
-		"mail-order-services": "우편 주문 서비스",
-		"mental-health-support": "정신 건강 지원",
-		"travel-assistance": "여행 지원"
+		"CATEGORYNAME": "Abortion Care",
+		"abortion-providers": "Abortion providers",
+		"financial-assistance": "Financial assistance",
+		"lodging-assistance": "Lodging assistance",
+		"mail-order-services": "Mail order services",
+		"mental-health-support": "Mental health support",
+		"travel-assistance": "Travel assistance"
 	},
 	"community-support": {
-		"CATEGORYNAME": "커뮤니티 지원",
-		"community-social-groups": "커뮤니티 및 소셜 그룹",
-		"cultural-centers": "문화 센터",
-		"lgbtq-centers": "LGBTQ 센터",
-		"reception-services": "리셉션 서비스",
-		"reentry-services": "재입국 서비스",
-		"spiritual-support": "영적인 지원",
-		"sponsors": "이민 스폰서십"
+		"CATEGORYNAME": "Community Support",
+		"community-social-groups": "Community and social groups",
+		"cultural-centers": "Cultural centers",
+		"lgbtq-centers": "LGBTQ centers",
+		"reception-services": "Reception services",
+		"reentry-services": "Re-entry services",
+		"spiritual-support": "Spiritual support",
+		"sponsors": "Immigration sponsorship"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "컴퓨터 및 인터넷",
-		"computers-and-internet": "컴퓨터 및 인터넷"
+		"CATEGORYNAME": "Computers and Internet",
+		"computers-and-internet": "Computers and internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "교육 및 고용",
-		"career-counseling": "커리어 카운셀링",
-		"educational-support-for-lgbtq-youth": "LGBTQ 청소년을 위한 교육 지원",
-		"english-classes": "영어 수업",
-		"language-classes": "언어 수업",
-		"leadership-training-and-professional-development": "리더십 교육 및 전문성 개발",
-		"libraries": "라이브러리",
-		"scholarships": "장학금"
+		"CATEGORYNAME": "Education and Employment",
+		"career-counseling": "Career counseling",
+		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
+		"english-classes": "English classes",
+		"language-classes": "Language classes",
+		"leadership-training-and-professional-development": "Leadership training and professional development",
+		"libraries": "Libraries",
+		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "식품",
-		"food": "식품",
-		"food-assistance": "식품 지원"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "주택",
-		"drop-in-centers-for-lgbtq-youth": "LGBTQ 청소년을 위한 드롭인 센터",
-		"emergency-housing": "비상 주택",
-		"housing-information-and-referrals": "숙소 정보 및 추천",
-		"short-term-housing": "단기 주택",
-		"trans-housing": "트랜스 하우징"
+		"CATEGORYNAME": "Housing",
+		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
+		"emergency-housing": "Emergency housing",
+		"housing-information-and-referrals": "Housing information and referrals",
+		"short-term-housing": "Short-term housing",
+		"trans-housing": "Trans housing"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "위생 및 의류",
-		"clothes": "의류",
-		"gender-affirming-items": "성별 확인 항목",
-		"gender-neutral-bathrooms": "젠더 뉴트럴 욕실",
-		"haircuts-and-stylists": "헤어컷 및 스타일리스트",
-		"hygiene": "위생"
+		"CATEGORYNAME": "Hygiene and Clothing",
+		"clothes": "Clothes",
+		"gender-affirming-items": "Gender-affirming items",
+		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
+		"haircuts-and-stylists": "Haircuts and stylists",
+		"hygiene": "Hygiene"
 	},
 	"legal": {
-		"CATEGORYNAME": "법률",
-		"asylum-application": "망명 신청서",
-		"citizenship": "시민권",
-		"crime-and-discrimination": "범죄 및 차별",
-		"deferred-action-for-childhood-arrivals-daca": "유년기 입국자 유예 조치 (DACA)",
-		"deportation-or-removal": "추방 또는 퇴거",
-		"employment-authorization": "고용 허가",
-		"family-petitions": "가족 청원서",
-		"immigration-detention": "이민 구금",
-		"legal-advice": "법률 자문",
-		"legal-hotlines": "법률 핫라인",
-		"name-and-gender-change": "이름 및 성별 변경",
-		"refugee-claim": "난민 청구",
-		"residency": "레지던시",
-		"special-immigrant-juvenile-status-sijs": "특수 이민 청소년 지위 (SIJS)",
-		"t-visa": "T 비자",
-		"u-visa": "U 비자"
+		"CATEGORYNAME": "Legal",
+		"asylum-application": "Asylum application",
+		"citizenship": "Citizenship",
+		"crime-and-discrimination": "Crime and discrimination",
+		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
+		"deportation-or-removal": "Deportation or removal",
+		"employment-authorization": "Employment authorization",
+		"family-petitions": "Family petitions",
+		"immigration-detention": "Immigration detention",
+		"legal-advice": "Legal advice",
+		"legal-hotlines": "Legal hotlines",
+		"name-and-gender-change": "Name and gender change",
+		"refugee-claim": "Refugee claim",
+		"residency": "Residency",
+		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "메일",
-		"mail": "메일"
+		"CATEGORYNAME": "Mail",
+		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "의료",
-		"covid-19-services": "COVID-19 서비스",
-		"dental-care": "덴탈 케어",
-		"hiv-and-sexual-health": "HIV 및 성 건강",
-		"medical-clinics": "의료 클리닉",
-		"obgyn-services": "산부인과 서비스",
-		"physical-evaluations-for-asylum-claim": "망명 신청에 대한 물리적 평가",
-		"physical-evaluations-for-refugee-claim": "난민 신청에 대한 신체 평가",
-		"trans-health": "트랜스 헬스",
-		"trans-health-gender-affirming-surgery": "트랜스 건강 - 젠더 긍정 수술",
-		"trans-health-hormone-and-surgery-letters": "트랜스 건강 - 호르몬 및 수술 편지",
-		"trans-health-hormone-therapy": "트랜스 건강 - 호르몬 요법",
-		"trans-health-primary-care": "트랜스 건강 - 1차 진료",
-		"trans-health-speech-therapy": "트랜스 건강 - 언어 치료"
+		"CATEGORYNAME": "Medical",
+		"covid-19-services": "COVID-19 services",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV and sexual health",
+		"medical-clinics": "Medical clinics",
+		"obgyn-services": "OBGYN services",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
+		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"trans-health": "Trans health",
+		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
+		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
+		"trans-health-hormone-therapy": "Trans health - hormone therapy",
+		"trans-health-primary-care": "Trans health - primary care",
+		"trans-health-speech-therapy": "Trans health - speech therapy"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "정신 건강",
-		"bipoc-support-groups": "BIPOC 지원 그룹",
-		"hotlines": "핫라인",
-		"private-therapy-and-counseling": "개인 치료 및 상담",
-		"psychological-evaluations-for-asylum-claim": "망명 신청에 대한 심리적 평가",
-		"psychological-evaluations-for-refugee-claim": "난민 신청에 대한 심리학적 평가",
-		"substance-use": "물질 사용",
-		"support-for-caregivers-of-trans-youth": "트랜스 청소년의 간병인을 위한 지원",
-		"support-for-conversion-therapy-survivors": "전환 요법 생존자를 위한 지원",
-		"support-groups": "지원 그룹",
-		"trans-support-groups": "트랜스 서포트 그룹"
+		"CATEGORYNAME": "Mental Health",
+		"bipoc-support-groups": "BIPOC support groups",
+		"hotlines": "Hotlines",
+		"private-therapy-and-counseling": "Private therapy and counseling",
+		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
+		"substance-use": "Substance use",
+		"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
+		"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
+		"support-groups": "Support groups",
+		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "엔터테인먼트 및 액티비티",
-		"art-music-literature": "예술, 음악, 문학",
-		"sports-and-entertainment": "스포츠 및 엔터테인먼트"
+		"CATEGORYNAME": "Entertainment and Activities",
+		"art-music-literature": "Art, music, and literature",
+		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "번역 및 통역",
-		"for-healthcare": "헬스케어용",
-		"for-legal-services": "법률 서비스용",
-		"general-translation-and-interpretation": "일반 번역 및 통역"
+		"CATEGORYNAME": "Translation and Interpretation",
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "교통수단",
-		"transit-passes-and-discounts": "대중교통 패스 및 할인",
-		"transportation-assistance": "교통 지원"
+		"CATEGORYNAME": "Transportation",
+		"transit-passes-and-discounts": "Transit passes and discounts",
+		"transportation-assistance": "Transportation assistance"
 	}
 }
