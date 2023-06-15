@@ -3,41 +3,41 @@
 		"redesign": "Soma juu ya uzinduzi wa Upyaji wa Programu ya InReach kwenye blogi yetu. <Link>Jifunze zaidi.</Link>"
 	},
 	"call-out": {
-		"hear-from-users": "<Title1>Sikia kutoka kwa watumiaji wetu</Title1>",
-		"who-we-are": "<Title1>sisi ni nani</Title1>\n<Text>Sisi ni trans-leed tech nonprofit kuongeza upatikanaji wa rasilimali kwa jamii mbalimbali LGBTQ +.</Text>\n<Link>Jifunze zaidi kuhusu sisi.</Link>"
+		"hear-from-users": "<Title1>Hear from our users</Title1>",
+		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led tech nonprofit increasing resource access for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
 	},
 	"hero": {
 		"community": {
-			"0": "LGBTQ+wanaotafuta hifadhi",
-			"1": "LGBTQ+wahamiaji",
-			"2": "Wakimbizi wa LGBTQ+",
-			"3": "Vijana wa LGBTQ+",
-			"4": "jamii ya transgender",
-			"5": "Jamii za LGBTQ+BIPOC",
-			"6": "walezi wa vijana wa LGBTQ+"
+			"0": "LGBTQ+ asylum seekers",
+			"1": "LGBTQ+ immigrants",
+			"2": "LGBTQ+ refugees",
+			"3": "LGBTQ+ youth",
+			"4": "the transgender community",
+			"5": "LGBTQ+ BIPOC communities",
+			"6": "caregivers of LGBTQ+ youth"
 		},
-		"find-resources": "<Text>Pata </Text><Service></Service><Text> iliyothibitishwa kwa </Text><Community></Community><Text> na InReach.</Text>",
-		"heading": "Pata rasilimali za LGBTQ +.",
+		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"heading": "Find LGBTQ+ resources.",
 		"privacy-disclaimer": "Jibu lako halijulikani na halijaunganishwa na wewe kama mtumiaji binafsi. Soma sera yetu ya faragha ya <Link></Link> ili ujifunze zaidi.",
 		"services": {
-			"0": "huduma ya matibabu",
-			"1": "Msaada wa jamii",
-			"2": "huduma ya afya ya akili",
-			"3": "elimu",
-			"4": "ajira",
-			"5": "chakula",
-			"6": "nyumba",
-			"7": "mavazi",
-			"8": "msaada wa kisheria",
-			"9": "tafsiri"
+			"0": "medical care",
+			"1": "community support",
+			"2": "mental health care",
+			"3": "education",
+			"4": "employment",
+			"5": "food",
+			"6": "housing",
+			"7": "clothing",
+			"8": "legal help",
+			"9": "translation"
 		},
-		"subheading": "Karibu kwenye jukwaa la kwanza la teknolojia ulimwenguni linalolingana na TLGBQ+ (transgender, lesbium, jinsia mbili, queer na vitambulisho zaidi) watu wanaokabiliwa na mateso au ubaguzi na rasilimali salama, zilizothibitishwa."
+		"subheading": "Welcome to the world's first tech platform matching TLGBQ+ (transgender, lesbian, gay, bisexual, queer and more identities) people facing persecution or discrimination with safe, verified resources."
 	},
 	"values": {
-		"free": "<Title2>Bure milele 🔑</Title2>\n<Text>Jukwaa letu la teknolojia ni bure kwa 100% kwa kila mtu kuhakikisha msaada salama uko daima katika Reach.</Text>\n<LinkFree>Changia kutusaidia kuweka jukwaa letu bure.</LinkFree>",
+		"free": "<Title2>Free forever 🔑</Title2>\n<Text>Our tech platform is 100% free for everyone to ensure safe help is always InReach.</Text>\n<LinkFree>Donate to help us to keep our platform free.</LinkFree>",
 		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, independently verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
-		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>Tunaamini usawa wa LGBTQ+unahitaji haki ya trans, haki ya wakimbizi, haki ya rangi, haki ya uzazi, haki ya lugha na zaidi.</Text>\n<LinkIntersect>Jifunze zaidi juu ya mchakato wetu wa kukagua.</LinkIntersect>",
-		"our-values": "Maadili yetu",
-		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>Tunajua kutokujulikana mtandaoni kunaweza kuwa suala la maisha au kifo kwa watu wa LGBTQ+. Ndio sababu Programu yetu imeundwa kulinda usiri na usalama wa watumiaji mkondoni.</Text>\n<LinkSafety>Jifunze zaidi kuhusu sera yetu ya faragha.</LinkSafety>"
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice and more.</Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
+		"our-values": "Our values",
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
 	}
 }
