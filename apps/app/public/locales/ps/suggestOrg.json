@@ -1,37 +1,37 @@
 {
 	"body": {
-		"accept-country": "مهرباني وکړئ په یاد ولرئ چې موږ کولی شو پدې وخت کې یوازې په متحده ایالاتو، میکسیکو او کاناډا کې موقعیت لرونکي سازمانونه ومنو.",
-		"additional-info": "اضافي معلومات",
-		"intro-text": "د InREACH ایپ کې برخه اخیستو کې ستاسو د علاقې لپاره مننه! دا فورمه د یوې ادارې وړاندیز کولو لپاره وکاروئ (د بیلګې په توګه غیر انتفاعي، بنسټونه یا د ټولنې سازمانونه، د روغتیا پاملرنې سیسټمونه، شخصي تمرین، او نور) چې تاسو فکر کوئ باید پکې شامل شي. دا سمه ده که تاسو ټول هغه معلومات نلرئ چې فورمه یې غوښتنه کوي - یوازې هغه څه ډک کړئ چې تاسو پوهیږئ، او موږ به پاتې کار وکړو! موږ ستاسو د سپارلو ستاینه کوو او د LGBTQ+متنوع ټولنې لپاره خوندي، تایید شوي سرچینو ته د لاسرسي ډیروالي کې د مرستې لپاره مننه کوو. ټول وړاندیز شوي سازمانونه د InReach په اړه د خپرولو دمخه د InReach روزل شوي رضاکارانو لخوا بیاکتنې تابع دي.",
-		"required-info": "اړین معلومات",
-		"subject-review": "ټول وړاندیز شوي سازمانونه د خپرولو دمخه د InReach لخوا بیاکتنې تابع دي.",
-		"suggest-org": "د یوې ادارې وړاندیز وکړئ"
+		"accept-country": "Please note that we can only accept organizations located in the U.S., Mexico, and Canada at this time.",
+		"additional-info": "Additional information",
+		"intro-text": "Thank you for your interest in contributing to the InReach App! Use this form to suggest an organization (e.g. nonprofits, grassroots or community organizations, healthcare systems, private practice, etc.) you think should be included. It's ok if you do not have all of the information the form asks for - just fill in what you know, and we'll do the rest! We appreciate your submission and thank you for helping to increase access to safe, verified resources for the diverse LGBTQ+ community. All suggested organizations are subject to review by InReach's trained volunteers before publication on InReach.",
+		"required-info": "Required information",
+		"subject-review": "All suggested organizations are subject to review by InReach before publication.",
+		"suggest-org": "Suggest an organization"
 	},
 	"form": {
-		"btn-community": "د LGBTQ+ټولنې تمرکز (es) اضافه کړئ",
-		"btn-save-changes": "بدلونونه خوندي کړئ",
-		"btn-service": "د خدماتو ډولونه اضافه کړئ",
-		"btn-submit": "نوې اداره وسپارئ",
-		"community-focus": "ایا دا اداره د LGBTQ+ځانګړو ټولنو باندې متمرکز خدمات چمتو کوي؟",
-		"error-exists-active": "<Link>{{org}}</Link> لا دمخه په InREACH کې لیست شوی. مهرباني وکړئ دا فورمه یوازې د نوي سازمانونو وړاندیز کولو لپاره وکاروئ.",
+		"btn-community": "Add LGBTQ+ community focus(es)",
+		"btn-save-changes": "Save changes",
+		"btn-service": "Add service type(s)",
+		"btn-submit": "Submit new organization",
+		"community-focus": "Does this organization provide service(s) focused on specific LGBTQ+ communities?",
+		"error-exists-active": "<Link>{{org}}</Link> is already listed on InReach. Please only use this form to suggest new organizations.",
 		"error-exists-dismiss": "<Dismiss>Click here if this is a different organization.</Dismiss>",
-		"error-exists-inactive": "<Link>{{org}}</Link> دمخه وړاندیز شوی. زموږ ټیم یا لاهم د معلوماتو تصدیق کوي یا دا سازمان زموږ ټولې اړتیاوې ندي پوره کړي.",
-		"org-address": "د سازمان پته",
-		"org-country": "په کوم هیواد کې دا سازمان موقعیت لري؟",
-		"org-name": "د سازمان نوم",
-		"org-website": "د سازمان ویب پا. ه",
-		"placeholder-address": "پته وليکئ...",
-		"placeholder-name": "د سازمان نوم دننه کړئ...",
-		"placeholder-website": "یو آر ایل دننه کړئ...",
-		"service-types": "دا سازمان کوم ډول خدمت (ونه) وړاندې کوي؟"
+		"error-exists-inactive": "<Link>{{org}}</Link> has already been suggested. Our team are either still verifying information or this organization did not meet all of our requirements.",
+		"org-address": "Organization address",
+		"org-country": "In what country is the organization located?",
+		"org-name": "Organization name",
+		"org-website": "Organization website",
+		"placeholder-address": "Enter address...",
+		"placeholder-name": "Enter organization name...",
+		"placeholder-website": "Enter URL...",
+		"service-types": "What type(s) of service(s) does this organization provide?"
 	},
 	"modal": {
-		"community-sub": "ایا دا اداره د LGBTQ+ځانګړو ټولنو باندې متمرکز خدمات چمتو کوي؟ مهرباني وکړئ هغه ټول غوره کړئ چې پلي کیږي.",
-		"community-title": "LGBTQ+د ټولنې تمرکز (es)",
-		"dismiss": "ګوښه کول",
-		"service-types-sub": "دا سازمان کوم ډول خدمت (ونه) وړاندې کوي؟ مهرباني وکړئ هغه ټول غوره کړئ چې پلي کیږي.",
-		"service-types-title": "د خدمت ډولونه",
-		"thank-you": "د {{org}}سپارلو لپاره مننه!",
-		"thank-you-sub": "زموږ ټیم به ستاسو سپارنه بیاکتنه وکړي، معلومات تایید کړي، او سازمان به په InReach کې خپور کړي که چیرې دا زموږ معیارونه پوره کړي."
+		"community-sub": "Does this organization provide service(s) focused on specific LGBTQ+ communities? Please select all that apply.",
+		"community-title": "LGBTQ+ community focus(es)",
+		"dismiss": "Dismiss",
+		"service-types-sub": "What type(s) of service(s) does this organization provide? Please select all that apply.",
+		"service-types-title": "Service types",
+		"thank-you": "Thank you for submitting {{org}}!",
+		"thank-you-sub": "Our team will review your submission, verify the information, and publish the organization on InReach if it meets our criteria."
 	}
 }
