@@ -1,0 +1,43 @@
+{
+	"banner": {
+		"redesign": "Read about the launch of the InReach App redesign on our blog. <Link>Learn more.</Link>"
+	},
+	"call-out": {
+		"hear-from-users": "<Title1>از کاربران ما بشنوید</Title1>",
+		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led tech nonprofit increasing resource access for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
+	},
+	"hero": {
+		"community": {
+			"0": "پناهجویان LGBTQ +",
+			"1": "دگرباشان جنسی و مهاجران",
+			"2": "دگرباشان جنسی",
+			"3": "دگرباشان جنسی",
+			"4": "جامعه تراجنسیتی",
+			"5": "جوامع LGBTQ+BIPOC",
+			"6": "مراقبان از LGBTQ+جوانان"
+		},
+		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"heading": "منابع LGBTQ+را پیدا کنید.",
+		"privacy-disclaimer": "پاسخ شما ناشناس است و به عنوان یک کاربر شخصی به شما متصل نیست. برای کسب اطلاعات بیشتر، <Link>سیاست حفظ حریم خصوصی</Link> ما را بخوانید.",
+		"services": {
+			"0": "مراقبت های پزشکی",
+			"1": "حمایت جامعه",
+			"2": "مراقبت های سلامت روان",
+			"3": "تحصیلات",
+			"4": "استخدام",
+			"5": "غذا",
+			"6": "مسکن",
+			"7": "لباس",
+			"8": "کمک حقوقی",
+			"9": "ترجمه"
+		},
+		"subheading": "خوش آمدید به اولین پلت فرم فناوری جهان مطابق TLGBQ+ (transgender، لزبین، همجنسگرا، دوجنسگرا، عجیب و غریب و هویت های بیشتر) افرادی که با آزار و اذیت یا تبعیض با منابع امن و تأیید شده روبرو هستند."
+	},
+	"values": {
+		"free": "<Title2>Free forever 🔑</Title2>\n<Text>Our tech platform is 100% free for everyone to ensure safe help is always InReach.</Text>\n<LinkFree>Donate to help us to keep our platform free.</LinkFree>",
+		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, independently verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice and more.</Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
+		"our-values": "ارزش های ما",
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
+	}
+}
