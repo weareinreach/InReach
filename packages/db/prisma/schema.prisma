@@ -13,6 +13,7 @@ generator zod {
   addInputTypeValidation = false
   addSelectType          = false
   useDefaultValidators   = false
+  writeBarrelFiles       = true
 }
 
 generator kysely {
