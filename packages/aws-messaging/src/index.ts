@@ -42,6 +42,7 @@ export const handler = (
 
 	switch (triggerSource) {
 		case 'CustomMessage_AdminCreateUser':
+		case 'CustomMessage_ResendCode':
 		case 'CustomMessage_SignUp': {
 			response.emailSubject = subject
 			response.emailMessage = `${message} ${confirmLink}`
