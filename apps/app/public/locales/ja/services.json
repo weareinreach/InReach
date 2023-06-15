@@ -1,124 +1,124 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "中絶ケア",
-		"abortion-providers": "中絶プロバイダー",
-		"financial-assistance": "財政援助",
-		"lodging-assistance": "宿泊アシスタンス",
-		"mail-order-services": "通信販売サービス",
-		"mental-health-support": "メンタルヘルスサポート",
-		"travel-assistance": "トラベルアシスタンス"
+		"CATEGORYNAME": "Abortion Care",
+		"abortion-providers": "Abortion providers",
+		"financial-assistance": "Financial assistance",
+		"lodging-assistance": "Lodging assistance",
+		"mail-order-services": "Mail order services",
+		"mental-health-support": "Mental health support",
+		"travel-assistance": "Travel assistance"
 	},
 	"community-support": {
-		"CATEGORYNAME": "コミュニティサポート",
-		"community-social-groups": "コミュニティと社会集団",
-		"cultural-centers": "文化センター",
-		"lgbtq-centers": "LGBTQ センター",
-		"reception-services": "レセプションサービス",
-		"reentry-services": "再入国サービス",
-		"spiritual-support": "スピリチュアルサポート",
-		"sponsors": "移民スポンサーシップ"
+		"CATEGORYNAME": "Community Support",
+		"community-social-groups": "Community and social groups",
+		"cultural-centers": "Cultural centers",
+		"lgbtq-centers": "LGBTQ centers",
+		"reception-services": "Reception services",
+		"reentry-services": "Re-entry services",
+		"spiritual-support": "Spiritual support",
+		"sponsors": "Immigration sponsorship"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "コンピューターとインターネット",
-		"computers-and-internet": "コンピューターとインターネット"
+		"CATEGORYNAME": "Computers and Internet",
+		"computers-and-internet": "Computers and internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "教育と雇用",
-		"career-counseling": "キャリアカウンセリング",
-		"educational-support-for-lgbtq-youth": "LGBTQの若者への教育支援",
-		"english-classes": "英語クラス",
-		"language-classes": "語学クラス",
-		"leadership-training-and-professional-development": "リーダーシップトレーニングと専門能力開発",
-		"libraries": "図書館",
-		"scholarships": "奨学金"
+		"CATEGORYNAME": "Education and Employment",
+		"career-counseling": "Career counseling",
+		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
+		"english-classes": "English classes",
+		"language-classes": "Language classes",
+		"leadership-training-and-professional-development": "Leadership training and professional development",
+		"libraries": "Libraries",
+		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "食べ物",
-		"food": "食べ物",
-		"food-assistance": "食糧援助"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "住宅",
-		"drop-in-centers-for-lgbtq-youth": "LGBTQの若者のためのドロップインセンター",
-		"emergency-housing": "緊急住宅",
-		"housing-information-and-referrals": "住宅情報と紹介",
-		"short-term-housing": "短期住宅",
-		"trans-housing": "トランスハウジング"
+		"CATEGORYNAME": "Housing",
+		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
+		"emergency-housing": "Emergency housing",
+		"housing-information-and-referrals": "Housing information and referrals",
+		"short-term-housing": "Short-term housing",
+		"trans-housing": "Trans housing"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "衛生と服装",
-		"clothes": "服",
-		"gender-affirming-items": "性別を確認するアイテム",
-		"gender-neutral-bathrooms": "ジェンダーニュートラルなバスルーム",
-		"haircuts-and-stylists": "ヘアカットとスタイリスト",
-		"hygiene": "衛生"
+		"CATEGORYNAME": "Hygiene and Clothing",
+		"clothes": "Clothes",
+		"gender-affirming-items": "Gender-affirming items",
+		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
+		"haircuts-and-stylists": "Haircuts and stylists",
+		"hygiene": "Hygiene"
 	},
 	"legal": {
-		"CATEGORYNAME": "合法",
-		"asylum-application": "亡命申請",
-		"citizenship": "市民権",
-		"crime-and-discrimination": "犯罪と差別",
-		"deferred-action-for-childhood-arrivals-daca": "小児期到着者に対する遅延措置（DACA）",
-		"deportation-or-removal": "国外追放または移送処分",
-		"employment-authorization": "雇用認可",
-		"family-petitions": "家族への請願",
-		"immigration-detention": "入国者拘禁",
-		"legal-advice": "法律相談",
-		"legal-hotlines": "リーガルホットライン",
-		"name-and-gender-change": "名前と性別の変更",
-		"refugee-claim": "難民申請",
-		"residency": "レジデンシー",
-		"special-immigrant-juvenile-status-sijs": "特別移民少年資格 (SIJS)",
-		"t-visa": "T ビザ",
-		"u-visa": "米国ビザ"
+		"CATEGORYNAME": "Legal",
+		"asylum-application": "Asylum application",
+		"citizenship": "Citizenship",
+		"crime-and-discrimination": "Crime and discrimination",
+		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
+		"deportation-or-removal": "Deportation or removal",
+		"employment-authorization": "Employment authorization",
+		"family-petitions": "Family petitions",
+		"immigration-detention": "Immigration detention",
+		"legal-advice": "Legal advice",
+		"legal-hotlines": "Legal hotlines",
+		"name-and-gender-change": "Name and gender change",
+		"refugee-claim": "Refugee claim",
+		"residency": "Residency",
+		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "メール",
-		"mail": "メール"
+		"CATEGORYNAME": "Mail",
+		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "医療",
-		"covid-19-services": "新型コロナウイルス関連サービス",
-		"dental-care": "デンタルケア",
-		"hiv-and-sexual-health": "HIVと性的健康",
-		"medical-clinics": "医療クリニック",
-		"obgyn-services": "産婦人科サービス",
-		"physical-evaluations-for-asylum-claim": "庇護申請の身体的評価",
-		"physical-evaluations-for-refugee-claim": "難民申請の身体的評価",
-		"trans-health": "トランスヘルス",
-		"trans-health-gender-affirming-surgery": "トランスヘルス-性別確認手術",
-		"trans-health-hormone-and-surgery-letters": "トランスヘルス-ホルモンと手術の手紙",
-		"trans-health-hormone-therapy": "トランスヘルス-ホルモン療法",
-		"trans-health-primary-care": "トランスヘルス-プライマリケア",
-		"trans-health-speech-therapy": "トランスヘルス-言語療法"
+		"CATEGORYNAME": "Medical",
+		"covid-19-services": "COVID-19 services",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV and sexual health",
+		"medical-clinics": "Medical clinics",
+		"obgyn-services": "OBGYN services",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
+		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"trans-health": "Trans health",
+		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
+		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
+		"trans-health-hormone-therapy": "Trans health - hormone therapy",
+		"trans-health-primary-care": "Trans health - primary care",
+		"trans-health-speech-therapy": "Trans health - speech therapy"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "メンタルヘルス",
-		"bipoc-support-groups": "BIPOC サポートグループ",
-		"hotlines": "ホットライン",
-		"private-therapy-and-counseling": "プライベートセラピーとカウンセリング",
-		"psychological-evaluations-for-asylum-claim": "庇護申請の心理的評価",
-		"psychological-evaluations-for-refugee-claim": "難民申請の心理学的評価",
-		"substance-use": "薬物使用",
-		"support-for-caregivers-of-trans-youth": "トランスジェンダーの若者の介護者への支援",
-		"support-for-conversion-therapy-survivors": "転向療法生存者への支援",
-		"support-groups": "サポートグループ",
-		"trans-support-groups": "トランスサポートグループ"
+		"CATEGORYNAME": "Mental Health",
+		"bipoc-support-groups": "BIPOC support groups",
+		"hotlines": "Hotlines",
+		"private-therapy-and-counseling": "Private therapy and counseling",
+		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
+		"substance-use": "Substance use",
+		"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
+		"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
+		"support-groups": "Support groups",
+		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "エンターテイメントとアクティビティ",
-		"art-music-literature": "芸術、音楽、文学",
-		"sports-and-entertainment": "スポーツとエンターテイメント"
+		"CATEGORYNAME": "Entertainment and Activities",
+		"art-music-literature": "Art, music, and literature",
+		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "翻訳と通訳",
-		"for-healthcare": "ヘルスケア用",
-		"for-legal-services": "法務サービス用",
-		"general-translation-and-interpretation": "一般的な翻訳と通訳"
+		"CATEGORYNAME": "Translation and Interpretation",
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "交通機関",
-		"transit-passes-and-discounts": "トランジットパスと割引",
-		"transportation-assistance": "交通アシスタンス"
+		"CATEGORYNAME": "Transportation",
+		"transit-passes-and-discounts": "Transit passes and discounts",
+		"transportation-assistance": "Transportation assistance"
 	}
 }
