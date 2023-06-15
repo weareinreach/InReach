@@ -245,8 +245,8 @@
 		"lcr-screen1none": "Nada de esto es aplicable a mí.",
 		"lcr-screen2": "¿En qué país se encuentra?",
 		"lcr-screen2a": "Estados Unidos (incluyendo territorios)",
-		"lcr-screen2b": "Canadá",
-		"lcr-screen2c": "México",
+		"lcr-screen2b": "Canada",
+		"lcr-screen2c": "Mexico",
 		"lcr-screen2none": "Ninguna de las anteriores",
 		"lcr-screen3": "He revisado la página de <Link><strong>Revisor de la Comunidad Local</strong></Link> en el sitio web de InReach y cumplo los requisitos.",
 		"modal-body": [
@@ -269,7 +269,7 @@
 	},
 	"sign-up-free": "Regístrate gratis",
 	"social": {
-		"email": "E-mail",
+		"email": "Email",
 		"facebook": "Facebook",
 		"github": "GitHub",
 		"group-header": "Social",
