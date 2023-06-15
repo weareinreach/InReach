@@ -1,124 +1,124 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "رعاية الإجهاض",
-		"abortion-providers": "مزودي خدمات الإجهاض",
-		"financial-assistance": "المساعدة المالية",
-		"lodging-assistance": "مساعدة السكن",
-		"mail-order-services": "خدمات طلب البريد",
-		"mental-health-support": "دعم الصحة النفسية",
-		"travel-assistance": "المساعدة في السفر"
+		"CATEGORYNAME": "Abortion Care",
+		"abortion-providers": "Abortion providers",
+		"financial-assistance": "Financial assistance",
+		"lodging-assistance": "Lodging assistance",
+		"mail-order-services": "Mail order services",
+		"mental-health-support": "Mental health support",
+		"travel-assistance": "Travel assistance"
 	},
 	"community-support": {
-		"CATEGORYNAME": "الدعم المجتمعي",
+		"CATEGORYNAME": "Community Support",
 		"community-social-groups": "المجموعات المجتمعية والاجتماعية",
-		"cultural-centers": "المراكز الثقافية",
-		"lgbtq-centers": "مراكز LGBTQ",
-		"reception-services": "خدمات الاستقبال",
-		"reentry-services": "خدمات العودة",
-		"spiritual-support": "الدعم الروحي",
-		"sponsors": "الراعيون"
+		"cultural-centers": "Cultural centers",
+		"lgbtq-centers": "LGBTQ centers",
+		"reception-services": "Reception services",
+		"reentry-services": "Re-entry services",
+		"spiritual-support": "Spiritual support",
+		"sponsors": "Immigration sponsorship"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "الحواسيب والإنترنت",
-		"computers-and-internet": "الحواسيب والإنترنت"
+		"CATEGORYNAME": "Computers and Internet",
+		"computers-and-internet": "Computers and internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "التعليم والعمالة",
-		"career-counseling": "المشورة الوظيفية",
-		"educational-support-for-lgbtq-youth": "الدعم التعليمي لشباب المثليات والمثليات والمثليات والمثليات والمثليات والمثليات جنسياً",
-		"english-classes": "دروس اللغة الإنجليزية",
-		"language-classes": "فصول اللغة",
-		"leadership-training-and-professional-development": "التدريب على القيادة والتطوير المهني",
-		"libraries": "المكتبات",
-		"scholarships": "المنح الدراسية"
+		"CATEGORYNAME": "Education and Employment",
+		"career-counseling": "Career counseling",
+		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
+		"english-classes": "English classes",
+		"language-classes": "Language classes",
+		"leadership-training-and-professional-development": "Leadership training and professional development",
+		"libraries": "Libraries",
+		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "الطعام",
-		"food": "الطعام",
-		"food-assistance": "المساعدة الغذائية"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "السكن",
-		"drop-in-centers-for-lgbtq-youth": "مراكز الاستقبال لشباب المثليات والمثليات والمثليات جنسياً",
-		"emergency-housing": "مساكن الطوارئ",
-		"housing-information-and-referrals": "معلومات الإسكان والإحالات",
-		"short-term-housing": "السكن القصير الأجل",
-		"trans-housing": "السكن العابر"
+		"CATEGORYNAME": "Housing",
+		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
+		"emergency-housing": "Emergency housing",
+		"housing-information-and-referrals": "Housing information and referrals",
+		"short-term-housing": "Short-term housing",
+		"trans-housing": "Trans housing"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "النظافة الصحية والملابس",
-		"clothes": "الملابس",
-		"gender-affirming-items": "البنود المؤكدة على نوع الجنس",
-		"gender-neutral-bathrooms": "حمامات محايدة جنسانيا",
-		"haircuts-and-stylists": "قذائف الشعر والأنماط",
-		"hygiene": "النظافة"
+		"CATEGORYNAME": "Hygiene and Clothing",
+		"clothes": "Clothes",
+		"gender-affirming-items": "Gender-affirming items",
+		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
+		"haircuts-and-stylists": "Haircuts and stylists",
+		"hygiene": "Hygiene"
 	},
 	"legal": {
-		"CATEGORYNAME": "قانوني",
-		"asylum-application": "طلب اللجوء",
-		"citizenship": "المواطنة",
-		"crime-and-discrimination": "دال - الجريمة والتمييز",
-		"deferred-action-for-childhood-arrivals-daca": "الإجراءات المؤجلة لوصول الأطفال",
-		"deportation-or-removal": "الترحيل أو الترحيل",
-		"employment-authorization": "الإذن بالعمل",
-		"family-petitions": "الالتماسات العائلية",
-		"immigration-detention": "احتجاز المهاجرين",
-		"legal-advice": "الاستشارات القانونية",
-		"legal-hotlines": "الخطوط الساخنة القانونية",
-		"name-and-gender-change": "الاسم والتغيير الجنساني",
-		"refugee-claim": "طلب اللجوء",
-		"residency": "الإقامة",
-		"special-immigrant-juvenile-status-sijs": "حالة الأحداث الخاصة بالمهاجر",
-		"t-visa": "T Visa",
-		"u-visa": "U Visa"
+		"CATEGORYNAME": "Legal",
+		"asylum-application": "Asylum application",
+		"citizenship": "Citizenship",
+		"crime-and-discrimination": "Crime and discrimination",
+		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
+		"deportation-or-removal": "Deportation or removal",
+		"employment-authorization": "Employment authorization",
+		"family-petitions": "Family petitions",
+		"immigration-detention": "Immigration detention",
+		"legal-advice": "Legal advice",
+		"legal-hotlines": "Legal hotlines",
+		"name-and-gender-change": "Name and gender change",
+		"refugee-claim": "Refugee claim",
+		"residency": "Residency",
+		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "البريد",
-		"mail": "البريد"
+		"CATEGORYNAME": "Mail",
+		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "طبي",
-		"covid-19-services": "خدمات COVID-19",
-		"dental-care": "الرعاية الصحية بالأسنان",
-		"hiv-and-sexual-health": "فيروس نقص المناعة البشرية والصحة الجنسية",
-		"medical-clinics": "العيادات الطبية",
-		"obgyn-services": "خدمات OBGYN",
-		"physical-evaluations-for-asylum-claim": "التقييمات المادية لطلب اللجوء",
-		"physical-evaluations-for-refugee-claim": "التقييمات المادية لطلب اللجوء",
-		"trans-health": "عبر الصحة",
-		"trans-health-gender-affirming-surgery": "الصحة العابرة - الجراحة المؤكدة للجنسين",
-		"trans-health-hormone-and-surgery-letters": "عبر الصحة - رسائل الهورمون والجراحة",
-		"trans-health-hormone-therapy": "الصحة المباشرة - العلاج الهورمون",
-		"trans-health-primary-care": "الصحة المباشرة - الرعاية الأولية",
-		"trans-health-speech-therapy": "الصحة المباشرة - علاج الكلام"
+		"CATEGORYNAME": "Medical",
+		"covid-19-services": "COVID-19 services",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV and sexual health",
+		"medical-clinics": "Medical clinics",
+		"obgyn-services": "OBGYN services",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
+		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"trans-health": "Trans health",
+		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
+		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
+		"trans-health-hormone-therapy": "Trans health - hormone therapy",
+		"trans-health-primary-care": "Trans health - primary care",
+		"trans-health-speech-therapy": "Trans health - speech therapy"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "الصحة النفسية",
-		"bipoc-support-groups": "مجموعات دعم BIPOC",
-		"hotlines": "الخطوط الساخنة",
-		"private-therapy-and-counseling": "العلاج الخاص والمشورة",
-		"psychological-evaluations-for-asylum-claim": "التقييمات النفسية لطلب اللجوء",
-		"psychological-evaluations-for-refugee-claim": "التقييمات النفسية لطلب اللجوء",
-		"substance-use": "استخدام المواد",
-		"support-for-caregivers-of-trans-youth": "تقديم الدعم لمقدمي الرعاية للقاصرين من الشباب",
-		"support-for-conversion-therapy-survivors": "دعم الناجين من العلاج التحويلي",
-		"support-groups": "مجموعات الدعم",
-		"trans-support-groups": "عبر مجموعات الدعم"
+		"CATEGORYNAME": "Mental Health",
+		"bipoc-support-groups": "BIPOC support groups",
+		"hotlines": "Hotlines",
+		"private-therapy-and-counseling": "Private therapy and counseling",
+		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
+		"substance-use": "Substance use",
+		"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
+		"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
+		"support-groups": "Support groups",
+		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "الرياضة والترفيه",
+		"CATEGORYNAME": "Entertainment and Activities",
 		"art-music-literature": "الفن والموسيقى والآداب",
-		"sports-and-entertainment": "الرياضة والترفيه"
+		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "الترجمة التحريرية والترجمة الشفوية",
-		"for-healthcare": "الرعاية الصحية",
-		"for-legal-services": "بالنسبة للخدمات القانونية",
-		"general-translation-and-interpretation": "الترجمة الشفوية والترجمة الشفوية العامة"
+		"CATEGORYNAME": "Translation and Interpretation",
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "النقل",
-		"transit-passes-and-discounts": "تصاريح العبور والخصومات",
-		"transportation-assistance": "المساعدة في مجال النقل"
+		"CATEGORYNAME": "Transportation",
+		"transit-passes-and-discounts": "Transit passes and discounts",
+		"transportation-assistance": "Transportation assistance"
 	}
 }
