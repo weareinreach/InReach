@@ -1,124 +1,124 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Swen Avòtman",
-		"abortion-providers": "Founisè avòtman",
-		"financial-assistance": "Asistans finansye",
-		"lodging-assistance": "Asistans lojman",
-		"mail-order-services": "Sèvis lòd lapòs",
-		"mental-health-support": "Sipò sante mantal",
-		"travel-assistance": "Asistans vwayaj"
+		"CATEGORYNAME": "Abortion Care",
+		"abortion-providers": "Abortion providers",
+		"financial-assistance": "Financial assistance",
+		"lodging-assistance": "Lodging assistance",
+		"mail-order-services": "Mail order services",
+		"mental-health-support": "Mental health support",
+		"travel-assistance": "Travel assistance"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Sipò pou Kominote",
+		"CATEGORYNAME": "Community Support",
 		"community-social-groups": "Kominote ak gwoup sosyal",
-		"cultural-centers": "Sant kiltirèl",
-		"lgbtq-centers": "Sant LGBTQ",
-		"reception-services": "Sèvis resepsyon",
+		"cultural-centers": "Cultural centers",
+		"lgbtq-centers": "LGBTQ centers",
+		"reception-services": "Reception services",
 		"reentry-services": "Re-antre sèvis yo",
-		"spiritual-support": "Sipò espirityèl",
-		"sponsors": "Imigrasyon parennaj"
+		"spiritual-support": "Spiritual support",
+		"sponsors": "Immigration sponsorship"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "Odinatè ak entènèt",
-		"computers-and-internet": "Odinatè ak entènèt"
+		"CATEGORYNAME": "Computers and Internet",
+		"computers-and-internet": "Computers and internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Edikasyon ak Travay",
-		"career-counseling": "Karyè konsèy",
-		"educational-support-for-lgbtq-youth": "Sipò edikasyon pou jèn LGBTQ",
-		"english-classes": "Klas angle",
-		"language-classes": "Klas lang",
-		"leadership-training-and-professional-development": "Fòmasyon lidèchip ak devlopman pwofesyonèl",
-		"libraries": "Bibliyotèk",
-		"scholarships": "Bousdetid"
+		"CATEGORYNAME": "Education and Employment",
+		"career-counseling": "Career counseling",
+		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
+		"english-classes": "English classes",
+		"language-classes": "Language classes",
+		"leadership-training-and-professional-development": "Leadership training and professional development",
+		"libraries": "Libraries",
+		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "Manje",
-		"food": "Manje",
-		"food-assistance": "Asistans manje"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "Lojman",
-		"drop-in-centers-for-lgbtq-youth": "Drop-nan sant pou jèn LGBTQ",
-		"emergency-housing": "Lojman Ijans",
-		"housing-information-and-referrals": "Enfòmasyon sou lojman ak referans",
-		"short-term-housing": "Kout tèm lojman",
-		"trans-housing": "Trans lojman"
+		"CATEGORYNAME": "Housing",
+		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
+		"emergency-housing": "Emergency housing",
+		"housing-information-and-referrals": "Housing information and referrals",
+		"short-term-housing": "Short-term housing",
+		"trans-housing": "Trans housing"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "Ijyèn ak Rad",
-		"clothes": "Rad",
-		"gender-affirming-items": "Sèks-afime atik",
-		"gender-neutral-bathrooms": "Sèks-net twalèt",
-		"haircuts-and-stylists": "Koup cheve ak stilist",
-		"hygiene": "Ijyèn"
+		"CATEGORYNAME": "Hygiene and Clothing",
+		"clothes": "Clothes",
+		"gender-affirming-items": "Gender-affirming items",
+		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
+		"haircuts-and-stylists": "Haircuts and stylists",
+		"hygiene": "Hygiene"
 	},
 	"legal": {
 		"CATEGORYNAME": "Legal",
-		"asylum-application": "Azil aplikasyon",
-		"citizenship": "Sitwayènte",
-		"crime-and-discrimination": "Krim ak diskriminasyon",
-		"deferred-action-for-childhood-arrivals-daca": "Aksyon difere pou arive timoun (DACA)",
-		"deportation-or-removal": "Depòtasyon oswa retire",
-		"employment-authorization": "Otorizasyon travay",
-		"family-petitions": "Petisyon fanmi",
-		"immigration-detention": "Imigrasyon detansyon",
-		"legal-advice": "Konsèy legal",
-		"legal-hotlines": "Liy dirèk legal",
-		"name-and-gender-change": "Non ak chanjman sèks",
-		"refugee-claim": "Reklamasyon Refijye",
-		"residency": "Rezidans",
-		"special-immigrant-juvenile-status-sijs": "Estati Jivenil Imigran Espesyal (SIJS)",
-		"t-visa": "T viza",
-		"u-visa": "Viza"
+		"asylum-application": "Asylum application",
+		"citizenship": "Citizenship",
+		"crime-and-discrimination": "Crime and discrimination",
+		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
+		"deportation-or-removal": "Deportation or removal",
+		"employment-authorization": "Employment authorization",
+		"family-petitions": "Family petitions",
+		"immigration-detention": "Immigration detention",
+		"legal-advice": "Legal advice",
+		"legal-hotlines": "Legal hotlines",
+		"name-and-gender-change": "Name and gender change",
+		"refugee-claim": "Refugee claim",
+		"residency": "Residency",
+		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
 		"CATEGORYNAME": "Mail",
 		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medikal",
-		"covid-19-services": "Sèvis COVID-19",
-		"dental-care": "Swen dantè",
-		"hiv-and-sexual-health": "VIH ak sante seksyèl",
-		"medical-clinics": "Klinik medikal",
-		"obgyn-services": "Sèvis OBGYN",
-		"physical-evaluations-for-asylum-claim": "Evalyasyon fizik pou reklamasyon azil",
-		"physical-evaluations-for-refugee-claim": "Evalyasyon fizik pou reklamasyon refijye yo",
-		"trans-health": "Trans sante",
-		"trans-health-gender-affirming-surgery": "Trans sante - sèks afime operasyon",
-		"trans-health-hormone-and-surgery-letters": "Trans sante - òmòn ak lèt operasyon",
-		"trans-health-hormone-therapy": "Trans sante - terapi òmòn",
-		"trans-health-primary-care": "Trans sante - swen prensipal",
-		"trans-health-speech-therapy": "Trans sante - terapi lapawòl"
+		"CATEGORYNAME": "Medical",
+		"covid-19-services": "COVID-19 services",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV and sexual health",
+		"medical-clinics": "Medical clinics",
+		"obgyn-services": "OBGYN services",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
+		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"trans-health": "Trans health",
+		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
+		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
+		"trans-health-hormone-therapy": "Trans health - hormone therapy",
+		"trans-health-primary-care": "Trans health - primary care",
+		"trans-health-speech-therapy": "Trans health - speech therapy"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Sante Mantal",
-		"bipoc-support-groups": "Gwoup sipò BIPOC",
+		"CATEGORYNAME": "Mental Health",
+		"bipoc-support-groups": "BIPOC support groups",
 		"hotlines": "Hotlines",
-		"private-therapy-and-counseling": "Prive terapi ak konsèy",
-		"psychological-evaluations-for-asylum-claim": "Evalyasyon sikolojik pou reklamasyon azil",
-		"psychological-evaluations-for-refugee-claim": "Evalyasyon sikolojik pou reklamasyon refijye",
-		"substance-use": "Itilize sibstans",
-		"support-for-caregivers-of-trans-youth": "Sipò pou moun kap bay swen nan jèn trans",
-		"support-for-conversion-therapy-survivors": "Sipò pou sivivan terapi konvèsyon",
-		"support-groups": "Gwoup sipò yo",
-		"trans-support-groups": "Gwoup sipò Trans"
+		"private-therapy-and-counseling": "Private therapy and counseling",
+		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
+		"substance-use": "Substance use",
+		"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
+		"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
+		"support-groups": "Support groups",
+		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Lwazi ak Aktivite",
+		"CATEGORYNAME": "Entertainment and Activities",
 		"art-music-literature": "Atizay, mizik, ak literati",
-		"sports-and-entertainment": "Espò ak amizman"
+		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Tradiksyon ak Entèpretasyon",
-		"for-healthcare": "Pou swen sante",
-		"for-legal-services": "Pou sèvis legal",
-		"general-translation-and-interpretation": "Tradiksyon jeneral ak entèpretasyon"
+		"CATEGORYNAME": "Translation and Interpretation",
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "Transpòtasyon",
-		"transit-passes-and-discounts": "Pase transpò ak rabè",
-		"transportation-assistance": "Asistans pou transpò"
+		"CATEGORYNAME": "Transportation",
+		"transit-passes-and-discounts": "Transit passes and discounts",
+		"transportation-assistance": "Transportation assistance"
 	}
 }
