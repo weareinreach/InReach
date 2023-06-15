@@ -9,7 +9,7 @@
 		"demonym_other": "Arubans"
 	},
 	"AFG": {
-		"name": "أفغانستان",
+		"name": "Afghanistan",
 		"demonym_zero": "الأفغان",
 		"demonym_one": "أفغاني",
 		"demonym_two": "الأفغان",
@@ -18,7 +18,7 @@
 		"demonym_other": "الأفغان"
 	},
 	"AGO": {
-		"name": "أنغولا",
+		"name": "Angola",
 		"demonym_zero": "الأنغوليون",
 		"demonym_one": "أنغولي",
 		"demonym_two": "الأنغوليون",
@@ -36,7 +36,7 @@
 		"demonym_other": "الأنغيليين"
 	},
 	"ALA": {
-		"name": "جزر آلاند",
+		"name": "Åland Islands",
 		"demonym_zero": "الهبوط",
 		"demonym_one": "الهبوط",
 		"demonym_two": "الهبوط",
@@ -45,7 +45,7 @@
 		"demonym_other": "الهبوط"
 	},
 	"ALB": {
-		"name": "ألبانيا",
+		"name": "Albania",
 		"demonym_zero": "الألبان",
 		"demonym_one": "الألبانية",
 		"demonym_two": "الألبان",
@@ -63,7 +63,7 @@
 		"demonym_other": "Andorrans"
 	},
 	"ARE": {
-		"name": "الإمارات العربية المتحدة",
+		"name": "United Arab Emirates",
 		"demonym_zero": "Emiratis",
 		"demonym_one": "Emirati",
 		"demonym_two": "Emiratis",
@@ -72,7 +72,7 @@
 		"demonym_other": "Emiratis"
 	},
 	"ARG": {
-		"name": "الأرجنتين",
+		"name": "Argentina",
 		"demonym_zero": "Argentineans",
 		"demonym_one": "Argentinean",
 		"demonym_two": "Argentineans",
@@ -81,7 +81,7 @@
 		"demonym_other": "Argentineans"
 	},
 	"ARM": {
-		"name": "أرمينيا",
+		"name": "Armenia",
 		"demonym_zero": "الأرمن",
 		"demonym_one": "الأرميني",
 		"demonym_two": "الأرمن",
@@ -108,16 +108,16 @@
 		"demonym_other": "Antarcticans"
 	},
 	"ATF": {
-		"name": "أراضي جنوب فرنسا وأنتاركتيكا",
-		"demonym_zero": "الفرنسية",
-		"demonym_one": "الفرنسية",
-		"demonym_two": "الفرنسية",
-		"demonym_few": "الفرنسية",
-		"demonym_many": "الفرنسية",
-		"demonym_other": "الفرنسية"
+		"name": "French Southern and Antarctic Lands",
+		"demonym_zero": "French",
+		"demonym_one": "French",
+		"demonym_two": "French",
+		"demonym_few": "French",
+		"demonym_many": "French",
+		"demonym_other": "French"
 	},
 	"ATG": {
-		"name": "أنتيغوا وبربودا",
+		"name": "Antigua and Barbuda",
 		"demonym_zero": "أنتيغواي/وبربودا",
 		"demonym_one": "أنتيغوا وبربودا",
 		"demonym_two": "أنتيغواي/وبربودا",
@@ -126,7 +126,7 @@
 		"demonym_other": "أنتيغواي/وبربودا"
 	},
 	"AUS": {
-		"name": "أستراليا",
+		"name": "Australia",
 		"demonym_zero": "الأستراليون",
 		"demonym_one": "أسترالي",
 		"demonym_two": "الأستراليون",
@@ -135,7 +135,7 @@
 		"demonym_other": "الأستراليون"
 	},
 	"AUT": {
-		"name": "النمسا",
+		"name": "Austria",
 		"demonym_zero": "النمساويين",
 		"demonym_one": "نمساوي",
 		"demonym_two": "النمساويين",
@@ -144,7 +144,7 @@
 		"demonym_other": "النمساويين"
 	},
 	"AZE": {
-		"name": "أذربيجان",
+		"name": "Azerbaijan",
 		"demonym_zero": "الأذربيجانيين",
 		"demonym_one": "الأذربيجانية",
 		"demonym_two": "الأذربيجانيين",
@@ -162,7 +162,7 @@
 		"demonym_other": "Burundians"
 	},
 	"BEL": {
-		"name": "بلجيكا",
+		"name": "Belgium",
 		"demonym_zero": "Belgians",
 		"demonym_one": "Belgian",
 		"demonym_two": "Belgians",
@@ -172,18 +172,18 @@
 	},
 	"BEN": {
 		"name": "Benin",
-		"demonym_zero": "بنن",
-		"demonym_one": "بنن",
-		"demonym_two": "بنن",
-		"demonym_few": "بنن",
-		"demonym_many": "بنن",
-		"demonym_other": "بنن"
+		"demonym_zero": "Beninese",
+		"demonym_one": "Beninese",
+		"demonym_two": "Beninese",
+		"demonym_few": "Beninese",
+		"demonym_many": "Beninese",
+		"demonym_other": "Beninese"
 	},
 	"BES": {
-		"name": "منطقة البحر الكاريبي هولندا"
+		"name": "Caribbean Netherlands"
 	},
 	"BFA": {
-		"name": "بوركينا فاسو",
+		"name": "Burkina Faso",
 		"demonym_zero": "بوركينا فاسو",
 		"demonym_one": "Burkinabe",
 		"demonym_two": "بوركينا فاسو",
@@ -192,7 +192,7 @@
 		"demonym_other": "بوركينا فاسو"
 	},
 	"BGD": {
-		"name": "بنغلاديش",
+		"name": "Bangladesh",
 		"demonym_zero": "Bangladeshis",
 		"demonym_one": "Bangladeshi",
 		"demonym_two": "Bangladeshis",
@@ -201,7 +201,7 @@
 		"demonym_other": "Bangladeshis"
 	},
 	"BGR": {
-		"name": "بلغاريا",
+		"name": "Bulgaria",
 		"demonym_zero": "البلغاريين",
 		"demonym_one": "البلغاري",
 		"demonym_two": "البلغاريين",
@@ -228,7 +228,7 @@
 		"demonym_other": "Bahamians"
 	},
 	"BIH": {
-		"name": "البوسنة والهرسك",
+		"name": "Bosnia and Herzegovina",
 		"demonym_zero": "البوسنيون والهرسكيون",
 		"demonym_one": "البوسنية والهرسكية",
 		"demonym_two": "البوسنيون والهرسكيون",
@@ -237,7 +237,7 @@
 		"demonym_other": "البوسنيون والهرسكيون"
 	},
 	"BLM": {
-		"name": "سانت بارثيوليمي",
+		"name": "Saint Barthélemy",
 		"demonym_zero": "سكان سانت بارتيليمي",
 		"demonym_one": "سكان جزيرة سانت بارثيوليمي",
 		"demonym_two": "سكان سانت بارتيليمي",
@@ -246,7 +246,7 @@
 		"demonym_other": "سكان سانت بارتيليمي"
 	},
 	"BLR": {
-		"name": "بيلاروس",
+		"name": "Belarus",
 		"demonym_zero": "البيلاروسيون",
 		"demonym_one": "البيلاروسية",
 		"demonym_two": "البيلاروسيون",
@@ -255,7 +255,7 @@
 		"demonym_other": "البيلاروسيون"
 	},
 	"BLZ": {
-		"name": "بليز",
+		"name": "Belize",
 		"demonym_zero": "البليزيون",
 		"demonym_one": "Belizean",
 		"demonym_two": "البليزيون",
@@ -282,7 +282,7 @@
 		"demonym_other": "البوليفيون"
 	},
 	"BRA": {
-		"name": "البرازيل",
+		"name": "Brazil",
 		"demonym_zero": "برازيليون",
 		"demonym_one": "برازيلي",
 		"demonym_two": "برازيليون",
@@ -291,7 +291,7 @@
 		"demonym_other": "برازيليون"
 	},
 	"BRB": {
-		"name": "بربادوس",
+		"name": "Barbados",
 		"demonym_zero": "بربادوس",
 		"demonym_one": "بربادوس",
 		"demonym_two": "بربادوس",
@@ -309,16 +309,16 @@
 		"demonym_other": "Bruneians"
 	},
 	"BTN": {
-		"name": "بوتان",
-		"demonym_zero": "بوتاني",
-		"demonym_one": "بوتاني",
-		"demonym_two": "بوتاني",
-		"demonym_few": "بوتاني",
-		"demonym_many": "بوتاني",
-		"demonym_other": "بوتاني"
+		"name": "Bhutan",
+		"demonym_zero": "Bhutanese",
+		"demonym_one": "Bhutanese",
+		"demonym_two": "Bhutanese",
+		"demonym_few": "Bhutanese",
+		"demonym_many": "Bhutanese",
+		"demonym_other": "Bhutanese"
 	},
 	"BVT": {
-		"name": "جزيرة بوفيت"
+		"name": "Bouvet Island"
 	},
 	"BWA": {
 		"name": "Botswana",
@@ -330,7 +330,7 @@
 		"demonym_other": "Motswanas"
 	},
 	"CAF": {
-		"name": "جمهورية أفريقيا الوسطى",
+		"name": "Central African Republic",
 		"demonym_zero": "سكان أفريقيا الوسطى",
 		"demonym_one": "جمهورية أفريقيا الوسطى",
 		"demonym_two": "سكان أفريقيا الوسطى",
@@ -339,7 +339,7 @@
 		"demonym_other": "سكان أفريقيا الوسطى"
 	},
 	"CAN": {
-		"name": "كندا",
+		"name": "Canada",
 		"demonym_zero": "الكنديون",
 		"demonym_one": "كندي",
 		"demonym_two": "الكنديون",
@@ -348,7 +348,7 @@
 		"demonym_other": "الكنديون"
 	},
 	"CCK": {
-		"name": "جزر كوكوس (كيلينغ)",
+		"name": "Cocos (Keeling) Islands",
 		"demonym_zero": "Cocos Islanders",
 		"demonym_one": "Cocos Islander",
 		"demonym_two": "Cocos Islanders",
@@ -357,16 +357,16 @@
 		"demonym_other": "Cocos Islanders"
 	},
 	"CHE": {
-		"name": "سويسرا",
-		"demonym_zero": "سويسري",
-		"demonym_one": "سويسري",
-		"demonym_two": "سويسري",
-		"demonym_few": "سويسري",
-		"demonym_many": "سويسري",
-		"demonym_other": "سويسري"
+		"name": "Switzerland",
+		"demonym_zero": "Swiss",
+		"demonym_one": "Swiss",
+		"demonym_two": "Swiss",
+		"demonym_few": "Swiss",
+		"demonym_many": "Swiss",
+		"demonym_other": "Swiss"
 	},
 	"CHL": {
-		"name": "شيلي",
+		"name": "Chile",
 		"demonym_zero": "الشيليين",
 		"demonym_one": "Chilean",
 		"demonym_two": "الشيليين",
@@ -375,16 +375,16 @@
 		"demonym_other": "الشيليين"
 	},
 	"CHN": {
-		"name": "الصين",
-		"demonym_zero": "الصينية",
-		"demonym_one": "الصينية",
-		"demonym_two": "الصينية",
-		"demonym_few": "الصينية",
-		"demonym_many": "الصينية",
-		"demonym_other": "الصينية"
+		"name": "China",
+		"demonym_zero": "Chinese",
+		"demonym_one": "Chinese",
+		"demonym_two": "Chinese",
+		"demonym_few": "Chinese",
+		"demonym_many": "Chinese",
+		"demonym_other": "Chinese"
 	},
 	"CIV": {
-		"name": "ساحل العاج",
+		"name": "Ivory Coast",
 		"demonym_zero": "Ivorians",
 		"demonym_one": "إيفواري",
 		"demonym_two": "Ivorians",
@@ -393,7 +393,7 @@
 		"demonym_other": "Ivorians"
 	},
 	"CMR": {
-		"name": "الكاميرون",
+		"name": "Cameroon",
 		"demonym_zero": "الكاميرونيون",
 		"demonym_one": "كاميروني",
 		"demonym_two": "الكاميرونيون",
@@ -411,7 +411,7 @@
 		"demonym_other": "Congolese"
 	},
 	"COG": {
-		"name": "جمهورية الكونغو الديمقراطية",
+		"name": "Republic of the Congo",
 		"demonym_zero": "Congolese",
 		"demonym_one": "Congolese",
 		"demonym_two": "Congolese",
@@ -420,7 +420,7 @@
 		"demonym_other": "Congolese"
 	},
 	"COK": {
-		"name": "جزر كوك",
+		"name": "Cook Islands",
 		"demonym_zero": "سكان جزر كوك",
 		"demonym_one": "سكان جزر كوك",
 		"demonym_two": "سكان جزر كوك",
@@ -429,7 +429,7 @@
 		"demonym_other": "سكان جزر كوك"
 	},
 	"COL": {
-		"name": "كولومبيا",
+		"name": "Colombia",
 		"demonym_zero": "الكولومبيين",
 		"demonym_one": "كولومبي",
 		"demonym_two": "الكولومبيين",
@@ -438,7 +438,7 @@
 		"demonym_other": "الكولومبيين"
 	},
 	"COM": {
-		"name": "جزر القمر",
+		"name": "Comoros",
 		"demonym_zero": "Comorans",
 		"demonym_one": "جزر القمر",
 		"demonym_two": "Comorans",
@@ -447,7 +447,7 @@
 		"demonym_other": "Comorans"
 	},
 	"CPV": {
-		"name": "الرأس الأخضر",
+		"name": "Cape Verde",
 		"demonym_zero": "سكان الرأس الأخضر",
 		"demonym_one": "الرأس الأخضر",
 		"demonym_two": "سكان الرأس الأخضر",
@@ -456,7 +456,7 @@
 		"demonym_other": "سكان الرأس الأخضر"
 	},
 	"CRI": {
-		"name": "كوستاريكا",
+		"name": "Costa Rica",
 		"demonym_zero": "الكوستاريكيون",
 		"demonym_one": "كوستاريكا",
 		"demonym_two": "الكوستاريكيون",
@@ -474,16 +474,16 @@
 		"demonym_other": "الكوبيون"
 	},
 	"CUW": {
-		"name": "كوراتشو",
-		"demonym_zero": "الهولنديون",
-		"demonym_one": "الهولندية",
-		"demonym_two": "الهولنديون",
-		"demonym_few": "الهولنديون",
-		"demonym_many": "الهولنديون",
-		"demonym_other": "الهولنديون"
+		"name": "Curaçao",
+		"demonym_zero": "Dutch",
+		"demonym_one": "Dutch",
+		"demonym_two": "Dutch",
+		"demonym_few": "Dutch",
+		"demonym_many": "Dutch",
+		"demonym_other": "Dutch"
 	},
 	"CXR": {
-		"name": "جزيرة عيد الميلاد",
+		"name": "Christmas Island",
 		"demonym_zero": "جزر الكريسماس",
 		"demonym_one": "جزيرة عيد الميلاد",
 		"demonym_two": "جزر الكريسماس",
@@ -492,7 +492,7 @@
 		"demonym_other": "جزر الكريسماس"
 	},
 	"CYM": {
-		"name": "جزر كايمان",
+		"name": "Cayman Islands",
 		"demonym_zero": "الكايمانيون",
 		"demonym_one": "Caymanian",
 		"demonym_two": "الكايمانيون",
@@ -501,7 +501,7 @@
 		"demonym_other": "الكايمانيون"
 	},
 	"CYP": {
-		"name": "قبرص",
+		"name": "Cyprus",
 		"demonym_zero": "قبارصة",
 		"demonym_one": "قبرصي",
 		"demonym_two": "قبارصة",
@@ -510,7 +510,7 @@
 		"demonym_other": "قبارصة"
 	},
 	"CZE": {
-		"name": "تشيكية",
+		"name": "Czechia",
 		"demonym_zero": "التشيكيون",
 		"demonym_one": "التشيكية",
 		"demonym_two": "التشيكيون",
@@ -519,7 +519,7 @@
 		"demonym_other": "التشيكيون"
 	},
 	"DEU": {
-		"name": "ألمانيا",
+		"name": "Germany",
 		"demonym_zero": "الألمان",
 		"demonym_one": "الألمانية",
 		"demonym_two": "الألمان",
@@ -529,15 +529,15 @@
 	},
 	"DJI": {
 		"name": "Djibouti",
-		"demonym_zero": "Djiboutis",
+		"demonym_zero": "Djibouti",
 		"demonym_one": "Djibouti",
-		"demonym_two": "Djiboutis",
-		"demonym_few": "Djiboutis",
-		"demonym_many": "Djiboutis",
-		"demonym_other": "Djiboutis"
+		"demonym_two": "Djibouti",
+		"demonym_few": "Djibouti",
+		"demonym_many": "Djibouti",
+		"demonym_other": "Djibouti"
 	},
 	"DMA": {
-		"name": "دومينيكا",
+		"name": "Dominica",
 		"demonym_zero": "دومينيكيين",
 		"demonym_one": "الدومينيك",
 		"demonym_two": "دومينيكيين",
@@ -546,22 +546,22 @@
 		"demonym_other": "دومينيكيين"
 	},
 	"DNK": {
-		"name": "الدانمرك",
-		"demonym_zero": "الدانماركيين",
-		"demonym_one": "الدانماركية",
-		"demonym_two": "الدانماركيين",
-		"demonym_few": "الدانماركيين",
-		"demonym_many": "الدانماركيين",
-		"demonym_other": "الدانماركيين"
+		"name": "Denmark",
+		"demonym_zero": "Danish",
+		"demonym_one": "Danish",
+		"demonym_two": "Danish",
+		"demonym_few": "Danish",
+		"demonym_many": "Danish",
+		"demonym_other": "Danish"
 	},
 	"DOM": {
-		"name": "الجمهورية الدومينيكية",
-		"demonym_zero": "دومينيكيين",
-		"demonym_one": "الدومينيك",
-		"demonym_two": "دومينيكيين",
-		"demonym_few": "دومينيكيين",
-		"demonym_many": "دومينيكيين",
-		"demonym_other": "دومينيكيين"
+		"name": "Dominican Republic",
+		"demonym_zero": "Dominicans",
+		"demonym_one": "Dominican",
+		"demonym_two": "Dominicans",
+		"demonym_few": "Dominicans",
+		"demonym_many": "Dominicans",
+		"demonym_other": "Dominicans"
 	},
 	"DZA": {
 		"name": "Algeria",
@@ -582,7 +582,7 @@
 		"demonym_other": "Ecuadoreans"
 	},
 	"EGY": {
-		"name": "مصر",
+		"name": "Egypt",
 		"demonym_zero": "المصريون",
 		"demonym_one": "مصري",
 		"demonym_two": "المصريون",
@@ -591,7 +591,7 @@
 		"demonym_other": "المصريون"
 	},
 	"ERI": {
-		"name": "إريتريا",
+		"name": "Eritrea",
 		"demonym_zero": "الإريتريون",
 		"demonym_one": "الإريتريون",
 		"demonym_two": "الإريتريون",
@@ -600,7 +600,7 @@
 		"demonym_other": "الإريتريون"
 	},
 	"ESH": {
-		"name": "الصحراء الغربية",
+		"name": "Western Sahara",
 		"demonym_zero": "Sahrawis",
 		"demonym_one": "الصحراوي",
 		"demonym_two": "Sahrawis",
@@ -609,16 +609,16 @@
 		"demonym_other": "Sahrawis"
 	},
 	"ESP": {
-		"name": "إسبانيا",
-		"demonym_zero": "الاسبانية",
-		"demonym_one": "الإسبانية",
-		"demonym_two": "الاسبانية",
-		"demonym_few": "الاسبانية",
-		"demonym_many": "الاسبانية",
-		"demonym_other": "الاسبانية"
+		"name": "Spain",
+		"demonym_zero": "Spanish",
+		"demonym_one": "Spanish",
+		"demonym_two": "Spanish",
+		"demonym_few": "Spanish",
+		"demonym_many": "Spanish",
+		"demonym_other": "Spanish"
 	},
 	"EST": {
-		"name": "إستونيا",
+		"name": "Estonia",
 		"demonym_zero": "الإستونيون",
 		"demonym_one": "الإستونية",
 		"demonym_two": "الإستونيون",
@@ -636,7 +636,7 @@
 		"demonym_other": "الإثيوبيون"
 	},
 	"FIN": {
-		"name": "فنلندا",
+		"name": "Finland",
 		"demonym_zero": "الفنلنديون",
 		"demonym_one": "الفنلندية",
 		"demonym_two": "الفنلنديون",
@@ -654,7 +654,7 @@
 		"demonym_other": "Fijians"
 	},
 	"FLK": {
-		"name": "جزر فوكلاند",
+		"name": "Falkland Islands",
 		"demonym_zero": "Falkland Islanders",
 		"demonym_one": "Falkland Islanders",
 		"demonym_two": "Falkland Islanders",
@@ -663,22 +663,22 @@
 		"demonym_other": "Falkland Islanders"
 	},
 	"FRA": {
-		"name": "فرنسا",
-		"demonym_zero": "الفرنسية",
-		"demonym_one": "الفرنسية",
-		"demonym_two": "الفرنسية",
-		"demonym_few": "الفرنسية",
-		"demonym_many": "الفرنسية",
-		"demonym_other": "الفرنسية"
+		"name": "France",
+		"demonym_zero": "French",
+		"demonym_one": "French",
+		"demonym_two": "French",
+		"demonym_few": "French",
+		"demonym_many": "French",
+		"demonym_other": "French"
 	},
 	"FRO": {
-		"name": "جزر فارو",
-		"demonym_zero": "Faroeses",
+		"name": "Faroe Islands",
+		"demonym_zero": "Faroese",
 		"demonym_one": "Faroese",
-		"demonym_two": "Faroeses",
-		"demonym_few": "Faroeses",
-		"demonym_many": "Faroeses",
-		"demonym_other": "Faroeses"
+		"demonym_two": "Faroese",
+		"demonym_few": "Faroese",
+		"demonym_many": "Faroese",
+		"demonym_other": "Faroese"
 	},
 	"FSM": {
 		"name": "Micronesia",
@@ -691,24 +691,24 @@
 	},
 	"GAB": {
 		"name": "Gabon",
-		"demonym_zero": "Gaboneses",
-		"demonym_one": "الغابونية",
-		"demonym_two": "Gaboneses",
-		"demonym_few": "Gaboneses",
-		"demonym_many": "Gaboneses",
-		"demonym_other": "Gaboneses"
+		"demonym_zero": "Gabonese",
+		"demonym_one": "Gabonese",
+		"demonym_two": "Gabonese",
+		"demonym_few": "Gabonese",
+		"demonym_many": "Gabonese",
+		"demonym_other": "Gabonese"
 	},
 	"GBR": {
-		"name": "المملكة المتحدة",
-		"demonym_zero": "Britishs",
-		"demonym_one": "بريطانيا",
-		"demonym_two": "Britishs",
-		"demonym_few": "Britishs",
-		"demonym_many": "Britishs",
-		"demonym_other": "Britishs"
+		"name": "United Kingdom",
+		"demonym_zero": "British",
+		"demonym_one": "British",
+		"demonym_two": "British",
+		"demonym_few": "British",
+		"demonym_many": "British",
+		"demonym_other": "British"
 	},
 	"GEO": {
-		"name": "جورجيا",
+		"name": "Georgia",
 		"demonym_zero": "الجورجيون",
 		"demonym_one": "جورجي",
 		"demonym_two": "الجورجيون",
@@ -726,7 +726,7 @@
 		"demonym_other": "سكان جزر القناة"
 	},
 	"GHA": {
-		"name": "غانا",
+		"name": "Ghana",
 		"demonym_zero": "الغانيون",
 		"demonym_one": "غاني",
 		"demonym_two": "الغانيون",
@@ -735,7 +735,7 @@
 		"demonym_other": "الغانيون"
 	},
 	"GIB": {
-		"name": "جبل طارق",
+		"name": "Gibraltar",
 		"demonym_zero": "جبل طارق",
 		"demonym_one": "جبل طارق",
 		"demonym_two": "جبل طارق",
@@ -789,7 +789,7 @@
 		"demonym_other": "غينيا الاستوائية"
 	},
 	"GRC": {
-		"name": "اليونان",
+		"name": "Greece",
 		"demonym_zero": "Greeks",
 		"demonym_one": "اليونانية",
 		"demonym_two": "Greeks",
@@ -798,7 +798,7 @@
 		"demonym_other": "Greeks"
 	},
 	"GRD": {
-		"name": "غرينادا",
+		"name": "Grenada",
 		"demonym_zero": "الغرينيون",
 		"demonym_one": "غرينادي",
 		"demonym_two": "الغرينيون",
@@ -807,7 +807,7 @@
 		"demonym_other": "الغرينيون"
 	},
 	"GRL": {
-		"name": "غرينلاند",
+		"name": "Greenland",
 		"demonym_zero": "غرينلانديك",
 		"demonym_one": "غرينلاندية",
 		"demonym_two": "غرينلانديك",
@@ -816,7 +816,7 @@
 		"demonym_other": "غرينلانديك"
 	},
 	"GTM": {
-		"name": "غواتيمالا",
+		"name": "Guatemala",
 		"demonym_zero": "الغواتيماليون",
 		"demonym_one": "غواتيمالي",
 		"demonym_two": "الغواتيماليون",
@@ -825,10 +825,10 @@
 		"demonym_other": "الغواتيماليون"
 	},
 	"GUF": {
-		"name": "غيانا الفرنسية"
+		"name": "French Guiana"
 	},
 	"GUM": {
-		"name": "غوام",
+		"name": "Guam",
 		"demonym_zero": "Guamanians",
 		"demonym_one": "غوام",
 		"demonym_two": "Guamanians",
@@ -838,15 +838,15 @@
 	},
 	"GUY": {
 		"name": "Guyana",
-		"demonym_zero": "Guyaneses",
+		"demonym_zero": "Guyanese",
 		"demonym_one": "Guyanese",
-		"demonym_two": "Guyaneses",
-		"demonym_few": "Guyaneses",
-		"demonym_many": "Guyaneses",
-		"demonym_other": "Guyaneses"
+		"demonym_two": "Guyanese",
+		"demonym_few": "Guyanese",
+		"demonym_many": "Guyanese",
+		"demonym_other": "Guyanese"
 	},
 	"HKG": {
-		"name": "هونغ كونغ",
+		"name": "Hong Kong",
 		"demonym_zero": "هونغ كونغ",
 		"demonym_one": "هونغ كونغ",
 		"demonym_two": "هونغ كونغ",
@@ -855,7 +855,7 @@
 		"demonym_other": "هونغ كونغ"
 	},
 	"HMD": {
-		"name": "جزيرة هورد وجزر ماكدونالد",
+		"name": "Heard Island and McDonald Islands",
 		"demonym_zero": "سمع وسكان جزر ماكدونالد",
 		"demonym_one": "سمع و جزيرة ماكدونالد",
 		"demonym_two": "سمع وسكان جزر ماكدونالد",
@@ -873,7 +873,7 @@
 		"demonym_other": "Hondurans"
 	},
 	"HRV": {
-		"name": "كرواتيا",
+		"name": "Croatia",
 		"demonym_zero": "الكرواتيون",
 		"demonym_one": "الكرواتية",
 		"demonym_two": "الكرواتيون",
@@ -891,7 +891,7 @@
 		"demonym_other": "الهايتيون"
 	},
 	"HUN": {
-		"name": "هنغاريا",
+		"name": "Hungary",
 		"demonym_zero": "الهنغاريون",
 		"demonym_one": "الهنغارية",
 		"demonym_two": "الهنغاريون",
@@ -900,7 +900,7 @@
 		"demonym_other": "الهنغاريون"
 	},
 	"IDN": {
-		"name": "اندونيسيا",
+		"name": "Indonesia",
 		"demonym_zero": "الإندونيسيون",
 		"demonym_one": "الإندونيسية",
 		"demonym_two": "الإندونيسيون",
@@ -909,16 +909,16 @@
 		"demonym_other": "الإندونيسيون"
 	},
 	"IMN": {
-		"name": "جزيرة مان",
-		"demonym_zero": "مانكس",
+		"name": "Isle of Man",
+		"demonym_zero": "Manx",
 		"demonym_one": "Manx",
-		"demonym_two": "مانكس",
-		"demonym_few": "مانكس",
-		"demonym_many": "مانكس",
-		"demonym_other": "مانكس"
+		"demonym_two": "Manx",
+		"demonym_few": "Manx",
+		"demonym_many": "Manx",
+		"demonym_other": "Manx"
 	},
 	"IND": {
-		"name": "الهند",
+		"name": "India",
 		"demonym_zero": "الهنود",
 		"demonym_one": "الهندية",
 		"demonym_two": "الهنود",
@@ -927,25 +927,25 @@
 		"demonym_other": "الهنود"
 	},
 	"IOT": {
-		"name": "إقليم المحيط الهندي البريطاني",
-		"demonym_zero": "الهنود",
-		"demonym_one": "الهندية",
-		"demonym_two": "الهنود",
-		"demonym_few": "الهنود",
-		"demonym_many": "الهنود",
-		"demonym_other": "الهنود"
+		"name": "British Indian Ocean Territory",
+		"demonym_zero": "Indians",
+		"demonym_one": "Indian",
+		"demonym_two": "Indians",
+		"demonym_few": "Indians",
+		"demonym_many": "Indians",
+		"demonym_other": "Indians"
 	},
 	"IRL": {
-		"name": "آيرلندا",
-		"demonym_zero": "الأيرلنديين",
-		"demonym_one": "الأيرلندية",
-		"demonym_two": "الأيرلنديين",
-		"demonym_few": "الأيرلنديين",
-		"demonym_many": "الأيرلنديين",
-		"demonym_other": "الأيرلنديين"
+		"name": "Ireland",
+		"demonym_zero": "Irish",
+		"demonym_one": "Irish",
+		"demonym_two": "Irish",
+		"demonym_few": "Irish",
+		"demonym_many": "Irish",
+		"demonym_other": "Irish"
 	},
 	"IRN": {
-		"name": "إيران",
+		"name": "Iran",
 		"demonym_zero": "الإيرانيون",
 		"demonym_one": "إيراني",
 		"demonym_two": "الإيرانيون",
@@ -954,7 +954,7 @@
 		"demonym_other": "الإيرانيون"
 	},
 	"IRQ": {
-		"name": "العراق",
+		"name": "Iraq",
 		"demonym_zero": "Iraqis",
 		"demonym_one": "عراقي",
 		"demonym_two": "Iraqis",
@@ -963,7 +963,7 @@
 		"demonym_other": "Iraqis"
 	},
 	"ISL": {
-		"name": "آيسلندا",
+		"name": "Iceland",
 		"demonym_zero": "الآيسلنديون",
 		"demonym_one": "آيسلندي",
 		"demonym_two": "الآيسلنديون",
@@ -981,7 +981,7 @@
 		"demonym_other": "إسرائيليون"
 	},
 	"ITA": {
-		"name": "إيطاليا",
+		"name": "Italy",
 		"demonym_zero": "الإيطاليون",
 		"demonym_one": "الإيطالية",
 		"demonym_two": "الإيطاليون",
@@ -999,16 +999,16 @@
 		"demonym_other": "Jamaicans"
 	},
 	"JEY": {
-		"name": "جيرسي",
-		"demonym_zero": "سكان جزر القناة",
-		"demonym_one": "جزيرة القناة",
-		"demonym_two": "سكان جزر القناة",
-		"demonym_few": "سكان جزر القناة",
-		"demonym_many": "سكان جزر القناة",
-		"demonym_other": "سكان جزر القناة"
+		"name": "Jersey",
+		"demonym_zero": "Channel Islanders",
+		"demonym_one": "Channel Islander",
+		"demonym_two": "Channel Islanders",
+		"demonym_few": "Channel Islanders",
+		"demonym_many": "Channel Islanders",
+		"demonym_other": "Channel Islanders"
 	},
 	"JOR": {
-		"name": "الأردن",
+		"name": "Jordan",
 		"demonym_zero": "الأردنيون",
 		"demonym_one": "أردني",
 		"demonym_two": "الأردنيون",
@@ -1017,16 +1017,16 @@
 		"demonym_other": "الأردنيون"
 	},
 	"JPN": {
-		"name": "اليابان",
-		"demonym_zero": "اليابانيون",
-		"demonym_one": "يابانية",
-		"demonym_two": "اليابانيون",
-		"demonym_few": "اليابانيون",
-		"demonym_many": "اليابانيون",
-		"demonym_other": "اليابانيون"
+		"name": "Japan",
+		"demonym_zero": "Japanese",
+		"demonym_one": "Japanese",
+		"demonym_two": "Japanese",
+		"demonym_few": "Japanese",
+		"demonym_many": "Japanese",
+		"demonym_other": "Japanese"
 	},
 	"KAZ": {
-		"name": "كازاخستان",
+		"name": "Kazakhstan",
 		"demonym_zero": "الكازاخستانية",
 		"demonym_one": "كازاخستان",
 		"demonym_two": "الكازاخستانية",
@@ -1035,7 +1035,7 @@
 		"demonym_other": "الكازاخستانية"
 	},
 	"KEN": {
-		"name": "كينيا",
+		"name": "Kenya",
 		"demonym_zero": "الكينيون",
 		"demonym_one": "كيني",
 		"demonym_two": "الكينيون",
@@ -1045,15 +1045,15 @@
 	},
 	"KGZ": {
 		"name": "Kyrgyzstan",
-		"demonym_zero": "Kirghizs",
+		"demonym_zero": "Kirghiz",
 		"demonym_one": "Kirghiz",
-		"demonym_two": "Kirghizs",
-		"demonym_few": "Kirghizs",
-		"demonym_many": "Kirghizs",
-		"demonym_other": "Kirghizs"
+		"demonym_two": "Kirghiz",
+		"demonym_few": "Kirghiz",
+		"demonym_many": "Kirghiz",
+		"demonym_other": "Kirghiz"
 	},
 	"KHM": {
-		"name": "كمبوديا",
+		"name": "Cambodia",
 		"demonym_zero": "الكمبوديين",
 		"demonym_one": "كمبودي",
 		"demonym_two": "الكمبوديين",
@@ -1071,7 +1071,7 @@
 		"demonym_other": "I-Kiribatis"
 	},
 	"KNA": {
-		"name": "سانت كيتس ونيفيس",
+		"name": "Saint Kitts and Nevis",
 		"demonym_zero": "الكيتية أو النفيسية",
 		"demonym_one": "كيتيتي أو نيفيسي",
 		"demonym_two": "الكيتية أو النفيسية",
@@ -1080,7 +1080,7 @@
 		"demonym_other": "الكيتية أو النفيسية"
 	},
 	"KOR": {
-		"name": "كوريا الجنوبية",
+		"name": "South Korea",
 		"demonym_zero": "الكوريين الجنوبيين",
 		"demonym_one": "كوريا الجنوبية",
 		"demonym_two": "الكوريين الجنوبيين",
@@ -1098,7 +1098,7 @@
 		"demonym_other": "Kuwaitis"
 	},
 	"LAO": {
-		"name": "لاوس",
+		"name": "Laos",
 		"demonym_zero": "لاويتيون",
 		"demonym_one": "لاوية",
 		"demonym_two": "لاويتيون",
@@ -1108,15 +1108,15 @@
 	},
 	"LBN": {
 		"name": "Lebanon",
-		"demonym_zero": "Lebaneses",
-		"demonym_one": "لبناني",
-		"demonym_two": "Lebaneses",
-		"demonym_few": "Lebaneses",
-		"demonym_many": "Lebaneses",
-		"demonym_other": "Lebaneses"
+		"demonym_zero": "Lebanese",
+		"demonym_one": "Lebanese",
+		"demonym_two": "Lebanese",
+		"demonym_few": "Lebanese",
+		"demonym_many": "Lebanese",
+		"demonym_other": "Lebanese"
 	},
 	"LBR": {
-		"name": "ليبيريا",
+		"name": "Liberia",
 		"demonym_zero": "الليبريون",
 		"demonym_one": "ليبيريا",
 		"demonym_two": "الليبريون",
@@ -1125,7 +1125,7 @@
 		"demonym_other": "الليبريون"
 	},
 	"LBY": {
-		"name": "ليبيا",
+		"name": "Libya",
 		"demonym_zero": "الليبيون",
 		"demonym_one": "ليبيا",
 		"demonym_two": "الليبيون",
@@ -1134,7 +1134,7 @@
 		"demonym_other": "الليبيون"
 	},
 	"LCA": {
-		"name": "سانت لوسيا",
+		"name": "Saint Lucia",
 		"demonym_zero": "سانت لوسيا",
 		"demonym_one": "سانت لوسيا",
 		"demonym_two": "سانت لوسيا",
@@ -1152,7 +1152,7 @@
 		"demonym_other": "Liechtensteiners"
 	},
 	"LKA": {
-		"name": "سري لانكا",
+		"name": "Sri Lanka",
 		"demonym_zero": "السريلانكيون",
 		"demonym_one": "سري لانكي",
 		"demonym_two": "السريلانكيون",
@@ -1170,7 +1170,7 @@
 		"demonym_other": "Mosothos"
 	},
 	"LTU": {
-		"name": "ليتوانيا",
+		"name": "Lithuania",
 		"demonym_zero": "ليتوانيون",
 		"demonym_one": "ليتوانية",
 		"demonym_two": "ليتوانيون",
@@ -1188,7 +1188,7 @@
 		"demonym_other": "Luxembourgers"
 	},
 	"LVA": {
-		"name": "لاتفيا",
+		"name": "Latvia",
 		"demonym_zero": "اللاتفيون",
 		"demonym_one": "لاتفيا",
 		"demonym_two": "اللاتفيون",
@@ -1197,16 +1197,16 @@
 		"demonym_other": "اللاتفيون"
 	},
 	"MAC": {
-		"name": "ماكاو",
-		"demonym_zero": "الصينية",
-		"demonym_one": "الصينية",
-		"demonym_two": "الصينية",
-		"demonym_few": "الصينية",
-		"demonym_many": "الصينية",
-		"demonym_other": "الصينية"
+		"name": "Macau",
+		"demonym_zero": "Chinese",
+		"demonym_one": "Chinese",
+		"demonym_two": "Chinese",
+		"demonym_few": "Chinese",
+		"demonym_many": "Chinese",
+		"demonym_other": "Chinese"
 	},
 	"MAF": {
-		"name": "سانت مارتن",
+		"name": "Saint Martin",
 		"demonym_zero": "سكان سانت مارتن",
 		"demonym_one": "جزر سانت مارتن",
 		"demonym_two": "سكان سانت مارتن",
@@ -1215,7 +1215,7 @@
 		"demonym_other": "سكان سانت مارتن"
 	},
 	"MAR": {
-		"name": "المغرب",
+		"name": "Morocco",
 		"demonym_zero": "المغاربة",
 		"demonym_one": "مغربي",
 		"demonym_two": "المغاربة",
@@ -1224,7 +1224,7 @@
 		"demonym_other": "المغاربة"
 	},
 	"MCO": {
-		"name": "موناكو",
+		"name": "Monaco",
 		"demonym_zero": "موناكو",
 		"demonym_one": "موناكو",
 		"demonym_two": "موناكو",
@@ -1243,15 +1243,15 @@
 	},
 	"MDG": {
 		"name": "Madagascar",
-		"demonym_zero": "Malagasys",
+		"demonym_zero": "Malagasy",
 		"demonym_one": "Malagasy",
-		"demonym_two": "Malagasys",
-		"demonym_few": "Malagasys",
-		"demonym_many": "Malagasys",
-		"demonym_other": "Malagasys"
+		"demonym_two": "Malagasy",
+		"demonym_few": "Malagasy",
+		"demonym_many": "Malagasy",
+		"demonym_other": "Malagasy"
 	},
 	"MDV": {
-		"name": "ملديف",
+		"name": "Maldives",
 		"demonym_zero": "Maldivans",
 		"demonym_one": "Maldivan",
 		"demonym_two": "Maldivans",
@@ -1260,7 +1260,7 @@
 		"demonym_other": "Maldivans"
 	},
 	"MEX": {
-		"name": "المكسيك",
+		"name": "Mexico",
 		"demonym_zero": "Mexicans",
 		"demonym_one": "مكسيكي",
 		"demonym_two": "Mexicans",
@@ -1269,16 +1269,16 @@
 		"demonym_other": "Mexicans"
 	},
 	"MHL": {
-		"name": "جزر مارشال",
-		"demonym_zero": "الشظايا",
-		"demonym_one": "المارشالية",
-		"demonym_two": "الشظايا",
-		"demonym_few": "الشظايا",
-		"demonym_many": "الشظايا",
-		"demonym_other": "الشظايا"
+		"name": "Marshall Islands",
+		"demonym_zero": "Marshallese",
+		"demonym_one": "Marshallese",
+		"demonym_two": "Marshallese",
+		"demonym_few": "Marshallese",
+		"demonym_many": "Marshallese",
+		"demonym_other": "Marshallese"
 	},
 	"MKD": {
-		"name": "شمال مقدونيا",
+		"name": "North Macedonia",
 		"demonym_zero": "المقدونيون",
 		"demonym_one": "مقدونية",
 		"demonym_two": "المقدونيون",
@@ -1297,12 +1297,12 @@
 	},
 	"MLT": {
 		"name": "Malta",
-		"demonym_zero": "Malteses",
+		"demonym_zero": "Maltese",
 		"demonym_one": "Maltese",
-		"demonym_two": "Malteses",
-		"demonym_few": "Malteses",
-		"demonym_many": "Malteses",
-		"demonym_other": "Malteses"
+		"demonym_two": "Maltese",
+		"demonym_few": "Maltese",
+		"demonym_many": "Maltese",
+		"demonym_other": "Maltese"
 	},
 	"MMR": {
 		"name": "Myanmar",
@@ -1314,7 +1314,7 @@
 		"demonym_other": "Bamars"
 	},
 	"MNE": {
-		"name": "الجبل الأسود",
+		"name": "Montenegro",
 		"demonym_zero": "Montenegrins",
 		"demonym_one": "الجبل الأسود",
 		"demonym_two": "Montenegrins",
@@ -1332,7 +1332,7 @@
 		"demonym_other": "المنغوليون"
 	},
 	"MNP": {
-		"name": "جزر ماريانا الشمالية",
+		"name": "Northern Mariana Islands",
 		"demonym_zero": "الأمريكيون",
 		"demonym_one": "أمريكي",
 		"demonym_two": "الأمريكيون",
@@ -1341,7 +1341,7 @@
 		"demonym_other": "الأمريكيون"
 	},
 	"MOZ": {
-		"name": "موزامبيق",
+		"name": "Mozambique",
 		"demonym_zero": "Mozambicans",
 		"demonym_one": "Mozambicans",
 		"demonym_two": "Mozambicans",
@@ -1368,22 +1368,22 @@
 		"demonym_other": "Montserratians"
 	},
 	"MTQ": {
-		"name": "مارتينيك",
-		"demonym_zero": "الفرنسية",
-		"demonym_one": "الفرنسية",
-		"demonym_two": "الفرنسية",
-		"demonym_few": "الفرنسية",
-		"demonym_many": "الفرنسية",
-		"demonym_other": "الفرنسية"
+		"name": "Martinique",
+		"demonym_zero": "French",
+		"demonym_one": "French",
+		"demonym_two": "French",
+		"demonym_few": "French",
+		"demonym_many": "French",
+		"demonym_other": "French"
 	},
 	"MUS": {
 		"name": "Mauritius",
-		"demonym_zero": "موريشيون",
-		"demonym_one": "موريشيوسي",
-		"demonym_two": "موريشيون",
-		"demonym_few": "موريشيون",
-		"demonym_many": "موريشيون",
-		"demonym_other": "موريشيون"
+		"demonym_zero": "Mauritian",
+		"demonym_one": "Mauritian",
+		"demonym_two": "Mauritian",
+		"demonym_few": "Mauritian",
+		"demonym_many": "Mauritian",
+		"demonym_other": "Mauritian"
 	},
 	"MWI": {
 		"name": "Malawi",
@@ -1395,7 +1395,7 @@
 		"demonym_other": "Malawians"
 	},
 	"MYS": {
-		"name": "ماليزيا",
+		"name": "Malaysia",
 		"demonym_zero": "ماليزيون",
 		"demonym_one": "ماليزي",
 		"demonym_two": "ماليزيون",
@@ -1404,7 +1404,7 @@
 		"demonym_other": "ماليزيون"
 	},
 	"MYT": {
-		"name": "مايوت",
+		"name": "Mayotte",
 		"demonym_zero": "Mahorans",
 		"demonym_one": "Mahorans",
 		"demonym_two": "Mahorans",
@@ -1422,7 +1422,7 @@
 		"demonym_other": "الناميبيون"
 	},
 	"NCL": {
-		"name": "كاليدونيا الجديدة",
+		"name": "New Caledonia",
 		"demonym_zero": "كاليدونيا الجديدة",
 		"demonym_one": "كاليدونيا الجديدة",
 		"demonym_two": "كاليدونيا الجديدة",
@@ -1440,7 +1440,7 @@
 		"demonym_other": "Nigeriens"
 	},
 	"NFK": {
-		"name": "جزيرة نورفولك",
+		"name": "Norfolk Island",
 		"demonym_zero": "سكان جزر نورفولك",
 		"demonym_one": "جزيرة نورفولك",
 		"demonym_two": "سكان جزر نورفولك",
@@ -1467,7 +1467,7 @@
 		"demonym_other": "Nicaraguans"
 	},
 	"NIU": {
-		"name": "نيوي",
+		"name": "Niue",
 		"demonym_zero": "النيويون",
 		"demonym_one": "نيوي",
 		"demonym_two": "النيويون",
@@ -1476,16 +1476,16 @@
 		"demonym_other": "النيويون"
 	},
 	"NLD": {
-		"name": "هولندا",
-		"demonym_zero": "الهولنديون",
-		"demonym_one": "الهولندية",
-		"demonym_two": "الهولنديون",
-		"demonym_few": "الهولنديون",
-		"demonym_many": "الهولنديون",
-		"demonym_other": "الهولنديون"
+		"name": "Netherlands",
+		"demonym_zero": "Dutch",
+		"demonym_one": "Dutch",
+		"demonym_two": "Dutch",
+		"demonym_few": "Dutch",
+		"demonym_many": "Dutch",
+		"demonym_other": "Dutch"
 	},
 	"NOR": {
-		"name": "النرويج",
+		"name": "Norway",
 		"demonym_zero": "النرويجيون",
 		"demonym_one": "النرويجية",
 		"demonym_two": "النرويجيون",
@@ -1494,13 +1494,13 @@
 		"demonym_other": "النرويجيون"
 	},
 	"NPL": {
-		"name": "نيبال",
-		"demonym_zero": "Nepaleses",
+		"name": "Nepal",
+		"demonym_zero": "Nepalese",
 		"demonym_one": "Nepalese",
-		"demonym_two": "Nepaleses",
-		"demonym_few": "Nepaleses",
-		"demonym_many": "Nepaleses",
-		"demonym_other": "Nepaleses"
+		"demonym_two": "Nepalese",
+		"demonym_few": "Nepalese",
+		"demonym_many": "Nepalese",
+		"demonym_other": "Nepalese"
 	},
 	"NRU": {
 		"name": "Nauru",
@@ -1512,7 +1512,7 @@
 		"demonym_other": "Nauruans"
 	},
 	"NZL": {
-		"name": "نيوزيلندا",
+		"name": "New Zealand",
 		"demonym_zero": "سكان نيوزيلندا",
 		"demonym_one": "النيوزيلنديين",
 		"demonym_two": "سكان نيوزيلندا",
@@ -1530,7 +1530,7 @@
 		"demonym_other": "Omanis"
 	},
 	"PAK": {
-		"name": "باكستان",
+		"name": "Pakistan",
 		"demonym_zero": "Pakistanis",
 		"demonym_one": "Pakistanis",
 		"demonym_two": "Pakistanis",
@@ -1548,7 +1548,7 @@
 		"demonym_other": "البنميون"
 	},
 	"PCN": {
-		"name": "جزر بيتكيرن",
+		"name": "Pitcairn Islands",
 		"demonym_zero": "Pitcairn Islanders",
 		"demonym_one": "Pitcairn Islanders",
 		"demonym_two": "Pitcairn Islanders",
@@ -1557,7 +1557,7 @@
 		"demonym_other": "Pitcairn Islanders"
 	},
 	"PER": {
-		"name": "بيرو",
+		"name": "Peru",
 		"demonym_zero": "البيروفيون",
 		"demonym_one": "البيروفيون",
 		"demonym_two": "البيروفيون",
@@ -1566,7 +1566,7 @@
 		"demonym_other": "البيروفيون"
 	},
 	"PHL": {
-		"name": "الفلبين",
+		"name": "Philippines",
 		"demonym_zero": "الفلبينيون",
 		"demonym_one": "فلبيني",
 		"demonym_two": "الفلبينيون",
@@ -1593,13 +1593,13 @@
 		"demonym_other": "Papua New Guineans"
 	},
 	"POL": {
-		"name": "بولندا",
-		"demonym_zero": "البولنديين",
-		"demonym_one": "البولندية",
-		"demonym_two": "البولنديين",
-		"demonym_few": "البولنديين",
-		"demonym_many": "البولنديين",
-		"demonym_other": "البولنديين"
+		"name": "Poland",
+		"demonym_zero": "Polish",
+		"demonym_one": "Polish",
+		"demonym_two": "Polish",
+		"demonym_few": "Polish",
+		"demonym_many": "Polish",
+		"demonym_other": "Polish"
 	},
 	"PRI": {
 		"name": "Puerto Rico",
@@ -1611,7 +1611,7 @@
 		"demonym_other": "البورتوريكيون"
 	},
 	"PRK": {
-		"name": "كوريا الشمالية",
+		"name": "North Korea",
 		"demonym_zero": "الكوريين الشماليين",
 		"demonym_one": "كوريا الشمالية",
 		"demonym_two": "الكوريين الشماليين",
@@ -1620,13 +1620,13 @@
 		"demonym_other": "الكوريين الشماليين"
 	},
 	"PRT": {
-		"name": "البرتغال",
-		"demonym_zero": "البرتغالية",
-		"demonym_one": "البرتغالية",
-		"demonym_two": "البرتغالية",
-		"demonym_few": "البرتغالية",
-		"demonym_many": "البرتغالية",
-		"demonym_other": "البرتغالية"
+		"name": "Portugal",
+		"demonym_zero": "Portuguese",
+		"demonym_one": "Portuguese",
+		"demonym_two": "Portuguese",
+		"demonym_few": "Portuguese",
+		"demonym_many": "Portuguese",
+		"demonym_other": "Portuguese"
 	},
 	"PRY": {
 		"name": "Paraguay",
@@ -1647,7 +1647,7 @@
 		"demonym_other": "Palestinians"
 	},
 	"PYF": {
-		"name": "بولينيزيا الفرنسية",
+		"name": "French Polynesia",
 		"demonym_zero": "البولينيزيون الفرنسيون",
 		"demonym_one": "بولينيزيا الفرنسية",
 		"demonym_two": "البولينيزيون الفرنسيون",
@@ -1665,16 +1665,16 @@
 		"demonym_other": "قطر"
 	},
 	"REU": {
-		"name": "الاتحاد",
-		"demonym_zero": "الفرنسية",
-		"demonym_one": "الفرنسية",
-		"demonym_two": "الفرنسية",
-		"demonym_few": "الفرنسية",
-		"demonym_many": "الفرنسية",
-		"demonym_other": "الفرنسية"
+		"name": "Réunion",
+		"demonym_zero": "French",
+		"demonym_one": "French",
+		"demonym_two": "French",
+		"demonym_few": "French",
+		"demonym_many": "French",
+		"demonym_other": "French"
 	},
 	"ROU": {
-		"name": "رومانيا",
+		"name": "Romania",
 		"demonym_zero": "الرومانية",
 		"demonym_one": "الرومانية",
 		"demonym_two": "الرومانية",
@@ -1683,7 +1683,7 @@
 		"demonym_other": "الرومانية"
 	},
 	"RUS": {
-		"name": "روسيا",
+		"name": "Russia",
 		"demonym_zero": "الروس",
 		"demonym_one": "الروسية",
 		"demonym_two": "الروس",
@@ -1701,7 +1701,7 @@
 		"demonym_other": "Rwandans"
 	},
 	"SAU": {
-		"name": "المملكة العربية السعودية",
+		"name": "Saudi Arabia",
 		"demonym_zero": "المملكة العربية السعودية",
 		"demonym_one": "المملكة العربية السعودية",
 		"demonym_two": "المملكة العربية السعودية",
@@ -1711,24 +1711,24 @@
 	},
 	"SDN": {
 		"name": "Sudan",
-		"demonym_zero": "Sudaneses",
+		"demonym_zero": "Sudanese",
 		"demonym_one": "Sudanese",
-		"demonym_two": "Sudaneses",
-		"demonym_few": "Sudaneses",
-		"demonym_many": "Sudaneses",
-		"demonym_other": "Sudaneses"
+		"demonym_two": "Sudanese",
+		"demonym_few": "Sudanese",
+		"demonym_many": "Sudanese",
+		"demonym_other": "Sudanese"
 	},
 	"SEN": {
 		"name": "Senegal",
-		"demonym_zero": "Senegaleses",
+		"demonym_zero": "Senegalese",
 		"demonym_one": "Senegalese",
-		"demonym_two": "Senegaleses",
-		"demonym_few": "Senegaleses",
-		"demonym_many": "Senegaleses",
-		"demonym_other": "Senegaleses"
+		"demonym_two": "Senegalese",
+		"demonym_few": "Senegalese",
+		"demonym_many": "Senegalese",
+		"demonym_other": "Senegalese"
 	},
 	"SGP": {
-		"name": "سنغافورة",
+		"name": "Singapore",
 		"demonym_zero": "السنغافوريين",
 		"demonym_one": "السنغافورية",
 		"demonym_two": "السنغافوريين",
@@ -1737,7 +1737,7 @@
 		"demonym_other": "السنغافوريين"
 	},
 	"SGS": {
-		"name": "جورجيا الجنوبية",
+		"name": "South Georgia",
 		"demonym_zero": "جزر ساندويتش الجنوبية الجورجية الجنوبية",
 		"demonym_one": "جزر ساندويتش الجنوبية الجورجية الجنوبية",
 		"demonym_two": "جزر ساندويتش الجنوبية الجورجية الجنوبية",
@@ -1746,19 +1746,19 @@
 		"demonym_other": "جزر ساندويتش الجنوبية الجورجية الجنوبية"
 	},
 	"SHN": {
-		"name": "سانت هيلانة وأسنسيون وتريستان دا كونها"
+		"name": "Saint Helena, Ascension and Tristan da Cunha"
 	},
 	"SJM": {
-		"name": "سفالبارد ويان ماين",
-		"demonym_zero": "النرويجيون",
-		"demonym_one": "النرويجية",
-		"demonym_two": "النرويجيون",
-		"demonym_few": "النرويجيون",
-		"demonym_many": "النرويجيون",
-		"demonym_other": "النرويجيون"
+		"name": "Svalbard and Jan Mayen",
+		"demonym_zero": "Norwegians",
+		"demonym_one": "Norwegian",
+		"demonym_two": "Norwegians",
+		"demonym_few": "Norwegians",
+		"demonym_many": "Norwegians",
+		"demonym_other": "Norwegians"
 	},
 	"SLB": {
-		"name": "جزر سليمان",
+		"name": "Solomon Islands",
 		"demonym_zero": "سكان جزر سليمان",
 		"demonym_one": "جزر سليمان",
 		"demonym_two": "سكان جزر سليمان",
@@ -1767,7 +1767,7 @@
 		"demonym_other": "سكان جزر سليمان"
 	},
 	"SLE": {
-		"name": "سيراليون",
+		"name": "Sierra Leone",
 		"demonym_zero": "Sierra Leoneans",
 		"demonym_one": "Sierra Leoneans",
 		"demonym_two": "Sierra Leoneans",
@@ -1786,12 +1786,12 @@
 	},
 	"SMR": {
 		"name": "San Marino",
-		"demonym_zero": "Sammarineses",
+		"demonym_zero": "Sammarinese",
 		"demonym_one": "Sammarinese",
-		"demonym_two": "Sammarineses",
-		"demonym_few": "Sammarineses",
-		"demonym_many": "Sammarineses",
-		"demonym_other": "Sammarineses"
+		"demonym_two": "Sammarinese",
+		"demonym_few": "Sammarinese",
+		"demonym_many": "Sammarinese",
+		"demonym_other": "Sammarinese"
 	},
 	"SOM": {
 		"name": "Somalia",
@@ -1803,16 +1803,16 @@
 		"demonym_other": "Somalis"
 	},
 	"SPM": {
-		"name": "سانت بيير وميكلون",
-		"demonym_zero": "الفرنسية",
-		"demonym_one": "الفرنسية",
-		"demonym_two": "الفرنسية",
-		"demonym_few": "الفرنسية",
-		"demonym_many": "الفرنسية",
-		"demonym_other": "الفرنسية"
+		"name": "Saint Pierre and Miquelon",
+		"demonym_zero": "French",
+		"demonym_one": "French",
+		"demonym_two": "French",
+		"demonym_few": "French",
+		"demonym_many": "French",
+		"demonym_other": "French"
 	},
 	"SRB": {
-		"name": "صربيا",
+		"name": "Serbia",
 		"demonym_zero": "الصربيون",
 		"demonym_one": "الصربية",
 		"demonym_two": "الصربيون",
@@ -1821,16 +1821,16 @@
 		"demonym_other": "الصربيون"
 	},
 	"SSD": {
-		"name": "جنوب السودان",
-		"demonym_zero": "جنوب السودانيين",
-		"demonym_one": "جنوب السودان",
-		"demonym_two": "جنوب السودانيين",
-		"demonym_few": "جنوب السودانيين",
-		"demonym_many": "جنوب السودانيين",
-		"demonym_other": "جنوب السودانيين"
+		"name": "South Sudan",
+		"demonym_zero": "South Sudanese",
+		"demonym_one": "South Sudanese",
+		"demonym_two": "South Sudanese",
+		"demonym_few": "South Sudanese",
+		"demonym_many": "South Sudanese",
+		"demonym_other": "South Sudanese"
 	},
 	"STP": {
-		"name": "ساو تومي و بريسنسيبي",
+		"name": "São Tomé and Príncipe",
 		"demonym_zero": "Sao Tomeans",
 		"demonym_one": "Sao Tomeans",
 		"demonym_two": "Sao Tomeans",
@@ -1848,7 +1848,7 @@
 		"demonym_other": "سورينامي"
 	},
 	"SVK": {
-		"name": "سلوفاكيا",
+		"name": "Slovakia",
 		"demonym_zero": "Slovaks",
 		"demonym_one": "السلوفاكية",
 		"demonym_two": "Slovaks",
@@ -1866,16 +1866,16 @@
 		"demonym_other": "Slovenes"
 	},
 	"SWE": {
-		"name": "السويد",
-		"demonym_zero": "السويديون",
-		"demonym_one": "السويدية",
-		"demonym_two": "السويديون",
-		"demonym_few": "السويديون",
-		"demonym_many": "السويديون",
-		"demonym_other": "السويديون"
+		"name": "Sweden",
+		"demonym_zero": "Swedish",
+		"demonym_one": "Swedish",
+		"demonym_two": "Swedish",
+		"demonym_few": "Swedish",
+		"demonym_many": "Swedish",
+		"demonym_other": "Swedish"
 	},
 	"SWZ": {
-		"name": "إيسواتيني",
+		"name": "Eswatini",
 		"demonym_zero": "Swazis",
 		"demonym_one": "Swazis",
 		"demonym_two": "Swazis",
@@ -1894,15 +1894,15 @@
 	},
 	"SYC": {
 		"name": "Seychelles",
-		"demonym_zero": "Seychelloiss",
+		"demonym_zero": "Seychellois",
 		"demonym_one": "Seychellois",
-		"demonym_two": "Seychelloiss",
-		"demonym_few": "Seychelloiss",
-		"demonym_many": "Seychelloiss",
-		"demonym_other": "Seychelloiss"
+		"demonym_two": "Seychellois",
+		"demonym_few": "Seychellois",
+		"demonym_many": "Seychellois",
+		"demonym_other": "Seychellois"
 	},
 	"SYR": {
-		"name": "سوريا",
+		"name": "Syria",
 		"demonym_zero": "السوريون",
 		"demonym_one": "سورية",
 		"demonym_two": "السوريون",
@@ -1911,7 +1911,7 @@
 		"demonym_other": "السوريون"
 	},
 	"TCA": {
-		"name": "جزر تركس وكايكوس",
+		"name": "Turks and Caicos Islands",
 		"demonym_zero": "جزر تركس وكايكوس",
 		"demonym_one": "جزر تركس وكايكوس",
 		"demonym_two": "جزر تركس وكايكوس",
@@ -1920,7 +1920,7 @@
 		"demonym_other": "جزر تركس وكايكوس"
 	},
 	"TCD": {
-		"name": "تشاد",
+		"name": "Chad",
 		"demonym_zero": "تشادي",
 		"demonym_one": "تشادي",
 		"demonym_two": "تشادي",
@@ -1929,13 +1929,13 @@
 		"demonym_other": "تشادي"
 	},
 	"TGO": {
-		"name": "توغو",
-		"demonym_zero": "Togoleses",
+		"name": "Togo",
+		"demonym_zero": "Togolese",
 		"demonym_one": "Togolese",
-		"demonym_two": "Togoleses",
-		"demonym_few": "Togoleses",
-		"demonym_many": "Togoleses",
-		"demonym_other": "Togoleses"
+		"demonym_two": "Togolese",
+		"demonym_few": "Togolese",
+		"demonym_many": "Togolese",
+		"demonym_other": "Togolese"
 	},
 	"THA": {
 		"name": "Thailand",
@@ -1975,12 +1975,12 @@
 	},
 	"TLS": {
 		"name": "Timor-Leste",
-		"demonym_zero": "التيموريين الشرقيين",
-		"demonym_one": "تيمور الشرقية",
-		"demonym_two": "التيموريين الشرقيين",
-		"demonym_few": "التيموريين الشرقيين",
-		"demonym_many": "التيموريين الشرقيين",
-		"demonym_other": "التيموريين الشرقيين"
+		"demonym_zero": "East Timorese",
+		"demonym_one": "East Timorese",
+		"demonym_two": "East Timorese",
+		"demonym_few": "East Timorese",
+		"demonym_many": "East Timorese",
+		"demonym_other": "East Timorese"
 	},
 	"TON": {
 		"name": "Tonga",
@@ -1992,7 +1992,7 @@
 		"demonym_other": "التونغانس"
 	},
 	"TTO": {
-		"name": "ترينيداد وتوباغو",
+		"name": "Trinidad and Tobago",
 		"demonym_zero": "Trinidadians",
 		"demonym_one": "Trinidadians",
 		"demonym_two": "Trinidadians",
@@ -2010,7 +2010,7 @@
 		"demonym_other": "تونسيون"
 	},
 	"TUR": {
-		"name": "تركيا",
+		"name": "Turkey",
 		"demonym_zero": "الأتراك",
 		"demonym_one": "تركية",
 		"demonym_two": "الأتراك",
@@ -2028,13 +2028,13 @@
 		"demonym_other": "Tuvaluans"
 	},
 	"TWN": {
-		"name": "تايوان",
-		"demonym_zero": "تايوانيين",
-		"demonym_one": "تايواني",
-		"demonym_two": "تايوانيين",
-		"demonym_few": "تايوانيين",
-		"demonym_many": "تايوانيين",
-		"demonym_other": "تايوانيين"
+		"name": "Taiwan",
+		"demonym_zero": "Taiwanese",
+		"demonym_one": "Taiwanese",
+		"demonym_two": "Taiwanese",
+		"demonym_few": "Taiwanese",
+		"demonym_many": "Taiwanese",
+		"demonym_other": "Taiwanese"
 	},
 	"TZA": {
 		"name": "Tanzania",
@@ -2055,7 +2055,7 @@
 		"demonym_other": "Ugandans"
 	},
 	"UKR": {
-		"name": "أوكرانيا",
+		"name": "Ukraine",
 		"demonym_zero": "الأوكرانيين",
 		"demonym_one": "أوكراني",
 		"demonym_two": "الأوكرانيين",
@@ -2064,13 +2064,13 @@
 		"demonym_other": "الأوكرانيين"
 	},
 	"UMI": {
-		"name": "جزر الولايات المتحدة النائية الصغيرة",
-		"demonym_zero": "الأمريكيون",
-		"demonym_one": "أمريكي",
-		"demonym_two": "الأمريكيون",
-		"demonym_few": "الأمريكيون",
-		"demonym_many": "الأمريكيون",
-		"demonym_other": "الأمريكيون"
+		"name": "United States Minor Outlying Islands",
+		"demonym_zero": "Americans",
+		"demonym_one": "American",
+		"demonym_two": "Americans",
+		"demonym_few": "Americans",
+		"demonym_many": "Americans",
+		"demonym_other": "Americans"
 	},
 	"UNK": {
 		"name": "Kosovo",
@@ -2091,13 +2091,13 @@
 		"demonym_other": "Uruguayans"
 	},
 	"USA": {
-		"name": "الولايات المتحدة الأمريكية",
-		"demonym_zero": "الأمريكيون",
-		"demonym_one": "أمريكي",
-		"demonym_two": "الأمريكيون",
-		"demonym_few": "الأمريكيون",
-		"demonym_many": "الأمريكيون",
-		"demonym_other": "الأمريكيون"
+		"name": "United States",
+		"demonym_zero": "Americans",
+		"demonym_one": "American",
+		"demonym_two": "Americans",
+		"demonym_few": "Americans",
+		"demonym_many": "Americans",
+		"demonym_other": "Americans"
 	},
 	"UZB": {
 		"name": "Uzbekistan",
@@ -2109,16 +2109,16 @@
 		"demonym_other": "Uzbekistanis"
 	},
 	"VAT": {
-		"name": "مدينة الفاتيكان",
-		"demonym_zero": "الإيطاليون",
-		"demonym_one": "الإيطالية",
-		"demonym_two": "الإيطاليون",
-		"demonym_few": "الإيطاليون",
-		"demonym_many": "الإيطاليون",
-		"demonym_other": "الإيطاليون"
+		"name": "Vatican City",
+		"demonym_zero": "Italians",
+		"demonym_one": "Italian",
+		"demonym_two": "Italians",
+		"demonym_few": "Italians",
+		"demonym_many": "Italians",
+		"demonym_other": "Italians"
 	},
 	"VCT": {
-		"name": "سانت فنسنت وجزر غرينادين",
+		"name": "Saint Vincent and the Grenadines",
 		"demonym_zero": "القديس فيناسيون",
 		"demonym_one": "القديس فيناسيون",
 		"demonym_two": "القديس فيناسيون",
@@ -2127,7 +2127,7 @@
 		"demonym_other": "القديس فيناسيون"
 	},
 	"VEN": {
-		"name": "فنـزويلا",
+		"name": "Venezuela",
 		"demonym_zero": "الفنزويليون",
 		"demonym_one": "فنزويلي",
 		"demonym_two": "الفنزويليون",
@@ -2136,7 +2136,7 @@
 		"demonym_other": "الفنزويليون"
 	},
 	"VGB": {
-		"name": "جزر فرجن البريطانية",
+		"name": "British Virgin Islands",
 		"demonym_zero": "سكان جزر فرجن",
 		"demonym_one": "جزر فرجن",
 		"demonym_two": "سكان جزر فرجن",
@@ -2145,34 +2145,34 @@
 		"demonym_other": "سكان جزر فرجن"
 	},
 	"VIR": {
-		"name": "جزر فرجن التابعة للولايات المتحدة",
-		"demonym_zero": "سكان جزر فرجن",
-		"demonym_one": "جزر فرجن",
-		"demonym_two": "سكان جزر فرجن",
-		"demonym_few": "سكان جزر فرجن",
-		"demonym_many": "سكان جزر فرجن",
-		"demonym_other": "سكان جزر فرجن"
+		"name": "United States Virgin Islands",
+		"demonym_zero": "Virgin Islanders",
+		"demonym_one": "Virgin Islander",
+		"demonym_two": "Virgin Islanders",
+		"demonym_few": "Virgin Islanders",
+		"demonym_many": "Virgin Islanders",
+		"demonym_other": "Virgin Islanders"
 	},
 	"VNM": {
 		"name": "Vietnam",
-		"demonym_zero": "Vietnameses",
+		"demonym_zero": "Vietnamese",
 		"demonym_one": "Vietnamese",
-		"demonym_two": "Vietnameses",
-		"demonym_few": "Vietnameses",
-		"demonym_many": "Vietnameses",
-		"demonym_other": "Vietnameses"
+		"demonym_two": "Vietnamese",
+		"demonym_few": "Vietnamese",
+		"demonym_many": "Vietnamese",
+		"demonym_other": "Vietnamese"
 	},
 	"VUT": {
 		"name": "Vanuatu",
-		"demonym_zero": "Ni-Vanuatus",
+		"demonym_zero": "Ni-Vanuatu",
 		"demonym_one": "Ni-Vanuatu",
-		"demonym_two": "Ni-Vanuatus",
-		"demonym_few": "Ni-Vanuatus",
-		"demonym_many": "Ni-Vanuatus",
-		"demonym_other": "Ni-Vanuatus"
+		"demonym_two": "Ni-Vanuatu",
+		"demonym_few": "Ni-Vanuatu",
+		"demonym_many": "Ni-Vanuatu",
+		"demonym_other": "Ni-Vanuatu"
 	},
 	"WLF": {
-		"name": "واليس وفوتونا",
+		"name": "Wallis and Futuna",
 		"demonym_zero": "باء - واليس وجزر فوتونا",
 		"demonym_one": "فاليس وسكان جزر فوتونا",
 		"demonym_two": "باء - واليس وجزر فوتونا",
@@ -2190,7 +2190,7 @@
 		"demonym_other": "Samoans"
 	},
 	"YEM": {
-		"name": "اليمن",
+		"name": "Yemen",
 		"demonym_zero": "اليمنيون",
 		"demonym_one": "اليمنية",
 		"demonym_two": "اليمنيون",
@@ -2199,7 +2199,7 @@
 		"demonym_other": "اليمنيون"
 	},
 	"ZAF": {
-		"name": "جنوب أفريقيا",
+		"name": "South Africa",
 		"demonym_zero": "جنوب أفريقيا",
 		"demonym_one": "جنوب أفريقيا",
 		"demonym_two": "جنوب أفريقيا",
