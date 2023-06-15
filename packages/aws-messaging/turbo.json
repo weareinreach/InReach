@@ -4,7 +4,7 @@
 	"pipeline": {
 		"build:aws": {
 			"dependsOn": ["format", "lint:fix", "type-check"],
-			"inputs": ["src/**"],
+			"inputs": ["./src/**"],
 			"outputs": ["./dist/**"]
 		},
 		"deploy:aws": {
