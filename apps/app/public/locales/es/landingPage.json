@@ -1,43 +1,43 @@
 {
 	"banner": {
-		"redesign": "Lee sobre el lanzamiento del rediseño de la aplicación InReach en nuestro blog. <Link>Más información.</Link>"
+		"redesign": "Read about the launch of the InReach App redesign on our blog. <Link>Learn more.</Link>"
 	},
 	"call-out": {
-		"hear-from-users": "<Title1>Escuchar a nuestros usuarios</Title1>",
-		"who-we-are": "<Title1>Quien somos</Title1>\n<Text>Somos una organización sin fines de lucro trans-lucrativos que aumenta el acceso a la seguridad recursos verificados para la comunidad LGBTQ+.</Text>\n<Link>Aprende más sobre nosotros</Link>"
+		"hear-from-users": "<Title1>Hear from our users</Title1>",
+		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led tech nonprofit increasing resource access for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
 	},
 	"hero": {
 		"community": {
-			"0": "Solicitudes de asilo LGBTQ+",
-			"1": "Inmigrantes LGBTQ+",
-			"2": "Refugiados LGBTQ+",
-			"3": "trans hombres",
-			"4": "mujeres trans",
-			"5": "Juventud LGBTQ+",
-			"6": "Personas VIH+"
+			"0": "LGBTQ+ asylum seekers",
+			"1": "LGBTQ+ immigrants",
+			"2": "LGBTQ+ refugees",
+			"3": "LGBTQ+ youth",
+			"4": "the transgender community",
+			"5": "LGBTQ+ BIPOC communities",
+			"6": "caregivers of LGBTQ+ youth"
 		},
-		"find-resources": "Encuentra <Service></Service> verificado durante <Community></Community> con InReach.",
-		"heading": "Encontrar recursos de LGBTQ.",
-		"privacy-disclaimer": "Tu respuesta es anónima y no está conectada a ti como usuario individual. Lee nuestra <Link>política de privacidad</Link> para obtener más información.",
+		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"heading": "Find LGBTQ+ resources.",
+		"privacy-disclaimer": "Your answer is anonymous and not connected to you as an individual user. Read our <Link>privacy policy</Link> to learn more.",
 		"services": {
-			"0": "atención médica",
-			"1": "asistencia legal",
-			"2": "centros culturales",
+			"0": "medical care",
+			"1": "community support",
+			"2": "mental health care",
 			"3": "Educación",
-			"4": "apoyo espiritual",
-			"5": "consejería de carrera",
-			"6": "apoyo educativo",
-			"7": "clases de idioma",
-			"8": "entrenamiento de liderazgo",
-			"9": "vivienda de emergencia"
+			"4": "employment",
+			"5": "food",
+			"6": "housing",
+			"7": "clothing",
+			"8": "legal help",
+			"9": "translation"
 		},
-		"subheading": "Bienvenido a la primera plataforma tecnológica del mundo que coincide con TLGBQ+ (transgénero, lesbiano, gay, bisexual, y más identidades) personas que sufren discriminación y persecución con recursos seguros y verificados."
+		"subheading": "Welcome to the world's first tech platform matching TLGBQ+ (transgender, lesbian, gay, bisexual, queer and more identities) people facing persecution or discrimination with safe, verified resources."
 	},
 	"values": {
-		"free": "<Title2>Gratis para siempre 🔑</Title2>\n<Text>Nuestra plataforma de tecnología es 100% gratuita para todos para asegurar que la ayuda segura sea siempre InReach.</Text>\n<LinkFree>Dona para ayudarnos a mantener nuestra plataforma libre</LinkFree>",
-		"innovative": "<Title2>Innovador ✨</Title2>\n<Text>Somos la primera plataforma tecnológica del mundo que combina a las personas LGBTQ+ con discriminación y persecución con una seguridad independiente recursos verificados.</Text>\n<LinkInnovative>Ver nuestro código fuente y contribuir.</LinkInnovative>",
-		"intersectional": "<Title2>Intersectional ✊🏿► ✊🏾✊🏽</Title2>\n<Text>Creemos que la igualdad LGBTQ+ requiere de tramos de justicia, justicia de refugiados, justicia racial, justicia reproductiva, justicia lingüística y más.</Text>\n<LinkIntersect>Más información sobre nuestro proceso de veterinario</LinkIntersect>",
-		"our-values": "Nuestros Valores",
-		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>Sabemos que el anonimato en línea puede ser un problema de por vida o muerte para personas LGBTQ+. Por eso nuestra aplicación está diseñada para proteger la confidencialidad y seguridad de los usuarios en línea.</Text>\n<LinkSafety>Más información sobre nuestra política de privacidad.</LinkSafety>"
+		"free": "<Title2>Free forever 🔑</Title2>\n<Text>Our tech platform is 100% free for everyone to ensure safe help is always InReach.</Text>\n<LinkFree>Donate to help us to keep our platform free.</LinkFree>",
+		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, independently verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice and more.</Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
+		"our-values": "Our values",
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
 	}
 }
