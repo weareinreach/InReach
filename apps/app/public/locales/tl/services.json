@@ -1,124 +1,124 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Pangangalaga sa Pagpapalaglag",
-		"abortion-providers": "Mga nagbibigay ng pagpapalaglag",
-		"financial-assistance": "Tulong sa pananalapi",
-		"lodging-assistance": "Tulong sa panunuluyan",
-		"mail-order-services": "Mga serbisyo sa order ng mail",
-		"mental-health-support": "Suporta sa kalusugan ng isip",
-		"travel-assistance": "Tulong sa paglalakbay"
+		"CATEGORYNAME": "Abortion Care",
+		"abortion-providers": "Abortion providers",
+		"financial-assistance": "Financial assistance",
+		"lodging-assistance": "Lodging assistance",
+		"mail-order-services": "Mail order services",
+		"mental-health-support": "Mental health support",
+		"travel-assistance": "Travel assistance"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Suporta sa Komunidad",
+		"CATEGORYNAME": "Community Support",
 		"community-social-groups": "Mga pangkat ng komunidad at panlipunan",
-		"cultural-centers": "Mga sentro ng kultura",
-		"lgbtq-centers": "Mga sentro ng LGBTQ",
-		"reception-services": "Mga serbisyo sa pagtanggap",
+		"cultural-centers": "Cultural centers",
+		"lgbtq-centers": "LGBTQ centers",
+		"reception-services": "Reception services",
 		"reentry-services": "Mga serbisyo sa muling pagpasok",
-		"spiritual-support": "Espirituwal na suporta",
-		"sponsors": "Pag-sponsor ng imigrasyon"
+		"spiritual-support": "Spiritual support",
+		"sponsors": "Immigration sponsorship"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "Mga Computer at Internet",
-		"computers-and-internet": "Mga computer at internet"
+		"CATEGORYNAME": "Computers and Internet",
+		"computers-and-internet": "Computers and internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Edukasyon at Trabaho",
-		"career-counseling": "Pagpapayo sa karera",
-		"educational-support-for-lgbtq-youth": "Suporta sa edukasyon para sa kabataan ng LGBTQ",
-		"english-classes": "Mga klase sa Ingles",
-		"language-classes": "Mga klase sa wika",
-		"leadership-training-and-professional-development": "Pagsasanay sa pamumuno at pag-unlad ng propesyonal",
-		"libraries": "Mga aklatan",
-		"scholarships": "Scholarship"
+		"CATEGORYNAME": "Education and Employment",
+		"career-counseling": "Career counseling",
+		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
+		"english-classes": "English classes",
+		"language-classes": "Language classes",
+		"leadership-training-and-professional-development": "Leadership training and professional development",
+		"libraries": "Libraries",
+		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "Pagkain",
-		"food": "Pagkain",
-		"food-assistance": "Tulong sa pagkain"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "Pabahay",
-		"drop-in-centers-for-lgbtq-youth": "Mga drop-in center para sa kabataan ng LGBTQ",
-		"emergency-housing": "Pabahay ng emerhensiya",
-		"housing-information-and-referrals": "Impormasyon sa pabahay at mga referral",
-		"short-term-housing": "Panandaliang pabahay",
-		"trans-housing": "Trans pabahay"
+		"CATEGORYNAME": "Housing",
+		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
+		"emergency-housing": "Emergency housing",
+		"housing-information-and-referrals": "Housing information and referrals",
+		"short-term-housing": "Short-term housing",
+		"trans-housing": "Trans housing"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "Kalinisan at Damit",
-		"clothes": "Damit",
-		"gender-affirming-items": "Mga item na nagpapatunay sa kasarian",
-		"gender-neutral-bathrooms": "Mga banyo na walang kinikilingan sa kasarian",
-		"haircuts-and-stylists": "Mga haircuts at stylists",
-		"hygiene": "Kalinisan"
+		"CATEGORYNAME": "Hygiene and Clothing",
+		"clothes": "Clothes",
+		"gender-affirming-items": "Gender-affirming items",
+		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
+		"haircuts-and-stylists": "Haircuts and stylists",
+		"hygiene": "Hygiene"
 	},
 	"legal": {
 		"CATEGORYNAME": "Legal",
-		"asylum-application": "Aplikasyon ng pagpapakupkop",
-		"citizenship": "Pagkamamamayan",
-		"crime-and-discrimination": "Krimen at diskriminasyon",
-		"deferred-action-for-childhood-arrivals-daca": "Ipinagpaliban Aksyon para sa Childhood Dating (KUNG)",
-		"deportation-or-removal": "Deportasyon o pag-alis",
-		"employment-authorization": "Awtorisasyon ng trabaho",
-		"family-petitions": "Mga petisyon ng pamilya",
-		"immigration-detention": "Pagpigil sa imigrasyon",
-		"legal-advice": "Legal na payo",
-		"legal-hotlines": "Mga ligal na hotline",
-		"name-and-gender-change": "Pagbabago ng pangalan at kasarian",
-		"refugee-claim": "Pag-angkin ng Refugee",
-		"residency": "Paninirahan",
-		"special-immigrant-juvenile-status-sijs": "Katayuan ng Espesyal na Immigrant Juvenile (SIJS)",
+		"asylum-application": "Asylum application",
+		"citizenship": "Citizenship",
+		"crime-and-discrimination": "Crime and discrimination",
+		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
+		"deportation-or-removal": "Deportation or removal",
+		"employment-authorization": "Employment authorization",
+		"family-petitions": "Family petitions",
+		"immigration-detention": "Immigration detention",
+		"legal-advice": "Legal advice",
+		"legal-hotlines": "Legal hotlines",
+		"name-and-gender-change": "Name and gender change",
+		"refugee-claim": "Refugee claim",
+		"residency": "Residency",
+		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
 		"t-visa": "T visa",
-		"u-visa": "Visa"
+		"u-visa": "U visa"
 	},
 	"mail": {
 		"CATEGORYNAME": "Mail",
 		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medikal",
-		"covid-19-services": "Mga serbisyo ng COVID-19",
-		"dental-care": "Pangangalaga sa ngipin",
-		"hiv-and-sexual-health": "HIV at sekswal na kalusugan",
-		"medical-clinics": "Mga medikal na klinika",
-		"obgyn-services": "Mga serbisyo ng OBGYN",
-		"physical-evaluations-for-asylum-claim": "Mga pisikal na pagsusuri para sa pag-angkin ng asylum",
-		"physical-evaluations-for-refugee-claim": "Pisikal na pagsusuri para sa claim ng refugee",
-		"trans-health": "Kalusugan ng trans",
-		"trans-health-gender-affirming-surgery": "Trans health - operasyon sa pagpapatibay ng kasarian",
-		"trans-health-hormone-and-surgery-letters": "Trans health - mga titik ng hormone at operasyon",
-		"trans-health-hormone-therapy": "Kalusugan ng trans - therapy ng hormon",
-		"trans-health-primary-care": "Trans health - pangunahing pangangalaga",
-		"trans-health-speech-therapy": "Kalusugan ng trans - therapy sa pagsasalita"
+		"CATEGORYNAME": "Medical",
+		"covid-19-services": "COVID-19 services",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV and sexual health",
+		"medical-clinics": "Medical clinics",
+		"obgyn-services": "OBGYN services",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
+		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"trans-health": "Trans health",
+		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
+		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
+		"trans-health-hormone-therapy": "Trans health - hormone therapy",
+		"trans-health-primary-care": "Trans health - primary care",
+		"trans-health-speech-therapy": "Trans health - speech therapy"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Kalusugang pangkaisipan",
-		"bipoc-support-groups": "Mga grupo ng suporta ng BIPOC",
-		"hotlines": "Mga Hotline",
-		"private-therapy-and-counseling": "Pribadong therapy at pagpapayo",
-		"psychological-evaluations-for-asylum-claim": "Mga pagsusuri sa sikolohikal para sa pag-angkin ng pagpapakupkop",
-		"psychological-evaluations-for-refugee-claim": "Mga pagsusuri sa sikolohikal para sa pag-angkin ng mga refugee",
-		"substance-use": "Paggamit ng sangkap",
-		"support-for-caregivers-of-trans-youth": "Suporta para sa mga tagapag-alaga ng trans kabataan",
-		"support-for-conversion-therapy-survivors": "Suporta para sa mga nakaligtas sa conversion therapy",
-		"support-groups": "Mga grupo ng suporta",
-		"trans-support-groups": "Mga grupo ng suporta sa trans"
+		"CATEGORYNAME": "Mental Health",
+		"bipoc-support-groups": "BIPOC support groups",
+		"hotlines": "Hotlines",
+		"private-therapy-and-counseling": "Private therapy and counseling",
+		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
+		"substance-use": "Substance use",
+		"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
+		"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
+		"support-groups": "Support groups",
+		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Libangan at Aktibidad",
+		"CATEGORYNAME": "Entertainment and Activities",
 		"art-music-literature": "Sining, musika, at panitikan",
-		"sports-and-entertainment": "Palakasan at libangan"
+		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Pagsasalin at Interpretasyon",
-		"for-healthcare": "Para sa pangangalagang pangkalusugan",
-		"for-legal-services": "Para sa mga legal na serbisyo",
-		"general-translation-and-interpretation": "Pangkalahatang pagsasalin at interpretasyon"
+		"CATEGORYNAME": "Translation and Interpretation",
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "Transportasyon",
-		"transit-passes-and-discounts": "Transit pass at diskwento",
-		"transportation-assistance": "Tulong sa transportasyon"
+		"CATEGORYNAME": "Transportation",
+		"transit-passes-and-discounts": "Transit passes and discounts",
+		"transportation-assistance": "Transportation assistance"
 	}
 }
