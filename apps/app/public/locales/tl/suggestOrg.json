@@ -1,11 +1,11 @@
 {
 	"body": {
 		"accept-country": "Mangyaring tandaan na maaari lamang naming tanggapin ang mga organisasyon na matatagpuan sa US, Mexico, at Canada sa oras na ito.",
-		"additional-info": "Karagdagang impormasyon",
+		"additional-info": "Additional information",
 		"intro-text": "Salamat sa iyong interes sa pagbibigay ng kontribusyon sa inReach App! Gamitin ang form na ito upang magmungkahi ng isang samahan (hal. Mga nonprofit, katutubo o mga organisasyon ng komunidad, mga sistema ng pangangalagang pangkalusugan, pribadong kasanayan, atbp.) Sa palagay mo ay dapat isama. Ito ay ok kung wala kang lahat ng impormasyon na hinihiling ng form - punan lamang ang alam mo, at gagawin namin ang natitira! Pinahahalagahan namin ang iyong pagsusumite at salamat sa pagtulong upang madagdagan ang pag-access sa ligtas, na-verify na mga mapagkukunan para sa magkakaibang komunidad ng LGBTQ +. Ang lahat ng mga iminungkahing organisasyon ay napapailalim sa pagsusuri ng mga sinanay na boluntaryo ng inReach bago mailathala sa inReach.",
 		"required-info": "Kinakailangang impormasyon",
 		"subject-review": "Ang lahat ng mga iminungkahing organisasyon ay napapailalim sa pagsusuri ng inReach bago mailathala.",
-		"suggest-org": "Magmungkahi ng isang organisasyon"
+		"suggest-org": "Suggest an organization"
 	},
 	"form": {
 		"btn-community": "Magdagdag ng pokus ng komunidad ng LGBTQ+",
@@ -21,7 +21,7 @@
 		"org-name": "Pangalan ng samahan",
 		"org-website": "Website ng samahan",
 		"placeholder-address": "Ipasok ang address...",
-		"placeholder-name": "Ipasok ang pangalan ng samahan...",
+		"placeholder-name": "Enter organization name...",
 		"placeholder-website": "Ipasok ang URL...",
 		"service-types": "Anong uri ng (mga) serbisyo ang ibinibigay ng samahang ito?"
 	},
