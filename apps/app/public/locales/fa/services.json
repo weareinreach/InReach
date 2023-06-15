@@ -1,124 +1,124 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "مراقبت از سقط جنین",
-		"abortion-providers": "ارائه دهندگان سقط جنین",
-		"financial-assistance": "کمک مالی",
-		"lodging-assistance": "کمک های اسکان",
-		"mail-order-services": "خدمات سفارش پستی",
-		"mental-health-support": "حمایت از سلامت روان",
-		"travel-assistance": "کمک سفر"
+		"CATEGORYNAME": "Abortion Care",
+		"abortion-providers": "Abortion providers",
+		"financial-assistance": "Financial assistance",
+		"lodging-assistance": "Lodging assistance",
+		"mail-order-services": "Mail order services",
+		"mental-health-support": "Mental health support",
+		"travel-assistance": "Travel assistance"
 	},
 	"community-support": {
-		"CATEGORYNAME": "پشتیبانی جامعه",
-		"community-social-groups": "جامعه و گروه های اجتماعی",
-		"cultural-centers": "مراکز فرهنگی",
-		"lgbtq-centers": "مراکز دگرباشان جنسی",
-		"reception-services": "خدمات پذیرش",
-		"reentry-services": "خدمات ورود مجدد",
-		"spiritual-support": "حمایت معنوی",
-		"sponsors": "حمایت مالی مهاجرت"
+		"CATEGORYNAME": "Community Support",
+		"community-social-groups": "Community and social groups",
+		"cultural-centers": "Cultural centers",
+		"lgbtq-centers": "LGBTQ centers",
+		"reception-services": "Reception services",
+		"reentry-services": "Re-entry services",
+		"spiritual-support": "Spiritual support",
+		"sponsors": "Immigration sponsorship"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "کامپیوتر و اینترنت",
-		"computers-and-internet": "کامپیوتر و اینترنت"
+		"CATEGORYNAME": "Computers and Internet",
+		"computers-and-internet": "Computers and internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "آموزش و اشتغال",
-		"career-counseling": "مشاوره شغلی",
-		"educational-support-for-lgbtq-youth": "پشتیبانی آموزشی برای جوانان دگرباشان جنسی",
-		"english-classes": "کلاس های زبان انگلیسی",
-		"language-classes": "کلاس های زبان",
-		"leadership-training-and-professional-development": "آموزش رهبری و توسعه حرفه ای",
-		"libraries": "کتابخانه",
-		"scholarships": "بورس های تحصیلی"
+		"CATEGORYNAME": "Education and Employment",
+		"career-counseling": "Career counseling",
+		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
+		"english-classes": "English classes",
+		"language-classes": "Language classes",
+		"leadership-training-and-professional-development": "Leadership training and professional development",
+		"libraries": "Libraries",
+		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "مواد غذایی",
-		"food": "مواد غذایی",
-		"food-assistance": "کمک های غذایی"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "مسکن",
-		"drop-in-centers-for-lgbtq-youth": "مراکز رها کردن برای جوانان LGBTQ",
-		"emergency-housing": "مسکن اضطراری",
-		"housing-information-and-referrals": "اطلاعات مسکن و ارجاع",
-		"short-term-housing": "مسکن کوتاه مدت",
-		"trans-housing": "مسکن ترانس"
+		"CATEGORYNAME": "Housing",
+		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
+		"emergency-housing": "Emergency housing",
+		"housing-information-and-referrals": "Housing information and referrals",
+		"short-term-housing": "Short-term housing",
+		"trans-housing": "Trans housing"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "بهداشت و پوشاک",
-		"clothes": "لباس",
-		"gender-affirming-items": "موارد تأیید جنسیت",
-		"gender-neutral-bathrooms": "حمام های خنثی جنسیتی",
-		"haircuts-and-stylists": "کوتاهی مو و سبک",
-		"hygiene": "رده: بهداشت"
+		"CATEGORYNAME": "Hygiene and Clothing",
+		"clothes": "Clothes",
+		"gender-affirming-items": "Gender-affirming items",
+		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
+		"haircuts-and-stylists": "Haircuts and stylists",
+		"hygiene": "Hygiene"
 	},
 	"legal": {
-		"CATEGORYNAME": "حقوقی",
-		"asylum-application": "درخواست پناهندگی",
-		"citizenship": "تابعیت",
-		"crime-and-discrimination": "جرم و تبعیض",
-		"deferred-action-for-childhood-arrivals-daca": "اقدام معوق برای ورود به دوران کودکی (DACA)",
-		"deportation-or-removal": "اخراج یا برکناری",
-		"employment-authorization": "مجوز استخدام",
-		"family-petitions": "دادخواست های خانوادگی",
-		"immigration-detention": "بازداشت مهاجرت",
-		"legal-advice": "مشاوره حقوقی",
-		"legal-hotlines": "خطوط تماس حقوقی",
-		"name-and-gender-change": "تغییر نام و جنسیت",
-		"refugee-claim": "ادعای پناهندگی",
-		"residency": "دستیاری",
-		"special-immigrant-juvenile-status-sijs": "وضعیت ویژه نوجوانان مهاجر (SIJS)",
-		"t-visa": "ویزای T",
-		"u-visa": "ویزای U"
+		"CATEGORYNAME": "Legal",
+		"asylum-application": "Asylum application",
+		"citizenship": "Citizenship",
+		"crime-and-discrimination": "Crime and discrimination",
+		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
+		"deportation-or-removal": "Deportation or removal",
+		"employment-authorization": "Employment authorization",
+		"family-petitions": "Family petitions",
+		"immigration-detention": "Immigration detention",
+		"legal-advice": "Legal advice",
+		"legal-hotlines": "Legal hotlines",
+		"name-and-gender-change": "Name and gender change",
+		"refugee-claim": "Refugee claim",
+		"residency": "Residency",
+		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "نامه",
-		"mail": "نامه"
+		"CATEGORYNAME": "Mail",
+		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "پزشکی",
-		"covid-19-services": "خدمات کووید-19",
-		"dental-care": "مراقبت از دندان",
-		"hiv-and-sexual-health": "اچ آی وی و سلامت جنسی",
-		"medical-clinics": "کلینیک های پزشکی",
-		"obgyn-services": "خدمات OBGYN",
-		"physical-evaluations-for-asylum-claim": "ارزیابی فیزیکی برای درخواست پناهندگی",
-		"physical-evaluations-for-refugee-claim": "ارزیابی فیزیکی برای تقاضای پناهندگی",
-		"trans-health": "سلامت ترانس",
-		"trans-health-gender-affirming-surgery": "سلامت ترانس - جراحی تأیید جنسیت",
-		"trans-health-hormone-and-surgery-letters": "سلامت ترانس - نامه های هورمون و جراحی",
-		"trans-health-hormone-therapy": "سلامت ترانس - هورمون درمانی",
-		"trans-health-primary-care": "سلامت ترانس - مراقبت های اولیه",
-		"trans-health-speech-therapy": "سلامت ترانس - گفتاردرمانی"
+		"CATEGORYNAME": "Medical",
+		"covid-19-services": "COVID-19 services",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV and sexual health",
+		"medical-clinics": "Medical clinics",
+		"obgyn-services": "OBGYN services",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
+		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"trans-health": "Trans health",
+		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
+		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
+		"trans-health-hormone-therapy": "Trans health - hormone therapy",
+		"trans-health-primary-care": "Trans health - primary care",
+		"trans-health-speech-therapy": "Trans health - speech therapy"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "سلامت روان",
-		"bipoc-support-groups": "گروه های پشتیبانی BIPOC",
-		"hotlines": "خطوط تلفن",
-		"private-therapy-and-counseling": "مشاوره و درمان خصوصی",
-		"psychological-evaluations-for-asylum-claim": "ارزیابی روانی برای درخواست پناهندگی",
-		"psychological-evaluations-for-refugee-claim": "ارزیابی های روانشناختی برای ادعای پناهندگی",
-		"substance-use": "استفاده از مواد",
-		"support-for-caregivers-of-trans-youth": "حمایت از مراقبان جوانان ترانس",
-		"support-for-conversion-therapy-survivors": "پشتیبانی از بازماندگان تبدیل درمانی",
-		"support-groups": "گروه های پشتیبانی",
-		"trans-support-groups": "گروه های پشتیبانی ترانس"
+		"CATEGORYNAME": "Mental Health",
+		"bipoc-support-groups": "BIPOC support groups",
+		"hotlines": "Hotlines",
+		"private-therapy-and-counseling": "Private therapy and counseling",
+		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
+		"substance-use": "Substance use",
+		"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
+		"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
+		"support-groups": "Support groups",
+		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "سرگرمی و فعالیت ها",
-		"art-music-literature": "هنر، موسیقی و ادبیات",
-		"sports-and-entertainment": "ورزش و سرگرمی"
+		"CATEGORYNAME": "Entertainment and Activities",
+		"art-music-literature": "Art, music, and literature",
+		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "ترجمه و تفسیر",
-		"for-healthcare": "برای مراقبت های بهداشتی",
-		"for-legal-services": "برای خدمات حقوقی",
-		"general-translation-and-interpretation": "ترجمه و تفسیر عمومی"
+		"CATEGORYNAME": "Translation and Interpretation",
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "حمل و نقل",
-		"transit-passes-and-discounts": "عبور حمل و نقل و تخفیف",
-		"transportation-assistance": "کمک حمل و نقل"
+		"CATEGORYNAME": "Transportation",
+		"transit-passes-and-discounts": "Transit passes and discounts",
+		"transportation-assistance": "Transportation assistance"
 	}
 }
