@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Аборт",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "Поставщики абортов",
 		"financial-assistance": "Финансовая помощь",
 		"lodging-assistance": "Помощь в аренде",
@@ -9,83 +9,83 @@
 		"travel-assistance": "Помощь в организации поездок"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Поддержка сообщества",
+		"CATEGORYNAME": "Community Support",
 		"community-social-groups": "Сообщество и социальные группы",
-		"cultural-centers": "Культурные центры",
-		"lgbtq-centers": "Центры LGBTQ",
-		"reception-services": "Услуги приёма",
+		"cultural-centers": "Cultural centers",
+		"lgbtq-centers": "LGBTQ centers",
+		"reception-services": "Reception services",
 		"reentry-services": "Услуги для повторного ввода",
 		"spiritual-support": "Духовная поддержка",
 		"sponsors": "Иммиграционное спонсорство"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "Компьютеры и Интернет",
+		"CATEGORYNAME": "Computers and Internet",
 		"computers-and-internet": "Компьютеры и Интернет"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Образование и занятость",
-		"career-counseling": "Карьерные консультации",
-		"educational-support-for-lgbtq-youth": "Образовательная поддержка молодежи LGBTQ",
-		"english-classes": "Курсы английского языка",
-		"language-classes": "Классы языка",
-		"leadership-training-and-professional-development": "Подготовка руководящих кадров и профессиональное развитие",
-		"libraries": "Библиотеки",
-		"scholarships": "Стипендии"
+		"CATEGORYNAME": "Education and Employment",
+		"career-counseling": "Career counseling",
+		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
+		"english-classes": "English classes",
+		"language-classes": "Language classes",
+		"leadership-training-and-professional-development": "Leadership training and professional development",
+		"libraries": "Libraries",
+		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "Еда",
-		"food": "Еда",
-		"food-assistance": "Продовольственная помощь"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "Жилье",
-		"drop-in-centers-for-lgbtq-youth": "Центры по вывозу молодежи LGBTQ",
-		"emergency-housing": "Аварийное жилье",
-		"housing-information-and-referrals": "Информация о жилье и обращения",
-		"short-term-housing": "Краткосрочное жилье",
-		"trans-housing": "Транс жилье"
+		"CATEGORYNAME": "Housing",
+		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
+		"emergency-housing": "Emergency housing",
+		"housing-information-and-referrals": "Housing information and referrals",
+		"short-term-housing": "Short-term housing",
+		"trans-housing": "Trans housing"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "Гигиена и одежда",
-		"clothes": "Одежда",
-		"gender-affirming-items": "Предметы, подтверждающие гендерный фактор",
-		"gender-neutral-bathrooms": "Гендерно-нейтральные ванные комнаты",
-		"haircuts-and-stylists": "Волосы и стилисты",
-		"hygiene": "Гигиена"
+		"CATEGORYNAME": "Hygiene and Clothing",
+		"clothes": "Clothes",
+		"gender-affirming-items": "Gender-affirming items",
+		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
+		"haircuts-and-stylists": "Haircuts and stylists",
+		"hygiene": "Hygiene"
 	},
 	"legal": {
-		"CATEGORYNAME": "Юридическая информация",
-		"asylum-application": "Приложение Asylum",
-		"citizenship": "Гражданство",
-		"crime-and-discrimination": "Преступность и дискриминация",
-		"deferred-action-for-childhood-arrivals-daca": "Отсроченные действия по прибытию в детство (ДАСА)",
-		"deportation-or-removal": "Депортация или удаление",
+		"CATEGORYNAME": "Legal",
+		"asylum-application": "Asylum application",
+		"citizenship": "Citizenship",
+		"crime-and-discrimination": "Crime and discrimination",
+		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
+		"deportation-or-removal": "Deportation or removal",
 		"employment-authorization": "Разрешение на трудоустройство",
 		"family-petitions": "Ходатайство о семейном положении",
-		"immigration-detention": "Иммиграционное задержание",
-		"legal-advice": "Юридические консультации",
-		"legal-hotlines": "Горячие линии",
-		"name-and-gender-change": "Имя и изменения пола",
-		"refugee-claim": "Требование беженца",
-		"residency": "Жилье",
-		"special-immigrant-juvenile-status-sijs": "Специальный статус иммигрантов-несовершеннолетних (SIJS)",
+		"immigration-detention": "Immigration detention",
+		"legal-advice": "Legal advice",
+		"legal-hotlines": "Legal hotlines",
+		"name-and-gender-change": "Name and gender change",
+		"refugee-claim": "Refugee claim",
+		"residency": "Residency",
+		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
 		"t-visa": "T visa",
 		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "Почта",
-		"mail": "Почта"
+		"CATEGORYNAME": "Mail",
+		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "Медицинский",
-		"covid-19-services": "Услуги COVID-19",
-		"dental-care": "Стоматологическая помощь",
-		"hiv-and-sexual-health": "ВИЧ и сексуальное здоровье",
-		"medical-clinics": "Медицинская клиника",
-		"obgyn-services": "Службы OBGYN",
-		"physical-evaluations-for-asylum-claim": "Оценка физического характера ходатайств о предоставлении убежища",
-		"physical-evaluations-for-refugee-claim": "Оценка физического состояния претензии беженцев",
-		"trans-health": "Транс здоровья",
+		"CATEGORYNAME": "Medical",
+		"covid-19-services": "COVID-19 services",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV and sexual health",
+		"medical-clinics": "Medical clinics",
+		"obgyn-services": "OBGYN services",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
+		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"trans-health": "Trans health",
 		"trans-health-gender-affirming-surgery": "Противодействие - подтверждение гендерной хирургии",
 		"trans-health-hormone-and-surgery-letters": "Транс здоровье - гормон и письма хирургии",
 		"trans-health-hormone-therapy": "Транс здоровье - гормональная терапия",
@@ -93,17 +93,17 @@
 		"trans-health-speech-therapy": "Транс здоровье - речевая терапия"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Психическое здоровье",
-		"bipoc-support-groups": "Группы поддержки BIPOC",
-		"hotlines": "Горячие линии",
-		"private-therapy-and-counseling": "Частная терапия и консультирование",
-		"psychological-evaluations-for-asylum-claim": "Психологическая оценка ходатайств о предоставлении убежища",
-		"psychological-evaluations-for-refugee-claim": "Психологическая оценка претензий беженцев",
-		"substance-use": "Использование вещества",
-		"support-for-caregivers-of-trans-youth": "Оказание поддержки лицам, обеспечивающим уход за детьми в возрасте от 16 лет",
-		"support-for-conversion-therapy-survivors": "Поддержка конверсионной терапии для выживших",
-		"support-groups": "Группы поддержки",
-		"trans-support-groups": "Группы поддержки Trans"
+		"CATEGORYNAME": "Mental Health",
+		"bipoc-support-groups": "BIPOC support groups",
+		"hotlines": "Hotlines",
+		"private-therapy-and-counseling": "Private therapy and counseling",
+		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
+		"substance-use": "Substance use",
+		"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
+		"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
+		"support-groups": "Support groups",
+		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "Развлечения и мероприятия",
@@ -111,14 +111,14 @@
 		"sports-and-entertainment": "Спорт и развлечения"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Перевод и перевод",
-		"for-healthcare": "Здравоохранение",
-		"for-legal-services": "Правовые услуги",
-		"general-translation-and-interpretation": "Общий перевод и устный перевод"
+		"CATEGORYNAME": "Translation and Interpretation",
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "Транспорт",
-		"transit-passes-and-discounts": "Транзитные переходы и скидки",
-		"transportation-assistance": "Транспортная помощь"
+		"CATEGORYNAME": "Transportation",
+		"transit-passes-and-discounts": "Transit passes and discounts",
+		"transportation-assistance": "Transportation assistance"
 	}
 }
