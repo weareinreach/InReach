@@ -1,0 +1,43 @@
+{
+	"banner": {
+		"redesign": "InReachアプリの再設計の開始については、ブログをご覧ください。 <Link>もっと詳しく.</Link>"
+	},
+	"call-out": {
+		"hear-from-users": "<Title1>ユーザーからの意見を聞く</Title1>",
+		"who-we-are": "<Title1>私たちについて</Title1>\n<Text>私たちは、多様な LGBTQ+ コミュニティへのリソースアクセスを増やす、トランスジェンダー主導のテクノロジー非営利団体です。</Text>\n<Link>私たちについてもっと学びましょう。</Link>"
+	},
+	"hero": {
+		"community": {
+			"0": "LGBTQ+ の亡命希望者",
+			"1": "LGBTQ+ 移民",
+			"2": "LGBTQ+ 難民",
+			"3": "LGBTQ+ ユース",
+			"4": "トランスジェンダー・コミュニティ",
+			"5": "LGBTQ+ BIPOC コミュニティ",
+			"6": "LGBTQ+ 青少年の介護者"
+		},
+		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"heading": "LGBTQ+ に関するリソースを検索できます。",
+		"privacy-disclaimer": "回答は匿名で、個人ユーザーとは関係ありません。詳細については、 <Link>プライバシーポリシー</Link> をお読みください。",
+		"services": {
+			"0": "医療",
+			"1": "コミュニティサポート",
+			"2": "メンタルヘルスケア",
+			"3": "教育",
+			"4": "雇用",
+			"5": "食べ物",
+			"6": "ハウジング",
+			"7": "衣類",
+			"8": "法的支援",
+			"9": "翻訳"
+		},
+		"subheading": "迫害や差別に直面しているTLGBQ+（トランスジェンダー、レズビアン、ゲイ、バイセクシュアル、クィアなど）の人々と安全で検証済みのリソースをマッチングする世界初の技術プラットフォームへようこそ。"
+	},
+	"values": {
+		"free": "<Title2>永久無料 🔑</Title2>\n<Text>当社のテクノロジープラットフォームはどなたでも 100% 無料で、いつでも安全なサポートを受けることができます。</Text>\n<LinkFree>プラットフォームを無料に保つために寄付してください。</LinkFree>",
+		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>私たちは、迫害や差別に直面しているLGBTQ+の人々に、独立して検証された安全なリソースをマッチングする世界初の技術プラットフォームです。</Text>\n<LinkInnovative>ソースコードを見て貢献してください。</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>LGBTQ+ の平等には、トランスジェンダーの正義、難民の正義、人種的正義、生殖に関する正義、言語的正義などが必要だと考えています。</Text>\n<LinkIntersect>審査プロセスの詳細をご覧ください。</LinkIntersect>",
+		"our-values": "私たちの価値観",
+		"safety-first": "<Title2>安全第一 🔒</Title2>\n<Text>LGBTQ+の人々にとって、オンラインの匿名性は生死にかかわる問題になり得ることを私たちは知っています。そのため、当社のアプリはユーザーのオンライン上での機密性と安全性を保護するように設計されています。</Text>\n<LinkSafety>プライバシーポリシーの詳細をご覧ください。</LinkSafety>"
+	}
+}
