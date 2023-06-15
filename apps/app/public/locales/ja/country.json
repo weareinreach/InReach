@@ -1,0 +1,998 @@
+{
+	"ABW": {
+		"name": "アルバ",
+		"demonym_other": "アルバン"
+	},
+	"AFG": {
+		"name": "アフガニスタン",
+		"demonym_other": "アフガン人"
+	},
+	"AGO": {
+		"name": "アンゴラ",
+		"demonym_other": "アンゴラ人"
+	},
+	"AIA": {
+		"name": "アンギラ",
+		"demonym_other": "アンギリア人"
+	},
+	"ALA": {
+		"name": "オーランド諸島",
+		"demonym_other": "オーランド人"
+	},
+	"ALB": {
+		"name": "アルバニア",
+		"demonym_other": "アルバニア人"
+	},
+	"AND": {
+		"name": "アンドラ",
+		"demonym_other": "アンドラ人"
+	},
+	"ARE": {
+		"name": "アラブ首長国連邦",
+		"demonym_other": "エミラティス"
+	},
+	"ARG": {
+		"name": "アルゼンチン",
+		"demonym_other": "アルゼンチン人"
+	},
+	"ARM": {
+		"name": "アルメニア",
+		"demonym_other": "アルメニア人"
+	},
+	"ASM": {
+		"name": "アメリカ領サモア",
+		"demonym_other": "アメリカ領サモア人"
+	},
+	"ATA": {
+		"name": "南極大陸",
+		"demonym_other": "南極人"
+	},
+	"ATF": {
+		"name": "フランス領南方および南極地域",
+		"demonym_other": "フランス語"
+	},
+	"ATG": {
+		"name": "アンティグアバーブーダ",
+		"demonym_other": "アンティグア人、バーブーダ人"
+	},
+	"AUS": {
+		"name": "オーストラリア",
+		"demonym_other": "オーストラリア人"
+	},
+	"AUT": {
+		"name": "オーストリア",
+		"demonym_other": "オーストリア人"
+	},
+	"AZE": {
+		"name": "アゼルバイジャン",
+		"demonym_other": "アゼルバイジャン"
+	},
+	"BDI": {
+		"name": "ブルンジ",
+		"demonym_other": "ブルンジ人"
+	},
+	"BEL": {
+		"name": "ベルギー",
+		"demonym_other": "ベルギー人"
+	},
+	"BEN": {
+		"name": "ベナン",
+		"demonym_other": "ベナン"
+	},
+	"BES": {
+		"name": "カリブ海オランダ"
+	},
+	"BFA": {
+		"name": "ブルキナファソ",
+		"demonym_other": "ブルキナビ"
+	},
+	"BGD": {
+		"name": "バングラデシュ",
+		"demonym_other": "バングラデシュ人"
+	},
+	"BGR": {
+		"name": "ブルガリア",
+		"demonym_other": "ブルガリア人"
+	},
+	"BHR": {
+		"name": "バーレーン",
+		"demonym_other": "バーレーンの"
+	},
+	"BHS": {
+		"name": "バハマ",
+		"demonym_other": "バハマ人"
+	},
+	"BIH": {
+		"name": "ボスニア・ヘルツェゴビナ",
+		"demonym_other": "ボスニア人、ヘルツェゴビナ人"
+	},
+	"BLM": {
+		"name": "サン・バルテルミー",
+		"demonym_other": "サン・バルテルミー・アイランダーズ"
+	},
+	"BLR": {
+		"name": "ベラルーシ",
+		"demonym_other": "ベラルーシ人"
+	},
+	"BLZ": {
+		"name": "ベリーズ",
+		"demonym_other": "ベリーズ人"
+	},
+	"BMU": {
+		"name": "バミューダ",
+		"demonym_other": "バミューダ人"
+	},
+	"BOL": {
+		"name": "ボリビア",
+		"demonym_other": "ボリビア人"
+	},
+	"BRA": {
+		"name": "ブラジル",
+		"demonym_other": "ブラジル人"
+	},
+	"BRB": {
+		"name": "バルバドス",
+		"demonym_other": "バルバドス人"
+	},
+	"BRN": {
+		"name": "ブルネイ",
+		"demonym_other": "ブルネイ人"
+	},
+	"BTN": {
+		"name": "ブータン",
+		"demonym_other": "ブータン語"
+	},
+	"BVT": {
+		"name": "ブーベ島"
+	},
+	"BWA": {
+		"name": "ボツワナ",
+		"demonym_other": "バツワナ"
+	},
+	"CAF": {
+		"name": "中央アフリカ共和国",
+		"demonym_other": "中央アフリカ人"
+	},
+	"CAN": {
+		"name": "カナダ",
+		"demonym_other": "カナダ人"
+	},
+	"CCK": {
+		"name": "ココス (キーリング) 諸島",
+		"demonym_other": "ココスアイランダーズ"
+	},
+	"CHE": {
+		"name": "スイス",
+		"demonym_other": "スイス"
+	},
+	"CHL": {
+		"name": "チリ",
+		"demonym_other": "チリ人"
+	},
+	"CHN": {
+		"name": "中国",
+		"demonym_other": "中国語"
+	},
+	"CIV": {
+		"name": "コートジボワール",
+		"demonym_other": "コートジボワー人"
+	},
+	"CMR": {
+		"name": "カメルーン",
+		"demonym_other": "カメルーン人"
+	},
+	"COD": {
+		"name": "コンゴ民主共和国",
+		"demonym_other": "コンゴ人"
+	},
+	"COG": {
+		"name": "コンゴ共和国",
+		"demonym_other": "コンゴ人"
+	},
+	"COK": {
+		"name": "クック諸島",
+		"demonym_other": "クック諸島人"
+	},
+	"COL": {
+		"name": "コロンビア",
+		"demonym_other": "コロンビア人"
+	},
+	"COM": {
+		"name": "コモロ",
+		"demonym_other": "コモロ人"
+	},
+	"CPV": {
+		"name": "カーボベルデ",
+		"demonym_other": "ケープ・ヴェルディアン"
+	},
+	"CRI": {
+		"name": "コスタリカ",
+		"demonym_other": "コスタリカ人"
+	},
+	"CUB": {
+		"name": "キューバ",
+		"demonym_other": "キューバ人"
+	},
+	"CUW": {
+		"name": "キュラソー",
+		"demonym_other": "オランダの"
+	},
+	"CXR": {
+		"name": "クリスマス島",
+		"demonym_other": "クリスマスアイランダーズ"
+	},
+	"CYM": {
+		"name": "ケイマン諸島",
+		"demonym_other": "ケイマン人"
+	},
+	"CYP": {
+		"name": "キプロス",
+		"demonym_other": "キプロス"
+	},
+	"CZE": {
+		"name": "チェコ",
+		"demonym_other": "チェコ人"
+	},
+	"DEU": {
+		"name": "ドイツ",
+		"demonym_other": "ドイツ人"
+	},
+	"DJI": {
+		"name": "ジブチ",
+		"demonym_other": "ジブチ"
+	},
+	"DMA": {
+		"name": "ドミニカ国",
+		"demonym_other": "ドミニカ人"
+	},
+	"DNK": {
+		"name": "デンマーク",
+		"demonym_other": "デンマーク語"
+	},
+	"DOM": {
+		"name": "ドミニカ共和国",
+		"demonym_other": "ドミニカ人"
+	},
+	"DZA": {
+		"name": "アルジェリア",
+		"demonym_other": "アルジェリア"
+	},
+	"ECU": {
+		"name": "エクアドル",
+		"demonym_other": "エクアドル人"
+	},
+	"EGY": {
+		"name": "エジプト",
+		"demonym_other": "エジプト人"
+	},
+	"ERI": {
+		"name": "エリトリア",
+		"demonym_other": "エリトリア人"
+	},
+	"ESH": {
+		"name": "西サハラ",
+		"demonym_other": "サハラウィ人"
+	},
+	"ESP": {
+		"name": "スペイン",
+		"demonym_other": "スペイン語"
+	},
+	"EST": {
+		"name": "エストニア",
+		"demonym_other": "エストニア人"
+	},
+	"ETH": {
+		"name": "エチオピア",
+		"demonym_other": "エチオピア人"
+	},
+	"FIN": {
+		"name": "フィンランド",
+		"demonym_other": "フィンランド人"
+	},
+	"FJI": {
+		"name": "フィジー",
+		"demonym_other": "フィジー人"
+	},
+	"FLK": {
+		"name": "フォークランド諸島",
+		"demonym_other": "フォークランド諸島人"
+	},
+	"FRA": {
+		"name": "フランス",
+		"demonym_other": "フランス語"
+	},
+	"FRO": {
+		"name": "フェロー諸島",
+		"demonym_other": "フェロー語"
+	},
+	"FSM": {
+		"name": "ミクロネシア",
+		"demonym_other": "ミクロネシア人"
+	},
+	"GAB": {
+		"name": "ガボン",
+		"demonym_other": "ガボン語"
+	},
+	"GBR": {
+		"name": "イギリス",
+		"demonym_other": "英国の"
+	},
+	"GEO": {
+		"name": "ジョージア",
+		"demonym_other": "グルジア人"
+	},
+	"GGY": {
+		"name": "ガーンジー島",
+		"demonym_other": "チャンネル・アイランダーズ"
+	},
+	"GHA": {
+		"name": "ガーナ",
+		"demonym_other": "ガーナ人"
+	},
+	"GIB": {
+		"name": "ジブラルタル",
+		"demonym_other": "ジブラルタル人"
+	},
+	"GIN": {
+		"name": "ギニア",
+		"demonym_other": "ギニア人"
+	},
+	"GLP": {
+		"name": "グアドループ",
+		"demonym_other": "グアドループ人"
+	},
+	"GMB": {
+		"name": "ガンビア",
+		"demonym_other": "ガンビア人"
+	},
+	"GNB": {
+		"name": "ギニアビサウ",
+		"demonym_other": "ギニアビサウ人"
+	},
+	"GNQ": {
+		"name": "赤道ギニア",
+		"demonym_other": "赤道ギニア人"
+	},
+	"GRC": {
+		"name": "ギリシャ",
+		"demonym_other": "ギリシア人"
+	},
+	"GRD": {
+		"name": "グレナダ",
+		"demonym_other": "グレナディア人"
+	},
+	"GRL": {
+		"name": "グリーンランド",
+		"demonym_other": "グリーンランダーズ"
+	},
+	"GTM": {
+		"name": "グアテマラ",
+		"demonym_other": "グアテマラ人"
+	},
+	"GUF": {
+		"name": "フランス領ギアナ"
+	},
+	"GUM": {
+		"name": "グアム島",
+		"demonym_other": "グアマニア人"
+	},
+	"GUY": {
+		"name": "ガイアナ",
+		"demonym_other": "ガイアナ人"
+	},
+	"HKG": {
+		"name": "香港",
+		"demonym_other": "香港人"
+	},
+	"HMD": {
+		"name": "ハード島とマクドナルド諸島",
+		"demonym_other": "ハード島とマクドナルド・アイランダーズ"
+	},
+	"HND": {
+		"name": "ホンジュラス",
+		"demonym_other": "ホンジュラス人"
+	},
+	"HRV": {
+		"name": "クロアチア",
+		"demonym_other": "クロアチア人"
+	},
+	"HTI": {
+		"name": "ハイチ",
+		"demonym_other": "ハイチ人"
+	},
+	"HUN": {
+		"name": "ハンガリー",
+		"demonym_other": "ハンガリー人"
+	},
+	"IDN": {
+		"name": "インドネシア",
+		"demonym_other": "インドネシア人"
+	},
+	"IMN": {
+		"name": "マン島",
+		"demonym_other": "マンクス"
+	},
+	"IND": {
+		"name": "インド",
+		"demonym_other": "インディアン"
+	},
+	"IOT": {
+		"name": "イギリス領インド洋地域",
+		"demonym_other": "インディアン"
+	},
+	"IRL": {
+		"name": "アイルランド",
+		"demonym_other": "アイルランド語"
+	},
+	"IRN": {
+		"name": "イラン",
+		"demonym_other": "イラン人"
+	},
+	"IRQ": {
+		"name": "イラク",
+		"demonym_other": "イラク人"
+	},
+	"ISL": {
+		"name": "アイスランド",
+		"demonym_other": "アイスランド人"
+	},
+	"ISR": {
+		"name": "イスラエル",
+		"demonym_other": "イスラエル人"
+	},
+	"ITA": {
+		"name": "イタリア",
+		"demonym_other": "イタリア人"
+	},
+	"JAM": {
+		"name": "ジャマイカ",
+		"demonym_other": "ジャマイカ人"
+	},
+	"JEY": {
+		"name": "ジャージー",
+		"demonym_other": "チャンネル・アイランダーズ"
+	},
+	"JOR": {
+		"name": "ヨルダン",
+		"demonym_other": "ヨルダン人"
+	},
+	"JPN": {
+		"name": "日本",
+		"demonym_other": "日本人"
+	},
+	"KAZ": {
+		"name": "カザフスタン",
+		"demonym_other": "カザフスタン人"
+	},
+	"KEN": {
+		"name": "ケニア",
+		"demonym_other": "ケニア人"
+	},
+	"KGZ": {
+		"name": "キルギス",
+		"demonym_other": "キルギス"
+	},
+	"KHM": {
+		"name": "カンボジア",
+		"demonym_other": "カンボジア人"
+	},
+	"KIR": {
+		"name": "キリバス",
+		"demonym_other": "I-キリバティス"
+	},
+	"KNA": {
+		"name": "セントキッツ・ネイビス",
+		"demonym_other": "キッティシャンまたはネビシアン"
+	},
+	"KOR": {
+		"name": "韓国",
+		"demonym_other": "韓国人"
+	},
+	"KWT": {
+		"name": "クウェート",
+		"demonym_other": "クウェート人"
+	},
+	"LAO": {
+		"name": "ラオス",
+		"demonym_other": "ラオス人"
+	},
+	"LBN": {
+		"name": "レバノン",
+		"demonym_other": "レバノン"
+	},
+	"LBR": {
+		"name": "リベリア",
+		"demonym_other": "リベリア人"
+	},
+	"LBY": {
+		"name": "リビア",
+		"demonym_other": "リビア人"
+	},
+	"LCA": {
+		"name": "セントルシア",
+		"demonym_other": "セントルシアン"
+	},
+	"LIE": {
+		"name": "リヒテンシュタイン",
+		"demonym_other": "リヒテンシュタイナー"
+	},
+	"LKA": {
+		"name": "スリランカ",
+		"demonym_other": "スリランカ人"
+	},
+	"LSO": {
+		"name": "レソト",
+		"demonym_other": "バソト"
+	},
+	"LTU": {
+		"name": "リトアニア",
+		"demonym_other": "リトアニア人"
+	},
+	"LUX": {
+		"name": "ルクセンブルク",
+		"demonym_other": "ルクセンブルク人"
+	},
+	"LVA": {
+		"name": "ラトビア",
+		"demonym_other": "ラトビア人"
+	},
+	"MAC": {
+		"name": "マカオ",
+		"demonym_other": "中国語"
+	},
+	"MAF": {
+		"name": "セント・マーチン",
+		"demonym_other": "セント・マーチン・アイランダーズ"
+	},
+	"MAR": {
+		"name": "モロッコ",
+		"demonym_other": "モロッコ人"
+	},
+	"MCO": {
+		"name": "モナコ",
+		"demonym_other": "モネガスク人"
+	},
+	"MDA": {
+		"name": "モルドバ",
+		"demonym_other": "モルドバ人"
+	},
+	"MDG": {
+		"name": "マダガスカル",
+		"demonym_other": "マダガスカル"
+	},
+	"MDV": {
+		"name": "モルディブ",
+		"demonym_other": "モルディブ人"
+	},
+	"MEX": {
+		"name": "メキシコ",
+		"demonym_other": "メキシコ人"
+	},
+	"MHL": {
+		"name": "マーシャル諸島",
+		"demonym_other": "マーシャル語"
+	},
+	"MKD": {
+		"name": "北マケドニア",
+		"demonym_other": "マケドニア人"
+	},
+	"MLI": {
+		"name": "マリ",
+		"demonym_other": "マリ人"
+	},
+	"MLT": {
+		"name": "マルタ",
+		"demonym_other": "マルタ語"
+	},
+	"MMR": {
+		"name": "ミャンマー",
+		"demonym_other": "バマース"
+	},
+	"MNE": {
+		"name": "モンテネグロ",
+		"demonym_other": "モンテネグリン"
+	},
+	"MNG": {
+		"name": "モンゴル",
+		"demonym_other": "モンゴル人"
+	},
+	"MNP": {
+		"name": "北マリアナ諸島",
+		"demonym_other": "アメリカ人"
+	},
+	"MOZ": {
+		"name": "モザンビーク",
+		"demonym_other": "モザンビーク人"
+	},
+	"MRT": {
+		"name": "モーリタニア",
+		"demonym_other": "モーリタニア人"
+	},
+	"MSR": {
+		"name": "モントセラト",
+		"demonym_other": "モントセラト人"
+	},
+	"MTQ": {
+		"name": "マルティニーク",
+		"demonym_other": "フランス語"
+	},
+	"MUS": {
+		"name": "モーリシャス",
+		"demonym_other": "モーリシャス人"
+	},
+	"MWI": {
+		"name": "マラウイ",
+		"demonym_other": "マラウイ人"
+	},
+	"MYS": {
+		"name": "マレーシア",
+		"demonym_other": "マレーシア人"
+	},
+	"MYT": {
+		"name": "マヨット",
+		"demonym_other": "マホラン"
+	},
+	"NAM": {
+		"name": "ナミビア",
+		"demonym_other": "ナミビア人"
+	},
+	"NCL": {
+		"name": "ニューカレドニア",
+		"demonym_other": "ニューカレドニア人"
+	},
+	"NER": {
+		"name": "ニジェール",
+		"demonym_other": "ニジェール人"
+	},
+	"NFK": {
+		"name": "ノーフォーク島",
+		"demonym_other": "ノーフォーク・アイランダーズ"
+	},
+	"NGA": {
+		"name": "ナイジェリア",
+		"demonym_other": "ナイジェリア人"
+	},
+	"NIC": {
+		"name": "ニカラグア",
+		"demonym_other": "ニカラグア人"
+	},
+	"NIU": {
+		"name": "ニウエ",
+		"demonym_other": "ニウエ人"
+	},
+	"NLD": {
+		"name": "オランダ",
+		"demonym_other": "オランダの"
+	},
+	"NOR": {
+		"name": "ノルウェー",
+		"demonym_other": "ノルウェー人"
+	},
+	"NPL": {
+		"name": "ネパール",
+		"demonym_other": "ネパール語"
+	},
+	"NRU": {
+		"name": "ナウル",
+		"demonym_other": "ナウル人"
+	},
+	"NZL": {
+		"name": "ニュージーランド",
+		"demonym_other": "ニュージーランド人"
+	},
+	"OMN": {
+		"name": "オマーン",
+		"demonym_other": "オマーン"
+	},
+	"PAK": {
+		"name": "パキスタン",
+		"demonym_other": "パキスタン人"
+	},
+	"PAN": {
+		"name": "パナマ",
+		"demonym_other": "パナマ人"
+	},
+	"PCN": {
+		"name": "ピトケアン諸島",
+		"demonym_other": "ピトケアン諸島人"
+	},
+	"PER": {
+		"name": "ペルー",
+		"demonym_other": "ペルー人"
+	},
+	"PHL": {
+		"name": "フィリピン",
+		"demonym_other": "フィリピン人"
+	},
+	"PLW": {
+		"name": "パラオ",
+		"demonym_other": "パラオ人"
+	},
+	"PNG": {
+		"name": "パプアニューギニア",
+		"demonym_other": "パプアニューギニア人"
+	},
+	"POL": {
+		"name": "ポーランド",
+		"demonym_other": "ポーランド語"
+	},
+	"PRI": {
+		"name": "プエルトリコ",
+		"demonym_other": "プエルトリコ人"
+	},
+	"PRK": {
+		"name": "北朝鮮",
+		"demonym_other": "北朝鮮人"
+	},
+	"PRT": {
+		"name": "ポルトガル",
+		"demonym_other": "ポルトガル語"
+	},
+	"PRY": {
+		"name": "パラグアイ",
+		"demonym_other": "パラグアイ人"
+	},
+	"PSE": {
+		"name": "パレスチナ",
+		"demonym_other": "パレスチナ人"
+	},
+	"PYF": {
+		"name": "フランス領ポリネシア",
+		"demonym_other": "フランス領ポリネシア人"
+	},
+	"QAT": {
+		"name": "カタール",
+		"demonym_other": "カタール人"
+	},
+	"REU": {
+		"name": "レユニオン",
+		"demonym_other": "フランス語"
+	},
+	"ROU": {
+		"name": "ルーマニア",
+		"demonym_other": "ルーマニア人"
+	},
+	"RUS": {
+		"name": "ロシア",
+		"demonym_other": "ロシア人"
+	},
+	"RWA": {
+		"name": "ルワンダ",
+		"demonym_other": "ルワンダ人"
+	},
+	"SAU": {
+		"name": "サウジアラビア",
+		"demonym_other": "サウジアラビア人"
+	},
+	"SDN": {
+		"name": "スーダン",
+		"demonym_other": "スーダン人"
+	},
+	"SEN": {
+		"name": "セネガル",
+		"demonym_other": "セネガル"
+	},
+	"SGP": {
+		"name": "シンガポール",
+		"demonym_other": "シンガポール人"
+	},
+	"SGS": {
+		"name": "サウスジョージア",
+		"demonym_other": "サウスジョージアン・サウス・サンドウィッチ・アイランダーズ"
+	},
+	"SHN": {
+		"name": "セントヘレナ、アセンション、トリスタンダクーニャ"
+	},
+	"SJM": {
+		"name": "スバールバル諸島とヤンマイエン島",
+		"demonym_other": "ノルウェー人"
+	},
+	"SLB": {
+		"name": "ソロモン諸島",
+		"demonym_other": "ソロモン諸島人"
+	},
+	"SLE": {
+		"name": "シエラレオネ",
+		"demonym_other": "シエラレオネ人"
+	},
+	"SLV": {
+		"name": "エルサルバドル",
+		"demonym_other": "エルサルバドル人"
+	},
+	"SMR": {
+		"name": "サンマリノ",
+		"demonym_other": "サンマリネ"
+	},
+	"SOM": {
+		"name": "ソマリア",
+		"demonym_other": "ソマリア"
+	},
+	"SPM": {
+		"name": "サンピエール島とミクロン島",
+		"demonym_other": "フランス語"
+	},
+	"SRB": {
+		"name": "セルビア",
+		"demonym_other": "セルビア人"
+	},
+	"SSD": {
+		"name": "南スーダン",
+		"demonym_other": "南スーダン人"
+	},
+	"STP": {
+		"name": "サントメ・プリンシペ",
+		"demonym_other": "サントメアンズ"
+	},
+	"SUR": {
+		"name": "スリナム",
+		"demonym_other": "スリナム"
+	},
+	"SVK": {
+		"name": "スロバキア",
+		"demonym_other": "スロバキア人"
+	},
+	"SVN": {
+		"name": "スロベニア",
+		"demonym_other": "スロベニア人"
+	},
+	"SWE": {
+		"name": "スウェーデン",
+		"demonym_other": "スウェーデンの"
+	},
+	"SWZ": {
+		"name": "エスワティニ",
+		"demonym_other": "スワジス"
+	},
+	"SXM": {
+		"name": "シント・マールテン",
+		"demonym_other": "セントマーチンズ"
+	},
+	"SYC": {
+		"name": "セイシェル",
+		"demonym_other": "セイシェル"
+	},
+	"SYR": {
+		"name": "シリア",
+		"demonym_other": "シリア人"
+	},
+	"TCA": {
+		"name": "タークス・カイコス諸島",
+		"demonym_other": "タークス・カイコス諸島民"
+	},
+	"TCD": {
+		"name": "チャド",
+		"demonym_other": "チャド人"
+	},
+	"TGO": {
+		"name": "トーゴ",
+		"demonym_other": "トーゴ人"
+	},
+	"THA": {
+		"name": "タイ",
+		"demonym_other": "タイ人"
+	},
+	"TJK": {
+		"name": "タジキスタン",
+		"demonym_other": "タジク人"
+	},
+	"TKL": {
+		"name": "トケラウ",
+		"demonym_other": "トケラウ人"
+	},
+	"TKM": {
+		"name": "トルクメニスタン",
+		"demonym_other": "トルクメニスタン人"
+	},
+	"TLS": {
+		"name": "東ティモール",
+		"demonym_other": "東ティモール人"
+	},
+	"TON": {
+		"name": "トンガ",
+		"demonym_other": "トンガ人"
+	},
+	"TTO": {
+		"name": "トリニダード・トバゴ",
+		"demonym_other": "トリニダード人"
+	},
+	"TUN": {
+		"name": "チュニジア",
+		"demonym_other": "チュニジア人"
+	},
+	"TUR": {
+		"name": "七面鳥",
+		"demonym_other": "トルコ人"
+	},
+	"TUV": {
+		"name": "ツバル",
+		"demonym_other": "ツバル人"
+	},
+	"TWN": {
+		"name": "台湾",
+		"demonym_other": "台湾人"
+	},
+	"TZA": {
+		"name": "タンザニア",
+		"demonym_other": "タンザニア人"
+	},
+	"UGA": {
+		"name": "ウガンダ",
+		"demonym_other": "ウガンダ人"
+	},
+	"UKR": {
+		"name": "ウクライナ",
+		"demonym_other": "ウクライナ人"
+	},
+	"UMI": {
+		"name": "合衆国領有小離島",
+		"demonym_other": "アメリカ人"
+	},
+	"UNK": {
+		"name": "コソボ",
+		"demonym_other": "コソボ人"
+	},
+	"URY": {
+		"name": "ウルグアイ",
+		"demonym_other": "ウルグアイ人"
+	},
+	"USA": {
+		"name": "米国",
+		"demonym_other": "アメリカ人"
+	},
+	"UZB": {
+		"name": "ウズベキスタン",
+		"demonym_other": "ウズベキスタン人"
+	},
+	"VAT": {
+		"name": "バチカン市",
+		"demonym_other": "イタリア人"
+	},
+	"VCT": {
+		"name": "セントビンセントおよびグレナディーン諸島",
+		"demonym_other": "セントビンセンティアンズ"
+	},
+	"VEN": {
+		"name": "ベネズエラ",
+		"demonym_other": "ベネズエラ人"
+	},
+	"VGB": {
+		"name": "イギリス領バージン諸島",
+		"demonym_other": "ヴァージン諸島人"
+	},
+	"VIR": {
+		"name": "アメリカ領バージン諸島",
+		"demonym_other": "ヴァージン諸島人"
+	},
+	"VNM": {
+		"name": "ベトナム",
+		"demonym_other": "ベトナム語"
+	},
+	"VUT": {
+		"name": "バヌアツ",
+		"demonym_other": "ニバヌアツ"
+	},
+	"WLF": {
+		"name": "ワリスフツナ諸島",
+		"demonym_other": "ウォリス・フツナ諸島民"
+	},
+	"WSM": {
+		"name": "サモア",
+		"demonym_other": "サモア人"
+	},
+	"YEM": {
+		"name": "イエメン",
+		"demonym_other": "イエメン人"
+	},
+	"ZAF": {
+		"name": "南アフリカ",
+		"demonym_other": "南アフリカ人"
+	},
+	"ZMB": {
+		"name": "ザンビア",
+		"demonym_other": "ザンビア人"
+	},
+	"ZWE": {
+		"name": "ジンバブエ",
+		"demonym_other": "ジンバブエ人"
+	}
+}

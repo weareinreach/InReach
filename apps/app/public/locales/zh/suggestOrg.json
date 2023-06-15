@@ -1,0 +1,37 @@
+{
+	"body": {
+		"accept-country": "请注意，我们目前只能接受位于美国、墨西哥和加拿大的组织。",
+		"additional-info": "附加信息",
+		"intro-text": "感谢您有兴趣为 InReach 应用程序做出贡献！使用此表格建议您认为应该包括的组织（例如非营利组织、基层或社区组织、医疗保健系统、私人诊所等）。如果你没有表格要求的所有信息，那也没关系 —— 只需填写你所知道的，剩下的交给我们！我们感谢您的提交，也感谢您帮助多元化的 LGBTQ+ 社区增加获得安全、经过验证的资源的机会。在InReach上发布之前，所有推荐的组织都必须经过inReach训练有素的志愿者的审查。",
+		"required-info": "必填信息",
+		"subject-review": "所有推荐的组织在发布前都要经过inReach的审查。",
+		"suggest-org": "推荐一个组织"
+	},
+	"form": {
+		"btn-community": "添加 LGBTQ+ 社区焦点",
+		"btn-save-changes": "保存更改",
+		"btn-service": "添加服务类型",
+		"btn-submit": "提交新组织",
+		"community-focus": "该组织是否提供针对特定 LGBTQ+ 社区的服务？",
+		"error-exists-active": "<Link>{{org}}</Link> 已经在 inReach 上列出了。请仅使用此表格来推荐新的组织。",
+		"error-exists-dismiss": "<Dismiss>如果这是其他组织，请单击此处。</Dismiss>",
+		"error-exists-inactive": "已经建议了 <Link>{{org}}</Link> 。我们的团队要么仍在验证信息，要么该组织没有满足我们的所有要求。",
+		"org-address": "组织地址",
+		"org-country": "该组织位于哪个国家？",
+		"org-name": "组织名称",
+		"org-website": "组织网站",
+		"placeholder-address": "输入地址...",
+		"placeholder-name": "输入组织名称...",
+		"placeholder-website": "输入网址...",
+		"service-types": "该组织提供什么类型的服务？"
+	},
+	"modal": {
+		"community-sub": "该组织是否提供针对特定 LGBTQ+ 社区的服务？请选择所有适用选项。",
+		"community-title": "LGBTQ+ 社区焦点",
+		"dismiss": "解雇",
+		"service-types-sub": "该组织提供什么类型的服务？请选择所有适用选项。",
+		"service-types-title": "服务类型",
+		"thank-you": "感谢您提交 {{org}}！",
+		"thank-you-sub": "我们的团队将审查您提交的内容，验证信息，如果该组织符合我们的标准，则在 inReach 上发布该组织。"
+	}
+}

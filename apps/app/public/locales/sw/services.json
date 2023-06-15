@@ -1,0 +1,124 @@
+{
+	"abortion-care": {
+		"CATEGORYNAME": "Huduma ya Utoaji Mimba",
+		"abortion-providers": "Watoa huduma za utoaji mimba",
+		"financial-assistance": "Msaada wa kifedha",
+		"lodging-assistance": "Msaada wa makaazi",
+		"mail-order-services": "Huduma za kuagiza barua",
+		"mental-health-support": "Msaada wa afya ya akili",
+		"travel-assistance": "Msaada wa kusafiri"
+	},
+	"community-support": {
+		"CATEGORYNAME": "Msaada wa Jumuiya",
+		"community-social-groups": "Jamii na vikundi vya kijamii",
+		"cultural-centers": "Vituo vya kitamaduni",
+		"lgbtq-centers": "Vituo vya LGBTQ",
+		"reception-services": "Huduma za mapokezi",
+		"reentry-services": "Huduma za kuingia tena",
+		"spiritual-support": "Msaada wa kiroho",
+		"sponsors": "Udhamini wa uhamiaji"
+	},
+	"computers-and-internet": {
+		"CATEGORYNAME": "Kompyuta na mtandao",
+		"computers-and-internet": "Kompyuta na internet"
+	},
+	"education-and-employment": {
+		"CATEGORYNAME": "Elimu na Ajira",
+		"career-counseling": "Ushauri wa kazi",
+		"educational-support-for-lgbtq-youth": "Msaada wa elimu kwa vijana wa LGBTQ",
+		"english-classes": "Madarasa ya Kiingereza",
+		"language-classes": "Madarasa ya lugha",
+		"leadership-training-and-professional-development": "Mafunzo ya uongozi na maendeleo ya kitaaluma",
+		"libraries": "Maktaba",
+		"scholarships": "Scholarships"
+	},
+	"food": {
+		"CATEGORYNAME": "Chakula",
+		"food": "Chakula",
+		"food-assistance": "Msaada wa chakula"
+	},
+	"housing": {
+		"CATEGORYNAME": "Makazi",
+		"drop-in-centers-for-lgbtq-youth": "Vituo vya kuacha kwa vijana wa LGBTQ",
+		"emergency-housing": "Nyumba ya dharura",
+		"housing-information-and-referrals": "Habari ya makazi na rufaa",
+		"short-term-housing": "Makazi ya muda mfupi",
+		"trans-housing": "Trans makazi"
+	},
+	"hygiene-and-clothing": {
+		"CATEGORYNAME": "Usafi na Mavazi",
+		"clothes": "Nguo",
+		"gender-affirming-items": "Vitu vinavyothibitisha jinsia",
+		"gender-neutral-bathrooms": "Bafu zisizo na jinsia",
+		"haircuts-and-stylists": "Haircuts na stylists",
+		"hygiene": "Usafi"
+	},
+	"legal": {
+		"CATEGORYNAME": "Kisheria",
+		"asylum-application": "Maombi ya hifadhi",
+		"citizenship": "Uraia",
+		"crime-and-discrimination": "Uhalifu na ubaguzi",
+		"deferred-action-for-childhood-arrivals-daca": "Hatua iliyoahirishwa kwa Kuwasili kwa Watoto (DACA)",
+		"deportation-or-removal": "Kuhamishwa au kuondolewa",
+		"employment-authorization": "Idhini ya ajira",
+		"family-petitions": "Maombi ya familia",
+		"immigration-detention": "Uhamiaji kizuizini",
+		"legal-advice": "Ushauri wa kisheria",
+		"legal-hotlines": "Hotlines kisheria",
+		"name-and-gender-change": "Jina na mabadiliko ya jinsia",
+		"refugee-claim": "Madai ya wakimbizi",
+		"residency": "Makazi",
+		"special-immigrant-juvenile-status-sijs": "Hali maalum ya Wahamiaji Watoto (SIJS)",
+		"t-visa": "Visa vya T",
+		"u-visa": "Visa ya U"
+	},
+	"mail": {
+		"CATEGORYNAME": "Barua",
+		"mail": "Barua"
+	},
+	"medical": {
+		"CATEGORYNAME": "Matibabu",
+		"covid-19-services": "Huduma za COVID-19",
+		"dental-care": "Huduma ya meno",
+		"hiv-and-sexual-health": "VVU na afya ya ngono",
+		"medical-clinics": "Kliniki za matibabu",
+		"obgyn-services": "Huduma za OBGYN",
+		"physical-evaluations-for-asylum-claim": "Tathmini ya kimwili kwa madai ya hifadhi",
+		"physical-evaluations-for-refugee-claim": "Tathmini ya kimwili kwa madai ya wakimbizi",
+		"trans-health": "Afya ya Trans",
+		"trans-health-gender-affirming-surgery": "Afya ya Trans - upasuaji wa kuthibitisha jinsia",
+		"trans-health-hormone-and-surgery-letters": "Trans afya - homoni na upasuaji barua",
+		"trans-health-hormone-therapy": "Afya ya Trans - tiba ya homoni",
+		"trans-health-primary-care": "Trans afya - huduma ya msingi",
+		"trans-health-speech-therapy": "Afya ya Trans - tiba ya hotuba"
+	},
+	"mental-health": {
+		"CATEGORYNAME": "Afya ya Akili",
+		"bipoc-support-groups": "Vikundi vya msaada wa BIPOC",
+		"hotlines": "Hotlines",
+		"private-therapy-and-counseling": "Tiba ya kibinafsi na ushauri nasaha",
+		"psychological-evaluations-for-asylum-claim": "Tathmini ya kisaikolojia ya madai ya hifadhi",
+		"psychological-evaluations-for-refugee-claim": "Tathmini ya kisaikolojia kwa madai ya wakimbizi",
+		"substance-use": "Matumizi ya dutu",
+		"support-for-caregivers-of-trans-youth": "Msaada kwa walezi wa vijana wa trans",
+		"support-for-conversion-therapy-survivors": "Msaada kwa waathirika wa tiba ya uongofu",
+		"support-groups": "Vikundi vya msaada",
+		"trans-support-groups": "Vikundi vya msaada vya Trans"
+	},
+	"sports-and-entertainment": {
+		"CATEGORYNAME": "Burudani na Shughuli",
+		"art-music-literature": "Sanaa, muziki, na fasihi",
+		"sports-and-entertainment": "Michezo na burudani"
+	},
+	"translation-and-interpretation": {
+		"CATEGORYNAME": "Tafsiri na Tafsiri",
+		"for-healthcare": "Kwa huduma ya afya",
+		"for-legal-services": "Kwa huduma za kisheria",
+		"general-translation-and-interpretation": "Tafsiri ya jumla na tafsiri"
+	},
+	"transportation": {
+		"CATEGORYNAME": "Usafiri",
+		"transit-passes-and-discounts": "Transit hupita na punguzo",
+		"transportation-assistance": "Msaada wa usafiri"
+	}
+}
