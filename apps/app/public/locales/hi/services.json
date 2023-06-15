@@ -1,124 +1,124 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "गर्भपात की देखभाल",
-		"abortion-providers": "गर्भपात कराने वाले",
-		"financial-assistance": "वित्तीय सहायता",
-		"lodging-assistance": "लॉजिंग सहायता",
-		"mail-order-services": "मेल ऑर्डर सेवाएं",
-		"mental-health-support": "मानसिक स्वास्थ्य सहायता",
-		"travel-assistance": "यात्रा संबंधी सहायता"
+		"CATEGORYNAME": "Abortion Care",
+		"abortion-providers": "Abortion providers",
+		"financial-assistance": "Financial assistance",
+		"lodging-assistance": "Lodging assistance",
+		"mail-order-services": "Mail order services",
+		"mental-health-support": "Mental health support",
+		"travel-assistance": "Travel assistance"
 	},
 	"community-support": {
-		"CATEGORYNAME": "सामुदायिक सहायता",
+		"CATEGORYNAME": "Community Support",
 		"community-social-groups": "समुदाय और सामाजिक समूह",
-		"cultural-centers": "सांस्कृतिक केंद्र",
-		"lgbtq-centers": "LGBTQ केंद्र",
-		"reception-services": "रिसेप्शन सेवाएं",
+		"cultural-centers": "Cultural centers",
+		"lgbtq-centers": "LGBTQ centers",
+		"reception-services": "Reception services",
 		"reentry-services": "पुन: प्रवेश सेवाएँ",
-		"spiritual-support": "आध्यात्मिक सहायता",
-		"sponsors": "आप्रवासन प्रायोजन"
+		"spiritual-support": "Spiritual support",
+		"sponsors": "Immigration sponsorship"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "कंप्यूटर और इंटरनेट",
-		"computers-and-internet": "कंप्यूटर और इंटरनेट"
+		"CATEGORYNAME": "Computers and Internet",
+		"computers-and-internet": "Computers and internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "शिक्षा और रोजगार",
-		"career-counseling": "करियर काउंसलिंग",
-		"educational-support-for-lgbtq-youth": "LGBTQ युवाओं के लिए शैक्षिक सहायता",
-		"english-classes": "अंग्रेजी की कक्षाएं",
-		"language-classes": "भाषा की कक्षाएँ",
-		"leadership-training-and-professional-development": "नेतृत्व प्रशिक्षण और पेशेवर विकास",
-		"libraries": "लाइब्रेरीज़",
-		"scholarships": "छात्रवृत्तियां"
+		"CATEGORYNAME": "Education and Employment",
+		"career-counseling": "Career counseling",
+		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
+		"english-classes": "English classes",
+		"language-classes": "Language classes",
+		"leadership-training-and-professional-development": "Leadership training and professional development",
+		"libraries": "Libraries",
+		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "फ़ूड",
-		"food": "फ़ूड",
-		"food-assistance": "खाद्य सहायता"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "हाउसिंग",
-		"drop-in-centers-for-lgbtq-youth": "LGBTQ युवाओं के लिए ड्रॉप-इन सेंटर",
-		"emergency-housing": "आपातकालीन आवास",
-		"housing-information-and-referrals": "आवास की जानकारी और रेफरल",
-		"short-term-housing": "लघु अवधि के आवास",
-		"trans-housing": "ट्रांस हाउसिंग"
+		"CATEGORYNAME": "Housing",
+		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
+		"emergency-housing": "Emergency housing",
+		"housing-information-and-referrals": "Housing information and referrals",
+		"short-term-housing": "Short-term housing",
+		"trans-housing": "Trans housing"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "स्वच्छता और कपड़े",
-		"clothes": "कपड़े",
-		"gender-affirming-items": "लिंग की पुष्टि करने वाली वस्तुएं",
-		"gender-neutral-bathrooms": "जेंडर-न्यूट्रल बाथरूम",
-		"haircuts-and-stylists": "हेयरकूट और स्टाइलिस्ट",
-		"hygiene": "हाइजीन"
+		"CATEGORYNAME": "Hygiene and Clothing",
+		"clothes": "Clothes",
+		"gender-affirming-items": "Gender-affirming items",
+		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
+		"haircuts-and-stylists": "Haircuts and stylists",
+		"hygiene": "Hygiene"
 	},
 	"legal": {
-		"CATEGORYNAME": "लीगल",
-		"asylum-application": "शरण आवेदन",
-		"citizenship": "नागरिकता",
-		"crime-and-discrimination": "अपराध और भेदभाव",
-		"deferred-action-for-childhood-arrivals-daca": "बचपन के आगमन के लिए आस्थगित कार्रवाई (DACA)",
-		"deportation-or-removal": "निर्वासन या निष्कासन",
-		"employment-authorization": "रोजगार प्राधिकरण",
-		"family-petitions": "पारिवारिक याचिकाएं",
-		"immigration-detention": "आप्रवासन निरोध",
-		"legal-advice": "कानूनी सलाह",
-		"legal-hotlines": "कानूनी हॉटलाइन",
-		"name-and-gender-change": "नाम और लिंग परिवर्तन",
-		"refugee-claim": "शरणार्थी का दावा",
-		"residency": "रेजीडेंसी",
-		"special-immigrant-juvenile-status-sijs": "विशेष आप्रवासी किशोर स्थिति (SIJS)",
-		"t-visa": "टी वीज़ा",
-		"u-visa": "यू वीज़ा"
+		"CATEGORYNAME": "Legal",
+		"asylum-application": "Asylum application",
+		"citizenship": "Citizenship",
+		"crime-and-discrimination": "Crime and discrimination",
+		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
+		"deportation-or-removal": "Deportation or removal",
+		"employment-authorization": "Employment authorization",
+		"family-petitions": "Family petitions",
+		"immigration-detention": "Immigration detention",
+		"legal-advice": "Legal advice",
+		"legal-hotlines": "Legal hotlines",
+		"name-and-gender-change": "Name and gender change",
+		"refugee-claim": "Refugee claim",
+		"residency": "Residency",
+		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "मेल",
-		"mail": "मेल"
+		"CATEGORYNAME": "Mail",
+		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "मेडिकल",
-		"covid-19-services": "COVID-19 सेवाएं",
-		"dental-care": "दाँतों की देखभाल",
-		"hiv-and-sexual-health": "एचआईवी और यौन स्वास्थ्य",
-		"medical-clinics": "मेडिकल क्लीनिक",
-		"obgyn-services": "ओबीजीवाईएन सेवाएं",
-		"physical-evaluations-for-asylum-claim": "शरण के दावे के लिए भौतिक मूल्यांकन",
-		"physical-evaluations-for-refugee-claim": "शरणार्थी के दावे के लिए भौतिक मूल्यांकन",
-		"trans-health": "ट्रांस हेल्थ",
-		"trans-health-gender-affirming-surgery": "ट्रांस हेल्थ - लिंग पुष्टि करने वाली सर्जरी",
-		"trans-health-hormone-and-surgery-letters": "ट्रांस हेल्थ - हार्मोन और सर्जरी पत्र",
-		"trans-health-hormone-therapy": "ट्रांस हेल्थ - हार्मोन थेरेपी",
-		"trans-health-primary-care": "ट्रांस हेल्थ - प्राथमिक देखभाल",
-		"trans-health-speech-therapy": "ट्रांस हेल्थ - स्पीच थेरेपी"
+		"CATEGORYNAME": "Medical",
+		"covid-19-services": "COVID-19 services",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV and sexual health",
+		"medical-clinics": "Medical clinics",
+		"obgyn-services": "OBGYN services",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
+		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"trans-health": "Trans health",
+		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
+		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
+		"trans-health-hormone-therapy": "Trans health - hormone therapy",
+		"trans-health-primary-care": "Trans health - primary care",
+		"trans-health-speech-therapy": "Trans health - speech therapy"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "मानसिक स्वास्थ्य",
-		"bipoc-support-groups": "BIPOC सहायता समूह",
-		"hotlines": "हॉटलाइन",
-		"private-therapy-and-counseling": "निजी चिकित्सा और परामर्श",
-		"psychological-evaluations-for-asylum-claim": "शरण के दावे के लिए मनोवैज्ञानिक मूल्यांकन",
-		"psychological-evaluations-for-refugee-claim": "शरणार्थी के दावे के लिए मनोवैज्ञानिक मूल्यांकन",
-		"substance-use": "पदार्थ का उपयोग",
-		"support-for-caregivers-of-trans-youth": "ट्रांस युवाओं की देखभाल करने वालों के लिए सहायता",
-		"support-for-conversion-therapy-survivors": "रूपांतरण चिकित्सा से बचे लोगों के लिए सहायता",
-		"support-groups": "सहायता समूह",
-		"trans-support-groups": "ट्रांस सहायता समूह"
+		"CATEGORYNAME": "Mental Health",
+		"bipoc-support-groups": "BIPOC support groups",
+		"hotlines": "Hotlines",
+		"private-therapy-and-counseling": "Private therapy and counseling",
+		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
+		"substance-use": "Substance use",
+		"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
+		"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
+		"support-groups": "Support groups",
+		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "मनोरंजन और गतिविधियां",
+		"CATEGORYNAME": "Entertainment and Activities",
 		"art-music-literature": "कला, संगीत और साहित्य",
-		"sports-and-entertainment": "खेल और मनोरंजन"
+		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "अनुवाद और व्याख्या",
-		"for-healthcare": "हेल्थकेयर के लिए",
-		"for-legal-services": "कानूनी सेवाओं के लिए",
-		"general-translation-and-interpretation": "सामान्य अनुवाद और व्याख्या"
+		"CATEGORYNAME": "Translation and Interpretation",
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "ट्रांसपोर्टेशन",
-		"transit-passes-and-discounts": "ट्रांज़िट पास और छूट",
-		"transportation-assistance": "परिवहन सहायता"
+		"CATEGORYNAME": "Transportation",
+		"transit-passes-and-discounts": "Transit passes and discounts",
+		"transportation-assistance": "Transportation assistance"
 	}
 }
