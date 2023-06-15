@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Cuidado del aborto",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "Proveedores de aborto",
 		"financial-assistance": "Ayuda financiera",
 		"lodging-assistance": "Asistencia de alojamiento",
@@ -9,36 +9,36 @@
 		"travel-assistance": "Asistencia para viajes"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Soporte de la comunidad",
+		"CATEGORYNAME": "Community Support",
 		"community-social-groups": "Comunidad y grupos sociales",
 		"cultural-centers": "Centros culturales",
 		"lgbtq-centers": "Centros LGBTQ",
-		"reception-services": "Servicios de vigilancia",
+		"reception-services": "Reception services",
 		"reentry-services": "Servicios de reentrada",
 		"spiritual-support": "Soporte espiritual",
 		"sponsors": "Patrocinio de inmigración"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "Ordenadores e Internet",
+		"CATEGORYNAME": "Computers and Internet",
 		"computers-and-internet": "Ordenadores e Internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Educación y empleo",
+		"CATEGORYNAME": "Education and Employment",
 		"career-counseling": "Asesoramiento profesional",
 		"educational-support-for-lgbtq-youth": "Apoyo educativo a la juventud LGBTQ",
 		"english-classes": "Clases de inglés",
-		"language-classes": "Clases de idioma",
+		"language-classes": "Language classes",
 		"leadership-training-and-professional-development": "Capacitación de liderazgo y desarrollo profesional",
 		"libraries": "Bibliotecas",
 		"scholarships": "Becas"
 	},
 	"food": {
-		"CATEGORYNAME": "Comida",
-		"food": "Comida",
-		"food-assistance": "Ayuda alimentaria"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "Casita",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "Centros para jóvenes LGBTQ",
 		"emergency-housing": "Vivienda de emergencia",
 		"housing-information-and-referrals": "Información y referencias de Housing",
@@ -46,7 +46,7 @@
 		"trans-housing": "Vivienda Trans"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "Higiene y ropa",
+		"CATEGORYNAME": "Hygiene and Clothing",
 		"clothes": "Ropa",
 		"gender-affirming-items": "Objetos de afirmación de género",
 		"gender-neutral-bathrooms": "Baños neutrales de género",
@@ -63,29 +63,29 @@
 		"employment-authorization": "Autorización de empleo",
 		"family-petitions": "Peticiones familiares",
 		"immigration-detention": "Detención de inmigrantes",
-		"legal-advice": "Asesoramiento legal",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "Líneas directas legales",
 		"name-and-gender-change": "Cambio de nombre y género",
-		"refugee-claim": "Reclamo de Refuge",
+		"refugee-claim": "Refugee claim",
 		"residency": "Residencia",
 		"special-immigrant-juvenile-status-sijs": "Estado Especial de Juveniles Inmigrantes (SIJS)",
 		"t-visa": "T visa",
 		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "Correo",
-		"mail": "Correo"
+		"CATEGORYNAME": "Mail",
+		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "Médico",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "Servicios COVID-19",
 		"dental-care": "Cuidado dental",
 		"hiv-and-sexual-health": "VIH y salud sexual",
 		"medical-clinics": "Clínicas médicas",
 		"obgyn-services": "Servicios OBGYN",
-		"physical-evaluations-for-asylum-claim": "Evaluaciones físicas de la solicitud de asilo",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
 		"physical-evaluations-for-refugee-claim": "Evaluaciones físicas de la demanda de refugiados",
-		"trans-health": "Salud trans",
+		"trans-health": "Trans health",
 		"trans-health-gender-affirming-surgery": "Trans health - cirugía de afirmación de género",
 		"trans-health-hormone-and-surgery-letters": "Salud trans - letras de hormona y cirugía",
 		"trans-health-hormone-therapy": "Salud trans - terapia hormonal",
@@ -98,7 +98,7 @@
 		"hotlines": "Líneas de acceso",
 		"private-therapy-and-counseling": "Terapia y consejería privada",
 		"psychological-evaluations-for-asylum-claim": "Evaluaciones psicológicas de la solicitud de asilo",
-		"psychological-evaluations-for-refugee-claim": "Evaluaciones psicológicas para la solicitud de refugiados",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
 		"substance-use": "Uso de sustancias",
 		"support-for-caregivers-of-trans-youth": "Apoyo a los cuidadores de los jóvenes trans",
 		"support-for-conversion-therapy-survivors": "Apoyo a los supervivientes de la terapia de conversión",
@@ -112,12 +112,12 @@
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Traducción e interpretación",
-		"for-healthcare": "Para la salud",
-		"for-legal-services": "Para servicios legales",
-		"general-translation-and-interpretation": "Traducción e interpretación general"
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "Transportación",
+		"CATEGORYNAME": "Transportation",
 		"transit-passes-and-discounts": "Pases de tránsito y descuentos",
 		"transportation-assistance": "Asistencia de transporte"
 	}
