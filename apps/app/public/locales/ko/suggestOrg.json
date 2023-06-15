@@ -1,11 +1,11 @@
 {
 	"body": {
 		"accept-country": "현재 미국, 멕시코 및 캐나다에 위치한 조직만 수락할 수 있다는 점을 참고하십시오.",
-		"additional-info": "추가 정보",
+		"additional-info": "Additional information",
 		"intro-text": "inReach 앱에 기여하는 데 관심을 가져주셔서 감사합니다!이 양식을 사용하여 포함되어야 한다고 생각하는 조직 (예: 비영리 단체, 풀뿌리 또는 지역사회 단체, 의료 시스템, 민간 진료 등) 을 제안하십시오.양식에서 요구하는 모든 정보가 없어도 괜찮습니다. 알고 있는 내용만 입력하면 나머지는 저희가 처리해 드리겠습니다!제출해 주셔서 감사합니다. 다양한 LGBTQ+ 커뮤니티를 위해 안전하고 검증된 리소스에 대한 접근성을 높이는 데 도움을 주셔서 감사합니다.제안된 모든 단체는 inReach에 게시되기 전에 inReach의 숙련된 자원 봉사자의 검토를 거쳐야 합니다.",
 		"required-info": "필수 정보",
 		"subject-review": "제안된 모든 조직은 출판 전에 inReach의 검토를 거쳐야 합니다.",
-		"suggest-org": "조직 제안하기"
+		"suggest-org": "Suggest an organization"
 	},
 	"form": {
 		"btn-community": "LGBTQ+ 커뮤니티 포커스 추가",
@@ -21,7 +21,7 @@
 		"org-name": "조직 이름",
 		"org-website": "조직 웹 사이트",
 		"placeholder-address": "주소 입력...",
-		"placeholder-name": "조직 이름 입력...",
+		"placeholder-name": "Enter organization name...",
 		"placeholder-website": "URL 입력...",
 		"service-types": "이 조직은 어떤 유형의 서비스를 제공합니까?"
 	},
