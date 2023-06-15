@@ -1,124 +1,124 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Догляд за абортами",
-		"abortion-providers": "Постачальники абортів",
-		"financial-assistance": "Фінансова допомога",
-		"lodging-assistance": "Допомога в житлі",
-		"mail-order-services": "Послуги поштових замовлень",
-		"mental-health-support": "Підтримка психічного здоров'я",
-		"travel-assistance": "Допомога в поїзді"
+		"CATEGORYNAME": "Abortion Care",
+		"abortion-providers": "Abortion providers",
+		"financial-assistance": "Financial assistance",
+		"lodging-assistance": "Lodging assistance",
+		"mail-order-services": "Mail order services",
+		"mental-health-support": "Mental health support",
+		"travel-assistance": "Travel assistance"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Підтримка спільноти",
+		"CATEGORYNAME": "Community Support",
 		"community-social-groups": "Спільнота та соціальні групи",
-		"cultural-centers": "Культурні центри",
-		"lgbtq-centers": "ЛГБТК-центри",
-		"reception-services": "Послуги ресепшн",
+		"cultural-centers": "Cultural centers",
+		"lgbtq-centers": "LGBTQ centers",
+		"reception-services": "Reception services",
 		"reentry-services": "Послуги повторного входу",
-		"spiritual-support": "Духовна підтримка",
-		"sponsors": "Спонсорство імміграції"
+		"spiritual-support": "Spiritual support",
+		"sponsors": "Immigration sponsorship"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "Комп'ютери та Інтернет",
-		"computers-and-internet": "Комп'ютери та інтернет"
+		"CATEGORYNAME": "Computers and Internet",
+		"computers-and-internet": "Computers and internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Освіта та працевлаштування",
-		"career-counseling": "Кар'єрне консультування",
-		"educational-support-for-lgbtq-youth": "Освітня підтримка ЛГБТК-молоді",
-		"english-classes": "Заняття з англійської мови",
-		"language-classes": "Мовні класи",
-		"leadership-training-and-professional-development": "Навчання лідерству та підвищення кваліфікації",
-		"libraries": "Бібліотеки",
-		"scholarships": "Стипендії"
+		"CATEGORYNAME": "Education and Employment",
+		"career-counseling": "Career counseling",
+		"educational-support-for-lgbtq-youth": "Educational support for LGBTQ youth",
+		"english-classes": "English classes",
+		"language-classes": "Language classes",
+		"leadership-training-and-professional-development": "Leadership training and professional development",
+		"libraries": "Libraries",
+		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "Харчування",
-		"food": "Харчування",
-		"food-assistance": "Харчова допомога"
+		"CATEGORYNAME": "Food",
+		"food": "Food",
+		"food-assistance": "Food assistance"
 	},
 	"housing": {
-		"CATEGORYNAME": "Житло",
-		"drop-in-centers-for-lgbtq-youth": "Центри для ЛГБТК-молоді",
-		"emergency-housing": "Аварійне житло",
-		"housing-information-and-referrals": "Інформація про житло та реферали",
-		"short-term-housing": "Короткострокове житло",
-		"trans-housing": "Транс-житло"
+		"CATEGORYNAME": "Housing",
+		"drop-in-centers-for-lgbtq-youth": "Drop-in centers for LGBTQ youth",
+		"emergency-housing": "Emergency housing",
+		"housing-information-and-referrals": "Housing information and referrals",
+		"short-term-housing": "Short-term housing",
+		"trans-housing": "Trans housing"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "Гігієна та одяг",
-		"clothes": "Одяг",
-		"gender-affirming-items": "Гендерно-підтверджуючі предмети",
-		"gender-neutral-bathrooms": "Гендерно-нейтральні ванні кімнати",
-		"haircuts-and-stylists": "Стрижки і стилісти",
-		"hygiene": "Гігієна"
+		"CATEGORYNAME": "Hygiene and Clothing",
+		"clothes": "Clothes",
+		"gender-affirming-items": "Gender-affirming items",
+		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
+		"haircuts-and-stylists": "Haircuts and stylists",
+		"hygiene": "Hygiene"
 	},
 	"legal": {
-		"CATEGORYNAME": "Юридичні",
-		"asylum-application": "Заява про притулок",
-		"citizenship": "Громадянство",
-		"crime-and-discrimination": "Злочин і дискримінація",
-		"deferred-action-for-childhood-arrivals-daca": "Відкладені дії для дитинства прибуття (DACA)",
-		"deportation-or-removal": "Депортація або вивезення",
-		"employment-authorization": "Дозвіл на працевлаштування",
-		"family-petitions": "Сімейні клопотання",
-		"immigration-detention": "Затримання імміграції",
-		"legal-advice": "Юридична консультація",
-		"legal-hotlines": "Юридичні гарячі лінії",
-		"name-and-gender-change": "Зміна імені та статі",
-		"refugee-claim": "Позов про біженця",
-		"residency": "Резиденція",
-		"special-immigrant-juvenile-status-sijs": "Спеціальний статус неповнолітніх іммігрантів (SIJS)",
-		"t-visa": "T віза",
-		"u-visa": "U віза"
+		"CATEGORYNAME": "Legal",
+		"asylum-application": "Asylum application",
+		"citizenship": "Citizenship",
+		"crime-and-discrimination": "Crime and discrimination",
+		"deferred-action-for-childhood-arrivals-daca": "Deferred Action for Childhood Arrivals (DACA)",
+		"deportation-or-removal": "Deportation or removal",
+		"employment-authorization": "Employment authorization",
+		"family-petitions": "Family petitions",
+		"immigration-detention": "Immigration detention",
+		"legal-advice": "Legal advice",
+		"legal-hotlines": "Legal hotlines",
+		"name-and-gender-change": "Name and gender change",
+		"refugee-claim": "Refugee claim",
+		"residency": "Residency",
+		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
 	"mail": {
-		"CATEGORYNAME": "Пошта",
-		"mail": "Пошта"
+		"CATEGORYNAME": "Mail",
+		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "Медичний",
-		"covid-19-services": "Послуги COVID-19",
-		"dental-care": "Стоматологічна допомога",
-		"hiv-and-sexual-health": "ВІЛ і сексуальне здоров'я",
-		"medical-clinics": "Медичні клініки",
-		"obgyn-services": "Послуги акушерської гінекології",
-		"physical-evaluations-for-asylum-claim": "Фізичні оцінки для заяви про притулок",
-		"physical-evaluations-for-refugee-claim": "Фізичні оцінки для заяви про біженців",
-		"trans-health": "Транс здоров'я",
-		"trans-health-gender-affirming-surgery": "Trans health - гендерна підтверджуюча хірургія",
-		"trans-health-hormone-and-surgery-letters": "Транс-здоров'я - гормони та хірургічні листи",
-		"trans-health-hormone-therapy": "Транс здоров'я - гормональна терапія",
-		"trans-health-primary-care": "Trans health - первинна медична допомога",
-		"trans-health-speech-therapy": "Транс здоров'я - логопедія"
+		"CATEGORYNAME": "Medical",
+		"covid-19-services": "COVID-19 services",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV and sexual health",
+		"medical-clinics": "Medical clinics",
+		"obgyn-services": "OBGYN services",
+		"physical-evaluations-for-asylum-claim": "Physical evaluations for asylum claim",
+		"physical-evaluations-for-refugee-claim": "Physical evaluations for refugee claim",
+		"trans-health": "Trans health",
+		"trans-health-gender-affirming-surgery": "Trans health - gender affirming surgery",
+		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
+		"trans-health-hormone-therapy": "Trans health - hormone therapy",
+		"trans-health-primary-care": "Trans health - primary care",
+		"trans-health-speech-therapy": "Trans health - speech therapy"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Психічне здоров'я",
-		"bipoc-support-groups": "Групи підтримки BIPOC",
-		"hotlines": "Гарячі лінії",
-		"private-therapy-and-counseling": "Приватна терапія та консультування",
-		"psychological-evaluations-for-asylum-claim": "Психологічні оцінки для заяви про притулок",
-		"psychological-evaluations-for-refugee-claim": "Психологічні оцінки для заяви про біженця",
-		"substance-use": "Вживання речовин",
-		"support-for-caregivers-of-trans-youth": "Підтримка вихователів транс-молоді",
-		"support-for-conversion-therapy-survivors": "Підтримка вижили конверсійної терапії",
-		"support-groups": "Групи підтримки",
-		"trans-support-groups": "Групи підтримки транс"
+		"CATEGORYNAME": "Mental Health",
+		"bipoc-support-groups": "BIPOC support groups",
+		"hotlines": "Hotlines",
+		"private-therapy-and-counseling": "Private therapy and counseling",
+		"psychological-evaluations-for-asylum-claim": "Psychological evaluations for asylum claim",
+		"psychological-evaluations-for-refugee-claim": "Psychological evaluations for refugee claim",
+		"substance-use": "Substance use",
+		"support-for-caregivers-of-trans-youth": "Support for caregivers of trans youth",
+		"support-for-conversion-therapy-survivors": "Support for conversion therapy survivors",
+		"support-groups": "Support groups",
+		"trans-support-groups": "Trans support groups"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Розваги та розваги",
+		"CATEGORYNAME": "Entertainment and Activities",
 		"art-music-literature": "Мистецтво, музика та література",
-		"sports-and-entertainment": "Спорт і розваги"
+		"sports-and-entertainment": "Sports and entertainment"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Переклад і усний переклад",
-		"for-healthcare": "Для охорони здоров'я",
-		"for-legal-services": "Для юридичних послуг",
-		"general-translation-and-interpretation": "Загальний переклад та усний переклад"
+		"CATEGORYNAME": "Translation and Interpretation",
+		"for-healthcare": "For healthcare",
+		"for-legal-services": "For legal services",
+		"general-translation-and-interpretation": "General translation and interpretation"
 	},
 	"transportation": {
-		"CATEGORYNAME": "Перевезення",
-		"transit-passes-and-discounts": "Транзитні абонементи та знижки",
-		"transportation-assistance": "Допомога в транспорті"
+		"CATEGORYNAME": "Transportation",
+		"transit-passes-and-discounts": "Transit passes and discounts",
+		"transportation-assistance": "Transportation assistance"
 	}
 }
