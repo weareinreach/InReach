@@ -1,37 +1,37 @@
 {
 	"body": {
-		"accept-country": "Tanpri sonje ke nou ka sèlman aksepte òganizasyon ki sitiye nan peyi Etazini an, Meksik, ak Kanada nan moman sa a.",
-		"additional-info": "Lòt enfòmasyon",
-		"intro-text": "Mèsi pou enterè ou nan kontribye nan App a InReach! Sèvi ak fòm sa a sijere yon òganizasyon (egzanp ONG, de baz oswa òganizasyon kominotè, sistèm swen sante, pratik prive, elatriye) ou panse yo ta dwe enkli. Li ok si ou pa gen tout enfòmasyon fòm nan mande pou - jis ranpli nan sa ou konnen, epi nou pral fè rès la! Nou apresye soumèt ou epi di ou mèsi pou ede ogmante aksè a resous san danje, verifye pou divès kominote LGBTQ+la. Tout òganizasyon sijere yo sijè a revize pa volontè ki resevwa fòmasyon InReach a anvan piblikasyon sou InReach.",
-		"required-info": "Enfòmasyon obligatwa",
-		"subject-review": "Tout òganizasyon sijere yo sijè a revize pa InReach anvan piblikasyon.",
-		"suggest-org": "Sijere yon òganizasyon"
+		"accept-country": "Please note that we can only accept organizations located in the U.S., Mexico, and Canada at this time.",
+		"additional-info": "Additional information",
+		"intro-text": "Thank you for your interest in contributing to the InReach App! Use this form to suggest an organization (e.g. nonprofits, grassroots or community organizations, healthcare systems, private practice, etc.) you think should be included. It's ok if you do not have all of the information the form asks for - just fill in what you know, and we'll do the rest! We appreciate your submission and thank you for helping to increase access to safe, verified resources for the diverse LGBTQ+ community. All suggested organizations are subject to review by InReach's trained volunteers before publication on InReach.",
+		"required-info": "Required information",
+		"subject-review": "All suggested organizations are subject to review by InReach before publication.",
+		"suggest-org": "Suggest an organization"
 	},
 	"form": {
-		"btn-community": "Ajoute LGBTQ+konsantre kominote (yo)",
-		"btn-save-changes": "Sove chanjman",
-		"btn-service": "Ajoute kalite sèvis (yo)",
-		"btn-submit": "Soumèt nouvo òganizasyon",
-		"community-focus": "Èske òganizasyon sa a bay sèvis (yo) konsantre sou kominote espesifik LGBTQ+?",
-		"error-exists-active": "<Link>{{org}}</Link> deja ki nan lis sou InReach. Tanpri itilize sèlman fòm sa a pou sijere nouvo òganizasyon yo.",
-		"error-exists-dismiss": "<Dismiss>Klike la a si sa a se yon òganizasyon diferan.</Dismiss>",
-		"error-exists-inactive": "<Link>{{org}}</Link> te deja sijere. Ekip nou an se swa toujou verifye enfòmasyon oswa òganizasyon sa a pa t 'satisfè tout kondisyon nou yo.",
-		"org-address": "Adrès òganizasyon an",
-		"org-country": "Nan ki peyi se òganizasyon an ki sitiye?",
-		"org-name": "Non òganizasyon an",
-		"org-website": "Sit wèb òganizasyon",
-		"placeholder-address": "Antre nan adrès...",
-		"placeholder-name": "Mete non òganizasyon...",
-		"placeholder-website": "Antre URL...",
-		"service-types": "Ki kalite (yo) nan sèvis (yo) òganizasyon sa a bay?"
+		"btn-community": "Add LGBTQ+ community focus(es)",
+		"btn-save-changes": "Save changes",
+		"btn-service": "Add service type(s)",
+		"btn-submit": "Submit new organization",
+		"community-focus": "Does this organization provide service(s) focused on specific LGBTQ+ communities?",
+		"error-exists-active": "<Link>{{org}}</Link> is already listed on InReach. Please only use this form to suggest new organizations.",
+		"error-exists-dismiss": "<Dismiss>Click here if this is a different organization.</Dismiss>",
+		"error-exists-inactive": "<Link>{{org}}</Link> has already been suggested. Our team are either still verifying information or this organization did not meet all of our requirements.",
+		"org-address": "Organization address",
+		"org-country": "In what country is the organization located?",
+		"org-name": "Organization name",
+		"org-website": "Organization website",
+		"placeholder-address": "Enter address...",
+		"placeholder-name": "Enter organization name...",
+		"placeholder-website": "Enter URL...",
+		"service-types": "What type(s) of service(s) does this organization provide?"
 	},
 	"modal": {
-		"community-sub": "Èske òganizasyon sa a bay sèvis (yo) konsantre sou kominote espesifik LGBTQ+? Tanpri chwazi tout sa ki aplike.",
-		"community-title": "LGBTQ+konsantre kominote (yo)",
-		"dismiss": "Ranvwaye",
-		"service-types-sub": "Ki kalite (yo) nan sèvis (yo) òganizasyon sa a bay? Tanpri chwazi tout sa ki aplike.",
-		"service-types-title": "Kalite sèvis yo",
-		"thank-you": "Mèsi pou soumèt {{org}}!",
-		"thank-you-sub": "Ekip nou an pral revize soumèt ou, verifye enfòmasyon an, epi pibliye òganizasyon an sou InReach si li satisfè kritè nou yo."
+		"community-sub": "Does this organization provide service(s) focused on specific LGBTQ+ communities? Please select all that apply.",
+		"community-title": "LGBTQ+ community focus(es)",
+		"dismiss": "Dismiss",
+		"service-types-sub": "What type(s) of service(s) does this organization provide? Please select all that apply.",
+		"service-types-title": "Service types",
+		"thank-you": "Thank you for submitting {{org}}!",
+		"thank-you-sub": "Our team will review your submission, verify the information, and publish the organization on InReach if it meets our criteria."
 	}
 }
