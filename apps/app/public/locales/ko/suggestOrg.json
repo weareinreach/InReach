@@ -1,37 +1,37 @@
 {
 	"body": {
-		"accept-country": "현재 미국, 멕시코 및 캐나다에 위치한 조직만 수락할 수 있다는 점을 참고하십시오.",
-		"additional-info": "추가 정보",
-		"intro-text": "inReach 앱에 기여하는 데 관심을 가져주셔서 감사합니다!이 양식을 사용하여 포함되어야 한다고 생각하는 조직 (예: 비영리 단체, 풀뿌리 또는 지역사회 단체, 의료 시스템, 민간 진료 등) 을 제안하십시오.양식에서 요구하는 모든 정보가 없어도 괜찮습니다. 알고 있는 내용만 입력하면 나머지는 저희가 처리해 드리겠습니다!제출해 주셔서 감사합니다. 다양한 LGBTQ+ 커뮤니티를 위해 안전하고 검증된 리소스에 대한 접근성을 높이는 데 도움을 주셔서 감사합니다.제안된 모든 단체는 inReach에 게시되기 전에 inReach의 숙련된 자원 봉사자의 검토를 거쳐야 합니다.",
-		"required-info": "필수 정보",
-		"subject-review": "제안된 모든 조직은 출판 전에 inReach의 검토를 거쳐야 합니다.",
-		"suggest-org": "조직 제안하기"
+		"accept-country": "Please note that we can only accept organizations located in the U.S., Mexico, and Canada at this time.",
+		"additional-info": "Additional information",
+		"intro-text": "Thank you for your interest in contributing to the InReach App! Use this form to suggest an organization (e.g. nonprofits, grassroots or community organizations, healthcare systems, private practice, etc.) you think should be included. It's ok if you do not have all of the information the form asks for - just fill in what you know, and we'll do the rest! We appreciate your submission and thank you for helping to increase access to safe, verified resources for the diverse LGBTQ+ community. All suggested organizations are subject to review by InReach's trained volunteers before publication on InReach.",
+		"required-info": "Required information",
+		"subject-review": "All suggested organizations are subject to review by InReach before publication.",
+		"suggest-org": "Suggest an organization"
 	},
 	"form": {
-		"btn-community": "LGBTQ+ 커뮤니티 포커스 추가",
-		"btn-save-changes": "변경 내용 저장",
-		"btn-service": "서비스 유형 추가",
-		"btn-submit": "새 조직 제출",
-		"community-focus": "이 조직은 특정 LGBTQ+ 커뮤니티에 초점을 맞춘 서비스를 제공합니까?",
+		"btn-community": "Add LGBTQ+ community focus(es)",
+		"btn-save-changes": "Save changes",
+		"btn-service": "Add service type(s)",
+		"btn-submit": "Submit new organization",
+		"community-focus": "Does this organization provide service(s) focused on specific LGBTQ+ communities?",
 		"error-exists-active": "<Link>{{org}}</Link> is already listed on InReach. Please only use this form to suggest new organizations.",
-		"error-exists-dismiss": "<Dismiss>다른 조직인 경우 여기를 클릭하십시오.</Dismiss>",
+		"error-exists-dismiss": "<Dismiss>Click here if this is a different organization.</Dismiss>",
 		"error-exists-inactive": "<Link>{{org}}</Link> has already been suggested. Our team are either still verifying information or this organization did not meet all of our requirements.",
-		"org-address": "조직 주소",
-		"org-country": "조직은 어느 국가에 위치해 있습니까?",
-		"org-name": "조직 이름",
-		"org-website": "조직 웹 사이트",
-		"placeholder-address": "주소 입력...",
-		"placeholder-name": "조직 이름 입력...",
-		"placeholder-website": "URL 입력...",
-		"service-types": "이 조직은 어떤 유형의 서비스를 제공합니까?"
+		"org-address": "Organization address",
+		"org-country": "In what country is the organization located?",
+		"org-name": "Organization name",
+		"org-website": "Organization website",
+		"placeholder-address": "Enter address...",
+		"placeholder-name": "Enter organization name...",
+		"placeholder-website": "Enter URL...",
+		"service-types": "What type(s) of service(s) does this organization provide?"
 	},
 	"modal": {
-		"community-sub": "이 조직은 특정 LGBTQ+ 커뮤니티에 초점을 맞춘 서비스를 제공합니까?해당하는 항목을 모두 선택하십시오.",
-		"community-title": "LGBTQ+ 커뮤니티 포커스",
-		"dismiss": "버리다",
-		"service-types-sub": "이 조직은 어떤 유형의 서비스를 제공합니까?해당하는 항목을 모두 선택하십시오.",
-		"service-types-title": "서비스 유형",
+		"community-sub": "Does this organization provide service(s) focused on specific LGBTQ+ communities? Please select all that apply.",
+		"community-title": "LGBTQ+ community focus(es)",
+		"dismiss": "Dismiss",
+		"service-types-sub": "What type(s) of service(s) does this organization provide? Please select all that apply.",
+		"service-types-title": "Service types",
 		"thank-you": "Thank you for submitting {{org}}!",
-		"thank-you-sub": "우리 팀은 제출물을 검토하고 정보를 확인한 다음 기준을 충족하는 경우 inReach에 조직을 게시합니다."
+		"thank-you-sub": "Our team will review your submission, verify the information, and publish the organization on InReach if it meets our criteria."
 	}
 }
