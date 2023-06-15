@@ -1,43 +1,43 @@
 {
 	"banner": {
-		"redesign": "Basahin ang tungkol sa paglulunsad ng muling idisenyo ng inReach App sa aming blog. <Link>Matuto nang higit pa.</Link>"
+		"redesign": "Read about the launch of the InReach App redesign on our blog. <Link>Learn more.</Link>"
 	},
 	"call-out": {
-		"hear-from-users": "<Title1>Pakinggan mula sa aming mga gumagamit</Title1>",
-		"who-we-are": "<Title1>Sino tayo</Title1>\n<Text>Kami ay isang trans-led tech na hindi pangkalakal na pagtaas ng pag-access sa mapagkukunan para sa magkakaibang komunidad ng LGBTQ +.</Text>\n<Link>Matuto nang higit pa tungkol sa amin.</Link>"
+		"hear-from-users": "<Title1>Hear from our users</Title1>",
+		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led tech nonprofit increasing resource access for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
 	},
 	"hero": {
 		"community": {
-			"0": "Mga naghahanap ng pagpapakupkop laban sa LGBTQ+",
-			"1": "Mga imigrante ng LGBTQ+",
-			"2": "Mga refugee ng LGBTQ+",
-			"3": "LGBTQ+kabataan",
-			"4": "ang komunidad ng transgender",
-			"5": "Mga pamayanan ng LGBTQ+BIPOC",
-			"6": "tagapag-alaga ng kabataan ng LGBTQ+"
+			"0": "LGBTQ+ asylum seekers",
+			"1": "LGBTQ+ immigrants",
+			"2": "LGBTQ+ refugees",
+			"3": "LGBTQ+ youth",
+			"4": "the transgender community",
+			"5": "LGBTQ+ BIPOC communities",
+			"6": "caregivers of LGBTQ+ youth"
 		},
-		"find-resources": "<Text>Hanapin ang na-verify na </Text><Service></Service><Text> para sa </Text><Community></Community><Text> kasama ang inReach.</Text>",
-		"heading": "Maghanap ng mga mapagkukunan ng LGBTQ +.",
-		"privacy-disclaimer": "Ang iyong sagot ay hindi nakikilalang at hindi nakakonekta sa iyo bilang isang indibidwal na gumagamit. Basahin ang aming <Link>patakaran sa privacy</Link> upang matuto nang higit pa.",
+		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"heading": "Find LGBTQ+ resources.",
+		"privacy-disclaimer": "Your answer is anonymous and not connected to you as an individual user. Read our <Link>privacy policy</Link> to learn more.",
 		"services": {
-			"0": "pangangalagang medikal",
-			"1": "suporta sa komunidad",
-			"2": "pangangalaga sa kalusugan ng isip",
-			"3": "edukasyon",
-			"4": "trabaho",
-			"5": "pagkain",
-			"6": "pabahay",
-			"7": "damit",
-			"8": "legal na tulong",
-			"9": "pagsasalin"
+			"0": "medical care",
+			"1": "community support",
+			"2": "mental health care",
+			"3": "education",
+			"4": "employment",
+			"5": "food",
+			"6": "housing",
+			"7": "clothing",
+			"8": "legal help",
+			"9": "translation"
 		},
-		"subheading": "Maligayang pagdating sa unang tech platform sa buong mundo na tumutugma sa TLGBQ+ (transgender, lesbian, gay, bisexual, queer at higit pang mga pagkakakilanlan) ang mga taong nahaharap sa pag-uusig o diskriminasyon na may ligtas, na-verify na mapagkukunan."
+		"subheading": "Welcome to the world's first tech platform matching TLGBQ+ (transgender, lesbian, gay, bisexual, queer and more identities) people facing persecution or discrimination with safe, verified resources."
 	},
 	"values": {
-		"free": "<Title2>Libre magpakailanman 🔑</Title2>\n<Text>Ang aming tech platform ay 100% libre para sa lahat upang matiyak na ang ligtas na tulong ay palaging inReach.</Text>\n<LinkFree>Mag-donate upang matulungan kaming panatilihing libre ang aming platform.</LinkFree>",
-		"innovative": "<Title2>Makabagong ✨</Title2>\n<Text>Kami ang unang tech platform sa buong mundo na tumutugma sa LGBTQ+mga taong nahaharap sa pag-uusig o diskriminasyon na may ligtas, nakapag-iisa na napatunayan na mga mapagkukunan.</Text>\n<LinkInnovative>Tingnan ang aming source code at mag-ambag.</LinkInnovative>",
-		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>Naniniwala kami na ang pagkakapantay-pantay ng LGBTQ+ay nangangailangan ng hustisya ng trans, hustisya sa refugee, hustisya sa lahi, hustisya sa reproduktibo, hustisya sa wika at marami pa.</Text>\n<LinkIntersect>Matuto nang higit pa tungkol sa aming proseso ng pag-vetting.</LinkIntersect>",
-		"our-values": "Ang aming mga halaga",
-		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>Alam namin na ang online anonymity ay maaaring maging isang isyu sa buhay-o-kamatayan para sa mga taong LGBTQ +. Iyon ang dahilan kung bakit ang aming App ay dinisenyo upang protektahan ang pagiging kompidensiyal at kaligtasan ng mga gumagamit sa online.</Text>\n<LinkSafety>Matuto nang higit pa tungkol sa aming patakaran sa privacy.</LinkSafety>"
+		"free": "<Title2>Free forever 🔑</Title2>\n<Text>Our tech platform is 100% free for everyone to ensure safe help is always InReach.</Text>\n<LinkFree>Donate to help us to keep our platform free.</LinkFree>",
+		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, independently verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice and more.</Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
+		"our-values": "Our values",
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
 	}
 }
