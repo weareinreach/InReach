@@ -1,0 +1,124 @@
+{
+	"abortion-care": {
+		"CATEGORYNAME": "Aborsie sorg",
+		"abortion-providers": "Aborsie verskaffers",
+		"financial-assistance": "Finansiële bystand",
+		"lodging-assistance": "Verblyf hulp",
+		"mail-order-services": "Posbestelling dienste",
+		"mental-health-support": "Ondersteuning vir geestesgesondheid",
+		"travel-assistance": "Reisbystand"
+	},
+	"community-support": {
+		"CATEGORYNAME": "Gemeenskapsondersteuning",
+		"community-social-groups": "Gemeenskap en sosiale groepe",
+		"cultural-centers": "Kulturele sentrums",
+		"lgbtq-centers": "LGBTQ sentrums",
+		"reception-services": "Ontvangs dienste",
+		"reentry-services": "Re-entry dienste",
+		"spiritual-support": "Geestelike ondersteuning",
+		"sponsors": "Immigrasie borgskap"
+	},
+	"computers-and-internet": {
+		"CATEGORYNAME": "Rekenaars en Internet",
+		"computers-and-internet": "Rekenaars en internet"
+	},
+	"education-and-employment": {
+		"CATEGORYNAME": "Onderwys en indiensneming",
+		"career-counseling": "Loopbaanberading",
+		"educational-support-for-lgbtq-youth": "Opvoedkundige ondersteuning vir LGBTQ-jeug",
+		"english-classes": "Engelse klasse",
+		"language-classes": "Taal klasse",
+		"leadership-training-and-professional-development": "Leierskapopleiding en professionele ontwikkeling",
+		"libraries": "Biblioteke",
+		"scholarships": "Beurse"
+	},
+	"food": {
+		"CATEGORYNAME": "Kos",
+		"food": "Kos",
+		"food-assistance": "Voedselbystand"
+	},
+	"housing": {
+		"CATEGORYNAME": "Behuising",
+		"drop-in-centers-for-lgbtq-youth": "Inloopsentrums vir LGBTQ-jeug",
+		"emergency-housing": "Nood behuising",
+		"housing-information-and-referrals": "Behuising inligting en verwysings",
+		"short-term-housing": "Korttermyn behuising",
+		"trans-housing": "Trans behuising"
+	},
+	"hygiene-and-clothing": {
+		"CATEGORYNAME": "Higiëne en klere",
+		"clothes": "Klere",
+		"gender-affirming-items": "Geslagsbevestigende items",
+		"gender-neutral-bathrooms": "Geslagsneutrale badkamers",
+		"haircuts-and-stylists": "Haarsny en stiliste",
+		"hygiene": "higiëne"
+	},
+	"legal": {
+		"CATEGORYNAME": "Wetlike",
+		"asylum-application": "Asiel aansoek",
+		"citizenship": "Burgerskap",
+		"crime-and-discrimination": "Misdaad en diskriminasie",
+		"deferred-action-for-childhood-arrivals-daca": "Uitgestelde aksie vir kinderjare aankomste (DACA)",
+		"deportation-or-removal": "Deportasie of verwydering",
+		"employment-authorization": "indiensneming magtiging",
+		"family-petitions": "Familie petisies",
+		"immigration-detention": "Immigrasie aanhouding",
+		"legal-advice": "Regsadvies",
+		"legal-hotlines": "Wetlike blitslyne",
+		"name-and-gender-change": "Naam en geslagsverandering",
+		"refugee-claim": "Vlugtelinge eis",
+		"residency": "Koshuis",
+		"special-immigrant-juvenile-status-sijs": "Spesiale immigrant jeugdige status (SIJS)",
+		"t-visa": "T visum",
+		"u-visa": "U visum"
+	},
+	"mail": {
+		"CATEGORYNAME": "Mail",
+		"mail": "Mail"
+	},
+	"medical": {
+		"CATEGORYNAME": "Mediese",
+		"covid-19-services": "COVID-19 dienste",
+		"dental-care": "Tandheelkundige sorg",
+		"hiv-and-sexual-health": "MIV en seksuele gesondheid",
+		"medical-clinics": "Mediese klinieke",
+		"obgyn-services": "OBGYN dienste",
+		"physical-evaluations-for-asylum-claim": "Fisiese evaluerings vir asieleis",
+		"physical-evaluations-for-refugee-claim": "Fisiese evaluerings vir vlugtelingseis",
+		"trans-health": "Trans gesondheid",
+		"trans-health-gender-affirming-surgery": "Trans gesondheid - geslagsbevestigende chirurgie",
+		"trans-health-hormone-and-surgery-letters": "Trans gesondheid - hormoon en chirurgie briewe",
+		"trans-health-hormone-therapy": "Trans gesondheid - hormoonterapie",
+		"trans-health-primary-care": "Trans gesondheid - primêre sorg",
+		"trans-health-speech-therapy": "Trans gesondheid - spraakterapie"
+	},
+	"mental-health": {
+		"CATEGORYNAME": "Geestesgesondheid",
+		"bipoc-support-groups": "BIPOC ondersteuningsgroepe",
+		"hotlines": "Blitslyne",
+		"private-therapy-and-counseling": "Privaat terapie en berading",
+		"psychological-evaluations-for-asylum-claim": "Sielkundige evaluerings vir asieleis",
+		"psychological-evaluations-for-refugee-claim": "Sielkundige evaluerings vir vlugtelingeis",
+		"substance-use": "Stof gebruik",
+		"support-for-caregivers-of-trans-youth": "Ondersteuning vir versorgers van trans jeug",
+		"support-for-conversion-therapy-survivors": "Ondersteuning vir omskakelingsterapie-oorlewendes",
+		"support-groups": "Ondersteuningsgroepe",
+		"trans-support-groups": "Trans ondersteuningsgroepe"
+	},
+	"sports-and-entertainment": {
+		"CATEGORYNAME": "Vermaak en aktiwiteite",
+		"art-music-literature": "Kuns, musiek en letterkunde",
+		"sports-and-entertainment": "Sport en vermaak"
+	},
+	"translation-and-interpretation": {
+		"CATEGORYNAME": "Vertaling en interpretasie",
+		"for-healthcare": "Vir gesondheidsorg",
+		"for-legal-services": "Vir regsdienste",
+		"general-translation-and-interpretation": "Algemene vertaling en interpretasie"
+	},
+	"transportation": {
+		"CATEGORYNAME": "Vervoer",
+		"transit-passes-and-discounts": "Transit-passe en afslag",
+		"transportation-assistance": "Vervoer bystand"
+	}
+}
