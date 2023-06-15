@@ -1,11 +1,11 @@
 {
 	"body": {
 		"accept-country": "現時点では、米国、メキシコ、カナダに所在する組織のみを受け入れることができますのでご注意ください。",
-		"additional-info": "追加情報",
+		"additional-info": "Additional information",
 		"intro-text": "inReachアプリへの貢献に関心をお寄せいただきありがとうございます！このフォームを使用して、参加すべきと思われる組織（非営利団体、草の根組織、コミュニティ組織、医療制度、個人開業など）を提案してください。フォームに必要な情報がすべて揃っていなくても問題ありません。知っていることを記入していただければ、あとは私たちが行います。ご提出いただきありがとうございます。また、多様なLGBTQ+コミュニティの安全で検証済みのリソースへのアクセスを増やすためにご協力いただきありがとうございます。提案されたすべての組織は、InReachに掲載される前にInReachの訓練を受けたボランティアによる審査の対象となります。",
 		"required-info": "必要な情報",
 		"subject-review": "提案されたすべての組織は、公開前にInReachによる審査の対象となります。",
-		"suggest-org": "組織を提案してください"
+		"suggest-org": "Suggest an organization"
 	},
 	"form": {
 		"btn-community": "LGBTQ+ コミュニティフォーカスを追加",
@@ -21,7 +21,7 @@
 		"org-name": "組織名",
 		"org-website": "組織のウェブサイト",
 		"placeholder-address": "住所を入力...",
-		"placeholder-name": "組織名を入力...",
+		"placeholder-name": "Enter organization name...",
 		"placeholder-website": "URL を入力...",
 		"service-types": "この組織はどのようなサービスを提供していますか？"
 	},
