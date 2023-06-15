@@ -1,43 +1,43 @@
 {
 	"banner": {
-		"redesign": "블로그에서 inReach 앱 재설계 출시에 대해 읽어보세요. <Link>자세히 알아보기.</Link>"
+		"redesign": "Read about the launch of the InReach App redesign on our blog. <Link>Learn more.</Link>"
 	},
 	"call-out": {
-		"hear-from-users": "<Title1>사용자 의견 듣기</Title1>",
-		"who-we-are": "<Title1>우리는 누구인가</Title1>\n<Text>우리는 다양한 LGBTQ+ 커뮤니티를 위한 리소스 접근성을 높이는 트랜스젠더 주도의 기술 비영리 단체입니다.</Text>\n<Link>우리에 대해 자세히 알아보십시오.</Link>"
+		"hear-from-users": "<Title1>Hear from our users</Title1>",
+		"who-we-are": "<Title1>Who we are</Title1>\n<Text>We are a trans-led tech nonprofit increasing resource access for the diverse LGBTQ+ community.</Text>\n<Link>Learn more about us.</Link>"
 	},
 	"hero": {
 		"community": {
-			"0": "LGBTQ+ 망명 신청자",
-			"1": "성소수자 (LGBTQ+) 이민자",
-			"2": "LGBTQ+ 난민",
-			"3": "LGBTQ+ 청소년",
-			"4": "트랜스젠더 커뮤니티",
-			"5": "LGBTQ+ BIPOC 커뮤니티",
-			"6": "LGBTQ+ 청소년을 돌보는 사람"
+			"0": "LGBTQ+ asylum seekers",
+			"1": "LGBTQ+ immigrants",
+			"2": "LGBTQ+ refugees",
+			"3": "LGBTQ+ youth",
+			"4": "the transgender community",
+			"5": "LGBTQ+ BIPOC communities",
+			"6": "caregivers of LGBTQ+ youth"
 		},
 		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
-		"heading": "LGBTQ+ 자료를 찾아보세요.",
+		"heading": "Find LGBTQ+ resources.",
 		"privacy-disclaimer": "Your answer is anonymous and not connected to you as an individual user. Read our <Link>privacy policy</Link> to learn more.",
 		"services": {
-			"0": "의료 치료",
-			"1": "커뮤니티 지원",
-			"2": "정신 건강 관리",
-			"3": "교육",
-			"4": "고용",
-			"5": "음식",
-			"6": "주택",
-			"7": "의류",
-			"8": "법률 지원",
-			"9": "번역"
+			"0": "medical care",
+			"1": "community support",
+			"2": "mental health care",
+			"3": "education",
+			"4": "employment",
+			"5": "food",
+			"6": "housing",
+			"7": "clothing",
+			"8": "legal help",
+			"9": "translation"
 		},
-		"subheading": "박해나 차별에 직면한 TLGBQ+ (트랜스젠더, 레즈비언, 게이, 양성애자, 퀴어 등) 사람들을 안전하고 검증된 리소스와 매칭하는 세계 최초의 기술 플랫폼에 오신 것을 환영합니다."
+		"subheading": "Welcome to the world's first tech platform matching TLGBQ+ (transgender, lesbian, gay, bisexual, queer and more identities) people facing persecution or discrimination with safe, verified resources."
 	},
 	"values": {
-		"free": "<Title2>Free Forever 🔑</Title2>\n<Text>당사의 기술 플랫폼은 누구나 100% 무료로 제공되므로 항상 inReach에서 안전한 도움을 받을 수 있습니다.</Text>\n<LinkFree>플랫폼을 무료로 유지할 수 있도록 기부해 주세요.</LinkFree>",
-		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>우리는 박해나 차별에 직면한 LGBTQ+ 사람들을 안전하고 독립적으로 검증된 리소스와 연결하는 세계 최초의 기술 플랫폼입니다.</Text>\n<LinkInnovative>우리의 소스 코드를 보고 기여하세요.</LinkInnovative>",
-		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>우리는 LGBTQ+ 평등을 위해서는 트랜스 정의, 난민 정의, 인종 정의, 생식 정의, 언어 정의 등이 필요하다고 믿습니다.</Text>\n<LinkIntersect>심사 절차에 대해 자세히 알아보십시오.</LinkIntersect>",
-		"our-values": "우리의 가치",
-		"safety-first": "<Title2>안전 우선 🔒</Title2>\n<Text>우리는 온라인 익명성이 LGBTQ+ 사람들에게 삶과 죽음의 문제가 될 수 있다는 것을 알고 있습니다.이것이 바로 우리 앱이 사용자의 온라인 기밀과 안전을 보호하도록 설계된 이유입니다.</Text>\n<LinkSafety>개인 정보 보호 정책에 대해 자세히 알아보십시오.</LinkSafety>"
+		"free": "<Title2>Free forever 🔑</Title2>\n<Text>Our tech platform is 100% free for everyone to ensure safe help is always InReach.</Text>\n<LinkFree>Donate to help us to keep our platform free.</LinkFree>",
+		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, independently verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice and more.</Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
+		"our-values": "Our values",
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
 	}
 }
