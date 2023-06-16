@@ -201,7 +201,7 @@
 		"demonym_other": "جزایر کوکوس"
 	},
 	"CHE": {
-		"name": "Switzerland",
+		"name": "سوئیس",
 		"demonym_one": "سوئیس",
 		"demonym_other": "سوئیس"
 	},
@@ -401,7 +401,7 @@
 		"demonym_other": "گرجی ها"
 	},
 	"GGY": {
-		"name": "Guernsey",
+		"name": "گرنزی",
 		"demonym_one": "جزیره کانال",
 		"demonym_other": "رده: جزیره‌نشینان کانال"
 	},
@@ -446,7 +446,7 @@
 		"demonym_other": "يوناني ها"
 	},
 	"GRD": {
-		"name": "Grenada",
+		"name": "گرانادا",
 		"demonym_one": "گرنادا",
 		"demonym_other": "گرنادیایی‌ها"
 	},
@@ -559,7 +559,7 @@
 		"demonym_other": "جامایکان"
 	},
 	"JEY": {
-		"name": "Jersey",
+		"name": "جرسی",
 		"demonym_one": "جزیره کانال",
 		"demonym_other": "رده: جزیره‌نشینان کانال"
 	},
@@ -619,7 +619,7 @@
 		"demonym_other": "لائوتی‌ها"
 	},
 	"LBN": {
-		"name": "Lebanon",
+		"name": "لبنان",
 		"demonym_one": "لبنانی",
 		"demonym_other": "لبنانی"
 	},
@@ -894,7 +894,7 @@
 		"demonym_other": "جلا"
 	},
 	"PRI": {
-		"name": "Puerto Rico",
+		"name": "رده: پورتو ریکو",
 		"demonym_one": "پورتوریکویی",
 		"demonym_other": "پورتوریکویی"
 	},
