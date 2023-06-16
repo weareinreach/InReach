@@ -1,0 +1,1244 @@
+{
+	"ABW": {
+		"name": "अरूबा",
+		"demonym_one": "अरूबाई",
+		"demonym_other": "अरूबन्स"
+	},
+	"AFG": {
+		"name": "अफगानिस्तान",
+		"demonym_one": "अफगान",
+		"demonym_other": "अफगानवासी"
+	},
+	"AGO": {
+		"name": "अंगोला",
+		"demonym_one": "अंगोला",
+		"demonym_other": "अंगोला"
+	},
+	"AIA": {
+		"name": "एंगुइला",
+		"demonym_one": "एंगुइलियन",
+		"demonym_other": "एंगुइलियंस"
+	},
+	"ALA": {
+		"name": "आलैंड द्वीपसमूह",
+		"demonym_one": "ऑलैंडिश",
+		"demonym_other": "ऑलैंडर्स"
+	},
+	"ALB": {
+		"name": "अल्बानिया",
+		"demonym_one": "अल्बानियाई",
+		"demonym_other": "अल्बानियाई"
+	},
+	"AND": {
+		"name": "अंडोरा",
+		"demonym_one": "अन्डोरान",
+		"demonym_other": "अंडोरन्स"
+	},
+	"ARE": {
+		"name": "संयुक्त अरब अमीरात",
+		"demonym_one": "अमीराती",
+		"demonym_other": "एमिरेटिस"
+	},
+	"ARG": {
+		"name": "अर्जेंटीना",
+		"demonym_one": "अर्जेंटीना का रहनेवाला",
+		"demonym_other": "अर्जेंटीनावासी"
+	},
+	"ARM": {
+		"name": "आर्मेनिया",
+		"demonym_one": "अर्मेनियाई",
+		"demonym_other": "आर्मेनियाई"
+	},
+	"ASM": {
+		"name": "अमेरिकन समोआ",
+		"demonym_one": "अमेरिकन समोअन",
+		"demonym_other": "अमेरिकन समोअन"
+	},
+	"ATA": {
+		"name": "अंटार्कटिका",
+		"demonym_one": "अंटार्कटिका",
+		"demonym_other": "अंटार्कटिका"
+	},
+	"ATF": {
+		"name": "फ्रांसीसी दक्षिणी और अंटार्कटिक भूमि",
+		"demonym_one": "फ्रेंच",
+		"demonym_other": "फ्रेंच"
+	},
+	"ATG": {
+		"name": "एंटीगुआ और बारबूडा",
+		"demonym_one": "एंटीगुआन, बारबूडान",
+		"demonym_other": "एंटीगुआंस, बारबूडान"
+	},
+	"AUS": {
+		"name": "ऑस्ट्रेलिया",
+		"demonym_one": "ऑस्ट्रेलियाई",
+		"demonym_other": "आस्ट्रेलियाई"
+	},
+	"AUT": {
+		"name": "ऑस्ट्रिया",
+		"demonym_one": "ऑस्ट्रिया वासी",
+		"demonym_other": "ऑस्ट्रिया का निवासी"
+	},
+	"AZE": {
+		"name": "अजरबैजान",
+		"demonym_one": "आज़रबाइजानी",
+		"demonym_other": "Azerbaijanis"
+	},
+	"BDI": {
+		"name": "बुरुंडी",
+		"demonym_one": "बुरुन्डियन",
+		"demonym_other": "बुरुंडियंस"
+	},
+	"BEL": {
+		"name": "बेल्जियम",
+		"demonym_one": "बेल्जियन",
+		"demonym_other": "बेल्जियन"
+	},
+	"BEN": {
+		"name": "बेनिन",
+		"demonym_one": "बेनीनीज़",
+		"demonym_other": "बेनीनीज़"
+	},
+	"BES": {
+		"name": "कैरेबियन नीदरलैंड्स"
+	},
+	"BFA": {
+		"name": "बुर्किना फ़ासो",
+		"demonym_one": "बुर्किनाबे",
+		"demonym_other": "बुर्किना बेस"
+	},
+	"BGD": {
+		"name": "बांग्लादेश",
+		"demonym_one": "बांग्लादेशी",
+		"demonym_other": "बांग्लादेशियों"
+	},
+	"BGR": {
+		"name": "बुल्गारिया",
+		"demonym_one": "बल्गेरियाई",
+		"demonym_other": "बुल्गारियाई"
+	},
+	"BHR": {
+		"name": "बहरीन",
+		"demonym_one": "बहरीन",
+		"demonym_other": "बहरीन"
+	},
+	"BHS": {
+		"name": "बहामा",
+		"demonym_one": "बहामियन",
+		"demonym_other": "बहामियंस"
+	},
+	"BIH": {
+		"name": "बोस्निया और हर्जेगोविना",
+		"demonym_one": "बोस्नियाई, हर्ज़ेगोविनियन",
+		"demonym_other": "बोस्नियाई, हर्जेगोविनियन"
+	},
+	"BLM": {
+		"name": "सेंट बार्थेलेमी",
+		"demonym_one": "सेंट बार्थेलेमी आइलैंडर",
+		"demonym_other": "सेंट बार्थेलेमी आइलैंडर्स"
+	},
+	"BLR": {
+		"name": "बेलारूस",
+		"demonym_one": "बेलारूसी",
+		"demonym_other": "बेलारूसवासी"
+	},
+	"BLZ": {
+		"name": "बेलीज",
+		"demonym_one": "बेलिज़ियन",
+		"demonym_other": "बेलिज़ियन"
+	},
+	"BMU": {
+		"name": "बरमूडा",
+		"demonym_one": "बरमूडियन",
+		"demonym_other": "बरमूडियन्स"
+	},
+	"BOL": {
+		"name": "बोलीविया",
+		"demonym_one": "बोलीविया",
+		"demonym_other": "बोलिवियन"
+	},
+	"BRA": {
+		"name": "ब्राज़ील",
+		"demonym_one": "ब्राजील के",
+		"demonym_other": "ब्राज़िल का"
+	},
+	"BRB": {
+		"name": "बारबाडोस",
+		"demonym_one": "बारबाडियन",
+		"demonym_other": "बारबाडियन"
+	},
+	"BRN": {
+		"name": "ब्रुनेई",
+		"demonym_one": "ब्रुनेई",
+		"demonym_other": "ब्रुनेई"
+	},
+	"BTN": {
+		"name": "भूटान",
+		"demonym_one": "भूटानीज",
+		"demonym_other": "भूटानीज"
+	},
+	"BVT": {
+		"name": "बौवेट आइलैंड"
+	},
+	"BWA": {
+		"name": "बोत्सवाना",
+		"demonym_one": "मोत्सवाना",
+		"demonym_other": "बत्स्वाना"
+	},
+	"CAF": {
+		"name": "सेंट्रल अफ्रीकन रिपब्लिक",
+		"demonym_one": "मध्य अफ़्रीकी",
+		"demonym_other": "मध्य अफ़्रीकी"
+	},
+	"CAN": {
+		"name": "कनाडा",
+		"demonym_one": "कैनेडियन",
+		"demonym_other": "कनाडाई"
+	},
+	"CCK": {
+		"name": "कोकोस (कीलिंग) द्वीप",
+		"demonym_one": "कोकोस आइलैंडर",
+		"demonym_other": "कोकोस आइलैंडर्स"
+	},
+	"CHE": {
+		"name": "Switzerland",
+		"demonym_one": "स्विस",
+		"demonym_other": "स्विस"
+	},
+	"CHL": {
+		"name": "चिली",
+		"demonym_one": "चिली के",
+		"demonym_other": "चिली"
+	},
+	"CHN": {
+		"name": "चीन",
+		"demonym_one": "चीनी",
+		"demonym_other": "चीनी"
+	},
+	"CIV": {
+		"name": "आइवरी कोस्ट",
+		"demonym_one": "इवोरियन",
+		"demonym_other": "इवोरियन"
+	},
+	"CMR": {
+		"name": "कैमरून",
+		"demonym_one": "कैमरून का",
+		"demonym_other": "कैमरूनियन"
+	},
+	"COD": {
+		"name": "डीआर कांगो",
+		"demonym_one": "कांगो",
+		"demonym_other": "कांगो"
+	},
+	"COG": {
+		"name": "कांगो गणराज्य",
+		"demonym_one": "कांगो",
+		"demonym_other": "कांगो"
+	},
+	"COK": {
+		"name": "कुक आइलैंड्स",
+		"demonym_one": "कुक आइलैंडर",
+		"demonym_other": "कुक आइलैंडर्स"
+	},
+	"COL": {
+		"name": "कोलंबिया",
+		"demonym_one": "कोलम्बियाई",
+		"demonym_other": "कोलंबियाई"
+	},
+	"COM": {
+		"name": "कोमोरोज़",
+		"demonym_one": "कोमोरन",
+		"demonym_other": "कोमोरांस"
+	},
+	"CPV": {
+		"name": "केप वर्डे",
+		"demonym_one": "केप वर्डियन",
+		"demonym_other": "केप वर्डियन्स"
+	},
+	"CRI": {
+		"name": "कॉस्टा रीका",
+		"demonym_one": "कॉस्टा रीकन",
+		"demonym_other": "कोस्टा रिकन्स"
+	},
+	"CUB": {
+		"name": "क्यूबा",
+		"demonym_one": "क्यूबाई",
+		"demonym_other": "क्यूबाई"
+	},
+	"CUW": {
+		"name": "कुराकाओ",
+		"demonym_one": "डच",
+		"demonym_other": "डच"
+	},
+	"CXR": {
+		"name": "क्रिसमस आइलैंड",
+		"demonym_one": "क्रिसमस आइलैंडर",
+		"demonym_other": "क्रिसमस आइलैंडर्स"
+	},
+	"CYM": {
+		"name": "केमैन आइलैंड्स",
+		"demonym_one": "कैमेनियन",
+		"demonym_other": "केमैन"
+	},
+	"CYP": {
+		"name": "साइप्रस",
+		"demonym_one": "साइप्रसवासी",
+		"demonym_other": "Cypriots"
+	},
+	"CZE": {
+		"name": "चेकिया",
+		"demonym_one": "चेक",
+		"demonym_other": "चेक"
+	},
+	"DEU": {
+		"name": "जर्मनी",
+		"demonym_one": "जर्मन",
+		"demonym_other": "जर्मनों"
+	},
+	"DJI": {
+		"name": "जिबूती",
+		"demonym_one": "जिबूती",
+		"demonym_other": "जिबूती"
+	},
+	"DMA": {
+		"name": "डोमिनिका",
+		"demonym_one": "डोमिनिकन",
+		"demonym_other": "डोमिनिकन"
+	},
+	"DNK": {
+		"name": "डेनमार्क",
+		"demonym_one": "डेनमार्क निवासी",
+		"demonym_other": "डेनमार्क निवासी"
+	},
+	"DOM": {
+		"name": "डोमिनिकन गणराज्य",
+		"demonym_one": "डोमिनिकन",
+		"demonym_other": "डोमिनिकन"
+	},
+	"DZA": {
+		"name": "अल्जीरिया",
+		"demonym_one": "अल्जीरियाई",
+		"demonym_other": "अल्जीरिया"
+	},
+	"ECU": {
+		"name": "इक्वेडोर",
+		"demonym_one": "इक्वेडोर",
+		"demonym_other": "इक्वेडोर"
+	},
+	"EGY": {
+		"name": "मिस्र",
+		"demonym_one": "मिस्र वासी",
+		"demonym_other": "मिस्त्र निवासी"
+	},
+	"ERI": {
+		"name": "इरिट्रिया",
+		"demonym_one": "एरिट्रियन",
+		"demonym_other": "एरिट्रांस"
+	},
+	"ESH": {
+		"name": "पश्चिमी सहारा",
+		"demonym_one": "सहरावी",
+		"demonym_other": "सहराविस"
+	},
+	"ESP": {
+		"name": "स्पेन",
+		"demonym_one": "स्पेनिश",
+		"demonym_other": "स्पेनिश"
+	},
+	"EST": {
+		"name": "एस्टोनिया",
+		"demonym_one": "एस्टोनियावासी",
+		"demonym_other": "एस्टोनियाई"
+	},
+	"ETH": {
+		"name": "इथियोपिया",
+		"demonym_one": "इथियोपियाई",
+		"demonym_other": "इथियोपिया"
+	},
+	"FIN": {
+		"name": "फिनलैंड",
+		"demonym_one": "फिनिश",
+		"demonym_other": "फिनलैंड वासियों"
+	},
+	"FJI": {
+		"name": "फ़िजी",
+		"demonym_one": "फिजियान",
+		"demonym_other": "फिजी के"
+	},
+	"FLK": {
+		"name": "फ़ॉकलैंड द्वीपसमूह",
+		"demonym_one": "फ़ॉकलैंड आइलैंडर",
+		"demonym_other": "फ़ॉकलैंड आइलैंडर्स"
+	},
+	"FRA": {
+		"name": "फ्रांस",
+		"demonym_one": "फ्रेंच",
+		"demonym_other": "फ्रेंच"
+	},
+	"FRO": {
+		"name": "फरो आइलैंड्स",
+		"demonym_one": "फरोज़",
+		"demonym_other": "फरोज़"
+	},
+	"FSM": {
+		"name": "माइक्रोनेशिया",
+		"demonym_one": "माइक्रोनेशियन",
+		"demonym_other": "माइक्रोनेशियन"
+	},
+	"GAB": {
+		"name": "गैबॉन",
+		"demonym_one": "गैबोनीज़",
+		"demonym_other": "गैबोनीज़"
+	},
+	"GBR": {
+		"name": "यूनाइटेड किंगडम",
+		"demonym_one": "ब्रिटिश",
+		"demonym_other": "ब्रिटिश"
+	},
+	"GEO": {
+		"name": "जॉर्जिया",
+		"demonym_one": "जॉर्जियाई",
+		"demonym_other": "जार्जियाई"
+	},
+	"GGY": {
+		"name": "Guernsey",
+		"demonym_one": "चैनल आइलैंडर",
+		"demonym_other": "चैनल आइलैंडर्स"
+	},
+	"GHA": {
+		"name": "घाना",
+		"demonym_one": "घाना",
+		"demonym_other": "घाना"
+	},
+	"GIB": {
+		"name": "जिब्राल्टर",
+		"demonym_one": "जिब्राल्टेरियन",
+		"demonym_other": "जिब्राल्टेरियन"
+	},
+	"GIN": {
+		"name": "गिन्नी",
+		"demonym_one": "गिनीयन",
+		"demonym_other": "गिनीयन"
+	},
+	"GLP": {
+		"name": "गुआदेलूप",
+		"demonym_one": "गुआदेलूपियन",
+		"demonym_other": "गुआदेलूपियंस"
+	},
+	"GMB": {
+		"name": "गाम्बिया",
+		"demonym_one": "गमन",
+		"demonym_other": "Gambians"
+	},
+	"GNB": {
+		"name": "गिनी-बिसाऊ",
+		"demonym_one": "गिनी-बिसौआन",
+		"demonym_other": "गिनी-बिसाऊंस"
+	},
+	"GNQ": {
+		"name": "इक्वेटोरियल गिनी",
+		"demonym_one": "इक्वेटोरियल गिनी",
+		"demonym_other": "इक्वेटोरियल गिनी"
+	},
+	"GRC": {
+		"name": "ग्रीस",
+		"demonym_one": "ग्रीक",
+		"demonym_other": "यूनानियों"
+	},
+	"GRD": {
+		"name": "Grenada",
+		"demonym_one": "ग्रेनेडियन",
+		"demonym_other": "ग्रेनेडियन्स"
+	},
+	"GRL": {
+		"name": "ग्रीनलैंड",
+		"demonym_one": "ग्रीनलैंडिक",
+		"demonym_other": "ग्रीनलैंडर्स"
+	},
+	"GTM": {
+		"name": "ग्वाटेमाला",
+		"demonym_one": "ग्वाटेमाला",
+		"demonym_other": "ग्वाटेमेलियन"
+	},
+	"GUF": {
+		"name": "फ़्रेंच गुयाना"
+	},
+	"GUM": {
+		"name": "गुआम",
+		"demonym_one": "गुआमानियन",
+		"demonym_other": "गुआमानिया"
+	},
+	"GUY": {
+		"name": "गुयाना",
+		"demonym_one": "गुयाना",
+		"demonym_other": "गुयाना"
+	},
+	"HKG": {
+		"name": "हॉन्ग कॉन्ग",
+		"demonym_one": "हाँग काँग",
+		"demonym_other": "हॉंग कॉंगर्स"
+	},
+	"HMD": {
+		"name": "हर्ड आइलैंड और मैकडोनाल्ड आइलैंड्स",
+		"demonym_one": "हर्ड एंड मैकडोनाल्ड आइलैंडर",
+		"demonym_other": "हर्ड एंड मैकडोनाल्ड आइलैंडर्स"
+	},
+	"HND": {
+		"name": "होंडुरास",
+		"demonym_one": "होंडुरन",
+		"demonym_other": "होंडुरांस"
+	},
+	"HRV": {
+		"name": "क्रोएशिया",
+		"demonym_one": "क्रोएशियाई",
+		"demonym_other": "क्रोएशियाई"
+	},
+	"HTI": {
+		"name": "हैती",
+		"demonym_one": "हाईटिवासी",
+		"demonym_other": "हैटियन"
+	},
+	"HUN": {
+		"name": "हंगरी",
+		"demonym_one": "हंगेरियन",
+		"demonym_other": "हंगरी"
+	},
+	"IDN": {
+		"name": "इंडोनेशिया",
+		"demonym_one": "इंडोनेशियाई",
+		"demonym_other": "इंडोनेशियाई"
+	},
+	"IMN": {
+		"name": "आइल ऑफ़ मैन",
+		"demonym_one": "मैनक्स",
+		"demonym_other": "मैनक्स"
+	},
+	"IND": {
+		"name": "इंडिया",
+		"demonym_one": "भारतीय",
+		"demonym_other": "भारतीयों"
+	},
+	"IOT": {
+		"name": "ब्रिटिश हिंद महासागर क्षेत्र",
+		"demonym_one": "भारतीय",
+		"demonym_other": "भारतीयों"
+	},
+	"IRL": {
+		"name": "आयरलैंड",
+		"demonym_one": "आयरिश",
+		"demonym_other": "आयरिश"
+	},
+	"IRN": {
+		"name": "ईरान",
+		"demonym_one": "ईरानी",
+		"demonym_other": "ईरानियों"
+	},
+	"IRQ": {
+		"name": "इराक",
+		"demonym_one": "इराकी",
+		"demonym_other": "इराकियों"
+	},
+	"ISL": {
+		"name": "आइसलैंड",
+		"demonym_one": "आइसलैंडर",
+		"demonym_other": "आइसलैंडर्स"
+	},
+	"ISR": {
+		"name": "इजराइल",
+		"demonym_one": "इजरायली",
+		"demonym_other": "इजरायली"
+	},
+	"ITA": {
+		"name": "इटली",
+		"demonym_one": "इतालवी",
+		"demonym_other": "इटालियंस"
+	},
+	"JAM": {
+		"name": "जमैका",
+		"demonym_one": "जमैका",
+		"demonym_other": "जमैका"
+	},
+	"JEY": {
+		"name": "Jersey",
+		"demonym_one": "चैनल आइलैंडर",
+		"demonym_other": "चैनल आइलैंडर्स"
+	},
+	"JOR": {
+		"name": "जॉर्डन",
+		"demonym_one": "जॉर्डन का",
+		"demonym_other": "जार्डन"
+	},
+	"JPN": {
+		"name": "जापान",
+		"demonym_one": "जापानी",
+		"demonym_other": "जापानी"
+	},
+	"KAZ": {
+		"name": "कजाखस्तान",
+		"demonym_one": "कज़ाखस्तानी",
+		"demonym_other": "कज़ाखस्तानियों"
+	},
+	"KEN": {
+		"name": "केन्या",
+		"demonym_one": "केन्याई",
+		"demonym_other": "केन्याई"
+	},
+	"KGZ": {
+		"name": "किर्गिस्तान",
+		"demonym_one": "किर्गिज़",
+		"demonym_other": "किर्गिज़"
+	},
+	"KHM": {
+		"name": "कंबोडिया",
+		"demonym_one": "कंबोडिया",
+		"demonym_other": "कंबोडियाई"
+	},
+	"KIR": {
+		"name": "किरिबाती",
+		"demonym_one": "I-किरिबाती",
+		"demonym_other": "I-किरीबाटिस"
+	},
+	"KNA": {
+		"name": "सेंट किट्स एंड नेविस",
+		"demonym_one": "किटिटियन या नेविसियन",
+		"demonym_other": "किटिटियन या नेविसियन"
+	},
+	"KOR": {
+		"name": "दक्षिण कोरिया",
+		"demonym_one": "दक्षिण कोरियाई",
+		"demonym_other": "दक्षिण कोरियाई"
+	},
+	"KWT": {
+		"name": "कुवैत",
+		"demonym_one": "कुवैती",
+		"demonym_other": "कुवैटिस"
+	},
+	"LAO": {
+		"name": "लाओस",
+		"demonym_one": "लाओटियन",
+		"demonym_other": "लाओटियन"
+	},
+	"LBN": {
+		"name": "Lebanon",
+		"demonym_one": "लेबनानी",
+		"demonym_other": "लेबनानी"
+	},
+	"LBR": {
+		"name": "लाइबेरिया",
+		"demonym_one": "लाइबेरिया",
+		"demonym_other": "लाइबेरिया"
+	},
+	"LBY": {
+		"name": "लीबिया",
+		"demonym_one": "लीबिया वासी",
+		"demonym_other": "लीबियाई"
+	},
+	"LCA": {
+		"name": "सैंट लूसिया",
+		"demonym_one": "सैंट लूसियन",
+		"demonym_other": "सैंट लुसियन्स"
+	},
+	"LIE": {
+		"name": "लिकटेंस्टीन",
+		"demonym_one": "लिकटेंस्टीनर",
+		"demonym_other": "लिकटेंस्टीनर्स"
+	},
+	"LKA": {
+		"name": "श्री लंका",
+		"demonym_one": "श्रीलंकाई",
+		"demonym_other": "श्रीलंकाई"
+	},
+	"LSO": {
+		"name": "लेसोथो",
+		"demonym_one": "मोसोथो",
+		"demonym_other": "बसोथो"
+	},
+	"LTU": {
+		"name": "लिथुआनिया",
+		"demonym_one": "लिथुआनियाई",
+		"demonym_other": "लिथुआनियाई"
+	},
+	"LUX": {
+		"name": "लक्ज़मबर्ग",
+		"demonym_one": "लक्ज़मबर्ग",
+		"demonym_other": "लक्ज़मबर्ग"
+	},
+	"LVA": {
+		"name": "लातविया",
+		"demonym_one": "लातवियाई",
+		"demonym_other": "लातवियाई"
+	},
+	"MAC": {
+		"name": "मकाउ",
+		"demonym_one": "चीनी",
+		"demonym_other": "चीनी"
+	},
+	"MAF": {
+		"name": "सैंट मार्टिन",
+		"demonym_one": "सैंट मार्टिन आइलैंडर",
+		"demonym_other": "सैंट मार्टिन आइलैंडर्स"
+	},
+	"MAR": {
+		"name": "मोरक्को",
+		"demonym_one": "मोरक्को",
+		"demonym_other": "मोरक्को"
+	},
+	"MCO": {
+		"name": "मोनाको",
+		"demonym_one": "मोनेगास्क",
+		"demonym_other": "मोनेगास्कस"
+	},
+	"MDA": {
+		"name": "मोल्दोवा",
+		"demonym_one": "मोल्दोवन",
+		"demonym_other": "मोल्दोवन"
+	},
+	"MDG": {
+		"name": "मेडागास्कर",
+		"demonym_one": "मालागासी",
+		"demonym_other": "मालागासी"
+	},
+	"MDV": {
+		"name": "मालदीव",
+		"demonym_one": "मालदीवान",
+		"demonym_other": "मालदीव"
+	},
+	"MEX": {
+		"name": "मेक्सिको",
+		"demonym_one": "मैक्सिकन",
+		"demonym_other": "मेक्सिको"
+	},
+	"MHL": {
+		"name": "मार्शल आइलैंड्स",
+		"demonym_one": "मार्शलिस",
+		"demonym_other": "मार्शलिस"
+	},
+	"MKD": {
+		"name": "नार्थ मैसेडोनिया",
+		"demonym_one": "मैसेडोनियन",
+		"demonym_other": "मैसेडोनियन"
+	},
+	"MLI": {
+		"name": "माली",
+		"demonym_one": "मलियान",
+		"demonym_other": "मलियन"
+	},
+	"MLT": {
+		"name": "माल्टा",
+		"demonym_one": "मोलतिज़",
+		"demonym_other": "मोलतिज़"
+	},
+	"MMR": {
+		"name": "म्यांमार",
+		"demonym_one": "बामर",
+		"demonym_other": "बामर्स"
+	},
+	"MNE": {
+		"name": "मोंटेनेग्रो",
+		"demonym_one": "मॉन्टीनीग्रो-निवासी",
+		"demonym_other": "मोंटेनेग्रिन्स"
+	},
+	"MNG": {
+		"name": "मंगोलिया",
+		"demonym_one": "मंगोलियन",
+		"demonym_other": "मंगोलियाई"
+	},
+	"MNP": {
+		"name": "उत्तरी मारियाना द्वीपसमूह",
+		"demonym_one": "अमरिकी",
+		"demonym_other": "अमेरिकियों"
+	},
+	"MOZ": {
+		"name": "मोजाम्बिक",
+		"demonym_one": "मोजाम्बिक",
+		"demonym_other": "मोजाम्बिक"
+	},
+	"MRT": {
+		"name": "मॉरिटानिया",
+		"demonym_one": "मॉरिटानियन",
+		"demonym_other": "मॉरिटानियन"
+	},
+	"MSR": {
+		"name": "मोंटेसेराट",
+		"demonym_one": "मोंटसेराटियन",
+		"demonym_other": "मोंटसेराटियन"
+	},
+	"MTQ": {
+		"name": "मार्टीनिक",
+		"demonym_one": "फ्रेंच",
+		"demonym_other": "फ्रेंच"
+	},
+	"MUS": {
+		"name": "मॉरीशस",
+		"demonym_one": "मॉरीशस",
+		"demonym_other": "मॉरीशस"
+	},
+	"MWI": {
+		"name": "मलावी",
+		"demonym_one": "मलावियन",
+		"demonym_other": "मलावियन"
+	},
+	"MYS": {
+		"name": "मलेशिया",
+		"demonym_one": "मलेशियाई",
+		"demonym_other": "मलेशियाई"
+	},
+	"MYT": {
+		"name": "मैयट",
+		"demonym_one": "महोरन",
+		"demonym_other": "महोरन"
+	},
+	"NAM": {
+		"name": "नामीबिया",
+		"demonym_one": "नामीबियाई",
+		"demonym_other": "नामीबियाई"
+	},
+	"NCL": {
+		"name": "न्यू कैलेडोनिया",
+		"demonym_one": "न्यू कैलेडोनियन",
+		"demonym_other": "न्यू कैलेडोनियन"
+	},
+	"NER": {
+		"name": "नाइजर",
+		"demonym_one": "नाइजीरियाई",
+		"demonym_other": "नाइजीरियाई"
+	},
+	"NFK": {
+		"name": "नॉरफ़ॉक आइलैंड",
+		"demonym_one": "नॉरफ़ॉक आइलैंडर",
+		"demonym_other": "नॉरफ़ॉक आइलैंडर्स"
+	},
+	"NGA": {
+		"name": "नाइजीरिया",
+		"demonym_one": "नाइजीरियाई",
+		"demonym_other": "नाइजीरिया"
+	},
+	"NIC": {
+		"name": "निकारागुआ",
+		"demonym_one": "निकारागुआन",
+		"demonym_other": "निकारागुआंस"
+	},
+	"NIU": {
+		"name": "नियू",
+		"demonym_one": "नीयूआन",
+		"demonym_other": "नीयून्स"
+	},
+	"NLD": {
+		"name": "नीदरलैंड",
+		"demonym_one": "डच",
+		"demonym_other": "डच"
+	},
+	"NOR": {
+		"name": "नॉर्वे",
+		"demonym_one": "नार्वेजियन",
+		"demonym_other": "नार्वेजियन"
+	},
+	"NPL": {
+		"name": "नेपाल",
+		"demonym_one": "नेपाली",
+		"demonym_other": "नेपाली"
+	},
+	"NRU": {
+		"name": "नाउरू",
+		"demonym_one": "नौरुआन",
+		"demonym_other": "नौरूआंस"
+	},
+	"NZL": {
+		"name": "न्यूज़ीलैंड",
+		"demonym_one": "न्यूज़ीलैंडर",
+		"demonym_other": "न्यूज़ीलैंडर्स"
+	},
+	"OMN": {
+		"name": "ओमान",
+		"demonym_one": "ओमानी",
+		"demonym_other": "ओमानिस"
+	},
+	"PAK": {
+		"name": "पाकिस्तान",
+		"demonym_one": "पाकिस्तानी",
+		"demonym_other": "पाकिस्तानियों"
+	},
+	"PAN": {
+		"name": "पनामा",
+		"demonym_one": "पनामा का निवासी",
+		"demonym_other": "पनामा का निवासी"
+	},
+	"PCN": {
+		"name": "पिटकेर्न द्वीपसमूह",
+		"demonym_one": "पिटकेर्न आइलैंडर",
+		"demonym_other": "पिटकेर्न आइलैंडर्स"
+	},
+	"PER": {
+		"name": "पेरू",
+		"demonym_one": "पेरूवियन",
+		"demonym_other": "पेरूवियन"
+	},
+	"PHL": {
+		"name": "फिलीपींस",
+		"demonym_one": "फिलिपिनो",
+		"demonym_other": "फिलिपिनोस"
+	},
+	"PLW": {
+		"name": "पलाऊ",
+		"demonym_one": "पलौआन",
+		"demonym_other": "Palauans"
+	},
+	"PNG": {
+		"name": "पापुआ न्यू गिनी",
+		"demonym_one": "पापुआ न्यू गिनी",
+		"demonym_other": "पापुआ न्यू गिनीयन"
+	},
+	"POL": {
+		"name": "पोलैंड",
+		"demonym_one": "पोलिश",
+		"demonym_other": "पोलिश"
+	},
+	"PRI": {
+		"name": "Puerto Rico",
+		"demonym_one": "पुएर्तो रीको का",
+		"demonym_other": "प्वेर्टो रिकन्स"
+	},
+	"PRK": {
+		"name": "नार्थ कोरिया",
+		"demonym_one": "उत्तर कोरियाई",
+		"demonym_other": "उत्तर कोरियाई"
+	},
+	"PRT": {
+		"name": "पुर्तगाल",
+		"demonym_one": "पुर्तगाली",
+		"demonym_other": "पुर्तगाली"
+	},
+	"PRY": {
+		"name": "पराग्वे",
+		"demonym_one": "पैराग्वे संबंधित",
+		"demonym_other": "परागुआयन"
+	},
+	"PSE": {
+		"name": "पलेस्टाइन",
+		"demonym_one": "फिलिस्तीनी",
+		"demonym_other": "फिलिस्तीनियों"
+	},
+	"PYF": {
+		"name": "फ़्रेंच पोलिनेशिया",
+		"demonym_one": "फ़्रेंच पॉलिनेशियन",
+		"demonym_other": "फ़्रेंच पॉलिनेशियन"
+	},
+	"QAT": {
+		"name": "कतर",
+		"demonym_one": "कतरी",
+		"demonym_other": "कतरी"
+	},
+	"REU": {
+		"name": "रियूनियन",
+		"demonym_one": "फ्रेंच",
+		"demonym_other": "फ्रेंच"
+	},
+	"ROU": {
+		"name": "रोमानिया",
+		"demonym_one": "रोमानियाई",
+		"demonym_other": "रोम देशवासी"
+	},
+	"RUS": {
+		"name": "रूस",
+		"demonym_one": "रूसी",
+		"demonym_other": "रूसियों"
+	},
+	"RWA": {
+		"name": "रवांडा",
+		"demonym_one": "रवांडा",
+		"demonym_other": "रवांडा"
+	},
+	"SAU": {
+		"name": "सउदी अरब",
+		"demonym_one": "सऊदी अरेबियन",
+		"demonym_other": "सऊदी अरब"
+	},
+	"SDN": {
+		"name": "सूडान",
+		"demonym_one": "सूडानी",
+		"demonym_other": "सूडानी"
+	},
+	"SEN": {
+		"name": "सेनेगल",
+		"demonym_one": "सेनेगली",
+		"demonym_other": "सेनेगली"
+	},
+	"SGP": {
+		"name": "सिंगापुर",
+		"demonym_one": "सिंगापुरी",
+		"demonym_other": "सिंगापुरी"
+	},
+	"SGS": {
+		"name": "दक्षिण जॉर्जिया",
+		"demonym_one": "साउथ जॉर्जियाई साउथ सैंडविच आइलैंडर",
+		"demonym_other": "साउथ जॉर्जियाई साउथ सैंडविच आइलैंडर्स"
+	},
+	"SHN": {
+		"name": "सेंट हेलेना, असेंशन और ट्रिस्टन दा कुन्हा"
+	},
+	"SJM": {
+		"name": "स्वालबार्ड और जान मायेन",
+		"demonym_one": "नार्वेजियन",
+		"demonym_other": "नार्वेजियन"
+	},
+	"SLB": {
+		"name": "सोलोमन द्वीपसमूह",
+		"demonym_one": "सोलोमन आइलैंडर",
+		"demonym_other": "सोलोमन आइलैंडर्स"
+	},
+	"SLE": {
+		"name": "सियरा लियोन",
+		"demonym_one": "सियरा लियोनियन",
+		"demonym_other": "सियरा लियोनियंस"
+	},
+	"SLV": {
+		"name": "अल सल्वाडोर",
+		"demonym_one": "साल्वाडोरन",
+		"demonym_other": "साल्वाडोरन"
+	},
+	"SMR": {
+		"name": "सैन मारिनो",
+		"demonym_one": "सममरीनीज़",
+		"demonym_other": "सममरीनीज़"
+	},
+	"SOM": {
+		"name": "सोमालिया",
+		"demonym_one": "सोमाली",
+		"demonym_other": "सोमालियाई"
+	},
+	"SPM": {
+		"name": "सेंट पिएरे और मिकेलॉन",
+		"demonym_one": "फ्रेंच",
+		"demonym_other": "फ्रेंच"
+	},
+	"SRB": {
+		"name": "सर्बिया",
+		"demonym_one": "सर्बियाई",
+		"demonym_other": "सर्बियाई"
+	},
+	"SSD": {
+		"name": "दक्षिण सूडान",
+		"demonym_one": "दक्षिण सूडानी",
+		"demonym_other": "दक्षिण सूडानी"
+	},
+	"STP": {
+		"name": "साओ टोमे और प्रिंसिपी",
+		"demonym_one": "साओ टोमेन",
+		"demonym_other": "साओ टोमेन्स"
+	},
+	"SUR": {
+		"name": "सूरीनाम",
+		"demonym_one": "सुरीनामेर",
+		"demonym_other": "सुरिनमेर्स"
+	},
+	"SVK": {
+		"name": "स्लोवाकिया",
+		"demonym_one": "स्लोवाक",
+		"demonym_other": "स्लोवाक लोगों"
+	},
+	"SVN": {
+		"name": "स्लोवेनिया",
+		"demonym_one": "स्लोवेनियाई",
+		"demonym_other": "स्लोवेनियाई"
+	},
+	"SWE": {
+		"name": "स्वीडन",
+		"demonym_one": "स्वीडिश",
+		"demonym_other": "स्वीडिश"
+	},
+	"SWZ": {
+		"name": "इस्वातिनी",
+		"demonym_one": "स्वाजी",
+		"demonym_other": "स्वाज़िस"
+	},
+	"SXM": {
+		"name": "सिंट मार्टेन",
+		"demonym_one": "सेंट मार्टनर",
+		"demonym_other": "सेंट मार्टेनर्स"
+	},
+	"SYC": {
+		"name": "सेचेल्स",
+		"demonym_one": "सेशेलोइस",
+		"demonym_other": "सेशेलोइस"
+	},
+	"SYR": {
+		"name": "सीरिया",
+		"demonym_one": "सीरियाई",
+		"demonym_other": "सीरिया"
+	},
+	"TCA": {
+		"name": "तुर्क और कैकोस द्वीपसमूह",
+		"demonym_one": "तुर्क एंड कैकोस आइलैंडर",
+		"demonym_other": "तुर्क एंड कैकोस आइलैंडर्स"
+	},
+	"TCD": {
+		"name": "काग़ज़ का टुकड़ा",
+		"demonym_one": "चैडियन",
+		"demonym_other": "चैडियन्स"
+	},
+	"TGO": {
+		"name": "टोगो",
+		"demonym_one": "टोगोलेज़",
+		"demonym_other": "टोगोलेज़"
+	},
+	"THA": {
+		"name": "थाईलैंड",
+		"demonym_one": "थाई",
+		"demonym_other": "थायस"
+	},
+	"TJK": {
+		"name": "तजाकिस्तान",
+		"demonym_one": "तद्झिक",
+		"demonym_other": "तद्झिक"
+	},
+	"TKL": {
+		"name": "टोकेलाऊ",
+		"demonym_one": "टोकेलौआन",
+		"demonym_other": "टोकेलुआंस"
+	},
+	"TKM": {
+		"name": "तुर्कमेनिस्तान",
+		"demonym_one": "तुक्रमेन",
+		"demonym_other": "तुर्कमेनिस्तान"
+	},
+	"TLS": {
+		"name": "तिमोर-लेस्ते",
+		"demonym_one": "पूर्वी तिमोर",
+		"demonym_other": "पूर्वी तिमोर"
+	},
+	"TON": {
+		"name": "टोंगा",
+		"demonym_one": "टोंगन",
+		"demonym_other": "टोंगन्स"
+	},
+	"TTO": {
+		"name": "त्रिनिदाद और टोबैगो",
+		"demonym_one": "त्रिनिदादिअन",
+		"demonym_other": "त्रिनिदाद"
+	},
+	"TUN": {
+		"name": "ट्यूनीशिया",
+		"demonym_one": "ट्यूनीशियाई",
+		"demonym_other": "ट्यूनीशिया"
+	},
+	"TUR": {
+		"name": "तुर्की",
+		"demonym_one": "तुर्की",
+		"demonym_other": "तुर्की का नागरिक"
+	},
+	"TUV": {
+		"name": "तुवालु",
+		"demonym_one": "तुवालुअन",
+		"demonym_other": "तुवालुअन्स"
+	},
+	"TWN": {
+		"name": "ताइवान",
+		"demonym_one": "ताइवानी",
+		"demonym_other": "ताइवानी"
+	},
+	"TZA": {
+		"name": "तंजानिया",
+		"demonym_one": "तंज़ानियाई",
+		"demonym_other": "तंजानिया"
+	},
+	"UGA": {
+		"name": "युगांडा",
+		"demonym_one": "युगांडा",
+		"demonym_other": "युगांडा"
+	},
+	"UKR": {
+		"name": "यूक्रेन",
+		"demonym_one": "यूक्रेनी",
+		"demonym_other": "यूक्रेनियन"
+	},
+	"UMI": {
+		"name": "यूनाइटेड स्टेट्स माइनर आउटलाइंग आइलैंड्स",
+		"demonym_one": "अमरिकी",
+		"demonym_other": "अमेरिकियों"
+	},
+	"UNK": {
+		"name": "कोसोवो",
+		"demonym_one": "कोसोवर",
+		"demonym_other": "कोसोवर"
+	},
+	"URY": {
+		"name": "उरुग्वे",
+		"demonym_one": "उरुग्वे",
+		"demonym_other": "उरुग्वे"
+	},
+	"USA": {
+		"name": "संयुक्त राज्य अमेरिका",
+		"demonym_one": "अमरिकी",
+		"demonym_other": "अमेरिकियों"
+	},
+	"UZB": {
+		"name": "उज़्बेकिस्तान",
+		"demonym_one": "उज़्बेकिस्तानी",
+		"demonym_other": "उज़्बेकिस्तान"
+	},
+	"VAT": {
+		"name": "वैटिकन सिटी",
+		"demonym_one": "इतालवी",
+		"demonym_other": "इटालियंस"
+	},
+	"VCT": {
+		"name": "सेंट विंसेंट एंड द ग्रेनेडाइंस",
+		"demonym_one": "सेंट विंसेंटियन",
+		"demonym_other": "सेंट विंसेंटियन्स"
+	},
+	"VEN": {
+		"name": "वेनेजुएला",
+		"demonym_one": "विनीज़वीलियन",
+		"demonym_other": "विनीज़वीलियन"
+	},
+	"VGB": {
+		"name": "ब्रिटिश वर्जिन आइलैंड्स",
+		"demonym_one": "वर्जिन आइलैंडर",
+		"demonym_other": "वर्जिन आइलैंडर्स"
+	},
+	"VIR": {
+		"name": "संयुक्त राज्य अमेरिका वर्जिन द्वीपसमूह",
+		"demonym_one": "वर्जिन आइलैंडर",
+		"demonym_other": "वर्जिन आइलैंडर्स"
+	},
+	"VNM": {
+		"name": "वियतनाम",
+		"demonym_one": "वियतनामी",
+		"demonym_other": "वियतनामी"
+	},
+	"VUT": {
+		"name": "वानुअतु",
+		"demonym_one": "नी-वानुअतु",
+		"demonym_other": "नी-वानुअतु"
+	},
+	"WLF": {
+		"name": "वालिस और फ़्यूचूना",
+		"demonym_one": "वालिस और फ़्यूचूना आइलैंडर",
+		"demonym_other": "वालिस और फ़्यूचूना आइलैंडर्स"
+	},
+	"WSM": {
+		"name": "समोआ",
+		"demonym_one": "समोआन",
+		"demonym_other": "समोआंस"
+	},
+	"YEM": {
+		"name": "यमन",
+		"demonym_one": "येमेनी",
+		"demonym_other": "येमनियों"
+	},
+	"ZAF": {
+		"name": "दक्षिण अफ़्रीका",
+		"demonym_one": "दक्षिण अफ़्रीकी",
+		"demonym_other": "दक्षिण अफ़्रीकी"
+	},
+	"ZMB": {
+		"name": "जाम्बिया",
+		"demonym_one": "जाम्बिया का बासी",
+		"demonym_other": "जाम्बिया"
+	},
+	"ZWE": {
+		"name": "जिम्बाब्वे",
+		"demonym_one": "जिम्बाब्वे",
+		"demonym_other": "जिम्बाब्वे"
+	}
+}
