@@ -11,6 +11,9 @@ export default {
 	args: {
 		parentId: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH',
 	},
+	argTypes: {
+		hideRemoteBadges: { control: 'boolean' },
+	},
 	parameters: {
 		layout: 'fullscreen',
 		nextjs: {

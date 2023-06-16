@@ -11,12 +11,10 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ServiceModal } from '~ui/modals/Service'
 
-// const serviceCat: Record<string, Set<string>> = {}
-let servObj: ServObj = {}
-
 type ServiceSectionProps = {
 	category: string | string[]
 	services: ServItem[]
+	hideRemoteBadges?: boolean
 }
 
 const useServiceSectionStyles = createStyles((theme) => ({
@@ -35,7 +33,7 @@ const useServiceSectionStyles = createStyles((theme) => ({
 	},
 }))
 
-const ServiceSection = ({ category, services }: ServiceSectionProps) => {
+const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSectionProps) => {
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 	const { slug, orgLocationId } = router.query
 	const { t } = useTranslation(['common', 'services', slug])
@@ -45,11 +43,6 @@ const ServiceSection = ({ category, services }: ServiceSectionProps) => {
 
 	const variants = useCustomVariant()
 	const apiUtils = api.useContext()
-
-	const breadCrumbProps = parent?.name
-		? ({ option: 'back', backTo: 'dynamicText', backToText: parent.name } as const)
-		: ({ option: 'back', backTo: 'none' } as const)
-	// api.service.byId.useQuery({ id: preloadService }, { enabled: preloadService !== '' })
 	return (
 		<Stack spacing={8}>
 			{Array.isArray(category) ? (
@@ -68,9 +61,19 @@ const ServiceSection = ({ category, services }: ServiceSectionProps) => {
 						className={classes.group}
 						onMouseOver={() => apiUtils.service.byId.prefetch({ id: service.id })}
 					>
-						<Text variant={variants.Text.utility1}>
-							{t(service.tsKey ?? '', { ns: slug, defaultValue: service.defaultText }) as string}
-						</Text>
+						{service.offersRemote && !hideRemoteBadges ? (
+							<Group spacing={8} align='center'>
+								<Text variant={variants.Text.utility1}>
+									{t(service.tsKey ?? '', { ns: slug, defaultValue: service.defaultText }) as string}
+								</Text>
+								<Badge variant='remote' />
+							</Group>
+						) : (
+							<Text variant={variants.Text.utility1}>
+								{t(service.tsKey ?? '', { ns: slug, defaultValue: service.defaultText }) as string}
+							</Text>
+						)}
+
 						<Icon icon='carbon:chevron-right' height={24} width={24} className={classes.icon} />
 					</ServiceModal>
 				))}
@@ -79,18 +82,17 @@ const ServiceSection = ({ category, services }: ServiceSectionProps) => {
 	)
 }
 
-type ServObj = { [k: string]: Set<string> }
 type ServItem = {
 	id: string
 	tsNs: string
 	tsKey?: string
 	defaultText?: string
+	offersRemote: boolean
 }
 
-export const ServicesInfoCard = ({ parentId }: ServicesInfoCardProps) => {
-	// const { t } = useTranslation()
+export const ServicesInfoCard = ({ parentId, hideRemoteBadges }: ServicesInfoCardProps) => {
 	const { isMobile } = useScreenSize()
-	const { data: services, isLoading } = api.service.forServiceInfoCard.useQuery(parentId)
+	const { data: services, isLoading } = api.service.forServiceInfoCard.useQuery({ parentId })
 
 	if (isLoading || !services) {
 		return isMobile ? (
@@ -102,28 +104,55 @@ export const ServicesInfoCard = ({ parentId }: ServicesInfoCardProps) => {
 		)
 	}
 	// service can have many tags - narrow down
+	const serviceMap = new Map<string, Set<string>>()
 
 	for (const service of services) {
-		servObj = service.services.reduce((items: ServObj, record) => {
-			const key = record.tag.category.tsKey
-			if (!items[key]) {
-				items[key] = new Set()
-			}
-			items[key]?.add(
+		const key = service.serviceCategories.join(',')
+
+		if (serviceMap.has(key)) {
+			const serviceSet = serviceMap.get(key)
+			if (!serviceSet) continue
+			serviceSet.add(
 				transformer.stringify({
 					id: service.id,
-					tsNs: service.serviceName?.ns,
-					tsKey: service.serviceName?.key,
+					tsNs: service.serviceName?.tsNs,
+					tsKey: service.serviceName?.tsKey,
 					defaultText: service.serviceName?.tsKey.text,
+					offersRemote: service.offersRemote,
 				})
 			)
-			return items
-		}, servObj)
+			serviceMap.set(key, serviceSet)
+		} else {
+			serviceMap.set(
+				key,
+				new Set([
+					transformer.stringify({
+						id: service.id,
+						tsNs: service.serviceName?.tsNs,
+						tsKey: service.serviceName?.tsKey,
+						defaultText: service.serviceName?.tsKey.text,
+						offersRemote: service.offersRemote,
+					}),
+				])
+			)
+		}
 	}
-	const sections = Object.entries(servObj).map(([key, value]) => {
+
+	const sectionArray: [string[], Set<string>][] = Array.from(serviceMap.entries())
+		.map<[string[], Set<string>]>(([key, value]) => [key.split(','), value])
+		.sort((a, b) => (Array.isArray(a[0]) && Array.isArray(b[0]) ? b[0].length - a[0].length : -1))
+
+	const sections = sectionArray.map(([key, value]) => {
 		const valSet = [...value]
 		const services = valSet.map((item) => transformer.parse<ServItem>(item))
-		return <ServiceSection key={key} category={key} services={services} />
+		return (
+			<ServiceSection
+				key={key.join('-')}
+				category={key}
+				services={services}
+				{...(hideRemoteBadges ? { hideRemoteBadges } : {})}
+			/>
+		)
 	})
 
 	const body = <Stack spacing={40}>{sections}</Stack>
@@ -137,4 +166,5 @@ export type ServicesInfoCardProps = {
 	// services: PageQueryResult['locations'][number]['services'] | PageQueryResult['services']
 	/** Can be either an OrganizationID or a LocationID */
 	parentId: string
+	hideRemoteBadges?: boolean
 }
