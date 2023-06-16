@@ -238,7 +238,7 @@
 			"projectKey": "weareinreach_InReach"
 		},
 		"tms.stringsCompletionFileExtensions": "ts,tsx,json",
-		"typescript.preferences.importModuleSpecifier": "relative",
+		"typescript.preferences.importModuleSpecifier": "non-relative",
 		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
 		"typescript.enablePromptUseWorkspaceTsdk": true,
 		"typescript.workspaceSymbols.scope": "allOpenProjects"
