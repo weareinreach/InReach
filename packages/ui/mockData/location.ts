@@ -1,4 +1,4 @@
-import { type ApiInput, type ApiOutput } from '@weareinreach/api'
+import { type ApiOutput } from '@weareinreach/api'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
 const getAddress = {
@@ -28,10 +28,31 @@ const getAddress = {
 		],
 	},
 } satisfies ApiOutput['location']['getAddress']
+const forLocationCard = {
+	id: 'oloc_01GVH3VEVBERFNA9PHHJYEBGA3',
+	name: 'Whitman-Walker 1525',
+	street1: '1525 14th St. NW ',
+	street2: '',
+	city: 'Washington',
+	postCode: '20005',
+	country: 'US',
+	govDist: {
+		abbrev: 'DC',
+		tsKey: 'us-district-of-columbia',
+		tsNs: 'gov-dist',
+	},
+	phones: [],
+	attributes: [],
+	services: ['medical.CATEGORYNAME', 'mental-health.CATEGORYNAME'],
+} satisfies ApiOutput['location']['forLocationCard']
 
 export const location = {
 	getAddress: getTRPCMock({
 		path: ['location', 'getAddress'],
 		response: getAddress,
+	}),
+	forLocationCard: getTRPCMock({
+		path: ['location', 'forLocationCard'],
+		response: forLocationCard,
 	}),
 }

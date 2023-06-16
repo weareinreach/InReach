@@ -340,7 +340,7 @@ export const queries = defineRouter({
 		.input(
 			z.object({
 				parentId: z.string().regex(getIdPrefixRegex('organization', 'orgLocation')),
-				onlyRemote: z.boolean().optional(),
+				remoteOnly: z.boolean().optional(),
 			})
 		)
 		.query(async ({ ctx, input }) => {
@@ -350,7 +350,7 @@ export const queries = defineRouter({
 					...(isIdFor('organization', input.parentId)
 						? { organization: { id: input.parentId, ...isPublic } }
 						: { locations: { some: { location: { id: input.parentId, ...isPublic } } } }),
-					...(input.onlyRemote
+					...(input.remoteOnly
 						? { attributes: { some: { attribute: { active: true, tag: 'offers-remote-services' } } } }
 						: {}),
 				},

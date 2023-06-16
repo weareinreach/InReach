@@ -1,9 +1,7 @@
 import { Card, createStyles, Group, rem, Skeleton, Stack, Text } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useState } from 'react'
 
-import { type ApiOutput } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
 import { Badge, BadgeGroup } from '~ui/components/core/Badge'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
@@ -35,11 +33,9 @@ const useServiceSectionStyles = createStyles((theme) => ({
 
 const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSectionProps) => {
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
-	const { slug, orgLocationId } = router.query
+	const { slug } = router.query
 	const { t } = useTranslation(['common', 'services', slug])
 	const { classes } = useServiceSectionStyles()
-	const apiQuery = typeof orgLocationId === 'string' ? { orgLocationId } : { slug }
-	const { data: parent } = api.service.getParentName.useQuery(apiQuery)
 
 	const variants = useCustomVariant()
 	const apiUtils = api.useContext()
@@ -90,9 +86,9 @@ type ServItem = {
 	offersRemote: boolean
 }
 
-export const ServicesInfoCard = ({ parentId, hideRemoteBadges }: ServicesInfoCardProps) => {
+export const ServicesInfoCard = ({ parentId, hideRemoteBadges, remoteOnly }: ServicesInfoCardProps) => {
 	const { isMobile } = useScreenSize()
-	const { data: services, isLoading } = api.service.forServiceInfoCard.useQuery({ parentId })
+	const { data: services, isLoading } = api.service.forServiceInfoCard.useQuery({ parentId, remoteOnly })
 
 	if (isLoading || !services) {
 		return isMobile ? (
@@ -160,11 +156,9 @@ export const ServicesInfoCard = ({ parentId, hideRemoteBadges }: ServicesInfoCar
 	return isMobile ? body : <Card>{body}</Card>
 }
 
-type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>
-
 export type ServicesInfoCardProps = {
-	// services: PageQueryResult['locations'][number]['services'] | PageQueryResult['services']
 	/** Can be either an OrganizationID or a LocationID */
 	parentId: string
 	hideRemoteBadges?: boolean
+	remoteOnly?: boolean
 }

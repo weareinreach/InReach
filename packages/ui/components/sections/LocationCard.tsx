@@ -4,9 +4,7 @@ import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
 import { formatAddress } from 'localized-address-format'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useEffect } from 'react'
 
-import { type ApiOutput } from '@weareinreach/api'
 import { BadgeGroup } from '~ui/components/core/Badge'
 import { Link } from '~ui/components/core/Link'
 import { Rating } from '~ui/components/core/Rating'
@@ -20,7 +18,64 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 	const { t } = useTranslation(['gov-dist', 'common'])
 	const { ref: addressRef, height: addressListHeight } = useElementSize()
 	const theme = useMantineTheme()
-	const { data, isLoading } = api.location.forLocationCard.useQuery(locationId)
+	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug: router.query.slug })
+	const { data, isLoading: locationIsLoading } = api.location.forLocationCard.useQuery(locationId ?? '', {
+		enabled: !remoteOnly,
+	})
+	const { data: remoteServices, isLoading: remoteIsLoading } = api.service.forServiceInfoCard.useQuery(
+		{ parentId: orgId?.id ?? '', remoteOnly },
+		{ enabled: remoteOnly && orgId?.id !== undefined }
+	)
+
+	const remoteReady = remoteOnly && remoteServices?.length && !remoteIsLoading
+
+	if (remoteReady) {
+		const remoteServCategories = [
+			...new Set(remoteServices.flatMap(({ serviceCategories }) => serviceCategories)),
+		]
+
+		return (
+			<Link
+				href={{
+					pathname: '/org/[slug]/remote',
+					query: {
+						slug: router.query.slug,
+					},
+				}}
+				variant={variants.Link.card}
+			>
+				<Card w='100%' variant={variants.Card.hoverCoolGray}>
+					<Stack spacing={32}>
+						<Stack spacing={12}>
+							<Title order={2}>{t('common:remote-services')}</Title>
+						</Stack>
+						<Stack spacing={12}>
+							<Title order={3}>{t('services', { ns: 'common' })}</Title>
+							<BadgeGroup
+								badges={remoteServCategories.map((tsKey) => ({
+									variant: 'service',
+									tsKey,
+								}))}
+							/>
+						</Stack>
+
+						<Group spacing={24}>
+							<BadgeGroup
+								badges={[
+									{
+										variant: 'attribute',
+										tsNs: 'attribute',
+										tsKey: 'additional.offers-remote-services',
+										icon: 'carbon:globe',
+									},
+								]}
+							/>
+						</Group>
+					</Stack>
+				</Card>
+			</Link>
+		)
+	}
 
 	if (!data) return null
 
@@ -57,14 +112,6 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 	const hasServices = Boolean(data.services.length)
 	const hasAttributes = Boolean(data.attributes.length)
 
-	// useEffect(
-	// 	() => {
-	// 		router.prefetch(`/org/${router.query.slug as string}/${location.id}`)
-	// 	},
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// 	[location.id]
-	// )
-
 	return (
 		<Link
 			href={{
@@ -76,19 +123,7 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 			}}
 			variant={variants.Link.card}
 		>
-			<Card
-				w='100%'
-				variant={variants.Card.hoverCoolGray}
-				// onClick={() =>
-				// 	router.push({
-				// 		pathname: '/org/[slug]/[orgLocationId]',
-				// 		query: {
-				// 			slug: router.query.slug as string,
-				// 			orgLocationId: location.id,
-				// 		},
-				// 	})
-				// }
-			>
+			<Card w='100%' variant={variants.Card.hoverCoolGray}>
 				<Stack spacing={32}>
 					<Stack spacing={12}>
 						<Title order={2}>{data.name}</Title>
@@ -127,7 +162,17 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 	)
 }
 
-export type LocationCardProps = {
+// export type LocationCardProps = {
+// 	locationId: string
+// 	remoteOnly?: boolean
+// }
+
+export type LocationCardProps = LocationProps | RemoteProps
+interface LocationProps {
 	locationId: string
-	remoteOnly?: boolean
+	remoteOnly?: false
+}
+interface RemoteProps {
+	locationId?: never
+	remoteOnly: true
 }
