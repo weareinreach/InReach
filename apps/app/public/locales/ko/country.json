@@ -1,0 +1,998 @@
+{
+	"ABW": {
+		"name": "아루바",
+		"demonym_other": "아루반스"
+	},
+	"AFG": {
+		"name": "아프가니스탄",
+		"demonym_other": "아프가니스탄"
+	},
+	"AGO": {
+		"name": "앙골라",
+		"demonym_other": "앙골라"
+	},
+	"AIA": {
+		"name": "앵귈라",
+		"demonym_other": "앵귈리아인"
+	},
+	"ALA": {
+		"name": "올란드 제도",
+		"demonym_other": "올란더스"
+	},
+	"ALB": {
+		"name": "알바니아",
+		"demonym_other": "알바니아인"
+	},
+	"AND": {
+		"name": "안도라",
+		"demonym_other": "안도란스"
+	},
+	"ARE": {
+		"name": "아랍에미리트",
+		"demonym_other": "에미리트"
+	},
+	"ARG": {
+		"name": "아르헨티나",
+		"demonym_other": "아르헨티나인"
+	},
+	"ARM": {
+		"name": "아르메니아",
+		"demonym_other": "아르메니아인"
+	},
+	"ASM": {
+		"name": "아메리칸사모아",
+		"demonym_other": "미국령 사모아인"
+	},
+	"ATA": {
+		"name": "남극",
+		"demonym_other": "남극 대륙"
+	},
+	"ATF": {
+		"name": "프랑스령 남부 및 남극 지역",
+		"demonym_other": "프랑스 국민"
+	},
+	"ATG": {
+		"name": "앤티가 바부다",
+		"demonym_other": "안티구아나, 바부다"
+	},
+	"AUS": {
+		"name": "호주",
+		"demonym_other": "호주인들"
+	},
+	"AUT": {
+		"name": "오스트리아",
+		"demonym_other": "오스트리아인"
+	},
+	"AZE": {
+		"name": "아제르바이잔",
+		"demonym_other": "아제르바이잔"
+	},
+	"BDI": {
+		"name": "부룬디",
+		"demonym_other": "부룬디"
+	},
+	"BEL": {
+		"name": "벨기에",
+		"demonym_other": "벨기에인"
+	},
+	"BEN": {
+		"name": "베냉",
+		"demonym_other": "베닌어"
+	},
+	"BES": {
+		"name": "캐리비안 네덜란드"
+	},
+	"BFA": {
+		"name": "부르키나파소",
+		"demonym_other": "부르키나베"
+	},
+	"BGD": {
+		"name": "방글라데시",
+		"demonym_other": "방글라데시"
+	},
+	"BGR": {
+		"name": "불가리아",
+		"demonym_other": "불가리아인"
+	},
+	"BHR": {
+		"name": "바레인",
+		"demonym_other": "바레인"
+	},
+	"BHS": {
+		"name": "바하마",
+		"demonym_other": "바하마인"
+	},
+	"BIH": {
+		"name": "보스니아 헤르체고비나",
+		"demonym_other": "보스니아인, 헤르체고비니아인"
+	},
+	"BLM": {
+		"name": "생 바르텔레미",
+		"demonym_other": "생바르텔레미 아일랜더스"
+	},
+	"BLR": {
+		"name": "벨라루스",
+		"demonym_other": "벨로루시인"
+	},
+	"BLZ": {
+		"name": "벨리즈",
+		"demonym_other": "벨리즈인"
+	},
+	"BMU": {
+		"name": "버뮤다",
+		"demonym_other": "버뮤다"
+	},
+	"BOL": {
+		"name": "볼리비아",
+		"demonym_other": "볼리비아 사람"
+	},
+	"BRA": {
+		"name": "브라질",
+		"demonym_other": "브라질인"
+	},
+	"BRB": {
+		"name": "바베이도스",
+		"demonym_other": "바베이도스"
+	},
+	"BRN": {
+		"name": "브루나이",
+		"demonym_other": "브루나이인"
+	},
+	"BTN": {
+		"name": "부탄",
+		"demonym_other": "부탄"
+	},
+	"BVT": {
+		"name": "부베 아일랜드"
+	},
+	"BWA": {
+		"name": "보츠와나",
+		"demonym_other": "바츠와나"
+	},
+	"CAF": {
+		"name": "중앙아프리카 공화국",
+		"demonym_other": "중앙아프리카인"
+	},
+	"CAN": {
+		"name": "캐나다",
+		"demonym_other": "캐나다인"
+	},
+	"CCK": {
+		"name": "코코스 (킬링) 제도",
+		"demonym_other": "코코스 아일랜더스"
+	},
+	"CHE": {
+		"name": "Switzerland",
+		"demonym_other": "스위스"
+	},
+	"CHL": {
+		"name": "칠레",
+		"demonym_other": "칠레 사람"
+	},
+	"CHN": {
+		"name": "중국",
+		"demonym_other": "중국말"
+	},
+	"CIV": {
+		"name": "코트디부아르",
+		"demonym_other": "코트디부아르"
+	},
+	"CMR": {
+		"name": "카메룬",
+		"demonym_other": "카메룬인"
+	},
+	"COD": {
+		"name": "콩고 민주 공화국",
+		"demonym_other": "콩고"
+	},
+	"COG": {
+		"name": "콩고 공화국",
+		"demonym_other": "콩고"
+	},
+	"COK": {
+		"name": "쿡 제도",
+		"demonym_other": "쿡 아일랜더스"
+	},
+	"COL": {
+		"name": "콜롬비아",
+		"demonym_other": "콜롬비아"
+	},
+	"COM": {
+		"name": "코모로",
+		"demonym_other": "코모로"
+	},
+	"CPV": {
+		"name": "카보 베르데",
+		"demonym_other": "케이프 베르디안스"
+	},
+	"CRI": {
+		"name": "코스타리카",
+		"demonym_other": "코스타리카인"
+	},
+	"CUB": {
+		"name": "쿠바",
+		"demonym_other": "쿠바"
+	},
+	"CUW": {
+		"name": "퀴라소",
+		"demonym_other": "네덜란드어"
+	},
+	"CXR": {
+		"name": "크리스마스 아일랜드",
+		"demonym_other": "크리스마스 아일랜더스"
+	},
+	"CYM": {
+		"name": "케이맨 제도",
+		"demonym_other": "케이맨인"
+	},
+	"CYP": {
+		"name": "키프로스",
+		"demonym_other": "키프로스"
+	},
+	"CZE": {
+		"name": "체코",
+		"demonym_other": "체코"
+	},
+	"DEU": {
+		"name": "독일",
+		"demonym_other": "독일인"
+	},
+	"DJI": {
+		"name": "지부티",
+		"demonym_other": "지부티"
+	},
+	"DMA": {
+		"name": "도미니카",
+		"demonym_other": "도미니카인"
+	},
+	"DNK": {
+		"name": "덴마크",
+		"demonym_other": "덴마크 말"
+	},
+	"DOM": {
+		"name": "도미니카 공화국",
+		"demonym_other": "도미니카인"
+	},
+	"DZA": {
+		"name": "알제리",
+		"demonym_other": "알제리인"
+	},
+	"ECU": {
+		"name": "에콰도르",
+		"demonym_other": "에콰도르인"
+	},
+	"EGY": {
+		"name": "이집트",
+		"demonym_other": "이집트인"
+	},
+	"ERI": {
+		"name": "에리트레아",
+		"demonym_other": "에리트레아"
+	},
+	"ESH": {
+		"name": "서부 사하라",
+		"demonym_other": "사하라"
+	},
+	"ESP": {
+		"name": "스페인",
+		"demonym_other": "스페인 사람"
+	},
+	"EST": {
+		"name": "에스토니아",
+		"demonym_other": "에스토니아인들"
+	},
+	"ETH": {
+		"name": "에티오피아",
+		"demonym_other": "에티오피아"
+	},
+	"FIN": {
+		"name": "핀란드",
+		"demonym_other": "핀란드인"
+	},
+	"FJI": {
+		"name": "피지",
+		"demonym_other": "피지제도인들"
+	},
+	"FLK": {
+		"name": "포클랜드 제도",
+		"demonym_other": "포클랜드 아일랜더스"
+	},
+	"FRA": {
+		"name": "프랑스",
+		"demonym_other": "프랑스 국민"
+	},
+	"FRO": {
+		"name": "페로 제도",
+		"demonym_other": "페로"
+	},
+	"FSM": {
+		"name": "미크로네시아",
+		"demonym_other": "미크로네시아인"
+	},
+	"GAB": {
+		"name": "가봉",
+		"demonym_other": "가봉어"
+	},
+	"GBR": {
+		"name": "영국",
+		"demonym_other": "영국인"
+	},
+	"GEO": {
+		"name": "조지아",
+		"demonym_other": "조지아인"
+	},
+	"GGY": {
+		"name": "Guernsey",
+		"demonym_other": "채널 아일랜더스"
+	},
+	"GHA": {
+		"name": "가나",
+		"demonym_other": "가나인"
+	},
+	"GIB": {
+		"name": "지브롤터",
+		"demonym_other": "지브롤터"
+	},
+	"GIN": {
+		"name": "기니",
+		"demonym_other": "기니"
+	},
+	"GLP": {
+		"name": "과들루프",
+		"demonym_other": "과들루프"
+	},
+	"GMB": {
+		"name": "감비아",
+		"demonym_other": "감비아인"
+	},
+	"GNB": {
+		"name": "기니비사우",
+		"demonym_other": "기니비사우안"
+	},
+	"GNQ": {
+		"name": "적도 기니",
+		"demonym_other": "적도 기니"
+	},
+	"GRC": {
+		"name": "그리스",
+		"demonym_other": "그리스인"
+	},
+	"GRD": {
+		"name": "Grenada",
+		"demonym_other": "그레나다인"
+	},
+	"GRL": {
+		"name": "그린란드",
+		"demonym_other": "그린란드인"
+	},
+	"GTM": {
+		"name": "과테말라",
+		"demonym_other": "과테말라"
+	},
+	"GUF": {
+		"name": "프랑스령 기아나"
+	},
+	"GUM": {
+		"name": "괌",
+		"demonym_other": "과마니아인"
+	},
+	"GUY": {
+		"name": "가이아나",
+		"demonym_other": "가이아나"
+	},
+	"HKG": {
+		"name": "홍콩",
+		"demonym_other": "홍콩인"
+	},
+	"HMD": {
+		"name": "허드 섬 및 맥도날드 제도",
+		"demonym_other": "허드 및 맥도날드 제도 주민"
+	},
+	"HND": {
+		"name": "온두라스",
+		"demonym_other": "온두라스"
+	},
+	"HRV": {
+		"name": "크로아티아",
+		"demonym_other": "크로아티아인"
+	},
+	"HTI": {
+		"name": "아이티",
+		"demonym_other": "아이티 사람"
+	},
+	"HUN": {
+		"name": "헝가리",
+		"demonym_other": "헝가리어"
+	},
+	"IDN": {
+		"name": "인도네시아",
+		"demonym_other": "인도네시아인"
+	},
+	"IMN": {
+		"name": "아일 오브 맨",
+		"demonym_other": "맨스"
+	},
+	"IND": {
+		"name": "인도",
+		"demonym_other": "인디언"
+	},
+	"IOT": {
+		"name": "영국령 인도양 지역",
+		"demonym_other": "인디언"
+	},
+	"IRL": {
+		"name": "아일랜드",
+		"demonym_other": "아일랜드어"
+	},
+	"IRN": {
+		"name": "이란",
+		"demonym_other": "이란인"
+	},
+	"IRQ": {
+		"name": "이라크",
+		"demonym_other": "이라크"
+	},
+	"ISL": {
+		"name": "아이슬란드",
+		"demonym_other": "아이슬란드인"
+	},
+	"ISR": {
+		"name": "이스라엘",
+		"demonym_other": "이스라엘인"
+	},
+	"ITA": {
+		"name": "이탈리아",
+		"demonym_other": "이탈리아인"
+	},
+	"JAM": {
+		"name": "자메이카",
+		"demonym_other": "자메이카인"
+	},
+	"JEY": {
+		"name": "Jersey",
+		"demonym_other": "채널 아일랜더스"
+	},
+	"JOR": {
+		"name": "요르단",
+		"demonym_other": "요르단"
+	},
+	"JPN": {
+		"name": "일본",
+		"demonym_other": "일본어"
+	},
+	"KAZ": {
+		"name": "카자흐스탄",
+		"demonym_other": "카자흐스탄"
+	},
+	"KEN": {
+		"name": "케냐",
+		"demonym_other": "케냐인들"
+	},
+	"KGZ": {
+		"name": "키르기스스탄",
+		"demonym_other": "키르기스스탄"
+	},
+	"KHM": {
+		"name": "캄보디아",
+		"demonym_other": "캄보디아"
+	},
+	"KIR": {
+		"name": "키리바시",
+		"demonym_other": "키리바티스"
+	},
+	"KNA": {
+		"name": "세인트키츠 네비스",
+		"demonym_other": "키티안 또는 네비시아인"
+	},
+	"KOR": {
+		"name": "대한민국",
+		"demonym_other": "대한민국 사람"
+	},
+	"KWT": {
+		"name": "쿠웨이트",
+		"demonym_other": "쿠웨이트"
+	},
+	"LAO": {
+		"name": "라오스",
+		"demonym_other": "라오스인"
+	},
+	"LBN": {
+		"name": "Lebanon",
+		"demonym_other": "레바논"
+	},
+	"LBR": {
+		"name": "라이베리아",
+		"demonym_other": "라이베리아"
+	},
+	"LBY": {
+		"name": "리비아",
+		"demonym_other": "리비아인들"
+	},
+	"LCA": {
+		"name": "세인트루시아",
+		"demonym_other": "세인트루시아스"
+	},
+	"LIE": {
+		"name": "리히텐슈타인",
+		"demonym_other": "리히텐슈타이너"
+	},
+	"LKA": {
+		"name": "스리랑카",
+		"demonym_other": "스리랑카인"
+	},
+	"LSO": {
+		"name": "레소토",
+		"demonym_other": "바소토"
+	},
+	"LTU": {
+		"name": "리투아니아",
+		"demonym_other": "리투아니아인"
+	},
+	"LUX": {
+		"name": "룩셈부르크",
+		"demonym_other": "룩셈부르크인"
+	},
+	"LVA": {
+		"name": "라트비아",
+		"demonym_other": "라트비아 사람"
+	},
+	"MAC": {
+		"name": "마카오",
+		"demonym_other": "중국말"
+	},
+	"MAF": {
+		"name": "세인트 마틴",
+		"demonym_other": "세인트 마틴 아일랜더스"
+	},
+	"MAR": {
+		"name": "모로코",
+		"demonym_other": "모로코인"
+	},
+	"MCO": {
+		"name": "모나코",
+		"demonym_other": "모네가스크"
+	},
+	"MDA": {
+		"name": "몰도바",
+		"demonym_other": "몰도바인"
+	},
+	"MDG": {
+		"name": "마다가스카르",
+		"demonym_other": "마다가스카르"
+	},
+	"MDV": {
+		"name": "몰디브",
+		"demonym_other": "몰디브"
+	},
+	"MEX": {
+		"name": "멕시코",
+		"demonym_other": "멕시코인"
+	},
+	"MHL": {
+		"name": "마셜 제도",
+		"demonym_other": "마셜 제도"
+	},
+	"MKD": {
+		"name": "북 마케도니아",
+		"demonym_other": "마케도니아인"
+	},
+	"MLI": {
+		"name": "말리",
+		"demonym_other": "말리인"
+	},
+	"MLT": {
+		"name": "몰타",
+		"demonym_other": "몰티즈"
+	},
+	"MMR": {
+		"name": "미얀마",
+		"demonym_other": "바마르스"
+	},
+	"MNE": {
+		"name": "몬테네그로",
+		"demonym_other": "몬테네그로인"
+	},
+	"MNG": {
+		"name": "몽골",
+		"demonym_other": "몽골인"
+	},
+	"MNP": {
+		"name": "북마리아나 제도",
+		"demonym_other": "미국인"
+	},
+	"MOZ": {
+		"name": "모잠비크",
+		"demonym_other": "모잠비크"
+	},
+	"MRT": {
+		"name": "모리타니아",
+		"demonym_other": "모리타니인"
+	},
+	"MSR": {
+		"name": "몬세라트",
+		"demonym_other": "몬세라티안"
+	},
+	"MTQ": {
+		"name": "마르티니크",
+		"demonym_other": "프랑스 국민"
+	},
+	"MUS": {
+		"name": "모리셔스",
+		"demonym_other": "모리셔스"
+	},
+	"MWI": {
+		"name": "말라위",
+		"demonym_other": "말라위인"
+	},
+	"MYS": {
+		"name": "말레이시아",
+		"demonym_other": "말레이시아인"
+	},
+	"MYT": {
+		"name": "마요트",
+		"demonym_other": "마호란"
+	},
+	"NAM": {
+		"name": "나미비아",
+		"demonym_other": "나미비아인"
+	},
+	"NCL": {
+		"name": "뉴칼레도니아",
+		"demonym_other": "뉴칼레도니아인"
+	},
+	"NER": {
+		"name": "니제르",
+		"demonym_other": "나이지리아인"
+	},
+	"NFK": {
+		"name": "노퍽 섬",
+		"demonym_other": "노퍽 아일랜더스"
+	},
+	"NGA": {
+		"name": "나이지리아",
+		"demonym_other": "나이지리아인"
+	},
+	"NIC": {
+		"name": "니카라과",
+		"demonym_other": "니카라과"
+	},
+	"NIU": {
+		"name": "니우에",
+		"demonym_other": "니우에스인"
+	},
+	"NLD": {
+		"name": "네덜란드",
+		"demonym_other": "네덜란드어"
+	},
+	"NOR": {
+		"name": "노르웨이",
+		"demonym_other": "노르웨이인"
+	},
+	"NPL": {
+		"name": "네팔",
+		"demonym_other": "네팔"
+	},
+	"NRU": {
+		"name": "나우루",
+		"demonym_other": "나우루인"
+	},
+	"NZL": {
+		"name": "뉴질랜드",
+		"demonym_other": "뉴질랜드인"
+	},
+	"OMN": {
+		"name": "오만",
+		"demonym_other": "오만인"
+	},
+	"PAK": {
+		"name": "파키스탄",
+		"demonym_other": "파키스탄인"
+	},
+	"PAN": {
+		"name": "파나마",
+		"demonym_other": "파나마인"
+	},
+	"PCN": {
+		"name": "핏케언 제도",
+		"demonym_other": "핏케언 아일랜더스"
+	},
+	"PER": {
+		"name": "페루",
+		"demonym_other": "페루인"
+	},
+	"PHL": {
+		"name": "필리핀 제도",
+		"demonym_other": "필리핀"
+	},
+	"PLW": {
+		"name": "팔라우",
+		"demonym_other": "팔라우인"
+	},
+	"PNG": {
+		"name": "파푸아뉴기니",
+		"demonym_other": "파푸아뉴기니"
+	},
+	"POL": {
+		"name": "폴란드",
+		"demonym_other": "광택"
+	},
+	"PRI": {
+		"name": "Puerto Rico",
+		"demonym_other": "푸에르토리코"
+	},
+	"PRK": {
+		"name": "북한",
+		"demonym_other": "조선민주주의인민공화국"
+	},
+	"PRT": {
+		"name": "포르투갈",
+		"demonym_other": "포르투갈인"
+	},
+	"PRY": {
+		"name": "파라과이",
+		"demonym_other": "파라과이인"
+	},
+	"PSE": {
+		"name": "팔레스타인",
+		"demonym_other": "팔레스타인인"
+	},
+	"PYF": {
+		"name": "프랑스령 폴리네시아",
+		"demonym_other": "프랑스령 폴리네시아인"
+	},
+	"QAT": {
+		"name": "카타르",
+		"demonym_other": "카타르"
+	},
+	"REU": {
+		"name": "레위니옹",
+		"demonym_other": "프랑스 국민"
+	},
+	"ROU": {
+		"name": "루마니아",
+		"demonym_other": "루마니아인"
+	},
+	"RUS": {
+		"name": "러시아 제국",
+		"demonym_other": "러시아인들"
+	},
+	"RWA": {
+		"name": "르완다",
+		"demonym_other": "르완다인"
+	},
+	"SAU": {
+		"name": "사우디아라비아",
+		"demonym_other": "사우디아라비아인"
+	},
+	"SDN": {
+		"name": "수단",
+		"demonym_other": "수단"
+	},
+	"SEN": {
+		"name": "세네갈",
+		"demonym_other": "세네갈어"
+	},
+	"SGP": {
+		"name": "싱가포르",
+		"demonym_other": "싱가포르인"
+	},
+	"SGS": {
+		"name": "사우스 조지아",
+		"demonym_other": "사우스조지아 사우스샌드위치 아일랜더스"
+	},
+	"SHN": {
+		"name": "세인트헬레나, 어센션, 트리스탄 다 쿠냐"
+	},
+	"SJM": {
+		"name": "스발바르 얀마옌",
+		"demonym_other": "노르웨이인"
+	},
+	"SLB": {
+		"name": "솔로몬 제도",
+		"demonym_other": "솔로몬 제도 주민"
+	},
+	"SLE": {
+		"name": "시에라리온",
+		"demonym_other": "시에라리온"
+	},
+	"SLV": {
+		"name": "엘살바도르",
+		"demonym_other": "살바도르"
+	},
+	"SMR": {
+		"name": "산마리노",
+		"demonym_other": "사마린어"
+	},
+	"SOM": {
+		"name": "소말리아",
+		"demonym_other": "소말리아"
+	},
+	"SPM": {
+		"name": "세인트 피에르 미클롱",
+		"demonym_other": "프랑스 국민"
+	},
+	"SRB": {
+		"name": "세르비아",
+		"demonym_other": "세르비아인"
+	},
+	"SSD": {
+		"name": "남수단",
+		"demonym_other": "남수단"
+	},
+	"STP": {
+		"name": "상투메 프린시페",
+		"demonym_other": "상투메아스"
+	},
+	"SUR": {
+		"name": "수리남",
+		"demonym_other": "수리남"
+	},
+	"SVK": {
+		"name": "슬로바키아",
+		"demonym_other": "슬로바키아어"
+	},
+	"SVN": {
+		"name": "슬로베니아",
+		"demonym_other": "슬로베니아"
+	},
+	"SWE": {
+		"name": "스웨덴",
+		"demonym_other": "스웨덴어"
+	},
+	"SWZ": {
+		"name": "에스와티니",
+		"demonym_other": "스와지족"
+	},
+	"SXM": {
+		"name": "신트 마르턴",
+		"demonym_other": "세인트 마테너스"
+	},
+	"SYC": {
+		"name": "세이셸",
+		"demonym_other": "세이셸"
+	},
+	"SYR": {
+		"name": "시리아",
+		"demonym_other": "시리아인"
+	},
+	"TCA": {
+		"name": "터크스 케이커스 제도",
+		"demonym_other": "터크스 케이커스 제도 주민"
+	},
+	"TCD": {
+		"name": "차드",
+		"demonym_other": "차드"
+	},
+	"TGO": {
+		"name": "토고",
+		"demonym_other": "토고"
+	},
+	"THA": {
+		"name": "태국",
+		"demonym_other": "태국인"
+	},
+	"TJK": {
+		"name": "타지키스탄",
+		"demonym_other": "타지크"
+	},
+	"TKL": {
+		"name": "토켈라우",
+		"demonym_other": "토켈라우인"
+	},
+	"TKM": {
+		"name": "투르크메니스탄",
+		"demonym_other": "투르크메니스인들"
+	},
+	"TLS": {
+		"name": "동티모르",
+		"demonym_other": "동티모르"
+	},
+	"TON": {
+		"name": "통가",
+		"demonym_other": "통가"
+	},
+	"TTO": {
+		"name": "트리니다드 토바고",
+		"demonym_other": "트리니다드인"
+	},
+	"TUN": {
+		"name": "튀니지",
+		"demonym_other": "튀니지"
+	},
+	"TUR": {
+		"name": "터키",
+		"demonym_other": "터키인"
+	},
+	"TUV": {
+		"name": "투발루",
+		"demonym_other": "투발루인"
+	},
+	"TWN": {
+		"name": "대만",
+		"demonym_other": "대만 사람"
+	},
+	"TZA": {
+		"name": "탄자니아",
+		"demonym_other": "탄자니아인"
+	},
+	"UGA": {
+		"name": "우간다",
+		"demonym_other": "우간다인"
+	},
+	"UKR": {
+		"name": "우크라이나",
+		"demonym_other": "우크라이나 인"
+	},
+	"UMI": {
+		"name": "미국 소수 외곽 제도",
+		"demonym_other": "미국인"
+	},
+	"UNK": {
+		"name": "코소보",
+		"demonym_other": "코소보"
+	},
+	"URY": {
+		"name": "우루과이",
+		"demonym_other": "우루과이인"
+	},
+	"USA": {
+		"name": "미국",
+		"demonym_other": "미국인"
+	},
+	"UZB": {
+		"name": "우즈베키스탄",
+		"demonym_other": "우즈베키스탄인"
+	},
+	"VAT": {
+		"name": "바티칸 시티",
+		"demonym_other": "이탈리아인"
+	},
+	"VCT": {
+		"name": "세인트빈센트 그레나딘",
+		"demonym_other": "세인트 빈첸시안"
+	},
+	"VEN": {
+		"name": "베네수엘라",
+		"demonym_other": "베네수엘라 사람들"
+	},
+	"VGB": {
+		"name": "영국령 버진 아일랜드",
+		"demonym_other": "버진 아일랜더스"
+	},
+	"VIR": {
+		"name": "미국령 버진아일랜드",
+		"demonym_other": "버진 아일랜더스"
+	},
+	"VNM": {
+		"name": "베트남",
+		"demonym_other": "베트남 사람"
+	},
+	"VUT": {
+		"name": "바누아투",
+		"demonym_other": "니-바누아투"
+	},
+	"WLF": {
+		"name": "월리스 푸투나",
+		"demonym_other": "월리스 푸투나 제도 주민"
+	},
+	"WSM": {
+		"name": "사모아",
+		"demonym_other": "사모아"
+	},
+	"YEM": {
+		"name": "예멘",
+		"demonym_other": "예멘인"
+	},
+	"ZAF": {
+		"name": "남아프리카",
+		"demonym_other": "남아프리카인"
+	},
+	"ZMB": {
+		"name": "잠비아",
+		"demonym_other": "잠비아인"
+	},
+	"ZWE": {
+		"name": "짐바브웨",
+		"demonym_other": "짐바브웨인"
+	}
+}
