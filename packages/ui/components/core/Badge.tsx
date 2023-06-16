@@ -326,17 +326,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						label,
 						multiline: true,
 						width: label.length > MAX_CHARACTERS ? 600 : 'auto',
-						closeDelay: 1000,
 						style: { pointerEvents: 'auto' },
-					}
-				}
-				case 'unclaimed': {
-					const MAX_CHARACTERS = 80
-					const label = <Trans i18nKey='badge.unclaimed-tool-tip' />
-					return {
-						label,
-						multiline: true,
-						width: label.length > MAX_CHARACTERS ? 600 : 'auto',
 					}
 				}
 			}
@@ -368,19 +358,31 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 		)
 		if (props.variant === 'unclaimed') {
 			return (
-				<ClaimOrgModal
-					component={MantineBadge}
-					variant={mantineVariant}
-					classNames={merge(classNames, baseClasses)}
-					className={unclaimedClasses.root}
-					ref={ref}
-					leftSection={leftSection}
-					w='fit-content'
-					{...styleDataProps}
-					{...passedBadgeProps}
+				<Tooltip
+					style={{ pointerEvents: 'auto' }}
+					label={
+						<Trans
+							i18nKey='badge.unclaimed-tool-tip'
+							components={{
+								link1: <ClaimOrgModal component={Link} variant={variants.Link.inheritStyle} />,
+							}}
+						/>
+					}
 				>
-					{children}
-				</ClaimOrgModal>
+					<ClaimOrgModal
+						component={MantineBadge}
+						variant={mantineVariant}
+						classNames={merge(classNames, baseClasses)}
+						className={unclaimedClasses.root}
+						ref={ref}
+						leftSection={leftSection}
+						w='fit-content'
+						{...styleDataProps}
+						{...passedBadgeProps}
+					>
+						{children}
+					</ClaimOrgModal>
+				</Tooltip>
 			)
 		}
 
