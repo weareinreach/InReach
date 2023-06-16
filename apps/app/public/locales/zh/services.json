@@ -1,0 +1,124 @@
+{
+	"abortion-care": {
+		"CATEGORYNAME": "堕胎护理",
+		"abortion-providers": "堕胎提供者",
+		"financial-assistance": "财务援助",
+		"lodging-assistance": "住宿援助",
+		"mail-order-services": "邮购服务",
+		"mental-health-support": "心理健康支持",
+		"travel-assistance": "旅行援助"
+	},
+	"community-support": {
+		"CATEGORYNAME": "社区支持",
+		"community-social-groups": "社区和社会团体",
+		"cultural-centers": "文化中心",
+		"lgbtq-centers": "LGBTQ 中心",
+		"reception-services": "接待服务",
+		"reentry-services": "再入境服务",
+		"spiritual-support": "精神支持",
+		"sponsors": "移民赞助"
+	},
+	"computers-and-internet": {
+		"CATEGORYNAME": "计算机和互联网",
+		"computers-and-internet": "计算机和互联网"
+	},
+	"education-and-employment": {
+		"CATEGORYNAME": "教育和就业",
+		"career-counseling": "职业咨询",
+		"educational-support-for-lgbtq-youth": "为 LGBTQ 青年提供教育支持",
+		"english-classes": "英语课",
+		"language-classes": "语言课",
+		"leadership-training-and-professional-development": "领导力培训和职业发展",
+		"libraries": "图书馆",
+		"scholarships": "奖学金"
+	},
+	"food": {
+		"CATEGORYNAME": "食物",
+		"food": "食物",
+		"food-assistance": "食物援助"
+	},
+	"housing": {
+		"CATEGORYNAME": "住房",
+		"drop-in-centers-for-lgbtq-youth": "LGBTQ 青年救助中心",
+		"emergency-housing": "应急住房",
+		"housing-information-and-referrals": "住房信息和推荐",
+		"short-term-housing": "短期住房",
+		"trans-housing": "变性人住房"
+	},
+	"hygiene-and-clothing": {
+		"CATEGORYNAME": "卫生和服装",
+		"clothes": "衣服",
+		"gender-affirming-items": "确认性别的项目",
+		"gender-neutral-bathrooms": "不分性别的浴室",
+		"haircuts-and-stylists": "发型师和发型师",
+		"hygiene": "卫生"
+	},
+	"legal": {
+		"CATEGORYNAME": "合法",
+		"asylum-application": "庇护申请",
+		"citizenship": "公民身份",
+		"crime-and-discrimination": "犯罪和歧视",
+		"deferred-action-for-childhood-arrivals-daca": "儿童入境延期行动 (DACA)",
+		"deportation-or-removal": "驱逐出境或驱逐",
+		"employment-authorization": "就业授权",
+		"family-petitions": "家庭请愿书",
+		"immigration-detention": "移民拘留",
+		"legal-advice": "法律建议",
+		"legal-hotlines": "法律热线",
+		"name-and-gender-change": "姓名和性别变更",
+		"refugee-claim": "难民申请",
+		"residency": "居留权",
+		"special-immigrant-juvenile-status-sijs": "特殊移民少年身份 (SIJS)",
+		"t-visa": "T 签证",
+		"u-visa": "U 签证"
+	},
+	"mail": {
+		"CATEGORYNAME": "邮件",
+		"mail": "邮件"
+	},
+	"medical": {
+		"CATEGORYNAME": "医疗",
+		"covid-19-services": "COVID-19 服务",
+		"dental-care": "牙科保健",
+		"hiv-and-sexual-health": "艾滋病毒和性健康",
+		"medical-clinics": "医疗诊所",
+		"obgyn-services": "妇产科服务",
+		"physical-evaluations-for-asylum-claim": "庇护申请的身体评估",
+		"physical-evaluations-for-refugee-claim": "难民申请的身体评估",
+		"trans-health": "跨性别健康",
+		"trans-health-gender-affirming-surgery": "跨性别健康——性别确认手术",
+		"trans-health-hormone-and-surgery-letters": "跨性别健康——荷尔蒙和手术信",
+		"trans-health-hormone-therapy": "跨性别健康-激素疗法",
+		"trans-health-primary-care": "跨性别健康——初级保健",
+		"trans-health-speech-therapy": "跨性别健康-言语疗法"
+	},
+	"mental-health": {
+		"CATEGORYNAME": "心理健康",
+		"bipoc-support-groups": "BIPOC 支持小组",
+		"hotlines": "热线",
+		"private-therapy-and-counseling": "私人治疗和咨询",
+		"psychological-evaluations-for-asylum-claim": "庇护申请的心理评估",
+		"psychological-evaluations-for-refugee-claim": "对难民申请的心理评估",
+		"substance-use": "物质的使用",
+		"support-for-caregivers-of-trans-youth": "为跨性别青年的护理人员提供支持",
+		"support-for-conversion-therapy-survivors": "为转化疗法幸存者提供支持",
+		"support-groups": "支持团体",
+		"trans-support-groups": "跨性别支持团体"
+	},
+	"sports-and-entertainment": {
+		"CATEGORYNAME": "娱乐和活动",
+		"art-music-literature": "艺术、音乐和文学",
+		"sports-and-entertainment": "体育和娱乐"
+	},
+	"translation-and-interpretation": {
+		"CATEGORYNAME": "笔译和口译",
+		"for-healthcare": "用于医疗保健",
+		"for-legal-services": "用于法律服务",
+		"general-translation-and-interpretation": "一般笔译和口译"
+	},
+	"transportation": {
+		"CATEGORYNAME": "运输",
+		"transit-passes-and-discounts": "过境通行证和折扣",
+		"transportation-assistance": "交通援助"
+	}
+}
