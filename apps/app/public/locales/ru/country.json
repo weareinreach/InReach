@@ -279,7 +279,7 @@
 		"demonym_other": "Cocos Islanders"
 	},
 	"CHE": {
-		"name": "Switzerland",
+		"name": "Швейцария",
 		"demonym_one": "Швейцарский",
 		"demonym_few": "Швейцарский",
 		"demonym_many": "Швейцарский",
@@ -622,7 +622,7 @@
 		"demonym_other": "Greeks"
 	},
 	"GRD": {
-		"name": "Grenada",
+		"name": "Гренада",
 		"demonym_one": "Гренадец",
 		"demonym_few": "Гренады",
 		"demonym_many": "Гренады",
@@ -779,7 +779,7 @@
 		"demonym_other": "Jamaicans"
 	},
 	"JEY": {
-		"name": "Jersey",
+		"name": "Джерси",
 		"demonym_one": "Остров каналов",
 		"demonym_few": "Острова каналов",
 		"demonym_many": "Острова каналов",
