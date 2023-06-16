@@ -1,6 +1,4 @@
 {
-	"dataAdmin": "Администратор данных",
-	"dataManager": "Управление данными",
 	"eth-american-indiannative-americanindigenous-person": "Американское индейское/коренное население",
 	"eth-asian": "Азия",
 	"eth-biracialmultiracial": "Бирасиальная многорасовая",
@@ -29,17 +27,15 @@
 	"immigration-asylee": "Асыле (предоставленное убежище)",
 	"immigration-asylum-seeker": "Искатель убежища",
 	"immigration-dreamer": "Dreamer (получатель DACA)",
-	"immigration-immigrant": "Иммигрант",
+	"immigration-immigrant": "Другие иммигранты",
+	"immigration-none": "Я не идентифицирую ни одного из этих",
+	"immigration-prefer-not-to-say": "Предпочитаю не говорить",
 	"immigration-refugee": "Беженцы",
-	"lcr": "Просмотр локального сообщества",
-	"provider": "Поставщик услуг",
-	"seeker": "Искатель ресурсов",
-	"sysadmin": "Системный администратор",
 	"type-dataadmin": "Администратор данных",
 	"type-datamanager": "Управление данными",
+	"type-individual": "Индивидуальный",
 	"type-lcr": "Просмотр локального сообщества",
 	"type-provider": "Поставщик услуг",
-	"type-seeker": "Искатель ресурсов",
 	"type-sysadmin": "Системный администратор",
 	"type-system": "Системный пользователь"
 }
