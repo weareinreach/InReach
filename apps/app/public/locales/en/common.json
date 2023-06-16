@@ -18,6 +18,7 @@
 	},
 	"badge": {
 		"community-tool-tip": "Community served by this organization.",
+		"remote-tool-tip": "Available remotely",
 		"service-tool-tip": "Service(s) offered by this organization."
 	},
 	"breadcrumb": {
