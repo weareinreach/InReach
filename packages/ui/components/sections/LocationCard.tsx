@@ -8,44 +8,43 @@ import { useEffect } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { BadgeGroup } from '~ui/components/core/Badge'
+import { Link } from '~ui/components/core/Link'
 import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant } from '~ui/hooks'
 import { type IconList } from '~ui/icon'
+import { trpc as api } from '~ui/lib/trpcClient'
 
-export const LocationCard = (props: LocationCardProps) => {
-	const router = useRouter()
+export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
+	const router = useRouter<'/org/[slug]'>()
 	const variants = useCustomVariant()
 	const { t } = useTranslation(['gov-dist', 'common'])
-	const { location } = props
 	const { ref: addressRef, height: addressListHeight } = useElementSize()
 	const theme = useMantineTheme()
+	const { data, isLoading } = api.location.forLocationCard.useQuery(locationId)
 
-	const adminArea = location.govDist?.abbrev
-		? location.govDist.abbrev
-		: location.govDist?.tsKey
-		? (t(location.govDist.tsKey, { ns: location.govDist.tsNs }) as string)
+	if (!data) return null
+
+	const adminArea = data.govDist?.abbrev
+		? data.govDist.abbrev
+		: data.govDist?.tsKey
+		? (t(data.govDist.tsKey, { ns: data.govDist.tsNs }) satisfies string)
 		: undefined
 
 	const formattedAddress = formatAddress({
-		addressLines: location.street2
-			? [location.street1.trim(), location.street2.trim()]
-			: [location.street1.trim()],
-		locality: location.city.trim(),
-		postalCode: location.postCode ? location.postCode.trim() : undefined,
-		postalCountry: location.country.cca2,
+		addressLines: data.street2 ? [data.street1.trim(), data.street2.trim()] : [data.street1.trim()],
+		locality: data.city.trim(),
+		postalCode: data.postCode ? data.postCode.trim() : undefined,
+		postalCountry: data.country,
 		administrativeArea: adminArea,
 	}).join(', ')
 
-	const primaryPhone = location.phones.find((phone) => Boolean(phone.phone.primary)) ?? location.phones[0]
+	const primaryPhone = data.phones.find((phone) => Boolean(phone.primary)) ?? data.phones[0]
 
 	const parsedPhone = primaryPhone
-		? parsePhoneNumber(primaryPhone.phone.number, primaryPhone.phone.country.cca2 as CountryCode)
+		? parsePhoneNumber(primaryPhone.number, primaryPhone.country as CountryCode)
 		: undefined
 	const formattedPhone = parsedPhone ? parsedPhone.formatNational() : undefined
 
-	const serviceTags = new Set(
-		location.services.flatMap(({ service }) => service.services.map((service) => service.tag.category.tsKey))
-	)
 	const isAddressSingleLine = addressListHeight > 36
 	const addressListVariant = isAddressSingleLine
 		? variants.List.inlineUtil2DarkGray
@@ -55,72 +54,80 @@ export const LocationCard = (props: LocationCardProps) => {
 	)
 	const listProps = { variant: addressListVariant, icon: separator, ref: addressRef }
 
-	const attributeTags = location.attributes.filter(({ attribute }) => Boolean(attribute.showOnLocation))
+	const hasServices = Boolean(data.services.length)
+	const hasAttributes = Boolean(data.attributes.length)
 
-	const hasServices = Boolean(serviceTags.size)
-	const hasAttributes = Boolean(attributeTags.length)
-
-	useEffect(
-		() => {
-			router.prefetch(`/org/${router.query.slug as string}/${location.id}`)
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[location.id]
-	)
+	// useEffect(
+	// 	() => {
+	// 		router.prefetch(`/org/${router.query.slug as string}/${location.id}`)
+	// 	},
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// 	[location.id]
+	// )
 
 	return (
-		<Card
-			w='100%'
-			variant={variants.Card.hoverCoolGray}
-			onClick={() =>
-				router.push({
-					pathname: '/org/[slug]/[orgLocationId]',
-					query: {
-						slug: router.query.slug as string,
-						orgLocationId: location.id,
-					},
-				})
-			}
+		<Link
+			href={{
+				pathname: '/org/[slug]/[orgLocationId]',
+				query: {
+					slug: router.query.slug,
+					orgLocationId: data.id,
+				},
+			}}
+			variant={variants.Link.card}
 		>
-			<Stack spacing={32}>
-				<Stack spacing={12}>
-					<Title order={2}>{location.name}</Title>
-					<List {...listProps}>
-						<List.Item>{formattedAddress}</List.Item>
-						{formattedPhone && <List.Item>{formattedPhone}</List.Item>}
-					</List>
-				</Stack>
-				{hasServices && (
+			<Card
+				w='100%'
+				variant={variants.Card.hoverCoolGray}
+				// onClick={() =>
+				// 	router.push({
+				// 		pathname: '/org/[slug]/[orgLocationId]',
+				// 		query: {
+				// 			slug: router.query.slug as string,
+				// 			orgLocationId: location.id,
+				// 		},
+				// 	})
+				// }
+			>
+				<Stack spacing={32}>
 					<Stack spacing={12}>
-						<Title order={3}>{t('services', { ns: 'common' })}</Title>
-						<BadgeGroup
-							badges={[...serviceTags].map((tsKey) => ({
-								variant: 'service',
-								tsKey,
-							}))}
-						/>
+						<Title order={2}>{data.name}</Title>
+						<List {...listProps}>
+							<List.Item>{formattedAddress}</List.Item>
+							{formattedPhone && <List.Item>{formattedPhone}</List.Item>}
+						</List>
 					</Stack>
-				)}
-				<Group spacing={24}>
-					{hasAttributes && (
-						<BadgeGroup
-							badges={attributeTags.map(({ attribute }) => ({
-								variant: 'attribute',
-								tsNs: attribute.tsNs,
-								tsKey: attribute.tsKey,
-								icon: attribute.icon as IconList,
-							}))}
-						/>
+					{hasServices && (
+						<Stack spacing={12}>
+							<Title order={3}>{t('services', { ns: 'common' })}</Title>
+							<BadgeGroup
+								badges={data.services.map((tsKey) => ({
+									variant: 'service',
+									tsKey,
+								}))}
+							/>
+						</Stack>
 					)}
-					<Rating hideCount recordId={location.id} />
-				</Group>
-			</Stack>
-		</Card>
+					<Group spacing={24}>
+						{hasAttributes && (
+							<BadgeGroup
+								badges={data.attributes.map((attribute) => ({
+									variant: 'attribute',
+									tsNs: attribute.tsNs,
+									tsKey: attribute.tsKey,
+									icon: attribute.icon as IconList,
+								}))}
+							/>
+						)}
+						<Rating hideCount recordId={data.id} />
+					</Group>
+				</Stack>
+			</Card>
+		</Link>
 	)
 }
 
-type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>
-
 export type LocationCardProps = {
-	location: PageQueryResult['locations'][number]
+	locationId: string
+	remoteOnly?: boolean
 }

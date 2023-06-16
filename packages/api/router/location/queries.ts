@@ -111,4 +111,50 @@ export const queries = defineRouter({
 
 			return transformedResult
 		}),
+	forLocationCard: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		const result = await ctx.prisma.orgLocation.findUniqueOrThrow({
+			where: {
+				id: input,
+				...isPublic,
+			},
+			select: {
+				id: true,
+				name: true,
+				street1: true,
+				street2: true,
+				city: true,
+				postCode: true,
+				country: { select: { cca2: true } },
+				govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
+				phones: {
+					where: { phone: isPublic },
+					select: { phone: { select: { primary: true, number: true, country: { select: { cca2: true } } } } },
+				},
+				attributes: { select: { attribute: { select: { tsNs: true, tsKey: true, icon: true } } } },
+				services: {
+					select: {
+						service: {
+							select: {
+								services: { select: { tag: { select: { category: { select: { tsKey: true } } } } } },
+							},
+						},
+					},
+				},
+			},
+		})
+
+		const transformed = {
+			...result,
+			country: result.country.cca2,
+			phones: result.phones.map(({ phone }) => ({ ...phone, country: phone.country.cca2 })),
+			attributes: result.attributes.map(({ attribute }) => attribute),
+			services: [
+				...new Set(
+					result.services.flatMap(({ service }) => service.services.map(({ tag }) => tag.category.tsKey))
+				),
+			],
+		}
+
+		return transformed
+	}),
 })
