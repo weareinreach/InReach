@@ -326,18 +326,13 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						label,
 						multiline: true,
 						width: label.length > MAX_CHARACTERS ? 600 : 'auto',
+						closeDelay: 1000,
+						style: { pointerEvents: 'auto' },
 					}
 				}
 				case 'unclaimed': {
 					const MAX_CHARACTERS = 80
-					const label = (
-						<Trans
-							i18nKey='badge.unclaimed-tool-tip'
-							components={{
-								link1: <Link external href='#' variant={variants.Link.inheritStyle} />,
-							}}
-						/>
-					)
+					const label = <Trans i18nKey='badge.unclaimed-tool-tip' />
 					return {
 						label,
 						multiline: true,

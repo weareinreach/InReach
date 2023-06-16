@@ -1,5 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
+import { ClaimOrgModal } from '~ui/modals/ClaimOrg'
 import { commonTheme as theme } from '~ui/theme/common'
 
 import { Badge, BadgeGroup } from './Badge'
