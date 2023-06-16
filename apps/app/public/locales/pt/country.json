@@ -201,7 +201,7 @@
 		"demonym_other": "Moradores das Ilhas Cocos"
 	},
 	"CHE": {
-		"name": "Switzerland",
+		"name": "Suíça",
 		"demonym_one": "suíça",
 		"demonym_other": "suíça"
 	},
@@ -446,7 +446,7 @@
 		"demonym_other": "Gregos"
 	},
 	"GRD": {
-		"name": "Grenada",
+		"name": "Granada",
 		"demonym_one": "granadino",
 		"demonym_other": "Granadinos"
 	},
@@ -559,7 +559,7 @@
 		"demonym_other": "Jamaicanos"
 	},
 	"JEY": {
-		"name": "Jersey",
+		"name": "Jérsei",
 		"demonym_one": "Channel Islander",
 		"demonym_other": "Channel Islanders"
 	},
@@ -619,7 +619,7 @@
 		"demonym_other": "laosianos"
 	},
 	"LBN": {
-		"name": "Lebanon",
+		"name": "Líbano",
 		"demonym_one": "libanês",
 		"demonym_other": "libanês"
 	},
@@ -894,7 +894,7 @@
 		"demonym_other": "polonês"
 	},
 	"PRI": {
-		"name": "Puerto Rico",
+		"name": "Porto Rico",
 		"demonym_one": "Porto-riquenho",
 		"demonym_other": "Porto-riquenhos"
 	},
