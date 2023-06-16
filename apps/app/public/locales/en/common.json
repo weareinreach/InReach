@@ -18,7 +18,7 @@
 	},
 	"badge": {
 		"claimed-tool-tip": "This organization has been claimed by a verified representative. <link1>Learn more.</link1>",
-		"unclaimed-tool-tip":"This organization has not yet been claimed by a representative. <link1>Claim this organization</link1> to build trust with our community, update your own information, and more."
+		"unclaimed-tool-tip":"This organization has not yet been claimed by a representative. <link1>Claim this organization</link1> to build trust with our community, update your own information, and more.",
 		"community-tool-tip": "Community served by this organization.",
 		"service-tool-tip": "Service(s) offered by this organization."
 	},
