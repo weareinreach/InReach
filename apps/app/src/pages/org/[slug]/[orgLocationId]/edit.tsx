@@ -26,7 +26,7 @@ const OrgLocationPage: NextPage = () => {
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const { data: orgData, status: orgDataStatus } = api.organization.getBySlug.useQuery(query)
-	const { data, isLoading, status } = api.location.getById.useQuery({ id: orgLocationId })
+	const { data, status } = api.location.getById.useQuery({ id: orgLocationId })
 	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
 		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
 	})
@@ -35,12 +35,7 @@ const OrgLocationPage: NextPage = () => {
 	}, [data, status, orgData, orgDataStatus])
 	if (loading || !data || !orgData) return <>Loading</>
 
-	const { emails, phones, socialMedia, websites, attributes, description, services, photos, reviews } = data
-
-	const locations = (() => {
-		const { street1, street2, city, postCode, govDist, country } = data
-		return [{ street1, street2, city, postCode, govDist, country }]
-	})()
+	const { emails, phones, socialMedia, websites, attributes, description, photos, reviews } = data
 
 	return (
 		<>
@@ -81,7 +76,7 @@ const OrgLocationPage: NextPage = () => {
 							<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 						</Tabs.List>
 						<Tabs.Panel value='services'>
-							<ServicesInfoCard services={services} />
+							<ServicesInfoCard parentId={data.id} />
 						</Tabs.Panel>
 						<Tabs.Panel value='photos'>
 							<PhotosSection photos={photos} />

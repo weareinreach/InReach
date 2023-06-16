@@ -9,17 +9,14 @@ import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
-// import { getEnv } from '@weareinreach/env'
-// import { prisma } from '@weareinreach/db/client'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
-// import {LocationCard } from '@weareinreach/ui/components/sections/LocationCard'
 import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
-import { useScreenSize } from '@weareinreach/ui/hooks/useScreenSize'
+// import { useScreenSize } from '@weareinreach/ui/hooks/useScreenSize'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
@@ -71,7 +68,6 @@ const OrgLocationPage: NextPage = () => {
 	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
 		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
 	})
-	const { isMobile } = useScreenSize()
 	const { classes } = useStyles()
 
 	const servicesRef = useRef<HTMLDivElement>(null)
@@ -83,12 +79,7 @@ const OrgLocationPage: NextPage = () => {
 	}, [data, status, orgData, orgDataStatus])
 	if (loading || !data || !orgData || router.isFallback) return <LoadingState />
 
-	const { emails, phones, socialMedia, websites, attributes, description, services, photos, reviews } = data
-
-	// const locations = (() => {
-	// 	const { street1, street2, city, postCode, govDist, country } = data
-	// 	return [{ street1, street2, city, postCode, govDist, country }]
-	// })()
+	const { emails, phones, socialMedia, websites, attributes, description, photos, reviews } = data
 
 	return (
 		<>
@@ -158,22 +149,16 @@ const OrgLocationPage: NextPage = () => {
 							<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
 							<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 						</Tabs.List>
-						{/* <Tabs.Panel value='services'> */}
 						<Stack spacing={40} pt={40}>
 							<div ref={servicesRef}>
-								<ServicesInfoCard services={services} />
+								<ServicesInfoCard parentId={data.id} />
 							</div>
-							{/* </Tabs.Panel> */}
-							{/* <Tabs.Panel value='photos'> */}
 							<div ref={photosRef}>
 								<PhotosSection photos={photos} />
 							</div>
-							{/* </Tabs.Panel> */}
-							{/* <Tabs.Panel value='reviews'> */}
 							<div ref={reviewsRef}>
 								<ReviewSection reviews={reviews} />
 							</div>
-							{/* </Tabs.Panel> */}
 						</Stack>
 					</Tabs>
 				</Stack>
@@ -191,31 +176,10 @@ const OrgLocationPage: NextPage = () => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	// eslint-disable-next-line node/no-process-env, turbo/no-undeclared-env-vars
-	// if (getEnv('VERCEL_ENV') === 'production' || process.env.PRERENDER === 'true') {
-	// 	const pages = await prisma.organization.findMany({
-	// 		where: { published: true, deleted: false },
-	// 		select: { slug: true, locations: { select: { id: true }, where: { published: true, deleted: false } } },
-	// 	})
-
-	// 	return {
-	// 		paths: compact(
-	// 			pages.flatMap(({ slug, locations }) => {
-	// 				if (locations.length > 1) {
-	// 					return locations.map((location) => ({ params: { slug: slug, orgLocationId: location.id } }))
-	// 				}
-	// 			})
-	// 		),
-	// 		// fallback: 'blocking', // false or "blocking"
-	// 		fallback: true,
-	// 	}
-	// } else {
 	return {
 		paths: [],
-		// fallback: 'blocking',
 		fallback: true,
 	}
-	// }
 }
 export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
 	const urlParams = z.object({ slug: z.string(), orgLocationId: z.string() }).safeParse(params)

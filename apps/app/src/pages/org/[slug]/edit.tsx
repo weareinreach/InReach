@@ -43,7 +43,6 @@ const OrganizationPage: NextPage = () => {
 		attributes,
 		description,
 		slug,
-		services,
 		photos,
 		reviews,
 		locations,
@@ -60,7 +59,7 @@ const OrganizationPage: NextPage = () => {
 					<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 				</Tabs.List>
 				<Tabs.Panel value='services'>
-					<ServicesInfoCard services={services} />
+					<ServicesInfoCard parentId={organizationId} />
 				</Tabs.Panel>
 				<Tabs.Panel value='photos'>
 					<PhotosSection photos={photos} />
@@ -72,7 +71,7 @@ const OrganizationPage: NextPage = () => {
 		) : (
 			<>
 				{locations.map((location) => (
-					<LocationCard key={location.id} location={location} />
+					<LocationCard key={location.id} locationId={location.id} />
 				))}
 			</>
 		)

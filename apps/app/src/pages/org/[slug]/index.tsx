@@ -64,6 +64,14 @@ const OrganizationPage: NextPage = () => {
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const { data, status } = api.organization.getBySlug.useQuery(query)
+	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
+		{ parentId: data?.id ?? '', remoteOnly: true },
+		{
+			enabled: !!data?.id && data?.locations.length > 1,
+			// @ts-expect-error trpc/trpc#4519
+			select: (data) => data.length !== 0,
+		}
+	)
 	const { ref, width } = useElementSize()
 	const { searchParams } = useSearchState()
 	const theme = useMantineTheme()
@@ -104,7 +112,6 @@ const OrganizationPage: NextPage = () => {
 		attributes,
 		description,
 		slug,
-		services,
 		photos,
 		reviews,
 		locations,
@@ -140,22 +147,16 @@ const OrganizationPage: NextPage = () => {
 					<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
 					<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 				</Tabs.List>
-				{/* <Tabs.Panel value='services'> */}
 				<Stack spacing={40} pt={40}>
 					<div ref={servicesRef}>
-						<ServicesInfoCard services={services} />
+						<ServicesInfoCard parentId={organizationId} />
 					</div>
-					{/* </Tabs.Panel> */}
-					{/* <Tabs.Panel value='photos'> */}
 					<div ref={photosRef}>
 						<PhotosSection photos={photos} />
 					</div>
-					{/* </Tabs.Panel> */}
-					{/* <Tabs.Panel value='reviews'> */}
 					<div ref={reviewsRef}>
 						<ReviewSection reviews={reviews} />
 					</div>
-					{/* </Tabs.Panel> */}
 				</Stack>
 			</Tabs>
 		) : (
@@ -165,8 +166,9 @@ const OrganizationPage: NextPage = () => {
 				</Tabs.List>
 				<Stack pt={40} spacing={40}>
 					{locations.map((location) => (
-						<LocationCard key={location.id} location={location} />
+						<LocationCard key={location.id} locationId={location.id} />
 					))}
+					{hasRemote && <LocationCard remoteOnly />}
 				</Stack>
 			</Tabs>
 		)
@@ -227,8 +229,6 @@ const OrganizationPage: NextPage = () => {
 						<Stack spacing={40} w='100%'>
 							<Divider />
 							<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
-							{/* </Grid.Col> */}
-							{/* <Grid.Col order={4}> */}
 							{sidebar}
 						</Stack>
 					)}
@@ -239,8 +239,6 @@ const OrganizationPage: NextPage = () => {
 				<Grid.Col order={2}>
 					<Stack spacing={40}>
 						<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
-						{/* </Grid.Col> */}
-						{/* <Grid.Col order={4}> */}
 						{sidebar}
 					</Stack>
 				</Grid.Col>
@@ -250,21 +248,8 @@ const OrganizationPage: NextPage = () => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	// eslint-disable-next-line node/no-process-env, turbo/no-undeclared-env-vars
-	// if (getEnv('VERCEL_ENV') === 'production' || process.env.PRERENDER === 'true') {
-	// 	const pages = await prisma.organization.findMany({
-	// 		where: { published: true, deleted: false },
-	// 		select: { slug: true },
-	// 	})
-	// 	return {
-	// 		paths: pages.map(({ slug }) => ({ params: { slug } })),
-	// 		// fallback: 'blocking', // false or "blocking"
-	// 		fallback: true,
-	// 	}
-	// } else {
 	return {
 		paths: [],
-		// fallback: 'blocking',
 		fallback: true,
 	}
 	// }
