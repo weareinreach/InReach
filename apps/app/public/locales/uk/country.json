@@ -1,0 +1,1736 @@
+{
+	"ABW": {
+		"name": "Аруба",
+		"demonym_one": "Аруби",
+		"demonym_few": "Аруби",
+		"demonym_many": "Аруби",
+		"demonym_other": "Аруби"
+	},
+	"AFG": {
+		"name": "Афганістан",
+		"demonym_one": "Афганський",
+		"demonym_few": "Афганці",
+		"demonym_many": "Афганці",
+		"demonym_other": "Афганці"
+	},
+	"AGO": {
+		"name": "Ангола",
+		"demonym_one": "Ангольська",
+		"demonym_few": "Анголани",
+		"demonym_many": "Анголани",
+		"demonym_other": "Анголани"
+	},
+	"AIA": {
+		"name": "Ангілья",
+		"demonym_one": "Ангільська",
+		"demonym_few": "Ангільйці",
+		"demonym_many": "Ангільйці",
+		"demonym_other": "Ангільйці"
+	},
+	"ALA": {
+		"name": "Аландські острови",
+		"demonym_one": "Аландська",
+		"demonym_few": "Аландці",
+		"demonym_many": "Аландці",
+		"demonym_other": "Аландці"
+	},
+	"ALB": {
+		"name": "Албанія",
+		"demonym_one": "албанська",
+		"demonym_few": "албанців",
+		"demonym_many": "албанців",
+		"demonym_other": "албанців"
+	},
+	"AND": {
+		"name": "Андорра",
+		"demonym_one": "Андорри",
+		"demonym_few": "Андорри",
+		"demonym_many": "Андорри",
+		"demonym_other": "Андорри"
+	},
+	"ARE": {
+		"name": "Об'єднані Арабські Емірати",
+		"demonym_one": "Емірати",
+		"demonym_few": "Емірати",
+		"demonym_many": "Емірати",
+		"demonym_other": "Емірати"
+	},
+	"ARG": {
+		"name": "Аргентина",
+		"demonym_one": "Аргентинська",
+		"demonym_few": "Аргентинці",
+		"demonym_many": "Аргентинці",
+		"demonym_other": "Аргентинці"
+	},
+	"ARM": {
+		"name": "Вірменія",
+		"demonym_one": "Вірменська",
+		"demonym_few": "вірмени",
+		"demonym_many": "вірмени",
+		"demonym_other": "вірмени"
+	},
+	"ASM": {
+		"name": "Американське Самоа",
+		"demonym_one": "Американський Самоа",
+		"demonym_few": "Американські Самоанці",
+		"demonym_many": "Американські Самоанці",
+		"demonym_other": "Американські Самоанці"
+	},
+	"ATA": {
+		"name": "Антарктида",
+		"demonym_one": "Антарктида",
+		"demonym_few": "Антарктики",
+		"demonym_many": "Антарктики",
+		"demonym_other": "Антарктики"
+	},
+	"ATF": {
+		"name": "Французькі Південні та Антарктичні території",
+		"demonym_one": "Французький",
+		"demonym_few": "Французький",
+		"demonym_many": "Французький",
+		"demonym_other": "Французький"
+	},
+	"ATG": {
+		"name": "Антигуа і Барбуда",
+		"demonym_one": "Антігуан, Барбуданський",
+		"demonym_few": "Антигуани, барбудани",
+		"demonym_many": "Антигуани, барбудани",
+		"demonym_other": "Антигуани, барбудани"
+	},
+	"AUS": {
+		"name": "Австралія",
+		"demonym_one": "Австралійський",
+		"demonym_few": "Австралійці",
+		"demonym_many": "Австралійці",
+		"demonym_other": "Австралійці"
+	},
+	"AUT": {
+		"name": "Австрія",
+		"demonym_one": "Австрійський",
+		"demonym_few": "Австрійці",
+		"demonym_many": "Австрійці",
+		"demonym_other": "Австрійці"
+	},
+	"AZE": {
+		"name": "Азербайджан",
+		"demonym_one": "Азербайджанська",
+		"demonym_few": "азербайджанці",
+		"demonym_many": "азербайджанці",
+		"demonym_other": "азербайджанці"
+	},
+	"BDI": {
+		"name": "Бурунді",
+		"demonym_one": "Бурундійський",
+		"demonym_few": "Бурундійці",
+		"demonym_many": "Бурундійці",
+		"demonym_other": "Бурундійці"
+	},
+	"BEL": {
+		"name": "Бельгія",
+		"demonym_one": "Бельгійський",
+		"demonym_few": "бельгійці",
+		"demonym_many": "бельгійці",
+		"demonym_other": "бельгійці"
+	},
+	"BEN": {
+		"name": "Бенін",
+		"demonym_one": "Бенінський",
+		"demonym_few": "Бенінський",
+		"demonym_many": "Бенінський",
+		"demonym_other": "Бенінський"
+	},
+	"BES": {
+		"name": "Карибські Нідерланди"
+	},
+	"BFA": {
+		"name": "Буркіна-Фасо",
+		"demonym_one": "Буркінабе",
+		"demonym_few": "Буркінабес",
+		"demonym_many": "Буркінабес",
+		"demonym_other": "Буркінабес"
+	},
+	"BGD": {
+		"name": "Бангладеш",
+		"demonym_one": "Бангладешська",
+		"demonym_few": "Бангладешці",
+		"demonym_many": "Бангладешці",
+		"demonym_other": "Бангладешці"
+	},
+	"BGR": {
+		"name": "Болгарія",
+		"demonym_one": "Болгарська",
+		"demonym_few": "Болгари",
+		"demonym_many": "Болгари",
+		"demonym_other": "Болгари"
+	},
+	"BHR": {
+		"name": "Бахрейн",
+		"demonym_one": "Бахрейнський",
+		"demonym_few": "Бахрейнці",
+		"demonym_many": "Бахрейнці",
+		"demonym_other": "Бахрейнці"
+	},
+	"BHS": {
+		"name": "Багамські Острови",
+		"demonym_one": "Багамський",
+		"demonym_few": "Багамці",
+		"demonym_many": "Багамці",
+		"demonym_other": "Багамці"
+	},
+	"BIH": {
+		"name": "Боснія і Герцеговина",
+		"demonym_one": "Боснійська, Герцоговинська",
+		"demonym_few": "Боснійці, герцеговінці",
+		"demonym_many": "Боснійці, герцеговінці",
+		"demonym_other": "Боснійці, герцеговінці"
+	},
+	"BLM": {
+		"name": "Сен-Бартельмі",
+		"demonym_one": "Острів Сен-Бартельмі",
+		"demonym_few": "Сен-Бартельмі Айлендерс",
+		"demonym_many": "Сен-Бартельмі Айлендерс",
+		"demonym_other": "Сен-Бартельмі Айлендерс"
+	},
+	"BLR": {
+		"name": "Білорусь",
+		"demonym_one": "Білоруська",
+		"demonym_few": "білоруси",
+		"demonym_many": "білоруси",
+		"demonym_other": "білоруси"
+	},
+	"BLZ": {
+		"name": "Беліз",
+		"demonym_one": "Белізький",
+		"demonym_few": "Белізці",
+		"demonym_many": "Белізці",
+		"demonym_other": "Белізці"
+	},
+	"BMU": {
+		"name": "Бермуди",
+		"demonym_one": "Бермудський",
+		"demonym_few": "бермудці",
+		"demonym_many": "бермудці",
+		"demonym_other": "бермудці"
+	},
+	"BOL": {
+		"name": "Болівія",
+		"demonym_one": "болівійський",
+		"demonym_few": "болівійці",
+		"demonym_many": "болівійці",
+		"demonym_other": "болівійці"
+	},
+	"BRA": {
+		"name": "Бразилія",
+		"demonym_one": "Бразильська",
+		"demonym_few": "Бразильці",
+		"demonym_many": "Бразильці",
+		"demonym_other": "Бразильці"
+	},
+	"BRB": {
+		"name": "Барбадос",
+		"demonym_one": "Барбадоський",
+		"demonym_few": "барбадоці",
+		"demonym_many": "барбадоці",
+		"demonym_other": "барбадоці"
+	},
+	"BRN": {
+		"name": "Бруней",
+		"demonym_one": "Брунейський",
+		"demonym_few": "Брунеї",
+		"demonym_many": "Брунеї",
+		"demonym_other": "Брунеї"
+	},
+	"BTN": {
+		"name": "Бутан",
+		"demonym_one": "бутанський",
+		"demonym_few": "бутанський",
+		"demonym_many": "бутанський",
+		"demonym_other": "бутанський"
+	},
+	"BVT": {
+		"name": "Острів Буве"
+	},
+	"BWA": {
+		"name": "Ботсвана",
+		"demonym_one": "Мотсвана",
+		"demonym_few": "Батсвана",
+		"demonym_many": "Батсвана",
+		"demonym_other": "Батсвана"
+	},
+	"CAF": {
+		"name": "Центрально-Африканська Республіка",
+		"demonym_one": "Центрально-Африканська",
+		"demonym_few": "Центральноафриканці",
+		"demonym_many": "Центральноафриканці",
+		"demonym_other": "Центральноафриканці"
+	},
+	"CAN": {
+		"name": "Канади",
+		"demonym_one": "Канадський",
+		"demonym_few": "Канадці",
+		"demonym_many": "Канадці",
+		"demonym_other": "Канадці"
+	},
+	"CCK": {
+		"name": "Кокосові (Кілінгові) острови",
+		"demonym_one": "Кокосові острови",
+		"demonym_few": "Кокосові остров'яни",
+		"demonym_many": "Кокосові остров'яни",
+		"demonym_other": "Кокосові остров'яни"
+	},
+	"CHE": {
+		"name": "Switzerland",
+		"demonym_one": "Швейцарський",
+		"demonym_few": "Швейцарський",
+		"demonym_many": "Швейцарський",
+		"demonym_other": "Швейцарський"
+	},
+	"CHL": {
+		"name": "Чилі",
+		"demonym_one": "Чилійський",
+		"demonym_few": "Чилійці",
+		"demonym_many": "Чилійці",
+		"demonym_other": "Чилійці"
+	},
+	"CHN": {
+		"name": "Китай",
+		"demonym_one": "Китайська",
+		"demonym_few": "Китайська",
+		"demonym_many": "Китайська",
+		"demonym_other": "Китайська"
+	},
+	"CIV": {
+		"name": "Кот-д'Івуар",
+		"demonym_one": "Івуарський",
+		"demonym_few": "Івурійці",
+		"demonym_many": "Івурійці",
+		"demonym_other": "Івурійці"
+	},
+	"CMR": {
+		"name": "Камерун",
+		"demonym_one": "Камерунський",
+		"demonym_few": "камерунці",
+		"demonym_many": "камерунці",
+		"demonym_other": "камерунці"
+	},
+	"COD": {
+		"name": "ДР Конго",
+		"demonym_one": "Конголезька",
+		"demonym_few": "Конголезька",
+		"demonym_many": "Конголезька",
+		"demonym_other": "Конголезька"
+	},
+	"COG": {
+		"name": "Республіка Конго",
+		"demonym_one": "Конголезька",
+		"demonym_few": "Конголезька",
+		"demonym_many": "Конголезька",
+		"demonym_other": "Конголезька"
+	},
+	"COK": {
+		"name": "Острови Кука",
+		"demonym_one": "Кука остров'янин",
+		"demonym_few": "Остров'яни Кука",
+		"demonym_many": "Остров'яни Кука",
+		"demonym_other": "Остров'яни Кука"
+	},
+	"COL": {
+		"name": "Колумбія",
+		"demonym_one": "колумбійський",
+		"demonym_few": "колумбійців",
+		"demonym_many": "колумбійців",
+		"demonym_other": "колумбійців"
+	},
+	"COM": {
+		"name": "Коморські Острови",
+		"demonym_one": "Коморський",
+		"demonym_few": "Комори",
+		"demonym_many": "Комори",
+		"demonym_other": "Комори"
+	},
+	"CPV": {
+		"name": "Кабо-Верде",
+		"demonym_one": "Кейп-Вердіан",
+		"demonym_few": "Кейп-Вердіани",
+		"demonym_many": "Кейп-Вердіани",
+		"demonym_other": "Кейп-Вердіани"
+	},
+	"CRI": {
+		"name": "Коста-Ріка",
+		"demonym_one": "Коста-ріканський",
+		"demonym_few": "Костариканці",
+		"demonym_many": "Костариканці",
+		"demonym_other": "Костариканці"
+	},
+	"CUB": {
+		"name": "Куба",
+		"demonym_one": "Кубинська",
+		"demonym_few": "Кубинці",
+		"demonym_many": "Кубинці",
+		"demonym_other": "Кубинці"
+	},
+	"CUW": {
+		"name": "Кюрасао",
+		"demonym_one": "Голландська",
+		"demonym_few": "Голландська",
+		"demonym_many": "Голландська",
+		"demonym_other": "Голландська"
+	},
+	"CXR": {
+		"name": "Острів Різдва",
+		"demonym_one": "Остров'янин Різдва",
+		"demonym_few": "Остров'яни Різдва",
+		"demonym_many": "Остров'яни Різдва",
+		"demonym_other": "Остров'яни Різдва"
+	},
+	"CYM": {
+		"name": "Кайманові острови",
+		"demonym_one": "Кайманський",
+		"demonym_few": "Кайманові",
+		"demonym_many": "Кайманові",
+		"demonym_other": "Кайманові"
+	},
+	"CYP": {
+		"name": "Кіпр",
+		"demonym_one": "Кіпрський",
+		"demonym_few": "кіпріотів",
+		"demonym_many": "кіпріотів",
+		"demonym_other": "кіпріотів"
+	},
+	"CZE": {
+		"name": "Чехія",
+		"demonym_one": "Чеська",
+		"demonym_few": "чехи",
+		"demonym_many": "чехи",
+		"demonym_other": "чехи"
+	},
+	"DEU": {
+		"name": "Німеччина",
+		"demonym_one": "Німецька",
+		"demonym_few": "німці",
+		"demonym_many": "німці",
+		"demonym_other": "німці"
+	},
+	"DJI": {
+		"name": "Джибуті",
+		"demonym_one": "Джибуті",
+		"demonym_few": "Джибуті",
+		"demonym_many": "Джибуті",
+		"demonym_other": "Джибуті"
+	},
+	"DMA": {
+		"name": "Домініка",
+		"demonym_one": "Домініканець",
+		"demonym_few": "Домініканці",
+		"demonym_many": "Домініканці",
+		"demonym_other": "Домініканці"
+	},
+	"DNK": {
+		"name": "Данія",
+		"demonym_one": "Данська",
+		"demonym_few": "Данська",
+		"demonym_many": "Данська",
+		"demonym_other": "Данська"
+	},
+	"DOM": {
+		"name": "Домініканська Республіка",
+		"demonym_one": "Домініканець",
+		"demonym_few": "Домініканці",
+		"demonym_many": "Домініканці",
+		"demonym_other": "Домініканці"
+	},
+	"DZA": {
+		"name": "Алжир",
+		"demonym_one": "Алжирський",
+		"demonym_few": "Алжирці",
+		"demonym_many": "Алжирці",
+		"demonym_other": "Алжирці"
+	},
+	"ECU": {
+		"name": "Еквадор",
+		"demonym_one": "еквадорська",
+		"demonym_few": "еквадорці",
+		"demonym_many": "еквадорці",
+		"demonym_other": "еквадорці"
+	},
+	"EGY": {
+		"name": "Єгипет",
+		"demonym_one": "Єгипетський",
+		"demonym_few": "єгиптяни",
+		"demonym_many": "єгиптяни",
+		"demonym_other": "єгиптяни"
+	},
+	"ERI": {
+		"name": "Еритреї",
+		"demonym_one": "Еритрейський",
+		"demonym_few": "еритрейців",
+		"demonym_many": "еритрейців",
+		"demonym_other": "еритрейців"
+	},
+	"ESH": {
+		"name": "Західна Сахара",
+		"demonym_one": "Сахраві",
+		"demonym_few": "Сахарська",
+		"demonym_many": "Сахарська",
+		"demonym_other": "Сахарська"
+	},
+	"ESP": {
+		"name": "Іспанія",
+		"demonym_one": "Іспанська",
+		"demonym_few": "Іспанська",
+		"demonym_many": "Іспанська",
+		"demonym_other": "Іспанська"
+	},
+	"EST": {
+		"name": "Естонія",
+		"demonym_one": "естонська",
+		"demonym_few": "Естонці",
+		"demonym_many": "Естонці",
+		"demonym_other": "Естонці"
+	},
+	"ETH": {
+		"name": "Ефіопія",
+		"demonym_one": "Ефіопський",
+		"demonym_few": "Ефіопи",
+		"demonym_many": "Ефіопи",
+		"demonym_other": "Ефіопи"
+	},
+	"FIN": {
+		"name": "Фінляндія",
+		"demonym_one": "Фінська",
+		"demonym_few": "фінів",
+		"demonym_many": "фінів",
+		"demonym_other": "фінів"
+	},
+	"FJI": {
+		"name": "Фіджі",
+		"demonym_one": "фіджійського",
+		"demonym_few": "фіджійці",
+		"demonym_many": "фіджійці",
+		"demonym_other": "фіджійці"
+	},
+	"FLK": {
+		"name": "Фолклендські острови",
+		"demonym_one": "Фолклендських островів",
+		"demonym_few": "Жителі Фолклендських островів",
+		"demonym_many": "Жителі Фолклендських островів",
+		"demonym_other": "Жителі Фолклендських островів"
+	},
+	"FRA": {
+		"name": "Франція",
+		"demonym_one": "Французький",
+		"demonym_few": "Французький",
+		"demonym_many": "Французький",
+		"demonym_other": "Французький"
+	},
+	"FRO": {
+		"name": "Фарерські острови",
+		"demonym_one": "Фарерські",
+		"demonym_few": "Фарерські",
+		"demonym_many": "Фарерські",
+		"demonym_other": "Фарерські"
+	},
+	"FSM": {
+		"name": "Мікронезія",
+		"demonym_one": "Мікронезійська",
+		"demonym_few": "Мікронезійці",
+		"demonym_many": "Мікронезійці",
+		"demonym_other": "Мікронезійці"
+	},
+	"GAB": {
+		"name": "Габон",
+		"demonym_one": "Габонський",
+		"demonym_few": "Габонський",
+		"demonym_many": "Габонський",
+		"demonym_other": "Габонський"
+	},
+	"GBR": {
+		"name": "Сполучене Королівство",
+		"demonym_one": "Британці",
+		"demonym_few": "Британці",
+		"demonym_many": "Британці",
+		"demonym_other": "Британці"
+	},
+	"GEO": {
+		"name": "Грузія",
+		"demonym_one": "Грузинська",
+		"demonym_few": "Грузини",
+		"demonym_many": "Грузини",
+		"demonym_other": "Грузини"
+	},
+	"GGY": {
+		"name": "Guernsey",
+		"demonym_one": "Канал остров'янин",
+		"demonym_few": "Канал остров'ян",
+		"demonym_many": "Канал остров'ян",
+		"demonym_other": "Канал остров'ян"
+	},
+	"GHA": {
+		"name": "Гана",
+		"demonym_one": "ганський",
+		"demonym_few": "Ганці",
+		"demonym_many": "Ганці",
+		"demonym_other": "Ганці"
+	},
+	"GIB": {
+		"name": "Гібралтар",
+		"demonym_one": "Гібралтарський",
+		"demonym_few": "Гібралтарці",
+		"demonym_many": "Гібралтарці",
+		"demonym_other": "Гібралтарці"
+	},
+	"GIN": {
+		"name": "Гвінея",
+		"demonym_one": "Гвінейська",
+		"demonym_few": "Гвінейці",
+		"demonym_many": "Гвінейці",
+		"demonym_other": "Гвінейці"
+	},
+	"GLP": {
+		"name": "Гваделупа",
+		"demonym_one": "Гваделупа",
+		"demonym_few": "Гваделупи",
+		"demonym_many": "Гваделупи",
+		"demonym_other": "Гваделупи"
+	},
+	"GMB": {
+		"name": "Гамбія",
+		"demonym_one": "Гамбійська",
+		"demonym_few": "Гамбійці",
+		"demonym_many": "Гамбійці",
+		"demonym_other": "Гамбійці"
+	},
+	"GNB": {
+		"name": "Гвінея-Бісау",
+		"demonym_one": "Гвінея-Бісау",
+		"demonym_few": "Гвінея-Бісау",
+		"demonym_many": "Гвінея-Бісау",
+		"demonym_other": "Гвінея-Бісау"
+	},
+	"GNQ": {
+		"name": "Екваторіальної Гвінеї",
+		"demonym_one": "Екваторіальна Гвінеї",
+		"demonym_few": "Екваторіальна Гвінея",
+		"demonym_many": "Екваторіальна Гвінея",
+		"demonym_other": "Екваторіальна Гвінея"
+	},
+	"GRC": {
+		"name": "Греція",
+		"demonym_one": "Грецька",
+		"demonym_few": "Греки",
+		"demonym_many": "Греки",
+		"demonym_other": "Греки"
+	},
+	"GRD": {
+		"name": "Grenada",
+		"demonym_one": "гренадський",
+		"demonym_few": "гренадці",
+		"demonym_many": "гренадці",
+		"demonym_other": "гренадці"
+	},
+	"GRL": {
+		"name": "Гренландія",
+		"demonym_one": "Гренландський",
+		"demonym_few": "Гренландці",
+		"demonym_many": "Гренландці",
+		"demonym_other": "Гренландці"
+	},
+	"GTM": {
+		"name": "Гватемала",
+		"demonym_one": "гватемальського",
+		"demonym_few": "гватемальців",
+		"demonym_many": "гватемальців",
+		"demonym_other": "гватемальців"
+	},
+	"GUF": {
+		"name": "Французька Гвіана"
+	},
+	"GUM": {
+		"name": "Гуам",
+		"demonym_one": "Гуаманський",
+		"demonym_few": "Гуаманці",
+		"demonym_many": "Гуаманці",
+		"demonym_other": "Гуаманці"
+	},
+	"GUY": {
+		"name": "Гайана",
+		"demonym_one": "Гайянка",
+		"demonym_few": "Гайянка",
+		"demonym_many": "Гайянка",
+		"demonym_other": "Гайянка"
+	},
+	"HKG": {
+		"name": "Гонконг",
+		"demonym_one": "Гонконг",
+		"demonym_few": "Гонконг",
+		"demonym_many": "Гонконг",
+		"demonym_other": "Гонконг"
+	},
+	"HMD": {
+		"name": "Острови Херд і Макдональд",
+		"demonym_one": "Херд і Макдональд Айлендер",
+		"demonym_few": "Херд і Макдональд Айлендерс",
+		"demonym_many": "Херд і Макдональд Айлендерс",
+		"demonym_other": "Херд і Макдональд Айлендерс"
+	},
+	"HND": {
+		"name": "Гондурас",
+		"demonym_one": "гондураської",
+		"demonym_few": "Гондурасці",
+		"demonym_many": "Гондурасці",
+		"demonym_other": "Гондурасці"
+	},
+	"HRV": {
+		"name": "Хорватія",
+		"demonym_one": "Хорватська",
+		"demonym_few": "хорватів",
+		"demonym_many": "хорватів",
+		"demonym_other": "хорватів"
+	},
+	"HTI": {
+		"name": "Гаїті",
+		"demonym_one": "Гаїтянська",
+		"demonym_few": "гаїтян",
+		"demonym_many": "гаїтян",
+		"demonym_other": "гаїтян"
+	},
+	"HUN": {
+		"name": "Угорщини",
+		"demonym_one": "Угорська",
+		"demonym_few": "угорці",
+		"demonym_many": "угорці",
+		"demonym_other": "угорці"
+	},
+	"IDN": {
+		"name": "Індонезія",
+		"demonym_one": "індонезійська",
+		"demonym_few": "Індонезійці",
+		"demonym_many": "Індонезійці",
+		"demonym_other": "Індонезійці"
+	},
+	"IMN": {
+		"name": "Острів Мен",
+		"demonym_one": "Менкс",
+		"demonym_few": "Менкс",
+		"demonym_many": "Менкс",
+		"demonym_other": "Менкс"
+	},
+	"IND": {
+		"name": "Індія",
+		"demonym_one": "Індійський",
+		"demonym_few": "індіанці",
+		"demonym_many": "індіанці",
+		"demonym_other": "індіанці"
+	},
+	"IOT": {
+		"name": "Британська територія Індійського океану",
+		"demonym_one": "Індійський",
+		"demonym_few": "індіанці",
+		"demonym_many": "індіанці",
+		"demonym_other": "індіанці"
+	},
+	"IRL": {
+		"name": "Ірландія",
+		"demonym_one": "Ірландський",
+		"demonym_few": "Ірландський",
+		"demonym_many": "Ірландський",
+		"demonym_other": "Ірландський"
+	},
+	"IRN": {
+		"name": "Іран",
+		"demonym_one": "Іранський",
+		"demonym_few": "іранці",
+		"demonym_many": "іранці",
+		"demonym_other": "іранці"
+	},
+	"IRQ": {
+		"name": "Ірак",
+		"demonym_one": "Іракський",
+		"demonym_few": "Іракці",
+		"demonym_many": "Іракці",
+		"demonym_other": "Іракці"
+	},
+	"ISL": {
+		"name": "Ісландія",
+		"demonym_one": "Ісландці",
+		"demonym_few": "Ісландці",
+		"demonym_many": "Ісландці",
+		"demonym_other": "Ісландці"
+	},
+	"ISR": {
+		"name": "Ізраїль",
+		"demonym_one": "ізраїльська",
+		"demonym_few": "Ізраїльтяни",
+		"demonym_many": "Ізраїльтяни",
+		"demonym_other": "Ізраїльтяни"
+	},
+	"ITA": {
+		"name": "Італія",
+		"demonym_one": "італійська",
+		"demonym_few": "італійці",
+		"demonym_many": "італійці",
+		"demonym_other": "італійці"
+	},
+	"JAM": {
+		"name": "Ямайка",
+		"demonym_one": "Ямайська",
+		"demonym_few": "Ямайці",
+		"demonym_many": "Ямайці",
+		"demonym_other": "Ямайці"
+	},
+	"JEY": {
+		"name": "Jersey",
+		"demonym_one": "Канал остров'янин",
+		"demonym_few": "Канал остров'ян",
+		"demonym_many": "Канал остров'ян",
+		"demonym_other": "Канал остров'ян"
+	},
+	"JOR": {
+		"name": "Йорданія",
+		"demonym_one": "Йорданський",
+		"demonym_few": "йорданців",
+		"demonym_many": "йорданців",
+		"demonym_other": "йорданців"
+	},
+	"JPN": {
+		"name": "Японія",
+		"demonym_one": "Японці",
+		"demonym_few": "Японці",
+		"demonym_many": "Японці",
+		"demonym_other": "Японці"
+	},
+	"KAZ": {
+		"name": "Казахстан",
+		"demonym_one": "Казахстанська",
+		"demonym_few": "Казахстанці",
+		"demonym_many": "Казахстанці",
+		"demonym_other": "Казахстанці"
+	},
+	"KEN": {
+		"name": "Кенія",
+		"demonym_one": "Кенійський",
+		"demonym_few": "кенійців",
+		"demonym_many": "кенійців",
+		"demonym_other": "кенійців"
+	},
+	"KGZ": {
+		"name": "Киргизстан",
+		"demonym_one": "Киргизська",
+		"demonym_few": "Киргизська",
+		"demonym_many": "Киргизська",
+		"demonym_other": "Киргизська"
+	},
+	"KHM": {
+		"name": "Камбоджа",
+		"demonym_one": "Камбоджійський",
+		"demonym_few": "Камбоджійці",
+		"demonym_many": "Камбоджійці",
+		"demonym_other": "Камбоджійці"
+	},
+	"KIR": {
+		"name": "Кірібаті",
+		"demonym_one": "Кірібаті",
+		"demonym_few": "Кірібатіс",
+		"demonym_many": "Кірібатіс",
+		"demonym_other": "Кірібатіс"
+	},
+	"KNA": {
+		"name": "Сент-Кітс і Невіс",
+		"demonym_one": "Кіттіціан або Невізіан",
+		"demonym_few": "Кіттяни або невізіанці",
+		"demonym_many": "Кіттяни або невізіанці",
+		"demonym_other": "Кіттяни або невізіанці"
+	},
+	"KOR": {
+		"name": "Південна Корея",
+		"demonym_one": "Південнокорейський",
+		"demonym_few": "Південнокорейці",
+		"demonym_many": "Південнокорейці",
+		"demonym_other": "Південнокорейці"
+	},
+	"KWT": {
+		"name": "Кувейт",
+		"demonym_one": "Кувейтський",
+		"demonym_few": "Кувейт",
+		"demonym_many": "Кувейт",
+		"demonym_other": "Кувейт"
+	},
+	"LAO": {
+		"name": "Лаос",
+		"demonym_one": "лаоська",
+		"demonym_few": "лаосці",
+		"demonym_many": "лаосці",
+		"demonym_other": "лаосці"
+	},
+	"LBN": {
+		"name": "Lebanon",
+		"demonym_one": "Ліванці",
+		"demonym_few": "Ліванці",
+		"demonym_many": "Ліванці",
+		"demonym_other": "Ліванці"
+	},
+	"LBR": {
+		"name": "Ліберія",
+		"demonym_one": "ліберійського",
+		"demonym_few": "ліберійці",
+		"demonym_many": "ліберійці",
+		"demonym_other": "ліберійці"
+	},
+	"LBY": {
+		"name": "Лівія",
+		"demonym_one": "Лівійський",
+		"demonym_few": "лівійці",
+		"demonym_many": "лівійці",
+		"demonym_other": "лівійці"
+	},
+	"LCA": {
+		"name": "Сент-Люсія",
+		"demonym_one": "Сент-Люсіан",
+		"demonym_few": "Сент-Люкіани",
+		"demonym_many": "Сент-Люкіани",
+		"demonym_other": "Сент-Люкіани"
+	},
+	"LIE": {
+		"name": "Ліхтенштейн",
+		"demonym_one": "Ліхтенштейнер",
+		"demonym_few": "Ліхтенштейнери",
+		"demonym_many": "Ліхтенштейнери",
+		"demonym_other": "Ліхтенштейнери"
+	},
+	"LKA": {
+		"name": "Шрі-Ланка",
+		"demonym_one": "Шрі-Ланка",
+		"demonym_few": "шрі-ланкійці",
+		"demonym_many": "шрі-ланкійці",
+		"demonym_other": "шрі-ланкійці"
+	},
+	"LSO": {
+		"name": "Лесото",
+		"demonym_one": "Мосото",
+		"demonym_few": "Басото",
+		"demonym_many": "Басото",
+		"demonym_other": "Басото"
+	},
+	"LTU": {
+		"name": "Литва",
+		"demonym_one": "Литовська",
+		"demonym_few": "литовці",
+		"demonym_many": "литовці",
+		"demonym_other": "литовці"
+	},
+	"LUX": {
+		"name": "Люксембург",
+		"demonym_one": "люксембурзька",
+		"demonym_few": "люксембурзьці",
+		"demonym_many": "люксембурзьці",
+		"demonym_other": "люксембурзьці"
+	},
+	"LVA": {
+		"name": "Латвія",
+		"demonym_one": "Латвійська",
+		"demonym_few": "Латвійці",
+		"demonym_many": "Латвійці",
+		"demonym_other": "Латвійці"
+	},
+	"MAC": {
+		"name": "Макао",
+		"demonym_one": "Китайська",
+		"demonym_few": "Китайська",
+		"demonym_many": "Китайська",
+		"demonym_other": "Китайська"
+	},
+	"MAF": {
+		"name": "Сен-Мартен",
+		"demonym_one": "Острів Сен-Мартен",
+		"demonym_few": "Острів Сен-Мартен",
+		"demonym_many": "Острів Сен-Мартен",
+		"demonym_other": "Острів Сен-Мартен"
+	},
+	"MAR": {
+		"name": "Марокко",
+		"demonym_one": "Марокканські",
+		"demonym_few": "Марокканці",
+		"demonym_many": "Марокканці",
+		"demonym_other": "Марокканці"
+	},
+	"MCO": {
+		"name": "Монако",
+		"demonym_one": "Монако",
+		"demonym_few": "Монегаски",
+		"demonym_many": "Монегаски",
+		"demonym_other": "Монегаски"
+	},
+	"MDA": {
+		"name": "Молдова",
+		"demonym_one": "молдавський",
+		"demonym_few": "Молдавани",
+		"demonym_many": "Молдавани",
+		"demonym_other": "Молдавани"
+	},
+	"MDG": {
+		"name": "Мадагаскар",
+		"demonym_one": "Малагасійська",
+		"demonym_few": "Малагасійська",
+		"demonym_many": "Малагасійська",
+		"demonym_other": "Малагасійська"
+	},
+	"MDV": {
+		"name": "Мальдіви",
+		"demonym_one": "Мальдіванський",
+		"demonym_few": "Мальдівські",
+		"demonym_many": "Мальдівські",
+		"demonym_other": "Мальдівські"
+	},
+	"MEX": {
+		"name": "Мексика",
+		"demonym_one": "Мексиканський",
+		"demonym_few": "Мексиканці",
+		"demonym_many": "Мексиканці",
+		"demonym_other": "Мексиканці"
+	},
+	"MHL": {
+		"name": "Маршаллові Острови",
+		"demonym_one": "Маршаллезе",
+		"demonym_few": "Маршаллезе",
+		"demonym_many": "Маршаллезе",
+		"demonym_other": "Маршаллезе"
+	},
+	"MKD": {
+		"name": "Північна Македонія",
+		"demonym_one": "Македонська",
+		"demonym_few": "Македонці",
+		"demonym_many": "Македонці",
+		"demonym_other": "Македонці"
+	},
+	"MLI": {
+		"name": "Малі",
+		"demonym_one": "Маліан",
+		"demonym_few": "Малійці",
+		"demonym_many": "Малійці",
+		"demonym_other": "Малійці"
+	},
+	"MLT": {
+		"name": "Мальта",
+		"demonym_one": "мальтійська",
+		"demonym_few": "мальтійська",
+		"demonym_many": "мальтійська",
+		"demonym_other": "мальтійська"
+	},
+	"MMR": {
+		"name": "М'янма",
+		"demonym_one": "Бамар",
+		"demonym_few": "Бабарс",
+		"demonym_many": "Бабарс",
+		"demonym_other": "Бабарс"
+	},
+	"MNE": {
+		"name": "Чорногорія",
+		"demonym_one": "Чорногорський",
+		"demonym_few": "чорногорці",
+		"demonym_many": "чорногорці",
+		"demonym_other": "чорногорці"
+	},
+	"MNG": {
+		"name": "Монголія",
+		"demonym_one": "Монгольська",
+		"demonym_few": "монголи",
+		"demonym_many": "монголи",
+		"demonym_other": "монголи"
+	},
+	"MNP": {
+		"name": "Північні Маріанські острови",
+		"demonym_one": "Американський",
+		"demonym_few": "американці",
+		"demonym_many": "американці",
+		"demonym_other": "американці"
+	},
+	"MOZ": {
+		"name": "Мозамбік",
+		"demonym_one": "Мозамбіка",
+		"demonym_few": "Мозамбіки",
+		"demonym_many": "Мозамбіки",
+		"demonym_other": "Мозамбіки"
+	},
+	"MRT": {
+		"name": "Мавританія",
+		"demonym_one": "мавританська",
+		"demonym_few": "мавританці",
+		"demonym_many": "мавританці",
+		"demonym_other": "мавританці"
+	},
+	"MSR": {
+		"name": "Монтсеррат",
+		"demonym_one": "Монтсерратійський",
+		"demonym_few": "Монсерратійці",
+		"demonym_many": "Монсерратійці",
+		"demonym_other": "Монсерратійці"
+	},
+	"MTQ": {
+		"name": "Мартініка",
+		"demonym_one": "Французький",
+		"demonym_few": "Французький",
+		"demonym_many": "Французький",
+		"demonym_other": "Французький"
+	},
+	"MUS": {
+		"name": "Маврикій",
+		"demonym_one": "Маврикія",
+		"demonym_few": "Маврикія",
+		"demonym_many": "Маврикія",
+		"demonym_other": "Маврикія"
+	},
+	"MWI": {
+		"name": "Малаві",
+		"demonym_one": "Малавійська",
+		"demonym_few": "малавійці",
+		"demonym_many": "малавійці",
+		"demonym_other": "малавійці"
+	},
+	"MYS": {
+		"name": "Малайзія",
+		"demonym_one": "малайзійський",
+		"demonym_few": "малайзійці",
+		"demonym_many": "малайзійці",
+		"demonym_other": "малайзійці"
+	},
+	"MYT": {
+		"name": "Майотта",
+		"demonym_one": "Махоран",
+		"demonym_few": "Магорани",
+		"demonym_many": "Магорани",
+		"demonym_other": "Магорани"
+	},
+	"NAM": {
+		"name": "Намібія",
+		"demonym_one": "намібійського",
+		"demonym_few": "Намібійці",
+		"demonym_many": "Намібійці",
+		"demonym_other": "Намібійці"
+	},
+	"NCL": {
+		"name": "Нова Каледонія",
+		"demonym_one": "Нова Каледонія",
+		"demonym_few": "Нової Каледонії",
+		"demonym_many": "Нової Каледонії",
+		"demonym_other": "Нової Каледонії"
+	},
+	"NER": {
+		"name": "Нігер",
+		"demonym_one": "Нігерія",
+		"demonym_few": "Нігерійці",
+		"demonym_many": "Нігерійці",
+		"demonym_other": "Нігерійці"
+	},
+	"NFK": {
+		"name": "Острів Норфолк",
+		"demonym_one": "Остров'янин Норфолк",
+		"demonym_few": "Норфолк Айлендерс",
+		"demonym_many": "Норфолк Айлендерс",
+		"demonym_other": "Норфолк Айлендерс"
+	},
+	"NGA": {
+		"name": "Нігерія",
+		"demonym_one": "Нігерійська",
+		"demonym_few": "Нігерійці",
+		"demonym_many": "Нігерійці",
+		"demonym_other": "Нігерійці"
+	},
+	"NIC": {
+		"name": "Нікарагуа",
+		"demonym_one": "Нікарагуанський",
+		"demonym_few": "Нікарагуанці",
+		"demonym_many": "Нікарагуанці",
+		"demonym_other": "Нікарагуанці"
+	},
+	"NIU": {
+		"name": "Ніуе",
+		"demonym_one": "Ніуан",
+		"demonym_few": "Ніуеанці",
+		"demonym_many": "Ніуеанці",
+		"demonym_other": "Ніуеанці"
+	},
+	"NLD": {
+		"name": "Нідерланди",
+		"demonym_one": "Голландська",
+		"demonym_few": "Голландська",
+		"demonym_many": "Голландська",
+		"demonym_other": "Голландська"
+	},
+	"NOR": {
+		"name": "Норвегія",
+		"demonym_one": "норвезька",
+		"demonym_few": "Норвежці",
+		"demonym_many": "Норвежці",
+		"demonym_other": "Норвежці"
+	},
+	"NPL": {
+		"name": "Непал",
+		"demonym_one": "Непальці",
+		"demonym_few": "Непальці",
+		"demonym_many": "Непальці",
+		"demonym_other": "Непальці"
+	},
+	"NRU": {
+		"name": "Науру",
+		"demonym_one": "Науруан",
+		"demonym_few": "Науруани",
+		"demonym_many": "Науруани",
+		"demonym_other": "Науруани"
+	},
+	"NZL": {
+		"name": "Нова Зеландія",
+		"demonym_one": "Новозеландці",
+		"demonym_few": "Новозеландці",
+		"demonym_many": "Новозеландці",
+		"demonym_other": "Новозеландці"
+	},
+	"OMN": {
+		"name": "Оман",
+		"demonym_one": "Оманський",
+		"demonym_few": "Оманіс",
+		"demonym_many": "Оманіс",
+		"demonym_other": "Оманіс"
+	},
+	"PAK": {
+		"name": "Пакистан",
+		"demonym_one": "Пакистанська",
+		"demonym_few": "Пакистанці",
+		"demonym_many": "Пакистанці",
+		"demonym_other": "Пакистанці"
+	},
+	"PAN": {
+		"name": "Панама",
+		"demonym_one": "панамська",
+		"demonym_few": "Панамці",
+		"demonym_many": "Панамці",
+		"demonym_other": "Панамці"
+	},
+	"PCN": {
+		"name": "Острови Піткерн",
+		"demonym_one": "Острови Піткерн",
+		"demonym_few": "Остров'яни Піткерн",
+		"demonym_many": "Остров'яни Піткерн",
+		"demonym_other": "Остров'яни Піткерн"
+	},
+	"PER": {
+		"name": "Перу",
+		"demonym_one": "Перуанський",
+		"demonym_few": "перуанці",
+		"demonym_many": "перуанці",
+		"demonym_other": "перуанці"
+	},
+	"PHL": {
+		"name": "Філіппіни",
+		"demonym_one": "Філіппінський",
+		"demonym_few": "Філіппінці",
+		"demonym_many": "Філіппінці",
+		"demonym_other": "Філіппінці"
+	},
+	"PLW": {
+		"name": "Палау",
+		"demonym_one": "Палауан",
+		"demonym_few": "Палауанці",
+		"demonym_many": "Палауанці",
+		"demonym_other": "Палауанці"
+	},
+	"PNG": {
+		"name": "Папуа-Нова Гвінея",
+		"demonym_one": "Папуа-Нова Гвінея",
+		"demonym_few": "Папуа-Нової Гвінеї",
+		"demonym_many": "Папуа-Нової Гвінеї",
+		"demonym_other": "Папуа-Нової Гвінеї"
+	},
+	"POL": {
+		"name": "Польща",
+		"demonym_one": "Польська",
+		"demonym_few": "Польська",
+		"demonym_many": "Польська",
+		"demonym_other": "Польська"
+	},
+	"PRI": {
+		"name": "Puerto Rico",
+		"demonym_one": "Пуерто-Ріко",
+		"demonym_few": "пуерториканці",
+		"demonym_many": "пуерториканці",
+		"demonym_other": "пуерториканці"
+	},
+	"PRK": {
+		"name": "Північна Корея",
+		"demonym_one": "північнокорейський",
+		"demonym_few": "північнокорейці",
+		"demonym_many": "північнокорейці",
+		"demonym_other": "північнокорейці"
+	},
+	"PRT": {
+		"name": "Португалія",
+		"demonym_one": "Португальська",
+		"demonym_few": "Португальська",
+		"demonym_many": "Португальська",
+		"demonym_other": "Португальська"
+	},
+	"PRY": {
+		"name": "Парагвай",
+		"demonym_one": "парагвайський",
+		"demonym_few": "Парагвайці",
+		"demonym_many": "Парагвайці",
+		"demonym_other": "Парагвайці"
+	},
+	"PSE": {
+		"name": "Палестина",
+		"demonym_one": "палестинська",
+		"demonym_few": "Палестинці",
+		"demonym_many": "Палестинці",
+		"demonym_other": "Палестинці"
+	},
+	"PYF": {
+		"name": "Французька Полінезія",
+		"demonym_one": "Французька Полінезійська",
+		"demonym_few": "Французькі полінезійці",
+		"demonym_many": "Французькі полінезійці",
+		"demonym_other": "Французькі полінезійці"
+	},
+	"QAT": {
+		"name": "Катар",
+		"demonym_one": "Катарський",
+		"demonym_few": "катарський",
+		"demonym_many": "катарський",
+		"demonym_other": "катарський"
+	},
+	"REU": {
+		"name": "Реюньйон",
+		"demonym_one": "Французький",
+		"demonym_few": "Французький",
+		"demonym_many": "Французький",
+		"demonym_other": "Французький"
+	},
+	"ROU": {
+		"name": "Румунія",
+		"demonym_one": "Румунська",
+		"demonym_few": "румуни",
+		"demonym_many": "румуни",
+		"demonym_other": "румуни"
+	},
+	"RUS": {
+		"name": "Росія",
+		"demonym_one": "Російська мова",
+		"demonym_few": "Росіяни",
+		"demonym_many": "Росіяни",
+		"demonym_other": "Росіяни"
+	},
+	"RWA": {
+		"name": "Руанди",
+		"demonym_one": "Руанда",
+		"demonym_few": "руандийці",
+		"demonym_many": "руандийці",
+		"demonym_other": "руандийці"
+	},
+	"SAU": {
+		"name": "Саудівська Аравія",
+		"demonym_one": "Саудівська Аравія",
+		"demonym_few": "Саудівська Аравія",
+		"demonym_many": "Саудівська Аравія",
+		"demonym_other": "Саудівська Аравія"
+	},
+	"SDN": {
+		"name": "Судан",
+		"demonym_one": "Суданська",
+		"demonym_few": "Суданська",
+		"demonym_many": "Суданська",
+		"demonym_other": "Суданська"
+	},
+	"SEN": {
+		"name": "Сенегал",
+		"demonym_one": "Сенегальський",
+		"demonym_few": "Сенегальський",
+		"demonym_many": "Сенегальський",
+		"demonym_other": "Сенегальський"
+	},
+	"SGP": {
+		"name": "Сінгапур",
+		"demonym_one": "Сінгапурська",
+		"demonym_few": "сінгапурці",
+		"demonym_many": "сінгапурці",
+		"demonym_other": "сінгапурці"
+	},
+	"SGS": {
+		"name": "Південна Джорджія",
+		"demonym_one": "Південно-грузинський південний сендвіч",
+		"demonym_few": "Південно-грузинські Південні Сандвіч Айлендерс",
+		"demonym_many": "Південно-грузинські Південні Сандвіч Айлендерс",
+		"demonym_other": "Південно-грузинські Південні Сандвіч Айлендерс"
+	},
+	"SHN": {
+		"name": "Острів Святої Єлени, Вознесіння і Трістан-да-Кунья"
+	},
+	"SJM": {
+		"name": "Шпіцберген і Ян-Маєн",
+		"demonym_one": "норвезька",
+		"demonym_few": "Норвежці",
+		"demonym_many": "Норвежці",
+		"demonym_other": "Норвежці"
+	},
+	"SLB": {
+		"name": "Соломонові острови",
+		"demonym_one": "Жителька Соломонових Островів",
+		"demonym_few": "Жителі Соломонових Островів",
+		"demonym_many": "Жителі Соломонових Островів",
+		"demonym_other": "Жителі Соломонових Островів"
+	},
+	"SLE": {
+		"name": "Сьєрра-Леоне",
+		"demonym_one": "Сьєрра-Леоне",
+		"demonym_few": "Сьєрра-леонейці",
+		"demonym_many": "Сьєрра-леонейці",
+		"demonym_other": "Сьєрра-леонейці"
+	},
+	"SLV": {
+		"name": "Сальвадор",
+		"demonym_one": "сальвадорський",
+		"demonym_few": "сальвадорці",
+		"demonym_many": "сальвадорці",
+		"demonym_other": "сальвадорці"
+	},
+	"SMR": {
+		"name": "Сан-Марино",
+		"demonym_one": "Саммаринез",
+		"demonym_few": "Саммаринез",
+		"demonym_many": "Саммаринез",
+		"demonym_other": "Саммаринез"
+	},
+	"SOM": {
+		"name": "Сомалі",
+		"demonym_one": "Сомалійські",
+		"demonym_few": "Сомалі",
+		"demonym_many": "Сомалі",
+		"demonym_other": "Сомалі"
+	},
+	"SPM": {
+		"name": "Сен-П'єр і Мікелон",
+		"demonym_one": "Французький",
+		"demonym_few": "Французький",
+		"demonym_many": "Французький",
+		"demonym_other": "Французький"
+	},
+	"SRB": {
+		"name": "Сербія",
+		"demonym_one": "Сербська",
+		"demonym_few": "Сербійці",
+		"demonym_many": "Сербійці",
+		"demonym_other": "Сербійці"
+	},
+	"SSD": {
+		"name": "Південний Судан",
+		"demonym_one": "Південно-Суданський",
+		"demonym_few": "Південно-Суданський",
+		"demonym_many": "Південно-Суданський",
+		"demonym_other": "Південно-Суданський"
+	},
+	"STP": {
+		"name": "Сан-Томе і Прінсіпі",
+		"demonym_one": "Сан-Томе",
+		"demonym_few": "Сан-Томаєс",
+		"demonym_many": "Сан-Томаєс",
+		"demonym_other": "Сан-Томаєс"
+	},
+	"SUR": {
+		"name": "Сурінам",
+		"demonym_one": "Сурінамер",
+		"demonym_few": "Сурінамці",
+		"demonym_many": "Сурінамці",
+		"demonym_other": "Сурінамці"
+	},
+	"SVK": {
+		"name": "Словаччина",
+		"demonym_one": "Словацька",
+		"demonym_few": "словаків",
+		"demonym_many": "словаків",
+		"demonym_other": "словаків"
+	},
+	"SVN": {
+		"name": "Словенія",
+		"demonym_one": "Словенська",
+		"demonym_few": "словенці",
+		"demonym_many": "словенці",
+		"demonym_other": "словенці"
+	},
+	"SWE": {
+		"name": "Швеція",
+		"demonym_one": "Шведський",
+		"demonym_few": "Шведський",
+		"demonym_many": "Шведський",
+		"demonym_other": "Шведський"
+	},
+	"SWZ": {
+		"name": "Есватіні",
+		"demonym_one": "Свазі",
+		"demonym_few": "Свазіленд",
+		"demonym_many": "Свазіленд",
+		"demonym_other": "Свазіленд"
+	},
+	"SXM": {
+		"name": "Сінт-Мартен",
+		"demonym_one": "Сент-Мартенер-Санкт",
+		"demonym_few": "Сент-Мартенерс",
+		"demonym_many": "Сент-Мартенерс",
+		"demonym_other": "Сент-Мартенерс"
+	},
+	"SYC": {
+		"name": "Сейшельські острови",
+		"demonym_one": "Сейшельська",
+		"demonym_few": "Сейшельська",
+		"demonym_many": "Сейшельська",
+		"demonym_other": "Сейшельська"
+	},
+	"SYR": {
+		"name": "Сирія",
+		"demonym_one": "Сирійська",
+		"demonym_few": "сирійці",
+		"demonym_many": "сирійці",
+		"demonym_other": "сирійці"
+	},
+	"TCA": {
+		"name": "Острови Теркс і Кайкос",
+		"demonym_one": "Острови Теркс і Кайкос",
+		"demonym_few": "Теркс і Кайкос Айлендерс",
+		"demonym_many": "Теркс і Кайкос Айлендерс",
+		"demonym_other": "Теркс і Кайкос Айлендерс"
+	},
+	"TCD": {
+		"name": "Чад",
+		"demonym_one": "Чадянин",
+		"demonym_few": "Чадійці",
+		"demonym_many": "Чадійці",
+		"demonym_other": "Чадійці"
+	},
+	"TGO": {
+		"name": "Того",
+		"demonym_one": "Тоголезька",
+		"demonym_few": "Тоголезька",
+		"demonym_many": "Тоголезька",
+		"demonym_other": "Тоголезька"
+	},
+	"THA": {
+		"name": "Таїланд",
+		"demonym_one": "Тайська",
+		"demonym_few": "Тайці",
+		"demonym_many": "Тайці",
+		"demonym_other": "Тайці"
+	},
+	"TJK": {
+		"name": "Таджикистан",
+		"demonym_one": "Таджик",
+		"demonym_few": "Таджики",
+		"demonym_many": "Таджики",
+		"demonym_other": "Таджики"
+	},
+	"TKL": {
+		"name": "Токелау",
+		"demonym_one": "Токелауан",
+		"demonym_few": "Токелауанці",
+		"demonym_many": "Токелауанці",
+		"demonym_other": "Токелауанці"
+	},
+	"TKM": {
+		"name": "Туркменістан",
+		"demonym_one": "Туркменська",
+		"demonym_few": "туркменці",
+		"demonym_many": "туркменці",
+		"demonym_other": "туркменці"
+	},
+	"TLS": {
+		"name": "Тимор-Лешті",
+		"demonym_one": "Східний Тиморський",
+		"demonym_few": "Східний Тиморський",
+		"demonym_many": "Східний Тиморський",
+		"demonym_other": "Східний Тиморський"
+	},
+	"TON": {
+		"name": "Тонга",
+		"demonym_one": "Тонганський",
+		"demonym_few": "Тонгани",
+		"demonym_many": "Тонгани",
+		"demonym_other": "Тонгани"
+	},
+	"TTO": {
+		"name": "Тринідад і Тобаго",
+		"demonym_one": "Тринідадський",
+		"demonym_few": "Тринідадці",
+		"demonym_many": "Тринідадці",
+		"demonym_other": "Тринідадці"
+	},
+	"TUN": {
+		"name": "Туніс",
+		"demonym_one": "Туніський",
+		"demonym_few": "Тунісців",
+		"demonym_many": "Тунісців",
+		"demonym_other": "Тунісців"
+	},
+	"TUR": {
+		"name": "Туреччина",
+		"demonym_one": "Турецька",
+		"demonym_few": "Турки",
+		"demonym_many": "Турки",
+		"demonym_other": "Турки"
+	},
+	"TUV": {
+		"name": "Тувалу",
+		"demonym_one": "Тувалуан",
+		"demonym_few": "Тувалу",
+		"demonym_many": "Тувалу",
+		"demonym_other": "Тувалу"
+	},
+	"TWN": {
+		"name": "Тайваню",
+		"demonym_one": "Тайванський",
+		"demonym_few": "Тайванський",
+		"demonym_many": "Тайванський",
+		"demonym_other": "Тайванський"
+	},
+	"TZA": {
+		"name": "Танзанія",
+		"demonym_one": "танзанійський",
+		"demonym_few": "танзанійці",
+		"demonym_many": "танзанійці",
+		"demonym_other": "танзанійці"
+	},
+	"UGA": {
+		"name": "Уганда",
+		"demonym_one": "угандійського",
+		"demonym_few": "угандійці",
+		"demonym_many": "угандійці",
+		"demonym_other": "угандійці"
+	},
+	"UKR": {
+		"name": "Україна",
+		"demonym_one": "Українська",
+		"demonym_few": "Українці",
+		"demonym_many": "Українці",
+		"demonym_other": "Українці"
+	},
+	"UMI": {
+		"name": "Зовнішні малі острови США",
+		"demonym_one": "Американський",
+		"demonym_few": "американці",
+		"demonym_many": "американці",
+		"demonym_other": "американці"
+	},
+	"UNK": {
+		"name": "Косово",
+		"demonym_one": "Косовар",
+		"demonym_few": "Косоури",
+		"demonym_many": "Косоури",
+		"demonym_other": "Косоури"
+	},
+	"URY": {
+		"name": "Уругвай",
+		"demonym_one": "Уругвайський",
+		"demonym_few": "Уругвайці",
+		"demonym_many": "Уругвайці",
+		"demonym_other": "Уругвайці"
+	},
+	"USA": {
+		"name": "Сполучені Штати Америки",
+		"demonym_one": "Американський",
+		"demonym_few": "американці",
+		"demonym_many": "американці",
+		"demonym_other": "американці"
+	},
+	"UZB": {
+		"name": "Узбекистан",
+		"demonym_one": "узбецький",
+		"demonym_few": "Узбекістанці",
+		"demonym_many": "Узбекістанці",
+		"demonym_other": "Узбекістанці"
+	},
+	"VAT": {
+		"name": "Ватикан",
+		"demonym_one": "італійська",
+		"demonym_few": "італійці",
+		"demonym_many": "італійці",
+		"demonym_other": "італійці"
+	},
+	"VCT": {
+		"name": "Сент-Вінсент і Гренадини",
+		"demonym_one": "Святий Вінсентіан",
+		"demonym_few": "Сент-Вінсентіанс",
+		"demonym_many": "Сент-Вінсентіанс",
+		"demonym_other": "Сент-Вінсентіанс"
+	},
+	"VEN": {
+		"name": "Венесуела",
+		"demonym_one": "венесуельський",
+		"demonym_few": "венесуельці",
+		"demonym_many": "венесуельці",
+		"demonym_other": "венесуельці"
+	},
+	"VGB": {
+		"name": "Британські Віргінські острови",
+		"demonym_one": "Богородиця",
+		"demonym_few": "Віргінські острови",
+		"demonym_many": "Віргінські острови",
+		"demonym_other": "Віргінські острови"
+	},
+	"VIR": {
+		"name": "Віргінські острови США",
+		"demonym_one": "Богородиця",
+		"demonym_few": "Віргінські острови",
+		"demonym_many": "Віргінські острови",
+		"demonym_other": "Віргінські острови"
+	},
+	"VNM": {
+		"name": "В'єтнам",
+		"demonym_one": "в'єтнамська",
+		"demonym_few": "в'єтнамська",
+		"demonym_many": "в'єтнамська",
+		"demonym_other": "в'єтнамська"
+	},
+	"VUT": {
+		"name": "Вануату",
+		"demonym_one": "Ні-Вануату",
+		"demonym_few": "Ні-Вануату",
+		"demonym_many": "Ні-Вануату",
+		"demonym_other": "Ні-Вануату"
+	},
+	"WLF": {
+		"name": "Уолліс і Футуна",
+		"demonym_one": "Волліс і Футуна",
+		"demonym_few": "Остров'яни Уолліс і Футуна",
+		"demonym_many": "Остров'яни Уолліс і Футуна",
+		"demonym_other": "Остров'яни Уолліс і Футуна"
+	},
+	"WSM": {
+		"name": "Самоа",
+		"demonym_one": "самоанська",
+		"demonym_few": "Самоанці",
+		"demonym_many": "Самоанці",
+		"demonym_other": "Самоанці"
+	},
+	"YEM": {
+		"name": "Ємен",
+		"demonym_one": "Єменський",
+		"demonym_few": "Єменський",
+		"demonym_many": "Єменський",
+		"demonym_other": "Єменський"
+	},
+	"ZAF": {
+		"name": "Південно-Африканська Республіка",
+		"demonym_one": "Південно-Африканська",
+		"demonym_few": "Південноафриканці",
+		"demonym_many": "Південноафриканці",
+		"demonym_other": "Південноафриканці"
+	},
+	"ZMB": {
+		"name": "Замбія",
+		"demonym_one": "замбійська",
+		"demonym_few": "Замбійці",
+		"demonym_many": "Замбійці",
+		"demonym_other": "Замбійці"
+	},
+	"ZWE": {
+		"name": "Зімбабве",
+		"demonym_one": "Зімбабвійська",
+		"demonym_few": "зімбабвійці",
+		"demonym_many": "зімбабвійці",
+		"demonym_other": "зімбабвійці"
+	}
+}
