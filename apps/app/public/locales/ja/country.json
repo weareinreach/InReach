@@ -162,7 +162,7 @@
 		"demonym_other": "ココスアイランダーズ"
 	},
 	"CHE": {
-		"name": "Switzerland",
+		"name": "スイス",
 		"demonym_other": "スイス"
 	},
 	"CHL": {
@@ -322,7 +322,7 @@
 		"demonym_other": "グルジア人"
 	},
 	"GGY": {
-		"name": "Guernsey",
+		"name": "ガーンジー島",
 		"demonym_other": "チャンネル・アイランダーズ"
 	},
 	"GHA": {
@@ -358,7 +358,7 @@
 		"demonym_other": "ギリシア人"
 	},
 	"GRD": {
-		"name": "Grenada",
+		"name": "グレナダ",
 		"demonym_other": "グレナディア人"
 	},
 	"GRL": {
@@ -449,7 +449,7 @@
 		"demonym_other": "ジャマイカ人"
 	},
 	"JEY": {
-		"name": "Jersey",
+		"name": "ジャージー",
 		"demonym_other": "チャンネル・アイランダーズ"
 	},
 	"JOR": {
@@ -497,7 +497,7 @@
 		"demonym_other": "ラオス人"
 	},
 	"LBN": {
-		"name": "Lebanon",
+		"name": "レバノン",
 		"demonym_other": "レバノン"
 	},
 	"LBR": {
@@ -717,7 +717,7 @@
 		"demonym_other": "ポーランド語"
 	},
 	"PRI": {
-		"name": "Puerto Rico",
+		"name": "プエルトリコ",
 		"demonym_other": "プエルトリコ人"
 	},
 	"PRK": {
