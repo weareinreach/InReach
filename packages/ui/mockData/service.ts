@@ -12,7 +12,7 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Access PEP and PrEP',
 			},
-			services: ['medical.CATEGORYNAME'],
+			serviceCategories: ['medical.CATEGORYNAME'],
 			offersRemote: false,
 		},
 		{
@@ -24,8 +24,8 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Receive behavioral health services',
 			},
-			services: ['mental-health.CATEGORYNAME'],
-			offersRemote: false,
+			serviceCategories: ['mental-health.CATEGORYNAME'],
+			offersRemote: true,
 		},
 		{
 			id: 'osvc_01GVH3VEWFZ5FHZ6S7BXQY1W55',
@@ -36,7 +36,7 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Get the COVID-19 vaccine',
 			},
-			services: ['medical.CATEGORYNAME'],
+			serviceCategories: ['medical.CATEGORYNAME'],
 			offersRemote: false,
 		},
 		{
@@ -49,7 +49,7 @@ export const serviceData = {
 				defaultText:
 					'Get legal help for transgender people to replace and update name/gender marker on immigration documents',
 			},
-			services: ['legal.CATEGORYNAME'],
+			serviceCategories: ['legal.CATEGORYNAME'],
 			offersRemote: false,
 		},
 		{
@@ -61,7 +61,7 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Get free individual and group psychotherapy for LGBTQ young people (ages 13-24)',
 			},
-			services: ['community-support.CATEGORYNAME', 'mental-health.CATEGORYNAME'],
+			serviceCategories: ['community-support.CATEGORYNAME', 'mental-health.CATEGORYNAME'],
 			offersRemote: false,
 		},
 		{
@@ -73,8 +73,12 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Access youth and family support services',
 			},
-			services: ['community-support.CATEGORYNAME', 'medical.CATEGORYNAME', 'mental-health.CATEGORYNAME'],
-			offersRemote: false,
+			serviceCategories: [
+				'community-support.CATEGORYNAME',
+				'medical.CATEGORYNAME',
+				'mental-health.CATEGORYNAME',
+			],
+			offersRemote: true,
 		},
 		{
 			id: 'osvc_01GVH3VEWHDC6F5FCQHB0H5GD6',
@@ -85,7 +89,7 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Get gender affirming hormone therapy',
 			},
-			services: ['medical.CATEGORYNAME'],
+			serviceCategories: ['medical.CATEGORYNAME'],
 			offersRemote: false,
 		},
 		{
@@ -97,7 +101,7 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Receive gender affirming care and services',
 			},
-			services: ['legal.CATEGORYNAME', 'medical.CATEGORYNAME', 'mental-health.CATEGORYNAME'],
+			serviceCategories: ['legal.CATEGORYNAME', 'medical.CATEGORYNAME', 'mental-health.CATEGORYNAME'],
 			offersRemote: false,
 		},
 		{
@@ -109,7 +113,7 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Get dental health services for HIV-positive individuals',
 			},
-			services: ['medical.CATEGORYNAME'],
+			serviceCategories: ['medical.CATEGORYNAME'],
 			offersRemote: false,
 		},
 		{
@@ -121,7 +125,7 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Get HIV care for newly diagnosed patients',
 			},
-			services: ['medical.CATEGORYNAME'],
+			serviceCategories: ['medical.CATEGORYNAME'],
 			offersRemote: false,
 		},
 		{
@@ -133,8 +137,8 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Get help with navigating health insurance options',
 			},
-			services: ['medical.CATEGORYNAME'],
-			offersRemote: false,
+			serviceCategories: ['medical.CATEGORYNAME'],
+			offersRemote: true,
 		},
 		{
 			id: 'osvc_01GVH3VEVZY7K2TYY1ZE7WXRRC',
@@ -145,7 +149,7 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Get legal help with immigration services',
 			},
-			services: ['legal.CATEGORYNAME'],
+			serviceCategories: ['legal.CATEGORYNAME'],
 			offersRemote: false,
 		},
 		{
@@ -157,7 +161,7 @@ export const serviceData = {
 				tsNs: 'org-data',
 				defaultText: 'Get rapid HIV testing',
 			},
-			services: ['medical.CATEGORYNAME'],
+			serviceCategories: ['medical.CATEGORYNAME'],
 			offersRemote: false,
 		},
 	],

@@ -337,14 +337,22 @@ export const queries = defineRouter({
 		return result
 	}),
 	forServiceInfoCard: publicProcedure
-		.input(z.string().regex(getIdPrefixRegex('organization', 'orgLocation')))
+		.input(
+			z.object({
+				parentId: z.string().regex(getIdPrefixRegex('organization', 'orgLocation')),
+				onlyRemote: z.boolean().optional(),
+			})
+		)
 		.query(async ({ ctx, input }) => {
 			const result = await ctx.prisma.orgService.findMany({
 				where: {
 					...isPublic,
-					...(isIdFor('organization', input)
-						? { organization: { id: input, ...isPublic } }
-						: { locations: { some: { location: { id: input, ...isPublic } } } }),
+					...(isIdFor('organization', input.parentId)
+						? { organization: { id: input.parentId, ...isPublic } }
+						: { locations: { some: { location: { id: input.parentId, ...isPublic } } } }),
+					...(input.onlyRemote
+						? { attributes: { some: { attribute: { active: true, tag: 'offers-remote-services' } } } }
+						: {}),
 				},
 				select: {
 					id: true,
@@ -369,10 +377,9 @@ export const queries = defineRouter({
 				serviceName: serviceName
 					? { tsKey: serviceName.tsKey, tsNs: serviceName.ns, defaultText: serviceName.tsKey.text }
 					: null,
-				services: [...new Set(services.map(({ tag }) => tag.category.tsKey))],
+				serviceCategories: [...new Set(services.map(({ tag }) => tag.category.tsKey))].sort(),
 				offersRemote: attributes.length > 0,
 			}))
-
 			return transformed
 		}),
 })
