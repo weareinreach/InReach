@@ -326,6 +326,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						label,
 						multiline: true,
 						width: label.length > MAX_CHARACTERS ? 600 : 'auto',
+						closeDelay: 500,
 						style: { pointerEvents: 'auto' },
 					}
 				}
@@ -360,6 +361,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 			return (
 				<Tooltip
 					style={{ pointerEvents: 'auto' }}
+					closeDelay={500}
 					label={
 						<Trans
 							i18nKey='badge.unclaimed-tool-tip'
