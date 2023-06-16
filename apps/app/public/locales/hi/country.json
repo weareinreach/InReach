@@ -201,7 +201,7 @@
 		"demonym_other": "कोकोस आइलैंडर्स"
 	},
 	"CHE": {
-		"name": "Switzerland",
+		"name": "स्विट्जरलैंड",
 		"demonym_one": "स्विस",
 		"demonym_other": "स्विस"
 	},
@@ -401,7 +401,7 @@
 		"demonym_other": "जार्जियाई"
 	},
 	"GGY": {
-		"name": "Guernsey",
+		"name": "ग्वेर्नसे",
 		"demonym_one": "चैनल आइलैंडर",
 		"demonym_other": "चैनल आइलैंडर्स"
 	},
@@ -446,7 +446,7 @@
 		"demonym_other": "यूनानियों"
 	},
 	"GRD": {
-		"name": "Grenada",
+		"name": "ग्रेनेडा",
 		"demonym_one": "ग्रेनेडियन",
 		"demonym_other": "ग्रेनेडियन्स"
 	},
@@ -559,7 +559,7 @@
 		"demonym_other": "जमैका"
 	},
 	"JEY": {
-		"name": "Jersey",
+		"name": "जर्सी",
 		"demonym_one": "चैनल आइलैंडर",
 		"demonym_other": "चैनल आइलैंडर्स"
 	},
@@ -619,7 +619,7 @@
 		"demonym_other": "लाओटियन"
 	},
 	"LBN": {
-		"name": "Lebanon",
+		"name": "लेबनान",
 		"demonym_one": "लेबनानी",
 		"demonym_other": "लेबनानी"
 	},
@@ -894,7 +894,7 @@
 		"demonym_other": "पोलिश"
 	},
 	"PRI": {
-		"name": "Puerto Rico",
+		"name": "प्यूर्टो रिको",
 		"demonym_one": "पुएर्तो रीको का",
 		"demonym_other": "प्वेर्टो रिकन्स"
 	},
