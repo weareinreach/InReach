@@ -4,6 +4,7 @@
 	"private": true,
 	"license": "GPL-3.0-only",
 	"main": "./index.ts",
+	"types": "./index.ts",
 	"scripts": {
 		"clean:export": "rm -rf ./datastore/v1/mongodb/{output,output-types}/* || true",
 		"clean:logs": "pnpm run \"/^clean:logs:.*/\"",
