@@ -115,7 +115,7 @@ const OrganizationPage: NextPage = () => {
 			</Grid.Col>
 			<Grid.Col order={2}>
 				<Stack spacing={40}>
-					<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
+					<ContactSection role='org' parentId={data.id} />
 					{/* </Grid.Col> */}
 					{/* <Grid.Col order={4}> */}
 					{sidebar}

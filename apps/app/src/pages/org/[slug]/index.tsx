@@ -185,7 +185,7 @@ const OrganizationPage: NextPage = () => {
 			</>
 		) : (
 			// Hide google map temporarily for 'sm' breakpoint
-			locations.length &&
+			Boolean(locations.length) &&
 			!isTablet && (
 				<>
 					{isTablet && <Divider />}
@@ -228,7 +228,7 @@ const OrganizationPage: NextPage = () => {
 					{isTablet && (
 						<Stack spacing={40} w='100%'>
 							<Divider />
-							<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
+							<ContactSection role='org' parentId={data.id} />
 							{sidebar}
 						</Stack>
 					)}
@@ -238,7 +238,7 @@ const OrganizationPage: NextPage = () => {
 			{!isTablet && (
 				<Grid.Col order={2}>
 					<Stack spacing={40}>
-						<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
+						<ContactSection role='org' parentId={data.id} />
 						{sidebar}
 					</Stack>
 				</Grid.Col>

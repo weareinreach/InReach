@@ -1,6 +1,5 @@
 import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, Title, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-// import compact from 'just-compact'
 import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -10,6 +9,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { Breadcrumb } from '@weareinreach/ui/components/core/Breadcrumb'
+import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
@@ -95,7 +95,7 @@ const RemoteServicesPage: NextPage = () => {
 					{isTablet && (
 						<Stack spacing={40} w='100%'>
 							<Divider />
-							{/* <ContactSection role='org' data={{ emails, phones, socialMedia, websites }} /> */}
+							<ContactSection role='org' parentId={org.id} />
 						</Stack>
 					)}
 					<Tabs
@@ -125,7 +125,7 @@ const RemoteServicesPage: NextPage = () => {
 			{!isTablet && (
 				<Grid.Col order={2}>
 					<Stack spacing={40}>
-						{/* <ContactSection role='org' data={{ emails, phones, socialMedia, websites }} /> */}
+						<ContactSection role='org' parentId={org.id} />
 					</Stack>
 				</Grid.Col>
 			)}

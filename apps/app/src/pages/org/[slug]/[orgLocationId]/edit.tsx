@@ -89,7 +89,7 @@ const OrgLocationPage: NextPage = () => {
 			</Grid.Col>
 			<Grid.Col order={2}>
 				<Stack spacing={40}>
-					<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
+					<ContactSection role='org' parentId={data.id} />
 					<VisitCard location={data} />
 				</Stack>
 			</Grid.Col>

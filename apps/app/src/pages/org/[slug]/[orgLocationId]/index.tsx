@@ -118,7 +118,7 @@ const OrgLocationPage: NextPage = () => {
 					{isTablet && (
 						<Stack spacing={40} w='100%'>
 							<Divider />
-							<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
+							<ContactSection role='org' parentId={data.id} />
 							<Divider />
 							<VisitCard location={data} />
 						</Stack>
@@ -166,7 +166,7 @@ const OrgLocationPage: NextPage = () => {
 			{!isTablet && (
 				<Grid.Col order={2}>
 					<Stack spacing={40}>
-						<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
+						<ContactSection role='org' parentId={data.id} />
 						<VisitCard location={data} />
 					</Stack>
 				</Grid.Col>
