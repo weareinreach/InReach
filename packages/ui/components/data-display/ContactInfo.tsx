@@ -1,23 +1,24 @@
 import { Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
-import { type ApiOutput } from '@weareinreach/api'
+import { api } from '~app/utils/api'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { isSocialIcon, SocialLink, type SocialLinkProps } from '~ui/components/core/SocialLink'
 import { parsePhoneNumber, useCustomVariant, useSlug } from '~ui/hooks'
 
-const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
+const PhoneNumbers = ({ parentId, direct, locationOnly }: PhoneNumbersProps) => {
 	const output: JSX.Element[] = []
+	const slug = useSlug()
 	const { t } = useTranslation(['common', 'phone-type'])
 	const variants = useCustomVariant()
-	const slug = useSlug()
+	const { data, isLoading } = api.orgPhone.forContactInfo.useQuery({ parentId, locationOnly })
 	let k = 0
 
-	if (!data.length) return null
+	if (!data?.length) return null
 
-	for (const { phone } of data) {
+	for (const phone of data) {
 		const { country, ext, locationOnly: showLocationOnly, number, phoneType, primary, description } = phone
-		const parsedPhone = parsePhoneNumber(number, country.cca2)
+		const parsedPhone = parsePhoneNumber(number, country)
 		if (!parsedPhone) continue
 		if (ext) parsedPhone.setExt(ext)
 		const dialURL = parsedPhone.getURI()
@@ -38,9 +39,9 @@ const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
 		}
 		if (locationOnly && !showLocationOnly) continue
 		const desc = description
-			? t(description.key, { ns: slug, defaultValue: description.tsKey.text })
-			: phoneType?.tsKey
-			? t(phoneType.tsKey, { ns: 'phone-type' })
+			? t(description.key, { ns: slug, defaultValue: description.defaultText })
+			: phoneType?.key
+			? t(phoneType.key, { ns: 'phone-type' })
 			: undefined
 
 		const item = (
@@ -66,16 +67,17 @@ const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
 	)
 }
 
-const Emails = ({ data, direct, locationOnly, serviceOnly }: EmailsProps) => {
+const Emails = ({ parentId, direct, locationOnly, serviceOnly }: EmailsProps) => {
 	const output: JSX.Element[] = []
 	const slug = useSlug()
 	const { t } = useTranslation(['common', slug, 'user-title'])
 	const variants = useCustomVariant()
+	const { data, isLoading } = api.orgEmail.forContactInfo.useQuery({ parentId, locationOnly, serviceOnly })
 	let k = 0
 
-	if (!data.length) return null
+	if (!data?.length) return null
 
-	for (const { email } of data) {
+	for (const email of data) {
 		const {
 			primary,
 			title,
@@ -99,9 +101,9 @@ const Emails = ({ data, direct, locationOnly, serviceOnly }: EmailsProps) => {
 			)
 		}
 		const desc = title
-			? t(title.tsKey, { ns: 'user-title' })
+			? t(title.key, { ns: 'user-title' })
 			: description?.key
-			? t(description.key, { defaultValue: description.tsKey.text, ns: slug })
+			? t(description.key, { defaultValue: description.defaultText, ns: slug })
 			: undefined
 
 		const item = (
@@ -123,15 +125,16 @@ const Emails = ({ data, direct, locationOnly, serviceOnly }: EmailsProps) => {
 	)
 }
 
-const Websites = ({ data, direct, locationOnly, websiteDesc }: WebsitesProps) => {
+const Websites = ({ parentId, direct, locationOnly, websiteDesc }: WebsitesProps) => {
 	const output: JSX.Element[] = []
 	const slug = useSlug()
 	const { t } = useTranslation(['common', slug])
 	const variants = useCustomVariant()
+	const { data, isLoading } = api.orgWebsite.forContactInfo.useQuery({ parentId, locationOnly })
 	// eslint-disable-next-line no-useless-escape
 	const domainExtract = /https?:\/\/([^:\/\n?]+)/
 
-	if (!data.length) return null
+	if (!data?.length) return null
 
 	for (const website of data) {
 		const { id, url, orgLocationOnly, description, isPrimary } = website
@@ -154,7 +157,7 @@ const Websites = ({ data, direct, locationOnly, websiteDesc }: WebsitesProps) =>
 
 		const desc = websiteDesc
 			? description?.key
-				? t(description.key, { ns: slug, defaultText: description.tsKey.text })
+				? t(description.key, { ns: slug, defaultText: description.defaultText })
 				: urlBase
 			: urlBase
 		const item = (
@@ -175,12 +178,13 @@ const Websites = ({ data, direct, locationOnly, websiteDesc }: WebsitesProps) =>
 	)
 }
 
-const SocialMedia = ({ data }: SocialMediaProps) => {
-	if (!data.length) return null
+const SocialMedia = ({ parentId, locationOnly }: SocialMediaProps) => {
+	const { data, isLoading } = api.orgSocialMedia.forContactInfo.useQuery({ parentId, locationOnly })
+	if (!data?.length) return null
 	const items: SocialLinkProps[] = []
 
 	for (const item of data) {
-		const icon = item.service.name.toLowerCase()
+		const icon = item.service.toLowerCase()
 		if (!isSocialIcon(icon)) continue
 		items.push({
 			icon,
@@ -193,24 +197,32 @@ const SocialMedia = ({ data }: SocialMediaProps) => {
 }
 
 export const ContactInfo = ({
-	data,
+	parentId,
 	order = ['website', 'phone', 'email', 'socialMedia'],
 	gap = 24,
 	...commonProps
 }: ContactInfoProps) => {
 	const sections: ContactMap = {
-		website: <Websites key='Websites' data={data.websites ?? []} {...commonProps} />,
-		phone: <PhoneNumbers key='PhoneNumbers' data={data.phones ?? []} {...commonProps} />,
-		email: <Emails key='Emails' data={data.emails ?? []} {...commonProps} />,
-		socialMedia: <SocialMedia key='SocialMedia' data={data.socialMedia ?? []} />,
+		website: <Websites key='Websites' parentId={parentId} {...commonProps} />,
+		phone: <PhoneNumbers key='PhoneNumbers' parentId={parentId} {...commonProps} />,
+		email: <Emails key='Emails' parentId={parentId} {...commonProps} />,
+		socialMedia: <SocialMedia key='SocialMedia' parentId={parentId} />,
 	}
 	const items = order.map((item) => sections[item])
 	return <Stack spacing={gap}>{items}</Stack>
 }
 
-export const hasContactInfo = (data: ContactInfoProps['data']) => {
-	const { websites, phones, emails, socialMedia } = data
-	return Boolean(websites.length || phones.length || emails.length || socialMedia.length)
+export const hasContactInfo = (parentId: string) => {
+	const [phones, emails, websites, socialMedia] = api.useQueries((t) => [
+		t.orgPhone.forContactInfo({ parentId }),
+		t.orgEmail.forContactInfo({ parentId }),
+		t.orgWebsite.forContactInfo({ parentId }),
+		t.orgSocialMedia.forContactInfo({ parentId }),
+	])
+
+	return Boolean(
+		websites.data?.length || phones.data?.length || emails.data?.length || socialMedia.data?.length
+	)
 }
 
 type ContactSections = 'phone' | 'email' | 'website' | 'socialMedia'
@@ -220,36 +232,20 @@ type ContactMap = {
 }
 
 export interface ContactInfoProps extends CommonProps {
-	data: {
-		websites: WebsitesProps['data']
-		phones: PhoneNumbersProps['data']
-		emails: EmailsProps['data']
-		socialMedia: SocialMediaProps['data']
-	}
 	order?: ContactSections[]
 	gap?: number
 }
 
 interface CommonProps {
+	parentId: string
 	direct?: boolean
 	locationOnly?: boolean
 	serviceOnly?: boolean
 	websiteDesc?: boolean
 }
 
-interface PhoneNumbersProps extends CommonProps {
-	data: PageQueryResult['phones'] | Location['phones']
-}
-interface WebsitesProps extends CommonProps {
-	data: PageQueryResult['websites'] | Location['websites']
-}
+type PhoneNumbersProps = CommonProps
+type WebsitesProps = CommonProps
 
-interface EmailsProps extends CommonProps {
-	data: PageQueryResult['emails'] | Location['emails']
-}
-interface SocialMediaProps extends CommonProps {
-	data: PageQueryResult['socialMedia'] | Location['socialMedia']
-}
-
-type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>
-type Location = NonNullable<PageQueryResult['locations']>[number]
+type EmailsProps = CommonProps
+type SocialMediaProps = CommonProps
