@@ -157,4 +157,57 @@ export const queries = defineRouter({
 
 		return transformed
 	}),
+	forVisitCard: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		const result = await ctx.prisma.orgLocation.findUniqueOrThrow({
+			where: {
+				...isPublic,
+				id: input,
+			},
+			select: {
+				id: true,
+				street1: true,
+				street2: true,
+				city: true,
+				postCode: true,
+				country: { select: { cca2: true } },
+				govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
+				attributes: {
+					where: { attribute: { tsKey: 'additional.offers-remote-services' } },
+					select: { attribute: { select: { tsKey: true, icon: true } } },
+				},
+			},
+		})
+		const { attributes, ...rest } = result
+		const transformed = {
+			...rest,
+			remote: attributes.find(({ attribute }) => attribute.tsKey === 'additional.offers-remote-services')
+				?.attribute,
+		}
+		return transformed
+	}),
+	forGoogleMaps: publicProcedure.input(z.string().or(z.string().array())).query(async ({ ctx, input }) => {
+		const select = {
+			id: true,
+			name: true,
+			latitude: true,
+			longitude: true,
+		}
+
+		const result = Array.isArray(input)
+			? await ctx.prisma.orgLocation.findMany({
+					where: {
+						...isPublic,
+						id: { in: input },
+					},
+					select,
+			  })
+			: await ctx.prisma.orgLocation.findUniqueOrThrow({
+					where: {
+						...isPublic,
+						id: input,
+					},
+					select,
+			  })
+		return result
+	}),
 })

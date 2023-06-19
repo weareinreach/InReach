@@ -49,5 +49,6 @@ export const useFormattedAddress = (location?: UseFormattedAddressProps) => {
 }
 
 export type UseFormattedAddressProps = Partial<
-	NonNullable<ApiOutput['organization']['getBySlug']>['locations'][number]
+	| NonNullable<ApiOutput['organization']['getBySlug']>['locations'][number]
+	| NonNullable<ApiOutput['location']['forVisitCard']>
 >
