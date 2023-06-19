@@ -59,6 +59,11 @@
 		"node": "^18",
 		"pnpm": "^7 || ^8"
 	},
+	"manypkg": {
+		"ignoredRules": [
+			"INTERNAL_MISMATCH"
+		]
+	},
 	"pnpm": {
 		"overrides": {
 			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
