@@ -195,16 +195,16 @@
 		"@weareinreach/auth": "*",
 		"dayjs": "^1",
 		"embla-carousel-react": "^7",
-		"i18next": "^22 || ^23.0.0",
+		"i18next": "^23.0.0",
 		"i18next-http-backend": "^2",
 		"i18next-intervalplural-postprocessor": "^3",
 		"luxon": "^3",
 		"next": "^13",
 		"next-auth": "^4",
-		"next-i18next": "^13 || ^14.0.0",
+		"next-i18next": "^14.0.0",
 		"react": "^18",
 		"react-dom": "^18",
-		"react-i18next": "^12 || ^13.0.0"
+		"react-i18next": "^13.0.0"
 	},
 	"msw": {
 		"workerDirectory": "public"
