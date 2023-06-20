@@ -133,6 +133,20 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				},
 			}
 		}
+		case 'remote': {
+			return {
+				root: {
+					border: 0,
+					height: rem(20),
+					padding: '0',
+					lineHeight: 'inherit',
+					borderRadius: 0,
+				},
+				leftSection: {
+					height: rem(20),
+				},
+			}
+		}
 
 		default:
 			return {}
@@ -154,6 +168,7 @@ const customVariants = [
 	'attribute',
 	'privatePractice',
 	'verifiedReviewer',
+	'remote',
 ] as const
 
 const customVariantMap = {
@@ -166,6 +181,7 @@ const customVariantMap = {
 	attribute: 'outline',
 	privatePractice: 'outline',
 	verifiedReviewer: 'outline',
+	remote: 'outline',
 } satisfies Record<CustomVariants, BadgeVariant | undefined>
 
 /** Badge variants `serviceTag` and `communityTag` are responsive - the sizing changes at the `sm` breakpoint. */
@@ -226,6 +242,9 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						<Icon icon='carbon:checkmark-filled' height={20} color={theme.other.colors.primary.allyGreen} />
 					)
 				}
+				case 'remote': {
+					return <Icon icon='carbon:globe' height={20} color={theme.other.colors.secondary.black} />
+				}
 			}
 		})()
 
@@ -278,6 +297,11 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				case 'community': {
 					return {
 						label: t('badge.community-tool-tip'),
+					}
+				}
+				case 'remote': {
+					return {
+						label: t('badge.remote-tool-tip'),
 					}
 				}
 				case 'service': {

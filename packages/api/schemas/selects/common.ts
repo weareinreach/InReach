@@ -140,6 +140,22 @@ export const attributes = {
 	},
 } satisfies Prisma.OrgService$attributesArgs
 
+export const attribShowOnLoc = {
+	where: {
+		attribute: {
+			active: true,
+			showOnLocation: true,
+			categories: {
+				some: {
+					category: {
+						active: true,
+					},
+				},
+			},
+		},
+	},
+	select: attributes.select,
+} satisfies Prisma.OrgService$attributesArgs | Prisma.OrgLocation$attributesArgs
 export const attributesByName = (tags: string[]) =>
 	({
 		where: {

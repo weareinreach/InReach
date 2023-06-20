@@ -1,4 +1,4 @@
-import { Box, createStyles, Divider, Group, Skeleton, Space, Stack, Text, Title } from '@mantine/core'
+import { createStyles, Divider, Group, Skeleton, Space, Stack, Text, Title } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 
@@ -119,12 +119,14 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 	return (
 		<>
 			<Stack spacing={16} ref={hoverRef}>
-				<Stack spacing={12}>
-					<div>
-						<div style={{ float: 'right' }}>
-							<ActionButtons iconKey='save' organizationId={result.id} />
-						</div>
-						<Title order={2} className={classes.hoverText} data-hovered={hovered ? hovered : undefined}>
+				<Stack spacing={0}>
+					<Group align='center' position='apart' noWrap>
+						<Title
+							order={2}
+							className={classes.hoverText}
+							data-hovered={hovered ? hovered : undefined}
+							mb={12}
+						>
 							<Link
 								href={{ pathname: '/org/[slug]', query: { slug } }}
 								variant={variants.Link.inheritStyle}
@@ -135,7 +137,8 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 								<BadgeGroup badges={leaderBadges} />
 							</Link>
 						</Title>
-					</div>
+						<ActionButtons iconKey='save' organizationId={result.id} />
+					</Group>
 					<Link
 						href={{ pathname: '/org/[slug]', query: { slug } }}
 						variant={variants.Link.inheritStyle}

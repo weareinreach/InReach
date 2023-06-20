@@ -25,6 +25,7 @@ export default {
 				'unclaimed',
 				'attribute',
 				'verifiedUser',
+				'remote',
 			],
 			control: 'select',
 		},
@@ -321,5 +322,11 @@ export const VerifiedReviewer = {
 		controls: {
 			include: ['variant'],
 		},
+	},
+} satisfies StoryDef
+
+export const Remote = {
+	args: {
+		variant: 'remote',
 	},
 } satisfies StoryDef

@@ -82,10 +82,10 @@ export interface OrgInfoProps {
 		name: string
 		id: string
 		slug: string
-		lastVerified: NonNullable<ApiOutput['organization']['getBySlug']>['lastVerified']
-		attributes: NonNullable<ApiOutput['organization']['getBySlug']>['attributes']
-		description: NonNullable<ApiOutput['organization']['getBySlug']>['description']
-		locations: NonNullable<ApiOutput['organization']['getBySlug']>['locations']
+		lastVerified: NonNullable<ApiOutput['organization']['forOrgPage']>['lastVerified']
+		attributes: NonNullable<ApiOutput['organization']['forOrgPage']>['attributes']
+		description: NonNullable<ApiOutput['organization']['forOrgPage']>['description']
+		locations: NonNullable<ApiOutput['organization']['forOrgPage']>['locations']
 		isClaimed: boolean
 	}
 }
@@ -96,10 +96,10 @@ export interface LocationInfoProps {
 		name: string
 		id: string
 		slug: string
-		lastVerified: NonNullable<ApiOutput['organization']['getBySlug']>['lastVerified']
-		attributes: NonNullable<ApiOutput['location']['getById']>['attributes']
-		description: NonNullable<ApiOutput['location']['getById']>['description']
-		locations: NonNullable<ApiOutput['location']['getById']>[]
+		lastVerified: NonNullable<ApiOutput['organization']['forLocationPage']>['lastVerified']
+		attributes: NonNullable<ApiOutput['location']['forLocationPage']>['attributes']
+		description: NonNullable<ApiOutput['location']['forLocationPage']>['description']
+		locations: NonNullable<ApiOutput['location']['forLocationPage']>[]
 		isClaimed: boolean
 	}
 }

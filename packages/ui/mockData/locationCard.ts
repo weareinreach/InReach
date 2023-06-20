@@ -1,5 +1,3 @@
-import { type LocationCardProps } from '~ui/components/sections'
-
 // http://localhost:3000/api/panel
 //  location.getById: oloc_01GVH3VEVBERFNA9PHHJYEBGA3
 
@@ -1969,4 +1967,4 @@ export const locationMock = {
 	longitude: -77.032,
 	latitude: 38.91,
 	id: 'oloc_01GVH3VEVBERFNA9PHHJYEBGA3',
-} satisfies LocationCardProps['location']
+}

@@ -7,7 +7,7 @@ import { prismaDistSearchDetails } from '~api/prisma/org'
 import { id, searchTerm, slug } from '~api/schemas/common'
 import { attributeFilter, serviceFilter } from '~api/schemas/filters/org'
 import { distSearch } from '~api/schemas/org/search'
-import { isPublic } from '~api/schemas/selects/common'
+import { attributes, freeText, isPublic } from '~api/schemas/selects/common'
 import { organizationInclude } from '~api/schemas/selects/org'
 
 import { uniqueSlug } from './lib'
@@ -166,35 +166,6 @@ export const queries = defineRouter({
 		return lists
 	}),
 	suggestionOptions: publicProcedure.query(async ({ ctx }) => {
-		// const countries = await ctx.prisma.country.findMany({
-		// 	where: { activeForSuggest: true },
-		// 	select: { id: true, tsKey: true, tsNs: true },
-		// 	orderBy: { tsKey: 'desc' },
-		// })
-		// const serviceTypes = await ctx.prisma.serviceCategory.findMany({
-		// 	where: { active: true },
-		// 	select: { id: true, tsKey: true, tsNs: true },
-		// 	orderBy: { tsKey: 'asc' },
-		// })
-		// const communities = await ctx.prisma.attribute.findMany({
-		// 	where: {
-		// 		categories: { some: { category: { tag: 'service-focus' } } },
-		// 		parents: { none: {} },
-		// 	},
-		// 	select: {
-		// 		id: true,
-		// 		tsNs: true,
-		// 		tsKey: true,
-		// 		icon: true,
-		// 		children: {
-		// 			select: {
-		// 				child: { select: { id: true, tsNs: true, tsKey: true } },
-		// 			},
-		// 		},
-		// 	},
-		// 	orderBy: { tsKey: 'asc' },
-		// })
-
 		const [countries, serviceTypes, communities] = await Promise.all([
 			ctx.prisma.country.findMany({
 				where: { activeForSuggest: true },
@@ -202,7 +173,7 @@ export const queries = defineRouter({
 				orderBy: { tsKey: 'desc' },
 			}),
 			ctx.prisma.serviceCategory.findMany({
-				where: { active: true },
+				where: { active: true, activeForSuggest: true },
 				select: { id: true, tsKey: true, tsNs: true },
 				orderBy: { tsKey: 'asc' },
 			}),
@@ -210,6 +181,7 @@ export const queries = defineRouter({
 				where: {
 					categories: { some: { category: { tag: 'service-focus' } } },
 					parents: { none: {} },
+					activeForSuggest: true,
 				},
 				select: {
 					id: true,
@@ -258,6 +230,86 @@ export const queries = defineRouter({
 		try {
 			const slug = await uniqueSlug(ctx, input)
 			return slug
+		} catch (error) {
+			handleError(error)
+		}
+	}),
+	forOrgPage: publicProcedure.input(slug).query(async ({ ctx, input }) => {
+		try {
+			const { slug } = input
+			const org = await ctx.prisma.organization.findUniqueOrThrow({
+				where: {
+					slug,
+					...isPublic,
+				},
+				select: {
+					id: true,
+					name: true,
+					slug: true,
+					published: true,
+					lastVerified: true,
+					allowedEditors: { where: { authorized: true }, select: { userId: true } },
+					description: freeText,
+					userLists: ctx.session?.user.id
+						? {
+								where: { list: { ownedById: ctx.session.user.id } },
+								select: { list: { select: { id: true, name: true } } },
+						  }
+						: undefined,
+					attributes,
+					reviews: {
+						where: { visible: true, deleted: false },
+						select: { id: true },
+					},
+					locations: {
+						where: isPublic,
+						select: {
+							id: true,
+							street1: true,
+							street2: true,
+							city: true,
+							postCode: true,
+							country: { select: { cca2: true } },
+							govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
+						},
+					},
+				},
+			})
+			const { allowedEditors, ...orgData } = org
+			const reformatted = {
+				...orgData,
+				isClaimed: Boolean(allowedEditors.length),
+			}
+
+			return reformatted
+		} catch (error) {
+			handleError(error)
+		}
+	}),
+	forLocationPage: publicProcedure.input(slug).query(async ({ ctx, input }) => {
+		try {
+			const { slug } = input
+			const org = await ctx.prisma.organization.findUniqueOrThrow({
+				where: {
+					slug,
+					...isPublic,
+				},
+				select: {
+					id: true,
+					name: true,
+					slug: true,
+					published: true,
+					lastVerified: true,
+					allowedEditors: { where: { authorized: true }, select: { userId: true } },
+				},
+			})
+			const { allowedEditors, ...orgData } = org
+			const reformatted = {
+				...orgData,
+				isClaimed: Boolean(allowedEditors.length),
+			}
+
+			return reformatted
 		} catch (error) {
 			handleError(error)
 		}
