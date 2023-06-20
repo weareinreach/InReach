@@ -1,6 +1,10 @@
-import { defineRouter, permissionedProcedure } from '~api/lib/trpc'
+import { z } from 'zod'
+
+import { getIdPrefixRegex, isIdFor, type Prisma } from '@weareinreach/db'
+import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { CreateOrgPhotoSchema, UpdateOrgPhotoSchema } from '~api/schemas/create/orgPhoto'
+import { isPublic } from '~api/schemas/selects/common'
 
 export const orgPhotoRouter = defineRouter({
 	create: permissionedProcedure('createPhoto')
@@ -38,5 +42,35 @@ export const orgPhotoRouter = defineRouter({
 				return updated
 			})
 			return updatedRecord
+		}),
+	getByParent: publicProcedure
+		.input(z.string().regex(getIdPrefixRegex('organization', 'orgLocation')))
+		.query(async ({ input, ctx }) => {
+			const whereId = (): Prisma.OrgPhotoWhereInput => {
+				switch (true) {
+					case isIdFor('organization', input): {
+						return { organization: { id: input, ...isPublic } }
+					}
+					case isIdFor('orgLocation', input): {
+						return { orgLocation: { id: input, ...isPublic } }
+					}
+					default: {
+						return {}
+					}
+				}
+			}
+			const result = await ctx.prisma.orgPhoto.findMany({
+				where: {
+					...isPublic,
+					...whereId(),
+				},
+				select: {
+					id: true,
+					src: true,
+					height: true,
+					width: true,
+				},
+			})
+			return result
 		}),
 })

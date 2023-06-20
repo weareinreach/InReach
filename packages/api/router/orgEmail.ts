@@ -1,8 +1,9 @@
 import compact from 'just-compact'
 import { z } from 'zod'
 
+import { getIdPrefixRegex, isIdFor, type Prisma } from '@weareinreach/db'
 import { generateNestedFreeText } from '@weareinreach/db/lib/generateFreeText'
-import { defineRouter, permissionedProcedure } from '~api/lib/trpc'
+import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import {
 	CreateOrgEmailSchema,
@@ -15,6 +16,7 @@ import {
 	createManyOptional,
 	diffConnectionsMtoN,
 } from '~api/schemas/nestedOps'
+import { isPublic } from '~api/schemas/selects/common'
 
 export const orgEmailRouter = defineRouter({
 	create: permissionedProcedure('createNewEmail')
@@ -189,5 +191,58 @@ export const orgEmailRouter = defineRouter({
 				)
 			)
 			return upserts
+		}),
+	forContactInfo: publicProcedure
+		.input(
+			z.object({
+				parentId: z.string().regex(getIdPrefixRegex('organization', 'orgLocation', 'orgService')),
+				locationOnly: z.boolean().optional(),
+				serviceOnly: z.boolean().optional(),
+			})
+		)
+		.query(async ({ ctx, input }) => {
+			const whereId = (): Prisma.OrgEmailWhereInput => {
+				switch (true) {
+					case isIdFor('organization', input.parentId): {
+						return { organization: { some: { organization: { id: input.parentId, ...isPublic } } } }
+					}
+					case isIdFor('orgLocation', input.parentId): {
+						return { locations: { some: { location: { id: input.parentId, ...isPublic } } } }
+					}
+					case isIdFor('orgService', input.parentId): {
+						return { services: { some: { service: { id: input.parentId, ...isPublic } } } }
+					}
+					default: {
+						return {}
+					}
+				}
+			}
+
+			const result = await ctx.prisma.orgEmail.findMany({
+				where: {
+					...isPublic,
+					...whereId(),
+					...(input.locationOnly !== undefined ? { locationOnly: input.locationOnly } : {}),
+					...(input.serviceOnly !== undefined ? { serviceOnly: input.serviceOnly } : {}),
+				},
+				select: {
+					id: true,
+					email: true,
+					primary: true,
+					title: { select: { key: { select: { key: true } } } },
+					description: { select: { tsKey: { select: { text: true, key: true } } } },
+					locationOnly: true,
+					serviceOnly: true,
+				},
+				orderBy: { primary: 'desc' },
+			})
+			const transformed = result.map(({ description, title, ...record }) => ({
+				...record,
+				title: title ? { key: title?.key.key } : null,
+				description: description
+					? { key: description?.tsKey.key, defaultText: description?.tsKey.text }
+					: null,
+			}))
+			return transformed
 		}),
 })

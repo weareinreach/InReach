@@ -1,44 +1,21 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { StorybookGridSingle } from '~ui/layouts'
-import { locationMock } from '~ui/mockData/locationCard'
+import { location } from '~ui/mockData/location'
 
 import { VisitCard } from './VisitCard'
-
-const remote = {
-	attribute: {
-		id: 'attr_01GW2HHFV5Q7XN2ZNTYFR1AD3M',
-		_count: {
-			children: 0,
-			parents: 0,
-		},
-		tsKey: 'additional.offers-remote-services',
-		tsNs: 'attribute',
-		icon: 'carbon:globe',
-		iconBg: null,
-		showOnLocation: null,
-		categories: [
-			{
-				category: {
-					tag: 'additional-information',
-					icon: null,
-				},
-			},
-		],
-	},
-	supplement: [],
-}
 
 export default {
 	title: 'Sections/Visit Info',
 	component: VisitCard,
 	args: {
-		location: locationMock,
+		locationId: 'locationId',
 		published: true,
 	},
 	decorators: [StorybookGridSingle],
 	parameters: {
 		layout: 'fullscreen',
+		msw: [location.forVisitCard],
 	},
 } satisfies Meta<typeof VisitCard>
 
@@ -53,22 +30,8 @@ export const Mobile = {
 	},
 } satisfies StoryDef
 
-export const Remote = {
-	args: {
-		location: {
-			...locationMock,
-			country: {},
-			govDist: {},
-			attributes: [remote],
-		},
-	},
-}
+// export const Remote = {} satisfies StoryDef
 
-export const RemoteWithPhysicalAddress = {
-	args: {
-		location: {
-			...locationMock,
-			attributes: [remote],
-		},
-	},
-} satisfies StoryDef
+// export const RemoteWithPhysicalAddress = {
+
+// } satisfies StoryDef

@@ -4,6 +4,7 @@
 	"private": true,
 	"license": "GPL-3.0-only",
 	"main": "./index.ts",
+	"types": "./index.ts",
 	"scripts": {
 		"clean:export": "rm -rf ./datastore/v1/mongodb/{output,output-types}/* || true",
 		"clean:logs": "pnpm run \"/^clean:logs:.*/\"",
@@ -76,6 +77,7 @@
 		"@types/langs": "2.0.1",
 		"@types/luxon": "3.3.0",
 		"@types/node": "18.16.18",
+		"@types/papaparse": "5.3.7",
 		"@types/prettier": "2.7.3",
 		"@types/recursive-readdir": "2.2.1",
 		"@types/terraformer__wkt": "2.0.0",
@@ -101,6 +103,7 @@
 		"listr2": "6.6.0",
 		"luxon": "3.3.0",
 		"mongoback": "3.0.6",
+		"papaparse": "5.4.1",
 		"prettier": "2.8.8",
 		"pretty-bytes": "6.1.0",
 		"prisma": "4.16.0",

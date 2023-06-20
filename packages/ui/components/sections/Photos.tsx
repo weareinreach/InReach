@@ -7,6 +7,7 @@ import { useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { useCustomVariant } from '~ui/hooks'
+import { trpc as api } from '~ui/lib/trpcClient'
 
 const useStyles = createStyles((theme) => ({
 	text: {
@@ -46,7 +47,7 @@ const useStyles = createStyles((theme) => ({
  *   null, and height: number | null
  * @returns JSX.Element
  */
-export const PhotosSection = ({ photos }: PhotosSectionProps) => {
+export const PhotosSection = ({ parentId }: PhotosSectionProps) => {
 	const { t } = useTranslation('common')
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
@@ -54,13 +55,13 @@ export const PhotosSection = ({ photos }: PhotosSectionProps) => {
 	const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 	const [opened, { open, close }] = useDisclosure()
 	const [initialSlide, setInitialSlide] = useState<number | undefined>(undefined)
-
+	const { data: photos } = api.orgPhoto.getByParent.useQuery(parentId)
 	const TRANSITION_DURATION = 100
 	const [embla, setEmbla] = useState<Embla | null>(null)
 
 	useAnimationOffsetEffect(embla, TRANSITION_DURATION)
 
-	const photosArray = Array.isArray(photos) ? photos : [photos]
+	const photosArray = photos === undefined ? [] : Array.isArray(photos) ? photos : [photos]
 	const mainImages = isMobile ? 2 : 4
 	const mainDisplay = photosArray.slice(0, mainImages)
 
@@ -135,8 +136,6 @@ export const PhotosSection = ({ photos }: PhotosSectionProps) => {
 	)
 }
 
-type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>
-
 export type PhotosSectionProps = {
-	photos: PageQueryResult['locations'][number]['photos'] | PageQueryResult['photos'][number]
+	parentId: string
 }
