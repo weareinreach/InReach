@@ -26,8 +26,8 @@
 	},
 	"cancel": "取消",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach (coming soon!)</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
-		"title": "<emojiLg>🏠</emojiLg>\n<title2>服务提供商尚未宣称该组织。</title2>\n<textDarkGray>您可以声称该组织为服务提供商，以：</textDarkGray>"
+		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>服务提供商尚未宣称该组织。</title2>\n<textDarkGray>您可以声称该组织为服务提供商，以：< extDarkGray>"
 	},
 	"claimed": "已申领",
 	"clear": "清除",
@@ -185,7 +185,7 @@
 	"privatePractice": "私人诊所",
 	"profile": "个人档案",
 	"questions": "有问题吗？",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "远程可用的服务",
 	"reset-password": "重置你的密码",
