@@ -17,8 +17,11 @@
 		"title": "Engagement anti-haine"
 	},
 	"badge": {
+		"claimed-tool-tip": "Cette organisation a été réclamée par un représentant vérifié. <link>En savoir plus.</link>",
 		"community-tool-tip": "Communauté desservi par cet organisme.",
-		"service-tool-tip": "Service (s) offert(s) par cette organisation."
+		"remote-tool-tip": "Disponible à distance",
+		"service-tool-tip": "Service (s) offert(s) par cette organisation.",
+		"unclaimed-tool-tip": "Cette organisation n'a pas encore été réclamée par un représentant. <link>Réclamez cette organisation</link> pour établir la confiance avec notre communauté, mettre à jour vos propres informations, et plus encore."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Retour à <u>{{page}}</u>",
@@ -189,6 +192,7 @@
 	"quick-promo-body": "<textUtility1>💚 Enregistrez et partagez les listes de ressources personnalisées</textUtility1>\n<textUtility1>💬 Laissez votre évaluation publique sur les organisations</textUtility1>\n<textUtility1>🏠 Suggérer des organisations dans votre région</textUtility1>\n<textUtility1>🔗 Revendiquer la page de profil de votre organisation</textUtility1>",
 	"quick-promo-heading": "<emojiLg>:arc-en-ciel :</emojiLg>\n<title2>Vous devez vous connecter pour économiser des ressources.</title2>\n<textDarkGray>Avec un compte InReach gratuit, vous pouvez débloquer des fonctionnalités supplémentaires :</textDarkGray>",
 	"remote-services": "Services disponibles à distance",
+	"remote-services-page-title": "Services distants",
 	"reset-password": "Réinitialiser votre mot de passe",
 	"reset-password-message": "Nous vous enverrons un email pour réinitialiser votre mot de passe",
 	"resource-saved": "Ressource enregistrée.",
