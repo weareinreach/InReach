@@ -46,7 +46,7 @@ i18n
 				return value
 			},
 		},
-		react: { useSuspense: true },
+		react: { useSuspense: false, bindI18nStore: 'added loaded', bindI18n: 'languageChanged loaded' },
 		cleanCode: true,
 		supportedLngs: locales,
 		ns,

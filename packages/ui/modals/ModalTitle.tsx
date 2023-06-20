@@ -1,15 +1,9 @@
 import { Box, Group, Text } from '@mantine/core'
 import { closeAllModals } from '@mantine/modals'
-import { type DefaultTFuncReturn } from 'i18next'
 import { type MouseEventHandler } from 'react'
 
 import { ActionButtons } from '~ui/components/core/ActionButtons'
-import {
-	Breadcrumb,
-	type BreadcrumbProps,
-	isValidBreadcrumbProps,
-	type ModalTitleBreadcrumb,
-} from '~ui/components/core/Breadcrumb'
+import { Breadcrumb, type BreadcrumbProps, isValidBreadcrumbProps } from '~ui/components/core/Breadcrumb'
 import { useCustomVariant } from '~ui/hooks'
 
 export const ModalTitle = (props: ModalTitleProps) => {
@@ -47,6 +41,6 @@ export type ModalTitleProps = {
 		onClick?: MouseEventHandler<HTMLButtonElement>
 	}
 	icons?: ('save' | 'share')[]
-	rightText?: string | DefaultTFuncReturn
+	rightText?: string
 	serviceId?: string
 }

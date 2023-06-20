@@ -14,7 +14,6 @@ import {
 	useMantineTheme,
 } from '@mantine/core'
 import { useClipboard } from '@mantine/hooks'
-import { type DefaultTFuncReturn } from 'i18next'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
@@ -519,7 +518,7 @@ interface ActionButtonProps {
 	omitLabel?: boolean
 	/** Specify which buttons will be displayed in the 'more' dropdown menu */
 	outsideMoreMenu?: string[]
-	children?: string | DefaultTFuncReturn
+	children?: string
 	/** Information for save button */
 	serviceId?: string
 	organizationId?: string

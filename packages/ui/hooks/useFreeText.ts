@@ -1,4 +1,4 @@
-import { type DefaultTFuncReturn, type TOptions } from 'i18next'
+import { type TOptions } from 'i18next'
 import { useTranslation } from 'next-i18next'
 
 import { type DB } from '@weareinreach/api/prisma/types'
@@ -29,4 +29,4 @@ export type GetFreeText = (
 	tOptions?: TOptions
 ) => { key: string; options: TOptions }
 
-export type UseFreeText = (freeTextRecord: UseFreeTextProps, tOptions?: TOptions) => DefaultTFuncReturn
+export type UseFreeText = (freeTextRecord: UseFreeTextProps, tOptions?: TOptions) => string
