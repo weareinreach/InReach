@@ -62,7 +62,7 @@ const OrganizationPage: NextPage = () => {
 					<ServicesInfoCard parentId={organizationId} />
 				</Tabs.Panel>
 				<Tabs.Panel value='photos'>
-					<PhotosSection photos={photos} />
+					<PhotosSection parentId={organizationId} />
 				</Tabs.Panel>
 				<Tabs.Panel value='reviews'>
 					<ReviewSection reviews={reviews} />
@@ -78,11 +78,17 @@ const OrganizationPage: NextPage = () => {
 
 	const sidebar =
 		locations?.length === 1 ? (
-			<>{locations[0] && <VisitCard location={locations[0]} />}</>
+			<>{locations[0] && <VisitCard locationId={locations[0].id} />}</>
 		) : (
 			locations.length && (
 				<Stack ref={ref} miw='100%'>
-					{width && <GoogleMap marker={locations} width={width} height={Math.floor(width * 1.185)} />}
+					{width && (
+						<GoogleMap
+							locationIds={locations.map(({ id }) => id)}
+							width={width}
+							height={Math.floor(width * 1.185)}
+						/>
+					)}
 				</Stack>
 			)
 		)

@@ -63,7 +63,7 @@ const OrganizationPage: NextPage = () => {
 	const { query } = router
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
-	const { data, status } = api.organization.getBySlug.useQuery(query)
+	const { data, status } = api.organization.forOrgPage.useQuery(query)
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
 		{ parentId: data?.id ?? '', remoteOnly: true },
 		{
@@ -103,21 +103,7 @@ const OrganizationPage: NextPage = () => {
 
 	if (loading || !data || router.isFallback) return <LoadingState />
 
-	const {
-		emails,
-		phones,
-		socialMedia,
-		websites,
-		userLists,
-		attributes,
-		description,
-		slug,
-		photos,
-		reviews,
-		locations,
-		isClaimed,
-		id: organizationId,
-	} = data
+	const { userLists, attributes, description, slug, reviews, locations, isClaimed, id: organizationId } = data
 
 	const body =
 		locations?.length === 1 ? (
@@ -152,7 +138,7 @@ const OrganizationPage: NextPage = () => {
 						<ServicesInfoCard parentId={organizationId} />
 					</div>
 					<div ref={photosRef}>
-						<PhotosSection photos={photos} />
+						<PhotosSection parentId={organizationId} />
 					</div>
 					<div ref={reviewsRef}>
 						<ReviewSection reviews={reviews} />
@@ -179,7 +165,7 @@ const OrganizationPage: NextPage = () => {
 				{locations[0] && (
 					<>
 						{isTablet && <Divider />}
-						<VisitCard location={locations[0]} />
+						<VisitCard locationId={locations[0].id} />
 					</>
 				)}
 			</>
@@ -190,7 +176,13 @@ const OrganizationPage: NextPage = () => {
 				<>
 					{isTablet && <Divider />}
 					<Stack ref={ref} miw='100%'>
-						{width && <GoogleMap marker={locations} width={width} height={Math.floor(width * 1.185)} />}
+						{width && (
+							<GoogleMap
+								locationIds={locations.map(({ id }) => id)}
+								width={width}
+								height={Math.floor(width * 1.185)}
+							/>
+						)}
 					</Stack>
 				</>
 			)
@@ -266,7 +258,7 @@ export const getStaticProps: GetStaticProps<Record<string, unknown>, RoutedQuery
 
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug]),
-		ssg.organization.getBySlug.prefetch({ slug }),
+		ssg.organization.forOrgPage.prefetch({ slug }),
 	])
 	// await ssg.organization.getBySlug.prefetch({ slug })
 

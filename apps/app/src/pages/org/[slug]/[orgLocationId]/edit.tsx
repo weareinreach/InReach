@@ -1,3 +1,4 @@
+/* eslint-disable i18next/no-literal-string */
 import { Grid, Stack, Tabs, Title } from '@mantine/core'
 import { type GetServerSideProps, type NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -79,7 +80,7 @@ const OrgLocationPage: NextPage = () => {
 							<ServicesInfoCard parentId={data.id} />
 						</Tabs.Panel>
 						<Tabs.Panel value='photos'>
-							<PhotosSection photos={photos} />
+							<PhotosSection parentId={data.id} />
 						</Tabs.Panel>
 						<Tabs.Panel value='reviews'>
 							<ReviewSection reviews={reviews} />
@@ -90,7 +91,7 @@ const OrgLocationPage: NextPage = () => {
 			<Grid.Col order={2}>
 				<Stack spacing={40}>
 					<ContactSection role='org' parentId={data.id} />
-					<VisitCard location={data} />
+					<VisitCard locationId={data.id} />
 				</Stack>
 			</Grid.Col>
 		</>

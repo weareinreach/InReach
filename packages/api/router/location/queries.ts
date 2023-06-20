@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { handleError } from '~api/lib/errorHandler'
 import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 import { id, orgId } from '~api/schemas/common'
-import { isPublic } from '~api/schemas/selects/common'
+import { attributes, freeText, isPublic } from '~api/schemas/selects/common'
 import { orgLocationInclude } from '~api/schemas/selects/org'
 
 export const queries = defineRouter({
@@ -209,5 +209,37 @@ export const queries = defineRouter({
 					select,
 			  })
 		return result
+	}),
+	forLocationPage: publicProcedure.input(id).query(async ({ ctx, input }) => {
+		try {
+			const location = await ctx.prisma.orgLocation.findUniqueOrThrow({
+				where: {
+					id: input.id,
+					...isPublic,
+				},
+				select: {
+					id: true,
+					primary: true,
+					name: true,
+					street1: true,
+					street2: true,
+					city: true,
+					postCode: true,
+					country: { select: { cca2: true } },
+					govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
+					longitude: true,
+					latitude: true,
+					description: freeText,
+					attributes,
+					reviews: {
+						where: { visible: true, deleted: false },
+						select: { id: true },
+					},
+				},
+			})
+			return location
+		} catch (error) {
+			handleError(error)
+		}
 	}),
 })

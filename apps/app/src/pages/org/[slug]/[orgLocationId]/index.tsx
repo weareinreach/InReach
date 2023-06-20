@@ -63,8 +63,8 @@ const OrgLocationPage: NextPage = () => {
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
-	const { data: orgData, status: orgDataStatus } = api.organization.getBySlug.useQuery(query)
-	const { data, status } = api.location.getById.useQuery({ id: orgLocationId })
+	const { data: orgData, status: orgDataStatus } = api.organization.forLocationPage.useQuery(query)
+	const { data, status } = api.location.forLocationPage.useQuery({ id: orgLocationId })
 	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
 		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
 	})
@@ -79,7 +79,7 @@ const OrgLocationPage: NextPage = () => {
 	}, [data, status, orgData, orgDataStatus])
 	if (loading || !data || !orgData || router.isFallback) return <LoadingState />
 
-	const { emails, phones, socialMedia, websites, attributes, description, photos, reviews } = data
+	const { attributes, description, reviews } = data
 
 	return (
 		<>
@@ -120,7 +120,7 @@ const OrgLocationPage: NextPage = () => {
 							<Divider />
 							<ContactSection role='org' parentId={data.id} />
 							<Divider />
-							<VisitCard location={data} />
+							<VisitCard locationId={data.id} />
 						</Stack>
 					)}
 					<Tabs
@@ -154,7 +154,7 @@ const OrgLocationPage: NextPage = () => {
 								<ServicesInfoCard parentId={data.id} />
 							</div>
 							<div ref={photosRef}>
-								<PhotosSection photos={photos} />
+								<PhotosSection parentId={data.id} />
 							</div>
 							<div ref={reviewsRef}>
 								<ReviewSection reviews={reviews} />
@@ -167,7 +167,7 @@ const OrgLocationPage: NextPage = () => {
 				<Grid.Col order={2}>
 					<Stack spacing={40}>
 						<ContactSection role='org' parentId={data.id} />
-						<VisitCard location={data} />
+						<VisitCard locationId={data.id} />
 					</Stack>
 				</Grid.Col>
 			)}
@@ -191,7 +191,8 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
 		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug]),
 		ssg.organization.getBySlug.prefetch({ slug }),
 		ssg.organization.getIdFromSlug.prefetch({ slug }),
-		ssg.location.getById.prefetch({ id: orgLocationId }),
+		ssg.location.forLocationPage.prefetch({ id: orgLocationId }),
+		ssg.organization.forLocationPage.prefetch({ slug }),
 	])
 	const props = {
 		trpcState: ssg.dehydrate(),
