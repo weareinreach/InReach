@@ -12,7 +12,6 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
-import { type DefaultTFuncReturn } from 'i18next'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import { type Dispatch, forwardRef, type ReactNode, type SetStateAction, useEffect, useState } from 'react'
@@ -321,7 +320,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 
 type SearchBoxProps = {
 	type: 'location' | 'organization'
-	label?: string | DefaultTFuncReturn | ReactNode
+	label?: string | ReactNode
 	loadingManager: {
 		setLoading: Dispatch<SetStateAction<boolean>>
 		isLoading: boolean
