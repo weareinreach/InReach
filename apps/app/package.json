@@ -12,6 +12,7 @@
 		"generate:all": "tsx ./lib/generate.ts",
 		"generate:data": "tsx ./lib/generate.ts -d",
 		"generate:i18n": "tsx ./lib/generate.ts -t",
+		"generate:i18nTypes": "i18next-resources-for-ts interface -i ./public/locales/en -o ./src/types/resources.d.ts",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "next lint",
 		"lint:fix": "next lint --fix",
@@ -127,11 +128,13 @@
 		"dotenv": "16.3.1",
 		"eslint": "8.43.0",
 		"eslint-plugin-i18next": "6.0.3",
+		"i18next-resources-for-ts": "1.2.1",
 		"listr2": "6.6.0",
 		"prettier": "2.8.8",
 		"trpc-client-devtools-link": "0.2.1-next",
 		"trpc-panel": "1.3.4",
 		"trpc-playground": "1.0.4",
+		"type-fest": "3.12.0",
 		"typescript": "5.1.3"
 	},
 	"ct3aMetadata": {
