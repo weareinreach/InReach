@@ -83,7 +83,7 @@
 		"@weareinreach/eslint-config": "0.100.0",
 		"@zerodep/geo.stateiso": "0.1.4",
 		"axios": "1.4.0",
-		"commander": "10.0.1",
+		"commander": "11.0.0",
 		"countries-languages": "1.0.3",
 		"dotenv": "16.3.1",
 		"dotenv-cli": "7.2.1",
