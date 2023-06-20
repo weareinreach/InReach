@@ -10,7 +10,7 @@ overrides:
   axe-core: ^4.7.0
   chokidar: '>=3.0.0'
   csstype: ^3.1.2
-  eslint-plugin-import: npm:eslint-plugin-i
+  eslint-plugin-import: npm:eslint-plugin-i@latest
   eslint-plugin-turbo@0.0.9: 0.0.8
   glob-parent@<5.1.2: '>=5.1.2'
   http-cache-semantics@<=4.1.0: ^4.1.1
@@ -1233,7 +1233,7 @@ importers:
         specifier: 6.0.3
         version: 6.0.3
       eslint-plugin-import:
-        specifier: npm:eslint-plugin-i
+        specifier: npm:eslint-plugin-i@latest
         version: /eslint-plugin-i@2.27.5-2(@typescript-eslint/parser@5.60.0)(eslint-import-resolver-typescript@3.5.5)(eslint@8.43.0)
       eslint-plugin-node:
         specifier: 11.1.0
@@ -1250,6 +1250,9 @@ importers:
       next:
         specifier: 13.4.6
         version: 13.4.6(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
+      resolve-pkg-maps:
+        specifier: 1.0.0
+        version: 1.0.0
       typescript:
         specifier: 5.1.3
         version: 5.1.3
@@ -22756,6 +22759,10 @@ packages:
   /resolve-from@5.0.0:
     resolution: {integrity: sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==}
     engines: {node: '>=8'}
+
+  /resolve-pkg-maps@1.0.0:
+    resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
+    dev: true
 
   /resolve-protobuf-schema@2.1.0:
     resolution: {integrity: sha512-kI5ffTiZWmJaS/huM8wZfEMer1eRd7oJQhDuxeCLe3t7N7mX3z94CN0xPxBQxFYQTSNz9T0i+v6inKqSdK8xrQ==}

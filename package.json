@@ -71,7 +71,7 @@
 			"axe-core": "^4.7.0",
 			"chokidar": ">=3.0.0",
 			"csstype": "^3.1.2",
-			"eslint-plugin-import": "npm:eslint-plugin-i",
+			"eslint-plugin-import": "npm:eslint-plugin-i@latest",
 			"eslint-plugin-turbo@0.0.9": "0.0.8",
 			"glob-parent@<5.1.2": ">=5.1.2",
 			"http-cache-semantics@<=4.1.0": "^4.1.1",
