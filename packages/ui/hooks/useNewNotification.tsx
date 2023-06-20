@@ -1,6 +1,5 @@
 import { createStyles, Group, Text, useMantineTheme } from '@mantine/core'
 import { type NotificationProps, showNotification } from '@mantine/notifications'
-import { type DefaultTFuncReturn } from 'i18next'
 import Link, { type LinkProps } from 'next/link'
 
 import { Icon } from '~ui/icon'
@@ -84,7 +83,7 @@ export type NotificationInnerProps = Optional<UseNotificationProps, 'icon'>
 
 export type UseNotificationProps = {
 	/** Text to display */
-	displayText: string | DefaultTFuncReturn
+	displayText: string
 	/** Display icon */
 	icon: keyof typeof iconList
 	/**
@@ -95,6 +94,6 @@ export type UseNotificationProps = {
 		/** URL */
 		href: LinkProps['href']
 		/** Text to display */
-		text: string | DefaultTFuncReturn
+		text: string
 	}
 }
