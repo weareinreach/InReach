@@ -300,6 +300,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						.setLocale(i18n.resolvedLanguage ?? 'en')
 						.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 					const label = t('verified-information-detail', { dateString })
+
 					return {
 						label,
 						multiline: true,
@@ -322,10 +323,15 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 							}}
 						/>
 					)
+
+					const labelBase = t('badge.claimed-base')
+					const labelLink = t('badge.claimed-learn-more')
+					const labelLength = labelBase.length + labelLink.length
+
 					return {
 						label,
 						multiline: true,
-						width: label.length > MAX_CHARACTERS ? 600 : 'auto',
+						width: labelLength > MAX_CHARACTERS ? 600 : 'auto',
 						closeDelay: 500,
 						style: { pointerEvents: 'auto' },
 					}
@@ -358,18 +364,26 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 			</MantineBadge>
 		)
 		if (props.variant === 'unclaimed') {
+			const MAX_CHARACTERS = 80
+			const label = (
+				<Trans
+					i18nKey='badge.unclaimed-tool-tip'
+					components={{
+						link1: <ClaimOrgModal component={Link} variant={variants.Link.inheritStyle} />,
+					}}
+				/>
+			)
+			const labelBase = t('badge.unclaimed-base')
+			const labelLink = t('badge.unclaimed-claim-org')
+			const labelLength = labelBase.length + labelLink.length
+
 			return (
 				<Tooltip
 					style={{ pointerEvents: 'auto' }}
 					closeDelay={500}
-					label={
-						<Trans
-							i18nKey='badge.unclaimed-tool-tip'
-							components={{
-								link1: <ClaimOrgModal component={Link} variant={variants.Link.inheritStyle} />,
-							}}
-						/>
-					}
+					label={label}
+					multiline={true}
+					width={labelLength > MAX_CHARACTERS ? 500 : 'auto'}
 				>
 					<ClaimOrgModal
 						component={MantineBadge}
