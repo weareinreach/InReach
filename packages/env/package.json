@@ -9,7 +9,7 @@
 	],
 	"scripts": {},
 	"dependencies": {
-		"@t3-oss/env-nextjs": "0.4.0",
+		"@t3-oss/env-nextjs": "0.4.1",
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
