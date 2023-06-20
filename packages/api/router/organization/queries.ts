@@ -166,35 +166,6 @@ export const queries = defineRouter({
 		return lists
 	}),
 	suggestionOptions: publicProcedure.query(async ({ ctx }) => {
-		// const countries = await ctx.prisma.country.findMany({
-		// 	where: { activeForSuggest: true },
-		// 	select: { id: true, tsKey: true, tsNs: true },
-		// 	orderBy: { tsKey: 'desc' },
-		// })
-		// const serviceTypes = await ctx.prisma.serviceCategory.findMany({
-		// 	where: { active: true },
-		// 	select: { id: true, tsKey: true, tsNs: true },
-		// 	orderBy: { tsKey: 'asc' },
-		// })
-		// const communities = await ctx.prisma.attribute.findMany({
-		// 	where: {
-		// 		categories: { some: { category: { tag: 'service-focus' } } },
-		// 		parents: { none: {} },
-		// 	},
-		// 	select: {
-		// 		id: true,
-		// 		tsNs: true,
-		// 		tsKey: true,
-		// 		icon: true,
-		// 		children: {
-		// 			select: {
-		// 				child: { select: { id: true, tsNs: true, tsKey: true } },
-		// 			},
-		// 		},
-		// 	},
-		// 	orderBy: { tsKey: 'asc' },
-		// })
-
 		const [countries, serviceTypes, communities] = await Promise.all([
 			ctx.prisma.country.findMany({
 				where: { activeForSuggest: true },
@@ -202,7 +173,7 @@ export const queries = defineRouter({
 				orderBy: { tsKey: 'desc' },
 			}),
 			ctx.prisma.serviceCategory.findMany({
-				where: { active: true },
+				where: { active: true, activeForSuggest: true },
 				select: { id: true, tsKey: true, tsNs: true },
 				orderBy: { tsKey: 'asc' },
 			}),
@@ -210,6 +181,7 @@ export const queries = defineRouter({
 				where: {
 					categories: { some: { category: { tag: 'service-focus' } } },
 					parents: { none: {} },
+					activeForSuggest: true,
 				},
 				select: {
 					id: true,

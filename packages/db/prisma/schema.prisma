@@ -964,14 +964,15 @@ enum AttributeRender {
 }
 
 model Attribute {
-  id      String  @id @default(cuid())
-  tag     String  @unique
-  name    String
-  icon    String?
-  iconBg  String?
+  id               String   @id @default(cuid())
+  tag              String   @unique
+  name             String
+  icon             String?
+  iconBg           String?
   /// Internal description
-  intDesc String?
-  active  Boolean @default(true)
+  intDesc          String?
+  active           Boolean  @default(true)
+  activeForSuggest Boolean?
 
   /// Can this be used as a filter? No - `null` : Yes - Defined as INCLUDE or EXCLUDE
   filterType FilterType?
@@ -1085,6 +1086,7 @@ model ServiceCategory {
   id                String                            @id @default(cuid())
   category          String                            @unique
   active            Boolean                           @default(true)
+  activeForSuggest  Boolean?
   services          ServiceTag[]
   defaultAttributes ServiceCategoryDefaultAttribute[]
 
