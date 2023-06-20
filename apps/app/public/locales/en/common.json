@@ -17,15 +17,11 @@
 		"title": "Anti-hate commitment"
 	},
 	"badge": {
-		"claimed-tool-tip": "This organization has been claimed by a verified representative. <link1>Learn more.</link1>",
-		"claimed-base": "This organization has been claimed by a verified representative.",
-		"claimed-learn-more":"Learn more.",
-		"unclaimed-tool-tip":"This organization has not yet been claimed by a representative. <link1>Claim this organization</link1> to build trust with our community, update your own information, and more.",
-		"unclaimed-base": "This organization has not yet been claimed by a representative.  to build trust with our community, update your own information, and more.",
-		"unclaimed-claim-org": "Claim this organization",
+		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
 		"community-tool-tip": "Community served by this organization.",
 		"remote-tool-tip": "Available remotely",
-		"service-tool-tip": "Service(s) offered by this organization."
+		"service-tool-tip": "Service(s) offered by this organization.",
+		"unclaimed-tool-tip": "This organization has not yet been claimed by a representative.<br/><link1>Claim this organization</link1> to build trust with our community, update your own information, and more."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Back to <u>{{page}}</u>",

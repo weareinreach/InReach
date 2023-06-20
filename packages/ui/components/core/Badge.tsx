@@ -332,7 +332,6 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 					}
 				}
 				case 'claimed': {
-					const MAX_CHARACTERS = 80
 					const label = (
 						<Trans
 							i18nKey='badge.claimed-tool-tip'
@@ -347,17 +346,13 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 							}}
 						/>
 					)
-
-					const labelBase = t('badge.claimed-base')
-					const labelLink = t('badge.claimed-learn-more')
-					const labelLength = labelBase.length + labelLink.length
-
 					return {
 						label,
 						multiline: true,
-						width: labelLength > MAX_CHARACTERS ? 600 : 'auto',
 						closeDelay: 500,
 						style: { pointerEvents: 'auto' },
+						events: { hover: true, focus: true, touch: true },
+						maw: { base: '90vw', xs: 600 },
 					}
 				}
 			}
@@ -388,7 +383,6 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 			</MantineBadge>
 		)
 		if (props.variant === 'unclaimed') {
-			const MAX_CHARACTERS = 80
 			const label = (
 				<Trans
 					i18nKey='badge.unclaimed-tool-tip'
@@ -397,17 +391,17 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 					}}
 				/>
 			)
-			const labelBase = t('badge.unclaimed-base')
-			const labelLink = t('badge.unclaimed-claim-org')
-			const labelLength = labelBase.length + labelLink.length
-
 			return (
 				<Tooltip
 					style={{ pointerEvents: 'auto' }}
 					closeDelay={500}
 					label={label}
-					multiline={true}
-					width={labelLength > MAX_CHARACTERS ? 500 : 'auto'}
+					events={{ hover: true, focus: true, touch: true }}
+					multiline
+					variant={variants.Tooltip.utility1}
+					px={16}
+					py={10}
+					maw={{ base: '90vw', xs: 600 }}
 				>
 					<ClaimOrgModal
 						component={MantineBadge}
