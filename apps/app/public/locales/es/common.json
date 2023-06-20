@@ -178,7 +178,7 @@
 		"<textDarkGray>InReach utiliza <linkUmami>Umami</linkUmami>, una alternativa a Google Analytics centrada en la privacidad, para analizar y rastrear de forma anónima los datos de uso de la aplicación (p. ej., búsquedas de usuarios y otros comportamientos) en conjunto. <linkUmamiGDPR>Umami cumple con GDPR</linkUmamiGDPR> y no recopila ninguna información de identificación personal y anonimiza todos los datos recopilados. Los usuarios no pueden ser identificados y nunca son rastreados a través de los sitios web.</textDarkGray>",
 		"<textDarkGray>InReach también utiliza Vercel Analytics para analizar los datos vitales y el rendimiento de la web. Vercel Analytics proporciona información sobre el uso del sitio sin vincularse ni asociarse con ningún visitante individual o dirección IP. El registro de puntos de datos es anónimo y la función Analytics no recopila ni almacena información que permitiría a Vercel reconstruir una sesión de navegación a través de páginas o identificar a un usuario.</textDarkGray>"
 	],
-	"privacy-statement-foot": "<linkPolicy>Lea nuestra política de privacidad completa para obtener más información</linkPolicy>",
+	"privacy-statement-foot": "<linkPolicy>Lee nuestra política de privacidad completa para obtener más información</linkPolicy>",
 	"privacy-statement-head": [
 		"<emojiLg>🔒</emojiLg>",
 		"<title2>Declaración de privacidad</title2>"
@@ -258,9 +258,9 @@
 		"name_alias": "Nombre o alias",
 		"name_full": "Nombre completo",
 		"placeholder-name_alias": "Introduzca nombre o alias...",
-		"placeholder-name_full": "Introduzca el nombre completo...",
+		"placeholder-name_full": "Introduce el nombre completo...",
 		"select-law-practice": "¿Dónde practica la ley?",
-		"select-service-provider": "¿Dónde trabajas o voluntario?",
+		"select-service-provider": "¿Dónde trabajas o donde eres voluntario?",
 		"specify-work-volunteer": "Por favor especifique dónde trabaja o voluntario",
 		"success": "¡Te has registrado en una cuenta!",
 		"user-exists-body": "Esa dirección de correo electrónico ya está registrada.",
@@ -357,7 +357,7 @@
 		"service-hours": "Horas de servicio",
 		"settings": "Ajustes",
 		"share": "Compartir",
-		"sign-up": "Regístrate",
+		"sign-up": "Registrarse",
 		"skip": "Saltar",
 		"support": "Apoyo",
 		"yes": "Sí"
