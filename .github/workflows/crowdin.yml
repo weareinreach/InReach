@@ -66,4 +66,5 @@ jobs:
           upload_translations: false
           download_translations: false
           create_pull_request: false
-          delete_crowdin_branch: ${{ steps.sanitizebranch.outputs.value }}
+          command: branch delete
+          command_args: ${{ steps.sanitizebranch.outputs.value }}
