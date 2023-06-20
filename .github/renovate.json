@@ -1,5 +1,6 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"addLabels": ["dependencies", "automerge", "kodiak: merge.method = 'squash'"],
 	"baseBranches": ["dev"],
 	"extends": ["github>weareinreach/renovate-config"],
 	"packageRules": [
