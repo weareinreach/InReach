@@ -25,177 +25,144 @@ const defaultSelect = {
 	locations: true,
 }
 
-const serviceSelect = z
-	.object({
-		services: z.boolean().default(true),
-		serviceAreas: z.boolean().default(true),
-		hours: z.boolean().default(true),
-		reviews: z.boolean().default(true),
-		attributes: z.boolean().default(true),
-		phones: z.boolean().default(true),
-		emails: z.boolean().default(true),
-		accessDetails: z.boolean().default(true),
-		locations: z.boolean().default(true),
-	})
-	.partial()
-	.transform((select) => {
-		const query = {
-			serviceName: freeText,
-			services: select.services
-				? {
-						where: {
-							tag: {
-								active: true,
-							},
-						},
+const serviceSelect = {
+	serviceName: freeText,
+	services: {
+		where: {
+			tag: {
+				active: true,
+			},
+		},
+		select: {
+			tag: {
+				select: {
+					defaultAttributes: {
 						select: {
-							tag: {
+							attribute: {
 								select: {
-									defaultAttributes: {
-										select: {
-											attribute: {
-												select: {
-													tsKey: true,
-													tsNs: true,
-												},
-											},
-										},
-									},
-									category: {
-										select: {
-											tsKey: true,
-											tsNs: true,
-										},
-									},
 									tsKey: true,
 									tsNs: true,
-									active: true,
 								},
 							},
 						},
-				  }
-				: undefined,
-			serviceAreas: select.serviceAreas
-				? {
+					},
+					category: {
 						select: {
-							countries: {
-								select: {
-									country: countryWithoutGeo,
-								},
-							},
-							districts: {
-								select: {
-									govDist: govDistWithoutGeo,
-								},
-							},
+							tsKey: true,
+							tsNs: true,
 						},
-				  }
-				: undefined,
-			hours: select.hours
-				? {
+					},
+					tsKey: true,
+					tsNs: true,
+					active: true,
+				},
+			},
+		},
+	},
+	serviceAreas: {
+		select: {
+			countries: {
+				select: {
+					country: countryWithoutGeo,
+				},
+			},
+			districts: {
+				select: {
+					govDist: govDistWithoutGeo,
+				},
+			},
+		},
+	},
+	hours: {
+		select: {
+			dayIndex: true,
+			start: true,
+			end: true,
+			closed: true,
+			tz: true,
+		},
+	},
+	reviews: {
+		where: {
+			visible: true,
+			deleted: false,
+		},
+		select: {
+			language: languageNames,
+			lcrCountry: countryWithoutGeo,
+			lcrGovDist: govDistWithoutGeo,
+			translatedText: {
+				select: {
+					text: true,
+					language: {
 						select: {
-							dayIndex: true,
-							start: true,
-							end: true,
-							closed: true,
-							tz: true,
+							localeCode: true,
 						},
-				  }
-				: undefined,
-			reviews: select.reviews
-				? {
-						where: {
-							visible: true,
-							deleted: false,
-						},
+					},
+				},
+			},
+		},
+	},
+	attributes: attributes,
+	phones: phoneSelectPublic,
+	emails: {
+		where: {
+			email: isPublic,
+		},
+		select: {
+			email: {
+				include: {
+					title: {
 						select: {
-							language: languageNames,
-							lcrCountry: countryWithoutGeo,
-							lcrGovDist: govDistWithoutGeo,
-							translatedText: {
-								select: {
-									text: true,
-									language: {
-										select: {
-											localeCode: true,
-										},
-									},
-								},
-							},
+							tsKey: true,
+							tsNs: true,
 						},
-				  }
-				: undefined,
-			attributes: select.attributes ? attributes : undefined,
-			phones: select.phones ? phoneSelectPublic : undefined,
-			emails: select.emails
-				? {
-						where: {
-							email: isPublic,
-						},
-						select: {
-							email: {
-								include: {
-									title: {
-										select: {
-											tsKey: true,
-											tsNs: true,
-										},
-									},
-								},
-							},
-						},
-				  }
-				: undefined,
-			accessDetails: select.accessDetails
-				? {
-						select: {
-							attributes,
-						},
-				  }
-				: undefined,
-			locations: select.locations
-				? {
-						where: {
-							location: isPublic,
-						},
-						select: {
-							location: {
-								select: {
-									name: true,
-									street1: true,
-									street2: true,
-									city: true,
-									postCode: true,
-									primary: true,
-									govDist: govDistWithoutGeo,
-									country: countryWithoutGeo,
-									longitude: true,
-									latitude: true,
-								},
-							},
-						},
-				  }
-				: undefined,
-			id: true,
-			// createdAt: true,
-			// updatedAt: true,
-			description: freeText,
-		} satisfies Prisma.OrgServiceSelect
-		return query
-	})
+					},
+				},
+			},
+		},
+	},
+	accessDetails: {
+		select: {
+			attributes,
+		},
+	},
+	locations: {
+		where: {
+			location: isPublic,
+		},
+		select: {
+			location: {
+				select: {
+					name: true,
+					street1: true,
+					street2: true,
+					city: true,
+					postCode: true,
+					primary: true,
+					govDist: govDistWithoutGeo,
+					country: countryWithoutGeo,
+					longitude: true,
+					latitude: true,
+				},
+			},
+		},
+	},
+	id: true,
+	description: freeText,
+} satisfies Prisma.OrgServiceSelect
 
 export const serviceById = z
 	.object({
 		id: z.string(),
-		select: serviceSelect.default(defaultSelect),
 	})
 	.transform(
-		({ id, select }) =>
+		({ id }) =>
 			({
 				where: {
 					id,
 				},
-				select,
+				select: serviceSelect,
 			} satisfies Prisma.OrgServiceFindUniqueOrThrowArgs)
 	)
 
@@ -243,10 +210,9 @@ export const serviceByOrgId = z
 export const serviceByLocationId = z
 	.object({
 		orgLocationId: z.string(),
-		select: serviceSelect.optional(),
 	})
 	.transform(
-		({ select, orgLocationId }) =>
+		({ orgLocationId }) =>
 			({
 				where: {
 					locations: {
@@ -255,17 +221,16 @@ export const serviceByLocationId = z
 						},
 					},
 				},
-				select,
+				select: serviceSelect,
 			} satisfies Prisma.OrgServiceFindManyArgs)
 	)
 
 export const serviceByUserListId = z
 	.object({
 		listId: z.string(),
-		select: serviceSelect.optional(),
 	})
 	.transform(
-		({ select, listId }) =>
+		({ listId }) =>
 			({
 				where: {
 					userLists: {
@@ -274,7 +239,7 @@ export const serviceByUserListId = z
 						},
 					},
 				},
-				select,
+				select: serviceSelect,
 			} satisfies Prisma.OrgServiceFindManyArgs)
 	)
 

@@ -11,7 +11,8 @@
 		"db:deploy": {
 			"dependsOn": ["db:generate"],
 			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
-			"inputs": ["./prisma/migrations/**/*"]
+			"inputs": ["./prisma/migrations/**/*"],
+			"outputMode": "new-only"
 		},
 		"db:generate": {
 			"cache": false,

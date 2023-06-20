@@ -12,6 +12,6 @@
 			"~web/*": ["../../apps/web/src/*"]
 		}
 	},
-	"exclude": ["**/node_modules", "**/.*/"],
-	"include": ["./**/*.ts", "../../@types/**/*.ts"]
+	"exclude": ["node_modules"],
+	"include": ["./index.ts", "../../@types/**/*.ts"]
 }

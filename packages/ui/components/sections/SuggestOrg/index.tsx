@@ -101,7 +101,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		validateInputOnBlur: true,
 	})
 	const { classes: locationClasses } = useLocationStyles()
-	const { t, i18n } = useTranslation(['suggestOrg', 'country', 'services', 'attribute'])
+	const { t } = useTranslation(['suggestOrg', 'country', 'services', 'attribute'])
 	const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 	const variants = useCustomVariant()
 	const [locationSearch, setLocationSearch] = useState('')

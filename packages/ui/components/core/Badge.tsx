@@ -20,9 +20,10 @@ import { type PolymorphicComponentProps } from '@mantine/utils'
 import { type TOptions } from 'i18next'
 import { DateTime } from 'luxon'
 import { merge } from 'merge-anything'
-import { useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode } from 'react'
 
+import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon, type IconList, isValidIcon } from '~ui/icon'
 import { ClaimOrgModal } from '~ui/modals/ClaimOrg'
@@ -132,6 +133,20 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				},
 			}
 		}
+		case 'remote': {
+			return {
+				root: {
+					border: 0,
+					height: rem(20),
+					padding: '0',
+					lineHeight: 'inherit',
+					borderRadius: 0,
+				},
+				leftSection: {
+					height: rem(20),
+				},
+			}
+		}
 
 		default:
 			return {}
@@ -153,6 +168,7 @@ const customVariants = [
 	'attribute',
 	'privatePractice',
 	'verifiedReviewer',
+	'remote',
 ] as const
 
 const customVariantMap = {
@@ -165,6 +181,7 @@ const customVariantMap = {
 	attribute: 'outline',
 	privatePractice: 'outline',
 	verifiedReviewer: 'outline',
+	remote: 'outline',
 } satisfies Record<CustomVariants, BadgeVariant | undefined>
 
 /** Badge variants `serviceTag` and `communityTag` are responsive - the sizing changes at the `sm` breakpoint. */
@@ -225,6 +242,9 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						<Icon icon='carbon:checkmark-filled' height={20} color={theme.other.colors.primary.allyGreen} />
 					)
 				}
+				case 'remote': {
+					return <Icon icon='carbon:globe' height={20} color={theme.other.colors.secondary.black} />
+				}
 			}
 		})()
 
@@ -279,6 +299,11 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						label: t('badge.community-tool-tip'),
 					}
 				}
+				case 'remote': {
+					return {
+						label: t('badge.remote-tool-tip'),
+					}
+				}
 				case 'service': {
 					return {
 						label: t('badge.service-tool-tip'),
@@ -299,10 +324,35 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						.setLocale(i18n.resolvedLanguage ?? 'en')
 						.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 					const label = t('verified-information-detail', { dateString })
+
 					return {
 						label,
 						multiline: true,
 						width: label.length > MAX_CHARACTERS ? 600 : 'auto',
+					}
+				}
+				case 'claimed': {
+					const label = (
+						<Trans
+							i18nKey='badge.claimed-tool-tip'
+							components={{
+								link1: (
+									<Link
+										external
+										href='https://inreach.org/claimed-organizations/'
+										variant={variants.Link.inheritStyle}
+									/>
+								),
+							}}
+						/>
+					)
+					return {
+						label,
+						multiline: true,
+						closeDelay: 500,
+						style: { pointerEvents: 'auto' },
+						events: { hover: true, focus: true, touch: true },
+						maw: { base: '90vw', xs: 600 },
 					}
 				}
 			}
@@ -333,20 +383,40 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 			</MantineBadge>
 		)
 		if (props.variant === 'unclaimed') {
+			const label = (
+				<Trans
+					i18nKey='badge.unclaimed-tool-tip'
+					components={{
+						link1: <ClaimOrgModal component={Link} variant={variants.Link.inheritStyle} />,
+					}}
+				/>
+			)
 			return (
-				<ClaimOrgModal
-					component={MantineBadge}
-					variant={mantineVariant}
-					classNames={merge(classNames, baseClasses)}
-					className={unclaimedClasses.root}
-					ref={ref}
-					leftSection={leftSection}
-					w='fit-content'
-					{...styleDataProps}
-					{...passedBadgeProps}
+				<Tooltip
+					style={{ pointerEvents: 'auto' }}
+					closeDelay={500}
+					label={label}
+					events={{ hover: true, focus: true, touch: true }}
+					multiline
+					variant={variants.Tooltip.utility1}
+					px={16}
+					py={10}
+					maw={{ base: '90vw', xs: 600 }}
 				>
-					{children}
-				</ClaimOrgModal>
+					<ClaimOrgModal
+						component={MantineBadge}
+						variant={mantineVariant}
+						classNames={merge(classNames, baseClasses)}
+						className={unclaimedClasses.root}
+						ref={ref}
+						leftSection={leftSection}
+						w='fit-content'
+						{...styleDataProps}
+						{...passedBadgeProps}
+					>
+						{children}
+					</ClaimOrgModal>
+				</Tooltip>
 			)
 		}
 

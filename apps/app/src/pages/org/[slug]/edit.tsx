@@ -43,7 +43,6 @@ const OrganizationPage: NextPage = () => {
 		attributes,
 		description,
 		slug,
-		services,
 		photos,
 		reviews,
 		locations,
@@ -60,10 +59,10 @@ const OrganizationPage: NextPage = () => {
 					<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 				</Tabs.List>
 				<Tabs.Panel value='services'>
-					<ServicesInfoCard services={services} />
+					<ServicesInfoCard parentId={organizationId} />
 				</Tabs.Panel>
 				<Tabs.Panel value='photos'>
-					<PhotosSection photos={photos} />
+					<PhotosSection parentId={organizationId} />
 				</Tabs.Panel>
 				<Tabs.Panel value='reviews'>
 					<ReviewSection reviews={reviews} />
@@ -72,18 +71,24 @@ const OrganizationPage: NextPage = () => {
 		) : (
 			<>
 				{locations.map((location) => (
-					<LocationCard key={location.id} location={location} />
+					<LocationCard key={location.id} locationId={location.id} />
 				))}
 			</>
 		)
 
 	const sidebar =
 		locations?.length === 1 ? (
-			<>{locations[0] && <VisitCard location={locations[0]} />}</>
+			<>{locations[0] && <VisitCard locationId={locations[0].id} />}</>
 		) : (
 			locations.length && (
 				<Stack ref={ref} miw='100%'>
-					{width && <GoogleMap marker={locations} width={width} height={Math.floor(width * 1.185)} />}
+					{width && (
+						<GoogleMap
+							locationIds={locations.map(({ id }) => id)}
+							width={width}
+							height={Math.floor(width * 1.185)}
+						/>
+					)}
 				</Stack>
 			)
 		)
@@ -116,7 +121,7 @@ const OrganizationPage: NextPage = () => {
 			</Grid.Col>
 			<Grid.Col order={2}>
 				<Stack spacing={40}>
-					<ContactSection role='org' data={{ emails, phones, socialMedia, websites }} />
+					<ContactSection role='org' parentId={data.id} />
 					{/* </Grid.Col> */}
 					{/* <Grid.Col order={4}> */}
 					{sidebar}

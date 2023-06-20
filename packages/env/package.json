@@ -2,12 +2,14 @@
 	"name": "@weareinreach/env",
 	"version": "0.0.0",
 	"private": true,
+	"main": "./index.ts",
+	"types": "./index.ts",
 	"files": [
 		"./index.ts"
 	],
 	"scripts": {},
 	"dependencies": {
-		"@t3-oss/env-nextjs": "0.4.0",
+		"@t3-oss/env-nextjs": "0.4.1",
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
