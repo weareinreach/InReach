@@ -14,7 +14,7 @@ import {
 	publicProcedure,
 	// staffProcedure,
 } from '~api/lib/trpc'
-import { freeTextCrowdinId, isPublic } from '~api/schemas/selects/common'
+import { attributes, freeTextCrowdinId, isPublic } from '~api/schemas/selects/common'
 import {
 	forServiceDrawer,
 	serviceById,
@@ -382,4 +382,59 @@ export const queries = defineRouter({
 			}))
 			return transformed
 		}),
+	forServiceModal: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		const result = await ctx.prisma.orgService.findUniqueOrThrow({
+			where: { id: input, ...isPublic },
+			select: {
+				id: true,
+				services: { select: { tag: { select: { tsKey: true } } }, where: { tag: { active: true } } },
+				accessDetails: {
+					where: { active: true },
+					select: {
+						attributes: {
+							select: {
+								attribute: { select: { id: true } },
+								supplement: {
+									select: {
+										id: true,
+										data: true,
+										text: { select: { key: true, tsKey: { select: { text: true } } } },
+									},
+								},
+							},
+						},
+					},
+				},
+				serviceName: {
+					select: {
+						key: true,
+						ns: true,
+						tsKey: {
+							select: {
+								text: true,
+							},
+						},
+					},
+				},
+				locations: {
+					where: { location: isPublic },
+					select: { location: { select: { country: { select: { cca2: true } } } } },
+				},
+				attributes,
+				hours: { where: { active: true }, select: { _count: true } },
+				description: {
+					select: {
+						key: true,
+						ns: true,
+						tsKey: {
+							select: {
+								text: true,
+							},
+						},
+					},
+				},
+			},
+		})
+		return result
+	}),
 })
