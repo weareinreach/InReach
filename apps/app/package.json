@@ -123,7 +123,7 @@
 		"@typescript-eslint/parser": "5.60.0",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
-		"commander": "10.0.1",
+		"commander": "11.0.0",
 		"dotenv": "16.3.1",
 		"eslint": "8.43.0",
 		"eslint-plugin-i18next": "6.0.3",
