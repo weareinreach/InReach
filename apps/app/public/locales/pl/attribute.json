@@ -9,13 +9,13 @@
 		"private-practice": "Prywatna praktyka",
 		"religiously-affiliated": "Jest religijnie powiązany",
 		"time-walk-in": "Ma godziny Walk-In",
-		"wheelchair-accessible_false": "Niedostępne",
+		"wheelchair-accessible_false": "Brak dostępu dla wózków inwalidzkich",
 		"wheelchair-accessible_true": "Dostępny"
 	},
 	"alerts": {
 		"CATEGORYNAME": "Alerty",
 		"info": "Alert informacyjny",
-		"warn": "Alert ostrzegawczy"
+		"warn": "Ostrzeżenie"
 	},
 	"community": {
 		"CATEGORYNAME": "Społeczność",
@@ -59,9 +59,9 @@
 		"teens": "„nastolatek” zdefiniowany jako 12-18 lat",
 		"trans-youth": "Możliwości, które służą młodzieży trans",
 		"trans-youth-caregivers": "Możliwości, które służą opiekunom młodzieży trans",
-		"transfeminine": "Możliwości, które służą społeczności transkobiecej",
+		"transfeminine": "Możliwości, które służą społeczności Trans Feminine",
 		"transgender": "Możliwości, które służą społeczności transpłciowej (w przypadku społeczności niezgodnych lub niebinarnych, użyj właściwości niezgodnych z płcią lub niebinarnych)",
-		"transmasculine": "Możliwości, które służą społeczności Trasmasculine",
+		"transmasculine": "Możliwości, które służą męskiej społeczności Tras",
 		"unaccompanied-minors": "Możliwości, które służą nieletnim bez opieki",
 		"undocumented": "Szanse, które służą nieudokumentowanym imigrantom"
 	},
@@ -96,7 +96,7 @@
 		"black-led": "Czarna dioda LED",
 		"immigrant-led": "Prowadzony przez imigrantów",
 		"trans-led": "Transgender-LED",
-		"women-led": "Damskie diody LED"
+		"women-led": "Zarządzana przez kobiety"
 	},
 	"serviceaccess": {
 		"CATEGORYNAME": "Instrukcje dostępu do usługi",
@@ -114,11 +114,11 @@
 		"bipoc-comm": "Społeczność BIPOC",
 		"caregivers": "Społeczność opiekunów",
 		"disabled": "Społeczność osób niepełnosprawnych",
-		"elder": "Koncentruje się na starszych",
+		"elder": "Koncentruje się na pomocy osobom starszym",
 		"gender-nc": "Płeć niezgodna",
 		"hiv-comm": "Społeczność HIV",
 		"immigrant-comm": "Społeczność imigrantów",
-		"incarcerated": "Wspólnota uwięziona",
+		"incarcerated": "Społeczność osób osadzonych",
 		"lgbtq-youth-focus": "LGBTQ+ Młodzież",
 		"resettled-refugees": "Uchodźcy przesiedleni",
 		"spanish-speakers": "Hiszpańscy mówcy",
@@ -126,7 +126,7 @@
 		"trans-fem": "Trans Kobiety/Trans Feminine",
 		"trans-masc": "Trans Mężczyźni/Trans Męski",
 		"trans-youth-focus": "Trans Młodzież",
-		"women": "Koncentruje się na kobietach"
+		"women": "Koncentruje się na pomocy kobietom"
 	},
 	"sys": {
 		"CATEGORYNAME": "System",
@@ -141,7 +141,7 @@
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "Opcje dostawcy usług",
-		"case-mananger": "Kierownik sprawy",
+		"case-mananger": "Psycholog prowadzący",
 		"community-org": "Wolontariusz/pracownicy organizacji społecznej",
 		"friend-family": "Nie dotyczy (Szukam w imieniu znajomych/rodziny)",
 		"govt-agency": "Agencja rządowa",
@@ -149,9 +149,9 @@
 		"healthcare": "Dostawca opieki zdrowotnej",
 		"lawyer": "Prawnik",
 		"other": "Inne (proszę określić)",
-		"paralegal": "Paralegal lub inny personel pomocy prawnej",
+		"paralegal": "Pomocnik adwokata lub inny personel dostarczający obsługę prawną",
 		"social-worker": "Pracownik socjalny",
-		"student-club": "Lider/administrator klubu studenckiego",
+		"student-club": "Klub studencki",
 		"teacher": "Nauczyciel",
 		"therapist-counselor": "Terapeuta/doradca"
 	}
