@@ -17,8 +17,11 @@
 		"title": "反仇恨承诺"
 	},
 	"badge": {
+		"claimed-tool-tip": "经核实的代表声称该组织。 <link1>了解更多。</link1>",
 		"community-tool-tip": "该组织所服务的社区。",
-		"service-tool-tip": "该组织提供的服务。"
+		"remote-tool-tip": "可远程使用",
+		"service-tool-tip": "该组织提供的服务。",
+		"unclaimed-tool-tip": "尚未有代表宣称拥有该组织。 <link1>声明此组织</link1> 以建立与我们社区的信任、更新您自己的信息等。"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "返回 <u>{{page}}</u>",
@@ -188,6 +191,7 @@
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "远程可用的服务",
+	"remote-services-page-title": "远程服务",
 	"reset-password": "重置你的密码",
 	"reset-password-message": "我们将向您发送一封电子邮件以重置您的密码",
 	"resource-saved": "资源已保存。",
