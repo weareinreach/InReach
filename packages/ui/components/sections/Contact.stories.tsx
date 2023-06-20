@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 
 import { StorybookGridSingle } from '~ui/layouts'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
+import { miscMock } from '~ui/mockData/misc'
 import { orgEmail } from '~ui/mockData/orgEmail'
 import { orgPhone } from '~ui/mockData/orgPhone'
 import { orgSocialMedia } from '~ui/mockData/orgSocialMedia'
@@ -39,6 +40,7 @@ export default {
 			orgPhone.forContactInfo,
 			orgWebsite.forContactInfo,
 			orgSocialMedia.forContactInfo,
+			miscMock.hasContactInfo,
 		],
 	},
 	decorators: [StorybookGridSingle],

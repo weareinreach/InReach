@@ -1,14 +1,16 @@
 import { Card, Stack, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
-import { ContactInfo, hasContactInfo } from '~ui/components/data-display/ContactInfo'
+import { api } from '~app/utils/api'
+import { ContactInfo } from '~ui/components/data-display/ContactInfo'
 import { useScreenSize } from '~ui/hooks'
 
 export const ContactSection = ({ parentId }: ContactSectionProps) => {
 	const { t } = useTranslation(['common'])
 	const { isMobile, isTablet } = useScreenSize()
+	const { data: hasContactInfo } = api.misc.hasContactInfo.useQuery(parentId)
 
-	if (!hasContactInfo(parentId)) return null
+	if (!hasContactInfo) return null
 
 	const body = (
 		<Stack spacing={isMobile ? 32 : 40}>
