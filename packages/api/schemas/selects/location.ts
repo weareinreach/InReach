@@ -24,13 +24,13 @@ export const serviceAreaSelect = (subDistrictLevels: 0 | 1 | 2) =>
 				},
 				subDistricts:
 					subDistrictLevels === 0
-						? false
+						? undefined
 						: {
 								select: {
 									...subDistrictSelect,
 									subDistricts:
 										subDistrictLevels === 1
-											? false
+											? undefined
 											: {
 													select: subDistrictSelect,
 													orderBy: { name: 'asc' },
@@ -42,7 +42,32 @@ export const serviceAreaSelect = (subDistrictLevels: 0 | 1 | 2) =>
 			orderBy: { name: 'asc' },
 		},
 	} satisfies Prisma.CountrySelect)
-
+export const serviceAreaSelect2 = {
+	...common,
+	cca2: true,
+	flag: true,
+	govDist: {
+		where: { isPrimary: true },
+		select: {
+			...common,
+			abbrev: true,
+			govDistType: {
+				select: { tsKey: true, tsNs: true },
+			},
+			subDistricts: {
+				select: {
+					...subDistrictSelect,
+					subDistricts: {
+						select: subDistrictSelect,
+						orderBy: { name: 'asc' },
+					},
+				},
+				orderBy: { name: 'asc' },
+			},
+		},
+		orderBy: { name: 'asc' },
+	},
+} satisfies Prisma.CountrySelect
 export const serviceAreaSelectNoSub = {
 	...common,
 	cca2: true,

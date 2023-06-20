@@ -6,12 +6,14 @@ import { fieldOptRouter } from './fieldOpt'
 import { geoRouter } from './geo'
 import { internalNoteRouter } from './internalNote'
 import { locationRouter } from './location'
+import { miscRouter } from './misc'
 import { orgRouter } from './organization'
 import { orgEmailRouter } from './orgEmail'
 import { orgHoursRouter } from './orgHours'
 import { orgPhoneRouter } from './orgPhone'
 import { orgPhotoRouter } from './orgPhoto'
 import { orgSocialMediaRouter } from './orgSocialMedia'
+import { orgWebsiteRouter } from './orgWebsite'
 import { quickLinkRouter } from './quicklink'
 import { reviewRouter } from './review'
 import { savedListRouter } from './savedLists'
@@ -26,11 +28,13 @@ export const appRouter = defineRouter({
 	geo: geoRouter,
 	internalNote: internalNoteRouter,
 	location: locationRouter,
+	misc: miscRouter,
 	organization: orgRouter,
 	orgEmail: orgEmailRouter,
 	orgHours: orgHoursRouter,
 	orgPhone: orgPhoneRouter,
 	orgPhoto: orgPhotoRouter,
+	orgWebsite: orgWebsiteRouter,
 	orgSocialMedia: orgSocialMediaRouter,
 	quicklink: quickLinkRouter,
 	review: reviewRouter,

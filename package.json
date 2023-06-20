@@ -59,6 +59,11 @@
 		"node": "^18",
 		"pnpm": "^7 || ^8"
 	},
+	"manypkg": {
+		"ignoredRules": [
+			"INTERNAL_MISMATCH"
+		]
+	},
 	"pnpm": {
 		"overrides": {
 			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
@@ -66,12 +71,13 @@
 			"axe-core": "^4.7.0",
 			"chokidar": ">=3.0.0",
 			"csstype": "^3.1.2",
-			"eslint-plugin-import": "npm:eslint-plugin-i",
+			"eslint-plugin-import": "npm:eslint-plugin-i@latest",
 			"eslint-plugin-turbo@0.0.9": "0.0.8",
 			"glob-parent@<5.1.2": ">=5.1.2",
 			"http-cache-semantics@<=4.1.0": "^4.1.1",
 			"listr2@<5": ">=5.0.5",
 			"micromatch": ">=4.0.0",
+			"msw@1.2.2": "1.2.1",
 			"node-fetch@<2.6.7": ">=2.6.7",
 			"package-json@<7": "^7.0.0",
 			"react-dom@<18": "^18",

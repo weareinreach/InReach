@@ -17,7 +17,8 @@ i18n
 	.use(initReactI18next)
 	.init<HttpBackendOptions>({
 		...config,
-		debug: true,
+		debug: false,
+
 		// lng: 'en',
 		backend: {
 			loadPath: '/public/locales/{{lng}}/{{ns}}.json',

@@ -14,7 +14,7 @@ import { type ErrorInput, jsonRpcErrorResponse, jsonRpcSuccessResponse } from '.
 
 const getReqData = async (req: RestRequest) => {
 	if (req.method === 'POST') {
-		const body = await req.text()
+		const body = await req.clone().text()
 		return body
 	}
 	const query = req.url.search.charAt(0) === '?' ? req.url.search.substr(1) : req.url.search
@@ -45,12 +45,12 @@ export const getTRPCMock = <
 	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2])
 >(
 	endpoint: TRPCEndpointSuccess<K1, K2, O> | TRPCEndpointError<K1, K2>
-) => {
+): RestHandler => {
 	// #region msw handler
 	const fn = endpoint.type === 'mutation' ? rest.post : rest.get
 
 	const type = endpoint.type === 'mutation' ? 'mutation' : 'query'
-	const trpcRequest = action(`tRPC Request [${endpoint.path.join('.')}] (${type})`)
+	const trpcRequest = action(`${type === 'query' ? '❓' : '✍️'} tRPC Request [${endpoint.path.join('.')}]`)
 
 	const route = path.join(getBaseUrl(), '/trpc/', endpoint.path[0] + '.' + (endpoint.path[1] as string))
 
@@ -61,8 +61,8 @@ export const getTRPCMock = <
 			const transformed = transformer.parse<ApiInput[K1][K2]>(data)
 			trpcRequest(transformed)
 			return res(
-				ctx.delay(endpoint.delay),
-				ctx.json(jsonRpcSuccessResponse(endpoint.path, response(transformed)))
+				ctx.json(jsonRpcSuccessResponse(endpoint.path, response(transformed))),
+				ctx.delay(endpoint.delay)
 			)
 		})
 	}
@@ -72,10 +72,10 @@ export const getTRPCMock = <
 		const transformed = transformer.parse<ApiInput[K1][K2]>(data)
 		trpcRequest(transformed)
 		if (endpoint.error) {
-			return res(ctx.delay(endpoint.delay), ctx.json(jsonRpcErrorResponse(endpoint.path, endpoint.error)))
+			return res(ctx.json(jsonRpcErrorResponse(endpoint.path, endpoint.error)), ctx.delay(endpoint.delay))
 		}
 
-		return res(ctx.delay(endpoint.delay), ctx.json(jsonRpcSuccessResponse(endpoint.path, endpoint.response)))
+		return res(ctx.json(jsonRpcSuccessResponse(endpoint.path, endpoint.response)), ctx.delay(endpoint.delay))
 	})
 	// #endregion
 }
@@ -96,4 +96,11 @@ type TRPCEndpointError<K1 extends keyof ApiInput, K2 extends keyof ApiInput[K1]>
 	error: ErrorInput
 	type?: 'query' | 'mutation'
 	delay?: number
+}
+
+export type MockDataObject<P extends keyof ApiOutput> = {
+	[K in keyof ApiOutput[P]]?: ApiOutput[P][K]
+}
+export type MockHandlerObject<P extends keyof ApiOutput> = {
+	[K in keyof ApiOutput[P]]?: RestHandler
 }
