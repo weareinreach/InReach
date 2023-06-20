@@ -17,8 +17,11 @@
 		"title": "د نفرت ضد ژمنتیا"
 	},
 	"badge": {
+		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
 		"community-tool-tip": "ټولنه د دې سازمان لخوا خدمت شوی.",
-		"service-tool-tip": "د دې سازمان لخوا وړاندیز شوي خدمتونه."
+		"remote-tool-tip": "په لرې ډول شتون لري",
+		"service-tool-tip": "د دې سازمان لخوا وړاندیز شوي خدمتونه.",
+		"unclaimed-tool-tip": "دا سازمان لا تر اوسه د یوه استازي لخوا ادعا نه ده شوې. <link1>د دې سازمان ادعا وکړئ</link1> زموږ د ټولنې سره باور رامینځته کولو لپاره، خپل معلومات تازه کړئ، او نور ډیر څه."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "بېرته <u>{{page}}</u>ته",
@@ -189,6 +192,7 @@
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "خدمات په لرې ډول شتون لري",
+	"remote-services-page-title": "لیرې خدمتونه",
 	"reset-password": "خپل رمز بیا تنظیم کړئ",
 	"reset-password-message": "موږ به تاسو ته ستاسو د رمز له سره تنظیم کولو لپاره بریښنالیک واستوو",
 	"resource-saved": "سرچینه خوندي شوې.",

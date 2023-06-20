@@ -17,8 +17,11 @@
 		"title": "Compromisso anti-ódio"
 	},
 	"badge": {
+		"claimed-tool-tip": "Essa organização foi reivindicada por um representante verificado. <link1>Saiba mais.</link1>",
 		"community-tool-tip": "Comunidade atendida por esta organização.",
-		"service-tool-tip": "Serviço (s) oferecido (s) por esta organização."
+		"remote-tool-tip": "Disponível remotamente",
+		"service-tool-tip": "Serviço (s) oferecido (s) por esta organização.",
+		"unclaimed-tool-tip": "Essa organização ainda não foi reivindicada por um representante. <link1>Reivindique esta organização</link1> para criar confiança com nossa comunidade, atualizar suas próprias informações e muito mais."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Voltar para <u>{{page}}</u>",
@@ -189,6 +192,7 @@
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "Serviços disponíveis remotamente",
+	"remote-services-page-title": "Serviços remotos",
 	"reset-password": "Redefinir sua senha",
 	"reset-password-message": "Enviaremos um e-mail para redefinir sua senha",
 	"resource-saved": "Recurso salvo.",

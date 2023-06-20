@@ -17,8 +17,11 @@
 		"title": "Anti-poot na pangako"
 	},
 	"badge": {
+		"claimed-tool-tip": "Ang organisasyong ito ay inaangkin ng isang na-verify na kinatawan. <link1>Matuto nang higit pa.</link1>",
 		"community-tool-tip": "Komunidad na pinaglilingkuran ng organisasyong ito.",
-		"service-tool-tip": "(Mga) serbisyo na inaalok ng samahang ito."
+		"remote-tool-tip": "Magagamit nang malayuan",
+		"service-tool-tip": "(Mga) serbisyo na inaalok ng samahang ito.",
+		"unclaimed-tool-tip": "Ang organisasyong ito ay hindi pa inaangkin ng isang kinatawan. <link1>Kunin ang samahang ito</link1> upang bumuo ng tiwala sa aming komunidad, i-update ang iyong sariling impormasyon, at higit pa."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Bumalik sa <u>{{page}}</u>",
@@ -189,6 +192,7 @@
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "Magagamit ang mga serbisyo nang malayuan",
+	"remote-services-page-title": "Remote serbisyo",
 	"reset-password": "I-reset ang iyong password",
 	"reset-password-message": "Padadalhan ka namin ng isang email upang i-reset ang iyong password",
 	"resource-saved": "Nai-save ang mapagkukunan.",
