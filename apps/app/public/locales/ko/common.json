@@ -17,8 +17,11 @@
 		"title": "증오 방지 약속"
 	},
 	"badge": {
+		"claimed-tool-tip": "이 단체는 검증된 대리인에 의해 소유권을 주장했습니다. <link1>자세히 알아보기.</link1>",
 		"community-tool-tip": "이 조직에서 서비스를 제공하는 커뮤니티.",
-		"service-tool-tip": "이 조직에서 제공하는 서비스."
+		"remote-tool-tip": "원격으로 사용 가능",
+		"service-tool-tip": "이 조직에서 제공하는 서비스.",
+		"unclaimed-tool-tip": "이 단체는 아직 대리인에 의해 청구되지 않았습니다.<br/><link1>이 단체에 대한 소유권 주장</link1> 커뮤니티와의 신뢰 구축, 자체 정보 업데이트 등."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Back to <u>{{page}}</u>",
@@ -188,6 +191,7 @@
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "원격으로 서비스 이용 가능",
+	"remote-services-page-title": "원격 서비스",
 	"reset-password": "비밀번호 재설정",
 	"reset-password-message": "비밀번호 재설정을 위한 이메일을 보내드립니다",
 	"resource-saved": "리소스가 저장되었습니다.",
