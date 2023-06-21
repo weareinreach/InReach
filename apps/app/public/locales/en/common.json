@@ -17,8 +17,11 @@
 		"title": "Anti-hate commitment"
 	},
 	"badge": {
+		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
 		"community-tool-tip": "Community served by this organization.",
-		"service-tool-tip": "Service(s) offered by this organization."
+		"remote-tool-tip": "Available remotely",
+		"service-tool-tip": "Service(s) offered by this organization.",
+		"unclaimed-tool-tip": "This organization has not yet been claimed by a representative.<br/><link1>Claim this organization</link1> to build trust with our community, update your own information, and more."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Back to <u>{{page}}</u>",
@@ -188,6 +191,7 @@
 	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "Services available remotely",
+	"remote-services-page-title": "Remote services",
 	"reset-password": "Reset your password",
 	"reset-password-message": "We will send you an email to reset your password",
 	"resource-saved": "Resource saved.",
