@@ -54,6 +54,17 @@ export const idPrefix = {
 
 export type IdPrefix = keyof typeof idPrefix
 
+export const getIdPrefixRegex = (...keys: Uncapitalize<Tables>[]) => {
+	const prefixes = keys.map((key) => idPrefix[key])
+	const pattern = `^(${prefixes.join('|')})_`
+	return new RegExp(pattern)
+}
+
+export const isIdFor = (table: Uncapitalize<Tables>, id: string) => {
+	const regex = getIdPrefixRegex(table)
+	return regex.test(id)
+}
+
 /**
  * It generates a unique id for a given table, prefixed with the table identifier
  *

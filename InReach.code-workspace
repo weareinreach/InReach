@@ -197,6 +197,11 @@
 			"**/.turbo/**": true,
 			"**/generated/**": true
 		},
+		"search.exclude": {
+			"**/node_modules": true,
+			"**/*.code-search": true,
+			"pnpm-lock.yaml": true
+		},
 		"i18n-ally.annotationInPlace": false,
 		"i18n-ally.defaultNamespace": "common",
 		"i18n-ally.displayLanguage": "en",
@@ -238,7 +243,7 @@
 			"projectKey": "weareinreach_InReach"
 		},
 		"tms.stringsCompletionFileExtensions": "ts,tsx,json",
-		"typescript.preferences.importModuleSpecifier": "relative",
+		"typescript.preferences.importModuleSpecifier": "non-relative",
 		"typescript.tsdk": "✨ InReach (root)/node_modules/typescript/lib",
 		"typescript.enablePromptUseWorkspaceTsdk": true,
 		"typescript.workspaceSymbols.scope": "allOpenProjects"

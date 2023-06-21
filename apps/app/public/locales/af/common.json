@@ -17,8 +17,11 @@
 		"title": "Anti-haat verbintenis"
 	},
 	"badge": {
+		"claimed-tool-tip": "Hierdie organisasie is deur 'n geverifieerde verteenwoordiger geëis. <link1>Kom meer te wete.</link1>",
 		"community-tool-tip": "Gemeenskap bedien deur hierdie organisasie.",
-		"service-tool-tip": "Diens (s) wat deur hierdie organisasie aangebied word."
+		"remote-tool-tip": "Beskikbaar op afstand",
+		"service-tool-tip": "Diens (s) wat deur hierdie organisasie aangebied word.",
+		"unclaimed-tool-tip": "Hierdie organisasie is nog nie deur 'n verteenwoordiger geëis nie. <link1>Eis hierdie organisasie</link1> om vertroue met ons gemeenskap op te bou, jou eie inligting op te dateer, en meer."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Terug na <u>{{page}}</u>",
@@ -26,7 +29,7 @@
 	},
 	"cancel": "Kanselleer",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach (coming soon!)</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Hierdie organisasie is nog nie deur 'n diensverskaffer geëis nie.</title2>\n<textDarkGray>U kan hierdie organisasie as diensverskaffer aanspraak maak op:</textDarkGray>"
 	},
 	"claimed": "Beweer",
@@ -186,9 +189,10 @@
 	"privatePractice": "Privaat praktyk",
 	"profile": "Profiel",
 	"questions": "Vrae?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "Dienste op afstand beskikbaar",
+	"remote-services-page-title": "Afgeleë dienste",
 	"reset-password": "Stel u wagwoord terug",
 	"reset-password-message": "Ons sal vir jou 'n e-pos stuur om jou wagwoord terug te stel",
 	"resource-saved": "Hulpbron gered.",

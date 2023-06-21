@@ -17,8 +17,11 @@
 		"title": "Анти-ненависть зобов'язання"
 	},
 	"badge": {
+		"claimed-tool-tip": "На цю організацію претендував перевірений представник. <link1>Дізнатися більше.</link1>",
 		"community-tool-tip": "Спільнота обслуговується цією організацією.",
-		"service-tool-tip": "Послуга (и), пропонована цією організацією."
+		"remote-tool-tip": "Доступно дистанційно",
+		"service-tool-tip": "Послуга (и), пропонована цією організацією.",
+		"unclaimed-tool-tip": "На цю організацію поки що не претендує представник. <link1>Заявіть цю організацію</link1> , щоб зміцнити довіру до нашої спільноти, оновити власну інформацію тощо."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Повернутися до <u>{{page}}</u>",
@@ -26,7 +29,7 @@
 	},
 	"cancel": "Скасувати",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach (coming soon!)</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Ця організація ще не затребувана постачальником послуг.</title2>\n<textDarkGray>Ви можете претендувати на цю організацію як постачальника послуг:</textDarkGray>"
 	},
 	"claimed": "Заявлений",
@@ -188,9 +191,10 @@
 	"privatePractice": "Приватна практика",
 	"profile": "Профіль",
 	"questions": "Питання?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "Послуги, доступні віддалено",
+	"remote-services-page-title": "Дистанційні послуги",
 	"reset-password": "Скидання пароля",
 	"reset-password-message": "Ми надішлемо вам електронного листа для скидання пароля",
 	"resource-saved": "Ресурс збережений.",

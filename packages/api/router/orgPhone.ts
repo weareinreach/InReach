@@ -1,8 +1,9 @@
 import compact from 'just-compact'
 import { z } from 'zod'
 
+import { getIdPrefixRegex, isIdFor, type Prisma } from '@weareinreach/db'
 import { generateNestedFreeText } from '@weareinreach/db/lib/generateFreeText'
-import { defineRouter, permissionedProcedure } from '~api/lib/trpc'
+import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import {
 	CreateOrgPhoneSchema,
@@ -16,6 +17,7 @@ import {
 	createManyOptional,
 	diffConnectionsMtoN,
 } from '~api/schemas/nestedOps'
+import { isPublic } from '~api/schemas/selects/common'
 
 export const orgPhoneRouter = defineRouter({
 	create: permissionedProcedure('createNewPhone')
@@ -193,5 +195,58 @@ export const orgPhoneRouter = defineRouter({
 				)
 			)
 			return upserts
+		}),
+	forContactInfo: publicProcedure
+		.input(
+			z.object({
+				parentId: z.string().regex(getIdPrefixRegex('organization', 'orgLocation', 'orgService')),
+				locationOnly: z.boolean().optional(),
+			})
+		)
+		.query(async ({ ctx, input }) => {
+			const whereId = (): Prisma.OrgPhoneWhereInput => {
+				switch (true) {
+					case isIdFor('organization', input.parentId): {
+						return { organization: { organization: { id: input.parentId, ...isPublic } } }
+					}
+					case isIdFor('orgLocation', input.parentId): {
+						return { locations: { some: { location: { id: input.parentId, ...isPublic } } } }
+					}
+					case isIdFor('orgService', input.parentId): {
+						return { services: { some: { service: { id: input.parentId, ...isPublic } } } }
+					}
+					default: {
+						return {}
+					}
+				}
+			}
+
+			const result = await ctx.prisma.orgPhone.findMany({
+				where: {
+					...isPublic,
+					...whereId(),
+					...(input.locationOnly !== undefined ? { locationOnly: input.locationOnly } : {}),
+				},
+				select: {
+					id: true,
+					number: true,
+					ext: true,
+					country: { select: { cca2: true } },
+					primary: true,
+					description: { select: { tsKey: { select: { text: true, key: true } } } },
+					phoneType: { select: { key: { select: { text: true, key: true } } } },
+					locationOnly: true,
+				},
+				orderBy: { primary: 'desc' },
+			})
+			const transformed = result.map(({ description, phoneType, country, ...record }) => ({
+				...record,
+				country: country?.cca2,
+				phoneType: phoneType ? { key: phoneType?.key.key, defaultText: phoneType?.key.text } : null,
+				description: description
+					? { key: description?.tsKey.key, defaultText: description?.tsKey.text }
+					: null,
+			}))
+			return transformed
 		}),
 })

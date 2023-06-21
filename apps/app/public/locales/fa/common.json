@@ -17,8 +17,11 @@
 		"title": "تعهد ضد نفرت"
 	},
 	"badge": {
+		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
 		"community-tool-tip": "جامعه خدمت شده توسط این سازمان.",
-		"service-tool-tip": "خدمات (های) ارائه شده توسط این سازمان."
+		"remote-tool-tip": "از راه دور موجود است",
+		"service-tool-tip": "خدمات (های) ارائه شده توسط این سازمان.",
+		"unclaimed-tool-tip": "این سازمان هنوز توسط یک نماینده ادعا نشده‌است. <link1>ادعای این سازمان</link1> برای ایجاد اعتماد با جامعه ما، به روز رسانی اطلاعات خود و موارد دیگر."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Back to <u>{{page}}</u>",
@@ -26,7 +29,7 @@
 	},
 	"cancel": "لغو",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach (coming soon!)</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>این سازمان هنوز توسط یک ارائه دهنده خدمات ادعا نشده است.</title2>\n<textDarkGray>شما می توانید این سازمان را به عنوان ارائه دهنده خدمات ادعا کنید:</textDarkGray>"
 	},
 	"claimed": "ادعا شده",
@@ -186,9 +189,10 @@
 	"privatePractice": "تمرین خصوصی",
 	"profile": "مشخصات",
 	"questions": "سوال؟",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "خدمات موجود از راه دور",
+	"remote-services-page-title": "خدمات از راه دور",
 	"reset-password": "رمز عبور خود را بازنشانی کنید",
 	"reset-password-message": "ما یک ایمیل برای تنظیم مجدد رمز عبور شما ارسال خواهیم کرد",
 	"resource-saved": "منابع ذخیره شده.",

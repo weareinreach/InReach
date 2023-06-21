@@ -24,7 +24,7 @@ import {
 	type CommunityTagProps,
 	type ServiceTagProps,
 } from '~ui/components/core/Badge'
-import { ContactInfo, type ContactInfoProps, hasContactInfo, Hours } from '~ui/components/data-display'
+import { ContactInfo, hasContactInfo, Hours, type PassedDataObject } from '~ui/components/data-display'
 import { getFreeText, useSlug } from '~ui/hooks'
 import { isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -60,7 +60,7 @@ const CONTACTS = ['phone', 'email', 'website'] as const
 export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(
 	({ serviceId, ...props }, ref) => {
 		const slug = useSlug()
-		const { data, status } = api.service.byId.useQuery({ id: serviceId })
+		const { data, status } = api.service.forServiceModal.useQuery(serviceId)
 		const { t, i18n } = useTranslation(['common', 'attribute', slug])
 		const { classes } = useStyles()
 		const [opened, handler] = useDisclosure(false)
@@ -153,7 +153,7 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 			)
 		}
 
-		const contactData: ContactInfoProps['data'] = {
+		const contactData: PassedDataObject = {
 			phones: [],
 			emails: [],
 			websites: [],
@@ -185,46 +185,42 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 								}
 								case 'email': {
 									contactData.emails.push({
-										email: {
-											title: null,
-											description: null,
-											email: parsed.data.access_value,
-											legacyDesc: parsed.data.instructions,
-											firstName: null,
-											lastName: null,
-											primary: false,
-											locationOnly: false,
-											serviceOnly: false,
-										},
+										id,
+										title: null,
+										description: null,
+										email: parsed.data.access_value,
+										// legacyDesc: parsed.data.instructions,
+										// firstName: null,
+										// lastName: null,
+										primary: false,
+										locationOnly: false,
+										serviceOnly: false,
 									})
 									break
 								}
 								case 'phone': {
 									const country = locations.find(({ location }) => Boolean(location.country))?.location
-										.country
+										.country.cca2
 									if (!country) break
 									contactData.phones.push({
-										phone: {
-											number: parsed.data.access_value,
-											phoneType: null,
-											country,
-											primary: false,
-											locationOnly: false,
-											ext: null,
-											phoneLangs: [],
-											description: null,
-										},
+										id,
+										number: parsed.data.access_value,
+										phoneType: null,
+										country,
+										primary: false,
+										locationOnly: false,
+										ext: null,
+										description: null,
 									})
 									break
 								}
 								case 'link':
 								case 'file': {
 									contactData.websites.push({
+										id,
 										description: null,
-										id: '',
 										isPrimary: false,
-										languages: [],
-										orgLocationId: null,
+										// orgLocationId: null,
 										orgLocationOnly: false,
 										url: parsed.data.access_value,
 									})
@@ -429,9 +425,9 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 							{(hasContactInfo(contactData) || Boolean(hours.length)) && (
 								<SectionDivider title='get-help'>
 									{hasContactInfo(contactData) && (
-										<ContactInfo data={contactData} direct order={['phone', 'email', 'website']} />
+										<ContactInfo passedData={contactData} direct order={['phone', 'email', 'website']} />
 									)}
-									{Boolean(hours.length) && <Hours data={hours} label='service' />}
+									{Boolean(hours.length) && <Hours parentId={serviceId} label='service' />}
 								</SectionDivider>
 							)}
 							{(Boolean(clientsServed.srvfocus.length) || Boolean(clientsServed.targetPop.length)) && (

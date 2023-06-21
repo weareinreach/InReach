@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { type AttributesByCategory } from '@weareinreach/db/client'
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
-import { serviceAreaSelect, serviceAreaSelectNoSub } from '~api/schemas/selects/location'
+import { serviceAreaSelect2, serviceAreaSelectNoSub } from '~api/schemas/selects/location'
 
 export const fieldOptRouter = defineRouter({
 	/** All government districts by country (active for org listings). Gives up to 2 levels of sub-districts */
@@ -29,7 +29,7 @@ export const fieldOptRouter = defineRouter({
 					activeForOrgs: input?.activeForOrgs ?? undefined,
 					activeForSuggest: input?.activeForSuggest ?? undefined,
 				},
-				select: serviceAreaSelect(2),
+				select: serviceAreaSelect2,
 				orderBy: {
 					cca2: 'asc',
 				},

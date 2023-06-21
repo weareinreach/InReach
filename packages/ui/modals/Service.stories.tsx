@@ -3,7 +3,7 @@ import { type Meta } from '@storybook/react'
 import { Button } from '~ui/components/core/Button'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { getAll } from '~ui/mockData/savedList'
-import { mockServData } from '~ui/mockData/serviceModal'
+import { mockService } from '~ui/mockData/service'
 
 import { ServiceModal } from './Service'
 
@@ -14,11 +14,6 @@ export default {
 	component: ServiceModal,
 	parameters: {
 		msw: [
-			getTRPCMock({
-				path: ['service', 'byId'],
-				type: 'query',
-				response: mockServData(),
-			}),
 			getTRPCMock({
 				path: ['service', 'getParentName'],
 				response: { name: 'Organization name' },
@@ -34,6 +29,7 @@ export default {
 					id: 'orgn_ORGANIZATIONID',
 				},
 			}),
+			mockService.forServiceModal,
 		],
 		nextjs: {
 			router: {

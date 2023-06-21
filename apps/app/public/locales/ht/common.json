@@ -17,8 +17,11 @@
 		"title": "Angajman anti-rayi"
 	},
 	"badge": {
+		"claimed-tool-tip": "Òganizasyon sa a te reklame pa yon reprezantan verifye. <link1>Aprann plis.</link1>",
 		"community-tool-tip": "Kominote ki te sèvi nan òganizasyon sa a.",
-		"service-tool-tip": "Sèvis (yo) ofri nan òganizasyon sa a."
+		"remote-tool-tip": "Disponib adistans",
+		"service-tool-tip": "Sèvis (yo) ofri nan òganizasyon sa a.",
+		"unclaimed-tool-tip": "Òganizasyon sa a pa gen ankò yo te reklame pa yon reprezantan. <link1>Reklame òganizasyon sa a</link1> pou konstwi konfyans ak kominote nou an, mete ajou pwòp enfòmasyon ou, ak plis ankò."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Tounen pou <u>{{page}}</u>",
@@ -26,7 +29,7 @@
 	},
 	"cancel": "Anile",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach (coming soon!)</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Òganizasyon sa a poko reklame pa yon founisè sèvis.</title2>\n<textDarkGray>Ou ka reklame òganizasyon sa a kòm yon founisè sèvis nan:</textDarkGray>"
 	},
 	"claimed": "Reklame",
@@ -186,9 +189,10 @@
 	"privatePractice": "Prive Pratike",
 	"profile": "Wofil",
 	"questions": "Kesyon?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "Sèvis ki disponib adistans",
+	"remote-services-page-title": "Sèvis aleka",
 	"reset-password": "Reyajiste modpas ou",
 	"reset-password-message": "Nou pral voye ba ou yon imèl Reyajiste modpas ou",
 	"resource-saved": "Resous sove.",

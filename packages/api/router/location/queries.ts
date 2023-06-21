@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { handleError } from '~api/lib/errorHandler'
 import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 import { id, orgId } from '~api/schemas/common'
-import { isPublic } from '~api/schemas/selects/common'
+import { attributes, freeText, isPublic } from '~api/schemas/selects/common'
 import { orgLocationInclude } from '~api/schemas/selects/org'
 
 export const queries = defineRouter({
@@ -111,4 +111,135 @@ export const queries = defineRouter({
 
 			return transformedResult
 		}),
+	forLocationCard: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		const result = await ctx.prisma.orgLocation.findUniqueOrThrow({
+			where: {
+				id: input,
+				...isPublic,
+			},
+			select: {
+				id: true,
+				name: true,
+				street1: true,
+				street2: true,
+				city: true,
+				postCode: true,
+				country: { select: { cca2: true } },
+				govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
+				phones: {
+					where: { phone: isPublic },
+					select: { phone: { select: { primary: true, number: true, country: { select: { cca2: true } } } } },
+				},
+				attributes: { select: { attribute: { select: { tsNs: true, tsKey: true, icon: true } } } },
+				services: {
+					select: {
+						service: {
+							select: {
+								services: { select: { tag: { select: { category: { select: { tsKey: true } } } } } },
+							},
+						},
+					},
+				},
+			},
+		})
+
+		const transformed = {
+			...result,
+			country: result.country.cca2,
+			phones: result.phones.map(({ phone }) => ({ ...phone, country: phone.country.cca2 })),
+			attributes: result.attributes.map(({ attribute }) => attribute),
+			services: [
+				...new Set(
+					result.services.flatMap(({ service }) => service.services.map(({ tag }) => tag.category.tsKey))
+				),
+			],
+		}
+
+		return transformed
+	}),
+	forVisitCard: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		const result = await ctx.prisma.orgLocation.findUniqueOrThrow({
+			where: {
+				...isPublic,
+				id: input,
+			},
+			select: {
+				id: true,
+				street1: true,
+				street2: true,
+				city: true,
+				postCode: true,
+				country: { select: { cca2: true } },
+				govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
+				attributes: {
+					where: { attribute: { tsKey: 'additional.offers-remote-services' } },
+					select: { attribute: { select: { tsKey: true, icon: true } } },
+				},
+			},
+		})
+		const { attributes, ...rest } = result
+		const transformed = {
+			...rest,
+			remote: attributes.find(({ attribute }) => attribute.tsKey === 'additional.offers-remote-services')
+				?.attribute,
+		}
+		return transformed
+	}),
+	forGoogleMaps: publicProcedure.input(z.string().or(z.string().array())).query(async ({ ctx, input }) => {
+		const select = {
+			id: true,
+			name: true,
+			latitude: true,
+			longitude: true,
+		}
+
+		const result = Array.isArray(input)
+			? await ctx.prisma.orgLocation.findMany({
+					where: {
+						...isPublic,
+						id: { in: input },
+					},
+					select,
+			  })
+			: await ctx.prisma.orgLocation.findUniqueOrThrow({
+					where: {
+						...isPublic,
+						id: input,
+					},
+					select,
+			  })
+		return result
+	}),
+	forLocationPage: publicProcedure.input(id).query(async ({ ctx, input }) => {
+		try {
+			const location = await ctx.prisma.orgLocation.findUniqueOrThrow({
+				where: {
+					id: input.id,
+					...isPublic,
+				},
+				select: {
+					id: true,
+					primary: true,
+					name: true,
+					street1: true,
+					street2: true,
+					city: true,
+					postCode: true,
+					country: { select: { cca2: true } },
+					govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
+					longitude: true,
+					latitude: true,
+					description: freeText,
+					attributes,
+					reviews: {
+						where: { visible: true, deleted: false },
+						select: { id: true },
+					},
+				},
+			})
+			return location
+		} catch (error) {
+			handleError(error)
+		}
+	}),
 })

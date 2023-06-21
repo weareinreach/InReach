@@ -16,7 +16,8 @@
 		"./**/*.tsx",
 		".storybook/**/*",
 		"../../@types/**/*.ts",
-		"../../apps/app/nextjs-routes.d.ts"
+		"../../apps/app/nextjs-routes.d.ts",
+		"../../apps/app/src/types/i18next.d.ts"
 	],
 	"exclude": ["**/node_modules", "**/storybook-static/"]
 }

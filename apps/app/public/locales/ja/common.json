@@ -17,8 +17,11 @@
 		"title": "反ヘイトコミットメント"
 	},
 	"badge": {
+		"claimed-tool-tip": "この組織は確認済みの代理人によって申し立てられています。 <link1>もっと詳しく.</link1>",
 		"community-tool-tip": "この組織がサービスを提供するコミュニティ。",
-		"service-tool-tip": "この組織が提供するサービス。"
+		"remote-tool-tip": "リモートで利用可能",
+		"service-tool-tip": "この組織が提供するサービス。",
+		"unclaimed-tool-tip": "この組織はまだ代表者による申請を受けていません。<br/><link1>この組織に申請して</link1> コミュニティとの信頼関係を築き、自分の情報を更新するなどしてください。"
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "<u>{{page}}</u>に戻る",
@@ -26,7 +29,7 @@
 	},
 	"cancel": "[キャンセル]",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach (coming soon!)</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>この組織はまだサービスプロバイダーから申請されていません。</title2>\n<textDarkGray>この組織をサービスプロバイダーとして申請できるのは、以下のとおりです。</textDarkGray>"
 	},
 	"claimed": "請求済み",
@@ -185,9 +188,10 @@
 	"privatePractice": "プライベート・プラクティス",
 	"profile": "プロフィール",
 	"questions": "質問?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "リモートで利用できるサービス",
+	"remote-services-page-title": "リモートサービス",
 	"reset-password": "パスワードをリセット",
 	"reset-password-message": "パスワードをリセットするためのメールをお送りします",
 	"resource-saved": "リソースが保存されました。",
