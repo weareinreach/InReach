@@ -54,6 +54,13 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 		const { isMobile } = useScreenSize()
 
 		useEffect(() => {
+			if (router.query.c !== undefined) {
+				handler.open()
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [router.query.c])
+
+		useEffect(() => {
 			if (!success && !verifyAccount.isLoading && opened && !error) {
 				verifyAccount.mutate(UrlParams.transform(({ c, code }) => ({ data: c, code })).parse(router.query))
 			}

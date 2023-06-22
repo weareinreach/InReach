@@ -16,7 +16,7 @@ import { useForm, type UseFormReturnType, zodResolver } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { z } from 'zod'
 
 import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
@@ -163,6 +163,12 @@ export const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswor
 		})
 
 		const [opened, handler] = useDisclosure(autoOpen)
+		useEffect(() => {
+			if (router.query.r !== undefined) {
+				handler.open()
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [router.query.r])
 
 		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
 
