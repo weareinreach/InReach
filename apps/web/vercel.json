@@ -1,10 +1,6 @@
 {
 	"$schema": "https://openapi.vercel.sh/vercel.json",
 	"git": {
-		"deploymentEnabled": {
-			"*": false,
-			"l10n_*": false,
-			"renovate/github_actions": false
-		}
+		"deploymentEnabled": false
 	}
 }
