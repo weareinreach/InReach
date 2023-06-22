@@ -88,7 +88,8 @@ export const env = createEnv({
 		// eslint-disable-next-line turbo/no-undeclared-env-vars
 		NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
 	},
-	skipValidation: process.env.NODE_ENV === 'development',
+	// eslint-disable-next-line turbo/no-undeclared-env-vars
+	skipValidation: process.env.NODE_ENV === 'development' || process.env.SKIP_ENV_VALIDATION === 'true',
 })
 
 export const getEnv = <T extends keyof typeof env>(envVar: T): (typeof env)[T] => env[envVar]

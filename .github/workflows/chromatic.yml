@@ -21,6 +21,7 @@ jobs:
       CI: true
       OVERRIDE_CI: true
       FORCE_COLOR: true
+      SKIP_ENV_VALIDATION: true
     runs-on: ubuntu-latest
     defaults:
       run:
