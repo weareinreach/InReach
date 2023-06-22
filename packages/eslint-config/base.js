@@ -4,7 +4,8 @@ const config = {
 	plugins: ['codegen', 'turbo', 'node', 'import', '@tanstack/query'],
 	extends: [
 		'eslint:recommended',
-		'plugin:turbo/recommended',
+		// disable turbo plugin until vercel/turbo#5355 is resolved
+		// 'plugin:turbo/recommended',
 		'plugin:@tanstack/eslint-plugin-query/recommended',
 		'plugin:@typescript-eslint/recommended',
 		'plugin:import/typescript',
@@ -33,7 +34,7 @@ const config = {
 		'codegen/codegen': 'error',
 		'react/jsx-key': 'off',
 		'react/no-unescaped-entities': ['off'],
-		'turbo/no-undeclared-env-vars': 'warn',
+		// 'turbo/no-undeclared-env-vars': 'warn',
 		'import/first': 'error',
 		'import/newline-after-import': 'error',
 		'import/no-absolute-path': 'error',
