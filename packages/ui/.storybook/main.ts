@@ -113,7 +113,6 @@ const config: StorybookConfig = {
 			stats: {
 				colors: true,
 			},
-			// devtool: isDev ? 'eval-source-map' : 'cheap-module-source-map',
 		}
 		const mergedConfig = mergeAndConcat(config, configAdditions)
 		return mergedConfig
