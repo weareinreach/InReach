@@ -21,7 +21,7 @@ import { type TOptions } from 'i18next'
 import { DateTime } from 'luxon'
 import { merge } from 'merge-anything'
 import { Trans, useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode } from 'react'
+import { forwardRef, type ReactNode, useState } from 'react'
 
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks'
@@ -197,6 +197,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 		})
 		const { classes: unclaimedClasses } = useUnclaimedStyles()
 		const { variant, classNames, ...others } = props as BadgeProps
+		const [modalOpen, setModalOpen] = useState(false)
 
 		const leftSection = (() => {
 			switch (props.variant) {
@@ -316,7 +317,6 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 					}
 				}
 				case 'verified': {
-					const MAX_CHARACTERS = 80
 					const lastVerified =
 						props.lastverified instanceof Date ? props.lastverified : new Date(props.lastverified)
 
@@ -328,7 +328,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 					return {
 						label,
 						multiline: true,
-						width: label.length > MAX_CHARACTERS ? 600 : 'auto',
+						maw: { base: '90vw', xs: 600 },
 					}
 				}
 				case 'claimed': {
@@ -351,7 +351,6 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						multiline: true,
 						closeDelay: 500,
 						style: { pointerEvents: 'auto' },
-						events: { hover: true, focus: true, touch: true },
 						maw: { base: '90vw', xs: 600 },
 					}
 				}
@@ -387,7 +386,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				<Trans
 					i18nKey='badge.unclaimed-tool-tip'
 					components={{
-						link1: <ClaimOrgModal component={Link} variant={variants.Link.inheritStyle} />,
+						link1: <Link external onClick={() => setModalOpen(true)} variant={variants.Link.inheritStyle} />,
 					}}
 				/>
 			)
@@ -411,6 +410,8 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						ref={ref}
 						leftSection={leftSection}
 						w='fit-content'
+						externalOpen={modalOpen}
+						externalStateHandler={setModalOpen}
 						{...styleDataProps}
 						{...passedBadgeProps}
 					>
@@ -422,7 +423,14 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 
 		if (renderTooltip) {
 			return (
-				<Tooltip multiline variant={variants.Tooltip.utility1} px={16} py={10} {...renderTooltip}>
+				<Tooltip
+					multiline
+					variant={variants.Tooltip.utility1}
+					px={16}
+					py={10}
+					events={{ hover: true, focus: true, touch: true }}
+					{...renderTooltip}
+				>
 					{badge}
 				</Tooltip>
 			)
