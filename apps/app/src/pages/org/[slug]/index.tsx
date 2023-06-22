@@ -68,7 +68,6 @@ const OrganizationPage: NextPage = () => {
 		{ parentId: data?.id ?? '', remoteOnly: true },
 		{
 			enabled: !!data?.id && data?.locations.length > 1,
-			// @ts-expect-error trpc/trpc#4519
 			select: (data) => data.length !== 0,
 		}
 	)
