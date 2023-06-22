@@ -59,7 +59,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 		{ organizationId },
 		{
 			enabled: Boolean(organizationId),
-			// @ts-expect-error trpc/trpc#4519
+
 			// !fix when issue resolved.
 			select: (data) =>
 				data.map(({ id, tsKey, defaultText }) => ({
@@ -72,7 +72,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 		{ organizationId: organizationId ?? '' },
 		{
 			enabled: Boolean(organizationId),
-			// @ts-expect-error trpc/trpc#4519
+
 			// !fix when issue resolved.
 			select: (data) => data.map(({ id, name }) => ({ value: id, label: name ?? 'Missing Name' })),
 		}
@@ -80,14 +80,12 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 
 	useEffect(() => {
 		if (serviceData && !isServiceLoading && !compareArrays(serviceData, services)) {
-			// @ts-expect-error trpc/trpc#4519
 			// !fix when issue resolved.
 			setServices(serviceData)
 		}
 	}, [serviceData, isServiceLoading, services])
 	useEffect(() => {
 		if (locationData && !isLocationLoading && !compareArrays(locationData, locations)) {
-			// @ts-expect-error trpc/trpc#4519
 			// !fix when issue resolved.
 			setLocations(locationData)
 		}
