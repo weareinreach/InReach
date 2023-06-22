@@ -47,6 +47,7 @@ export const SearchResultSidebar = ({ resultCount, loadingManager }: SearchResul
 				pinToLeft
 			/>
 			<Divider mt={-10} />
+			{/* @ts-expect-error - component arg should be valid... */}
 			<Button variant={variants.Button.primaryLg} component={Link} href='/suggest'>
 				{t('suggest-a-resource')}
 			</Button>
