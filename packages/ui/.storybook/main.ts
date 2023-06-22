@@ -1,6 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import { type StorybookConfig } from '@storybook/nextjs'
+import isChromatic from 'chromatic/isChromatic'
 import { mergeAndConcat } from 'merge-anything'
 import { type PropItem } from 'react-docgen-typescript'
 
@@ -112,7 +113,6 @@ const config: StorybookConfig = {
 			stats: {
 				colors: true,
 			},
-			// devtool: isDev ? 'eval-source-map' : 'cheap-module-source-map',
 		}
 		const mergedConfig = mergeAndConcat(config, configAdditions)
 		return mergedConfig
@@ -120,5 +120,10 @@ const config: StorybookConfig = {
 	docs: {
 		autodocs: true,
 	},
+	env: isChromatic()
+		? {
+				SKIP_ENV_VALIDATION: 'true',
+		  }
+		: {},
 }
 export default config

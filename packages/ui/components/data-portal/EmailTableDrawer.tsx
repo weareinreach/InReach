@@ -146,7 +146,7 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 	)
 	const { data: userTitles } = api.fieldOpt.userTitle.useQuery(undefined, {
 		enabled: Boolean(organizationId),
-		// @ts-expect-error trpc/trpc#4519
+
 		// !fix when issue resolved.
 		select: (data) => [
 			...data.map(({ id, title }) => ({ value: id, label: title })),
@@ -158,7 +158,7 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 		{ organizationId },
 		{
 			enabled: Boolean(organizationId),
-			// @ts-expect-error trpc/trpc#4519
+
 			// !fix when issue resolved.
 			select: (data) => data.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
 			refetchOnWindowFocus: false,
@@ -168,7 +168,7 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 		{ organizationId: organizationId ?? '' },
 		{
 			enabled: Boolean(organizationId),
-			// @ts-expect-error trpc/trpc#4519
+
 			// !fix when issue resolved.
 			select: (data) => data.map(({ id, name }) => ({ value: id, label: name ?? '' })),
 			refetchOnWindowFocus: false,
@@ -247,7 +247,6 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 					>
 						<Group noWrap key={info.cell.id} spacing={4}>
 							<Select
-								// @ts-expect-error trpc/trpc#4519
 								// !fix when issue resolved.
 								data={userTitles ?? []}
 								{...form.getInputProps(`data.${info.row.index}.title`, { withFocus: false })}
@@ -306,7 +305,6 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 			cell: (info) => (
 				<MultiSelectPopover
 					key={info.cell.id}
-					// @ts-expect-error trpc/trpc#4519
 					// !fix when issue resolved.
 					data={orgServices ?? []}
 					label='Services'
@@ -320,7 +318,6 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 			cell: (info) => (
 				<MultiSelectPopover
 					key={info.cell.id}
-					// @ts-expect-error trpc/trpc#4519
 					// !fix when issue resolved.
 					data={orgLocations ?? []}
 					label='Locations'
