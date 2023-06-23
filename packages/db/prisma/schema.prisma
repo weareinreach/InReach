@@ -3,18 +3,18 @@ generator client {
   previewFeatures = ["extendedWhereUnique", "fieldReference", "fullTextSearch", "postgresqlExtensions", "tracing", "views", "jsonProtocol"]
 }
 
-generator zod {
-  provider               = "zod-prisma-types"
-  output                 = "../zod-schemas"
-  useMultipleFiles       = true
-  createModelTypes       = true
-  createInputTypes       = false
-  createPartialTypes     = true
-  addInputTypeValidation = false
-  addSelectType          = false
-  useDefaultValidators   = false
-  writeBarrelFiles       = true
-}
+// generator zod {
+//   provider               = "zod-prisma-types"
+//   output                 = "../zod-schemas"
+//   useMultipleFiles       = true
+//   createModelTypes       = true
+//   createInputTypes       = false
+//   createPartialTypes     = true
+//   addInputTypeValidation = false
+//   addSelectType          = false
+//   useDefaultValidators   = false
+//   writeBarrelFiles       = true
+// }
 
 generator kysely {
   provider = "prisma-kysely"
