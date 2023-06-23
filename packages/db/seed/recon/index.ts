@@ -1,8 +1,8 @@
 import { Listr, PRESET_TIMER } from 'listr2'
 
-import * as generators from './generator'
-import { attachLogger } from './logger'
-import { type Context, type ListrJob } from './types'
+import * as generators from './lib/generateDbMaps'
+import { attachLogger } from './lib/logger'
+import { type Context, type ListrJob } from './lib/types'
 
 const renderOptions = {
 	bottomBar: 10,

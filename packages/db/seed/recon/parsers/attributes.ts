@@ -1,5 +1,3 @@
-import { prisma, type Prisma } from '~db/client'
-
 //#region Helper - isTruthy
 
 /**
@@ -9,7 +7,7 @@ import { prisma, type Prisma } from '~db/client'
  * @param val - Typeof value
  * @returns A function that takes a value and returns a boolean.
  */
-const isTruthy = (val: string | boolean | number | undefined | unknown[]) => {
+export const isTruthy = (val: string | boolean | number | undefined | unknown[]) => {
 	const check = val?.toString().toLocaleLowerCase()
 	if (check === 'unknown') return undefined
 	if (check === 'yes' || check === 'true') return true
@@ -17,7 +15,3 @@ const isTruthy = (val: string | boolean | number | undefined | unknown[]) => {
 }
 
 //#endregion
-
-//#region Data Maps
-
-export const countryMap = new Map<string, string>()

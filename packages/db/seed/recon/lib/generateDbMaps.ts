@@ -5,15 +5,18 @@ import fs from 'fs'
 import path from 'path'
 
 import { prisma, type Prisma } from '~db/client'
-import { attachLogger } from '~db/seed/recon/logger'
-import { type ListrJob } from '~db/seed/recon/types'
+import { attachLogger } from '~db/seed/recon/lib/logger'
+import { type ListrJob } from '~db/seed/recon/lib/types'
 
 // import { createLogger } from './logger'
 
 const writeSuperJSON = (filename: string, data: unknown) => {
-	fs.writeFileSync(path.resolve(__dirname, `./generated/${filename}.json`), superjson.stringify(data))
+	fs.writeFileSync(path.resolve(__dirname, `../generated/${filename}.json`), superjson.stringify(data))
 }
 
+const typeOutput: string[] = []
+
+// #region Countries
 export const generateCountryMap = {
 	title: 'Generate Country Map',
 	task: async (_ctx, task) => {
@@ -29,6 +32,11 @@ export const generateCountryMap = {
 	},
 } satisfies ListrJob
 
+typeOutput.push('export type CountryMap = Map<string, string>')
+
+// #endregion
+
+// #region Districts
 export const generateDistList = {
 	title: 'Generate Governing District List',
 	task: async (_ctx, task) => {
@@ -43,6 +51,12 @@ export const generateDistList = {
 		writeSuperJSON('distList', dists)
 	},
 } satisfies ListrJob
+
+typeOutput.push('export type DistList = { id: string; slug: string }[]')
+
+// #endregion
+
+// #region Organization IDs
 
 export const generateOrgIdMap = {
 	title: 'Generate Organization ID Map',
@@ -60,6 +74,11 @@ export const generateOrgIdMap = {
 	},
 } satisfies ListrJob
 
+typeOutput.push('export type OrgIdMap = Map<string, string>')
+
+// #endregion
+
+// #region Location IDs
 export const generateLocationIdMap = {
 	title: 'Generate Location ID Map',
 	task: async (_ctx, task) => {
@@ -74,6 +93,12 @@ export const generateLocationIdMap = {
 		writeSuperJSON('locationIdMap', locationIdMap)
 	},
 } satisfies ListrJob
+
+typeOutput.push('export type LocationIdMap = Map<string, string>')
+
+// #endregion
+
+// #region Service IDs
 
 export const generateServiceIdMap = {
 	title: 'Generate Service ID Map',
@@ -90,6 +115,11 @@ export const generateServiceIdMap = {
 	},
 } satisfies ListrJob
 
+typeOutput.push('export type ServiceIdMap = Map<string, string>')
+
+// #endregion
+
+// #region Service Tags
 export const generateServiceTagMap = {
 	title: 'Generate Service Tag Map',
 	task: async (_ctx, task) => {
@@ -101,14 +131,21 @@ export const generateServiceTagMap = {
 	},
 } satisfies ListrJob
 
+typeOutput.push('export type ServiceTagMap = Map<string, string>')
+
+// #endregion
+
+// #region Attributes
+
 export const generateAttributeMap = {
 	title: 'Generate Attribute Map',
 	task: async (_ctx, task) => {
 		attachLogger(task)
 		const attributes = await prisma.attribute.findMany({
 			select: {
-				id: true,
 				tsKey: true,
+				tag: true,
+				id: true,
 				requireText: true,
 				requireLanguage: true,
 				requireGeo: true,
@@ -117,13 +154,23 @@ export const generateAttributeMap = {
 			},
 		})
 		task.output = `Attributes retrieved: ${attributes.length}`
-		const attributeMap = new Map<string, Omit<(typeof attributes)[number], 'tsKey'>>(
-			attributes.map(({ tsKey, ...rest }) => [tsKey, rest])
+		const attributeMap = new Map<string, Omit<(typeof attributes)[number], 'tsKey' | 'tag'>>(
+			attributes.flatMap(({ tsKey, tag, ...rest }) => [
+				[tsKey, rest],
+				[tag, rest],
+			])
 		)
 		writeSuperJSON('attributeMap', attributeMap)
 	},
 } satisfies ListrJob
 
+typeOutput.push(
+	'export type AttributeMap = Map<string, {id: string, requireText: boolean, requireLanguage: boolean, requireGeo: boolean, requireBoolean: boolean, requireData: boolean}>'
+)
+
+// #endregion
+
+// #region Languages
 export const generateLanguageMap = {
 	title: 'Generate Language Map',
 	task: async (_ctx, task) => {
@@ -142,6 +189,11 @@ export const generateLanguageMap = {
 	},
 } satisfies ListrJob
 
+typeOutput.push('export type LanguageMap = Map<string, string>')
+
+// #endregion
+
+// #region Social Media Services
 export const generateSocialMediaMap = {
 	title: 'Generate Social Media Map',
 	task: async (_ctx, task) => {
@@ -155,6 +207,12 @@ export const generateSocialMediaMap = {
 	},
 } satisfies ListrJob
 
+typeOutput.push('export type SocialMediaMap = Map<string, string>')
+
+// #endregion
+
+// #region User Types
+
 export const generateUserTypeMap = {
 	title: 'Generate User Type Map',
 	task: async (_ctx, task) => {
@@ -167,3 +225,63 @@ export const generateUserTypeMap = {
 		writeSuperJSON('userTypeMap', userTypeMap)
 	},
 } satisfies ListrJob
+
+typeOutput.push('export type UserTypeMap = Map<string, string>')
+
+// #endregion
+
+// #region User IDs
+
+export const generateUserIdMap = {
+	title: 'Generate User ID Map',
+	task: async (_ctx, task) => {
+		attachLogger(task)
+		const users = await prisma.user.findMany({
+			select: { id: true, legacyId: true },
+		})
+		task.output = `Users retrieved: ${users.length}`
+		const userIdMap = new Map<string, string>(
+			compact(users.map((u) => (u.legacyId ? [u.legacyId, u.id] : undefined)))
+		)
+		writeSuperJSON('userIdMap', userIdMap)
+	},
+} satisfies ListrJob
+
+typeOutput.push('export type UserIdMap = Map<string, string>')
+
+// #endregion
+
+// #region Permissions
+
+export const generatePermissionMap = {
+	title: 'Generate Permission Map',
+	task: async (_ctx, task) => {
+		attachLogger(task)
+		const permissions = await prisma.permission.findMany({
+			select: { name: true, id: true },
+		})
+		task.output = `Permissions retrieved: ${permissions.length}`
+		const permissionMap = new Map<string, string>(permissions.map(({ name, id }) => [name.toLowerCase(), id]))
+		writeSuperJSON('permissionMap', permissionMap)
+	},
+} satisfies ListrJob
+
+typeOutput.push('export type PermissionMap = Map<string, string>')
+
+// #endregion
+
+// #region Types
+
+export const generateTypes = {
+	title: 'Generate Types',
+	task: async (_ctx, task) => {
+		attachLogger(task)
+
+		const output = typeOutput.join('\n\n')
+
+		task.output = `Types exported: ${typeOutput.length}`
+		fs.writeFileSync(path.resolve(__dirname, '../generated/', 'types.ts'), output)
+	},
+}
+
+// #endregion
