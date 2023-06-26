@@ -61,7 +61,7 @@
 		"trans-youth-caregivers": "トランスジェンダーの若者の介護者に役立つ機会",
 		"transfeminine": "トランスフェミニンコミュニティに役立つ機会",
 		"transgender": "トランスジェンダーのコミュニティに役立つ機会（不適合または非バイナリーのコミュニティの場合は、性別不適合または非バイナリーの特性を利用してください）",
-		"transmasculine": "トランスマスキュリンコミュニティに役立つ機会",
+		"transmasculine": "トランス・マスキュリン・コミュニティに役立つ機会",
 		"unaccompanied-minors": "同伴者のいない未成年者向けの機会",
 		"undocumented": "不法移民に役立つ機会"
 	},
@@ -151,7 +151,7 @@
 		"other": "その他 (指定してください)",
 		"paralegal": "パラリーガルまたはその他の法務サポートスタッフ",
 		"social-worker": "ソーシャルワーカー",
-		"student-club": "学生クラブリーダー/管理者",
+		"student-club": "学生クラブ",
 		"teacher": "教師",
 		"therapist-counselor": "セラピスト/カウンセラー"
 	}
