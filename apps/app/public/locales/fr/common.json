@@ -30,7 +30,7 @@
 	"cancel": "Annuler",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Réclamez la page de profil de votre organisation et faites confiance à votre public sur InReach</textUtility1>\n<textUtility1>✍🏾 Mettez à jour les informations de votre organisation sur InReach</textUtility1>\n<textUtility1>📨 Invitez un autre personnel à rejoindre votre organisation sur InReach (bientôt!)</textUtility1>\n<textUtility1>🔑 Accédez à des fonctionnalités futures conçues spécifiquement pour les fournisseurs de services affiliés sur InReach</textUtility1>",
-		"title": "<emojiLg>🏠</emojiLg>\n<title2>Cette organisation n'a pas encore été réclamée par un fournisseur de services.</title2>\n<textDarkGray>Vous pouvez réclamer cette organisation en tant que prestataire de services à :</textDarkGray>"
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>Cette organisation n'a pas encore été réclamée par un fournisseur de services.</title2>\n<textDarkGray>Vous pouvez réclamer cette organisation en tant que prestataire de services à :<extDarkGray>"
 	},
 	"claimed": "Réclamé",
 	"clear": "Nettoyer",
