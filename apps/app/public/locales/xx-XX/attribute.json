@@ -1,15 +1,16 @@
 {
 	"additional": {
-		"at-capacity": "crwdns988174:0crwdne988174:0",
 		"CATEGORYNAME": "crwdns988176:0crwdne988176:0",
+		"at-capacity": "crwdns988174:0crwdne988174:0",
 		"geo-near-public-transit": "crwdns988178:0crwdne988178:0",
 		"geo-public-transit-description": "crwdns988180:0crwdne988180:0",
 		"has-confidentiality-policy": "crwdns988182:0crwdne988182:0",
 		"offers-remote-services": "crwdns988184:0crwdne988184:0",
+		"private-practice": "crwdns1944515:0crwdne1944515:0",
 		"religiously-affiliated": "crwdns988186:0crwdne988186:0",
 		"time-walk-in": "crwdns988188:0crwdne988188:0",
-		"wheelchair-accessible_true": "crwdns1773635:0crwdne1773635:0",
-		"wheelchair-accessible_false": "crwdns1773637:0crwdne1773637:0"
+		"wheelchair-accessible_false": "crwdns1773637:0crwdne1773637:0",
+		"wheelchair-accessible_true": "crwdns1773635:0crwdne1773635:0"
 	},
 	"alerts": {
 		"CATEGORYNAME": "crwdns1773639:0crwdne1773639:0",
@@ -17,6 +18,7 @@
 		"warn": "crwdns1773643:0crwdne1773643:0"
 	},
 	"community": {
+		"CATEGORYNAME": "crwdns988214:0crwdne988214:0",
 		"adults": "crwdns988192:0crwdne988192:0",
 		"africa-immigrant": "crwdns988194:0crwdne988194:0",
 		"african-american": "crwdns988196:0crwdne988196:0",
@@ -28,7 +30,6 @@
 		"bipoc": "crwdns988208:0crwdne988208:0",
 		"bisexual": "crwdns988210:0crwdne988210:0",
 		"black": "crwdns988212:0crwdne988212:0",
-		"CATEGORYNAME": "crwdns988214:0crwdne988214:0",
 		"citizens": "crwdns988216:0{{country}}crwdne988216:0",
 		"conversion-therapy-survivors": "crwdns988218:0crwdne988218:0",
 		"daca-recipient-seeker": "crwdns988220:0crwdne988220:0",
@@ -56,11 +57,11 @@
 		"seniors": "crwdns988264:0crwdne988264:0",
 		"sex-workers": "crwdns988266:0crwdne988266:0",
 		"teens": "crwdns988268:0crwdne988268:0",
+		"trans-youth": "crwdns988276:0crwdne988276:0",
+		"trans-youth-caregivers": "crwdns988278:0crwdne988278:0",
 		"transfeminine": "crwdns988270:0crwdne988270:0",
 		"transgender": "crwdns988272:0crwdne988272:0",
 		"transmasculine": "crwdns988274:0crwdne988274:0",
-		"trans-youth": "crwdns988276:0crwdne988276:0",
-		"trans-youth-caregivers": "crwdns988278:0crwdne988278:0",
 		"unaccompanied-minors": "crwdns988280:0crwdne988280:0",
 		"undocumented": "crwdns988282:0crwdne988282:0"
 	},
@@ -84,42 +85,48 @@
 		"time-appointment-required": "crwdns988308:0crwdne988308:0"
 	},
 	"lang": {
+		"CATEGORYNAME": "crwdns988314:0crwdne988314:0",
 		"all-languages-by-interpreter": "crwdns988310:0crwdne988310:0",
 		"american-sign-language": "crwdns988312:0crwdne988312:0",
-		"CATEGORYNAME": "crwdns988314:0crwdne988314:0",
 		"lang-offered": "crwdns988316:0crwdne988316:0"
 	},
 	"orgleader": {
+		"CATEGORYNAME": "crwdns988322:0crwdne988322:0",
 		"bipoc-led": "crwdns988318:0crwdne988318:0",
 		"black-led": "crwdns988320:0crwdne988320:0",
-		"CATEGORYNAME": "crwdns988322:0crwdne988322:0",
 		"immigrant-led": "crwdns988324:0crwdne988324:0",
-		"trans-led": "crwdns988326:0crwdne988326:0"
+		"trans-led": "crwdns988326:0crwdne988326:0",
+		"women-led": "crwdns1944519:0crwdne1944519:0"
 	},
 	"serviceaccess": {
+		"CATEGORYNAME": "crwdns988340:0crwdne988340:0",
 		"accessemail": "crwdns988328:0crwdne988328:0",
 		"accessfile": "crwdns988330:0crwdne988330:0",
 		"accesslink": "crwdns988332:0crwdne988332:0",
 		"accesslocation": "crwdns988334:0crwdne988334:0",
 		"accessphone": "crwdns988336:0crwdne988336:0",
 		"accesspublictransit": "crwdns988342:0crwdne988342:0",
-		"accesstext": "crwdns988338:0crwdne988338:0",
-		"CATEGORYNAME": "crwdns988340:0crwdne988340:0"
+		"accesstext": "crwdns988338:0crwdne988338:0"
 	},
 	"srvfocus": {
+		"CATEGORYNAME": "crwdns988348:0crwdne988348:0",
 		"asylum-seekers": "crwdns988344:0crwdne988344:0",
 		"bipoc-comm": "crwdns988346:0crwdne988346:0",
-		"CATEGORYNAME": "crwdns988348:0crwdne988348:0",
+		"caregivers": "crwdns1944521:0crwdne1944521:0",
+		"disabled": "crwdns1944523:0crwdne1944523:0",
+		"elder": "crwdns1944525:0crwdne1944525:0",
 		"gender-nc": "crwdns988350:0crwdne988350:0",
 		"hiv-comm": "crwdns988352:0crwdne988352:0",
 		"immigrant-comm": "crwdns988354:0crwdne988354:0",
+		"incarcerated": "crwdns1944527:0crwdne1944527:0",
 		"lgbtq-youth-focus": "crwdns988356:0crwdne988356:0",
 		"resettled-refugees": "crwdns988358:0crwdne988358:0",
 		"spanish-speakers": "crwdns988360:0crwdne988360:0",
 		"trans-comm": "crwdns988362:0crwdne988362:0",
 		"trans-fem": "crwdns988364:0crwdne988364:0",
 		"trans-masc": "crwdns988366:0crwdne988366:0",
-		"trans-youth-focus": "crwdns988368:0crwdne988368:0"
+		"trans-youth-focus": "crwdns988368:0crwdne988368:0",
+		"women": "crwdns1944529:0crwdne1944529:0"
 	},
 	"sys": {
 		"CATEGORYNAME": "crwdns988370:0crwdne988370:0",

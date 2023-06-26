@@ -1,28 +1,33 @@
-import { Button, createStyles, rem, Text, useMantineTheme } from '@mantine/core'
+import { createStyles, Group, rem, Text, UnstyledButton, useMantineTheme } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import { type MouseEventHandler, useMemo } from 'react'
 
+import { useScreenSize } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { useSearchState } from '~ui/providers/SearchState'
 
 const useStyles = createStyles((theme) => ({
 	root: {
-		// height: '40px',
+		height: rem(40),
 		maxWidth: '100%',
-		padding: `calc(${theme.spacing.sm} - ${rem(2)}) ${theme.spacing.xs}`,
+		padding: `${rem(10)} ${rem(8)}`,
 		color: theme.other.colors.secondary.black,
 		backgroundColor: theme.other.colors.secondary.white,
-		borderRadius: rem(5),
+		borderRadius: rem(8),
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
 			textDecoration: 'none !important',
 		},
+		...theme.fn.hover({
+			backgroundColor: `${theme.other.colors.primary.lightGray} !important`,
+			textDecoration: 'none !important',
+		}),
 	},
 	icon: {
 		width: rem(24),
 		height: rem(24),
-		marginRight: theme.spacing.xs,
+		// marginRight: theme.spacing.xs,
 	},
 	buttonText: {},
 }))
@@ -36,6 +41,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 	const { t } = useTranslation('common')
 	const router = useRouter()
 	const { searchParams } = useSearchState()
+	const { isMobile } = useScreenSize()
 
 	const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
 		if (typeof onClick === 'function') return onClick(e)
@@ -88,6 +94,9 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 					}
 					case 'dynamicText': {
 						const page = backToText
+						if (isMobile) {
+							return t('words.back')
+						}
 						return (
 							<Trans
 								i18nKey='breadcrumb.back-to-dynamic'
@@ -108,18 +117,19 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 	}, [option, backTo, backToText])
 
 	return (
-		<Button
-			variant='subtle'
-			classNames={{ root: classes.root, icon: classes.icon }}
-			px={`calc(${theme.spacing.sm} - ${rem(2)})`}
-			py={theme.spacing.xs}
-			onClick={clickHandler}
-			leftIcon={<Icon icon={iconRender} height={24} color={theme.other.colors.secondary.black} />}
-		>
-			<Text size='md' fw={theme.other.fontWeight.semibold} truncate>
-				{childrenRender}
-			</Text>
-		</Button>
+		<UnstyledButton className={classes.root} onClick={clickHandler}>
+			<Group spacing={8}>
+				<Icon
+					icon={iconRender}
+					height={24}
+					color={theme.other.colors.secondary.black}
+					className={classes.icon}
+				/>
+				<Text size='md' fw={theme.other.fontWeight.semibold} truncate m={0}>
+					{childrenRender}
+				</Text>
+			</Group>
+		</UnstyledButton>
 	)
 }
 

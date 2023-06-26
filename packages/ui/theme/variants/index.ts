@@ -31,8 +31,10 @@ export const variantNames: VariantNames = {
 		inheritStyle: 'inheritStyle',
 		block: 'block',
 		inlineUtil1: 'inlineUtil1',
+		inlineUtil1darkGray: 'inlineUtil1darkGray',
 		card: 'card',
 		pagination: 'pagination',
+		inlineUtil2darkGray: 'inlineUtil2darkGray',
 	},
 	Badge: {
 		community: 'community',
@@ -68,6 +70,8 @@ export const variantNames: VariantNames = {
 		inlineBulletUtil2: 'inlineBulletUtil2',
 		inlineUtil2: 'inlineUtil2',
 		textDarkGray: 'textDarkGray',
+		inlineBulletUtil2DarkGray: 'inlineBulletUtil2DarkGray',
+		inlineUtil2DarkGray: 'inlineUtil2DarkGray',
 	},
 	Skeleton: {
 		text: 'text',
@@ -91,6 +95,7 @@ export const variantNames: VariantNames = {
 		utility3darkGray: 'utility3darkGray',
 		utility4darkGray: 'utility4darkGray',
 		darkGray: 'darkGray',
+		utility1white: 'utility1white',
 	},
 	Tooltip: {
 		utility1: 'utility1',

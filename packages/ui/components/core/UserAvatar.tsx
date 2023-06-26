@@ -1,4 +1,4 @@
-import { Avatar, createStyles, Group, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
+import { Avatar, createStyles, Group, rem, Skeleton, Stack, Text, useMantineTheme } from '@mantine/core'
 import { DateTime } from 'luxon'
 import { type User } from 'next-auth'
 import { useSession } from 'next-auth/react'
@@ -6,9 +6,9 @@ import { useTranslation } from 'next-i18next'
 
 import { Icon } from '~ui/icon'
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { avatarSize }: { avatarSize: number }) => ({
 	group: {
-		gap: theme.spacing.md,
+		gap: rem(avatarSize >= 48 ? 12 : 4),
 	},
 	name: {
 		...theme.other.utilityFonts.utility1,
@@ -17,10 +17,20 @@ const useStyles = createStyles((theme) => ({
 		...theme.other.utilityFonts.utility2,
 		color: theme.other.colors.secondary.darkGray,
 	},
+	avatarPlaceholder: {
+		height: rem(avatarSize),
+		width: rem(avatarSize),
+	},
 }))
 
-export const UserAvatar = ({ subheading, user, useLoggedIn = false, loading = false }: UserAvatarProps) => {
-	const { classes } = useStyles()
+export const UserAvatar = ({
+	subheading,
+	user,
+	useLoggedIn = false,
+	loading = false,
+	avatarSize = 40,
+}: UserAvatarProps) => {
+	const { classes } = useStyles({ avatarSize })
 	const { t, i18n } = useTranslation()
 	const { data: session, status } = useSession()
 	const theme = useMantineTheme()
@@ -55,7 +65,7 @@ export const UserAvatar = ({ subheading, user, useLoggedIn = false, loading = fa
 	if (showLoadingState) {
 		return (
 			<Group className={classes.group}>
-				<Skeleton height={48} circle />
+				<Skeleton height={avatarSize} circle />
 				<Stack align='flex-start' justify='center' spacing={4}>
 					<Skeleton variant='utility' />
 					{Boolean(subText()) && <Skeleton variant='utility'>{subText()}</Skeleton>}
@@ -70,8 +80,12 @@ export const UserAvatar = ({ subheading, user, useLoggedIn = false, loading = fa
 	}
 
 	return (
-		<Group className={classes.group}>
-			<Avatar src={displayData.image} alt={displayData.name ?? (t('user-avatar') as string)}>
+		<Group className={classes.group} align='center'>
+			<Avatar
+				src={displayData.image}
+				alt={displayData.name ?? (t('user-avatar') as string)}
+				classNames={{ root: classes.avatarPlaceholder, placeholder: classes.avatarPlaceholder }}
+			>
 				<Icon icon='carbon:user' height={24} color={theme.other.colors.secondary.darkGray} />
 			</Avatar>
 			<Stack align='flex-start' justify='center' spacing={4}>
@@ -93,6 +107,7 @@ interface PropsPassed {
 	user?: Pick<User, 'name' | 'image'>
 	/** Return loading state */
 	loading?: boolean
+	avatarSize?: number
 }
 
 interface PropsSession {
@@ -102,4 +117,5 @@ interface PropsSession {
 	subheading?: Date | string | null
 	user?: undefined
 	loading?: undefined
+	avatarSize?: number
 }

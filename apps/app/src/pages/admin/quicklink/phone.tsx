@@ -71,7 +71,7 @@ const QuickLink = () => {
 		},
 	})
 
-	const { data, isLoading } = api.quicklink.getPhoneData.useQuery(
+	const { data, isLoading, isSuccess } = api.quicklink.getPhoneData.useQuery(
 		{
 			limit: RESULTS_PER_PAGE,
 			skip: RESULTS_PER_PAGE * page,
@@ -200,7 +200,7 @@ const QuickLink = () => {
 					columnHelper.accessor('name', {
 						header: 'Organization',
 						cell: (info) => {
-							const slug = form.values.data[info.row.index]?.slug
+							const slug = info.row.original.slug
 							return (
 								<Group noWrap spacing={8}>
 									<Text variant={variants.Text.utility4}>{info.renderValue()}</Text>
@@ -377,9 +377,10 @@ const QuickLink = () => {
 				<Tabs.List>
 					<Tabs.Tab value='/admin/quicklink/phone'>Phone Numbers</Tabs.Tab>
 					<Tabs.Tab value='/admin/quicklink/email'>Email Addresses</Tabs.Tab>
+					<Tabs.Tab value='/admin/quicklink/services'>Location Services</Tabs.Tab>
 				</Tabs.List>
 			</Tabs>
-			{isLoading || !data || !form.values.data?.length ? (
+			{isLoading ? (
 				<Center h='75vh'>
 					<Loader />
 				</Center>
@@ -390,6 +391,10 @@ const QuickLink = () => {
 						<QuickPromotionModal autoLaunch noClose />
 					</Overlay>
 				</>
+			) : isSuccess && !form.values.data?.length ? (
+				<Center h='75vh'>
+					<Text variant={variants.Text.utility1}>No pending links.</Text>
+				</Center>
 			) : (
 				<>
 					<Table>

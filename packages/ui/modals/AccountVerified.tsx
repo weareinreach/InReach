@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 import {
+	Button,
 	type ButtonProps,
 	createPolymorphicComponent,
+	Group,
 	Loader,
 	Modal,
 	Stack,
@@ -15,12 +17,14 @@ import { forwardRef, useEffect, useState } from 'react'
 import { z } from 'zod'
 
 import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
+// import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { LoginModalLauncher } from './Login'
 import { ModalTitle } from './ModalTitle'
+import { PrivacyStatementModal } from './PrivacyStatement'
+import { UserSurveyModalLauncher } from './UserSurvey'
 
 const isRecord = (data: unknown) => z.record(z.any()).safeParse(data).success
 const UrlParams = z.object({ c: z.string(), code: z.string() }).refine((data) => {
@@ -47,6 +51,14 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 		})
 		// const DataSchema = z.string().default('')
 		const [opened, handler] = useDisclosure(autoOpen)
+		const { isMobile } = useScreenSize()
+
+		useEffect(() => {
+			if (router.query.c !== undefined) {
+				handler.open()
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [router.query.c])
 
 		useEffect(() => {
 			if (!success && !verifyAccount.isLoading && opened && !error) {
@@ -68,22 +80,42 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 		)
 
 		const bodySuccess = (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
-					<Title order={1}>✅</Title>
-					<Title order={2}>{t('verify-account.verified')}</Title>
+			<Stack align='center' spacing={40}>
+				<Stack align='center' spacing={24}>
+					<Stack spacing={0} align='center'>
+						<Title order={1}>📋</Title>
+						<Title order={2} ta='center'>
+							{t('survey.launch-title')}
+						</Title>
+					</Stack>
+					<Text variant={variants.Text.darkGray} ta='center'>
+						<Trans
+							i18nKey='survey.launch-item1'
+							components={{
+								Bold: <Title order={3} display='inline' />,
+							}}
+						/>
+					</Text>
+					<Text variant={variants.Text.darkGray} ta='center'>
+						<Trans
+							i18nKey='survey.launch-item2'
+							components={{
+								Bold: <Title order={3} display='inline' />,
+							}}
+						/>
+					</Text>
+					<PrivacyStatementModal component={Link} variant={variants.Link.inlineUtil2darkGray}>
+						{t('privacy-policy')}
+					</PrivacyStatementModal>
 				</Stack>
-				<Trans
-					i18nKey='verify-account.verified-body'
-					components={{
-						LoginModal: (
-							<LoginModalLauncher component={Link} key={0} variant={variants.Link.inheritStyle}>
-								.
-							</LoginModalLauncher>
-						),
-						Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
-					}}
-				/>
+				<Group>
+					<Button variant={variants.Button.secondaryLg} onClick={handler.close} radius='md'>
+						{t('survey.not-right-now')}
+					</Button>
+					<UserSurveyModalLauncher component={Button} variant={variants.Button.primaryLg}>
+						{t('survey.start-survey')}
+					</UserSurveyModalLauncher>
+				</Group>
 			</Stack>
 		)
 		const bodyError = (
@@ -103,7 +135,7 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 
 		return (
 			<>
-				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()}>
+				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
 					{success ? bodySuccess : error ? bodyError : bodyWorking}
 				</Modal>
 				{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
@@ -111,9 +143,7 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 		)
 	}
 )
-
 AccountVerifyModalBody.displayName = 'AccountVerifyModal'
-
 export const AccountVerifyModal = createPolymorphicComponent<'button', AccountVerifyModalBodyProps>(
 	AccountVerifyModalBody
 )

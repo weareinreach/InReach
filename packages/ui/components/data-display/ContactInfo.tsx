@@ -2,22 +2,26 @@ import { Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { api } from '~app/utils/api'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { isSocialIcon, SocialLink, type SocialLinkProps } from '~ui/components/core/SocialLink'
 import { parsePhoneNumber, useCustomVariant, useSlug } from '~ui/hooks'
 
-const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
+const PhoneNumbers = ({ parentId = '', passedData, direct, locationOnly }: PhoneNumbersProps) => {
 	const output: JSX.Element[] = []
+	const slug = useSlug()
 	const { t } = useTranslation(['common', 'phone-type'])
 	const variants = useCustomVariant()
-	const slug = useSlug()
+	const { data } = api.orgPhone.forContactInfo.useQuery({ parentId, locationOnly }, { enabled: !passedData })
 	let k = 0
 
-	if (!data.length) return null
+	const componentData = passedData ? passedData : data
 
-	for (const { phone } of data) {
+	if (!componentData?.length) return null
+
+	for (const phone of componentData) {
 		const { country, ext, locationOnly: showLocationOnly, number, phoneType, primary, description } = phone
-		const parsedPhone = parsePhoneNumber(number, country.cca2)
+		const parsedPhone = parsePhoneNumber(number, country)
 		if (!parsedPhone) continue
 		if (ext) parsedPhone.setExt(ext)
 		const dialURL = parsedPhone.getURI()
@@ -38,13 +42,13 @@ const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
 		}
 		if (locationOnly && !showLocationOnly) continue
 		const desc = description
-			? t(description.key, { ns: slug, defaultValue: description.tsKey.text })
-			: phoneType?.tsKey
-			? t(phoneType.tsKey, { ns: 'phone-type' })
+			? t(description.key, { ns: slug, defaultValue: description.defaultText })
+			: phoneType?.key
+			? t(phoneType.key, { ns: 'phone-type' })
 			: undefined
 
 		const item = (
-			<Stack spacing={12} key={k}>
+			<Stack spacing={4} key={k}>
 				{isExternal(dialURL) ? (
 					<Link key={k} external href={dialURL} variant={variants.Link.inlineInverted}>
 						{phoneNumber}
@@ -66,16 +70,22 @@ const PhoneNumbers = ({ data, direct, locationOnly }: PhoneNumbersProps) => {
 	)
 }
 
-const Emails = ({ data, direct, locationOnly, serviceOnly }: EmailsProps) => {
+const Emails = ({ parentId = '', passedData, direct, locationOnly, serviceOnly }: EmailsProps) => {
 	const output: JSX.Element[] = []
 	const slug = useSlug()
 	const { t } = useTranslation(['common', slug, 'user-title'])
 	const variants = useCustomVariant()
+	const { data } = api.orgEmail.forContactInfo.useQuery(
+		{ parentId, locationOnly, serviceOnly },
+		{ enabled: !passedData }
+	)
 	let k = 0
 
-	if (!data.length) return null
+	const componentData = passedData ? passedData : data
 
-	for (const { email } of data) {
+	if (!componentData?.length) return null
+
+	for (const email of componentData) {
 		const {
 			primary,
 			title,
@@ -99,9 +109,9 @@ const Emails = ({ data, direct, locationOnly, serviceOnly }: EmailsProps) => {
 			)
 		}
 		const desc = title
-			? t(title.tsKey, { ns: 'user-title' })
+			? t(title.key, { ns: 'user-title' })
 			: description?.key
-			? t(description.key, { defaultValue: description.tsKey.text, ns: slug })
+			? t(description.key, { defaultValue: description.defaultText, ns: slug })
 			: undefined
 
 		const item = (
@@ -123,17 +133,23 @@ const Emails = ({ data, direct, locationOnly, serviceOnly }: EmailsProps) => {
 	)
 }
 
-const Websites = ({ data, direct, locationOnly, websiteDesc }: WebsitesProps) => {
+const Websites = ({ parentId = '', passedData, direct, locationOnly, websiteDesc }: WebsitesProps) => {
 	const output: JSX.Element[] = []
 	const slug = useSlug()
 	const { t } = useTranslation(['common', slug])
 	const variants = useCustomVariant()
+	const { data } = api.orgWebsite.forContactInfo.useQuery(
+		{ parentId, locationOnly },
+		{ enabled: !passedData }
+	)
 	// eslint-disable-next-line no-useless-escape
 	const domainExtract = /https?:\/\/([^:\/\n?]+)/
 
-	if (!data.length) return null
+	const componentData = passedData ? passedData : data
 
-	for (const website of data) {
+	if (!componentData?.length) return null
+
+	for (const website of componentData) {
 		const { id, url, orgLocationOnly, description, isPrimary } = website
 		const urlMatch = url.match(domainExtract)
 		const urlBase = urlMatch?.length ? urlMatch[1] : undefined
@@ -154,7 +170,7 @@ const Websites = ({ data, direct, locationOnly, websiteDesc }: WebsitesProps) =>
 
 		const desc = websiteDesc
 			? description?.key
-				? t(description.key, { ns: slug, defaultText: description.tsKey.text })
+				? t(description.key, { ns: slug, defaultText: description.defaultText })
 				: urlBase
 			: urlBase
 		const item = (
@@ -175,12 +191,19 @@ const Websites = ({ data, direct, locationOnly, websiteDesc }: WebsitesProps) =>
 	)
 }
 
-const SocialMedia = ({ data }: SocialMediaProps) => {
-	if (!data.length) return null
+const SocialMedia = ({ parentId = '', passedData, locationOnly }: SocialMediaProps) => {
+	const { data } = api.orgSocialMedia.forContactInfo.useQuery(
+		{ parentId, locationOnly },
+		{ enabled: !passedData }
+	)
+
+	const componentData = passedData ? passedData : data
+
+	if (!componentData?.length) return null
 	const items: SocialLinkProps[] = []
 
-	for (const item of data) {
-		const icon = item.service.name.toLowerCase()
+	for (const item of componentData) {
+		const icon = item.service.toLowerCase()
 		if (!isSocialIcon(icon)) continue
 		items.push({
 			icon,
@@ -193,22 +216,47 @@ const SocialMedia = ({ data }: SocialMediaProps) => {
 }
 
 export const ContactInfo = ({
-	data,
+	passedData,
+	parentId,
 	order = ['website', 'phone', 'email', 'socialMedia'],
 	gap = 24,
 	...commonProps
 }: ContactInfoProps) => {
 	const sections: ContactMap = {
-		website: <Websites key='Websites' data={data.websites ?? []} {...commonProps} />,
-		phone: <PhoneNumbers key='PhoneNumbers' data={data.phones ?? []} {...commonProps} />,
-		email: <Emails key='Emails' data={data.emails ?? []} {...commonProps} />,
-		socialMedia: <SocialMedia key='SocialMedia' data={data.socialMedia ?? []} />,
+		website: (
+			<Websites
+				key='Websites'
+				{...commonProps}
+				{...(passedData ? { passedData: passedData.websites } : { parentId })}
+			/>
+		),
+		phone: (
+			<PhoneNumbers
+				key='PhoneNumbers'
+				{...commonProps}
+				{...(passedData ? { passedData: passedData.phones } : { parentId })}
+			/>
+		),
+		email: (
+			<Emails
+				key='Emails'
+				{...commonProps}
+				{...(passedData ? { passedData: passedData.emails } : { parentId })}
+			/>
+		),
+		socialMedia: (
+			<SocialMedia
+				key='SocialMedia'
+				{...commonProps}
+				{...(passedData ? { passedData: passedData.socialMedia } : { parentId })}
+			/>
+		),
 	}
 	const items = order.map((item) => sections[item])
 	return <Stack spacing={gap}>{items}</Stack>
 }
 
-export const hasContactInfo = (data: ContactInfoProps['data']) => {
+export const hasContactInfo = (data: PassedDataObject) => {
 	const { websites, phones, emails, socialMedia } = data
 	return Boolean(websites.length || phones.length || emails.length || socialMedia.length)
 }
@@ -219,16 +267,10 @@ type ContactMap = {
 	[K in ContactSections]: JSX.Element
 }
 
-export interface ContactInfoProps extends CommonProps {
-	data: {
-		websites: WebsitesProps['data']
-		phones: PhoneNumbersProps['data']
-		emails: EmailsProps['data']
-		socialMedia: SocialMediaProps['data']
-	}
+export type ContactInfoProps = CommonProps & {
 	order?: ContactSections[]
 	gap?: number
-}
+} & (ApiData | PassedDataProps)
 
 interface CommonProps {
 	direct?: boolean
@@ -237,19 +279,28 @@ interface CommonProps {
 	websiteDesc?: boolean
 }
 
-interface PhoneNumbersProps extends CommonProps {
-	data: PageQueryResult['phones'] | Location['phones']
-}
-interface WebsitesProps extends CommonProps {
-	data: PageQueryResult['websites'] | Location['websites']
+type PhoneNumbersProps = CommonProps & (ApiData | PassedData<'orgPhone', 'forContactInfo'>)
+type WebsitesProps = CommonProps & (ApiData | PassedData<'orgWebsite', 'forContactInfo'>)
+
+type EmailsProps = CommonProps & (ApiData | PassedData<'orgEmail', 'forContactInfo'>)
+type SocialMediaProps = CommonProps & (ApiData | PassedData<'orgSocialMedia', 'forContactInfo'>)
+
+type PassedData<K1 extends keyof ApiOutput, K2 extends keyof ApiOutput[K1]> = {
+	passedData: ApiOutput[K1][K2]
+	parentId?: never
 }
 
-interface EmailsProps extends CommonProps {
-	data: PageQueryResult['emails'] | Location['emails']
+export interface PassedDataObject {
+	phones: ApiOutput['orgPhone']['forContactInfo']
+	emails: ApiOutput['orgEmail']['forContactInfo']
+	websites: ApiOutput['orgWebsite']['forContactInfo']
+	socialMedia: ApiOutput['orgSocialMedia']['forContactInfo']
 }
-interface SocialMediaProps extends CommonProps {
-	data: PageQueryResult['socialMedia'] | Location['socialMedia']
+type ApiData = {
+	parentId: string
+	passedData?: never
 }
-
-type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>
-type Location = NonNullable<PageQueryResult['locations']>[number]
+type PassedDataProps = {
+	passedData: PassedDataObject
+	parentId?: never
+}

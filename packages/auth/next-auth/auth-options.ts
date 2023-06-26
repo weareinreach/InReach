@@ -1,4 +1,4 @@
-// import { getEnv } from '@weareinreach/config/env'
+// import { getEnv } from '@weareinreach/env'
 import { JwtInvalidClaimError } from 'aws-jwt-verify/error'
 import { type NextAuthOptions } from 'next-auth'
 

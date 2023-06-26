@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 
 import { StorybookGridDouble } from '~ui/layouts'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { locationMock } from '~ui/mockData/locationCard'
+import { location } from '~ui/mockData/location'
 
 import { LocationCard } from './LocationCard'
 
@@ -10,7 +10,7 @@ export default {
 	title: 'Sections/Location Info',
 	component: LocationCard,
 	args: {
-		location: locationMock,
+		locationId: '',
 	},
 	decorators: [StorybookGridDouble],
 	parameters: {
@@ -25,6 +25,7 @@ export default {
 						count: 10,
 					},
 				}),
+				location.forLocationCard,
 			],
 		},
 		nextjs: {

@@ -31,5 +31,7 @@ export const updateGeo: UpdateGeo = async (table, id, client) => {
 type UpdateGeo = (
 	table: LiteralUnion<TablesWithGeo, 'string'>,
 	id: string,
-	client?: PrismaClient | Omit<PrismaClient, '$connect' | '$disconnect' | '$on' | '$transaction' | '$use'>
+	client?:
+		| PrismaClient
+		| Omit<PrismaClient, '$connect' | '$disconnect' | '$on' | '$transaction' | '$use' | '$extends'>
 ) => Promise<number>

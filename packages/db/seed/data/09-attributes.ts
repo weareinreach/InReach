@@ -466,9 +466,9 @@ export const attributeData: AttributeData = [
 		ns: 'userLawPractice',
 		attributes: [
 			{ key: 'corp-law-firm', name: 'Corporate law firm' },
-			{ key: 'legal-nonprofit', name: 'Legal non-profit' },
-			{ key: 'law-school-clinic', name: 'Law school student clinic' },
-			{ key: 'law-other', name: 'Other (please specify)', requireData: true },
+			{ key: 'legal-nonprofit', name: 'Legal nonprofit organization' },
+			{ key: 'law-school-clinic', name: 'Law school clinic' },
+			{ key: 'law-other', name: 'Other', requireData: true },
 		],
 	},
 	{

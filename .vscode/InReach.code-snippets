@@ -63,7 +63,7 @@
 		"description": "Calc CSS"
 	},
 	"Storybook Story": {
-		"prefix": "sbstory",
+		"prefix": "!sbstory",
 		"body": [
 			"import { Meta, StoryObj } from '@storybook/react'",
 			"",

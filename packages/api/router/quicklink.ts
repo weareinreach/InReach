@@ -282,4 +282,108 @@ export const quickLinkRouter = defineRouter({
 			const results = await ctx.prisma.$transaction(updates)
 			return results
 		}),
+	getServiceLocationData: permissionedProcedure('updateLocation')
+		.input(z.object({ limit: z.number(), skip: z.number().optional() }))
+		.query(async ({ ctx, input }) => {
+			const limit = input.limit ?? 20
+			const { skip } = input
+
+			const where = {
+				published: true,
+				deleted: false,
+				locations: {
+					some: { services: { none: {} }, published: true },
+				},
+			} satisfies Prisma.OrganizationWhereInput
+			const results = await ctx.prisma.organization.findMany({
+				where,
+				select: {
+					id: true,
+					name: true,
+					slug: true,
+					locations: {
+						select: {
+							id: true,
+							name: true,
+							published: true,
+							services: {
+								select: {
+									service: {
+										select: { id: true, serviceName: { select: { tsKey: { select: { text: true } } } } },
+									},
+								},
+							},
+						},
+						where: { services: { none: {} }, published: true, deleted: false },
+					},
+					services: {
+						select: {
+							id: true,
+							serviceName: { select: { tsKey: { select: { text: true } } } },
+						},
+					},
+				},
+				orderBy: { id: 'asc' },
+				take: limit, // + 1,
+				skip,
+			})
+			const totalResults = await ctx.prisma.organization.count({ where })
+			const transformedData = results.flatMap(({ locations, services, id, name, slug }) =>
+				locations.map(({ id: locationId, name: locationName, services: locationServices, published }) => {
+					return {
+						orgId: id,
+						name,
+						slug,
+						locationId,
+						locationName,
+						published,
+						attachedServices: locationServices.map(({ service }) => service.id),
+						services,
+					}
+				})
+			)
+			return {
+				results: transformedData,
+				totalResults,
+			}
+		}),
+	updateServiceLocationData: permissionedProcedure('updateLocation')
+		.input(
+			z
+				.object({
+					id: z.string(),
+					from: z
+						.object({
+							services: z.string().array(),
+							published: z.boolean().optional(),
+						})
+						.partial(),
+					to: z.object({
+						services: z.object({ add: z.string().array(), del: z.string().array() }).partial(),
+						published: z.boolean().optional(),
+					}),
+				})
+				.array()
+		)
+		.mutation(async ({ ctx, input }) => {
+			const updates = input.map(({ id, from, to }) => {
+				const { services, published } = to
+				const auditLogs = CreateAuditLog({ actorId: ctx.actorId, operation: 'UPDATE', from, to: flush(to) })
+				return ctx.prisma.orgLocation.update({
+					where: { id },
+					data: {
+						published,
+						services: {
+							createMany: services.add?.length
+								? { data: services.add.map((serviceId) => ({ serviceId })), skipDuplicates: true }
+								: undefined,
+							deleteMany: services.del?.length ? { serviceId: { in: services.del } } : undefined,
+						},
+						auditLogs,
+					},
+				})
+			})
+			const results = await ctx.prisma.$transaction(updates)
+			return results
+		}),
 })

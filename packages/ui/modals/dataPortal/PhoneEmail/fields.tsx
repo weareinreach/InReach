@@ -59,6 +59,8 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 		{ organizationId },
 		{
 			enabled: Boolean(organizationId),
+
+			// !fix when issue resolved.
 			select: (data) =>
 				data.map(({ id, tsKey, defaultText }) => ({
 					value: id,
@@ -70,17 +72,21 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 		{ organizationId: organizationId ?? '' },
 		{
 			enabled: Boolean(organizationId),
+
+			// !fix when issue resolved.
 			select: (data) => data.map(({ id, name }) => ({ value: id, label: name ?? 'Missing Name' })),
 		}
 	)
 
 	useEffect(() => {
 		if (serviceData && !isServiceLoading && !compareArrays(serviceData, services)) {
+			// !fix when issue resolved.
 			setServices(serviceData)
 		}
 	}, [serviceData, isServiceLoading, services])
 	useEffect(() => {
 		if (locationData && !isLocationLoading && !compareArrays(locationData, locations)) {
+			// !fix when issue resolved.
 			setLocations(locationData)
 		}
 	}, [locationData, isLocationLoading, locations])

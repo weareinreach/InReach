@@ -3,22 +3,24 @@ import { DateTime, Interval } from 'luxon'
 import { useTranslation } from 'next-i18next'
 
 import { useCustomVariant } from '~ui/hooks'
+import { trpc as api } from '~ui/lib/trpcClient'
 
 const labelKeys = {
 	regular: 'words.hours',
 	service: 'words.service-hours',
 } as const
 
-export const Hours = ({ data, label = 'regular' }: HoursProps) => {
+export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 	const { t, i18n } = useTranslation('common')
 	const variants = useCustomVariant()
 	const hourDisplay: JSX.Element[] = []
+	const { data } = api.orgHours.forHoursDisplay.useQuery(parentId)
 
 	if (!data) return null
 
 	const labelKey = labelKeys[label]
 
-	const hourMap = new Map<number, Set<NonNullable<HoursProps['data']>[number]>>()
+	const hourMap = new Map<number, Set<NonNullable<typeof data>[number]>>()
 	let timezone: string | null = null
 
 	for (const entry of data) {
@@ -71,12 +73,6 @@ export const Hours = ({ data, label = 'regular' }: HoursProps) => {
 }
 
 export interface HoursProps {
-	data?: {
-		dayIndex: number
-		start: Date
-		end: Date
-		closed: boolean
-		tz: string | null
-	}[]
+	parentId: string
 	label?: keyof typeof labelKeys
 }

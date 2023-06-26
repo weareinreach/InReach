@@ -7,16 +7,23 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider'
 import { type User } from 'next-auth'
 import invariant from 'tiny-invariant'
+import { z } from 'zod'
 
 import { createHmac } from 'crypto'
 
-import { getEnv } from '@weareinreach/config/env'
 import { prisma } from '@weareinreach/db'
+import { getEnv } from '@weareinreach/env'
 
 import { decodeCognitoIdJwt } from './cognitoJwt'
 import { generateUserSession } from './genUserSession'
-import { CognitoSessionSchema } from './userLogin'
 
+export const CognitoSessionSchema = z.object({
+	AccessToken: z.string(),
+	ExpiresIn: z.number(),
+	IdToken: z.string(),
+	RefreshToken: z.string().optional(),
+	TokenType: z.string(),
+})
 export const cognito = new CognitoIdentityProvider({
 	credentials: {
 		accessKeyId: getEnv('COGNITO_ACCESS_KEY'),

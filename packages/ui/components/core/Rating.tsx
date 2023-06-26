@@ -1,4 +1,4 @@
-import { createStyles, Group, LoadingOverlay, rem, Text, Tooltip } from '@mantine/core'
+import { createStyles, Group, rem, Skeleton, Text, Tooltip } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 import { useCustomVariant } from '~ui/hooks'
@@ -17,17 +17,39 @@ const useStyles = createStyles((theme, { noMargin }: Partial<Props>) => ({
 	text: {
 		...theme.other.utilityFonts.utility1,
 	},
+	iconDimmed: {
+		color: theme.other.colors.tertiary.coolGray,
+	},
+	textDimmed: {
+		color: theme.other.colors.secondary.darkGray,
+	},
 }))
 
 export const Rating = ({ recordId, hideCount = false, noMargin = false, forceLoading = false }: Props) => {
-	const { classes } = useStyles({ noMargin })
+	const { classes, cx } = useStyles({ noMargin })
 	const { t } = useTranslation('common')
 	const variants = useCustomVariant()
 	const { data, status } = api.review.getAverage.useQuery(recordId as string, { enabled: Boolean(recordId) })
 
-	const { average, count } = data ?? { average: 0, count: 0 }
+	const { average, count } = data ?? { count: 0 }
 
 	const parenRegex = /\(|\)/g
+
+	if (status !== 'success' || Boolean(forceLoading)) {
+		return <Skeleton className={classes.container} visible={true} />
+	}
+
+	if (average === null || count === 0) {
+		return (
+			<Group position='center' spacing={5} className={classes.container}>
+				<Icon icon='carbon:star-filled' className={cx(classes.icon, classes.iconDimmed)} height={24} />
+				<Text className={cx(classes.text, classes.textDimmed)}>
+					{t('review-count_interval', { count, postProcess: 'interval' })}
+				</Text>
+			</Group>
+		)
+	}
+
 	return (
 		<Tooltip
 			label={t('review-count_interval', { count, postProcess: 'interval' }).replace(parenRegex, '')}
@@ -35,7 +57,6 @@ export const Rating = ({ recordId, hideCount = false, noMargin = false, forceLoa
 			variant={variants.Tooltip.utility1}
 		>
 			<Group position='center' spacing={5} className={classes.container}>
-				<LoadingOverlay visible={status !== 'success' || Boolean(forceLoading)} overlayBlur={1.75} />
 				<Icon icon='carbon:star-filled' className={classes.icon} height={24} />
 				<Text className={classes.text}>
 					{average === null && hideCount ? '-.-' : average}{' '}

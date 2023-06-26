@@ -1,0 +1,124 @@
+{
+	"abortion-care": {
+		"CATEGORYNAME": "د سقط پاملرنه",
+		"abortion-providers": "د سقط چمتو کونکي",
+		"financial-assistance": "مالي مرسته",
+		"lodging-assistance": "د استوګنې مرسته",
+		"mail-order-services": "د میل آرډر خدمتونه",
+		"mental-health-support": "د دماغي روغتیا ملاتړ",
+		"travel-assistance": "د سفر مرسته"
+	},
+	"community-support": {
+		"CATEGORYNAME": "د ټولنې ملاتړ",
+		"community-social-groups": "ټولنه او ټولنیزې ډلې",
+		"cultural-centers": "کلتوري مرکزونه",
+		"lgbtq-centers": "د LGBTQ مرکزونه",
+		"reception-services": "د استقبال خدمتونه",
+		"reentry-services": "د بیا ننوتلو خدمتونه",
+		"spiritual-support": "روحاني ملاتړ",
+		"sponsors": "د مهاجرت سپانسرشپ"
+	},
+	"computers-and-internet": {
+		"CATEGORYNAME": "کمپیوټر او انټرنیټ",
+		"computers-and-internet": "کمپیوټر او انټرنیټ"
+	},
+	"education-and-employment": {
+		"CATEGORYNAME": "ښوونه او روزنه",
+		"career-counseling": "د کیریر مشوره",
+		"educational-support-for-lgbtq-youth": "د LGBTQ ځوانانو لپاره تعلیمي ملاتړ",
+		"english-classes": "انګلیسي ټولګي",
+		"language-classes": "د ژبې ټولګي",
+		"leadership-training-and-professional-development": "د رهبرۍ روزنه او مسلکي پرمختګ",
+		"libraries": "کتابتونونه",
+		"scholarships": "بورسونه"
+	},
+	"food": {
+		"CATEGORYNAME": "خواړه",
+		"food": "خواړه",
+		"food-assistance": "د خوړو مرسته"
+	},
+	"housing": {
+		"CATEGORYNAME": "د کور جوړول",
+		"drop-in-centers-for-lgbtq-youth": "د LGBTQ ځوانانو لپاره د ډراپ ان مرکزونه",
+		"emergency-housing": "بيړنۍ کور",
+		"housing-information-and-referrals": "د کور معلومات او راجع کول",
+		"short-term-housing": "لنډمهاله هستوګنه",
+		"trans-housing": "د ټرانس کور"
+	},
+	"hygiene-and-clothing": {
+		"CATEGORYNAME": "حفظ الصحه او کالي",
+		"clothes": "کالي",
+		"gender-affirming-items": "د جنډر تایید توکي",
+		"gender-neutral-bathrooms": "د جنډر غیر جانبدار تشنابونه",
+		"haircuts-and-stylists": "ویښتان او سټایلسټان",
+		"hygiene": "حفظ الصحه"
+	},
+	"legal": {
+		"CATEGORYNAME": "قانوني",
+		"asylum-application": "د پناه غوښتنې غوښتنه",
+		"citizenship": "تابعیت",
+		"crime-and-discrimination": "جرم او تبعیض",
+		"deferred-action-for-childhood-arrivals-daca": "د ماشومتوب راتګ لپاره ځنډول شوی عمل (DACA)",
+		"deportation-or-removal": "جلاوطنه یا لرې کول",
+		"employment-authorization": "د کارموندنې واک",
+		"family-petitions": "کورنۍ غوښتنې",
+		"immigration-detention": "د کډوالۍ توقیف",
+		"legal-advice": "حقوقي مشوره",
+		"legal-hotlines": "قانوني هټلاینونه",
+		"name-and-gender-change": "نوم او د جندر بدلون",
+		"refugee-claim": "د کډوالو ادعا",
+		"residency": "د استوګنې ځای",
+		"special-immigrant-juvenile-status-sijs": "د ځانګړي کډوال ځوان حالت (SIJS)",
+		"t-visa": "T ویزه",
+		"u-visa": "U ویزه"
+	},
+	"mail": {
+		"CATEGORYNAME": "میل",
+		"mail": "میل"
+	},
+	"medical": {
+		"CATEGORYNAME": "طبي",
+		"covid-19-services": "د کوویډ - 19 خدمتونه",
+		"dental-care": "د غاښونو پاملرنه",
+		"hiv-and-sexual-health": "HIV او جنسي روغتیا",
+		"medical-clinics": "طبي کلینیکونه",
+		"obgyn-services": "د OBGYN خدمتونه",
+		"physical-evaluations-for-asylum-claim": "د پناه غوښتنې لپاره فزیکي ارزونه",
+		"physical-evaluations-for-refugee-claim": "د کډوالو د ادعا لپاره فزیکي ارزونه",
+		"trans-health": "د ټرانس روغتیا",
+		"trans-health-gender-affirming-surgery": "د ټرانس روغتیا - د جنډر تایید جراحي",
+		"trans-health-hormone-and-surgery-letters": "د ټرانس روغتیا - هورمون او جراحي لیکونه",
+		"trans-health-hormone-therapy": "د ټرانس روغتیا - هورمون درملنه",
+		"trans-health-primary-care": "د ټرانس روغتیا - لومړنۍ پاملرنه",
+		"trans-health-speech-therapy": "د ټرانس روغتیا - د وینا درملنه"
+	},
+	"mental-health": {
+		"CATEGORYNAME": "دماغي روغتیا",
+		"bipoc-support-groups": "د BIPOC ملاتړ ډلې",
+		"hotlines": "هاټ لاینونه",
+		"private-therapy-and-counseling": "شخصي درملنه او مشوره ورکول",
+		"psychological-evaluations-for-asylum-claim": "د پناه غوښتنې لپاره رواني ارزونې",
+		"psychological-evaluations-for-refugee-claim": "د کډوالو د ادعا لپاره رواني ارزونه",
+		"substance-use": "د موادو کارول",
+		"support-for-caregivers-of-trans-youth": "د ټرانس ځوانانو پاملرنې کونکو لپاره ملاتړ",
+		"support-for-conversion-therapy-survivors": "د تبادلې درملنې ژوندي پاتې کیدو لپاره ملاتړ",
+		"support-groups": "د ملاتړ ډلې",
+		"trans-support-groups": "د ټرانس ملاتړ ډلې"
+	},
+	"sports-and-entertainment": {
+		"CATEGORYNAME": "تفریح او فعالیتونه",
+		"art-music-literature": "هنر، میوزیک او ادب",
+		"sports-and-entertainment": "سپورت او ساتیري"
+	},
+	"translation-and-interpretation": {
+		"CATEGORYNAME": "ژباړه او تفسیر",
+		"for-healthcare": "د روغتیا پاملرنې لپاره",
+		"for-legal-services": "د قانوني خدماتو لپاره",
+		"general-translation-and-interpretation": "عمومي ژباړه او تفسیر"
+	},
+	"transportation": {
+		"CATEGORYNAME": "ترانسپورت",
+		"transit-passes-and-discounts": "ټرانزیټ پاسونه او تخفیفونه",
+		"transportation-assistance": "د ترانسپورت مرستې"
+	}
+}

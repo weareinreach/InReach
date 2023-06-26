@@ -32,6 +32,7 @@ const QuickLinkIndex = () => {
 				<Tabs.List>
 					<Tabs.Tab value='/admin/quicklink/phone'>Phone Numbers</Tabs.Tab>
 					<Tabs.Tab value='/admin/quicklink/email'>Email Addresses</Tabs.Tab>
+					<Tabs.Tab value='/admin/quicklink/services'>Location Services</Tabs.Tab>
 				</Tabs.List>
 			</Tabs>
 			<Stack h='40vh'>

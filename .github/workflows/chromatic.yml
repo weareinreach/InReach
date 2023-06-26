@@ -17,15 +17,17 @@ jobs:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DB_DIRECT_URL: ${{ secrets.DB_DIRECT_URL }}
       CI: true
       OVERRIDE_CI: true
       FORCE_COLOR: true
+      SKIP_ENV_VALIDATION: true
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: packages/ui
     steps:
-      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
         with:
           fetch-depth: 0
       - name: Install Node.js
@@ -57,7 +59,7 @@ jobs:
 
       # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
-        uses: chromaui/action@a2ed440e22f7d4e2c6b0710f7903aa2df70a1ecd # v1
+        uses: chromaui/action@44caff7e88d584b04f79f04e31e819f9a95d4d8f # v1
         with:
           workingDir: packages/ui
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

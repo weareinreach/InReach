@@ -28,6 +28,8 @@ import {
 	rem,
 	type SkeletonProps,
 	type SkeletonStylesParams,
+	type SliderProps,
+	type SliderStylesNames,
 	type StackProps,
 	type Styles,
 	type SwitchProps,
@@ -204,10 +206,7 @@ export const commonTheme = {
 			styles: (theme) => ({
 				root: {
 					// color: `${theme.other.colors.secondary.black} !important`,
-					paddingBottom: theme.spacing.sm,
-					paddingTop: theme.spacing.sm,
-					paddingLeft: theme.spacing.xs,
-					paddingRight: theme.spacing.xs,
+					padding: `${rem(10)} ${rem(8)}`,
 					borderRadius: theme.spacing.sm,
 					textDecoration: 'underline',
 					...theme.other.utilityFonts.utility1,
@@ -365,13 +364,12 @@ export const commonTheme = {
 				root: {
 					margin: '0 auto',
 					padding: `${rem(0)} ${rem(20)}`,
-					marginBottom: rem(100),
 					[theme.fn.largerThan('xs')]: {
 						padding: `${rem(0)} ${rem(32)}`,
 					},
 					[theme.fn.largerThan('sm')]: {
 						padding: `${rem(0)} ${rem(40)}`,
-						marginBottom: 'unset',
+						// marginBottom: 'unset',
 					},
 					[theme.fn.largerThan('lg')]: {
 						padding: `${rem(0)} ${rem(64)}`,
@@ -662,6 +660,35 @@ export const commonTheme = {
 
 			variants: variants.Skeleton,
 		},
+		Slider: {
+			defaultProps: (theme) =>
+				({
+					color: theme.other.colors.secondary.black,
+					thumbSize: 12,
+					label: null,
+				} satisfies SliderProps),
+			styles: (theme) =>
+				({
+					bar: {
+						height: rem(2),
+						backgroundColor: theme.other.colors.secondary.black,
+					},
+					track: {
+						height: rem(2),
+					},
+					thumb: {
+						backgroundColor: theme.other.colors.secondary.black,
+						borderColor: `${theme.other.colors.secondary.black} !important`,
+					},
+					mark: {
+						backgroundColor: 'inherit',
+						border: 'none',
+					},
+					markLabel: {
+						color: theme.other.colors.secondary.black,
+					},
+				} satisfies Styles<SliderStylesNames>),
+		},
 		Switch: {
 			defaultProps: {
 				labelPosition: 'left',
@@ -741,6 +768,7 @@ export const commonTheme = {
 						'&[data-active]:hover': {
 							borderColor: theme.other.colors.secondary.black,
 						},
+						...theme.fn.hover({ backgroundColor: theme.other.colors.primary.lightGray }),
 					},
 					tabLabel: {
 						...theme.other.utilityFonts.utility1,

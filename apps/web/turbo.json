@@ -3,7 +3,7 @@
 	"extends": ["//"],
 	"pipeline": {
 		"build": {
-			"dependsOn": ["^build"],
+			"dependsOn": [],
 			"env": [
 				"WEB_SENTRY_DSN",
 				"SANITY_TOKEN",

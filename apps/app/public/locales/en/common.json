@@ -16,12 +16,23 @@
 		"body": "By using InReach, you agree that you will not use this resource information for harmful, hate-based, homophobic, transphobic, xenophobic, and/or racist agendas or commentary.",
 		"title": "Anti-hate commitment"
 	},
+	"badge": {
+		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
+		"community-tool-tip": "Community served by this organization.",
+		"remote-tool-tip": "Available remotely",
+		"service-tool-tip": "Service(s) offered by this organization.",
+		"unclaimed-tool-tip": "This organization has not yet been claimed by a representative.<br/><link1>Claim this organization</link1> to build trust with our community, update your own information, and more."
+	},
 	"breadcrumb": {
 		"back-to-dynamic": "Back to <u>{{page}}</u>",
 		"back-to-search": "Back to search"
 	},
 	"cancel": "Cancel",
 	"can-help-people-in": "Can help people located anywhere in {{location}}",
+	"claim-org-modal": {
+		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>This organization has not yet been claimed by a service provider.</title2>\n<textDarkGray>With a free InReach Service Provider account, you will soon be able to:</textDarkGray>"
+	},
 	"claimed": "Claimed",
 	"clear": "Clear",
 	"close": "Close",
@@ -62,6 +73,7 @@
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
 	"exclude": "Exclude",
+	"filter-by-service": "Filter by services",
 	"find-resources": "Find resources",
 	"find-x": "Find {{value}}",
 	"footer": {
@@ -109,23 +121,32 @@
 		"removedSingle": "Resource removed from list"
 	},
 	"loading-page": "Loading Page...",
-	"log-in": "Log In",
-	"log-out": "Log Out",
+	"log-in": "Log in",
+	"log-out": "Log out",
 	"login": {
 		"error-generic": "Something went wrong, please try again.",
 		"error-username-password": "Incorrect username or password."
 	},
 	"modal-content": {
-		"accessibility": "<stack16>\n<title2>InReach Accessibility Statement</title2>\n<textReg>InReach’s open source technology is built for the diverse LGBTQ+ community, including users with disabilities.</textReg>\n<textReg>The free InReach App is available on web (desktop and mobile), and native iOS and Android. Beginning with the launch of our latest redesign (February 2023), InReach will strive to meet <linkAccessibility>Web Content Accessibility Guidelines (WCAG) level AA criteria.</linkAccessibility></textReg>\n<textReg>At InReach, we strive to make our tech platform accessible for as many users and devices as possible in alignment with our mission to serve all LGBTQ+ people facing discrimination and persecution.</textReg>",
+		"accessibility": "<stack16>\n<title2>Accessibility Statement</title2>\n<textDarkGray>InReach’s open source technology is built for the diverse LGBTQ+ community, including users with disabilities.</textDarkGray>\n<textDarkGray>The free InReach App is available on web (desktop and mobile), and native iOS and Android. Beginning with the launch of our latest redesign (June 2023), InReach will strive to meet <linkAccessibility>Web Content Accessibility Guidelines (WCAG) level AA criteria.</linkAccessibility></textDarkGray>\n<textDarkGray>At InReach, we strive to make our tech platform accessible for as many users and devices as possible in alignment with our mission to serve all LGBTQ+ people facing persecution or discrimination.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>The InReach team will do its best to confirm the eligibility and basic facts about service providers listed on this website. However, we cannot guarantee the viability or capabilities of any such providers. Consequently, InReach assumes no responsibility for the actions of providers listed on this website and users who contact any such providers do so at their own risk.</textReg>\n</stack16>"
 	},
-	"more": {
-		"filters": "More filters"
+	"modal-more-options": {
+		"exclude": "Exclude resources that...",
+		"include": "Include resources that..."
 	},
-	"no-reviews": "No reviews yet",
+	"more": {
+		"options": "More options"
+	},
+	"no-reviews": "No reviews have been submitted for this organization yet. Be the first to share your experience!",
 	"none-apply": "None of these apply to me",
+	"offices-and-locations": "Offices & Locations",
 	"org-image": "Organization photo",
 	"other-specify": "Other (please specify)",
+	"page-title": {
+		"base": "{{title}} - InReach",
+		"search-results": "Search Results"
+	},
 	"password": "Password",
 	"password-confirm": "Confirm password",
 	"password-error-match": "Passwords must match",
@@ -145,16 +166,15 @@
 	"photo_interval": "(0)[No photos yet];(2-inf)[See all {{count}} photos];",
 	"photo_one": "Photo",
 	"photo_other": "Photos",
+	"please-specify": "Please specify",
 	"powered-by-vercel": "Powered by Vercel",
 	"prefer-not-to-say": "Prefer not to say",
 	"privacy-policy": "Privacy policy",
 	"privacy-statement": "Privacy Statement",
 	"privacy-statement-body": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>Privacy statement</title2>",
-		"<textDarkGray>At InReach, we recognize that preserving online anonymity is a life-or-death issue for many LGBTQ+ people. That's why the free InReach App (our web app, native iOS app, and native Android app) is designed to prioritize protecting users' safety and confidentiality online.</textDarkGray>",
+		"<textDarkGrayCentered>At InReach, we recognize that preserving online anonymity is a life-or-death issue for many LGBTQ+ people. That's why the free InReach App (our web app, native iOS app, and native Android app) is designed to prioritize protecting users' safety and confidentiality online.</textDarkGrayCentered>",
 		"<title2>User demographic data</title2>",
-		"<strong>We do not require any personally identifiable information to use the free InReach App.</strong>",
+		"<textDarkGray><strong>We do not require any personally identifiable information to use the free InReach App.</strong></textDarkGray>",
 		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
 		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
 		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
@@ -162,21 +182,23 @@
 		"<textDarkGray>Understanding our user demographics can help us to quantify our impact, raise funds, and evaluate future product decisions. We appreciate users voluntarily sharing this information with us, and we take these steps to protect your privacy and anonymity.</textDarkGray>",
 		"<textDarkGray><title2>Site usage Analytics</title2></textDarkGray>",
 		"<textDarkGray>InReach uses <linkUmami>Umami</linkUmami>, a privacy-focused alternative to Google Analytics, to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. <linkUmamiGDPR>Umami is GDPR compliant</linkUmamiGDPR> and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
-		"<textDarkGray>InReach also uses Vercel Analytics to analyze web vitals and performance. Vercel Analytics provides site usage information without being tied to, or associated with, any individual visitor or IP address. The recording of data points is anonymous and the Analytics feature does not collect or store information that would enable Vercel to reconstruct a browsing session across pages or identify a user.</textDarkGray>",
-		"<linkPolicy>Read our full privacy policy for more information</linkPolicy>"
+		"<textDarkGray>InReach also uses Vercel Analytics to analyze web vitals and performance. Vercel Analytics provides site usage information without being tied to, or associated with, any individual visitor or IP address. The recording of data points is anonymous and the Analytics feature does not collect or store information that would enable Vercel to reconstruct a browsing session across pages or identify a user.</textDarkGray>"
 	],
+	"privacy-statement-foot": "<linkPolicy>Read our full privacy policy for more information</linkPolicy>",
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Privacy statement</title2>"],
 	"privatePractice": "Private Practice",
 	"profile": "Profile",
 	"questions": "Questions?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "Services available remotely",
+	"remote-services-page-title": "Remote services",
 	"reset-password": "Reset your password",
 	"reset-password-message": "We will send you an email to reset your password",
 	"resource-saved": "Resource saved.",
 	"resources": "Resources",
 	"retry": "Retry",
-	"review-count_interval": "(0)[No reviews];",
+	"review-count_interval": "(0)[No reviews yet];",
 	"review-count_one": "({{count}} review)",
 	"review-count_other": "({{count}} reviews)",
 	"review-not-empty": "Review cannot be empty",
@@ -188,10 +210,10 @@
 	"save": "Save",
 	"save-changes": "Save changes",
 	"saved": "Saved",
-	"saved-lists": "Saved Lists",
 	"search": {
-		"location-placeholder": "Enter state, city, or zip code...",
-		"look-up-org": "Look up an organization",
+		"include-remote": "Include remote services",
+		"location-placeholder": "Enter city or zip code...",
+		"look-up-org": "Look up an organization by name",
 		"no-results": "No results found. Please try again.",
 		"organization-placeholder": "Enter organization name...",
 		"suggest-resource": "Can't find it? <1>Suggest an organization</1> you think should be included."
@@ -218,26 +240,43 @@
 		"transit-directions": "Public transit directions"
 	},
 	"services": "Services",
-	"settings": "Settings",
 	"share-feedback": "Share Feedback",
 	"show-less": "Show less",
 	"show-more": "Show more",
-	"sign-up": "Sign up",
+	"sign-up": {
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, verified resources.</textDarkGray>\n</group>",
+		"lcr-error1": "Unfortunately, you do not meet the current eligibility requirements to be a Local Community Reviewer.\n<Switch>Click here to create a standard account.</Switch>",
+		"lcr-error2": "You must read & review the <Link><strong>Local Community Reviewer</strong></Link> page.",
+		"lcr-screen1": "Please select all that apply",
+		"lcr-screen1a": "I have personal lived experience accessing local services in my community.",
+		"lcr-screen1b": "I have experience helping LGBTQ+ clients access local services in my community.",
+		"lcr-screen1c": "I have experience helping LGBTQ+ loved ones/family members access local services in my community.",
+		"lcr-screen1none": "None of these apply to me.",
+		"lcr-screen2": "In which country are you located?",
+		"lcr-screen2a": "United States (including territories)",
+		"lcr-screen2b": "Canada",
+		"lcr-screen2c": "Mexico",
+		"lcr-screen2none": "None of the above",
+		"lcr-screen3": "I have reviewed the <Link><strong>Local Community Reviewer</strong></Link> page on InReach's website and I meet the requirements.",
+		"modal-body": [
+			"<title3>What type of account would you like to create?</title3>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
+			"<loginLink>Already have an account?</loginLink>"
+		],
+		"name-use-any": "Use whatever name you're comfortable with.",
+		"name_alias": "Name or alias",
+		"name_full": "Full name",
+		"placeholder-name_alias": "Enter name or alias...",
+		"placeholder-name_full": "Enter full name...",
+		"select-law-practice": "Where do you practice law?",
+		"select-service-provider": "Where do you work or volunteer?",
+		"specify-work-volunteer": "Please specify where you work or volunteer",
+		"success": "You've signed up for an account!",
+		"user-exists-body": "That email address is already registered.",
+		"user-exists-header": "You may already have an account.",
+		"verify-email": "Before you can start using your new account, you must verify your email address. Check your inbox and click the link in the message."
+	},
 	"sign-up-free": "Sign up for free",
-	"sign-up-header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(sign-up)</title2>\n<textDarkGray>Welcome to the world's first tech platform matching LGBTQ+ people facing discrimination and persecution with safe, verified resources.</textDarkGray>\n</group>",
-	"sign-up-modal-body": [
-		"<title3>How can we help you?</title3>",
-		"<group>\n<button data-option='myself'>I need help for myself/loved one</button>\n<button data-option='law'>I am an attorney or law student</button>\n<button data-option='servpro'>I am a non-legal service provider</button>\n<button data-option='lcr'>I am a local community reviewer</button>\n</group>",
-		"<loginLink>Already have an account?</loginLink>"
-	],
-	"sign-up-name-use-any": "Use whatever name you're comfortable with.",
-	"sign-up-name_alias": "Name or alias",
-	"sign-up-name_full": "Full name",
-	"sign-up-placeholder-name_alias": "Enter name or alias...",
-	"sign-up-placeholder-name_full": "Enter full name...",
-	"sign-up-select-law-practice": "Where do you practice law?",
-	"sign-up-select-service-provider": "Where do you work or volunteer?",
-	"sign-up-success": "You've signed up for an account!",
 	"social": {
 		"email": "Email",
 		"facebook": "Facebook",
@@ -267,6 +306,9 @@
 	"survey": {
 		"birthyear-req-value": "Year must be between {{year1}} and {{year2}}, i.e 2005",
 		"finish": "Finish",
+		"launch-item1": "<Bold>Why do we ask?</Bold> Understanding our user demographics can help us to quantify our impact, raise funds, and evaluate future product decisions.",
+		"launch-item2": "<Bold>Safety-first:</Bold> Your answers are stored anonymously and not connected to you as an individual user or to your user account.",
+		"launch-title": "Please take a few minutes to tell us about yourself in our anonymous user survey.",
 		"not-right-now": "Not right now",
 		"question-1-title": "How would you describe yourself?",
 		"question-2-placeholder": "Enter country...",
@@ -285,8 +327,6 @@
 	"uncheck-all": "Uncheck all",
 	"unclaimed": "Unclaimed",
 	"user-avatar": "User avatar",
-	"user-survey-body": "<textUtility1>Why do we ask? Understanding our user demographics can help us to quantify our impact, raise funds, and evaluate future product decisions.</textUtility1>\n<textUtility1>Safety-first: Your answers are stored anonymously and not connected to you as an individual user or to your user account.</textUtility1>",
-	"user-survey-heading": "<emojiLg>📋</emojiLg>\n<title>Please take a few minutes to tell us about yourself in our anonymous user survey.</title></textDarkGray>",
 	"verified-information": "Verified information",
 	"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information at least once every 6 months.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
 	"verify-account": {
@@ -307,25 +347,32 @@
 		"and": "and",
 		"and-x-more": "and {{count}} more",
 		"back": "Back",
+		"close": "Close",
 		"coming-soon": "Coming soon",
 		"delete": "Delete",
+		"distance": "Distance",
 		"email": "Email",
+		"home": "Home",
 		"hours": "Hours",
 		"more": "more",
 		"next": "Next",
+		"no": "No",
 		"password": "Password",
 		"phone": "Phone",
 		"please-wait": "Please wait...",
 		"prev": "Prev",
 		"print": "Print",
 		"review": "Review",
+		"reviews": "Reviews",
 		"save": "Save",
 		"saved": "Saved",
 		"search": "Search",
 		"service-hours": "Service hours",
+		"settings": "Settings",
 		"share": "Share",
+		"sign-up": "Sign up",
 		"skip": "Skip",
-		"support": "Support"
-	},
-	"your-comments": "Your Comments"
+		"support": "Support",
+		"yes": "Yes"
+	}
 }

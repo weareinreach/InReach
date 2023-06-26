@@ -1,91 +1,66 @@
 {
 	"abortion-care": {
-		"abortion-providers": "مزودي خدمات الإجهاض",
+		"CATEGORYNAME": "رعاية الإجهاض",
+		"abortion-providers": "موفري الإجهاض",
 		"financial-assistance": "المساعدة المالية",
 		"lodging-assistance": "مساعدة السكن",
 		"mail-order-services": "خدمات طلب البريد",
 		"mental-health-support": "دعم الصحة النفسية",
-		"travel-assistance": "المساعدة في السفر",
-		"CATEGORYNAME": "رعاية الإجهاض"
+		"travel-assistance": "المساعدة في السفر"
 	},
-	"abortion-providers": "مزودي خدمات الإجهاض",
-	"asylum-application": "طلب اللجوء",
-	"bipoc-support-groups": "مجموعات دعم BIPOC",
-	"career-counseling": "المشورة الوظيفية",
-	"citizenship": "المواطنة",
-	"clothes": "الملابس",
 	"community-support": {
+		"CATEGORYNAME": "الدعم المجتمعي",
+		"community-social-groups": "المجموعات المجتمعية والاجتماعية",
 		"cultural-centers": "المراكز الثقافية",
 		"lgbtq-centers": "مراكز LGBTQ",
 		"reception-services": "خدمات الاستقبال",
+		"reentry-services": "خدمات العودة",
 		"spiritual-support": "الدعم الروحي",
-		"sponsors": "الراعيون",
-		"CATEGORYNAME": "الدعم المجتمعي"
+		"sponsors": "رعاية الهجرة"
 	},
 	"computers-and-internet": {
-		"computers-and-internet": "الحواسيب والإنترنت",
-		"CATEGORYNAME": "الحواسيب والإنترنت"
+		"CATEGORYNAME": "الحواسيب والإنترنت",
+		"computers-and-internet": "الحواسيب والإنترنت"
 	},
-	"covid-19-services": "خدمات COVID-19",
-	"crime-and-discrimination": "دال - الجريمة والتمييز",
-	"cultural-centers": "المراكز الثقافية",
-	"deferred-action-for-childhood-arrivals-daca": "الإجراءات المؤجلة لوصول الأطفال",
-	"dental-care": "الرعاية الصحية بالأسنان",
-	"deportation-or-removal": "الترحيل أو الترحيل",
-	"drop-in-centers-for-lgbtq-youth": "مراكز الاستقبال لشباب المثليات والمثليات والمثليات جنسياً",
 	"education-and-employment": {
+		"CATEGORYNAME": "التعليم والعمالة",
 		"career-counseling": "المشورة الوظيفية",
 		"educational-support-for-lgbtq-youth": "الدعم التعليمي لشباب المثليات والمثليات والمثليات والمثليات والمثليات والمثليات جنسياً",
 		"english-classes": "دروس اللغة الإنجليزية",
 		"language-classes": "فصول اللغة",
 		"leadership-training-and-professional-development": "التدريب على القيادة والتطوير المهني",
 		"libraries": "المكتبات",
-		"scholarships": "المنح الدراسية",
-		"CATEGORYNAME": "التعليم والعمالة"
+		"scholarships": "المنح الدراسية"
 	},
-	"educational-support-for-lgbtq-youth": "الدعم التعليمي لشباب المثليات والمثليات والمثليات والمثليات والمثليات والمثليات جنسياً",
-	"emergency-housing": "مساكن الطوارئ",
-	"employment-authorization": "الإذن بالعمل",
-	"english-classes": "دروس اللغة الإنجليزية",
-	"family-petitions": "الالتماسات العائلية",
-	"financial-assistance": "المساعدة المالية",
 	"food": {
+		"CATEGORYNAME": "الطعام",
 		"food": "الطعام",
-		"food-assistance": "المساعدة الغذائية",
-		"CATEGORYNAME": "الطعام"
+		"food-assistance": "المساعدة الغذائية"
 	},
-	"gender-affirming-items": "البنود المؤكدة على نوع الجنس",
-	"gender-neutral-bathrooms": "حمامات محايدة جنسانيا",
-	"haircuts-and-stylists": "قذائف الشعر والأنماط",
-	"hiv-and-sexual-health": "فيروس نقص المناعة البشرية والصحة الجنسية",
-	"hotlines": "الخطوط الساخنة",
 	"housing": {
+		"CATEGORYNAME": "السكن",
 		"drop-in-centers-for-lgbtq-youth": "مراكز الاستقبال لشباب المثليات والمثليات والمثليات جنسياً",
 		"emergency-housing": "مساكن الطوارئ",
 		"housing-information-and-referrals": "معلومات الإسكان والإحالات",
 		"short-term-housing": "السكن القصير الأجل",
-		"trans-housing": "السكن العابر",
-		"CATEGORYNAME": "السكن"
+		"trans-housing": "السكن العابر"
 	},
-	"housing-information-and-referrals": "معلومات الإسكان والإحالات",
-	"hygiene": "النظافة",
 	"hygiene-and-clothing": {
+		"CATEGORYNAME": "النظافة الصحية والملابس",
 		"clothes": "الملابس",
 		"gender-affirming-items": "البنود المؤكدة على نوع الجنس",
 		"gender-neutral-bathrooms": "حمامات محايدة جنسانيا",
 		"haircuts-and-stylists": "قذائف الشعر والأنماط",
-		"hygiene": "النظافة",
-		"CATEGORYNAME": "النظافة الصحية والملابس"
+		"hygiene": "النظافة"
 	},
-	"immigration-detention": "احتجاز المهاجرين",
-	"leadership-training-and-professional-development": "التدريب على القيادة والتطوير المهني",
 	"legal": {
+		"CATEGORYNAME": "قانوني",
 		"asylum-application": "طلب اللجوء",
 		"citizenship": "المواطنة",
 		"crime-and-discrimination": "دال - الجريمة والتمييز",
 		"deferred-action-for-childhood-arrivals-daca": "الإجراءات المؤجلة لوصول الأطفال",
 		"deportation-or-removal": "الترحيل أو الترحيل",
-		"employment-authorization": "الإذن بالعمل",
+		"employment-authorization": "إذن العمل",
 		"family-petitions": "الالتماسات العائلية",
 		"immigration-detention": "احتجاز المهاجرين",
 		"legal-advice": "الاستشارات القانونية",
@@ -94,20 +69,15 @@
 		"refugee-claim": "طلب اللجوء",
 		"residency": "الإقامة",
 		"special-immigrant-juvenile-status-sijs": "حالة الأحداث الخاصة بالمهاجر",
-		"t-visa": "T Visa",
-		"u-visa": "U Visa",
-		"CATEGORYNAME": "قانوني"
+		"t-visa": "T visa",
+		"u-visa": "U visa"
 	},
-	"legal-hotlines": "الخطوط الساخنة القانونية",
-	"lgbtq-centers": "مراكز LGBTQ",
-	"libraries": "المكتبات",
-	"lodging-assistance": "مساعدة السكن",
 	"mail": {
-		"mail": "البريد",
-		"CATEGORYNAME": "البريد"
+		"CATEGORYNAME": "البريد",
+		"mail": "البريد"
 	},
-	"mail-order-services": "خدمات طلب البريد",
 	"medical": {
+		"CATEGORYNAME": "طبي",
 		"covid-19-services": "خدمات COVID-19",
 		"dental-care": "الرعاية الصحية بالأسنان",
 		"hiv-and-sexual-health": "فيروس نقص المناعة البشرية والصحة الجنسية",
@@ -116,15 +86,14 @@
 		"physical-evaluations-for-asylum-claim": "التقييمات المادية لطلب اللجوء",
 		"physical-evaluations-for-refugee-claim": "التقييمات المادية لطلب اللجوء",
 		"trans-health": "عبر الصحة",
-		"trans-health-gender-affirming-surgery": "الصحة العابرة - الجراحة المؤكدة للجنسين",
-		"trans-health-hormone-and-surgery-letters": "عبر الصحة - رسائل الهورمون والجراحة",
-		"trans-health-hormone-therapy": "الصحة المباشرة - العلاج الهورمون",
-		"trans-health-primary-care": "الصحة المباشرة - الرعاية الأولية",
-		"trans-health-speech-therapy": "الصحة المباشرة - علاج الكلام",
-		"CATEGORYNAME": "طبي"
+		"trans-health-gender-affirming-surgery": "الصحة المباشرة - الجراحة التي تؤكد نوع الجنس",
+		"trans-health-hormone-and-surgery-letters": "عبر الصحة - الهرمون وحروف الجراحة",
+		"trans-health-hormone-therapy": "الصحة العابرة - العلاج بالهرمونات",
+		"trans-health-primary-care": "الرعاية الصحية المباشرة - الرعاية الأولية",
+		"trans-health-speech-therapy": "الصحة العابرة - علاج النطق"
 	},
-	"medical-clinics": "العيادات الطبية",
 	"mental-health": {
+		"CATEGORYNAME": "الصحة النفسية",
 		"bipoc-support-groups": "مجموعات دعم BIPOC",
 		"hotlines": "الخطوط الساخنة",
 		"private-therapy-and-counseling": "العلاج الخاص والمشورة",
@@ -134,50 +103,22 @@
 		"support-for-caregivers-of-trans-youth": "تقديم الدعم لمقدمي الرعاية للقاصرين من الشباب",
 		"support-for-conversion-therapy-survivors": "دعم الناجين من العلاج التحويلي",
 		"support-groups": "مجموعات الدعم",
-		"trans-support-groups": "عبر مجموعات الدعم",
-		"CATEGORYNAME": "الصحة النفسية"
+		"trans-support-groups": "عبر مجموعات الدعم"
 	},
-	"mental-health-support": "دعم الصحة النفسية",
-	"name-and-gender-change": "الاسم والتغيير الجنساني",
-	"obgyn-services": "خدمات OBGYN",
-	"physical-evaluations-for-refugee-claim": "التقييمات المادية لطلب اللجوء",
-	"private-therapy-and-counseling": "العلاج الخاص والمشورة",
-	"psychological-evaluations-for-asylum-claim": "التقييمات النفسية لطلب اللجوء",
-	"residency": "الإقامة",
-	"scholarships": "المنح الدراسية",
-	"short-term-housing": "السكن القصير الأجل",
-	"special-immigrant-juvenile-status-sijs": "حالة الأحداث الخاصة بالمهاجر",
-	"spiritual-support": "الدعم الروحي",
-	"sponsors": "الراعيون",
 	"sports-and-entertainment": {
-		"sports-and-entertainment": "الرياضة والترفيه",
-		"CATEGORYNAME": "الرياضة والترفيه"
+		"CATEGORYNAME": "الترفيه والأنشطة",
+		"art-music-literature": "الفن والموسيقى والآداب",
+		"sports-and-entertainment": "الرياضة والترفيه"
 	},
-	"substance-use": "استخدام المواد",
-	"support-for-caregivers-of-trans-youth": "تقديم الدعم لمقدمي الرعاية للقاصرين من الشباب",
-	"support-for-conversion-therapy-survivors": "دعم الناجين من العلاج التحويلي",
-	"support-groups": "مجموعات الدعم",
-	"t-visa": "T Visa",
-	"trans-health-gender-affirming-surgery": "الصحة العابرة - الجراحة المؤكدة للجنسين",
-	"trans-health-hormone-and-surgery-letters": "عبر الصحة - رسائل الهورمون والجراحة",
-	"trans-health-hormone-therapy": "الصحة المباشرة - العلاج الهورمون",
-	"trans-health-primary-care": "الصحة المباشرة - الرعاية الأولية",
-	"trans-health-speech-therapy": "الصحة المباشرة - علاج الكلام",
-	"trans-housing": "السكن العابر",
-	"trans-support-groups": "عبر مجموعات الدعم",
-	"transit-passes-and-discounts": "تصاريح العبور والخصومات",
 	"translation-and-interpretation": {
+		"CATEGORYNAME": "الترجمة التحريرية والترجمة الشفوية",
 		"for-healthcare": "الرعاية الصحية",
 		"for-legal-services": "بالنسبة للخدمات القانونية",
-		"general-translation-and-interpretation": "الترجمة الشفوية والترجمة الشفوية العامة",
-		"CATEGORYNAME": "الترجمة التحريرية والترجمة الشفوية"
+		"general-translation-and-interpretation": "الترجمة الشفوية والترجمة الشفوية العامة"
 	},
 	"transportation": {
+		"CATEGORYNAME": "النقل",
 		"transit-passes-and-discounts": "تصاريح العبور والخصومات",
-		"transportation-assistance": "المساعدة في مجال النقل",
-		"CATEGORYNAME": "النقل"
-	},
-	"transportation-assistance": "المساعدة في مجال النقل",
-	"travel-assistance": "المساعدة في السفر",
-	"u-visa": "U Visa"
+		"transportation-assistance": "المساعدة في مجال النقل"
+	}
 }

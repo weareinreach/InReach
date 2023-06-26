@@ -1,10 +1,11 @@
 /* eslint-disable node/no-process-env */
 import { createEnv } from '@t3-oss/env-nextjs'
+import isChromatic from 'chromatic/isChromatic'
 import { z } from 'zod'
 
 export const env = createEnv({
 	server: {
-		NODE_ENV: z.enum(['development', 'production', 'test']),
+		NODE_ENV: z.enum(['development', 'production', 'test']).optional(),
 		DATABASE_URL: z.string().url(),
 		DB_DIRECT_URL: z.string().url(),
 		KV_URL: z.string().url(),
@@ -88,7 +89,14 @@ export const env = createEnv({
 		// eslint-disable-next-line turbo/no-undeclared-env-vars
 		NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
 	},
-	skipValidation: process.env.NODE_ENV === 'development',
+	skipValidation:
+		// eslint-disable-next-line turbo/no-undeclared-env-vars
+		process.env.NODE_ENV === 'development' ||
+		// eslint-disable-next-line turbo/no-undeclared-env-vars
+		process.env.SKIP_ENV_VALIDATION === 'true' ||
+		// eslint-disable-next-line turbo/no-undeclared-env-vars
+		Boolean(process.env.CI) ||
+		isChromatic(),
 })
 
 export const getEnv = <T extends keyof typeof env>(envVar: T): (typeof env)[T] => env[envVar]

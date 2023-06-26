@@ -3,6 +3,7 @@ import flush from 'just-flush'
 import mapObjectVals from 'just-map-values'
 import { z } from 'zod'
 
+import { getIdPrefixRegex, isIdFor } from '@weareinreach/db'
 import { type Prisma } from '@weareinreach/db/client'
 import { handleError } from '~api/lib/errorHandler'
 import { transformer } from '~api/lib/transformer'
@@ -11,9 +12,9 @@ import {
 	permissionedProcedure,
 	protectedProcedure,
 	publicProcedure,
-	staffProcedure,
+	// staffProcedure,
 } from '~api/lib/trpc'
-import { freeTextCrowdinId } from '~api/schemas/selects/common'
+import { attributes, freeTextCrowdinId, isPublic } from '~api/schemas/selects/common'
 import {
 	forServiceDrawer,
 	serviceById,
@@ -94,12 +95,12 @@ export const queries = defineRouter({
 						tsNs: true,
 					},
 					orderBy: {
-						tsKey: 'asc',
+						name: 'asc',
 					},
 				},
 			},
 			orderBy: {
-				tsKey: 'asc',
+				category: 'asc',
 			},
 		})
 		return result
@@ -329,6 +330,107 @@ export const queries = defineRouter({
 						active: true,
 						tsKey: true,
 						tsNs: true,
+					},
+				},
+			},
+		})
+		return result
+	}),
+	forServiceInfoCard: publicProcedure
+		.input(
+			z.object({
+				parentId: z.string().regex(getIdPrefixRegex('organization', 'orgLocation')),
+				remoteOnly: z.boolean().optional(),
+			})
+		)
+		.query(async ({ ctx, input }) => {
+			const result = await ctx.prisma.orgService.findMany({
+				where: {
+					...isPublic,
+					...(isIdFor('organization', input.parentId)
+						? { organization: { id: input.parentId, ...isPublic } }
+						: { locations: { some: { location: { id: input.parentId, ...isPublic } } } }),
+					...(input.remoteOnly
+						? { attributes: { some: { attribute: { active: true, tag: 'offers-remote-services' } } } }
+						: {}),
+				},
+				select: {
+					id: true,
+					serviceName: { select: { key: true, ns: true, tsKey: { select: { text: true } } } },
+					services: {
+						select: {
+							tag: {
+								select: { tsKey: true, category: { select: { tsKey: true } } },
+							},
+						},
+						where: { tag: { active: true, category: { active: true } } },
+					},
+					attributes: {
+						where: { attribute: { active: true, tag: 'offers-remote-services' } },
+						select: { attributeId: true },
+					},
+				},
+			})
+
+			const transformed = result.map(({ id, serviceName, services, attributes }) => ({
+				id,
+				serviceName: serviceName
+					? { tsKey: serviceName.tsKey, tsNs: serviceName.ns, defaultText: serviceName.tsKey.text }
+					: null,
+				serviceCategories: [...new Set(services.map(({ tag }) => tag.category.tsKey))].sort(),
+				offersRemote: attributes.length > 0,
+			}))
+			return transformed
+		}),
+	forServiceModal: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		const result = await ctx.prisma.orgService.findUniqueOrThrow({
+			where: { id: input, ...isPublic },
+			select: {
+				id: true,
+				services: { select: { tag: { select: { tsKey: true } } }, where: { tag: { active: true } } },
+				accessDetails: {
+					where: { active: true },
+					select: {
+						attributes: {
+							select: {
+								attribute: { select: { id: true } },
+								supplement: {
+									select: {
+										id: true,
+										data: true,
+										text: { select: { key: true, tsKey: { select: { text: true } } } },
+									},
+								},
+							},
+						},
+					},
+				},
+				serviceName: {
+					select: {
+						key: true,
+						ns: true,
+						tsKey: {
+							select: {
+								text: true,
+							},
+						},
+					},
+				},
+				locations: {
+					where: { location: isPublic },
+					select: { location: { select: { country: { select: { cca2: true } } } } },
+				},
+				attributes,
+				hours: { where: { active: true }, select: { _count: true } },
+				description: {
+					select: {
+						key: true,
+						ns: true,
+						tsKey: {
+							select: {
+								text: true,
+							},
+						},
 					},
 				},
 			},

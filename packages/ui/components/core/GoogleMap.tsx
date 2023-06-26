@@ -5,16 +5,18 @@ import { GoogleMap as GMap, Marker, type MarkerProps, useJsApiLoader } from '@re
 import { getBounds } from 'geolib'
 import { memo, useCallback } from 'react'
 
-import { type ApiOutput } from '@weareinreach/api'
+import { trpc as api } from '~ui/lib/trpcClient'
 
-export const _GoogleMap = ({ height, width, marker }: GoogleMapProps) => {
+export const _GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
+	const { data, isLoading } = api.location.forGoogleMaps.useQuery(locationIds)
+
 	const { isLoaded } = useJsApiLoader({
 		googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string,
 	})
 	const getBoundProps = () => {
-		if (Array.isArray(marker)) {
+		if (Array.isArray(data)) {
 			const coords: { latitude: number; longitude: number }[] = []
-			for (const { latitude, longitude } of marker) {
+			for (const { latitude, longitude } of data) {
 				if (!latitude || !longitude) continue
 				coords.push({ longitude, latitude })
 			}
@@ -28,8 +30,8 @@ export const _GoogleMap = ({ height, width, marker }: GoogleMapProps) => {
 	}
 
 	const getMarkers = () => {
-		if (Array.isArray(marker)) {
-			return marker.map(({ latitude, longitude }, idx) => {
+		if (Array.isArray(data)) {
+			return data.map(({ latitude, longitude }, idx) => {
 				if (!latitude || !longitude) return null
 				const props: MarkerProps = {
 					position: {
@@ -40,11 +42,11 @@ export const _GoogleMap = ({ height, width, marker }: GoogleMapProps) => {
 				return <Marker key={idx} {...props} />
 			})
 		}
-		if (!marker.latitude || !marker.longitude) return null
+		if (!data?.latitude || !data?.longitude) return null
 		const props: MarkerProps = {
 			position: {
-				lat: marker.latitude,
-				lng: marker.longitude,
+				lat: data.latitude,
+				lng: data.longitude,
 			},
 		}
 		return <Marker {...props} />
@@ -54,11 +56,11 @@ export const _GoogleMap = ({ height, width, marker }: GoogleMapProps) => {
 	const onLoad = useCallback(function onLoad(map: google.maps.Map) {
 		map.setOptions({ disableDefaultUI: true, keyboardShortcuts: false })
 
-		if (Array.isArray(marker)) {
+		if (Array.isArray(data)) {
 			map.fitBounds(getBoundProps())
 		} else {
-			if (marker.latitude && marker.longitude) {
-				const center = new google.maps.LatLng({ lat: marker.latitude, lng: marker.longitude })
+			if (data?.latitude && data?.longitude) {
+				const center = new google.maps.LatLng({ lat: data.latitude, lng: data.longitude })
 				map.setCenter(center)
 				map.setZoom(11)
 			}
@@ -66,7 +68,7 @@ export const _GoogleMap = ({ height, width, marker }: GoogleMapProps) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	return isLoaded ? (
+	return isLoaded || !isLoading ? (
 		<GMap mapContainerStyle={{ height, width, borderRadius: rem(16) }} onLoad={onLoad}>
 			{getMarkers()}
 		</GMap>
@@ -77,11 +79,8 @@ export const _GoogleMap = ({ height, width, marker }: GoogleMapProps) => {
 
 export const GoogleMap = memo(_GoogleMap)
 
-type Location =
-	| NonNullable<ApiOutput['organization']['getBySlug']>['locations'][number]
-	| NonNullable<ApiOutput['location']['getById']>
 interface GoogleMapProps {
-	marker: Location | Location[]
+	locationIds: string | string[]
 	height: number
 	width: number
 }

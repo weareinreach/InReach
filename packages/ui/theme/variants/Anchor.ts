@@ -24,6 +24,26 @@ export const Anchor = {
 			},
 		},
 	}),
+	inlineUtil1darkGray: (theme) => ({
+		root: {
+			padding: '0 !important',
+			...theme.other.utilityFonts.utility1,
+			color: `${theme.other.colors.secondary.darkGray} !important`,
+			'&:hover': {
+				backgroundColor: 'transparent !important',
+			},
+		},
+	}),
+	inlineUtil2darkGray: (theme) => ({
+		root: {
+			padding: '0 !important',
+			...theme.other.utilityFonts.utility2,
+			color: `${theme.other.colors.secondary.darkGray} !important`,
+			'&:hover': {
+				backgroundColor: 'transparent !important',
+			},
+		},
+	}),
 	inlineInverted: (theme) => ({
 		root: {
 			padding: '0 !important',

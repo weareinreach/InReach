@@ -3,7 +3,7 @@ import { type NextApiHandler } from 'next'
 import { nextHandler } from 'trpc-playground/handlers/next'
 
 import { appRouter } from '@weareinreach/api'
-import { getEnv } from '@weareinreach/config/env'
+import { getEnv } from '@weareinreach/env'
 
 const setupHandler = nextHandler({
 	router: appRouter,

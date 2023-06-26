@@ -1,0 +1,124 @@
+{
+	"abortion-care": {
+		"CATEGORYNAME": "Opieka aborcyjna",
+		"abortion-providers": "Dostawcy aborcji",
+		"financial-assistance": "Pomoc finansowa",
+		"lodging-assistance": "Pomoc w zakwaterowaniu",
+		"mail-order-services": "Usługi sprzedaży wysyłkowej",
+		"mental-health-support": "Wsparcie zdrowia psychicznego",
+		"travel-assistance": "Pomoc w podróży"
+	},
+	"community-support": {
+		"CATEGORYNAME": "Wsparcie społeczności",
+		"community-social-groups": "Społeczność i grupy społeczne",
+		"cultural-centers": "Centra kultury",
+		"lgbtq-centers": "Centra LGBTQ",
+		"reception-services": "Usługi recepcji",
+		"reentry-services": "Usługi ponownego wejścia",
+		"spiritual-support": "Wsparcie duchowe",
+		"sponsors": "Sponsoring imigracyjny"
+	},
+	"computers-and-internet": {
+		"CATEGORYNAME": "Komputery i Internet",
+		"computers-and-internet": "Komputery i internet"
+	},
+	"education-and-employment": {
+		"CATEGORYNAME": "Edukacja i zatrudnienie",
+		"career-counseling": "Doradztwo zawodowe",
+		"educational-support-for-lgbtq-youth": "Wsparcie edukacyjne dla młodzieży LGBTQ",
+		"english-classes": "Zajęcia z języka angielskiego",
+		"language-classes": "Zajęcia językowe",
+		"leadership-training-and-professional-development": "Szkolenie przywódcze i rozwój zawodowy",
+		"libraries": "Biblioteki",
+		"scholarships": "Stypendia"
+	},
+	"food": {
+		"CATEGORYNAME": "Żywność",
+		"food": "Żywność",
+		"food-assistance": "Pomoc żywnościowa"
+	},
+	"housing": {
+		"CATEGORYNAME": "Obudowa",
+		"drop-in-centers-for-lgbtq-youth": "Centra wrzucające dla młodzieży LGBTQ",
+		"emergency-housing": "Obudowa awaryjna",
+		"housing-information-and-referrals": "Informacje o mieszkaniach i skierowania",
+		"short-term-housing": "Krótkoterminowe mieszkania",
+		"trans-housing": "Obudowa Trans"
+	},
+	"hygiene-and-clothing": {
+		"CATEGORYNAME": "Higiena i odzież",
+		"clothes": "Ubrania",
+		"gender-affirming-items": "Elementy potwierdzające płeć",
+		"gender-neutral-bathrooms": "Łazienki neutralne pod względem płci",
+		"haircuts-and-stylists": "Fryzury i styliści",
+		"hygiene": "Higiena"
+	},
+	"legal": {
+		"CATEGORYNAME": "Prawne",
+		"asylum-application": "Wniosek o azyl",
+		"citizenship": "Obywatelstwo",
+		"crime-and-discrimination": "Przestępczość i dyskryminacja",
+		"deferred-action-for-childhood-arrivals-daca": "Odroczone działanie na rzecz przybycia z dzieciństwa (DACA)",
+		"deportation-or-removal": "Deportacja lub usunięcie",
+		"employment-authorization": "Zezwolenie na zatrudnienie",
+		"family-petitions": "Petycje rodzinne",
+		"immigration-detention": "Zatrzymanie imigracyjne",
+		"legal-advice": "Doradztwo prawne",
+		"legal-hotlines": "Infolinie prawne",
+		"name-and-gender-change": "Zmiana nazwiska i płci",
+		"refugee-claim": "Wniosek o uchodźcę",
+		"residency": "Rezydencja",
+		"special-immigrant-juvenile-status-sijs": "Specjalny status nieletnich imigrantów (SIJS)",
+		"t-visa": "Wiza T",
+		"u-visa": "Wiza U"
+	},
+	"mail": {
+		"CATEGORYNAME": "Poczta",
+		"mail": "Poczta"
+	},
+	"medical": {
+		"CATEGORYNAME": "Medyczny",
+		"covid-19-services": "Usługi COVID-19",
+		"dental-care": "Dental care",
+		"hiv-and-sexual-health": "HIV a zdrowie seksualne",
+		"medical-clinics": "Kliniki medyczne",
+		"obgyn-services": "Usługi położnicze",
+		"physical-evaluations-for-asylum-claim": "Fizyczne oceny wniosku o azyl",
+		"physical-evaluations-for-refugee-claim": "Fizyczne oceny wniosku o uchodźcę",
+		"trans-health": "Zdrowie trans",
+		"trans-health-gender-affirming-surgery": "Zdrowie trans - operacja potwierdzająca płeć",
+		"trans-health-hormone-and-surgery-letters": "Zdrowie trans - listy hormonalne i chirurgiczne",
+		"trans-health-hormone-therapy": "Zdrowie trans - terapia hormonalna",
+		"trans-health-primary-care": "Zdrowie trans - podstawowa opieka zdrowotna",
+		"trans-health-speech-therapy": "Zdrowie trans - logopedia"
+	},
+	"mental-health": {
+		"CATEGORYNAME": "Zdrowie psychiczne",
+		"bipoc-support-groups": "Grupy wsparcia BIPOC",
+		"hotlines": "Infolinie",
+		"private-therapy-and-counseling": "Prywatna terapia i poradnictwo",
+		"psychological-evaluations-for-asylum-claim": "Psychologiczne oceny wniosku o azyl",
+		"psychological-evaluations-for-refugee-claim": "Psychologiczne oceny wniosku o uchodźcę",
+		"substance-use": "Używanie substancji",
+		"support-for-caregivers-of-trans-youth": "Wsparcie dla opiekunów młodzieży trans",
+		"support-for-conversion-therapy-survivors": "Wsparcie dla osób, które przeżyły terapię konwersyjną",
+		"support-groups": "Grupy wsparcia",
+		"trans-support-groups": "Grupy wsparcia trans"
+	},
+	"sports-and-entertainment": {
+		"CATEGORYNAME": "Rozrywka i zajęcia",
+		"art-music-literature": "Sztuka, muzyka i literatura",
+		"sports-and-entertainment": "Sport i rozrywka"
+	},
+	"translation-and-interpretation": {
+		"CATEGORYNAME": "Tłumaczenia pisemne i ustne",
+		"for-healthcare": "Dla opieki zdrowotnej",
+		"for-legal-services": "Do obsługi prawnej",
+		"general-translation-and-interpretation": "Tłumaczenia ogólne i ustne"
+	},
+	"transportation": {
+		"CATEGORYNAME": "Transport",
+		"transit-passes-and-discounts": "Karnety tranzytowe i zniżki",
+		"transportation-assistance": "Pomoc w transporcie"
+	}
+}

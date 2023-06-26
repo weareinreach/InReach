@@ -1,4 +1,4 @@
-import { Stack, Text, Title } from '@mantine/core'
+import { Skeleton, Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -7,7 +7,7 @@ import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant, useFormattedAddress } from '~ui/hooks'
 
 export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
-	const { t } = useTranslation([data.slug])
+	const { t, ready: i18nReady } = useTranslation(data.slug)
 	const variants = useCustomVariant()
 	const { attributes, isClaimed, locations, description, slug } = data
 
@@ -57,7 +57,9 @@ export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
 
 	const descriptionSection =
 		description && description.key ? (
-			<Text>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
+			<Skeleton visible={!i18nReady}>
+				<Text py={12}>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
+			</Skeleton>
 		) : null
 
 	return (
@@ -80,10 +82,10 @@ export interface OrgInfoProps {
 		name: string
 		id: string
 		slug: string
-		lastVerified: NonNullable<ApiOutput['organization']['getBySlug']>['lastVerified']
-		attributes: NonNullable<ApiOutput['organization']['getBySlug']>['attributes']
-		description: NonNullable<ApiOutput['organization']['getBySlug']>['description']
-		locations: NonNullable<ApiOutput['organization']['getBySlug']>['locations']
+		lastVerified: NonNullable<ApiOutput['organization']['forOrgPage']>['lastVerified']
+		attributes: NonNullable<ApiOutput['organization']['forOrgPage']>['attributes']
+		description: NonNullable<ApiOutput['organization']['forOrgPage']>['description']
+		locations: NonNullable<ApiOutput['organization']['forOrgPage']>['locations']
 		isClaimed: boolean
 	}
 }
@@ -94,10 +96,10 @@ export interface LocationInfoProps {
 		name: string
 		id: string
 		slug: string
-		lastVerified: NonNullable<ApiOutput['organization']['getBySlug']>['lastVerified']
-		attributes: NonNullable<ApiOutput['location']['getById']>['attributes']
-		description: NonNullable<ApiOutput['location']['getById']>['description']
-		locations: NonNullable<ApiOutput['location']['getById']>[]
+		lastVerified: NonNullable<ApiOutput['organization']['forLocationPage']>['lastVerified']
+		attributes: NonNullable<ApiOutput['location']['forLocationPage']>['attributes']
+		description: NonNullable<ApiOutput['location']['forLocationPage']>['description']
+		locations: NonNullable<ApiOutput['location']['forLocationPage']>[]
 		isClaimed: boolean
 	}
 }
