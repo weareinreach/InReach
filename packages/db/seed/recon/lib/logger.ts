@@ -4,6 +4,8 @@ import { DateTime } from 'luxon'
 import fs from 'fs'
 import path from 'path'
 
+import { iconList, type IconList } from '~db/seed/lib'
+
 import { type PassedTask } from './types'
 
 const getTimestamp = () => DateTime.now().toFormat('yyyyMMdd_HHmmss')
@@ -19,3 +21,9 @@ const timestamp = getTimestamp()
 const logFilename = `${timestamp}.log`
 export const attachLogger = (task: PassedTask) =>
 	task.task.on(ListrTaskEventType.OUTPUT, (output) => logFile(logFilename, output))
+
+export const formatMessage = (message: string, icon?: IconList, indent = false) => {
+	const dispIcon = icon ? `${iconList(icon)} ` : ''
+	const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
+	return formattedMessage
+}
