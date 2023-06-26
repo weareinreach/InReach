@@ -36,7 +36,7 @@
 		"detained-immigrant": "Mga oportunidad na naglilingkod sa mga pinigil na imigrante",
 		"disabled": "Mga oportunidad na nagsisilbi sa komunidad na may kapansanan",
 		"gay": "Mga oportunidad na nagsisilbi sa Komunidad ng Gay",
-		"gender-nonconforming": "Mga oportunidad na nagsisilbi sa komunidad na hindi naaayon sa Kasarian",
+		"gender-nonconforming": "Mga oportunidad na nagsisilbi sa komunidad na hindi umaayon sa Kasarian",
 		"hiv-aids": "Mga oportunidad na nagsisilbi sa HIV+at nasa panganib na komunidad",
 		"homeless": "Mga oportunidad na nagsisilbi sa mga indibidwal na walang tirahan",
 		"human-trafficking-survivor": "Mga oportunidad na nagsisilbi sa mga nakaligtas sa human trafficking",
@@ -59,9 +59,9 @@
 		"teens": "“tinedyer” na tinukoy bilang 12-18 taong gulang",
 		"trans-youth": "Mga oportunidad na naglilingkod sa kabataan ng Trans",
 		"trans-youth-caregivers": "Mga oportunidad na naglilingkod sa mga tagapag-alaga ng mga kabataan ng Trans",
-		"transfeminine": "Mga oportunidad na nagsisilbi sa Komunidad ng Transfeminine",
+		"transfeminine": "Mga oportunidad na nagsisilbi sa Trans Feminine Community",
 		"transgender": "Ang mga oportunidad na nagsisilbi sa komunidad ng transgender (para sa mga hindi sumunod o di-binary na mga komunidad, gamitin ang mga katangiang hindi naaayon o di-binary na mga katangian)",
-		"transmasculine": "Mga oportunidad na naglilingkod sa Trasmasculine Community",
+		"transmasculine": "Mga oportunidad na nagsisilbi sa Tras Masculine Community",
 		"unaccompanied-minors": "Mga oportunidad na nagsisilbi sa mga walang kasamang menor de edad",
 		"undocumented": "Mga oportunidad na naglilingkod sa mga undocumented na imigrante"
 	},
@@ -151,7 +151,7 @@
 		"other": "Iba pa (mangyaring tukuyin)",
 		"paralegal": "Paralegal o iba pang kawani ng ligal na suporta",
 		"social-worker": "Manggagawa sa lipunan",
-		"student-club": "Pinuno/tagapangasiwa ng club ng mag-aaral",
+		"student-club": "Klub ng mag-aaral",
 		"teacher": "Guro",
 		"therapist-counselor": "Therapist/tagapayo"
 	}
