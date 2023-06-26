@@ -59,9 +59,9 @@
 		"teens": "\"adolescent\" défini comme âgé de 12-18 ans",
 		"trans-youth": "Opportunités au service des jeunes Trans",
 		"trans-youth-caregivers": "Opportunités au service des soignants de la jeunesse Trans",
-		"transfeminine": "Opportunités au service de la communauté des femmes trans",
+		"transfeminine": "Opportunités au service de la communauté transféminine",
 		"transgender": "Les opportunités qui servent la communauté transsexuelle (pour les communautés non conformes ou non binaires, utilisez les propriétés non conformes ou non binaires)",
-		"transmasculine": "Opportunités au service de la communauté Tras Masculine",
+		"transmasculine": "Opportunités au service de la communauté trasmasculine",
 		"unaccompanied-minors": "Possibilités au service des mineurs non accompagnés",
 		"undocumented": "Opportunités au service des immigrés sans papiers"
 	},
@@ -115,7 +115,7 @@
 		"caregivers": "Communauté aidants",
 		"disabled": "Communauté désactivée",
 		"elder": "Concentré sur les Aînés",
-		"gender-nc": "Gender Non-Conforming",
+		"gender-nc": "Sexe non conforme",
 		"hiv-comm": "Communauté du VIH",
 		"immigrant-comm": "Communauté immigrée",
 		"incarcerated": "Communauté Incarcérée",
@@ -123,8 +123,8 @@
 		"resettled-refugees": "Réfugiés réinitialisés",
 		"spanish-speakers": "Orateurs espagnols",
 		"trans-comm": "Communauté Trans",
-		"trans-fem": "Femme trans / Femme trans",
-		"trans-masc": "Masculine trans-homme/trans",
+		"trans-fem": "Transfemelle/Transféminine",
+		"trans-masc": "Hommes/Transmasculin Trans",
 		"trans-youth-focus": "Jeunes Trans",
 		"women": "Concentré sur les femmes"
 	},
@@ -151,7 +151,7 @@
 		"other": "Autre (merci de préciser)",
 		"paralegal": "Parajuriste ou autre personnel de soutien juridique",
 		"social-worker": "Collaborateur social",
-		"student-club": "Responsable du club étudiant",
+		"student-club": "Club étudiant",
 		"teacher": "Professeur",
 		"therapist-counselor": "Thérapeute/Conseiller"
 	}
