@@ -9,21 +9,21 @@
 		"travel-assistance": "Asistencia para viajes"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Soporte de la comunidad",
+		"CATEGORYNAME": "Apoye de la Comunidad",
 		"community-social-groups": "Comunidad y grupos sociales",
 		"cultural-centers": "Centros culturales",
 		"lgbtq-centers": "Centros LGBTQ",
-		"reception-services": "Servicios de vigilancia",
+		"reception-services": "Servicios de Recibimiento",
 		"reentry-services": "Servicios de reentrada",
 		"spiritual-support": "Soporte espiritual",
 		"sponsors": "Patrocinio de inmigración"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "Ordenadores e Internet",
+		"CATEGORYNAME": "Computadoras e Internet",
 		"computers-and-internet": "Ordenadores e Internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Educación y empleo",
+		"CATEGORYNAME": "Educación y Empleo",
 		"career-counseling": "Asesoramiento profesional",
 		"educational-support-for-lgbtq-youth": "Apoyo educativo a la juventud LGBTQ",
 		"english-classes": "Clases de inglés",
@@ -66,7 +66,7 @@
 		"legal-advice": "Asesoramiento legal",
 		"legal-hotlines": "Líneas directas legales",
 		"name-and-gender-change": "Cambio de nombre y género",
-		"refugee-claim": "Reclamo de Refuge",
+		"refugee-claim": "Solicitud de Refugio",
 		"residency": "Residencia",
 		"special-immigrant-juvenile-status-sijs": "Estado Especial de Juveniles Inmigrantes (SIJS)",
 		"t-visa": "T visa",
@@ -83,7 +83,7 @@
 		"hiv-and-sexual-health": "VIH y salud sexual",
 		"medical-clinics": "Clínicas médicas",
 		"obgyn-services": "Servicios OBGYN",
-		"physical-evaluations-for-asylum-claim": "Evaluaciones físicas de la solicitud de asilo",
+		"physical-evaluations-for-asylum-claim": "Evaluaciones físicas para la solicitud de asilo",
 		"physical-evaluations-for-refugee-claim": "Evaluaciones físicas de la demanda de refugiados",
 		"trans-health": "Salud trans",
 		"trans-health-gender-affirming-surgery": "Trans health - cirugía de afirmación de género",
@@ -112,12 +112,12 @@
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Traducción e interpretación",
-		"for-healthcare": "Para la salud",
+		"for-healthcare": "Para el cuidado de salud",
 		"for-legal-services": "Para servicios legales",
 		"general-translation-and-interpretation": "Traducción e interpretación general"
 	},
 	"transportation": {
-		"CATEGORYNAME": "Transportación",
+		"CATEGORYNAME": "Transporte",
 		"transit-passes-and-discounts": "Pases de tránsito y descuentos",
 		"transportation-assistance": "Asistencia de transporte"
 	}
