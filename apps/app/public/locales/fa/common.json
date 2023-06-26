@@ -30,7 +30,7 @@
 	"cancel": "لغو",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
-		"title": "<emojiLg>🏠</emojiLg>\n<title2>این سازمان هنوز توسط یک ارائه دهنده خدمات ادعا نشده است.</title2>\n<textDarkGray>شما می توانید این سازمان را به عنوان ارائه دهنده خدمات ادعا کنید:</textDarkGray>"
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>این سازمان هنوز توسط یک ارائه دهنده خدمات ادعا نشده است.</title2>\n<textDarkGray>شما می توانید این سازمان را به عنوان ارائه دهنده خدمات ادعا کنید: < extDarkGray>"
 	},
 	"claimed": "ادعا شده",
 	"clear": "پاک کردن",
