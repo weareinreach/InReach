@@ -2,28 +2,28 @@
 	"abortion-care": {
 		"CATEGORYNAME": "Cuidado del aborto",
 		"abortion-providers": "Proveedores de aborto",
-		"financial-assistance": "Ayuda financiera",
+		"financial-assistance": "Asistencia Financiera",
 		"lodging-assistance": "Asistencia de alojamiento",
-		"mail-order-services": "Servicios de pedidos por correo",
-		"mental-health-support": "Apoyo a la salud mental",
+		"mail-order-services": "Servicios de Pedidos por Correo",
+		"mental-health-support": "Apoyo de salud mental",
 		"travel-assistance": "Asistencia para viajes"
 	},
 	"community-support": {
-		"CATEGORYNAME": "Soporte de la comunidad",
+		"CATEGORYNAME": "Apoye de la Comunidad",
 		"community-social-groups": "Comunidad y grupos sociales",
 		"cultural-centers": "Centros culturales",
 		"lgbtq-centers": "Centros LGBTQ",
-		"reception-services": "Servicios de vigilancia",
+		"reception-services": "Servicios de Recibimiento",
 		"reentry-services": "Servicios de reentrada",
-		"spiritual-support": "Soporte espiritual",
-		"sponsors": "Patrocinio de inmigración"
+		"spiritual-support": "Soporte Spiritual",
+		"sponsors": "Patrocinio de Inmigración"
 	},
 	"computers-and-internet": {
-		"CATEGORYNAME": "Ordenadores e Internet",
-		"computers-and-internet": "Ordenadores e Internet"
+		"CATEGORYNAME": "Computadoras e Internet",
+		"computers-and-internet": "Computadoras e Internet"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "Educación y empleo",
+		"CATEGORYNAME": "Educación y Empleo",
 		"career-counseling": "Asesoramiento profesional",
 		"educational-support-for-lgbtq-youth": "Apoyo educativo a la juventud LGBTQ",
 		"english-classes": "Clases de inglés",
@@ -66,11 +66,11 @@
 		"legal-advice": "Asesoramiento legal",
 		"legal-hotlines": "Líneas directas legales",
 		"name-and-gender-change": "Cambio de nombre y género",
-		"refugee-claim": "Reclamo de Refuge",
+		"refugee-claim": "Solicitud de Refugio",
 		"residency": "Residencia",
 		"special-immigrant-juvenile-status-sijs": "Estado Especial de Juveniles Inmigrantes (SIJS)",
-		"t-visa": "T visa",
-		"u-visa": "U visa"
+		"t-visa": "Visa T",
+		"u-visa": "Visa U"
 	},
 	"mail": {
 		"CATEGORYNAME": "Correo",
@@ -83,14 +83,14 @@
 		"hiv-and-sexual-health": "VIH y salud sexual",
 		"medical-clinics": "Clínicas médicas",
 		"obgyn-services": "Servicios OBGYN",
-		"physical-evaluations-for-asylum-claim": "Evaluaciones físicas de la solicitud de asilo",
+		"physical-evaluations-for-asylum-claim": "Evaluaciones físicas para la solicitud de asilo",
 		"physical-evaluations-for-refugee-claim": "Evaluaciones físicas de la demanda de refugiados",
 		"trans-health": "Salud trans",
-		"trans-health-gender-affirming-surgery": "Trans health - cirugía de afirmación de género",
-		"trans-health-hormone-and-surgery-letters": "Salud trans - letras de hormona y cirugía",
-		"trans-health-hormone-therapy": "Salud trans - terapia hormonal",
-		"trans-health-primary-care": "Salud trans - atención primaria",
-		"trans-health-speech-therapy": "Salud trans - terapia de voz"
+		"trans-health-gender-affirming-surgery": "Salud Trans - Cirugía de afirmación de género",
+		"trans-health-hormone-and-surgery-letters": "Salud Trans - Cartas para recibir hormonas y cirugía",
+		"trans-health-hormone-therapy": "Salud Trans - terapia hormonal",
+		"trans-health-primary-care": "Salud Trans - Cuidado Primario",
+		"trans-health-speech-therapy": "Salud Trans - terapia de lenguaje"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Salud Mental",
@@ -106,18 +106,18 @@
 		"trans-support-groups": "Grupos de soporte Trans"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "Empresas y actividades",
+		"CATEGORYNAME": "Entretenimiento y Actividades",
 		"art-music-literature": "Arte, música y literatura",
-		"sports-and-entertainment": "Deportes y entretenimiento"
+		"sports-and-entertainment": "Deportes y Entretenimiento"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Traducción e interpretación",
-		"for-healthcare": "Para la salud",
+		"for-healthcare": "Para el cuidado de salud",
 		"for-legal-services": "Para servicios legales",
 		"general-translation-and-interpretation": "Traducción e interpretación general"
 	},
 	"transportation": {
-		"CATEGORYNAME": "Transportación",
+		"CATEGORYNAME": "Transporte",
 		"transit-passes-and-discounts": "Pases de tránsito y descuentos",
 		"transportation-assistance": "Asistencia de transporte"
 	}
