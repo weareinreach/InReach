@@ -17,11 +17,11 @@
 		"title": "Compromiso antiodio"
 	},
 	"badge": {
-		"claimed-tool-tip": "Esta organización ha sido reclamada por un representante verificado. <link>Más información.</link>",
+		"claimed-tool-tip": "Esta organización ha sido reclamada por un representante verificado.<br/><link1>Más información.</link1>",
 		"community-tool-tip": "Comunidad atendida por esta organización.",
 		"remote-tool-tip": "Disponible de forma remota",
 		"service-tool-tip": "Servicio(s) ofrecido(s) por esta organización.",
-		"unclaimed-tool-tip": "Esta organización aún no ha sido reclamada por un representante. <link>Reclama a esta organización</link> para generar confianza con nuestra comunidad, actualizar tu propia información y más."
+		"unclaimed-tool-tip": "Esta organización aún no ha sido reclamada por un representante.<br/><link1>Reclama a esta organización</link1> para generar confianza con nuestra comunidad, actualizar tu propia información y más."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Volver a <u>{{page}}</u>",
@@ -181,7 +181,7 @@
 		"<textDarkGray>InReach utiliza <linkUmami>Umami</linkUmami>, una alternativa a Google Analytics centrada en la privacidad, para analizar y rastrear de forma anónima los datos de uso de la aplicación (p. ej., búsquedas de usuarios y otros comportamientos) en conjunto. <linkUmamiGDPR>Umami cumple con GDPR</linkUmamiGDPR> y no recopila ninguna información de identificación personal y anonimiza todos los datos recopilados. Los usuarios no pueden ser identificados y nunca son rastreados a través de los sitios web.</textDarkGray>",
 		"<textDarkGray>InReach también utiliza Vercel Analytics para analizar los datos vitales y el rendimiento de la web. Vercel Analytics proporciona información sobre el uso del sitio sin vincularse ni asociarse con ningún visitante individual o dirección IP. El registro de puntos de datos es anónimo y la función Analytics no recopila ni almacena información que permitiría a Vercel reconstruir una sesión de navegación a través de páginas o identificar a un usuario.</textDarkGray>"
 	],
-	"privacy-statement-foot": "<linkPolicy>Lea nuestra política de privacidad completa para obtener más información</linkPolicy>",
+	"privacy-statement-foot": "<linkPolicy>Lee nuestra política de privacidad completa para obtener más información</linkPolicy>",
 	"privacy-statement-head": [
 		"<emojiLg>🔒</emojiLg>",
 		"<title2>Declaración de privacidad</title2>"
@@ -189,7 +189,7 @@
 	"privatePractice": "Práctica privada",
 	"profile": "Perfil",
 	"questions": "¿Preguntas?",
-	"quick-promo-body": "<textUtility1>💚 Guardar y compartir listas de recursos personalizados</textUtility1>\n<textUtility1>: speech _balloon: Dejar calificaciones/opiniones públicas sobre las organizaciones</textUtility1>\n<textUtility1>🏠 Sugerir organizaciones en tu área</textUtility1>\n<textUtility1>🔗 Reclamar la página de perfil de su organización</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 Guardar y compartir listas de recursos personalizados</textUtility1>\n<textUtility1>: speech _balloon: Dejar calificaciones/opiniones públicas sobre las organizaciones</textUtility1>\n<textUtility1>🏠 Sugerir organizaciones en tu área</textUtility1>\n<textUtility1>🔗 Reclamar la página de perfil de su organización (¡pronto!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Necesitas iniciar sesión para hacer eso.</title2>\n<textDarkGray>Con una cuenta gratuita de InReach puedes desbloquear características adicionales:</textDarkGray>",
 	"remote-services": "Servicios disponibles de forma remota",
 	"remote-services-page-title": "Servicios remotos",
@@ -262,9 +262,9 @@
 		"name_alias": "Nombre o alias",
 		"name_full": "Nombre completo",
 		"placeholder-name_alias": "Introduzca nombre o alias...",
-		"placeholder-name_full": "Introduzca el nombre completo...",
+		"placeholder-name_full": "Introduce el nombre completo...",
 		"select-law-practice": "¿Dónde practica la ley?",
-		"select-service-provider": "¿Dónde trabajas o voluntario?",
+		"select-service-provider": "¿Dónde trabajas o donde eres voluntario?",
 		"specify-work-volunteer": "Por favor especifique dónde trabaja o voluntario",
 		"success": "¡Te has registrado en una cuenta!",
 		"user-exists-body": "Esa dirección de correo electrónico ya está registrada.",
@@ -361,7 +361,7 @@
 		"service-hours": "Horas de servicio",
 		"settings": "Ajustes",
 		"share": "Compartir",
-		"sign-up": "Regístrate",
+		"sign-up": "Registrarse",
 		"skip": "Saltar",
 		"support": "Apoyo",
 		"yes": "Sí"
