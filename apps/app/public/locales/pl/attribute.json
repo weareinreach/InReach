@@ -59,9 +59,9 @@
 		"teens": "„nastolatek” zdefiniowany jako 12-18 lat",
 		"trans-youth": "Możliwości, które służą młodzieży trans",
 		"trans-youth-caregivers": "Możliwości, które służą opiekunom młodzieży trans",
-		"transfeminine": "Możliwości, które służą społeczności transkobiecej",
+		"transfeminine": "Możliwości, które służą społeczności Trans Feminine",
 		"transgender": "Możliwości, które służą społeczności transpłciowej (w przypadku społeczności niezgodnych lub niebinarnych, użyj właściwości niezgodnych z płcią lub niebinarnych)",
-		"transmasculine": "Możliwości, które służą społeczności Trasmasculine",
+		"transmasculine": "Możliwości, które służą męskiej społeczności Tras",
 		"unaccompanied-minors": "Możliwości, które służą nieletnim bez opieki",
 		"undocumented": "Szanse, które służą nieudokumentowanym imigrantom"
 	},
@@ -151,7 +151,7 @@
 		"other": "Inne (proszę określić)",
 		"paralegal": "Pomocnik adwokata lub inny personel dostarczający obsługę prawną",
 		"social-worker": "Pracownik socjalny",
-		"student-club": "Lider/administrator klubu studenckiego",
+		"student-club": "Klub studencki",
 		"teacher": "Nauczyciel",
 		"therapist-counselor": "Terapeuta/doradca"
 	}
