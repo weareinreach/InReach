@@ -4,7 +4,7 @@ import superjson from 'superjson'
 import fs from 'fs'
 import path from 'path'
 
-import { prisma, type Prisma } from '~db/client'
+import { prisma } from '~db/client'
 import { attachLogger } from '~db/seed/recon/lib/logger'
 import { type ListrJob } from '~db/seed/recon/lib/types'
 
@@ -38,10 +38,10 @@ typeOutput.push('export type CountryMap = Map<string, string>')
 
 // #region Districts
 export const generateDistList = {
-	title: 'Generate Governing District List',
+	title: 'Generate Governing District List & Map',
 	task: async (_ctx, task) => {
 		attachLogger(task)
-		const countries = ['AS', 'UM', 'MX', 'MP', 'CA', 'VI', 'US', 'PR', 'GU']
+		const countries = ['AS', 'CA', 'GU', 'MP', 'MX', 'PR', 'PW', 'UM', 'US', 'VI']
 		const dists = await prisma.govDist.findMany({
 			where: { country: { cca2: { in: countries } } },
 			select: { id: true, slug: true },
@@ -49,10 +49,12 @@ export const generateDistList = {
 		})
 		task.output = `Districts retrieved: ${dists.length}`
 		writeSuperJSON('distList', dists)
+		writeSuperJSON('distMap', new Map(dists.map((d) => [d.slug, d.id])))
 	},
 } satisfies ListrJob
 
 typeOutput.push('export type DistList = { id: string; slug: string }[]')
+typeOutput.push('export type DistMap = Map<string, string>')
 
 // #endregion
 
@@ -75,6 +77,25 @@ export const generateOrgIdMap = {
 } satisfies ListrJob
 
 typeOutput.push('export type OrgIdMap = Map<string, string>')
+
+// #endregion
+
+// #region Organization Slugs
+export const generateOrgSlugSet = {
+	title: 'Generate Organization Slug Set',
+	task: async (_ctx, task) => {
+		attachLogger(task)
+		const orgs = await prisma.organization.findMany({
+			select: { slug: true },
+		})
+		task.output = `Organizations retrieved: ${orgs.length}`
+		const orgSlugSet = new Set<string>(orgs.map(({ slug }) => slug))
+
+		writeSuperJSON('orgSlugSet', orgSlugSet)
+	},
+} satisfies ListrJob
+
+typeOutput.push('export type OrgSlugSet = Set<string>')
 
 // #endregion
 
@@ -267,6 +288,40 @@ export const generatePermissionMap = {
 } satisfies ListrJob
 
 typeOutput.push('export type PermissionMap = Map<string, string>')
+
+// #endregion
+
+// #region Translation Keys
+
+export const generateTranslationKeySet = {
+	title: 'Generate Translation Key Set',
+	task: async (_ctx, task) => {
+		attachLogger(task)
+		const keys = await prisma.translationKey.findMany({
+			select: { key: true },
+		})
+		task.output = `Translation Keys retrieved: ${keys.length}`
+		const translationKeySet = new Set<string>(keys.map(({ key }) => key))
+		writeSuperJSON('translationKeySet', translationKeySet)
+	},
+} satisfies ListrJob
+
+typeOutput.push('export type TranslationKeySet = Set<string>')
+
+export const generateTranslationMap = {
+	title: 'Generate Translation Key Set',
+	task: async (_ctx, task) => {
+		attachLogger(task)
+		const items = await prisma.translationKey.findMany({
+			select: { key: true, text: true },
+		})
+		task.output = `Translation Items retrieved: ${items.length}`
+		const translationMap = new Map<string, string>(items.map(({ key, text }) => [key, text]))
+		writeSuperJSON('translationMap', translationMap)
+	},
+} satisfies ListrJob
+
+typeOutput.push('export type TranslationMap = Map<string, string>')
 
 // #endregion
 
