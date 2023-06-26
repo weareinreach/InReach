@@ -59,9 +59,9 @@
 		"teens": "“청소년”은 12-18세로 정의됩니다.",
 		"trans-youth": "트랜스 청소년을 위한 기회",
 		"trans-youth-caregivers": "트랜스 청소년의 간병인에게 서비스를 제공하는 기회",
-		"transfeminine": "트랜스페미닌 커뮤니티에 도움이 되는 기회",
+		"transfeminine": "트랜스 페미닌 커뮤니티에 도움이 되는 기회",
 		"transgender": "트랜스젠더 커뮤니티에 도움이 되는 기회 (비순응 또는 논바이너리 커뮤니티의 경우 젠더 비순응 또는 논바이너리 속성 사용)",
-		"transmasculine": "트랜스마큘린 커뮤니티에 도움이 되는 기회",
+		"transmasculine": "Tras Masculine 커뮤니티에 도움이 되는 기회",
 		"unaccompanied-minors": "보호자 없는 미성년자에게 서비스를 제공하는 기회",
 		"undocumented": "서류 미비 이민자에게 서비스를 제공하는 기회"
 	},
@@ -151,7 +151,7 @@
 		"other": "기타 (구체적으로 적어주세요)",
 		"paralegal": "법률 보조원 또는 기타 법률 지원 직원",
 		"social-worker": "사회 복지사",
-		"student-club": "학생 클럽 리더/관리자",
+		"student-club": "학생 클럽",
 		"teacher": "선생님",
 		"therapist-counselor": "치료사/상담사"
 	}
