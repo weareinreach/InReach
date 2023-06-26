@@ -20,6 +20,10 @@
  * `✍️ write`
  *
  * `🚮 trash`
+ *
+ * `🔵 info`
+ *
+ * `😵 error`
  */
 export type Log = (message: string, icon?: IconList, indent?: boolean, silent?: boolean) => void
 
@@ -35,6 +39,8 @@ export type IconList =
 	| 'write'
 	| 'warning'
 	| 'trash'
+	| 'info'
+	| 'error'
 
 export const iconList = (icon: IconList) => {
 	switch (icon) {
@@ -60,5 +66,9 @@ export const iconList = (icon: IconList) => {
 			return '✍️'
 		case 'trash':
 			return '🚮'
+		case 'info':
+			return '🔵'
+		case 'error':
+			return '😵'
 	}
 }

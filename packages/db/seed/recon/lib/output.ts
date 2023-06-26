@@ -13,7 +13,7 @@ const createDir = path.resolve(outputDir, 'create')
 const updateDir = path.resolve(outputDir, 'update')
 
 export const getBatchFile: GetBatchFile = ({ type, batchName }) =>
-	type === 'create' ? `${createDir}${batchName}.json` : `${updateDir}${batchName}.json`
+	type === 'create' ? `${createDir}/${batchName}.json` : `${updateDir}/${batchName}.json`
 export const create = {
 	organization: new Set<Prisma.OrganizationCreateManyInput>(),
 	translationKey: new Set<Prisma.TranslationKeyCreateManyInput>(),
@@ -70,6 +70,10 @@ export const writeBatches = (task: PassedTask, clear = false) => {
 			fs.writeFileSync(batchFile, superjson.stringify(outputData))
 			task.output = formatMessage(`Clearing file: ${batchFile}`, 'trash')
 		} else {
+			if (!batch.size) {
+				task.output = formatMessage(`Skipping empty batch: ${batchName}`, 'skip')
+				continue
+			}
 			const currentCount = batchCount.get(`create.${batchName}`) ?? 0
 			const currentBatchCount = batch.size
 			const existingBatch = fs.existsSync(batchFile)
@@ -95,6 +99,10 @@ export const writeBatches = (task: PassedTask, clear = false) => {
 			fs.writeFileSync(batchFile, superjson.stringify(outputData))
 			task.output = formatMessage(`Clearing file: ${batchFile}`, 'trash')
 		} else {
+			if (!batch.size) {
+				task.output = formatMessage(`Skipping empty batch: ${batchName}`, 'skip')
+				continue
+			}
 			const currentCount = batchCount.get(`update.${batchName}`) ?? 0
 			const currentBatchCount = batch.size
 			const existingBatch = fs.existsSync(batchFile)

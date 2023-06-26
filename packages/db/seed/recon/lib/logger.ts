@@ -22,6 +22,7 @@ const logFilename = `${timestamp}.log`
 export const attachLogger = (task: PassedTask) =>
 	task.task.on(ListrTaskEventType.OUTPUT, (output) => logFile(logFilename, output))
 
+export const isSuccess = (param: unknown) => (param ? `✅` : `❌`)
 export const formatMessage = (message: string, icon?: IconList, indent = false) => {
 	const dispIcon = icon ? `${iconList(icon)} ` : ''
 	const formattedMessage = `${indent ? '\t' : ''}${dispIcon}${message}`
