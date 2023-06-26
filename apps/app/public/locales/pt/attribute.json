@@ -59,9 +59,9 @@
 		"teens": "“adolescente” definido como de 12 a 18 anos",
 		"trans-youth": "Oportunidades que atendem jovens trans",
 		"trans-youth-caregivers": "Oportunidades que atendem cuidadores de jovens trans",
-		"transfeminine": "Oportunidades que atendem à comunidade transfeminina",
+		"transfeminine": "Oportunidades que atendem à comunidade trans feminina",
 		"transgender": "Oportunidades que atendem à comunidade transgênero (para comunidades não conformes ou não binárias, use as propriedades de gênero não conformes ou não binárias)",
-		"transmasculine": "Oportunidades que atendem à comunidade trasmasculina",
+		"transmasculine": "Oportunidades que atendem à comunidade Tras Masculine",
 		"unaccompanied-minors": "Oportunidades que atendem menores desacompanhados",
 		"undocumented": "Oportunidades que atendem imigrantes sem documentos"
 	},
@@ -151,7 +151,7 @@
 		"other": "Outros (por favor, especifique)",
 		"paralegal": "Paralegal ou outra equipe de apoio jurídico",
 		"social-worker": "Assistente social",
-		"student-club": "Líder/administrador do clube estudantil",
+		"student-club": "Clube estudantil",
 		"teacher": "Professora",
 		"therapist-counselor": "Terapeuta/conselheira"
 	}
