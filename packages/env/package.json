@@ -1,0 +1,19 @@
+{
+	"name": "@weareinreach/env",
+	"version": "0.0.0",
+	"private": true,
+	"main": "./index.ts",
+	"types": "./index.ts",
+	"files": [
+		"./index.ts"
+	],
+	"scripts": {},
+	"dependencies": {
+		"@t3-oss/env-nextjs": "0.6.0",
+		"chromatic": "6.19.9",
+		"zod": "3.21.4"
+	},
+	"devDependencies": {
+		"@weareinreach/config": "workspace:*"
+	}
+}

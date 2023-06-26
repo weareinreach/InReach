@@ -3,10 +3,10 @@ import { useDisclosure } from '@mantine/hooks'
 import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode } from 'react'
 
-import { useCustomVariant } from '~ui/hooks'
+import { AntiHateMessage, Button, Link } from '~ui/components/core'
+import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
 import { ModalTitle } from './ModalTitle'
-import { AntiHateMessage, Button, Link } from '../components/core'
 
 const TransContent = ({ i18nKey }: { i18nKey: string }) => {
 	const variants = useCustomVariant()
@@ -18,14 +18,19 @@ const TransContent = ({ i18nKey }: { i18nKey: string }) => {
 				title1: <Title order={1}>.</Title>,
 				title2: <Title order={2}>.</Title>,
 				title3: <Title order={3}>.</Title>,
-				textReg: <Text ta='justify'>.</Text>,
+				textReg: <Text ta='center'>.</Text>,
+				textDarkGray: (
+					<Text ta='center' variant={variants.Text.darkGray}>
+						.
+					</Text>
+				),
 				stack16: (
 					<Stack align='center' spacing={16}>
 						.
 					</Stack>
 				),
 				linkAccessibility: (
-					<Link external href='https://www.w3.org/TR/WCAG21/' variant={variants.Link.inlineUtil1}>
+					<Link external href='https://www.w3.org/TR/WCAG21/' variant={variants.Link.inlineUtil1darkGray}>
 						.
 					</Link>
 				),
@@ -46,6 +51,7 @@ export const GenericContentModalBody = forwardRef<HTMLButtonElement, GenericCont
 		const { t } = useTranslation(['common'])
 		const variants = useCustomVariant()
 		const [opened, handlers] = useDisclosure(false)
+		const { isMobile } = useScreenSize()
 
 		const modalChildren = content === 'custom' ? customBody : presetContent[content]
 		const modalTitle = accept ? undefined : (
@@ -54,7 +60,7 @@ export const GenericContentModalBody = forwardRef<HTMLButtonElement, GenericCont
 
 		return (
 			<>
-				<Modal opened={opened} onClose={() => handlers.close()} title={modalTitle}>
+				<Modal opened={opened} onClose={() => handlers.close()} title={modalTitle} fullScreen={isMobile}>
 					<Stack align='center' spacing={24}>
 						{modalChildren}
 						{accept ? (

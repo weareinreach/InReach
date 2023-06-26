@@ -6,7 +6,7 @@ export const Card = {
 	hoverCoolGray: (theme) => ({
 		root: {
 			'&:hover': {
-				backgroundColor: theme.other.colors.tertiary.coolGray,
+				backgroundColor: theme.other.colors.primary.lightGray,
 				cursor: 'pointer',
 			},
 		},

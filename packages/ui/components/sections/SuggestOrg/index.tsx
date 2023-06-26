@@ -14,8 +14,16 @@ import {
 } from '@mantine/core'
 import { zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
+import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { type ComponentPropsWithRef, forwardRef, useEffect, useState } from 'react'
+import {
+	type ComponentPropsWithRef,
+	type Dispatch,
+	forwardRef,
+	type SetStateAction,
+	useEffect,
+	useState,
+} from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
@@ -74,20 +82,26 @@ SelectItemTwoLines.displayName = 'Selection Item'
 interface OrgExistsErrorProps {
 	queryResult: ApiOutput['organization']['checkForExisting']
 }
+interface SuggestOrgProps {
+	authPromptState: {
+		overlay: boolean
+		setOverlay: Dispatch<SetStateAction<boolean>>
+		hasAuth: boolean
+	}
+}
 
-export const SuggestOrg = () => {
+export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	const [modalOpen, modalHandler] = useDisclosure(false)
-
+	const { overlay, setOverlay, hasAuth } = authPromptState
 	const suggestOrgApi = api.organization.createNewSuggestion.useMutation({
 		onSuccess: () => modalHandler.open(),
 	})
-
 	const form = useForm({
 		validate: zodResolver(SuggestionSchema),
 		validateInputOnBlur: true,
 	})
 	const { classes: locationClasses } = useLocationStyles()
-	const { t, i18n } = useTranslation(['suggestOrg', 'country', 'services', 'attribute'])
+	const { t } = useTranslation(['suggestOrg', 'country', 'services', 'attribute'])
 	const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 	const variants = useCustomVariant()
 	const [locationSearch, setLocationSearch] = useState('')
@@ -95,6 +109,7 @@ export const SuggestOrg = () => {
 	const [locSearchInput] = useDebouncedValue(form.values.searchLocation, 400)
 	const [orgName, setOrgName] = useState<string>()
 	const [generateSlug, setGenerateSlug] = useState(false)
+	const router = useRouter()
 
 	const countrySelected = Boolean(form.values.countryId)
 
@@ -109,7 +124,7 @@ export const SuggestOrg = () => {
 	})
 
 	api.geo.autocomplete.useQuery(
-		{ search: locSearchInput, locale: simpleLocale(i18n.language), fullAddress: true },
+		{ search: locSearchInput, locale: simpleLocale(router.locale), fullAddress: true },
 		{
 			enabled: Boolean(locSearchInput) && locSearchInput !== '',
 			onSuccess: ({ results }) =>
@@ -203,6 +218,14 @@ export const SuggestOrg = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [loading, formOptions, isSuccess, isLoading])
+
+	useEffect(() => {
+		if (!hasAuth && !overlay && form.values.countryId) {
+			setOverlay(true)
+			form.setFieldValue('countryId', '')
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [hasAuth, overlay, form.values.countryId])
 
 	if (loading) return null
 	const countrySelections = Array.isArray(form.values.formOptions?.countries)

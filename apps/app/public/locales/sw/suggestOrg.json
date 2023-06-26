@@ -1,0 +1,37 @@
+{
+	"body": {
+		"accept-country": "Tafadhali kumbuka kuwa tunaweza tu kukubali mashirika yaliyo Amerika, Mexico, na Canada kwa wakati huu.",
+		"additional-info": "Maelezo ya ziada",
+		"intro-text": "Asante kwa maslahi yako katika kuchangia InReach App! Tumia fomu hii kupendekeza shirika (kwa mfano mashirika yasiyo ya faida, mashinani au mashirika ya jamii, mifumo ya huduma za afya, mazoezi ya kibinafsi, nk) unafikiri inapaswa kuingizwa. Ni sawa ikiwa huna maelezo yote ambayo fomu inauliza - tu kujaza kile unachojua, na tutafanya mapumziko! Tunashukuru uwasilishaji wako na tunakushukuru kwa kusaidia kuongeza ufikiaji wa rasilimali salama, zilizothibitishwa kwa jamii anuwai ya LGBTQ +. Mashirika yote yaliyopendekezwa yanaweza kukaguliwa na wajitolea waliofunzwa wa InReach kabla ya kuchapishwa kwenye InReach.",
+		"required-info": "Taarifa zinazohitajika",
+		"subject-review": "Mashirika yote yaliyopendekezwa yanaweza kukaguliwa na InReach kabla ya kuchapishwa.",
+		"suggest-org": "Pendekeza shirika"
+	},
+	"form": {
+		"btn-community": "Ongeza mwelekeo wa jamii ya LGBTQ+",
+		"btn-save-changes": "Hifadhi mabadiliko",
+		"btn-service": "Ongeza aina za huduma",
+		"btn-submit": "Wasilisha shirika jipya",
+		"community-focus": "Je! Shirika hili linatoa huduma zinazolenga jamii maalum za LGBTQ+?",
+		"error-exists-active": "<Link>{{org}}</Link> tayari imeorodheshwa kwenye InReach. Tafadhali tumia fomu hii tu kupendekeza mashirika mapya.",
+		"error-exists-dismiss": "<Dismiss>Bonyeza hapa ikiwa hii ni shirika tofauti.</Dismiss>",
+		"error-exists-inactive": "<Link>{{org}}</Link> tayari imependekezwa. Timu yetu labda bado inathibitisha habari au shirika hili halikukidhi mahitaji yetu yote.",
+		"org-address": "Anwani ya shirika",
+		"org-country": "Shirika liko katika nchi gani?",
+		"org-name": "Jina la shirika",
+		"org-website": "Tovuti ya shirika",
+		"placeholder-address": "Ingiza anwani...",
+		"placeholder-name": "Ingiza jina la shirika...",
+		"placeholder-website": "Ingiza URL...",
+		"service-types": "Ni aina gani (s) ya huduma (s) ambayo shirika hili hutoa?"
+	},
+	"modal": {
+		"community-sub": "Je! Shirika hili linatoa huduma zinazolenga jamii maalum za LGBTQ+? Tafadhali chagua yote yanayotumika.",
+		"community-title": "Mtazamo wa jamii ya LGBTQ+",
+		"dismiss": "Kumfukuza",
+		"service-types-sub": "Ni aina gani (s) ya huduma (s) ambayo shirika hili hutoa? Tafadhali chagua yote yanayotumika.",
+		"service-types-title": "Aina za huduma",
+		"thank-you": "Asante kwa kuwasilisha {{org}}!",
+		"thank-you-sub": "Timu yetu itakagua uwasilishaji wako, kuthibitisha habari, na kuchapisha shirika kwenye InReach ikiwa inakidhi vigezo vyetu."
+	}
+}

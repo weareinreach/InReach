@@ -14,12 +14,13 @@ import invariant from 'tiny-invariant'
 import fs from 'fs'
 import path from 'path'
 
+import { type OrganizationsJSONCollection } from '~db/datastore/out-data/2023-06-06/organizations'
 import { dayMap, hoursMap, hoursMeta } from '~db/datastore/v1/helpers/hours'
-import { type OrganizationsJSONCollection } from '~db/datastore/v1/mongodb/output-types/organizations'
 import {
 	generateId,
 	JsonInputOrNull,
 	JsonInputOrNullSuperJSON,
+	type Prisma,
 	prisma,
 	slug as slugGenerator,
 	type SourceType,
@@ -173,7 +174,7 @@ const phoneTypeMap = new Map<string, string>()
 // #region Initial Org Creation
 export const migrateOrgs = async (task: ListrTask) => {
 	const orgs: OrganizationsJSONCollection[] = JSON.parse(
-		fs.readFileSync('./datastore/v1/mongodb/output/organizations.json', 'utf-8')
+		fs.readFileSync('./datastore/out-data/2023-06-06/organizations.json', 'utf-8')
 	)
 	const log: Log = (message, icon?, indent = false, silent = true) => {
 		const dispIcon = icon ? `${iconList(icon)} ` : ''
@@ -203,6 +204,8 @@ export const migrateOrgs = async (task: ListrTask) => {
 	const generate = async (task: ListrTask) => {
 		let countOrg = 0
 		let skipOrg = 0
+		const existingOrgs: typeof orgs = []
+		const newOrgs: typeof orgs = []
 		log(`🛠️ Generating Organization records...`)
 		for (const org of orgs) {
 			const count = countOrg + skipOrg + 1
@@ -212,9 +215,11 @@ export const migrateOrgs = async (task: ListrTask) => {
 			if (orgMap.get(org._id.$oid)) {
 				const existing = orgMap.get(org._id.$oid)
 				log(`SKIPPING ${org.name}: Organization exists in db: ${existing}`, 'skip', false, true)
+				existingOrgs.push(org)
 				skipOrg++
 				continue
 			}
+			newOrgs.push(org)
 			const primaryLocation = org.locations.find((location) => location.is_primary)
 			const slug = await uniqueSlug(org.name, primaryLocation?.city, primaryLocation?.state)
 			slugSet.add(slug)
@@ -275,10 +280,20 @@ export const migrateOrgs = async (task: ListrTask) => {
 		log(`⚙️ Organization records generated: ${organization.size}`)
 		log(`⚙️ Organization description translation key records generated: ${orgTranslationKey.size}`)
 		log(`⚙️ Organization description free text link records generated: ${orgFreeText.size}`)
+
+		fs.writeFileSync(path.resolve(__dirname, './out/existingOrgs.json'), JSON.stringify(existingOrgs))
+		fs.writeFileSync(path.resolve(__dirname, './out/newOrgs.json'), JSON.stringify(newOrgs))
 	}
+
 	const process = async (task: ListrTask) => {
 		let translationRecordCount = 0
 		/* Create translation keys for descriptions */
+		const outputFile = {
+			translationKey: [...orgTranslationKey],
+			freeText: [...orgFreeText],
+			organization: [...organization],
+		}
+		fs.writeFileSync(path.resolve(__dirname, './out/!INITIAL.json'), superjson.stringify(outputFile))
 		if (orgTranslationKey.size) {
 			const results = await prisma.translationKey.createMany({
 				data: [...orgTranslationKey],
@@ -317,7 +332,7 @@ export const migrateOrgs = async (task: ListrTask) => {
 export const generateRecords = async (task: ListrTask) => {
 	// #region Setup
 	const orgs: OrganizationsJSONCollection[] = JSON.parse(
-		fs.readFileSync('./datastore/v1/mongodb/output/organizations.json', 'utf-8')
+		fs.readFileSync(path.resolve(__dirname, './out/newOrgs.json'), 'utf-8')
 	)
 	const log: Log = (message, icon?, indent = false, silent = true) => {
 		const dispIcon = icon ? `${iconList(icon)} ` : ''
@@ -380,7 +395,7 @@ export const generateRecords = async (task: ListrTask) => {
 		log(`🛠️ Generating linked records...`)
 		let orgCount = 0
 		for (const org of orgs) {
-			task.title = `Generate supplemental organization records [${orgCount + 1}/${orgs.length}]`
+			task.title = `Generate supplemental organization records: ${org.name} [${orgCount + 1}/${orgs.length}]`
 			let countLoc = 0
 			let skipLoc = 0
 			const orgId = orgIdMap.get(org._id.$oid)
@@ -485,28 +500,34 @@ export const generateRecords = async (task: ListrTask) => {
 					newPhoneMap.set(phone._id.$oid, id)
 					let phoneTypeId: string | undefined
 					if (typeof phone.phone_type === 'string' && phone.phone_type !== '') {
-						const { phone_type, phone_type_ES, phone_type_es } = phone
+						const { phone_type, phone_type_ES } = phone
 						if (phoneTypeMap.has(slugGenerator(phone_type))) {
 							phoneTypeId = phoneTypeMap.get(slugGenerator(phone_type))
 						} else {
-							phoneTypeId = generateId('phoneType', createdAt)
-							const { key, ns, text } = generateKey({ type: 'phoneType', text: phone_type })
+							// phoneTypeId = generateId('phoneType', createdAt)
+							const { key, ns, text } = generateKey({
+								type: 'desc',
+								text: phone_type,
+								keyPrefix: `${orgSlug}.${id}`,
+							})
 							if (key && ns && text) {
+								const descriptionId = generateId('freeText', createdAt)
 								data.translationKey.add({
 									key,
 									ns,
 									text,
 								})
-								if (phone_type_ES || phone_type_es) {
-									exportTranslation({ key, ns, text: phone_type_ES || phone_type_es, log })
+								if (phone_type_ES) {
+									exportTranslation({ key, ns, text: phone_type_ES, log })
 								}
-								data.phoneType.add({
-									id: phoneTypeId,
-									tsKey: key,
-									tsNs: ns,
-									type: text,
+								data.freeText.add({
+									id: descriptionId,
+									key,
+									ns,
+									createdAt,
+									updatedAt,
 								})
-								phoneTypeMap.set(slugGenerator(phone_type), phoneTypeId)
+								// phoneTypeMap.set(slugGenerator(phone_type), phoneTypeId)
 							}
 						}
 					}
@@ -579,8 +600,8 @@ export const generateRecords = async (task: ListrTask) => {
 								createdAt,
 								updatedAt,
 							})
-							if (email.title_ES || email.title_es) {
-								exportTranslation({ key, ns, text: email.title_ES || email.title_es, log })
+							if (email.title_ES) {
+								exportTranslation({ key, ns, text: email.title_ES, log })
 							}
 						}
 					}
@@ -951,7 +972,7 @@ export const generateRecords = async (task: ListrTask) => {
 									data.attributeSupplement.add({
 										...attrBase,
 										id,
-										data: attrData.data,
+										data: superjson.serialize(attrData.data) as object satisfies Prisma.InputJsonValue,
 										organizationAttributeAttributeId: attrRecord.id,
 										organizationAttributeOrganizationId: organizationId,
 									})
@@ -1317,7 +1338,7 @@ export const generateRecords = async (task: ListrTask) => {
 											data.attributeSupplement.add({
 												...attrBase,
 												id,
-												data: attrData.data,
+												data: superjson.serialize(attrData.data) as object satisfies Prisma.InputJsonValue,
 												serviceAttributeAttributeId: attrRecord.id,
 												serviceAttributeOrgServiceId: serviceId,
 											})
@@ -1516,7 +1537,11 @@ export const generateRecords = async (task: ListrTask) => {
 			// #region Loop controller
 			orgCount++
 			// if (orgCount === 1) break
-			if (orgCount % batchSize === 0 || orgCount === initialData.organization.size) {
+			if (
+				orgCount % batchSize === 0 ||
+				orgCount === initialData.organization.size ||
+				orgCount === orgs.length
+			) {
 				batchCounter++
 				const message = `✍️ Writing batch ${batchCounter} of ${maxBatches} to file`
 				log(message)

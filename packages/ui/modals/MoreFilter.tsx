@@ -32,6 +32,7 @@ import {
 } from 'react'
 
 import { Button } from '~ui/components/core/Button'
+import { Link } from '~ui/components/core/Link'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -108,6 +109,9 @@ const useModalStyles = createStyles((theme) => ({
 const useStyles = createStyles((theme) => ({
 	label: {
 		...theme.other.utilityFonts.utility1,
+		[theme.fn.smallerThan('sm')]: {
+			textAlign: 'center',
+		},
 	},
 
 	count: {
@@ -124,10 +128,11 @@ const useStyles = createStyles((theme) => ({
 	},
 
 	button: {
-		padding: `${rem(14)} ${rem(20)} ${rem(14)} ${rem(16)}`,
+		padding: `${rem(14)} ${rem(16)}`,
 		backgroundColor: theme.other.colors.secondary.white,
 		borderRadius: rem(8),
 		border: `${theme.other.colors.tertiary.coolGray} ${rem(1)} solid`,
+		height: rem(48),
 	},
 
 	itemParent: {},
@@ -302,21 +307,30 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 
 			return (
 				<Group className={modalTitle ? undefined : classes.button} position='apart' noWrap spacing={0}>
-					<Group spacing={8} noWrap>
-						<FilterDisplay>{t('more.filters')}</FilterDisplay>
-						{selectedItems.length > 0 ? selectedCountIcon : null}
-					</Group>
-
 					{modalTitle ? (
-						<Text
-							fw={500}
-							onClick={() => deselectAll()}
-							className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
-						>
-							{t('uncheck-all')}
-						</Text>
+						<>
+							<Group spacing={8} noWrap>
+								<FilterDisplay>{t('more.options')}</FilterDisplay>
+								{selectedItems.length > 0 ? selectedCountIcon : null}
+							</Group>
+							{selectedItems.length > 0 ? (
+								<Link
+									fw={500}
+									onClick={() => deselectAll()}
+									// className={selectedItems.length > 0 ? classes.uncheck : classes.uncheckDisabled}
+								>
+									{t('uncheck-all')}
+								</Link>
+							) : null}
+						</>
 					) : (
-						<Icon icon='carbon:chevron-down' height={24} />
+						<>
+							<Group spacing={8} noWrap position='center' w='100%'>
+								<Icon icon='carbon:settings-adjust' rotate={2} />
+								<FilterDisplay>{t('more.options')}</FilterDisplay>
+							</Group>
+							{selectedItems.length > 0 ? selectedCountIcon : <Icon icon='carbon:chevron-down' height={24} />}
+						</>
 					)}
 				</Group>
 			)
@@ -340,17 +354,17 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 					classNames={modalClasses}
 					scrollAreaComponent={Modal.NativeScrollArea}
 				>
-					<Stack spacing={24} pb={12}>
+					<Stack spacing={24}>
 						<ScrollArea.Autosize
 							classNames={{ viewport: accordionClasses.scrollArea }}
 							mah={scrollAreaMaxHeight}
 						>
 							<Stack className={classes.sectionLabel} spacing={4} mt={0}>
-								<Title order={3}>{t('include')}</Title>
+								<Title order={3}>{t('modal-more-options.include')}</Title>
 								{filterListInclude}
 							</Stack>
 							<Stack className={classes.sectionLabel} spacing={4}>
-								<Title order={3}>{t('exclude')}</Title>
+								<Title order={3}>{t('modal-more-options.exclude')}</Title>
 								{filterListExclude}
 							</Stack>
 						</ScrollArea.Autosize>
@@ -374,7 +388,6 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 						</Button>
 					</Group>
 				</Modal>
-
 				<Box ref={ref} component={DefaultLauncher} onClick={() => setOpened(true)} {...props} />
 			</>
 		)

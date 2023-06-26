@@ -4,7 +4,7 @@
 	"pipeline": {
 		"build:aws": {
 			"dependsOn": ["format", "lint:fix", "^db:generate", "type-check"],
-			"inputs": ["src/**", "../../node_modules/.prisma/client/**"],
+			"inputs": ["./src/**"],
 			"outputs": ["./dist/**"]
 		},
 		"deploy:aws": {

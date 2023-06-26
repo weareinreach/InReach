@@ -1,7 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
-import { Card, Stack, Text, Title } from '@mantine/core'
-import { useElementSize } from '@mantine/hooks'
+import { Card, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -10,40 +10,40 @@ import { GoogleMap } from '~ui/components/core/GoogleMap'
 import { Hours } from '~ui/components/data-display/Hours'
 import { useCustomVariant, useFormattedAddress, useScreenSize } from '~ui/hooks'
 import { validateIcon } from '~ui/icon'
+import { trpc as api } from '~ui/lib/trpcClient'
 
-export const VisitCard = (props: VisitCardProps) => {
+export const VisitCard = ({ locationId, ...props }: VisitCardProps) => {
 	const { isMobile } = useScreenSize()
-	const { location, published = true } = props
 	const { t } = useTranslation(['common', 'attribute'])
 	const { ref, width } = useElementSize()
-	const formattedAddress = useFormattedAddress(location)
 	const variants = useCustomVariant()
+	const theme = useMantineTheme()
+	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
+	const { data } = api.location.forVisitCard.useQuery(locationId)
+
+	const formattedAddress = useFormattedAddress(data)
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
 	// )
 
-	const remote = location.attributes.find(
-		({ attribute: { tsKey } }) => tsKey === 'additional.offers-remote-services'
-	)
+	if (!data) return null
 
-	if (!published && !remote && !location.hours.length) return null
-
-	const address = formattedAddress && published && (
+	const address = formattedAddress && (
 		<Stack spacing={12} ref={ref}>
-			<Title order={3}>{t('address', { context: remote ? 'physical' : undefined })}</Title>
+			<Title order={3}>{t('address', { context: data.remote ? 'physical' : undefined })}</Title>
 			<Text>{formattedAddress}</Text>
-			<GoogleMap marker={location} height={Math.floor(width * 0.625)} width={width} />
+			<GoogleMap locationIds={data.id} height={Math.floor(width * 0.625)} width={width} />
 		</Stack>
 	)
 
-	const remoteSection = remote && (
+	const remoteSection = data.remote && (
 		<Stack spacing={12}>
 			<Badge
 				variant='attribute'
 				tsNs='attribute'
-				tsKey={remote.attribute.tsKey}
-				icon={validateIcon(remote.attribute.icon)}
+				tsKey={data.remote.tsKey}
+				icon={validateIcon(data.remote.icon)}
 			/>
 			<Text variant={variants.Text.utility2}>{t('remote-services')}</Text>
 		</Stack>
@@ -54,7 +54,7 @@ export const VisitCard = (props: VisitCardProps) => {
 			<Title order={2}>{t('visit')}</Title>
 			{address}
 			{remoteSection}
-			<Hours data={location.hours} />
+			<Hours parentId={locationId} />
 			{/* TODO: [IN-807] Validate accessibility data points before enabling.
 			<Stack spacing={12} align='flex-start'>
 				<Badge
@@ -72,13 +72,13 @@ export const VisitCard = (props: VisitCardProps) => {
 		</Stack>
 	)
 
-	return isMobile ? body : <Card>{body}</Card>
+	return isTablet ? body : <Card>{body}</Card>
 }
 // TODO: [IN-785] Create variant for Remote/Unpublished address
 type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>
 type LocationResult = NonNullable<ApiOutput['location']['getById']>
 
 export type VisitCardProps = {
-	location: PageQueryResult['locations'][number] | LocationResult
+	locationId: string
 	published?: boolean
 }

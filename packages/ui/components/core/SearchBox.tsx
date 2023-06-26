@@ -12,10 +12,9 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
-import { type DefaultTFuncReturn } from 'i18next'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { type Dispatch, forwardRef, type SetStateAction, useEffect, useState } from 'react'
+import { type Dispatch, forwardRef, type ReactNode, type SetStateAction, useEffect, useState } from 'react'
 import reactStringReplace from 'react-string-replace'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -77,12 +76,15 @@ const useStyles = createStyles((theme) => ({
 	resultContainer: {
 		minWidth: 'fit-content',
 	},
+	pinToLeft: {
+		left: `0 !important`,
+	},
 }))
 
 /** Most of Google's autocomplete language options are only the two letter variants */
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
-export const SearchBox = ({ type, label, loadingManager, initialValue }: SearchBoxProps) => {
+export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
@@ -298,7 +300,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue }: SearchB
 					? classes.autocompleteContainer
 					: cx(classes.autocompleteContainer, classes.emptyLocation),
 				itemsWrapper: classes.autocompleteWrapper,
-				dropdown: classes.resultContainer,
+				dropdown: pinToLeft ? cx(classes.resultContainer, classes.pinToLeft) : classes.resultContainer,
 			}}
 			itemComponent={AutoCompleteItem}
 			dropdownComponent={isOrgSearch ? ResultContainer : undefined}
@@ -318,12 +320,13 @@ export const SearchBox = ({ type, label, loadingManager, initialValue }: SearchB
 
 type SearchBoxProps = {
 	type: 'location' | 'organization'
-	label?: string | DefaultTFuncReturn
+	label?: string | ReactNode
 	loadingManager: {
 		setLoading: Dispatch<SetStateAction<boolean>>
 		isLoading: boolean
 	}
 	initialValue?: string
+	pinToLeft?: boolean
 }
 type FormValues = {
 	search: string

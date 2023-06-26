@@ -1,7 +1,7 @@
 import { CognitoJwtVerifier } from 'aws-jwt-verify'
 import { z } from 'zod'
 
-import { getEnv } from '@weareinreach/config/env'
+import { getEnv } from '@weareinreach/env'
 
 const verifier = (tokenUse: 'access' | 'id') =>
 	CognitoJwtVerifier.create({

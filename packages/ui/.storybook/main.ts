@@ -1,6 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import { type StorybookConfig } from '@storybook/nextjs'
+import isChromatic from 'chromatic/isChromatic'
 import { mergeAndConcat } from 'merge-anything'
 import { type PropItem } from 'react-docgen-typescript'
 
@@ -81,38 +82,37 @@ const config: StorybookConfig = {
 					'next-i18next': 'react-i18next',
 				},
 				roots: [path.resolve(__dirname, '../../../apps/app/public')],
-				fallback: {
-					fs: false,
-					assert: false,
-					buffer: false,
-					console: false,
-					constants: false,
-					crypto: false,
-					domain: false,
-					events: false,
-					http: false,
-					https: false,
-					os: false,
-					path: false,
-					punycode: false,
-					process: false,
-					querystring: false,
-					stream: false,
-					string_decoder: false,
-					sys: false,
-					timers: false,
-					tty: false,
-					url: false,
-					util: false,
-					v8: false,
-					vm: false,
-					zlib: false,
-				},
+				// fallback: {
+				// 	fs: false,
+				// 	assert: false,
+				// 	buffer: false,
+				// 	console: false,
+				// 	constants: false,
+				// 	crypto: false,
+				// 	domain: false,
+				// 	events: false,
+				// 	http: false,
+				// 	https: false,
+				// 	os: false,
+				// 	path: false,
+				// 	punycode: false,
+				// 	process: false,
+				// 	querystring: false,
+				// 	stream: false,
+				// 	string_decoder: false,
+				// 	sys: false,
+				// 	timers: false,
+				// 	tty: false,
+				// 	url: false,
+				// 	util: false,
+				// 	v8: false,
+				// 	vm: false,
+				// 	zlib: false,
+				// },
 			},
 			stats: {
 				colors: true,
 			},
-			// devtool: isDev ? 'eval-source-map' : 'cheap-module-source-map',
 		}
 		const mergedConfig = mergeAndConcat(config, configAdditions)
 		return mergedConfig
@@ -120,5 +120,10 @@ const config: StorybookConfig = {
 	docs: {
 		autodocs: true,
 	},
+	env: isChromatic()
+		? {
+				SKIP_ENV_VALIDATION: 'true',
+		  }
+		: {},
 }
 export default config

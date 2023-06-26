@@ -42,13 +42,14 @@ export const handler = (
 
 	switch (triggerSource) {
 		case 'CustomMessage_AdminCreateUser':
+		case 'CustomMessage_ResendCode':
 		case 'CustomMessage_SignUp': {
 			response.emailSubject = subject
 			response.emailMessage = `${message} ${confirmLink}`
 			break
 		}
 		case 'CustomMessage_ForgotPassword': {
-			response.emailSubject = 'Reset your password'
+			response.emailSubject = subject
 			response.emailMessage = `${message} ${resetLink}`
 			break
 		}

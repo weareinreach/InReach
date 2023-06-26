@@ -4,10 +4,12 @@
 	"pipeline": {
 		"build": {
 			"dependsOn": ["^build"],
-			"outputs": ["storybook-static/**", "./icon/iconList.ts"]
+			"inputs": ["./icon/iconList.ts", "./icon/iconCollection.ts"],
+			"outputs": ["./icon/iconList.ts"]
 		},
 		"build:icons": {
-			"inputs": ["./icon/iconList.ts"]
+			"inputs": ["./icon/iconList.ts", "./icon/iconCollection.ts"],
+			"outputs": ["./icon/iconList.ts"]
 		},
 		"chromatic": {
 			"dependsOn": ["build"],

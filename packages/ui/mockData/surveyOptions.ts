@@ -1617,10 +1617,22 @@ export const surveyOptions = {
 			status: 'Dreamer (DACA recipient)',
 		},
 		{
+			id: 'uimm_01H2RRM42VTDFX1TE9T0JEP0RC',
+			tsKey: 'immigration-none',
+			tsNs: 'user',
+			status: 'None',
+		},
+		{
 			id: 'uimm_01GW2HHHS4G6TA7FVKXBC3NT8M',
 			tsKey: 'immigration-immigrant',
 			tsNs: 'user',
-			status: 'Immigrant',
+			status: 'Other immigrant',
+		},
+		{
+			id: 'uimm_01H2RS1637PN3MECKRZXJRPGM2',
+			tsKey: 'immigration-prefer-not-to-say',
+			tsNs: 'user',
+			status: 'Prefer not to say',
 		},
 		{
 			id: 'uimm_01GW2HHHS4DQRF2AJR7RTQ1WDJ',

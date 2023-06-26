@@ -1,7 +1,7 @@
 import { Grid, Overlay } from '@mantine/core'
-import { type GetServerSidePropsContext } from 'next'
+import { type GetStaticPropsContext } from 'next'
 import { useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { getServerSession } from '@weareinreach/auth'
@@ -11,24 +11,18 @@ import { getServerSideTranslations } from '~app/utils/i18n'
 
 const SuggestResource = () => {
 	const { data: session, status } = useSession()
-	const [overlay, setOverlay] = useState(status === 'unauthenticated')
-
-	useEffect(() => {
-		if (!session && status === 'unauthenticated') {
-			setOverlay(true)
-		} else if (session && status === 'authenticated') {
-			setOverlay(false)
-		}
-	}, [session, status])
+	const [overlay, setOverlay] = useState(false)
 
 	return (
 		<>
 			<Grid.Col sm={8}>
-				<SuggestOrg />
+				<SuggestOrg
+					authPromptState={{ overlay, setOverlay, hasAuth: Boolean(session && status === 'authenticated') }}
+				/>
 			</Grid.Col>
 			{overlay && (
 				<Overlay blur={2}>
-					<QuickPromotionModal autoLaunch noClose />
+					<QuickPromotionModal autoLaunch onClose={() => setOverlay(false)} />
 				</Overlay>
 			)}
 		</>
@@ -37,23 +31,19 @@ const SuggestResource = () => {
 
 export default SuggestResource
 
-export const getServerSideProps = async ({ locale, req, res }: GetServerSidePropsContext) => {
-	const session = await getServerSession({ req, res })
-	const ssg = await trpcServerClient({ session })
+export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
+	const ssg = await trpcServerClient({ session: null })
 
-	await ssg.organization.suggestionOptions.prefetch()
+	const [i18n] = await Promise.allSettled([
+		getServerSideTranslations(locale, ['suggestOrg', 'country', 'services', 'attribute', 'common']),
+		ssg.organization.suggestionOptions.prefetch(),
+	])
 
 	return {
 		props: {
-			session,
 			trpcState: ssg.dehydrate(),
-			...(await getServerSideTranslations(locale, [
-				'suggestOrg',
-				'country',
-				'services',
-				'attribute',
-				'common',
-			])),
+			...(i18n.status === 'fulfilled' ? i18n.value : {}),
 		},
+		revalidate: 60 * 60 * 24, // 24 hours
 	}
 }

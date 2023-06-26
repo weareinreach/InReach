@@ -5,24 +5,28 @@
 		"db:dataMigrate": {
 			"dependsOn": ["download:seedData", "db:generate", "db:deploy"],
 			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
-			"inputs": ["prisma/data-migrations/**/*.ts", "prisma/dataMigrationRunner.ts"]
+			"inputs": ["./prisma/data-migrations/**/*.ts", "./prisma/dataMigrationRunner.ts"],
+			"outputMode": "new-only"
 		},
 		"db:deploy": {
 			"dependsOn": ["db:generate"],
 			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
-			"inputs": ["prisma/migrations/**/*"]
+			"inputs": ["./prisma/migrations/**/*"],
+			"outputMode": "new-only"
 		},
 		"db:generate": {
 			"cache": false,
 			"env": ["DATABASE_URL", "DB_DIRECT_URL", "PRISMA_GENERATE_DATAPROXY"],
-			"inputs": ["prisma/schema.prisma"]
+			"inputs": ["./prisma/schema.prisma"]
 		},
 		"db:run-seed": {
 			"cache": false,
 			"dependsOn": ["download:seedData"]
 		},
 		"download:seedData": {
-			"outputs": ["seed/data/downloaded/*.json"]
+			"inputs": ["./seed/starterData.ts", "./seed/downloadData.ts"],
+			"outputMode": "new-only",
+			"outputs": ["./seed/data/downloaded/*.json"]
 		},
 		"generate:data": {
 			"cache": false,

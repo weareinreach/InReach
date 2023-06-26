@@ -8,11 +8,9 @@ import { Icon } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({
 	menuTarget: {
-		paddingBottom: theme.spacing.sm,
-		paddingTop: theme.spacing.sm,
-		paddingLeft: theme.spacing.xs,
-		paddingRight: theme.spacing.xs,
+		padding: `${rem(4)} ${rem(12)}`,
 		borderRadius: theme.spacing.sm,
+		height: rem(56),
 		'&:hover': {
 			backgroundColor: theme.other.colors.primary.lightGray,
 			cursor: 'pointer',
@@ -25,9 +23,7 @@ const useStyles = createStyles((theme) => ({
 		...theme.other.utilityFonts.utility1,
 		color: `${theme.other.colors.secondary.black} !important`,
 		padding: `${rem(16)} ${rem(32)}`,
-	},
-	dropdown: {
-		borderRadius: theme.spacing.sm,
+		...theme.fn.hover({ backgroundColor: theme.other.colors.primary.lightGray, cursor: 'pointer' }),
 	},
 }))
 
@@ -65,8 +61,13 @@ export const LangPicker = () => {
 			trigger='hover'
 			classNames={{
 				item: classes.menuItem,
-				dropdown: classes.dropdown,
 			}}
+			position='bottom-start'
+			transitionProps={{
+				transition: 'scale-y',
+			}}
+			radius='sm'
+			shadow='xs'
 		>
 			<Menu.Target>
 				<MenuTarget activeLang={activeLang} />

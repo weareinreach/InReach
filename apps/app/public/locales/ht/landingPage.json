@@ -1,0 +1,43 @@
+{
+	"banner": {
+		"redesign": "Li sou lansman de InReach App Redesign a sou blog nou an. <Link>Aprann plis.</Link>"
+	},
+	"call-out": {
+		"hear-from-users": "<Title1>Koute itilizatè nou an</Title1>",
+		"who-we-are": "<Title1>Ki moun nou ye</Title1>\n<Text>Nou se yon teknoloji trans-dirije san bi likratif ogmante aksè resous pou divès LGBTQ+kominote a.</Text>\n<Link>Aprann plis bagay sou nou.</Link>"
+	},
+	"hero": {
+		"community": {
+			"0": "LGBTQ+moun k ap chèche azil",
+			"1": "Imigran LGBTQ+",
+			"2": "LGBTQ+refijye",
+			"3": "LGBTQ+jèn",
+			"4": "kominote a transganr",
+			"5": "LGBTQ+kominote BIPOC",
+			"6": "moun kap bay swen nan LGBTQ+jèn"
+		},
+		"find-resources": "<Text>Jwenn verifye </Text><Service></Service><Text> pou </Text><Community></Community><Text> ak InReach.</Text>",
+		"heading": "Jwenn resous LGBTQ+.",
+		"privacy-disclaimer": "Repons ou an anonim epi yo pa konekte ak ou kòm yon itilizatè endividyèl. Li nou an <Link>règleman sou vi prive</Link> yo aprann plis.",
+		"services": {
+			"0": "swen medikal",
+			"1": "sipò kominote",
+			"2": "swen sante mantal",
+			"3": "edikasyon",
+			"4": "travay",
+			"5": "manje",
+			"6": "lojman",
+			"7": "rad",
+			"8": "èd legal",
+			"9": "tradiksyon"
+		},
+		"subheading": "Byenveni nan premye platfòm teknoloji nan mond lan matche TLGBQ+ (transganr, lèsbyan, masisi, biseksyèl, queer ak plis idantite) moun ki fè fas a pèsekisyon oswa diskriminasyon ak resous ki an sekirite, verifye."
+	},
+	"values": {
+		"free": "<Title2>Gratis pou tout tan 🔑</Title2>\n<Text>platfòm teknoloji nou an se 100% gratis pou tout moun asire èd san danje se toujou InREACH.</Text>\n<LinkFree>Fè don pou ede nou kenbe platfòm nou an gratis.</LinkFree>",
+		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>Nou se premye platfòm teknoloji nan mond lan matche LGBTQ+moun ki fè fas a pèsekisyon oswa diskriminasyon ak resous ki an sekirite, poukont verifye.</Text>\n<LinkInnovative>Gade kòd sous nou yo ak kontribye.</LinkInnovative>",
+		"intersectional": "<Title2>Entèseksyonèl ✊🏿‍✊🏾✊🏽</Title2>\n<Text>Nou kwè LGBTQ+egalite mande jistis trans, jistis refijye, jistis rasyal, jistis repwodiktif, jistis langaj ak plis ankò.</Text>\n<LinkIntersect>Aprann plis bagay sou pwosesis revizyon nou an.</LinkIntersect>",
+		"our-values": "Valè nou",
+		"safety-first": "<Title2>Sekirite-premye 🔒</Title2>\n<Text>Nou konnen anonim sou entènèt kapab yon pwoblèm lavi-oswa-lanmò pou LGBTQ+moun. Se poutèt sa App nou an fèt pou pwoteje konfidansyalite ak sekirite itilizatè yo sou entènèt.</Text>\n<LinkSafety>Aprann plis sou règleman sou vi prive nou an.</LinkSafety>"
+	}
+}

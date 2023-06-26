@@ -7,7 +7,7 @@
 	"main": "dist/index.js",
 	"source": "src/index.ts",
 	"scripts": {
-		"aws:db:generate": "prisma generate --schema ../db/prisma/schema.prisma --data-proxy",
+		"aws:db:generate": "prisma generate --schema ../db/prisma/schema.prisma",
 		"build:aws": "./build.sh",
 		"bundle": "ncc build ./src/index.ts -s  -a -d",
 		"clean:dist": "rm -fr dist",
@@ -21,22 +21,22 @@
 		"prune-clients": "find ./dist/client -type f -not -name '*rhel*' -delete -print"
 	},
 	"dependencies": {
-		"@aws-lambda-powertools/logger": "1.8.0",
-		"@prisma/client": "4.14.1",
-		"@weareinreach/db": "0.100.0"
+		"@aws-lambda-powertools/logger": "1.10.0",
+		"@prisma/client": "4.16.1",
+		"@weareinreach/db": "workspace:*"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.115",
-		"@types/eslint": "8.40.0",
-		"@types/node": "18.16.16",
-		"@types/prettier": "2.7.2",
+		"@types/aws-lambda": "8.10.119",
+		"@types/eslint": "8.40.2",
+		"@types/node": "18.16.18",
+		"@types/prettier": "2.7.3",
 		"@vercel/ncc": "0.36.1",
-		"@weareinreach/config": "0.100.0",
+		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
-		"eslint": "8.41.0",
+		"eslint": "8.43.0",
 		"prettier": "2.8.8",
-		"prisma": "4.14.1",
-		"typescript": "5.0.4"
+		"prisma": "4.16.1",
+		"typescript": "5.1.3"
 	}
 }

@@ -20,11 +20,13 @@ import { type PolymorphicComponentProps } from '@mantine/utils'
 import { type TOptions } from 'i18next'
 import { DateTime } from 'luxon'
 import { merge } from 'merge-anything'
-import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode } from 'react'
+import { Trans, useTranslation } from 'next-i18next'
+import { forwardRef, type ReactNode, useState } from 'react'
 
+import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon, type IconList, isValidIcon } from '~ui/icon'
+import { ClaimOrgModal } from '~ui/modals/ClaimOrg'
 
 const badgeVariants: BadgeVariants = (theme, params) => {
 	switch (params.variant) {
@@ -53,7 +55,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 			return {
 				root: {
 					backgroundColor: theme.other.colors.primary.lightGray,
-					border: 'none',
+					borderColor: theme.other.colors.secondary.white,
 				},
 				inner: {
 					fontSize: theme.fontSizes.sm,
@@ -123,18 +125,25 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 					border: 0,
 					minHeight: rem(24),
 					padding: '0',
-					// alignItems: 'flex-start',
 					lineHeight: 'inherit',
 					borderRadius: 0,
 				},
 				leftSection: {
 					height: rem(24),
-					// '& *': {
-					// 	margin: 0,
-					// },
-					// '& svg': {
-					// 	verticalAlign: 'sub',
-					// },
+				},
+			}
+		}
+		case 'remote': {
+			return {
+				root: {
+					border: 0,
+					height: rem(20),
+					padding: '0',
+					lineHeight: 'inherit',
+					borderRadius: 0,
+				},
+				leftSection: {
+					height: rem(20),
 				},
 			}
 		}
@@ -145,6 +154,9 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 }
 
 const useVariantStyles = createStyles((theme, params: BadgeStylesParams) => badgeVariants(theme, params))
+const useUnclaimedStyles = createStyles((theme) => ({
+	root: theme.fn.hover({ cursor: 'pointer' }),
+}))
 
 const customVariants = [
 	'community',
@@ -156,6 +168,7 @@ const customVariants = [
 	'attribute',
 	'privatePractice',
 	'verifiedReviewer',
+	'remote',
 ] as const
 
 const customVariantMap = {
@@ -168,6 +181,7 @@ const customVariantMap = {
 	attribute: 'outline',
 	privatePractice: 'outline',
 	verifiedReviewer: 'outline',
+	remote: 'outline',
 } satisfies Record<CustomVariants, BadgeVariant | undefined>
 
 /** Badge variants `serviceTag` and `communityTag` are responsive - the sizing changes at the `sm` breakpoint. */
@@ -181,7 +195,9 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 			variant: props.variant ?? 'light',
 			...(props.variant === 'leader' ? { minify: props.minify, hideBg: props.hideBg } : {}),
 		})
+		const { classes: unclaimedClasses } = useUnclaimedStyles()
 		const { variant, classNames, ...others } = props as BadgeProps
+		const [modalOpen, setModalOpen] = useState(false)
 
 		const leftSection = (() => {
 			switch (props.variant) {
@@ -226,6 +242,9 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 					return (
 						<Icon icon='carbon:checkmark-filled' height={20} color={theme.other.colors.primary.allyGreen} />
 					)
+				}
+				case 'remote': {
+					return <Icon icon='carbon:globe' height={20} color={theme.other.colors.secondary.black} />
 				}
 			}
 		})()
@@ -276,6 +295,21 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 
 		const renderTooltip: Omit<TooltipProps, 'children'> | undefined = (() => {
 			switch (props.variant) {
+				case 'community': {
+					return {
+						label: t('badge.community-tool-tip'),
+					}
+				}
+				case 'remote': {
+					return {
+						label: t('badge.remote-tool-tip'),
+					}
+				}
+				case 'service': {
+					return {
+						label: t('badge.service-tool-tip'),
+					}
+				}
 				case 'leader': {
 					return {
 						label: t('adjective.organization', { ns: 'common', adjective: `$t(attribute:${props.tsKey})` }), //t(props.tsKey, { ns: 'attribute' }),
@@ -283,7 +317,6 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 					}
 				}
 				case 'verified': {
-					const MAX_CHARACTERS = 80
 					const lastVerified =
 						props.lastverified instanceof Date ? props.lastverified : new Date(props.lastverified)
 
@@ -291,10 +324,34 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						.setLocale(i18n.resolvedLanguage ?? 'en')
 						.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
 					const label = t('verified-information-detail', { dateString })
+
 					return {
 						label,
 						multiline: true,
-						width: label.length > MAX_CHARACTERS ? 600 : 'auto',
+						maw: { base: '90vw', xs: 600 },
+					}
+				}
+				case 'claimed': {
+					const label = (
+						<Trans
+							i18nKey='badge.claimed-tool-tip'
+							components={{
+								link1: (
+									<Link
+										external
+										href='https://inreach.org/claimed-organizations/'
+										variant={variants.Link.inheritStyle}
+									/>
+								),
+							}}
+						/>
+					)
+					return {
+						label,
+						multiline: true,
+						closeDelay: 500,
+						style: { pointerEvents: 'auto' },
+						maw: { base: '90vw', xs: 600 },
 					}
 				}
 			}
@@ -324,10 +381,56 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				{children}
 			</MantineBadge>
 		)
+		if (props.variant === 'unclaimed') {
+			const label = (
+				<Trans
+					i18nKey='badge.unclaimed-tool-tip'
+					components={{
+						link1: <Link external onClick={() => setModalOpen(true)} variant={variants.Link.inheritStyle} />,
+					}}
+				/>
+			)
+			return (
+				<Tooltip
+					style={{ pointerEvents: 'auto' }}
+					closeDelay={500}
+					label={label}
+					events={{ hover: true, focus: true, touch: true }}
+					multiline
+					variant={variants.Tooltip.utility1}
+					px={16}
+					py={10}
+					maw={{ base: '90vw', xs: 600 }}
+				>
+					<ClaimOrgModal
+						component={MantineBadge}
+						variant={mantineVariant}
+						classNames={merge(classNames, baseClasses)}
+						className={unclaimedClasses.root}
+						ref={ref}
+						leftSection={leftSection}
+						w='fit-content'
+						externalOpen={modalOpen}
+						externalStateHandler={setModalOpen}
+						{...styleDataProps}
+						{...passedBadgeProps}
+					>
+						{children}
+					</ClaimOrgModal>
+				</Tooltip>
+			)
+		}
 
 		if (renderTooltip) {
 			return (
-				<Tooltip multiline variant={variants.Tooltip.utility1} {...renderTooltip}>
+				<Tooltip
+					multiline
+					variant={variants.Tooltip.utility1}
+					px={16}
+					py={10}
+					events={{ hover: true, focus: true, touch: true }}
+					{...renderTooltip}
+				>
 					{badge}
 				</Tooltip>
 			)

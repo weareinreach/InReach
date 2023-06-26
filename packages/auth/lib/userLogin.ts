@@ -1,5 +1,4 @@
 import { AuthFlowType } from '@aws-sdk/client-cognito-identity-provider'
-import { z } from 'zod'
 
 import { type AuthResult, ClientId, cognito, generateHash, parseAuthResponse } from './cognitoClient'
 
@@ -17,11 +16,3 @@ export const userLogin: UserLogin = async (email, password) => {
 }
 
 type UserLogin = (email: string, password: string) => Promise<AuthResult>
-
-export const CognitoSessionSchema = z.object({
-	AccessToken: z.string(),
-	ExpiresIn: z.number(),
-	IdToken: z.string(),
-	RefreshToken: z.string().optional(),
-	TokenType: z.string(),
-})

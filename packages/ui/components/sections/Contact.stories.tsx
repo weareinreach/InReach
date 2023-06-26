@@ -1,15 +1,20 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { StorybookGridSingle } from '~ui/layouts'
-import { contactMock } from '~ui/mockData/contactSection'
+import { getTRPCMock } from '~ui/lib/getTrpcMock'
+import { miscMock } from '~ui/mockData/misc'
+import { orgEmail } from '~ui/mockData/orgEmail'
+import { orgPhone } from '~ui/mockData/orgPhone'
+import { orgSocialMedia } from '~ui/mockData/orgSocialMedia'
+import { orgWebsite } from '~ui/mockData/orgWebsite'
 
 import { ContactSection } from './Contact'
 
 export default {
-	title: 'Sections/Contact Info',
+	title: 'Sections/Contact Info - Individual API',
 	component: ContactSection,
 	args: {
-		data: contactMock,
+		parentId: 'parentId',
 		role: 'org',
 	},
 	parameters: {
@@ -23,6 +28,20 @@ export default {
 				},
 			},
 		},
+		msw: [
+			getTRPCMock({
+				path: ['organization', 'getIdFromSlug'],
+				type: 'query',
+				response: {
+					id: 'orgn_ORGANIZATIONID',
+				},
+			}),
+			orgEmail.forContactInfo,
+			orgPhone.forContactInfo,
+			orgWebsite.forContactInfo,
+			orgSocialMedia.forContactInfo,
+			miscMock.hasContactInfo,
+		],
 	},
 	decorators: [StorybookGridSingle],
 } satisfies Meta<typeof ContactSection>
