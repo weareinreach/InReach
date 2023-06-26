@@ -150,7 +150,7 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 	)
 	const { data: phoneTypes } = api.fieldOpt.phoneTypes.useQuery(undefined, {
 		enabled: Boolean(organizationId),
-		// @ts-expect-error trpc/trpc#4519
+
 		// !fix when issue resolved.
 		select: (data) => [
 			...data.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) satisfies string })),
@@ -162,7 +162,7 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 		{ organizationId },
 		{
 			enabled: Boolean(organizationId),
-			// @ts-expect-error trpc/trpc#4519
+
 			// !fix when issue resolved.
 			select: (data) => data.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
 			refetchOnWindowFocus: false,
@@ -172,7 +172,7 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 		{ organizationId: organizationId ?? '' },
 		{
 			enabled: Boolean(organizationId),
-			// @ts-expect-error trpc/trpc#4519
+
 			// !fix when issue resolved.
 			select: (data) => data.map(({ id, name }) => ({ value: id, label: name ?? '' })),
 			refetchOnWindowFocus: false,
@@ -235,7 +235,6 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 					>
 						<Group noWrap key={info.cell.id} spacing={4}>
 							<Select
-								// @ts-expect-error trpc/trpc#4519
 								// !fix when issue resolved.
 								data={phoneTypes ?? []}
 								{...form.getInputProps(`data.${info.row.index}.phoneType`, { withFocus: false })}
@@ -293,7 +292,6 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 			cell: (info) => (
 				<MultiSelectPopover
 					key={info.cell.id}
-					// @ts-expect-error trpc/trpc#4519
 					// !fix when issue resolved.
 					data={orgServices ?? []}
 					label='Services'
@@ -307,7 +305,6 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 			cell: (info) => (
 				<MultiSelectPopover
 					key={info.cell.id}
-					// @ts-expect-error trpc/trpc#4519
 					// !fix when issue resolved.
 					data={orgLocations ?? []}
 					label='Locations'

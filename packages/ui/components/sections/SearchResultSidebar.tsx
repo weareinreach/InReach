@@ -47,8 +47,7 @@ export const SearchResultSidebar = ({ resultCount, loadingManager }: SearchResul
 				pinToLeft
 			/>
 			<Divider mt={-10} />
-			{/*  eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-			{/* @ts-expect-error */}
+			{/* @ts-expect-error - component arg should be valid... */}
 			<Button variant={variants.Button.primaryLg} component={Link} href='/suggest'>
 				{t('suggest-a-resource')}
 			</Button>

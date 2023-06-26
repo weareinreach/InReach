@@ -143,7 +143,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const { data: orgServices } = api.service.getNames.useQuery(
 		{ organizationId },
 		{
-			// @ts-expect-error trpc/trpc#4519
 			// !fix when issue resolved.
 			select: (data) => data.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
 			enabled: Boolean(organizationId),
@@ -418,7 +417,6 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 							<Divider w='100%' />
 							<MultiSelectPopover
 								label='Services available'
-								// @ts-expect-error trpc/trpc#4519
 								// !fix when issue resolved.
 								data={orgServices}
 								fullWidth

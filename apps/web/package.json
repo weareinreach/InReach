@@ -35,14 +35,14 @@
 		"@weareinreach/ui": "workspace:*",
 		"dayjs": "1.11.8",
 		"embla-carousel-react": "7.1.0",
-		"i18next": "23.2.1",
-		"next": "13.4.6",
+		"i18next": "23.2.3",
+		"next": "13.4.7",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"react-i18next": "13.0.0"
+		"react-i18next": "13.0.1"
 	},
 	"devDependencies": {
-		"@next/bundle-analyzer": "13.4.6",
+		"@next/bundle-analyzer": "13.4.7",
 		"@types/eslint": "8.40.2",
 		"@types/node": "18.16.18",
 		"@types/react": "18.2.13",
