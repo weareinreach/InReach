@@ -1,0 +1,125 @@
+import superjson from 'superjson'
+import { type LiteralUnion } from 'type-fest'
+
+import fs from 'fs'
+import path from 'path'
+
+import { type Prisma } from '~db/client'
+import { formatMessage } from '~db/seed/recon/lib/logger'
+import { type PassedTask } from '~db/seed/recon/lib/types'
+
+const outputDir = path.resolve(__dirname, '../output')
+const createDir = path.resolve(outputDir, 'create')
+const updateDir = path.resolve(outputDir, 'update')
+
+export const getBatchFile: GetBatchFile = ({ type, batchName }) =>
+	type === 'create' ? `${createDir}${batchName}.json` : `${updateDir}${batchName}.json`
+export const create = {
+	organization: new Set<Prisma.OrganizationCreateManyInput>(),
+	translationKey: new Set<Prisma.TranslationKeyCreateManyInput>(),
+	freeText: new Set<Prisma.FreeTextCreateManyInput>(),
+	phoneType: new Set<Prisma.PhoneTypeCreateManyInput>(),
+	orgLocation: new Set<Prisma.OrgLocationCreateManyInput>(),
+	orgPhone: new Set<Prisma.OrgPhoneCreateManyInput>(),
+	orgEmail: new Set<Prisma.OrgEmailCreateManyInput>(),
+	orgWebsite: new Set<Prisma.OrgWebsiteCreateManyInput>(),
+	orgWebsiteLanguage: new Set<Prisma.OrgWebsiteLanguageCreateManyInput>(),
+	orgSocialMedia: new Set<Prisma.OrgSocialMediaCreateManyInput>(),
+	outsideAPI: new Set<Prisma.OutsideAPICreateManyInput>(),
+	orgPhoto: new Set<Prisma.OrgPhotoCreateManyInput>(),
+	orgHours: new Set<Prisma.OrgHoursCreateManyInput>(),
+	orgService: new Set<Prisma.OrgServiceCreateManyInput>(),
+	serviceAccess: new Set<Prisma.ServiceAccessCreateManyInput>(),
+	attributeSupplement: new Set<Prisma.AttributeSupplementCreateManyInput>(),
+	orgServicePhone: new Set<Prisma.OrgServicePhoneCreateManyInput>(),
+	orgServiceEmail: new Set<Prisma.OrgServiceEmailCreateManyInput>(),
+	orgLocationService: new Set<Prisma.OrgLocationServiceCreateManyInput>(),
+	orgServiceTag: new Set<Prisma.OrgServiceTagCreateManyInput>(),
+	organizationAttribute: new Set<Prisma.OrganizationAttributeCreateManyInput>(),
+	serviceAttribute: new Set<Prisma.ServiceAttributeCreateManyInput>(),
+	serviceAccessAttribute: new Set<Prisma.ServiceAccessAttributeCreateManyInput>(),
+	serviceArea: new Set<Prisma.ServiceAreaCreateManyInput>(),
+	serviceAreaCountry: new Set<Prisma.ServiceAreaCountryCreateManyInput>(),
+	serviceAreaDist: new Set<Prisma.ServiceAreaDistCreateManyInput>(),
+	userToOrganization: new Set<Prisma.UserToOrganizationCreateManyInput>(),
+	userPermission: new Set<Prisma.UserPermissionCreateManyInput>(),
+	organizationPermission: new Set<Prisma.OrganizationPermissionCreateManyInput>(),
+	organizationEmail: new Set<Prisma.OrganizationEmailCreateManyInput>(),
+	organizationPhone: new Set<Prisma.OrganizationPhoneCreateManyInput>(),
+}
+
+export const update = {
+	organization: new Set<Prisma.OrganizationUpdateArgs>(),
+	translationKey: new Set<Prisma.TranslationKeyUpdateArgs>(),
+	orgLocation: new Set<Prisma.OrgLocationUpdateArgs>(),
+	orgPhone: new Set<Prisma.OrgPhoneUpdateArgs>(),
+	orgEmail: new Set<Prisma.OrgEmailUpdateArgs>(),
+	orgWebsite: new Set<Prisma.OrgWebsiteUpdateArgs>(),
+	orgSocialMedia: new Set<Prisma.OrgSocialMediaUpdateArgs>(),
+	orgService: new Set<Prisma.OrgServiceUpdateArgs>(),
+}
+
+export const batchCount = new Map<string, number>()
+export const writeBatches = (task: PassedTask, clear = false) => {
+	// Create
+	for (const batchName in create) {
+		const batch = create[batchName]
+		const batchFile = getBatchFile({ type: 'create', batchName })
+		if (clear) {
+			const outputData = new Set()
+			fs.writeFileSync(batchFile, superjson.stringify(outputData))
+			task.output = formatMessage(`Clearing file: ${batchFile}`, 'trash')
+		} else {
+			const currentCount = batchCount.get(`create.${batchName}`) ?? 0
+			const currentBatchCount = batch.size
+			const existingBatch = fs.existsSync(batchFile)
+				? superjson.parse<Set<unknown>>(fs.readFileSync(batchFile, 'utf-8'))
+				: []
+			const outputData = new Set([...existingBatch, ...batch])
+			fs.writeFileSync(batchFile, superjson.stringify(outputData))
+			batchCount.set(`create.${batchName}`, currentCount + currentBatchCount)
+			task.output = formatMessage(
+				`Records added to ${batchName}.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
+				'write',
+				true
+			)
+			create[batchName].clear()
+		}
+	}
+	// Updates
+	for (const batchName in update) {
+		const batch = update[batchName]
+		const batchFile = getBatchFile({ type: 'update', batchName })
+		if (clear) {
+			const outputData = new Set()
+			fs.writeFileSync(batchFile, superjson.stringify(outputData))
+			task.output = formatMessage(`Clearing file: ${batchFile}`, 'trash')
+		} else {
+			const currentCount = batchCount.get(`update.${batchName}`) ?? 0
+			const currentBatchCount = batch.size
+			const existingBatch = fs.existsSync(batchFile)
+				? superjson.parse<Set<unknown>>(fs.readFileSync(batchFile, 'utf-8'))
+				: []
+			const outputData = new Set([...existingBatch, ...batch])
+			fs.writeFileSync(batchFile, superjson.stringify(outputData))
+			batchCount.set(`update.${batchName}`, currentCount + currentBatchCount)
+			task.output = formatMessage(
+				`Records added to ${batchName}.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
+				'write',
+				true
+			)
+			update[batchName].clear()
+		}
+	}
+}
+
+interface GetCreateParams {
+	type: 'create'
+	batchName: LiteralUnion<keyof typeof create, string>
+}
+interface GetUpdateParams {
+	type: 'update'
+	batchName: LiteralUnion<keyof typeof update, string>
+}
+
+type GetBatchFile = (params: GetCreateParams | GetUpdateParams) => string
