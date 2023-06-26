@@ -59,9 +59,9 @@
 		"teens": "“青少年” 定义为 12-18 岁",
 		"trans-youth": "为跨性别青年提供服务的机会",
 		"trans-youth-caregivers": "为跨性别青年护理人员提供服务的机会",
-		"transfeminine": "为变性人社区提供服务的机会",
+		"transfeminine": "为跨性别女性社区提供服务的机会",
 		"transgender": "为跨性别者社区服务的机会（对于不合规或非二元社区，使用性别不一致或非二元特性）",
-		"transmasculine": "为跨男性社区提供服务的机会",
+		"transmasculine": "为 Tras maculine 社区提供服务的机会",
 		"unaccompanied-minors": "为无人陪伴的未成年人提供服务的机会",
 		"undocumented": "为无证移民提供服务的机会"
 	},
@@ -151,7 +151,7 @@
 		"other": "其他（请注明）",
 		"paralegal": "律师助理或其他法律支持人员",
 		"social-worker": "社会工作者",
-		"student-club": "学生俱乐部负责人/管理员",
+		"student-club": "学生俱乐部",
 		"teacher": "老师",
 		"therapist-counselor": "治疗师/辅导员"
 	}
