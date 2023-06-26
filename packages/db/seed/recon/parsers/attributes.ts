@@ -34,7 +34,7 @@ const areaCountryMap = new Map([
 	['mexico', 'mx'],
 ])
 
-const getAreaRecord = (tag: string): { id: string; type: 'country' | 'dist' } | undefined => {
+const getAreaRecord = (tag: string): { data: AttributeSupplementData } | undefined => {
 	const tagBreakdown = tag.split('-')
 	tagBreakdown.shift()
 	const type = tagBreakdown.shift()
@@ -48,8 +48,7 @@ const getAreaRecord = (tag: string): { id: string; type: 'country' | 'dist' } | 
 			const countryId = countryMap.get(cca2)
 			if (!countryId) return undefined
 			return {
-				type: 'country' as const,
-				id: countryId,
+				data: { countryId },
 			}
 		}
 		case 'county':
@@ -57,8 +56,7 @@ const getAreaRecord = (tag: string): { id: string; type: 'country' | 'dist' } | 
 			const result = distList.find((x) => x.slug.match(type === 'county' ? county : state))
 			if (!result) return undefined
 			return {
-				type: 'dist' as const,
-				id: result.id,
+				data: { govDistId: result.id },
 			}
 		}
 		default: {
@@ -69,11 +67,11 @@ const getAreaRecord = (tag: string): { id: string; type: 'country' | 'dist' } | 
 
 /** Generate "incompatible" attribute for unknown/misc tags */
 const incompatible = (tag: string, value?: string | number | boolean) => {
-	const attribute = attributeMap.get('system-incompatible-info')
+	const attribute = attributeMap.get('sys.incompatible-info')
 	if (!attribute) throw new Error('Cannot find "incompatible info" tag')
 	return {
-		attribute,
-		data: { [tag]: value },
+		attributeId: attribute.id,
+		supplementData: { [tag]: value },
 		type: 'unknown' as const,
 	}
 }
@@ -85,19 +83,27 @@ export const tagParser = (tag: string, value: string | number | boolean) => {
 	const ageRegex = /elig-age.*/i
 
 	let attribId: string | undefined
-	let supplementData: AttributeSupplementData
+	let supplementData: AttributeSupplementData | undefined
+	let type: 'attribute' | 'serviceArea' | 'unknown' = 'attribute'
 
 	switch (true) {
+		// #region Elibility description
 		case tag === 'elig-description' && typeof value === 'string': {
 			attribId = attributeMap.get('eligibility.other-describe')?.id
 			supplementData = { text: value.toString() }
 			break
 		}
+		// #endregion
+
+		// #region Cost
 		case tag === 'cost-fees' && typeof value === 'string': {
 			attribId = attributeMap.get(tag)?.id
 			supplementData = { text: value.toString() }
 			break
 		}
+		// #endregion
+
+		// #region Age restriction
 		case ageRegex.test(tag): {
 			attribId = attributeMap.get('eligibility.elig-age')?.id
 			switch (tag) {
@@ -105,7 +111,7 @@ export const tagParser = (tag: string, value: string | number | boolean) => {
 					const parsedAge = z.coerce.number().safeParse(value)
 					const ageData = parsedAge.success ? { min: parsedAge.data } : tagDataMaps.maxAge.get(value)
 					if (!ageData) {
-						return incompatible(tag)
+						return incompatible(tag, value)
 					}
 					supplementData = { data: ageData }
 					break
@@ -115,7 +121,7 @@ export const tagParser = (tag: string, value: string | number | boolean) => {
 					const parsedAge = z.coerce.number().safeParse(value)
 					const ageData = parsedAge.success ? { max: parsedAge.data } : tagDataMaps.maxAge.get(value)
 					if (!ageData) {
-						return incompatible(tag)
+						return incompatible(tag, value)
 					}
 					supplementData = { data: ageData }
 					break
@@ -129,42 +135,77 @@ export const tagParser = (tag: string, value: string | number | boolean) => {
 					const ageSplit = typeof value === 'string' ? value.split('-') : undefined
 					const ageParse = z.tuple([z.coerce.number(), z.coerce.number()]).safeParse(ageSplit)
 					if (!ageParse.success) {
-						return incompatible(tag)
+						return incompatible(tag, value)
 					}
 					supplementData = { data: { min: ageParse.data[0], max: ageParse.data[1] } }
 				}
 			}
 			break
 		}
-		case speakerRegex.test(tag): {
-			attribId = attributeMap.get('community-language-speakers')?.id
-			const [, lang] = speakerRegex.exec(tag) ?? [undefined, '']
-			// !!: Check to see if this is passing the full name or just the ISO...
-			const langRecord = languageMap.get(lang)
-			if (!langRecord) {
-				return incompatible(tag)
-			}
+		// #endregion
 
+		// #region Languages offered
+		case speakerRegex.test(tag): {
+			attribId = attributeMap.get('community.language-speakers')?.id
+			const [, lang] = speakerRegex.exec(tag) ?? [undefined, '']
+			const langRecord = languageMap.get(lang.toLowerCase())
+			if (!langRecord) {
+				return incompatible(tag, value)
+			}
+			supplementData = { languageId: langRecord }
+			break
+		}
+		case langRegex.test(tag): {
+			attribId = attributeMap.get('lang.lang-offered')?.id
+			const [, lang] = langRegex.exec(tag) ?? [undefined, '']
+			const langRecord = languageMap.get(lang.toLowerCase())
+			if (!langRecord) {
+				return incompatible(tag, value)
+			}
+			supplementData = { languageId: langRecord }
+			break
+		}
+		// #endregion
+
+		// #region Service Area
+		case areaRegex.test(tag): {
+			const area = getAreaRecord(tag)
+			if (!area) return incompatible(tag, value)
+			type = 'serviceArea'
+			supplementData = area.data
 			break
 		}
 
-		case attributeMap.get(tag) !== undefined: {
-			const attribute = attributeMap.get(tag)
-			if (!attribute) return incompatible(tag)
+		// #endregion
+
+		// #region All others
+		case attributeMap.get(tag) !== undefined || attributeMap.get(tag.replace(/-/, '.')) !== undefined: {
+			const attribute = attributeMap.get(tag) ?? attributeMap.get(tag.replace(/-/, '.'))
+			if (!attribute) return incompatible(tag, value)
 			attribId = attribute.id
 
 			supplementData = {
-				boolean: attribute.requireBoolean ? isTruthy(value) : undefined,
-				text: attribute.requireText ? value?.toString() : undefined,
-				data:
-					!attribute.requireBoolean && !attribute.requireText
-						? typeof value === 'object'
-							? value
-							: { migrated: value }
-						: undefined,
+				...(attribute.requireBoolean ? { boolean: isTruthy(value) } : {}),
+				...(attribute.requireText ? { text: value?.toString() } : {}),
+				...(attribute.requireData ? { data: typeof value === 'object' ? value : { migrated: value } } : {}),
 			}
+
+			// supplementData = {
+			// 	boolean: attribute.requireBoolean ? isTruthy(value) : undefined,
+			// 	text: attribute.requireText ? value?.toString() : undefined,
+			// 	data: attribute.requireData ? (typeof value === 'object' ? value : { migrated: value }) : undefined,
+			// }
 			break
 		}
+		// #endregion
+		default: {
+			return incompatible(tag, value)
+		}
+	}
+	return {
+		attributeId: attribId,
+		...(Object.keys(supplementData).length ? { supplementData } : undefined),
+		type,
 	}
 }
 
