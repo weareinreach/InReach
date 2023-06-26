@@ -59,9 +59,9 @@
 		"teens": "“kijana” hufafanuliwa kama umri wa miaka 12-18",
 		"trans-youth": "Fursa ambazo zinahudumia vijana wa Trans",
 		"trans-youth-caregivers": "Fursa ambazo hutumikia Walezi wa Vijana wa Trans",
-		"transfeminine": "Fursa ambazo hutumikia Jumuiya ya Transfeminine",
+		"transfeminine": "Fursa ambazo hutumikia Jumuiya ya Wanawake wa Trans",
 		"transgender": "Fursa ambazo hutumikia jamii ya transgender (kwa jamii zisizofanana au zisizo za binary, tumia mali isiyofanana na jinsia au isiyo ya kawaida)",
-		"transmasculine": "Fursa zinazohudumia Jumuiya ya Trasmasculine",
+		"transmasculine": "Fursa ambazo hutumikia Jumuiya ya Kiume ya Tras",
 		"unaccompanied-minors": "Fursa ambazo zinahudumia watoto wasioandamana",
 		"undocumented": "Fursa zinazowahudumia wahamiaji wasio na hati"
 	},
@@ -151,7 +151,7 @@
 		"other": "Nyingine (tafadhali taja)",
 		"paralegal": "Msaidizi wa kisheria au wafanyakazi wengine wa msaada wa kisheria",
 		"social-worker": "Mfanyakazi wa jamii",
-		"student-club": "Kiongozi wa kilabu cha mwanafunzi/msimamizi",
+		"student-club": "Klabu ya wanafunzi",
 		"teacher": "Mwalimu",
 		"therapist-counselor": "Mtaalamu/Mshauri"
 	}
