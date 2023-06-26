@@ -30,7 +30,7 @@
 	"cancel": "Kanselleer",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
-		"title": "<emojiLg>🏠</emojiLg>\n<title2>Hierdie organisasie is nog nie deur 'n diensverskaffer geëis nie.</title2>\n<textDarkGray>U kan hierdie organisasie as diensverskaffer aanspraak maak op:</textDarkGray>"
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>Hierdie organisasie is nog nie deur 'n diensverskaffer geëis nie.</title2>\n<textDarkGray>U kan hierdie organisasie as diensverskaffer aanspraak maak op: < extDarkGray>"
 	},
 	"claimed": "Beweer",
 	"clear": "Duidelik",
