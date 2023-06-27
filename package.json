@@ -34,7 +34,7 @@
 		"types:sync": "typesync"
 	},
 	"dependencies": {
-		"@changesets/cli": "2.26.1",
+		"@changesets/cli": "2.26.2",
 		"@manypkg/cli": "0.21.0",
 		"@types/lint-staged": "13.2.0",
 		"@types/node": "18.16.18",
