@@ -66,9 +66,10 @@ export const writeBatches = (task: PassedTask, clear = false) => {
 		const batch = create[batchName]
 		const batchFile = getBatchFile({ type: 'create', batchName })
 		if (clear) {
-			const outputData = new Set()
-			fs.writeFileSync(batchFile, superjson.stringify(outputData))
-			task.output = formatMessage(`Clearing file: ${batchFile}`, 'trash')
+			if (fs.existsSync(batchFile)) {
+				fs.rmSync(batchFile)
+				task.output = formatMessage(`Deleting file: ${batchFile}`, 'trash')
+			}
 		} else {
 			if (!batch.size) {
 				task.output = formatMessage(`Skipping empty batch: ${batchName}`, 'skip')
@@ -95,9 +96,10 @@ export const writeBatches = (task: PassedTask, clear = false) => {
 		const batch = update[batchName]
 		const batchFile = getBatchFile({ type: 'update', batchName })
 		if (clear) {
-			const outputData = new Set()
-			fs.writeFileSync(batchFile, superjson.stringify(outputData))
-			task.output = formatMessage(`Clearing file: ${batchFile}`, 'trash')
+			if (fs.existsSync(batchFile)) {
+				fs.rmSync(batchFile)
+				task.output = formatMessage(`Deleting file: ${batchFile}`, 'trash')
+			}
 		} else {
 			if (!batch.size) {
 				task.output = formatMessage(`Skipping empty batch: ${batchName}`, 'skip')

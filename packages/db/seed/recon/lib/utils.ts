@@ -7,3 +7,5 @@ export const readSuperJSON = <T = unknown>(filename: string) => {
 	const data = fs.readFileSync(path.resolve(__dirname, `../generated/${filename}.json`), 'utf-8')
 	return superjson.parse<T>(data)
 }
+
+export const trimSpaces = (str?: string) => (str ? str.trim().replace(/ +(?=[^\S\n])/g, ' ') : undefined)
