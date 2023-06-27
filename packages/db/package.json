@@ -55,7 +55,7 @@
 		"@weareinreach/env": "workspace:*",
 		"kysely": "0.25.0",
 		"prisma-kysely": "1.4.2",
-		"superjson": "1.12.3",
+		"superjson": "1.12.4",
 		"tslog": "4.8.2",
 		"ulid": "2.3.0",
 		"zod": "3.21.4"
