@@ -96,7 +96,7 @@
 		"black-led": "Led Negro",
 		"immigrant-led": "Led Inmigrante",
 		"trans-led": "Trans Led",
-		"women-led": "Mujeres lideradas"
+		"women-led": "Dirigida por mujeres"
 	},
 	"serviceaccess": {
 		"CATEGORYNAME": "Instrucciones de acceso al servicio",
@@ -113,12 +113,12 @@
 		"asylum-seekers": "Buscadores de asilo",
 		"bipoc-comm": "Comunidad BIPOC",
 		"caregivers": "Comunidad de cuidadores",
-		"disabled": "Comunidad deshabilitada",
-		"elder": "Centrado en los ancianos",
+		"disabled": "Comunidad de discapacitados",
+		"elder": "Centrado en los Ancianos",
 		"gender-nc": "Género no conformes",
 		"hiv-comm": "Comunidad del VIH",
 		"immigrant-comm": "Comunidad Inmigrante",
-		"incarcerated": "Comunidad encarcelada",
+		"incarcerated": "Comunidad de encarcelados",
 		"lgbtq-youth-focus": "LGBTQ+ Juventud",
 		"resettled-refugees": "Refugios Reiniciados",
 		"spanish-speakers": "Altavoz español",
@@ -147,12 +147,12 @@
 		"govt-agency": "Agencia gubernamental",
 		"grassroots-direct": "Organización de servicios directos de base",
 		"healthcare": "Proveedor de asistencia sanitaria",
-		"lawyer": "Asalto",
+		"lawyer": "Abogado",
 		"other": "Otra (por favor especifique)",
-		"paralegal": "Personal de apoyo legal u otro tipo",
+		"paralegal": "Personal paralegal u otro tipo",
 		"social-worker": "Trabajador social",
 		"student-club": "Club de estudiantes",
 		"teacher": "Profesor",
-		"therapist-counselor": "Therapista/consejero"
+		"therapist-counselor": "Terapeuta/consejero"
 	}
 }
