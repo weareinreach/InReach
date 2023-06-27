@@ -59,7 +59,10 @@ const task = async (key: string, ns: string) => {
 }
 let recordTotal = 0
 const run = async () => {
-	const records = await prisma.translationKey.findMany({ select: { key: true, ns: true } })
+	const records = await prisma.translationKey.findMany({
+		where: { crowdinId: null },
+		select: { key: true, ns: true },
+	})
 	recordTotal = records.length
 	for (const record of records) {
 		const { key, ns } = record

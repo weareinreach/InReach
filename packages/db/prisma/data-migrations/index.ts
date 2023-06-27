@@ -32,4 +32,5 @@ export * from './2023-06-14_remote-tags/index'
 export * from './2023-06-20_tags-for-suggestions'
 export * from './2023-06-21_update-sourceid'
 export * from './2023-06-26_active-country'
+export * from './2023-06-27_add-crowdin-ids/index'
 // codegen:end
