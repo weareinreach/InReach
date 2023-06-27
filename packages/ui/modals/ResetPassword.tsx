@@ -132,7 +132,7 @@ export const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswor
 		const autoOpen = Boolean(router.query['r'])
 		const variants = useCustomVariant()
 		const [success, setSuccess] = useState(false)
-		const [error, setError] = useState(!UrlParams.safeParse(router.query).success)
+		const [error, setError] = useState(false)
 		const { isMobile } = useScreenSize()
 		const FormSchema = z
 			.object({
