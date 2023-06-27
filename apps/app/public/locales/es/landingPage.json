@@ -8,16 +8,16 @@
 	},
 	"hero": {
 		"community": {
-			"0": "Solicitudes de asilo LGBTQ+",
+			"0": "Solicitantes de asilo LGBTQ+",
 			"1": "Inmigrantes LGBTQ+",
-			"2": "Refugiados LGBTQ+",
-			"3": "trans hombres",
+			"2": "Refugiades LGBTQ+",
+			"3": "Jóvenes LGBTQ+",
 			"4": "la comunidad transgénero",
 			"5": "Comunidades BIPOC LGBTQ+",
 			"6": "cuidadores de la juventud LGBTQ+"
 		},
 		"find-resources": "<Text>Encontrar verificado </Text><Service></Service><Text> por </Text><Community></Community><Text> con InReach.</Text>",
-		"heading": "Encontrar recursos de LGBTQ.",
+		"heading": "Encontrar recursos de LGBTQ+.",
 		"privacy-disclaimer": "Tu respuesta es anónima y no está conectada a ti como usuario individual. Lee nuestra <Link>política de privacidad</Link> para obtener más información.",
 		"services": {
 			"0": "atención médica",
@@ -35,9 +35,9 @@
 	},
 	"values": {
 		"free": "<Title2>Gratis para siempre 🔑</Title2>\n<Text>Nuestra plataforma de tecnología es 100% gratuita para todos para asegurar que la ayuda segura sea siempre InReach.</Text>\n<LinkFree>Dona para ayudarnos a mantener nuestra plataforma libre</LinkFree>",
-		"innovative": "<Title2>Innovador ✨</Title2>\n<Text>Somos la primera plataforma tecnológica del mundo que combina a las personas LGBTQ+ con discriminación y persecución con una seguridad independiente recursos verificados.</Text>\n<LinkInnovative>Ver nuestro código fuente y contribuir.</LinkInnovative>",
-		"intersectional": "<Title2>Intersectional ✊🏿► ✊🏾✊🏽</Title2>\n<Text>Creemos que la igualdad LGBTQ+ requiere de tramos de justicia, justicia de refugiados, justicia racial, justicia reproductiva, justicia lingüística y más.</Text>\n<LinkIntersect>Más información sobre nuestro proceso de veterinario</LinkIntersect>",
+		"innovative": "<Title2>Innovador ✨</Title2>\n<Text>Somos la primera plataforma tecnológica del mundo que combina a les persones LGBTQ+ que sufren discriminación y persecución con una seguridad independiente recursos verificados.</Text>\n<LinkInnovative>Ver nuestro código fuente y contribuir.</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿► ✊🏾✊🏽</Title2>\n<Text>Creemos que la igualdad LGBTQ+ requiere de tramos de justicia, justicia de refugiados, justicia racial, justicia reproductiva, justicia lingüística y más.</Text>\n<LinkIntersect>Más información sobre nuestro proceso de selección</LinkIntersect>",
 		"our-values": "Nuestros valores",
-		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>Sabemos que el anonimato en línea puede ser un problema de por vida o muerte para personas LGBTQ+. Por eso nuestra aplicación está diseñada para proteger la confidencialidad y seguridad de los usuarios en línea.</Text>\n<LinkSafety>Más información sobre nuestra política de privacidad.</LinkSafety>"
+		"safety-first": "<Title2>Seguridad Primero 🔒</Title2>\n<Text>Sabemos que el anonimato en línea puede ser un problema de por vida o muerte para personas LGBTQ+. Por eso nuestra aplicación está diseñada para proteger la confidencialidad y seguridad de los usuarios en línea.</Text>\n<LinkSafety>Más información sobre nuestra política de privacidad.</LinkSafety>"
 	}
 }
