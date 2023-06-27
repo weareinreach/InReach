@@ -4,17 +4,17 @@
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>Escuchar a nuestros usuarios</Title1>",
-		"who-we-are": "<Title1>Quien somos</Title1>\n<Text>Somos una organización sin fines de lucro trans-lucrativos que aumenta el acceso a la seguridad recursos verificados para la comunidad LGBTQ+.</Text>\n<Link>Aprende más sobre nosotros</Link>"
+		"who-we-are": "<Title1>Quien somos</Title1>\n<Text>Somos una organización sin fines de lucro dirigida por trans que aumenta el acceso a la seguridad recursos verificados para la comunidad LGBTQ+.</Text>\n<Link>Aprende más sobre nosotros</Link>"
 	},
 	"hero": {
 		"community": {
-			"0": "Solicitudes de asilo LGBTQ+",
+			"0": "Solicitantes de asilo LGBTQ+",
 			"1": "Inmigrantes LGBTQ+",
-			"2": "Refugiados LGBTQ+",
-			"3": "trans hombres",
-			"4": "mujeres trans",
-			"5": "Juventud LGBTQ+",
-			"6": "Personas VIH+"
+			"2": "Refugiades LGBTQ+",
+			"3": "Jóvenes LGBTQ+",
+			"4": "la comunidad transgénero",
+			"5": "Comunidades LGBTQ+ BIPOC",
+			"6": "cuidadores de jóvenes LGBTQ+"
 		},
 		"find-resources": "Encuentra <Service></Service> verificado durante <Community></Community> con InReach.",
 		"heading": "Encontrar recursos de LGBTQ.",
