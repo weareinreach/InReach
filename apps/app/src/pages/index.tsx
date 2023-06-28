@@ -315,27 +315,21 @@ Home.omitGrid = true
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	const ssg = await trpcServerClient({ session: null })
-	await ssg.review.getFeatured.prefetch(3)
 
+	const [i18n] = await Promise.allSettled([
+		getServerSideTranslations(locale, ['common', 'landingPage', 'attribute']),
+		ssg.review.getFeatured.prefetch(3),
+	])
+
+	// await ssg.review.getFeatured.prefetch(3)
 	return {
 		props: {
 			trpcState: ssg.dehydrate(),
-			...(await getServerSideTranslations(locale, ['common', 'landingPage', 'attribute'])),
+			// ...(await getServerSideTranslations(locale, ['common', 'landingPage', 'attribute'])),
+			...(i18n.status === 'fulfilled' ? i18n.value : {}),
 		},
 		revalidate: 60 * 60 * 24, // 24 hours
 	}
 }
-// export const getServerSideProps = async ({ locale, req, res }: GetServerSidePropsContext) => {
-// 	const session = await getServerSession({ req, res })
-// 	const ssg = await trpcServerClient({ session })
-// 	await ssg.review.getFeatured.prefetch(3)
 
-// 	return {
-// 		props: {
-// 			session,
-// 			trpcState: ssg.dehydrate(),
-// 			...(await getServerSideTranslations(locale, ['common', 'landingPage'])),
-// 		},
-// 	}
-// }
 export default Home
