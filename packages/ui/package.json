@@ -9,7 +9,7 @@
 		"build:icons": "tsx ./icon/buildIcons.ts",
 		"chromatic": "chromatic",
 		"clean:node": "rm -rf ./node_modules/ || true",
-		"dev": "pnpm with-env storybook dev -p 6006 --no-open",
+		"dev": "storybook dev -p 6006 --no-open",
 		"dev:fast": "pnpm dev",
 		"format": "prettier --write --cache --cache-strategy metadata .",
 		"preinstall": "npx only-allow pnpm",
@@ -41,7 +41,8 @@
 		"probe-image-size": "7.2.3",
 		"react-error-boundary": "4.0.10",
 		"react-phone-number-input": "3.2.23",
-		"react-string-replace": "1.1.1"
+		"react-string-replace": "1.1.1",
+		"timezones-list": "3.0.2"
 	},
 	"devDependencies": {
 		"@babel/core": "7.22.5",
@@ -117,7 +118,7 @@
 		"@weareinreach/auth": "workspace:*",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/db": "workspace:*",
-		"@weareinreach/eslint-config": "0.100.0",
+		"@weareinreach/eslint-config": "workspace:0.100.0",
 		"babel-loader": "9.1.2",
 		"chromatic": "6.19.9",
 		"css-chaos-addon": "0.0.5",
@@ -132,7 +133,7 @@
 		"i18next-intervalplural-postprocessor": "3.0.0",
 		"luxon": "3.3.0",
 		"merge-anything": "5.1.7",
-		"msw": "1.2.2",
+		"msw": "1.2.1",
 		"msw-storybook-addon": "1.8.0",
 		"next": "13.4.7",
 		"next-auth": "4.22.1",
