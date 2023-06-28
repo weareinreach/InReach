@@ -26,6 +26,7 @@ seed/recon/input/**/*.json
 prisma/generated
 prisma/dbml
 prisma/data-migrations/**/!*.json
+prisma/migrations/**/*.json
 
 zod-schemas/
 kysely-vercel/
