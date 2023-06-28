@@ -30,7 +30,7 @@
 	"cancel": "Скасувати",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
-		"title": "<emojiLg>🏠</emojiLg>\n<title2>Ця організація ще не затребувана постачальником послуг.</title2>\n<textDarkGray>Ви можете претендувати на цю організацію як постачальника послуг:</textDarkGray>"
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>Ця організація ще не затребувана постачальником послуг.</title2>\n<textDarkGray>Ви можете претендувати на цю організацію в якості постачальника послуг, щоб: < extDarkGray>"
 	},
 	"claimed": "Заявлений",
 	"clear": "Очистити",
