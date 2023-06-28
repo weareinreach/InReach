@@ -1,4 +1,5 @@
 import { TRPCError } from '@trpc/server'
+import { DateTime, Interval } from 'luxon'
 import { z } from 'zod'
 
 import { getIdPrefixRegex, isIdFor, type Prisma } from '@weareinreach/db'
@@ -95,6 +96,17 @@ export const orgHoursRouter = defineRouter({
 				select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true },
 				orderBy: [{ dayIndex: 'asc' }, { start: 'asc' }],
 			})
-			return result
+			// TODO: alter db schema
+			const intervalResults = result.map(({ start, end, ...rest }) => {
+				const interval = Interval.fromDateTimes(
+					DateTime.fromJSDate(start, { zone: rest.tz ?? 'America/New_York' }),
+					DateTime.fromJSDate(end, { zone: rest.tz ?? 'America/New_York' })
+				)
+				return {
+					...rest,
+					interval,
+				}
+			})
+			return intervalResults
 		}),
 })
