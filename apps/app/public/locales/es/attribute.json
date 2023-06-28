@@ -36,7 +36,7 @@
 		"detained-immigrant": "Oportunidades que sirven a los inmigrantes detenidos",
 		"disabled": "Oportunidades que sirven a la comunidad de discapacitados",
 		"gay": "Oportunidades que sirven a la Comunidad Gay",
-		"gender-nonconforming": "Oportunidades que sirven a la comunidad inconformista de género",
+		"gender-nonconforming": "Oportunidades que sirven a la comunidad inconformidad de género",
 		"hiv-aids": "Oportunidades que sirven a la comunidad VIH+ y a la comunidad de riesgo",
 		"homeless": "Oportunidades que sirven a persones sin hogar",
 		"human-trafficking-survivor": "Oportunidades que sirven a los sobrevivientes de la trata de seres humanos",
@@ -59,9 +59,9 @@
 		"teens": "\"adolescente\" definido como 12-18 años de edad",
 		"trans-youth": "Oportunidades que sirven a los jóvenes Trans",
 		"trans-youth-caregivers": "Oportunidades que sirven a los cuidadores de los jóvenes trans",
-		"transfeminine": "Oportunidades que sirven a la Comunidad Trans-Feminina",
+		"transfeminine": "Oportunidades que sirven a la Comunidad Transfeminina",
 		"transgender": "Oportunidades que sirven a la comunidad transgénera (para comunidades no conformes o no binarias, utilice las propiedades no conformes o no binarias)",
-		"transmasculine": "Oportunidades que sirven a la comunidad tras Masculine",
+		"transmasculine": "Oportunidades que sirven a la Comunidad Trasmasculina",
 		"unaccompanied-minors": "Oportunidades que sirven a menores no acompañados",
 		"undocumented": "Oportunidades que sirven a inmigrantes indocumentados"
 	},
@@ -115,7 +115,7 @@
 		"caregivers": "Comunidad de cuidadores",
 		"disabled": "Comunidad de discapacitados",
 		"elder": "Centrado en los Ancianos",
-		"gender-nc": "Género no conformes",
+		"gender-nc": "Inconformidad de Género",
 		"hiv-comm": "Comunidad del VIH",
 		"immigrant-comm": "Comunidad Inmigrante",
 		"incarcerated": "Comunidad de encarcelados",
@@ -123,8 +123,8 @@
 		"resettled-refugees": "Refugios Reiniciados",
 		"spanish-speakers": "Hablantes de español",
 		"trans-comm": "Comunidad Trans",
-		"trans-fem": "Trans Mujer/Trans Feminina",
-		"trans-masc": "Masculina Trans",
+		"trans-fem": "Trans Mujeres/Transfemenina",
+		"trans-masc": "Hombres Trans/Transmasculina",
 		"trans-youth-focus": "Jóvenes Trans",
 		"women": "Centrado en las mujeres"
 	},
@@ -136,8 +136,8 @@
 		"CATEGORYNAME": "Opciones de Prácticas de Ley",
 		"corp-law-firm": "Bufete de derecho corporativo",
 		"law-other": "Otro",
-		"law-school-clinic": "Clínica de estudiantes de Facultad de Derecho",
-		"legal-nonprofit": "Sin ánimo de lucro legal"
+		"law-school-clinic": "Clínica de la facultad de derecho",
+		"legal-nonprofit": "Organización sin fines de lucro legal"
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "Opciones de Proveedor de Servicios",
@@ -151,7 +151,7 @@
 		"other": "Otra (por favor especifique)",
 		"paralegal": "Personal paralegal u otro tipo",
 		"social-worker": "Trabajador social",
-		"student-club": "Líder/administrador del club de estudiantes",
+		"student-club": "Líder / administrador del club de estudiantes",
 		"teacher": "Profesor",
 		"therapist-counselor": "Terapeuta/consejero"
 	}
