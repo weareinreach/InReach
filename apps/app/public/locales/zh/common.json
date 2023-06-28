@@ -30,7 +30,7 @@
 	"cancel": "取消",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
-		"title": "<emojiLg>🏠</emojiLg>\n<title2>服务提供商尚未宣称该组织。</title2>\n<textDarkGray>您可以声称该组织为服务提供商，以：</textDarkGray>"
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>服务提供商尚未宣称该组织。</title2>\n<textDarkGray>您可以声称该组织为服务提供商，以：< extDarkGray>"
 	},
 	"claimed": "已申领",
 	"clear": "清除",
