@@ -29,8 +29,8 @@
 	},
 	"cancel": "Cancelar",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Reclama la página de perfil de tu organización y crea confianza con tu audiencia en InReach</textUtility1>\n<textUtility1>✍🏾 Actualiza la información de tu organización en InReach</textUtility1>\n<textUtility1>📨 Invita a otro personal a unirse a tu organización en InReach</textUtility1>\n<textUtility1>🔑 Obtener acceso a futuras características construidas específicamente para proveedores de servicios afiliados en InReach</textUtility1>",
-		"title": "<emojiLg>🏠</emojiLg>\n<title2>Esta organización aún no ha sido reclamada por un proveedor de servicios.</title2>\n<textDarkGray>Con una cuenta gratuita de Proveedor de Servicios de InReach, pronto podrá:</textDarkGray>"
+		"list": "<textUtility1>🔗 Reclama la página de perfil de tu organización y crea confianza con tu audiencia en InReach</textUtility1>\n<textUtility1>✍🏾 Actualiza la información de tu organización en InReach</textUtility1>\n<textUtility1>📨 Invita a otro personal a unirse a tu organización en InReach (¡pronto!)</textUtility1>\n<textUtility1>🔑 Obtener acceso a futuras características construidas específicamente para proveedores de servicios afiliados en InReach</textUtility1>",
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>Esta organización aún no ha sido reclamada por un proveedor de servicios.</title2>\n<textDarkGray>Puedes reclamar esta organización como proveedor de servicios:<\textDarkGray>"
 	},
 	"claimed": "Reclamado",
 	"clear": "Claro",
@@ -263,7 +263,7 @@
 		"name_full": "Nombre completo",
 		"placeholder-name_alias": "Introduzca nombre o alias...",
 		"placeholder-name_full": "Introduzca el nombre completo...",
-		"select-law-practice": "¿Dónde practica la ley?",
+		"select-law-practice": "¿Dónde ejerces la abogacía?",
 		"select-service-provider": "¿Dónde trabajas o voluntario?",
 		"specify-work-volunteer": "Por favor especifique dónde trabaja o voluntario",
 		"success": "¡Te has registrado en una cuenta!",
