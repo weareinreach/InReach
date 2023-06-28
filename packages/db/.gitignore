@@ -18,6 +18,10 @@ seed/migrate-v1/_generated/*
 seed/data/downloaded/*
 !seed/data/downloaded/.gitkeep
 seed/migrate-edits/*.json
+seed/recon/generated/*.json
+seed/recon/corrections/*.json
+seed/recon/output/**/*.json
+seed/recon/input/**/*.json
 
 prisma/generated
 prisma/dbml
