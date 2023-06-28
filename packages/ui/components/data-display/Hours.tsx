@@ -32,6 +32,13 @@ export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 		}
 	}
 	function formatInterval(interval: { s: string; e: string }, dayIndex: number, displayDay: boolean) {
+		const startDate = DateTime.fromISO(interval.s)
+		const endDate = DateTime.fromISO(interval.e)
+
+		const isSameTime = startDate.hour === endDate.hour && startDate.minute === endDate.minute
+		if (isSameTime) {
+			return `${startDate.set({ weekday: dayIndex === 0 ? 7 : dayIndex }).toFormat('EEE')} Open 24 Hours`
+		}
 		const formatPattern = displayDay ? 'EEE h:mm a' : 'h:mm a'
 		const formattedStart = DateTime.fromISO(interval.s)
 			.set({ weekday: dayIndex === 0 ? 7 : dayIndex })
@@ -43,6 +50,8 @@ export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 
 	hourMap.forEach((value, key) => {
 		const entry = [...value].map(({ dayIndex, tz, interval }, daySegment) => {
+			console.log(interval)
+
 			const zone = tz ?? undefined
 
 			if (!timezone && zone) {

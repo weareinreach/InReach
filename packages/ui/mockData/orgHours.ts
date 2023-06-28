@@ -66,6 +66,13 @@ export const orgHoursData = {
 			closed: false,
 			tz: 'America/New_York',
 		},
+		{
+			id: 'ohrs_01GW2HT8CQFZHK6TD586TJ1MFH',
+			dayIndex: 6,
+			interval: createInterval('00:00', '00:00'),
+			closed: false,
+			tz: 'America/New_York',
+		},
 	],
 } satisfies MockDataObject<'orgHours'>
 
