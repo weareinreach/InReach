@@ -2,6 +2,7 @@ import { List, Stack, Text, Title } from '@mantine/core'
 import { DateTime, Interval } from 'luxon'
 import { useTranslation } from 'next-i18next'
 
+import { COGNITO_CUSTOMID_FIELDNAME } from '@weareinreach/auth'
 import { useCustomVariant } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -15,7 +16,6 @@ export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 	const variants = useCustomVariant()
 	const hourDisplay: JSX.Element[] = []
 	const { data } = api.orgHours.forHoursDisplay.useQuery(parentId)
-
 	if (!data) return null
 
 	const labelKey = labelKeys[label]
@@ -31,36 +31,39 @@ export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 			hourMap.set(entry.dayIndex, new Set([...daySet, entry]))
 		}
 	}
-	const { weekYear, weekNumber } = DateTime.now()
+	function formatInterval(interval: { s: string; e: string }, dayIndex: number, displayDay: boolean) {
+		const formatPattern = displayDay ? 'EEE h:mm a' : 'h:mm a'
+		const formattedStart = DateTime.fromISO(interval.s)
+			.set({ weekday: dayIndex === 0 ? 7 : dayIndex })
+			.toFormat(formatPattern)
+		const formattedEnd = DateTime.fromISO(interval.e).toFormat('h:mm a')
+
+		return `${formattedStart} - ${formattedEnd}`
+	}
+
 	hourMap.forEach((value, key) => {
-		const entry = [...value].map(({ start, end, dayIndex: weekday, tz }, idx) => {
+		const entry = [...value].map(({ dayIndex, tz, interval }, daySegment) => {
 			const zone = tz ?? undefined
-			const open = DateTime.fromJSDate(start, { zone }).set({ weekday, weekNumber, weekYear })
-			const close = DateTime.fromJSDate(end, { zone }).set({ weekday, weekNumber, weekYear })
-			const interval = Interval.fromDateTimes(open, close)
+
 			if (!timezone && zone) {
-				timezone = open.toFormat('ZZZZZ (ZZZZ)', { locale: i18n.language })
+				timezone = DateTime.now().setZone(zone).toFormat('ZZZZZ (ZZZZ)', { locale: i18n.language })
 			}
 
-			if (idx === 0) {
-				const range = interval
-					.toLocaleString(
-						{ weekday: 'short', hour: 'numeric', minute: 'numeric', formatMatcher: 'best fit' },
-						{ locale: i18n.language }
-					)
-					.split(',')
-					.join('')
-
-				return interval.isValid ? range : null
+			if (daySegment === 0) {
+				const range = formatInterval(interval, dayIndex, true)
+				return range
 			}
 
-			const range = interval.toLocaleString({ hour: 'numeric', minute: 'numeric' }, { locale: i18n.language })
-			return interval.isValid ? range : null
+			const range = formatInterval(interval, dayIndex, false)
+			return range
 		})
+
 		if (entry[0] === null) return
 		hourDisplay.push(<List.Item key={key}>{entry.filter(Boolean).join(' & ')}</List.Item>)
 	})
+
 	if (!hourDisplay.length) return null
+
 	return (
 		<Stack spacing={12}>
 			<div>
