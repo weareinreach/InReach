@@ -44,7 +44,7 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 		const autoOpen = Boolean(router.query['c'])
 		const variants = useCustomVariant()
 		const [success, setSuccess] = useState(false)
-		const [error, setError] = useState(!UrlParams.safeParse(router.query).success)
+		const [error, setError] = useState(false)
 		const verifyAccount = api.user.confirmAccount.useMutation({
 			onSuccess: () => setSuccess(true),
 			onError: () => setError(true),
@@ -60,12 +60,13 @@ export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerif
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, [router.query.c])
 
+		const parsedData = UrlParams.transform(({ c, code }) => ({ data: c, code })).safeParse(router.query)
 		useEffect(() => {
-			if (!success && !verifyAccount.isLoading && opened && !error) {
-				verifyAccount.mutate(UrlParams.transform(({ c, code }) => ({ data: c, code })).parse(router.query))
+			if (!success && !verifyAccount.isLoading && opened && !error && parsedData.success) {
+				verifyAccount.mutate(parsedData.data)
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [success, verifyAccount.isLoading, opened, error])
+		}, [success, verifyAccount.isLoading, opened, error, parsedData.success])
 
 		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
 
