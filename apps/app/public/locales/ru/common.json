@@ -260,7 +260,7 @@
 			"<group>\n<button data-option='individual'>Индивидуальный</button>\n<button data-option='provider'>Профессионал/Провайдер</button>\n<button data-option='lcr'>Рецензент местных сообществ</button>\n</group>",
 			"<loginLink>Уже есть аккаунт?</loginLink>"
 		],
-		"name-use-any": "Используйте любое имя, с которым вам удобно.",
+		"name-use-any": "Используйте любое удобное для вас имя.",
 		"name_alias": "Имя или псевдоним",
 		"name_full": "Полное имя",
 		"placeholder-name_alias": "Введите имя или псевдонимы...",
@@ -344,7 +344,7 @@
 		"coming-soon": "Скоро появится",
 		"delete": "Удалить",
 		"distance": "Расстояние",
-		"email": "Почта",
+		"email": "Электронная почта",
 		"home": "Домашний",
 		"hours": "Часы",
 		"more": "больше",
