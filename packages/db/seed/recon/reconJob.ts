@@ -7,6 +7,7 @@ import path from 'path'
 import { prisma, type Prisma } from '~db/client'
 import { namespace } from '~db/generated/namespaces'
 import { createPoint } from '~db/lib/createPoint'
+import { generateId } from '~db/lib/idGen'
 import { organizationsSchema } from '~db/seed/recon/input/types'
 import { needsUpdate } from '~db/seed/recon/lib/compare'
 import { dataCorrections, existing, getCountryId, getGovDistId } from '~db/seed/recon/lib/existing'
@@ -227,6 +228,69 @@ export const orgRecon = {
 					}
 
 					locationCount++
+				}
+			}
+
+			// #endregion
+
+			/**
+			 * .
+			 *
+			 * === EMAILS ===
+			 *
+			 * .
+			 */
+			// #region Emails
+			if (!org.emails.length) {
+				log('SKIPPING Email records, no emails', 'skip')
+			} else {
+				log(`Processing ${org.emails.length} Email records`, 'generate')
+				let emailCount = 1
+				const emailSkip = 0
+
+				for (const email of org.emails) {
+					log(`Processing Email: ${email.email} [${emailCount + emailSkip}/${org.emails.length}]`, 'generate')
+					const existingRecord = await prisma.orgEmail.findUnique({
+						where: { legacyId: email._id.$oid },
+					})
+					if (existingRecord) {
+						log(`Reconcile email against ${existingRecord.id}`, undefined, true)
+						const updateRecord: Prisma.OrgEmailUpdateArgs = {
+							where: { id: existingRecord.id },
+							data: {},
+						}
+						if (needsUpdate(existingRecord.email, email.email)) {
+							logUpdate('email', existingRecord.email, email.email)
+							updateRecord.data.email = trimSpaces(email.email)
+						}
+						if (needsUpdate(existingRecord.primary, email.is_primary)) {
+							logUpdate('primary', existingRecord.primary, email.is_primary)
+							updateRecord.data.primary = email.is_primary
+						}
+						if (needsUpdate(existingRecord.published, email.show_on_organization)) {
+							if (email.show_on_organization === true) {
+								log(`SKIPPING - Mark email as published`, 'skip', true)
+							} else {
+								logUpdate('published', existingRecord.published, email.show_on_organization)
+								updateRecord.data.published = email.show_on_organization
+							}
+						}
+						if (needsUpdate(existingRecord.firstName, email.first_name)) {
+							logUpdate('firstName', existingRecord.firstName, email.first_name)
+							updateRecord.data.firstName = email.first_name
+						}
+						if (needsUpdate(existingRecord.lastName, email.last_name)) {
+							logUpdate('lastName', existingRecord.lastName, email.last_name)
+							updateRecord.data.lastName = email.last_name
+						}
+
+						if (Object.keys(updateRecord.data).length) {
+							update.orgEmail.add(updateRecord)
+							log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
+						}
+
+						emailCount++
+					}
 				}
 			}
 
