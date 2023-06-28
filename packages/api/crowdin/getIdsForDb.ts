@@ -9,8 +9,8 @@ import { prisma } from '@weareinreach/db'
 import { getStringIdByKey } from '.'
 
 const queue = new PQueue({
-	concurrency: 20,
-	intervalCap: 20,
+	concurrency: 15,
+	intervalCap: 15,
 	interval: 500,
 	autoStart: false,
 	carryoverConcurrencyCount: true,
@@ -36,9 +36,9 @@ const output: { crowdinId: number; key: string; ns: string }[] = []
 // queue.on('completed', () => {
 // 	console.info(`--> Job #${qcount} finished in ${Date.now() - qtimer}ms`)
 // })
-// queue.on('error', (error) => {
-// 	console.error(error)
-// })
+queue.on('error', (error) => {
+	console.error(error)
+})
 queue.on('idle', () => {
 	// console.info(`<==> Writing data to file.`)
 	fs.writeFileSync(path.resolve(__dirname, './generated/out.json'), JSON.stringify(output))
@@ -59,7 +59,10 @@ const task = async (key: string, ns: string) => {
 }
 let recordTotal = 0
 const run = async () => {
-	const records = await prisma.translationKey.findMany({ select: { key: true, ns: true } })
+	const records = await prisma.translationKey.findMany({
+		where: { ns: 'org-data', crowdinId: null },
+		select: { key: true, ns: true },
+	})
 	recordTotal = records.length
 	for (const record of records) {
 		const { key, ns } = record
