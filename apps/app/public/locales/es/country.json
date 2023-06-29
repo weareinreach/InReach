@@ -20,7 +20,7 @@
 		"demonym_other": "Anguilanos"
 	},
 	"ALA": {
-		"name": "Islas Tierras",
+		"name": "Islas Åland",
 		"demonym_one": "Llanplato",
 		"demonym_other": "Llandishs"
 	},
@@ -35,7 +35,7 @@
 		"demonym_other": "Andorrans"
 	},
 	"ARE": {
-		"name": "Emiraos árabes Unidos",
+		"name": "Emiratos Árabes Unidos",
 		"demonym_one": "Emiratis",
 		"demonym_other": "Emiratis"
 	},
@@ -50,12 +50,12 @@
 		"demonym_other": "Armenios"
 	},
 	"ASM": {
-		"name": "American Samoa",
+		"name": "Samoa Americana",
 		"demonym_one": "Samuán Americano",
 		"demonym_other": "Samoanes americanos"
 	},
 	"ATA": {
-		"name": "Antarctica",
+		"name": "Antártida",
 		"demonym_one": "Antártida",
 		"demonym_other": "Antarcticans"
 	},
@@ -80,7 +80,7 @@
 		"demonym_other": "Austríacos"
 	},
 	"AZE": {
-		"name": "Martín",
+		"name": "Azerbaiyán",
 		"demonym_one": "Бессия",
 		"demonym_other": "Baiyana"
 	},
@@ -95,12 +95,12 @@
 		"demonym_other": "Belgians"
 	},
 	"BEN": {
-		"name": "Benin",
+		"name": "Benín",
 		"demonym_one": "Beninés",
 		"demonym_other": "Beninés"
 	},
 	"BES": {
-		"name": "Caribe Holandés"
+		"name": "Caribe Neerlandés"
 	},
 	"BFA": {
 		"name": "Burkina Faso",
@@ -118,7 +118,7 @@
 		"demonym_other": "Búlgaros"
 	},
 	"BHR": {
-		"name": "Bahrain",
+		"name": "Baréin",
 		"demonym_one": "Bahreí",
 		"demonym_other": "Bahrainis"
 	},
@@ -173,7 +173,7 @@
 		"demonym_other": "Bruneians"
 	},
 	"BTN": {
-		"name": "Bhután",
+		"name": "Bután",
 		"demonym_one": "Bhutanés",
 		"demonym_other": "Bhutanés"
 	},
@@ -181,7 +181,7 @@
 		"name": "Isla Bouvet"
 	},
 	"BWA": {
-		"name": "Botswana",
+		"name": "Botsuana",
 		"demonym_one": "Motswanas",
 		"demonym_other": "Motswanas"
 	},
@@ -226,7 +226,7 @@
 		"demonym_other": "Cameruneses"
 	},
 	"COD": {
-		"name": "DR Congo",
+		"name": "República Democrática del Congo",
 		"demonym_one": "Congolese",
 		"demonym_other": "Congolese"
 	},
