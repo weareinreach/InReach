@@ -42,6 +42,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
+		"@crowdin/crowdin-api-client": "1.23.2",
 		"@opentelemetry/exporter-trace-otlp-http": "0.40.0",
 		"@opentelemetry/instrumentation": "0.40.0",
 		"@opentelemetry/resources": "1.14.0",
