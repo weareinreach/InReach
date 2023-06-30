@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Opieka aborcyjna",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "Dostawcy aborcji",
 		"financial-assistance": "Pomoc finansowa",
 		"lodging-assistance": "Pomoc w zakwaterowaniu",
@@ -38,7 +38,7 @@
 		"food-assistance": "Pomoc żywnościowa"
 	},
 	"housing": {
-		"CATEGORYNAME": "Obudowa",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "Centra wrzucające dla młodzieży LGBTQ",
 		"emergency-housing": "Obudowa awaryjna",
 		"housing-information-and-referrals": "Informacje o mieszkaniach i skierowania",
@@ -63,7 +63,7 @@
 		"employment-authorization": "Zezwolenie na zatrudnienie",
 		"family-petitions": "Petycje rodzinne",
 		"immigration-detention": "Zatrzymanie imigracyjne",
-		"legal-advice": "Doradztwo prawne",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "Infolinie prawne",
 		"name-and-gender-change": "Zmiana nazwiska i płci",
 		"refugee-claim": "Wniosek o uchodźcę",
@@ -77,7 +77,7 @@
 		"mail": "Poczta"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medyczny",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "Usługi COVID-19",
 		"dental-care": "Dental care",
 		"hiv-and-sexual-health": "HIV a zdrowie seksualne",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "Zdrowie trans - logopedia"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Zdrowie psychiczne",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "Grupy wsparcia BIPOC",
 		"hotlines": "Infolinie",
 		"private-therapy-and-counseling": "Prywatna terapia i poradnictwo",
@@ -111,7 +111,7 @@
 		"sports-and-entertainment": "Sport i rozrywka"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Tłumaczenia pisemne i ustne",
+		"CATEGORYNAME": "Tłumaczenie ustne",
 		"for-healthcare": "Dla opieki zdrowotnej",
 		"for-legal-services": "Do obsługi prawnej",
 		"general-translation-and-interpretation": "Tłumaczenia ogólne i ustne"
