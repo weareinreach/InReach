@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Huduma ya Utoaji Mimba",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "Watoa huduma za utoaji mimba",
 		"financial-assistance": "Msaada wa kifedha",
 		"lodging-assistance": "Msaada wa makaazi",
@@ -38,7 +38,7 @@
 		"food-assistance": "Msaada wa chakula"
 	},
 	"housing": {
-		"CATEGORYNAME": "Makazi",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "Vituo vya kuacha kwa vijana wa LGBTQ",
 		"emergency-housing": "Nyumba ya dharura",
 		"housing-information-and-referrals": "Habari ya makazi na rufaa",
@@ -63,7 +63,7 @@
 		"employment-authorization": "Idhini ya ajira",
 		"family-petitions": "Maombi ya familia",
 		"immigration-detention": "Uhamiaji kizuizini",
-		"legal-advice": "Ushauri wa kisheria",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "Hotlines kisheria",
 		"name-and-gender-change": "Jina na mabadiliko ya jinsia",
 		"refugee-claim": "Madai ya wakimbizi",
@@ -77,7 +77,7 @@
 		"mail": "Barua"
 	},
 	"medical": {
-		"CATEGORYNAME": "Matibabu",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "Huduma za COVID-19",
 		"dental-care": "Huduma ya meno",
 		"hiv-and-sexual-health": "VVU na afya ya ngono",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "Afya ya Trans - tiba ya hotuba"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Afya ya Akili",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "Vikundi vya msaada wa BIPOC",
 		"hotlines": "Hotlines",
 		"private-therapy-and-counseling": "Tiba ya kibinafsi na ushauri nasaha",
@@ -111,7 +111,7 @@
 		"sports-and-entertainment": "Michezo na burudani"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Tafsiri na Tafsiri",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "Kwa huduma ya afya",
 		"for-legal-services": "Kwa huduma za kisheria",
 		"general-translation-and-interpretation": "Tafsiri ya jumla na tafsiri"
