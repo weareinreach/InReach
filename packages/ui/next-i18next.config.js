@@ -10,7 +10,7 @@ const config = {
 	},
 	nonExplicitSupportedLngs: true,
 	reloadOnPrerender: process.env.NODE_ENV !== 'production',
-	react: { useSuspense: false },
+	react: { useSuspense: false, bindI18n: 'languageChanged loaded' },
 	localePath: '../../apps/app/public/locales',
 }
 module.exports = config

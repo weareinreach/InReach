@@ -4,7 +4,6 @@ import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
-import { getServerSession } from '@weareinreach/auth'
 import { SuggestOrg } from '@weareinreach/ui/components/sections/SuggestOrg'
 import { QuickPromotionModal } from '@weareinreach/ui/modals'
 import { getServerSideTranslations } from '~app/utils/i18n'
