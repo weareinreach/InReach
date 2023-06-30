@@ -275,7 +275,7 @@
 	},
 	"sign-up-free": "Зарегистрироваться бесплатно",
 	"social": {
-		"email": "Электронная почта",
+		"email": "Email",
 		"facebook": "Facebook",
 		"github": "GitHub",
 		"group-header": "Соцсети",
@@ -344,7 +344,7 @@
 		"coming-soon": "Скоро появится",
 		"delete": "Удалить",
 		"distance": "Расстояние",
-		"email": "Электронная почта",
+		"email": "Email",
 		"home": "Домашний",
 		"hours": "Часы",
 		"more": "больше",
