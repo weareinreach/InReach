@@ -29,7 +29,7 @@
 	},
 	"cancel": "Cancelar",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 reivindique a página de perfil da sua organização e construa confiança com o seu público em InReach</textUtility1>\n<textUtility1>:writing_hand_medi_skin_tone: Atualize as informações da sua organização em Infernir</textUtility1>\n<textUtility1>📨 Convide outros funcionários para se juntar à sua organização em Inach</textUtility1>\n<textUtility1>🔑 Ganhe acesso a recursos futuros construídos especificamente para provedores de serviços afiliados em Inferir</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Essa organização ainda não foi reivindicada por um provedor de serviços.</title2>\n<textDarkGray>Você pode reivindicar essa organização como prestadora de serviços para: < extDarkGray>"
 	},
 	"claimed": "Reivindicado",
@@ -170,11 +170,11 @@
 	"privacy-statement": "Declaração de privacidade",
 	"privacy-statement-body": [
 		"<textDarkGrayCentered>Na inReach, reconhecemos que preservar o anonimato on-line é um problema de vida ou morte para muitas pessoas LGBTQ+. É por isso que o aplicativo gratuito inReach (nosso aplicativo web, aplicativo iOS nativo e aplicativo nativo para Android) foi projetado para priorizar a proteção da segurança e confidencialidade on-line dos usuários.</textDarkGrayCentered>",
-		"<title2>User demographic data</title2>",
+		"<title2>Dados demográficos do usuário</title2>",
 		"<textDarkGray><strong>Não exigimos nenhuma informação de identificação pessoal para usar o aplicativo gratuito inReach.</strong></textDarkGray>",
-		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
+		"<textDarkGray>Usuários que optam por criar uma conta gratuita de InReach têm <strong>a opção</strong> de compartilhar as seguintes informações demográficas por meio de uma pesquisa anônima on-line:</textDarkGray>",
 		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
-		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
+		"<textDarkGray><strong>Todas essas informações confidenciais são armazenadas anonimamente e não são conectadas a qualquer usuário ou conta de usuário individual.*</strong></textDarkGray>",
 		"<textUtility4>(*A única exceção é o tipo de conta de usuário do Local Community Reviewer, que aproveita todas as informações demográficas coletadas para aprimorar a experiência e o impacto do voluntariado dos revisores comunitários locais. Para contas do Local Community Reviewer, exigimos que a localização e todas as outras informações demográficas sejam opcionais, mas estejam vinculadas ao registro do usuário. Esses dados só seriam visíveis fora da equipe da inReach se o revisor da comunidade local optasse por torná-los visíveis por meio das configurações de privacidade da conta. Compartilhar um perfil voltado para o público ajudará outros usuários a se sentirem mais confiantes em suas avaliações.)</textUtility4>",
 		"<textDarkGray>Compreender a demografia de nossos usuários pode nos ajudar a quantificar nosso impacto, arrecadar fundos e avaliar futuras decisões sobre produtos. Agradecemos que os usuários compartilhem voluntariamente essas informações conosco e tomamos essas medidas para proteger sua privacidade e anonimato.</textDarkGray>",
 		"<textDarkGray><title2>Análise de uso do site</title2></textDarkGray>",
@@ -189,8 +189,8 @@
 	"privatePractice": "Clínica privada",
 	"profile": "Perfil",
 	"questions": "Perguntas?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
-	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
+	"quick-promo-body": "<textUtility1>💚 Salvar e compartilhar listas de recursos personalizadas</textUtility1>\n<textUtility1>💬 Deixe a classificação pública/comentários nas organizações</textUtility1>\n<textUtility1>🏠 Sugerir organizações em sua área</textUtility1>\n<textUtility1>🔗 Reivindicar o perfil da sua organização (em breve!</textUtility1>",
+	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Você precisa logar para fazer isso.</title2>\n<textDarkGray>Com uma conta gratuita você pode desbloquear recursos adicionais:</textDarkGray>",
 	"remote-services": "Serviços disponíveis remotamente",
 	"remote-services-page-title": "Serviços remotos",
 	"reset-password": "Redefinir sua senha",
@@ -255,7 +255,7 @@
 		"lcr-screen3": "Analisei a página <Link><strong>Local Community Reviewer</strong></Link> no site da inReach e atendo aos requisitos.",
 		"modal-body": [
 			"<title3>Que tipo de conta você gostaria de criar?</title3>",
-			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Profissional/Provedor</button>\n<button data-option='lcr'>Revisor da Comunidade Local</button>\n</group>",
 			"<loginLink>Já tem uma conta?</loginLink>"
 		],
 		"name-use-any": "Use qualquer nome com o qual você se sinta confortável.",
@@ -273,7 +273,7 @@
 	},
 	"sign-up-free": "Cadastre-se gratuitamente",
 	"social": {
-		"email": "E-mail",
+		"email": "Email",
 		"facebook": "Facebook",
 		"github": "GitHub",
 		"group-header": "Social",
