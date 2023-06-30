@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { readSlugCache, writeSlugCache } from '~api/cache/slugToOrgId'
 import { handleError } from '~api/lib/errorHandler'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
 import { defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
@@ -61,10 +62,13 @@ export const queries = defineRouter({
 	getIdFromSlug: publicProcedure.input(slug).query(async ({ ctx, input }) => {
 		try {
 			const { slug } = input
+			const cachedId = await readSlugCache(slug)
+			if (cachedId) return { id: cachedId }
 			const orgId = await ctx.prisma.organization.findUniqueOrThrow({
 				where: { slug, ...isPublic },
 				select: { id: true },
 			})
+			await writeSlugCache(slug, orgId.id)
 			return orgId
 		} catch (error) {
 			handleError(error)

@@ -34,7 +34,8 @@ const useServiceSectionStyles = createStyles((theme) => ({
 const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSectionProps) => {
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 	const { slug } = router.query
-	const { t } = useTranslation(['common', 'services', slug])
+	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
+	const { t } = useTranslation(orgId?.id ? ['common', 'services', orgId.id] : ['common', 'services'])
 	const { classes } = useServiceSectionStyles()
 
 	const variants = useCustomVariant()
