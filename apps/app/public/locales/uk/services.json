@@ -38,7 +38,7 @@
 		"food-assistance": "Харчова допомога"
 	},
 	"housing": {
-		"CATEGORYNAME": "Housing",
+		"CATEGORYNAME": "Житло",
 		"drop-in-centers-for-lgbtq-youth": "Центри для ЛГБТК-молоді",
 		"emergency-housing": "Аварійне житло",
 		"housing-information-and-referrals": "Інформація про житло та реферали",
@@ -111,7 +111,7 @@
 		"sports-and-entertainment": "Спорт і розваги"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Translation and Interpretation",
+		"CATEGORYNAME": "Переклад і інтерпретація",
 		"for-healthcare": "Для охорони здоров'я",
 		"for-legal-services": "Для юридичних послуг",
 		"general-translation-and-interpretation": "Загальний переклад та усний переклад"
