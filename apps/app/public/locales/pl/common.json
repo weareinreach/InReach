@@ -29,7 +29,7 @@
 	},
 	"cancel": "Anuluj",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 Odbierz stronę profilu swojej organizacji i buduj zaufanie do swoich odbiorców na Inach</textUtility1>\n<textUtility1>:writing_hand_średnie, dark_skin_tone: Zaktualizuj informacje o swojej organizacji na InReach</textUtility1>\n<textUtility1>📨 Zaproś innych pracowników, aby dołączyli do swojej organizacji na InReach</textUtility1>\n<textUtility1>🔑 Uzyskaj dostęp do przyszłych funkcji stworzonych specjalnie dla powiązanych dostawców usług na InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Ta organizacja nie została jeszcze zgłoszona przez usługodawcę.</title2>\n<textDarkGray>Możesz ubiegać się o tę organizację jako usługodawcę, aby: < extDarkGray>"
 	},
 	"claimed": "Twierdził",
@@ -257,7 +257,7 @@
 		"lcr-screen3": "Przejrzałem stronę <Link><strong>Local Community Reviewer</strong></Link> na stronie inReach i spełniam wymagania.",
 		"modal-body": [
 			"<title3>Jaki typ konta chciałbyś założyć?</title3>",
-			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
+			"<group>\n<button data-option='individual'>Indywidualny</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Lokalny recenzenta społeczności</button>\n</group>",
 			"<loginLink>Masz już konto?</loginLink>"
 		],
 		"name-use-any": "Używaj dowolnej nazwy, z którą czujesz się komfortowo.",
