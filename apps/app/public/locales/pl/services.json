@@ -38,7 +38,7 @@
 		"food-assistance": "Pomoc żywnościowa"
 	},
 	"housing": {
-		"CATEGORYNAME": "Housing",
+		"CATEGORYNAME": "Mieszkalnictwo",
 		"drop-in-centers-for-lgbtq-youth": "Centra wrzucające dla młodzieży LGBTQ",
 		"emergency-housing": "Obudowa awaryjna",
 		"housing-information-and-referrals": "Informacje o mieszkaniach i skierowania",
@@ -111,7 +111,7 @@
 		"sports-and-entertainment": "Sport i rozrywka"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Translation and Interpretation",
+		"CATEGORYNAME": "Tłumaczenie ustne",
 		"for-healthcare": "Dla opieki zdrowotnej",
 		"for-legal-services": "Do obsługi prawnej",
 		"general-translation-and-interpretation": "Tłumaczenia ogólne i ustne"
