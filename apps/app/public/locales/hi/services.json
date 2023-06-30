@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "गर्भपात की देखभाल",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "गर्भपात कराने वाले",
 		"financial-assistance": "वित्तीय सहायता",
 		"lodging-assistance": "लॉजिंग सहायता",
@@ -38,7 +38,7 @@
 		"food-assistance": "खाद्य सहायता"
 	},
 	"housing": {
-		"CATEGORYNAME": "हाउसिंग",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ युवाओं के लिए ड्रॉप-इन सेंटर",
 		"emergency-housing": "आपातकालीन आवास",
 		"housing-information-and-referrals": "आवास की जानकारी और रेफरल",
@@ -63,7 +63,7 @@
 		"employment-authorization": "रोजगार प्राधिकरण",
 		"family-petitions": "पारिवारिक याचिकाएं",
 		"immigration-detention": "आप्रवासन निरोध",
-		"legal-advice": "कानूनी सलाह",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "कानूनी हॉटलाइन",
 		"name-and-gender-change": "नाम और लिंग परिवर्तन",
 		"refugee-claim": "शरणार्थी का दावा",
@@ -77,7 +77,7 @@
 		"mail": "मेल"
 	},
 	"medical": {
-		"CATEGORYNAME": "मेडिकल",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "COVID-19 सेवाएं",
 		"dental-care": "दाँतों की देखभाल",
 		"hiv-and-sexual-health": "एचआईवी और यौन स्वास्थ्य",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "ट्रांस हेल्थ - स्पीच थेरेपी"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "मानसिक स्वास्थ्य",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "BIPOC सहायता समूह",
 		"hotlines": "हॉटलाइन",
 		"private-therapy-and-counseling": "निजी चिकित्सा और परामर्श",
@@ -111,7 +111,7 @@
 		"sports-and-entertainment": "खेल और मनोरंजन"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "अनुवाद और व्याख्या",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "हेल्थकेयर के लिए",
 		"for-legal-services": "कानूनी सेवाओं के लिए",
 		"general-translation-and-interpretation": "सामान्य अनुवाद और व्याख्या"
