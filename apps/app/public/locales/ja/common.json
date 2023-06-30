@@ -29,7 +29,7 @@
 	},
 	"cancel": "[キャンセル]",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 組織のプロフィールページを要求し、InReach でオーディエンスと信頼関係を構築する</textUtility1>\n<textUtility1>✍🏾 組織のInReach に関する情報を更新する</textUtility1>\n<textUtility1>📨 InReach であなたの組織に参加するために他のスタッフを招待する</textUtility1>\n<textUtility1>🔑 InReach の関連サービスプロバイダー専用に構築された将来の機能へのアクセスを得る</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>この組織はまだサービスプロバイダーから申請されていません。</title2>\n<textDarkGray>この組織をサービスプロバイダーとして申請できるのは、以下のとおりです。< extDarkGray>"
 	},
 	"claimed": "請求済み",
@@ -298,7 +298,7 @@
 	"suggest-a-resource": "リソースを提案",
 	"support": "サポート",
 	"survey": {
-		"birthyear-req-value": "Year must be between {{year1}} and {{year2}}, i.e 2005",
+		"birthyear-req-value": "年は {{year1}} から {{year2}}の間でなければなりません、例えば 2005",
 		"finish": "フィニッシュ",
 		"launch-item1": "<Bold>なぜ私たちは尋ねるの？</Bold> ユーザー層を理解することは、私たちの影響を定量化し、資金を調達し、将来の製品に関する意思決定の評価を行うのに役立ちます。",
 		"launch-item2": "<Bold>安全第一:</Bold> 回答は匿名で保存され、個人ユーザーやユーザーアカウントとは関係ありません。",
