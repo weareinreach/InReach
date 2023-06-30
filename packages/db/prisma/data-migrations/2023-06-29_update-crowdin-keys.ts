@@ -41,7 +41,7 @@ export const job20230629a = {
 		// Only run when Vercel is doing the production build.
 
 		// eslint-disable-next-line node/no-process-env
-		if (process.env.CI !== '1' && process.env.VERCEL_ENV !== 'production') {
+		if (process.env.VERCEL_ENV !== 'production') {
 			task.output = `IGNORING - only run when Vercel is doing the production build.`
 			await jobPostRunner(jobDef)
 			return task.skip()
