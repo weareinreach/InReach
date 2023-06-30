@@ -38,7 +38,7 @@
 		"food-assistance": "食物援助"
 	},
 	"housing": {
-		"CATEGORYNAME": "Housing",
+		"CATEGORYNAME": "住房",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ 青年救助中心",
 		"emergency-housing": "应急住房",
 		"housing-information-and-referrals": "住房信息和推荐",
@@ -111,7 +111,7 @@
 		"sports-and-entertainment": "体育和娱乐"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Translation and Interpretation",
+		"CATEGORYNAME": "笔译和口译",
 		"for-healthcare": "用于医疗保健",
 		"for-legal-services": "用于法律服务",
 		"general-translation-and-interpretation": "一般笔译和口译"
