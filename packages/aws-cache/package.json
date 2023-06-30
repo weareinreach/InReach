@@ -17,7 +17,7 @@
 		"lint:fix": "eslint --cache --fix ."
 	},
 	"dependencies": {
-		"@aws-lambda-powertools/logger": "1.10.0",
+		"@aws-lambda-powertools/logger": "1.11.0",
 		"flat": "5.0.2",
 		"ioredis": "5.3.2",
 		"tslog": "4.8.2",
@@ -36,6 +36,6 @@
 		"esbuild": "0.18.10",
 		"eslint": "8.43.0",
 		"prettier": "2.8.8",
-		"typescript": "5.1.5"
+		"typescript": "5.1.6"
 	}
 }

@@ -14,7 +14,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@aws-sdk/client-cognito-identity-provider": "3.360.0",
+		"@aws-sdk/client-cognito-identity-provider": "3.363.0",
 		"@next-auth/prisma-adapter": "1.0.7",
 		"@weareinreach/db": "workspace:*",
 		"@weareinreach/env": "workspace:*",
@@ -35,7 +35,7 @@
 		"next-auth": "4.22.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"typescript": "5.1.5"
+		"typescript": "5.1.6"
 	},
 	"peerDependencies": {
 		"next": "^13",
