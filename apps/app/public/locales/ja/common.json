@@ -9,7 +9,7 @@
 	"adjective": {
 		"organization": "{{adjective}} 組織"
 	},
-	"agree-disclaimer": "By clicking \"{{action}}\" you agree to InReach's <link1>Privacy Policy</link1> and <link2>Terms of Use</link2>.",
+	"agree-disclaimer": "「{{action}}」をクリックすると、InReachの <link1>プライバシーポリシー</link1> および <link2>利用規約</link2>に同意したことになります。",
 	"alert-message-1": "<strong>COVID-19 ポリシー:</strong> COVID-19 予防に関するニュースやベストプラクティスは日々急速に変化しているため、Whitman-Walker Health は予防に関する推奨事項を反映するようにサービスを更新し続けています。最新情報については、彼らのウェブサイトを確認してください。",
 	"all-service-category": "すべて {{serviceCategory}}",
 	"anti-hate": {
@@ -29,7 +29,7 @@
 	},
 	"cancel": "[キャンセル]",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 組織のプロフィールページを要求し、InReach でオーディエンスと信頼関係を構築する</textUtility1>\n<textUtility1>✍🏾 組織のInReach に関する情報を更新する</textUtility1>\n<textUtility1>📨 InReach であなたの組織に参加するために他のスタッフを招待する</textUtility1>\n<textUtility1>🔑 InReach の関連サービスプロバイダー専用に構築された将来の機能へのアクセスを得る</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>この組織はまだサービスプロバイダーから申請されていません。</title2>\n<textDarkGray>この組織をサービスプロバイダーとして申請できるのは、以下のとおりです。</textDarkGray>"
 	},
 	"claimed": "請求済み",
@@ -44,7 +44,7 @@
 	"contact": "連絡",
 	"contact-us": "お問い合わせ",
 	"count": {
-		"result_other": "{{count}} results"
+		"result_other": "{{count}} 件の結果"
 	},
 	"country-select": "国を選択してください",
 	"create-new-list": "新しいリストを作成",
@@ -160,8 +160,8 @@
 	},
 	"password-reset-success": "<Text>新しいパスワードを使用して <LoginModal>ログイン</LoginModal> してください。</Text>",
 	"password-saved": "パスワードが保存されました！",
-	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
-	"photo_interval": "(0)[No photos yet];(2-inf)[See all {{count}} photos];",
+	"photo-count_interval": "(0)[まだ写真はありません。];(1)[{{count}} 写真];(2-inf)[{{count}} 写真]",
+	"photo_interval": "(0)[まだ写真はありません];(2-inf)[ {{count}} 枚の写真をすべて見る];",
 	"please-specify": "指定してください",
 	"powered-by-vercel": "パワー・バイ・バーセル",
 	"prefer-not-to-say": "言いたくない",
@@ -169,11 +169,11 @@
 	"privacy-statement": "プライバシーステートメント",
 	"privacy-statement-body": [
 		"<textDarkGrayCentered>inReachでは、オンラインの匿名性を維持することは、多くのLGBTQ+の人々にとって生死にかかわる問題であることを認識しています。そのため、無料のInReachアプリ（当社のウェブアプリ、ネイティブiOSアプリ、ネイティブAndroidアプリ）は、オンラインでのユーザーの安全と機密性の保護を優先して設計されています。</textDarkGrayCentered>",
-		"<title2>User demographic data</title2>",
+		"<title2>ユーザ人口統計データ</title2>",
 		"<textDarkGray><strong>無料のInReachアプリを使用するにあたり、個人を特定できる情報は必要ありません。</strong></textDarkGray>",
-		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
+		"<textDarkGray>InReachユーザーアカウントを作成することを選択したユーザーには、匿名のオンラインアンケートを通じて以下の人口統計情報を共有するオプション <strong></strong> があります。</textDarkGray>",
 		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
-		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
+		"<textDarkGray><strong>この機密情報はすべて匿名で保存され、単一の個人ユーザーまたはユーザーアカウントには接続されません。*</strong></textDarkGray>",
 		"<textUtility4>(*唯一の例外は、Local Community Reviewer のユーザーアカウントタイプです。これは、収集された人口統計情報を活用して、Local Community Reviewerのボランティア活動の経験と影響力を高めます。Local Community Reviewer アカウントの場合、位置情報やその他の人口統計情報は任意ですが、ユーザーレコードに関連付けられます。このデータは、ローカルコミュニティレビュー担当者がアカウントのプライバシー設定で公開することを選択した場合にのみ、inReachスタッフ以外には表示されません。プロフィールを公開すると、他のユーザーがあなたのレビューに自信を持てるようになります。）</textUtility4>",
 		"<textDarkGray>ユーザー層を理解することは、インパクトの定量化、資金調達、将来の製品に関する意思決定の評価に役立ちます。ユーザーが自発的にこの情報を私たちと共有してくれることに感謝し、私たちはあなたのプライバシーと匿名性を保護するためにこれらの措置を講じています。</textDarkGray>",
 		"<textDarkGray><title2>サイト利用分析</title2></textDarkGray>",
@@ -188,7 +188,7 @@
 	"privatePractice": "プライベート・プラクティス",
 	"profile": "プロフィール",
 	"questions": "質問?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 パーソナライズされたリソースリストを保存して共有する</textUtility1>\n<textUtility1>💬 公開評価/組織レビューを残す</textUtility1>\n<textUtility1>🏠 お住まいの地域の組織を提案する</textUtility1>\n<textUtility1>🔗 組織のプロフィールページを入手する (近日公開予定!</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "リモートで利用できるサービス",
 	"remote-services-page-title": "リモートサービス",
@@ -272,7 +272,7 @@
 	},
 	"sign-up-free": "無料でサインアップ",
 	"social": {
-		"email": "E メール",
+		"email": "Email",
 		"facebook": "フェイスブック",
 		"github": "GitHub",
 		"group-header": "ソーシャル",
@@ -298,7 +298,7 @@
 	"suggest-a-resource": "リソースを提案",
 	"support": "サポート",
 	"survey": {
-		"birthyear-req-value": "Year must be between {{year1}} and {{year2}}, i.e 2005",
+		"birthyear-req-value": "年は {{year1}} から {{year2}}の間でなければなりません、例えば 2005",
 		"finish": "フィニッシュ",
 		"launch-item1": "<Bold>なぜ私たちは尋ねるの？</Bold> ユーザー層を理解することは、私たちの影響を定量化し、資金を調達し、将来の製品に関する意思決定の評価を行うのに役立ちます。",
 		"launch-item2": "<Bold>安全第一:</Bold> 回答は匿名で保存され、個人ユーザーやユーザーアカウントとは関係ありません。",
@@ -335,7 +335,7 @@
 		"account": "アカウント",
 		"add": "[追加]",
 		"and": "そして",
-		"and-x-more": "and {{count}} more",
+		"and-x-more": "他 {{count}} 名",
 		"back": "戻る",
 		"close": "閉じる",
 		"coming-soon": "近日公開予定",
@@ -368,6 +368,6 @@
 	"photo_other": "写真",
 	"review-count_other": "({{count}} レビュー)",
 	"review_other": "レビュー",
-	"view-x-result_other": "View {{count}} results",
+	"view-x-result_other": "{{count}} 件の結果を表示",
 	"website_other": "ウェブサイト"
 }
