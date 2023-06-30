@@ -58,7 +58,7 @@ const SearchResultLoading = () => {
 
 const SearchResultData = ({ result }: SearchResultHasData) => {
 	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories } = result
-	const { t, ready: i18nReady } = useTranslation(['common', slug])
+	const { t, ready: i18nReady } = useTranslation(['common', result.id])
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()

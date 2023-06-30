@@ -12,6 +12,8 @@ declare module "nextjs-routes" {
 
   export type Route =
     | StaticRoute<"/account">
+    | StaticRoute<"/account/reviews">
+    | StaticRoute<"/account/saved">
     | StaticRoute<"/admin/quicklink/email">
     | StaticRoute<"/admin/quicklink">
     | StaticRoute<"/admin/quicklink/phone">
@@ -29,7 +31,6 @@ declare module "nextjs-routes" {
     | DynamicRoute<"/org/[slug]", { "slug": string }>
     | DynamicRoute<"/org/[slug]/remote", { "slug": string }>
     | StaticRoute<"/profile">
-    | StaticRoute<"/saved">
     | DynamicRoute<"/search/[...params]", { "params": string[] }>
     | StaticRoute<"/search">
     | StaticRoute<"/suggest">

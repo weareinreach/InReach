@@ -61,7 +61,10 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 	({ serviceId, ...props }, ref) => {
 		const slug = useSlug()
 		const { data, status } = api.service.forServiceModal.useQuery(serviceId)
-		const { t, i18n } = useTranslation(['common', 'attribute', slug])
+		const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
+		const { t, i18n } = useTranslation(
+			orgId?.id ? ['common', 'attribute', orgId.id] : ['common', 'attribute']
+		)
 		const { classes } = useStyles()
 		const [opened, handler] = useDisclosure(false)
 		const theme = useMantineTheme()

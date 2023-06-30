@@ -7,7 +7,7 @@ import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant, useFormattedAddress } from '~ui/hooks'
 
 export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
-	const { t, ready: i18nReady } = useTranslation(data.slug)
+	const { t, ready: i18nReady } = useTranslation(data.id)
 	const variants = useCustomVariant()
 	const { attributes, isClaimed, locations, description, slug } = data
 
