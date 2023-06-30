@@ -30,5 +30,4 @@ export * from './2023-06-12_survey-options'
 export * from './2023-06-13_user-type'
 export * from './2023-06-14_remote-tags/index'
 export * from './2023-06-20_tags-for-suggestions'
-export * from './2023-06-29_update-crowdin-keys'
 // codegen:end
