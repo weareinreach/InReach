@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "낙태 치료",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "낙태 제공자",
 		"financial-assistance": "재정 지원",
 		"lodging-assistance": "숙박 지원",
@@ -38,7 +38,7 @@
 		"food-assistance": "식품 지원"
 	},
 	"housing": {
-		"CATEGORYNAME": "주택",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ 청소년을 위한 드롭인 센터",
 		"emergency-housing": "비상 주택",
 		"housing-information-and-referrals": "숙소 정보 및 추천",
@@ -63,7 +63,7 @@
 		"employment-authorization": "고용 허가",
 		"family-petitions": "가족 청원서",
 		"immigration-detention": "이민 구금",
-		"legal-advice": "법률 자문",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "법률 핫라인",
 		"name-and-gender-change": "이름 및 성별 변경",
 		"refugee-claim": "난민 청구",
@@ -77,7 +77,7 @@
 		"mail": "메일"
 	},
 	"medical": {
-		"CATEGORYNAME": "의료",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "COVID-19 서비스",
 		"dental-care": "덴탈 케어",
 		"hiv-and-sexual-health": "HIV 및 성 건강",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "트랜스 건강 - 언어 치료"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "정신 건강",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "BIPOC 지원 그룹",
 		"hotlines": "핫라인",
 		"private-therapy-and-counseling": "개인 치료 및 상담",
@@ -111,7 +111,7 @@
 		"sports-and-entertainment": "스포츠 및 엔터테인먼트"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "번역 및 통역",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "헬스케어용",
 		"for-legal-services": "법률 서비스용",
 		"general-translation-and-interpretation": "일반 번역 및 통역"
