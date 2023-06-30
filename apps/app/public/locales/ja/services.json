@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "中絶ケア",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "中絶プロバイダー",
 		"financial-assistance": "財政援助",
 		"lodging-assistance": "宿泊アシスタンス",
@@ -38,7 +38,7 @@
 		"food-assistance": "食糧援助"
 	},
 	"housing": {
-		"CATEGORYNAME": "住宅",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQの若者のためのドロップインセンター",
 		"emergency-housing": "緊急住宅",
 		"housing-information-and-referrals": "住宅情報と紹介",
@@ -63,7 +63,7 @@
 		"employment-authorization": "雇用認可",
 		"family-petitions": "家族への請願",
 		"immigration-detention": "入国者拘禁",
-		"legal-advice": "法律相談",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "リーガルホットライン",
 		"name-and-gender-change": "名前と性別の変更",
 		"refugee-claim": "難民申請",
@@ -77,7 +77,7 @@
 		"mail": "メール"
 	},
 	"medical": {
-		"CATEGORYNAME": "医療",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "新型コロナウイルス関連サービス",
 		"dental-care": "デンタルケア",
 		"hiv-and-sexual-health": "HIVと性的健康",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "トランスヘルス-言語療法"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "メンタルヘルス",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "BIPOC サポートグループ",
 		"hotlines": "ホットライン",
 		"private-therapy-and-counseling": "プライベートセラピーとカウンセリング",
@@ -111,7 +111,7 @@
 		"sports-and-entertainment": "スポーツとエンターテイメント"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "翻訳と通訳",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "ヘルスケア用",
 		"for-legal-services": "法務サービス用",
 		"general-translation-and-interpretation": "一般的な翻訳と通訳"
