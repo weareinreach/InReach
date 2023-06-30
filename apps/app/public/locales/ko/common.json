@@ -272,7 +272,7 @@
 	},
 	"sign-up-free": "무료로 가입하기",
 	"social": {
-		"email": "이메일",
+		"email": "Email",
 		"facebook": "페이스북",
 		"github": "깃허브",
 		"group-header": "소셜",
@@ -341,7 +341,7 @@
 		"coming-soon": "곧 출시될 예정입니다.",
 		"delete": "삭제",
 		"distance": "거리",
-		"email": "이메일",
+		"email": "Email",
 		"home": "홈",
 		"hours": "시간",
 		"more": "더",
