@@ -38,7 +38,7 @@
 		"food-assistance": "Продовольственная помощь"
 	},
 	"housing": {
-		"CATEGORYNAME": "Housing",
+		"CATEGORYNAME": "Жилье",
 		"drop-in-centers-for-lgbtq-youth": "Центры по вывозу молодежи LGBTQ",
 		"emergency-housing": "Аварийное жилье",
 		"housing-information-and-referrals": "Информация о жилье и обращения",
@@ -111,7 +111,7 @@
 		"sports-and-entertainment": "Спорт и развлечения"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Translation and Interpretation",
+		"CATEGORYNAME": "Перевод и перевод",
 		"for-healthcare": "Здравоохранение",
 		"for-legal-services": "Правовые услуги",
 		"general-translation-and-interpretation": "Общий перевод и устный перевод"
