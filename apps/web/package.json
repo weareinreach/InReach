@@ -35,7 +35,7 @@
 		"@weareinreach/ui": "workspace:*",
 		"dayjs": "1.11.8",
 		"embla-carousel-react": "7.1.0",
-		"i18next": "23.2.3",
+		"i18next": "23.2.6",
 		"next": "13.4.7",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
@@ -50,6 +50,6 @@
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"eslint": "8.43.0",
-		"typescript": "5.1.5"
+		"typescript": "5.1.6"
 	}
 }
