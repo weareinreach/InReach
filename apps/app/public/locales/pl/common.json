@@ -29,7 +29,7 @@
 	},
 	"cancel": "Anuluj",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 Odbierz stronę profilu swojej organizacji i buduj zaufanie do swoich odbiorców na Inach</textUtility1>\n<textUtility1>:writing_hand_średnie, dark_skin_tone: Zaktualizuj informacje o swojej organizacji na InReach</textUtility1>\n<textUtility1>📨 Zaproś innych pracowników, aby dołączyli do swojej organizacji na InReach</textUtility1>\n<textUtility1>🔑 Uzyskaj dostęp do przyszłych funkcji stworzonych specjalnie dla powiązanych dostawców usług na InReach</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Ta organizacja nie została jeszcze zgłoszona przez usługodawcę.</title2>\n<textDarkGray>Możesz ubiegać się o tę organizację jako usługodawcę do:</textDarkGray>"
 	},
 	"claimed": "Twierdził",
@@ -163,7 +163,7 @@
 	},
 	"password-reset-success": "<Text>Proszę <LoginModal>Zaloguj się</LoginModal> używając nowego hasła.</Text>",
 	"password-saved": "Hasło zapisane!",
-	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
+	"photo-count_interval": "(0)[Brak zdjęć.];(1)[{{count}} zdjęć];(2-inf)[{{count}} zdjęć]",
 	"photo_interval": "(0) [Brak zdjęć]; (2-inf) [Zobacz wszystkie {{count}} zdjęcia];",
 	"please-specify": "Proszę określić",
 	"powered-by-vercel": "Obsługiwane przez Vercel",
@@ -172,11 +172,11 @@
 	"privacy-statement": "Oświadczenie o ochronie prywatności",
 	"privacy-statement-body": [
 		"<textDarkGrayCentered>W inReach zdajemy sobie sprawę, że zachowanie anonimowości online jest problemem życia lub śmierci wielu osób LGBTQ +. Dlatego bezpłatna aplikacja inReach (nasza aplikacja internetowa, natywna aplikacja na iOS i natywna aplikacja na Androida) została zaprojektowana tak, aby priorytetowo traktować ochronę bezpieczeństwa i poufności użytkowników w Internecie.</textDarkGrayCentered>",
-		"<title2>User demographic data</title2>",
+		"<title2>Dane demograficzne użytkownika</title2>",
 		"<textDarkGray><strong>Nie wymagamy żadnych danych osobowych, aby korzystać z bezpłatnej aplikacji inReach.</strong></textDarkGray>",
-		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
-		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
-		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
+		"<textDarkGray>Użytkownicy, którzy decydują się utworzyć darmowe konto użytkownika InReach, mają <strong>opcję</strong> udostępniania następujących informacji demograficznych w anonimowej ankiecie online:</textDarkGray>",
+		"<textDarkGray><listGroup><listItem>Rok urodzenia</listItem>\n<listItem>Kraj pochodzenia</listItem>\n<listItem>Tożsamość LGBTQ+ (orientacja seksualna i tożsamość płciowa)</listItem>\n<listItem>Rasa/pochodzenie etniczne</listItem>\n<listItem>Status imigracyjny</listItem>\n<listItem>Bieżąca lokalizacja</listItem></listGroup></textDarkGray>",
+		"<textDarkGray><strong>Wszystkie te poufne informacje są przechowywane anonimowo i nie są połączone z żadnym indywidualnym użytkownikiem lub kontem użytkownika.*</strong></textDarkGray>",
 		"<textUtility4>(*Jedynym wyjątkiem jest typ konta użytkownika Local Community Reviewer, który wykorzystuje wszelkie zebrane informacje demograficzne w celu zwiększenia doświadczenia i wpływu na wolontariat recenzentów społeczności lokalnych. W przypadku kont recenzentów społeczności lokalnej, wymagamy lokalizacji, a wszystkie inne informacje demograficzne są opcjonalne, ale byłyby powiązane z ich rekordem użytkownika. Dane te byłyby widoczne poza personelem inReach tylko wtedy, gdy Recenzent Społeczności Lokalnej zdecyduje się je uwidocznić w ustawieniach prywatności swojego konta. Udostępnianie publicznego profilu pomoże innym użytkownikom poczuć się pewniej w swoich recenzjach).</textUtility4>",
 		"<textDarkGray>Zrozumienie danych demograficznych użytkowników może pomóc nam określić ilościowo nasz wpływ, zebrać fundusze i ocenić przyszłe decyzje dotyczące produktów. Doceniamy, że użytkownicy dobrowolnie udostępniają nam te informacje i podejmujemy te kroki, aby chronić Twoją prywatność i anonimowość.</textDarkGray>",
 		"<textDarkGray><title2>Analityka użytkowania witryny</title2></textDarkGray>",
@@ -191,8 +191,8 @@
 	"privatePractice": "Prywatna praktyka",
 	"profile": "Profil",
 	"questions": "Pytania?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
-	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
+	"quick-promo-body": "<textUtility1>💚 Zapisz i udostępnij spersonalizowane listy zasobów</textUtility1>\n<textUtility1>💬 Pozostaw publiczną ocenę/recenzje na organizacjach</textUtility1>\n<textUtility1>🏠 Suggest Organizations in your area</textUtility1>\n<textUtility1>🔗 Odbierz stronę profilową swojej organizacji (Już wkrótce!</textUtility1>",
+	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Musisz się zalogować, aby to zrobić.</title2>\n<textDarkGray>Z darmowym kontem InReach możesz odblokować dodatkowe funkcje:</textDarkGray>",
 	"remote-services": "Usługi dostępne zdalnie",
 	"remote-services-page-title": "Usługi zdalne",
 	"reset-password": "Zresetuj hasło",
@@ -257,7 +257,7 @@
 		"lcr-screen3": "Przejrzałem stronę <Link><strong>Local Community Reviewer</strong></Link> na stronie inReach i spełniam wymagania.",
 		"modal-body": [
 			"<title3>Jaki typ konta chciałbyś założyć?</title3>",
-			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
+			"<group>\n<button data-option='individual'>Indywidualny</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Lokalny recenzenta społeczności</button>\n</group>",
 			"<loginLink>Masz już konto?</loginLink>"
 		],
 		"name-use-any": "Używaj dowolnej nazwy, z którą czujesz się komfortowo.",
@@ -275,7 +275,7 @@
 	},
 	"sign-up-free": "Zarejestruj się za darmo",
 	"social": {
-		"email": "E-mail",
+		"email": "Email",
 		"facebook": "Facebook",
 		"github": "GitHub",
 		"group-header": "Społeczny",
