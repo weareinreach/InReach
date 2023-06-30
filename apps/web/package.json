@@ -3,7 +3,7 @@
 	"version": "0.100.0",
 	"private": true,
 	"scripts": {
-		"build": "next build",
+		"buildx": "next build",
 		"clean:node": "rm -rf ./node_modules/ || true && rm -rf ./.next || true",
 		"dev": "next dev",
 		"preinstall": "npx only-allow pnpm",
@@ -50,6 +50,6 @@
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"eslint": "8.43.0",
-		"typescript": "5.1.3"
+		"typescript": "5.1.5"
 	}
 }

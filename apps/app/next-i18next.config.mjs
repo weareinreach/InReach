@@ -2,17 +2,15 @@
 /* eslint-disable node/no-process-env */
 // @ts-check
 /* eslint-disable import/no-unused-modules */
-import axios from 'axios'
+// import axios from 'axios'
 import ChainedBackend from 'i18next-chained-backend'
 import HttpBackend from 'i18next-http-backend'
 import intervalPlural from 'i18next-intervalplural-postprocessor'
 // import LocalStorageBackend from 'i18next-localstorage-backend'
 import MultiBackend from 'i18next-multiload-backend-adapter'
-import { z } from 'zod'
+// import { z } from 'zod'
 
 import path from 'path'
-
-import { I18nextKeysOnDemand } from '@weareinreach/i18next-keys-ondemand'
 
 export const namespaces = [
 	'attribute',
@@ -28,7 +26,7 @@ export const namespaces = [
 ]
 const isBrowser = typeof window !== 'undefined'
 
-const Keys = z.record(z.string())
+// const Keys = z.record(z.string())
 
 /**
  * Gets full path based on environment
@@ -44,30 +42,12 @@ const getUrl = (path) => {
 	return `http://localhost:${process.env.PORT ?? 3000}${parsedPath}` // dev SSR should use localhost
 }
 
-/** @type {import('@weareinreach/i18next-keys-ondemand').TranslationGetter} */
-const onDemandFetcher = async (keys, lang, ns, defaultValues) => {
-	console.log('fetcher called', { keys, lang, ns, defaultValues })
-	try {
-		const { data } = await axios.post(getUrl('/api/i18n/get'), { keys, lang, ns, defaultValues })
-		const translations = Keys.parse(data)
-		return translations
-	} catch (err) {
-		console.error(err)
-		return {}
-	}
-}
-
-const onDemand = new I18nextKeysOnDemand({
-	translationGetter: onDemandFetcher,
-	debounceDelay: 50,
-})
-
 // const crowdinBackend = new CrowdinOtaBackend(undefined, )
 const apiPath = '/api/i18n/load?lng={{lng}}&ns={{ns}}'
-const httpBackend = new HttpBackend(null, {
-	loadPath: getUrl(apiPath), //typeof window !== 'undefined' ? apiPath : `http://localhost:3000${apiPath}`,
-	allowMultiLoading: true,
-})
+// const httpBackend = new HttpBackend(null, {
+// 	loadPath: getUrl(apiPath), //typeof window !== 'undefined' ? apiPath : `http://localhost:3000${apiPath}`,
+// 	allowMultiLoading: true,
+// })
 
 const multi = new MultiBackend(null, {
 	backend: HttpBackend,

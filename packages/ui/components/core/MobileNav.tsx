@@ -66,22 +66,6 @@ export const MobileNav = ({ className }: { className?: string }) => {
 	const { t } = useTranslation('common')
 	const router = useRouter()
 	const { searchParams } = useSearchState()
-	//  const navItems = {
-	// 	search: { icon: 'carbon:search', labelKey: 'words.search', href: '/search' },
-	// 	saved: { icon: 'carbon:favorite', labelKey: 'words.saved', href: '/' },
-	// 	account: { icon: 'carbon:user', labelKey: 'words.account', href: '/' },
-	// 	support: { icon: 'carbon:help', labelKey: 'words.support', href: '/' },
-	// } as const
-	// const tabs = Object.entries(navItems).map(([key, item]) => (
-	// 	<Tabs.Tab key={key} value={key} icon={<Icon icon={item.icon} height={20} />}>
-	// 		{t(item.labelKey)}
-	// 	</Tabs.Tab>
-	// ))
-
-	// const switchTab = (tab: string extends NavItems ? NavItems : string | null) => {
-	// 	if (tab === null) return
-	// 	if (Object.keys(navItems).includes(tab)) router.push(navItems[tab as NavItems].href)
-	// }
 
 	return (
 		<Tabs
@@ -102,7 +86,7 @@ export const MobileNav = ({ className }: { className?: string }) => {
 						}
 						break
 					case 'saved':
-						router.push('/saved')
+						router.push('/account/saved')
 						break
 					case 'account':
 						router.push('/account')

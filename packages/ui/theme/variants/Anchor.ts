@@ -126,4 +126,9 @@ export const Anchor = {
 			},
 		},
 	}),
+	navMenu: (theme) => ({
+		root: {
+			textDecoration: 'none !important',
+		},
+	}),
 } satisfies VariantObj

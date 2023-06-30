@@ -73,7 +73,8 @@ const PhoneNumbers = ({ parentId = '', passedData, direct, locationOnly }: Phone
 const Emails = ({ parentId = '', passedData, direct, locationOnly, serviceOnly }: EmailsProps) => {
 	const output: JSX.Element[] = []
 	const slug = useSlug()
-	const { t } = useTranslation(['common', slug, 'user-title'])
+	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
+	const { t } = useTranslation(orgId?.id ? ['common', orgId.id, 'user-title'] : ['common', 'user-title'])
 	const variants = useCustomVariant()
 	const { data } = api.orgEmail.forContactInfo.useQuery(
 		{ parentId, locationOnly, serviceOnly },
@@ -136,7 +137,8 @@ const Emails = ({ parentId = '', passedData, direct, locationOnly, serviceOnly }
 const Websites = ({ parentId = '', passedData, direct, locationOnly, websiteDesc }: WebsitesProps) => {
 	const output: JSX.Element[] = []
 	const slug = useSlug()
-	const { t } = useTranslation(['common', slug])
+	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
+	const { t } = useTranslation(orgId?.id ? ['common', orgId.id] : ['common'])
 	const variants = useCustomVariant()
 	const { data } = api.orgWebsite.forContactInfo.useQuery(
 		{ parentId, locationOnly },
