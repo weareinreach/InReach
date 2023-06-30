@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "رعاية الإجهاض",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "موفري الإجهاض",
 		"financial-assistance": "المساعدة المالية",
 		"lodging-assistance": "مساعدة السكن",
@@ -38,7 +38,7 @@
 		"food-assistance": "المساعدة الغذائية"
 	},
 	"housing": {
-		"CATEGORYNAME": "السكن",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "مراكز الاستقبال لشباب المثليات والمثليات والمثليات جنسياً",
 		"emergency-housing": "مساكن الطوارئ",
 		"housing-information-and-referrals": "معلومات الإسكان والإحالات",
@@ -63,7 +63,7 @@
 		"employment-authorization": "إذن العمل",
 		"family-petitions": "الالتماسات العائلية",
 		"immigration-detention": "احتجاز المهاجرين",
-		"legal-advice": "الاستشارات القانونية",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "الخطوط الساخنة القانونية",
 		"name-and-gender-change": "الاسم والتغيير الجنساني",
 		"refugee-claim": "طلب اللجوء",
@@ -77,7 +77,7 @@
 		"mail": "البريد"
 	},
 	"medical": {
-		"CATEGORYNAME": "طبي",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "خدمات COVID-19",
 		"dental-care": "الرعاية الصحية بالأسنان",
 		"hiv-and-sexual-health": "فيروس نقص المناعة البشرية والصحة الجنسية",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "الصحة العابرة - علاج النطق"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "الصحة النفسية",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "مجموعات دعم BIPOC",
 		"hotlines": "الخطوط الساخنة",
 		"private-therapy-and-counseling": "العلاج الخاص والمشورة",
