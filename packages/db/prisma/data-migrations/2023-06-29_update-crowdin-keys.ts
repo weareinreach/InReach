@@ -56,7 +56,7 @@ export const job20230629a = {
 			where: { ns: 'org-data', crowdinId: { not: null } },
 			select: { key: true, crowdinId: true },
 		})
-		const batchSize = 100
+		const batchSize = 300
 		const totalBatches = Math.ceil(data.length / batchSize)
 		let batchCount = 1
 		task.output = `${data.length} records will be divided in to ${totalBatches} batches.`
