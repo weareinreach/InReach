@@ -5,7 +5,6 @@ import {
 	Menu,
 	rem,
 	type Selectors,
-	Text,
 	UnstyledButton,
 } from '@mantine/core'
 import { signOut, useSession } from 'next-auth/react'
@@ -13,6 +12,8 @@ import { useTranslation } from 'next-i18next'
 
 import { Button } from '~ui/components/core/Button'
 import { LangPicker } from '~ui/components/core/LangPicker'
+import { Link } from '~ui/components/core/Link'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { LoginModalLauncher } from '~ui/modals/Login'
 import { SignupModalLauncher } from '~ui/modals/SignUp'
 
@@ -51,7 +52,7 @@ const useStyles = createStyles((theme) => ({
 		'&:disabled': theme.fn.hover({ cursor: 'auto' }),
 	},
 	logoutButton: {
-		padding: `${rem(4)} ${rem(12)}`,
+		padding: `${rem(14)} ${rem(12)}`,
 	},
 }))
 
@@ -59,6 +60,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 	const { t } = useTranslation()
 	const { data: session, status } = useSession()
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
+	const variant = useCustomVariant()
 
 	const isLoading = status === 'loading'
 
@@ -91,30 +93,38 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 						</UnstyledButton>
 					</Menu.Target>
 					<Menu.Dropdown>
-						<Menu.Item>{t('words.saved')}</Menu.Item>
-						<Menu.Item>{t('words.reviews')}</Menu.Item>
-						<Menu.Item>{t('words.settings')}</Menu.Item>
+						<Menu.Item component={Link} href='/account/saved' target='_self'>
+							{t('words.saved')}
+						</Menu.Item>
+						<Menu.Item component={Link} href='/account/reviews' target='_self'>
+							{t('words.reviews')}
+						</Menu.Item>
+						<Menu.Item component={Link} href='/account' target='_self'>
+							{t('words.settings')}
+						</Menu.Item>
 						<Menu.Item
+							component={Link}
+							external
 							onClick={(e) => {
 								e.preventDefault()
-								signOut()
+								signOut({ callbackUrl: '/' })
 							}}
 						>
 							{t('log-out')}
 						</Menu.Item>
 					</Menu.Dropdown>
 				</Menu>
-				<UnstyledButton className={classes.logoutButton}>
-					<Text
-						className={classes.navText}
-						style={{ visibility: isLoading ? 'hidden' : undefined }}
-						onClick={(e) => {
-							// e.preventDefault()
-							signOut()
-						}}
-					>
-						{t('log-out')}
-					</Text>
+				<UnstyledButton
+					className={cx(classes.logoutButton)}
+					variant={variant.Link.inlineInvertedUtil1}
+					component={Link}
+					style={{ visibility: isLoading ? 'hidden' : undefined }}
+					onClick={(e) => {
+						// e.preventDefault()
+						signOut({ callbackUrl: '/' })
+					}}
+				>
+					{t('log-out')}
 				</UnstyledButton>
 			</Group>
 		)

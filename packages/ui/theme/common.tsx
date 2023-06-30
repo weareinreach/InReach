@@ -210,10 +210,10 @@ export const commonTheme = {
 					borderRadius: theme.spacing.sm,
 					textDecoration: 'underline',
 					...theme.other.utilityFonts.utility1,
-					'&:hover': {
+					...theme.fn.hover({
 						backgroundColor: theme.other.colors.primary.lightGray,
 						textDecoration: 'none',
-					},
+					}),
 				},
 			}),
 			variants: variants.Anchor,
