@@ -16,14 +16,14 @@
 			"5": "LGBTQ+ BIPOC コミュニティ",
 			"6": "LGBTQ+ 青少年の介護者"
 		},
-		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"find-resources": "<Text>InReachの </Text><Service></Service><Text> for </Text><Community></Community><Text> を見つけます。</Text>",
 		"heading": "LGBTQ+ に関するリソースを検索できます。",
 		"privacy-disclaimer": "回答は匿名で、個人ユーザーとは関係ありません。詳細については、 <Link>プライバシーポリシー</Link> をお読みください。",
 		"services": {
 			"0": "医療",
 			"1": "コミュニティサポート",
 			"2": "メンタルヘルスケア",
-			"3": "教育",
+			"3": "education",
 			"4": "雇用",
 			"5": "食べ物",
 			"6": "ハウジング",
