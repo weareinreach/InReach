@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Догляд за абортами",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "Постачальники абортів",
 		"financial-assistance": "Фінансова допомога",
 		"lodging-assistance": "Допомога в житлі",
@@ -38,7 +38,7 @@
 		"food-assistance": "Харчова допомога"
 	},
 	"housing": {
-		"CATEGORYNAME": "Житло",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "Центри для ЛГБТК-молоді",
 		"emergency-housing": "Аварійне житло",
 		"housing-information-and-referrals": "Інформація про житло та реферали",
@@ -63,7 +63,7 @@
 		"employment-authorization": "Дозвіл на працевлаштування",
 		"family-petitions": "Сімейні клопотання",
 		"immigration-detention": "Затримання імміграції",
-		"legal-advice": "Юридична консультація",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "Юридичні гарячі лінії",
 		"name-and-gender-change": "Зміна імені та статі",
 		"refugee-claim": "Позов про біженця",
@@ -77,7 +77,7 @@
 		"mail": "Пошта"
 	},
 	"medical": {
-		"CATEGORYNAME": "Медичний",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "Послуги COVID-19",
 		"dental-care": "Стоматологічна допомога",
 		"hiv-and-sexual-health": "ВІЛ і сексуальне здоров'я",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "Транс здоров'я - логопедія"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Психічне здоров'я",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "Групи підтримки BIPOC",
 		"hotlines": "Гарячі лінії",
 		"private-therapy-and-counseling": "Приватна терапія та консультування",
@@ -111,7 +111,7 @@
 		"sports-and-entertainment": "Спорт і розваги"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Переклад і усний переклад",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "Для охорони здоров'я",
 		"for-legal-services": "Для юридичних послуг",
 		"general-translation-and-interpretation": "Загальний переклад та усний переклад"
