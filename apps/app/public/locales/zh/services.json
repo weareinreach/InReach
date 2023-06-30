@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "堕胎护理",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "堕胎提供者",
 		"financial-assistance": "财务援助",
 		"lodging-assistance": "住宿援助",
@@ -38,7 +38,7 @@
 		"food-assistance": "食物援助"
 	},
 	"housing": {
-		"CATEGORYNAME": "住房",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ 青年救助中心",
 		"emergency-housing": "应急住房",
 		"housing-information-and-referrals": "住房信息和推荐",
@@ -63,7 +63,7 @@
 		"employment-authorization": "就业授权",
 		"family-petitions": "家庭请愿书",
 		"immigration-detention": "移民拘留",
-		"legal-advice": "法律建议",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "法律热线",
 		"name-and-gender-change": "姓名和性别变更",
 		"refugee-claim": "难民申请",
@@ -77,7 +77,7 @@
 		"mail": "邮件"
 	},
 	"medical": {
-		"CATEGORYNAME": "医疗",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "COVID-19 服务",
 		"dental-care": "牙科保健",
 		"hiv-and-sexual-health": "艾滋病毒和性健康",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "跨性别健康-言语疗法"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "心理健康",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "BIPOC 支持小组",
 		"hotlines": "热线",
 		"private-therapy-and-counseling": "私人治疗和咨询",
@@ -111,7 +111,7 @@
 		"sports-and-entertainment": "体育和娱乐"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "笔译和口译",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "用于医疗保健",
 		"for-legal-services": "用于法律服务",
 		"general-translation-and-interpretation": "一般笔译和口译"
