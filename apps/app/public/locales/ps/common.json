@@ -273,7 +273,7 @@
 	},
 	"sign-up-free": "د وړیا لپاره لاسلیک وکړئ",
 	"social": {
-		"email": "برېښنالیک",
+		"email": "Email",
 		"facebook": "فېسبوک",
 		"github": "ګیټ هب",
 		"group-header": "ټولنیز",
@@ -342,7 +342,7 @@
 		"coming-soon": "ژر راځي",
 		"delete": "ړنګول",
 		"distance": "فاصله",
-		"email": "برېښنالیک",
+		"email": "Email",
 		"home": "کور",
 		"hours": "ساعتونه",
 		"more": "نور",
