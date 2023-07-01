@@ -65,7 +65,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 			select: (data) =>
 				data.map(({ id, tsKey, defaultText }) => ({
 					value: id,
-					label: t(tsKey, { ns: slug, defaultValue: defaultText }),
+					label: t(tsKey, { ns: orgId?.id, defaultValue: defaultText }),
 				})),
 		}
 	)
