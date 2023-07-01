@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Abortion Care",
+		"CATEGORYNAME": "Аборт",
 		"abortion-providers": "Поставщики абортов",
 		"financial-assistance": "Финансовая помощь",
 		"lodging-assistance": "Помощь в аренде",
@@ -63,7 +63,7 @@
 		"employment-authorization": "Разрешение на трудоустройство",
 		"family-petitions": "Ходатайство о семейном положении",
 		"immigration-detention": "Иммиграционное задержание",
-		"legal-advice": "Legal advice",
+		"legal-advice": "Юридические консультации",
 		"legal-hotlines": "Горячие линии",
 		"name-and-gender-change": "Имя и изменения пола",
 		"refugee-claim": "Требование беженца",
@@ -77,7 +77,7 @@
 		"mail": "Почта"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medical",
+		"CATEGORYNAME": "Медицинский",
 		"covid-19-services": "Услуги COVID-19",
 		"dental-care": "Стоматологическая помощь",
 		"hiv-and-sexual-health": "ВИЧ и сексуальное здоровье",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "Транс здоровье - речевая терапия"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Mental Health",
+		"CATEGORYNAME": "Психическое здоровье",
 		"bipoc-support-groups": "Группы поддержки BIPOC",
 		"hotlines": "Горячие линии",
 		"private-therapy-and-counseling": "Частная терапия и консультирование",
