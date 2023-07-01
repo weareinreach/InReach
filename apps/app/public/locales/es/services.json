@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Abortion Care",
+		"CATEGORYNAME": "Cuidado del aborto",
 		"abortion-providers": "Proveedores de aborto",
 		"financial-assistance": "Asistencia Financiera",
 		"lodging-assistance": "Asistencia de alojamiento",
@@ -63,7 +63,7 @@
 		"employment-authorization": "Autorización de empleo",
 		"family-petitions": "Peticiones familiares",
 		"immigration-detention": "Detención de inmigrantes",
-		"legal-advice": "Legal advice",
+		"legal-advice": "Asesoramiento legal",
 		"legal-hotlines": "Líneas directas legales",
 		"name-and-gender-change": "Cambio de nombre y género",
 		"refugee-claim": "Solicitud de Refugio",
@@ -77,7 +77,7 @@
 		"mail": "Correo"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medical",
+		"CATEGORYNAME": "Médico",
 		"covid-19-services": "Servicios COVID-19",
 		"dental-care": "Cuidado dental",
 		"hiv-and-sexual-health": "VIH y salud sexual",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "Salud Trans - terapia de lenguaje"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Mental Health",
+		"CATEGORYNAME": "Salud mental",
 		"bipoc-support-groups": "Grupos de soporte BIPOC",
 		"hotlines": "Líneas de acceso",
 		"private-therapy-and-counseling": "Terapia y consejería privada",
