@@ -51,7 +51,7 @@
 		"prettier-plugin-prisma": "4.13.0",
 		"tsx": "3.12.7",
 		"turbo": "1.10.6",
-		"typescript": "5.1.5",
+		"typescript": "5.1.6",
 		"typesync": "0.11.1"
 	},
 	"packageManager": "pnpm@8.6.5",
