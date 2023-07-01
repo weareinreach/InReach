@@ -277,7 +277,7 @@
 	},
 	"sign-up-free": "قم بالتسجيل مجاناً",
 	"social": {
-		"email": "Email",
+		"email": "البريد الإلكتروني",
 		"facebook": "فيسبوك",
 		"github": "GitHub",
 		"group-header": "إجتماعي",
@@ -346,7 +346,7 @@
 		"coming-soon": "قريباً",
 		"delete": "حذف",
 		"distance": "المسافة",
-		"email": "Email",
+		"email": "البريد الإلكتروني",
 		"home": "المنزل",
 		"hours": "الساعات",
 		"more": "المزيد",
