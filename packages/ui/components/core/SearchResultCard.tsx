@@ -148,7 +148,7 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 							<Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text>
 							{description && (
 								<Text className={classes.description}>
-									{t(description.key, { ns: slug, defaultValue: description.text })}
+									{t(description.key, { ns: result.id, defaultValue: description.text })}
 								</Text>
 							)}
 						</Stack>
