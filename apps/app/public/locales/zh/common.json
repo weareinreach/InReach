@@ -272,7 +272,7 @@
 	},
 	"sign-up-free": "免费注册",
 	"social": {
-		"email": "Email",
+		"email": "电子邮件地址",
 		"facebook": "Facebook",
 		"github": "GitHub",
 		"group-header": "社交",
@@ -341,7 +341,7 @@
 		"coming-soon": "即将上线",
 		"delete": "删除",
 		"distance": "距离",
-		"email": "Email",
+		"email": "电子邮件地址",
 		"home": "主页",
 		"hours": "小时",
 		"more": "更多",
