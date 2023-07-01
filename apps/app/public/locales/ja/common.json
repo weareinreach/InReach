@@ -272,7 +272,7 @@
 	},
 	"sign-up-free": "無料でサインアップ",
 	"social": {
-		"email": "Email",
+		"email": "Eメールアドレス",
 		"facebook": "フェイスブック",
 		"github": "GitHub",
 		"group-header": "ソーシャル",
@@ -341,7 +341,7 @@
 		"coming-soon": "近日公開予定",
 		"delete": "[削除]",
 		"distance": "距離",
-		"email": "Email",
+		"email": "Eメールアドレス",
 		"home": "ホーム",
 		"hours": "時間",
 		"more": "もっと",
