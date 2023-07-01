@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Abortion Care",
+		"CATEGORYNAME": "رعاية الإجهاض",
 		"abortion-providers": "مزودي خدمات الإجهاض",
 		"financial-assistance": "المساعدة المالية",
 		"lodging-assistance": "مساعدة السكن",
@@ -63,7 +63,7 @@
 		"employment-authorization": "الإذن بالعمل",
 		"family-petitions": "الالتماسات العائلية",
 		"immigration-detention": "احتجاز المهاجرين",
-		"legal-advice": "Legal advice",
+		"legal-advice": "الاستشارات القانونية",
 		"legal-hotlines": "الخطوط الساخنة القانونية",
 		"name-and-gender-change": "الاسم والتغيير الجنساني",
 		"refugee-claim": "طلب اللجوء",
@@ -77,7 +77,7 @@
 		"mail": "البريد"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medical",
+		"CATEGORYNAME": "طبي",
 		"covid-19-services": "خدمات COVID-19",
 		"dental-care": "الرعاية الصحية بالأسنان",
 		"hiv-and-sexual-health": "فيروس نقص المناعة البشرية والصحة الجنسية",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "الصحة المباشرة - علاج الكلام"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Mental Health",
+		"CATEGORYNAME": "الصحة النفسية",
 		"bipoc-support-groups": "مجموعات دعم BIPOC",
 		"hotlines": "الخطوط الساخنة",
 		"private-therapy-and-counseling": "العلاج الخاص والمشورة",
