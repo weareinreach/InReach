@@ -10,7 +10,8 @@ import { parsePhoneNumber, useCustomVariant, useSlug } from '~ui/hooks'
 const PhoneNumbers = ({ parentId = '', passedData, direct, locationOnly }: PhoneNumbersProps) => {
 	const output: JSX.Element[] = []
 	const slug = useSlug()
-	const { t } = useTranslation(['common', 'phone-type'])
+	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
+	const { t } = useTranslation(orgId?.id ? ['common', 'phone-type', orgId.id] : ['common', 'phone-type'])
 	const variants = useCustomVariant()
 	const { data } = api.orgPhone.forContactInfo.useQuery({ parentId, locationOnly }, { enabled: !passedData })
 	let k = 0
@@ -42,7 +43,7 @@ const PhoneNumbers = ({ parentId = '', passedData, direct, locationOnly }: Phone
 		}
 		if (locationOnly && !showLocationOnly) continue
 		const desc = description
-			? t(description.key, { ns: slug, defaultValue: description.defaultText })
+			? t(description.key, { ns: orgId?.id, defaultValue: description.defaultText })
 			: phoneType?.key
 			? t(phoneType.key, { ns: 'phone-type' })
 			: undefined
@@ -112,7 +113,7 @@ const Emails = ({ parentId = '', passedData, direct, locationOnly, serviceOnly }
 		const desc = title
 			? t(title.key, { ns: 'user-title' })
 			: description?.key
-			? t(description.key, { defaultValue: description.defaultText, ns: slug })
+			? t(description.key, { defaultValue: description.defaultText, ns: orgId?.id })
 			: undefined
 
 		const item = (
@@ -172,7 +173,7 @@ const Websites = ({ parentId = '', passedData, direct, locationOnly, websiteDesc
 
 		const desc = websiteDesc
 			? description?.key
-				? t(description.key, { ns: slug, defaultText: description.defaultText })
+				? t(description.key, { ns: orgId?.id, defaultText: description.defaultText })
 				: urlBase
 			: urlBase
 		const item = (
