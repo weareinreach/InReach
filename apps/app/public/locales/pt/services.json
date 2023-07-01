@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Abortion Care",
+		"CATEGORYNAME": "Cuidado com Abortação",
 		"abortion-providers": "Provedores de aborto",
 		"financial-assistance": "Assistência financeira",
 		"lodging-assistance": "Assistência de hospedagem",
@@ -77,7 +77,7 @@
 		"mail": "Correio"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medical",
+		"CATEGORYNAME": "Medicamentos",
 		"covid-19-services": "Serviços da COVID-19",
 		"dental-care": "Assistência odontológica",
 		"hiv-and-sexual-health": "HIV e saúde sexual",
@@ -93,7 +93,7 @@
 		"trans-health-speech-therapy": "Saúde trans - terapia da fala"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Mental Health",
+		"CATEGORYNAME": "Saúde mental",
 		"bipoc-support-groups": "Grupos de apoio do BIPOC",
 		"hotlines": "Linhas diretas",
 		"private-therapy-and-counseling": "Terapia e aconselhamento privados",
