@@ -417,11 +417,11 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 								{atCapacity}
 								{serviceName && (
 									<Title order={2}>
-										{t(serviceName.key, { ns: slug, defaultValue: serviceName.tsKey.text })}
+										{t(serviceName.key, { ns: orgId?.id, defaultValue: serviceName.tsKey.text })}
 									</Title>
 								)}
 								{description && (
-									<Text>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
+									<Text>{t(description.key, { ns: orgId?.id, defaultValue: description.tsKey.text })}</Text>
 								)}
 							</Stack>
 							<BadgeGroup badges={serviceBadges} />

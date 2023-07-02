@@ -61,13 +61,13 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 						{service.offersRemote && !hideRemoteBadges ? (
 							<Group spacing={8} align='center'>
 								<Text variant={variants.Text.utility1}>
-									{t(service.tsKey ?? '', { ns: slug, defaultValue: service.defaultText }) as string}
+									{t(service.tsKey ?? '', { ns: orgId?.id, defaultValue: service.defaultText }) as string}
 								</Text>
 								<Badge variant='remote' />
 							</Group>
 						) : (
 							<Text variant={variants.Text.utility1}>
-								{t(service.tsKey ?? '', { ns: slug, defaultValue: service.defaultText }) as string}
+								{t(service.tsKey ?? '', { ns: orgId?.id, defaultValue: service.defaultText }) as string}
 							</Text>
 						)}
 
