@@ -286,7 +286,7 @@
 		"demonym_other": "chipriotas"
 	},
 	"CZE": {
-		"name": "Etiopía",
+		"name": "Chequia",
 		"demonym_one": "Checo",
 		"demonym_other": "Echos"
 	},
@@ -312,11 +312,11 @@
 	},
 	"DOM": {
 		"name": "República Dominicana",
-		"demonym_one": "Dominicano",
-		"demonym_other": "Dominicanos"
+		"demonym_one": "Dominicane",
+		"demonym_other": "Dominicanes"
 	},
 	"DZA": {
-		"name": "Algeria",
+		"name": "Argelia",
 		"demonym_one": "Argelio",
 		"demonym_other": "Algerios"
 	},
