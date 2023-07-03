@@ -58,7 +58,7 @@ const SearchResultLoading = () => {
 
 const SearchResultData = ({ result }: SearchResultHasData) => {
 	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories } = result
-	const { t, ready: i18nReady } = useTranslation(['common', slug])
+	const { t, ready: i18nReady } = useTranslation(['common', result.id])
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
@@ -148,7 +148,7 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 							<Text variant={variants.Text.utility2darkGray}>{cityList(locations)}</Text>
 							{description && (
 								<Text className={classes.description}>
-									{t(description.key, { ns: slug, defaultValue: description.text })}
+									{t(description.key, { ns: result.id, defaultValue: description.text })}
 								</Text>
 							)}
 						</Stack>

@@ -7,9 +7,9 @@ import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant, useFormattedAddress } from '~ui/hooks'
 
 export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
-	const { t, ready: i18nReady } = useTranslation(data.slug)
+	const { t, ready: i18nReady } = useTranslation(data.id)
 	const variants = useCustomVariant()
-	const { attributes, isClaimed, locations, description, slug } = data
+	const { attributes, isClaimed, locations, description, slug, id } = data
 
 	// const isMultiLoc = role === 'org' && (locations?.length ?? 0) > 1
 	const isSingleLoc = locations?.length === 1
@@ -58,7 +58,7 @@ export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
 	const descriptionSection =
 		description && description.key ? (
 			<Skeleton visible={!i18nReady}>
-				<Text py={12}>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
+				<Text py={12}>{t(description.key, { ns: id, defaultValue: description.tsKey.text })}</Text>
 			</Skeleton>
 		) : null
 
