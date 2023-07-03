@@ -15,13 +15,13 @@ import { dataCorrections, existing, getCountryId, getGovDistId } from '~db/seed/
 import { attachLogger, formatMessage } from '~db/seed/recon/lib/logger'
 import { create, update, writeBatches } from '~db/seed/recon/lib/output'
 import { type ListrJob } from '~db/seed/recon/lib/types'
-import { trimSpaces } from '~db/seed/recon/lib/utils'
+import { emptyStrToNull, trimSpaces } from '~db/seed/recon/lib/utils'
 import { JsonInputOrNull } from '~db/zod_util/prismaJson'
 
 export const orgRecon = {
 	title: 'Reconcile Organizations',
 	// skip: true,
-	// options: { bottomBar: false },
+	options: { bottomBar: false },
 	task: async (_ctx, task) => {
 		attachLogger(task)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))
@@ -72,6 +72,7 @@ export const orgRecon = {
 					existing.orgSlug
 				)
 				if (newSlug !== existingOrgRecord.slug) {
+					logUpdate('slug', existingOrgRecord.slug, newSlug)
 					updateOrgRecord.data.slug = newSlug
 					create.slugRedirect.add({ from: existingOrgRecord.slug, to: newSlug, orgId: existingOrgRecord.id })
 				}
@@ -168,7 +169,7 @@ export const orgRecon = {
 
 						if (needsUpdate(existingLocation.name, trimSpaces(location.name))) {
 							logUpdate('name', existingLocation.name, trimSpaces(location.name))
-							updateRecord.data.name = trimSpaces(location.name) ?? null
+							updateRecord.data.name = emptyStrToNull(location.name) ?? null
 						}
 						if (needsUpdate(existingLocation.street1, location.address)) {
 							logUpdate('street1', existingLocation.street1, location.address)
@@ -176,15 +177,17 @@ export const orgRecon = {
 						}
 						if (needsUpdate(existingLocation.street2, location.unit)) {
 							logUpdate('street2', existingLocation.street2, location.unit)
-							updateRecord.data.street2 = trimSpaces(location.unit) ?? null
+							updateRecord.data.street2 = emptyStrToNull(location.unit) ?? null
 						}
-						if (needsUpdate(existingLocation.city, location.city)) {
-							logUpdate('city', existingLocation.city, location.city)
-							updateRecord.data.city = trimSpaces(location.city)
+						const washdcRegex = /washington.*dc/i
+
+						if (needsUpdate(existingLocation.city, location.city?.replace(washdcRegex, 'Washington'))) {
+							logUpdate('city', existingLocation.city, location.city?.replace(washdcRegex, 'Washington'))
+							updateRecord.data.city = trimSpaces(location.city?.replace(washdcRegex, 'Washington'))
 						}
 						if (needsUpdate(existingLocation.postCode, location.zip_code)) {
 							logUpdate('postCode', existingLocation.postCode, location.zip_code)
-							updateRecord.data.postCode = trimSpaces(location.zip_code) ?? null
+							updateRecord.data.postCode = emptyStrToNull(location.zip_code) ?? null
 						}
 						if (needsUpdate(existingLocation.primary, location.is_primary)) {
 							logUpdate('primary', existingLocation.primary, location.is_primary)
@@ -286,13 +289,13 @@ export const orgRecon = {
 								updateRecord.data.published = email.show_on_organization
 							}
 						}
-						if (needsUpdate(existingRecord.firstName, email.first_name)) {
-							logUpdate('firstName', existingRecord.firstName, email.first_name)
-							updateRecord.data.firstName = email.first_name
+						if (needsUpdate(existingRecord.firstName, emptyStrToNull(email.first_name))) {
+							logUpdate('firstName', existingRecord.firstName, emptyStrToNull(email.first_name))
+							updateRecord.data.firstName = emptyStrToNull(email.first_name)
 						}
-						if (needsUpdate(existingRecord.lastName, email.last_name)) {
-							logUpdate('lastName', existingRecord.lastName, email.last_name)
-							updateRecord.data.lastName = email.last_name
+						if (needsUpdate(existingRecord.lastName, emptyStrToNull(email.last_name))) {
+							logUpdate('lastName', existingRecord.lastName, emptyStrToNull(email.last_name))
+							updateRecord.data.lastName = emptyStrToNull(email.last_name)
 						}
 
 						if (Object.keys(updateRecord.data).length) {

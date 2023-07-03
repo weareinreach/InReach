@@ -8,4 +8,7 @@ export const readSuperJSON = <T = unknown>(filename: string) => {
 	return superjson.parse<T>(data)
 }
 
-export const trimSpaces = (str?: string) => (str ? str.trim().replace(/ +(?=[^\S\n])/g, ' ') : undefined)
+export const trimSpaces = (str?: string) => (str ? str.trim().replaceAll(/ +(?=[^\S\n])/g, ' ') : undefined)
+
+export const emptyStrToNull = (str: string | null | undefined) =>
+	str === '' || str === null ? null : trimSpaces(str)
