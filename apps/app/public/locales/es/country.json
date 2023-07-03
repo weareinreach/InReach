@@ -257,13 +257,13 @@
 	},
 	"CRI": {
 		"name": "Costa Rica",
-		"demonym_one": "Costa Rica",
-		"demonym_other": "Costa Rica"
+		"demonym_one": "Costarricense",
+		"demonym_other": "Costarricenses"
 	},
 	"CUB": {
 		"name": "Cuba",
-		"demonym_one": "Cubano",
-		"demonym_other": "Cubos"
+		"demonym_one": "Cubane",
+		"demonym_other": "Cubanes"
 	},
 	"CUW": {
 		"name": "Curazao",
@@ -272,23 +272,23 @@
 	},
 	"CXR": {
 		"name": "Isla de Navidad",
-		"demonym_one": "Isla de Navidad",
-		"demonym_other": "Islas Navideñas"
+		"demonym_one": "Isleñe de navidad",
+		"demonym_other": "Isleñes de Navidad"
 	},
 	"CYM": {
 		"name": "Islas Caimán",
-		"demonym_one": "Caymanian",
-		"demonym_other": "Caymanes"
+		"demonym_one": "Caimán",
+		"demonym_other": "Caimaneses"
 	},
 	"CYP": {
 		"name": "Chipre",
 		"demonym_one": "Chipriota",
-		"demonym_other": "chipriotas"
+		"demonym_other": "Chipriotas"
 	},
 	"CZE": {
-		"name": "Etiopía",
-		"demonym_one": "Checo",
-		"demonym_other": "Echos"
+		"name": "Chequia",
+		"demonym_one": "Chequie",
+		"demonym_other": "Chequies"
 	},
 	"DEU": {
 		"name": "Alemania",
@@ -302,8 +302,8 @@
 	},
 	"DMA": {
 		"name": "Domínica",
-		"demonym_one": "Dominicano",
-		"demonym_other": "Dominicanos"
+		"demonym_one": "Dominicane",
+		"demonym_other": "Dominicanes"
 	},
 	"DNK": {
 		"name": "Dinamarca",
@@ -312,23 +312,23 @@
 	},
 	"DOM": {
 		"name": "República Dominicana",
-		"demonym_one": "Dominicano",
-		"demonym_other": "Dominicanos"
+		"demonym_one": "Dominicane",
+		"demonym_other": "Dominicanes"
 	},
 	"DZA": {
-		"name": "Algeria",
-		"demonym_one": "Argelio",
-		"demonym_other": "Algerios"
+		"name": "Argelia",
+		"demonym_one": "Argelino",
+		"demonym_other": "Argelinos"
 	},
 	"ECU": {
 		"name": "Ecuador",
-		"demonym_one": "Ecuadorean",
-		"demonym_other": "Ecuadoreans"
+		"demonym_one": "Ecuatoriane",
+		"demonym_other": "Ecuatorianes"
 	},
 	"EGY": {
 		"name": "Egipto",
-		"demonym_one": "Egipcio",
-		"demonym_other": "Egipcios"
+		"demonym_one": "Egipcie",
+		"demonym_other": "Egipcies"
 	},
 	"ERI": {
 		"name": "Eritrea",
