@@ -8,6 +8,7 @@ import { prisma, type Prisma } from '~db/client'
 import { namespace } from '~db/generated/namespaces'
 import { createPoint } from '~db/lib/createPoint'
 import { generateId } from '~db/lib/idGen'
+import { slugUpdate } from '~db/lib/slugGen'
 import { organizationsSchema } from '~db/seed/recon/input/types'
 import { needsUpdate } from '~db/seed/recon/lib/compare'
 import { dataCorrections, existing, getCountryId, getGovDistId } from '~db/seed/recon/lib/existing'
@@ -20,6 +21,7 @@ import { JsonInputOrNull } from '~db/zod_util/prismaJson'
 export const orgRecon = {
 	title: 'Reconcile Organizations',
 	// skip: true,
+	// options: { bottomBar: false },
 	task: async (_ctx, task) => {
 		attachLogger(task)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))
@@ -64,6 +66,15 @@ export const orgRecon = {
 			if (needsUpdate(existingOrgRecord.name, trimSpaces(org.name))) {
 				logUpdate('name', existingOrgRecord.name, trimSpaces(org.name))
 				updateOrgRecord.data.name = trimSpaces(org.name)
+
+				const newSlug = await slugUpdate(
+					{ name: trimSpaces(org.name) as string, id: existingOrgRecord.id, slug: existingOrgRecord.slug },
+					existing.orgSlug
+				)
+				if (newSlug !== existingOrgRecord.slug) {
+					updateOrgRecord.data.slug = newSlug
+					create.slugRedirect.add({ from: existingOrgRecord.slug, to: newSlug, orgId: existingOrgRecord.id })
+				}
 			}
 			if (
 				existingOrgRecord.description &&
