@@ -1108,13 +1108,13 @@
 	},
 	"TON": {
 		"name": "Tonga",
-		"demonym_one": "Tongan",
+		"demonym_one": "Tongane",
 		"demonym_other": "Tonganes"
 	},
 	"TTO": {
 		"name": "Trinidad y Tobago",
-		"demonym_one": "Trinidadian",
-		"demonym_other": "Trinidadians"
+		"demonym_one": "Trinitense",
+		"demonym_other": "Trinitenses"
 	},
 	"TUN": {
 		"name": "Tunisia",
@@ -1163,8 +1163,8 @@
 	},
 	"URY": {
 		"name": "Uruguay",
-		"demonym_one": "Uruguayan",
-		"demonym_other": "Uruguayans"
+		"demonym_one": "Uruguaye",
+		"demonym_other": "Uruguayes"
 	},
 	"USA": {
 		"name": "Estados Unidos",
@@ -1177,7 +1177,7 @@
 		"demonym_other": "Uzbekistanis"
 	},
 	"VAT": {
-		"name": "Ciudad de Vatican",
+		"name": "Ciudad del Vaticano",
 		"demonym_one": "Italiane",
 		"demonym_other": "Italianes"
 	},
@@ -1188,8 +1188,8 @@
 	},
 	"VEN": {
 		"name": "Venezuela",
-		"demonym_one": "Venezuelo",
-		"demonym_other": "Venezuelanos"
+		"demonym_one": "Venezolane",
+		"demonym_other": "Venezolanes"
 	},
 	"VGB": {
 		"name": "Islas Vírgenes Británicas",
@@ -1218,8 +1218,8 @@
 	},
 	"WSM": {
 		"name": "Samoa",
-		"demonym_one": "Samoan",
-		"demonym_other": "Samoans"
+		"demonym_one": "Samoane",
+		"demonym_other": "Samoanes"
 	},
 	"YEM": {
 		"name": "Yemen",
