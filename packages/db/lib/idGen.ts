@@ -34,6 +34,7 @@ export const idPrefix = {
 	serviceCategory: 'svct',
 	serviceTag: 'svtg',
 	session: 'sess',
+	slugRedirect: 'slgr',
 	socialMediaLink: 'smdl',
 	socialMediaService: 'smsv',
 	source: 'srce',

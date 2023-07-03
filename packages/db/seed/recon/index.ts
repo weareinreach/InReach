@@ -10,7 +10,10 @@ const renderOptions = {
 	persistentOutput: true,
 	timer: PRESET_TIMER,
 } satisfies ListrJob['options']
-const injectOptions = (job: ListrJob): ListrJob => ({ ...job, options: renderOptions })
+const injectOptions = (job: ListrJob): ListrJob => ({
+	...job,
+	options: job.options ? { ...renderOptions, ...job.options } : renderOptions,
+})
 
 const jobs = new Listr<Context>(
 	[

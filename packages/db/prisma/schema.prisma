@@ -453,6 +453,7 @@ model Organization {
   updatedAt DateTime       @updatedAt
   auditLogs AuditLog[]
   notes     InternalNote[]
+  oldSlugs  SlugRedirect[]
 
   /// Does this record need to be checked by staff after migration?
   checkMigration Boolean?
@@ -460,6 +461,18 @@ model Organization {
 
   @@index([name(sort: Asc)])
   @@index([id, published, deleted])
+}
+
+model SlugRedirect {
+  id   String @id @default(cuid())
+  from String @unique
+  to   String @unique
+
+  org   Organization @relation(fields: [orgId], references: [id])
+  orgId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 /// Organization email contacts - can be general or location specific

@@ -46,6 +46,7 @@ export const create = {
 	organizationPermission: new Set<Prisma.OrganizationPermissionCreateManyInput>(),
 	organizationEmail: new Set<Prisma.OrganizationEmailCreateManyInput>(),
 	organizationPhone: new Set<Prisma.OrganizationPhoneCreateManyInput>(),
+	slugRedirect: new Set<Prisma.SlugRedirectCreateManyInput>(),
 }
 
 export const update = {
