@@ -11,9 +11,21 @@ import { type PassedTask } from '~db/seed/recon/lib/types'
 const outputDir = path.resolve(__dirname, '../output')
 const createDir = path.resolve(outputDir, 'create')
 const updateDir = path.resolve(outputDir, 'update')
+const execptionDir = path.resolve(outputDir, 'exceptions')
 
-export const getBatchFile: GetBatchFile = ({ type, batchName }) =>
-	type === 'create' ? `${createDir}/${batchName}.json` : `${updateDir}/${batchName}.json`
+export const getBatchFile: GetBatchFile = ({ type, batchName }) => {
+	switch (type) {
+		case 'create': {
+			return `${createDir}/${batchName}.json`
+		}
+		case 'update': {
+			return `${updateDir}/${batchName}.json`
+		}
+		case 'exceptions': {
+			return `${execptionDir}/${batchName}.json`
+		}
+	}
+}
 export const create = {
 	organization: new Set<Prisma.OrganizationCreateManyInput>(),
 	translationKey: new Set<Prisma.TranslationKeyCreateManyInput>(),
@@ -66,6 +78,15 @@ export const crowdin = {
 		{ id: number; text: string; delete?: never } | { id: number; delete: true; text?: never }
 	>(),
 }
+interface ExceptionItem {
+	organizationId: string
+	record: unknown
+	existing?: unknown
+}
+export const exceptions = {
+	phone: new Set<ExceptionItem>(),
+	location: new Set<ExceptionItem>(),
+}
 export const batchCount = new Map<string, number>()
 export const writeBatches = (task: PassedTask, clear = false) => {
 	// Create
@@ -91,7 +112,7 @@ export const writeBatches = (task: PassedTask, clear = false) => {
 			fs.writeFileSync(batchFile, superjson.stringify(outputData))
 			batchCount.set(`create.${batchName}`, currentCount + currentBatchCount)
 			task.output = formatMessage(
-				`Records added to ${batchName}.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
+				`Records added to create/${batchName}.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
 				'write',
 				true
 			)
@@ -121,11 +142,41 @@ export const writeBatches = (task: PassedTask, clear = false) => {
 			fs.writeFileSync(batchFile, superjson.stringify(outputData))
 			batchCount.set(`update.${batchName}`, currentCount + currentBatchCount)
 			task.output = formatMessage(
-				`Records added to ${batchName}.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
+				`Records added to update/${batchName}.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
 				'write',
 				true
 			)
 			update[batchName].clear()
+		}
+	}
+	// Exceptions
+	for (const batchName in exceptions) {
+		const batch = exceptions[batchName]
+		const batchFile = getBatchFile({ type: 'exceptions', batchName })
+		if (clear) {
+			if (fs.existsSync(batchFile)) {
+				fs.rmSync(batchFile)
+				task.output = formatMessage(`Deleting file: ${batchFile}`, 'trash')
+			}
+		} else {
+			if (!batch.size) {
+				task.output = formatMessage(`Skipping empty batch: ${batchName}`, 'skip')
+				continue
+			}
+			const currentCount = batchCount.get(`exceptions.${batchName}`) ?? 0
+			const currentBatchCount = batch.size
+			const existingBatch = fs.existsSync(batchFile)
+				? superjson.parse<Set<unknown>>(fs.readFileSync(batchFile, 'utf-8'))
+				: []
+			const outputData = new Set([...existingBatch, ...batch])
+			fs.writeFileSync(batchFile, superjson.stringify(outputData))
+			batchCount.set(`exceptions.${batchName}`, currentCount + currentBatchCount)
+			task.output = formatMessage(
+				`Records added to exceptions/${batchName}.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
+				'write',
+				true
+			)
+			exceptions[batchName].clear()
 		}
 	}
 	if (crowdin.create) {
@@ -154,7 +205,7 @@ export const writeBatches = (task: PassedTask, clear = false) => {
 				fs.writeFileSync(batchFile, superjson.stringify(outputData))
 				batchCount.set(`create.crowdin`, currentCount + currentBatchCount)
 				task.output = formatMessage(
-					`Records added to crowdin.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
+					`Records added to create/crowdin.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
 					'write',
 					true
 				)
@@ -192,7 +243,7 @@ export const writeBatches = (task: PassedTask, clear = false) => {
 				fs.writeFileSync(batchFile, superjson.stringify(outputData))
 				batchCount.set(`update.crowdin`, currentCount + currentBatchCount)
 				task.output = formatMessage(
-					`Records added to crowdin.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
+					`Records added to update/crowdin.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
 					'write',
 					true
 				)
@@ -210,5 +261,9 @@ interface GetUpdateParams {
 	type: 'update'
 	batchName: LiteralUnion<keyof typeof update, string>
 }
+interface GetExceptionsParams {
+	type: 'exceptions'
+	batchName: LiteralUnion<keyof typeof exceptions, string>
+}
 
-type GetBatchFile = (params: GetCreateParams | GetUpdateParams) => string
+type GetBatchFile = (params: GetCreateParams | GetUpdateParams | GetExceptionsParams) => string
