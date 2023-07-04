@@ -1,4 +1,6 @@
 import { geojsonToWKT } from '@terraformer/wkt'
+import filterObject from 'just-filter-object'
+import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js/max'
 import superjson from 'superjson'
 
 import fs from 'fs'
@@ -13,11 +15,17 @@ import { organizationsSchema } from '~db/seed/recon/input/types'
 import { needsUpdate } from '~db/seed/recon/lib/compare'
 import { dataCorrections, existing, getCountryId, getGovDistId } from '~db/seed/recon/lib/existing'
 import { attachLogger, formatMessage } from '~db/seed/recon/lib/logger'
-import { create, update, writeBatches } from '~db/seed/recon/lib/output'
+import { create, crowdin, exceptions, update, writeBatches } from '~db/seed/recon/lib/output'
+import { generateFreeTextKey } from '~db/seed/recon/lib/translations'
 import { type ListrJob } from '~db/seed/recon/lib/types'
 import { emptyStrToNull, trimSpaces } from '~db/seed/recon/lib/utils'
 import { JsonInputOrNull } from '~db/zod_util/prismaJson'
 
+const washdcRegex = /washington.*dc/i
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type PlainObject<T> = T extends Map<any, any> | Set<any> | null ? never : T extends object ? T : never
+const filterUndefined = <T extends Record<string, unknown>>(obj: PlainObject<T>) =>
+	filterObject<T>(obj, (_k, v) => v !== undefined)
 export const orgRecon = {
 	title: 'Reconcile Organizations',
 	// skip: true,
@@ -79,12 +87,17 @@ export const orgRecon = {
 			}
 			if (
 				existingOrgRecord.description &&
-				needsUpdate(existingOrgRecord.description.tsKey.text, trimSpaces(org.description))
+				needsUpdate(existingOrgRecord.description.tsKey.text, org.description)
 			) {
-				logUpdate('description', existingOrgRecord.description.tsKey.text, trimSpaces(org.description))
+				logUpdate('description', existingOrgRecord.description.tsKey.text, trimSpaces(org.description ?? ''))
+				if (org.description && existingOrgRecord.description.tsKey.crowdinId)
+					crowdin.update.add({
+						id: existingOrgRecord.description.tsKey.crowdinId,
+						text: trimSpaces(org.description),
+					})
 				update.translationKey.add({
 					where: { ns_key: { ns: namespace.orgData, key: existingOrgRecord.description.key } },
-					data: { text: trimSpaces(org.description) },
+					data: { text: org.description ? trimSpaces(org.description) : undefined },
 				})
 			}
 			if (needsUpdate(existingOrgRecord.deleted, org.is_deleted)) {
@@ -103,7 +116,7 @@ export const orgRecon = {
 				logUpdate('lastVerified', existingOrgRecord.lastVerified, org.verified_at.$date)
 				updateOrgRecord.data.lastVerified = org.verified_at.$date
 			}
-
+			updateOrgRecord.data = filterUndefined(updateOrgRecord.data)
 			if (Object.keys(updateOrgRecord.data).length) {
 				update.organization.add(updateOrgRecord)
 				log(`Updated ${Object.keys(updateOrgRecord.data).length} keys`, undefined, true)
@@ -149,6 +162,7 @@ export const orgRecon = {
 
 					if (!location.country && !location.city && !location.state) {
 						log(`SKIPPING Location: ${location.name} -- Missing city, governing district, & country`, 'skip')
+						exceptions.location.add({ organizationId, record: location })
 						locationSkip++
 						continue
 					}
@@ -167,23 +181,24 @@ export const orgRecon = {
 							(x) => +parseFloat(x.$numberDecimal).toFixed(3)
 						)
 
-						if (needsUpdate(existingLocation.name, trimSpaces(location.name))) {
-							logUpdate('name', existingLocation.name, trimSpaces(location.name))
+						if (needsUpdate(existingLocation.name, location.name)) {
+							logUpdate('name', existingLocation.name, location.name)
 							updateRecord.data.name = emptyStrToNull(location.name) ?? null
 						}
 						if (needsUpdate(existingLocation.street1, location.address)) {
 							logUpdate('street1', existingLocation.street1, location.address)
-							updateRecord.data.street1 = trimSpaces(location.address)
+							updateRecord.data.street1 = location.address ? trimSpaces(location.address) : undefined
 						}
 						if (needsUpdate(existingLocation.street2, location.unit)) {
 							logUpdate('street2', existingLocation.street2, location.unit)
 							updateRecord.data.street2 = emptyStrToNull(location.unit) ?? null
 						}
-						const washdcRegex = /washington.*dc/i
 
 						if (needsUpdate(existingLocation.city, location.city?.replace(washdcRegex, 'Washington'))) {
 							logUpdate('city', existingLocation.city, location.city?.replace(washdcRegex, 'Washington'))
-							updateRecord.data.city = trimSpaces(location.city?.replace(washdcRegex, 'Washington'))
+							updateRecord.data.city = location.city
+								? trimSpaces(location.city.replace(washdcRegex, 'Washington'))
+								: undefined
 						}
 						if (needsUpdate(existingLocation.postCode, location.zip_code)) {
 							logUpdate('postCode', existingLocation.postCode, location.zip_code)
@@ -193,9 +208,18 @@ export const orgRecon = {
 							logUpdate('primary', existingLocation.primary, location.is_primary)
 							updateRecord.data.primary = location.is_primary
 						}
-						if (needsUpdate(existingLocation.govDistId, getGovDistId(location.state, location.city))) {
-							logUpdate('govDistId', existingLocation.govDistId, getGovDistId(location.state, location.city))
-							updateRecord.data.govDistId = getGovDistId(location.state, location.city)
+						if (
+							needsUpdate(
+								existingLocation.govDistId,
+								getGovDistId(location.state, location.city, location._id.$oid)
+							)
+						) {
+							logUpdate(
+								'govDistId',
+								existingLocation.govDistId,
+								getGovDistId(location.state, location.city, location._id.$oid)
+							)
+							updateRecord.data.govDistId = getGovDistId(location.state, location.city, location._id.$oid)
 						}
 						if (
 							needsUpdate(
@@ -235,10 +259,43 @@ export const orgRecon = {
 								updateRecord.data.published = location.show_on_organization
 							}
 						}
+						updateRecord.data = filterUndefined(updateRecord.data)
 						if (Object.keys(updateRecord.data).length) {
 							update.orgLocation.add(updateRecord)
 							log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
 						}
+					} else {
+						log(
+							`Creating Location: ${location.name} [${locationCount + locationSkip}/${org.locations.length}]`,
+							'generate'
+						)
+						const [longitude, latitude] = location.geolocation.coordinates.map(
+							(x) => +parseFloat(x.$numberDecimal).toFixed(3)
+						)
+						const geoObj = createPoint({ longitude, latitude })
+						const geoJSON = JsonInputOrNull.parse(geoObj)
+						const geoWKT = geoObj === 'JsonNull' ? undefined : geojsonToWKT(geoObj)
+						if (!location.city) location.city = ''
+
+						const newLocation: Prisma.OrgLocationCreateManyInput = {
+							id: generateId('orgLocation'),
+							orgId: organizationId,
+							legacyId: location._id.$oid,
+							name: location.name,
+							street1: location.address ? trimSpaces(location.address) : '',
+							street2: emptyStrToNull(location.unit) ?? undefined,
+							city: trimSpaces(location.city.replace(washdcRegex, 'Washington')),
+							postCode: emptyStrToNull(location.zip_code) ?? undefined,
+							countryId: getCountryId(location.country, location.state, location._id.$oid),
+							govDistId: getGovDistId(location.state, location.city, location._id.$oid),
+							primary: location.is_primary,
+							published: location.show_on_organization,
+							longitude,
+							latitude,
+							geoJSON,
+							geoWKT,
+						}
+						create.orgLocation.add(filterUndefined(newLocation) as Prisma.OrgLocationCreateManyInput)
 					}
 
 					locationCount++
@@ -266,6 +323,7 @@ export const orgRecon = {
 					log(`Processing Email: ${email.email} [${emailCount + emailSkip}/${org.emails.length}]`, 'generate')
 					const existingRecord = await prisma.orgEmail.findUnique({
 						where: { legacyId: email._id.$oid },
+						include: { description: { include: { tsKey: true } } },
 					})
 					if (existingRecord) {
 						log(`Reconcile email against ${existingRecord.id}`, undefined, true)
@@ -297,15 +355,279 @@ export const orgRecon = {
 							logUpdate('lastName', existingRecord.lastName, emptyStrToNull(email.last_name))
 							updateRecord.data.lastName = emptyStrToNull(email.last_name)
 						}
+						if (needsUpdate(existingRecord.description?.tsKey.text, trimSpaces(email.title ?? ''))) {
+							logUpdate('description', existingRecord.description?.tsKey.text, email.title)
+							if (existingRecord.description && email.title) {
+								if (existingRecord.description.tsKey.crowdinId)
+									crowdin.update.add({
+										id: existingRecord.description.tsKey.crowdinId,
+										text: trimSpaces(email.title),
+									})
+								const { ns, key } = existingRecord.description
+								update.translationKey.add({
+									where: { ns_key: { ns, key } },
+									data: { text: trimSpaces(email.title) },
+								})
+							} else if (existingRecord.description && !email.title) {
+								log(`Deleting Email description: ${existingRecord.description.tsKey.text}`, 'trash', true)
+								if (existingRecord.description.tsKey.crowdinId)
+									crowdin.update.add({ id: existingRecord.description.tsKey.crowdinId, delete: true })
+								updateRecord.data.description = { delete: {} }
+							} else if (!existingRecord.description && email.title) {
+								log(`Creating Email description: ${email.title}`, 'generate', true)
+								const freeText = generateFreeTextKey({
+									orgId: organizationId,
+									type: 'description',
+									itemId: existingRecord.id,
+									text: trimSpaces(email.title),
+								})
+								if (freeText) {
+									const id = generateId('freeText')
+									const { key, ns, text } = freeText
+									crowdin.create.add({ key, text })
+									create.translationKey.add({ key, ns, text })
+									create.freeText.add({ id, key, ns })
+									updateRecord.data.description = { connect: { id } }
+								}
+							}
+						}
 
+						updateRecord.data = filterUndefined(updateRecord.data)
 						if (Object.keys(updateRecord.data).length) {
 							update.orgEmail.add(updateRecord)
 							log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
 						}
+					} else {
+						log(`Creating Email: ${email.email} [${emailCount + emailSkip}/${org.emails.length}]`, 'generate')
+						const newId = generateId('orgEmail')
+						const newEmail: Prisma.OrgEmailCreateManyInput = {
+							id: newId,
+							email: trimSpaces(email.email),
+							legacyId: email._id.$oid,
+							primary: email.is_primary,
+							published: email.show_on_organization,
+							firstName: emptyStrToNull(email.first_name) ?? undefined,
+							lastName: emptyStrToNull(email.last_name) ?? undefined,
+						}
+						if (email.title) {
+							const freeText = generateFreeTextKey({
+								orgId: organizationId,
+								text: trimSpaces(email.title),
+								type: 'description',
+								itemId: newId,
+							})
+							if (freeText) {
+								const id = generateId('freeText')
+								const { key, ns, text } = freeText
+								crowdin.create.add({ key, text })
+								create.translationKey.add({ key, ns, text })
+								create.freeText.add({ id, key, ns })
+								newEmail.descriptionId = id
+							}
+						}
+						create.organizationEmail.add({ organizationId, orgEmailId: newEmail.id as string })
+						create.orgEmail.add(filterUndefined(newEmail) as Prisma.OrgEmailCreateManyInput)
+					}
+					emailCount++
+				}
+			}
 
-						emailCount++
+			// #endregion
+
+			/**
+			 * .
+			 *
+			 * === PHONES ===
+			 *
+			 * .
+			 */
+			// #region Phones
+			if (!org.phones.length) {
+				log('SKIPPING Phone records, no phones', 'skip')
+			} else {
+				log(`Processing ${org.phones.length} Phone records`, 'generate')
+				let phoneCount = 1
+				let phoneSkip = 0
+				const deletedPhones = await prisma.orgPhone.findMany({
+					where: {
+						legacyId: { notIn: org.phones.map((x) => x._id.$oid) },
+						organization: { organizationId },
+						deleted: false,
+					},
+					select: { id: true, number: true },
+				})
+				if (deletedPhones.length) {
+					log(`Marking ${deletedPhones.length} Phone records as deleted`, 'trash')
+					for (const phone of deletedPhones) {
+						log(`Marking phone ${phone.number} as deleted`, undefined, true)
+						update.orgPhone.add({ where: { id: phone.id }, data: { deleted: true } })
 					}
 				}
+
+				for (const phone of org.phones) {
+					if (!phone.digits) {
+						phoneSkip++
+						log(
+							`SKIPPING ${phone._id.$oid} - Missing digits [${phoneCount + phoneSkip}/${org.phones.length}]`,
+							'skip',
+							true
+						)
+						continue
+					}
+					log(
+						`Processing Phone: ${phone.digits} [${phoneCount + phoneSkip}/${org.phones.length}]`,
+						'generate'
+					)
+					const existingRecord = await prisma.orgPhone.findUnique({
+						where: { legacyId: phone._id.$oid },
+						include: { description: { include: { tsKey: true } } },
+					})
+					if (existingRecord) {
+						log(`Reconcile phone against ${existingRecord.id}`, undefined, true)
+						const updateRecord: Prisma.OrgPhoneUpdateArgs = {
+							where: { id: existingRecord.id },
+							data: {},
+						}
+						const countryCodes = ['CA', 'MX', 'US', 'PR', 'VI', 'GU', 'AS', 'MP', 'MH', 'PW'] as const
+						let phoneData: PhoneNumber | undefined
+						for (const country of countryCodes) {
+							const strip = /(?:,.*)|(?:option.*)/gi
+							phoneData = parsePhoneNumber(
+								phone.digits.replace(/\)-/, ') ').replaceAll(strip, '').replace(/×/, 'ext. '),
+								country
+							)
+							if (phoneData?.country) {
+								break
+							}
+						}
+						if (!phoneData) {
+							phoneSkip++
+							log(
+								`SKIPPING ${phone._id.$oid} - Cannot parse [${phoneCount + phoneSkip}/${org.phones.length}]`,
+								'skip',
+								true
+							)
+							exceptions.phone.add({ organizationId, record: phone, existing: existingRecord })
+							// debugger
+							continue
+						}
+						const phoneCountry = existing.country.get(phoneData.country ?? 'US')
+
+						if (needsUpdate(existingRecord.number, phoneData.nationalNumber)) {
+							logUpdate('number', existingRecord.number, phoneData.nationalNumber)
+							updateRecord.data.number = phoneData.nationalNumber
+						}
+						if (needsUpdate(existingRecord.ext, phoneData.ext)) {
+							logUpdate('ext', existingRecord.ext, phoneData.ext)
+						}
+						if (phoneCountry && needsUpdate(existingRecord.countryId, phoneCountry)) {
+							logUpdate('countryId', existingRecord.countryId, phoneCountry)
+							updateRecord.data.countryId = phoneCountry
+						}
+						if (needsUpdate(existingRecord.primary, phone.is_primary)) {
+							logUpdate('primary', existingRecord.primary, phone.is_primary)
+							updateRecord.data.primary = phone.is_primary
+						}
+						if (needsUpdate(existingRecord.published, phone.show_on_organization)) {
+							if (phone.show_on_organization === true) {
+								log(`SKIPPING - Mark phone as published`, 'skip', true)
+							} else {
+								logUpdate('published', existingRecord.published, phone.show_on_organization)
+								updateRecord.data.published = phone.show_on_organization
+							}
+						}
+						if (needsUpdate(existingRecord.description?.tsKey.text, phone.phone_type)) {
+							if (!existingRecord.description) {
+								const freeText = generateFreeTextKey({
+									orgId: organizationId,
+									text: phone.phone_type,
+									type: 'description',
+									itemId: existingRecord.id,
+								})
+								if (freeText && freeText.action === 'create') {
+									log(`Adding description: ${phone.phone_type}`, 'create', true)
+									const id = generateId('freeText')
+									const { key, ns, text } = freeText
+									create.translationKey.add({ key, ns, text })
+									create.freeText.add({ id, key, ns })
+									crowdin.create.add({ key, text })
+									updateRecord.data.description = { connect: { id } }
+								}
+							} else {
+								log(`Updating description: ${phone.phone_type}`, 'update', true)
+								const { key, ns } = existingRecord.description
+								update.translationKey.add({
+									where: { ns_key: { ns, key } },
+									data: { text: trimSpaces(phone.phone_type) },
+								})
+								if (existingRecord.description.tsKey.crowdinId)
+									crowdin.update.add({
+										id: existingRecord.description.tsKey.crowdinId,
+										text: trimSpaces(phone.phone_type),
+									})
+							}
+						}
+						updateRecord.data = filterUndefined(updateRecord.data)
+						if (Object.keys(updateRecord.data).length) {
+							update.orgPhone.add(updateRecord)
+							log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
+						}
+					} else {
+						log(
+							`Creating Phone: ${phone.digits} [${phoneCount + phoneSkip}/${org.phones.length}]`,
+							'create',
+							true
+						)
+						const newPhone: Prisma.OrgPhoneCreateManyInput = { number: '', countryId: '' }
+
+						const countryCodes = ['CA', 'MX', 'US', 'PR', 'VI', 'GU', 'AS', 'MP', 'MH', 'PW'] as const
+						let phoneData: PhoneNumber | undefined
+						for (const country of countryCodes) {
+							phoneData = parsePhoneNumber(phone.digits, country)
+							if (phoneData?.country) {
+								break
+							}
+						}
+						const phoneCountry = existing.country.get(phoneData?.country ?? 'US')
+						if (!phoneData || !phoneCountry) {
+							phoneSkip++
+							log(
+								`SKIPPING ${phone._id.$oid} - Cannot parse [${phoneCount + phoneSkip}/${org.phones.length}]`,
+								'skip',
+								true
+							)
+							exceptions.phone.add({ organizationId, record: phone, existing: null })
+							continue
+						}
+						newPhone.id = generateId('orgPhone')
+						newPhone.legacyId = phone._id.$oid
+						newPhone.number = phoneData.nationalNumber
+						newPhone.ext = phoneData.ext
+						newPhone.countryId = phoneCountry
+						if (phone.phone_type) {
+							const freeText = generateFreeTextKey({
+								orgId: organizationId,
+								text: phone.phone_type,
+								type: 'description',
+								itemId: newPhone.id,
+							})
+							if (freeText && freeText.action === 'create') {
+								log(`Adding description: ${phone.phone_type}`, 'create', true)
+								const id = generateId('freeText')
+								const { key, ns, text } = freeText
+								create.translationKey.add({ key, ns, text })
+								create.freeText.add({ id, key, ns })
+								crowdin.create.add({ key, text })
+								newPhone.descriptionId = id
+								newPhone.legacyDesc = phone.phone_type
+							}
+						}
+						create.organizationPhone.add({ organizationId, phoneId: newPhone.id })
+						create.orgPhone.add(filterUndefined(newPhone) as Prisma.OrgPhoneCreateManyInput)
+					}
+				}
+
+				phoneCount++
 			}
 
 			// #endregion
