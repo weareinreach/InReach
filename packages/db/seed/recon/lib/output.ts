@@ -60,6 +60,12 @@ export const update = {
 	orgService: new Set<Prisma.OrgServiceUpdateArgs>(),
 }
 
+export const crowdin = {
+	create: new Set<{ text: string; key: string }>(),
+	update: new Set<
+		{ id: number; text: string; delete?: never } | { id: number; delete: true; text?: never }
+	>(),
+}
 export const batchCount = new Map<string, number>()
 export const writeBatches = (task: PassedTask, clear = false) => {
 	// Create
@@ -120,6 +126,78 @@ export const writeBatches = (task: PassedTask, clear = false) => {
 				true
 			)
 			update[batchName].clear()
+		}
+	}
+	if (crowdin.create) {
+		const batch = crowdin.create
+		const batchFile = getBatchFile({ type: 'create', batchName: 'crowdin' })
+		if (clear) {
+			if (fs.existsSync(batchFile)) {
+				fs.rmSync(batchFile)
+				task.output = formatMessage(`Deleting file: ${batchFile}`, 'trash')
+			}
+		} else {
+			if (!batch.size) {
+				task.output = formatMessage(`Skipping empty batch: CrowdIn Additions`, 'skip')
+			} else {
+				const currentCount = batchCount.get(`create.crowdin`) ?? 0
+				const currentBatchCount = batch.size
+				const existingBatch = fs.existsSync(batchFile)
+					? superjson.parse<Set<unknown>>(fs.readFileSync(batchFile, 'utf-8'))
+					: []
+				const crowdinActions = [...batch].map(({ text, key: identifier }) => ({
+					op: 'add',
+					path: '/-',
+					value: { text, identifier, fileId: 794 },
+				}))
+				const outputData = new Set([...existingBatch, ...crowdinActions])
+				fs.writeFileSync(batchFile, superjson.stringify(outputData))
+				batchCount.set(`create.crowdin`, currentCount + currentBatchCount)
+				task.output = formatMessage(
+					`Records added to crowdin.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
+					'write',
+					true
+				)
+				crowdin.create.clear()
+			}
+		}
+	}
+	if (crowdin.update) {
+		const batch = crowdin.update
+		const batchFile = getBatchFile({ type: 'update', batchName: 'crowdin' })
+		if (clear) {
+			if (fs.existsSync(batchFile)) {
+				fs.rmSync(batchFile)
+				task.output = formatMessage(`Deleting file: ${batchFile}`, 'trash')
+			}
+		} else {
+			if (!batch.size) {
+				task.output = formatMessage(`Skipping empty batch: CrowdIn Updates`, 'skip')
+			} else {
+				const currentCount = batchCount.get(`update.crowdin`) ?? 0
+				const currentBatchCount = batch.size
+				const existingBatch = fs.existsSync(batchFile)
+					? superjson.parse<Set<unknown>>(fs.readFileSync(batchFile, 'utf-8'))
+					: []
+				const crowdinActions = [...batch].map((item) =>
+					item.delete
+						? { op: 'remove', path: `/${item.id}` }
+						: {
+								op: 'replace',
+								path: `/${item.id}/text`,
+								value: item.text,
+						  }
+				)
+				const outputData = new Set([...existingBatch, ...crowdinActions])
+				fs.writeFileSync(batchFile, superjson.stringify(outputData))
+				batchCount.set(`update.crowdin`, currentCount + currentBatchCount)
+				task.output = formatMessage(
+					`Records added to crowdin.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
+					'write',
+					true
+				)
+				crowdin.create.clear()
+			}
 		}
 	}
 }

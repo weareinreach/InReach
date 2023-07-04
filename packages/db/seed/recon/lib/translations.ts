@@ -1,9 +1,8 @@
 import { namespace } from '~db/generated/namespaces'
-import { slug } from '~db/lib/slugGen'
 import { type TranslationKeySet, type TranslationMap } from '~db/seed/recon/generated/types'
 import { formatMessage } from '~db/seed/recon/lib/logger'
 import { type PassedTask } from '~db/seed/recon/lib/types'
-import { readSuperJSON } from '~db/seed/recon/lib/utils'
+import { readSuperJSON, trimSpaces } from '~db/seed/recon/lib/utils'
 
 const translatedStrings: Record<string, Map<string, string>> = {}
 
@@ -32,49 +31,49 @@ const translationKeySet = readSuperJSON<TranslationKeySet>('translationKeySet')
 const translationMap = readSuperJSON<TranslationMap>('translationMap')
 export const keyExists = (key: string) => translationKeySet.has(key)
 
-export const generateFreeTextKey: GenerateFreeTextKey = ({ slug, itemId, type, text }) => {
+export const generateFreeTextKey: GenerateFreeTextKey = ({ orgId, itemId, type, text }) => {
 	switch (type) {
 		case 'name':
 		case 'access':
 		case 'description': {
-			const key = itemId ? `${slug}.${itemId}.${type}` : `${slug}.${type}`
+			const key = itemId ? `${orgId}.${itemId}.${type}` : `${orgId}.${type}`
 			if (keyExists(key)) {
 				const currentValue = translationMap.get(key)
-				if (currentValue?.trim() === text.trim()) return undefined
+				if (currentValue && trimSpaces(currentValue) === trimSpaces(text)) return undefined
 				return {
 					action: 'update',
 					ns: namespace.orgData,
 					key,
-					text: text.trim(),
+					text: trimSpaces(text),
 				}
 			}
 			return {
 				action: 'create',
 				ns: namespace.orgData,
 				key,
-				text: text.trim(),
+				text: trimSpaces(text),
 			}
 		}
 		case 'supplement': {
 			if (!itemId) {
 				throw new Error(`'itemId' is required!`)
 			}
-			const key = `${slug}.attribute.${itemId}`
+			const key = `${orgId}.attribute.${itemId}`
 			if (keyExists(key)) {
 				const currentValue = translationMap.get(key)
-				if (currentValue?.trim() === text.trim()) return undefined
+				if (currentValue && trimSpaces(currentValue) === trimSpaces(text)) return undefined
 				return {
 					action: 'update',
 					ns: namespace.orgData,
 					key,
-					text: text.trim(),
+					text: trimSpaces(text),
 				}
 			}
 			return {
 				action: 'create',
 				ns: namespace.orgData,
 				key,
-				text: text.trim(),
+				text: trimSpaces(text),
 			}
 		}
 	}
@@ -89,7 +88,7 @@ type GenerateFreeTextKey = (params: FreeTextKey) =>
 	| undefined
 
 type FreeTextKey = {
-	slug: string
+	orgId: string
 	itemId?: string
 	type: 'access' | 'description' | 'name' | 'supplement'
 	text: string

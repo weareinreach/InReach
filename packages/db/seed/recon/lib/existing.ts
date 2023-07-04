@@ -4,8 +4,9 @@ import {
 	countryOverrideId,
 	govDistCorrection,
 	govDistFromCity,
+	govDistFromId,
 } from '~db/seed/recon/corrections/location'
-import { readSuperJSON } from '~db/seed/recon/lib/utils'
+import { readSuperJSON, trimSpaces } from '~db/seed/recon/lib/utils'
 
 import type * as Gen from '~db/seed/recon/generated/types'
 
@@ -32,17 +33,22 @@ export const dataCorrections = {
 	countryOverrideById: countryOverrideId,
 	govDist: govDistCorrection,
 	govDistFromCity: govDistFromCity,
+	govDistFromId,
 }
 
 const territories = ['as', 'gu', 'mh', 'mp', 'pr', 'pw', 'um', 'vi']
 
-export const getGovDistId = (state: string | undefined, city: string | undefined) => {
-	if (state && territories.includes(existing.govDistMap.get(state.toLowerCase()) ?? '')) return undefined
+export const getGovDistId = (state: string | undefined, city: string | undefined, locId?: string) => {
+	if (state && territories.includes(existing.govDistMap.get(trimSpaces(state).toLowerCase()) ?? ''))
+		return undefined
 	if (!state) {
-		const slug = dataCorrections.govDistFromCity.get(city ?? '')
-		return slug ? existing.govDistMap.get(slug.toLowerCase()) : undefined
+		const slug =
+			dataCorrections.govDistFromCity.get(trimSpaces(city ?? '')) ??
+			dataCorrections.govDistFromId.get(locId ?? '')
+		return slug ? existing.govDistMap.get(slug) : undefined
 	}
-	const slug = dataCorrections.govDist.get(state.toLowerCase())
+	const slug =
+		dataCorrections.govDist.get(trimSpaces(state)) ?? dataCorrections.govDist.get(`${state}-${city}`)
 	return slug ? existing.govDistMap.get(slug) : undefined
 }
 
@@ -59,7 +65,10 @@ export const getCountryId = (
 	if (!location.country) {
 		location.country = dataCorrections.countryOverrideById.get(location.id)
 	}
-	if (location.state && territories.includes(dataCorrections.govDist.get(location.state) ?? '')) {
+	if (
+		location.state &&
+		territories.includes(dataCorrections.govDist.get(location.state)?.toLowerCase() ?? '')
+	) {
 		location.country = dataCorrections.govDist.get(location.state)
 	}
 	if (!location.country) {

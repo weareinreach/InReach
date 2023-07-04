@@ -16,3 +16,6 @@ export const govDistCorrection = superjson.parse<Map<string, string | undefined>
 export const govDistFromCity = superjson.parse<Map<string, string>>(
 	fs.readFileSync(path.resolve(__dirname, `./govDistCity.json`), 'utf-8')
 )
+export const govDistFromId = superjson.parse<Map<string, string>>(
+	fs.readFileSync(path.resolve(__dirname, `./govDistById.json`), 'utf-8')
+)
