@@ -1,7 +1,13 @@
 import { geojsonToWKT } from '@terraformer/wkt'
+import { getDiff } from 'json-difference'
+import compareObj from 'just-compare'
+import { diff } from 'just-diff'
+import { diffApply } from 'just-diff-apply'
 import filterObject from 'just-filter-object'
+import pick from 'just-pick'
 import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js/max'
 import superjson from 'superjson'
+import { type SuperJSONResult } from 'superjson/dist/types'
 
 import fs from 'fs'
 import path from 'path'
@@ -11,6 +17,7 @@ import { namespace } from '~db/generated/namespaces'
 import { createPoint } from '~db/lib/createPoint'
 import { generateId } from '~db/lib/idGen'
 import { slugUpdate } from '~db/lib/slugGen'
+import { InputJsonValue } from '~db/lib/zod'
 import { organizationsSchema } from '~db/seed/recon/input/types'
 import { needsUpdate } from '~db/seed/recon/lib/compare'
 import { dataCorrections, existing, getCountryId, getGovDistId } from '~db/seed/recon/lib/existing'
@@ -18,7 +25,9 @@ import { attachLogger, formatMessage } from '~db/seed/recon/lib/logger'
 import { create, crowdin, exceptions, update, writeBatches } from '~db/seed/recon/lib/output'
 import { generateFreeTextKey } from '~db/seed/recon/lib/translations'
 import { type ListrJob } from '~db/seed/recon/lib/types'
-import { emptyStrToNull, trimSpaces } from '~db/seed/recon/lib/utils'
+import { emptyStrToNull, raise, trimSpaces } from '~db/seed/recon/lib/utils'
+// import { parseSchedule } from '~db/seed/recon/parsers/hours'
+import { generateSupplementTxn, tagParser } from '~db/seed/recon/parsers/attributes'
 import { JsonInputOrNull } from '~db/zod_util/prismaJson'
 
 const washdcRegex = /washington.*dc/i
@@ -44,16 +53,48 @@ export const orgRecon = {
 			.parse(JSON.parse(fs.readFileSync(path.resolve(__dirname, './input/existingOrgs.json'), 'utf-8')))
 		log(`Organizations to process: ${orgs.length}`, 'info')
 
+		// get System userId for audit log
+		const { id: actorId } = await prisma.user.findUniqueOrThrow({
+			where: { email: 'inreach_svc@inreach.org' },
+			select: { id: true },
+		})
+
 		// start loop
 		for (const org of orgs) {
 			task.title = `Reconcile Organizations [${orgCounter}/${orgs.length}]`
 			log(`Reconciling Organization: ${org.name}`, 'generate')
-
+			const createdAt = org.created_at.$date
+			const updatedAt = org.updated_at.$date
 			const organizationId = existing.orgId.get(org._id.$oid)
 			if (!organizationId) {
 				log(`Organization not found: ${org._id.$oid}`, 'error')
 				throw new Error('Organization not found', { cause: org._id.$oid })
 			}
+			const genAuditUpdate = (
+				from: Record<string, unknown>,
+				to: Record<string, unknown>,
+				links: AuditLogLinks
+			) => {
+				const changedFields = pick(from, Object.keys(to))
+				create.auditLog.add({
+					actorId,
+					operation: 'UPDATE',
+					from: InputJsonValue.parse(superjson.serialize(changedFields)),
+					to: InputJsonValue.parse(superjson.serialize(to)),
+					organizationId,
+					...links,
+				})
+			}
+			const genAuditCreate = (to: unknown, links: AuditLogLinks) => {
+				create.auditLog.add({
+					actorId,
+					operation: 'CREATE',
+					to: InputJsonValue.parse(superjson.serialize(to)),
+					organizationId,
+					...links,
+				})
+			}
+
 			/**
 			 * .
 			 *
@@ -82,7 +123,14 @@ export const orgRecon = {
 				if (newSlug !== existingOrgRecord.slug) {
 					logUpdate('slug', existingOrgRecord.slug, newSlug)
 					updateOrgRecord.data.slug = newSlug
-					create.slugRedirect.add({ from: existingOrgRecord.slug, to: newSlug, orgId: existingOrgRecord.id })
+					const slugRedirect: Prisma.SlugRedirectCreateManyInput = {
+						id: generateId('slugRedirect'),
+						from: existingOrgRecord.slug,
+						to: newSlug,
+						orgId: existingOrgRecord.id,
+					}
+					create.slugRedirect.add(slugRedirect)
+					genAuditCreate(slugRedirect, { slugRedirectId: slugRedirect.id })
 				}
 			}
 			if (
@@ -99,6 +147,11 @@ export const orgRecon = {
 					where: { ns_key: { ns: namespace.orgData, key: existingOrgRecord.description.key } },
 					data: { text: org.description ? trimSpaces(org.description) : undefined },
 				})
+				genAuditUpdate(
+					{ text: existingOrgRecord.description.tsKey.text },
+					{ text: org.description ? trimSpaces(org.description) : undefined },
+					{ translationKey: existingOrgRecord.description.key, translationNs: namespace.orgData }
+				)
 			}
 			if (needsUpdate(existingOrgRecord.deleted, org.is_deleted)) {
 				logUpdate('deleted', existingOrgRecord.deleted, org.is_deleted)
@@ -118,7 +171,9 @@ export const orgRecon = {
 			}
 			updateOrgRecord.data = filterUndefined(updateOrgRecord.data)
 			if (Object.keys(updateOrgRecord.data).length) {
+				updateOrgRecord.data.updatedAt = updatedAt
 				update.organization.add(updateOrgRecord)
+				genAuditUpdate(existingOrgRecord, updateOrgRecord.data, { organizationId })
 				log(`Updated ${Object.keys(updateOrgRecord.data).length} keys`, undefined, true)
 			}
 
@@ -151,6 +206,7 @@ export const orgRecon = {
 					for (const location of deletedLocations) {
 						log(`Marking Location: ${location.name} as deleted`, undefined, true)
 						update.orgLocation.add({ where: { id: location.id }, data: { deleted: true } })
+						genAuditUpdate({ deleted: false }, { deleted: true }, { orgLocationId: location.id })
 					}
 				}
 
@@ -261,7 +317,9 @@ export const orgRecon = {
 						}
 						updateRecord.data = filterUndefined(updateRecord.data)
 						if (Object.keys(updateRecord.data).length) {
+							updateRecord.data.updatedAt = updatedAt
 							update.orgLocation.add(updateRecord)
+							genAuditUpdate(existingLocation, updateRecord.data, { orgLocationId: existingLocation.id })
 							log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
 						}
 					} else {
@@ -294,8 +352,11 @@ export const orgRecon = {
 							latitude,
 							geoJSON,
 							geoWKT,
+							createdAt,
+							updatedAt,
 						}
 						create.orgLocation.add(filterUndefined(newLocation) as Prisma.OrgLocationCreateManyInput)
+						genAuditCreate(filterUndefined(newLocation), { orgLocationId: newLocation.id })
 					}
 
 					locationCount++
@@ -368,6 +429,16 @@ export const orgRecon = {
 									where: { ns_key: { ns, key } },
 									data: { text: trimSpaces(email.title) },
 								})
+								genAuditUpdate(
+									{ text: existingRecord.description.tsKey.text },
+									{ text: trimSpaces(email.title) },
+									{
+										orgEmailId: existingRecord.id,
+										translationKey: key,
+										translationNs: ns,
+										freeTextId: existingRecord.description.id,
+									}
+								)
 							} else if (existingRecord.description && !email.title) {
 								log(`Deleting Email description: ${existingRecord.description.tsKey.text}`, 'trash', true)
 								if (existingRecord.description.tsKey.crowdinId)
@@ -388,13 +459,19 @@ export const orgRecon = {
 									create.translationKey.add({ key, ns, text })
 									create.freeText.add({ id, key, ns })
 									updateRecord.data.description = { connect: { id } }
+									genAuditCreate(
+										{ key, ns, text },
+										{ translationKey: key, translationNs: ns, freeTextId: id, orgEmailId: existingRecord.id }
+									)
 								}
 							}
 						}
 
 						updateRecord.data = filterUndefined(updateRecord.data)
 						if (Object.keys(updateRecord.data).length) {
+							updateRecord.data.updatedAt = updatedAt
 							update.orgEmail.add(updateRecord)
+							genAuditUpdate(existingRecord, updateRecord.data, { orgEmailId: existingRecord.id })
 							log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
 						}
 					} else {
@@ -408,6 +485,8 @@ export const orgRecon = {
 							published: email.show_on_organization,
 							firstName: emptyStrToNull(email.first_name) ?? undefined,
 							lastName: emptyStrToNull(email.last_name) ?? undefined,
+							createdAt,
+							updatedAt,
 						}
 						if (email.title) {
 							const freeText = generateFreeTextKey({
@@ -423,10 +502,15 @@ export const orgRecon = {
 								create.translationKey.add({ key, ns, text })
 								create.freeText.add({ id, key, ns })
 								newEmail.descriptionId = id
+								genAuditCreate(
+									{ key, ns, text },
+									{ translationKey: key, translationNs: ns, freeTextId: id, orgEmailId: newId }
+								)
 							}
 						}
 						create.organizationEmail.add({ organizationId, orgEmailId: newEmail.id as string })
 						create.orgEmail.add(filterUndefined(newEmail) as Prisma.OrgEmailCreateManyInput)
+						genAuditCreate(filterUndefined(newEmail), { orgEmailId: newEmail.id })
 					}
 					emailCount++
 				}
@@ -461,6 +545,7 @@ export const orgRecon = {
 					for (const phone of deletedPhones) {
 						log(`Marking phone ${phone.number} as deleted`, undefined, true)
 						update.orgPhone.add({ where: { id: phone.id }, data: { deleted: true } })
+						genAuditUpdate({ deleted: false }, { deleted: true }, { orgPhoneId: phone.id })
 					}
 				}
 
@@ -519,6 +604,7 @@ export const orgRecon = {
 						}
 						if (needsUpdate(existingRecord.ext, phoneData.ext)) {
 							logUpdate('ext', existingRecord.ext, phoneData.ext)
+							updateRecord.data.ext = phoneData.ext
 						}
 						if (phoneCountry && needsUpdate(existingRecord.countryId, phoneCountry)) {
 							logUpdate('countryId', existingRecord.countryId, phoneCountry)
@@ -552,6 +638,10 @@ export const orgRecon = {
 									create.freeText.add({ id, key, ns })
 									crowdin.create.add({ key, text })
 									updateRecord.data.description = { connect: { id } }
+									genAuditCreate(
+										{ key, ns, text },
+										{ translationKey: key, translationNs: ns, freeTextId: id, orgPhoneId: existingRecord.id }
+									)
 								}
 							} else {
 								log(`Updating description: ${phone.phone_type}`, 'update', true)
@@ -560,6 +650,16 @@ export const orgRecon = {
 									where: { ns_key: { ns, key } },
 									data: { text: trimSpaces(phone.phone_type) },
 								})
+								genAuditUpdate(
+									{ text: existingRecord.description.tsKey.text },
+									{ text: trimSpaces(phone.phone_type) },
+									{
+										orgPhoneId: existingRecord.id,
+										translationKey: key,
+										translationNs: ns,
+										freeTextId: existingRecord.description.id,
+									}
+								)
 								if (existingRecord.description.tsKey.crowdinId)
 									crowdin.update.add({
 										id: existingRecord.description.tsKey.crowdinId,
@@ -569,7 +669,9 @@ export const orgRecon = {
 						}
 						updateRecord.data = filterUndefined(updateRecord.data)
 						if (Object.keys(updateRecord.data).length) {
+							updateRecord.data.updatedAt = updatedAt
 							update.orgPhone.add(updateRecord)
+							genAuditUpdate(existingRecord, updateRecord.data, { orgPhoneId: existingRecord.id })
 							log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
 						}
 					} else {
@@ -578,7 +680,12 @@ export const orgRecon = {
 							'create',
 							true
 						)
-						const newPhone: Prisma.OrgPhoneCreateManyInput = { number: '', countryId: '' }
+						const newPhone: Prisma.OrgPhoneCreateManyInput = {
+							number: '',
+							countryId: '',
+							createdAt,
+							updatedAt,
+						}
 
 						const countryCodes = ['CA', 'MX', 'US', 'PR', 'VI', 'GU', 'AS', 'MP', 'MH', 'PW'] as const
 						let phoneData: PhoneNumber | undefined
@@ -620,14 +727,393 @@ export const orgRecon = {
 								crowdin.create.add({ key, text })
 								newPhone.descriptionId = id
 								newPhone.legacyDesc = phone.phone_type
+								genAuditCreate(
+									{ key, ns, text },
+									{ translationKey: key, translationNs: ns, freeTextId: id, orgPhoneId: newPhone.id }
+								)
 							}
 						}
 						create.organizationPhone.add({ organizationId, phoneId: newPhone.id })
 						create.orgPhone.add(filterUndefined(newPhone) as Prisma.OrgPhoneCreateManyInput)
+						genAuditCreate(filterUndefined(newPhone), { orgPhoneId: newPhone.id })
 					}
 				}
 
 				phoneCount++
+			}
+
+			// #endregion
+
+			/**
+			 * .
+			 *
+			 * === WEBSITES ===
+			 *
+			 * .
+			 */
+			// #region Websites
+			if (!org.website) {
+				log('SKIPPING Website records, no entry', 'skip')
+			} else {
+				log(`Processing Website records`, 'generate')
+				const existingRecord = await prisma.orgWebsite.findFirst({
+					where: { organizationId, published: true },
+				})
+				if (existingRecord) {
+					log(`Reconcile website against ${existingRecord.id}`, undefined, true)
+					const updateRecord: Prisma.OrgWebsiteUpdateArgs = {
+						where: { id: existingRecord.id },
+						data: {},
+					}
+					if (needsUpdate(existingRecord.url, org.website)) {
+						logUpdate('url', existingRecord.url, org.website)
+						updateRecord.data.url = org.website
+					}
+					if (Object.keys(updateRecord.data).length) {
+						updateRecord.data.updatedAt = updatedAt
+						update.orgWebsite.add(updateRecord)
+						genAuditUpdate(existingRecord, updateRecord.data, { orgWebsiteId: existingRecord.id })
+						log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
+					}
+				} else {
+					const inactiveRecord = await prisma.orgWebsite.findFirst({
+						where: { organizationId },
+					})
+					if (inactiveRecord) {
+						log(`Reconcile website against inactive record ${inactiveRecord.id}`, undefined, true)
+						const updateRecord: Prisma.OrgWebsiteUpdateArgs = {
+							where: { id: inactiveRecord.id },
+							data: { published: true },
+						}
+						if (needsUpdate(inactiveRecord.url, org.website)) {
+							logUpdate('url', inactiveRecord.url, org.website)
+							updateRecord.data.url = org.website
+						}
+						if (Object.keys(updateRecord.data).length) {
+							updateRecord.data.updatedAt = updatedAt
+							update.orgWebsite.add(updateRecord)
+							genAuditUpdate(inactiveRecord, updateRecord.data, { orgWebsiteId: inactiveRecord.id })
+							log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
+						}
+					} else {
+						log(`Creating Website: ${org.website}`, 'create', true)
+						const newWebsite: Prisma.OrgWebsiteCreateManyInput = {
+							id: generateId('orgWebsite'),
+							organizationId,
+							url: org.website,
+							published: true,
+							createdAt,
+							updatedAt,
+						}
+						create.orgWebsite.add(newWebsite)
+						genAuditCreate(newWebsite, { orgWebsiteId: newWebsite.id })
+					}
+				}
+			}
+
+			// #endregion
+
+			/**
+			 * .
+			 *
+			 * === SOCIAL MEDIA ===
+			 *
+			 * .
+			 */
+			// #region Social Media
+			if (!org.social_media?.length) {
+				log('SKIPPING Social Media records, no entry', 'skip')
+			} else {
+				log(`Processing ${org.social_media.length} Social Media records`, 'generate')
+				let socialCount = 1
+				let socialSkip = 0
+				const regex =
+					/(?:(?:http|https):\/\/|)(?:www\.|)(\w*)\.com\/(?:channel\/|user\/|in\/|company\/|)([a-zA-Z0-9._-]{1,})/
+				for (const social of org.social_media) {
+					const existingRecord = await prisma.orgSocialMedia.findUnique({
+						where: { legacyId: social._id.$oid },
+						include: { service: true },
+					})
+					if (existingRecord) {
+						log(`Reconcile social media against ${existingRecord.id}`, undefined, true)
+						const updateRecord: Prisma.OrgSocialMediaUpdateArgs = {
+							where: { id: existingRecord.id },
+							data: {},
+						}
+						const [, service, username] = regex.exec(social.url) ?? [undefined, undefined, '']
+						const serviceId = existing.socialMediaService.get(social.name ?? service ?? raise('No service'))
+						if (needsUpdate(social.url, existingRecord.url)) {
+							logUpdate('url', existingRecord.url, social.url)
+							updateRecord.data.url = social.url
+						}
+						if (serviceId && needsUpdate(serviceId, existingRecord.serviceId)) {
+							logUpdate('service', existingRecord.service.name, social.name)
+							updateRecord.data.service = { connect: { id: serviceId } }
+						}
+						if (username && needsUpdate(username, existingRecord.username)) {
+							logUpdate('username', existingRecord.username, username)
+							updateRecord.data.username = username
+						}
+
+						if (Object.keys(updateRecord.data).length) {
+							updateRecord.data.updatedAt = updatedAt
+							update.orgSocialMedia.add(updateRecord)
+							genAuditUpdate(existingRecord, updateRecord.data, { orgSocialMediaId: existingRecord.id })
+							log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
+						}
+					} else {
+						log(`Creating Social Media: ${social.name}`, 'create', true)
+						const [, service, username] = regex.exec(social.url) ?? [undefined, undefined, '']
+						const serviceId = existing.socialMediaService.get(social.name ?? service ?? raise('No service'))
+						if (!serviceId || !username) {
+							socialSkip++
+							log(
+								`SKIPPING ${social._id.$oid} - Cannot parse [${socialCount + socialSkip}/${
+									org.social_media.length
+								}]`
+							)
+							exceptions.socialMedia.add({ organizationId, record: social, existing: null })
+							continue
+						}
+						const newSocial: Prisma.OrgSocialMediaCreateManyInput = {
+							id: generateId('orgSocialMedia'),
+							legacyId: social._id.$oid,
+							organizationId,
+							url: social.url,
+							username,
+							serviceId: serviceId,
+							createdAt,
+							updatedAt,
+						}
+						create.orgSocialMedia.add(newSocial)
+						genAuditCreate(newSocial, { orgSocialMediaId: newSocial.id })
+					}
+					socialCount++
+				}
+			}
+
+			// #endregion
+
+			/**
+			 * .
+			 *
+			 * === PHOTOS ===
+			 *
+			 * .
+			 */
+			// #region Photos
+			if (!org.photos?.length) {
+				log('SKIPPING Photos records, no entries', 'skip')
+			} else {
+				let countPhoto = 1
+				log(`Processing ${org.photos.length} Photos records`, 'generate')
+				const photosToDelete = await prisma.orgPhoto.findMany({
+					where: { orgId: organizationId, src: { notIn: org.photos.map(({ src }) => src) } },
+				})
+				if (photosToDelete.length) {
+					log(`Marking ${photosToDelete.length} Photos records as deleted`, 'trash', true)
+					for (const photo of photosToDelete) {
+						log(`Marking ${photo.id} as deleted`, 'trash', true)
+						const deleteRecord: Prisma.OrgPhotoUpdateArgs = {
+							where: { id: photo.id },
+							data: { deleted: true },
+						}
+						update.orgPhoto.add(deleteRecord)
+						genAuditUpdate(photo, deleteRecord.data, { orgPhotoId: photo.id })
+					}
+				}
+				for (const photo of org.photos) {
+					log(`Processing Photo: ${photo.src} [${countPhoto}/${org.photos.length}]`, 'generate')
+					const existingRecord = await prisma.orgPhoto.findFirst({
+						where: { src: photo.src },
+					})
+					if (existingRecord) {
+						log(`Reconcile photo against ${existingRecord.id}`, undefined, true)
+						const updateRecord: Prisma.OrgPhotoUpdateArgs = {
+							where: { id: existingRecord.id },
+							data: {},
+						}
+						if (needsUpdate(Math.round(photo.width), existingRecord.width)) {
+							logUpdate('width', existingRecord.width, Math.round(photo.width))
+							updateRecord.data.width = Math.round(photo.width)
+						}
+						if (needsUpdate(Math.round(photo.height), existingRecord.height)) {
+							logUpdate('height', existingRecord.height, Math.round(photo.height))
+							updateRecord.data.height = Math.round(photo.height)
+						}
+						if (Object.keys(updateRecord.data).length) {
+							updateRecord.data.updatedAt = updatedAt
+							update.orgPhoto.add(updateRecord)
+							genAuditUpdate(existingRecord, updateRecord.data, { orgPhotoId: existingRecord.id })
+							log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
+						}
+					} else {
+						log(`Creating Photo: ${photo.src}`, 'create', true)
+						const newPhoto: Prisma.OrgPhotoCreateManyInput = {
+							id: generateId('orgPhoto'),
+							orgId: organizationId,
+							src: photo.src,
+							width: Math.round(photo.width),
+							height: Math.round(photo.height),
+							createdAt,
+							updatedAt,
+						}
+						create.orgPhoto.add(newPhoto)
+						genAuditCreate(newPhoto, { orgPhotoId: newPhoto.id })
+					}
+
+					countPhoto++
+				}
+			}
+
+			// #endregion
+
+			/**
+			 * .
+			 *
+			 * === HOURS ===
+			 *
+			 * .
+			 */
+			// #region Hours
+			// if (!org.schedules?.length) {
+			// 	log('SKIPPING Hours records, no entries', 'skip')
+			// } else {
+			// 	log(`Processing ${org.schedules.length} Hours records`, 'generate')
+			// 	const hoursCount = 1
+			// 	const hoursSkip = 0
+
+			// 	for (const schedule of org.schedules) {
+			// 		log(`Processing Schedule: ${schedule.name} [${hoursCount}/${org.schedules.length}]`, 'generate')
+			// 		const parsed = parseSchedule(schedule)
+			// 		for (const [day,data] of Object.entries(parsed)) {
+
+			// 		}
+			// 	}
+			// }
+
+			// #endregion
+
+			/**
+			 * .
+			 *
+			 * === ORG ATTRIBUTES ===
+			 *
+			 * .
+			 */
+			// #region Org Attributes
+			if (!org.properties || !Object.keys(org.properties).length) {
+				log('SKIPPING Org Attributes records, no entries', 'skip')
+			} else {
+				log(`Processing ${Object.keys(org.properties).length} Org Attributes records`, 'generate')
+				let attributesCount = 1
+				const attributesSkip = 0
+				const unsupportedAttributes: Record<string, unknown>[] = []
+				const { id: unsupportedId } =
+					existing.attribute.get('sys.incompatible-info') ?? raise(`Cannot find 'incompatible' id`)
+				const existingAttributes = await prisma.organizationAttribute.findMany({
+					where: { organizationId },
+					include: { supplement: { include: { text: { include: { tsKey: true } } } } },
+				})
+				const existingServAreas = await prisma.serviceArea.findUnique({
+					where: { organizationId },
+					include: { countries: true, districts: true },
+				})
+				const orgAttrib: Record<string, AttrSupp[]> = {}
+				const orgServArea: ServArea = { countries: [], districts: [] }
+				for (const [tag, value] of Object.entries(org.properties)) {
+					log(
+						`Processing Tag: ${tag} [${attributesCount + attributesSkip}/${
+							Object.keys(org.properties).length
+						}]`,
+						'generate'
+					)
+					const tagRecord = tagParser(tag, value)
+
+					switch (tagRecord.type) {
+						case 'unknown': {
+							log(`Unsupported Attribute: ${Object.keys(tagRecord.supplementData).join()}`, undefined, true)
+							unsupportedAttributes.push(tagRecord.supplementData)
+							break
+						}
+						case 'attribute': {
+							const attribId = tagRecord.attributeId ?? raise('missing attributeId')
+							if (tagRecord.supplementData?.data)
+								tagRecord.supplementData.data = superjson.stringify(tagRecord.supplementData.data)
+							if (Object.hasOwn(orgAttrib, attribId) && tagRecord.supplementData) {
+								orgAttrib[attribId]?.push(tagRecord.supplementData)
+							} else {
+								orgAttrib[attribId] = tagRecord.supplementData ? [tagRecord.supplementData] : []
+							}
+							break
+						}
+						case 'serviceArea': {
+							if (tagRecord.supplementData?.countryId)
+								orgServArea.countries.push(tagRecord.supplementData.countryId)
+							if (tagRecord.supplementData?.govDistId)
+								orgServArea.districts.push(tagRecord.supplementData.govDistId)
+							break
+						}
+					}
+					attributesCount++
+				}
+				if (unsupportedAttributes.length) {
+					orgAttrib[unsupportedId] = [
+						{
+							data: superjson.stringify(unsupportedAttributes),
+						},
+					]
+				}
+				for (const [attributeId, attributeSupplement] of Object.entries(orgAttrib)) {
+					const existingIdx = existingAttributes.findIndex(({ attributeId: id }) => id === attributeId)
+					if (existingIdx !== -1) {
+						const existing = existingAttributes.splice(existingIdx, 1)[0] ?? raise('Unable to get record')
+						const existingSupplements = existing.supplement.map(
+							({ boolean, countryId, govDistId, languageId, data, text, id }) =>
+								filterObject<AttrSupp>(
+									{
+										id,
+										boolean,
+										countryId,
+										govDistId,
+										languageId,
+										data: data
+											? superjson.stringify(superjson.deserialize(data as unknown as SuperJSONResult))
+											: undefined,
+										text: text?.tsKey.text,
+									},
+									(k, v) => Boolean(v)
+								)
+						)
+						const changes = diff(
+							existingSupplements.map(({ id, ...data }) => data),
+							attributeSupplement
+						)
+						if (changes.length) {
+							const diff = getDiff(
+								existingSupplements.map(({ id, ...data }) => data),
+								attributeSupplement
+							)
+							const updated = diffApply(existingSupplements, changes)
+
+							// const txns = updated.map(({ id, ...data }) => ({
+							// 	where: { id },
+							// 	data,
+							// }))
+							const txn = generateSupplementTxn(updated)
+							if (Array.isArray(txn)) {
+								for (const item of txn) {
+									if (item.data.text) {
+										// update TranslationKey record
+									}
+									// update.attributeSupplement.add(item)
+								}
+							}
+						}
+						// debugger
+					}
+				}
+				// debugger
 			}
 
 			// #endregion
@@ -637,3 +1123,24 @@ export const orgRecon = {
 		writeBatches(task)
 	},
 } satisfies ListrJob
+
+type AuditLogLinks = Omit<
+	Prisma.AuditLogCreateManyInput,
+	'id' | 'actorId' | 'from' | 'to' | 'operation' | 'timestamp'
+>
+
+type AttrSupp = {
+	id?: string
+	// active:boolean
+	data?: unknown
+	boolean?: boolean | null
+	countryId?: string | null
+	govDistId?: string | null
+	languageId?: string | null
+	text?: string
+}
+
+type ServArea = {
+	countries: string[]
+	districts: string[]
+}
