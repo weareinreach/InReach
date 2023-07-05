@@ -539,14 +539,14 @@
 		"demonym_other": "Iraquíes"
 	},
 	"ISL": {
-		"name": "Icelanato",
-		"demonym_one": "Icelandra",
-		"demonym_other": "Celandros"
+		"name": "Islandia",
+		"demonym_one": "Islandés",
+		"demonym_other": "Islandeses"
 	},
 	"ISR": {
 		"name": "Israel",
 		"demonym_one": "Israelí",
-		"demonym_other": "Eleis"
+		"demonym_other": "Israelis"
 	},
 	"ITA": {
 		"name": "Italia",
@@ -574,24 +574,24 @@
 		"demonym_other": "Japoneses"
 	},
 	"KAZ": {
-		"name": "Kazakan",
+		"name": "Kazajistán",
 		"demonym_one": "Kazaki",
 		"demonym_other": "Kazakis"
 	},
 	"KEN": {
-		"name": "Kenya",
-		"demonym_one": "Kenyano",
-		"demonym_other": "Kenyanos"
+		"name": "Kenia",
+		"demonym_one": "Keniano",
+		"demonym_other": "Kenianos"
 	},
 	"KGZ": {
-		"name": "Kyrgyzstan",
+		"name": "Kirguistán",
 		"demonym_one": "Kirghiz",
 		"demonym_other": "Kirghizs"
 	},
 	"KHM": {
 		"name": "Camboya",
-		"demonym_one": "Campanario",
-		"demonym_other": "Campanarios"
+		"demonym_one": "Camboyano",
+		"demonym_other": "Camboyanos"
 	},
 	"KIR": {
 		"name": "Kiribati",
