@@ -181,7 +181,7 @@
 		"<textDarkGray>La compréhension de la démographie de nos utilisateurs peut nous aider à quantifier notre impact, à recueillir des fonds et à évaluer les décisions futures de nos produits. Nous apprécions que les utilisateurs partagent volontairement ces informations avec nous, et nous prenons ces mesures pour protéger votre vie privée et votre anonymat.</textDarkGray>",
 		"<textDarkGray><title2>Analyse d'utilisation du site</title2></textDarkGray>"
 	],
-	"privacy-statement-foot": "<linkPolicy>Lisez notre politique de confidentialité complète pour plus d'informations</linkPolicy>",
+	"privacy-statement-foot": "<linkPolicy>Lire notre politique de confidentialité complète pour plus d'informations</linkPolicy>",
 	"privacy-statement-head": [
 		"<emojiLg>🔒</emojiLg>",
 		"<title2>Déclaration de confidentialité</title2>"
@@ -258,13 +258,13 @@
 			"<group>\n<button data-option='individual'>Individuel</button>\n<button data-option='provider'>Professionnel/Fournisseur</button>\n<button data-option='lcr'>Récapitulatif de la communauté locale</button>\n</group>",
 			"<loginLink>Vous avez déjà un compte ?</loginLink>"
 		],
-		"name-use-any": "Utilisez le nom qui vous convient le mieux.",
+		"name-use-any": "Utiliser le nom qui vous convient le mieux.",
 		"name_alias": "Nom ou alias",
 		"name_full": "Nom complet",
-		"placeholder-name_alias": "Entrez le nom ou l'alias...",
-		"placeholder-name_full": "Entrez le nom complet...",
-		"select-law-practice": "Où pratiquez vous le droit ?",
-		"select-service-provider": "Où travaillez-vous ou donnez-vous du bénévolat?",
+		"placeholder-name_alias": "Entrer le nom ou l'alias...",
+		"placeholder-name_full": "Entrer le nom complet...",
+		"select-law-practice": "Où pratiquez-vous le droit ?",
+		"select-service-provider": "Où travaillez-vous ou faites-vous du bénévolat?",
 		"specify-work-volunteer": "Indiquez où vous travaillez ou bénévole",
 		"success": "Vous avez créé un compte !",
 		"user-exists-body": "Cette adresse e-mail est déjà enregistrée.",
