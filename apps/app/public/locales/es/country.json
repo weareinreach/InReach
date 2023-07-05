@@ -714,7 +714,7 @@
 		"demonym_other": "Mariscales"
 	},
 	"MKD": {
-		"name": "Norte de Macedonia",
+		"name": "Macedonia del Norte",
 		"demonym_one": "Macedonio",
 		"demonym_other": "Macedonios"
 	},
@@ -769,7 +769,7 @@
 		"demonym_other": "Francés"
 	},
 	"MUS": {
-		"name": "Mauritius",
+		"name": "Mauricio",
 		"demonym_one": "Ligero",
 		"demonym_other": "· itianos"
 	},
@@ -794,12 +794,12 @@
 		"demonym_other": "Namibios"
 	},
 	"NCL": {
-		"name": "Nueva Caldera",
+		"name": "Nueva Caledonia",
 		"demonym_one": "Nuevo caledonio",
 		"demonym_other": "Nuevos caledonios"
 	},
 	"NER": {
-		"name": "Niger",
+		"name": "Níger",
 		"demonym_one": "Nigeriens",
 		"demonym_other": "Nigeriens"
 	},
@@ -824,7 +824,7 @@
 		"demonym_other": "Niueanos"
 	},
 	"NLD": {
-		"name": "Holanda",
+		"name": "Países Bajos",
 		"demonym_one": "Holandés",
 		"demonym_other": "Duchas"
 	},
@@ -849,7 +849,7 @@
 		"demonym_other": "Nueva Zelanda"
 	},
 	"OMN": {
-		"name": "Oman",
+		"name": "Omán",
 		"demonym_one": "Omanis",
 		"demonym_other": "Omanis"
 	},
@@ -884,7 +884,7 @@
 		"demonym_other": "Palauans"
 	},
 	"PNG": {
-		"name": "Papua New Guinea",
+		"name": "Papúa Nueva Guinea",
 		"demonym_one": "Papua New Guineans",
 		"demonym_other": "Papua New Guineans"
 	},
@@ -914,22 +914,22 @@
 		"demonym_other": "Paraguayans"
 	},
 	"PSE": {
-		"name": "Palestine",
+		"name": "Palestina",
 		"demonym_one": "Palestinians",
 		"demonym_other": "Palestinians"
 	},
 	"PYF": {
-		"name": "Polinesia francesa",
+		"name": "Polinesia Francesa",
 		"demonym_one": "Polinesio francés",
 		"demonym_other": "Polinesios franceses"
 	},
 	"QAT": {
-		"name": "Qatar",
+		"name": "Katar",
 		"demonym_one": "Qataris",
 		"demonym_other": "Qataris"
 	},
 	"REU": {
-		"name": "Réunión",
+		"name": "Reunión",
 		"demonym_one": "Francés",
 		"demonym_other": "Francés"
 	},
@@ -944,7 +944,7 @@
 		"demonym_other": "Rusos"
 	},
 	"RWA": {
-		"name": "Rwanda",
+		"name": "Ruanda",
 		"demonym_one": "Rwandans",
 		"demonym_other": "Rwandans"
 	},
