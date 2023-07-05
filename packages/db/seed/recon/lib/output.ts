@@ -59,6 +59,7 @@ export const create = {
 	organizationEmail: new Set<Prisma.OrganizationEmailCreateManyInput>(),
 	organizationPhone: new Set<Prisma.OrganizationPhoneCreateManyInput>(),
 	slugRedirect: new Set<Prisma.SlugRedirectCreateManyInput>(),
+	auditLog: new Set<Prisma.AuditLogCreateManyInput>(),
 }
 
 export const update = {

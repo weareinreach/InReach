@@ -23,7 +23,13 @@ export const JsonValue: z.ZodType<Prisma.JsonValue> = z.union([
 	z.lazy(() => z.array(JsonValue)),
 	z.lazy(() => z.record(JsonValue)),
 ])
-
+export const InputJsonValue: z.ZodType<Prisma.InputJsonValue> = z.union([
+	z.string(),
+	z.number(),
+	z.boolean(),
+	z.lazy(() => z.array(InputJsonValue)),
+	z.lazy(() => z.record(InputJsonValue)),
+])
 export type JsonValueType = z.infer<typeof JsonValue>
 export const NullableJsonValue = z
 	.union([JsonValue, z.literal('DbNull'), z.literal('JsonNull')])

@@ -55,6 +55,7 @@
 		"@vercel/postgres-kysely": "0.4.0",
 		"@weareinreach/env": "workspace:*",
 		"just-filter-object": "3.2.0",
+		"just-pick": "4.2.0",
 		"kysely": "0.25.0",
 		"prisma-kysely": "1.5.0",
 		"sql-bricks": "3.0.0",

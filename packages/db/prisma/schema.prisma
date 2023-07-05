@@ -471,8 +471,9 @@ model SlugRedirect {
   org   Organization @relation(fields: [orgId], references: [id])
   orgId String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  auditLogs AuditLog[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 /// Organization email contacts - can be general or location specific
@@ -1727,6 +1728,8 @@ model AuditLog {
   serviceCategoryId                    String?
   ServiceTag                           ServiceTag?                    @relation(fields: [serviceTagId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   serviceTagId                         String?
+  SlugRedirect                         SlugRedirect?                  @relation(fields: [slugRedirectId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  slugRedirectId                       String?
   SocialMediaLink                      SocialMediaLink?               @relation(fields: [socialMediaLinkId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   socialMediaLinkId                    String?
   SocialMediaService                   SocialMediaService?            @relation(fields: [socialMediaServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
