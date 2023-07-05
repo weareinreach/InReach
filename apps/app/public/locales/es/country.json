@@ -610,13 +610,13 @@
 	},
 	"KWT": {
 		"name": "Kuwait",
-		"demonym_one": "Kuwaiti",
-		"demonym_other": "Kuwaitis"
+		"demonym_one": "Kuwaití",
+		"demonym_other": "Kuwaitíes"
 	},
 	"LAO": {
 		"name": "Laos",
 		"demonym_one": "Laosiano",
-		"demonym_other": "Laotianos"
+		"demonym_other": "Laosianos"
 	},
 	"LBN": {
 		"name": "Líbano",
@@ -630,13 +630,13 @@
 	},
 	"LBY": {
 		"name": "Libia",
-		"demonym_one": "Libia",
-		"demonym_other": "Libyans"
+		"demonym_one": "Libio",
+		"demonym_other": "Libios"
 	},
 	"LCA": {
 		"name": "Santa Lucía",
-		"demonym_one": "San Luciano",
-		"demonym_other": "San Luciano"
+		"demonym_one": "Santaluciano",
+		"demonym_other": "Santalucianos"
 	},
 	"LIE": {
 		"name": "Liechtenstein",
@@ -645,8 +645,8 @@
 	},
 	"LKA": {
 		"name": "Sri Lanka",
-		"demonym_one": "Sri Lanka",
-		"demonym_other": "Sri Lanka"
+		"demonym_one": "Esrilanqués",
+		"demonym_other": "Esrilanqueses"
 	},
 	"LSO": {
 		"name": "Lesotho",
