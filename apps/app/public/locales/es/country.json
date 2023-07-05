@@ -575,13 +575,13 @@
 	},
 	"KAZ": {
 		"name": "Kazajistán",
-		"demonym_one": "Kazaki",
-		"demonym_other": "Kazakis"
+		"demonym_one": "Kazaje",
+		"demonym_other": "Kazajes"
 	},
 	"KEN": {
 		"name": "Kenia",
-		"demonym_one": "Keniano",
-		"demonym_other": "Kenianos"
+		"demonym_one": "Keniane",
+		"demonym_other": "Kenianes"
 	},
 	"KGZ": {
 		"name": "Kirguistán",
@@ -590,8 +590,8 @@
 	},
 	"KHM": {
 		"name": "Camboya",
-		"demonym_one": "Camboyano",
-		"demonym_other": "Camboyanos"
+		"demonym_one": "Camboyane",
+		"demonym_other": "Camboyanes"
 	},
 	"KIR": {
 		"name": "Kiribati",
@@ -600,8 +600,8 @@
 	},
 	"KNA": {
 		"name": "San Cristóbal y Nevis",
-		"demonym_one": "Kittitian o Nevisiano",
-		"demonym_other": "Kittitian o nevisianos"
+		"demonym_one": "Kitticiane o Nevisiane",
+		"demonym_other": "Kitticianes o Nevisianes"
 	},
 	"KOR": {
 		"name": "Corea del Sur",
@@ -630,13 +630,13 @@
 	},
 	"LBY": {
 		"name": "Libia",
-		"demonym_one": "Libio",
-		"demonym_other": "Libios"
+		"demonym_one": "Libie",
+		"demonym_other": "Libies"
 	},
 	"LCA": {
 		"name": "Santa Lucía",
-		"demonym_one": "Santaluciano",
-		"demonym_other": "Santalucianos"
+		"demonym_one": "Santaluciane",
+		"demonym_other": "Santalucianes"
 	},
 	"LIE": {
 		"name": "Liechtenstein",
@@ -675,8 +675,8 @@
 	},
 	"MAF": {
 		"name": "San Martín",
-		"demonym_one": "Isla San Martín",
-		"demonym_other": "Islas de San Martín"
+		"demonym_one": "Isleñe de San Martín",
+		"demonym_other": "Isleñes de San Martín"
 	},
 	"MAR": {
 		"name": "Marruecos",
@@ -685,13 +685,13 @@
 	},
 	"MCO": {
 		"name": "Mónaco",
-		"demonym_one": "Monegasco",
-		"demonym_other": "Monegascos"
+		"demonym_one": "Monegasque",
+		"demonym_other": "Monegasques"
 	},
 	"MDA": {
 		"name": "Moldova",
-		"demonym_one": "Moldovan",
-		"demonym_other": "Moldovans"
+		"demonym_one": "Moldove",
+		"demonym_other": "Moldoves"
 	},
 	"MDG": {
 		"name": "Madagascar",
