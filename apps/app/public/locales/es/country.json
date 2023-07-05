@@ -649,19 +649,19 @@
 		"demonym_other": "Esrilanqueses"
 	},
 	"LSO": {
-		"name": "Lesotho",
+		"name": "Lesoto",
 		"demonym_one": "Mosotho",
-		"demonym_other": "Mosothos"
+		"demonym_other": "Basotho"
 	},
 	"LTU": {
-		"name": "Lithuania",
+		"name": "Lituania",
 		"demonym_one": "Lituano",
-		"demonym_other": "Litanos"
+		"demonym_other": "Lituanos"
 	},
 	"LUX": {
 		"name": "Luxembourg",
-		"demonym_one": "Luxembourger",
-		"demonym_other": "Luxembourgers"
+		"demonym_one": "Luxemburgués",
+		"demonym_other": "Luxemburgueses"
 	},
 	"LVA": {
 		"name": "Letonia",
