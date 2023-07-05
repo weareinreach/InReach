@@ -1,4 +1,4 @@
-import { hoursCorrection } from '~db/seed/recon/corrections/hours'
+import { dayMap, hoursCorrection, hoursMeta, timezoneMap } from '~db/seed/recon/corrections/hours'
 import {
 	countryCorrection,
 	countryOverrideId,
@@ -28,12 +28,17 @@ export const existing = {
 }
 
 export const dataCorrections = {
-	hours: hoursCorrection,
 	country: countryCorrection,
 	countryOverrideById: countryOverrideId,
 	govDist: govDistCorrection,
 	govDistFromCity: govDistFromCity,
 	govDistFromId,
+}
+export const hoursCorrections = {
+	hours: hoursCorrection,
+	days: dayMap,
+	meta: hoursMeta,
+	tz: timezoneMap,
 }
 
 const territories = ['as', 'gu', 'mh', 'mp', 'pr', 'pw', 'um', 'vi']

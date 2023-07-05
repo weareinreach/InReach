@@ -209,6 +209,26 @@ export const tagParser = (tag: string, value: string | number | boolean) => {
 	}
 }
 
+export const generateSupplementTxn = (updatedRecord: AttrSupp | AttrSupp[]) => {
+	if (Array.isArray(updatedRecord)) {
+		return updatedRecord.map(({ id, ...data }) => ({
+			where: { id },
+			data,
+		}))
+	}
+	const { id, ...data } = updatedRecord
+	return { where: { id }, data }
+}
+type AttrSupp = {
+	id?: string
+	data?: unknown | undefined
+	boolean?: boolean | null
+	countryId?: string | null
+	govDistId?: string | null
+	languageId?: string | null
+	text?: string
+}
+
 interface AttributeSupplementData {
 	countryId?: string
 	govDistId?: string

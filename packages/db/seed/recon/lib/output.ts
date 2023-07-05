@@ -71,6 +71,8 @@ export const update = {
 	orgWebsite: new Set<Prisma.OrgWebsiteUpdateArgs>(),
 	orgSocialMedia: new Set<Prisma.OrgSocialMediaUpdateArgs>(),
 	orgService: new Set<Prisma.OrgServiceUpdateArgs>(),
+	orgPhoto: new Set<Prisma.OrgPhotoUpdateArgs>(),
+	attributeSupplement: new Set<Prisma.AttributeSupplementUpdateArgs>(),
 }
 
 export const crowdin = {
@@ -87,6 +89,7 @@ interface ExceptionItem {
 export const exceptions = {
 	phone: new Set<ExceptionItem>(),
 	location: new Set<ExceptionItem>(),
+	socialMedia: new Set<ExceptionItem>(),
 }
 export const batchCount = new Map<string, number>()
 export const writeBatches = (task: PassedTask, clear = false) => {
