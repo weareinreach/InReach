@@ -72,7 +72,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Exigences d'éligibilité",
-		"elig-age_max": "En dessous de {{max}}",
+		"elig-age_max": "Plus jeune que {{max}}",
 		"elig-age_min": "{{min}} et plus",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Autre (description du texte libre)",
