@@ -8,17 +8,17 @@
 	},
 	"hero": {
 		"community": {
-			"0": "Demandes d'asile LGBTQ+",
-			"1": "immigrés LGBTQ+",
-			"2": "réfugiés LGBTQ+",
-			"3": "hommes trans",
+			"0": "Demandeurs d'asile LGBTQ+",
+			"1": "Immigrés LGBTQ+",
+			"2": "Réfugiés LGBTQ+",
+			"3": "Jeunes LGBTQ+",
 			"4": "la communauté transgenres",
 			"5": "Communautés de BIPOC LGBTQ+",
 			"6": "soignants des jeunes LGBTQ+"
 		},
 		"find-resources": "<Text>Trouvez </Text><Service><Service></Service><Text> vérifié pour </Text><Community></Community><Text> avec InReach.</Text>",
 		"heading": "Trouver des ressources LGBTQ.",
-		"privacy-disclaimer": "Votre réponse est anonyme et n'est pas connectée à vous en tant qu'utilisateur individuel. Lisez notre <Link>politique de confidentialité</Link> pour en savoir plus.",
+		"privacy-disclaimer": "Votre réponse est anonyme et n'est pas connectée à vous en tant qu'utilisateur individuel. Lire notre <Link>politique de confidentialité</Link> pour en savoir plus.",
 		"services": {
 			"0": "soins médicaux",
 			"1": "soutien de la communauté",
