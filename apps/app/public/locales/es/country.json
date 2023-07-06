@@ -970,8 +970,8 @@
 	},
 	"SGS": {
 		"name": "Georgia del Sur",
-		"demonym_one": "Isleño de Sandwich del Sur de Georgia",
-		"demonym_other": "Isleños de Sandwich del Sur de Georgia"
+		"demonym_one": "Isleñe de Sandwich del Sur de Georgia",
+		"demonym_other": "Isleñes de Sandwich del Sur de Georgia"
 	},
 	"SHN": {
 		"name": "Santa Helena, Ascensión y Tristán da Cunha"
@@ -983,8 +983,8 @@
 	},
 	"SLB": {
 		"name": "Islas Salomón",
-		"demonym_one": "Isleño Salomón",
-		"demonym_other": "Isleños Salomón"
+		"demonym_one": "Isleñe de Salomón",
+		"demonym_other": "Isleñes de Salomón"
 	},
 	"SLE": {
 		"name": "Sierra Leona",
