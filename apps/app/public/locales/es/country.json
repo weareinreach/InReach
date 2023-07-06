@@ -1022,12 +1022,12 @@
 		"demonym_other": "Sudaneses del Sur"
 	},
 	"STP": {
-		"name": "Saúl Tomey Príncipe",
+		"name": "Saúl Tomé y Príncipe",
 		"demonym_one": "Sao Tomeans",
 		"demonym_other": "Sao Tomeans"
 	},
 	"SUR": {
-		"name": "Suriname",
+		"name": "Surinam",
 		"demonym_one": "Surinamers",
 		"demonym_other": "Surinamers"
 	},
@@ -1037,7 +1037,7 @@
 		"demonym_other": "Slovaks"
 	},
 	"SVN": {
-		"name": "Slovenia",
+		"name": "Eslovenia",
 		"demonym_one": "Slovenes",
 		"demonym_other": "Slovenes"
 	},
@@ -1047,12 +1047,12 @@
 		"demonym_other": "Suecia,"
 	},
 	"SWZ": {
-		"name": "Eswatini",
+		"name": "Esuatini",
 		"demonym_one": "Swazis",
 		"demonym_other": "Swazis"
 	},
 	"SXM": {
-		"name": "Sint Maarten",
+		"name": "San Martín",
 		"demonym_one": "St. Maarteners",
 		"demonym_other": "St. Maarteners"
 	},
@@ -1087,7 +1087,7 @@
 		"demonym_other": "Tailandés"
 	},
 	"TJK": {
-		"name": "Tajikistan",
+		"name": "Tayikistán",
 		"demonym_one": "Tadzik",
 		"demonym_other": "Tadzhiks"
 	},
@@ -1097,7 +1097,7 @@
 		"demonym_other": "Tokelauans"
 	},
 	"TKM": {
-		"name": "Turkmenistan",
+		"name": "Turkmenistán",
 		"demonym_one": "Turkmens",
 		"demonym_other": "Turkmens"
 	},
@@ -1117,12 +1117,12 @@
 		"demonym_other": "Trinidadians"
 	},
 	"TUN": {
-		"name": "Tunisia",
+		"name": "Túnez",
 		"demonym_one": "Túnez",
 		"demonym_other": "Túnez"
 	},
 	"TUR": {
-		"name": "Pavo",
+		"name": "Turquía",
 		"demonym_one": "Turco",
 		"demonym_other": "Turcos"
 	},
@@ -1152,7 +1152,7 @@
 		"demonym_other": "Ucranianos"
 	},
 	"UMI": {
-		"name": "Islas Menores de Estados Unidos",
+		"name": "Islas Menores Periféricas de Estados Unidos",
 		"demonym_one": "Americane",
 		"demonym_other": "Americanes"
 	},
@@ -1198,8 +1198,8 @@
 	},
 	"VIR": {
 		"name": "Islas Virgen de los Estados Unidos",
-		"demonym_one": "Isla Virgen",
-		"demonym_other": "Islas Virgen"
+		"demonym_one": "Isleñe de Virgen",
+		"demonym_other": "Isleñes de Virgen"
 	},
 	"VNM": {
 		"name": "Vietnam",
@@ -1237,7 +1237,7 @@
 		"demonym_other": "Zambianos"
 	},
 	"ZWE": {
-		"name": "Zimbabwe",
+		"name": "Zimbabue",
 		"demonym_one": "Zimbabue",
 		"demonym_other": "Zimbabue"
 	}
