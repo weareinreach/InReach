@@ -6,7 +6,7 @@
 		"geo-public-transit-description": "Transports publics / directions spécifiques",
 		"has-confidentiality-policy": "A une politique de confidentialité",
 		"offers-remote-services": "Distante",
-		"private-practice": "Cabinet médical privé",
+		"private-practice": "Cabinet privé",
 		"religiously-affiliated": "Est religieusement affilié",
 		"time-walk-in": "A des heures de marche",
 		"wheelchair-accessible_false": "Non Accessible",
@@ -66,7 +66,7 @@
 		"undocumented": "Opportunités au service des immigrés sans papiers"
 	},
 	"cost": {
-		"CATEGORYNAME": "Coûts",
+		"CATEGORYNAME": "Coût",
 		"cost-fees": "Inflige un coût",
 		"cost-free": "Gratuit"
 	},
