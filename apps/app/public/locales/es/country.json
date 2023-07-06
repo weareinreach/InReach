@@ -984,12 +984,12 @@
 	"SLB": {
 		"name": "Islas Salomón",
 		"demonym_one": "Isleño Salomón",
-		"demonym_other": "Islas Salomón"
+		"demonym_other": "Isleños Salomón"
 	},
 	"SLE": {
 		"name": "Sierra Leona",
-		"demonym_one": "Sierra Leonean",
-		"demonym_other": "Sierra Leoneans"
+		"demonym_one": "Sierraleonés",
+		"demonym_other": "Sierraleoneses"
 	},
 	"SLV": {
 		"name": "El Salvador",
@@ -1003,8 +1003,8 @@
 	},
 	"SOM": {
 		"name": "Somalia",
-		"demonym_one": "Somali",
-		"demonym_other": "Somalis"
+		"demonym_one": "Somalí",
+		"demonym_other": "Somalíes"
 	},
 	"SPM": {
 		"name": "San Pedro y Miquelón",
