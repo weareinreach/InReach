@@ -239,23 +239,23 @@
 	"show-less": "Afficher moins",
 	"show-more": "Afficher plus",
 	"sign-up": {
-		"header": "<group>\n<emojiLg>:arc-en-ciel :</emojiLg>\n<title2>$t(mots. ign-up)</title2>\n<textDarkGray>Bienvenue sur la première plateforme technologique du monde qui corresponde aux personnes LGBTQ+ victimes de persécution ou de discrimination avec des ressources sûres et vérifiées.</textDarkGray>\n</group>",
-		"lcr-error1": "Malheureusement, vous ne remplissez pas les conditions d'éligibilité actuelles pour être un examinateur de communauté locale.\n<Switch>Cliquez ici pour créer un compte standard.</Switch>",
-		"lcr-error2": "Vous devez lire et examiner la page <Link><strong>Évaluateur de la communauté locale</strong></Link>.",
+		"header": "<group>\n<emojiLg>🌈</emojiLg>\n<title2>$t(words.sign-up)</title2>\n<textDarkGray>Bienvenue à la première plateforme technologique au monde mettant en relation des personnes LGBTQ+ confrontées à la persécution ou à la discrimination avec des ressources sûres et vérifiées.</textDarkGray>\n</group>",
+		"lcr-error1": "Malheureusement, vous ne satisfaites pas les conditions d'éligibilité actuelles pour être une critique dans la communauté locale.\n<Switch>Cliquer ici pour créer un compte standard.</Switch>",
+		"lcr-error2": "Il faut lire et examiner la page <Link><strong>de la critique dans la communauté locale</strong></Link>.",
 		"lcr-screen1": "Veuillez sélectionner tout ce qui s'applique",
 		"lcr-screen1a": "J'ai une expérience personnelle en accédant à des services locaux dans ma communauté.",
-		"lcr-screen1b": "J'ai de l'expérience en aidant les clients LGBTQ+ à accéder aux services locaux de ma communauté.",
-		"lcr-screen1c": "J'ai de l'expérience en aidant LGBTQ+ à accéder aux services locaux de ma communauté.",
+		"lcr-screen1b": "J'ai de l'expérience en aidant les clients LGBTQ+ à accéder aux services locaux dans ma communauté.",
+		"lcr-screen1c": "J'ai de l'expérience en aidant les proches/membres de la famille LGBTQ+ à accéder aux services locaux dans ma communauté.",
 		"lcr-screen1none": "Rien de tout cela ne s'applique à moi.",
 		"lcr-screen2": "Dans quel pays êtes-vous situé ?",
 		"lcr-screen2a": "États-Unis (y compris les territoires)",
 		"lcr-screen2b": "Le Canada",
 		"lcr-screen2c": "Mexique",
 		"lcr-screen2none": "Aucune de ces réponses",
-		"lcr-screen3": "J'ai vérifié la page <Link><strong>de l'évaluateur local de la communauté</strong></Link> sur le site Web d'InReach et je réponds aux exigences.",
+		"lcr-screen3": "J'ai examiné la page <Link><strong>de la critique dans la la communauté locale</strong></Link> sur le site Web d'InReach et je satisfais les exigences.",
 		"modal-body": [
 			"<title3>Quel type de compte voulez-vous créer ?</title3>",
-			"<group>\n<button data-option='individual'>Individuel</button>\n<button data-option='provider'>Professionnel/Fournisseur</button>\n<button data-option='lcr'>Récapitulatif de la communauté locale</button>\n</group>",
+			"<group>\n<button data-option='individual'>Individuel</button>\n<button data-option='provider'>Professionnel/Prestataire</button>\n<button data-option='lcr'>Critique dans la communauté locale</button>\n</group>",
 			"<loginLink>Vous avez déjà un compte ?</loginLink>"
 		],
 		"name-use-any": "Utiliser le nom qui vous convient le mieux.",
@@ -285,7 +285,7 @@
 	},
 	"sort": {
 		"bipoc": "Communauté BIPOC",
-		"by-lgbtq-focus": "Trier par priorité communautaire LGBTQ+",
+		"by-lgbtq-focus": "Trier par focalisation sur la communauté LGBTQ+",
 		"hiv": "La communauté séropositive+",
 		"immigrants": "Les immigrants",
 		"spanish-speakers": "Les hispanophones",
@@ -329,7 +329,7 @@
 		"verified-body": "<Text>Votre compte a été vérifié ! Veuillez <LoginModal>vous connecter</LoginModal> pour commencer à utiliser les fonctionnalités supplémentaires d'InReach.",
 		"verifying": "Vérification du compte..."
 	},
-	"view-list": "Voir la liste",
+	"view-list": "Afficher la liste",
 	"visit": "Visiter",
 	"words": {
 		"accept": "Accepter",
@@ -372,7 +372,7 @@
 	"review-count_other": "{{count}} avis",
 	"review_one": "Review",
 	"review_other": "Reviews",
-	"view-x-result_one": "Voir le résultat de {{count}}",
+	"view-x-result_one": "Voir {{count}} résultat",
 	"view-x-result_other": "Voir {{count}} résultats",
 	"website_one": "Website",
 	"website_other": "Websites"
