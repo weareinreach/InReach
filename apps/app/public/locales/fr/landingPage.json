@@ -8,28 +8,28 @@
 	},
 	"hero": {
 		"community": {
-			"0": "Demandes d'asile LGBTQ+",
-			"1": "immigrés LGBTQ+",
-			"2": "réfugiés LGBTQ+",
-			"3": "hommes trans",
-			"4": "femmes trans",
-			"5": "Jeunesse LGBTQ+",
-			"6": "Personnes séropositives"
+			"0": "Demandeurs d'asile LGBTQ+",
+			"1": "Immigrés LGBTQ+",
+			"2": "Réfugiés LGBTQ+",
+			"3": "Jeunes LGBTQ+",
+			"4": "La communauté transgenre",
+			"5": "Les communautés LGBTQ+ et BIPOC",
+			"6": "Aidants des jeunes LGBTQ+"
 		},
-		"find-resources": "Trouvez <Service></Service> vérifié pour <Community></Community> avec InReach.",
+		"find-resources": "Trouver <Service></Service> vérifié pour <Community></Community> avec InReach.",
 		"heading": "Trouver des ressources LGBTQ.",
-		"privacy-disclaimer": "Votre réponse est anonyme et n'est pas connectée à vous en tant qu'utilisateur individuel. Lisez notre <Link>politique de confidentialité</Link> pour en savoir plus.",
+		"privacy-disclaimer": "Votre réponse est anonyme et n'est pas connectée à vous en tant qu'utilisateur individuel. Lire notre <Link>politique de confidentialité</Link> pour en savoir plus.",
 		"services": {
 			"0": "soins médicaux",
-			"1": "assistance juridique",
-			"2": "centres culturels",
+			"1": "soutien communautaire",
+			"2": "soins de la santé mentale",
 			"3": "éducation",
-			"4": "soutien spirituel",
-			"5": "conseil professionnel",
-			"6": "soutien éducatif",
-			"7": "cours de langue",
-			"8": "formation au leadership",
-			"9": "logement d'urgence"
+			"4": "travail",
+			"5": "nourriture",
+			"6": "logement",
+			"7": "vêtements",
+			"8": "assistance juridique",
+			"9": "traduction"
 		},
 		"subheading": "Bienvenue sur la première plateforme technologique au monde assortie TLGBQ+ (transsexuel, lesbien, gay, bisexuel, queer et plus d'identités) les personnes confrontées à la discrimination et à la persécution avec des ressources sûres et vérifiées."
 	},
