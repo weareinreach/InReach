@@ -1008,9 +1008,21 @@ importers:
       just-map-values:
         specifier: 3.2.0
         version: 3.2.0
+      just-omit:
+        specifier: 2.2.0
+        version: 2.2.0
       just-pick:
         specifier: 4.2.0
         version: 4.2.0
+      just-safe-get:
+        specifier: 4.2.0
+        version: 4.2.0
+      just-safe-set:
+        specifier: 4.2.1
+        version: 4.2.1
+      just-sort-by:
+        specifier: 3.2.0
+        version: 3.2.0
       kysely:
         specifier: 0.25.0
         version: 0.25.0
@@ -18853,6 +18865,18 @@ packages:
 
   /just-remove@3.2.0:
     resolution: {integrity: sha512-gR3EOFIkZapF3g0K4IRRqH4lM+czJEfaOFgrwZl5vNfVUeJqfke9/L67Mf3CgnT3j2HM46C+mdCRvqaCD77Nqg==}
+    dev: false
+
+  /just-safe-get@4.2.0:
+    resolution: {integrity: sha512-+tS4Bvgr/FnmYxOGbwziJ8I2BFk+cP1gQHm6rm7zo61w1SbxBwWGEq/Ryy9Gb6bvnloPq6pz7Bmm4a0rjTNlXA==}
+    dev: false
+
+  /just-safe-set@4.2.1:
+    resolution: {integrity: sha512-La5CP41Ycv52+E4g7w1sRV8XXk7Sp8a/TwWQAYQKn6RsQz1FD4Z/rDRRmqV3wJznS1MDF3YxK7BCudX1J8FxLg==}
+    dev: false
+
+  /just-sort-by@3.2.0:
+    resolution: {integrity: sha512-kfKNELhpDd0/aC/dBeT1uS+pUmFgHIcU6sDnUKZRuGoGYx8mKgZLCNlL6QfNYFzUkqPUEVOsiN9uaZs4z2X9Vw==}
     dev: false
 
   /jwa@1.4.1:
