@@ -155,7 +155,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 	api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: locationSearch !== '' && !isOrgSearch,
 		onSuccess: (data) => {
-			const DEFAULT_RADIUS = 50
+			const DEFAULT_RADIUS = 200
 			const DEFAULT_UNIT = 'mi'
 			if (!data.result) return
 			// apiUtils.
