@@ -39,6 +39,7 @@ export const orgInclude: OrgIncludeKeys = z.object({
 	userLists: boolFalse,
 	websites: boolFalse,
 	suggestions: boolFalse,
+	oldSlugs: boolFalse,
 })
 
 const base = { id: true, createdAt: true, updatedAt: true }

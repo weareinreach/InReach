@@ -1790,7 +1790,8 @@ model UserPermission {
   permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   permissionId String
 
-  linkedAt DateTime @default(now())
+  linkedAt   DateTime @default(now())
+  authorized Boolean  @default(false)
   //@@schema("relation")
 
   @@id([userId, permissionId])
@@ -1824,7 +1825,8 @@ model UserToOrganization {
   phone      OrgPhone?  @relation(fields: [orgPhoneId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgPhoneId String?    @unique
 
-  linkedAt DateTime @default(now())
+  linkedAt   DateTime @default(now())
+  authorized Boolean  @default(false)
   //@@schema("relation")
 
   @@id([userId, organizationId])
@@ -1948,7 +1950,8 @@ model AssignedRole {
   role   UserRole @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   roleId String
 
-  linkedAt DateTime @default(now())
+  linkedAt   DateTime @default(now())
+  authorized Boolean  @default(false)
   //@@schema("relation")
 
   @@id([userId, roleId])
@@ -2100,6 +2103,7 @@ model OrgLocationService {
   serviceId     String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgLocationId, serviceId])
@@ -2113,6 +2117,7 @@ model OrgServiceTag {
   tagId     String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([serviceId, tagId])
@@ -2126,6 +2131,7 @@ model ServiceAreaCountry {
   countryId     String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([serviceAreaId, countryId])
@@ -2139,6 +2145,7 @@ model ServiceAreaDist {
   govDistId     String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([serviceAreaId, govDistId])
@@ -2170,6 +2177,7 @@ model UserAttribute {
   supplement  AttributeSupplement[]
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([userId, attributeId])
@@ -2184,6 +2192,7 @@ model OrganizationAttribute {
   supplement     AttributeSupplement[]
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([organizationId, attributeId])
@@ -2198,6 +2207,7 @@ model LocationAttribute {
   supplement  AttributeSupplement[]
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([locationId, attributeId])
@@ -2212,6 +2222,7 @@ model ServiceAttribute {
   supplement   AttributeSupplement[]
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgServiceId, attributeId])
@@ -2227,6 +2238,7 @@ model ServiceAccessAttribute {
   supplement      AttributeSupplement[]
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([serviceAccessId, attributeId])
