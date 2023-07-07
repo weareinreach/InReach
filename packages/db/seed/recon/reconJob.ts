@@ -1,3 +1,4 @@
+/* eslint-disable node/no-process-env */
 import { geojsonToWKT } from '@terraformer/wkt'
 import { getDiff } from 'json-difference'
 import { diff } from 'just-diff'
@@ -22,12 +23,18 @@ import { slugUpdate } from '~db/lib/slugGen'
 import { InputJsonValue } from '~db/lib/zod'
 import { organizationsSchema } from '~db/seed/recon/input/types'
 import { needsUpdate } from '~db/seed/recon/lib/compare'
-import { dataCorrections, existing, getCountryId, getGovDistId } from '~db/seed/recon/lib/existing'
+import {
+	attribsToNotDelete,
+	dataCorrections,
+	existing,
+	getCountryId,
+	getGovDistId,
+} from '~db/seed/recon/lib/existing'
 import { attachLogger, formatMessage } from '~db/seed/recon/lib/logger'
-import { create, crowdin, exceptions, update, writeBatches } from '~db/seed/recon/lib/output'
+import { create, crowdin, deleteRecord, exceptions, update, writeBatches } from '~db/seed/recon/lib/output'
 import { generateFreeTextKey } from '~db/seed/recon/lib/translations'
 import { type ListrJob } from '~db/seed/recon/lib/types'
-import { emptyStrToNull, raise, trimSpaces } from '~db/seed/recon/lib/utils'
+import { conditionalObj, emptyStrToNull, raise, trimSpaces } from '~db/seed/recon/lib/utils'
 // import { parseSchedule } from '~db/seed/recon/parsers/hours'
 import { type AttrSupp, generateSupplementTxn, tagParser } from '~db/seed/recon/parsers/attributes'
 import { JsonInputOrNull } from '~db/zod_util/prismaJson'
@@ -56,7 +63,17 @@ export const orgRecon = {
 				true
 			)
 
-		const logAddition = (table: string, value: unknown) => log(`Adding ${value} to ${table}`, 'create', true)
+		const logAddition = (table: string, value: unknown) =>
+			log(
+				`Adding ${
+					typeof value === 'object' ? '\n' + JSON.stringify(value, null, 1) + '\n' : `"${value}"`
+				} to ${table}`,
+				'create',
+				true
+			)
+
+		const logDeletion = (table: string, value: unknown) =>
+			log(`Deleting ${value} from ${table}`, 'trash', true)
 
 		writeBatches(task, true)
 		let orgCounter = 1
@@ -115,6 +132,14 @@ export const orgRecon = {
 					operation: 'CREATE',
 					to: InputJsonValue.parse(superjson.serialize(to)),
 					organizationId,
+					...links,
+				})
+			}
+			const genAuditLink = (links: AuditLogLinks) => {
+				create.auditLog.add({
+					actorId,
+					to: InputJsonValue.parse(superjson.serialize(links)),
+					operation: 'LINK',
 					...links,
 				})
 			}
@@ -1038,7 +1063,7 @@ export const orgRecon = {
 					where: { organizationId },
 					include: { supplement: { include: { text: { include: { tsKey: true } } } } },
 				})
-				const existingServAreas = await prisma.serviceArea.findUnique({
+				const existingServArea = await prisma.serviceArea.findUnique({
 					where: { organizationId },
 					include: { countries: true, districts: true },
 				})
@@ -1134,13 +1159,11 @@ export const orgRecon = {
 									const newSupplement: Prisma.AttributeSupplementCreateManyInput = {
 										id: generateId('attributeSupplement'),
 										...rest,
-										...(data
-											? {
-													data: JsonInputOrNull.parse(
-														superjson.serialize(typeof data === 'string' ? superjson.parse(data) : data)
-													),
-											  }
-											: {}),
+										...conditionalObj(data, {
+											data: JsonInputOrNull.parse(
+												superjson.serialize(typeof data === 'string' ? superjson.parse(data) : data)
+											),
+										}),
 										createdAt,
 										updatedAt,
 									}
@@ -1203,13 +1226,11 @@ export const orgRecon = {
 									const updatedRecord: Prisma.AttributeSupplementUpdateArgs = {
 										where: { id: txn.where.id },
 										data: {
-											...(data
-												? {
-														data: JsonInputOrNull.parse(
-															superjson.serialize(typeof data === 'string' ? superjson.parse(data) : data)
-														),
-												  }
-												: {}),
+											...conditionalObj(data, {
+												data: JsonInputOrNull.parse(
+													superjson.serialize(typeof data === 'string' ? superjson.parse(data) : data)
+												),
+											}),
 											...rest,
 											updatedAt,
 										},
@@ -1241,13 +1262,147 @@ export const orgRecon = {
 							}
 						}
 						// debugger
+					} else {
+						logAddition('organizationAttribute', attributeId)
+						create.organizationAttribute.add({ attributeId, organizationId })
+						genAuditLink({ attributeId, organizationId })
+
+						for (const supplement of attributeSupplement) {
+							if (supplement.text) {
+								const { key, ns, text } =
+									generateFreeTextKey({
+										orgId: organizationId,
+										text: supplement.text,
+										type: 'supplement',
+										itemId: supplement.id,
+									}) ?? {}
+								if (key && ns && text) {
+									logAddition('translationKey', { key, ns, text, updatedAt, createdAt })
+									create.translationKey.add({ key, ns, text })
+									logAddition('freeText', supplement.text)
+									const textId = generateId('freeText')
+									create.freeText.add({ id: textId, key, ns, updatedAt, createdAt })
+									crowdin.create.add({ key, text })
+									supplement.textId = textId
+									delete supplement.text
+								}
+							}
+							logAddition('attributeSupplement', supplement)
+							create.attributeSupplement.add(supplement)
+						}
 					}
 				}
-				// debugger
+				if (existingAttributes.length) {
+					log(
+						`Reviewing ${existingAttributes.length} existing attributes for possible deactivation`,
+						undefined,
+						true
+					)
+					for (const record of existingAttributes) {
+						log(`Processing ${record.attributeId}`, undefined, true)
+						const { attributeId } = record
+						if (!attribsToNotDelete.has(attributeId)) {
+							logUpdate('active', 'true', 'false')
+							update.organizationAttribute.add({
+								where: { organizationId_attributeId: { attributeId, organizationId } },
+								data: { active: false },
+							})
+							genAuditUpdate({ active: true }, { active: false }, { organizationId, attributeId })
+						}
+					}
+				}
+
+				if (orgServArea.countries.length || orgServArea.districts.length) {
+					if (existingServArea) {
+						const current = {
+							countries: existingServArea.countries.map(({ countryId }) => countryId),
+							districts: existingServArea.districts.map(({ govDistId }) => govDistId),
+						}
+
+						const changes: { add: ServArea; del: ServArea } = {
+							add: { countries: [], districts: [] },
+							del: { countries: [], districts: [] },
+						}
+						let hasChanges = false
+
+						for (const key of Object.keys(orgServArea)) {
+							for (const id of orgServArea[key]) {
+								if (!current[key].includes(id)) {
+									changes.add[key].push(id)
+									hasChanges = true
+								}
+							}
+						}
+						for (const key of Object.keys(current)) {
+							for (const id of current[key]) {
+								if (!orgServArea[key].includes(id)) {
+									changes.del[key].push(id)
+									hasChanges = true
+								}
+							}
+						}
+						if (hasChanges) {
+							logUpdate(
+								'serviceArea',
+								{ govDistId: current.districts, countryId: current.countries },
+								{ ...orgServArea }
+							)
+							update.serviceArea.add({
+								where: { id: existingServArea.id },
+								data: {
+									...conditionalObj(changes.del.districts.length || changes.add.districts.length, {
+										districts: {
+											...conditionalObj(changes.del.districts.length, {
+												deleteMany: { govDistId: { in: changes.del.districts } },
+											}),
+											...conditionalObj(changes.add.districts.length, {
+												createMany: {
+													data: changes.add.districts.map((govDistId) => ({ govDistId })),
+													skipDuplicates: true,
+												},
+											}),
+										},
+									}),
+									...conditionalObj(changes.del.countries.length || changes.add.countries.length, {
+										countries: {
+											...conditionalObj(changes.del.countries.length, {
+												deleteMany: { countryId: { in: changes.del.countries } },
+											}),
+											...conditionalObj(changes.add.countries.length, {
+												createMany: {
+													data: changes.add.countries.map((countryId) => ({ countryId })),
+													skipDuplicates: true,
+												},
+											}),
+										},
+									}),
+								},
+							})
+						}
+						genAuditUpdate(existingServArea, { ...orgServArea }, { serviceAreaId: existingServArea.id })
+					} else {
+						logAddition('serviceArea', { ...orgServArea })
+						const id = generateId('serviceArea')
+						create.serviceArea.add({ id, createdAt, updatedAt, organizationId })
+						genAuditCreate({ ...orgServArea, createdAt, updatedAt, organizationId }, { serviceAreaId: id })
+						orgServArea.countries.forEach((countryId) => {
+							logAddition('serviceAreaCountry', countryId)
+							const record = { countryId, serviceAreaId: id, linkedAt: updatedAt }
+							create.serviceAreaCountry.add(record)
+							genAuditLink({ countryId, serviceAreaId: id })
+						})
+						orgServArea.districts.forEach((govDistId) => {
+							logAddition('serviceAreaDists', govDistId)
+							const record = { govDistId, serviceAreaId: id, linkedAt: updatedAt }
+							create.serviceAreaDist.add(record)
+							genAuditLink({ govDistId, serviceAreaId: id })
+						})
+					}
+				}
 			}
 
 			// #endregion
-
+			if (process.env.LIMIT && parseInt(process.env.LIMIT) === orgCounter) break
 			orgCounter++
 		}
 		writeBatches(task)

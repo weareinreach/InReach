@@ -11,6 +11,7 @@ import { type PassedTask } from '~db/seed/recon/lib/types'
 const outputDir = path.resolve(__dirname, '../output')
 const createDir = path.resolve(outputDir, 'create')
 const updateDir = path.resolve(outputDir, 'update')
+const deleteDir = path.resolve(outputDir, 'delete')
 const execptionDir = path.resolve(outputDir, 'exceptions')
 
 export const getBatchFile: GetBatchFile = ({ type, batchName }) => {
@@ -20,6 +21,9 @@ export const getBatchFile: GetBatchFile = ({ type, batchName }) => {
 		}
 		case 'update': {
 			return `${updateDir}/${batchName}.json`
+		}
+		case 'delete': {
+			return `${deleteDir}/${batchName}.json`
 		}
 		case 'exceptions': {
 			return `${execptionDir}/${batchName}.json`
@@ -73,6 +77,12 @@ export const update = {
 	orgService: new Set<Prisma.OrgServiceUpdateArgs>(),
 	orgPhoto: new Set<Prisma.OrgPhotoUpdateArgs>(),
 	attributeSupplement: new Set<Prisma.AttributeSupplementUpdateArgs>(),
+	organizationAttribute: new Set<Prisma.OrganizationAttributeUpdateArgs>(),
+	serviceArea: new Set<Prisma.ServiceAreaUpdateArgs>(),
+}
+
+export const deleteRecord = {
+	organizationAttribute: new Set<Prisma.OrganizationAttributeDeleteManyArgs>(),
 }
 
 export const crowdin = {
@@ -151,6 +161,36 @@ export const writeBatches = (task: PassedTask, clear = false) => {
 				true
 			)
 			update[batchName].clear()
+		}
+	}
+	// Deletions
+	for (const batchName in deleteRecord) {
+		const batch = deleteRecord[batchName]
+		const batchFile = getBatchFile({ type: 'delete', batchName })
+		if (clear) {
+			if (fs.existsSync(batchFile)) {
+				fs.rmSync(batchFile)
+				task.output = formatMessage(`Deleting file: ${batchFile}`, 'trash')
+			}
+		} else {
+			if (!batch.size) {
+				task.output = formatMessage(`Skipping empty batch: ${batchName}`, 'skip')
+				continue
+			}
+			const currentCount = batchCount.get(`delete.${batchName}`) ?? 0
+			const currentBatchCount = batch.size
+			const existingBatch = fs.existsSync(batchFile)
+				? superjson.parse<Set<unknown>>(fs.readFileSync(batchFile, 'utf-8'))
+				: []
+			const outputData = new Set([...existingBatch, ...batch])
+			fs.writeFileSync(batchFile, superjson.stringify(outputData))
+			batchCount.set(`delete.${batchName}`, currentCount + currentBatchCount)
+			task.output = formatMessage(
+				`Records added to delete/${batchName}.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
+				'write',
+				true
+			)
+			deleteRecord[batchName].clear()
 		}
 	}
 	// Exceptions
@@ -265,9 +305,15 @@ interface GetUpdateParams {
 	type: 'update'
 	batchName: LiteralUnion<keyof typeof update, string>
 }
+interface GetDeleteParams {
+	type: 'delete'
+	batchName: LiteralUnion<keyof typeof deleteRecord, string>
+}
 interface GetExceptionsParams {
 	type: 'exceptions'
 	batchName: LiteralUnion<keyof typeof exceptions, string>
 }
 
-type GetBatchFile = (params: GetCreateParams | GetUpdateParams | GetExceptionsParams) => string
+type GetBatchFile = (
+	params: GetCreateParams | GetUpdateParams | GetDeleteParams | GetExceptionsParams
+) => string

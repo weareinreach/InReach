@@ -21,3 +21,8 @@ export const emptyStrToNull = (str: string | null | undefined) =>
 export const raise = (err: string): never => {
 	throw new Error(err)
 }
+
+export const conditionalObj = <T extends Record<string, unknown>>(
+	condition: unknown,
+	obj: T
+): T | Record<string, never> => (condition ? obj : {})
