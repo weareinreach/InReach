@@ -11,7 +11,7 @@ import { type PassedTask } from './types'
 const getTimestamp = () => DateTime.now().toFormat('yyyyMMdd_HHmmss')
 
 const logFile = (file: string, output: string) => {
-	const timestamp = DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss')
+	const timestamp = DateTime.now().toFormat('HH:mm:ss.u')
 	const outFile = path.resolve(__dirname, '../logs/', file)
 	const formattedOutput = `[${timestamp}] ${output}\n`
 	fs.writeFileSync(outFile, formattedOutput, { flag: 'a' })
