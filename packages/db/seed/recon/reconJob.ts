@@ -1,13 +1,15 @@
 import { geojsonToWKT } from '@terraformer/wkt'
 import { getDiff } from 'json-difference'
-import compareObj from 'just-compare'
 import { diff } from 'just-diff'
 import { diffApply } from 'just-diff-apply'
 import filterObject from 'just-filter-object'
+import omit from 'just-omit'
 import pick from 'just-pick'
+import sortArray from 'just-sort-by'
 import parsePhoneNumber, { type PhoneNumber } from 'libphonenumber-js/max'
 import superjson from 'superjson'
 import { type SuperJSONResult } from 'superjson/dist/types'
+import { ZodError } from 'zod'
 
 import fs from 'fs'
 import path from 'path'
@@ -27,7 +29,7 @@ import { generateFreeTextKey } from '~db/seed/recon/lib/translations'
 import { type ListrJob } from '~db/seed/recon/lib/types'
 import { emptyStrToNull, raise, trimSpaces } from '~db/seed/recon/lib/utils'
 // import { parseSchedule } from '~db/seed/recon/parsers/hours'
-import { generateSupplementTxn, tagParser } from '~db/seed/recon/parsers/attributes'
+import { type AttrSupp, generateSupplementTxn, tagParser } from '~db/seed/recon/parsers/attributes'
 import { JsonInputOrNull } from '~db/zod_util/prismaJson'
 
 const washdcRegex = /washington.*dc/i
@@ -35,6 +37,8 @@ const washdcRegex = /washington.*dc/i
 type PlainObject<T> = T extends Map<any, any> | Set<any> | null ? never : T extends object ? T : never
 const filterUndefined = <T extends Record<string, unknown>>(obj: PlainObject<T>) =>
 	filterObject<T>(obj, (_k, v) => v !== undefined)
+const filterUndefinedOrNull = <T extends Record<string, unknown>>(obj: PlainObject<T>) =>
+	filterObject<T>(obj, (_k, v) => v !== undefined && v !== null)
 export const orgRecon = {
 	title: 'Reconcile Organizations',
 	// skip: true,
@@ -42,8 +46,18 @@ export const orgRecon = {
 	task: async (_ctx, task) => {
 		attachLogger(task)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))
+
 		const logUpdate = (field: string, from: unknown, to: unknown) =>
-			log(`Updating ${field} from "${from}" to "${to}"`, 'update', true)
+			log(
+				`Updating ${field} from ${
+					typeof from === 'object' ? '\n' + JSON.stringify(from, null, 1) + '\n' : `"${from}"`
+				} to ${typeof to === 'object' ? '\n' + JSON.stringify(to, null, 1) : `"${to}"`}`,
+				'update',
+				true
+			)
+
+		const logAddition = (table: string, value: unknown) => log(`Adding ${value} to ${table}`, 'create', true)
+
 		writeBatches(task, true)
 		let orgCounter = 1
 
@@ -62,7 +76,7 @@ export const orgRecon = {
 		// start loop
 		for (const org of orgs) {
 			task.title = `Reconcile Organizations [${orgCounter}/${orgs.length}]`
-			log(`Reconciling Organization: ${org.name}`, 'generate')
+			log(`[${orgCounter}/${orgs.length}] Reconciling Organization: ${org.name}`, 'info')
 			const createdAt = org.created_at.$date
 			const updatedAt = org.updated_at.$date
 			const organizationId = existing.orgId.get(org._id.$oid)
@@ -76,14 +90,24 @@ export const orgRecon = {
 				links: AuditLogLinks
 			) => {
 				const changedFields = pick(from, Object.keys(to))
-				create.auditLog.add({
-					actorId,
-					operation: 'UPDATE',
-					from: InputJsonValue.parse(superjson.serialize(changedFields)),
-					to: InputJsonValue.parse(superjson.serialize(to)),
-					organizationId,
-					...links,
-				})
+				try {
+					const serializedFrom = superjson.serialize(changedFields)
+					const serializedTo = superjson.serialize(to)
+					create.auditLog.add({
+						actorId,
+						operation: 'UPDATE',
+						from: JsonInputOrNull.parse(serializedFrom),
+						to: JsonInputOrNull.parse(serializedTo),
+						organizationId,
+						...links,
+					})
+				} catch (err) {
+					if (err instanceof ZodError) {
+						const flattened = err.flatten()
+						task.output = JSON.stringify(flattened, null, 2)
+					}
+					throw err
+				}
 			}
 			const genAuditCreate = (to: unknown, links: AuditLogLinks) => {
 				create.auditLog.add({
@@ -737,9 +761,8 @@ export const orgRecon = {
 						create.orgPhone.add(filterUndefined(newPhone) as Prisma.OrgPhoneCreateManyInput)
 						genAuditCreate(filterUndefined(newPhone), { orgPhoneId: newPhone.id })
 					}
+					phoneCount++
 				}
-
-				phoneCount++
 			}
 
 			// #endregion
@@ -1085,10 +1108,16 @@ export const orgRecon = {
 									(k, v) => Boolean(v)
 								)
 						)
-						const changes = diff(
+
+						const sortedExisting = sortArray(
 							existingSupplements.map(({ id, ...data }) => data),
-							attributeSupplement
+							(data) => Object.entries(data).forEach(([k, v]) => v)
 						)
+						const sortedUpdates = sortArray(attributeSupplement, ({ id, ...data }) =>
+							Object.entries(data).forEach(([k, v]) => v)
+						)
+
+						const changes = diff(sortedExisting, sortedUpdates)
 						if (changes.length) {
 							const diff = getDiff(
 								existingSupplements.map(({ id, ...data }) => data),
@@ -1096,18 +1125,119 @@ export const orgRecon = {
 							)
 							const updated = diffApply(existingSupplements, changes)
 
-							// const txns = updated.map(({ id, ...data }) => ({
-							// 	where: { id },
-							// 	data,
-							// }))
-							const txn = generateSupplementTxn(updated)
-							if (Array.isArray(txn)) {
-								for (const item of txn) {
-									if (item.data.text) {
-										// update TranslationKey record
+							const pendingUpdates = generateSupplementTxn(updated, changes)
+							// #region Process Supplement Changes
+							const processChanges = (txn: AttrSupplementChange) => {
+								if (!txn.where.id) {
+									logAddition(`attribute ${existing.attributeId}`, 'attributeSupplement')
+									const { data, text, ...rest } = txn.data
+									const newSupplement: Prisma.AttributeSupplementCreateManyInput = {
+										id: generateId('attributeSupplement'),
+										...rest,
+										...(data
+											? {
+													data: JsonInputOrNull.parse(
+														superjson.serialize(typeof data === 'string' ? superjson.parse(data) : data)
+													),
+											  }
+											: {}),
+										createdAt,
+										updatedAt,
 									}
-									// update.attributeSupplement.add(item)
+									if (text) {
+										logAddition('freeText', text)
+										const { key, ns } =
+											generateFreeTextKey({
+												orgId: organizationId,
+												text,
+												type: 'supplement',
+												itemId: newSupplement.id,
+											}) ?? {}
+										if (key && ns) {
+											const id = generateId('freeText')
+											create.translationKey.add({ key, ns, text, createdAt, updatedAt })
+											create.freeText.add({ id, key, ns, updatedAt, createdAt })
+											crowdin.create.add({ key, text })
+											txn.data.textId = id
+										}
+									}
+									create.attributeSupplement.add(newSupplement)
+									genAuditCreate(newSupplement, { attributeSupplementId: newSupplement.id })
+								} else {
+									const existingSupp =
+										existing.supplement.find(({ id }) => id === txn.where.id) ?? raise('Cannot locate record')
+									if (txn.data.text) {
+										// update TranslationKey record
+										const { key, ns, text: oldText, crowdinId } = existingSupp.text?.tsKey ?? {}
+										const { text } = txn.data
+										if (key && ns) {
+											logUpdate('text', oldText, text)
+											update.translationKey.add({ where: { ns_key: { ns, key } }, data: { text, updatedAt } })
+											if (crowdinId) crowdin.update.add({ id: crowdinId, text })
+											genAuditUpdate(
+												{ text: oldText },
+												{ text, updatedAt },
+												{ translationKey: key, translationNs: ns, attributeSupplementId: txn.where.id }
+											)
+										} else {
+											logAddition('freeText', text)
+											const { key, ns } =
+												generateFreeTextKey({
+													orgId: organizationId,
+													text,
+													type: 'supplement',
+													itemId: txn.where.id,
+												}) ?? {}
+											if (key && ns) {
+												const id = generateId('freeText')
+												create.translationKey.add({ key, ns, text, createdAt, updatedAt })
+												create.freeText.add({ id, key, ns, updatedAt, createdAt })
+												crowdin.create.add({ key, text })
+												txn.data.textId = id
+											}
+										}
+									}
+									const { text: _, data, ...rest } = txn.data
+									// if (existingOrgRecord.name === 'North East Medical Services') debugger
+
+									const updatedRecord: Prisma.AttributeSupplementUpdateArgs = {
+										where: { id: txn.where.id },
+										data: {
+											...(data
+												? {
+														data: JsonInputOrNull.parse(
+															superjson.serialize(typeof data === 'string' ? superjson.parse(data) : data)
+														),
+												  }
+												: {}),
+											...rest,
+											updatedAt,
+										},
+									}
+									update.attributeSupplement.add(updatedRecord)
+									const { text: _origText, ...originalRecord } = existingSupp
+									const filteredOriginal = pick(
+										originalRecord,
+										Object.keys(updatedRecord.data) as unknown as keyof typeof originalRecord
+									)
+									logUpdate(
+										updatedRecord.where?.id ?? 'attributeSupplement',
+										omit(filteredOriginal, 'updatedAt'),
+										omit(updatedRecord.data, 'updatedAt')
+									)
+									genAuditUpdate(filteredOriginal, updatedRecord.data, {
+										attributeSupplementId: updatedRecord.where.id,
+									})
 								}
+							}
+							// #endregion
+
+							if (Array.isArray(pendingUpdates)) {
+								for (const item of pendingUpdates) {
+									processChanges(item)
+								}
+							} else {
+								processChanges(pendingUpdates)
 							}
 						}
 						// debugger
@@ -1129,15 +1259,9 @@ type AuditLogLinks = Omit<
 	'id' | 'actorId' | 'from' | 'to' | 'operation' | 'timestamp'
 >
 
-type AttrSupp = {
-	id?: string
-	// active:boolean
-	data?: unknown
-	boolean?: boolean | null
-	countryId?: string | null
-	govDistId?: string | null
-	languageId?: string | null
-	text?: string
+interface AttrSupplementChange {
+	where: { id?: string }
+	data: Omit<AttrSupp, 'id'>
 }
 
 type ServArea = {

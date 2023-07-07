@@ -1,5 +1,11 @@
+import { type diff } from 'just-diff'
+import flush from 'just-flush'
+import getByPath from 'just-safe-get'
+import setByPath from 'just-safe-set'
 import superjson from 'superjson'
 import { z } from 'zod'
+
+import { type Prisma } from '~db/client'
 
 import { tagDataMaps } from './tagDataMaps'
 import { type AttributeMap, type CountryMap, type DistList, type LanguageMap } from '../generated/types'
@@ -160,9 +166,15 @@ export const tagParser = (tag: string, value: string | number | boolean) => {
 			const [, lang] = langRegex.exec(tag) ?? [undefined, '']
 			const langRecord = languageMap.get(lang.toLowerCase())
 			if (!langRecord) {
-				return incompatible(tag, value)
+				if (lang.toLowerCase() === 'farsi') {
+					const langRecord = languageMap.get('persian')
+					supplementData = { languageId: langRecord }
+				} else {
+					return incompatible(tag, value)
+				}
+			} else {
+				supplementData = { languageId: langRecord }
 			}
-			supplementData = { languageId: langRecord }
 			break
 		}
 		// #endregion
@@ -209,24 +221,70 @@ export const tagParser = (tag: string, value: string | number | boolean) => {
 	}
 }
 
-export const generateSupplementTxn = (updatedRecord: AttrSupp | AttrSupp[]) => {
+export const generateSupplementTxn = (
+	updatedRecord: AttrSupp | AttrSupp[],
+	changes: ReturnType<typeof diff>
+) => {
+	let pendingUpdates: AttrSuppChangesReturn | AttrSuppChangesReturn[]
+	const updatesToReturn = Array.isArray(updatedRecord) ? [] : {}
 	if (Array.isArray(updatedRecord)) {
-		return updatedRecord.map(({ id, ...data }) => ({
+		pendingUpdates = updatedRecord.map(({ id, ...data }) => ({
 			where: { id },
 			data,
 		}))
+	} else {
+		const { id, ...data } = updatedRecord
+		pendingUpdates = { where: { id }, data }
 	}
-	const { id, ...data } = updatedRecord
-	return { where: { id }, data }
+	const isPath = (path: unknown): path is Array<string | number> => Array.isArray(path)
+	let idx = 0
+	const changedItems = changes.flatMap(({ path }) => {
+		if (!isPath(path)) throw new Error('path must be an array!')
+		const testPath = path.at(0) ?? ''
+		if (typeof testPath === 'number' || typeof parseInt(testPath) === 'number') {
+			const [firstSegment] = path.splice(0, 1)
+			if (!Array.isArray(updatedRecord)) {
+				return [
+					{ get: ['where'], set: ['where'] },
+					{
+						get: ['data', ...path.map((x) => x.toString())],
+						set: ['data', ...path.map((x) => x.toString())],
+					},
+				]
+			}
+			const returnPath = [
+				{ get: flush([firstSegment?.toString(), 'where']), set: flush([idx.toString(), 'where']) },
+				{
+					get: flush([firstSegment?.toString(), 'data', ...path.map((x) => x.toString())]),
+					set: flush([idx.toString(), 'data', ...path.map((x) => x.toString())]),
+				},
+			]
+			idx++
+			return returnPath
+		}
+		return [
+			{ get: ['where'], set: ['where'] },
+			{
+				get: ['data', ...path.map((x) => x.toString())],
+				set: ['data', ...path.map((x) => x.toString())],
+			},
+		]
+	})
+	for (const path of changedItems) {
+		const dataToSet = getByPath(pendingUpdates, path.get)
+		setByPath(updatesToReturn, path.set, dataToSet)
+	}
+	return updatesToReturn as AttrSuppChangesReturn | AttrSuppChangesReturn[]
 }
-type AttrSupp = {
+export type AttrSupp = {
 	id?: string
-	data?: unknown | undefined
+	data?: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput
 	boolean?: boolean | null
 	countryId?: string | null
 	govDistId?: string | null
 	languageId?: string | null
 	text?: string
+	textId?: string | null
 }
 
 interface AttributeSupplementData {
@@ -235,5 +293,10 @@ interface AttributeSupplementData {
 	languageId?: string
 	text?: string
 	boolean?: boolean
-	data?: unknown
+	data?: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput
+}
+
+interface AttrSuppChangesReturn {
+	where: { id?: string }
+	data: AttrSupp
 }
