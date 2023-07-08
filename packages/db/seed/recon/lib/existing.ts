@@ -1,3 +1,5 @@
+import slugify from 'slugify'
+
 import { dayMap, hoursCorrection, hoursMeta, timezoneMap } from '~db/seed/recon/corrections/hours'
 import {
 	countryCorrection,
@@ -117,4 +119,13 @@ export const attribsToNotDelete = new Set([
 	'attr_01H273ETEX43K0BR6FG3G7MZ4S',
 	'attr_01H273GHADR15DGYH06SSN5XVG',
 	'attr_01GW2HHFV5Q7XN2ZNTYFR1AD3M',
+])
+
+export const legacyAccessMap = new Map<string, string | undefined>([
+	['email', slugify('Service Access Instructions-accessEmail', { lower: true, strict: true })],
+	['file', slugify('Service Access Instructions-accessFile', { lower: true, strict: true })],
+	['link', slugify('Service Access Instructions-accessLink', { lower: true, strict: true })],
+	['location', slugify('Service Access Instructions-accessLocation', { lower: true, strict: true })],
+	['phone', slugify('Service Access Instructions-accessPhone', { lower: true, strict: true })],
+	['other', slugify('Service Access Instructions-accessText', { lower: true, strict: true })],
 ])

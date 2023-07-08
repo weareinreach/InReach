@@ -29,6 +29,7 @@ import {
 	existing,
 	getCountryId,
 	getGovDistId,
+	legacyAccessMap,
 } from '~db/seed/recon/lib/existing'
 import { attachLogger, formatMessage } from '~db/seed/recon/lib/logger'
 import { create, crowdin, deleteRecord, exceptions, update, writeBatches } from '~db/seed/recon/lib/output'
@@ -184,21 +185,22 @@ export const orgRecon = {
 			}
 			if (
 				existingOrgRecord.description &&
+				org.description &&
 				needsUpdate(existingOrgRecord.description.tsKey.text, org.description)
 			) {
 				logUpdate('description', existingOrgRecord.description.tsKey.text, trimSpaces(org.description ?? ''))
-				if (org.description && existingOrgRecord.description.tsKey.crowdinId)
+				if (existingOrgRecord.description.tsKey.crowdinId)
 					crowdin.update.add({
 						id: existingOrgRecord.description.tsKey.crowdinId,
 						text: trimSpaces(org.description),
 					})
 				update.translationKey.add({
 					where: { ns_key: { ns: namespace.orgData, key: existingOrgRecord.description.key } },
-					data: { text: org.description ? trimSpaces(org.description) : undefined },
+					data: { text: trimSpaces(org.description) },
 				})
 				genAuditUpdate(
 					{ text: existingOrgRecord.description.tsKey.text },
-					{ text: org.description ? trimSpaces(org.description) : undefined },
+					{ text: trimSpaces(org.description) },
 					{ translationKey: existingOrgRecord.description.key, translationNs: namespace.orgData }
 				)
 			}
@@ -1402,6 +1404,127 @@ export const orgRecon = {
 			}
 
 			// #endregion
+
+			/**
+			 * .
+			 *
+			 * === SERVICES ===
+			 *
+			 * .
+			 */
+			// #region Services
+			if (!org.services.length) {
+				log(`SKIPPING Services - no records`, 'skip')
+			} else {
+				log(`Processing ${org.services.length} services`, 'generate')
+				let count = 1
+
+				for (const service of org.services) {
+					const existingRecord = await prisma.orgService.findUnique({
+						where: { legacyId: service._id.$oid },
+						include: {
+							serviceName: { include: { tsKey: true } },
+							description: { include: { tsKey: true } },
+							accessDetails: {
+								include: {
+									attributes: { include: { attribute: true, supplement: { include: { text: true } } } },
+								},
+							},
+						},
+					})
+
+					if (existingRecord) {
+						log(
+							`[${count}/${org.services.length}] Reconciling record against ${existingRecord.id}`,
+							undefined,
+							true
+						)
+
+						const updatedRecord: Prisma.OrgServiceUpdateArgs = {
+							where: { id: existingRecord.id },
+							data: {},
+						}
+						if (needsUpdate(existingRecord.deleted, service.is_deleted)) {
+							logUpdate('deleted', existingRecord.deleted, service.is_deleted)
+							updatedRecord.data.deleted = service.is_deleted
+						}
+						if (needsUpdate(existingRecord.published, service.is_published)) {
+							if (service.is_published === true) {
+								log(`SKIPPING - Mark service as published`, 'skip', true)
+							} else {
+								logUpdate('published', existingRecord.published, service.is_published)
+								updatedRecord.data.published = service.is_published
+							}
+						}
+						if (
+							existingRecord.serviceName &&
+							needsUpdate(existingRecord.serviceName.tsKey.text, service.name)
+						) {
+							logUpdate('serviceName', existingRecord.serviceName.tsKey.text, trimSpaces(service.name))
+							if (existingRecord.serviceName.tsKey.crowdinId)
+								crowdin.update.add({
+									id: existingRecord.serviceName.tsKey.crowdinId,
+									text: trimSpaces(service.name),
+								})
+
+							const { key, ns } = existingRecord.serviceName
+							update.translationKey.add({
+								where: {
+									ns_key: { ns, key },
+								},
+								data: { text: trimSpaces(service.name) },
+							})
+							genAuditUpdate(
+								{ text: existingRecord.serviceName.tsKey.text },
+								{ text: trimSpaces(service.name) },
+								{ translationKey: key, translationNs: ns }
+							)
+						}
+
+						if (
+							existingRecord.description &&
+							service.description &&
+							needsUpdate(existingRecord.description.tsKey.text, service.description)
+						) {
+							logUpdate('description', existingRecord.description.tsKey.text, trimSpaces(service.description))
+							if (existingRecord.description.tsKey.crowdinId)
+								crowdin.update.add({
+									id: existingRecord.description.tsKey.crowdinId,
+									text: trimSpaces(service.description),
+								})
+
+							const { key, ns } = existingRecord.description
+							update.translationKey.add({
+								where: {
+									ns_key: { ns, key },
+								},
+								data: { text: trimSpaces(service.description) },
+							})
+							genAuditUpdate(
+								{ text: existingRecord.description.tsKey.text },
+								{ text: trimSpaces(service.description) },
+								{ translationKey: key, translationNs: ns }
+							)
+						}
+
+						if (service.access_instructions.length) {
+							log(
+								`Processing ${service.access_instructions.length} access instruction records`,
+								'generate',
+								true
+							)
+							for (const access of service.access_instructions) {
+								const existingAccess = await prisma.serviceAccess.findFirst()
+							}
+						}
+					}
+
+					count++
+				}
+			}
+
+			// #endregion
+
 			if (process.env.LIMIT && parseInt(process.env.LIMIT) === orgCounter) break
 			orgCounter++
 		}
