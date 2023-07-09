@@ -82,7 +82,6 @@ type zodInput = {
 	orgPhoto: Prisma.OrgPhotoCreateManyInput
 	orgHours: Prisma.OrgHoursCreateManyInput
 	orgService: Prisma.OrgServiceCreateManyInput
-	serviceAccess: Prisma.ServiceAccessCreateManyInput
 	attributeSupplement: Prisma.AttributeSupplementCreateManyInput
 	orgServicePhone: Prisma.OrgServicePhoneCreateManyInput
 	orgServiceEmail: Prisma.OrgServiceEmailCreateManyInput
@@ -119,7 +118,6 @@ type zodFindMany = {
 	orgPhoto: Prisma.OrgPhotoFindManyArgs
 	orgHours: Prisma.OrgHoursFindManyArgs
 	orgService: Prisma.OrgServiceFindManyArgs
-	serviceAccess: Prisma.ServiceAccessFindManyArgs
 	attributeSupplement: Prisma.AttributeSupplementFindManyArgs
 	orgServicePhone: Prisma.OrgServicePhoneFindManyArgs
 	orgServiceEmail: Prisma.OrgServiceEmailFindManyArgs

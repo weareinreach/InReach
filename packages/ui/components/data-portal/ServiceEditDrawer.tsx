@@ -72,6 +72,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 		const { data, isLoading } = api.service.forServiceEditDrawer.useQuery(serviceId, {
 			refetchOnWindowFocus: false,
 		})
+
 		useEffect(() => {
 			if (data && !isLoading) {
 				form.setValues(data)
@@ -310,7 +311,11 @@ interface FormData {
 	} | null
 	attributes: Attribute[]
 	accessDetails: {
-		id: string
-		attributes: Attribute[]
+		attribute: { id: string; tsKey: string; tsNs: string }
+		supplement: {
+			id: string
+			data: unknown
+			text: { id: string; key: string; ns: string; tsKey: { text: string; crowdinId: number | null } } | null
+		}[]
 	}[]
 }

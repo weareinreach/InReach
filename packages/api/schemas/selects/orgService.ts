@@ -123,9 +123,10 @@ const serviceSelect = {
 		},
 	},
 	accessDetails: {
-		select: {
-			attributes,
+		where: {
+			active: true,
 		},
+		select: attributes.select,
 	},
 	locations: {
 		where: {
