@@ -45,7 +45,6 @@ export const create = {
 	orgPhoto: new Set<Prisma.OrgPhotoCreateManyInput>(),
 	orgHours: new Set<Prisma.OrgHoursCreateManyInput>(),
 	orgService: new Set<Prisma.OrgServiceCreateManyInput>(),
-	serviceAccess: new Set<Prisma.ServiceAccessCreateManyInput>(),
 	attributeSupplement: new Set<Prisma.AttributeSupplementCreateManyInput>(),
 	orgServicePhone: new Set<Prisma.OrgServicePhoneCreateManyInput>(),
 	orgServiceEmail: new Set<Prisma.OrgServiceEmailCreateManyInput>(),

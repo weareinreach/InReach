@@ -1425,11 +1425,11 @@ export const orgRecon = {
 						include: {
 							serviceName: { include: { tsKey: true } },
 							description: { include: { tsKey: true } },
-							accessDetails: {
-								include: {
-									attributes: { include: { attribute: true, supplement: { include: { text: true } } } },
-								},
-							},
+							// accessDetails: {
+							// 	include: {
+							// 		attributes: { include: { attribute: true, supplement: { include: { text: true } } } },
+							// 	},
+							// },
 						},
 					})
 
@@ -1514,7 +1514,7 @@ export const orgRecon = {
 								true
 							)
 							for (const access of service.access_instructions) {
-								const existingAccess = await prisma.serviceAccess.findFirst()
+								// const existingAccess = await prisma.serviceAccess.findFirst()
 							}
 						}
 					}
