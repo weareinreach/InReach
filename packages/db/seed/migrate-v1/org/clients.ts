@@ -22,7 +22,6 @@ import {
 	type OutsideAPI,
 	type PhoneType,
 	type Prisma,
-	type ServiceAccess,
 	type ServiceAccessAttribute,
 	type ServiceArea,
 	type ServiceAreaCountry,
@@ -42,7 +41,6 @@ export const migrateClient: MigrationClient = {
 	freeText: (client, data) => client.freeText.createMany({ data, ...clientopt }),
 	phoneType: (client, data) => client.phoneType.createMany({ data, ...clientopt }),
 	organization: (client, data) => client.organization.createMany({ data, ...clientopt }),
-
 	orgLocation: (client, data) => client.orgLocation.createMany({ data, ...clientopt }),
 	orgPhone: (client, data) => client.orgPhone.createMany({ data, ...clientopt }),
 	orgEmail: (client, data) => client.orgEmail.createMany({ data, ...clientopt }),
@@ -53,7 +51,6 @@ export const migrateClient: MigrationClient = {
 	orgPhoto: (client, data) => client.orgPhoto.createMany({ data, ...clientopt }),
 	orgHours: (client, data) => client.orgHours.createMany({ data, ...clientopt }),
 	orgService: (client, data) => client.orgService.createMany({ data, ...clientopt }),
-	serviceAccess: (client, data) => client.serviceAccess.createMany({ data, ...clientopt }),
 	orgServicePhone: (client, data) => client.orgServicePhone.createMany({ data, ...clientopt }),
 	orgServiceEmail: (client, data) => client.orgServiceEmail.createMany({ data, ...clientopt }),
 	orgLocationService: (client, data) => client.orgLocationService.createMany({ data, ...clientopt }),
@@ -87,7 +84,6 @@ export const queryClient: QueryClient = {
 	orgPhoto: (client, args) => client.orgPhoto.findMany(args),
 	orgHours: (client, args) => client.orgHours.findMany(args),
 	orgService: (client, args) => client.orgService.findMany(args),
-	serviceAccess: (client, args) => client.serviceAccess.findMany(args),
 	attributeSupplement: (client, args) => client.attributeSupplement.findMany(args),
 	orgServicePhone: (client, args) => client.orgServicePhone.findMany(args),
 	orgServiceEmail: (client, args) => client.orgServiceEmail.findMany(args),
@@ -144,7 +140,6 @@ type PrismaSchemas = {
 	orgPhoto: OrgPhoto
 	orgHours: OrgHours
 	orgService: OrgService
-	serviceAccess: ServiceAccess
 	attributeSupplement: AttributeSupplement
 	orgServicePhone: OrgServicePhone
 	orgServiceEmail: OrgServiceEmail

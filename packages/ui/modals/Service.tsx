@@ -173,67 +173,65 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 
 			const baseDetails: AccessDetails = { publicTransit: [] }
 
-			const { publicTransit } = accessDetails.reduce((details, { attributes }) => {
-				attributes.forEach(({ supplement }) => {
-					supplement.forEach(({ data, text, id }) => {
-						const parsed = supplementSchema.accessInstructions.safeParse(data)
-						if (parsed.success) {
-							const { access_type, access_value } = parsed.data
-							switch (access_type) {
-								case 'publicTransit': {
-									if (!text) break
-									const { key, options } = getFreeText(text)
-									details[access_type].push(<ModalText key={id}>{t(key, options)}</ModalText>)
-									break
-								}
-								case 'email': {
-									contactData.emails.push({
-										id,
-										title: null,
-										description: null,
-										email: parsed.data.access_value,
-										// legacyDesc: parsed.data.instructions,
-										// firstName: null,
-										// lastName: null,
-										primary: false,
-										locationOnly: false,
-										serviceOnly: false,
-									})
-									break
-								}
-								case 'phone': {
-									const country = locations.find(({ location }) => Boolean(location.country))?.location
-										.country.cca2
-									if (!country) break
-									contactData.phones.push({
-										id,
-										number: parsed.data.access_value,
-										phoneType: null,
-										country,
-										primary: false,
-										locationOnly: false,
-										ext: null,
-										description: null,
-									})
-									break
-								}
-								case 'link':
-								case 'file': {
-									contactData.websites.push({
-										id,
-										description: null,
-										isPrimary: false,
-										// orgLocationId: null,
-										orgLocationOnly: false,
-										url: parsed.data.access_value,
-									})
-								}
+			const { publicTransit } = accessDetails.reduce((details, { supplement }) => {
+				supplement.forEach(({ data, text, id }) => {
+					const parsed = supplementSchema.accessInstructions.safeParse(data)
+					if (parsed.success) {
+						const { access_type, access_value } = parsed.data
+						switch (access_type) {
+							case 'publicTransit': {
+								if (!text) break
+								const { key, options } = getFreeText(text)
+								details[access_type].push(<ModalText key={id}>{t(key, options)}</ModalText>)
+								break
 							}
-
-							const accessKey = CONTACTS.find((category) => category === access_type)
-							if (accessKey) details[accessKey] ||= <Text key={id}>{access_value}</Text>
+							case 'email': {
+								contactData.emails.push({
+									id,
+									title: null,
+									description: null,
+									email: parsed.data.access_value,
+									// legacyDesc: parsed.data.instructions,
+									// firstName: null,
+									// lastName: null,
+									primary: false,
+									locationOnly: false,
+									serviceOnly: false,
+								})
+								break
+							}
+							case 'phone': {
+								const country = locations.find(({ location }) => Boolean(location.country))?.location.country
+									.cca2
+								if (!country) break
+								contactData.phones.push({
+									id,
+									number: parsed.data.access_value,
+									phoneType: null,
+									country,
+									primary: false,
+									locationOnly: false,
+									ext: null,
+									description: null,
+								})
+								break
+							}
+							case 'link':
+							case 'file': {
+								contactData.websites.push({
+									id,
+									description: null,
+									isPrimary: false,
+									// orgLocationId: null,
+									orgLocationOnly: false,
+									url: parsed.data.access_value,
+								})
+							}
 						}
-					})
+
+						const accessKey = CONTACTS.find((category) => category === access_type)
+						if (accessKey) details[accessKey] ||= <Text key={id}>{access_value}</Text>
+					}
 				})
 				return details
 			}, baseDetails)
