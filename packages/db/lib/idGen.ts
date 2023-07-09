@@ -29,7 +29,6 @@ export const idPrefix = {
 	outsideAPI: 'oapi',
 	permission: 'perm',
 	phoneType: 'phtp',
-	serviceAccess: 'svac',
 	serviceArea: 'svar',
 	serviceCategory: 'svct',
 	serviceTag: 'svtg',

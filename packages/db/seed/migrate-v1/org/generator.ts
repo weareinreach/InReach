@@ -1068,7 +1068,7 @@ export const generateRecords = async (task: ListrTask) => {
 				log(`🛠️ Generating Service ${pluralRecord(org.services)} for ${org.name}`)
 
 				for (const service of org.services) {
-					let accessCount = 0
+					const accessCount = 0
 					const count = counter + skips + 1
 					const serviceId = getId(['orgService', createdAt], service._id.$oid)
 					log(`🛠️ [${count}/${org.services.length}] Service: ${service.name}`)
@@ -1108,64 +1108,64 @@ export const generateRecords = async (task: ListrTask) => {
 
 					/* Access Instruction records*/
 					// #region Access Instructions
-					for (const access of service.access_instructions) {
-						const accessId = generateId('serviceAccess', createdAt)
-						const attributeSuppId = generateId('attributeSupplement', createdAt)
-						const newTag = legacyAccessMap.get(access.access_type ?? '')
-						const attribute = attributeList.get(newTag ?? '')
-						if (!attribute) {
-							log(`🤷 SKIPPING Access record ${access._id.$oid}: Cannot map attribute`)
-							continue
-						}
-						let textId: string | undefined
-						if (access.instructions) {
-							const { key, ns, text } = generateKey({
-								type: 'attrSupp',
-								keyPrefix: orgSlug,
-								suppId: attributeSuppId,
-								text: access.instructions?.trim(),
-							})
-							const freeTextId = generateId('freeText', createdAt)
-							if (key && ns && text) {
-								data.translationKey.add({
-									key,
-									ns,
-									text,
-									createdAt,
-									updatedAt,
-								})
-								data.freeText.add({ id: freeTextId, key, ns, createdAt, updatedAt })
-								rollback.translationKey.add(key)
-								log(`🗣️ Service access instructions. Namespace: ${ns}, Key: ${key}, Free text: ${freeTextId}`)
-								exportTranslation({ ns, key, text: access.instructions_ES, log })
-								textId = freeTextId
-							}
-						}
+					// for (const access of service.access_instructions) {
+					// 	const accessId = generateId('serviceAccess', createdAt)
+					// 	const attributeSuppId = generateId('attributeSupplement', createdAt)
+					// 	const newTag = legacyAccessMap.get(access.access_type ?? '')
+					// 	const attribute = attributeList.get(newTag ?? '')
+					// 	if (!attribute) {
+					// 		log(`🤷 SKIPPING Access record ${access._id.$oid}: Cannot map attribute`)
+					// 		continue
+					// 	}
+					// 	let textId: string | undefined
+					// 	if (access.instructions) {
+					// 		const { key, ns, text } = generateKey({
+					// 			type: 'attrSupp',
+					// 			keyPrefix: orgSlug,
+					// 			suppId: attributeSuppId,
+					// 			text: access.instructions?.trim(),
+					// 		})
+					// 		const freeTextId = generateId('freeText', createdAt)
+					// 		if (key && ns && text) {
+					// 			data.translationKey.add({
+					// 				key,
+					// 				ns,
+					// 				text,
+					// 				createdAt,
+					// 				updatedAt,
+					// 			})
+					// 			data.freeText.add({ id: freeTextId, key, ns, createdAt, updatedAt })
+					// 			rollback.translationKey.add(key)
+					// 			log(`🗣️ Service access instructions. Namespace: ${ns}, Key: ${key}, Free text: ${freeTextId}`)
+					// 			exportTranslation({ ns, key, text: access.instructions_ES, log })
+					// 			textId = freeTextId
+					// 		}
+					// 	}
 
-						data.serviceAccessAttribute.add({
-							attributeId: attribute.id,
-							serviceAccessId: accessId,
-							// supplementId: attributeSuppId,
-							linkedAt,
-						})
-						data.attributeSupplement.add({
-							id: attributeSuppId,
-							createdAt,
-							updatedAt,
-							textId,
-							data: JsonInputOrNullSuperJSON.parse(access),
-							serviceAccessAttributeAttributeId: attribute.id,
-							serviceAccessAttributeServiceAccessId: accessId,
-						})
-						rollback.attributeSupplement.add(attributeSuppId)
-						data.serviceAccess.add({
-							id: accessId,
-							serviceId,
-						})
-						rollback.serviceAccess.add(accessId)
-						log(`\t🔑 Service Access Instruction: '${access.instructions?.trim() ?? access._id.$oid}'`)
-						accessCount++
-					}
+					// 	data.serviceAccessAttribute.add({
+					// 		attributeId: attribute.id,
+					// 		serviceAccessId: accessId,
+					// 		// supplementId: attributeSuppId,
+					// 		linkedAt,
+					// 	})
+					// 	data.attributeSupplement.add({
+					// 		id: attributeSuppId,
+					// 		createdAt,
+					// 		updatedAt,
+					// 		textId,
+					// 		data: JsonInputOrNullSuperJSON.parse(access),
+					// 		serviceAccessAttributeAttributeId: attribute.id,
+					// 		serviceAccessAttributeServiceAccessId: accessId,
+					// 	})
+					// 	rollback.attributeSupplement.add(attributeSuppId)
+					// 	data.serviceAccess.add({
+					// 		id: accessId,
+					// 		serviceId,
+					// 	})
+					// 	rollback.serviceAccess.add(accessId)
+					// 	log(`\t🔑 Service Access Instruction: '${access.instructions?.trim() ?? access._id.$oid}'`)
+					// 	accessCount++
+					// }
 					// #endregion
 
 					// #region Service Title

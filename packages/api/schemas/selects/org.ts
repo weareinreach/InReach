@@ -125,7 +125,6 @@ type AttributeInclude =
 	| Prisma.Organization$attributesArgs
 	| Prisma.OrgLocation$attributesArgs
 	| Prisma.OrgService$attributesArgs
-	| Prisma.ServiceAccess$attributesArgs
 
 const attributeInclude = attributes satisfies AttributeInclude
 
@@ -173,8 +172,8 @@ const orgServiceTagInclude = {
 } satisfies Prisma.OrgServiceTagArgs
 
 const serviceAccessInclude = {
-	select: { attributes: attributeInclude },
-} satisfies Prisma.ServiceAccessArgs
+	select: attributeInclude.select,
+} satisfies Prisma.ServiceAccessAttributeArgs
 const reviewIds = {
 	where: {
 		visible: true,

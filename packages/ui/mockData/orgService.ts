@@ -267,11 +267,11 @@ export const serviceData = {
 		id: 'osvc_01GVH3VEVPF1KEKBTRVTV70WGV',
 		description: {
 			id: 'ftxt_01GW2HT9EZ3Y7G4JY1X91ZPX5P',
-			key: 'whitman-walker-health.osvc_01GVH3VEVPF1KEKBTRVTV70WGV.description',
+			key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.osvc_01GVH3VEVPF1KEKBTRVTV70WGV.description',
 			ns: 'org-data',
 			tsKey: {
 				text: 'Whitman-Walker provides walk-in HIV testing at multiple locations in DC. Walk-in HIV testing includes a confidential, rapid HIV test and risk-reduction counseling. The counseling provides clients with education on their options for having safer sex. Whitman-Walker uses the INSTI® HIV-1/HIV-2 Rapid Antibody Test and results take one minute.',
-				crowdinId: null,
+				crowdinId: 773222,
 			},
 		},
 		hours: [],
@@ -279,16 +279,16 @@ export const serviceData = {
 		deleted: false,
 		serviceName: {
 			id: 'ftxt_01GW2HT9F1PZAQCMGSWY07973D',
-			key: 'whitman-walker-health.osvc_01GVH3VEVPF1KEKBTRVTV70WGV.name',
+			key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.osvc_01GVH3VEVPF1KEKBTRVTV70WGV.name',
 			ns: 'org-data',
 			tsKey: {
 				text: 'Get rapid HIV testing',
-				crowdinId: null,
+				crowdinId: 773224,
 			},
 		},
-		phones: ['ophn_01GVH3VEVCFKT3NWQ79STYVDKR'],
+		phones: ['ophn_01GVH3VEVCFKT3NWQ79STYVDKR', 'ophn_01GVH3VEVC36PW0Z9GDV0ZERV1'],
 		emails: [],
-		locations: [],
+		locations: ['oloc_01GVH3VEVBRCFA2AHNTWCXQA2B', 'oloc_01GVH3VEVBSA85T6VR2C38BJPT'],
 		services: [
 			{
 				id: 'svtg_01GW2HHFBRPBXSYN12DWNEAJJ7',
@@ -297,13 +297,8 @@ export const serviceData = {
 		],
 		serviceAreas: {
 			id: 'svar_01GW2HT9F1JKT1MCAJ3P7XBDHP',
-			countries: ['ctry_01GW2HHDK9M26M80SG63T21SVH'],
-			districts: [
-				'gdst_01GW2HJ5A278S2G84AB3N9FCW0',
-				'gdst_01GW2HHYFH1TDS4HXMJ6EZDCCM',
-				'gdst_01GW2HKJ7PP2TBNC8MQQS02N6S',
-				'gdst_01GW2HKF7GKZBEW06ATJGN7YA0',
-			],
+			countries: [],
+			districts: ['gdst_01GW2HJ5A278S2G84AB3N9FCW0'],
 		},
 		attributes: [
 			{
@@ -396,154 +391,125 @@ export const serviceData = {
 		],
 		accessDetails: [
 			{
-				id: 'svac_01GW2HT9EZ2TD5STD33AT17BX6',
-				attributes: [
+				attribute: {
+					id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
+					tsKey: 'serviceaccess.accesslocation',
+					tsNs: 'attribute',
+				},
+				supplement: [
 					{
-						attribute: {
-							id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
-							tsKey: 'serviceaccess.accesslocation',
-							tsNs: 'attribute',
-						},
-						supplement: [
-							{
-								id: 'atts_01GW2HT9F0SPS3EBCQ710RCNTA',
-								text: {
-									id: 'ftxt_01GW2HT9F0ACKFYVT7EHMKJPFN',
-									key: 'whitman-walker-health.attribute.atts_01GW2HT9F0SPS3EBCQ710RCNTA',
-									ns: 'org-data',
-									tsKey: {
-										text: 'Max Robinson Center - NO walk-in testing is available. Monday: 08:30-12:30, 13:30-17:30; Tuesday: 08:30 - 12:30, 13:30 - 17:30; Wednesday: 08:30 - 12:30, 13:30 - 17:30; Thursday: 08:30 - 12:30, 13:30 - 17:30; Friday: 08:30 - 12:30, 14:15 - 17:30.',
-										crowdinId: null,
-									},
-								},
-								data: {
-									_id: {
-										$oid: '5e7e4bdbd54f1760921a4231',
-									},
-									access_type: 'location',
-									access_value: '2301 M. Luther King Jr., Washington DC 20020',
-									instructions:
-										'Max Robinson Center - NO walk-in testing is available. Monday: 08:30-12:30, 13:30-17:30; Tuesday: 08:30 - 12:30, 13:30 - 17:30; Wednesday: 08:30 - 12:30, 13:30 - 17:30; Thursday: 08:30 - 12:30, 13:30 - 17:30; Friday: 08:30 - 12:30, 14:15 - 17:30.',
-									access_value_ES: '2301 M. Luther King Jr., Washington DC 20020',
-									instructions_ES:
-										'Centro Max Robinson: NO hay pruebas disponibles sin cita previa. Lunes: 08:30-12:30, 13:30-17:30; Martes: 08:30 - 12:30, 13:30 - 17:30; Miércoles: 08:30 - 12:30, 13:30 - 17:30; Jueves: 08:30 - 12:30, 13:30 - 17:30; Viernes: 08:30 - 12:30, 14:15 - 17:30.',
-								},
+						id: 'atts_01GW2HT9F0SPS3EBCQ710RCNTA',
+						text: {
+							id: 'ftxt_01GW2HT9F0ACKFYVT7EHMKJPFN',
+							key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.attribute.atts_01GW2HT9F0SPS3EBCQ710RCNTA',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Max Robinson Center - NO walk-in testing is available. Monday: 08:30-12:30, 13:30-17:30; Tuesday: 08:30 - 12:30, 13:30 - 17:30; Wednesday: 08:30 - 12:30, 13:30 - 17:30; Thursday: 08:30 - 12:30, 13:30 - 17:30; Friday: 08:30 - 12:30, 14:15 - 17:30.',
+								crowdinId: 1535745,
 							},
-						],
+						},
+						data: {
+							_id: {
+								$oid: '5e7e4bdbd54f1760921a4231',
+							},
+							access_type: 'location',
+							access_value: '2301 M. Luther King Jr., Washington DC 20020',
+							instructions:
+								'Max Robinson Center - NO walk-in testing is available. Monday: 08:30-12:30, 13:30-17:30; Tuesday: 08:30 - 12:30, 13:30 - 17:30; Wednesday: 08:30 - 12:30, 13:30 - 17:30; Thursday: 08:30 - 12:30, 13:30 - 17:30; Friday: 08:30 - 12:30, 14:15 - 17:30.',
+							access_value_ES: '2301 M. Luther King Jr., Washington DC 20020',
+							instructions_ES:
+								'Centro Max Robinson: NO hay pruebas disponibles sin cita previa. Lunes: 08:30-12:30, 13:30-17:30; Martes: 08:30 - 12:30, 13:30 - 17:30; Miércoles: 08:30 - 12:30, 13:30 - 17:30; Jueves: 08:30 - 12:30, 13:30 - 17:30; Viernes: 08:30 - 12:30, 14:15 - 17:30.',
+						},
+					},
+					{
+						id: 'atts_01GW2HT9F0638MD74PJ3SCWNXC',
+						text: {
+							id: 'ftxt_01GW2HT9F0VGSCRNGE0Y06TJZQ',
+							key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.attribute.atts_01GW2HT9F0638MD74PJ3SCWNXC',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Whitman-Walker at 1525 - NO walk-in testing is available. Monday-Thursday: 08:30-12:30 & 13:30-17:30; Friday: 08:30- 12:30 & 14:30 -17:30.',
+								crowdinId: 1535741,
+							},
+						},
+						data: {
+							_id: {
+								$oid: '5e7e4bdbd54f1760921a4233',
+							},
+							access_type: 'location',
+							access_value: '1525 14th St, NW Washington, DC 20005',
+							instructions:
+								'Whitman-Walker at 1525 - NO walk-in testing is available. Monday-Thursday: 08:30-12:30 & 13:30-17:30; Friday: 08:30- 12:30 & 14:30 -17:30.',
+							access_value_ES: '1525 14th St, NW Washington, DC 20005',
+							instructions_ES:
+								'Whitman-Walker en 1525: NO hay pruebas disponibles. Lunes-Jueves: 08:30-12:30 y 13:30-17:30; Viernes: 08:30- 12:30 y 14:30 -17:30.',
+						},
 					},
 				],
 			},
 			{
-				id: 'svac_01GW2HT9F0A8EKG5P8HM3KX6AC',
-				attributes: [
+				attribute: {
+					id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
+					tsKey: 'serviceaccess.accessphone',
+					tsNs: 'attribute',
+				},
+				supplement: [
 					{
-						attribute: {
-							id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
-							tsKey: 'serviceaccess.accessphone',
-							tsNs: 'attribute',
-						},
-						supplement: [
-							{
-								id: 'atts_01GW2HT9F09GFRWM3JK2A43AWG',
-								text: {
-									id: 'ftxt_01GW2HT9F0H3RBRWNQT73BKMKF',
-									key: 'whitman-walker-health.attribute.atts_01GW2HT9F09GFRWM3JK2A43AWG',
-									ns: 'org-data',
-									tsKey: {
-										text: 'Contact the Main Office about services offered in multiple languages upon request.',
-										crowdinId: null,
-									},
-								},
-								data: {
-									_id: {
-										$oid: '5e7e4bdbd54f1760921a4235',
-									},
-									access_type: 'phone',
-									access_value: '202-745-7000',
-									instructions:
-										'Contact the Main Office about services offered in multiple languages upon request. ',
-									access_value_ES: '202-745-7000',
-									instructions_ES:
-										'Comunícate con la oficina principal sobre los servicios que se ofrecen en varios idiomas si lo solicitas.',
-								},
+						id: 'atts_01GW2HT9F09GFRWM3JK2A43AWG',
+						text: {
+							id: 'ftxt_01GW2HT9F0H3RBRWNQT73BKMKF',
+							key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.attribute.atts_01GW2HT9F09GFRWM3JK2A43AWG',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Contact the Main Office about services offered in multiple languages upon request.',
+								crowdinId: 1535743,
 							},
-						],
+						},
+						data: {
+							_id: {
+								$oid: '5e7e4bdbd54f1760921a4235',
+							},
+							access_type: 'phone',
+							access_value: '202-745-7000',
+							instructions:
+								'Contact the Main Office about services offered in multiple languages upon request. ',
+							access_value_ES: '202-745-7000',
+							instructions_ES:
+								'Comunícate con la oficina principal sobre los servicios que se ofrecen en varios idiomas si lo solicitas.',
+						},
 					},
 				],
 			},
 			{
-				id: 'svac_01GW2HT9F0DH2BAW2RFNRD8802',
-				attributes: [
+				attribute: {
+					id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
+					tsKey: 'serviceaccess.accesslink',
+					tsNs: 'attribute',
+				},
+				supplement: [
 					{
-						attribute: {
-							id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
-							tsKey: 'serviceaccess.accesslocation',
-							tsNs: 'attribute',
-						},
-						supplement: [
-							{
-								id: 'atts_01GW2HT9F0638MD74PJ3SCWNXC',
-								text: {
-									id: 'ftxt_01GW2HT9F0VGSCRNGE0Y06TJZQ',
-									key: 'whitman-walker-health.attribute.atts_01GW2HT9F0638MD74PJ3SCWNXC',
-									ns: 'org-data',
-									tsKey: {
-										text: 'Whitman-Walker at 1525 - NO walk-in testing is available. Monday-Thursday: 08:30-12:30 & 13:30-17:30; Friday: 08:30- 12:30 & 14:30 -17:30.',
-										crowdinId: null,
-									},
-								},
-								data: {
-									_id: {
-										$oid: '5e7e4bdbd54f1760921a4233',
-									},
-									access_type: 'location',
-									access_value: '1525 14th St, NW Washington, DC 20005',
-									instructions:
-										'Whitman-Walker at 1525 - NO walk-in testing is available. Monday-Thursday: 08:30-12:30 & 13:30-17:30; Friday: 08:30- 12:30 & 14:30 -17:30.',
-									access_value_ES: '1525 14th St, NW Washington, DC 20005',
-									instructions_ES:
-										'Whitman-Walker en 1525: NO hay pruebas disponibles. Lunes-Jueves: 08:30-12:30 y 13:30-17:30; Viernes: 08:30- 12:30 y 14:30 -17:30.',
-								},
+						id: 'atts_01GW2HT9F01W2M7FBSKSXAQ9R4',
+						text: {
+							id: 'ftxt_01GW2HT9F0D57GDYZJWTP9258B',
+							key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.attribute.atts_01GW2HT9F01W2M7FBSKSXAQ9R4',
+							ns: 'org-data',
+							tsKey: {
+								text: "Visit the website to learn more about Whitman-Walker's testing hours and locations.",
+								crowdinId: 1535739,
 							},
-						],
-					},
-				],
-			},
-			{
-				id: 'svac_01GW2HT9F0ZD5K9G5BW46YYDRX',
-				attributes: [
-					{
-						attribute: {
-							id: 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD',
-							tsKey: 'serviceaccess.accesslink',
-							tsNs: 'attribute',
 						},
-						supplement: [
-							{
-								id: 'atts_01GW2HT9F01W2M7FBSKSXAQ9R4',
-								text: {
-									id: 'ftxt_01GW2HT9F0D57GDYZJWTP9258B',
-									key: 'whitman-walker-health.attribute.atts_01GW2HT9F01W2M7FBSKSXAQ9R4',
-									ns: 'org-data',
-									tsKey: {
-										text: "Visit the website to learn more about Whitman-Walker's testing hours and locations.",
-										crowdinId: null,
-									},
-								},
-								data: {
-									_id: {
-										$oid: '5e7e4bdbd54f1760921a4234',
-									},
-									access_type: 'link',
-									access_value: 'https://www.whitman-walker.org/hiv-sti-testing',
-									instructions:
-										"Visit the website to learn more about Whitman-Walker's testing hours and locations. ",
-									access_value_ES: 'https://www.whitman-walker.org/hiv-sti-testing',
-									instructions_ES:
-										'Visita el sitio web para obtener más información sobre los horarios y lugares de prueba de Whitman-Walker.',
-								},
+						data: {
+							_id: {
+								$oid: '5e7e4bdbd54f1760921a4234',
 							},
-						],
+							access_type: 'link',
+							access_value: 'https://www.whitman-walker.org/hiv-sti-testing',
+							instructions:
+								"Visit the website to learn more about Whitman-Walker's testing hours and locations. ",
+							access_value_ES: 'https://www.whitman-walker.org/hiv-sti-testing',
+							instructions_ES:
+								'Visita el sitio web para obtener más información sobre los horarios y lugares de prueba de Whitman-Walker.',
+						},
 					},
 				],
 			},
