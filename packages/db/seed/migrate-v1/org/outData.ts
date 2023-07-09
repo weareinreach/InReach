@@ -32,7 +32,6 @@ export type OutData = {
 	orgPhoto: Set<Prisma.OrgPhotoCreateManyInput>
 	orgHours: Set<Prisma.OrgHoursCreateManyInput>
 	orgService: Set<Prisma.OrgServiceCreateManyInput>
-	serviceAccess: Set<Prisma.ServiceAccessCreateManyInput>
 	attributeSupplement: Set<Prisma.AttributeSupplementCreateManyInput>
 	orgServicePhone: Set<Prisma.OrgServicePhoneCreateManyInput>
 	orgServiceEmail: Set<Prisma.OrgServiceEmailCreateManyInput>
@@ -80,7 +79,6 @@ export const data: OutData = {
 	orgPhoto: new Set(),
 	orgHours: new Set(),
 	orgService: new Set(),
-	serviceAccess: new Set(),
 	attributeSupplement: new Set(),
 	serviceArea: new Set(),
 	serviceAreaCountry: new Set(),
@@ -116,7 +114,6 @@ export const batchNameMap = new Map<BatchNames, string>([
 	['orgPhoto', 'Organization photo records'],
 	['orgHours', 'Operating hours records'],
 	['orgService', 'Service records'],
-	['serviceAccess', 'Service access records'],
 	['attributeSupplement', 'Attribute supplements'],
 	['serviceArea', 'Service area records'],
 	['serviceAreaCountry', 'Service area country links'],
@@ -148,7 +145,6 @@ export type RollbackKeys =
 	| 'orgPhoto'
 	| 'orgHours'
 	| 'orgService'
-	| 'serviceAccess'
 	| 'attributeSupplement'
 	| 'serviceArea'
 	| 'userPermission'
@@ -167,7 +163,6 @@ export const rollback: Rollback = {
 	orgPhoto: new Set(),
 	orgHours: new Set(),
 	orgService: new Set(),
-	serviceAccess: new Set(),
 	attributeSupplement: new Set(),
 	serviceArea: new Set(),
 	userPermission: new Set(),

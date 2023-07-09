@@ -175,8 +175,6 @@ export const AttachServAccess = () => {
 
 		const supplementId = supplementInput ? generateId('attributeSupplement') : undefined
 
-		const serviceAccessId = generateId('serviceAccess')
-
 		const { freeText, translationKey } =
 			supplementId && supplementInput?.text
 				? generateFreeText({ orgSlug, text: supplementInput.text, type: 'attSupp', itemId: supplementId })
@@ -184,22 +182,6 @@ export const AttachServAccess = () => {
 
 		const { boolean, countryId, data, govDistId, languageId } = supplementInput ?? {}
 		const auditLogs = new Set<Prisma.AuditLogCreateManyInput>()
-
-		const serviceAccess: Prisma.ServiceAccessCreateArgs = {
-			data: {
-				id: serviceAccessId,
-				serviceId,
-			},
-		}
-		auditLogs.add(
-			GenerateAuditLog({
-				actorId,
-				operation: 'CREATE',
-				to: serviceAccess.data,
-				orgServiceId: serviceId,
-				serviceAccessId,
-			})
-		)
 
 		if (freeText && translationKey) {
 			auditLogs.add(
@@ -246,16 +228,11 @@ export const AttachServAccess = () => {
 						data: supplementData,
 				  })
 				: undefined,
-			serviceAccess: Prisma.validator<Prisma.ServiceAccessCreateArgs>()({
-				data: {
-					id: serviceAccessId,
-					serviceId,
-				},
-			}),
+
 			serviceAccessAttribute: Prisma.validator<Prisma.ServiceAccessAttributeCreateArgs>()({
 				data: {
 					attribute: { connect: { id: attributeId } },
-					serviceAccess: { connect: { id: serviceAccessId } },
+					service: { connect: { id: serviceId } },
 					supplement: supplementId ? { connect: { id: supplementId } } : undefined,
 				},
 			}),
