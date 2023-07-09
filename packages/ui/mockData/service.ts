@@ -167,7 +167,7 @@ export const serviceData = {
 	],
 	byId: {
 		serviceName: {
-			key: 'larkin-street-youth-services.osvc_01GVH3VDMSN34BACQDMY6S5GPM.name',
+			key: 'orgn_01GVH3V3RCCBMFD55PWHR8AEC0.osvc_01GVH3VDMSN34BACQDMY6S5GPM.name',
 			ns: 'org-data',
 			tsKey: {
 				text: 'Get education and employment services for youth ages 24 and under',
@@ -473,111 +473,103 @@ export const serviceData = {
 		emails: [],
 		accessDetails: [
 			{
-				attributes: [
-					{
-						attribute: {
-							id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
-							tsKey: 'serviceaccess.accesslocation',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'service-access-instructions',
-										icon: null,
-									},
-								},
-							],
-							_count: {
-								parents: 0,
-								children: 0,
+				attribute: {
+					id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
+					tsKey: 'serviceaccess.accesslocation',
+					tsNs: 'attribute',
+					icon: null,
+					iconBg: null,
+					showOnLocation: null,
+					categories: [
+						{
+							category: {
+								tag: 'service-access-instructions',
+								icon: null,
 							},
 						},
-						supplement: [
-							{
-								id: 'atts_01GW2HT8BWQ0WZ804A34QV7P0J',
-								country: null,
-								language: null,
-								text: {
-									key: 'larkin-street-youth-services.attribute.atts_01GW2HT8BWQ0WZ804A34QV7P0J',
-									ns: 'org-data',
-									tsKey: {
-										text: 'The above are drop-in service hours for education. Drop-in hours for employment services are Monday, Tuesday: 10 a.m. to noon, and 2:30 to 4:30 p.m. Wednesday: 10 a.m. to noon, and 1 to 2 p.m. Thursday: 10 a.m. to noon, and 1 to 3 p.m. Friday: 10 a.m. to 1 p.m.',
-									},
-								},
-								govDist: null,
-								boolean: null,
-								data: {
-									json: {
-										_id: {
-											$oid: '5e7e4bd9d54f1760921a3aff',
-										},
-										access_type: 'location',
-										access_value: '134 Golden Gate Ave, San Francisco, CA 94102',
-										instructions:
-											'The above are drop-in service hours for education. Drop-in hours for employment services are Monday, Tuesday: 10 a.m. to noon, and 2:30 to 4:30 p.m. Wednesday: 10 a.m. to noon, and 1 to 2 p.m. Thursday: 10 a.m. to noon, and 1 to 3 p.m. Friday: 10 a.m. to 1 p.m.',
-										access_value_ES: '134 Golden Gate Ave, San Francisco, CA 94102',
-										instructions_ES: 'Visita para más información.',
-									},
-								},
+					],
+					_count: {
+						parents: 0,
+						children: 0,
+					},
+				},
+				supplement: [
+					{
+						id: 'atts_01GW2HT8BWQ0WZ804A34QV7P0J',
+						country: null,
+						language: null,
+						text: {
+							key: 'orgn_01GVH3V3RCCBMFD55PWHR8AEC0.attribute.atts_01GW2HT8BWQ0WZ804A34QV7P0J',
+							ns: 'org-data',
+							tsKey: {
+								text: 'The above are drop-in service hours for education. Drop-in hours for employment services are Monday, Tuesday: 10 a.m. to noon, and 2:30 to 4:30 p.m. Wednesday: 10 a.m. to noon, and 1 to 2 p.m. Thursday: 10 a.m. to noon, and 1 to 3 p.m. Friday: 10 a.m. to 1 p.m.',
 							},
-						],
+						},
+						govDist: null,
+						boolean: null,
+						data: {
+							json: {
+								_id: {
+									$oid: '5e7e4bd9d54f1760921a3aff',
+								},
+								access_type: 'location',
+								access_value: '134 Golden Gate Ave, San Francisco, CA 94102',
+								instructions:
+									'The above are drop-in service hours for education. Drop-in hours for employment services are Monday, Tuesday: 10 a.m. to noon, and 2:30 to 4:30 p.m. Wednesday: 10 a.m. to noon, and 1 to 2 p.m. Thursday: 10 a.m. to noon, and 1 to 3 p.m. Friday: 10 a.m. to 1 p.m.',
+								access_value_ES: '134 Golden Gate Ave, San Francisco, CA 94102',
+								instructions_ES: 'Visita para más información.',
+							},
+						},
 					},
 				],
 			},
 			{
-				attributes: [
-					{
-						attribute: {
-							id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
-							tsKey: 'serviceaccess.accessphone',
-							tsNs: 'attribute',
-							icon: null,
-							iconBg: null,
-							showOnLocation: null,
-							categories: [
-								{
-									category: {
-										tag: 'service-access-instructions',
-										icon: null,
-									},
-								},
-							],
-							_count: {
-								parents: 0,
-								children: 0,
+				attribute: {
+					id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
+					tsKey: 'serviceaccess.accessphone',
+					tsNs: 'attribute',
+					icon: null,
+					iconBg: null,
+					showOnLocation: null,
+					categories: [
+						{
+							category: {
+								tag: 'service-access-instructions',
+								icon: null,
 							},
 						},
-						supplement: [
-							{
-								id: 'atts_01GW2HT8BWZG5BTQ57DAQHJZ5Z',
-								country: null,
-								language: null,
-								text: {
-									key: 'larkin-street-youth-services.attribute.atts_01GW2HT8BWZG5BTQ57DAQHJZ5Z',
-									ns: 'org-data',
-									tsKey: {
-										text: 'Call for more information.',
-									},
-								},
-								govDist: null,
-								boolean: null,
-								data: {
-									json: {
-										_id: {
-											$oid: '5e7e4bd9d54f1760921a3b00',
-										},
-										access_type: 'phone',
-										access_value: '415-673-0911',
-										instructions: 'Call for more information.',
-										access_value_ES: '415-673-0911',
-										instructions_ES: 'Llama para más información.',
-									},
-								},
+					],
+					_count: {
+						parents: 0,
+						children: 0,
+					},
+				},
+				supplement: [
+					{
+						id: 'atts_01GW2HT8BWZG5BTQ57DAQHJZ5Z',
+						country: null,
+						language: null,
+						text: {
+							key: 'orgn_01GVH3V3RCCBMFD55PWHR8AEC0.attribute.atts_01GW2HT8BWZG5BTQ57DAQHJZ5Z',
+							ns: 'org-data',
+							tsKey: {
+								text: 'Call for more information.',
 							},
-						],
+						},
+						govDist: null,
+						boolean: null,
+						data: {
+							json: {
+								_id: {
+									$oid: '5e7e4bd9d54f1760921a3b00',
+								},
+								access_type: 'phone',
+								access_value: '415-673-0911',
+								instructions: 'Call for more information.',
+								access_value_ES: '415-673-0911',
+								instructions_ES: 'Llama para más información.',
+							},
+						},
 					},
 				],
 			},
@@ -633,7 +625,7 @@ export const serviceData = {
 		],
 		id: 'osvc_01GVH3VDMSN34BACQDMY6S5GPM',
 		description: {
-			key: 'larkin-street-youth-services.osvc_01GVH3VDMSN34BACQDMY6S5GPM.description',
+			key: 'orgn_01GVH3V3RCCBMFD55PWHR8AEC0.osvc_01GVH3VDMSN34BACQDMY6S5GPM.description',
 			ns: 'org-data',
 			tsKey: {
 				text: 'Larkin Street Academy Services offers job readiness, college readiness, computer classes, job placement and retention, internships, tutoring, GED tutoring and classes, secondary and post-secondary school enrollment and support, mindfulness, visual and performing arts. Offices are open Monday through Thursday, 9:00 AM - 16:00 PM, appointments only.',
@@ -651,73 +643,65 @@ export const serviceData = {
 		],
 		accessDetails: [
 			{
-				attributes: [
+				attribute: {
+					id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
+				},
+				supplement: [
 					{
-						attribute: {
-							id: 'attr_01GW2HHFVMH6AE94EXN7T5A87C',
-						},
-						supplement: [
-							{
-								id: 'atts_01GW2HT8BWQ0WZ804A34QV7P0J',
-								data: {
-									json: {
-										_id: {
-											$oid: '5e7e4bd9d54f1760921a3aff',
-										},
-										access_type: 'location',
-										access_value: '134 Golden Gate Ave, San Francisco, CA 94102',
-										instructions:
-											'The above are drop-in service hours for education. Drop-in hours for employment services are Monday, Tuesday: 10 a.m. to noon, and 2:30 to 4:30 p.m. Wednesday: 10 a.m. to noon, and 1 to 2 p.m. Thursday: 10 a.m. to noon, and 1 to 3 p.m. Friday: 10 a.m. to 1 p.m.',
-										access_value_ES: '134 Golden Gate Ave, San Francisco, CA 94102',
-										instructions_ES: 'Visita para más información.',
-									},
+						id: 'atts_01GW2HT8BWQ0WZ804A34QV7P0J',
+						data: {
+							json: {
+								_id: {
+									$oid: '5e7e4bd9d54f1760921a3aff',
 								},
-								text: {
-									key: 'larkin-street-youth-services.attribute.atts_01GW2HT8BWQ0WZ804A34QV7P0J',
-									tsKey: {
-										text: 'The above are drop-in service hours for education. Drop-in hours for employment services are Monday, Tuesday: 10 a.m. to noon, and 2:30 to 4:30 p.m. Wednesday: 10 a.m. to noon, and 1 to 2 p.m. Thursday: 10 a.m. to noon, and 1 to 3 p.m. Friday: 10 a.m. to 1 p.m.',
-									},
-								},
+								access_type: 'location',
+								access_value: '134 Golden Gate Ave, San Francisco, CA 94102',
+								instructions:
+									'The above are drop-in service hours for education. Drop-in hours for employment services are Monday, Tuesday: 10 a.m. to noon, and 2:30 to 4:30 p.m. Wednesday: 10 a.m. to noon, and 1 to 2 p.m. Thursday: 10 a.m. to noon, and 1 to 3 p.m. Friday: 10 a.m. to 1 p.m.',
+								access_value_ES: '134 Golden Gate Ave, San Francisco, CA 94102',
+								instructions_ES: 'Visita para más información.',
 							},
-						],
+						},
+						text: {
+							key: 'orgn_01GVH3V3RCCBMFD55PWHR8AEC0.attribute.atts_01GW2HT8BWQ0WZ804A34QV7P0J',
+							tsKey: {
+								text: 'The above are drop-in service hours for education. Drop-in hours for employment services are Monday, Tuesday: 10 a.m. to noon, and 2:30 to 4:30 p.m. Wednesday: 10 a.m. to noon, and 1 to 2 p.m. Thursday: 10 a.m. to noon, and 1 to 3 p.m. Friday: 10 a.m. to 1 p.m.',
+							},
+						},
 					},
 				],
 			},
 			{
-				attributes: [
+				attribute: {
+					id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
+				},
+				supplement: [
 					{
-						attribute: {
-							id: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
-						},
-						supplement: [
-							{
-								id: 'atts_01GW2HT8BWZG5BTQ57DAQHJZ5Z',
-								data: {
-									json: {
-										_id: {
-											$oid: '5e7e4bd9d54f1760921a3b00',
-										},
-										access_type: 'phone',
-										access_value: '415-673-0911',
-										instructions: 'Call for more information.',
-										access_value_ES: '415-673-0911',
-										instructions_ES: 'Llama para más información.',
-									},
+						id: 'atts_01GW2HT8BWZG5BTQ57DAQHJZ5Z',
+						data: {
+							json: {
+								_id: {
+									$oid: '5e7e4bd9d54f1760921a3b00',
 								},
-								text: {
-									key: 'larkin-street-youth-services.attribute.atts_01GW2HT8BWZG5BTQ57DAQHJZ5Z',
-									tsKey: {
-										text: 'Call for more information.',
-									},
-								},
+								access_type: 'phone',
+								access_value: '415-673-0911',
+								instructions: 'Call for more information.',
+								access_value_ES: '415-673-0911',
+								instructions_ES: 'Llama para más información.',
 							},
-						],
+						},
+						text: {
+							key: 'orgn_01GVH3V3RCCBMFD55PWHR8AEC0.attribute.atts_01GW2HT8BWZG5BTQ57DAQHJZ5Z',
+							tsKey: {
+								text: 'Call for more information.',
+							},
+						},
 					},
 				],
 			},
 		],
 		serviceName: {
-			key: 'larkin-street-youth-services.osvc_01GVH3VDMSN34BACQDMY6S5GPM.name',
+			key: 'orgn_01GVH3V3RCCBMFD55PWHR8AEC0.osvc_01GVH3VDMSN34BACQDMY6S5GPM.name',
 			ns: 'org-data',
 			tsKey: {
 				text: 'Get education and employment services for youth ages 24 and under',
@@ -733,6 +717,110 @@ export const serviceData = {
 			},
 		],
 		attributes: [
+			{
+				attribute: {
+					id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
+					tsKey: 'additional.has-confidentiality-policy',
+					tsNs: 'attribute',
+					icon: null,
+					iconBg: null,
+					showOnLocation: null,
+					categories: [
+						{
+							category: {
+								tag: 'additional-information',
+								icon: null,
+							},
+						},
+					],
+					_count: {
+						parents: 0,
+						children: 0,
+					},
+				},
+				supplement: [],
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
+					tsKey: 'cost.cost-free',
+					tsNs: 'attribute',
+					icon: 'carbon:piggy-bank',
+					iconBg: null,
+					showOnLocation: null,
+					categories: [
+						{
+							category: {
+								tag: 'cost',
+								icon: null,
+							},
+						},
+					],
+					_count: {
+						parents: 0,
+						children: 0,
+					},
+				},
+				supplement: [],
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
+					tsKey: 'eligibility.time-appointment-required',
+					tsNs: 'attribute',
+					icon: null,
+					iconBg: null,
+					showOnLocation: null,
+					categories: [
+						{
+							category: {
+								tag: 'eligibility-requirements',
+								icon: null,
+							},
+						},
+					],
+					_count: {
+						parents: 0,
+						children: 0,
+					},
+				},
+				supplement: [],
+			},
+			{
+				attribute: {
+					id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
+					tsKey: 'eligibility.elig-age',
+					tsNs: 'attribute',
+					icon: null,
+					iconBg: null,
+					showOnLocation: null,
+					categories: [
+						{
+							category: {
+								tag: 'eligibility-requirements',
+								icon: null,
+							},
+						},
+					],
+					_count: {
+						parents: 0,
+						children: 0,
+					},
+				},
+				supplement: [
+					{
+						id: 'atts_01GW2HT8C1J8AQAEHVGANCYRPB',
+						country: null,
+						language: null,
+						text: null,
+						govDist: null,
+						boolean: null,
+						data: {
+							min: 24,
+						},
+					},
+				],
+			},
 			{
 				attribute: {
 					id: 'attr_01GW2HHFVJ8K180CNX339BTXM2',
@@ -768,75 +856,6 @@ export const serviceData = {
 						data: null,
 					},
 				],
-			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVGDTNW9PDQNXK6TF1T',
-					tsKey: 'cost.cost-free',
-					tsNs: 'attribute',
-					icon: 'carbon:piggy-bank',
-					iconBg: null,
-					showOnLocation: null,
-					categories: [
-						{
-							category: {
-								tag: 'cost',
-								icon: null,
-							},
-						},
-					],
-					_count: {
-						parents: 0,
-						children: 0,
-					},
-				},
-				supplement: [],
-			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFV3BADK80TG0DXXFPMM',
-					tsKey: 'additional.has-confidentiality-policy',
-					tsNs: 'attribute',
-					icon: null,
-					iconBg: null,
-					showOnLocation: null,
-					categories: [
-						{
-							category: {
-								tag: 'additional-information',
-								icon: null,
-							},
-						},
-					],
-					_count: {
-						parents: 0,
-						children: 0,
-					},
-				},
-				supplement: [],
-			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVGJ5GD2WHNJDPSFNRW',
-					tsKey: 'eligibility.time-appointment-required',
-					tsNs: 'attribute',
-					icon: null,
-					iconBg: null,
-					showOnLocation: null,
-					categories: [
-						{
-							category: {
-								tag: 'eligibility-requirements',
-								icon: null,
-							},
-						},
-					],
-					_count: {
-						parents: 0,
-						children: 0,
-					},
-				},
-				supplement: [],
 			},
 			{
 				attribute: {
@@ -894,50 +913,15 @@ export const serviceData = {
 					},
 				],
 			},
-			{
-				attribute: {
-					id: 'attr_01GW2HHFVGSAZXGR4JAVHEK6ZC',
-					tsKey: 'eligibility.elig-age',
-					tsNs: 'attribute',
-					icon: null,
-					iconBg: null,
-					showOnLocation: null,
-					categories: [
-						{
-							category: {
-								tag: 'eligibility-requirements',
-								icon: null,
-							},
-						},
-					],
-					_count: {
-						parents: 0,
-						children: 0,
-					},
-				},
-				supplement: [
-					{
-						id: 'atts_01GW2HT8C1J8AQAEHVGANCYRPB',
-						country: null,
-						language: null,
-						text: null,
-						govDist: null,
-						boolean: null,
-						data: {
-							min: 24,
-						},
-					},
-				],
-			},
 		],
+		hours: [],
 		description: {
-			key: 'larkin-street-youth-services.osvc_01GVH3VDMSN34BACQDMY6S5GPM.description',
+			key: 'orgn_01GVH3V3RCCBMFD55PWHR8AEC0.osvc_01GVH3VDMSN34BACQDMY6S5GPM.description',
 			ns: 'org-data',
 			tsKey: {
 				text: 'Larkin Street Academy Services offers job readiness, college readiness, computer classes, job placement and retention, internships, tutoring, GED tutoring and classes, secondary and post-secondary school enrollment and support, mindfulness, visual and performing arts. Offices are open Monday through Thursday, 9:00 AM - 16:00 PM, appointments only.',
 			},
 		},
-		hours: [],
 	},
 } satisfies MockDataObject<'service'>
 

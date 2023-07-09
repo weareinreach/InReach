@@ -4,7 +4,7 @@ import { type SuperJSONResult } from 'superjson/dist/types'
 import { Logger } from 'tslog'
 import { z } from 'zod'
 
-import { NullableJsonValue } from '../zod-schemas'
+import { NullableJsonValue } from './zod'
 
 const MODELS_TO_RUN: Prisma.ModelName[] = ['AttributeSupplement', 'Suggestion']
 
