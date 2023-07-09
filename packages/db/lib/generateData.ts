@@ -70,5 +70,5 @@ tasks.run()
 export type Context = {
 	error?: boolean
 }
-export type ListrTask = ListrTaskWrapper<unknown, typeof ListrRenderer>
+export type ListrTask = ListrTaskWrapper<Context, typeof ListrRenderer>
 type ListrJob = ListrTaskObj<Context, ListrDefaultRenderer>
