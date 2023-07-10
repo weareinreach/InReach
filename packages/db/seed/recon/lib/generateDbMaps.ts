@@ -325,6 +325,48 @@ typeOutput.push('export type TranslationMap = Map<string, string>')
 
 // #endregion
 
+// #region Email IDs
+
+export const generateEmailIdMap = {
+	title: 'Generate Email ID Map',
+	task: async (_ctx, task) => {
+		attachLogger(task)
+		const records = await prisma.orgEmail.findMany({
+			select: { id: true, legacyId: true },
+		})
+		task.output = `Emails retrieved: ${records.length}`
+		const idMap = new Map<string, string>(
+			compact(records.map((u) => (u.legacyId ? [u.legacyId, u.id] : undefined)))
+		)
+		writeSuperJSON('emailIdMap', idMap)
+	},
+} satisfies ListrJob
+
+typeOutput.push('export type EmailIdMap = Map<string, string>')
+
+// #endregion
+
+// #region Phone IDs
+
+export const generatePhoneIdMap = {
+	title: 'Generate Phone ID Map',
+	task: async (_ctx, task) => {
+		attachLogger(task)
+		const records = await prisma.orgPhone.findMany({
+			select: { id: true, legacyId: true },
+		})
+		task.output = `Phone records retrieved: ${records.length}`
+		const idMap = new Map<string, string>(
+			compact(records.map((u) => (u.legacyId ? [u.legacyId, u.id] : undefined)))
+		)
+		writeSuperJSON('phoneIdMap', idMap)
+	},
+} satisfies ListrJob
+
+typeOutput.push('export type PhoneIdMap = Map<string, string>')
+
+// #endregion
+
 // #region Types
 
 export const generateTypes = {

@@ -39,3 +39,7 @@ export type PermissionMap = Map<string, string>
 export type TranslationKeySet = Set<string>
 
 export type TranslationMap = Map<string, string>
+
+export type EmailIdMap = Map<string, string>
+
+export type PhoneIdMap = Map<string, string>

@@ -27,6 +27,8 @@ export const existing = {
 	country: readSuperJSON<Gen.CountryMap>('countryMap'),
 	govDistList: readSuperJSON<Gen.DistList>('distList'),
 	govDistMap: readSuperJSON<Gen.DistMap>('distMap'),
+	emailId: readSuperJSON<Gen.EmailIdMap>('emailIdMap'),
+	phoneId: readSuperJSON<Gen.PhoneIdMap>('phoneIdMap'),
 }
 
 export const dataCorrections = {
@@ -121,11 +123,11 @@ export const attribsToNotDelete = new Set([
 	'attr_01GW2HHFV5Q7XN2ZNTYFR1AD3M',
 ])
 
-export const legacyAccessMap = new Map<string, string | undefined>([
-	['email', slugify('Service Access Instructions-accessEmail', { lower: true, strict: true })],
-	['file', slugify('Service Access Instructions-accessFile', { lower: true, strict: true })],
-	['link', slugify('Service Access Instructions-accessLink', { lower: true, strict: true })],
-	['location', slugify('Service Access Instructions-accessLocation', { lower: true, strict: true })],
-	['phone', slugify('Service Access Instructions-accessPhone', { lower: true, strict: true })],
-	['other', slugify('Service Access Instructions-accessText', { lower: true, strict: true })],
+export const legacyAccessMap = new Map<string, string>([
+	['email', 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW'],
+	['file', 'attr_01GW2HHFVKMRHFD8SMDAZM3SSM'],
+	['link', 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD'],
+	['location', 'attr_01GW2HHFVMH6AE94EXN7T5A87C'],
+	['phone', 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0'],
+	['other', 'attr_01GW2HHFVMMF19AX2KPBTMV6P3'],
 ])

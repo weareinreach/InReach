@@ -407,6 +407,7 @@ export const orgRecon = {
 							updatedAt,
 						}
 						create.orgLocation.add(filterUndefined(newLocation) as Prisma.OrgLocationCreateManyInput)
+						existing.locationId.set(location._id.$oid, newLocation.id ?? raise('missing new id for location'))
 						genAuditCreate(filterUndefined(newLocation), { orgLocationId: newLocation.id })
 					}
 
@@ -561,6 +562,7 @@ export const orgRecon = {
 						}
 						create.organizationEmail.add({ organizationId, orgEmailId: newEmail.id as string })
 						create.orgEmail.add(filterUndefined(newEmail) as Prisma.OrgEmailCreateManyInput)
+						existing.emailId.set(email._id.$oid, newEmail.id ?? raise('missing new id for email'))
 						genAuditCreate(filterUndefined(newEmail), { orgEmailId: newEmail.id })
 					}
 					emailCount++
@@ -786,6 +788,7 @@ export const orgRecon = {
 						}
 						create.organizationPhone.add({ organizationId, phoneId: newPhone.id })
 						create.orgPhone.add(filterUndefined(newPhone) as Prisma.OrgPhoneCreateManyInput)
+						existing.phoneId.set(phone._id.$oid, newPhone.id ?? raise('missing new id for phone'))
 						genAuditCreate(filterUndefined(newPhone), { orgPhoneId: newPhone.id })
 					}
 					phoneCount++
