@@ -996,6 +996,9 @@ importers:
       just-compare:
         specifier: 2.3.0
         version: 2.3.0
+      just-deep-map-values:
+        specifier: 1.2.0
+        version: 1.2.0
       just-diff:
         specifier: 6.0.2
         version: 6.0.2
@@ -18826,6 +18829,10 @@ packages:
 
   /just-compare@2.3.0:
     resolution: {integrity: sha512-6shoR7HDT+fzfL3gBahx1jZG3hWLrhPAf+l7nCwahDdT9XDtosB9kIF0ZrzUp5QY8dJWfQVr5rnsPqsbvflDzg==}
+    dev: false
+
+  /just-deep-map-values@1.2.0:
+    resolution: {integrity: sha512-4vpPBzHHis4UW/EbH5kHZn0gJvKP+EiMpbjD669ZSxdwx+EoAlQLMbLR08SEtydcq/MjDPPtwGiPo9R893iHVA==}
     dev: false
 
   /just-diff-apply@5.5.0:

@@ -78,6 +78,7 @@ export const update = {
 	attributeSupplement: new Set<Prisma.AttributeSupplementUpdateArgs>(),
 	organizationAttribute: new Set<Prisma.OrganizationAttributeUpdateArgs>(),
 	serviceArea: new Set<Prisma.ServiceAreaUpdateArgs>(),
+	serviceAccessAttribute: new Set<Prisma.ServiceAccessAttributeUpdateArgs>(),
 }
 
 export const deleteRecord = {

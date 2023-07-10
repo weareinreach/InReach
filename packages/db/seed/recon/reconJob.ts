@@ -1,6 +1,7 @@
 /* eslint-disable node/no-process-env */
 import { geojsonToWKT } from '@terraformer/wkt'
 import { getDiff } from 'json-difference'
+import mapObj from 'just-deep-map-values'
 import { diff } from 'just-diff'
 import { diffApply } from 'just-diff-apply'
 import filterObject from 'just-filter-object'
@@ -21,7 +22,10 @@ import { createPoint } from '~db/lib/createPoint'
 import { generateId } from '~db/lib/idGen'
 import { slugUpdate } from '~db/lib/slugGen'
 import { InputJsonValue } from '~db/lib/zod'
-import { organizationsSchema } from '~db/seed/recon/input/types'
+import {
+	type AccessInstruction as LegacyAccessInstruction,
+	organizationsSchema,
+} from '~db/seed/recon/input/types'
 import { needsUpdate } from '~db/seed/recon/lib/compare'
 import {
 	attribsToNotDelete,
@@ -35,7 +39,7 @@ import { attachLogger, formatMessage } from '~db/seed/recon/lib/logger'
 import { create, crowdin, deleteRecord, exceptions, update, writeBatches } from '~db/seed/recon/lib/output'
 import { generateFreeTextKey } from '~db/seed/recon/lib/translations'
 import { type ListrJob } from '~db/seed/recon/lib/types'
-import { conditionalObj, emptyStrToNull, raise, trimSpaces } from '~db/seed/recon/lib/utils'
+import { conditionalObj, emptyStrToNull, isSuperJSON, raise, trimSpaces } from '~db/seed/recon/lib/utils'
 // import { parseSchedule } from '~db/seed/recon/parsers/hours'
 import { type AttrSupp, generateSupplementTxn, tagParser } from '~db/seed/recon/parsers/attributes'
 import { JsonInputOrNull } from '~db/zod_util/prismaJson'
@@ -1428,15 +1432,14 @@ export const orgRecon = {
 						include: {
 							serviceName: { include: { tsKey: true } },
 							description: { include: { tsKey: true } },
-							// accessDetails: {
-							// 	include: {
-							// 		attributes: { include: { attribute: true, supplement: { include: { text: true } } } },
-							// 	},
-							// },
+							accessDetails: {
+								include: { attribute: true, supplement: { include: { text: { include: { tsKey: true } } } } },
+							},
 						},
 					})
 
 					if (existingRecord) {
+						// #region Service Basic Info
 						log(
 							`[${count}/${org.services.length}] Reconciling record against ${existingRecord.id}`,
 							undefined,
@@ -1509,17 +1512,168 @@ export const orgRecon = {
 								{ translationKey: key, translationNs: ns }
 							)
 						}
-
+						// #endregion
+						// #region Access Instructions
 						if (service.access_instructions.length) {
 							log(
 								`Processing ${service.access_instructions.length} access instruction records`,
 								'generate',
 								true
 							)
+							const existingAccessInstructions = new Map(
+								existingRecord.accessDetails.map(({ attributeId, supplement }) => [
+									attributeId,
+									supplement.map(({ data, ...rest }) => ({
+										...rest,
+										data: isSuperJSON(data)
+											? superjson.deserialize<LegacyAccessInstruction>(data)
+											: undefined,
+									})),
+								])
+							)
+							// Compile access instructions in to an object to compare against
+							const servAccessToRecon: Record<string, LegacyAccessInstruction[]> = {}
 							for (const access of service.access_instructions) {
-								// const existingAccess = await prisma.serviceAccess.findFirst()
+								const accessType = legacyAccessMap.get(access.access_type ?? '')
+								if (!accessType) {
+									log(`SKIPPING - Unknown access type: ${access.access_type}`, 'skip', true)
+									continue
+								}
+								Array.isArray(servAccessToRecon[accessType])
+									? servAccessToRecon[accessType]?.push(access)
+									: (servAccessToRecon[accessType] = [access])
 							}
+							for (const [accessTypeId, supps] of Object.entries(servAccessToRecon)) {
+								const currentData = existingAccessInstructions.get(accessTypeId)
+								if (!currentData?.length) {
+									log(
+										`Creating ${supps.length} missing records for access type: ${accessTypeId}`,
+										'create',
+										true
+									)
+									supps.forEach((record) => {
+										const newRecord: Prisma.AttributeSupplementCreateManyInput = {
+											id: generateId('attributeSupplement'),
+											serviceAccessAttributeAttributeId: accessTypeId,
+											serviceAccessAttributeServiceId: existingRecord.id,
+											createdAt,
+											updatedAt,
+										}
+										if (record.instructions && record.instructions !== '') {
+											const { key, ns, text } =
+												generateFreeTextKey({
+													orgId: organizationId,
+													text: record.instructions,
+													type: 'access',
+													itemId: newRecord.id,
+												}) ?? {}
+											if (key && ns && text) {
+												const id = generateId('freeText')
+												crowdin.create.add({ key, text })
+												create.translationKey.add({ key, ns, text, createdAt, updatedAt })
+												create.freeText.add({ id, key, ns, createdAt, updatedAt })
+												newRecord.textId = id
+											}
+										}
+										newRecord.data = JsonInputOrNull.parse(superjson.serialize(record))
+										create.attributeSupplement.add(newRecord)
+										create.serviceAccessAttribute.add({
+											serviceId: existingRecord.id,
+											attributeId: accessTypeId,
+										})
+									})
+								} else {
+									for (let record of supps) {
+										record = filterUndefinedOrNull(
+											mapObj<LegacyAccessInstruction>(
+												// @ts-expect-error whatever.
+												record,
+												emptyStrToNull
+											)
+										) as unknown as LegacyAccessInstruction
+										const idx = currentData.findIndex(({ data }) => data?._id.$oid === record._id.$oid)
+										if (idx >= 0) {
+											const existingItem =
+												currentData.splice(idx, 1)[0] ?? raise('error getting existing record')
+											log(`Reconciling record against ${existingItem.id}`, undefined, true)
+											if (
+												existingItem.text?.tsKey.text &&
+												emptyStrToNull(record.instructions) &&
+												needsUpdate(existingItem.text.tsKey.text, emptyStrToNull(record.instructions))
+											) {
+												const newText = emptyStrToNull(record.instructions) ?? raise('cannot parse text')
+												const { key, ns } = existingItem.text
+												logUpdate('text', existingItem.text?.tsKey.text, newText)
+												update.translationKey.add({
+													where: { ns_key: { key, ns } },
+													data: { text: newText, createdAt, updatedAt },
+												})
+											}
+
+											const changes = diff(existingItem.data ?? {}, record)
+											if (changes.length) {
+												logUpdate('data', superjson.stringify(existingItem.data), superjson.stringify(record))
+												update.attributeSupplement.add({
+													where: { id: existingItem.id },
+													data: { data: JsonInputOrNull.parse(superjson.serialize(record)), updatedAt },
+												})
+											}
+										} else {
+											log(`Creating missing record from ${record._id.$oid}`, 'create', true)
+											const newRecord: Prisma.AttributeSupplementCreateManyInput = {
+												id: generateId('attributeSupplement'),
+												serviceAccessAttributeAttributeId: accessTypeId,
+												serviceAccessAttributeServiceId: existingRecord.id,
+												createdAt,
+												updatedAt,
+											}
+											if (record.instructions && record.instructions !== '') {
+												const { key, ns, text } =
+													generateFreeTextKey({
+														orgId: organizationId,
+														text: record.instructions,
+														type: 'access',
+														itemId: newRecord.id,
+													}) ?? {}
+												if (key && ns && text) {
+													const id = generateId('freeText')
+													crowdin.create.add({ key, text })
+													create.translationKey.add({ key, ns, text, createdAt, updatedAt })
+													create.freeText.add({ id, key, ns, createdAt, updatedAt })
+													newRecord.textId = id
+												}
+											}
+											newRecord.data = JsonInputOrNull.parse(superjson.serialize(record))
+											create.attributeSupplement.add(newRecord)
+											create.serviceAccessAttribute.add({
+												serviceId: existingRecord.id,
+												attributeId: accessTypeId,
+											})
+										}
+									}
+									if (currentData.length) {
+										log(`Deactivating ${currentData.length} records`, 'trash', true)
+										currentData.forEach((record) => {
+											update.attributeSupplement.add({
+												where: { id: record.id },
+												data: { active: false, updatedAt },
+											})
+										})
+									}
+								}
+							}
+						} else if (existingRecord.accessDetails.length) {
+							log(`Marking ${existingRecord.accessDetails.length} records as inactive`, 'trash', true)
+							existingRecord.accessDetails.forEach((record) => {
+								update.serviceAccessAttribute.add({
+									where: {
+										serviceId_attributeId: { serviceId: record.serviceId, attributeId: record.attributeId },
+									},
+									data: { active: false },
+								})
+							})
 						}
+						// #endregion
 					}
 
 					count++
