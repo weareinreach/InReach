@@ -1008,6 +1008,9 @@ importers:
       just-filter-object:
         specifier: 3.2.0
         version: 3.2.0
+      just-map-keys:
+        specifier: 2.3.0
+        version: 2.3.0
       just-map-values:
         specifier: 3.2.0
         version: 3.2.0
@@ -18856,6 +18859,10 @@ packages:
 
   /just-intersect@4.3.0:
     resolution: {integrity: sha512-XdAiJUmfM7VOoBUh7I4xo+0YYuzCPiV0Xf21oAmR+1j6a/P8KxJUCigZDblmURZmkIWffNziY2sbSaHrJbNcuA==}
+    dev: false
+
+  /just-map-keys@2.3.0:
+    resolution: {integrity: sha512-enWodahIp6kDnt+/dw5Ps1baTmuuc9AVFOuwwLhn3mufOyP4aWF3+4uF6oEFKVH15H0ymb7MjuO9W6j8HFQ8ng==}
     dev: false
 
   /just-map-values@3.2.0:
