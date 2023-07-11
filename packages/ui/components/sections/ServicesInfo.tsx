@@ -34,7 +34,8 @@ const useServiceSectionStyles = createStyles((theme) => ({
 const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSectionProps) => {
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
 	const { slug } = router.query
-	const { t } = useTranslation(['common', 'services', slug])
+	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
+	const { t } = useTranslation(orgId?.id ? ['common', 'services', orgId.id] : ['common', 'services'])
 	const { classes } = useServiceSectionStyles()
 
 	const variants = useCustomVariant()
@@ -60,13 +61,13 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 						{service.offersRemote && !hideRemoteBadges ? (
 							<Group spacing={8} align='center'>
 								<Text variant={variants.Text.utility1}>
-									{t(service.tsKey ?? '', { ns: slug, defaultValue: service.defaultText }) as string}
+									{t(service.tsKey ?? '', { ns: orgId?.id, defaultValue: service.defaultText }) as string}
 								</Text>
 								<Badge variant='remote' />
 							</Group>
 						) : (
 							<Text variant={variants.Text.utility1}>
-								{t(service.tsKey ?? '', { ns: slug, defaultValue: service.defaultText }) as string}
+								{t(service.tsKey ?? '', { ns: orgId?.id, defaultValue: service.defaultText }) as string}
 							</Text>
 						)}
 

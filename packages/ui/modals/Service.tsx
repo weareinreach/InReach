@@ -61,7 +61,10 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 	({ serviceId, ...props }, ref) => {
 		const slug = useSlug()
 		const { data, status } = api.service.forServiceModal.useQuery(serviceId)
-		const { t, i18n } = useTranslation(['common', 'attribute', slug])
+		const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
+		const { t, i18n } = useTranslation(
+			orgId?.id ? ['common', 'attribute', orgId.id] : ['common', 'attribute']
+		)
 		const { classes } = useStyles()
 		const [opened, handler] = useDisclosure(false)
 		const theme = useMantineTheme()
@@ -414,11 +417,11 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 								{atCapacity}
 								{serviceName && (
 									<Title order={2}>
-										{t(serviceName.key, { ns: slug, defaultValue: serviceName.tsKey.text })}
+										{t(serviceName.key, { ns: orgId?.id, defaultValue: serviceName.tsKey.text })}
 									</Title>
 								)}
 								{description && (
-									<Text>{t(description.key, { ns: slug, defaultValue: description.tsKey.text })}</Text>
+									<Text>{t(description.key, { ns: orgId?.id, defaultValue: description.tsKey.text })}</Text>
 								)}
 							</Stack>
 							<BadgeGroup badges={serviceBadges} />

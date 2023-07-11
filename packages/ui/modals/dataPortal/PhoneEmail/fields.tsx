@@ -50,9 +50,10 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 	const form = useFormContext()
 	const [locations, setLocations] = useState<BasicSelect[]>()
 	const [services, setServices] = useState<BasicSelect[]>()
-	const slug = useSlug()
 	const variants = useCustomVariant()
-	const { t } = useTranslation([slug])
+	const slug = useSlug()
+	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
+	const { t } = useTranslation(orgId?.id)
 	const { id: organizationId } = useOrgInfo()
 
 	const { data: serviceData, isLoading: isServiceLoading } = api.service.getNames.useQuery(
@@ -64,7 +65,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 			select: (data) =>
 				data.map(({ id, tsKey, defaultText }) => ({
 					value: id,
-					label: t(tsKey, { ns: slug, defaultValue: defaultText }),
+					label: t(tsKey, { ns: orgId?.id, defaultValue: defaultText }),
 				})),
 		}
 	)
