@@ -150,28 +150,20 @@ export const mutations = defineRouter({
 		.mutation(async ({ ctx, input }) => {
 			const inputData = { actorId: ctx.actorId, operation: 'CREATE', data: input }
 
-			const {
-				serviceAccess,
-				serviceAccessAttribute,
-				attributeSupplement,
-				auditLogs,
-				freeText,
-				translationKey,
-			} = AttachServAccess().dataParser.parse(inputData)
+			const { serviceAccessAttribute, attributeSupplement, auditLogs, freeText, translationKey } =
+				AttachServAccess().dataParser.parse(inputData)
 			const result = await ctx.prisma.$transaction(async (tx) => {
 				const tKey = translationKey ? await tx.translationKey.create(translationKey) : undefined
 				const fText = freeText ? await tx.freeText.create(freeText) : undefined
 				const aSupp = attributeSupplement
 					? await tx.attributeSupplement.create(attributeSupplement)
 					: undefined
-				const access = await tx.serviceAccess.create(serviceAccess)
 				const attrLink = await tx.serviceAccessAttribute.create(serviceAccessAttribute)
 				const logs = await tx.auditLog.createMany({ data: auditLogs, skipDuplicates: true })
 				return {
 					translationKey: tKey,
 					freeText: fText,
 					attributeSupplement: aSupp,
-					serviceAccess: access,
 					serviceAccessAttribute: attrLink,
 					auditLog: logs,
 				}
