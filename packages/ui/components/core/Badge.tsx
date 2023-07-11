@@ -96,7 +96,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 						radius: theme.radius.xl,
 						padding: 0,
 					},
-					'&[data-hideBg]': {
+					'&[data-hidebg]': {
 						backgroundColor: undefined,
 						height: undefined,
 						width: undefined,
@@ -253,7 +253,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 		const children = (() => {
 			switch (props.variant) {
 				case 'leader': {
-					const { tsKey, minify, hideBg: _, variant: _variant, ...rest } = props
+					const { tsKey, minify, hideBg: _, variant: _variant, iconBg: _iconBg, ...rest } = props
 					passedBadgeProps = rest
 					return minify ? null : <Text fw={500}>{t(tsKey, { ns: 'attribute' })}</Text>
 				}
@@ -364,8 +364,8 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 			: (variant as BadgeVariant)
 
 		const styleDataProps = {
-			'data-minify': (props.variant === 'leader' && props.minify) || undefined,
-			'data-hideBg': (props.variant === 'leader' && props.hideBg) || undefined,
+			...(props.variant === 'leader' && props.minify ? { 'data-minify': true } : {}),
+			...(props.variant === 'leader' && props.hideBg ? { 'data-hidebg': true } : {}),
 		}
 
 		const badge = (
