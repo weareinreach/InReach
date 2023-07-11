@@ -1,5 +1,5 @@
 import superjson from 'superjson'
-import { type LiteralUnion } from 'type-fest'
+import { type CamelCasedProperties, type LiteralUnion } from 'type-fest'
 
 import fs from 'fs'
 import path from 'path'
@@ -11,7 +11,7 @@ import { type PassedTask } from '~db/seed/recon/lib/types'
 const outputDir = path.resolve(__dirname, '../output')
 const createDir = path.resolve(outputDir, 'create')
 const updateDir = path.resolve(outputDir, 'update')
-const deleteDir = path.resolve(outputDir, 'delete')
+
 const execptionDir = path.resolve(outputDir, 'exceptions')
 
 export const getBatchFile: GetBatchFile = ({ type, batchName }) => {
@@ -22,14 +22,15 @@ export const getBatchFile: GetBatchFile = ({ type, batchName }) => {
 		case 'update': {
 			return `${updateDir}/${batchName}.json`
 		}
-		case 'delete': {
-			return `${deleteDir}/${batchName}.json`
-		}
 		case 'exceptions': {
 			return `${execptionDir}/${batchName}.json`
 		}
 	}
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type RecordSet = CamelCasedProperties<{ [key in Prisma.ModelName]?: Set<any> }>
+
 export const create = {
 	organization: new Set<Prisma.OrganizationCreateManyInput>(),
 	translationKey: new Set<Prisma.TranslationKeyCreateManyInput>(),
@@ -45,7 +46,6 @@ export const create = {
 	orgPhoto: new Set<Prisma.OrgPhotoCreateManyInput>(),
 	orgHours: new Set<Prisma.OrgHoursCreateManyInput>(),
 	orgService: new Set<Prisma.OrgServiceCreateManyInput>(),
-	attributeSupplement: new Set<Prisma.AttributeSupplementCreateManyInput>(),
 	orgServicePhone: new Set<Prisma.OrgServicePhoneCreateManyInput>(),
 	orgServiceEmail: new Set<Prisma.OrgServiceEmailCreateManyInput>(),
 	orgLocationService: new Set<Prisma.OrgLocationServiceCreateManyInput>(),
@@ -61,9 +61,11 @@ export const create = {
 	organizationPermission: new Set<Prisma.OrganizationPermissionCreateManyInput>(),
 	organizationEmail: new Set<Prisma.OrganizationEmailCreateManyInput>(),
 	organizationPhone: new Set<Prisma.OrganizationPhoneCreateManyInput>(),
+	attributeSupplement: new Set<Prisma.AttributeSupplementCreateManyInput>(),
 	slugRedirect: new Set<Prisma.SlugRedirectCreateManyInput>(),
 	auditLog: new Set<Prisma.AuditLogCreateManyInput>(),
-}
+} as const
+export const createBatchNames = Object.keys(create) as (keyof typeof create)[]
 
 export const update = {
 	organization: new Set<Prisma.OrganizationUpdateArgs>(),
@@ -79,11 +81,25 @@ export const update = {
 	organizationAttribute: new Set<Prisma.OrganizationAttributeUpdateArgs>(),
 	serviceArea: new Set<Prisma.ServiceAreaUpdateArgs>(),
 	serviceAccessAttribute: new Set<Prisma.ServiceAccessAttributeUpdateArgs>(),
-}
-
-export const deleteRecord = {
-	organizationAttribute: new Set<Prisma.OrganizationAttributeDeleteManyArgs>(),
-}
+	serviceAttribute: new Set<Prisma.ServiceAttributeUpdateArgs>(),
+	orgServiceTag: new Set<Prisma.OrgServiceTagUpdateArgs>(),
+	orgServiceEmail: new Set<Prisma.OrgServiceEmailUpdateArgs>(),
+	orgLocationService: new Set<Prisma.OrgLocationServiceUpdateArgs>(),
+	orgServicePhone: new Set<Prisma.OrgServicePhoneUpdateArgs>(),
+} as const
+export const updateBatchNames = Object.keys(update) as (keyof typeof update)[]
+export type CreateBatchNames = keyof typeof create
+export type UpdateBatchNames = keyof typeof update
+export type BatchData<
+	T extends 'create' | 'update',
+	K extends T extends 'create' ? CreateBatchNames : UpdateBatchNames
+> = T extends 'create'
+	? K extends CreateBatchNames
+		? (typeof create)[K]
+		: never
+	: K extends UpdateBatchNames
+	? (typeof update)[K]
+	: never
 
 export const crowdin = {
 	create: new Set<{ text: string; key: string }>(),
@@ -95,11 +111,13 @@ interface ExceptionItem {
 	organizationId: string
 	record: unknown
 	existing?: unknown
+	[k: string]: unknown
 }
 export const exceptions = {
 	phone: new Set<ExceptionItem>(),
 	location: new Set<ExceptionItem>(),
 	socialMedia: new Set<ExceptionItem>(),
+	serviceTag: new Set<ExceptionItem>(),
 }
 export const batchCount = new Map<string, number>()
 export const writeBatches = (task: PassedTask, clear = false) => {
@@ -163,36 +181,7 @@ export const writeBatches = (task: PassedTask, clear = false) => {
 			update[batchName].clear()
 		}
 	}
-	// Deletions
-	for (const batchName in deleteRecord) {
-		const batch = deleteRecord[batchName]
-		const batchFile = getBatchFile({ type: 'delete', batchName })
-		if (clear) {
-			if (fs.existsSync(batchFile)) {
-				fs.rmSync(batchFile)
-				task.output = formatMessage(`Deleting file: ${batchFile}`, 'trash')
-			}
-		} else {
-			if (!batch.size) {
-				task.output = formatMessage(`Skipping empty batch: ${batchName}`, 'skip')
-				continue
-			}
-			const currentCount = batchCount.get(`delete.${batchName}`) ?? 0
-			const currentBatchCount = batch.size
-			const existingBatch = fs.existsSync(batchFile)
-				? superjson.parse<Set<unknown>>(fs.readFileSync(batchFile, 'utf-8'))
-				: []
-			const outputData = new Set([...existingBatch, ...batch])
-			fs.writeFileSync(batchFile, superjson.stringify(outputData))
-			batchCount.set(`delete.${batchName}`, currentCount + currentBatchCount)
-			task.output = formatMessage(
-				`Records added to delete/${batchName}.json: ${currentBatchCount} (Total records in file: ${outputData.size})`,
-				'write',
-				true
-			)
-			deleteRecord[batchName].clear()
-		}
-	}
+
 	// Exceptions
 	for (const batchName in exceptions) {
 		const batch = exceptions[batchName]
@@ -305,15 +294,10 @@ interface GetUpdateParams {
 	type: 'update'
 	batchName: LiteralUnion<keyof typeof update, string>
 }
-interface GetDeleteParams {
-	type: 'delete'
-	batchName: LiteralUnion<keyof typeof deleteRecord, string>
-}
+
 interface GetExceptionsParams {
 	type: 'exceptions'
 	batchName: LiteralUnion<keyof typeof exceptions, string>
 }
 
-type GetBatchFile = (
-	params: GetCreateParams | GetUpdateParams | GetDeleteParams | GetExceptionsParams
-) => string
+type GetBatchFile = (params: GetCreateParams | GetUpdateParams | GetExceptionsParams) => string

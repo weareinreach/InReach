@@ -1,6 +1,8 @@
 /* eslint-disable node/no-process-env */
 import { geojsonToWKT } from '@terraformer/wkt'
+import { flatten } from 'flat'
 import { getDiff } from 'json-difference'
+import compact from 'just-compact'
 import mapObj from 'just-deep-map-values'
 import { diff } from 'just-diff'
 import { diffApply } from 'just-diff-apply'
@@ -20,7 +22,7 @@ import { prisma, type Prisma } from '~db/client'
 import { namespace } from '~db/generated/namespaces'
 import { createPoint } from '~db/lib/createPoint'
 import { generateId } from '~db/lib/idGen'
-import { slugUpdate } from '~db/lib/slugGen'
+import { slug, slugUpdate } from '~db/lib/slugGen'
 import { InputJsonValue } from '~db/lib/zod'
 import {
 	type AccessInstruction as LegacyAccessInstruction,
@@ -29,14 +31,13 @@ import {
 import { needsUpdate } from '~db/seed/recon/lib/compare'
 import {
 	attribsToNotDelete,
-	dataCorrections,
 	existing,
 	getCountryId,
 	getGovDistId,
 	legacyAccessMap,
 } from '~db/seed/recon/lib/existing'
-import { attachLogger, formatMessage } from '~db/seed/recon/lib/logger'
-import { create, crowdin, deleteRecord, exceptions, update, writeBatches } from '~db/seed/recon/lib/output'
+import { attachLogger, formatMessage, isSuccess } from '~db/seed/recon/lib/logger'
+import { create, crowdin, exceptions, update, writeBatches } from '~db/seed/recon/lib/output'
 import { generateFreeTextKey } from '~db/seed/recon/lib/translations'
 import { type ListrJob } from '~db/seed/recon/lib/types'
 import { conditionalObj, emptyStrToNull, isSuperJSON, raise, trimSpaces } from '~db/seed/recon/lib/utils'
@@ -53,7 +54,6 @@ const filterUndefinedOrNull = <T extends Record<string, unknown>>(obj: PlainObje
 	filterObject<T>(obj, (_k, v) => v !== undefined && v !== null)
 export const orgRecon = {
 	title: 'Reconcile Organizations',
-	// skip: true,
 	options: { bottomBar: false },
 	task: async (_ctx, task) => {
 		attachLogger(task)
@@ -159,7 +159,7 @@ export const orgRecon = {
 			// #region Organization basics
 			const existingOrgRecord = await prisma.organization.findUniqueOrThrow({
 				where: { id: organizationId },
-				include: { description: { include: { tsKey: true } } },
+				include: { description: { include: { tsKey: true } }, allowedEditors: true, associatedUsers: true },
 			})
 			const updateOrgRecord: Prisma.OrganizationUpdateArgs = {
 				where: { id: organizationId },
@@ -205,7 +205,11 @@ export const orgRecon = {
 				genAuditUpdate(
 					{ text: existingOrgRecord.description.tsKey.text },
 					{ text: trimSpaces(org.description) },
-					{ translationKey: existingOrgRecord.description.key, translationNs: namespace.orgData }
+					{
+						translationKey: existingOrgRecord.description.key,
+						translationNs: namespace.orgData,
+						freeTextId: existingOrgRecord.description.id,
+					}
 				)
 			}
 			if (needsUpdate(existingOrgRecord.deleted, org.is_deleted)) {
@@ -601,7 +605,7 @@ export const orgRecon = {
 					log(`Marking ${deletedPhones.length} Phone records as deleted`, 'trash')
 					for (const phone of deletedPhones) {
 						log(`Marking phone ${phone.number} as deleted`, undefined, true)
-						update.orgPhone.add({ where: { id: phone.id }, data: { deleted: true } })
+						update.orgPhone.add({ where: { id: phone.id }, data: { deleted: true, updatedAt } })
 						genAuditUpdate({ deleted: false }, { deleted: true }, { orgPhoneId: phone.id })
 					}
 				}
@@ -691,8 +695,8 @@ export const orgRecon = {
 									log(`Adding description: ${phone.phone_type}`, 'create', true)
 									const id = generateId('freeText')
 									const { key, ns, text } = freeText
-									create.translationKey.add({ key, ns, text })
-									create.freeText.add({ id, key, ns })
+									create.translationKey.add({ key, ns, text, createdAt, updatedAt })
+									create.freeText.add({ id, key, ns, createdAt, updatedAt })
 									crowdin.create.add({ key, text })
 									updateRecord.data.description = { connect: { id } }
 									genAuditCreate(
@@ -705,7 +709,7 @@ export const orgRecon = {
 								const { key, ns } = existingRecord.description
 								update.translationKey.add({
 									where: { ns_key: { ns, key } },
-									data: { text: trimSpaces(phone.phone_type) },
+									data: { text: trimSpaces(phone.phone_type), updatedAt },
 								})
 								genAuditUpdate(
 									{ text: existingRecord.description.tsKey.text },
@@ -779,8 +783,8 @@ export const orgRecon = {
 								log(`Adding description: ${phone.phone_type}`, 'create', true)
 								const id = generateId('freeText')
 								const { key, ns, text } = freeText
-								create.translationKey.add({ key, ns, text })
-								create.freeText.add({ id, key, ns })
+								create.translationKey.add({ key, ns, text, createdAt, updatedAt })
+								create.freeText.add({ id, key, ns, createdAt, updatedAt })
 								crowdin.create.add({ key, text })
 								newPhone.descriptionId = id
 								newPhone.legacyDesc = phone.phone_type
@@ -973,7 +977,7 @@ export const orgRecon = {
 						log(`Marking ${photo.id} as deleted`, 'trash', true)
 						const deleteRecord: Prisma.OrgPhotoUpdateArgs = {
 							where: { id: photo.id },
-							data: { deleted: true },
+							data: { deleted: true, updatedAt },
 						}
 						update.orgPhoto.add(deleteRecord)
 						genAuditUpdate(photo, deleteRecord.data, { orgPhotoId: photo.id })
@@ -1175,6 +1179,8 @@ export const orgRecon = {
 										}),
 										createdAt,
 										updatedAt,
+										organizationAttributeAttributeId: existing.attributeId,
+										organizationAttributeOrganizationId: organizationId,
 									}
 									if (text) {
 										logAddition('freeText', text)
@@ -1277,6 +1283,7 @@ export const orgRecon = {
 						genAuditLink({ attributeId, organizationId })
 
 						for (const supplement of attributeSupplement) {
+							supplement.id = generateId('attributeSupplement')
 							if (supplement.text) {
 								const { key, ns, text } =
 									generateFreeTextKey({
@@ -1297,7 +1304,13 @@ export const orgRecon = {
 								}
 							}
 							logAddition('attributeSupplement', supplement)
-							create.attributeSupplement.add(supplement)
+							create.attributeSupplement.add({
+								...supplement,
+								organizationAttributeAttributeId: attributeId,
+								organizationAttributeOrganizationId: organizationId,
+								createdAt,
+								updatedAt,
+							})
 						}
 					}
 				}
@@ -1359,6 +1372,7 @@ export const orgRecon = {
 							update.serviceArea.add({
 								where: { id: existingServArea.id },
 								data: {
+									updatedAt,
 									...conditionalObj(changes.del.districts.length || changes.add.districts.length, {
 										districts: {
 											...conditionalObj(changes.del.districts.length, {
@@ -1435,6 +1449,10 @@ export const orgRecon = {
 							accessDetails: {
 								include: { attribute: true, supplement: { include: { text: { include: { tsKey: true } } } } },
 							},
+							services: true,
+							emails: true,
+							phones: true,
+							locations: true,
 						},
 					})
 
@@ -1445,7 +1463,7 @@ export const orgRecon = {
 							undefined,
 							true
 						)
-
+						const orgServiceId = existingRecord.id
 						const updatedRecord: Prisma.OrgServiceUpdateArgs = {
 							where: { id: existingRecord.id },
 							data: {},
@@ -1478,7 +1496,7 @@ export const orgRecon = {
 								where: {
 									ns_key: { ns, key },
 								},
-								data: { text: trimSpaces(service.name) },
+								data: { text: trimSpaces(service.name), updatedAt },
 							})
 							genAuditUpdate(
 								{ text: existingRecord.serviceName.tsKey.text },
@@ -1504,7 +1522,7 @@ export const orgRecon = {
 								where: {
 									ns_key: { ns, key },
 								},
-								data: { text: trimSpaces(service.description) },
+								data: { text: trimSpaces(service.description), updatedAt },
 							})
 							genAuditUpdate(
 								{ text: existingRecord.description.tsKey.text },
@@ -1606,7 +1624,7 @@ export const orgRecon = {
 												logUpdate('text', existingItem.text?.tsKey.text, newText)
 												update.translationKey.add({
 													where: { ns_key: { key, ns } },
-													data: { text: newText, createdAt, updatedAt },
+													data: { text: newText, updatedAt },
 												})
 											}
 
@@ -1674,14 +1692,853 @@ export const orgRecon = {
 							})
 						}
 						// #endregion
+						// #region Attributes
+						if (!service.properties || !Object.keys(service.properties).length) {
+							log('SKIPPING Service Attributes records, no entries', 'skip')
+						} else {
+							log(
+								`Processing ${Object.keys(service.properties).length} Service Attribute records`,
+								'generate'
+							)
+							let attributesCount = 1
+							const attributesSkip = 0
+							const unsupportedAttributes: Record<string, unknown>[] = []
+							const { id: unsupportedId } =
+								existing.attribute.get('sys.incompatible-info') ?? raise(`Cannot find 'incompatible' id`)
+							const existingAttributes = await prisma.serviceAttribute.findMany({
+								where: { orgServiceId },
+								include: { supplement: { include: { text: { include: { tsKey: true } } } } },
+							})
+							const existingServArea = await prisma.serviceArea.findUnique({
+								where: { orgServiceId },
+								include: { countries: true, districts: true },
+							})
+							const servAttrib: Record<string, AttrSupp[]> = {}
+							const serviceArea: ServArea = { countries: [], districts: [] }
+							for (const [tag, rawValue] of Object.entries(service.properties)) {
+								log(
+									`Processing Tag: ${tag} [${attributesCount + attributesSkip}/${
+										Object.keys(service.properties).length
+									}]`,
+									'generate'
+								)
+								const value =
+									typeof rawValue === 'string'
+										? rawValue
+										: Array.isArray(rawValue)
+										? rawValue.join()
+										: rawValue.toString()
+								const tagRecord = tagParser(tag, value)
+
+								switch (tagRecord.type) {
+									case 'unknown': {
+										log(
+											`Unsupported Attribute: ${Object.keys(tagRecord.supplementData).join()}`,
+											undefined,
+											true
+										)
+										unsupportedAttributes.push(tagRecord.supplementData)
+										break
+									}
+									case 'attribute': {
+										const attribId = tagRecord.attributeId ?? raise('missing attributeId')
+										if (tagRecord.supplementData?.data)
+											tagRecord.supplementData.data = superjson.stringify(tagRecord.supplementData.data)
+										if (Object.hasOwn(servAttrib, attribId) && tagRecord.supplementData) {
+											servAttrib[attribId]?.push(tagRecord.supplementData)
+										} else {
+											servAttrib[attribId] = tagRecord.supplementData ? [tagRecord.supplementData] : []
+										}
+										break
+									}
+									case 'serviceArea': {
+										if (tagRecord.supplementData?.countryId)
+											serviceArea.countries.push(tagRecord.supplementData.countryId)
+										if (tagRecord.supplementData?.govDistId)
+											serviceArea.districts.push(tagRecord.supplementData.govDistId)
+										break
+									}
+								}
+								attributesCount++
+							}
+							if (unsupportedAttributes.length) {
+								servAttrib[unsupportedId] = [
+									{
+										data: superjson.stringify(unsupportedAttributes),
+									},
+								]
+							}
+							for (const [attributeId, attributeSupplement] of Object.entries(servAttrib)) {
+								const existingIdx = existingAttributes.findIndex(({ attributeId: id }) => id === attributeId)
+								if (existingIdx !== -1) {
+									const existing =
+										existingAttributes.splice(existingIdx, 1)[0] ?? raise('Unable to get record')
+									const existingSupplements = existing.supplement.map(
+										({ boolean, countryId, govDistId, languageId, data, text, id }) =>
+											filterObject<AttrSupp>(
+												{
+													id,
+													boolean,
+													countryId,
+													govDistId,
+													languageId,
+													data: data
+														? superjson.stringify(superjson.deserialize(data as unknown as SuperJSONResult))
+														: undefined,
+													text: text?.tsKey.text,
+												},
+												(k, v) => Boolean(v)
+											)
+									)
+
+									const sortedExisting = sortArray(
+										existingSupplements.map(({ id, ...data }) => data),
+										(data) => Object.entries(data).forEach(([k, v]) => v)
+									)
+									const sortedUpdates = sortArray(attributeSupplement, ({ id, ...data }) =>
+										Object.entries(data).forEach(([k, v]) => v)
+									)
+
+									const changes = diff(sortedExisting, sortedUpdates)
+									if (changes.length) {
+										const diff = getDiff(
+											existingSupplements.map(({ id, ...data }) => data),
+											attributeSupplement
+										)
+										const updated = diffApply(existingSupplements, changes)
+
+										const pendingUpdates = generateSupplementTxn(updated, changes)
+										// #region Process Supplement Changes
+										const processChanges = (txn: AttrSupplementChange) => {
+											if (!txn.where.id) {
+												logAddition(`attribute ${existing.attributeId}`, 'attributeSupplement')
+												const { data, text, ...rest } = txn.data
+												const newSupplement: Prisma.AttributeSupplementCreateManyInput = {
+													id: generateId('attributeSupplement'),
+													...rest,
+													...conditionalObj(data, {
+														data: JsonInputOrNull.parse(
+															superjson.serialize(typeof data === 'string' ? superjson.parse(data) : data)
+														),
+													}),
+													createdAt,
+													updatedAt,
+													serviceAttributeAttributeId: existing.attributeId,
+													serviceAttributeOrgServiceId: orgServiceId,
+												}
+												if (text) {
+													logAddition('freeText', text)
+													const { key, ns } =
+														generateFreeTextKey({
+															orgId: organizationId,
+															text,
+															type: 'supplement',
+															itemId: newSupplement.id,
+														}) ?? {}
+													if (key && ns) {
+														const id = generateId('freeText')
+														create.translationKey.add({ key, ns, text, createdAt, updatedAt })
+														create.freeText.add({ id, key, ns, updatedAt, createdAt })
+														crowdin.create.add({ key, text })
+														txn.data.textId = id
+													}
+												}
+												create.attributeSupplement.add(newSupplement)
+												genAuditCreate(newSupplement, {
+													attributeSupplementId: newSupplement.id,
+													orgServiceId,
+												})
+											} else {
+												const existingSupp =
+													existing.supplement.find(({ id }) => id === txn.where.id) ??
+													raise('Cannot locate record')
+												if (txn.data.text) {
+													// update TranslationKey record
+													const { key, ns, text: oldText, crowdinId } = existingSupp.text?.tsKey ?? {}
+													const { text } = txn.data
+													if (key && ns) {
+														logUpdate('text', oldText, text)
+														update.translationKey.add({
+															where: { ns_key: { ns, key } },
+															data: { text, updatedAt },
+														})
+														if (crowdinId) crowdin.update.add({ id: crowdinId, text })
+														genAuditUpdate(
+															{ text: oldText },
+															{ text, updatedAt },
+															{ translationKey: key, translationNs: ns, attributeSupplementId: txn.where.id }
+														)
+													} else {
+														logAddition('freeText', text)
+														const { key, ns } =
+															generateFreeTextKey({
+																orgId: organizationId,
+																text,
+																type: 'supplement',
+																itemId: txn.where.id,
+															}) ?? {}
+														if (key && ns) {
+															const id = generateId('freeText')
+															create.translationKey.add({ key, ns, text, createdAt, updatedAt })
+															create.freeText.add({ id, key, ns, updatedAt, createdAt })
+															crowdin.create.add({ key, text })
+															txn.data.textId = id
+														}
+													}
+												}
+												const { text: _, data, ...rest } = txn.data
+												// if (existingOrgRecord.name === 'North East Medical Services') debugger
+
+												const updatedRecord: Prisma.AttributeSupplementUpdateArgs = {
+													where: { id: txn.where.id },
+													data: {
+														...conditionalObj(data, {
+															data: JsonInputOrNull.parse(
+																superjson.serialize(typeof data === 'string' ? superjson.parse(data) : data)
+															),
+														}),
+														...rest,
+														updatedAt,
+													},
+												}
+												update.attributeSupplement.add(updatedRecord)
+												const { text: _origText, ...originalRecord } = existingSupp
+												const filteredOriginal = pick(
+													originalRecord,
+													Object.keys(updatedRecord.data) as unknown as keyof typeof originalRecord
+												)
+												logUpdate(
+													updatedRecord.where?.id ?? 'attributeSupplement',
+													omit(filteredOriginal, 'updatedAt'),
+													omit(updatedRecord.data, 'updatedAt')
+												)
+												genAuditUpdate(filteredOriginal, updatedRecord.data, {
+													attributeSupplementId: updatedRecord.where.id,
+												})
+											}
+										}
+										// #endregion
+
+										if (Array.isArray(pendingUpdates)) {
+											for (const item of pendingUpdates) {
+												processChanges(item)
+											}
+										} else {
+											processChanges(pendingUpdates)
+										}
+									}
+									// debugger
+								} else {
+									logAddition('serviceAttribute', attributeId)
+									create.serviceAttribute.add({ attributeId, orgServiceId })
+									genAuditLink({ attributeId, organizationId, orgServiceId })
+
+									for (const supplement of attributeSupplement) {
+										supplement.id = generateId('attributeSupplement')
+										if (supplement.text) {
+											const { key, ns, text } =
+												generateFreeTextKey({
+													orgId: organizationId,
+													text: supplement.text,
+													type: 'supplement',
+													itemId: supplement.id,
+												}) ?? {}
+											if (key && ns && text) {
+												logAddition('translationKey', { key, ns, text, updatedAt, createdAt })
+												create.translationKey.add({ key, ns, text, createdAt, updatedAt })
+												logAddition('freeText', supplement.text)
+												const textId = generateId('freeText')
+												create.freeText.add({ id: textId, key, ns, updatedAt, createdAt })
+												crowdin.create.add({ key, text })
+												supplement.textId = textId
+												delete supplement.text
+											}
+										}
+										logAddition('attributeSupplement', supplement)
+										create.attributeSupplement.add({
+											...supplement,
+											createdAt,
+											updatedAt,
+											serviceAttributeAttributeId: attributeId,
+											serviceAttributeOrgServiceId: orgServiceId,
+										})
+									}
+								}
+							}
+							if (existingAttributes.length) {
+								log(
+									`Reviewing ${existingAttributes.length} existing attributes for possible deactivation`,
+									undefined,
+									true
+								)
+								for (const record of existingAttributes) {
+									log(`Processing ${record.attributeId}`, undefined, true)
+									const { attributeId } = record
+									if (!attribsToNotDelete.has(attributeId)) {
+										logUpdate('active', 'true', 'false')
+										update.serviceAttribute.add({
+											where: { orgServiceId_attributeId: { attributeId, orgServiceId } },
+											data: { active: false },
+										})
+										genAuditUpdate({ active: true }, { active: false }, { orgServiceId, attributeId })
+									}
+								}
+							}
+
+							if (serviceArea.countries.length || serviceArea.districts.length) {
+								if (existingServArea) {
+									const current = {
+										countries: existingServArea.countries.map(({ countryId }) => countryId),
+										districts: existingServArea.districts.map(({ govDistId }) => govDistId),
+									}
+
+									const changes: { add: ServArea; del: ServArea } = {
+										add: { countries: [], districts: [] },
+										del: { countries: [], districts: [] },
+									}
+									let hasChanges = false
+
+									for (const key of Object.keys(serviceArea)) {
+										for (const id of serviceArea[key]) {
+											if (!current[key].includes(id)) {
+												changes.add[key].push(id)
+												hasChanges = true
+											}
+										}
+									}
+									for (const key of Object.keys(current)) {
+										for (const id of current[key]) {
+											if (!serviceArea[key].includes(id)) {
+												changes.del[key].push(id)
+												hasChanges = true
+											}
+										}
+									}
+									if (hasChanges) {
+										logUpdate(
+											'serviceArea',
+											{ govDistId: current.districts, countryId: current.countries },
+											{ ...serviceArea }
+										)
+										update.serviceArea.add({
+											where: { id: existingServArea.id },
+											data: {
+												updatedAt,
+												...conditionalObj(changes.del.districts.length || changes.add.districts.length, {
+													districts: {
+														...conditionalObj(changes.del.districts.length, {
+															deleteMany: { govDistId: { in: changes.del.districts } },
+														}),
+														...conditionalObj(changes.add.districts.length, {
+															createMany: {
+																data: changes.add.districts.map((govDistId) => ({ govDistId })),
+																skipDuplicates: true,
+															},
+														}),
+													},
+												}),
+												...conditionalObj(changes.del.countries.length || changes.add.countries.length, {
+													countries: {
+														...conditionalObj(changes.del.countries.length, {
+															deleteMany: { countryId: { in: changes.del.countries } },
+														}),
+														...conditionalObj(changes.add.countries.length, {
+															createMany: {
+																data: changes.add.countries.map((countryId) => ({ countryId })),
+																skipDuplicates: true,
+															},
+														}),
+													},
+												}),
+											},
+										})
+									}
+									genAuditUpdate(
+										existingServArea,
+										{ ...serviceArea },
+										{ serviceAreaId: existingServArea.id, orgServiceId }
+									)
+								} else {
+									logAddition('serviceArea', { ...serviceArea })
+									const id = generateId('serviceArea')
+									create.serviceArea.add({ id, createdAt, updatedAt, orgServiceId })
+									genAuditCreate(
+										{ ...serviceArea, createdAt, updatedAt },
+										{ serviceAreaId: id, orgServiceId }
+									)
+									serviceArea.countries.forEach((countryId) => {
+										logAddition('serviceAreaCountry', countryId)
+										const record = { countryId, serviceAreaId: id, linkedAt: updatedAt }
+										create.serviceAreaCountry.add(record)
+										genAuditLink({ countryId, serviceAreaId: id, orgServiceId })
+									})
+									serviceArea.districts.forEach((govDistId) => {
+										logAddition('serviceAreaDists', govDistId)
+										const record = { govDistId, serviceAreaId: id, linkedAt: updatedAt }
+										create.serviceAreaDist.add(record)
+										genAuditLink({ govDistId, serviceAreaId: id, orgServiceId })
+									})
+								}
+							}
+						}
+
+						// #endregion
+						// #region Service Tags
+						if (!service.tags || !Object.keys(service.tags).length) {
+							log(`SKIPPING Service Tag records for ${service.name}: No tags`, 'skip')
+						} else {
+							let counter = 1
+							const flatTags = flatten(service.tags, {
+								transformKey: (k) => (['united_states', 'canada', 'mexico'].includes(k) ? '' : slug(k)),
+							}) as Record<string, string | undefined>
+
+							for (const tag of Object.keys(flatTags)) {
+								const tagId = existing.serviceTag.get(tag) // ?? raise('Cannot locate service tag')
+								if (!tagId) {
+									exceptions.serviceTag.add({
+										organizationId,
+										record: { id: existingRecord.id },
+										legacyTag: tag,
+									})
+									continue
+								}
+								log(`[${counter}/${Object.keys(flatTags).length}] Processing ${tag}`, undefined, true)
+								if (!existingRecord.services.some(({ tagId: existingTagId }) => existingTagId === tagId)) {
+									logAddition('orgServiceTag', tagId)
+									create.orgServiceTag.add({ tagId, serviceId: orgServiceId })
+									genAuditLink({ serviceTagId: tagId, organizationId, orgServiceId })
+								}
+								counter++
+							}
+							const activeTags = compact(Object.keys(flatTags).map((k) => existing.serviceTag.get(k)))
+							for (const { tagId: existingTagId } of existingRecord.services) {
+								if (!activeTags.includes(existingTagId)) {
+									log(`Deactivating ${existingTagId}`, undefined, true)
+									update.orgServiceTag.add({
+										where: { serviceId_tagId: { serviceId: orgServiceId, tagId: existingTagId } },
+										data: { active: false },
+									})
+								}
+							}
+						}
+
+						// #endregion
+						// #region Linked Records
+						// #region Linked Emails
+						if (service.email_id || existingRecord.emails.length) {
+							const linkedEmail = existing.emailId.get(service.email_id ?? '')
+							if (
+								linkedEmail &&
+								!existingRecord.emails.some(({ orgEmailId }) => orgEmailId === linkedEmail)
+							) {
+								log(`Linking ${service.email_id} to ${existingRecord.id}`, 'link', true)
+								create.orgServiceEmail.add({ orgEmailId: linkedEmail, serviceId: orgServiceId })
+								genAuditLink({ orgEmailId: linkedEmail, organizationId, orgServiceId })
+								// } else if (!linkedEmail && existingRecord.emails.length) {
+								// existingRecord.emails.forEach(({ orgEmailId, serviceId }) => {
+								// 	log(`Unlinking ${orgEmailId} from ${serviceId}`, 'unlink', true)
+								// 	update.orgServiceEmail.add({
+								// 		where: { orgEmailId_serviceId: { orgEmailId, serviceId } },
+								// 		data: { active: false },
+								// 	})
+								// })
+							}
+						}
+						// #endregion
+						// #region Linked Locations
+						if (service.location_id || existingRecord.locations.length) {
+							const linkedLocation = existing.locationId.get(service.location_id ?? '')
+							if (
+								linkedLocation &&
+								!existingRecord.locations.some(({ orgLocationId }) => orgLocationId === linkedLocation)
+							) {
+								log(`Linking ${service.location_id} to ${existingRecord.id}`, 'link', true)
+								create.orgLocationService.add({ orgLocationId: linkedLocation, serviceId: orgServiceId })
+								genAuditLink({ orgLocationId: linkedLocation, organizationId, orgServiceId })
+								// } else if (!linkedLocation && existingRecord.locations.length) {
+								// existingRecord.locations.forEach(({ orgLocationId, serviceId }) => {
+								// 	log(`Unlinking ${orgLocationId} from ${serviceId}`, 'unlink', true)
+								// 	update.orgLocationService.add({
+								// 		where: { orgLocationId_serviceId: { orgLocationId, serviceId } },
+								// 		data: { active: false },
+								// 	})
+								// })
+							}
+						}
+						// #endregion
+						// #region Linked Phones
+						if (service.phone_id || existingRecord.phones.length) {
+							const linkedPhone = existing.phoneId.get(service.phone_id ?? '')
+							if (
+								linkedPhone &&
+								!existingRecord.phones.some(({ orgPhoneId }) => orgPhoneId === linkedPhone)
+							) {
+								log(`Linking ${service.phone_id} to ${existingRecord.id}`, 'link', true)
+								create.orgServicePhone.add({ orgPhoneId: linkedPhone, serviceId: orgServiceId })
+								genAuditLink({ orgPhoneId: linkedPhone, organizationId, orgServiceId })
+								// } else if (!linkedPhone && existingRecord.emails.length) {
+								// existingRecord.phones.forEach(({ orgPhoneId, serviceId }) => {
+								// 	log(`Unlinking ${orgPhoneId} from ${serviceId}`, 'unlink', true)
+								// 	update.orgServicePhone.add({
+								// 		where: { orgPhoneId_serviceId: { orgPhoneId, serviceId } },
+								// 		data: { active: false },
+								// 	})
+								// })
+							}
+						}
+						// #endregion
+						// #endregion
+					} else {
+						// #region Create new service
+						// #region Basic Info
+						log(`Creating Service ${service.name}`, 'create', true)
+						const newService: Prisma.OrgServiceCreateManyInput = {
+							id: generateId('orgService'),
+							deleted: service.is_deleted,
+							published: service.is_published,
+							createdAt,
+							updatedAt,
+						}
+						const orgServiceId = newService.id ?? raise('Missing new service id!')
+						if (service.name) {
+							const { key, ns, text } =
+								generateFreeTextKey({
+									orgId: organizationId,
+									itemId: newService.id,
+									text: service.name,
+									type: 'name',
+								}) ?? {}
+							if (key && ns && text) {
+								logAddition('translationKey', { key, ns, text })
+								create.translationKey.add({ key, ns, text, updatedAt, createdAt })
+								logAddition('freeText', service.name)
+								const textId = generateId('freeText')
+								create.freeText.add({ id: textId, key, ns, updatedAt, createdAt })
+								crowdin.create.add({ key, text })
+								newService.serviceNameId = textId
+								newService.legacyName = service.name
+							}
+						}
+						if (service.description) {
+							const { key, ns, text } =
+								generateFreeTextKey({
+									orgId: organizationId,
+									itemId: newService.id,
+									text: service.description,
+									type: 'description',
+								}) ?? {}
+							if (key && ns && text) {
+								logAddition('translationKey', { key, ns, text })
+								create.translationKey.add({ key, ns, text, updatedAt, createdAt })
+								logAddition('freeText', service.description)
+								const textId = generateId('freeText')
+								create.freeText.add({ id: textId, key, ns, updatedAt, createdAt })
+								crowdin.create.add({ key, text })
+								newService.descriptionId = textId
+							}
+						}
+						create.orgService.add(newService)
+						genAuditCreate(newService, { orgServiceId: newService.id })
+						// #endregion
+						// #region Access Instructions
+						if (service.access_instructions.length) {
+							log(
+								`Processing ${service.access_instructions.length} access instruction records`,
+								'generate',
+								true
+							)
+							const servAccessToAdd: Record<string, LegacyAccessInstruction[]> = {}
+							for (const access of service.access_instructions) {
+								const accessType = legacyAccessMap.get(access.access_type ?? '')
+								if (!accessType) {
+									log(`SKIPPING - Unknown access type: ${access.access_type}`, 'skip', true)
+									continue
+								}
+								Array.isArray(servAccessToAdd[accessType])
+									? servAccessToAdd[accessType]?.push(access)
+									: (servAccessToAdd[accessType] = [access])
+							}
+							for (const [accessTypeId, supps] of Object.entries(servAccessToAdd)) {
+								log(
+									`Creating ${supps.length} missing records for access type: ${accessTypeId}`,
+									'create',
+									true
+								)
+								supps.forEach((record) => {
+									const newRecord: Prisma.AttributeSupplementCreateManyInput = {
+										id: generateId('attributeSupplement'),
+										serviceAccessAttributeAttributeId: accessTypeId,
+										serviceAccessAttributeServiceId: newService.id,
+										createdAt,
+										updatedAt,
+									}
+									if (record.instructions && record.instructions !== '') {
+										const { key, ns, text } =
+											generateFreeTextKey({
+												orgId: organizationId,
+												text: record.instructions,
+												type: 'access',
+												itemId: newRecord.id,
+											}) ?? {}
+										if (key && ns && text) {
+											const id = generateId('freeText')
+											crowdin.create.add({ key, text })
+											create.translationKey.add({ key, ns, text, createdAt, updatedAt })
+											create.freeText.add({ id, key, ns, createdAt, updatedAt })
+											newRecord.textId = id
+										}
+									}
+									newRecord.data = JsonInputOrNull.parse(superjson.serialize(record))
+									create.attributeSupplement.add(newRecord)
+									create.serviceAccessAttribute.add({
+										serviceId: newService.id ?? raise('Missing new service id!'),
+										attributeId: accessTypeId,
+									})
+								})
+							}
+						}
+						// #endregion
+						// #region Attributes & Service Areas
+						if (service.properties && Object.keys(service.properties).length) {
+							log(
+								`Processing ${Object.keys(service.properties).length} Service Attribute records`,
+								'generate'
+							)
+							let attributesCount = 1
+							const attributesSkip = 0
+							const unsupportedAttributes: Record<string, unknown>[] = []
+							const { id: unsupportedId } =
+								existing.attribute.get('sys.incompatible-info') ?? raise(`Cannot find 'incompatible' id`)
+							const servAttrib: Record<string, AttrSupp[]> = {}
+							const serviceArea: ServArea = { countries: [], districts: [] }
+							for (const [tag, rawValue] of Object.entries(service.properties)) {
+								log(
+									`Processing Tag: ${tag} [${attributesCount + attributesSkip}/${
+										Object.keys(service.properties).length
+									}]`,
+									'generate'
+								)
+								const value =
+									typeof rawValue === 'string'
+										? rawValue
+										: Array.isArray(rawValue)
+										? rawValue.join()
+										: rawValue.toString()
+								const tagRecord = tagParser(tag, value)
+
+								switch (tagRecord.type) {
+									case 'unknown': {
+										log(
+											`Unsupported Attribute: ${Object.keys(tagRecord.supplementData).join()}`,
+											undefined,
+											true
+										)
+										unsupportedAttributes.push(tagRecord.supplementData)
+										break
+									}
+									case 'attribute': {
+										const attribId = tagRecord.attributeId ?? raise('missing attributeId')
+										if (tagRecord.supplementData?.data)
+											tagRecord.supplementData.data = superjson.stringify(tagRecord.supplementData.data)
+										if (Object.hasOwn(servAttrib, attribId) && tagRecord.supplementData) {
+											servAttrib[attribId]?.push(tagRecord.supplementData)
+										} else {
+											servAttrib[attribId] = tagRecord.supplementData ? [tagRecord.supplementData] : []
+										}
+										break
+									}
+									case 'serviceArea': {
+										if (tagRecord.supplementData?.countryId)
+											serviceArea.countries.push(tagRecord.supplementData.countryId)
+										if (tagRecord.supplementData?.govDistId)
+											serviceArea.districts.push(tagRecord.supplementData.govDistId)
+										break
+									}
+								}
+								attributesCount++
+							}
+							if (unsupportedAttributes.length) {
+								servAttrib[unsupportedId] = [
+									{
+										data: superjson.stringify(unsupportedAttributes),
+									},
+								]
+							}
+							for (const [attributeId, attributeSupplement] of Object.entries(servAttrib)) {
+								logAddition('serviceAttribute', attributeId)
+								create.serviceAttribute.add({ attributeId, orgServiceId })
+								genAuditLink({ attributeId, organizationId, orgServiceId })
+								for (const supplement of attributeSupplement) {
+									supplement.id = generateId('attributeSupplement')
+									if (supplement.text) {
+										const { key, ns, text } =
+											generateFreeTextKey({
+												orgId: organizationId,
+												text: supplement.text,
+												type: 'supplement',
+												itemId: supplement.id,
+											}) ?? {}
+										if (key && ns && text) {
+											logAddition('translationKey', { key, ns, text, updatedAt, createdAt })
+											create.translationKey.add({ key, ns, text, createdAt, updatedAt })
+											logAddition('freeText', supplement.text)
+											const textId = generateId('freeText')
+											create.freeText.add({ id: textId, key, ns, updatedAt, createdAt })
+											crowdin.create.add({ key, text })
+											supplement.textId = textId
+											delete supplement.text
+										}
+									}
+									logAddition('attributeSupplement', supplement)
+									create.attributeSupplement.add({
+										...supplement,
+										createdAt,
+										updatedAt,
+										serviceAttributeAttributeId: attributeId,
+										serviceAttributeOrgServiceId: orgServiceId,
+									})
+								}
+							}
+							if (serviceArea.countries.length || serviceArea.districts.length) {
+								logAddition('serviceArea', { ...serviceArea })
+								const id = generateId('serviceArea')
+								create.serviceArea.add({ id, createdAt, updatedAt, orgServiceId })
+								genAuditCreate({ ...serviceArea, createdAt, updatedAt }, { serviceAreaId: id, orgServiceId })
+								serviceArea.countries.forEach((countryId) => {
+									logAddition('serviceAreaCountry', countryId)
+									const record = { countryId, serviceAreaId: id, linkedAt: updatedAt }
+									create.serviceAreaCountry.add(record)
+									genAuditLink({ countryId, serviceAreaId: id, orgServiceId })
+								})
+								serviceArea.districts.forEach((govDistId) => {
+									logAddition('serviceAreaDists', govDistId)
+									const record = { govDistId, serviceAreaId: id, linkedAt: updatedAt }
+									create.serviceAreaDist.add(record)
+									genAuditLink({ govDistId, serviceAreaId: id, orgServiceId })
+								})
+							}
+						}
+						// #endregion
+						// #region Service Tags
+						if (service.tags && Object.keys(service.tags).length) {
+							let counter = 1
+							const flatTags = flatten(service.tags, {
+								transformKey: (k) => (['united_states', 'canada', 'mexico'].includes(k) ? '' : slug(k)),
+							}) as Record<string, string | undefined>
+							for (const tag of Object.keys(flatTags)) {
+								const tagId = existing.serviceTag.get(tag)
+								if (!tagId) {
+									exceptions.serviceTag.add({
+										organizationId,
+										record: { id: orgServiceId },
+										legacyTag: tag,
+									})
+									continue
+								}
+								log(`[${counter}/${Object.keys(flatTags).length}] Processing ${tag}`, undefined, true)
+								logAddition('orgServiceTag', tagId)
+								create.orgServiceTag.add({ tagId, serviceId: orgServiceId })
+								genAuditLink({ serviceTagId: tagId, organizationId, orgServiceId })
+								counter++
+							}
+						}
+						// #endregion
+						// #region Linked Records
+						// #region Linked Emails
+						if (service.email_id) {
+							const linkedEmail = existing.emailId.get(service.email_id ?? '')
+							if (linkedEmail) {
+								log(`Linking ${service.email_id} to ${orgServiceId}`, 'link', true)
+								create.orgServiceEmail.add({ orgEmailId: linkedEmail, serviceId: orgServiceId })
+								genAuditLink({ orgEmailId: linkedEmail, organizationId, orgServiceId })
+							}
+						}
+						// #endregion
+						// #region Linked Locations
+						if (service.location_id) {
+							const linkedLocation = existing.locationId.get(service.location_id ?? '')
+							if (linkedLocation) {
+								log(`Linking ${service.location_id} to ${orgServiceId}`, 'link', true)
+								create.orgLocationService.add({ orgLocationId: linkedLocation, serviceId: orgServiceId })
+								genAuditLink({ orgLocationId: linkedLocation, organizationId, orgServiceId })
+							}
+						}
+						// #endregion
+						// #region Linked Phones
+						if (service.phone_id) {
+							const linkedPhone = existing.phoneId.get(service.phone_id ?? '')
+							if (linkedPhone) {
+								log(`Linking ${service.phone_id} to ${orgServiceId}`, 'link', true)
+								create.orgServicePhone.add({ orgPhoneId: linkedPhone, serviceId: orgServiceId })
+								genAuditLink({ orgPhoneId: linkedPhone, organizationId, orgServiceId })
+							}
+						}
+
+						// #endregion
+						// #endregion
+						// #endregion
+					}
+					count++
+				}
+			}
+			// #endregion
+
+			/**
+			 * .
+			 *
+			 * === ASSOCIATED USERS ===
+			 *
+			 * .
+			 */
+			// #region Associated Users
+			if (org.owners?.length) {
+				const permissionId = existing.permission.get('editsingleorg') ?? raise('unable to get permission id')
+				let counter = 1
+				let skips = 0
+				for (const owner of org.owners) {
+					const count = counter + skips
+					log(`[${count}/${org.owners.length}] Processing ${owner.userId}`, undefined, true)
+					const userId = existing.userId.get(owner.userId)
+					if (!userId) {
+						log(`SKIPPING connection for ${owner.userId}: Cannot map userId`, 'skip', true)
+						skips++
+						continue
 					}
 
-					count++
+					if (
+						existingOrgRecord.allowedEditors.some(
+							({ userId: existingUserId }) => existingUserId === userId
+						) &&
+						existingOrgRecord.associatedUsers.some(({ userId: existingUserId }) => existingUserId === userId)
+					) {
+						log(`SKIPPING ${owner.userId}: Already linked`, 'skip', true)
+						skips++
+						continue
+					}
+
+					log(`Linking user ${owner.userId} to ${organizationId}`, 'link', true)
+					create.userToOrganization.add({ organizationId, userId, authorized: owner.isApproved })
+					genAuditLink({ userId, organizationId })
+					create.userPermission.add({ userId, permissionId })
+					genAuditLink({ userId, permissionId, organizationId })
+					create.organizationPermission.add({
+						permissionId,
+						organizationId,
+						userId,
+						authorized: owner.isApproved,
+					})
+					log(
+						`🛠️ [${count}/${org.owners.length}] Org owner records for: ${
+							owner.userId
+						} - Linked to org: ${isSuccess(true)}, Permission record: ${isSuccess(
+							true
+						)} (Approved: ${isSuccess(owner.isApproved)})`
+					)
+					counter++
 				}
 			}
 
 			// #endregion
-
 			if (process.env.LIMIT && parseInt(process.env.LIMIT) === orgCounter) break
 			orgCounter++
 		}

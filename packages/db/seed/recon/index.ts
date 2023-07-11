@@ -1,5 +1,6 @@
 import { Listr, PRESET_TIMER } from 'listr2'
 
+import { dbRun } from './dbRunner'
 import * as generators from './lib/generateDbMaps'
 import { attachLogger } from './lib/logger'
 import { type Context, type ListrJob } from './lib/types'
@@ -15,6 +16,12 @@ const injectOptions = (job: ListrJob): ListrJob => ({
 	options: job.options ? { ...renderOptions, ...job.options } : renderOptions,
 })
 
+const skips = {
+	generators: true,
+	recon: false,
+	dbRun: true,
+} as const
+
 const jobs = new Listr<Context>(
 	[
 		injectOptions({
@@ -24,9 +31,10 @@ const jobs = new Listr<Context>(
 				task.output = 'Running generators...'
 				return task.newListr(Object.values(generators).map((job) => injectOptions(job)))
 			},
-			skip: true,
+			skip: skips.generators,
 		}),
-		injectOptions(orgRecon),
+		injectOptions({ ...orgRecon, skip: skips.recon }),
+		injectOptions({ ...dbRun, skip: skips.dbRun }),
 	],
 	{
 		rendererOptions: {

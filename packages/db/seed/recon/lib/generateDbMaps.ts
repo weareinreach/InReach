@@ -147,7 +147,20 @@ export const generateServiceTagMap = {
 		attachLogger(task)
 		const tags = await prisma.serviceTag.findMany({ select: { id: true, tsKey: true } })
 		task.output = `Service Tags retrieved: ${tags.length}`
-		const serviceTagMap = new Map<string, string>(tags.map((t) => [t.tsKey, t.id]))
+		const extraTags: [string, string][] = [
+			['mail', 'svtg_01GW2HHFBT91CV2R6WKEX6MYPE'],
+			['computers-and-internet', 'svtg_01GW2HHFBN4B2F1W8HAWNK1HVS'],
+			['education-and-employment.career-counselling', 'svtg_01GW2HHFBP8GY6D2YJ8N1GYTNH'],
+			['food', 'svtg_01GW2HHFBP9CP8V4WGA1QCWVKQ'],
+			['sports-and-entertainment', 'svtg_01GW2HHFBSYJJ8FRE5QRW4BQVR'],
+			['translation-and-interpretation', 'svtg_01GW2HHFBSA32322K840DVFNSW'],
+		]
+		task.output = `Adding ${extraTags.length} extra tags`
+
+		const serviceTagMap = new Map<string, string>([
+			...(tags.map((t) => [t.tsKey, t.id]) satisfies [string, string][]),
+			...extraTags,
+		])
 		writeSuperJSON('serviceTagMap', serviceTagMap)
 	},
 } satisfies ListrJob
