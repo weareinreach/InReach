@@ -7,7 +7,7 @@ import { memo, useCallback } from 'react'
 
 import { trpc as api } from '~ui/lib/trpcClient'
 
-export const _GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
+export const GoogleMapComponent = ({ height, width, locationIds }: GoogleMapProps) => {
 	const { data, isLoading } = api.location.forGoogleMaps.useQuery(locationIds)
 
 	const { isLoaded } = useJsApiLoader({
@@ -77,7 +77,7 @@ export const _GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
 	)
 }
 
-export const GoogleMap = memo(_GoogleMap)
+export const GoogleMap = memo(GoogleMapComponent)
 
 interface GoogleMapProps {
 	locationIds: string | string[]

@@ -53,10 +53,11 @@ const nextConfig = {
 	typescript: {
 		ignoreBuildErrors: isVercelActiveDev,
 	},
-	webpack: (config, { isServer }) => {
+	webpack: (config, { isServer, webpack }) => {
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
+		config.plugins.push(new webpack.DefinePlugin({ __SENTRY_DEBUG__: false }))
 		return config
 	},
 }
@@ -72,36 +73,45 @@ function defineNextConfig(config) {
 	// loadOtel()
 	return withBundleAnalyzer(withRoutes()(config))
 }
+/**
+ * Wraps NextJS config with the Sentry config.
+ *
+ * @template {typeof nextConfig} T
+ * @param {T} nextConfig
+ * @returns {T}
+ */
+const defineSentryConfig = (nextConfig) =>
+	withSentryConfig(
+		nextConfig,
+		{
+			// For all available options, see:
+			// https://github.com/getsentry/sentry-webpack-plugin#options
 
-export default withSentryConfig(
-	defineNextConfig(nextConfig),
-	{
-		// For all available options, see:
-		// https://github.com/getsentry/sentry-webpack-plugin#options
+			// Suppresses source map uploading logs during build
+			silent: true,
 
-		// Suppresses source map uploading logs during build
-		silent: true,
+			org: 'weareinreach',
+			project: 'inreach-app',
+		},
+		{
+			// For all available options, see:
+			// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
-		org: 'weareinreach',
-		project: 'inreach-app',
-	},
-	{
-		// For all available options, see:
-		// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+			// Upload a larger set of source maps for prettier stack traces (increases build time)
+			widenClientFileUpload: true,
 
-		// Upload a larger set of source maps for prettier stack traces (increases build time)
-		widenClientFileUpload: true,
+			// Transpiles SDK to be compatible with IE11 (increases bundle size)
+			transpileClientSDK: true,
 
-		// Transpiles SDK to be compatible with IE11 (increases bundle size)
-		transpileClientSDK: true,
+			// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
+			tunnelRoute: '/monitoring',
 
-		// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-		tunnelRoute: '/monitoring',
+			// Hides source maps from generated client bundles
+			hideSourceMaps: true,
 
-		// Hides source maps from generated client bundles
-		hideSourceMaps: true,
-
-		// Automatically tree-shake Sentry logger statements to reduce bundle size
-		disableLogger: true,
-	}
-)
+			// Automatically tree-shake Sentry logger statements to reduce bundle size
+			disableLogger: true,
+		}
+	)
+// export default defineNextConfig(nextConfig)
+export default defineSentryConfig(defineNextConfig(nextConfig))
