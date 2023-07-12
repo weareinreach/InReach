@@ -116,6 +116,7 @@ export const orgRecon = {
 					const serializedFrom = superjson.serialize(changedFields)
 					const serializedTo = superjson.serialize(to)
 					create.auditLog.add({
+						id: generateId('auditLog'),
 						actorId,
 						operation: 'UPDATE',
 						from: JsonInputOrNull.parse(serializedFrom),
@@ -133,6 +134,7 @@ export const orgRecon = {
 			}
 			const genAuditCreate = (to: unknown, links: AuditLogLinks) => {
 				create.auditLog.add({
+					id: generateId('auditLog'),
 					actorId,
 					operation: 'CREATE',
 					to: InputJsonValue.parse(superjson.serialize(to)),
@@ -142,6 +144,7 @@ export const orgRecon = {
 			}
 			const genAuditLink = (links: AuditLogLinks) => {
 				create.auditLog.add({
+					id: generateId('auditLog'),
 					actorId,
 					to: InputJsonValue.parse(superjson.serialize(links)),
 					operation: 'LINK',
@@ -2198,6 +2201,8 @@ export const orgRecon = {
 							published: service.is_published,
 							createdAt,
 							updatedAt,
+							organizationId,
+							legacyId: service._id.$oid,
 						}
 						const orgServiceId = newService.id ?? raise('Missing new service id!')
 						if (service.name) {
