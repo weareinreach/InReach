@@ -361,8 +361,8 @@ importers:
         specifier: 1.35.1
         version: 1.35.1
       '@prisma/nextjs-monorepo-workaround-plugin':
-        specifier: 4.16.2
-        version: 4.16.2
+        specifier: 5.0.0
+        version: 5.0.0
       '@tanstack/react-query-devtools':
         specifier: 4.29.19
         version: 4.29.19(@tanstack/react-query@4.29.19)(react-dom@18.2.0)(react@18.2.0)
@@ -8570,8 +8570,8 @@ packages:
       - supports-color
     dev: true
 
-  /@prisma/nextjs-monorepo-workaround-plugin@4.16.2:
-    resolution: {integrity: sha512-A0ZplyjvkNz38GT8ddZlewwV9XFHXo3iwbFwtQXgA3HrQ2TWl042DzxsOybjkJUCLM5xZWa7sCC5QxqZIsX2og==}
+  /@prisma/nextjs-monorepo-workaround-plugin@5.0.0:
+    resolution: {integrity: sha512-9iPBVd2Mz29QzJccyLJforZb/oWCLAS/5Ky6ZVtV5iST/kcDdCL+R+fllzNBltwywPrNwGorUx4C8Ps6WFZaiA==}
     dev: true
 
   /@prisma/ni@4.13.0:

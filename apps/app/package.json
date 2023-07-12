@@ -107,7 +107,7 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "1.35.1",
-		"@prisma/nextjs-monorepo-workaround-plugin": "4.16.2",
+		"@prisma/nextjs-monorepo-workaround-plugin": "5.0.0",
 		"@tanstack/react-query-devtools": "4.29.19",
 		"@tanstack/react-table-devtools": "8.7.6",
 		"@total-typescript/ts-reset": "0.4.2",
