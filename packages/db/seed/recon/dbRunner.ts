@@ -40,7 +40,7 @@ export const dbRun = {
 		attachLogger(task)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))
 
-		const createManyBatchSize = 10 //00
+		const createManyBatchSize = 1000
 		const updateBatchSize = 500
 		await prisma.$transaction(
 			async (tx) => {
