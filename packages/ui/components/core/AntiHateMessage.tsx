@@ -49,7 +49,7 @@ export const AntiHateMessage = ({ noCard, stacked }: AntiHateMessageProps) => {
 	return noCard ? (
 		content
 	) : (
-		<Card radius='lg' withBorder classNames={{ root: classes.card }}>
+		<Card radius='lg' withBorder className={classes.card}>
 			{content}
 		</Card>
 	)
