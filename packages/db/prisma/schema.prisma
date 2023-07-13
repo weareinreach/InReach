@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["extendedWhereUnique", "fieldReference", "fullTextSearch", "postgresqlExtensions", "tracing", "views", "jsonProtocol"]
+  previewFeatures = ["fullTextSearch", "postgresqlExtensions", "tracing", "views"]
 }
 
 // generator zod {
@@ -1759,20 +1759,6 @@ enum AuditLogOperation {
 
 // Permissions
 
-/// Assign permissions to user
-model UserPermission {
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId       String
-  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  permissionId String
-
-  linkedAt   DateTime @default(now())
-  authorized Boolean  @default(false)
-  //@@schema("relation")
-
-  @@id([userId, permissionId])
-}
-
 /// Assign default permissions to role
 model RolePermission {
   role         UserRole   @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -1781,9 +1767,25 @@ model RolePermission {
   permissionId String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([roleId, permissionId])
+}
+
+/// Assign permissions to user
+model UserPermission {
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId       String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  permissionId String
+
+  authorized Boolean @default(false)
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([userId, permissionId])
 }
 
 /// Associate User to Org - w/ contact info
@@ -1794,6 +1796,8 @@ model UserToOrganization {
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   organizationId String
 
+  authorized Boolean @default(false)
+
   title      UserTitle? @relation(fields: [orgTitleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgTitleId String?
   email      OrgEmail?  @relation(fields: [orgEmailId], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -1801,8 +1805,7 @@ model UserToOrganization {
   phone      OrgPhone?  @relation(fields: [orgPhoneId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgPhoneId String?    @unique
 
-  linkedAt   DateTime @default(now())
-  authorized Boolean  @default(false)
+  linkedAt DateTime @default(now())
   //@@schema("relation")
 
   @@id([userId, organizationId])
@@ -1926,8 +1929,9 @@ model AssignedRole {
   role   UserRole @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   roleId String
 
-  linkedAt   DateTime @default(now())
-  authorized Boolean  @default(false)
+  authorized Boolean @default(false)
+
+  linkedAt DateTime @default(now())
   //@@schema("relation")
 
   @@id([userId, roleId])
@@ -1977,6 +1981,7 @@ model OrganizationPhone {
   phoneId        String       @unique
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([organizationId, phoneId])
@@ -1989,6 +1994,7 @@ model OrganizationEmail {
   organizationId String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgEmailId, organizationId])
@@ -2002,6 +2008,7 @@ model OrgWebsiteLanguage {
   languageId   String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgWebsiteId, languageId])
@@ -2015,6 +2022,7 @@ model OrgPhoneLanguage {
   languageId String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgPhoneId, languageId])
@@ -2028,6 +2036,7 @@ model OrgServicePhone {
   serviceId  String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgPhoneId, serviceId])
@@ -2041,6 +2050,7 @@ model OrgServiceEmail {
   serviceId  String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgEmailId, serviceId])
@@ -2054,6 +2064,7 @@ model OrgLocationEmail {
   orgEmailId    String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgEmailId, orgLocationId])
@@ -2066,6 +2077,7 @@ model OrgLocationPhone {
   phoneId       String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgLocationId, phoneId])
@@ -2133,9 +2145,8 @@ model ServiceAreaDist {
 
 /// Nesting attributes
 model AttributeNesting {
-  child   Attribute @relation("attribChildToParent", fields: [childId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  childId String
-
+  child    Attribute @relation("attribChildToParent", fields: [childId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  childId  String
   parent   Attribute @relation("attribParentToChild", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   parentId String
 
@@ -2241,6 +2252,7 @@ model ServiceCategoryDefaultAttribute {
   categoryId  String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([attributeId, categoryId])
@@ -2254,6 +2266,7 @@ model ServiceTagDefaultAttribute {
   serviceId   String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([attributeId, serviceId])
@@ -2266,6 +2279,7 @@ model ServiceTagCountry {
   serviceId String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
 
   @@id([countryId, serviceId])
 }

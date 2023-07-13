@@ -16,28 +16,20 @@ const logFile = (file: string, output: string) => {
 	fs.writeFileSync(outFile, formattedOutput, { flag: 'a' })
 }
 
+/** Creates a log file, attaches to `stdout` and saves the output to that file. */
 export const createLogger = (task: PassedTask, jobId: string) => {
 	const timestamp = getTimestamp()
 	const logFilename = `${jobId}_${timestamp}.log`
 	task.task.on(ListrTaskEventType.OUTPUT, (output) => logFile(logFilename, output))
 }
 
+/** @deprecated Call `createLogger` directly in the job instead */
 export const jobPreRunner = async (jobDef: JobDef, task: PassedTask) => {
-	try {
-		const exists = await prisma.dataMigration.findUnique({
-			where: { jobId: jobDef.jobId },
-			select: { id: true },
-		})
-		if (exists?.id) {
-			return true
-		}
-		createLogger(task, jobDef.jobId)
-		return false
-	} catch (err) {
-		return true
-	}
+	createLogger(task, jobDef.jobId)
+	return false
 }
 
+/** Marks the migration job as successful in the database. */
 export const jobPostRunner = async (jobDef: JobDef) => {
 	try {
 		await prisma.dataMigration.create({ data: jobDef })

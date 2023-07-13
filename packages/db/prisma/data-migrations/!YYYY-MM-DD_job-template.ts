@@ -1,12 +1,15 @@
-import { prisma } from '~db/index'
-import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
-import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
+import { prisma } from '~db/client'
+import { formatMessage } from '~db/prisma/common'
+import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
+import { createLogger, type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {
 	jobId: 'yyyy-mm-dd-shortDescription',
-	title: 'Longer description',
+	title: 'Descriptive Title',
 	createdBy: 'Your Name',
+	/** Optional: Longer description for the job */
+	description: undefined,
 }
 /**
  * Job export - this variable MUST be UNIQUE
@@ -20,14 +23,9 @@ const jobDef: JobDef = {
 export const jobYYYYmmDD = {
 	title: `${jobDef.jobId} - ${jobDef.title}`,
 	task: async (_ctx, task) => {
-		/**
-		 * Do not edit this part
-		 *
-		 * This ensures that jobs are only run once
-		 */
-		if (await jobPreRunner(jobDef, task)) {
-			return task.skip(`${jobDef.jobId} - Migration has already been run.`)
-		}
+		/** Create logging instance */
+		createLogger(task, jobDef.jobId)
+		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))
 		/**
 		 * Start defining your data migration from here.
 		 *
@@ -38,7 +36,7 @@ export const jobYYYYmmDD = {
 
 		// Do stuff
 
-		task.output = `Put text here to output to the terminal & log file`
+		log(`Put text here to output to the terminal & log file`)
 
 		/**
 		 * DO NOT REMOVE BELOW
@@ -47,4 +45,5 @@ export const jobYYYYmmDD = {
 		 */
 		await jobPostRunner(jobDef)
 	},
-} satisfies ListrJob
+	def: jobDef,
+} satisfies MigrationJob
