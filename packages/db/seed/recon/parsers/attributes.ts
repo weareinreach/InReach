@@ -2,7 +2,6 @@ import { type diff } from 'just-diff'
 import flush from 'just-flush'
 import getByPath from 'just-safe-get'
 import setByPath from 'just-safe-set'
-import superjson from 'superjson'
 import { z } from 'zod'
 
 import { type Prisma } from '~db/client'
@@ -45,8 +44,8 @@ const getAreaRecord = (tag: string): { data: AttributeSupplementData } | undefin
 	tagBreakdown.shift()
 	const type = tagBreakdown.shift()
 	const search = tagBreakdown.join('-')
-	const state = new RegExp(`\\w{2}-${search}`, 'gi')
-	const county = new RegExp(`\\w{2}-${search}-.*`, 'gi')
+	const state = new RegExp(`^\\w{2}-${search}`, 'gi')
+	const county = new RegExp(`^\\w{2}-${search}-.*`, 'gi')
 	switch (type) {
 		case 'national': {
 			const cca2 = areaCountryMap.get(search)

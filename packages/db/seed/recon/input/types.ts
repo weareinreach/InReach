@@ -85,6 +85,7 @@ export enum CountryES {
 	CountryESCanada = ' Canada',
 	CountryESEEUU = 'EE.UU',
 	CountryESEstadosUnidos = 'Estados Unidos ',
+	CountryESEstadosUnidos2 = 'Estados Unidos  ',
 	CountryESMexico = 'Mexico ',
 	CountryESMéxico = 'México ',
 	CountryESUnitedStates = 'United States ',
@@ -95,6 +96,7 @@ export enum CountryES {
 	Empty = '',
 	EstadosUnidos = 'Estados Unidos',
 	LosEEUU = 'Los EEUU',
+	LosEEUU2 = 'Los EEU ',
 	LosEstadosUnidos = 'Los Estados Unidos',
 	LossEEUU = 'Loss EEUU',
 	Mexico = 'Mexico',
@@ -105,6 +107,12 @@ export enum CountryES {
 	UnitedStates = 'United States',
 	Us = 'US',
 	Usa = 'USA',
+	NY = 'Nueva York',
+	Michoacán = 'Michoacán',
+	Georgetown = 'Georgetown',
+	mexico = 'mexico',
+	VirginIslands = 'Virgin Islands',
+	CDMX = 'CDMX',
 }
 
 export interface Geolocation {
@@ -212,7 +220,7 @@ export interface Service {
 
 export interface AccessInstruction {
 	_id: ID
-	access_value?: string
+	access_value?: string | null
 	access_type?: AccessType
 	instructions?: string
 	access_value_ES?: string
@@ -536,7 +544,7 @@ export const phoneSchema = z.object({
 	_id: idSchema,
 	digits: z.string().optional().nullable(),
 	is_primary: z.boolean().optional(),
-	phone_type: z.string(),
+	phone_type: z.string().optional(),
 	show_on_organization: z.boolean().optional(),
 	phone_type_ES: z.string().optional(),
 	phone_type_es: eEsSchema.optional(),
@@ -620,7 +628,7 @@ export const canadaTransportationSchema = z.object({
 })
 
 export const canadaAbortionCareSchema = z.object({
-	'Abortion Providers': z.string(),
+	'Abortion Providers': z.string().optional(),
 	'Mail Order Services': z.string().optional(),
 })
 
@@ -752,7 +760,7 @@ export const nameSchema = z.nativeEnum(Name)
 
 export const emailSchema = z.object({
 	_id: idSchema,
-	email: z.string(),
+	email: z.string().optional(),
 	first_name: z.string().optional().nullable(),
 	is_primary: z.boolean().optional(),
 	last_name: z.string().optional().nullable(),
@@ -790,7 +798,7 @@ export const scheduleSchema = z.object({
 
 export const accessInstructionSchema = z.object({
 	_id: idSchema,
-	access_value: z.string().optional(),
+	access_value: z.string().nullish(),
 	access_type: accessTypeSchema.optional(),
 	instructions: z.string().optional(),
 	access_value_ES: z.string().optional(),
