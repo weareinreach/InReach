@@ -45,8 +45,8 @@ MenuTarget.displayName = 'MenuTarget'
 export const LangPicker = () => {
 	const { classes } = useStyles()
 	const { i18n } = useTranslation()
-	const currentLanguage = i18n.language
 	const router = useRouter()
+	const currentLanguage = router.locale
 
 	const activeLang = translatedLangs.find((lang) => lang.localeCode === currentLanguage)?.nativeName
 

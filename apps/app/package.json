@@ -54,7 +54,7 @@
 		"@opentelemetry/sdk-trace-base": "1.14.0",
 		"@opentelemetry/sdk-trace-node": "1.14.0",
 		"@opentelemetry/semantic-conventions": "1.14.0",
-		"@prisma/instrumentation": "4.16.2",
+		"@prisma/instrumentation": "5.0.0",
 		"@sentry/nextjs": "7.57.0",
 		"@tanstack/react-query": "4.29.19",
 		"@tanstack/react-table": "8.9.3",
@@ -107,7 +107,7 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "1.35.1",
-		"@prisma/nextjs-monorepo-workaround-plugin": "4.16.2",
+		"@prisma/nextjs-monorepo-workaround-plugin": "5.0.0",
 		"@tanstack/react-query-devtools": "4.29.19",
 		"@tanstack/react-table-devtools": "8.7.6",
 		"@total-typescript/ts-reset": "0.4.2",

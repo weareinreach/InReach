@@ -5,7 +5,7 @@ import path from 'path'
 
 import { generateId, type Prisma, prisma } from '~db/index'
 import { batchRunner } from '~db/prisma/batchRunner'
-import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
+import { type ListrJob, type ListrTask, type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 import { namespaces } from '~db/seed/data/00-namespaces'
 
@@ -102,4 +102,5 @@ const job: ListrTask = async (_ctx, task) => {
 export const job20230410 = {
 	title: `${jobDef.jobId} - ${jobDef.title}`,
 	task: job,
-} satisfies ListrJob
+	def: jobDef,
+} satisfies MigrationJob
