@@ -76,7 +76,7 @@ export const orgRecon = {
 				true
 			)
 
-		// writeBatches(task, true)
+		writeBatches(task, true)
 		let orgCounter = 1
 
 		// read input file

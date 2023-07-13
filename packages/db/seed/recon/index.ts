@@ -18,8 +18,8 @@ const injectOptions = (job: ListrJob): ListrJob => ({
 
 const skips = {
 	generators: true,
-	recon: false,
-	dbRun: true,
+	recon: true,
+	dbRun: false,
 } as const
 
 const jobs = new Listr<Context>(
