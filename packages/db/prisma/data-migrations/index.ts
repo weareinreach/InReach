@@ -34,4 +34,5 @@ export * from './2023-06-21_update-sourceid'
 export * from './2023-06-26_active-country'
 export * from './2023-06-27_add-crowdin-ids/index'
 export * from './2023-07-12_1-add-remote-tags/index'
+export * from './2023-07-12_2-leader-focus-attribs/index'
 // codegen:end
