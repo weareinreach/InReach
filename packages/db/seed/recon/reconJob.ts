@@ -1,7 +1,6 @@
 /* eslint-disable node/no-process-env */
 import { geojsonToWKT } from '@terraformer/wkt'
 import { flatten } from 'flat'
-import { getDiff } from 'json-difference'
 import compact from 'just-compact'
 import mapObj from 'just-deep-map-values'
 import { diff } from 'just-diff'
@@ -58,7 +57,7 @@ export const orgRecon = {
 	task: async (_ctx, task) => {
 		attachLogger(task)
 		const log = (...args: Parameters<typeof formatMessage>) => (task.output = formatMessage(...args))
-
+		// debugger
 		const logUpdate = (field: string, from: unknown, to: unknown) =>
 			log(
 				`Updating ${field} from ${
@@ -77,16 +76,13 @@ export const orgRecon = {
 				true
 			)
 
-		const logDeletion = (table: string, value: unknown) =>
-			log(`Deleting ${value} from ${table}`, 'trash', true)
-
-		writeBatches(task, true)
+		// writeBatches(task, true)
 		let orgCounter = 1
 
 		// read input file
 		const orgs = organizationsSchema
 			.array()
-			.parse(JSON.parse(fs.readFileSync(path.resolve(__dirname, './input/existingOrgs.json'), 'utf-8')))
+			.parse(JSON.parse(fs.readFileSync(path.resolve(__dirname, './input/allOrgs.json'), 'utf-8')))
 		log(`Organizations to process: ${orgs.length}`, 'info')
 
 		// get System userId for audit log
@@ -455,7 +451,7 @@ export const orgRecon = {
 							where: { id: existingRecord.id },
 							data: {},
 						}
-						if (needsUpdate(existingRecord.email, email.email)) {
+						if (email.email && needsUpdate(existingRecord.email, email.email)) {
 							logUpdate('email', existingRecord.email, email.email)
 							updateRecord.data.email = trimSpaces(email.email)
 						}
@@ -524,7 +520,12 @@ export const orgRecon = {
 									updateRecord.data.description = { connect: { id } }
 									genAuditCreate(
 										{ key, ns, text },
-										{ translationKey: key, translationNs: ns, freeTextId: id, orgEmailId: existingRecord.id }
+										{
+											translationKey: key,
+											translationNs: ns,
+											freeTextId: id,
+											orgEmailId: existingRecord.id,
+										}
 									)
 								}
 							}
@@ -537,7 +538,7 @@ export const orgRecon = {
 							genAuditUpdate(existingRecord, updateRecord.data, { orgEmailId: existingRecord.id })
 							log(`Updated ${Object.keys(updateRecord.data).length} keys`, undefined, true)
 						}
-					} else {
+					} else if (email.email) {
 						log(`Creating Email: ${email.email} [${emailCount + emailSkip}/${org.emails.length}]`, 'generate')
 						const newId = generateId('orgEmail')
 						const newEmail: Prisma.OrgEmailCreateManyInput = {
@@ -686,7 +687,7 @@ export const orgRecon = {
 								updateRecord.data.published = phone.show_on_organization
 							}
 						}
-						if (needsUpdate(existingRecord.description?.tsKey.text, phone.phone_type)) {
+						if (phone.phone_type && needsUpdate(existingRecord.description?.tsKey.text, phone.phone_type)) {
 							if (!existingRecord.description) {
 								const freeText = generateFreeTextKey({
 									orgId: organizationId,
@@ -704,7 +705,12 @@ export const orgRecon = {
 									updateRecord.data.description = { connect: { id } }
 									genAuditCreate(
 										{ key, ns, text },
-										{ translationKey: key, translationNs: ns, freeTextId: id, orgPhoneId: existingRecord.id }
+										{
+											translationKey: key,
+											translationNs: ns,
+											freeTextId: id,
+											orgPhoneId: existingRecord.id,
+										}
 									)
 								}
 							} else {
@@ -1151,7 +1157,7 @@ export const orgRecon = {
 						)
 
 						const sortedExisting = sortArray(
-							existingSupplements.map(({ id, ...data }) => data),
+							existingSupplements.map((data) => data),
 							(data) => Object.entries(data).forEach(([k, v]) => v)
 						)
 						const sortedUpdates = sortArray(attributeSupplement, ({ id, ...data }) =>
@@ -1159,14 +1165,21 @@ export const orgRecon = {
 						)
 
 						const changes = diff(sortedExisting, sortedUpdates)
-						if (changes.length) {
-							const diff = getDiff(
-								existingSupplements.map(({ id, ...data }) => data),
-								attributeSupplement
-							)
-							const updated = diffApply(existingSupplements, changes)
+						const filteredChanges = compact(
+							changes.flatMap((change) => {
+								if (change.op !== 'remove') return change
+								const i = change.path.at(0)
+								if (typeof i === 'number') {
+									if (change.path.includes('id')) return []
+									if (change.path.length === 1 && sortedExisting[i]?.id)
+										return { op: 'add' as const, path: [i, 'active'], value: false }
+								}
+							})
+						)
+						if (filteredChanges.length) {
+							const updated = diffApply(existingSupplements, filteredChanges)
 
-							const pendingUpdates = generateSupplementTxn(updated, changes)
+							const pendingUpdates = generateSupplementTxn(updated, filteredChanges)
 							// #region Process Supplement Changes
 							const processChanges = (txn: AttrSupplementChange) => {
 								if (!txn.where.id) {
@@ -1213,7 +1226,10 @@ export const orgRecon = {
 										const { text } = txn.data
 										if (key && ns) {
 											logUpdate('text', oldText, text)
-											update.translationKey.add({ where: { ns_key: { ns, key } }, data: { text, updatedAt } })
+											update.translationKey.add({
+												where: { ns_key: { ns, key } },
+												data: { text, updatedAt },
+											})
 											if (crowdinId) crowdin.update.add({ id: crowdinId, text })
 											genAuditUpdate(
 												{ text: oldText },
@@ -1404,8 +1420,8 @@ export const orgRecon = {
 									}),
 								},
 							})
+							genAuditUpdate(existingServArea, { ...orgServArea }, { serviceAreaId: existingServArea.id })
 						}
-						genAuditUpdate(existingServArea, { ...orgServArea }, { serviceAreaId: existingServArea.id })
 					} else {
 						logAddition('serviceArea', { ...orgServArea })
 						const id = generateId('serviceArea')
@@ -1450,7 +1466,10 @@ export const orgRecon = {
 							serviceName: { include: { tsKey: true } },
 							description: { include: { tsKey: true } },
 							accessDetails: {
-								include: { attribute: true, supplement: { include: { text: { include: { tsKey: true } } } } },
+								include: {
+									attribute: true,
+									supplement: { include: { text: { include: { tsKey: true } } } },
+								},
 							},
 							services: true,
 							emails: true,
@@ -1612,7 +1631,7 @@ export const orgRecon = {
 												emptyStrToNull
 											)
 										) as unknown as LegacyAccessInstruction
-										const idx = currentData.findIndex(({ data }) => data?._id.$oid === record._id.$oid)
+										const idx = currentData.findIndex(({ data }) => data?._id?.$oid === record._id.$oid)
 										if (idx >= 0) {
 											const existingItem =
 												currentData.splice(idx, 1)[0] ?? raise('error getting existing record')
@@ -1795,7 +1814,7 @@ export const orgRecon = {
 									)
 
 									const sortedExisting = sortArray(
-										existingSupplements.map(({ id, ...data }) => data),
+										existingSupplements.map(({ ...data }) => data),
 										(data) => Object.entries(data).forEach(([k, v]) => v)
 									)
 									const sortedUpdates = sortArray(attributeSupplement, ({ id, ...data }) =>
@@ -1803,14 +1822,21 @@ export const orgRecon = {
 									)
 
 									const changes = diff(sortedExisting, sortedUpdates)
-									if (changes.length) {
-										const diff = getDiff(
-											existingSupplements.map(({ id, ...data }) => data),
-											attributeSupplement
-										)
-										const updated = diffApply(existingSupplements, changes)
+									const filteredChanges = compact(
+										changes.flatMap((change) => {
+											if (change.op !== 'remove') return change
+											const i = change.path.at(0)
+											if (typeof i === 'number') {
+												if (change.path.includes('id')) return []
+												if (change.path.length === 1 && sortedExisting[i]?.id)
+													return { op: 'add' as const, path: [i, 'active'], value: false }
+											}
+										})
+									)
+									if (filteredChanges.length) {
+										const updated = diffApply(existingSupplements, filteredChanges)
 
-										const pendingUpdates = generateSupplementTxn(updated, changes)
+										const pendingUpdates = generateSupplementTxn(updated, filteredChanges)
 										// #region Process Supplement Changes
 										const processChanges = (txn: AttrSupplementChange) => {
 											if (!txn.where.id) {
@@ -1869,7 +1895,11 @@ export const orgRecon = {
 														genAuditUpdate(
 															{ text: oldText },
 															{ text, updatedAt },
-															{ translationKey: key, translationNs: ns, attributeSupplementId: txn.where.id }
+															{
+																translationKey: key,
+																translationNs: ns,
+																attributeSupplementId: txn.where.id,
+															}
 														)
 													} else {
 														logAddition('freeText', text)
@@ -2055,12 +2085,12 @@ export const orgRecon = {
 												}),
 											},
 										})
+										genAuditUpdate(
+											existingServArea,
+											{ ...serviceArea },
+											{ serviceAreaId: existingServArea.id, orgServiceId }
+										)
 									}
-									genAuditUpdate(
-										existingServArea,
-										{ ...serviceArea },
-										{ serviceAreaId: existingServArea.id, orgServiceId }
-									)
 								} else {
 									logAddition('serviceArea', { ...serviceArea })
 									const id = generateId('serviceArea')
