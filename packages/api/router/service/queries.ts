@@ -386,6 +386,7 @@ export const queries = defineRouter({
 					select: {
 						attribute: { select: { id: true } },
 						supplement: {
+							where: { active: true },
 							select: {
 								id: true,
 								data: true,
