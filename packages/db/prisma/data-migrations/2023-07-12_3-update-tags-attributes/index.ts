@@ -3,7 +3,7 @@ import path from 'path'
 
 import { prisma, type Prisma } from '~db/client'
 import { formatMessage } from '~db/prisma/common'
-import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
+import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 import { OrgAttributesSchema, ServAttributesSchema, ServiceTagsSchema } from './!types'
@@ -173,7 +173,8 @@ export const job20230712c = {
 		 */
 		await jobPostRunner(jobDef)
 	},
-} satisfies ListrJob
+	def: jobDef,
+} satisfies MigrationJob
 
 interface Batches {
 	orgServiceTag: Prisma.OrgServiceTagCreateManyInput[]
