@@ -1,10 +1,11 @@
 import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 // import compact from 'just-compact'
-import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
+import { type GetStaticPaths, type GetStaticPropsContext, type NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
@@ -181,32 +182,53 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		fallback: true,
 	}
 }
-export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
+export const getStaticProps = async ({
+	locale,
+	params,
+}: GetStaticPropsContext<RoutedQuery<'/org/[slug]/[orgLocationId]'>>) => {
 	const urlParams = z.object({ slug: z.string(), orgLocationId: z.string() }).safeParse(params)
 	if (!urlParams.success) return { notFound: true }
 	const { slug, orgLocationId } = urlParams.data
 
 	const ssg = await trpcServerClient({ session: null })
+	try {
+		const redirect = await ssg.organization.slugRedirect.fetch(slug)
+		if (redirect?.redirectTo) {
+			return {
+				redirect: {
+					permanent: true,
+					destination: `/org/${redirect.redirectTo}/${orgLocationId}`,
+				},
+			}
+		}
 
-	const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
-	if (!orgId?.id) return { notFound: true }
+		const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
+		if (!orgId?.id) return { notFound: true }
 
-	const [i18n] = await Promise.allSettled([
-		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId.id]),
-		ssg.organization.getBySlug.prefetch({ slug }),
-		// ssg.organization.getIdFromSlug.prefetch({ slug }),
-		ssg.location.forLocationPage.prefetch({ id: orgLocationId }),
-		ssg.organization.forLocationPage.prefetch({ slug }),
-	])
-	const props = {
-		trpcState: ssg.dehydrate(),
-		// ...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
-		...(i18n.status === 'fulfilled' ? i18n.value : {}),
-	}
+		const [i18n] = await Promise.allSettled([
+			getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId.id]),
+			ssg.organization.getBySlug.prefetch({ slug }),
+			// ssg.organization.getIdFromSlug.prefetch({ slug }),
+			ssg.location.forLocationPage.prefetch({ id: orgLocationId }),
+			ssg.organization.forLocationPage.prefetch({ slug }),
+		])
+		const props = {
+			trpcState: ssg.dehydrate(),
+			// ...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
+			...(i18n.status === 'fulfilled' ? i18n.value : {}),
+		}
 
-	return {
-		props,
-		revalidate: 60 * 30, // 30 minutes
+		return {
+			props,
+			revalidate: 60 * 30, // 30 minutes
+		}
+	} catch (error) {
+		const TRPCError = (await import('@trpc/server')).TRPCError
+		if (error instanceof TRPCError) {
+			if (error.code === 'NOT_FOUND') {
+				return { notFound: true }
+			}
+		}
 	}
 }
 
