@@ -102,7 +102,7 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 	const { userLists, attributes, description, reviews, locations, isClaimed, id: organizationId } = data
 
 	const body =
-		locations?.length === 1 ? (
+		locations?.length <= 1 ? (
 			<Tabs
 				w='100%'
 				value={activeTab}
