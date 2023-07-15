@@ -1,20 +1,20 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["extendedWhereUnique", "fieldReference", "fullTextSearch", "postgresqlExtensions", "tracing", "views", "jsonProtocol"]
+  previewFeatures = ["fullTextSearch", "postgresqlExtensions", "tracing", "views"]
 }
 
-generator zod {
-  provider               = "zod-prisma-types"
-  output                 = "../zod-schemas"
-  useMultipleFiles       = true
-  createModelTypes       = true
-  createInputTypes       = false
-  createPartialTypes     = true
-  addInputTypeValidation = false
-  addSelectType          = false
-  useDefaultValidators   = false
-  writeBarrelFiles       = true
-}
+// generator zod {
+//   provider               = "zod-prisma-types"
+//   output                 = "../zod-schemas"
+//   useMultipleFiles       = true
+//   createModelTypes       = true
+//   createInputTypes       = false
+//   createPartialTypes     = true
+//   addInputTypeValidation = false
+//   addSelectType          = false
+//   useDefaultValidators   = false
+//   writeBarrelFiles       = true
+// }
 
 generator kysely {
   provider = "prisma-kysely"
@@ -453,6 +453,7 @@ model Organization {
   updatedAt DateTime       @updatedAt
   auditLogs AuditLog[]
   notes     InternalNote[]
+  oldSlugs  SlugRedirect[]
 
   /// Does this record need to be checked by staff after migration?
   checkMigration Boolean?
@@ -460,6 +461,19 @@ model Organization {
 
   @@index([name(sort: Asc)])
   @@index([id, published, deleted])
+}
+
+model SlugRedirect {
+  id   String @id @default(cuid())
+  from String @unique
+  to   String @unique
+
+  org   Organization @relation(fields: [orgId], references: [id])
+  orgId String
+
+  auditLogs AuditLog[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 /// Organization email contacts - can be general or location specific
@@ -767,13 +781,13 @@ model FreeText {
 /// Organization's offered services - access instructions & details
 ///  associated with service tag
 model OrgService {
-  id            String             @id @default(cuid())
-  legacyId      String?            @unique /// old ID from MongoDB
-  published     Boolean            @default(false)
-  deleted       Boolean            @default(false)
+  id            String                   @id @default(cuid())
+  legacyId      String?                  @unique /// old ID from MongoDB
+  published     Boolean                  @default(false)
+  deleted       Boolean                  @default(false)
   legacyName    String?
-  serviceName   FreeText?          @relation("OrgServiceName", fields: [serviceNameId], references: [id])
-  serviceNameId String?            @unique
+  serviceName   FreeText?                @relation("OrgServiceName", fields: [serviceNameId], references: [id])
+  serviceNameId String?                  @unique
   // Nested data
   services      OrgServiceTag[]
   serviceAreas  ServiceArea?
@@ -782,9 +796,9 @@ model OrgService {
   attributes    ServiceAttribute[]
   phones        OrgServicePhone[]
   emails        OrgServiceEmail[]
-  accessDetails ServiceAccess[]
-  description   FreeText?          @relation("OrgServiceDescription", fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  descriptionId String?            @unique
+  accessDetails ServiceAccessAttribute[]
+  description   FreeText?                @relation("OrgServiceDescription", fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  descriptionId String?                  @unique
 
   // attachments
   organization   Organization?        @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -831,26 +845,6 @@ model ServiceArea {
   @@index([organizationId, id])
   @@index([orgLocationId, id])
   @@index([orgServiceId, id])
-}
-
-model ServiceAccess {
-  id     String  @id @default(cuid())
-  active Boolean @default(true)
-  // the legacyIds are nowhere near unique
-  // legacyId String? @unique /// old ID from MongoDB
-
-  attributes ServiceAccessAttribute[]
-
-  service   OrgService @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceId String /// old ID from MongoDB
-
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  auditLogs     AuditLog[]
-  internalNotes InternalNote[]
-  //@@schema("org")
-
-  @@index([serviceId, id])
 }
 
 /// User reviews/ratings of organization
@@ -1047,24 +1041,24 @@ model AttributeSupplement {
   //@@schema("system")
   locationAttribute      LocationAttribute?      @relation(references: [attributeId, locationId], fields: [locationAttributeAttributeId, locationAttributeLocationId], onDelete: Cascade)
   organizationAttribute  OrganizationAttribute?  @relation(references: [attributeId, organizationId], fields: [organizationAttributeAttributeId, organizationAttributeOrganizationId], onDelete: Cascade)
-  serviceAccessAttribute ServiceAccessAttribute? @relation(references: [attributeId, serviceAccessId], fields: [serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId], onDelete: Cascade)
+  serviceAccessAttribute ServiceAccessAttribute? @relation(references: [attributeId, serviceId], fields: [serviceAccessAttributeAttributeId, serviceAccessAttributeServiceId], onDelete: Cascade)
   serviceAttribute       ServiceAttribute?       @relation(references: [attributeId, orgServiceId], fields: [serviceAttributeAttributeId, serviceAttributeOrgServiceId], onDelete: Cascade)
   userAttribute          UserAttribute?          @relation(references: [attributeId, userId], fields: [userAttributeAttributeId, userAttributeUserId], onDelete: Cascade)
 
-  locationAttributeAttributeId          String?
-  locationAttributeLocationId           String?
-  organizationAttributeAttributeId      String?
-  organizationAttributeOrganizationId   String?
-  serviceAccessAttributeAttributeId     String?
-  serviceAccessAttributeServiceAccessId String?
-  serviceAttributeAttributeId           String?
-  serviceAttributeOrgServiceId          String?
-  userAttributeAttributeId              String?
-  userAttributeUserId                   String?
+  locationAttributeAttributeId        String?
+  locationAttributeLocationId         String?
+  organizationAttributeAttributeId    String?
+  organizationAttributeOrganizationId String?
+  serviceAccessAttributeAttributeId   String?
+  serviceAccessAttributeServiceId     String?
+  serviceAttributeAttributeId         String?
+  serviceAttributeOrgServiceId        String?
+  userAttributeAttributeId            String?
+  userAttributeUserId                 String?
 
   @@index([locationAttributeAttributeId, locationAttributeLocationId, id])
   @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId, id])
-  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceAccessId, id])
+  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceId, id])
   @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId, id])
   @@index([userAttributeAttributeId, userAttributeUserId, id])
 }
@@ -1608,8 +1602,6 @@ model InternalNote {
   permissionId                    String?
   phoneType                       PhoneType?                     @relation(fields: [phoneTypeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   phoneTypeId                     String?
-  serviceAccess                   ServiceAccess?                 @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceAccessId                 String?
   serviceCategory                 ServiceCategory?               @relation(fields: [serviceCategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   serviceCategoryId               String?
   serviceTag                      ServiceTag?                    @relation(fields: [serviceTagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -1706,14 +1698,14 @@ model AuditLog {
   permissionId                         String?
   PhoneType                            PhoneType?                     @relation(fields: [phoneTypeId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   phoneTypeId                          String?
-  ServiceAccess                        ServiceAccess?                 @relation(fields: [serviceAccessId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  serviceAccessId                      String?
   ServiceArea                          ServiceArea?                   @relation(fields: [serviceAreaId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   serviceAreaId                        String?
   ServiceCategory                      ServiceCategory?               @relation(fields: [serviceCategoryId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   serviceCategoryId                    String?
   ServiceTag                           ServiceTag?                    @relation(fields: [serviceTagId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   serviceTagId                         String?
+  SlugRedirect                         SlugRedirect?                  @relation(fields: [slugRedirectId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  slugRedirectId                       String?
   SocialMediaLink                      SocialMediaLink?               @relation(fields: [socialMediaLinkId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   socialMediaLinkId                    String?
   SocialMediaService                   SocialMediaService?            @relation(fields: [socialMediaServiceId], references: [id], onDelete: SetNull, onUpdate: Cascade)
@@ -1767,19 +1759,6 @@ enum AuditLogOperation {
 
 // Permissions
 
-/// Assign permissions to user
-model UserPermission {
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId       String
-  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  permissionId String
-
-  linkedAt DateTime @default(now())
-  //@@schema("relation")
-
-  @@id([userId, permissionId])
-}
-
 /// Assign default permissions to role
 model RolePermission {
   role         UserRole   @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -1788,9 +1767,25 @@ model RolePermission {
   permissionId String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([roleId, permissionId])
+}
+
+/// Assign permissions to user
+model UserPermission {
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId       String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  permissionId String
+
+  authorized Boolean @default(false)
+
+  linkedAt DateTime @default(now())
+  //@@schema("relation")
+
+  @@id([userId, permissionId])
 }
 
 /// Associate User to Org - w/ contact info
@@ -1800,6 +1795,8 @@ model UserToOrganization {
   userId         String
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   organizationId String
+
+  authorized Boolean @default(false)
 
   title      UserTitle? @relation(fields: [orgTitleId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   orgTitleId String?
@@ -1932,6 +1929,8 @@ model AssignedRole {
   role   UserRole @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   roleId String
 
+  authorized Boolean @default(false)
+
   linkedAt DateTime @default(now())
   //@@schema("relation")
 
@@ -1982,6 +1981,7 @@ model OrganizationPhone {
   phoneId        String       @unique
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([organizationId, phoneId])
@@ -1994,6 +1994,7 @@ model OrganizationEmail {
   organizationId String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgEmailId, organizationId])
@@ -2007,6 +2008,7 @@ model OrgWebsiteLanguage {
   languageId   String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgWebsiteId, languageId])
@@ -2020,6 +2022,7 @@ model OrgPhoneLanguage {
   languageId String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgPhoneId, languageId])
@@ -2033,6 +2036,7 @@ model OrgServicePhone {
   serviceId  String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgPhoneId, serviceId])
@@ -2046,6 +2050,7 @@ model OrgServiceEmail {
   serviceId  String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgEmailId, serviceId])
@@ -2059,6 +2064,7 @@ model OrgLocationEmail {
   orgEmailId    String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgEmailId, orgLocationId])
@@ -2071,6 +2077,7 @@ model OrgLocationPhone {
   phoneId       String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgLocationId, phoneId])
@@ -2084,6 +2091,7 @@ model OrgLocationService {
   serviceId     String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgLocationId, serviceId])
@@ -2097,6 +2105,7 @@ model OrgServiceTag {
   tagId     String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([serviceId, tagId])
@@ -2110,6 +2119,7 @@ model ServiceAreaCountry {
   countryId     String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([serviceAreaId, countryId])
@@ -2123,6 +2133,7 @@ model ServiceAreaDist {
   govDistId     String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([serviceAreaId, govDistId])
@@ -2134,9 +2145,8 @@ model ServiceAreaDist {
 
 /// Nesting attributes
 model AttributeNesting {
-  child   Attribute @relation("attribChildToParent", fields: [childId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  childId String
-
+  child    Attribute @relation("attribChildToParent", fields: [childId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  childId  String
   parent   Attribute @relation("attribParentToChild", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   parentId String
 
@@ -2154,6 +2164,7 @@ model UserAttribute {
   supplement  AttributeSupplement[]
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([userId, attributeId])
@@ -2168,6 +2179,7 @@ model OrganizationAttribute {
   supplement     AttributeSupplement[]
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([organizationId, attributeId])
@@ -2182,6 +2194,7 @@ model LocationAttribute {
   supplement  AttributeSupplement[]
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([locationId, attributeId])
@@ -2196,6 +2209,7 @@ model ServiceAttribute {
   supplement   AttributeSupplement[]
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([orgServiceId, attributeId])
@@ -2204,16 +2218,17 @@ model ServiceAttribute {
 
 /// Link attributes to Service Access instructions
 model ServiceAccessAttribute {
-  serviceAccess   ServiceAccess         @relation(fields: [serviceAccessId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  serviceAccessId String
-  attribute       Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  attributeId     String
-  supplement      AttributeSupplement[]
+  attribute   Attribute             @relation(fields: [attributeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  attributeId String
+  service     OrgService            @relation(fields: [serviceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceId   String
+  supplement  AttributeSupplement[]
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
-  @@id([serviceAccessId, attributeId])
+  @@id([serviceId, attributeId])
 }
 
 /// Link attributes to category
@@ -2237,6 +2252,7 @@ model ServiceCategoryDefaultAttribute {
   categoryId  String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([attributeId, categoryId])
@@ -2250,6 +2266,7 @@ model ServiceTagDefaultAttribute {
   serviceId   String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
   //@@schema("relation")
 
   @@id([attributeId, serviceId])
@@ -2262,6 +2279,7 @@ model ServiceTagCountry {
   serviceId String
 
   linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
 
   @@id([countryId, serviceId])
 }

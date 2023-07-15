@@ -219,13 +219,8 @@ export const queries = defineRouter({
 						id: true,
 						accessDetails: {
 							select: {
-								id: true,
-								attributes: {
-									select: {
-										attribute: { select: { id: true, tsKey: true, tsNs: true } },
-										supplement: { select: { id: true, text: freeTextCrowdinId, data: true } },
-									},
-								},
+								attribute: { select: { id: true, tsKey: true, tsNs: true } },
+								supplement: { select: { id: true, text: freeTextCrowdinId, data: true } },
 							},
 						},
 						attributes: {
@@ -298,17 +293,14 @@ export const queries = defineRouter({
 							}),
 						}
 					}),
-					accessDetails: accessDetails.map(({ id, attributes }) => ({
-						id,
-						attributes: attributes.map(({ attribute, supplement }) => ({
-							attribute,
-							supplement: supplement.map(({ data, ...rest }) => {
-								if (data) {
-									return { ...rest, data: transformer.parse(JSON.stringify(data)) }
-								}
-								return { ...rest, data }
-							}),
-						})),
+					accessDetails: accessDetails.map(({ attribute, supplement }) => ({
+						attribute,
+						supplement: supplement.map(({ data, ...rest }) => {
+							if (data) {
+								return { ...rest, data: transformer.parse(JSON.stringify(data)) }
+							}
+							return { ...rest, data }
+						}),
 					})),
 				}
 
@@ -390,17 +382,15 @@ export const queries = defineRouter({
 				services: { select: { tag: { select: { tsKey: true } } }, where: { tag: { active: true } } },
 				accessDetails: {
 					where: { active: true },
+
 					select: {
-						attributes: {
+						attribute: { select: { id: true } },
+						supplement: {
+							where: { active: true },
 							select: {
-								attribute: { select: { id: true } },
-								supplement: {
-									select: {
-										id: true,
-										data: true,
-										text: { select: { key: true, tsKey: { select: { text: true } } } },
-									},
-								},
+								id: true,
+								data: true,
+								text: { select: { key: true, tsKey: { select: { text: true } } } },
 							},
 						},
 					},

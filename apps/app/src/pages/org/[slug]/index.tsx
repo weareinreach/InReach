@@ -1,7 +1,7 @@
 /* eslint-disable i18next/no-literal-string */
 import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
-import { type GetStaticPaths, type GetStaticProps, type NextPage } from 'next'
+import { type GetStaticPaths, type GetStaticPropsContext, type InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -57,13 +57,15 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-const OrganizationPage: NextPage = () => {
-	const { t, i18n } = useTranslation()
+const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const router = useRouter<'/org/[slug]'>()
-	const { query } = router
+	// const { query } = router
+	const { t, i18n } = useTranslation(['common', 'services', 'attribute', 'phone-type', slug], {
+		bindI18n: 'languageChanged loaded',
+	})
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
-	const { data, status } = api.organization.forOrgPage.useQuery(query)
+	const { data, status } = api.organization.forOrgPage.useQuery({ slug }, { enabled: !!slug })
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
 		{ parentId: data?.id ?? '', remoteOnly: true },
 		{
@@ -81,6 +83,7 @@ const OrganizationPage: NextPage = () => {
 	const photosRef = useRef<HTMLDivElement>(null)
 	const reviewsRef = useRef<HTMLDivElement>(null)
 
+	console.log('fallback?', router.isFallback)
 	useEffect(() => {
 		if (data && status === 'success') {
 			setLoading(false)
@@ -89,23 +92,17 @@ const OrganizationPage: NextPage = () => {
 	}, [data, status])
 
 	useEffect(() => {
-		if (query.slug)
-			i18n.reloadResources(i18n.resolvedLanguage, [
-				'common',
-				'services',
-				'attribute',
-				'phone-type',
-				query.slug,
-			])
+		slug &&
+			i18n.reloadResources(i18n.resolvedLanguage, ['common', 'services', 'attribute', 'phone-type', slug])
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	if (loading || !data || router.isFallback) return <LoadingState />
 
-	const { userLists, attributes, description, slug, reviews, locations, isClaimed, id: organizationId } = data
+	const { userLists, attributes, description, reviews, locations, isClaimed, id: organizationId } = data
 
 	const body =
-		locations?.length === 1 ? (
+		locations?.length <= 1 ? (
 			<Tabs
 				w='100%'
 				value={activeTab}
@@ -246,33 +243,53 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	// }
 }
 
-export const getStaticProps: GetStaticProps<Record<string, unknown>, RoutedQuery<'/org/[slug]'>> = async ({
+export const getStaticProps = async ({
 	locale,
 	params,
-}) => {
+}: GetStaticPropsContext<RoutedQuery<'/org/[slug]'>>) => {
 	if (!params) return { notFound: true }
 	const { slug } = params
 
 	const ssg = await trpcServerClient({ session: null })
-	const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
-	if (!orgId?.id) return { notFound: true }
+	try {
+		const redirect = await ssg.organization.slugRedirect.fetch(slug)
+		if (redirect?.redirectTo) {
+			return {
+				redirect: {
+					permanent: true,
+					destination: `/org/${redirect.redirectTo}`,
+				},
+			}
+		}
 
-	const [i18n] = await Promise.allSettled([
-		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId.id]),
-		ssg.organization.forOrgPage.prefetch({ slug }),
-	])
-	// await ssg.organization.getBySlug.prefetch({ slug })
+		const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
+		// if (!orgId) return { notFound: true, props: {} }
 
-	const props = {
-		trpcState: ssg.dehydrate(),
-		organizationId: orgId.id,
-		// ...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
-		...(i18n.status === 'fulfilled' ? i18n.value : {}),
-	}
+		const [i18n] = await Promise.allSettled([
+			orgId &&
+				getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId?.id]),
+			ssg.organization.forOrgPage.prefetch({ slug }),
+		])
+		// await ssg.organization.getBySlug.prefetch({ slug })
 
-	return {
-		props,
-		revalidate: 60 * 30, // 30 minutes
+		const props = {
+			trpcState: ssg.dehydrate(),
+			organizationId: orgId?.id,
+			slug,
+			...(i18n.status === 'fulfilled' ? i18n.value : {}),
+		}
+
+		return {
+			props,
+			revalidate: 60 * 30, // 30 minutes
+		}
+	} catch (error) {
+		const TRPCError = (await import('@trpc/server')).TRPCError
+		if (error instanceof TRPCError) {
+			if (error.code === 'NOT_FOUND') {
+				return { notFound: true }
+			}
+		}
 	}
 }
 

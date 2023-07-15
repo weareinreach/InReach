@@ -21,7 +21,7 @@ export default createNextApiHandler({
 	responseMeta(opts) {
 		const { ctx, errors, type } = opts
 
-		const shouldSkip = ctx?.skipCache ?? true
+		const shouldSkip = ctx?.skipCache ?? false
 		const allOk = errors.length === 0
 		const isQuery = type === 'query'
 

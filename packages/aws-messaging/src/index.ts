@@ -17,7 +17,7 @@ const clientMetadataDefaults = (triggerSource: CustomMessageTriggerEvent['trigge
 	const resetPw = triggerSource === 'CustomMessage_ForgotPassword'
 
 	return {
-		baseUrl: `http://localhost:3000`,
+		baseUrl: `https://app.inreach.org`,
 		subject: resetPw ? 'Reset your password' : 'Confirm your account',
 		message: resetPw
 			? 'Click the following link to reset your password:'

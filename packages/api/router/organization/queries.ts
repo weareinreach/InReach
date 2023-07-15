@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { readSlugRedirectCache, writeSlugRedirectCache } from '~api/cache/slugRedirect'
 import { readSlugCache, writeSlugCache } from '~api/cache/slugToOrgId'
 import { handleError } from '~api/lib/errorHandler'
 import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
@@ -314,6 +315,25 @@ export const queries = defineRouter({
 			}
 
 			return reformatted
+		} catch (error) {
+			handleError(error)
+		}
+	}),
+	slugRedirect: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+		try {
+			const cached = await readSlugRedirectCache(input)
+			if (cached) {
+				return { redirectTo: cached }
+			}
+			const { slug: primarySlug } = await ctx.prisma.organization.findFirstOrThrow({
+				where: { OR: [{ slug: input }, { oldSlugs: { some: { from: input } } }], ...isPublic },
+				select: { slug: true },
+			})
+			if (primarySlug !== input) {
+				await writeSlugRedirectCache(input, primarySlug)
+				return { redirectTo: primarySlug }
+			}
+			return { redirectTo: null }
 		} catch (error) {
 			handleError(error)
 		}

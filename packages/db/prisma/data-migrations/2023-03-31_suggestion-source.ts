@@ -1,5 +1,5 @@
 import { prisma } from '~db/index'
-import { type ListrJob, type ListrTask } from '~db/prisma/dataMigrationRunner'
+import { type ListrJob, type ListrTask, type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 const jobDef: JobDef = {
@@ -32,4 +32,5 @@ const job: ListrTask = async (_ctx, task) => {
 export const job20220330 = {
 	title: `${jobDef.jobId} - ${jobDef.title}`,
 	task: job,
-} satisfies ListrJob
+	def: jobDef,
+} satisfies MigrationJob

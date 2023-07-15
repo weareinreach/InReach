@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { prisma } from '~db/index'
-import { type ListrJob } from '~db/prisma/dataMigrationRunner'
+import { type ListrJob, type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
@@ -69,4 +69,5 @@ export const job20230614a = {
 		 */
 		await jobPostRunner(jobDef)
 	},
-} satisfies ListrJob
+	def: jobDef,
+} satisfies MigrationJob
