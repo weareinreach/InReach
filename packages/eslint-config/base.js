@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unused-modules */
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
-	plugins: ['codegen', 'turbo', 'node', 'import', '@tanstack/query'],
+	plugins: ['codegen', 'turbo', 'node', /*'import',*/ '@tanstack/query'],
 	extends: [
 		'eslint:recommended',
 		// disable turbo plugin until vercel/turbo#5355 is resolved
