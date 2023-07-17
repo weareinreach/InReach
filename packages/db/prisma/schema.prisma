@@ -680,6 +680,7 @@ model OrgLocation {
 
   @@index([geo], type: SpGist)
   @@index([orgId, id])
+  @@index([orgId])
   @@index([descriptionId, id])
   @@index([id, published, deleted])
   @@index([orgId, id, geo])
@@ -2095,6 +2096,8 @@ model OrgLocationService {
   //@@schema("relation")
 
   @@id([orgLocationId, serviceId])
+  @@index([orgLocationId, active])
+  @@index([serviceId, active])
 }
 
 /// Link tags to services
@@ -2109,6 +2112,8 @@ model OrgServiceTag {
   //@@schema("relation")
 
   @@id([serviceId, tagId])
+  @@index([serviceId, active])
+  @@index([tagId, active])
 }
 
 /// Link countries to service areas
@@ -2183,6 +2188,8 @@ model OrganizationAttribute {
   //@@schema("relation")
 
   @@id([organizationId, attributeId])
+  @@index([organizationId, active])
+  @@index([attributeId, active])
 }
 
 /// Link attributes to locations
@@ -2198,6 +2205,8 @@ model LocationAttribute {
   //@@schema("relation")
 
   @@id([locationId, attributeId])
+  @@index([attributeId, active])
+  @@index([locationId, active])
 }
 
 /// Link attributes to services
@@ -2214,6 +2223,8 @@ model ServiceAttribute {
 
   @@id([orgServiceId, attributeId])
   @@index([attributeId, orgServiceId])
+  @@index([attributeId, active])
+  @@index([orgServiceId, active])
 }
 
 /// Link attributes to Service Access instructions
