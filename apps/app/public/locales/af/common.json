@@ -19,6 +19,7 @@
 	"badge": {
 		"claimed-tool-tip": "Hierdie organisasie is deur 'n geverifieerde verteenwoordiger geëis. <link1>Kom meer te wete.</link1>",
 		"community-tool-tip": "Gemeenskap bedien deur hierdie organisasie.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "Beskikbaar op afstand",
 		"service-tool-tip": "Diens (s) wat deur hierdie organisasie aangebied word.",
 		"unclaimed-tool-tip": "Hierdie organisasie is nog nie deur 'n verteenwoordiger geëis nie. <link1>Eis hierdie organisasie</link1> om vertroue met ons gemeenskap op te bou, jou eie inligting op te dateer, en meer."
