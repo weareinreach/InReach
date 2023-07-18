@@ -6,7 +6,7 @@ import { connectOneId } from '../nestedOps'
 
 export const CreateOrgWebsiteSchema = z
 	.object({
-		orgSlug: z.string(),
+		orgId: z.string(),
 		data: z.object({
 			url: z.string(),
 			isPrimary: z.boolean().optional(),
@@ -17,10 +17,10 @@ export const CreateOrgWebsiteSchema = z
 			description: z.string().optional(),
 		}),
 	})
-	.transform(({ data, orgSlug }) => {
+	.transform(({ data, orgId }) => {
 		const id = generateId('orgPhone')
 		const description = data.description
-			? generateNestedFreeText({ orgSlug, itemId: id, text: data.description, type: 'websiteDesc' })
+			? generateNestedFreeText({ orgId, itemId: id, text: data.description, type: 'websiteDesc' })
 			: undefined
 
 		const { url, isPrimary, published, organizationId, orgLocationId, orgLocationOnly } = data

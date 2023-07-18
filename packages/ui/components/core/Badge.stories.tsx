@@ -25,6 +25,7 @@ export default {
 				'attribute',
 				'verifiedUser',
 				'remote',
+				'national',
 			],
 			control: 'select',
 		},
@@ -327,5 +328,18 @@ export const VerifiedReviewer = {
 export const Remote = {
 	args: {
 		variant: 'remote',
+	},
+} satisfies StoryDef
+
+export const National = {
+	args: {
+		variant: 'national',
+		tsKey: 'USA.name',
+	},
+} satisfies StoryDef
+export const NationalMultiple = {
+	args: {
+		variant: 'national',
+		tsKey: ['USA.name', 'CAN.name'],
 	},
 } satisfies StoryDef

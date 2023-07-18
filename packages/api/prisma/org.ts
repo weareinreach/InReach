@@ -12,13 +12,11 @@ export const prismaDistSearchDetails = async ({ ctx, input }: PrismaSearchDistan
 	const results = await ctx.prisma.organization.findMany({
 		where: {
 			id: { in: resultIds },
-			...attributeFilter(attributes),
-			...serviceFilter(services),
+			// ...attributeFilter(attributes),
+			// ...serviceFilter(services),
 			...isPublic,
 		},
 		select: orgSearchSelect,
-		skip,
-		take,
 	})
 
 	const transformed = results.map(({ attributes, description, locations, services, ...rest }) => {

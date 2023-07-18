@@ -13,7 +13,7 @@ import { forwardRef } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { PhoneNumberEntry } from '~ui/components/data-portal/PhoneNumberEntry'
-import { useSlug } from '~ui/hooks/useSlug'
+import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { ModalTitle } from '~ui/modals/ModalTitle'
 
@@ -26,7 +26,7 @@ const PhoneEmailModalBody = forwardRef<HTMLButtonElement, PhoneEmailModalProps>(
 	const form = useForm(formHookParams)
 	const [opened, handler] = useDisclosure(false)
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
-	const slug = useSlug()
+	const { id: orgId, slug } = useOrgInfo()
 
 	const handleSubmit = () => {
 		if (!form.isValid()) return
@@ -37,7 +37,7 @@ const PhoneEmailModalBody = forwardRef<HTMLButtonElement, PhoneEmailModalProps>(
 				const { emailAddress: email, firstName, lastName } = formValues
 				if (!email) return
 				saveEmail.mutate({
-					orgSlug: slug,
+					orgId: orgId ?? '',
 					data: { email, firstName, lastName, locationOnly: false, serviceOnly: false },
 				})
 				break
@@ -46,7 +46,7 @@ const PhoneEmailModalBody = forwardRef<HTMLButtonElement, PhoneEmailModalProps>(
 				const { phoneNumber: number, phoneCountryId: countryId, phoneTypeId, customPhoneType } = formValues
 				if (!number || !countryId) return
 
-				savePhone.mutate({ orgSlug: slug, data: { number, countryId, phoneTypeId } })
+				savePhone.mutate({ orgId: orgId ?? '', data: { number, countryId, phoneTypeId } })
 
 				break
 			}
