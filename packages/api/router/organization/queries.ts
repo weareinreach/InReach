@@ -124,12 +124,12 @@ export const queries = defineRouter({
 		const orderedResults: ((typeof results)[number] & {
 			distance: number
 			unit: 'km' | 'mi'
-			isNational: boolean
+			national: string[]
 		})[] = []
-		orgs.results.forEach(({ id, distMeters, isNational }) => {
+		orgs.results.forEach(({ id, distMeters, national }) => {
 			const distance = unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934
 			const sort = results.find((result) => result.id === id)
-			if (sort) orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit, isNational })
+			if (sort) orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit, national })
 		})
 		return { orgs: orderedResults, resultCount: orgs.total }
 	}),
