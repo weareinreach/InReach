@@ -33,7 +33,7 @@ const config = {
 		'node/no-process-env': 'warn',
 		'codegen/codegen': 'error',
 		'react/jsx-key': 'off',
-		'react/no-unescaped-entities': ['off'],
+		'react/no-unescaped-entities': 'off',
 		// 'turbo/no-undeclared-env-vars': 'warn',
 		'import/first': 'error',
 		'import/newline-after-import': 'error',
