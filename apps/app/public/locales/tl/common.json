@@ -19,6 +19,7 @@
 	"badge": {
 		"claimed-tool-tip": "Ang organisasyong ito ay inaangkin ng isang na-verify na kinatawan. <link1>Matuto nang higit pa.</link1>",
 		"community-tool-tip": "Komunidad na pinaglilingkuran ng organisasyong ito.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "Magagamit nang malayuan",
 		"service-tool-tip": "(Mga) serbisyo na inaalok ng samahang ito.",
 		"unclaimed-tool-tip": "Ang organisasyong ito ay hindi pa inaangkin ng isang kinatawan. <link1>Kunin ang samahang ito</link1> upang bumuo ng tiwala sa aming komunidad, i-update ang iyong sariling impormasyon, at higit pa."
