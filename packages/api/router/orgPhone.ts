@@ -121,7 +121,7 @@ export const orgPhoneRouter = defineRouter({
 	upsertMany: permissionedProcedure('updatePhone')
 		.input(UpsertManyOrgPhoneSchema)
 		.mutation(async ({ ctx, input }) => {
-			const { orgSlug, data } = input
+			const { orgId, data } = input
 
 			const existing = await ctx.prisma.orgPhone.findMany({
 				where: {
@@ -165,7 +165,7 @@ export const orgPhoneRouter = defineRouter({
 								locations: createManyOptional(locations),
 								auditLogs,
 								description: description
-									? generateNestedFreeText({ orgSlug, text: description, type: 'phoneDesc', itemId: id })
+									? generateNestedFreeText({ orgId, text: description, type: 'phoneDesc', itemId: id })
 									: undefined,
 							},
 							update: {
@@ -179,7 +179,7 @@ export const orgPhoneRouter = defineRouter({
 									? {
 											upsert: {
 												...generateNestedFreeText({
-													orgSlug,
+													orgId,
 													text: description,
 													type: 'phoneDesc',
 													itemId: id,

@@ -8,26 +8,26 @@ import { slug } from './slugGen'
 
 const createKey = (parts: string[]) => slug(parts.join('.'))
 
-export const generateFreeText = ({ orgSlug, itemId, text, type }: GenerateFreeTextParams) => {
+export const generateFreeText = ({ orgId, itemId, text, type }: GenerateFreeTextParams) => {
 	const key = (() => {
 		switch (type) {
 			case 'orgDesc': {
-				return createKey([orgSlug, 'description'])
+				return createKey([orgId, 'description'])
 			}
 			case 'attSupp': {
 				invariant(itemId)
-				return createKey([orgSlug, 'attribute', itemId])
+				return createKey([orgId, 'attribute', itemId])
 			}
 			case 'svcName': {
 				invariant(itemId)
-				return createKey([orgSlug, itemId, 'name'])
+				return createKey([orgId, itemId, 'name'])
 			}
 			case 'websiteDesc':
 			case 'phoneDesc':
 			case 'emailDesc':
 			case 'svcDesc': {
 				invariant(itemId)
-				return createKey([orgSlug, itemId, 'description'])
+				return createKey([orgId, itemId, 'description'])
 			}
 		}
 	})()
@@ -41,7 +41,7 @@ export const generateFreeText = ({ orgSlug, itemId, text, type }: GenerateFreeTe
 		}),
 	}
 }
-export const generateNestedFreeText = ({ orgSlug, itemId, text, type }: GenerateFreeTextParams) => {
+export const generateNestedFreeText = ({ orgId: orgSlug, itemId, text, type }: GenerateFreeTextParams) => {
 	const key = (() => {
 		switch (type) {
 			case 'orgDesc': {
@@ -74,7 +74,7 @@ type GenerateFreeTextParams = GenerateFreeTextWithItem | GenerateFreeTextWithout
 
 interface GenerateFreeTextBase {
 	text: string
-	orgSlug: string
+	orgId: string
 }
 interface GenerateFreeTextWithItem extends GenerateFreeTextBase {
 	type: 'attSupp' | 'svcName' | 'svcDesc' | 'emailDesc' | 'phoneDesc' | 'websiteDesc'

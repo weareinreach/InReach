@@ -65,6 +65,7 @@ const badgeVariants: BadgeVariants = (theme, params) => {
 				},
 			}
 		}
+		case 'national':
 		case 'leader': {
 			return {
 				leftSection: {
@@ -169,6 +170,7 @@ const customVariants = [
 	'privatePractice',
 	'verifiedReviewer',
 	'remote',
+	'national',
 ] as const
 
 const customVariantMap = {
@@ -182,13 +184,16 @@ const customVariantMap = {
 	privatePractice: 'outline',
 	verifiedReviewer: 'outline',
 	remote: 'outline',
+	national: 'outline',
 } satisfies Record<CustomVariants, BadgeVariant | undefined>
 
 /** Badge variants `serviceTag` and `communityTag` are responsive - the sizing changes at the `sm` breakpoint. */
 export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div', CustomBadgeProps>>(
 	(props, ref) => {
 		const variants = useCustomVariant()
-		const { t, i18n } = useTranslation(['common', 'attribute'])
+		const { t, i18n } = useTranslation(
+			props.variant === 'national' ? ['common', 'attribute', 'country'] : ['common', 'attribute']
+		)
 		const isCustom = (customVariants as ReadonlyArray<string>).includes(props.variant ?? 'light')
 		const theme = useMantineTheme()
 		const { classes: baseClasses } = useVariantStyles({
@@ -207,6 +212,9 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 							<span>{props.icon}</span>
 						</ColorSwatch>
 					)
+				}
+				case 'national': {
+					return <Icon icon='carbon:globe' height={24} color={theme.other.colors.secondary.black} />
 				}
 				case 'verified': {
 					return (
@@ -308,6 +316,26 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 				case 'service': {
 					return {
 						label: t('badge.service-tool-tip'),
+					}
+				}
+				case 'national': {
+					if (Array.isArray(props.tsKey)) {
+						const formatter = new Intl.ListFormat(i18n.resolvedLanguage, {
+							style: 'long',
+							type: 'conjunction',
+						})
+						return {
+							label: t('badge.national-tool-tip', {
+								country: formatter.format(props.tsKey.map((country) => `$t(country:${country}.name)`)),
+								interpolation: { skipOnVariables: false },
+							}),
+						}
+					}
+					return {
+						label: t('badge.national-tool-tip', {
+							country: `$t(country:${props.tsKey}.name)`,
+							interpolation: { skipOnVariables: false },
+						}),
 					}
 				}
 				case 'leader': {
@@ -478,7 +506,7 @@ export type CustomBadgeProps =
 	| (Omit<BadgeProps, 'variant'> & {
 			/** Preset designs */
 			variant?:
-				| Exclude<CustomVariants, 'leader' | 'verified' | 'attribute' | 'community' | 'service'>
+				| Exclude<CustomVariants, 'leader' | 'verified' | 'attribute' | 'community' | 'service' | 'national'>
 				| 'outline'
 			/**
 			 * Item rendered on the left side of the badge. Should be either an emoji unicode string or an Icon
@@ -491,6 +519,7 @@ export type CustomBadgeProps =
 	| AttributeTagProps
 	| CommunityTagProps
 	| ServiceTagProps
+	| NationalBadgeProps
 type CustomVariants = (typeof customVariants)[number]
 
 export type CustomBadgeStyles = Partial<{ [className in BadgeStylesNames]: CSSObject }>
@@ -508,6 +537,11 @@ type LeaderBadgeProps = {
 	minify?: boolean
 	/** Hide light gray bg for mini */
 	hideBg?: boolean
+}
+type NationalBadgeProps = {
+	variant: 'national'
+	/** Translation key for the country name(s) */
+	tsKey: string | string[]
 }
 
 type VerifiedBadgeProps = {

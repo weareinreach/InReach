@@ -183,7 +183,7 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 	})
 
 	const handleUpdate = () => {
-		updatePhones.mutate({ orgSlug, data: form.getTransformedValues().data })
+		updatePhones.mutate({ orgId: organizationId ?? '', data: form.getTransformedValues().data })
 	}
 	// #endregion
 

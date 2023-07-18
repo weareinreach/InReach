@@ -47,14 +47,14 @@
 		"lint-staged": "13.2.3",
 		"prettier": "2.8.8",
 		"prettier-plugin-jsdoc": "0.4.2",
-		"prettier-plugin-packagejson": "2.4.4",
-		"prettier-plugin-prisma": "4.13.0",
+		"prettier-plugin-packagejson": "2.4.5",
+		"prettier-plugin-prisma": "5.0.0",
 		"tsx": "3.12.7",
-		"turbo": "1.10.7",
+		"turbo": "1.10.8",
 		"typescript": "5.1.6",
 		"typesync": "0.11.1"
 	},
-	"packageManager": "pnpm@8.6.6",
+	"packageManager": "pnpm@8.6.9",
 	"engines": {
 		"node": "^18",
 		"pnpm": "^7 || ^8"
