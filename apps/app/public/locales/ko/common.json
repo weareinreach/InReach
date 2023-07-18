@@ -19,6 +19,7 @@
 	"badge": {
 		"claimed-tool-tip": "이 단체는 검증된 대리인에 의해 소유권을 주장했습니다. <link1>자세히 알아보기.</link1>",
 		"community-tool-tip": "이 조직에서 서비스를 제공하는 커뮤니티.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "원격으로 사용 가능",
 		"service-tool-tip": "이 조직에서 제공하는 서비스.",
 		"unclaimed-tool-tip": "이 단체는 아직 대리인에 의해 청구되지 않았습니다.<br/><link1>이 단체에 대한 소유권 주장</link1> 커뮤니티와의 신뢰 구축, 자체 정보 업데이트 등."
