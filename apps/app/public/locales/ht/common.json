@@ -19,6 +19,7 @@
 	"badge": {
 		"claimed-tool-tip": "Òganizasyon sa a te reklame pa yon reprezantan verifye. <link1>Aprann plis.</link1>",
 		"community-tool-tip": "Kominote ki te sèvi nan òganizasyon sa a.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "Disponib adistans",
 		"service-tool-tip": "Sèvis (yo) ofri nan òganizasyon sa a.",
 		"unclaimed-tool-tip": "Òganizasyon sa a pa gen ankò yo te reklame pa yon reprezantan. <link1>Reklame òganizasyon sa a</link1> pou konstwi konfyans ak kominote nou an, mete ajou pwòp enfòmasyon ou, ak plis ankò."
