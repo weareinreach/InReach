@@ -19,6 +19,7 @@
 	"badge": {
 		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
 		"community-tool-tip": "جامعه خدمت شده توسط این سازمان.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "از راه دور موجود است",
 		"service-tool-tip": "خدمات (های) ارائه شده توسط این سازمان.",
 		"unclaimed-tool-tip": "این سازمان هنوز توسط یک نماینده ادعا نشده‌است. <link1>ادعای این سازمان</link1> برای ایجاد اعتماد با جامعه ما، به روز رسانی اطلاعات خود و موارد دیگر."
