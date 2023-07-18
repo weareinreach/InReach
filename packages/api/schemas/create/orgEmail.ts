@@ -5,7 +5,7 @@ import { namespaces } from '@weareinreach/db/seed/data/00-namespaces'
 
 export const CreateOrgEmailSchema = z
 	.object({
-		orgSlug: z.string(),
+		orgId: z.string(),
 		data: z.object({
 			firstName: z.string().optional(),
 			lastName: z.string().optional(),
@@ -23,13 +23,13 @@ export const CreateOrgEmailSchema = z
 		 * locations)
 		 */
 	})
-	.transform(({ orgSlug, data, title, titleId, description }) => {
+	.transform(({ orgId, data, title, titleId, description }) => {
 		const id = generateId('orgEmail')
 
 		return Prisma.validator<Prisma.OrgEmailCreateInput>()({
 			...data,
 			description: description
-				? generateNestedFreeText({ orgSlug, itemId: id, text: description, type: 'emailDesc' })
+				? generateNestedFreeText({ orgId, itemId: id, text: description, type: 'emailDesc' })
 				: undefined,
 			title: title
 				? {
@@ -81,7 +81,7 @@ export const UpdateOrgEmailSchema = z
 	.transform(({ data, id }) => Prisma.validator<Prisma.OrgEmailUpdateArgs>()({ where: { id }, data }))
 
 export const UpsertManyOrgEmailSchema = z.object({
-	orgSlug: z.string(),
+	orgId: z.string(),
 	data: z
 		.object({
 			id: z.string().optional(),

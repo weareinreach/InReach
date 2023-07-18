@@ -16,7 +16,6 @@ import { CreateNestedOrgWebsiteSchema } from './orgWebsite'
 export const AttachOrgAttribute = () => {
 	const { dataParser: parser, inputSchema } = CreationBase(
 		z.object({
-			orgSlug: z.string(),
 			organizationId: z.string(),
 			attributeId: z.string(),
 			supplement: z
@@ -33,13 +32,18 @@ export const AttachOrgAttribute = () => {
 	)
 
 	const dataParser = parser.transform(({ actorId, operation, data: parsedData }) => {
-		const { orgSlug, organizationId, attributeId, supplement: supplementInput } = parsedData
+		const { organizationId, attributeId, supplement: supplementInput } = parsedData
 
 		const supplementId = supplementInput ? generateId('attributeSupplement') : undefined
 
 		const { freeText, translationKey } =
 			supplementId && supplementInput?.text
-				? generateFreeText({ orgSlug, text: supplementInput.text, type: 'attSupp', itemId: supplementId })
+				? generateFreeText({
+						orgId: organizationId,
+						text: supplementInput.text,
+						type: 'attSupp',
+						itemId: supplementId,
+				  })
 				: { freeText: undefined, translationKey: undefined }
 
 		const { boolean, countryId, data, govDistId, languageId } = supplementInput ?? {}

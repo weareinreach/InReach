@@ -3,61 +3,36 @@ import { type ApiOutput } from '@weareinreach/api'
 export const searchResultsMock = {
 	orgs: [
 		{
-			id: 'orgn_01GVH3V43QAKQH440MP6TWWD0X',
-			name: 'The George Washington University Immigration Clinic',
-			slug: 'the-george-washington-university-immigration-clinic',
+			id: 'orgn_01GVH3V4MT8QBB7JSP7HSYAZ7Y',
+			name: 'Arlington Food Assistance Center',
+			slug: 'arlington-food-assistance-center',
 			description: {
-				key: 'the-george-washington-university-immigration-clinic.description',
+				key: 'orgn_01GVH3V4MT8QBB7JSP7HSYAZ7Y.description',
 				ns: 'org-data',
-				text: 'The George Washington University Immigration Clinic represents clients from around the world on immigration law matters, including removal proceedings and petitions for affirmative asylum. The clinic accepts removal cases scheduled in the Arlington Immigration Court and affirmative asylum cases, as well as deportation or removal proceedings involving cancellation of removal, temporary protected status, or criminal issues.',
+				text: 'Since 1988, the Arlington Food Assistance Center remains dedicated to its simple but critical mission of obtaining and distributing groceries, directly and free of charge, to people living in Arlington, VA, who cannot afford to purchase enough food to meet their basic needs. AFAC is committed to maintaining a safe, supportive, and respectful space for all members of the community regardless of race, religion, immigration status, age, sexual orientation, ethnicity, first language, gender, or disability.',
 			},
 			serviceCategories: [
 				{
-					id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
-					tsKey: 'legal.CATEGORYNAME',
+					id: 'svct_01GW2HHEVFXW9YFMK4R95ZHBPV',
+					tsKey: 'food.CATEGORYNAME',
 					tsNs: 'services',
 				},
 			],
-			orgLeader: [
-				{
-					tsKey: 'orgleader.bipoc-led',
-					icon: '🤎',
-					iconBg: '#F1DD7F',
-					id: '',
-					category: {
-						tag: 'organization-leadership',
-					},
-					_count: {
-						parents: 0,
-					},
-				},
-			],
-			orgFocus: [
-				{
-					category: {
-						tag: 'service-focus',
-					},
-					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
-					tsKey: 'srvfocus.immigrant-comm',
-					icon: '️‍️‍🌎',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
-				},
-			],
-			locations: ['Washington'],
-			distance: 4.6,
+			orgLeader: [],
+			orgFocus: [],
+			locations: ['Arlington'],
+			distance: 1.46,
 			unit: 'mi',
+			national: [],
 		},
 		{
-			id: 'orgn_01GVH3V446G607JE4V8YJQ2XEE',
-			name: "Capital Area Immigrants' Rights (CAIR) Coalition",
-			slug: 'capital-area-immigrants-rights-cair-coalition',
+			id: 'orgn_01GVH3V9EKZ9ZZMW9E5S51SB2B',
+			name: 'Hogar Immigrant Services',
+			slug: 'hogar-immigrant-services',
 			description: {
-				key: 'capital-area-immigrants-rights-cair-coalition.description',
+				key: 'orgn_01GVH3V9EKZ9ZZMW9E5S51SB2B.description',
 				ns: 'org-data',
-				text: 'The Capital Area Immigrants’ Rights (CAIR) Coalition strives to ensure equal justice for all immigrant adults and children at risk of detention and deportation in the Capital region and beyond through direct legal representation, know your rights presentations, impact litigation, advocacy, and the enlistment and training of attorneys to defend immigrants. CAIR provides free immigration legal assistance for all immigrant men, women, and children at risk of detention and deportation in the DC metropolitan area and beyond.',
+				text: 'Hogar Immigrant Services is a program of Catholic Charities Diocese of Arlington which seeks to fulfill the Catholic Church\'s mission to "welcome the stranger" by providing high-quality, low-cost immigration legal services to individuals, regardless of their race, religion, nationality, sexuality, country of origin, or ability to pay.',
 			},
 			serviceCategories: [
 				{
@@ -81,23 +56,165 @@ export const searchResultsMock = {
 					},
 				},
 			],
-			locations: ['Washington, DC ', 'Washington', 'Baltimore'],
-			distance: 5.21,
+			locations: ['Alexandria'],
+			distance: 3.22,
 			unit: 'mi',
+			national: [],
 		},
 		{
-			id: 'orgn_01GVH3V43ZWVSZA5046E3YD5YX',
-			name: 'The Wanda Alston Foundation',
-			slug: 'the-wanda-alston-foundation',
+			id: 'orgn_01GVH3VABSTMFWTM40J8XTYEPX',
+			name: 'Legal Aid Justice Center',
+			slug: 'legal-aid-justice-center',
 			description: {
-				key: 'the-wanda-alston-foundation.description',
+				key: 'orgn_01GVH3VABSTMFWTM40J8XTYEPX.description',
 				ns: 'org-data',
-				text: "this organization has Duplicate cities listed in the cities array, however, duplicates should not be shown in the location summary displayed below the organization title. The Wanda Alston Foundation (WAF) is the only housing nonprofit in Washington, D.C. that is solely dedicated to offering pre-independent transitional living and support services to homeless or at-risk LGBTQ youth ages 16-24. The foundation consists of two separate transitional housing programs, Wanda's House and Alston's Place. WAF's mission is to eradicate homelessness and poverty for LGBTQ youth ages 18 to 24, and provides services in the areas of long-term transitional living (up to 18 months), on-site 24/7 staff, case management, educational guidance and support, job training and guidance, and support service referrals.",
+				text: "Legal Aid Justice Center's Access to Justice Partnership provides legal services to low-income clients in areas such as consumer protection, education, elder law, immigration, employment, and housing disputes.",
 			},
 			serviceCategories: [
 				{
-					id: 'svct_01GW2HHEVDKRVB42KT85KA3FM3',
-					tsKey: 'computers-and-internet.CATEGORYNAME',
+					id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
+					tsKey: 'legal.CATEGORYNAME',
+					tsNs: 'services',
+				},
+			],
+			orgLeader: [],
+			orgFocus: [
+				{
+					category: {
+						tag: 'service-focus',
+					},
+					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
+					tsKey: 'srvfocus.immigrant-comm',
+					icon: '️‍️‍🌎',
+					iconBg: null,
+					_count: {
+						parents: 0,
+					},
+				},
+			],
+			locations: ['Falls Church', 'Richmond', 'Charlottesville', 'Petersburg'],
+			distance: 3.82,
+			unit: 'mi',
+			national: [],
+		},
+		{
+			id: 'orgn_01GVH3V61FAZQGQ1ZDGBXVD79V',
+			name: 'African Communities Together',
+			slug: 'african-communities-together',
+			description: {
+				key: 'orgn_01GVH3V61FAZQGQ1ZDGBXVD79V.description',
+				ns: 'org-data',
+				text: 'African Communities Together is an organization of African immigrants fighting for civil rights, opportunity, and a better life for their families here in the U.S. and worldwide. They connect African immigrants to critical services, help Africans develop as leaders, and organize communities around the issues that matter. ACT helps African immigrants find free or low-cost assistance with immigration, jobs, and other needs. Through the Monthly Membership Meetings, Leadership Committees, and training, ACT gives African immigrants the tools and information they need to become leaders on the issues that matter to them. ACT mobilizes African immigrant communities to speak out on the issues that affect their lives and the lives of their families.',
+			},
+			serviceCategories: [
+				{
+					id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
+					tsKey: 'legal.CATEGORYNAME',
+					tsNs: 'services',
+				},
+				{
+					id: 'svct_01GW2HHEVPFRQR07PTHMWJDDKS',
+					tsKey: 'translation-and-interpretation.CATEGORYNAME',
+					tsNs: 'services',
+				},
+				{
+					id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
+					tsKey: 'education-and-employment.CATEGORYNAME',
+					tsNs: 'services',
+				},
+			],
+			orgLeader: [
+				{
+					category: {
+						tag: 'organization-leadership',
+					},
+					id: 'attr_01GW2HHFVN3JX2J7REFFT5NAMS',
+					tsKey: 'orgleader.black-led',
+					icon: '️‍️‍✊🏿',
+					iconBg: '#C77E54',
+					_count: {
+						parents: 0,
+					},
+				},
+				{
+					category: {
+						tag: 'organization-leadership',
+					},
+					id: 'attr_01GW2HHFVNHMF72WHVKRF6W4TA',
+					tsKey: 'orgleader.immigrant-led',
+					icon: '️‍️‍🌎',
+					iconBg: '#79ADD7',
+					_count: {
+						parents: 0,
+					},
+				},
+				{
+					category: {
+						tag: 'organization-leadership',
+					},
+					id: 'attr_01GW2HHFVNPKMHYK12DDRVC1VJ',
+					tsKey: 'orgleader.bipoc-led',
+					icon: '🤎',
+					iconBg: '#F1DD7F',
+					_count: {
+						parents: 0,
+					},
+				},
+			],
+			orgFocus: [
+				{
+					category: {
+						tag: 'service-focus',
+					},
+					id: 'attr_01GW2HHFVN72D7XEBZZJXCJQXQ',
+					tsKey: 'srvfocus.bipoc-comm',
+					icon: '️‍️‍✊🏿',
+					iconBg: null,
+					_count: {
+						parents: 0,
+					},
+				},
+				{
+					category: {
+						tag: 'service-focus',
+					},
+					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
+					tsKey: 'srvfocus.immigrant-comm',
+					icon: '️‍️‍🌎',
+					iconBg: null,
+					_count: {
+						parents: 0,
+					},
+				},
+			],
+			locations: ['Arlington', 'Washington', 'New York'],
+			distance: 4.42,
+			unit: 'mi',
+			national: [],
+		},
+		{
+			id: 'orgn_01GVH3V8JWQQZ7W4VHTZJX8J3Q',
+			name: 'PathForward',
+			slug: 'pathforward',
+			description: {
+				key: 'orgn_01GVH3V8JWQQZ7W4VHTZJX8J3Q.description',
+				ns: 'org-data',
+				text: 'PathForward is a non-profit working to end homelessness in Arlington, Virginia. PathForward (formerly A-SPAN) transforms lives by delivering housing solutions and pathways to stability in Arlington County, VA.',
+			},
+			serviceCategories: [
+				{
+					id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
+					tsKey: 'medical.CATEGORYNAME',
+					tsNs: 'services',
+				},
+				{
+					id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
+					tsKey: 'mental-health.CATEGORYNAME',
+					tsNs: 'services',
+				},
+				{
+					id: 'svct_01GW2HHEVGD7CE9VKYVSZYYTPS',
+					tsKey: 'hygiene-and-clothing.CATEGORYNAME',
 					tsNs: 'services',
 				},
 				{
@@ -106,175 +223,31 @@ export const searchResultsMock = {
 					tsNs: 'services',
 				},
 				{
-					id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
-					tsKey: 'education-and-employment.CATEGORYNAME',
-					tsNs: 'services',
-				},
-				{
-					id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
-					tsKey: 'mental-health.CATEGORYNAME',
+					id: 'svct_01GW2HHEVFXW9YFMK4R95ZHBPV',
+					tsKey: 'food.CATEGORYNAME',
 					tsNs: 'services',
 				},
 			],
 			orgLeader: [],
-			orgFocus: [
-				{
-					category: {
-						tag: 'service-focus',
-					},
-					id: 'attr_01GW2HHFVQCZPA3Z5GW6J3MQHW',
-					tsKey: 'srvfocus.lgbtq-youth-focus',
-					icon: '🌱',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
-				},
-			],
-			locations: ['Washington', 'New York', 'washington', 'new York', 'los Angeles'],
-			distance: 5.27,
+			orgFocus: [],
+			locations: ['Arlington'],
+			distance: 5.37,
 			unit: 'mi',
+			national: [],
 		},
 		{
-			id: 'orgn_01GVH3V3S8ZFWWNVC4V5J71PAZ',
-			name: 'Upwardly Global',
-			slug: 'upwardly-global',
+			id: 'orgn_01GVH3V9HWXJMSE5R0F9QWV67J',
+			name: 'Community of Hope',
+			slug: 'community-of-hope',
 			description: {
-				key: 'upwardly-global.description',
+				key: 'orgn_01GVH3V9HWXJMSE5R0F9QWV67J.description',
 				ns: 'org-data',
-				text: 'Upwardly Global (UpGlo) helps work-authorized immigrants, refugees, asylees, and Special Immigrant Visa holders (SIVs) restart or start their professional careers in the United States.',
+				text: "Community of Hope's mission is to improve health and end family homelessness to make Washington, DC more equitable. Their goals include ending homelessness for families in Washington, DC and improving health and eliminating inequities in health outcomes in under-resources communities in Washington, DC. They embrace the diversity of their community, welcome all voices and perspectives, and treat everyone with respect, compassion, and integrity.",
 			},
 			serviceCategories: [
 				{
-					id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
-					tsKey: 'education-and-employment.CATEGORYNAME',
-					tsNs: 'services',
-				},
-			],
-			orgLeader: [],
-			orgFocus: [
-				{
-					category: {
-						tag: 'service-focus',
-					},
-					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
-					tsKey: 'srvfocus.immigrant-comm',
-					icon: '️‍️‍🌎',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
-				},
-			],
-			locations: ['Washington', 'New York', 'Chicago', 'San Francisco'],
-			distance: 5.35,
-			unit: 'mi',
-		},
-		{
-			id: 'orgn_01GVH3V43M2WBQ1RHDVT4CF58M',
-			name: 'Human Rights First',
-			slug: 'human-rights-first',
-			description: {
-				key: 'human-rights-first.description',
-				ns: 'org-data',
-				text: 'Human Rights First is an independent advocacy and action organization that helps people living in the greater Washington, D.C., New York City, and Houston metropolitan areas who do not already have legal representation, cannot afford an attorney, and need help with a claim for asylum or other protection-based form of immigration status. Their New York and Houston offices can also help people who are seeking asylum from within a nearby immigration detention center.',
-			},
-			serviceCategories: [
-				{
-					id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
-					tsKey: 'legal.CATEGORYNAME',
-					tsNs: 'services',
-				},
-			],
-			orgLeader: [],
-			orgFocus: [
-				{
-					category: {
-						tag: 'service-focus',
-					},
-					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
-					tsKey: 'srvfocus.immigrant-comm',
-					icon: '️‍️‍🌎',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
-				},
-			],
-			locations: ['Washington', 'New York', 'Los Angeles'],
-			distance: 5.39,
-			unit: 'mi',
-		},
-		{
-			id: 'orgn_01GVH3V44AQG32G6119BCJDTX0',
-			name: 'National Center for Lesbian Rights (NCLR)',
-			slug: 'national-center-for-lesbian-rights-nclr',
-			description: {
-				key: 'national-center-for-lesbian-rights-nclr.description',
-				ns: 'org-data',
-				text: 'National Center for Lesbian Rights (NCLR) is a legal organization committed to advancing the civil and human rights of lesbian, gay, bisexual, and transgender people and their families through litigation, legislation, policy, and public education. NCLR offers free legal help to LGBTQ asylum seekers and immigrants. They advocate for equitable public policies that affect the LGBTQ community, provide free legal services, and provide community education on LGBTQ issues.',
-			},
-			serviceCategories: [
-				{
-					id: 'svct_01GW2HHEVCXGK9GPK6SAZ2Q7E3',
-					tsKey: 'community-support.CATEGORYNAME',
-					tsNs: 'services',
-				},
-				{
-					id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
-					tsKey: 'legal.CATEGORYNAME',
-					tsNs: 'services',
-				},
-			],
-			orgLeader: [],
-			orgFocus: [
-				{
-					category: {
-						tag: 'service-focus',
-					},
-					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
-					tsKey: 'srvfocus.immigrant-comm',
-					icon: '️‍️‍🌎',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
-				},
-				{
-					category: {
-						tag: 'service-focus',
-					},
-					id: 'attr_01GW2HHFVQ8AGBKBBZJWTHNP2F',
-					tsKey: 'srvfocus.spanish-speakers',
-					icon: '🗣️',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
-				},
-			],
-			locations: ['Washington DC', 'San Francisco'],
-			distance: 5.43,
-			unit: 'mi',
-		},
-		{
-			id: 'orgn_01GVH3V40BD8DYPDG81EKBMCB7',
-			name: 'The DC Center for the LGBT Community',
-			slug: 'the-dc-center-for-the-lgbt-community',
-			description: {
-				key: 'the-dc-center-for-the-lgbt-community.description',
-				ns: 'org-data',
-				text: 'The DC Center for the LGBT Community educates, empowers, celebrates, and connects the lesbian, gay, bisexual, and transgender communities by focusing on four core areas: health and wellness, arts and culture, social and peer support, and advocacy and community building. They envision communities where LGBT people feel healthy, safe, and affirmed.',
-			},
-			serviceCategories: [
-				{
-					id: 'svct_01GW2HHEVGD7CE9VKYVSZYYTPS',
-					tsKey: 'hygiene-and-clothing.CATEGORYNAME',
-					tsNs: 'services',
-				},
-				{
-					id: 'svct_01GW2HHEVCXGK9GPK6SAZ2Q7E3',
-					tsKey: 'community-support.CATEGORYNAME',
+					id: 'svct_01GW2HHEVF8W7D67CH3NVSQYA6',
+					tsKey: 'housing.CATEGORYNAME',
 					tsNs: 'services',
 				},
 				{
@@ -287,14 +260,42 @@ export const searchResultsMock = {
 					tsKey: 'mental-health.CATEGORYNAME',
 					tsNs: 'services',
 				},
+			],
+			orgLeader: [],
+			orgFocus: [],
+			locations: ['Washington'],
+			distance: 6.36,
+			unit: 'mi',
+			national: [],
+		},
+		{
+			id: 'orgn_01GVH3V4KBTWXQ61TRMT5H33TA',
+			name: 'CASA',
+			slug: 'casa',
+			description: {
+				key: 'orgn_01GVH3V4KBTWXQ61TRMT5H33TA.description',
+				ns: 'org-data',
+				text: 'Since 1985, CASA has worked to assist Central American refugees fleeing wars and civil strife at home. They do this by providing employment placement; workforce development and training; health education; citizenship and legal services; and financial, language, and literacy training to Latino and immigrant communities in Maryland, Pennsylvania, and Virginia. CASA has formalized its commitment to including LGBTQ+ brothers, sisters, and siblings, united in the fight for justice. Its staff-led LGBT+ Advisory Committee creates a welcoming and inclusive organization for staff and community members by providing support, guidance and creating safe and brave spaces for individuals across the spectrums of gender and sexuality.',
+			},
+			serviceCategories: [
 				{
-					id: 'svct_01GW2HHEVFXW9YFMK4R95ZHBPV',
-					tsKey: 'food.CATEGORYNAME',
+					id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
+					tsKey: 'legal.CATEGORYNAME',
 					tsNs: 'services',
 				},
 				{
-					id: 'svct_01GW2HHEVPXANJ6MPCDE0S4CWT',
-					tsKey: 'transportation.CATEGORYNAME',
+					id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
+					tsKey: 'education-and-employment.CATEGORYNAME',
+					tsNs: 'services',
+				},
+				{
+					id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
+					tsKey: 'medical.CATEGORYNAME',
+					tsNs: 'services',
+				},
+				{
+					id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
+					tsKey: 'mental-health.CATEGORYNAME',
 					tsNs: 'services',
 				},
 			],
@@ -316,147 +317,6 @@ export const searchResultsMock = {
 					category: {
 						tag: 'service-focus',
 					},
-					id: 'attr_01GW2HHFVPSYBCYF37B44WP6CZ',
-					tsKey: 'srvfocus.trans-comm',
-					icon: '🏳️‍⚧️',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
-				},
-				{
-					category: {
-						tag: 'service-focus',
-					},
-					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
-					tsKey: 'srvfocus.immigrant-comm',
-					icon: '️‍️‍🌎',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
-				},
-				{
-					category: {
-						tag: 'service-focus',
-					},
-					id: 'attr_01GW2HHFVRMQFJ9AMA633SQQGV',
-					tsKey: 'srvfocus.hiv-comm',
-					icon: '💛',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
-				},
-			],
-			locations: ['Washington'],
-			distance: 6.18,
-			unit: 'mi',
-		},
-		{
-			id: 'orgn_01GVH3V442E4QSM849J47CJWDJ',
-			name: 'SMYAL',
-			slug: 'smyal',
-			description: {
-				key: 'smyal.description',
-				ns: 'org-data',
-				text: 'SMYAL (Supporting and Mentoring Youth Advocates and Leaders) supports and empowers lesbian, gay, bisexual, transgender, and questioning (LGBTQ) youth in the Washington, DC, metropolitan region. Through youth leadership, SMYAL creates opportunities for LGBTQ youth to build self-confidence, develop critical life skills, and engage their peers and community through service and advocacy. Committed to social change, SMYAL builds, sustains, and advocates for programs, policies, and services that LGBTQ youth need as they grow into adulthood.',
-			},
-			serviceCategories: [
-				{
-					id: 'svct_01GW2HHEVCXGK9GPK6SAZ2Q7E3',
-					tsKey: 'community-support.CATEGORYNAME',
-					tsNs: 'services',
-				},
-				{
-					id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
-					tsKey: 'education-and-employment.CATEGORYNAME',
-					tsNs: 'services',
-				},
-				{
-					id: 'svct_01GW2HHEVF8W7D67CH3NVSQYA6',
-					tsKey: 'housing.CATEGORYNAME',
-					tsNs: 'services',
-				},
-				{
-					id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
-					tsKey: 'medical.CATEGORYNAME',
-					tsNs: 'services',
-				},
-				{
-					id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
-					tsKey: 'mental-health.CATEGORYNAME',
-					tsNs: 'services',
-				},
-			],
-			orgLeader: [],
-			orgFocus: [
-				{
-					category: {
-						tag: 'service-focus',
-					},
-					id: 'attr_01GW2HHFVQCZPA3Z5GW6J3MQHW',
-					tsKey: 'srvfocus.lgbtq-youth-focus',
-					icon: '🌱',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
-				},
-			],
-			locations: ['Washington'],
-			distance: 7.67,
-			unit: 'mi',
-		},
-		{
-			id: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH',
-			name: 'Whitman-Walker Health',
-			slug: 'whitman-walker-health',
-			description: {
-				key: 'whitman-walker-health.description',
-				ns: 'org-data',
-				text: "Whitman-Walker Health's mission is to offer affirming community-based health and wellness services to all with a special expertise in LGBTQ and HIV care. They empower all persons to live healthy, love openly, and achieve equality and inclusion. Through multiple locations throughout DC, they provide stigma-free care to anyone who walks through our doors. They are proud and honored to be a place where the gay, lesbian, bisexual, transgender and queer communities, as well to those living with or affected by HIV feel supported, welcomed and respected. They strive to be a place where they see the person first; a healthcare home where you will be treated with the dignity, respect and love.",
-			},
-			serviceCategories: [
-				{
-					id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
-					tsKey: 'medical.CATEGORYNAME',
-					tsNs: 'services',
-				},
-				{
-					id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
-					tsKey: 'legal.CATEGORYNAME',
-					tsNs: 'services',
-				},
-				{
-					id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
-					tsKey: 'mental-health.CATEGORYNAME',
-					tsNs: 'services',
-				},
-				{
-					id: 'svct_01GW2HHEVCXGK9GPK6SAZ2Q7E3',
-					tsKey: 'community-support.CATEGORYNAME',
-					tsNs: 'services',
-				},
-			],
-			orgLeader: [],
-			orgFocus: [
-				{
-					category: {
-						tag: 'service-focus',
-					},
-					id: 'attr_01GW2HHFVPSYBCYF37B44WP6CZ',
-					tsKey: 'srvfocus.trans-comm',
-					icon: '🏳️‍⚧️',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
-				},
-				{
-					category: {
-						tag: 'service-focus',
-					},
 					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
 					tsKey: 'srvfocus.immigrant-comm',
 					icon: '️‍️‍🌎',
@@ -477,25 +337,47 @@ export const searchResultsMock = {
 						parents: 0,
 					},
 				},
+			],
+			locations: [
+				'Falls Church',
+				'Hyattsville',
+				'Silver Spring',
+				'Langley Park',
+				'Woodbridge',
+				'Rockville',
+				'Baltimore',
+				'York',
+				'Lancaster',
+			],
+			distance: 7.16,
+			unit: 'mi',
+			national: [],
+		},
+		{
+			id: 'orgn_01GVH3V43QAKQH440MP6TWWD0X',
+			name: 'The George Washington University Immigration Clinic',
+			slug: 'the-george-washington-university-immigration-clinic',
+			description: {
+				key: 'orgn_01GVH3V43QAKQH440MP6TWWD0X.description',
+				ns: 'org-data',
+				text: 'The George Washington University Immigration Clinic represents clients from around the world on immigration law matters, including removal proceedings and petitions for affirmative asylum. The clinic accepts removal cases scheduled in the Arlington Immigration Court and affirmative asylum cases, as well as deportation or removal proceedings involving cancellation of removal, temporary protected status, or criminal issues.',
+			},
+			serviceCategories: [
 				{
-					category: {
-						tag: 'service-focus',
-					},
-					id: 'attr_01GW2HHFVQCZPA3Z5GW6J3MQHW',
-					tsKey: 'srvfocus.lgbtq-youth-focus',
-					icon: '🌱',
-					iconBg: null,
-					_count: {
-						parents: 0,
-					},
+					id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
+					tsKey: 'legal.CATEGORYNAME',
+					tsNs: 'services',
 				},
+			],
+			orgLeader: [],
+			orgFocus: [
 				{
 					category: {
 						tag: 'service-focus',
 					},
-					id: 'attr_01GW2HHFVRMQFJ9AMA633SQQGV',
-					tsKey: 'srvfocus.hiv-comm',
-					icon: '💛',
+					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
+					tsKey: 'srvfocus.immigrant-comm',
+					icon: '️‍️‍🌎',
 					iconBg: null,
 					_count: {
 						parents: 0,
@@ -503,15 +385,16 @@ export const searchResultsMock = {
 				},
 			],
 			locations: ['Washington'],
-			distance: 8.13,
+			distance: 7.21,
 			unit: 'mi',
+			national: [],
 		},
 		{
 			id: 'orgn_01GVH3V43VTXXF9FET8M5J2GNA',
 			name: 'Ayuda',
 			slug: 'ayuda',
 			description: {
-				key: 'ayuda.description',
+				key: 'orgn_01GVH3V43VTXXF9FET8M5J2GNA.description',
 				ns: 'org-data',
 				text: 'Ayuda advocates for and defends the legal and human rights of low-income immigrants living in Washington, DC, Maryland, and Virginia. Ayuda provides legal, social, and language services to help low-income immigrants access justice and transform their lives. Ayuda’s expert and dedicated professionals help immigrants from anywhere in the world navigate the immigration and justice systems and access the social safety net. Their comprehensive and welcoming approach breaks down barriers, helps those in need, and makes the community stronger.',
 			},
@@ -559,27 +442,61 @@ export const searchResultsMock = {
 					},
 				},
 			],
-			locations: ['Washington ', 'Fairfax', 'Silver Spring'],
-			distance: 11.84,
+			locations: ['Washington', 'Fairfax', 'Silver Spring'],
+			distance: 7.44,
 			unit: 'mi',
+			national: [],
+		},
+		{
+			id: 'orgn_01GVH3VAFY3EF3NZDMZDZJN0X1',
+			name: 'Just Neighbors',
+			slug: 'just-neighbors-n0x1',
+			description: {
+				key: 'orgn_01GVH3VAFY3EF3NZDMZDZJN0X1.description',
+				ns: 'org-data',
+				text: 'Just Neighbors is a nonprofit 501(c)(3) tax-exempt organization dedicated to serving and supporting the immigrant community of Washington, D.C., Maryland, and Virginia. They foster mutual understanding between immigrants and the larger community in which they live.\nLow-income immigrants and refugees often face many hurdles, everything from putting food on the table to understanding English. Just Neighbors knows that immigrants and refugees are striving to achieve their own version of the American Dream. That’s why Just Neighbors offers compassionate immigration legal services. During appointments, attorneys will offer trustworthy advice and assistance with individual immigration situation. Just Neighbors strives to be an inclusive, antiracist organization that fosters an environment where everyone belongs. Just Neighbors is Safe Zone trained. Safe Zone trainings are opportunities to learn about LGBTQ+ identities, gender and sexuality, and examine prejudice, assumptions, and privilege.',
+			},
+			serviceCategories: [
+				{
+					id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
+					tsKey: 'legal.CATEGORYNAME',
+					tsNs: 'services',
+				},
+			],
+			orgLeader: [],
+			orgFocus: [
+				{
+					category: {
+						tag: 'service-focus',
+					},
+					id: 'attr_01GW2HHFVPTK9555WHJHDBDA2J',
+					tsKey: 'srvfocus.immigrant-comm',
+					icon: '️‍️‍🌎',
+					iconBg: null,
+					_count: {
+						parents: 0,
+					},
+				},
+				{
+					category: {
+						tag: 'service-focus',
+					},
+					id: 'attr_01GW2HHFVQ8AGBKBBZJWTHNP2F',
+					tsKey: 'srvfocus.spanish-speakers',
+					icon: '🗣️',
+					iconBg: null,
+					_count: {
+						parents: 0,
+					},
+				},
+			],
+			locations: ['Annandale', 'Rockville', 'Warrenton'],
+			distance: 7.55,
+			unit: 'mi',
+			national: [],
 		},
 	],
-	serviceAreas: {
-		country: [
-			{
-				id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
-			},
-		],
-		govDist: [
-			{
-				id: 'gdst_01GW2HKADSS3SDS9XJV1WHMTVY',
-			},
-			{
-				id: 'gdst_01GW2HKB0HQ34JX4SB211WD84Q',
-			},
-		],
-	},
-	resultCount: 74,
+	resultCount: 98,
 } satisfies ApiOutput['organization']['searchDistance']
 
 export const searchResultLongTitle = {
@@ -692,4 +609,5 @@ export const searchResultLongTitle = {
 	locations: ['Washington'],
 	distance: 8.52,
 	unit: 'mi',
+	national: [],
 } satisfies ApiOutput['organization']['searchDistance']['orgs'][number]

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { coerceCoordItems, coordItems, pagination } from '~api/schemas/common'
+import { coerceCoordItems, pagination } from '~api/schemas/common'
 
 export const distSearch = z.object({
 	...coerceCoordItems,

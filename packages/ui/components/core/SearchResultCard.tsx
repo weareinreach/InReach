@@ -57,8 +57,8 @@ const SearchResultLoading = () => {
 }
 
 const SearchResultData = ({ result }: SearchResultHasData) => {
-	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories } = result
-	const { t, ready: i18nReady } = useTranslation(['common', result.id])
+	const { description, slug, name, locations, orgLeader, orgFocus, serviceCategories, national } = result
+	const { t, ready: i18nReady } = useTranslation(['common', 'country', result.id])
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
 	const { hovered, ref: hoverRef } = useHover()
@@ -81,6 +81,13 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 		variant: 'service',
 		tsKey,
 	}))
+
+	if (national.length) {
+		leaderBadges.push({
+			variant: 'national',
+			tsKey: national,
+		})
+	}
 
 	const cityList = (cities: string[]) => {
 		//check for duplicates and be case insensitive, before switching
