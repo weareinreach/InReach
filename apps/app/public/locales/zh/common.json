@@ -19,6 +19,7 @@
 	"badge": {
 		"claimed-tool-tip": "经核实的代表声称该组织。 <link1>了解更多。</link1>",
 		"community-tool-tip": "该组织所服务的社区。",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "可远程使用",
 		"service-tool-tip": "该组织提供的服务。",
 		"unclaimed-tool-tip": "尚未有代表宣称拥有该组织。 <link1>声明此组织</link1> 以建立与我们社区的信任、更新您自己的信息等。"
