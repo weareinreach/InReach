@@ -461,6 +461,8 @@ model Organization {
 
   @@index([name(sort: Asc)])
   @@index([id, published, deleted])
+  @@index([published, deleted])
+  @@index([slug])
 }
 
 model SlugRedirect {
@@ -683,8 +685,11 @@ model OrgLocation {
   @@index([orgId])
   @@index([descriptionId, id])
   @@index([id, published, deleted])
+  @@index([published, deleted])
   @@index([orgId, id, geo])
   @@index([geo, id])
+  @@index([published])
+  @@index([deleted])
 }
 
 /// Organization photos
@@ -821,6 +826,7 @@ model OrgService {
   @@index([id, published, deleted])
   @@index([id, organizationId])
   @@index([organizationId, id])
+  @@index([organizationId, published, deleted])
 }
 
 model ServiceArea {
@@ -843,9 +849,9 @@ model ServiceArea {
 
   //@@schema("org")
 
-  @@index([organizationId, id])
-  @@index([orgLocationId, id])
-  @@index([orgServiceId, id])
+  @@index([organizationId, active])
+  @@index([orgLocationId, active])
+  @@index([orgServiceId, active])
 }
 
 /// User reviews/ratings of organization
@@ -1057,11 +1063,11 @@ model AttributeSupplement {
   userAttributeAttributeId            String?
   userAttributeUserId                 String?
 
-  @@index([locationAttributeAttributeId, locationAttributeLocationId, id])
-  @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId, id])
-  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceId, id])
-  @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId, id])
-  @@index([userAttributeAttributeId, userAttributeUserId, id])
+  @@index([locationAttributeAttributeId, locationAttributeLocationId, active])
+  @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId, active])
+  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceId, active])
+  @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId, active])
+  @@index([userAttributeAttributeId, userAttributeUserId, active])
 }
 
 model AttributeSupplementDataSchema {
@@ -2128,6 +2134,7 @@ model ServiceAreaCountry {
   //@@schema("relation")
 
   @@id([serviceAreaId, countryId])
+  @@index([serviceAreaId, active])
 }
 
 /// Link Governing Districts to service areas
@@ -2142,6 +2149,7 @@ model ServiceAreaDist {
   //@@schema("relation")
 
   @@id([serviceAreaId, govDistId])
+  @@index([serviceAreaId, active])
 }
 
 //
@@ -2190,6 +2198,8 @@ model OrganizationAttribute {
   @@id([organizationId, attributeId])
   @@index([organizationId, active])
   @@index([attributeId, active])
+  @@index([organizationId])
+  @@index([attributeId])
 }
 
 /// Link attributes to locations
@@ -2240,6 +2250,8 @@ model ServiceAccessAttribute {
   //@@schema("relation")
 
   @@id([serviceId, attributeId])
+  @@index([attributeId, active])
+  @@index([serviceId, active])
 }
 
 /// Link attributes to category
