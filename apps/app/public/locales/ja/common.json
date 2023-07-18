@@ -19,6 +19,7 @@
 	"badge": {
 		"claimed-tool-tip": "この組織は確認済みの代理人によって申し立てられています。 <link1>もっと詳しく.</link1>",
 		"community-tool-tip": "この組織がサービスを提供するコミュニティ。",
+		"national-tool-tip": "{{country}} を通じてサービスを提供しています。",
 		"remote-tool-tip": "リモートで利用可能",
 		"service-tool-tip": "この組織が提供するサービス。",
 		"unclaimed-tool-tip": "この組織はまだ代表者による申請を受けていません。<br/><link1>この組織に申請して</link1> コミュニティとの信頼関係を築き、自分の情報を更新するなどしてください。"
