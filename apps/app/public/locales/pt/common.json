@@ -19,6 +19,7 @@
 	"badge": {
 		"claimed-tool-tip": "Essa organização foi reivindicada por um representante verificado. <link1>Saiba mais.</link1>",
 		"community-tool-tip": "Comunidade atendida por esta organização.",
+		"national-tool-tip": "Oferece serviços ao longo do {{country}}.",
 		"remote-tool-tip": "Disponível remotamente",
 		"service-tool-tip": "Serviço (s) oferecido (s) por esta organização.",
 		"unclaimed-tool-tip": "Essa organização ainda não foi reivindicada por um representante. <link1>Reivindique esta organização</link1> para criar confiança com nossa comunidade, atualizar suas próprias informações e muito mais."
