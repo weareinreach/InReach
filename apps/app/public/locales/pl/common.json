@@ -19,6 +19,7 @@
 	"badge": {
 		"claimed-tool-tip": "Organizacja została zgłoszona przez zweryfikowanego przedstawiciela. <link1>Dowiedz się więcej.</link1>",
 		"community-tool-tip": "Społeczność obsługiwana przez tę organizację.",
+		"national-tool-tip": "Oferuje usługi w całym {{country}}.",
 		"remote-tool-tip": "Dostępne zdalnie",
 		"service-tool-tip": "Usługi oferowane przez tę organizację.",
 		"unclaimed-tool-tip": "Organizacja ta nie została jeszcze zgłoszona przez przedstawiciela. <link1>Zgłoś tę organizację</link1> , aby zbudować zaufanie do naszej społeczności, zaktualizować własne informacje, i więcej."
