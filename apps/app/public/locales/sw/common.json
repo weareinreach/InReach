@@ -19,6 +19,7 @@
 	"badge": {
 		"claimed-tool-tip": "Shirika hili limedaiwa na mwakilishi aliyethibitishwa. <link1>Jifunze zaidi.</link1>",
 		"community-tool-tip": "Jumuiya inayohudumiwa na shirika hili.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "Inapatikana kwa mbali",
 		"service-tool-tip": "Huduma (s) zinazotolewa na shirika hili.",
 		"unclaimed-tool-tip": "Shirika hili bado halijadaiwa na mwakilishi. <link1>Dai shirika hili</link1> kujenga uaminifu na jamii yetu, sasisha habari yako mwenyewe, na zaidi."
