@@ -10,7 +10,7 @@ import { connectOneId } from '../nestedOps'
 export const CreateOrgService = () => {
 	const { dataParser: parser, inputSchema } = CreationBase(
 		z.object({
-			orgSlug: z.string(),
+			orgId: z.string(),
 			data: z.object({
 				serviceName: z.string(),
 				description: z.string().optional(),
@@ -21,16 +21,16 @@ export const CreateOrgService = () => {
 	)
 
 	const dataParser = parser.transform(({ data: parsedData, actorId, operation }) => {
-		const { orgSlug, data } = parsedData
+		const { orgId, data } = parsedData
 		const id = generateId('orgService')
 		const serviceName = generateNestedFreeText({
-			orgSlug,
+			orgId,
 			text: data.serviceName,
 			type: 'svcName',
 			itemId: id,
 		})
 		const description = data.description
-			? generateNestedFreeText({ orgSlug, text: data.description, type: 'svcDesc', itemId: id })
+			? generateNestedFreeText({ orgId, text: data.description, type: 'svcDesc', itemId: id })
 			: undefined
 		const organization = connectOneId(data.organizationId)
 		const { published } = data
@@ -64,7 +64,7 @@ export const UpdateOrgService = z
 export const AttachServAttribute = () => {
 	const { dataParser: parser, inputSchema } = CreationBase(
 		z.object({
-			orgSlug: z.string(),
+			orgId: z.string(),
 			orgServiceId: z.string(),
 			attributeId: z.string(),
 			supplement: z
@@ -81,13 +81,13 @@ export const AttachServAttribute = () => {
 	)
 
 	const dataParser = parser.transform(({ actorId, operation, data: parsedData }) => {
-		const { orgSlug, orgServiceId, attributeId, supplement: supplementInput } = parsedData
+		const { orgId, orgServiceId, attributeId, supplement: supplementInput } = parsedData
 
 		const supplementId = supplementInput ? generateId('attributeSupplement') : undefined
 
 		const { freeText, translationKey } =
 			supplementId && supplementInput?.text
-				? generateFreeText({ orgSlug, text: supplementInput.text, type: 'attSupp', itemId: supplementId })
+				? generateFreeText({ orgId, text: supplementInput.text, type: 'attSupp', itemId: supplementId })
 				: { freeText: undefined, translationKey: undefined }
 
 		const { boolean, countryId, data, govDistId, languageId } = supplementInput ?? {}
@@ -154,7 +154,7 @@ export const AttachServAttribute = () => {
 export const AttachServAccess = () => {
 	const { dataParser: parser, inputSchema } = CreationBase(
 		z.object({
-			orgSlug: z.string(),
+			orgId: z.string(),
 			serviceId: z.string(),
 			attributeId: z.string(),
 			supplement: z
@@ -171,13 +171,13 @@ export const AttachServAccess = () => {
 	)
 
 	const dataParser = parser.transform(({ actorId, operation, data: parsedData }) => {
-		const { orgSlug, serviceId, attributeId, supplement: supplementInput } = parsedData
+		const { orgId, serviceId, attributeId, supplement: supplementInput } = parsedData
 
 		const supplementId = supplementInput ? generateId('attributeSupplement') : undefined
 
 		const { freeText, translationKey } =
 			supplementId && supplementInput?.text
-				? generateFreeText({ orgSlug, text: supplementInput.text, type: 'attSupp', itemId: supplementId })
+				? generateFreeText({ orgId, text: supplementInput.text, type: 'attSupp', itemId: supplementId })
 				: { freeText: undefined, translationKey: undefined }
 
 		const { boolean, countryId, data, govDistId, languageId } = supplementInput ?? {}

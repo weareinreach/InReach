@@ -179,7 +179,7 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 	})
 
 	const handleUpdate = () => {
-		updateEmails.mutate({ orgSlug, data: form.getTransformedValues().data })
+		updateEmails.mutate({ orgId: organizationId ?? '', data: form.getTransformedValues().data })
 	}
 	// #endregion
 
