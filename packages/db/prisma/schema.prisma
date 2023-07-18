@@ -65,6 +65,7 @@ model Account {
   //@@schema("user")
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 /// NextAuth Session **DO NOT ALTER**
@@ -161,8 +162,9 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   auditLogs AuditLog[] @relation("AuditLogEntry")
-
   //@@schema("user")
+
+  @@index([userTypeId])
 }
 
 /// User Role - Contains array of granular permissions
@@ -406,6 +408,10 @@ model UserMail {
   auditLogs AuditLog[]
 
   //@@schema("user")
+
+  @@index([toUserId])
+  @@index([fromUserId])
+  @@index([responseToId])
 }
 
 /// Main organization definition
@@ -460,7 +466,6 @@ model Organization {
   //@@schema("org")
 
   @@index([name(sort: Asc)])
-  @@index([id, published, deleted])
   @@index([published, deleted])
   @@index([slug])
 }
@@ -476,6 +481,8 @@ model SlugRedirect {
   auditLogs AuditLog[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+
+  @@index([orgId])
 }
 
 /// Organization email contacts - can be general or location specific
@@ -514,8 +521,6 @@ model OrgEmail {
 
   @@index([lastName(sort: Asc), firstName])
   @@index([email])
-  @@index([id, descriptionId])
-  @@index([id, published, deleted])
 }
 
 /// Org phone numbers - can be general or location specific
@@ -558,8 +563,6 @@ model OrgPhone {
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
   //@@schema("org")
-
-  @@index([id, published, deleted])
 }
 
 /// Organization's social media links
@@ -588,7 +591,9 @@ model OrgSocialMedia {
   internalNotes InternalNote[]
   //@@schema("org")
 
-  @@index([id, published, deleted])
+  @@index([serviceId])
+  @@index([organizationId])
+  @@index([orgLocationId])
 }
 
 model OrgWebsite {
@@ -615,7 +620,8 @@ model OrgWebsite {
   internalNotes InternalNote[]
   //@@schema("org")
 
-  @@index([id, published, deleted])
+  @@index([organizationId])
+  @@index([orgLocationId])
 }
 
 /// Org location information
@@ -681,13 +687,11 @@ model OrgLocation {
   //@@schema("org")
 
   @@index([geo], type: SpGist)
-  @@index([orgId, id])
   @@index([orgId])
-  @@index([descriptionId, id])
-  @@index([id, published, deleted])
+  @@index([countryId])
+  @@index([govDistId])
   @@index([published, deleted])
   @@index([orgId, id, geo])
-  @@index([geo, id])
   @@index([published])
   @@index([deleted])
 }
@@ -713,7 +717,8 @@ model OrgPhoto {
   internalNotes InternalNote[]
   //@@schema("org")
 
-  @@index([id, published, deleted])
+  @@index([orgId])
+  @@index([orgLocationId])
 }
 
 /// Organization location/service hours
@@ -755,9 +760,9 @@ model OrgHours {
   internalNotes InternalNote[]
   //@@schema("org")
 
-  @@index([id, orgLocId])
-  @@index([id, orgServiceId])
-  @@index([id, organizationId])
+  @@index([orgLocId])
+  @@index([orgServiceId])
+  @@index([organizationId])
 }
 
 model FreeText {
@@ -781,7 +786,7 @@ model FreeText {
   //@@schema("org")
 
   @@unique([key, ns])
-  @@index([id, key, ns])
+  @@index([key])
 }
 
 /// Organization's offered services - access instructions & details
@@ -822,11 +827,8 @@ model OrgService {
   //@@schema("org")
 
   @@index([organizationId(sort: Asc)])
-  @@index([id, serviceNameId, descriptionId])
-  @@index([id, published, deleted])
-  @@index([id, organizationId])
-  @@index([organizationId, id])
   @@index([organizationId, published, deleted])
+  @@index([published, deleted])
 }
 
 model ServiceArea {
@@ -849,9 +851,9 @@ model ServiceArea {
 
   //@@schema("org")
 
-  @@index([organizationId, active])
-  @@index([orgLocationId, active])
-  @@index([orgServiceId, active])
+  @@index([organizationId])
+  @@index([orgLocationId])
+  @@index([orgServiceId])
 }
 
 /// User reviews/ratings of organization
@@ -910,9 +912,8 @@ model OrgReview {
   @@index([organizationId(sort: Asc)])
   @@index([orgServiceId(sort: Asc)])
   @@index([id, visible, deleted])
-  @@index([organizationId, id])
-  @@index([orgLocationId, id])
-  @@index([orgServiceId, id])
+  @@index([orgLocationId])
+  @@index([userId])
 }
 
 /// Store machine translations for reviews - save on API calls
@@ -931,7 +932,7 @@ model TranslatedReview {
   updatedAt DateTime   @updatedAt
   auditLogs AuditLog[]
 
-  @@index([reviewId, languageId, id])
+  @@index([reviewId, languageId])
 }
 
 /// Additional Properties for Org/Service.
@@ -1063,11 +1064,21 @@ model AttributeSupplement {
   userAttributeAttributeId            String?
   userAttributeUserId                 String?
 
-  @@index([locationAttributeAttributeId, locationAttributeLocationId, active])
-  @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId, active])
-  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceId, active])
-  @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId, active])
-  @@index([userAttributeAttributeId, userAttributeUserId, active])
+  @@index([locationAttributeAttributeId, locationAttributeLocationId])
+  @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId])
+  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceId])
+  @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId])
+  @@index([userAttributeAttributeId, userAttributeUserId])
+  @@index([locationAttributeAttributeId])
+  @@index([locationAttributeLocationId])
+  @@index([organizationAttributeAttributeId])
+  @@index([organizationAttributeOrganizationId])
+  @@index([serviceAccessAttributeAttributeId])
+  @@index([serviceAccessAttributeServiceId])
+  @@index([serviceAttributeAttributeId])
+  @@index([serviceAttributeOrgServiceId])
+  @@index([userAttributeAttributeId])
+  @@index([userAttributeUserId])
 }
 
 model AttributeSupplementDataSchema {
@@ -1136,7 +1147,6 @@ model ServiceTag {
   @@unique([tsKey, tsNs])
   @@unique([name, categoryId])
   @@index([categoryId])
-  @@index([categoryId, id])
 }
 
 /// Phone number descriptors
@@ -1224,6 +1234,8 @@ model Suggestion {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
+
+  @@index([organizationId])
 }
 
 /// Country metadata
@@ -1457,6 +1469,8 @@ model TranslationKey {
   /// Only 1 key per namespace
   // @@unique([ns(sort: Asc), key(sort: Asc)])
   @@id([ns, key])
+  @@index([crowdinId])
+  @@index([key])
 }
 
 enum InterpolationOptions {
@@ -2104,6 +2118,8 @@ model OrgLocationService {
   @@id([orgLocationId, serviceId])
   @@index([orgLocationId, active])
   @@index([serviceId, active])
+  @@index([orgLocationId])
+  @@index([serviceId])
 }
 
 /// Link tags to services
@@ -2120,6 +2136,8 @@ model OrgServiceTag {
   @@id([serviceId, tagId])
   @@index([serviceId, active])
   @@index([tagId, active])
+  @@index([serviceId])
+  @@index([tagId])
 }
 
 /// Link countries to service areas
@@ -2135,6 +2153,8 @@ model ServiceAreaCountry {
 
   @@id([serviceAreaId, countryId])
   @@index([serviceAreaId, active])
+  @@index([serviceAreaId])
+  @@index([countryId])
 }
 
 /// Link Governing Districts to service areas
@@ -2150,6 +2170,8 @@ model ServiceAreaDist {
 
   @@id([serviceAreaId, govDistId])
   @@index([serviceAreaId, active])
+  @@index([serviceAreaId])
+  @@index([govDistId])
 }
 
 //
@@ -2217,6 +2239,8 @@ model LocationAttribute {
   @@id([locationId, attributeId])
   @@index([attributeId, active])
   @@index([locationId, active])
+  @@index([attributeId])
+  @@index([locationId])
 }
 
 /// Link attributes to services
@@ -2235,6 +2259,8 @@ model ServiceAttribute {
   @@index([attributeId, orgServiceId])
   @@index([attributeId, active])
   @@index([orgServiceId, active])
+  @@index([attributeId])
+  @@index([orgServiceId])
 }
 
 /// Link attributes to Service Access instructions
@@ -2252,6 +2278,8 @@ model ServiceAccessAttribute {
   @@id([serviceId, attributeId])
   @@index([attributeId, active])
   @@index([serviceId, active])
+  @@index([attributeId])
+  @@index([serviceId])
 }
 
 /// Link attributes to category
@@ -2392,4 +2420,33 @@ view user_refresh_token {
 view user_access_token {
   id           String  @unique
   access_token String?
+}
+
+view pg_index_usage_rate {
+  relname                     String @unique
+  percent_of_times_index_used Int
+  rows_in_table               Int
+
+  @@ignore
+}
+
+view pg_cache_hit_rate {
+  heap_read Int   @unique
+  heap_hit  Int
+  ratio     Float
+
+  @@ignore
+}
+
+view pg_index_usage {
+  relation        String
+  indexname       String @unique
+  num_rows        Int
+  table_size      String
+  index_size      String
+  number_of_scans Int
+  tuples_read     Int
+  tuples_fetched  Int
+
+  @@ignore
 }
