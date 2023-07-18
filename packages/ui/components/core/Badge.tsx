@@ -191,7 +191,9 @@ const customVariantMap = {
 export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div', CustomBadgeProps>>(
 	(props, ref) => {
 		const variants = useCustomVariant()
-		const { t, i18n } = useTranslation(['common', 'attribute', 'country'])
+		const { t, i18n } = useTranslation(
+			props.variant === 'national' ? ['common', 'attribute', 'country'] : ['common', 'attribute']
+		)
 		const isCustom = (customVariants as ReadonlyArray<string>).includes(props.variant ?? 'light')
 		const theme = useMantineTheme()
 		const { classes: baseClasses } = useVariantStyles({
@@ -324,14 +326,14 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 						})
 						return {
 							label: t('badge.national-tool-tip', {
-								country: formatter.format(props.tsKey.map((country) => `$t(country:${country})`)),
+								country: formatter.format(props.tsKey.map((country) => `$t(country:${country}.name)`)),
 								interpolation: { skipOnVariables: false },
 							}),
 						}
 					}
 					return {
 						label: t('badge.national-tool-tip', {
-							country: `$t(country:${props.tsKey})`,
+							country: `$t(country:${props.tsKey}.name)`,
 							interpolation: { skipOnVariables: false },
 						}),
 					}
