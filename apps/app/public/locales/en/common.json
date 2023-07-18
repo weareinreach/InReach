@@ -19,10 +19,10 @@
 	"badge": {
 		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
 		"community-tool-tip": "Community served by this organization.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "Available remotely",
 		"service-tool-tip": "Service(s) offered by this organization.",
-		"unclaimed-tool-tip": "This organization has not yet been claimed by a representative.<br/><link1>Claim this organization</link1> to build trust with our community, update your own information, and more.",
-		"national-tool-tip": "Offers services throughout {{country}}."
+		"unclaimed-tool-tip": "This organization has not yet been claimed by a representative.<br/><link1>Claim this organization</link1> to build trust with our community, update your own information, and more."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "Back to <u>{{page}}</u>",
@@ -216,9 +216,6 @@
 		"no-results": "No results found. Please try again.",
 		"organization-placeholder": "Enter organization name...",
 		"suggest-resource": "Can't find it? <1>Suggest an organization</1> you think should be included."
-	},
-	"search-result": {
-		"national": "Offers services throughout {{country}}."
 	},
 	"send-email": "Send email",
 	"service": {
