@@ -686,7 +686,7 @@ model OrgLocation {
   checkMigration Boolean?
   //@@schema("org")
 
-  @@index([geo], type: SpGist)
+  @@index([geo], type: Gist)
   @@index([orgId])
   @@index([countryId])
   @@index([govDistId])
@@ -1241,23 +1241,20 @@ model Suggestion {
 /// Country metadata
 /// @zod.import(["import {Geometry} from '../../zod_util'"])
 model Country {
-  id        String                                  @id @default(cuid())
+  id       String @id @default(cuid())
   /// ISO 3166-1 alpha-2 Country code
-  cca2      String                                  @unique @db.Char(2)
+  cca2     String @unique @db.Char(2)
   /// ISO 3166-1 alpha-3 Country code
-  cca3      String                                  @unique @db.Char(3)
+  cca3     String @unique @db.Char(3)
   /// Country name (English).
-  name      String                                  @unique(sort: Asc)
+  name     String @unique(sort: Asc)
   /// International dialing code
-  dialCode  Int?                                    @db.SmallInt
+  dialCode Int?   @db.SmallInt
   /// Country flag (emoji)
-  flag      String
-  /// GeoJSON object - required only if this will be considered a "service area"
-  geo       Unsupported("Geometry(GEOMETRY,4326)")?
-  geoJSON   Json? /// @zod.custom.use(Geometry)
-  geoWKT    String?
-  geoData   GeoData?                                @relation(fields: [geoDataId], references: [id])
-  geoDataId String?                                 @unique
+  flag     String
+
+  geoData   GeoData? @relation(fields: [geoDataId], references: [id])
+  geoDataId String?  @unique
 
   key   TranslationKey @relation("country", fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -1292,28 +1289,24 @@ model Country {
 
   @@unique([tsKey, tsNs])
   @@unique([demonymKey, demonymNs])
-  @@index([geo], type: SpGist)
   @@index([geoDataId])
 }
 
 /// Administrative districts for countries
 /// @zod.import(["import {Geometry} from '../../zod_util'"])
 model GovDist {
-  id        String                                  @id @default(cuid())
+  id        String   @id @default(cuid())
   /// Name (English/Roman alphabet)
   name      String
   /// Slug - [country (ISO)]-[govdist]-[...]
-  slug      String                                  @unique
+  slug      String   @unique
   /// ISO-3166-2 code
   iso       String?
   /// Abbreviation (Optional)
   abbrev    String?
-  /// GeoJSON object - required only if this will be considered a "service area"
-  geo       Unsupported("Geometry(GEOMETRY,4326)")?
-  geoJSON   Json? /// @zod.custom.use(Geometry)
-  geoWKT    String?
-  geoData   GeoData?                                @relation(fields: [geoDataId], references: [id])
-  geoDataId String?                                 @unique
+  /// Geo data - required only if this will be considered a "service area"
+  geoData   GeoData? @relation(fields: [geoDataId], references: [id])
+  geoDataId String?  @unique
 
   active Boolean? @default(true)
 
@@ -1348,7 +1341,6 @@ model GovDist {
   //@@schema("system")
 
   @@unique([tsKey, tsNs])
-  @@index([geo], type: SpGist)
   @@index([countryId])
   @@index([parentId])
   @@index([countryId, id])
@@ -1390,7 +1382,7 @@ model GeoData {
   country Country?
   govDist GovDist?
 
-  @@index([geo], type: SpGist)
+  @@index([geo], type: Gist)
   @@index([name])
   @@index([iso])
   @@index([abbrev])
@@ -2145,6 +2137,7 @@ model OrgLocationService {
   //@@schema("relation")
 
   @@id([orgLocationId, serviceId])
+  @@index([serviceId, orgLocationId])
   @@index([orgLocationId, active])
   @@index([serviceId, active])
   @@index([orgLocationId])
@@ -2182,6 +2175,7 @@ model ServiceAreaCountry {
 
   @@id([serviceAreaId, countryId])
   @@index([serviceAreaId, active])
+  @@index([serviceAreaId, countryId, active])
   @@index([serviceAreaId])
   @@index([countryId])
 }
@@ -2201,6 +2195,7 @@ model ServiceAreaDist {
   @@index([serviceAreaId, active])
   @@index([serviceAreaId])
   @@index([govDistId])
+  @@index([serviceAreaId, govDistId, active])
 }
 
 //
@@ -2322,6 +2317,8 @@ model AttributeToCategory {
   //@@schema("relation")
 
   @@id([attributeId, categoryId])
+  @@index([attributeId])
+  @@index([categoryId])
 }
 
 /// Link default attributes to service category
@@ -2362,6 +2359,8 @@ model ServiceTagCountry {
   active   Boolean  @default(true)
 
   @@id([countryId, serviceId])
+  @@index([countryId])
+  @@index([serviceId])
 }
 
 model ServiceTagNesting {
