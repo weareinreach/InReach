@@ -16,15 +16,6 @@ generator client {
 //   writeBarrelFiles       = true
 // }
 
-generator kysely {
-  provider = "prisma-kysely"
-
-  // Optionally provide a destination directory for the generated file
-  // and a filename of your choice
-  output   = "../kysely-vercel"
-  fileName = "index.ts"
-}
-
 // generator dbml {
 //   provider              = "prisma-dbml-generator"
 //   output                = "./dbml"
@@ -625,7 +616,6 @@ model OrgWebsite {
 }
 
 /// Org location information
-/// @zod.import(["import {Geometry} from '../../zod_util'"])
 model OrgLocation {
   id       String  @id @default(cuid())
   legacyId String? @unique /// old ID from MongoDB
@@ -650,7 +640,7 @@ model OrgLocation {
   longitude Float?                               @db.Real
   latitude  Float?                               @db.Real
   geo       Unsupported("Geometry(POINT,4326)")?
-  geoJSON   Json? /// @zod.custom.use(Geometry)
+  geoJSON   Json?
   geoWKT    String?
 
   published Boolean    @default(true)
@@ -1239,7 +1229,6 @@ model Suggestion {
 }
 
 /// Country metadata
-/// @zod.import(["import {Geometry} from '../../zod_util'"])
 model Country {
   id       String @id @default(cuid())
   /// ISO 3166-1 alpha-2 Country code
@@ -1293,7 +1282,6 @@ model Country {
 }
 
 /// Administrative districts for countries
-/// @zod.import(["import {Geometry} from '../../zod_util'"])
 model GovDist {
   id        String   @id @default(cuid())
   /// Name (English/Roman alphabet)

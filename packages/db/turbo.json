@@ -16,6 +16,7 @@
 		},
 		"db:generate": {
 			"cache": false,
+			"dependsOn": ["db:generate:kysely"],
 			"env": ["DATABASE_URL", "DB_DIRECT_URL", "PRISMA_GENERATE_DATAPROXY"],
 			"inputs": ["./prisma/schema.prisma"]
 		},
