@@ -12,6 +12,7 @@ export const idPrefix = {
 	dataMigration: 'data',
 	fieldVisibility: 'fviz',
 	freeText: 'ftxt',
+	geoData: 'geod',
 	govDist: 'gdst',
 	govDistType: 'gdty',
 	internalNote: 'note',
