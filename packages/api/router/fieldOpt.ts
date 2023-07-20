@@ -147,14 +147,12 @@ export const fieldOptRouter = defineRouter({
 					tsKey: true,
 					tsNs: true,
 					activeForOrgs: true,
-					geoJSON: includeGeo?.json ?? false,
-					geoWKT: includeGeo?.wkt ?? false,
 				},
 				orderBy: {
 					name: 'asc',
 				},
 			})
-			type CountryResult = SetOptional<(typeof result)[number], 'geoJSON' | 'geoWKT'>[]
+			type CountryResult = (typeof result)[number][]
 			return result as CountryResult
 		}),
 	userTitle: publicProcedure.query(async ({ ctx }) =>
