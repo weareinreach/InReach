@@ -428,9 +428,10 @@ model Organization {
   hours         OrgHours[] // for schedules that need to be assigned to locations
   attributes    OrganizationAttribute[]
 
-  deleted      Boolean   @default(false)
-  published    Boolean   @default(false)
-  lastVerified DateTime?
+  deleted        Boolean   @default(false)
+  published      Boolean   @default(false)
+  crisisResource Boolean?
+  lastVerified   DateTime?
 
   // Outside API connections
   outsideApi OutsideAPI[]

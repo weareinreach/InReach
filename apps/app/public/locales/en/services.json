@@ -53,6 +53,12 @@
 		"haircuts-and-stylists": "Haircuts and stylists",
 		"hygiene": "Hygiene"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Mental Health",
+		"resettlement-assistance": "Resettlement Assistance"
+	},
 	"legal": {
 		"CATEGORYNAME": "Legal",
 		"asylum-application": "Asylum application",
