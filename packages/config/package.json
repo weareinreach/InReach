@@ -15,11 +15,11 @@
 		"preinstall": "npx only-allow pnpm"
 	},
 	"devDependencies": {
-		"@types/node": "18.16.19",
+		"@types/node": "18.17.0",
 		"@weareinreach/eslint-config": "0.100.0",
 		"alex": "11.0.0",
 		"next-i18next": "14.0.0",
 		"typescript": "5.1.6"
 	},
-	"packageManager": "pnpm@8.6.9"
+	"packageManager": "pnpm@8.6.10"
 }
