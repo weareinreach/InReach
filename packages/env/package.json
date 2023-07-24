@@ -10,7 +10,7 @@
 	"scripts": {},
 	"dependencies": {
 		"@t3-oss/env-nextjs": "0.6.0",
-		"chromatic": "6.19.9",
+		"chromatic": "6.20.0",
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
