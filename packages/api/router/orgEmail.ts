@@ -120,7 +120,7 @@ export const orgEmailRouter = defineRouter({
 	upsertMany: permissionedProcedure('updateEmail')
 		.input(UpsertManyOrgEmailSchema)
 		.mutation(async ({ ctx, input }) => {
-			const { orgSlug, data } = input
+			const { orgId, data } = input
 
 			const existing = await ctx.prisma.orgEmail.findMany({
 				where: {
@@ -162,7 +162,7 @@ export const orgEmailRouter = defineRouter({
 								locations: createManyOptional(locations),
 								auditLogs,
 								description: description
-									? generateNestedFreeText({ orgSlug, text: description, type: 'emailDesc', itemId: id })
+									? generateNestedFreeText({ orgId, text: description, type: 'emailDesc', itemId: id })
 									: undefined,
 							},
 							update: {
@@ -175,7 +175,7 @@ export const orgEmailRouter = defineRouter({
 									? {
 											upsert: {
 												...generateNestedFreeText({
-													orgSlug,
+													orgId,
 													text: description,
 													type: 'emailDesc',
 													itemId: id,

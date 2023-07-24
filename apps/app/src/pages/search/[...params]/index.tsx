@@ -243,7 +243,7 @@ export const getServerSideProps: GetServerSideProps<
 	// const nextPage = PageIndexSchema.parse(query.page) * SEARCH_RESULT_PAGE_SIZE
 
 	const [i18n] = await Promise.allSettled([
-		getServerSideTranslations(locale, ['services', 'common', 'attribute']),
+		getServerSideTranslations(locale, ['services', 'common', 'attribute', 'country']),
 		ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take }),
 		// await ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip: nextPage, take })
 		ssg.service.getFilterOptions.prefetch(),

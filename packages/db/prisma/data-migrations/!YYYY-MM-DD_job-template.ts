@@ -1,7 +1,7 @@
 import { prisma } from '~db/client'
 import { formatMessage } from '~db/prisma/common'
 import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
-import { createLogger, type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
+import { createLogger, type JobDef, jobPostRunner } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {

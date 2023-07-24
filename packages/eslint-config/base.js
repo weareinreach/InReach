@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unused-modules */
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
-	plugins: ['codegen', 'turbo', 'node', 'import', '@tanstack/query'],
+	plugins: ['codegen', 'turbo', 'node', /*'import',*/ '@tanstack/query'],
 	extends: [
 		'eslint:recommended',
 		// disable turbo plugin until vercel/turbo#5355 is resolved
@@ -33,7 +33,7 @@ const config = {
 		'node/no-process-env': 'warn',
 		'codegen/codegen': 'error',
 		'react/jsx-key': 'off',
-		'react/no-unescaped-entities': ['off'],
+		'react/no-unescaped-entities': 'off',
 		// 'turbo/no-undeclared-env-vars': 'warn',
 		'import/first': 'error',
 		'import/newline-after-import': 'error',

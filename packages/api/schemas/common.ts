@@ -36,8 +36,8 @@ export const nonEmptyString = z
 // .optional()
 export const searchTerm = z.object({ search: z.string().trim() })
 export const pagination = {
-	skip: z.coerce.number().optional(),
-	take: z.coerce.number().optional(),
+	skip: z.coerce.number(),
+	take: z.coerce.number(),
 }
 export const coordItems = {
 	lat: z.number().gte(-90).lte(90),

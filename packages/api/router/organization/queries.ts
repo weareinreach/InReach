@@ -102,14 +102,12 @@ export const queries = defineRouter({
 		const { lat, lon, dist, unit, skip, take, services, attributes } = input
 		// Convert to meters
 		const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
-		// const serviceAreas = await getCoveredAreas({ lat, lon }, ctx)
-		// const orgs = await searchOrgByDistance({ lat, lon, searchRadius }, ctx)
 
-		const [serviceAreas, orgs] = await Promise.all([
-			getCoveredAreas({ lat, lon }, ctx),
-			searchOrgByDistance({ lat, lon, searchRadius }, ctx),
-		])
-		const resultIds = orgs.map(({ id }) => id)
+		const orgs = await searchOrgByDistance(
+			{ lat, lon, searchRadius, skip, take, attributeFilter: attributes, serviceFilter: services },
+			ctx
+		)
+		const resultIds = orgs.results.map(({ id }) => id)
 
 		const resultDetailWhere = {
 			id: {
@@ -120,19 +118,20 @@ export const queries = defineRouter({
 			...isPublic,
 		}
 		// const resultCount = await ctx.prisma.organization.count({ where: resultDetailWhere })
-		// const results = await prismaDistSearchDetails({ ctx, input: { ...input, resultIds } })
-		const [resultCount, results] = await Promise.all([
-			ctx.prisma.organization.count({ where: resultDetailWhere }),
-			prismaDistSearchDetails({ ctx, input: { ...input, resultIds } }),
-		])
+		// const results = await prismaDistSearchDetails({ ctx, input: { ...input, resultIds } })[
+		const results = await prismaDistSearchDetails({ ctx, input: { ...input, resultIds } })
 
-		const orderedResults: ((typeof results)[number] & { distance: number; unit: 'km' | 'mi' })[] = []
-		orgs.forEach(({ id, distMeters }) => {
+		const orderedResults: ((typeof results)[number] & {
+			distance: number
+			unit: 'km' | 'mi'
+			national: string[]
+		})[] = []
+		orgs.results.forEach(({ id, distMeters, national }) => {
 			const distance = unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934
 			const sort = results.find((result) => result.id === id)
-			if (sort) orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit })
+			if (sort) orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit, national })
 		})
-		return { orgs: orderedResults, serviceAreas, resultCount }
+		return { orgs: orderedResults, resultCount: orgs.total }
 	}),
 	getNameFromSlug: publicProcedure.input(z.string()).query(async ({ ctx, input }) =>
 		ctx.prisma.organization.findUniqueOrThrow({

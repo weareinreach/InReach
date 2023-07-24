@@ -19,6 +19,7 @@
 	"badge": {
 		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
 		"community-tool-tip": "Community served by this organization.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "Available remotely",
 		"service-tool-tip": "Service(s) offered by this organization.",
 		"unclaimed-tool-tip": "This organization has not yet been claimed by a representative.<br/><link1>Claim this organization</link1> to build trust with our community, update your own information, and more."
@@ -143,7 +144,7 @@
 	"org-image": "Organization photo",
 	"other-specify": "Other (please specify)",
 	"page-title": {
-		"base": "{{title}} - InReach",
+		"base": "{{- title}} - InReach",
 		"search-results": "Search Results"
 	},
 	"password": "Password",

@@ -5,7 +5,7 @@ import { namespaces } from '@weareinreach/db/seed/data/00-namespaces'
 
 export const CreateOrgPhoneSchema = z
 	.object({
-		orgSlug: z.string(),
+		orgId: z.string(),
 		data: z.object({
 			number: z.string(),
 			ext: z.string().optional(),
@@ -18,10 +18,10 @@ export const CreateOrgPhoneSchema = z
 			locationOnly: z.boolean().optional(),
 		}),
 	})
-	.transform(({ data, orgSlug }) => {
+	.transform(({ data, orgId }) => {
 		const id = generateId('orgPhone')
 		const description = data.description
-			? generateNestedFreeText({ orgSlug, itemId: id, text: data.description, type: 'phoneDesc' })
+			? generateNestedFreeText({ orgId, itemId: id, text: data.description, type: 'phoneDesc' })
 			: undefined
 		const phoneType = data.phoneTypeId
 			? { connect: { id: data.phoneTypeId } }
@@ -86,7 +86,7 @@ export const UpdateOrgPhoneSchema = z
 	.transform(({ data, id }) => Prisma.validator<Prisma.OrgPhoneUpdateArgs>()({ where: { id }, data }))
 
 export const UpsertManyOrgPhoneSchema = z.object({
-	orgSlug: z.string(),
+	orgId: z.string(),
 	data: z
 		.object({
 			id: z.string().optional(),

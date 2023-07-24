@@ -65,6 +65,7 @@ model Account {
   //@@schema("user")
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 /// NextAuth Session **DO NOT ALTER**
@@ -161,8 +162,9 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   auditLogs AuditLog[] @relation("AuditLogEntry")
-
   //@@schema("user")
+
+  @@index([userTypeId])
 }
 
 /// User Role - Contains array of granular permissions
@@ -406,6 +408,10 @@ model UserMail {
   auditLogs AuditLog[]
 
   //@@schema("user")
+
+  @@index([toUserId])
+  @@index([fromUserId])
+  @@index([responseToId])
 }
 
 /// Main organization definition
@@ -460,7 +466,8 @@ model Organization {
   //@@schema("org")
 
   @@index([name(sort: Asc)])
-  @@index([id, published, deleted])
+  @@index([published, deleted])
+  @@index([slug])
 }
 
 model SlugRedirect {
@@ -474,6 +481,8 @@ model SlugRedirect {
   auditLogs AuditLog[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+
+  @@index([orgId])
 }
 
 /// Organization email contacts - can be general or location specific
@@ -512,8 +521,6 @@ model OrgEmail {
 
   @@index([lastName(sort: Asc), firstName])
   @@index([email])
-  @@index([id, descriptionId])
-  @@index([id, published, deleted])
 }
 
 /// Org phone numbers - can be general or location specific
@@ -556,8 +563,6 @@ model OrgPhone {
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
   //@@schema("org")
-
-  @@index([id, published, deleted])
 }
 
 /// Organization's social media links
@@ -586,7 +591,9 @@ model OrgSocialMedia {
   internalNotes InternalNote[]
   //@@schema("org")
 
-  @@index([id, published, deleted])
+  @@index([serviceId])
+  @@index([organizationId])
+  @@index([orgLocationId])
 }
 
 model OrgWebsite {
@@ -613,7 +620,8 @@ model OrgWebsite {
   internalNotes InternalNote[]
   //@@schema("org")
 
-  @@index([id, published, deleted])
+  @@index([organizationId])
+  @@index([orgLocationId])
 }
 
 /// Org location information
@@ -678,12 +686,14 @@ model OrgLocation {
   checkMigration Boolean?
   //@@schema("org")
 
-  @@index([geo], type: SpGist)
-  @@index([orgId, id])
-  @@index([descriptionId, id])
-  @@index([id, published, deleted])
+  @@index([geo], type: Gist)
+  @@index([orgId])
+  @@index([countryId])
+  @@index([govDistId])
+  @@index([published, deleted])
   @@index([orgId, id, geo])
-  @@index([geo, id])
+  @@index([published])
+  @@index([deleted])
 }
 
 /// Organization photos
@@ -707,7 +717,8 @@ model OrgPhoto {
   internalNotes InternalNote[]
   //@@schema("org")
 
-  @@index([id, published, deleted])
+  @@index([orgId])
+  @@index([orgLocationId])
 }
 
 /// Organization location/service hours
@@ -749,9 +760,9 @@ model OrgHours {
   internalNotes InternalNote[]
   //@@schema("org")
 
-  @@index([id, orgLocId])
-  @@index([id, orgServiceId])
-  @@index([id, organizationId])
+  @@index([orgLocId])
+  @@index([orgServiceId])
+  @@index([organizationId])
 }
 
 model FreeText {
@@ -775,7 +786,7 @@ model FreeText {
   //@@schema("org")
 
   @@unique([key, ns])
-  @@index([id, key, ns])
+  @@index([key])
 }
 
 /// Organization's offered services - access instructions & details
@@ -816,10 +827,8 @@ model OrgService {
   //@@schema("org")
 
   @@index([organizationId(sort: Asc)])
-  @@index([id, serviceNameId, descriptionId])
-  @@index([id, published, deleted])
-  @@index([id, organizationId])
-  @@index([organizationId, id])
+  @@index([organizationId, published, deleted])
+  @@index([published, deleted])
 }
 
 model ServiceArea {
@@ -842,9 +851,9 @@ model ServiceArea {
 
   //@@schema("org")
 
-  @@index([organizationId, id])
-  @@index([orgLocationId, id])
-  @@index([orgServiceId, id])
+  @@index([organizationId])
+  @@index([orgLocationId])
+  @@index([orgServiceId])
 }
 
 /// User reviews/ratings of organization
@@ -903,9 +912,8 @@ model OrgReview {
   @@index([organizationId(sort: Asc)])
   @@index([orgServiceId(sort: Asc)])
   @@index([id, visible, deleted])
-  @@index([organizationId, id])
-  @@index([orgLocationId, id])
-  @@index([orgServiceId, id])
+  @@index([orgLocationId])
+  @@index([userId])
 }
 
 /// Store machine translations for reviews - save on API calls
@@ -924,7 +932,7 @@ model TranslatedReview {
   updatedAt DateTime   @updatedAt
   auditLogs AuditLog[]
 
-  @@index([reviewId, languageId, id])
+  @@index([reviewId, languageId])
 }
 
 /// Additional Properties for Org/Service.
@@ -1056,11 +1064,21 @@ model AttributeSupplement {
   userAttributeAttributeId            String?
   userAttributeUserId                 String?
 
-  @@index([locationAttributeAttributeId, locationAttributeLocationId, id])
-  @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId, id])
-  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceId, id])
-  @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId, id])
-  @@index([userAttributeAttributeId, userAttributeUserId, id])
+  @@index([locationAttributeAttributeId, locationAttributeLocationId])
+  @@index([organizationAttributeAttributeId, organizationAttributeOrganizationId])
+  @@index([serviceAccessAttributeAttributeId, serviceAccessAttributeServiceId])
+  @@index([serviceAttributeAttributeId, serviceAttributeOrgServiceId])
+  @@index([userAttributeAttributeId, userAttributeUserId])
+  @@index([locationAttributeAttributeId])
+  @@index([locationAttributeLocationId])
+  @@index([organizationAttributeAttributeId])
+  @@index([organizationAttributeOrganizationId])
+  @@index([serviceAccessAttributeAttributeId])
+  @@index([serviceAccessAttributeServiceId])
+  @@index([serviceAttributeAttributeId])
+  @@index([serviceAttributeOrgServiceId])
+  @@index([userAttributeAttributeId])
+  @@index([userAttributeUserId])
 }
 
 model AttributeSupplementDataSchema {
@@ -1129,7 +1147,6 @@ model ServiceTag {
   @@unique([tsKey, tsNs])
   @@unique([name, categoryId])
   @@index([categoryId])
-  @@index([categoryId, id])
 }
 
 /// Phone number descriptors
@@ -1217,26 +1234,27 @@ model Suggestion {
   updatedAt     DateTime       @updatedAt
   auditLogs     AuditLog[]
   internalNotes InternalNote[]
+
+  @@index([organizationId])
 }
 
 /// Country metadata
 /// @zod.import(["import {Geometry} from '../../zod_util'"])
 model Country {
-  id       String                                  @id @default(cuid())
+  id       String @id @default(cuid())
   /// ISO 3166-1 alpha-2 Country code
-  cca2     String                                  @unique @db.Char(2)
+  cca2     String @unique @db.Char(2)
   /// ISO 3166-1 alpha-3 Country code
-  cca3     String                                  @unique @db.Char(3)
+  cca3     String @unique @db.Char(3)
   /// Country name (English).
-  name     String                                  @unique(sort: Asc)
+  name     String @unique(sort: Asc)
   /// International dialing code
-  dialCode Int?                                    @db.SmallInt
+  dialCode Int?   @db.SmallInt
   /// Country flag (emoji)
   flag     String
-  /// GeoJSON object - required only if this will be considered a "service area"
-  geo      Unsupported("Geometry(GEOMETRY,4326)")?
-  geoJSON  Json? /// @zod.custom.use(Geometry)
-  geoWKT   String?
+
+  geoData   GeoData? @relation(fields: [geoDataId], references: [id])
+  geoDataId String?  @unique
 
   key   TranslationKey @relation("country", fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -1271,26 +1289,26 @@ model Country {
 
   @@unique([tsKey, tsNs])
   @@unique([demonymKey, demonymNs])
-  @@index([geo], type: SpGist)
+  @@index([geoDataId])
 }
 
 /// Administrative districts for countries
 /// @zod.import(["import {Geometry} from '../../zod_util'"])
 model GovDist {
-  id      String                                  @id @default(cuid())
+  id        String   @id @default(cuid())
   /// Name (English/Roman alphabet)
-  name    String
+  name      String
   /// Slug - [country (ISO)]-[govdist]-[...]
-  slug    String                                  @unique
+  slug      String   @unique
   /// ISO-3166-2 code
-  iso     String?
+  iso       String?
   /// Abbreviation (Optional)
-  abbrev  String?
-  /// GeoJSON object - required only if this will be considered a "service area"
-  geo     Unsupported("Geometry(GEOMETRY,4326)")?
-  geoJSON Json? /// @zod.custom.use(Geometry)
-  geoWKT  String?
-  active  Boolean?                                @default(true)
+  abbrev    String?
+  /// Geo data - required only if this will be considered a "service area"
+  geoData   GeoData? @relation(fields: [geoDataId], references: [id])
+  geoDataId String?  @unique
+
+  active Boolean? @default(true)
 
   country   Country @relation(fields: [countryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   countryId String
@@ -1323,11 +1341,11 @@ model GovDist {
   //@@schema("system")
 
   @@unique([tsKey, tsNs])
-  @@index([geo], type: SpGist)
   @@index([countryId])
   @@index([parentId])
   @@index([countryId, id])
   @@index([parentId, id])
+  @@index([geoDataId])
 }
 
 /// Descriptor of principal administrative districts (state, province, county, etc.)
@@ -1348,6 +1366,28 @@ model GovDistType {
   //@@schema("system")
 
   @@unique([tsKey, tsNs])
+}
+
+/// Geo data
+model GeoData {
+  id         String                                     @id @default(cuid())
+  name       String
+  geo        Unsupported("geometry(multipolygon,4326)")
+  iso        String
+  iso2       String?
+  abbrev     String?
+  type       String?
+  adminLevel Int
+
+  country Country?
+  govDist GovDist?
+
+  @@index([geo], type: Gist)
+  @@index([name])
+  @@index([iso])
+  @@index([abbrev])
+  @@index([iso, abbrev])
+  @@index([iso, adminLevel])
 }
 
 /// Languages - ETF BCP 47 language tag
@@ -1450,6 +1490,8 @@ model TranslationKey {
   /// Only 1 key per namespace
   // @@unique([ns(sort: Asc), key(sort: Asc)])
   @@id([ns, key])
+  @@index([crowdinId])
+  @@index([key])
 }
 
 enum InterpolationOptions {
@@ -2095,6 +2137,11 @@ model OrgLocationService {
   //@@schema("relation")
 
   @@id([orgLocationId, serviceId])
+  @@index([serviceId, orgLocationId])
+  @@index([orgLocationId, active])
+  @@index([serviceId, active])
+  @@index([orgLocationId])
+  @@index([serviceId])
 }
 
 /// Link tags to services
@@ -2109,6 +2156,10 @@ model OrgServiceTag {
   //@@schema("relation")
 
   @@id([serviceId, tagId])
+  @@index([serviceId, active])
+  @@index([tagId, active])
+  @@index([serviceId])
+  @@index([tagId])
 }
 
 /// Link countries to service areas
@@ -2123,6 +2174,10 @@ model ServiceAreaCountry {
   //@@schema("relation")
 
   @@id([serviceAreaId, countryId])
+  @@index([serviceAreaId, active])
+  @@index([serviceAreaId, countryId, active])
+  @@index([serviceAreaId])
+  @@index([countryId])
 }
 
 /// Link Governing Districts to service areas
@@ -2137,6 +2192,10 @@ model ServiceAreaDist {
   //@@schema("relation")
 
   @@id([serviceAreaId, govDistId])
+  @@index([serviceAreaId, active])
+  @@index([serviceAreaId])
+  @@index([govDistId])
+  @@index([serviceAreaId, govDistId, active])
 }
 
 //
@@ -2183,6 +2242,10 @@ model OrganizationAttribute {
   //@@schema("relation")
 
   @@id([organizationId, attributeId])
+  @@index([organizationId, active])
+  @@index([attributeId, active])
+  @@index([organizationId])
+  @@index([attributeId])
 }
 
 /// Link attributes to locations
@@ -2198,6 +2261,10 @@ model LocationAttribute {
   //@@schema("relation")
 
   @@id([locationId, attributeId])
+  @@index([attributeId, active])
+  @@index([locationId, active])
+  @@index([attributeId])
+  @@index([locationId])
 }
 
 /// Link attributes to services
@@ -2214,6 +2281,10 @@ model ServiceAttribute {
 
   @@id([orgServiceId, attributeId])
   @@index([attributeId, orgServiceId])
+  @@index([attributeId, active])
+  @@index([orgServiceId, active])
+  @@index([attributeId])
+  @@index([orgServiceId])
 }
 
 /// Link attributes to Service Access instructions
@@ -2229,6 +2300,10 @@ model ServiceAccessAttribute {
   //@@schema("relation")
 
   @@id([serviceId, attributeId])
+  @@index([attributeId, active])
+  @@index([serviceId, active])
+  @@index([attributeId])
+  @@index([serviceId])
 }
 
 /// Link attributes to category
@@ -2242,6 +2317,8 @@ model AttributeToCategory {
   //@@schema("relation")
 
   @@id([attributeId, categoryId])
+  @@index([attributeId])
+  @@index([categoryId])
 }
 
 /// Link default attributes to service category
@@ -2282,6 +2359,8 @@ model ServiceTagCountry {
   active   Boolean  @default(true)
 
   @@id([countryId, serviceId])
+  @@index([countryId])
+  @@index([serviceId])
 }
 
 model ServiceTagNesting {
@@ -2369,4 +2448,33 @@ view user_refresh_token {
 view user_access_token {
   id           String  @unique
   access_token String?
+}
+
+view pg_index_usage_rate {
+  relname                     String @unique
+  percent_of_times_index_used Int
+  rows_in_table               Int
+
+  @@ignore
+}
+
+view pg_cache_hit_rate {
+  heap_read Int   @unique
+  heap_hit  Int
+  ratio     Float
+
+  @@ignore
+}
+
+view pg_index_usage {
+  relation        String
+  indexname       String @unique
+  num_rows        Int
+  table_size      String
+  index_size      String
+  number_of_scans Int
+  tuples_read     Int
+  tuples_fetched  Int
+
+  @@ignore
 }
