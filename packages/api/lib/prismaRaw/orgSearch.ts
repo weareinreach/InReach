@@ -22,12 +22,9 @@ filters(
 ),
 covered_areas AS (
 	SELECT
-		ARRAY_AGG(DISTINCT c .id) AS country,
-		ARRAY_AGG(DISTINCT gd.id) AS district
-	FROM "Country" c
-		JOIN points ON TRUE
-		JOIN "GovDist" gd ON ST_CoveredBy(points.degrees, gd.geo)
-	WHERE ST_CoveredBy(points.degrees, c .geo)
+	id
+	FROM "GeoData" g
+	WHERE ST_CoveredBy((select degrees from points), g.geo)
 ),
 attributes AS (
 SELECT * FROM (
@@ -69,6 +66,20 @@ services AS (
 		ols. "orgLocationId",
 		os. "organizationId"
 	ORDER BY os."organizationId", ols."orgLocationId"
+),
+service_area as (
+	SELECT
+		country."geoDataId" as "countryGeoId",
+		district."geoDataId" as "districtGeoId",
+		country.cca3 as "cca3",
+		sa."organizationId",
+		sa."orgLocationId"
+	FROM "ServiceArea" sa
+		 JOIN "ServiceAreaCountry" sac ON sac. "serviceAreaId" = sa.id AND sac.active
+		 JOIN "ServiceAreaDist" sad ON sad. "serviceAreaId" = sa.id AND sad.active
+		 JOIN "Country" country ON country.id = sac. "countryId"
+		 JOIN "GovDist" district ON district.id = sad. "govDistId"
+	WHERE sa.active AND sa."organizationId" is not null
 )
 	SELECT
 		*,
@@ -91,23 +102,13 @@ services AS (
 			}
 			MIN(
 				ROUND(
-					ST_Distance(ST_Transform(loc.geo, 3857), points.meters)::int
+					ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int
 				)
 			) AS distance,
-			ARRAY_REMOVE(ARRAY_AGG(DISTINCT country.cca3), NULL) AS "national"
+			ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3), NULL) AS "national"
 		FROM "OrgLocation" loc
-			JOIN points ON TRUE
-			JOIN filters ON TRUE
-			JOIN covered_areas ca ON TRUE
 			INNER JOIN "Organization" org ON org.id = loc. "orgId"
-			AND org.published
-			AND NOT org.deleted
-			LEFT JOIN "ServiceArea" sa ON sa. "orgLocationId" = loc.id
-			OR sa. "organizationId" = loc. "orgId"
-			LEFT JOIN "ServiceAreaCountry" sac ON sac. "serviceAreaId" = sa.id
-			LEFT JOIN "ServiceAreaDist" sad ON sad. "serviceAreaId" = sa.id
-			LEFT JOIN "Country" country ON country.id = sac. "countryId"
-			LEFT JOIN "GovDist" district ON district.id = sad. "govDistId"
+			LEFT JOIN service_area sa ON  sa. "organizationId" = loc. "orgId"
 			${
 				serviceFilter?.length
 					? Prisma.sql`
@@ -122,12 +123,14 @@ services AS (
 		}
 	WHERE
 		(
-			ST_DWithin(ST_Transform(loc.geo, 3857), points.meters, ${searchRadius})
-			OR country.id = ANY (ca.country)
-			OR district.id = ANY (ca.district)
+			ST_DWithin(ST_Transform(loc.geo, 3857), (SELECT meters FROM points), ${searchRadius})
+			OR sa."countryGeoId"  = ANY(SELECT id FROM covered_areas)
+			OR sa."districtGeoId" = ANY(SELECT id FROM covered_areas)
 		)
-		AND loc.published = TRUE
-		AND loc.deleted = FALSE
+		AND loc.published
+		AND org.published
+		AND NOT loc.deleted
+		AND NOT org.deleted
 	GROUP BY
 		loc."orgId"
 	ORDER BY
