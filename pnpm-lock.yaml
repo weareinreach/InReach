@@ -10892,7 +10892,7 @@ packages:
   /@types/pg@8.10.2:
     resolution: {integrity: sha512-MKFs9P6nJ+LAeHLU3V0cODEOgyThJ3OAnmOlsZsxux6sfQs3HRXR5bBn7xG5DjckEFhTAxsXi7k7cd0pCMxpJw==}
     dependencies:
-      '@types/node': 18.16.19
+      '@types/node': 18.17.0
       pg-protocol: 1.6.0
       pg-types: 4.0.1
     dev: true
