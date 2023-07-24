@@ -50,6 +50,11 @@ const nextConfig = {
 	eslint: {
 		ignoreDuringBuilds: isVercelActiveDev,
 	},
+		images: {
+		remotePatterns: [
+			{protocol: 'https', hostname: '**.4sqi.net'}
+		]
+	},
 	typescript: {
 		ignoreBuildErrors: isVercelActiveDev,
 	},
