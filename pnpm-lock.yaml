@@ -108,8 +108,8 @@ importers:
   apps/app:
     dependencies:
       '@aws-crypto/sha256-js':
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 5.0.0
+        version: 5.0.0
       '@aws-sdk/client-s3':
         specifier: 3.374.0
         version: 3.374.0
@@ -1835,10 +1835,11 @@ packages:
       '@aws-sdk/types': 3.370.0
       tslib: 1.14.1
 
-  /@aws-crypto/sha256-js@4.0.0:
-    resolution: {integrity: sha512-MHGJyjE7TX9aaqXj7zk2ppnFUOhaDs5sP+HtNS0evOxn72c+5njUmyJmpGd7TfyoDznZlHMmdo/xGUdu2NIjNQ==}
+  /@aws-crypto/sha256-js@5.0.0:
+    resolution: {integrity: sha512-g+u9iKkaQVp9Mjoxq1IJSHj9NHGZF441+R/GIH0dn7u4mix5QQ4VqgpppHrNm1LzjUzb0BpcFGsBXP6cOVf+ZQ==}
+    engines: {node: '>=16.0.0'}
     dependencies:
-      '@aws-crypto/util': 4.0.0
+      '@aws-crypto/util': 5.0.0
       '@aws-sdk/types': 3.370.0
       tslib: 1.14.1
     dev: false
@@ -1855,8 +1856,8 @@ packages:
       '@aws-sdk/util-utf8-browser': 3.259.0
       tslib: 1.14.1
 
-  /@aws-crypto/util@4.0.0:
-    resolution: {integrity: sha512-2EnmPy2gsFZ6m8bwUQN4jq+IyXV3quHAcwPOS6ZA3k+geujiqI8aRokO2kFJe+idJ/P3v4qWI186rVMo0+zLDQ==}
+  /@aws-crypto/util@5.0.0:
+    resolution: {integrity: sha512-1GYqLdYRe96idcCltlqxdJ68OWE6ADT8qGLmVi7PVHKl8AxD2EWSbJSSevPq2eTx6vaPZpkr1RoZ3lcw/uGoEA==}
     dependencies:
       '@aws-sdk/types': 3.370.0
       '@aws-sdk/util-utf8-browser': 3.259.0
