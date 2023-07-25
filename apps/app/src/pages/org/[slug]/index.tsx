@@ -20,9 +20,9 @@ import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
-import { useSearchState } from '@weareinreach/ui/providers/SearchState'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
+import { useSearchSession } from '~ui/hooks/useSearchSession'
 
 const LoadingState = () => (
 	<>
@@ -74,7 +74,7 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 		}
 	)
 	const { ref, width } = useElementSize()
-	const { searchParams } = useSearchState()
+	const searchSession = useSearchSession()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
@@ -191,7 +191,7 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 			</Head>
 			<Grid.Col xs={12} sm={8} order={1} pb={40}>
 				<Toolbar
-					hideBreadcrumb={searchParams.searchState.params.length === 0}
+					hideBreadcrumb={!searchSession.params}
 					breadcrumbProps={{
 						option: 'back',
 						backTo: 'search',

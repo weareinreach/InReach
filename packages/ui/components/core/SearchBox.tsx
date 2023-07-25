@@ -18,10 +18,11 @@ import { type Dispatch, forwardRef, type ReactNode, type SetStateAction, useEffe
 import reactStringReplace from 'react-string-replace'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { useCustomVariant } from '~ui/hooks'
+import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useSearchSession } from '~ui/hooks/useSearchSession'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
-import { useSearchState } from '~ui/providers/SearchState'
 
 const useStyles = createStyles((theme) => ({
 	autocompleteContainer: {
@@ -89,25 +90,25 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
 	const router = useRouter()
-	const form = useForm<FormValues>({ initialValues: { search: '' } })
+	const form = useForm<FormValues>(initialValue ? { initialValues: { search: initialValue } } : undefined)
 	const [search] = useDebouncedValue(form.values.search, 400)
 	const [locationSearch, setLocationSearch] = useState('')
 	const { isLoading, setLoading } = loadingManager
 	const isOrgSearch = type === 'organization'
-	const { routeActions } = useSearchState()
+	const searchSession = useSearchSession()
 
 	// tRPC functions
 	const { data: orgSearchData, isFetching: orgSearchLoading } = api.organization.searchName.useQuery(
 		{ search },
 		{
-			enabled: search !== '' && isOrgSearch,
+			enabled: form.isDirty('search') && isOrgSearch,
 			refetchOnWindowFocus: false,
 		}
 	)
 	const { data: autocompleteData, isFetching: autocompleteLoading } = api.geo.autocomplete.useQuery(
 		{ search, locale: simpleLocale(router.locale) },
 		{
-			enabled: search !== '' && !isOrgSearch,
+			enabled: form.isDirty('search') && !isOrgSearch,
 			refetchOnWindowFocus: false,
 		}
 	)
@@ -145,30 +146,24 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 		}
 	}, [autocompleteData, autocompleteLoading, search, isOrgSearch, orgSearchData, orgSearchLoading])
 
-	useEffect(() => {
-		if (initialValue && !form.values.search) {
-			form.setFieldValue('search', initialValue)
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
-
 	api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: locationSearch !== '' && !isOrgSearch,
 		onSuccess: (data) => {
 			const DEFAULT_RADIUS = 200
 			const DEFAULT_UNIT = 'mi'
 			if (!data.result) return
-			// apiUtils.
+			const params = SearchParamsSchema.safeParse([
+				data.result.country,
+				data.result.geometry.location.lng,
+				data.result.geometry.location.lat,
+				DEFAULT_RADIUS,
+				DEFAULT_UNIT,
+			])
+			if (!params.success) return
 			router.push({
 				pathname: '/search/[...params]',
 				query: {
-					params: [
-						'dist',
-						data.result.geometry.location.lng.toString(),
-						data.result.geometry.location.lat.toString(),
-						DEFAULT_RADIUS.toString(),
-						DEFAULT_UNIT,
-					],
+					params: params.data,
 				},
 			})
 			setLoading(false)
@@ -180,7 +175,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 			<Group>
 				<Loader size={32} mr={16} />
 			</Group>
-		) : form.values.search.length > 0 ? (
+		) : form.values.search?.length > 0 ? (
 			<Group spacing={4} noWrap className={classes.rightIcon} onClick={() => form.reset()}>
 				<Text>{t('clear')}</Text>
 				<Icon icon='carbon:close' />
@@ -275,7 +270,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 				setLoading(false)
 				return
 			}
-			routeActions.setSearchTerm(item.value)
+			searchSession.setSearchTerm(item.value)
 			router.push({
 				pathname: '/org/[slug]',
 				query: {
@@ -288,7 +283,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 				setLoading(false)
 				return
 			}
-			routeActions.setSearchTerm(item.value)
+			searchSession.setSearchTerm(item.value)
 			setLocationSearch(item.placeId)
 		}
 	}
@@ -312,6 +307,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 			label={label}
 			withinPortal
 			nothingFound={noResults ? <Text variant={variants.Text.utility1}>{t('search.no-results')}</Text> : null}
+			defaultValue={initialValue}
 			{...fieldRole}
 			{...form.getInputProps('search')}
 		/>
