@@ -5,6 +5,7 @@
 	"license": "GPL-3.0-only",
 	"scripts": {
 		"build": "next build",
+		"build:prebuild": "pnpm with-env tsx ./lib/prebuild.ts",
 		"clean:node": "rm -rf ./node_modules/ || true && rm -rf ./.next || true",
 		"dev": "next dev",
 		"dev:verbose": "NEXT_VERBOSE=1 next dev",
@@ -66,6 +67,7 @@
 		"@trpc/react-query": "10.35.0",
 		"@trpc/server": "10.35.0",
 		"@vercel/analytics": "1.0.1",
+		"@vercel/edge-config": "0.2.1",
 		"@vercel/kv": "0.2.2",
 		"@weareinreach/api": "workspace:*",
 		"@weareinreach/auth": "workspace:*",
