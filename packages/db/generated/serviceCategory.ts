@@ -42,6 +42,12 @@ export const serviceCategory = [
 		tsKey: 'hygiene-and-clothing.CATEGORYNAME',
 		tsNs: 'services',
 	},
+	{
+		id: 'svct_01H64G5CDDYVMADBGTS0TPWF86',
+		category: 'International Support',
+		tsKey: 'international-support.CATEGORTYNAME',
+		tsNs: 'services',
+	},
 	{ id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX', category: 'Legal', tsKey: 'legal.CATEGORYNAME', tsNs: 'services' },
 	{ id: 'svct_01GW2HHEVQ0VE6E94T3CZWEW9F', category: 'Mail', tsKey: 'mail.CATEGORYNAME', tsNs: 'services' },
 	{
