@@ -144,7 +144,7 @@
 	"org-image": "Foto de la organización",
 	"other-specify": "Otra (por favor especifique)",
 	"page-title": {
-		"base": "{{title}} - InReach",
+		"base": "{{- title}} - InReach",
 		"search-results": "Resultados de búsqueda"
 	},
 	"password": "Contraseña",
