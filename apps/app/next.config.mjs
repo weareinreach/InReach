@@ -74,7 +74,7 @@ const nextConfig = {
  */
 function defineNextConfig(config) {
 	// loadOtel()
-	return withBundleAnalyzer(withRoutes()(config))
+	return withBundleAnalyzer(withRoutes({ outDir: './src/types' })(config))
 }
 /**
  * Wraps NextJS config with the Sentry config.
