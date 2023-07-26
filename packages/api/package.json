@@ -51,9 +51,9 @@
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
-		"@types/eslint": "8.44.0",
+		"@types/eslint": "8.44.1",
 		"@types/luxon": "3.3.1",
-		"@types/node": "18.17.0",
+		"@types/node": "18.17.1",
 		"@types/prettier": "2.7.3",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "workspace:*",
