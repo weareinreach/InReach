@@ -18,8 +18,11 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 	const { t } = useTranslation(['gov-dist', 'common'])
 	const { ref: addressRef, height: addressListHeight } = useElementSize()
 	const theme = useMantineTheme()
-	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug: router.query.slug })
-	const { data, isLoading: locationIsLoading } = api.location.forLocationCard.useQuery(locationId ?? '', {
+	const { data: orgId } = api.organization.getIdFromSlug.useQuery(
+		{ slug: router.query.slug ?? '' },
+		{ enabled: router.isReady }
+	)
+	const { data } = api.location.forLocationCard.useQuery(locationId ?? '', {
 		enabled: !remoteOnly,
 	})
 	const { data: remoteServices, isLoading: remoteIsLoading } = api.service.forServiceInfoCard.useQuery(
@@ -39,7 +42,7 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 				href={{
 					pathname: '/org/[slug]/remote',
 					query: {
-						slug: router.query.slug,
+						slug: router.query.slug ?? '',
 					},
 				}}
 				variant={variants.Link.card}
@@ -117,7 +120,7 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 			href={{
 				pathname: '/org/[slug]/[orgLocationId]',
 				query: {
-					slug: router.query.slug,
+					slug: router.query.slug ?? '',
 					orgLocationId: data.id,
 				},
 			}}
