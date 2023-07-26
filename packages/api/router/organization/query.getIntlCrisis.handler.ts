@@ -59,6 +59,9 @@ export const getIntlCrisis = async ({ input }: TRPCHandlerParams<TGetIntlCrisisS
 					},
 				},
 			},
+			orderBy: {
+				crisisResourceSort: 'asc',
+			},
 		})
 
 		const formattedData = orgs.map(({ id, name, description, attributes, services }) => {

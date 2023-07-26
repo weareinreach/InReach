@@ -433,6 +433,9 @@ model Organization {
   crisisResource Boolean?
   lastVerified   DateTime?
 
+  // For International Crisis Support resources
+  crisisResourceSort Int? @unique
+
   // Outside API connections
   outsideApi OutsideAPI[]
 
