@@ -116,7 +116,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinT
 	const [results, setResults] = useState<AutocompleteItem[]>([])
 	const [noResults, setNoResults] = useState(false)
 	const [searchLoading, setSearchLoading] = useState(false)
-	console.log('dirty', form.isDirty('search'))
+
 	useEffect(() => {
 		if (
 			(!orgSearchData && orgSearchLoading && notBlank(search)) ||
