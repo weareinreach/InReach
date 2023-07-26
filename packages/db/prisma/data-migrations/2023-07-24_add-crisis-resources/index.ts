@@ -136,6 +136,7 @@ export const job20230724a = {
 			attributeSupplement: [],
 			serviceArea: [],
 			serviceAreaCountry: [],
+			orgServiceTag: [],
 		}
 
 		for (const record of intlData) {
@@ -223,6 +224,7 @@ export const job20230724a = {
 			intlRecords.serviceAreaCountry.push(
 				...countries.map((c) => ({ serviceAreaId: record.servAreaId, countryId: c, active: true }))
 			)
+			intlRecords.orgServiceTag.push(...record.svcTags.map((tagId) => ({ tagId, serviceId: record.svcId })))
 		}
 
 		const intlTKey = await prisma.translationKey.createMany({
@@ -270,6 +272,11 @@ export const job20230724a = {
 			skipDuplicates: true,
 		})
 		log(`Created ${intlSvcAreaCountry.count} service area country records`)
+		const intlServiceTag = await prisma.orgServiceTag.createMany({
+			data: intlRecords.orgServiceTag,
+			skipDuplicates: true,
+		})
+		log(`Created ${intlServiceTag.count} service tag records`)
 
 		/**
 		 * DO NOT REMOVE BELOW
@@ -291,4 +298,5 @@ interface IntlRecords {
 	serviceArea: Prisma.ServiceAreaCreateManyInput[]
 	serviceAreaCountry: Prisma.ServiceAreaCountryCreateManyInput[]
 	organizationAttribute: Prisma.OrganizationAttributeCreateManyInput[]
+	orgServiceTag: Prisma.OrgServiceTagCreateManyInput[]
 }
