@@ -101,6 +101,15 @@ const useStyles = createStyles((theme) => ({
 		[theme.fn.smallerThan('sm')]: {
 			textAlign: 'center',
 		},
+		'&[data-disabled]': {
+			color: theme.other.colors.secondary.darkGray,
+		},
+	},
+	launchButton: {
+		'&:disabled, &[data-disabled]': {
+			color: theme.other.colors.secondary.darkGray,
+			pointerEvents: 'none',
+		},
 	},
 	count: {
 		...theme.other.utilityFonts.utility1,
@@ -121,6 +130,9 @@ const useStyles = createStyles((theme) => ({
 		borderRadius: rem(8),
 		border: `${theme.other.colors.tertiary.coolGray} ${rem(1)} solid`,
 		height: rem(48),
+		'&:disabled, &[data-disabled]': {
+			backgroundColor: theme.other.colors.primary.lightGray,
+		},
 	},
 
 	itemParent: {},
@@ -184,7 +196,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const ServiceFilter = ({ resultCount, stateHandler, isFetching }: ServiceFilterProps) => {
+export const ServiceFilter = ({ resultCount, stateHandler, isFetching, disabled }: ServiceFilterProps) => {
 	const { data: serviceOptionData, status } = api.service.getFilterOptions.useQuery()
 	const { classes } = useStyles()
 	const { classes: accordionClasses } = useAccordionStyles()
@@ -319,10 +331,20 @@ export const ServiceFilter = ({ resultCount, stateHandler, isFetching }: Service
 
 	const ServiceBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
 		const ServicesDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
-			modalTitle ? <Title order={2} mb={0} {...props} /> : <Text className={classes.label} {...props} />
+			modalTitle ? (
+				<Title order={2} mb={0} {...props} />
+			) : (
+				<Text className={classes.label} {...(disabled ? { 'data-disabled': disabled } : {})} {...props} />
+			)
 
 		return (
-			<Group className={modalTitle ? undefined : classes.button} position='apart' noWrap spacing={0}>
+			<Group
+				className={modalTitle ? undefined : classes.button}
+				position='apart'
+				noWrap
+				spacing={0}
+				{...(disabled ? { 'data-disabled': disabled } : {})}
+			>
 				{modalTitle ? (
 					<>
 						<Group spacing={8} noWrap>
@@ -399,7 +421,12 @@ export const ServiceFilter = ({ resultCount, stateHandler, isFetching }: Service
 				</Group>
 			</Modal>
 
-			<UnstyledButton onClick={() => setOpened(true)} w='100%'>
+			<UnstyledButton
+				onClick={() => setOpened(true)}
+				w='100%'
+				className={classes.launchButton}
+				{...(disabled ? { disabled, 'data-disabled': disabled } : {})}
+			>
 				<ServiceBar />
 			</UnstyledButton>
 		</>
@@ -409,4 +436,5 @@ interface ServiceFilterProps {
 	resultCount?: number
 	stateHandler: Dispatch<SetStateAction<string[]>>
 	isFetching?: boolean
+	disabled?: boolean
 }
