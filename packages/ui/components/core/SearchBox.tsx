@@ -85,7 +85,8 @@ const useStyles = createStyles((theme) => ({
 /** Most of Google's autocomplete language options are only the two letter variants */
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
-export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft }: SearchBoxProps) => {
+const notBlank = (value?: string) => !!value && value.length > 0
+export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinToLeft }: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
@@ -101,25 +102,25 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 	const { data: orgSearchData, isFetching: orgSearchLoading } = api.organization.searchName.useQuery(
 		{ search },
 		{
-			enabled: form.isDirty('search') && isOrgSearch,
+			enabled: notBlank(search) && isOrgSearch,
 			refetchOnWindowFocus: false,
 		}
 	)
 	const { data: autocompleteData, isFetching: autocompleteLoading } = api.geo.autocomplete.useQuery(
 		{ search, locale: simpleLocale(router.locale) },
 		{
-			enabled: form.isDirty('search') && !isOrgSearch,
+			enabled: notBlank(search) && !isOrgSearch,
 			refetchOnWindowFocus: false,
 		}
 	)
 	const [results, setResults] = useState<AutocompleteItem[]>([])
 	const [noResults, setNoResults] = useState(false)
 	const [searchLoading, setSearchLoading] = useState(false)
-
+	console.log('dirty', form.isDirty('search'))
 	useEffect(() => {
 		if (
-			(!orgSearchData && orgSearchLoading && search !== '') ||
-			(!autocompleteData?.results?.length && autocompleteLoading && search !== '')
+			(!orgSearchData && orgSearchLoading && notBlank(search)) ||
+			(!autocompleteData?.results?.length && autocompleteLoading && notBlank(search))
 		) {
 			setSearchLoading(true)
 			setResults([{ value: search, label: search, fetching: true }])
@@ -128,13 +129,13 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 
 	useEffect(() => {
 		if (isOrgSearch) {
-			if (orgSearchData && !orgSearchLoading && search !== '') {
+			if (orgSearchData && !orgSearchLoading && notBlank(search)) {
 				if (orgSearchData.length === 0) setNoResults(true)
 				setResults(orgSearchData)
 				setSearchLoading(false)
 			}
 		} else {
-			if (autocompleteData && !autocompleteLoading && search !== '') {
+			if (autocompleteData && !autocompleteLoading && notBlank(search)) {
 				if (autocompleteData.status === 'ZERO_RESULTS') setNoResults(true)
 				setResults(autocompleteData.results)
 				setSearchLoading(false)
