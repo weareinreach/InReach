@@ -2,11 +2,10 @@
 import { createStyles, Divider, Grid, Group, Skeleton, Text, useMantineTheme } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import compare from 'just-compare'
-import { type GetServerSideProps } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { type RoutedQuery } from 'nextjs-routes'
+import { type GetServerSideProps } from 'nextjs-routes'
 import { useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
@@ -207,10 +206,12 @@ const SearchResults = () => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps<
-	Record<string, unknown>,
-	RoutedQuery<'/search/[...params]'>
-> = async ({ locale, query, req, res }) => {
+export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/search/[...params]'> = async ({
+	locale,
+	query,
+	req,
+	res,
+}) => {
 	const [_country, lon, lat, dist, unit] = SearchParamsSchema.parse(query.params)
 	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
