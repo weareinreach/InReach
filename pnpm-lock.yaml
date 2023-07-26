@@ -333,8 +333,8 @@ importers:
         specifier: 6.1.0
         version: 6.1.0(next@13.4.12)(react-dom@18.2.0)(react@18.2.0)
       nextjs-routes:
-        specifier: 1.0.9
-        version: 1.0.9(next@13.4.12)
+        specifier: 2.0.1
+        version: 2.0.1(next@13.4.12)
       object-sizeof:
         specifier: 2.6.3
         version: 2.6.3
@@ -696,6 +696,9 @@ importers:
         specifier: 8.45.0
         version: 8.45.0
       just-capitalize:
+        specifier: 3.2.0
+        version: 3.2.0
+      just-pascal-case:
         specifier: 3.2.0
         version: 3.2.0
       listr2:
@@ -1380,8 +1383,8 @@ importers:
         specifier: 1.3.1
         version: 1.3.1
       nextjs-routes:
-        specifier: 1.0.9
-        version: 1.0.9(next@13.4.12)
+        specifier: 2.0.1
+        version: 2.0.1(next@13.4.12)
       probe-image-size:
         specifier: 7.2.3
         version: 7.2.3
@@ -18040,6 +18043,10 @@ packages:
     resolution: {integrity: sha512-Js7+HxDOGcB3RhI38Mird/RgyMf3t0DAJFda1QWqqlAKTa36NeSYIufJXxrZUbysFTRcTOFcoMCiFK5FwCoI7Q==}
     dev: false
 
+  /just-pascal-case@3.2.0:
+    resolution: {integrity: sha512-B0PW5mgJrsGmXdvDLxC2Kdfyie74m+mRO+iCjJ+Es0Jl5kcQwVfB0qb/qiDOCE3m0XUOo1SdZBWzUlNCO9zreg==}
+    dev: true
+
   /just-pick@4.2.0:
     resolution: {integrity: sha512-m6bi0P/gFq5GEQJGYfHFsdod6fogViNIhsKbPBYavqF9SKFfMKPz7kf6ROL2PblkOdaib9vN/wJ7VXhCJre5Hw==}
     dev: false
@@ -19766,8 +19773,9 @@ packages:
       - '@babel/core'
       - babel-plugin-macros
 
-  /nextjs-routes@1.0.9(next@13.4.12):
-    resolution: {integrity: sha512-vITLm5SzpoYGGgDUmWXjf2GU5oHyc4Oh/b7VdDOTqKudEOWuSk1pluZFIlZ9ogVqVxI28c+U+EQ6KyjZOuZR5g==}
+  /nextjs-routes@2.0.1(next@13.4.12):
+    resolution: {integrity: sha512-pBGRm6uR44zwUjWWYn6+gwz08BhBbqUYlIzsbNHAh1TWohHYKWFaa2YVsj8BxEo726MZYg87OJPnHpaaY1ia0w==}
+    hasBin: true
     peerDependencies:
       next: '*'
     dependencies:

@@ -97,7 +97,7 @@
 		"next-auth": "4.22.3",
 		"next-i18next": "14.0.0",
 		"next-seo": "6.1.0",
-		"nextjs-routes": "1.0.9",
+		"nextjs-routes": "2.0.1",
 		"object-sizeof": "2.6.3",
 		"pretty-bytes": "6.1.1",
 		"react": "18.2.0",

@@ -61,6 +61,7 @@
 		"dotenv-cli": "7.2.1",
 		"eslint": "8.45.0",
 		"just-capitalize": "3.2.0",
+		"just-pascal-case": "3.2.0",
 		"listr2": "6.6.0",
 		"next": "13.4.12",
 		"p-queue": "7.3.4",
