@@ -1246,6 +1246,9 @@ model Country {
   /// Country flag (emoji)
   flag     String
 
+  /// Does the country name have a prefix in certain situations? (The United States, The Netherlands...)
+  articlePrefix Boolean?
+
   geoData   GeoData? @relation(fields: [geoDataId], references: [id])
   geoDataId String?  @unique
 
