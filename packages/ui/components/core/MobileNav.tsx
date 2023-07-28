@@ -2,7 +2,7 @@ import { createStyles, rem, Tabs } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
-import { useSearchSession } from '~ui/hooks/useSearchSession'
+import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({
@@ -65,7 +65,7 @@ export const MobileNav = ({ className }: { className?: string }) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation('common')
 	const router = useRouter()
-	const searchSession = useSearchSession()
+	const { searchState } = useSearchState()
 
 	return (
 		<Tabs
@@ -75,16 +75,18 @@ export const MobileNav = ({ className }: { className?: string }) => {
 			defaultValue='search'
 			onTabChange={(tab) => {
 				switch (tab) {
-					case 'search':
-						if (searchSession.getRoute) {
+					case 'search': {
+						const query = searchState.getRoute()
+						if (query) {
 							router.push({
 								pathname: '/search/[...params]',
-								query: searchSession.getRoute,
+								query,
 							})
 						} else {
 							router.push('/')
 						}
 						break
+					}
 					case 'saved':
 						router.push('/account/saved')
 						break
@@ -102,9 +104,9 @@ export const MobileNav = ({ className }: { className?: string }) => {
 			<Tabs.List position='apart'>
 				<Tabs.Tab
 					value='search'
-					icon={<Icon icon={searchSession.params?.length ? 'carbon:search' : 'carbon:home'} height={20} />}
+					icon={<Icon icon={searchState.params?.length ? 'carbon:search' : 'carbon:home'} height={20} />}
 				>
-					{t(searchSession.params?.length ? 'words.search' : 'words.home')}
+					{t(searchState.params?.length ? 'words.search' : 'words.home')}
 				</Tabs.Tab>{' '}
 				<Tabs.Tab value='saved' icon={<Icon icon='carbon:favorite' height={20} />}>
 					{t('words.saved')}

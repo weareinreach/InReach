@@ -16,12 +16,12 @@ import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
-import { useSearchSession } from '@weareinreach/ui/hooks/useSearchSession'
 import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
 import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
+import { useSearchState } from '~ui/hooks/useSearchState'
 
 const PageIndexSchema = z.coerce.number().default(1)
 
@@ -43,12 +43,10 @@ const useStyles = createStyles((theme) => ({
 
 const SearchResults = () => {
 	const router = useRouter<'/search/[...params]'>()
-	const searchSession = useSearchSession(router.query)
+	const { searchState, searchStateActions } = useSearchState()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
-	const [filteredServices, setFilteredServices] = useState<string[]>([])
-	const [filteredAttributes, setFilteredAttributes] = useState<string[]>([])
 	const { t } = useTranslation(['services', 'common'])
 	const queryParams = SearchParamsSchema.safeParse(router.query.params)
 	const skip = (PageIndexSchema.parse(router.query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
@@ -82,8 +80,8 @@ const SearchResults = () => {
 			unit,
 			skip,
 			take,
-			services: filteredServices.length ? filteredServices : undefined,
-			attributes: filteredAttributes.length ? filteredAttributes : undefined,
+			...(searchState.services.length ? { services: searchState.services } : {}),
+			...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
 		},
 		{
 			enabled: queryParams.success,
@@ -114,14 +112,11 @@ const SearchResults = () => {
 
 	useEffect(
 		() => {
-			if (!compare(searchSession.attributes, filteredAttributes))
-				searchSession.setAttributes(filteredAttributes)
-			if (!compare(searchSession.services, filteredServices)) searchSession.setServices(filteredServices)
-			if (typeof router.query.page === 'string' && searchSession.page !== router.query.page)
-				searchSession.setPage(router.query.page)
+			if (typeof router.query.page === 'string' && searchState.page !== router.query.page)
+				searchStateActions.setPage(router.query.page)
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[filteredAttributes, filteredServices, router.query.page]
+		[router.query.page]
 	)
 
 	const nextSkip = useMemo(
@@ -140,12 +135,12 @@ const SearchResults = () => {
 				unit,
 				skip: nextSkip,
 				take,
-				...(filteredServices.length ? { services: filteredServices } : {}),
-				...(filteredAttributes.length ? { attributes: filteredAttributes } : {}),
+				...(searchState.services.length ? { services: searchState.services } : {}),
+				...(searchState.attributes.length ? { attributes: searchState.attributes } : {}),
 			})
 		}
-		if (queryParams.success && !compare(queryParams.data, searchSession.params)) {
-			searchSession.setParams(queryParams.data)
+		if (queryParams.success && !compare(queryParams.data, searchState.params)) {
+			searchStateActions.setParams(queryParams.data)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
@@ -163,20 +158,12 @@ const SearchResults = () => {
 						<SearchBox
 							type='location'
 							loadingManager={{ setLoading: setLoadingPage, isLoading: loadingPage }}
-							initialValue={searchSession.searchTerm}
+							initialValue={searchState.searchTerm}
 						/>
 					</Group>
 					<Group noWrap w={{ base: '100%', md: '50%' }}>
-						<ServiceFilter
-							resultCount={resultCount}
-							stateHandler={setFilteredServices}
-							isFetching={searchIsFetching}
-						/>
-						<MoreFilter
-							resultCount={resultCount}
-							stateHandler={setFilteredAttributes}
-							isFetching={searchIsFetching}
-						>
+						<ServiceFilter resultCount={resultCount} isFetching={searchIsFetching} />
+						<MoreFilter resultCount={resultCount} isFetching={searchIsFetching}>
 							{t('more.filters')}
 						</MoreFilter>
 					</Group>

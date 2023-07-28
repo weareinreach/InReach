@@ -19,10 +19,11 @@ import { useForm } from '@mantine/form'
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
+import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -196,7 +197,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const ServiceFilter = ({ resultCount, stateHandler, isFetching, disabled }: ServiceFilterProps) => {
+export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilterProps) => {
 	const { data: serviceOptionData, status } = api.service.getFilterOptions.useQuery()
 	const { classes } = useStyles()
 	const { classes: accordionClasses } = useAccordionStyles()
@@ -205,6 +206,7 @@ export const ServiceFilter = ({ resultCount, stateHandler, isFetching, disabled 
 	const [opened, setOpened] = useState(false)
 	const theme = useMantineTheme()
 	const router = useRouter()
+	const { searchStateActions } = useSearchState()
 
 	const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
 	const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: ${em(430)})`)
@@ -256,8 +258,9 @@ export const ServiceFilter = ({ resultCount, stateHandler, isFetching, disabled 
 				if (checked) selectedItems.push(id)
 			})
 		})
-		stateHandler(selectedItems)
-	}, [form.values, stateHandler])
+		searchStateActions.setServices(selectedItems)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [form.values])
 
 	if (!serviceOptionData) return <Skeleton height={48} width='100%' radius='xs' />
 
@@ -434,7 +437,6 @@ export const ServiceFilter = ({ resultCount, stateHandler, isFetching, disabled 
 }
 interface ServiceFilterProps {
 	resultCount?: number
-	stateHandler: Dispatch<SetStateAction<string[]>>
 	isFetching?: boolean
 	disabled?: boolean
 }

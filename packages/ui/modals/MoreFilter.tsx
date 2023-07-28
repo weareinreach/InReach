@@ -22,17 +22,11 @@ import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import {
-	type Dispatch,
-	forwardRef,
-	type MouseEventHandler,
-	type SetStateAction,
-	useEffect,
-	useState,
-} from 'react'
+import { forwardRef, type MouseEventHandler, useEffect, useState } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
+import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -215,7 +209,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
-	({ resultCount, stateHandler, isFetching, disabled, ...props }, ref) => {
+	({ resultCount, isFetching, disabled, ...props }, ref) => {
 		const { data: moreFilterOptionData, status } = api.attribute.getFilterOptions.useQuery()
 		const { classes } = useStyles()
 		const { classes: accordionClasses } = useAccordionStyles()
@@ -224,6 +218,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 		const [opened, setOpened] = useState(false)
 		const theme = useMantineTheme()
 		const router = useRouter()
+		const { searchStateActions } = useSearchState()
 
 		const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
 		const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: ${em(430)})`)
@@ -266,8 +261,9 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 			Object.values(form.values).forEach(({ checked, id }) => {
 				if (checked) selectedItems.push(id)
 			})
-			stateHandler(selectedItems)
-		}, [form.values, stateHandler])
+			searchStateActions.setAttributes(selectedItems)
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [form.values])
 
 		if (!moreFilterOptionData) return <Skeleton height={48} width='100%' radius='xs' />
 
@@ -428,7 +424,6 @@ export const MoreFilter = createPolymorphicComponent<'button', MoreFilterProps>(
 
 interface MoreFilterProps extends UnstyledButtonProps {
 	resultCount?: number
-	stateHandler: Dispatch<SetStateAction<string[]>>
 	isFetching?: boolean
 	disabled?: boolean
 }

@@ -20,7 +20,7 @@ import reactStringReplace from 'react-string-replace'
 import { type ApiOutput } from '@weareinreach/api'
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
-import { useSearchSession } from '~ui/hooks/useSearchSession'
+import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -96,7 +96,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinT
 	const [locationSearch, setLocationSearch] = useState('')
 	const { isLoading, setLoading } = loadingManager
 	const isOrgSearch = type === 'organization'
-	const searchSession = useSearchSession()
+	const { searchStateActions } = useSearchState()
 
 	// tRPC functions
 	const { data: orgSearchData, isFetching: orgSearchLoading } = api.organization.searchName.useQuery(
@@ -148,7 +148,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinT
 	}, [autocompleteData, autocompleteLoading, search, isOrgSearch, orgSearchData, orgSearchLoading])
 
 	api.geo.geoByPlaceId.useQuery(locationSearch, {
-		enabled: locationSearch !== '' && !isOrgSearch,
+		enabled: Boolean(locationSearch.length) && !isOrgSearch,
 		onSuccess: (data) => {
 			const DEFAULT_RADIUS = 200
 			const DEFAULT_UNIT = 'mi'
@@ -271,7 +271,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinT
 				setLoading(false)
 				return
 			}
-			searchSession.setSearchTerm(item.value)
+			searchStateActions.setSearchTerm(item.value)
 			router.push({
 				pathname: '/org/[slug]',
 				query: {
@@ -284,7 +284,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinT
 				setLoading(false)
 				return
 			}
-			searchSession.setSearchTerm(item.value)
+			searchStateActions.setSearchTerm(item.value)
 			setLocationSearch(item.placeId)
 		}
 	}
