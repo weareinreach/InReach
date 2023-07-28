@@ -14,7 +14,15 @@ import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { type Dispatch, forwardRef, type ReactNode, type SetStateAction, useEffect, useState } from 'react'
+import {
+	type Dispatch,
+	forwardRef,
+	type ReactNode,
+	type SetStateAction,
+	useDebugValue,
+	useEffect,
+	useState,
+} from 'react'
 import reactStringReplace from 'react-string-replace'
 
 import { type ApiOutput } from '@weareinreach/api'
@@ -86,14 +94,43 @@ const useStyles = createStyles((theme) => ({
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
 const notBlank = (value?: string) => !!value && value.length > 0
-export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinToLeft }: SearchBoxProps) => {
+
+const useResults = () => {
+	const [results, setResults] = useState<AutocompleteItem[]>([])
+	useDebugValue(results)
+	return [results, setResults] as [typeof results, typeof setResults]
+}
+const useNoResults = () => {
+	const [noResults, setNoResults] = useState(false)
+	useDebugValue(noResults)
+	return [noResults, setNoResults] as [typeof noResults, typeof setNoResults]
+}
+const useSearchLoading = () => {
+	const [searchLoading, setSearchLoading] = useState(false)
+	useDebugValue(searchLoading)
+	return [searchLoading, setSearchLoading] as [typeof searchLoading, typeof setSearchLoading]
+}
+const useLocationSearch = () => {
+	const [locationSearch, setLocationSearch] = useState('')
+	useDebugValue(locationSearch)
+	return [locationSearch, setLocationSearch] as [typeof locationSearch, typeof setLocationSearch]
+}
+
+export const SearchBox = ({
+	type,
+	label,
+	loadingManager,
+	initialValue = '',
+	pinToLeft,
+	placeholderTextKey,
+}: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
 	const router = useRouter()
 	const form = useForm<FormValues>(initialValue ? { initialValues: { search: initialValue } } : undefined)
 	const [search] = useDebouncedValue(form.values.search, 400)
-	const [locationSearch, setLocationSearch] = useState('')
+	const [locationSearch, setLocationSearch] = useLocationSearch()
 	const { isLoading, setLoading } = loadingManager
 	const isOrgSearch = type === 'organization'
 	const { searchStateActions } = useSearchState()
@@ -113,9 +150,9 @@ export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinT
 			refetchOnWindowFocus: false,
 		}
 	)
-	const [results, setResults] = useState<AutocompleteItem[]>([])
-	const [noResults, setNoResults] = useState(false)
-	const [searchLoading, setSearchLoading] = useState(false)
+	const [results, setResults] = useResults()
+	const [noResults, setNoResults] = useNoResults()
+	const [searchLoading, setSearchLoading] = useSearchLoading()
 
 	useEffect(() => {
 		if (
@@ -125,6 +162,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinT
 			setSearchLoading(true)
 			setResults([{ value: search, label: search, fetching: true }])
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [autocompleteData, autocompleteLoading, search, orgSearchData, orgSearchLoading])
 
 	useEffect(() => {
@@ -145,10 +183,11 @@ export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinT
 			setResults([])
 			setNoResults(false)
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [autocompleteData, autocompleteLoading, search, isOrgSearch, orgSearchData, orgSearchLoading])
 
 	api.geo.geoByPlaceId.useQuery(locationSearch, {
-		enabled: Boolean(locationSearch.length) && !isOrgSearch,
+		enabled: notBlank(locationSearch) && !isOrgSearch,
 		onSuccess: (data) => {
 			const DEFAULT_RADIUS = 200
 			const DEFAULT_UNIT = 'mi'
@@ -160,6 +199,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinT
 				DEFAULT_RADIUS,
 				DEFAULT_UNIT,
 			])
+			console.log('searchbox push', params)
 			if (!params.success) return
 			router.push({
 				pathname: '/search/[...params]',
@@ -186,13 +226,13 @@ export const SearchBox = ({ type, label, loadingManager, initialValue = '', pinT
 	const fieldRole = (
 		isOrgSearch
 			? {
-					placeholder: `${t('search.organization-placeholder')}`,
+					placeholder: `${t(placeholderTextKey ?? 'search.organization-placeholder')}`,
 					rightSection: rightIcon,
 					icon: <Icon icon='carbon:search' className={classes.leftIcon} />,
 					variant: 'default',
 			  }
 			: {
-					placeholder: `${t('search.location-placeholder')}`,
+					placeholder: `${t(placeholderTextKey ?? 'search.location-placeholder')}`,
 					rightSection: rightIcon,
 					icon: <Icon icon='carbon:location-filled' className={classes.leftIcon} />,
 					variant: 'filled',
@@ -324,6 +364,7 @@ type SearchBoxProps = {
 	}
 	initialValue?: string
 	pinToLeft?: boolean
+	placeholderTextKey?: string
 }
 type FormValues = {
 	search: string
