@@ -33,6 +33,7 @@ declare module "nextjs-routes" {
     | StaticRoute<"/profile">
     | DynamicRoute<"/search/[...params]", { "params": string[] }>
     | StaticRoute<"/search">
+    | DynamicRoute<"/search/intl/[country]", { "country": string }>
     | StaticRoute<"/suggest">
     | StaticRoute<"/support">;
 

@@ -14,16 +14,17 @@ export const middleware: NextMiddleware = async (req: NextRequest) => {
 		})
 	}
 	const session = req.cookies.get('inreach-session') ?? res.cookies.get('inreach-session')
-	console.log(session?.value)
 
-	if (req.nextUrl.pathname.startsWith('/search')) {
+	console.log('middleware pathname:', req.nextUrl.pathname)
+
+	if (req.nextUrl.pathname.startsWith('/search') && !req.nextUrl.pathname.startsWith('/search/intl')) {
 		const activeCountries = await get<string[]>('activeCountries')
 		const searchedCountry = req.nextUrl.pathname.split('/').at(2)
 		if (searchedCountry && !activeCountries?.includes(searchedCountry)) {
 			console.log('inactive country', searchedCountry)
 			const url = req.nextUrl.clone()
-			url.pathname = '/search'
-			url.searchParams.set('country', searchedCountry)
+			url.pathname = `/search/intl/${searchedCountry}`
+			// url.searchParams.set('country', searchedCountry)
 			const redirected = NextResponse.rewrite(url)
 			if (session) redirected.cookies.set('inreach-session', session.value)
 
@@ -36,5 +37,5 @@ export const middleware: NextMiddleware = async (req: NextRequest) => {
 }
 
 export const config = {
-	matcher: ['/search/:path*'],
+	matcher: ['/((?!api|_next/static|_next/image|favicon).*)'],
 }

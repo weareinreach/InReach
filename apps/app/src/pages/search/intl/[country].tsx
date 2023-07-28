@@ -13,11 +13,12 @@ import {
 	useMantineTheme,
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
+import { type GetStaticPaths, type GetStaticPropsContext } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { type GetServerSidePropsContext } from 'nextjs-routes'
-import { useState } from 'react'
+import { type RoutedQuery } from 'nextjs-routes'
+import { useEffect, useState } from 'react'
 import { z } from 'zod'
 
 import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
@@ -185,25 +186,29 @@ const OrgCard = ({ data }: { data: NonNullable<ApiOutput['organization']['getInt
 
 const OutsideServiceArea = () => {
 	const [loading, setLoading] = useState(false)
-	const [filteredServices, setFilteredServices] = useState<string[]>([])
-	const [filteredAttributes, setFilteredAttributes] = useState<string[]>([])
+	// const [filteredServices, setFilteredServices] = useState<string[]>([])
+	// const [filteredAttributes, setFilteredAttributes] = useState<string[]>([])
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
-	const router = useRouter<'/search'>()
-	if (!router.isReady) {
-		setLoading(true)
-	} else if (router.isReady && loading) {
-		setLoading(false)
-	}
-	const searchedCountry = QuerySchema.parse(router.query).country
-	const { data: countryInfo, isLoading: countryInfoLoading } = api.misc.getCountryTranslation.useQuery({
-		cca2: searchedCountry,
-	})
-	const { data, isLoading } = api.organization.getIntlCrisis.useQuery(
-		{ cca2: searchedCountry },
-		{ onSuccess: () => setLoading(false) }
+	const router = useRouter<'/search/intl/[country]'>()
+
+	useEffect(() => {
+		if (!router.isReady && !loading) {
+			setLoading(true)
+		} else if (router.isReady && loading) {
+			setLoading(false)
+		}
+	}, [router.isReady, router.isFallback, loading])
+
+	const { data: countryInfo } = api.misc.getCountryTranslation.useQuery(
+		{ cca2: router.query.country ?? '' },
+		{ enabled: router.isReady }
+	)
+	const { data } = api.organization.getIntlCrisis.useQuery(
+		{ cca2: router.query.country ?? '' },
+		{ onSuccess: () => setLoading(false), enabled: router.isReady }
 	)
 	const { t } = useTranslation(['services', 'common', 'attribute', 'country'])
 
@@ -245,10 +250,12 @@ const OutsideServiceArea = () => {
 			<Grid.Col xs={12} sm={8} md={8}>
 				<Stack spacing={48}>
 					<Title order={2}>
-						{t('intl-crisis.outside-service-area', {
-							country: `$t(country:${countryInfo?.tsKey})`,
-							ns: 'common',
-						})}
+						<Skeleton visible={loading}>
+							{t('intl-crisis.outside-service-area', {
+								country: `$t(country:${countryInfo?.tsKey})`,
+								ns: 'common',
+							})}
+						</Skeleton>
 					</Title>
 					<Card className={classes.parentCard}>
 						<Stack spacing={32}>
@@ -278,16 +285,25 @@ const OutsideServiceArea = () => {
 		</>
 	)
 }
-
-export const getStaticProps = async ({ query, locale, req, res }: GetServerSidePropsContext<'/search'>) => {
-	const parsedQuery = QuerySchema.safeParse(query)
+export const getStaticPaths: GetStaticPaths = async () => {
+	return {
+		paths: [],
+		fallback: true,
+	}
+}
+export const getStaticProps = async ({
+	params,
+	locale,
+}: GetStaticPropsContext<RoutedQuery<'/search/intl/[country]'>>) => {
+	const parsedQuery = QuerySchema.safeParse(params)
+	console.log(parsedQuery)
 	if (!parsedQuery.success) {
 		return {
 			notFound: true,
 		}
 	}
 
-	const ssg = await trpcServerClient({ req, res })
+	const ssg = await trpcServerClient({ session: null })
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, ['services', 'common', 'attribute', 'country']),
 		ssg.misc.getCountryTranslation.prefetch({ cca2: parsedQuery.data.country }),
