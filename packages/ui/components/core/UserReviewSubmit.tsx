@@ -55,7 +55,7 @@ export const UserReviewSubmit = ({ type = 'body' }: ReviewSubmitProps) => {
 		<form
 			onSubmit={form.onSubmit((values) => {
 				submitReview.mutate(values)
-			}, console.log)}
+			})}
 		>
 			<Stack align='flex-start' spacing='xl'>
 				<UserAvatar useLoggedIn={true} avatarSize={48} />

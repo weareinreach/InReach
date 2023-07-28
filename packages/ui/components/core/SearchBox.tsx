@@ -199,7 +199,6 @@ export const SearchBox = ({
 				DEFAULT_RADIUS,
 				DEFAULT_UNIT,
 			])
-			console.log('searchbox push', params)
 			if (!params.success) return
 			router.push({
 				pathname: '/search/[...params]',

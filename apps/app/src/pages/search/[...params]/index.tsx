@@ -90,7 +90,6 @@ const SearchResults = () => {
 
 	useEffect(() => {
 		if (loadingPage !== searchIsLoading) {
-			console.log('setLoading', searchIsLoading)
 			setLoadingPage(searchIsLoading)
 		}
 		if (searchQuery.data) {

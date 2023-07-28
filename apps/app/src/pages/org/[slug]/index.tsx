@@ -83,7 +83,6 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 	const photosRef = useRef<HTMLDivElement>(null)
 	const reviewsRef = useRef<HTMLDivElement>(null)
 
-	console.log('fallback?', router.isFallback)
 	useEffect(() => {
 		if (data && status === 'success') {
 			setLoading(false)

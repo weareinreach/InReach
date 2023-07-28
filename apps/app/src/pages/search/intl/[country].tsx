@@ -296,7 +296,6 @@ export const getStaticProps = async ({
 	locale,
 }: GetStaticPropsContext<RoutedQuery<'/search/intl/[country]'>>) => {
 	const parsedQuery = QuerySchema.safeParse(params)
-	console.log(parsedQuery)
 	if (!parsedQuery.success) {
 		return {
 			notFound: true,

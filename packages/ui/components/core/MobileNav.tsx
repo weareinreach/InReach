@@ -97,7 +97,6 @@ export const MobileNav = ({ className }: { className?: string }) => {
 						router.push('/support')
 						break
 					default:
-						console.log(tab)
 				}
 			}}
 		>
