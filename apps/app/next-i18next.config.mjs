@@ -58,7 +58,6 @@ const config = {
 		locales: ['en', 'es', 'fr', 'ar', 'ru'],
 	},
 	defaultNS: 'common',
-	ns: ['common'],
 	localePath: path.resolve('./public/locales'),
 	fallbackLng: ['en'],
 	reloadOnPrerender: process.env.NODE_ENV !== 'production',
