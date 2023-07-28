@@ -25,6 +25,7 @@
 		"@trpc/next": "10.35.0",
 		"@trpc/react-query": "10.35.0",
 		"@trpc/server": "10.35.0",
+		"@vercel/edge-config": "0.2.1",
 		"@vercel/kv": "0.2.2",
 		"@weareinreach/auth": "workspace:*",
 		"@weareinreach/db": "workspace:*",

@@ -1,12 +1,19 @@
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 import superjson from 'superjson'
 
 import { getEnv } from '@weareinreach/env'
 import { handleError } from '~api/lib/errorHandler'
-import { adminProcedure, defineRouter, permissionedProcedure } from '~api/lib/trpc'
+import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 
 import { permissionSubRouter } from './permission'
+import * as schema from './schemas'
 // import { userRoleSubRouter } from './role'
 
+type SystemHandlerCache = {
+	getFeatureFlag: typeof import('./query.getFeatureFlag.handler').getFeatureFlag
+}
+
+const HandlerCache: Partial<SystemHandlerCache> = {}
 export const systemRouter = defineRouter({
 	permissions: permissionSubRouter,
 	updateInactiveCountryEdgeConfig: permissionedProcedure('attachOrgAttributes').mutation(async ({ ctx }) => {
@@ -60,6 +67,14 @@ export const systemRouter = defineRouter({
 		} catch (error) {
 			handleError(error)
 		}
+	}),
+	getFeatureFlag: publicProcedure.input(schema.ZGetFeatureFlagSchema).query(async ({ input, ctx }) => {
+		if (!HandlerCache.getFeatureFlag)
+			HandlerCache.getFeatureFlag = await import('./query.getFeatureFlag.handler').then(
+				(mod) => mod.getFeatureFlag
+			)
+		if (!HandlerCache.getFeatureFlag) throw new Error('Failed to load handler')
+		return HandlerCache.getFeatureFlag({ ctx, input })
 	}),
 	// userRoles: userRoleSubRouter,
 })
