@@ -219,9 +219,11 @@
 	"search": {
 		"include-remote": "Include remote services",
 		"location-placeholder": "Enter city or zip code...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "Look up an organization by name",
 		"no-results": "No results found. Please try again.",
 		"organization-placeholder": "Enter organization name...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Can't find it? <1>Suggest an organization</1> you think should be included."
 	},
 	"send-email": "Send email",
@@ -360,9 +362,11 @@
 		"email": "Email",
 		"home": "Home",
 		"hours": "Hours",
+		"location": "Location",
 		"more": "more",
 		"next": "Next",
 		"no": "No",
+		"organization": "Organization",
 		"password": "Password",
 		"phone": "Phone",
 		"please-wait": "Please wait...",

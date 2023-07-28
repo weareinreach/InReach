@@ -1,4 +1,15 @@
-import { Box, createStyles, Group, rem, Stack, Text, Title, Transition, useMantineTheme } from '@mantine/core'
+import {
+	Box,
+	createStyles,
+	Group,
+	rem,
+	Stack,
+	Tabs,
+	Text,
+	Title,
+	Transition,
+	useMantineTheme,
+} from '@mantine/core'
 import { useReducedMotion } from '@mantine/hooks'
 import { type TFunction, Trans, useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
@@ -256,7 +267,26 @@ export const Hero = () => {
 			</Group>
 			<Stack spacing={0} align='center'>
 				<Group maw={636} w='100%'>
-					<SearchBox type='location' loadingManager={{ isLoading, setLoading }} />
+					<Tabs defaultValue='location' w='100%'>
+						<Tabs.List grow position='apart'>
+							<Tabs.Tab value='location'>{t('common:words.location')}</Tabs.Tab>
+							<Tabs.Tab value='name'>{t('common:words.organization')}</Tabs.Tab>
+						</Tabs.List>
+						<Tabs.Panel value='location' m={0}>
+							<SearchBox
+								type='location'
+								loadingManager={{ isLoading, setLoading }}
+								placeholderTextKey='search.location-placeholder-searchby'
+							/>
+						</Tabs.Panel>
+						<Tabs.Panel value='name' m={0}>
+							<SearchBox
+								type='organization'
+								loadingManager={{ isLoading, setLoading }}
+								placeholderTextKey='search.organization-placeholder-searchby'
+							/>
+						</Tabs.Panel>
+					</Tabs>
 				</Group>
 				<Text variant={variants.Text.utility4darkGray}>
 					<Trans
