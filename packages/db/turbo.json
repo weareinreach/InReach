@@ -20,6 +20,11 @@
 			"env": ["DATABASE_URL", "DB_DIRECT_URL", "PRISMA_GENERATE_DATAPROXY"],
 			"inputs": ["./prisma/schema.prisma"]
 		},
+		"db:generate:kysely": {
+			"cache": false,
+			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
+			"inputs": ["./prisma/schema.prisma"]
+		},
 		"db:run-seed": {
 			"cache": false,
 			"dependsOn": ["download:seedData"]
