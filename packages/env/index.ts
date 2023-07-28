@@ -89,7 +89,8 @@ export const env = createEnv({
 		process.env.SKIP_ENV_VALIDATION === 'true' ||
 		// eslint-disable-next-line turbo/no-undeclared-env-vars
 		Boolean(process.env.CI) ||
-		isChromatic(),
+		isChromatic() ||
+		process.env.NODE_ENV === 'development',
 })
 
 export const getEnv = <T extends keyof typeof env>(envVar: T): (typeof env)[T] => env[envVar]
