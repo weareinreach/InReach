@@ -23,9 +23,10 @@ export const middleware: NextMiddleware = async (req: NextRequest) => {
 		if (searchedCountry && !activeCountries?.includes(searchedCountry)) {
 			console.log('inactive country', searchedCountry)
 			const url = req.nextUrl.clone()
+			url.searchParams.forEach((_v, k) => url.searchParams.delete(k))
 			url.pathname = `/search/intl/${searchedCountry}`
 			// url.searchParams.set('country', searchedCountry)
-			const redirected = NextResponse.rewrite(url)
+			const redirected = NextResponse.redirect(url)
 			if (session) redirected.cookies.set('inreach-session', session.value)
 
 			return redirected
