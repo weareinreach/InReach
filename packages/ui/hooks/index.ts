@@ -7,7 +7,7 @@ export * from './useNewNotification'
 export * from './useOrgInfo'
 export * from './usePhoneNumber'
 export * from './useScreenSize'
-export * from './useSearchSession'
+export * from './useSearchState'
 export * from './useShake'
 export * from './useSlug'
 // codegen:end
