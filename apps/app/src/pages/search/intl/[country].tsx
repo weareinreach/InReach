@@ -68,6 +68,8 @@ const useStyles = createStyles((theme) => ({
 
 const QuerySchema = z.object({ country: z.string().length(2) })
 
+const notBlank = (value?: string) => !!value && value.length > 0
+
 const OrgCard = ({ data }: { data: NonNullable<ApiOutput['organization']['getIntlCrisis']>[number] }) => {
 	const { accessInstructions, description, id, name, services, targetPop } = data
 	const theme = useMantineTheme()
@@ -186,8 +188,6 @@ const OrgCard = ({ data }: { data: NonNullable<ApiOutput['organization']['getInt
 
 const OutsideServiceArea = () => {
 	const [loading, setLoading] = useState(false)
-	// const [filteredServices, setFilteredServices] = useState<string[]>([])
-	// const [filteredAttributes, setFilteredAttributes] = useState<string[]>([])
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
@@ -204,17 +204,15 @@ const OutsideServiceArea = () => {
 
 	const { data: countryInfo } = api.misc.getCountryTranslation.useQuery(
 		{ cca2: router.query.country ?? '' },
-		{ enabled: router.isReady }
+		{ enabled: notBlank(router.query.country) }
 	)
 	const { data } = api.organization.getIntlCrisis.useQuery(
 		{ cca2: router.query.country ?? '' },
-		{ onSuccess: () => setLoading(false), enabled: router.isReady }
+		{ enabled: notBlank(router.query.country), onSuccess: () => setLoading(false) }
 	)
 	const { t } = useTranslation(['services', 'common', 'attribute', 'country'])
 
 	const resultCount = 0
-
-	if (loading) return null
 
 	return (
 		<>
@@ -257,29 +255,31 @@ const OutsideServiceArea = () => {
 							})}
 						</Skeleton>
 					</Title>
-					<Card className={classes.parentCard}>
-						<Stack spacing={32}>
-							<Stack spacing={16}>
-								<Badge
-									variant='service'
-									tsKey='international-support.CATEGORTYNAME'
-									hideTooltip
-									className={classes.categoryBadge}
-								/>
-								<Title order={2}>{t('common:intl-crisis.we-recommend')}</Title>
-								<Text>{t('common:intl-crisis.these-verified')}</Text>
+					<Skeleton visible={loading}>
+						<Card className={classes.parentCard}>
+							<Stack spacing={32}>
+								<Stack spacing={16}>
+									<Badge
+										variant='service'
+										tsKey='international-support.CATEGORTYNAME'
+										hideTooltip
+										className={classes.categoryBadge}
+									/>
+									<Title order={2}>{t('common:intl-crisis.we-recommend')}</Title>
+									<Text>{t('common:intl-crisis.these-verified')}</Text>
+								</Stack>
+								<Stack spacing={16} p={20} className={classes.staySafeCard}>
+									<Trans
+										i18nKey='common:intl-crisis.stay-safe'
+										components={{ Title3: <Title order={3}></Title>, Text: <Text></Text> }}
+									/>
+								</Stack>
+								{data?.map((resource) => (
+									<OrgCard key={resource.id} data={resource} />
+								))}
 							</Stack>
-							<Stack spacing={16} p={20} className={classes.staySafeCard}>
-								<Trans
-									i18nKey='common:intl-crisis.stay-safe'
-									components={{ Title3: <Title order={3}></Title>, Text: <Text></Text> }}
-								/>
-							</Stack>
-							{data?.map((resource) => (
-								<OrgCard key={resource.id} data={resource} />
-							))}
-						</Stack>
-					</Card>
+						</Card>
+					</Skeleton>
 				</Stack>
 			</Grid.Col>
 		</>
@@ -320,4 +320,5 @@ export const getStaticProps = async ({
 	}
 }
 
+OutsideServiceArea.autoResetState = true
 export default OutsideServiceArea
