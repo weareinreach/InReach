@@ -1099,6 +1099,9 @@ importers:
       '@types/inquirer':
         specifier: 9.0.3
         version: 9.0.3
+      '@types/inquirer-autocomplete-prompt':
+        specifier: 3.0.0
+        version: 3.0.0
       '@types/iso-3166-2':
         specifier: 1.0.0
         version: 1.0.0
@@ -1162,6 +1165,9 @@ importers:
       inquirer:
         specifier: 9.2.9
         version: 9.2.9
+      inquirer-autocomplete-prompt:
+        specifier: 3.0.0
+        version: 3.0.0(inquirer@9.2.9)
       iso-3166-2:
         specifier: 1.0.0
         version: 1.0.0
@@ -10753,6 +10759,12 @@ packages:
   /@types/http-cache-semantics@4.0.1:
     resolution: {integrity: sha512-SZs7ekbP8CN0txVG2xVRH6EgKmEm31BOxA07vkFaETzZz1xh+cbt8BcI0slpymvwhx5dlFnQG2rTlPVQn+iRPQ==}
 
+  /@types/inquirer-autocomplete-prompt@3.0.0:
+    resolution: {integrity: sha512-qgaINEdGNMP4fq3BJi5rvs8iMNrYhrp6krGwuVJ3jhFr+6gwqiHPSWrKov4x9vCJFbpzDVoDYjNdFG3kepdhDw==}
+    dependencies:
+      '@types/inquirer': 9.0.3
+    dev: true
+
   /@types/inquirer@9.0.3:
     resolution: {integrity: sha512-CzNkWqQftcmk2jaCWdBTf9Sm7xSw4rkI1zpU/Udw3HX5//adEZUIm9STtoRP1qgWj0CWQtJ9UTvqmO2NNjhMJw==}
     dependencies:
@@ -16558,6 +16570,20 @@ packages:
     dependencies:
       prop-types: 15.8.1
     dev: false
+
+  /inquirer-autocomplete-prompt@3.0.0(inquirer@9.2.9):
+    resolution: {integrity: sha512-nsPWllBQB3qhvpVgV1UIJN4xo3yz7Qv8y1+zrNVpJUNPxtUZ7btCum/4UCAs5apPCe/FVhKH1V6Wx0cAwkreyg==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      inquirer: ^9.1.0
+    dependencies:
+      ansi-escapes: 6.2.0
+      figures: 5.0.0
+      inquirer: 9.2.9
+      picocolors: 1.0.0
+      run-async: 2.4.1
+      rxjs: 7.8.1
+    dev: true
 
   /inquirer@8.2.5:
     resolution: {integrity: sha512-QAgPDQMEgrDssk1XiwwHoOGYF9BAbUcc1+j+FhEvaOt8/cKRqyLn0U5qA6F74fGhTMGxf92pOvPBeh29jQJDTQ==}
