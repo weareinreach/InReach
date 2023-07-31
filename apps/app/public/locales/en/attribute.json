@@ -70,6 +70,10 @@
 		"cost-fees": "Incurs a cost",
 		"cost-free": "Free of cost"
 	},
+	"crisis-support-community": {
+		"elders": "Elders",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Eligibility Requirements",
 		"elig-age_max": "Under {{max}}",
