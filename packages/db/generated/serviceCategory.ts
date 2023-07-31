@@ -18,6 +18,12 @@ export const serviceCategory = [
 		tsNs: 'services',
 	},
 	{
+		id: 'svct_01H6P8M1YA3H7QX3CXN25Q9F00',
+		category: 'Crisis Support',
+		tsKey: 'crisis-support.CATEGORYNAME',
+		tsNs: 'services',
+	},
+	{
 		id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
 		category: 'Education and Employment',
 		tsKey: 'education-and-employment.CATEGORYNAME',
