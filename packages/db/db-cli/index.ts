@@ -18,7 +18,7 @@ const main = () =>
 		.then((answers) => {
 			if (!answers.task) throw new Error('Something went wrong.')
 			if (answers.task === 'quit') process.exit()
-			switch (answers.tasks) {
+			switch (answers.task) {
 				case 'generateId': {
 					generateIdTask()
 				}
