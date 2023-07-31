@@ -805,6 +805,8 @@ model OrgService {
   description   FreeText?                @relation("OrgServiceDescription", fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   descriptionId String?                  @unique
 
+  crisisSupportOnly Boolean?
+
   // attachments
   organization   Organization?        @relation(fields: [organizationId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   organizationId String?
@@ -1097,6 +1099,7 @@ model ServiceCategory {
   activeForSuggest  Boolean?
   services          ServiceTag[]
   defaultAttributes ServiceCategoryDefaultAttribute[]
+  crisisSupportOnly Boolean?
 
   key   TranslationKey @relation(fields: [tsKey, tsNs], references: [key, ns], onDelete: Restrict, onUpdate: Cascade)
   tsKey String
@@ -1123,6 +1126,8 @@ model ServiceTag {
 
   category   ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   categoryId String
+
+  crisisSupportOnly Boolean?
 
   children ServiceTagNesting[] @relation("serviceParentToChild")
   parents  ServiceTagNesting[] @relation("serviceChildToParent")

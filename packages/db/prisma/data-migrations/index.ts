@@ -40,4 +40,5 @@ export * from './2023-07-17_SWT-update'
 export * from './2023-07-19_district-data-corrections/index'
 export * from './2023-07-24_add-crisis-resources/index'
 export * from './2023-07-26_intl-crisis-sorting'
+export * from './2023-07-31_crisis-support-tags'
 // codegen:end
