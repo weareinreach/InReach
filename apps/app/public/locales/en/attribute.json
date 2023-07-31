@@ -110,7 +110,9 @@
 		"accesslocation": "Access Instructions - Location",
 		"accessphone": "Access Instructions - Phone",
 		"accesspublictransit": "Access Instructions - Public Transit",
-		"accesstext": "Access Instructions - Text"
+		"accesssms": "Access Instructions - SMS",
+		"accesstext": "Access Instructions - Text",
+		"accesswhatsapp": "Access Instructions - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Service Focus",
