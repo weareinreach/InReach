@@ -18,6 +18,7 @@ type OrgQueryHandlerCache = {
 	forLocationPage: typeof import('./query.forLocationPage.handler').forLocationPage
 	slugRedirect: typeof import('./query.slugRedirect.handler').slugRedirect
 	getIntlCrisis: typeof import('./query.getIntlCrisis.handler').getIntlCrisis
+	getNatlCrisis: typeof import('./query.getNatlCrisis.handler').getNatlCrisis
 }
 
 const HandlerCache: Partial<OrgQueryHandlerCache> = {}
@@ -134,5 +135,14 @@ export const queries = defineRouter({
 
 		if (!HandlerCache.getIntlCrisis) throw new Error('Failed to load handler')
 		return HandlerCache.getIntlCrisis({ ctx, input })
+	}),
+	getNatlCrisis: publicProcedure.input(schema.ZGetNatlCrisisSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getNatlCrisis)
+			HandlerCache.getNatlCrisis = await import('./query.getNatlCrisis.handler').then(
+				(mod) => mod.getNatlCrisis
+			)
+
+		if (!HandlerCache.getNatlCrisis) throw new Error('Failed to load handler')
+		return HandlerCache.getNatlCrisis({ ctx, input })
 	}),
 })
