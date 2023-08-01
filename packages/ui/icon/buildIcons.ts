@@ -14,7 +14,7 @@ const generate = async () => {
 		listIcons()
 	)} as const`
 
-	const formattedOutput = prettier.format(iconList, {
+	const formattedOutput = await prettier.format(iconList, {
 		...prettierOpts,
 		parser: 'typescript',
 	})
