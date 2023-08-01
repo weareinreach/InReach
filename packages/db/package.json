@@ -125,7 +125,7 @@
 		"luxon": "3.3.0",
 		"mongoback": "3.0.6",
 		"papaparse": "5.4.1",
-		"prettier": "2.8.8",
+		"prettier": "3.0.0",
 		"pretty-bytes": "6.1.1",
 		"prisma": "5.1.0",
 		"prisma-dbml-generator": "0.10.0",
