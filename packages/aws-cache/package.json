@@ -35,7 +35,7 @@
 		"aws-lambda": "1.0.7",
 		"esbuild": "0.18.17",
 		"eslint": "8.46.0",
-		"prettier": "2.8.8",
+		"prettier": "3.0.0",
 		"typescript": "5.1.6"
 	}
 }
