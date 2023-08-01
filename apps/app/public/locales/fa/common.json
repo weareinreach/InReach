@@ -1,5 +1,8 @@
 {
 	"about-us": "درباره ما",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "این ساختمان صندلی چرخدار در دسترس نیست",
 	"accessible-building_true": "این ساختمان ویلچر قابل دسترسی است",
 	"account": "حساب",
@@ -50,6 +53,15 @@
 	},
 	"country-select": "یک کشور را انتخاب کنید",
 	"create-new-list": "ایجاد لیست جدید",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "Inreach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "مکان فعلی",
 	"delete-account": "حساب کاربری خود را حذف کنید؟",
 	"delete-account-password": "رمز عبور حساب خود را برای تأیید وارد کنید.",
@@ -209,9 +221,12 @@
 	"search": {
 		"include-remote": "شامل خدمات از راه دور",
 		"location-placeholder": "شهر یا کد پستی را وارد کنید...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "یک سازمان را با نام جستجو کنید",
 		"no-results": "نتیجه ای یافت نشد. لطفا دوباره امتحان کنید",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "نام سازمان را وارد کنید...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "نمی توانید آن را پیدا کنید؟ <1>پیشنهاد یک سازمان</1> شما فکر می کنم باید شامل شود."
 	},
 	"send-email": "ارسال ایمیل",
@@ -346,9 +361,11 @@
 		"email": "پست الکترونیک",
 		"home": "صفحه اصلی",
 		"hours": "ساعت",
+		"location": "Location",
 		"more": "بيشتر",
 		"next": "بعدی",
 		"no": "نه",
+		"organization": "سازمان",
 		"password": "کلمه عبور",
 		"phone": "تلفن",
 		"please-wait": "لطفا صبر کنید...",
@@ -365,6 +382,7 @@
 		"sign-up": "ثبت نام کنید",
 		"skip": "پرش",
 		"support": "پشتیبانی",
+		"website": "Website",
 		"yes": "بله"
 	},
 	"photo_one": "تصویر",
