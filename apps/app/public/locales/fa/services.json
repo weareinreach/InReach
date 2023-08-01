@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "کامپیوتر و اینترنت",
 		"computers-and-internet": "کامپیوتر و اینترنت"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "آموزش و اشتغال",
 		"career-counseling": "مشاوره شغلی",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "حمام های خنثی جنسیتی",
 		"haircuts-and-stylists": "کوتاهی مو و سبک",
 		"hygiene": "رده: بهداشت"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Mental Health",
+		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
 		"CATEGORYNAME": "حقوقی",
