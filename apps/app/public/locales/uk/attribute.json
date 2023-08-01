@@ -70,6 +70,10 @@
 		"cost-fees": "Стягне за собою витрати",
 		"cost-free": "Безкоштовно"
 	},
+	"crisis-support-community": {
+		"elders": "Елдерс",
+		"general-lgbtq": "Загальні LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Вимоги до прийнятності",
 		"elig-age_max": "Під {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "Інструкції щодо доступу - Місцезнаходження",
 		"accessphone": "Інструкції з доступу - Телефон",
 		"accesspublictransit": "Інструкції щодо доступу - Громадський транспорт",
-		"accesstext": "Інструкції щодо доступу - Текст"
+		"accesssms": "Інструкції доступу - SMS",
+		"accesstext": "Інструкції щодо доступу - Текст",
+		"accesswhatsapp": "Інструкція доступу - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Сервісний фокус",
