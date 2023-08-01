@@ -1,12 +1,22 @@
 /* eslint-disable i18next/no-literal-string */
-import { createStyles, Divider, Grid, Group, Skeleton, Text, useMantineTheme } from '@mantine/core'
+import {
+	createStyles,
+	Divider,
+	Grid,
+	Group,
+	rem,
+	Skeleton,
+	Stack,
+	Text,
+	useMantineTheme,
+} from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import compare from 'just-compare'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
-import { useEffect, useMemo, useState } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
@@ -14,6 +24,7 @@ import { type ApiOutput, trpcServerClient } from '@weareinreach/api/trpc'
 import { Pagination } from '@weareinreach/ui/components/core/Pagination'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultCard'
+import { CrisisSupport } from '@weareinreach/ui/components/sections/CrisisSupport'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
@@ -37,6 +48,12 @@ const useStyles = createStyles((theme) => ({
 	hideMobile: {
 		[theme.fn.smallerThan('sm')]: {
 			display: 'none',
+		},
+	},
+	noResultsStack: {
+		gap: rem(40),
+		[theme.fn.largerThan('sm')]: {
+			gap: rem(48),
 		},
 	},
 }))
@@ -64,9 +81,9 @@ const SearchResults = () => {
 	const [loadingPage, setLoadingPage] = useState(false)
 
 	if (!queryParams.success) setError(true)
-	const [_country, lon, lat, dist, unit] = queryParams.success
+	const [country, lon, lat, dist, unit] = queryParams.success
 		? queryParams.data
-		: (['dist', 0, 0, 0, 'mi'] as const)
+		: (['US', 0, 0, 0, 'mi'] as const)
 	const {
 		isSuccess,
 		isFetching: searchIsFetching,
@@ -87,6 +104,24 @@ const SearchResults = () => {
 			enabled: queryParams.success,
 		}
 	)
+
+	const { data: crisisResults } = api.organization.getNatlCrisis.useQuery({
+		cca2: country,
+	})
+
+	const NoResults = memo(({ data }: { data: NonNullable<ApiOutput['organization']['getNatlCrisis']> }) => {
+		return (
+			<Stack className={classes.noResultsStack}>
+				<Text>{t('common:search.no-results-adjust')}</Text>
+				<CrisisSupport role='national'>
+					{data.map((result) => (
+						<CrisisSupport.National data={result} key={result.id} />
+					))}
+				</CrisisSupport>
+			</Stack>
+		)
+	})
+	NoResults.displayName = 'NoResults'
 
 	useEffect(() => {
 		if (loadingPage !== searchIsLoading) {
@@ -169,7 +204,7 @@ const SearchResults = () => {
 					{isTablet && (
 						<>
 							<Divider w='100%' />
-							<Skeleton visible={!resultCount}>
+							<Skeleton visible={searchIsFetching}>
 								<Text variant={variants.Text.utility1}>
 									{t('common:count.result', { count: resultCount })}
 								</Text>
@@ -185,8 +220,14 @@ const SearchResults = () => {
 				/>
 			</Grid.Col>
 			<Grid.Col xs={12} sm={8} md={8}>
-				{resultDisplay}
-				<Pagination total={getSearchResultPageCount(data?.resultCount)} />
+				{data?.resultCount === 0 && crisisResults ? (
+					<NoResults data={crisisResults} />
+				) : (
+					<>
+						{resultDisplay}
+						<Pagination total={getSearchResultPageCount(data?.resultCount)} />
+					</>
+				)}
 			</Grid.Col>
 		</>
 	)
@@ -198,7 +239,7 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 	req,
 	res,
 }) => {
-	const [_country, lon, lat, dist, unit] = SearchParamsSchema.parse(query.params)
+	const [country, lon, lat, dist, unit] = SearchParamsSchema.parse(query.params)
 	const skip = (PageIndexSchema.parse(query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
 	const ssg = await trpcServerClient({ req, res })
@@ -206,6 +247,7 @@ export const getServerSideProps: GetServerSideProps<Record<string, unknown>, '/s
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, ['services', 'common', 'attribute', 'country']),
 		ssg.organization.searchDistance.prefetch({ lat, lon, dist, unit, skip, take }),
+		ssg.organization.getNatlCrisis.prefetch({ cca2: country }),
 		ssg.service.getFilterOptions.prefetch(),
 		ssg.attribute.getFilterOptions.prefetch(),
 	])

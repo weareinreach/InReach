@@ -50,7 +50,7 @@ export const InternationalCard = ({
 					)}
 					{!!targetPop?.tsKey && !!targetPop.text && (
 						<Trans
-							i18nKey='common:intl-crisis.who-this-serves'
+							i18nKey='common:crisis-support.who-this-serves'
 							components={{ Text: <Text color={theme.other.colors.secondary.darkGray}></Text> }}
 							t={t}
 							values={{ targetPop: t(`${id}:${targetPop.tsKey}`, { defaultValue: targetPop.text }) }}

@@ -1,12 +1,10 @@
 import { Card, createStyles, rem, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
-import { Trans, useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { Badge } from '~ui/components/core/Badge'
-import { isExternal, Link } from '~ui/components/core/Link'
 import { AccessInfo } from '~ui/components/data-display/AccessInfo'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
-import { parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 
 const useStyles = createStyles((theme) => ({
 	getHelpCard: {
