@@ -1,5 +1,8 @@
 {
 	"about-us": "Про нас",
+	"access": {
+		"sms-with-body": "SMS на <strong>{{body}}</strong> по {{code}}"
+	},
 	"accessible-building_false": "Ця будівля НЕ доступна для інвалідних візків",
 	"accessible-building_true": "Ця будівля доступна для інвалідних візків",
 	"account": "Обліковий запис",
@@ -52,6 +55,15 @@
 	},
 	"country-select": "Оберіть країну",
 	"create-new-list": "Створити новий список",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "Ці перевірені ресурси можуть допомогти спільноті LGBTQ+ у будь-якому місці світу.",
+		"intl-we-recommend": "Ми рекомендуємо ці міжнародні ресурси",
+		"natl-find-help-now": "Знайти допомогу зараз",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "Inreach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Поточне місцезнаходження",
 	"delete-account": "Видалити обліковий запис?",
 	"delete-account-password": "Введіть пароль облікового запису для підтвердження.",
@@ -211,9 +223,12 @@
 	"search": {
 		"include-remote": "Включити віддалені послуги",
 		"location-placeholder": "Введіть місто або поштовий індекс...",
+		"location-placeholder-searchby": "Пошук по місту або поштовому індексу...",
 		"look-up-org": "Шукайте організацію за назвою",
 		"no-results": "Результатів не знайдено. Будь ласка, спробуйте ще раз.",
+		"no-results-adjust": "Нічого не знайдено для вашого пошуку. Спробуйте змінити вибране місце або фільтри.",
 		"organization-placeholder": "Введіть назву організації...",
+		"organization-placeholder-searchby": "Пошук за назвою організації...",
 		"suggest-resource": "Не можете його знайти? <1>Запропонуйте організацію</1>, на вашу думку, повинна бути включена."
 	},
 	"send-email": "Надіслати електронну пошту",
@@ -348,9 +363,11 @@
 		"email": "Електронна пошта",
 		"home": "Головна",
 		"hours": "Годинники",
+		"location": "Місцезнаходження",
 		"more": "більше",
 		"next": "Наступний",
 		"no": "Ні",
+		"organization": "Організація",
 		"password": "Пароль",
 		"phone": "Телефон",
 		"please-wait": "Будь ласка, зачекайте...",
@@ -367,6 +384,7 @@
 		"sign-up": "Зареєструватися",
 		"skip": "Пропустити",
 		"support": "Підтримка",
+		"website": "Вебсайт",
 		"yes": "Так"
 	},
 	"photo_one": "Фотографія",
