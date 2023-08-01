@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "کمپیوټر او انټرنیټ",
 		"computers-and-internet": "کمپیوټر او انټرنیټ"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "ښوونه او روزنه",
 		"career-counseling": "د کیریر مشوره",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "د جنډر غیر جانبدار تشنابونه",
 		"haircuts-and-stylists": "ویښتان او سټایلسټان",
 		"hygiene": "حفظ الصحه"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Mental Health",
+		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
 		"CATEGORYNAME": "قانوني",
