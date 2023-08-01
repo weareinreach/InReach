@@ -1,5 +1,8 @@
 {
 	"about-us": "私たちについて",
+	"access": {
+		"sms-with-body": "<strong>{{body}}</strong> を {{code}} にテキスト"
+	},
 	"accessible-building_false": "この建物は車椅子ではご利用いただけません",
 	"accessible-building_true": "この建物は車椅子対応です",
 	"account": "アカウント",
@@ -49,6 +52,15 @@
 	},
 	"country-select": "国を選択してください",
 	"create-new-list": "新しいリストを作成",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "これらの検証済みリソースは、世界中のどこでもLGBTQ+コミュニティを助けることができます。",
+		"intl-we-recommend": "私たちはこれらの国際的なリソースをお勧めします",
+		"natl-find-help-now": "今すぐヘルプを探す",
+		"natl-these-verified": "<Text>これらの検証済みリソースは、米国のLGBTQ+コミュニティに役立ちます。 これらのサービスは、<Text>遠隔から利用可能で、 <strong>、</strong> 、 <strong>無料の</strong>です。</Text>",
+		"outside-service-area": "{{country}} ではインリーチは動作しません",
+		"who-this-serves": "<Text><strong>誰がこのリソースを提供:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "現在の場所",
 	"delete-account": "アカウントを削除する?",
 	"delete-account-password": "アカウントのパスワードを入力して確認します。",
@@ -208,9 +220,12 @@
 	"search": {
 		"include-remote": "リモートサービスを含める",
 		"location-placeholder": "都市または郵便番号を入力...",
+		"location-placeholder-searchby": "都市または郵便番号で検索...",
 		"look-up-org": "組織を名前で検索",
 		"no-results": "結果が見つかりませんでした。もう一度試してください。",
+		"no-results-adjust": "検索結果が見つかりませんでした。選択した場所またはフィルターを調整してください。",
 		"organization-placeholder": "組織名を入力...",
+		"organization-placeholder-searchby": "組織名で検索...",
 		"suggest-resource": "見つかりませんか？<1>含めるべきだと思う組織を提案してください</1>。"
 	},
 	"send-email": "E メールを送信",
@@ -345,9 +360,11 @@
 		"email": "E メール",
 		"home": "ホーム",
 		"hours": "時間",
+		"location": "場所",
 		"more": "もっと",
 		"next": "[次へ]",
 		"no": "いいえ",
+		"organization": "組織",
 		"password": "[パスワード]",
 		"phone": "[電話]",
 		"please-wait": "しばらくお待ちください...",
@@ -364,6 +381,7 @@
 		"sign-up": "サインアップ",
 		"skip": "スキップ",
 		"support": "サポート",
+		"website": "ウェブサイト",
 		"yes": "はい"
 	},
 	"photo_other": "写真",
