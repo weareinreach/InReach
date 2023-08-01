@@ -2,6 +2,7 @@ export const attributeCategory = [
 	{ id: 'attc_01GW2HHFV3DJ380F351SKB0B74', tag: 'additional-information', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GYSVX1N9T91BJYSHRDPCHJBS', tag: 'alerts', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GW2HHFVFKNMYPN8F86M0H576', tag: 'cost', icon: null, ns: 'attribute' },
+	{ id: 'attc_01H6P8SSY4C141YH7BAC1RW7KJ', tag: 'crisis-support-community', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GW2HHFVGHPW1Y72SA8377623', tag: 'eligibility-requirements', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GW2HHFVJQQ68XGSBXM976BDF', tag: 'languages', icon: null, ns: 'attribute' },
 	{ id: 'attc_01GW2HHFVRSN3W3GYZZ43WCW24', tag: 'law-practice-options', icon: null, ns: 'attribute' },

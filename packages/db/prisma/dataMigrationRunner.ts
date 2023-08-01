@@ -49,6 +49,7 @@ const jobs = new Listr<Context>(
 				}
 				if (jobNamesToRun.length) {
 					ctx.pendingMigrations = true
+					ctx.jobCount = jobNamesToRun.length
 					task.output = `${jobNamesToRun.length} migrations to run:\n${jobNamesToRun.join('\n')}`
 					task.title = `Pending migrations: ${jobNamesToRun.length}`
 				} else {
@@ -59,7 +60,10 @@ const jobs = new Listr<Context>(
 		},
 		{
 			title: `Apply ${jobQueue.length} pending migrations`,
-			task: (_, task) => task.newListr(jobQueue),
+			task: (ctx, task) => {
+				task.title = `Apply ${ctx.jobCount ?? 0} pending migrations`
+				return task.newListr(jobQueue)
+			},
 			enabled: (ctx) => !!ctx.pendingMigrations,
 			...renderOptions,
 		},
@@ -85,6 +89,7 @@ jobs.run()
 export type Context = {
 	error?: boolean
 	pendingMigrations?: boolean
+	jobCount?: number
 }
 export type PassedTask = ListrTaskWrapper<Context, ListrDefaultRenderer>
 export type ListrJob = ListrTaskObj<Context, ListrDefaultRenderer>

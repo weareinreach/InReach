@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react'
 import { type NextPage } from 'next'
 import { type AppProps } from 'next/app'
 import { Work_Sans } from 'next/font/google'
+import { useRouter } from 'next/router'
 import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { appWithTranslation } from 'next-i18next'
@@ -62,12 +63,17 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 		pageProps: { session, ...pageProps },
 	} = appProps
 
+	const router = useRouter()
+
 	const { isMobile, isTablet } = useScreenSize()
+
+	const autoResetState = Component.autoResetState ? { key: router.asPath } : {}
+
 	const PageContent = Component.omitGrid ? (
-		<Component {...pageProps} />
+		<Component {...autoResetState} {...pageProps} />
 	) : (
 		<BodyGrid>
-			<Component {...pageProps} />
+			<Component {...autoResetState} {...pageProps} />
 		</BodyGrid>
 	)
 
@@ -99,5 +105,8 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 
 export default api.withTRPC(appWithTranslation(MyApp, nextI18nConfig))
 
-export type NextPageWithoutGrid<P = unknown, IP = P> = NextPage<P, IP> & { omitGrid?: boolean }
+export type NextPageWithoutGrid<P = unknown, IP = P> = NextPage<P, IP> & {
+	omitGrid?: boolean
+	autoResetState?: boolean
+}
 type AppPropsWithGridSwitch = AppProps & { Component: NextPageWithoutGrid; session: Session }

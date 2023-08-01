@@ -1,11 +1,9 @@
-import { Prisma } from '@weareinreach/db'
+import { prisma, Prisma } from '@weareinreach/db'
 
-import { type Context } from '../context'
-
-export const searchOrgByDistance = async (params: Params, ctx: Context) => {
+export const searchOrgByDistance = async (params: Params) => {
 	const { lat, lon, searchRadius, skip, take, serviceFilter, attributeFilter } = params
 
-	const results = await ctx.prisma.$queryRaw<SearchResult[]>`
+	const results = await prisma.$queryRaw<SearchResult[]>`
 WITH points AS (
 	SELECT
 		ST_Transform(ST_Point(${lon}, ${lat}, 4326), 3857) AS meters,

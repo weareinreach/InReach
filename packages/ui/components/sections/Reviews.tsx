@@ -16,12 +16,17 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 	const variants = useCustomVariant()
 	const { isMobile } = useScreenSize()
 	const router = useRouter<'/org/[slug]' | '/org/[slug]/[orgLocationId]'>()
-	const { slug, orgLocationId, orgServiceId } = router.query
+	const { slug, orgLocationId, orgServiceId } = router.isReady
+		? router.query
+		: { slug: '', orgLocationId: '', orgServiceId: '' }
 
 	const queryParams = props.reviews.length ? props.reviews.map((review) => review.id) : undefined
 
 	const { data, status } = api.review.getByIds.useQuery(queryParams ?? [], { enabled: Boolean(queryParams) })
-	const { data: organizationId } = api.organization.getIdFromSlug.useQuery({ slug })
+	const { data: organizationId } = api.organization.getIdFromSlug.useQuery(
+		{ slug },
+		{ enabled: router.isReady }
+	)
 
 	const ratingProps = {
 		recordId: organizationId?.id || validateString(orgServiceId) || validateString(orgLocationId),

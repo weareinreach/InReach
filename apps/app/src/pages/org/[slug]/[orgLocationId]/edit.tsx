@@ -22,11 +22,13 @@ import { getServerSideTranslations } from '~app/utils/i18n'
 const OrgLocationPage: NextPage = () => {
 	const { t } = useTranslation()
 	const router = useRouter<'/org/[slug]/[orgLocationId]'>()
-	const { query } = router
+	const { query } = router.isReady ? router : { query: { slug: '', orgLocationId: '' } }
 	const { slug, orgLocationId } = query
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
-	const { data: orgData, status: orgDataStatus } = api.organization.getBySlug.useQuery(query)
+	const { data: orgData, status: orgDataStatus } = api.organization.getBySlug.useQuery(query, {
+		enabled: router.isReady,
+	})
 	const { data, status } = api.location.getById.useQuery({ id: orgLocationId })
 	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
 		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
@@ -36,7 +38,16 @@ const OrgLocationPage: NextPage = () => {
 	}, [data, status, orgData, orgDataStatus])
 	if (loading || !data || !orgData) return <>Loading</>
 
-	const { emails, phones, socialMedia, websites, attributes, description, photos, reviews } = data
+	const {
+		// emails,
+		// phones,
+		// socialMedia,
+		// websites,
+		attributes,
+		description,
+		// photos,
+		reviews,
+	} = data
 
 	return (
 		<>

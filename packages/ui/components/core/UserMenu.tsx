@@ -57,7 +57,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuProps) => {
-	const { t } = useTranslation()
+	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
 	const { classes, cx } = useStyles(undefined, { name: 'UserMenu', classNames, styles, unstyled })
 	const variant = useCustomVariant()

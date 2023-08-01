@@ -1,7 +1,6 @@
 import { Container, createStyles, Flex, Group, rem } from '@mantine/core'
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
-// import { useEffect } from 'react'
 
 import InReachLogo from '~ui/assets/inreach.svg'
 import { Button } from '~ui/components/core/Button'
@@ -27,16 +26,10 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export const Navbar = () => {
-	// const { t, i18n } = useTranslation(['common'], { bindI18n: 'languageChanged loaded' })
-	const { t } = useTranslation()
+	const { t } = useTranslation('common')
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 	const { isMobile, isTablet } = useScreenSize()
-
-	// useEffect(() => {
-	// 	i18n.reloadResources(i18n.resolvedLanguage, ['common'])
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [])
 
 	return isMobile || isTablet ? (
 		<MobileNav className={classes.mobileNav} />

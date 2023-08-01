@@ -64,3 +64,5 @@ _generated/*
 
 packages/db/backup
 
+# internal temp scripts
+___*.ts

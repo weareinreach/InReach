@@ -7,12 +7,10 @@ export default {
 	component: SearchDistance,
 	parameters: {
 		searchContext: {
-			searchState: {
-				params: ['dist', '-77.0368707', '38.9071923', '50', 'mi'],
-				a: [],
-				page: '1',
-				s: [],
-			},
+			params: ['dist', '-77.0368707', '38.9071923', '50', 'mi'],
+			a: [],
+			page: '1',
+			s: [],
 		},
 		nextjs: {
 			router: {

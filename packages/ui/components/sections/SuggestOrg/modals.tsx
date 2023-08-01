@@ -74,16 +74,16 @@ export const Communities = ({ disabled }: ModalProps) => {
 	// const childRecords = form.values.formOptions?.communities.flatMap(({ children }) => children)
 	const unique = (ids: string[]) => [...new Set(ids)]
 	const hasChildren = (parentId: string) =>
-		form.values.formOptions.communities.find(({ id, children }) => id === parentId && children.length)
+		form.values.formOptions?.communities.find(({ id, children }) => id === parentId && children.length)
 
 	const getChildIds = (parentId: string) => {
-		const parentRecord = form.values.formOptions.communities.find(({ id }) => id === parentId)
+		const parentRecord = form.values.formOptions?.communities.find(({ id }) => id === parentId)
 		if (!parentRecord) return []
 		return parentRecord.children.map(({ id }) => id)
 	}
 
 	const selectedChildren = (parentId: string, all?: boolean, none?: boolean): boolean => {
-		const parentRecord = form.values.formOptions.communities.find(({ id }) => id === parentId)
+		const parentRecord = form.values.formOptions?.communities.find(({ id }) => id === parentId)
 		if (!parentRecord || !hasChildren(parentId)) return false
 		if (all) {
 			const allChecked = parentRecord.children.every(({ id }) => selectedCurr.includes(id))
@@ -98,7 +98,7 @@ export const Communities = ({ disabled }: ModalProps) => {
 		)
 	}
 	const toggleCategory = (parentId: string) => {
-		const parentRecord = form.values.formOptions.communities.find(({ id }) => id === parentId)
+		const parentRecord = form.values.formOptions?.communities.find(({ id }) => id === parentId)
 		if (!parentRecord) return
 		const childIds = getChildIds(parentId)
 		if (selectedChildren(parentId, true)) {

@@ -70,6 +70,10 @@
 		"cost-fees": "Incurs a cost",
 		"cost-free": "Free of cost"
 	},
+	"crisis-support-community": {
+		"elders": "Elders",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Eligibility Requirements",
 		"elig-age_max": "Under {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "Access Instructions - Location",
 		"accessphone": "Access Instructions - Phone",
 		"accesspublictransit": "Access Instructions - Public Transit",
-		"accesstext": "Access Instructions - Text"
+		"accesssms": "Access Instructions - SMS",
+		"accesstext": "Access Instructions - Text",
+		"accesswhatsapp": "Access Instructions - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Service Focus",

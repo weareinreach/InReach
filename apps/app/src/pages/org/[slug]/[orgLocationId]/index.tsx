@@ -57,15 +57,20 @@ const useStyles = createStyles((theme) => ({
 const OrgLocationPage: NextPage = () => {
 	const { t } = useTranslation()
 	const router = useRouter<'/org/[slug]/[orgLocationId]'>()
-	const { query } = router
-	const { slug, orgLocationId } = query
+	const { slug, orgLocationId } = router.isReady ? router.query : { slug: '', orgLocationId: '' }
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
-	const { data: orgData, status: orgDataStatus } = api.organization.forLocationPage.useQuery(query)
-	const { data, status } = api.location.forLocationPage.useQuery({ id: orgLocationId })
+	const { data: orgData, status: orgDataStatus } = api.organization.forLocationPage.useQuery(
+		{ slug },
+		{ enabled: router.isReady }
+	)
+	const { data, status } = api.location.forLocationPage.useQuery(
+		{ id: orgLocationId },
+		{ enabled: router.isReady }
+	)
 	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
 		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
 	})
