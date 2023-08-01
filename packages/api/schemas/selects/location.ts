@@ -41,7 +41,7 @@ export const serviceAreaSelect = (subDistrictLevels: 0 | 1 | 2) =>
 			},
 			orderBy: { name: 'asc' },
 		},
-	} satisfies Prisma.CountrySelect)
+	}) satisfies Prisma.CountrySelect
 export const serviceAreaSelect2 = {
 	...common,
 	cca2: true,

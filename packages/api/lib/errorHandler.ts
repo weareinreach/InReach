@@ -8,7 +8,7 @@ import { PRISMA_ERROR_CODES } from './prismaErrorCodes'
 
 const mapEntries = Object.entries(PRISMA_ERROR_CODES).map(([key, value]) => [key, value]) satisfies [
 	string,
-	TRPCError['code']
+	TRPCError['code'],
 ][]
 const prismaErrorMap = new Map<string, TRPCError['code']>(mapEntries)
 

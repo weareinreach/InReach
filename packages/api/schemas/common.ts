@@ -107,9 +107,9 @@ export const CreationOneOrManyBase = <
 	T extends z.ZodUnion<
 		[
 			z.ZodObject<z.ZodRawShape, 'strip', z.ZodTypeAny, z.objectOutputType<z.ZodRawShape, z.ZodTypeAny>>,
-			z.ZodArray<z.ZodTypeAny>
+			z.ZodArray<z.ZodTypeAny>,
 		]
-	>
+	>,
 >(
 	schema: T
 ) => ({
