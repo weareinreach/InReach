@@ -92,7 +92,7 @@ export type CreateBatchNames = keyof typeof create
 export type UpdateBatchNames = keyof typeof update
 export type BatchData<
 	T extends 'create' | 'update',
-	K extends T extends 'create' ? CreateBatchNames : UpdateBatchNames
+	K extends T extends 'create' ? CreateBatchNames : UpdateBatchNames,
 > = T extends 'create'
 	? K extends CreateBatchNames
 		? (typeof create)[K]
