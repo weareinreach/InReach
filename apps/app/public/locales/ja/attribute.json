@@ -70,6 +70,10 @@
 		"cost-fees": "費用が発生する",
 		"cost-free": "費用無料"
 	},
+	"crisis-support-community": {
+		"elders": "エルダー",
+		"general-lgbtq": "一般的なLGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "資格要件",
 		"elig-age_max": "{{max}}歳未満",
@@ -106,7 +110,9 @@
 		"accesslocation": "アクセス方法-場所",
 		"accessphone": "アクセス手順-電話",
 		"accesspublictransit": "アクセス方法-公共交通機関",
-		"accesstext": "アクセス手順-テキスト"
+		"accesssms": "アクセス手順 - SMS",
+		"accesstext": "アクセス手順-テキスト",
+		"accesswhatsapp": "アクセス手順 - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "サービスフォーカス",
