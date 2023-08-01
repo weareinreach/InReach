@@ -1,5 +1,8 @@
 {
 	"about-us": "हमारे बारे में",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "यह इमारत व्हीलचेयर से सुलभ नहीं है",
 	"accessible-building_true": "इस इमारत में व्हीलचेयर से पहुँचा जा सकता है",
 	"account": "अकाउंट",
@@ -50,6 +53,15 @@
 	},
 	"country-select": "एक देश चुनें",
 	"create-new-list": "नई सूची बनाएं",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "Inreach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "मौज़ूदा स्थान",
 	"delete-account": "अपना अकाउंट डिलीट करें?",
 	"delete-account-password": "पुष्टि करने के लिए अपना अकाउंट पासवर्ड डालें।",
@@ -209,9 +221,12 @@
 	"search": {
 		"include-remote": "रिमोट सेवाओं को शामिल करें",
 		"location-placeholder": "शहर या ज़िप कोड डालें...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "किसी संगठन को नाम से ढूंढें",
 		"no-results": "कोई परिणाम नहीं मिला। कृपया फिर से कोशिश करें।",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "संगठन का नाम दर्ज करें...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "यह नहीं मिल रहा है? <1>एक ऐसे संगठन का सुझाव दें जो</1> आपको लगता है कि इसमें शामिल किया जाना चाहिए।"
 	},
 	"send-email": "ईमेल भेजें",
@@ -346,9 +361,11 @@
 		"email": "ईमेल",
 		"home": "होम",
 		"hours": "घंटे",
+		"location": "Location",
 		"more": "ज़्यादा",
 		"next": "अगला",
 		"no": "नहीं",
+		"organization": "संगठन",
 		"password": "पासवर्ड",
 		"phone": "फ़ोन",
 		"please-wait": "कृपया प्रतीक्षा करें...",
@@ -365,6 +382,7 @@
 		"sign-up": "साइन अप करें",
 		"skip": "स्किप",
 		"support": "सहायता",
+		"website": "Website",
 		"yes": "हाँ"
 	},
 	"photo_one": "तस्वीर",
