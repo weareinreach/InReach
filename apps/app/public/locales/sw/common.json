@@ -1,5 +1,8 @@
 {
 	"about-us": "Kuhusu sisi",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "Jengo hili halipatikani kiti cha magurudumu",
 	"accessible-building_true": "Jengo hili linaweza kupatikana kwa magurudumu",
 	"account": "Akaunti",
@@ -50,6 +53,15 @@
 	},
 	"country-select": "Chagua nchi",
 	"create-new-list": "Unda orodha mpya",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "Inreach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Mahali pa sasa",
 	"delete-account": "Futa akaunti yako?",
 	"delete-account-password": "Ingiza nenosiri la akaunti yako ili uthibitishe.",
@@ -209,9 +221,12 @@
 	"search": {
 		"include-remote": "Jumuisha huduma za mbali",
 		"location-placeholder": "Ingiza jiji au msimbo wa zip...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "Tafuta shirika kwa jina",
 		"no-results": "Hakuna matokeo yaliyopatikana. Tafadhali jaribu tena.",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "Ingiza jina la shirika...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Haiwezi kuipata? <1>Pendekeza shirika unalofikiria</1> linapaswa kujumuishwa."
 	},
 	"send-email": "Tuma barua pepe",
@@ -346,9 +361,11 @@
 		"email": "Barua pepe",
 		"home": "Nyumbani",
 		"hours": "Masaa",
+		"location": "Location",
 		"more": "zaidi",
 		"next": "Ijayo",
 		"no": "Hapana",
+		"organization": "Shirika",
 		"password": "Nenosiri",
 		"phone": "Simu",
 		"please-wait": "Tafadhali subiri...",
@@ -365,6 +382,7 @@
 		"sign-up": "Ishara ya juu",
 		"skip": "Ruka",
 		"support": "Msaada",
+		"website": "Website",
 		"yes": "Ndio"
 	},
 	"photo_one": "Picha",
