@@ -1,5 +1,8 @@
 {
 	"about-us": "Acerca de Nosotres",
+	"access": {
+		"sms-with-body": "Texto <strong>{{body}}</strong> a {{code}}"
+	},
 	"accessible-building_false": "Este edificio NO es accesible en silla de ruedas",
 	"accessible-building_true": "Este edificio es accesible en silla de ruedas",
 	"account": "Cuenta",
@@ -50,6 +53,15 @@
 	},
 	"country-select": "Elige un país",
 	"create-new-list": "Crea una nueva lista",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Por favor, mantente seguro en línea</Title3>\n<Text>Visitar cualquiera de estos sitios web <strong>puede dejar un registro en tu ordenador o navegador</strong>, como lo hace cualquier sitio web después de visitarlo. Por favor, tome medidas para evitar situaciones inseguras en su propia área.</Text>",
+		"intl-these-verified": "Estos recursos verificados pueden ayudar a la comunidad LGBTQ+ en cualquier parte del mundo.",
+		"intl-we-recommend": "Recomendamos estos recursos internacionales",
+		"natl-find-help-now": "Buscar ayuda ahora",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "Inreach no funciona en {{country}}",
+		"who-this-serves": "<Text><strong>Quién sirve este recurso:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Ubicación actual",
 	"delete-account": "¿Eliminar tu cuenta?",
 	"delete-account-password": "Introduce la contraseña de tu cuenta para confirmar.",
@@ -209,9 +221,12 @@
 	"search": {
 		"include-remote": "Incluye servicios remotos",
 		"location-placeholder": "Introduzca la ciudad o código postal...",
+		"location-placeholder-searchby": "Buscar por código postal o ciudad...",
 		"look-up-org": "Buscar una organización por nombre",
 		"no-results": "No se han encontrado resultados. Vuelva a intentarlo.",
+		"no-results-adjust": "No se han encontrado resultados para su búsqueda. Intente ajustar la ubicación o los filtros seleccionados.",
 		"organization-placeholder": "Introduzca el nombre de la organización...",
+		"organization-placeholder-searchby": "Buscar por nombre de organización...",
 		"suggest-resource": "¿No lo encuentras? <1>Sugiera una organización</1> que crea que debería incluirse."
 	},
 	"send-email": "Enviar email",
@@ -346,9 +361,11 @@
 		"email": "E-mail",
 		"home": "Inicio",
 		"hours": "Horas",
+		"location": "Ubicación",
 		"more": "más",
 		"next": "Siguiente",
 		"no": "No",
+		"organization": "Organización",
 		"password": "Contraseña",
 		"phone": "Teléfono",
 		"please-wait": "Por favor espere...",
@@ -365,6 +382,7 @@
 		"sign-up": "Regístrate",
 		"skip": "Saltar",
 		"support": "Apoyo",
+		"website": "Página web",
 		"yes": "Sí"
 	},
 	"photo_one": "Foto",
