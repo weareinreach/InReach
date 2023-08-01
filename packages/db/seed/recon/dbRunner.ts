@@ -17,7 +17,7 @@ import { type ListrJob } from '~db/seed/recon/lib/types'
 
 const loadBatch = <
 	O extends 'create' | 'update',
-	const B extends O extends 'create' ? CreateBatchNames : UpdateBatchNames
+	const B extends O extends 'create' ? CreateBatchNames : UpdateBatchNames,
 >(
 	op: O,
 	batchName: B
