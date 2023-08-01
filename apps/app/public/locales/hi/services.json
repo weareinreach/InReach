@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "कंप्यूटर और इंटरनेट",
 		"computers-and-internet": "कंप्यूटर और इंटरनेट"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "शिक्षा और रोजगार",
 		"career-counseling": "करियर काउंसलिंग",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "जेंडर-न्यूट्रल बाथरूम",
 		"haircuts-and-stylists": "हेयरकूट और स्टाइलिस्ट",
 		"hygiene": "हाइजीन"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Mental Health",
+		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
 		"CATEGORYNAME": "लीगल",
