@@ -181,7 +181,7 @@ export const fieldOptRouter = defineRouter({
 		const resultMap = new Map<string, CountryGovDistMapItem>([
 			...(countries.map(({ govDist, ...rest }) => [rest.id, { ...rest, children: govDist }]) satisfies [
 				string,
-				CountryGovDistMapItem
+				CountryGovDistMapItem,
 			][]),
 			...(govDists.map(({ subDistricts, parent, country, ...rest }) => [
 				rest.id,

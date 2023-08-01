@@ -21,7 +21,7 @@ export const ExampleModal = (props: ExampleModalProps) =>
 	({
 		title: <ModalTitle {...props.title} />,
 		children: <ExampleModalBody {...props.body} />,
-	} satisfies ModalSettings)
+	}) satisfies ModalSettings
 
 export type ExampleModalBodyProps = {
 	text: string
