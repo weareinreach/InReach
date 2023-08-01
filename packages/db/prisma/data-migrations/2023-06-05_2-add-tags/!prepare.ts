@@ -27,11 +27,11 @@ const main = async () => {
 	const idMap = new Map<string, string>([
 		...(compact(orgData.map(({ id, legacyId }) => (legacyId ? [legacyId, id] : undefined))) satisfies [
 			string,
-			string
+			string,
 		][]),
 		...(compact(serviceData.map(({ id, legacyId }) => (legacyId ? [legacyId, id] : undefined))) satisfies [
 			string,
-			string
+			string,
 		][]),
 	])
 	const addServiceTag = ({ orgLegacyId, serviceLegacyId, tagId, serviceTag }: AddServiceTag) => {

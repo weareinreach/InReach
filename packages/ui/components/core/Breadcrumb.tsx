@@ -3,9 +3,9 @@ import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import { type MouseEventHandler, useMemo } from 'react'
 
-import { useScreenSize } from '~ui/hooks'
+import { useScreenSize } from '~ui/hooks/useScreenSize'
+import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
-import { useSearchState } from '~ui/providers/SearchState'
 
 const useStyles = createStyles((theme) => ({
 	root: {
@@ -40,7 +40,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
 	const router = useRouter()
-	const { searchParams } = useSearchState()
+	const { searchStateActions } = useSearchState()
 	const { isMobile } = useScreenSize()
 
 	const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -49,13 +49,12 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 		if (option === 'back') {
 			switch (backTo) {
 				case 'search': {
-					if (searchParams) {
-						const { searchState } = searchParams
-						if (searchState)
-							router.push({
-								pathname: '/search/[...params]',
-								query: searchState,
-							})
+					const query = searchStateActions.getRoute()
+					if (query) {
+						router.push({
+							pathname: '/search/[...params]',
+							query,
+						})
 					}
 					break
 				}

@@ -27,7 +27,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-const SearchResultLoading = () => {
+export const SearchResultLoading = () => {
 	const variants = useCustomVariant()
 	return (
 		<>
@@ -141,8 +141,8 @@ const SearchResultData = ({ result }: SearchResultHasData) => {
 							>
 								{name}
 								<Space w={4} display='inline-block' />
-								<BadgeGroup badges={leaderBadges} />
 							</Link>
+							<BadgeGroup badges={leaderBadges} />
 						</Title>
 						<ActionButtons iconKey='save' organizationId={result.id} />
 					</Group>

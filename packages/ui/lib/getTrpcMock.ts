@@ -42,7 +42,7 @@ const getReqData = async (req: RestRequest) => {
 export const getTRPCMock = <
 	K1 extends keyof ApiInput, // object itself
 	K2 extends keyof ApiInput[K1], // all its keys
-	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2])
+	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2]),
 >(
 	endpoint: TRPCEndpointSuccess<K1, K2, O> | TRPCEndpointError<K1, K2>
 ): RestHandler => {
@@ -82,7 +82,7 @@ export const getTRPCMock = <
 type TRPCEndpointSuccess<
 	K1 extends keyof ApiInput,
 	K2 extends keyof ApiInput[K1],
-	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2])
+	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2]),
 > = {
 	path: [K1, K2]
 	response: O

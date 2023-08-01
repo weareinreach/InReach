@@ -34,7 +34,7 @@ export const getStaticProps = async ({ locale }: GetStaticPropsContext) => {
 	const ssg = await trpcServerClient({ session: null })
 
 	const [i18n] = await Promise.allSettled([
-		getServerSideTranslations(locale, ['suggestOrg', 'country', 'services', 'attribute', 'common']),
+		getServerSideTranslations(locale, ['suggestOrg', 'services', 'attribute', 'common']),
 		ssg.organization.suggestionOptions.prefetch(),
 	])
 

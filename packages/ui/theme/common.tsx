@@ -200,7 +200,7 @@ export const commonTheme = {
 				({
 					color: theme.other.colors.secondary.cornflower,
 					radius: 'xl',
-				} satisfies ActionIconProps),
+				}) satisfies ActionIconProps,
 		},
 		Anchor: {
 			styles: (theme) => ({
@@ -247,7 +247,7 @@ export const commonTheme = {
 					leftSection: {
 						margin: 0,
 					},
-				} satisfies Styles<BadgeStylesNames, BadgeStylesParams>),
+				}) satisfies Styles<BadgeStylesNames, BadgeStylesParams>,
 			variants: variants.Badge,
 		},
 		Button: {
@@ -354,7 +354,7 @@ export const commonTheme = {
 						height: params.indeterminate ? rem(3) : rem(10.5),
 						margin: params.indeterminate ? `${rem(10.5)} ${rem(6)}` : `${rem(6.75)} ${rem(5)}`,
 					},
-				} satisfies Styles<CheckboxStylesNames, CheckboxStylesParams>),
+				}) satisfies Styles<CheckboxStylesNames, CheckboxStylesParams>,
 		},
 		Container: {
 			defaultProps: {
@@ -398,7 +398,7 @@ export const commonTheme = {
 					body: {
 						padding: `${rem(0)} ${rem(36)} ${rem(16)} ${rem(36)}`,
 					},
-				} satisfies Styles<DrawerStylesNames>),
+				}) satisfies Styles<DrawerStylesNames>,
 		},
 		Grid: {
 			defaultProps: {
@@ -467,7 +467,7 @@ export const commonTheme = {
 					wrapper: {
 						margin: 0,
 					},
-				} satisfies Styles<InputStylesNames, InputStylesParams>),
+				}) satisfies Styles<InputStylesNames, InputStylesParams>,
 			variants: variants.Input,
 		},
 		InputWrapper: {
@@ -499,7 +499,7 @@ export const commonTheme = {
 					root: {
 						width: '100%',
 					},
-				} satisfies Styles<InputWrapperStylesNames>),
+				}) satisfies Styles<InputWrapperStylesNames>,
 		},
 		List: {
 			variants: variants.List,
@@ -568,7 +568,7 @@ export const commonTheme = {
 						width: '100%',
 						padding: 0,
 					},
-				} satisfies Styles<ModalStylesNames>),
+				}) satisfies Styles<ModalStylesNames>,
 		},
 		PaginationRoot: {
 			defaultProps: (theme) => ({
@@ -628,7 +628,7 @@ export const commonTheme = {
 							backgroundColor: theme.other.colors.primary.lightGray,
 						},
 					},
-				} satisfies Styles<RadioStylesNames, RadioStylesParams>),
+				}) satisfies Styles<RadioStylesNames, RadioStylesParams>,
 		},
 		Rating: {
 			defaultProps: (theme) => ({
@@ -650,13 +650,13 @@ export const commonTheme = {
 			defaultProps: (theme) =>
 				({
 					radius: 'xl',
-				} satisfies SkeletonProps),
+				}) satisfies SkeletonProps,
 			styles: (theme, { circle }: SkeletonStylesParams) =>
 				({
 					root: {
 						minWidth: circle ? undefined : rem(100),
 					},
-				} satisfies Styles<'root', SkeletonStylesParams>),
+				}) satisfies Styles<'root', SkeletonStylesParams>,
 
 			variants: variants.Skeleton,
 		},
@@ -666,7 +666,7 @@ export const commonTheme = {
 					color: theme.other.colors.secondary.black,
 					thumbSize: 12,
 					label: null,
-				} satisfies SliderProps),
+				}) satisfies SliderProps,
 			styles: (theme) =>
 				({
 					bar: {
@@ -687,7 +687,7 @@ export const commonTheme = {
 					markLabel: {
 						color: theme.other.colors.secondary.black,
 					},
-				} satisfies Styles<SliderStylesNames>),
+				}) satisfies Styles<SliderStylesNames>,
 		},
 		Switch: {
 			defaultProps: {
@@ -740,7 +740,7 @@ export const commonTheme = {
 							borderColor: theme.other.colors.primary.lightGray,
 						},
 					},
-				} satisfies Styles<SwitchStylesNames, SwitchStylesParams>),
+				}) satisfies Styles<SwitchStylesNames, SwitchStylesParams>,
 		},
 		SwitchGroup: {
 			styles: (theme) => ({
@@ -776,7 +776,7 @@ export const commonTheme = {
 					panel: {
 						margin: `${rem(40)} 0`,
 					},
-				} satisfies Styles<TabsStylesNames, TabsStylesParams>),
+				}) satisfies Styles<TabsStylesNames, TabsStylesParams>,
 		},
 		Text: {
 			defaultProps: (theme) => ({
@@ -852,7 +852,7 @@ export const commonTheme = {
 							},
 						},
 					},
-				} satisfies Styles<'root', TitleStylesParams>),
+				}) satisfies Styles<'root', TitleStylesParams>,
 		},
 		Tooltip: {
 			defaultProps: {

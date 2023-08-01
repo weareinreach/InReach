@@ -18,7 +18,7 @@ export const List = {
 			itemIcon: {
 				display: 'none',
 			},
-		} satisfies Styles<ListStylesNames, ListStylesParams>),
+		}) satisfies Styles<ListStylesNames, ListStylesParams>,
 	inlineBulletUtil2: (theme) =>
 		({
 			root: {
@@ -42,7 +42,7 @@ export const List = {
 			itemWrapper: {
 				alignItems: 'center',
 			},
-		} satisfies Styles<ListStylesNames, ListStylesParams>),
+		}) satisfies Styles<ListStylesNames, ListStylesParams>,
 	inlineUtil2DarkGray: (theme) =>
 		({
 			root: {
@@ -59,7 +59,7 @@ export const List = {
 			itemIcon: {
 				display: 'none',
 			},
-		} satisfies Styles<ListStylesNames, ListStylesParams>),
+		}) satisfies Styles<ListStylesNames, ListStylesParams>,
 	inlineBulletUtil2DarkGray: (theme) =>
 		({
 			root: {
@@ -84,7 +84,7 @@ export const List = {
 			itemWrapper: {
 				alignItems: 'center',
 			},
-		} satisfies Styles<ListStylesNames, ListStylesParams>),
+		}) satisfies Styles<ListStylesNames, ListStylesParams>,
 	inlineBullet: (theme) =>
 		({
 			root: {
@@ -107,7 +107,7 @@ export const List = {
 			itemWrapper: {
 				alignItems: 'center',
 			},
-		} satisfies Styles<ListStylesNames, ListStylesParams>),
+		}) satisfies Styles<ListStylesNames, ListStylesParams>,
 	inline: (theme) =>
 		({
 			root: {
@@ -122,11 +122,11 @@ export const List = {
 			itemIcon: {
 				display: 'none',
 			},
-		} satisfies Styles<ListStylesNames, ListStylesParams>),
+		}) satisfies Styles<ListStylesNames, ListStylesParams>,
 	textDarkGray: (theme) =>
 		({
 			item: {
 				color: theme.other.colors.secondary.darkGray,
 			},
-		} satisfies Styles<ListStylesNames, ListStylesParams>),
+		}) satisfies Styles<ListStylesNames, ListStylesParams>,
 } satisfies VariantObj

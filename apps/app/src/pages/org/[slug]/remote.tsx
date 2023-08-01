@@ -50,12 +50,14 @@ const useStyles = createStyles((theme) => ({
 const RemoteServicesPage: NextPage = () => {
 	const { t } = useTranslation('common')
 	const router = useRouter<'/org/[slug]/remote'>()
-	const { slug } = router.query
+	const { slug } = router.isReady ? router.query : { slug: '' }
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 
-	const { data: org, status } = api.organization.getIdFromSlug.useQuery({ slug })
-	const { data: orgName, status: orgNameStatus } = api.organization.getNameFromSlug.useQuery(slug)
+	const { data: org, status } = api.organization.getIdFromSlug.useQuery({ slug }, { enabled: router.isReady })
+	const { data: orgName, status: orgNameStatus } = api.organization.getNameFromSlug.useQuery(slug, {
+		enabled: router.isReady,
+	})
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)

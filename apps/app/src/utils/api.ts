@@ -1,4 +1,7 @@
-import { httpBatchLink, loggerLink } from '@trpc/client'
+import {
+	/*httpBatchLink,*/ unstable_httpBatchStreamLink as httpBatchStreamLink,
+	loggerLink,
+} from '@trpc/client'
 import { createTRPCNext } from '@trpc/next'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 import { devtoolsLink } from 'trpc-client-devtools-link'
@@ -28,9 +31,13 @@ export const api = createTRPCNext<AppRouter>({
 						(process.env.NODE_ENV === 'development' && typeof window !== 'undefined') ||
 						(opts.direction === 'down' && opts.result instanceof Error),
 				}),
-				httpBatchLink({
+
+				httpBatchStreamLink({
 					url: `${getBaseUrl()}/api/trpc`,
 				}),
+				// httpBatchLink({
+				// 	url: `${getBaseUrl()}/api/trpc`,
+				// }),
 			],
 			queryClientConfig: {
 				defaultOptions: {

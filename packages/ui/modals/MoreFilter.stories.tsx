@@ -33,7 +33,7 @@ export default {
 		useEffect(() => {
 			action('Set service filter')(filter)
 		}, [filter])
-		return <MoreFilter {...args} stateHandler={setFilter} />
+		return <MoreFilter {...args} />
 	},
 } as Meta<typeof MoreFilter>
 

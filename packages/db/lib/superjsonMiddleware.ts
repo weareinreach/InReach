@@ -86,7 +86,7 @@ const processRead = (data?: z.infer<typeof NullableJsonValue>) => {
 	}
 }
 const processWrite = (data?: z.infer<typeof NullableJsonValue>) => {
-	if (data === Prisma.DbNull || data === Prisma.JsonNull) {
+	if (data === Prisma.DbNull || data === Prisma.JsonNull || isSuperJSON(data)) {
 		return data
 	}
 	return superjson.serialize(data) as unknown as z.infer<typeof NullableJsonValue>
