@@ -164,7 +164,7 @@ export const serviceById = z
 					id,
 				},
 				select: serviceSelect,
-			} satisfies Prisma.OrgServiceFindUniqueOrThrowArgs)
+			}) satisfies Prisma.OrgServiceFindUniqueOrThrowArgs
 	)
 
 export const serviceByOrgId = z
@@ -205,7 +205,7 @@ export const serviceByOrgId = z
 						},
 					},
 				},
-			} satisfies Prisma.OrgServiceFindManyArgs)
+			}) satisfies Prisma.OrgServiceFindManyArgs
 	)
 
 export const serviceByLocationId = z
@@ -223,7 +223,7 @@ export const serviceByLocationId = z
 					},
 				},
 				select: serviceSelect,
-			} satisfies Prisma.OrgServiceFindManyArgs)
+			}) satisfies Prisma.OrgServiceFindManyArgs
 	)
 
 export const serviceByUserListId = z
@@ -241,7 +241,7 @@ export const serviceByUserListId = z
 					},
 				},
 				select: serviceSelect,
-			} satisfies Prisma.OrgServiceFindManyArgs)
+			}) satisfies Prisma.OrgServiceFindManyArgs
 	)
 
 export const forServiceDrawer = z
@@ -282,5 +282,5 @@ export const forServiceDrawer = z
 						},
 					},
 				},
-			} satisfies Prisma.OrgServiceFindManyArgs)
+			}) satisfies Prisma.OrgServiceFindManyArgs
 	)
