@@ -1,5 +1,8 @@
 {
 	"about-us": "关于我们",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "这栋建筑不适合轮椅使用者",
 	"accessible-building_true": "这栋建筑适合轮椅使用者",
 	"account": "账户",
@@ -49,6 +52,15 @@
 	},
 	"country-select": "选择一个国家",
 	"create-new-list": "创建新清单",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "这些已验证的资源可以帮助世界上任何地方的LGBTQ+社区。",
+		"intl-we-recommend": "我们建议这些国际资源",
+		"natl-find-help-now": "立即查找帮助",
+		"natl-these-verified": "<Text>这些已验证的资源可以帮助美国的LGBTQ+社区。 这些服务是 <strong>远程可用，保密，</strong> 和 <strong>免费</strong>。</Text>",
+		"outside-service-area": "Inreach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "当前所在地",
 	"delete-account": "删除你的账户？",
 	"delete-account-password": "输入您的账户密码进行确认。",
@@ -208,9 +220,12 @@
 	"search": {
 		"include-remote": "包括远程服务",
 		"location-placeholder": "输入城市或邮政编码...",
+		"location-placeholder-searchby": "通过城市或邮政编码搜索...",
 		"look-up-org": "按名称查找组织",
 		"no-results": "未找到任何结果。请再试一次。",
+		"no-results-adjust": "未找到搜索结果。请尝试调整您选定的位置或过滤器。",
 		"organization-placeholder": "输入组织名称...",
+		"organization-placeholder-searchby": "按组织名称搜索...",
 		"suggest-resource": "找不到？<1>建议一个你认为应该包括的组织</1>。"
 	},
 	"send-email": "发送电子邮件",
@@ -345,9 +360,11 @@
 		"email": "电子邮件",
 		"home": "主页",
 		"hours": "小时",
+		"location": "地点",
 		"more": "更多",
 		"next": "下一步",
 		"no": "没有",
+		"organization": "组织",
 		"password": "密码",
 		"phone": "电话",
 		"please-wait": "请稍候...",
@@ -364,6 +381,7 @@
 		"sign-up": "注册",
 		"skip": "跳过",
 		"support": "支持",
+		"website": "网址",
 		"yes": "是的"
 	},
 	"photo_other": "照片",
