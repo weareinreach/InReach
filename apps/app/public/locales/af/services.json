@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "Rekenaars en Internet",
 		"computers-and-internet": "Rekenaars en internet"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Onderwys en indiensneming",
 		"career-counseling": "Loopbaanberading",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "Geslagsneutrale badkamers",
 		"haircuts-and-stylists": "Haarsny en stiliste",
 		"hygiene": "higiëne"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Mental Health",
+		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
 		"CATEGORYNAME": "Wetlike",
