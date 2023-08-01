@@ -1,5 +1,8 @@
 {
 	"about-us": "زموږ په اړه",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "دا ودانۍ د ویلچیر لاسرسی نلري",
 	"accessible-building_true": "دا ودانۍ ویلچیر د لاسرسي وړ ده",
 	"account": "ګڼون",
@@ -50,6 +53,15 @@
 	},
 	"country-select": "یو هیواد غوره کړئ",
 	"create-new-list": "نوی لیست جوړ کړئ",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "Inreach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "اوسنی موقعیت",
 	"delete-account": "خپل حساب حذف کړئ؟",
 	"delete-account-password": "د تایید لپاره د خپل حساب رمز دننه کړئ.",
@@ -209,9 +221,12 @@
 	"search": {
 		"include-remote": "لیرې خدمتونه شامل کړئ",
 		"location-placeholder": "ښار یا زپ کوډ دننه کړئ...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "د نوم په واسطه یو سازمان وګورئ",
 		"no-results": "هیڅ پایله ونه موندل شوه. مهرباني وکړئ بیا هڅه وکړئ.",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "د سازمان نوم دننه کړئ...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "دا نشي موندلی؟ <1>هغه سازمان وړاندیز</1> کړئ چې تاسو فکر کوئ باید پکې شامل شي."
 	},
 	"send-email": "برېښناليک ولېږئ",
@@ -346,9 +361,11 @@
 		"email": "برېښنالیک",
 		"home": "کور",
 		"hours": "ساعتونه",
+		"location": "Location",
 		"more": "نور",
 		"next": "بل",
 		"no": "نه",
+		"organization": "سازمان",
 		"password": "شفر",
 		"phone": "تليفون",
 		"please-wait": "مهرباني وکړئ انتظار وکړئ...",
@@ -365,6 +382,7 @@
 		"sign-up": "نوم لیکنه",
 		"skip": "پرېښودل",
 		"support": "د ملاتړ",
+		"website": "Website",
 		"yes": "هو"
 	},
 	"photo_one": "عکس",
