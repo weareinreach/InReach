@@ -40,6 +40,8 @@ const nextConfig = {
 	images: {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],
 	},
+	rewrites: async () => [{ source: '/search', destination: '/' }],
+
 	typescript: {
 		ignoreBuildErrors: isVercelActiveDev,
 	},
