@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "Odinatè ak entènèt",
 		"computers-and-internet": "Odinatè ak entènèt"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Edikasyon ak Travay",
 		"career-counseling": "Karyè konsèy",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "Sèks-net twalèt",
 		"haircuts-and-stylists": "Koup cheve ak stilist",
 		"hygiene": "Ijyèn"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Mental Health",
+		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
 		"CATEGORYNAME": "Legal",
