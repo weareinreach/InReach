@@ -6,7 +6,7 @@ export const suggestionOptions = async () => {
 		const [countries, serviceTypes, communities] = await Promise.all([
 			prisma.country.findMany({
 				where: { activeForSuggest: true },
-				select: { id: true, tsKey: true, tsNs: true },
+				select: { id: true, tsKey: true, cca2: true },
 				orderBy: { tsKey: 'desc' },
 			}),
 			prisma.serviceCategory.findMany({
