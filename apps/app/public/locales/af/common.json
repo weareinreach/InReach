@@ -1,5 +1,8 @@
 {
 	"about-us": "Oor ons",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "Hierdie gebou is NIE toeganklik vir rolstoele nie",
 	"accessible-building_true": "Hierdie gebou is toeganklik vir rolstoele",
 	"account": "Rekening",
@@ -50,6 +53,15 @@
 	},
 	"country-select": "Kies 'n land",
 	"create-new-list": "Skep nuwe lys",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "Inreach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Huidige ligging",
 	"delete-account": "Verwyder jou rekening?",
 	"delete-account-password": "Voer u rekeningwagwoord in om te bevestig.",
@@ -209,9 +221,12 @@
 	"search": {
 		"include-remote": "Sluit afgeleë dienste in",
 		"location-placeholder": "Voer stad of poskode in...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "Soek 'n organisasie op naam",
 		"no-results": "Geen resultate gevind nie. Probeer asseblief weer.",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "Voer organisasie naam in...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Kan jy dit nie vind nie? <1>Stel 'n organisasie</1> voor wat u dink ingesluit moet word."
 	},
 	"send-email": "Stuur e-pos",
@@ -346,9 +361,11 @@
 		"email": "E-pos",
 		"home": "Huis",
 		"hours": "Ure",
+		"location": "Location",
 		"more": "baie",
 		"next": "Volgende",
 		"no": "Nee",
+		"organization": "Organisasie",
 		"password": "Wagwoord",
 		"phone": "Foon",
 		"please-wait": "Wag asseblief...",
@@ -365,6 +382,7 @@
 		"sign-up": "Teken in",
 		"skip": "Slaan",
 		"support": "Ondersteuning",
+		"website": "Website",
 		"yes": "Ja"
 	},
 	"photo_one": "foto",
