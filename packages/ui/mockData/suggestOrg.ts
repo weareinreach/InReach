@@ -5,17 +5,17 @@ export const suggestionOptions = {
 		{
 			id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
 			tsKey: 'USA.name',
-			tsNs: 'country',
+			cca2: 'US',
 		},
 		{
 			id: 'ctry_01GW2HHDKB9DG2T2YZM5MFFVX9',
 			tsKey: 'MEX.name',
-			tsNs: 'country',
+			cca2: 'MX',
 		},
 		{
 			id: 'ctry_01GW2HHDKAWXWYHAAESAA5HH94',
 			tsKey: 'CAN.name',
-			tsNs: 'country',
+			cca2: 'CA',
 		},
 	],
 	serviceTypes: [
