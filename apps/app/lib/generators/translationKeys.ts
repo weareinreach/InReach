@@ -75,7 +75,7 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 		const newKeys = countKeys(outputFile) - existingLength
 		logMessage = `${filename} generated with ${newKeys} new ${newKeys === 1 ? 'key' : 'keys'}.`
 
-		const formattedOutput = prettier.format(JSON.stringify(outputFile), {
+		const formattedOutput = await prettier.format(JSON.stringify(outputFile), {
 			...prettierOpts,
 			parser: 'json',
 		})

@@ -391,7 +391,7 @@ export const generateRecords = async (task: ListrTask) => {
 	}
 	// #endregion
 	/* Loop over orgs again to create supplemental records.*/
-	const generate = (task: ListrTask) => {
+	const generate = async (task: ListrTask) => {
 		log(`🛠️ Generating linked records...`)
 		let orgCount = 0
 		for (const org of orgs) {
@@ -1553,7 +1553,8 @@ export const generateRecords = async (task: ListrTask) => {
 		}
 
 		// #region Final file writeout
-		const formatJson = (data: string) => prettier.format(data, { ...prettierOpts, parser: 'json-stringify' })
+		const formatJson = async (data: string) =>
+			await prettier.format(data, { ...prettierOpts, parser: 'json-stringify' })
 
 		const translationDir = path.resolve(__dirname, '../_generated/translations')
 		for (const ns in translatedStrings) {
@@ -1564,14 +1565,14 @@ export const generateRecords = async (task: ListrTask) => {
 			}
 			const translationsOut = unflatten(Object.fromEntries(stringMap))
 			log(`🛠️ Generating translation JSON file for ${ns} (${stringMap.size} translations)`)
-			fs.writeFileSync(`${translationDir}/${ns}.json`, formatJson(JSON.stringify(translationsOut)))
+			fs.writeFileSync(`${translationDir}/${ns}.json`, await formatJson(JSON.stringify(translationsOut)))
 		}
 
 		log(`🛠️ Generating unsupported attribute JSON file (${unsupportedMap.size} attributes)`)
 		const unsupportedAttOut = Object.fromEntries(unsupportedMap)
 		fs.writeFileSync(
 			`${generatedDir}unsupportedAttributes.json`,
-			formatJson(JSON.stringify(unsupportedAttOut))
+			await formatJson(JSON.stringify(unsupportedAttOut))
 		)
 
 		log(`✍️ Writing ID Map file`)
