@@ -189,7 +189,7 @@ const customVariantMap = {
 
 /** Badge variants `serviceTag` and `communityTag` are responsive - the sizing changes at the `sm` breakpoint. */
 export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div', CustomBadgeProps>>(
-	(props, ref) => {
+	({ hideTooltip, ...props }, ref) => {
 		const variants = useCustomVariant()
 		const { t, i18n } = useTranslation(
 			props.variant === 'national' ? ['common', 'attribute', 'country'] : ['common', 'attribute']
@@ -429,6 +429,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 					px={16}
 					py={10}
 					maw={{ base: '90vw', xs: 600 }}
+					disabled={hideTooltip}
 				>
 					<ClaimOrgModal
 						component={MantineBadge}
@@ -457,6 +458,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 					px={16}
 					py={10}
 					events={{ hover: true, focus: true, touch: true }}
+					disabled={hideTooltip}
 					{...renderTooltip}
 				>
 					{badge}
@@ -513,6 +515,7 @@ export type CustomBadgeProps =
 			 * component
 			 */
 			leftSection?: ReactNode
+			hideTooltip?: boolean
 	  })
 	| LeaderBadgeProps
 	| VerifiedBadgeProps
@@ -537,16 +540,19 @@ type LeaderBadgeProps = {
 	minify?: boolean
 	/** Hide light gray bg for mini */
 	hideBg?: boolean
+	hideTooltip?: boolean
 }
 type NationalBadgeProps = {
 	variant: 'national'
 	/** Translation key for the country name(s) */
 	tsKey: string | string[]
+	hideTooltip?: boolean
 }
 
 type VerifiedBadgeProps = {
 	variant: 'verified'
 	lastverified: Date | string
+	hideTooltip?: boolean
 }
 
 export type AttributeTagProps = {
@@ -555,6 +561,7 @@ export type AttributeTagProps = {
 	tsKey: string
 	tsNs: string
 	tProps?: Omit<TOptions, 'ns'>
+	hideTooltip?: boolean
 }
 
 export type CommunityTagProps = {
@@ -562,9 +569,11 @@ export type CommunityTagProps = {
 	icon: string
 	tsKey: string
 	tProps?: Omit<TOptions, 'ns'>
+	hideTooltip?: boolean
 }
 export type ServiceTagProps = {
 	variant: 'service'
 	tsKey: string
 	tProps?: Omit<TOptions, 'ns'>
+	hideTooltip?: boolean
 }

@@ -37,7 +37,7 @@ export default {
 			action('Set service filter')(filter)
 		}, [filter])
 
-		return <ServiceFilter {...args} stateHandler={setFilter} />
+		return <ServiceFilter {...args} />
 	},
 } as Meta<typeof ServiceFilter>
 

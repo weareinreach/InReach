@@ -18,6 +18,12 @@ export const serviceCategory = [
 		tsNs: 'services',
 	},
 	{
+		id: 'svct_01H6P8M1YA3H7QX3CXN25Q9F00',
+		category: 'Crisis Support',
+		tsKey: 'crisis-support.CATEGORYNAME',
+		tsNs: 'services',
+	},
+	{
 		id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
 		category: 'Education and Employment',
 		tsKey: 'education-and-employment.CATEGORYNAME',
@@ -40,6 +46,12 @@ export const serviceCategory = [
 		id: 'svct_01GW2HHEVGD7CE9VKYVSZYYTPS',
 		category: 'Hygiene and Clothing',
 		tsKey: 'hygiene-and-clothing.CATEGORYNAME',
+		tsNs: 'services',
+	},
+	{
+		id: 'svct_01H64G5CDDYVMADBGTS0TPWF86',
+		category: 'International Support',
+		tsKey: 'international-support.CATEGORTYNAME',
 		tsNs: 'services',
 	},
 	{ id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX', category: 'Legal', tsKey: 'legal.CATEGORYNAME', tsNs: 'services' },

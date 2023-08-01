@@ -610,4 +610,4 @@ export const searchResultLongTitle = {
 	distance: 8.52,
 	unit: 'mi',
 	national: [],
-} satisfies ApiOutput['organization']['searchDistance']['orgs'][number]
+} satisfies NonNullable<ApiOutput['organization']['searchDistance']>['orgs'][number]
