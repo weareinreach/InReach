@@ -1,5 +1,8 @@
 {
 	"about-us": "Tungkol sa Amin",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "Ang gusaling ito ay HINDI mapupuntahan ang wheelchair",
 	"accessible-building_true": "Mapupuntahan ang gusaling ito sa wheelchair",
 	"account": "Account",
@@ -50,6 +53,15 @@
 	},
 	"country-select": "Pumili ng isang bansa",
 	"create-new-list": "Lumikha ng bagong listahan",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "Inreach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Kasalukuyang lokasyon",
 	"delete-account": "Tanggalin ang iyong account?",
 	"delete-account-password": "Ipasok ang password ng iyong account upang kumpirmahin.",
@@ -209,9 +221,12 @@
 	"search": {
 		"include-remote": "Isama ang mga remote na serbisyo",
 		"location-placeholder": "Ipasok ang lungsod o zip code...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "Maghanap ng isang samahan ayon sa pangalan",
 		"no-results": "Walang nahanap na mga resulta. Mangyaring subukang muli.",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "Ipasok ang pangalan ng samahan...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Hindi mahanap ito? <1>Magmungkahi ng isang samahan</1> na sa palagay mo ay dapat isama."
 	},
 	"send-email": "Magpadala ng email",
@@ -346,9 +361,11 @@
 		"email": "Email",
 		"home": "Tahanan",
 		"hours": "Oras",
+		"location": "Location",
 		"more": "higit pa",
 		"next": "Susunod",
 		"no": "Hindi",
+		"organization": "Organisasyon",
 		"password": "Password",
 		"phone": "Telepono",
 		"please-wait": "Mangyaring maghintay...",
@@ -365,6 +382,7 @@
 		"sign-up": "Mag-sign up",
 		"skip": "Laktawan",
 		"support": "Suporta",
+		"website": "Website",
 		"yes": "Oo"
 	},
 	"photo_one": "Larawan",
