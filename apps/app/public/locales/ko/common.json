@@ -1,5 +1,8 @@
 {
 	"about-us": "회사 소개",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "이 건물은 휠체어 이용이 불가능합니다.",
 	"accessible-building_true": "이 건물은 휠체어 출입이 가능합니다.",
 	"account": "계정",
@@ -49,6 +52,15 @@
 	},
 	"country-select": "국가 선택하기",
 	"create-new-list": "새 목록 만들기",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "Inreach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "현재 위치",
 	"delete-account": "계정을 삭제하시겠습니까?",
 	"delete-account-password": "계정 비밀번호를 입력하여 확인합니다.",
@@ -208,9 +220,12 @@
 	"search": {
 		"include-remote": "원격 서비스 포함",
 		"location-placeholder": "도시 또는 우편번호 입력...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "이름을 기준으로 조직 검색",
 		"no-results": "결과를 찾을 수 없습니다.다시 시도해 주세요.",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "조직 이름 입력...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "찾을 수 없나요?포함되어야 한다고 생각하는 <1>조직을 제안하세요</1>."
 	},
 	"send-email": "이메일 보내기",
@@ -345,9 +360,11 @@
 		"email": "이메일",
 		"home": "홈",
 		"hours": "시간",
+		"location": "Location",
 		"more": "더",
 		"next": "다음",
 		"no": "아니오",
+		"organization": "조직",
 		"password": "패스워드",
 		"phone": "핸드폰",
 		"please-wait": "잠시만 기다려 주세요...",
@@ -364,6 +381,7 @@
 		"sign-up": "가입하기",
 		"skip": "건너뛰기",
 		"support": "서포트",
+		"website": "Website",
 		"yes": "예"
 	},
 	"photo_other": "사진",
