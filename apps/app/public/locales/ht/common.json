@@ -1,5 +1,8 @@
 {
 	"about-us": "Enfòmasyon pou nou",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "Bilding sa a PA chèz woulant aksesib",
 	"accessible-building_true": "Bilding sa a se chèz woulant aksesib",
 	"account": "Kont",
@@ -50,6 +53,15 @@
 	},
 	"country-select": "Chwazi yon peyi",
 	"create-new-list": "Kreye nouvo lis",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "Inreach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Kouran kote",
 	"delete-account": "Efase kont ou?",
 	"delete-account-password": "Antre nan modpas kont ou a konfime.",
@@ -209,9 +221,12 @@
 	"search": {
 		"include-remote": "Mete sèvis aleka",
 		"location-placeholder": "Antre nan vil la oswa kòd postal...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "Gade yon òganizasyon pa non",
 		"no-results": "Pa gen rezilta yo te jwenn. Tanpri eseye ankò.",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "Mete non òganizasyon...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Pa ka jwenn li? <1>Sijere yon òganizasyon</1> ou panse yo ta dwe enkli."
 	},
 	"send-email": "Voye imèl",
@@ -346,9 +361,11 @@
 		"email": "Imèl",
 		"home": "Kay",
 		"hours": "Èdtan",
+		"location": "Location",
 		"more": "plis",
 		"next": "Pwochen",
 		"no": "Pa",
+		"organization": "Òganizasyon",
 		"password": "Modpas",
 		"phone": "Telefòn",
 		"please-wait": "Tanpri, tann...",
@@ -365,6 +382,7 @@
 		"sign-up": "Enskri",
 		"skip": "Sote",
 		"support": "Sipò",
+		"website": "Website",
 		"yes": "Wi"
 	},
 	"photo_one": "Photo",
