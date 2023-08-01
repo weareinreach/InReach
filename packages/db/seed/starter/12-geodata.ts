@@ -51,37 +51,6 @@ const keyGen = (text: string, prefix?: string, suffix?: string) => {
 	}
 }
 
-const countryAll = async (task: ListrTask) => {
-	let countA = 0
-	const resultList: string[] = []
-
-	for (const country in geoCountryData) {
-		if (Object.prototype.hasOwnProperty.call(geoCountryData, country)) {
-			const element = geoCountryData[country]
-			const logMessage = `(${countA + 1}/${
-				Object.keys(geoCountryData).length
-			}) Updating GeoJSON data for ${country}`
-			logFile.log(logMessage)
-			task.output = logMessage
-			await prisma.country.update({
-				where: {
-					cca2: country,
-				},
-				data: {
-					geoJSON: element,
-					geoWKT: geojsonToWKT(element),
-				},
-			})
-			countA++
-			resultList.push(country)
-		}
-	}
-	const countries = await prisma.country.findMany({ select: { id: true, cca2: true } })
-	countries.forEach(({ cca2, id }) => countryMap.set(cca2, id))
-
-	task.title = `GeoJSON data for countries (${resultList.join(', ')})`
-}
-
 type DistTypeData = {
 	translate: Prisma.TranslationKeyCreateManyInput[]
 	translateChild: Prisma.TranslationKeyCreateManyInput[]
@@ -228,8 +197,6 @@ const countryUS = async (task: ListrTask) => {
 				slug,
 				iso,
 				abbrev,
-				geoJSON: geo,
-				geoWKT: geojsonToWKT(geo as Geometry),
 				tsKey,
 				tsNs,
 				countryId,
@@ -268,8 +235,6 @@ const countryUS = async (task: ListrTask) => {
 				data.childDist.push({
 					name: countyName,
 					slug,
-					geoJSON: county.geometry,
-					geoWKT: geojsonToWKT(county.geometry as Geometry),
 					countryId,
 					govDistTypeId: distType,
 					isPrimary: false,
@@ -379,8 +344,6 @@ const countryCA = async (task: ListrTask) => {
 			slug,
 			iso,
 			abbrev: abbrev ?? iso.slice(-2),
-			geoJSON: geo,
-			geoWKT: geojsonToWKT(geo as Geometry),
 			countryId,
 			govDistTypeId,
 			tsKey: key,
@@ -463,8 +426,6 @@ const countryMX = async (task: ListrTask) => {
 			slug,
 			iso,
 			abbrev: abbrev ?? iso?.slice(-2),
-			geoJSON: geo,
-			geoWKT: geojsonToWKT(geo as Geometry),
 			countryId,
 			govDistTypeId,
 			tsKey: key,
@@ -541,8 +502,6 @@ const countiesPR = async (task: ListrTask) => {
 			name,
 			slug,
 			// iso,
-			geoJSON: county.geometry,
-			geoWKT: geojsonToWKT(county.geometry as Geometry),
 			countryId,
 			govDistTypeId,
 			tsKey: key,
@@ -586,11 +545,11 @@ export const seedGeoData = (task: ListrTask) =>
 			task: async (_ctx: unknown, task: ListrTask): Promise<void> => upsertDistrictTypes(task),
 			options: renderOptions,
 		},
-		{
-			title: 'GeoJSON data for countries',
-			task: async (_ctx: unknown, task: ListrTask): Promise<void> => countryAll(task),
-			options: renderOptions,
-		},
+		// {
+		// 	title: 'GeoJSON data for countries',
+		// 	task: async (_ctx: unknown, task: ListrTask): Promise<void> => countryAll(task),
+		// 	options: renderOptions,
+		// },
 		{
 			title: 'GeoJSON data for US',
 			task: async (_ctx: unknown, task: ListrTask): Promise<void> => countryUS(task),

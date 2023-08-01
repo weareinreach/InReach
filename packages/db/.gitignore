@@ -32,3 +32,5 @@ zod-schemas/
 kysely-vercel/
 pg-diff/
 pg-diff-config.json
+
+__*.ts

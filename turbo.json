@@ -34,6 +34,7 @@
 		},
 		"build:aws": {},
 		"build:icons": {},
+		"build:prebuild": {},
 		"chromatic": {},
 		"clean": {
 			"cache": false
@@ -44,6 +45,7 @@
 		"db:dataMigrate": {},
 		"db:deploy": {},
 		"db:generate": {},
+		"db:generate:kysely": {},
 		"deploy:aws": {},
 		"dev": {
 			"cache": false,

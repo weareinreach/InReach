@@ -2,8 +2,8 @@ import { createStyles, rem, Tabs } from '@mantine/core'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
+import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
-import { useSearchState } from '~ui/providers/SearchState'
 
 const useStyles = createStyles((theme) => ({
 	tab: {
@@ -65,7 +65,7 @@ export const MobileNav = ({ className }: { className?: string }) => {
 	const { classes } = useStyles()
 	const { t } = useTranslation('common')
 	const router = useRouter()
-	const { searchParams } = useSearchState()
+	const { searchState } = useSearchState()
 
 	return (
 		<Tabs
@@ -75,16 +75,18 @@ export const MobileNav = ({ className }: { className?: string }) => {
 			defaultValue='search'
 			onTabChange={(tab) => {
 				switch (tab) {
-					case 'search':
-						if (searchParams.searchState.params.length) {
+					case 'search': {
+						const query = searchState.getRoute()
+						if (query) {
 							router.push({
 								pathname: '/search/[...params]',
-								query: searchParams.searchState,
+								query,
 							})
 						} else {
 							router.push('/')
 						}
 						break
+					}
 					case 'saved':
 						router.push('/account/saved')
 						break
@@ -95,21 +97,15 @@ export const MobileNav = ({ className }: { className?: string }) => {
 						router.push('/support')
 						break
 					default:
-						console.log(tab)
 				}
 			}}
 		>
 			<Tabs.List position='apart'>
 				<Tabs.Tab
 					value='search'
-					icon={
-						<Icon
-							icon={searchParams.searchState.params.length ? 'carbon:search' : 'carbon:home'}
-							height={20}
-						/>
-					}
+					icon={<Icon icon={searchState.params?.length ? 'carbon:search' : 'carbon:home'} height={20} />}
 				>
-					{t(searchParams.searchState.params.length ? 'words.search' : 'words.home')}
+					{t(searchState.params?.length ? 'words.search' : 'words.home')}
 				</Tabs.Tab>{' '}
 				<Tabs.Tab value='saved' icon={<Icon icon='carbon:favorite' height={20} />}>
 					{t('words.saved')}

@@ -57,4 +57,12 @@ export const miscRouter = defineRouter({
 			])
 			return email + phone + socialMedia + website !== 0 // ? 'true' : 'false'
 		}),
+	getCountryTranslation: publicProcedure
+		.input(z.object({ cca2: z.string().length(2) }))
+		.query(async ({ ctx, input }) =>
+			ctx.prisma.country.findUniqueOrThrow({
+				where: { cca2: input.cca2 },
+				select: { name: true, tsKey: true, tsNs: true },
+			})
+		),
 })

@@ -29,6 +29,7 @@ const clientOptions = {
 				{ level: 'error', emit: 'event' },
 				{ level: 'warn', emit: 'event' },
 		  ],
+	errorFormat: 'pretty',
 } satisfies Prisma.PrismaClientOptions
 
 const prisma = global.prisma || new PrismaClient(clientOptions)

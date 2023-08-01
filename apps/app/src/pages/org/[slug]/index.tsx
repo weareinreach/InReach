@@ -20,9 +20,9 @@ import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
-import { useSearchState } from '@weareinreach/ui/providers/SearchState'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
+import { useSearchState } from '~ui/hooks/useSearchState'
 
 const LoadingState = () => (
 	<>
@@ -74,7 +74,7 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 		}
 	)
 	const { ref, width } = useElementSize()
-	const { searchParams } = useSearchState()
+	const { searchState } = useSearchState()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
 
@@ -83,7 +83,6 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 	const photosRef = useRef<HTMLDivElement>(null)
 	const reviewsRef = useRef<HTMLDivElement>(null)
 
-	console.log('fallback?', router.isFallback)
 	useEffect(() => {
 		if (data && status === 'success') {
 			setLoading(false)
@@ -92,8 +91,8 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 	}, [data, status])
 
 	useEffect(() => {
-		slug &&
-			i18n.reloadResources(i18n.resolvedLanguage, ['common', 'services', 'attribute', 'phone-type', slug])
+		data?.id &&
+			i18n.reloadResources(i18n.resolvedLanguage, ['common', 'services', 'attribute', 'phone-type', data.id])
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -191,7 +190,7 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 			</Head>
 			<Grid.Col xs={12} sm={8} order={1} pb={40}>
 				<Toolbar
-					hideBreadcrumb={searchParams.searchState.params.length === 0}
+					hideBreadcrumb={!searchState.params.length}
 					breadcrumbProps={{
 						option: 'back',
 						backTo: 'search',
@@ -266,8 +265,9 @@ export const getStaticProps = async ({
 		// if (!orgId) return { notFound: true, props: {} }
 
 		const [i18n] = await Promise.allSettled([
-			orgId &&
-				getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId?.id]),
+			orgId
+				? getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId?.id])
+				: getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type']),
 			ssg.organization.forOrgPage.prefetch({ slug }),
 		])
 		// await ssg.organization.getBySlug.prefetch({ slug })

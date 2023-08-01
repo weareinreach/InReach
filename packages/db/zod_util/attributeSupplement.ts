@@ -35,26 +35,86 @@ const incompatible = z
 		type: z.literal('incompatible'),
 	})
 	.catchall(z.record(z.any()))
-const accessInstructions = z.object({
-	type: z.literal('accessInstructions'),
+
+const commonAccessInstructions = {
 	access_value: z.string().nullish(),
-	access_type: z.enum(['email', 'file', 'link', 'location', 'other', 'phone', '']),
-	instructions: z.string(),
-})
+	instructions: z.string().optional(),
+}
+
+export const accessInstructions = {
+	email: z.object({
+		access_type: z.literal('email'),
+		...commonAccessInstructions,
+	}),
+	file: z.object({
+		access_type: z.literal('file'),
+		...commonAccessInstructions,
+	}),
+	link: z.object({
+		access_type: z.literal('link'),
+		...commonAccessInstructions,
+	}),
+	location: z.object({
+		access_type: z.literal('location'),
+		...commonAccessInstructions,
+	}),
+	other: z.object({
+		access_type: z.literal('other'),
+		...commonAccessInstructions,
+	}),
+	phone: z.object({
+		access_type: z.literal('phone'),
+		...commonAccessInstructions,
+	}),
+	sms: z.object({
+		access_type: z.literal('sms'),
+		sms_body: z.string().optional(),
+		...commonAccessInstructions,
+	}),
+	whatsapp: z.object({
+		access_type: z.literal('whatsapp'),
+		...commonAccessInstructions,
+	}),
+	blank: z.object({
+		access_type: z.literal(''),
+		...commonAccessInstructions,
+	}),
+
+	getAll: function () {
+		return z.discriminatedUnion('access_type', [
+			this.email,
+			this.file,
+			this.link,
+			this.location,
+			this.other,
+			this.phone,
+			this.sms,
+			this.whatsapp,
+			this.blank,
+		])
+	},
+}
+export type AccessInstructions = {
+	email: z.infer<typeof accessInstructions.email>
+	file: z.infer<typeof accessInstructions.file>
+	link: z.infer<typeof accessInstructions.link>
+	location: z.infer<typeof accessInstructions.location>
+	other: z.infer<typeof accessInstructions.other>
+	phone: z.infer<typeof accessInstructions.phone>
+	sms: z.infer<typeof accessInstructions.sms>
+	whatsapp: z.infer<typeof accessInstructions.whatsapp>
+	blank: z.infer<typeof accessInstructions.blank>
+	getAll: () => z.infer<ReturnType<typeof accessInstructions.getAll>>
+}
 
 /**
  * Supplemental information for attribute
  *
  * @param type - `num-min-max`, `num-min`, `num-max`, `number`, or `incompatible`
  */
-export const AttributeSupplementDataSchemas = z.discriminatedUnion('type', [
-	numMinMaxOpt,
-	numMinMax,
-	numMin,
-	numMax,
-	number,
-	incompatible,
-	accessInstructions,
+export const AttributeSupplementDataSchemas = z.union([
+	z.discriminatedUnion('type', [numMinMaxOpt, numMinMax, numMin, numMax, number, incompatible]),
+	accessInstructions.getAll(),
 ])
 export type AttributeSupplementData = z.infer<typeof AttributeSupplementDataSchemas>
 

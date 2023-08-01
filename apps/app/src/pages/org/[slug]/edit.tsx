@@ -24,10 +24,10 @@ import { getServerSideTranslations } from '~app/utils/i18n'
 const OrganizationPage: NextPage = () => {
 	const { t } = useTranslation()
 	const router = useRouter<'/org/[slug]'>()
-	const { query } = router
+	const { query } = router.isReady ? router : { query: { slug: '' } }
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
-	const { data, status } = api.organization.getBySlug.useQuery(query)
+	const { data, status } = api.organization.getBySlug.useQuery(query, { enabled: router.isReady })
 	const { ref, width } = useElementSize()
 	useEffect(() => {
 		if (data && status === 'success') setLoading(false)
@@ -35,15 +35,15 @@ const OrganizationPage: NextPage = () => {
 	if (loading || !data) return <>Loading</>
 
 	const {
-		emails,
-		phones,
-		socialMedia,
-		websites,
+		// emails,
+		// phones,
+		// socialMedia,
+		// websites,
 		userLists,
 		attributes,
 		description,
 		slug,
-		photos,
+		// photos,
 		reviews,
 		locations,
 		isClaimed,
