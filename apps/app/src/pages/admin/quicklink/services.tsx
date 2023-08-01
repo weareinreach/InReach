@@ -241,8 +241,8 @@ const QuickLink = () => {
 						id: 'allServices',
 						header: () => <div style={{ textAlign: 'center' }}>Attach All Services</div>,
 						cell: (info) => {
-							const isChecked = form.values.data[info.row.index]?.services.every(({ id }) =>
-								form.values.data[info.row.index]?.attachedServices.includes(id)
+							const isChecked = form.values.data[info.row.index]?.services.every(
+								({ id }) => form.values.data[info.row.index]?.attachedServices.includes(id)
 							)
 
 							const handleUpdate = (select: boolean) => {
