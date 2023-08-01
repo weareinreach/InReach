@@ -70,6 +70,10 @@
 		"cost-fees": "یو لګښت لري",
 		"cost-free": "د وړیا لګښت"
 	},
+	"crisis-support-community": {
+		"elders": "Elders",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "د وړتیا اړتیاوې",
 		"elig-age_max": "د {{max}}لاندې",
@@ -106,7 +110,9 @@
 		"accesslocation": "د لاسرسي لارښوونې - موقعیت",
 		"accessphone": "د لاسرسي لارښوونې - تلیفون",
 		"accesspublictransit": "د لاسرسي لارښوونې - عامه لیږد",
-		"accesstext": "د لاسرسي لارښوونې - متن"
+		"accesssms": "Access Instructions - SMS",
+		"accesstext": "د لاسرسي لارښوونې - متن",
+		"accesswhatsapp": "Access Instructions - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "د خدمت تمرکز",
