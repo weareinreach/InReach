@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "コンピューターとインターネット",
 		"computers-and-internet": "コンピューターとインターネット"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "危機への支援",
+		"crisis-support": "危機への支援"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "教育と雇用",
 		"career-counseling": "キャリアカウンセリング",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "ジェンダーニュートラルなバスルーム",
 		"haircuts-and-stylists": "ヘアカットとスタイリスト",
 		"hygiene": "衛生"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "国際サポート",
+		"financial-assistance": "金融支援",
+		"mental-health": "精神的健康",
+		"resettlement-assistance": "再定住支援"
 	},
 	"legal": {
 		"CATEGORYNAME": "合法",
