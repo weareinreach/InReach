@@ -14,14 +14,23 @@ import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
-import { type Dispatch, forwardRef, type ReactNode, type SetStateAction, useEffect, useState } from 'react'
+import {
+	type Dispatch,
+	forwardRef,
+	type ReactNode,
+	type SetStateAction,
+	useDebugValue,
+	useEffect,
+	useState,
+} from 'react'
 import reactStringReplace from 'react-string-replace'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { useCustomVariant } from '~ui/hooks'
+import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
-import { useSearchState } from '~ui/providers/SearchState'
 
 const useStyles = createStyles((theme) => ({
 	autocompleteContainer: {
@@ -84,56 +93,87 @@ const useStyles = createStyles((theme) => ({
 /** Most of Google's autocomplete language options are only the two letter variants */
 const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 
-export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft }: SearchBoxProps) => {
+const notBlank = (value?: string) => !!value && value.length > 0
+
+const useResults = () => {
+	const [results, setResults] = useState<AutocompleteItem[]>([])
+	useDebugValue(results)
+	return [results, setResults] as [typeof results, typeof setResults]
+}
+const useNoResults = () => {
+	const [noResults, setNoResults] = useState(false)
+	useDebugValue(noResults)
+	return [noResults, setNoResults] as [typeof noResults, typeof setNoResults]
+}
+const useSearchLoading = () => {
+	const [searchLoading, setSearchLoading] = useState(false)
+	useDebugValue(searchLoading)
+	return [searchLoading, setSearchLoading] as [typeof searchLoading, typeof setSearchLoading]
+}
+const useLocationSearch = () => {
+	const [locationSearch, setLocationSearch] = useState('')
+	useDebugValue(locationSearch)
+	return [locationSearch, setLocationSearch] as [typeof locationSearch, typeof setLocationSearch]
+}
+
+export const SearchBox = ({
+	type,
+	label,
+	loadingManager,
+	initialValue = '',
+	pinToLeft,
+	placeholderTextKey,
+}: SearchBoxProps) => {
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
 	const { t } = useTranslation()
 	const router = useRouter()
-	const form = useForm<FormValues>({ initialValues: { search: '' } })
+	const form = useForm<FormValues>(initialValue ? { initialValues: { search: initialValue } } : undefined)
 	const [search] = useDebouncedValue(form.values.search, 400)
-	const [locationSearch, setLocationSearch] = useState('')
+	const [locationSearch, setLocationSearch] = useLocationSearch()
 	const { isLoading, setLoading } = loadingManager
 	const isOrgSearch = type === 'organization'
-	const { routeActions } = useSearchState()
+	const { searchStateActions } = useSearchState()
 
 	// tRPC functions
 	const { data: orgSearchData, isFetching: orgSearchLoading } = api.organization.searchName.useQuery(
 		{ search },
 		{
-			enabled: search !== '' && isOrgSearch,
+			enabled: notBlank(search) && isOrgSearch,
 			refetchOnWindowFocus: false,
 		}
 	)
 	const { data: autocompleteData, isFetching: autocompleteLoading } = api.geo.autocomplete.useQuery(
 		{ search, locale: simpleLocale(router.locale) },
 		{
-			enabled: search !== '' && !isOrgSearch,
+			enabled: notBlank(search) && !isOrgSearch,
 			refetchOnWindowFocus: false,
 		}
 	)
-	const [results, setResults] = useState<AutocompleteItem[]>([])
-	const [noResults, setNoResults] = useState(false)
-	const [searchLoading, setSearchLoading] = useState(false)
+	const [results, setResults] = useResults()
+	const [noResults, setNoResults] = useNoResults()
+	const [searchLoading, setSearchLoading] = useSearchLoading()
 
 	useEffect(() => {
 		if (
-			(!orgSearchData && orgSearchLoading && search !== '') ||
-			(!autocompleteData?.results?.length && autocompleteLoading && search !== '')
+			(!orgSearchData && orgSearchLoading && notBlank(search)) ||
+			(!autocompleteData?.results?.length && autocompleteLoading && notBlank(search))
 		) {
 			setSearchLoading(true)
 			setResults([{ value: search, label: search, fetching: true }])
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [autocompleteData, autocompleteLoading, search, orgSearchData, orgSearchLoading])
 
 	useEffect(() => {
 		if (isOrgSearch) {
-			if (orgSearchData && !orgSearchLoading && search !== '') {
+			if (orgSearchData && !orgSearchLoading && notBlank(search)) {
 				if (orgSearchData.length === 0) setNoResults(true)
 				setResults(orgSearchData)
 				setSearchLoading(false)
 			}
 		} else {
-			if (autocompleteData && !autocompleteLoading && search !== '') {
+			if (autocompleteData && !autocompleteLoading && notBlank(search)) {
 				if (autocompleteData.status === 'ZERO_RESULTS') setNoResults(true)
 				setResults(autocompleteData.results)
 				setSearchLoading(false)
@@ -143,32 +183,27 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 			setResults([])
 			setNoResults(false)
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [autocompleteData, autocompleteLoading, search, isOrgSearch, orgSearchData, orgSearchLoading])
 
-	useEffect(() => {
-		if (initialValue && !form.values.search) {
-			form.setFieldValue('search', initialValue)
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
-
 	api.geo.geoByPlaceId.useQuery(locationSearch, {
-		enabled: locationSearch !== '' && !isOrgSearch,
+		enabled: notBlank(locationSearch) && !isOrgSearch,
 		onSuccess: (data) => {
 			const DEFAULT_RADIUS = 200
 			const DEFAULT_UNIT = 'mi'
 			if (!data.result) return
-			// apiUtils.
+			const params = SearchParamsSchema.safeParse([
+				data.result.country,
+				data.result.geometry.location.lng,
+				data.result.geometry.location.lat,
+				DEFAULT_RADIUS,
+				DEFAULT_UNIT,
+			])
+			if (!params.success) return
 			router.push({
 				pathname: '/search/[...params]',
 				query: {
-					params: [
-						'dist',
-						data.result.geometry.location.lng.toString(),
-						data.result.geometry.location.lat.toString(),
-						DEFAULT_RADIUS.toString(),
-						DEFAULT_UNIT,
-					],
+					params: params.data,
 				},
 			})
 			setLoading(false)
@@ -180,7 +215,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 			<Group>
 				<Loader size={32} mr={16} />
 			</Group>
-		) : form.values.search.length > 0 ? (
+		) : form.values.search?.length > 0 ? (
 			<Group spacing={4} noWrap className={classes.rightIcon} onClick={() => form.reset()}>
 				<Text>{t('clear')}</Text>
 				<Icon icon='carbon:close' />
@@ -190,13 +225,13 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 	const fieldRole = (
 		isOrgSearch
 			? {
-					placeholder: `${t('search.organization-placeholder')}`,
+					placeholder: `${t(placeholderTextKey ?? 'search.organization-placeholder')}`,
 					rightSection: rightIcon,
 					icon: <Icon icon='carbon:search' className={classes.leftIcon} />,
 					variant: 'default',
 			  }
 			: {
-					placeholder: `${t('search.location-placeholder')}`,
+					placeholder: `${t(placeholderTextKey ?? 'search.location-placeholder')}`,
 					rightSection: rightIcon,
 					icon: <Icon icon='carbon:location-filled' className={classes.leftIcon} />,
 					variant: 'filled',
@@ -275,7 +310,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 				setLoading(false)
 				return
 			}
-			routeActions.setSearchTerm(item.value)
+			searchStateActions.setSearchTerm(item.value)
 			router.push({
 				pathname: '/org/[slug]',
 				query: {
@@ -288,7 +323,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 				setLoading(false)
 				return
 			}
-			routeActions.setSearchTerm(item.value)
+			searchStateActions.setSearchTerm(item.value)
 			setLocationSearch(item.placeId)
 		}
 	}
@@ -312,6 +347,7 @@ export const SearchBox = ({ type, label, loadingManager, initialValue, pinToLeft
 			label={label}
 			withinPortal
 			nothingFound={noResults ? <Text variant={variants.Text.utility1}>{t('search.no-results')}</Text> : null}
+			defaultValue={initialValue}
 			{...fieldRole}
 			{...form.getInputProps('search')}
 		/>
@@ -327,6 +363,7 @@ type SearchBoxProps = {
 	}
 	initialValue?: string
 	pinToLeft?: boolean
+	placeholderTextKey?: string
 }
 type FormValues = {
 	search: string

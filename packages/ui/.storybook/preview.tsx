@@ -7,7 +7,7 @@ import { type BaseRouter } from 'next/dist/shared/lib/router/router'
 import { type Router } from 'next/router'
 
 import { type LocaleCodes, translatedLangs } from '@weareinreach/db/generated/languages'
-import { type SearchStateContext } from '~ui/providers/SearchState'
+import { type SearchStateProviderProps } from '~ui/providers/SearchState'
 
 import {
 	Layouts,
@@ -122,7 +122,7 @@ declare module '@storybook/react' {
 		disableWhyDidYouRender?: boolean
 		pseudo?: Partial<Record<PseudoStates, string | string[] | boolean>> & { rootElement?: string }
 		rqDevtools?: boolean
-		searchContext?: SearchStateContext['searchParams']
+		searchContext?: SearchStateProviderProps['initState']
 	}
 }
 type PseudoStates =

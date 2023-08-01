@@ -22,17 +22,11 @@ import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import {
-	type Dispatch,
-	forwardRef,
-	type MouseEventHandler,
-	type SetStateAction,
-	useEffect,
-	useState,
-} from 'react'
+import { forwardRef, type MouseEventHandler, useEffect, useState } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
+import { useSearchState } from '~ui/hooks/useSearchState'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -112,6 +106,15 @@ const useStyles = createStyles((theme) => ({
 		[theme.fn.smallerThan('sm')]: {
 			textAlign: 'center',
 		},
+		'&[data-disabled]': {
+			color: theme.other.colors.secondary.darkGray,
+		},
+	},
+	launchButton: {
+		'&:disabled, &[data-disabled]': {
+			color: theme.other.colors.secondary.darkGray,
+			pointerEvents: 'none',
+		},
 	},
 
 	count: {
@@ -133,6 +136,9 @@ const useStyles = createStyles((theme) => ({
 		borderRadius: rem(8),
 		border: `${theme.other.colors.tertiary.coolGray} ${rem(1)} solid`,
 		height: rem(48),
+		'&:disabled, &[data-disabled]': {
+			backgroundColor: theme.other.colors.primary.lightGray,
+		},
 	},
 
 	itemParent: {},
@@ -203,7 +209,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
-	({ resultCount, stateHandler, isFetching, ...props }, ref) => {
+	({ resultCount, isFetching, disabled, ...props }, ref) => {
 		const { data: moreFilterOptionData, status } = api.attribute.getFilterOptions.useQuery()
 		const { classes } = useStyles()
 		const { classes: accordionClasses } = useAccordionStyles()
@@ -212,6 +218,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 		const [opened, setOpened] = useState(false)
 		const theme = useMantineTheme()
 		const router = useRouter()
+		const { searchStateActions } = useSearchState()
 
 		const isMobileQuery = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`)
 		const isLandscape = useMediaQuery(`(orientation: landscape) and (max-height: ${em(430)})`)
@@ -254,8 +261,9 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 			Object.values(form.values).forEach(({ checked, id }) => {
 				if (checked) selectedItems.push(id)
 			})
-			stateHandler(selectedItems)
-		}, [form.values, stateHandler])
+			searchStateActions.setAttributes(selectedItems)
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [form.values])
 
 		if (!moreFilterOptionData) return <Skeleton height={48} width='100%' radius='xs' />
 
@@ -303,10 +311,20 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 
 		const TitleBar = ({ modalTitle = false }: { modalTitle?: boolean }) => {
 			const FilterDisplay = (props: typeof modalTitle extends true ? TitleProps : TextProps) =>
-				modalTitle ? <Title order={2} mb={0} {...props} /> : <Text className={classes.label} {...props} />
+				modalTitle ? (
+					<Title order={2} mb={0} {...props} />
+				) : (
+					<Text className={classes.label} {...(disabled ? { 'data-disabled': disabled } : {})} {...props} />
+				)
 
 			return (
-				<Group className={modalTitle ? undefined : classes.button} position='apart' noWrap spacing={0}>
+				<Group
+					className={modalTitle ? undefined : classes.button}
+					position='apart'
+					noWrap
+					spacing={0}
+					{...(disabled ? { 'data-disabled': disabled } : {})}
+				>
 					{modalTitle ? (
 						<>
 							<Group spacing={8} noWrap>
@@ -388,7 +406,14 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 						</Button>
 					</Group>
 				</Modal>
-				<Box ref={ref} component={DefaultLauncher} onClick={() => setOpened(true)} {...props} />
+				<Box
+					ref={ref}
+					component={DefaultLauncher}
+					onClick={() => setOpened(true)}
+					className={classes.launchButton}
+					{...(disabled ? { disabled, 'data-disabled': disabled } : {})}
+					{...props}
+				/>
 			</>
 		)
 	}
@@ -399,6 +424,6 @@ export const MoreFilter = createPolymorphicComponent<'button', MoreFilterProps>(
 
 interface MoreFilterProps extends UnstyledButtonProps {
 	resultCount?: number
-	stateHandler: Dispatch<SetStateAction<string[]>>
 	isFetching?: boolean
+	disabled?: boolean
 }

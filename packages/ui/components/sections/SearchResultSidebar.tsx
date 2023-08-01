@@ -17,7 +17,7 @@ export const SearchResultSidebar = ({ resultCount, loadingManager }: SearchResul
 
 	return (
 		<Stack spacing={32} maw={300}>
-			<Skeleton visible={!resultCount}>
+			<Skeleton visible={typeof resultCount !== 'number'}>
 				<Text variant={variants.Text.utility1}>{t('count.result', { count: resultCount })}</Text>
 			</Skeleton>
 

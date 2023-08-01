@@ -1,340 +1,148 @@
-import { z } from 'zod'
-
-import { readSlugRedirectCache, writeSlugRedirectCache } from '~api/cache/slugRedirect'
-import { readSlugCache, writeSlugCache } from '~api/cache/slugToOrgId'
-import { handleError } from '~api/lib/errorHandler'
-import { getCoveredAreas, searchOrgByDistance } from '~api/lib/prismaRaw'
+/* eslint-disable @typescript-eslint/consistent-type-imports */
 import { defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
-import { prismaDistSearchDetails } from '~api/prisma/org'
-import { id, searchTerm, slug } from '~api/schemas/common'
-import { attributeFilter, serviceFilter } from '~api/schemas/filters/org'
-import { distSearch } from '~api/schemas/org/search'
-import { attributes, freeText, isPublic } from '~api/schemas/selects/common'
-import { organizationInclude } from '~api/schemas/selects/org'
 
-import { uniqueSlug } from './lib'
+import * as schema from './schemas'
+
+type OrgQueryHandlerCache = {
+	getById: typeof import('./query.getById.handler').getById
+	getBySlug: typeof import('./query.getBySlug.handler').getBySlug
+	getIdFromSlug: typeof import('./query.getIdFromSlug.handler').getIdFromSlug
+	searchName: typeof import('./query.searchName.handler').searchName
+	searchDistance: typeof import('./query.searchDistance.handler').searchDistance
+	getNameFromSlug: typeof import('./query.getNameFromSlug.handler').getNameFromSlug
+	isSaved: typeof import('./query.isSaved.handler').isSaved
+	suggestionOptions: typeof import('./query.suggestionOptions.handler').suggestionOptions
+	checkForExisting: typeof import('./query.checkForExisting.handler').checkForExisting
+	generateSlug: typeof import('./query.generateSlug.handler').generateSlug
+	forOrgPage: typeof import('./query.forOrgPage.handler').forOrgPage
+	forLocationPage: typeof import('./query.forLocationPage.handler').forLocationPage
+	slugRedirect: typeof import('./query.slugRedirect.handler').slugRedirect
+	getIntlCrisis: typeof import('./query.getIntlCrisis.handler').getIntlCrisis
+	getNatlCrisis: typeof import('./query.getNatlCrisis.handler').getNatlCrisis
+}
+
+const HandlerCache: Partial<OrgQueryHandlerCache> = {}
 
 export const queries = defineRouter({
-	getById: publicProcedure.input(id).query(async ({ ctx, input }) => {
-		try {
-			const { select } = organizationInclude(ctx)
-			const org = await ctx.prisma.organization.findUniqueOrThrow({
-				where: {
-					id: input.id,
-					...isPublic,
-				},
-				select,
-			})
-			const { allowedEditors, ...orgData } = org
-			const reformatted = {
-				...orgData,
-				isClaimed: Boolean(allowedEditors.length),
-				services: org.services.map((serv) => ({ service: serv })),
-			}
+	getById: publicProcedure.input(schema.ZGetByIdSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getById)
+			HandlerCache.getById = await import('./query.getById.handler').then((mod) => mod.getById)
 
-			return reformatted
-		} catch (error) {
-			handleError(error)
-		}
+		if (!HandlerCache.getById) throw new Error('Failed to load handler')
+		return HandlerCache.getById({ ctx, input })
 	}),
-	getBySlug: publicProcedure.input(slug).query(async ({ ctx, input }) => {
-		try {
-			const { slug } = input
-			const { select } = organizationInclude(ctx)
-			const org = await ctx.prisma.organization.findUniqueOrThrow({
-				where: {
-					slug,
-					...isPublic,
-				},
-				select,
-			})
-			const { allowedEditors, ...orgData } = org
-			const reformatted = {
-				...orgData,
-				isClaimed: Boolean(allowedEditors.length),
-				services: org.services.map((serv) => ({ service: serv })),
-			}
+	getBySlug: publicProcedure.input(schema.ZGetBySlugSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getBySlug)
+			HandlerCache.getBySlug = await import('./query.getBySlug.handler').then((mod) => mod.getBySlug)
 
-			return reformatted
-		} catch (error) {
-			handleError(error)
-		}
+		if (!HandlerCache.getBySlug) throw new Error('Failed to load handler')
+		return HandlerCache.getBySlug({ ctx, input })
 	}),
-	getIdFromSlug: publicProcedure.input(slug).query(async ({ ctx, input }) => {
-		try {
-			const { slug } = input
-			const cachedId = await readSlugCache(slug)
-			if (cachedId) return { id: cachedId }
-			const orgId = await ctx.prisma.organization.findUniqueOrThrow({
-				where: { slug, ...isPublic },
-				select: { id: true },
-			})
-			await writeSlugCache(slug, orgId.id)
-			return orgId
-		} catch (error) {
-			handleError(error)
-		}
+	getIdFromSlug: publicProcedure.input(schema.ZGetIdFromSlugSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getIdFromSlug)
+			HandlerCache.getIdFromSlug = await import('./query.getIdFromSlug.handler').then(
+				(mod) => mod.getIdFromSlug
+			)
+
+		if (!HandlerCache.getIdFromSlug) throw new Error('Failed to load handler')
+		return HandlerCache.getIdFromSlug({ ctx, input })
 	}),
-	searchName: publicProcedure.input(searchTerm).query(async ({ ctx, input }) => {
-		try {
-			const orgIds = await ctx.prisma.organization.findMany({
-				where: {
-					name: {
-						contains: input.search,
-						mode: 'insensitive',
-					},
-					...isPublic,
-				},
-				select: {
-					id: true,
-					name: true,
-					slug: true,
-				},
-			})
-			const shaped = orgIds.map(({ name, ...rest }) => ({ value: name, label: name, ...rest }))
-			return shaped
-		} catch (error) {
-			handleError(error)
-			return []
-		}
+	searchName: publicProcedure.input(schema.ZSearchNameSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.searchName)
+			HandlerCache.searchName = await import('./query.searchName.handler').then((mod) => mod.searchName)
+
+		if (!HandlerCache.searchName) throw new Error('Failed to load handler')
+		return HandlerCache.searchName({ ctx, input })
 	}),
-	searchDistance: publicProcedure.input(distSearch).query(async ({ ctx, input }) => {
-		const { lat, lon, dist, unit, skip, take, services, attributes } = input
-		// Convert to meters
-		const searchRadius = unit === 'km' ? dist * 1000 : Math.round(dist * 1.60934 * 1000)
+	searchDistance: publicProcedure.input(schema.ZSearchDistanceSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.searchDistance)
+			HandlerCache.searchDistance = await import('./query.searchDistance.handler').then(
+				(mod) => mod.searchDistance
+			)
 
-		const orgs = await searchOrgByDistance(
-			{ lat, lon, searchRadius, skip, take, attributeFilter: attributes, serviceFilter: services },
-			ctx
-		)
-		const resultIds = orgs.results.map(({ id }) => id)
-
-		const resultDetailWhere = {
-			id: {
-				in: resultIds,
-			},
-			...attributeFilter(attributes),
-			...serviceFilter(services),
-			...isPublic,
-		}
-		// const resultCount = await ctx.prisma.organization.count({ where: resultDetailWhere })
-		// const results = await prismaDistSearchDetails({ ctx, input: { ...input, resultIds } })[
-		const results = await prismaDistSearchDetails({ ctx, input: { ...input, resultIds } })
-
-		const orderedResults: ((typeof results)[number] & {
-			distance: number
-			unit: 'km' | 'mi'
-			national: string[]
-		})[] = []
-		orgs.results.forEach(({ id, distMeters, national }) => {
-			const distance = unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934
-			const sort = results.find((result) => result.id === id)
-			if (sort) orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit, national })
-		})
-		return { orgs: orderedResults, resultCount: orgs.total }
+		if (!HandlerCache.searchDistance) throw new Error('Failed to load handler')
+		return HandlerCache.searchDistance({ ctx, input })
 	}),
-	getNameFromSlug: publicProcedure.input(z.string()).query(async ({ ctx, input }) =>
-		ctx.prisma.organization.findUniqueOrThrow({
-			where: {
-				slug: input,
-			},
-			select: {
-				name: true,
-			},
-		})
-	),
-	isSaved: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
-		if (!ctx.session?.user.id) return false
+	getNameFromSlug: publicProcedure.input(schema.ZGetNameFromSlugSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getNameFromSlug)
+			HandlerCache.getNameFromSlug = await import('./query.getNameFromSlug.handler').then(
+				(mod) => mod.getNameFromSlug
+			)
 
-		const listEntries = await ctx.prisma.savedOrganization.findMany({
-			where: {
-				list: {
-					ownedById: ctx.session.user.id,
-				},
-				organization: {
-					slug: input,
-				},
-			},
-			select: {
-				list: {
-					select: {
-						id: true,
-						name: true,
-					},
-				},
-			},
-		})
+		if (!HandlerCache.getNameFromSlug) throw new Error('Failed to load handler')
+		return HandlerCache.getNameFromSlug({ ctx, input })
+	}),
+	isSaved: publicProcedure.input(schema.ZIsSavedSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.isSaved)
+			HandlerCache.isSaved = await import('./query.isSaved.handler').then((mod) => mod.isSaved)
 
-		if (!listEntries.length) return false
-		const lists = listEntries.map(({ list }) => list)
-		return lists
+		if (!HandlerCache.isSaved) throw new Error('Failed to load handler')
+		return HandlerCache.isSaved({ ctx, input })
 	}),
 	suggestionOptions: publicProcedure.query(async ({ ctx }) => {
-		const [countries, serviceTypes, communities] = await Promise.all([
-			ctx.prisma.country.findMany({
-				where: { activeForSuggest: true },
-				select: { id: true, tsKey: true, tsNs: true },
-				orderBy: { tsKey: 'desc' },
-			}),
-			ctx.prisma.serviceCategory.findMany({
-				where: { active: true, activeForSuggest: true },
-				select: { id: true, tsKey: true, tsNs: true },
-				orderBy: { tsKey: 'asc' },
-			}),
-			ctx.prisma.attribute.findMany({
-				where: {
-					categories: { some: { category: { tag: 'service-focus' } } },
-					parents: { none: {} },
-					activeForSuggest: true,
-				},
-				select: {
-					id: true,
-					tsNs: true,
-					tsKey: true,
-					icon: true,
-					children: {
-						select: {
-							child: { select: { id: true, tsNs: true, tsKey: true } },
-						},
-					},
-				},
-				orderBy: { tsKey: 'asc' },
-			}),
-		])
+		if (!HandlerCache.suggestionOptions)
+			HandlerCache.suggestionOptions = await import('./query.suggestionOptions.handler').then(
+				(mod) => mod.suggestionOptions
+			)
 
-		return {
-			countries,
-			serviceTypes,
-			communities: communities.map(({ children, ...record }) => {
-				const newChildren = children.map(({ child }) => ({
-					...child,
-					parentId: record.id,
-				}))
-				return { ...record, children: newChildren }
-			}),
-		}
+		if (!HandlerCache.suggestionOptions) throw new Error('Failed to load handler')
+		return HandlerCache.suggestionOptions()
 	}),
-	checkForExisting: publicProcedure.input(z.string().trim()).query(async ({ ctx, input }) => {
-		const result = await ctx.prisma.organization.findFirst({
-			where: {
-				name: {
-					contains: input,
-					mode: 'insensitive',
-				},
-			},
-			select: {
-				name: true,
-				slug: true,
-				published: true,
-			},
-		})
-		return result
-	}),
-	generateSlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
-		try {
-			const slug = await uniqueSlug(ctx, input)
-			return slug
-		} catch (error) {
-			handleError(error)
-		}
-	}),
-	forOrgPage: publicProcedure.input(slug).query(async ({ ctx, input }) => {
-		try {
-			const { slug } = input
-			const org = await ctx.prisma.organization.findUniqueOrThrow({
-				where: {
-					slug,
-					...isPublic,
-				},
-				select: {
-					id: true,
-					name: true,
-					slug: true,
-					published: true,
-					lastVerified: true,
-					allowedEditors: { where: { authorized: true }, select: { userId: true } },
-					description: freeText,
-					userLists: ctx.session?.user.id
-						? {
-								where: { list: { ownedById: ctx.session.user.id } },
-								select: { list: { select: { id: true, name: true } } },
-						  }
-						: undefined,
-					attributes,
-					reviews: {
-						where: { visible: true, deleted: false },
-						select: { id: true },
-					},
-					locations: {
-						where: isPublic,
-						select: {
-							id: true,
-							street1: true,
-							street2: true,
-							city: true,
-							postCode: true,
-							country: { select: { cca2: true } },
-							govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
-						},
-					},
-				},
-			})
-			const { allowedEditors, ...orgData } = org
-			const reformatted = {
-				...orgData,
-				isClaimed: Boolean(allowedEditors.length),
-			}
+	checkForExisting: publicProcedure.input(schema.ZCheckForExistingSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.checkForExisting)
+			HandlerCache.checkForExisting = await import('./query.checkForExisting.handler').then(
+				(mod) => mod.checkForExisting
+			)
 
-			return reformatted
-		} catch (error) {
-			handleError(error)
-		}
+		if (!HandlerCache.checkForExisting) throw new Error('Failed to load handler')
+		return HandlerCache.checkForExisting({ ctx, input })
 	}),
-	forLocationPage: publicProcedure.input(slug).query(async ({ ctx, input }) => {
-		try {
-			const { slug } = input
-			const org = await ctx.prisma.organization.findUniqueOrThrow({
-				where: {
-					slug,
-					...isPublic,
-				},
-				select: {
-					id: true,
-					name: true,
-					slug: true,
-					published: true,
-					lastVerified: true,
-					allowedEditors: { where: { authorized: true }, select: { userId: true } },
-				},
-			})
-			const { allowedEditors, ...orgData } = org
-			const reformatted = {
-				...orgData,
-				isClaimed: Boolean(allowedEditors.length),
-			}
+	generateSlug: protectedProcedure.input(schema.ZGenerateSlugSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.generateSlug)
+			HandlerCache.generateSlug = await import('./query.generateSlug.handler').then((mod) => mod.generateSlug)
 
-			return reformatted
-		} catch (error) {
-			handleError(error)
-		}
+		if (!HandlerCache.generateSlug) throw new Error('Failed to load handler')
+		return HandlerCache.generateSlug({ ctx, input })
 	}),
-	slugRedirect: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
-		try {
-			const cached = await readSlugRedirectCache(input)
-			if (cached) {
-				return { redirectTo: cached }
-			}
-			const { slug: primarySlug } = await ctx.prisma.organization.findFirstOrThrow({
-				where: { OR: [{ slug: input }, { oldSlugs: { some: { from: input } } }], ...isPublic },
-				select: { slug: true },
-			})
-			if (primarySlug !== input) {
-				await writeSlugRedirectCache(input, primarySlug)
-				return { redirectTo: primarySlug }
-			}
-			return { redirectTo: null }
-		} catch (error) {
-			handleError(error)
-		}
+	forOrgPage: publicProcedure.input(schema.ZForOrgPageSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.forOrgPage)
+			HandlerCache.forOrgPage = await import('./query.forOrgPage.handler').then((mod) => mod.forOrgPage)
+
+		if (!HandlerCache.forOrgPage) throw new Error('Failed to load handler')
+		return HandlerCache.forOrgPage({ ctx, input })
+	}),
+	forLocationPage: publicProcedure.input(schema.ZForLocationPageSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.forLocationPage)
+			HandlerCache.forLocationPage = await import('./query.forLocationPage.handler').then(
+				(mod) => mod.forLocationPage
+			)
+
+		if (!HandlerCache.forLocationPage) throw new Error('Failed to load handler')
+		return HandlerCache.forLocationPage({ ctx, input })
+	}),
+	slugRedirect: publicProcedure.input(schema.ZSlugRedirectSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.slugRedirect)
+			HandlerCache.slugRedirect = await import('./query.slugRedirect.handler').then((mod) => mod.slugRedirect)
+
+		if (!HandlerCache.slugRedirect) throw new Error('Failed to load handler')
+		return HandlerCache.slugRedirect({ ctx, input })
+	}),
+	getIntlCrisis: publicProcedure.input(schema.ZGetIntlCrisisSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getIntlCrisis)
+			HandlerCache.getIntlCrisis = await import('./query.getIntlCrisis.handler').then(
+				(mod) => mod.getIntlCrisis
+			)
+
+		if (!HandlerCache.getIntlCrisis) throw new Error('Failed to load handler')
+		return HandlerCache.getIntlCrisis({ ctx, input })
+	}),
+	getNatlCrisis: publicProcedure.input(schema.ZGetNatlCrisisSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getNatlCrisis)
+			HandlerCache.getNatlCrisis = await import('./query.getNatlCrisis.handler').then(
+				(mod) => mod.getNatlCrisis
+			)
+
+		if (!HandlerCache.getNatlCrisis) throw new Error('Failed to load handler')
+		return HandlerCache.getNatlCrisis({ ctx, input })
 	}),
 })

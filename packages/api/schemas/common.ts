@@ -36,16 +36,16 @@ export const nonEmptyString = z
 // .optional()
 export const searchTerm = z.object({ search: z.string().trim() })
 export const pagination = {
-	skip: z.coerce.number(),
-	take: z.coerce.number(),
+	skip: z.union([z.number(), z.string()]).pipe(z.coerce.number()),
+	take: z.union([z.number(), z.string()]).pipe(z.coerce.number()),
 }
 export const coordItems = {
 	lat: z.number().gte(-90).lte(90),
 	lon: z.number().gte(-180).lte(180),
 }
 export const coerceCoordItems = {
-	lat: z.coerce.number().gte(-90).lte(90),
-	lon: z.coerce.number().gte(-180).lte(180),
+	lat: z.union([z.number(), z.string()]).pipe(z.coerce.number().gte(-90).lte(90)),
+	lon: z.union([z.number(), z.string()]).pipe(z.coerce.number().gte(-180).lte(180)),
 }
 export const coord = z.object(coordItems)
 export const reviewAvgId = z

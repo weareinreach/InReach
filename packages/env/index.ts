@@ -12,6 +12,9 @@ export const env = createEnv({
 		KV_REST_API_URL: z.string().url(),
 		KV_REST_API_TOKEN: z.string(),
 		KV_REST_API_READ_ONLY_TOKEN: z.string(),
+		EDGE_CONFIG: z.string().url(),
+		EDGE_CONFIG_TOKEN: z.string().optional(),
+		FEATURE_FLAG_CONFIG: z.string().url(),
 		NEXTAUTH_SECRET: z.string(),
 		NEXTAUTH_URL: z.string().url().optional(),
 		COGNITO_ACCESS_KEY: z.string(),
@@ -19,14 +22,9 @@ export const env = createEnv({
 		COGNITO_CLIENT_ID: z.string(),
 		COGNITO_CLIENT_SECRET: z.string(),
 		GOOGLE_PLACES_API_KEY: z.string(),
-		S3_ACCESS_KEY: z.string().optional(),
-		S3_SECRET: z.string().optional(),
-		CACHE_ACCESS_KEY: z.string(),
-		CACHE_SECRET: z.string(),
-		CACHE_READ_URL: z.string().url(),
-		CACHE_WRITE_URL: z.string().url(),
 		CROWDIN_TOKEN: z.string().optional(),
 		OTEL_SERVER: z.string().url().optional(),
+		CRON_KEY: z.string(),
 		NEXT_RUNTIME: z.enum(['nodejs', 'edge']),
 		VERCEL: z
 			.string()
@@ -53,6 +51,9 @@ export const env = createEnv({
 		KV_REST_API_URL: process.env.KV_REST_API_URL,
 		KV_REST_API_TOKEN: process.env.KV_REST_API_TOKEN,
 		KV_REST_API_READ_ONLY_TOKEN: process.env.KV_REST_API_READ_ONLY_TOKEN,
+		EDGE_CONFIG: process.env.EDGE_CONFIG,
+		EDGE_CONFIG_TOKEN: process.env.EDGE_CONFIG_TOKEN,
+		FEATURE_FLAG_CONFIG: process.env.FEATURE_FLAG_CONFIG,
 		NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
 		NEXTAUTH_URL: process.env.NEXTAUTH_URL,
 		COGNITO_ACCESS_KEY: process.env.COGNITO_ACCESS_KEY,
@@ -61,19 +62,13 @@ export const env = createEnv({
 		COGNITO_CLIENT_SECRET: process.env.COGNITO_CLIENT_SECRET,
 		GOOGLE_PLACES_API_KEY: process.env.GOOGLE_PLACES_API_KEY,
 		NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
-		S3_ACCESS_KEY: process.env.S3_ACCESS_KEY,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
-		S3_SECRET: process.env.S3_SECRET,
-		CACHE_ACCESS_KEY: process.env.CACHE_ACCESS_KEY,
-		CACHE_SECRET: process.env.CACHE_SECRET,
-		CACHE_READ_URL: process.env.CACHE_READ_URL,
-		CACHE_WRITE_URL: process.env.CACHE_WRITE_URL,
 		CROWDIN_TOKEN: process.env.CROWDIN_TOKEN,
 		// eslint-disable-next-line turbo/no-undeclared-env-vars
 		PORT: process.env.PORT,
 		// eslint-disable-next-line turbo/no-undeclared-env-vars
 		OTEL_SERVER: process.env.OTEL_SERVER,
+		// eslint-disable-next-line turbo/no-undeclared-env-vars
+		CRON_KEY: process.env.CRON_KEY,
 		// eslint-disable-next-line turbo/no-undeclared-env-vars
 		NEXT_RUNTIME: process.env.NEXT_RUNTIME,
 		// eslint-disable-next-line turbo/no-undeclared-env-vars

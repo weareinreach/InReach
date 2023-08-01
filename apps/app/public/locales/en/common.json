@@ -1,5 +1,8 @@
 {
 	"about-us": "About Us",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "This building is NOT wheelchair accessible",
 	"accessible-building_true": "This building is wheelchair accessible",
 	"account": "Account",
@@ -50,6 +53,15 @@
 	},
 	"country-select": "Choose a country",
 	"create-new-list": "Create new list",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "Inreach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Current location",
 	"delete-account": "Delete your account?",
 	"delete-account-password": "Enter your account password to confirm.",
@@ -212,9 +224,12 @@
 	"search": {
 		"include-remote": "Include remote services",
 		"location-placeholder": "Enter city or zip code...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "Look up an organization by name",
 		"no-results": "No results found. Please try again.",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "Enter organization name...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Can't find it? <1>Suggest an organization</1> you think should be included."
 	},
 	"send-email": "Send email",
@@ -353,9 +368,11 @@
 		"email": "Email",
 		"home": "Home",
 		"hours": "Hours",
+		"location": "Location",
 		"more": "more",
 		"next": "Next",
 		"no": "No",
+		"organization": "Organization",
 		"password": "Password",
 		"phone": "Phone",
 		"please-wait": "Please wait...",
@@ -372,6 +389,7 @@
 		"sign-up": "Sign up",
 		"skip": "Skip",
 		"support": "Support",
+		"website": "Website",
 		"yes": "Yes"
 	}
 }

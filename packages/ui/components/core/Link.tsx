@@ -1,15 +1,15 @@
 import { Anchor, type AnchorProps, type Variants } from '@mantine/core'
-import NextLink, { type LinkProps } from 'next/link'
+import NextLink, { type LinkProps as NextLinkProps } from 'next/link'
 import { forwardRef } from 'react'
 
-const externalPrefixes = ['http', 'tel:', 'mailto:'] as const
+const externalPrefixes = ['http', 'tel:', 'mailto:', 'sms:'] as const
 
 export const isExternal = (href: unknown): href is ExternalLink => {
 	const regex = new RegExp(`${externalPrefixes.map((prefix) => `(?:${prefix})|`)}`)
 	return Boolean(typeof href === 'string' && regex.test(href))
 }
 
-export const Link = forwardRef<HTMLAnchorElement, Props>(({ children, href, external, ...rest }, ref) => {
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>(({ children, href, external, ...rest }, ref) => {
 	if (external === true || href === undefined || isExternal(href)) {
 		return (
 			<Anchor ref={ref} component='a' href={href as string} target='_blank' {...rest}>
@@ -25,10 +25,10 @@ export const Link = forwardRef<HTMLAnchorElement, Props>(({ children, href, exte
 	)
 })
 Link.displayName = 'Link'
-export type InternalLink = LinkProps['href']
+export type InternalLink = NextLinkProps['href']
 export type ExternalLink = `${(typeof externalPrefixes)[number]}${string}`
 
-interface Props extends Omit<LinkProps, 'href' | 'color'>, AnchorProps {
+export interface LinkProps extends Omit<NextLinkProps, 'href' | 'color'>, AnchorProps {
 	href?: InternalLink | ExternalLink
 	external?: boolean
 	variant?: Variants<'inline' | 'inlineInverted'>
