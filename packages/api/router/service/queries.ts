@@ -80,6 +80,7 @@ export const queries = defineRouter({
 		const result = await ctx.prisma.serviceCategory.findMany({
 			where: {
 				active: true,
+				OR: [{ crisisSupportOnly: null }, { crisisSupportOnly: false }],
 			},
 			select: {
 				id: true,
@@ -345,6 +346,7 @@ export const queries = defineRouter({
 					...(input.remoteOnly
 						? { attributes: { some: { attribute: { active: true, tag: 'offers-remote-services' } } } }
 						: {}),
+					OR: [{ crisisSupportOnly: null }, { crisisSupportOnly: false }],
 				},
 				select: {
 					id: true,
