@@ -14,6 +14,6 @@ export const writeOutput = async (filename: string, data: string, isJs = false) 
 	const parser = isJs ? 'babel' : 'typescript'
 	const outFile = `${path.resolve(__dirname, '../../generated')}/${filename}.${isJs ? 'mjs' : 'ts'}`
 
-	const formattedOutput = prettier.format(data, { ...prettierOpts, parser })
+	const formattedOutput = await prettier.format(data, { ...prettierOpts, parser })
 	writeFileSync(outFile, formattedOutput)
 }
