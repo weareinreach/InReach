@@ -215,7 +215,7 @@ export const attributesByName = (tags: string[]) =>
 				},
 			},
 		},
-	} satisfies Prisma.OrgService$attributesArgs)
+	}) satisfies Prisma.OrgService$attributesArgs
 
 export const languageNames = { select: { languageName: true, nativeName: true } }
 

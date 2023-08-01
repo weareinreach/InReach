@@ -33,7 +33,7 @@ export type RpcErrorResponse = {
 export const jsonRpcSuccessResponse = <
 	K1 extends keyof ApiInput,
 	K2 extends keyof ApiInput[K1],
-	T extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2])
+	T extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2]),
 >(
 	path: [K1, K2],
 	data: T

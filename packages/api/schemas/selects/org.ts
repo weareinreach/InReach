@@ -199,7 +199,7 @@ const orgServiceInclude = (ctx: Context) =>
 			userLists: userListSelect(ctx),
 			id: true,
 		},
-	} satisfies Prisma.Organization$servicesArgs)
+	}) satisfies Prisma.Organization$servicesArgs
 
 const orgLocationServiceInclude = (ctx: Context) =>
 	({
@@ -207,7 +207,7 @@ const orgLocationServiceInclude = (ctx: Context) =>
 			service: isPublic,
 		},
 		select: { service: { select: orgServiceInclude(ctx).select } },
-	} satisfies Prisma.OrgLocation$servicesArgs)
+	}) satisfies Prisma.OrgLocation$servicesArgs
 
 const photoSelect = {
 	where: isPublic,
@@ -264,7 +264,7 @@ export const orgLocationInclude = (ctx: Context) =>
 			latitude: true,
 			id: true,
 		},
-	} satisfies Prisma.Organization$locationsArgs)
+	}) satisfies Prisma.Organization$locationsArgs
 
 export const organizationInclude = (ctx: Context) =>
 	({
@@ -294,7 +294,7 @@ export const organizationInclude = (ctx: Context) =>
 			id: true,
 			lastVerified: true,
 		},
-	} satisfies Pick<Prisma.OrganizationFindUniqueOrThrowArgs, 'select'>)
+	}) satisfies Pick<Prisma.OrganizationFindUniqueOrThrowArgs, 'select'>
 
 const selectServCat = {
 	select: {

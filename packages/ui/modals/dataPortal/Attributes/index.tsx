@@ -196,10 +196,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 					...form.values.selected,
 					{ label, value, icon, iconBg, variant, tKey },
 				])
-				form.setFieldValue(
-					'attributes',
-					form.values.attributes?.filter(({ value }) => value !== e)
-				)
+				form.setFieldValue('attributes', form.values.attributes?.filter(({ value }) => value !== e))
 				selectAttrRef.current && (selectAttrRef.current.value = '')
 			}
 		}
@@ -248,10 +245,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		}
 
 		const removeHandler = (e: string) => {
-			form.setFieldValue(
-				'selected',
-				form.values.selected?.filter(({ value }) => value !== e)
-			)
+			form.setFieldValue('selected', form.values.selected?.filter(({ value }) => value !== e))
 			utils.fieldOpt.attributesByCategory.invalidate()
 		}
 
