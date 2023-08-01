@@ -21,10 +21,12 @@ export const GoogleMapComponent = ({ height, width, locationIds }: GoogleMapProp
 				coords.push({ longitude, latitude })
 			}
 			const bounds = getBounds(coords)
-			return new google.maps.LatLngBounds(
-				{ lat: bounds.minLat, lng: bounds.minLng },
-				{ lat: bounds.maxLat, lng: bounds.minLng }
-			)
+			if (isLoaded) {
+				return new google.maps.LatLngBounds(
+					{ lat: bounds.minLat, lng: bounds.minLng },
+					{ lat: bounds.maxLat, lng: bounds.minLng }
+				)
+			}
 		}
 		throw new Error('Must have multiple points')
 	}
@@ -59,7 +61,7 @@ export const GoogleMapComponent = ({ height, width, locationIds }: GoogleMapProp
 		if (Array.isArray(data)) {
 			map.fitBounds(getBoundProps())
 		} else {
-			if (data?.latitude && data?.longitude) {
+			if (data?.latitude && data?.longitude && isLoaded) {
 				const center = new google.maps.LatLng({ lat: data.latitude, lng: data.longitude })
 				map.setCenter(center)
 				map.setZoom(11)
@@ -68,7 +70,7 @@ export const GoogleMapComponent = ({ height, width, locationIds }: GoogleMapProp
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	return isLoaded || !isLoading ? (
+	return isLoaded && !isLoading ? (
 		<GMap mapContainerStyle={{ height, width, borderRadius: rem(16) }} onLoad={onLoad}>
 			{getMarkers()}
 		</GMap>

@@ -71,10 +71,13 @@ export const ClaimOrgModalBody = forwardRef<HTMLButtonElement, ClaimOrgModalProp
 								}}
 							/>
 						</Stack>
-						<LoginModalLauncher component={Button} fullWidth variant={variants.Button.primaryLg}>
-							{t('log-in')}
+						<LoginModalLauncher component={Button} fullWidth variant={variants.Button.primaryLg} disabled>
+							{/* {t('log-in')} */}
+							{t('words.coming-soon')}
 						</LoginModalLauncher>
-						<SignupModalLauncher component={Link}>{t('dont-have-account')}</SignupModalLauncher>
+						{/* <SignupModalLauncher component={Link}>
+							{t('dont-have-account')}
+						</SignupModalLauncher> */}
 					</Stack>
 				</Modal>
 				<Box

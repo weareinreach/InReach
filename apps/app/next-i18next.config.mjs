@@ -1,14 +1,12 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 // @ts-check
-/* eslint-disable import/no-unused-modules */
-// import axios from 'axios'
+import LanguageDetector from 'i18next-browser-languagedetector'
 import ChainedBackend from 'i18next-chained-backend'
 import HttpBackend from 'i18next-http-backend'
 import intervalPlural from 'i18next-intervalplural-postprocessor'
 // import LocalStorageBackend from 'i18next-localstorage-backend'
 import MultiBackend from 'i18next-multiload-backend-adapter'
-// import { z } from 'zod'
 
 import path from 'path'
 
@@ -42,32 +40,22 @@ const getUrl = (path) => {
 	return `http://localhost:${process.env.PORT ?? 3000}${parsedPath}` // dev SSR should use localhost
 }
 
-// const crowdinBackend = new CrowdinOtaBackend(undefined, )
 const apiPath = '/api/i18n/load?lng={{lng}}&ns={{ns}}'
-// const httpBackend = new HttpBackend(null, {
-// 	loadPath: getUrl(apiPath), //typeof window !== 'undefined' ? apiPath : `http://localhost:3000${apiPath}`,
-// 	allowMultiLoading: true,
-// })
 
 const multi = new MultiBackend(null, {
 	backend: HttpBackend,
 	// debounceInterval: 200,
 	backendOption: {
-		loadPath: getUrl(apiPath), //typeof window !== 'undefined' ? apiPath : `http://localhost:3000${apiPath}`,
+		loadPath: getUrl(apiPath),
 		allowMultiLoading: true,
 	},
 })
 
-/**
- * @template {import('next-i18next').UserConfig} T
- * @type {import('next-i18next').UserConfig}
- * @param {T} config
- * @constraint {{import('next-i18next').UserConfig}}
- */
+/** @type {import('next-i18next').UserConfig} */
 const config = {
 	i18n: {
 		defaultLocale: 'en',
-		locales: ['en', 'es', 'fr', 'ar', 'ru'], // ['en', 'en-US', 'en-CA', 'en-MX', 'es', 'es-US', 'es-MX'],
+		locales: ['en', 'es', 'fr', 'ar', 'ru'],
 	},
 	defaultNS: 'common',
 	localePath: path.resolve('./public/locales'),
@@ -85,26 +73,19 @@ const config = {
 
 	backend: {
 		backendOptions: [
-			// {
-			// 	expirationTime: 60 * 60 * 1000,
-			// },
 			{
 				backend: HttpBackend,
 				// debounceInterval: 200,
 				backendOption: {
-					loadPath: getUrl(apiPath), //isBrowser ? apiPath : `http://localhost:3000${apiPath}`,
+					loadPath: getUrl(apiPath),
 					allowMultiLoading: true,
 				},
 			},
 		],
-		backends: isBrowser ? [multi] : [], //[LocalStorageBackend, multi] : [],
+		backends: isBrowser ? [multi] : [],
 	},
-
-	// saveMissing: true,
-
-	// updateMissing: true,
 	serializeConfig: false,
-	use: isBrowser ? [ChainedBackend, intervalPlural] : [intervalPlural],
+	use: isBrowser ? [ChainedBackend, intervalPlural, LanguageDetector] : [intervalPlural, LanguageDetector],
 	maxParallelReads: 20,
 	joinArrays: '',
 	interpolation: {
@@ -120,6 +101,5 @@ const config = {
 			return value
 		},
 	},
-	// postProcess: ['interval'],
 }
 export default config

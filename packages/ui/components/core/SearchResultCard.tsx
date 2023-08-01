@@ -27,7 +27,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-const SearchResultLoading = () => {
+export const SearchResultLoading = () => {
 	const variants = useCustomVariant()
 	return (
 		<>

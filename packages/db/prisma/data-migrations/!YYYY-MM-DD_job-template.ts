@@ -21,7 +21,7 @@ const jobDef: JobDef = {
  * @example `job20230404b`
  */
 export const jobYYYYmmDD = {
-	title: `${jobDef.jobId} - ${jobDef.title}`,
+	title: `[${jobDef.jobId}] ${jobDef.title}`,
 	task: async (_ctx, task) => {
 		/** Create logging instance */
 		createLogger(task, jobDef.jobId)

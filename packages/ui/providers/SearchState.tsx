@@ -1,73 +1,38 @@
-import { createContext, type ReactNode, useContext, useDebugValue, useReducer } from 'react'
+import { createContext, type ReactNode, useReducer } from 'react'
+import { type SetRequired } from 'type-fest'
 import { z } from 'zod'
 
-interface State {
-	searchState: {
-		params: string[]
-		page: string
-		a?: string[]
-		s?: string[]
-		extended?: string
-		sort?: string[]
-	}
-	searchTerm?: string
-}
-
-type Action =
-	| { type: 'SET_PARAMS'; payload: string[] }
-	| { type: 'SET_PAGE'; payload: string }
-	| { type: 'SET_ATTRIBUTES'; payload: string[] }
-	| { type: 'SET_SERVICES'; payload: string[] }
-	| { type: 'SET_SEARCHTERM'; payload: string }
-	| { type: 'SET_EXTENDED'; payload: string }
-	| { type: 'SET_SORT'; payload: string[] }
-	| { type: 'SET_SEARCHSTATE'; payload: State['searchState'] }
-
 const initialState: State = {
-	searchState: {
-		params: [],
-		page: '',
-		a: [],
-		s: [],
-		extended: '',
-		sort: [],
-	},
+	params: [],
+	page: '1',
+	a: [],
+	s: [],
+	extended: undefined,
+	sort: [],
+	searchTerm: undefined,
 }
 
-const reducer = (state: State, action: Action): State => {
+const searchStateReducer = (state: State, action: Action): State => {
 	switch (action.type) {
 		case 'SET_PARAMS':
-			return { ...state, searchState: { ...state.searchState, params: action.payload } }
+			return { ...state, params: action.payload }
 		case 'SET_PAGE':
-			return { ...state, searchState: { ...state.searchState, page: action.payload } }
+			return { ...state, page: action.payload }
 		case 'SET_ATTRIBUTES':
-			return { ...state, searchState: { ...state.searchState, a: action.payload } }
+			return { ...state, a: action.payload }
 		case 'SET_SERVICES':
-			return { ...state, searchState: { ...state.searchState, s: action.payload } }
+			return { ...state, s: action.payload }
 		case 'SET_SEARCHTERM':
 			return { ...state, searchTerm: action.payload }
 		case 'SET_EXTENDED':
-			return { ...state, searchState: { ...state.searchState, extended: action.payload } }
+			return { ...state, extended: action.payload }
 		case 'SET_SORT':
-			return { ...state, searchState: { ...state.searchState, sort: action.payload } }
+			return { ...state, sort: action.payload }
 		case 'SET_SEARCHSTATE':
-			return { ...state, searchState: action.payload }
+			return { ...state, ...action.payload }
 		default:
 			return state
 	}
-}
-
-type DispatchAction<T> = (payload: T) => void
-
-type ActionCreators = {
-	setParams: DispatchAction<string[]>
-	setPage: DispatchAction<string>
-	setAttributes: DispatchAction<string[]>
-	setServices: DispatchAction<string[]>
-	setSearchTerm: DispatchAction<string>
-	setExtended: DispatchAction<string>
-	setSort: DispatchAction<string[]>
-	setSearchState: DispatchAction<z.input<typeof SearchStateSchema>>
 }
 
 const StringToArray = z
@@ -82,10 +47,7 @@ const SearchStateSchema = z.object({
 	a: z.string().array().optional().default([]).or(StringToArray),
 	s: z.string().array().optional().default([]).or(StringToArray),
 	extended: z.coerce.string().optional(),
-})
-
-const StateSchema = z.object({
-	searchState: SearchStateSchema,
+	sort: z.string().array().optional().default([]).or(StringToArray),
 	searchTerm: z.string().optional(),
 })
 
@@ -101,34 +63,75 @@ const createActionCreators = (dispatch: React.Dispatch<Action>): ActionCreators 
 		dispatch({ type: 'SET_SEARCHSTATE', payload: SearchStateSchema.parse(payload) }),
 })
 
-const SearchStateContext = createContext<SearchStateContext | null>(null)
+export const SearchStateContext = createContext<SearchStateContext | null>(null)
+SearchStateContext.displayName = 'SearchStateContext'
 export const SearchStateProvider = ({ children, initState }: SearchStateProviderProps) => {
-	const [state, dispatch] = useReducer(reducer, initState ?? initialState)
+	const [state, dispatch] = useReducer(searchStateReducer, { ...initialState, ...initState })
 
-	const routeActions = createActionCreators(dispatch)
+	const getRoute = () => {
+		if (state.params.length) {
+			return {
+				params: state.params,
+				page: state.page.toString(),
+				...(state.a.length ? { a: state.a } : {}),
+				...(state.s.length ? { s: state.s } : {}),
+				...(state.sort.length ? { sort: state.sort } : {}),
+			}
+		}
+	}
+
+	const searchStateActions = { ...createActionCreators(dispatch), getRoute }
+	const searchState = { ...state, attributes: state.a, services: state.s, getRoute }
 
 	return (
-		<SearchStateContext.Provider value={{ searchParams: state, routeActions }}>
+		<SearchStateContext.Provider value={{ searchState, searchStateActions }}>
 			{children}
 		</SearchStateContext.Provider>
 	)
 }
 
-export const useSearchState = () => {
-	const context = useContext(SearchStateContext)
-	if (!context) throw new Error('Unable to load context')
-	const { searchParams, routeActions } = context
-	useDebugValue(searchParams)
-
-	return { searchParams, routeActions }
-}
+type GetRoute = () =>
+	| {
+			params: string[]
+			page: string
+			a?: string[]
+			s?: string[]
+			sort?: string[]
+	  }
+	| undefined
 
 export interface SearchStateContext {
-	searchParams: State
-	routeActions: ActionCreators
+	searchState: State & { attributes: string[]; services: string[]; getRoute: GetRoute }
+	searchStateActions: ActionCreators & {
+		getRoute: GetRoute
+	}
 }
 
-interface SearchStateProviderProps {
+export interface SearchStateProviderProps {
 	children: ReactNode
-	initState?: State
+	initState?: SetRequired<Partial<State>, 'params'>
+}
+type State = z.infer<typeof SearchStateSchema>
+
+type Action =
+	| { type: 'SET_PARAMS'; payload: string[] }
+	| { type: 'SET_PAGE'; payload: string }
+	| { type: 'SET_ATTRIBUTES'; payload: string[] }
+	| { type: 'SET_SERVICES'; payload: string[] }
+	| { type: 'SET_SEARCHTERM'; payload: string }
+	| { type: 'SET_EXTENDED'; payload: string }
+	| { type: 'SET_SORT'; payload: string[] }
+	| { type: 'SET_SEARCHSTATE'; payload: State }
+
+type DispatchAction<T> = (payload: T) => void
+
+type ActionCreators = {
+	setParams: DispatchAction<string[]>
+	setPage: DispatchAction<string>
+	setAttributes: DispatchAction<string[]>
+	setServices: DispatchAction<string[]>
+	setSearchTerm: DispatchAction<string>
+	setExtended: DispatchAction<string>
+	setSort: DispatchAction<string[]>
+	setSearchState: DispatchAction<z.input<typeof SearchStateSchema>>
 }

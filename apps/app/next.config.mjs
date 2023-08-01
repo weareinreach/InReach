@@ -1,7 +1,5 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
-// import { env } from './src/env/server.mjs'
-/* eslint-disable import/first */
 
 import bundleAnalyze from '@next/bundle-analyzer'
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
@@ -12,20 +10,13 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import i18nConfig from './next-i18next.config.mjs'
-// import * as otel from './otel.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const isVercelActiveDev = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF !== 'dev'
+const isDev = process.env.NODE_ENV === 'development'
 
-// const loadOtel = async () => {
-// 	if (process.env.NEXT_RUNTIME === 'nodejs') {
-// 		await import('./otel.mjs')
-// 	}
-// }
-
-/* eslint-disable-next-line turbo/no-undeclared-env-vars */
 const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -37,15 +28,11 @@ const nextConfig = {
 		...(process.env.VERCEL_ENV === 'production' ? { removeConsole: { exclude: ['error'] } } : {}),
 	},
 	experimental: {
-		// fontLoaders: [{ loader: 'next/font/google', options: { subsets: ['latin'] } }],
 		outputFileTracingExcludes: {
 			'*': ['**swc+core**', '**esbuild**'],
 		},
 		outputFileTracingRoot: path.join(__dirname, '../../'),
 		instrumentationHook: true,
-		// turbotrace: {
-		// 	logDetail: true,
-		// },
 	},
 	eslint: {
 		ignoreDuringBuilds: isVercelActiveDev,
@@ -53,6 +40,8 @@ const nextConfig = {
 	images: {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],
 	},
+	rewrites: async () => [{ source: '/search', destination: '/' }],
+
 	typescript: {
 		ignoreBuildErrors: isVercelActiveDev,
 	},
@@ -61,6 +50,7 @@ const nextConfig = {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
 		config.plugins.push(new webpack.DefinePlugin({ __SENTRY_DEBUG__: false }))
+
 		return config
 	},
 }
@@ -73,8 +63,7 @@ const nextConfig = {
  * @returns {T}
  */
 function defineNextConfig(config) {
-	// loadOtel()
-	return withBundleAnalyzer(withRoutes()(config))
+	return withBundleAnalyzer(withRoutes({ outDir: './src/types' })(config))
 }
 /**
  * Wraps NextJS config with the Sentry config.
@@ -92,7 +81,6 @@ const defineSentryConfig = (nextConfig) =>
 
 			// Suppresses source map uploading logs during build
 			silent: true,
-
 			org: 'weareinreach',
 			project: 'inreach-app',
 		},
@@ -104,7 +92,7 @@ const defineSentryConfig = (nextConfig) =>
 			widenClientFileUpload: true,
 
 			// Transpiles SDK to be compatible with IE11 (increases bundle size)
-			transpileClientSDK: true,
+			transpileClientSDK: false,
 
 			// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
 			tunnelRoute: '/monitoring',
@@ -116,5 +104,5 @@ const defineSentryConfig = (nextConfig) =>
 			disableLogger: true,
 		}
 	)
-// export default defineNextConfig(nextConfig)
-export default defineSentryConfig(defineNextConfig(nextConfig))
+
+export default isDev ? defineNextConfig(nextConfig) : defineSentryConfig(defineNextConfig(nextConfig))

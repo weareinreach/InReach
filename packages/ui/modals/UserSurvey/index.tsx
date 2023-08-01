@@ -43,7 +43,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 		},
 		onError: (error) => {
 			//add something here - refer to AccountVerified error body
-			console.log(error)
+			console.error(error)
 		},
 	})
 
