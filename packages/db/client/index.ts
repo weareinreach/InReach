@@ -1,12 +1,12 @@
 /* eslint-disable node/no-process-env */
 import { type Prisma, PrismaClient } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
-import { Logger } from 'tslog'
 
+import { createSubLog } from '@weareinreach/util/logger'
 import { idMiddleware } from '~db/lib/idMiddleware'
 import { superjsonMiddleware } from '~db/lib/superjsonMiddleware'
 
-const log = new Logger({ name: 'prisma' })
+const log = createSubLog('prisma')
 const verboseLogging = Boolean(
 	// eslint-disable-next-line turbo/no-undeclared-env-vars
 	process.env.NODE_ENV === 'development' && (!!process.env.NEXT_VERBOSE || !!process.env.PRISMA_VERBOSE)

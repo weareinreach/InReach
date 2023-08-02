@@ -9,7 +9,9 @@ import { devtoolsLink } from 'trpc-client-devtools-link'
 import { type AppRouter } from '@weareinreach/api'
 import { transformer } from '@weareinreach/api/lib/transformer'
 import { getEnv } from '@weareinreach/env'
+import { createSubLog } from '@weareinreach/util/logger'
 
+const log = createSubLog('tRPC')
 const getBaseUrl = () => {
 	if (typeof window !== 'undefined') return '' // browser should use relative url
 	if (getEnv('VERCEL_URL')) return `https://${getEnv('VERCEL_URL')}` // SSR should use vercel url
@@ -30,6 +32,10 @@ export const api = createTRPCNext<AppRouter>({
 						// eslint-disable-next-line node/no-process-env
 						(process.env.NODE_ENV === 'development' && typeof window !== 'undefined') ||
 						(opts.direction === 'down' && opts.result instanceof Error),
+					console: {
+						log: log.info,
+						error: log.error,
+					},
 				}),
 
 				httpBatchStreamLink({
