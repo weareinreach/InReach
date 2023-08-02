@@ -4,6 +4,8 @@
 
 import * as Sentry from '@sentry/nextjs'
 
+import { prisma } from '@weareinreach/db'
+
 Sentry.init({
 	dsn: 'https://3398c2248c86498ab42fa8533e4f83f1@o1412293.ingest.sentry.io/6751163',
 
@@ -11,5 +13,5 @@ Sentry.init({
 	tracesSampleRate: 1,
 
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
-	debug: false,
+	integrations: [new Sentry.Integrations.Prisma({ client: prisma })],
 })
