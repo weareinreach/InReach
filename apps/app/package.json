@@ -74,6 +74,7 @@
 		"@weareinreach/db": "workspace:*",
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/ui": "workspace:*",
+		"@weareinreach/util": "workspace:*",
 		"axios": "1.4.0",
 		"cookies-next": "2.1.2",
 		"dayjs": "1.11.9",
