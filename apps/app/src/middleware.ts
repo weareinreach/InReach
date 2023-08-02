@@ -19,9 +19,12 @@ export const middleware: NextMiddleware = async (req: NextRequest) => {
 		const searchedCountry = req.nextUrl.pathname.split('/').at(2)
 		if (searchedCountry && !activeCountries?.includes(searchedCountry)) {
 			const url = req.nextUrl.clone()
-			url.searchParams.forEach((_v, k) => url.searchParams.delete(k))
-			url.pathname = `/search/intl/${searchedCountry}`
-			// url.searchParams.set('country', searchedCountry)
+			if (searchedCountry === 'dist') {
+				url.pathname = url.pathname.replace(/\/dist\//, '/US/')
+			} else {
+				url.searchParams.forEach((_v, k) => url.searchParams.delete(k))
+				url.pathname = `/search/intl/${searchedCountry}`
+			}
 			const redirected = NextResponse.redirect(url)
 			if (session) redirected.cookies.set('inreach-session', session.value)
 
