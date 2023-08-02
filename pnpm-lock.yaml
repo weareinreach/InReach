@@ -212,6 +212,9 @@ importers:
       '@sentry/nextjs':
         specifier: 7.61.0
         version: 7.61.0(next@13.4.12)(react@18.2.0)
+      '@sentry/opentelemetry-node':
+        specifier: 7.61.0
+        version: 7.61.0(@opentelemetry/api@1.4.1)(@opentelemetry/core@1.15.1)(@opentelemetry/sdk-trace-base@1.15.1)(@opentelemetry/semantic-conventions@1.15.1)
       '@tanstack/react-query':
         specifier: 4.32.1
         version: 4.32.1(react-dom@18.2.0)(react@18.2.0)
@@ -263,6 +266,9 @@ importers:
       '@weareinreach/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@weareinreach/util':
+        specifier: workspace:*
+        version: link:../../packages/util
       axios:
         specifier: 1.4.0
         version: 1.4.0
@@ -577,6 +583,9 @@ importers:
       '@opentelemetry/api':
         specifier: 1.4.1
         version: 1.4.1
+      '@sentry/node':
+        specifier: 7.61.0
+        version: 7.61.0
       '@tanstack/react-query':
         specifier: 4.32.1
         version: 4.32.1(react-dom@18.2.0)(react@18.2.0)
@@ -610,6 +619,9 @@ importers:
       '@weareinreach/env':
         specifier: workspace:*
         version: link:../env
+      '@weareinreach/util':
+        specifier: workspace:*
+        version: link:../util
       alex:
         specifier: 11.0.0
         version: 11.0.0
@@ -746,6 +758,9 @@ importers:
       '@weareinreach/env':
         specifier: workspace:*
         version: link:../env
+      '@weareinreach/util':
+        specifier: workspace:*
+        version: link:../util
       aws-jwt-verify:
         specifier: 4.0.0
         version: 4.0.0
@@ -999,6 +1014,9 @@ importers:
       '@weareinreach/env':
         specifier: workspace:*
         version: link:../env
+      '@weareinreach/util':
+        specifier: workspace:*
+        version: link:../util
       json-difference:
         specifier: 1.9.1
         version: 1.9.1
@@ -1261,6 +1279,9 @@ importers:
       '@t3-oss/env-nextjs':
         specifier: 0.6.0
         version: 0.6.0(typescript@5.1.6)(zod@3.21.4)
+      '@weareinreach/util':
+        specifier: workspace:*
+        version: link:../util
       chromatic:
         specifier: 6.20.0
         version: 6.20.0
@@ -1358,6 +1379,9 @@ importers:
       '@weareinreach/env':
         specifier: workspace:*
         version: link:../env
+      '@weareinreach/util':
+        specifier: workspace:*
+        version: link:../util
       ajv:
         specifier: 8.12.0
         version: 8.12.0
@@ -1758,6 +1782,19 @@ importers:
       zod:
         specifier: 3.21.4
         version: 3.21.4
+
+  packages/util:
+    dependencies:
+      tslog:
+        specifier: 4.8.2
+        version: 4.8.2
+    devDependencies:
+      '@weareinreach/config':
+        specifier: workspace:*
+        version: link:../config
+      '@weareinreach/eslint-config':
+        specifier: 0.100.0
+        version: link:../eslint-config
 
 packages:
 
@@ -8405,6 +8442,24 @@ packages:
       tslib: 2.5.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@sentry/opentelemetry-node@7.61.0(@opentelemetry/api@1.4.1)(@opentelemetry/core@1.15.1)(@opentelemetry/sdk-trace-base@1.15.1)(@opentelemetry/semantic-conventions@1.15.1):
+    resolution: {integrity: sha512-Q5o7pAu01Cleb6Q5eqh/h5bIV/upENtbuwhVPGCgRsrWSmnk4BwWEZU1CTkb/Y+z3BbmGQ+dliC6Jpr6rqCpVg==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      '@opentelemetry/api': 1.x
+      '@opentelemetry/core': 1.x
+      '@opentelemetry/sdk-trace-base': 1.x
+      '@opentelemetry/semantic-conventions': 1.x
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/core': 1.15.1(@opentelemetry/api@1.4.1)
+      '@opentelemetry/sdk-trace-base': 1.15.1(@opentelemetry/api@1.4.1)
+      '@opentelemetry/semantic-conventions': 1.15.1
+      '@sentry/core': 7.61.0
+      '@sentry/types': 7.61.0
+      '@sentry/utils': 7.61.0
     dev: false
 
   /@sentry/react@7.61.0(react@18.2.0):

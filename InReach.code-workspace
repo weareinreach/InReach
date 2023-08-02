@@ -37,36 +37,40 @@
 			"path": "./packages/api"
 		},
 		{
-			"name": "📦 Authentication (@weareinreach/auth)",
+			"name": "🔐 Authentication (@weareinreach/auth)",
 			"path": "./packages/auth"
+		},
+		{
+			"name": "🛠️ Utilities (@weareinreach/util)",
+			"path": "./packages/util"
+		},
+		{
+			"name": "🐑 AWS User Migration (@weareinreach/aws-user-migrate)",
+			"path": "./packages/aws-user-migrate"
+		},
+		{
+			"name": "🐑 AWS Cognito Messaging (@weareinreach/aws-messaging)",
+			"path": "./packages/aws-messaging"
+		},
+		{
+			"name": "🐑 AWS i18n Cache (@weareinreach/aws-i18n-cache)",
+			"path": "./packages/aws-cache"
+		},
+		{
+			"name": "⚙️ Environment Variables (@weareinreach/env)",
+			"path": "./packages/env"
+		},
+		{
+			"name": "⚙️ Shared configs (@weareinreach/config)",
+			"path": "./packages/config"
+		},
+		{
+			"name": "⚙️ ESLint Config (@weareinreach/eslint-config)",
+			"path": "./packages/eslint-config"
 		},
 		{
 			"name": "🚀 InReach main site (@weareinreach/web)",
 			"path": "./apps/web"
-		},
-		{
-			"name": "📦 Shared configs (@weareinreach/config)",
-			"path": "./packages/config"
-		},
-		{
-			"name": "📦 ESLint Config (@weareinreach/eslint-config)",
-			"path": "./packages/eslint-config"
-		},
-		{
-			"name": "📦 AWS User Migration (@weareinreach/aws-user-migrate)",
-			"path": "./packages/aws-user-migrate"
-		},
-		{
-			"name": "📦 AWS Cognito Messaging (@weareinreach/aws-messaging)",
-			"path": "./packages/aws-messaging"
-		},
-		{
-			"name": "📦 AWS i18n Cache (@weareinreach/aws-i18n-cache)",
-			"path": "./packages/aws-cache"
-		},
-		{
-			"name": "📦 Environment Variables (@weareinreach/env)",
-			"path": "./packages/env"
 		},
 		{
 			"name": "✨ InReach (root)",
@@ -133,7 +137,6 @@
 		"eslint.options": {
 			"cache": true
 		},
-		"eslint.packageManager": "pnpm",
 		"eslint.rules.customizations": [
 			{
 				"rule": "import/order",
