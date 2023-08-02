@@ -107,4 +107,5 @@ const defineSentryConfig = (nextConfig) =>
 		}
 	)
 
-export default isLocalDev ? defineNextConfig(nextConfig) : defineSentryConfig(defineNextConfig(nextConfig))
+// export default isLocalDev ? defineNextConfig(nextConfig) : defineSentryConfig(defineNextConfig(nextConfig))
+export default defineSentryConfig(defineNextConfig(nextConfig))

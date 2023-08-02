@@ -212,6 +212,9 @@ importers:
       '@sentry/nextjs':
         specifier: 7.61.0
         version: 7.61.0(next@13.4.12)(react@18.2.0)
+      '@sentry/opentelemetry-node':
+        specifier: 7.61.0
+        version: 7.61.0(@opentelemetry/api@1.4.1)(@opentelemetry/core@1.15.1)(@opentelemetry/sdk-trace-base@1.15.1)(@opentelemetry/semantic-conventions@1.15.1)
       '@tanstack/react-query':
         specifier: 4.32.1
         version: 4.32.1(react-dom@18.2.0)(react@18.2.0)
@@ -8439,6 +8442,24 @@ packages:
       tslib: 2.5.0
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@sentry/opentelemetry-node@7.61.0(@opentelemetry/api@1.4.1)(@opentelemetry/core@1.15.1)(@opentelemetry/sdk-trace-base@1.15.1)(@opentelemetry/semantic-conventions@1.15.1):
+    resolution: {integrity: sha512-Q5o7pAu01Cleb6Q5eqh/h5bIV/upENtbuwhVPGCgRsrWSmnk4BwWEZU1CTkb/Y+z3BbmGQ+dliC6Jpr6rqCpVg==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      '@opentelemetry/api': 1.x
+      '@opentelemetry/core': 1.x
+      '@opentelemetry/sdk-trace-base': 1.x
+      '@opentelemetry/semantic-conventions': 1.x
+    dependencies:
+      '@opentelemetry/api': 1.4.1
+      '@opentelemetry/core': 1.15.1(@opentelemetry/api@1.4.1)
+      '@opentelemetry/sdk-trace-base': 1.15.1(@opentelemetry/api@1.4.1)
+      '@opentelemetry/semantic-conventions': 1.15.1
+      '@sentry/core': 7.61.0
+      '@sentry/types': 7.61.0
+      '@sentry/utils': 7.61.0
     dev: false
 
   /@sentry/react@7.61.0(react@18.2.0):
