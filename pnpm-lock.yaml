@@ -1430,6 +1430,9 @@ importers:
       react-string-replace:
         specifier: 1.1.1
         version: 1.1.1
+      timezones-list:
+        specifier: 3.0.2
+        version: 3.0.2
     devDependencies:
       '@babel/core':
         specifier: 7.22.9
@@ -24266,6 +24269,10 @@ packages:
     dependencies:
       setimmediate: 1.0.5
     dev: true
+
+  /timezones-list@3.0.2:
+    resolution: {integrity: sha512-I698hm6Jp/xxkwyTSOr39pZkYKETL8LDJeSIhjxXBfPUAHM5oZNuQ4o9UK3PSkDBOkjATecSOBb3pR1IkIBUsg==}
+    dev: false
 
   /tiny-glob@0.2.9:
     resolution: {integrity: sha512-g/55ssRPUjShh+xkfx9UPDXqhckHEsHr4Vd9zX55oSdGZc/MD0m3sferOkwWtp98bv+kcVfEHtRJgBVJzelrzg==}
