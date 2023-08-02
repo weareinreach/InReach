@@ -13,9 +13,12 @@ import { createHmac } from 'crypto'
 
 import { prisma } from '@weareinreach/db'
 import { getEnv } from '@weareinreach/env'
+import { createSubLog } from '@weareinreach/util/logger'
 
 import { decodeCognitoIdJwt } from './cognitoJwt'
 import { generateUserSession } from './genUserSession'
+
+const logger = createSubLog('Cognito')
 
 export const CognitoSessionSchema = z.object({
 	AccessToken: z.string(),
@@ -29,6 +32,7 @@ export const cognito = new CognitoIdentityProvider({
 		accessKeyId: getEnv('COGNITO_ACCESS_KEY'),
 		secretAccessKey: getEnv('COGNITO_SECRET'),
 	},
+	logger,
 })
 export const ClientId = getEnv('COGNITO_CLIENT_ID')
 

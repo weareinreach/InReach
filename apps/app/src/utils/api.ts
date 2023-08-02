@@ -32,10 +32,6 @@ export const api = createTRPCNext<AppRouter>({
 						// eslint-disable-next-line node/no-process-env
 						(process.env.NODE_ENV === 'development' && typeof window !== 'undefined') ||
 						(opts.direction === 'down' && opts.result instanceof Error),
-					console: {
-						log: log.info,
-						error: log.error,
-					},
 				}),
 
 				httpBatchStreamLink({
