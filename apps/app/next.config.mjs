@@ -15,7 +15,8 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const isVercelActiveDev = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF !== 'dev'
-const isDev = process.env.NODE_ENV === 'development'
+const isLocalDev =
+	process.env.NODE_ENV === 'development' && !['preview', 'production'].includes(process.env.VERCEL_ENV)
 
 const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
 /** @type {import('next').NextConfig} */
@@ -49,8 +50,9 @@ const nextConfig = {
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
-		config.plugins.push(new webpack.DefinePlugin({ __SENTRY_DEBUG__: false }))
-
+		if (process.env.VERCEL_ENV === 'production') {
+			config.plugins.push(new webpack.DefinePlugin({ __SENTRY_DEBUG__: false }))
+		}
 		return config
 	},
 }
@@ -105,4 +107,4 @@ const defineSentryConfig = (nextConfig) =>
 		}
 	)
 
-export default isDev ? defineNextConfig(nextConfig) : defineSentryConfig(defineNextConfig(nextConfig))
+export default isLocalDev ? defineNextConfig(nextConfig) : defineSentryConfig(defineNextConfig(nextConfig))
