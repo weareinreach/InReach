@@ -6,13 +6,13 @@
 		"paths": {
 			"~api/*": ["../../packages/api/*"],
 			"~app/*": ["../../apps/app/src/*"],
-			"~auth/*": ["./*"],
+			"~auth/*": ["../../packages/auth/*"],
 			"~db/*": ["../../packages/db/*"],
 			"~ui/*": ["../../packages/ui/*"],
-			"~web/*": ["../../apps/web/src/*"],
-			"~util/*": ["../../packages/util/*"]
+			"~util/*": ["./*"],
+			"~web/*": ["../../apps/web/src/*"]
 		}
 	},
-	"exclude": ["**/node_modules", "**/.*/"],
-	"include": ["./**/*.ts", "../../@types/**/*.ts"]
+	"exclude": ["**/node_modules/**"],
+	"include": ["./**/*.ts"]
 }

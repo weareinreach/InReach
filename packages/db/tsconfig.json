@@ -11,7 +11,8 @@
 			"~auth/*": ["../../packages/auth/*"],
 			"~db/*": ["./*"],
 			"~ui/*": ["../../packages/ui/*"],
-			"~web/*": ["../../apps/web/src/*"]
+			"~web/*": ["../../apps/web/src/*"],
+			"~util/*": ["../../packages/util/*"]
 		}
 	},
 	"exclude": ["**/node_modules", "./**/.*/"],

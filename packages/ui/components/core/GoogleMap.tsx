@@ -28,7 +28,7 @@ export const GoogleMapComponent = ({ height, width, locationIds }: GoogleMapProp
 				)
 			}
 		}
-		throw new Error('Must have multiple points')
+		throw new Error('Must have multiple points', { cause: { data, isLoading, isLoaded } })
 	}
 
 	const getMarkers = () => {
@@ -55,20 +55,21 @@ export const GoogleMapComponent = ({ height, width, locationIds }: GoogleMapProp
 	}
 
 	// const RenderMap = () => {
-	const onLoad = useCallback(function onLoad(map: google.maps.Map) {
-		map.setOptions({ disableDefaultUI: true, keyboardShortcuts: false })
-
-		if (Array.isArray(data)) {
-			map.fitBounds(getBoundProps())
-		} else {
-			if (data?.latitude && data?.longitude && isLoaded) {
+	const onLoad = useCallback(
+		function onLoad(map: google.maps.Map) {
+			map.setOptions({ disableDefaultUI: true, keyboardShortcuts: false })
+			if (isLoading) return
+			if (Array.isArray(data)) {
+				map.fitBounds(getBoundProps())
+			} else if (data?.latitude && data?.longitude && isLoaded) {
 				const center = new google.maps.LatLng({ lat: data.latitude, lng: data.longitude })
 				map.setCenter(center)
 				map.setZoom(11)
 			}
-		}
+		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+		[isLoading]
+	)
 
 	return isLoaded && !isLoading ? (
 		<GMap mapContainerStyle={{ height, width, borderRadius: rem(16) }} onLoad={onLoad}>

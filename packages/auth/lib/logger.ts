@@ -1,3 +1,3 @@
-import { Logger } from 'tslog'
+import { createSubLog } from '@weareinreach/util/logger'
 
-export const logger = new Logger({ name: '@weareinreach/auth', hideLogPositionForProduction: true })
+export const logger = createSubLog('@weareinreach/auth')

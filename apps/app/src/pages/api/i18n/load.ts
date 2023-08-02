@@ -2,9 +2,9 @@
 /* eslint-disable node/no-process-env */
 import { context, trace } from '@opentelemetry/api'
 import { type NextApiRequest, type NextApiResponse } from 'next'
-import { Logger } from 'tslog'
 import { z } from 'zod'
 
+import { createSubLog } from '@weareinreach/util/logger'
 import { crowdinOpts } from '~app/data/crowdinOta'
 import { crowdinDistTimestamp, fetchCrowdinDbKey, fetchCrowdinFile } from '~app/utils/crowdin'
 import { redisReadCache, redisWriteCache } from '~app/utils/vercel-kv'
@@ -14,7 +14,7 @@ const QuerySchema = z.object({
 	ns: z.string(),
 })
 const tracer = trace.getTracer('inreach-app')
-const log = new Logger({ name: 'i18n Loader' })
+const log = createSubLog('i18n Loader')
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const query = QuerySchema.parse(req.query)

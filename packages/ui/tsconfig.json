@@ -7,7 +7,8 @@
 			"~api/*": ["../../packages/api/*"],
 			"~app/*": ["../../apps/app/src/*"],
 			"~auth/*": ["../../packages/auth/*"],
-			"~db/*": ["../../packages/db/*"]
+			"~db/*": ["../../packages/db/*"],
+			"~util/*": ["../../packages/util/*"]
 		},
 		"strict": true
 	},

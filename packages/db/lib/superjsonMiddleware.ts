@@ -1,14 +1,15 @@
 import { Prisma } from '@prisma/client'
 import superjson from 'superjson'
 import { type SuperJSONResult } from 'superjson/dist/types'
-import { Logger } from 'tslog'
 import { z } from 'zod'
+
+import { createSubLog } from '@weareinreach/util/logger'
 
 import { NullableJsonValue } from './zod'
 
 const MODELS_TO_RUN: Prisma.ModelName[] = ['AttributeSupplement', 'Suggestion']
 
-const logger = new Logger({ name: 'SuperJSON middleware', minLevel: 3 })
+const logger = createSubLog('SuperJSON middleware', { minLevel: 3 })
 
 const ResultSchema = z
 	.object({
