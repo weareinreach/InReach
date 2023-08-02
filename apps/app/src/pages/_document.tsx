@@ -24,7 +24,18 @@ export default class _Document extends Document {
 		const currentLocale = this.props.__NEXT_DATA__.locale || i18nextConfig.i18n.defaultLocale
 		return (
 			<Html lang={currentLocale}>
-				<Head />
+				<Head>
+					{
+						// eslint-disable-next-line node/no-process-env
+						(process.env.NODE_ENV === 'development' || process.env.VERCEL_ENV === 'preview') && (
+							// eslint-disable-next-line @next/next/no-sync-scripts
+							<script
+								data-project-id='80bkuIz3fVjteVEQL6H3mzOWfyTGfUJwJQ8Y4oxw'
+								src='https://snippet.meticulous.ai/v1/meticulous.js'
+							/>
+						)
+					}
+				</Head>
 				<body>
 					<Main />
 					<NextScript />
