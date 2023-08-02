@@ -35,6 +35,9 @@
 			],
 			"outputs": [".next/**"]
 		},
+		"build:prebuild": {
+			"cache": false
+		},
 		"lint": {
 			"outputs": [".next/cache/eslint/**"]
 		},
