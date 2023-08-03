@@ -70,6 +70,10 @@
 		"cost-fees": "Заплатить себестоимость",
 		"cost-free": "Бесплатно"
 	},
+	"crisis-support-community": {
+		"elders": "Старейшины",
+		"general-lgbtq": "Общий LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Требования в отношении приемлемости",
 		"elig-age_max": "Под {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "Инструкции доступа - Местоположение",
 		"accessphone": "Инструкции доступа - Телефон",
 		"accesspublictransit": "Инструкции по доступу - общественный транзит",
-		"accesstext": "Инструкции доступа - Текст"
+		"accesssms": "Инструкции доступа - SMS",
+		"accesstext": "Инструкции доступа - Текст",
+		"accesswhatsapp": "Инструкции по доступу - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Фокус службы",
