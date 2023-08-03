@@ -35,9 +35,9 @@
 	},
 	"values": {
 		"free": "<Title2>永久免费 🔑</Title2>\n<Text>我们的技术平台 100% 免费提供给所有人，以确保 InReach 随时提供安全帮助。</Text>\n<LinkFree>捐款以帮助我们保持平台免费。</LinkFree>",
-		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>We are the world’s first tech platform matching LGBTQ+ people facing persecution or discrimination with safe, independently verified resources.</Text>\n<LinkInnovative>View our source code and contribute.</LinkInnovative>",
+		"innovative": "<Title2>创新：引导：</Title2>\n<Text>我们是世界上第一个符合LGBTQ+面临迫害或歧视的人的科技平台。 独立核实的资源。</Text>\n<LinkInnovative>查看我们的源代码和贡献。</LinkInnovative>",
 		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>We believe LGBTQ+ equality requires trans justice, refugee justice, racial justice, reproductive justice, language justice and more.</Text>\n<LinkIntersect>Learn more about our vetting process.</LinkIntersect>",
 		"our-values": "我们的价值观",
-		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>我们知道在线匿名可能是LGBTQ+ 人的生死问题。 这就是为什么我们的应用旨在保护用户在线的保密和安全。</Text>\n<LinkSafety>了解更多关于我们隐私政策的信息</LinkSafety>"
 	}
 }
