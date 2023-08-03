@@ -26,7 +26,7 @@
 		"asexual": "Możliwości, które służą społeczności bezpłciowej",
 		"asia-immigrant": "Możliwości, które służą osobom z krajów azjatyckich",
 		"asylee": "Szanse, które służą azylowi (osobom, które otrzymały status azylu)",
-		"asylum-seeker": "Opportunities that serve Asylum seekers from {{country}}",
+		"asylum-seeker": "Szanse dla osób ubiegających się o azyl z {{country}}",
 		"bipoc": "Możliwości, które służą Czarnym, rdzennym mieszkańcom i kolorowym ludziom",
 		"bisexual": "Możliwości, które służą społeczności biseksualnej",
 		"black": "Możliwości, które służą czarnej społeczności",
@@ -70,6 +70,10 @@
 		"cost-fees": "Kończy się koszt",
 		"cost-free": "Bezpłatnie"
 	},
+	"crisis-support-community": {
+		"elders": "Lampy analizujące do kamer telewizyjnych",
+		"general-lgbtq": "Ogólny LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Wymagania kwalifikacyjne",
 		"elig-age_max": "Poniżej {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "Instrukcje dostępu - Lokalizacja",
 		"accessphone": "Instrukcje dostępu - Telefon",
 		"accesspublictransit": "Instrukcje dostępu — transport publiczny",
-		"accesstext": "Instrukcje dostępu - tekst"
+		"accesssms": "Instrukcje dostępu - SMS",
+		"accesstext": "Instrukcje dostępu - tekst",
+		"accesswhatsapp": "Instrukcje dostępu - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Koncentracja na usługach",
