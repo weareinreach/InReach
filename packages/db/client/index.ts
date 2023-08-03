@@ -2,11 +2,11 @@
 import { type Prisma, PrismaClient } from '@prisma/client'
 import { createPrismaQueryEventHandler } from 'prisma-query-log'
 
-import { createSubLog } from '@weareinreach/util/logger'
+import { createLoggerInstance } from '@weareinreach/util/logger'
 import { idMiddleware } from '~db/lib/idMiddleware'
 import { superjsonMiddleware } from '~db/lib/superjsonMiddleware'
 
-const log = createSubLog('prisma')
+const log = createLoggerInstance('prisma')
 const verboseLogging = Boolean(
 	// eslint-disable-next-line turbo/no-undeclared-env-vars
 	process.env.NODE_ENV === 'development' && (!!process.env.NEXT_VERBOSE || !!process.env.PRISMA_VERBOSE)

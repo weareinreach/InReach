@@ -1,6 +1,5 @@
 import { type Context } from '~api/lib/context'
 
-export type TRPCHandlerParams<T> = {
+export type TRPCHandlerParams<TInput = undefined> = {
 	ctx: Context
-	input: T
-}
+} & (undefined extends TInput ? { input?: never } : { input: TInput })
