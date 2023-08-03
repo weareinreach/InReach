@@ -15,21 +15,22 @@ import {
 	UnstyledButton,
 } from '@mantine/core'
 import { TimeInput } from '@mantine/dates'
-import { zodResolver } from '@mantine/form'
-import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
+import { Form, useForm, zodResolver } from '@mantine/form'
+import { useDebouncedValue, useDisclosure, useListState } from '@mantine/hooks'
 import { DateTime, Interval } from 'luxon'
-import { type ComponentPropsWithRef, forwardRef, useEffect, useState } from 'react'
+import { type ComponentPropsWithRef, forwardRef, type ReactNode, useEffect, useMemo, useState } from 'react'
 import timezones from 'timezones-list'
 import { z } from 'zod'
 
 import { type ApiOutput } from '@weareinreach/api'
+import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { HoursDrawerFormProvider, useForm } from './HoursDrawerContext'
+// import { HoursDrawerFormProvider, useForm } from './HoursDrawerContext'
 
 const useStyles = createStyles((theme) => ({
 	drawerContent: {
@@ -53,17 +54,27 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-const FormSchema = z.object({
-	data: z
-		.object({
-			dayIndex: z.coerce.number().nullable(),
-			start: z.coerce.date().nullable(),
-			end: z.coerce.date().nullable(),
-			close: z.coerce.boolean().nullable(),
-			tz: z.string().nullable(),
-		})
-		.partial(),
-})
+const FormSchema = z
+	.object({
+		data: z
+			.object({
+				id: z.string().optional(),
+				dayIndex: z.coerce.number(),
+				start: z
+					.string({ required_error: 'Start time is required', invalid_type_error: 'Invalid entry' })
+					.length(5),
+				end: z
+					.string({ required_error: 'End time is required', invalid_type_error: 'Invalid entry' })
+					.length(5),
+				closed: z.coerce.boolean(),
+				tz: z.string().nullable(),
+				delete: z.boolean().optional(),
+			})
+			.array(),
+	})
+	.superRefine((val, ctx) => {
+		// https://zod.dev/?id=superrefine
+	})
 
 const schemaTransform = ({ id, data }: FormSchema) => ({
 	id,
@@ -103,16 +114,19 @@ const sortedTimezoneData = timezoneData.sort((a, b) => {
 })
 
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
-	const [opened, handler] = useDisclosure(false)
+	const [opened, handler] = useDisclosure(true) //TODO: Change back to 'false' when done.
 	const [isSaved, setIsSaved] = useState(false)
-	const form = useForm<FormSchema>({
+	const form = useForm<z.infer<typeof FormSchema>>({
 		validate: zodResolver(FormSchema),
-		initialValues: { data: [] },
-		transformValues: FormSchema.transform(schemaTransform).parse,
+		initialValues: {
+			data: [],
+		},
 	})
 	const [tzValue, setTzValue] = useState<string | null>(null)
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
+
+	/** Remove this */
 	const [checked, setChecked] = useState<{ [key: number]: boolean }>({
 		0: false, // Sunday
 		1: false, // Monday
@@ -122,6 +136,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		5: false, // Friday
 		6: false, // Saturday
 	})
+	/** Remove this */
 	const [timeValues, setTimeValues] = useState<{
 		[key: number]: { start: Date | null; end: Date | null }
 	}>({
@@ -133,117 +148,76 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		5: { start: null, end: null }, // Friday
 		6: { start: null, end: null }, // Saturday
 	})
-	console.log(timeValues)
+
+	//data comes back here
+	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '', {
+		onSuccess: (data) => form.setValues({ data }),
+	})
+	console.log('form values', form.values)
+
+	// Docs: https://mantine.dev/form/nested/
+
 	const handleUpdate = () => {
 		//TODO save to DB instead of sending to console.log
-		const data = generateDataArray()
-		console.log(data)
+		// const data = generateDataArray()
+		console.log('clicked save', form.isValid(), form.errors)
 	}
 
-	const TimeRangeComponent = (title: string, dayIndex: number) => {
-		const [timeRangeGroups, setTimeRangeGroups] = useState<JSX.Element[]>([]) // Define the type for state variable
-
-		const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-			const { checked } = event.currentTarget
-
-			setChecked((prevChecked) => {
-				if (checked) {
-					setTimeRangeGroups([])
-					setTimeValues((prevTimeValues) => ({
-						...prevTimeValues,
-						[dayIndex]: {
-							start: DateTime.fromMillis(0).toUTC().toISO(), // Set start time to 1970-01-01T00:00:00.000Z
-							end: DateTime.fromObject(
-								{ year: 1970, month: 1, day: 1, hour: 23, minute: 59, second: 59, millisecond: 0 },
-								{ zone: 'utc' }
-							).toISO(), // Set end time to 1970-01-01T23:59:59.000Z
-						},
-					}))
-				}
-
-				return {
-					...prevChecked,
-					[dayIndex]: checked,
-				}
-			})
-		}
-
-		const handleAddTimeRangeGroup = () => {
-			// Add a new time range group to the state
-			setTimeRangeGroups((prevTimeRangeGroups) => [
-				...prevTimeRangeGroups,
-				<Group key={prevTimeRangeGroups.length}>
+	const TimeRangeComponent = ({ arrayIdx }: { arrayIdx: number }) => {
+		return (
+			<Stack>
+				<Group>
 					<TimeInput
 						label='Open time'
-						ref={ref}
 						maw={200}
 						mx='auto'
-						disabled={isCheckboxChecked}
-						onChange={(event) => handleTimeChange(event, dayIndex, 'start')}
 						name='start'
+						{...form.getInputProps(`data.${arrayIdx}.start`)}
+						onFocus={undefined}
 					/>
 					<TimeInput
 						label='Close time'
-						ref={ref}
 						maw={200}
 						mx='auto'
-						disabled={isCheckboxChecked}
-						onChange={(event) => handleTimeChange(event, dayIndex, 'end')}
 						name='end'
+						{...form.getInputProps(`data.${arrayIdx}.end`)}
+						onFocus={undefined}
 					/>
-				</Group>,
-			])
+				</Group>
+				<Button onClick={() => form.setFieldValue(`data.${arrayIdx}.delete`, true)}>Delete</Button>
+			</Stack>
+		)
+	}
+	const DayWrap = ({ dayIndex, children }: { dayIndex: number; children: ReactNode }) => {
+		const days = {
+			0: 'Sunday',
+			1: 'Monday',
+			2: 'Tuesday',
+			3: 'Wednesday',
+			4: 'Thursday',
+			5: 'Friday',
+			6: 'Saturday',
 		}
-
-		const handleTimeChange = (
-			event: React.ChangeEvent<HTMLInputElement>,
-			dayIndex: number,
-			timeType: 'start' | 'end'
-		) => {
-			const { name, value } = event.currentTarget
-			const [hours, minutes] = value.split(':')
-
-			const date = new Date(1970, 0, 1, parseInt(hours, 10), parseInt(minutes, 10))
-
-			setTimeValues((prevTimeValues) => ({
-				...prevTimeValues,
-				[dayIndex]: {
-					...prevTimeValues[dayIndex],
-					[name]: date,
-				},
-			}))
-		}
-
-		const isCheckboxChecked = checked[dayIndex]
 
 		return (
 			<Stack>
 				<Group position='apart'>
-					<Title order={3}>{title}</Title>
-					<Checkbox checked={isCheckboxChecked} onChange={handleCheckboxChange} label='Open 24 Hours' />
+					<Title order={3}>{days[dayIndex.toString()] ?? ''}</Title>
+					<Checkbox label='Open 24 Hours' />
 				</Group>
-				<Group>
-					<TimeInput
-						label='Open time'
-						ref={ref}
-						maw={200}
-						mx='auto'
-						disabled={isCheckboxChecked}
-						onChange={(event) => handleTimeChange(event, dayIndex, 'start')}
-						name='start'
-					/>
-					<TimeInput
-						label='Close time'
-						ref={ref}
-						maw={200}
-						mx='auto'
-						disabled={isCheckboxChecked}
-						onChange={(event) => handleTimeChange(event, dayIndex, 'end')}
-						name='end'
-					/>
-				</Group>
-				{timeRangeGroups} {/* Render the dynamically added HTML when button is clicked*/}
-				<Button variant='secondary' onClick={handleAddTimeRangeGroup} disabled={isCheckboxChecked}>
+				{children}
+				<Button
+					variant='secondary'
+					onClick={() =>
+						form.insertListItem('data', {
+							dayIndex,
+							closed: false,
+							id: generateId('orgHours'),
+							start: '',
+							end: '',
+						})
+					}
+				>
 					<Group noWrap spacing={8}>
 						<Icon icon='carbon:add' className={classes.addNewText} height={24} />
 						<Text variant={variants.Text.utility2} className={classes.addNewText}>
@@ -256,6 +230,21 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 			</Stack>
 		)
 	}
+
+	const dayRender: Record<string, JSX.Element[]> = {
+		0: [],
+		1: [],
+		2: [],
+		3: [],
+		4: [],
+		5: [],
+		6: [],
+	}
+
+	form.values.data.forEach((item, idx) => {
+		if (item.delete || !dayRender[item.dayIndex.toString()]) return
+		dayRender[item.dayIndex.toString()]?.push(<TimeRangeComponent arrayIdx={idx} key={item.id ?? idx} />)
+	})
 
 	const convertTimeToUTC = (timeInput, timezone) => {
 		return timeInput
@@ -312,13 +301,13 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							/>
 							<Divider my='sm' />
 						</Stack>
-						{TimeRangeComponent('Sunday', 0)}
-						{TimeRangeComponent('Monday', 1)}
-						{TimeRangeComponent('Tuesday', 2)}
-						{TimeRangeComponent('Wednesday', 3)}
-						{TimeRangeComponent('Thursday', 4)}
-						{TimeRangeComponent('Friday', 5)}
-						{TimeRangeComponent('Saturday', 6)}
+						<form>
+							{Object.entries(dayRender).map(([dayIndex, children]) => (
+								<DayWrap key={dayIndex} dayIndex={parseInt(dayIndex)}>
+									{children}
+								</DayWrap>
+							))}
+						</form>
 					</Drawer.Body>
 				</Drawer.Content>
 			</Drawer.Root>

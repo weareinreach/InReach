@@ -6,6 +6,7 @@ import { fieldOpt } from '~ui/mockData/fieldOpt'
 import { geoMocks } from '~ui/mockData/geo'
 import { location } from '~ui/mockData/location'
 import { organization } from '~ui/mockData/organization'
+import { orgHours } from '~ui/mockData/orgHours'
 import { service } from '~ui/mockData/orgService'
 
 import { HoursDrawer } from './HoursDrawer'
@@ -37,6 +38,7 @@ export default {
 				type: 'mutation',
 				response: { id: 'oloc_00000RECORD22ID' },
 			}),
+			orgHours.forHoursDrawer,
 		],
 	},
 	args: {
