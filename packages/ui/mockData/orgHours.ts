@@ -81,11 +81,73 @@ export const orgHoursData = {
 			tz: 'America/New_York',
 		},
 	],
+	forHoursDrawer: [
+		{
+			start: '05:00',
+			end: '12:00',
+			id: 'ohrs_01GW2HT8BQ87EZJ6K9H5ME1W0M',
+			dayIndex: 1,
+			closed: false,
+			tz: 'America/Los_Angeles',
+		},
+		{
+			start: '13:00',
+			end: '16:00',
+			id: 'ohrs_01GW2HT8BQQ6GM1VYVXEZMR3HM',
+			dayIndex: 2,
+			closed: false,
+			tz: 'America/Los_Angeles',
+		},
+		{
+			start: '08:00',
+			end: '12:00',
+			id: 'ohrs_01GW2HT8BRB9V0GEP1BGWVNCGA',
+			dayIndex: 2,
+			closed: false,
+			tz: 'America/Los_Angeles',
+		},
+		{
+			start: '05:00',
+			end: '13:00',
+			id: 'ohrs_01GW2HT8BRXRB7QH0BTRVVE1XB',
+			dayIndex: 3,
+			closed: false,
+			tz: 'America/Los_Angeles',
+		},
+		{
+			start: '05:00',
+			end: '13:00',
+			id: 'ohrs_01GW2HT8BQKTD5Z92YSKHQ03PA',
+			dayIndex: 4,
+			closed: false,
+			tz: 'America/Los_Angeles',
+		},
+		{
+			start: '08:00',
+			end: '13:00',
+			id: 'ohrs_01GW2HT8BS0YGWY4J7KTX3C4VA',
+			dayIndex: 5,
+			closed: false,
+			tz: 'America/Los_Angeles',
+		},
+		{
+			start: '14:00',
+			end: '17:00',
+			id: 'ohrs_01GW2HT8BQX6XYNSVYH4S26MT0',
+			dayIndex: 5,
+			closed: false,
+			tz: 'America/Los_Angeles',
+		},
+	],
 } satisfies MockDataObject<'orgHours'>
 
 export const orgHours = {
 	forHoursDisplay: getTRPCMock({
 		path: ['orgHours', 'forHoursDisplay'],
 		response: orgHoursData.forHoursDisplay,
+	}),
+	forHoursDrawer: getTRPCMock({
+		path: ['orgHours', 'forHoursDrawer'],
+		response: orgHoursData.forHoursDrawer,
 	}),
 } satisfies MockHandlerObject<'orgHours'>

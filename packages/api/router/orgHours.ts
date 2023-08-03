@@ -109,4 +109,48 @@ export const orgHoursRouter = defineRouter({
 			})
 			return intervalResults
 		}),
+	forHoursDrawer: publicProcedure
+		.input(z.string().regex(getIdPrefixRegex('organization', 'orgLocation', 'orgService')))
+		.query(async ({ ctx, input }) => {
+			const whereId = (): Prisma.OrgHoursWhereInput => {
+				switch (true) {
+					case isIdFor('organization', input): {
+						return { organization: { id: input, ...isPublic } }
+					}
+					case isIdFor('orgLocation', input): {
+						return { orgLocation: { id: input, ...isPublic } }
+					}
+					case isIdFor('orgService', input): {
+						return { orgService: { id: input, ...isPublic } }
+					}
+					default: {
+						return {}
+					}
+				}
+			}
+
+			const result = await ctx.prisma.orgHours.findMany({
+				where: {
+					...whereId(),
+				},
+				select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true },
+				orderBy: [{ dayIndex: 'asc' }, { start: 'asc' }],
+			})
+			const transformedResult = result.map(({ start, end, ...rest }) => {
+				return {
+					start: DateTime.fromJSDate(start, { zone: rest.tz ?? 'America/New_York' }).toISOTime({
+						suppressMilliseconds: true,
+						suppressSeconds: true,
+						includeOffset: false,
+					}),
+					end: DateTime.fromJSDate(end, { zone: rest.tz ?? 'America/New_York' }).toISOTime({
+						suppressMilliseconds: true,
+						suppressSeconds: true,
+						includeOffset: false,
+					}),
+					...rest,
+				}
+			})
+			return transformedResult
+		}),
 })
