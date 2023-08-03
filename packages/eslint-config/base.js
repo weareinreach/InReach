@@ -25,8 +25,9 @@ const config = {
 			'warn',
 			{
 				varsIgnorePattern: '^_',
-				args: 'none',
+				args: 'after-used',
 				ignoreRestSiblings: true,
+				destructuredArrayIgnorePattern: '^_',
 			},
 		],
 		'@typescript-eslint/no-empty-function': 'off',
