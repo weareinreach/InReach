@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Swen Avòtman",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "Founisè avòtman",
 		"financial-assistance": "Asistans finansye",
 		"lodging-assistance": "Asistans lojman",
@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "Odinatè ak entènèt",
 		"computers-and-internet": "Odinatè ak entènèt"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Edikasyon ak Travay",
 		"career-counseling": "Karyè konsèy",
@@ -38,7 +42,7 @@
 		"food-assistance": "Asistans manje"
 	},
 	"housing": {
-		"CATEGORYNAME": "Lojman",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "Drop-nan sant pou jèn LGBTQ",
 		"emergency-housing": "Lojman Ijans",
 		"housing-information-and-referrals": "Enfòmasyon sou lojman ak referans",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "Koup cheve ak stilist",
 		"hygiene": "Ijyèn"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Mental Health",
+		"resettlement-assistance": "Resettlement Assistance"
+	},
 	"legal": {
 		"CATEGORYNAME": "Legal",
 		"asylum-application": "Azil aplikasyon",
@@ -63,7 +73,7 @@
 		"employment-authorization": "Otorizasyon travay",
 		"family-petitions": "Petisyon fanmi",
 		"immigration-detention": "Imigrasyon detansyon",
-		"legal-advice": "Konsèy legal",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "Liy dirèk legal",
 		"name-and-gender-change": "Non ak chanjman sèks",
 		"refugee-claim": "Reklamasyon Refijye",
@@ -77,7 +87,7 @@
 		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medikal",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "Sèvis COVID-19",
 		"dental-care": "Swen dantè",
 		"hiv-and-sexual-health": "VIH ak sante seksyèl",
@@ -93,7 +103,7 @@
 		"trans-health-speech-therapy": "Trans sante - terapi lapawòl"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Sante Mantal",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "Gwoup sipò BIPOC",
 		"hotlines": "Hotlines",
 		"private-therapy-and-counseling": "Prive terapi ak konsèy",
@@ -111,7 +121,7 @@
 		"sports-and-entertainment": "Espò ak amizman"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Tradiksyon ak Entèpretasyon",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "Pou swen sante",
 		"for-legal-services": "Pou sèvis legal",
 		"general-translation-and-interpretation": "Tradiksyon jeneral ak entèpretasyon"
