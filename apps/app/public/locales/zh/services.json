@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "计算机和互联网",
 		"computers-and-internet": "计算机和互联网"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "危机支助",
+		"crisis-support": "危机支助"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "教育和就业",
 		"career-counseling": "职业咨询",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "发型师和发型师",
 		"hygiene": "卫生"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "国际支助",
+		"financial-assistance": "财政援助",
+		"mental-health": "精神健康",
+		"resettlement-assistance": "重新安置援助"
+	},
 	"legal": {
 		"CATEGORYNAME": "合法",
 		"asylum-application": "庇护申请",
@@ -63,7 +73,7 @@
 		"employment-authorization": "就业授权",
 		"family-petitions": "家庭请愿书",
 		"immigration-detention": "移民拘留",
-		"legal-advice": "法律建议",
+		"legal-advice": "法律咨询_____",
 		"legal-hotlines": "法律热线",
 		"name-and-gender-change": "姓名和性别变更",
 		"refugee-claim": "难民申请",
@@ -77,7 +87,7 @@
 		"mail": "邮件"
 	},
 	"medical": {
-		"CATEGORYNAME": "医疗",
+		"CATEGORYNAME": "医疗服务",
 		"covid-19-services": "COVID-19 服务",
 		"dental-care": "牙科保健",
 		"hiv-and-sexual-health": "艾滋病毒和性健康",
@@ -93,7 +103,7 @@
 		"trans-health-speech-therapy": "跨性别健康-言语疗法"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "心理健康",
+		"CATEGORYNAME": "精神健康",
 		"bipoc-support-groups": "BIPOC 支持小组",
 		"hotlines": "热线",
 		"private-therapy-and-counseling": "私人治疗和咨询",
