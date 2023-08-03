@@ -17,6 +17,7 @@ const config = {
 			{
 				prefer: 'type-imports',
 				fixStyle: 'inline-type-imports',
+				disallowTypeAnnotations: false,
 			},
 		],
 		'no-unused-vars': 'off',
