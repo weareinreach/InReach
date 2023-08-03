@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "コンピューターとインターネット",
 		"computers-and-internet": "コンピューターとインターネット"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "危機への支援",
+		"crisis-support": "危機への支援"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "教育と雇用",
 		"career-counseling": "キャリアカウンセリング",
@@ -38,7 +42,7 @@
 		"food-assistance": "食糧援助"
 	},
 	"housing": {
-		"CATEGORYNAME": "住宅",
+		"CATEGORYNAME": "僅用於中文",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQの若者のためのドロップインセンター",
 		"emergency-housing": "緊急住宅",
 		"housing-information-and-referrals": "住宅情報と紹介",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "ヘアカットとスタイリスト",
 		"hygiene": "衛生"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "国際サポート",
+		"financial-assistance": "金融支援",
+		"mental-health": "精神的健康",
+		"resettlement-assistance": "再定住支援"
+	},
 	"legal": {
 		"CATEGORYNAME": "合法",
 		"asylum-application": "亡命申請",
@@ -63,7 +73,7 @@
 		"employment-authorization": "雇用認可",
 		"family-petitions": "家族への請願",
 		"immigration-detention": "入国者拘禁",
-		"legal-advice": "法律相談",
+		"legal-advice": "法的アドバイス",
 		"legal-hotlines": "リーガルホットライン",
 		"name-and-gender-change": "名前と性別の変更",
 		"refugee-claim": "難民申請",
@@ -93,7 +103,7 @@
 		"trans-health-speech-therapy": "トランスヘルス-言語療法"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "メンタルヘルス",
+		"CATEGORYNAME": "精神的健康",
 		"bipoc-support-groups": "BIPOC サポートグループ",
 		"hotlines": "ホットライン",
 		"private-therapy-and-counseling": "プライベートセラピーとカウンセリング",
@@ -111,7 +121,7 @@
 		"sports-and-entertainment": "スポーツとエンターテイメント"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "翻訳と通訳",
+		"CATEGORYNAME": "翻訳と解釈",
 		"for-healthcare": "ヘルスケア用",
 		"for-legal-services": "法務サービス用",
 		"general-translation-and-interpretation": "一般的な翻訳と通訳"
