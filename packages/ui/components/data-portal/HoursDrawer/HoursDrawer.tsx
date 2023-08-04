@@ -179,8 +179,12 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 						{...form.getInputProps(`data.${arrayIdx}.end`)}
 						onFocus={undefined}
 					/>
+					<Icon
+						icon='carbon:trash-can'
+						onClick={() => form.setFieldValue(`data..delete`, true)}
+						style={{ cursor: 'pointer' }}
+					/>
 				</Group>
-				<Button onClick={() => form.setFieldValue(`data.${arrayIdx}.delete`, true)}>Delete</Button>
 			</Stack>
 		)
 	}
