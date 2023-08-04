@@ -30,8 +30,6 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-// import { HoursDrawerFormProvider, useForm } from './HoursDrawerContext'
-
 const useStyles = createStyles((theme) => ({
 	drawerContent: {
 		borderRadius: `${rem(32)} 0 0 0`,
@@ -83,14 +81,14 @@ const schemaTransform = ({ id, data }: FormSchema) => ({
 	},
 })
 
-const tzGroup = [
+const tzGroup = new Set([
 	'Pacific/Honolulu',
 	'America/Anchorage',
 	'America/Los_Angeles',
 	'America/Denver',
 	'America/Chicago',
 	'America/New_York',
-]
+])
 
 const timezoneData = timezones.map((item, index) => {
 	const { tzCode, ...rest } = item
@@ -98,12 +96,10 @@ const timezoneData = timezones.map((item, index) => {
 		...rest,
 		key: index,
 		value: tzCode,
-		group: tzGroup.includes(tzCode) ? 'North America' : 'Other',
+		group: tzGroup.has(tzCode) ? 'North America' : 'Other',
 	}
 })
 
-//the mantine select grouping will set the group order based on the first group value it comes across
-//adding this sort order so the "Most Common" group will appear first
 const sortedTimezoneData = timezoneData.sort((a, b) => {
 	if (a.group === 'North America' && b.group === 'Other') {
 		return -1
@@ -160,7 +156,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 	const handleUpdate = () => {
 		//TODO save to DB instead of sending to console.log
 		// const data = generateDataArray()
-		console.log('clicked save', form.isValid(), form.errors)
+		console.log('clicked save', form.isValid(), form.errors, form.values)
 	}
 
 	const TimeRangeComponent = ({ arrayIdx }: { arrayIdx: number }) => {
