@@ -54,7 +54,7 @@ if (!global.prisma) {
 		prisma.$on('warn', (event) => log.warn(event))
 	}
 }
-
+prisma.$connect()
 if (process.env.NODE_ENV !== 'production') {
 	global.prisma = prisma
 }
