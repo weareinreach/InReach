@@ -1,5 +1,10 @@
+import { type SetNonNullable } from 'type-fest'
+
 import { type Context } from '~api/lib/context'
 
-export type TRPCHandlerParams<TInput = undefined> = {
-	ctx: Context
+type ContextScenario = 'public' | 'protected'
+type AuthedContext = SetNonNullable<Context, 'session'> & { actorId: string }
+
+export type TRPCHandlerParams<TInput = undefined, TScenario extends ContextScenario = 'public'> = {
+	ctx: TScenario extends 'public' ? Context : AuthedContext
 } & (undefined extends TInput ? { input?: never } : { input: TInput })
