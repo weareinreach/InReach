@@ -1,76 +1,35 @@
-import { z } from 'zod'
-
-import { getIdPrefixRegex, isIdFor, type Prisma } from '@weareinreach/db'
 import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
-import { CreateOrgPhotoSchema, UpdateOrgPhotoSchema } from '~api/schemas/create/orgPhoto'
-import { isPublic } from '~api/schemas/selects/common'
+
+import * as schema from './schemas'
+
+const HandlerCache: Partial<OrgPhotoHandlerCache> = {}
+type OrgPhotoHandlerCache = {
+	create: typeof import('./mutation.create.handler').create
+	update: typeof import('./mutation.update.handler').update
+	getByParent: typeof import('./query.getByParent.handler').getByParent
+}
 
 export const orgPhotoRouter = defineRouter({
 	create: permissionedProcedure('createPhoto')
-		.input(CreateOrgPhotoSchema)
+		.input(schema.ZCreateSchema)
 		.mutation(async ({ ctx, input }) => {
-			const auditLogs = CreateAuditLog({ actorId: ctx.session.user.id, operation: 'CREATE', to: input })
-			const newRecord = await ctx.prisma.orgPhoto.create({
-				data: {
-					...input,
-					auditLogs,
-				},
-				select: { id: true },
-			})
-			return newRecord
+			if (!HandlerCache.create)
+				HandlerCache.create = await import('./mutation.create.handler').then((mod) => mod.create)
+			if (!HandlerCache.create) throw new Error('Failed to load handler')
+			return HandlerCache.create({ ctx, input })
 		}),
 	update: permissionedProcedure('updatePhoto')
-		.input(UpdateOrgPhotoSchema)
+		.input(schema.ZUpdateSchema)
 		.mutation(async ({ input, ctx }) => {
-			const { where, data } = input
-			const updatedRecord = await ctx.prisma.$transaction(async (tx) => {
-				const current = await tx.orgPhoto.findUniqueOrThrow({ where })
-				const auditLogs = CreateAuditLog({
-					actorId: ctx.session.user.id,
-					operation: 'UPDATE',
-					from: current,
-					to: data,
-				})
-				const updated = await tx.orgPhoto.update({
-					where,
-					data: {
-						...data,
-						auditLogs,
-					},
-				})
-				return updated
-			})
-			return updatedRecord
+			if (!HandlerCache.update)
+				HandlerCache.update = await import('./mutation.update.handler').then((mod) => mod.update)
+			if (!HandlerCache.update) throw new Error('Failed to load handler')
+			return HandlerCache.update({ ctx, input })
 		}),
-	getByParent: publicProcedure
-		.input(z.string().regex(getIdPrefixRegex('organization', 'orgLocation')))
-		.query(async ({ input, ctx }) => {
-			const whereId = (): Prisma.OrgPhotoWhereInput => {
-				switch (true) {
-					case isIdFor('organization', input): {
-						return { organization: { id: input, ...isPublic } }
-					}
-					case isIdFor('orgLocation', input): {
-						return { orgLocation: { id: input, ...isPublic } }
-					}
-					default: {
-						return {}
-					}
-				}
-			}
-			const result = await ctx.prisma.orgPhoto.findMany({
-				where: {
-					...isPublic,
-					...whereId(),
-				},
-				select: {
-					id: true,
-					src: true,
-					height: true,
-					width: true,
-				},
-			})
-			return result
-		}),
+	getByParent: publicProcedure.input(schema.ZGetByParentSchema).query(async ({ input, ctx }) => {
+		if (!HandlerCache.getByParent)
+			HandlerCache.getByParent = await import('./query.getByParent.handler').then((mod) => mod.getByParent)
+		if (!HandlerCache.getByParent) throw new Error('Failed to load handler')
+		return HandlerCache.getByParent({ ctx, input })
+	}),
 })
