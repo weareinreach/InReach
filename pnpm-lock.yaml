@@ -1017,9 +1017,6 @@ importers:
       '@weareinreach/util':
         specifier: workspace:*
         version: link:../util
-      json-difference:
-        specifier: 1.15.7
-        version: 1.15.7
       just-compare:
         specifier: 2.3.0
         version: 2.3.0
@@ -18345,11 +18342,6 @@ packages:
 
   /json-buffer@3.0.1:
     resolution: {integrity: sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==}
-
-  /json-difference@1.15.7:
-    resolution: {integrity: sha512-XIL6opQfJ3Z8oX9QO6FcCF52M9ZMXH3HD6D9CTxL8RPE8L50ZW2fTVH1nydwWBpa60S283EM0JCLNaMZoOEjYA==}
-    engines: {node: '>=18.17.x'}
-    dev: false
 
   /json-parse-even-better-errors@2.3.1:
     resolution: {integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==}

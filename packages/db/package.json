@@ -56,7 +56,6 @@
 		"@vercel/postgres-kysely": "0.4.1",
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
-		"json-difference": "1.15.7",
 		"just-compare": "2.3.0",
 		"just-deep-map-values": "1.2.0",
 		"just-diff": "6.0.2",
