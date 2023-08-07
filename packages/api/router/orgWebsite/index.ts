@@ -1,94 +1,36 @@
-import { z } from 'zod'
-
-import { getIdPrefixRegex, isIdFor, type Prisma } from '@weareinreach/db'
 import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
-import { CreateOrgWebsiteSchema, UpdateOrgWebsiteSchema } from '~api/schemas/create/orgWebsite'
-import { isPublic } from '~api/schemas/selects/common'
 
+import * as schema from './schemas'
+
+const HandlerCache: Partial<OrgWebsiteHandlerCache> = {}
+type OrgWebsiteHandlerCache = {
+	create: typeof import('./mutation.create.handler').create
+	update: typeof import('./mutation.update.handler').update
+	forContactInfo: typeof import('./query.forContactInfo.handler').forContactInfo
+}
 export const orgWebsiteRouter = defineRouter({
 	create: permissionedProcedure('createOrgWebsite')
-		.input(CreateOrgWebsiteSchema)
+		.input(schema.ZCreateSchema)
 		.mutation(async ({ ctx, input }) => {
-			const auditLogs = CreateAuditLog({ actorId: ctx.session.user.id, operation: 'CREATE', to: input })
-			const newRecord = await ctx.prisma.orgWebsite.create({
-				data: {
-					...input,
-					auditLogs,
-				},
-				select: { id: true },
-			})
-			return newRecord
+			if (!HandlerCache.create)
+				HandlerCache.create = await import('./mutation.create.handler').then((mod) => mod.create)
+			if (!HandlerCache.create) throw new Error('Failed to load handler')
+			return HandlerCache.create({ ctx, input })
 		}),
 	update: permissionedProcedure('updateOrgWebsite')
-		.input(UpdateOrgWebsiteSchema)
+		.input(schema.ZUpdateSchema)
 		.mutation(async ({ input, ctx }) => {
-			const { where, data } = input
-			const updatedRecord = await ctx.prisma.$transaction(async (tx) => {
-				const current = await tx.orgWebsite.findUniqueOrThrow({ where })
-				const auditLogs = CreateAuditLog({
-					actorId: ctx.session.user.id,
-					operation: 'UPDATE',
-					from: current,
-					to: data,
-				})
-				const updated = await tx.orgWebsite.update({
-					where,
-					data: {
-						...data,
-						auditLogs,
-					},
-				})
-				return updated
-			})
-			return updatedRecord
+			if (!HandlerCache.update)
+				HandlerCache.update = await import('./mutation.update.handler').then((mod) => mod.update)
+			if (!HandlerCache.update) throw new Error('Failed to load handler')
+			return HandlerCache.update({ ctx, input })
 		}),
-	forContactInfo: publicProcedure
-		.input(
-			z.object({
-				parentId: z.string().regex(getIdPrefixRegex('organization', 'orgLocation' /*, 'orgService'*/)),
-				locationOnly: z.boolean().optional(),
-			})
-		)
-		.query(async ({ ctx, input }) => {
-			const whereId = (): Prisma.OrgWebsiteWhereInput => {
-				switch (true) {
-					case isIdFor('organization', input.parentId): {
-						return { organization: { id: input.parentId, ...isPublic } }
-					}
-					case isIdFor('orgLocation', input.parentId): {
-						return { orgLocation: { id: input.parentId, ...isPublic } }
-					}
-					// case isIdFor('orgService', input.parentId): {
-					// 	return { services: { some: { service: { id: input.parentId, ...isPublic } } } }
-					// }
-					default: {
-						return {}
-					}
-				}
-			}
-
-			const result = await ctx.prisma.orgWebsite.findMany({
-				where: {
-					...isPublic,
-					...whereId(),
-					...(input.locationOnly !== undefined ? { orgLocationOnly: input.locationOnly } : {}),
-				},
-				select: {
-					id: true,
-					url: true,
-					isPrimary: true,
-					description: { select: { tsKey: { select: { text: true, key: true } } } },
-					orgLocationOnly: true,
-				},
-				orderBy: { isPrimary: 'desc' },
-			})
-			const transformed = result.map(({ description, ...record }) => ({
-				...record,
-				description: description
-					? { key: description?.tsKey.key, defaultText: description?.tsKey.text }
-					: null,
-			}))
-			return transformed
-		}),
+	forContactInfo: publicProcedure.input(schema.ZForContactInfoSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.forContactInfo)
+			HandlerCache.forContactInfo = await import('./query.forContactInfo.handler').then(
+				(mod) => mod.forContactInfo
+			)
+		if (!HandlerCache.forContactInfo) throw new Error('Failed to load handler')
+		return HandlerCache.forContactInfo({ ctx, input })
+	}),
 })
