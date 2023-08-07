@@ -76,7 +76,7 @@
 		"@mantine/utils": "6.0.17",
 		"@storybook/addon-a11y": "7.2.1",
 		"@storybook/addon-actions": "7.2.1",
-    "@storybook/addon-designs": "7.0.1",
+		"@storybook/addon-designs": "7.0.1",
 		"@storybook/addon-docs": "7.2.1",
 		"@storybook/addon-essentials": "7.2.1",
 		"@storybook/addon-interactions": "7.2.1",
