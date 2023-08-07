@@ -65,6 +65,8 @@ const FormSchema = z
 					.string({ required_error: 'End time is required', invalid_type_error: 'Invalid entry' })
 					.length(5),
 				closed: z.coerce.boolean(),
+				open24: z.coerce.boolean(),
+				new: z.coerce.boolean(),
 				tz: z.string().nullable(),
 				delete: z.boolean().optional(),
 			})
@@ -110,8 +112,9 @@ const sortedTimezoneData = timezoneData.sort((a, b) => {
 })
 
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
-	const [opened, handler] = useDisclosure(true) //TODO: Change back to 'false' when done.
+	const [opened, handler] = useDisclosure(false) //TODO: Change back to 'false' when done.
 	const [isSaved, setIsSaved] = useState(false)
+
 	const form = useForm<z.infer<typeof FormSchema>>({
 		validate: zodResolver(FormSchema),
 		initialValues: {
@@ -122,40 +125,53 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 
-	/** Remove this */
-	const [checked, setChecked] = useState<{ [key: number]: boolean }>({
-		0: false, // Sunday
-		1: false, // Monday
-		2: false, // Tuesday
-		3: false, // Wednesday
-		4: false, // Thursday
-		5: false, // Friday
-		6: false, // Saturday
-	})
-	/** Remove this */
-	const [timeValues, setTimeValues] = useState<{
-		[key: number]: { start: Date | null; end: Date | null }
-	}>({
-		0: { start: null, end: null }, // Sunday
-		1: { start: null, end: null }, // Monday
-		2: { start: null, end: null }, // Tuesday
-		3: { start: null, end: null }, // Wednesday
-		4: { start: null, end: null }, // Thursday
-		5: { start: null, end: null }, // Friday
-		6: { start: null, end: null }, // Saturday
-	})
-
-	//data comes back here
+	//data comes from api here
 	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '', {
 		onSuccess: (data) => form.setValues({ data }),
 	})
 	console.log('form values', form.values)
-
 	// Docs: https://mantine.dev/form/nested/
+
+	// Initialize the array of checked states with false for each day
+	const [checkedStates, setCheckedStates] = useState<boolean[]>([
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+		false,
+	])
+
+	// Function to handle checkbox change for a specific day
+	const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, dayIndex: number) => {
+		const { checked } = event.currentTarget
+		// Create a new array with the updated checked state for the specific day
+		const newCheckedStates = [...checkedStates]
+		newCheckedStates[dayIndex] = checked
+		setCheckedStates(newCheckedStates)
+		console.log(newCheckedStates)
+		// Perform any action based on the checkbox state here, if needed.
+		if (newCheckedStates[dayIndex] === true) {
+			form.insertListItem('data', {
+				start: '00:00',
+				end: '00:00',
+				id: generateId('orgHours'),
+				dayIndex,
+				closed: false,
+				open24: true,
+			})
+		} else {
+			// Remove the item from form.values.data based on the new checkbox state
+			const newData = form.values.data.filter(
+				(item) => item.dayIndex !== dayIndex || newCheckedStates[dayIndex]
+			)
+			form.setValues({ data: newData })
+		}
+	}
 
 	const handleUpdate = () => {
 		//TODO save to DB instead of sending to console.log
-		// const data = generateDataArray()
 		console.log('clicked save', form.isValid(), form.errors, form.values)
 	}
 
@@ -181,14 +197,25 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 					/>
 					<Icon
 						icon='carbon:trash-can'
-						onClick={() => form.setFieldValue(`data..delete`, true)}
+						onClick={() => form.setFieldValue(`data.${arrayIdx}.delete`, true)}
 						style={{ cursor: 'pointer' }}
 					/>
 				</Group>
 			</Stack>
 		)
 	}
-	const DayWrap = ({ dayIndex, children }: { dayIndex: number; children: ReactNode }) => {
+	const DayWrap = ({
+		dayIndex,
+		checked,
+		onCheckboxChange,
+		children,
+	}: {
+		dayIndex: number
+		checked: boolean
+		children: React.ReactNode
+	}) => {
+		const specificDayIndex = dayIndex // Set the specific day index
+
 		const days = {
 			0: 'Sunday',
 			1: 'Monday',
@@ -203,20 +230,25 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 			<Stack>
 				<Group position='apart'>
 					<Title order={3}>{days[dayIndex.toString()] ?? ''}</Title>
-					<Checkbox label='Open 24 Hours' />
+					<Checkbox
+						label='Open 24 Hours'
+						checked={checked}
+						onChange={(event) => onCheckboxChange(event, dayIndex)}
+					/>
 				</Group>
 				{children}
 				<Button
 					variant='secondary'
 					onClick={() =>
 						form.insertListItem('data', {
-							dayIndex,
-							closed: false,
-							id: generateId('orgHours'),
 							start: '',
 							end: '',
+							id: generateId('orgHours'),
+							dayIndex,
+							closed: false,
 						})
 					}
+					disabled={checked && dayIndex === specificDayIndex}
 				>
 					<Group noWrap spacing={8}>
 						<Icon icon='carbon:add' className={classes.addNewText} height={24} />
@@ -245,29 +277,6 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		if (item.delete || !dayRender[item.dayIndex.toString()]) return
 		dayRender[item.dayIndex.toString()]?.push(<TimeRangeComponent arrayIdx={idx} key={item.id ?? idx} />)
 	})
-
-	const convertTimeToUTC = (timeInput, timezone) => {
-		return timeInput
-	}
-
-	const generateDataArray = () => {
-		const dataArray = Object.entries(timeValues).map(([dayIndex, timeValue]) => {
-			const start = timeValue.start ? convertTimeToUTC(timeValue.start, tzValue) : null
-			const end = timeValue.end ? convertTimeToUTC(timeValue.end, tzValue) : null
-			const closed = !start || !end
-			const tz = tzValue || null
-
-			return {
-				dayIndex: parseInt(dayIndex),
-				start,
-				end,
-				closed,
-				tz,
-			}
-		})
-
-		return dataArray
-	}
 
 	return (
 		<>
@@ -303,7 +312,12 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 						</Stack>
 						<form>
 							{Object.entries(dayRender).map(([dayIndex, children]) => (
-								<DayWrap key={dayIndex} dayIndex={parseInt(dayIndex)}>
+								<DayWrap
+									key={dayIndex}
+									dayIndex={parseInt(dayIndex)}
+									checked={checkedStates[parseInt(dayIndex)]}
+									onCheckboxChange={(event) => handleCheckboxChange(event, parseInt(dayIndex))}
+								>
 									{children}
 								</DayWrap>
 							))}
