@@ -57,7 +57,7 @@
 	"packageManager": "pnpm@8.6.12",
 	"engines": {
 		"node": "^18",
-		"pnpm": "^7 || ^8"
+		"pnpm": "^8"
 	},
 	"manypkg": {
 		"ignoredRules": [
