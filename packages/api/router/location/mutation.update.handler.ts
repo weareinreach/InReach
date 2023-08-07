@@ -8,10 +8,8 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateSchema } from './mutation.update.schema'
 
-export const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema>) => {
+export const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protected'>) => {
 	try {
-		if (ctx.session === null || !ctx.session?.user.id) throw new TRPCError({ code: 'UNAUTHORIZED' })
-
 		const { where, data } = input
 		const updatedRecord = await prisma.$transaction(async (tx) => {
 			const current = await tx.orgLocation.findUniqueOrThrow({ where })

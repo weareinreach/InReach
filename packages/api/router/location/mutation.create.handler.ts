@@ -4,7 +4,7 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateSchema, ZCreateSchema } from './mutation.create.schema'
 
-export const create = async ({ input }: TRPCHandlerParams<TCreateSchema>) => {
+export const create = async ({ input }: TRPCHandlerParams<TCreateSchema, 'protected'>) => {
 	try {
 		const data = ZCreateSchema().dataParser.parse(input)
 
