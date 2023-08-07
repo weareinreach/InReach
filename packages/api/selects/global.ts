@@ -1,7 +1,7 @@
 import { type Prisma } from '@weareinreach/db'
 
 export const globalSelect = {
-	freeText(): Prisma.FreeTextDefaultArgs {
+	freeText(opts?: FreeTextOpts) {
 		return {
 			select: {
 				key: true,
@@ -9,12 +9,13 @@ export const globalSelect = {
 				tsKey: {
 					select: {
 						text: true,
+						crowdinId: opts?.withCrowdinId,
 					},
 				},
 			},
-		}
+		} satisfies Prisma.FreeTextDefaultArgs
 	},
-	country(): Prisma.CountryDefaultArgs {
+	country() {
 		return {
 			select: {
 				cca2: true,
@@ -26,9 +27,9 @@ export const globalSelect = {
 				tsKey: true,
 				tsNs: true,
 			},
-		}
+		} satisfies Prisma.CountryDefaultArgs
 	},
-	govDistBasic(): Prisma.GovDistDefaultArgs {
+	govDistBasic() {
 		return {
 			select: {
 				govDistType: {
@@ -41,9 +42,9 @@ export const globalSelect = {
 				tsNs: true,
 				abbrev: true,
 			},
-		}
+		} satisfies Prisma.GovDistDefaultArgs
 	},
-	govDistExpanded(): Prisma.GovDistDefaultArgs {
+	govDistExpanded() {
 		return {
 			select: {
 				id: true,
@@ -81,17 +82,17 @@ export const globalSelect = {
 					},
 				},
 			},
-		}
+		} satisfies Prisma.GovDistDefaultArgs
 	},
-	language(): Prisma.LanguageDefaultArgs {
+	language() {
 		return {
 			select: {
 				languageName: true,
 				nativeName: true,
 			},
-		}
+		} satisfies Prisma.LanguageDefaultArgs
 	},
-	orgWebsite(): Prisma.OrgWebsiteDefaultArgs {
+	orgWebsite() {
 		return {
 			select: {
 				id: true,
@@ -102,18 +103,18 @@ export const globalSelect = {
 				orgLocationId: true,
 				orgLocationOnly: true,
 			},
-		}
+		} satisfies Prisma.OrgWebsiteDefaultArgs
 	},
-	orgPhoto(): Prisma.OrgPhotoDefaultArgs {
+	orgPhoto() {
 		return {
 			select: {
 				src: true,
 				height: true,
 				width: true,
 			},
-		}
+		} satisfies Prisma.OrgPhotoDefaultArgs
 	},
-	hours(): Prisma.OrgHoursDefaultArgs {
+	hours() {
 		return {
 			select: {
 				dayIndex: true,
@@ -122,9 +123,9 @@ export const globalSelect = {
 				closed: true,
 				tz: true,
 			},
-		}
+		} satisfies Prisma.OrgHoursDefaultArgs
 	},
-	serviceTags(): Prisma.ServiceTagDefaultArgs {
+	serviceTags() {
 		return {
 			select: {
 				name: true,
@@ -146,17 +147,17 @@ export const globalSelect = {
 					},
 				},
 			},
-		}
+		} satisfies Prisma.ServiceTagDefaultArgs
 	},
-	serviceArea(): Prisma.ServiceAreaDefaultArgs {
+	serviceArea() {
 		return {
 			select: {
 				countries: { select: { country: this.country() } },
 				districts: { select: { govDist: this.govDistBasic() } },
 			},
-		}
+		} satisfies Prisma.ServiceAreaDefaultArgs
 	},
-	socialMedia(): Prisma.OrgSocialMediaDefaultArgs {
+	socialMedia() {
 		return {
 			select: {
 				service: {
@@ -171,7 +172,21 @@ export const globalSelect = {
 				url: true,
 				username: true,
 			},
-		}
+		} satisfies Prisma.OrgSocialMediaDefaultArgs
+	},
+	orgPhone() {
+		return {
+			select: {
+				country: this.country(),
+				phoneLangs: { select: { language: this.language() } },
+				phoneType: { select: { tsKey: true, tsNs: true } },
+				description: this.freeText(),
+				number: true,
+				ext: true,
+				primary: true,
+				locationOnly: true,
+			},
+		} satisfies Prisma.OrgPhoneDefaultArgs
 	},
 }
 
@@ -182,4 +197,21 @@ export const globalWhere = {
 			deleted: false,
 		} as const
 	},
+	attributesByTag(tags: string[]): Prisma.AttributeWhereInput {
+		return {
+			active: true,
+			tag: { in: tags },
+			categories: {
+				some: {
+					category: {
+						active: true,
+					},
+				},
+			},
+		}
+	},
+}
+
+interface FreeTextOpts {
+	withCrowdinId?: boolean
 }
