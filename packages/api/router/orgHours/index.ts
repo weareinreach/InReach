@@ -1,100 +1,65 @@
-import { TRPCError } from '@trpc/server'
-import { z } from 'zod'
-
-import { getIdPrefixRegex, isIdFor, type Prisma } from '@weareinreach/db'
-import { getTz } from '~api/lib/getTz'
 import { defineRouter, permissionedProcedure, publicProcedure, staffProcedure } from '~api/lib/trpc'
-import { coord } from '~api/schemas/common'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
-import { CreateManyOrgHours, CreateOrgHoursSchema, UpdateOrgHoursSchema } from '~api/schemas/create/orgHours'
-import { isPublic } from '~api/schemas/selects/common'
+
+import * as schema from './schemas'
+
+const HandlerCache: Partial<OrgHoursHandlerCache> = {}
+type OrgHoursHandlerCache = {
+	create: typeof import('./mutation.create.handler').create
+	update: typeof import('./mutation.update.handler').update
+	createMany: typeof import('./mutation.createMany.handler').createMany
+	getTz: typeof import('./query.getTz.handler').getTz
+	forHoursDisplay: typeof import('./query.forHoursDisplay.handler').forHoursDisplay
+	forHoursDrawer: typeof import('./query.forHoursDrawer.handler').forHoursDrawer
+}
 
 export const orgHoursRouter = defineRouter({
 	create: permissionedProcedure('createNewHours')
-		.input(CreateOrgHoursSchema)
+		.input(schema.ZCreateSchema)
 		.mutation(async ({ ctx, input }) => {
-			const auditLogs = CreateAuditLog({ actorId: ctx.session.user.id, operation: 'CREATE', to: input })
-			const newRecord = await ctx.prisma.orgHours.create({
-				data: {
-					...input,
-					auditLogs,
-				},
-				select: { id: true },
-			})
-			return newRecord
+			if (!HandlerCache.create)
+				HandlerCache.create = await import('./mutation.create.handler').then((mod) => mod.create)
+			if (!HandlerCache.create) throw new Error('Failed to load handler')
+			return HandlerCache.create({ ctx, input })
 		}),
 	createMany: permissionedProcedure('createNewHours')
-		.input(CreateManyOrgHours().inputSchema)
+		.input(schema.ZCreateManySchema().inputSchema)
 		.mutation(async ({ ctx, input }) => {
-			const inputData = {
-				actorId: ctx.session.user.id,
-				operation: 'CREATE',
-				data: input,
-			}
-			const { orgHours, auditLogs } = CreateManyOrgHours().dataParser.parse(inputData)
-			const results = await ctx.prisma.$transaction(async (tx) => {
-				const hours = await tx.orgHours.createMany(orgHours)
-				const logs = await tx.auditLog.createMany(auditLogs)
-
-				return { orgHours: hours.count, auditLogs: logs.count, balanced: hours.count === logs.count }
-			})
-			return results
+			if (!HandlerCache.createMany)
+				HandlerCache.createMany = await import('./mutation.createMany.handler').then((mod) => mod.createMany)
+			if (!HandlerCache.createMany) throw new Error('Failed to load handler')
+			return HandlerCache.createMany({ ctx, input })
 		}),
 	update: permissionedProcedure('updateHours')
-		.input(UpdateOrgHoursSchema)
+		.input(schema.ZUpdateSchema)
 		.mutation(async ({ input, ctx }) => {
-			const { where, data } = input
-			const updatedRecord = await ctx.prisma.$transaction(async (tx) => {
-				const current = await tx.orgHours.findUniqueOrThrow({ where })
-				const auditLogs = CreateAuditLog({
-					actorId: ctx.session.user.id,
-					operation: 'UPDATE',
-					from: current,
-					to: data,
-				})
-				const updated = await tx.orgHours.update({
-					where,
-					data: {
-						...data,
-						auditLogs,
-					},
-				})
-				return updated
-			})
-			return updatedRecord
+			if (!HandlerCache.update)
+				HandlerCache.update = await import('./mutation.update.handler').then((mod) => mod.update)
+			if (!HandlerCache.update) throw new Error('Failed to load handler')
+			return HandlerCache.update({ ctx, input })
 		}),
-	getTz: staffProcedure.input(coord).query(({ input }) => {
-		const result = getTz(input)
-		if (!result) throw new TRPCError({ code: 'NOT_FOUND' })
-		return result
+	getTz: staffProcedure.input(schema.ZGetTzSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getTz)
+			HandlerCache.getTz = await import('./query.getTz.handler').then((mod) => mod.getTz)
+		if (!HandlerCache.getTz) throw new Error('Failed to load handler')
+		return HandlerCache.getTz({ ctx, input })
 	}),
-	forHoursDisplay: publicProcedure
-		.input(z.string().regex(getIdPrefixRegex('organization', 'orgLocation', 'orgService')))
+	forHoursDisplay: publicProcedure.input(schema.ZForHoursDisplaySchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.forHoursDisplay)
+			HandlerCache.forHoursDisplay = await import('./query.forHoursDisplay.handler').then(
+				(mod) => mod.forHoursDisplay
+			)
+		if (!HandlerCache.forHoursDisplay) throw new Error('Failed to load handler')
+		return HandlerCache.forHoursDisplay({ ctx, input })
+	}),
+	forHoursDrawer: publicProcedure
+		// permissionedProcedure('updateHours')
+		.input(schema.ZForHoursDrawerSchema)
 		.query(async ({ ctx, input }) => {
-			const whereId = (): Prisma.OrgHoursWhereInput => {
-				switch (true) {
-					case isIdFor('organization', input): {
-						return { organization: { id: input, ...isPublic } }
-					}
-					case isIdFor('orgLocation', input): {
-						return { orgLocation: { id: input, ...isPublic } }
-					}
-					case isIdFor('orgService', input): {
-						return { orgService: { id: input, ...isPublic } }
-					}
-					default: {
-						return {}
-					}
-				}
-			}
-
-			const result = await ctx.prisma.orgHours.findMany({
-				where: {
-					...whereId(),
-				},
-				select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true },
-				orderBy: [{ dayIndex: 'asc' }, { start: 'asc' }],
-			})
-			return result
+			if (!HandlerCache.forHoursDrawer)
+				HandlerCache.forHoursDrawer = await import('./query.forHoursDrawer.handler').then(
+					(mod) => mod.forHoursDrawer
+				)
+			if (!HandlerCache.forHoursDrawer) throw new Error('Failed to load handler')
+			return HandlerCache.forHoursDrawer({ ctx, input })
 		}),
 })
