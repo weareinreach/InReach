@@ -7,4 +7,8 @@ type AuthedContext = SetNonNullable<Context, 'session'> & { actorId: string }
 
 export type TRPCHandlerParams<TInput = undefined, TScenario extends ContextScenario = 'public'> = {
 	ctx: TScenario extends 'public' ? Context : AuthedContext
-} & (undefined extends TInput ? { input?: never } : { input: TInput })
+} & (undefined extends TInput
+	? [TInput] extends [undefined]
+		? { input?: never }
+		: { input: TInput }
+	: { input: TInput })
