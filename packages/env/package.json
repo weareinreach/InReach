@@ -11,7 +11,7 @@
 	"dependencies": {
 		"@t3-oss/env-nextjs": "0.6.0",
 		"@weareinreach/util": "workspace:*",
-		"chromatic": "6.20.0",
+		"chromatic": "6.21.0",
 		"zod": "3.21.4"
 	},
 	"devDependencies": {
