@@ -16,8 +16,8 @@ export const getByOrgId = async ({ ctx, input }: TRPCHandlerParams<TGetByOrgIdSc
 				...globalWhere.isPublic(),
 			},
 			select: {
-				govDist: select.govDistBasic(),
-				country: select.country(),
+				govDist: globalSelect.govDistBasic(),
+				country: globalSelect.country(),
 				attributes: {
 					where: {
 						attribute: {
@@ -34,14 +34,14 @@ export const getByOrgId = async ({ ctx, input }: TRPCHandlerParams<TGetByOrgIdSc
 					...select.attributes(),
 				},
 				emails: { where: { email: globalWhere.isPublic() }, ...select.orgEmail() },
-				websites: { where: globalWhere.isPublic(), ...select.orgWebsite() },
+				websites: { where: globalWhere.isPublic(), ...globalSelect.orgWebsite() },
 				phones: { where: { phone: globalWhere.isPublic() }, ...select.orgPhone() },
-				photos: { where: globalWhere.isPublic(), ...select.orgPhoto() },
-				hours: select.hours(),
+				photos: { where: globalWhere.isPublic(), ...globalSelect.orgPhoto() },
+				hours: globalSelect.hours(),
 				reviews: { where: { visible: true, deleted: false }, select: { id: true } },
 				services: { where: { service: globalWhere.isPublic() }, ...select.service(ctx) },
-				serviceAreas: select.serviceArea(),
-				socialMedia: { where: globalWhere.isPublic(), ...select.socialMedia() },
+				serviceAreas: globalSelect.serviceArea(),
+				socialMedia: { where: globalWhere.isPublic(), ...globalSelect.socialMedia() },
 				description: globalSelect.freeText(),
 				name: true,
 				street1: true,

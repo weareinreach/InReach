@@ -3,75 +3,6 @@ import { type Context } from '~api/lib'
 import { globalSelect, globalWhere } from '~api/selects/global'
 
 export const select = {
-	country(): Prisma.CountryDefaultArgs {
-		return {
-			select: {
-				cca2: true,
-				cca3: true,
-				id: true,
-				name: true,
-				dialCode: true,
-				flag: true,
-				tsKey: true,
-				tsNs: true,
-			},
-		}
-	},
-	govDistBasic(): Prisma.GovDistDefaultArgs {
-		return {
-			select: {
-				govDistType: {
-					select: {
-						tsNs: true,
-						tsKey: true,
-					},
-				},
-				tsKey: true,
-				tsNs: true,
-				abbrev: true,
-			},
-		}
-	},
-	govDistExpanded(): Prisma.GovDistDefaultArgs {
-		return {
-			select: {
-				id: true,
-				name: true,
-				slug: true,
-				iso: true,
-				abbrev: true,
-				country: this.country(),
-				govDistType: {
-					select: {
-						tsKey: true,
-						tsNs: true,
-					},
-				},
-				isPrimary: true,
-				tsKey: true,
-				tsNs: true,
-				parent: {
-					select: {
-						id: true,
-						name: true,
-						slug: true,
-						iso: true,
-						abbrev: true,
-						country: this.country(),
-						govDistType: {
-							select: {
-								tsKey: true,
-								tsNs: true,
-							},
-						},
-						isPrimary: true,
-						tsKey: true,
-						tsNs: true,
-					},
-				},
-			},
-		}
-	},
 	attributes(): Prisma.LocationAttributeDefaultArgs {
 		return {
 			select: {
@@ -104,7 +35,7 @@ export const select = {
 				supplement: {
 					select: {
 						id: true,
-						country: this.country(),
+						country: globalSelect.country(),
 						language: {
 							select: {
 								languageName: true,
@@ -112,7 +43,7 @@ export const select = {
 							},
 						},
 						text: globalSelect.freeText(),
-						govDist: this.govDistBasic(),
+						govDist: globalSelect.govDistBasic(),
 						boolean: true,
 						data: true,
 					},
@@ -144,36 +75,16 @@ export const select = {
 			},
 		}
 	},
-	language(): Prisma.LanguageDefaultArgs {
-		return {
-			select: {
-				languageName: true,
-				nativeName: true,
-			},
-		}
-	},
-	orgWebsite(): Prisma.OrgWebsiteDefaultArgs {
-		return {
-			select: {
-				id: true,
-				description: globalSelect.freeText(),
-				languages: { select: { language: this.language() } },
-				url: true,
-				isPrimary: true,
-				orgLocationId: true,
-				orgLocationOnly: true,
-			},
-		}
-	},
+
 	orgPhone(): Prisma.OrgLocationPhoneDefaultArgs {
 		return {
 			select: {
 				phone: {
 					select: {
-						country: this.country(),
+						country: globalSelect.country(),
 						phoneLangs: {
 							select: {
-								language: this.language(),
+								language: globalSelect.language(),
 							},
 						},
 						phoneType: {
@@ -192,58 +103,7 @@ export const select = {
 			},
 		}
 	},
-	orgPhoto(): Prisma.OrgPhotoDefaultArgs {
-		return {
-			select: {
-				src: true,
-				height: true,
-				width: true,
-			},
-		}
-	},
-	hours(): Prisma.OrgHoursDefaultArgs {
-		return {
-			select: {
-				dayIndex: true,
-				start: true,
-				end: true,
-				closed: true,
-				tz: true,
-			},
-		}
-	},
-	serviceTags(): Prisma.ServiceTagDefaultArgs {
-		return {
-			select: {
-				name: true,
-				tsKey: true,
-				tsNs: true,
-				category: {
-					select: {
-						tsKey: true,
-						tsNs: true,
-					},
-				},
-				defaultAttributes: {
-					select: {
-						attribute: {
-							select: {
-								categories: { select: { category: { select: { icon: true, ns: true, tag: true } } } },
-							},
-						},
-					},
-				},
-			},
-		}
-	},
-	serviceArea(): Prisma.ServiceAreaDefaultArgs {
-		return {
-			select: {
-				countries: { select: { country: this.country() } },
-				districts: { select: { govDist: this.govDistBasic() } },
-			},
-		}
-	},
+
 	service(ctx: Context): Prisma.OrgLocationServiceDefaultArgs {
 		return {
 			select: {
@@ -251,10 +111,10 @@ export const select = {
 					select: {
 						serviceName: globalSelect.freeText(),
 						description: globalSelect.freeText(),
-						hours: this.hours(),
+						hours: globalSelect.hours(),
 						attributes: this.attributes(),
-						serviceAreas: this.serviceArea(),
-						services: { select: { tag: this.serviceTags() } },
+						serviceAreas: globalSelect.serviceArea(),
+						services: { select: { tag: globalSelect.serviceTags() } },
 						accessDetails: this.attributes(),
 						reviews: { where: { visible: true, deleted: false }, select: { id: true } },
 						phones: { where: { phone: globalWhere.isPublic() }, ...this.orgPhone() },
@@ -268,23 +128,6 @@ export const select = {
 						id: true,
 					},
 				},
-			},
-		}
-	},
-	socialMedia(): Prisma.OrgSocialMediaDefaultArgs {
-		return {
-			select: {
-				service: {
-					select: {
-						tsKey: true,
-						tsNs: true,
-						logoIcon: true,
-						name: true,
-						urlBase: true,
-					},
-				},
-				url: true,
-				username: true,
 			},
 		}
 	},
