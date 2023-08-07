@@ -1,11 +1,22 @@
-import flush from 'just-flush'
-import { type SetOptional } from 'type-fest'
 import { z } from 'zod'
 
-import { type AttributesByCategory } from '@weareinreach/db/client'
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
-import { serviceAreaSelect2, serviceAreaSelectNoSub } from '~api/schemas/selects/location'
 
+import * as schema from './schemas'
+
+const HandlerCache: Partial<FieldOptHandlerCache> = {}
+
+type FieldOptHandlerCache = {
+	govDistsByCountry: typeof import('./query.govDistsByCountry.handler').govDistsByCountry
+	govDistsByCountryNoSub: typeof import('./query.govDistsByCountryNoSub.handler').govDistsByCountryNoSub
+	phoneTypes: typeof import('./query.phoneTypes.handler').phoneTypes
+	attributesByCategory: typeof import('./query.attributesByCategory.handler').attributesByCategory
+	attributeCategories: typeof import('./query.attributeCategories.handler').attributeCategories
+	languages: typeof import('./query.languages.handler').languages
+	countries: typeof import('./query.countries.handler').countries
+	userTitle: typeof import('./query.userTitle.handler').userTitle
+	countryGovDistMap: typeof import('./query.countryGovDistMap.handler').countryGovDistMap
+}
 export const fieldOptRouter = defineRouter({
 	/** All government districts by country (active for org listings). Gives up to 2 levels of sub-districts */
 	govDistsByCountry: publicProcedure
@@ -13,195 +24,78 @@ export const fieldOptRouter = defineRouter({
 			description:
 				'All government districts by country (active for org listings). Gives 2 levels of sub-districts',
 		})
-		.input(
-			z
-				.object({
-					cca2: z.string().optional().describe('Country CCA2 code'),
-					activeForOrgs: z.boolean().nullish().default(true),
-					activeForSuggest: z.boolean().nullish(),
-				})
-				.optional()
-		)
+		.input(schema.ZGovDistsByCountrySchema)
 		.query(async ({ ctx, input }) => {
-			const data = await ctx.prisma.country.findMany({
-				where: {
-					cca2: input?.cca2,
-					activeForOrgs: input?.activeForOrgs ?? undefined,
-					activeForSuggest: input?.activeForSuggest ?? undefined,
-				},
-				select: serviceAreaSelect2,
-				orderBy: {
-					cca2: 'asc',
-				},
-			})
-			return data
+			if (!HandlerCache.govDistsByCountry)
+				HandlerCache.govDistsByCountry = await import('./query.govDistsByCountry.handler').then(
+					(mod) => mod.govDistsByCountry
+				)
+			if (!HandlerCache.govDistsByCountry) throw new Error('Failed to load handler')
+			return HandlerCache.govDistsByCountry({ ctx, input })
 		}),
 	govDistsByCountryNoSub: publicProcedure
 		.meta({
 			description: 'All government districts by country (active for org listings).',
 		})
-		.input(
-			z
-				.object({
-					cca2: z.string().optional().describe('Country CCA2 code'),
-					activeForOrgs: z.boolean().nullish().default(true),
-					activeForSuggest: z.boolean().nullish(),
-				})
-				.optional()
-		)
+		.input(schema.ZGovDistsByCountryNoSubSchema)
 		.query(async ({ ctx, input }) => {
-			const data = await ctx.prisma.country.findMany({
-				where: {
-					cca2: input?.cca2,
-					activeForOrgs: input?.activeForOrgs ?? undefined,
-					activeForSuggest: input?.activeForSuggest ?? undefined,
-				},
-				select: serviceAreaSelectNoSub,
-				orderBy: {
-					cca2: 'asc',
-				},
-			})
-			return data
+			if (!HandlerCache.govDistsByCountryNoSub)
+				HandlerCache.govDistsByCountryNoSub = await import('./query.govDistsByCountryNoSub.handler').then(
+					(mod) => mod.govDistsByCountryNoSub
+				)
+			if (!HandlerCache.govDistsByCountryNoSub) throw new Error('Failed to load handler')
+			return HandlerCache.govDistsByCountryNoSub({ ctx, input })
 		}),
-	phoneTypes: publicProcedure.query(async ({ ctx }) =>
-		ctx.prisma.phoneType.findMany({
-			where: { active: true },
-			select: {
-				id: true,
-				tsKey: true,
-				tsNs: true,
-			},
-			orderBy: { type: 'asc' },
-		})
-	),
+	phoneTypes: publicProcedure.query(async () => {
+		if (!HandlerCache.phoneTypes)
+			HandlerCache.phoneTypes = await import('./query.phoneTypes.handler').then((mod) => mod.phoneTypes)
+		if (!HandlerCache.phoneTypes) throw new Error('Failed to load handler')
+		return HandlerCache.phoneTypes()
+	}),
 	attributesByCategory: publicProcedure
-		.input(z.string().or(z.string().array()).optional().describe('categoryName'))
+		.input(schema.ZAttributesByCategorySchema)
 		.query(async ({ ctx, input }) => {
-			const where = Array.isArray(input)
-				? { categoryName: { in: input } }
-				: typeof input === 'string'
-				? { categoryName: input }
-				: undefined
-			const result = await ctx.prisma.attributesByCategory.findMany({
-				where,
-				orderBy: [{ categoryName: 'asc' }, { attributeName: 'asc' }],
-			})
-			type FlushedAttributesByCategory = SetOptional<
-				AttributesByCategory,
-				'interpolationValues' | 'icon' | 'iconBg' | 'badgeRender' | 'dataSchema' | 'dataSchemaName'
-			>
-			const flushedResults = result.map((item) =>
-				flush<FlushedAttributesByCategory>(item)
-			) as FlushedAttributesByCategory[]
-			return flushedResults
+			if (!HandlerCache.attributesByCategory)
+				HandlerCache.attributesByCategory = await import('./query.attributesByCategory.handler').then(
+					(mod) => mod.attributesByCategory
+				)
+			if (!HandlerCache.attributesByCategory) throw new Error('Failed to load handler')
+			return HandlerCache.attributesByCategory({ ctx, input })
 		}),
-	attributeCategories: publicProcedure.input(z.string().array().optional()).query(async ({ ctx, input }) =>
-		ctx.prisma.attributeCategory.findMany({
-			where: { active: true, ...(input?.length ? { tag: { in: input } } : {}) },
-			select: {
-				id: true,
-				tag: true,
-				name: true,
-				icon: true,
-				intDesc: true,
-			},
-			orderBy: { tag: 'asc' },
-		})
-	),
-	languages: publicProcedure
-		.input(z.object({ activelyTranslated: z.boolean(), localeCode: z.string() }).partial().optional())
-		.query(async ({ ctx, input }) =>
-			ctx.prisma.language.findMany({
-				where: input,
-				select: {
-					id: true,
-					languageName: true,
-					localeCode: true,
-					iso6392: true,
-					nativeName: true,
-					activelyTranslated: true,
-				},
-				orderBy: { languageName: 'asc' },
-			})
-		),
-	countries: publicProcedure
-		.input(
-			z
-				.object({
-					where: z.object({ activeForOrgs: z.boolean(), cca2: z.string() }),
-					includeGeo: z.object({ wkt: z.boolean(), json: z.boolean() }),
-				})
-				.deepPartial()
-				.optional()
-		)
+	attributeCategories: publicProcedure
+		.input(schema.ZAttributeCategoriesSchema)
 		.query(async ({ ctx, input }) => {
-			const { where, includeGeo } = input ?? {}
-			const result = await ctx.prisma.country.findMany({
-				where,
-				select: {
-					id: true,
-					cca2: true,
-					name: true,
-					dialCode: true,
-					flag: true,
-					tsKey: true,
-					tsNs: true,
-					activeForOrgs: true,
-				},
-				orderBy: {
-					name: 'asc',
-				},
-			})
-			type CountryResult = (typeof result)[number][]
-			return result as CountryResult
+			if (!HandlerCache.attributeCategories)
+				HandlerCache.attributeCategories = await import('./query.attributeCategories.handler').then(
+					(mod) => mod.attributeCategories
+				)
+			if (!HandlerCache.attributeCategories) throw new Error('Failed to load handler')
+			return HandlerCache.attributeCategories({ ctx, input })
 		}),
-	userTitle: publicProcedure.query(async ({ ctx }) =>
-		ctx.prisma.userTitle.findMany({ where: { searchable: true }, select: { id: true, title: true } })
-	),
+	languages: publicProcedure.input(schema.ZLanguagesSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.languages)
+			HandlerCache.languages = await import('./query.languages.handler').then((mod) => mod.languages)
+		if (!HandlerCache.languages) throw new Error('Failed to load handler')
+		return HandlerCache.languages({ ctx, input })
+	}),
+	countries: publicProcedure.input(schema.ZCountriesSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.countries)
+			HandlerCache.countries = await import('./query.countries.handler').then((mod) => mod.countries)
+		if (!HandlerCache.countries) throw new Error('Failed to load handler')
+		return HandlerCache.countries({ ctx, input })
+	}),
+	userTitle: publicProcedure.query(async () => {
+		if (!HandlerCache.userTitle)
+			HandlerCache.userTitle = await import('./query.userTitle.handler').then((mod) => mod.userTitle)
+		if (!HandlerCache.userTitle) throw new Error('Failed to load handler')
+		return HandlerCache.userTitle()
+	}),
 	countryGovDistMap: publicProcedure.query(async ({ ctx }) => {
-		const fields = { id: true, tsKey: true, tsNs: true }
-
-		const countries = await ctx.prisma.country.findMany({
-			where: { activeForOrgs: true },
-			select: {
-				...fields,
-				govDist: { select: fields },
-			},
-		})
-		const govDists = await ctx.prisma.govDist.findMany({
-			select: {
-				...fields,
-				subDistricts: {
-					select: fields,
-				},
-				parent: { select: fields },
-				country: { select: fields },
-			},
-		})
-		const resultMap = new Map<string, CountryGovDistMapItem>([
-			...(countries.map(({ govDist, ...rest }) => [rest.id, { ...rest, children: govDist }]) satisfies [
-				string,
-				CountryGovDistMapItem,
-			][]),
-			...(govDists.map(({ subDistricts, parent, country, ...rest }) => [
-				rest.id,
-				{ ...rest, children: subDistricts, parent: parent ? { ...parent, parent: country } : country },
-			]) satisfies [string, CountryGovDistMapItem][]),
-		])
-		return resultMap
+		if (!HandlerCache.countryGovDistMap)
+			HandlerCache.countryGovDistMap = await import('./query.countryGovDistMap.handler').then(
+				(mod) => mod.countryGovDistMap
+			)
+		if (!HandlerCache.countryGovDistMap) throw new Error('Failed to load handler')
+		return HandlerCache.countryGovDistMap()
 	}),
 })
-
-interface CountryGovDistMapItemBasic {
-	id: string
-	tsKey: string
-	tsNs: string
-}
-
-interface CountryGovDistMapItem {
-	id: string
-	tsKey: string
-	tsNs: string
-	children: CountryGovDistMapItemBasic[]
-	parent?: CountryGovDistMapItemBasic & { parent?: CountryGovDistMapItemBasic }
-}
