@@ -1,248 +1,53 @@
-import compact from 'just-compact'
-import { z } from 'zod'
-
-import { getIdPrefixRegex, isIdFor, type Prisma } from '@weareinreach/db'
-import { generateNestedFreeText } from '@weareinreach/db/lib/generateFreeText'
 import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
-import {
-	CreateOrgEmailSchema,
-	UpdateOrgEmailSchema,
-	UpsertManyOrgEmailSchema,
-} from '~api/schemas/create/orgEmail'
-import {
-	connectOneId,
-	connectOrDisconnectId,
-	createManyOptional,
-	diffConnectionsMtoN,
-} from '~api/schemas/nestedOps'
-import { isPublic } from '~api/schemas/selects/common'
 
+import * as schema from './schemas'
+
+const HandlerCache: Partial<OrgEmailHandlerCache> = {}
+type OrgEmailHandlerCache = {
+	create: typeof import('./mutation.create.handler').create
+	update: typeof import('./mutation.update.handler').update
+	upsertMany: typeof import('./mutation.upsertMany.handler').upsertMany
+	get: typeof import('./query.get.handler').get
+	forContactInfo: typeof import('./query.forContactInfo.handler').forContactInfo
+}
 export const orgEmailRouter = defineRouter({
 	create: permissionedProcedure('createNewEmail')
-		.input(CreateOrgEmailSchema)
+		.input(schema.ZCreateSchema)
 		.mutation(async ({ ctx, input }) => {
-			const auditLogs = CreateAuditLog({ actorId: ctx.session.user.id, operation: 'CREATE', to: input })
-			const newEmail = await ctx.prisma.orgEmail.create({
-				data: {
-					...input,
-					auditLogs,
-				},
-				select: { id: true },
-			})
-			return newEmail
+			if (!HandlerCache.create)
+				HandlerCache.create = await import('./mutation.create.handler').then((mod) => mod.create)
+			if (!HandlerCache.create) throw new Error('Failed to load handler')
+			return HandlerCache.create({ ctx, input })
 		}),
 	update: permissionedProcedure('updateEmail')
-		.input(UpdateOrgEmailSchema)
+		.input(schema.ZUpdateSchema)
 		.mutation(async ({ ctx, input }) => {
-			const { where, data } = input
-			const updatedRecord = await ctx.prisma.$transaction(async (tx) => {
-				const current = await tx.orgEmail.findUniqueOrThrow({ where })
-				const auditLogs = CreateAuditLog({
-					actorId: ctx.session.user.id,
-					operation: 'UPDATE',
-					from: current,
-					to: data,
-				})
-				const updated = await tx.orgEmail.update({
-					where,
-					data: {
-						...data,
-						auditLogs,
-					},
-				})
-				return updated
-			})
-			return updatedRecord
+			if (!HandlerCache.update)
+				HandlerCache.update = await import('./mutation.update.handler').then((mod) => mod.update)
+			if (!HandlerCache.update) throw new Error('Failed to load handler')
+			return HandlerCache.update({ ctx, input })
 		}),
 	get: permissionedProcedure('createNewEmail')
-		.input(
-			z
-				.object({
-					id: z.string(),
-					organizationId: z.string(),
-					orgLocationId: z.string(),
-					serviceId: z.string(),
-				})
-				.partial()
-		)
+		.input(schema.ZGetSchema)
 		.query(async ({ ctx, input }) => {
-			const { id, orgLocationId, organizationId, serviceId } = input
-
-			const result = await ctx.prisma.orgEmail.findMany({
-				where: {
-					id,
-					...(organizationId ? { organization: { some: { organizationId } } } : {}),
-					...(orgLocationId ? { locations: { some: { orgLocationId } } } : {}),
-					...(serviceId ? { services: { some: { serviceId } } } : {}),
-				},
-				select: {
-					id: true,
-					email: true,
-					firstName: true,
-					lastName: true,
-					titleId: true,
-					primary: true,
-					published: true,
-					deleted: true,
-					description: { select: { tsKey: { select: { text: true } } } },
-					locations: { select: { location: { select: { id: true, name: true } } } },
-					organization: { select: { organization: { select: { id: true, name: true, slug: true } } } },
-					services: {
-						select: {
-							service: {
-								select: {
-									id: true,
-									serviceName: { select: { tsKey: { select: { text: true } } } },
-								},
-							},
-						},
-					},
-				},
-				orderBy: [{ published: 'desc' }, { deleted: 'desc' }],
-			})
-
-			const transformedResult = result.map(
-				({ description, locations, organization, titleId, services, ...record }) => ({
-					...record,
-					description: description?.tsKey.text,
-					locations: locations.map(({ location }) => ({ ...location })),
-					organization: organization.map(({ organization }) => ({ ...organization })),
-					title: titleId,
-					services: services.map(({ service }) => ({
-						id: service.id,
-						serviceName: service.serviceName?.tsKey.text,
-					})),
-				})
-			)
-			return transformedResult
+			if (!HandlerCache.get) HandlerCache.get = await import('./query.get.handler').then((mod) => mod.get)
+			if (!HandlerCache.get) throw new Error('Failed to load handler')
+			return HandlerCache.get({ ctx, input })
 		}),
 	upsertMany: permissionedProcedure('updateEmail')
-		.input(UpsertManyOrgEmailSchema)
+		.input(schema.ZUpsertManySchema)
 		.mutation(async ({ ctx, input }) => {
-			const { orgId, data } = input
-
-			const existing = await ctx.prisma.orgEmail.findMany({
-				where: {
-					id: { in: compact(data.map(({ id }) => id)) },
-				},
-				include: { services: true, locations: true },
-			})
-			const upserts = await ctx.prisma.$transaction(
-				data.map(
-					({
-						title,
-						services: servicesArr,
-						locations: locationsArr,
-						description,
-						id: passedId,
-						...record
-					}) => {
-						const before = passedId ? existing.find(({ id }) => id === passedId) : undefined
-						const servicesBefore = before?.services.map(({ serviceId }) => ({ serviceId })) ?? []
-						const locationsBefore = before?.locations.map(({ orgLocationId }) => ({ orgLocationId })) ?? []
-						const auditLogs = CreateAuditLog({
-							actorId: ctx.actorId,
-							operation: before ? 'UPDATE' : 'CREATE',
-							from: before,
-							to: record,
-						})
-						const id = passedId ?? ctx.generateId('orgEmail')
-
-						const services = servicesArr.map((serviceId) => ({ serviceId }))
-						const locations = locationsArr.map((orgLocationId) => ({ orgLocationId }))
-
-						return ctx.prisma.orgEmail.upsert({
-							where: { id },
-							create: {
-								id,
-								...record,
-								title: connectOneId(title),
-								services: createManyOptional(services),
-								locations: createManyOptional(locations),
-								auditLogs,
-								description: description
-									? generateNestedFreeText({ orgId, text: description, type: 'emailDesc', itemId: id })
-									: undefined,
-							},
-							update: {
-								id,
-								...record,
-								title: connectOrDisconnectId(title),
-								services: diffConnectionsMtoN(services, servicesBefore, 'serviceId'),
-								locations: diffConnectionsMtoN(locations, locationsBefore, 'orgLocationId'),
-								description: description
-									? {
-											upsert: {
-												...generateNestedFreeText({
-													orgId,
-													text: description,
-													type: 'emailDesc',
-													itemId: id,
-												}),
-												update: { tsKey: { update: { text: description } } },
-											},
-									  }
-									: undefined,
-								auditLogs,
-							},
-						})
-					}
-				)
+			if (!HandlerCache.upsertMany)
+				HandlerCache.upsertMany = await import('./mutation.upsertMany.handler').then((mod) => mod.upsertMany)
+			if (!HandlerCache.upsertMany) throw new Error('Failed to load handler')
+			return HandlerCache.upsertMany({ ctx, input })
+		}),
+	forContactInfo: publicProcedure.input(schema.ZForContactInfoSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.forContactInfo)
+			HandlerCache.forContactInfo = await import('./query.forContactInfo.handler').then(
+				(mod) => mod.forContactInfo
 			)
-			return upserts
-		}),
-	forContactInfo: publicProcedure
-		.input(
-			z.object({
-				parentId: z.string().regex(getIdPrefixRegex('organization', 'orgLocation', 'orgService')),
-				locationOnly: z.boolean().optional(),
-				serviceOnly: z.boolean().optional(),
-			})
-		)
-		.query(async ({ ctx, input }) => {
-			const whereId = (): Prisma.OrgEmailWhereInput => {
-				switch (true) {
-					case isIdFor('organization', input.parentId): {
-						return { organization: { some: { organization: { id: input.parentId, ...isPublic } } } }
-					}
-					case isIdFor('orgLocation', input.parentId): {
-						return { locations: { some: { location: { id: input.parentId, ...isPublic } } } }
-					}
-					case isIdFor('orgService', input.parentId): {
-						return { services: { some: { service: { id: input.parentId, ...isPublic } } } }
-					}
-					default: {
-						return {}
-					}
-				}
-			}
-
-			const result = await ctx.prisma.orgEmail.findMany({
-				where: {
-					...isPublic,
-					...whereId(),
-					...(input.locationOnly !== undefined ? { locationOnly: input.locationOnly } : {}),
-					...(input.serviceOnly !== undefined ? { serviceOnly: input.serviceOnly } : {}),
-				},
-				select: {
-					id: true,
-					email: true,
-					primary: true,
-					title: { select: { key: { select: { key: true } } } },
-					description: { select: { tsKey: { select: { text: true, key: true } } } },
-					locationOnly: true,
-					serviceOnly: true,
-				},
-				orderBy: { primary: 'desc' },
-			})
-			const transformed = result.map(({ description, title, ...record }) => ({
-				...record,
-				title: title ? { key: title?.key.key } : null,
-				description: description
-					? { key: description?.tsKey.key, defaultText: description?.tsKey.text }
-					: null,
-			}))
-			return transformed
-		}),
+		if (!HandlerCache.forContactInfo) throw new Error('Failed to load handler')
+		return HandlerCache.forContactInfo({ ctx, input })
+	}),
 })
