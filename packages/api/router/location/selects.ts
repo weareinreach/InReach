@@ -104,7 +104,7 @@ export const select = {
 		}
 	},
 
-	service(ctx: Context): Prisma.OrgLocationServiceDefaultArgs {
+	service(ctx: Omit<Context, 'prisma'>): Prisma.OrgLocationServiceDefaultArgs {
 		return {
 			select: {
 				service: {
