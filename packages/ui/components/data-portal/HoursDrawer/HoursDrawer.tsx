@@ -151,22 +151,52 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		newCheckedStates[dayIndex] = checked
 		setCheckedStates(newCheckedStates)
 		console.log(newCheckedStates)
+
+		// Check if there is an item with the same dayIndex and new: true
+		const existingNewItemIndex = form.values.data.findIndex(
+			(item) => item.dayIndex === dayIndex && item.new === true
+		)
+
+		// Check if there are items with the same dayIndex and open24: true
+		const existingOpen24ItemIndex = form.values.data.findIndex(
+			(item) => item.dayIndex === dayIndex && item.open24 === true
+		)
+
+		// Remove items with the same dayIndex and new: true
+		const newDataWithoutNew = form.values.data.filter(
+			(item) => !(item.dayIndex === dayIndex && item.new === true)
+		)
+
 		// Perform any action based on the checkbox state here, if needed.
-		if (newCheckedStates[dayIndex] === true) {
-			form.insertListItem('data', {
-				start: '00:00',
-				end: '00:00',
-				id: generateId('orgHours'),
-				dayIndex,
-				closed: false,
-				open24: true,
-			})
+		if (checked) {
+			// If open24 item doesn't exist, add a new item with open24: true
+			if (existingOpen24ItemIndex === -1) {
+				form.setValues({
+					data: [
+						...newDataWithoutNew,
+						{
+							start: '00:00',
+							end: '00:00',
+							id: generateId('orgHours'),
+							dayIndex,
+							closed: false,
+							open24: true,
+						},
+					],
+				})
+			}
 		} else {
-			// Remove the item from form.values.data based on the new checkbox state
-			const newData = form.values.data.filter(
-				(item) => item.dayIndex !== dayIndex || newCheckedStates[dayIndex]
-			)
-			form.setValues({ data: newData })
+			// If checkbox is unchecked, remove open24 property if it exists
+			const newDataWithoutOpen24 = newDataWithoutNew.map((item) => {
+				if (item.dayIndex === dayIndex && item.open24) {
+					const { open24, ...newItem } = item
+					return { ...newItem, new: true }
+				}
+				return item
+			})
+
+			// Update the form data without the items with new: true and without open24 property
+			form.setValues({ data: newDataWithoutOpen24 })
 		}
 	}
 
@@ -248,6 +278,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							id: generateId('orgHours'),
 							dayIndex,
 							closed: false,
+							new: true,
 						})
 					}
 					disabled={checked && dayIndex === specificDayIndex}
