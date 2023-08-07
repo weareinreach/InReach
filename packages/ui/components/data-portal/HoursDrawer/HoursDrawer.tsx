@@ -175,7 +175,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		console.log('clicked save', form.isValid(), form.errors, form.values)
 	}
 
-	const TimeRangeComponent = ({ arrayIdx }: { arrayIdx: number }) => {
+	const TimeRangeComponent = ({ arrayIdx, open24 }: { arrayIdx: number; open24?: boolean }) => {
 		return (
 			<Stack>
 				<Group>
@@ -186,6 +186,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 						name='start'
 						{...form.getInputProps(`data.${arrayIdx}.start`)}
 						onFocus={undefined}
+						disabled={open24}
 					/>
 					<TimeInput
 						label='Close time'
@@ -194,6 +195,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 						name='end'
 						{...form.getInputProps(`data.${arrayIdx}.end`)}
 						onFocus={undefined}
+						disabled={open24}
 					/>
 					<Icon
 						icon='carbon:trash-can'
@@ -275,7 +277,9 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 
 	form.values.data.forEach((item, idx) => {
 		if (item.delete || !dayRender[item.dayIndex.toString()]) return
-		dayRender[item.dayIndex.toString()]?.push(<TimeRangeComponent arrayIdx={idx} key={item.id ?? idx} />)
+		dayRender[item.dayIndex.toString()]?.push(
+			<TimeRangeComponent arrayIdx={idx} key={item.id ?? idx} open24={item.open24} />
+		)
 	})
 
 	return (
