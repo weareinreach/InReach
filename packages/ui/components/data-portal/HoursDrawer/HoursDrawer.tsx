@@ -229,7 +229,16 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 					/>
 					<Icon
 						icon='carbon:trash-can'
-						onClick={() => form.setFieldValue(`data.${arrayIdx}.delete`, true)}
+						onClick={() => {
+							if (form.values.data[arrayIdx].new) {
+								// Delete the item if new: true is set
+								const newData = form.values.data.filter((_, idx) => idx !== arrayIdx)
+								form.setValues({ data: newData })
+							} else {
+								// Set delete: true if new: true is not set
+								form.setFieldValue(`data.${arrayIdx}.delete`, true)
+							}
+						}}
 						style={{ cursor: 'pointer' }}
 					/>
 				</Group>
