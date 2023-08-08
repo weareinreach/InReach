@@ -125,13 +125,6 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 
-	//data comes from api here
-	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '', {
-		onSuccess: (data) => form.setValues({ data }),
-	})
-	console.log('form values', form.values)
-	// Docs: https://mantine.dev/form/nested/
-
 	// Initialize the array of checked states with false for each day
 	const [checkedStates, setCheckedStates] = useState<boolean[]>([
 		false,
@@ -142,6 +135,28 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		false,
 		false,
 	])
+
+	//data comes from api here
+	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '', {
+		onSuccess: (data) => {
+			const newData = data.map((item) => {
+				if (item.start === item.end) {
+					return { ...item, open24: true } as typeof item & { open24: boolean }
+				} else {
+					return { ...item, open24: false } as typeof item & { open24: boolean }
+				}
+				return item
+			})
+			form.setValues({ data: newData })
+
+			// update the array of checked states based on open24 property
+			const newCheckedStates = newData.map((item) => item.open24)
+			setCheckedStates(newCheckedStates)
+		},
+	})
+	console.log('form values', form.values)
+	console.log('checkedStates', checkedStates)
+	// Docs: https://mantine.dev/form/nested/
 
 	// Function to handle checkbox change for a specific day
 	const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, dayIndex: number) => {
