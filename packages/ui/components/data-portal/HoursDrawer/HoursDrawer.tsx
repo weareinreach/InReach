@@ -154,11 +154,6 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		// Check if there is a pre-existing time segment with the same dayIndex
 		const existingItemIndex = form.values.data.findIndex((item) => item.dayIndex === dayIndex && !item.new)
 
-		// Check if there is an item with the same dayIndex and new: true
-		// const existingNewItemIndex = form.values.data.findIndex(
-		// 	(item) => item.dayIndex === dayIndex && item.new === true
-		// )
-
 		// Check if there are items with the same dayIndex and open24: true
 		//we dont want to add a time segment if one already exists
 		const existingOpen24ItemIndex = form.values.data.findIndex(
@@ -180,8 +175,10 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 					if (item.dayIndex === dayIndex) {
 						if (index === existingItemIndex) {
 							// Update start, end, and open24 for the first matching item
+							// and remove the delete property if it's true
+							const { delete: propToDelete, ...updatedObject } = item
 							return {
-								...item,
+								...updatedObject,
 								open24: true,
 								start: '00:00',
 								end: '00:00',
@@ -348,6 +345,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 
 	form.values.data.forEach((item, idx) => {
 		if (item.delete || !dayRender[item.dayIndex.toString()]) return
+
 		dayRender[item.dayIndex.toString()]?.push(
 			<TimeRangeComponent arrayIdx={idx} key={item.id ?? idx} open24={item.open24} />
 		)
