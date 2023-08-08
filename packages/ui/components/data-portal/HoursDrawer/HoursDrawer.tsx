@@ -234,6 +234,12 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 								// Delete the item if new: true is set
 								const newData = form.values.data.filter((_, idx) => idx !== arrayIdx)
 								form.setValues({ data: newData })
+							} else {
+								// item not new so set delete flag to true
+								const newData = form.values.data.map((item, idx) =>
+									idx === arrayIdx ? { ...item, delete: true } : item
+								)
+								form.setValues({ data: newData })
 							}
 						}}
 						style={{
