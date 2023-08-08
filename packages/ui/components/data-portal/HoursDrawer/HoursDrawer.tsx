@@ -234,12 +234,12 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 								// Delete the item if new: true is set
 								const newData = form.values.data.filter((_, idx) => idx !== arrayIdx)
 								form.setValues({ data: newData })
-							} else {
-								// Set delete: true if new: true is not set
-								form.setFieldValue(`data.${arrayIdx}.delete`, true)
 							}
 						}}
-						style={{ cursor: 'pointer' }}
+						style={{
+							cursor: form.values.data[arrayIdx]?.open24 ? 'not-allowed' : 'pointer',
+							opacity: form.values.data[arrayIdx].open24 ? 0.5 : 1, // Adjust opacity for the disabled look
+						}}
 					/>
 				</Group>
 			</Stack>
