@@ -1,389 +1,117 @@
-import { z } from 'zod'
+import { defineRouter, permissionedProcedure, protectedProcedure, publicProcedure } from '~api/lib/trpc'
 
-import { handleError } from '~api/lib/errorHandler'
-import { defineRouter, protectedProcedure, publicProcedure, staffProcedure } from '~api/lib/trpc'
-import { id, orgId, orgIdLocationId, orgIdServiceId, userId } from '~api/schemas/common'
-import { CreateReview, CreateReviewInput } from '~api/schemas/create/review'
-import { ReviewToggleDelete, ReviewVisibility } from '~api/schemas/update/review'
+import * as schema from './schemas'
 
-const getRandomItems = <T>(items: T[], count: number): T[] => {
-	const randomIndexes = new Set<number>()
-	if (items.length < count)
-		throw new Error('Count exceeds the number of items!', { cause: { items: items.length, count } })
+const HandlerCache: Partial<ReviewHandlerCache> = {}
 
-	while (randomIndexes.size < count) {
-		randomIndexes.add(Math.floor(Math.random() * items.length))
-	}
-
-	return [...randomIndexes].map((i) => items[i]) as T[]
+type ReviewHandlerCache = {
+	create: typeof import('./mutation.create.handler').create
+	getCurrentUser: typeof import('./query.getCurrentUser.handler').getCurrentUser
+	getByOrg: typeof import('./query.getByOrg.handler').getByOrg
+	getByLocation: typeof import('./query.getByLocation.handler').getByLocation
+	getByService: typeof import('./query.getByService.handler').getByService
+	getByIds: typeof import('./query.getByIds.handler').getByIds
+	getByUser: typeof import('./query.getByUser.handler').getByUser
+	getAverage: typeof import('./query.getAverage.handler').getAverage
+	getFeatured: typeof import('./query.getFeatured.handler').getFeatured
+	hide: typeof import('./mutation.hide.handler').hide
+	unHide: typeof import('./mutation.unHide.handler').unHide
+	delete: typeof import('./mutation.delete.handler').deleteReview
+	unDelete: typeof import('./mutation.unDelete.handler').unDelete
 }
 
 export const reviewRouter = defineRouter({
-	create: protectedProcedure.input(z.object(CreateReviewInput)).mutation(async ({ ctx, input }) => {
-		try {
-			const { data } = CreateReview.parse({ ...input, userId: ctx.session.user.id })
-
-			const review = await ctx.prisma.orgReview.create({ data, select: { id: true } })
-
-			return review
-		} catch (error) {
-			handleError(error)
-		}
+	create: protectedProcedure.input(schema.ZCreateSchema).mutation(async ({ ctx, input }) => {
+		if (!HandlerCache.create)
+			HandlerCache.create = await import('./mutation.create.handler').then((mod) => mod.create)
+		if (!HandlerCache.create) throw new Error('Failed to load handler')
+		return HandlerCache.create({ ctx, input })
 	}),
 	getCurrentUser: protectedProcedure.query(async ({ ctx }) => {
-		try {
-			const reviews = await ctx.prisma.orgReview.findMany({
-				where: {
-					userId: ctx.session.user.id,
-				},
-				include: {
-					organization: true,
-					orgLocation: true,
-					orgService: true,
-				},
-			})
-			return reviews
-		} catch (error) {
-			handleError(error)
-		}
+		if (!HandlerCache.getCurrentUser)
+			HandlerCache.getCurrentUser = await import('./query.getCurrentUser.handler').then(
+				(mod) => mod.getCurrentUser
+			)
+		if (!HandlerCache.getCurrentUser) throw new Error('Failed to load handler')
+		return HandlerCache.getCurrentUser({ ctx })
 	}),
-	getByOrg: publicProcedure.input(orgId).query(async ({ ctx, input }) => {
-		try {
-			const reviews = await ctx.prisma.orgReview.findMany({
-				where: {
-					organizationId: input.orgId,
-				},
-			})
-			return reviews
-		} catch (error) {
-			handleError(error)
-		}
+	getByOrg: publicProcedure.input(schema.ZGetByOrgSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getByOrg)
+			HandlerCache.getByOrg = await import('./query.getByOrg.handler').then((mod) => mod.getByOrg)
+		if (!HandlerCache.getByOrg) throw new Error('Failed to load handler')
+		return HandlerCache.getByOrg({ ctx, input })
 	}),
-	getByLocation: publicProcedure.input(orgIdLocationId).query(async ({ ctx, input }) => {
-		try {
-			const reviews = await ctx.prisma.orgReview.findMany({
-				where: {
-					organizationId: input.orgId,
-					orgLocationId: input.locationId,
-				},
-			})
-			return reviews
-		} catch (error) {
-			handleError(error)
-		}
+	getByLocation: publicProcedure.input(schema.ZGetByLocationSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getByLocation)
+			HandlerCache.getByLocation = await import('./query.getByLocation.handler').then(
+				(mod) => mod.getByLocation
+			)
+		if (!HandlerCache.getByLocation) throw new Error('Failed to load handler')
+		return HandlerCache.getByLocation({ ctx, input })
 	}),
-	getByService: publicProcedure.input(orgIdServiceId).query(async ({ ctx, input }) => {
-		try {
-			const reviews = await ctx.prisma.orgReview.findMany({
-				where: {
-					organizationId: input.orgId,
-					orgServiceId: input.serviceId,
-				},
-			})
-			return reviews
-		} catch (error) {
-			handleError(error)
-		}
+	getByService: publicProcedure.input(schema.ZGetByServiceSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getByService)
+			HandlerCache.getByService = await import('./query.getByService.handler').then((mod) => mod.getByService)
+		if (!HandlerCache.getByService) throw new Error('Failed to load handler')
+		return HandlerCache.getByService({ ctx, input })
 	}),
 	/** Returns user reviews ready for public display. Takes reviewer's privacy preferences in to account */
-	getByIds: publicProcedure.input(z.string().array()).query(async ({ ctx, input }) => {
-		const results = await ctx.prisma.orgReview.findMany({
-			where: {
-				id: {
-					in: input,
-				},
-				visible: true,
-				deleted: false,
-			},
-			select: {
-				id: true,
-				rating: true,
-				reviewText: true,
-				user: {
-					select: {
-						name: true,
-						image: true,
-						fieldVisibility: {
-							select: {
-								name: true,
-								image: true,
-								currentCity: true,
-								currentGovDist: true,
-								currentCountry: true,
-							},
-						},
-						permissions: {
-							where: {
-								permission: {
-									name: 'isLCR',
-								},
-							},
-						},
-					},
-				},
-				language: {
-					select: {
-						languageName: true,
-						nativeName: true,
-					},
-				},
-				langConfidence: true,
-				translatedText: {
-					select: {
-						text: true,
-						language: {
-							select: { localeCode: true },
-						},
-					},
-				},
-				lcrCity: true,
-				lcrGovDist: {
-					select: {
-						tsKey: true,
-						tsNs: true,
-					},
-				},
-				lcrCountry: {
-					select: {
-						tsNs: true,
-						tsKey: true,
-					},
-				},
-				createdAt: true,
-			},
-		})
-
-		const filteredResults = results.map((result) => {
-			const {
-				name: nameVisible,
-				image: imageVisible,
-				currentCity: cityVisible,
-				currentGovDist: distVisible,
-				currentCountry: countryVisible,
-			} = result.user.fieldVisibility ?? {
-				name: false,
-				image: false,
-				currentCity: false,
-				currentGovDist: false,
-				currentCountry: false,
-			}
-
-			return {
-				...result,
-				user: {
-					image: imageVisible ? result.user.image : null,
-					name: nameVisible ? result.user.name : null,
-				},
-				lcrCity: cityVisible ? result.lcrCity : null,
-				lcrGovDist: distVisible ? result.lcrGovDist : null,
-				lcrCountry: countryVisible ? result.lcrCountry : null,
-				verifiedUser: Boolean(result.user.permissions.length),
-			}
-		})
-		return filteredResults
+	getByIds: publicProcedure.input(schema.ZGetByIdsSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getByIds)
+			HandlerCache.getByIds = await import('./query.getByIds.handler').then((mod) => mod.getByIds)
+		if (!HandlerCache.getByIds) throw new Error('Failed to load handler')
+		return HandlerCache.getByIds({ ctx, input })
 	}),
-	getByUser: staffProcedure
-		.input(userId)
-		.meta({ hasPerm: 'viewUserReviews' })
+	getByUser: permissionedProcedure('viewUserReviews')
+		.input(schema.ZGetByUserSchema)
 		.query(async ({ ctx, input }) => {
-			try {
-				const reviews = await ctx.prisma.orgReview.findMany({
-					where: {
-						userId: input.userId,
-					},
-					include: {
-						organization: true,
-						orgLocation: true,
-						orgService: true,
-					},
-				})
-				return reviews
-			} catch (error) {
-				handleError(error)
-			}
+			if (!HandlerCache.getByUser)
+				HandlerCache.getByUser = await import('./query.getByUser.handler').then((mod) => mod.getByUser)
+			if (!HandlerCache.getByUser) throw new Error('Failed to load handler')
+			return HandlerCache.getByUser({ ctx, input })
 		}),
-	hide: staffProcedure
-		.input(id)
-		.meta({ hasPerm: 'hideUserReview' })
+	hide: permissionedProcedure('hideUserReview')
+		.input(schema.ZHideSchema)
 		.mutation(async ({ ctx, input }) => {
-			try {
-				const inputData = {
-					...input,
-					actorId: ctx.session.user.id,
-					visible: false,
-				} satisfies z.input<typeof ReviewVisibility>
-
-				const data = ReviewVisibility.parse(inputData)
-
-				const result = await ctx.prisma.orgReview.update(data)
-				return result
-			} catch (error) {
-				handleError(error)
-			}
+			if (!HandlerCache.hide)
+				HandlerCache.hide = await import('./mutation.hide.handler').then((mod) => mod.hide)
+			if (!HandlerCache.hide) throw new Error('Failed to load handler')
+			return HandlerCache.hide({ ctx, input })
 		}),
-	unHide: staffProcedure
-		.input(id)
-		.meta({ hasPerm: 'showUserReview' })
+	unHide: permissionedProcedure('unHideUserReview')
+		.input(schema.ZUnHideSchema)
 		.mutation(async ({ ctx, input }) => {
-			try {
-				const inputData = {
-					...input,
-					actorId: ctx.session.user.id,
-					visible: true,
-				} satisfies z.input<typeof ReviewVisibility>
-
-				const data = ReviewVisibility.parse(inputData)
-
-				const result = await ctx.prisma.orgReview.update(data)
-				return result
-			} catch (error) {
-				handleError(error)
-			}
+			if (!HandlerCache.unHide)
+				HandlerCache.unHide = await import('./mutation.unHide.handler').then((mod) => mod.unHide)
+			if (!HandlerCache.unHide) throw new Error('Failed to load handler')
+			return HandlerCache.unHide({ ctx, input })
 		}),
-	delete: protectedProcedure
-		.input(id)
-		.meta({ hasPerm: 'deleteUserReview' })
+	delete: permissionedProcedure('deleteUserReview')
+		.input(schema.ZDeleteSchema)
 		.mutation(async ({ ctx, input }) => {
-			try {
-				const inputData = {
-					...input,
-					actorId: ctx.session.user.id,
-					deleted: true,
-				} satisfies z.input<typeof ReviewToggleDelete>
-				const data = ReviewToggleDelete.parse(inputData)
-
-				const result = await ctx.prisma.orgReview.update(data)
-				return result
-			} catch (error) {
-				handleError(error)
-			}
+			if (!HandlerCache.delete)
+				HandlerCache.delete = await import('./mutation.delete.handler').then((mod) => mod.deleteReview)
+			if (!HandlerCache.delete) throw new Error('Failed to load handler')
+			return HandlerCache.delete({ ctx, input })
 		}),
-	unDelete: protectedProcedure
-		.input(id)
-		.meta({ hasPerm: 'deleteUserReview' })
+	unDelete: permissionedProcedure('undeleteUserReview')
+		.input(schema.ZUnDeleteSchema)
 		.mutation(async ({ ctx, input }) => {
-			try {
-				const inputData = {
-					...input,
-					actorId: ctx.session.user.id,
-					deleted: false,
-				} satisfies z.input<typeof ReviewToggleDelete>
-				const data = ReviewToggleDelete.parse(inputData)
-
-				const result = await ctx.prisma.orgReview.update(data)
-				return result
-			} catch (error) {
-				handleError(error)
-			}
+			if (!HandlerCache.unDelete)
+				HandlerCache.unDelete = await import('./mutation.unDelete.handler').then((mod) => mod.unDelete)
+			if (!HandlerCache.unDelete) throw new Error('Failed to load handler')
+			return HandlerCache.unDelete({ ctx, input })
 		}),
-	getAverage: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
-		const result = await ctx.prisma.orgReview.aggregate({
-			_avg: {
-				rating: true,
-			},
-			_count: {
-				rating: true,
-			},
-			where: {
-				OR: [{ orgLocationId: input }, { orgServiceId: input }, { organizationId: input }],
-			},
-		})
-		return { average: result._avg.rating, count: result._count.rating }
+	getAverage: publicProcedure.input(schema.ZGetAverageSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getAverage)
+			HandlerCache.getAverage = await import('./query.getAverage.handler').then((mod) => mod.getAverage)
+		if (!HandlerCache.getAverage) throw new Error('Failed to load handler')
+		return HandlerCache.getAverage({ ctx, input })
 	}),
-	getFeatured: publicProcedure.input(z.number()).query(async ({ ctx, input }) => {
-		const results = await ctx.prisma.orgReview.findMany({
-			where: {
-				featured: true,
-				visible: true,
-				deleted: false,
-			},
-			select: {
-				id: true,
-				rating: true,
-				reviewText: true,
-				user: {
-					select: {
-						name: true,
-						image: true,
-						fieldVisibility: {
-							select: {
-								name: true,
-								image: true,
-								currentCity: true,
-								currentGovDist: true,
-								currentCountry: true,
-							},
-						},
-						permissions: {
-							where: {
-								permission: {
-									name: 'isLCR',
-								},
-							},
-						},
-					},
-				},
-				language: {
-					select: {
-						languageName: true,
-						nativeName: true,
-					},
-				},
-				langConfidence: true,
-				translatedText: {
-					select: {
-						text: true,
-						language: {
-							select: { localeCode: true },
-						},
-					},
-				},
-				lcrCity: true,
-				lcrGovDist: {
-					select: {
-						tsKey: true,
-						tsNs: true,
-					},
-				},
-				lcrCountry: {
-					select: {
-						tsNs: true,
-						tsKey: true,
-					},
-				},
-				createdAt: true,
-			},
-		})
-
-		const randomResults = getRandomItems(results, input)
-
-		const filteredResults = randomResults.map((result) => {
-			const {
-				name: nameVisible,
-				image: imageVisible,
-				currentCity: cityVisible,
-				currentGovDist: distVisible,
-				currentCountry: countryVisible,
-			} = result.user.fieldVisibility ?? {
-				name: false,
-				image: false,
-				currentCity: false,
-				currentGovDist: false,
-				currentCountry: false,
-			}
-
-			return {
-				...result,
-				user: {
-					image: imageVisible ? result.user.image : null,
-					name: nameVisible ? result.user.name : null,
-				},
-				lcrCity: cityVisible ? result.lcrCity : null,
-				lcrGovDist: distVisible ? result.lcrGovDist : null,
-				lcrCountry: countryVisible ? result.lcrCountry : null,
-				verifiedUser: Boolean(result.user.permissions.length),
-			}
-		})
-		return filteredResults
+	getFeatured: publicProcedure.input(schema.ZGetFeaturedSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getFeatured)
+			HandlerCache.getFeatured = await import('./query.getFeatured.handler').then((mod) => mod.getFeatured)
+		if (!HandlerCache.getFeatured) throw new Error('Failed to load handler')
+		return HandlerCache.getFeatured({ ctx, input })
 	}),
 })
