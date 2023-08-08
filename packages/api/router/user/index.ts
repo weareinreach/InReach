@@ -1,224 +1,117 @@
-import { TRPCError } from '@trpc/server'
-import { z } from 'zod'
-
-import {
-	confirmAccount,
-	createCognitoUser,
-	deleteAccount,
-	forgotPassword,
-	resetPassword,
-	userLogin,
-} from '@weareinreach/auth/lib'
-import { Prisma } from '@weareinreach/db'
-import { handleError } from '~api/lib/errorHandler'
 import { adminProcedure, defineRouter, protectedProcedure, publicProcedure } from '~api/lib/trpc'
-import {
-	AdminCreateUser,
-	type AdminCreateUserInput,
-	CognitoBase64,
-	CreateUser,
-	CreateUserSurvey,
-	ForgotPassword,
-	ResetPassword,
-} from '~api/schemas/create/user'
+
+import * as schema from './schemas'
+
+const HandlerCache: Partial<UserHandlerCache> = {}
+
+type UserHandlerCache = {
+	create: typeof import('./mutation.create.handler').create
+	adminCreate: typeof import('./mutation.adminCreate.handler').adminCreate
+	submitSurvey: typeof import('./mutation.submitSurvey.handler').submitSurvey
+	getProfile: typeof import('./query.getProfile.handler').getProfile
+	getPermissions: typeof import('./query.getPermissions.handler').getPermissions
+	getOrgPermissions: typeof import('./query.getOrgPermissions.handler').getOrgPermissions
+	getLocationPermissions: typeof import('./query.getLocationPermissions.handler').getLocationPermissions
+	surveyOptions: typeof import('./query.surveyOptions.handler').surveyOptions
+	forgotPassword: typeof import('./mutation.forgotPassword.handler').forgotPassword
+	confirmAccount: typeof import('./mutation.confirmAccount.handler').confirmAccount
+	resetPassword: typeof import('./mutation.resetPassword.handler').resetPassword
+	deleteAccount: typeof import('./mutation.deleteAccount.handler').deleteAccount
+}
 
 export const userRouter = defineRouter({
-	create: publicProcedure.input(CreateUser).mutation(async ({ ctx, input }) => {
-		// TODO: [IN-793] Alter signup input to match with Signup Flow data.
-		try {
-			const newUser = await ctx.prisma.$transaction(async (tx) => {
-				const user = await tx.user.create(input.prisma)
-				if (user.id !== input.cognito.databaseId) throw new Error('Database ID mismatch')
-				const cognitoUser = await createCognitoUser(input.cognito)
-				if (cognitoUser?.prismaAccount) await tx.account.create(cognitoUser.prismaAccount)
-
-				if (user.id && cognitoUser?.cognitoId) return { success: true }
-			})
-			return newUser
-		} catch (error) {
-			if (error instanceof Prisma.PrismaClientKnownRequestError) {
-				if (error.code === 'P2002') throw new TRPCError({ code: 'CONFLICT', message: 'User already exists' })
-			}
-			handleError(error)
-		}
+	create: publicProcedure.input(schema.ZCreateSchema).mutation(async ({ ctx, input }) => {
+		if (!HandlerCache.create)
+			HandlerCache.create = await import('./mutation.create.handler').then((mod) => mod.create)
+		if (!HandlerCache.create) throw new Error('Failed to load handler')
+		return HandlerCache.create({ ctx, input })
 	}),
-	adminCreate: adminProcedure.input(AdminCreateUser().inputSchema).mutation(async ({ ctx, input }) => {
-		try {
-			const inputData = {
-				actorId: ctx.session.user.id,
-				operation: 'CREATE',
-				data: input,
-			} satisfies AdminCreateUserInput
-
-			const recordData = AdminCreateUser().dataParser.parse(inputData)
-			const newUser = await ctx.prisma.$transaction(async (tx) => {
-				const user = await tx.user.create(recordData.prisma)
-				const cognitoUser = await createCognitoUser(recordData.cognito)
-				return {
-					user,
-					cognitoUser,
-				}
-			})
-			return newUser
-		} catch (error) {
-			handleError(error)
-		}
-	}),
-	submitSurvey: publicProcedure.input(CreateUserSurvey).mutation(async ({ ctx, input }) => {
-		try {
-			const survey = await ctx.prisma.userSurvey.create(input)
-			return survey.id
-		} catch (error) {
-			handleError(error)
-		}
+	adminCreate: adminProcedure
+		.input(schema.ZAdminCreateSchema().inputSchema)
+		.mutation(async ({ ctx, input }) => {
+			if (!HandlerCache.adminCreate)
+				HandlerCache.adminCreate = await import('./mutation.adminCreate.handler').then(
+					(mod) => mod.adminCreate
+				)
+			if (!HandlerCache.adminCreate) throw new Error('Failed to load handler')
+			return HandlerCache.adminCreate({ ctx, input })
+		}),
+	submitSurvey: publicProcedure.input(schema.ZSubmitSurveySchema).mutation(async ({ ctx, input }) => {
+		if (!HandlerCache.submitSurvey)
+			HandlerCache.submitSurvey = await import('./mutation.submitSurvey.handler').then(
+				(mod) => mod.submitSurvey
+			)
+		if (!HandlerCache.submitSurvey) throw new Error('Failed to load handler')
+		return HandlerCache.submitSurvey({ ctx, input })
 	}),
 	getProfile: protectedProcedure.query(async ({ ctx }) => {
-		try {
-			const profile = await ctx.prisma.user.findFirst({
-				where: {
-					id: ctx.session.user.id,
-				},
-				select: {
-					id: true,
-					createdAt: true,
-					updatedAt: true,
-					name: true,
-					email: true,
-					image: true,
-					active: true,
-				},
-			})
-			return profile
-		} catch (error) {
-			handleError(error)
-		}
+		if (!HandlerCache.getProfile)
+			HandlerCache.getProfile = await import('./query.getProfile.handler').then((mod) => mod.getProfile)
+		if (!HandlerCache.getProfile) throw new Error('Failed to load handler')
+		return HandlerCache.getProfile({ ctx })
 	}),
 	getPermissions: protectedProcedure.query(async ({ ctx }) => {
-		try {
-			const permissions = await ctx.prisma.userPermission.findMany({
-				where: {
-					userId: ctx.session.user.id,
-				},
-				include: {
-					permission: true,
-				},
-			})
-			return permissions
-		} catch (error) {
-			handleError(error)
-		}
+		if (!HandlerCache.getPermissions)
+			HandlerCache.getPermissions = await import('./query.getPermissions.handler').then(
+				(mod) => mod.getPermissions
+			)
+		if (!HandlerCache.getPermissions) throw new Error('Failed to load handler')
+		return HandlerCache.getPermissions({ ctx })
 	}),
 	getOrgPermissions: protectedProcedure.query(async ({ ctx }) => {
-		try {
-			const permissions = await ctx.prisma.organizationPermission.findMany({
-				where: {
-					userId: ctx.session.user.id,
-				},
-				include: {
-					organization: true,
-					permission: true,
-				},
-			})
-			return permissions
-		} catch (error) {
-			handleError(error)
-		}
+		if (!HandlerCache.getOrgPermissions)
+			HandlerCache.getOrgPermissions = await import('./query.getOrgPermissions.handler').then(
+				(mod) => mod.getOrgPermissions
+			)
+		if (!HandlerCache.getOrgPermissions) throw new Error('Failed to load handler')
+		return HandlerCache.getOrgPermissions({ ctx })
 	}),
 	getLocationPermissions: protectedProcedure.query(async ({ ctx }) => {
-		try {
-			const permissions = await ctx.prisma.locationPermission.findMany({
-				where: {
-					userId: ctx.session.user.id,
-				},
-				include: {
-					location: true,
-					permission: true,
-				},
-			})
-			return permissions
-		} catch (error) {
-			handleError(error)
-		}
+		if (!HandlerCache.getLocationPermissions)
+			HandlerCache.getLocationPermissions = await import('./query.getLocationPermissions.handler').then(
+				(mod) => mod.getLocationPermissions
+			)
+		if (!HandlerCache.getLocationPermissions) throw new Error('Failed to load handler')
+		return HandlerCache.getLocationPermissions({ ctx })
 	}),
-	surveyOptions: publicProcedure.query(async ({ ctx }) => {
-		const commonSelect = { id: true, tsKey: true, tsNs: true }
-
-		const immigration = await ctx.prisma.userImmigration.findMany({
-			select: {
-				...commonSelect,
-				status: true,
-			},
-			orderBy: {
-				status: 'asc',
-			},
-		})
-		const sog = await ctx.prisma.userSOGIdentity.findMany({
-			select: {
-				...commonSelect,
-				identifyAs: true,
-			},
-			orderBy: {
-				identifyAs: 'asc',
-			},
-		})
-		const ethnicity = await ctx.prisma.userEthnicity.findMany({
-			select: {
-				...commonSelect,
-				ethnicity: true,
-			},
-			orderBy: {
-				ethnicity: 'asc',
-			},
-		})
-		const community = await ctx.prisma.userCommunity.findMany({
-			select: {
-				...commonSelect,
-				community: true,
-			},
-			orderBy: {
-				community: 'asc',
-			},
-		})
-		const countries = await ctx.prisma.country.findMany({
-			select: {
-				...commonSelect,
-				cca2: true,
-			},
-			orderBy: {
-				name: 'asc',
-			},
-		})
-		return { community, countries, ethnicity, immigration, sog }
+	surveyOptions: publicProcedure.query(async () => {
+		if (!HandlerCache.surveyOptions)
+			HandlerCache.surveyOptions = await import('./query.surveyOptions.handler').then(
+				(mod) => mod.surveyOptions
+			)
+		if (!HandlerCache.surveyOptions) throw new Error('Failed to load handler')
+		return HandlerCache.surveyOptions()
 	}),
-	forgotPassword: publicProcedure.input(ForgotPassword).mutation(async ({ input }) => {
-		const response = await forgotPassword(input)
-		return response
+	forgotPassword: publicProcedure.input(schema.ZForgotPasswordSchema).mutation(async ({ ctx, input }) => {
+		if (!HandlerCache.forgotPassword)
+			HandlerCache.forgotPassword = await import('./mutation.forgotPassword.handler').then(
+				(mod) => mod.forgotPassword
+			)
+		if (!HandlerCache.forgotPassword) throw new Error('Failed to load handler')
+		return HandlerCache.forgotPassword({ ctx, input })
 	}),
-	confirmAccount: publicProcedure.input(CognitoBase64).mutation(async ({ input }) => {
-		const { code, email } = input
-		const response = await confirmAccount(email, code)
-		return response
+	confirmAccount: publicProcedure.input(schema.ZConfirmAccountSchema).mutation(async ({ ctx, input }) => {
+		if (!HandlerCache.confirmAccount)
+			HandlerCache.confirmAccount = await import('./mutation.confirmAccount.handler').then(
+				(mod) => mod.confirmAccount
+			)
+		if (!HandlerCache.confirmAccount) throw new Error('Failed to load handler')
+		return HandlerCache.confirmAccount({ ctx, input })
 	}),
-	resetPassword: publicProcedure.input(ResetPassword).mutation(async ({ input }) => {
-		const { code, password, email } = input
-		const response = await resetPassword({ code, email, password })
-		return response
+	resetPassword: publicProcedure.input(schema.ZResetPasswordSchema).mutation(async ({ ctx, input }) => {
+		if (!HandlerCache.resetPassword)
+			HandlerCache.resetPassword = await import('./mutation.resetPassword.handler').then(
+				(mod) => mod.resetPassword
+			)
+		if (!HandlerCache.resetPassword) throw new Error('Failed to load handler')
+		return HandlerCache.resetPassword({ ctx, input })
 	}),
-	deleteAccount: protectedProcedure.input(z.string()).mutation(async ({ input, ctx }) => {
-		const { email } = ctx.session.user
-		const cognitoSession = await userLogin(email, input)
-		if (cognitoSession.success) {
-			const successful = await ctx.prisma.$transaction(async (tx) => {
-				await tx.user.update({
-					where: { email },
-					data: { active: false },
-				})
-
-				await deleteAccount(email)
-				return true
-			})
-			if (successful) return true
-		}
-		throw new TRPCError({ code: 'UNAUTHORIZED', message: 'incorrect credentials' })
+	deleteAccount: protectedProcedure.input(schema.ZDeleteAccountSchema).mutation(async ({ input, ctx }) => {
+		if (!HandlerCache.deleteAccount)
+			HandlerCache.deleteAccount = await import('./mutation.deleteAccount.handler').then(
+				(mod) => mod.deleteAccount
+			)
+		if (!HandlerCache.deleteAccount) throw new Error('Failed to load handler')
+		return HandlerCache.deleteAccount({ ctx, input })
 	}),
 })
