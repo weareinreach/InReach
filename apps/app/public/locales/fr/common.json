@@ -1,7 +1,7 @@
 {
     "about-us": "À propos de nous",
     "access": {
-        "sms-with-body": "Envoyer un texte <strong>{{body}}</strong> à {{code}}"
+        "sms-with-body": "Envoyer un SMS <strong>{{body}}</strong> à {{code}}"
     },
     "accessible-building_false": "Ce bâtiment n'est PAS accessible en fauteuil roulant",
     "accessible-building_true": "Ce bâtiment est accessible en fauteuil roulant",
@@ -62,7 +62,7 @@
         "intl-we-recommend": "Nous recommandons ces ressources internationales",
         "natl-find-help-now": "Trouver de l'aide maintenant",
         "natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
-        "outside-service-area": "Inreach ne fonctionne pas dans {{country}}",
+        "outside-service-area": "InReach ne fonctionne pas au/en {{country}}",
         "who-this-serves": "<Text><strong>Qui cette ressource sert :</strong> {{targetPop}}</Text>"
     },
     "current-location": "Emplacement actuel",
@@ -84,8 +84,8 @@
     "enter-password-placeholder": "Entrer le mot de passe...",
     "enter-review": "Entrer votre avis...",
     "errors": {
-        "404-body": "Nous sommes désolés, la page que vous cherchez n'existe pas ou a été déplacée. Commencez une recherche ci-dessous pour trouver des ressources sûres et vérifiées pour la communauté LGBTQ+ dans votre région.",
-        "404-title": "404 : Page introuvable.",
+        "404-body": "Nous sommes désolés, la page que vous cherchez n'existe pas ou a été déplacée. Commencer une recherche ci-dessous pour trouver des ressources sûres et vérifiées pour la communauté LGBTQ+ dans votre région.",
+        "404-title": "404 : Page non trouvée.",
         "500-body": "Nous sommes désolés, une erreur s'est produite avec notre serveur. Veuillez réessayer plus tard, ou lancer une recherche ci-dessous pour trouver des ressources LGBTQ+ sûres et vérifiées dans votre région.",
         "500-title": "500: Une erreur s'est produite.",
         "oh-no": "Oh non !",
@@ -232,12 +232,12 @@
     "search": {
         "include-remote": "Inclure les services à distance",
         "location-placeholder": "Entrer la ville ou le code postal...",
-        "location-placeholder-searchby": "Recherche par ville ou par code postal...",
+        "location-placeholder-searchby": "Chercher par ville ou par code postal...",
         "look-up-org": "Rechercher une organisation par son nom",
         "no-results": "Aucun résultat trouvé. Veuillez réessayer.",
         "no-results-adjust": "Aucun résultat trouvé pour votre recherche. Essayez d'ajuster l'emplacement ou les filtres sélectionnés.",
         "organization-placeholder": "Entrer le nom de l'organisation...",
-        "organization-placeholder-searchby": "Recherche par nom d'organisme...",
+        "organization-placeholder-searchby": "Chercher par nom d'organisme...",
         "suggest-resource": "Vous ne le trouvez pas? <1>Suggérer une organisation</1> vous pensez qu'elle devrait être incluse."
     },
     "send-email": "Envoyer un e-mail",
