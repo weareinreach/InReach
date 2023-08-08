@@ -83,8 +83,8 @@ export const orgHoursData = {
 	],
 	forHoursDrawer: [
 		{
-			start: '05:00',
-			end: '12:00',
+			start: '00:00',
+			end: '00:00',
 			id: 'ohrs_01GW2HT8BQ87EZJ6K9H5ME1W0M',
 			dayIndex: 1,
 			closed: false,
