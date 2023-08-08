@@ -150,40 +150,65 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		const newCheckedStates = [...checkedStates]
 		newCheckedStates[dayIndex] = checked
 		setCheckedStates(newCheckedStates)
-		console.log(newCheckedStates)
+
+		// Check if there is a pre-existing time segment with the same dayIndex
+		const existingItemIndex = form.values.data.findIndex((item) => item.dayIndex === dayIndex && !item.new)
 
 		// Check if there is an item with the same dayIndex and new: true
-		const existingNewItemIndex = form.values.data.findIndex(
-			(item) => item.dayIndex === dayIndex && item.new === true
-		)
+		// const existingNewItemIndex = form.values.data.findIndex(
+		// 	(item) => item.dayIndex === dayIndex && item.new === true
+		// )
 
 		// Check if there are items with the same dayIndex and open24: true
+		//we dont want to add a time segment if one already exists
 		const existingOpen24ItemIndex = form.values.data.findIndex(
 			(item) => item.dayIndex === dayIndex && item.open24 === true
 		)
 
 		// Remove items with the same dayIndex and new: true
+		// This is because they were added and not saved before more changes were made
+		// to the form data and we don't want to have competing update and delete events
 		const newDataWithoutNew = form.values.data.filter(
 			(item) => !(item.dayIndex === dayIndex && item.new === true)
 		)
 
-		// Perform any action based on the checkbox state here, if needed.
+		// Update the form data based on the checkbox state and other conditions
 		if (checked) {
-			// If open24 item doesn't exist, add a new item with open24: true
-			if (existingOpen24ItemIndex === -1) {
-				form.setValues({
-					data: [
-						...newDataWithoutNew,
-						{
-							start: '00:00',
-							end: '00:00',
-							id: generateId('orgHours'),
-							dayIndex,
-							closed: false,
-							open24: true,
-						},
-					],
+			if (existingItemIndex > -1) {
+				// An item exists which matches the dayIndex, let's update that item
+				const newData = form.values.data.map((item, index) => {
+					if (item.dayIndex === dayIndex) {
+						if (index === existingItemIndex) {
+							// Update start, end, and open24 for the first matching item
+							return {
+								...item,
+								open24: true,
+								start: '00:00',
+								end: '00:00',
+							}
+						} else {
+							// Set delete: true for other matching items
+							return { ...item, delete: true }
+						}
+					} else {
+						return item // No changes for other items
+					}
 				})
+				form.setValues({ data: newData })
+			} else if (existingOpen24ItemIndex === -1 || newDataWithoutNew.length === 0) {
+				//if there are no pre-existing segments and no 'new' segments, add a new item with open24: true
+				const newData = [
+					...newDataWithoutNew,
+					{
+						start: '00:00',
+						end: '00:00',
+						id: generateId('orgHours'),
+						dayIndex,
+						closed: false,
+						open24: true,
+					},
+				]
+				form.setValues({ data: newData })
 			}
 		} else {
 			// If checkbox is unchecked, remove open24 property if it exists
@@ -195,7 +220,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 				return item
 			})
 
-			// Update the form data without the items with new: true and without open24 property
+			// Update the form data without the open24 property
 			form.setValues({ data: newDataWithoutOpen24 })
 		}
 	}
