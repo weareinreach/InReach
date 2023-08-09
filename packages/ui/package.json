@@ -55,6 +55,7 @@
 		"@faker-js/faker": "7.6.0",
 		"@geometricpanda/storybook-addon-badges": "2.0.0",
 		"@iconify-json/carbon": "1.1.19",
+		"@iconify-json/mdi": "1.1.54",
 		"@iconify-json/ph": "1.1.6",
 		"@iconify-json/simple-icons": "1.1.65",
 		"@iconify/react": "4.1.1",
