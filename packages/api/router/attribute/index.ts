@@ -16,7 +16,7 @@ export const attributeRouter = defineRouter({
 			)
 
 		if (!HandlerCache.getFilterOptions) throw new Error('Failed to load handler')
-		return HandlerCache.getFilterOptions({ ctx })
+		return HandlerCache.getFilterOptions()
 	}),
 	getOne: staffProcedure.input(schema.ZGetOneSchema).query(async ({ ctx, input }) => {
 		if (!HandlerCache.getOne)

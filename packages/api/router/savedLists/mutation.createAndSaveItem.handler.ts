@@ -1,7 +1,6 @@
 import { type z } from 'zod'
 
 import { prisma } from '@weareinreach/db'
-import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateAndSaveItemSchema, ZCreateAndSaveItemSchema } from './mutation.createAndSaveItem.schema'
@@ -10,26 +9,22 @@ export const createAndSaveItem = async ({
 	ctx,
 	input,
 }: TRPCHandlerParams<TCreateAndSaveItemSchema, 'protected'>) => {
-	try {
-		const { dataParser } = ZCreateAndSaveItemSchema()
+	const { dataParser } = ZCreateAndSaveItemSchema()
 
-		const inputData = {
-			actorId: ctx.session.user.id,
-			operation: 'CREATE',
-			ownedById: ctx.session.user.id,
-			data: input,
-		} satisfies z.input<typeof dataParser>
+	const inputData = {
+		actorId: ctx.session.user.id,
+		operation: 'CREATE',
+		ownedById: ctx.session.user.id,
+		data: input,
+	} satisfies z.input<typeof dataParser>
 
-		const data = dataParser.parse(inputData)
-		const result = await prisma.userSavedList.create(data)
+	const data = dataParser.parse(inputData)
+	const result = await prisma.userSavedList.create(data)
 
-		const flattenedResult = {
-			...result,
-			organizations: result.organizations.map((x) => x.organizationId),
-			services: result.services.map((x) => x.serviceId),
-		}
-		return flattenedResult
-	} catch (error) {
-		handleError(error)
+	const flattenedResult = {
+		...result,
+		organizations: result.organizations.map((x) => x.organizationId),
+		services: result.services.map((x) => x.serviceId),
 	}
+	return flattenedResult
 }

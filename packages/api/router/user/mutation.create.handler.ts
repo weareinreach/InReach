@@ -2,7 +2,6 @@ import { TRPCError } from '@trpc/server'
 
 import { createCognitoUser } from '@weareinreach/auth/lib/createUser'
 import { Prisma, prisma } from '@weareinreach/db'
-import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TCreateSchema } from './mutation.create.schema'
@@ -22,6 +21,6 @@ export const create = async ({ input }: TRPCHandlerParams<TCreateSchema>) => {
 		if (error instanceof Prisma.PrismaClientKnownRequestError) {
 			if (error.code === 'P2002') throw new TRPCError({ code: 'CONFLICT', message: 'User already exists' })
 		}
-		handleError(error)
+		throw error
 	}
 }

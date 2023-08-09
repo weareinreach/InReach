@@ -1,37 +1,26 @@
-import { TRPCError } from '@trpc/server'
-
 import { prisma } from '@weareinreach/db'
-import { handleError } from '~api/lib/errorHandler'
-import { updateGeo } from '~api/lib/prismaRaw/updateGeo'
 import { CreateAuditLog } from '~api/schemas/create/auditLog'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateSchema } from './mutation.update.schema'
 
 export const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protected'>) => {
-	try {
-		const { where, data } = input
-		const updatedRecord = await prisma.$transaction(async (tx) => {
-			const current = await tx.orgLocation.findUniqueOrThrow({ where })
-			const auditLog = CreateAuditLog({
-				actorId: ctx.session!.user.id,
-				operation: 'UPDATE',
-				from: current,
-				to: data,
-			})
-			const update = await tx.orgLocation.update({
-				where,
-				data: { ...data, auditLogs: auditLog },
-				select: { id: true },
-			})
-
-			// if WKT is updated, we need to have the DB update the `geo` column with raw SQL.
-			if (data.geoWKT) await updateGeo('orgLocation', where.id, tx)
-
-			return update
+	const { where, data } = input
+	const updatedRecord = await prisma.$transaction(async (tx) => {
+		const current = await tx.orgLocation.findUniqueOrThrow({ where })
+		const auditLog = CreateAuditLog({
+			actorId: ctx.session!.user.id,
+			operation: 'UPDATE',
+			from: current,
+			to: data,
 		})
-		return updatedRecord
-	} catch (error) {
-		handleError(error)
-	}
+		const update = await tx.orgLocation.update({
+			where,
+			data: { ...data, auditLogs: auditLog },
+			select: { id: true },
+		})
+
+		return update
+	})
+	return updatedRecord
 }

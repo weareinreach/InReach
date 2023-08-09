@@ -1,5 +1,3 @@
-import { z } from 'zod'
-
 import { defineRouter, publicProcedure } from '~api/lib/trpc'
 
 import * as schema from './schemas'

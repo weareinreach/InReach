@@ -1,41 +1,36 @@
 import { prisma } from '@weareinreach/db'
-import { handleError } from '~api/lib/errorHandler'
 
 export const countryGovDistMap = async () => {
-	try {
-		const fields = { id: true, tsKey: true, tsNs: true }
+	const fields = { id: true, tsKey: true, tsNs: true }
 
-		const countries = await prisma.country.findMany({
-			where: { activeForOrgs: true },
-			select: {
-				...fields,
-				govDist: { select: fields },
+	const countries = await prisma.country.findMany({
+		where: { activeForOrgs: true },
+		select: {
+			...fields,
+			govDist: { select: fields },
+		},
+	})
+	const govDists = await prisma.govDist.findMany({
+		select: {
+			...fields,
+			subDistricts: {
+				select: fields,
 			},
-		})
-		const govDists = await prisma.govDist.findMany({
-			select: {
-				...fields,
-				subDistricts: {
-					select: fields,
-				},
-				parent: { select: fields },
-				country: { select: fields },
-			},
-		})
-		const resultMap = new Map<string, CountryGovDistMapItem>([
-			...(countries.map(({ govDist, ...rest }) => [rest.id, { ...rest, children: govDist }]) satisfies [
-				string,
-				CountryGovDistMapItem,
-			][]),
-			...(govDists.map(({ subDistricts, parent, country, ...rest }) => [
-				rest.id,
-				{ ...rest, children: subDistricts, parent: parent ? { ...parent, parent: country } : country },
-			]) satisfies [string, CountryGovDistMapItem][]),
-		])
-		return resultMap
-	} catch (error) {
-		handleError(error)
-	}
+			parent: { select: fields },
+			country: { select: fields },
+		},
+	})
+	const resultMap = new Map<string, CountryGovDistMapItem>([
+		...(countries.map(({ govDist, ...rest }) => [rest.id, { ...rest, children: govDist }]) satisfies [
+			string,
+			CountryGovDistMapItem,
+		][]),
+		...(govDists.map(({ subDistricts, parent, country, ...rest }) => [
+			rest.id,
+			{ ...rest, children: subDistricts, parent: parent ? { ...parent, parent: country } : country },
+		]) satisfies [string, CountryGovDistMapItem][]),
+	])
+	return resultMap
 }
 
 interface CountryGovDistMapItemBasic {

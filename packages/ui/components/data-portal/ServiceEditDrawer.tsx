@@ -1,19 +1,15 @@
 import {
 	Box,
 	type ButtonProps,
-	Card,
 	createPolymorphicComponent,
 	createStyles,
-	Divider,
 	Drawer,
-	Group,
 	List,
 	Modal,
 	rem,
 	Stack,
 	Text,
 	Title,
-	UnstyledButton,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks'
@@ -21,11 +17,9 @@ import compact from 'just-compact'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode, useEffect, useMemo } from 'react'
 
-import { type ApiOutput } from '@weareinreach/api'
 import { BadgeGroup, type ServiceTagProps } from '~ui/components/core/Badge'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { useCustomVariant } from '~ui/hooks'
-import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 import { DataViewer } from '~ui/other/DataViewer'
@@ -63,7 +57,6 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 	({ serviceId, ...props }, ref) => {
 		const [drawerOpened, drawerHandler] = useDisclosure(true)
 		const [serviceModalOpened, serviceModalHandler] = useDisclosure(false)
-		const { id: organizationId, slug: orgSlug } = useOrgInfo()
 		const { classes } = useStyles()
 		const form = useForm<FormData>()
 		const variants = useCustomVariant()
@@ -90,7 +83,7 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 			if (!form.values.services?.length || !allServices) return []
 
 			return compact(
-				form.values.services.map(({ id, categoryId }) => {
+				form.values.services.map(({ id }) => {
 					const service = allServices.find((item) => item.id === id)
 					if (service) {
 						return {
@@ -311,11 +304,12 @@ interface FormData {
 	} | null
 	attributes: Attribute[]
 	accessDetails: {
+		id?: string
 		attribute: { id: string; tsKey: string; tsNs: string }
 		supplement: {
 			id: string
 			data: unknown
-			text: { id: string; key: string; ns: string; tsKey: { text: string; crowdinId: number | null } } | null
+			text: { id?: string; key: string; ns: string; tsKey: { text: string; crowdinId: number | null } } | null
 		}[]
 	}[]
 }

@@ -1,5 +1,6 @@
 import { Card, Divider, Group, List, Stack, Title, useMantineTheme } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
+import compact from 'just-compact'
 import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
 import { formatAddress } from 'localized-address-format'
 import { useRouter } from 'next/router'
@@ -89,7 +90,7 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 		: undefined
 
 	const formattedAddress = formatAddress({
-		addressLines: data.street2 ? [data.street1.trim(), data.street2.trim()] : [data.street1.trim()],
+		addressLines: compact([data.street1?.trim(), data.street2?.trim()]),
 		locality: data.city.trim(),
 		postalCode: data.postCode ? data.postCode.trim() : undefined,
 		postalCountry: data.country,

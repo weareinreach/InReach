@@ -10,8 +10,8 @@ export const ZUpdateSchema = z
 		data: z
 			.object({
 				name: z.string(),
-				street1: z.string(),
-				street2: z.string().nullable(),
+				street1: z.string().nullish(),
+				street2: z.string().nullish(),
 				city: z.string(),
 				postCode: z.string().nullable(),
 				primary: z.boolean(),

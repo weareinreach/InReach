@@ -5,26 +5,26 @@ import { prefixedId } from '~api/schemas/idPrefix'
 export const ZGetSchema = z.union([
 	z.object({
 		id: prefixedId('orgPhone'),
-		organizationId: z.never(),
-		orgLocationId: z.never(),
-		serviceId: z.never(),
+		organizationId: z.undefined().optional(),
+		orgLocationId: z.undefined().optional(),
+		serviceId: z.undefined().optional(),
 	}),
 	z.object({
-		id: z.never(),
+		id: z.undefined().optional(),
 		organizationId: prefixedId('organization'),
-		orgLocationId: z.never(),
-		serviceId: z.never(),
+		orgLocationId: z.undefined().optional(),
+		serviceId: z.undefined().optional(),
 	}),
 	z.object({
-		id: z.never(),
-		organizationId: z.never(),
+		id: z.undefined().optional(),
+		organizationId: z.undefined().optional(),
 		orgLocationId: prefixedId('orgLocation'),
-		serviceId: z.never(),
+		serviceId: z.undefined().optional(),
 	}),
 	z.object({
-		id: z.never(),
-		organizationId: z.never(),
-		orgLocationId: z.never(),
+		id: z.undefined().optional(),
+		organizationId: z.undefined().optional(),
+		orgLocationId: z.undefined().optional(),
 		serviceId: prefixedId('orgService'),
 	}),
 ])
