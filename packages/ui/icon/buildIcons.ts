@@ -10,7 +10,7 @@ loadIcons()
 const generate = async () => {
 	const iconList = `// generated file - do not modify directly\n// prettier-ignore\nexport const iconList = ${JSON.stringify(
 		listIcons()
-	)} as const`
+	)} as const\n`
 
 	writeFileSync('./icon/iconList.ts', iconList)
 
