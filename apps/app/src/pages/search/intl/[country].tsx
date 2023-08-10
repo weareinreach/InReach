@@ -158,7 +158,7 @@ export const getStaticProps = async ({
 	const parsedQuery = QuerySchema.safeParse(params)
 	console.log('getStaticProps -> parsedQuery', parsedQuery)
 	if (!parsedQuery.success) {
-		console.log('Redirecting to 404', {params, locale})
+		console.log('Redirecting to 404', { params, locale })
 		return {
 			notFound: true,
 		}
