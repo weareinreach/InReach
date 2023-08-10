@@ -157,7 +157,9 @@ export const getStaticProps = async ({
 }: GetStaticPropsContext<RoutedQuery<'/search/intl/[country]'>>) => {
 	const parsedQuery = QuerySchema.safeParse(params)
 	console.log('getStaticProps -> parsedQuery', parsedQuery)
+	console.log('getStaticProps -> params', {params, locale})
 	if (!parsedQuery.success) {
+		console.log('zod error', parsedQuery.error.flatten(), parsedQuery.error.toString())
 		console.log('Redirecting to 404', { params, locale })
 		return {
 			notFound: true,
