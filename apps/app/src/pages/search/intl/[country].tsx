@@ -160,6 +160,7 @@ export const getStaticProps = async (ctx: GetStaticPropsContext<RoutedQuery<'/se
 		return {
 			notFound: true,
 		}
+	}
 
 	const ssg = await trpcServerClient({ session: null })
 	const [i18n] = await Promise.allSettled([
