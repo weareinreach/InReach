@@ -151,16 +151,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		fallback: 'blocking',
 	}
 }
-export const getStaticProps = async ({
-	params,
-	locale,
-}: GetStaticPropsContext<RoutedQuery<'/search/intl/[country]'>>) => {
+export const getStaticProps = async (ctx: GetStaticPropsContext<RoutedQuery<'/search/intl/[country]'>>) => {
+	const { params, locale } = ctx
 	const parsedQuery = QuerySchema.safeParse(params)
+	console.log('getStaticProps -> parsedQuery', parsedQuery)
 	if (!parsedQuery.success) {
+		console.log('Redirecting to 404', ctx)
 		return {
 			notFound: true,
 		}
-	}
 
 	const ssg = await trpcServerClient({ session: null })
 	const [i18n] = await Promise.allSettled([
