@@ -13,7 +13,7 @@ type SystemHandlerCache = {
 
 const HandlerCache: Partial<SystemHandlerCache> = {}
 export const systemRouter = defineRouter({
-	permissions: permissionSubRouter,
+	// permissions: permissionSubRouter,
 	updateInactiveCountryEdgeConfig: permissionedProcedure('attachOrgAttributes').mutation(async () => {
 		if (!HandlerCache.updateInactiveCountryEdgeConfig)
 			HandlerCache.updateInactiveCountryEdgeConfig = await import(
