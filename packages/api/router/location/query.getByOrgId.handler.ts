@@ -10,7 +10,9 @@ import { select } from './selects'
 export const getByOrgId = async ({ ctx, input }: TRPCHandlerParams<TGetByOrgIdSchema>) => {
 	const locations = await prisma.orgLocation.findMany({
 		where: {
-			id: input.orgId,
+			organization: {
+				id: input.orgId,
+			},
 			...globalWhere.isPublic(),
 		},
 		select: {
