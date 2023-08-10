@@ -151,12 +151,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		fallback: 'blocking',
 	}
 }
-export const getStaticProps = async (ctx: GetStaticPropsContext<RoutedQuery<'/search/intl/[country]'>>) => {
-	const { params, locale } = ctx
+export const getStaticProps = async ({
+	params,
+	locale,
+}: GetStaticPropsContext<RoutedQuery<'/search/intl/[country]'>>) => {
 	const parsedQuery = QuerySchema.safeParse(params)
-	console.log('getStaticProps -> parsedQuery', parsedQuery)
 	if (!parsedQuery.success) {
-		console.log('Redirecting to 404', ctx)
 		return {
 			notFound: true,
 		}
