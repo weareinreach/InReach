@@ -22,7 +22,7 @@ export const middleware: NextMiddleware = async (req: NextRequest) => {
 			if (searchedCountry === 'dist') {
 				url.pathname = url.pathname.replace(/\/dist\//, '/US/')
 			} else {
-								console.log('middleware -> searchedCountry', searchedCountry)
+				console.log('middleware -> searchedCountry', searchedCountry)
 				url.searchParams.forEach((_v, k) => url.searchParams.delete(k))
 				url.pathname = `/search/intl/${searchedCountry}`
 			}
