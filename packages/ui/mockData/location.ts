@@ -1,4 +1,3 @@
-import { type ApiOutput } from '@weareinreach/api'
 import { getTRPCMock, type MockDataObject, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
 const locationData = {
@@ -33,9 +32,11 @@ const locationData = {
 		id: 'oloc_01GVH3VEVBERFNA9PHHJYEBGA3',
 		name: 'Whitman-Walker 1525',
 		street1: '1525 14th St. NW ',
-		street2: '',
+		street2: null,
 		city: 'Washington',
 		postCode: '20005',
+		latitude: 38.91,
+		longitude: -77.032,
 		country: 'US',
 		govDist: {
 			abbrev: 'DC',
