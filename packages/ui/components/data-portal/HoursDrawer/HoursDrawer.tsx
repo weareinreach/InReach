@@ -246,6 +246,17 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		}
 	}
 
+	const handleTimezoneChange = (selectedTzValue) => {
+		// Update the tz value for all items in the form data based on the dropdown selection
+		const updatedFormData = form.values.data.map((item) => ({
+			...item,
+			tz: selectedTzValue,
+		}))
+
+		// Update form values with the updated tz values
+		form.setValues({ data: updatedFormData })
+	}
+
 	const handleUpdate = () => {
 		//TODO save to DB instead of sending to console.log
 		console.log('clicked save', form.isValid(), form.errors, form.values)
@@ -397,7 +408,10 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							<Title order={2}>Hours</Title>
 							<Select
 								value={tzValue}
-								onChange={setTzValue}
+								onChange={(selectedTzValue) => {
+									setTzValue(selectedTzValue)
+									handleTimezoneChange(selectedTzValue)
+								}}
 								label='Select a timezone for this location'
 								placeholder='Search for timezone'
 								searchable
