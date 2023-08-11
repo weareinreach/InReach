@@ -139,18 +139,27 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 	//data comes from api here
 	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '', {
 		onSuccess: (data) => {
-			const newData = data.map((item) => {
-				if (item.start === item.end) {
-					return { ...item, open24: true } as typeof item & { open24: boolean }
-				} else {
-					return { ...item, open24: false } as typeof item & { open24: boolean }
+			if (data.length > 0) {
+				if (data[0] && data[0].tz) {
+					setTzValue(data[0].tz) // Set the tzValue based on the first item's tz property
 				}
-				return item
-			})
-			form.setValues({ data: newData })
+			}
+			const transformedData = data.map((item) => ({
+				...item,
+				start: item.start ?? '',
+				end: item.end ?? '',
+				closed: item.closed ?? false,
+				tz: item.tz ?? null,
+				id: item.id ?? generateId('orgHours'),
+				open24: false, // Add default value for open24
+				new: false, // Add default value for new
+				delete: false, // Add default value for delete
+			}))
+
+			form.setValues({ data: transformedData })
 
 			// update the array of checked states based on open24 property
-			const newCheckedStates = newData.map((item) => item.open24)
+			const newCheckedStates = transformedData.map((item) => item.open24)
 			setCheckedStates(newCheckedStates)
 		},
 	})
