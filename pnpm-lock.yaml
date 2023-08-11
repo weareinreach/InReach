@@ -686,6 +686,9 @@ importers:
       '@types/eslint':
         specifier: 8.44.2
         version: 8.44.2
+      '@types/google.maps':
+        specifier: 3.53.6
+        version: 3.53.6
       '@types/luxon':
         specifier: 3.3.1
         version: 3.3.1
@@ -1373,6 +1376,9 @@ importers:
       '@turf/helpers':
         specifier: 6.5.0
         version: 6.5.0
+      '@tweenjs/tween.js':
+        specifier: 21.0.0
+        version: 21.0.0
       '@weareinreach/env':
         specifier: workspace:*
         version: link:../env
@@ -1656,6 +1662,9 @@ importers:
       '@weareinreach/eslint-config':
         specifier: 0.100.0
         version: link:../eslint-config
+      '@welldone-software/why-did-you-render':
+        specifier: 7.0.1
+        version: 7.0.1(react@18.2.0)
       babel-loader:
         specifier: 9.1.3
         version: 9.1.3(@babel/core@7.22.10)(webpack@5.88.2)
@@ -1731,6 +1740,9 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      react-hook-tracer:
+        specifier: 1.4.0
+        version: 1.4.0(react-dom@18.2.0)(react@18.2.0)
       react-i18next:
         specifier: 13.0.3
         version: 13.0.3(i18next@23.4.4)(react-dom@18.2.0)(react@18.2.0)
@@ -9875,7 +9887,7 @@ packages:
       util: 0.12.5
       util-deprecate: 1.0.2
       watchpack: 2.4.0
-      ws: 8.13.0
+      ws: 8.13.0(bufferutil@4.0.7)(utf-8-validate@6.0.3)
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -11097,6 +11109,10 @@ packages:
       '@turf/meta': 6.5.0
     dev: true
 
+  /@tweenjs/tween.js@21.0.0:
+    resolution: {integrity: sha512-qVfOiFh0U8ZSkLgA6tf7kj2MciqRbSCWaJZRwftVO7UbtVDNsZAXpWXqvCDtIefvjC83UJB+vHTDOGm5ibXjEA==}
+    dev: false
+
   /@types/acorn@4.0.6:
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
     dependencies:
@@ -12023,6 +12039,15 @@ packages:
     dependencies:
       '@webassemblyjs/ast': 1.11.5
       '@xtuc/long': 4.2.2
+    dev: true
+
+  /@welldone-software/why-did-you-render@7.0.1(react@18.2.0):
+    resolution: {integrity: sha512-Qe/8Xxa2G+LMdI6VoazescPzjjkHYduCDa8aHOJR50e9Bgs8ihkfMBY+ev7B4oc3N59Zm547Sgjf8h5y0FOyoA==}
+    peerDependencies:
+      react: ^16 || ^17 || ^18 || 18
+    dependencies:
+      lodash: 4.17.21
+      react: 18.2.0
     dev: true
 
   /@xmldom/xmldom@0.8.7:
@@ -13076,7 +13101,6 @@ packages:
     requiresBuild: true
     dependencies:
       node-gyp-build: 4.6.0
-    dev: false
 
   /bufrw@1.3.0:
     resolution: {integrity: sha512-jzQnSbdJqhIltU9O5KUiTtljP9ccw2u5ix59McQy4pV2xGhVLhRZIndY8GIrgh5HjXa6+QJ9AQhOd2QWQizJFQ==}
@@ -20314,7 +20338,6 @@ packages:
   /node-gyp-build@4.6.0:
     resolution: {integrity: sha512-NTZVKn9IylLwUzaKjkas1e4u2DLNcV4rdYagA4PWdPwW87Bi7z+BznyKSRwS/761tV/lzCGXplWsiaMjLqP2zQ==}
     hasBin: true
-    dev: false
 
   /node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
@@ -22143,6 +22166,16 @@ packages:
       '@babel/runtime': 7.22.6
       react: 18.2.0
     dev: false
+
+  /react-hook-tracer@1.4.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-RX3JFlDmw5Q8LWltp0XRtMQ2VgaZF0QeuL4IfNwAA2eG4ASF7qaxBu7UOMGk9wrZB0NC6zV4R63osRas5ZrQGA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || 18
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || 18
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: true
 
   /react-i18next@13.0.3(i18next@23.4.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-/t4kt4Y2o+21hbvx+o9zpVnmoiud7KLDncyZFGN0U6TGAWYaXdTsp/ytAHFcKKSAODg4noIMaOO3X7bMgCqLHw==}
@@ -25043,7 +25076,6 @@ packages:
     requiresBuild: true
     dependencies:
       node-gyp-build: 4.6.0
-    dev: false
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
@@ -25580,19 +25612,6 @@ packages:
         optional: true
     dev: true
 
-  /ws@8.13.0:
-    resolution: {integrity: sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
-    dev: true
-
   /ws@8.13.0(bufferutil@4.0.7)(utf-8-validate@6.0.3):
     resolution: {integrity: sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==}
     engines: {node: '>=10.0.0'}
@@ -25607,7 +25626,6 @@ packages:
     dependencies:
       bufferutil: 4.0.7
       utf-8-validate: 6.0.3
-    dev: false
 
   /xdg-basedir@5.1.0:
     resolution: {integrity: sha512-GCPAHLvrIH13+c0SuacwvRYj2SxJXQ4kaVTT5xgL3kPrz56XxkF21IGhjSE1+W0aw7gpBWRGXLCPnPby6lSpmQ==}
