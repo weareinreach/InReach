@@ -69,6 +69,10 @@ const config: StorybookConfig = {
 			},
 		},
 	},
+	previewHead: (head) => `
+	<script src='http://localhost:8097'></script>
+	${head}
+	`,
 	webpackFinal: (config, options) => {
 		const configAdditions: typeof config = {
 			resolve: {
