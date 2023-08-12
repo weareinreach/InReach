@@ -49,8 +49,9 @@ const locationData = {
 	},
 	forVisitCard: {
 		id: 'oloc_01GVH3VEVBERFNA9PHHJYEBGA3',
+		name: 'Whitman-Walker 1525',
 		street1: '1525 14th St. NW ',
-		street2: '',
+		street2: null,
 		city: 'Washington',
 		postCode: '20005',
 		country: {
@@ -61,6 +62,8 @@ const locationData = {
 			tsKey: 'us-district-of-columbia',
 			tsNs: 'gov-dist',
 		},
+		latitude: 38.91,
+		longitude: -77.032,
 		remote: undefined,
 	},
 } satisfies MockDataObject<'location'>
