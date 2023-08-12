@@ -1,89 +1,93 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
+import { Status, Wrapper } from '@googlemaps/react-wrapper'
 import { rem, Skeleton } from '@mantine/core'
-import { GoogleMap as GMap, Marker, type MarkerProps, useJsApiLoader } from '@react-google-maps/api'
-import { getBounds } from 'geolib'
-import { memo, useCallback } from 'react'
+import { memo, useEffect, useRef } from 'react'
 
+import { useGoogleMaps, useGoogleMapSetup } from '~ui/hooks/useGoogleMaps'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-export const GoogleMapComponent = ({ height, width, locationIds }: GoogleMapProps) => {
-	const { data, isLoading } = api.location.forGoogleMaps.useQuery(locationIds)
+const MapRenderer = memo(({ height, width }: MapRendererProps) => {
+	const { setMap, setInfoWindow, mapEvents } = useGoogleMapSetup()
+	const mapRef = useRef<HTMLDivElement>(null)
 
-	const { isLoaded } = useJsApiLoader({
-		googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string,
-	})
-	const getBoundProps = () => {
-		if (Array.isArray(data)) {
-			const coords: { latitude: number; longitude: number }[] = []
-			for (const { latitude, longitude } of data) {
-				if (!latitude || !longitude) continue
-				coords.push({ longitude, latitude })
-			}
-			const bounds = getBounds(coords)
-			if (isLoaded) {
-				return new google.maps.LatLngBounds(
-					{ lat: bounds.minLat, lng: bounds.minLng },
-					{ lat: bounds.maxLat, lng: bounds.minLng }
-				)
-			}
-		}
-		throw new Error('Must have multiple points', { cause: { data, isLoading, isLoaded } })
-	}
-
-	const getMarkers = () => {
-		if (Array.isArray(data)) {
-			return data.map(({ latitude, longitude }, idx) => {
-				if (!latitude || !longitude) return null
-				const props: MarkerProps = {
-					position: {
-						lat: latitude,
-						lng: longitude,
-					},
-				}
-				return <Marker key={idx} {...props} />
+	useEffect(() => {
+		if (mapRef.current) {
+			const newMap = new google.maps.Map(mapRef.current, {
+				disableDefaultUI: true,
+				mapId: 'cd9fc3a944b18418',
+				isFractionalZoomEnabled: true,
 			})
+			const newInfoWindow = new google.maps.InfoWindow()
+			setMap(newMap)
+			setInfoWindow(newInfoWindow)
+			mapEvents.ready.emit(true)
 		}
-		if (!data?.latitude || !data?.longitude) return null
-		const props: MarkerProps = {
-			position: {
-				lat: data.latitude,
-				lng: data.longitude,
-			},
-		}
-		return <Marker {...props} />
-	}
-
-	// const RenderMap = () => {
-	const onLoad = useCallback(
-		function onLoad(map: google.maps.Map) {
-			map.setOptions({ disableDefaultUI: true, keyboardShortcuts: false })
-			if (isLoading) return
-			if (Array.isArray(data)) {
-				map.fitBounds(getBoundProps())
-			} else if (data?.latitude && data?.longitude && isLoaded) {
-				const center = new google.maps.LatLng({ lat: data.latitude, lng: data.longitude })
-				map.setCenter(center)
-				map.setZoom(11)
-			}
-		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[isLoading]
+	}, [])
+
+	return <div ref={mapRef} style={{ height, width, borderRadius: rem(16) }} />
+})
+
+MapRenderer.displayName = 'GoogleMapRenderer'
+export const GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
+	const { map, mapIsReady, mapEvents, camera } = useGoogleMaps()
+	const { data, isLoading } = api.location.forGoogleMaps.useQuery(
+		{ locationIds: Array.isArray(locationIds) ? locationIds : [locationIds] },
+		{ enabled: mapIsReady }
 	)
 
-	return isLoaded && !isLoading ? (
-		<GMap mapContainerStyle={{ height, width, borderRadius: rem(16) }} onLoad={onLoad}>
-			{getMarkers()}
-		</GMap>
-	) : (
-		<Skeleton h={height} w={width} radius={16} />
+	useEffect(() => {
+		if (mapIsReady && !isLoading && data) {
+			const { bounds, center, zoom } = data
+			if (zoom) {
+				map.setZoom(zoom)
+			}
+			if (center) {
+				map.setCenter(center)
+			}
+			if (bounds) {
+				map.fitBounds(bounds)
+				map.panToBounds(bounds)
+			}
+			camera.center = center
+			camera.zoom = zoom ?? map.getZoom()
+			mapEvents.initialPropsSet.emit(true)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [mapIsReady, map, isLoading, data])
+
+	const mapRender = (status: Status) => {
+		switch (status) {
+			case Status.LOADING: {
+				return <Skeleton h={height} w={width} radius={16} />
+			}
+			case Status.FAILURE: {
+				return <></>
+			}
+			case Status.SUCCESS: {
+				return <MapRenderer {...{ height, width }} />
+			}
+		}
+	}
+
+	return (
+		<Wrapper
+			apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string}
+			render={mapRender}
+			libraries={['core', 'maps', 'marker']}
+			id='google-map'
+			version='weekly'
+		/>
 	)
 }
 
-export const GoogleMap = memo(GoogleMapComponent)
+GoogleMap.displayName = '@weareinreach/ui/components/core/GoogleMap'
 
-interface GoogleMapProps {
+export interface GoogleMapProps {
 	locationIds: string | string[]
 	height: number
 	width: number
 }
+
+type MapRendererProps = Omit<GoogleMapProps, 'locationIds'>
