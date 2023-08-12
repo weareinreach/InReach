@@ -13,6 +13,7 @@ export const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSch
 		},
 		select: {
 			id: true,
+			name: true,
 			street1: true,
 			street2: true,
 			city: true,
@@ -23,6 +24,8 @@ export const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSch
 				where: { attribute: { tsKey: 'additional.offers-remote-services' } },
 				select: { attribute: { select: { tsKey: true, icon: true } } },
 			},
+			latitude: true,
+			longitude: true,
 		},
 	})
 	const { attributes, ...rest } = result
