@@ -28,6 +28,7 @@
 		"@tweenjs/tween.js": "21.0.0",
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
+		"ahooks": "3.7.8",
 		"ajv": "8.12.0",
 		"alex": "11.0.0",
 		"cookies-next": "2.1.2",
