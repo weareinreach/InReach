@@ -24,15 +24,15 @@
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.119",
-		"@types/eslint": "8.44.1",
-		"@types/node": "18.17.1",
+		"@types/eslint": "8.44.2",
+		"@types/node": "18.17.5",
 		"@types/prettier": "2.7.3",
 		"@vercel/ncc": "0.36.1",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
-		"eslint": "8.46.0",
-		"prettier": "3.0.0",
+		"eslint": "8.47.0",
+		"prettier": "3.0.1",
 		"typescript": "5.1.6"
 	}
 }

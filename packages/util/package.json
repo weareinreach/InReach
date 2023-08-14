@@ -13,7 +13,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"tslog": "4.8.2"
+		"tslog": "4.9.1"
 	},
 	"devDependencies": {
 		"@weareinreach/config": "workspace:*",

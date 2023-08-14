@@ -17,6 +17,7 @@ const config = {
 			{
 				prefer: 'type-imports',
 				fixStyle: 'inline-type-imports',
+				disallowTypeAnnotations: false,
 			},
 		],
 		'no-unused-vars': 'off',
@@ -24,8 +25,9 @@ const config = {
 			'warn',
 			{
 				varsIgnorePattern: '^_',
-				args: 'none',
+				args: 'after-used',
 				ignoreRestSiblings: true,
+				destructuredArrayIgnorePattern: '^_',
 			},
 		],
 		'@typescript-eslint/no-empty-function': 'off',

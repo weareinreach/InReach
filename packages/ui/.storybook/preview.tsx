@@ -1,8 +1,10 @@
+import './wdyr'
 import { type BADGE } from '@geometricpanda/storybook-addon-badges'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
+import { type WhyDidYouRenderOptions } from '@welldone-software/why-did-you-render'
 import { type RequestHandler, rest } from 'msw'
-import { initialize as initializeMsw, /*mswDecorator,*/ mswLoader } from 'msw-storybook-addon'
+import { initialize as initializeMsw, mswLoader } from 'msw-storybook-addon'
 import { type BaseRouter } from 'next/dist/shared/lib/router/router'
 import { type Router } from 'next/router'
 
@@ -12,11 +14,13 @@ import { type SearchStateProviderProps } from '~ui/providers/SearchState'
 import {
 	Layouts,
 	type LayoutsDecorator,
+	WithGoogleMaps,
 	WithI18n,
 	WithMantine,
 	WithSearchState,
 	WithStrictMode,
 	WithTRPC,
+	WithWhyDidYouRender,
 } from './decorators'
 import { i18n } from './i18next'
 import { type Viewports } from './types'
@@ -89,7 +93,16 @@ const preview: Preview = {
 		},
 		pseudo: {},
 	},
-	decorators: [WithSearchState, Layouts, WithMantine, WithI18n, /*mswDecorator,*/ WithTRPC, WithStrictMode],
+	decorators: [
+		WithGoogleMaps,
+		WithSearchState,
+		Layouts,
+		WithMantine,
+		WithI18n,
+		WithTRPC,
+		WithStrictMode,
+		WithWhyDidYouRender,
+	],
 	loaders: [mswLoader],
 }
 export default preview
@@ -123,6 +136,7 @@ declare module '@storybook/react' {
 		pseudo?: Partial<Record<PseudoStates, string | string[] | boolean>> & { rootElement?: string }
 		rqDevtools?: boolean
 		searchContext?: SearchStateProviderProps['initState']
+		wdyr?: boolean | WhyDidYouRenderOptions
 	}
 }
 type PseudoStates =

@@ -4,10 +4,10 @@ import { flatten, unflatten } from 'flat'
 import sizeof from 'object-sizeof'
 import formatBytes from 'pretty-bytes'
 
-import { createSubLog } from '@weareinreach/util/logger'
+import { createLoggerInstance } from '@weareinreach/util/logger'
 
 const redisTTL = 86400
-const log = createSubLog('Vercel KV')
+const log = createLoggerInstance('Vercel KV')
 const tracer = trace.getTracer('inreach-app')
 
 export const redisReadCache = async (namespaces: string[], lang: string, otaManifestTimestamp: number) => {

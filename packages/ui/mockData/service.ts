@@ -1,4 +1,3 @@
-import { type ApiOutput } from '@weareinreach/api'
 import { getTRPCMock, type MockDataObject, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
 export const serviceData = {
@@ -171,6 +170,7 @@ export const serviceData = {
 			ns: 'org-data',
 			tsKey: {
 				text: 'Get education and employment services for youth ages 24 and under',
+				crowdinId: null,
 			},
 		},
 		services: [
@@ -503,6 +503,7 @@ export const serviceData = {
 							ns: 'org-data',
 							tsKey: {
 								text: 'The above are drop-in service hours for education. Drop-in hours for employment services are Monday, Tuesday: 10 a.m. to noon, and 2:30 to 4:30 p.m. Wednesday: 10 a.m. to noon, and 1 to 2 p.m. Thursday: 10 a.m. to noon, and 1 to 3 p.m. Friday: 10 a.m. to 1 p.m.',
+								crowdinId: null,
 							},
 						},
 						govDist: null,
@@ -554,6 +555,7 @@ export const serviceData = {
 							ns: 'org-data',
 							tsKey: {
 								text: 'Call for more information.',
+								crowdinId: null,
 							},
 						},
 						govDist: null,
@@ -584,29 +586,13 @@ export const serviceData = {
 					postCode: '94109',
 					primary: true,
 					govDist: {
-						id: 'gdst_01GW2HJ23GMD17FBJMJWD16PZ1',
-						name: 'California',
-						slug: 'us-california',
-						iso: 'US-CA',
 						abbrev: 'CA',
-						country: {
-							cca2: 'US',
-							cca3: 'USA',
-							id: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
-							name: 'United States',
-							dialCode: null,
-							flag: '🇺🇸',
-							tsKey: 'USA.name',
-							tsNs: 'country',
-						},
 						govDistType: {
 							tsKey: 'type-state',
 							tsNs: 'gov-dist',
 						},
-						isPrimary: true,
 						tsKey: 'us-california',
 						tsNs: 'gov-dist',
-						parent: null,
 					},
 					country: {
 						cca2: 'US',
@@ -629,6 +615,7 @@ export const serviceData = {
 			ns: 'org-data',
 			tsKey: {
 				text: 'Larkin Street Academy Services offers job readiness, college readiness, computer classes, job placement and retention, internships, tutoring, GED tutoring and classes, secondary and post-secondary school enrollment and support, mindfulness, visual and performing arts. Offices are open Monday through Thursday, 9:00 AM - 16:00 PM, appointments only.',
+				crowdinId: null,
 			},
 		},
 	},
