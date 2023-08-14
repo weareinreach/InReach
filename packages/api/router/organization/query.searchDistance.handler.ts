@@ -1,7 +1,6 @@
 import { getDistance } from 'geolib'
 
 import { prisma, Prisma } from '@weareinreach/db'
-import { handleError } from '~api/lib/errorHandler'
 import { isPublic } from '~api/schemas/selects/common'
 import { orgSearchSelect } from '~api/schemas/selects/org'
 import { type TRPCHandlerParams } from '~api/types/handler'
@@ -290,26 +289,22 @@ type City = {
 }
 
 export const searchDistance = async ({ input }: TRPCHandlerParams<TSearchDistanceSchema>) => {
-	try {
-		const { unit } = input
+	const { unit } = input
 
-		const orgs = await searchOrgByDistance(input)
-		const resultIds = orgs.results.map(({ id }) => id)
+	const orgs = await searchOrgByDistance(input)
+	const resultIds = orgs.results.map(({ id }) => id)
 
-		const results = await prismaDistSearchDetails({ ...input, resultIds })
+	const results = await prismaDistSearchDetails({ ...input, resultIds })
 
-		const orderedResults: ((typeof results)[number] & {
-			distance: number
-			unit: 'km' | 'mi'
-			national: string[]
-		})[] = []
-		orgs.results.forEach(({ id, distMeters, national }) => {
-			const distance = unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934
-			const sort = results.find((result) => result.id === id)
-			if (sort) orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit, national })
-		})
-		return { orgs: orderedResults, resultCount: orgs.total }
-	} catch (error) {
-		handleError(error)
-	}
+	const orderedResults: ((typeof results)[number] & {
+		distance: number
+		unit: 'km' | 'mi'
+		national: string[]
+	})[] = []
+	orgs.results.forEach(({ id, distMeters, national }) => {
+		const distance = unit === 'km' ? distMeters / 1000 : distMeters / 1000 / 1.60934
+		const sort = results.find((result) => result.id === id)
+		if (sort) orderedResults.push({ ...sort, distance: +distance.toFixed(2), unit, national })
+	})
+	return { orgs: orderedResults, resultCount: orgs.total }
 }

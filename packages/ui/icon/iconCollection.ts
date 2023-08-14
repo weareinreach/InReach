@@ -3,6 +3,7 @@ import { addCollection } from '@iconify/react'
 import { getIcons } from '@iconify/utils'
 
 const { icons: carbonIcons } = require('@iconify-json/carbon')
+const { icons: mdiIcons } = require('@iconify-json/mdi')
 const { icons: phIcons } = require('@iconify-json/ph')
 const { icons: simpleIcons } = require('@iconify-json/simple-icons')
 
@@ -14,8 +15,10 @@ const { icons: simpleIcons } = require('@iconify-json/simple-icons')
 export const loadIcons = () => {
 	const iconsSimple = getIcons(simpleIcons, ['tiktok'])
 	const iconsPh = getIcons(phIcons, ['map-pin-fill'])
+	const iconsMdi = getIcons(mdiIcons, ['map-marker'])
 
 	addCollection(carbonIcons)
 	if (iconsSimple !== null) addCollection(iconsSimple)
 	if (iconsPh !== null) addCollection(iconsPh)
+	if (iconsMdi !== null) addCollection(iconsMdi)
 }

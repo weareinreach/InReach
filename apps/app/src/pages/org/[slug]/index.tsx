@@ -60,9 +60,11 @@ const useStyles = createStyles((theme) => ({
 const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const router = useRouter<'/org/[slug]'>()
 	// const { query } = router
-	const { t, i18n } = useTranslation(['common', 'services', 'attribute', 'phone-type', slug], {
-		bindI18n: 'languageChanged loaded',
-	})
+	const {
+		t,
+		i18n,
+		ready: i18nReady,
+	} = useTranslation(['common', 'services', 'attribute', 'phone-type', slug])
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const { data, status } = api.organization.forOrgPage.useQuery({ slug }, { enabled: !!slug })
@@ -84,11 +86,11 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 	const reviewsRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		if (data && status === 'success') {
+		if (i18nReady && data && status === 'success') {
 			setLoading(false)
 			if (data.locations?.length > 1) setActiveTab('locations')
 		}
-	}, [data, status])
+	}, [data, status, i18nReady])
 
 	useEffect(() => {
 		data?.id &&

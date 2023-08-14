@@ -1,8 +1,8 @@
 import { kv as redis } from '@vercel/kv'
 
-import { createSubLog } from '@weareinreach/util/logger'
+import { createLoggerInstance } from '@weareinreach/util/logger'
 
-const log = createSubLog('Cache - Slug redirect')
+const log = createLoggerInstance('Cache - Slug redirect')
 
 export const readSlugRedirectCache = async (slug: string) => {
 	try {
