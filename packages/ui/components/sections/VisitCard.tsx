@@ -5,7 +5,6 @@ import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 
-import { type ApiOutput } from '@weareinreach/api'
 import { Badge } from '~ui/components/core/Badge'
 import { GoogleMap } from '~ui/components/core/GoogleMap'
 import { Hours } from '~ui/components/data-display/Hours'
@@ -15,7 +14,7 @@ import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
 import { validateIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-export const VisitCard = ({ locationId, ...props }: VisitCardProps) => {
+export const VisitCard = ({ locationId }: VisitCardProps) => {
 	const [marker, setMarker] = useState<google.maps.Marker>()
 	const { isMobile } = useScreenSize()
 	const { t } = useTranslation(['common', 'attribute'])
@@ -28,9 +27,17 @@ export const VisitCard = ({ locationId, ...props }: VisitCardProps) => {
 	const { data } = api.location.forVisitCard.useQuery(locationId)
 
 	const formattedAddress = useFormattedAddress(data)
-
 	useEffect(() => {
-		if (data && data.latitude && data.longitude && data.name && formattedAddress && !marker && mapIsReady) {
+		if (
+			data &&
+			data.latitude &&
+			data.longitude &&
+			data.name &&
+			formattedAddress &&
+			!marker &&
+			mapIsReady &&
+			map
+		) {
 			const newMarker = mapMarker.add({
 				id: data.id,
 				lat: data.latitude,
@@ -40,13 +47,12 @@ export const VisitCard = ({ locationId, ...props }: VisitCardProps) => {
 				map: map,
 			})
 			setMarker(newMarker)
-
 			return () => {
 				mapMarker.remove(newMarker)
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, formattedAddress, mapMarker, map, mapIsReady])
+	}, [data, formattedAddress, map, mapIsReady])
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
