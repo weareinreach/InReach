@@ -151,20 +151,20 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 				closed: item.closed ?? false,
 				tz: item.tz ?? null,
 				id: item.id ?? generateId('orgHours'),
-				open24: false, // Add default value for open24
+				open24: item.start !== '' && item.end !== '' && item.start === item.end, // Update open24 condition
 				new: false, // Add default value for new
 				delete: false, // Add default value for delete
 			}))
 
 			form.setValues({ data: transformedData })
 
-			// update the array of checked states based on open24 property
-			const newCheckedStates = transformedData.map((item) => item.open24)
+			// Update the array of checked states based on open24 property
+			const newCheckedStates = checkedStates.map((_, index) =>
+				transformedData.some((item) => item.dayIndex === index && item.open24)
+			)
 			setCheckedStates(newCheckedStates)
 		},
 	})
-	console.log('form values', form.values)
-	console.log('checkedStates', checkedStates)
 	// Docs: https://mantine.dev/form/nested/
 
 	// Function to handle checkbox change for a specific day
