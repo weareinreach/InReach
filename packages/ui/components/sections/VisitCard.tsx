@@ -3,7 +3,7 @@
 import { Card, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { Badge } from '~ui/components/core/Badge'
 import { GoogleMap } from '~ui/components/core/GoogleMap'
@@ -15,7 +15,6 @@ import { validateIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 export const VisitCard = ({ locationId }: VisitCardProps) => {
-	const [marker, setMarker] = useState<google.maps.Marker>()
 	const { isMobile } = useScreenSize()
 	const { t } = useTranslation(['common', 'attribute'])
 	const { ref, width } = useElementSize()
@@ -28,28 +27,18 @@ export const VisitCard = ({ locationId }: VisitCardProps) => {
 
 	const formattedAddress = useFormattedAddress(data)
 	useEffect(() => {
-		if (
-			data &&
-			data.latitude &&
-			data.longitude &&
-			data.name &&
-			formattedAddress &&
-			!marker &&
-			mapIsReady &&
-			map
-		) {
-			const newMarker = mapMarker.add({
-				id: data.id,
+		if (data && data.latitude && data.longitude && data.name && formattedAddress && mapIsReady && map) {
+			mapMarker.add({
+				id: locationId,
 				lat: data.latitude,
 				lng: data.longitude,
 				name: data.name,
 				address: formattedAddress,
 				map: map,
 			})
-			setMarker(newMarker)
-			return () => {
-				mapMarker.remove(newMarker)
-			}
+		}
+		return () => {
+			mapMarker.remove(locationId)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, formattedAddress, map, mapIsReady])

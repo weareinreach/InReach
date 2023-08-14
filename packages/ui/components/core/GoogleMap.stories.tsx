@@ -38,7 +38,7 @@ const MapWithMarkers = ({ locationIds, height, width }: GoogleMapProps) => {
 				markers.push(newMarker)
 			}
 			return () => {
-				for (const marker of markers) mapMarker.remove(marker)
+				for (const location of data.locations) mapMarker.remove(location.id)
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

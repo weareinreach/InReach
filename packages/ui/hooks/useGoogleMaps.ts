@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import { GoogleMapContext, type MapEvents } from '~ui/providers/GoogleMaps'
+import { GoogleMapContext, type MapEvents, type MarkerState } from '~ui/providers/GoogleMaps'
 
 export const useGoogleMaps = (): UseGoogleMapsReturn => {
 	const context = useContext(GoogleMapContext)
@@ -14,6 +14,7 @@ export const useGoogleMaps = (): UseGoogleMapsReturn => {
 			mapIsReady: true,
 			mapEvents: context.mapEvents,
 			camera: context.camera,
+			marker: context.marker,
 		}
 	} else {
 		return {
@@ -22,6 +23,7 @@ export const useGoogleMaps = (): UseGoogleMapsReturn => {
 			mapIsReady: false,
 			mapEvents: context.mapEvents,
 			camera: context.camera,
+			marker: context.marker,
 		}
 	}
 }
@@ -46,6 +48,7 @@ interface MapNotReady {
 	mapIsReady: false
 	mapEvents: MapEvents
 	camera: google.maps.CameraOptions
+	marker: MarkerState
 }
 interface MapIsReady {
 	map: google.maps.Map
@@ -53,5 +56,6 @@ interface MapIsReady {
 	mapIsReady: true
 	mapEvents: MapEvents
 	camera: google.maps.CameraOptions
+	marker: MarkerState
 }
 type UseGoogleMapsReturn = MapNotReady | MapIsReady

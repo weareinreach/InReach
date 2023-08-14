@@ -32,12 +32,18 @@ type GetHref = (params: SlugOnly | LocationAndSlug) => Route
 export const useGoogleMapMarker = () => {
 	const router = useRouter()
 	const variant = useCustomVariant()
-	const { mapIsReady, infoWindow } = useGoogleMaps()
+	const { mapIsReady, infoWindow, marker, map } = useGoogleMaps()
 	return {
-		add({ id, lat, lng, name, address, slug, locationId, map }: AddMarkerParams) {
+		get(id: string) {
+			return marker.get(id)
+		},
+		add({ id, lat, lng, name, address, slug, locationId }: AddMarkerParams) {
 			if (!mapIsReady) throw new Error('map is not ready')
 			const position = new google.maps.LatLng({ lat, lng })
-			const marker = new google.maps.Marker({ position, map })
+			const newMarker = marker.get(id) ?? new google.maps.Marker()
+
+			newMarker.setMap(map)
+			newMarker.setPosition(position)
 
 			const infoBoxNode = document.createElement('div')
 			infoBoxNode.id = id
@@ -61,16 +67,21 @@ export const useGoogleMapMarker = () => {
 				</MantineProvider>
 			)
 			if (mapIsReady) {
-				marker.addListener('click', () => {
+				newMarker.addListener('click', () => {
 					infoWindow.setContent(infoBoxNode)
-					infoWindow.open(map, marker)
+					infoWindow.open(map, newMarker)
 				})
 			}
-			return marker
+			marker.set(id, newMarker)
+			return newMarker
 		},
-		remove(marker: google.maps.Marker) {
-			marker.setMap(null)
-			google.maps.event.clearInstanceListeners(marker)
+		remove(markerId: string) {
+			const markerItem = marker.get(markerId)
+			if (!markerItem) return false
+			markerItem.setMap(null)
+			google.maps.event.clearInstanceListeners(markerItem)
+			marker.remove(markerId)
+			return true
 		},
 	}
 }

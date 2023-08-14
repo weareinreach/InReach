@@ -1,4 +1,4 @@
-import { useEventEmitter } from 'ahooks'
+import { useEventEmitter, useMap } from 'ahooks'
 import { type EventEmitter } from 'ahooks/lib/useEventEmitter'
 import { createContext, type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 
@@ -9,6 +9,7 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 	const [map, setMap] = useState<google.maps.Map>()
 	const [infoWindow, setInfoWindow] = useState<google.maps.InfoWindow>()
 	const [isReady, setIsReady] = useState(false)
+	const [markers, marker] = useMap<string, google.maps.Marker>()
 
 	const mapEvents = {
 		ready: useEventEmitter<boolean>(),
@@ -35,13 +36,16 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 			})
 			const mapListener = google.maps.event.addListener(map, 'click', () => {
 				infoWindow.close()
+				if (cameraRef.current.center) map.panTo(cameraRef.current.center)
 			})
+			markers.forEach((marker) => marker.setMap(map))
 
 			return () => {
 				google.maps.event.removeListener(infoListener)
 				google.maps.event.removeListener(mapListener)
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [map, infoWindow])
 	const contextValue = {
 		map,
@@ -51,6 +55,8 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 		isReady,
 		mapEvents,
 		camera: cameraRef.current,
+		marker,
+		markers,
 	}
 
 	return <GoogleMapContext.Provider value={contextValue}>{children}</GoogleMapContext.Provider>
@@ -59,6 +65,13 @@ export const GoogleMapsProvider = ({ children }: { children: ReactNode }) => {
 export interface MapEvents {
 	ready: EventEmitter<boolean>
 	initialPropsSet: EventEmitter<boolean>
+}
+export interface MarkerState {
+	set: (key: string, value: google.maps.Marker) => void
+	setAll: (value: Iterable<readonly [string, google.maps.Marker]>) => void
+	get: (key: string) => google.maps.Marker | undefined
+	remove: (key: string) => void
+	reset: () => void
 }
 
 interface GoogleMapContextValue {
@@ -69,4 +82,6 @@ interface GoogleMapContextValue {
 	isReady: boolean
 	mapEvents: MapEvents
 	camera: google.maps.CameraOptions
+	marker: MarkerState
+	markers: Map<string, google.maps.Marker>
 }

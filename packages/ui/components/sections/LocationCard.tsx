@@ -28,7 +28,6 @@ const stopAnimations = (animationProcess: number) => {
 
 export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 	const { map, mapIsReady, mapEvents, camera } = useGoogleMaps()
-	const [marker, setMarker] = useState<google.maps.Marker>()
 	const [initialPosition, setInitialPosition] = useState<google.maps.CameraOptions>()
 	const [canGetCenter, setCanGetCenter] = useState(map?.getCenter() !== undefined)
 
@@ -69,11 +68,18 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 
 	mapEvents.initialPropsSet.useSubscription((val) => {
 		setCanGetCenter(val)
+		if (map) {
+			const initPosition = {
+				center: map.getCenter()?.toJSON(),
+				zoom: map.getZoom(),
+			}
+			setInitialPosition(initPosition)
+		}
 	})
 
 	useEffect(() => {
-		if (mapIsReady && data && map && data.latitude && data.longitude && canGetCenter) {
-			const newMarker = mapMarker.add({
+		if (mapIsReady && map && data?.latitude && data?.longitude && canGetCenter) {
+			mapMarker.add({
 				map,
 				id: data.id,
 				name: data.name ?? '',
@@ -83,73 +89,66 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 				slug: router.query.slug,
 				locationId: data.id,
 			})
-			setMarker(newMarker)
-			setInitialPosition({
-				center: map.getCenter()?.toJSON(),
-				zoom: map.getZoom(),
-			})
-			return () => {
-				mapMarker.remove(newMarker)
-				setMarker(undefined)
+		}
+		return () => {
+			if (locationId) {
+				mapMarker.remove(locationId)
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data, mapIsReady, formattedAddressParts, router.query.slug, canGetCenter])
 	useEffect(() => {
-		if (marker && cardRef.current && mapIsReady && data?.latitude && data?.longitude && initialPosition) {
-			const card = cardRef.current
-			const locationCoords = new google.maps.LatLng({ lat: data.latitude, lng: data.longitude })
-			const originalView: google.maps.CameraOptions = {
-				center: map.getCenter()?.toJSON(),
-				zoom: map.getZoom(),
-			}
-			const locationView: google.maps.CameraOptions = {
-				center: locationCoords.toJSON(),
-				zoom: 15,
-			}
+		if (locationId) {
+			const marker = mapMarker.get(locationId)
+			if (marker && cardRef.current && map && data?.latitude && data?.longitude && initialPosition) {
+				const card = cardRef.current
+				const locationCoords = new google.maps.LatLng({ lat: data.latitude, lng: data.longitude })
+				const locationView: google.maps.CameraOptions = {
+					center: locationCoords.toJSON(),
+					zoom: 15,
+				}
+				const zoomIn = new Tween(camera)
+					.to(locationView, 2000)
+					.easing(Easing.Quadratic.Out)
+					.onUpdate(() => {
+						map.moveCamera(camera)
+					})
+				const zoomOut = new Tween(camera)
+					.to(initialPosition, 2000)
+					.easing(Easing.Quadratic.Out)
+					.onUpdate(() => {
+						map.moveCamera(camera)
+					})
 
-			const zoomIn = new Tween(camera)
-				.to(locationView, 2000)
-				.easing(Easing.Quadratic.Out)
-				.onUpdate(() => {
-					map.moveCamera(camera)
-				})
-			const zoomOut = new Tween(camera)
-				.to(originalView, 2000)
-				.easing(Easing.Quadratic.Out)
-				.onUpdate(() => {
-					map.moveCamera(camera)
-				})
+				const animateIn = async (time: number) => {
+					runningAnimation = requestAnimationFrame(animateIn)
+					setTimeout(() => zoomIn.update(time), 80)
+				}
+				const animateOut = async (time: number) => {
+					runningAnimation = requestAnimationFrame(animateOut)
+					setTimeout(() => zoomOut.update(time), 80)
+				}
+				const enterEvent = () => {
+					stopAnimations(runningAnimation)
+					zoomIn.start()
+					runningAnimation = requestAnimationFrame(animateIn)
+				}
+				const exitEvent = () => {
+					stopAnimations(runningAnimation)
+					zoomOut.start()
+					runningAnimation = requestAnimationFrame(animateOut)
+				}
+				card.addEventListener('mouseenter', enterEvent)
+				card.addEventListener('mouseleave', exitEvent)
 
-			const animateIn = async (time: number) => {
-				runningAnimation = requestAnimationFrame(animateIn)
-				setTimeout(() => zoomIn.update(time), 80)
-			}
-			const animateOut = async (time: number) => {
-				runningAnimation = requestAnimationFrame(animateOut)
-				setTimeout(() => zoomOut.update(time), 80)
-			}
-			const enterEvent = () => {
-				stopAnimations(runningAnimation)
-				zoomIn.start()
-				runningAnimation = requestAnimationFrame(animateIn)
-			}
-			const exitEvent = () => {
-				stopAnimations(runningAnimation)
-				zoomOut.start()
-				runningAnimation = requestAnimationFrame(animateOut)
-			}
-
-			card.addEventListener('mouseenter', enterEvent)
-			card.addEventListener('mouseleave', exitEvent)
-
-			return () => {
-				card.removeEventListener('mouseenter', enterEvent)
-				card.removeEventListener('mouseleave', exitEvent)
+				return () => {
+					card.removeEventListener('mouseenter', enterEvent)
+					card.removeEventListener('mouseleave', exitEvent)
+				}
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, mapIsReady, marker, map])
+	}, [data, mapIsReady, map, mapMarker.get(locationId ?? ''), initialPosition])
 
 	const remoteReady = remoteOnly && remoteServices?.length && !remoteIsLoading
 
