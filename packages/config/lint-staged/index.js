@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unused-modules */
 const runPrettier = 'prettier --cache --cache-strategy metadata --write'
 const runEslint = 'eslint --cache --fix --max-warnings=-1'
 // const runPrismaFormat = (files) => files.map((file) => `prisma format --schema ${file}`)

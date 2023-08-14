@@ -2,10 +2,10 @@ import { Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { api } from '~app/utils/api'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { isSocialIcon, SocialLink, type SocialLinkProps } from '~ui/components/core/SocialLink'
 import { parsePhoneNumber, useCustomVariant, useSlug } from '~ui/hooks'
+import { trpc as api } from '~ui/lib/trpcClient'
 
 const PhoneNumbers = ({ parentId = '', passedData, direct, locationOnly }: PhoneNumbersProps) => {
 	const output: JSX.Element[] = []

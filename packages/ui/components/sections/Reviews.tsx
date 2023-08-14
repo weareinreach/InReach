@@ -29,7 +29,7 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 	)
 
 	const ratingProps = {
-		recordId: organizationId?.id || validateString(orgServiceId) || validateString(orgLocationId),
+		recordId: validateString(orgServiceId) || validateString(orgLocationId) || organizationId?.id,
 	}
 
 	const reviews =

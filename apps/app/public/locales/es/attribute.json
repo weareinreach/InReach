@@ -70,6 +70,10 @@
 		"cost-fees": "Incurre un coste",
 		"cost-free": "Gratis"
 	},
+	"crisis-support-community": {
+		"elders": "Ancianes",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Requisitos de Elegibilidad",
 		"elig-age_max": "Menos de {{max}}",
@@ -106,19 +110,21 @@
 		"accesslocation": "Instrucciones de Acceso - Ubicación",
 		"accessphone": "Instrucciones de acceso - Teléfono",
 		"accesspublictransit": "Instrucciones de acceso - Tránsito público",
-		"accesstext": "Instrucciones de Acceso - Texto"
+		"accesssms": "Instrucciones de Acceso - SMS",
+		"accesstext": "Instrucciones de Acceso - Texto",
+		"accesswhatsapp": "Instrucciones de acceso - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Enfoque del servicio",
 		"asylum-seekers": "Solicitantes de asilo",
 		"bipoc-comm": "Comunidad BIPOC",
 		"caregivers": "Comunidad de cuidadores",
-		"disabled": "Comunidad de discapacitados",
-		"elder": "Centrado en los Ancianos",
+		"disabled": "Comunidad de discapacitades",
+		"elder": "Enfocado en las personas mayores",
 		"gender-nc": "Género no conformes",
 		"hiv-comm": "Comunidad del VIH",
 		"immigrant-comm": "Comunidad Inmigrante",
-		"incarcerated": "Comunidad de encarcelados",
+		"incarcerated": "Comunidad de personas encarceladas",
 		"lgbtq-youth-focus": "LGBTQ+ Jóvenes",
 		"resettled-refugees": "Refugios Reiniciados",
 		"spanish-speakers": "Hablantes de español",
@@ -147,12 +153,12 @@
 		"govt-agency": "Agencia gubernamental",
 		"grassroots-direct": "Organización de Servicio Directo de Bases",
 		"healthcare": "Proveedor de Cuidado de Salud",
-		"lawyer": "Abogado",
+		"lawyer": "Abogade",
 		"other": "Otra (por favor especifique)",
 		"paralegal": "Personal paralegal u otro tipo",
-		"social-worker": "Trabajador social",
+		"social-worker": "Trabajadore social",
 		"student-club": "Líder/administrador del club de estudiantes",
-		"teacher": "Profesor",
-		"therapist-counselor": "Terapeuta/consejero"
+		"teacher": "Docente",
+		"therapist-counselor": "Terapeuta/consejere"
 	}
 }

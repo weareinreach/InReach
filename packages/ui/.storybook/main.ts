@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import { type StorybookConfig } from '@storybook/nextjs'
 import isChromatic from 'chromatic/isChromatic'
@@ -6,14 +5,19 @@ import dotenv from 'dotenv'
 import { mergeAndConcat } from 'merge-anything'
 import { type PropItem } from 'react-docgen-typescript'
 
-import path from 'path'
+import path, { dirname, join } from 'path'
+
+dotenv.config({ path: path.resolve(__dirname, '../../../.env') })
 
 const filePattern = '*.stories.@(ts|tsx)'
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isDev = process.env.NODE_ENV === 'development'
 
-dotenv.config({ path: path.resolve(__dirname, '../../../.env') })
+const getAbsolutePath = (value: string) => {
+	const abPath = dirname(require.resolve(join(value, 'package.json')))
+	console.log(abPath)
+	return abPath
+}
 
 const config: StorybookConfig = {
 	stories: [`../(components|hooks|icon|layouts|modals|other)/**/${filePattern}`, '../other/**/*.mdx'],
@@ -25,20 +29,20 @@ const config: StorybookConfig = {
 		'../public',
 	],
 	addons: [
-		'@geometricpanda/storybook-addon-badges',
-		'@storybook/addon-a11y',
-		'@storybook/addon-interactions',
-		'@tomfreudenberg/next-auth-mock/storybook',
-		'@storybook/addon-designs',
-		'storybook-addon-pseudo-states',
-		'@storybook/addon-essentials', // Keep this last
+		getAbsolutePath('@storybook/addon-essentials'),
+		getAbsolutePath('@geometricpanda/storybook-addon-badges'),
+		getAbsolutePath('@storybook/addon-a11y'),
+		'@tomfreudenberg/next-auth-mock/storybook', // This addon doesn't like to be wrapped.
+		getAbsolutePath('@storybook/addon-designs'),
+		getAbsolutePath('storybook-addon-pseudo-states'),
+		getAbsolutePath('@storybook/addon-interactions'),
 	],
 	framework: {
-		name: '@storybook/nextjs',
+		name: getAbsolutePath('@storybook/nextjs') as '@storybook/nextjs',
 		options: {
 			builder: {
 				lazyCompilation: Boolean(process.env.SB_LAZY),
-				fsCache: Boolean(process.env.SB_CACHE),
+				fsCache: true, // Boolean(process.env.SB_CACHE),
 				useSWC: true,
 			},
 			nextConfigPath: path.resolve(__dirname, '../../../apps/app/next.config.mjs'),

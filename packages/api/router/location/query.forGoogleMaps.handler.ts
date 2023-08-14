@@ -44,9 +44,12 @@ export const forGoogleMaps = async ({ input }: TRPCHandlerParams<TForGoogleMapsS
 		if (latitude && longitude) coordsForBounds.push({ latitude, longitude })
 	}
 	const bounds = result.length > 1 ? getBoundary(coordsForBounds) : null
+	const singleLat = result.at(0)?.latitude
+	const singleLon = result.at(0)?.longitude
+
 	const center =
-		result.length === 1 && result.at(0)?.latitude && result.at(0)?.longitude
-			? ({ lat: result.at(0)!.latitude, lng: result.at(0)!.longitude } as { lat: number; lng: number })
+		result.length === 1 && singleLat && singleLon
+			? ({ lat: singleLat, lng: singleLon } satisfies google.maps.LatLngLiteral)
 			: getCenter(coordsForBounds)
 	const zoom = result.length === 1 ? 17 : null
 

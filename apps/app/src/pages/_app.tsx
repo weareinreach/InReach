@@ -23,6 +23,7 @@ import { appCache, appTheme } from '@weareinreach/ui/theme'
 import { api } from '~app/utils/api'
 
 import nextI18nConfig from '../../next-i18next.config.mjs'
+import 'core-js/features/array/at'
 
 const fontWorkSans = Work_Sans({ subsets: ['latin'] })
 

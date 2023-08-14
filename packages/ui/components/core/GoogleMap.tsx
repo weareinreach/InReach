@@ -50,7 +50,7 @@ export const GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
 			if (bounds) {
 				map.fitBounds(bounds)
 				map.panToBounds(bounds)
-				if (map.getZoom() ?? 0 > 16) {
+				if ((map.getZoom() ?? 0) > 16) {
 					map.setZoom(16)
 				}
 			}
