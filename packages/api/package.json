@@ -55,6 +55,7 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "8.44.2",
+		"@types/google.maps": "3.53.6",
 		"@types/luxon": "3.3.1",
 		"@types/node": "18.17.4",
 		"@types/prettier": "2.7.3",

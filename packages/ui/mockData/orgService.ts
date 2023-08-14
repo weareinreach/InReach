@@ -266,7 +266,6 @@ export const serviceData = {
 	forServiceEditDrawer: {
 		id: 'osvc_01GVH3VEVPF1KEKBTRVTV70WGV',
 		description: {
-			id: 'ftxt_01GW2HT9EZ3Y7G4JY1X91ZPX5P',
 			key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.osvc_01GVH3VEVPF1KEKBTRVTV70WGV.description',
 			ns: 'org-data',
 			tsKey: {
@@ -278,7 +277,6 @@ export const serviceData = {
 		published: true,
 		deleted: false,
 		serviceName: {
-			id: 'ftxt_01GW2HT9F1PZAQCMGSWY07973D',
 			key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.osvc_01GVH3VEVPF1KEKBTRVTV70WGV.name',
 			ns: 'org-data',
 			tsKey: {
@@ -400,7 +398,6 @@ export const serviceData = {
 					{
 						id: 'atts_01GW2HT9F0SPS3EBCQ710RCNTA',
 						text: {
-							id: 'ftxt_01GW2HT9F0ACKFYVT7EHMKJPFN',
 							key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.attribute.atts_01GW2HT9F0SPS3EBCQ710RCNTA',
 							ns: 'org-data',
 							tsKey: {
@@ -424,7 +421,6 @@ export const serviceData = {
 					{
 						id: 'atts_01GW2HT9F0638MD74PJ3SCWNXC',
 						text: {
-							id: 'ftxt_01GW2HT9F0VGSCRNGE0Y06TJZQ',
 							key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.attribute.atts_01GW2HT9F0638MD74PJ3SCWNXC',
 							ns: 'org-data',
 							tsKey: {
@@ -457,7 +453,6 @@ export const serviceData = {
 					{
 						id: 'atts_01GW2HT9F09GFRWM3JK2A43AWG',
 						text: {
-							id: 'ftxt_01GW2HT9F0H3RBRWNQT73BKMKF',
 							key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.attribute.atts_01GW2HT9F09GFRWM3JK2A43AWG',
 							ns: 'org-data',
 							tsKey: {
@@ -490,7 +485,6 @@ export const serviceData = {
 					{
 						id: 'atts_01GW2HT9F01W2M7FBSKSXAQ9R4',
 						text: {
-							id: 'ftxt_01GW2HT9F0D57GDYZJWTP9258B',
 							key: 'orgn_01GVH3V408N0YS7CDYAH3F2BMH.attribute.atts_01GW2HT9F01W2M7FBSKSXAQ9R4',
 							ns: 'org-data',
 							tsKey: {

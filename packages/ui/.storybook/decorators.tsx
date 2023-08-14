@@ -12,6 +12,7 @@ import { devtoolsLink } from 'trpc-client-devtools-link'
 import { transformer } from '@weareinreach/api/lib/transformer'
 import { BodyGrid } from '~ui/layouts/BodyGrid'
 import { type StorybookTRPC, trpc } from '~ui/lib/trpcClient'
+import { GoogleMapsProvider } from '~ui/providers/GoogleMaps'
 import { SearchStateProvider } from '~ui/providers/SearchState'
 import { storybookTheme } from '~ui/theme/storybook'
 
@@ -100,6 +101,7 @@ export const WithTRPC = (Story: StoryFn, { parameters }: StoryContext) => {
 	)
 }
 
+export type LayoutsDecorator = 'centeredFullscreen' | 'centeredHalf' | 'gridSingle' | 'gridDouble'
 export const Layouts = (Story: StoryFn, context: StoryContext) => {
 	const { layoutWrapper } = context.parameters
 
@@ -150,11 +152,26 @@ export const WithStrictMode = (Story: StoryFn, context: StoryContext) =>
 	)
 WithStrictMode.displayName = 'StrictModeWrapper'
 
-export type LayoutsDecorator = 'centeredFullscreen' | 'centeredHalf' | 'gridSingle' | 'gridDouble'
-
 export const WithSearchState = (Story: StoryFn, { parameters }: StoryContext) => (
 	<SearchStateProvider initState={parameters.searchContext}>
 		<Story />
 	</SearchStateProvider>
 )
 WithSearchState.displayName = 'SearchStateProvider'
+
+export const WithWhyDidYouRender = (Story: StoryFn, { parameters, component }: StoryContext) => {
+	const { wdyr } = parameters
+	if (wdyr && component) {
+		// @ts-expect-error Module augmentation is too complex.
+		component.whyDidYouRender = wdyr
+	}
+	return <Story />
+}
+
+export const WithGoogleMaps = (Story: StoryFn) => {
+	return (
+		<GoogleMapsProvider>
+			<Story />
+		</GoogleMapsProvider>
+	)
+}

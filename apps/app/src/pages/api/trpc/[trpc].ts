@@ -1,9 +1,9 @@
 import { createNextApiHandler } from '@trpc/server/adapters/next'
 
 import { appRouter, createContext } from '@weareinreach/api'
-import { createSubLog } from '@weareinreach/util/logger'
+import { createLoggerInstance } from '@weareinreach/util/logger'
 
-const log = createSubLog('tRPC')
+const log = createLoggerInstance('tRPC')
 
 /* Creating a handler for the tRPC endpoint. */
 export default createNextApiHandler({

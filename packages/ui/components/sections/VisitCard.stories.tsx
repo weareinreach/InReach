@@ -2,6 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 
 import { StorybookGridSingle } from '~ui/layouts'
 import { location } from '~ui/mockData/location'
+import { orgHours } from '~ui/mockData/orgHours'
 
 import { VisitCard } from './VisitCard'
 
@@ -15,7 +16,7 @@ export default {
 	decorators: [StorybookGridSingle],
 	parameters: {
 		layout: 'fullscreen',
-		msw: [location.forVisitCard],
+		msw: [location.forVisitCard, location.forGoogleMaps, orgHours.forHoursDisplay],
 	},
 } satisfies Meta<typeof VisitCard>
 
