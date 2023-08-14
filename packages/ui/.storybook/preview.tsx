@@ -14,6 +14,7 @@ import { type SearchStateProviderProps } from '~ui/providers/SearchState'
 import {
 	Layouts,
 	type LayoutsDecorator,
+	WithGoogleMaps,
 	WithI18n,
 	WithMantine,
 	WithSearchState,
@@ -93,6 +94,7 @@ const preview: Preview = {
 		pseudo: {},
 	},
 	decorators: [
+		WithGoogleMaps,
 		WithSearchState,
 		Layouts,
 		WithMantine,

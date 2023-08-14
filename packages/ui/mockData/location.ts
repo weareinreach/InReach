@@ -66,6 +66,22 @@ const locationData = {
 		longitude: -77.032,
 		remote: undefined,
 	},
+	forGoogleMaps: {
+		locations: [
+			{
+				id: 'oloc_01GVH3VEVBERFNA9PHHJYEBGA3',
+				name: 'Whitman-Walker 1525',
+				latitude: 38.91,
+				longitude: -77.032,
+			},
+		],
+		bounds: null,
+		center: {
+			lat: 38.91,
+			lng: -77.032,
+		},
+		zoom: 13,
+	},
 } satisfies MockDataObject<'location'>
 
 export const location = {
@@ -80,5 +96,9 @@ export const location = {
 	forVisitCard: getTRPCMock({
 		path: ['location', 'forVisitCard'],
 		response: locationData.forVisitCard,
+	}),
+	forGoogleMaps: getTRPCMock({
+		path: ['location', 'forGoogleMaps'],
+		response: locationData.forGoogleMaps,
 	}),
 } satisfies MockHandlerObject<'location'>

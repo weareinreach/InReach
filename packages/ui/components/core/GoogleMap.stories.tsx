@@ -58,13 +58,6 @@ export default {
 		// layoutWrapper: 'gridSingle',
 		wdyr: { trackAllPureComponents: true },
 	},
-	decorators: [
-		(Story) => (
-			<GoogleMapsProvider>
-				<Story />
-			</GoogleMapsProvider>
-		),
-	],
 } satisfies Meta<typeof GoogleMap>
 
 type StoryDef = StoryObj<typeof GoogleMap>
