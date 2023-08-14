@@ -19,6 +19,7 @@ const MapRenderer = memo(({ height, width }: MapRendererProps) => {
 				isFractionalZoomEnabled: true,
 			})
 			const newInfoWindow = new google.maps.InfoWindow()
+
 			setMap(newMap)
 			setInfoWindow(newInfoWindow)
 			mapEvents.ready.emit(true)
@@ -49,6 +50,9 @@ export const GoogleMap = ({ height, width, locationIds }: GoogleMapProps) => {
 			if (bounds) {
 				map.fitBounds(bounds)
 				map.panToBounds(bounds)
+				if (map.getZoom() ?? 0 > 16) {
+					map.setZoom(16)
+				}
 			}
 			camera.center = center
 			camera.zoom = zoom ?? map.getZoom()

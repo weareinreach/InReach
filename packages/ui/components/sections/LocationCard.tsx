@@ -105,7 +105,7 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 				const locationCoords = new google.maps.LatLng({ lat: data.latitude, lng: data.longitude })
 				const locationView: google.maps.CameraOptions = {
 					center: locationCoords.toJSON(),
-					zoom: 15,
+					zoom: 17,
 				}
 				const zoomIn = new Tween(camera)
 					.to(locationView, 2000)

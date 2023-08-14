@@ -48,7 +48,7 @@ export const forGoogleMaps = async ({ input }: TRPCHandlerParams<TForGoogleMapsS
 		result.length === 1 && result.at(0)?.latitude && result.at(0)?.longitude
 			? ({ lat: result.at(0)!.latitude, lng: result.at(0)!.longitude } as { lat: number; lng: number })
 			: getCenter(coordsForBounds)
-	const zoom = result.length === 1 ? 11 : null
+	const zoom = result.length === 1 ? 17 : null
 
 	return {
 		locations: result,
