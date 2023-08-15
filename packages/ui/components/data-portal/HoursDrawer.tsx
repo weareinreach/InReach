@@ -65,8 +65,8 @@ const FormSchema = z
 					.string({ required_error: 'End time is required', invalid_type_error: 'Invalid entry' })
 					.length(5),
 				closed: z.coerce.boolean(),
-				open24: z.coerce.boolean(),
-				new: z.coerce.boolean(),
+				open24: z.coerce.boolean().optional(),
+				new: z.coerce.boolean().optional(),
 				tz: z.string().nullable(),
 				delete: z.boolean().optional(),
 			})
@@ -165,7 +165,54 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 			setCheckedStates(newCheckedStates)
 		},
 	})
+	console.log(form.values)
 	// Docs: https://mantine.dev/form/nested/
+
+	//check for time segment overlaps
+	const findOverlappingDayIndexes = (data: z.infer<typeof FormSchema>['data']): number[] => {
+		const overlappingDayIndexes: number[] = []
+
+		for (let i = 0; i < data.length; i++) {
+			const currentItem = data[i]
+
+			// Skip if currentItem is undefined, an emtpy string, or if open24 is true, or if item is already marked as overlapping
+			if (!currentItem || currentItem.open24 || overlappingDayIndexes.includes(currentItem.dayIndex)) {
+				continue
+			}
+
+			const overlappingRanges = data.filter(
+				(item) =>
+					item.dayIndex === currentItem.dayIndex &&
+					!item.open24 &&
+					currentItem.start !== '' &&
+					currentItem.end !== '' &&
+					item.start !== '' &&
+					item.end !== '' &&
+					rangesOverlap([currentItem.start, currentItem.end], [item.start, item.end])
+			)
+
+			if (overlappingRanges.length > 1) {
+				console.log('day index is overlapping', currentItem.dayIndex)
+				overlappingDayIndexes.push(currentItem.dayIndex)
+			}
+		}
+
+		return overlappingDayIndexes
+	}
+
+	const rangesOverlap = (rangeA: string[], rangeB: string[]) => {
+		const [startA = '', endA = ''] = rangeA
+		const [startB = '', endB = ''] = rangeB
+
+		const startADateTime = DateTime.fromFormat(startA, 'HH:mm')
+		const endADateTime = DateTime.fromFormat(endA, 'HH:mm')
+		const startBDateTime = DateTime.fromFormat(startB, 'HH:mm')
+		const endBDateTime = DateTime.fromFormat(endB, 'HH:mm')
+
+		return !(endADateTime <= startBDateTime || endBDateTime <= startADateTime)
+	}
+
+	console.log(findOverlappingDayIndexes(form.values.data))
 
 	// Function to handle checkbox change for a specific day
 	const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, dayIndex: number) => {
@@ -246,7 +293,7 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		}
 	}
 
-	const handleTimezoneChange = (selectedTzValue) => {
+	const handleTimezoneChange = (selectedTzValue: string) => {
 		// Update the tz value for all items in the form data based on the dropdown selection
 		const updatedFormData = form.values.data.map((item) => ({
 			...item,
