@@ -132,7 +132,6 @@ declare module '@storybook/react' {
 		layout?: 'centered' | 'fullscreen' | 'padded'
 		layoutWrapper?: LayoutsDecorator
 		disableStrictMode?: boolean
-		disableWhyDidYouRender?: boolean
 		pseudo?: Partial<Record<PseudoStates, string | string[] | boolean>> & { rootElement?: string }
 		rqDevtools?: boolean
 		searchContext?: SearchStateProviderProps['initState']
