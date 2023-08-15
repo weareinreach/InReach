@@ -38,6 +38,9 @@ patchedDependencies:
   iso-google-locales@3.0.4:
     hash: ltnamflm7ayajalculwqyezjya
     path: patches/iso-google-locales@3.0.4.patch
+  next-auth@4.23.0:
+    hash: 5rcmqpbec3t4wwdelpjvypkzei
+    path: patches/next-auth@4.23.0.patch
   trpc-panel@1.3.4:
     hash: 3z2tx2cn67fyw5s2xdx73dxaji
     path: patches/trpc-panel@1.3.4.patch
@@ -330,7 +333,7 @@ importers:
         version: 13.4.16(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 4.23.0
-        version: 4.23.0(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.23.0(patch_hash=5rcmqpbec3t4wwdelpjvypkzei)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
         specifier: 14.0.0
         version: 14.0.0(i18next@23.4.4)(next@13.4.16)(react-i18next@13.1.2)(react@18.2.0)
@@ -802,7 +805,7 @@ importers:
         version: 13.4.16(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 4.23.0
-        version: 4.23.0(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.23.0(patch_hash=5rcmqpbec3t4wwdelpjvypkzei)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -1717,7 +1720,7 @@ importers:
         version: 13.4.16(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: 4.23.0
-        version: 4.23.0(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.23.0(patch_hash=5rcmqpbec3t4wwdelpjvypkzei)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
         specifier: 14.0.0
         version: 14.0.0(i18next@23.4.4)(next@13.4.16)(react-i18next@13.1.2)(react@18.2.0)
@@ -1847,7 +1850,7 @@ packages:
     resolution: {integrity: sha512-IzSgsrxUcsrejQbPVilIKy16kAT52EwB6zSaI+M3xxIhKh5+aldEyvI+z6erM7TCLB2BJsFrtHjp6/4/sr+3dA==}
     dependencies:
       '@aws-crypto/util': 3.0.0
-      '@aws-sdk/types': 3.370.0
+      '@aws-sdk/types': 3.391.0
       tslib: 1.14.1
 
   /@aws-crypto/crc32c@3.0.0:
@@ -2504,6 +2507,7 @@ packages:
     dependencies:
       '@smithy/types': 1.2.0
       tslib: 2.6.1
+    dev: false
 
   /@aws-sdk/types@3.391.0:
     resolution: {integrity: sha512-QpYVFKMOnzHz/JMj/b8wb18qxiT92U/5r5MmtRz2R3LOH6ooTO96k4ozXCrYr0qNed1PAnOj73rPrrH2wnCJKQ==}
@@ -6127,7 +6131,7 @@ packages:
       next-auth: ^4
     dependencies:
       '@prisma/client': 5.1.1(prisma@5.1.1)
-      next-auth: 4.23.0(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
+      next-auth: 4.23.0(patch_hash=5rcmqpbec3t4wwdelpjvypkzei)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@next/bundle-analyzer@13.4.16:
@@ -8466,6 +8470,7 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       tslib: 2.6.1
+    dev: false
 
   /@smithy/types@2.2.0:
     resolution: {integrity: sha512-Ahpt9KvD0mWeWiyaGo5EBE7KOByLl3jl4CD9Ps/r8qySgzVzo/4qsa+vvstOU3ZEriALmrPqUKIhqHt0Rn+m6g==}
@@ -10354,7 +10359,7 @@ packages:
       next-auth: ^4.12.3
       react: ^18 || 18
     dependencies:
-      next-auth: 4.23.0(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
+      next-auth: 4.23.0(patch_hash=5rcmqpbec3t4wwdelpjvypkzei)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: true
 
@@ -19543,7 +19548,7 @@ packages:
     resolution: {integrity: sha512-md4cGoxuT4T4d/HDOXbrUHkTKrp/vp+m3aOA7XXVYwNsUNMK49g3SQicTSeV5GIz/5QVGAeYRAOlyp9OvlgsYA==}
     engines: {node: '>=10'}
 
-  /next-auth@4.23.0(next@13.4.16)(react-dom@18.2.0)(react@18.2.0):
+  /next-auth@4.23.0(patch_hash=5rcmqpbec3t4wwdelpjvypkzei)(next@13.4.16)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-RgukcJkBdvsJwEfA+B80Wcowvtgy6tk8KKWffb7CMCdzcLO4fCCA6aB6sp/DZ2I0ISvWGnbVcO5KXmlan71igw==}
     peerDependencies:
       next: ^12.2.5 || ^13 || 13
@@ -19566,6 +19571,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       uuid: 9.0.0
+    patched: true
 
   /next-i18next@14.0.0(i18next@23.4.4)(next@13.4.16)(react-i18next@13.1.2)(react@18.2.0):
     resolution: {integrity: sha512-umv8hOZoSoAA+td3ErfemyO/5Ib2pnYCdQ8/Oy+fncS2skFIL3hHKRer3Oa3Nfm4Xbv5p6DHWzm3NhT1j4tWwg==}
@@ -22544,7 +22550,6 @@ packages:
 
   /sax@1.2.4:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
-    dev: false
 
   /scheduler@0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
@@ -25127,7 +25132,7 @@ packages:
     resolution: {integrity: sha512-drPFnkQJik/O+uPKpqSgr22mpuFHqKdbS835iAQrUC73L2F5WkboIRd63ai/2Yg6I1jzifPFKH2NTK+cfglkIA==}
     engines: {node: '>=4.0.0'}
     dependencies:
-      sax: 1.2.1
+      sax: 1.2.4
       xmlbuilder: 11.0.1
     dev: true
 

@@ -85,7 +85,6 @@ const config: StorybookConfig = {
 					'next-i18next': 'react-i18next',
 				},
 				roots: [path.resolve(__dirname, '../../../apps/app/public')],
-				conditionNames: ['import', 'require', 'module'],
 			},
 			stats: {
 				colors: true,
