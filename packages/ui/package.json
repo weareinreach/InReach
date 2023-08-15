@@ -54,7 +54,7 @@
 		"@babel/preset-typescript": "7.22.5",
 		"@emotion/react": "11.11.1",
 		"@emotion/server": "11.11.0",
-		"@faker-js/faker": "7.6.0",
+		"@faker-js/faker": "8.0.2",
 		"@geometricpanda/storybook-addon-badges": "2.0.0",
 		"@iconify-json/carbon": "1.1.19",
 		"@iconify-json/mdi": "1.1.54",
