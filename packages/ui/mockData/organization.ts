@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker'
+
 import { type ApiOutput } from '@weareinreach/api'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
@@ -270,6 +272,32 @@ export const organization = {
 	getIdFromSlug: getTRPCMock({
 		path: ['organization', 'getIdFromSlug'],
 		response: organizationData.getIdFromSlug,
+	}),
+	forOrganizationTable: getTRPCMock({
+		path: ['organization', 'forOrganizationTable'],
+		response: () => {
+			const totalRecords = 1000
+			faker.seed(1024)
+			const data: ApiOutput['organization']['forOrganizationTable'] = []
+
+			for (let index = 0; index < totalRecords; index++) {
+				const lastVerified = faker.date.past()
+				const updatedAt = faker.date.past({ refDate: lastVerified })
+				const createdAt = faker.date.past({ refDate: updatedAt })
+
+				data.push({
+					id: `orgn_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
+					name: faker.company.name(),
+					slug: faker.lorem.slug(3),
+					lastVerified,
+					updatedAt,
+					createdAt,
+					published: faker.datatype.boolean(0.9),
+					deleted: faker.datatype.boolean(0.05),
+				})
+			}
+			return data
+		},
 	}),
 }
 

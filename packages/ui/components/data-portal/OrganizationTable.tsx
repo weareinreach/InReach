@@ -1,12 +1,14 @@
+import { DateTime } from 'luxon'
 import {
 	MantineReactTable,
 	type MRT_ColumnDef,
 	type MRT_ColumnFilterFnsState,
 	type MRT_ColumnFiltersState,
 	type MRT_SortingState,
+	type MRT_Virtualizer,
 	useMantineReactTable,
 } from 'mantine-react-table'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -16,12 +18,69 @@ type Fields = ApiOutput['organization']['forOrganizationTable'][number]
 export const OrganizationTable = (props: Props) => {
 	const columns = useMemo<MRT_ColumnDef<Fields>[]>(
 		() => [
-			{ accessorKey: 'name', header: 'Name' },
-			{ accessorKey: 'lastVerified', header: 'Last Verified' },
-			{ accessorKey: 'updatedAt', header: 'Last Updated' },
-			{ accessorKey: 'createdAt', header: 'Created' },
-			{ accessorKey: 'published', header: 'Published' },
-			{ accessorKey: 'deleted', header: 'Deleted' },
+			{
+				accessorKey: 'name',
+				header: 'Name',
+				columnFilterModeOptions: ['contains', 'fuzzy', 'startsWith', 'endsWith'],
+				filterVariant: 'autocomplete',
+			},
+			{
+				accessorKey: 'lastVerified',
+				header: 'Last Verified',
+				Cell: ({ cell }) => {
+					const date = DateTime.fromJSDate(cell.getValue<Date>())
+					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+				},
+				columnFilterModeOptions: ['betweenInclusive'],
+				filterVariant: 'date-range',
+				enableColumnFilterModes: false,
+			},
+			{
+				accessorKey: 'updatedAt',
+				header: 'Last Updated',
+				Cell: ({ cell }) => {
+					const date = DateTime.fromJSDate(cell.getValue<Date>())
+					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+				},
+				columnFilterModeOptions: ['betweenInclusive'],
+				filterVariant: 'date-range',
+				enableColumnFilterModes: false,
+			},
+			{
+				accessorKey: 'createdAt',
+				header: 'Created',
+				Cell: ({ cell }) => {
+					const date = DateTime.fromJSDate(cell.getValue<Date>())
+					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+				},
+				columnFilterModeOptions: ['betweenInclusive'],
+				filterVariant: 'date-range',
+				enableColumnFilterModes: false,
+			},
+			{
+				accessorKey: 'published',
+				header: 'Published',
+				Cell: ({ cell }) => cell.getValue<boolean>().toString(),
+				columnFilterModeOptions: ['equals'],
+				filterVariant: 'checkbox',
+				enableColumnFilterModes: false,
+				mantineFilterCheckboxProps: { label: 'Published?' },
+				enableSorting: false,
+				enableColumnActions: false,
+				size: 110,
+			},
+			{
+				accessorKey: 'deleted',
+				header: 'Deleted',
+				Cell: ({ cell }) => cell.getValue<boolean>().toString(),
+				columnFilterModeOptions: ['equals'],
+				filterVariant: 'checkbox',
+				enableColumnFilterModes: false,
+				mantineFilterCheckboxProps: { label: 'Deleted?' },
+				enableSorting: false,
+				enableColumnActions: false,
+				size: 100,
+			},
 		],
 		[]
 	)
@@ -29,10 +88,24 @@ export const OrganizationTable = (props: Props) => {
 	const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([])
 	const [columnFilterFns, setColumnFilterFns] = //filter modes
 		useState<MRT_ColumnFilterFnsState>(
-			Object.fromEntries(columns.map(({ accessorKey }) => [accessorKey, 'contains']))
+			Object.fromEntries(
+				columns.map(({ accessorKey, columnFilterModeOptions }) => [
+					accessorKey,
+					columnFilterModeOptions?.at(0) ?? 'equals',
+				])
+			)
 		)
 	const [globalFilter, setGlobalFilter] = useState('')
-	const [sorting, setSorting] = useState<MRT_SortingState>([])
+	const [sorting, setSorting] = useState<MRT_SortingState>([
+		{ id: 'deleted', desc: false },
+		{ id: 'published', desc: true },
+		{ id: 'name', desc: false },
+	])
+	const rowVirtualizerInstanceRef = useRef<MRT_Virtualizer<HTMLDivElement, HTMLTableRowElement>>(null)
+	// useEffect(() => {
+	// 	//scroll to the top of the table when the sorting changes
+	// 	rowVirtualizerInstanceRef.current?.scrollToIndex(0)
+	// }, [sorting])
 
 	const { data, isLoading, isError, isFetching } = api.organization.forOrganizationTable.useQuery(undefined, {
 		placeholderData: [],
@@ -62,16 +135,25 @@ export const OrganizationTable = (props: Props) => {
 		columns,
 		data: data ?? [],
 		enableColumnFilterModes: true,
-		columnFilterModeOptions: ['contains', 'startsWith', 'endsWith'],
+		enableGlobalFilterModes: true,
+		enableColumnResizing: false,
+		enableFacetedValues: true,
+		enablePagination: false,
+		enablePinning: true,
+		enableRowNumbers: true,
+		enableRowVirtualization: true,
+		mantineTableContainerProps: { sx: { maxHeight: '600px' } },
+		columnFilterDisplayMode: 'popover',
+
+		// columnFilterModeOptions: ['contains', 'startsWith', 'endsWith'],
 		initialState: {
-			showColumnFilters: true,
+			showColumnFilters: false,
 		},
-		manualFiltering: true,
-		manualSorting: true,
 		mantineToolbarAlertBannerProps: getAlertBanner,
 		onColumnFilterFnsChange: setColumnFilterFns,
 		onColumnFiltersChange: setColumnFilters,
 		onGlobalFilterChange: setGlobalFilter,
+		onSortingChange: setSorting,
 		rowCount: data?.length ?? 0,
 		state: {
 			columnFilterFns,
@@ -81,7 +163,13 @@ export const OrganizationTable = (props: Props) => {
 			showAlertBanner: getAlertBanner !== undefined,
 			showProgressBars: isFetching,
 			sorting,
+			density: 'xs',
 		},
+		rowVirtualizerInstanceRef,
+		rowVirtualizerProps: { overscan: 5 }, //optionally customize the row virtualizer
+		mantineTableProps: { striped: true },
+		mantineProgressProps: ({ isTopToolbar }) => ({ style: { display: isTopToolbar ? 'block' : 'none' } }),
+		renderBottomToolbar: ({ table }) => <span>{table.getFilteredRowModel().rows.length} results</span>,
 	})
 
 	return <MantineReactTable table={table} />
