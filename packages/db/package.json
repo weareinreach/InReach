@@ -78,7 +78,7 @@
 		"zod": "3.22.0"
 	},
 	"devDependencies": {
-		"@faker-js/faker": "7.6.0",
+		"@faker-js/faker": "8.0.2",
 		"@nuskin/mexico-state-lookup": "2.1.0",
 		"@placemarkio/check-geojson": "0.1.12",
 		"@terraformer/wkt": "2.2.0",
@@ -125,7 +125,7 @@
 		"luxon": "3.4.0",
 		"mongoback": "3.0.6",
 		"papaparse": "5.4.1",
-		"prettier": "3.0.1",
+		"prettier": "3.0.2",
 		"pretty-bytes": "6.1.1",
 		"prisma": "5.1.1",
 		"prisma-dbml-generator": "0.10.0",
