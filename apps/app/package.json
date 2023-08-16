@@ -78,6 +78,7 @@
 		"@weareinreach/util": "workspace:*",
 		"axios": "1.4.0",
 		"cookies-next": "2.1.2",
+		"core-js": "3.32.0",
 		"dayjs": "1.11.9",
 		"deepmerge": "4.3.1",
 		"duration-fns": "3.0.2",

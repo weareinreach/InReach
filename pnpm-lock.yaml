@@ -277,6 +277,9 @@ importers:
       cookies-next:
         specifier: 2.1.2
         version: 2.1.2
+      core-js:
+        specifier: 3.32.0
+        version: 3.32.0
       dayjs:
         specifier: 1.11.9
         version: 1.11.9
