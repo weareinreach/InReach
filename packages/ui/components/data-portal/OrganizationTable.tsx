@@ -1,3 +1,4 @@
+import { Tooltip } from '@mantine/core'
 import { DateTime } from 'luxon'
 import {
 	MantineReactTable,
@@ -23,21 +24,28 @@ export const OrganizationTable = (props: Props) => {
 				header: 'Name',
 				columnFilterModeOptions: ['contains', 'fuzzy', 'startsWith', 'endsWith'],
 				filterVariant: 'autocomplete',
+				enableResizing: true,
+				minSize: 250,
 			},
 			{
 				accessorKey: 'lastVerified',
-				header: 'Last Verified',
+				header: 'Verified',
 				Cell: ({ cell }) => {
 					const date = DateTime.fromJSDate(cell.getValue<Date>())
-					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
+					return (
+						<Tooltip label={date.toLocaleString(DateTime.DATE_HUGE)} withinPortal>
+							<span>{date.toRelativeCalendar()}</span>
+						</Tooltip>
+					)
 				},
 				columnFilterModeOptions: ['betweenInclusive'],
 				filterVariant: 'date-range',
 				enableColumnFilterModes: false,
+				size: 150,
 			},
 			{
 				accessorKey: 'updatedAt',
-				header: 'Last Updated',
+				header: 'Updated',
 				Cell: ({ cell }) => {
 					const date = DateTime.fromJSDate(cell.getValue<Date>())
 					return <span>{date.toLocaleString(DateTime.DATETIME_SHORT)}</span>
@@ -45,6 +53,7 @@ export const OrganizationTable = (props: Props) => {
 				columnFilterModeOptions: ['betweenInclusive'],
 				filterVariant: 'date-range',
 				enableColumnFilterModes: false,
+				size: 150,
 			},
 			{
 				accessorKey: 'createdAt',
@@ -56,6 +65,7 @@ export const OrganizationTable = (props: Props) => {
 				columnFilterModeOptions: ['betweenInclusive'],
 				filterVariant: 'date-range',
 				enableColumnFilterModes: false,
+				size: 150,
 			},
 			{
 				accessorKey: 'published',
@@ -85,7 +95,9 @@ export const OrganizationTable = (props: Props) => {
 		[]
 	)
 
-	const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([])
+	const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([
+		{ id: 'deleted', value: false },
+	])
 	const [columnFilterFns, setColumnFilterFns] = //filter modes
 		useState<MRT_ColumnFilterFnsState>(
 			Object.fromEntries(
@@ -111,7 +123,7 @@ export const OrganizationTable = (props: Props) => {
 		placeholderData: [],
 	})
 
-	const getAlertBanner = useMemo(() => {
+	const getAlertBanner = () => {
 		switch (true) {
 			case isError: {
 				return {
@@ -119,6 +131,7 @@ export const OrganizationTable = (props: Props) => {
 					children: 'Error fetching data',
 				}
 			}
+			case isFetching:
 			case isLoading: {
 				return {
 					color: 'green',
@@ -126,10 +139,10 @@ export const OrganizationTable = (props: Props) => {
 				}
 			}
 			default: {
-				return undefined
+				return { color: 'white', children: null, sx: { backgroundColor: 'transparent' } }
 			}
 		}
-	}, [isLoading, isError])
+	}
 
 	const table = useMantineReactTable({
 		columns,
@@ -140,7 +153,7 @@ export const OrganizationTable = (props: Props) => {
 		enableFacetedValues: true,
 		enablePagination: false,
 		enablePinning: true,
-		enableRowNumbers: true,
+		enableRowNumbers: false,
 		enableRowVirtualization: true,
 		mantineTableContainerProps: { sx: { maxHeight: '600px' } },
 		columnFilterDisplayMode: 'popover',
@@ -148,8 +161,9 @@ export const OrganizationTable = (props: Props) => {
 		// columnFilterModeOptions: ['contains', 'startsWith', 'endsWith'],
 		initialState: {
 			showColumnFilters: false,
+			columnPinning: { left: ['name'] },
 		},
-		mantineToolbarAlertBannerProps: getAlertBanner,
+		mantineToolbarAlertBannerProps: getAlertBanner(),
 		onColumnFilterFnsChange: setColumnFilterFns,
 		onColumnFiltersChange: setColumnFilters,
 		onGlobalFilterChange: setGlobalFilter,
@@ -170,6 +184,7 @@ export const OrganizationTable = (props: Props) => {
 		mantineTableProps: { striped: true },
 		mantineProgressProps: ({ isTopToolbar }) => ({ style: { display: isTopToolbar ? 'block' : 'none' } }),
 		renderBottomToolbar: ({ table }) => <span>{table.getFilteredRowModel().rows.length} results</span>,
+		isMultiSortEvent: () => true,
 	})
 
 	return <MantineReactTable table={table} />
