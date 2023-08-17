@@ -110,7 +110,7 @@ export const Layouts = (Story: StoryFn, context: StoryContext) => {
 	switch (layoutWrapper) {
 		case 'centeredFullscreen': {
 			return (
-				<Center h='100vh'>
+				<Center h='100vh' w='100vw'>
 					<Story />
 				</Center>
 			)

@@ -15,6 +15,16 @@ export const forOrganizationTable = async ({ input }: TRPCHandlerParams<TForOrga
 			createdAt: true,
 			published: true,
 			deleted: true,
+			locations: {
+				select: {
+					id: true,
+					name: true,
+					updatedAt: true,
+					createdAt: true,
+					published: true,
+					deleted: true,
+				},
+			},
 		},
 		orderBy: [{ deleted: 'desc' }, { name: 'asc' }],
 	})

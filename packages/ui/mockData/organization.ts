@@ -284,6 +284,23 @@ export const organization = {
 				const lastVerified = faker.date.past()
 				const updatedAt = faker.date.past({ refDate: lastVerified })
 				const createdAt = faker.date.past({ refDate: updatedAt })
+				const locations: NonNullable<ApiOutput['organization']['forOrganizationTable']>[number]['locations'] =
+					[]
+
+				const totalLocations = faker.number.int({ min: 0, max: 7 })
+
+				for (let locIdx = 0; locIdx < totalLocations; locIdx++) {
+					const updatedAt = faker.date.past({ refDate: lastVerified })
+					const createdAt = faker.date.past({ refDate: updatedAt })
+					locations.push({
+						id: `oloc_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
+						name: `${faker.location.street()} location`,
+						updatedAt,
+						createdAt,
+						published: faker.datatype.boolean(0.9),
+						deleted: faker.datatype.boolean(0.05),
+					})
+				}
 
 				data.push({
 					id: `orgn_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
@@ -294,6 +311,7 @@ export const organization = {
 					createdAt,
 					published: faker.datatype.boolean(0.9),
 					deleted: faker.datatype.boolean(0.05),
+					locations,
 				})
 			}
 			return data
