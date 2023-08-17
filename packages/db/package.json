@@ -69,13 +69,13 @@
 		"just-safe-set": "4.2.1",
 		"just-sort-by": "3.2.0",
 		"kysely": "0.26.1",
-		"pg": "8.11.2",
+		"pg": "8.11.3",
 		"prisma-kysely": "1.5.0",
 		"sql-bricks": "3.0.1",
 		"superjson": "1.13.1",
 		"tslog": "4.9.1",
 		"ulid": "2.3.0",
-		"zod": "3.22.0"
+		"zod": "3.22.1"
 	},
 	"devDependencies": {
 		"@faker-js/faker": "8.0.2",
@@ -107,7 +107,7 @@
 		"commander": "11.0.0",
 		"countries-languages": "1.0.3",
 		"dotenv": "16.3.1",
-		"dotenv-cli": "7.2.1",
+		"dotenv-cli": "7.3.0",
 		"eslint": "8.47.0",
 		"flat": "5.0.2",
 		"geojson": "0.5.0",
