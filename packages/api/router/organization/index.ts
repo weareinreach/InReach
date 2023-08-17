@@ -24,6 +24,7 @@ type OrganizationHandlerCache = {
 	slugRedirect: typeof import('./query.slugRedirect.handler').slugRedirect
 	getIntlCrisis: typeof import('./query.getIntlCrisis.handler').getIntlCrisis
 	getNatlCrisis: typeof import('./query.getNatlCrisis.handler').getNatlCrisis
+	forOrganizationTable: typeof import('./query.forOrganizationTable.handler').forOrganizationTable
 	// #endregion
 
 	//
@@ -162,6 +163,17 @@ export const orgRouter = defineRouter({
 		if (!HandlerCache.getNatlCrisis) throw new Error('Failed to load handler')
 		return HandlerCache.getNatlCrisis({ ctx, input })
 	}),
+	forOrganizationTable: publicProcedure
+		.input(schema.ZForOrganizationTableSchema)
+		.query(async ({ ctx, input }) => {
+			if (!HandlerCache.forOrganizationTable)
+				HandlerCache.forOrganizationTable = await import('./query.forOrganizationTable.handler').then(
+					(mod) => mod.forOrganizationTable
+				)
+
+			if (!HandlerCache.forOrganizationTable) throw new Error('Failed to load handler')
+			return HandlerCache.forOrganizationTable({ ctx, input })
+		}),
 
 	// #endregion
 

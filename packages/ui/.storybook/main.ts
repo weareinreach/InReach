@@ -38,7 +38,7 @@ const config: StorybookConfig = {
 		options: {
 			builder: {
 				lazyCompilation: Boolean(process.env.SB_LAZY),
-				fsCache: Boolean(process.env.SB_CACHE),
+				fsCache: true, // Boolean(process.env.SB_CACHE),
 				useSWC: true,
 			},
 			nextConfigPath: path.resolve(__dirname, '../../../apps/app/next.config.mjs'),
