@@ -1,4 +1,4 @@
-import { createStyles, Group, rem, Tooltip, useMantineTheme } from '@mantine/core'
+import { ActionIcon, createStyles, Group, rem, Text, Tooltip, useMantineTheme } from '@mantine/core'
 import { DateTime } from 'luxon'
 import {
 	MantineReactTable,
@@ -9,14 +9,21 @@ import {
 	type MRT_Virtualizer,
 	useMantineReactTable,
 } from 'mantine-react-table'
+import { useRouter } from 'next/router'
 import { type Dispatch, type SetStateAction, useMemo, useRef, useState } from 'react'
 
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 const useStyles = createStyles((theme) => ({
-	table: {
-		minWidth: '80%',
+	warning: {
+		color: theme.other.colors.tertiary.red,
+	},
+	warningDim: {
+		color: theme.fn.lighten(theme.other.colors.tertiary.red, 0.3),
+	},
+	bottomBar: {
+		paddingTop: rem(20),
 	},
 }))
 
@@ -37,17 +44,18 @@ const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps
 	const deletedState = columnFilters.find(({ id }) => id === 'deleted')?.value as boolean | undefined
 
 	return (
-		<>
-			<Group>
-				<Tooltip
-					label={
-						publishedState
-							? 'Show only unpublished'
-							: publishedState === undefined
-							? 'Show only published'
-							: 'Show all'
-					}
-				>
+		<Group>
+			<Tooltip
+				label={
+					publishedState
+						? 'Show only unpublished'
+						: publishedState === undefined
+						? 'Show only published'
+						: 'Show all'
+				}
+				withinPortal
+			>
+				<ActionIcon onClick={() => toggle('published')}>
 					<Icon
 						icon={
 							publishedState
@@ -60,13 +68,15 @@ const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps
 							color: publishedState === undefined ? theme.other.colors.secondary.darkGray : undefined,
 						}}
 						height={24}
-						onClick={() => toggle('published')}
 					/>
-				</Tooltip>
-				<Tooltip
-					label={deletedState ? 'Show all' : deletedState === undefined ? 'Hide deleted' : 'Show deleted'}
-				>
-					<Group onClick={() => toggle('deleted')}>
+				</ActionIcon>
+			</Tooltip>
+			<Tooltip
+				label={deletedState ? 'Show all' : deletedState === undefined ? 'Hide deleted' : 'Show deleted'}
+				withinPortal
+			>
+				<ActionIcon onClick={() => toggle('deleted')}>
+					<Group noWrap ml={8}>
 						<Icon
 							icon='carbon:trash-can'
 							style={{
@@ -85,14 +95,15 @@ const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps
 							}}
 						/>
 					</Group>
-				</Tooltip>
-			</Group>
-		</>
+				</ActionIcon>
+			</Tooltip>
+		</Group>
 	)
 }
 
 export const OrganizationTable = () => {
 	const { classes } = useStyles()
+	const router = useRouter()
 	const { data, isLoading, isError, isFetching } = api.organization.forOrganizationTable.useQuery(undefined, {
 		placeholderData: [],
 		select: (data) => data.map(({ locations, ...rest }) => ({ ...rest, subRows: locations })),
@@ -111,8 +122,18 @@ export const OrganizationTable = () => {
 			{
 				accessorKey: 'lastVerified',
 				header: 'Verified',
-				Cell: ({ cell }) => {
-					if (!cell.getValue<Date>()) return null
+				Cell: ({ cell, row }) => {
+					if (row.getParentRow()) return null
+					if (!cell.getValue<Date>())
+						return (
+							<Group spacing={4}>
+								<Icon
+									icon='carbon:warning-filled'
+									className={row.original.published ? classes.warning : classes.warningDim}
+								/>
+								<span className={row.original.published ? classes.warning : classes.warningDim}>Never</span>
+							</Group>
+						)
 					const date = DateTime.fromJSDate(cell.getValue<Date>())
 					return (
 						<Tooltip label={date.toLocaleString(DateTime.DATE_HUGE)} withinPortal>
@@ -176,6 +197,7 @@ export const OrganizationTable = () => {
 				size: 100,
 			},
 		],
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	)
 
@@ -227,6 +249,7 @@ export const OrganizationTable = () => {
 		enableFacetedValues: true,
 		enablePagination: false,
 		enablePinning: true,
+		enableRowActions: true,
 		enableRowNumbers: false,
 		enableRowVirtualization: true,
 		enableExpanding: true,
@@ -238,11 +261,11 @@ export const OrganizationTable = () => {
 		positionGlobalFilter: 'left',
 		rowCount: data?.length ?? 0,
 		rowVirtualizerInstanceRef,
-		rowVirtualizerProps: { overscan: 5 }, //optionally customize the row virtualizer
+		rowVirtualizerProps: { overscan: 5 },
 		// #endregion
 		// #region State
 		initialState: {
-			columnPinning: { left: ['mrt-row-expand', 'mrt-row-select', 'name'] },
+			columnPinning: { left: ['mrt-row-expand', 'mrt-row-select', 'mrt-row-actions', 'name'] },
 			columnVisibility: {
 				published: false,
 				deleted: false,
@@ -262,9 +285,9 @@ export const OrganizationTable = () => {
 		},
 		// #endregion
 		// #region Mantine component props to be passed down
+		mantinePaperProps: { miw: '85%' },
 		mantineProgressProps: ({ isTopToolbar }) => ({ style: { display: isTopToolbar ? 'block' : 'none' } }),
 		mantineSelectCheckboxProps: ({ row }) => ({ style: { display: row.getCanSelect() ? 'block' : 'none' } }),
-		mantineTableContainerProps: { miw: '85%', mah: rem(600) },
 		mantineTableBodyCellProps: ({ row }) => ({
 			sx: (theme) => ({
 				textDecoration: row.original.deleted ? 'line-through' : 'none',
@@ -278,7 +301,78 @@ export const OrganizationTable = () => {
 		renderToolbarInternalActions: () => (
 			<ToolbarButtons columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
 		),
-		renderBottomToolbar: ({ table }) => <span>{table.getFilteredRowModel().rows.length} results</span>,
+		renderBottomToolbar: ({ table }) => {
+			if (table.getPreFilteredRowModel().rows.length !== table.getFilteredRowModel().rows.length) {
+				return (
+					<div className={classes.bottomBar}>
+						<Text variant='utility3'>
+							Showing {table.getFilteredRowModel().rows.length} of{' '}
+							{table.getPreFilteredRowModel().rows.length} results
+						</Text>
+					</div>
+				)
+			}
+			return (
+				<div className={classes.bottomBar}>
+					<Text variant='utility3'>{table.getFilteredRowModel().rows.length} results</Text>
+				</div>
+			)
+		},
+		renderRowActions: ({ row }) => {
+			const handleView = () => {
+				const parent = row.getParentRow()
+				if (parent) {
+					router.push({
+						pathname: '/org/[slug]/[orgLocationId]',
+						query: {
+							slug: parent.original.slug,
+							orgLocationId: row.original.id,
+						},
+					})
+				} else {
+					router.push({
+						pathname: '/org/[slug]',
+						query: {
+							slug: row.original.slug,
+						},
+					})
+				}
+			}
+			const handleEdit = () => {
+				const parent = row.getParentRow()
+				if (parent) {
+					router.push({
+						pathname: '/org/[slug]/[orgLocationId]/edit',
+						query: {
+							slug: parent.original.slug,
+							orgLocationId: row.original.id,
+						},
+					})
+				} else {
+					router.push({
+						pathname: '/org/[slug]/edit',
+						query: {
+							slug: row.original.slug,
+						},
+					})
+				}
+			}
+
+			return (
+				<Group noWrap spacing={8}>
+					<Tooltip label='View' withinPortal>
+						<ActionIcon onClick={handleView}>
+							<Icon icon='carbon:search' />
+						</ActionIcon>
+					</Tooltip>
+					<Tooltip label='Edit' withinPortal>
+						<ActionIcon onClick={handleEdit}>
+							<Icon icon='carbon:edit' />
+						</ActionIcon>
+					</Tooltip>
+				</Group>
+			)
+		},
 		// #endregion
 		// #region Events
 		onColumnFilterFnsChange: setColumnFilterFns,

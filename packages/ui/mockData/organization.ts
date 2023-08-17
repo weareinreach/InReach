@@ -306,7 +306,7 @@ export const organization = {
 					id: `orgn_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
 					name: faker.company.name(),
 					slug: faker.lorem.slug(3),
-					lastVerified,
+					lastVerified: faker.helpers.maybe(() => lastVerified, { probability: 0.9 }) ?? null,
 					updatedAt,
 					createdAt,
 					published: faker.datatype.boolean(0.9),
