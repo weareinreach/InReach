@@ -271,7 +271,7 @@ export const OrganizationTable = () => {
 		positionGlobalFilter: 'left',
 		rowCount: data?.length ?? 0,
 		rowVirtualizerInstanceRef,
-		rowVirtualizerProps: { overscan: 5 },
+		rowVirtualizerProps: { overscan: 10, estimateSize: () => 56 },
 		// #endregion
 		// #region State
 		initialState: {
