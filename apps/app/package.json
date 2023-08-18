@@ -60,9 +60,9 @@
 		"@sentry/opentelemetry-node": "7.64.0",
 		"@tanstack/react-query": "4.32.6",
 		"@tanstack/react-table": "8.9.3",
-		"@tiptap/extension-link": "2.1.1",
-		"@tiptap/react": "2.1.1",
-		"@tiptap/starter-kit": "2.1.1",
+		"@tiptap/extension-link": "2.1.3",
+		"@tiptap/react": "2.1.3",
+		"@tiptap/starter-kit": "2.1.3",
 		"@trpc/client": "10.37.1",
 		"@trpc/next": "10.37.1",
 		"@trpc/react-query": "10.37.1",
@@ -112,7 +112,7 @@
 		"zod": "3.22.1"
 	},
 	"devDependencies": {
-		"@playwright/test": "1.37.0",
+		"@playwright/test": "1.37.1",
 		"@prisma/nextjs-monorepo-workaround-plugin": "5.1.1",
 		"@tanstack/react-query-devtools": "4.32.6",
 		"@tanstack/react-table-devtools": "8.7.6",
