@@ -118,6 +118,15 @@ export const OrganizationTable = () => {
 				filterVariant: 'autocomplete',
 				enableResizing: true,
 				minSize: 250,
+				enableColumnFilter: false,
+				Cell: ({ cell, row }) =>
+					row.original.published ? (
+						cell.getValue<string>()
+					) : (
+						<Group spacing={8}>
+							{cell.getValue<string>()} <Icon icon='carbon:view-off' />
+						</Group>
+					),
 			},
 			{
 				accessorKey: 'lastVerified',
@@ -258,6 +267,7 @@ export const OrganizationTable = () => {
 		enableHiding: true,
 		getRowId: (originalRow) => originalRow.id,
 		isMultiSortEvent: () => true,
+		maxLeafRowFilterDepth: 0,
 		positionGlobalFilter: 'left',
 		rowCount: data?.length ?? 0,
 		rowVirtualizerInstanceRef,
@@ -288,6 +298,7 @@ export const OrganizationTable = () => {
 		mantinePaperProps: { miw: '85%' },
 		mantineProgressProps: ({ isTopToolbar }) => ({ style: { display: isTopToolbar ? 'block' : 'none' } }),
 		mantineSelectCheckboxProps: ({ row }) => ({ style: { display: row.getCanSelect() ? 'block' : 'none' } }),
+		mantineTableBodyProps: { mah: '60vh' },
 		mantineTableBodyCellProps: ({ row }) => ({
 			sx: (theme) => ({
 				textDecoration: row.original.deleted ? 'line-through' : 'none',
