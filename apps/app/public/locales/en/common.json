@@ -244,7 +244,7 @@
         "no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
         "organization-placeholder": "Enter organization name...",
         "organization-placeholder-searchby": "Search by organization name...",
-        "suggest-resource": "Can't find it? <1>Suggest an organization</1> you think should be included."
+        "suggest-resource": "Can't find it? <strong>Suggest an organization</strong> you think should be included."
     },
     "send-email": "Send email",
     "service": {

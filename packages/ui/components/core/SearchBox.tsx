@@ -12,6 +12,7 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
+import { localeIncludes } from 'locale-includes'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import {
@@ -114,6 +115,18 @@ const useLocationSearch = () => {
 	const [locationSearch, setLocationSearch] = useState('')
 	useDebugValue(locationSearch)
 	return [locationSearch, setLocationSearch] as [typeof locationSearch, typeof setLocationSearch]
+}
+
+const SuggestItem = () => {
+	const { classes } = useStyles()
+	const router = useRouter()
+	return (
+		<div className={classes.itemComponent} onClick={() => router.push('/suggest')}>
+			<Text className={classes.unmatchedText}>
+				<Trans i18nKey='search.suggest-resource' />
+			</Text>
+		</div>
+	)
 }
 
 export const SearchBox = ({
@@ -278,16 +291,6 @@ export const SearchBox = ({
 	)
 	AutoCompleteItem.displayName = 'AutoCompleteItem'
 
-	const SuggestItem = () => {
-		return (
-			<div className={classes.itemComponent} onClick={() => router.push('/suggest')}>
-				<Text className={classes.unmatchedText}>
-					<Trans i18nKey='search.suggest-resource' t={t} />
-				</Text>
-			</div>
-		)
-	}
-
 	// only used for Organization results - always displays suggestion item last.
 	const ResultContainer = forwardRef<HTMLDivElement, ScrollAreaProps>(
 		({ children, style, ...props }, ref) => {
@@ -348,6 +351,12 @@ export const SearchBox = ({
 			withinPortal
 			nothingFound={noResults ? <Text variant={variants.Text.utility1}>{t('search.no-results')}</Text> : null}
 			defaultValue={initialValue}
+			filter={(value, item) =>
+				localeIncludes(item.value, value, {
+					usage: 'search',
+					sensitivity: 'base',
+				})
+			}
 			{...fieldRole}
 			{...form.getInputProps('search')}
 		/>
