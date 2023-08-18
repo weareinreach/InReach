@@ -117,6 +117,18 @@ const useLocationSearch = () => {
 	return [locationSearch, setLocationSearch] as [typeof locationSearch, typeof setLocationSearch]
 }
 
+const SuggestItem = () => {
+	const { classes } = useStyles()
+	const router = useRouter()
+	return (
+		<div className={classes.itemComponent} onClick={() => router.push('/suggest')}>
+			<Text className={classes.unmatchedText}>
+				<Trans i18nKey='search.suggest-resource' />
+			</Text>
+		</div>
+	)
+}
+
 export const SearchBox = ({
 	type,
 	label,
@@ -278,16 +290,6 @@ export const SearchBox = ({
 		}
 	)
 	AutoCompleteItem.displayName = 'AutoCompleteItem'
-
-	const SuggestItem = () => {
-		return (
-			<div className={classes.itemComponent} onClick={() => router.push('/suggest')}>
-				<Text className={classes.unmatchedText}>
-					<Trans i18nKey='search.suggest-resource' t={t} />
-				</Text>
-			</div>
-		)
-	}
 
 	// only used for Organization results - always displays suggestion item last.
 	const ResultContainer = forwardRef<HTMLDivElement, ScrollAreaProps>(
