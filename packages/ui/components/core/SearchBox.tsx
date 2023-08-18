@@ -12,6 +12,7 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
+import { localeIncludes } from 'locale-includes'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import {
@@ -348,6 +349,12 @@ export const SearchBox = ({
 			withinPortal
 			nothingFound={noResults ? <Text variant={variants.Text.utility1}>{t('search.no-results')}</Text> : null}
 			defaultValue={initialValue}
+			filter={(value, item) =>
+				localeIncludes(item.value, value, {
+					usage: 'search',
+					sensitivity: 'base',
+				})
+			}
 			{...fieldRole}
 			{...form.getInputProps('search')}
 		/>
