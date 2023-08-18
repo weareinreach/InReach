@@ -126,19 +126,22 @@ const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps
 
 const BottomBar = ({ table }: BottomBarProps) => {
 	const { classes } = useStyles()
-	if (table.getPreFilteredRowModel().rows.length !== table.getFilteredRowModel().rows.length) {
+	const filteredRowCount = table.getFilteredRowModel().rows.length
+	const preFilteredRowCount = table.getPreFilteredRowModel().rows.length
+
+	if (preFilteredRowCount !== filteredRowCount) {
 		return (
 			<div className={classes.bottomBar}>
 				<Text variant='utility3'>
-					Showing {table.getFilteredRowModel().rows.length} of {table.getPreFilteredRowModel().rows.length}{' '}
-					results
+					Showing {filteredRowCount} of {preFilteredRowCount} results
 				</Text>
 			</div>
 		)
 	}
+
 	return (
 		<div className={classes.bottomBar}>
-			<Text variant='utility3'>{table.getFilteredRowModel().rows.length} results</Text>
+			<Text variant='utility3'>{preFilteredRowCount} results</Text>
 		</div>
 	)
 }
