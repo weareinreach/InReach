@@ -11,6 +11,8 @@ declare module "nextjs-routes" {
   } from "next";
 
   export type Route =
+    | StaticRoute<"/401">
+    | StaticRoute<"/403">
     | StaticRoute<"/404">
     | StaticRoute<"/500">
     | StaticRoute<"/account">
