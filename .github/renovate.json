@@ -6,13 +6,7 @@
 	"packageRules": [
 		{
 			"groupName": "patched packages",
-			"matchPackageNames": [
-				"@crowdin/ota-client",
-				"eslint-plugin-node",
-				"iso-google-locales",
-				"trpc-panel",
-				"next-auth"
-			],
+			"matchPackageNames": ["@crowdin/ota-client", "eslint-plugin-node", "iso-google-locales", "trpc-panel"],
 			"matchUpdateTypes": ["major", "minor", "patch"]
 		}
 	],

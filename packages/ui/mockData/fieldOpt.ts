@@ -1,10 +1,12 @@
+import { parse } from 'libphonenumber-js'
 import { z } from 'zod'
 
-import fs from 'fs'
-import path from 'path'
-
+// import fs from 'fs'
+// import path from 'path'
 import { type ApiInput, type ApiOutput } from '@weareinreach/api'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
+
+import countryGovDistMapData from './json/countryGovDistMap.json'
 
 export const attributeCategories = [
 	{
@@ -9216,9 +9218,7 @@ const countryGovDistMapSchema = z
 	.array()
 
 const countryGovDistMap = new Map<string, CountryGovDistMapItem>(
-	countryGovDistMapSchema.parse(
-		JSON.parse(fs.readFileSync(path.resolve(__dirname, './json/countryGovDistMap.json'), 'utf-8'))
-	)
+	countryGovDistMapSchema.parse(countryGovDistMapData)
 )
 export const fieldOpt = {
 	attributeCategories: getTRPCMock({
