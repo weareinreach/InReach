@@ -17,7 +17,7 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": true,
-		"target": "es2017"
+		"target": "es2020"
 	},
 	"display": "Default",
 	"include": ["../../@types/**/*.ts"],
