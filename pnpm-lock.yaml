@@ -328,6 +328,9 @@ importers:
       luxon:
         specifier: 3.4.0
         version: 3.4.0
+      mantine-react-table:
+        specifier: 1.1.1
+        version: 1.1.1(@emotion/react@11.11.1)(@mantine/core@6.0.19)(@mantine/dates@6.0.19)(@mantine/hooks@6.0.19)(@tabler/icons-react@2.30.0)(react-dom@18.2.0)(react@18.2.0)
       next:
         specifier: 13.4.18
         version: 13.4.18(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
@@ -10084,7 +10087,6 @@ packages:
     engines: {node: '>=12'}
     dependencies:
       remove-accents: 0.4.2
-    dev: true
 
   /@tanstack/query-core@4.32.6:
     resolution: {integrity: sha512-YVB+mVWENQwPyv+40qO7flMgKZ0uI41Ph7qXC2Zf1ft5AIGfnXnMZyifB2ghhZ27u+5wm5mlzO4Y6lwwadzxCA==}
@@ -10162,7 +10164,6 @@ packages:
     dependencies:
       '@tanstack/virtual-core': 3.0.0-beta.54
       react: 18.2.0
-    dev: true
 
   /@tanstack/table-core@8.9.3:
     resolution: {integrity: sha512-NpHZBoHTfqyJk0m/s/+CSuAiwtebhYK90mDuf5eylTvgViNOujiaOaxNDxJkQQAsVvHWZftUGAx1EfO1rkKtLg==}
@@ -10170,7 +10171,6 @@ packages:
 
   /@tanstack/virtual-core@3.0.0-beta.54:
     resolution: {integrity: sha512-jtkwqdP2rY2iCCDVAFuaNBH3fiEi29aTn2RhtIoky8DTTiCdc48plpHHreLwmv1PICJ4AJUUESaq3xa8fZH8+g==}
-    dev: true
 
   /@terraformer/wkt@2.2.0:
     resolution: {integrity: sha512-i33rTSqPtmO4sRdeznI0IEc9gpIZZIXN5kGhZ4rTwVtDccDKL3h4uia9cmWdRJlJMlG4Febxatw5b9ylI5YYuA==}
@@ -18754,7 +18754,6 @@ packages:
       '@tanstack/react-virtual': 3.0.0-beta.54(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: true
 
   /map-obj@1.0.1:
     resolution: {integrity: sha512-7N/q3lyZ+LVCp7PzuxrJr4KMbBE2hW7BT7YNia330OFxIf4d3r5zVpicP2650l7CPN6RM9zOJRl3NGpqSiw3Eg==}
@@ -22392,7 +22391,6 @@ packages:
 
   /remove-accents@0.4.2:
     resolution: {integrity: sha512-7pXIJqJOq5tFgG1A2Zxti3Ht8jJF337m4sowbuHsW30ZnkQFnDzy9qBNhgzX8ZLW4+UBcXiiR7SwR6pokHsxiA==}
-    dev: true
 
   /renderkid@3.0.0:
     resolution: {integrity: sha512-q/7VIQA8lmM1hF+jn+sFSPWGlMkSAeNYcPLmDQx2zzuiDfaLrOmumR8iaUKlenFgh0XRPIUeSPlH3A+AW3Z5pg==}
