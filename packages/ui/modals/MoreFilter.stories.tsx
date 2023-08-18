@@ -35,6 +35,6 @@ export default {
 		}, [filter])
 		return <MoreFilter {...args} />
 	},
-} as Meta<typeof MoreFilter>
+} satisfies Meta<typeof MoreFilter>
 
 export const MoreFilterExample = {}

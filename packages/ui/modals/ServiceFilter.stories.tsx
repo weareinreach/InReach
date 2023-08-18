@@ -39,6 +39,6 @@ export default {
 
 		return <ServiceFilter {...args} />
 	},
-} as Meta<typeof ServiceFilter>
+} satisfies Meta<typeof ServiceFilter>
 
 export const ServiceFilterExample = {}
