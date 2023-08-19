@@ -84,6 +84,9 @@
     "enter-password-placeholder": "पासवर्ड दर्ज करें...",
     "enter-review": "अपनी समीक्षा दर्ज करें...",
     "errors": {
+        "401-title": "You must be logged in to do that.",
+        "403-body": "You do not have permission to access this page. If you feel that you have reached this page in error, please contact your supervisor.",
+        "403-title": "403: Forbidden",
         "404-body": "We're sorry, the page you're looking for doesn't exist or has been moved. Start a search below to find safe, verified resources for the diverse LGBTQ+ community in your area.",
         "404-title": "404: Page not found.",
         "500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
@@ -358,6 +361,7 @@
     },
     "view-list": "सूची देखें",
     "visit": "विजिट करें",
+    "welcome-name": "Welcome, {{name}}!",
     "words": {
         "accept": "स्वीकारें",
         "account": "अकाउंट",
