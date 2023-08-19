@@ -12,7 +12,7 @@ jobs:
       FORCE_COLOR: true
       # GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     name: 'Lint & format'
-    runs-on: ubuntu-latest
+    runs-on: macos-13
     steps:
       # Setup steps
       - name: Checkout
@@ -43,20 +43,6 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
-
-      # - name: Get pnpm store directory
-      #   id: pnpm-cache
-      #   shell: bash
-      #   run: |
-      #     echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      # - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
-      #   name: Setup pnpm cache
-      #   with:
-      #     path: ${{ env.STORE_PATH }}
-      #     key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install
