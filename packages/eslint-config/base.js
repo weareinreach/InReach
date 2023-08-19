@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unused-modules */
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
 	plugins: ['codegen', 'turbo', 'node', /*'import',*/ '@tanstack/query'],
@@ -12,6 +11,10 @@ const config = {
 		'prettier',
 	],
 	rules: {
+		'@typescript-eslint/consistent-type-assertions': [
+			'error',
+			{ assertionStyle: 'as', objectLiteralTypeAssertions: 'allow-as-parameter' },
+		],
 		'@typescript-eslint/consistent-type-imports': [
 			'error',
 			{
@@ -32,7 +35,11 @@ const config = {
 		],
 		'@typescript-eslint/no-empty-function': 'off',
 		'no-duplicate-imports': 'off',
+		'node/no-deprecated-api': 'error',
 		'node/no-process-env': 'warn',
+		'node/no-unsupported-features/es-builtins': 'error',
+		'node/no-unsupported-features/es-syntax': 'error',
+		'node/no-unsupported-features/node-builtins': 'error',
 		'codegen/codegen': 'error',
 		'react/jsx-key': 'off',
 		'react/no-unescaped-entities': 'off',
@@ -103,21 +110,28 @@ const config = {
 	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
-		project: ['./packages/*/tsconfig.json', './apps/*/tsconfig.json', './tsconfig.json'],
+		EXPERIMENTAL_useProjectService: true,
+		// project: [ './packages/*/tsconfig.json', './apps/*/tsconfig.json', './tsconfig.json' ],
+		emitDecoratorMetadata: true,
+		ecmaVersion: 2020,
 	},
 	ignorePatterns: ['!.*', 'node_modules', 'dist/', '.next/'],
 	settings: {
+		'import/cache': {
+			lifetime: 60,
+		},
 		'import/extensions': ['.js', '.jsx', '.cjs', '.mjs', '.ts', '.mts', '.tsx'],
+		'import/internal-regex': '^(?:(?:@weareinreach\\/)|(?:~\\w*\\/)).*',
+		'import/parsers': {
+			'@typescript-eslint/parser': ['.ts', '.tsx', '.mts'],
+		},
 		'import/resolver': {
 			node: true,
 			typescript: {
 				alwaysTryTypes: true,
+				project: ['./packages/*/tsconfig.json', './apps/*/tsconfig.json', './tsconfig.json'],
 			},
 		},
-		'import/cache': {
-			lifetime: 10,
-		},
-		'import/internal-regex': '^(?:(?:@weareinreach\\/)|(?:~\\w*\\/)).*',
 	},
 	env: {
 		node: true,

@@ -5,13 +5,17 @@ import {
 	type MRT_ColumnDef,
 	type MRT_ColumnFilterFnsState,
 	type MRT_ColumnFiltersState,
+	type MRT_Row,
 	type MRT_SortingState,
+	type MRT_TableInstance,
 	type MRT_Virtualizer,
 	useMantineReactTable,
 } from 'mantine-react-table'
-import { useRouter } from 'next/router'
+import { type Route } from 'nextjs-routes'
 import { type Dispatch, type SetStateAction, useMemo, useRef, useState } from 'react'
 
+import { type ApiOutput } from '@weareinreach/api'
+import { Link } from '~ui/components/core/Link'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -26,6 +30,25 @@ const useStyles = createStyles((theme) => ({
 		paddingTop: rem(20),
 	},
 }))
+
+const getAlertBanner = ({
+	isError,
+	isFetching,
+	isLoading,
+}: Record<'isError' | 'isFetching' | 'isLoading', boolean>) => {
+	switch (true) {
+		case isError: {
+			return { color: 'red', children: 'Error fetching data' }
+		}
+		case isFetching:
+		case isLoading: {
+			return { color: 'green', children: 'Loading data' }
+		}
+		default: {
+			return { color: 'white', children: null, sx: { backgroundColor: 'transparent' } }
+		}
+	}
+}
 
 const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps) => {
 	const theme = useMantineTheme()
@@ -101,15 +124,77 @@ const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps
 	)
 }
 
+const BottomBar = ({ table }: BottomBarProps) => {
+	const { classes } = useStyles()
+	const filteredRowCount = table.getFilteredRowModel().rows.length
+	const preFilteredRowCount = table.getPreFilteredRowModel().rows.length
+
+	if (preFilteredRowCount !== filteredRowCount) {
+		return (
+			<div className={classes.bottomBar}>
+				<Text variant='utility3'>
+					Showing {filteredRowCount} of {preFilteredRowCount} results
+				</Text>
+			</div>
+		)
+	}
+
+	return (
+		<div className={classes.bottomBar}>
+			<Text variant='utility3'>{preFilteredRowCount} results</Text>
+		</div>
+	)
+}
+
+const RowAction = ({ row }: RowActionProps) => {
+	const getViewUrl = (): Route => {
+		const parent = row.getParentRow()
+		if (parent) {
+			return {
+				pathname: '/org/[slug]/[orgLocationId]',
+				query: { slug: parent.original.slug, orgLocationId: row.original.id },
+			}
+		} else {
+			return { pathname: '/org/[slug]', query: { slug: row.original.slug } }
+		}
+	}
+	const getEditUrl = (): Route => {
+		const parent = row.getParentRow()
+		if (parent) {
+			return {
+				pathname: '/org/[slug]/[orgLocationId]/edit',
+				query: { slug: parent.original.slug, orgLocationId: row.original.id },
+			}
+		} else {
+			return { pathname: '/org/[slug]/edit', query: { slug: row.original.slug } }
+		}
+	}
+	return (
+		<Group noWrap spacing={8}>
+			<Tooltip label='View' withinPortal>
+				<ActionIcon component={Link} href={getViewUrl()} target='_blank'>
+					<Icon icon='carbon:search' />
+				</ActionIcon>
+			</Tooltip>
+			<Tooltip label='Edit' withinPortal>
+				<ActionIcon component={Link} href={getEditUrl()} target='_blank'>
+					<Icon icon='carbon:edit' />
+				</ActionIcon>
+			</Tooltip>
+		</Group>
+	)
+}
+
 export const OrganizationTable = () => {
 	const { classes } = useStyles()
-	const router = useRouter()
 	const { data, isLoading, isError, isFetching } = api.organization.forOrganizationTable.useQuery(undefined, {
 		placeholderData: [],
 		select: (data) => data.map(({ locations, ...rest }) => ({ ...rest, subRows: locations })),
+		refetchOnWindowFocus: false,
 	})
 
-	const columns = useMemo<MRT_ColumnDef<NonNullable<typeof data>[number]>[]>(
+	// #region Column Definitions
+	const columns = useMemo<MRT_ColumnDef<RestucturedDataItem>[]>(
 		() => [
 			{
 				accessorKey: 'name',
@@ -118,6 +203,15 @@ export const OrganizationTable = () => {
 				filterVariant: 'autocomplete',
 				enableResizing: true,
 				minSize: 250,
+				enableColumnFilter: false,
+				Cell: ({ cell, row }) =>
+					row.original.published ? (
+						cell.getValue<string>()
+					) : (
+						<Group spacing={8}>
+							{cell.getValue<string>()} <Icon icon='carbon:view-off' />
+						</Group>
+					),
 			},
 			{
 				accessorKey: 'lastVerified',
@@ -200,7 +294,9 @@ export const OrganizationTable = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[]
 	)
+	// #endregion
 
+	// #region State
 	const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>([
 		{ id: 'deleted', value: false },
 	])
@@ -220,22 +316,9 @@ export const OrganizationTable = () => {
 		{ id: 'name', desc: false },
 	])
 	const rowVirtualizerInstanceRef = useRef<MRT_Virtualizer<HTMLDivElement, HTMLTableRowElement>>(null)
+	// #endregion
 
-	const getAlertBanner = () => {
-		switch (true) {
-			case isError: {
-				return { color: 'red', children: 'Error fetching data' }
-			}
-			case isFetching:
-			case isLoading: {
-				return { color: 'green', children: 'Loading data' }
-			}
-			default: {
-				return { color: 'white', children: null, sx: { backgroundColor: 'transparent' } }
-			}
-		}
-	}
-
+	// #region Table Setup
 	const table = useMantineReactTable({
 		// #region Basic Props
 		columns,
@@ -258,10 +341,11 @@ export const OrganizationTable = () => {
 		enableHiding: true,
 		getRowId: (originalRow) => originalRow.id,
 		isMultiSortEvent: () => true,
+		maxLeafRowFilterDepth: 0,
 		positionGlobalFilter: 'left',
 		rowCount: data?.length ?? 0,
 		rowVirtualizerInstanceRef,
-		rowVirtualizerProps: { overscan: 5 },
+		rowVirtualizerProps: { overscan: 10, estimateSize: () => 56 },
 		// #endregion
 		// #region State
 		initialState: {
@@ -278,7 +362,7 @@ export const OrganizationTable = () => {
 			columnFilters,
 			globalFilter,
 			isLoading,
-			showAlertBanner: getAlertBanner !== undefined,
+			showAlertBanner: isError || isFetching || isLoading,
 			showProgressBars: isFetching,
 			sorting,
 			density: 'xs',
@@ -288,91 +372,22 @@ export const OrganizationTable = () => {
 		mantinePaperProps: { miw: '85%' },
 		mantineProgressProps: ({ isTopToolbar }) => ({ style: { display: isTopToolbar ? 'block' : 'none' } }),
 		mantineSelectCheckboxProps: ({ row }) => ({ style: { display: row.getCanSelect() ? 'block' : 'none' } }),
+		mantineTableBodyProps: { mah: '60vh' },
 		mantineTableBodyCellProps: ({ row }) => ({
 			sx: (theme) => ({
 				textDecoration: row.original.deleted ? 'line-through' : 'none',
 				color: row.original.published ? undefined : theme.other.colors.secondary.darkGray,
 			}),
 		}),
-		mantineToolbarAlertBannerProps: getAlertBanner(),
+		mantineToolbarAlertBannerProps: getAlertBanner({ isLoading, isFetching, isError }),
 		mantineTableProps: { striped: true },
 		// #endregion
 		// #region Override sections
 		renderToolbarInternalActions: () => (
 			<ToolbarButtons columnFilters={columnFilters} setColumnFilters={setColumnFilters} />
 		),
-		renderBottomToolbar: ({ table }) => {
-			if (table.getPreFilteredRowModel().rows.length !== table.getFilteredRowModel().rows.length) {
-				return (
-					<div className={classes.bottomBar}>
-						<Text variant='utility3'>
-							Showing {table.getFilteredRowModel().rows.length} of{' '}
-							{table.getPreFilteredRowModel().rows.length} results
-						</Text>
-					</div>
-				)
-			}
-			return (
-				<div className={classes.bottomBar}>
-					<Text variant='utility3'>{table.getFilteredRowModel().rows.length} results</Text>
-				</div>
-			)
-		},
-		renderRowActions: ({ row }) => {
-			const handleView = () => {
-				const parent = row.getParentRow()
-				if (parent) {
-					router.push({
-						pathname: '/org/[slug]/[orgLocationId]',
-						query: {
-							slug: parent.original.slug,
-							orgLocationId: row.original.id,
-						},
-					})
-				} else {
-					router.push({
-						pathname: '/org/[slug]',
-						query: {
-							slug: row.original.slug,
-						},
-					})
-				}
-			}
-			const handleEdit = () => {
-				const parent = row.getParentRow()
-				if (parent) {
-					router.push({
-						pathname: '/org/[slug]/[orgLocationId]/edit',
-						query: {
-							slug: parent.original.slug,
-							orgLocationId: row.original.id,
-						},
-					})
-				} else {
-					router.push({
-						pathname: '/org/[slug]/edit',
-						query: {
-							slug: row.original.slug,
-						},
-					})
-				}
-			}
-
-			return (
-				<Group noWrap spacing={8}>
-					<Tooltip label='View' withinPortal>
-						<ActionIcon onClick={handleView}>
-							<Icon icon='carbon:search' />
-						</ActionIcon>
-					</Tooltip>
-					<Tooltip label='Edit' withinPortal>
-						<ActionIcon onClick={handleEdit}>
-							<Icon icon='carbon:edit' />
-						</ActionIcon>
-					</Tooltip>
-				</Group>
-			)
-		},
+		renderBottomToolbar: ({ table }) => <BottomBar table={table} />,
+		renderRowActions: ({ row }) => <RowAction row={row} />,
 		// #endregion
 		// #region Events
 		onColumnFilterFnsChange: setColumnFilterFns,
@@ -381,6 +396,7 @@ export const OrganizationTable = () => {
 		onSortingChange: setSorting,
 		// #endregion
 	})
+	// #endregion
 
 	return <MantineReactTable table={table} />
 }
@@ -388,4 +404,13 @@ export const OrganizationTable = () => {
 interface ToolbarButtonsProps {
 	columnFilters: MRT_ColumnFiltersState
 	setColumnFilters: Dispatch<SetStateAction<MRT_ColumnFiltersState>>
+}
+interface BottomBarProps {
+	table: MRT_TableInstance<RestucturedDataItem>
+}
+interface RowActionProps {
+	row: MRT_Row<RestucturedDataItem>
+}
+type RestucturedDataItem = Omit<ApiOutput['organization']['forOrganizationTable'][number], 'locations'> & {
+	subRows: ApiOutput['organization']['forOrganizationTable'][number]['locations']
 }
