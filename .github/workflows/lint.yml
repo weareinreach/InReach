@@ -12,7 +12,7 @@ jobs:
       FORCE_COLOR: true
       # GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     name: 'Lint & format'
-    runs-on: macos-13
+    runs-on: ubuntu-latest
     steps:
       # Setup steps
       - name: Checkout
@@ -78,7 +78,7 @@ jobs:
         with:
           message: 'chore: lint & format'
           commit: --signoff --no-verify
-          committer_name: InReach Bot
+          committer_name: InReach [bot]
           committer_email: 108850934+InReach-svc@users.noreply.github.com
-          author_name: InReach Bot
+          author_name: InReach [bot]
           author_email: 108850934+InReach-svc@users.noreply.github.com
