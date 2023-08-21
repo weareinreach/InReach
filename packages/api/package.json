@@ -20,7 +20,7 @@
 		"@googlemaps/google-maps-services-js": "3.3.35",
 		"@opentelemetry/api": "1.4.1",
 		"@sentry/node": "7.64.0",
-		"@tanstack/react-query": "4.32.6",
+		"@tanstack/react-query": "4.33.0",
 		"@terraformer/wkt": "2.2.0",
 		"@trpc/client": "10.37.1",
 		"@trpc/next": "10.37.1",
@@ -32,7 +32,7 @@
 		"@weareinreach/db": "workspace:*",
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
-		"alex": "11.0.0",
+		"alex": "11.0.1",
 		"geo-tz": "7.0.7",
 		"geolib": "3.3.4",
 		"just-compact": "3.2.0",
@@ -51,13 +51,13 @@
 		"superjson": "1.13.1",
 		"tiny-invariant": "1.3.1",
 		"tslog": "4.9.1",
-		"zod": "3.22.1"
+		"zod": "3.22.2"
 	},
 	"devDependencies": {
 		"@types/eslint": "8.44.2",
 		"@types/google.maps": "3.53.6",
 		"@types/luxon": "3.3.1",
-		"@types/node": "18.17.5",
+		"@types/node": "18.17.6",
 		"@types/prettier": "2.7.3",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "workspace:*",
