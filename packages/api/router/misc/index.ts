@@ -1,68 +1,45 @@
-import { z } from 'zod'
+import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 
-import { getIdPrefixRegex, isIdFor, type Prisma } from '@weareinreach/db'
-import { defineRouter, publicProcedure } from '~api/lib/trpc'
-import { isPublic } from '~api/schemas/selects/common'
+import * as schema from './schemas'
+
+const HandlerCache: Partial<MiscHandlerCache> = {}
+
+type MiscHandlerCache = {
+	hasContactInfo: typeof import('./query.hasContactInfo.handler').hasContactInfo
+	getCountryTranslation: typeof import('./query.getCountryTranslation.handler').getCountryTranslation
+	forEditNavbar: typeof import('./query.forEditNavbar.handler').forEditNavbar
+}
 
 export const miscRouter = defineRouter({
-	hasContactInfo: publicProcedure
-		.input(z.string().regex(getIdPrefixRegex('organization', 'orgLocation', 'orgService')))
-		.query(async ({ ctx, input }) => {
-			const whereId = (): {
-				phone: Prisma.OrgPhoneWhereInput
-				email: Prisma.OrgEmailWhereInput
-				website: Prisma.OrgWebsiteWhereInput
-				socialMedia: Prisma.OrgSocialMediaWhereInput
-			} => {
-				switch (true) {
-					case isIdFor('organization', input): {
-						return {
-							email: { organization: { some: { organization: { id: input, ...isPublic } } }, ...isPublic },
-							phone: { organization: { organization: { id: input, ...isPublic } }, ...isPublic },
-							socialMedia: { organization: { id: input, ...isPublic }, ...isPublic },
-							website: { organization: { id: input, ...isPublic }, ...isPublic },
-						}
-					}
-					case isIdFor('orgLocation', input): {
-						return {
-							email: { locations: { some: { location: { id: input, ...isPublic } } }, ...isPublic },
-							phone: { locations: { some: { location: { id: input, ...isPublic } } }, ...isPublic },
-							socialMedia: { orgLocation: { id: input, ...isPublic }, ...isPublic },
-							website: { orgLocation: { id: input, ...isPublic }, ...isPublic },
-						}
-					}
-					case isIdFor('orgService', input): {
-						return {
-							email: { services: { some: { service: { id: input, ...isPublic } } }, ...isPublic },
-							phone: { services: { some: { service: { id: input, ...isPublic } } }, ...isPublic },
-							socialMedia: {},
-							website: {},
-						}
-					}
-					default: {
-						return {
-							email: {},
-							phone: {},
-							socialMedia: {},
-							website: {},
-						}
-					}
-				}
-			}
-			const [email, phone, socialMedia, website] = await Promise.all([
-				ctx.prisma.orgEmail.count({ where: whereId().email }),
-				ctx.prisma.orgPhone.count({ where: whereId().phone }),
-				whereId().socialMedia ? ctx.prisma.orgSocialMedia.count({ where: whereId().socialMedia }) : 0,
-				whereId().website ? ctx.prisma.orgWebsite.count({ where: whereId().website }) : 0,
-			])
-			return email + phone + socialMedia + website !== 0 // ? 'true' : 'false'
-		}),
+	hasContactInfo: publicProcedure.input(schema.ZHasContactInfoSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.hasContactInfo)
+			HandlerCache.hasContactInfo = await import('./query.hasContactInfo.handler').then(
+				(mod) => mod.hasContactInfo
+			)
+
+		if (!HandlerCache.hasContactInfo) throw new Error('Failed to load handler')
+		return HandlerCache.hasContactInfo({ ctx, input })
+	}),
 	getCountryTranslation: publicProcedure
-		.input(z.object({ cca2: z.string().length(2) }))
-		.query(async ({ ctx, input }) =>
-			ctx.prisma.country.findUniqueOrThrow({
-				where: { cca2: input.cca2 },
-				select: { name: true, tsKey: true, tsNs: true },
-			})
-		),
+		.input(schema.ZGetCountryTranslationSchema)
+		.query(async ({ ctx, input }) => {
+			if (!HandlerCache.getCountryTranslation)
+				HandlerCache.getCountryTranslation = await import('./query.getCountryTranslation.handler').then(
+					(mod) => mod.getCountryTranslation
+				)
+
+			if (!HandlerCache.getCountryTranslation) throw new Error('Failed to load handler')
+			return HandlerCache.getCountryTranslation({ ctx, input })
+		}),
+	forEditNavbar: permissionedProcedure('updateLocation')
+		.input(schema.ZForEditNavbarSchema)
+		.query(async ({ ctx, input }) => {
+			if (!HandlerCache.forEditNavbar)
+				HandlerCache.forEditNavbar = await import('./query.forEditNavbar.handler').then(
+					(mod) => mod.forEditNavbar
+				)
+
+			if (!HandlerCache.forEditNavbar) throw new Error('Failed to load handler')
+			return HandlerCache.forEditNavbar({ ctx, input })
+		}),
 })

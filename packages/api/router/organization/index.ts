@@ -25,6 +25,7 @@ type OrganizationHandlerCache = {
 	getIntlCrisis: typeof import('./query.getIntlCrisis.handler').getIntlCrisis
 	getNatlCrisis: typeof import('./query.getNatlCrisis.handler').getNatlCrisis
 	forOrganizationTable: typeof import('./query.forOrganizationTable.handler').forOrganizationTable
+	forOrgPageEdits: typeof import('./query.forOrgPageEdits.handler').forOrgPageEdits
 	// #endregion
 
 	//
@@ -174,6 +175,15 @@ export const orgRouter = defineRouter({
 			if (!HandlerCache.forOrganizationTable) throw new Error('Failed to load handler')
 			return HandlerCache.forOrganizationTable({ ctx, input })
 		}),
+	forOrgPageEdits: publicProcedure.input(schema.ZForOrgPageEditsSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.forOrgPageEdits)
+			HandlerCache.forOrgPageEdits = await import('./query.forOrgPageEdits.handler').then(
+				(mod) => mod.forOrgPageEdits
+			)
+
+		if (!HandlerCache.forOrgPageEdits) throw new Error('Failed to load handler')
+		return HandlerCache.forOrgPageEdits({ ctx, input })
+	}),
 
 	// #endregion
 
