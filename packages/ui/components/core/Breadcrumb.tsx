@@ -35,7 +35,7 @@ const useStyles = createStyles((theme) => ({
 const isString = (...args: unknown[]) => args.every((val) => typeof val === 'string')
 
 export const Breadcrumb = (props: BreadcrumbProps) => {
-	const { option, backTo, backToText, onClick } = props
+	const { option, backTo, backToText, onClick, children } = props
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const { t } = useTranslation('common')
@@ -125,7 +125,7 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 					className={classes.icon}
 				/>
 				<Text size='md' fw={theme.other.fontWeight.semibold} truncate m={0}>
-					{childrenRender}
+					{children || childrenRender}
 				</Text>
 			</Group>
 		</UnstyledButton>
@@ -150,7 +150,7 @@ type PossibleBreadcrumbProps = {
 export type ModalTitleBreadcrumb = Omit<BreadcrumbProps, 'onClick'> & {
 	onClick?: MouseEventHandler<HTMLButtonElement>
 }
-export type BreadcrumbProps = Close | Back | BackToDynamic
+export type BreadcrumbProps = (Close | Back | BackToDynamic) & { children?: React.ReactNode }
 interface Close {
 	option: 'close'
 	onClick: MouseEventHandler<HTMLButtonElement>

@@ -4,14 +4,17 @@ export const EditModeContext = createContext<EditContext | null>(null)
 
 export const EditModeProvider = ({ children }: { children: React.ReactNode }) => {
 	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
-	const editModeRef = useRef<EditModeRef>({ handleEditSubmit: (handler: () => void) => handler() })
+	const editModeRef = useRef<EditModeRef>({
+		handleEditSubmit: (handler: () => void) => handler(),
+		canSave: false,
+	})
 
 	const contextValue = {
 		unsaved: {
 			set: setHasUnsavedChanges,
 			state: hasUnsavedChanges,
 		},
-		submitEditHandler: editModeRef.current.handleEditSubmit,
+		...editModeRef.current,
 	}
 
 	return <EditModeContext.Provider value={contextValue}>{children}</EditModeContext.Provider>
@@ -22,8 +25,8 @@ type EditContext = {
 		set: Dispatch<SetStateAction<boolean>>
 		state: boolean
 	}
-	submitEditHandler: (handler: () => void) => void
-}
+} & EditModeRef
 type EditModeRef = {
 	handleEditSubmit: (handler: () => void) => void
+	canSave: boolean
 }

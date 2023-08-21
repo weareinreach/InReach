@@ -33,7 +33,7 @@ import { ResetPasswordModal } from '@weareinreach/ui/modals/ResetPassword'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-import { type NextPageWithoutGrid } from './_app'
+import { type NextPageWithOptions } from './_app'
 
 const useStyles = createStyles((theme) => ({
 	callout1text: {
@@ -153,7 +153,7 @@ const CardTranslation = ({ i18nKey, t }: { i18nKey: string; t: TFunction }) => {
 	)
 }
 
-const Home: NextPageWithoutGrid = () => {
+const Home: NextPageWithOptions = () => {
 	const { t } = useTranslation('landingPage')
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()

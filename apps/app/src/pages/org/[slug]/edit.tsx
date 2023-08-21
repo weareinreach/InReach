@@ -1,7 +1,7 @@
 /* eslint-disable i18next/no-literal-string */
 import { Grid, Stack, Tabs, Title } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
-import { type GetServerSideProps, type NextPage } from 'next'
+import { type GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
@@ -18,63 +18,31 @@ import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
+import { type NextPageWithOptions } from '~app/pages/_app'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
-const OrganizationPage: NextPage = () => {
+const OrganizationPage: NextPageWithOptions = () => {
 	const { t } = useTranslation()
 	const router = useRouter<'/org/[slug]'>()
 	const { query } = router.isReady ? router : { query: { slug: '' } }
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
-	const { data, status } = api.organization.getBySlug.useQuery(query, { enabled: router.isReady })
+	const { data, status } = api.organization.forOrgPageEdits.useQuery(query, { enabled: router.isReady })
+	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
+		{ parentId: data?.id ?? '', remoteOnly: true },
+		{
+			enabled: !!data?.id && data?.locations.length > 1,
+			select: (data) => data.length !== 0,
+		}
+	)
 	const { ref, width } = useElementSize()
 	useEffect(() => {
 		if (data && status === 'success') setLoading(false)
 	}, [data, status])
 	if (loading || !data) return <>Loading</>
 
-	const {
-		// emails,
-		// phones,
-		// socialMedia,
-		// websites,
-		userLists,
-		attributes,
-		description,
-		slug,
-		// photos,
-		reviews,
-		locations,
-		isClaimed,
-		id: organizationId,
-	} = data
-
-	const body =
-		locations?.length === 1 ? (
-			<Tabs w='100%' value={activeTab} onTabChange={setActiveTab}>
-				<Tabs.List>
-					<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
-					<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
-					<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
-				</Tabs.List>
-				<Tabs.Panel value='services'>
-					<ServicesInfoCard parentId={organizationId} />
-				</Tabs.Panel>
-				<Tabs.Panel value='photos'>
-					<PhotosSection parentId={organizationId} />
-				</Tabs.Panel>
-				<Tabs.Panel value='reviews'>
-					<ReviewSection reviews={reviews} />
-				</Tabs.Panel>
-			</Tabs>
-		) : (
-			<>
-				{locations.map((location) => (
-					<LocationCard key={location.id} locationId={location.id} />
-				))}
-			</>
-		)
+	const { attributes, description, slug, reviews, locations, isClaimed, id: organizationId } = data
 
 	const sidebar =
 		locations?.length === 1 ? (
@@ -95,13 +63,15 @@ const OrganizationPage: NextPage = () => {
 
 	return (
 		<>
-			<Title order={1}>EDIT MODE</Title>
+			<Grid.Col sm={12} order={0}>
+				<Title order={1}>EDIT MODE</Title>
+			</Grid.Col>
 			<Grid.Col sm={8} order={1}>
-				<Toolbar
+				{/* <Toolbar
 					breadcrumbProps={{ option: 'back', backTo: 'search', onClick: () => router.back() }}
 					saved={Boolean(userLists?.length)}
 					organizationId={organizationId}
-				/>
+				/> */}
 				<Stack pt={24} align='flex-start' spacing={40}>
 					<ListingBasicInfo
 						role='org'
@@ -116,7 +86,9 @@ const OrganizationPage: NextPage = () => {
 							isClaimed,
 						}}
 					/>
-					{body}
+					{locations.map((location) => (
+						<LocationCard key={location.id} locationId={location.id} />
+					))}
 				</Stack>
 			</Grid.Col>
 			<Grid.Col order={2}>
@@ -166,5 +138,4 @@ export const getServerSideProps: GetServerSideProps<
 		props,
 	}
 }
-
 export default OrganizationPage
