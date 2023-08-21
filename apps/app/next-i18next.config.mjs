@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 // @ts-check
 import LanguageDetector from 'i18next-browser-languagedetector'
@@ -10,20 +9,9 @@ import MultiBackend from 'i18next-multiload-backend-adapter'
 
 import path from 'path'
 
-export const namespaces = [
-	'attribute',
-	'common',
-	'country',
-	'gov-dist',
-	// 'org-data',
-	// 'org-description',
-	// 'org-service',
-	'phone-type',
-	'services',
-	'user',
-]
 const isBrowser = typeof window !== 'undefined'
-
+const isDev = process.env.NODE_ENV !== 'production'
+const isVerbose = !!process.env.NEXT_VERBOSE
 // const Keys = z.record(z.string())
 
 /**
@@ -60,8 +48,8 @@ const config = {
 	defaultNS: 'common',
 	localePath: path.resolve('./public/locales'),
 	fallbackLng: ['en'],
-	reloadOnPrerender: process.env.NODE_ENV !== 'production',
-	debug: process.env.NODE_ENV !== 'production' && isBrowser && !!process.env.NEXT_VERBOSE,
+	reloadOnPrerender: isDev,
+	debug: isDev && isBrowser && isVerbose,
 	partialBundledLanguages: true,
 	nonExplicitSupportedLngs: true,
 	cleanCode: true,
@@ -91,7 +79,7 @@ const config = {
 	interpolation: {
 		skipOnVariables: false,
 		alwaysFormat: true,
-		format: (value, format, lng, edit) => {
+		format: (value, format) => {
 			switch (format) {
 				case 'lowercase': {
 					if (typeof value === 'string') return value.toLowerCase()

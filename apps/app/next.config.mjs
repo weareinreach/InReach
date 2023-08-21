@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 
 import bundleAnalyze from '@next/bundle-analyzer'
@@ -15,6 +14,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const isVercelActiveDev = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF !== 'dev'
+const isVercelProd = process.env.VERCEL_ENV === 'production'
 const isLocalDev =
 	process.env.NODE_ENV === 'development' && !['preview', 'production'].includes(process.env.VERCEL_ENV)
 
@@ -24,7 +24,14 @@ const nextConfig = {
 	i18n: i18nConfig.i18n,
 	reactStrictMode: true,
 	swcMinify: true,
-	transpilePackages: ['@weareinreach/ui', '@weareinreach/db', '@weareinreach/auth', '@weareinreach/api'],
+	transpilePackages: [
+		'@weareinreach/api',
+		'@weareinreach/auth',
+		'@weareinreach/db',
+		'@weareinreach/env',
+		'@weareinreach/ui',
+		'@weareinreach/util',
+	],
 	compiler: {
 		...(process.env.VERCEL_ENV === 'production' ? { removeConsole: { exclude: ['error'] } } : {}),
 	},
@@ -36,7 +43,7 @@ const nextConfig = {
 		instrumentationHook: true,
 	},
 	eslint: {
-		ignoreDuringBuilds: isVercelActiveDev,
+		ignoreDuringBuilds: isVercelActiveDev || isLocalDev,
 	},
 	images: {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],
@@ -44,13 +51,13 @@ const nextConfig = {
 	rewrites: async () => [{ source: '/search', destination: '/' }],
 
 	typescript: {
-		ignoreBuildErrors: isVercelActiveDev,
+		ignoreBuildErrors: isVercelActiveDev || isLocalDev,
 	},
 	webpack: (config, { isServer, webpack }) => {
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
-		if (process.env.VERCEL_ENV === 'production') {
+		if (isVercelProd) {
 			config.plugins.push(new webpack.DefinePlugin({ __SENTRY_DEBUG__: false }))
 		}
 		return config
