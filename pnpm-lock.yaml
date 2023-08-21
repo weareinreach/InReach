@@ -125,6 +125,9 @@ importers:
       '@emotion/server':
         specifier: 11.11.0
         version: 11.11.0
+      '@hookform/resolvers':
+        specifier: 3.2.0
+        version: 3.2.0(react-hook-form@7.45.4)
       '@iconify/react':
         specifier: 4.1.1
         version: 4.1.1(react@18.2.0)
@@ -359,6 +362,12 @@ importers:
       react-error-boundary:
         specifier: 4.0.11
         version: 4.0.11(react@18.2.0)
+      react-hook-form:
+        specifier: 7.45.4
+        version: 7.45.4(react@18.2.0)
+      react-hook-form-mantine:
+        specifier: 2.0.0
+        version: 2.0.0(@mantine/core@6.0.19)(@mantine/dates@6.0.19)(react-dom@18.2.0)(react-hook-form@7.45.4)(react@18.2.0)
       react-i18next:
         specifier: 13.1.2
         version: 13.1.2(i18next@23.4.4)(react-dom@18.2.0)(react@18.2.0)
@@ -369,6 +378,9 @@ importers:
         specifier: 3.22.2
         version: 3.22.2
     devDependencies:
+      '@hookform/devtools':
+        specifier: 4.3.1
+        version: 4.3.1(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
       '@playwright/test':
         specifier: 1.37.1
         version: 1.37.1
@@ -1433,9 +1445,6 @@ importers:
       probe-image-size:
         specifier: 7.2.3
         version: 7.2.3
-      react-error-boundary:
-        specifier: 4.0.11
-        version: 4.0.11(react@18.2.0)
       react-phone-number-input:
         specifier: 3.3.4
         version: 3.3.4(react-dom@18.2.0)(react@18.2.0)
@@ -1470,9 +1479,18 @@ importers:
       '@geometricpanda/storybook-addon-badges':
         specifier: 2.0.0
         version: 2.0.0(@storybook/blocks@7.3.2)(@storybook/components@7.3.2)(@storybook/core-events@7.3.2)(@storybook/manager-api@7.3.2)(@storybook/preview-api@7.3.2)(@storybook/theming@7.3.2)(@storybook/types@7.3.2)(react-dom@18.2.0)(react@18.2.0)
+      '@hookform/devtools':
+        specifier: 4.3.1
+        version: 4.3.1(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
+      '@hookform/resolvers':
+        specifier: 3.2.0
+        version: 3.2.0(react-hook-form@7.45.4)
       '@iconify-json/carbon':
         specifier: 1.1.20
         version: 1.1.20
+      '@iconify-json/fluent-mdl2':
+        specifier: 1.1.3
+        version: 1.1.3
       '@iconify-json/mdi':
         specifier: 1.1.54
         version: 1.1.54
@@ -1752,6 +1770,15 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      react-error-boundary:
+        specifier: 4.0.11
+        version: 4.0.11(react@18.2.0)
+      react-hook-form:
+        specifier: 7.45.4
+        version: 7.45.4(react@18.2.0)
+      react-hook-form-mantine:
+        specifier: 2.0.0
+        version: 2.0.0(@mantine/core@6.0.19)(@mantine/dates@6.0.19)(react-dom@18.2.0)(react-hook-form@7.45.4)(react@18.2.0)
       react-hook-tracer:
         specifier: 1.4.0
         version: 1.4.0(react-dom@18.2.0)(react@18.2.0)
@@ -4434,7 +4461,6 @@ packages:
     resolution: {integrity: sha512-61Mf7Ufx4aDxx1xlDeOm8aFFigGHE4z+0sKCa+IHCeZKiyP9RLD0Mmx7m8b9/Cf37f7NAvQOOJAbQQGVr5uERw==}
     dependencies:
       '@emotion/memoize': 0.8.1
-    dev: false
 
   /@emotion/memoize@0.8.1:
     resolution: {integrity: sha512-W2P2c/VRW1/1tLox0mVUalvnWXxavmv/Oum2aPsRcoDJuob75FC3Y8FbpfLwUegRcxINtGUMPq0tFCvYNTBXNA==}
@@ -4503,7 +4529,6 @@ packages:
       '@emotion/utils': 1.2.1
       '@types/react': 18.2.20
       react: 18.2.0
-    dev: false
 
   /@emotion/unitless@0.8.1:
     resolution: {integrity: sha512-KOEGMu6dmJZtpadb476IsZBclKvILjopjUii3V+7MnXIQCYh8W3NgNcgwo21n9LXZX6EDIKvqfjYxXebDwxKmQ==}
@@ -5316,6 +5341,33 @@ packages:
       '@hapi/hoek': 9.3.0
     dev: true
 
+  /@hookform/devtools@4.3.1(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-CrWxEoHQZaOXJZVQ8KBgOuAa8p2LI8M0DAN5GTRTmdCieRwFVjVDEmuTAVazWVRRkpEQSgSt3KYp7VmmqXdEnw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18 || 18
+      react-dom: ^16.8.0 || ^17 || ^18 || 18
+    dependencies:
+      '@emotion/react': 11.11.1(@types/react@18.2.20)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.20)(react@18.2.0)
+      '@types/lodash': 4.14.197
+      little-state-machine: 4.8.0(react@18.2.0)
+      lodash: 4.17.21
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-simple-animate: 3.5.2(react-dom@18.2.0)
+      use-deep-compare-effect: 1.8.1(react@18.2.0)
+      uuid: 9.0.0
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: true
+
+  /@hookform/resolvers@3.2.0(react-hook-form@7.45.4):
+    resolution: {integrity: sha512-skXQHhLxq0Sz2xDwCyv5dygBCtXJe1GmWwxDzfdtl0X6agD6qcyTG8HrZWkjJoy8AkiLARqYvSYJ8z7+Nwmi7w==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.45.4(react@18.2.0)
+
   /@humanwhocodes/config-array@0.11.10:
     resolution: {integrity: sha512-KVVjQmNUepDVGXNuoRRdmmEjruj0KfiGSbS8LVc12LMsWDQzRXJ0qdhN8L8uUigKpfEHRhlaQFY0ib1tnUbNeQ==}
     engines: {node: '>=10.10.0'}
@@ -5338,6 +5390,12 @@ packages:
 
   /@iconify-json/carbon@1.1.20:
     resolution: {integrity: sha512-ed/3FDCjicQARWaSGIDZpaF+rWmxoSqrmHYZV2aEicufp0yciG44y9OEmArxxr/0U6bEC3zJbKMSOSw4CKeBJg==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/fluent-mdl2@1.1.3:
+    resolution: {integrity: sha512-LtsZvgFjWK4fQwe0G6cNFDMXhvon4PqUfZY+E4vW6ruOyoFN/Bjzd/LSOVe2POwM785L6ChW2djgNu7fOjrT6Q==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
@@ -5886,7 +5944,7 @@ packages:
     dependencies:
       '@mantine/ssr': 6.0.19(@emotion/react@11.11.1)(@emotion/server@11.11.0)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/styles': 6.0.19(@emotion/react@11.11.1)(react-dom@18.2.0)(react@18.2.0)
-      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
@@ -10617,7 +10675,7 @@ packages:
       '@trpc/client': 10.37.1(@trpc/server@10.37.1)
       '@trpc/react-query': 10.37.1(@tanstack/react-query@4.33.0)(@trpc/client@10.37.1)(@trpc/server@10.37.1)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server': 10.37.1
-      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
@@ -18490,6 +18548,14 @@ packages:
       lit-html: 2.8.0
     dev: true
 
+  /little-state-machine@4.8.0(react@18.2.0):
+    resolution: {integrity: sha512-xfi5+iDxTLhu0hbnNubUs+qoQQqxhtEZeObP5ELjUlHnl74bbasY7mOonsGQrAouyrbag3ebNLSse5xX1T7buQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18 || 18
+    dependencies:
+      react: 18.2.0
+    dev: true
+
   /load-plugin@5.1.0:
     resolution: {integrity: sha512-Lg1CZa1CFj2CbNaxijTL6PCbzd4qGTlZov+iH2p5Xwy/ApcZJh+i6jMN2cYePouTfjJfrNu3nXFdEw8LvbjPFQ==}
     dependencies:
@@ -19832,7 +19898,7 @@ packages:
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.14.4
-      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       oauth: 0.9.15
       openid-client: 5.4.3
       preact: 10.17.0
@@ -19856,7 +19922,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       i18next: 23.4.4
       i18next-fs-backend: 2.1.5
-      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-i18next: 13.1.2(i18next@23.4.4)(react-dom@18.2.0)(react@18.2.0)
 
@@ -19920,7 +19986,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
-    dev: true
 
   /next@13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-HuPSzzAbJ1T4BD8e0bs6B9C1kWQ6gv8ykZoRWs5AQoiIuqbGHHdQO7Ljuvg05Q0Z24E2ABozHe6FxDvI6HfyAw==}
@@ -19969,7 +20034,7 @@ packages:
       next: '*'
     dependencies:
       chokidar: 3.5.3
-      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /nice-try@1.0.5:
@@ -21879,7 +21944,29 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.10
       react: 18.2.0
-    dev: false
+
+  /react-hook-form-mantine@2.0.0(@mantine/core@6.0.19)(@mantine/dates@6.0.19)(react-dom@18.2.0)(react-hook-form@7.45.4)(react@18.2.0):
+    resolution: {integrity: sha512-/vHi2wm9sU2cWR/wAJ1hsH/TZzlu6z/zxQNR4jUVPcB6Bz9+HKGdWk6Di9snqYG3rOBbWqR93BIBE1cyxcK8OA==}
+    peerDependencies:
+      '@mantine/core': ^6.0.0
+      '@mantine/dates': ^6.0.0
+      react: ^18.2.0 || 18
+      react-dom: ^18.2.0 || 18
+      react-hook-form: ^7.43
+    dependencies:
+      '@mantine/core': 6.0.19(@emotion/react@11.11.1)(@mantine/hooks@6.0.19)(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/dates': 6.0.19(@mantine/core@6.0.19)(@mantine/hooks@6.0.19)(dayjs@1.11.9)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-hook-form: 7.45.4(react@18.2.0)
+
+  /react-hook-form@7.45.4(react@18.2.0):
+    resolution: {integrity: sha512-HGDV1JOOBPZj10LB3+OZgfDBTn+IeEsNOKiq/cxbQAIbKaiJUe/KV8DBUzsx0Gx/7IG/orWqRRm736JwOfUSWQ==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18 || 18
+    dependencies:
+      react: 18.2.0
 
   /react-hook-tracer@1.4.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-RX3JFlDmw5Q8LWltp0XRtMQ2VgaZF0QeuL4IfNwAA2eG4ASF7qaxBu7UOMGk9wrZB0NC6zV4R63osRas5ZrQGA==}
@@ -22015,6 +22102,14 @@ packages:
     dependencies:
       lodash: 4.17.21
       react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: true
+
+  /react-simple-animate@3.5.2(react-dom@18.2.0):
+    resolution: {integrity: sha512-xLE65euP920QMTOmv5haPlml+hmOPDkbIr5WeF7ADIXWBYt5kW/vwpNfWg8EKMab8aeDxIZ6QjffVh8v2dUyhg==}
+    peerDependencies:
+      react-dom: ^16.8.0 || ^17 || ^18 || 18
+    dependencies:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
@@ -24792,6 +24887,17 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || 18
     dependencies:
       react: 18.2.0
+
+  /use-deep-compare-effect@1.8.1(react@18.2.0):
+    resolution: {integrity: sha512-kbeNVZ9Zkc0RFGpfMN3MNfaKNvcLNyxOAAd9O4CBZ+kCBXXscn9s/4I+8ytUER4RDpEYs5+O6Rs4PqiZ+rHr5Q==}
+    engines: {node: '>=10', npm: '>=6'}
+    peerDependencies:
+      react: '>=16.13 || 18'
+    dependencies:
+      '@babel/runtime': 7.22.10
+      dequal: 2.0.3
+      react: 18.2.0
+    dev: true
 
   /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.20)(react@18.2.0):
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
