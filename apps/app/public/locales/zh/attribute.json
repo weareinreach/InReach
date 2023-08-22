@@ -70,6 +70,10 @@
 		"cost-fees": "产生成本",
 		"cost-free": "免费的"
 	},
+	"crisis-support-community": {
+		"elders": "长老会",
+		"general-lgbtq": "常规LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "资格要求",
 		"elig-age_max": "{{max}}以下",
@@ -106,7 +110,9 @@
 		"accesslocation": "访问说明-位置",
 		"accessphone": "访问说明-电话",
 		"accesspublictransit": "访问说明-公共交通",
-		"accesstext": "访问说明-文本"
+		"accesssms": "访问说明 - 短信",
+		"accesstext": "访问说明-文本",
+		"accesswhatsapp": "访问说明 - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "服务重点",
