@@ -70,6 +70,10 @@
 		"cost-fees": "लागत लगाती है",
 		"cost-free": "मुफ़्त"
 	},
+	"crisis-support-community": {
+		"elders": "Elders",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "पात्रता आवश्यकताएँ",
 		"elig-age_max": "{{max}}के अंतर्गत",
@@ -106,7 +110,9 @@
 		"accesslocation": "एक्सेस निर्देश - स्थान",
 		"accessphone": "एक्सेस निर्देश - फ़ोन",
 		"accesspublictransit": "एक्सेस निर्देश - सार्वजनिक ट्रांज़िट",
-		"accesstext": "एक्सेस निर्देश - टेक्स्ट"
+		"accesssms": "Access Instructions - SMS",
+		"accesstext": "एक्सेस निर्देश - टेक्स्ट",
+		"accesswhatsapp": "Access Instructions - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "सर्विस फोकस",
