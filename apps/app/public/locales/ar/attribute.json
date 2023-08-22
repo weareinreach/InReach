@@ -70,6 +70,10 @@
 		"cost-fees": "يتكبد تكلفة",
 		"cost-free": "مجانا"
 	},
+	"crisis-support-community": {
+		"elders": "كبار السن",
+		"general-lgbtq": "اللواء LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "متطلبات الأهلية",
 		"elig-age_max": "تحت {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "تعليمات الوصول - الموقع",
 		"accessphone": "تعليمات الوصول - الهاتف",
 		"accesspublictransit": "تعليمات الوصول - النقل العام",
-		"accesstext": "تعليمات الوصول - النص"
+		"accesssms": "تعليمات الوصول - الرسائل القصيرة",
+		"accesstext": "تعليمات الوصول - النص",
+		"accesswhatsapp": "تعليمات الوصول - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "تركيز الخدمة",
