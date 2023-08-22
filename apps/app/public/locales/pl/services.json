@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Opieka aborcyjna",
+		"CATEGORYNAME": "Opieka nad Płodzeniem",
 		"abortion-providers": "Dostawcy aborcji",
 		"financial-assistance": "Pomoc finansowa",
 		"lodging-assistance": "Pomoc w zakwaterowaniu",
@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "Komputery i Internet",
 		"computers-and-internet": "Komputery i internet"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Wsparcie w sytuacjach kryzysowych",
+		"crisis-support": "Wsparcie w sytuacjach kryzysowych"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Edukacja i zatrudnienie",
 		"career-counseling": "Doradztwo zawodowe",
@@ -38,7 +42,7 @@
 		"food-assistance": "Pomoc żywnościowa"
 	},
 	"housing": {
-		"CATEGORYNAME": "Obudowa",
+		"CATEGORYNAME": "Mieszkalnictwo",
 		"drop-in-centers-for-lgbtq-youth": "Centra wrzucające dla młodzieży LGBTQ",
 		"emergency-housing": "Obudowa awaryjna",
 		"housing-information-and-referrals": "Informacje o mieszkaniach i skierowania",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "Łazienki neutralne pod względem płci",
 		"haircuts-and-stylists": "Fryzury i styliści",
 		"hygiene": "Higiena"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "Wsparcie międzynarodowe",
+		"financial-assistance": "Pomoc finansowa",
+		"mental-health": "Zdrowie psychiczne",
+		"resettlement-assistance": "Pomoc w przesiedleniach"
 	},
 	"legal": {
 		"CATEGORYNAME": "Prawne",
@@ -77,7 +87,7 @@
 		"mail": "Poczta"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medyczny",
+		"CATEGORYNAME": "Medyczne",
 		"covid-19-services": "Usługi COVID-19",
 		"dental-care": "Dental care",
 		"hiv-and-sexual-health": "HIV a zdrowie seksualne",
@@ -111,7 +121,7 @@
 		"sports-and-entertainment": "Sport i rozrywka"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Tłumaczenia pisemne i ustne",
+		"CATEGORYNAME": "Tłumaczenie ustne",
 		"for-healthcare": "Dla opieki zdrowotnej",
 		"for-legal-services": "Do obsługi prawnej",
 		"general-translation-and-interpretation": "Tłumaczenia ogólne i ustne"
