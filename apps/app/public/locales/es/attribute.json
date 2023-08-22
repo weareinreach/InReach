@@ -70,6 +70,10 @@
 		"cost-fees": "Incurre un coste",
 		"cost-free": "Gratis"
 	},
+	"crisis-support-community": {
+		"elders": "Ancianes",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Requisitos de Elegibilidad",
 		"elig-age_max": "Menos de {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "Instrucciones de Acceso - Ubicación",
 		"accessphone": "Instrucciones de acceso - Teléfono",
 		"accesspublictransit": "Instrucciones de acceso - Tránsito público",
-		"accesstext": "Instrucciones de Acceso - Texto"
+		"accesssms": "Instrucciones de Acceso - SMS",
+		"accesstext": "Instrucciones de Acceso - Texto",
+		"accesswhatsapp": "Instrucciones de acceso - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Enfoque del servicio",
