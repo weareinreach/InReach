@@ -624,13 +624,15 @@ model OrgLocation {
   id       String  @id @default(cuid())
   legacyId String? @unique /// old ID from MongoDB
   name     String?
-  street1  String
+  street1  String?
   street2  String?
   city     String
   postCode String?
   primary  Boolean @default(false)
 
   mailOnly Boolean?
+
+  mapCityOnly Boolean?
 
   description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   descriptionId String?   @unique

@@ -13,12 +13,12 @@ import { createHmac } from 'crypto'
 
 import { prisma } from '@weareinreach/db'
 import { getEnv } from '@weareinreach/env'
-import { createSubLog } from '@weareinreach/util/logger'
+import { createLoggerInstance } from '@weareinreach/util/logger'
 
 import { decodeCognitoIdJwt } from './cognitoJwt'
 import { generateUserSession } from './genUserSession'
 
-const logger = createSubLog('Cognito')
+const logger = createLoggerInstance('Cognito')
 
 export const CognitoSessionSchema = z.object({
 	AccessToken: z.string(),

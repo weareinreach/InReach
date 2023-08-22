@@ -1,6 +1,10 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
-import { httpBatchLink, loggerLink } from '@trpc/client'
+import {
+	// httpBatchLink,
+	unstable_httpBatchStreamLink as httpBatchStreamLink,
+	loggerLink,
+} from '@trpc/client'
 import { createTRPCNext } from '@trpc/next'
 import { createTRPCReact } from '@trpc/react-query'
 import { devtoolsLink } from 'trpc-client-devtools-link'
@@ -12,7 +16,7 @@ import { getEnv } from '@weareinreach/env'
 export const getBaseUrl = () => {
 	if (typeof window !== 'undefined') return '' // browser should use relative url
 	if (getEnv('VERCEL_URL')) return `https://${getEnv('VERCEL_URL')}` // SSR should use vercel url
-	return `http://localhost:${getEnv('PORT') ?? 6006}` // dev SSR should use localhost
+	return `http://localhost:${getEnv('PORT') ?? process.env.STORYBOOK ? 6006 : 3000}` // dev SSR should use localhost
 }
 
 export const nextTRPC = () =>
@@ -22,18 +26,19 @@ export const nextTRPC = () =>
 				transformer,
 				links: [
 					devtoolsLink({
-						// eslint-disable-next-line node/no-process-env
 						enabled: process.env.NODE_ENV === 'development',
 					}),
 					loggerLink({
 						enabled: (opts) =>
-							// eslint-disable-next-line node/no-process-env
 							process.env.NODE_ENV === 'development' ||
 							(opts.direction === 'down' && opts.result instanceof Error),
 					}),
-					httpBatchLink({
+					httpBatchStreamLink({
 						url: `${getBaseUrl()}/api/trpc`,
 					}),
+					// httpBatchLink({
+					// 	url: `${getBaseUrl()}/api/trpc`,
+					// }),
 				],
 				queryClientConfig: {
 					defaultOptions: {

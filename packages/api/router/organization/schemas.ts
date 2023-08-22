@@ -1,6 +1,10 @@
 // codegen:start {preset: barrel, include: ./*.schema.ts}
+export * from './mutation.attachAttribute.schema'
+export * from './mutation.createNewQuick.schema'
+export * from './mutation.createNewSuggestion.schema'
 export * from './query.checkForExisting.schema'
 export * from './query.forLocationPage.schema'
+export * from './query.forOrganizationTable.schema'
 export * from './query.forOrgPage.schema'
 export * from './query.generateSlug.schema'
 export * from './query.getById.schema'

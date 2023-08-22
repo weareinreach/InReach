@@ -1,9 +1,9 @@
-import { type Meta } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core/Button'
 import { cognito, csrf, providers, signin } from '~ui/mockData/login'
 
-import { LoginModalLauncher } from './Login'
+import { LoginBody, LoginModalLauncher } from './Login'
 
 export default {
 	title: 'Modals/Login',
@@ -26,3 +26,9 @@ export default {
 } satisfies Meta<typeof LoginModalLauncher>
 
 export const Modal = {}
+export const BodyOnly = {
+	parameters: {
+		layoutWrapper: 'centeredFullscreen',
+	},
+	render: () => <LoginBody />,
+} satisfies StoryObj<typeof LoginBody>

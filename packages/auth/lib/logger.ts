@@ -1,3 +1,3 @@
-import { createSubLog } from '@weareinreach/util/logger'
+import { createLoggerInstance } from '@weareinreach/util/logger'
 
-export const logger = createSubLog('@weareinreach/auth')
+export const logger = createLoggerInstance('@weareinreach/auth')

@@ -143,7 +143,7 @@ export const MutationBaseArray = <T extends z.ZodRawShape>(
 		.array(),
 })
 
-export const transformNullString = (val: string | null) => {
+export const transformNullString = (val?: string | null) => {
 	if (val === '' || val === 'NULL') return null
 	return val
 }

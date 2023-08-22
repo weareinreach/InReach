@@ -43,7 +43,7 @@ import { PhoneEmailModal } from '~ui/modals/dataPortal/PhoneEmail'
 import { MultiSelectPopover } from './MultiSelectPopover'
 import { PhoneNumberEntry } from './PhoneNumberEntry'
 
-const [FormProvider, useFormContext, useForm] = createFormContext<{ data: PhoneTableColumns[] }>()
+const [FormProvider, _useFormContext, useForm] = createFormContext<{ data: PhoneTableColumns[] }>()
 
 const transformNullString = (val: string | null) => {
 	if (val === '' || val === 'NULL') return null
@@ -124,13 +124,13 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 		validate: zodResolver(FormSchema),
 		transformValues: FormSchema.parse,
 	})
-	const { id: organizationId, slug: orgSlug } = useOrgInfo()
+	const { id: organizationId } = useOrgInfo()
 	const { classes } = useStyles()
 	const { t } = useTranslation('phone-type')
 	// #region tRPC
 	const apiUtils = api.useContext()
-	const { data } = api.orgPhone.get.useQuery(
-		{ organizationId },
+	const { data: _data } = api.orgPhone.get.useQuery(
+		{ organizationId: organizationId ?? '' },
 		{
 			enabled: Boolean(organizationId),
 			onSuccess: (data) => {
@@ -159,7 +159,7 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 		refetchOnWindowFocus: false,
 	})
 	const { data: orgServices } = api.service.getNames.useQuery(
-		{ organizationId },
+		{ organizationId: organizationId ?? '' },
 		{
 			enabled: Boolean(organizationId),
 
@@ -262,7 +262,7 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 						key={info.cell.id}
 						disabled={!info.row.getValue('published') || info.row.getValue('deleted')}
 						checked={form.getInputProps(`data.${info.row.index}.primary`, { type: 'checkbox' }).checked}
-						onChange={(e) => {
+						onChange={() => {
 							const newValues = form.values.data.map(({ primary, ...rest }, i) =>
 								info.row.index === i ? { primary: true, ...rest } : { primary: false, ...rest }
 							)
