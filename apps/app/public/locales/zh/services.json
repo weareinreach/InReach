@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "计算机和互联网",
 		"computers-and-internet": "计算机和互联网"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "危机支助",
+		"crisis-support": "危机支助"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "教育和就业",
 		"career-counseling": "职业咨询",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "不分性别的浴室",
 		"haircuts-and-stylists": "发型师和发型师",
 		"hygiene": "卫生"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "国际支助",
+		"financial-assistance": "财政援助",
+		"mental-health": "精神健康",
+		"resettlement-assistance": "重新安置援助"
 	},
 	"legal": {
 		"CATEGORYNAME": "合法",
