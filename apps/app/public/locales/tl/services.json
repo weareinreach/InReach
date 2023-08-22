@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Pangangalaga sa Pagpapalaglag",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "Mga nagbibigay ng pagpapalaglag",
 		"financial-assistance": "Tulong sa pananalapi",
 		"lodging-assistance": "Tulong sa panunuluyan",
@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "Mga Computer at Internet",
 		"computers-and-internet": "Mga computer at internet"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Edukasyon at Trabaho",
 		"career-counseling": "Pagpapayo sa karera",
@@ -38,7 +42,7 @@
 		"food-assistance": "Tulong sa pagkain"
 	},
 	"housing": {
-		"CATEGORYNAME": "Pabahay",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "Mga drop-in center para sa kabataan ng LGBTQ",
 		"emergency-housing": "Pabahay ng emerhensiya",
 		"housing-information-and-referrals": "Impormasyon sa pabahay at mga referral",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "Mga haircuts at stylists",
 		"hygiene": "Kalinisan"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Mental Health",
+		"resettlement-assistance": "Resettlement Assistance"
+	},
 	"legal": {
 		"CATEGORYNAME": "Legal",
 		"asylum-application": "Aplikasyon ng pagpapakupkop",
@@ -63,7 +73,7 @@
 		"employment-authorization": "Awtorisasyon ng trabaho",
 		"family-petitions": "Mga petisyon ng pamilya",
 		"immigration-detention": "Pagpigil sa imigrasyon",
-		"legal-advice": "Legal na payo",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "Mga ligal na hotline",
 		"name-and-gender-change": "Pagbabago ng pangalan at kasarian",
 		"refugee-claim": "Pag-angkin ng Refugee",
@@ -77,7 +87,7 @@
 		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medikal",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "Mga serbisyo ng COVID-19",
 		"dental-care": "Pangangalaga sa ngipin",
 		"hiv-and-sexual-health": "HIV at sekswal na kalusugan",
@@ -93,7 +103,7 @@
 		"trans-health-speech-therapy": "Kalusugan ng trans - therapy sa pagsasalita"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Kalusugang pangkaisipan",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "Mga grupo ng suporta ng BIPOC",
 		"hotlines": "Mga Hotline",
 		"private-therapy-and-counseling": "Pribadong therapy at pagpapayo",
@@ -111,7 +121,7 @@
 		"sports-and-entertainment": "Palakasan at libangan"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Pagsasalin at Interpretasyon",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "Para sa pangangalagang pangkalusugan",
 		"for-legal-services": "Para sa mga legal na serbisyo",
 		"general-translation-and-interpretation": "Pangkalahatang pagsasalin at interpretasyon"
