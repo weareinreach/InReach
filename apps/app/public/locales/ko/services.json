@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "컴퓨터 및 인터넷",
 		"computers-and-internet": "컴퓨터 및 인터넷"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "교육 및 고용",
 		"career-counseling": "커리어 카운셀링",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "젠더 뉴트럴 욕실",
 		"haircuts-and-stylists": "헤어컷 및 스타일리스트",
 		"hygiene": "위생"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Mental Health",
+		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
 		"CATEGORYNAME": "법률",
