@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "Komputery i Internet",
 		"computers-and-internet": "Komputery i internet"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Wsparcie w sytuacjach kryzysowych",
+		"crisis-support": "Wsparcie w sytuacjach kryzysowych"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Edukacja i zatrudnienie",
 		"career-counseling": "Doradztwo zawodowe",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "Łazienki neutralne pod względem płci",
 		"haircuts-and-stylists": "Fryzury i styliści",
 		"hygiene": "Higiena"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "Wsparcie międzynarodowe",
+		"financial-assistance": "Pomoc finansowa",
+		"mental-health": "Zdrowie psychiczne",
+		"resettlement-assistance": "Pomoc w przesiedleniach"
 	},
 	"legal": {
 		"CATEGORYNAME": "Prawne",
