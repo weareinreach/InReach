@@ -1,34 +1,46 @@
-/* eslint-disable i18next/no-literal-string */
-import { Grid, Stack, Tabs, Title } from '@mantine/core'
+import { DevTool } from '@hookform/devtools'
+import { Grid, Stack } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
+import compact from 'just-compact'
 import { type GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
 import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
-import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
 import { LocationCard } from '@weareinreach/ui/components/sections/LocationCard'
-import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
-import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
-import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
-import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
+import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { type NextPageWithOptions } from '~app/pages/_app'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
+const formSchema = z
+	.object({
+		name: z.string(),
+		description: z.string(),
+	})
+	.partial()
+type FormSchema = z.infer<typeof formSchema>
+
 const OrganizationPage: NextPageWithOptions = () => {
-	const { t } = useTranslation()
 	const router = useRouter<'/org/[slug]'>()
 	const { query } = router.isReady ? router : { query: { slug: '' } }
-	const [activeTab, setActiveTab] = useState<string | null>('services')
-	const [loading, setLoading] = useState(true)
 	const { data, status } = api.organization.forOrgPageEdits.useQuery(query, { enabled: router.isReady })
+	const { t } = useTranslation()
+	const formMethods = useForm<FormSchema>({
+		values: {
+			name: data?.name,
+			description: data?.description?.tsKey?.text,
+		},
+	})
+	const [loading, setLoading] = useState(true)
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
 		{ parentId: data?.id ?? '', remoteOnly: true },
 		{
@@ -40,41 +52,15 @@ const OrganizationPage: NextPageWithOptions = () => {
 	useEffect(() => {
 		if (data && status === 'success') setLoading(false)
 	}, [data, status])
-	if (loading || !data) return <>Loading</>
+	if (loading || !data) return <OrgPageLoading />
 
-	const { attributes, description, slug, reviews, locations, isClaimed, id: organizationId } = data
-
-	const sidebar =
-		locations?.length === 1 ? (
-			<>{locations[0] && <VisitCard locationId={locations[0].id} />}</>
-		) : (
-			locations.length && (
-				<Stack ref={ref} miw='100%'>
-					{width && (
-						<GoogleMap
-							locationIds={locations.map(({ id }) => id)}
-							width={width}
-							height={Math.floor(width * 1.185)}
-						/>
-					)}
-				</Stack>
-			)
-		)
+	const { attributes, description, slug, locations, isClaimed } = data
 
 	return (
-		<>
-			<Grid.Col sm={12} order={0}>
-				<Title order={1}>EDIT MODE</Title>
-			</Grid.Col>
+		<FormProvider {...formMethods}>
 			<Grid.Col sm={8} order={1}>
-				{/* <Toolbar
-					breadcrumbProps={{ option: 'back', backTo: 'search', onClick: () => router.back() }}
-					saved={Boolean(userLists?.length)}
-					organizationId={organizationId}
-				/> */}
 				<Stack pt={24} align='flex-start' spacing={40}>
 					<ListingBasicInfo
-						role='org'
 						data={{
 							name: data.name,
 							id: data.id,
@@ -85,21 +71,32 @@ const OrganizationPage: NextPageWithOptions = () => {
 							locations,
 							isClaimed,
 						}}
+						edit
 					/>
-					{locations.map((location) => (
-						<LocationCard key={location.id} locationId={location.id} />
-					))}
+					<Stack spacing={40}>
+						{locations.map((location) => (
+							<LocationCard key={location.id} locationId={location.id} />
+						))}
+						{hasRemote && <LocationCard remoteOnly />}
+					</Stack>
 				</Stack>
 			</Grid.Col>
 			<Grid.Col order={2}>
 				<Stack spacing={40}>
 					<ContactSection role='org' parentId={data.id} />
-					{/* </Grid.Col> */}
-					{/* <Grid.Col order={4}> */}
-					{sidebar}
+					<Stack ref={ref} miw='100%'>
+						{width && (
+							<GoogleMap
+								locationIds={locations.map(({ id }) => id)}
+								width={width}
+								height={Math.floor(width * 1.185)}
+							/>
+						)}
+					</Stack>
 				</Stack>
+				<DevTool control={formMethods.control} />
 			</Grid.Col>
-		</>
+		</FormProvider>
 	)
 }
 
@@ -126,12 +123,17 @@ export const getServerSideProps: GetServerSideProps<
 	}
 
 	const ssg = await trpcServerClient({ session })
+	const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
 
-	await ssg.organization.getBySlug.prefetch({ slug })
+	const [i18n] = await Promise.allSettled([
+		getServerSideTranslations(locale, compact(['common', 'services', 'attribute', 'phone-type', orgId?.id])),
+		ssg.organization.getBySlug.prefetch({ slug }),
+		ssg.organization.forOrgPageEdits.prefetch({ slug }),
+	])
 	const props = {
 		session,
 		trpcState: ssg.dehydrate(),
-		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
+		...(i18n.status === 'fulfilled' ? i18n.value : {}),
 	}
 
 	return {
