@@ -44,7 +44,8 @@
 		"nextjs-routes": "2.0.1",
 		"probe-image-size": "7.2.3",
 		"react-phone-number-input": "3.3.4",
-		"react-string-replace": "1.1.1"
+		"react-string-replace": "1.1.1",
+		"zustand": "4.4.1"
 	},
 	"devDependencies": {
 		"@babel/core": "7.22.10",
