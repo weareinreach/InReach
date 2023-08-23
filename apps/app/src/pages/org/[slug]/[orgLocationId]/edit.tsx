@@ -16,6 +16,7 @@ import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
+import { OrgLocationPageLoading } from '@weareinreach/ui/loading-states/OrgLocationPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
@@ -36,7 +37,7 @@ const OrgLocationPage: NextPage = () => {
 	useEffect(() => {
 		if (data && status === 'success' && orgData && orgDataStatus === 'success') setLoading(false)
 	}, [data, status, orgData, orgDataStatus])
-	if (loading || !data || !orgData) return <>Loading</>
+	if (loading || !data || !orgData) return <OrgLocationPageLoading />
 
 	const {
 		// emails,
@@ -69,7 +70,6 @@ const OrgLocationPage: NextPage = () => {
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
 					<ListingBasicInfo
-						role='location'
 						data={{
 							name: data.name || orgData.name,
 							id: data.id,

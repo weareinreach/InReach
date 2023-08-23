@@ -8,8 +8,6 @@ import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
-// import { getEnv } from '@weareinreach/env'
-// import { prisma } from '@weareinreach/db/client'
 import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
@@ -19,33 +17,10 @@ import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
+import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
+import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { useSearchState } from '~ui/hooks/useSearchState'
-
-const LoadingState = () => (
-	<>
-		<Grid.Col sm={8} order={1} pb={40}>
-			{/* Toolbar */}
-			<Skeleton h={48} w='100%' radius={8} />
-			<Stack pt={24} align='flex-start' spacing={40}>
-				{/* Listing Basic */}
-				<Skeleton h={260} w='100%' />
-				{/* Body */}
-				<Skeleton h={520} w='100%' />
-				{/* Tab panels */}
-			</Stack>
-		</Grid.Col>
-		<Grid.Col order={2}>
-			<Stack spacing={40}>
-				{/* Contact Card */}
-				<Skeleton h={520} w='100%' />
-				{/* Visit Card  */}
-				<Skeleton h={260} w='100%' />
-			</Stack>
-		</Grid.Col>
-	</>
-)
 
 const useStyles = createStyles((theme) => ({
 	tabsList: {
@@ -97,7 +72,7 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	if (loading || !data || router.isFallback) return <LoadingState />
+	if (loading || !data || router.isFallback) return <OrgPageLoading />
 
 	const { userLists, attributes, description, reviews, locations, isClaimed, id: organizationId } = data
 
@@ -201,7 +176,6 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
 					<ListingBasicInfo
-						role='org'
 						data={{
 							name: data.name,
 							id: data.id,
