@@ -1,14 +1,14 @@
-import { Box } from '@mantine/core'
-import { type Meta } from '@storybook/react'
+import { Textarea } from '@mantine/core'
+import { type Meta, type StoryObj } from '@storybook/react'
 
-import { InlineTextarea, InlineTextInput } from './InlineTextInput'
+import { InlineTextInput } from './InlineTextInput'
 
 export default {
 	title: 'Data Portal/Fields/Inline Text Field',
 	component: InlineTextInput,
 	parameters: {
 		layout: 'fullscreen',
-		layoutWrapper: 'centeredHalf',
+		layoutWrapper: 'gridDouble',
 	},
 	argTypes: {
 		fontSize: {
@@ -21,25 +21,16 @@ export default {
 		value: 'Test value',
 	},
 } satisfies Meta<typeof InlineTextInput>
-
-export const TextInput = {
+type StoryDef = StoryObj<typeof InlineTextInput>
+export const SingleLine = {
 	args: {
 		fontSize: 'h1',
 	},
-	render: (args) => (
-		<Box w={'50%'}>
-			<InlineTextInput {...args} />
-		</Box>
-	),
-} satisfies Meta<typeof InlineTextInput>
+} satisfies StoryDef
 
-export const Textarea = {
+export const MultiLine = {
 	args: {
 		fontSize: 'utility1',
+		component: Textarea,
 	},
-	render: (args) => (
-		<Box w={'50%'}>
-			<InlineTextarea {...args} />
-		</Box>
-	),
-} satisfies Meta<typeof InlineTextarea>
+} satisfies StoryDef
