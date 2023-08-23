@@ -1,5 +1,4 @@
 /* eslint-disable no-var */
-/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import Crowdin from '@crowdin/crowdin-api-client'
 import OtaClient from '@crowdin/ota-client'
@@ -15,6 +14,17 @@ export const crowdinApi =
 export const crowdinOta = new OtaClient(crowdinOpts.hash, {
 	enterpriseOrganizationDomain: 'inreach',
 	disableJsonDeepMerge: true,
+	...(process.env.NEXT_RUNTIME === 'edge'
+		? {
+				httpClient: {
+					get: async <T>(url: string) => {
+						const data = await fetch(url)
+
+						return (await data.json()) as T
+					},
+				},
+		  }
+		: {}),
 })
 
 export const crowdinVars = {

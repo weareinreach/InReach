@@ -1,13 +1,16 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
-/* eslint-disable node/no-process-env */
 import { context, trace } from '@opentelemetry/api'
-import { type NextApiRequest, type NextApiResponse } from 'next'
+// import { type NextApiRequest, type NextApiResponse } from 'next'
+import { type NextRequest } from 'next/server'
 import { z } from 'zod'
 
 import { createLoggerInstance } from '@weareinreach/util/logger'
 import { crowdinOpts } from '~app/data/crowdinOta'
 import { crowdinDistTimestamp, fetchCrowdinDbKey, fetchCrowdinFile } from '~app/utils/crowdin'
 import { redisReadCache, redisWriteCache } from '~app/utils/vercel-kv'
+
+export const config = {
+	runtime: 'edge',
+}
 
 const QuerySchema = z.object({
 	lng: z.string(),
@@ -16,8 +19,15 @@ const QuerySchema = z.object({
 const tracer = trace.getTracer('inreach-app')
 const log = createLoggerInstance('i18n Loader')
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const query = QuerySchema.parse(req.query)
+export default async function handler(req: NextRequest) {
+	const { searchParams } = new URL(req.url)
+	const parsedQuery = QuerySchema.safeParse({ ns: searchParams.get('ns'), lng: searchParams.get('lng') })
+	if (!parsedQuery.success) {
+		return new Response(JSON.stringify({ error: parsedQuery.error.message }), {
+			status: 400,
+		})
+	}
+	const query = parsedQuery.data
 	const namespaces = query.ns.split(' ')
 	const langs = query.lng.split(' ')
 	const cacheWriteQueue: WriteCacheArgs[] = []
@@ -66,11 +76,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			results.set(lang, Object.fromEntries(langResult))
 		} catch (error) {
 			log.error(error)
-			return res.status(500).json({ error })
+			return new Response(JSON.stringify({ error }), {
+				status: 500,
+			})
 		}
 	}
 	const data = Object.fromEntries(results.entries())
-	res.status(200).json(data)
+	// res.status(200).json(data)
+	return new Response(JSON.stringify(data), {
+		status: 200,
+	})
 }
 
 interface WriteCacheArgs {
