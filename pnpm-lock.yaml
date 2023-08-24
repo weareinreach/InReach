@@ -380,7 +380,7 @@ importers:
     devDependencies:
       '@hookform/devtools':
         specifier: 4.3.1
-        version: 4.3.1(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.3.1(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
       '@playwright/test':
         specifier: 1.37.1
         version: 1.37.1
@@ -1453,7 +1453,7 @@ importers:
         version: 1.1.1
       zustand:
         specifier: 4.4.1
-        version: 4.4.1(@types/react@18.2.20)(react@18.2.0)
+        version: 4.4.1(@types/react@18.2.21)(react@18.2.0)
     devDependencies:
       '@babel/core':
         specifier: 7.22.11
@@ -1484,7 +1484,7 @@ importers:
         version: 2.0.0(@storybook/blocks@7.3.2)(@storybook/components@7.3.2)(@storybook/core-events@7.3.2)(@storybook/manager-api@7.3.2)(@storybook/preview-api@7.3.2)(@storybook/theming@7.3.2)(@storybook/types@7.3.2)(react-dom@18.2.0)(react@18.2.0)
       '@hookform/devtools':
         specifier: 4.3.1
-        version: 4.3.1(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.3.1(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
       '@hookform/resolvers':
         specifier: 3.2.0
         version: 3.2.0(react-hook-form@7.45.4)
@@ -5562,14 +5562,14 @@ packages:
       '@hapi/hoek': 9.3.0
     dev: true
 
-  /@hookform/devtools@4.3.1(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0):
+  /@hookform/devtools@4.3.1(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-CrWxEoHQZaOXJZVQ8KBgOuAa8p2LI8M0DAN5GTRTmdCieRwFVjVDEmuTAVazWVRRkpEQSgSt3KYp7VmmqXdEnw==}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || 18
       react-dom: ^16.8.0 || ^17 || ^18 || 18
     dependencies:
-      '@emotion/react': 11.11.1(@types/react@18.2.20)(react@18.2.0)
-      '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.20)(react@18.2.0)
+      '@emotion/react': 11.11.1(@types/react@18.2.21)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.21)(react@18.2.0)
       '@types/lodash': 4.14.197
       little-state-machine: 4.8.0(react@18.2.0)
       lodash: 4.17.21
@@ -6165,7 +6165,7 @@ packages:
     dependencies:
       '@mantine/ssr': 6.0.19(@emotion/react@11.11.1)(@emotion/server@11.11.0)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/styles': 6.0.19(@emotion/react@11.11.1)(react-dom@18.2.0)(react@18.2.0)
-      next: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     transitivePeerDependencies:
@@ -20056,7 +20056,7 @@ packages:
       '@panva/hkdf': 1.1.1
       cookie: 0.5.0
       jose: 4.14.4
-      next: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       oauth: 0.9.15
       openid-client: 5.4.3
       preact: 10.17.0
@@ -20080,7 +20080,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       i18next: 23.4.5
       i18next-fs-backend: 2.1.5
-      next: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-i18next: 13.2.0(i18next@23.4.5)(react-dom@18.2.0)(react@18.2.0)
 
@@ -20144,6 +20144,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+    dev: true
 
   /next@13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-HuPSzzAbJ1T4BD8e0bs6B9C1kWQ6gv8ykZoRWs5AQoiIuqbGHHdQO7Ljuvg05Q0Z24E2ABozHe6FxDvI6HfyAw==}
@@ -20192,7 +20193,7 @@ packages:
       next: '*'
     dependencies:
       chokidar: 3.5.3
-      next: 13.4.19(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
+      next: 13.4.19(@opentelemetry/api@1.4.1)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /nice-try@1.0.5:
@@ -22112,7 +22113,7 @@ packages:
       react-dom: ^18.2.0 || 18
       react-hook-form: ^7.43
     dependencies:
-      '@mantine/core': 6.0.19(@emotion/react@11.11.1)(@mantine/hooks@6.0.19)(@types/react@18.2.20)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/core': 6.0.19(@emotion/react@11.11.1)(@mantine/hooks@6.0.19)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
       '@mantine/dates': 6.0.19(@mantine/core@6.0.19)(@mantine/hooks@6.0.19)(dayjs@1.11.9)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -25050,7 +25051,7 @@ packages:
       react: 18.2.0
     dev: true
 
-  /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.20)(react@18.2.0):
+  /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.21)(react@18.2.0):
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
     peerDependencies:
       '@types/react': '*'
