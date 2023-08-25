@@ -23,5 +23,12 @@ export const PageLoadProgress = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [router.asPath])
 
-	return <NavigationProgress autoReset={true} progressLabel={t('loading-page') as string} size={8} />
+	return (
+		<NavigationProgress
+			autoReset={true}
+			progressLabel={t('loading-page') as string}
+			size={8}
+			zIndex={999999}
+		/>
+	)
 }
