@@ -1,4 +1,3 @@
-/* eslint-disable i18next/no-literal-string */
 import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticPropsContext, type InferGetStaticPropsType } from 'next'
@@ -20,9 +19,9 @@ import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
+import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { useSearchState } from '~ui/hooks/useSearchState'
 
 const LoadingState = () => (
 	<>

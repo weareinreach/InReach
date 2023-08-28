@@ -3,11 +3,11 @@ import { type GetServerSideProps } from 'next'
 import { useTranslation } from 'next-i18next'
 
 import { AntiHateMessage } from '@weareinreach/ui/components/core/AntiHateMessage'
+import { Link } from '@weareinreach/ui/components/core/Link'
+import { useCustomVariant } from '@weareinreach/ui/hooks'
 import { Icon } from '@weareinreach/ui/icon'
+import { GenericContentModal, PrivacyStatementModal } from '@weareinreach/ui/modals'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { Link } from '~ui/components/core/Link'
-import { useCustomVariant } from '~ui/hooks'
-import { GenericContentModal, PrivacyStatementModal } from '~ui/modals'
 
 const SavedLists = () => {
 	const { t } = useTranslation('common')

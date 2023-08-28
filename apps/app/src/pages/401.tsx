@@ -5,8 +5,8 @@ import { useTranslation } from 'next-i18next'
 import { type Route } from 'nextjs-routes'
 import { z } from 'zod'
 
+import { LoginBody } from '@weareinreach/ui/modals/Login'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { LoginBody } from '~ui/modals/Login'
 
 const RouteSchema = z.object({
 	pathname: z.string(),
@@ -30,7 +30,6 @@ const Unauthorized = () => {
 				spacing={32}
 			>
 				<Stack spacing={0} align='center'>
-					{/* eslint-disable-next-line i18next/no-literal-string */}
 					<Title order={1}>🔐</Title>
 					<Title order={1}>{t('errors.401-title')}</Title>
 				</Stack>

@@ -3,8 +3,7 @@
 import bundleAnalyze from '@next/bundle-analyzer'
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
 import { withSentryConfig } from '@sentry/nextjs'
-import bundleStats from 'next-plugin-bundle-stats'
-import withRoutes from 'nextjs-routes/config'
+import routes from 'nextjs-routes/config'
 
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -19,8 +18,8 @@ const isVercelProd = process.env.VERCEL_ENV === 'production'
 const isLocalDev =
 	process.env.NODE_ENV === 'development' && !['preview', 'production'].includes(process.env.VERCEL_ENV)
 
+const withRoutes = routes({ outDir: './src/types' })
 const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
-const withBundleStats = bundleStats({})
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	i18n: i18nConfig.i18n,
@@ -74,7 +73,7 @@ const nextConfig = {
  * @returns {T}
  */
 function defineNextConfig(config) {
-	return withBundleStats(withBundleAnalyzer(withRoutes({ outDir: './src/types' })(config)))
+	return withBundleAnalyzer(withRoutes(config))
 }
 /**
  * Wraps NextJS config with the Sentry config.
