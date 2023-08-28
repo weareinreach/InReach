@@ -2,6 +2,7 @@
 	"name": "@weareinreach/eslint-config",
 	"version": "0.100.0",
 	"license": "GPL-3.0-only",
+	"sideEffects": false,
 	"main": "index.js",
 	"files": [
 		"next.js",

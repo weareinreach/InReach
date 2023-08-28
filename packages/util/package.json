@@ -2,6 +2,7 @@
 	"name": "@weareinreach/util",
 	"version": "0.100.0",
 	"private": true,
+	"sideEffects": false,
 	"main": "./index.ts",
 	"types": "./index.ts",
 	"scripts": {

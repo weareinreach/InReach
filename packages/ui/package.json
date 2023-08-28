@@ -2,6 +2,7 @@
 	"name": "@weareinreach/ui",
 	"version": "0.100.0",
 	"license": "GPL-3.0-only",
+	"sideEffects": false,
 	"main": "./index.tsx",
 	"types": "./index.tsx",
 	"scripts": {

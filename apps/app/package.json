@@ -3,7 +3,9 @@
 	"version": "0.100.0",
 	"private": true,
 	"license": "GPL-3.0-only",
+	"sideEffects": false,
 	"scripts": {
+		"analyze": "ANALYZE=true next build",
 		"build": "next build",
 		"build:prebuild": "SKIP_ENV_VALIDATION=true tsx ./lib/prebuild.ts",
 		"clean:node": "rm -rf ./node_modules/ || true && rm -rf ./.next || true",
