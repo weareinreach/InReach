@@ -3,6 +3,7 @@
 import bundleAnalyze from '@next/bundle-analyzer'
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
 import { withSentryConfig } from '@sentry/nextjs'
+import bundleStats from 'next-plugin-bundle-stats'
 import withRoutes from 'nextjs-routes/config'
 
 import path from 'path'
@@ -19,6 +20,7 @@ const isLocalDev =
 	process.env.NODE_ENV === 'development' && !['preview', 'production'].includes(process.env.VERCEL_ENV)
 
 const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
+const withBundleStats = bundleStats({})
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	i18n: i18nConfig.i18n,
@@ -43,7 +45,7 @@ const nextConfig = {
 		instrumentationHook: true,
 	},
 	eslint: {
-		ignoreDuringBuilds: isVercelActiveDev,
+		ignoreDuringBuilds: !isVercelProd,
 	},
 	images: {
 		remotePatterns: [{ protocol: 'https', hostname: '**.4sqi.net' }],
@@ -51,7 +53,7 @@ const nextConfig = {
 	rewrites: async () => [{ source: '/search', destination: '/' }],
 
 	typescript: {
-		ignoreBuildErrors: isVercelActiveDev,
+		ignoreBuildErrors: !isVercelProd,
 	},
 	webpack: (config, { isServer, webpack }) => {
 		if (isServer) {
@@ -72,7 +74,7 @@ const nextConfig = {
  * @returns {T}
  */
 function defineNextConfig(config) {
-	return withBundleAnalyzer(withRoutes({ outDir: './src/types' })(config))
+	return withBundleStats(withBundleAnalyzer(withRoutes({ outDir: './src/types' })(config)))
 }
 /**
  * Wraps NextJS config with the Sentry config.
@@ -89,7 +91,7 @@ const defineSentryConfig = (nextConfig) =>
 			// https://github.com/getsentry/sentry-webpack-plugin#options
 
 			// Suppresses source map uploading logs during build
-			silent: isVercelProd,
+			silent: true,
 			org: 'weareinreach',
 			project: 'inreach-app',
 		},
