@@ -26,17 +26,17 @@
 	},
 	"devDependencies": {
 		"@types/eslint": "8.44.2",
-		"@types/node": "18.17.9",
+		"@types/node": "18.17.12",
 		"@types/react": "18.2.21",
 		"@types/react-dom": "18.2.7",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
-		"eslint": "8.47.0",
+		"eslint": "8.48.0",
 		"next": "13.4.19",
 		"next-auth": "4.23.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"typescript": "5.1.6"
+		"typescript": "5.2.2"
 	},
 	"peerDependencies": {
 		"next": "^13",
