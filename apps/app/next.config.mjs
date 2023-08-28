@@ -4,6 +4,7 @@ import bundleAnalyze from '@next/bundle-analyzer'
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
 import { withSentryConfig } from '@sentry/nextjs'
 import routes from 'nextjs-routes/config'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -17,9 +18,10 @@ const isVercelActiveDev = process.env.VERCEL_ENV === 'preview' && process.env.VE
 const isVercelProd = process.env.VERCEL_ENV === 'production'
 const isLocalDev =
 	process.env.NODE_ENV === 'development' && !['preview', 'production'].includes(process.env.VERCEL_ENV)
+const shouldAnalyze = process.env.ANALYZE === 'true'
 
 const withRoutes = routes({ outDir: './src/types' })
-const withBundleAnalyzer = bundleAnalyze({ enabled: process.env.ANALYZE === 'true' })
+const withBundleAnalyzer = bundleAnalyze({ enabled: shouldAnalyze, openAnalyzer: false })
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	i18n: i18nConfig.i18n,
@@ -34,7 +36,7 @@ const nextConfig = {
 		'@weareinreach/util',
 	],
 	compiler: {
-		...(process.env.VERCEL_ENV === 'production' ? { removeConsole: { exclude: ['error'] } } : {}),
+		...(isVercelProd ? { removeConsole: { exclude: ['error'] } } : {}),
 	},
 	experimental: {
 		outputFileTracingExcludes: {
@@ -58,10 +60,27 @@ const nextConfig = {
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
-		if (process.env.VERCEL_ENV === 'production') {
+		if (!isLocalDev) {
 			config.plugins.push(new webpack.DefinePlugin({ __SENTRY_DEBUG__: false }))
+			if (shouldAnalyze) {
+				config.plugins.push(
+					new BundleAnalyzerPlugin({ analyzerMode: 'static', generateStatsFile: true, openAnalyzer: false })
+				)
+			}
 		}
 		return config
+	},
+	async headers() {
+		return [
+			{
+				source: '/(.*)',
+				headers: [
+					{ key: 'Access-Control-Allow-Headers', value: 'sentry-trace' },
+					{ key: 'Access-Control-Allow-Headers', value: 'baggage' },
+					{ key: 'Document-Policy', value: 'js-profiling' },
+				],
+			},
+		]
 	},
 }
 

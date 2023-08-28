@@ -1,7 +1,8 @@
+/* eslint-disable node/no-process-env */
 import { type ISettingsParam, Logger } from 'tslog'
-// eslint-disable-next-line node/no-process-env
-const isDev = process.env.NODE_ENV === 'development'
 
+const isDev = process.env.NODE_ENV === 'development'
+const verboseLogging = Boolean(isDev && (!!process.env.NEXT_VERBOSE || !!process.env.PRISMA_VERBOSE))
 export const appLog = new Logger({
 	name: 'app',
 	type: isDev ? 'pretty' : 'json',
@@ -12,6 +13,7 @@ export const appLog = new Logger({
 	stylePrettyLogs: true,
 	prettyErrorLoggerNameDelimiter: '',
 	prettyLogTimeZone: isDev ? 'local' : 'UTC',
+	minLevel: verboseLogging ? 0 : 3,
 })
 
 export const createLoggerInstance = (name: string, opts?: Omit<ISettingsParam<unknown>, 'name'>) =>
