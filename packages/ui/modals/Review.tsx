@@ -15,7 +15,7 @@ export const ReviewModalBody = forwardRef<HTMLButtonElement, ReviewModalProps>((
 	return (
 		<>
 			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
-				<UserReviewSubmit type='modal' />
+				<UserReviewSubmit type='modal' closeModalHandler={handler.close} />
 			</Modal>
 			<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
 		</>

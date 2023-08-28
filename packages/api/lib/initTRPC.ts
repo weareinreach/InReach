@@ -22,9 +22,6 @@ export const t = initTRPC
 				data: {
 					...shape.data,
 					cause: error.cause instanceof ZodError ? error.cause.flatten() : error.cause,
-					// ...(error.code === 'BAD_REQUEST' && error.cause instanceof ZodError
-					// 	? { zodError: error.cause.flatten() }
-					// 	: {}),
 				},
 			}
 		},

@@ -27,12 +27,12 @@ import { SearchResultCard } from '@weareinreach/ui/components/core/SearchResultC
 import { CrisisSupport } from '@weareinreach/ui/components/sections/CrisisSupport'
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
+import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
 import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { useSearchState } from '~ui/hooks/useSearchState'
 
 const PageIndexSchema = z.coerce.number().default(1)
 

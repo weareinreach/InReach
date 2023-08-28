@@ -1,9 +1,9 @@
 import { Card, Stack, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 
-import { api } from '~app/utils/api'
 import { ContactInfo } from '~ui/components/data-display/ContactInfo'
 import { useScreenSize } from '~ui/hooks'
+import { trpc as api } from '~ui/lib/trpcClient'
 
 export const ContactSection = ({ parentId }: ContactSectionProps) => {
 	const { t } = useTranslation(['common'])

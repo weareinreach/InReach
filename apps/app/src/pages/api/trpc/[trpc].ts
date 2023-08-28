@@ -18,7 +18,6 @@ export default createNextApiHandler({
 		switch (true) {
 			case isDev: {
 				if (error.code === 'INTERNAL_SERVER_ERROR') {
-					log.debug('Sending error to Sentry')
 					Sentry.captureException(error, (scope) => {
 						scope.setTags({
 							'tRPC.path': path,
