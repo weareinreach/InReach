@@ -13,7 +13,7 @@ import { UserAvatar } from './UserAvatar'
 
 const RouterSchema = z.object({
 	slug: z.string(),
-	locationId: z.string().optional(),
+	orgLocationId: z.string().optional(),
 	serviceId: z.string().optional(),
 })
 const ReviewSchema = z.object({
@@ -24,20 +24,28 @@ const ReviewSchema = z.object({
 	reviewText: z.string().optional(),
 })
 
-export const UserReviewSubmit = ({ type = 'body' }: ReviewSubmitProps) => {
+export const UserReviewSubmit = ({ type = 'body', closeModalHandler }: ReviewSubmitProps) => {
 	const { t } = useTranslation()
 	const theme = useMantineTheme()
 	const { query: rawQuery } = useRouter()
 	const query = RouterSchema.parse(rawQuery)
 	const { data: orgQuery, status } = api.organization.getIdFromSlug.useQuery(query, { enabled: !!query })
-	const { locationId, serviceId } = query
-
-	const submitReview = api.review.create.useMutation()
+	const { orgLocationId, serviceId } = query
+	const apiUtil = api.useContext()
+	const submitReview = api.review.create.useMutation({
+		onSuccess: () => {
+			apiUtil.organization.forOrgPage.invalidate()
+			apiUtil.location.forLocationPage.invalidate()
+			if (closeModalHandler instanceof Function) {
+				closeModalHandler()
+			}
+		},
+	})
 
 	const form = useForm<FormFields>({
 		initialValues: {
 			organizationId: orgQuery?.id ?? '',
-			orgLocationId: locationId,
+			orgLocationId,
 			orgServiceId: serviceId,
 			rating: 0,
 		},
@@ -96,4 +104,5 @@ type ReviewSubmitProps = {
 	 * Page body will add a Grid.Col wrapper
 	 */
 	type?: 'body' | 'modal'
+	closeModalHandler?: () => void
 }

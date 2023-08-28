@@ -2,6 +2,7 @@
 	"name": "@weareinreach/util",
 	"version": "0.100.0",
 	"private": true,
+	"sideEffects": false,
 	"main": "./index.ts",
 	"types": "./index.ts",
 	"scripts": {
@@ -13,6 +14,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
+		"@vercel/edge-config": "0.2.1",
 		"tslog": "4.9.2"
 	},
 	"devDependencies": {

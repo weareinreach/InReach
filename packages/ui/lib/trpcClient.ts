@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import {
 	// httpBatchLink,
@@ -19,6 +18,8 @@ export const getBaseUrl = () => {
 	return `http://localhost:${getEnv('PORT') ?? process.env.STORYBOOK ? 6006 : 3000}` // dev SSR should use localhost
 }
 
+const isDev = process.env.NODE_ENV === 'development'
+
 export const nextTRPC = () =>
 	createTRPCNext<AppRouter>({
 		config() {
@@ -26,12 +27,10 @@ export const nextTRPC = () =>
 				transformer,
 				links: [
 					devtoolsLink({
-						enabled: process.env.NODE_ENV === 'development',
+						enabled: isDev,
 					}),
 					loggerLink({
-						enabled: (opts) =>
-							process.env.NODE_ENV === 'development' ||
-							(opts.direction === 'down' && opts.result instanceof Error),
+						enabled: () => isDev,
 					}),
 					httpBatchStreamLink({
 						url: `${getBaseUrl()}/api/trpc`,
