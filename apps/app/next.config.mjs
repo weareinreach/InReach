@@ -89,7 +89,7 @@ const defineSentryConfig = (nextConfig) =>
 			// https://github.com/getsentry/sentry-webpack-plugin#options
 
 			// Suppresses source map uploading logs during build
-			silent: isVercelProd,
+			silent: true,
 			org: 'weareinreach',
 			project: 'inreach-app',
 		},
