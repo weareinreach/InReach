@@ -28,9 +28,10 @@ Sentry.init({
 		}),
 		new Sentry.BrowserTracing(),
 	],
-	tracePropagationTargets: [
-		'https://app.inreach.org',
-		'https://*-weareinreach.vercel.app',
-		'http://localhost',
-	],
+	// tracePropagationTargets: [
+	// 	/ https:\/\/app.inreach.org\/.*/,
+	// 	/https:\/\/.*-weareinreach.vercel.app\//,
+	// 	'localhost',
+	// 	/^\//,
+	// ],
 })

@@ -14,6 +14,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const isVercelActiveDev = process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF !== 'dev'
+const isVercelProd = process.env.VERCEL_ENV === 'production'
 const isLocalDev =
 	process.env.NODE_ENV === 'development' && !['preview', 'production'].includes(process.env.VERCEL_ENV)
 
@@ -23,7 +24,14 @@ const nextConfig = {
 	i18n: i18nConfig.i18n,
 	reactStrictMode: true,
 	swcMinify: true,
-	transpilePackages: ['@weareinreach/ui', '@weareinreach/db', '@weareinreach/auth', '@weareinreach/api'],
+	transpilePackages: [
+		'@weareinreach/api',
+		'@weareinreach/auth',
+		'@weareinreach/db',
+		'@weareinreach/env',
+		'@weareinreach/ui',
+		'@weareinreach/util',
+	],
 	compiler: {
 		...(process.env.VERCEL_ENV === 'production' ? { removeConsole: { exclude: ['error'] } } : {}),
 	},
@@ -81,7 +89,7 @@ const defineSentryConfig = (nextConfig) =>
 			// https://github.com/getsentry/sentry-webpack-plugin#options
 
 			// Suppresses source map uploading logs during build
-			silent: true,
+			silent: isVercelProd,
 			org: 'weareinreach',
 			project: 'inreach-app',
 		},
@@ -102,7 +110,7 @@ const defineSentryConfig = (nextConfig) =>
 			hideSourceMaps: false,
 
 			// Automatically tree-shake Sentry logger statements to reduce bundle size
-			disableLogger: true,
+			disableLogger: isVercelProd,
 		}
 	)
 
