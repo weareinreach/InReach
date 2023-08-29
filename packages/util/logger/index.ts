@@ -1,7 +1,5 @@
 /* eslint-disable node/no-process-env */
 import { type ISettingsParam, Logger } from 'tslog'
-// eslint-disable-next-line node/no-process-env
-const isDev = process.env.NODE_ENV === 'development'
 
 const isDev = process.env.NODE_ENV === 'development'
 const verboseLogging = Boolean(isDev && (!!process.env.NEXT_VERBOSE || !!process.env.PRISMA_VERBOSE))
