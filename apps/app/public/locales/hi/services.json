@@ -42,7 +42,7 @@
 		"food-assistance": "खाद्य सहायता"
 	},
 	"housing": {
-		"CATEGORYNAME": "Housing",
+		"CATEGORYNAME": "हाउसिंग",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ युवाओं के लिए ड्रॉप-इन सेंटर",
 		"emergency-housing": "आपातकालीन आवास",
 		"housing-information-and-referrals": "आवास की जानकारी और रेफरल",
@@ -60,7 +60,7 @@
 	"international-support": {
 		"CATEGORTYNAME": "International Support",
 		"financial-assistance": "Financial Assistance",
-		"mental-health": "Mental Health",
+		"mental-health": "मानसिक स्वास्थ्य",
 		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
@@ -103,7 +103,7 @@
 		"trans-health-speech-therapy": "ट्रांस हेल्थ - स्पीच थेरेपी"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Mental Health",
+		"CATEGORYNAME": "मानसिक स्वास्थ्य",
 		"bipoc-support-groups": "BIPOC सहायता समूह",
 		"hotlines": "हॉटलाइन",
 		"private-therapy-and-counseling": "निजी चिकित्सा और परामर्श",
@@ -121,7 +121,7 @@
 		"sports-and-entertainment": "खेल और मनोरंजन"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Translation and Interpretation",
+		"CATEGORYNAME": "अनुवाद और व्याख्या",
 		"for-healthcare": "हेल्थकेयर के लिए",
 		"for-legal-services": "कानूनी सेवाओं के लिए",
 		"general-translation-and-interpretation": "सामान्य अनुवाद और व्याख्या"
