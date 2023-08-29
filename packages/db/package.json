@@ -98,7 +98,6 @@
 		"@types/node": "18.17.12",
 		"@types/papaparse": "5.3.8",
 		"@types/pg": "8.10.2",
-		"@types/prettier": "2.7.3",
 		"@types/recursive-readdir": "2.2.1",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "workspace:*",
