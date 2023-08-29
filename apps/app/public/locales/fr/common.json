@@ -327,7 +327,7 @@
     "submit-review": "Soumettre un avis",
     "subscribe-to-newsletter": "S'abonner à la lettre d'information",
     "suggest-a-resource": "Suggérer une ressource",
-    "support": "Support",
+    "support": "Assistance",
     "survey": {
         "birthyear-req-value": "L'année doit être entre {{year1}} et {{year2}}, c'est-à-dire 2005",
         "finish": "Terminer",
@@ -396,7 +396,7 @@
         "share": "Partager",
         "sign-up": "S'inscrire",
         "skip": "Ignorer",
-        "support": "Support",
+        "support": "Assistance",
         "website": "Site Web",
         "yes": "Oui"
     },
@@ -404,10 +404,10 @@
     "photo_other": "Photos",
     "review-count_one": "{{count}} avis",
     "review-count_other": "{{count}} avis",
-    "review_one": "Review",
-    "review_other": "Reviews",
+    "review_one": "Révision",
+    "review_other": "Critiques",
     "view-x-result_one": "Voir {{count}} résultat",
     "view-x-result_other": "Voir {{count}} résultats",
-    "website_one": "Website",
-    "website_other": "Websites"
+    "website_one": "Site Web",
+    "website_other": "Sites Web"
 }
