@@ -84,6 +84,9 @@
     "enter-password-placeholder": "Voer wagwoord in...",
     "enter-review": "Voer jou resensie in...",
     "errors": {
+        "401-title": "You must be logged in to do that.",
+        "403-body": "You do not have permission to access this page. If you feel that you have reached this page in error, please contact your supervisor.",
+        "403-title": "403: Forbidden",
         "404-body": "We're sorry, the page you're looking for doesn't exist or has been moved. Start a search below to find safe, verified resources for the diverse LGBTQ+ community in your area.",
         "404-title": "404: Page not found.",
         "500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
@@ -212,7 +215,7 @@
     "privatePractice": "Privaat praktyk",
     "profile": "Profiel",
     "questions": "Vrae?",
-    "quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
+    "quick-promo-body": "<textUtility1>💚 Stoor en deel persoonlike hulpbronlyste</textUtility1>\n<textUtility1>💬 Laat openbare gradering/resensies oor organisasies</textUtility1>\n<textUtility1>🏠 Stel organisasies in u omgewing voor</textUtility1>\n<textUtility1>🔗 Eis die profielbladsy van u organisasie op (binnekort!)</textUtility1>",
     "quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
     "remote-services": "Dienste op afstand beskikbaar",
     "remote-services-page-title": "Afgeleë dienste",
@@ -358,6 +361,7 @@
     },
     "view-list": "Bekyk lys",
     "visit": "Besoek",
+    "welcome-name": "Welcome, {{name}}!",
     "words": {
         "accept": "Aanvaar",
         "account": "Rekening",
