@@ -241,7 +241,7 @@
         "no-results-adjust": "No se han encontrado resultados para su búsqueda. Intente ajustar la ubicación o los filtros seleccionados.",
         "organization-placeholder": "Introduzca el nombre de la organización...",
         "organization-placeholder-searchby": "Buscar por nombre de organización...",
-        "suggest-resource": "¿No lo encuentras? <1>Sugiera una organización</1> que crea que debería incluirse."
+        "suggest-resource": "¿No lo encuentras? <strong>Sugiera una organización</strong> que crea que debería incluirse."
     },
     "send-email": "Enviar email",
     "service": {
