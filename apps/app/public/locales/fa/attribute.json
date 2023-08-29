@@ -70,6 +70,10 @@
 		"cost-fees": "هزینه ای را متحمل می شود",
 		"cost-free": "رایگان از هزینه"
 	},
+	"crisis-support-community": {
+		"elders": "Elders",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "الزامات واجد شرایط بودن",
 		"elig-age_max": "زیر {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "دستورالعمل دسترسی - محل",
 		"accessphone": "دستورالعمل دسترسی - تلفن",
 		"accesspublictransit": "دستورالعمل های دسترسی - حمل و نقل عمومی",
-		"accesstext": "دستورالعمل دسترسی - متن"
+		"accesssms": "Access Instructions - SMS",
+		"accesstext": "دستورالعمل دسترسی - متن",
+		"accesswhatsapp": "Access Instructions - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "تمرکز خدمات",

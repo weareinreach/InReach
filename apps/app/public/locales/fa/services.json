@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "مراقبت از سقط جنین",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "ارائه دهندگان سقط جنین",
 		"financial-assistance": "کمک مالی",
 		"lodging-assistance": "کمک های اسکان",
@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "کامپیوتر و اینترنت",
 		"computers-and-internet": "کامپیوتر و اینترنت"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "آموزش و اشتغال",
 		"career-counseling": "مشاوره شغلی",
@@ -38,7 +42,7 @@
 		"food-assistance": "کمک های غذایی"
 	},
 	"housing": {
-		"CATEGORYNAME": "مسکن",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "مراکز رها کردن برای جوانان LGBTQ",
 		"emergency-housing": "مسکن اضطراری",
 		"housing-information-and-referrals": "اطلاعات مسکن و ارجاع",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "کوتاهی مو و سبک",
 		"hygiene": "رده: بهداشت"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Mental Health",
+		"resettlement-assistance": "Resettlement Assistance"
+	},
 	"legal": {
 		"CATEGORYNAME": "حقوقی",
 		"asylum-application": "درخواست پناهندگی",
@@ -63,7 +73,7 @@
 		"employment-authorization": "مجوز استخدام",
 		"family-petitions": "دادخواست های خانوادگی",
 		"immigration-detention": "بازداشت مهاجرت",
-		"legal-advice": "مشاوره حقوقی",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "خطوط تماس حقوقی",
 		"name-and-gender-change": "تغییر نام و جنسیت",
 		"refugee-claim": "ادعای پناهندگی",
@@ -77,7 +87,7 @@
 		"mail": "نامه"
 	},
 	"medical": {
-		"CATEGORYNAME": "پزشکی",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "خدمات کووید-19",
 		"dental-care": "مراقبت از دندان",
 		"hiv-and-sexual-health": "اچ آی وی و سلامت جنسی",
@@ -93,7 +103,7 @@
 		"trans-health-speech-therapy": "سلامت ترانس - گفتاردرمانی"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "سلامت روان",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "گروه های پشتیبانی BIPOC",
 		"hotlines": "خطوط تلفن",
 		"private-therapy-and-counseling": "مشاوره و درمان خصوصی",
@@ -111,7 +121,7 @@
 		"sports-and-entertainment": "ورزش و سرگرمی"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "ترجمه و تفسیر",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "برای مراقبت های بهداشتی",
 		"for-legal-services": "برای خدمات حقوقی",
 		"general-translation-and-interpretation": "ترجمه و تفسیر عمومی"

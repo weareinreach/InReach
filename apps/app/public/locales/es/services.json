@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "Computadoras e Internet",
 		"computers-and-internet": "Ordenadores e Internet"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Apoyo a la crisis",
+		"crisis-support": "Apoyo a la crisis"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Educación y Empleo",
 		"career-counseling": "Asesoramiento profesional",
@@ -38,7 +42,7 @@
 		"food-assistance": "Ayuda alimentaria"
 	},
 	"housing": {
-		"CATEGORYNAME": "Casita",
+		"CATEGORYNAME": "Alojamiento",
 		"drop-in-centers-for-lgbtq-youth": "Centros para jóvenes LGBTQ",
 		"emergency-housing": "Vivienda de emergencia",
 		"housing-information-and-referrals": "Información y referencias de Housing",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "Baños neutrales de género",
 		"haircuts-and-stylists": "Peluchos y estilistas",
 		"hygiene": "Higiene"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "Apoyo internacional",
+		"financial-assistance": "Asistencia Financiera",
+		"mental-health": "Salud mental",
+		"resettlement-assistance": "Asistencia de Reasentamiento"
 	},
 	"legal": {
 		"CATEGORYNAME": "Legal",
@@ -93,7 +103,7 @@
 		"trans-health-speech-therapy": "Salud trans - terapia de voz"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Salud Mental",
+		"CATEGORYNAME": "Salud mental",
 		"bipoc-support-groups": "Grupos de soporte BIPOC",
 		"hotlines": "Líneas de acceso",
 		"private-therapy-and-counseling": "Terapia y consejería privada",

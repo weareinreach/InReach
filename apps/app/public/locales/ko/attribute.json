@@ -70,6 +70,10 @@
 		"cost-fees": "비용 발생",
 		"cost-free": "비용 무료"
 	},
+	"crisis-support-community": {
+		"elders": "Elders",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "자격 요건",
 		"elig-age_max": "Under {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "액세스 지침 - 위치",
 		"accessphone": "액세스 지침 - 전화",
 		"accesspublictransit": "접근 지침 - 대중교통",
-		"accesstext": "액세스 지침 - 텍스트"
+		"accesssms": "Access Instructions - SMS",
+		"accesstext": "액세스 지침 - 텍스트",
+		"accesswhatsapp": "Access Instructions - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "서비스 포커스",
