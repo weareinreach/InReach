@@ -36,7 +36,7 @@ i18n
 		interpolation: {
 			escapeValue: true,
 			skipOnVariables: false,
-			format: (value, format, lng, edit) => {
+			format: (value, format) => {
 				switch (format) {
 					case 'lowercase': {
 						if (typeof value === 'string') return value.toLowerCase()

@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "د سقط پاملرنه",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "د سقط چمتو کونکي",
 		"financial-assistance": "مالي مرسته",
 		"lodging-assistance": "د استوګنې مرسته",
@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "کمپیوټر او انټرنیټ",
 		"computers-and-internet": "کمپیوټر او انټرنیټ"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "ښوونه او روزنه",
 		"career-counseling": "د کیریر مشوره",
@@ -38,7 +42,7 @@
 		"food-assistance": "د خوړو مرسته"
 	},
 	"housing": {
-		"CATEGORYNAME": "د کور جوړول",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "د LGBTQ ځوانانو لپاره د ډراپ ان مرکزونه",
 		"emergency-housing": "بيړنۍ کور",
 		"housing-information-and-referrals": "د کور معلومات او راجع کول",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "ویښتان او سټایلسټان",
 		"hygiene": "حفظ الصحه"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Mental Health",
+		"resettlement-assistance": "Resettlement Assistance"
+	},
 	"legal": {
 		"CATEGORYNAME": "قانوني",
 		"asylum-application": "د پناه غوښتنې غوښتنه",
@@ -63,7 +73,7 @@
 		"employment-authorization": "د کارموندنې واک",
 		"family-petitions": "کورنۍ غوښتنې",
 		"immigration-detention": "د کډوالۍ توقیف",
-		"legal-advice": "حقوقي مشوره",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "قانوني هټلاینونه",
 		"name-and-gender-change": "نوم او د جندر بدلون",
 		"refugee-claim": "د کډوالو ادعا",
@@ -77,7 +87,7 @@
 		"mail": "میل"
 	},
 	"medical": {
-		"CATEGORYNAME": "طبي",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "د کوویډ - 19 خدمتونه",
 		"dental-care": "د غاښونو پاملرنه",
 		"hiv-and-sexual-health": "HIV او جنسي روغتیا",
@@ -93,7 +103,7 @@
 		"trans-health-speech-therapy": "د ټرانس روغتیا - د وینا درملنه"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "دماغي روغتیا",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "د BIPOC ملاتړ ډلې",
 		"hotlines": "هاټ لاینونه",
 		"private-therapy-and-counseling": "شخصي درملنه او مشوره ورکول",
@@ -111,7 +121,7 @@
 		"sports-and-entertainment": "سپورت او ساتیري"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "ژباړه او تفسیر",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "د روغتیا پاملرنې لپاره",
 		"for-legal-services": "د قانوني خدماتو لپاره",
 		"general-translation-and-interpretation": "عمومي ژباړه او تفسیر"

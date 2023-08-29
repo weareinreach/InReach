@@ -49,7 +49,7 @@ export default {
 			<StateWrapper {...args} />
 		</div>
 	),
-} as Meta<typeof SearchBoxComp>
+} satisfies Meta<typeof SearchBoxComp>
 
 type StoryDef = StoryObj<typeof SearchBoxComp>
 export const ByLocation = {

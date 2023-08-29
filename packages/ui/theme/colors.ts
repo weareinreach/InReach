@@ -287,7 +287,7 @@ export const customColors = {
 		'#136776',
 		'#0e4b56',
 	],
-} as DefineColors
+} satisfies DefineColors
 
 /** Merge custom color names with Mantine's presets */
 type ExtendedCustomColors = CustomColors | DefaultMantineColor

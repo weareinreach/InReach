@@ -23,12 +23,12 @@ import { z } from 'zod'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { SearchBox } from '@weareinreach/ui/components/core/SearchBox'
 import { CrisisSupport } from '@weareinreach/ui/components/sections/CrisisSupport'
+import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
 import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { SearchResultSidebar } from '~ui/components/sections/SearchResultSidebar'
 
 const useStyles = createStyles((theme) => ({
 	searchControls: {

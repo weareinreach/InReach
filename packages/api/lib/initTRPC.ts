@@ -1,6 +1,7 @@
-import { initTRPC } from '@trpc/server'
+import { initTRPC, TRPCError } from '@trpc/server'
 import superjson from 'superjson'
 import { type TRPCPanelMeta } from 'trpc-panel'
+import { ZodError } from 'zod'
 
 import { type Permission } from '@weareinreach/db/generated/permission'
 
@@ -15,7 +16,13 @@ export const t = initTRPC
 	.meta<Meta>()
 	.create({
 		transformer: superjson,
-		errorFormatter({ shape }) {
-			return shape
+		errorFormatter({ shape, error }) {
+			return {
+				...shape,
+				data: {
+					...shape.data,
+					cause: error.cause instanceof ZodError ? error.cause.flatten() : error.cause,
+				},
+			}
 		},
 	})

@@ -5,7 +5,7 @@ import { UserMenu as UserMenuComponent } from '.'
 export default {
 	title: 'Sections/Navbar/User Menu',
 	component: UserMenuComponent,
-} as Meta<typeof UserMenuComponent>
+} satisfies Meta<typeof UserMenuComponent>
 
 export const LoggedOut = {
 	parameters: {
