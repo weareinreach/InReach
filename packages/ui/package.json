@@ -118,7 +118,6 @@
 		"@types/google.maps": "3.54.0",
 		"@types/luxon": "3.3.1",
 		"@types/node": "18.17.12",
-		"@types/prettier": "2.7.3",
 		"@types/probe-image-size": "7.2.0",
 		"@types/react": "18.2.21",
 		"@types/react-dom": "18.2.7",
