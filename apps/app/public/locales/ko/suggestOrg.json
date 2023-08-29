@@ -15,7 +15,7 @@
 		"community-focus": "이 조직은 특정 LGBTQ+ 커뮤니티에 초점을 맞춘 서비스를 제공합니까?",
 		"error-exists-active": "<Link>{{org}}</Link> is already listed on InReach. Please only use this form to suggest new organizations.",
 		"error-exists-dismiss": "<Dismiss>다른 조직인 경우 여기를 클릭하십시오.</Dismiss>",
-		"error-exists-inactive": "<Link>{{org}}</Link> has already been suggested. Our team are either still verifying information or this organization did not meet all of our requirements.",
+		"error-exists-inactive": "<Link>{{org}}</Link> 가 이미 제안되었습니다.우리 팀이 아직 정보를 확인 중이거나 이 조직이 우리의 모든 요구 사항을 충족하지 못했습니다.",
 		"org-address": "조직 주소",
 		"org-country": "조직은 어느 국가에 위치해 있습니까?",
 		"org-name": "조직 이름",
