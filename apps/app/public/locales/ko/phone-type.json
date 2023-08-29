@@ -1,7 +1,7 @@
 {
-    "fax": "팩스",
-    "hotline": "핫라인",
-    "office": "사무실",
+    "fax": "Fax",
+    "hotline": "Hotline",
+    "office": "Office",
     "sms": "SMS",
-    "whatsapp": "왓츠앱"
+    "whatsapp": "WhatsApp"
 }
