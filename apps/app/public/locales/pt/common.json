@@ -84,6 +84,9 @@
     "enter-password-placeholder": "Digite a senha...",
     "enter-review": "Insira seu comentário...",
     "errors": {
+        "401-title": "Você precisa estar logado para fazer isso.",
+        "403-body": "Você não tem permissão para acessar esta página. Se você acha que chegou a esta página por engano, entre em contato com seu supervisor.",
+        "403-title": "403: Proibido",
         "404-body": "Desculpe, a página que você está procurando não existe ou foi movida. Inicie uma pesquisa abaixo para encontrar recursos seguros e verificados para a comunidade LGBTQ+ em sua área.",
         "404-title": "404: Página não encontrada.",
         "500-body": "Sinto muito, algo deu errado com o nosso servidor. Por favor, tente novamente mais tarde ou inicie uma pesquisa abaixo para encontrar recursos LGBTQ+ seguros em sua área.",
@@ -358,6 +361,7 @@
     },
     "view-list": "Exibir lista",
     "visit": "Visita",
+    "welcome-name": "Bem-vindo, {{name}}!",
     "words": {
         "accept": "Aceitar",
         "account": "Conta",
