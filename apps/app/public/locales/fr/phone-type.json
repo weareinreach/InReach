@@ -1,7 +1,7 @@
 {
-    "fax": "Fax",
-    "hotline": "Hotline",
-    "office": "Bureau",
-    "sms": "SMS",
-    "whatsapp": "WhatsApp"
+	"fax": "Fax",
+	"hotline": "Hotlines",
+	"office": "Bureau",
+	"sms": "SMS",
+	"whatsapp": "WhatsApp"
 }

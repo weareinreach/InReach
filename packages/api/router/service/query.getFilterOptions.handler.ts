@@ -15,12 +15,18 @@ export const getFilterOptions = async () => {
 					active: true,
 				},
 				select: {
-					id: true,
-					tsKey: true,
-					tsNs: true,
+					serviceTag: {
+						select: {
+							id: true,
+							tsKey: true,
+							tsNs: true,
+						},
+					},
 				},
 				orderBy: {
-					name: 'asc',
+					serviceTag: {
+						name: 'asc',
+					},
 				},
 			},
 		},
@@ -28,5 +34,9 @@ export const getFilterOptions = async () => {
 			category: 'asc',
 		},
 	})
-	return result
+	const transformed = result.map(({ services, ...rest }) => ({
+		...rest,
+		services: services.map(({ serviceTag }) => serviceTag),
+	}))
+	return transformed
 }

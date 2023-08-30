@@ -1,5 +1,5 @@
 import { type Prisma } from '@prisma/client'
-import { ulid } from 'ulid'
+import { Ulid } from 'id128'
 
 export const idPrefix = {
 	account: 'acct',
@@ -57,13 +57,17 @@ export type IdPrefix = keyof typeof idPrefix
 
 export const getIdPrefixRegex = (...keys: Uncapitalize<Tables>[]) => {
 	const prefixes = keys.map((key) => idPrefix[key])
-	const pattern = `^(${prefixes.join('|')})_`
+	const pattern = `^(${prefixes.join('|')})`
 	return new RegExp(pattern)
 }
 
 export const isIdFor = (table: Uncapitalize<Tables>, id: string) => {
 	const regex = getIdPrefixRegex(table)
-	return regex.test(id)
+	const [prefix, suffix] = id.split('_')
+	if (!prefix || !suffix) {
+		return false
+	}
+	return regex.test(prefix) && Ulid.isCanonical(suffix)
 }
 
 /**
@@ -79,7 +83,7 @@ export const generateId = (table: IdPrefix, seedTime?: Date | number) => {
 		typeof seedTime === 'undefined' ? undefined : typeof seedTime === 'number' ? seedTime : seedTime.valueOf()
 	const prefix = idPrefix[table]
 
-	const id = ulid(seedNum)
+	const id = Ulid.generate({ time: seedNum }).toCanonical()
 	const prefixedId = `${prefix}_${id}`
 	return prefixedId
 }
@@ -134,4 +138,6 @@ const excludedTables = [
 	'AttributesByCategory',
 	'user_refresh_token',
 	'user_access_token',
+	'AuditTrail',
+	'ServiceTagToCategory',
 ] as const // satisfies Prisma.ModelName[]

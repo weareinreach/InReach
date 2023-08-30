@@ -94,7 +94,7 @@ export const job20230724a = {
 			data: [
 				{
 					id: 'svtg_01H64GVYCYZBWXBSKK8WX2D7NJ',
-					categoryId: servCat.id,
+					primaryCategoryId: servCat.id,
 					name: 'Resettlement Assistance',
 					tsKey: 'international-support.resettlement-assistance',
 					tsNs: namespace.services,
@@ -102,7 +102,7 @@ export const job20230724a = {
 				},
 				{
 					id: 'svtg_01H64GWD9JR68SJWYFC9TBK290',
-					categoryId: servCat.id,
+					primaryCategoryId: servCat.id,
 					name: 'Mental Health',
 					tsKey: 'international-support.mental-health',
 					tsNs: namespace.services,
@@ -110,7 +110,7 @@ export const job20230724a = {
 				},
 				{
 					id: 'svtg_01H64GX7989A4T26WH1H6566DG',
-					categoryId: servCat.id,
+					primaryCategoryId: servCat.id,
 					name: 'Financial Assistance',
 					tsKey: 'international-support.financial-assistance',
 					tsNs: namespace.services,
@@ -184,8 +184,8 @@ export const job20230724a = {
 						svc.type === 'email'
 							? 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW'
 							: svc.type === 'link'
-							? 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD'
-							: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
+							  ? 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD'
+							  : 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 					serviceId: record.svcId,
 				}))
 			)
@@ -208,8 +208,8 @@ export const job20230724a = {
 						svc.type === 'email'
 							? 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW'
 							: svc.type === 'link'
-							? 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD'
-							: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
+							  ? 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD'
+							  : 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 					serviceAccessAttributeServiceId: record.svcId,
 					data: JsonInputOrNull.parse(
 						superjson.serialize({ access_type: svc.type, access_value: svc.value })

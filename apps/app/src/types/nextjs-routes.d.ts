@@ -67,7 +67,13 @@ declare module "nextjs-routes" {
     | "es"
     | "fr"
     | "ar"
-    | "ru";
+    | "zh"
+    | "ja"
+    | "ko"
+    | "pl"
+    | "pt"
+    | "ru"
+    | "uk";
 
   /**
    * A typesafe utility function for generating paths in your application.
@@ -93,7 +99,13 @@ declare module "nextjs-routes" {
           "es",
           "fr",
           "ar",
-          "ru"
+          "zh",
+          "ja",
+          "ko",
+          "pl",
+          "pt",
+          "ru",
+          "uk"
         ];
   };
 
@@ -195,7 +207,13 @@ declare module "next/router" {
           "es",
           "fr",
           "ar",
-          "ru"
+          "zh",
+          "ja",
+          "ko",
+          "pl",
+          "pt",
+          "ru",
+          "uk"
         ];
         push(
           url: Route | StaticRoute | Omit<Route, "pathname">,

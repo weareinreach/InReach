@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import dotenv from 'dotenv'
 import { flatten, unflatten } from 'flat'
@@ -7,7 +6,7 @@ import prettier from 'prettier'
 import fs from 'fs'
 
 import { prisma } from '@weareinreach/db'
-import { type ListrTask } from 'lib/generate'
+import { type PassedTask } from 'lib/generate'
 
 const localePath = 'public/locales/en'
 
@@ -22,8 +21,8 @@ const isObject = (data: unknown): data is Record<string, string> =>
 
 const countKeys = (obj: Output): number => Object.keys(flatten(obj)).length
 
-export const generateTranslationKeys = async (task: ListrTask) => {
-	const prettierOpts = (await prettier.resolveConfig(__dirname)) ?? undefined
+export const generateTranslationKeys = async (task: PassedTask) => {
+	const prettierOpts = (await prettier.resolveConfig(__filename)) ?? undefined
 
 	const data = await prisma.translationNamespace.findMany({
 		where: {
@@ -56,7 +55,7 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 			}
 		}
 		const filename = `${localePath}/${namespace.name}.json`
-		// eslint-disable-next-line prefer-const
+
 		let existingFile: unknown = {}
 		if (fs.existsSync(filename)) {
 			existingFile = flatten(JSON.parse(fs.readFileSync(filename, 'utf-8')))

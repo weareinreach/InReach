@@ -4,7 +4,6 @@ import bundleAnalyze from '@next/bundle-analyzer'
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
 import { withSentryConfig } from '@sentry/nextjs'
 import routes from 'nextjs-routes/config'
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -22,28 +21,31 @@ const shouldAnalyze = process.env.ANALYZE === 'true'
 
 const withRoutes = routes({ outDir: './src/types' })
 const withBundleAnalyzer = bundleAnalyze({ enabled: shouldAnalyze, openAnalyzer: false })
-/** @type {import('next').NextConfig} */
+/**
+ * @typedef {import('@sentry/nextjs/types/config/types').ExportedNextConfig} NextConfig
+ * @type {NextConfig}
+ */
 const nextConfig = {
 	i18n: i18nConfig.i18n,
 	reactStrictMode: true,
 	swcMinify: true,
 	transpilePackages: [
+		// '@weareinreach/analytics',
 		'@weareinreach/api',
 		'@weareinreach/auth',
+		// '@weareinreach/crowdin',
 		'@weareinreach/db',
-		'@weareinreach/env',
+		// '@weareinreach/env',
 		'@weareinreach/ui',
-		'@weareinreach/util',
+		// '@weareinreach/util',
 	],
 	compiler: {
 		...(isVercelProd ? { removeConsole: { exclude: ['error'] } } : {}),
 	},
 	experimental: {
-		outputFileTracingExcludes: {
-			'*': ['**swc+core**', '**esbuild**'],
-		},
-		outputFileTracingRoot: path.join(__dirname, '../../'),
-		instrumentationHook: true,
+		// outputFileTracingRoot: path.join(__dirname, '../../'),
+		// instrumentationHook: true,
+		webpackBuildWorker: true,
 	},
 	eslint: {
 		ignoreDuringBuilds: !isVercelProd,
@@ -56,17 +58,40 @@ const nextConfig = {
 	typescript: {
 		ignoreBuildErrors: !isVercelProd,
 	},
+	sentry: {
+		// For all available options, see:
+		// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+
+		// Upload a larger set of source maps for prettier stack traces (increases build time)
+		widenClientFileUpload: true,
+
+		// Transpiles SDK to be compatible with IE11 (increases bundle size)
+		transpileClientSDK: false,
+
+		// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
+		tunnelRoute: '/monitoring',
+
+		// Hides source maps from generated client bundles
+		hideSourceMaps: true,
+
+		// Automatically tree-shake Sentry logger statements to reduce bundle size
+		disableLogger: isVercelProd || isVercelActiveDev,
+	},
 	webpack: (config, { isServer, webpack }) => {
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
+
+		config.devtool = 'eval-source-map'
+
 		if (!isLocalDev) {
-			config.plugins.push(new webpack.DefinePlugin({ __SENTRY_DEBUG__: false }))
-			if (shouldAnalyze) {
-				config.plugins.push(
-					new BundleAnalyzerPlugin({ analyzerMode: 'static', generateStatsFile: true, openAnalyzer: false })
-				)
-			}
+			config.plugins.push(
+				new webpack.DefinePlugin({
+					__SENTRY_DEBUG__: false,
+					__RRWEB_EXCLUDE_CANVAS__: true,
+					__RRWEB_EXCLUDE_IFRAME__: true,
+				})
+			)
 		}
 		return config
 	},
@@ -102,37 +127,15 @@ function defineNextConfig(config) {
  * @returns {T}
  */
 const defineSentryConfig = (nextConfig) =>
-	withSentryConfig(
-		nextConfig,
-		{
-			// For all available options, see:
-			// https://github.com/getsentry/sentry-webpack-plugin#options
+	withSentryConfig(nextConfig, {
+		// For all available options, see:
+		// https://github.com/getsentry/sentry-webpack-plugin#options
 
-			// Suppresses source map uploading logs during build
-			silent: true,
-			org: 'weareinreach',
-			project: 'inreach-app',
-		},
-		{
-			// For all available options, see:
-			// https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-			// Upload a larger set of source maps for prettier stack traces (increases build time)
-			widenClientFileUpload: true,
-
-			// Transpiles SDK to be compatible with IE11 (increases bundle size)
-			transpileClientSDK: false,
-
-			// Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-			tunnelRoute: '/monitoring',
-
-			// Hides source maps from generated client bundles
-			hideSourceMaps: false,
-
-			// Automatically tree-shake Sentry logger statements to reduce bundle size
-			disableLogger: isVercelProd,
-		}
-	)
+		// Suppresses source map uploading logs during build
+		silent: !process.env.SENTRY_DEBUG,
+		org: 'weareinreach',
+		project: 'inreach-app',
+	})
 
 // export default isLocalDev ? defineNextConfig(nextConfig) : defineSentryConfig(defineNextConfig(nextConfig))
 export default defineSentryConfig(defineNextConfig(nextConfig))

@@ -3,7 +3,7 @@ import { createFormContext } from '@mantine/form'
 import { type ApiOutput } from '@weareinreach/api'
 
 export const [SuggestionFormProvider, useFormContext, useForm] = createFormContext<SuggestionForm>()
-interface SuggestionForm {
+export interface SuggestionForm {
 	//data for submission
 	countryId: string
 	orgName: string

@@ -58,6 +58,7 @@ const useStyles = createStyles((theme) => ({
 		zIndex: 20,
 		backgroundColor: theme.other.colors.secondary.white,
 		boxShadow: `${rem(0)} ${rem(-8)} ${rem(16)} rgba(0, 0, 0, 0.05)`,
+		// paddingBottom: rem(16),
 	},
 }))
 
@@ -66,6 +67,8 @@ export const MobileNav = ({ className }: { className?: string }) => {
 	const { t } = useTranslation('common')
 	const router = useRouter()
 	const { searchState } = useSearchState()
+
+	const showSearch = searchState.params?.length && router.pathname !== '/search/[...params]'
 
 	return (
 		<Tabs
@@ -77,7 +80,7 @@ export const MobileNav = ({ className }: { className?: string }) => {
 				switch (tab) {
 					case 'search': {
 						const query = searchState.getRoute()
-						if (query) {
+						if (query && showSearch) {
 							router.push({
 								pathname: '/search/[...params]',
 								query,
@@ -103,9 +106,9 @@ export const MobileNav = ({ className }: { className?: string }) => {
 			<Tabs.List position='apart'>
 				<Tabs.Tab
 					value='search'
-					icon={<Icon icon={searchState.params?.length ? 'carbon:search' : 'carbon:home'} height={20} />}
+					icon={<Icon icon={showSearch ? 'carbon:search' : 'carbon:home'} height={20} />}
 				>
-					{t(searchState.params?.length ? 'words.search' : 'words.home')}
+					{t(showSearch ? 'words.search' : 'words.home')}
 				</Tabs.Tab>{' '}
 				<Tabs.Tab value='saved' icon={<Icon icon='carbon:favorite' height={20} />}>
 					{t('words.saved')}

@@ -17,7 +17,7 @@ import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
 import { ModalTitle } from './ModalTitle'
 
-export const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProps>((props, ref) => {
+const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProps>((props, ref) => {
 	const variants = useCustomVariant()
 	const [opened, handler] = useDisclosure(false)
 	const { isMobile } = useScreenSize()
@@ -68,7 +68,13 @@ export const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyMo
 
 	return (
 		<>
-			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
+			<Modal
+				title={modalTitle}
+				opened={opened}
+				onClose={() => handler.close()}
+				fullScreen={isMobile}
+				zIndex={999999}
+			>
 				<Stack align='center' spacing={16}>
 					<Trans
 						i18nKey='privacy-statement-head'

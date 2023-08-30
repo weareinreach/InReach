@@ -1,6 +1,7 @@
 import { List, Stack, Text, Title } from '@mantine/core'
 import { DateTime, Interval } from 'luxon'
 import { useTranslation } from 'next-i18next'
+import { type JSX } from 'react'
 
 import { COGNITO_CUSTOMID_FIELDNAME } from '@weareinreach/auth'
 import { useCustomVariant } from '~ui/hooks'

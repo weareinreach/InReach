@@ -39,7 +39,7 @@ const ServiceSection = ({ category, services, hideRemoteBadges }: ServiceSection
 	const { classes } = useServiceSectionStyles()
 
 	const variants = useCustomVariant()
-	const apiUtils = api.useContext()
+	const apiUtils = api.useUtils()
 	return (
 		<Stack spacing={8}>
 			{Array.isArray(category) ? (

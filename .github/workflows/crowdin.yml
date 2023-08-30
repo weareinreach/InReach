@@ -2,27 +2,63 @@ name: Crowdin Action
 
 on:
   push:
-    paths:
-      - 'apps/app/public/locales/en/*.json'
+    branches-ignore:
+      - renovate/*
+      - l10n_*
   pull_request:
     types:
       - closed
     branches-ignore:
-      # - dev
       - main
-      - l10n_**
+      - l10n_*
       - renovate/*
+  workflow_dispatch:
+  schedule:
+    #       ┌───────────── minute (0 - 59)
+    #       │ ┌───────────── hour (0 - 23)
+    #       │ │ ┌───────────── day of the month (1 - 31)
+    #       │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+    #       │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    #       │ │ │ │ │
+    #       │ │ │ │ │
+    #       │ │ │ │ │
+    - cron: 0 8 * * *
 
 jobs:
   synchronize-with-crowdin:
     runs-on: ubuntu-latest
-    # permissions:
-    #   contents: write
-    #   pull-requests: write
-
+    env:
+      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     steps:
       - name: Checkout
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@82a020f1f7f605c65dd2449b392a52c3fcfef7ef # v6
+        with:
+          gpg_private_key: ${{ secrets.BOT_GPG_KEY }}
+          git_user_signingkey: true
+          git_config_global: true
+          git_commit_gpgsign: true
+          git_committer_name: 'InReach [bot]'
+
+      - uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598 # v2.4.0
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
+      - name: Install Node.js
+        if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install Crowdin
+        run: pnpm -g add @crowdin/cli
 
       - name: Remove Jira ticket ID from branch name
         id: branchregex
@@ -42,33 +78,51 @@ jobs:
           flags: gi
           replacement: '_'
 
-      - name: Upload to Crowdin
+      - name: Push sources to Crowdin
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
-        uses: crowdin/github-action@ecdf564895766b8a6b4b581559b3c6cd955467d1 # v1.12.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
-          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+        run: crowdin push sources -b ${{ steps.sanitizebranch.outputs.value }} --no-progress
+
+      - name: Synchronize sources to Crowdin
+        if: steps.sanitizebranch.outputs.value == 'main'
+        run: crowdin push sources -b ${{ steps.sanitizebranch.outputs.value }} --no-progress
+
+      - name: Pull updated translations from Crowdin
+        if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
+        run: crowdin pull -b ${{ steps.sanitizebranch.outputs.value }} --no-progress
+
+      - name: Check for updated files
+        if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
+        uses: tj-actions/verify-changed-files@54e20d3c522fbeed99ebaf2e38a1eb33214c58ba # v16
+        id: verify-changed-files
         with:
-          upload_sources: true
-          upload_translations: false
-          download_translations: false
-          localization_branch_name: ${{ steps.branchregex.outputs.value }}
-          create_pull_request: true
-          pull_request_title: 'chore(i18n): Updated translations from Crowdin'
-          pull_request_labels: "translations, kodiak: merge.method = 'squash', automerge"
-          pull_request_base_branch_name: ${{ github.ref_name }}
-          crowdin_branch_name: ${{ steps.sanitizebranch.outputs.value }}
+          files: '**/locales/*/*.json'
+
+      - name: Format json files
+        if: ((github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled') && steps.verify-changed-files.outputs.files_changed
+        working-directory: apps/app
+        run: |
+          echo 'Installing package dependencies'
+          pnpm install
+          echo 'Running prettier'
+          pnpm format
+
+      - name: Commit files
+        if: ((github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled') && steps.verify-changed-files.outputs.files_changed
+        uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
+        with:
+          token: ${{ secrets.GH_ACT_PAT }}
+          commit-message: Updated translations from Crowdin
+          committer: 'InReach [bot] <108850934+InReach-svc@users.noreply.github.com>'
+          author: 'InReach [bot] <108850934+InReach-svc@users.noreply.github.com>'
+          branch: ${{ format('l10n_{0}',steps.branchregex.outputs.value) }}
+          base: ${{ github.ref_name }}
+          title: 'chore(i18n): Updated translations from Crowdin'
+          labels: |
+            translations
+            kodiak: merge.method = 'squash'
+            automerge
+          delete-branch: true
 
       - name: Delete Crowdin Branch
-        if: github.event_name == 'pull_request'
-        uses: crowdin/github-action@ecdf564895766b8a6b4b581559b3c6cd955467d1 # v1.12.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
-          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-        with:
-          upload_sources: false
-          upload_translations: false
-          download_translations: false
-          create_pull_request: false
-          command: branch delete
-          command_args: ${{ steps.sanitizebranch.outputs.value }}
+        if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev' && steps.sanitizebranch.outputs.value != 'dev' && steps.sanitizebranch.outputs.value != 'main'
+        run: crowdin branch delete ${{ steps.sanitizebranch.outputs.value }} --no-progress

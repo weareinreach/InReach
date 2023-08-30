@@ -37,7 +37,7 @@
 		"scholarships": "奖学金"
 	},
 	"food": {
-		"CATEGORYNAME": "食物",
+		"CATEGORYNAME": "Food",
 		"food": "食物",
 		"food-assistance": "食物援助"
 	},
@@ -52,7 +52,7 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "卫生和服装",
 		"clothes": "衣服",
-		"gender-affirming-items": "确认性别的项目",
+		"gender-affirming-items": "申明两性平等的项目",
 		"gender-neutral-bathrooms": "不分性别的浴室",
 		"haircuts-and-stylists": "发型师和发型师",
 		"hygiene": "卫生"
@@ -75,7 +75,7 @@
 		"immigration-detention": "移民拘留",
 		"legal-advice": "法律咨询_____",
 		"legal-hotlines": "法律热线",
-		"name-and-gender-change": "姓名和性别变更",
+		"name-and-gender-change": "姓名和性别标记更改",
 		"refugee-claim": "难民申请",
 		"residency": "居留权",
 		"special-immigrant-juvenile-status-sijs": "特殊移民少年身份 (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "跨性别健康——荷尔蒙和手术信",
 		"trans-health-hormone-therapy": "跨性别健康-激素疗法",
 		"trans-health-primary-care": "跨性别健康——初级保健",
-		"trans-health-speech-therapy": "跨性别健康-言语疗法"
+		"trans-health-speech-therapy": "跨性别健康-言语疗法",
+		"trans-health-youth-care": "跨部门健康——青年保健"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "精神健康",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "娱乐和活动",
 		"art-music-literature": "艺术、音乐和文学",
 		"sports-and-entertainment": "体育和娱乐"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "跨界焦点服务",
+		"transport-gacare": "两性平等肯定保健的运输",
+		"transport-relo-support": "Trans remission support"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "笔译和口译",

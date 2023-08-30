@@ -7,6 +7,9 @@
 		"//#clean": {
 			"cache": false
 		},
+		"//#lint:pkg": {
+			"cache": false
+		},
 		"build": {
 			"dependsOn": ["^build", "^build:icons"],
 			"env": [
@@ -29,7 +32,8 @@
 				"CACHE_SECRET",
 				"CACHE_READ_URL",
 				"CACHE_WRITE_URL",
-				"CROWDIN_TOKEN"
+				"CROWDIN_TOKEN",
+				"NEXT_PUBLIC_GA_MEASUREMENT_ID"
 			]
 		},
 		"build:aws": {},
@@ -52,23 +56,19 @@
 			"dependsOn": ["^db:generate", "^db:deploy", "^db:dataMigrate"],
 			"persistent": true
 		},
-		"download:seedData": {},
 		"format": {
 			"dependsOn": ["^db:generate"],
-			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"],
-			"outputs": ["node_modules/.cache/prettier/.prettier-cache"]
+			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"]
 		},
 		"generate:data": {},
 		"lint": {
-			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"],
-			"outputs": [".eslintcache"]
+			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"]
 		},
 		"lint:fix": {
-			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"],
-			"outputs": [".eslintcache"]
+			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"]
 		},
 		"post-install": {
-			"dependsOn": ["^generate:data", "^build:icons"]
+			"dependsOn": ["^generate:data", "^build:icons", "//#lint:pkg"]
 		},
 		"sb:build": {},
 		"type-check": {

@@ -1,0 +1,43 @@
+{
+	"banner": {
+		"redesign": "Lesen Sie mehr über den Start des InReach App-Redesigns in unserem Blog. <Link>Erfahre mehr.</Link>"
+	},
+	"call-out": {
+		"hear-from-users": "<Title1>Höre von unseren Benutzern</Title1>",
+		"who-we-are": "<Title1>Wen wir sind</Title1>\n<Text>Wir sind ein transgeführter Technologie-gemeinnütziger und zunehmender Ressourcenzugang für die vielfältige LGBTQ+-Community.</Text>\n<Link>Erfahre mehr über uns.</Link>"
+	},
+	"hero": {
+		"community": {
+			"0": "LGBTQ+ Asylbewerber",
+			"1": "LGBTQ+ Einwanderer",
+			"2": "LGBTQ+ Flüchtlinge",
+			"3": "LGBTQ+ Jugend",
+			"4": "die Transgender Gemeinschaft",
+			"5": "LGBTQ+ BIPOC Communities",
+			"6": "Betreuer von LGBTQ+ Jugendlichen"
+		},
+		"find-resources": "<Text>Finde verifizierte </Text><Service></Service><Text> für </Text><Community></Community><Text> mit InReach.</Text>",
+		"heading": "Finde LGBTQ+ Ressourcen.",
+		"privacy-disclaimer": "Ihre Antwort ist anonym und nicht mit Ihnen als Einzelnutzer verbunden. Lesen Sie unsere <Link>Datenschutzrichtlinie</Link> , um mehr zu erfahren.",
+		"services": {
+			"0": "medizinische Versorgung",
+			"1": "Community-Unterstützung",
+			"2": "psychische Gesundheitsfürsorge",
+			"3": "erziehung",
+			"4": "beschäftigung",
+			"5": "essen",
+			"6": "gehäuse",
+			"7": "kleidung",
+			"8": "rechtliche Hilfe",
+			"9": "übersetzen"
+		},
+		"subheading": "Willkommen auf der weltweit ersten Technologieplattform für TLGBQ+ (Transgender, Lesben, Schwulen, Bisexual, Queer und mehr Identitäten) Menschen, die mit Verfolgungen oder Diskriminierungen mit sicheren, überprüften Ressourcen konfrontiert sind."
+	},
+	"values": {
+		"free": "<Title2>Kostenlos für immer 🔑</Title2>\n<Text>Unsere Technologieplattform ist 100% kostenlos für alle, um sichere Hilfe zu gewährleisten, ist immer InReach.</Text>\n<LinkFree>Spenden Sie uns, um unsere Plattform frei zu halten.</LinkFree>",
+		"innovative": "<Title2>Innovativ :funkeln:</Title2>\n<Text>Wir sind die weltweit erste Technologieplattform, die LGBTQ+ Menschen mit Verfolgung oder Diskriminierung mit Sicherheit begegnet unabhängig überprüfte Ressourcen.</Text>\n<LinkInnovative>Sehen Sie sich unseren Quellcode an und tragen Sie bei.</LinkInnovative>",
+		"intersectional": "<Title2>Intersektional✊🏿<unk> :raised_fist_medium dark_skin_tone:✊🏽</Title2>\n<Text>Wir glauben, dass die Gleichheit von LGBTQ+ Trans Gerechtigkeit erfordert Flüchtlingsrecht, rassische Gerechtigkeit, reproduktive Gerechtigkeit, Sprachgerechtigkeit und vieles mehr.</Text>\n<LinkIntersect>Erfahre mehr über unseren Überprüfungsprozess.</LinkIntersect>",
+		"our-values": "Unsere Werte",
+		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
+	}
+}

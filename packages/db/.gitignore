@@ -28,9 +28,14 @@ prisma/dbml
 prisma/data-migrations/**/!*.json
 prisma/migrations/**/*.json
 
+util/crowdin/generated/*
+!util/crowdin/generated/.gitkeep
+
 zod-schemas/
 kysely-vercel/
 pg-diff/
 pg-diff-config.json
 
 __*.ts
+___*.*
+_queries/

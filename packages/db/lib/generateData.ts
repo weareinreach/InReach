@@ -2,7 +2,7 @@
 import {
 	Listr,
 	type ListrDefaultRenderer,
-	type ListrRenderer,
+	type ListrSimpleRenderer,
 	type ListrTask as ListrTaskObj,
 	type ListrTaskWrapper,
 	PRESET_TIMER,
@@ -12,14 +12,14 @@ import { prisma } from '~db/client'
 
 import * as job from './generators'
 
-const renderOptions = {
+const rendererOptions = {
 	bottomBar: 10,
 	timer: PRESET_TIMER,
 }
 const defineJob = (title: string, job: (task: ListrTask) => void | Promise<void>): ListrJob => ({
 	title,
 	task: async (_ctx, task): Promise<void> => job(task),
-	options: renderOptions,
+	rendererOptions,
 	skip: !process.env.DATABASE_URL,
 })
 
@@ -50,8 +50,6 @@ const tasks = new Listr<Context>(
 	],
 	{
 		exitOnError: false,
-		forceColor: true,
-
 		fallbackRendererOptions: {
 			timer: PRESET_TIMER,
 		},
@@ -70,5 +68,5 @@ tasks.run()
 export type Context = {
 	error?: boolean
 }
-export type ListrTask = ListrTaskWrapper<Context, typeof ListrRenderer>
+export type ListrTask = ListrTaskWrapper<Context, ListrDefaultRenderer, ListrSimpleRenderer>
 type ListrJob = ListrTaskObj<Context, ListrDefaultRenderer>

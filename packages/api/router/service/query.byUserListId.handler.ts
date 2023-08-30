@@ -29,7 +29,7 @@ export const byUserListId = async ({ ctx, input }: TRPCHandlerParams<TByUserList
 									},
 								},
 							},
-							category: {
+							primaryCategory: {
 								select: {
 									tsKey: true,
 									tsNs: true,

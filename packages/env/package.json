@@ -1,21 +1,29 @@
 {
 	"name": "@weareinreach/env",
-	"version": "0.0.0",
+	"version": "0.100.0",
 	"private": true,
-	"sideEffects": false,
 	"main": "./index.ts",
 	"types": "./index.ts",
 	"files": [
-		"./index.ts"
+		"./index.ts",
+		"./checks.ts"
 	],
-	"scripts": {},
+	"scripts": {
+		"clean:node": "rm -rf ./node_modules/ || true",
+		"format": "prettier --write --cache --cache-strategy metadata --ignore-unknown .",
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix .",
+		"type-check": "tsc --noEmit",
+		"with-env": "dotenv -e ../../.env --"
+	},
 	"dependencies": {
-		"@t3-oss/env-nextjs": "0.6.1",
+		"@t3-oss/env-nextjs": "0.7.1",
 		"@weareinreach/util": "workspace:*",
-		"chromatic": "6.24.1",
-		"zod": "3.22.2"
+		"chromatic": "9.1.0",
+		"zod": "3.22.4"
 	},
 	"devDependencies": {
-		"@weareinreach/config": "workspace:*"
+		"@weareinreach/config": "workspace:*",
+		"@weareinreach/eslint-config": "workspace:*"
 	}
 }

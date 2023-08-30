@@ -6,7 +6,7 @@
 		"geo-public-transit-description": "حمل و نقل عمومی/جهت خاص",
 		"has-confidentiality-policy": "دارای یک سیاست محرمانگی",
 		"offers-remote-services": "از راه دور",
-		"private-practice": "تمرین خصوصی",
+		"private-practice": "Private Practice",
 		"religiously-affiliated": "وابسته به مذهب است",
 		"time-walk-in": "ساعت پیاده روی دارد",
 		"wheelchair-accessible_false": "قابل دسترسی نیست",
@@ -26,7 +26,7 @@
 		"asexual": "فرصت هایی که به جامعه غیر جنسی خدمت می کنند",
 		"asia-immigrant": "فرصت هایی که به کسانی که از کشورهای آسیایی خدمت می کنند",
 		"asylee": "فرصت هایی که به پناهجویان خدمت می کنند (کسانی که پناهندگی دریافت کرده اند)",
-		"asylum-seeker": "Opportunities that serve Asylum seekers from {{country}}",
+		"asylum-seeker": "فرصت هایی که از {{country}}به پناهجویان خدمت می کنند",
 		"bipoc": "فرصت هایی که در خدمت سیاه و سفید, بومی, و مردم از رنگ",
 		"bisexual": "فرصت هایی که به جامعه دوجنسگرا خدمت می کنند",
 		"black": "فرصت هایی که در خدمت جامعه سیاه پوست",
@@ -66,7 +66,7 @@
 		"undocumented": "فرصت هایی که به مهاجران غیرقانونی خدمت می کنند"
 	},
 	"cost": {
-		"CATEGORYNAME": "هزینه",
+		"CATEGORYNAME": "Cost",
 		"cost-fees": "هزینه ای را متحمل می شود",
 		"cost-free": "رایگان از هزینه"
 	},
@@ -76,8 +76,8 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "الزامات واجد شرایط بودن",
-		"elig-age_max": "زیر {{max}}",
-		"elig-age_min": "{{min}} و بالاتر",
+		"elig-age_max": "Under {{max}}",
+		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "سایر (توضیحات متن رایگان)",
 		"req-medical-insurance": "نیاز به بیمه درمانی",
@@ -89,7 +89,7 @@
 		"time-appointment-required": "وقت ملاقات مورد نیاز"
 	},
 	"lang": {
-		"CATEGORYNAME": "زبان",
+		"CATEGORYNAME": "Languages",
 		"all-languages-by-interpreter": "همه زبان ها از طریق مترجم",
 		"american-sign-language": "زبان اشاره آمریکایی",
 		"lang-offered": "زبان های خاص ارائه شده"
@@ -154,7 +154,7 @@
 		"grassroots-direct": "مردمی سازمان خدمات مستقیم",
 		"healthcare": "ارائه دهنده خدمات بهداشتی",
 		"lawyer": "وکیل",
-		"other": "دیگر (لطفا مشخص کنید)",
+		"other": "Other (please specify)",
 		"paralegal": "مشاوران حقوقی یا سایر کارکنان پشتیبانی حقوقی",
 		"social-worker": "مددکار اجتماعی",
 		"student-club": "رهبر/مدیر باشگاه دانشجویی",

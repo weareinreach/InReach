@@ -372,8 +372,8 @@
 	},
 	"FRA": {
 		"name": "Pransya",
-		"demonym_one": "Pranses",
-		"demonym_other": "Pranses"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"FRO": {
 		"name": "Mga Isla ng Faroe",
@@ -560,8 +560,8 @@
 	},
 	"JEY": {
 		"name": "Jersey",
-		"demonym_one": "Mga Isla ng Channel",
-		"demonym_other": "Mga Isla ng Channel"
+		"demonym_one": "Channel Islander",
+		"demonym_other": "Channel Islanders"
 	},
 	"JOR": {
 		"name": "Jordan",
@@ -670,8 +670,8 @@
 	},
 	"MAC": {
 		"name": "Macau",
-		"demonym_one": "Intsik",
-		"demonym_other": "Intsik"
+		"demonym_one": "Chinese",
+		"demonym_other": "Chinese"
 	},
 	"MAF": {
 		"name": "Saint Martin",
@@ -765,8 +765,8 @@
 	},
 	"MTQ": {
 		"name": "Martinique",
-		"demonym_one": "Pranses",
-		"demonym_other": "Pranses"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"MUS": {
 		"name": "Mauritius",
@@ -930,8 +930,8 @@
 	},
 	"REU": {
 		"name": "Réunion",
-		"demonym_one": "Pranses",
-		"demonym_other": "Pranses"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"ROU": {
 		"name": "Romania",
@@ -979,7 +979,7 @@
 	"SJM": {
 		"name": "Svalbard at Jan Mayen",
 		"demonym_one": "Norwegian",
-		"demonym_other": "Mga Norwegian"
+		"demonym_other": "Norwegians"
 	},
 	"SLB": {
 		"name": "Mga Isla ng Solomon",
@@ -1008,8 +1008,8 @@
 	},
 	"SPM": {
 		"name": "Sina Saint Pierre at Miquelon",
-		"demonym_one": "Pranses",
-		"demonym_other": "Pranses"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"SRB": {
 		"name": "Serbia",
@@ -1153,8 +1153,8 @@
 	},
 	"UMI": {
 		"name": "Mga Isla ng Minor Outlying ng Estados Unidos",
-		"demonym_one": "Amerikano",
-		"demonym_other": "Amerikano"
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UNK": {
 		"name": "Kosovo",
@@ -1168,8 +1168,8 @@
 	},
 	"USA": {
 		"name": "Estados Unidos",
-		"demonym_one": "Amerikano",
-		"demonym_other": "Amerikano"
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UZB": {
 		"name": "Uzbekistan",
@@ -1178,7 +1178,7 @@
 	},
 	"VAT": {
 		"name": "Lungsod ng Vatican",
-		"demonym_one": "Italyano",
+		"demonym_one": "Italian",
 		"demonym_other": "Italians"
 	},
 	"VCT": {
@@ -1198,8 +1198,8 @@
 	},
 	"VIR": {
 		"name": "Mga Isla ng Virgin ng Estados Unidos",
-		"demonym_one": "Birhen Isla",
-		"demonym_other": "Mga Isla Ng Birhen"
+		"demonym_one": "Virgin Islander",
+		"demonym_other": "Virgin Islanders"
 	},
 	"VNM": {
 		"name": "Vietnam",

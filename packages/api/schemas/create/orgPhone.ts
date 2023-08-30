@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { generateId, generateNestedFreeText, Prisma, slug } from '@weareinreach/db'
-import { namespaces } from '@weareinreach/db/seed/data/00-namespaces'
+import { namespace as namespaces } from '@weareinreach/db/generated/namespaces'
 
 export const CreateOrgPhoneSchema = z
 	.object({
@@ -26,19 +26,19 @@ export const CreateOrgPhoneSchema = z
 		const phoneType = data.phoneTypeId
 			? { connect: { id: data.phoneTypeId } }
 			: data.phoneTypeNew
-			? {
-					create: {
-						type: data.phoneTypeNew,
-						key: {
-							create: {
-								key: slug(data.phoneTypeNew),
-								text: data.phoneTypeNew,
-								namespace: { connect: { name: namespaces.phoneType } },
+			  ? {
+						create: {
+							type: data.phoneTypeNew,
+							key: {
+								create: {
+									key: slug(data.phoneTypeNew),
+									text: data.phoneTypeNew,
+									namespace: { connect: { name: namespaces.phoneType } },
+								},
 							},
 						},
-					},
-			  }
-			: undefined
+			    }
+			  : undefined
 
 		const { number, ext, locationOnly, primary, published } = data
 		return Prisma.validator<Prisma.OrgPhoneCreateInput>()({

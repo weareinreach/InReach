@@ -37,7 +37,7 @@
 		"scholarships": "Стипендії"
 	},
 	"food": {
-		"CATEGORYNAME": "Харчування",
+		"CATEGORYNAME": "Продукти харчування",
 		"food": "Харчування",
 		"food-assistance": "Харчова допомога"
 	},
@@ -52,7 +52,7 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "Гігієна та одяг",
 		"clothes": "Одяг",
-		"gender-affirming-items": "Гендерно-підтверджуючі предмети",
+		"gender-affirming-items": "Гендерні елементи формування",
 		"gender-neutral-bathrooms": "Гендерно-нейтральні ванні кімнати",
 		"haircuts-and-stylists": "Стрижки і стилісти",
 		"hygiene": "Гігієна"
@@ -75,7 +75,7 @@
 		"immigration-detention": "Затримання імміграції",
 		"legal-advice": "Правова порада",
 		"legal-hotlines": "Юридичні гарячі лінії",
-		"name-and-gender-change": "Зміна імені та статі",
+		"name-and-gender-change": "Зміна маркера імені та статі",
 		"refugee-claim": "Позов про біженця",
 		"residency": "Резиденція",
 		"special-immigrant-juvenile-status-sijs": "Спеціальний статус неповнолітніх іммігрантів (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Транс-здоров'я - гормони та хірургічні листи",
 		"trans-health-hormone-therapy": "Транс здоров'я - гормональна терапія",
 		"trans-health-primary-care": "Trans health - первинна медична допомога",
-		"trans-health-speech-therapy": "Транс здоров'я - логопедія"
+		"trans-health-speech-therapy": "Транс здоров'я - логопедія",
+		"trans-health-youth-care": "Транс здоров'я - молодіжна допомога"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Психічне здоров'я",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Розваги та розваги",
 		"art-music-literature": "Мистецтво, музика та література",
 		"sports-and-entertainment": "Спорт і розваги"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Транса, виділені сервіси",
+		"transport-gacare": "Транспорт гендерної опіки",
+		"transport-relo-support": "Транспортна перелокація підтримка"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Переклад і інтерпретація",

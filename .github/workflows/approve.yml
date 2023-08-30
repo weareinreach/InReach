@@ -5,19 +5,19 @@ on:
 
 permissions:
   pull-requests: write
+  checks: write
+  contents: write
+  statuses: read
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: github/privileged-requester@91ebaf95f94bf27577b474f91936815d0f98138e # v1.0.1
+      - uses: github/privileged-requester@f8d60d9344e1c10976aad5c1af0c7c977badd677 # v2.1.0
         if: ${{ github.event.requested_reviewer.login == 'InReach-svc'}}
         with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
-          robotUserToken: ${{ secrets.GH_ACT_PAT }}
+          github_token: ${{ secrets.GH_ACT_PAT }}
           path: .github/autoapprove-config.yaml
-          prCreator: ${{ github.event.pull_request.user.login }}
-          prNumber: ${{ github.event.pull_request.number }}
           checkCommits: 'false'
           checkDiff: 'false'
           checkLabels: 'false'

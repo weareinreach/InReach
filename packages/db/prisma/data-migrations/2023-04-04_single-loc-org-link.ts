@@ -1,3 +1,4 @@
+/* eslint-disable deprecation/deprecation */
 import { prisma, type Prisma } from '~db/index'
 import { batchRunner } from '~db/prisma/batchRunner'
 import { type ListrJob, type ListrTask, type MigrationJob } from '~db/prisma/dataMigrationRunner'

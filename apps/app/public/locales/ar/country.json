@@ -1479,10 +1479,10 @@
 		"name": "هولندا",
 		"demonym_zero": "الهولنديون",
 		"demonym_one": "الهولندية",
-		"demonym_two": "الهولنديون",
-		"demonym_few": "الهولنديون",
-		"demonym_many": "الهولنديون",
-		"demonym_other": "الهولنديون"
+		"demonym_two": "الهولندية",
+		"demonym_few": "الهولندية",
+		"demonym_many": "الهولندية",
+		"demonym_other": "الهولندية"
 	},
 	"NOR": {
 		"name": "النرويج",

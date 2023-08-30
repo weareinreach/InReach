@@ -1,14 +1,21 @@
 import { Prisma } from '@prisma/client'
 import invariant from 'tiny-invariant'
 
-import { namespaces } from '~db/seed/data/00-namespaces'
+import { namespace as namespaces } from '~db/generated/namespaces'
 
 import { generateId } from './idGen'
 import { slug } from './slugGen'
 
-const createKey = (parts: string[]) => slug(parts.join('.'))
+const createKey = (parts: string[]) =>
+	parts.map((part) => slug(part, { remove: /[^\w\s$*+~.()'"!\-:@]+/g })).join('.')
 
-export const generateFreeText = ({ orgId, itemId, text, type }: GenerateFreeTextParams) => {
+export const generateFreeText = <T extends GenerateFreeTextType>({
+	orgId,
+	itemId,
+	text,
+	type,
+	freeTextId,
+}: GenerateFreeTextParams<T>) => {
 	const key = (() => {
 		switch (type) {
 			case 'orgDesc': {
@@ -32,16 +39,23 @@ export const generateFreeText = ({ orgId, itemId, text, type }: GenerateFreeText
 		}
 	})()
 	const ns = namespaces.orgData
+	if (!key) throw new Error('Error creating key')
 	return {
 		translationKey: Prisma.validator<Prisma.TranslationKeyUncheckedCreateInput>()({ key, text, ns }),
 		freeText: Prisma.validator<Prisma.FreeTextUncheckedCreateInput>()({
 			key,
 			ns,
-			id: generateId('freeText'),
+			id: freeTextId ?? generateId('freeText'),
 		}),
 	}
 }
-export const generateNestedFreeText = ({ orgId: orgSlug, itemId, text, type }: GenerateFreeTextParams) => {
+export const generateNestedFreeText = <T extends GenerateFreeTextType>({
+	orgId: orgSlug,
+	itemId,
+	text,
+	type,
+	freeTextId,
+}: GenerateFreeTextParams<T>) => {
 	const key = (() => {
 		switch (type) {
 			case 'orgDesc': {
@@ -64,23 +78,38 @@ export const generateNestedFreeText = ({ orgId: orgSlug, itemId, text, type }: G
 			}
 		}
 	})()
+	invariant(key)
 	const ns = namespaces.orgData
 	return {
-		create: { tsKey: { create: { key, text, namespace: { connect: { name: ns } } } } },
+		create: {
+			id: freeTextId ?? generateId('freeText'),
+			tsKey: { create: { key, text, namespace: { connect: { name: ns } } } },
+		},
 	}
 }
 
-type GenerateFreeTextParams = GenerateFreeTextWithItem | GenerateFreeTextWithoutItem
-
+type GenerateFreeTextParams<T extends GenerateFreeTextType> = GenerateFreeTextWithItem<T>
 interface GenerateFreeTextBase {
 	text: string
 	orgId: string
+	freeTextId?: string
 }
-interface GenerateFreeTextWithItem extends GenerateFreeTextBase {
-	type: 'attSupp' | 'svcName' | 'svcDesc' | 'emailDesc' | 'phoneDesc' | 'websiteDesc'
-	itemId: string
+
+type GenerateFreeTextType =
+	| 'attSupp'
+	| 'svcName'
+	| 'svcDesc'
+	| 'emailDesc'
+	| 'phoneDesc'
+	| 'websiteDesc'
+	| 'orgDesc'
+
+interface GenerateFreeTextWithItem<T extends GenerateFreeTextType> extends GenerateFreeTextBase {
+	type: T
+	itemId?: GenerateFreeTextItemId<T>
 }
-interface GenerateFreeTextWithoutItem extends GenerateFreeTextBase {
-	type: 'orgDesc'
-	itemId?: never
-}
+type GenerateFreeTextItemId<T extends GenerateFreeTextType> = T extends 'orgDesc' ? never : Required<string>
+// interface GenerateFreeTextWithoutItem extends GenerateFreeTextBase {
+// 	type: 'orgDesc'
+// 	itemId?: never
+// }

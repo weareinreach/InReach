@@ -18,32 +18,28 @@ import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useEffect, useState } from 'react'
 import { z } from 'zod'
 
-import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
+// import { decodeUrl } from '@weareinreach/api/lib/encodeUrl'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { LoginModalLauncher } from './Login'
+import { LoginModalLauncher } from './LoginSignUp'
 import { ModalTitle } from './ModalTitle'
 
-const isRecord = (data: unknown) => z.record(z.any()).safeParse(data).success
-const UrlParams = z.object({ r: z.string(), code: z.string() }).refine((data) => {
-	try {
-		const obj = decodeUrl(data.r)
-		return isRecord(obj)
-	} catch (error) {
-		console.error(error)
-		return false
-	}
-})
+// const isRecord = (data: unknown) => z.record(z.any()).safeParse(data).success
+// const UrlParams = z.object({ r: z.string(), code: z.string() }).refine((data) => {
+// 	try {
+// 		const obj = decodeUrl(data.r)
+// 		return isRecord(obj)
+// 	} catch (error) {
+// 		console.error(error)
+// 		return false
+// 	}
+// })
 
-export const FormPassword = ({
-	form,
-}: {
-	form: UseFormReturnType<FormProps, (values: FormProps) => FormProps>
-}) => {
+const FormPassword = ({ form }: { form: UseFormReturnType<FormProps, (values: FormProps) => FormProps> }) => {
 	const { t } = useTranslation('common')
 	const theme = useMantineTheme()
 	type PasswordRequirementProps = {
@@ -99,8 +95,8 @@ export const FormPassword = ({
 		pwStrength === 100
 			? theme.other.colors.primary.allyGreen
 			: pwStrength > 50
-			? theme.other.colors.tertiary.yellow
-			: theme.other.colors.tertiary.red
+			  ? theme.other.colors.tertiary.yellow
+			  : theme.other.colors.tertiary.red
 	const [pwPopover, setPwPopover] = useState(false)
 
 	return (
@@ -124,8 +120,8 @@ export const FormPassword = ({
 	)
 }
 
-export const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalBodyProps>(
-	(props, ref) => {
+const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalBodyProps>(
+	(/*props, ref*/) => {
 		const { t } = useTranslation(['common'])
 		const router = useRouter()
 		const autoOpen = Boolean(router.query['r'])

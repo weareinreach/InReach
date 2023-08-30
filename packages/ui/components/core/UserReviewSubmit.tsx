@@ -31,7 +31,7 @@ export const UserReviewSubmit = ({ type = 'body', closeModalHandler }: ReviewSub
 	const query = RouterSchema.parse(rawQuery)
 	const { data: orgQuery, status } = api.organization.getIdFromSlug.useQuery(query, { enabled: !!query })
 	const { orgLocationId, serviceId } = query
-	const apiUtil = api.useContext()
+	const apiUtil = api.useUtils()
 	const submitReview = api.review.create.useMutation({
 		onSuccess: () => {
 			apiUtil.organization.forOrgPage.invalidate()

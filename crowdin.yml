@@ -13,7 +13,6 @@ files:
       translation: '/apps/app/public/locales/%locale%/%original_file_name%',
       type: i18next_json,
       update_option: 'update_as_unapproved',
-      export_only_approved: true,
     },
   ]
 
@@ -21,4 +20,5 @@ pull_request_labels:
   - translations
   - "kodiak: merge.method = 'squash'"
   - automerge
+
 pull_request_title: 'chore(i18n): Updated translations from Crowdin'

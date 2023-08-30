@@ -1,6 +1,7 @@
+/* eslint-disable node/no-process-env */
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
-	plugins: ['codegen', 'turbo', 'node', /*'import',*/ '@tanstack/query'],
+	plugins: ['codegen', 'turbo', 'node', 'deprecation', /*'import',*/ '@tanstack/query'],
 	extends: [
 		'eslint:recommended',
 		// disable turbo plugin until vercel/turbo#5355 is resolved
@@ -74,7 +75,13 @@ const config = {
 			},
 		],
 		'import/no-self-import': 'error',
-		// 'import/no-cycle': 'error',
+		'import/no-cycle': [
+			process.env.ESLINT_FULL ? 'error' : 'off',
+			{
+				ignoreExternal: true,
+				maxDepth: 2,
+			},
+		],
 		'no-restricted-imports': [
 			'error',
 			{
@@ -84,6 +91,11 @@ const config = {
 						importNames: ['useTranslation', 'Trans', 'Translation'],
 						message: "Please import from 'next-i18next'",
 					},
+					{
+						name: 'nextjs-google-analytics',
+						importNames: ['event'],
+						message: "Define the event in '@weareinreach/analytics' and import from there",
+					},
 				],
 			},
 		],
@@ -91,6 +103,7 @@ const config = {
 		'@typescript-eslint/require-await': 'off',
 		'no-return-await': 'off',
 		'@typescript-eslint/return-await': 'off',
+		'deprecation/deprecation': 'warn',
 	},
 	overrides: [
 		{
@@ -100,11 +113,13 @@ const config = {
 			},
 		},
 		{
-			files: ['./**/*.js'],
+			files: ['./**/*.{js,mjs,cjs}'],
 			parserOptions: { project: null },
 			rules: {
 				'@typescript-eslint/require-await': 'off',
 				'@typescript-eslint/return-await': 'off',
+				'@typescript-eslint/consistent-type-assertions': 'off',
+				'deprecation/deprecation': 'off',
 			},
 		},
 	],

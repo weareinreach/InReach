@@ -37,7 +37,7 @@
 		"scholarships": "بورس های تحصیلی"
 	},
 	"food": {
-		"CATEGORYNAME": "مواد غذایی",
+		"CATEGORYNAME": "Food",
 		"food": "مواد غذایی",
 		"food-assistance": "کمک های غذایی"
 	},
@@ -52,7 +52,7 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "بهداشت و پوشاک",
 		"clothes": "لباس",
-		"gender-affirming-items": "موارد تأیید جنسیت",
+		"gender-affirming-items": "Gender affirming items",
 		"gender-neutral-bathrooms": "حمام های خنثی جنسیتی",
 		"haircuts-and-stylists": "کوتاهی مو و سبک",
 		"hygiene": "رده: بهداشت"
@@ -75,7 +75,7 @@
 		"immigration-detention": "بازداشت مهاجرت",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "خطوط تماس حقوقی",
-		"name-and-gender-change": "تغییر نام و جنسیت",
+		"name-and-gender-change": "Name and gender marker change",
 		"refugee-claim": "ادعای پناهندگی",
 		"residency": "دستیاری",
 		"special-immigrant-juvenile-status-sijs": "وضعیت ویژه نوجوانان مهاجر (SIJS)",
@@ -83,7 +83,7 @@
 		"u-visa": "ویزای U"
 	},
 	"mail": {
-		"CATEGORYNAME": "نامه",
+		"CATEGORYNAME": "Mail",
 		"mail": "نامه"
 	},
 	"medical": {
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "سلامت ترانس - نامه های هورمون و جراحی",
 		"trans-health-hormone-therapy": "سلامت ترانس - هورمون درمانی",
 		"trans-health-primary-care": "سلامت ترانس - مراقبت های اولیه",
-		"trans-health-speech-therapy": "سلامت ترانس - گفتاردرمانی"
+		"trans-health-speech-therapy": "سلامت ترانس - گفتاردرمانی",
+		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Mental Health",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "سرگرمی و فعالیت ها",
 		"art-music-literature": "هنر، موسیقی و ادبیات",
 		"sports-and-entertainment": "ورزش و سرگرمی"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Trans Focused Services",
+		"transport-gacare": "Transportation for gender affirming care",
+		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Translation and Interpretation",

@@ -1,5 +1,5 @@
 /* eslint-disable node/no-process-env */
-import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http'
+// import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http'
 import { Resource } from '@opentelemetry/resources'
 import { NodeSDK } from '@opentelemetry/sdk-node'
 import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions'
@@ -10,10 +10,10 @@ import { config } from 'dotenv'
 config({ path: '../../.env' })
 const otelTraceOptions = process.env.OTEL_SERVER ? { url: process.env.OTEL_SERVER } : undefined
 
-if (!process.env.VERCEL) console.log('Initializing OpenTelemetry...')
+// if (!process.env.VERCEL) console.log('Initializing OpenTelemetry...')
 
 if (otelTraceOptions) {
-	console.log(`Using custom server: ${otelTraceOptions.url}`)
+	console.log(`Using custom OpenTelemetry server: ${otelTraceOptions.url}`)
 }
 
 const sdk = new NodeSDK({
@@ -25,7 +25,7 @@ const sdk = new NodeSDK({
 		[SemanticResourceAttributes.PROCESS_RUNTIME_VERSION]: process.version,
 		[SemanticResourceAttributes.OS_TYPE]: process.platform,
 	}),
-	traceExporter: new OTLPTraceExporter(otelTraceOptions),
+	// traceExporter: new OTLPTraceExporter(otelTraceOptions),
 	spanProcessor: new SentrySpanProcessor(),
 	textMapPropagator: new SentryPropagator(),
 	instrumentations: [new PrismaInstrumentation({ middleware: true })],

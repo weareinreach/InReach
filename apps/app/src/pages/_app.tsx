@@ -1,31 +1,36 @@
-import { MantineProvider, Space } from '@mantine/core'
-import { ModalsProvider } from '@mantine/modals'
+import { Space } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Analytics } from '@vercel/analytics/react'
 import { type NextPage } from 'next'
-import { type AppProps } from 'next/app'
-import { Work_Sans } from 'next/font/google'
+import { type AppProps, type NextWebVitalsMetric } from 'next/app'
+import dynamic from 'next/dynamic'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { type Session } from 'next-auth'
-import { SessionProvider } from 'next-auth/react'
 import { appWithTranslation } from 'next-i18next'
 import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
+import { GoogleAnalytics } from 'nextjs-google-analytics'
 
+import { appEvent } from '@weareinreach/analytics/events'
+import { isLocalDev } from '@weareinreach/env/checks'
 import { PageLoadProgress } from '@weareinreach/ui/components/core/PageLoadProgress'
 import { Footer } from '@weareinreach/ui/components/sections/Footer'
 import { Navbar } from '@weareinreach/ui/components/sections/Navbar'
 import { useScreenSize } from '@weareinreach/ui/hooks/useScreenSize'
 import { BodyGrid } from '@weareinreach/ui/layouts/BodyGrid'
-import { GoogleMapsProvider } from '@weareinreach/ui/providers/GoogleMaps'
-import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
-import { appCache, appTheme } from '@weareinreach/ui/theme'
+import { Providers } from '~app/providers'
 import { api } from '~app/utils/api'
 
 import nextI18nConfig from '../../next-i18next.config.mjs'
-import 'core-js/features/array/at'
+// import { Donate, DonateModal } from '@weareinreach/ui/components/core/Donate'
+const DonateModal = dynamic(() =>
+	import('@weareinreach/ui/components/core/Donate').then((mod) => mod.DonateModal)
+)
 
-const fontWorkSans = Work_Sans({ subsets: ['latin'] })
+const ReactQueryDevtools = dynamic(
+	() => import('@tanstack/react-query-devtools').then((mod) => mod.ReactQueryDevtools),
+	{ ssr: false }
+)
 
 const defaultSEO = {
 	titleTemplate: '%s | InReach',
@@ -59,6 +64,10 @@ const defaultSEO = {
 	],
 } satisfies DefaultSeoProps
 
+export function reportWebVitals(stats: NextWebVitalsMetric) {
+	appEvent.webVitals(stats)
+}
+
 const MyApp = (appProps: AppPropsWithGridSwitch) => {
 	const {
 		Component,
@@ -71,39 +80,36 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 
 	const autoResetState = Component.autoResetState ? { key: router.asPath } : {}
 
-	const PageContent = Component.omitGrid ? (
-		<Component {...autoResetState} {...pageProps} />
-	) : (
-		<BodyGrid>
+	const PageContent = () =>
+		Component.omitGrid ? (
 			<Component {...autoResetState} {...pageProps} />
-		</BodyGrid>
-	)
+		) : (
+			<BodyGrid>
+				<Component {...autoResetState} {...pageProps} />
+			</BodyGrid>
+		)
 
 	return (
-		<SessionProvider session={session}>
-			<DefaultSeo {...defaultSEO} />
-			<MantineProvider
-				withGlobalStyles
-				withNormalizeCSS
-				theme={{ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }}
-				emotionCache={appCache}
-			>
-				<ModalsProvider>
-					<SearchStateProvider>
-						<GoogleMapsProvider>
-							<PageLoadProgress />
-							<Navbar />
-							{PageContent}
-							{(isMobile || isTablet) && <Space h={80} />}
-							<Footer />
-							<Notifications transitionDuration={500} />
-						</GoogleMapsProvider>
-					</SearchStateProvider>
-				</ModalsProvider>
-				<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
+		<>
+			<Head>
+				<meta name='viewport' content='initial-scale=1, width=device-width, viewport-fit=cover'></meta>
+			</Head>
+			<Providers session={session}>
+				<DefaultSeo {...defaultSEO} />
+				<GoogleAnalytics trackPageViews defaultConsent='granted' />
+				<PageLoadProgress />
+				<Navbar />
+				<PageContent />
+				{(isMobile || isTablet) && <Space h={80} />}
+				<Footer />
+				<Notifications transitionDuration={500} />
+				{isLocalDev && (
+					<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
+				)}
 				<Analytics />
-			</MantineProvider>
-		</SessionProvider>
+				<DonateModal />
+			</Providers>
+		</>
 	)
 }
 
@@ -113,4 +119,4 @@ export type NextPageWithoutGrid<P = unknown, IP = P> = NextPage<P, IP> & {
 	omitGrid?: boolean
 	autoResetState?: boolean
 }
-type AppPropsWithGridSwitch = AppProps & { Component: NextPageWithoutGrid; session: Session }
+type AppPropsWithGridSwitch = AppProps<{ session: Session }> & { Component: NextPageWithoutGrid }

@@ -1,3 +1,4 @@
+/* eslint-disable deprecation/deprecation */
 import { parse } from 'superjson'
 
 import fs from 'fs'

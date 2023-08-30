@@ -32,6 +32,7 @@ import {
 // import { ReactTableDevtools } from '@tanstack/react-table-devtools'
 import compact from 'just-compact'
 import { type GetServerSideProps } from 'next'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { type Route } from 'nextjs-routes'
@@ -44,9 +45,13 @@ import { Link } from '@weareinreach/ui/components/core/Link'
 import { MultiSelectPopover } from '@weareinreach/ui/components/data-portal/MultiSelectPopover'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { Icon } from '@weareinreach/ui/icon'
-import { QuickPromotionModal } from '@weareinreach/ui/modals'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
+// import { QuickPromotionModal } from '@weareinreach/ui/modals'
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
+const QuickPromotionModal = dynamic(() =>
+	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
+)
 
 const RESULTS_PER_PAGE = 20
 
@@ -62,7 +67,7 @@ const QuickLink = () => {
 	const [overlay, setOverlay] = useState(sessionStatus === 'unauthenticated')
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const router = useRouter()
-	const apiUtils = api.useContext()
+	const apiUtils = api.useUtils()
 	const variants = useCustomVariant()
 	const updateEmails = api.quicklink.updateEmailData.useMutation({
 		onSuccess: () => {
@@ -405,7 +410,7 @@ const QuickLink = () => {
 				<>
 					<Space h={400} />
 					<Overlay blur={2}>
-						<QuickPromotionModal autoLaunch noClose />
+						<QuickPromotionModal component='button' autoLaunch noClose />
 					</Overlay>
 				</>
 			) : !isLoading && !form.values.data?.length ? (

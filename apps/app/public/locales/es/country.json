@@ -312,8 +312,8 @@
 	},
 	"DOM": {
 		"name": "República Dominicana",
-		"demonym_one": "Dominicane",
-		"demonym_other": "Dominicanes"
+		"demonym_one": "Dominicano",
+		"demonym_other": "Dominicanos"
 	},
 	"DZA": {
 		"name": "Argelia",
@@ -401,7 +401,7 @@
 		"demonym_other": "Gigantes"
 	},
 	"GGY": {
-		"name": "Guernesey",
+		"name": "Guernsey",
 		"demonym_one": "Isla del Canal",
 		"demonym_other": "Islas del canal"
 	},
@@ -520,8 +520,8 @@
 	},
 	"IOT": {
 		"name": "Territorio Británico del Océano Índico",
-		"demonym_one": "Indie",
-		"demonym_other": "Indies"
+		"demonym_one": "Indio",
+		"demonym_other": "Indios"
 	},
 	"IRL": {
 		"name": "Irlanda",
@@ -560,8 +560,8 @@
 	},
 	"JEY": {
 		"name": "Jersey",
-		"demonym_one": "Isleñe del Canal",
-		"demonym_other": "Isleñes del Canal"
+		"demonym_one": "Isla del Canal",
+		"demonym_other": "Islas del canal"
 	},
 	"JOR": {
 		"name": "Jordán",
@@ -619,7 +619,7 @@
 		"demonym_other": "Laotianos"
 	},
 	"LBN": {
-		"name": "Líbano",
+		"name": "Lebanon",
 		"demonym_one": "Líbano",
 		"demonym_other": "Lebaneses"
 	},
@@ -826,7 +826,7 @@
 	"NLD": {
 		"name": "Países Bajos",
 		"demonym_one": "Holandés",
-		"demonym_other": "Duchas"
+		"demonym_other": "Holandés"
 	},
 	"NOR": {
 		"name": "Noruega",
@@ -978,8 +978,8 @@
 	},
 	"SJM": {
 		"name": "Svalbard y Jan Mayen",
-		"demonym_one": "Noruegue",
-		"demonym_other": "Noruegues"
+		"demonym_one": "Noruego",
+		"demonym_other": "Noruego"
 	},
 	"SLB": {
 		"name": "Islas Salomón",
@@ -1153,8 +1153,8 @@
 	},
 	"UMI": {
 		"name": "Islas Menores Periféricas de Estados Unidos",
-		"demonym_one": "Americane",
-		"demonym_other": "Americanes"
+		"demonym_one": "Americano",
+		"demonym_other": "Americanos"
 	},
 	"UNK": {
 		"name": "Kosovo",
@@ -1168,8 +1168,8 @@
 	},
 	"USA": {
 		"name": "Estados Unidos",
-		"demonym_one": "Americane",
-		"demonym_other": "Americanes"
+		"demonym_one": "Americano",
+		"demonym_other": "Americanos"
 	},
 	"UZB": {
 		"name": "Uzbekistan",
@@ -1178,8 +1178,8 @@
 	},
 	"VAT": {
 		"name": "Ciudad del Vaticano",
-		"demonym_one": "Italiane",
-		"demonym_other": "Italianes"
+		"demonym_one": "Italiano",
+		"demonym_other": "Italianos"
 	},
 	"VCT": {
 		"name": "San Vicente y las Granadinas",
@@ -1198,8 +1198,8 @@
 	},
 	"VIR": {
 		"name": "Islas Virgen de los Estados Unidos",
-		"demonym_one": "Isleñe de Virgen",
-		"demonym_other": "Isleñes de Virgen"
+		"demonym_one": "Isla Virgen",
+		"demonym_other": "Islas Virgen"
 	},
 	"VNM": {
 		"name": "Vietnam",

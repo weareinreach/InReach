@@ -171,7 +171,7 @@ export const orgEmail = {
 	upsertMany: getTRPCMock({
 		path: ['orgEmail', 'upsertMany'],
 		type: 'mutation',
-		response: (input) => [],
+		response: () => [],
 	}),
 	forContactInfo: getTRPCMock({
 		path: ['orgEmail', 'forContactInfo'],

@@ -29,7 +29,7 @@ export const byOrgLocationId = async ({ input }: TRPCHandlerParams<TByOrgLocatio
 									},
 								},
 							},
-							category: {
+							primaryCategory: {
 								select: {
 									tsKey: true,
 									tsNs: true,

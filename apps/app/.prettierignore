@@ -1,6 +1,5 @@
 node_modules
 .next
-public
 storybook-static
 dist
 
@@ -12,3 +11,4 @@ pnpm-lock.yaml
 .prettierignore
 .DS_Store
 .eslintignore
+.trace/*.json

@@ -6,33 +6,38 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 import { type TForVisitCardSchema } from './query.forVisitCard.schema'
 
 export const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSchema>) => {
-	const result = await prisma.orgLocation.findUniqueOrThrow({
-		where: {
-			...globalWhere.isPublic(),
-			id: input,
-		},
-		select: {
-			id: true,
-			name: true,
-			street1: true,
-			street2: true,
-			city: true,
-			postCode: true,
-			country: { select: { cca2: true } },
-			govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
-			attributes: {
-				where: { attribute: { tsKey: 'additional.offers-remote-services' } },
-				select: { attribute: { select: { tsKey: true, icon: true } } },
+	try {
+		const result = await prisma.orgLocation.findUniqueOrThrow({
+			where: {
+				...globalWhere.isPublic(),
+				id: input,
+				notVisitable: { not: true },
 			},
-			latitude: true,
-			longitude: true,
-		},
-	})
-	const { attributes, ...rest } = result
-	const transformed = {
-		...rest,
-		remote: attributes.find(({ attribute }) => attribute.tsKey === 'additional.offers-remote-services')
-			?.attribute,
+			select: {
+				id: true,
+				name: true,
+				street1: true,
+				street2: true,
+				city: true,
+				postCode: true,
+				country: { select: { cca2: true } },
+				govDist: { select: { abbrev: true, tsKey: true, tsNs: true } },
+				attributes: {
+					where: { attribute: { tsKey: 'additional.offers-remote-services' } },
+					select: { attribute: { select: { tsKey: true, icon: true } } },
+				},
+				latitude: true,
+				longitude: true,
+			},
+		})
+		const { attributes, ...rest } = result
+		const transformed = {
+			...rest,
+			remote: attributes.find(({ attribute }) => attribute.tsKey === 'additional.offers-remote-services')
+				?.attribute,
+		}
+		return transformed
+	} catch (err) {
+		return handleError(err)
 	}
-	return transformed
 }

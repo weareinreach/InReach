@@ -290,7 +290,7 @@ export const serviceData = {
 		services: [
 			{
 				id: 'svtg_01GW2HHFBRPBXSYN12DWNEAJJ7',
-				categoryId: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
+				primaryCategoryId: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 			},
 		],
 		serviceAreas: {
@@ -515,7 +515,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'abortion-care.abortion-providers',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVBM0ZHVJ295P2QKR6H',
 				active: true,
 				tsKey: 'abortion-care.CATEGORYNAME',
@@ -527,7 +527,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'abortion-care.financial-assistance',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVBM0ZHVJ295P2QKR6H',
 				active: true,
 				tsKey: 'abortion-care.CATEGORYNAME',
@@ -539,7 +539,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'abortion-care.lodging-assistance',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVBM0ZHVJ295P2QKR6H',
 				active: true,
 				tsKey: 'abortion-care.CATEGORYNAME',
@@ -551,7 +551,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'abortion-care.mail-order-services',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVBM0ZHVJ295P2QKR6H',
 				active: true,
 				tsKey: 'abortion-care.CATEGORYNAME',
@@ -563,7 +563,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'abortion-care.mental-health-support',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVBM0ZHVJ295P2QKR6H',
 				active: true,
 				tsKey: 'abortion-care.CATEGORYNAME',
@@ -575,7 +575,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'abortion-care.travel-assistance',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVBM0ZHVJ295P2QKR6H',
 				active: true,
 				tsKey: 'abortion-care.CATEGORYNAME',
@@ -587,7 +587,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'community-support.cultural-centers',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVCXGK9GPK6SAZ2Q7E3',
 				active: true,
 				tsKey: 'community-support.CATEGORYNAME',
@@ -599,7 +599,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'community-support.lgbtq-centers',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVCXGK9GPK6SAZ2Q7E3',
 				active: true,
 				tsKey: 'community-support.CATEGORYNAME',
@@ -611,7 +611,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'community-support.reception-services',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVCXGK9GPK6SAZ2Q7E3',
 				active: true,
 				tsKey: 'community-support.CATEGORYNAME',
@@ -623,7 +623,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'community-support.sponsors',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVCXGK9GPK6SAZ2Q7E3',
 				active: true,
 				tsKey: 'community-support.CATEGORYNAME',
@@ -635,7 +635,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'community-support.spiritual-support',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVCXGK9GPK6SAZ2Q7E3',
 				active: true,
 				tsKey: 'community-support.CATEGORYNAME',
@@ -647,7 +647,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'computers-and-internet.computers-and-internet',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVDKRVB42KT85KA3FM3',
 				active: true,
 				tsKey: 'computers-and-internet.CATEGORYNAME',
@@ -659,7 +659,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'education-and-employment.career-counseling',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
 				active: true,
 				tsKey: 'education-and-employment.CATEGORYNAME',
@@ -671,7 +671,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'education-and-employment.educational-support-for-lgbtq-youth',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
 				active: true,
 				tsKey: 'education-and-employment.CATEGORYNAME',
@@ -683,7 +683,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'education-and-employment.english-classes',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
 				active: true,
 				tsKey: 'education-and-employment.CATEGORYNAME',
@@ -695,7 +695,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'education-and-employment.language-classes',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
 				active: true,
 				tsKey: 'education-and-employment.CATEGORYNAME',
@@ -707,7 +707,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'education-and-employment.leadership-training-and-professional-development',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
 				active: true,
 				tsKey: 'education-and-employment.CATEGORYNAME',
@@ -719,7 +719,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'education-and-employment.libraries',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
 				active: true,
 				tsKey: 'education-and-employment.CATEGORYNAME',
@@ -731,7 +731,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'education-and-employment.scholarships',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVDX898ZT0QGM471WMV',
 				active: true,
 				tsKey: 'education-and-employment.CATEGORYNAME',
@@ -743,7 +743,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'food.food',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVFXW9YFMK4R95ZHBPV',
 				active: true,
 				tsKey: 'food.CATEGORYNAME',
@@ -755,7 +755,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'food.food-assistance',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVFXW9YFMK4R95ZHBPV',
 				active: true,
 				tsKey: 'food.CATEGORYNAME',
@@ -767,7 +767,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'housing.drop-in-centers-for-lgbtq-youth',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVF8W7D67CH3NVSQYA6',
 				active: true,
 				tsKey: 'housing.CATEGORYNAME',
@@ -779,7 +779,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'housing.emergency-housing',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVF8W7D67CH3NVSQYA6',
 				active: true,
 				tsKey: 'housing.CATEGORYNAME',
@@ -791,7 +791,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'housing.housing-information-and-referrals',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVF8W7D67CH3NVSQYA6',
 				active: true,
 				tsKey: 'housing.CATEGORYNAME',
@@ -803,7 +803,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'housing.short-term-housing',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVF8W7D67CH3NVSQYA6',
 				active: true,
 				tsKey: 'housing.CATEGORYNAME',
@@ -815,7 +815,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'housing.trans-housing',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVF8W7D67CH3NVSQYA6',
 				active: true,
 				tsKey: 'housing.CATEGORYNAME',
@@ -827,7 +827,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'hygiene-and-clothing.clothes',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVGD7CE9VKYVSZYYTPS',
 				active: true,
 				tsKey: 'hygiene-and-clothing.CATEGORYNAME',
@@ -839,7 +839,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'hygiene-and-clothing.gender-affirming-items',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVGD7CE9VKYVSZYYTPS',
 				active: true,
 				tsKey: 'hygiene-and-clothing.CATEGORYNAME',
@@ -851,7 +851,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'hygiene-and-clothing.gender-neutral-bathrooms',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVGD7CE9VKYVSZYYTPS',
 				active: true,
 				tsKey: 'hygiene-and-clothing.CATEGORYNAME',
@@ -863,7 +863,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'hygiene-and-clothing.haircuts-and-stylists',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVGD7CE9VKYVSZYYTPS',
 				active: true,
 				tsKey: 'hygiene-and-clothing.CATEGORYNAME',
@@ -875,7 +875,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'hygiene-and-clothing.hygiene',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVGD7CE9VKYVSZYYTPS',
 				active: true,
 				tsKey: 'hygiene-and-clothing.CATEGORYNAME',
@@ -887,7 +887,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.asylum-application',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -899,7 +899,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.citizenship',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -911,7 +911,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.crime-and-discrimination',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -923,7 +923,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.deferred-action-for-childhood-arrivals-daca',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -935,7 +935,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.deportation-or-removal',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -947,7 +947,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.employment-authorization',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -959,7 +959,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.family-petitions',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -971,7 +971,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.immigration-detention',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -983,7 +983,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.legal-advice',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -995,7 +995,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.legal-hotlines',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -1007,7 +1007,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.name-and-gender-change',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -1019,7 +1019,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.refugee-claim',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -1031,7 +1031,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.residency',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -1043,7 +1043,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.special-immigrant-juvenile-status-sijs',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -1055,7 +1055,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.t-visa',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -1067,7 +1067,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'legal.u-visa',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVH75KPRYKD49EJHYXX',
 				active: true,
 				tsKey: 'legal.CATEGORYNAME',
@@ -1079,7 +1079,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.covid-19-services',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1091,7 +1091,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.dental-care',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1103,7 +1103,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.hiv-and-sexual-health',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1115,7 +1115,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.medical-clinics',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1127,7 +1127,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.obgyn-services',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1139,7 +1139,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.physical-evaluations-for-asylum-claim',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1151,7 +1151,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.physical-evaluations-for-refugee-claim',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1163,7 +1163,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.trans-health',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1175,7 +1175,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.trans-health-gender-affirming-surgery',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1187,7 +1187,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.trans-health-hormone-and-surgery-letters',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1199,7 +1199,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.trans-health-hormone-therapy',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1211,7 +1211,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.trans-health-primary-care',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1223,7 +1223,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'medical.trans-health-speech-therapy',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVKVHTWSBY7PVWC5390',
 				active: true,
 				tsKey: 'medical.CATEGORYNAME',
@@ -1235,7 +1235,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'mental-health.bipoc-support-groups',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
 				active: true,
 				tsKey: 'mental-health.CATEGORYNAME',
@@ -1247,7 +1247,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'mental-health.hotlines',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
 				active: true,
 				tsKey: 'mental-health.CATEGORYNAME',
@@ -1259,7 +1259,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'mental-health.private-therapy-and-counseling',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
 				active: true,
 				tsKey: 'mental-health.CATEGORYNAME',
@@ -1271,7 +1271,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'mental-health.psychological-evaluations-for-asylum-claim',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
 				active: true,
 				tsKey: 'mental-health.CATEGORYNAME',
@@ -1283,7 +1283,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'mental-health.psychological-evaluations-for-refugee-claim',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
 				active: true,
 				tsKey: 'mental-health.CATEGORYNAME',
@@ -1295,7 +1295,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'mental-health.substance-use',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
 				active: true,
 				tsKey: 'mental-health.CATEGORYNAME',
@@ -1307,7 +1307,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'mental-health.support-for-caregivers-of-trans-youth',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
 				active: true,
 				tsKey: 'mental-health.CATEGORYNAME',
@@ -1319,7 +1319,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'mental-health.support-for-conversion-therapy-survivors',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
 				active: true,
 				tsKey: 'mental-health.CATEGORYNAME',
@@ -1331,7 +1331,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'mental-health.support-groups',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
 				active: true,
 				tsKey: 'mental-health.CATEGORYNAME',
@@ -1343,7 +1343,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'mental-health.trans-support-groups',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVMEF7DMG9WHP0JM2ZZ',
 				active: true,
 				tsKey: 'mental-health.CATEGORYNAME',
@@ -1355,7 +1355,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'sports-and-entertainment.sports-and-entertainment',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVPE008PHCPNHZDAWMS',
 				active: true,
 				tsKey: 'sports-and-entertainment.CATEGORYNAME',
@@ -1367,7 +1367,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'translation-and-interpretation.general-translation-and-interpretation',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVPFRQR07PTHMWJDDKS',
 				active: true,
 				tsKey: 'translation-and-interpretation.CATEGORYNAME',
@@ -1379,7 +1379,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'translation-and-interpretation.for-healthcare',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVPFRQR07PTHMWJDDKS',
 				active: true,
 				tsKey: 'translation-and-interpretation.CATEGORYNAME',
@@ -1391,7 +1391,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'translation-and-interpretation.for-legal-services',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVPFRQR07PTHMWJDDKS',
 				active: true,
 				tsKey: 'translation-and-interpretation.CATEGORYNAME',
@@ -1403,7 +1403,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'transportation.transit-passes-and-discounts',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVPXANJ6MPCDE0S4CWT',
 				active: true,
 				tsKey: 'transportation.CATEGORYNAME',
@@ -1415,7 +1415,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'transportation.transportation-assistance',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVPXANJ6MPCDE0S4CWT',
 				active: true,
 				tsKey: 'transportation.CATEGORYNAME',
@@ -1427,7 +1427,7 @@ export const serviceData = {
 			active: true,
 			tsKey: 'mail.mail',
 			tsNs: 'services',
-			category: {
+			primaryCategory: {
 				id: 'svct_01GW2HHEVQ0VE6E94T3CZWEW9F',
 				active: true,
 				tsKey: 'mail.CATEGORYNAME',

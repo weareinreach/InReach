@@ -1,3 +1,4 @@
+/* eslint-disable deprecation/deprecation */
 import { prisma } from '~db/index'
 import { type ListrJob, type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'

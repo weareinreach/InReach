@@ -14,7 +14,7 @@
 		"cultural-centers": "Cultural centers",
 		"lgbtq-centers": "LGBTQ centers",
 		"reception-services": "Reception services",
-		"reentry-services": "Re-entry services",
+		"reentry-services": "Incarceration and re-entry services",
 		"spiritual-support": "Spiritual support",
 		"sponsors": "Immigration sponsorship"
 	},
@@ -52,7 +52,7 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "Hygiene and Clothing",
 		"clothes": "Clothes",
-		"gender-affirming-items": "Gender-affirming items",
+		"gender-affirming-items": "Gender affirming items",
 		"gender-neutral-bathrooms": "Gender-neutral bathrooms",
 		"haircuts-and-stylists": "Haircuts and stylists",
 		"hygiene": "Hygiene"
@@ -75,7 +75,7 @@
 		"immigration-detention": "Immigration detention",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "Legal hotlines",
-		"name-and-gender-change": "Name and gender change",
+		"name-and-gender-change": "Name and gender marker change",
 		"refugee-claim": "Refugee claim",
 		"residency": "Residency",
 		"special-immigrant-juvenile-status-sijs": "Special Immigrant Juvenile Status (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Trans health - hormone and surgery letters",
 		"trans-health-hormone-therapy": "Trans health - hormone therapy",
 		"trans-health-primary-care": "Trans health - primary care",
-		"trans-health-speech-therapy": "Trans health - speech therapy"
+		"trans-health-speech-therapy": "Trans health - speech therapy",
+		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Mental Health",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Entertainment and Activities",
 		"art-music-literature": "Art, music, and literature",
 		"sports-and-entertainment": "Sports and entertainment"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Trans Focused Services",
+		"transport-gacare": "Transportation for gender affirming care",
+		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Translation and Interpretation",

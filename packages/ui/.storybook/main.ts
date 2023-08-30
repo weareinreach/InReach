@@ -15,7 +15,6 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const getAbsolutePath = (value: string) => {
 	const abPath = dirname(require.resolve(join(value, 'package.json')))
-	console.log(abPath)
 	return abPath
 }
 
@@ -32,6 +31,7 @@ const config: StorybookConfig = {
 		getAbsolutePath('@storybook/addon-essentials'),
 		getAbsolutePath('@geometricpanda/storybook-addon-badges'),
 		getAbsolutePath('@storybook/addon-a11y'),
+		// eslint-disable-next-line storybook/no-uninstalled-addons
 		'@tomfreudenberg/next-auth-mock/storybook', // This addon doesn't like to be wrapped.
 		getAbsolutePath('@storybook/addon-designs'),
 		getAbsolutePath('storybook-addon-pseudo-states'),

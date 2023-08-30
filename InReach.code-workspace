@@ -37,12 +37,20 @@
 			"path": "./packages/api"
 		},
 		{
+			"name": "🤷🏻 Analytics (@weareinreach/analytics)",
+			"path": "./packages/analytics"
+		},
+		{
 			"name": "🔐 Authentication (@weareinreach/auth)",
 			"path": "./packages/auth"
 		},
 		{
 			"name": "🛠️ Utilities (@weareinreach/util)",
 			"path": "./packages/util"
+		},
+		{
+			"name": "📦 Crowdin Client (@weareinreach/crowdin)",
+			"path": "./packages/crowdin"
 		},
 		{
 			"name": "⚙️ Environment Variables (@weareinreach/env)",
@@ -162,7 +170,11 @@
 		"explorer.fileNesting.patterns": {
 			"*.tsx": "${capture}.ts, ${capture}.stories.tsx",
 			"*.ts": "${capture}.ts, ${capture}.stories.tsx",
-			"*eslintrc.js": ".eslintignore, .eslintcache"
+			"*eslintrc.js": ".eslintignore, .eslintcache",
+			"package.json": "pnpm-lock*.yaml, pnpm-workspace.yaml, .nvmrc",
+			"*prettierrc.js": ".prettierignore, .prettiercache, .editorconfig",
+			"vercel.json": ".vercelignore",
+			"README.md": "LICENSE.md"
 		},
 		"files.exclude": {
 			".next/": true,

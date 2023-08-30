@@ -106,7 +106,7 @@ const languageSelect = {
 		languageName: true,
 		nativeName: true,
 	},
-} satisfies Prisma.LanguageArgs
+} satisfies Prisma.LanguageDefaultArgs
 
 const orgWebsiteInclude = {
 	where: isPublic,
@@ -140,25 +140,25 @@ const govDistInclude = {
 		tsNs: true,
 		abbrev: true,
 	},
-} satisfies Prisma.GovDistArgs
+} satisfies Prisma.GovDistDefaultArgs
 
 const serviceAreaInclude = {
 	select: {
 		countries: { select: { country: countryWithoutGeo } },
 		districts: { select: { govDist: govDistInclude } },
 	},
-} satisfies Prisma.ServiceAreaArgs
+} satisfies Prisma.ServiceAreaDefaultArgs
 const attributeDefInclude = {
 	select: {
 		categories: { select: { category: { select: { icon: true, ns: true, tag: true } } } },
 	},
-} satisfies Prisma.AttributeArgs
+} satisfies Prisma.AttributeDefaultArgs
 const serviceTagInclude = {
 	select: {
 		name: true,
 		tsKey: true,
 		tsNs: true,
-		category: {
+		primaryCategory: {
 			select: {
 				tsKey: true,
 				tsNs: true,
@@ -166,14 +166,14 @@ const serviceTagInclude = {
 		},
 		defaultAttributes: { select: { attribute: attributeDefInclude } },
 	},
-} satisfies Prisma.ServiceTagArgs
+} satisfies Prisma.ServiceTagDefaultArgs
 const orgServiceTagInclude = {
 	select: { tag: serviceTagInclude },
-} satisfies Prisma.OrgServiceTagArgs
+} satisfies Prisma.OrgServiceTagDefaultArgs
 
 const serviceAccessInclude = {
 	select: attributeInclude.select,
-} satisfies Prisma.ServiceAccessAttributeArgs
+} satisfies Prisma.ServiceAccessAttributeDefaultArgs
 const reviewIds = {
 	where: {
 		visible: true,
@@ -296,7 +296,7 @@ export const organizationInclude = (ctx: Omit<Context, 'prisma'>) =>
 		},
 	}) satisfies Pick<Prisma.OrganizationFindUniqueOrThrowArgs, 'select'>
 
-const selectServCat = {
+export const selectServCat = {
 	select: {
 		services: {
 			select: {
@@ -373,7 +373,7 @@ const selectServ = {
 			where: {
 				tag: {
 					active: true,
-					category: {
+					primaryCategory: {
 						active: true,
 					},
 				},
@@ -384,7 +384,7 @@ const selectServ = {
 						id: true,
 						tsKey: true,
 						tsNs: true,
-						category: {
+						primaryCategory: {
 							select: {
 								id: true,
 								tsKey: true,

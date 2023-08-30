@@ -17,7 +17,7 @@
 			"6": "cuidadores de la juventud LGBTQ+"
 		},
 		"find-resources": "<Text>Encontrar verificado </Text><Service></Service><Text> por </Text><Community></Community><Text> con InReach.</Text>",
-		"heading": "Encontrar recursos de LGBTQ+.",
+		"heading": "Encuentra recursos LGBTQ+.",
 		"privacy-disclaimer": "Tu respuesta es anónima y no está conectada a ti como usuario individual. Lee nuestra <Link>política de privacidad</Link> para obtener más información.",
 		"services": {
 			"0": "atención médica",
@@ -34,7 +34,7 @@
 		"subheading": "Bienvenide a la primera plataforma tecnológica del mundo que conecta a personas TLGBQ+ (transgénero, lesbiano, gay, bisexual, y más identidades) que sufren discriminación y persecución con recursos seguros y verificados."
 	},
 	"values": {
-		"free": "<Title2>Gratis para siempre 🔑</Title2>\n<Text>Nuestra plataforma de tecnología es 100% gratuita para todos para asegurar que la ayuda segura sea siempre InReach.</Text>\n<LinkFree>Dona para ayudarnos a mantener nuestra plataforma libre</LinkFree>",
+		"free": "<Title2>Gratis para siempre 🔑</Title2>\n<Text>Nuestra plataforma tecnológica es 100% gratuita para todes, para garantizar que la ayuda segura siempre esté InReach(\"Al Alcance\"). </Text>\n<LinkFree>Dona para ayudarnos a mantener nuestra plataforma gratis.</LinkFree>",
 		"innovative": "<Title2>Innovación ✨</Title2>\n<Text>Somos la primera plataforma tecnológica del mundo que conecta a las personas LGBTQ+ que sufren discriminación y persecución con recursos seguros e independientemente verificados.</Text>\n<LinkInnovative>Ve nuestro código fuente y contribuye.</LinkInnovative>",
 		"intersectional": "<Title2>Interseccional ✊🏿✊🏾✊🏽</Title2>\n<Text>Creemos que la igualdad LGBTQ+ requiere justicia para personas trans, justicia para refugiades, justicia racial, justicia reproductiva, justicia lingüística y más.</Text>\n<LinkIntersect>Conoce más sobre nuestro proceso de selección</LinkIntersect>",
 		"our-values": "Nuestros valores",

@@ -12,6 +12,7 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
+import regexEscape from 'escape-string-regexp'
 import { localeIncludes } from 'locale-includes'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
@@ -26,6 +27,7 @@ import {
 } from 'react'
 import reactStringReplace from 'react-string-replace'
 
+import { searchBoxEvent } from '@weareinreach/analytics/events'
 import { type ApiOutput } from '@weareinreach/api'
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -216,7 +218,7 @@ export const SearchBox = ({
 			router.push({
 				pathname: '/search/[...params]',
 				query: {
-					params: params.data,
+					params: params.data.map((val) => val.toString()),
 				},
 			})
 			setLoading(false)
@@ -252,7 +254,7 @@ export const SearchBox = ({
 	) satisfies Partial<AutocompleteProps>
 
 	const matchText = (result: string, textToMatch: string) => {
-		const matcher = new RegExp(`(${textToMatch})`, 'ig')
+		const matcher = new RegExp(`(${regexEscape(textToMatch)})`, 'ig')
 		const replaced = reactStringReplace(result, matcher, (match, i) => (
 			<span key={i} className={classes.matchedText}>
 				{match}
@@ -314,6 +316,7 @@ export const SearchBox = ({
 				return
 			}
 			searchStateActions.setSearchTerm(item.value)
+			searchBoxEvent.searchOrg(search, item.value)
 			router.push({
 				pathname: '/org/[slug]',
 				query: {
@@ -326,6 +329,7 @@ export const SearchBox = ({
 				setLoading(false)
 				return
 			}
+			searchBoxEvent.searchLocation(item.value, item.placeId)
 			searchStateActions.setSearchTerm(item.value)
 			setLocationSearch(item.placeId)
 		}

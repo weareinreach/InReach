@@ -6,7 +6,7 @@
 		"geo-public-transit-description": "Transpò piblik/direksyon espesifik",
 		"has-confidentiality-policy": "Gen yon règleman konfidansyalite",
 		"offers-remote-services": "Remote",
-		"private-practice": "Prive Pratike",
+		"private-practice": "Private Practice",
 		"religiously-affiliated": "Relijyezman afilye",
 		"time-walk-in": "Gen mache-nan èdtan",
 		"wheelchair-accessible_false": "Pa aksesib",
@@ -66,7 +66,7 @@
 		"undocumented": "Opòtinite ki sèvi imigran san papye"
 	},
 	"cost": {
-		"CATEGORYNAME": "Pri",
+		"CATEGORYNAME": "Cost",
 		"cost-fees": "Incurs yon pri",
 		"cost-free": "Gratis nan pri"
 	},
@@ -76,8 +76,8 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Kondisyon pou Kalifikasyon",
-		"elig-age_max": "Anba {{max}}",
-		"elig-age_min": "{{min}} ak pi gran",
+		"elig-age_max": "Under {{max}}",
+		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Lòt (deskripsyon tèks gratis)",
 		"req-medical-insurance": "Mande asirans medikal",
@@ -89,7 +89,7 @@
 		"time-appointment-required": "Randevou Tan Egzije"
 	},
 	"lang": {
-		"CATEGORYNAME": "Lang",
+		"CATEGORYNAME": "Languages",
 		"all-languages-by-interpreter": "Tout lang atravè entèprèt",
 		"american-sign-language": "Lang Siy Ameriken",
 		"lang-offered": "Lang espesifik yo ofri"
@@ -154,7 +154,7 @@
 		"grassroots-direct": "Grassroots dirèk sèvis òganizasyon",
 		"healthcare": "Founisè swen sante",
 		"lawyer": "Avoka",
-		"other": "Lòt (tanpri presize)",
+		"other": "Other (please specify)",
 		"paralegal": "Paralegal oswa lòt anplwaye sipò legal",
 		"social-worker": "Travayè sosyal",
 		"student-club": "Klib elèv",

@@ -18,7 +18,7 @@ export const getBaseUrl = () => {
 	return `http://localhost:${getEnv('PORT') ?? process.env.STORYBOOK ? 6006 : 3000}` // dev SSR should use localhost
 }
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development' && process.env.VERCEL !== '1'
 
 export const nextTRPC = () =>
 	createTRPCNext<AppRouter>({
@@ -26,12 +26,16 @@ export const nextTRPC = () =>
 			return {
 				transformer,
 				links: [
-					devtoolsLink({
-						enabled: isDev,
-					}),
-					loggerLink({
-						enabled: () => isDev,
-					}),
+					...(isDev
+						? [
+								devtoolsLink({
+									enabled: isDev,
+								}),
+								loggerLink({
+									enabled: () => isDev,
+								}),
+						  ]
+						: []),
 					httpBatchStreamLink({
 						url: `${getBaseUrl()}/api/trpc`,
 					}),

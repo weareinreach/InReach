@@ -322,10 +322,10 @@
 	},
 	"COG": {
 		"name": "Republika Konga",
-		"demonym_one": "Kongijczyk",
-		"demonym_few": "Kongijczyk",
-		"demonym_many": "Kongijczyk",
-		"demonym_other": "Kongijczyk"
+		"demonym_one": "Congolese",
+		"demonym_few": "Congolese",
+		"demonym_many": "Congolese",
+		"demonym_other": "Congolese"
 	},
 	"COK": {
 		"name": "Wyspy Cooka",
@@ -434,10 +434,10 @@
 	},
 	"DOM": {
 		"name": "Republika Dominikany",
-		"demonym_one": "dominikański",
-		"demonym_few": "Dominikanów",
-		"demonym_many": "Dominikanów",
-		"demonym_other": "Dominikanów"
+		"demonym_one": "Dominikan",
+		"demonym_few": "Dominikany",
+		"demonym_many": "Dominikany",
+		"demonym_other": "Dominikany"
 	},
 	"DZA": {
 		"name": "Algieria",
@@ -518,10 +518,10 @@
 	},
 	"FRA": {
 		"name": "Francja",
-		"demonym_one": "Francuz",
-		"demonym_few": "Francuz",
-		"demonym_many": "Francuz",
-		"demonym_other": "Francuz"
+		"demonym_one": "Francuski",
+		"demonym_few": "Francuski",
+		"demonym_many": "Francuski",
+		"demonym_other": "Francuski"
 	},
 	"FRO": {
 		"name": "Wyspy Owcze",
@@ -724,10 +724,10 @@
 	},
 	"IOT": {
 		"name": "Brytyjskie terytorium Oceanu Indyjskiego",
-		"demonym_one": "indyjski",
-		"demonym_few": "Indianie",
-		"demonym_many": "Indianie",
-		"demonym_other": "Indianie"
+		"demonym_one": "Indyjski",
+		"demonym_few": "Hinduski",
+		"demonym_many": "Hinduski",
+		"demonym_other": "Hinduski"
 	},
 	"IRL": {
 		"name": "Irlandia",
@@ -779,11 +779,11 @@
 		"demonym_other": "Jamajczycy"
 	},
 	"JEY": {
-		"name": "sweter",
-		"demonym_one": "Channel Islander",
-		"demonym_few": "Channel Islanders",
-		"demonym_many": "Channel Islanders",
-		"demonym_other": "Channel Islanders"
+		"name": "Jersey",
+		"demonym_one": "Wyspa Normandzka",
+		"demonym_few": "Wyspy Normandzkie",
+		"demonym_many": "Wyspy Normandzkie",
+		"demonym_other": "Wyspy Normandzkie"
 	},
 	"JOR": {
 		"name": "Jordan",
@@ -863,7 +863,7 @@
 		"demonym_other": "Laotańczyków"
 	},
 	"LBN": {
-		"name": "Liban",
+		"name": "Lebanon",
 		"demonym_one": "libański",
 		"demonym_few": "libański",
 		"demonym_many": "libański",
@@ -934,10 +934,10 @@
 	},
 	"MAC": {
 		"name": "Makau",
-		"demonym_one": "chiński",
-		"demonym_few": "chiński",
-		"demonym_many": "chiński",
-		"demonym_other": "chiński"
+		"demonym_one": "Chiński",
+		"demonym_few": "Chiński",
+		"demonym_many": "Chiński",
+		"demonym_other": "Chiński"
 	},
 	"MAF": {
 		"name": "Święty Marcin",
@@ -1067,10 +1067,10 @@
 	},
 	"MTQ": {
 		"name": "Martynika",
-		"demonym_one": "Francuz",
-		"demonym_few": "Francuz",
-		"demonym_many": "Francuz",
-		"demonym_other": "Francuz"
+		"demonym_one": "Francuski",
+		"demonym_few": "Francuski",
+		"demonym_many": "Francuski",
+		"demonym_other": "Francuski"
 	},
 	"MUS": {
 		"name": "Mauritius",
@@ -1298,10 +1298,10 @@
 	},
 	"REU": {
 		"name": "Reunion",
-		"demonym_one": "Francuz",
-		"demonym_few": "Francuz",
-		"demonym_many": "Francuz",
-		"demonym_other": "Francuz"
+		"demonym_one": "Francuski",
+		"demonym_few": "Francuski",
+		"demonym_many": "Francuski",
+		"demonym_other": "Francuski"
 	},
 	"ROU": {
 		"name": "Rumunia",
@@ -1365,9 +1365,9 @@
 	"SJM": {
 		"name": "Svalbard i Jan Mayen",
 		"demonym_one": "norweski",
-		"demonym_few": "Norwegowie",
-		"demonym_many": "Norwegowie",
-		"demonym_other": "Norwegowie"
+		"demonym_few": "Norweski",
+		"demonym_many": "Norweski",
+		"demonym_other": "Norweski"
 	},
 	"SLB": {
 		"name": "Wyspy Salomona",
@@ -1406,10 +1406,10 @@
 	},
 	"SPM": {
 		"name": "Saint-Pierre i Miquelon",
-		"demonym_one": "Francuz",
-		"demonym_few": "Francuz",
-		"demonym_many": "Francuz",
-		"demonym_other": "Francuz"
+		"demonym_one": "Francuski",
+		"demonym_few": "Francuski",
+		"demonym_many": "Francuski",
+		"demonym_other": "Francuski"
 	},
 	"SRB": {
 		"name": "Serbia",
@@ -1609,7 +1609,7 @@
 	},
 	"UMI": {
 		"name": "Dalekie Wyspy Mniejsze Stanów Zjednoczonych",
-		"demonym_one": "amerykańskie",
+		"demonym_one": "Amerykański",
 		"demonym_few": "Amerykanie",
 		"demonym_many": "Amerykanie",
 		"demonym_other": "Amerykanie"
@@ -1630,7 +1630,7 @@
 	},
 	"USA": {
 		"name": "Stany Zjednoczone",
-		"demonym_one": "amerykańskie",
+		"demonym_one": "Amerykański",
 		"demonym_few": "Amerykanie",
 		"demonym_many": "Amerykanie",
 		"demonym_other": "Amerykanie"
@@ -1644,10 +1644,10 @@
 	},
 	"VAT": {
 		"name": "Watykan",
-		"demonym_one": "Włoski",
-		"demonym_few": "Włosi",
-		"demonym_many": "Włosi",
-		"demonym_other": "Włosi"
+		"demonym_one": "włoski",
+		"demonym_few": "Włoski",
+		"demonym_many": "Włoski",
+		"demonym_other": "Włoski"
 	},
 	"VCT": {
 		"name": "Saint Vincent i Grenadyny",
@@ -1672,10 +1672,10 @@
 	},
 	"VIR": {
 		"name": "Wyspy Dziewicze Stanów Zjednoczonych",
-		"demonym_one": "Wyspach Dziewiczych",
-		"demonym_few": "Wyspiarzy Dziewiczych",
-		"demonym_many": "Wyspiarzy Dziewiczych",
-		"demonym_other": "Wyspiarzy Dziewiczych"
+		"demonym_one": "Wyspa Dziewicza",
+		"demonym_few": "Wyspy Dziewicze",
+		"demonym_many": "Wyspy Dziewicze",
+		"demonym_other": "Wyspy Dziewicze"
 	},
 	"VNM": {
 		"name": "Wietnam",

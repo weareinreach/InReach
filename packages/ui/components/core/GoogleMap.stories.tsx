@@ -6,7 +6,6 @@ import { useGoogleMapMarker } from '~ui/hooks/useGoogleMapMarker'
 import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { trpc as api } from '~ui/lib/trpcClient'
-import { GoogleMapsProvider } from '~ui/providers/GoogleMaps'
 
 import { GoogleMap, type GoogleMapProps } from './GoogleMap'
 

@@ -21,6 +21,7 @@ export const env = createEnv({
 		COGNITO_SECRET: z.string(),
 		COGNITO_CLIENT_ID: z.string(),
 		COGNITO_CLIENT_SECRET: z.string(),
+		COGNITO_USER_POOL_ID: z.string(),
 		GOOGLE_PLACES_API_KEY: z.string(),
 		CROWDIN_TOKEN: z.string().optional(),
 		OTEL_SERVER: z.string().url().optional(),
@@ -42,54 +43,47 @@ export const env = createEnv({
 		NEXT_PUBLIC_GOOGLE_MAPS_API: z.string(),
 		NEXT_PUBLIC_VERCEL_URL: z.string().optional(),
 		NEXT_PUBLIC_VERCEL_ENV: z.enum(['production', 'development', 'preview']).optional(),
+		NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string(),
 	},
 	runtimeEnv: {
-		NODE_ENV: process.env.NODE_ENV,
-		DATABASE_URL: process.env.DATABASE_URL,
-		DB_DIRECT_URL: process.env.DB_DIRECT_URL,
-		KV_URL: process.env.KV_URL,
-		KV_REST_API_URL: process.env.KV_REST_API_URL,
-		KV_REST_API_TOKEN: process.env.KV_REST_API_TOKEN,
-		KV_REST_API_READ_ONLY_TOKEN: process.env.KV_REST_API_READ_ONLY_TOKEN,
-		EDGE_CONFIG: process.env.EDGE_CONFIG,
-		EDGE_CONFIG_TOKEN: process.env.EDGE_CONFIG_TOKEN,
-		FEATURE_FLAG_CONFIG: process.env.FEATURE_FLAG_CONFIG,
-		NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-		NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+		// Server
+		CI: process.env.CI,
 		COGNITO_ACCESS_KEY: process.env.COGNITO_ACCESS_KEY,
-		COGNITO_SECRET: process.env.COGNITO_SECRET,
 		COGNITO_CLIENT_ID: process.env.COGNITO_CLIENT_ID,
 		COGNITO_CLIENT_SECRET: process.env.COGNITO_CLIENT_SECRET,
-		GOOGLE_PLACES_API_KEY: process.env.GOOGLE_PLACES_API_KEY,
-		NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API,
-		CROWDIN_TOKEN: process.env.CROWDIN_TOKEN,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
-		PORT: process.env.PORT,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
-		OTEL_SERVER: process.env.OTEL_SERVER,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
+		COGNITO_SECRET: process.env.COGNITO_SECRET,
+		COGNITO_USER_POOL_ID: process.env.COGNITO_USER_POOL_ID,
 		CRON_KEY: process.env.CRON_KEY,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
+		CROWDIN_TOKEN: process.env.CROWDIN_TOKEN,
+		DATABASE_URL: process.env.DATABASE_URL,
+		DB_DIRECT_URL: process.env.DB_DIRECT_URL,
+		EDGE_CONFIG_TOKEN: process.env.EDGE_CONFIG_TOKEN,
+		EDGE_CONFIG: process.env.EDGE_CONFIG,
+		FEATURE_FLAG_CONFIG: process.env.FEATURE_FLAG_CONFIG,
+		GOOGLE_PLACES_API_KEY: process.env.GOOGLE_PLACES_API_KEY,
+		KV_REST_API_READ_ONLY_TOKEN: process.env.KV_REST_API_READ_ONLY_TOKEN,
+		KV_REST_API_TOKEN: process.env.KV_REST_API_TOKEN,
+		KV_REST_API_URL: process.env.KV_REST_API_URL,
+		KV_URL: process.env.KV_URL,
 		NEXT_RUNTIME: process.env.NEXT_RUNTIME,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
-		VERCEL: process.env.VERCEL,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
-		CI: process.env.CI,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
-		VERCEL_URL: process.env.VERCEL_URL,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
+		NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+		NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+		NODE_ENV: process.env.NODE_ENV,
+		OTEL_SERVER: process.env.OTEL_SERVER,
+		PORT: process.env.PORT,
 		VERCEL_ENV: process.env.VERCEL_ENV,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
-		NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
+		VERCEL_URL: process.env.VERCEL_URL,
+		VERCEL: process.env.VERCEL,
+
+		// Client
+		NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
+		NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API,
 		NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
+		NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
 	},
 	skipValidation:
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
 		process.env.NODE_ENV === 'development' ||
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
 		process.env.SKIP_ENV_VALIDATION === 'true' ||
-		// eslint-disable-next-line turbo/no-undeclared-env-vars
 		Boolean(process.env.CI) ||
 		isChromatic(),
 })

@@ -37,7 +37,7 @@
 		"scholarships": "Scholarships"
 	},
 	"food": {
-		"CATEGORYNAME": "Chakula",
+		"CATEGORYNAME": "Food",
 		"food": "Chakula",
 		"food-assistance": "Msaada wa chakula"
 	},
@@ -52,7 +52,7 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "Usafi na Mavazi",
 		"clothes": "Nguo",
-		"gender-affirming-items": "Vitu vinavyothibitisha jinsia",
+		"gender-affirming-items": "Gender affirming items",
 		"gender-neutral-bathrooms": "Bafu zisizo na jinsia",
 		"haircuts-and-stylists": "Haircuts na stylists",
 		"hygiene": "Usafi"
@@ -75,7 +75,7 @@
 		"immigration-detention": "Uhamiaji kizuizini",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "Hotlines kisheria",
-		"name-and-gender-change": "Jina na mabadiliko ya jinsia",
+		"name-and-gender-change": "Name and gender marker change",
 		"refugee-claim": "Madai ya wakimbizi",
 		"residency": "Makazi",
 		"special-immigrant-juvenile-status-sijs": "Hali maalum ya Wahamiaji Watoto (SIJS)",
@@ -83,7 +83,7 @@
 		"u-visa": "Visa ya U"
 	},
 	"mail": {
-		"CATEGORYNAME": "Barua",
+		"CATEGORYNAME": "Mail",
 		"mail": "Barua"
 	},
 	"medical": {
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Trans afya - homoni na upasuaji barua",
 		"trans-health-hormone-therapy": "Afya ya Trans - tiba ya homoni",
 		"trans-health-primary-care": "Trans afya - huduma ya msingi",
-		"trans-health-speech-therapy": "Afya ya Trans - tiba ya hotuba"
+		"trans-health-speech-therapy": "Afya ya Trans - tiba ya hotuba",
+		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Mental Health",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Burudani na Shughuli",
 		"art-music-literature": "Sanaa, muziki, na fasihi",
 		"sports-and-entertainment": "Michezo na burudani"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Trans Focused Services",
+		"transport-gacare": "Transportation for gender affirming care",
+		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Translation and Interpretation",
