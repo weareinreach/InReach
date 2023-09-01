@@ -35,6 +35,7 @@ type OrganizationHandlerCache = {
 	createNewQuick: typeof import('./mutation.createNewQuick.handler').createNewQuick
 	createNewSuggestion: typeof import('./mutation.createNewSuggestion.handler').createNewSuggestion
 	attachAttribute: typeof import('./mutation.attachAttribute.handler').attachAttribute
+	updateBasic: typeof import('./mutation.updateBasic.handler').updateBasic
 	// #endregion
 }
 
@@ -221,6 +222,15 @@ export const orgRouter = defineRouter({
 			if (!HandlerCache.attachAttribute) throw new Error('Failed to load handler')
 			return HandlerCache.attachAttribute({ ctx, input })
 		}),
-
+	updateBasic: permissionedProcedure('createNewOrgQuick')
+		.input(schema.ZUpdateBasicSchema)
+		.mutation(async ({ ctx, input }) => {
+			if (!HandlerCache.updateBasic)
+				HandlerCache.updateBasic = await import('./mutation.updateBasic.handler').then(
+					(mod) => mod.updateBasic
+				)
+			if (!HandlerCache.updateBasic) throw new Error('Failed to load handler')
+			return HandlerCache.updateBasic({ ctx, input })
+		}),
 	// #endregion
 })
