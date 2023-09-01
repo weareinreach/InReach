@@ -252,8 +252,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/util
       cookies-next:
-        specifier: 2.1.2
-        version: 2.1.2
+        specifier: 3.0.0
+        version: 3.0.0
       core-js:
         specifier: 3.32.1
         version: 3.32.1
@@ -1301,8 +1301,8 @@ importers:
         specifier: 11.0.1
         version: 11.0.1
       cookies-next:
-        specifier: 2.1.2
-        version: 2.1.2
+        specifier: 3.0.0
+        version: 3.0.0
       geolib:
         specifier: 3.3.4
         version: 3.3.4
@@ -13316,8 +13316,8 @@ packages:
     resolution: {integrity: sha512-LDx6oHrK+PhzLKJU9j5S7/Y3jM/mUHvD/DeI1WQmJn652iPC5Y4TBzC9l+5OMOXlyTTA+SmVUPm0HQUwpD5Jqw==}
     dev: false
 
-  /cookies-next@2.1.2:
-    resolution: {integrity: sha512-czxcfqVaQlo0Q/3xMgp/2jpspsuLJrIm6D37wlmibP3DAcYT315c8UxQmDMohhAT/GRWpaHzpDEFANBjzTFQGg==}
+  /cookies-next@3.0.0:
+    resolution: {integrity: sha512-VaSrsjQJ8yHnGAGulV9zJxBr7hrKJ/O2mo87evsGIMF7XvJI3AJNguevotx0Gek1MMMBkZvZNWu2JueSNoSKEQ==}
     dependencies:
       '@types/cookie': 0.4.1
       '@types/node': 16.18.40
