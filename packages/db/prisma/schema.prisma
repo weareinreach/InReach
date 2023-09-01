@@ -1805,10 +1805,10 @@ model AuditTrail {
   operation AuditTrailOperation
   old       Json?
   new       Json?
-  timestamp DateTime            @default(now())
+  timestamp DateTime            @default(now()) @db.Timestamptz
   actorId   String
 
-  @@index([recordId])
+  @@index([recordId], type: Gin)
   @@index([actorId])
   @@index([table_oid])
   @@index([timestamp], type: Brin)
