@@ -134,4 +134,5 @@ const excludedTables = [
 	'AttributesByCategory',
 	'user_refresh_token',
 	'user_access_token',
+	'AuditTrail',
 ] as const // satisfies Prisma.ModelName[]
