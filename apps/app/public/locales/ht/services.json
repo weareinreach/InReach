@@ -42,7 +42,7 @@
 		"food-assistance": "Asistans manje"
 	},
 	"housing": {
-		"CATEGORYNAME": "Housing",
+		"CATEGORYNAME": "Lojman",
 		"drop-in-centers-for-lgbtq-youth": "Drop-nan sant pou jèn LGBTQ",
 		"emergency-housing": "Lojman Ijans",
 		"housing-information-and-referrals": "Enfòmasyon sou lojman ak referans",
@@ -60,7 +60,7 @@
 	"international-support": {
 		"CATEGORTYNAME": "International Support",
 		"financial-assistance": "Financial Assistance",
-		"mental-health": "Mental Health",
+		"mental-health": "Sante Mantal",
 		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
@@ -103,7 +103,7 @@
 		"trans-health-speech-therapy": "Trans sante - terapi lapawòl"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Mental Health",
+		"CATEGORYNAME": "Sante Mantal",
 		"bipoc-support-groups": "Gwoup sipò BIPOC",
 		"hotlines": "Hotlines",
 		"private-therapy-and-counseling": "Prive terapi ak konsèy",
@@ -121,7 +121,7 @@
 		"sports-and-entertainment": "Espò ak amizman"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Translation and Interpretation",
+		"CATEGORYNAME": "Tradiksyon ak Entèpretasyon",
 		"for-healthcare": "Pou swen sante",
 		"for-legal-services": "Pou sèvis legal",
 		"general-translation-and-interpretation": "Tradiksyon jeneral ak entèpretasyon"

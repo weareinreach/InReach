@@ -31,7 +31,7 @@
         "unclaimed-tool-tip": "این سازمان هنوز توسط یک نماینده ادعا نشده‌است. <link1>ادعای این سازمان</link1> برای ایجاد اعتماد با جامعه ما، به روز رسانی اطلاعات خود و موارد دیگر."
     },
     "breadcrumb": {
-        "back-to-dynamic": "Back to <u>{{page}}</u>",
+        "back-to-dynamic": "بازگشت به <u>{{page}}</u>",
         "back-to-search": "بازگشت به جستجو"
     },
     "cancel": "لغو",
@@ -373,7 +373,7 @@
         "coming-soon": "به زودی",
         "delete": "حذف",
         "distance": "فاصله",
-        "email": "پست الکترونیک",
+        "email": "Email",
         "home": "صفحه اصلی",
         "hours": "ساعت",
         "location": "Location",

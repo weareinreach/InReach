@@ -42,7 +42,7 @@
 		"food-assistance": "Msaada wa chakula"
 	},
 	"housing": {
-		"CATEGORYNAME": "Housing",
+		"CATEGORYNAME": "Makazi",
 		"drop-in-centers-for-lgbtq-youth": "Vituo vya kuacha kwa vijana wa LGBTQ",
 		"emergency-housing": "Nyumba ya dharura",
 		"housing-information-and-referrals": "Habari ya makazi na rufaa",
@@ -60,7 +60,7 @@
 	"international-support": {
 		"CATEGORTYNAME": "International Support",
 		"financial-assistance": "Financial Assistance",
-		"mental-health": "Mental Health",
+		"mental-health": "Afya ya Akili",
 		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
@@ -103,7 +103,7 @@
 		"trans-health-speech-therapy": "Afya ya Trans - tiba ya hotuba"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Mental Health",
+		"CATEGORYNAME": "Afya ya Akili",
 		"bipoc-support-groups": "Vikundi vya msaada wa BIPOC",
 		"hotlines": "Hotlines",
 		"private-therapy-and-counseling": "Tiba ya kibinafsi na ushauri nasaha",
@@ -121,7 +121,7 @@
 		"sports-and-entertainment": "Michezo na burudani"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Translation and Interpretation",
+		"CATEGORYNAME": "Tafsiri na Tafsiri",
 		"for-healthcare": "Kwa huduma ya afya",
 		"for-legal-services": "Kwa huduma za kisheria",
 		"general-translation-and-interpretation": "Tafsiri ya jumla na tafsiri"

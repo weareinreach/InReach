@@ -241,7 +241,7 @@
         "no-results-adjust": "No se han encontrado resultados para su búsqueda. Intente ajustar la ubicación o los filtros seleccionados.",
         "organization-placeholder": "Introduzca el nombre de la organización...",
         "organization-placeholder-searchby": "Buscar por nombre de organización...",
-        "suggest-resource": "¿No lo encuentras? <1>Sugiera una organización</1> que crea que debería incluirse."
+        "suggest-resource": "¿No lo encuentras? <strong>Sugiera una organización</strong> que crea que debería incluirse."
     },
     "send-email": "Enviar email",
     "service": {
@@ -293,7 +293,7 @@
         "name_full": "Nombre completo",
         "placeholder-name_alias": "Introduzca nombre o alias...",
         "placeholder-name_full": "Introduzca el nombre completo...",
-        "select-law-practice": "¿Dónde practica la ley?",
+        "select-law-practice": "¿Dónde ejerces la abogacía?",
         "select-service-provider": "¿Dónde trabajas o voluntario?",
         "specify-work-volunteer": "Por favor especifique dónde trabaja o voluntario",
         "success": "¡Te has registrado en una cuenta!",
@@ -303,7 +303,7 @@
     },
     "sign-up-free": "Regístrate gratis",
     "social": {
-        "email": "E-mail",
+        "email": "Correo electrónico",
         "facebook": "Facebook",
         "github": "GitHub",
         "group-header": "Social",
@@ -373,7 +373,7 @@
         "coming-soon": "Próximamente",
         "delete": "Eliminar",
         "distance": "Distancia",
-        "email": "E-mail",
+        "email": "Correo electrónico",
         "home": "Inicio",
         "hours": "Horas",
         "location": "Ubicación",
