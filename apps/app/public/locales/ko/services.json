@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Abortion Care",
+		"CATEGORYNAME": "낙태 치료",
 		"abortion-providers": "낙태 제공자",
 		"financial-assistance": "재정 지원",
 		"lodging-assistance": "숙박 지원",
@@ -23,8 +23,8 @@
 		"computers-and-internet": "컴퓨터 및 인터넷"
 	},
 	"crisis-support": {
-		"CATEGORYNAME": "Crisis Support",
-		"crisis-support": "Crisis Support"
+		"CATEGORYNAME": "위기 지원",
+		"crisis-support": "위기 지원"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "교육 및 고용",
@@ -42,7 +42,7 @@
 		"food-assistance": "식품 지원"
 	},
 	"housing": {
-		"CATEGORYNAME": "Housing",
+		"CATEGORYNAME": "주택",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ 청소년을 위한 드롭인 센터",
 		"emergency-housing": "비상 주택",
 		"housing-information-and-referrals": "숙소 정보 및 추천",
@@ -58,10 +58,10 @@
 		"hygiene": "위생"
 	},
 	"international-support": {
-		"CATEGORTYNAME": "International Support",
-		"financial-assistance": "Financial Assistance",
-		"mental-health": "Mental Health",
-		"resettlement-assistance": "Resettlement Assistance"
+		"CATEGORTYNAME": "국제 지원",
+		"financial-assistance": "재정 지원",
+		"mental-health": "정신 건강",
+		"resettlement-assistance": "재정착 지원"
 	},
 	"legal": {
 		"CATEGORYNAME": "법률",
@@ -73,7 +73,7 @@
 		"employment-authorization": "고용 허가",
 		"family-petitions": "가족 청원서",
 		"immigration-detention": "이민 구금",
-		"legal-advice": "Legal advice",
+		"legal-advice": "법률 자문",
 		"legal-hotlines": "법률 핫라인",
 		"name-and-gender-change": "이름 및 성별 변경",
 		"refugee-claim": "난민 청구",
@@ -87,7 +87,7 @@
 		"mail": "메일"
 	},
 	"medical": {
-		"CATEGORYNAME": "Medical",
+		"CATEGORYNAME": "의료",
 		"covid-19-services": "COVID-19 서비스",
 		"dental-care": "덴탈 케어",
 		"hiv-and-sexual-health": "HIV 및 성 건강",
@@ -103,7 +103,7 @@
 		"trans-health-speech-therapy": "트랜스 건강 - 언어 치료"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Mental Health",
+		"CATEGORYNAME": "정신 건강",
 		"bipoc-support-groups": "BIPOC 지원 그룹",
 		"hotlines": "핫라인",
 		"private-therapy-and-counseling": "개인 치료 및 상담",
@@ -121,7 +121,7 @@
 		"sports-and-entertainment": "스포츠 및 엔터테인먼트"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Translation and Interpretation",
+		"CATEGORYNAME": "번역 및 통역",
 		"for-healthcare": "헬스케어용",
 		"for-legal-services": "법률 서비스용",
 		"general-translation-and-interpretation": "일반 번역 및 통역"
