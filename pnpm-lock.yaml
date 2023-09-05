@@ -1210,6 +1210,9 @@ importers:
       '@weareinreach/config':
         specifier: workspace:*
         version: link:../config
+      '@weareinreach/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
 
   packages/eslint-config:
     devDependencies:
