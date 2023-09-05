@@ -7,6 +7,7 @@ type OrgWebsiteHandlerCache = {
 	create: typeof import('./mutation.create.handler').create
 	update: typeof import('./mutation.update.handler').update
 	forContactInfo: typeof import('./query.forContactInfo.handler').forContactInfo
+	forEditDrawer: typeof import('./query.forEditDrawer.handler').forEditDrawer
 }
 export const orgWebsiteRouter = defineRouter({
 	create: permissionedProcedure('createOrgWebsite')
@@ -33,4 +34,14 @@ export const orgWebsiteRouter = defineRouter({
 		if (!HandlerCache.forContactInfo) throw new Error('Failed to load handler')
 		return HandlerCache.forContactInfo({ ctx, input })
 	}),
+	forEditDrawer: permissionedProcedure('updateOrgWebsite')
+		.input(schema.ZForEditDrawerSchema)
+		.query(async ({ ctx, input }) => {
+			if (!HandlerCache.forEditDrawer)
+				HandlerCache.forEditDrawer = await import('./query.forEditDrawer.handler').then(
+					(mod) => mod.forEditDrawer
+				)
+			if (!HandlerCache.forEditDrawer) throw new Error('Failed to load handler')
+			return HandlerCache.forEditDrawer({ ctx, input })
+		}),
 })
