@@ -1,5 +1,4 @@
 /* eslint-disable no-var */
-/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import Crowdin from '@crowdin/crowdin-api-client'
 import OtaClient from '@crowdin/ota-client'
