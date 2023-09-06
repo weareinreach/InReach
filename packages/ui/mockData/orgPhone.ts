@@ -283,6 +283,25 @@ export const orgPhoneData = {
 			},
 		},
 	],
+	forEditDrawer: {
+		id: 'ophn_01GVH3WK8HSVYQE7J4W9ASS9V8',
+		legacyId: '62d054f7c028d00016b5a067',
+		legacyDesc: 'Jose Fragoso (Youth Refugee Program)',
+		number: '7709360969',
+		ext: '152',
+		primary: false,
+		published: true,
+		deleted: false,
+		migrationReview: true,
+		countryId: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
+		phoneTypeId: null,
+		descriptionId: 'ftxt_01G7SHWZE32XTMB5QSK1C3YCTR',
+		locationOnly: false,
+		serviceOnly: true,
+		createdAt: new Date('2022-07-12T15:54:30.723Z'),
+		updatedAt: new Date('2023-05-21T03:54:05.484Z'),
+		description: 'Jose Fragoso (Youth Refugee Program)',
+	},
 } satisfies MockDataObject<'orgPhone'>
 
 export const orgPhone = {
@@ -302,5 +321,10 @@ export const orgPhone = {
 			locationOnly !== undefined
 				? orgPhoneData.forContactInfo.filter((record) => record.locationOnly === locationOnly)
 				: orgPhoneData.forContactInfo,
+	}),
+	forEditDrawer: getTRPCMock({
+		path: ['orgPhone', 'forEditDrawer'],
+		type: 'query',
+		response: orgPhoneData.forEditDrawer,
 	}),
 } satisfies MockHandlerObject<'orgPhone'>

@@ -1,4 +1,5 @@
 import { type Meta, type StoryFn, type StoryObj } from '@storybook/react'
+import { FormProvider, useForm as useHookForm } from 'react-hook-form'
 
 import { fieldOpt } from '~ui/mockData/fieldOpt'
 import {
@@ -9,6 +10,7 @@ import {
 } from '~ui/modals/dataPortal/PhoneEmail/context'
 
 import { PhoneNumberEntry } from './PhoneNumberEntry'
+import { PhoneNumberEntry as PhoneNumberEntryHookForm } from './PhoneNumberEntryHookForm'
 
 const FormContextDecorator = (Story: StoryFn) => {
 	const form = useForm(formHookParams)
@@ -18,12 +20,25 @@ const FormContextDecorator = (Story: StoryFn) => {
 		</PhoneEmailFormProvider>
 	)
 }
+const HookFormContextDecorator = (Story: StoryFn) => {
+	const form = useHookForm<HookFormParams>()
+	return (
+		<FormProvider {...form}>
+			<Story />
+		</FormProvider>
+	)
+}
 export default {
 	title: 'Data Portal/Fields/Phone Number Entry',
 	component: PhoneNumberEntry,
 	parameters: {
 		msw: [fieldOpt.countries],
 	},
+} satisfies Meta<typeof PhoneNumberEntry>
+
+type StoryDef = StoryObj<typeof PhoneNumberEntry>
+
+export const Default = {
 	decorators: [FormContextDecorator],
 	render: function Render() {
 		const form = useFormContext()
@@ -38,8 +53,17 @@ export default {
 			/>
 		)
 	},
-} satisfies Meta<typeof PhoneNumberEntry>
+} satisfies StoryDef
 
-type StoryDef = StoryObj<typeof PhoneNumberEntry>
+export const WithReactHookForm = {
+	decorators: [HookFormContextDecorator],
+	args: {
+		countrySelectProps: { name: 'countryId' },
+		phoneEntryProps: { name: 'number' },
+	},
+	render: function Render(args) {
+		return <PhoneNumberEntryHookForm {...args} />
+	},
+} satisfies StoryObj<typeof PhoneNumberEntryHookForm>
 
-export const Default = {} satisfies StoryDef
+type HookFormParams = { countryId: string; number: string }

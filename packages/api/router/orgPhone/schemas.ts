@@ -3,5 +3,6 @@ export * from './mutation.create.schema'
 export * from './mutation.update.schema'
 export * from './mutation.upsertMany.schema'
 export * from './query.forContactInfo.schema'
+export * from './query.forEditDrawer.schema'
 export * from './query.get.schema'
 // codegen:end
