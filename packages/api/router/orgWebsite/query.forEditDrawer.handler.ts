@@ -7,7 +7,7 @@ import { type TForEditDrawerSchema } from './query.forEditDrawer.schema'
 export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
 	try {
 		const result = await prisma.orgWebsite.findUniqueOrThrow({
-			where: { id: input.id },
+			where: input,
 			include: {
 				description: { include: { tsKey: true } },
 			},

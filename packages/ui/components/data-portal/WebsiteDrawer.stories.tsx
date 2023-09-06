@@ -21,12 +21,13 @@ export default {
 				},
 			},
 		},
-		msw: [organization.getIdFromSlug, orgWebsite.forEditDrawer],
+		msw: [organization.getIdFromSlug, orgWebsite.forEditDrawer, orgWebsite.update],
 	},
 	args: {
 		component: Button,
 		children: 'Open Drawer',
 		variant: 'inlineInvertedUtil1',
+		id: 'oweb_01H29ENF8JTJ3FNJ5BQXDH4PMA',
 	},
 } satisfies Meta<typeof WebsiteDrawer>
 

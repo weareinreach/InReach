@@ -5,8 +5,11 @@ import {
 	createStyles,
 	Drawer,
 	Group,
+	LoadingOverlay,
+	Modal,
 	rem,
 	Stack,
+	Text,
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
@@ -17,6 +20,7 @@ import { z } from 'zod'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 const useStyles = createStyles((theme) => ({
@@ -35,34 +39,58 @@ const FormSchema = z.object({
 type FormSchema = z.infer<typeof FormSchema>
 const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(({ id, ...props }, ref) => {
 	const { data, isFetching } = api.orgWebsite.forEditDrawer.useQuery({ id })
-	const [opened, handler] = useDisclosure(true)
+	const [drawerOpened, drawerHandler] = useDisclosure(true)
+	const [modalOpened, modalHandler] = useDisclosure(false)
 	const { classes } = useStyles()
-	const { control, handleSubmit } = useForm<FormSchema>({
+	const { control, handleSubmit, formState, reset, getValues } = useForm<FormSchema>({
 		resolver: zodResolver(FormSchema),
 		values: data,
 		defaultValues: data,
 	})
 	const apiUtils = api.useContext()
 	const siteUpdate = api.orgWebsite.update.useMutation({
-		onSettled: () => apiUtils.orgWebsite.forContactInfo.invalidate(),
+		onSettled: (data) => {
+			apiUtils.orgWebsite.forContactInfo.invalidate()
+			reset(data)
+		},
 	})
+	const isSaved = siteUpdate.isSuccess && !formState.isDirty
+	const handleClose = () => {
+		if (formState.isDirty) {
+			return modalHandler.open()
+		} else {
+			return drawerHandler.close()
+		}
+	}
 	return (
 		<>
-			<Drawer.Root onClose={handler.close} opened={opened} position='right'>
+			<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right'>
 				<Drawer.Overlay />
 				<Drawer.Content className={classes.drawerContent}>
 					<form
 						onSubmit={handleSubmit(
-							(data) => siteUpdate.mutate({ id: '', data }),
+							(data) => {
+								siteUpdate.mutate({ id, data })
+							},
 							(error) => console.error(error)
 						)}
 					>
 						<Drawer.Header>
 							<Group noWrap position='apart' w='100%'>
-								<Breadcrumb option='close' onClick={handler.close} />
+								<Breadcrumb option='close' onClick={handleClose} />
+								<Button
+									variant='primary-icon'
+									leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
+									loading={siteUpdate.isLoading}
+									disabled={!formState.isDirty}
+									type='submit'
+								>
+									{isSaved ? 'Saved' : 'Save'}
+								</Button>
 							</Group>
 						</Drawer.Header>
 						<Drawer.Body>
+							<LoadingOverlay visible={isFetching} />
 							<Stack spacing={24} align='center'>
 								<Title order={2}>Edit Website</Title>
 								<Stack spacing={24} align='flex-start' w='100%'>
@@ -75,11 +103,46 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(({ id, 
 								</Stack>
 							</Stack>
 						</Drawer.Body>
+						<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes'>
+							<Stack align='center'>
+								<Text>You have unsaved changes</Text>
+								<Group noWrap>
+									<Button
+										variant='primary-icon'
+										leftIcon={<Icon icon='carbon:save' />}
+										loading={siteUpdate.isLoading}
+										onClick={() => {
+											siteUpdate.mutate(
+												{ id, data: getValues() },
+												{
+													onSuccess: () => {
+														modalHandler.close()
+														drawerHandler.close()
+													},
+												}
+											)
+										}}
+									>
+										Save
+									</Button>
+									<Button
+										variant='secondaryLg'
+										onClick={() => {
+											reset()
+											modalHandler.close()
+											drawerHandler.close()
+										}}
+									>
+										Discard
+									</Button>
+								</Group>
+							</Stack>
+						</Modal>
 					</form>
 				</Drawer.Content>
 			</Drawer.Root>
 			<Stack>
-				<Box component='button' onClick={handler.open} ref={ref} {...props} />
+				<Box component='button' onClick={drawerHandler.open} ref={ref} {...props} />
 			</Stack>
 		</>
 	)

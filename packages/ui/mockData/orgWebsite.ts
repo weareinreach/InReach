@@ -40,4 +40,9 @@ export const orgWebsite = {
 		type: 'query',
 		response: orgWebsiteData.forEditDrawer,
 	}),
+	update: getTRPCMock({
+		path: ['orgWebsite', 'update'],
+		type: 'mutation',
+		response: (input) => ({ ...orgWebsiteData.forEditDrawer, ...input.data }),
+	}),
 } satisfies MockHandlerObject<'orgWebsite'>
