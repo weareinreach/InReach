@@ -122,7 +122,7 @@
 		"langs": "2.0.0",
 		"libphonenumber-js": "1.10.44",
 		"listr2": "6.6.1",
-		"luxon": "3.4.2",
+		"luxon": "3.4.3",
 		"mongoback": "3.0.6",
 		"papaparse": "5.4.1",
 		"prettier": "3.0.3",
