@@ -24,7 +24,9 @@ const HookFormContextDecorator = (Story: StoryFn) => {
 	const form = useHookForm<HookFormParams>()
 	return (
 		<FormProvider {...form}>
-			<Story />
+			<form>
+				<Story />
+			</form>
 		</FormProvider>
 	)
 }
@@ -33,6 +35,7 @@ export default {
 	component: PhoneNumberEntry,
 	parameters: {
 		msw: [fieldOpt.countries],
+		rqDevtools: true,
 	},
 } satisfies Meta<typeof PhoneNumberEntry>
 
