@@ -8,7 +8,7 @@ import {
 	TextInput,
 	type TextInputProps,
 } from '@mantine/core'
-import { AsYouType, type CountryCode, isSupportedCountry } from 'libphonenumber-js'
+import { AsYouType, type CountryCode } from 'libphonenumber-js'
 import { type ComponentPropsWithoutRef, forwardRef, useEffect, useState } from 'react'
 import PhoneInput, { parsePhoneNumber, type Props as PhoneInputProps } from 'react-phone-number-input/input'
 import { type SetOptional } from 'type-fest'
@@ -56,19 +56,6 @@ const usePhoneEntryStyles = createStyles((theme) => ({
 		borderLeft: `1px solid ${theme.other.colors.primary.lightGray}`,
 	},
 }))
-export interface PhoneNumberEntryProps {
-	countrySelectProps: Omit<SelectProps, 'data' | 'itemComponent' | 'classNames' | 'clearable'>
-	phoneEntryProps: Omit<
-		SetOptional<
-			PhoneInputProps<Omit<TextInputProps, 'rightSection' | 'rightSectionWidth' | 'classNames'>>,
-			'onChange'
-		>,
-		'country' | 'defaultCountry' | 'itemComponent'
-	> & {
-		setError?: (err: string) => void
-		'data-autofocus'?: boolean
-	}
-}
 
 export const PhoneNumberEntry = ({
 	countrySelectProps,
@@ -161,6 +148,21 @@ export const PhoneNumberEntry = ({
 			{...phoneEntryProps}
 		/>
 	)
+}
+
+export interface PhoneNumberEntryProps {
+	countrySelectProps: Omit<SelectProps, 'data' | 'itemComponent' | 'classNames' | 'clearable'>
+	phoneEntryProps: Omit<
+		SetOptional<
+			PhoneInputProps<Omit<TextInputProps, 'rightSection' | 'rightSectionWidth' | 'classNames'>>,
+			'onChange'
+		>,
+		'country' | 'defaultCountry' | 'itemComponent'
+	> & {
+		setError?: (err: string) => void
+		'data-autofocus'?: boolean
+	}
+	hookForm?: boolean
 }
 
 type CountryList = ApiOutput['fieldOpt']['countries']
