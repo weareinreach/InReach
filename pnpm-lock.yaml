@@ -747,7 +747,7 @@ importers:
     devDependencies:
       '@turbo/gen':
         specifier: 1.10.13
-        version: 1.10.13(@types/node@18.17.14)(typescript@5.2.2)
+        version: 1.10.13(@types/node@18.17.15)(typescript@5.2.2)
       '@types/eslint':
         specifier: 8.44.2
         version: 8.44.2
@@ -1013,7 +1013,7 @@ importers:
         version: 2.2.0
       '@turbo/gen':
         specifier: 1.10.13
-        version: 1.10.13(@types/node@18.17.14)(typescript@5.2.2)
+        version: 1.10.13(@types/node@18.17.15)(typescript@5.2.2)
       '@turf/buffer':
         specifier: 6.5.0
         version: 6.5.0
@@ -7080,7 +7080,6 @@ packages:
 
   /@prisma/ni@4.13.0:
     resolution: {integrity: sha512-FN1wV1I61P6WndheLpja5oQuzIW2WkYqFViPL5GS5dhrpsO69SlyOnAsxpfCKUa5HhXINi7fowgdcngK1QDW9w==}
-    deprecated: This package is not maintained anymore. You can now use https://www.npmjs.com/package/@antfu/ni
     dev: false
 
   /@prisma/prisma-fmt-wasm@4.13.0-50.1e7af066ee9cb95cf3a403c78d9aab3e6b04f37a:
@@ -10345,7 +10344,7 @@ packages:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
     dev: true
 
-  /@turbo/gen@1.10.13(@types/node@18.17.14)(typescript@5.2.2):
+  /@turbo/gen@1.10.13(@types/node@18.17.15)(typescript@5.2.2):
     resolution: {integrity: sha512-fwGVjeun2i0RIdq/20d2wpatPw9vE4Mbk60uB8rk8NENDXn2JLfbsh00mZ5KAEX5ZQUibh6tD+B7xROV8Eb7dQ==}
     hasBin: true
     dependencies:
@@ -10357,7 +10356,7 @@ packages:
       minimatch: 9.0.3
       node-plop: 0.26.3
       proxy-agent: 6.3.0
-      ts-node: 10.9.1(@types/node@18.17.14)(typescript@5.2.2)
+      ts-node: 10.9.1(@types/node@18.17.15)(typescript@5.2.2)
       update-check: 1.5.4
       validate-npm-package-name: 5.0.0
     transitivePeerDependencies:
@@ -10662,7 +10661,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 18.17.14
+      '@types/node': 18.17.15
     dev: true
 
   /@types/google.maps@3.54.0:
@@ -19959,6 +19958,7 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+    dev: true
 
   /next@13.4.19(@opentelemetry/api@1.5.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-HuPSzzAbJ1T4BD8e0bs6B9C1kWQ6gv8ykZoRWs5AQoiIuqbGHHdQO7Ljuvg05Q0Z24E2ABozHe6FxDvI6HfyAw==}
@@ -23923,6 +23923,7 @@ packages:
 
   /strnum@1.0.5:
     resolution: {integrity: sha512-J8bbNyKKXl5qYcR36TIO8W3mVGVHrmmxsd5PAItGkmyzwJvybiw2IVq5nqd0i4LSNSkB/sx9VHllbfFdr9k1JA==}
+    requiresBuild: true
 
   /style-loader@3.3.3(webpack@5.88.2):
     resolution: {integrity: sha512-53BiGLXAcll9maCYtZi2RCQZKa8NQQai5C4horqKyRmHj9H7QmcUyucrH+4KW/gBQbXM2AsB0axoEcFZPlfPcw==}
@@ -24444,7 +24445,7 @@ packages:
       typescript: 5.2.2
     dev: true
 
-  /ts-node@10.9.1(@types/node@18.17.14)(typescript@5.2.2):
+  /ts-node@10.9.1(@types/node@18.17.15)(typescript@5.2.2):
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -24463,7 +24464,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 18.17.14
+      '@types/node': 18.17.15
       acorn: 8.10.0
       acorn-walk: 8.2.0
       arg: 4.1.3
