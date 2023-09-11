@@ -83,6 +83,7 @@
 		"@nuskin/mexico-state-lookup": "2.1.0",
 		"@placemarkio/check-geojson": "0.1.12",
 		"@terraformer/wkt": "2.2.0",
+		"@turbo/gen": "1.10.13",
 		"@turf/buffer": "6.5.0",
 		"@turf/helpers": "6.5.0",
 		"@turf/points-within-polygon": "6.5.0",

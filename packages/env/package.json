@@ -16,6 +16,7 @@
 		"zod": "3.22.2"
 	},
 	"devDependencies": {
-		"@weareinreach/config": "workspace:*"
+		"@weareinreach/config": "workspace:*",
+		"@weareinreach/eslint-config": "workspace:*"
 	}
 }
