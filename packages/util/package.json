@@ -14,7 +14,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@vercel/edge-config": "0.2.1",
+		"@vercel/edge-config": "0.3.0",
 		"tslog": "4.9.2"
 	},
 	"devDependencies": {
