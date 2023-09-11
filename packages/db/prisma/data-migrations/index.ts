@@ -43,4 +43,5 @@ export * from './2023-07-26_intl-crisis-sorting'
 export * from './2023-07-31_crisis-support-tags'
 export * from './2023-07-31_national-crisis-resources/index'
 export * from './2023-08-07_permissions'
+export * from './2023-09-11_fix-unsupported-attrib-data/index'
 // codegen:end
