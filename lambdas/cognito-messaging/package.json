@@ -23,7 +23,7 @@
 		"@aws-lambda-powertools/logger": "1.12.1"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.119",
+		"@types/aws-lambda": "8.10.120",
 		"@types/eslint": "8.44.2",
 		"@types/node": "18.17.15",
 		"@vercel/ncc": "0.38.0",
