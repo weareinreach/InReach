@@ -53,6 +53,7 @@
 		"@types/flat": "5.0.2",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
+		"prettier": "3.0.3",
 		"typescript": "5.2.2"
 	}
 }

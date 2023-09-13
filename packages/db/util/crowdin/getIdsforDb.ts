@@ -4,9 +4,8 @@ import PQueue from 'p-queue'
 import fs from 'fs'
 import path from 'path'
 
-import { prisma } from '@weareinreach/db'
-
-import { getStringIdByKey } from '.'
+import { getStringIdByKey } from '@weareinreach/crowdin/api'
+import { prisma } from '~db/client'
 
 const queue = new PQueue({
 	concurrency: 15,

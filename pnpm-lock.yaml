@@ -936,6 +936,9 @@ importers:
       '@weareinreach/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      prettier:
+        specifier: 3.0.3
+        version: 3.0.3
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -975,6 +978,9 @@ importers:
       '@vercel/postgres-kysely':
         specifier: 0.4.1
         version: 0.4.1(kysely@0.26.3)
+      '@weareinreach/crowdin':
+        specifier: workspace:*
+        version: link:../crowdin
       '@weareinreach/env':
         specifier: workspace:*
         version: link:../env
@@ -1020,6 +1026,9 @@ importers:
       kysely:
         specifier: 0.26.3
         version: 0.26.3
+      p-queue:
+        specifier: 7.4.1
+        version: 7.4.1
       pg:
         specifier: 8.11.3
         version: 8.11.3
@@ -20665,7 +20674,6 @@ packages:
     dependencies:
       eventemitter3: 5.0.1
       p-timeout: 5.1.0
-    dev: true
 
   /p-retry@4.6.2:
     resolution: {integrity: sha512-312Id396EbJdvRONlngUx0NydfrIQ5lsYu0znKVUzVvArzEIt08V1qhtyESbGVd1FGX7UKtiFp5uwKZdM8wIuQ==}
@@ -20677,7 +20685,6 @@ packages:
   /p-timeout@5.1.0:
     resolution: {integrity: sha512-auFDyzzzGZZZdHz3BtET9VEz0SE/uMEAx7uWfGPucfzEwwe/xH0iVeZibQmANYE/hp9T2+UUZT5m+BKyrDp3Ew==}
     engines: {node: '>=12'}
-    dev: true
 
   /p-try@2.2.0:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
