@@ -100,11 +100,12 @@ const config = {
 			},
 		},
 		{
-			files: ['./**/*.js'],
+			files: ['./**/*.{js,mjs,cjs}'],
 			parserOptions: { project: null },
 			rules: {
 				'@typescript-eslint/require-await': 'off',
 				'@typescript-eslint/return-await': 'off',
+				'@typescript-eslint/consistent-type-assertions': 'off',
 			},
 		},
 	],
