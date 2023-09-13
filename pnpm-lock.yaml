@@ -242,6 +242,9 @@ importers:
       '@weareinreach/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@weareinreach/crowdin':
+        specifier: workspace:*
+        version: link:../../packages/crowdin
       '@weareinreach/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -893,6 +896,46 @@ importers:
       next-i18next:
         specifier: 14.0.3
         version: 14.0.3(i18next@23.5.1)(next@13.4.19)(react-i18next@13.2.2)(react@18.2.0)
+      typescript:
+        specifier: 5.2.2
+        version: 5.2.2
+
+  packages/crowdin:
+    dependencies:
+      '@crowdin/crowdin-api-client':
+        specifier: 1.24.0
+        version: 1.24.0
+      '@crowdin/ota-client':
+        specifier: 1.0.0
+        version: 1.0.0(patch_hash=refrge56ym5gomc3tkglzjdymy)
+      '@opentelemetry/api':
+        specifier: 1.5.0
+        version: 1.5.0
+      '@vercel/kv':
+        specifier: 0.2.2
+        version: 0.2.2
+      '@weareinreach/util':
+        specifier: workspace:*
+        version: link:../util
+      flat:
+        specifier: 5.0.2
+        version: 5.0.2
+      object-sizeof:
+        specifier: 2.6.3
+        version: 2.6.3
+      pretty-bytes:
+        specifier: 6.1.1
+        version: 6.1.1
+    devDependencies:
+      '@types/flat':
+        specifier: 5.0.2
+        version: 5.0.2
+      '@weareinreach/config':
+        specifier: workspace:*
+        version: link:../config
+      '@weareinreach/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -6323,6 +6366,7 @@ packages:
   /@opentelemetry/api@1.5.0:
     resolution: {integrity: sha512-636km3y3pVyJldKGp9qM+lPvxuOvhThUED9cHNPsERkp+APbdtCtj0sALW+mZsbQqnqQkNRHqoGw/Uc82UP6fQ==}
     engines: {node: '>=8.0.0'}
+    deprecated: Version 1.5.0 of @opentelemetry/api mistakenly contained a breaking change for some users. Please update to 1.6.0 or later.
 
   /@opentelemetry/context-async-hooks@1.16.0(@opentelemetry/api@1.5.0):
     resolution: {integrity: sha512-gV93lVjiqtiDnE6D9QQ7OxpgURQTZqF2xVlqP5+5kbPcsRj+8WQAtpauKm2FuL/eIKVBEeDLaSJWatUKh9RONg==}
