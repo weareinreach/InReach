@@ -130,6 +130,7 @@
 		"papaparse": "5.4.1",
 		"prettier": "3.0.3",
 		"pretty-bytes": "6.1.1",
+		"pretty-ms": "8.0.0",
 		"prisma": "5.2.0",
 		"prisma-dbml-generator": "0.10.0",
 		"prisma-query-inspector": "1.4.4",
