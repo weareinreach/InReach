@@ -42,7 +42,7 @@
 	"dependencies": {
 		"@crowdin/crowdin-api-client": "1.24.0",
 		"@crowdin/ota-client": "1.0.0",
-		"@opentelemetry/api": "1.5.0",
+		"@opentelemetry/api": "1.6.0",
 		"@vercel/kv": "0.2.2",
 		"@weareinreach/util": "workspace:*",
 		"flat": "5.0.2",
