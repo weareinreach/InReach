@@ -1,4 +1,4 @@
-import { createStyles, Paper, useMantineTheme } from '@mantine/core'
+import { createStyles, Paper, Text, useMantineTheme } from '@mantine/core'
 import { Trans } from 'next-i18next'
 
 import { Icon } from '~ui/icon'
@@ -40,7 +40,7 @@ export const alertTypeIcon = {
 } as const
 
 /** Used to display an alert message on an organization/location/service. */
-export const AlertMessage = ({ textKey, iconKey = 'information' }: Props) => {
+export const AlertMessage = ({ textKey, ns, iconKey = 'information', defaultText }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
 	const iconRender = alertTypeIcon[iconKey]
@@ -57,8 +57,14 @@ export const AlertMessage = ({ textKey, iconKey = 'information' }: Props) => {
 						: theme.other.colors.tertiary.orange
 				}
 				className={classes.iconContainer}
-			></Icon>
-			<Trans i18nKey={textKey} parent='p' className={classes.textContainer}></Trans>
+			/>
+			<Trans
+				i18nKey={textKey}
+				ns={ns}
+				parent={Text}
+				className={classes.textContainer}
+				defaults={defaultText}
+			/>
 		</Paper>
 	)
 }
@@ -66,6 +72,8 @@ export const AlertMessage = ({ textKey, iconKey = 'information' }: Props) => {
 type Props = {
 	/** The alert message is created using a textKey from the i18n JSON/Crowdin */
 	textKey: string
+	ns: string
+	defaultText: string
 	/** `warning` or `information` will dictate the icon that is displayed with the alert */
 	iconKey: keyof typeof alertTypeIcon
 }
