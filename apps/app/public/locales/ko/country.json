@@ -77,7 +77,7 @@
 	},
 	"BEN": {
 		"name": "베냉",
-		"demonym_other": "베닌어"
+		"demonym_other": "베냉 사람"
 	},
 	"BES": {
 		"name": "캐리비안 네덜란드"
@@ -147,7 +147,7 @@
 	},
 	"BWA": {
 		"name": "보츠와나",
-		"demonym_other": "바츠와나"
+		"demonym_other": "보츠와나"
 	},
 	"CAF": {
 		"name": "중앙아프리카 공화국",
@@ -944,7 +944,7 @@
 		"demonym_other": "우즈베키스탄인"
 	},
 	"VAT": {
-		"name": "바티칸 시티",
+		"name": "바티칸 시국",
 		"demonym_other": "이탈리아인"
 	},
 	"VCT": {
@@ -984,7 +984,7 @@
 		"demonym_other": "예멘인"
 	},
 	"ZAF": {
-		"name": "남아프리카",
+		"name": "남아프리카 공화국",
 		"demonym_other": "남아프리카인"
 	},
 	"ZMB": {
