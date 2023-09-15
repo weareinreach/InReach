@@ -207,7 +207,7 @@
         "<textDarkGray>InReach utilise <linkUmami>Umami</linkUmami>, une alternative à Google Analytics axée sur la vie privée, pour analyser et suivre anonymement les données d'utilisation de l'application (par ex, les recherches des utilisateurs et d'autres comportements) dans l'agrégat. <linkUmamiGDPR>Umami est conforme au GDPR</linkUmamiGDPR> et ne réunit aucune information personnellement identifiable et rend anonyme toutes les données collectées. Les utilisateurs ne peuvent pas être identifiés et ne sont jamais suivis sur les sites Web.</textDarkGray>",
         "<textDarkGray>InReach utilise également Vercel Analytics pour analyser la performance et les composants essentiels du web. Vercel Analytics fournit des informations d'utilisation du site sans être lié à, ou associé à un visiteur ou à une adresse IP individuelle. L'enregistrement des données est anonyme et la fonction Analytics ne collecte pas ou ne garde pas d'informations qui permettraient à Vercel de reconstruire une session de navigation à travers des pages ou d'identifier un utilisateur.</textDarkGray>"
     ],
-    "privacy-statement-foot": "<linkPolicy>Lire notre politique de confidentialité complète pour plus d'informations</linkPolicy>",
+    "privacy-statement-foot": "<linkPolicy>Lisez notre politique de confidentialité complète pour plus d'informations</linkPolicy>",
     "privacy-statement-head": [
         "<emojiLg>🔒</emojiLg>",
         "<title2>Déclaration de confidentialité</title2>"
@@ -288,13 +288,13 @@
             "<group>\n<button data-option='individual'>Individuel</button>\n<button data-option='provider'>Professionnel/Prestataire</button>\n<button data-option='lcr'>Critique dans la communauté locale</button>\n</group>",
             "<loginLink>Vous avez déjà un compte ?</loginLink>"
         ],
-        "name-use-any": "Utiliser le nom qui vous convient le mieux.",
+        "name-use-any": "Utilisez le nom qui vous convient le mieux.",
         "name_alias": "Nom ou alias",
         "name_full": "Nom complet",
-        "placeholder-name_alias": "Entrer le nom ou l'alias...",
-        "placeholder-name_full": "Entrer le nom complet...",
-        "select-law-practice": "Où pratiquez-vous le droit ?",
-        "select-service-provider": "Où travaillez-vous ou faites-vous du bénévolat?",
+        "placeholder-name_alias": "Entrez le nom ou l'alias...",
+        "placeholder-name_full": "Entrez le nom complet...",
+        "select-law-practice": "Où pratiquez vous le droit ?",
+        "select-service-provider": "Où travaillez-vous ou donnez-vous du bénévolat?",
         "specify-work-volunteer": "Veuillez préciser où vous travaillez ou faites du bénévolat",
         "success": "Vous avez créé un compte !",
         "user-exists-body": "Cette adresse e-mail est déjà enregistrée.",
