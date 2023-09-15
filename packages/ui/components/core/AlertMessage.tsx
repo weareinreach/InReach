@@ -72,8 +72,8 @@ export const AlertMessage = ({ textKey, ns, iconKey = 'information', defaultText
 type Props = {
 	/** The alert message is created using a textKey from the i18n JSON/Crowdin */
 	textKey: string
-	ns: string
-	defaultText: string
+	ns?: string
+	defaultText?: string
 	/** `warning` or `information` will dictate the icon that is displayed with the alert */
 	iconKey: keyof typeof alertTypeIcon
 }
