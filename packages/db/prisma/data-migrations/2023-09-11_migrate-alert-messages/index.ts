@@ -76,25 +76,28 @@ export const job20230911_migrate_alert_messages = {
 
 		// fs.writeFileSync(path.resolve(__dirname, '___translations.json'), JSON.stringify(translation))
 
-		await prisma.$transaction(async (tx) => {
-			const tkeys = await tx.translationKey.createMany({ data: translationKey, skipDuplicates: true })
-			log(`Translation keys created: ${tkeys.count}`)
+		await prisma.$transaction(
+			async (tx) => {
+				const tkeys = await tx.translationKey.createMany({ data: translationKey, skipDuplicates: true })
+				log(`Translation keys created: ${tkeys.count}`)
 
-			const fText = await tx.freeText.createMany({ data: freeText, skipDuplicates: true })
-			log(`FreeText records created: ${fText.count}`)
+				const fText = await tx.freeText.createMany({ data: freeText, skipDuplicates: true })
+				log(`FreeText records created: ${fText.count}`)
 
-			const oAtt = await tx.organizationAttribute.createMany({
-				data: organizationAttribute,
-				skipDuplicates: true,
-			})
-			log(`Organization Attribute records created: ${oAtt.count}`)
+				const oAtt = await tx.organizationAttribute.createMany({
+					data: organizationAttribute,
+					skipDuplicates: true,
+				})
+				log(`Organization Attribute records created: ${oAtt.count}`)
 
-			const aSupp = await tx.attributeSupplement.createMany({
-				data: attributeSupplement,
-				skipDuplicates: true,
-			})
-			log(`Attribute Supplement records created: ${aSupp.count}`)
-		})
+				const aSupp = await tx.attributeSupplement.createMany({
+					data: attributeSupplement,
+					skipDuplicates: true,
+				})
+				log(`Attribute Supplement records created: ${aSupp.count}`)
+			},
+			{ timeout: 60000 }
+		)
 
 		/**
 		 * DO NOT REMOVE BELOW
