@@ -363,9 +363,6 @@ importers:
       '@types/eslint':
         specifier: 8.44.2
         version: 8.44.2
-      '@types/flat':
-        specifier: 5.0.3
-        version: 5.0.3
       '@types/luxon':
         specifier: 3.3.2
         version: 3.3.2
@@ -1017,9 +1014,6 @@ importers:
       '@types/eslint':
         specifier: 8.44.2
         version: 8.44.2
-      '@types/flat':
-        specifier: 5.0.3
-        version: 5.0.3
       '@types/geojson':
         specifier: 7946.0.10
         version: 7946.0.10
@@ -10180,10 +10174,6 @@ packages:
 
   /@types/find-cache-dir@3.2.1:
     resolution: {integrity: sha512-frsJrz2t/CeGifcu/6uRo4b+SzAwT4NYCVPu1GN8IB9XTzrpPkGuV0tmh9mN+/L0PklAlsC3u5Fxt0ju00LXIw==}
-    dev: true
-
-  /@types/flat@5.0.3:
-    resolution: {integrity: sha512-uG/4x6EXYbq4VDsBJLNDHQAQmtRPg3x4tAXcBspxlnEknz8NiJxnHoxSiJKGNExiS00q4mJNvuEBgVA3jsDIdQ==}
     dev: true
 
   /@types/geojson@7946.0.10:

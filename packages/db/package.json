@@ -88,7 +88,6 @@
 		"@turf/points-within-polygon": "6.5.0",
 		"@turf/simplify": "6.5.0",
 		"@types/eslint": "8.44.2",
-		"@types/flat": "5.0.3",
 		"@types/geojson": "7946.0.10",
 		"@types/inquirer": "9.0.3",
 		"@types/inquirer-autocomplete-prompt": "3.0.0",
