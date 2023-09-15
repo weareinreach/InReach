@@ -915,8 +915,8 @@ importers:
         specifier: workspace:*
         version: link:../util
       flat:
-        specifier: 5.0.2
-        version: 5.0.2
+        specifier: 6.0.0
+        version: 6.0.0
       object-sizeof:
         specifier: 2.6.3
         version: 2.6.3
@@ -924,9 +924,6 @@ importers:
         specifier: 6.1.1
         version: 6.1.1
     devDependencies:
-      '@types/flat':
-        specifier: 5.0.2
-        version: 5.0.2
       '@weareinreach/config':
         specifier: workspace:*
         version: link:../config
