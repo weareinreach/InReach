@@ -22,20 +22,20 @@
 	},
 	"dependencies": {
 		"@aws-lambda-powertools/logger": "1.12.1",
-		"@prisma/client": "5.3.0",
+		"@prisma/client": "5.3.1",
 		"@weareinreach/db": "workspace:*"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.120",
+		"@types/aws-lambda": "8.10.121",
 		"@types/eslint": "8.44.2",
-		"@types/node": "18.17.15",
+		"@types/node": "18.17.16",
 		"@vercel/ncc": "0.38.0",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
 		"eslint": "8.49.0",
 		"prettier": "3.0.3",
-		"prisma": "5.3.0",
+		"prisma": "5.3.1",
 		"typescript": "5.2.2"
 	}
 }
