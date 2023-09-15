@@ -6,7 +6,8 @@ import formatBytes from 'pretty-bytes'
 
 import { createLoggerInstance } from '@weareinreach/util/logger'
 
-const redisTTL = 86400
+import { cacheTime } from '../constants'
+
 const log = createLoggerInstance('Vercel KV')
 const tracer = trace.getTracer('inreach-app')
 
@@ -31,7 +32,7 @@ export const redisReadCache = async (namespaces: string[], lang: string, otaMani
 			}
 			const expiretime = itemTTL + Math.round(Date.now() / 1000)
 
-			if (otaManifestTimestamp > expiretime - redisTTL) {
+			if (otaManifestTimestamp > expiretime - cacheTime) {
 				log.info(`Manifest is newer than cache - skipping cache for ${cacheKey}`)
 				continue
 			}
@@ -56,7 +57,7 @@ export const redisReadCache = async (namespaces: string[], lang: string, otaMani
 			const expirePipeline = redis.pipeline()
 			const spanExpire = tracer.startSpan('redis-expire', undefined, context.active())
 			for (const item of expireQueue) {
-				expirePipeline.expire(item, redisTTL)
+				expirePipeline.expire(item, cacheTime)
 			}
 			await expirePipeline.exec()
 			spanExpire.end()
@@ -99,7 +100,7 @@ export const redisWriteCache = async (data: WriteCacheArgs[]) => {
 			log.info(`Writing ${key} - ${Object.keys(flattenedStrings).length} strings`)
 			dataSize += sizeof(flattenedStrings)
 			pipeline.hset(key, flattenedStrings)
-			pipeline.expire(key, redisTTL)
+			pipeline.expire(key, cacheTime)
 			loopSpan.end()
 		}
 

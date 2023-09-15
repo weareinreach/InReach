@@ -70,6 +70,7 @@
 		"@vercel/kv": "0.2.2",
 		"@weareinreach/api": "workspace:*",
 		"@weareinreach/auth": "workspace:*",
+		"@weareinreach/crowdin": "workspace:*",
 		"@weareinreach/db": "workspace:*",
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/ui": "workspace:*",
