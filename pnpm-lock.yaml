@@ -267,8 +267,8 @@ importers:
         specifier: 7.1.0
         version: 7.1.0(react@18.2.0)
       flat:
-        specifier: 5.0.2
-        version: 5.0.2
+        specifier: 6.0.0
+        version: 6.0.0
       i18next:
         specifier: 23.5.1
         version: 23.5.1
@@ -1081,8 +1081,8 @@ importers:
         specifier: 8.49.0
         version: 8.49.0
       flat:
-        specifier: 5.0.2
-        version: 5.0.2
+        specifier: 6.0.0
+        version: 6.0.0
       geojson:
         specifier: 0.5.0
         version: 0.5.0
@@ -14805,8 +14805,9 @@ packages:
       rimraf: 3.0.2
     dev: true
 
-  /flat@5.0.2:
-    resolution: {integrity: sha512-b6suED+5/3rTpUBdG1gupIl8MPFCAMA0QXwmljLhvCUKcUvdE4gWky9zpuGCcXHOsz4J9wPGNWq6OKpmIzz3hQ==}
+  /flat@6.0.0:
+    resolution: {integrity: sha512-/aYW7n5yD9HyW9ZHCzW2LGSpyTmbXEdRWdH5ded6K/a2ETgowOripjBqJorQ4/PBa3VPFub28fNruWp+onmIUg==}
+    engines: {node: '>=18'}
     hasBin: true
 
   /flatted@3.2.7:
