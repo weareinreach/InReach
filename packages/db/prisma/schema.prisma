@@ -1099,7 +1099,8 @@ model ServiceCategory {
   category          String                            @unique
   active            Boolean                           @default(true)
   activeForSuggest  Boolean?
-  services          ServiceTag[]
+  primaryServices   ServiceTag[]
+  services          ServiceTagToCategory[]
   defaultAttributes ServiceCategoryDefaultAttribute[]
   crisisSupportOnly Boolean?
 
@@ -1126,8 +1127,9 @@ model ServiceTag {
   tsKey String
   tsNs  String
 
-  category   ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  categoryId String
+  primaryCategory   ServiceCategory        @relation(fields: [primaryCategoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  primaryCategoryId String
+  categories        ServiceTagToCategory[]
 
   crisisSupportOnly Boolean?
 
@@ -1146,8 +1148,20 @@ model ServiceTag {
   //@@schema("system")
 
   @@unique([tsKey, tsNs])
-  @@unique([name, categoryId])
-  @@index([categoryId])
+  @@unique([name, primaryCategoryId])
+  @@index([primaryCategoryId])
+}
+
+model ServiceTagToCategory {
+  category     ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoryId   String
+  serviceTag   ServiceTag      @relation(fields: [serviceTagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceTagId String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+
+  @@id([categoryId, serviceTagId])
 }
 
 /// Phone number descriptors

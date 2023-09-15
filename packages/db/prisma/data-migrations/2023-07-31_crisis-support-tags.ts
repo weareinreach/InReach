@@ -150,7 +150,7 @@ export const job20230731 = {
 				name: 'Crisis Support',
 				active: true,
 				crisisSupportOnly: true,
-				categoryId: 'svct_01H6P8M1YA3H7QX3CXN25Q9F00',
+				primaryCategoryId: 'svct_01H6P8M1YA3H7QX3CXN25Q9F00',
 				tsKey: 'crisis-support.crisis-support',
 				tsNs: 'services',
 			},
