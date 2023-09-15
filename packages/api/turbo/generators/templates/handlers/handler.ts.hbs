@@ -1,0 +1,19 @@
+import { prisma } from '@weareinreach/db'
+import { handleError } from '~api/lib/errorHandler'
+import { type TRPCHandlerParams } from '~api/types/handler'
+{{#if createSchema}}
+import { type T{{pascalCase name}}Schema } from './{{operation}}.{{name}}.schema'
+{{/if}}
+
+{{#if createSchema}}
+export const {{name}} = async ({ctx, input}: TRPCHandlerParams<T{{pascalCase name}}Schema>) => {
+{{else}}
+export const {{name}} = async ({ctx}: TRPCHandlerParams<undefined>) => {
+{{/if}}
+	try {
+
+
+	} catch (error) {
+		handleError(error)
+	}
+}

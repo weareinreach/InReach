@@ -3,7 +3,7 @@ import prettier from 'prettier'
 import { writeFileSync } from 'fs'
 import path from 'path'
 
-import { crowdinApi, crowdinVars } from './client'
+import { crowdinApi, projectId } from '../api'
 
 const writeOutput = async (filename: string, data: string, isJs = false) => {
 	const prettierOpts = (await prettier.resolveConfig(__dirname)) ?? undefined
@@ -15,7 +15,7 @@ const writeOutput = async (filename: string, data: string, isJs = false) => {
 }
 
 const updateOpts = async () => {
-	const { data: branches } = await crowdinApi.sourceFilesApi.listProjectBranches(crowdinVars.projectId)
+	const { data: branches } = await crowdinApi.sourceFilesApi.listProjectBranches(projectId)
 	const branchesToExport = ['main', 'dev', 'database', 'database-draft']
 
 	const branchMap = new Map<string, number>()
@@ -30,7 +30,7 @@ const updateOpts = async () => {
 
 	for (const [key, value] of Object.entries(branchObj)) {
 		if (!branchesToExport.includes(key)) continue
-		const { data: files } = await crowdinApi.sourceFilesApi.listProjectFiles(crowdinVars.projectId, {
+		const { data: files } = await crowdinApi.sourceFilesApi.listProjectFiles(projectId, {
 			branchId: value,
 		})
 		fileMap.set(key, Object.fromEntries(files.map(({ data }) => [data.name.replace('.json', ''), data.id])))

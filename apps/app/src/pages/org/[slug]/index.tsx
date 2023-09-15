@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 // import { getEnv } from '@weareinreach/env'
 // import { prisma } from '@weareinreach/db/client'
+import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
 import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
@@ -58,15 +59,15 @@ const useStyles = createStyles((theme) => ({
 
 const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const router = useRouter<'/org/[slug]'>()
+	const { data, status } = api.organization.forOrgPage.useQuery({ slug }, { enabled: !!slug })
 	// const { query } = router
 	const {
 		t,
 		i18n,
 		ready: i18nReady,
-	} = useTranslation(['common', 'services', 'attribute', 'phone-type', slug])
+	} = useTranslation(['common', 'services', 'attribute', 'phone-type', ...(data?.id ? [data.id] : [])])
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
-	const { data, status } = api.organization.forOrgPage.useQuery({ slug }, { enabled: !!slug })
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
 		{ parentId: data?.id ?? '', remoteOnly: true },
 		{
@@ -74,6 +75,8 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 			select: (data) => data.length !== 0,
 		}
 	)
+	const { data: alertData } = api.organization.getAlerts.useQuery({ slug }, { enabled: !!slug })
+	const hasAlerts = Array.isArray(alertData) && alertData.length > 0
 	const { ref, width } = useElementSize()
 	const { searchState } = useSearchState()
 	const theme = useMantineTheme()
@@ -200,6 +203,16 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 					organizationId={organizationId}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
+					{hasAlerts &&
+						alertData.map((alert) => (
+							<AlertMessage
+								key={alert.key}
+								iconKey={alert.icon}
+								ns={organizationId}
+								textKey={alert.key}
+								defaultText={alert.text}
+							/>
+						))}
 					<ListingBasicInfo
 						role='org'
 						data={{

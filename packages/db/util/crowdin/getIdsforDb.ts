@@ -1,12 +1,12 @@
 import { Listr } from 'listr2'
 import PQueue from 'p-queue'
+import ms from 'pretty-ms'
 
 import fs from 'fs'
 import path from 'path'
 
-import { prisma } from '@weareinreach/db'
-
-import { getStringIdByKey } from '.'
+import { getStringIdByKey } from '@weareinreach/crowdin/api'
+import { prisma } from '~db/client'
 
 const queue = new PQueue({
 	concurrency: 15,
@@ -22,20 +22,7 @@ let qerror = 0
 // let qtimer: number
 
 const output: { crowdinId: number; key: string; ns: string }[] = []
-// queue.on('add', () => {
-// 	console.info(` 🛠   Added item #${++qtotal}.`)
-// })
-// queue.on('active', () => {
-// 	// qtimer = Date.now()
-// 	console.info(
-// 		`<-- Working on item #${++qcount} of ${qtotal}. Remaining: ${queue.size}. Pending: ${
-// 			queue.pending
-// 		}. Errors: ${qerror}.`
-// 	)
-// })
-// queue.on('completed', () => {
-// 	console.info(`--> Job #${qcount} finished in ${Date.now() - qtimer}ms`)
-// })
+
 queue.on('error', (error) => {
 	console.error(error)
 })
@@ -60,7 +47,7 @@ const task = async (key: string, ns: string) => {
 let recordTotal = 0
 const run = async () => {
 	const records = await prisma.translationKey.findMany({
-		where: { ns: 'org-data', crowdinId: null },
+		where: { crowdinId: null },
 		select: { key: true, ns: true },
 	})
 	recordTotal = records.length
@@ -88,8 +75,19 @@ const tasks = new Listr([
 	{
 		title: 'Running Jobs',
 		task: (_, task) => {
+			const start = Date.now()
+			const getRemainingTime = () => {
+				// Get elapsed time
+				const elapsed = Date.now() - start
+				const averageTxn = elapsed / qcount
+				const estimatedRemainder = queue.size * averageTxn
+
+				return ms(estimatedRemainder)
+			}
 			queue.on('active', () => {
-				task.title = `Running Jobs [${++qcount}/${qtotal}] Remaining: ${queue.size}. Errors: ${qerror}.`
+				task.title = `Running Jobs [${++qcount}/${qtotal}] Remaining: ${
+					queue.size
+				}. Errors: ${qerror}. Estimated remaining time: ${getRemainingTime()}.`
 			})
 
 			startQueue()
@@ -97,5 +95,4 @@ const tasks = new Listr([
 		options: { bottomBar: 20 },
 	},
 ])
-console.log(process.pid)
 tasks.run()
