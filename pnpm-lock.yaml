@@ -267,8 +267,8 @@ importers:
         specifier: 7.1.0
         version: 7.1.0(react@18.2.0)
       flat:
-        specifier: 5.0.2
-        version: 5.0.2
+        specifier: 6.0.0
+        version: 6.0.0
       i18next:
         specifier: 23.5.1
         version: 23.5.1
@@ -363,9 +363,6 @@ importers:
       '@types/eslint':
         specifier: 8.44.2
         version: 8.44.2
-      '@types/flat':
-        specifier: 5.0.3
-        version: 5.0.3
       '@types/luxon':
         specifier: 3.3.2
         version: 3.3.2
@@ -1017,9 +1014,6 @@ importers:
       '@types/eslint':
         specifier: 8.44.2
         version: 8.44.2
-      '@types/flat':
-        specifier: 5.0.3
-        version: 5.0.3
       '@types/geojson':
         specifier: 7946.0.10
         version: 7946.0.10
@@ -1081,8 +1075,8 @@ importers:
         specifier: 8.49.0
         version: 8.49.0
       flat:
-        specifier: 5.0.2
-        version: 5.0.2
+        specifier: 6.0.0
+        version: 6.0.0
       geojson:
         specifier: 0.5.0
         version: 0.5.0
@@ -10182,10 +10176,6 @@ packages:
     resolution: {integrity: sha512-frsJrz2t/CeGifcu/6uRo4b+SzAwT4NYCVPu1GN8IB9XTzrpPkGuV0tmh9mN+/L0PklAlsC3u5Fxt0ju00LXIw==}
     dev: true
 
-  /@types/flat@5.0.3:
-    resolution: {integrity: sha512-uG/4x6EXYbq4VDsBJLNDHQAQmtRPg3x4tAXcBspxlnEknz8NiJxnHoxSiJKGNExiS00q4mJNvuEBgVA3jsDIdQ==}
-    dev: true
-
   /@types/geojson@7946.0.10:
     resolution: {integrity: sha512-Nmh0K3iWQJzniTuPRcJn5hxXkfB1T1pgB89SBig5PlJQU5yocazeu4jATJlaA0GYFKWMqDdvYemoSnF2pXgLVA==}
     dev: true
@@ -14805,8 +14795,9 @@ packages:
       rimraf: 3.0.2
     dev: true
 
-  /flat@5.0.2:
-    resolution: {integrity: sha512-b6suED+5/3rTpUBdG1gupIl8MPFCAMA0QXwmljLhvCUKcUvdE4gWky9zpuGCcXHOsz4J9wPGNWq6OKpmIzz3hQ==}
+  /flat@6.0.0:
+    resolution: {integrity: sha512-/aYW7n5yD9HyW9ZHCzW2LGSpyTmbXEdRWdH5ded6K/a2ETgowOripjBqJorQ4/PBa3VPFub28fNruWp+onmIUg==}
+    engines: {node: '>=18'}
     hasBin: true
 
   /flatted@3.2.7:
