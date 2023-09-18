@@ -13,7 +13,6 @@
 		"dev:verbose": "NEXT_VERBOSE=1 next dev",
 		"format": "prettier --write --ignore-unknown .",
 		"generate:all": "tsx ./lib/generate.ts",
-		"generate:data": "tsx ./lib/generate.ts -d",
 		"generate:i18n": "tsx ./lib/generate.ts -t",
 		"generate:i18nTypes": "i18next-resources-for-ts interface -i ./public/locales/en -o ./src/types/resources.d.ts",
 		"preinstall": "npx only-allow pnpm",

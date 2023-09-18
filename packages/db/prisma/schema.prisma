@@ -1420,6 +1420,10 @@ model Language {
   /// Is this language being actively used for translations?
   activelyTranslated Boolean @default(false)
 
+  // Sorting options
+  defaultSort Int?     @unique
+  groupCommon Boolean?
+
   // fields using records
   attributeSupplements AttributeSupplement[]
   reviews              OrgReview[]
