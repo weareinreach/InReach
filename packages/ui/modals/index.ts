@@ -14,5 +14,4 @@ export * from './QuickPromotion'
 export * from './ResetPassword'
 export * from './Review'
 export * from './Service'
-export * from './ServiceFilter'
 // codegen:end
