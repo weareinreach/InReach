@@ -22,7 +22,7 @@ const isObject = (data: unknown): data is Record<string, string> =>
 const countKeys = (obj: Output): number => Object.keys(flatten(obj)).length
 
 export const generateTranslationKeys = async (task: ListrTask) => {
-	const prettierOpts = (await prettier.resolveConfig(__dirname)) ?? undefined
+	const prettierOpts = (await prettier.resolveConfig(__filename)) ?? undefined
 
 	const data = await prisma.translationNamespace.findMany({
 		where: {
