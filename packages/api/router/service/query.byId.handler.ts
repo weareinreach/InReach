@@ -29,7 +29,7 @@ export const byId = async ({ input }: TRPCHandlerParams<TByIdSchema>) => {
 									},
 								},
 							},
-							category: {
+							primaryCategory: {
 								select: {
 									tsKey: true,
 									tsNs: true,

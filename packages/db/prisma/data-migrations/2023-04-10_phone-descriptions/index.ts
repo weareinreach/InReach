@@ -3,11 +3,11 @@ import { z } from 'zod'
 import fs from 'fs'
 import path from 'path'
 
+import { namespace as namespaces } from '~db/generated/namespaces'
 import { generateId, type Prisma, prisma } from '~db/index'
 import { batchRunner } from '~db/prisma/batchRunner'
-import { type ListrJob, type ListrTask, type MigrationJob } from '~db/prisma/dataMigrationRunner'
+import { type ListrTask, type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
-import { namespaces } from '~db/seed/data/00-namespaces'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {

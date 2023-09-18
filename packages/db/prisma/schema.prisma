@@ -29,7 +29,7 @@ datasource db {
   provider   = "postgresql"
   url        = env("DATABASE_URL")
   directUrl  = env("DB_DIRECT_URL")
-  extensions = [postgis, pg_stat_statements]
+  extensions = [pg_stat_statements, postgis]
   // schemas    = ["user", "org", "system", "relation"]
 }
 
@@ -1099,7 +1099,8 @@ model ServiceCategory {
   category          String                            @unique
   active            Boolean                           @default(true)
   activeForSuggest  Boolean?
-  services          ServiceTag[]
+  primaryServices   ServiceTag[]
+  services          ServiceTagToCategory[]
   defaultAttributes ServiceCategoryDefaultAttribute[]
   crisisSupportOnly Boolean?
 
@@ -1126,8 +1127,9 @@ model ServiceTag {
   tsKey String
   tsNs  String
 
-  category   ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  categoryId String
+  primaryCategory   ServiceCategory        @relation(fields: [primaryCategoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  primaryCategoryId String
+  categories        ServiceTagToCategory[]
 
   crisisSupportOnly Boolean?
 
@@ -1146,8 +1148,20 @@ model ServiceTag {
   //@@schema("system")
 
   @@unique([tsKey, tsNs])
-  @@unique([name, categoryId])
-  @@index([categoryId])
+  @@unique([name, primaryCategoryId])
+  @@index([primaryCategoryId])
+}
+
+model ServiceTagToCategory {
+  category     ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categoryId   String
+  serviceTag   ServiceTag      @relation(fields: [serviceTagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  serviceTagId String
+
+  linkedAt DateTime @default(now())
+  active   Boolean  @default(true)
+
+  @@id([categoryId, serviceTagId])
 }
 
 /// Phone number descriptors
@@ -1795,6 +1809,29 @@ enum AuditLogOperation {
   DELETE
   LINK
   UNLINK
+}
+
+model AuditTrail {
+  id        String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  table     String
+  table_oid Int                 @db.Oid
+  recordId  String[]
+  operation AuditTrailOperation
+  old       Json?
+  new       Json?
+  timestamp DateTime            @default(now()) @db.Timestamptz
+  actorId   String
+
+  @@index([recordId], type: Gin)
+  @@index([actorId])
+  @@index([table_oid])
+  @@index([timestamp], type: Brin)
+}
+
+enum AuditTrailOperation {
+  INSERT
+  UPDATE
+  DELETE
 }
 
 //
@@ -2480,3 +2517,58 @@ view pg_index_usage {
 
   @@ignore
 }
+
+// view pg_stat_statements_info {
+//   dealloc     BigInt?
+//   stats_reset DateTime? @db.Timestamptz(6)
+
+//   @@ignore
+// }
+
+// view pg_stat_statements {
+//   userid                 Int?     @db.Oid
+//   dbid                   Int?     @db.Oid
+//   toplevel               Boolean?
+//   queryid                BigInt?
+//   query                  String?
+//   plans                  BigInt?
+//   total_plan_time        Float?
+//   min_plan_time          Float?
+//   max_plan_time          Float?
+//   mean_plan_time         Float?
+//   stddev_plan_time       Float?
+//   calls                  BigInt?
+//   total_exec_time        Float?
+//   min_exec_time          Float?
+//   max_exec_time          Float?
+//   mean_exec_time         Float?
+//   stddev_exec_time       Float?
+//   rows                   BigInt?
+//   shared_blks_hit        BigInt?
+//   shared_blks_read       BigInt?
+//   shared_blks_dirtied    BigInt?
+//   shared_blks_written    BigInt?
+//   local_blks_hit         BigInt?
+//   local_blks_read        BigInt?
+//   local_blks_dirtied     BigInt?
+//   local_blks_written     BigInt?
+//   temp_blks_read         BigInt?
+//   temp_blks_written      BigInt?
+//   blk_read_time          Float?
+//   blk_write_time         Float?
+//   temp_blk_read_time     Float?
+//   temp_blk_write_time    Float?
+//   wal_records            BigInt?
+//   wal_fpi                BigInt?
+//   wal_bytes              Decimal? @db.Decimal
+//   jit_functions          BigInt?
+//   jit_generation_time    Float?
+//   jit_inlining_count     BigInt?
+//   jit_inlining_time      Float?
+//   jit_optimization_count BigInt?
+//   jit_optimization_time  Float?
+//   jit_emission_count     BigInt?
+//   jit_emission_time      Float?
+
+//   @@ignore
+// }

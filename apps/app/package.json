@@ -24,8 +24,6 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@crowdin/crowdin-api-client": "1.24.0",
-		"@crowdin/ota-client": "1.0.0",
 		"@emotion/react": "11.11.1",
 		"@emotion/server": "11.11.0",
 		"@hookform/resolvers": "3.3.1",

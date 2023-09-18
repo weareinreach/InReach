@@ -158,7 +158,7 @@ const serviceTagInclude = {
 		name: true,
 		tsKey: true,
 		tsNs: true,
-		category: {
+		primaryCategory: {
 			select: {
 				tsKey: true,
 				tsNs: true,
@@ -296,7 +296,7 @@ export const organizationInclude = (ctx: Omit<Context, 'prisma'>) =>
 		},
 	}) satisfies Pick<Prisma.OrganizationFindUniqueOrThrowArgs, 'select'>
 
-const selectServCat = {
+export const selectServCat = {
 	select: {
 		services: {
 			select: {
@@ -373,7 +373,7 @@ const selectServ = {
 			where: {
 				tag: {
 					active: true,
-					category: {
+					primaryCategory: {
 						active: true,
 					},
 				},
@@ -384,7 +384,7 @@ const selectServ = {
 						id: true,
 						tsKey: true,
 						tsNs: true,
-						category: {
+						primaryCategory: {
 							select: {
 								id: true,
 								tsKey: true,

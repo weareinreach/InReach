@@ -177,7 +177,7 @@ export const serviceData = {
 			{
 				tag: {
 					defaultAttributes: [],
-					category: {
+					primaryCategory: {
 						tsKey: 'education-and-employment.CATEGORYNAME',
 						tsNs: 'services',
 					},

@@ -46,7 +46,7 @@ const serviceSelect = {
 							},
 						},
 					},
-					category: {
+					primaryCategory: {
 						select: {
 							tsKey: true,
 							tsNs: true,
@@ -185,7 +185,7 @@ export const serviceByOrgId = z
 						select: {
 							tag: {
 								select: {
-									category: { select: { tsKey: true, tsNs: true } },
+									primaryCategory: { select: { tsKey: true, tsNs: true } },
 									tsKey: true,
 									tsNs: true,
 									active: true,
@@ -262,7 +262,7 @@ export const forServiceDrawer = z
 						select: {
 							tag: {
 								select: {
-									category: { select: { tsKey: true, tsNs: true, id: true } },
+									primaryCategory: { select: { tsKey: true, tsNs: true, id: true } },
 									tsKey: true,
 									tsNs: true,
 									active: true,

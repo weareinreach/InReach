@@ -1,4 +1,4 @@
-import { iconList, type IconList } from '~db/seed/lib'
+import { iconList, type IconList } from '~db/lib/icons'
 
 export const isSuccess = (criteria: unknown) => (criteria ? '✅' : '❎')
 export const formatMessage = (message: string, icon?: IconList, indent = false) => {

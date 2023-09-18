@@ -1,14 +1,12 @@
 import { Prisma } from '@prisma/client'
-import { z } from 'zod'
 
 import fs from 'fs'
 import path from 'path'
 
+import { namespace as namespaces } from '~db/generated/namespaces'
 import { prisma } from '~db/index'
-import { type ListrJob, type ListrTask, type MigrationJob } from '~db/prisma/dataMigrationRunner'
+import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
-
-import { namespaces } from '../../../seed/data'
 
 const getJSON = (file: string) => JSON.parse(fs.readFileSync(path.resolve(__dirname, file), 'utf-8'))
 
@@ -68,7 +66,7 @@ export const job20230605b = {
 				id: 'svtg_01H2738F1W23TZXB23VNPR9JM3',
 				name: 'Community & Social Groups',
 				// okay to be active
-				category: {
+				primaryCategory: {
 					connect: {
 						id: 'svct_01GW2HHEVCXGK9GPK6SAZ2Q7E3',
 					},
@@ -88,7 +86,7 @@ export const job20230605b = {
 				id: 'svtg_01H273BXC1T475GPEW4TXZ3Z20',
 				name: 'Art, Music, & Literature',
 				// okay to be active
-				category: {
+				primaryCategory: {
 					connect: {
 						id: 'svct_01GW2HHEVPE008PHCPNHZDAWMS',
 					},
@@ -110,7 +108,7 @@ export const job20230605b = {
 				id: 'svtg_01H273CH9YC9PXQWJ5RV349T2F',
 				// do not publish yet
 				name: 'Re-entry services',
-				category: {
+				primaryCategory: {
 					connect: {
 						id: 'svct_01GW2HHEVCXGK9GPK6SAZ2Q7E3',
 					},
