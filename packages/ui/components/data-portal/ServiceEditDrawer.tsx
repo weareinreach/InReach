@@ -295,7 +295,7 @@ interface FormData {
 	locations: string[]
 	services: {
 		id: string
-		categoryId: string
+		primaryCategoryId: string
 	}[]
 	serviceAreas: {
 		id: string

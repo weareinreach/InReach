@@ -131,7 +131,7 @@ export const globalSelect = {
 				name: true,
 				tsKey: true,
 				tsNs: true,
-				category: {
+				primaryCategory: {
 					select: {
 						tsKey: true,
 						tsNs: true,

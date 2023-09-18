@@ -24,7 +24,7 @@ export const forServiceDrawer = async ({ input }: TRPCHandlerParams<TForServiceD
 				select: {
 					tag: {
 						select: {
-							category: { select: { tsKey: true, tsNs: true, id: true } },
+							primaryCategory: { select: { tsKey: true, tsNs: true, id: true } },
 							tsKey: true,
 							tsNs: true,
 							active: true,
@@ -49,7 +49,7 @@ export const forServiceDrawer = async ({ input }: TRPCHandlerParams<TForServiceD
 	let servObj: ServObj = {}
 	for (const service of results) {
 		servObj = service.services.reduce((items: ServObj, record) => {
-			const key = record.tag.category.tsKey
+			const key = record.tag.primaryCategory.tsKey
 			if (!items[key]) {
 				items[key] = new Set()
 			}
