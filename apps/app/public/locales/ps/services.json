@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "د سقط پاملرنه",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "د سقط چمتو کونکي",
 		"financial-assistance": "مالي مرسته",
 		"lodging-assistance": "د استوګنې مرسته",
@@ -21,6 +21,10 @@
 	"computers-and-internet": {
 		"CATEGORYNAME": "کمپیوټر او انټرنیټ",
 		"computers-and-internet": "کمپیوټر او انټرنیټ"
+	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "ښوونه او روزنه",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "ویښتان او سټایلسټان",
 		"hygiene": "حفظ الصحه"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "دماغي روغتیا",
+		"resettlement-assistance": "Resettlement Assistance"
+	},
 	"legal": {
 		"CATEGORYNAME": "قانوني",
 		"asylum-application": "د پناه غوښتنې غوښتنه",
@@ -63,7 +73,7 @@
 		"employment-authorization": "د کارموندنې واک",
 		"family-petitions": "کورنۍ غوښتنې",
 		"immigration-detention": "د کډوالۍ توقیف",
-		"legal-advice": "حقوقي مشوره",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "قانوني هټلاینونه",
 		"name-and-gender-change": "نوم او د جندر بدلون",
 		"refugee-claim": "د کډوالو ادعا",
@@ -77,7 +87,7 @@
 		"mail": "میل"
 	},
 	"medical": {
-		"CATEGORYNAME": "طبي",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "د کوویډ - 19 خدمتونه",
 		"dental-care": "د غاښونو پاملرنه",
 		"hiv-and-sexual-health": "HIV او جنسي روغتیا",

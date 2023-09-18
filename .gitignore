@@ -66,3 +66,6 @@ packages/db/backup
 
 # internal temp scripts
 ___*.ts
+
+# 1password shell plugins
+.op/

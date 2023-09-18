@@ -1,7 +1,6 @@
 import slugify from 'slugify'
 
 import { prisma } from '@weareinreach/db'
-import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGenerateSlugSchema } from './query.generateSlug.schema'
@@ -30,10 +29,6 @@ const uniqueSlug = async (name: string, inc?: number): Promise<string> => {
 }
 
 export const generateSlug = async ({ input }: TRPCHandlerParams<TGenerateSlugSchema>) => {
-	try {
-		const slug = await uniqueSlug(input)
-		return slug
-	} catch (error) {
-		handleError(error)
-	}
+	const slug = await uniqueSlug(input)
+	return slug
 }

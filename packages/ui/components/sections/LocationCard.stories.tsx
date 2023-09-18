@@ -3,6 +3,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { StorybookGridDouble } from '~ui/layouts'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { location } from '~ui/mockData/location'
+import { GoogleMapsProvider } from '~ui/providers/GoogleMaps'
 
 import { LocationCard } from './LocationCard'
 
@@ -12,7 +13,14 @@ export default {
 	args: {
 		locationId: '',
 	},
-	decorators: [StorybookGridDouble],
+	decorators: [
+		StorybookGridDouble,
+		(Story) => (
+			<GoogleMapsProvider>
+				<Story />
+			</GoogleMapsProvider>
+		),
+	],
 	parameters: {
 		layout: 'fullscreen',
 		msw: {

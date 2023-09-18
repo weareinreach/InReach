@@ -70,6 +70,10 @@
 		"cost-fees": "Inapata gharama",
 		"cost-free": "Bure ya gharama"
 	},
+	"crisis-support-community": {
+		"elders": "Elders",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Mahitaji ya kustahiki",
 		"elig-age_max": "Chini ya {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "Maagizo ya Ufikiaji - Mahali",
 		"accessphone": "Maagizo ya Ufikiaji - Simu",
 		"accesspublictransit": "Maagizo ya Ufikiaji - Usafiri wa Umma",
-		"accesstext": "Maelekezo ya Ufikiaji - Nakala"
+		"accesssms": "Access Instructions - SMS",
+		"accesstext": "Maelekezo ya Ufikiaji - Nakala",
+		"accesswhatsapp": "Access Instructions - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Kuzingatia Huduma",

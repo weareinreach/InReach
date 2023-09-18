@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Cuidados com o aborto",
+		"CATEGORYNAME": "Cuidado com Abortação",
 		"abortion-providers": "Provedores de aborto",
 		"financial-assistance": "Assistência financeira",
 		"lodging-assistance": "Assistência de hospedagem",
@@ -21,6 +21,10 @@
 	"computers-and-internet": {
 		"CATEGORYNAME": "Computadores e Internet",
 		"computers-and-internet": "Computadores e internet"
+	},
+	"crisis-support": {
+		"CATEGORYNAME": "Suporte Crítico",
+		"crisis-support": "Suporte Crítico"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Educação e emprego",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "Cortes de cabelo e estilistas",
 		"hygiene": "Higiene"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "Suporte internacional",
+		"financial-assistance": "Assistência Financeira",
+		"mental-health": "Saúde mental",
+		"resettlement-assistance": "Assistência de Reconfiguração"
+	},
 	"legal": {
 		"CATEGORYNAME": "Legal",
 		"asylum-application": "Pedido de asilo",
@@ -63,7 +73,7 @@
 		"employment-authorization": "Autorização de emprego",
 		"family-petitions": "Petições familiares",
 		"immigration-detention": "Detenção de imigrantes",
-		"legal-advice": "Aconselhamento jurídico",
+		"legal-advice": "Consulta jurídica",
 		"legal-hotlines": "Linhas diretas jurídicas",
 		"name-and-gender-change": "Mudança de nome e gênero",
 		"refugee-claim": "Pedido de refugiado",
@@ -77,7 +87,7 @@
 		"mail": "Correio"
 	},
 	"medical": {
-		"CATEGORYNAME": "Médico",
+		"CATEGORYNAME": "Medicamentos",
 		"covid-19-services": "Serviços da COVID-19",
 		"dental-care": "Assistência odontológica",
 		"hiv-and-sexual-health": "HIV e saúde sexual",
@@ -111,7 +121,7 @@
 		"sports-and-entertainment": "Esportes e entretenimento"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Tradução e interpretação",
+		"CATEGORYNAME": "Tradução e Interpretação",
 		"for-healthcare": "Para cuidados de saúde",
 		"for-legal-services": "Para serviços jurídicos",
 		"general-translation-and-interpretation": "Tradução e interpretação gerais"

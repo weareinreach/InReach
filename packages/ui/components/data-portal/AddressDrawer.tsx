@@ -72,7 +72,7 @@ const FormSchema = z.object({
 	data: z
 		.object({
 			name: z.string().nullable(),
-			street1: z.string(),
+			street1: z.string().nullish().transform(transformNullString),
 			street2: z.string().nullable().transform(transformNullString),
 			city: z.string(),
 			postCode: z.string().nullable().transform(transformNullString),
@@ -118,7 +118,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 		initialValues: { id: '', data: { accessible: {} } },
 		transformValues: FormSchema.transform(schemaTransform).parse,
 	})
-	const { id: organizationId, slug: orgSlug } = useOrgInfo()
+	const { id: organizationId } = useOrgInfo()
 	const { t } = useTranslation(['attribute', 'country', 'gov-dist'])
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
@@ -141,7 +141,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 
 	// #region Get org's services
 	const { data: orgServices } = api.service.getNames.useQuery(
-		{ organizationId },
+		{ organizationId: organizationId ?? '' },
 		{
 			// !fix when issue resolved.
 			select: (data) => data.map(({ id, defaultText }) => ({ value: id, label: defaultText })),
@@ -281,7 +281,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 			return (
 				<div ref={ref} {...others}>
 					<Text className={classes.unmatchedText} truncate>
-						{matchText(value, form.values.data?.street1)}
+						{matchText(value, form.values.data?.street1 ?? '')}
 					</Text>
 					<Text className={cx(classes.unmatchedText, classes.secondLine)} truncate>
 						{subheading}

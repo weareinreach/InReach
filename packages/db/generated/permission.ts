@@ -39,6 +39,7 @@ export const permissions = [
 	'publishService',
 	'root',
 	'showUserReview',
+	'undeleteUserReview',
 	'unpublishLocation',
 	'unpublishOrg',
 	'unpublishService',

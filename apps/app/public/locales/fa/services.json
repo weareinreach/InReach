@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "مراقبت از سقط جنین",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "ارائه دهندگان سقط جنین",
 		"financial-assistance": "کمک مالی",
 		"lodging-assistance": "کمک های اسکان",
@@ -21,6 +21,10 @@
 	"computers-and-internet": {
 		"CATEGORYNAME": "کامپیوتر و اینترنت",
 		"computers-and-internet": "کامپیوتر و اینترنت"
+	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "آموزش و اشتغال",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "کوتاهی مو و سبک",
 		"hygiene": "رده: بهداشت"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "سلامت روان",
+		"resettlement-assistance": "Resettlement Assistance"
+	},
 	"legal": {
 		"CATEGORYNAME": "حقوقی",
 		"asylum-application": "درخواست پناهندگی",
@@ -63,7 +73,7 @@
 		"employment-authorization": "مجوز استخدام",
 		"family-petitions": "دادخواست های خانوادگی",
 		"immigration-detention": "بازداشت مهاجرت",
-		"legal-advice": "مشاوره حقوقی",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "خطوط تماس حقوقی",
 		"name-and-gender-change": "تغییر نام و جنسیت",
 		"refugee-claim": "ادعای پناهندگی",
@@ -77,7 +87,7 @@
 		"mail": "نامه"
 	},
 	"medical": {
-		"CATEGORYNAME": "پزشکی",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "خدمات کووید-19",
 		"dental-care": "مراقبت از دندان",
 		"hiv-and-sexual-health": "اچ آی وی و سلامت جنسی",

@@ -63,7 +63,7 @@
 		"intl-we-recommend": "We recommend these international resources",
 		"natl-find-help-now": "Find help now",
 		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
-		"outside-service-area": "Inreach does not operate in {{country}}",
+		"outside-service-area": "InReach does not operate in {{country}}",
 		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "Current location",
@@ -85,6 +85,13 @@
 	"enter-password-placeholder": "Enter password...",
 	"enter-review": "Enter your review...",
 	"errors": {
+		"401-title": "You must be logged in to do that.",
+		"403-body": "You do not have permission to access this page. If you feel that you have reached this page in error, please contact your supervisor.",
+		"403-title": "403: Forbidden",
+		"404-body": "We're sorry, the page you're looking for doesn't exist or has been moved. Start a search below to find safe, verified resources for the diverse LGBTQ+ community in your area.",
+		"404-title": "404: Page not found.",
+		"500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
+		"500-title": "500: Something went wrong.",
 		"oh-no": "Oh no!",
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
@@ -238,7 +245,7 @@
 		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "Enter organization name...",
 		"organization-placeholder-searchby": "Search by organization name...",
-		"suggest-resource": "Can't find it? <1>Suggest an organization</1> you think should be included."
+		"suggest-resource": "Can't find it? <strong>Suggest an organization</strong> you think should be included."
 	},
 	"send-email": "Send email",
 	"service": {
@@ -350,7 +357,7 @@
 	"unclaimed": "Unclaimed",
 	"user-avatar": "User avatar",
 	"verified-information": "Verified information",
-	"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information at least once every 6 months.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
+	"verified-information-detail": "The information on this page was last updated {{dateString}}. InReach prioritizes accuracy and user safety, and updates all information regularly.  For more information on our vetting process, please visit our Vetting Process page on InReach.org.",
 	"verify-account": {
 		"verified": "Account verified!",
 		"verified-body": "<Text>Your account has been verified! Please <LoginModal>login</LoginModal> to start using InReach's additional features.",
@@ -362,6 +369,7 @@
 	"visit": "Visit",
 	"website_one": "Website",
 	"website_other": "Websites",
+	"welcome-name": "Welcome, {{name}}!",
 	"words": {
 		"accept": "Accept",
 		"account": "Account",

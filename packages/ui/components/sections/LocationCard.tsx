@@ -1,23 +1,43 @@
 import { Card, Divider, Group, List, Stack, Title, useMantineTheme } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
+import { Easing, getAll as getAllTweens, Tween } from '@tweenjs/tween.js'
+import compact from 'just-compact'
 import parsePhoneNumber, { type CountryCode } from 'libphonenumber-js'
 import { formatAddress } from 'localized-address-format'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { BadgeGroup } from '~ui/components/core/Badge'
 import { Link } from '~ui/components/core/Link'
 import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant } from '~ui/hooks'
+import { useGoogleMapMarker } from '~ui/hooks/useGoogleMapMarker'
+import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
 import { type IconList } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+let runningAnimation: number
+const stopAnimations = (animationProcess: number) => {
+	cancelAnimationFrame(animationProcess)
+	const tweens = getAllTweens()
+	for (const instance of tweens) {
+		instance.stop()
+	}
+}
+
 export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
+	const { map, mapIsReady, mapEvents, camera } = useGoogleMaps()
+	const [initialPosition, setInitialPosition] = useState<google.maps.CameraOptions>()
+	const [canGetCenter, setCanGetCenter] = useState(map?.getCenter() !== undefined)
+
+	const cardRef = useRef<HTMLDivElement>(null)
 	const router = useRouter<'/org/[slug]'>()
 	const variants = useCustomVariant()
 	const { t } = useTranslation(['gov-dist', 'common'])
 	const { ref: addressRef, height: addressListHeight } = useElementSize()
 	const theme = useMantineTheme()
+	const mapMarker = useGoogleMapMarker()
 	const { data: orgId } = api.organization.getIdFromSlug.useQuery(
 		{ slug: router.query.slug ?? '' },
 		{ enabled: router.isReady }
@@ -29,6 +49,106 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 		{ parentId: orgId?.id ?? '', remoteOnly },
 		{ enabled: remoteOnly && orgId?.id !== undefined }
 	)
+	const formattedAddressParts = useMemo(() => {
+		const adminArea = data?.govDist?.abbrev
+			? data.govDist.abbrev
+			: data?.govDist?.tsKey
+			? (t(data.govDist.tsKey, { ns: data.govDist.tsNs }) satisfies string)
+			: undefined
+
+		return formatAddress({
+			addressLines: compact([data?.street1?.trim(), data?.street2?.trim()]),
+			locality: data?.city.trim(),
+			postalCode: data?.postCode ? data.postCode.trim() : undefined,
+			postalCountry: data?.country,
+			administrativeArea: adminArea,
+		})
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data])
+
+	mapEvents.initialPropsSet.useSubscription((val) => {
+		setCanGetCenter(val)
+		if (map) {
+			const initPosition = {
+				center: map.getCenter()?.toJSON(),
+				zoom: map.getZoom(),
+			}
+			setInitialPosition(initPosition)
+		}
+	})
+
+	useEffect(() => {
+		if (mapIsReady && map && data?.latitude && data?.longitude && canGetCenter) {
+			mapMarker.add({
+				map,
+				id: data.id,
+				name: data.name ?? '',
+				lat: data.latitude,
+				lng: data.longitude,
+				address: formattedAddressParts,
+				slug: router.query.slug,
+				locationId: data.id,
+			})
+		}
+		return () => {
+			if (locationId) {
+				mapMarker.remove(locationId)
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data, mapIsReady, formattedAddressParts, router.query.slug, canGetCenter])
+	useEffect(() => {
+		if (locationId) {
+			const marker = mapMarker.get(locationId)
+			if (marker && cardRef.current && map && data?.latitude && data?.longitude && initialPosition) {
+				const card = cardRef.current
+				const locationCoords = new google.maps.LatLng({ lat: data.latitude, lng: data.longitude })
+				const locationView: google.maps.CameraOptions = {
+					center: locationCoords.toJSON(),
+					zoom: 17,
+				}
+				const zoomIn = new Tween(camera)
+					.to(locationView, 2000)
+					.easing(Easing.Quadratic.Out)
+					.onUpdate(() => {
+						map.moveCamera(camera)
+					})
+				const zoomOut = new Tween(camera)
+					.to(initialPosition, 2000)
+					.easing(Easing.Quadratic.Out)
+					.onUpdate(() => {
+						map.moveCamera(camera)
+					})
+
+				const animateIn = async (time: number) => {
+					runningAnimation = requestAnimationFrame(animateIn)
+					setTimeout(() => zoomIn.update(time), 80)
+				}
+				const animateOut = async (time: number) => {
+					runningAnimation = requestAnimationFrame(animateOut)
+					setTimeout(() => zoomOut.update(time), 80)
+				}
+				const enterEvent = () => {
+					stopAnimations(runningAnimation)
+					zoomIn.start()
+					runningAnimation = requestAnimationFrame(animateIn)
+				}
+				const exitEvent = () => {
+					stopAnimations(runningAnimation)
+					zoomOut.start()
+					runningAnimation = requestAnimationFrame(animateOut)
+				}
+				card.addEventListener('mouseenter', enterEvent)
+				card.addEventListener('mouseleave', exitEvent)
+
+				return () => {
+					card.removeEventListener('mouseenter', enterEvent)
+					card.removeEventListener('mouseleave', exitEvent)
+				}
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data, mapIsReady, map, mapMarker.get(locationId ?? ''), initialPosition])
 
 	const remoteReady = remoteOnly && remoteServices?.length && !remoteIsLoading
 
@@ -89,7 +209,7 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 		: undefined
 
 	const formattedAddress = formatAddress({
-		addressLines: data.street2 ? [data.street1.trim(), data.street2.trim()] : [data.street1.trim()],
+		addressLines: compact([data.street1?.trim(), data.street2?.trim()]),
 		locality: data.city.trim(),
 		postalCode: data.postCode ? data.postCode.trim() : undefined,
 		postalCountry: data.country,
@@ -126,7 +246,7 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 			}}
 			variant={variants.Link.card}
 		>
-			<Card w='100%' variant={variants.Card.hoverCoolGray}>
+			<Card w='100%' variant={variants.Card.hoverCoolGray} ref={cardRef}>
 				<Stack spacing={32}>
 					<Stack spacing={12}>
 						<Title order={2}>{data.name}</Title>
@@ -164,11 +284,6 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 		</Link>
 	)
 }
-
-// export type LocationCardProps = {
-// 	locationId: string
-// 	remoteOnly?: boolean
-// }
 
 export type LocationCardProps = LocationProps | RemoteProps
 interface LocationProps {

@@ -29,7 +29,7 @@ import {
 	getCoreRowModel,
 	useReactTable,
 } from '@tanstack/react-table'
-import { useTranslation } from 'next-i18next'
+// import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
 import { z } from 'zod'
 
@@ -44,7 +44,7 @@ import { PhoneEmailModal } from '~ui/modals/dataPortal/PhoneEmail'
 
 import { MultiSelectPopover } from './MultiSelectPopover'
 
-const [FormProvider, useFormContext, useForm] = createFormContext<{ data: EmailTableColumns[] }>()
+const [FormProvider, _useFormContext, useForm] = createFormContext<{ data: EmailTableColumns[] }>()
 
 const FormSchema = z.object({
 	orgSlug: z.string().optional(),
@@ -120,14 +120,14 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 		validate: zodResolver(FormSchema),
 		transformValues: FormSchema.parse,
 	})
-	const { id: organizationId, slug: orgSlug } = useOrgInfo()
+	const { id: organizationId } = useOrgInfo()
 	const { classes } = useStyles()
-	const { t } = useTranslation('phone-type')
+	// const { t } = useTranslation('phone-type')
 	// #region tRPC
 	const apiUtils = api.useContext()
 	const variants = useCustomVariant()
-	const { data } = api.orgEmail.get.useQuery(
-		{ organizationId },
+	const { data: _data } = api.orgEmail.get.useQuery(
+		{ organizationId: organizationId ?? '' },
 		{
 			enabled: Boolean(organizationId),
 			onSuccess: (data) => {
@@ -155,7 +155,7 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 		refetchOnWindowFocus: false,
 	})
 	const { data: orgServices } = api.service.getNames.useQuery(
-		{ organizationId },
+		{ organizationId: organizationId ?? '' },
 		{
 			enabled: Boolean(organizationId),
 
@@ -275,7 +275,7 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 						key={info.cell.id}
 						disabled={!info.row.getValue('published') || info.row.getValue('deleted')}
 						checked={form.getInputProps(`data.${info.row.index}.primary`, { type: 'checkbox' }).checked}
-						onChange={(e) => {
+						onChange={() => {
 							const newValues = form.values.data.map(({ primary, ...rest }, i) =>
 								info.row.index === i ? { primary: true, ...rest } : { primary: false, ...rest }
 							)

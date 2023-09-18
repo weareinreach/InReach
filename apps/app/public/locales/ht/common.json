@@ -1,5 +1,8 @@
 {
 	"about-us": "Enfòmasyon pou nou",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "Bilding sa a PA chèz woulant aksesib",
 	"accessible-building_true": "Bilding sa a se chèz woulant aksesib",
 	"account": "Kont",
@@ -10,7 +13,10 @@
 		"organization": "{{adjective}} òganizasyon"
 	},
 	"agree-disclaimer": "Pa klike \"{{action}}\" ou dakò ak <link1>Règleman sou enfòmasyon prive InReach a</link1> ak <link2>Regleman pou Itilize</link2>.",
+	"alert-message": "Alert message",
 	"alert-message-1": "<strong>Règleman COVID-19:</strong> Avèk nouvèl ak pi bon pratik pou prevansyon COVID-19 chanje rapidman chak jou, Whitman-Walker Health kontinye mete ajou sèvis yo pou reflete rekòmandasyon prevansyon yo. Tanpri tcheke sit entènèt yo pou enfòmasyon ki pi monte-a-dat.",
+	"alert-message-instructions": "Enter the alert message",
+	"alert-title-instructions": "Enter a title for the message...",
 	"all-service-category": "tout {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Lè l sèvi avèk InReach, ou dakò ke ou pa pral sèvi ak enfòmasyon sa a resous pou danjere, rayi ki baze sou, omofob, transfobik, ksenofob, ak/oswa ajanda rasis oswa Book.",
@@ -19,6 +25,7 @@
 	"badge": {
 		"claimed-tool-tip": "Òganizasyon sa a te reklame pa yon reprezantan verifye. <link1>Aprann plis.</link1>",
 		"community-tool-tip": "Kominote ki te sèvi nan òganizasyon sa a.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "Disponib adistans",
 		"service-tool-tip": "Sèvis (yo) ofri nan òganizasyon sa a.",
 		"unclaimed-tool-tip": "Òganizasyon sa a pa gen ankò yo te reklame pa yon reprezantan. <link1>Reklame òganizasyon sa a</link1> pou konstwi konfyans ak kominote nou an, mete ajou pwòp enfòmasyon ou, ak plis ankò."
@@ -49,6 +56,15 @@
 	},
 	"country-select": "Chwazi yon peyi",
 	"create-new-list": "Kreye nouvo lis",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "InReach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Kouran kote",
 	"delete-account": "Efase kont ou?",
 	"delete-account-password": "Antre nan modpas kont ou a konfime.",
@@ -68,6 +84,13 @@
 	"enter-password-placeholder": "Mete modpas...",
 	"enter-review": "Antre nan revizyon ou...",
 	"errors": {
+		"401-title": "You must be logged in to do that.",
+		"403-body": "You do not have permission to access this page. If you feel that you have reached this page in error, please contact your supervisor.",
+		"403-title": "403: Forbidden",
+		"404-body": "We're sorry, the page you're looking for doesn't exist or has been moved. Start a search below to find safe, verified resources for the diverse LGBTQ+ community in your area.",
+		"404-title": "404: Page not found.",
+		"500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
+		"500-title": "500: Something went wrong.",
 		"oh-no": "Oh pa gen okenn!",
 		"try-again-text": "<Text>Yon bagay ale mal! Tanpri eseye ankò.</Text>"
 	},
@@ -126,6 +149,8 @@
 		"error-generic": "Yon bagay ale mal, tanpri eseye ankò.",
 		"error-username-password": "Kòrèk non itilizatè oswa modpas."
 	},
+	"message_text": "Message text",
+	"message_title": "Message title",
 	"modal-content": {
 		"accessibility": "<stack16>\n<title2>Deklarasyon Aksè</title2>\n<textDarkGray>teknoloji sous louvri InREACH a bati pou divès LGBTQ+kominote a, ki gen ladan itilizatè ki gen andikap.</textDarkGray>\n<textDarkGray>Gratis InReach App a disponib sou entènèt (Desktop ak mobil), ak iOS natif natal ak android. Kòmanse ak lansman de dènye Redesign nou an (jen 2023), InReach pral fè efò al kontre <linkAccessibility>Web Content Access Guidelines (WCAG) kritè AA nivo.</linkAccessibility></textDarkGray>\n<textDarkGray>Nan InReach, nou fè efò pou fè platfòm teknoloji nou an aksesib pou anpil itilizatè ak aparèy ke posib nan aliyman ak misyon nou pou sèvi tout LGBTQ+moun ki fè fas a pèsekisyon oswa diskriminasyon.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>InReach Limit responsabilite nou</title2>\n<textReg>Ekip la InReach pral fè pi byen li yo konfime kalifikasyon an ak reyalite debaz sou founisè sèvis ki nan lis sou sit entènèt sa a. Sepandan, nou pa ka garanti rantabilite oswa kapasite nan nenpòt ki founisè sa yo. Kontinwe, InReach sipoze pa gen okenn responsablite pou aksyon sa yo nan founisè ki nan lis sou sit entènèt sa a ak itilizatè ki kontakte nenpòt founisè sa yo fè sa sou pwòp risk yo.</textReg>\n</stack16>"
@@ -141,6 +166,7 @@
 	"none-apply": "Okenn nan sa yo aplike pou mwen",
 	"offices-and-locations": "Biwo & Lokal",
 	"org-image": "Foto òganizasyon an",
+	"organization": "Òganizasyon",
 	"other-specify": "Lòt (tanpri presize)",
 	"page-title": {
 		"base": "{{title}} - InReach",
@@ -182,14 +208,11 @@
 		"<textDarkGray>InReach itilize tou Vercel Analytics pou analize vitals entènèt ak pèfòmans. Vercel Analytics bay enfòmasyon l 'sit san yo pa mare nan, oswa ki asosye ak, nenpòt vizitè endividyèl oswa adrès IP. Anrejistreman an nan pwen done se anonim ak karakteristik nan Analytics pa kolekte oswa magazen enfòmasyon ki ta pèmèt Vercel rekonstwi yon sesyon Navigasyon atravè paj oswa idantifye yon itilizatè.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Li politik plen vi prive nou an pou plis enfòmasyon</linkPolicy>",
-	"privacy-statement-head": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>Deklarasyon sou enfòmasyon prive</title2>"
-	],
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Deklarasyon sou enfòmasyon prive</title2>"],
 	"privatePractice": "Prive Pratike",
 	"profile": "Wofil",
 	"questions": "Kesyon?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 Sove ak pataje lis resous pèsonalize</textUtility1>\n<textUtility1>💬 Kite piblik Rating/revize sou òganizasyon</textUtility1>\n<textUtility1>🏠 Sijere òganizasyon nan zòn ou an</textUtility1>\n<textUtility1>🔗 Reklame paj pwofil òganizasyon ou an (Vini byento!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "Sèvis ki disponib adistans",
 	"remote-services-page-title": "Sèvis aleka",
@@ -204,13 +227,17 @@
 	"review-resource": "Revize resous sa a",
 	"safety-exit": "Sòti Sekirite",
 	"save": "Sove",
+	"save-changes": "Sove chanjman",
 	"saved": "Sove",
 	"search": {
 		"include-remote": "Mete sèvis aleka",
 		"location-placeholder": "Antre nan vil la oswa kòd postal...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "Gade yon òganizasyon pa non",
 		"no-results": "Pa gen rezilta yo te jwenn. Tanpri eseye ankò.",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "Mete non òganizasyon...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Pa ka jwenn li? <1>Sijere yon òganizasyon</1> ou panse yo ta dwe enkli."
 	},
 	"send-email": "Voye imèl",
@@ -273,7 +300,7 @@
 	},
 	"sign-up-free": "Enskri pou gratis",
 	"social": {
-		"email": "Imèl",
+		"email": "Email",
 		"facebook": "Facebook",
 		"github": "GitHub",
 		"group-header": "Sosyal",
@@ -331,6 +358,7 @@
 	},
 	"view-list": "View lis",
 	"visit": "Vizite",
+	"welcome-name": "Welcome, {{name}}!",
 	"words": {
 		"accept": "Aksepte",
 		"account": "Kont",
@@ -345,9 +373,11 @@
 		"email": "Imèl",
 		"home": "Kay",
 		"hours": "Èdtan",
+		"location": "Location",
 		"more": "plis",
 		"next": "Pwochen",
 		"no": "Pa",
+		"organization": "Òganizasyon",
 		"password": "Modpas",
 		"phone": "Telefòn",
 		"please-wait": "Tanpri, tann...",
@@ -364,6 +394,7 @@
 		"sign-up": "Enskri",
 		"skip": "Sote",
 		"support": "Sipò",
+		"website": "Website",
 		"yes": "Wi"
 	},
 	"photo_one": "Photo",

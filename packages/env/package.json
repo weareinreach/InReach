@@ -2,6 +2,7 @@
 	"name": "@weareinreach/env",
 	"version": "0.0.0",
 	"private": true,
+	"sideEffects": false,
 	"main": "./index.ts",
 	"types": "./index.ts",
 	"files": [
@@ -9,11 +10,13 @@
 	],
 	"scripts": {},
 	"dependencies": {
-		"@t3-oss/env-nextjs": "0.6.0",
-		"chromatic": "6.20.0",
-		"zod": "3.21.4"
+		"@t3-oss/env-nextjs": "0.6.1",
+		"@weareinreach/util": "workspace:*",
+		"chromatic": "7.1.0",
+		"zod": "3.22.2"
 	},
 	"devDependencies": {
-		"@weareinreach/config": "workspace:*"
+		"@weareinreach/config": "workspace:*",
+		"@weareinreach/eslint-config": "workspace:*"
 	}
 }

@@ -17,7 +17,7 @@ export default {
 			type: 'string',
 		},
 	},
-} as Meta<typeof SocialLink>
+} satisfies Meta<typeof SocialLink>
 
 type StoryDef = StoryObj<typeof SocialLink>
 type StoryGroupDef = StoryObj<typeof SocialLink.Group>

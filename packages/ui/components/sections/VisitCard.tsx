@@ -3,25 +3,45 @@
 import { Card, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
+import { useEffect } from 'react'
 
-import { type ApiOutput } from '@weareinreach/api'
 import { Badge } from '~ui/components/core/Badge'
 import { GoogleMap } from '~ui/components/core/GoogleMap'
 import { Hours } from '~ui/components/data-display/Hours'
 import { useCustomVariant, useFormattedAddress, useScreenSize } from '~ui/hooks'
+import { useGoogleMapMarker } from '~ui/hooks/useGoogleMapMarker'
+import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
 import { validateIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-export const VisitCard = ({ locationId, ...props }: VisitCardProps) => {
+export const VisitCard = ({ locationId }: VisitCardProps) => {
 	const { isMobile } = useScreenSize()
 	const { t } = useTranslation(['common', 'attribute'])
 	const { ref, width } = useElementSize()
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
 	const isTablet = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`)
+	const mapMarker = useGoogleMapMarker()
+	const { map, mapIsReady } = useGoogleMaps()
 	const { data } = api.location.forVisitCard.useQuery(locationId)
 
 	const formattedAddress = useFormattedAddress(data)
+	useEffect(() => {
+		if (data && data.latitude && data.longitude && data.name && formattedAddress && mapIsReady && map) {
+			mapMarker.add({
+				id: locationId,
+				lat: data.latitude,
+				lng: data.longitude,
+				name: data.name,
+				address: formattedAddress,
+				map: map,
+			})
+		}
+		return () => {
+			mapMarker.remove(locationId)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data, formattedAddress, map, mapIsReady])
 
 	// const isAccessible = location.attributes.some(
 	// 	(attribute) => attribute.attribute.tsKey === 'additional.wheelchair-accessible'
@@ -75,8 +95,6 @@ export const VisitCard = ({ locationId, ...props }: VisitCardProps) => {
 	return isTablet ? body : <Card>{body}</Card>
 }
 // TODO: [IN-785] Create variant for Remote/Unpublished address
-type PageQueryResult = NonNullable<ApiOutput['organization']['getBySlug']>
-type LocationResult = NonNullable<ApiOutput['location']['getById']>
 
 export type VisitCardProps = {
 	locationId: string

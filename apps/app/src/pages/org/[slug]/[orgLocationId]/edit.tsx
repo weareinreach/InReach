@@ -29,7 +29,7 @@ const OrgLocationPage: NextPage = () => {
 	const { data: orgData, status: orgDataStatus } = api.organization.getBySlug.useQuery(query, {
 		enabled: router.isReady,
 	})
-	const { data, status } = api.location.getById.useQuery({ id: orgLocationId })
+	const { data, status } = api.location.forLocationPage.useQuery({ id: orgLocationId })
 	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
 		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
 	})

@@ -2,9 +2,9 @@ import { type Prisma } from '@prisma/client'
 import { z } from 'zod'
 
 /** Longitudes are vertical lines that measure east or west of the meridian in Greenwich, England */
-const longitude = z.number().gte(-180).lte(180)
+export const longitude = z.number().gte(-180).lte(180)
 /** Latitudes are horizontal lines that measure distance north or south of the equator. */
-const latitude = z.number().gte(-90).lte(90)
+export const latitude = z.number().gte(-90).lte(90)
 /** [Longitude, Latitude] */
 const coordTuple = z.tuple([longitude, latitude])
 const polygon = coordTuple.array().min(4).array()

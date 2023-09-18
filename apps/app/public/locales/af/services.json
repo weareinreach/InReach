@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Aborsie sorg",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "Aborsie verskaffers",
 		"financial-assistance": "Finansiële bystand",
 		"lodging-assistance": "Verblyf hulp",
@@ -21,6 +21,10 @@
 	"computers-and-internet": {
 		"CATEGORYNAME": "Rekenaars en Internet",
 		"computers-and-internet": "Rekenaars en internet"
+	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Onderwys en indiensneming",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "Haarsny en stiliste",
 		"hygiene": "higiëne"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Geestesgesondheid",
+		"resettlement-assistance": "Resettlement Assistance"
+	},
 	"legal": {
 		"CATEGORYNAME": "Wetlike",
 		"asylum-application": "Asiel aansoek",
@@ -63,7 +73,7 @@
 		"employment-authorization": "indiensneming magtiging",
 		"family-petitions": "Familie petisies",
 		"immigration-detention": "Immigrasie aanhouding",
-		"legal-advice": "Regsadvies",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "Wetlike blitslyne",
 		"name-and-gender-change": "Naam en geslagsverandering",
 		"refugee-claim": "Vlugtelinge eis",
@@ -77,7 +87,7 @@
 		"mail": "Mail"
 	},
 	"medical": {
-		"CATEGORYNAME": "Mediese",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "COVID-19 dienste",
 		"dental-care": "Tandheelkundige sorg",
 		"hiv-and-sexual-health": "MIV en seksuele gesondheid",

@@ -70,6 +70,10 @@
 		"cost-fees": "Gaan 'n koste aan",
 		"cost-free": "Vry van koste"
 	},
+	"crisis-support-community": {
+		"elders": "Elders",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Geskiktheidsvereistes",
 		"elig-age_max": "Onder {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "Toegangsinstruksies - Ligging",
 		"accessphone": "Toegangsinstruksies - telefoon",
 		"accesspublictransit": "Toegangsinstruksies - Openbare vervoer",
-		"accesstext": "Toegangsinstruksies - teks"
+		"accesssms": "Access Instructions - SMS",
+		"accesstext": "Toegangsinstruksies - teks",
+		"accesswhatsapp": "Access Instructions - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Diens Fokus",

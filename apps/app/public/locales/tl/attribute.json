@@ -70,6 +70,10 @@
 		"cost-fees": "Nagkakasakit ng gastos",
 		"cost-free": "Walang gastos"
 	},
+	"crisis-support-community": {
+		"elders": "Elders",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Mga Kinakailangan sa Pagiging Karapat-dapat",
 		"elig-age_max": "Sa ilalim ng {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "Mga Tagubilin sa Pag-access - Lokasyon",
 		"accessphone": "Mga Tagubilin sa Pag-access - Telepono",
 		"accesspublictransit": "Mga Tagubilin sa Pag-access - Pampublikong Transit",
-		"accesstext": "Mga Tagubilin sa Pag-access - Teksto"
+		"accesssms": "Access Instructions - SMS",
+		"accesstext": "Mga Tagubilin sa Pag-access - Teksto",
+		"accesswhatsapp": "Access Instructions - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Pokus sa Serbisyo",

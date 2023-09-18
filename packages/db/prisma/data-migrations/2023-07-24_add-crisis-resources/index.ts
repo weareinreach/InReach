@@ -94,7 +94,7 @@ export const job20230724a = {
 			data: [
 				{
 					id: 'svtg_01H64GVYCYZBWXBSKK8WX2D7NJ',
-					categoryId: servCat.id,
+					primaryCategoryId: servCat.id,
 					name: 'Resettlement Assistance',
 					tsKey: 'international-support.resettlement-assistance',
 					tsNs: namespace.services,
@@ -102,7 +102,7 @@ export const job20230724a = {
 				},
 				{
 					id: 'svtg_01H64GWD9JR68SJWYFC9TBK290',
-					categoryId: servCat.id,
+					primaryCategoryId: servCat.id,
 					name: 'Mental Health',
 					tsKey: 'international-support.mental-health',
 					tsNs: namespace.services,
@@ -110,7 +110,7 @@ export const job20230724a = {
 				},
 				{
 					id: 'svtg_01H64GX7989A4T26WH1H6566DG',
-					categoryId: servCat.id,
+					primaryCategoryId: servCat.id,
 					name: 'Financial Assistance',
 					tsKey: 'international-support.financial-assistance',
 					tsNs: namespace.services,

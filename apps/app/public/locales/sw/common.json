@@ -1,5 +1,8 @@
 {
 	"about-us": "Kuhusu sisi",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "Jengo hili halipatikani kiti cha magurudumu",
 	"accessible-building_true": "Jengo hili linaweza kupatikana kwa magurudumu",
 	"account": "Akaunti",
@@ -10,7 +13,10 @@
 		"organization": "{{adjective}} shirika"
 	},
 	"agree-disclaimer": "Kwa kubofya \"{{action}}\" unakubaliana na InReach <link1>Sera ya faragha</link1> na <link2>Masharti ya Matumizi</link2>.",
+	"alert-message": "Alert message",
 	"alert-message-1": "<strong>COVID-19 policy:</strong> With news and best practices for COVID-19 prevention changing rapidly each day, Whitman-Walker Health continues to update their services to reflect prevention recommendations. Please check their website for the most up-to-date information.",
+	"alert-message-instructions": "Enter the alert message",
+	"alert-title-instructions": "Enter a title for the message...",
 	"all-service-category": "Zote {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Kwa kutumia InReach, unakubali kwamba hautatumia habari hii ya rasilimali kwa ajenda hatari, chuki, chuki ya jinsia moja, transphobic, chuki wageni, na/au ajenda za ubaguzi wa rangi au maoni.",
@@ -19,6 +25,7 @@
 	"badge": {
 		"claimed-tool-tip": "Shirika hili limedaiwa na mwakilishi aliyethibitishwa. <link1>Jifunze zaidi.</link1>",
 		"community-tool-tip": "Jumuiya inayohudumiwa na shirika hili.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "Inapatikana kwa mbali",
 		"service-tool-tip": "Huduma (s) zinazotolewa na shirika hili.",
 		"unclaimed-tool-tip": "Shirika hili bado halijadaiwa na mwakilishi. <link1>Dai shirika hili</link1> kujenga uaminifu na jamii yetu, sasisha habari yako mwenyewe, na zaidi."
@@ -49,6 +56,15 @@
 	},
 	"country-select": "Chagua nchi",
 	"create-new-list": "Unda orodha mpya",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "InReach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Mahali pa sasa",
 	"delete-account": "Futa akaunti yako?",
 	"delete-account-password": "Ingiza nenosiri la akaunti yako ili uthibitishe.",
@@ -68,6 +84,13 @@
 	"enter-password-placeholder": "Ingiza nenosiri...",
 	"enter-review": "Ingiza hakiki yako...",
 	"errors": {
+		"401-title": "You must be logged in to do that.",
+		"403-body": "You do not have permission to access this page. If you feel that you have reached this page in error, please contact your supervisor.",
+		"403-title": "403: Forbidden",
+		"404-body": "We're sorry, the page you're looking for doesn't exist or has been moved. Start a search below to find safe, verified resources for the diverse LGBTQ+ community in your area.",
+		"404-title": "404: Page not found.",
+		"500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
+		"500-title": "500: Something went wrong.",
 		"oh-no": "Oh hapana!",
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
@@ -126,6 +149,8 @@
 		"error-generic": "Kitu kilienda vibaya, tafadhali jaribu tena.",
 		"error-username-password": "Jina la mtumiaji au nenosiri lisilo sahihi."
 	},
+	"message_text": "Message text",
+	"message_title": "Message title",
 	"modal-content": {
 		"accessibility": "<stack16>\n<title2>Taarifa ya Ufikiaji</title2>\n<textDarkGray>Teknolojia ya chanzo wazi ya InReach imejengwa kwa jamii tofauti ya LGBTQ+, pamoja na watumiaji wenye ulemavu.</textDarkGray>\n<textDarkGray>Programu ya bure ya InReach inapatikana kwenye wavuti (desktop na rununu), na iOS asili na Android. Kuanzia na uzinduzi wa urekebishaji wetu wa hivi karibuni (Juni 2023), InReach itajitahidi kufikia vigezo <linkAccessibility>vya Miongozo ya Ufikiaji wa Maudhui ya Wavuti (WCAG).</linkAccessibility></textDarkGray>\n<textDarkGray>Katika InReach, tunajitahidi kufanya jukwaa letu la teknolojia kupatikana kwa watumiaji na vifaa vingi iwezekanavyo kulingana na dhamira yetu ya kuwahudumia watu wote wa LGBTQ+wanaokabiliwa na mateso au ubaguzi.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>Timu ya InReach itajitahidi kuthibitisha ustahiki na ukweli wa kimsingi juu ya watoa huduma walioorodheshwa kwenye wavuti hii. Walakini, hatuwezi kuhakikisha uwezekano au uwezo wa watoa huduma kama hao. Kwa hivyo, InReach haichukui jukumu la vitendo vya watoa huduma walioorodheshwa kwenye wavuti hii na watumiaji wanaowasiliana na watoa huduma kama hao hufanya hivyo kwa hatari yao wenyewe.</textReg>\n</stack16>"
@@ -141,6 +166,7 @@
 	"none-apply": "Hakuna hata moja ya haya yanatumika kwangu",
 	"offices-and-locations": "Ofisi na Maeneo",
 	"org-image": "Picha ya shirika",
+	"organization": "Shirika",
 	"other-specify": "Nyingine (tafadhali taja)",
 	"page-title": {
 		"base": "{{title}} - Katika Kufikia",
@@ -182,10 +208,7 @@
 		"<textDarkGray>InReach pia hutumia Vercel Analytics kuchambua vitals za wavuti na utendaji. Vercel Analytics hutoa habari ya matumizi ya tovuti bila kufungwa, au kuhusishwa na, mgeni yeyote au anwani ya IP. Kurekodi kwa alama za data haijulikani na huduma ya Analytics haikusanyi au kuhifadhi habari ambayo itawezesha Vercel kujenga tena kikao cha kuvinjari kwenye kurasa au kutambua mtumiaji.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Soma sera yetu kamili ya faragha kwa habari zaidi</linkPolicy>",
-	"privacy-statement-head": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>Taarifa ya faragha</title2>"
-	],
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Taarifa ya faragha</title2>"],
 	"privatePractice": "Private Mazoezi",
 	"profile": "Profaili",
 	"questions": "Maswali?",
@@ -204,13 +227,17 @@
 	"review-resource": "Pitia rasilimali hii",
 	"safety-exit": "Toka kwa usalama",
 	"save": "Okoa",
+	"save-changes": "Hifadhi mabadiliko",
 	"saved": "Kuokolewa",
 	"search": {
 		"include-remote": "Jumuisha huduma za mbali",
 		"location-placeholder": "Ingiza jiji au msimbo wa zip...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "Tafuta shirika kwa jina",
 		"no-results": "Hakuna matokeo yaliyopatikana. Tafadhali jaribu tena.",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "Ingiza jina la shirika...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Haiwezi kuipata? <1>Pendekeza shirika unalofikiria</1> linapaswa kujumuishwa."
 	},
 	"send-email": "Tuma barua pepe",
@@ -331,6 +358,7 @@
 	},
 	"view-list": "Tazama orodha",
 	"visit": "Tembelea",
+	"welcome-name": "Welcome, {{name}}!",
 	"words": {
 		"accept": "Kubali",
 		"account": "Akaunti",
@@ -345,9 +373,11 @@
 		"email": "Barua pepe",
 		"home": "Nyumbani",
 		"hours": "Masaa",
+		"location": "Location",
 		"more": "zaidi",
 		"next": "Ijayo",
 		"no": "Hapana",
+		"organization": "Shirika",
 		"password": "Nenosiri",
 		"phone": "Simu",
 		"please-wait": "Tafadhali subiri...",
@@ -364,6 +394,7 @@
 		"sign-up": "Ishara ya juu",
 		"skip": "Ruka",
 		"support": "Msaada",
+		"website": "Website",
 		"yes": "Ndio"
 	},
 	"photo_one": "Picha",

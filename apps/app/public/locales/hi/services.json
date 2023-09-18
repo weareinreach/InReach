@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "गर्भपात की देखभाल",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "गर्भपात कराने वाले",
 		"financial-assistance": "वित्तीय सहायता",
 		"lodging-assistance": "लॉजिंग सहायता",
@@ -21,6 +21,10 @@
 	"computers-and-internet": {
 		"CATEGORYNAME": "कंप्यूटर और इंटरनेट",
 		"computers-and-internet": "कंप्यूटर और इंटरनेट"
+	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "शिक्षा और रोजगार",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "हेयरकूट और स्टाइलिस्ट",
 		"hygiene": "हाइजीन"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "मानसिक स्वास्थ्य",
+		"resettlement-assistance": "Resettlement Assistance"
+	},
 	"legal": {
 		"CATEGORYNAME": "लीगल",
 		"asylum-application": "शरण आवेदन",
@@ -63,7 +73,7 @@
 		"employment-authorization": "रोजगार प्राधिकरण",
 		"family-petitions": "पारिवारिक याचिकाएं",
 		"immigration-detention": "आप्रवासन निरोध",
-		"legal-advice": "कानूनी सलाह",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "कानूनी हॉटलाइन",
 		"name-and-gender-change": "नाम और लिंग परिवर्तन",
 		"refugee-claim": "शरणार्थी का दावा",
@@ -77,7 +87,7 @@
 		"mail": "मेल"
 	},
 	"medical": {
-		"CATEGORYNAME": "मेडिकल",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "COVID-19 सेवाएं",
 		"dental-care": "दाँतों की देखभाल",
 		"hiv-and-sexual-health": "एचआईवी और यौन स्वास्थ्य",

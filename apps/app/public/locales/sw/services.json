@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Huduma ya Utoaji Mimba",
+		"CATEGORYNAME": "Abortion Care",
 		"abortion-providers": "Watoa huduma za utoaji mimba",
 		"financial-assistance": "Msaada wa kifedha",
 		"lodging-assistance": "Msaada wa makaazi",
@@ -21,6 +21,10 @@
 	"computers-and-internet": {
 		"CATEGORYNAME": "Kompyuta na mtandao",
 		"computers-and-internet": "Kompyuta na internet"
+	},
+	"crisis-support": {
+		"CATEGORYNAME": "Crisis Support",
+		"crisis-support": "Crisis Support"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Elimu na Ajira",
@@ -53,6 +57,12 @@
 		"haircuts-and-stylists": "Haircuts na stylists",
 		"hygiene": "Usafi"
 	},
+	"international-support": {
+		"CATEGORTYNAME": "International Support",
+		"financial-assistance": "Financial Assistance",
+		"mental-health": "Afya ya Akili",
+		"resettlement-assistance": "Resettlement Assistance"
+	},
 	"legal": {
 		"CATEGORYNAME": "Kisheria",
 		"asylum-application": "Maombi ya hifadhi",
@@ -63,7 +73,7 @@
 		"employment-authorization": "Idhini ya ajira",
 		"family-petitions": "Maombi ya familia",
 		"immigration-detention": "Uhamiaji kizuizini",
-		"legal-advice": "Ushauri wa kisheria",
+		"legal-advice": "Legal advice",
 		"legal-hotlines": "Hotlines kisheria",
 		"name-and-gender-change": "Jina na mabadiliko ya jinsia",
 		"refugee-claim": "Madai ya wakimbizi",
@@ -77,7 +87,7 @@
 		"mail": "Barua"
 	},
 	"medical": {
-		"CATEGORYNAME": "Matibabu",
+		"CATEGORYNAME": "Medical",
 		"covid-19-services": "Huduma za COVID-19",
 		"dental-care": "Huduma ya meno",
 		"hiv-and-sexual-health": "VVU na afya ya ngono",

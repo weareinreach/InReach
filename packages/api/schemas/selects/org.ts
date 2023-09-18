@@ -158,7 +158,7 @@ const serviceTagInclude = {
 		name: true,
 		tsKey: true,
 		tsNs: true,
-		category: {
+		primaryCategory: {
 			select: {
 				tsKey: true,
 				tsNs: true,
@@ -182,7 +182,7 @@ const reviewIds = {
 	select: { id: true },
 } satisfies Prisma.Organization$reviewsArgs | Prisma.OrgLocation$reviewsArgs | Prisma.OrgService$reviewsArgs
 
-const orgServiceInclude = (ctx: Context) =>
+const orgServiceInclude = (ctx: Omit<Context, 'prisma'>) =>
 	({
 		where: isPublic,
 		select: {
@@ -201,7 +201,7 @@ const orgServiceInclude = (ctx: Context) =>
 		},
 	}) satisfies Prisma.Organization$servicesArgs
 
-const orgLocationServiceInclude = (ctx: Context) =>
+const orgLocationServiceInclude = (ctx: Omit<Context, 'prisma'>) =>
 	({
 		where: {
 			service: isPublic,
@@ -218,7 +218,7 @@ const photoSelect = {
 	},
 } satisfies Prisma.OrgLocation$photosArgs
 
-const userListSelect = (ctx: Context) => {
+const userListSelect = (ctx: Omit<Context, 'prisma'>) => {
 	if (!ctx.session?.user.id) return undefined
 	return {
 		where: {
@@ -237,7 +237,7 @@ const userListSelect = (ctx: Context) => {
 	}
 }
 
-export const orgLocationInclude = (ctx: Context) =>
+export const orgLocationInclude = (ctx: Omit<Context, 'prisma'>) =>
 	({
 		where: isPublic,
 		select: {
@@ -266,7 +266,7 @@ export const orgLocationInclude = (ctx: Context) =>
 		},
 	}) satisfies Prisma.Organization$locationsArgs
 
-export const organizationInclude = (ctx: Context) =>
+export const organizationInclude = (ctx: Omit<Context, 'prisma'>) =>
 	({
 		select: {
 			description: freeText,
@@ -296,7 +296,7 @@ export const organizationInclude = (ctx: Context) =>
 		},
 	}) satisfies Pick<Prisma.OrganizationFindUniqueOrThrowArgs, 'select'>
 
-const selectServCat = {
+export const selectServCat = {
 	select: {
 		services: {
 			select: {
@@ -373,7 +373,7 @@ const selectServ = {
 			where: {
 				tag: {
 					active: true,
-					category: {
+					primaryCategory: {
 						active: true,
 					},
 				},
@@ -384,7 +384,7 @@ const selectServ = {
 						id: true,
 						tsKey: true,
 						tsNs: true,
-						category: {
+						primaryCategory: {
 							select: {
 								id: true,
 								tsKey: true,

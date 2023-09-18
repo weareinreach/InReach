@@ -1,8 +1,8 @@
+import { namespace as namespaces } from '~db/generated/namespaces'
 import { prisma, type Prisma } from '~db/index'
 import { slug } from '~db/lib/slugGen'
-import { type ListrJob, type ListrTask, type MigrationJob } from '~db/prisma/dataMigrationRunner'
+import { type ListrTask, type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
-import { namespaces } from '~db/seed/data/00-namespaces'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {

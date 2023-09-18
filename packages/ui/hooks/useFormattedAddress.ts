@@ -20,7 +20,7 @@ const AddressSchema = z.object({
 })
 
 export const useFormattedAddressParts = (location?: UseFormattedAddressProps) => {
-	const { t } = useTranslation()
+	const { t } = useTranslation('gov-dist')
 	const addressParts = AddressSchema.safeParse(location)
 	if (!addressParts.success) return null
 

@@ -6,7 +6,7 @@
 		"geo-public-transit-description": "Transports publics / directions spécifiques",
 		"has-confidentiality-policy": "A une politique de confidentialité",
 		"offers-remote-services": "Distante",
-		"private-practice": "Cabinet médical privé",
+		"private-practice": "Cabinet privé",
 		"religiously-affiliated": "Est religieusement affilié",
 		"time-walk-in": "A des heures de marche",
 		"wheelchair-accessible_false": "Non Accessible",
@@ -66,13 +66,17 @@
 		"undocumented": "Opportunités au service des immigrés sans papiers"
 	},
 	"cost": {
-		"CATEGORYNAME": "Coûts",
+		"CATEGORYNAME": "Coût",
 		"cost-fees": "Inflige un coût",
 		"cost-free": "Gratuit"
 	},
+	"crisis-support-community": {
+		"elders": "Anciens",
+		"general-lgbtq": "LGBTQ+ général"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Exigences d'éligibilité",
-		"elig-age_max": "En dessous de {{max}}",
+		"elig-age_max": "Plus jeune que {{max}}",
 		"elig-age_min": "{{min}} et plus",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Autre (description du texte libre)",
@@ -106,7 +110,9 @@
 		"accesslocation": "Instructions d'accès - Lieu",
 		"accessphone": "Instructions d'accès - Téléphone",
 		"accesspublictransit": "Instructions d'accès - Transports publics",
-		"accesstext": "Instructions d'accès - Texte"
+		"accesssms": "Instructions d'accès - SMS",
+		"accesstext": "Instructions d'accès - Texte",
+		"accesswhatsapp": "Instructions d'accès - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Focus sur le service",
@@ -148,7 +154,7 @@
 		"grassroots-direct": "Organisation de Service Direct Grassroots",
 		"healthcare": "Fournisseur de soins de santé",
 		"lawyer": "Avocat",
-		"other": "Autre (merci de préciser)",
+		"other": "Autre (veuillez préciser)",
 		"paralegal": "Parajuriste ou autre personnel de soutien juridique",
 		"social-worker": "Collaborateur social",
 		"student-club": "Responsable du club étudiant",

@@ -361,7 +361,7 @@ const PrintButton = createPolymorphicComponent<'button', PolyButtonProps>(PrintB
 // Previous actions object is now a hook to check user session before using save or saved actions
 const useActions = () => {
 	const { classes } = useStyles()
-
+	const { status: sessionStatus } = useSession()
 	/**
 	 * Curried function which accepts a Polymorphic button element as its base param. The inner function returns
 	 * a JSX component.
@@ -396,7 +396,7 @@ const useActions = () => {
 		delete: generic(QuickPromotionModal),
 		more: generic(createPolymorphicComponent<'button', PolyButtonProps>(Button)),
 		print: generic(PrintButton),
-		review: generic(ReviewModal),
+		review: generic(sessionStatus === 'authenticated' ? ReviewModal : QuickPromotionModal),
 		save: generic(SaveToggleButton),
 		share: generic(ShareLink),
 	} as const

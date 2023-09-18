@@ -1,5 +1,8 @@
 {
 	"about-us": "درباره ما",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "این ساختمان صندلی چرخدار در دسترس نیست",
 	"accessible-building_true": "این ساختمان ویلچر قابل دسترسی است",
 	"account": "حساب",
@@ -10,7 +13,10 @@
 		"organization": "{{adjective}} سازمان"
 	},
 	"agree-disclaimer": "با کلیک کردن بر روی \"{{action}}\" شما موافقت می کنید <link1>سیاست حفظ حریم خصوصی</link1> و <link2>شرایط استفاده</link2>.",
+	"alert-message": "Alert message",
 	"alert-message-1": "<strong>سیاست COVID-19:</strong> با توجه به اینکه اخبار و بهترین شیوه های پیشگیری از COVID-19 هر روز به سرعت تغییر می کند، Whitman-Walker Health همچنان خدمات خود را به روز می کند تا منعکس کننده توصیه های پیشگیری باشد. لطفاً برای به روزترین اطلاعات، وب سایت آنها را بررسی کنید.",
+	"alert-message-instructions": "Enter the alert message",
+	"alert-title-instructions": "Enter a title for the message...",
 	"all-service-category": "همه {{serviceCategory}}",
 	"anti-hate": {
 		"body": "با استفاده از InReach، شما موافقت می کنید که از این اطلاعات منابع برای برنامه های مضر، نفرت محور، همجنسگرا، ترانسفوبیک، بیگانه هراسی و/یا نژادپرستانه استفاده نخواهید کرد.",
@@ -19,12 +25,13 @@
 	"badge": {
 		"claimed-tool-tip": "This organization has been claimed by a verified representative.<br/><link1>Learn more.</link1>",
 		"community-tool-tip": "جامعه خدمت شده توسط این سازمان.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "از راه دور موجود است",
 		"service-tool-tip": "خدمات (های) ارائه شده توسط این سازمان.",
 		"unclaimed-tool-tip": "این سازمان هنوز توسط یک نماینده ادعا نشده‌است. <link1>ادعای این سازمان</link1> برای ایجاد اعتماد با جامعه ما، به روز رسانی اطلاعات خود و موارد دیگر."
 	},
 	"breadcrumb": {
-		"back-to-dynamic": "Back to <u>{{page}}</u>",
+		"back-to-dynamic": "بازگشت به <u>{{page}}</u>",
 		"back-to-search": "بازگشت به جستجو"
 	},
 	"cancel": "لغو",
@@ -49,6 +56,15 @@
 	},
 	"country-select": "یک کشور را انتخاب کنید",
 	"create-new-list": "ایجاد لیست جدید",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "InReach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "مکان فعلی",
 	"delete-account": "حساب کاربری خود را حذف کنید؟",
 	"delete-account-password": "رمز عبور حساب خود را برای تأیید وارد کنید.",
@@ -68,6 +84,13 @@
 	"enter-password-placeholder": "رمز عبور را وارد کنید...",
 	"enter-review": "بررسی خود را وارد کنید...",
 	"errors": {
+		"401-title": "You must be logged in to do that.",
+		"403-body": "You do not have permission to access this page. If you feel that you have reached this page in error, please contact your supervisor.",
+		"403-title": "403: Forbidden",
+		"404-body": "We're sorry, the page you're looking for doesn't exist or has been moved. Start a search below to find safe, verified resources for the diverse LGBTQ+ community in your area.",
+		"404-title": "404: Page not found.",
+		"500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
+		"500-title": "500: Something went wrong.",
 		"oh-no": "اوه نه",
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
@@ -126,6 +149,8 @@
 		"error-generic": "مشکلی پیش آمد، لطفاً دوباره امتحان کنید.",
 		"error-username-password": "نام کاربری یا رمز عبور نادرست"
 	},
+	"message_text": "Message text",
+	"message_title": "Message title",
 	"modal-content": {
 		"accessibility": "<stack16>\n<title2>Accessibility Statement</title2>\n<textDarkGray>InReach’s open source technology is built for the diverse LGBTQ+ community, including users with disabilities.</textDarkGray>\n<textDarkGray>The free InReach App is available on web (desktop and mobile), and native iOS and Android. Beginning with the launch of our latest redesign (June 2023), InReach will strive to meet <linkAccessibility>Web Content Accessibility Guidelines (WCAG) level AA criteria.</linkAccessibility></textDarkGray>\n<textDarkGray>At InReach, we strive to make our tech platform accessible for as many users and devices as possible in alignment with our mission to serve all LGBTQ+ people facing persecution or discrimination.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>The InReach team will do its best to confirm the eligibility and basic facts about service providers listed on this website. However, we cannot guarantee the viability or capabilities of any such providers. Consequently, InReach assumes no responsibility for the actions of providers listed on this website and users who contact any such providers do so at their own risk.</textReg>\n</stack16>"
@@ -141,6 +166,7 @@
 	"none-apply": "هیچ کدام از اینها برای من صدق نمی کند",
 	"offices-and-locations": "دفاتر و مکان",
 	"org-image": "عکس سازمان",
+	"organization": "سازمان",
 	"other-specify": "دیگر (لطفا مشخص کنید)",
 	"page-title": {
 		"base": "{{title}} - دور از دسترس",
@@ -182,10 +208,7 @@
 		"<textDarkGray>InReach also uses Vercel Analytics to analyze web vitals and performance. Vercel Analytics provides site usage information without being tied to, or associated with, any individual visitor or IP address. The recording of data points is anonymous and the Analytics feature does not collect or store information that would enable Vercel to reconstruct a browsing session across pages or identify a user.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>برای اطلاعات بیشتر سیاست حفظ حریم خصوصی کامل ما را بخوانید</linkPolicy>",
-	"privacy-statement-head": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>بیانیه حریم خصوصی</title2>"
-	],
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>بیانیه حریم خصوصی</title2>"],
 	"privatePractice": "تمرین خصوصی",
 	"profile": "مشخصات",
 	"questions": "سوال؟",
@@ -204,13 +227,17 @@
 	"review-resource": "این منبع را مرور کنید",
 	"safety-exit": "خروج ایمنی",
 	"save": "ذخیره",
+	"save-changes": "تغییرات را ذخیره کنید",
 	"saved": "ذخیره شده",
 	"search": {
 		"include-remote": "شامل خدمات از راه دور",
 		"location-placeholder": "شهر یا کد پستی را وارد کنید...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "یک سازمان را با نام جستجو کنید",
 		"no-results": "نتیجه ای یافت نشد. لطفا دوباره امتحان کنید",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "نام سازمان را وارد کنید...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "نمی توانید آن را پیدا کنید؟ <1>پیشنهاد یک سازمان</1> شما فکر می کنم باید شامل شود."
 	},
 	"send-email": "ارسال ایمیل",
@@ -273,7 +300,7 @@
 	},
 	"sign-up-free": "ثبت نام به صورت رایگان",
 	"social": {
-		"email": "پست الکترونیک",
+		"email": "Email",
 		"facebook": "فیس بوک",
 		"github": "GitHub",
 		"group-header": "رده: اجتماعی",
@@ -331,6 +358,7 @@
 	},
 	"view-list": "مشاهده لیست",
 	"visit": "بازدید",
+	"welcome-name": "Welcome, {{name}}!",
 	"words": {
 		"accept": "قبول کردن",
 		"account": "حساب",
@@ -345,9 +373,11 @@
 		"email": "پست الکترونیک",
 		"home": "صفحه اصلی",
 		"hours": "ساعت",
+		"location": "Location",
 		"more": "بيشتر",
 		"next": "بعدی",
 		"no": "نه",
+		"organization": "سازمان",
 		"password": "کلمه عبور",
 		"phone": "تلفن",
 		"please-wait": "لطفا صبر کنید...",
@@ -364,6 +394,7 @@
 		"sign-up": "ثبت نام کنید",
 		"skip": "پرش",
 		"support": "پشتیبانی",
+		"website": "Website",
 		"yes": "بله"
 	},
 	"photo_one": "تصویر",

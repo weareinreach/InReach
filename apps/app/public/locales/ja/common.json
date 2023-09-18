@@ -1,5 +1,8 @@
 {
 	"about-us": "私たちについて",
+	"access": {
+		"sms-with-body": "<strong>{{body}}</strong> を {{code}} にテキスト"
+	},
 	"accessible-building_false": "この建物は車椅子ではご利用いただけません",
 	"accessible-building_true": "この建物は車椅子対応です",
 	"account": "アカウント",
@@ -9,8 +12,11 @@
 	"adjective": {
 		"organization": "{{adjective}} 組織"
 	},
-	"agree-disclaimer": "By clicking \"{{action}}\" you agree to InReach's <link1>Privacy Policy</link1> and <link2>Terms of Use</link2>.",
+	"agree-disclaimer": "「{{action}}」をクリックすると、InReachの <link1>プライバシーポリシー</link1> および <link2>利用規約</link2>に同意したことになります。",
+	"alert-message": "アラートメッセージ",
 	"alert-message-1": "<strong>COVID-19 ポリシー:</strong> COVID-19 予防に関するニュースやベストプラクティスは日々急速に変化しているため、Whitman-Walker Health は予防に関する推奨事項を反映するようにサービスを更新し続けています。最新情報については、彼らのウェブサイトを確認してください。",
+	"alert-message-instructions": "警告メッセージを入力してください",
+	"alert-title-instructions": "メッセージのタイトルを入力してください...",
 	"all-service-category": "すべて {{serviceCategory}}",
 	"anti-hate": {
 		"body": "InReachを使用することにより、このリソース情報を有害、憎悪に基づく、同性愛嫌悪、トランスフォビア、外国人嫌悪、および/または人種差別的なアジェンダやコメントに使用しないことに同意したものとみなされます。",
@@ -19,6 +25,7 @@
 	"badge": {
 		"claimed-tool-tip": "この組織は確認済みの代理人によって申し立てられています。 <link1>もっと詳しく.</link1>",
 		"community-tool-tip": "この組織がサービスを提供するコミュニティ。",
+		"national-tool-tip": "{{country}} を通じてサービスを提供しています。",
 		"remote-tool-tip": "リモートで利用可能",
 		"service-tool-tip": "この組織が提供するサービス。",
 		"unclaimed-tool-tip": "この組織はまだ代表者による申請を受けていません。<br/><link1>この組織に申請して</link1> コミュニティとの信頼関係を築き、自分の情報を更新するなどしてください。"
@@ -29,7 +36,7 @@
 	},
 	"cancel": "[キャンセル]",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 組織のプロフィールページを要求し、InReach でオーディエンスと信頼関係を構築する</textUtility1>\n<textUtility1>✍🏾 組織のInReach に関する情報を更新する</textUtility1>\n<textUtility1>📨 InReach であなたの組織に参加するために他のスタッフを招待する</textUtility1>\n<textUtility1>🔑 InReach の関連サービスプロバイダー専用に構築された将来の機能へのアクセスを得る</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>この組織はまだサービスプロバイダーから申請されていません。</title2>\n<textDarkGray>この組織をサービスプロバイダーとして申請できるのは、以下のとおりです。</textDarkGray>"
 	},
 	"claimed": "請求済み",
@@ -44,10 +51,19 @@
 	"contact": "連絡",
 	"contact-us": "お問い合わせ",
 	"count": {
-		"result_other": "{{count}} results"
+		"result_other": "{{count}} 件の結果"
 	},
 	"country-select": "国を選択してください",
 	"create-new-list": "新しいリストを作成",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "これらの検証済みリソースは、世界中のどこでもLGBTQ+コミュニティを助けることができます。",
+		"intl-we-recommend": "私たちはこれらの国際的なリソースをお勧めします",
+		"natl-find-help-now": "今すぐヘルプを探す",
+		"natl-these-verified": "<Text>これらの検証済みリソースは、米国のLGBTQ+コミュニティに役立ちます。 これらのサービスは、<Text>遠隔から利用可能で、 <strong>、</strong> 、 <strong>無料の</strong>です。</Text>",
+		"outside-service-area": "{{country}} ではインリーチは動作しません",
+		"who-this-serves": "<Text><strong>誰がこのリソースを提供:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "現在の場所",
 	"delete-account": "アカウントを削除する?",
 	"delete-account-password": "アカウントのパスワードを入力して確認します。",
@@ -67,6 +83,13 @@
 	"enter-password-placeholder": "パスワードを入力...",
 	"enter-review": "レビューを入力...",
 	"errors": {
+		"401-title": "ログインする必要があります。",
+		"403-body": "このページにアクセスする権限がありません．誤ってこのページに到達したと思われる場合は，上司に連絡してください．",
+		"403-title": "403: 禁止",
+		"404-body": "申し訳ありませんが、お探しのページが存在しないか、移動されていません。 以下の検索を開始して、お住まいの地域の多様なLGBTQ+コミュニティの安全性を確認したリソースを探しましょう。",
+		"404-title": "404: ページが見つかりません。",
+		"500-body": "申し訳ありませんが、サーバーに問題が発生しました。 後でもう一度お試しいただくか、以下の検索を開始して、お住まいの地域で安全なLGBTQ+リソースを確認してください。",
+		"500-title": "500: 問題が発生しました。",
 		"oh-no": "ああ、いや！",
 		"try-again-text": "<Text>何かが間違っています！もう一度試してください。</Text>"
 	},
@@ -125,6 +148,8 @@
 		"error-generic": "問題が発生しました。もう一度試してください。",
 		"error-username-password": "ユーザー名またはパスワードが正しくありません。"
 	},
+	"message_text": "メッセージ テキスト",
+	"message_title": "メッセージタイトル",
 	"modal-content": {
 		"accessibility": "<stack16>\n<title2>Accessibility Statement</title2>\n<textDarkGray>InReach’s open source technology is built for the diverse LGBTQ+ community, including users with disabilities.</textDarkGray>\n<textDarkGray>The free InReach App is available on web (desktop and mobile), and native iOS and Android. Beginning with the launch of our latest redesign (June 2023), InReach will strive to meet <linkAccessibility>Web Content Accessibility Guidelines (WCAG) level AA criteria.</linkAccessibility></textDarkGray>\n<textDarkGray>At InReach, we strive to make our tech platform accessible for as many users and devices as possible in alignment with our mission to serve all LGBTQ+ people facing persecution or discrimination.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>inReach免責事項</title2>\n<textReg>inReachチームは、このウェブサイトに掲載されているサービスプロバイダーに関する適格性と基本的な事実を確認するために最善を尽くします。ただし、そのようなプロバイダーの存続可能性や能力を保証することはできません。したがって、InReachは、本ウェブサイトに掲載されているプロバイダーの行為について一切の責任を負わず、そのようなプロバイダーに連絡するユーザーは自己責任で行ってください。</textReg>\n</stack16>"
@@ -140,6 +165,7 @@
 	"none-apply": "これらのどれも私には当てはまりません",
 	"offices-and-locations": "オフィスと拠点",
 	"org-image": "組織写真",
+	"organization": "組織",
 	"other-specify": "その他 (指定してください)",
 	"page-title": {
 		"base": "{{title}} -インリーチ",
@@ -160,8 +186,8 @@
 	},
 	"password-reset-success": "<Text>新しいパスワードを使用して <LoginModal>ログイン</LoginModal> してください。</Text>",
 	"password-saved": "パスワードが保存されました！",
-	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
-	"photo_interval": "(0)[No photos yet];(2-inf)[See all {{count}} photos];",
+	"photo-count_interval": "(0)[まだ写真はありません。];(1)[{{count}} 写真];(2-inf)[{{count}} 写真]",
+	"photo_interval": "(0)[まだ写真はありません];(2-inf)[ {{count}} 枚の写真をすべて見る];",
 	"please-specify": "指定してください",
 	"powered-by-vercel": "パワー・バイ・バーセル",
 	"prefer-not-to-say": "言いたくない",
@@ -169,11 +195,11 @@
 	"privacy-statement": "プライバシーステートメント",
 	"privacy-statement-body": [
 		"<textDarkGrayCentered>inReachでは、オンラインの匿名性を維持することは、多くのLGBTQ+の人々にとって生死にかかわる問題であることを認識しています。そのため、無料のInReachアプリ（当社のウェブアプリ、ネイティブiOSアプリ、ネイティブAndroidアプリ）は、オンラインでのユーザーの安全と機密性の保護を優先して設計されています。</textDarkGrayCentered>",
-		"<title2>User demographic data</title2>",
+		"<title2>ユーザ人口統計データ</title2>",
 		"<textDarkGray><strong>無料のInReachアプリを使用するにあたり、個人を特定できる情報は必要ありません。</strong></textDarkGray>",
-		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
+		"<textDarkGray>InReachユーザーアカウントを作成することを選択したユーザーには、匿名のオンラインアンケートを通じて以下の人口統計情報を共有するオプション <strong></strong> があります。</textDarkGray>",
 		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
-		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
+		"<textDarkGray><strong>この機密情報はすべて匿名で保存され、単一の個人ユーザーまたはユーザーアカウントには接続されません。*</strong></textDarkGray>",
 		"<textUtility4>(*唯一の例外は、Local Community Reviewer のユーザーアカウントタイプです。これは、収集された人口統計情報を活用して、Local Community Reviewerのボランティア活動の経験と影響力を高めます。Local Community Reviewer アカウントの場合、位置情報やその他の人口統計情報は任意ですが、ユーザーレコードに関連付けられます。このデータは、ローカルコミュニティレビュー担当者がアカウントのプライバシー設定で公開することを選択した場合にのみ、inReachスタッフ以外には表示されません。プロフィールを公開すると、他のユーザーがあなたのレビューに自信を持てるようになります。）</textUtility4>",
 		"<textDarkGray>ユーザー層を理解することは、インパクトの定量化、資金調達、将来の製品に関する意思決定の評価に役立ちます。ユーザーが自発的にこの情報を私たちと共有してくれることに感謝し、私たちはあなたのプライバシーと匿名性を保護するためにこれらの措置を講じています。</textDarkGray>",
 		"<textDarkGray><title2>サイト利用分析</title2></textDarkGray>",
@@ -181,14 +207,11 @@
 		"<textDarkGray>InReachは、ウェブのバイタルやパフォーマンスの分析にもVercel Analyticsを使用しています。Vercel Analyticsは、個々の訪問者やIPアドレスに縛られたり、関連付けられたりすることなく、サイトの使用状況情報を提供します。データポイントの記録は匿名で行われ、アナリティクス機能は、Vercelがページ間のブラウジングセッションを再構築したり、ユーザーを特定したりできるような情報を収集または保存しません。</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>詳細については、当社のプライバシーポリシー全文をお読みください。</linkPolicy>",
-	"privacy-statement-head": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>プライバシーステートメント</title2>"
-	],
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>プライバシーステートメント</title2>"],
 	"privatePractice": "プライベート・プラクティス",
 	"profile": "プロフィール",
 	"questions": "質問?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 パーソナライズされたリソースリストを保存して共有する</textUtility1>\n<textUtility1>💬 公開評価/組織レビューを残す</textUtility1>\n<textUtility1>🏠 お住まいの地域の組織を提案する</textUtility1>\n<textUtility1>🔗 組織のプロフィールページを入手する (近日公開予定!</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "リモートで利用できるサービス",
 	"remote-services-page-title": "リモートサービス",
@@ -203,13 +226,17 @@
 	"review-resource": "このリソースを確認",
 	"safety-exit": "安全出口",
 	"save": "[保存]",
+	"save-changes": "変更を保存",
 	"saved": "保存済み",
 	"search": {
 		"include-remote": "リモートサービスを含める",
 		"location-placeholder": "都市または郵便番号を入力...",
+		"location-placeholder-searchby": "都市または郵便番号で検索...",
 		"look-up-org": "組織を名前で検索",
 		"no-results": "結果が見つかりませんでした。もう一度試してください。",
+		"no-results-adjust": "検索結果が見つかりませんでした。選択した場所またはフィルターを調整してください。",
 		"organization-placeholder": "組織名を入力...",
+		"organization-placeholder-searchby": "組織名で検索...",
 		"suggest-resource": "見つかりませんか？<1>含めるべきだと思う組織を提案してください</1>。"
 	},
 	"send-email": "E メールを送信",
@@ -272,7 +299,7 @@
 	},
 	"sign-up-free": "無料でサインアップ",
 	"social": {
-		"email": "E メール",
+		"email": "Eメールアドレス",
 		"facebook": "フェイスブック",
 		"github": "GitHub",
 		"group-header": "ソーシャル",
@@ -298,7 +325,7 @@
 	"suggest-a-resource": "リソースを提案",
 	"support": "サポート",
 	"survey": {
-		"birthyear-req-value": "Year must be between {{year1}} and {{year2}}, i.e 2005",
+		"birthyear-req-value": "年は {{year1}} から {{year2}}の間でなければなりません、例えば 2005",
 		"finish": "フィニッシュ",
 		"launch-item1": "<Bold>なぜ私たちは尋ねるの？</Bold> ユーザー層を理解することは、私たちの影響を定量化し、資金を調達し、将来の製品に関する意思決定の評価を行うのに役立ちます。",
 		"launch-item2": "<Bold>安全第一:</Bold> 回答は匿名で保存され、個人ユーザーやユーザーアカウントとは関係ありません。",
@@ -330,12 +357,13 @@
 	},
 	"view-list": "リストを表示",
 	"visit": "訪問",
+	"welcome-name": "ようこそ、 {{name}}！",
 	"words": {
 		"accept": "受け入れます",
 		"account": "アカウント",
 		"add": "[追加]",
 		"and": "そして",
-		"and-x-more": "and {{count}} more",
+		"and-x-more": "他 {{count}} 名",
 		"back": "戻る",
 		"close": "閉じる",
 		"coming-soon": "近日公開予定",
@@ -344,9 +372,11 @@
 		"email": "E メール",
 		"home": "ホーム",
 		"hours": "時間",
+		"location": "場所",
 		"more": "もっと",
 		"next": "[次へ]",
 		"no": "いいえ",
+		"organization": "組織",
 		"password": "[パスワード]",
 		"phone": "[電話]",
 		"please-wait": "しばらくお待ちください...",
@@ -363,11 +393,12 @@
 		"sign-up": "サインアップ",
 		"skip": "スキップ",
 		"support": "サポート",
+		"website": "ウェブサイト",
 		"yes": "はい"
 	},
 	"photo_other": "写真",
 	"review-count_other": "({{count}} レビュー)",
 	"review_other": "レビュー",
-	"view-x-result_other": "View {{count}} results",
+	"view-x-result_other": "{{count}} 件の結果を表示",
 	"website_other": "ウェブサイト"
 }

@@ -22,6 +22,10 @@
 		"CATEGORYNAME": "الحواسيب والإنترنت",
 		"computers-and-internet": "الحواسيب والإنترنت"
 	},
+	"crisis-support": {
+		"CATEGORYNAME": "دعم الأزمات",
+		"crisis-support": "دعم الأزمات"
+	},
 	"education-and-employment": {
 		"CATEGORYNAME": "التعليم والعمالة",
 		"career-counseling": "المشورة الوظيفية",
@@ -52,6 +56,12 @@
 		"gender-neutral-bathrooms": "حمامات محايدة جنسانيا",
 		"haircuts-and-stylists": "قذائف الشعر والأنماط",
 		"hygiene": "النظافة"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "الدعم الدولي",
+		"financial-assistance": "المساعدة المالية",
+		"mental-health": "الصحة النفسية",
+		"resettlement-assistance": "المساعدة على إعادة التوطين"
 	},
 	"legal": {
 		"CATEGORYNAME": "قانوني",

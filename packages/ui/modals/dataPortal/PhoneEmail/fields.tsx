@@ -57,7 +57,7 @@ export const PhoneEmailFlags = ({ role }: PhoneEmailFlagsProps) => {
 	const { id: organizationId } = useOrgInfo()
 
 	const { data: serviceData, isLoading: isServiceLoading } = api.service.getNames.useQuery(
-		{ organizationId },
+		{ organizationId: organizationId ?? '' },
 		{
 			enabled: Boolean(organizationId),
 

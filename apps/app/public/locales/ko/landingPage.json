@@ -1,6 +1,6 @@
 {
 	"banner": {
-		"redesign": "블로그에서 inReach 앱 재설계 출시에 대해 읽어보세요. <Link>자세히 알아보기.</Link>"
+		"redesign": "블로그에서 InReach 앱 재설계 출시에 대해 읽어보세요. <Link>더 알아보기.</Link>"
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>사용자 의견 듣기</Title1>",
@@ -16,15 +16,15 @@
 			"5": "LGBTQ+ BIPOC 커뮤니티",
 			"6": "LGBTQ+ 청소년을 돌보는 사람"
 		},
-		"find-resources": "<Text>Find verified </Text><Service></Service><Text> for </Text><Community></Community><Text> with InReach.</Text>",
+		"find-resources": "<Text>InReach가 있는</Text><Community></Community><Text> 확인된 </Text><Service></Service><Text> 찾기.</Text>",
 		"heading": "LGBTQ+ 자료를 찾아보세요.",
-		"privacy-disclaimer": "Your answer is anonymous and not connected to you as an individual user. Read our <Link>privacy policy</Link> to learn more.",
+		"privacy-disclaimer": "귀하의 답변은 익명으로 처리되며 개인 사용자로서 귀하와 연결되지 않습니다. 자세히 알아보려면 <Link>개인정보 처리방침 </Link> 읽어보세요.",
 		"services": {
 			"0": "의료 치료",
 			"1": "커뮤니티 지원",
-			"2": "정신 건강 관리",
+			"2": "정신 건강 치료",
 			"3": "교육",
-			"4": "고용",
+			"4": "고용/지겁",
 			"5": "음식",
 			"6": "주택",
 			"7": "의류",

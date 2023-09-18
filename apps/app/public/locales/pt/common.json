@@ -1,5 +1,8 @@
 {
 	"about-us": "Sobre nós",
+	"access": {
+		"sms-with-body": "Texto <strong>{{body}}</strong> para {{code}}"
+	},
 	"accessible-building_false": "Este edifício NÃO é acessível para cadeiras de rodas",
 	"accessible-building_true": "Este edifício é acessível para cadeiras de rodas",
 	"account": "Conta",
@@ -10,7 +13,10 @@
 		"organization": "{{adjective}} organização"
 	},
 	"agree-disclaimer": "Ao clicar em \"{{action}}\", você concorda com a Política de Privacidade <link1></link1> e <link2>Termos de Uso</link2>da inReach.",
+	"alert-message": "Mensagem de alerta",
 	"alert-message-1": "<strong>Política da COVID-19:</strong> Com as notícias e as melhores práticas para a prevenção da COVID-19 mudando rapidamente a cada dia, a Whitman-Walker Health continua atualizando seus serviços para refletir as recomendações de prevenção. Verifique o site deles para obter as informações mais atualizadas.",
+	"alert-message-instructions": "Digite a mensagem de alerta",
+	"alert-title-instructions": "Digite um título para a mensagem...",
 	"all-service-category": "Todos os {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Ao usar o inReach, você concorda que não usará essas informações de recursos para agendas ou comentários nocivos, baseados no ódio, homofóbicos, transfóbicos, xenófobos e/ou racistas.",
@@ -19,6 +25,7 @@
 	"badge": {
 		"claimed-tool-tip": "Essa organização foi reivindicada por um representante verificado. <link1>Saiba mais.</link1>",
 		"community-tool-tip": "Comunidade atendida por esta organização.",
+		"national-tool-tip": "Oferece serviços ao longo do {{country}}.",
 		"remote-tool-tip": "Disponível remotamente",
 		"service-tool-tip": "Serviço (s) oferecido (s) por esta organização.",
 		"unclaimed-tool-tip": "Essa organização ainda não foi reivindicada por um representante. <link1>Reivindique esta organização</link1> para criar confiança com nossa comunidade, atualizar suas próprias informações e muito mais."
@@ -29,7 +36,7 @@
 	},
 	"cancel": "Cancelar",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
+		"list": "<textUtility1>🔗 reivindique a página de perfil da sua organização e construa confiança com o seu público em InReach</textUtility1>\n<textUtility1>:writing_hand_medi_skin_tone: Atualize as informações da sua organização em Infernir</textUtility1>\n<textUtility1>📨 Convide outros funcionários para se juntar à sua organização em Inach</textUtility1>\n<textUtility1>🔑 Ganhe acesso a recursos futuros construídos especificamente para provedores de serviços afiliados em Inferir</textUtility1>",
 		"title": "<emojiLg>🏠</emojiLg>\n<title2>Essa organização ainda não foi reivindicada por um provedor de serviços.</title2>\n<textDarkGray>Você pode reivindicar essa organização como prestadora de serviços para: < extDarkGray>"
 	},
 	"claimed": "Reivindicado",
@@ -49,6 +56,15 @@
 	},
 	"country-select": "Escolha um país",
 	"create-new-list": "Criar nova lista",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "Estes recursos verificados podem ajudar a comunidade LGBTQ+ em qualquer lugar do mundo.",
+		"intl-we-recommend": "Recomendamos esses recursos internacionais",
+		"natl-find-help-now": "Encontre ajuda agora",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "A inreach não opera em {{country}}",
+		"who-this-serves": "<Text><strong>Quem este recurso serve:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Localização atual",
 	"delete-account": "Excluir sua conta?",
 	"delete-account-password": "Digite a senha da sua conta para confirmar.",
@@ -68,6 +84,13 @@
 	"enter-password-placeholder": "Digite a senha...",
 	"enter-review": "Insira seu comentário...",
 	"errors": {
+		"401-title": "Você precisa estar logado para fazer isso.",
+		"403-body": "Você não tem permissão para acessar esta página. Se você acha que chegou a esta página por engano, entre em contato com seu supervisor.",
+		"403-title": "403: Proibido",
+		"404-body": "Desculpe, a página que você está procurando não existe ou foi movida. Inicie uma pesquisa abaixo para encontrar recursos seguros e verificados para a comunidade LGBTQ+ em sua área.",
+		"404-title": "404: Página não encontrada.",
+		"500-body": "Sinto muito, algo deu errado com o nosso servidor. Por favor, tente novamente mais tarde ou inicie uma pesquisa abaixo para encontrar recursos LGBTQ+ seguros em sua área.",
+		"500-title": "500: Algo deu errado.",
 		"oh-no": "Ah, não!",
 		"try-again-text": "<Text>Algo deu errado! Por favor, tente novamente.</Text>"
 	},
@@ -126,6 +149,8 @@
 		"error-generic": "Algo deu errado, tente novamente.",
 		"error-username-password": "Nome de usuário ou senha incorretos."
 	},
+	"message_text": "Texto da mensagem",
+	"message_title": "Título da mensagem",
 	"modal-content": {
 		"accessibility": "<stack16>\n<title2>Declaração de acessibilidade</title2>\n<textDarkGray>A tecnologia de código aberto da inReach foi criada para a comunidade diversificada LGBTQ+, incluindo usuários com deficiências.</textDarkGray>\n<textDarkGray>O aplicativo gratuito inReach está disponível na web (desktop e celular) e em iOS e Android nativos. Começando com o lançamento de nossa última reformulação (junho de 2023), a inReach se esforçará para atender aos <linkAccessibility>critérios de nível AA das Diretrizes de Acessibilidade de Conteúdo da Web (WCAG).</linkAccessibility></textDarkGray>\n<textDarkGray>Na inReach, nos esforçamos para tornar nossa plataforma tecnológica acessível para o maior número possível de usuários e dispositivos, de acordo com nossa missão de servir todas as pessoas LGBTQ+ que enfrentam perseguição ou discriminação.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>Aviso legal da inReach</title2>\n<textReg>A equipe da inReach fará o possível para confirmar a elegibilidade e os fatos básicos sobre os prestadores de serviços listados neste site. No entanto, não podemos garantir a viabilidade ou as capacidades de nenhum desses fornecedores. Consequentemente, a inReach não assume nenhuma responsabilidade pelas ações dos provedores listados neste site e os usuários que entram em contato com esses provedores o fazem por sua conta e risco.</textReg>\n</stack16>"
@@ -141,6 +166,7 @@
 	"none-apply": "Nada disso se aplica a mim",
 	"offices-and-locations": "Escritórios e localizações",
 	"org-image": "Foto da organização",
+	"organization": "Organização",
 	"other-specify": "Outros (por favor, especifique)",
 	"page-title": {
 		"base": "{{title}} - Em Reach",
@@ -170,11 +196,11 @@
 	"privacy-statement": "Declaração de privacidade",
 	"privacy-statement-body": [
 		"<textDarkGrayCentered>Na inReach, reconhecemos que preservar o anonimato on-line é um problema de vida ou morte para muitas pessoas LGBTQ+. É por isso que o aplicativo gratuito inReach (nosso aplicativo web, aplicativo iOS nativo e aplicativo nativo para Android) foi projetado para priorizar a proteção da segurança e confidencialidade on-line dos usuários.</textDarkGrayCentered>",
-		"<title2>User demographic data</title2>",
+		"<title2>Dados demográficos do usuário</title2>",
 		"<textDarkGray><strong>Não exigimos nenhuma informação de identificação pessoal para usar o aplicativo gratuito inReach.</strong></textDarkGray>",
-		"<textDarkGray>Users who choose to create a free InReach user account have <strong>the option</strong> to share the following demographic information via an anonymous online survey:</textDarkGray>",
+		"<textDarkGray>Usuários que optam por criar uma conta gratuita de InReach têm <strong>a opção</strong> de compartilhar as seguintes informações demográficas por meio de uma pesquisa anônima on-line:</textDarkGray>",
 		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
-		"<textDarkGray><strong>All of this sensitive information is stored anonymously and not connected to any single individual user or user account.*</strong></textDarkGray>",
+		"<textDarkGray><strong>Todas essas informações confidenciais são armazenadas anonimamente e não são conectadas a qualquer usuário ou conta de usuário individual.*</strong></textDarkGray>",
 		"<textUtility4>(*A única exceção é o tipo de conta de usuário do Local Community Reviewer, que aproveita todas as informações demográficas coletadas para aprimorar a experiência e o impacto do voluntariado dos revisores comunitários locais. Para contas do Local Community Reviewer, exigimos que a localização e todas as outras informações demográficas sejam opcionais, mas estejam vinculadas ao registro do usuário. Esses dados só seriam visíveis fora da equipe da inReach se o revisor da comunidade local optasse por torná-los visíveis por meio das configurações de privacidade da conta. Compartilhar um perfil voltado para o público ajudará outros usuários a se sentirem mais confiantes em suas avaliações.)</textUtility4>",
 		"<textDarkGray>Compreender a demografia de nossos usuários pode nos ajudar a quantificar nosso impacto, arrecadar fundos e avaliar futuras decisões sobre produtos. Agradecemos que os usuários compartilhem voluntariamente essas informações conosco e tomamos essas medidas para proteger sua privacidade e anonimato.</textDarkGray>",
 		"<textDarkGray><title2>Análise de uso do site</title2></textDarkGray>",
@@ -182,15 +208,12 @@
 		"O <textDarkGray>inReach também usa o Vercel Analytics para analisar os sinais vitais e o desempenho da web. O Vercel Analytics fornece informações de uso do site sem estar vinculado ou associado a nenhum visitante individual ou endereço IP. O registro dos pontos de dados é anônimo e o recurso Analytics não coleta nem armazena informações que permitam à Vercel reconstruir uma sessão de navegação entre páginas ou identificar um usuário.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Leia nossa política de privacidade completa para obter mais informações</linkPolicy>",
-	"privacy-statement-head": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>Declaração de privacidade</title2>"
-	],
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Declaração de privacidade</title2>"],
 	"privatePractice": "Clínica privada",
 	"profile": "Perfil",
 	"questions": "Perguntas?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
-	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
+	"quick-promo-body": "<textUtility1>💚 Salvar e compartilhar listas de recursos personalizadas</textUtility1>\n<textUtility1>💬 Deixe a classificação pública/comentários nas organizações</textUtility1>\n<textUtility1>🏠 Sugerir organizações em sua área</textUtility1>\n<textUtility1>🔗 Reivindicar o perfil da sua organização (em breve!</textUtility1>",
+	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>Você precisa logar para fazer isso.</title2>\n<textDarkGray>Com uma conta gratuita você pode desbloquear recursos adicionais:</textDarkGray>",
 	"remote-services": "Serviços disponíveis remotamente",
 	"remote-services-page-title": "Serviços remotos",
 	"reset-password": "Redefinir sua senha",
@@ -204,13 +227,17 @@
 	"review-resource": "Revise este recurso",
 	"safety-exit": "Saída de segurança",
 	"save": "Salvar",
+	"save-changes": "Salvar alterações",
 	"saved": "Salvo",
 	"search": {
 		"include-remote": "Inclua serviços remotos",
 		"location-placeholder": "Insira a cidade ou código postal...",
+		"location-placeholder-searchby": "Procurar por cidade ou CEP...",
 		"look-up-org": "Procure uma organização pelo nome",
 		"no-results": "Nenhum resultado encontrado. Por favor, tente novamente.",
+		"no-results-adjust": "Nenhum resultado encontrado para sua pesquisa. Tente ajustar a localização selecionada ou filtros.",
 		"organization-placeholder": "Insira o nome da organização...",
+		"organization-placeholder-searchby": "Pesquisar por nome da organização...",
 		"suggest-resource": "Não consegue encontrá-lo? <1>Sugira uma organização</1> que você acha que deveria ser incluída."
 	},
 	"send-email": "Enviar e-mail",
@@ -255,7 +282,7 @@
 		"lcr-screen3": "Analisei a página <Link><strong>Local Community Reviewer</strong></Link> no site da inReach e atendo aos requisitos.",
 		"modal-body": [
 			"<title3>Que tipo de conta você gostaria de criar?</title3>",
-			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
+			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Profissional/Provedor</button>\n<button data-option='lcr'>Revisor da Comunidade Local</button>\n</group>",
 			"<loginLink>Já tem uma conta?</loginLink>"
 		],
 		"name-use-any": "Use qualquer nome com o qual você se sinta confortável.",
@@ -273,7 +300,7 @@
 	},
 	"sign-up-free": "Cadastre-se gratuitamente",
 	"social": {
-		"email": "E-mail",
+		"email": "e-mail",
 		"facebook": "Facebook",
 		"github": "GitHub",
 		"group-header": "Social",
@@ -331,6 +358,7 @@
 	},
 	"view-list": "Exibir lista",
 	"visit": "Visita",
+	"welcome-name": "Bem-vindo, {{name}}!",
 	"words": {
 		"accept": "Aceitar",
 		"account": "Conta",
@@ -345,9 +373,11 @@
 		"email": "E-mail",
 		"home": "Casa",
 		"hours": "Horas",
+		"location": "Local:",
 		"more": "mais",
 		"next": "Próximo",
 		"no": "Não",
+		"organization": "Organização",
 		"password": "Senha",
 		"phone": "Telefone",
 		"please-wait": "Por favor, espere...",
@@ -364,6 +394,7 @@
 		"sign-up": "Cadastre-se",
 		"skip": "Ignorar",
 		"support": "Suporte",
+		"website": "site",
 		"yes": "sim"
 	},
 	"photo_one": "foto",

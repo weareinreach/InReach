@@ -1,23 +1,52 @@
+import * as Sentry from '@sentry/nextjs'
 import { createNextApiHandler } from '@trpc/server/adapters/next'
-import { Logger } from 'tslog'
 
 import { appRouter, createContext } from '@weareinreach/api'
+import { createLoggerInstance } from '@weareinreach/util/logger'
 
-const log = new Logger({ name: 'tRPC', type: 'json', hideLogPositionForProduction: true })
+const log = createLoggerInstance('tRPC')
+
+// eslint-disable-next-line node/no-process-env
+const isDev = process.env.NODE_ENV === 'development'
+const isServer = typeof window === 'undefined'
 
 /* Creating a handler for the tRPC endpoint. */
 export default createNextApiHandler({
 	router: appRouter,
 	createContext,
-	onError:
-		// eslint-disable-next-line node/no-process-env
-		process.env.NODE_ENV === 'development'
-			? ({ path, error, type }) => {
-					log.error(`❌ tRPC ${type} failed on ${path}: ${error}`)
-			  }
-			: typeof window === 'undefined'
-			? ({ path, error, type }) => log.error({ type, path, error })
-			: undefined,
+	onError: ({ path, error, type }) => {
+		switch (true) {
+			case isDev: {
+				if (error.code === 'INTERNAL_SERVER_ERROR') {
+					Sentry.captureException(error, (scope) => {
+						scope.setTags({
+							'tRPC.path': path,
+							'tRPC.operation': type,
+						})
+						return scope
+					})
+				}
+				log.error(`❌ tRPC ${type} failed on ${path}:`, error)
+				break
+			}
+			case isServer: {
+				if (error.code === 'INTERNAL_SERVER_ERROR') {
+					Sentry.captureException(error, (scope) => {
+						scope.setTags({
+							'tRPC.path': path,
+							'tRPC.operation': type,
+						})
+						return scope
+					})
+				}
+				log.error({ type, path, error })
+				break
+			}
+			default: {
+				return
+			}
+		}
+	},
 	responseMeta(opts) {
 		const { ctx, errors, type } = opts
 

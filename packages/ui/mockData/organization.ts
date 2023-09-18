@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker'
+
 import { type ApiOutput } from '@weareinreach/api'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 
@@ -270,6 +272,50 @@ export const organization = {
 	getIdFromSlug: getTRPCMock({
 		path: ['organization', 'getIdFromSlug'],
 		response: organizationData.getIdFromSlug,
+	}),
+	forOrganizationTable: getTRPCMock({
+		path: ['organization', 'forOrganizationTable'],
+		response: () => {
+			const totalRecords = 1000
+			faker.seed(1024)
+			const data: ApiOutput['organization']['forOrganizationTable'] = []
+
+			for (let index = 0; index < totalRecords; index++) {
+				const lastVerified = faker.date.past()
+				const updatedAt = faker.date.past({ refDate: lastVerified })
+				const createdAt = faker.date.past({ refDate: updatedAt })
+				const locations: NonNullable<ApiOutput['organization']['forOrganizationTable']>[number]['locations'] =
+					[]
+
+				const totalLocations = faker.number.int({ min: 0, max: 7 })
+
+				for (let locIdx = 0; locIdx < totalLocations; locIdx++) {
+					const updatedAt = faker.date.past({ refDate: lastVerified })
+					const createdAt = faker.date.past({ refDate: updatedAt })
+					locations.push({
+						id: `oloc_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
+						name: `${faker.location.street()} location`,
+						updatedAt,
+						createdAt,
+						published: faker.datatype.boolean(0.9),
+						deleted: faker.datatype.boolean(0.05),
+					})
+				}
+
+				data.push({
+					id: `orgn_${faker.string.alphanumeric({ length: 26, casing: 'upper' })}`,
+					name: faker.company.name(),
+					slug: faker.lorem.slug(3),
+					lastVerified: faker.helpers.maybe(() => lastVerified, { probability: 0.9 }) ?? null,
+					updatedAt,
+					createdAt,
+					published: faker.datatype.boolean(0.9),
+					deleted: faker.datatype.boolean(0.05),
+					locations,
+				})
+			}
+			return data
+		},
 	}),
 }
 

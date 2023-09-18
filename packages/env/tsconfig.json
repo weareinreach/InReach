@@ -9,7 +9,8 @@
 			"~auth/*": ["../../packages/auth/*"],
 			"~db/*": ["../../packages/db/*"],
 			"~ui/*": ["../../packages/ui/*"],
-			"~web/*": ["../../apps/web/src/*"]
+			"~web/*": ["../../apps/web/src/*"],
+			"~util/*": ["../../packages/util/*"]
 		}
 	},
 	"exclude": ["node_modules"],

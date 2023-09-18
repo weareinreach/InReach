@@ -1,5 +1,8 @@
 {
 	"about-us": "Acerca de Nosotres",
+	"access": {
+		"sms-with-body": "Texto <strong>{{body}}</strong> a {{code}}"
+	},
 	"accessible-building_false": "Este edificio NO es accesible en silla de ruedas",
 	"accessible-building_true": "Este edificio es accesible en silla de ruedas",
 	"account": "Cuenta",
@@ -10,7 +13,10 @@
 		"organization": "{{adjective}} organización"
 	},
 	"agree-disclaimer": "Al hacer clic en \"{{action}}\" aceptas la <link1>Política de Privacidad</link1> y <link2>Términos de Uso</link2> de InReach.",
+	"alert-message": "Mensaje de alerta",
 	"alert-message-1": "<strong>Política COVID-19:</strong> Con noticias y buenas prácticas para la prevención COVID-19 cambiando rápidamente cada día Salud Whitman-Walker (Whitman-Walker Health) continúa actualizando sus servicios para reflejar las recomendaciones de prevención. Consulta su página web para obtener la información más actualizada.",
+	"alert-message-instructions": "Introduzca el mensaje de alerta",
+	"alert-title-instructions": "Introduzca un título para el mensaje...",
 	"all-service-category": "Todos {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Al usar InReach, usted acepta que no usará esta información de recursos para agendas o comentarios nocivos, basados en el odio, homofóbicos, transfóbicos, xenofóbicos y/o racistas.",
@@ -19,6 +25,7 @@
 	"badge": {
 		"claimed-tool-tip": "Esta organización ha sido reclamada por un representante verificado.<br/><link1>Más información.</link1>",
 		"community-tool-tip": "Comunidad atendida por esta organización.",
+		"national-tool-tip": "Ofrece servicios en {{country}}.",
 		"remote-tool-tip": "Disponible de forma remota",
 		"service-tool-tip": "Servicio(s) ofrecido(s) por esta organización.",
 		"unclaimed-tool-tip": "Esta organización aún no ha sido reclamada por un representante.<br/><link1>Reclama a esta organización</link1> para generar confianza con nuestra comunidad, actualizar tu propia información y más."
@@ -49,6 +56,15 @@
 	},
 	"country-select": "Elige un país",
 	"create-new-list": "Crea una nueva lista",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Por favor, mantente seguro en línea</Title3>\n<Text>Visitar cualquiera de estos sitios web <strong>puede dejar un registro en tu ordenador o navegador</strong>, como lo hace cualquier sitio web después de visitarlo. Por favor, tome medidas para evitar situaciones inseguras en su propia área.</Text>",
+		"intl-these-verified": "Estos recursos verificados pueden ayudar a la comunidad LGBTQ+ en cualquier parte del mundo.",
+		"intl-we-recommend": "Recomendamos estos recursos internacionales",
+		"natl-find-help-now": "Encuentra ayuda ahora",
+		"natl-these-verified": "<Text>Estos recursos verificados pueden ayudar a la comunidad LGBTQ+ en los Estados Unidos. Estos servicios son <strong>disponibles remotamente, confidenciales,</strong> y <strong>gratuitos</strong>.</Text>",
+		"outside-service-area": "Inreach no funciona en {{country}}",
+		"who-this-serves": "<Text><strong>Quién sirve este recurso:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Ubicación actual",
 	"delete-account": "¿Eliminar tu cuenta?",
 	"delete-account-password": "Introduce la contraseña de tu cuenta para confirmar.",
@@ -68,6 +84,13 @@
 	"enter-password-placeholder": "Introduce contraseña...",
 	"enter-review": "Ingresa tu reseña...",
 	"errors": {
+		"401-title": "Debes estar conectado para hacer eso.",
+		"403-body": "No tienes permiso para acceder a esta página. Si crees que has llegado a esta página por error, ponte en contacto con tu supervisor.",
+		"403-title": "403: Prohibida",
+		"404-body": "Lo sentimos, la página que estás buscando no existe o ha sido movida. Comienza una búsqueda a continuación para encontrar recursos seguros y verificados para la diversa comunidad de LGBTQ+ en tu área.",
+		"404-title": "404: Página no encontrada.",
+		"500-body": "Lo sentimos, algo salió mal con nuestro servidor. Por favor, inténtalo de nuevo más tarde, o inicia una búsqueda a continuación para encontrar recursos seguros y verificados de LGBTQ+ en tu área.",
+		"500-title": "500: Algo salió mal.",
 		"oh-no": "Oh no!",
 		"try-again-text": "<Text>¡Algo salió mal! Por favor, inténtalo de nuevo.</Text>"
 	},
@@ -126,6 +149,8 @@
 		"error-generic": "Algo salió mal, por favor inténtalo de nuevo.",
 		"error-username-password": "Nombre de usuario o contraseña incorrectos."
 	},
+	"message_text": "Texto del mensaje",
+	"message_title": "Título del mensaje",
 	"modal-content": {
 		"accessibility": "<stack16>\n<title2>Declaración de accesibilidad</title2>\n<textDarkGray>La tecnología de código abierto de InReach está construida para la diversa comunidad LGBTQ+, incluyendo usuarios con discapacidades.</textDarkGray>\n<textDarkGray>La aplicación InReach gratuita está disponible en la web (escritorio y móvil), e iOS nativo y Android. Empezando con el lanzamiento de nuestro último rediseño (junio de 2023), InReach se esforzará por cumplir con <linkAccessibility>Directrices de Accesibilidad al Contenido Web (WCAG) criterios AA.</linkAccessibility></textDarkGray>\n<textDarkGray>En InReach, nos esforzamos por hacer que nuestra plataforma tecnológica sea accesible para el mayor número posible de usuarios y dispositivos en línea con nuestra misión de servir a todas las personas LGBTQ+ que sufren persecución o discriminación.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>Aviso de responsabilidad de InReach</title2>\n<textReg>El equipo de InReach hará todo lo posible para confirmar la elegibilidad y los datos básicos sobre los proveedores de servicios listados en este sitio web. Sin embargo, no podemos garantizar la viabilidad o capacidad de ninguno de estos proveedores. En consecuencia, InReach no asume ninguna responsabilidad por las acciones de los proveedores listados en este sitio web y los usuarios que se pongan en contacto con dichos proveedores lo hacen bajo su propio riesgo.</textReg>\n</stack16>"
@@ -141,9 +166,10 @@
 	"none-apply": "Ninguno de estos se aplica a mí",
 	"offices-and-locations": "Oficinas y Ubicaciones",
 	"org-image": "Foto de la organización",
+	"organization": "Organización",
 	"other-specify": "Otra (por favor especifique)",
 	"page-title": {
-		"base": "{{title}} - InReach",
+		"base": "{{- title}} - InReach",
 		"search-results": "Resultados de búsqueda"
 	},
 	"password": "Contraseña",
@@ -182,10 +208,7 @@
 		"<textDarkGray>InReach también utiliza Vercel Analytics para analizar los datos vitales y el rendimiento de la web. Vercel Analytics proporciona información sobre el uso del sitio sin vincularse ni asociarse con ningún visitante individual o dirección IP. El registro de puntos de datos es anónimo y la función Analytics no recopila ni almacena información que permitiría a Vercel reconstruir una sesión de navegación a través de páginas o identificar a un usuario.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Lea nuestra política de privacidad completa para obtener más información</linkPolicy>",
-	"privacy-statement-head": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>Declaración de privacidad</title2>"
-	],
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Declaración de privacidad</title2>"],
 	"privatePractice": "Práctica privada",
 	"profile": "Perfil",
 	"questions": "¿Preguntas?",
@@ -204,14 +227,18 @@
 	"review-resource": "Haz una reseña sobre este recurso",
 	"safety-exit": "Salida de seguridad",
 	"save": "Guardar",
+	"save-changes": "Guardar cambios",
 	"saved": "Guardado",
 	"search": {
 		"include-remote": "Incluye servicios remotos",
 		"location-placeholder": "Introduzca la ciudad o código postal...",
+		"location-placeholder-searchby": "Buscar por código postal o ciudad...",
 		"look-up-org": "Buscar una organización por nombre",
 		"no-results": "No se han encontrado resultados. Vuelva a intentarlo.",
+		"no-results-adjust": "No se han encontrado resultados para su búsqueda. Intente ajustar la ubicación o los filtros seleccionados.",
 		"organization-placeholder": "Introduzca el nombre de la organización...",
-		"suggest-resource": "¿No lo encuentras? <1>Sugiera una organización</1> que crea que debería incluirse."
+		"organization-placeholder-searchby": "Buscar por nombre de organización...",
+		"suggest-resource": "¿No lo encuentras? <strong>Sugiera una organización</strong> que crea que debería incluirse."
 	},
 	"send-email": "Enviar email",
 	"service": {
@@ -273,7 +300,7 @@
 	},
 	"sign-up-free": "Regístrate gratis",
 	"social": {
-		"email": "E-mail",
+		"email": "Correo electrónico",
 		"facebook": "Facebook",
 		"github": "GitHub",
 		"group-header": "Social",
@@ -323,7 +350,7 @@
 	"unclaimed": "Sin reclamar",
 	"user-avatar": "Avatar de usuario",
 	"verified-information": "Información verificada",
-	"verified-information-detail": "La información de esta página fue actualizada por última vez {{dateString}}. InReach prioriza la exactitud y la seguridad del usuario, y actualiza toda la información al menos una vez cada 6 meses. Para más información sobre nuestro proceso de selección, por favor visite nuestra página del Proceso de Verificación en InReach.org.",
+	"verified-information-detail": "La información de esta página fue actualizada por última vez {{dateString}}. InReach prioriza la exactitud y la seguridad de le usuarie, y actualiza toda la información al menos una vez cada 6 meses. Para más información sobre nuestro proceso de selección, por favor visita nuestra página del Proceso de Verificación en InReach.org.",
 	"verify-account": {
 		"verified": "¡Cuenta Verificada!",
 		"verified-body": "<Text>¡Tu cuenta ha sido verificada! Por favor, <LoginModal>inicia sesión</LoginModal> para empezar a usar las características adicionales de InReach.",
@@ -331,6 +358,7 @@
 	},
 	"view-list": "Ver lista",
 	"visit": "Visita",
+	"welcome-name": "¡Bienvenido, {{name}}!",
 	"words": {
 		"accept": "Aceptar",
 		"account": "Cuenta",
@@ -345,9 +373,11 @@
 		"email": "E-mail",
 		"home": "Inicio",
 		"hours": "Horas",
+		"location": "Ubicación",
 		"more": "más",
 		"next": "Siguiente",
 		"no": "No",
+		"organization": "Organización",
 		"password": "Contraseña",
 		"phone": "Teléfono",
 		"please-wait": "Por favor espere...",
@@ -364,6 +394,7 @@
 		"sign-up": "Regístrate",
 		"skip": "Saltar",
 		"support": "Apoyo",
+		"website": "Página web",
 		"yes": "Sí"
 	},
 	"photo_one": "Foto",

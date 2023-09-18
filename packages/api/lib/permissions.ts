@@ -52,6 +52,14 @@ const orgWebsite = {
 	updateOrgWebsite: 'editSingleOrg',
 } satisfies PermissionDefs
 
+const reviews = {
+	viewUserReviews: ['viewUserReviews'],
+	hideUserReview: ['hideUserReview'],
+	unHideUserReview: ['showUserReview'],
+	deleteUserReview: ['deleteUserReview'],
+	undeleteUserReview: ['undeleteUserReview'],
+} satisfies PermissionDefs
+
 const system = {
 	createPermission: 'adminPermissions',
 	getDetails: ['dataPortalBasic'],
@@ -67,6 +75,7 @@ const permissions = {
 	...orgService,
 	...orgSocialMedia,
 	...orgWebsite,
+	...reviews,
 	...system,
 } satisfies PermissionDefs
 

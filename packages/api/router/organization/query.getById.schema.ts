@@ -1,4 +1,6 @@
 import { z } from 'zod'
 
-export const ZGetByIdSchema = z.object({ id: z.string() })
+import { prefixedId } from '~api/schemas/idPrefix'
+
+export const ZGetByIdSchema = z.object({ id: prefixedId('organization') })
 export type TGetByIdSchema = z.infer<typeof ZGetByIdSchema>

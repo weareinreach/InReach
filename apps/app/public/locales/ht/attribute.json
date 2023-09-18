@@ -70,6 +70,10 @@
 		"cost-fees": "Incurs yon pri",
 		"cost-free": "Gratis nan pri"
 	},
+	"crisis-support-community": {
+		"elders": "Elders",
+		"general-lgbtq": "General LGBTQ+"
+	},
 	"eligibility": {
 		"CATEGORYNAME": "Kondisyon pou Kalifikasyon",
 		"elig-age_max": "Anba {{max}}",
@@ -106,7 +110,9 @@
 		"accesslocation": "Aksè Enstriksyon - Kote",
 		"accessphone": "Aksè Enstriksyon - Telefòn",
 		"accesspublictransit": "Aksè Enstriksyon - Transpò Piblik",
-		"accesstext": "Aksè Enstriksyon - Tèks"
+		"accesssms": "Access Instructions - SMS",
+		"accesstext": "Aksè Enstriksyon - Tèks",
+		"accesswhatsapp": "Access Instructions - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "Sèvis Konsantre",

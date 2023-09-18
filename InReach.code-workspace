@@ -37,40 +37,40 @@
 			"path": "./packages/api"
 		},
 		{
-			"name": "📦 Authentication (@weareinreach/auth)",
+			"name": "🔐 Authentication (@weareinreach/auth)",
 			"path": "./packages/auth"
+		},
+		{
+			"name": "🛠️ Utilities (@weareinreach/util)",
+			"path": "./packages/util"
+		},
+		{
+			"name": "📦 Crowdin Client (@weareinreach/crowdin)",
+			"path": "./packages/crowdin"
+		},
+		{
+			"name": "⚙️ Environment Variables (@weareinreach/env)",
+			"path": "./packages/env"
+		},
+		{
+			"name": "⚙️ Shared configs (@weareinreach/config)",
+			"path": "./packages/config"
+		},
+		{
+			"name": "⚙️ ESLint Config (@weareinreach/eslint-config)",
+			"path": "./packages/eslint-config"
 		},
 		{
 			"name": "🚀 InReach main site (@weareinreach/web)",
 			"path": "./apps/web"
 		},
 		{
-			"name": "📦 Shared configs (@weareinreach/config)",
-			"path": "./packages/config"
-		},
-		{
-			"name": "📦 ESLint Config (@weareinreach/eslint-config)",
-			"path": "./packages/eslint-config"
-		},
-		{
-			"name": "📦 AWS User Migration (@weareinreach/aws-user-migrate)",
-			"path": "./packages/aws-user-migrate"
-		},
-		{
-			"name": "📦 AWS Cognito Messaging (@weareinreach/aws-messaging)",
-			"path": "./packages/aws-messaging"
-		},
-		{
-			"name": "📦 AWS i18n Cache (@weareinreach/aws-i18n-cache)",
-			"path": "./packages/aws-cache"
-		},
-		{
-			"name": "📦 Environment Variables (@weareinreach/env)",
-			"path": "./packages/env"
-		},
-		{
 			"name": "✨ InReach (root)",
 			"path": "./"
+		},
+		{
+			"name": "🐑 AWS Lambdas",
+			"path": "./lambdas"
 		},
 		{
 			"name": "🛠️ Patched packages",
@@ -133,7 +133,8 @@
 		"eslint.options": {
 			"cache": true
 		},
-		"eslint.packageManager": "pnpm",
+		"eslint.ignoreUntitled": true,
+		"eslint.nodeEnv": "development",
 		"eslint.rules.customizations": [
 			{
 				"rule": "import/order",
@@ -157,9 +158,7 @@
 			},
 			{ "rule": "sort-imports", "severity": "off" }
 		],
-		"eslint.runtime": "node",
 		"eslint.useESLintClass": true,
-		"eslint.workingDirectories": [{ "pattern": "./packages/*/" }, { "pattern": "./apps/*/" }],
 		"explorer.decorations.badges": true,
 		"explorer.expandSingleFolderWorkspaces": false,
 		"explorer.fileNesting.enabled": true,
@@ -182,7 +181,8 @@
 			"node_modules/": true,
 			"packages/": true,
 			"patches/": true,
-			"storybook-static/": true
+			"storybook-static/": true,
+			"lambdas/": true
 		},
 		"files.watcherExclude": {
 			"**/.git/objects/**": true,

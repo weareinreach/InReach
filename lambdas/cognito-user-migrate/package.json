@@ -1,0 +1,41 @@
+{
+	"name": "@weareinreach/aws-user-migrate",
+	"version": "0.100.0",
+	"description": "Lambda to gradually migrate existing users to AWS Cognito",
+	"license": "GPL-3.0-only",
+	"author": "",
+	"main": "dist/index.js",
+	"source": "src/index.ts",
+	"scripts": {
+		"aws:db:generate": "prisma generate --schema ../db/prisma/schema.prisma",
+		"build:aws": "./build.sh",
+		"bundle": "ncc build ./src/index.ts -s  -a -d",
+		"clean:dist": "rm -fr dist",
+		"clean:node": "rm -rf ./node_modules/ || true",
+		"deploy:aws": "aws lambda update-function-code --function-name user-migrate --zip-file fileb://bundle.zip",
+		"format": "prettier --cache --cache-strategy metadata --write --ignore-unknown .",
+		"preinstall": "npx only-allow pnpm",
+		"lint": "eslint --cache .",
+		"lint:fix": "eslint --cache --fix .",
+		"package": "cd dist && zip -r bundle.zip *",
+		"prune-clients": "find ./dist/client -type f -not -name '*rhel*' -delete -print"
+	},
+	"dependencies": {
+		"@aws-lambda-powertools/logger": "1.12.1",
+		"@prisma/client": "5.3.1",
+		"@weareinreach/db": "workspace:*"
+	},
+	"devDependencies": {
+		"@types/aws-lambda": "8.10.121",
+		"@types/eslint": "8.44.2",
+		"@types/node": "18.17.17",
+		"@vercel/ncc": "0.38.0",
+		"@weareinreach/config": "workspace:*",
+		"@weareinreach/eslint-config": "0.100.0",
+		"aws-lambda": "1.0.7",
+		"eslint": "8.49.0",
+		"prettier": "3.0.3",
+		"prisma": "5.3.1",
+		"typescript": "5.2.2"
+	}
+}

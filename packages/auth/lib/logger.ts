@@ -1,3 +1,3 @@
-import { Logger } from 'tslog'
+import { createLoggerInstance } from '@weareinreach/util/logger'
 
-export const logger = new Logger({ name: '@weareinreach/auth', hideLogPositionForProduction: true })
+export const logger = createLoggerInstance('@weareinreach/auth')

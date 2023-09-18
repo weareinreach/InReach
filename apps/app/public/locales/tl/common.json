@@ -1,5 +1,8 @@
 {
 	"about-us": "Tungkol sa Amin",
+	"access": {
+		"sms-with-body": "Text <strong>{{body}}</strong> to {{code}}"
+	},
 	"accessible-building_false": "Ang gusaling ito ay HINDI mapupuntahan ang wheelchair",
 	"accessible-building_true": "Mapupuntahan ang gusaling ito sa wheelchair",
 	"account": "Account",
@@ -10,7 +13,10 @@
 		"organization": "{{adjective}} samahan"
 	},
 	"agree-disclaimer": "Sa pamamagitan ng pag-click sa \"{{action}}\" sumasang-ayon ka sa <link1>Patakaran sa Privacy ng inReach</link1> at <link2>Mga Tuntunin ng Paggamit</link2>.",
+	"alert-message": "Alert message",
 	"alert-message-1": "Patakaran sa <strong>COVID-19:</strong> Sa mga balita at pinakamahusay na kasanayan para sa pag-iwas sa COVID-19 na mabilis na nagbabago bawat araw, patuloy na ina-update ng Whitman-Walker Health ang kanilang mga serbisyo upang maipakita ang mga rekomendasyon sa pag-iwas. Mangyaring suriin ang kanilang website para sa pinaka-up-to-date na impormasyon.",
+	"alert-message-instructions": "Enter the alert message",
+	"alert-title-instructions": "Enter a title for the message...",
 	"all-service-category": "Lahat ng {{serviceCategory}}",
 	"anti-hate": {
 		"body": "Sa pamamagitan ng paggamit ng inReach, sumasang-ayon ka na hindi mo gagamitin ang impormasyong ito para sa mapanganib, nakabatay sa poot, homophobic, transphobic, xenophobic, at/o racist agenda o komentaryo.",
@@ -19,6 +25,7 @@
 	"badge": {
 		"claimed-tool-tip": "Ang organisasyong ito ay inaangkin ng isang na-verify na kinatawan. <link1>Matuto nang higit pa.</link1>",
 		"community-tool-tip": "Komunidad na pinaglilingkuran ng organisasyong ito.",
+		"national-tool-tip": "Offers services throughout {{country}}.",
 		"remote-tool-tip": "Magagamit nang malayuan",
 		"service-tool-tip": "(Mga) serbisyo na inaalok ng samahang ito.",
 		"unclaimed-tool-tip": "Ang organisasyong ito ay hindi pa inaangkin ng isang kinatawan. <link1>Kunin ang samahang ito</link1> upang bumuo ng tiwala sa aming komunidad, i-update ang iyong sariling impormasyon, at higit pa."
@@ -49,6 +56,15 @@
 	},
 	"country-select": "Pumili ng isang bansa",
 	"create-new-list": "Lumikha ng bagong listahan",
+	"crisis-support": {
+		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-these-verified": "These verified resources can help the LGBTQ+ community anywhere in the world.",
+		"intl-we-recommend": "We recommend these international resources",
+		"natl-find-help-now": "Find help now",
+		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"outside-service-area": "InReach does not operate in {{country}}",
+		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+	},
 	"current-location": "Kasalukuyang lokasyon",
 	"delete-account": "Tanggalin ang iyong account?",
 	"delete-account-password": "Ipasok ang password ng iyong account upang kumpirmahin.",
@@ -68,6 +84,13 @@
 	"enter-password-placeholder": "Ipasok ang password...",
 	"enter-review": "Ipasok ang iyong pagsusuri...",
 	"errors": {
+		"401-title": "You must be logged in to do that.",
+		"403-body": "You do not have permission to access this page. If you feel that you have reached this page in error, please contact your supervisor.",
+		"403-title": "403: Forbidden",
+		"404-body": "We're sorry, the page you're looking for doesn't exist or has been moved. Start a search below to find safe, verified resources for the diverse LGBTQ+ community in your area.",
+		"404-title": "404: Page not found.",
+		"500-body": "We're sorry, something went wrong with our server. Please try again later, or start a search below to find safe, verified LGBTQ+ resources in your area.",
+		"500-title": "500: Something went wrong.",
 		"oh-no": "Oh hindi!",
 		"try-again-text": "<Text>May nagkamali! Mangyaring subukang muli.</Text>"
 	},
@@ -126,6 +149,8 @@
 		"error-generic": "May nagkamali, mangyaring subukang muli.",
 		"error-username-password": "Maling username o password."
 	},
+	"message_text": "Message text",
+	"message_title": "Message title",
 	"modal-content": {
 		"accessibility": "<stack16>\n<title2>Pahayag ng Accessibility</title2>\n<textDarkGray>Ang bukas na mapagkukunan ng teknolohiya ng inReach ay itinayo para sa magkakaibang komunidad ng LGBTQ +, kabilang ang mga gumagamit na may kapansanan.</textDarkGray>\n<textDarkGray>Ang libreng inReach App ay magagamit sa web (desktop at mobile), at katutubong iOS at Android. Simula sa paglulunsad ng aming pinakabagong muling pagdidisenyo (Hunyo 2023), sisikapin ng inReach na matugunan ang <linkAccessibility>na pamantayan sa antas ng AA sa Pag-access sa Nilalaman ng Web Content (WCAG).</linkAccessibility></textDarkGray>\n<textDarkGray>Sa inReach, nagsusumikap kaming gawing naa-access ang aming tech platform para sa maraming mga gumagamit at aparato hangga't maaari sa pagkakahanay sa aming misyon na maglingkod sa lahat ng mga taong LGBTQ+na nahaharap sa pag-uusig o diskriminasyon.</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>InReach Disclaimer</title2>\n<textReg>Gagawin ng koponan ng inReach ang makakaya upang kumpirmahin ang pagiging karapat-dapat at pangunahing mga katotohanan tungkol sa mga service provider na nakalista sa website na ito. Gayunpaman, hindi namin magagarantiyahan ang posibilidad na mabuhay o kakayahan ng anumang naturang mga provider. Dahil dito, ang inReach ay walang responsibilidad para sa mga aksyon ng mga provider na nakalista sa website na ito at ang mga gumagamit na nakikipag-ugnay sa anumang naturang mga provider ay ginagawa ito sa kanilang sariling panganib.</textReg>\n</stack16>"
@@ -141,6 +166,7 @@
 	"none-apply": "Wala sa mga ito ang nalalapat sa akin",
 	"offices-and-locations": "Mga Opisina at Lokasyon",
 	"org-image": "Larawan ng samahan",
+	"organization": "Organisasyon",
 	"other-specify": "Iba pa (mangyaring tukuyin)",
 	"page-title": {
 		"base": "{{title}} - inReach",
@@ -182,14 +208,11 @@
 		"Gumagamit din ang <textDarkGray>inReach ng Vercel Analytics upang pag-aralan ang mga web vitals at pagganap. Nagbibigay ang Vercel Analytics ng impormasyon sa paggamit ng site nang hindi nakatali sa, o nauugnay sa, anumang indibidwal na bisita o IP address. Ang pag-record ng mga puntos ng data ay hindi nagpapakilala at ang tampok na Analytics ay hindi nangongolekta o nag-iimbak ng impormasyon na magpapahintulot sa Vercel na muling buuin ang isang session sa pagba-browse sa mga pahina o kilalanin ang isang gumagamit.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Basahin ang aming buong patakaran sa privacy para sa karagdagang impormasyon</linkPolicy>",
-	"privacy-statement-head": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>Pahayag sa privacy</title2>"
-	],
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Pahayag sa privacy</title2>"],
 	"privatePractice": "Pribadong Practice",
 	"profile": "Profile",
 	"questions": "Mga Tanong?",
-	"quick-promo-body": "<textUtility1>💚 Save and share personalized resource lists</textUtility1>\n<textUtility1>💬 Leave public rating/reviews on organizations</textUtility1>\n<textUtility1>🏠 Suggest organizations in your area</textUtility1>\n<textUtility1>🔗 Claim your organization’s profile page (Coming soon!)</textUtility1>",
+	"quick-promo-body": "<textUtility1>💚 I-save at ibahagi ang mga personalized na listahan ng mapagkukunan</textUtility1>\n<textUtility1>💬 Mag-iwan ng pampublikong rating/review sa mga organisasyon</textUtility1>\n<textUtility1>🏠 Magmungkahi ng mga organisasyon sa iyong lugar</textUtility1>\n<textUtility1>🔗 I-claim ang pahina ng profile ng iyong samahan (Malapit na!)</textUtility1>",
 	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
 	"remote-services": "Magagamit ang mga serbisyo nang malayuan",
 	"remote-services-page-title": "Remote serbisyo",
@@ -204,13 +227,17 @@
 	"review-resource": "Suriin ang mapagkukunang ito",
 	"safety-exit": "Kaligtasan exit",
 	"save": "I-save",
+	"save-changes": "I-save ang mga pagbabago",
 	"saved": "Nai-save",
 	"search": {
 		"include-remote": "Isama ang mga remote na serbisyo",
 		"location-placeholder": "Ipasok ang lungsod o zip code...",
+		"location-placeholder-searchby": "Search by city or zip code...",
 		"look-up-org": "Maghanap ng isang samahan ayon sa pangalan",
 		"no-results": "Walang nahanap na mga resulta. Mangyaring subukang muli.",
+		"no-results-adjust": "No results found for your search. Try adjusting your selected location or filters.",
 		"organization-placeholder": "Ipasok ang pangalan ng samahan...",
+		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Hindi mahanap ito? <1>Magmungkahi ng isang samahan</1> na sa palagay mo ay dapat isama."
 	},
 	"send-email": "Magpadala ng email",
@@ -331,6 +358,7 @@
 	},
 	"view-list": "Tingnan ang listahan",
 	"visit": "Bisitahin",
+	"welcome-name": "Welcome, {{name}}!",
 	"words": {
 		"accept": "Tanggapin",
 		"account": "Account",
@@ -345,9 +373,11 @@
 		"email": "Email",
 		"home": "Tahanan",
 		"hours": "Oras",
+		"location": "Location",
 		"more": "higit pa",
 		"next": "Susunod",
 		"no": "Hindi",
+		"organization": "Organisasyon",
 		"password": "Password",
 		"phone": "Telepono",
 		"please-wait": "Mangyaring maghintay...",
@@ -364,6 +394,7 @@
 		"sign-up": "Mag-sign up",
 		"skip": "Laktawan",
 		"support": "Suporta",
+		"website": "Website",
 		"yes": "Oo"
 	},
 	"photo_one": "Larawan",
