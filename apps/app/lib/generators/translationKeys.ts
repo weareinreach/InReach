@@ -1,4 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
 /* eslint-disable node/no-process-env */
 import dotenv from 'dotenv'
 import { flatten, unflatten } from 'flat'
@@ -56,7 +55,7 @@ export const generateTranslationKeys = async (task: ListrTask) => {
 			}
 		}
 		const filename = `${localePath}/${namespace.name}.json`
-		// eslint-disable-next-line prefer-const
+
 		let existingFile: unknown = {}
 		if (fs.existsSync(filename)) {
 			existingFile = flatten(JSON.parse(fs.readFileSync(filename, 'utf-8')))
