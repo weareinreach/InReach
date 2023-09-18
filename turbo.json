@@ -52,7 +52,6 @@
 			"dependsOn": ["^db:generate", "^db:deploy", "^db:dataMigrate"],
 			"persistent": true
 		},
-		"download:seedData": {},
 		"format": {
 			"dependsOn": ["^db:generate"],
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"],

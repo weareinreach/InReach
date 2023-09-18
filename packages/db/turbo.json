@@ -3,7 +3,7 @@
 	"extends": ["//"],
 	"pipeline": {
 		"db:dataMigrate": {
-			"dependsOn": ["download:seedData", "db:generate", "db:deploy"],
+			"dependsOn": ["db:generate", "db:deploy"],
 			"env": ["DATABASE_URL", "DB_DIRECT_URL"],
 			"inputs": ["./prisma/data-migrations/**/*.ts", "./prisma/dataMigrationRunner.ts"],
 			"outputMode": "new-only"
@@ -27,12 +27,7 @@
 		},
 		"db:run-seed": {
 			"cache": false,
-			"dependsOn": ["download:seedData"]
-		},
-		"download:seedData": {
-			"inputs": ["./seed/starterData.ts", "./seed/downloadData.ts"],
-			"outputMode": "new-only",
-			"outputs": ["./seed/data/downloaded/*.json"]
+			"dependsOn": []
 		},
 		"generate:data": {
 			"cache": false,
