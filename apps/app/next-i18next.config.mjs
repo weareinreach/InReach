@@ -9,6 +9,9 @@ import MultiBackend from 'i18next-multiload-backend-adapter'
 
 import path from 'path'
 
+// @ts-expect-error - yelling about declaration file
+import { localeList } from '@weareinreach/db/generated/locales.mjs'
+
 const isBrowser = typeof window !== 'undefined'
 const isDev = process.env.NODE_ENV !== 'production'
 const isVerbose = !!process.env.NEXT_VERBOSE
@@ -43,7 +46,7 @@ const multi = new MultiBackend(null, {
 const config = {
 	i18n: {
 		defaultLocale: 'en',
-		locales: ['en', 'es', 'fr', 'ar', 'ru'],
+		locales: localeList,
 	},
 	defaultNS: 'common',
 	localePath: path.resolve('./public/locales'),
