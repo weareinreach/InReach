@@ -1,14 +1,12 @@
 import { Prisma } from '@prisma/client'
-import { z } from 'zod'
 
 import fs from 'fs'
 import path from 'path'
 
+import { namespace as namespaces } from '~db/generated/namespaces'
 import { prisma } from '~db/index'
-import { type ListrJob, type ListrTask, type MigrationJob } from '~db/prisma/dataMigrationRunner'
+import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { type JobDef, jobPostRunner, jobPreRunner } from '~db/prisma/jobPreRun'
-
-import { namespaces } from '../../../seed/data'
 
 const getJSON = (file: string) => JSON.parse(fs.readFileSync(path.resolve(__dirname, file), 'utf-8'))
 

@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client'
 import invariant from 'tiny-invariant'
 
-import { namespaces } from '~db/seed/data/00-namespaces'
+import { namespace as namespaces } from '~db/generated/namespaces'
 
 import { generateId } from './idGen'
 import { slug } from './slugGen'
