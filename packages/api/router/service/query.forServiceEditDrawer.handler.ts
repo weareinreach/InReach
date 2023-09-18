@@ -48,7 +48,7 @@ export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServ
 			emails: { select: { email: { select: { id: true } } } },
 			locations: { select: { location: { select: { id: true } } } },
 			hours: { select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true } },
-			services: { select: { tag: { select: { id: true, categoryId: true } } } },
+			services: { select: { tag: { select: { id: true, primaryCategoryId: true } } } },
 			serviceAreas: {
 				select: {
 					id: true,
@@ -67,7 +67,7 @@ export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServ
 		phones: phones.map(({ phone }) => phone.id),
 		emails: emails.map(({ email }) => email.id),
 		locations: locations.map(({ location }) => location.id),
-		services: services.map(({ tag }) => ({ id: tag.id, categoryId: tag.categoryId })),
+		services: services.map(({ tag }) => ({ id: tag.id, primaryCategoryId: tag.primaryCategoryId })),
 		serviceAreas: serviceAreas
 			? {
 					id: serviceAreas.id,

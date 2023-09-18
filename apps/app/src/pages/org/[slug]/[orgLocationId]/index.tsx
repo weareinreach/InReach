@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
+import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
@@ -50,6 +51,11 @@ const OrgLocationPage: NextPage = () => {
 	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
 		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
 	})
+	const { data: alertData } = api.location.getAlerts.useQuery(
+		{ id: orgLocationId },
+		{ enabled: router.isReady }
+	)
+	const hasAlerts = Array.isArray(alertData) && alertData.length > 0
 	const { classes } = useStyles()
 
 	const servicesRef = useRef<HTMLDivElement>(null)
@@ -84,6 +90,16 @@ const OrgLocationPage: NextPage = () => {
 					saved={Boolean(isSaved)}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
+					{hasAlerts &&
+						alertData.map((alert) => (
+							<AlertMessage
+								key={alert.key}
+								iconKey={alert.icon}
+								ns={orgData.id}
+								textKey={alert.key}
+								defaultText={alert.text}
+							/>
+						))}
 					<ListingBasicInfo
 						data={{
 							name: data.name || orgData.name,

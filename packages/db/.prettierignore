@@ -23,3 +23,5 @@ prisma/data-migrations/**/*.json
 seed/recon/corrections/*.json
 seed/recon/output/**/*.json
 seed/recon/input/**/*.json
+
+*.hbs

@@ -4,7 +4,7 @@
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>Entendre dire des avis par nos utilisateurs </Title1>",
-		"who-we-are": "<Title1>Qui nous sommes</Title1>\n<Text>Nous sommes une organisation technologique à but non lucratif et dirigée par des personnes transgenres qui s'efforce à augmenter l'accès à des ressources vérifiées pour la communauté LGBTQ+ diverse.</Text>\n<Link>En savoir plus sur nous.</Link>"
+		"who-we-are": "<Title1>Qui nous sommes</Title1>\n<Text>Nous sommes un accès à des ressources à but non lucratif et trans-dirigé pour la communauté LGBTQ+ diversifiée.</Text>\n<Link>En savoir plus sur nous.</Link>"
 	},
 	"hero": {
 		"community": {
@@ -12,24 +12,24 @@
 			"1": "Immigrés LGBTQ+",
 			"2": "Réfugiés LGBTQ+",
 			"3": "Jeunes LGBTQ+",
-			"4": "La communauté transgenre",
-			"5": "Les communautés LGBTQ+ et BIPOC",
-			"6": "Aidants des jeunes LGBTQ+"
+			"4": "la communauté transgenres",
+			"5": "Communautés de BIPOC LGBTQ+",
+			"6": "soignants des jeunes LGBTQ+"
 		},
-		"find-resources": "Trouver <Service></Service> vérifié pour <Community></Community> avec InReach.",
+		"find-resources": "<Text>Trouvez </Text><Service><Service></Service><Text> vérifié pour </Text><Community></Community><Text> avec InReach.</Text>",
 		"heading": "Trouver des ressources LGBTQ.",
 		"privacy-disclaimer": "Votre réponse est anonyme et n'est pas connectée à vous en tant qu'utilisateur individuel. Lire notre <Link>politique de confidentialité</Link> pour en savoir plus.",
 		"services": {
 			"0": "soins médicaux",
-			"1": "soutien communautaire",
-			"2": "soins de la santé mentale",
+			"1": "soutien de la communauté",
+			"2": "soins de santé mentale",
 			"3": "éducation",
-			"4": "travail",
+			"4": "emploi",
 			"5": "nourriture",
 			"6": "logement",
-			"7": "vêtements",
-			"8": "assistance juridique",
-			"9": "traduction"
+			"7": "vêtement",
+			"8": "aide juridique",
+			"9": "Traduction"
 		},
 		"subheading": "Bienvenue sur la première plateforme technologique au monde mettant en relation les personnes TLGBQ+ (transgenre, lesbien, gay, bisexuel, queer et plus d'identités) confrontées à la discrimination et à la persécution avec des ressources sûres et vérifiées."
 	},

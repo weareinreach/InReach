@@ -7,7 +7,7 @@ export const getOptions = async () => {
 			active: true,
 			tsKey: true,
 			tsNs: true,
-			category: {
+			primaryCategory: {
 				select: {
 					id: true,
 					active: true,

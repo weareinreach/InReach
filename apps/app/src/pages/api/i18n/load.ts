@@ -3,10 +3,18 @@ import { context, trace } from '@opentelemetry/api'
 import { type NextRequest } from 'next/server'
 import { z } from 'zod'
 
+import { redisReadCache, redisWriteCache } from '@weareinreach/crowdin/cache'
+import {
+	crowdinDistTimestamp,
+	fetchCrowdinDbKey,
+	fetchCrowdinFile,
+	sourceFiles,
+} from '@weareinreach/crowdin/ota/edge'
 import { createLoggerInstance } from '@weareinreach/util/logger'
-import { crowdinOpts } from '~app/data/crowdinOta'
-import { crowdinDistTimestamp, fetchCrowdinDbKey, fetchCrowdinFile } from '~app/utils/crowdin'
-import { redisReadCache, redisWriteCache } from '~app/utils/vercel-kv'
+
+export const config = {
+	runtime: 'edge',
+}
 
 export const config = {
 	runtime: 'edge',
@@ -36,9 +44,9 @@ export default async function handler(req: NextRequest) {
 
 	for (const lang of langs) {
 		try {
-			const nsFileMap = crowdinOpts.nsFileMap(lang)
+			const nsFileMap = sourceFiles(lang)
 			if (lang === 'en') continue
-			const databaseFile = crowdinOpts.nsFileMap(lang).databaseStrings
+			const databaseFile = sourceFiles(lang).databaseStrings
 			const cached = await redisReadCache(namespaces, lang, otaManifestTimestamp)
 			const langResult = new Map<string, object | string>(cached)
 

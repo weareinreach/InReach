@@ -1,3 +1,0 @@
-[submodule "packages/db/datastore"]
-	path = packages/db/datastore
-	url = https://github.com/weareinreach/datastore.git

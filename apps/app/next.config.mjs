@@ -30,6 +30,7 @@ const nextConfig = {
 	transpilePackages: [
 		'@weareinreach/api',
 		'@weareinreach/auth',
+		'@weareinreach/crowdin',
 		'@weareinreach/db',
 		'@weareinreach/env',
 		'@weareinreach/ui',

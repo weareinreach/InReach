@@ -30,7 +30,7 @@ export const forLocationCard = async ({ input }: TRPCHandlerParams<TForLocationC
 				select: {
 					service: {
 						select: {
-							services: { select: { tag: { select: { category: { select: { tsKey: true } } } } } },
+							services: { select: { tag: { select: { primaryCategory: { select: { tsKey: true } } } } } },
 						},
 					},
 				},
@@ -45,7 +45,7 @@ export const forLocationCard = async ({ input }: TRPCHandlerParams<TForLocationC
 		attributes: result.attributes.map(({ attribute }) => attribute),
 		services: [
 			...new Set(
-				result.services.flatMap(({ service }) => service.services.map(({ tag }) => tag.category.tsKey))
+				result.services.flatMap(({ service }) => service.services.map(({ tag }) => tag.primaryCategory.tsKey))
 			),
 		],
 	}
