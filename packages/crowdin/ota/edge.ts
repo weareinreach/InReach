@@ -7,7 +7,7 @@ import { createCommonFns } from '../common/otaFns'
 import { otaHash } from '../constants'
 
 export const crowdinEdgeOta =
-	global.crowdinOta ||
+	global.crowdinEdgeOta ||
 	new OtaClient(otaHash, {
 		enterpriseOrganizationDomain: 'inreach',
 		disableJsonDeepMerge: true,
