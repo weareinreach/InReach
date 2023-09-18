@@ -69,12 +69,6 @@ export const serviceCategory = [
 		tsNs: 'services',
 	},
 	{
-		id: 'svct_01HAD5SFNG7R86J1RTHXBFD96J',
-		category: 'Trans Focused Services',
-		tsKey: 'trans-focused-services.CATEGORYNAME',
-		tsNs: 'services',
-	},
-	{
 		id: 'svct_01GW2HHEVPFRQR07PTHMWJDDKS',
 		category: 'Translation and Interpretation',
 		tsKey: 'translation-and-interpretation.CATEGORYNAME',
