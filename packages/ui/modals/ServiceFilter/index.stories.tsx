@@ -6,7 +6,7 @@ import { StorybookGridDouble } from '~ui/layouts/BodyGrid'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { serviceFilterMock } from '~ui/mockData/serviceFilter'
 
-import { ServiceFilter } from './ServiceFilter'
+import { ServiceFilter } from './index'
 
 export default {
 	title: 'Modals/Service Filter',
