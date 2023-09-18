@@ -16,10 +16,6 @@ export const config = {
 	runtime: 'edge',
 }
 
-export const config = {
-	runtime: 'edge',
-}
-
 const QuerySchema = z.object({
 	lng: z.string(),
 	ns: z.string(),

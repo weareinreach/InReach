@@ -666,6 +666,9 @@ importers:
       '@weareinreach/auth':
         specifier: workspace:*
         version: link:../auth
+      '@weareinreach/crowdin':
+        specifier: workspace:*
+        version: link:../crowdin
       '@weareinreach/db':
         specifier: workspace:*
         version: link:../db

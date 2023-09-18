@@ -1,3 +1,4 @@
+import { crowdinApi, getStringIdByKey, projectId } from '@weareinreach/crowdin/api'
 import {
 	generateFreeText,
 	generateId,
@@ -7,8 +8,6 @@ import {
 } from '@weareinreach/db'
 import { isVercelProd } from '@weareinreach/env'
 import { createLoggerInstance } from '@weareinreach/util/logger'
-import { getStringIdByKey } from '~api/crowdin'
-import { crowdinApi, crowdinVars } from '~api/crowdin/client'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -50,7 +49,7 @@ export const updateBasic = async ({ ctx, input }: TRPCHandlerParams<TUpdateBasic
 				(await getStringIdByKey(existing.description?.tsKey.key, true))
 			if (stringId) {
 				if (isVercelProd) {
-					await crowdinApi.sourceStringsApi.editString(crowdinVars.projectId, stringId, [
+					await crowdinApi.sourceStringsApi.editString(projectId, stringId, [
 						{ op: 'replace', path: '/text', value: input.description },
 					])
 				} else {
