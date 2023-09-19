@@ -43,6 +43,7 @@ const useStyles = createStyles((theme) => ({
 	blackText: {
 		color: '#000000',
 		margin: 0,
+		whiteSpace: 'pre-line',
 	},
 }))
 
