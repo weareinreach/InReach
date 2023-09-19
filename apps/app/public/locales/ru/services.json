@@ -1,7 +1,7 @@
 {
 	"abortion-care": {
 		"CATEGORYNAME": "Аборт",
-		"abortion-providers": "Поставщики абортов",
+		"abortion-providers": "Услуги по прерыванию беременности",
 		"financial-assistance": "Финансовая помощь",
 		"lodging-assistance": "Помощь в аренде жилья",
 		"mail-order-services": "Услуги заказа почты",
@@ -12,7 +12,7 @@
 		"CATEGORYNAME": "Поддержка сообщества",
 		"community-social-groups": "Сообщество и социальные группы",
 		"cultural-centers": "Культурные центры",
-		"lgbtq-centers": "Центры LGBTQ",
+		"lgbtq-centers": "Центры ЛГБТК",
 		"reception-services": "Услуги приёма",
 		"reentry-services": "Услуги для повторного ввода",
 		"spiritual-support": "Духовная поддержка",
@@ -20,7 +20,7 @@
 	},
 	"computers-and-internet": {
 		"CATEGORYNAME": "Компьютеры и Интернет",
-		"computers-and-internet": "Компьютеры и Интернет"
+		"computers-and-internet": "Компьютеры и интернет"
 	},
 	"crisis-support": {
 		"CATEGORYNAME": "Кризисная поддержка",
