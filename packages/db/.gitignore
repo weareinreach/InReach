@@ -37,3 +37,4 @@ pg-diff/
 pg-diff-config.json
 
 __*.ts
+___*.*
