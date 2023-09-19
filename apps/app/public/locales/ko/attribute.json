@@ -1,6 +1,6 @@
 {
 	"additional": {
-		"CATEGORYNAME": "추가의 정보",
+		"CATEGORYNAME": "더 자세한 정보",
 		"at-capacity": "만원으로",
 		"geo-near-public-transit": "대중교통 근처",
 		"geo-public-transit-description": "대중교통/특정 방향",
@@ -9,8 +9,8 @@
 		"private-practice": "프라이빗 프랙티스",
 		"religiously-affiliated": "종교에 소속되어 있습니다.",
 		"time-walk-in": "방문 시간 있음 / 예약 필요 없습니다\n",
-		"wheelchair-accessible_false": "액세스할 수 없음",
-		"wheelchair-accessible_true": "접근 가능"
+		"wheelchair-accessible_false": "접근가능 아닙니다",
+		"wheelchair-accessible_true": "접근 가능합니다"
 	},
 	"alerts": {
 		"CATEGORYNAME": "알림",
@@ -67,11 +67,11 @@
 	},
 	"cost": {
 		"CATEGORYNAME": "비용",
-		"cost-fees": "비용 발생",
+		"cost-fees": "비용 있습니다",
 		"cost-free": "비용 무료입니다"
 	},
 	"crisis-support-community": {
-		"elders": "노인분들",
+		"elders": "노인분",
 		"general-lgbtq": "일반 LGBTQ+"
 	},
 	"eligibility": {
@@ -84,9 +84,9 @@
 		"req-photo-id": "사진이 있는 신분증 필요합니다",
 		"req-proof-of-age": "나이 증명 필요합니다",
 		"req-proof-of-income": "소득금액증명원 필요합니다",
-		"req-proof-of-residence": "거주지 증명 필요",
-		"req-referral": "추천이 필요합니다.",
-		"time-appointment-required": "시간 예약 필요"
+		"req-proof-of-residence": "거주지 증명서 필요합니다",
+		"req-referral": "추천서 필요합니다",
+		"time-appointment-required": "예약 시간 필요합니다"
 	},
 	"lang": {
 		"CATEGORYNAME": "언어",
@@ -100,7 +100,7 @@
 		"black-led": "블랙 LED",
 		"immigrant-led": "이민자 주도",
 		"trans-led": "트랜스젠더 주도",
-		"women-led": "여성에 주도"
+		"women-led": "여성 지도자"
 	},
 	"serviceaccess": {
 		"CATEGORYNAME": "서비스 액세스 지침",
@@ -118,9 +118,9 @@
 		"CATEGORYNAME": "서비스 포커스",
 		"asylum-seekers": "망명 신청자",
 		"bipoc-comm": "BIPOC 커뮤니티",
-		"caregivers": "간병인 커뮤니티",
-		"disabled": "장애인 커뮤니티",
-		"elder": "노인들에 집중",
+		"caregivers": "간병인 공동체",
+		"disabled": "장애인 공동체",
+		"elder": "노인들에 초점을 맛춤",
 		"gender-nc": "성별 부적합",
 		"hiv-comm": "HIV 커뮤니티",
 		"immigrant-comm": "이민자 커뮤니티",
@@ -132,7 +132,7 @@
 		"trans-fem": "트랜스 여성/트랜스페미닌",
 		"trans-masc": "트랜스 남성/트랜스매스큘인",
 		"trans-youth-focus": "트랜스 유스",
-		"women": "여성에 집중"
+		"women": "여성에 초점을 맛춤"
 	},
 	"sys": {
 		"CATEGORYNAME": "시스템",
@@ -148,7 +148,7 @@
 	"userserviceprovider": {
 		"CATEGORYNAME": "서비스 프로바이더 옵션",
 		"case-mananger": "케이스 매니저",
-		"community-org": "지역 사회 단체의 자원봉사자/직원",
+		"community-org": "공동체 단체의 자원자/직원",
 		"friend-family": "N/A (친구/가족을 대신하여 검색하고 있습니다.)",
 		"govt-agency": "정부 기관",
 		"grassroots-direct": "풀뿌리 다이렉트 서비스 조직",
@@ -156,7 +156,7 @@
 		"lawyer": "변호사",
 		"other": "기타 (구체적으로 적어주세요)",
 		"paralegal": "법률 보조원 또는 기타 법률 지원 직원",
-		"social-worker": "사회 복지사",
+		"social-worker": "사회복지사",
 		"student-club": "학생 클럽",
 		"teacher": "선생님",
 		"therapist-counselor": "치료사/상담사"
