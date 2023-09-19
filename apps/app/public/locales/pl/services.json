@@ -75,7 +75,7 @@
 		"immigration-detention": "Zatrzymanie imigracyjne",
 		"legal-advice": "Doradztwo prawne",
 		"legal-hotlines": "Infolinie prawne",
-		"name-and-gender-change": "Zmiana nazwiska i płci",
+		"name-and-gender-change": "Zmiana nazwy i markera płci",
 		"refugee-claim": "Wniosek o uchodźcę",
 		"residency": "Rezydencja",
 		"special-immigrant-juvenile-status-sijs": "Specjalny status nieletnich imigrantów (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Zdrowie trans - listy hormonalne i chirurgiczne",
 		"trans-health-hormone-therapy": "Zdrowie trans - terapia hormonalna",
 		"trans-health-primary-care": "Zdrowie trans - podstawowa opieka zdrowotna",
-		"trans-health-speech-therapy": "Zdrowie trans - logopedia"
+		"trans-health-speech-therapy": "Zdrowie trans - logopedia",
+		"trans-health-youth-care": "Trans zdrowie – opieka nad młodzieżą"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Zdrowie psychiczne",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Rozrywka i zajęcia",
 		"art-music-literature": "Sztuka, muzyka i literatura",
 		"sports-and-entertainment": "Sport i rozrywka"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Transmisja usług zorientowanych",
+		"transport-gacare": "Transport na rzecz kobiet i mężczyzn potwierdzający opiekę",
+		"transport-relo-support": "Obsługa przenoszenia przenoszenia"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Tłumaczenie ustne",
