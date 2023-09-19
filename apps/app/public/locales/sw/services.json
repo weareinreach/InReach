@@ -75,7 +75,7 @@
 		"immigration-detention": "Uhamiaji kizuizini",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "Hotlines kisheria",
-		"name-and-gender-change": "Jina na mabadiliko ya jinsia",
+		"name-and-gender-change": "Name and gender marker change",
 		"refugee-claim": "Madai ya wakimbizi",
 		"residency": "Makazi",
 		"special-immigrant-juvenile-status-sijs": "Hali maalum ya Wahamiaji Watoto (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Trans afya - homoni na upasuaji barua",
 		"trans-health-hormone-therapy": "Afya ya Trans - tiba ya homoni",
 		"trans-health-primary-care": "Trans afya - huduma ya msingi",
-		"trans-health-speech-therapy": "Afya ya Trans - tiba ya hotuba"
+		"trans-health-speech-therapy": "Afya ya Trans - tiba ya hotuba",
+		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Afya ya Akili",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Burudani na Shughuli",
 		"art-music-literature": "Sanaa, muziki, na fasihi",
 		"sports-and-entertainment": "Michezo na burudani"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Trans Focused Services",
+		"transport-gacare": "Transportation for gender affirming care",
+		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Tafsiri na Tafsiri",
