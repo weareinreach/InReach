@@ -24,11 +24,11 @@
 	},
 	"badge": {
 		"claimed-tool-tip": "이 단체는 검증된 대리인에 의해 소유권을 주장했습니다.<br/><link1>더 알아보기.</link1>",
-		"community-tool-tip": "이 조직에서 서비스를 제공하는 커뮤니티.",
+		"community-tool-tip": "이 단체에서 서비스를 제공하는 공동체.",
 		"national-tool-tip": "{{country}} 저녁에 서비스를 제공합니다",
 		"remote-tool-tip": "원격으로 사용 가능합니다",
-		"service-tool-tip": "이 조직에서 제공하는 서비스.",
-		"unclaimed-tool-tip": "이 단체는 아직 대리인에 의해 청구되지 않았습니다.<br/><link1>이 단체에 대한 소유권 주장</link1> 커뮤니티와의 신뢰 구축, 자체 정보 업데이트 등."
+		"service-tool-tip": "이 단체에서 제공하는 서비스.",
+		"unclaimed-tool-tip": "이 단체는 아직 대리인에 의해 청구되지 않았습니다.<br/><link1>이 단체에 대한 주장</link1> 공동체와의 신뢰 구축, 자체 정보 업데이트와 더할수입니다."
 	},
 	"breadcrumb": {
 		"back-to-dynamic": "<u>{{page}}</u>로 돌아가기",
@@ -36,10 +36,10 @@
 	},
 	"cancel": "취소",
 	"claim-org-modal": {
-		"list": "<textUtility1>🔗 InReach에서 회사의 프로필 페이지를 주장하고 청중과 신뢰를 쌓습니다 </textUtility1>\n<textUtility1> ✍🏾 InReach에 대한 조직의 정보 업데이트 </textUtility1>\n<textUtility1>📨 InReach에서 다른 직원을 조직에 가입시키십시오 </textUtility1>\n<textUtility1>🔑 InReach의 제휴 서비스 공급자를 위해 특별히 제작된 향후 기능에 대한 액세스 권한 획득</textUtility1>",
-		"title": "<emojiLg>🏠</emojiLg>\n<title2>이 조직은 아직 서비스 제공업체로부터 클레임을 받지 않았습니다.</title2>\n<textDarkGray>무료 InReach Service Provider 계정을 사용하면 곧 다음을 수행할 수 있습니다:</textDarkGray>"
+		"list": "<textUtility1>🔗 InReach에서 다네의 프로필 페이지를 주장하고 청중과 신뢰를 쌓습니다 </textUtility1>\n<textUtility1> ✍🏾 InReach에 대한 단체의 정보 업데이트 </textUtility1>\n<textUtility1>📨 InReach에서 다른 직원을 단체에 가입시키십시오 </textUtility1>\n<textUtility1>🔑 InReach의 제휴 서비스 공급자를 위해 특별히 제작된 향후 기능에 대한 액세스 권한 획득</textUtility1>",
+		"title": "<emojiLg>🏠</emojiLg>\n<title2>이 다체 아직 서비스 제공업체로부터 주장을 되지 않았습니다.</title2>\n<textDarkGray>InReach Service Provider 무료 계정을 사용하면 곧 다음을 수행할 수 있습니다:</textDarkGray>"
 	},
-	"claimed": "청구된",
+	"claimed": "주장된",
 	"clear": "지우기",
 	"close": "닫기",
 	"confirm-account": {
@@ -57,18 +57,18 @@
 	"create-new-list": "새 목록 만들기",
 	"crisis-support": {
 		"intl-stay-safe": "<Title3>📣 온라인에서 안전하게 지내세요.</Title3>\n<Text>이 웹사이트를 방문하면<strong> 컴퓨터나 브라우저에 기록이 남을 수 있습니다</strong>, 방문 후 안전하지 않은 상황이 발생하지 않도록 조치하시기 바랍니다.</Text>",
-		"intl-these-verified": "이러한 검증된 리소스는 전 세계 어디서나 LGBTQ+ 커뮤니티에 도움이 될 수 있습니다.",
-		"intl-we-recommend": "다음과 같은 국제 리소스를 추천합니다.",
+		"intl-these-verified": "이러한 검증된 자원 전 세계 어디서나 LGBTQ+ 공동체에 도움이 될 수 있습니다.",
+		"intl-we-recommend": "우리는 이 국제 자원들 추천합니다.",
 		"natl-find-help-now": "지금 도움 찾기",
-		"natl-these-verified": "<Text>이러한 확인된 자료는 미국의 LGBTQ+ 커뮤니티에 도움이 될 수 있습니다. 이러한 서비스는 <strong>원격으로 이용 가능하고 비밀이 보장되며</strong>와 <strong>무료입니다</strong>.</Text>",
+		"natl-these-verified": "<Text>이 검증된 자원은 미국의 LGBTQ+ 공동에 도움이 될 수 있습니다. 이 서비스는 <strong>원격으로 이용 가능하고 비밀보장하고 </strong>그리고<strong>무료입니다</strong>.</Text>",
 		"outside-service-area": "InReach는 {{country}}에서는 작동하지 않습니다.",
-		"who-this-serves": "<Text><strong>이 리소스가 제공하는 대상:</strong> {{targetPop}}</Text>"
+		"who-this-serves": "<Text><strong>이 자원 제공하는 대상:</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "현재 위치",
 	"delete-account": "계정을 삭제하시겠습니까?",
 	"delete-account-password": "계정 비밀번호를 입력하여 확인합니다.",
 	"direct": {
-		"email": "다이렉트 이메일",
+		"email": "이메일 주소",
 		"phone": "직통 전화",
 		"website": "다이렉트 웹사이트"
 	},
@@ -81,7 +81,7 @@
 	"email_student-pro": "전문가 아니면 학생 이메일",
 	"enter-email-placeholder": "이메일 주소 입력...",
 	"enter-password-placeholder": "비밀번호 입력...",
-	"enter-review": "리뷰를 입력하세요...",
+	"enter-review": "후기를 입력하세요...",
 	"errors": {
 		"401-title": "이 작업을 수행하려면 로그인해야 합니다.",
 		"403-body": "이 페이지에 액세스할 권한이 없습니다.이 페이지에 잘못 접속했다고 생각되면 상사에게 문의하세요.",
