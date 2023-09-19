@@ -10,6 +10,7 @@ export const forVisitCard = async ({ input }: TRPCHandlerParams<TForVisitCardSch
 		where: {
 			...globalWhere.isPublic(),
 			id: input,
+			notVisitable: { not: true },
 		},
 		select: {
 			id: true,

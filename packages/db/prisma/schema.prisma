@@ -470,7 +470,7 @@ model SlugRedirect {
   from String @unique
   to   String @unique
 
-  org   Organization @relation(fields: [orgId], references: [id])
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   orgId String
 
   auditLogs AuditLog[]
@@ -630,9 +630,9 @@ model OrgLocation {
   postCode String?
   primary  Boolean @default(false)
 
-  mailOnly Boolean?
-
-  mapCityOnly Boolean?
+  mailOnly     Boolean?
+  notVisitable Boolean?
+  mapCityOnly  Boolean?
 
   description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   descriptionId String?   @unique
