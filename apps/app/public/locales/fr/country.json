@@ -1,18 +1,18 @@
 {
 	"ABW": {
 		"name": "Aruba",
-		"demonym_one": "Aruban",
-		"demonym_other": "Arubans"
+		"demonym_one": "Arubain.e",
+		"demonym_other": "Arubain.e.s"
 	},
 	"AFG": {
 		"name": "L'Afghanistan",
-		"demonym_one": "afghan",
-		"demonym_other": "Afghans"
+		"demonym_one": "Afghan.e",
+		"demonym_other": "Afghan.e.s"
 	},
 	"AGO": {
 		"name": "Angola",
-		"demonym_one": "Angolais",
-		"demonym_other": "Angolais"
+		"demonym_one": "Angolais.e",
+		"demonym_other": "Angolais.e.s"
 	},
 	"AIA": {
 		"name": "Anguilla",
@@ -21,96 +21,96 @@
 	},
 	"ALA": {
 		"name": "Iles A<unk> land",
-		"demonym_one": "A<unk> landish",
-		"demonym_other": "Les vaisselles"
+		"demonym_one": "Aalandais.e",
+		"demonym_other": "Aalandais.e.s"
 	},
 	"ALB": {
 		"name": "Albanie",
-		"demonym_one": "Albanais",
-		"demonym_other": "Albanais"
+		"demonym_one": "Albanais.e",
+		"demonym_other": "Albanais.e.s"
 	},
 	"AND": {
-		"name": "Andorra",
-		"demonym_one": "Andorran",
-		"demonym_other": "Andorrans"
+		"name": "Andorre",
+		"demonym_one": "Andorran.e",
+		"demonym_other": "Andorran.e.s"
 	},
 	"ARE": {
 		"name": "Émirats Arabes Unis",
-		"demonym_one": "Emirati",
-		"demonym_other": "Emiratis"
+		"demonym_one": "Émirien.ne",
+		"demonym_other": "Émirien.ne.s"
 	},
 	"ARG": {
 		"name": "Argentine",
-		"demonym_one": "Argentinean",
-		"demonym_other": "Argentineans"
+		"demonym_one": "Argentin.e",
+		"demonym_other": "Argentin.e.s"
 	},
 	"ARM": {
 		"name": "Arménie",
-		"demonym_one": "Arménien",
-		"demonym_other": "Arméniens"
+		"demonym_one": "Arménien.ne",
+		"demonym_other": "Arménien.ne.s"
 	},
 	"ASM": {
-		"name": "American Samoa",
-		"demonym_one": "Samoan américain",
-		"demonym_other": "Samoans américains"
+		"name": "Samoa américaines ",
+		"demonym_one": "Samoan.e américain.e",
+		"demonym_other": "Samoan.e.s américain.e.s"
 	},
 	"ATA": {
-		"name": "Antarctica",
-		"demonym_one": "Antarctique",
-		"demonym_other": "Antarcticans"
+		"name": "Antarctique",
+		"demonym_one": "Antarcticain.e",
+		"demonym_other": "Antarcticain.e.s"
 	},
 	"ATF": {
-		"name": "Terres françaises du Sud et de l'Antarctique",
-		"demonym_one": "Français",
-		"demonym_other": "Français"
+		"name": "Terres australes et antarctiques françaises",
+		"demonym_one": "Français.e",
+		"demonym_other": "Français.e.s"
 	},
 	"ATG": {
 		"name": "Antigua-et-Barbuda",
-		"demonym_one": "Antiguan/Barbudan",
-		"demonym_other": "Antiguans/Barbudes"
+		"demonym_one": "Antiguais.e/Barbudien.ne",
+		"demonym_other": "Antiguais.e.s/Barbudien.ne.s"
 	},
 	"AUS": {
 		"name": "Australie",
-		"demonym_one": "australien",
-		"demonym_other": "Australiens"
+		"demonym_one": "Australien.ne",
+		"demonym_other": "Australien.ne.s"
 	},
 	"AUT": {
 		"name": "L'Autriche",
-		"demonym_one": "Autrichien",
-		"demonym_other": "Autrichiens"
+		"demonym_one": "Autrichien.ne",
+		"demonym_other": "Autrichien.ne.s"
 	},
 	"AZE": {
 		"name": "Azerbaïdjan",
-		"demonym_one": "Azerbaïdjan",
-		"demonym_other": "Azerbaïdjanais"
+		"demonym_one": "Azerbaïdjanais.e",
+		"demonym_other": "Azerbaïdjanais.e.s"
 	},
 	"BDI": {
 		"name": "Burundi",
-		"demonym_one": "Burundian",
-		"demonym_other": "Burundians"
+		"demonym_one": "Burundais.e",
+		"demonym_other": "Burundais.e.s"
 	},
 	"BEL": {
 		"name": "Belgique",
-		"demonym_one": "Belgian",
-		"demonym_other": "Belgians"
+		"demonym_one": "Belge",
+		"demonym_other": "Belges"
 	},
 	"BEN": {
-		"name": "Benin",
-		"demonym_one": "Béninais",
-		"demonym_other": "Béninais"
+		"name": "Bénin",
+		"demonym_one": "Béninois.e",
+		"demonym_other": "Béninois.e.s"
 	},
 	"BES": {
-		"name": "Pays-Bas des Caraïbes"
+		"name": "Pays-Bas caribéens"
 	},
 	"BFA": {
 		"name": "Burkina Faso",
-		"demonym_one": "Burkinabe",
-		"demonym_other": "Burkinabés"
+		"demonym_one": "Burkinabé.e",
+		"demonym_other": "Burkinabé.e.s"
 	},
 	"BGD": {
 		"name": "Bangladesh",
-		"demonym_one": "Bangladeshi",
-		"demonym_other": "Bangladeshis"
+		"demonym_one": "Bangladais.e",
+		"demonym_other": "Bangladais.e.s"
 	},
 	"BGR": {
 		"name": "La Bulgarie",
@@ -118,24 +118,24 @@
 		"demonym_other": "Bulgares"
 	},
 	"BHR": {
-		"name": "Bahrain",
-		"demonym_one": "Bahreïn",
-		"demonym_other": "Bahrainis"
+		"name": "Bahraïn",
+		"demonym_one": "Bahreïnien.ne",
+		"demonym_other": "Bahraïnien.ne.s"
 	},
 	"BHS": {
 		"name": "Bahamas",
-		"demonym_one": "Bahamian",
-		"demonym_other": "Bahamians"
+		"demonym_one": "Bahaméen.ne",
+		"demonym_other": "Bahaméen.ne.s"
 	},
 	"BIH": {
 		"name": "Bosnie-et-Herzégovine",
-		"demonym_one": "Bosnie-Herzégovine",
-		"demonym_other": "Bosnie-Herzégovine"
+		"demonym_one": "Bosnien.ne",
+		"demonym_other": "Bosnien.ne.s"
 	},
 	"BLM": {
 		"name": "Saint Barthélemy",
-		"demonym_one": "Île de Saint Barthélemy",
-		"demonym_other": "Iles de Saint Barthélemy"
+		"demonym_one": "Saint-Barthinois.e",
+		"demonym_other": "Saint-Barthinois.e.s"
 	},
 	"BLR": {
 		"name": "Biélorussie",
@@ -143,47 +143,47 @@
 		"demonym_other": "Biélorusses"
 	},
 	"BLZ": {
-		"name": "Bélize",
-		"demonym_one": "Belizean",
-		"demonym_other": "Bélizéens"
+		"name": "Belize",
+		"demonym_one": "Belizien.ne",
+		"demonym_other": "Bélizien.ne.s"
 	},
 	"BMU": {
-		"name": "Bermuda",
-		"demonym_one": "Bermudian",
-		"demonym_other": "Bermudians"
+		"name": "Bermudes",
+		"demonym_one": "Bermudien.ne",
+		"demonym_other": "Bermudien.ne.s"
 	},
 	"BOL": {
-		"name": "Bolivia",
-		"demonym_one": "Bolivien",
-		"demonym_other": "Boliviens"
+		"name": "Bolivie",
+		"demonym_one": "Bolivien.ne",
+		"demonym_other": "Bolivien.ne.s"
 	},
 	"BRA": {
 		"name": "Le Brésil",
-		"demonym_one": "Brésilien",
-		"demonym_other": "Brésiliens"
+		"demonym_one": "Brésilien.ne",
+		"demonym_other": "Brésilien.ne.s"
 	},
 	"BRB": {
 		"name": "Barbade",
-		"demonym_one": "Barbadien",
-		"demonym_other": "Barbadiens"
+		"demonym_one": "Barbadien.ne",
+		"demonym_other": "Barbadien.ne.s"
 	},
 	"BRN": {
 		"name": "Brunei",
-		"demonym_one": "Brunéien",
-		"demonym_other": "Bruneians"
+		"demonym_one": "Brunéien.ne",
+		"demonym_other": "Brunéien.ne.s"
 	},
 	"BTN": {
 		"name": "Bhoutan",
-		"demonym_one": "Bhoutanais",
-		"demonym_other": "Bhoutanais"
+		"demonym_one": "Bhoutanais.e",
+		"demonym_other": "Bhoutanais.e.s"
 	},
 	"BVT": {
 		"name": "Île Bouvet"
 	},
 	"BWA": {
 		"name": "Botswana",
-		"demonym_one": "Motswana",
-		"demonym_other": "Motswanas"
+		"demonym_one": "Botswanais.e",
+		"demonym_other": "Botswanais.e.s"
 	},
 	"CAF": {
 		"name": "République centrafricaine",
@@ -372,8 +372,8 @@
 	},
 	"FRA": {
 		"name": "France",
-		"demonym_one": "Français",
-		"demonym_other": "Français"
+		"demonym_one": "Français.e",
+		"demonym_other": "Français.e.s"
 	},
 	"FRO": {
 		"name": "Iles Féroé",
@@ -765,8 +765,8 @@
 	},
 	"MTQ": {
 		"name": "Martinique",
-		"demonym_one": "Français",
-		"demonym_other": "Français"
+		"demonym_one": "Français.e",
+		"demonym_other": "Français.e.s"
 	},
 	"MUS": {
 		"name": "Mauritius",
@@ -930,8 +930,8 @@
 	},
 	"REU": {
 		"name": "Réunion",
-		"demonym_one": "Français",
-		"demonym_other": "Français"
+		"demonym_one": "Français.e",
+		"demonym_other": "Français.e.s"
 	},
 	"ROU": {
 		"name": "Roumanie",
@@ -1008,8 +1008,8 @@
 	},
 	"SPM": {
 		"name": "Saint-Pierre et Miquelon",
-		"demonym_one": "Français",
-		"demonym_other": "Français"
+		"demonym_one": "Français.e",
+		"demonym_other": "Français.e.s"
 	},
 	"SRB": {
 		"name": "Serbie",
