@@ -75,7 +75,7 @@
 		"immigration-detention": "Imigrasyon detansyon",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "Liy dirèk legal",
-		"name-and-gender-change": "Non ak chanjman sèks",
+		"name-and-gender-change": "Name and gender marker change",
 		"refugee-claim": "Reklamasyon Refijye",
 		"residency": "Rezidans",
 		"special-immigrant-juvenile-status-sijs": "Estati Jivenil Imigran Espesyal (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Trans sante - òmòn ak lèt operasyon",
 		"trans-health-hormone-therapy": "Trans sante - terapi òmòn",
 		"trans-health-primary-care": "Trans sante - swen prensipal",
-		"trans-health-speech-therapy": "Trans sante - terapi lapawòl"
+		"trans-health-speech-therapy": "Trans sante - terapi lapawòl",
+		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Sante Mantal",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Lwazi ak Aktivite",
 		"art-music-literature": "Atizay, mizik, ak literati",
 		"sports-and-entertainment": "Espò ak amizman"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Trans Focused Services",
+		"transport-gacare": "Transportation for gender affirming care",
+		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Tradiksyon ak Entèpretasyon",
