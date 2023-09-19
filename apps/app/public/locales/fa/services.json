@@ -75,7 +75,7 @@
 		"immigration-detention": "بازداشت مهاجرت",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "خطوط تماس حقوقی",
-		"name-and-gender-change": "تغییر نام و جنسیت",
+		"name-and-gender-change": "Name and gender marker change",
 		"refugee-claim": "ادعای پناهندگی",
 		"residency": "دستیاری",
 		"special-immigrant-juvenile-status-sijs": "وضعیت ویژه نوجوانان مهاجر (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "سلامت ترانس - نامه های هورمون و جراحی",
 		"trans-health-hormone-therapy": "سلامت ترانس - هورمون درمانی",
 		"trans-health-primary-care": "سلامت ترانس - مراقبت های اولیه",
-		"trans-health-speech-therapy": "سلامت ترانس - گفتاردرمانی"
+		"trans-health-speech-therapy": "سلامت ترانس - گفتاردرمانی",
+		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "سلامت روان",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "سرگرمی و فعالیت ها",
 		"art-music-literature": "هنر، موسیقی و ادبیات",
 		"sports-and-entertainment": "ورزش و سرگرمی"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Trans Focused Services",
+		"transport-gacare": "Transportation for gender affirming care",
+		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "ترجمه و تفسیر",
