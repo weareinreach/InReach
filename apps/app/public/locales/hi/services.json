@@ -75,7 +75,7 @@
 		"immigration-detention": "आप्रवासन निरोध",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "कानूनी हॉटलाइन",
-		"name-and-gender-change": "नाम और लिंग परिवर्तन",
+		"name-and-gender-change": "Name and gender marker change",
 		"refugee-claim": "शरणार्थी का दावा",
 		"residency": "रेजीडेंसी",
 		"special-immigrant-juvenile-status-sijs": "विशेष आप्रवासी किशोर स्थिति (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "ट्रांस हेल्थ - हार्मोन और सर्जरी पत्र",
 		"trans-health-hormone-therapy": "ट्रांस हेल्थ - हार्मोन थेरेपी",
 		"trans-health-primary-care": "ट्रांस हेल्थ - प्राथमिक देखभाल",
-		"trans-health-speech-therapy": "ट्रांस हेल्थ - स्पीच थेरेपी"
+		"trans-health-speech-therapy": "ट्रांस हेल्थ - स्पीच थेरेपी",
+		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "मानसिक स्वास्थ्य",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "मनोरंजन और गतिविधियां",
 		"art-music-literature": "कला, संगीत और साहित्य",
 		"sports-and-entertainment": "खेल और मनोरंजन"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Trans Focused Services",
+		"transport-gacare": "Transportation for gender affirming care",
+		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "अनुवाद और व्याख्या",
