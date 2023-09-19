@@ -45,7 +45,7 @@
 		"@opentelemetry/api": "1.6.0",
 		"@vercel/kv": "0.2.2",
 		"@weareinreach/util": "workspace:*",
-		"flat": "6.0.0",
+		"flat": "6.0.1",
 		"object-sizeof": "2.6.3",
 		"pretty-bytes": "6.1.1"
 	},
