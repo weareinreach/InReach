@@ -1,5 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
-/* eslint-disable node/no-process-env */
 import { Card, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
