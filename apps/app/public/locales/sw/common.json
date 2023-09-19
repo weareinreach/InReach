@@ -208,7 +208,10 @@
 		"<textDarkGray>InReach pia hutumia Vercel Analytics kuchambua vitals za wavuti na utendaji. Vercel Analytics hutoa habari ya matumizi ya tovuti bila kufungwa, au kuhusishwa na, mgeni yeyote au anwani ya IP. Kurekodi kwa alama za data haijulikani na huduma ya Analytics haikusanyi au kuhifadhi habari ambayo itawezesha Vercel kujenga tena kikao cha kuvinjari kwenye kurasa au kutambua mtumiaji.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Soma sera yetu kamili ya faragha kwa habari zaidi</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Taarifa ya faragha</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>Taarifa ya faragha</title2>"
+	],
 	"privatePractice": "Private Mazoezi",
 	"profile": "Profaili",
 	"questions": "Maswali?",
