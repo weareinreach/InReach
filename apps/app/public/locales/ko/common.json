@@ -86,27 +86,27 @@
 		"401-title": "이 작업을 수행하려면 로그인해야 합니다.",
 		"403-body": "이 페이지에 액세스할 권한이 없습니다.이 페이지에 잘못 접속했다고 생각되면 상사에게 문의하세요.",
 		"403-title": "403: 금지됨",
-		"404-body": "죄송합니다. 찾으시는 페이지가 존재하지 않거나 이동되었습니다.아래에서 검색을 시작하여 해당 지역의 다양한 LGBTQ+ 커뮤니티를 위한 안전하고 검증된 자료를 찾아보세요.",
+		"404-body": "죄송합니다. 찾으시는 페이지가 존재하지 않거나 이동되었습니다. 아래에서 검색을 시작하여 해당 지역의 다양한 LGBTQ+ 공동체를 위한 안전하고 검증된 자원을 찾아보세요.",
 		"404-title": "404: 페이지를 찾을수 없습니다.",
-		"500-body": "죄송합니다. 서버에 문제가 생겼습니다.나중에 다시 시도하거나 아래에서 검색을 시작하여 해당 지역에서 안전하고 검증된 LGBTQ+ 리소스를 찾아보세요.",
+		"500-body": "죄송합니다. 서버에 문제가 생겼습니다. 나중에 다시 시도하거나 아래에서 검색을 시작하여 해당 지역에서 안전하고 검증된 LGBTQ+ 자원 찾아보세요.",
 		"500-title": "500: 뭔가 잘못됐습니다",
 		"oh-no": "악! 안돼요!",
 		"try-again-text": "<Text>뭔가 잘못됐습니다! 다시 시도해 주십시요.</Text>"
 	},
 	"exclude": "제외",
 	"filter-by-service": "서비스별 걸러내십시오",
-	"find-resources": "리소스 찾기",
+	"find-resources": "자원을 찾기",
 	"find-x": "{{value}}찾기",
 	"footer": {
 		"anti-hate": "증오 방지 약속",
 		"digital-accessibility": "디지털 접근성",
 		"disclaimer": "면책 조항",
-		"privacy-statement": "개인정보 취급방침",
+		"privacy-statement": "개인정보 보호정책",
 		"share-feedback": "피드백 공유하십시오",
 		"subscribe-newsletter": "뉴스레터 구독하십시오",
 		"suggest-org": "단체 제안하기",
-		"tagline": "LGBTQ+ 자료를 찾아보세요.<br/>\n안전한 곳에 도달하세요.<br/>\n소속감 찾기.",
-		"vetting-process": "심사 프로세스"
+		"tagline": "LGBTQ+ 자원을 찾아보세요.<br/>\n안전한 곳에 도달하세요.<br/>\n속하는 것 찾기.",
+		"vetting-process": "검증된은 과정"
 	},
 	"forgot-password": "비밀번호 잃어버렸어요?",
 	"form-error-enter-valid-email": "이메일 주소를 입력하십시오.",
@@ -131,28 +131,28 @@
 		"added": "리소스는 목록에 저장됩니다: {{name}}",
 		"create-new": "새 목록 만들기",
 		"create-new-sub": "저장된 리소스 목록은 본인 및 해당 리소스를 공유하는 사람만 볼 수 있습니다.",
-		"create-new-sub2": "카테고리, 요일 또는 이 목록의 대상 사람별로 목록 이름을 지정하세요.",
+		"create-new-sub2": "카테고리별, 요일로 아니면 목록의 사용자별로 목록의 이름을 지정합니다.",
 		"created": "새 목록 만드셨습니다: {{name}}",
-		"error-add": "목록에 저장하기 오류 발생입니다",
+		"error-add": "목록에 저장하기 잘못됐습니다",
 		"error-name-not-blank": "목록 이름은 비워둘 수 없습니다.",
-		"error-remove": "목록에 제거하기 오류 발생입니다",
-		"name": "리스트 이름",
+		"error-remove": "목록에 제거하기 잘못됐습니다",
+		"name": "목록 이름",
 		"new-list-placeholder": "목록 이름 입력해주세요...",
-		"removedMulti": "목록에서 리소스 제거됨: {{name}}",
-		"removedSingle": "리소스가 목록에서 제거됨"
+		"removedMulti": "목록에서 자원 제거됨: {{name}}",
+		"removedSingle": "목록에서 자원 제거됨니다"
 	},
 	"loading-page": "페이지 로드 중...",
 	"log-in": "로그인",
 	"log-out": "로그아웃",
 	"login": {
-		"error-generic": "문제가 발생했습니다. 다시 시도해 주십시오.",
-		"error-username-password": "사용자 이름 또는 암호가 잘못되었습니다."
+		"error-generic": "잘못됐습니다. 다시 시도해 주십시오.",
+		"error-username-password": "사용자 이름이나 비밀번호가 틀렸습니다"
 	},
 	"message_text": "메시지 텍스트",
 	"message_title": "메시지 제목",
 	"modal-content": {
-		"accessibility": "<stack16>\n<title2>접근성 선언문</title2>\n<textDarkGray>InReach의 오픈 소스 기술은 장애 사용자를 포함한 다양한 LGBTQ+ 커뮤니티를 위해 구축되었습니다.</textDarkGray>\n<textDarkGray>무료 inReach 앱은 웹 (데스크톱와 모바일), 네이티브 iOS와 Android에서 사용할 수 있습니다. InReach는 최신 재설계 출시 (2023년 6월) 를 시작으로 <linkAccessibility>웹 콘텐츠 접근성 지침 (WCAG) 수준 AA 기준을 충족하기 위해 노력할 것입니다.</linkAccessibility></textDarkGray>\n<textDarkGray>InReach는 박해나 차별에 직면한 모든 LGBTQ+ 사람들에게 서비스를 제공한다는 사명에 따라 최대한 많은 사용자와 장치가 기술 플랫폼을 이용할 수 있도록 하기 위해 노력하고 있습니다.</textDarkGray>",
-		"disclaimer": "<stack16>\n<title2>inReach 고지 사항</title2>\n<textReg>inReach 팀은 이 웹 사이트에 나열된 서비스 제공자에 대한 자격 및 기본 사실을 확인하기 위해 최선을 다할 것입니다.그러나 당사는 그러한 제공자의 생존 가능성이나 능력을 보장할 수 없습니다.따라서 inReach는 본 웹 사이트에 나열된 제공자의 행동에 대해 책임을 지지 않으며 해당 공급자와 접촉하는 사용자는 자신의 책임하에 해당 제공자와 접촉합니다.</textReg>\n</stack16>"
+		"accessibility": "<stack16>\n<title2>접근성 정책</title2>\n<textDarkGray>InReach의 오픈 소스 기술은 장애 사용자를 포함한 다양한 LGBTQ+ 공동체를 위해 구축되었습니다.</textDarkGray>\n<textDarkGray>InReach 무료 앱은 웹 (데스크톱과 모바일), 네이티브 iOS와 Android에서 사용할 수 있습니다. InReach는 최신 재설계 출시 (2023년 6월) 를 시작으로 <linkAccessibility>웹 콘텐츠 접근성 지침 (WCAG) 수준 AA 기준을 충족하기 위해 노력할 것입니다.</linkAccessibility></textDarkGray>\n<textDarkGray>InReach는 박해나 차별에 직면한 모든 LGBTQ+ 사람들에게 서비스를 제공한다는 사명에 따라 최대한 많은 사용자와 장치가 기술 플랫폼을 이용할 수 있도록 하기 위해 노력하고 있습니다.</textDarkGray>",
+		"disclaimer": "<stack16>\n<title2>InReach 면책 조항</title2>\n<textReg>InReach 팀은 이 웹 사이트에 나열된 서비스 제공자에 대한 자격과 기본 사실을 확인하기 위해 최선을 다할 것입니다. 그러나 당사는 그러한 제공자의 생존 가능성이나 능력을 보장할 수 없습니다. 따라서 InReach는 본 웹사이트에 나열된 제공자의 행동에 대해 책임을 지지 않합니다 공급자와 접촉하는 사용자는 자신의 책임하에 해당 제공자와 접촉합니다.</textReg>\n</stack16>"
 	},
 	"modal-more-options": {
 		"exclude": "다음과 같은 리소스는 제외합니다.",
@@ -161,7 +161,7 @@
 	"more": {
 		"options": "추가 옵션"
 	},
-	"no-reviews": "아직 리뷰가 없습니다",
+	"no-reviews": "아직 이 단체에서 후기가 없습니다. 처음 후기 남기세요!",
 	"none-apply": "이 중 어느 것도 저에게는 해당되지 않습니다.",
 	"offices-and-locations": "사무실이랑 위치",
 	"org-image": "단체 사진",
