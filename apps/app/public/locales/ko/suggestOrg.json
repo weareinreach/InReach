@@ -21,7 +21,7 @@
 		"org-name": "단체 이름",
 		"org-website": "단체의 웹사이트",
 		"placeholder-address": "주소 입력...",
-		"placeholder-name": "조직 이름 입력...",
+		"placeholder-name": "단체 이름 입력...",
 		"placeholder-website": "URL 입력...",
 		"service-types": "이 단체에서 어떤 서비스 제공합니까?"
 	},
