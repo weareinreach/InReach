@@ -50,6 +50,7 @@ export const job20230920_update_services = {
 					tagId: 'svtg_01HAD99DSF7TH2HDXNYC331BVN',
 					active: true,
 				})),
+				skipDuplicates: true,
 			})
 			log(`Created ${gaCareTag.count} tags for ${tGaCare.length} services`)
 		})
