@@ -18,7 +18,7 @@
 	"dependencies": {
 		"@googlemaps/google-maps-services-js": "3.3.38",
 		"@opentelemetry/api": "1.6.0",
-		"@sentry/node": "7.69.0",
+		"@sentry/node": "7.70.0",
 		"@tanstack/react-query": "4.35.3",
 		"@terraformer/wkt": "2.2.0",
 		"@trpc/client": "10.38.3",
@@ -52,7 +52,7 @@
 		"@types/eslint": "8.44.2",
 		"@types/google.maps": "3.54.1",
 		"@types/luxon": "3.3.2",
-		"@types/node": "18.17.17",
+		"@types/node": "18.17.18",
 		"@types/terraformer__wkt": "2.0.0",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
