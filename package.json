@@ -38,7 +38,7 @@
 		"@manypkg/cli": "0.21.0",
 		"@turbo/gen": "1.10.14",
 		"@types/lint-staged": "13.2.0",
-		"@types/node": "18.17.17",
+		"@types/node": "18.17.18",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"boxen": "7.1.1",
