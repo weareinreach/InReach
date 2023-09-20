@@ -2,9 +2,11 @@
 import {
 	Listr,
 	type ListrDefaultRenderer,
+	type ListrSimpleRenderer,
 	type ListrTask as ListrTaskObj,
 	type ListrTaskWrapper,
 	PRESET_TIMER,
+	PRESET_TIMESTAMP,
 } from 'listr2'
 
 import { prisma } from '~db/client'
@@ -18,12 +20,13 @@ import * as jobList from './data-migrations'
  * You shouldn't need to touch anything in this file. All jobs in `data-migrations/index.ts` will be imported.
  */
 
-const renderOptions = {
-	bottomBar: 10,
+const rendererOptions = {
+	outputBar: 10,
 	persistentOutput: true,
 	timer: PRESET_TIMER,
-} satisfies ListrJob['options']
-const injectOptions = (job: ListrJob): ListrJob => ({ ...job, options: renderOptions })
+} satisfies ListrJob['rendererOptions']
+
+const injectOptions = (job: ListrJob): ListrJob => ({ ...job, rendererOptions })
 
 const jobQueue: ListrJob[] = []
 
@@ -50,24 +53,23 @@ const jobs = new Listr<Context>(
 				if (jobNamesToRun.length) {
 					ctx.pendingMigrations = true
 					ctx.jobCount = jobNamesToRun.length
-					task.output = `${jobNamesToRun.length} migrations to run:\n${jobNamesToRun.join('\n')}`
+					task.output = `${jobNamesToRun.length} migrations to run:\n▸ ${jobNamesToRun.join('\n▸ ')}`
 					task.title = `Pending migrations: ${jobNamesToRun.length}`
 				} else {
-					task.title = `No pending migrations`
+					task.title = `No pending migrations to apply.`
 				}
 			},
-			...renderOptions,
+
+			rendererOptions: { ...rendererOptions, timer: { condition: false, field: '' } },
 		},
 		{
-			title: `Apply ${jobQueue.length} pending migrations`,
 			task: (ctx, task) => {
-				task.title = `Apply ${ctx.jobCount ?? 0} pending migrations`
+				task.title = `Applying ${ctx.jobCount ?? 0} pending migrations`
 				return task.newListr(jobQueue)
 			},
 			enabled: (ctx) => !!ctx.pendingMigrations,
-			...renderOptions,
+			rendererOptions,
 		},
-		// ...Object.values(jobList).map((job) => injectOptions(job)),
 	],
 	{
 		rendererOptions: {
@@ -75,12 +77,13 @@ const jobs = new Listr<Context>(
 			timer: PRESET_TIMER,
 			suffixSkips: true,
 			collapseSubtasks: false,
+			removeEmptyLines: false,
 		},
 		fallbackRendererOptions: {
 			timer: PRESET_TIMER,
+			timestamp: PRESET_TIMESTAMP,
 		},
 		exitOnError: false,
-		forceColor: true,
 	}
 )
 
@@ -91,7 +94,7 @@ export type Context = {
 	pendingMigrations?: boolean
 	jobCount?: number
 }
-export type PassedTask = ListrTaskWrapper<Context, ListrDefaultRenderer>
+export type PassedTask = ListrTaskWrapper<Context, ListrDefaultRenderer, ListrSimpleRenderer>
 export type ListrJob = ListrTaskObj<Context, ListrDefaultRenderer>
 
 export type MigrationJob = ListrJob & { def: JobDef }
