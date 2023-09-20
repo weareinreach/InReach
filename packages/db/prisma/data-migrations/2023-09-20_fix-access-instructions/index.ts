@@ -65,6 +65,11 @@ export const job20230920_fix_access_instructions = {
 		})
 		log(`Fixed text formatting for ${fixText.key}`)
 
+		const serviceUpdate = await prisma.serviceTag.update({
+			where: { id: 'svtg_01GW2HHFBQ817GKC3K6D6JGMVC' },
+			data: { name: 'Gender affirming items', key: { update: { text: 'Gender affirming items' } } },
+		})
+		log(`Updated service tag ${serviceUpdate.id}`)
 		/**
 		 * DO NOT REMOVE BELOW
 		 *
