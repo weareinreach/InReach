@@ -110,9 +110,9 @@
 		"accesslocation": "액세스 지침 - 위치",
 		"accessphone": "액세스 지침 - 전화",
 		"accesspublictransit": "접근 지침 - 대중교통",
-		"accesssms": "액세스 지침 - SMS",
+		"accesssms": "지시에 접근 - SMS",
 		"accesstext": "액세스 지침 - 텍스트",
-		"accesswhatsapp": "액세스 지침 - 왓츠앱"
+		"accesswhatsapp": "지시에 접근 - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "서비스 초점",
@@ -124,7 +124,7 @@
 		"gender-nc": "성별 부적합",
 		"hiv-comm": "HIV 공동체",
 		"immigrant-comm": "이민자 공동체",
-		"incarcerated": "수감된 지역",
+		"incarcerated": "수감된 공동체",
 		"lgbtq-youth-focus": "LGBTQ+ 청소년",
 		"resettled-refugees": "난민을 정착",
 		"spanish-speakers": "스페인어를 하는 사람",
@@ -147,7 +147,7 @@
 	},
 	"userserviceprovider": {
 		"CATEGORYNAME": "서비스 프로바이더 옵션",
-		"case-mananger": "케이스 매니저",
+		"case-mananger": "사례관리사",
 		"community-org": "공동체 단체의 자원자/직원",
 		"friend-family": "N/A (친구/가족을 대신하여 검색하고 있습니다.)",
 		"govt-agency": "정부 대행사",
@@ -155,7 +155,7 @@
 		"healthcare": "헬스케어 제공자",
 		"lawyer": "변호사",
 		"other": "기타 (구체적으로 적어주세요)",
-		"paralegal": "법률 보조원 또는 기타 법률 지원 직원",
+		"paralegal": "보조원이나 다른 법률 지원 직원들",
 		"social-worker": "사회복지사",
 		"student-club": "학생 클럽 리더/관리자",
 		"teacher": "선생님",
