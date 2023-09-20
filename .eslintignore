@@ -1,0 +1,9 @@
+*.spec.ts
+lambdas/*/dist/
+lambdas/*/.aws-sam/
+apps/*/.next/
+packages/ui/storybook-static/
+packages/db/datastore/
+packages/db/prisma/generated/
+packages/db/zod-schemas/
+packages/db/kysely-vercel/
