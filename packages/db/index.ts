@@ -1,7 +1,9 @@
 export * from './client'
+export { getAuditedClient } from './client/extensions/auditContext'
 export * from './zod_util'
 
-export { slug } from './lib/slugGen'
+export { setAuditId } from './lib/audit'
+export { slug, generateUniqueSlug } from './lib/slugGen'
 export { createPoint, createPointOrNull, createGeoFields } from './lib/createPoint'
 export { generateFreeText, generateNestedFreeText } from './lib/generateFreeText'
 export { generateId, getIdPrefixRegex, isIdFor } from './lib/idGen'
