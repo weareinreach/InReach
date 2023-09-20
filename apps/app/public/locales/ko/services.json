@@ -10,7 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "커뮤니티 지원",
-		"community-social-groups": "커뮤니티 와 소셜 그룹",
+		"community-social-groups": "공동체와 소셜 그룹",
 		"cultural-centers": "문화센터",
 		"lgbtq-centers": "LGBTQ 센터",
 		"reception-services": "리셉션 서비스",
@@ -75,7 +75,7 @@
 		"immigration-detention": "이민 구금",
 		"legal-advice": "법률 자문",
 		"legal-hotlines": "법률 핫라인",
-		"name-and-gender-change": "이름 및 성별 마커 변경",
+		"name-and-gender-change": "이름과 성별 마커 변경",
 		"refugee-claim": "난민 청구",
 		"residency": "레지던시",
 		"special-immigrant-juvenile-status-sijs": "특수 이민 청소년 지위 (SIJS)",
@@ -101,7 +101,7 @@
 		"trans-health-hormone-therapy": "트랜스 건강 - 호르몬 요법",
 		"trans-health-primary-care": "트랜스 건강 - 일차 진료",
 		"trans-health-speech-therapy": "트랜스 건강 - 언어 치료",
-		"trans-health-youth-care": "트랜스 헬스 - 청소년 케어"
+		"trans-health-youth-care": "트랜스 건강 - 청소년 진료"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "정신 건강",
@@ -122,9 +122,9 @@
 		"sports-and-entertainment": "스포츠와 엔터테인먼트"
 	},
 	"trans-focused-services": {
-		"CATEGORYNAME": "트랜스 포커스 서비스",
-		"transport-gacare": "성별 확인 치료를 위한 교통편",
-		"transport-relo-support": "트랜스 재배치 지원"
+		"CATEGORYNAME": "트랜스에 초점을 맛춤한 서비스",
+		"transport-gacare": "성별 확증 진료를 위한 교통편",
+		"transport-relo-support": "트랜스 재정착하기 지원"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "번역 및 통역",
