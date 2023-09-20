@@ -75,9 +75,9 @@
 		"general-lgbtq": "일반 LGBTQ+"
 	},
 	"eligibility": {
-		"CATEGORYNAME": "자격 요건",
+		"CATEGORYNAME": "자격 조건",
 		"elig-age_max": "{{max}}미만",
-		"elig-age_min": "{{min}} 세 이상",
+		"elig-age_min": "{{min}}과 이상",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "기타 (텍스트로 설명하기)",
 		"req-medical-insurance": "의료 보험이 필요합니다.",
