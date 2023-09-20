@@ -352,13 +352,13 @@
 	"unclaimed": "청구되지 않았습니다",
 	"user-avatar": "사용자 아바타",
 	"verified-information": "검증된 정보",
-	"verified-information-detail": "이 페이지의 정보는 마지막으로 업데이트되었습니다. {{dateString}}.inReach는 정확성과 사용자 안전을 우선시하며 최소 6개월에 한 번씩 모든 정보를 업데이트합니다.심사 절차에 대한 자세한 내용은 inReach.org의 심사 프로세스 페이지를 참조하십시오.",
+	"verified-information-detail": "이 페이지의 정보는 마지막으로 업데이트되었습니다. {{dateString}}. InReach는 정확성과 사용자 안전을 우선시하며 최소 정기적으로 모든 정보를 업데이트합니다.심사 절차에 대한 자세한 내용은 InReach.org의 심사 프로세스 페이지를 참조하십시오.",
 	"verify-account": {
 		"verified": "계정이 확인되었습니다!",
-		"verified-body": "<Text>계정이 인증되었습니다!inReach의 추가 기능을 사용하려면 <LoginModal>로그인</LoginModal> 번을 클릭하십시오.",
+		"verified-body": "<Text>계정이 확인되었습니다! InReach의 부가 기능을 사용하려면 <LoginModal>로그인</LoginModal> 번을 클릭하십시오.",
 		"verifying": "계정 확인 중..."
 	},
-	"view-list": "리스트 보기",
+	"view-list": "목록 보기",
 	"visit": "방문",
 	"welcome-name": "어서 오세요, {{name}}!",
 	"words": {
@@ -385,7 +385,7 @@
 		"please-wait": "잠시만요...",
 		"prev": "이전글",
 		"print": "프린트",
-		"review": "리뷰",
+		"review": "후기",
 		"reviews": "리뷰",
 		"save": "저장",
 		"saved": "저장됨",
