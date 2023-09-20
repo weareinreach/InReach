@@ -50,5 +50,4 @@ export * from './2023-09-15_service-category-addition'
 export * from './2023-09-18_enable-and-sort-languages'
 export * from './2023-09-19_add-orgs-trans-relo-support/index'
 export * from './2023-09-20_fix-access-instructions/index'
-export * from './2023-09-20_service-updates'
 // codegen:end
