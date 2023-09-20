@@ -28,6 +28,7 @@
 		"@vercel/edge-config": "0.4.1",
 		"@vercel/kv": "0.2.3",
 		"@weareinreach/auth": "workspace:*",
+		"@weareinreach/crowdin": "workspace:*",
 		"@weareinreach/db": "workspace:*",
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",

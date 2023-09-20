@@ -45,6 +45,7 @@
 		"probe-image-size": "7.2.3",
 		"react-phone-number-input": "3.3.6",
 		"react-string-replace": "1.1.1",
+		"timezones-list": "3.0.2",
 		"zustand": "4.4.1"
 	},
 	"devDependencies": {
