@@ -208,7 +208,10 @@
 		"<textDarkGray>inReach gebruik ook Vercel Analytics om webvitale en prestasie te ontleed. Vercel Analytics verskaf inligting oor webwerfgebruik sonder om gekoppel te wees aan, of geassosieer met, enige individuele besoeker of IP-adres. Die opname van datapunte is anoniem en die Analytics-funksie versamel of stoor nie inligting wat Vercel in staat sal stel om 'n blaaisessie oor bladsye te rekonstrueer of 'n gebruiker te identifiseer nie.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Lees ons volledige privaatheidsbeleid vir meer inligting</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Privaatheidsverklaring</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>Privaatheidsverklaring</title2>"
+	],
 	"privatePractice": "Privaat praktyk",
 	"profile": "Profiel",
 	"questions": "Vrae?",
