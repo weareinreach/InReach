@@ -5,12 +5,12 @@ import path from 'path'
 
 import { getEnv } from '@weareinreach/env'
 
-const renderOptions = {
+const rendererOptions = {
 	bottomBar: 10,
 	persistentOutput: true,
 	timer: PRESET_TIMER,
-} satisfies ListrJob['options']
-const injectOptions = (job: ListrJob): ListrJob => ({ ...job, options: renderOptions })
+} satisfies ListrJob['rendererOptions']
+const injectOptions = (job: ListrJob): ListrJob => ({ ...job, rendererOptions })
 
 const tasks = new Listr(
 	[
@@ -38,7 +38,6 @@ const tasks = new Listr(
 			timer: PRESET_TIMER,
 		},
 		exitOnError: false,
-		forceColor: true,
 	}
 )
 
