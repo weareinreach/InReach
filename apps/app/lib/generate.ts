@@ -1,12 +1,19 @@
 /* eslint-disable node/no-process-env */
 import { Command } from 'commander'
-import { Listr, type ListrContext, type ListrRenderer, type ListrTaskWrapper } from 'listr2'
+import {
+	Listr,
+	type ListrContext,
+	type ListrDefaultRenderer,
+	type ListrSimpleRenderer,
+	type ListrTask,
+	type ListrTaskWrapper,
+} from 'listr2'
 
 import { generateTranslationKeys } from 'lib/generators'
 
 const program = new Command()
 
-export type ListrTask = ListrTaskWrapper<unknown, typeof ListrRenderer>
+export type PassedTask = ListrTaskWrapper<unknown, ListrDefaultRenderer, ListrSimpleRenderer>
 
 const options = {
 	bottomBar: 10,
@@ -15,7 +22,7 @@ const options = {
 const translation = [
 	{
 		title: 'Translation definitions from DB',
-		task: (_ctx: ListrContext, task: ListrTask) => generateTranslationKeys(task),
+		task: (_ctx: ListrContext, task: PassedTask) => generateTranslationKeys(task),
 		options,
 		skip: !process.env.DATABASE_URL,
 	},
@@ -28,7 +35,7 @@ program
 
 program.parse(process.argv)
 const cliOpts = program.opts()
-let tasklist = []
+let tasklist: ListrJob[] = []
 
 if (cliOpts.translations) tasklist.push(...translation)
 
@@ -39,3 +46,5 @@ const tasks = new Listr(tasklist, {
 })
 
 tasks.run()
+
+type ListrJob = ListrTask<unknown, ListrDefaultRenderer>

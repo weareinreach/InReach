@@ -2,7 +2,6 @@
 import {
 	Listr,
 	type ListrDefaultRenderer,
-	type ListrSimpleRenderer,
 	type ListrTask as ListrTaskObj,
 	type ListrTaskWrapper,
 	PRESET_TIMER,
@@ -94,7 +93,7 @@ export type Context = {
 	pendingMigrations?: boolean
 	jobCount?: number
 }
-export type PassedTask = ListrTaskWrapper<Context, ListrDefaultRenderer, ListrSimpleRenderer>
+export type PassedTask = ListrTaskWrapper<Context, ListrDefaultRenderer, ListrDefaultRenderer>
 export type ListrJob = ListrTaskObj<Context, ListrDefaultRenderer>
 
 export type MigrationJob = ListrJob & { def: JobDef }
