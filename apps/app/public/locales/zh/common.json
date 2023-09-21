@@ -207,10 +207,7 @@
 		"<textDarkGray>还使用Vercel Analytics来分析网络生命值和性能。 Vercel Analytics提供站点使用信息，不与任何个别访客或IP地址关联或相关联。 数据点的记录是匿名的，分析功能不收集或存储能使Vercel在页面上重建浏览会话或识别用户的信息。</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>阅读我们的完整隐私政策以获取更多信息</linkPolicy>",
-	"privacy-statement-head": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>隐私声明</title2>"
-	],
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>隐私声明</title2>"],
 	"privatePractice": "私人诊所",
 	"profile": "个人档案",
 	"questions": "有问题吗？",

@@ -210,10 +210,7 @@
 		"<textDarkGray>inReach wykorzystuje również Vercel Analytics do analizy parametrów życiowych i wydajności sieci. Vercel Analytics zapewnia informacje o użytkowaniu witryny bez powiązania lub powiązania z jakimkolwiek indywidualnym odwiedzającym lub adresem IP. Rejestrowanie punktów danych jest anonimowe, a funkcja Analytics nie gromadzi ani nie przechowuje informacji, które umożliwiłyby firmie Vercel zrekonstruowanie sesji przeglądania stron lub identyfikację użytkownika.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Przeczytaj naszą pełną politykę prywatności, aby uzyskać więcej informacji</linkPolicy>",
-	"privacy-statement-head": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>Polityka prywatności</title2>"
-	],
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Polityka prywatności</title2>"],
 	"privatePractice": "Prywatna praktyka",
 	"profile": "Profil",
 	"questions": "Pytania?",
