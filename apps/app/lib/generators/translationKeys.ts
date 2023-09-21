@@ -6,7 +6,7 @@ import prettier from 'prettier'
 import fs from 'fs'
 
 import { prisma } from '@weareinreach/db'
-import { type ListrTask } from 'lib/generate'
+import { type PassedTask } from 'lib/generate'
 
 const localePath = 'public/locales/en'
 
@@ -21,7 +21,7 @@ const isObject = (data: unknown): data is Record<string, string> =>
 
 const countKeys = (obj: Output): number => Object.keys(flatten(obj)).length
 
-export const generateTranslationKeys = async (task: ListrTask) => {
+export const generateTranslationKeys = async (task: PassedTask) => {
 	const prettierOpts = (await prettier.resolveConfig(__filename)) ?? undefined
 
 	const data = await prisma.translationNamespace.findMany({
