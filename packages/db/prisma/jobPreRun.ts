@@ -7,10 +7,10 @@ import path from 'path'
 import { type PassedTask } from './dataMigrationRunner'
 import { prisma } from '..'
 
-const getTimestamp = () => DateTime.now().toLocaleString(DateTime.TIME_24_WITH_SECONDS).replaceAll(':', '.')
+const getTimestamp = () => DateTime.now().toFormat('yyyy-MM-dd_HH.mm.ss')
 
 const logFile = (file: string, output: string) => {
-	const timestamp = DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss')
+	const timestamp = DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss.SSS')
 	const outFile = path.resolve(__dirname, './migration-logs/', file)
 	const formattedOutput = `[${timestamp}] ${output}\n`
 	fs.writeFileSync(outFile, formattedOutput, { flag: 'a' })

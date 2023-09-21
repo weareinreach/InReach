@@ -70,7 +70,7 @@ const tasks = new Listr([
 			})
 			await run()
 		},
-		options: { bottomBar: 20 },
+		rendererOptions: { bottomBar: 20 },
 	},
 	{
 		title: 'Running Jobs',
@@ -92,7 +92,7 @@ const tasks = new Listr([
 
 			startQueue()
 		},
-		options: { bottomBar: 20 },
+		rendererOptions: { bottomBar: 20 },
 	},
 ])
 tasks.run()

@@ -238,7 +238,7 @@ const jobs = new Listr(
 				task.title = jobTitle
 				task.task.off(ListrTaskEventType.OUTPUT)
 			},
-			options: { bottomBar: 10, persistentOutput: true },
+			rendererOptions: { bottomBar: 10, persistentOutput: true },
 		},
 	],
 	{
