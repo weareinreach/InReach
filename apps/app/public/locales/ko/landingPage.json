@@ -4,7 +4,7 @@
 	},
 	"call-out": {
 		"hear-from-users": "<Title1>사용자 의견 듣기</Title1>",
-		"who-we-are": "<Title1>우리는 누구인가</Title1>\n<Text>우리는 다양한 LGBTQ+ 커뮤니티를 위한 리소스 접근성을 높이는 트랜스젠더 주도의 기술 비영리 단체입니다.</Text>\n<Link>우리에 대해 자세히 알아보십시오.</Link>"
+		"who-we-are": "<Title1>우리는 누구인가</Title1>\n<Text>우리는 다양한 LGBTQ+ 공동체를 위한 자원 접근성을 높이는 트랜스젠더 주도의 기술 비영리 단체입니다.</Text>\n<Link>우리에 대해서 자세히 알아보십시오.</Link>"
 	},
 	"hero": {
 		"community": {
@@ -13,15 +13,15 @@
 			"2": "LGBTQ+ 난민",
 			"3": "LGBTQ+ 청소년",
 			"4": "트랜스젠더 커뮤니티",
-			"5": "LGBTQ+ BIPOC 커뮤니티",
+			"5": "LGBTQ+ BIPOC 공동체",
 			"6": "LGBTQ+ 청소년을 돌보는 사람"
 		},
 		"find-resources": "<Text>InReach가 있는</Text><Community></Community><Text> 확인된 </Text><Service></Service><Text> 찾기.</Text>",
 		"heading": "LGBTQ+ 자료를 찾아보세요.",
-		"privacy-disclaimer": "귀하의 답변은 익명으로 처리되며 개인 사용자로서 귀하와 연결되지 않습니다. 자세히 알아보려면 <Link>개인정보 처리방침 </Link> 읽어보세요.",
+		"privacy-disclaimer": "귀하의 답변은 익명으로 처리되며 개인 사용자로서 귀하와 연결되지 않습니다. 자세히 알아보려면 <Link>개인정보 보호정책 </Link> 읽어보세요.",
 		"services": {
 			"0": "의료 치료",
-			"1": "커뮤니티 지원",
+			"1": "공동체 지원",
 			"2": "정신 건강 치료",
 			"3": "교육",
 			"4": "고용/지겁",
@@ -31,10 +31,10 @@
 			"8": "법률 지원",
 			"9": "번역"
 		},
-		"subheading": "박해나 차별에 직면한 TLGBQ+ (트랜스젠더, 레즈비언, 게이, 양성애자, 퀴어 등) 사람들을 안전하고 검증된 리소스와 매칭하는 세계 최초의 기술 플랫폼에 오신 것을 환영합니다."
+		"subheading": "박해나 차별에 직면한 LGBTQ+ (트랜스젠더, 레즈비언, 게이, 바이섹슈얼, 퀴어와 다른 제성) 사람들을 안전하고 검증된 자원과 매칭하는 세계 최초의 기술 플랫폼에 오신 것을 환영합니다."
 	},
 	"values": {
-		"free": "<Title2>Free Forever 🔑</Title2>\n<Text>당사의 기술 플랫폼은 누구나 100% 무료로 제공되므로 항상 inReach에서 안전한 도움을 받을 수 있습니다.</Text>\n<LinkFree>플랫폼을 무료로 유지할 수 있도록 기부해 주세요.</LinkFree>",
+		"free": "<Title2>Free Forever 🔑</Title2>\n<Text>당사의 기술 플랫폼은 누구나 100% 무료로 제공되므로 항상 InReach에서 안전한 도움을 받을 수 있습니다.</Text>\n<LinkFree>플랫폼을 무료로 유지할 수 있도록 기부해주세요.</LinkFree>",
 		"innovative": "<Title2>Innovative ✨</Title2>\n<Text>우리는 박해나 차별에 직면한 LGBTQ+ 사람들을 안전하고 독립적으로 검증된 리소스와 연결하는 세계 최초의 기술 플랫폼입니다.</Text>\n<LinkInnovative>우리의 소스 코드를 보고 기여하세요.</LinkInnovative>",
 		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>우리는 LGBTQ+ 평등을 위해서는 트랜스 정의, 난민 정의, 인종 정의, 생식 정의, 언어 정의 등이 필요하다고 믿습니다.</Text>\n<LinkIntersect>심사 절차에 대해 자세히 알아보십시오.</LinkIntersect>",
 		"our-values": "우리의 가치",
