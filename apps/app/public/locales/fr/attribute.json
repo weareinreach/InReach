@@ -71,7 +71,7 @@
 		"cost-free": "Gratuit"
 	},
 	"crisis-support-community": {
-		"elders": "Anciens",
+		"elders": "Personnes âgées",
 		"general-lgbtq": "LGBTQ+ général"
 	},
 	"eligibility": {
@@ -118,13 +118,13 @@
 		"CATEGORYNAME": "L'objectif du service",
 		"asylum-seekers": "Demandeurs d’asile",
 		"bipoc-comm": "Communauté PANDC",
-		"caregivers": "Communauté aidants",
-		"disabled": "Communauté désactivée",
-		"elder": "Concentré sur les Aînés",
+		"caregivers": "Communauté de soignants",
+		"disabled": "Communauté de personnes handicapées",
+		"elder": "Axé sur les personnes âgées",
 		"gender-nc": "Des personnes non conformes au genre",
 		"hiv-comm": "Communauté des personnes vivant avec le VIH",
 		"immigrant-comm": "Communauté des immigrants",
-		"incarcerated": "Communauté Incarcérée",
+		"incarcerated": "Communauté de personnes incarcérées",
 		"lgbtq-youth-focus": "La jeunesse LGBTQ+",
 		"resettled-refugees": "Réfugiés réétabli.e.s",
 		"spanish-speakers": "Hispanophones",
@@ -132,7 +132,7 @@
 		"trans-fem": "Femmes trans/transféminins",
 		"trans-masc": "Hommes Trans/Transmasculins",
 		"trans-youth-focus": "La Jeunesse Trans",
-		"women": "Concentré sur les femmes"
+		"women": "Axé sur les femmes"
 	},
 	"sys": {
 		"CATEGORYNAME": "Système",
@@ -148,17 +148,17 @@
 	"userserviceprovider": {
 		"CATEGORYNAME": "Options de fournisseurs de services",
 		"case-mananger": "Gestionnaire de cas",
-		"community-org": "Volontaire/personnel d'une organisation communautaire",
+		"community-org": "Bénévole/personnel d'un organisme communautaire",
 		"friend-family": "N/A (Recherche au nom des amis/de la famille)",
 		"govt-agency": "Organisme gouvernemental",
 		"grassroots-direct": "Organisation communautaire de services directs",
 		"healthcare": "Prestataire de santé",
-		"lawyer": "Avocat",
+		"lawyer": "Avocat.e",
 		"other": "Autre (veuillez préciser)",
-		"paralegal": "Parajuriste ou autre personnel de soutien juridique",
-		"social-worker": "Collaborateur social",
+		"paralegal": "Parajuriste ou autre personnel d'appui juridique",
+		"social-worker": "Travailleur.euse social",
 		"student-club": "Responsable/administrateur de l'association étudiante",
-		"teacher": "Professeur",
-		"therapist-counselor": "Thérapeute/Conseiller"
+		"teacher": "Professeur.e",
+		"therapist-counselor": "Thérapeute/Conseiller.ère"
 	}
 }
