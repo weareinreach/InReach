@@ -1,7 +1,8 @@
-import { createStyles, Paper, useMantineTheme } from '@mantine/core'
+import { createStyles, Paper, Text, useMantineTheme } from '@mantine/core'
 import { Trans } from 'next-i18next'
+import { type LiteralUnion } from 'type-fest'
 
-import { Icon } from '~ui/icon'
+import { Icon, type IconList } from '~ui/icon'
 
 const useStyles = createStyles((theme) => ({
 	messageContainer: {
@@ -32,33 +33,45 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const alertTypeIcon = {
-	information: { icon: 'carbon:information-filled' },
-	warning: { icon: 'carbon:warning-filled' },
-	'carbon:information-filled': { icon: 'carbon:information-filled' },
-	'carbon:warning-filled': { icon: 'carbon:warning-filled' },
-} as const
+type MapKeys = LiteralUnion<
+	'information' | 'warning' | 'carbon:information-filled' | 'carbon:warning-filled',
+	string
+>
+
+const iconMap = new Map<MapKeys, IconList>([
+	['information', 'carbon:information-filled'],
+	['warning', 'carbon:warning-filled'],
+	['carbon:information-filled', 'carbon:information-filled'],
+	['carbon:warning-filled', 'carbon:warning-filled'],
+])
 
 /** Used to display an alert message on an organization/location/service. */
-export const AlertMessage = ({ textKey, iconKey = 'information' }: Props) => {
+export const AlertMessage = ({ textKey, ns, iconKey = 'information', defaultText }: Props) => {
 	const { classes } = useStyles()
 	const theme = useMantineTheme()
-	const iconRender = alertTypeIcon[iconKey]
+	const iconDef = iconKey ?? 'information'
+	const iconRender = iconMap.get(iconDef) ?? 'carbon:information-filled'
 
 	return (
 		<Paper radius='md' className={classes.messageContainer}>
 			<Icon
-				icon={iconRender.icon}
+				icon={iconRender}
 				width={20}
 				height={20}
 				color={
-					iconKey == 'information'
+					['information', 'carbon:information-filled'].includes(iconDef)
 						? theme.other.colors.secondary.cornflower
 						: theme.other.colors.tertiary.orange
 				}
 				className={classes.iconContainer}
-			></Icon>
-			<Trans i18nKey={textKey} parent='p' className={classes.textContainer}></Trans>
+			/>
+			<Trans
+				i18nKey={textKey}
+				ns={ns}
+				parent={Text}
+				className={classes.textContainer}
+				defaults={defaultText}
+			/>
 		</Paper>
 	)
 }
@@ -66,6 +79,8 @@ export const AlertMessage = ({ textKey, iconKey = 'information' }: Props) => {
 type Props = {
 	/** The alert message is created using a textKey from the i18n JSON/Crowdin */
 	textKey: string
+	ns?: string
+	defaultText?: string
 	/** `warning` or `information` will dictate the icon that is displayed with the alert */
-	iconKey: keyof typeof alertTypeIcon
+	iconKey: MapKeys | null
 }

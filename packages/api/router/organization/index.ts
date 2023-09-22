@@ -25,6 +25,8 @@ type OrganizationHandlerCache = {
 	getIntlCrisis: typeof import('./query.getIntlCrisis.handler').getIntlCrisis
 	getNatlCrisis: typeof import('./query.getNatlCrisis.handler').getNatlCrisis
 	forOrganizationTable: typeof import('./query.forOrganizationTable.handler').forOrganizationTable
+	getAttributes: typeof import('./query.getAttributes.handler').getAttributes
+	getAlerts: typeof import('./query.getAlerts.handler').getAlerts
 	// #endregion
 
 	//
@@ -174,7 +176,22 @@ export const orgRouter = defineRouter({
 			if (!HandlerCache.forOrganizationTable) throw new Error('Failed to load handler')
 			return HandlerCache.forOrganizationTable({ ctx, input })
 		}),
+	getAttributes: publicProcedure.input(schema.ZGetAttributesSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getAttributes)
+			HandlerCache.getAttributes = await import('./query.getAttributes.handler').then(
+				(mod) => mod.getAttributes
+			)
 
+		if (!HandlerCache.getAttributes) throw new Error('Failed to load handler')
+		return HandlerCache.getAttributes({ ctx, input })
+	}),
+	getAlerts: publicProcedure.input(schema.ZGetAlertsSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getAlerts)
+			HandlerCache.getAlerts = await import('./query.getAlerts.handler').then((mod) => mod.getAlerts)
+
+		if (!HandlerCache.getAlerts) throw new Error('Failed to load handler')
+		return HandlerCache.getAlerts({ ctx, input })
+	}),
 	// #endregion
 
 	//

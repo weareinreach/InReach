@@ -83,6 +83,13 @@ export const locationRouter = defineRouter({
 		if (!HandlerCache.forLocationPage) throw new Error('Failed to load handler')
 		return HandlerCache.forLocationPage({ ctx, input })
 	}),
+	getAlerts: publicProcedure.input(schema.ZGetAlertsSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getAlerts) {
+			HandlerCache.getAlerts = await import('./query.getAlerts.handler').then((mod) => mod.getAlerts)
+		}
+		if (!HandlerCache.getAlerts) throw new Error('Failed to load handler')
+		return HandlerCache.getAlerts({ ctx, input })
+	}),
 	// #endregion
 	//
 	// MUTATIONS
@@ -123,6 +130,7 @@ type LocationHandlerCache = {
 	forVisitCard: typeof import('./query.forVisitCard.handler').forVisitCard
 	forGoogleMaps: typeof import('./query.forGoogleMaps.handler').forGoogleMaps
 	forLocationPage: typeof import('./query.forLocationPage.handler').forLocationPage
+	getAlerts: typeof import('./query.getAlerts.handler').getAlerts
 	// #endregion
 	//
 	// MUTATIONS

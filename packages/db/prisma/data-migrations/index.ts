@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./**/*.ts, exclude: ./**/!*.ts}
+// codegen:start {preset: barrel, include: ./**/*.ts, exclude: './**/{!,___}*.ts'}
 export * from './2023-03-29_nest-attribs-primary-cntry'
 export * from './2023-03-31_suggestion-source'
 export * from './2023-04-04_badges/index'
@@ -43,4 +43,14 @@ export * from './2023-07-26_intl-crisis-sorting'
 export * from './2023-07-31_crisis-support-tags'
 export * from './2023-07-31_national-crisis-resources/index'
 export * from './2023-08-07_permissions'
+export * from './2023-09-11_fix-unsupported-attrib-data/index'
+export * from './2023-09-11_migrate-alert-messages/index'
+export * from './2023-09-12_update-crowdin-ids/index'
+export * from './2023-09-15_service-category-addition'
+export * from './2023-09-18_enable-and-sort-languages'
+export * from './2023-09-19_add-orgs-trans-relo-support/index'
+export * from './2023-09-20_fix-access-instructions/index'
+export * from './2023-09-20_update-services'
+export * from './2023-09-22_service-areas'
+export * from './2023-09-22_update-alerts/index'
 // codegen:end

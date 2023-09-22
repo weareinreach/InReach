@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unused-modules */
 /**
  * @template {import('@types/prettier').RequiredOptions} T
  * @param {T} config A generic parameter that flows through to the return type

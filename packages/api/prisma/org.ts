@@ -2,13 +2,12 @@ import { getDistance } from 'geolib'
 
 import { type Prisma } from '@weareinreach/db'
 import { type Context } from '~api/lib'
-import { attributeFilter, serviceFilter } from '~api/schemas/filters'
 import { type DistSearch } from '~api/schemas/org/search'
 import { isPublic } from '~api/schemas/selects/common'
 import { orgSearchSelect } from '~api/schemas/selects/org'
 
 export const prismaDistSearchDetails = async ({ ctx, input }: PrismaSearchDistance) => {
-	const { resultIds, skip, take, lat: latitude, lon: longitude, attributes, services } = input
+	const { resultIds, lat: latitude, lon: longitude } = input
 	const results = await ctx.prisma.organization.findMany({
 		where: {
 			id: { in: resultIds },
@@ -29,9 +28,9 @@ export const prismaDistSearchDetails = async ({ ctx, input }: PrismaSearchDistan
 
 		services.forEach(({ services }) =>
 			services.forEach(({ tag, service }) => {
-				const { id, tsKey, tsNs, category } = tag
+				const { id, tsKey, tsNs, primaryCategory } = tag
 				servIds.add(id)
-				serviceCategoryMap.set(category.id, category)
+				serviceCategoryMap.set(primaryCategory.id, primaryCategory)
 				serviceTagMap.set(id, { id, tsKey, tsNs })
 				service.attributes.forEach(({ attribute }) => {
 					const { categories, ...rest } = attribute
@@ -54,9 +53,9 @@ export const prismaDistSearchDetails = async ({ ctx, input }: PrismaSearchDistan
 			})
 			services.forEach(({ service }) =>
 				service.services.forEach(({ tag, service }) => {
-					const { id, tsKey, tsNs, category } = tag
+					const { id, tsKey, tsNs, primaryCategory } = tag
 					servIds.add(id)
-					serviceCategoryMap.set(category.id, category)
+					serviceCategoryMap.set(primaryCategory.id, primaryCategory)
 					serviceTagMap.set(id, { id, tsKey, tsNs })
 					service.attributes.forEach(({ attribute }) => {
 						const { categories, ...rest } = attribute

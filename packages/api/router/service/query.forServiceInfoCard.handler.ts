@@ -22,10 +22,10 @@ export const forServiceInfoCard = async ({ input }: TRPCHandlerParams<TForServic
 			services: {
 				select: {
 					tag: {
-						select: { tsKey: true, category: { select: { tsKey: true } } },
+						select: { tsKey: true, primaryCategory: { select: { tsKey: true } } },
 					},
 				},
-				where: { tag: { active: true, category: { active: true } } },
+				where: { tag: { active: true, primaryCategory: { active: true } } },
 			},
 			attributes: {
 				where: { attribute: { active: true, tag: 'offers-remote-services' } },
@@ -39,7 +39,7 @@ export const forServiceInfoCard = async ({ input }: TRPCHandlerParams<TForServic
 		serviceName: serviceName
 			? { tsKey: serviceName.tsKey, tsNs: serviceName.ns, defaultText: serviceName.tsKey.text }
 			: null,
-		serviceCategories: [...new Set(services.map(({ tag }) => tag.category.tsKey))].sort(),
+		serviceCategories: [...new Set(services.map(({ tag }) => tag.primaryCategory.tsKey))].sort(),
 		offersRemote: attributes.length > 0,
 	}))
 	return transformed

@@ -323,7 +323,7 @@
 	"BWA": {
 		"name": "Botswana",
 		"demonym_zero": "Motswanas",
-		"demonym_one": "Motswana",
+		"demonym_one": "Motswanas",
 		"demonym_two": "Motswanas",
 		"demonym_few": "Motswanas",
 		"demonym_many": "Motswanas",
@@ -575,7 +575,7 @@
 	"ECU": {
 		"name": "Ecuador",
 		"demonym_zero": "Ecuadoreans",
-		"demonym_one": "Ecuadorean",
+		"demonym_one": "Ecuadoreans",
 		"demonym_two": "Ecuadoreans",
 		"demonym_few": "Ecuadoreans",
 		"demonym_many": "Ecuadoreans",
@@ -593,7 +593,7 @@
 	"ERI": {
 		"name": "إريتريا",
 		"demonym_zero": "الإريتريون",
-		"demonym_one": "Eritrean",
+		"demonym_one": "الإريتريون",
 		"demonym_two": "الإريتريون",
 		"demonym_few": "الإريتريون",
 		"demonym_many": "الإريتريون",
@@ -647,7 +647,7 @@
 	"FJI": {
 		"name": "Fiji",
 		"demonym_zero": "Fijians",
-		"demonym_one": "Fijian",
+		"demonym_one": "Fijians",
 		"demonym_two": "Fijians",
 		"demonym_few": "Fijians",
 		"demonym_many": "Fijians",
@@ -656,7 +656,7 @@
 	"FLK": {
 		"name": "جزر فوكلاند",
 		"demonym_zero": "Falkland Islanders",
-		"demonym_one": "Falkland Islander",
+		"demonym_one": "Falkland Islanders",
 		"demonym_two": "Falkland Islanders",
 		"demonym_few": "Falkland Islanders",
 		"demonym_many": "Falkland Islanders",
@@ -746,7 +746,7 @@
 	"GIN": {
 		"name": "Guinea",
 		"demonym_zero": "Guineans",
-		"demonym_one": "Guinean",
+		"demonym_one": "Guineans",
 		"demonym_two": "Guineans",
 		"demonym_few": "Guineans",
 		"demonym_many": "Guineans",
@@ -755,7 +755,7 @@
 	"GLP": {
 		"name": "Guadeloupe",
 		"demonym_zero": "غوادلوبيان",
-		"demonym_one": "Guadeloupian",
+		"demonym_one": "غوادلوبيان",
 		"demonym_two": "غوادلوبيان",
 		"demonym_few": "غوادلوبيان",
 		"demonym_many": "غوادلوبيان",
@@ -773,7 +773,7 @@
 	"GNB": {
 		"name": "Guinea-Bissau",
 		"demonym_zero": "Guinea-Bissauans",
-		"demonym_one": "Guinea-Bissauan",
+		"demonym_one": "Guinea-Bissauans",
 		"demonym_two": "Guinea-Bissauans",
 		"demonym_few": "Guinea-Bissauans",
 		"demonym_many": "Guinea-Bissauans",
@@ -782,7 +782,7 @@
 	"GNQ": {
 		"name": "Equatorial Guinea",
 		"demonym_zero": "غينيا الاستوائية",
-		"demonym_one": "Equatorial Guinean",
+		"demonym_one": "غينيا الاستوائية",
 		"demonym_two": "غينيا الاستوائية",
 		"demonym_few": "غينيا الاستوائية",
 		"demonym_many": "غينيا الاستوائية",
@@ -1064,7 +1064,7 @@
 	"KIR": {
 		"name": "Kiribati",
 		"demonym_zero": "I-Kiribatis",
-		"demonym_one": "I-Kiribati",
+		"demonym_one": "I-Kiribatis",
 		"demonym_two": "I-Kiribatis",
 		"demonym_few": "I-Kiribatis",
 		"demonym_many": "I-Kiribatis",
@@ -1091,7 +1091,7 @@
 	"KWT": {
 		"name": "Kuwait",
 		"demonym_zero": "Kuwaitis",
-		"demonym_one": "Kuwaiti",
+		"demonym_one": "Kuwaitis",
 		"demonym_two": "Kuwaitis",
 		"demonym_few": "Kuwaitis",
 		"demonym_many": "Kuwaitis",
@@ -1145,7 +1145,7 @@
 	"LIE": {
 		"name": "Liechtenstein",
 		"demonym_zero": "Liechtensteiners",
-		"demonym_one": "Liechtensteiner",
+		"demonym_one": "Liechtensteiners",
 		"demonym_two": "Liechtensteiners",
 		"demonym_few": "Liechtensteiners",
 		"demonym_many": "Liechtensteiners",
@@ -1163,7 +1163,7 @@
 	"LSO": {
 		"name": "Lesotho",
 		"demonym_zero": "Mosothos",
-		"demonym_one": "Mosotho",
+		"demonym_one": "Mosothos",
 		"demonym_two": "Mosothos",
 		"demonym_few": "Mosothos",
 		"demonym_many": "Mosothos",
@@ -1181,7 +1181,7 @@
 	"LUX": {
 		"name": "Luxembourg",
 		"demonym_zero": "Luxembourgers",
-		"demonym_one": "Luxembourger",
+		"demonym_one": "Luxembourgers",
 		"demonym_two": "Luxembourgers",
 		"demonym_few": "Luxembourgers",
 		"demonym_many": "Luxembourgers",
@@ -1307,7 +1307,7 @@
 	"MMR": {
 		"name": "Myanmar",
 		"demonym_zero": "Bamars",
-		"demonym_one": "Bamar",
+		"demonym_one": "Bamars",
 		"demonym_two": "Bamars",
 		"demonym_few": "Bamars",
 		"demonym_many": "Bamars",
@@ -1343,7 +1343,7 @@
 	"MOZ": {
 		"name": "موزامبيق",
 		"demonym_zero": "Mozambicans",
-		"demonym_one": "Mozambican",
+		"demonym_one": "Mozambicans",
 		"demonym_two": "Mozambicans",
 		"demonym_few": "Mozambicans",
 		"demonym_many": "Mozambicans",
@@ -1352,7 +1352,7 @@
 	"MRT": {
 		"name": "Mauritania",
 		"demonym_zero": "موريتانيون",
-		"demonym_one": "Mauritanian",
+		"demonym_one": "موريتانيون",
 		"demonym_two": "موريتانيون",
 		"demonym_few": "موريتانيون",
 		"demonym_many": "موريتانيون",
@@ -1361,7 +1361,7 @@
 	"MSR": {
 		"name": "Montserrat",
 		"demonym_zero": "Montserratians",
-		"demonym_one": "Montserratian",
+		"demonym_one": "Montserratians",
 		"demonym_two": "Montserratians",
 		"demonym_few": "Montserratians",
 		"demonym_many": "Montserratians",
@@ -1388,7 +1388,7 @@
 	"MWI": {
 		"name": "Malawi",
 		"demonym_zero": "Malawians",
-		"demonym_one": "Malawian",
+		"demonym_one": "Malawians",
 		"demonym_two": "Malawians",
 		"demonym_few": "Malawians",
 		"demonym_many": "Malawians",
@@ -1406,7 +1406,7 @@
 	"MYT": {
 		"name": "مايوت",
 		"demonym_zero": "Mahorans",
-		"demonym_one": "Mahoran",
+		"demonym_one": "Mahorans",
 		"demonym_two": "Mahorans",
 		"demonym_few": "Mahorans",
 		"demonym_many": "Mahorans",
@@ -1415,7 +1415,7 @@
 	"NAM": {
 		"name": "Namibia",
 		"demonym_zero": "الناميبيون",
-		"demonym_one": "Namibian",
+		"demonym_one": "الناميبيون",
 		"demonym_two": "الناميبيون",
 		"demonym_few": "الناميبيون",
 		"demonym_many": "الناميبيون",
@@ -1433,7 +1433,7 @@
 	"NER": {
 		"name": "Niger",
 		"demonym_zero": "Nigeriens",
-		"demonym_one": "Nigerien",
+		"demonym_one": "Nigeriens",
 		"demonym_two": "Nigeriens",
 		"demonym_few": "Nigeriens",
 		"demonym_many": "Nigeriens",
@@ -1451,7 +1451,7 @@
 	"NGA": {
 		"name": "Nigeria",
 		"demonym_zero": "النيجيريين",
-		"demonym_one": "Nigerian",
+		"demonym_one": "النيجيريين",
 		"demonym_two": "النيجيريين",
 		"demonym_few": "النيجيريين",
 		"demonym_many": "النيجيريين",
@@ -1460,7 +1460,7 @@
 	"NIC": {
 		"name": "Nicaragua",
 		"demonym_zero": "Nicaraguans",
-		"demonym_one": "Nicaraguan",
+		"demonym_one": "Nicaraguans",
 		"demonym_two": "Nicaraguans",
 		"demonym_few": "Nicaraguans",
 		"demonym_many": "Nicaraguans",
@@ -1505,7 +1505,7 @@
 	"NRU": {
 		"name": "Nauru",
 		"demonym_zero": "Nauruans",
-		"demonym_one": "Nauruan",
+		"demonym_one": "Nauruans",
 		"demonym_two": "Nauruans",
 		"demonym_few": "Nauruans",
 		"demonym_many": "Nauruans",
@@ -1523,7 +1523,7 @@
 	"OMN": {
 		"name": "Oman",
 		"demonym_zero": "Omanis",
-		"demonym_one": "Omani",
+		"demonym_one": "Omanis",
 		"demonym_two": "Omanis",
 		"demonym_few": "Omanis",
 		"demonym_many": "Omanis",
@@ -1532,7 +1532,7 @@
 	"PAK": {
 		"name": "باكستان",
 		"demonym_zero": "Pakistanis",
-		"demonym_one": "Pakistani",
+		"demonym_one": "Pakistanis",
 		"demonym_two": "Pakistanis",
 		"demonym_few": "Pakistanis",
 		"demonym_many": "Pakistanis",
@@ -1550,7 +1550,7 @@
 	"PCN": {
 		"name": "جزر بيتكيرن",
 		"demonym_zero": "Pitcairn Islanders",
-		"demonym_one": "Pitcairn Islander",
+		"demonym_one": "Pitcairn Islanders",
 		"demonym_two": "Pitcairn Islanders",
 		"demonym_few": "Pitcairn Islanders",
 		"demonym_many": "Pitcairn Islanders",
@@ -1559,7 +1559,7 @@
 	"PER": {
 		"name": "بيرو",
 		"demonym_zero": "البيروفيون",
-		"demonym_one": "Peruvian",
+		"demonym_one": "البيروفيون",
 		"demonym_two": "البيروفيون",
 		"demonym_few": "البيروفيون",
 		"demonym_many": "البيروفيون",
@@ -1577,7 +1577,7 @@
 	"PLW": {
 		"name": "Palau",
 		"demonym_zero": "Palauans",
-		"demonym_one": "Palauan",
+		"demonym_one": "Palauans",
 		"demonym_two": "Palauans",
 		"demonym_few": "Palauans",
 		"demonym_many": "Palauans",
@@ -1586,7 +1586,7 @@
 	"PNG": {
 		"name": "Papua New Guinea",
 		"demonym_zero": "Papua New Guineans",
-		"demonym_one": "Papua New Guinean",
+		"demonym_one": "Papua New Guineans",
 		"demonym_two": "Papua New Guineans",
 		"demonym_few": "Papua New Guineans",
 		"demonym_many": "Papua New Guineans",
@@ -1640,7 +1640,7 @@
 	"PSE": {
 		"name": "Palestine",
 		"demonym_zero": "Palestinians",
-		"demonym_one": "Palestinian",
+		"demonym_one": "Palestinians",
 		"demonym_two": "Palestinians",
 		"demonym_few": "Palestinians",
 		"demonym_many": "Palestinians",
@@ -1658,7 +1658,7 @@
 	"QAT": {
 		"name": "Qatar",
 		"demonym_zero": "قطر",
-		"demonym_one": "Qatari",
+		"demonym_one": "قطر",
 		"demonym_two": "قطر",
 		"demonym_few": "قطر",
 		"demonym_many": "قطر",
@@ -1769,7 +1769,7 @@
 	"SLE": {
 		"name": "سيراليون",
 		"demonym_zero": "Sierra Leoneans",
-		"demonym_one": "Sierra Leonean",
+		"demonym_one": "Sierra Leoneans",
 		"demonym_two": "Sierra Leoneans",
 		"demonym_few": "Sierra Leoneans",
 		"demonym_many": "Sierra Leoneans",
@@ -1796,7 +1796,7 @@
 	"SOM": {
 		"name": "Somalia",
 		"demonym_zero": "Somalis",
-		"demonym_one": "Somali",
+		"demonym_one": "Somalis",
 		"demonym_two": "Somalis",
 		"demonym_few": "Somalis",
 		"demonym_many": "Somalis",
@@ -1832,7 +1832,7 @@
 	"STP": {
 		"name": "ساو تومي و بريسنسيبي",
 		"demonym_zero": "Sao Tomeans",
-		"demonym_one": "Sao Tomean",
+		"demonym_one": "Sao Tomeans",
 		"demonym_two": "Sao Tomeans",
 		"demonym_few": "Sao Tomeans",
 		"demonym_many": "Sao Tomeans",
@@ -1877,7 +1877,7 @@
 	"SWZ": {
 		"name": "إيسواتيني",
 		"demonym_zero": "Swazis",
-		"demonym_one": "Swazi",
+		"demonym_one": "Swazis",
 		"demonym_two": "Swazis",
 		"demonym_few": "Swazis",
 		"demonym_many": "Swazis",
@@ -1886,7 +1886,7 @@
 	"SXM": {
 		"name": "Sint Maarten",
 		"demonym_zero": "St. Maarteners",
-		"demonym_one": "St. Maartener",
+		"demonym_one": "St. Maarteners",
 		"demonym_two": "St. Maarteners",
 		"demonym_few": "St. Maarteners",
 		"demonym_many": "St. Maarteners",
@@ -1967,7 +1967,7 @@
 	"TKM": {
 		"name": "Turkmenistan",
 		"demonym_zero": "Turkmens",
-		"demonym_one": "Turkmen",
+		"demonym_one": "Turkmens",
 		"demonym_two": "Turkmens",
 		"demonym_few": "Turkmens",
 		"demonym_many": "Turkmens",
@@ -1985,7 +1985,7 @@
 	"TON": {
 		"name": "Tonga",
 		"demonym_zero": "التونغانس",
-		"demonym_one": "Tongan",
+		"demonym_one": "التونغانس",
 		"demonym_two": "التونغانس",
 		"demonym_few": "التونغانس",
 		"demonym_many": "التونغانس",
@@ -1994,7 +1994,7 @@
 	"TTO": {
 		"name": "ترينيداد وتوباغو",
 		"demonym_zero": "Trinidadians",
-		"demonym_one": "Trinidadian",
+		"demonym_one": "Trinidadians",
 		"demonym_two": "Trinidadians",
 		"demonym_few": "Trinidadians",
 		"demonym_many": "Trinidadians",
@@ -2003,7 +2003,7 @@
 	"TUN": {
 		"name": "Tunisia",
 		"demonym_zero": "تونسيون",
-		"demonym_one": "Tunisian",
+		"demonym_one": "تونسيون",
 		"demonym_two": "تونسيون",
 		"demonym_few": "تونسيون",
 		"demonym_many": "تونسيون",
@@ -2021,7 +2021,7 @@
 	"TUV": {
 		"name": "Tuvalu",
 		"demonym_zero": "Tuvaluans",
-		"demonym_one": "Tuvaluan",
+		"demonym_one": "Tuvaluans",
 		"demonym_two": "Tuvaluans",
 		"demonym_few": "Tuvaluans",
 		"demonym_many": "Tuvaluans",
@@ -2075,7 +2075,7 @@
 	"UNK": {
 		"name": "Kosovo",
 		"demonym_zero": "Kosovars",
-		"demonym_one": "Kosovar",
+		"demonym_one": "Kosovars",
 		"demonym_two": "Kosovars",
 		"demonym_few": "Kosovars",
 		"demonym_many": "Kosovars",
@@ -2084,7 +2084,7 @@
 	"URY": {
 		"name": "Uruguay",
 		"demonym_zero": "Uruguayans",
-		"demonym_one": "Uruguayan",
+		"demonym_one": "Uruguayans",
 		"demonym_two": "Uruguayans",
 		"demonym_few": "Uruguayans",
 		"demonym_many": "Uruguayans",
@@ -2120,7 +2120,7 @@
 	"VCT": {
 		"name": "سانت فنسنت وجزر غرينادين",
 		"demonym_zero": "القديس فيناسيون",
-		"demonym_one": "Saint Vincentian",
+		"demonym_one": "القديس فيناسيون",
 		"demonym_two": "القديس فيناسيون",
 		"demonym_few": "القديس فيناسيون",
 		"demonym_many": "القديس فيناسيون",
@@ -2183,7 +2183,7 @@
 	"WSM": {
 		"name": "Samoa",
 		"demonym_zero": "Samoans",
-		"demonym_one": "Samoan",
+		"demonym_one": "Samoans",
 		"demonym_two": "Samoans",
 		"demonym_few": "Samoans",
 		"demonym_many": "Samoans",

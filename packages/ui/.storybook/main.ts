@@ -15,7 +15,6 @@ const isDev = process.env.NODE_ENV === 'development'
 
 const getAbsolutePath = (value: string) => {
 	const abPath = dirname(require.resolve(join(value, 'package.json')))
-	console.log(abPath)
 	return abPath
 }
 

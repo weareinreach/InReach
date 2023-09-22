@@ -214,7 +214,15 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 					)
 				}
 				case 'national': {
-					return <Icon icon='carbon:globe' height={24} color={theme.other.colors.secondary.black} />
+					return (
+						<Icon
+							icon='carbon:globe'
+							height={24}
+							width={24}
+							color={theme.other.colors.secondary.black}
+							style={{ marginBottom: rem(-12) }}
+						/>
+					)
 				}
 				case 'verified': {
 					return (

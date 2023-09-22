@@ -82,10 +82,10 @@ service_area as (
 		sa."organizationId",
 		sa."orgLocationId"
 	FROM "ServiceArea" sa
-		 JOIN "ServiceAreaCountry" sac ON sac. "serviceAreaId" = sa.id AND sac.active
-		 JOIN "ServiceAreaDist" sad ON sad. "serviceAreaId" = sa.id AND sad.active
-		 JOIN "Country" country ON country.id = sac. "countryId"
-		 JOIN "GovDist" district ON district.id = sad. "govDistId"
+		 LEFT JOIN "ServiceAreaCountry" sac ON sac. "serviceAreaId" = sa.id AND sac.active
+		 LEFT JOIN "ServiceAreaDist" sad ON sad. "serviceAreaId" = sa.id AND sad.active
+		 LEFT JOIN "Country" country ON country.id = sac. "countryId"
+		 LEFT JOIN "GovDist" district ON district.id = sad. "govDistId"
 	WHERE sa.active AND sa."organizationId" is not null
 )
 	SELECT
@@ -188,9 +188,9 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 
 		services.forEach(({ services }) =>
 			services.forEach(({ tag, service }) => {
-				const { id, tsKey, tsNs, category } = tag
+				const { id, tsKey, tsNs, primaryCategory } = tag
 				servIds.add(id)
-				serviceCategoryMap.set(category.id, category)
+				serviceCategoryMap.set(primaryCategory.id, primaryCategory)
 				serviceTagMap.set(id, { id, tsKey, tsNs })
 				service.attributes.forEach(({ attribute }) => {
 					const { categories, ...rest } = attribute
@@ -213,9 +213,9 @@ const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultId
 			})
 			services.forEach(({ service }) =>
 				service.services.forEach(({ tag, service }) => {
-					const { id, tsKey, tsNs, category } = tag
+					const { id, tsKey, tsNs, primaryCategory } = tag
 					servIds.add(id)
-					serviceCategoryMap.set(category.id, category)
+					serviceCategoryMap.set(primaryCategory.id, primaryCategory)
 					serviceTagMap.set(id, { id, tsKey, tsNs })
 					service.attributes.forEach(({ attribute }) => {
 						const { categories, ...rest } = attribute

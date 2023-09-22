@@ -1,14 +1,15 @@
 import { Prisma } from '@prisma/client'
 import invariant from 'tiny-invariant'
 
-import { namespaces } from '~db/seed/data/00-namespaces'
+import { namespace as namespaces } from '~db/generated/namespaces'
 
 import { generateId } from './idGen'
 import { slug } from './slugGen'
 
-const createKey = (parts: string[]) => slug(parts.join('.'))
+const createKey = (parts: string[]) =>
+	parts.map((part) => slug(part, { remove: /[^\w\s$*+~.()'"!\-:@]+/g })).join('.')
 
-export const generateFreeText = ({ orgId, itemId, text, type }: GenerateFreeTextParams) => {
+export const generateFreeText = ({ orgId, itemId, text, type, freeTextId }: GenerateFreeTextParams) => {
 	const key = (() => {
 		switch (type) {
 			case 'orgDesc': {
@@ -37,11 +38,17 @@ export const generateFreeText = ({ orgId, itemId, text, type }: GenerateFreeText
 		freeText: Prisma.validator<Prisma.FreeTextUncheckedCreateInput>()({
 			key,
 			ns,
-			id: generateId('freeText'),
+			id: freeTextId ?? generateId('freeText'),
 		}),
 	}
 }
-export const generateNestedFreeText = ({ orgId: orgSlug, itemId, text, type }: GenerateFreeTextParams) => {
+export const generateNestedFreeText = ({
+	orgId: orgSlug,
+	itemId,
+	text,
+	type,
+	freeTextId,
+}: GenerateFreeTextParams) => {
 	const key = (() => {
 		switch (type) {
 			case 'orgDesc': {
@@ -66,7 +73,7 @@ export const generateNestedFreeText = ({ orgId: orgSlug, itemId, text, type }: G
 	})()
 	const ns = namespaces.orgData
 	return {
-		create: { tsKey: { create: { key, text, namespace: { connect: { name: ns } } } } },
+		create: { id: freeTextId, tsKey: { create: { key, text, namespace: { connect: { name: ns } } } } },
 	}
 }
 
@@ -75,6 +82,7 @@ type GenerateFreeTextParams = GenerateFreeTextWithItem | GenerateFreeTextWithout
 interface GenerateFreeTextBase {
 	text: string
 	orgId: string
+	freeTextId?: string
 }
 interface GenerateFreeTextWithItem extends GenerateFreeTextBase {
 	type: 'attSupp' | 'svcName' | 'svcDesc' | 'emailDesc' | 'phoneDesc' | 'websiteDesc'

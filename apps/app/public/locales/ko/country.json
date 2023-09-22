@@ -1,11 +1,11 @@
 {
 	"ABW": {
 		"name": "아루바",
-		"demonym_other": "아루반스"
+		"demonym_other": "아루바인"
 	},
 	"AFG": {
 		"name": "아프가니스탄",
-		"demonym_other": "아프가니스탄"
+		"demonym_other": "아프가니스탄인"
 	},
 	"AGO": {
 		"name": "앙골라",
@@ -77,10 +77,10 @@
 	},
 	"BEN": {
 		"name": "베냉",
-		"demonym_other": "베닌어"
+		"demonym_other": "베냉 사람"
 	},
 	"BES": {
-		"name": "캐리비안 네덜란드"
+		"name": "카리브 네덜란드"
 	},
 	"BFA": {
 		"name": "부르키나파소",
@@ -147,7 +147,7 @@
 	},
 	"BWA": {
 		"name": "보츠와나",
-		"demonym_other": "바츠와나"
+		"demonym_other": "보츠와나"
 	},
 	"CAF": {
 		"name": "중앙아프리카 공화국",
@@ -202,7 +202,7 @@
 		"demonym_other": "코모로"
 	},
 	"CPV": {
-		"name": "카보 베르데",
+		"name": "카보베르데",
 		"demonym_other": "케이프 베르디안스"
 	},
 	"CRI": {
@@ -218,7 +218,7 @@
 		"demonym_other": "네덜란드어"
 	},
 	"CXR": {
-		"name": "크리스마스 아일랜드",
+		"name": "크리스마스 섬",
 		"demonym_other": "크리스마스 아일랜더스"
 	},
 	"CYM": {
@@ -944,7 +944,7 @@
 		"demonym_other": "우즈베키스탄인"
 	},
 	"VAT": {
-		"name": "바티칸 시티",
+		"name": "바티칸 시국",
 		"demonym_other": "이탈리아인"
 	},
 	"VCT": {
@@ -984,7 +984,7 @@
 		"demonym_other": "예멘인"
 	},
 	"ZAF": {
-		"name": "남아프리카",
+		"name": "남아프리카 공화국",
 		"demonym_other": "남아프리카인"
 	},
 	"ZMB": {

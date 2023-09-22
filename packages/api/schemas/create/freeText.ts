@@ -1,4 +1,4 @@
-import { namespaces } from '@weareinreach/db/seed/data/00-namespaces'
+import { namespace as namespaces } from '@weareinreach/db/generated/namespaces'
 
 export const createFreeText = (slug: string, text?: string) => {
 	if (!text) return undefined

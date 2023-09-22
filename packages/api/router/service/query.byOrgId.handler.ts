@@ -21,7 +21,7 @@ export const byOrgId = async ({ input }: TRPCHandlerParams<TByOrgIdSchema>) => {
 				select: {
 					tag: {
 						select: {
-							category: { select: { tsKey: true, tsNs: true } },
+							primaryCategory: { select: { tsKey: true, tsNs: true } },
 							tsKey: true,
 							tsNs: true,
 							active: true,

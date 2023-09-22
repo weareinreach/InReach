@@ -52,7 +52,7 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "衛生と服装",
 		"clothes": "服",
-		"gender-affirming-items": "性別を確認するアイテム",
+		"gender-affirming-items": "性別を肯定しているアイテム",
 		"gender-neutral-bathrooms": "ジェンダーニュートラルなバスルーム",
 		"haircuts-and-stylists": "ヘアカットとスタイリスト",
 		"hygiene": "衛生"
@@ -75,7 +75,7 @@
 		"immigration-detention": "入国者拘禁",
 		"legal-advice": "法的アドバイス",
 		"legal-hotlines": "リーガルホットライン",
-		"name-and-gender-change": "名前と性別の変更",
+		"name-and-gender-change": "名前と性別マーカーの変更",
 		"refugee-claim": "難民申請",
 		"residency": "レジデンシー",
 		"special-immigrant-juvenile-status-sijs": "特別移民少年資格 (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "トランスヘルス-ホルモンと手術の手紙",
 		"trans-health-hormone-therapy": "トランスヘルス-ホルモン療法",
 		"trans-health-primary-care": "トランスヘルス-プライマリケア",
-		"trans-health-speech-therapy": "トランスヘルス-言語療法"
+		"trans-health-speech-therapy": "トランスヘルス-言語療法",
+		"trans-health-youth-care": "トランス健康 - 青少年ケア"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "精神的健康",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "エンターテイメントとアクティビティ",
 		"art-music-literature": "芸術、音楽、文学",
 		"sports-and-entertainment": "スポーツとエンターテイメント"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "トランスフォーカスサービス",
+		"transport-gacare": "ジェンダー確認ケアのための交通",
+		"transport-relo-support": "トランス位置変換サポート"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "翻訳と解釈",
