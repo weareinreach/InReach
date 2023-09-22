@@ -212,7 +212,10 @@
 		"<textDarkGray><title2>تحليلات استخدام الموقع</title2></textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>اقرأ سياسة الخصوصية الكاملة لدينا للمزيد من المعلومات</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>بيان الخصوصية</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>بيان الخصوصية</title2>"
+	],
 	"privatePractice": "تدريب خاص",
 	"profile": "الملف الشخصي",
 	"questions": "أسئلة؟",
