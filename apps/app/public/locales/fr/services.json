@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Santé Trans - Lettres d'Hormone et de Chirurgie",
 		"trans-health-hormone-therapy": "Santé Trans - Thérapie de l'hormone",
 		"trans-health-primary-care": "Santé Trans - Soins primaires",
-		"trans-health-speech-therapy": "Santé trans - Thérapie vocale"
+		"trans-health-speech-therapy": "Santé trans - Thérapie vocale",
+		"trans-health-youth-care": "Santé des trans - Soins des jeunes"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Santé mentale",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Sports et divertissement",
 		"art-music-literature": "Art, Musique et Littérature",
 		"sports-and-entertainment": "Sports et divertissement"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Services ciblés Trans",
+		"transport-gacare": "Transport pour les soins d'affirmation du genre",
+		"transport-relo-support": "Prise en charge de la relocalisation des trans"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Traduction et interprétation",
