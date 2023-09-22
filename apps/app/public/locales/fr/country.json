@@ -30,7 +30,7 @@
 		"demonym_other": "Albanais"
 	},
 	"AND": {
-		"name": "Andorra",
+		"name": "Andorre",
 		"demonym_one": "Andorrans",
 		"demonym_other": "Andorrans"
 	},
@@ -50,19 +50,19 @@
 		"demonym_other": "Arméniens"
 	},
 	"ASM": {
-		"name": "American Samoa",
+		"name": "Samoa américaines ",
 		"demonym_one": "Samoan américain",
 		"demonym_other": "Samoans américains"
 	},
 	"ATA": {
-		"name": "Antarctica",
+		"name": "Antarctique",
 		"demonym_one": "Antarctique",
 		"demonym_other": "Antarcticans"
 	},
 	"ATF": {
-		"name": "Terres françaises du Sud et de l'Antarctique",
-		"demonym_one": "Français",
-		"demonym_other": "Français"
+		"name": "Terres australes et antarctiques françaises",
+		"demonym_one": "Français.e",
+		"demonym_other": "Français.e.s"
 	},
 	"ATG": {
 		"name": "Antigua-et-Barbuda",
@@ -95,12 +95,12 @@
 		"demonym_other": "Belgians"
 	},
 	"BEN": {
-		"name": "Benin",
-		"demonym_one": "Béninais",
-		"demonym_other": "Béninais"
+		"name": "Bénin",
+		"demonym_one": "Béninois.e",
+		"demonym_other": "Béninois.e.s"
 	},
 	"BES": {
-		"name": "Pays-Bas des Caraïbes"
+		"name": "Pays-Bas caribéens"
 	},
 	"BFA": {
 		"name": "Burkina Faso",
@@ -118,7 +118,7 @@
 		"demonym_other": "Bulgares"
 	},
 	"BHR": {
-		"name": "Bahrain",
+		"name": "Bahraïn",
 		"demonym_one": "Bahreïn",
 		"demonym_other": "Bahrainis"
 	},
@@ -143,17 +143,17 @@
 		"demonym_other": "Biélorusses"
 	},
 	"BLZ": {
-		"name": "Bélize",
+		"name": "Belize",
 		"demonym_one": "Bélizéens",
 		"demonym_other": "Bélizéens"
 	},
 	"BMU": {
-		"name": "Bermuda",
+		"name": "Bermudes",
 		"demonym_one": "Bermudians",
 		"demonym_other": "Bermudians"
 	},
 	"BOL": {
-		"name": "Bolivia",
+		"name": "Bolivie",
 		"demonym_one": "Bolivien",
 		"demonym_other": "Boliviens"
 	},
@@ -174,8 +174,8 @@
 	},
 	"BTN": {
 		"name": "Bhoutan",
-		"demonym_one": "Bhoutanais",
-		"demonym_other": "Bhoutanais"
+		"demonym_one": "Bhoutanais.e",
+		"demonym_other": "Bhoutanais.e.s"
 	},
 	"BVT": {
 		"name": "Île Bouvet"
@@ -372,8 +372,8 @@
 	},
 	"FRA": {
 		"name": "France",
-		"demonym_one": "Français",
-		"demonym_other": "Français"
+		"demonym_one": "Français.e",
+		"demonym_other": "Français.e.s"
 	},
 	"FRO": {
 		"name": "Iles Féroé",
@@ -765,8 +765,8 @@
 	},
 	"MTQ": {
 		"name": "Martinique",
-		"demonym_one": "Français",
-		"demonym_other": "Français"
+		"demonym_one": "Français.e",
+		"demonym_other": "Français.e.s"
 	},
 	"MUS": {
 		"name": "Mauritius",
@@ -930,8 +930,8 @@
 	},
 	"REU": {
 		"name": "Réunion",
-		"demonym_one": "Français",
-		"demonym_other": "Français"
+		"demonym_one": "Français.e",
+		"demonym_other": "Français.e.s"
 	},
 	"ROU": {
 		"name": "Roumanie",
@@ -1008,8 +1008,8 @@
 	},
 	"SPM": {
 		"name": "Saint-Pierre et Miquelon",
-		"demonym_one": "Français",
-		"demonym_other": "Français"
+		"demonym_one": "Français.e",
+		"demonym_other": "Français.e.s"
 	},
 	"SRB": {
 		"name": "Serbie",

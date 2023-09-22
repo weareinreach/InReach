@@ -10,7 +10,7 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "커뮤니티 지원",
-		"community-social-groups": "커뮤니티 와 소셜 그룹",
+		"community-social-groups": "공동체와 소셜 그룹",
 		"cultural-centers": "문화센터",
 		"lgbtq-centers": "LGBTQ 센터",
 		"reception-services": "리셉션 서비스",
@@ -27,7 +27,7 @@
 		"crisis-support": "위기 지원"
 	},
 	"education-and-employment": {
-		"CATEGORYNAME": "교육 및 취업",
+		"CATEGORYNAME": "교육와 취업",
 		"career-counseling": "진로상담",
 		"educational-support-for-lgbtq-youth": "LGBTQ 청소년을 위한 교육 지원",
 		"english-classes": "영어 수업",
@@ -52,8 +52,8 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "위생 및 의류",
 		"clothes": "옷",
-		"gender-affirming-items": "성별 확인 항목",
-		"gender-neutral-bathrooms": "젠더 뉴트럴 욕실",
+		"gender-affirming-items": "성별 확증 옷",
+		"gender-neutral-bathrooms": "성별 중성 화장실",
 		"haircuts-and-stylists": "헤어컷과 스타일리스트",
 		"hygiene": "위생"
 	},
@@ -75,7 +75,7 @@
 		"immigration-detention": "이민 구금",
 		"legal-advice": "법률 자문",
 		"legal-hotlines": "법률 핫라인",
-		"name-and-gender-change": "이름 및 성별 변경",
+		"name-and-gender-change": "이름과 성별 마커 변경",
 		"refugee-claim": "난민 청구",
 		"residency": "레지던시",
 		"special-immigrant-juvenile-status-sijs": "특수 이민 청소년 지위 (SIJS)",
@@ -83,24 +83,25 @@
 		"u-visa": "U 비자"
 	},
 	"mail": {
-		"CATEGORYNAME": "메일",
-		"mail": "메일"
+		"CATEGORYNAME": "우편물",
+		"mail": "우편물"
 	},
 	"medical": {
 		"CATEGORYNAME": "의료",
 		"covid-19-services": "COVID-19 서비스",
-		"dental-care": "덴탈 케어",
-		"hiv-and-sexual-health": "HIV 및 성 건강",
+		"dental-care": "치과 치료",
+		"hiv-and-sexual-health": "HIV와 성 건강",
 		"medical-clinics": "의료 클리닉",
 		"obgyn-services": "산부인과 서비스",
 		"physical-evaluations-for-asylum-claim": "망명 신청에 대한 물리적 평가",
 		"physical-evaluations-for-refugee-claim": "난민 신청에 대한 신체 평가",
 		"trans-health": "트랜스 헬스",
-		"trans-health-gender-affirming-surgery": "트랜스 건강 - 젠더 긍정 수술",
-		"trans-health-hormone-and-surgery-letters": "트랜스 건강 - 호르몬 및 수술 편지",
+		"trans-health-gender-affirming-surgery": "트랜스 건강 - 성별 확증 수술",
+		"trans-health-hormone-and-surgery-letters": "트랜스 건강 - 호르몬이랑 수술 편지",
 		"trans-health-hormone-therapy": "트랜스 건강 - 호르몬 요법",
-		"trans-health-primary-care": "트랜스 건강 - 1차 진료",
-		"trans-health-speech-therapy": "트랜스 건강 - 언어 치료"
+		"trans-health-primary-care": "트랜스 건강 - 일차 진료",
+		"trans-health-speech-therapy": "트랜스 건강 - 언어 치료",
+		"trans-health-youth-care": "트랜스 건강 - 청소년 진료"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "정신 건강",
@@ -118,17 +119,22 @@
 	"sports-and-entertainment": {
 		"CATEGORYNAME": "엔터테인먼트 및 액티비티",
 		"art-music-literature": "예술, 음악, 문학",
-		"sports-and-entertainment": "스포츠 및 엔터테인먼트"
+		"sports-and-entertainment": "스포츠와 엔터테인먼트"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "트랜스에 초점을 맛춤한 서비스",
+		"transport-gacare": "성별 확증 진료를 위한 교통편",
+		"transport-relo-support": "트랜스 재정착하기 지원"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "번역 및 통역",
 		"for-healthcare": "헬스케어용",
 		"for-legal-services": "법률 서비스용",
-		"general-translation-and-interpretation": "일반 번역 및 통역"
+		"general-translation-and-interpretation": "일반 번역이랑 통역"
 	},
 	"transportation": {
 		"CATEGORYNAME": "교통수단",
-		"transit-passes-and-discounts": "대중교통 패스 및 할인",
+		"transit-passes-and-discounts": "대중교통 패스랑 할인",
 		"transportation-assistance": "교통 지원"
 	}
 }

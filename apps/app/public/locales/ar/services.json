@@ -75,7 +75,7 @@
 		"immigration-detention": "احتجاز المهاجرين",
 		"legal-advice": "الاستشارات القانونية",
 		"legal-hotlines": "الخطوط الساخنة القانونية",
-		"name-and-gender-change": "الاسم والتغيير الجنساني",
+		"name-and-gender-change": "تغيير الاسم والعلامات الجنسانية",
 		"refugee-claim": "طلب اللجوء",
 		"residency": "الإقامة",
 		"special-immigrant-juvenile-status-sijs": "حالة الأحداث الخاصة بالمهاجر",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "عبر الصحة - الهرمون وحروف الجراحة",
 		"trans-health-hormone-therapy": "الصحة العابرة - العلاج بالهرمونات",
 		"trans-health-primary-care": "الرعاية الصحية المباشرة - الرعاية الأولية",
-		"trans-health-speech-therapy": "الصحة العابرة - علاج النطق"
+		"trans-health-speech-therapy": "الصحة العابرة - علاج النطق",
+		"trans-health-youth-care": "الصحة المباشرة - رعاية الشباب"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "الصحة النفسية",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "الترفيه والأنشطة",
 		"art-music-literature": "الفن والموسيقى والآداب",
 		"sports-and-entertainment": "الرياضة والترفيه"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "الخدمات المركزة",
+		"transport-gacare": "النقل من أجل تأكيد الرعاية الجنسانية",
+		"transport-relo-support": "دعم النقل العابر"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "الترجمة التحريرية والترجمة الشفوية",
