@@ -207,7 +207,10 @@
 		"<textDarkGray>InReachは、ウェブのバイタルやパフォーマンスの分析にもVercel Analyticsを使用しています。Vercel Analyticsは、個々の訪問者やIPアドレスに縛られたり、関連付けられたりすることなく、サイトの使用状況情報を提供します。データポイントの記録は匿名で行われ、アナリティクス機能は、Vercelがページ間のブラウジングセッションを再構築したり、ユーザーを特定したりできるような情報を収集または保存しません。</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>詳細については、当社のプライバシーポリシー全文をお読みください。</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>プライバシーステートメント</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>プライバシーステートメント</title2>"
+	],
 	"privatePractice": "プライベート・プラクティス",
 	"profile": "プロフィール",
 	"questions": "質問?",
