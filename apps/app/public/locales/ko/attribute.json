@@ -110,9 +110,9 @@
 		"accesslocation": "액세스 지침 - 위치",
 		"accessphone": "액세스 지침 - 전화",
 		"accesspublictransit": "접근 지침 - 대중교통",
-		"accesssms": "지시에 접근 - SMS",
+		"accesssms": "교육접속 - SMS",
 		"accesstext": "액세스 지침 - 텍스트",
-		"accesswhatsapp": "지시에 접근 - WhatsApp"
+		"accesswhatsapp": "교육접속 - WhatsApp"
 	},
 	"srvfocus": {
 		"CATEGORYNAME": "서비스 초점",
@@ -155,7 +155,7 @@
 		"healthcare": "헬스케어 제공자",
 		"lawyer": "변호사",
 		"other": "기타 (구체적으로 적어주세요)",
-		"paralegal": "보조원이나 다른 법률 지원 직원들",
+		"paralegal": "보조원이나 법률 지원 직원들",
 		"social-worker": "사회복지사",
 		"student-club": "학생 클럽 리더/관리자",
 		"teacher": "선생님",
