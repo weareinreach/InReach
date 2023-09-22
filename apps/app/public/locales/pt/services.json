@@ -52,7 +52,7 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "Higiene e vestuário",
 		"clothes": "Roupas",
-		"gender-affirming-items": "Itens de afirmação de gênero",
+		"gender-affirming-items": "Itens de gênero afirmando",
 		"gender-neutral-bathrooms": "Banheiros de gênero neutro",
 		"haircuts-and-stylists": "Cortes de cabelo e estilistas",
 		"hygiene": "Higiene"
@@ -75,7 +75,7 @@
 		"immigration-detention": "Detenção de imigrantes",
 		"legal-advice": "Consulta jurídica",
 		"legal-hotlines": "Linhas diretas jurídicas",
-		"name-and-gender-change": "Mudança de nome e gênero",
+		"name-and-gender-change": "Nome e sexo variação de marcador",
 		"refugee-claim": "Pedido de refugiado",
 		"residency": "Residência",
 		"special-immigrant-juvenile-status-sijs": "Status Especial Juvenil de Imigrante (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Saúde trans - cartas sobre hormônios e cirurgias",
 		"trans-health-hormone-therapy": "Saúde trans - terapia hormonal",
 		"trans-health-primary-care": "Saúde trans - atenção primária",
-		"trans-health-speech-therapy": "Saúde trans - terapia da fala"
+		"trans-health-speech-therapy": "Saúde trans - terapia da fala",
+		"trans-health-youth-care": "Saúde de Trans - Cuidados com juventude"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Saúde mental",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Entretenimento e atividades",
 		"art-music-literature": "Arte, música e literatura",
 		"sports-and-entertainment": "Esportes e entretenimento"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Serviços Focados nos Trans",
+		"transport-gacare": "Transporte para a afirmação do género",
+		"transport-relo-support": "Suporte a realocação de Trans"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Tradução e Interpretação",
