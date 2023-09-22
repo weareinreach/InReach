@@ -13,8 +13,8 @@
 		"wheelchair-accessible_true": "Accessible"
 	},
 	"alerts": {
-		"CATEGORYNAME": "Alertes",
-		"info": "Alerte informative",
+		"CATEGORYNAME": "Avertissement",
+		"info": "Avertissement informatif",
 		"warn": "Alerte d'avertissement"
 	},
 	"community": {
