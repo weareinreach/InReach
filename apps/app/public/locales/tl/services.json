@@ -52,7 +52,7 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "Kalinisan at Damit",
 		"clothes": "Damit",
-		"gender-affirming-items": "Mga item na nagpapatunay sa kasarian",
+		"gender-affirming-items": "Gender affirming items",
 		"gender-neutral-bathrooms": "Mga banyo na walang kinikilingan sa kasarian",
 		"haircuts-and-stylists": "Mga haircuts at stylists",
 		"hygiene": "Kalinisan"
@@ -75,7 +75,7 @@
 		"immigration-detention": "Pagpigil sa imigrasyon",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "Mga ligal na hotline",
-		"name-and-gender-change": "Pagbabago ng pangalan at kasarian",
+		"name-and-gender-change": "Name and gender marker change",
 		"refugee-claim": "Pag-angkin ng Refugee",
 		"residency": "Paninirahan",
 		"special-immigrant-juvenile-status-sijs": "Katayuan ng Espesyal na Immigrant Juvenile (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Trans health - mga titik ng hormone at operasyon",
 		"trans-health-hormone-therapy": "Kalusugan ng trans - therapy ng hormon",
 		"trans-health-primary-care": "Trans health - pangunahing pangangalaga",
-		"trans-health-speech-therapy": "Kalusugan ng trans - therapy sa pagsasalita"
+		"trans-health-speech-therapy": "Kalusugan ng trans - therapy sa pagsasalita",
+		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Kalusugan ng Kaisipan",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Libangan at Aktibidad",
 		"art-music-literature": "Sining, musika, at panitikan",
 		"sports-and-entertainment": "Palakasan at libangan"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Trans Focused Services",
+		"transport-gacare": "Transportation for gender affirming care",
+		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Pagsasalin at Interpretasyon",
