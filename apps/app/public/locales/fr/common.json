@@ -61,7 +61,7 @@
         "intl-these-verified": "Ces ressources vérifiées peuvent aider la communauté LGBTQ+ partout dans le monde.",
         "intl-we-recommend": "Nous recommandons ces ressources internationales",
         "natl-find-help-now": "Trouver de l'aide maintenant",
-        "natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+        "natl-these-verified": "<Text>Ces ressources vérifiées peuvent aider la communauté LGBTQ+ aux États-Unis. Ces services sont <strong> accessibles à distance, confidentielles, </strong> et <strong> gratuites</strong>. </Text>",
         "outside-service-area": "InReach ne fonctionne pas au/en {{country}}",
         "who-this-serves": "<Text><strong>Qui cette ressource sert :</strong> {{targetPop}}</Text>"
     },
@@ -84,8 +84,8 @@
     "enter-password-placeholder": "Entrer le mot de passe...",
     "enter-review": "Entrer votre avis...",
     "errors": {
-        "401-title": "Vous devez être connecté pour faire cela.",
-        "403-body": "Vous n'êtes pas autorisé à accéder à cette page. Si vous pensez avoir atteint cette page par erreur, veuillez contacter votre superviseur.",
+        "401-title": "Vous devez être connecté.e pour faire cela.",
+        "403-body": "Vous n'êtes pas autorisé.e à accéder à cette page. Si vous pensez avoir atteint cette page par erreur, veuillez contacter votre superviseur.",
         "403-title": "403 : Interdit",
         "404-body": "Nous sommes désolés, la page que vous cherchez n'existe pas ou a été déplacée. Commencer une recherche ci-dessous pour trouver des ressources sûres et vérifiées pour la communauté LGBTQ+ dans votre région.",
         "404-title": "404 : Page non trouvée.",
@@ -202,7 +202,7 @@
         "<textDarkGray><listGroup><listItem>Année de naissance</listItem>\n<listItem>Pays d'origine</listItem>\n<listItem>Identité LGBTQ+ (orientation sexuelle et identité de genre)</listItem>\n<listItem>Race/ethnicité</listItem>\n<listItem>Statut d'immigration</listItem>\n<listItem>Emplacement actuel</listItem></listGroup></textDarkGray>",
         "<textDarkGray><strong>Toutes ces informations sensibles sont enregistrées de manière anonyme et non connectées à aucun compte ou utilisateur individuel.</strong></textDarkGray>",
         "<textDarkGray><listGroup><listItem>Année de naissance</listItem>\n<listItem>Pays d'origine</listItem>\n<listItem>Identité LGBTQ+ (orientation sexuelle et identité de genre)</listItem>\n<listItem>Race/ethnicité</listItem>\n<listItem>Statut d'immigration</listItem>\n<listItem>Emplacement actuel</listItem></listGroup></textDarkGray>",
-        "<textDarkGray><strong>Toutes ces informations sensibles sont stockées de manière anonyme et non connectées à aucun compte utilisateur ou utilisateur individuel.</strong></textDarkGray>",
+        "<textDarkGray>Comprendre les caractéristiques démographiques de nos utilisateurs peut nous aider à quantifier notre impact, à lever des fonds et à évaluer les décisions futures en matière de produits. Nous apprécions que les utilisateurs partagent volontairement ces informations avec nous, et nous prenons ces mesures pour protéger votre vie privée et votre anonymat.\n</textDarkGray>",
         "<textDarkGray><title2>Analyse d'utilisation du site</title2></textDarkGray>",
         "<textDarkGray>InReach utilise <linkUmami>Umami</linkUmami>, une alternative à Google Analytics axée sur la vie privée, pour analyser et suivre anonymement les données d'utilisation de l'application (par ex, les recherches des utilisateurs et d'autres comportements) dans l'agrégat. <linkUmamiGDPR>Umami est conforme au GDPR</linkUmamiGDPR> et ne réunit aucune information personnellement identifiable et rend anonyme toutes les données collectées. Les utilisateurs ne peuvent pas être identifiés et ne sont jamais suivis sur les sites Web.</textDarkGray>",
         "<textDarkGray>InReach utilise également Vercel Analytics pour analyser la performance et les composants essentiels du web. Vercel Analytics fournit des informations d'utilisation du site sans être lié à, ou associé à un visiteur ou à une adresse IP individuelle. L'enregistrement des données est anonyme et la fonction Analytics ne collecte pas ou ne garde pas d'informations qui permettraient à Vercel de reconstruire une session de navigation à travers des pages ou d'identifier un utilisateur.</textDarkGray>"
@@ -238,10 +238,10 @@
         "location-placeholder-searchby": "Chercher par ville ou par code postal...",
         "look-up-org": "Rechercher une organisation par son nom",
         "no-results": "Aucun résultat trouvé. Veuillez réessayer.",
-        "no-results-adjust": "Aucun résultat trouvé pour votre recherche. Essayez d'ajuster l'emplacement ou les filtres sélectionnés.",
+        "no-results-adjust": "Aucun résultat trouvé pour votre recherche. Essayez d'ajuster la localisation ou les filtres sélectionnés.",
         "organization-placeholder": "Entrer le nom de l'organisation...",
         "organization-placeholder-searchby": "Chercher par nom d'organisme...",
-        "suggest-resource": "Vous ne le trouvez pas? <1>Suggérer une organisation</1> vous pensez qu'elle devrait être incluse."
+        "suggest-resource": "Vous ne le trouvez pas ? <strong>Proposez une organisation</strong> qui devrait être incluse."
     },
     "send-email": "Envoyer un e-mail",
     "service": {
@@ -404,7 +404,7 @@
     "photo_other": "Photos",
     "review-count_one": "{{count}} avis",
     "review-count_other": "{{count}} avis",
-    "review_one": "Révision",
+    "review_one": "Commentaires",
     "review_other": "Critiques",
     "view-x-result_one": "Voir {{count}} résultat",
     "view-x-result_other": "Voir {{count}} résultats",
