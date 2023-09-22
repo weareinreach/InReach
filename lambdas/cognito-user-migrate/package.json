@@ -21,7 +21,7 @@
 		"prune-clients": "find ./dist/client -type f -not -name '*rhel*' -delete -print"
 	},
 	"dependencies": {
-		"@aws-lambda-powertools/logger": "1.13.0",
+		"@aws-lambda-powertools/logger": "1.13.1",
 		"@prisma/client": "5.3.1",
 		"@weareinreach/db": "workspace:*"
 	},
