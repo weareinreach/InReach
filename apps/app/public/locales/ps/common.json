@@ -208,7 +208,10 @@
 		"<textDarkGray>InReach also uses Vercel Analytics to analyze web vitals and performance. Vercel Analytics provides site usage information without being tied to, or associated with, any individual visitor or IP address. The recording of data points is anonymous and the Analytics feature does not collect or store information that would enable Vercel to reconstruct a browsing session across pages or identify a user.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>د نورو معلوماتو لپاره زموږ د محرمیت بشپړ تګلاره ولولئ</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>د محرمیت بیان</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>د محرمیت بیان</title2>"
+	],
 	"privatePractice": "شخصي تمرین",
 	"profile": "پيژند",
 	"questions": "پوښتنې؟",
