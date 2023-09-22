@@ -208,10 +208,7 @@
 		"Gumagamit din ang <textDarkGray>inReach ng Vercel Analytics upang pag-aralan ang mga web vitals at pagganap. Nagbibigay ang Vercel Analytics ng impormasyon sa paggamit ng site nang hindi nakatali sa, o nauugnay sa, anumang indibidwal na bisita o IP address. Ang pag-record ng mga puntos ng data ay hindi nagpapakilala at ang tampok na Analytics ay hindi nangongolekta o nag-iimbak ng impormasyon na magpapahintulot sa Vercel na muling buuin ang isang session sa pagba-browse sa mga pahina o kilalanin ang isang gumagamit.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Basahin ang aming buong patakaran sa privacy para sa karagdagang impormasyon</linkPolicy>",
-	"privacy-statement-head": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>Pahayag sa privacy</title2>"
-	],
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Pahayag sa privacy</title2>"],
 	"privatePractice": "Pribadong Practice",
 	"profile": "Profile",
 	"questions": "Mga Tanong?",

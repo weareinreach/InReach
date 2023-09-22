@@ -208,10 +208,7 @@
 		"<textDarkGray>InReach itilize tou Vercel Analytics pou analize vitals entènèt ak pèfòmans. Vercel Analytics bay enfòmasyon l 'sit san yo pa mare nan, oswa ki asosye ak, nenpòt vizitè endividyèl oswa adrès IP. Anrejistreman an nan pwen done se anonim ak karakteristik nan Analytics pa kolekte oswa magazen enfòmasyon ki ta pèmèt Vercel rekonstwi yon sesyon Navigasyon atravè paj oswa idantifye yon itilizatè.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Li politik plen vi prive nou an pou plis enfòmasyon</linkPolicy>",
-	"privacy-statement-head": [
-		"<emojiLg>🔒</emojiLg>",
-		"<title2>Deklarasyon sou enfòmasyon prive</title2>"
-	],
+	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Deklarasyon sou enfòmasyon prive</title2>"],
 	"privatePractice": "Prive Pratike",
 	"profile": "Wofil",
 	"questions": "Kesyon?",
