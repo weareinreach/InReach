@@ -207,7 +207,10 @@
 		"또한 <textDarkGray>inReach는 버셀 애널리틱스를 사용하여 웹 바이탈과 성능을 분석합니다.Vercel Analytics는 개별 방문자 또는 IP 주소와 연결되거나 연결되지 않은 사이트 사용 정보를 제공합니다.데이터 포인트 기록은 익명이며 분석 기능은 Vercel이 여러 페이지의 브라우징 세션을 재구성하거나 사용자를 식별할 수 있도록 하는 정보를 수집하거나 저장하지 않습니다.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>자세한 내용은 개인 정보 보호 정책 전문을 읽어보십시오.</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>개인정보취급방침</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>개인정보취급방침</title2>"
+	],
 	"privatePractice": "프라이빗 프랙티스",
 	"profile": "프로필",
 	"questions": "질문 있으세요?",
