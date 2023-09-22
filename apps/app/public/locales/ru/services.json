@@ -12,7 +12,7 @@
 		"CATEGORYNAME": "Поддержка сообщества",
 		"community-social-groups": "Сообщество и социальные группы",
 		"cultural-centers": "Культурные центры",
-		"lgbtq-centers": "Центры LGBTQ",
+		"lgbtq-centers": "Центры ЛГБТК",
 		"reception-services": "Услуги приёма",
 		"reentry-services": "Услуги для повторного ввода",
 		"spiritual-support": "Духовная поддержка",
@@ -75,9 +75,9 @@
 		"immigration-detention": "Иммиграционное задержание",
 		"legal-advice": "Юридические консультации",
 		"legal-hotlines": "Горячие линии",
-		"name-and-gender-change": "Имя и изменения пола",
+		"name-and-gender-change": "Изменение имени и маркера пола",
 		"refugee-claim": "Требование беженца",
-		"residency": "Жилье",
+		"residency": "Вид на жительство",
 		"special-immigrant-juvenile-status-sijs": "Специальный статус иммигрантов-несовершеннолетних (SIJS)",
 		"t-visa": "T visa",
 		"u-visa": "U visa"
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Транс здоровье - гормон и письма хирургии",
 		"trans-health-hormone-therapy": "Транс здоровье - гормональная терапия",
 		"trans-health-primary-care": "Противодействие - первичная помощь",
-		"trans-health-speech-therapy": "Транс здоровье - речевая терапия"
+		"trans-health-speech-therapy": "Транс здоровье - речевая терапия",
+		"trans-health-youth-care": "Проходит здравоохранение - уход за молодежью"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Психическое здоровье",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Развлечения и мероприятия",
 		"art-music-literature": "Искусство, музыка и литература",
 		"sports-and-entertainment": "Спорт и развлечения"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Трансфорированные услуги",
+		"transport-gacare": "Транспортировка с целью подтверждения гендерного равенства",
+		"transport-relo-support": "Поддержка переезда на транс"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Перевод и перевод",

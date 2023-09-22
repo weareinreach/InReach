@@ -52,7 +52,7 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "Higiëne en klere",
 		"clothes": "Klere",
-		"gender-affirming-items": "Geslagsbevestigende items",
+		"gender-affirming-items": "Gender affirming items",
 		"gender-neutral-bathrooms": "Geslagsneutrale badkamers",
 		"haircuts-and-stylists": "Haarsny en stiliste",
 		"hygiene": "higiëne"
@@ -75,7 +75,7 @@
 		"immigration-detention": "Immigrasie aanhouding",
 		"legal-advice": "Legal advice",
 		"legal-hotlines": "Wetlike blitslyne",
-		"name-and-gender-change": "Naam en geslagsverandering",
+		"name-and-gender-change": "Name and gender marker change",
 		"refugee-claim": "Vlugtelinge eis",
 		"residency": "Koshuis",
 		"special-immigrant-juvenile-status-sijs": "Spesiale immigrant jeugdige status (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Trans gesondheid - hormoon en chirurgie briewe",
 		"trans-health-hormone-therapy": "Trans gesondheid - hormoonterapie",
 		"trans-health-primary-care": "Trans gesondheid - primêre sorg",
-		"trans-health-speech-therapy": "Trans gesondheid - spraakterapie"
+		"trans-health-speech-therapy": "Trans gesondheid - spraakterapie",
+		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Geestesgesondheid",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Vermaak en aktiwiteite",
 		"art-music-literature": "Kuns, musiek en letterkunde",
 		"sports-and-entertainment": "Sport en vermaak"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Trans Focused Services",
+		"transport-gacare": "Transportation for gender affirming care",
+		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Vertaling en interpretasie",
