@@ -75,7 +75,7 @@
 		"immigration-detention": "Иммиграционное задержание",
 		"legal-advice": "Юридические консультации",
 		"legal-hotlines": "Горячие линии",
-		"name-and-gender-change": "Имя и изменения пола",
+		"name-and-gender-change": "Изменение имени и маркера пола",
 		"refugee-claim": "Требование беженца",
 		"residency": "Вид на жительство",
 		"special-immigrant-juvenile-status-sijs": "Специальный статус иммигрантов-несовершеннолетних (SIJS)",
@@ -100,7 +100,8 @@
 		"trans-health-hormone-and-surgery-letters": "Транс Здоровье - Гормоны и Хирургические письма",
 		"trans-health-hormone-therapy": "Транс Здоровье - Гормоновая Терапия",
 		"trans-health-primary-care": "Трансформация - первичная помощь",
-		"trans-health-speech-therapy": "Транс Здоровье - Речевая Терапия"
+		"trans-health-speech-therapy": "Транс Здоровье - Речевая Терапия",
+		"trans-health-youth-care": "Проходит здравоохранение - уход за молодежью"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Психическое здоровье",
@@ -119,6 +120,11 @@
 		"CATEGORYNAME": "Спорт и развлечения",
 		"art-music-literature": "Искусство, музыка и литература",
 		"sports-and-entertainment": "Спорт и развлечения"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Трансфорированные услуги",
+		"transport-gacare": "Транспортировка с целью подтверждения гендерного равенства",
+		"transport-relo-support": "Поддержка переезда на транс"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Перевод и перевод",
