@@ -17,7 +17,7 @@
 		"error-exists-dismiss": "<Dismiss>다른 단체이면 여기를 클릭하십시오.</Dismiss>",
 		"error-exists-inactive": "<Link>{{org}}</Link> 가 이미 제안되었습니다.우리 팀이 아직 정보를 확인 중이거나 이 조직이 우리의 모든 요구 사항을 충족하지 못했습니다.",
 		"org-address": "단체 주소",
-		"org-country": "단체는 어느 국가에 위치해 있습니까?",
+		"org-country": "이 단체는 어느 국가에 있습니까?",
 		"org-name": "단체 이름",
 		"org-website": "단체의 웹사이트",
 		"placeholder-address": "주소 입력...",
