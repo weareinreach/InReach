@@ -1,23 +1,19 @@
 import { z } from 'zod'
 
-import { Prisma } from '@weareinreach/db'
 import { prefixedId } from '~api/schemas/idPrefix'
 
-export const ZUpdateSchema = z
-	.object({
-		id: prefixedId('orgPhone'),
-		data: z
-			.object({
-				number: z.string(),
-				ext: z.string(),
-				primary: z.boolean(),
-				published: z.boolean(),
-				deleted: z.boolean(),
-				countryId: prefixedId('country'),
-				phoneTypeId: prefixedId('phoneType'),
-				locationOnly: z.boolean(),
-			})
-			.partial(),
-	})
-	.transform(({ data, id }) => Prisma.validator<Prisma.OrgPhoneUpdateArgs>()({ where: { id }, data }))
+export const ZUpdateSchema = z.object({
+	id: prefixedId('orgPhone'),
+	orgId: prefixedId('organization'),
+	number: z.string().optional(),
+	ext: z.string().nullish(),
+	primary: z.boolean().optional(),
+	published: z.boolean().optional(),
+	deleted: z.boolean().optional(),
+	countryId: prefixedId('country').optional(),
+	phoneTypeId: prefixedId('phoneType').nullish(),
+	locationOnly: z.boolean().optional(),
+	serviceOnly: z.boolean().optional(),
+	description: z.string().nullish(),
+})
 export type TUpdateSchema = z.infer<typeof ZUpdateSchema>

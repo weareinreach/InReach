@@ -8,13 +8,25 @@ export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerS
 	try {
 		const result = await prisma.orgPhone.findUniqueOrThrow({
 			where: input,
-			include: {
-				description: { include: { tsKey: true } },
+			select: {
+				id: true,
+				number: true,
+				ext: true,
+				primary: true,
+				published: true,
+				deleted: true,
+				country: { select: { id: true, cca2: true } },
+				phoneType: { select: { id: true, type: true } },
+				description: { select: { id: true, key: true, tsKey: { select: { text: true } } } },
+				locationOnly: true,
+				serviceOnly: true,
 			},
 		})
 		const reformatted = {
 			...result,
-			description: result.description?.tsKey?.text,
+			description: result.description
+				? { id: result.description?.id, key: result.description?.key, text: result.description?.tsKey?.text }
+				: null,
 		}
 		return reformatted
 	} catch (error) {
