@@ -38,7 +38,7 @@
 		"@manypkg/cli": "0.21.0",
 		"@turbo/gen": "1.10.14",
 		"@types/lint-staged": "13.2.0",
-		"@types/node": "18.17.18",
+		"@types/node": "18.17.19",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"boxen": "7.1.1",
@@ -49,7 +49,7 @@
 		"prettier-plugin-jsdoc": "1.0.2",
 		"prettier-plugin-packagejson": "2.4.5",
 		"prettier-plugin-prisma": "5.0.0",
-		"tsx": "3.12.10",
+		"tsx": "3.13.0",
 		"turbo": "1.10.14",
 		"typescript": "5.2.2",
 		"typesync": "0.11.1"
