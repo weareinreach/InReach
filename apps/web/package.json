@@ -43,13 +43,13 @@
 	},
 	"devDependencies": {
 		"@next/bundle-analyzer": "13.5.2",
-		"@types/eslint": "8.44.2",
-		"@types/node": "18.17.18",
+		"@types/eslint": "8.44.3",
+		"@types/node": "18.17.19",
 		"@types/react": "18.2.22",
 		"@types/react-dom": "18.2.7",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
-		"eslint": "8.49.0",
+		"eslint": "8.50.0",
 		"typescript": "5.2.2"
 	}
 }
