@@ -1,3 +1,4 @@
+import { DevTool } from '@hookform/devtools'
 import { type Meta, type StoryFn, type StoryObj } from '@storybook/react'
 import { FormProvider, useForm as useHookForm } from 'react-hook-form'
 
@@ -9,8 +10,8 @@ import {
 	useFormContext,
 } from '~ui/modals/dataPortal/PhoneEmail/context'
 
-import { PhoneNumberEntry } from './PhoneNumberEntry'
-import { PhoneNumberEntry as PhoneNumberEntryHookForm } from './PhoneNumberEntryHookForm'
+import { PhoneNumberEntry } from './index'
+import { PhoneNumberEntry as PhoneNumberEntryHookForm } from './withHookForm'
 
 const FormContextDecorator = (Story: StoryFn) => {
 	const form = useForm(formHookParams)
@@ -60,12 +61,20 @@ export const Default = {
 
 export const WithReactHookForm = {
 	decorators: [HookFormContextDecorator],
-	args: {
-		countrySelectProps: { name: 'countryId' },
-		phoneEntryProps: { name: 'number' },
-	},
-	render: function Render(args) {
-		return <PhoneNumberEntryHookForm {...args} />
+
+	render: function Render() {
+		const form = useHookForm<HookFormParams>({ mode: 'onTouched' })
+
+		return (
+			<form>
+				<PhoneNumberEntryHookForm<HookFormParams>
+					control={form.control}
+					countrySelect={{ name: 'countryId' }}
+					phoneInput={{ name: 'number' }}
+				/>
+				<DevTool control={form.control} />
+			</form>
+		)
 	},
 } satisfies StoryObj<typeof PhoneNumberEntryHookForm>
 

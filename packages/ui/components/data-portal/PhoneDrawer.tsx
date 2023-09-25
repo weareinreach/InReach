@@ -20,6 +20,7 @@ import { z } from 'zod'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { PhoneNumberEntry } from '~ui/components/data-portal/PhoneNumberEntry/withHookForm'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -31,14 +32,35 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const FormSchema = z.object({
-	url: z.string().url(),
-	description: z.string().optional(),
+	id: z.string().nullish(),
+	number: z.string(),
+	ext: z.string().nullish(),
+	primary: z.boolean(),
 	published: z.boolean(),
 	deleted: z.boolean(),
+	country: z.object({
+		id: z.string(),
+		cca2: z.string(),
+	}),
+	phoneType: z
+		.object({
+			id: z.string(),
+			type: z.string(),
+		})
+		.nullish(),
+	description: z
+		.object({
+			id: z.string(),
+			key: z.string(),
+			text: z.string(),
+		})
+		.nullish(),
+	locationOnly: z.boolean(),
+	serviceOnly: z.boolean(),
 })
 type FormSchema = z.infer<typeof FormSchema>
 const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...props }, ref) => {
-	const { data, isFetching } = api.orgWebsite.forEditDrawer.useQuery({ id })
+	const { data, isFetching } = api.orgPhone.forEditDrawer.useQuery({ id })
 	const [drawerOpened, drawerHandler] = useDisclosure(true)
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const { classes } = useStyles()
@@ -48,9 +70,9 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 		defaultValues: data,
 	})
 	const apiUtils = api.useContext()
-	const siteUpdate = api.orgWebsite.update.useMutation({
+	const siteUpdate = api.orgPhone.update.useMutation({
 		onSettled: (data) => {
-			apiUtils.orgWebsite.forContactInfo.invalidate()
+			apiUtils.orgPhone.forEditDrawer.invalidate()
 			reset(data)
 		},
 	})
@@ -70,7 +92,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 					<form
 						onSubmit={handleSubmit(
 							(data) => {
-								siteUpdate.mutate({ id, data })
+								siteUpdate.mutate({ id, ...data })
 							},
 							(error) => console.error(error)
 						)}
@@ -92,9 +114,15 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 						<Drawer.Body>
 							<LoadingOverlay visible={isFetching} />
 							<Stack spacing={24} align='center'>
-								<Title order={2}>Edit Website</Title>
+								<Title order={2}>Edit Phone</Title>
 								<Stack spacing={24} align='flex-start' w='100%'>
-									<TextInput label='Website URL' required name='url' control={control} />
+									<PhoneNumberEntry
+										label='Phone Number'
+										required
+										countrySelect={{ name: 'country.id' }}
+										phoneInput={{ name: 'number' }}
+										control={control}
+									/>
 									<TextInput label='Description' name='description' control={control} />
 									<Stack>
 										<Checkbox label='Published' name='published' control={control} />
