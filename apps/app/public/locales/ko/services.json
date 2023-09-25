@@ -9,7 +9,7 @@
 		"travel-assistance": "여행 보조"
 	},
 	"community-support": {
-		"CATEGORYNAME": "커뮤니티 지원",
+		"CATEGORYNAME": "공동체 지원",
 		"community-social-groups": "공동체와 소셜 그룹",
 		"cultural-centers": "문화센터",
 		"lgbtq-centers": "LGBTQ 센터",
@@ -59,7 +59,7 @@
 	},
 	"international-support": {
 		"CATEGORTYNAME": "국제 지원",
-		"financial-assistance": "재정 지원",
+		"financial-assistance": "재정 보조",
 		"mental-health": "정신 건강",
 		"resettlement-assistance": "재정착 지원"
 	},

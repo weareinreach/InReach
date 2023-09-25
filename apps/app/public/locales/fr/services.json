@@ -10,11 +10,11 @@
 	},
 	"community-support": {
 		"CATEGORYNAME": "Support de la communauté",
-		"community-social-groups": "Communautés et Groupes Sociaux",
+		"community-social-groups": "Groupes communautaires et sociaux",
 		"cultural-centers": "Centres culturels",
 		"lgbtq-centers": "Centres LGBTQ",
 		"reception-services": "Services de réception",
-		"reentry-services": "Services de ré-entrée",
+		"reentry-services": "Services de réinsertion sociale",
 		"spiritual-support": "Soutien spirituel",
 		"sponsors": "Parrainage de l'immigration"
 	},
@@ -23,8 +23,8 @@
 		"computers-and-internet": "Ordinateurs et Internet"
 	},
 	"crisis-support": {
-		"CATEGORYNAME": "Soutien à la crise",
-		"crisis-support": "Soutien à la crise"
+		"CATEGORYNAME": "Soutien en cas de crise",
+		"crisis-support": "Soutien en cas de crise"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "Éducation et emploi",
@@ -61,7 +61,7 @@
 		"CATEGORTYNAME": "Support international",
 		"financial-assistance": "Assistance financière",
 		"mental-health": "Santé mentale",
-		"resettlement-assistance": "Assistance à la relocalisation"
+		"resettlement-assistance": "Aide au rétablissement"
 	},
 	"legal": {
 		"CATEGORYNAME": "Mentions légales",
@@ -75,7 +75,7 @@
 		"immigration-detention": "Rétention de l’immigration",
 		"legal-advice": "Conseils juridiques",
 		"legal-hotlines": "Hotlines légalement",
-		"name-and-gender-change": "Changement de nom et de sexe",
+		"name-and-gender-change": "Changement de nom et de marqueur de genre",
 		"refugee-claim": "Demande de réfugié",
 		"residency": "Résidence",
 		"special-immigrant-juvenile-status-sijs": "Statut spécial des enfants immigrés (SIJS)",
@@ -101,7 +101,7 @@
 		"trans-health-hormone-therapy": "Santé trans - thérapie hormonale",
 		"trans-health-primary-care": "Santé des trans - soins primaires",
 		"trans-health-speech-therapy": "Santé trans - thérapie vocale",
-		"trans-health-youth-care": "Santé des trans - Soins des jeunes"
+		"trans-health-youth-care": "Santé trans - Aide à la jeunesse"
 	},
 	"mental-health": {
 		"CATEGORYNAME": "Santé mentale",
@@ -122,9 +122,9 @@
 		"sports-and-entertainment": "Sports et divertissement"
 	},
 	"trans-focused-services": {
-		"CATEGORYNAME": "Services ciblés Trans",
+		"CATEGORYNAME": "Services axés sur les personnes trans",
 		"transport-gacare": "Transport pour les soins d'affirmation du genre",
-		"transport-relo-support": "Prise en charge de la relocalisation des trans"
+		"transport-relo-support": "Aide à la relocalisation des personnes trans"
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "Traduction et interprétation",
