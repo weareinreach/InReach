@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'apps/app/public/locales/en/*.json'
+    branches:
+      - dev
   pull_request:
     types:
       - closed
