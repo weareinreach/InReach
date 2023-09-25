@@ -51,7 +51,7 @@ jobs:
         with:
           upload_sources: true
           upload_translations: false
-          download_translations: false
+          download_translations: ${{ github.ref_name == 'dev' }}
           localization_branch_name: ${{ steps.branchregex.outputs.value }}
           create_pull_request: true
           pull_request_title: 'chore(i18n): Updated translations from Crowdin'
