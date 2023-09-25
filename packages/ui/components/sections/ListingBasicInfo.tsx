@@ -121,7 +121,7 @@ export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
 	}))
 
 	return (
-		<form autoComplete='off'>
+		<form autoComplete='off' style={{ width: '100%' }}>
 			<Stack align='flex-start' spacing={12}>
 				<InlineTextInput
 					component={TextInput}
