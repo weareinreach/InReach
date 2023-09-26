@@ -28,6 +28,7 @@
 		"lint:pkg": "manypkg check",
 		"lint:pkg:fix": "manypkg fix",
 		"lint:staged": "lint-staged",
+		"notify:install": "tsx ./lib/runInstall.ts",
 		"prepare": "tsx ./lib/prepare.ts",
 		"scripts:post-install": "turbo run post-install --continue",
 		"types:check": "turbo type-check",
