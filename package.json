@@ -64,6 +64,12 @@
 			"INTERNAL_MISMATCH"
 		]
 	},
+	"nextBundleAnalysis": {
+		"budget": 588800,
+		"budgetPercentIncreaseRed": 20,
+		"minimumChangeThreshold": 0,
+		"showDetails": true
+	},
 	"pnpm": {
 		"overrides": {
 			"@floating-ui/react-dom-interactions": "npm:@floating-ui/react@^0.17.0",
