@@ -11,4 +11,4 @@ fi
 }
 
 # Run `pnpm install` if package.json changed.
-check_changed "package.json pnpm-lock.yaml" "tsx ./lib/runInstall.ts"
+check_changed "package.json pnpm-lock.yaml" "pnpm notify:install"
