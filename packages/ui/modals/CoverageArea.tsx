@@ -22,7 +22,7 @@ import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
 
-import { Icon } from 'icon'
+import { Icon } from '~ui/icon'
 
 import { ModalTitle } from './ModalTitle'
 
