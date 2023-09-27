@@ -116,7 +116,7 @@
 		"@types/babel__core": "7.20.2",
 		"@types/babel__preset-env": "7.9.3",
 		"@types/eslint": "8.44.3",
-		"@types/google.maps": "3.54.1",
+		"@types/google.maps": "3.54.2",
 		"@types/luxon": "3.3.2",
 		"@types/node": "18.18.0",
 		"@types/probe-image-size": "7.2.1",
