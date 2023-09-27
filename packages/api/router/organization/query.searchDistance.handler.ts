@@ -78,6 +78,7 @@ service_area as (
 	SELECT
 		country."geoDataId" as "countryGeoId",
 		district."geoDataId" as "districtGeoId",
+		district.slug AS "districtSlug",
 		country.cca3 as "cca3",
 		sa."organizationId",
 		sa."orgLocationId"
@@ -112,7 +113,9 @@ service_area as (
 					ST_Distance(ST_Transform(loc.geo, 3857), (SELECT meters FROM points))::int
 				)
 			) AS distance,
-			ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3), NULL) AS "national"
+			ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3), NULL) AS "national",
+			ARRAY_LENGTH(ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3), NULL),1) is not NULL AS "isNational",
+			ARRAY_REMOVE(ARRAY_AGG(DISTINCT sa.cca3) || ARRAY_AGG( DISTINCT sa."districtSlug"), NULL) AS "serviceAreas"
 		FROM "OrgLocation" loc
 			INNER JOIN "Organization" org ON org.id = loc. "orgId"
 			LEFT JOIN service_area sa ON  sa. "organizationId" = loc. "orgId"
@@ -165,9 +168,10 @@ type SearchResult = {
 	matchedAttributes?: string[]
 	distance: string
 	national: string[]
+	isNational: boolean
+	serviceAreas: string[]
 	total: string
 }
-
 const prismaDistSearchDetails = async (input: TSearchDistanceSchema & { resultIds: string[] }) => {
 	const { resultIds, lat: latitude, lon: longitude } = input
 	const results = await prisma.organization.findMany({
