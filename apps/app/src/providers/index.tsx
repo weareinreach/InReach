@@ -10,7 +10,21 @@ import { GoogleMapsProvider } from '@weareinreach/ui/providers/GoogleMaps'
 import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 
-const fontWorkSans = Work_Sans({ subsets: ['latin'] })
+const fontWorkSans = Work_Sans({
+	subsets: ['latin-ext'],
+	weight: ['400', '500', '600'],
+	fallback: [
+		'-apple-system',
+		'BlinkMacSystemFont',
+		'Segoe UI',
+		'Roboto',
+		'Helvetica',
+		'Arial',
+		'sans-serif',
+		'Apple Color Emoji',
+		'Segoe UI Emoji',
+	],
+})
 
 export const Providers = ({ children, session }: ProviderProps) => {
 	return (
@@ -18,7 +32,10 @@ export const Providers = ({ children, session }: ProviderProps) => {
 			<MantineProvider
 				withGlobalStyles
 				withNormalizeCSS
-				theme={{ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }}
+				theme={{
+					...appTheme,
+					fontFamily: fontWorkSans.style.fontFamily,
+				}}
 				emotionCache={appCache}
 			>
 				<ModalsProvider>
