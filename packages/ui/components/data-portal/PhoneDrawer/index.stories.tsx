@@ -1,10 +1,11 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core/Button'
+import { fieldOpt } from '~ui/mockData/fieldOpt'
 import { organization } from '~ui/mockData/organization'
-import { orgWebsite } from '~ui/mockData/orgWebsite'
+import { orgPhone } from '~ui/mockData/orgPhone'
 
-import { PhoneDrawer } from './PhoneDrawer'
+import { PhoneDrawer } from '.'
 
 export default {
 	title: 'Data Portal/Drawers/Phone',
@@ -21,7 +22,7 @@ export default {
 				},
 			},
 		},
-		msw: [organization.getIdFromSlug, orgWebsite.forEditDrawer, orgWebsite.update],
+		msw: [organization.getIdFromSlug, fieldOpt.countries, orgPhone.forEditDrawer],
 	},
 	args: {
 		component: Button,

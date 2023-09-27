@@ -285,7 +285,7 @@ export const orgPhoneData = {
 	],
 	forEditDrawer: {
 		id: 'ophn_01GVH3VFF4XR4V24E3G2JVHN0E',
-		number: '2027333643',
+		number: '+12027333643',
 		ext: null,
 		primary: true,
 		published: true,
@@ -298,7 +298,7 @@ export const orgPhoneData = {
 		description: {
 			id: 'ftxt_01E4ENGNAR7046QZ3H83Y873A2',
 			key: 'orgn_01GVH3V43ZWVSZA5046E3YD5YX.ophn_01GVH3VFF4XR4V24E3G2JVHN0E.description',
-			text: 'Services',
+			text: 'Description for phone number',
 		},
 		locationOnly: false,
 		serviceOnly: false,

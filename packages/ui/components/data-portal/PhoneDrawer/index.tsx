@@ -123,7 +123,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 										phoneInput={{ name: 'number' }}
 										control={control}
 									/>
-									<TextInput label='Description' name='description' control={control} />
+									<TextInput label='Description' name='description.text' control={control} />
 									<Stack>
 										<Checkbox label='Published' name='published' control={control} />
 										<Checkbox label='Deleted' name='deleted' control={control} />
