@@ -942,6 +942,9 @@ importers:
       kysely:
         specifier: 0.26.3
         version: 0.26.3
+      libphonenumber-js:
+        specifier: 1.10.45
+        version: 1.10.45
       p-queue:
         specifier: 7.4.1
         version: 7.4.1

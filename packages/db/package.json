@@ -52,6 +52,7 @@
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
 		"kysely": "0.26.3",
+		"libphonenumber-js": "1.10.45",
 		"p-queue": "7.4.1",
 		"pg": "8.11.3",
 		"prisma-kysely": "1.7.1",
