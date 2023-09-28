@@ -4,7 +4,7 @@ import { AsYouType } from 'libphonenumber-js'
 import { useEffect, useMemo } from 'react'
 import { type Control, type FieldValues, useController, type UseControllerProps } from 'react-hook-form'
 import { Select, type SelectProps } from 'react-hook-form-mantine'
-import { isPossiblePhoneNumber, parsePhoneNumber } from 'react-phone-number-input'
+import { parsePhoneNumber } from 'react-phone-number-input'
 import PhoneInput, { type Props as PhoneInputProps } from 'react-phone-number-input/react-hook-form-input'
 
 import { isCountryCode } from '~ui/hooks/usePhoneNumber'
