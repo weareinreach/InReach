@@ -13,9 +13,10 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
 import { useForm } from 'react-hook-form'
-import { Checkbox, TextInput } from 'react-hook-form-mantine'
+import { Checkbox, Select, TextInput } from 'react-hook-form-mantine'
 import { z } from 'zod'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
@@ -38,16 +39,8 @@ const FormSchema = z.object({
 	primary: z.boolean(),
 	published: z.boolean(),
 	deleted: z.boolean(),
-	country: z.object({
-		id: z.string(),
-		cca2: z.string(),
-	}),
-	phoneType: z
-		.object({
-			id: z.string(),
-			type: z.string(),
-		})
-		.nullish(),
+	countryId: z.string(),
+	phoneTypeId: z.string().nullable(),
 	description: z
 		.object({
 			id: z.string(),
@@ -60,11 +53,16 @@ const FormSchema = z.object({
 })
 type FormSchema = z.infer<typeof FormSchema>
 const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...props }, ref) => {
+	const { t } = useTranslation(['phone-type'])
 	const { data, isFetching } = api.orgPhone.forEditDrawer.useQuery({ id })
+	const { data: phoneTypes } = api.fieldOpt.phoneTypes.useQuery(undefined, {
+		initialData: [],
+		select: (data) => data.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) })),
+	})
 	const [drawerOpened, drawerHandler] = useDisclosure(true)
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const { classes } = useStyles()
-	const { control, handleSubmit, formState, reset, getValues } = useForm<FormSchema>({
+	const { control, handleSubmit, formState, reset, getValues, watch } = useForm<FormSchema>({
 		resolver: zodResolver(FormSchema),
 		values: data,
 		defaultValues: data,
@@ -77,6 +75,11 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 		},
 	})
 	const isSaved = siteUpdate.isSuccess && !formState.isDirty
+
+	const values = {
+		phoneTypeId: watch('phoneTypeId'),
+	}
+
 	const handleClose = () => {
 		if (formState.isDirty) {
 			return modalHandler.open()
@@ -119,11 +122,19 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 									<PhoneNumberEntry
 										label='Phone Number'
 										required
-										countrySelect={{ name: 'country.id' }}
+										countrySelect={{ name: 'countryId' }}
 										phoneInput={{ name: 'number' }}
 										control={control}
 									/>
-									<TextInput label='Description' name='description.text' control={control} />
+									<Select
+										label='Type'
+										control={control}
+										name='phoneTypeId'
+										data={[...phoneTypes, { value: null as unknown as string, label: 'Custom' }]}
+									/>
+									{values.phoneTypeId === null && (
+										<TextInput label='Description' name='description.text' control={control} />
+									)}
 									<Stack>
 										<Checkbox label='Published' name='published' control={control} />
 										<Checkbox label='Deleted' name='deleted' control={control} />

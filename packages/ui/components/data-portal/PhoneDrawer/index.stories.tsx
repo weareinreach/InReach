@@ -22,7 +22,7 @@ export default {
 				},
 			},
 		},
-		msw: [organization.getIdFromSlug, fieldOpt.countries, orgPhone.forEditDrawer],
+		msw: [organization.getIdFromSlug, fieldOpt.countries, orgPhone.forEditDrawer, fieldOpt.phoneTypes],
 	},
 	args: {
 		component: Button,
