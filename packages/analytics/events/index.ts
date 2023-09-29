@@ -8,13 +8,13 @@ import type { ServiceCategoryToggleAction, ServiceModalOpenedAction } from './ty
 
 export const serviceFilterEvent = {
 	select: (serviceId: string, service?: string, category?: string) =>
-		event('service_filter_select', { serviceId, service, category }),
+		event('service_filter_select', { serviceId, service_name: service, service_category: category }),
 	unselect: (serviceId: string, service?: string, category?: string) =>
-		event('service_filter_unselect', { serviceId, service, category }),
+		event('service_filter_unselect', { serviceId, service_name: service, service_category: category }),
 	toggleCategory: (category: string, action: ServiceCategoryToggleAction) =>
-		event('service_filter_category_toggle', { category, action }),
+		event('service_filter_category_toggle', { service_category: category, action }),
 	deselectAll: (selectedServices: (string | undefined)[]) =>
-		event('service_filter_deselect_all', { selectedServices: compact(selectedServices) }),
+		event('service_filter_deselect_all', { service_name: compact(selectedServices) }),
 }
 
 export const navbarEvent = {
