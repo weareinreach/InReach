@@ -8,8 +8,9 @@ import { useRouter } from 'next/router'
 import { type Session } from 'next-auth'
 import { appWithTranslation } from 'next-i18next'
 import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
-import { event, GoogleAnalytics } from 'nextjs-google-analytics'
+import { GoogleAnalytics } from 'nextjs-google-analytics'
 
+import { appEvent } from '@weareinreach/analytics/events'
 import { PageLoadProgress } from '@weareinreach/ui/components/core/PageLoadProgress'
 import { Footer } from '@weareinreach/ui/components/sections/Footer'
 import { Navbar } from '@weareinreach/ui/components/sections/Navbar'
@@ -52,13 +53,8 @@ const defaultSEO = {
 	],
 } satisfies DefaultSeoProps
 
-export function reportWebVitals({ id, name, label, value }: NextWebVitalsMetric) {
-	event(name, {
-		category: label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
-		value: Math.round(name === 'CLS' ? value * 1000 : value), // values must be integers
-		label: id, // id unique to current page load
-		nonInteraction: true, // avoids affecting bounce rate.
-	})
+export function reportWebVitals(stats: NextWebVitalsMetric) {
+	appEvent.webVitals(stats)
 }
 
 const MyApp = (appProps: AppPropsWithGridSwitch) => {
@@ -84,7 +80,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 	return (
 		<Providers session={session}>
 			<DefaultSeo {...defaultSEO} />
-			<GoogleAnalytics trackPageViews debugMode defaultConsent='denied' />
+			<GoogleAnalytics trackPageViews defaultConsent='denied' />
 
 			<PageLoadProgress />
 			<Navbar />

@@ -3,7 +3,7 @@ import { type NextWebVitalsMetric } from 'next/app'
 import { event } from 'nextjs-google-analytics'
 
 // eslint-disable-next-line import/consistent-type-specifier-style
-import type { ServiceCategoryToggleAction } from './types'
+import type { ServiceCategoryToggleAction, ServiceModalOpenedAction } from './types'
 
 export const serviceFilterEvent = {
 	select: (serviceId: string, service?: string, category?: string) =>
@@ -35,4 +35,9 @@ export const appEvent = {
 			label: id, // id unique to current page load
 			nonInteraction: true, // avoids affecting bounce rate.
 		}),
+}
+
+export const serviceModalEvent = {
+	opened: ({ serviceId, serviceName, orgSlug }: ServiceModalOpenedAction) =>
+		event('select_content', { content_type: 'orgService', content_id: serviceId, serviceName, orgSlug }),
 }
