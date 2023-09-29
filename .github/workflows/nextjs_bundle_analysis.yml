@@ -119,7 +119,7 @@ jobs:
         id: fc
         with:
           issue-number: ${{ github.event.number }}
-          body-includes: '<!-- __NEXTJS_BUNDLE -->'
+          body-includes: '<!-- __NEXTJS_BUNDLE_@weareinreach/app -->'
 
       - name: Create Comment
         uses: peter-evans/create-or-update-comment@c6c9a1a66007646a28c153e2a8580a5bad27bcfa # v3

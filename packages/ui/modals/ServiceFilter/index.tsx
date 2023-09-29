@@ -16,10 +16,11 @@ import {
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useMemo, useState } from 'react'
+import { type BaseSyntheticEvent, type MouseEvent, useEffect, useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { Checkbox } from 'react-hook-form-mantine'
 
+import { serviceFilterEvent } from '@weareinreach/analytics/events'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useSearchState } from '~ui/hooks/useSearchState'
@@ -72,6 +73,16 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 			),
 		[serviceOptionData]
 	)
+	const serviceName = useMemo(() => {
+		const data = serviceOptionData?.flatMap(({ services }) =>
+			services.map(({ label, value }) => [value, t(label, { lng: 'en' })])
+		) as [string, string][] | undefined
+		return new Map(data)
+	}, [serviceOptionData, t])
+	const serviceCategoryName = useMemo(
+		() => new Map(serviceOptionData?.map(({ categoryId, label }) => [categoryId, t(label, { lng: 'en' })])),
+		[serviceOptionData, t]
+	)
 	const selectedValues = useWatch({ name: 'selected', control: form.control })
 
 	useEffect(() => {
@@ -95,16 +106,39 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 
 	const toggleCategory = (categoryId: string) => {
 		const services = servicesByCategory.get(categoryId)
+		const category = serviceCategoryName.get(categoryId)
 		if (!services) return
 		if (!hasAll(categoryId)) {
 			const newValue = [...new Set([...selectedValues, ...services])]
+			for (const service of newValue) {
+				if (!selectedValues.includes(service)) {
+					serviceFilterEvent.select(service, serviceName.get(service), category)
+				}
+			}
 			form.setValue('selected', newValue, { shouldValidate: true })
 		} else {
 			const newValue = selectedValues.filter((id) => !services.includes(id))
+			if (newValue.length === 0) {
+				for (const service of selectedValues) {
+					serviceFilterEvent.unselect(service, serviceName.get(service), category)
+				}
+			}
+			for (const service of newValue) {
+				if (!selectedValues.includes(service)) {
+					serviceFilterEvent.unselect(service, serviceName.get(service), category)
+				}
+			}
 			form.setValue('selected', newValue, { shouldValidate: true })
 		}
 	}
-	const deselectAll = () => form.setValue('selected', [], { shouldValidate: true })
+	const deselectAll = () => {
+		serviceFilterEvent.deselectAll(selectedValues.map((serviceId) => serviceName.get(serviceId)))
+		for (const service of selectedValues) {
+			serviceFilterEvent.unselect(service, serviceName.get(service))
+		}
+		form.setValue('selected', [], { shouldValidate: true })
+	}
+
 	const selectedCountIcon = <Text className={classes.count}>{selectedValues.length}</Text>
 	const categorySelectedCountIcon = (categoryId: string) => {
 		const services = servicesByCategory.get(categoryId)
@@ -133,7 +167,13 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 							indeterminate={indeterminate}
 							label={t('all-service-category', { serviceCategory: `$t(${label})` })}
 							transitionDuration={0}
-							onClick={() => toggleCategory(categoryId)}
+							onClick={() => {
+								toggleCategory(categoryId)
+								serviceFilterEvent.toggleCategory(
+									t(label, { lng: 'en' }),
+									checked ? 'unselect' : indeterminate ? 'select_from_partial' : 'select'
+								)
+							}}
 							className={classes.itemParent}
 						/>
 					)}
@@ -145,6 +185,14 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 									label={t(item.label)}
 									value={item.value}
 									key={item.value}
+									onClick={(e: BaseSyntheticEvent<MouseEvent, HTMLInputElement, { checked: boolean }>) => {
+										const serviceId = item.value
+										const serviceName = t(item.label, { lng: 'en' })
+										const serviceCategory = t(label, { lng: 'en' })
+										e.target.checked
+											? serviceFilterEvent.select(serviceId, serviceName, serviceCategory)
+											: serviceFilterEvent.unselect(serviceId, serviceName, serviceCategory)
+									}}
 								/>
 							)
 						})}

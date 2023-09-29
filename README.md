@@ -189,4 +189,4 @@ See [LICENSE](LICENSE) for more information.
 
 [![Powered by Vercel](.github/images/powered-by-vercel.svg)](https://vercel.com/?utm_source=in-reach&utm_campaign=oss)
 
-[![Structured Content Powered by Sanity](.github/images/sanity-logo.svg)](https://sanity.io)
+[![built with Codeium](https://codeium.com/badges/main)](https://codeium.com)

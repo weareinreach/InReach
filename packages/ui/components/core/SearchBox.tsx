@@ -26,6 +26,7 @@ import {
 } from 'react'
 import reactStringReplace from 'react-string-replace'
 
+import { searchBoxEvent } from '@weareinreach/analytics/events'
 import { type ApiOutput } from '@weareinreach/api'
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -314,6 +315,7 @@ export const SearchBox = ({
 				return
 			}
 			searchStateActions.setSearchTerm(item.value)
+			searchBoxEvent.searchOrg(search, item.value)
 			router.push({
 				pathname: '/org/[slug]',
 				query: {
@@ -326,6 +328,7 @@ export const SearchBox = ({
 				setLoading(false)
 				return
 			}
+			searchBoxEvent.searchLocation(item.value, item.placeId)
 			searchStateActions.setSearchTerm(item.value)
 			setLocationSearch(item.placeId)
 		}
