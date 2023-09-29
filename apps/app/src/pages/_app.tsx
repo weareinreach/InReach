@@ -1,31 +1,24 @@
-import { MantineProvider, Space } from '@mantine/core'
-import { ModalsProvider } from '@mantine/modals'
+import { Space } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Analytics } from '@vercel/analytics/react'
 import { type NextPage } from 'next'
-import { type AppProps } from 'next/app'
-import { Work_Sans } from 'next/font/google'
+import { type AppProps, type NextWebVitalsMetric } from 'next/app'
 import { useRouter } from 'next/router'
 import { type Session } from 'next-auth'
-import { SessionProvider } from 'next-auth/react'
 import { appWithTranslation } from 'next-i18next'
 import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
+import { event, GoogleAnalytics } from 'nextjs-google-analytics'
 
 import { PageLoadProgress } from '@weareinreach/ui/components/core/PageLoadProgress'
 import { Footer } from '@weareinreach/ui/components/sections/Footer'
 import { Navbar } from '@weareinreach/ui/components/sections/Navbar'
 import { useScreenSize } from '@weareinreach/ui/hooks/useScreenSize'
 import { BodyGrid } from '@weareinreach/ui/layouts/BodyGrid'
-import { GoogleMapsProvider } from '@weareinreach/ui/providers/GoogleMaps'
-import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
-import { appCache, appTheme } from '@weareinreach/ui/theme'
+import { Providers } from '~app/providers'
 import { api } from '~app/utils/api'
 
 import nextI18nConfig from '../../next-i18next.config.mjs'
-import 'core-js/features/array/at'
-
-const fontWorkSans = Work_Sans({ subsets: ['latin'] })
 
 const defaultSEO = {
 	titleTemplate: '%s | InReach',
@@ -59,6 +52,15 @@ const defaultSEO = {
 	],
 } satisfies DefaultSeoProps
 
+export function reportWebVitals({ id, name, label, value }: NextWebVitalsMetric) {
+	event(name, {
+		category: label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
+		value: Math.round(name === 'CLS' ? value * 1000 : value), // values must be integers
+		label: id, // id unique to current page load
+		nonInteraction: true, // avoids affecting bounce rate.
+	})
+}
+
 const MyApp = (appProps: AppPropsWithGridSwitch) => {
 	const {
 		Component,
@@ -80,30 +82,19 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 	)
 
 	return (
-		<SessionProvider session={session}>
+		<Providers session={session}>
 			<DefaultSeo {...defaultSEO} />
-			<MantineProvider
-				withGlobalStyles
-				withNormalizeCSS
-				theme={{ ...appTheme, fontFamily: fontWorkSans.style.fontFamily }}
-				emotionCache={appCache}
-			>
-				<ModalsProvider>
-					<SearchStateProvider>
-						<GoogleMapsProvider>
-							<PageLoadProgress />
-							<Navbar />
-							{PageContent}
-							{(isMobile || isTablet) && <Space h={80} />}
-							<Footer />
-							<Notifications transitionDuration={500} />
-						</GoogleMapsProvider>
-					</SearchStateProvider>
-				</ModalsProvider>
-				<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
-				<Analytics />
-			</MantineProvider>
-		</SessionProvider>
+			<GoogleAnalytics trackPageViews debugMode defaultConsent='denied' />
+
+			<PageLoadProgress />
+			<Navbar />
+			{PageContent}
+			{(isMobile || isTablet) && <Space h={80} />}
+			<Footer />
+			<Notifications transitionDuration={500} />
+			<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
+			<Analytics />
+		</Providers>
 	)
 }
 
