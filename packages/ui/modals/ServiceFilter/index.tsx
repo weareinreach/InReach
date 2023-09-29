@@ -16,7 +16,8 @@ import {
 import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useMemo, useState } from 'react'
+import { event } from 'nextjs-google-analytics'
+import { type BaseSyntheticEvent, type MouseEvent, useEffect, useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { Checkbox } from 'react-hook-form-mantine'
 
@@ -133,7 +134,20 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 							indeterminate={indeterminate}
 							label={t('all-service-category', { serviceCategory: `$t(${label})` })}
 							transitionDuration={0}
-							onClick={() => toggleCategory(categoryId)}
+							onClick={() => {
+								toggleCategory(categoryId)
+								event('select_item', {
+									item_list_id: 'service-filter',
+									item_list_name: 'Service Filter',
+									items: [
+										{
+											item_id: categoryId,
+											item_name: t('all-service-category', { serviceCategory: `$t(${label})` }),
+											value: !checked,
+										},
+									],
+								})
+							}}
 							className={classes.itemParent}
 						/>
 					)}
@@ -145,6 +159,19 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 									label={t(item.label)}
 									value={item.value}
 									key={item.value}
+									onClick={(e: BaseSyntheticEvent<MouseEvent, HTMLInputElement, { checked: boolean }>) => {
+										event('select_item', {
+											item_list_id: 'service-filter',
+											item_list_name: 'Service Filter',
+											items: [
+												{
+													item_id: item.value,
+													item_name: t(item.label),
+													value: e.target.checked,
+												},
+											],
+										})
+									}}
 								/>
 							)
 						})}
