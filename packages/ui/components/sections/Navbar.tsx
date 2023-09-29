@@ -2,6 +2,7 @@ import { Container, createStyles, Flex, Group, rem } from '@mantine/core'
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 
+import { navbarEvent } from '@weareinreach/analytics/events'
 import InReachLogo from '~ui/assets/inreach.svg'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
@@ -49,7 +50,9 @@ export const Navbar = () => {
 					<Group spacing={40} noWrap align='center'>
 						<UserMenu />
 						<Link href='https://www.google.com' target='_self' variant={variants.Link.inheritStyle}>
-							<Button variant='accent'>{t('safety-exit')}</Button>
+							<Button variant='accent' onClick={navbarEvent.safetyExit} id='safety-exit'>
+								{t('safety-exit')}
+							</Button>
 						</Link>
 					</Group>
 				</Flex>

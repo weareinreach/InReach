@@ -26,6 +26,7 @@
 		"@textea/json-viewer": "3.1.1",
 		"@turf/helpers": "6.5.0",
 		"@tweenjs/tween.js": "21.0.0",
+		"@weareinreach/analytics": "workspace:*",
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
 		"ahooks": "3.7.8",
