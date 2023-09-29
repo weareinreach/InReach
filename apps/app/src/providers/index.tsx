@@ -1,13 +1,12 @@
 'use client'
 import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
-import { type TFunction } from 'i18next'
 import dynamic, { type LoaderComponent } from 'next/dynamic'
 import { Work_Sans } from 'next/font/google'
 import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next'
-import { type ComponentPropsWithoutRef } from 'react'
+import { type ComponentPropsWithoutRef, useMemo } from 'react'
 import { ConsentBanner, type ConsentOptions, ConsentProvider } from 'react-hook-consent'
 
 import { GoogleMapsProvider } from '@weareinreach/ui/providers/GoogleMaps'
@@ -31,28 +30,6 @@ const fontWorkSans = Work_Sans({
 	],
 })
 
-const consentOptions = (t: TFunction<'common'>): ConsentOptions => ({
-	services: [
-		{
-			id: 'basic',
-			name: t('cookie-consent.item-basic'),
-			mandatory: true,
-		},
-		{
-			id: 'ga4',
-			name: t('cookie-consent.item-ga4'),
-			scripts: [
-				{
-					id: 'ga4-consent',
-					code: `window.gtag && window.gtag('consent', 'update', {ad_storage: 'granted',	analytics_storage: 'granted'})`,
-				},
-			],
-			mandatory: false,
-		},
-	],
-	theme: 'light',
-})
-
 const PrivacyStatementModal = dynamic(
 	() =>
 		import('@weareinreach/ui/modals/PrivacyStatement').then(
@@ -61,35 +38,63 @@ const PrivacyStatementModal = dynamic(
 )
 const Link = dynamic(() => import('@weareinreach/ui/components/core/Link').then((mod) => mod.Link))
 
-const consentBannerSettings = (t: TFunction<'common'>): ConsentBannerOpts => ({
-	settings: {
-		modal: {
-			title: t('cookie-consent.modal-title'),
-			approve: { label: t('cookie-consent.approve-selected') },
-			approveAll: { label: t('cookie-consent.approve-all') },
-			decline: { label: t('words.decline') },
-			description: (
-				<Trans
-					i18nKey='cookie-consent.body'
-					components={{
-						PrivacyLink: (
-							/* @ts-expect-error -> This is a dynamic component */
-							<PrivacyStatementModal component={Link} variant='inlineInvertedUtil1' />
-						),
-					}}
-				/>
-			),
-		},
-		label: t('words.customize'),
-	},
-	approve: { label: t('words.accept') },
-	decline: { label: t('words.decline') },
-})
-
 export const Providers = ({ children, session }: ProviderProps) => {
 	const { t } = useTranslation('common')
+
+	const consentOptions: ConsentOptions = useMemo(
+		() => ({
+			services: [
+				{
+					id: 'basic',
+					name: t('cookie-consent.item-basic'),
+					mandatory: true,
+				},
+				{
+					id: 'ga4',
+					name: t('cookie-consent.item-ga4'),
+					scripts: [
+						{
+							id: 'ga4-consent',
+							code: `window.gtag && window.gtag('consent', 'update', {ad_storage: 'granted',	analytics_storage: 'granted'})`,
+						},
+					],
+				},
+			],
+			theme: 'light',
+		}),
+		[t]
+	)
+
+	const consentBannerSettings: ConsentBannerOpts = useMemo(
+		() => ({
+			settings: {
+				modal: {
+					title: t('cookie-consent.modal-title'),
+					approve: { label: t('cookie-consent.approve-selected') },
+					approveAll: { label: t('cookie-consent.approve-all') },
+					decline: { label: t('words.decline') },
+					description: (
+						<Trans
+							i18nKey='cookie-consent.body'
+							components={{
+								PrivacyLink: (
+									/* @ts-expect-error -> This is a dynamic component */
+									<PrivacyStatementModal component={Link} variant='inlineInvertedUtil1' />
+								),
+							}}
+						/>
+					),
+				},
+				label: t('words.customize'),
+			},
+			approve: { label: t('words.accept') },
+			decline: { label: t('words.decline') },
+		}),
+		[t]
+	)
+
 	return (
-		<ConsentProvider options={consentOptions(t)}>
+		<ConsentProvider options={consentOptions}>
 			<SessionProvider session={session}>
 				<MantineProvider
 					withGlobalStyles
@@ -104,7 +109,7 @@ export const Providers = ({ children, session }: ProviderProps) => {
 						<SearchStateProvider>
 							<GoogleMapsProvider>
 								{children}
-								<ConsentBanner {...consentBannerSettings(t)}>{t('cookie-consent.intro')}</ConsentBanner>
+								<ConsentBanner {...consentBannerSettings}>{t('cookie-consent.intro')}</ConsentBanner>
 							</GoogleMapsProvider>
 						</SearchStateProvider>
 					</ModalsProvider>
