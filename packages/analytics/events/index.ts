@@ -1,6 +1,7 @@
 import compact from 'just-compact'
 import { type NextWebVitalsMetric } from 'next/app'
-import { event } from 'nextjs-google-analytics'
+
+import { event } from '../lib/event'
 
 // eslint-disable-next-line import/consistent-type-specifier-style
 import type { ServiceCategoryToggleAction, ServiceModalOpenedAction } from './types'
