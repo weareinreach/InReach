@@ -66,6 +66,7 @@
 		"@vercel/analytics": "1.0.2",
 		"@vercel/edge-config": "0.4.1",
 		"@vercel/kv": "0.2.3",
+		"@weareinreach/analytics": "workspace:*",
 		"@weareinreach/api": "workspace:*",
 		"@weareinreach/auth": "workspace:*",
 		"@weareinreach/crowdin": "workspace:*",

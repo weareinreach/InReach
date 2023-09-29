@@ -84,6 +84,11 @@ const config = {
 						importNames: ['useTranslation', 'Trans', 'Translation'],
 						message: "Please import from 'next-i18next'",
 					},
+					{
+						name: 'nextjs-google-analytics',
+						importNames: ['event'],
+						message: "Define the event in '@weareinreach/analytics' and import from there",
+					},
 				],
 			},
 		],

@@ -28,6 +28,7 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	transpilePackages: [
+		'@weareinreach/analytics',
 		'@weareinreach/api',
 		'@weareinreach/auth',
 		'@weareinreach/crowdin',
