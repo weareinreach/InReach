@@ -91,7 +91,10 @@ jobs:
 
       - name: Format json files
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
-        run: prettier --write apps/app/public/locales/*/*.json
+        run: |
+          pwd
+          ls
+          prettier --write apps/app/public/locales/*/*.json
         # uses: creyD/prettier_action@31355f8eef017f8aeba2e0bc09d8502b13dbbad1 # v4.3
         # with:
         #   prettier_options: '--write **/locales/*/*.json'
