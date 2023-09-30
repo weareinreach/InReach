@@ -76,8 +76,9 @@ jobs:
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
         uses: creyD/prettier_action@v4.3
         with:
-          prettier_options: --write ./apps/app/public/locales/**/*.json
+          prettier_options: --write **/*.json
           dry: true
+          prettier_plugins: 'prettier-plugin-packagejson prettier-plugin-jsdoc prettier-plugin-prisma'
 
       - name: Commit files
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
@@ -87,6 +88,7 @@ jobs:
           committer: 'InReach [bot] <108850934+InReach-svc@users.noreply.github.com>'
           author: 'InReach [bot] <108850934+InReach-svc@users.noreply.github.com>'
           branch: ${{ format('l10n_{0}',steps.branchregex.outputs.value) }}
+          base: ${{ github.ref_name }}
           title: 'chore(i18n): Updated translations from Crowdin'
           labels: |
             translations
