@@ -50,6 +50,15 @@
 	"connect": "接続",
 	"contact": "連絡",
 	"contact-us": "お問い合わせ",
+	"cookie-consent": {
+		"approve-all": "すべて承認",
+		"approve-selected": "承認を選択しました",
+		"body": "私たちは、このウェブサイト上でクッキーとサードパーティーのサービスを使用しています. それらのいくつかは不可欠であります, 他の人は、あなたのブラウジング体験を向上させるために私たちを助けます. 詳細については、 <PrivacyLink>プライバシーステートメント</PrivacyLink> をご覧ください。",
+		"intro": "当社は、当社のサイトを機能させるために必要なクッキーを使用しています。 サイトの使用状況を理解し、サイトの改善を行い、設定を記憶するために追加のクッキーを設定します。",
+		"item-basic": "サイト機能に必要なクッキー",
+		"item-ga4": "InReach の内部使用のための分析",
+		"modal-title": "Cookie の設定"
+	},
 	"count": {
 		"result_other": "{{count}} 件の結果"
 	},
@@ -203,7 +212,7 @@
 		"<textUtility4>(*唯一の例外は、Local Community Reviewer のユーザーアカウントタイプです。これは、収集された人口統計情報を活用して、Local Community Reviewerのボランティア活動の経験と影響力を高めます。Local Community Reviewer アカウントの場合、位置情報やその他の人口統計情報は任意ですが、ユーザーレコードに関連付けられます。このデータは、ローカルコミュニティレビュー担当者がアカウントのプライバシー設定で公開することを選択した場合にのみ、inReachスタッフ以外には表示されません。プロフィールを公開すると、他のユーザーがあなたのレビューに自信を持てるようになります。）</textUtility4>",
 		"<textDarkGray>ユーザー層を理解することは、インパクトの定量化、資金調達、将来の製品に関する意思決定の評価に役立ちます。ユーザーが自発的にこの情報を私たちと共有してくれることに感謝し、私たちはあなたのプライバシーと匿名性を保護するためにこれらの措置を講じています。</textDarkGray>",
 		"<textDarkGray><title2>サイト利用分析</title2></textDarkGray>",
-		"<textDarkGray>InReach uses <linkUmami>Umami</linkUmami>, a privacy-focused alternative to Google Analytics, to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. <linkUmamiGDPR>Umami is GDPR compliant</linkUmamiGDPR> and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
+		"<textDarkGray>InReach uses Google Analytics to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. Google Analytics is GDPR compliant and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
 		"<textDarkGray>InReachは、ウェブのバイタルやパフォーマンスの分析にもVercel Analyticsを使用しています。Vercel Analyticsは、個々の訪問者やIPアドレスに縛られたり、関連付けられたりすることなく、サイトの使用状況情報を提供します。データポイントの記録は匿名で行われ、アナリティクス機能は、Vercelがページ間のブラウジングセッションを再構築したり、ユーザーを特定したりできるような情報を収集または保存しません。</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>詳細については、当社のプライバシーポリシー全文をお読みください。</linkPolicy>",
@@ -364,9 +373,12 @@
 		"add": "[追加]",
 		"and": "そして",
 		"and-x-more": "他 {{count}} 名",
+		"approve": "承認",
 		"back": "戻る",
 		"close": "閉じる",
 		"coming-soon": "近日公開予定",
+		"customize": "カスタマイズ",
+		"decline": "同意しない",
 		"delete": "[削除]",
 		"distance": "距離",
 		"email": "E メール",
@@ -374,6 +386,7 @@
 		"hours": "時間",
 		"location": "場所",
 		"more": "もっと",
+		"more-info": "詳細情報",
 		"next": "[次へ]",
 		"no": "いいえ",
 		"organization": "組織",

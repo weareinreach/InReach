@@ -50,6 +50,15 @@
 	"connect": "Se connecter",
 	"contact": "Contacter",
 	"contact-us": "Nous contacter",
+	"cookie-consent": {
+		"approve-all": "Tout approuver",
+		"approve-selected": "Approuver la sélection",
+		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"intro": "Nous utilisons les cookies nécessaires pour faire fonctionner notre site. Nous aimerions configurer des cookies supplémentaires pour comprendre l'utilisation du site, améliorer le site et mémoriser vos paramètres.",
+		"item-basic": "Cookies nécessaires pour les fonctionnalités du site",
+		"item-ga4": "Analyses pour utilisation interne InReach",
+		"modal-title": "Paramètres des cookies"
+	},
 	"count": {
 		"result_one": "{{count}} résultat",
 		"result_other": "{{count}} résultats"
@@ -61,7 +70,7 @@
 		"intl-these-verified": "Ces ressources vérifiées peuvent aider la communauté LGBTQ+ partout dans le monde.",
 		"intl-we-recommend": "Nous recommandons ces ressources internationales",
 		"natl-find-help-now": "Trouver de l'aide maintenant",
-		"natl-these-verified": "<Text>Ces ressources vérifiées peuvent aider la communauté LGBTQ+ aux États-Unis. Ces services sont <strong> accessibles à distance, confidentielles, </strong> et <strong> gratuites</strong>. </Text>",
+		"natl-these-verified": "<Text>Ces ressources vérifiées peuvent aider la communauté LGBTQ+ aux États-Unis. Ces services sont <strong> accessibles à distance, confidentiels </strong> et <strong> gratuits</strong>. </Text>",
 		"outside-service-area": "InReach ne fonctionne pas au/en {{country}}",
 		"who-this-serves": "<Text><strong>Qui cette ressource sert :</strong> {{targetPop}}</Text>"
 	},
@@ -204,7 +213,7 @@
 		"<textDarkGray><listGroup><listItem>Année de naissance</listItem>\n<listItem>Pays d'origine</listItem>\n<listItem>Identité LGBTQ+ (orientation sexuelle et identité de genre)</listItem>\n<listItem>Race/ethnicité</listItem>\n<listItem>Statut d'immigration</listItem>\n<listItem>Emplacement actuel</listItem></listGroup></textDarkGray>",
 		"<textDarkGray>Comprendre les caractéristiques démographiques de nos utilisateurs peut nous aider à quantifier notre impact, à lever des fonds et à évaluer les décisions futures en matière de produits. Nous apprécions que les utilisateurs partagent volontairement ces informations avec nous, et nous prenons ces mesures pour protéger votre vie privée et votre anonymat.\n</textDarkGray>",
 		"<textDarkGray><title2>Analyse d'utilisation du site</title2></textDarkGray>",
-		"<textDarkGray>InReach utilise <linkUmami>Umami</linkUmami>, une alternative à Google Analytics axée sur la vie privée, pour analyser et suivre anonymement les données d'utilisation de l'application (par ex, les recherches des utilisateurs et d'autres comportements) dans l'agrégat. <linkUmamiGDPR>Umami est conforme au GDPR</linkUmamiGDPR> et ne réunit aucune information personnellement identifiable et rend anonyme toutes les données collectées. Les utilisateurs ne peuvent pas être identifiés et ne sont jamais suivis sur les sites Web.</textDarkGray>",
+		"<textDarkGray>InReach utilise <linkUmami>Umami</linkUmami>, une alternative à Google Analytics axée sur la vie privée, pour analyser et suivre anonymement les données d'utilisation de l'application (par exemple, les recherches des utilisateurs et d'autres comportements) dans l'agrégat. <linkUmamiGDPR>Umami est conforme au GDPR</linkUmamiGDPR> et ne réunit aucune information personnelle identifiable et rend anonyme toutes les données collectées. Les utilisateurs ne peuvent pas être identifiés et ne sont jamais suivis à travers les sites Web.</textDarkGray>",
 		"<textDarkGray>InReach utilise également Vercel Analytics pour analyser la performance et les composants essentiels du web. Vercel Analytics fournit des informations d'utilisation du site sans être lié à, ou associé à un visiteur ou à une adresse IP individuelle. L'enregistrement des données est anonyme et la fonction Analytics ne collecte pas ou ne garde pas d'informations qui permettraient à Vercel de reconstruire une session de navigation à travers des pages ou d'identifier un utilisateur.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Lisez notre politique de confidentialité complète pour plus d'informations</linkPolicy>",
@@ -365,9 +374,12 @@
 		"add": "Ajouter",
 		"and": "et",
 		"and-x-more": "et {{count}} de plus",
+		"approve": "Approuver",
 		"back": "Précédent",
 		"close": "Fermer",
 		"coming-soon": "Bientôt disponible",
+		"customize": "Personnaliser",
+		"decline": "Refuser",
 		"delete": "Supprimer",
 		"distance": "Distance",
 		"email": "Courriel",
@@ -375,6 +387,7 @@
 		"hours": "Heures",
 		"location": "Localisation",
 		"more": "plus",
+		"more-info": "Plus d'informations",
 		"next": "Suivant",
 		"no": "Non",
 		"organization": "Organisation",
