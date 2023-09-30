@@ -3,8 +3,7 @@ version = 1
 
 [update]
 	## Keep every PR up to date with main
-	# always = true
-	always = false
+	always = true
 	ignored_usernames = [
 		"dependabot",
 		"renovate",
