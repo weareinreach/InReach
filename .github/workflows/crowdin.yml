@@ -25,6 +25,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
       CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+      CI_USE_HUSKY: 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
