@@ -62,7 +62,7 @@ jobs:
           ESLINT_PRIVATE_KEY_BASE64: ${{ secrets.BOT_SECRET_KEY_B64 }}
 
       - name: Format projects
-        run: pnpm format
+        run: pnpm format --force
         if: always()
         id: format
 
