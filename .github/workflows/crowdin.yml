@@ -50,8 +50,6 @@ jobs:
         uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3
         with:
           node-version-file: .nvmrc
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
@@ -95,10 +93,11 @@ jobs:
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
         uses: creyD/prettier_action@31355f8eef017f8aeba2e0bc09d8502b13dbbad1 # v4.3
         with:
-          prettier_options: '--write **/locales/*/*.json && pwd'
+          prettier_options: '--write **/locales/*/*.json'
           commit_options: '--dry-run'
           push_options: '--dry-run'
           clean_node_folder: false
+          prettier_version: latest --dry-run
 
       - name: Commit files
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
