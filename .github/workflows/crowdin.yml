@@ -75,7 +75,7 @@ jobs:
           flags: gi
           replacement: '_'
 
-      - name: Upload to Crowdin
+      - name: Sync Crowdin
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
         uses: crowdin/github-action@6a189cf93a647dc1f4214eb10447661de26b577a # v1.13.1
         with:
@@ -95,7 +95,7 @@ jobs:
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
         uses: creyD/prettier_action@v4.3
         with:
-          prettier_options: --write apps/app/public/locales/**/*.json
+          prettier_options: --write **/locales/**/*.json
           commit_options: '--dry-run'
           push_options: '--dry-run'
 
