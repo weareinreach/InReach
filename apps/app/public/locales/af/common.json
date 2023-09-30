@@ -50,6 +50,15 @@
 	"connect": "Verbind",
 	"contact": "Kontak",
 	"contact-us": "Kontak Ons",
+	"cookie-consent": {
+		"approve-all": "Approve all",
+		"approve-selected": "Approve selected",
+		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"intro": "We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings.",
+		"item-basic": "Necessary cookies for site functionality",
+		"item-ga4": "Analytics for internal InReach use",
+		"modal-title": "Cookies Settings"
+	},
 	"count": {
 		"result_one": "{{count}} lei",
 		"result_other": "{{count}} resultate"
@@ -208,7 +217,10 @@
 		"<textDarkGray>inReach gebruik ook Vercel Analytics om webvitale en prestasie te ontleed. Vercel Analytics verskaf inligting oor webwerfgebruik sonder om gekoppel te wees aan, of geassosieer met, enige individuele besoeker of IP-adres. Die opname van datapunte is anoniem en die Analytics-funksie versamel of stoor nie inligting wat Vercel in staat sal stel om 'n blaaisessie oor bladsye te rekonstrueer of 'n gebruiker te identifiseer nie.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Lees ons volledige privaatheidsbeleid vir meer inligting</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Privaatheidsverklaring</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>Privaatheidsverklaring</title2>"
+	],
 	"privatePractice": "Privaat praktyk",
 	"profile": "Profiel",
 	"questions": "Vrae?",
@@ -365,9 +377,12 @@
 		"add": "Voeg",
 		"and": "en",
 		"and-x-more": "en {{count}} meer",
+		"approve": "Approve",
 		"back": "Terug",
 		"close": "Sluit",
 		"coming-soon": "Binnekort",
+		"customize": "Customize",
+		"decline": "Decline",
 		"delete": "Verwyder",
 		"distance": "Afstand",
 		"email": "E-pos",
@@ -375,6 +390,7 @@
 		"hours": "Ure",
 		"location": "Location",
 		"more": "baie",
+		"more-info": "More information",
 		"next": "Volgende",
 		"no": "Nee",
 		"organization": "Organisasie",

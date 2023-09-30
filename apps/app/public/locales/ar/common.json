@@ -50,6 +50,15 @@
 	"connect": "الاتصال",
 	"contact": "الاتصال",
 	"contact-us": "اتصل بنا",
+	"cookie-consent": {
+		"approve-all": "الموافقة على الكل",
+		"approve-selected": "الموافقة على المحدد",
+		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"intro": "نحن نستخدم ملفات تعريف الارتباط الضرورية لجعل موقعنا يعمل. نود تعيين ملفات تعريف الارتباط الإضافية لفهم استخدام الموقع، وإجراء تحسينات في الموقع وتذكر الإعدادات الخاصة بك.",
+		"item-basic": "ملفات تعريف الارتباط اللازمة لوظيفة الموقع",
+		"item-ga4": "تحليلات للاستخدام الداخلي للإتصال",
+		"modal-title": "إعدادات ملفات تعريف الارتباط"
+	},
 	"count": {
 		"result_zero": "نتائج {{count}}",
 		"result_one": "نتيجة {{count}}",
@@ -212,7 +221,10 @@
 		"<textDarkGray><title2>تحليلات استخدام الموقع</title2></textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>اقرأ سياسة الخصوصية الكاملة لدينا للمزيد من المعلومات</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>بيان الخصوصية</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>بيان الخصوصية</title2>"
+	],
 	"privatePractice": "تدريب خاص",
 	"profile": "الملف الشخصي",
 	"questions": "أسئلة؟",
@@ -369,9 +381,12 @@
 		"add": "إضافة",
 		"and": "و",
 		"and-x-more": "و {{count}} المزيد",
+		"approve": "الموافقة",
 		"back": "الرجوع",
 		"close": "أغلق",
 		"coming-soon": "قريباً",
+		"customize": "تخصيص",
+		"decline": "رفض",
 		"delete": "حذف",
 		"distance": "المسافة",
 		"email": "البريد الإلكتروني",
@@ -379,6 +394,7 @@
 		"hours": "الساعات",
 		"location": "الموقع",
 		"more": "المزيد",
+		"more-info": "مزيد من المعلومات",
 		"next": "التالي",
 		"no": "لا",
 		"organization": "المنظمة",

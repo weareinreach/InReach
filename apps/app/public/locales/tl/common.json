@@ -50,6 +50,15 @@
 	"connect": "Kumonekta",
 	"contact": "Makipag-ugnay",
 	"contact-us": "Makipag-ugnay sa Amin",
+	"cookie-consent": {
+		"approve-all": "Approve all",
+		"approve-selected": "Approve selected",
+		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"intro": "We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings.",
+		"item-basic": "Necessary cookies for site functionality",
+		"item-ga4": "Analytics for internal InReach use",
+		"modal-title": "Cookies Settings"
+	},
 	"count": {
 		"result_one": "{{count}} resulta",
 		"result_other": "{{count}} mga resulta"
@@ -208,7 +217,10 @@
 		"Gumagamit din ang <textDarkGray>inReach ng Vercel Analytics upang pag-aralan ang mga web vitals at pagganap. Nagbibigay ang Vercel Analytics ng impormasyon sa paggamit ng site nang hindi nakatali sa, o nauugnay sa, anumang indibidwal na bisita o IP address. Ang pag-record ng mga puntos ng data ay hindi nagpapakilala at ang tampok na Analytics ay hindi nangongolekta o nag-iimbak ng impormasyon na magpapahintulot sa Vercel na muling buuin ang isang session sa pagba-browse sa mga pahina o kilalanin ang isang gumagamit.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Basahin ang aming buong patakaran sa privacy para sa karagdagang impormasyon</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Pahayag sa privacy</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>Pahayag sa privacy</title2>"
+	],
 	"privatePractice": "Pribadong Practice",
 	"profile": "Profile",
 	"questions": "Mga Tanong?",
@@ -365,9 +377,12 @@
 		"add": "Magdagdag",
 		"and": "at",
 		"and-x-more": "at {{count}} higit pa",
+		"approve": "Approve",
 		"back": "Bumalik",
 		"close": "Isara",
 		"coming-soon": "Malapit na",
+		"customize": "Customize",
+		"decline": "Decline",
 		"delete": "Tanggalin",
 		"distance": "Distansya",
 		"email": "Email",
@@ -375,6 +390,7 @@
 		"hours": "Oras",
 		"location": "Location",
 		"more": "higit pa",
+		"more-info": "More information",
 		"next": "Susunod",
 		"no": "Hindi",
 		"organization": "Organisasyon",

@@ -50,6 +50,15 @@
 	"connect": "Conectar",
 	"contact": "Contato",
 	"contact-us": "Entre em contato conosco",
+	"cookie-consent": {
+		"approve-all": "Aprovar todos",
+		"approve-selected": "Aprovar selecionado(s)",
+		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"intro": "Usamos cookies necessários para fazer o nosso site funcionar. Gostaríamos de definir cookies adicionais para entender o uso do site, melhorar o site e lembrar de suas configurações.",
+		"item-basic": "Cookies necessários para a funcionalidade do site",
+		"item-ga4": "Análises para uso interno de InReach",
+		"modal-title": "Configurações de Cookies"
+	},
 	"count": {
 		"result_one": "{{count}} resultado",
 		"result_other": "{{count}} resultados"
@@ -208,7 +217,10 @@
 		"O <textDarkGray>inReach também usa o Vercel Analytics para analisar os sinais vitais e o desempenho da web. O Vercel Analytics fornece informações de uso do site sem estar vinculado ou associado a nenhum visitante individual ou endereço IP. O registro dos pontos de dados é anônimo e o recurso Analytics não coleta nem armazena informações que permitam à Vercel reconstruir uma sessão de navegação entre páginas ou identificar um usuário.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Leia nossa política de privacidade completa para obter mais informações</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Declaração de privacidade</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>Declaração de privacidade</title2>"
+	],
 	"privatePractice": "Clínica privada",
 	"profile": "Perfil",
 	"questions": "Perguntas?",
@@ -365,9 +377,12 @@
 		"add": "Adicionar",
 		"and": "e",
 		"and-x-more": "e {{count}} mais",
+		"approve": "Aprovar",
 		"back": "Voltar",
 		"close": "Fechar",
 		"coming-soon": "Em breve",
+		"customize": "Personalizar",
+		"decline": "Recusar",
 		"delete": "Excluir",
 		"distance": "Distância",
 		"email": "E-mail",
@@ -375,6 +390,7 @@
 		"hours": "Horas",
 		"location": "Local:",
 		"more": "mais",
+		"more-info": "Mais informações",
 		"next": "Próximo",
 		"no": "Não",
 		"organization": "Organização",

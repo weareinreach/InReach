@@ -50,6 +50,15 @@
 	"connect": "Unganisha",
 	"contact": "Kuwasiliana",
 	"contact-us": "Wasiliana Nasi",
+	"cookie-consent": {
+		"approve-all": "Approve all",
+		"approve-selected": "Approve selected",
+		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"intro": "We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings.",
+		"item-basic": "Necessary cookies for site functionality",
+		"item-ga4": "Analytics for internal InReach use",
+		"modal-title": "Cookies Settings"
+	},
 	"count": {
 		"result_one": "Matokeo ya {{count}}",
 		"result_other": "Matokeo {{count}}"
@@ -208,7 +217,10 @@
 		"<textDarkGray>InReach pia hutumia Vercel Analytics kuchambua vitals za wavuti na utendaji. Vercel Analytics hutoa habari ya matumizi ya tovuti bila kufungwa, au kuhusishwa na, mgeni yeyote au anwani ya IP. Kurekodi kwa alama za data haijulikani na huduma ya Analytics haikusanyi au kuhifadhi habari ambayo itawezesha Vercel kujenga tena kikao cha kuvinjari kwenye kurasa au kutambua mtumiaji.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Soma sera yetu kamili ya faragha kwa habari zaidi</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>Taarifa ya faragha</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>Taarifa ya faragha</title2>"
+	],
 	"privatePractice": "Private Mazoezi",
 	"profile": "Profaili",
 	"questions": "Maswali?",
@@ -365,9 +377,12 @@
 		"add": "Ongeza",
 		"and": "na",
 		"and-x-more": "na {{count}} zaidi",
+		"approve": "Approve",
 		"back": "Nyuma",
 		"close": "Karibu",
 		"coming-soon": "Inakuja hivi karibuni",
+		"customize": "Customize",
+		"decline": "Decline",
 		"delete": "Futa",
 		"distance": "Umbali",
 		"email": "Barua pepe",
@@ -375,6 +390,7 @@
 		"hours": "Masaa",
 		"location": "Location",
 		"more": "zaidi",
+		"more-info": "More information",
 		"next": "Ijayo",
 		"no": "Hapana",
 		"organization": "Shirika",

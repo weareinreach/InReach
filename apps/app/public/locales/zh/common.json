@@ -50,6 +50,15 @@
 	"connect": "连接",
 	"contact": "联系我们",
 	"contact-us": "联系我们",
+	"cookie-consent": {
+		"approve-all": "全部批准",
+		"approve-selected": "审批选定的",
+		"body": "我们在此网站上使用 cookie 和第三方服务。其中有些是必不可少的，其他人帮助我们改善您的浏览体验。 详情请查看我们的 <PrivacyLink>隐私声明</PrivacyLink>",
+		"intro": "我们使用必要的 cookie 来使我们的网站正常工作。 我们想要设置额外的 cookie 来了解网站的使用情况，改进网站并记住您的设置。",
+		"item-basic": "站点功能所需的 cookie",
+		"item-ga4": "内部海运使用分析",
+		"modal-title": "Cookies 设置"
+	},
 	"count": {
 		"result_other": "{{count}} 个结果"
 	},
@@ -207,7 +216,10 @@
 		"<textDarkGray>还使用Vercel Analytics来分析网络生命值和性能。 Vercel Analytics提供站点使用信息，不与任何个别访客或IP地址关联或相关联。 数据点的记录是匿名的，分析功能不收集或存储能使Vercel在页面上重建浏览会话或识别用户的信息。</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>阅读我们的完整隐私政策以获取更多信息</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>隐私声明</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>隐私声明</title2>"
+	],
 	"privatePractice": "私人诊所",
 	"profile": "个人档案",
 	"questions": "有问题吗？",
@@ -364,9 +376,12 @@
 		"add": "添加",
 		"and": "和",
 		"and-x-more": "和 {{count}} 更多",
+		"approve": "批准",
 		"back": "返回",
 		"close": "关闭",
 		"coming-soon": "即将上线",
+		"customize": "自定义",
+		"decline": "拒绝",
 		"delete": "删除",
 		"distance": "距离",
 		"email": "电子邮件",
@@ -374,6 +389,7 @@
 		"hours": "小时",
 		"location": "地点",
 		"more": "更多",
+		"more-info": "更多信息",
 		"next": "下一步",
 		"no": "没有",
 		"organization": "组织",

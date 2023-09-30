@@ -50,6 +50,15 @@
 	"connect": "कनेक्ट करें",
 	"contact": "संपर्क",
 	"contact-us": "हमसे संपर्क करें",
+	"cookie-consent": {
+		"approve-all": "Approve all",
+		"approve-selected": "Approve selected",
+		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"intro": "We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings.",
+		"item-basic": "Necessary cookies for site functionality",
+		"item-ga4": "Analytics for internal InReach use",
+		"modal-title": "Cookies Settings"
+	},
 	"count": {
 		"result_one": "{{count}} परिणाम",
 		"result_other": "{{count}} परिणाम"
@@ -208,7 +217,10 @@
 		"<textDarkGray>इनरीच वेब की नब्ज और प्रदर्शन का विश्लेषण करने के लिए वर्सेल एनालिटिक्स का भी उपयोग करता है। वर्सेल एनालिटिक्स किसी भी व्यक्तिगत विज़िटर या आईपी पते से जुड़े या उससे जुड़े बिना साइट के उपयोग की जानकारी प्रदान करता है। डेटा बिंदुओं की रिकॉर्डिंग अनाम है और Analytics सुविधा ऐसी जानकारी एकत्र या संग्रहीत नहीं करती है जो Vercel को पृष्ठों पर ब्राउज़िंग सत्र का पुनर्निर्माण करने या उपयोगकर्ता की पहचान करने में सक्षम बनाती है।</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>अधिक जानकारी के लिए हमारी पूरी गोपनीयता नीति पढ़ें</linkPolicy>",
-	"privacy-statement-head": ["<emojiLg>🔒</emojiLg>", "<title2>गोपनीयता कथन</title2>"],
+	"privacy-statement-head": [
+		"<emojiLg>🔒</emojiLg>",
+		"<title2>गोपनीयता कथन</title2>"
+	],
 	"privatePractice": "प्राइवेट प्रैक्टिस",
 	"profile": "प्रोफ़ाइल",
 	"questions": "प्रश्न?",
@@ -365,9 +377,12 @@
 		"add": "जोड़ें",
 		"and": "और",
 		"and-x-more": "और {{count}} और",
+		"approve": "Approve",
 		"back": "पीछे",
 		"close": "बंद करें",
 		"coming-soon": "जल्द आ रहा है",
+		"customize": "Customize",
+		"decline": "Decline",
 		"delete": "मिटाएँ",
 		"distance": "दूरी",
 		"email": "ईमेल",
@@ -375,6 +390,7 @@
 		"hours": "घंटे",
 		"location": "Location",
 		"more": "ज़्यादा",
+		"more-info": "More information",
 		"next": "अगला",
 		"no": "नहीं",
 		"organization": "संगठन",

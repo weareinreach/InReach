@@ -279,7 +279,7 @@
 		"demonym_other": "Cocos Islanders"
 	},
 	"CHE": {
-		"name": "Швейцария",
+		"name": "Суитзерленд",
 		"demonym_one": "Швейцарский",
 		"demonym_few": "Швейцарский",
 		"demonym_many": "Швейцарский",
@@ -552,7 +552,7 @@
 		"demonym_other": "Britishs"
 	},
 	"GEO": {
-		"name": "Грузия",
+		"name": "Джорджия",
 		"demonym_one": "Грузинский",
 		"demonym_few": "Грузия",
 		"demonym_many": "Грузия",
@@ -982,7 +982,7 @@
 		"demonym_other": "Maldivans"
 	},
 	"MEX": {
-		"name": "Мексика",
+		"name": "Мехико",
 		"demonym_one": "Мексиканский",
 		"demonym_few": "Mexicans",
 		"demonym_many": "Mexicans",
