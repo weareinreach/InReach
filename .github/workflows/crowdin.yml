@@ -2,32 +2,37 @@ name: Crowdin Action
 
 on:
   push:
-    # paths:
-    #   - 'apps/app/public/locales/en/*.json'
-    branches:
-      - dev
+    branches-ignore:
+      - renovate/*
+      - l10n_*
   pull_request:
     types:
       - closed
     branches-ignore:
-      # - dev
       - main
       - l10n_*
       - renovate/*
   workflow_dispatch:
+  schedule:
+    # ┌───────────── minute (0 - 59)
+    # │ ┌───────────── hour (0 - 23)
+    # │ │ ┌───────────── day of the month (1 - 31)
+    # │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+    # │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    # │ │ │ │ │
+    # │ │ │ │ │
+    # │ │ │ │ │
+    - cron: 0 8 * * *
 
 jobs:
   synchronize-with-crowdin:
     runs-on: ubuntu-latest
-    # permissions:
-    #   contents: write
-    #   pull-requests: write
     env:
-      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
       CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+
       - name: Import GPG key
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@82a020f1f7f605c65dd2449b392a52c3fcfef7ef # v6
@@ -43,17 +48,17 @@ jobs:
         id: pnpm-install
         with:
           run_install: false
-          # standalone: true
 
       - name: Install Node.js
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
         uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3
         with:
           node-version-file: .nvmrc
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
-      - name: Install dependencies
-        if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
-        run: pnpm -g add prettier prettier-plugin-packagejson prettier-plugin-jsdoc prettier-plugin-prisma
+      - name: Install Crowdin
+        run: pnpm -g add @crowdin/cli
 
       - name: Remove Jira ticket ID from branch name
         id: branchregex
@@ -73,38 +78,32 @@ jobs:
           flags: gi
           replacement: '_'
 
-      - name: Sync Crowdin
+      - name: Push sources to Crowdin
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
-        uses: crowdin/github-action@6a189cf93a647dc1f4214eb10447661de26b577a # v1.13.1
+        run: crowdin push sources -b ${{ steps.sanitizebranch.outputs.value }}
+
+      - name: Pull updated translations from Crowdin
+        if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
+        run: crowdin pull -b ${{ steps.sanitizebranch.outputs.value }}
+
+      - name: Check for updated files
+        if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
+        uses: tj-actions/verify-changed-files@v16
+        id: verify-changed-files
         with:
-          upload_sources: true
-          upload_translations: false
-          download_translations: ${{ github.ref_name == 'dev' }}
-          localization_branch_name: ${{ format('l10n_{0}',steps.branchregex.outputs.value) }}
-          create_pull_request: false
-          pull_request_title: 'chore(i18n): Updated translations from Crowdin'
-          pull_request_labels: "translations, kodiak: merge.method = 'squash', automerge"
-          pull_request_base_branch_name: ${{ github.ref_name }}
-          crowdin_branch_name: ${{ steps.sanitizebranch.outputs.value }}
-          push_sources: false
-          push_translations: false
+          files: '**/locales/*/*.json'
 
       - name: Format json files
-        if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
+        if: ((github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled') && steps.verify-changed-files.outputs.files_changed
+        working-directory: apps/app
         run: |
-          pwd
-          ls
-          prettier --write apps/app/public/locales/*/*.json
-        # uses: creyD/prettier_action@31355f8eef017f8aeba2e0bc09d8502b13dbbad1 # v4.3
-        # with:
-        #   prettier_options: '--write **/locales/*/*.json'
-        #   commit_options: '--dry-run'
-        #   push_options: '--dry-run'
-        #   clean_node_folder: false
-        #   prettier_version: latest --dry-run
+          echo 'Installing package dependencies'
+          pnpm install
+          echo 'Running prettier'
+          pnpm format
 
       - name: Commit files
-        if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
+        if: ((github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled') && steps.verify-changed-files.outputs.files_changed
         uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
         with:
           commit-message: Updated translations from Crowdin
@@ -120,12 +119,5 @@ jobs:
           delete-branch: true
 
       - name: Delete Crowdin Branch
-        if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev'
-        uses: crowdin/github-action@6a189cf93a647dc1f4214eb10447661de26b577a # v1.13.1
-        with:
-          upload_sources: false
-          upload_translations: false
-          download_translations: false
-          create_pull_request: false
-          command: branch delete
-          command_args: ${{ steps.sanitizebranch.outputs.value }}
+        if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev' && github.ref_name != 'dev'
+        run: crowdin branch delete ${{ steps.sanitizebranch.outputs.value }}
