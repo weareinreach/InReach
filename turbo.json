@@ -54,17 +54,14 @@
 		},
 		"format": {
 			"dependsOn": ["^db:generate"],
-			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"],
-			"outputs": ["node_modules/.cache/prettier/.prettier-cache"]
+			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx,json,prisma,html,css,scss,yml,yaml,md}"]
 		},
 		"generate:data": {},
 		"lint": {
-			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"],
-			"outputs": [".eslintcache"]
+			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"]
 		},
 		"lint:fix": {
-			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"],
-			"outputs": [".eslintcache"]
+			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"]
 		},
 		"post-install": {
 			"dependsOn": ["^generate:data", "^build:icons"]
