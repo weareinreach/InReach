@@ -25,8 +25,9 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
       CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-      CI_USE_HUSKY: 'true'
     steps:
+      - name: Checkout
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
       - name: Import GPG key
         id: import_gpg
         uses: crazy-max/ghaction-import-gpg@82a020f1f7f605c65dd2449b392a52c3fcfef7ef # v6
@@ -37,8 +38,24 @@ jobs:
           git_commit_gpgsign: true
           git_committer_name: 'InReach [bot]'
 
-      - name: Checkout
-        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+      - uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598 # v2.4.0
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+          # standalone: true
+
+      - name: Install Node.js
+        if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
+        run: pnpm -g add prettier prettier-plugin-packagejson prettier-plugin-jsdoc prettier-plugin-prisma
 
       - name: Remove Jira ticket ID from branch name
         id: branchregex
@@ -71,17 +88,16 @@ jobs:
           pull_request_labels: "translations, kodiak: merge.method = 'squash', automerge"
           pull_request_base_branch_name: ${{ github.ref_name }}
           crowdin_branch_name: ${{ steps.sanitizebranch.outputs.value }}
+          push_sources: false
+          push_translations: false
 
       - name: Format json files
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
         uses: creyD/prettier_action@v4.3
         with:
-          prettier_options: --write **/*.json
-          dry: true
-          prettier_plugins: |
-            prettier-plugin-packagejson
-            prettier-plugin-jsdoc
-            prettier-plugin-prisma
+          prettier_options: --write apps/app/public/locales/**/*.json
+          commit_options: '--dry-run'
+          push_options: '--dry-run'
 
       - name: Commit files
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
