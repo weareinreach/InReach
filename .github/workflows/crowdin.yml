@@ -93,15 +93,16 @@ jobs:
 
       - name: Format json files
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
-        uses: creyD/prettier_action@v4.3
+        uses: creyD/prettier_action@31355f8eef017f8aeba2e0bc09d8502b13dbbad1 # v4.3
         with:
-          prettier_options: --write **/locales/**/*.json
+          prettier_options: '--write **/locales/*/*.json && pwd'
           commit_options: '--dry-run'
           push_options: '--dry-run'
+          clean_node_folder: false
 
       - name: Commit files
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
         with:
           commit-message: Updated translations from Crowdin
           committer: 'InReach [bot] <108850934+InReach-svc@users.noreply.github.com>'
