@@ -50,6 +50,15 @@
 	"connect": "Konekte",
 	"contact": "Kontakte",
 	"contact-us": "Kontakte nou",
+	"cookie-consent": {
+		"approve-all": "Approve all",
+		"approve-selected": "Approve selected",
+		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"intro": "We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings.",
+		"item-basic": "Necessary cookies for site functionality",
+		"item-ga4": "Analytics for internal InReach use",
+		"modal-title": "Cookies Settings"
+	},
 	"count": {
 		"result_one": "{{count}} rezilta",
 		"result_other": "Rezilta {{count}}"
@@ -204,7 +213,7 @@
 		"<textUtility4>(* Sèl eksepsyon an se kalite kont itilizatè lokal Reviewer Kominote a, ki tire nenpòt enfòmasyon demografik kolekte amelyore eksperyans volontè ak enpak Kominote lokal Reviewers yo. Pou kont lokal Kominote Reviewer, nou mande pou kote ak tout lòt enfòmasyon demografik se si ou vle, men ta dwe mare nan dosye itilizatè yo. Done sa yo ta sèlman vizib deyò nan anplwaye InReach si Reviewer Kominote lokal la chwazi fè li vizib nan anviwònman vi prive kont yo. Pataje yon pwofil piblik-fè fas a, pral ede itilizatè lòt 'yo santi yo plis konfyans nan revizyon ou.)</textUtility4>",
 		"<textDarkGray>Konprann démographie itilizatè nou an ka ede nou quantifier enpak nou an, ranmase lajan, ak evalye desizyon pwodwi nan lavni. Nou apresye itilizatè yo volontèman pataje enfòmasyon sa a avèk nou, epi nou pran etap sa yo pou pwoteje vi prive ou ak anonim.</textDarkGray>",
 		"<textDarkGray><title2>Analytics sit itilizasyon</title2></textDarkGray>",
-		"<textDarkGray>InReach uses <linkUmami>Umami</linkUmami>, a privacy-focused alternative to Google Analytics, to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. <linkUmamiGDPR>Umami is GDPR compliant</linkUmamiGDPR> and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
+		"<textDarkGray>InReach uses Google Analytics to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. Google Analytics is GDPR compliant and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
 		"<textDarkGray>InReach itilize tou Vercel Analytics pou analize vitals entènèt ak pèfòmans. Vercel Analytics bay enfòmasyon l 'sit san yo pa mare nan, oswa ki asosye ak, nenpòt vizitè endividyèl oswa adrès IP. Anrejistreman an nan pwen done se anonim ak karakteristik nan Analytics pa kolekte oswa magazen enfòmasyon ki ta pèmèt Vercel rekonstwi yon sesyon Navigasyon atravè paj oswa idantifye yon itilizatè.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Li politik plen vi prive nou an pou plis enfòmasyon</linkPolicy>",
@@ -365,9 +374,12 @@
 		"add": "Ajoute",
 		"and": "ak",
 		"and-x-more": "ak {{count}} plis",
+		"approve": "Approve",
 		"back": "Tounen",
 		"close": "Fèmen",
 		"coming-soon": "Vini byento",
+		"customize": "Customize",
+		"decline": "Decline",
 		"delete": "Efase",
 		"distance": "Distans",
 		"email": "Imèl",
@@ -375,6 +387,7 @@
 		"hours": "Èdtan",
 		"location": "Location",
 		"more": "plis",
+		"more-info": "More information",
 		"next": "Pwochen",
 		"no": "Pa",
 		"organization": "Òganizasyon",
