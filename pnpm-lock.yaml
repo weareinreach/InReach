@@ -230,6 +230,9 @@ importers:
       '@vercel/kv':
         specifier: 0.2.3
         version: 0.2.3
+      '@weareinreach/analytics':
+        specifier: workspace:*
+        version: link:../../packages/analytics
       '@weareinreach/api':
         specifier: workspace:*
         version: link:../../packages/api
@@ -311,6 +314,9 @@ importers:
       next-seo:
         specifier: 6.1.0
         version: 6.1.0(next@13.5.3)(react-dom@18.2.0)(react@18.2.0)
+      nextjs-google-analytics:
+        specifier: 2.3.3
+        version: 2.3.3(next@13.5.3)(react@18.2.0)
       nextjs-routes:
         specifier: 2.0.1
         version: 2.0.1(next@13.5.3)
@@ -329,6 +335,9 @@ importers:
       react-error-boundary:
         specifier: 4.0.11
         version: 4.0.11(react@18.2.0)
+      react-hook-consent:
+        specifier: 3.3.0
+        version: 3.3.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
       react-hook-form:
         specifier: 7.46.2
         version: 7.46.2(react@18.2.0)
@@ -363,6 +372,9 @@ importers:
       '@types/eslint':
         specifier: 8.44.3
         version: 8.44.3
+      '@types/gtag.js':
+        specifier: 0.0.14
+        version: 0.0.14
       '@types/luxon':
         specifier: 3.3.2
         version: 3.3.2
@@ -624,6 +636,31 @@ importers:
       typescript:
         specifier: 5.2.2
         version: 5.2.2
+
+  packages/analytics:
+    dependencies:
+      just-compact:
+        specifier: 3.2.0
+        version: 3.2.0
+    devDependencies:
+      '@types/gtag.js':
+        specifier: 0.0.14
+        version: 0.0.14
+      '@weareinreach/config':
+        specifier: workspace:*
+        version: link:../config
+      '@weareinreach/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      next:
+        specifier: 13.5.3
+        version: 13.5.3(@opentelemetry/api@1.6.0)(react-dom@18.2.0)(react@18.2.0)
+      nextjs-google-analytics:
+        specifier: 2.3.3
+        version: 2.3.3(next@13.5.3)(react@18.2.0)
+      type-fest:
+        specifier: 4.3.2
+        version: 4.3.2
 
   packages/api:
     dependencies:
@@ -1190,6 +1227,9 @@ importers:
       '@tweenjs/tween.js':
         specifier: 21.0.0
         version: 21.0.0
+      '@weareinreach/analytics':
+        specifier: workspace:*
+        version: link:../analytics
       '@weareinreach/env':
         specifier: workspace:*
         version: link:../env
@@ -10067,8 +10107,12 @@ packages:
       '@types/node': 18.18.0
     dev: true
 
+  /@types/gtag.js@0.0.14:
+    resolution: {integrity: sha512-NcR9rf3B93ie5T086NIpXGTtoIJeOeQ14+IBIBwfNBztb175e/0gONc60ywUU4+f9dwctgz9L3I4h5Gs/hl31g==}
+    dev: true
+
   /@types/hast@2.3.6:
-    resolution: {integrity: sha512-47rJE80oqPmFdVDCD7IheXBrVdwuBgsYwoczFvKmwfo2Mzsnt+V9OONsYauFmICb6lQPpCuXYJWejBNs4pDJRg==}
+    resolution: {integrity: sha512-SvQi0L/lNpThgPoleH53cdjB3y9zpLlVjRbqB3rH8hx1jiRSBGAhyjV3H+URFjNVRqt2EdYNrbZE5IsGlNfpRg==}
     dependencies:
       '@types/unist': 2.0.8
 
@@ -19156,6 +19200,17 @@ packages:
       - '@babel/core'
       - babel-plugin-macros
 
+  /nextjs-google-analytics@2.3.3(next@13.5.3)(react@18.2.0):
+    resolution: {integrity: sha512-Y6sI6A7wt5dji8hYBnVkOh9LTyImSLFZXx3FpyQgVW7W4b4qEFHjH2u3fhDJsrRZeLlUGM8/RuHD/mhHc2Axfg==}
+    peerDependencies:
+      next: '>=11.0.0 || 13'
+      react: ^18 || 18
+    dependencies:
+      next: 13.5.3(@opentelemetry/api@1.6.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+    optionalDependencies:
+      fsevents: 2.3.3
+
   /nextjs-routes@2.0.1(next@13.5.3):
     resolution: {integrity: sha512-pBGRm6uR44zwUjWWYn6+gwz08BhBbqUYlIzsbNHAh1TWohHYKWFaa2YVsj8BxEo726MZYg87OJPnHpaaY1ia0w==}
     hasBin: true
@@ -19543,6 +19598,11 @@ packages:
   /object-hash@2.2.0:
     resolution: {integrity: sha512-gScRMn0bS5fH+IuwyIFgnh9zBdo4DV+6GhygmWM9HyNJSgS0hScp1f5vjtm7oIIOiT9trXrShAkLFSc2IqKNgw==}
     engines: {node: '>= 6'}
+
+  /object-hash@3.0.0:
+    resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
+    engines: {node: '>= 6'}
+    dev: false
 
   /object-inspect@1.12.3:
     resolution: {integrity: sha512-geUvdk7c+eizMNUDkRpW1wJwgfOiOeHbxBR/hLXK1aT6zmVSO0jsQcs7fj6MGw89jC/cjGfLcNOrtMYtGqm81g==}
@@ -21193,6 +21253,20 @@ packages:
       '@babel/runtime': 7.22.15
       react: 18.2.0
 
+  /react-hook-consent@3.3.0(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Kddu1CWdM2QFToiLCtgndbGeXPCM5dzpHEi+KlrdUXhWSXZmvUb+vizEFc5aUViwxZtkUECXcvVy9nAAINYayw==}
+    peerDependencies:
+      react: ^18 || 18
+      react-dom: ^18 || 18
+    dependencies:
+      object-hash: 3.0.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-toggle: 4.1.3(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
+    transitivePeerDependencies:
+      - prop-types
+    dev: false
+
   /react-hook-form-mantine@2.0.0(@mantine/core@6.0.21)(@mantine/dates@6.0.21)(react-dom@18.2.0)(react-hook-form@7.46.2)(react@18.2.0):
     resolution: {integrity: sha512-/vHi2wm9sU2cWR/wAJ1hsH/TZzlu6z/zxQNR4jUVPcB6Bz9+HKGdWk6Di9snqYG3rOBbWqR93BIBE1cyxcK8OA==}
     peerDependencies:
@@ -21401,6 +21475,19 @@ packages:
       use-latest: 1.2.1(@types/react@18.2.23)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
+
+  /react-toggle@4.1.3(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-WoPrvbwfQSvoagbrDnXPrlsxwzuhQIrs+V0I162j/s+4XPgY/YDAUmHSeWiroznfI73wj+MBydvW95zX8ABbSg==}
+    peerDependencies:
+      prop-types: '>= 15.3.0 < 19'
+      react: ^18 || 18
+      react-dom: ^18 || 18
+    dependencies:
+      classnames: 2.3.2
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /react-transition-group@4.4.2(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg==}

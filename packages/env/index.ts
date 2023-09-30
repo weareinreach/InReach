@@ -42,9 +42,10 @@ export const env = createEnv({
 		NEXT_PUBLIC_GOOGLE_MAPS_API: z.string(),
 		NEXT_PUBLIC_VERCEL_URL: z.string().optional(),
 		NEXT_PUBLIC_VERCEL_ENV: z.enum(['production', 'development', 'preview']).optional(),
+		NEXT_PUBLIC_GA_MEASUREMENT_ID: z.string(),
 	},
 	runtimeEnv: {
-		// SERVER ONLY
+		// Server
 		CI: process.env.CI,
 		COGNITO_ACCESS_KEY: process.env.COGNITO_ACCESS_KEY,
 		COGNITO_CLIENT_ID: process.env.COGNITO_CLIENT_ID,
@@ -71,7 +72,9 @@ export const env = createEnv({
 		VERCEL_ENV: process.env.VERCEL_ENV,
 		VERCEL_URL: process.env.VERCEL_URL,
 		VERCEL: process.env.VERCEL,
-		// CLIENT ONLY
+
+		// Client
+		NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
 		NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API,
 		NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
 		NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,

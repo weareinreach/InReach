@@ -13,7 +13,7 @@
 		"community-social-groups": "공동체와 소셜 그룹",
 		"cultural-centers": "문화센터",
 		"lgbtq-centers": "LGBTQ 센터",
-		"reception-services": "리셉션 서비스",
+		"reception-services": "접수처 서비스",
 		"reentry-services": "재입국 서비스",
 		"spiritual-support": "영적인 지원",
 		"sponsors": "이민국 스폰서십"
@@ -23,37 +23,37 @@
 		"computers-and-internet": "컴퓨터와 인터넷"
 	},
 	"crisis-support": {
-		"CATEGORYNAME": "위기 지원",
-		"crisis-support": "위기 지원"
+		"CATEGORYNAME": "위기 긴급지원",
+		"crisis-support": "위기 긴급지원"
 	},
 	"education-and-employment": {
 		"CATEGORYNAME": "교육와 취업",
-		"career-counseling": "진로상담",
-		"educational-support-for-lgbtq-youth": "LGBTQ 청소년을 위한 교육 지원",
+		"career-counseling": "경력상담",
+		"educational-support-for-lgbtq-youth": "LGBTQ 청소년을 위한 교육적 지원",
 		"english-classes": "영어 수업",
 		"language-classes": "언어 수업",
-		"leadership-training-and-professional-development": "리더십 교육 및 전문성 개발",
+		"leadership-training-and-professional-development": "지휘통솔 훈련과 전문성 신장",
 		"libraries": "도서관",
 		"scholarships": "장학금"
 	},
 	"food": {
 		"CATEGORYNAME": "식품",
 		"food": "식품",
-		"food-assistance": "식품 지원"
+		"food-assistance": "식량 원조"
 	},
 	"housing": {
 		"CATEGORYNAME": "주택",
-		"drop-in-centers-for-lgbtq-youth": "LGBTQ 청소년을 위한 드롭인 센터",
-		"emergency-housing": "비상 주택",
-		"housing-information-and-referrals": "숙소 정보 및 추천",
-		"short-term-housing": "단기 주택",
-		"trans-housing": "트랜스젠더 주택"
+		"drop-in-centers-for-lgbtq-youth": "LGBTQ 청소년을 위한 예약 필요 없는 회관",
+		"emergency-housing": "긴급주거",
+		"housing-information-and-referrals": "주거 정보와 추천서",
+		"short-term-housing": "단기의 주거",
+		"trans-housing": "트랜스젠더 주거"
 	},
 	"hygiene-and-clothing": {
-		"CATEGORYNAME": "위생 및 의류",
+		"CATEGORYNAME": "위생과 의복",
 		"clothes": "옷",
 		"gender-affirming-items": "성별 확증 옷",
-		"gender-neutral-bathrooms": "성별 중성 화장실",
+		"gender-neutral-bathrooms": "성 중립 화장실",
 		"haircuts-and-stylists": "헤어컷과 스타일리스트",
 		"hygiene": "위생"
 	},
@@ -69,10 +69,10 @@
 		"citizenship": "시민권",
 		"crime-and-discrimination": "범죄와 차별",
 		"deferred-action-for-childhood-arrivals-daca": "유년기 입국자 유예 조치 (DACA)",
-		"deportation-or-removal": "추방 또는 퇴거",
-		"employment-authorization": "고용 허가",
+		"deportation-or-removal": "추방이나 제거",
+		"employment-authorization": "취직인허증",
 		"family-petitions": "가족 청원서",
-		"immigration-detention": "이민 구금",
+		"immigration-detention": "이민자 수용소",
 		"legal-advice": "법률 자문",
 		"legal-hotlines": "법률 핫라인",
 		"name-and-gender-change": "이름과 성별 마커 변경",
@@ -91,15 +91,15 @@
 		"covid-19-services": "COVID-19 서비스",
 		"dental-care": "치과 치료",
 		"hiv-and-sexual-health": "HIV와 성 건강",
-		"medical-clinics": "의료 클리닉",
+		"medical-clinics": "건강 진료소",
 		"obgyn-services": "산부인과 서비스",
 		"physical-evaluations-for-asylum-claim": "망명 신청에 대한 물리적 평가",
 		"physical-evaluations-for-refugee-claim": "난민 신청에 대한 신체 평가",
-		"trans-health": "트랜스 헬스",
+		"trans-health": "트랜스 건강",
 		"trans-health-gender-affirming-surgery": "트랜스 건강 - 성별 확증 수술",
-		"trans-health-hormone-and-surgery-letters": "트랜스 건강 - 호르몬이랑 수술 편지",
+		"trans-health-hormone-and-surgery-letters": "트랜스 건강 - 호르몬이랑 수술 소견서",
 		"trans-health-hormone-therapy": "트랜스 건강 - 호르몬 요법",
-		"trans-health-primary-care": "트랜스 건강 - 일차 진료",
+		"trans-health-primary-care": "트랜스 건강 - 일차 의료",
 		"trans-health-speech-therapy": "트랜스 건강 - 언어 치료",
 		"trans-health-youth-care": "트랜스 건강 - 청소년 진료"
 	},
@@ -107,19 +107,19 @@
 		"CATEGORYNAME": "정신 건강",
 		"bipoc-support-groups": "BIPOC 지원 그룹",
 		"hotlines": "핫라인",
-		"private-therapy-and-counseling": "개인 치료 및 상담",
+		"private-therapy-and-counseling": "개인 요법과 상담",
 		"psychological-evaluations-for-asylum-claim": "망명 신청에 대한 심리적 평가",
 		"psychological-evaluations-for-refugee-claim": "난민 신청에 대한 심리학적 평가",
 		"substance-use": "물질 사용",
-		"support-for-caregivers-of-trans-youth": "트랜스 청소년의 간병인을 위한 지원",
-		"support-for-conversion-therapy-survivors": "전환 요법 생존자를 위한 지원",
-		"support-groups": "지원 그룹",
-		"trans-support-groups": "트랜스 서포트 그룹"
+		"support-for-caregivers-of-trans-youth": "트랜스 청소년의 간병인을 위한 도움",
+		"support-for-conversion-therapy-survivors": "전환 치료 생존자를 위한 도움",
+		"support-groups": "지원단",
+		"trans-support-groups": "트랜스 지원단"
 	},
 	"sports-and-entertainment": {
-		"CATEGORYNAME": "엔터테인먼트 및 액티비티",
+		"CATEGORYNAME": "오락과 활동",
 		"art-music-literature": "예술, 음악, 문학",
-		"sports-and-entertainment": "스포츠와 엔터테인먼트"
+		"sports-and-entertainment": "스포츠와 오락"
 	},
 	"trans-focused-services": {
 		"CATEGORYNAME": "트랜스에 초점을 맛춤한 서비스",
@@ -128,13 +128,13 @@
 	},
 	"translation-and-interpretation": {
 		"CATEGORYNAME": "번역 및 통역",
-		"for-healthcare": "헬스케어용",
-		"for-legal-services": "법률 서비스용",
+		"for-healthcare": "건강관리 위해",
+		"for-legal-services": "법률 서비스 위해",
 		"general-translation-and-interpretation": "일반 번역이랑 통역"
 	},
 	"transportation": {
-		"CATEGORYNAME": "교통수단",
+		"CATEGORYNAME": "교통편",
 		"transit-passes-and-discounts": "대중교통 패스랑 할인",
-		"transportation-assistance": "교통 지원"
+		"transportation-assistance": "교통편 보조"
 	}
 }

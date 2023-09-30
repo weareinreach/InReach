@@ -50,6 +50,15 @@
 	"connect": "Conecta",
 	"contact": "Contacto",
 	"contact-us": "Contáctanos",
+	"cookie-consent": {
+		"approve-all": "Aprobar todo",
+		"approve-selected": "Aprobar seleccionados",
+		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"intro": "Utilizamos las cookies necesarias para que nuestro sitio funcione. Nos gustaría configurar cookies adicionales para entender el uso del sitio, hacer mejoras en el sitio y recordar sus ajustes.",
+		"item-basic": "Cookies esenciales para la funcionalidad del sitio",
+		"item-ga4": "Analíticas para el uso interno de Alcance",
+		"modal-title": "Configuración de cookies"
+	},
 	"count": {
 		"result_one": "{{count}} resultado",
 		"result_other": "{{count}} resultados"
@@ -365,9 +374,12 @@
 		"add": "Agregar",
 		"and": "y",
 		"and-x-more": "y {{count}} más",
+		"approve": "Aprobar",
 		"back": "Atrás",
 		"close": "Cerrar",
 		"coming-soon": "Próximamente",
+		"customize": "Personalizar",
+		"decline": "Rechazar",
 		"delete": "Eliminar",
 		"distance": "Distancia",
 		"email": "E-mail",
@@ -375,6 +387,7 @@
 		"hours": "Horas",
 		"location": "Ubicación",
 		"more": "más",
+		"more-info": "Más información",
 		"next": "Siguiente",
 		"no": "No",
 		"organization": "Organización",

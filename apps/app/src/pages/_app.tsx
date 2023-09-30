@@ -1,16 +1,16 @@
-import 'core-js/features/array/at'
-
 import { Space } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Analytics } from '@vercel/analytics/react'
 import { type NextPage } from 'next'
-import { type AppProps } from 'next/app'
+import { type AppProps, type NextWebVitalsMetric } from 'next/app'
 import { useRouter } from 'next/router'
 import { type Session } from 'next-auth'
 import { appWithTranslation } from 'next-i18next'
 import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
+import { GoogleAnalytics } from 'nextjs-google-analytics'
 
+import { appEvent } from '@weareinreach/analytics/events'
 import { PageLoadProgress } from '@weareinreach/ui/components/core/PageLoadProgress'
 import { Footer } from '@weareinreach/ui/components/sections/Footer'
 import { Navbar } from '@weareinreach/ui/components/sections/Navbar'
@@ -33,7 +33,11 @@ const defaultSEO = {
 	],
 } satisfies DefaultSeoProps
 
-const MyApp = (appProps: AppPropsWithPageOptions) => {
+export function reportWebVitals(stats: NextWebVitalsMetric) {
+	appEvent.webVitals(stats)
+}
+
+const MyApp = (appProps: AppPropsWithGridSwitch) => {
 	const {
 		Component,
 		pageProps: { session, ...pageProps },
@@ -55,19 +59,19 @@ const MyApp = (appProps: AppPropsWithPageOptions) => {
 		)
 
 	return (
-		<>
+		<Providers session={session}>
 			<DefaultSeo {...defaultSEO} />
-			<Providers session={session}>
-				<PageLoadProgress />
-				<Navbar />
-				<PageContent />
-				{(isMobile || isTablet) && <Space h={80} />}
-				<Footer />
-				<Notifications transitionDuration={500} />
-				<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
-			</Providers>
+			<GoogleAnalytics trackPageViews defaultConsent='denied' />
+
+			<PageLoadProgress />
+			<Navbar />
+			{PageContent}
+			{(isMobile || isTablet) && <Space h={80} />}
+			<Footer />
+			<Notifications transitionDuration={500} />
+			<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
 			<Analytics />
-		</>
+		</Providers>
 	)
 }
 
