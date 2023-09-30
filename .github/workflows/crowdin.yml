@@ -78,7 +78,10 @@ jobs:
         with:
           prettier_options: --write **/*.json
           dry: true
-          prettier_plugins: 'prettier-plugin-packagejson prettier-plugin-jsdoc prettier-plugin-prisma'
+          prettier_plugins: |
+            prettier-plugin-packagejson
+            prettier-plugin-jsdoc
+            prettier-plugin-prisma
 
       - name: Commit files
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
