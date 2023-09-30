@@ -22,7 +22,9 @@ jobs:
     # permissions:
     #   contents: write
     #   pull-requests: write
-
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
+      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
@@ -48,9 +50,6 @@ jobs:
       - name: Upload to Crowdin
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
         uses: crowdin/github-action@6a189cf93a647dc1f4214eb10447661de26b577a # v1.13.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
-          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         with:
           upload_sources: true
           upload_translations: false
@@ -65,9 +64,6 @@ jobs:
       - name: Delete Crowdin Branch
         if: github.event_name == 'pull_request'
         uses: crowdin/github-action@6a189cf93a647dc1f4214eb10447661de26b577a # v1.13.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
-          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         with:
           upload_sources: false
           upload_translations: false
