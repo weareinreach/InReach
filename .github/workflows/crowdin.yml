@@ -27,6 +27,16 @@ jobs:
       CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
       CI_USE_HUSKY: 'true'
     steps:
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@82a020f1f7f605c65dd2449b392a52c3fcfef7ef # v6
+        with:
+          gpg_private_key: ${{ secrets.BOT_GPG_KEY }}
+          git_user_signingkey: true
+          git_config_global: true
+          git_commit_gpgsign: true
+          git_committer_name: 'InReach [bot]'
+
       - name: Checkout
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
 
@@ -56,11 +66,33 @@ jobs:
           upload_translations: false
           download_translations: ${{ github.ref_name == 'dev' }}
           localization_branch_name: ${{ format('l10n_{0}',steps.branchregex.outputs.value) }}
-          create_pull_request: true
+          create_pull_request: false
           pull_request_title: 'chore(i18n): Updated translations from Crowdin'
           pull_request_labels: "translations, kodiak: merge.method = 'squash', automerge"
           pull_request_base_branch_name: ${{ github.ref_name }}
           crowdin_branch_name: ${{ steps.sanitizebranch.outputs.value }}
+
+      - name: Format json files
+        if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --write ./apps/app/public/locales/**/*.json
+          dry: true
+
+      - name: Commit files
+        if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: Updated translations from Crowdin
+          committer: 'InReach [bot] <108850934+InReach-svc@users.noreply.github.com>'
+          author: 'InReach [bot] <108850934+InReach-svc@users.noreply.github.com>'
+          branch: ${{ format('l10n_{0}',steps.branchregex.outputs.value) }}
+          title: 'chore(i18n): Updated translations from Crowdin'
+          labels: |
+            translations
+            "kodiak: merge.method = 'squash'"
+            automerge
+          delete-branch: true
 
       - name: Delete Crowdin Branch
         if: github.event_name == 'pull_request'
