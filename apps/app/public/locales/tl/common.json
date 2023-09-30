@@ -50,6 +50,15 @@
 	"connect": "Kumonekta",
 	"contact": "Makipag-ugnay",
 	"contact-us": "Makipag-ugnay sa Amin",
+	"cookie-consent": {
+		"approve-all": "Approve all",
+		"approve-selected": "Approve selected",
+		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"intro": "We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings.",
+		"item-basic": "Necessary cookies for site functionality",
+		"item-ga4": "Analytics for internal InReach use",
+		"modal-title": "Cookies Settings"
+	},
 	"count": {
 		"result_one": "{{count}} resulta",
 		"result_other": "{{count}} mga resulta"
@@ -365,9 +374,12 @@
 		"add": "Magdagdag",
 		"and": "at",
 		"and-x-more": "at {{count}} higit pa",
+		"approve": "Approve",
 		"back": "Bumalik",
 		"close": "Isara",
 		"coming-soon": "Malapit na",
+		"customize": "Customize",
+		"decline": "Decline",
 		"delete": "Tanggalin",
 		"distance": "Distansya",
 		"email": "Email",
@@ -375,6 +387,7 @@
 		"hours": "Oras",
 		"location": "Location",
 		"more": "higit pa",
+		"more-info": "More information",
 		"next": "Susunod",
 		"no": "Hindi",
 		"organization": "Organisasyon",

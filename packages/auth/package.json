@@ -15,7 +15,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@aws-sdk/client-cognito-identity-provider": "3.418.0",
+		"@aws-sdk/client-cognito-identity-provider": "3.421.0",
 		"@next-auth/prisma-adapter": "1.0.7",
 		"@weareinreach/db": "workspace:*",
 		"@weareinreach/env": "workspace:*",
@@ -29,7 +29,7 @@
 		"@types/eslint": "8.44.3",
 		"@types/node": "18.18.0",
 		"@types/react": "18.2.23",
-		"@types/react-dom": "18.2.7",
+		"@types/react-dom": "18.2.8",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"eslint": "8.50.0",

@@ -37,6 +37,10 @@
 			"path": "./packages/api"
 		},
 		{
+			"name": "🤷🏻 Analytics (@weareinreach/analytics)",
+			"path": "./packages/analytics"
+		},
+		{
 			"name": "🔐 Authentication (@weareinreach/auth)",
 			"path": "./packages/auth"
 		},

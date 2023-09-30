@@ -68,7 +68,13 @@ export const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyMo
 
 	return (
 		<>
-			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
+			<Modal
+				title={modalTitle}
+				opened={opened}
+				onClose={() => handler.close()}
+				fullScreen={isMobile}
+				zIndex={999999}
+			>
 				<Stack align='center' spacing={16}>
 					<Trans
 						i18nKey='privacy-statement-head'

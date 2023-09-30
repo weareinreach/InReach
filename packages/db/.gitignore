@@ -38,3 +38,4 @@ pg-diff-config.json
 
 __*.ts
 ___*.*
+_queries/

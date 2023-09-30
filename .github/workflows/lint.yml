@@ -3,6 +3,7 @@ name: Lint & format
 on:
   push:
     branches-ignore: [dev, main, renovate/*]
+  workflow_dispatch:
 
 jobs:
   lintformat:
@@ -19,7 +20,6 @@ jobs:
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
         with:
           ref: ${{ github.head_ref }}
-          fetch-depth: 0
 
       - name: Import GPG key
         id: import_gpg
@@ -62,7 +62,7 @@ jobs:
           ESLINT_PRIVATE_KEY_BASE64: ${{ secrets.BOT_SECRET_KEY_B64 }}
 
       - name: Format projects
-        run: pnpm format
+        run: pnpm format --force
         if: always()
         id: format
 
@@ -82,3 +82,4 @@ jobs:
           committer_email: 108850934+InReach-svc@users.noreply.github.com
           author_name: InReach [bot]
           author_email: 108850934+InReach-svc@users.noreply.github.com
+          pull: '--rebase --autostash'

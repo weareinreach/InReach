@@ -15,6 +15,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, type ReactNode } from 'react'
 
+import { serviceModalEvent } from '@weareinreach/analytics/events'
 import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'
 import { AlertMessage } from '~ui/components/core/AlertMessage'
 import {
@@ -451,7 +452,15 @@ export const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>
 							<SectionDivider title='transit-directions'>{publicTransit}</SectionDivider>
 						</Stack>
 					</Modal>
-					<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
+					<Box
+						component='button'
+						ref={ref}
+						onClick={() => {
+							serviceModalEvent.opened({ serviceId, serviceName: serviceName?.tsKey.text, orgSlug: slug })
+							handler.open()
+						}}
+						{...props}
+					/>
 				</>
 			)
 		}

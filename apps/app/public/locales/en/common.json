@@ -50,6 +50,15 @@
 	"connect": "Connect",
 	"contact": "Contact",
 	"contact-us": "Contact Us",
+	"cookie-consent": {
+		"approve-all": "Approve all",
+		"approve-selected": "Approve selected",
+		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"intro": "We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings.",
+		"item-basic": "Necessary cookies for site functionality",
+		"item-ga4": "Analytics for internal InReach use",
+		"modal-title": "Cookies Settings"
+	},
 	"count": {
 		"result_one": "{{count}} result",
 		"result_other": "{{count}} results"
@@ -206,7 +215,7 @@
 		"<textUtility4>(*The only exception is the Local Community Reviewer user account type, which leverages any demographic information collected to enhance Local Community Reviewers’ volunteering experience and impact. For Local Community Reviewer accounts, we require location and all other demographic information is optional but would be tied to their user record. This data would only be visible outside of InReach staff if the Local Community Reviewer chooses to make it visible through their account privacy settings. Sharing a public-facing profile, will help other users’ to feel more confident in your reviews.)</textUtility4>",
 		"<textDarkGray>Understanding our user demographics can help us to quantify our impact, raise funds, and evaluate future product decisions. We appreciate users voluntarily sharing this information with us, and we take these steps to protect your privacy and anonymity.</textDarkGray>",
 		"<textDarkGray><title2>Site usage Analytics</title2></textDarkGray>",
-		"<textDarkGray>InReach uses <linkUmami>Umami</linkUmami>, a privacy-focused alternative to Google Analytics, to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. <linkUmamiGDPR>Umami is GDPR compliant</linkUmamiGDPR> and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
+		"<textDarkGray>InReach uses Google Analytics to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. Google Analytics is GDPR compliant and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
 		"<textDarkGray>InReach also uses Vercel Analytics to analyze web vitals and performance. Vercel Analytics provides site usage information without being tied to, or associated with, any individual visitor or IP address. The recording of data points is anonymous and the Analytics feature does not collect or store information that would enable Vercel to reconstruct a browsing session across pages or identify a user.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Read our full privacy policy for more information</linkPolicy>",
@@ -375,9 +384,12 @@
 		"add": "Add",
 		"and": "and",
 		"and-x-more": "and {{count}} more",
+		"approve": "Approve",
 		"back": "Back",
 		"close": "Close",
 		"coming-soon": "Coming soon",
+		"customize": "Customize",
+		"decline": "Decline",
 		"delete": "Delete",
 		"distance": "Distance",
 		"email": "Email",
@@ -385,6 +397,7 @@
 		"hours": "Hours",
 		"location": "Location",
 		"more": "more",
+		"more-info": "More information",
 		"next": "Next",
 		"no": "No",
 		"organization": "Organization",
