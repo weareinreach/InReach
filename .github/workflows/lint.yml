@@ -3,6 +3,7 @@ name: Lint & format
 on:
   push:
     branches-ignore: [dev, main, renovate/*]
+  workflow_dispatch:
 
 jobs:
   lintformat:
