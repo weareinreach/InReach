@@ -29,7 +29,8 @@
 				"CACHE_SECRET",
 				"CACHE_READ_URL",
 				"CACHE_WRITE_URL",
-				"CROWDIN_TOKEN"
+				"CROWDIN_TOKEN",
+				"NEXT_PUBLIC_GA_MEASUREMENT_ID"
 			]
 		},
 		"build:aws": {},
