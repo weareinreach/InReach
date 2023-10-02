@@ -11,9 +11,7 @@ const jobDef: JobDef = {
 	/** Optional: Longer description for the job */
 	description: undefined,
 }
-/**
- * Job export - this variable MUST be UNIQUE
- */
+/** Job export - this variable MUST be UNIQUE */
 export const job20230928_phone_number_normalization = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
 	task: async (_ctx, task) => {
