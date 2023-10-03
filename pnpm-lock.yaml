@@ -348,8 +348,8 @@ importers:
         specifier: 13.2.2
         version: 13.2.2(i18next@23.5.1)(react-dom@18.2.0)(react@18.2.0)
       zod:
-        specifier: 3.22.2
-        version: 3.22.2
+        specifier: 3.22.3
+        version: 3.22.3
     devDependencies:
       '@hookform/devtools':
         specifier: 4.3.1
@@ -425,10 +425,10 @@ importers:
         version: 0.2.1-next(@trpc/client@10.38.5)(@trpc/server@10.38.5)
       trpc-panel:
         specifier: 1.3.4
-        version: 1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.38.5)(zod@3.22.2)
+        version: 1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.38.5)(zod@3.22.3)
       trpc-playground:
         specifier: 1.0.4
-        version: 1.0.4(@trpc/server@10.38.5)(@types/node@18.18.3)(typescript@5.2.2)(zod@3.22.2)
+        version: 1.0.4(@trpc/server@10.38.5)(@types/node@18.18.3)(typescript@5.2.2)(zod@3.22.3)
       type-fest:
         specifier: 4.3.3
         version: 4.3.3
@@ -752,8 +752,8 @@ importers:
         specifier: 1.3.1
         version: 1.3.1
       zod:
-        specifier: 3.22.2
-        version: 3.22.2
+        specifier: 3.22.3
+        version: 3.22.3
     devDependencies:
       '@turbo/gen':
         specifier: 1.10.14
@@ -802,7 +802,7 @@ importers:
         version: 0.2.1-next(@trpc/client@10.38.5)(@trpc/server@10.38.5)
       trpc-panel:
         specifier: 1.3.4
-        version: 1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.38.5)(zod@3.22.2)
+        version: 1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.38.5)(zod@3.22.3)
       type-fest:
         specifier: 4.3.3
         version: 4.3.3
@@ -837,8 +837,8 @@ importers:
         specifier: 4.9.2
         version: 4.9.2
       zod:
-        specifier: 3.22.2
-        version: 3.22.2
+        specifier: 3.22.3
+        version: 3.22.3
     devDependencies:
       '@types/eslint':
         specifier: 8.44.3
@@ -998,8 +998,8 @@ importers:
         specifier: 2.3.0
         version: 2.3.0
       zod:
-        specifier: 3.22.2
-        version: 3.22.2
+        specifier: 3.22.3
+        version: 3.22.3
     devDependencies:
       '@terraformer/wkt':
         specifier: 2.2.0
@@ -1108,13 +1108,13 @@ importers:
         version: 2.7.9
       zod-to-json-schema:
         specifier: 3.21.4
-        version: 3.21.4(zod@3.22.2)
+        version: 3.21.4(zod@3.22.3)
 
   packages/env:
     dependencies:
       '@t3-oss/env-nextjs':
         specifier: 0.6.1
-        version: 0.6.1(typescript@5.2.2)(zod@3.22.2)
+        version: 0.6.1(typescript@5.2.2)(zod@3.22.3)
       '@weareinreach/util':
         specifier: workspace:*
         version: link:../util
@@ -1122,8 +1122,8 @@ importers:
         specifier: 7.2.0
         version: 7.2.0
       zod:
-        specifier: 3.22.2
-        version: 3.22.2
+        specifier: 3.22.3
+        version: 3.22.3
     devDependencies:
       '@weareinreach/config':
         specifier: workspace:*
@@ -1658,8 +1658,8 @@ importers:
         specifier: 5.88.2
         version: 5.88.2(@swc/core@1.3.85)(esbuild@0.18.20)
       zod:
-        specifier: 3.22.2
-        version: 3.22.2
+        specifier: 3.22.3
+        version: 3.22.3
 
   packages/util:
     dependencies:
@@ -9280,25 +9280,25 @@ packages:
     dependencies:
       defer-to-connect: 2.0.1
 
-  /@t3-oss/env-core@0.6.1(typescript@5.2.2)(zod@3.22.2):
+  /@t3-oss/env-core@0.6.1(typescript@5.2.2)(zod@3.22.3):
     resolution: {integrity: sha512-KQD7qEDJtkWIWWmTVjNvk0wnHpkvAQ6CRbUxbWMFNG/fiosBQDQvtRpBNu6USxBscJCoC4z6y7P9MN52/mLOzw==}
     peerDependencies:
       typescript: '>=4.7.2 || 5'
       zod: ^3.0.0
     dependencies:
       typescript: 5.2.2
-      zod: 3.22.2
+      zod: 3.22.3
     dev: false
 
-  /@t3-oss/env-nextjs@0.6.1(typescript@5.2.2)(zod@3.22.2):
+  /@t3-oss/env-nextjs@0.6.1(typescript@5.2.2)(zod@3.22.3):
     resolution: {integrity: sha512-z1dIC++Vxj9kmzX5nSPfcrCSkszy3dTEPC4Ssx7Ap5AqR3c2Qa7S0xf8axn6coy7D/vCXDAAnHYnCMDhtcY3SQ==}
     peerDependencies:
       typescript: '>=4.7.2 || 5'
       zod: ^3.0.0
     dependencies:
-      '@t3-oss/env-core': 0.6.1(typescript@5.2.2)(zod@3.22.2)
+      '@t3-oss/env-core': 0.6.1(typescript@5.2.2)(zod@3.22.3)
       typescript: 5.2.2
-      zod: 3.22.2
+      zod: 3.22.3
     dev: false
 
   /@tabler/icons-react@2.34.0(react@18.2.0):
@@ -20663,7 +20663,7 @@ packages:
       '@prisma/generator-helper': 5.3.1
       '@prisma/internals': 5.3.1
       typescript: 5.2.2
-      zod: 3.22.2
+      zod: 3.22.3
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -23502,7 +23502,7 @@ packages:
       superjson: 1.13.3
     dev: true
 
-  /trpc-panel@1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.38.5)(zod@3.22.2):
+  /trpc-panel@1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.38.5)(zod@3.22.3):
     resolution: {integrity: sha512-u5/dCi/AAp2tpJcCL5ZCfrdJtHHu8hrtm2hzSBZCE7z9Tw6MB1rCcliSQvgMPIEXMQrgwXk4t4IedfWkxioKng==}
     peerDependencies:
       '@trpc/server': ^10.0.0
@@ -23512,12 +23512,12 @@ packages:
       fuzzysort: 2.0.4
       path: 0.12.7
       url: 0.11.3
-      zod: 3.22.2
-      zod-to-json-schema: 3.21.4(zod@3.22.2)
+      zod: 3.22.3
+      zod-to-json-schema: 3.21.4(zod@3.22.3)
     dev: true
     patched: true
 
-  /trpc-playground@1.0.4(@trpc/server@10.38.5)(@types/node@18.18.3)(typescript@5.2.2)(zod@3.22.2):
+  /trpc-playground@1.0.4(@trpc/server@10.38.5)(@types/node@18.18.3)(typescript@5.2.2)(zod@3.22.3):
     resolution: {integrity: sha512-6nVf1o2LNoo1g6oTS24yajoH7xV4CFjxGAbAH7qLXqa3yo9qB5QHsWLbrm1hNt51SyCG++P0zHJaCdVfgvEVDg==}
     peerDependencies:
       '@trpc/server': ^10
@@ -23528,8 +23528,8 @@ packages:
       '@trpc/server': 10.38.5
       lodash: 4.17.21
       uttp: 0.1.3
-      zod: 3.22.2
-      zod-to-ts: 1.2.0(typescript@5.2.2)(zod@3.22.2)
+      zod: 3.22.3
+      zod-to-ts: 1.2.0(typescript@5.2.2)(zod@3.22.3)
     transitivePeerDependencies:
       - '@types/node'
       - express
@@ -25062,31 +25062,31 @@ packages:
       '@prisma/generator-helper': 5.3.1
       code-block-writer: 12.0.0
       lodash: 4.17.21
-      zod: 3.22.2
+      zod: 3.22.3
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /zod-to-json-schema@3.21.4(zod@3.22.2):
+  /zod-to-json-schema@3.21.4(zod@3.22.3):
     resolution: {integrity: sha512-fjUZh4nQ1s6HMccgIeE0VP4QG/YRGPmyjO9sAh890aQKPEk3nqbfUXhMFaC+Dr5KvYBm8BCyvfpZf2jY9aGSsw==}
     peerDependencies:
       zod: ^3.21.4
     dependencies:
-      zod: 3.22.2
+      zod: 3.22.3
     dev: true
 
-  /zod-to-ts@1.2.0(typescript@5.2.2)(zod@3.22.2):
+  /zod-to-ts@1.2.0(typescript@5.2.2)(zod@3.22.3):
     resolution: {integrity: sha512-x30XE43V+InwGpvTySRNz9kB7qFU8DlyEy7BsSTCHPH1R0QasMmHWZDCzYm6bVXtj/9NNJAZF3jW8rzFvH5OFA==}
     peerDependencies:
       typescript: ^4.9.4 || ^5.0.2 || 5
       zod: ^3
     dependencies:
       typescript: 5.2.2
-      zod: 3.22.2
+      zod: 3.22.3
     dev: true
 
-  /zod@3.22.2:
-    resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
+  /zod@3.22.3:
+    resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
 
   /zustand@4.4.2(@types/react@18.2.24)(react@18.2.0):
     resolution: {integrity: sha512-qF3/vZHCrjPUX5DvPE3DPDZlh+FiAWRKlP9PI7SlW1MCk8q4vUCDqyWsbF8K41ne0Yx8eeeb0m1cypn1LqUMYQ==}

@@ -58,7 +58,7 @@
 		"sql-bricks": "3.0.1",
 		"superjson": "1.13.3",
 		"ulid": "2.3.0",
-		"zod": "3.22.2"
+		"zod": "3.22.3"
 	},
 	"devDependencies": {
 		"@terraformer/wkt": "2.2.0",

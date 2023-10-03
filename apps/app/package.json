@@ -105,7 +105,7 @@
 		"react-hook-form": "7.47.0",
 		"react-hook-form-mantine": "2.0.0",
 		"react-i18next": "13.2.2",
-		"zod": "3.22.2"
+		"zod": "3.22.3"
 	},
 	"devDependencies": {
 		"@hookform/devtools": "4.3.1",
