@@ -174,7 +174,7 @@
 		"typescript": "5.2.2",
 		"ulid": "2.3.0",
 		"webpack": "5.88.2",
-		"zod": "3.22.2"
+		"zod": "3.22.3"
 	},
 	"peerDependencies": {
 		"@emotion/react": "^11",
