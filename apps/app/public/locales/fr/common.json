@@ -52,11 +52,11 @@
 	"contact-us": "Nous contacter",
 	"cookie-consent": {
 		"approve-all": "Tout approuver",
-		"approve-selected": "Approuver la sélection",
-		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
-		"intro": "Nous utilisons les cookies nécessaires pour faire fonctionner notre site. Nous aimerions configurer des cookies supplémentaires pour comprendre l'utilisation du site, améliorer le site et mémoriser vos paramètres.",
-		"item-basic": "Cookies nécessaires pour les fonctionnalités du site",
-		"item-ga4": "Analyses pour utilisation interne InReach",
+		"approve-selected": "Valider les options sélectionnées",
+		"body": "Nous utilisons des cookies et des services de tiers sur ce site web. Certains d'entre eux sont essentiels, d'autres nous aident à améliorer votre expérience de navigation. Veuillez consulter notre <PrivacyLink>Déclaration de confidentialité</PrivacyLink> pour plus d'informations.",
+		"intro": "Nous utilisons les cookies nécessaires au fonctionnement de notre site. Nous aimerions installer des cookies supplémentaires pour comprendre l'utilisation du site, l'améliorer et mémoriser vos paramètres.",
+		"item-basic": "Cookies nécessaires au fonctionnement du site",
+		"item-ga4": "Analyses pour l'utilisation interne d'InReach",
 		"modal-title": "Paramètres des cookies"
 	},
 	"count": {
@@ -213,7 +213,7 @@
 		"<textDarkGray><listGroup><listItem>Année de naissance</listItem>\n<listItem>Pays d'origine</listItem>\n<listItem>Identité LGBTQ+ (orientation sexuelle et identité de genre)</listItem>\n<listItem>Race/ethnicité</listItem>\n<listItem>Statut d'immigration</listItem>\n<listItem>Emplacement actuel</listItem></listGroup></textDarkGray>",
 		"<textDarkGray>Comprendre les caractéristiques démographiques de nos utilisateurs peut nous aider à quantifier notre impact, à lever des fonds et à évaluer les décisions futures en matière de produits. Nous apprécions que les utilisateurs partagent volontairement ces informations avec nous, et nous prenons ces mesures pour protéger votre vie privée et votre anonymat.\n</textDarkGray>",
 		"<textDarkGray><title2>Analyse d'utilisation du site</title2></textDarkGray>",
-		"<textDarkGray>InReach utilise <linkUmami>Umami</linkUmami>, une alternative à Google Analytics axée sur la vie privée, pour analyser et suivre anonymement les données d'utilisation de l'application (par exemple, les recherches des utilisateurs et d'autres comportements) dans l'agrégat. <linkUmamiGDPR>Umami est conforme au GDPR</linkUmamiGDPR> et ne réunit aucune information personnelle identifiable et rend anonyme toutes les données collectées. Les utilisateurs ne peuvent pas être identifiés et ne sont jamais suivis à travers les sites Web.</textDarkGray>",
+		"<textDarkGray>InReach utilise Google Analytics pour analyser et suivre de manière anonyme les données d'utilisation de l'application (par exemple, les recherches des utilisateurs et d'autres comportements) dans l'ensemble. Google Analytics est conforme au GDPR et ne recueille aucune information personnellement identifiable et anonymise toutes les données collectées. Les utilisateurs ne peuvent pas être identifiés et ne sont jamais suivis à travers les sites web.</textDarkGray>",
 		"<textDarkGray>InReach utilise également Vercel Analytics pour analyser la performance et les composants essentiels du web. Vercel Analytics fournit des informations d'utilisation du site sans être lié à, ou associé à un visiteur ou à une adresse IP individuelle. L'enregistrement des données est anonyme et la fonction Analytics ne collecte pas ou ne garde pas d'informations qui permettraient à Vercel de reconstruire une session de navigation à travers des pages ou d'identifier un utilisateur.</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>Lisez notre politique de confidentialité complète pour plus d'informations</linkPolicy>",
@@ -374,7 +374,7 @@
 		"add": "Ajouter",
 		"and": "et",
 		"and-x-more": "et {{count}} de plus",
-		"approve": "Approuver",
+		"approve": "Valider",
 		"back": "Précédent",
 		"close": "Fermer",
 		"coming-soon": "Bientôt disponible",
@@ -387,7 +387,7 @@
 		"hours": "Heures",
 		"location": "Localisation",
 		"more": "plus",
-		"more-info": "Plus d'informations",
+		"more-info": "En savoir plus",
 		"next": "Suivant",
 		"no": "Non",
 		"organization": "Organisation",
