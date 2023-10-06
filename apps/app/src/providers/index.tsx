@@ -9,6 +9,7 @@ import { Trans, useTranslation } from 'next-i18next'
 import { type ComponentPropsWithoutRef, useMemo } from 'react'
 import { ConsentBanner, type ConsentOptions, ConsentProvider } from 'react-hook-consent'
 
+import { EditModeProvider } from '@weareinreach/ui/providers/EditMode'
 import { GoogleMapsProvider } from '@weareinreach/ui/providers/GoogleMaps'
 import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
@@ -108,7 +109,7 @@ export const Providers = ({ children, session }: ProviderProps) => {
 					<ModalsProvider>
 						<SearchStateProvider>
 							<GoogleMapsProvider>
-								{children}
+								<EditModeProvider>{children}</EditModeProvider>
 								<ConsentBanner {...consentBannerSettings}>{t('cookie-consent.intro')}</ConsentBanner>
 							</GoogleMapsProvider>
 						</SearchStateProvider>
