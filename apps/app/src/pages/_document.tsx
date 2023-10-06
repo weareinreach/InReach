@@ -10,7 +10,6 @@ const stylesServer = createStylesServer(appCache)
 export default class _Document extends Document {
 	static async getInitialProps(ctx: DocumentContext) {
 		const initialProps = await Document.getInitialProps(ctx)
-
 		return {
 			...initialProps,
 			styles: [
@@ -39,11 +38,6 @@ export default class _Document extends Document {
 				<body>
 					<Main />
 					<NextScript />
-					<Script
-						src='https://stats.inreach.org/umami.js'
-						data-website-id='f228c645-98f3-4928-9d7a-61f65082728b'
-						data-domains='app.inreach.org'
-					/>
 				</body>
 			</Html>
 		)
