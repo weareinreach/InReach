@@ -1,0 +1,12 @@
+[
+	{
+		"relation": ["delegate_permission/common.handle_all_urls"],
+		"target": {
+			"namespace": "android_app",
+			"package_name": "org.asylumconnect.app",
+			"sha256_cert_fingerprints": [
+				"C1:C0:4D:8F:60:0A:1D:42:CC:89:7A:83:13:3B:89:B7:56:80:5D:1E:6D:AE:3E:6A:CD:86:5F:70:EB:A6:7F:01"
+			]
+		}
+	}
+]
