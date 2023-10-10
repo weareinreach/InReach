@@ -86,7 +86,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 			</Head>
 			<Providers session={session}>
 				<DefaultSeo {...defaultSEO} />
-				<GoogleAnalytics trackPageViews defaultConsent='denied' />
+				<GoogleAnalytics trackPageViews defaultConsent='granted' />
 				<PageLoadProgress />
 				<Navbar />
 				<PageContent />
