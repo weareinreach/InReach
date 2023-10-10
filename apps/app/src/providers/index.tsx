@@ -7,7 +7,7 @@ import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next'
 import { type ComponentPropsWithoutRef, useMemo } from 'react'
-import { ConsentBanner, type ConsentOptions, ConsentProvider } from 'react-hook-consent'
+import { type ConsentBanner, type ConsentOptions, ConsentProvider } from 'react-hook-consent'
 
 import { GoogleMapsProvider } from '@weareinreach/ui/providers/GoogleMaps'
 import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
@@ -94,28 +94,28 @@ export const Providers = ({ children, session }: ProviderProps) => {
 	)
 
 	return (
-		<ConsentProvider options={consentOptions}>
-			<SessionProvider session={session}>
-				<MantineProvider
-					withGlobalStyles
-					withNormalizeCSS
-					theme={{
-						...appTheme,
-						fontFamily: fontWorkSans.style.fontFamily,
-					}}
-					emotionCache={appCache}
-				>
-					<ModalsProvider>
-						<SearchStateProvider>
-							<GoogleMapsProvider>
-								{children}
-								<ConsentBanner {...consentBannerSettings}>{t('cookie-consent.intro')}</ConsentBanner>
-							</GoogleMapsProvider>
-						</SearchStateProvider>
-					</ModalsProvider>
-				</MantineProvider>
-			</SessionProvider>
-		</ConsentProvider>
+		//<ConsentProvider options={consentOptions}>
+		<SessionProvider session={session}>
+			<MantineProvider
+				withGlobalStyles
+				withNormalizeCSS
+				theme={{
+					...appTheme,
+					fontFamily: fontWorkSans.style.fontFamily,
+				}}
+				emotionCache={appCache}
+			>
+				<ModalsProvider>
+					<SearchStateProvider>
+						<GoogleMapsProvider>
+							{children}
+							{/* <ConsentBanner {...consentBannerSettings}>{t('cookie-consent.intro')}</ConsentBanner> */}
+						</GoogleMapsProvider>
+					</SearchStateProvider>
+				</ModalsProvider>
+			</MantineProvider>
+		</SessionProvider>
+		// </ConsentProvider>
 	)
 }
 

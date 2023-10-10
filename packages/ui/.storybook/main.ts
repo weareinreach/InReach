@@ -31,6 +31,7 @@ const config: StorybookConfig = {
 		getAbsolutePath('@storybook/addon-essentials'),
 		getAbsolutePath('@geometricpanda/storybook-addon-badges'),
 		getAbsolutePath('@storybook/addon-a11y'),
+		// eslint-disable-next-line storybook/no-uninstalled-addons
 		'@tomfreudenberg/next-auth-mock/storybook', // This addon doesn't like to be wrapped.
 		getAbsolutePath('@storybook/addon-designs'),
 		getAbsolutePath('storybook-addon-pseudo-states'),
