@@ -12,6 +12,7 @@ import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 
 import { appEvent } from '@weareinreach/analytics/events'
+import { Donate, DonateModal } from '@weareinreach/ui/components/core/Donate'
 import { PageLoadProgress } from '@weareinreach/ui/components/core/PageLoadProgress'
 import { Footer } from '@weareinreach/ui/components/sections/Footer'
 import { Navbar } from '@weareinreach/ui/components/sections/Navbar'
@@ -95,6 +96,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 				<Notifications transitionDuration={500} />
 				<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
 				<Analytics />
+				<DonateModal />
 			</Providers>
 		</>
 	)
