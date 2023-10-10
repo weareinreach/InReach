@@ -1,5 +1,3 @@
-/* eslint-disable node/no-process-env */
-/* eslint-disable turbo/no-undeclared-env-vars */
 import { z } from 'zod'
 
 import { ClientId, cognito, generateHash } from './cognitoClient'
