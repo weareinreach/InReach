@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Analytics } from '@vercel/analytics/react'
 import { type NextPage } from 'next'
 import { type AppProps, type NextWebVitalsMetric } from 'next/app'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { type Session } from 'next-auth'
 import { appWithTranslation } from 'next-i18next'
@@ -69,28 +70,33 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 
 	const autoResetState = Component.autoResetState ? { key: router.asPath } : {}
 
-	const PageContent = Component.omitGrid ? (
-		<Component {...autoResetState} {...pageProps} />
-	) : (
-		<BodyGrid>
+	const PageContent = () =>
+		Component.omitGrid ? (
 			<Component {...autoResetState} {...pageProps} />
-		</BodyGrid>
-	)
+		) : (
+			<BodyGrid>
+				<Component {...autoResetState} {...pageProps} />
+			</BodyGrid>
+		)
 
 	return (
-		<Providers session={session}>
-			<DefaultSeo {...defaultSEO} />
-			<GoogleAnalytics trackPageViews defaultConsent='denied' />
-
-			<PageLoadProgress />
-			<Navbar />
-			{PageContent}
-			{(isMobile || isTablet) && <Space h={80} />}
-			<Footer />
-			<Notifications transitionDuration={500} />
-			<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
-			<Analytics />
-		</Providers>
+		<>
+			<Head>
+				<meta name='viewport' content='initial-scale=1, width=device-width, viewport-fit=cover'></meta>
+			</Head>
+			<Providers session={session}>
+				<DefaultSeo {...defaultSEO} />
+				<GoogleAnalytics trackPageViews defaultConsent='granted' />
+				<PageLoadProgress />
+				<Navbar />
+				<PageContent />
+				{(isMobile || isTablet) && <Space h={80} />}
+				<Footer />
+				<Notifications transitionDuration={500} />
+				<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
+				<Analytics />
+			</Providers>
+		</>
 	)
 }
 
@@ -100,4 +106,4 @@ export type NextPageWithoutGrid<P = unknown, IP = P> = NextPage<P, IP> & {
 	omitGrid?: boolean
 	autoResetState?: boolean
 }
-type AppPropsWithGridSwitch = AppProps & { Component: NextPageWithoutGrid; session: Session }
+type AppPropsWithGridSwitch = AppProps<{ session: Session }> & { Component: NextPageWithoutGrid }
