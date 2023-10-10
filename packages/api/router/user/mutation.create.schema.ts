@@ -41,13 +41,20 @@ export const ZCreateSchema = z
 		otherLawPractice: z.string().optional(),
 		servProvider: z.string().optional(),
 		servProviderOther: z.string().optional(),
+		location: z
+			.object({
+				city: z.string(),
+				govDist: z.string(),
+				country: z.string(),
+			})
+			.optional(),
 	})
 	.transform(({ id, name, email, password, image, active, currentCity, ...data }) => {
 		const userType = connectOneRequired({ type: data.userType })
 		const langPref = connectOne({ localeCode: data.language })
 		const currentCountry = connectOne(data.currentCountry)
 		const currentGovDist = connectOne(data.currentGovDist)
-		const { lawPractice, otherLawPractice, servProvider, servProviderOther } = data
+		const { lawPractice, otherLawPractice, servProvider, servProviderOther, location } = data
 		const record = {
 			id,
 			name,
@@ -58,8 +65,8 @@ export const ZCreateSchema = z
 			currentCity,
 			currentCountry,
 			currentGovDist,
-			...(lawPractice || otherLawPractice || servProvider || servProviderOther
-				? { signupData: { lawPractice, otherLawPractice, servProvider, servProviderOther } }
+			...(lawPractice || otherLawPractice || servProvider || servProviderOther || location
+				? { signupData: { lawPractice, otherLawPractice, servProvider, servProviderOther, location } }
 				: {}),
 		} satisfies Prisma.UserCreateArgs['data']
 
