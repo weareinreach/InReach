@@ -75,7 +75,6 @@
 		"@weareinreach/ui": "workspace:*",
 		"@weareinreach/util": "workspace:*",
 		"cookies-next": "4.0.0",
-		"core-js": "3.33.0",
 		"dayjs": "1.11.10",
 		"embla-carousel-autoplay": "7.1.0",
 		"embla-carousel-react": "7.1.0",
