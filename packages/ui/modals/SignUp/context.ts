@@ -8,9 +8,9 @@ interface SignUpFormValues {
 	password: string
 	language?: string
 	location?: {
-		city?: string
-		govDist?: string
-		country?: string
+		city: string
+		govDist: string
+		country: string
 	}
 	searchLocation: string
 	locationOptions: {

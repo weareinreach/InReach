@@ -1,13 +1,18 @@
 import { Center, Grid, Loader, Overlay, Stack, Title } from '@mantine/core'
 import { type GetServerSideProps } from 'next'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
 import { getServerSession } from '@weareinreach/auth'
-import { QuickPromotionModal } from '@weareinreach/ui/modals'
 import { getServerSideTranslations } from '~app/utils/i18n'
+// import { QuickPromotionModal } from '@weareinreach/ui/modals'
 
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
+const QuickPromotionModal = dynamic(() =>
+	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
+)
 const SavedLists = () => {
 	const { t } = useTranslation('common')
 	const { data: session, status } = useSession()
@@ -22,7 +27,7 @@ const SavedLists = () => {
 	if (status === 'unauthenticated' || session === null) {
 		return (
 			<Overlay blur={2}>
-				<QuickPromotionModal autoLaunch onClose={() => router.replace('/')} />
+				<QuickPromotionModal component='button' autoLaunch onClose={() => router.replace('/')} />
 			</Overlay>
 		)
 	}

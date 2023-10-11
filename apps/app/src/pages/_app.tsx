@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Analytics } from '@vercel/analytics/react'
 import { type NextPage } from 'next'
 import { type AppProps, type NextWebVitalsMetric } from 'next/app'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { type Session } from 'next-auth'
@@ -21,6 +22,10 @@ import { Providers } from '~app/providers'
 import { api } from '~app/utils/api'
 
 import nextI18nConfig from '../../next-i18next.config.mjs'
+// import { Donate, DonateModal } from '@weareinreach/ui/components/core/Donate'
+const DonateModal = dynamic(() =>
+	import('@weareinreach/ui/components/core/Donate').then((mod) => mod.DonateModal)
+)
 
 const defaultSEO = {
 	titleTemplate: '%s | InReach',
@@ -95,6 +100,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 				<Notifications transitionDuration={500} />
 				<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
 				<Analytics />
+				<DonateModal />
 			</Providers>
 		</>
 	)

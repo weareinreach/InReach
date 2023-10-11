@@ -1,4 +1,3 @@
-/* eslint-disable import/consistent-type-specifier-style */
 import {
 	type ActionIconProps,
 	type AvatarProps,
@@ -355,6 +354,13 @@ export const commonTheme = {
 						margin: params.indeterminate ? `${rem(10.5)} ${rem(6)}` : `${rem(6.75)} ${rem(5)}`,
 					},
 				}) satisfies Styles<CheckboxStylesNames, CheckboxStylesParams>,
+		},
+		CloseButton: {
+			defaultProps: (theme) => ({
+				children: (
+					<Icon icon='carbon:close' height={24} width={24} color={theme.other.colors.secondary.black} />
+				),
+			}),
 		},
 		Container: {
 			defaultProps: {

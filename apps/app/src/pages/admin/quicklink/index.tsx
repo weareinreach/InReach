@@ -2,6 +2,7 @@
 
 import { Overlay, Stack, Tabs, Title } from '@mantine/core'
 import { type GetServerSideProps } from 'next'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { type Route } from 'nextjs-routes'
@@ -10,8 +11,13 @@ import { useEffect, useState } from 'react'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
 import { Icon } from '@weareinreach/ui/icon'
-import { QuickPromotionModal } from '@weareinreach/ui/modals'
 import { getServerSideTranslations } from '~app/utils/i18n'
+// import { QuickPromotionModal } from '@weareinreach/ui/modals'
+
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
+const QuickPromotionModal = dynamic(() =>
+	import('@weareinreach/ui/modals/QuickPromotion').then((mod) => mod.QuickPromotionModal)
+)
 
 const QuickLinkIndex = () => {
 	const router = useRouter()
@@ -43,7 +49,7 @@ const QuickLinkIndex = () => {
 			</Stack>
 			{overlay && (
 				<Overlay blur={2}>
-					<QuickPromotionModal autoLaunch noClose />
+					<QuickPromotionModal component='button' autoLaunch noClose />
 				</Overlay>
 			)}
 		</>
