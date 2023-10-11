@@ -7,6 +7,7 @@ import {
 	type Selectors,
 	UnstyledButton,
 } from '@mantine/core'
+import dynamic from 'next/dynamic'
 import { signOut, useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
 
@@ -14,10 +15,16 @@ import { Button } from '~ui/components/core/Button'
 import { LangPicker } from '~ui/components/core/LangPicker'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
-import { LoginModalLauncher } from '~ui/modals/Login'
-import { SignupModalLauncher } from '~ui/modals/SignUp'
+// import { LoginModalLauncher } from '~ui/modals/Login'
+// import { SignupModalLauncher } from '~ui/modals/SignUp'
 
-import { UserAvatar } from './UserAvatar'
+// import { UserAvatar } from './UserAvatar'
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
+const LoginModalLauncher = dynamic(() => import('~ui/modals/Login').then((mod) => mod.LoginModalLauncher))
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
+const SignupModalLauncher = dynamic(() => import('~ui/modals/SignUp').then((mod) => mod.SignupModalLauncher))
+
+const UserAvatar = dynamic(() => import('./UserAvatar').then((mod) => mod.UserAvatar))
 
 const useStyles = createStyles((theme) => ({
 	buttons: {

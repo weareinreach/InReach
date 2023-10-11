@@ -1,13 +1,23 @@
 import { Divider, Flex, Grid, Stack, Title, useMantineTheme } from '@mantine/core'
-import { type GetServerSideProps } from 'next'
+import { type GetStaticProps } from 'next'
+import dynamic from 'next/dynamic'
 import { useTranslation } from 'next-i18next'
 
 import { AntiHateMessage } from '@weareinreach/ui/components/core/AntiHateMessage'
 import { Link } from '@weareinreach/ui/components/core/Link'
 import { useCustomVariant } from '@weareinreach/ui/hooks'
 import { Icon } from '@weareinreach/ui/icon'
-import { GenericContentModal, PrivacyStatementModal } from '@weareinreach/ui/modals'
+// import { GenericContentModal, PrivacyStatementModal } from '@weareinreach/ui/modals'
 import { getServerSideTranslations } from '~app/utils/i18n'
+
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
+const GenericContentModal = dynamic(() =>
+	import('@weareinreach/ui/modals/GenericContent').then((mod) => mod.GenericContentModal)
+)
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
+const PrivacyStatementModal = dynamic(() =>
+	import('@weareinreach/ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal)
+)
 
 const SavedLists = () => {
 	const { t } = useTranslation('common')
@@ -77,7 +87,7 @@ const SavedLists = () => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
 	return {
 		props: {
 			...(await getServerSideTranslations(locale, ['common', 'attribute'])),

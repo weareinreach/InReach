@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Analytics } from '@vercel/analytics/react'
 import { type NextPage } from 'next'
 import { type AppProps, type NextWebVitalsMetric } from 'next/app'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { type Session } from 'next-auth'
@@ -12,7 +13,6 @@ import { DefaultSeo, type DefaultSeoProps } from 'next-seo'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 
 import { appEvent } from '@weareinreach/analytics/events'
-import { Donate, DonateModal } from '@weareinreach/ui/components/core/Donate'
 import { PageLoadProgress } from '@weareinreach/ui/components/core/PageLoadProgress'
 import { Footer } from '@weareinreach/ui/components/sections/Footer'
 import { Navbar } from '@weareinreach/ui/components/sections/Navbar'
@@ -22,6 +22,10 @@ import { Providers } from '~app/providers'
 import { api } from '~app/utils/api'
 
 import nextI18nConfig from '../../next-i18next.config.mjs'
+// import { Donate, DonateModal } from '@weareinreach/ui/components/core/Donate'
+const DonateModal = dynamic(() =>
+	import('@weareinreach/ui/components/core/Donate').then((mod) => mod.DonateModal)
+)
 
 const defaultSEO = {
 	titleTemplate: '%s | InReach',
