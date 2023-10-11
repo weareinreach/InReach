@@ -82,6 +82,11 @@
 		"website": "직접 웹사이트"
 	},
 	"disclaimer": "면책 진술서",
+	"donate": {
+		"hover": "InReach를 모두가 무료로 사용할 수 있도록 오늘 기부하세요",
+		"popup": "InReach를 무료로 사용할 수 있도록 도와주세요",
+		"to-inreach": "InReach에 기부하십시오 💝"
+	},
 	"dont-have-account": "계정이 없으세요?",
 	"download-app": "앱 다운로드",
 	"edit-profile": "프로필 편집하기",
@@ -381,6 +386,7 @@
 		"decline": "거절",
 		"delete": "삭제",
 		"distance": "거리",
+		"donate": "기부하기",
 		"email": "이메일",
 		"home": "홈",
 		"hours": "시간",

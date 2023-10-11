@@ -83,6 +83,11 @@
 		"website": "مستقیم ویب پا. ه"
 	},
 	"disclaimer": "اعلامیه",
+	"donate": {
+		"hover": "Donate today to help keep InReach free for everyone",
+		"popup": "Help keep InReach free for everyone",
+		"to-inreach": "Donate to InReach 💝"
+	},
 	"dont-have-account": "حساب نه لری؟",
 	"download-app": "اپلیکیشن ډاونلوډ کړئ",
 	"edit-profile": "پېژند سمول",
@@ -382,6 +387,7 @@
 		"decline": "Decline",
 		"delete": "ړنګول",
 		"distance": "فاصله",
+		"donate": "Donate",
 		"email": "برېښنالیک",
 		"home": "کور",
 		"hours": "ساعتونه",

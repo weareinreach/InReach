@@ -83,6 +83,11 @@
 		"website": "Sitio Web Directo"
 	},
 	"disclaimer": "Descargo de responsabilidad",
+	"donate": {
+		"hover": "Donar hoy para ayudar a mantener el alcance gratuito para todos",
+		"popup": "Ayuda a mantener el alcance gratuito para todos",
+		"to-inreach": "Donar para llegar a 💝"
+	},
 	"dont-have-account": "¿No tienes una cuenta?",
 	"download-app": "Descarga nuestra aplicación",
 	"edit-profile": "Editar perfil",
@@ -382,6 +387,7 @@
 		"decline": "Rechazar",
 		"delete": "Eliminar",
 		"distance": "Distancia",
+		"donate": "Donar",
 		"email": "E-mail",
 		"home": "Inicio",
 		"hours": "Horas",

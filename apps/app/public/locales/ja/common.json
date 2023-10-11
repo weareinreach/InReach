@@ -82,6 +82,11 @@
 		"website": "ダイレクトウェブサイト"
 	},
 	"disclaimer": "免責事項",
+	"donate": {
+		"hover": "InReach を誰もが無料で利用できるようにするために今日寄付してください",
+		"popup": "誰もがInReachを無料に保つのを助ける",
+		"to-inreach": "InReach :heart_with_ribbonに寄付する"
+	},
 	"dont-have-account": "アカウントを持っていない？",
 	"download-app": "アプリをダウンロードする",
 	"edit-profile": "プロフィールを編集",
@@ -381,6 +386,7 @@
 		"decline": "同意しない",
 		"delete": "[削除]",
 		"distance": "距離",
+		"donate": "寄付",
 		"email": "E メール",
 		"home": "ホーム",
 		"hours": "時間",

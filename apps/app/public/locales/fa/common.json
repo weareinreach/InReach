@@ -83,6 +83,11 @@
 		"website": "وب سایت مستقیم"
 	},
 	"disclaimer": "سلب مسئولیت",
+	"donate": {
+		"hover": "Donate today to help keep InReach free for everyone",
+		"popup": "Help keep InReach free for everyone",
+		"to-inreach": "Donate to InReach 💝"
+	},
 	"dont-have-account": "حساب کاربری ندارید؟",
 	"download-app": "برنامه را بارگیری کنید",
 	"edit-profile": "ویرایش پروفایل",
@@ -382,6 +387,7 @@
 		"decline": "Decline",
 		"delete": "حذف",
 		"distance": "فاصله",
+		"donate": "Donate",
 		"email": "پست الکترونیک",
 		"home": "صفحه اصلی",
 		"hours": "ساعت",
