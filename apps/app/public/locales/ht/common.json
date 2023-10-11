@@ -83,6 +83,11 @@
 		"website": "Sit entènèt dirèk"
 	},
 	"disclaimer": "Limit responsabilite nou",
+	"donate": {
+		"hover": "Donate today to help keep InReach free for everyone",
+		"popup": "Help keep InReach free for everyone",
+		"to-inreach": "Donate to InReach 💝"
+	},
 	"dont-have-account": "Pa gen yon kont?",
 	"download-app": "Telechaje app a",
 	"edit-profile": "Edit Profile",
@@ -382,6 +387,7 @@
 		"decline": "Decline",
 		"delete": "Efase",
 		"distance": "Distans",
+		"donate": "Donate",
 		"email": "Imèl",
 		"home": "Kay",
 		"hours": "Èdtan",
