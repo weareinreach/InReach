@@ -699,8 +699,8 @@ importers:
         specifier: 1.6.6
         version: 1.6.6
       superjson:
-        specifier: 1.13.3
-        version: 1.13.3
+        specifier: 2.0.0
+        version: 2.0.0
       tiny-invariant:
         specifier: 1.3.1
         version: 1.3.1
@@ -942,8 +942,8 @@ importers:
         specifier: 3.0.1
         version: 3.0.1
       superjson:
-        specifier: 1.13.3
-        version: 1.13.3
+        specifier: 2.0.0
+        version: 2.0.0
       ulid:
         specifier: 2.3.0
         version: 2.3.0
@@ -22723,6 +22723,14 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       copy-anything: 3.0.5
+    dev: true
+
+  /superjson@2.0.0:
+    resolution: {integrity: sha512-W3n+NJ7TFjaLle8ihIIvsr/bbuKpnxeatsyjmhy7iSkom+/cshaHziCQAWXrHGWJVQSQFDOuES6C3nSEvcbrQg==}
+    engines: {node: '>=16'}
+    dependencies:
+      copy-anything: 3.0.5
+    dev: false
 
   /supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
