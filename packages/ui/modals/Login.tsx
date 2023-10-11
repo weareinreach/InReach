@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import {
 	Box,
 	type ButtonProps,
@@ -19,6 +18,7 @@ import { type Route } from 'nextjs-routes'
 import { forwardRef, useState } from 'react'
 import { z } from 'zod'
 
+import { userEvent } from '@weareinreach/analytics/events'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize, useShake } from '~ui/hooks'
@@ -66,6 +66,7 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 					}
 				}
 				if (result?.ok) {
+					userEvent.login()
 					if (modalHandler) {
 						modalHandler.close()
 					} else if (callbackUrl) {
@@ -92,7 +93,6 @@ export const LoginBody = forwardRef<HTMLDivElement, LoginBodyProps>(
 					{...form.getInputProps('password')}
 				/>
 				<Button
-					// eslint-disable-next-line @typescript-eslint/return-await
 					onClick={async () => await loginHandle(form.values.email, form.values.password)}
 					variant='primary-icon'
 					fullWidth
