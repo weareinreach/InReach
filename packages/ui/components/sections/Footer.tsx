@@ -1,4 +1,5 @@
 import { createStyles, Grid, Group, rem, Stack, Text, Title } from '@mantine/core'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { Trans, useTranslation } from 'next-i18next'
 import { type MouseEventHandler } from 'react'
@@ -7,9 +8,18 @@ import InReach from '~ui/assets/inreach.svg'
 import Vercel from '~ui/assets/vercel.svg'
 import { type ExternalLink, type InternalLink, Link } from '~ui/components/core/Link'
 import { SocialLink } from '~ui/components/core/SocialLink'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { BodyGridNoTopMargin } from '~ui/layouts'
-import { GenericContentModal, PrivacyStatementModal } from '~ui/modals'
+// import { GenericContentModal, PrivacyStatementModal } from '~ui/modals'
+
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
+const GenericContentModal = dynamic(() =>
+	import('~ui/modals/GenericContent').then((mod) => mod.GenericContentModal)
+)
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
+const PrivacyStatementModal = dynamic(() =>
+	import('~ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal)
+)
 
 const useStyles = createStyles((theme) => ({
 	link: {

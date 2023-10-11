@@ -1,4 +1,4 @@
-import { Container, Stack, Title } from '@mantine/core'
+import { Stack, Title } from '@mantine/core'
 import { type GetServerSideProps, type NextPage } from 'next'
 import Head from 'next/head'
 import { useSession } from 'next-auth/react'

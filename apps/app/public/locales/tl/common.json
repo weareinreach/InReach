@@ -83,6 +83,11 @@
 		"website": "Direktang website"
 	},
 	"disclaimer": "Disclaimer",
+	"donate": {
+		"hover": "Donate today to help keep InReach free for everyone",
+		"popup": "Help keep InReach free for everyone",
+		"to-inreach": "Donate to InReach 💝"
+	},
 	"dont-have-account": "Wala kang account?",
 	"download-app": "I-download ang app",
 	"edit-profile": "I-edit ang Profile",
@@ -382,6 +387,7 @@
 		"decline": "Decline",
 		"delete": "Tanggalin",
 		"distance": "Distansya",
+		"donate": "Donate",
 		"email": "Email",
 		"home": "Tahanan",
 		"hours": "Oras",

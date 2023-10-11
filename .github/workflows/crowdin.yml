@@ -114,7 +114,7 @@ jobs:
           title: 'chore(i18n): Updated translations from Crowdin'
           labels: |
             translations
-            "kodiak: merge.method = 'squash'"
+            kodiak: merge.method = 'squash'
             automerge
           delete-branch: true
 

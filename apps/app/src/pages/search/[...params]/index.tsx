@@ -12,6 +12,7 @@ import {
 } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import compare from 'just-compare'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -28,11 +29,17 @@ import { CrisisSupport } from '@weareinreach/ui/components/sections/CrisisSuppor
 import { SearchResultSidebar } from '@weareinreach/ui/components/sections/SearchResultSidebar'
 import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
-import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
-import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
 import { api } from '~app/utils/api'
 import { getSearchResultPageCount, SEARCH_RESULT_PAGE_SIZE } from '~app/utils/constants'
 import { getServerSideTranslations } from '~app/utils/i18n'
+// import { MoreFilter } from '@weareinreach/ui/modals/MoreFilter'
+// import { ServiceFilter } from '@weareinreach/ui/modals/ServiceFilter'
+
+// @ts-expect-error Next Dynamic doesn't like polymorphic components
+const MoreFilter = dynamic(() => import('@weareinreach/ui/modals/MoreFilter').then((mod) => mod.MoreFilter))
+const ServiceFilter = dynamic(() =>
+	import('@weareinreach/ui/modals/ServiceFilter').then((mod) => mod.ServiceFilter)
+)
 
 const PageIndexSchema = z.coerce.number().default(1)
 
@@ -197,6 +204,7 @@ const SearchResults = () => {
 					</Group>
 					<Group noWrap w={{ base: '100%', md: '50%' }}>
 						<ServiceFilter resultCount={resultCount} isFetching={searchIsFetching} />
+						{/* @ts-expect-error `component` prop not needed.. */}
 						<MoreFilter resultCount={resultCount} isFetching={searchIsFetching}>
 							{t('more.filters')}
 						</MoreFilter>
