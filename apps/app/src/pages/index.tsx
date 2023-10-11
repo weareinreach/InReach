@@ -16,8 +16,9 @@ import { getCookie } from 'cookies-next'
 import Autoplay from 'embla-carousel-autoplay'
 import { type GetStaticProps } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { type TFunction, Trans, useTranslation } from 'next-i18next'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { ms } from '@weareinreach/api/lib/milliseconds'
 import { trpcServerClient } from '@weareinreach/api/trpc'
@@ -154,6 +155,7 @@ const CardTranslation = ({ i18nKey, t }: { i18nKey: string; t: TFunction }) => {
 }
 
 const Home: NextPageWithoutGrid = () => {
+	const router = useRouter()
 	const { t } = useTranslation('landingPage')
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
@@ -165,6 +167,11 @@ const Home: NextPageWithoutGrid = () => {
 	useAnimationOffsetEffect(embla, 5000)
 
 	const launchAHpopup = getCookie('inr-ahpop')
+
+	useEffect(() => {
+		router.prefetch('/search/[...params]')
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		<>
