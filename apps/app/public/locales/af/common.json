@@ -83,6 +83,11 @@
 		"website": "Direkte webwerf"
 	},
 	"disclaimer": "Vrywaring",
+	"donate": {
+		"hover": "Donate today to help keep InReach free for everyone",
+		"popup": "Help keep InReach free for everyone",
+		"to-inreach": "Donate to InReach 💝"
+	},
 	"dont-have-account": "Het u nie 'n rekening nie?",
 	"download-app": "Laai die app af",
 	"edit-profile": "Profiel wysig",
@@ -382,6 +387,7 @@
 		"decline": "Decline",
 		"delete": "Verwyder",
 		"distance": "Afstand",
+		"donate": "Donate",
 		"email": "E-pos",
 		"home": "Huis",
 		"hours": "Ure",

@@ -82,6 +82,11 @@
 		"website": "直接网站"
 	},
 	"disclaimer": "免责声明",
+	"donate": {
+		"hover": "今日捐赠以帮助所有人保持Inach免费。",
+		"popup": "帮助所有人保持无障碍连接",
+		"to-inreach": "捐赠给Inach :hear_with_ribbon："
+	},
 	"dont-have-account": "没有账号？",
 	"download-app": "下载该应用程序",
 	"edit-profile": "编辑个人资料",
@@ -381,6 +386,7 @@
 		"decline": "拒绝",
 		"delete": "删除",
 		"distance": "距离",
+		"donate": "捐助",
 		"email": "电子邮件",
 		"home": "主页",
 		"hours": "小时",

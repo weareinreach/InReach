@@ -83,6 +83,11 @@
 		"website": "Site direto"
 	},
 	"disclaimer": "Aviso de responsabilidade",
+	"donate": {
+		"hover": "Doe hoje para ajudar a manter o Alcance grátis para todos",
+		"popup": "Ajude a manter o InReach gratuito para todos",
+		"to-inreach": "Doe para o Alcance 💝"
+	},
 	"dont-have-account": "Não tem uma conta?",
 	"download-app": "Baixe o aplicativo",
 	"edit-profile": "Editar perfil",
@@ -382,6 +387,7 @@
 		"decline": "Recusar",
 		"delete": "Excluir",
 		"distance": "Distância",
+		"donate": "Doar",
 		"email": "E-mail",
 		"home": "Casa",
 		"hours": "Horas",

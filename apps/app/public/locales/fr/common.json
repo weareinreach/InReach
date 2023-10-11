@@ -83,6 +83,11 @@
 		"website": "Site Web direct"
 	},
 	"disclaimer": "Clause de non-responsabilité",
+	"donate": {
+		"hover": "Faire un don aujourd'hui pour aider InReach à rester gratuit pour tout le monde",
+		"popup": "Aidez InReach gratuitement pour tout le monde",
+		"to-inreach": "Faire un don à InReach 💝"
+	},
 	"dont-have-account": "Vous n'avez pas de compte ?",
 	"download-app": "Télécharger l'application",
 	"edit-profile": "Modifier le profil",
@@ -382,6 +387,7 @@
 		"decline": "Refuser",
 		"delete": "Supprimer",
 		"distance": "Distance",
+		"donate": "Faire un don",
 		"email": "Courriel",
 		"home": "Page d'accueil",
 		"hours": "Heures",

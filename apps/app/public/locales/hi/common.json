@@ -83,6 +83,11 @@
 		"website": "डायरेक्ट वेबसाइट"
 	},
 	"disclaimer": "अस्वीकरण",
+	"donate": {
+		"hover": "Donate today to help keep InReach free for everyone",
+		"popup": "Help keep InReach free for everyone",
+		"to-inreach": "Donate to InReach 💝"
+	},
 	"dont-have-account": "क्या आपके पास अकाउंट नहीं है?",
 	"download-app": "ऐप डाउनलोड करें",
 	"edit-profile": "प्रोफ़ाइल संपादित करें",
@@ -382,6 +387,7 @@
 		"decline": "Decline",
 		"delete": "मिटाएँ",
 		"distance": "दूरी",
+		"donate": "Donate",
 		"email": "ईमेल",
 		"home": "होम",
 		"hours": "घंटे",
