@@ -7,6 +7,7 @@ import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import { type LiteralUnion } from 'type-fest'
 
+import { userEvent } from '@weareinreach/analytics/events'
 import { type ModalTitleBreadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
@@ -126,7 +127,8 @@ export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProp
 
 	const variants = useCustomVariant()
 	const signUpAction = api.user.create.useMutation({
-		onSuccess: () => {
+		onSuccess: (_data, variables) => {
+			userEvent.signup(variables.userType)
 			setSuccessMessage(true)
 		},
 		onError: (error) => {

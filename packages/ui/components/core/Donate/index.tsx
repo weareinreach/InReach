@@ -5,6 +5,7 @@ import Script from 'next/script'
 import { useTranslation } from 'next-i18next'
 import { type ReactElement, useEffect, useState } from 'react'
 
+import { donateEvent } from '@weareinreach/analytics/events'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -52,6 +53,7 @@ export const DonateModal = ({ children }: DonateModalProps) => {
 	const buttonPosition = isMobile ? { bottom: rem(100), right: rem(12) } : { bottom: rem(40), right: rem(40) }
 
 	const buttonHandler = () => {
+		donateEvent.click()
 		if (isMobile) {
 			if (!showEmoji || opened) {
 				handler.close()
