@@ -83,8 +83,11 @@
 		"website": "Direct website"
 	},
 	"disclaimer": "Disclaimer",
-	"donation-hover-msg": "Donate today to help keep InReach free for everyone",
-	"donation-popup-msg": "Help keep InReach free for everyone",
+	"donate": {
+		"hover": "Donate today to help keep InReach free for everyone",
+		"popup": "Help keep InReach free for everyone",
+		"to-inreach": "Donate to InReach 💝"
+	},
 	"dont-have-account": "Don't have an account?",
 	"download-app": "Download the app",
 	"edit-profile": "Edit Profile",

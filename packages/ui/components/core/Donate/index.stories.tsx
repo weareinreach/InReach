@@ -1,14 +1,14 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
-import { Donate } from './index'
+import { DonateModal } from './index'
 
 export default {
 	title: 'Components/Core/Donate',
-	component: Donate,
+	component: DonateModal,
 	parameters: {
 		layoutWrapper: 'centeredFullscreen',
 	},
-} satisfies Meta<typeof Donate>
+} satisfies Meta<typeof DonateModal>
 
-type StoryDef = StoryObj<typeof Donate>
+type StoryDef = StoryObj<typeof DonateModal>
 export const Default = {} satisfies StoryDef
