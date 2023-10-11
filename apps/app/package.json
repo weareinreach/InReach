@@ -36,7 +36,7 @@
 		"@mantine/notifications": "6.0.21",
 		"@mantine/nprogress": "6.0.21",
 		"@mantine/utils": "6.0.21",
-		"@next/bundle-analyzer": "13.5.3",
+		"@next/bundle-analyzer": "13.5.4",
 		"@opentelemetry/api": "1.6.0",
 		"@opentelemetry/exporter-trace-otlp-http": "0.44.0",
 		"@opentelemetry/resources": "1.17.1",
