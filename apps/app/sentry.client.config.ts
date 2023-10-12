@@ -35,4 +35,5 @@ init({
 		/^https?:\/\/localhost(?::\d+)?(?:\/.*)?/i,
 		/^\//i,
 	],
+	ignoreErrors: [/^ResizeObserver loop completed with undelivered notifications.$/],
 })
