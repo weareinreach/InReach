@@ -42,3 +42,11 @@ export const serviceModalEvent = {
 	opened: ({ serviceId, serviceName, orgSlug }: ServiceModalOpenedAction) =>
 		event('select_content', { content_type: 'orgService', content_id: serviceId, serviceName, orgSlug }),
 }
+
+export const donateEvent = {
+	click: () => event('select_content', { content_type: 'donation_button' }),
+}
+export const userEvent = {
+	signup: (userType?: string) => event('sign_up', { userType }),
+	login: () => event('login'),
+}

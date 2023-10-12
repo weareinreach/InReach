@@ -5,6 +5,7 @@ import Script from 'next/script'
 import { useTranslation } from 'next-i18next'
 import { type ReactElement, useEffect, useState } from 'react'
 
+import { donateEvent } from '@weareinreach/analytics/events'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -52,6 +53,7 @@ export const DonateModal = ({ children }: DonateModalProps) => {
 	const buttonPosition = isMobile ? { bottom: rem(100), right: rem(12) } : { bottom: rem(40), right: rem(40) }
 
 	const buttonHandler = () => {
+		donateEvent.click()
 		if (isMobile) {
 			if (!showEmoji || opened) {
 				handler.close()
@@ -98,6 +100,7 @@ export const DonateModal = ({ children }: DonateModalProps) => {
 				// width={isMobile ? width - 40 : undefined}
 				styles={{ dropdown: { maxWidth: '90vw', textAlign: 'center' } }}
 				shadow='xl'
+				zIndex={100}
 			>
 				<Popover.Target>
 					{hasChildren ? (
@@ -157,7 +160,6 @@ export const DonateModal = ({ children }: DonateModalProps) => {
 							data-lookup-type='jquery-selector'
 							data-lookup-value='#kindful-donate-form-9e692b4a-fcfc-46a2-9a0e-4f9b8b0bd37b'
 							data-styles-off='true'
-							strategy='lazyOnload'
 						/>
 					</Modal.Body>
 				</Modal.Content>
