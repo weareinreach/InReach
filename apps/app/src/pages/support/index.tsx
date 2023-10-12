@@ -3,11 +3,11 @@ import { type GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useTranslation } from 'next-i18next'
 
+import { donateEvent } from '@weareinreach/analytics/events'
 import { AntiHateMessage } from '@weareinreach/ui/components/core/AntiHateMessage'
 import { Link } from '@weareinreach/ui/components/core/Link'
-import { useCustomVariant } from '@weareinreach/ui/hooks'
+import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { Icon } from '@weareinreach/ui/icon'
-// import { GenericContentModal, PrivacyStatementModal } from '@weareinreach/ui/modals'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
@@ -17,10 +17,6 @@ const GenericContentModal = dynamic(() =>
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
 const PrivacyStatementModal = dynamic(() =>
 	import('@weareinreach/ui/modals/PrivacyStatement').then((mod) => mod.PrivacyStatementModal)
-)
-
-const DonateModal = dynamic(() =>
-	import('@weareinreach/ui/components/core/Donate').then((mod) => mod.DonateModal)
 )
 
 const SupportItem = ({ tKey }: SupportItemProps) => {
@@ -43,10 +39,17 @@ const SupportPage = () => {
 
 	const variants = useCustomVariant()
 	const linkVar = { variant: variants.Link.inlineInvertedUtil1 }
+
 	const support = [
-		<DonateModal key={7}>
+		<Link
+			key={7}
+			external
+			href='https://inreach.kindful.com/embeds/4d78c071-9369-4a0c-84c7-8e783b21a940'
+			onClick={donateEvent.click}
+			{...linkVar}
+		>
 			<SupportItem tKey='donate.to-inreach' />
-		</DonateModal>,
+		</Link>,
 		<Link key={0} href='/suggest' target='_self' {...linkVar}>
 			<SupportItem tKey='footer.suggest-org' />
 		</Link>,
