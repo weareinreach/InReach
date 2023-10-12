@@ -100,6 +100,7 @@ export const DonateModal = ({ children }: DonateModalProps) => {
 				// width={isMobile ? width - 40 : undefined}
 				styles={{ dropdown: { maxWidth: '90vw', textAlign: 'center' } }}
 				shadow='xl'
+				zIndex={100}
 			>
 				<Popover.Target>
 					{hasChildren ? (
@@ -159,7 +160,6 @@ export const DonateModal = ({ children }: DonateModalProps) => {
 							data-lookup-type='jquery-selector'
 							data-lookup-value='#kindful-donate-form-9e692b4a-fcfc-46a2-9a0e-4f9b8b0bd37b'
 							data-styles-off='true'
-							strategy='lazyOnload'
 						/>
 					</Modal.Body>
 				</Modal.Content>
