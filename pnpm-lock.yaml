@@ -975,6 +975,9 @@ importers:
       '@types/node':
         specifier: 18.18.4
         version: 18.18.4
+      '@types/papaparse':
+        specifier: 5.3.9
+        version: 5.3.9
       '@types/pg':
         specifier: 8.10.5
         version: 8.10.5
@@ -1017,6 +1020,9 @@ importers:
       p-queue:
         specifier: 7.4.1
         version: 7.4.1
+      papaparse:
+        specifier: 5.4.1
+        version: 5.4.1
       prettier:
         specifier: 3.0.3
         version: 3.0.3
@@ -10012,6 +10018,12 @@ packages:
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
+
+  /@types/papaparse@5.3.9:
+    resolution: {integrity: sha512-sZcrKD63qA4/6GyBcVvX6AIp0AkpfyYk00CUQHMBvb4+OVXTZWyXUvidUZaai1wyKUVyJoxO7mgREam/pMRrDw==}
+    dependencies:
+      '@types/node': 18.18.4
+    dev: true
 
   /@types/parse-json@4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
@@ -19929,6 +19941,10 @@ packages:
 
   /pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
+    dev: true
+
+  /papaparse@5.4.1:
+    resolution: {integrity: sha512-HipMsgJkZu8br23pW15uvo6sib6wne/4woLZPlFf3rpDyMe9ywEXUsuD7+6K9PRkJlVT51j/sCOYDKGGS3ZJrw==}
     dev: true
 
   /param-case@2.1.1:
