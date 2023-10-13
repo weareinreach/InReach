@@ -67,7 +67,7 @@
 		"@types/inquirer": "9.0.4",
 		"@types/inquirer-autocomplete-prompt": "3.0.1",
 		"@types/luxon": "3.3.2",
-		"@types/node": "18.18.4",
+		"@types/node": "18.18.5",
 		"@types/papaparse": "5.3.9",
 		"@types/pg": "8.10.5",
 		"@types/terraformer__wkt": "2.0.0",
@@ -97,7 +97,7 @@
 		"tsx": "3.13.0",
 		"type-fest": "4.4.0",
 		"typescript": "5.2.2",
-		"zod-prisma-types": "2.7.9",
+		"zod-prisma-types": "2.7.11",
 		"zod-to-json-schema": "3.21.4"
 	},
 	"prisma": {
