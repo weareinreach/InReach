@@ -10,7 +10,7 @@
 	],
 	"scripts": {},
 	"dependencies": {
-		"@t3-oss/env-nextjs": "0.7.0",
+		"@t3-oss/env-nextjs": "0.7.1",
 		"@weareinreach/util": "workspace:*",
 		"chromatic": "7.4.0",
 		"zod": "3.22.4"
