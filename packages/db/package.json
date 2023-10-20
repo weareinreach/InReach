@@ -61,7 +61,7 @@
 	},
 	"devDependencies": {
 		"@terraformer/wkt": "2.2.0",
-		"@turbo/gen": "1.10.15",
+		"@turbo/gen": "1.10.16",
 		"@turf/helpers": "6.5.0",
 		"@types/eslint": "8.44.6",
 		"@types/inquirer": "9.0.6",
