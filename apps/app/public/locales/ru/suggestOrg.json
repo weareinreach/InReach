@@ -21,7 +21,7 @@
 		"org-name": "Название организации",
 		"org-website": "Сайт организации",
 		"placeholder-address": "Введите адрес",
-		"placeholder-name": "Введите название организации...",
+		"placeholder-name": "Введите название организации",
 		"placeholder-website": "Введите URL",
 		"service-types": "Какой(ие) тип(ы) услуг предоставляет данная организация?"
 	},
