@@ -43,10 +43,11 @@ export const DonateModal = () => {
 	const { isMobile } = useScreenSize()
 	const donateEmoji = '💝'
 	const [showEmoji, setShowEmoji] = useState(false)
+	const [isMobileApp, setIsMobileApp] = useState(false)
 	const { start } = useTimeout(() => {
 		setShowEmoji(true)
 	}, 10_000)
-	const buttonPosition = isMobile ? { bottom: rem(100), right: rem(12) } : { bottom: rem(40), right: rem(40) }
+	const buttonPosition = isMobile ? { bottom: rem(80), right: rem(12) } : { bottom: rem(40), right: rem(40) }
 
 	const buttonHandler = () => {
 		donateEvent.click()
@@ -54,7 +55,11 @@ export const DonateModal = () => {
 			if (!showEmoji || opened) {
 				handler.close()
 			}
-			modalHandler.open()
+			if (isMobileApp) {
+				window.open('https://inreach.kindful.com/embeds/9e692b4a-fcfc-46a2-9a0e-4f9b8b0bd37b', '_blank')
+			} else {
+				modalHandler.open()
+			}
 		} else {
 			modalHandler.open()
 		}
@@ -63,6 +68,11 @@ export const DonateModal = () => {
 		start()
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
+	useEffect(() => {
+		if (router.query.isMobileApp) {
+			setIsMobileApp(true)
+		}
+	}, [router.query.isMobileApp])
 
 	const isSupportPage = router.pathname === '/support'
 	const showPopover = !isSupportPage && (opened || !showEmoji)
