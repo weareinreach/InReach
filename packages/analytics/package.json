@@ -17,15 +17,15 @@
 		"just-compact": "3.2.0"
 	},
 	"devDependencies": {
-		"@types/gtag.js": "0.0.16",
+		"@types/gtag.js": "0.0.17",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
-		"next": "13.5.4",
+		"next": "13.5.3",
 		"nextjs-google-analytics": "2.3.3",
-		"type-fest": "4.4.0"
+		"type-fest": "4.5.0"
 	},
 	"peerDependencies": {
-		"next": "13.5.4",
+		"next": "13.5.3",
 		"nextjs-google-analytics": "2.3.3"
 	}
 }

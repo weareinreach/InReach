@@ -28,7 +28,7 @@ jobs:
       run:
         working-directory: packages/ui
     steps:
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
       - uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598 # v2.4.0
@@ -49,7 +49,7 @@ jobs:
 
       # 👇 Runs Chromatic CLI in ./packages/ui
       - name: Publish to Chromatic
-        uses: chromaui/action@78b6788ed70a57e2f7c9c335f9677cbb0cbc542a # v1
+        uses: chromaui/action@0b0d3df01fda65d7b89f09d02f18e1457a8d84b9 # v1
         with:
           workingDir: packages/ui
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}

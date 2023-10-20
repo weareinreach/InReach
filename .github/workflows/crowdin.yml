@@ -31,7 +31,7 @@ jobs:
       CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     steps:
       - name: Checkout
-        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Import GPG key
         id: import_gpg
@@ -88,7 +88,7 @@ jobs:
 
       - name: Check for updated files
         if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
-        uses: tj-actions/verify-changed-files@30aa174f53f67ecd5dc8e190dfbe46392202e5a5 # v16
+        uses: tj-actions/verify-changed-files@54e20d3c522fbeed99ebaf2e38a1eb33214c58ba # v16
         id: verify-changed-files
         with:
           files: '**/locales/*/*.json'

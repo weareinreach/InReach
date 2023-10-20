@@ -29,7 +29,7 @@
 	"education-and-employment": {
 		"CATEGORYNAME": "Образование и трудоустройство",
 		"career-counseling": "Профессиональные консультации",
-		"educational-support-for-lgbtq-youth": "Образовательная поддержка транс-молодёжи",
+		"educational-support-for-lgbtq-youth": "Образовательная поддержка ЛГБТК+ молодёжи",
 		"english-classes": "Курсы английского языка",
 		"language-classes": "Языковые курсы",
 		"leadership-training-and-professional-development": "Подготовка руководящих кадров и повышение квалификации",
@@ -43,7 +43,7 @@
 	},
 	"housing": {
 		"CATEGORYNAME": "Жилье",
-		"drop-in-centers-for-lgbtq-youth": "Центры для транс-молодёжи",
+		"drop-in-centers-for-lgbtq-youth": "Центры для ЛГБТК+ молодёжи",
 		"emergency-housing": "Экстренное жилье",
 		"housing-information-and-referrals": "Информация о жилье",
 		"short-term-housing": "Краткосрочное жилье",
@@ -52,7 +52,7 @@
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "Средства гигиены и предметы одежды",
 		"clothes": "Предметы одежды",
-		"gender-affirming-items": "Предметы, подтверждающие гендерный фактор",
+		"gender-affirming-items": "Одежда для трансгендеров",
 		"gender-neutral-bathrooms": "Гендерно-нейтральные туалеты",
 		"haircuts-and-stylists": "Парикмахерские услуги",
 		"hygiene": "Средства гигиены"
