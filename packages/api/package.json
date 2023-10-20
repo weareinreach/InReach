@@ -48,7 +48,7 @@
 		"zod": "3.22.4"
 	},
 	"devDependencies": {
-		"@turbo/gen": "1.10.15",
+		"@turbo/gen": "1.10.16",
 		"@types/eslint": "8.44.6",
 		"@types/google.maps": "3.54.4",
 		"@types/luxon": "3.3.3",
