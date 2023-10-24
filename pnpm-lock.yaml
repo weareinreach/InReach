@@ -699,8 +699,8 @@ importers:
         specifier: 1.6.6
         version: 1.6.6
       superjson:
-        specifier: 2.1.0
-        version: 2.1.0
+        specifier: 2.2.0
+        version: 2.2.0
       tiny-invariant:
         specifier: 1.3.1
         version: 1.3.1
@@ -942,8 +942,8 @@ importers:
         specifier: 3.0.1
         version: 3.0.1
       superjson:
-        specifier: 2.1.0
-        version: 2.1.0
+        specifier: 2.2.0
+        version: 2.2.0
       ulid:
         specifier: 2.3.0
         version: 2.3.0
@@ -22874,8 +22874,8 @@ packages:
       copy-anything: 3.0.5
     dev: true
 
-  /superjson@2.1.0:
-    resolution: {integrity: sha512-VrMxSzMeE2nLmTvxOl0gEuz45kErw5oNNIzmZJ+eCmtSO89sUzRIIOhATJOdkSOn4eChekU835RtmPqp33S7JQ==}
+  /superjson@2.2.0:
+    resolution: {integrity: sha512-vSr6kwT/LY3T1+JaZllIGFp5+qEYyCw/s6EMgR8TulTwRbKETuVIqN4RTurPBTU/HlEpP0ytN3srB2vjjeBRoQ==}
     engines: {node: '>=16'}
     dependencies:
       copy-anything: 3.0.5

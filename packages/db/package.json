@@ -55,7 +55,7 @@
 		"pg": "8.11.3",
 		"prisma-kysely": "1.7.1",
 		"sql-bricks": "3.0.1",
-		"superjson": "2.1.0",
+		"superjson": "2.2.0",
 		"ulid": "2.3.0",
 		"zod": "3.22.4"
 	},
