@@ -82,6 +82,7 @@
 		"inquirer-autocomplete-prompt": "3.0.1",
 		"just-compact": "3.2.0",
 		"kysely-codegen": "0.11.0",
+		"libphonenumber-js": "1.10.48",
 		"listr2": "7.0.2",
 		"luxon": "3.4.3",
 		"p-queue": "7.4.1",

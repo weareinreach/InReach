@@ -1017,6 +1017,9 @@ importers:
       kysely-codegen:
         specifier: 0.11.0
         version: 0.11.0(kysely@0.26.3)(pg@8.11.3)
+      libphonenumber-js:
+        specifier: 1.10.48
+        version: 1.10.48
       listr2:
         specifier: 7.0.2
         version: 7.0.2
@@ -17472,7 +17475,6 @@ packages:
 
   /libphonenumber-js@1.10.48:
     resolution: {integrity: sha512-Vvcgt4+o8+puIBJZLdMshPYx9nRN3/kTT7HPtOyfYrSQuN9PGBF1KUv0g07fjNzt4E4GuA7FnsLb+WeAMzyRQg==}
-    dev: false
 
   /lie@3.1.1:
     resolution: {integrity: sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==}
