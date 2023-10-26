@@ -53,4 +53,5 @@ export * from './2023-09-20_fix-access-instructions/index'
 export * from './2023-09-20_update-services'
 export * from './2023-09-22_service-areas'
 export * from './2023-09-22_update-alerts/index'
+export * from './2023-10-25_service-tag-updates'
 // codegen:end
