@@ -12,6 +12,7 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useDebouncedValue } from '@mantine/hooks'
+import regexEscape from 'escape-string-regexp'
 import { localeIncludes } from 'locale-includes'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
@@ -253,7 +254,7 @@ export const SearchBox = ({
 	) satisfies Partial<AutocompleteProps>
 
 	const matchText = (result: string, textToMatch: string) => {
-		const matcher = new RegExp(`(${textToMatch})`, 'ig')
+		const matcher = new RegExp(`(${regexEscape(textToMatch)})`, 'ig')
 		const replaced = reactStringReplace(result, matcher, (match, i) => (
 			<span key={i} className={classes.matchedText}>
 				{match}
