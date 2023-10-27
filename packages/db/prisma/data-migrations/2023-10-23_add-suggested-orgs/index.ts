@@ -1,8 +1,5 @@
-import fs from 'fs'
-import path from 'path'
-
 import { prisma } from '~db/client'
-import { formatMessage } from '~db/prisma/common'
+import { downloadFromDatastore, formatMessage } from '~db/prisma/common'
 import { type MigrationJob } from '~db/prisma/dataMigrationRunner'
 import { createLogger, type JobDef, jobPostRunner } from '~db/prisma/jobPreRun'
 
@@ -30,106 +27,115 @@ export const job20231023_add_suggested_orgs = {
 		 * This will be written to `stdout` and to a log file in `/prisma/migration-logs/`
 		 */
 
-		// Disable for CI
-		// eslint-disable-next-line node/no-process-env
-		if (process.env.CI) return
-
 		// Do stuff
-		const data = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'out.json'), 'utf8')) as Output
-
+		log(`Downloading data from datastore`)
+		const data = (await downloadFromDatastore(
+			'migrations/2023-10-23_add-suggested-orgs/data.json',
+			log
+		)) as Output
 		const translationKeys = await prisma.translationKey.createMany({
 			data: data.translationKey,
 			skipDuplicates: true,
 		})
-		log(`Created ${translationKeys.count} translation key records`)
+		log(`Translation Keys -- Submitted: ${data.translationKey.length}, Created: ${translationKeys.count}`)
 		const freeText = await prisma.freeText.createMany({ data: data.freeText, skipDuplicates: true })
-		log(`Created ${freeText.count} free text records`)
+		log(`Free Text -- Submitted: ${data.freeText.length}, Created: ${freeText.count}`)
 
 		const organizationNew = await prisma.organization.createMany({
 			data: data.organizationNew,
 			skipDuplicates: true,
 		})
-		log(`Created ${organizationNew.count} organization records`)
+		log(`Organizations -- Submitted: ${data.organizationNew.length}, Created: ${organizationNew.count}`)
 		const organizationUp = await prisma.$transaction(
 			data.organizationUp.map((args) => prisma.organization.update(args))
 		)
 		log(`Updated ${organizationUp.length} organization records`)
 
 		const orgLocation = await prisma.orgLocation.createMany({ data: data.orgLocation, skipDuplicates: true })
-		log(`Created ${orgLocation.count} org location records`)
+		log(`OrgLocation -- Submitted: ${data.orgLocation.length}, Created: ${orgLocation.count}`)
 		const orgService = await prisma.orgService.createMany({ data: data.orgService, skipDuplicates: true })
-		log(`Created ${orgService.count} org service records`)
+		log(`OrgService -- Submitted: ${data.orgService.length}, Created: ${orgService.count}`)
 		const orgEmail = await prisma.orgEmail.createMany({ data: data.orgEmail, skipDuplicates: true })
-		log(`Created ${orgEmail.count} org email records`)
+		log(`OrgEmail -- Submitted: ${data.orgEmail.length}, Created: ${orgEmail.count}`)
 		const orgPhone = await prisma.orgPhone.createMany({ data: data.orgPhone, skipDuplicates: true })
-		log(`Created ${orgPhone.count} org phone records`)
-
-		const attributeSupplement = await prisma.attributeSupplement.createMany({
-			data: data.attributeSupplement,
-			skipDuplicates: true,
-		})
-		log(`Created ${attributeSupplement.count} attribute supplement records`)
+		log(`OrgPhone -- Submitted: ${data.orgPhone.length}, Created: ${orgPhone.count}`)
 
 		const serviceArea = await prisma.serviceArea.createMany({ data: data.serviceArea, skipDuplicates: true })
-		log(`Created ${serviceArea.count} service area records`)
+		log(`ServiceArea -- Submitted: ${data.serviceArea.length}, Created: ${serviceArea.count}`)
 		const serviceAreaCountry = await prisma.serviceAreaCountry.createMany({
 			data: data.serviceAreaCountry,
 			skipDuplicates: true,
 		})
-		log(`Created ${serviceAreaCountry.count} service area country records`)
+		log(
+			`ServiceAreaCountry -- Submitted: ${data.serviceAreaCountry.length}, Created: ${serviceAreaCountry.count}`
+		)
 		const serviceAreaDist = await prisma.serviceAreaDist.createMany({
 			data: data.serviceAreaDist,
 			skipDuplicates: true,
 		})
-		log(`Created ${serviceAreaDist.count} service area dist records`)
+		log(`ServiceAreaDist -- Submitted: ${data.serviceAreaDist.length}, Created: ${serviceAreaDist.count}`)
 
 		const orgServiceTag = await prisma.orgServiceTag.createMany({
 			data: data.orgServiceTag,
 			skipDuplicates: true,
 		})
-		log(`Created ${orgServiceTag.count} org service tag records`)
+		log(`OrgServiceTag -- Submitted: ${data.orgServiceTag.length}, Created: ${orgServiceTag.count}`)
 
 		const organizationAttribute = await prisma.organizationAttribute.createMany({
 			data: data.organizationAttribute,
 			skipDuplicates: true,
 		})
-		log(`Created ${organizationAttribute.count} organization attribute records`)
-		const serviceAccessAttribute = await prisma.serviceAccessAttribute.createMany({
-			data: data.serviceAccessAttribute,
-			skipDuplicates: true,
-		})
-		log(`Created ${serviceAccessAttribute.count} service access attribute records`)
+		log(
+			`OrganizationAttribute -- Submitted: ${data.organizationAttribute.length}, Created: ${organizationAttribute.count}`
+		)
 		const serviceAttribute = await prisma.serviceAttribute.createMany({
 			data: data.serviceAttribute,
 			skipDuplicates: true,
 		})
-		log(`Created ${serviceAttribute.count} service attribute records`)
+		log(`ServiceAttribute -- Submitted: ${data.serviceAttribute.length}, Created: ${serviceAttribute.count}`)
+		const serviceAccessAttribute = await prisma.serviceAccessAttribute.createMany({
+			data: data.serviceAccessAttribute,
+			skipDuplicates: true,
+		})
+		log(
+			`ServiceAccessAttribute -- Submitted: ${data.serviceAccessAttribute.length}, Created: ${serviceAccessAttribute.count}`
+		)
+
+		const attributeSupplement = await prisma.attributeSupplement.createMany({
+			data: data.attributeSupplement,
+			skipDuplicates: true,
+		})
+		log(
+			`AttributeSupplement -- Submitted: ${data.attributeSupplement.length}, Created: ${attributeSupplement.count}`
+		)
 
 		const orgServiceEmail = await prisma.orgServiceEmail.createMany({
 			data: data.orgServiceEmail,
 			skipDuplicates: true,
 		})
-		log(`Created ${orgServiceEmail.count} org service email records`)
+		log(`OrgServiceEmail -- Submitted: ${data.orgServiceEmail.length}, Created: ${orgServiceEmail.count}`)
 		const orgServicePhone = await prisma.orgServicePhone.createMany({
 			data: data.orgServicePhone,
 			skipDuplicates: true,
 		})
-		log(`Created ${orgServicePhone.count} org service phone records`)
+		log(`OrgServicePhone -- Submitted: ${data.orgServicePhone.length}, Created: ${orgServicePhone.count}`)
 		const orgLocationEmail = await prisma.orgLocationEmail.createMany({
 			data: data.orgLocationEmail,
 			skipDuplicates: true,
 		})
-		log(`Created ${orgLocationEmail.count} org location email records`)
+		log(`OrgLocationEmail -- Submitted: ${data.orgLocationEmail.length}, Created: ${orgLocationEmail.count}`)
 		const orgLocationPhone = await prisma.orgLocationPhone.createMany({
 			data: data.orgLocationPhone,
 			skipDuplicates: true,
 		})
-		log(`Created ${orgLocationPhone.count} org location phone records`)
+		log(`OrgLocationPhone -- Submitted: ${data.orgLocationPhone.length}, Created: ${orgLocationPhone.count}`)
 		const orgLocationService = await prisma.orgLocationService.createMany({
 			data: data.orgLocationService,
 			skipDuplicates: true,
 		})
-		log(`Created ${orgLocationService.count} org location service records`)
+		log(
+			`OrgLocationService -- Submitted: ${data.orgLocationService.length}, Created: ${orgLocationService.count}`
+		)
 
 		const handledSuggestions = await prisma.suggestion.updateMany(data.handledSuggestions)
 		log(`Marked ${handledSuggestions.count} suggestions as 'handled'`)
