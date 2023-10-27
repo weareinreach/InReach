@@ -2,19 +2,19 @@
 // The config you add here will be used whenever a users loads a page in their browser.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import { BrowserProfilingIntegration, BrowserTracing, init, Replay } from '@sentry/nextjs'
+import * as Sentry from '@sentry/nextjs'
 
 // Sentry.init({
-init({
+Sentry.init({
 	dsn: 'https://3398c2248c86498ab42fa8533e4f83f1@o1412293.ingest.sentry.io/6751163',
 	integrations: [
-		new Replay({
+		new Sentry.Replay({
 			// Additional Replay configuration goes in here, for example:
 			maskAllText: true,
 			blockAllMedia: true,
 		}),
-		new BrowserTracing(),
-		new BrowserProfilingIntegration(),
+		new Sentry.BrowserTracing(),
+		new Sentry.BrowserProfilingIntegration(),
 	],
 	// Adjust this value in production, or use tracesSampler for greater control
 	tracesSampleRate: 1,
