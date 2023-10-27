@@ -29,12 +29,12 @@ Sentry.init({
 	replaysSessionSampleRate: 0.1,
 	profilesSampleRate: 1,
 
-	tracePropagationTargets: [
-		/^https?:\/\/app\.inreach\.org(?:\/.*)?/i,
-		/^https?:\/\/.*-weareinreach\.vercel\.app(?:\/.*)?/i,
-		/^https?:\/\/localhost(?::\d+)?(?:\/.*)?/i,
-		/^\//i,
-	],
+	// tracePropagationTargets: [
+	// 	/^https?:\/\/app\.inreach\.org(?:\/.*)?/i,
+	// 	/^https?:\/\/.*-weareinreach\.vercel\.app(?:\/.*)?/i,
+	// 	/^https?:\/\/localhost(?::\d+)?(?:\/.*)?/i,
+	// 	/^\//i,
+	// ],
 	ignoreErrors: [
 		/^ResizeObserver loop completed with undelivered notifications.$/,
 		/^ResizeObserver loop limit exceeded$/,

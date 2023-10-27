@@ -22,7 +22,10 @@ const shouldAnalyze = process.env.ANALYZE === 'true'
 
 const withRoutes = routes({ outDir: './src/types' })
 const withBundleAnalyzer = bundleAnalyze({ enabled: shouldAnalyze, openAnalyzer: false })
-/** @type {import('next').NextConfig} */
+/**
+ * @typedef {import('next').NextConfig} NextConfig
+ * @type {NextConfig}
+ */
 const nextConfig = {
 	i18n: i18nConfig.i18n,
 	reactStrictMode: true,
@@ -63,7 +66,13 @@ const nextConfig = {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
 		if (!isLocalDev) {
-			config.plugins.push(new webpack.DefinePlugin({ __SENTRY_DEBUG__: false }))
+			config.plugins.push(
+				new webpack.DefinePlugin({
+					__SENTRY_DEBUG__: false,
+					__RRWEB_EXCLUDE_CANVAS__: true,
+					__RRWEB_EXCLUDE_IFRAME__: true,
+				})
+			)
 			if (shouldAnalyze) {
 				config.plugins.push(
 					new BundleAnalyzerPlugin({ analyzerMode: 'static', generateStatsFile: true, openAnalyzer: false })
