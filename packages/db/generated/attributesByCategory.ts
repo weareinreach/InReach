@@ -490,7 +490,7 @@ export const attributesByCategory = [
 					tsNs: 'attribute',
 					showOnLocation: null,
 					filterType: null,
-					iconBg: '#D4A1BA',
+					iconBg: '#705890',
 				},
 			},
 		],
