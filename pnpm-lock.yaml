@@ -9,6 +9,7 @@ overrides:
   '@npmcli/move-file': npm:@npmcli/fs@^2.0.0
   axe-core: ^4.7.0
   chokidar: '>=3.0.0'
+  crypto-js@<=4.1.1: ^4.2.0
   csstype: ^3.1.2
   eslint-plugin-import: npm:eslint-plugin-i@latest
   eslint-plugin-node: npm:eslint-plugin-n@latest
@@ -147,6 +148,9 @@ importers:
       '@opentelemetry/api':
         specifier: 1.6.0
         version: 1.6.0
+      '@opentelemetry/core':
+        specifier: 1.17.1
+        version: 1.17.1(@opentelemetry/api@1.6.0)
       '@opentelemetry/exporter-trace-otlp-http':
         specifier: 0.44.0
         version: 0.44.0(@opentelemetry/api@1.6.0)
@@ -174,6 +178,9 @@ importers:
       '@sentry/node':
         specifier: 7.76.0
         version: 7.76.0
+      '@sentry/opentelemetry':
+        specifier: 7.76.0
+        version: 7.76.0(@opentelemetry/api@1.6.0)(@opentelemetry/core@1.17.1)(@opentelemetry/sdk-trace-base@1.17.1)(@opentelemetry/semantic-conventions@1.17.1)
       '@sentry/opentelemetry-node':
         specifier: 7.76.0
         version: 7.76.0(@opentelemetry/api@1.6.0)(@opentelemetry/core@1.17.1)(@opentelemetry/sdk-trace-base@1.17.1)(@opentelemetry/semantic-conventions@1.17.1)
@@ -4409,7 +4416,7 @@ packages:
   /@googlemaps/url-signature@1.0.29:
     resolution: {integrity: sha512-EKcL5ki6gUC02Yyrru8l37YKTNvfpoE/gMHy+tHoXjw2UuRBwGcXyMoHonGDUE9HNJrR7kXeG89ex4oGyX0NGQ==}
     dependencies:
-      crypto-js: 4.1.1
+      crypto-js: 4.2.0
     dev: false
 
   /@grpc/grpc-js@1.9.3:
@@ -7350,6 +7357,24 @@ packages:
       '@opentelemetry/core': 1.x
       '@opentelemetry/sdk-trace-base': 1.x
       '@opentelemetry/semantic-conventions': 1.x
+    dependencies:
+      '@opentelemetry/api': 1.6.0
+      '@opentelemetry/core': 1.17.1(@opentelemetry/api@1.6.0)
+      '@opentelemetry/sdk-trace-base': 1.17.1(@opentelemetry/api@1.6.0)
+      '@opentelemetry/semantic-conventions': 1.17.1
+      '@sentry/core': 7.76.0
+      '@sentry/types': 7.76.0
+      '@sentry/utils': 7.76.0
+    dev: false
+
+  /@sentry/opentelemetry@7.76.0(@opentelemetry/api@1.6.0)(@opentelemetry/core@1.17.1)(@opentelemetry/sdk-trace-base@1.17.1)(@opentelemetry/semantic-conventions@1.17.1):
+    resolution: {integrity: sha512-bhszOY6RWEWNMidEYL6S6cc2hRCLse1n1R7jBmBfk0x7l3I/dkJhC9be22pkYWS66jYHLl7Zqw4cV42Qnk5oPA==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@opentelemetry/api': ^1.0.0
+      '@opentelemetry/core': ^1.0.0
+      '@opentelemetry/sdk-trace-base': ^1.0.0
+      '@opentelemetry/semantic-conventions': ^1.0.0
     dependencies:
       '@opentelemetry/api': 1.6.0
       '@opentelemetry/core': 1.17.1(@opentelemetry/api@1.6.0)
@@ -12685,8 +12710,8 @@ packages:
       randomfill: 1.0.4
     dev: true
 
-  /crypto-js@4.1.1:
-    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
     dev: false
 
   /crypto-random-string@2.0.0:
