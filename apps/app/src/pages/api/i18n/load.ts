@@ -12,9 +12,9 @@ import {
 } from '@weareinreach/crowdin/ota/edge'
 import { createLoggerInstance } from '@weareinreach/util/logger'
 
-export const config = {
-	runtime: 'edge',
-}
+// export const config = {
+// 	runtime: 'edge',
+// }
 
 const QuerySchema = z.object({
 	lng: z.string(),

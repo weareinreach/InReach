@@ -20,12 +20,12 @@
 		"@types/gtag.js": "0.0.17",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
-		"next": "13.5.3",
+		"next": "14.0.1",
 		"nextjs-google-analytics": "2.3.3",
 		"type-fest": "4.6.0"
 	},
 	"peerDependencies": {
-		"next": "13.5.3",
+		"next": "14.0.1",
 		"nextjs-google-analytics": "2.3.3"
 	}
 }
