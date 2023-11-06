@@ -16,7 +16,7 @@
 			"5": "LGBTQ+ BIPOC 공동체",
 			"6": "LGBTQ+ 청소년의 간병인"
 		},
-		"find-resources": "<Text>InReach가 있는</Text><Community></Community><Text> 확인된 </Text><Service></Service><Text> 찾기.</Text>",
+		"find-resources": "<Text>확인된</Text><Service></Service><Text>위해</Text><Community></Community><Text>InReach랑</Text>",
 		"heading": "LGBTQ+ 자원을 찾아보세요.",
 		"privacy-disclaimer": "귀하의 답변은 익명으로 처리되며 개인 사용자로서 귀하와 연결되지 않습니다. 자세히 알아보려면 <Link>개인정보 보호정책 </Link> 읽어보세요.",
 		"services": {
