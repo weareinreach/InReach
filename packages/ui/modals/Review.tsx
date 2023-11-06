@@ -7,7 +7,7 @@ import { useScreenSize } from '~ui/hooks/useScreenSize'
 
 import { ModalTitle } from './ModalTitle'
 
-export const ReviewModalBody = forwardRef<HTMLButtonElement, ReviewModalProps>((props, ref) => {
+const ReviewModalBody = forwardRef<HTMLButtonElement, ReviewModalProps>((props, ref) => {
 	const [opened, handler] = useDisclosure(false)
 	const { isMobile } = useScreenSize()
 	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />

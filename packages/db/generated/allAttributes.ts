@@ -1156,7 +1156,7 @@ export const allAttributes = [
 		tag: 'trans-led',
 		name: 'Transgender-led',
 		icon: '️‍🏳️‍⚧️',
-		iconBg: '#D4A1BA',
+		iconBg: '#705890',
 		tsNs: 'attribute',
 		tsKey: 'orgleader.trans-led',
 		active: true,

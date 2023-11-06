@@ -14,7 +14,7 @@ import { LoginModalLauncher } from './Login'
 import { ModalTitle } from './ModalTitle'
 import { SignupModalLauncher } from './SignUp'
 
-export const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModalProps>(
+const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModalProps>(
 	({ autoLaunch, noClose, onClose, ...props }, ref) => {
 		const { t } = useTranslation(['common'])
 		const variants = useCustomVariant()

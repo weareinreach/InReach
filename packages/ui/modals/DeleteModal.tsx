@@ -47,7 +47,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((props, ref) => {
+const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((props, ref) => {
 	const router = useRouter()
 	const { t } = useTranslation(['common'])
 	const [error, setError] = useState<string | undefined>()

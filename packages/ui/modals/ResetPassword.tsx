@@ -39,11 +39,7 @@ const UrlParams = z.object({ r: z.string(), code: z.string() }).refine((data) =>
 	}
 })
 
-export const FormPassword = ({
-	form,
-}: {
-	form: UseFormReturnType<FormProps, (values: FormProps) => FormProps>
-}) => {
+const FormPassword = ({ form }: { form: UseFormReturnType<FormProps, (values: FormProps) => FormProps> }) => {
 	const { t } = useTranslation('common')
 	const theme = useMantineTheme()
 	type PasswordRequirementProps = {
@@ -124,123 +120,121 @@ export const FormPassword = ({
 	)
 }
 
-export const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalBodyProps>(
-	(props, ref) => {
-		const { t } = useTranslation(['common'])
-		const router = useRouter()
-		const autoOpen = Boolean(router.query['r'])
-		const variants = useCustomVariant()
-		const [success, setSuccess] = useState(false)
-		const [error, setError] = useState(false)
-		const { isMobile } = useScreenSize()
-		const FormSchema = z
-			.object({
-				password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
-					message: t('form-error-password-req') as string,
-				}),
-				confirmPassword: z.string(),
-			})
-			.refine((data) => data.password === data.confirmPassword, {
-				message: t('password-error-match') as string,
-				path: ['confirmPassword'],
-			})
-		const DataSchema = z.string().default('')
-
-		const passwordResetForm = useForm<FormProps>({
-			validate: zodResolver(FormSchema),
-			validateInputOnBlur: true,
-			initialValues: {
-				data: DataSchema.parse(router.query['r']),
-				code: DataSchema.parse(router.query['code']),
-				password: '',
-				confirmPassword: '',
-			},
+const ResetPasswordModalBody = forwardRef<HTMLButtonElement, ResetPasswordModalBodyProps>((props, ref) => {
+	const { t } = useTranslation(['common'])
+	const router = useRouter()
+	const autoOpen = Boolean(router.query['r'])
+	const variants = useCustomVariant()
+	const [success, setSuccess] = useState(false)
+	const [error, setError] = useState(false)
+	const { isMobile } = useScreenSize()
+	const FormSchema = z
+		.object({
+			password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[$&+,:;=?@#|'<>.^*()%!-]).{8,}$/, {
+				message: t('form-error-password-req') as string,
+			}),
+			confirmPassword: z.string(),
 		})
-		const pwResetHandler = api.user.resetPassword.useMutation({
-			onSuccess: () => setSuccess(true),
-			onError: () => setError(true),
+		.refine((data) => data.password === data.confirmPassword, {
+			message: t('password-error-match') as string,
+			path: ['confirmPassword'],
 		})
+	const DataSchema = z.string().default('')
 
-		const [opened, handler] = useDisclosure(autoOpen)
-		useEffect(() => {
-			if (router.query.r !== undefined) {
-				handler.open()
-			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [router.query.r])
+	const passwordResetForm = useForm<FormProps>({
+		validate: zodResolver(FormSchema),
+		validateInputOnBlur: true,
+		initialValues: {
+			data: DataSchema.parse(router.query['r']),
+			code: DataSchema.parse(router.query['code']),
+			password: '',
+			confirmPassword: '',
+		},
+	})
+	const pwResetHandler = api.user.resetPassword.useMutation({
+		onSuccess: () => setSuccess(true),
+		onError: () => setError(true),
+	})
 
-		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+	const [opened, handler] = useDisclosure(autoOpen)
+	useEffect(() => {
+		if (router.query.r !== undefined) {
+			handler.open()
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [router.query.r])
 
-		const bodyReset = (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
-					<Title order={1}>🔐</Title>
-					<Title order={2}>{t('reset-password')}</Title>
-				</Stack>
-				<FormPassword form={passwordResetForm} />
-				<PasswordInput
-					required
-					label={t('password-confirm')}
-					placeholder={t('password-reenter-placeholder') as string}
-					{...passwordResetForm.getInputProps('confirmPassword')}
-				/>
-				<Button
-					onClick={() => pwResetHandler.mutate(passwordResetForm.values)}
-					variant='primary-icon'
-					fullWidth
-					loaderPosition='center'
-					loading={pwResetHandler.isLoading}
-					disabled={!passwordResetForm.isValid()}
-				>
-					{t('save')}
-				</Button>
+	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+
+	const bodyReset = (
+		<Stack align='center' spacing={24}>
+			<Stack spacing={0} align='center'>
+				<Title order={1}>🔐</Title>
+				<Title order={2}>{t('reset-password')}</Title>
 			</Stack>
-		)
+			<FormPassword form={passwordResetForm} />
+			<PasswordInput
+				required
+				label={t('password-confirm')}
+				placeholder={t('password-reenter-placeholder') as string}
+				{...passwordResetForm.getInputProps('confirmPassword')}
+			/>
+			<Button
+				onClick={() => pwResetHandler.mutate(passwordResetForm.values)}
+				variant='primary-icon'
+				fullWidth
+				loaderPosition='center'
+				loading={pwResetHandler.isLoading}
+				disabled={!passwordResetForm.isValid()}
+			>
+				{t('save')}
+			</Button>
+		</Stack>
+	)
 
-		const bodySuccess = (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
-					<Title order={1}>✅</Title>
-					<Title order={2}>{t('password-saved')}</Title>
-				</Stack>
-				<Trans
-					i18nKey='password-reset-success'
-					components={{
-						LoginModal: (
-							<LoginModalLauncher component={Link} key={0} variant={variants.Link.inheritStyle}>
-								.
-							</LoginModalLauncher>
-						),
-						Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
-					}}
-				/>
+	const bodySuccess = (
+		<Stack align='center' spacing={24}>
+			<Stack spacing={0} align='center'>
+				<Title order={1}>✅</Title>
+				<Title order={2}>{t('password-saved')}</Title>
 			</Stack>
-		)
-		const bodyError = (
-			<Stack align='center' spacing={24}>
-				<Stack spacing={0} align='center'>
-					<Title order={1}>🫣</Title>
-					<Title order={2}>{t('errors.oh-no')}</Title>
-				</Stack>
-				<Trans
-					i18nKey='errors.try-again-text'
-					components={{
-						Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
-					}}
-				/>
+			<Trans
+				i18nKey='password-reset-success'
+				components={{
+					LoginModal: (
+						<LoginModalLauncher component={Link} key={0} variant={variants.Link.inheritStyle}>
+							.
+						</LoginModalLauncher>
+					),
+					Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
+				}}
+			/>
+		</Stack>
+	)
+	const bodyError = (
+		<Stack align='center' spacing={24}>
+			<Stack spacing={0} align='center'>
+				<Title order={1}>🫣</Title>
+				<Title order={2}>{t('errors.oh-no')}</Title>
 			</Stack>
-		)
+			<Trans
+				i18nKey='errors.try-again-text'
+				components={{
+					Text: <Text variant={variants.Text.utility1darkGray}>.</Text>,
+				}}
+			/>
+		</Stack>
+	)
 
-		return (
-			<>
-				<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
-					{success ? bodySuccess : error ? bodyError : bodyReset}
-				</Modal>
-				{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
-			</>
-		)
-	}
-)
+	return (
+		<>
+			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
+				{success ? bodySuccess : error ? bodyError : bodyReset}
+			</Modal>
+			{/* <Box component='button' ref={ref} onClick={() => handler.open()} {...props} /> */}
+		</>
+	)
+})
 
 ResetPasswordModalBody.displayName = 'ResetPasswordModal'
 
