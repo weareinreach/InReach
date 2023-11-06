@@ -78,9 +78,13 @@ export const generateNestedFreeText = <T extends GenerateFreeTextType>({
 			}
 		}
 	})()
+	invariant(key)
 	const ns = namespaces.orgData
 	return {
-		create: { id: freeTextId, tsKey: { create: { key, text, namespace: { connect: { name: ns } } } } },
+		create: {
+			id: freeTextId ?? generateId('freeText'),
+			tsKey: { create: { key, text, namespace: { connect: { name: ns } } } },
+		},
 	}
 }
 
@@ -102,10 +106,10 @@ type GenerateFreeTextType =
 
 interface GenerateFreeTextWithItem<T extends GenerateFreeTextType> extends GenerateFreeTextBase {
 	type: T
-	itemId: GenerateFreeTextItemId<T>
+	itemId?: GenerateFreeTextItemId<T>
 }
-type GenerateFreeTextItemId<T extends GenerateFreeTextType> = T extends 'orgDesc' ? never : string
-interface GenerateFreeTextWithoutItem extends GenerateFreeTextBase {
-	type: 'orgDesc'
-	itemId?: never
-}
+type GenerateFreeTextItemId<T extends GenerateFreeTextType> = T extends 'orgDesc' ? never : Required<string>
+// interface GenerateFreeTextWithoutItem extends GenerateFreeTextBase {
+// 	type: 'orgDesc'
+// 	itemId?: never
+// }
