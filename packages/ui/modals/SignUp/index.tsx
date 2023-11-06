@@ -39,7 +39,7 @@ type RichTranslateProps = {
 		toggle: () => void
 	}
 }
-export const RichTranslate = ({ stateSetter, handler, ...props }: RichTranslateProps) => {
+const RichTranslate = ({ stateSetter, handler, ...props }: RichTranslateProps) => {
 	const { t } = useTranslation()
 	const variants = useCustomVariant()
 
@@ -104,7 +104,7 @@ const LcrQuestion3 = (
 	/>
 )
 
-export const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((props, ref) => {
+const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((props, ref) => {
 	const { t } = useTranslation('common')
 	const { isMobile } = useScreenSize()
 	const [opened, handler] = useDisclosure(false)
