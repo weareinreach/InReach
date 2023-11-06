@@ -4,7 +4,6 @@ import bundleAnalyze from '@next/bundle-analyzer'
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
 import { withSentryConfig } from '@sentry/nextjs'
 import routes from 'nextjs-routes/config'
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -31,14 +30,14 @@ const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
 	transpilePackages: [
-		'@weareinreach/analytics',
+		// '@weareinreach/analytics',
 		'@weareinreach/api',
 		'@weareinreach/auth',
-		'@weareinreach/crowdin',
+		// '@weareinreach/crowdin',
 		'@weareinreach/db',
-		'@weareinreach/env',
+		// '@weareinreach/env',
 		'@weareinreach/ui',
-		'@weareinreach/util',
+		// '@weareinreach/util',
 	],
 	compiler: {
 		...(isVercelProd ? { removeConsole: { exclude: ['error'] } } : {}),
@@ -73,11 +72,6 @@ const nextConfig = {
 					__RRWEB_EXCLUDE_IFRAME__: true,
 				})
 			)
-			if (shouldAnalyze) {
-				config.plugins.push(
-					new BundleAnalyzerPlugin({ analyzerMode: 'static', generateStatsFile: true, openAnalyzer: false })
-				)
-			}
 		}
 		return config
 	},
