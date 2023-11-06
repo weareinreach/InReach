@@ -22,6 +22,7 @@
 		"test/**/*.js",
 		"lib/devmsg.ts",
 		"lib/prepare.ts",
-		"@types/**/*.ts"
+		"@types/**/*.ts",
+		"./*.ts"
 	]
 }
