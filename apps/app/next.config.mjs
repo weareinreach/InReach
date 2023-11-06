@@ -48,6 +48,7 @@ const nextConfig = {
 		},
 		outputFileTracingRoot: path.join(__dirname, '../../'),
 		instrumentationHook: true,
+		webpackBuildWorker: true,
 	},
 	eslint: {
 		ignoreDuringBuilds: !isVercelProd,
