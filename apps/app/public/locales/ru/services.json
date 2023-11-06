@@ -96,11 +96,11 @@
 		"physical-evaluations-for-asylum-claim": "Оценка физического здоровья для подачи на убежище",
 		"physical-evaluations-for-refugee-claim": "Оценка физического здоровья для подачи на статус беженца",
 		"trans-health": "Медицинские услуги для трансгендерных людей",
-		"trans-health-gender-affirming-surgery": "Противодействие - подтверждение гендерной хирургии",
-		"trans-health-hormone-and-surgery-letters": "Транс здоровье - гормон и письма хирургии",
-		"trans-health-hormone-therapy": "Транс здоровье - гормональная терапия",
-		"trans-health-primary-care": "Противодействие - первичная помощь",
-		"trans-health-speech-therapy": "Транс здоровье - речевая терапия",
+		"trans-health-gender-affirming-surgery": "Хирургическая коррекция пола",
+		"trans-health-hormone-and-surgery-letters": "Направления на гормональную терапию и хирургическую коррекцию пола",
+		"trans-health-hormone-therapy": "Гормональная терапия",
+		"trans-health-primary-care": "Услуги поликлиники",
+		"trans-health-speech-therapy": "Речевая терапия",
 		"trans-health-youth-care": "Уход за молодёжью"
 	},
 	"mental-health": {
