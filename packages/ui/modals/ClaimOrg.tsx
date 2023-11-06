@@ -11,7 +11,7 @@ import { LoginModalLauncher } from './Login'
 import { ModalTitle } from './ModalTitle'
 import { SignupModalLauncher } from './SignUp'
 
-export const ClaimOrgModalBody = forwardRef<HTMLButtonElement, ClaimOrgModalProps>(
+const ClaimOrgModalBody = forwardRef<HTMLButtonElement, ClaimOrgModalProps>(
 	({ externalOpen, externalStateHandler, ...props }, ref) => {
 		const { t } = useTranslation(['common'])
 		const variants = useCustomVariant()
