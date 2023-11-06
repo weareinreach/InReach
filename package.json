@@ -46,7 +46,7 @@
 		"boxen": "7.1.1",
 		"dotenv": "16.3.1",
 		"husky": "8.0.3",
-		"knip": "2.38.4",
+		"knip": "2.40.0",
 		"lint-staged": "15.0.2",
 		"prettier": "3.0.3",
 		"prettier-plugin-jsdoc": "1.1.1",
