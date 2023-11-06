@@ -199,7 +199,7 @@
 		"i18next-intervalplural-postprocessor": "^3",
 		"luxon": "^3",
 		"mantine-react-table": "^1",
-		"next": "^13 || ^14.0.0",
+		"next": "^14",
 		"next-auth": "^4",
 		"next-i18next": "^14.0.0",
 		"react": "^18",
