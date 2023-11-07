@@ -439,12 +439,12 @@ export const ActionButtons = ({
 	const orgOrServiceId = { organizationId: orgId ?? '', serviceId }
 
 	let filteredOverflowItems = Object.entries(overFlowItems).filter(
-		([key, item]) => !(isMobile || isTablet) || key !== 'print'
+		([key, _item]) => !(isMobile || isTablet) || key !== 'print'
 	)
 
 	if (outsideMoreMenu)
 		/* Keep overFlowItems where the key is not in outsideMoreMenu array */
-		filteredOverflowItems = filteredOverflowItems.filter(([key, item]) => !outsideMoreMenu.includes(key))
+		filteredOverflowItems = filteredOverflowItems.filter(([key, _item]) => !outsideMoreMenu.includes(key))
 
 	const overflowMenuItems = filteredOverflowItems.map(([key, item]) => {
 		const children = (
