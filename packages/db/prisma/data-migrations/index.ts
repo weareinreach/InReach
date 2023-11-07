@@ -56,4 +56,5 @@ export * from './2023-09-22_update-alerts/index'
 export * from './2023-10-23_add-suggested-orgs/index'
 export * from './2023-10-25_service-tag-updates'
 export * from './2023-10-27_tlc-service-updates'
+export * from './2023-11-07_corrections'
 // codegen:end
