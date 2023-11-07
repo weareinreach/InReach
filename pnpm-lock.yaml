@@ -293,8 +293,8 @@ importers:
         specifier: 4.24.4
         version: 4.24.4(next@14.0.1)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
-        specifier: 14.0.3
-        version: 14.0.3(i18next@23.6.0)(next@14.0.1)(react-i18next@13.3.1)(react@18.2.0)
+        specifier: 15.0.0
+        version: 15.0.0(i18next@23.6.0)(next@14.0.1)(react-i18next@13.3.1)(react@18.2.0)
       next-seo:
         specifier: 6.4.0
         version: 6.4.0(next@14.0.1)(react-dom@18.2.0)(react@18.2.0)
@@ -852,8 +852,8 @@ importers:
         specifier: 11.0.1
         version: 11.0.1
       next-i18next:
-        specifier: 14.0.3
-        version: 14.0.3(i18next@23.6.0)(next@14.0.1)(react-i18next@13.3.1)(react@18.2.0)
+        specifier: 15.0.0
+        version: 15.0.0(i18next@23.6.0)(next@14.0.1)(react-i18next@13.3.1)(react@18.2.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -1549,8 +1549,8 @@ importers:
         specifier: 4.24.4
         version: 4.24.4(next@14.0.1)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
-        specifier: 14.0.3
-        version: 14.0.3(i18next@23.6.0)(next@14.0.1)(react-i18next@13.3.1)(react@18.2.0)
+        specifier: 15.0.0
+        version: 15.0.0(i18next@23.6.0)(next@14.0.1)(react-i18next@13.3.1)(react@18.2.0)
       postcss-loader:
         specifier: 7.3.3
         version: 7.3.3(postcss@8.4.31)(typescript@5.2.2)(webpack@5.89.0)
@@ -13079,6 +13079,7 @@ packages:
 
   /defaults@1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
+    requiresBuild: true
     dependencies:
       clone: 1.0.4
 
@@ -19469,14 +19470,14 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       uuid: 9.0.1
 
-  /next-i18next@14.0.3(i18next@23.6.0)(next@14.0.1)(react-i18next@13.3.1)(react@18.2.0):
-    resolution: {integrity: sha512-FtnjRMfhlamk8YyeyWqd+pndNL+3er83iMZnH4M4mhiGA93l0+vtBUvuObgOAMHDJGLLB2SS2xOOZq69oiJh7A==}
+  /next-i18next@15.0.0(i18next@23.6.0)(next@14.0.1)(react-i18next@13.3.1)(react@18.2.0):
+    resolution: {integrity: sha512-9iGEU4dt1YCC5CXh6H8YHmDpmeWKjxES6XfoABxy9mmfaLLJcqS92F56ZKmVuZUPXEOLtgY/JtsnxsHYom9J4g==}
     engines: {node: '>=14'}
     peerDependencies:
-      i18next: ^23.4.6
+      i18next: ^23.6.0
       next: '>= 12.0.0 || 13'
       react: ^18 || 18
-      react-i18next: ^13.2.1 || 12
+      react-i18next: ^13.3.1 || 12
     dependencies:
       '@babel/runtime': 7.23.2
       '@types/hoist-non-react-statics': 3.3.4
