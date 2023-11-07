@@ -1,3 +1,4 @@
+/* eslint-disable node/no-process-env */
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
 	plugins: ['codegen', 'turbo', 'node', /*'import',*/ '@tanstack/query'],
@@ -74,7 +75,13 @@ const config = {
 			},
 		],
 		'import/no-self-import': 'error',
-		// 'import/no-cycle': 'error',
+		'import/no-cycle': [
+			process.env.ESLINT_FULL ? 'error' : 'off',
+			{
+				ignoreExternal: true,
+				maxDepth: 2,
+			},
+		],
 		'no-restricted-imports': [
 			'error',
 			{
