@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: './{*,*/index}.ts*', exclude: ./*.stories.tsx}
+// codegen:start {preset: barrel, include: './{*,*/index}.ts*', exclude: "*.stories.tsx"}
 export * from './AccountVerified'
 export * from './ClaimOrg'
 export * from './CreateNewList'

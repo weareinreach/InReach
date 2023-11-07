@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./**/*.ts, exclude: './**/{!,___}*.ts'}
+// codegen:start {preset: barrel, include: ./**/*.ts, exclude: ['**/{!,___}*.ts']}
 export * from './2023-03-29_nest-attribs-primary-cntry'
 export * from './2023-03-31_suggestion-source'
 export * from './2023-04-04_badges/index'
