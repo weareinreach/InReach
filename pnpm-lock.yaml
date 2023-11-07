@@ -989,8 +989,8 @@ importers:
         specifier: 18.18.8
         version: 18.18.8
       '@types/papaparse':
-        specifier: 5.3.10
-        version: 5.3.10
+        specifier: 5.3.11
+        version: 5.3.11
       '@types/pg':
         specifier: 8.10.8
         version: 8.10.8
@@ -1158,8 +1158,8 @@ importers:
         specifier: 3.6.1
         version: 3.6.1(@typescript-eslint/parser@6.10.0)(eslint-import-resolver-node@0.3.9)(eslint-plugin-i@2.29.0)(eslint@8.53.0)
       eslint-plugin-codegen:
-        specifier: 0.18.0
-        version: 0.18.0
+        specifier: 0.18.1
+        version: 0.18.1
       eslint-plugin-i18next:
         specifier: 6.0.3
         version: 6.0.3
@@ -1465,8 +1465,8 @@ importers:
         specifier: 18.18.8
         version: 18.18.8
       '@types/probe-image-size':
-        specifier: 7.2.2
-        version: 7.2.2
+        specifier: 7.2.3
+        version: 7.2.3
       '@types/react':
         specifier: 18.2.36
         version: 18.2.36
@@ -10160,8 +10160,8 @@ packages:
   /@types/normalize-package-data@2.4.3:
     resolution: {integrity: sha512-ehPtgRgaULsFG8x0NeYJvmyH1hmlfsNLujHe9dQEia/7MAJYdzMSi19JtchUHjmBA6XC/75dK55mzZH+RyieSg==}
 
-  /@types/papaparse@5.3.10:
-    resolution: {integrity: sha512-mS1Fta/xJ9EDYmAvpeWzcV9Gr0cOl1ClpW7di9+wSUNDIDO55tBtyXg97O7K+Syrd9rDEmuejM2iqmJIJ1SO5g==}
+  /@types/papaparse@5.3.11:
+    resolution: {integrity: sha512-ISil0lMkpRDrBTKRPnUgVb5IqxWwj19gWBrX/ROk3pbkkslBN3URa713r/BSfAUj+w9gTPg3S3f45aMToVfh1w==}
     dependencies:
       '@types/node': 18.18.8
     dev: true
@@ -10193,8 +10193,8 @@ packages:
     resolution: {integrity: sha512-vyv9knII8XeW8TnXDcGH7HqG6FeR56ESN6ExM34d/U8Zvs3xuG34euV6CVyB7KEYI7Ts4lQM8b4NL72e7UadnA==}
     dev: true
 
-  /@types/probe-image-size@7.2.2:
-    resolution: {integrity: sha512-rNWbJLj3XdCfiHsaDVTkPgvTtxlVMgNEpGpJYU/d2pVwzIpjumZguQzlnOQPWF7ajPOpX00rmPQGerRlB3tL+g==}
+  /@types/probe-image-size@7.2.3:
+    resolution: {integrity: sha512-6OJa/Tj7OjiahwdcfLWvrzGpXLSjLfbfjqdpth2Oy9YKI58A6Ec5YvFcqfVXOSaJPkA3W+nZx6cPheMQrdtz1w==}
     dependencies:
       '@types/needle': 3.2.2
       '@types/node': 18.18.8
@@ -13981,8 +13981,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-codegen@0.18.0:
-    resolution: {integrity: sha512-AK7cVIcPK8LXAclA9rtZq4/Pk0qP7yYWCkvfbdF2t7efgyaKEP/qsOmLzuYSKBQ7msmk/g1hfoBKQ79HjuV37A==}
+  /eslint-plugin-codegen@0.18.1:
+    resolution: {integrity: sha512-Sy5nJ7tMahHWygM02w2gAO70MX6Lp0ZK0PD9kMpPPGtoQhyS2n1oN7s9zLpDx5pmFDf3woj6LadqztNpJ5RepQ==}
     engines: {node: '>=12.0.0'}
     dependencies:
       '@babel/core': 7.23.2
