@@ -201,7 +201,7 @@
 		"mantine-react-table": "^1",
 		"next": "^14",
 		"next-auth": "^4",
-		"next-i18next": "^14.0.0 || ^15.0.0",
+		"next-i18next": "^15.0.0",
 		"react": "^18",
 		"react-dom": "^18",
 		"react-error-boundary": "^4",
