@@ -7,9 +7,8 @@ import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
-import { LoginModalLauncher } from './Login'
+import { LoginModalLauncher, SignupModalLauncher } from './LoginSignUp'
 import { ModalTitle } from './ModalTitle'
-import { SignupModalLauncher } from './SignUp'
 
 const ClaimOrgModalBody = forwardRef<HTMLButtonElement, ClaimOrgModalProps>(
 	({ externalOpen, externalStateHandler, ...props }, ref) => {

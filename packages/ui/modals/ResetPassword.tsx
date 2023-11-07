@@ -25,7 +25,7 @@ import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { LoginModalLauncher } from './Login'
+import { LoginModalLauncher } from './LoginSignUp'
 import { ModalTitle } from './ModalTitle'
 
 const isRecord = (data: unknown) => z.record(z.any()).safeParse(data).success

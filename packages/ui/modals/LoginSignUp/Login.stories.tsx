@@ -3,7 +3,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { Button } from '~ui/components/core/Button'
 import { cognito, csrf, providers, signin } from '~ui/mockData/login'
 
-import { LoginBody, LoginModalLauncher } from './Login'
+import { LoginBody, LoginModalLauncher } from './index'
 
 export default {
 	title: 'Modals/Login',

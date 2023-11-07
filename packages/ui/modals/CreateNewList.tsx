@@ -2,6 +2,7 @@ import {
 	Box,
 	type ButtonProps,
 	createPolymorphicComponent,
+	Group,
 	Modal,
 	Stack,
 	Text,
@@ -14,11 +15,10 @@ import { useTranslation } from 'next-i18next'
 import { forwardRef } from 'react'
 import { z } from 'zod'
 
+import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { useCustomVariant, useNewNotification, useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
-
-import { ModalTitle } from './ModalTitle'
 
 const FormSchema = z.object({
 	name: z.string(),
@@ -71,7 +71,13 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 		}
 	}
 
-	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+	const modalTitle = (
+		<Group position='apart' align='center' noWrap>
+			<Box maw='70%' style={{ overflow: 'hidden' }}>
+				<Breadcrumb option='close' onClick={handler.close} />
+			</Box>
+		</Group>
+	)
 
 	return (
 		<>

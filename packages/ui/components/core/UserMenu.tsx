@@ -20,9 +20,13 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 
 // import { UserAvatar } from './UserAvatar'
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
-const LoginModalLauncher = dynamic(() => import('~ui/modals/Login').then((mod) => mod.LoginModalLauncher))
+const LoginModalLauncher = dynamic(() =>
+	import('~ui/modals/LoginSignUp').then((mod) => mod.LoginModalLauncher)
+)
 // @ts-expect-error Next Dynamic doesn't like polymorphic components
-const SignupModalLauncher = dynamic(() => import('~ui/modals/SignUp').then((mod) => mod.SignupModalLauncher))
+const SignupModalLauncher = dynamic(() =>
+	import('~ui/modals/LoginSignUp').then((mod) => mod.SignupModalLauncher)
+)
 
 const UserAvatar = dynamic(() => import('./UserAvatar').then((mod) => mod.UserAvatar))
 
