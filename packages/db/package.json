@@ -69,7 +69,7 @@
 		"@types/inquirer-autocomplete-prompt": "3.0.2",
 		"@types/luxon": "3.3.4",
 		"@types/node": "18.18.8",
-		"@types/papaparse": "5.3.10",
+		"@types/papaparse": "5.3.11",
 		"@types/pg": "8.10.8",
 		"@types/terraformer__wkt": "2.0.1",
 		"@weareinreach/config": "workspace:*",
