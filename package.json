@@ -39,7 +39,7 @@
 		"@changesets/cli": "2.26.2",
 		"@manypkg/cli": "0.21.0",
 		"@turbo/gen": "1.10.16",
-		"@types/lint-staged": "13.2.1",
+		"@types/lint-staged": "13.2.2",
 		"@types/node": "18.18.8",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
