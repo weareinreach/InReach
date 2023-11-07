@@ -17,7 +17,7 @@
 		"just-compact": "3.2.0"
 	},
 	"devDependencies": {
-		"@types/gtag.js": "0.0.17",
+		"@types/gtag.js": "0.0.18",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
 		"next": "14.0.1",
