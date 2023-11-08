@@ -59,7 +59,7 @@
 	},
 	"packageManager": "pnpm@8.10.2",
 	"engines": {
-		"node": "^18",
+		"node": "^18.18",
 		"pnpm": "^8"
 	},
 	"manypkg": {
