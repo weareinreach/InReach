@@ -96,7 +96,7 @@
 		"@storybook/nextjs": "7.5.3",
 		"@storybook/preview-api": "7.5.3",
 		"@storybook/react": "7.5.3",
-		"@storybook/test-runner": "0.13.0",
+		"@storybook/test-runner": "0.14.0",
 		"@storybook/testing-library": "0.2.2",
 		"@storybook/theming": "7.5.3",
 		"@storybook/types": "7.5.3",
@@ -164,7 +164,7 @@
 		"trpc-client-devtools-link": "0.2.1-next",
 		"tsconfig-paths-webpack-plugin": "4.1.0",
 		"tsx": "3.14.0",
-		"type-fest": "4.6.0",
+		"type-fest": "4.7.0",
 		"typescript": "5.2.2",
 		"webpack": "5.89.0",
 		"zod": "3.22.4"
