@@ -215,8 +215,8 @@ importers:
         specifier: 0.4.1
         version: 0.4.1
       '@vercel/kv':
-        specifier: 0.2.4
-        version: 0.2.4
+        specifier: 1.0.0
+        version: 1.0.0
       '@weareinreach/analytics':
         specifier: workspace:*
         version: link:../../packages/analytics
@@ -658,8 +658,8 @@ importers:
         specifier: 0.4.1
         version: 0.4.1
       '@vercel/kv':
-        specifier: 0.2.4
-        version: 0.2.4
+        specifier: 1.0.0
+        version: 1.0.0
       '@weareinreach/auth':
         specifier: workspace:*
         version: link:../auth
@@ -870,8 +870,8 @@ importers:
         specifier: 1.7.0
         version: 1.7.0
       '@vercel/kv':
-        specifier: 0.2.4
-        version: 0.2.4
+        specifier: 1.0.0
+        version: 1.0.0
       '@weareinreach/util':
         specifier: workspace:*
         version: link:../util
@@ -925,8 +925,8 @@ importers:
         specifier: 5.5.2
         version: 5.5.2
       '@vercel/kv':
-        specifier: 0.2.4
-        version: 0.2.4
+        specifier: 1.0.0
+        version: 1.0.0
       '@vercel/postgres-kysely':
         specifier: 0.6.0
         version: 0.6.0(kysely@0.26.3)
@@ -10598,8 +10598,8 @@ packages:
       '@vercel/edge-config-fs': 0.1.0
     dev: false
 
-  /@vercel/kv@0.2.4:
-    resolution: {integrity: sha512-wbIOOXhg6MzmNMzKFSWbbLAS65hCZcJN33z1coENzI1M0fOX55yE9v9LwVGqkzdItp3eZsv6pYvwcmGtllyLTw==}
+  /@vercel/kv@1.0.0:
+    resolution: {integrity: sha512-StouXunmEqUfKE+1joSYfELWEEnI1MhTnzUdarHtv6H18RAm3cf5u5g9ElvA1DJNHcrMT6g5yVAhZcYRbk6lvg==}
     engines: {node: '>=14.6'}
     dependencies:
       '@upstash/redis': 1.24.3
