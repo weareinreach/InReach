@@ -18,7 +18,7 @@
 	"dependencies": {
 		"@googlemaps/google-maps-services-js": "3.3.41",
 		"@opentelemetry/api": "1.7.0",
-		"@sentry/node": "7.78.0",
+		"@sentry/node": "7.79.0",
 		"@tanstack/react-query": "4.36.1",
 		"@terraformer/wkt": "2.2.0",
 		"@trpc/client": "10.43.1",
@@ -64,7 +64,7 @@
 		"prettier": "3.0.3",
 		"trpc-client-devtools-link": "0.2.1-next",
 		"trpc-panel": "1.3.4",
-		"type-fest": "4.6.0",
+		"type-fest": "4.7.0",
 		"typescript": "5.2.2"
 	},
 	"peerDependencies": {
