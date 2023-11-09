@@ -48,6 +48,7 @@
 		"@prisma/instrumentation": "5.5.2",
 		"@sentry/browser": "7.80.0",
 		"@sentry/nextjs": "7.80.0",
+		"@sentry/node": "7.80.0",
 		"@sentry/opentelemetry": "7.80.0",
 		"@sentry/opentelemetry-node": "7.80.0",
 		"@sentry/profiling-node": "1.2.6",
