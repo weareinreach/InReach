@@ -43,10 +43,7 @@ const nextConfig = {
 		...(isVercelProd ? { removeConsole: { exclude: ['error'] } } : {}),
 	},
 	experimental: {
-		outputFileTracingExcludes: {
-			'*': ['**swc+core**', '**esbuild**'],
-		},
-		outputFileTracingRoot: path.join(__dirname, '../../'),
+		// outputFileTracingRoot: path.join(__dirname, '../../'),
 		// instrumentationHook: true,
 		webpackBuildWorker: true,
 	},
