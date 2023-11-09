@@ -20,7 +20,8 @@ Sentry.init({
 	tracesSampleRate: 0.5,
 
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
-	debug: false,
+	// eslint-disable-next-line node/no-process-env
+	debug: !!process.env.SENTRY_DEBUG,
 
 	replaysOnErrorSampleRate: 1.0,
 

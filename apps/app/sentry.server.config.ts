@@ -3,7 +3,8 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from '@sentry/nextjs'
-import { ProfilingIntegration } from '@sentry/profiling-node'
+
+import { prisma } from '@weareinreach/db'
 
 Sentry.init({
 	dsn: 'https://3398c2248c86498ab42fa8533e4f83f1@o1412293.ingest.sentry.io/6751163',
@@ -13,7 +14,8 @@ Sentry.init({
 	profilesSampleRate: 0.5,
 
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
-	debug: false,
-	instrumenter: 'otel',
-	integrations: [new ProfilingIntegration()],
+	// eslint-disable-next-line node/no-process-env
+	debug: !!process.env.SENTRY_DEBUG,
+	// instrumenter: 'otel',
+	integrations: [new Sentry.Integrations.RequestData(), new Sentry.Integrations.Prisma({ client: prisma })],
 })
