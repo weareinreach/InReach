@@ -119,5 +119,5 @@ jobs:
           delete-branch: true
 
       - name: Delete Crowdin Branch
-        if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev' && github.ref_name != 'dev'
+        if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev' && steps.sanitizebranch.outputs.value != 'dev' && steps.sanitizebranch.outputs.value != 'main'
         run: crowdin branch delete ${{ steps.sanitizebranch.outputs.value }}
