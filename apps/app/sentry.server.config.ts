@@ -19,7 +19,7 @@ Sentry.init({
 
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
 	debug: !!process.env.SENTRY_DEBUG,
-	instrumenter: 'otel',
+	// instrumenter: 'otel',
 	integrations: [
 		new Sentry.Integrations.RequestData(),
 		new Sentry.Integrations.Prisma({ client: prisma }),

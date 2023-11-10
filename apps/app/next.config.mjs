@@ -44,7 +44,7 @@ const nextConfig = {
 	},
 	experimental: {
 		// outputFileTracingRoot: path.join(__dirname, '../../'),
-		instrumentationHook: true,
+		// instrumentationHook: true,
 		webpackBuildWorker: true,
 	},
 	eslint: {
