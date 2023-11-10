@@ -3,7 +3,6 @@
 	"version": "0.100.0",
 	"private": true,
 	"license": "GPL-3.0-only",
-	"sideEffects": false,
 	"files": [
 		"lint-staged/index.js",
 		"lint-staged/next.js",

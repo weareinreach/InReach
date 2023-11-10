@@ -2,7 +2,6 @@
 	"name": "@weareinreach/env",
 	"version": "0.0.0",
 	"private": true,
-	"sideEffects": false,
 	"main": "./index.ts",
 	"types": "./index.ts",
 	"files": [

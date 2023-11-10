@@ -2,7 +2,6 @@
 	"name": "@weareinreach/crowdin",
 	"version": "0.100.0",
 	"private": true,
-	"sideEffects": false,
 	"exports": {
 		"./api": "./api/index.ts",
 		"./api/edge": "./api/edge.ts",
