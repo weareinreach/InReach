@@ -73,7 +73,7 @@
 		"embla-carousel-autoplay": "7.1.0",
 		"embla-carousel-react": "7.1.0",
 		"flat": "6.0.1",
-		"i18next": "23.7.3",
+		"i18next": "23.7.6",
 		"i18next-browser-languagedetector": "7.2.0",
 		"i18next-chained-backend": "4.6.2",
 		"i18next-http-backend": "2.4.1",
@@ -97,7 +97,7 @@
 		"react-hook-consent": "3.5.1",
 		"react-hook-form": "7.48.2",
 		"react-hook-form-mantine": "2.0.0",
-		"react-i18next": "13.4.0",
+		"react-i18next": "13.4.1",
 		"zod": "3.22.4"
 	},
 	"devDependencies": {

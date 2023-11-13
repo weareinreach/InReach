@@ -74,8 +74,8 @@ importers:
         specifier: 8.0.3
         version: 8.0.3
       knip:
-        specifier: 2.41.1
-        version: 2.41.1
+        specifier: 2.41.2
+        version: 2.41.2
       lint-staged:
         specifier: 15.1.0
         version: 15.1.0
@@ -257,8 +257,8 @@ importers:
         specifier: 6.0.1
         version: 6.0.1
       i18next:
-        specifier: 23.7.3
-        version: 23.7.3
+        specifier: 23.7.6
+        version: 23.7.6
       i18next-browser-languagedetector:
         specifier: 7.2.0
         version: 7.2.0
@@ -294,7 +294,7 @@ importers:
         version: 4.24.5(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
         specifier: 15.0.0
-        version: 15.0.0(i18next@23.7.3)(next@14.0.2)(react-i18next@13.4.0)(react@18.2.0)
+        version: 15.0.0(i18next@23.7.6)(next@14.0.2)(react-i18next@13.4.1)(react@18.2.0)
       next-seo:
         specifier: 6.4.0
         version: 6.4.0(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
@@ -329,8 +329,8 @@ importers:
         specifier: 2.0.0
         version: 2.0.0(@mantine/core@6.0.21)(@mantine/dates@6.0.21)(react-dom@18.2.0)(react-hook-form@7.48.2)(react@18.2.0)
       react-i18next:
-        specifier: 13.4.0
-        version: 13.4.0(i18next@23.7.3)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.1
+        version: 13.4.1(i18next@23.7.6)(react-dom@18.2.0)(react@18.2.0)
       zod:
         specifier: 3.22.4
         version: 3.22.4
@@ -474,8 +474,8 @@ importers:
         specifier: 7.1.0
         version: 7.1.0(react@18.2.0)
       i18next:
-        specifier: 23.7.3
-        version: 23.7.3
+        specifier: 23.7.6
+        version: 23.7.6
       next:
         specifier: 14.0.2
         version: 14.0.2(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
@@ -486,8 +486,8 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       react-i18next:
-        specifier: 13.4.0
-        version: 13.4.0(i18next@23.7.3)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.1
+        version: 13.4.1(i18next@23.7.6)(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@next/bundle-analyzer':
         specifier: 14.0.2
@@ -853,7 +853,7 @@ importers:
         version: 11.0.1
       next-i18next:
         specifier: 15.0.0
-        version: 15.0.0(i18next@23.7.3)(next@14.0.2)(react-i18next@13.4.0)(react@18.2.0)
+        version: 15.0.0(i18next@23.7.6)(next@14.0.2)(react-i18next@13.4.1)(react@18.2.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -1516,8 +1516,8 @@ importers:
         specifier: 8.53.0
         version: 8.53.0
       i18next:
-        specifier: 23.7.3
-        version: 23.7.3
+        specifier: 23.7.6
+        version: 23.7.6
       i18next-browser-languagedetector:
         specifier: 7.2.0
         version: 7.2.0
@@ -1550,7 +1550,7 @@ importers:
         version: 4.24.5(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
         specifier: 15.0.0
-        version: 15.0.0(i18next@23.7.3)(next@14.0.2)(react-i18next@13.4.0)(react@18.2.0)
+        version: 15.0.0(i18next@23.7.6)(next@14.0.2)(react-i18next@13.4.1)(react@18.2.0)
       postcss-loader:
         specifier: 7.3.3
         version: 7.3.3(postcss@8.4.31)(typescript@5.2.2)(webpack@5.89.0)
@@ -1582,8 +1582,8 @@ importers:
         specifier: 1.4.0
         version: 1.4.0(react-dom@18.2.0)(react@18.2.0)
       react-i18next:
-        specifier: 13.4.0
-        version: 13.4.0(i18next@23.7.3)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.1
+        version: 13.4.1(i18next@23.7.6)(react-dom@18.2.0)(react@18.2.0)
       resolve-url-loader:
         specifier: 5.0.0
         version: 5.0.0
@@ -15945,8 +15945,8 @@ packages:
     resolution: {integrity: sha512-k52N4CImVEDeA+jJo16EJIDdlemSIsWmX6MuBPyR5V8Ig1vQSqVG1acXiQkKE+txLxD8LnR6WKYhkcxTcR86kw==}
     dev: false
 
-  /i18next@23.7.3:
-    resolution: {integrity: sha512-XetHM9UCk5oeeIcE2hu6Os16mq/zPHi8v/janExQjbFtx4ndNg9ye5OyAz+f5aYums8A1WcnXa7QikaEjyELPg==}
+  /i18next@23.7.6:
+    resolution: {integrity: sha512-O66BhXBw0fH4bEJMA0/klQKPEbcwAp5wjXEL803pdAynNbg2f4qhLIYlNHJyE7icrL6XmSZKPYaaXwy11kJ6YQ==}
     dependencies:
       '@babel/runtime': 7.23.2
 
@@ -17640,8 +17640,8 @@ packages:
     resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
     engines: {node: '>= 8'}
 
-  /knip@2.41.1:
-    resolution: {integrity: sha512-69sKJruB+SxlIMErjPIRhac5DGU5EJD4g+lEiTpSLTcsQ8a+4Dw6voRYj9oyFvQedy/1YckotovM7bdCDVwAfA==}
+  /knip@2.41.2:
+    resolution: {integrity: sha512-PTjoJ8i7HSyF2lTDd+JVRYGse81biXQx5YhsGSjy9+MLJUjU3FplJOiOnwogU1uqqFi84IBVzkDOqoRfX7yJxA==}
     engines: {node: '>=16.17.0 <17 || >=18.6.0'}
     hasBin: true
     dependencies:
@@ -19444,7 +19444,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       uuid: 9.0.1
 
-  /next-i18next@15.0.0(i18next@23.7.3)(next@14.0.2)(react-i18next@13.4.0)(react@18.2.0):
+  /next-i18next@15.0.0(i18next@23.7.6)(next@14.0.2)(react-i18next@13.4.1)(react@18.2.0):
     resolution: {integrity: sha512-9iGEU4dt1YCC5CXh6H8YHmDpmeWKjxES6XfoABxy9mmfaLLJcqS92F56ZKmVuZUPXEOLtgY/JtsnxsHYom9J4g==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -19457,11 +19457,11 @@ packages:
       '@types/hoist-non-react-statics': 3.3.4
       core-js: 3.33.2
       hoist-non-react-statics: 3.3.2
-      i18next: 23.7.3
+      i18next: 23.7.6
       i18next-fs-backend: 2.2.0
       next: 14.0.2(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
-      react-i18next: 13.4.0(i18next@23.7.3)(react-dom@18.2.0)(react@18.2.0)
+      react-i18next: 13.4.1(i18next@23.7.6)(react-dom@18.2.0)(react@18.2.0)
 
   /next-seo@6.4.0(next@14.0.2)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-XQFxkOL2hw0YE+P100HbI3EAvcludlHPxuzMgaIjKb7kPK0CvjGvLFjd9hszZFEDc5oiQkGFA8+cuWcnip7eYA==}
@@ -21544,8 +21544,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /react-i18next@13.4.0(i18next@23.7.3)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-sZlTQEVK5dQuvq8AaIuj2OKviPqEskcBZdcHrsaoNGLv/uVCqUBfKYvJg9vcVeVqlxjJyYQ6A7LIHl4k7kkD3w==}
+  /react-i18next@13.4.1(i18next@23.7.6)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-z02JvLbt6Gavbuhr4CBOI6vasLypo+JSLvMgUOGeOMPv1g6spngfAb9jWAPwvuavPlKYU4dro9yRduflwyBeyA==}
     peerDependencies:
       i18next: '>= 23.2.3'
       react: ^18 || 18
@@ -21559,7 +21559,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.2
       html-parse-stringify: 3.0.1
-      i18next: 23.7.3
+      i18next: 23.7.6
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
