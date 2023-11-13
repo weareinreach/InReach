@@ -1106,8 +1106,8 @@ importers:
         specifier: workspace:*
         version: link:../util
       chromatic:
-        specifier: 7.6.0
-        version: 7.6.0
+        specifier: 9.0.0
+        version: 9.0.0
       zod:
         specifier: 3.22.4
         version: 3.22.4
@@ -1498,8 +1498,8 @@ importers:
         specifier: 9.1.3
         version: 9.1.3(@babel/core@7.23.3)(webpack@5.89.0)
       chromatic:
-        specifier: 7.6.0
-        version: 7.6.0
+        specifier: 9.0.0
+        version: 9.0.0
       css-loader:
         specifier: 6.8.1
         version: 6.8.1(webpack@5.89.0)
@@ -12230,8 +12230,8 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
 
-  /chromatic@7.6.0:
-    resolution: {integrity: sha512-4MwlX8EDMyfQKf1NXTdUhJ2b0EYueByaVrF75pdFaOzHH7n3OhzknmQYbUSegLiFhKvHuvM8nZvf9SCajO+Cow==}
+  /chromatic@9.0.0:
+    resolution: {integrity: sha512-PczbWYOfqsf/SM0yIzI3ZOpFznEyf9Fc96EkxoYkhztFaA9CEOcpA9nk8zpmNgPUQWmIWNyG7z4xEK40sApFzw==}
     hasBin: true
 
   /chrome-trace-event@1.0.3:
