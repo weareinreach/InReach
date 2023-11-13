@@ -73,8 +73,8 @@ const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps
 					publishedState
 						? 'Show only unpublished'
 						: publishedState === undefined
-						? 'Show only published'
-						: 'Show all'
+						  ? 'Show only published'
+						  : 'Show all'
 				}
 				withinPortal
 			>
@@ -84,8 +84,8 @@ const ToolbarButtons = ({ columnFilters, setColumnFilters }: ToolbarButtonsProps
 							publishedState
 								? 'carbon:view-filled'
 								: publishedState === undefined
-								? 'carbon:view'
-								: 'carbon:view-off-filled'
+								  ? 'carbon:view'
+								  : 'carbon:view-off-filled'
 						}
 						style={{
 							color: publishedState === undefined ? theme.other.colors.secondary.darkGray : undefined,
