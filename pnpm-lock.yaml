@@ -74,26 +74,26 @@ importers:
         specifier: 8.0.3
         version: 8.0.3
       knip:
-        specifier: 2.40.1
-        version: 2.40.1
+        specifier: 2.41.2
+        version: 2.41.2
       lint-staged:
-        specifier: 15.0.2
-        version: 15.0.2
+        specifier: 15.1.0
+        version: 15.1.0
       prettier:
-        specifier: 3.0.3
-        version: 3.0.3
+        specifier: 3.1.0
+        version: 3.1.0
       prettier-plugin-jsdoc:
         specifier: 1.1.1
-        version: 1.1.1(prettier@3.0.3)
+        version: 1.1.1(prettier@3.1.0)
       prettier-plugin-packagejson:
         specifier: 2.4.6
-        version: 2.4.6(prettier@3.0.3)
+        version: 2.4.6(prettier@3.1.0)
       prettier-plugin-prisma:
         specifier: 5.0.0
-        version: 5.0.0(prettier@3.0.3)
+        version: 5.0.0(prettier@3.1.0)
       tsx:
-        specifier: 3.14.0
-        version: 3.14.0
+        specifier: 4.1.1
+        version: 4.1.1
       turbo:
         specifier: 1.10.16
         version: 1.10.16
@@ -200,17 +200,17 @@ importers:
         specifier: 8.10.7
         version: 8.10.7(react-dom@18.2.0)(react@18.2.0)
       '@trpc/client':
-        specifier: 10.43.2
-        version: 10.43.2(@trpc/server@10.43.2)
+        specifier: 10.43.3
+        version: 10.43.3(@trpc/server@10.43.3)
       '@trpc/next':
-        specifier: 10.43.2
-        version: 10.43.2(@tanstack/react-query@4.36.1)(@trpc/client@10.43.2)(@trpc/react-query@10.43.2)(@trpc/server@10.43.2)(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 10.43.3
+        version: 10.43.3(@tanstack/react-query@4.36.1)(@trpc/client@10.43.3)(@trpc/react-query@10.43.3)(@trpc/server@10.43.3)(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/react-query':
-        specifier: 10.43.2
-        version: 10.43.2(@tanstack/react-query@4.36.1)(@trpc/client@10.43.2)(@trpc/server@10.43.2)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 10.43.3
+        version: 10.43.3(@tanstack/react-query@4.36.1)(@trpc/client@10.43.3)(@trpc/server@10.43.3)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
-        specifier: 10.43.2
-        version: 10.43.2
+        specifier: 10.43.3
+        version: 10.43.3
       '@vercel/analytics':
         specifier: 1.1.1
         version: 1.1.1
@@ -260,23 +260,23 @@ importers:
         specifier: 6.0.1
         version: 6.0.1
       i18next:
-        specifier: 23.6.0
-        version: 23.6.0
+        specifier: 23.7.6
+        version: 23.7.6
       i18next-browser-languagedetector:
-        specifier: 7.1.0
-        version: 7.1.0
+        specifier: 7.2.0
+        version: 7.2.0
       i18next-chained-backend:
-        specifier: 4.5.0
-        version: 4.5.0
+        specifier: 4.6.2
+        version: 4.6.2
       i18next-http-backend:
-        specifier: 2.3.1
-        version: 2.3.1
+        specifier: 2.4.1
+        version: 2.4.1
       i18next-intervalplural-postprocessor:
         specifier: 3.0.0
         version: 3.0.0
       i18next-multiload-backend-adapter:
-        specifier: 2.2.2
-        version: 2.2.2
+        specifier: 2.3.0
+        version: 2.3.0
       just-compact:
         specifier: 3.2.0
         version: 3.2.0
@@ -284,8 +284,8 @@ importers:
         specifier: 2.3.0
         version: 2.3.0
       luxon:
-        specifier: 3.4.3
-        version: 3.4.3
+        specifier: 3.4.4
+        version: 3.4.4
       mantine-react-table:
         specifier: 1.3.4
         version: 1.3.4(@emotion/react@11.11.1)(@mantine/core@6.0.21)(@mantine/dates@6.0.21)(@mantine/hooks@6.0.21)(@tabler/icons-react@2.40.0)(react-dom@18.2.0)(react@18.2.0)
@@ -293,11 +293,11 @@ importers:
         specifier: 14.0.2
         version: 14.0.2(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
-        specifier: 4.24.4
-        version: 4.24.4(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 4.24.5
+        version: 4.24.5(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
         specifier: 15.0.0
-        version: 15.0.0(i18next@23.6.0)(next@14.0.2)(react-i18next@13.3.1)(react@18.2.0)
+        version: 15.0.0(i18next@23.7.6)(next@14.0.2)(react-i18next@13.4.1)(react@18.2.0)
       next-seo:
         specifier: 6.4.0
         version: 6.4.0(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
@@ -332,8 +332,8 @@ importers:
         specifier: 2.0.0
         version: 2.0.0(@mantine/core@6.0.21)(@mantine/dates@6.0.21)(react-dom@18.2.0)(react-hook-form@7.48.2)(react@18.2.0)
       react-i18next:
-        specifier: 13.3.1
-        version: 13.3.1(i18next@23.6.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.1
+        version: 13.4.1(i18next@23.7.6)(react-dom@18.2.0)(react@18.2.0)
       zod:
         specifier: 3.22.4
         version: 3.22.4
@@ -405,17 +405,17 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
       prettier:
-        specifier: 3.0.3
-        version: 3.0.3
+        specifier: 3.1.0
+        version: 3.1.0
       trpc-client-devtools-link:
         specifier: 0.2.1-next
-        version: 0.2.1-next(@trpc/client@10.43.2)(@trpc/server@10.43.2)
+        version: 0.2.1-next(@trpc/client@10.43.3)(@trpc/server@10.43.3)
       trpc-panel:
         specifier: 1.3.4
-        version: 1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.43.2)(zod@3.22.4)
+        version: 1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.43.3)(zod@3.22.4)
       trpc-playground:
         specifier: 1.0.4
-        version: 1.0.4(@trpc/server@10.43.2)(@types/node@18.18.9)(typescript@5.2.2)(zod@3.22.4)
+        version: 1.0.4(@trpc/server@10.43.3)(@types/node@18.18.9)(typescript@5.2.2)(zod@3.22.4)
       type-fest:
         specifier: 4.7.1
         version: 4.7.1
@@ -477,8 +477,8 @@ importers:
         specifier: 7.1.0
         version: 7.1.0(react@18.2.0)
       i18next:
-        specifier: 23.6.0
-        version: 23.6.0
+        specifier: 23.7.6
+        version: 23.7.6
       next:
         specifier: 14.0.2
         version: 14.0.2(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
@@ -489,8 +489,8 @@ importers:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       react-i18next:
-        specifier: 13.3.1
-        version: 13.3.1(i18next@23.6.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.1
+        version: 13.4.1(i18next@23.7.6)(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@next/bundle-analyzer':
         specifier: 14.0.2
@@ -551,8 +551,8 @@ importers:
         specifier: 8.53.0
         version: 8.53.0
       prettier:
-        specifier: 3.0.3
-        version: 3.0.3
+        specifier: 3.1.0
+        version: 3.1.0
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -594,8 +594,8 @@ importers:
         specifier: 8.53.0
         version: 8.53.0
       prettier:
-        specifier: 3.0.3
-        version: 3.0.3
+        specifier: 3.1.0
+        version: 3.1.0
       prisma:
         specifier: 5.5.2
         version: 5.5.2
@@ -646,17 +646,17 @@ importers:
         specifier: 2.2.0
         version: 2.2.0
       '@trpc/client':
-        specifier: 10.43.2
-        version: 10.43.2(@trpc/server@10.43.2)
+        specifier: 10.43.3
+        version: 10.43.3(@trpc/server@10.43.3)
       '@trpc/next':
-        specifier: 10.43.2
-        version: 10.43.2(@tanstack/react-query@4.36.1)(@trpc/client@10.43.2)(@trpc/react-query@10.43.2)(@trpc/server@10.43.2)(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 10.43.3
+        version: 10.43.3(@tanstack/react-query@4.36.1)(@trpc/client@10.43.3)(@trpc/react-query@10.43.3)(@trpc/server@10.43.3)(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/react-query':
-        specifier: 10.43.2
-        version: 10.43.2(@tanstack/react-query@4.36.1)(@trpc/client@10.43.2)(@trpc/server@10.43.2)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 10.43.3
+        version: 10.43.3(@tanstack/react-query@4.36.1)(@trpc/client@10.43.3)(@trpc/server@10.43.3)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/server':
-        specifier: 10.43.2
-        version: 10.43.2
+        specifier: 10.43.3
+        version: 10.43.3
       '@vercel/edge-config':
         specifier: 0.4.1
         version: 0.4.1
@@ -703,8 +703,8 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       luxon:
-        specifier: 3.4.3
-        version: 3.4.3
+        specifier: 3.4.4
+        version: 3.4.4
       nanoid:
         specifier: 5.0.3
         version: 5.0.3
@@ -761,14 +761,14 @@ importers:
         specifier: 14.0.2
         version: 14.0.2(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       prettier:
-        specifier: 3.0.3
-        version: 3.0.3
+        specifier: 3.1.0
+        version: 3.1.0
       trpc-client-devtools-link:
         specifier: 0.2.1-next
-        version: 0.2.1-next(@trpc/client@10.43.2)(@trpc/server@10.43.2)
+        version: 0.2.1-next(@trpc/client@10.43.3)(@trpc/server@10.43.3)
       trpc-panel:
         specifier: 1.3.4
-        version: 1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.43.2)(zod@3.22.4)
+        version: 1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.43.3)(zod@3.22.4)
       type-fest:
         specifier: 4.7.1
         version: 4.7.1
@@ -779,11 +779,11 @@ importers:
   packages/auth:
     dependencies:
       '@aws-sdk/client-cognito-identity-provider':
-        specifier: 3.445.0
-        version: 3.445.0
+        specifier: 3.449.0
+        version: 3.449.0
       '@next-auth/prisma-adapter':
         specifier: 1.0.7
-        version: 1.0.7(@prisma/client@5.5.2)(next-auth@4.24.4)
+        version: 1.0.7(@prisma/client@5.5.2)(next-auth@4.24.5)
       '@weareinreach/db':
         specifier: workspace:*
         version: link:../db
@@ -831,8 +831,8 @@ importers:
         specifier: 14.0.2
         version: 14.0.2(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
-        specifier: 4.24.4
-        version: 4.24.4(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 4.24.5
+        version: 4.24.5(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -856,7 +856,7 @@ importers:
         version: 11.0.1
       next-i18next:
         specifier: 15.0.0
-        version: 15.0.0(i18next@23.6.0)(next@14.0.2)(react-i18next@13.3.1)(react@18.2.0)
+        version: 15.0.0(i18next@23.7.6)(next@14.0.2)(react-i18next@13.4.1)(react@18.2.0)
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -895,8 +895,8 @@ importers:
         specifier: workspace:*
         version: link:../eslint-config
       prettier:
-        specifier: 3.0.3
-        version: 3.0.3
+        specifier: 3.1.0
+        version: 3.1.0
       typescript:
         specifier: 5.2.2
         version: 5.2.2
@@ -1040,8 +1040,8 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
       luxon:
-        specifier: 3.4.3
-        version: 3.4.3
+        specifier: 3.4.4
+        version: 3.4.4
       p-queue:
         specifier: 7.4.1
         version: 7.4.1
@@ -1052,8 +1052,8 @@ importers:
         specifier: 5.4.1
         version: 5.4.1
       prettier:
-        specifier: 3.0.3
-        version: 3.0.3
+        specifier: 3.1.0
+        version: 3.1.0
       pretty-bytes:
         specifier: 6.1.1
         version: 6.1.1
@@ -1085,8 +1085,8 @@ importers:
         specifier: 1.3.1
         version: 1.3.1
       tsx:
-        specifier: 3.14.0
-        version: 3.14.0
+        specifier: 4.1.1
+        version: 4.1.1
       type-fest:
         specifier: 4.7.1
         version: 4.7.1
@@ -1094,8 +1094,8 @@ importers:
         specifier: 5.2.2
         version: 5.2.2
       zod-prisma-types:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.4
+        version: 3.1.4
       zod-to-json-schema:
         specifier: 3.21.4
         version: 3.21.4(zod@3.22.4)
@@ -1109,8 +1109,8 @@ importers:
         specifier: workspace:*
         version: link:../util
       chromatic:
-        specifier: 7.6.0
-        version: 7.6.0
+        specifier: 9.0.0
+        version: 9.0.0
       zod:
         specifier: 3.22.4
         version: 3.22.4
@@ -1236,8 +1236,8 @@ importers:
         specifier: 3.3.4
         version: 3.3.4
       json-schema-to-zod:
-        specifier: 1.1.1
-        version: 1.1.1
+        specifier: 1.2.0
+        version: 1.2.0
       just-compact:
         specifier: 3.2.0
         version: 3.2.0
@@ -1327,8 +1327,8 @@ importers:
         specifier: 1.1.6
         version: 1.1.6
       '@iconify-json/simple-icons':
-        specifier: 1.1.77
-        version: 1.1.77
+        specifier: 1.1.78
+        version: 1.1.78
       '@iconify/react':
         specifier: 4.1.1
         version: 4.1.1(react@18.2.0)
@@ -1439,16 +1439,16 @@ importers:
         version: 8.7.6(react-dom@18.2.0)(react@18.2.0)
       '@tomfreudenberg/next-auth-mock':
         specifier: 0.5.6
-        version: 0.5.6(next-auth@4.24.4)(react@18.2.0)
+        version: 0.5.6(next-auth@4.24.5)(react@18.2.0)
       '@trpc/client':
-        specifier: 10.43.2
-        version: 10.43.2(@trpc/server@10.43.2)
+        specifier: 10.43.3
+        version: 10.43.3(@trpc/server@10.43.3)
       '@trpc/next':
-        specifier: 10.43.2
-        version: 10.43.2(@tanstack/react-query@4.36.1)(@trpc/client@10.43.2)(@trpc/react-query@10.43.2)(@trpc/server@10.43.2)(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 10.43.3
+        version: 10.43.3(@tanstack/react-query@4.36.1)(@trpc/client@10.43.3)(@trpc/react-query@10.43.3)(@trpc/server@10.43.3)(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/react-query':
-        specifier: 10.43.2
-        version: 10.43.2(@tanstack/react-query@4.36.1)(@trpc/client@10.43.2)(@trpc/server@10.43.2)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 10.43.3
+        version: 10.43.3(@tanstack/react-query@4.36.1)(@trpc/client@10.43.3)(@trpc/server@10.43.3)(react-dom@18.2.0)(react@18.2.0)
       '@types/babel__core':
         specifier: 7.20.4
         version: 7.20.4
@@ -1501,8 +1501,8 @@ importers:
         specifier: 9.1.3
         version: 9.1.3(@babel/core@7.23.3)(webpack@5.89.0)
       chromatic:
-        specifier: 7.6.0
-        version: 7.6.0
+        specifier: 9.0.0
+        version: 9.0.0
       css-loader:
         specifier: 6.8.1
         version: 6.8.1(webpack@5.89.0)
@@ -1519,20 +1519,20 @@ importers:
         specifier: 8.53.0
         version: 8.53.0
       i18next:
-        specifier: 23.6.0
-        version: 23.6.0
+        specifier: 23.7.6
+        version: 23.7.6
       i18next-browser-languagedetector:
-        specifier: 7.1.0
-        version: 7.1.0
+        specifier: 7.2.0
+        version: 7.2.0
       i18next-http-backend:
-        specifier: 2.3.1
-        version: 2.3.1
+        specifier: 2.4.1
+        version: 2.4.1
       i18next-intervalplural-postprocessor:
         specifier: 3.0.0
         version: 3.0.0
       luxon:
-        specifier: 3.4.3
-        version: 3.4.3
+        specifier: 3.4.4
+        version: 3.4.4
       mantine-react-table:
         specifier: 1.3.4
         version: 1.3.4(@emotion/react@11.11.1)(@mantine/core@6.0.21)(@mantine/dates@6.0.21)(@mantine/hooks@6.0.21)(@tabler/icons-react@2.40.0)(react-dom@18.2.0)(react@18.2.0)
@@ -1549,17 +1549,17 @@ importers:
         specifier: 14.0.2
         version: 14.0.2(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
-        specifier: 4.24.4
-        version: 4.24.4(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 4.24.5
+        version: 4.24.5(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
         specifier: 15.0.0
-        version: 15.0.0(i18next@23.6.0)(next@14.0.2)(react-i18next@13.3.1)(react@18.2.0)
+        version: 15.0.0(i18next@23.7.6)(next@14.0.2)(react-i18next@13.4.1)(react@18.2.0)
       postcss-loader:
         specifier: 7.3.3
         version: 7.3.3(postcss@8.4.31)(typescript@5.2.2)(webpack@5.89.0)
       prettier:
-        specifier: 3.0.3
-        version: 3.0.3
+        specifier: 3.1.0
+        version: 3.1.0
       pretty-bytes:
         specifier: 6.1.1
         version: 6.1.1
@@ -1585,8 +1585,8 @@ importers:
         specifier: 1.4.0
         version: 1.4.0(react-dom@18.2.0)(react@18.2.0)
       react-i18next:
-        specifier: 13.3.1
-        version: 13.3.1(i18next@23.6.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: 13.4.1
+        version: 13.4.1(i18next@23.7.6)(react-dom@18.2.0)(react@18.2.0)
       resolve-url-loader:
         specifier: 5.0.0
         version: 5.0.0
@@ -1610,13 +1610,13 @@ importers:
         version: 3.3.3(webpack@5.89.0)
       trpc-client-devtools-link:
         specifier: 0.2.1-next
-        version: 0.2.1-next(@trpc/client@10.43.2)(@trpc/server@10.43.2)
+        version: 0.2.1-next(@trpc/client@10.43.3)(@trpc/server@10.43.3)
       tsconfig-paths-webpack-plugin:
         specifier: 4.1.0
         version: 4.1.0
       tsx:
-        specifier: 3.14.0
-        version: 3.14.0
+        specifier: 4.1.1
+        version: 4.1.1
       type-fest:
         specifier: 4.7.1
         version: 4.7.1
@@ -1691,7 +1691,7 @@ packages:
     resolution: {integrity: sha512-IzSgsrxUcsrejQbPVilIKy16kAT52EwB6zSaI+M3xxIhKh5+aldEyvI+z6erM7TCLB2BJsFrtHjp6/4/sr+3dA==}
     dependencies:
       '@aws-crypto/util': 3.0.0
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       tslib: 1.14.1
     dev: false
 
@@ -1708,7 +1708,7 @@ packages:
       '@aws-crypto/sha256-js': 3.0.0
       '@aws-crypto/supports-web-crypto': 3.0.0
       '@aws-crypto/util': 3.0.0
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@aws-sdk/util-locate-window': 3.310.0
       '@aws-sdk/util-utf8-browser': 3.259.0
       tslib: 1.14.1
@@ -1718,7 +1718,7 @@ packages:
     resolution: {integrity: sha512-PnNN7os0+yd1XvXAy23CFOmTbMaDxgxXtTKHybrJ39Y8kGzBATgBFibWJKH6BhytLI/Zyszs87xCOBNyBig6vQ==}
     dependencies:
       '@aws-crypto/util': 3.0.0
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       tslib: 1.14.1
     dev: false
 
@@ -1731,7 +1731,7 @@ packages:
   /@aws-crypto/util@3.0.0:
     resolution: {integrity: sha512-2OJlpeJpCR48CC8r+uKVChzs9Iungj9wkZrl8Z041DWEWvyIHILYKCPNzJghKsivj+S3mLo6BVc7mBNzdxA46w==}
     dependencies:
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@aws-sdk/util-utf8-browser': 3.259.0
       tslib: 1.14.1
     dev: false
@@ -1752,25 +1752,25 @@ packages:
       lodash.merge: 4.6.2
     dev: false
 
-  /@aws-sdk/client-cognito-identity-provider@3.445.0:
-    resolution: {integrity: sha512-Dqf8HTPA4Gd6DvSq8verk+oDGSNXZdMEDkciiG1h4dYIAB+08ggvuIOL9d3vmzEL5pwiV5bSitWYTgMC3sf3mg==}
+  /@aws-sdk/client-cognito-identity-provider@3.449.0:
+    resolution: {integrity: sha512-0ypic0S3JepsaSJOe5vQ97aLup8SDfvuFvhSXZtVTzWCari1Hw3fqlX1vmKFOjGu3DQuq736uFpfxDop8s5nTA==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@aws-crypto/sha256-browser': 3.0.0
       '@aws-crypto/sha256-js': 3.0.0
-      '@aws-sdk/client-sts': 3.445.0
+      '@aws-sdk/client-sts': 3.449.0
       '@aws-sdk/core': 3.445.0
-      '@aws-sdk/credential-provider-node': 3.445.0
-      '@aws-sdk/middleware-host-header': 3.433.0
-      '@aws-sdk/middleware-logger': 3.433.0
-      '@aws-sdk/middleware-recursion-detection': 3.433.0
-      '@aws-sdk/middleware-signing': 3.433.0
-      '@aws-sdk/middleware-user-agent': 3.438.0
+      '@aws-sdk/credential-provider-node': 3.449.0
+      '@aws-sdk/middleware-host-header': 3.449.0
+      '@aws-sdk/middleware-logger': 3.449.0
+      '@aws-sdk/middleware-recursion-detection': 3.449.0
+      '@aws-sdk/middleware-signing': 3.449.0
+      '@aws-sdk/middleware-user-agent': 3.449.0
       '@aws-sdk/region-config-resolver': 3.433.0
-      '@aws-sdk/types': 3.433.0
-      '@aws-sdk/util-endpoints': 3.438.0
-      '@aws-sdk/util-user-agent-browser': 3.433.0
-      '@aws-sdk/util-user-agent-node': 3.437.0
+      '@aws-sdk/types': 3.449.0
+      '@aws-sdk/util-endpoints': 3.449.0
+      '@aws-sdk/util-user-agent-browser': 3.449.0
+      '@aws-sdk/util-user-agent-node': 3.449.0
       '@smithy/config-resolver': 2.0.16
       '@smithy/fetch-http-handler': 2.2.4
       '@smithy/hash-node': 2.0.12
@@ -1799,22 +1799,22 @@ packages:
       - aws-crt
     dev: false
 
-  /@aws-sdk/client-sso@3.445.0:
-    resolution: {integrity: sha512-me4LvqNnu6kxi+sW7t0AgMv1Yi64ikas0x2+5jv23o6Csg32w0S0xOjCTKQYahOA5CMFunWvlkFIfxbqs+Uo7w==}
+  /@aws-sdk/client-sso@3.449.0:
+    resolution: {integrity: sha512-HFTlFbf9jwp5BJkXbMKlEwk6oGC7AVYaPEkaNk77kzZ8RGoqVSAqe0HL74DACcJUpMD/VWYX7pfWq/Wm+2B79g==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@aws-crypto/sha256-browser': 3.0.0
       '@aws-crypto/sha256-js': 3.0.0
       '@aws-sdk/core': 3.445.0
-      '@aws-sdk/middleware-host-header': 3.433.0
-      '@aws-sdk/middleware-logger': 3.433.0
-      '@aws-sdk/middleware-recursion-detection': 3.433.0
-      '@aws-sdk/middleware-user-agent': 3.438.0
+      '@aws-sdk/middleware-host-header': 3.449.0
+      '@aws-sdk/middleware-logger': 3.449.0
+      '@aws-sdk/middleware-recursion-detection': 3.449.0
+      '@aws-sdk/middleware-user-agent': 3.449.0
       '@aws-sdk/region-config-resolver': 3.433.0
-      '@aws-sdk/types': 3.433.0
-      '@aws-sdk/util-endpoints': 3.438.0
-      '@aws-sdk/util-user-agent-browser': 3.433.0
-      '@aws-sdk/util-user-agent-node': 3.437.0
+      '@aws-sdk/types': 3.449.0
+      '@aws-sdk/util-endpoints': 3.449.0
+      '@aws-sdk/util-user-agent-browser': 3.449.0
+      '@aws-sdk/util-user-agent-node': 3.449.0
       '@smithy/config-resolver': 2.0.16
       '@smithy/fetch-http-handler': 2.2.4
       '@smithy/hash-node': 2.0.12
@@ -1843,25 +1843,25 @@ packages:
       - aws-crt
     dev: false
 
-  /@aws-sdk/client-sts@3.445.0:
-    resolution: {integrity: sha512-ogbdqrS8x9O5BTot826iLnTQ6i4/F5BSi/74gycneCxYmAnYnyUBNOWVnynv6XZiEWyDJQCU2UtMd52aNGW1GA==}
+  /@aws-sdk/client-sts@3.449.0:
+    resolution: {integrity: sha512-iKh5Es9tyY+Ch17bvMubW67ydW4X3Buy9vwTIqpmXlnXEfbvjZRwycjWK2MO/P1Su3wjA14zNBq2ifNWFxkwFA==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@aws-crypto/sha256-browser': 3.0.0
       '@aws-crypto/sha256-js': 3.0.0
       '@aws-sdk/core': 3.445.0
-      '@aws-sdk/credential-provider-node': 3.445.0
-      '@aws-sdk/middleware-host-header': 3.433.0
-      '@aws-sdk/middleware-logger': 3.433.0
-      '@aws-sdk/middleware-recursion-detection': 3.433.0
-      '@aws-sdk/middleware-sdk-sts': 3.433.0
-      '@aws-sdk/middleware-signing': 3.433.0
-      '@aws-sdk/middleware-user-agent': 3.438.0
+      '@aws-sdk/credential-provider-node': 3.449.0
+      '@aws-sdk/middleware-host-header': 3.449.0
+      '@aws-sdk/middleware-logger': 3.449.0
+      '@aws-sdk/middleware-recursion-detection': 3.449.0
+      '@aws-sdk/middleware-sdk-sts': 3.449.0
+      '@aws-sdk/middleware-signing': 3.449.0
+      '@aws-sdk/middleware-user-agent': 3.449.0
       '@aws-sdk/region-config-resolver': 3.433.0
-      '@aws-sdk/types': 3.433.0
-      '@aws-sdk/util-endpoints': 3.438.0
-      '@aws-sdk/util-user-agent-browser': 3.433.0
-      '@aws-sdk/util-user-agent-node': 3.437.0
+      '@aws-sdk/types': 3.449.0
+      '@aws-sdk/util-endpoints': 3.449.0
+      '@aws-sdk/util-user-agent-browser': 3.449.0
+      '@aws-sdk/util-user-agent-node': 3.449.0
       '@smithy/config-resolver': 2.0.16
       '@smithy/fetch-http-handler': 2.2.4
       '@smithy/hash-node': 2.0.12
@@ -1899,25 +1899,25 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/credential-provider-env@3.433.0:
-    resolution: {integrity: sha512-Vl7Qz5qYyxBurMn6hfSiNJeUHSqfVUlMt0C1Bds3tCkl3IzecRWwyBOlxtxO3VCrgVeW3HqswLzCvhAFzPH6nQ==}
+  /@aws-sdk/credential-provider-env@3.449.0:
+    resolution: {integrity: sha512-SwO9XQcBoyA0XrsSmgnMqCnR99wIyp+BjGhvzDU+Wetib7QPt++E2slJkLM/iCNc6YiqiHZtHsvXapSV7RzBJw==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/property-provider': 2.0.13
       '@smithy/types': 2.4.0
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/credential-provider-ini@3.445.0:
-    resolution: {integrity: sha512-R7IYSGjNZ5KKJwQJ2HNPemjpAMWvdce91i8w+/aHfqeGfTXrmYJu99PeGRyyBTKEumBaojyjTRvmO8HzS+/l7g==}
+  /@aws-sdk/credential-provider-ini@3.449.0:
+    resolution: {integrity: sha512-C2pMYysIfbRBR4Q+Aj7J0cRsKY/X2cOnrggrWzsEUJK3EJ1aHwrzm3HI0VM5DttJyya5hE4tZ/H1VX3zNGUtKA==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/credential-provider-env': 3.433.0
-      '@aws-sdk/credential-provider-process': 3.433.0
-      '@aws-sdk/credential-provider-sso': 3.445.0
-      '@aws-sdk/credential-provider-web-identity': 3.433.0
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/credential-provider-env': 3.449.0
+      '@aws-sdk/credential-provider-process': 3.449.0
+      '@aws-sdk/credential-provider-sso': 3.449.0
+      '@aws-sdk/credential-provider-web-identity': 3.449.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/credential-provider-imds': 2.0.18
       '@smithy/property-provider': 2.0.13
       '@smithy/shared-ini-file-loader': 2.2.2
@@ -1927,16 +1927,16 @@ packages:
       - aws-crt
     dev: false
 
-  /@aws-sdk/credential-provider-node@3.445.0:
-    resolution: {integrity: sha512-zI4k4foSjQRKNEsouculRcz7IbLfuqdFxypDLYwn+qPNMqJwWJ7VxOOeBSPUpHFcd7CLSfbHN2JAhQ7M02gPTA==}
+  /@aws-sdk/credential-provider-node@3.449.0:
+    resolution: {integrity: sha512-cCsqMqL8vmHADwIHCmTWDB4vr5fCXb4PZn3njbA/PIA92xL4S7hRmYi/1ll0CMd+fks+t/h+s+PIhFGo54C7cA==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/credential-provider-env': 3.433.0
-      '@aws-sdk/credential-provider-ini': 3.445.0
-      '@aws-sdk/credential-provider-process': 3.433.0
-      '@aws-sdk/credential-provider-sso': 3.445.0
-      '@aws-sdk/credential-provider-web-identity': 3.433.0
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/credential-provider-env': 3.449.0
+      '@aws-sdk/credential-provider-ini': 3.449.0
+      '@aws-sdk/credential-provider-process': 3.449.0
+      '@aws-sdk/credential-provider-sso': 3.449.0
+      '@aws-sdk/credential-provider-web-identity': 3.449.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/credential-provider-imds': 2.0.18
       '@smithy/property-provider': 2.0.13
       '@smithy/shared-ini-file-loader': 2.2.2
@@ -1946,24 +1946,24 @@ packages:
       - aws-crt
     dev: false
 
-  /@aws-sdk/credential-provider-process@3.433.0:
-    resolution: {integrity: sha512-W7FcGlQjio9Y/PepcZGRyl5Bpwb0uWU7qIUCh+u4+q2mW4D5ZngXg8V/opL9/I/p4tUH9VXZLyLGwyBSkdhL+A==}
+  /@aws-sdk/credential-provider-process@3.449.0:
+    resolution: {integrity: sha512-IofhAgpwdSnaEg9H0dhydac07GCQ55Mc5oRzdzp/tm0Rl0MqnGdIvN8wYsxAeVhEi9pBSNla4eRiTu3LY6Z5+A==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/property-provider': 2.0.13
       '@smithy/shared-ini-file-loader': 2.2.2
       '@smithy/types': 2.4.0
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/credential-provider-sso@3.445.0:
-    resolution: {integrity: sha512-gJz7kAiDecdhtApgXnxfZsXKsww8BnifDF9MAx9Dr4X6no47qYsCCS3XPuEyRiF9VebXvHOH0H260Zp3bVyniQ==}
+  /@aws-sdk/credential-provider-sso@3.449.0:
+    resolution: {integrity: sha512-Lfhh38rOjFAZBjZZJ2ehve+X048xxr+hTr+ntGOKady1GAH6W1U5UGNYuD9fr5vFaQQtAcNLKkUui+TnmJ4z/w==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/client-sso': 3.445.0
-      '@aws-sdk/token-providers': 3.438.0
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/client-sso': 3.449.0
+      '@aws-sdk/token-providers': 3.449.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/property-provider': 2.0.13
       '@smithy/shared-ini-file-loader': 2.2.2
       '@smithy/types': 2.4.0
@@ -1972,60 +1972,60 @@ packages:
       - aws-crt
     dev: false
 
-  /@aws-sdk/credential-provider-web-identity@3.433.0:
-    resolution: {integrity: sha512-RlwjP1I5wO+aPpwyCp23Mk8nmRbRL33hqRASy73c4JA2z2YiRua+ryt6MalIxehhwQU6xvXUKulJnPG9VaMFZg==}
+  /@aws-sdk/credential-provider-web-identity@3.449.0:
+    resolution: {integrity: sha512-BdqATzdqg39z2VXnEH7I6dzuX/Di6F/4C8FyiiJYx2+VciYdqt6GPprlpGdpngtWct/f8pA/LxQysNBVuwU/RA==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/property-provider': 2.0.13
       '@smithy/types': 2.4.0
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/middleware-host-header@3.433.0:
-    resolution: {integrity: sha512-mBTq3UWv1UzeHG+OfUQ2MB/5GEkt5LTKFaUqzL7ESwzW8XtpBgXnjZvIwu3Vcd3sEetMwijwaGiJhY0ae/YyaA==}
+  /@aws-sdk/middleware-host-header@3.449.0:
+    resolution: {integrity: sha512-uO7ao5eFhqEEPk8uqkhNhYqqJPPv/+i2aLchvSYrviDcmcbz9HURc8j+Q9WkmIj3jf0hjAJ9UVMQggBUfoLEgg==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/protocol-http': 3.0.8
       '@smithy/types': 2.4.0
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/middleware-logger@3.433.0:
-    resolution: {integrity: sha512-We346Fb5xGonTGVZC9Nvqtnqy74VJzYuTLLiuuftA5sbNzftBDy/22QCfvYSTOAl3bvif+dkDUzQY2ihc5PwOQ==}
+  /@aws-sdk/middleware-logger@3.449.0:
+    resolution: {integrity: sha512-YwmPLuSx5Zjdnloxr7bArT2KgF+VvlSe5+p5T/woZWEQgINRaCLdvDB37p7x/LlHrxxZRmk20MaFwSKlJU85qQ==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/types': 2.4.0
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/middleware-recursion-detection@3.433.0:
-    resolution: {integrity: sha512-HEvYC9PQlWY/ccUYtLvAlwwf1iCif2TSAmLNr3YTBRVa98x6jKL0hlCrHWYklFeqOGSKy6XhE+NGJMUII0/HaQ==}
+  /@aws-sdk/middleware-recursion-detection@3.449.0:
+    resolution: {integrity: sha512-8kWxxpPBHwFUADf8JaZsUbJ+FtS3K9MGQpMx0AZhh3P9xLaoh602CL0y0+UEEdb2uh6FJJjQiIk4eQXEolhG6Q==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/protocol-http': 3.0.8
       '@smithy/types': 2.4.0
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/middleware-sdk-sts@3.433.0:
-    resolution: {integrity: sha512-ORYbJnBejUyonFl5FwIqhvI3Cq6sAp9j+JpkKZtFNma9tFPdrhmYgfCeNH32H/wGTQV/tUoQ3luh0gA4cuk6DA==}
+  /@aws-sdk/middleware-sdk-sts@3.449.0:
+    resolution: {integrity: sha512-a+mknJkS9jDiDoHg2sFW24B0f6MgT2zs/oF6zMFvVmImvUHjbhSgBzYStE+Phl/uM1zwp1lJfbuO+I+5tVwZEw==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/middleware-signing': 3.433.0
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/middleware-signing': 3.449.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/types': 2.4.0
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/middleware-signing@3.433.0:
-    resolution: {integrity: sha512-jxPvt59NZo/epMNLNTu47ikmP8v0q217I6bQFGJG7JVFnfl36zDktMwGw+0xZR80qiK47/2BWrNpta61Zd2FxQ==}
+  /@aws-sdk/middleware-signing@3.449.0:
+    resolution: {integrity: sha512-L33efrgdDDY3myjLwraeS2tzUlebaZL6WS7ooACsOwkB9mRs6UQRpSpT90HbcSAjwLaa+xGqaxTA0biAuRjT5A==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/property-provider': 2.0.13
       '@smithy/protocol-http': 3.0.8
       '@smithy/signature-v4': 2.0.12
@@ -2034,12 +2034,12 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/middleware-user-agent@3.438.0:
-    resolution: {integrity: sha512-a+xHT1wOxT6EA6YyLmrfaroKWOkwwyiktUfXKM0FsUutGzNi4fKhb5NZ2al58NsXzHgHFrasSDp+Lqbd/X2cEw==}
+  /@aws-sdk/middleware-user-agent@3.449.0:
+    resolution: {integrity: sha512-0cRptIhIthxUYadrgb5FmcTgGhPIeXnFATBILaa2gA/ivfVY/CiqMAvOvLHxtBAYNK8/VXM9DFL5TfOt8mF2UQ==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/types': 3.433.0
-      '@aws-sdk/util-endpoints': 3.438.0
+      '@aws-sdk/types': 3.449.0
+      '@aws-sdk/util-endpoints': 3.449.0
       '@smithy/protocol-http': 3.0.8
       '@smithy/types': 2.4.0
       tslib: 2.6.2
@@ -2056,21 +2056,21 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/token-providers@3.438.0:
-    resolution: {integrity: sha512-G2fUfTtU6/1ayYRMu0Pd9Ln4qYSvwJOWCqJMdkDgvXSwdgcOSOLsnAIk1AHGJDAvgLikdCzuyOsdJiexr9Vnww==}
+  /@aws-sdk/token-providers@3.449.0:
+    resolution: {integrity: sha512-Tgu6Z/l75uFuNQpKIidbn1gc5bI7OKmGdH5+E/ZAc58XYvxYs9N77HjhrhAGvYQEnXY6gRm26/WSeHAAh5wlgQ==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@aws-crypto/sha256-browser': 3.0.0
       '@aws-crypto/sha256-js': 3.0.0
-      '@aws-sdk/middleware-host-header': 3.433.0
-      '@aws-sdk/middleware-logger': 3.433.0
-      '@aws-sdk/middleware-recursion-detection': 3.433.0
-      '@aws-sdk/middleware-user-agent': 3.438.0
+      '@aws-sdk/middleware-host-header': 3.449.0
+      '@aws-sdk/middleware-logger': 3.449.0
+      '@aws-sdk/middleware-recursion-detection': 3.449.0
+      '@aws-sdk/middleware-user-agent': 3.449.0
       '@aws-sdk/region-config-resolver': 3.433.0
-      '@aws-sdk/types': 3.433.0
-      '@aws-sdk/util-endpoints': 3.438.0
-      '@aws-sdk/util-user-agent-browser': 3.433.0
-      '@aws-sdk/util-user-agent-node': 3.437.0
+      '@aws-sdk/types': 3.449.0
+      '@aws-sdk/util-endpoints': 3.449.0
+      '@aws-sdk/util-user-agent-browser': 3.449.0
+      '@aws-sdk/util-user-agent-node': 3.449.0
       '@smithy/config-resolver': 2.0.16
       '@smithy/fetch-http-handler': 2.2.4
       '@smithy/hash-node': 2.0.12
@@ -2101,19 +2101,19 @@ packages:
       - aws-crt
     dev: false
 
-  /@aws-sdk/types@3.433.0:
-    resolution: {integrity: sha512-0jEE2mSrNDd8VGFjTc1otYrwYPIkzZJEIK90ZxisKvQ/EURGBhNzWn7ejWB9XCMFT6XumYLBR0V9qq5UPisWtA==}
+  /@aws-sdk/types@3.449.0:
+    resolution: {integrity: sha512-tSQPAvknheB6XnRoc+AuEgdzn2KhY447hddeVW0Mbg8Yl9es4u4TKVINloKDEyUrCKhB/1f93Hb5uJkPe/e/Ww==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@smithy/types': 2.4.0
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/util-endpoints@3.438.0:
-    resolution: {integrity: sha512-6VyPTq1kN3GWxwFt5DdZfOsr6cJZPLjWh0troY/0uUv3hK74C9o3Y0Xf/z8UAUvQFkVqZse12O0/BgPVMImvfA==}
+  /@aws-sdk/util-endpoints@3.449.0:
+    resolution: {integrity: sha512-hWGM/e+BnbCExXLaIEa6gRb0JW3+XGfcHgRqWkAxsKCaxQuXVIPUA3HyifimxTZDKmTbGZcyWfxCnKGS7I19rw==}
     engines: {node: '>=14.0.0'}
     dependencies:
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/util-endpoints': 1.0.2
       tslib: 2.6.2
     dev: false
@@ -2125,17 +2125,17 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/util-user-agent-browser@3.433.0:
-    resolution: {integrity: sha512-2Cf/Lwvxbt5RXvWFXrFr49vXv0IddiUwrZoAiwhDYxvsh+BMnh+NUFot+ZQaTrk/8IPZVDeLPWZRdVy00iaVXQ==}
+  /@aws-sdk/util-user-agent-browser@3.449.0:
+    resolution: {integrity: sha512-MUQ8YIVZNZZso5w1qlatHu9c1JKYvdjlAugzKhj7npgV4U8D9RBOJUd2Ct8meXPaH4DTfW1qohPlZu/fWWqNVQ==}
     dependencies:
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/types': 2.4.0
       bowser: 2.11.0
       tslib: 2.6.2
     dev: false
 
-  /@aws-sdk/util-user-agent-node@3.437.0:
-    resolution: {integrity: sha512-JVEcvWaniamtYVPem4UthtCNoTBCfFTwYj7Y3CrWZ2Qic4TqrwLkAfaBGtI2TGrhIClVr77uzLI6exqMTN7orA==}
+  /@aws-sdk/util-user-agent-node@3.449.0:
+    resolution: {integrity: sha512-PFMnFMSQTdhMAS63anMFFkzz56kWKcjGscgl0bBheEaxo8zgfLf1AAdFuBM+Ob2KYXeMezUbxYu9zOC/0S2hvw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       aws-crt: '>=1.0.0'
@@ -2143,7 +2143,7 @@ packages:
       aws-crt:
         optional: true
     dependencies:
-      '@aws-sdk/types': 3.433.0
+      '@aws-sdk/types': 3.449.0
       '@smithy/node-config-provider': 2.1.3
       '@smithy/types': 2.4.0
       tslib: 2.6.2
@@ -4583,8 +4583,8 @@ packages:
       '@iconify/types': 2.0.0
     dev: true
 
-  /@iconify-json/simple-icons@1.1.77:
-    resolution: {integrity: sha512-awFflxKI8LGt3WvgPqmxX+DHX2UH0JG9Ehyv0zgsFOa93qdibtYAbVhVH/S+UWTzqFBV5NmTpTWdJ/v2kRLJIw==}
+  /@iconify-json/simple-icons@1.1.78:
+    resolution: {integrity: sha512-0EIy9T1YXyZyYj10rSqgcqswtfs30Rc6lTGW0xnLKn2O8rLR9gStvxzNfodLSRzb1zXDvx+vDuFJVKPXI7ty4g==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
@@ -5397,14 +5397,14 @@ packages:
       '@types/pg': 8.6.6
     dev: false
 
-  /@next-auth/prisma-adapter@1.0.7(@prisma/client@5.5.2)(next-auth@4.24.4):
+  /@next-auth/prisma-adapter@1.0.7(@prisma/client@5.5.2)(next-auth@4.24.5):
     resolution: {integrity: sha512-Cdko4KfcmKjsyHFrWwZ//lfLUbcLqlyFqjd/nYE2m3aZ7tjMNUjpks47iw7NTCnXf+5UWz5Ypyt1dSs1EP5QJw==}
     peerDependencies:
       '@prisma/client': '>=2.26.0 || >=3'
       next-auth: ^4
     dependencies:
       '@prisma/client': 5.5.2(prisma@5.5.2)
-      next-auth: 4.24.4(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
+      next-auth: 4.24.5(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@next/bundle-analyzer@14.0.2:
@@ -9555,13 +9555,13 @@ packages:
       - immer
     dev: false
 
-  /@tomfreudenberg/next-auth-mock@0.5.6(next-auth@4.24.4)(react@18.2.0):
+  /@tomfreudenberg/next-auth-mock@0.5.6(next-auth@4.24.5)(react@18.2.0):
     resolution: {integrity: sha512-fSZJY5rUyj8GIcJI450ZV7FV/CMzpjUUGhPiaRyQo9l7l5mLvrnNe1MymzOnLpgXIkFja+CF/UHFGW807QcwmA==}
     peerDependencies:
       next-auth: ^4.12.3
       react: ^18 || 18
     dependencies:
-      next-auth: 4.24.4(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
+      next-auth: 4.24.5(next@14.0.2)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: true
 
@@ -9591,61 +9591,61 @@ packages:
       - terser
     dev: true
 
-  /@trpc-playground/types@1.0.0(@trpc/server@10.43.2)(typescript@5.2.2):
+  /@trpc-playground/types@1.0.0(@trpc/server@10.43.3)(typescript@5.2.2):
     resolution: {integrity: sha512-Ap5aNaVlglfM9WLkPLKF2rHDZ8CwHcqK32A8YaqTyHUuoEFTSOh6oSgVU6Cv8toxClKiTXFvbWmE4aZxIoh4Zg==}
     peerDependencies:
       '@trpc/server': ^10
     dependencies:
-      '@trpc/server': 10.43.2
+      '@trpc/server': 10.43.3
       ts-essentials: 9.4.1(typescript@5.2.2)
     transitivePeerDependencies:
       - typescript
     dev: true
 
-  /@trpc/client@10.43.2(@trpc/server@10.43.2):
-    resolution: {integrity: sha512-3wbuvu38lZi37iG+36IsTE/SoqNyrwnGH6Q9TndaOdF/7vkQoofTsVWTaNuBsStkpj6xbvFUHZbCBd7kpIVL1A==}
+  /@trpc/client@10.43.3(@trpc/server@10.43.3):
+    resolution: {integrity: sha512-r/aE1l2iybJMlXCf+KWqSQpIloOqw/3jQhZD8F4VpvczWPI5fEQCmZZuPHAz2L/PiGE5K/ZwXQrJsT207ZQ2AQ==}
     peerDependencies:
-      '@trpc/server': 10.43.2
+      '@trpc/server': 10.43.3
     dependencies:
-      '@trpc/server': 10.43.2
+      '@trpc/server': 10.43.3
 
-  /@trpc/next@10.43.2(@tanstack/react-query@4.36.1)(@trpc/client@10.43.2)(@trpc/react-query@10.43.2)(@trpc/server@10.43.2)(next@14.0.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-fWdRGTwPjRh/AjrqsOarCTf7v11BNQM3ReR+jVa0TFvvp5I0UDuvdGMExA0OFpTB1KbnRc58A4S3IITUCf01Tg==}
+  /@trpc/next@10.43.3(@tanstack/react-query@4.36.1)(@trpc/client@10.43.3)(@trpc/react-query@10.43.3)(@trpc/server@10.43.3)(next@14.0.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-ioOqV5zJNi9iFibCfz0KqKNJsrONjBfF+JB3y845I+MKGZt7vhpBAJJucioLzhvnRwbwy4My3LTdjcyOsUtYUQ==}
     peerDependencies:
       '@tanstack/react-query': ^4.18.0
-      '@trpc/client': 10.43.2
-      '@trpc/react-query': 10.43.2
-      '@trpc/server': 10.43.2
+      '@trpc/client': 10.43.3
+      '@trpc/react-query': 10.43.3
+      '@trpc/server': 10.43.3
       next: '*'
       react: ^18 || 18
       react-dom: ^18 || 18
     dependencies:
       '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client': 10.43.2(@trpc/server@10.43.2)
-      '@trpc/react-query': 10.43.2(@tanstack/react-query@4.36.1)(@trpc/client@10.43.2)(@trpc/server@10.43.2)(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/server': 10.43.2
+      '@trpc/client': 10.43.3(@trpc/server@10.43.3)
+      '@trpc/react-query': 10.43.3(@tanstack/react-query@4.36.1)(@trpc/client@10.43.3)(@trpc/server@10.43.3)(react-dom@18.2.0)(react@18.2.0)
+      '@trpc/server': 10.43.3
       next: 14.0.2(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-ssr-prepass: 1.5.0(react@18.2.0)
 
-  /@trpc/react-query@10.43.2(@tanstack/react-query@4.36.1)(@trpc/client@10.43.2)(@trpc/server@10.43.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-2YPqIFwXdquxDqPGsRuEgv5Ky5UVgdyopzzc1l5xLXpwaaeJ0usfr5zNbeCmHa1IWYY1BiHU2TEVJlREEamngg==}
+  /@trpc/react-query@10.43.3(@tanstack/react-query@4.36.1)(@trpc/client@10.43.3)(@trpc/server@10.43.3)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-yTmORp8pJ15GV8rR2QTR6bIPxk/Vbtl2vLTDz+G5GipKc+9kSRRYaVqbwzFuaPf5NOMK/JYkIsyIpitabQ1n9A==}
     peerDependencies:
       '@tanstack/react-query': ^4.18.0
-      '@trpc/client': 10.43.2
-      '@trpc/server': 10.43.2
+      '@trpc/client': 10.43.3
+      '@trpc/server': 10.43.3
       react: ^18 || 18
       react-dom: ^18 || 18
     dependencies:
       '@tanstack/react-query': 4.36.1(react-dom@18.2.0)(react@18.2.0)
-      '@trpc/client': 10.43.2(@trpc/server@10.43.2)
-      '@trpc/server': 10.43.2
+      '@trpc/client': 10.43.3(@trpc/server@10.43.3)
+      '@trpc/server': 10.43.3
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  /@trpc/server@10.43.2:
-    resolution: {integrity: sha512-88C9sFCdmk1IFL4ub7gqRPM0lFVmyZPjxpOcYy4GZw5yJif/FLyFuzSJiwsy9NygHOjqpfCxsDrLYsFr4eANPA==}
+  /@trpc/server@10.43.3:
+    resolution: {integrity: sha512-U7HsNtgjupNvPzH6ho4rPlIXZ2t5PctOH6pmFX4jv4YJi98RjGuOhHUNhiiVb8KUw6Kuh5EHTAv7cUV+igbMuQ==}
     engines: {node: '>=18.0.0'}
 
   /@tsconfig/node10@1.0.9:
@@ -10027,6 +10027,7 @@ packages:
 
   /@types/json-schema@7.0.14:
     resolution: {integrity: sha512-U3PUjAudAdJBeC2pgN8uTIKgxrb4nlDF3SF0++EldXQvQBGkpFZMSnwQiIoDU77tv45VgNkl/L4ouD+rEomujw==}
+    dev: true
 
   /@types/keyv@3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
@@ -11858,6 +11859,11 @@ packages:
     dependencies:
       node-gyp-build: 4.6.1
 
+  /builtin-modules@3.3.0:
+    resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
+    engines: {node: '>=6'}
+    dev: true
+
   /builtin-status-codes@3.0.0:
     resolution: {integrity: sha512-HpGFw18DgFWlncDfjTa2rcQ4W88O1mC8e8yZ2AvQY5KDaktSTwo+KRf6nHK6FRI5FyRyb/5T6+TSxfP7QyGsmQ==}
     dev: true
@@ -12207,8 +12213,8 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
 
-  /chromatic@7.6.0:
-    resolution: {integrity: sha512-4MwlX8EDMyfQKf1NXTdUhJ2b0EYueByaVrF75pdFaOzHH7n3OhzknmQYbUSegLiFhKvHuvM8nZvf9SCajO+Cow==}
+  /chromatic@9.0.0:
+    resolution: {integrity: sha512-PczbWYOfqsf/SM0yIzI3ZOpFznEyf9Fc96EkxoYkhztFaA9CEOcpA9nk8zpmNgPUQWmIWNyG7z4xEK40sApFzw==}
     hasBin: true
 
   /chrome-trace-event@1.0.3:
@@ -14054,8 +14060,8 @@ packages:
       object.fromentries: 2.0.7
     dev: true
 
-  /eslint-plugin-n@16.3.0(eslint@8.53.0):
-    resolution: {integrity: sha512-/XZLH5CUXGK3laz3xYFNza8ZxLCq8ZNW6MsVw5z3d5hc2AwZzi0fPiySFZHQTdVDOHGs2cGv91aqzWmgBdq2gQ==}
+  /eslint-plugin-n@16.3.1(eslint@8.53.0):
+    resolution: {integrity: sha512-w46eDIkxQ2FaTHcey7G40eD+FhTXOdKudDXPUO2n9WNcslze/i/HT2qJ3GXjHngYSGDISIgPNhwGtgoix4zeOw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       eslint: '>=7.0.0'
@@ -14066,6 +14072,7 @@ packages:
       eslint-plugin-es-x: 7.3.0(eslint@8.53.0)
       get-tsconfig: 4.7.2
       ignore: 5.2.4
+      is-builtin-module: 3.2.1
       is-core-module: 2.13.1
       minimatch: 3.1.2
       resolve: 1.22.8
@@ -15893,23 +15900,22 @@ packages:
     hasBin: true
     dev: false
 
-  /i18next-browser-languagedetector@7.1.0:
-    resolution: {integrity: sha512-cr2k7u1XJJ4HTOjM9GyOMtbOA47RtUoWRAtt52z43r3AoMs2StYKyjS3URPhzHaf+mn10hY9dZWamga5WPQjhA==}
+  /i18next-browser-languagedetector@7.2.0:
+    resolution: {integrity: sha512-U00DbDtFIYD3wkWsr2aVGfXGAj2TgnELzOX9qv8bT0aJtvPV9CRO77h+vgmHFBMe7LAxdwvT/7VkCWGya6L3tA==}
     dependencies:
       '@babel/runtime': 7.23.2
 
-  /i18next-chained-backend@4.5.0:
-    resolution: {integrity: sha512-2W7JwY0iTJx/VfBmTSc3vhp2FGONiJx8eiFQUoXM70xfvYqtfnzptRyNjM9BJCUNV0rUvvBm5N8CmRuSL38v0A==}
+  /i18next-chained-backend@4.6.2:
+    resolution: {integrity: sha512-2P092fR+nAPQlGzPUoIIxbwo7PTBqQYgLxwv1XhSTQUAUoelLo5LkX+FqRxxSDg9WEAsrc8+2WL6mJtMGIa6WQ==}
     dependencies:
       '@babel/runtime': 7.23.2
-      i18next-resources-to-backend: 1.1.4
     dev: false
 
   /i18next-fs-backend@2.2.0:
     resolution: {integrity: sha512-VOPHhdDX0M/csRqEw+9Ectpf6wvTIg1MZDfAHxc3JKnAlJz7fcZSAKAeyDohOq0xuLx57esYpJopIvBaRb0Bag==}
 
-  /i18next-http-backend@2.3.1:
-    resolution: {integrity: sha512-jnagFs5cnq4ryb+g92Hex4tB5kj3tWmiRWx8gHMCcE/PEgV1fjH5rC7xyJmPSgyb9r2xgcP8rvZxPKgsmvMqTw==}
+  /i18next-http-backend@2.4.1:
+    resolution: {integrity: sha512-CZHzFGDvF8zN7ya1W2lHbgLj2ejPUvPD836+vA3eNXc9eKGUM3MSF6SA2TKBXKBZ2cNG3nxzycCXeM6n/46KWQ==}
     dependencies:
       cross-fetch: 4.0.0
     transitivePeerDependencies:
@@ -15918,18 +15924,12 @@ packages:
   /i18next-intervalplural-postprocessor@3.0.0:
     resolution: {integrity: sha512-ZJWg2Gcb0kQqVI7kygLj9wVwQHK3mzRAg94uLsdoHqss0M9n0HSPr1pThd2AttkBsJFWR26G18hnKCqcTB8shQ==}
 
-  /i18next-multiload-backend-adapter@2.2.2:
-    resolution: {integrity: sha512-GQ4PPRk7gTwWYblFavR2mJRHRwaFGfJ4Hk7JFGJLGKxGN7s0vtPFCkKYW6Re0bsywiCpoYqDOtB2ih+JLwjSwA==}
+  /i18next-multiload-backend-adapter@2.3.0:
+    resolution: {integrity: sha512-k52N4CImVEDeA+jJo16EJIDdlemSIsWmX6MuBPyR5V8Ig1vQSqVG1acXiQkKE+txLxD8LnR6WKYhkcxTcR86kw==}
     dev: false
 
-  /i18next-resources-to-backend@1.1.4:
-    resolution: {integrity: sha512-hMyr9AOmIea17AOaVe1srNxK/l3mbk81P7Uf3fdcjlw3ehZy3UNTd0OP3EEi6yu4J02kf9jzhCcjokz6AFlEOg==}
-    dependencies:
-      '@babel/runtime': 7.23.2
-    dev: false
-
-  /i18next@23.6.0:
-    resolution: {integrity: sha512-z0Cxr0MGkt+kli306WS4nNNM++9cgt2b2VCMprY92j+AIab/oclgPxdwtTZVLP1zn5t5uo8M6uLsZmYrcjr3HA==}
+  /i18next@23.7.6:
+    resolution: {integrity: sha512-O66BhXBw0fH4bEJMA0/klQKPEbcwAp5wjXEL803pdAynNbg2f4qhLIYlNHJyE7icrL6XmSZKPYaaXwy11kJ6YQ==}
     dependencies:
       '@babel/runtime': 7.23.2
 
@@ -16295,6 +16295,13 @@ packages:
   /is-buffer@2.0.5:
     resolution: {integrity: sha512-i2R6zNFDwgEHJyQUtJEk0XFi1i0dPFn/oqjK3/vPCcDeJvW5NQ83V8QbicfF1SupOaB0h8ntgBC2YiE7dfyctQ==}
     engines: {node: '>=4'}
+
+  /is-builtin-module@3.2.1:
+    resolution: {integrity: sha512-BSLE3HnV2syZ0FK0iMA/yUGplUeMmNz4AW5fnTunbCIqZi4vG3WjJT9FHMy5D69xmAYBHXQhJdALdpwVxV501A==}
+    engines: {node: '>=6'}
+    dependencies:
+      builtin-modules: 3.3.0
+    dev: true
 
   /is-callable@1.2.7:
     resolution: {integrity: sha512-1BC0BVFhS/p0qtw6enp8e+8OD0UrK0oFLztSjNzhcKA3WDuJxxAPXzPuPtKkjEY9UUoEWlX/8fgKeu2S8i9JTA==}
@@ -17457,11 +17464,10 @@ packages:
       - supports-color
     dev: false
 
-  /json-schema-to-zod@1.1.1:
-    resolution: {integrity: sha512-YhU/zVhEMUBQE5/tOWPEcajdjEIpWFHVitQz0A7knERlzldw705dhImXiwgWKvkivU4GkF6C1efREzAFDKXvmQ==}
+  /json-schema-to-zod@1.2.0:
+    resolution: {integrity: sha512-fC0JgINgkh1RWHbOonzrxP+221/oGwPE014bJxWRsdK6TqC7vLtx9t4l5dlKXzFR9o35/s0v/qgb15Bfwkm2xA==}
     hasBin: true
     dependencies:
-      '@types/json-schema': 7.0.14
       json-refs: 3.0.15
       prettier: 2.8.8
     transitivePeerDependencies:
@@ -17617,8 +17623,8 @@ packages:
     resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
     engines: {node: '>= 8'}
 
-  /knip@2.40.1:
-    resolution: {integrity: sha512-X+WsMvMxsCb9bY0kMVhMJJgypmjOgVKrArnwf3JsQxW19e+ELaoHRwll7AOKeYBNa91WyTNVWcJeUCpGLJv35w==}
+  /knip@2.41.2:
+    resolution: {integrity: sha512-PTjoJ8i7HSyF2lTDd+JVRYGse81biXQx5YhsGSjy9+MLJUjU3FplJOiOnwogU1uqqFi84IBVzkDOqoRfX7yJxA==}
     engines: {node: '>=16.17.0 <17 || >=18.6.0'}
     hasBin: true
     dependencies:
@@ -17752,8 +17758,8 @@ packages:
     resolution: {integrity: sha512-cNOjgCnLB+FnvWWtyRTzmB3POJ+cXxTA81LoW7u8JdmhfXzriropYwpjShnz1QLLWsQwY7nIxoDmcPTwphDK9w==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  /lint-staged@15.0.2:
-    resolution: {integrity: sha512-vnEy7pFTHyVuDmCAIFKR5QDO8XLVlPFQQyujQ/STOxe40ICWqJ6knS2wSJ/ffX/Lw0rz83luRDh+ET7toN+rOw==}
+  /lint-staged@15.1.0:
+    resolution: {integrity: sha512-ZPKXWHVlL7uwVpy8OZ7YQjYDAuO5X4kMh0XgZvPNxLcCCngd0PO5jKQyy3+s4TL2EnHoIXIzP1422f/l3nZKMw==}
     engines: {node: '>=18.12.0'}
     hasBin: true
     dependencies:
@@ -17766,7 +17772,7 @@ packages:
       micromatch: 4.0.5
       pidtree: 0.6.0
       string-argv: 0.3.2
-      yaml: 2.3.3
+      yaml: 2.3.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -18079,8 +18085,8 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
-  /luxon@3.4.3:
-    resolution: {integrity: sha512-tFWBiv3h7z+T/tDaoxA8rqTxy1CHV6gHS//QdaH4pulbq/JuBSGgQspQQqcgnwdAx6pNI7cmvz5Sv/addzHmUg==}
+  /luxon@3.4.4:
+    resolution: {integrity: sha512-zobTr7akeGHnv7eBOXcRgMeCP6+uyYsczwmeRCauvpvaAltgNyTbLH/+VaEAPUeWBT+1GuNmz4wC/6jtQzbbVA==}
     engines: {node: '>=12'}
 
   /lz-string@1.5.0:
@@ -19397,8 +19403,8 @@ packages:
     resolution: {integrity: sha512-md4cGoxuT4T4d/HDOXbrUHkTKrp/vp+m3aOA7XXVYwNsUNMK49g3SQicTSeV5GIz/5QVGAeYRAOlyp9OvlgsYA==}
     engines: {node: '>=10'}
 
-  /next-auth@4.24.4(next@14.0.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-5DGffi+OpkbU62vPQIJ1z+hFnmow+ec5Qrn9m6eoglIO51m0DlrmLxBduZEwKAYDEg9k2joi1yelgmq1vqK3aQ==}
+  /next-auth@4.24.5(next@14.0.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-3RafV3XbfIKk6rF6GlLE4/KxjTcuMCifqrmD+98ejFq73SRoj2rmzoca8u764977lH/Q7jo6Xu6yM+Re1Mz/Og==}
     peerDependencies:
       next: ^12.2.5 || ^13 || ^14 || 13
       nodemailer: ^6.6.5
@@ -19421,7 +19427,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       uuid: 9.0.1
 
-  /next-i18next@15.0.0(i18next@23.6.0)(next@14.0.2)(react-i18next@13.3.1)(react@18.2.0):
+  /next-i18next@15.0.0(i18next@23.7.6)(next@14.0.2)(react-i18next@13.4.1)(react@18.2.0):
     resolution: {integrity: sha512-9iGEU4dt1YCC5CXh6H8YHmDpmeWKjxES6XfoABxy9mmfaLLJcqS92F56ZKmVuZUPXEOLtgY/JtsnxsHYom9J4g==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -19434,11 +19440,11 @@ packages:
       '@types/hoist-non-react-statics': 3.3.4
       core-js: 3.33.2
       hoist-non-react-statics: 3.3.2
-      i18next: 23.6.0
+      i18next: 23.7.6
       i18next-fs-backend: 2.2.0
       next: 14.0.2(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
-      react-i18next: 13.3.1(i18next@23.6.0)(react-dom@18.2.0)(react@18.2.0)
+      react-i18next: 13.4.1(i18next@23.7.6)(react-dom@18.2.0)(react@18.2.0)
 
   /next-seo@6.4.0(next@14.0.2)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-XQFxkOL2hw0YE+P100HbI3EAvcludlHPxuzMgaIjKb7kPK0CvjGvLFjd9hszZFEDc5oiQkGFA8+cuWcnip7eYA==}
@@ -20921,7 +20927,7 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier-plugin-jsdoc@1.1.1(prettier@3.0.3):
+  /prettier-plugin-jsdoc@1.1.1(prettier@3.1.0):
     resolution: {integrity: sha512-yA13k0StQ+g0RJBrmo2IldVSp3ANXlJdsNzQNhGtQ0LY7JFC+u01No/1Z9xp0ZhT4u98BXlPAc4SC0iambqy5A==}
     engines: {node: '>=14.13.1 || >=16.0.0'}
     peerDependencies:
@@ -20930,12 +20936,12 @@ packages:
       binary-searching: 2.0.5
       comment-parser: 1.4.1
       mdast-util-from-markdown: 2.0.0
-      prettier: 3.0.3
+      prettier: 3.1.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /prettier-plugin-packagejson@2.4.6(prettier@3.0.3):
+  /prettier-plugin-packagejson@2.4.6(prettier@3.1.0):
     resolution: {integrity: sha512-5JGfzkJRL0DLNyhwmiAV9mV0hZLHDwddFCs2lc9CNxOChpoWUQVe8K4qTMktmevmDlMpok2uT10nvHUyU59sNw==}
     peerDependencies:
       prettier: '>= 1.16.0'
@@ -20943,19 +20949,19 @@ packages:
       prettier:
         optional: true
     dependencies:
-      prettier: 3.0.3
+      prettier: 3.1.0
       sort-package-json: 2.6.0
       synckit: 0.8.5
     dev: false
 
-  /prettier-plugin-prisma@5.0.0(prettier@3.0.3):
+  /prettier-plugin-prisma@5.0.0(prettier@3.1.0):
     resolution: {integrity: sha512-jTJV04D9+yF7ziOOMs7CJe4ijgAH7DEGjt0SAWAToGNRy1H6BEhvcKA2UQH6gC6KVW5zeeOSAvsoiDDTt9oKXg==}
     engines: {node: '>=14', npm: '>=8'}
     peerDependencies:
       prettier: '>=2 || >=3'
     dependencies:
       '@prisma/prisma-schema-wasm': 4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584
-      prettier: 3.0.3
+      prettier: 3.1.0
     dev: false
 
   /prettier@2.8.8:
@@ -20963,8 +20969,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  /prettier@3.0.3:
-    resolution: {integrity: sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==}
+  /prettier@3.1.0:
+    resolution: {integrity: sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -21521,8 +21527,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /react-i18next@13.3.1(i18next@23.6.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-JAtYREK879JXaN9GdzfBI4yJeo/XyLeXWUsRABvYXiFUakhZJ40l+kaTo+i+A/3cKIED41kS/HAbZ5BzFtq/Og==}
+  /react-i18next@13.4.1(i18next@23.7.6)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-z02JvLbt6Gavbuhr4CBOI6vasLypo+JSLvMgUOGeOMPv1g6spngfAb9jWAPwvuavPlKYU4dro9yRduflwyBeyA==}
     peerDependencies:
       i18next: '>= 23.2.3'
       react: ^18 || 18
@@ -21536,7 +21542,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.2
       html-parse-stringify: 3.0.1
-      i18next: 23.6.0
+      i18next: 23.7.6
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -23820,24 +23826,24 @@ packages:
   /trough@2.1.0:
     resolution: {integrity: sha512-AqTiAOLcj85xS7vQ8QkAV41hPDIJ71XJB4RCUrzo/1GM2CQwhkJGaf9Hgr7BOugMRpgGUrqRg/DrBDl4H40+8g==}
 
-  /trpc-client-devtools-link@0.2.1-next(@trpc/client@10.43.2)(@trpc/server@10.43.2):
+  /trpc-client-devtools-link@0.2.1-next(@trpc/client@10.43.3)(@trpc/server@10.43.3):
     resolution: {integrity: sha512-juHl8SSsVywR7U98KqcRb7/dYVnTcnZNboRF3l87zwtFcbVWz60R2dSAMrjD7jY2qAZ7VJYUbx1gvDKC2SaJvw==}
     peerDependencies:
       '@trpc/client': ^10.0.0-proxy-beta.10
       '@trpc/server': ^10.0.0-proxy-beta.10
     dependencies:
-      '@trpc/client': 10.43.2(@trpc/server@10.43.2)
-      '@trpc/server': 10.43.2
+      '@trpc/client': 10.43.3(@trpc/server@10.43.3)
+      '@trpc/server': 10.43.3
       superjson: 1.13.3
     dev: true
 
-  /trpc-panel@1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.43.2)(zod@3.22.4):
+  /trpc-panel@1.3.4(patch_hash=3z2tx2cn67fyw5s2xdx73dxaji)(@trpc/server@10.43.3)(zod@3.22.4):
     resolution: {integrity: sha512-u5/dCi/AAp2tpJcCL5ZCfrdJtHHu8hrtm2hzSBZCE7z9Tw6MB1rCcliSQvgMPIEXMQrgwXk4t4IedfWkxioKng==}
     peerDependencies:
       '@trpc/server': ^10.0.0
       zod: ^3.19.1
     dependencies:
-      '@trpc/server': 10.43.2
+      '@trpc/server': 10.43.3
       fuzzysort: 2.0.4
       path: 0.12.7
       url: 0.11.3
@@ -23846,15 +23852,15 @@ packages:
     dev: true
     patched: true
 
-  /trpc-playground@1.0.4(@trpc/server@10.43.2)(@types/node@18.18.9)(typescript@5.2.2)(zod@3.22.4):
+  /trpc-playground@1.0.4(@trpc/server@10.43.3)(@types/node@18.18.9)(typescript@5.2.2)(zod@3.22.4):
     resolution: {integrity: sha512-6nVf1o2LNoo1g6oTS24yajoH7xV4CFjxGAbAH7qLXqa3yo9qB5QHsWLbrm1hNt51SyCG++P0zHJaCdVfgvEVDg==}
     peerDependencies:
       '@trpc/server': ^10
       zod: ^3
     dependencies:
       '@trpc-playground/html': 1.0.4(@types/node@18.18.9)
-      '@trpc-playground/types': 1.0.0(@trpc/server@10.43.2)(typescript@5.2.2)
-      '@trpc/server': 10.43.2
+      '@trpc-playground/types': 1.0.0(@trpc/server@10.43.3)(typescript@5.2.2)
+      '@trpc/server': 10.43.3
       lodash: 4.17.21
       uttp: 0.1.3
       zod: 3.22.4
@@ -23983,8 +23989,9 @@ packages:
       typescript: 5.2.2
     dev: true
 
-  /tsx@3.14.0:
-    resolution: {integrity: sha512-xHtFaKtHxM9LOklMmJdI3BEnQq/D5F73Of2E1GDrITi9sgoVkvIsrQUTY1G8FlmGtA+awCI4EBlTRRYxkL2sRg==}
+  /tsx@4.1.1:
+    resolution: {integrity: sha512-zyPn5BFMB0TB5kMLbYPNx4x/oL/oSlaecdKCv6WeJ0TeSEfx8RTJWjuB5TZ2dSewktgfBsBO/HNA9mrMWqLXMA==}
+    engines: {node: '>=18.0.0'}
     hasBin: true
     dependencies:
       esbuild: 0.18.20
@@ -25320,11 +25327,6 @@ packages:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
 
-  /yaml@2.3.3:
-    resolution: {integrity: sha512-zw0VAJxgeZ6+++/su5AFoqBbZbrEakwu+X0M5HmcwUiBL7AzcuPKjj5we4xfQLp78LkEMpD0cOnUhmgOVy3KdQ==}
-    engines: {node: '>= 14'}
-    dev: false
-
   /yaml@2.3.4:
     resolution: {integrity: sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==}
     engines: {node: '>= 14'}
@@ -25413,8 +25415,8 @@ packages:
       compress-commons: 4.1.2
       readable-stream: 3.6.2
 
-  /zod-prisma-types@3.1.0:
-    resolution: {integrity: sha512-ruSJwW7fdxTSBZBQvSqstArkIslXxRHNvhRoVZfvktNsa7rIrpHeQIH2Fsc0U/257uQUxiS2hr2+k3PnxeU09w==}
+  /zod-prisma-types@3.1.4:
+    resolution: {integrity: sha512-5Bnz9HtCZgXZucyLmK/BsUIWikwufYbd6sTJrU87mIyE50vTL92rpgonbwUrRQNRnfKx9n2WC2XrGH1a3JdILg==}
     hasBin: true
     dependencies:
       '@prisma/generator-helper': 5.5.2
