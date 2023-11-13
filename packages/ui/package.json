@@ -163,7 +163,7 @@
 		"style-loader": "3.3.3",
 		"trpc-client-devtools-link": "0.2.1-next",
 		"tsconfig-paths-webpack-plugin": "4.1.0",
-		"tsx": "3.14.0",
+		"tsx": "4.1.1",
 		"type-fest": "4.7.1",
 		"typescript": "5.2.2",
 		"webpack": "5.89.0",
