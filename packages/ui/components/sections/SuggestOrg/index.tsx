@@ -12,7 +12,7 @@ import {
 	TextInput,
 	Title,
 } from '@mantine/core'
-import { zodResolver } from '@mantine/form'
+import { type UseFormReturnType, zodResolver } from '@mantine/form'
 import { useDebouncedValue, useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
@@ -28,12 +28,12 @@ import {
 import { type ApiOutput } from '@weareinreach/api'
 import { SuggestionSchema } from '@weareinreach/api/schemas/create/browserSafe/suggestOrg'
 import { Link } from '~ui/components/core/Link'
-import { useCustomVariant } from '~ui/hooks'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
-import { ModalTitle } from '~ui/modals'
+import { ModalTitle } from '~ui/modals/ModalTitle'
 
-import { SuggestionFormProvider, useForm } from './context'
+import { type SuggestionForm, SuggestionFormProvider, useForm } from './context'
 import { Communities, ServiceTypes } from './modals'
 
 const useLocationStyles = createStyles((theme) => ({
@@ -81,6 +81,8 @@ SelectItemTwoLines.displayName = 'Selection Item'
 
 interface OrgExistsErrorProps {
 	queryResult: ApiOutput['organization']['checkForExisting']
+	form: UseFormReturnType<SuggestionForm, (values: SuggestionForm) => SuggestionForm>
+	setGenerateSlug: Dispatch<SetStateAction<boolean>>
 }
 interface SuggestOrgProps {
 	authPromptState: {
@@ -88,6 +90,48 @@ interface SuggestOrgProps {
 		setOverlay: Dispatch<SetStateAction<boolean>>
 		hasAuth: boolean
 	}
+}
+
+const OrgExistsError = ({ queryResult, form, setGenerateSlug }: OrgExistsErrorProps) => {
+	const variants = useCustomVariant()
+	if (!queryResult) return null
+	const { name, published, slug } = queryResult
+	const key = published ? 'form.error-exists-active' : 'form.error-exists-inactive'
+	return (
+		<>
+			<Trans
+				i18nKey={key}
+				ns='suggestOrg'
+				values={{ org: name }}
+				components={{
+					Link: (
+						<Link href={{ pathname: '/org/[slug]', query: { slug } }} variant={variants.Link.inheritStyle}>
+							.
+						</Link>
+					),
+				}}
+				shouldUnescape={true}
+			/>
+			<Space h={8} />
+			<Trans
+				i18nKey='form.error-exists-dismiss'
+				ns='suggestOrg'
+				components={{
+					Dismiss: (
+						<Link
+							variant={variants.Link.inheritStyle}
+							onClick={() => {
+								form.clearFieldError('orgName')
+								setGenerateSlug(true)
+							}}
+						>
+							.
+						</Link>
+					),
+				}}
+			/>
+		</>
+	)
 }
 
 export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
@@ -151,47 +195,6 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		},
 	})
 
-	const OrgExistsError = ({ queryResult }: OrgExistsErrorProps) => {
-		const variants = useCustomVariant()
-		if (!queryResult) return null
-		const { name, published, slug } = queryResult
-		const key = published ? 'form.error-exists-active' : 'form.error-exists-inactive'
-		return (
-			<>
-				<Trans
-					i18nKey={key}
-					ns='suggestOrg'
-					values={{ org: name }}
-					components={{
-						Link: (
-							<Link href={{ pathname: '/org/[slug]', query: { slug } }} variant={variants.Link.inheritStyle}>
-								.
-							</Link>
-						),
-					}}
-					shouldUnescape={true}
-				/>
-				<Space h={8} />
-				<Trans
-					i18nKey='form.error-exists-dismiss'
-					ns='suggestOrg'
-					components={{
-						Dismiss: (
-							<Link
-								variant={variants.Link.inheritStyle}
-								onClick={() => {
-									form.clearFieldError('orgName')
-									setGenerateSlug(true)
-								}}
-							>
-								.
-							</Link>
-						),
-					}}
-				/>
-			</>
-		)
-	}
 	api.organization.checkForExisting.useQuery(orgName ?? '', {
 		enabled: Boolean(orgName && orgName !== ''),
 		onSuccess: (data) => {
@@ -199,7 +202,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 				form.clearFieldError('orgName')
 				setGenerateSlug(true)
 			} else {
-				form.setFieldError('orgName', <OrgExistsError queryResult={data} />)
+				form.setFieldError('orgName', <OrgExistsError {...{ queryResult: data, form, setGenerateSlug }} />)
 			}
 		},
 	})

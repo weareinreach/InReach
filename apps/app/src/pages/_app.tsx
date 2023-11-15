@@ -1,6 +1,5 @@
 import { Space } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Analytics } from '@vercel/analytics/react'
 import { type NextPage } from 'next'
 import { type AppProps, type NextWebVitalsMetric } from 'next/app'
@@ -25,6 +24,10 @@ import nextI18nConfig from '../../next-i18next.config.mjs'
 // import { Donate, DonateModal } from '@weareinreach/ui/components/core/Donate'
 const DonateModal = dynamic(() =>
 	import('@weareinreach/ui/components/core/Donate').then((mod) => mod.DonateModal)
+)
+
+const ReactQueryDevtools = dynamic(() =>
+	import('@tanstack/react-query-devtools').then((mod) => mod.ReactQueryDevtools)
 )
 
 const defaultSEO = {

@@ -2,8 +2,8 @@ import { Button, Checkbox, Divider, Modal, Stack, Text, Title } from '@mantine/c
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 
-import { useCustomVariant } from '~ui/hooks'
-import { ModalTitle } from '~ui/modals'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { ModalTitle } from '~ui/modals/ModalTitle'
 
 import { useFormContext } from './context'
 
