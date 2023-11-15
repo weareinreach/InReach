@@ -1,5 +1,6 @@
 import { Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
+import { type JSX } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { isExternal, Link } from '~ui/components/core/Link'
