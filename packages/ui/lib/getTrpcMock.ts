@@ -1,5 +1,3 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
-/* eslint-disable node/no-process-env */
 import { action } from '@storybook/addon-actions'
 import { rest, type RestHandler, type RestRequest } from 'msw'
 
@@ -17,7 +15,7 @@ const getReqData = async (req: RestRequest) => {
 		const body = await req.clone().text()
 		return body
 	}
-	const query = req.url.search.charAt(0) === '?' ? req.url.search.substr(1) : req.url.search
+	const query = req.url.search.charAt(0) === '?' ? req.url.search.substring(1) : req.url.search
 	const parsed = querystring.parse(query)
 	if (parsed.input) {
 		if (Array.isArray(parsed.input)) return parsed.input[0] ?? ''

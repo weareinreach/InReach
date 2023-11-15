@@ -6,10 +6,10 @@ import { BadgeGroup, type CustomBadgeProps } from '~ui/components/core/Badge'
 import { Rating } from '~ui/components/core/Rating'
 import { useCustomVariant, useFormattedAddress } from '~ui/hooks'
 
-export const ListingBasicInfo = ({ role, data }: ListingBasicInfoProps) => {
+export const ListingBasicInfo = ({ data }: ListingBasicInfoProps) => {
 	const { t, ready: i18nReady } = useTranslation(data.id)
 	const variants = useCustomVariant()
-	const { attributes, isClaimed, locations, description, slug, id } = data
+	const { attributes, isClaimed, locations, description, slug: _slug, id } = data
 
 	// const isMultiLoc = role === 'org' && (locations?.length ?? 0) > 1
 	const isSingleLoc = locations?.length === 1

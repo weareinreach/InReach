@@ -15,7 +15,6 @@ import {
 	type GridProps,
 	type InputStylesNames,
 	type InputStylesParams,
-	type InputWrapperBaseProps,
 	type InputWrapperProps,
 	type InputWrapperStylesNames,
 	type MantineThemeOther,
@@ -480,7 +479,7 @@ export const commonTheme = {
 			defaultProps: {
 				inputWrapperOrder: ['label', 'input', 'description', 'error'],
 			} satisfies Partial<InputWrapperProps>,
-			styles: (theme, { error }: InputWrapperBaseProps) =>
+			styles: (theme) =>
 				({
 					label: {
 						fontSize: rem(16),
@@ -516,7 +515,7 @@ export const commonTheme = {
 			}),
 		},
 		LoadingOverlay: {
-			defaultProps: (theme) => ({
+			defaultProps: () => ({
 				overlayBlur: 2,
 				radius: 'sm',
 			}),
@@ -643,7 +642,7 @@ export const commonTheme = {
 				),
 				fullSymbol: <Icon icon='carbon:star-filled' color={theme.other.colors.secondary.black} height={24} />,
 			}),
-			styles: (theme) => ({
+			styles: () => ({
 				root: {
 					columnGap: rem(4),
 				},
@@ -653,7 +652,7 @@ export const commonTheme = {
 			variants: variants.Input,
 		},
 		Skeleton: {
-			defaultProps: (theme) =>
+			defaultProps: () =>
 				({
 					radius: 'xl',
 				}) satisfies SkeletonProps,
@@ -749,7 +748,7 @@ export const commonTheme = {
 				}) satisfies Styles<SwitchStylesNames, SwitchStylesParams>,
 		},
 		SwitchGroup: {
-			styles: (theme) => ({
+			styles: () => ({
 				label: {
 					paddingBottom: rem(16),
 				},
@@ -795,7 +794,7 @@ export const commonTheme = {
 		},
 		Textarea: {
 			defaultProps: {} satisfies TextareaProps,
-			styles: (theme) => ({
+			styles: () => ({
 				input: {
 					height: rem(96),
 					padding: `${rem(14)} ${rem(16)} !important`,

@@ -17,7 +17,7 @@ import { useClipboard } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { useTranslation } from 'next-i18next'
-import { type ComponentType, forwardRef, useState } from 'react'
+import { type ComponentType, forwardRef, type JSX, useState } from 'react'
 
 import { type ApiInput } from '@weareinreach/api'
 import { useNewNotification, useScreenSize } from '~ui/hooks'
@@ -110,7 +110,7 @@ export const actionButtonIcons = {
  */
 const ListItem = ({ data, name, action }: ListMenuProps) => {
 	const { t } = useTranslation()
-	const utils = api.useContext()
+	const utils = api.useUtils()
 
 	const savedInList = useNewNotification({
 		icon: 'heartFilled',
@@ -171,7 +171,7 @@ export const SaveToggleButton = forwardRef<HTMLDivElement, SaveToggleButtonProps
 		const { status: sessionStatus } = useSession()
 		const { t } = useTranslation('common')
 		const theme = useMantineTheme()
-		const utils = api.useContext()
+		const utils = api.useUtils()
 		const buttonIcon = isSaved ? 'carbon:favorite-filled' : 'carbon:favorite'
 
 		api.savedList.isSaved.useQuery(serviceId ?? (organizationId as string), {

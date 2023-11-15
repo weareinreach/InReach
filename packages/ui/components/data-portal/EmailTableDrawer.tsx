@@ -124,7 +124,7 @@ export const _EmailTableDrawer = forwardRef<HTMLButtonElement, EmailTableDrawerP
 	const { classes } = useStyles()
 	// const { t } = useTranslation('phone-type')
 	// #region tRPC
-	const apiUtils = api.useContext()
+	const apiUtils = api.useUtils()
 	const variants = useCustomVariant()
 	const { data: _data } = api.orgEmail.get.useQuery(
 		{ organizationId: organizationId ?? '' },

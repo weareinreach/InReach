@@ -101,7 +101,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 		validateInputOnBlur: true,
 	})
 	const { classes: locationClasses } = useLocationStyles()
-	const { t, i18n } = useTranslation(['suggestOrg', 'services', 'attribute'])
+	const { t } = useTranslation(['suggestOrg', 'services', 'attribute'])
 	const simpleLocale = (locale: string) => (locale.length === 2 ? locale : locale.substring(0, 1))
 	const variants = useCustomVariant()
 	const [locationSearch, setLocationSearch] = useState('')
@@ -234,7 +234,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 	})
 
 	const countrySelections = Array.isArray(form.values.formOptions?.countries)
-		? form.values.formOptions?.countries.map(({ id, tsKey, cca2 }, i) => {
+		? form.values.formOptions?.countries.map(({ id, cca2 }, i) => {
 				return (
 					<Radio
 						key={id}

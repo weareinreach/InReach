@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 
-import { type ApiOutput } from '@weareinreach/api'
 import { useCustomVariant } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 

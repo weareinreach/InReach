@@ -27,7 +27,7 @@ const CreateNewListModalBody = forwardRef<HTMLButtonElement, CreateNewListModalB
 	const { t } = useTranslation('common')
 	const variants = useCustomVariant()
 	const [opened, handler] = useDisclosure(false)
-	const utils = api.useContext()
+	const utils = api.useUtils()
 	const { isMobile } = useScreenSize()
 	const form = useForm<FormProps>({
 		validate: zodResolver(FormSchema),

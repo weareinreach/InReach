@@ -4,10 +4,10 @@ import { Trans, useTranslation } from 'next-i18next'
 import { type Dispatch, forwardRef, type SetStateAction } from 'react'
 
 import { Button } from '~ui/components/core/Button'
-import { Link } from '~ui/components/core/Link'
+// import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
-import { LoginModalLauncher, SignupModalLauncher } from './LoginSignUp'
+import { LoginModalLauncher /*, SignupModalLauncher*/ } from './LoginSignUp'
 import { ModalTitle } from './ModalTitle'
 
 const ClaimOrgModalBody = forwardRef<HTMLButtonElement, ClaimOrgModalProps>(

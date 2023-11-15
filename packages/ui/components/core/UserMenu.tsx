@@ -130,7 +130,7 @@ export const UserMenu = ({ className, classNames, styles, unstyled }: UserMenuPr
 					variant={variant.Link.inlineInvertedUtil1}
 					component={Link}
 					style={{ visibility: isLoading ? 'hidden' : undefined }}
-					onClick={(e) => {
+					onClick={() => {
 						// e.preventDefault()
 						signOut({ callbackUrl: '/' })
 					}}
