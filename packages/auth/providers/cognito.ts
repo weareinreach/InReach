@@ -11,6 +11,7 @@ export const cognitoCredentialProvider: Provider = Credentials({
 		email: { label: 'Email', type: 'text' },
 		password: { label: 'Password', type: 'password' },
 	},
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	authorize: async (credentials, req) => {
 		if (!credentials?.email || !credentials?.password) return null
 
