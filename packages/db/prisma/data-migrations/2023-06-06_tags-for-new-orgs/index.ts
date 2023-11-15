@@ -1,3 +1,4 @@
+/* eslint-disable deprecation/deprecation */
 import fs from 'fs'
 import path from 'path'
 

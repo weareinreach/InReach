@@ -1,3 +1,4 @@
+/* eslint-disable deprecation/deprecation */
 import { namespace } from '~db/generated/namespaces'
 import { type Prisma, prisma } from '~db/index'
 import { isSuccess } from '~db/prisma/common'
