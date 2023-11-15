@@ -5,6 +5,5 @@
 			"l10n_*": false,
 			"renovate/github_actions": false
 		}
-	},
-	"installCommand": "pnpm install --no-frozen-lockfile"
+	}
 }
