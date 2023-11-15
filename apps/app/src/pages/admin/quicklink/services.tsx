@@ -67,7 +67,7 @@ const QuickLink = () => {
 	const [overlay, setOverlay] = useState(sessionStatus === 'unauthenticated')
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const router = useRouter()
-	const apiUtils = api.useContext()
+	const apiUtils = api.useUtils()
 	const variants = useCustomVariant()
 	const updateServices = api.quicklink.updateServiceLocationData.useMutation({
 		onSuccess: () => {
