@@ -6,5 +6,5 @@
 			"renovate/github_actions": false
 		}
 	},
-	"installCommand": "pnpm install --merge-git-branch-lockfiles"
+	"installCommand": "pnpm install --no-frozen-lockfile"
 }
