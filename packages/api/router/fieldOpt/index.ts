@@ -88,7 +88,7 @@ export const fieldOptRouter = defineRouter({
 		if (!HandlerCache.userTitle) throw new Error('Failed to load handler')
 		return HandlerCache.userTitle()
 	}),
-	countryGovDistMap: publicProcedure.query(async ({ ctx }) => {
+	countryGovDistMap: publicProcedure.query(async () => {
 		if (!HandlerCache.countryGovDistMap)
 			HandlerCache.countryGovDistMap = await import('./query.countryGovDistMap.handler').then(
 				(mod) => mod.countryGovDistMap
