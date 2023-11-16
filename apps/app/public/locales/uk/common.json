@@ -115,9 +115,9 @@
 	"find-resources": "Знайти ресурси",
 	"find-x": "Знайти {{value}}",
 	"footer": {
-		"anti-hate": "Анти-ненависть зобов'язання",
+		"anti-hate": "Антиненависті зобов'язання",
 		"digital-accessibility": "Цифрова доступність",
-		"disclaimer": "Відмова від відповідальності",
+		"disclaimer": "Умови обмеженої відповідальності",
 		"privacy-statement": "Заява про конфіденційність",
 		"share-feedback": "Поділитися відгуками",
 		"subscribe-newsletter": "Підпишіться на нашу розсилку",
@@ -199,7 +199,7 @@
 	"password-req-uppercase": "Включає велику літеру",
 	"password-reset": {
 		"email-body": "Натисніть наступне посилання, щоб скинути пароль:",
-		"email-subject": "Скидання пароля"
+		"email-subject": "Відновити ваш пароль"
 	},
 	"password-reset-success": "<Text>Будь ласка, <LoginModal>логін</LoginModal> використовуючи новий пароль.</Text>",
 	"password-saved": "Пароль збережено!",
@@ -292,7 +292,7 @@
 		"lcr-screen1none": "Жодне з них не стосується мене.",
 		"lcr-screen2": "В якій країні ви перебуваєте?",
 		"lcr-screen2a": "США (включаючи території)",
-		"lcr-screen2b": "Канади",
+		"lcr-screen2b": "Канада",
 		"lcr-screen2c": "Мексика",
 		"lcr-screen2none": "Жодне з перерахованих вище",
 		"lcr-screen3": "Я переглянув сторінку <Link><strong>Місцевий рецензент спільноти</strong></Link> на веб-сайті InReach і відповідаю цим вимогам.",

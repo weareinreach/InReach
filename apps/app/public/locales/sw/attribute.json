@@ -6,7 +6,7 @@
 		"geo-public-transit-description": "Usafiri wa umma/maelekezo maalum",
 		"has-confidentiality-policy": "Ina Sera ya Usiri",
 		"offers-remote-services": "Remote",
-		"private-practice": "Private Mazoezi",
+		"private-practice": "Private Practice",
 		"religiously-affiliated": "Ni uhusiano wa kidini",
 		"time-walk-in": "Ina Masaa ya Kutembea",
 		"wheelchair-accessible_false": "Haipatikani",
@@ -66,7 +66,7 @@
 		"undocumented": "Fursa zinazowahudumia wahamiaji wasio na hati"
 	},
 	"cost": {
-		"CATEGORYNAME": "Gharama",
+		"CATEGORYNAME": "Cost",
 		"cost-fees": "Inapata gharama",
 		"cost-free": "Bure ya gharama"
 	},
@@ -76,8 +76,8 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Mahitaji ya kustahiki",
-		"elig-age_max": "Chini ya {{max}}",
-		"elig-age_min": "{{min}} na zaidi",
+		"elig-age_max": "Under {{max}}",
+		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Nyingine (maelezo ya maandishi ya bure)",
 		"req-medical-insurance": "Inahitaji bima ya matibabu",
@@ -89,7 +89,7 @@
 		"time-appointment-required": "Muda Uteuzi Inahitajika"
 	},
 	"lang": {
-		"CATEGORYNAME": "Lugha",
+		"CATEGORYNAME": "Languages",
 		"all-languages-by-interpreter": "Lugha zote kupitia mkalimani",
 		"american-sign-language": "Lugha ya Ishara ya Marekani",
 		"lang-offered": "Lugha maalum zinazotolewa"
@@ -154,7 +154,7 @@
 		"grassroots-direct": "Shirika la Huduma ya Moja kwa Moja ya Grasroots",
 		"healthcare": "Mtoaji wa huduma ya afya",
 		"lawyer": "Mwanasheria",
-		"other": "Nyingine (tafadhali taja)",
+		"other": "Other (please specify)",
 		"paralegal": "Msaidizi wa kisheria au wafanyakazi wengine wa msaada wa kisheria",
 		"social-worker": "Mfanyakazi wa jamii",
 		"student-club": "Kiongozi wa kilabu cha mwanafunzi/msimamizi",

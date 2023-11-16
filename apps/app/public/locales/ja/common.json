@@ -112,7 +112,7 @@
 	"find-resources": "リソースを探す",
 	"find-x": "{{value}}を検索",
 	"footer": {
-		"anti-hate": "反ヘイトコミットメント",
+		"anti-hate": "憎悪防止への取り組み",
 		"digital-accessibility": "デジタルアクセシビリティ",
 		"disclaimer": "免責事項",
 		"privacy-statement": "プライバシーステートメント",
@@ -196,7 +196,7 @@
 	"password-req-uppercase": "大文字が含まれています",
 	"password-reset": {
 		"email-body": "パスワードをリセットするには、次のリンクをクリックしてください。",
-		"email-subject": "パスワードをリセット"
+		"email-subject": "パスワードをリセットする"
 	},
 	"password-reset-success": "<Text>新しいパスワードを使用して <LoginModal>ログイン</LoginModal> してください。</Text>",
 	"password-saved": "パスワードが保存されました！",
@@ -396,15 +396,15 @@
 		"next": "[次へ]",
 		"no": "いいえ",
 		"organization": "組織",
-		"password": "[パスワード]",
+		"password": "パスワード",
 		"phone": "[電話]",
 		"please-wait": "しばらくお待ちください...",
 		"prev": "前へ",
 		"print": "プリント",
 		"review": "レビュー",
 		"reviews": "レビュー",
-		"save": "[保存]",
-		"saved": "保存済み",
+		"save": "保存",
+		"saved": "保存しました",
 		"search": "検索",
 		"service-hours": "サービス時間",
 		"settings": "[設定]",

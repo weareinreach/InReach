@@ -201,7 +201,7 @@
 		"demonym_other": "کوکوس ټاپوګان"
 	},
 	"CHE": {
-		"name": "سویزرلینډ یا سویس",
+		"name": "Switzerland",
 		"demonym_one": "سویس",
 		"demonym_other": "سویس"
 	},
@@ -232,8 +232,8 @@
 	},
 	"COG": {
 		"name": "د کانګو جمهوريت",
-		"demonym_one": "کانګولیز",
-		"demonym_other": "کانګولیز"
+		"demonym_one": "Congolese",
+		"demonym_other": "Congolese"
 	},
 	"COK": {
 		"name": "کوک ټاپوګان",
@@ -312,8 +312,8 @@
 	},
 	"DOM": {
 		"name": "دومینیکن جمهوريت",
-		"demonym_one": "ډومینیکن",
-		"demonym_other": "ډومینیکان"
+		"demonym_one": "Dominican",
+		"demonym_other": "Dominicans"
 	},
 	"DZA": {
 		"name": "الجزایر",
@@ -372,8 +372,8 @@
 	},
 	"FRA": {
 		"name": "فرانسه",
-		"demonym_one": "فرانسوي",
-		"demonym_other": "فرانسوي"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"FRO": {
 		"name": "فیرو ټاپوګان",
@@ -396,12 +396,12 @@
 		"demonym_other": "برتانوي"
 	},
 	"GEO": {
-		"name": "ګرجستان",
+		"name": "Georgia",
 		"demonym_one": "ګرجستاني",
 		"demonym_other": "جورجيان"
 	},
 	"GGY": {
-		"name": "ګورنسي",
+		"name": "Guernsey",
 		"demonym_one": "چینل ټاپو",
 		"demonym_other": "چینل ټاپوګان"
 	},
@@ -446,7 +446,7 @@
 		"demonym_other": "یونانیان"
 	},
 	"GRD": {
-		"name": "ګرنادا",
+		"name": "Grenada",
 		"demonym_one": "ګريناډيان",
 		"demonym_other": "ګرینیاډیان"
 	},
@@ -520,8 +520,8 @@
 	},
 	"IOT": {
 		"name": "د برتانیا د هند سمندر سیمه",
-		"demonym_one": "هندي",
-		"demonym_other": "هنديان"
+		"demonym_one": "Indian",
+		"demonym_other": "Indians"
 	},
 	"IRL": {
 		"name": "ایرلینډ",
@@ -559,9 +559,9 @@
 		"demonym_other": "جمیکان"
 	},
 	"JEY": {
-		"name": "لباس",
-		"demonym_one": "چینل ټاپو",
-		"demonym_other": "چینل ټاپوګان"
+		"name": "Jersey",
+		"demonym_one": "Channel Islander",
+		"demonym_other": "Channel Islanders"
 	},
 	"JOR": {
 		"name": "اردن",
@@ -619,7 +619,7 @@
 		"demonym_other": "لاوتيان"
 	},
 	"LBN": {
-		"name": "لبنان",
+		"name": "Lebanon",
 		"demonym_one": "لبناني",
 		"demonym_other": "لبناني"
 	},
@@ -670,8 +670,8 @@
 	},
 	"MAC": {
 		"name": "مکاو",
-		"demonym_one": "چینایی",
-		"demonym_other": "چینایی"
+		"demonym_one": "Chinese",
+		"demonym_other": "Chinese"
 	},
 	"MAF": {
 		"name": "سینټ مارټین",
@@ -704,7 +704,7 @@
 		"demonym_other": "مالدیوان"
 	},
 	"MEX": {
-		"name": "میکسیکو",
+		"name": "Mexico",
 		"demonym_one": "مکسيکنی",
 		"demonym_other": "د مکسيکو اوسېدونکي"
 	},
@@ -765,8 +765,8 @@
 	},
 	"MTQ": {
 		"name": "مارټینیک",
-		"demonym_one": "فرانسوي",
-		"demonym_other": "فرانسوي"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"MUS": {
 		"name": "موریشیس",
@@ -825,8 +825,8 @@
 	},
 	"NLD": {
 		"name": "هالینډ",
-		"demonym_one": "هلندی",
-		"demonym_other": "هلندی"
+		"demonym_one": "Dutch",
+		"demonym_other": "Dutch"
 	},
 	"NOR": {
 		"name": "ناروی",
@@ -930,8 +930,8 @@
 	},
 	"REU": {
 		"name": "رییونین",
-		"demonym_one": "فرانسوي",
-		"demonym_other": "فرانسوي"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"ROU": {
 		"name": "رومانیا",
@@ -978,8 +978,8 @@
 	},
 	"SJM": {
 		"name": "سوالبارډ او جان ماین",
-		"demonym_one": "نارویژي",
-		"demonym_other": "دناروی اوسېدونکي"
+		"demonym_one": "Norwegian",
+		"demonym_other": "Norwegians"
 	},
 	"SLB": {
 		"name": "سلیمان ټاپوګان",
@@ -1008,8 +1008,8 @@
 	},
 	"SPM": {
 		"name": "سینټ پییر او میکیلون",
-		"demonym_one": "فرانسوي",
-		"demonym_other": "فرانسوي"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"SRB": {
 		"name": "صربیا",
@@ -1153,8 +1153,8 @@
 	},
 	"UMI": {
 		"name": "د متحده ایالاتو کوچني لرې ټاپوګان",
-		"demonym_one": "امریکایی",
-		"demonym_other": "امریکایان"
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UNK": {
 		"name": "کوسوو",
@@ -1168,8 +1168,8 @@
 	},
 	"USA": {
 		"name": "متحده ایالات",
-		"demonym_one": "امریکایی",
-		"demonym_other": "امریکایان"
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UZB": {
 		"name": "ازبکستان",
@@ -1178,8 +1178,8 @@
 	},
 	"VAT": {
 		"name": "واتیکان ښار",
-		"demonym_one": "ایټالیوي",
-		"demonym_other": "ایټالویان"
+		"demonym_one": "Italian",
+		"demonym_other": "Italians"
 	},
 	"VCT": {
 		"name": "سینټ وینسنټ او ګریناډینز",
@@ -1198,8 +1198,8 @@
 	},
 	"VIR": {
 		"name": "د متحده ایالاتو ورجین ټاپو",
-		"demonym_one": "ورجن ټاپو",
-		"demonym_other": "ورجن ټاپوګان"
+		"demonym_one": "Virgin Islander",
+		"demonym_other": "Virgin Islanders"
 	},
 	"VNM": {
 		"name": "ویتنام",

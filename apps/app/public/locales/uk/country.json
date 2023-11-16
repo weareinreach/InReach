@@ -322,10 +322,10 @@
 	},
 	"COG": {
 		"name": "Республіка Конго",
-		"demonym_one": "Конголезька",
-		"demonym_few": "Конголезька",
-		"demonym_many": "Конголезька",
-		"demonym_other": "Конголезька"
+		"demonym_one": "Congolese",
+		"demonym_few": "Congolese",
+		"demonym_many": "Congolese",
+		"demonym_other": "Congolese"
 	},
 	"COK": {
 		"name": "Острови Кука",
@@ -434,7 +434,7 @@
 	},
 	"DOM": {
 		"name": "Домініканська Республіка",
-		"demonym_one": "Домініканець",
+		"demonym_one": "Домініканці",
 		"demonym_few": "Домініканці",
 		"demonym_many": "Домініканці",
 		"demonym_other": "Домініканці"
@@ -518,10 +518,10 @@
 	},
 	"FRA": {
 		"name": "Франція",
-		"demonym_one": "Французький",
-		"demonym_few": "Французький",
-		"demonym_many": "Французький",
-		"demonym_other": "Французький"
+		"demonym_one": "Французька",
+		"demonym_few": "Французька",
+		"demonym_many": "Французька",
+		"demonym_other": "Французька"
 	},
 	"FRO": {
 		"name": "Фарерські острови",
@@ -552,14 +552,14 @@
 		"demonym_other": "Британці"
 	},
 	"GEO": {
-		"name": "Грузія",
+		"name": "Джорджія",
 		"demonym_one": "Грузинська",
 		"demonym_few": "Грузини",
 		"demonym_many": "Грузини",
 		"demonym_other": "Грузини"
 	},
 	"GGY": {
-		"name": "Гернсі",
+		"name": "Guernsey",
 		"demonym_one": "Канал остров'янин",
 		"demonym_few": "Канал остров'ян",
 		"demonym_many": "Канал остров'ян",
@@ -725,9 +725,9 @@
 	"IOT": {
 		"name": "Британська територія Індійського океану",
 		"demonym_one": "Індійський",
-		"demonym_few": "індіанці",
-		"demonym_many": "індіанці",
-		"demonym_other": "індіанці"
+		"demonym_few": "Індіанці",
+		"demonym_many": "Індіанці",
+		"demonym_other": "Індіанці"
 	},
 	"IRL": {
 		"name": "Ірландія",
@@ -780,10 +780,10 @@
 	},
 	"JEY": {
 		"name": "Джерсі",
-		"demonym_one": "Канал остров'янин",
-		"demonym_few": "Канал остров'ян",
-		"demonym_many": "Канал остров'ян",
-		"demonym_other": "Канал остров'ян"
+		"demonym_one": "Острівець каналів",
+		"demonym_few": "Острови Каналів",
+		"demonym_many": "Острови Каналів",
+		"demonym_other": "Острови Каналів"
 	},
 	"JOR": {
 		"name": "Йорданія",
@@ -863,7 +863,7 @@
 		"demonym_other": "лаосці"
 	},
 	"LBN": {
-		"name": "Ліван",
+		"name": "Lebanon",
 		"demonym_one": "Ліванці",
 		"demonym_few": "Ліванці",
 		"demonym_many": "Ліванці",
@@ -1067,10 +1067,10 @@
 	},
 	"MTQ": {
 		"name": "Мартініка",
-		"demonym_one": "Французький",
-		"demonym_few": "Французький",
-		"demonym_many": "Французький",
-		"demonym_other": "Французький"
+		"demonym_one": "Французька",
+		"demonym_few": "Французька",
+		"demonym_many": "Французька",
+		"demonym_other": "Французька"
 	},
 	"MUS": {
 		"name": "Маврикій",
@@ -1298,10 +1298,10 @@
 	},
 	"REU": {
 		"name": "Реюньйон",
-		"demonym_one": "Французький",
-		"demonym_few": "Французький",
-		"demonym_many": "Французький",
-		"demonym_other": "Французький"
+		"demonym_one": "Французька",
+		"demonym_few": "Французька",
+		"demonym_many": "Французька",
+		"demonym_other": "Французька"
 	},
 	"ROU": {
 		"name": "Румунія",
@@ -1364,7 +1364,7 @@
 	},
 	"SJM": {
 		"name": "Шпіцберген і Ян-Маєн",
-		"demonym_one": "норвезька",
+		"demonym_one": "Норвезька",
 		"demonym_few": "Норвежці",
 		"demonym_many": "Норвежці",
 		"demonym_other": "Норвежці"
@@ -1406,10 +1406,10 @@
 	},
 	"SPM": {
 		"name": "Сен-П'єр і Мікелон",
-		"demonym_one": "Французький",
-		"demonym_few": "Французький",
-		"demonym_many": "Французький",
-		"demonym_other": "Французький"
+		"demonym_one": "Французька",
+		"demonym_few": "Французька",
+		"demonym_many": "Французька",
+		"demonym_other": "Французька"
 	},
 	"SRB": {
 		"name": "Сербія",
@@ -1609,10 +1609,10 @@
 	},
 	"UMI": {
 		"name": "Зовнішні малі острови США",
-		"demonym_one": "Американський",
-		"demonym_few": "американці",
-		"demonym_many": "американці",
-		"demonym_other": "американці"
+		"demonym_one": "Американець",
+		"demonym_few": "Американці США",
+		"demonym_many": "Американці США",
+		"demonym_other": "Американці США"
 	},
 	"UNK": {
 		"name": "Косово",
@@ -1630,10 +1630,10 @@
 	},
 	"USA": {
 		"name": "Сполучені Штати Америки",
-		"demonym_one": "Американський",
-		"demonym_few": "американці",
-		"demonym_many": "американці",
-		"demonym_other": "американці"
+		"demonym_one": "Американець",
+		"demonym_few": "Американці США",
+		"demonym_many": "Американці США",
+		"demonym_other": "Американці США"
 	},
 	"UZB": {
 		"name": "Узбекистан",
@@ -1644,10 +1644,10 @@
 	},
 	"VAT": {
 		"name": "Ватикан",
-		"demonym_one": "італійська",
-		"demonym_few": "італійці",
-		"demonym_many": "італійці",
-		"demonym_other": "італійці"
+		"demonym_one": "Італійська",
+		"demonym_few": "Італійці",
+		"demonym_many": "Італійці",
+		"demonym_other": "Італійці"
 	},
 	"VCT": {
 		"name": "Сент-Вінсент і Гренадини",
@@ -1672,7 +1672,7 @@
 	},
 	"VIR": {
 		"name": "Віргінські острови США",
-		"demonym_one": "Богородиця",
+		"demonym_one": "Віргінський острівець",
 		"demonym_few": "Віргінські острови",
 		"demonym_many": "Віргінські острови",
 		"demonym_other": "Віргінські острови"

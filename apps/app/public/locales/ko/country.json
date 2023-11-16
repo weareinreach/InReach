@@ -299,7 +299,7 @@
 	},
 	"FRA": {
 		"name": "프랑스",
-		"demonym_other": "프랑스 국민"
+		"demonym_other": "프랑스인"
 	},
 	"FRO": {
 		"name": "페로 제도",
@@ -614,7 +614,7 @@
 	},
 	"MTQ": {
 		"name": "마르티니크",
-		"demonym_other": "프랑스 국민"
+		"demonym_other": "프랑스인"
 	},
 	"MUS": {
 		"name": "모리셔스",
@@ -746,7 +746,7 @@
 	},
 	"REU": {
 		"name": "레위니옹",
-		"demonym_other": "프랑스 국민"
+		"demonym_other": "프랑스인"
 	},
 	"ROU": {
 		"name": "루마니아",
@@ -809,7 +809,7 @@
 	},
 	"SPM": {
 		"name": "생피에르 미클롱",
-		"demonym_other": "프랑스 국민"
+		"demonym_other": "프랑스인"
 	},
 	"SRB": {
 		"name": "세르비아",
