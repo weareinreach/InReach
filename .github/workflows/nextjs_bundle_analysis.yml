@@ -32,17 +32,18 @@ jobs:
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
+      - uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598 # v2.4.0
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          run_install: false
+
       - name: Install Node.js
         uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4
         with:
           node-version-file: .nvmrc
           cache: pnpm
           cache-dependency-path: /home/runner/work/InReach/InReach/pnpm-lock.yaml
-      - uses: pnpm/action-setup@d882d12c64e032187b2edb46d3a0d003b7a43598 # v2.4.0
-        name: Install pnpm
-        id: pnpm-install
-        with:
-          run_install: false
 
       - name: Install turbo
         run: npm install -g turbo
