@@ -113,7 +113,7 @@
 		"@types/eslint": "8.44.7",
 		"@types/google.maps": "3.54.7",
 		"@types/luxon": "3.3.4",
-		"@types/node": "18.18.9",
+		"@types/node": "20.9.1",
 		"@types/probe-image-size": "7.2.3",
 		"@types/react": "18.2.37",
 		"@types/react-dom": "18.2.15",
