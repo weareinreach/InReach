@@ -35,7 +35,7 @@
 		"cookies-next": "4.0.0",
 		"escape-string-regexp": "5.0.0",
 		"geolib": "3.3.4",
-		"json-schema-to-zod": "1.2.0",
+		"json-schema-to-zod": "2.0.8",
 		"just-compact": "3.2.0",
 		"just-compare": "2.3.0",
 		"just-filter-object": "3.2.0",
