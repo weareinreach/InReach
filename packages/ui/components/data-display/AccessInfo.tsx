@@ -2,7 +2,6 @@ import { type CountryCode } from 'libphonenumber-js'
 import { Trans, useTranslation } from 'next-i18next'
 import { type LiteralUnion } from 'type-fest'
 
-import { type AccessInstructions } from '@weareinreach/db/zod_util/attributeSupplement'
 import { isExternal, Link, type LinkProps } from '~ui/components/core/Link'
 import { isCountryCode, parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 

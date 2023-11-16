@@ -259,13 +259,13 @@ const run = async () => {
 				street1: loc['Street'],
 				city: loc['City ']?.trim() ?? '',
 				countryId: loc['Country '],
-				govDistId: loc['State '],
+				govDistId: loc['State'],
 				postCode: loc['PostalCode'],
 				notVisitable: loc['Hide Location?'],
 				mapCityOnly: loc['Hide Location?'],
 			}
 			const cca2 = countryMap.get(loc['Country '])
-			const govDistAbbrev = govDistMap.get(loc['State '])
+			const govDistAbbrev = govDistMap.get(loc['State'] ?? '')
 			if (loc['City '] && cca2) {
 				const searchString = compact([
 					locData.street1,

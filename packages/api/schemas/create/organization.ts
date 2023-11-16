@@ -31,7 +31,7 @@ export const AttachOrgAttribute = () => {
 		})
 	)
 
-	const dataParser = parser.transform(({ actorId, operation, data: parsedData }) => {
+	const dataParser = parser.transform(({ actorId, data: parsedData }) => {
 		const { organizationId, attributeId, supplement: supplementInput } = parsedData
 
 		const supplementId = supplementInput ? generateId('attributeSupplement') : undefined

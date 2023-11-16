@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: './{*,*/index}.ts*', exclude: ./*.stories.tsx}
+// codegen:start {preset: barrel, include: './{*,*/index}.ts*', exclude: "*.stories.tsx"}
 export * from './AccountVerified'
 export * from './ClaimOrg'
 export * from './CreateNewList'
@@ -6,7 +6,7 @@ export * from './DeleteModal'
 export * from './Example'
 export * from './ForgotPassword'
 export * from './GenericContent'
-export * from './Login'
+export * from './LoginSignUp/index'
 export * from './ModalTitle'
 export * from './MoreFilter'
 export * from './PrivacyStatement'
@@ -15,6 +15,5 @@ export * from './ResetPassword'
 export * from './Review'
 export * from './Service'
 export * from './ServiceFilter/index'
-export * from './SignUp/index'
 export * from './UserSurvey/index'
 // codegen:end

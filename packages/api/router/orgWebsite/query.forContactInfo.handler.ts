@@ -4,26 +4,42 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForContactInfoSchema } from './query.forContactInfo.schema'
 
-export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
-	const whereId = (): Prisma.OrgWebsiteWhereInput => {
-		switch (true) {
-			case isIdFor('organization', input.parentId): {
-				return { organization: { id: input.parentId, ...globalWhere.isPublic() } }
-			}
-			case isIdFor('orgLocation', input.parentId): {
-				return { orgLocation: { id: input.parentId, ...globalWhere.isPublic() } }
-			}
+const isPublic = globalWhere.isPublic()
 
-			default: {
-				return {}
-			}
+const whereId = (input: TForContactInfoSchema, isSingleLoc?: boolean): Prisma.OrgWebsiteWhereInput => {
+	switch (true) {
+		case isIdFor('organization', input.parentId): {
+			return isSingleLoc
+				? {
+						OR: [
+							{ organization: { id: input.parentId, ...isPublic } },
+							{ orgLocation: { organization: { id: input.parentId, ...isPublic } } },
+						],
+				  }
+				: { organization: { id: input.parentId, ...isPublic } }
+		}
+		case isIdFor('orgLocation', input.parentId): {
+			return { orgLocation: { id: input.parentId, ...isPublic } }
+		}
+
+		default: {
+			return {}
 		}
 	}
+}
+
+export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
+	const locCount = isIdFor('organization', input.parentId)
+		? await prisma.orgLocation.count({
+				where: { organization: { id: input.parentId, ...isPublic }, ...isPublic },
+		  })
+		: 0
+	const isSingleLoc = locCount === 1
 
 	const result = await prisma.orgWebsite.findMany({
 		where: {
-			...globalWhere.isPublic(),
-			...whereId(),
+			...isPublic,
+			...whereId(input, isSingleLoc),
 			...(input.locationOnly !== undefined ? { orgLocationOnly: input.locationOnly } : {}),
 		},
 		select: {

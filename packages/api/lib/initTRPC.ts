@@ -1,4 +1,4 @@
-import { initTRPC, TRPCError } from '@trpc/server'
+import { initTRPC } from '@trpc/server'
 import superjson from 'superjson'
 import { type TRPCPanelMeta } from 'trpc-panel'
 import { ZodError } from 'zod'

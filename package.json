@@ -26,8 +26,8 @@
 		"knip": "knip -c ./knip.config.ts",
 		"lint": "TIMING=1 turbo run lint --parallel",
 		"lint:fix": "TIMING=1 turbo run lint:fix --parallel",
-		"lint:pkg": "manypkg check",
-		"lint:pkg:fix": "manypkg fix",
+		"lint:pkg": "sherif",
+		"lint:pkg:fix": "sherif --fix",
 		"lint:staged": "lint-staged",
 		"notify:install": "tsx ./lib/runInstall.ts",
 		"prepare": "tsx ./lib/prepare.ts",
@@ -35,9 +35,8 @@
 		"types:check": "turbo type-check",
 		"types:sync": "typesync"
 	},
-	"dependencies": {
+	"devDependencies": {
 		"@changesets/cli": "2.26.2",
-		"@manypkg/cli": "0.21.0",
 		"@turbo/gen": "1.10.16",
 		"@types/lint-staged": "13.2.2",
 		"@types/node": "18.18.9",
@@ -52,6 +51,7 @@
 		"prettier-plugin-jsdoc": "1.1.1",
 		"prettier-plugin-packagejson": "2.4.6",
 		"prettier-plugin-prisma": "5.0.0",
+		"sherif": "0.5.0",
 		"tsx": "4.1.2",
 		"turbo": "1.10.16",
 		"typescript": "5.2.2",
@@ -61,11 +61,6 @@
 	"engines": {
 		"node": "^18.17.0",
 		"pnpm": "^8.10.5"
-	},
-	"manypkg": {
-		"ignoredRules": [
-			"INTERNAL_MISMATCH"
-		]
 	},
 	"nextBundleAnalysis": {
 		"budget": 588800,
@@ -81,8 +76,8 @@
 			"chokidar": ">=3.0.0",
 			"crypto-js@<=4.1.1": "^4.2.0",
 			"csstype": "^3.1.2",
-			"eslint-plugin-import": "npm:eslint-plugin-i@latest",
-			"eslint-plugin-node": "npm:eslint-plugin-n@latest",
+			"eslint-plugin-import": "npm:eslint-plugin-i",
+			"eslint-plugin-node": "npm:eslint-plugin-n",
 			"glob-parent@<5.1.2": "^5.1.2",
 			"http-cache-semantics@<=4.1.0": "^4.1.1",
 			"listr2@<5": "^5.0.5",

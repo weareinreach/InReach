@@ -1,18 +1,25 @@
-import { Box, type ButtonProps, createPolymorphicComponent, Modal, Stack, Text, Title } from '@mantine/core'
+import {
+	Box,
+	type ButtonProps,
+	createPolymorphicComponent,
+	Group,
+	Modal,
+	Stack,
+	Text,
+	Title,
+} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next'
 import { forwardRef, useEffect } from 'react'
 
-import { type BreadcrumbProps } from '~ui/components/core/Breadcrumb'
+import { Breadcrumb, type BreadcrumbProps } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 
-import { LoginModalLauncher } from './Login'
-import { ModalTitle } from './ModalTitle'
-import { SignupModalLauncher } from './SignUp'
+import { LoginModalLauncher, SignupModalLauncher } from './LoginSignUp'
 
 const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModalProps>(
 	({ autoLaunch, noClose, onClose, ...props }, ref) => {
@@ -44,7 +51,13 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 						},
 				  }
 		) satisfies BreadcrumbProps
-		const modalTitle = <ModalTitle breadcrumb={titleProps} />
+		const modalTitle = (
+			<Group position='apart' align='center' noWrap>
+				<Box maw='70%' style={{ overflow: 'hidden' }}>
+					<Breadcrumb {...titleProps} />
+				</Box>
+			</Group>
+		)
 
 		return (
 			<>

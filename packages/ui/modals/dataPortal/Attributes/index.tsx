@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
 	Box,
 	type ButtonProps,
@@ -96,7 +97,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		})
 		const selectAttrRef = useRef<HTMLInputElement>(null)
 		// #region tRPC
-		const utils = api.useContext()
+		const utils = api.useUtils()
 		api.fieldOpt.attributeCategories.useQuery(restrictCategories, {
 			refetchOnWindowFocus: false,
 			onSuccess: (data) => {

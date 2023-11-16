@@ -38,7 +38,7 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 	const { classes } = useStyles()
 	const { animateCSS, fireEvent: startShake } = useShake({ variant: 1 })
 	const UserSurveyAction = api.user.submitSurvey.useMutation({
-		onSuccess: (data) => {
+		onSuccess: () => {
 			setSuccessMessage(true)
 		},
 		onError: (error) => {

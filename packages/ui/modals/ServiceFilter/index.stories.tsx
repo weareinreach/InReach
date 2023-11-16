@@ -32,7 +32,7 @@ export default {
 	},
 	decorators: [StorybookGridDouble],
 	render: function Render(args) {
-		const [filter, setFilter] = useState<string[]>([])
+		const [filter, _setFilter] = useState<string[]>([])
 		useEffect(() => {
 			action('Set service filter')(filter)
 		}, [filter])

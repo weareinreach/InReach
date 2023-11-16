@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { List, Stack, Title } from '@mantine/core'
 import { type ModalSettings } from '@mantine/modals/lib/context'
 

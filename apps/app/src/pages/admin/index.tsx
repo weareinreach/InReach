@@ -11,7 +11,7 @@ import { getServerSideTranslations } from '~app/utils/i18n'
 
 const AdminIndex: NextPage = () => {
 	const { t } = useTranslation(['common'])
-	const { data: session, status } = useSession()
+	const { data: session } = useSession()
 	return (
 		<>
 			<Head>

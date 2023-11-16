@@ -7,6 +7,9 @@
 		"//#clean": {
 			"cache": false
 		},
+		"//#lint:pkg": {
+			"cache": false
+		},
 		"build": {
 			"dependsOn": ["^build", "^build:icons"],
 			"env": [
@@ -65,7 +68,7 @@
 			"inputs": ["**/*.{cjs,mjs,js,jsx,ts,tsx}"]
 		},
 		"post-install": {
-			"dependsOn": ["^generate:data", "^build:icons"]
+			"dependsOn": ["^generate:data", "^build:icons", "//#lint:pkg"]
 		},
 		"sb:build": {},
 		"type-check": {

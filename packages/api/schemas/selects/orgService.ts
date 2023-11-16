@@ -13,17 +13,17 @@ import {
 	phoneSelectPublic,
 } from './common'
 
-const defaultSelect = {
-	services: true,
-	serviceAreas: true,
-	hours: true,
-	reviews: true,
-	attributes: true,
-	phones: true,
-	emails: true,
-	accessDetails: true,
-	locations: true,
-}
+// const defaultSelect = {
+// 	services: true,
+// 	serviceAreas: true,
+// 	hours: true,
+// 	reviews: true,
+// 	attributes: true,
+// 	phones: true,
+// 	emails: true,
+// 	accessDetails: true,
+// 	locations: true,
+// }
 
 const serviceSelect = {
 	serviceName: freeText,

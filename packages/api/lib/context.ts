@@ -3,7 +3,6 @@ import { type CreateNextContextOptions } from '@trpc/server/adapters/next'
 import { type NextApiRequest, type NextApiResponse } from 'next'
 
 import { getServerSession, type Session } from '@weareinreach/auth'
-import { prisma } from '@weareinreach/db/client'
 import { generateId } from '@weareinreach/db/lib/idGen'
 
 export type CreateContextOptions = {
@@ -24,7 +23,6 @@ export type CreateContextOptions = {
 export const createContextInner = (opts: CreateContextOptions) => {
 	return {
 		session: opts.session,
-		prisma,
 		generateId,
 		skipCache: false,
 		req: opts.req,

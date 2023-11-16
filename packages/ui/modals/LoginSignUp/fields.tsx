@@ -168,8 +168,8 @@ export const FormPassword = () => {
 		pwStrength === 100
 			? theme.other.colors.primary.allyGreen
 			: pwStrength > 50
-			? theme.other.colors.tertiary.yellow
-			: theme.other.colors.tertiary.red
+			  ? theme.other.colors.tertiary.yellow
+			  : theme.other.colors.tertiary.red
 	const [pwPopover, setPwPopover] = useState(false)
 
 	return (

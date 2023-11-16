@@ -1,8 +1,7 @@
 {
 	"extends": "@weareinreach/config/tsconfig/base.json",
 	"compilerOptions": {
-		"baseUrl": "./",
-		"strict": true,
+		"baseUrl": ".",
 		"paths": {
 			"~api/*": ["../../packages/api/*"],
 			"~app/*": ["../../apps/app/src/*"],
@@ -14,5 +13,5 @@
 		}
 	},
 	"exclude": ["node_modules"],
-	"include": ["./index.ts", "../../@types/**/*.ts"]
+	"include": ["./**/*.ts", "../../@types/**/*.ts"]
 }
