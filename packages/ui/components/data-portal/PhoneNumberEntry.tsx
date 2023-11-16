@@ -8,7 +8,7 @@ import {
 	TextInput,
 	type TextInputProps,
 } from '@mantine/core'
-import { AsYouType, type CountryCode, isSupportedCountry } from 'libphonenumber-js'
+import { AsYouType, type CountryCode } from 'libphonenumber-js'
 import { type ComponentPropsWithoutRef, forwardRef, useEffect, useState } from 'react'
 import PhoneInput, { parsePhoneNumber, type Props as PhoneInputProps } from 'react-phone-number-input/input'
 import { type SetOptional } from 'type-fest'
@@ -31,7 +31,7 @@ const PhoneCountrySelectItem = forwardRef<HTMLDivElement, PhoneCountrySelectItem
 )
 PhoneCountrySelectItem.displayName = 'PhoneCountrySelectItem'
 
-const useCountrySelectStyles = createStyles((theme) => ({
+const useCountrySelectStyles = createStyles(() => ({
 	dropdown: {
 		width: 'fit-content !important',
 		left: 'unset !important',

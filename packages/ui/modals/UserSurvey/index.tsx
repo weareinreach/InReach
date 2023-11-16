@@ -27,7 +27,7 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyProps>((props, ref) => {
+const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyProps>((props, ref) => {
 	const { t } = useTranslation(['common', 'country'])
 	const { isMobile } = useScreenSize()
 	const [opened, handler] = useDisclosure(false)
@@ -38,7 +38,7 @@ export const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModal
 	const { classes } = useStyles()
 	const { animateCSS, fireEvent: startShake } = useShake({ variant: 1 })
 	const UserSurveyAction = api.user.submitSurvey.useMutation({
-		onSuccess: (data) => {
+		onSuccess: () => {
 			setSuccessMessage(true)
 		},
 		onError: (error) => {

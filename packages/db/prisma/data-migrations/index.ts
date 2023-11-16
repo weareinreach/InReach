@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./**/*.ts, exclude: './**/{!,___}*.ts'}
+// codegen:start {preset: barrel, include: ./**/*.ts, exclude: ['**/{!,___}*.ts']}
 export * from './2023-03-29_nest-attribs-primary-cntry'
 export * from './2023-03-31_suggestion-source'
 export * from './2023-04-04_badges/index'
@@ -53,5 +53,9 @@ export * from './2023-09-20_fix-access-instructions/index'
 export * from './2023-09-20_update-services'
 export * from './2023-09-22_service-areas'
 export * from './2023-09-22_update-alerts/index'
+export * from './2023-10-23_add-suggested-orgs/index'
 export * from './2023-10-25_service-tag-updates'
+export * from './2023-10-27_tlc-service-updates'
+export * from './2023-11-07_corrections'
+export * from './2023-11-15_phone-number-corrections'
 // codegen:end

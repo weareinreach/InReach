@@ -6,7 +6,7 @@
 		"geo-public-transit-description": "Pampublikong pagbibiyahe /tiyak na direksyon",
 		"has-confidentiality-policy": "May Patakaran sa Kumpidensyal",
 		"offers-remote-services": "Remote",
-		"private-practice": "Pribadong Practice",
+		"private-practice": "Private Practice",
 		"religiously-affiliated": "Ay relihiyosong kaakibat",
 		"time-walk-in": "May Walk-In Oras",
 		"wheelchair-accessible_false": "Hindi maa-access",
@@ -66,7 +66,7 @@
 		"undocumented": "Mga oportunidad na naglilingkod sa mga undocumented na imigrante"
 	},
 	"cost": {
-		"CATEGORYNAME": "Gastos",
+		"CATEGORYNAME": "Cost",
 		"cost-fees": "Nagkakasakit ng gastos",
 		"cost-free": "Walang gastos"
 	},
@@ -76,8 +76,8 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Mga Kinakailangan sa Pagiging Karapat-dapat",
-		"elig-age_max": "Sa ilalim ng {{max}}",
-		"elig-age_min": "{{min}} at mas matanda",
+		"elig-age_max": "Under {{max}}",
+		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Iba pa (libreng paglalarawan ng teksto)",
 		"req-medical-insurance": "NANGANGAILANGAN ng medikal na seguro",
@@ -89,7 +89,7 @@
 		"time-appointment-required": "Kinakailangan ang Paghirang ng Oras"
 	},
 	"lang": {
-		"CATEGORYNAME": "Mga Wika",
+		"CATEGORYNAME": "Languages",
 		"all-languages-by-interpreter": "Lahat ng mga wika sa pamamagitan ng interpreter",
 		"american-sign-language": "American Sign Language",
 		"lang-offered": "Inaalok ang mga partikular na wika"
@@ -154,7 +154,7 @@
 		"grassroots-direct": "Grassroots Direktang Organisasyon ng Serbisyo",
 		"healthcare": "Tagabigay ng pangangalaga sa kalusugan",
 		"lawyer": "abogado",
-		"other": "Iba pa (mangyaring tukuyin)",
+		"other": "Other (please specify)",
 		"paralegal": "Paralegal o iba pang kawani ng ligal na suporta",
 		"social-worker": "Manggagawa sa lipunan",
 		"student-club": "Pinuno/tagapangasiwa ng club ng mag-aaral",

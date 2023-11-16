@@ -1,4 +1,4 @@
-import { type InputStylesNames, type InputStylesParams, rem, type Styles } from '@mantine/core'
+import { rem } from '@mantine/core'
 import objectMap from 'just-map-values'
 
 import { type VariantObj } from '~ui/types/mantine'

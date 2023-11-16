@@ -15,7 +15,7 @@ export const freeText = {
 			},
 		},
 	},
-} satisfies Prisma.FreeTextArgs
+} satisfies Prisma.FreeTextDefaultArgs
 export const freeTextCrowdinId = {
 	select: {
 		id: true,
@@ -28,7 +28,7 @@ export const freeTextCrowdinId = {
 			},
 		},
 	},
-} satisfies Prisma.FreeTextArgs
+} satisfies Prisma.FreeTextDefaultArgs
 
 export const countryWithoutGeo = {
 	select: {

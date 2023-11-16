@@ -6,7 +6,7 @@
 		"geo-public-transit-description": "عامه ترانزیت/ځانګړي لارښوونې",
 		"has-confidentiality-policy": "د محرمیت تګلاره لري",
 		"offers-remote-services": "لرې",
-		"private-practice": "شخصي تمرین",
+		"private-practice": "Private Practice",
 		"religiously-affiliated": "په مذهبي ډول تړاو لري",
 		"time-walk-in": "په ساعتونو کې واک لري",
 		"wheelchair-accessible_false": "د لاسرسي وړ ندی",
@@ -66,7 +66,7 @@
 		"undocumented": "هغه فرصتونه چې بې اسنادو مهاجرینو ته خدمت کوي"
 	},
 	"cost": {
-		"CATEGORYNAME": "لګښت",
+		"CATEGORYNAME": "Cost",
 		"cost-fees": "یو لګښت لري",
 		"cost-free": "د وړیا لګښت"
 	},
@@ -76,8 +76,8 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "د وړتیا اړتیاوې",
-		"elig-age_max": "د {{max}}لاندې",
-		"elig-age_min": "{{min}} او زوړ",
+		"elig-age_max": "Under {{max}}",
+		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "نور (د وړیا متن توضیحات)",
 		"req-medical-insurance": "طبي بیمې ته اړتیا لري",
@@ -89,7 +89,7 @@
 		"time-appointment-required": "د وخت ټاکل اړین دي"
 	},
 	"lang": {
-		"CATEGORYNAME": "ژبې",
+		"CATEGORYNAME": "Languages",
 		"all-languages-by-interpreter": "ټولې ژبې د ژباړونکي له لارې",
 		"american-sign-language": "د امریکا د اشارې ژبه",
 		"lang-offered": "ځانګړې ژبې وړاندیز شوې"
@@ -154,7 +154,7 @@
 		"grassroots-direct": "د ګراس روټس مستقیم خدمت سازمان",
 		"healthcare": "د روغتیا پاملرنې چمتو کونکی",
 		"lawyer": "وکیل",
-		"other": "نور (مهرباني وکړئ مشخص کړئ)",
+		"other": "Other (please specify)",
 		"paralegal": "پارلیګال یا نور قانوني ملاتړ کارمندان",
 		"social-worker": "ټولنیز کارکونکی",
 		"student-club": "د زده کونکي کلب مشر/مدیر",

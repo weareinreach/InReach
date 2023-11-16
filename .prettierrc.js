@@ -1,12 +1,10 @@
-/**
- * @template {import('@types/prettier').RequiredOptions} T
- * @param {T} config A generic parameter that flows through to the return type
- * @constraint {{import('@types/prettier').RequiredOptions}}
- */
-
-/** @type {import('@types/prettier').RequiredOptions} */
+/** @type {import('prettier').Config} */
 const config = {
-	plugins: ['prettier-plugin-packagejson', 'prettier-plugin-jsdoc', 'prettier-plugin-prisma'],
+	plugins: [
+		'prettier-plugin-packagejson',
+		'./node_modules/prettier-plugin-jsdoc/dist/index.js',
+		'prettier-plugin-prisma',
+	],
 	printWidth: 110,
 	tabWidth: 2,
 	useTabs: true,
@@ -19,6 +17,7 @@ const config = {
 	bracketSameLine: false,
 	arrowParens: 'always',
 	endOfLine: 'lf',
+	jsdocCommentLineStrategy: 'keep',
 	overrides: [
 		{
 			files: '*.json',

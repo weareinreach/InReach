@@ -20,18 +20,18 @@
 		"package": "cd dist && zip -r ../bundle.zip *"
 	},
 	"dependencies": {
-		"@aws-lambda-powertools/logger": "1.14.0"
+		"@aws-lambda-powertools/logger": "1.15.0"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.125",
-		"@types/eslint": "8.44.6",
-		"@types/node": "18.18.7",
+		"@types/aws-lambda": "8.10.126",
+		"@types/eslint": "8.44.7",
+		"@types/node": "18.18.9",
 		"@vercel/ncc": "0.38.1",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"aws-lambda": "1.0.7",
-		"eslint": "8.52.0",
-		"prettier": "3.0.3",
+		"eslint": "8.53.0",
+		"prettier": "3.1.0",
 		"typescript": "5.2.2"
 	}
 }

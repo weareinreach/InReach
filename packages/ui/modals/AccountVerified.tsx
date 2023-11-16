@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import {
 	Button,
 	type ButtonProps,
@@ -37,8 +36,8 @@ const UrlParams = z.object({ c: z.string(), code: z.string() }).refine((data) =>
 	}
 })
 
-export const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalBodyProps>(
-	(props, ref) => {
+const AccountVerifyModalBody = forwardRef<HTMLButtonElement, AccountVerifyModalBodyProps>(
+	(/*props, ref*/) => {
 		const { t } = useTranslation(['common'])
 		const router = useRouter()
 		const autoOpen = Boolean(router.query['c'])

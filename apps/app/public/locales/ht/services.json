@@ -37,12 +37,12 @@
 		"scholarships": "Bousdetid"
 	},
 	"food": {
-		"CATEGORYNAME": "Manje",
+		"CATEGORYNAME": "Food",
 		"food": "Manje",
 		"food-assistance": "Asistans manje"
 	},
 	"housing": {
-		"CATEGORYNAME": "Lojman",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "Drop-nan sant pou jèn LGBTQ",
 		"emergency-housing": "Lojman Ijans",
 		"housing-information-and-referrals": "Enfòmasyon sou lojman ak referans",
@@ -60,7 +60,7 @@
 	"international-support": {
 		"CATEGORTYNAME": "International Support",
 		"financial-assistance": "Financial Assistance",
-		"mental-health": "Sante Mantal",
+		"mental-health": "Mental Health",
 		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
@@ -104,7 +104,7 @@
 		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Sante Mantal",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "Gwoup sipò BIPOC",
 		"hotlines": "Hotlines",
 		"private-therapy-and-counseling": "Prive terapi ak konsèy",
@@ -127,7 +127,7 @@
 		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Tradiksyon ak Entèpretasyon",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "Pou swen sante",
 		"for-legal-services": "Pou sèvis legal",
 		"general-translation-and-interpretation": "Tradiksyon jeneral ak entèpretasyon"

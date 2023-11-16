@@ -4,14 +4,6 @@ import { organizationData } from '~ui/mockData/organization'
 
 import { CrisisSupport } from './index'
 
-/**
- * Throws an error - Use to raise an error for nullish-coalesced values
- *
- * @example FnThatDoesntAcceptUndefined(possibleUndefined ?? raise('this is the error'))
- */
-const raise = (err: string): never => {
-	throw new Error(err)
-}
 export default {
 	title: 'Sections/Crisis Support',
 	component: CrisisSupport,

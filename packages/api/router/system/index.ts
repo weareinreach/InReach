@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/consistent-type-imports */
-
 import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 
-import { permissionSubRouter } from './permission'
 import * as schema from './schemas'
 // import { userRoleSubRouter } from './role'
 

@@ -44,10 +44,10 @@
 	"housing": {
 		"CATEGORYNAME": "주택",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ 청소년을 위한 예약 필요 없는 회관",
-		"emergency-housing": "긴급주거",
-		"housing-information-and-referrals": "주거 정보와 추천서",
-		"short-term-housing": "단기의 주거",
-		"trans-housing": "트랜스젠더 주거"
+		"emergency-housing": "긴급 주택",
+		"housing-information-and-referrals": "주택 정보와 추천서",
+		"short-term-housing": "단기의 주택",
+		"trans-housing": "트랜스젠더 주택"
 	},
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "위생과 의류",
@@ -127,7 +127,7 @@
 		"transport-relo-support": "트랜스 재정착하기 지원"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "번역 및 통역",
+		"CATEGORYNAME": "일반 번역이랑 통역",
 		"for-healthcare": "건강관리 위해",
 		"for-legal-services": "법률 서비스 위해",
 		"general-translation-and-interpretation": "일반 번역이랑 통역"

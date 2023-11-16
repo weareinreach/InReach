@@ -82,6 +82,10 @@ jobs:
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
         run: crowdin push sources -b ${{ steps.sanitizebranch.outputs.value }}
 
+      - name: Synchronize sources to Crowdin
+        if: steps.sanitizebranch.outputs.value == 'main'
+        run: crowdin push sources -b ${{ steps.sanitizebranch.outputs.value }}
+
       - name: Pull updated translations from Crowdin
         if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
         run: crowdin pull -b ${{ steps.sanitizebranch.outputs.value }}
@@ -119,5 +123,5 @@ jobs:
           delete-branch: true
 
       - name: Delete Crowdin Branch
-        if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev' && github.ref_name != 'dev'
+        if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev' && steps.sanitizebranch.outputs.value != 'dev' && steps.sanitizebranch.outputs.value != 'main'
         run: crowdin branch delete ${{ steps.sanitizebranch.outputs.value }}

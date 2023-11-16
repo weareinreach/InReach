@@ -37,12 +37,12 @@
 		"scholarships": "بورسونه"
 	},
 	"food": {
-		"CATEGORYNAME": "خواړه",
+		"CATEGORYNAME": "Food",
 		"food": "خواړه",
 		"food-assistance": "د خوړو مرسته"
 	},
 	"housing": {
-		"CATEGORYNAME": "د کور جوړول",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "د LGBTQ ځوانانو لپاره د ډراپ ان مرکزونه",
 		"emergency-housing": "بيړنۍ کور",
 		"housing-information-and-referrals": "د کور معلومات او راجع کول",
@@ -60,7 +60,7 @@
 	"international-support": {
 		"CATEGORTYNAME": "International Support",
 		"financial-assistance": "Financial Assistance",
-		"mental-health": "دماغي روغتیا",
+		"mental-health": "Mental Health",
 		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
@@ -83,7 +83,7 @@
 		"u-visa": "U ویزه"
 	},
 	"mail": {
-		"CATEGORYNAME": "میل",
+		"CATEGORYNAME": "Mail",
 		"mail": "میل"
 	},
 	"medical": {
@@ -104,7 +104,7 @@
 		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "دماغي روغتیا",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "د BIPOC ملاتړ ډلې",
 		"hotlines": "هاټ لاینونه",
 		"private-therapy-and-counseling": "شخصي درملنه او مشوره ورکول",
@@ -127,7 +127,7 @@
 		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "ژباړه او تفسیر",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "د روغتیا پاملرنې لپاره",
 		"for-legal-services": "د قانوني خدماتو لپاره",
 		"general-translation-and-interpretation": "عمومي ژباړه او تفسیر"

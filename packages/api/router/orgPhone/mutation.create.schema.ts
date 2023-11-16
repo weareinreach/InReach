@@ -27,19 +27,19 @@ export const ZCreateSchema = z
 		const phoneType = data.phoneTypeId
 			? { connect: { id: data.phoneTypeId } }
 			: data.phoneTypeNew
-			? {
-					create: {
-						type: data.phoneTypeNew,
-						key: {
-							create: {
-								key: slug(data.phoneTypeNew),
-								text: data.phoneTypeNew,
-								namespace: { connect: { name: namespace.phoneType } },
+			  ? {
+						create: {
+							type: data.phoneTypeNew,
+							key: {
+								create: {
+									key: slug(data.phoneTypeNew),
+									text: data.phoneTypeNew,
+									namespace: { connect: { name: namespace.phoneType } },
+								},
 							},
 						},
-					},
-			  }
-			: undefined
+			    }
+			  : undefined
 
 		const { number, ext, locationOnly, primary, published } = data
 		return Prisma.validator<Prisma.OrgPhoneCreateInput>()({

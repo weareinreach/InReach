@@ -76,7 +76,7 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "Wymagania kwalifikacyjne",
-		"elig-age_max": "Poniżej {{max}}",
+		"elig-age_max": "Pod {{max}}",
 		"elig-age_min": "{{min}} i starsze",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "Inne (dowolny opis tekstowy)",

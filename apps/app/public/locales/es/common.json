@@ -53,7 +53,7 @@
 	"cookie-consent": {
 		"approve-all": "Aprobar todo",
 		"approve-selected": "Aprobar seleccionados",
-		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"body": "Utilizamos cookies y servicios de terceros en este sitio web. Algunas de ellas son esenciales, otras nos ayudan a mejorar tu experiencia de navegación. Consulte nuestra <PrivacyLink>Declaración de privacidad</PrivacyLink> para obtener más información.",
 		"intro": "Utilizamos las cookies necesarias para que nuestro sitio funcione. Nos gustaría configurar cookies adicionales para entender el uso del sitio, hacer mejoras en el sitio y recordar sus ajustes.",
 		"item-basic": "Cookies esenciales para la funcionalidad del sitio",
 		"item-ga4": "Analíticas para el uso interno de Alcance",

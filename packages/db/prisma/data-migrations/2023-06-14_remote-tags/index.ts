@@ -1,3 +1,4 @@
+/* eslint-disable deprecation/deprecation */
 import { z } from 'zod'
 
 import fs from 'fs'

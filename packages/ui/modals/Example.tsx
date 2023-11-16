@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { List, Stack, Title } from '@mantine/core'
 import { type ModalSettings } from '@mantine/modals/lib/context'
 
@@ -5,7 +6,7 @@ import { Badge } from '~ui/components/core/Badge'
 
 import { ModalTitle, type ModalTitleProps } from './ModalTitle'
 
-export const ExampleModalBody = ({ text }: ExampleModalBodyProps) => (
+const ExampleModalBody = ({ text }: ExampleModalBodyProps) => (
 	<Stack>
 		<Badge variant='service' tsKey='deferred-action-for-childhood-arrivals-daca' />
 		<Title order={3}>Sample Content</Title>

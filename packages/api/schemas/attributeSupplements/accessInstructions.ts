@@ -7,17 +7,17 @@ const isURL = (string: string) => z.string().url().safeParse(string).success
 const email = z.object({
 	access_type: z.literal('email'),
 	access_value: z.string().email(),
-	instructions: z.string(),
+	instructions: z.string().optional(),
 })
 const url = z.object({
 	access_type: z.enum(['file', 'link']),
 	access_value: z.string().url(),
-	instructions: z.string(),
+	instructions: z.string().optional(),
 })
 const other = z.object({
 	access_type: z.enum(['phone', 'other', 'location', 'publicTransit']),
 	access_value: z.string(),
-	instructions: z.string(),
+	instructions: z.string().optional(),
 })
 
 export const accessInstructions = z.preprocess(

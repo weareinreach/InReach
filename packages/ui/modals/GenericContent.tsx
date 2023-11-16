@@ -46,7 +46,7 @@ const presetContent = {
 	accessibilityStatement: <TransContent i18nKey='modal-content.accessibility' />,
 } as const
 
-export const GenericContentModalBody = forwardRef<HTMLButtonElement, GenericContentModalProps>(
+const GenericContentModalBody = forwardRef<HTMLButtonElement, GenericContentModalProps>(
 	({ customBody, content, accept, ...props }: GenericContentModalProps, ref) => {
 		const { t } = useTranslation(['common'])
 		const variants = useCustomVariant()

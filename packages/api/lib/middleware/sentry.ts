@@ -1,5 +1,5 @@
-import { Handlers } from '@sentry/node'
+import * as Sentry from '@sentry/nextjs'
 
 import { t } from '../initTRPC'
 
-export const sentryMiddleware = t.middleware(Handlers.trpcMiddleware({ attachRpcInput: true }))
+export const sentryMiddleware = t.middleware(Sentry.Handlers.trpcMiddleware({ attachRpcInput: true }))

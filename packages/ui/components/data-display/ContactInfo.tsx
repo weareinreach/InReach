@@ -1,5 +1,6 @@
 import { Stack, Text, Title } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
+import { type JSX } from 'react'
 
 import { type ApiOutput } from '@weareinreach/api'
 import { isExternal, Link } from '~ui/components/core/Link'
@@ -45,8 +46,8 @@ const PhoneNumbers = ({ parentId = '', passedData, direct, locationOnly }: Phone
 		const desc = description
 			? t(description.key, { ns: orgId?.id, defaultValue: description.defaultText })
 			: phoneType?.key
-			? t(phoneType.key, { ns: 'phone-type' })
-			: undefined
+			  ? t(phoneType.key, { ns: 'phone-type' })
+			  : undefined
 
 		const item = (
 			<Stack spacing={4} key={k}>
@@ -113,8 +114,8 @@ const Emails = ({ parentId = '', passedData, direct, locationOnly, serviceOnly }
 		const desc = title
 			? t(title.key, { ns: 'user-title' })
 			: description?.key
-			? t(description.key, { defaultValue: description.defaultText, ns: orgId?.id })
-			: undefined
+			  ? t(description.key, { defaultValue: description.defaultText, ns: orgId?.id })
+			  : undefined
 
 		const item = (
 			<Stack spacing={4} key={k}>

@@ -1,5 +1,3 @@
-import flush from 'just-flush'
-
 import { prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'

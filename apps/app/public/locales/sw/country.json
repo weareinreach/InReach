@@ -201,7 +201,7 @@
 		"demonym_other": "Wakazi wa Visiwa vya Cocos"
 	},
 	"CHE": {
-		"name": "Uswizi",
+		"name": "Switzerland",
 		"demonym_one": "Uswisi",
 		"demonym_other": "Uswisi"
 	},
@@ -232,8 +232,8 @@
 	},
 	"COG": {
 		"name": "Jamhuri ya Kongo",
-		"demonym_one": "Kikongo",
-		"demonym_other": "Kikongo"
+		"demonym_one": "Congolese",
+		"demonym_other": "Congolese"
 	},
 	"COK": {
 		"name": "Visiwa vya Cook",
@@ -312,8 +312,8 @@
 	},
 	"DOM": {
 		"name": "Jamhuri ya Dominika",
-		"demonym_one": "Kidominika",
-		"demonym_other": "Wadominika"
+		"demonym_one": "Dominican",
+		"demonym_other": "Dominicans"
 	},
 	"DZA": {
 		"name": "Algeria",
@@ -372,8 +372,8 @@
 	},
 	"FRA": {
 		"name": "Ufaransa",
-		"demonym_one": "Kifaransa",
-		"demonym_other": "Kifaransa"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"FRO": {
 		"name": "Visiwa vya Faroe",
@@ -520,8 +520,8 @@
 	},
 	"IOT": {
 		"name": "Wilaya ya Bahari ya Hindi ya Uingereza",
-		"demonym_one": "Muhindi",
-		"demonym_other": "Wahindi"
+		"demonym_one": "Indian",
+		"demonym_other": "Indians"
 	},
 	"IRL": {
 		"name": "Ireland",
@@ -560,7 +560,7 @@
 	},
 	"JEY": {
 		"name": "Jersey",
-		"demonym_one": "Kisiwa cha Channel",
+		"demonym_one": "Channel Islander",
 		"demonym_other": "Channel Islanders"
 	},
 	"JOR": {
@@ -670,8 +670,8 @@
 	},
 	"MAC": {
 		"name": "Macau",
-		"demonym_one": "Kichina",
-		"demonym_other": "Kichina"
+		"demonym_one": "Chinese",
+		"demonym_other": "Chinese"
 	},
 	"MAF": {
 		"name": "Mtakatifu Martin",
@@ -765,8 +765,8 @@
 	},
 	"MTQ": {
 		"name": "Martinique",
-		"demonym_one": "Kifaransa",
-		"demonym_other": "Kifaransa"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"MUS": {
 		"name": "Morisi",
@@ -825,8 +825,8 @@
 	},
 	"NLD": {
 		"name": "Uholanzi",
-		"demonym_one": "Kiholanzi",
-		"demonym_other": "Kiholanzi"
+		"demonym_one": "Dutch",
+		"demonym_other": "Dutch"
 	},
 	"NOR": {
 		"name": "Norway",
@@ -930,8 +930,8 @@
 	},
 	"REU": {
 		"name": "Réunion",
-		"demonym_one": "Kifaransa",
-		"demonym_other": "Kifaransa"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"ROU": {
 		"name": "romania",
@@ -978,8 +978,8 @@
 	},
 	"SJM": {
 		"name": "Svalbard na Jan Mayen",
-		"demonym_one": "Kinorwe",
-		"demonym_other": "Kinorway"
+		"demonym_one": "Norwegian",
+		"demonym_other": "Norwegians"
 	},
 	"SLB": {
 		"name": "Visiwa vya Solomon",
@@ -1008,8 +1008,8 @@
 	},
 	"SPM": {
 		"name": "Mtakatifu Pierre na Miquelon",
-		"demonym_one": "Kifaransa",
-		"demonym_other": "Kifaransa"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"SRB": {
 		"name": "Serbia",
@@ -1153,8 +1153,8 @@
 	},
 	"UMI": {
 		"name": "Marekani - Visiwa vidogo vya nje",
-		"demonym_one": "Amerika",
-		"demonym_other": "Wamarekani"
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UNK": {
 		"name": "Kosovo",
@@ -1168,8 +1168,8 @@
 	},
 	"USA": {
 		"name": "Marekani",
-		"demonym_one": "Amerika",
-		"demonym_other": "Wamarekani"
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UZB": {
 		"name": "Uzbekistan",
@@ -1178,8 +1178,8 @@
 	},
 	"VAT": {
 		"name": "Mji wa Vatikani",
-		"demonym_one": "Kiitaliano",
-		"demonym_other": "Waitaliano"
+		"demonym_one": "Italian",
+		"demonym_other": "Italians"
 	},
 	"VCT": {
 		"name": "Saint Vincent na Grenadines",
@@ -1199,7 +1199,7 @@
 	"VIR": {
 		"name": "Visiwa vya Virgin vya Marekani",
 		"demonym_one": "Virgin Islander",
-		"demonym_other": "Wakazi wa Visiwa vya Virgin"
+		"demonym_other": "Virgin Islanders"
 	},
 	"VNM": {
 		"name": "Vietnam",

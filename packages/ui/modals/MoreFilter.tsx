@@ -22,7 +22,7 @@ import { useMediaQuery, useViewportSize } from '@mantine/hooks'
 import { createPolymorphicComponent } from '@mantine/utils'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type MouseEventHandler, useEffect, useState } from 'react'
+import { forwardRef, type JSX, type MouseEventHandler, useEffect, useState } from 'react'
 
 import { Button } from '~ui/components/core/Button'
 import { Link } from '~ui/components/core/Link'
@@ -236,8 +236,8 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 		const preSelected = Array.isArray(router.query.a)
 			? router.query.a
 			: typeof router.query.a === 'string'
-			? [router.query.a]
-			: []
+			  ? [router.query.a]
+			  : []
 
 		const generateInitialData = (opts?: { clear?: boolean }) => {
 			if (!moreFilterOptionData) return []

@@ -53,8 +53,8 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 		const adminArea = data?.govDist?.abbrev
 			? data.govDist.abbrev
 			: data?.govDist?.tsKey
-			? (t(data.govDist.tsKey, { ns: data.govDist.tsNs }) satisfies string)
-			: undefined
+			  ? (t(data.govDist.tsKey, { ns: data.govDist.tsNs }) satisfies string)
+			  : undefined
 
 		return formatAddress({
 			addressLines: compact([data?.street1?.trim(), data?.street2?.trim()]),
@@ -205,8 +205,8 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 	const adminArea = data.govDist?.abbrev
 		? data.govDist.abbrev
 		: data.govDist?.tsKey
-		? (t(data.govDist.tsKey, { ns: data.govDist.tsNs }) satisfies string)
-		: undefined
+		  ? (t(data.govDist.tsKey, { ns: data.govDist.tsNs }) satisfies string)
+		  : undefined
 
 	const formattedAddress = formatAddress({
 		addressLines: compact([data.street1?.trim(), data.street2?.trim()]),

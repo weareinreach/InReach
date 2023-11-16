@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./*.ts, exclude: ./common.ts}
+// codegen:start {preset: barrel, include: ./*.ts, exclude: "common.ts"}
 export * from './allAttributes'
 export * from './attributeCategory'
 export * from './attributesByCategory'

@@ -184,8 +184,8 @@ export const job20230724a = {
 						svc.type === 'email'
 							? 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW'
 							: svc.type === 'link'
-							? 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD'
-							: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
+							  ? 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD'
+							  : 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 					serviceId: record.svcId,
 				}))
 			)
@@ -208,8 +208,8 @@ export const job20230724a = {
 						svc.type === 'email'
 							? 'attr_01GW2HHFVKFM4TDY4QRK4AR2ZW'
 							: svc.type === 'link'
-							? 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD'
-							: 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
+							  ? 'attr_01GW2HHFVMYXMS8ARA3GE7HZFD'
+							  : 'attr_01GW2HHFVMKTFWCKBVVFJ5GMY0',
 					serviceAccessAttributeServiceId: record.svcId,
 					data: JsonInputOrNull.parse(
 						superjson.serialize({ access_type: svc.type, access_value: svc.value })

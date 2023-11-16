@@ -13,3 +13,4 @@ pnpm-lock.yaml
 .DS_Store
 .eslintignore
 *.hbs
+.trace/*.json

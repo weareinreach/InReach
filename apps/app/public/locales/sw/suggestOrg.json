@@ -1,11 +1,11 @@
 {
 	"body": {
 		"accept-country": "Tafadhali kumbuka kuwa tunaweza tu kukubali mashirika yaliyo Amerika, Mexico, na Canada kwa wakati huu.",
-		"additional-info": "Maelezo ya ziada",
+		"additional-info": "Additional information",
 		"intro-text": "Asante kwa maslahi yako katika kuchangia InReach App! Tumia fomu hii kupendekeza shirika (kwa mfano mashirika yasiyo ya faida, mashinani au mashirika ya jamii, mifumo ya huduma za afya, mazoezi ya kibinafsi, nk) unafikiri inapaswa kuingizwa. Ni sawa ikiwa huna maelezo yote ambayo fomu inauliza - tu kujaza kile unachojua, na tutafanya mapumziko! Tunashukuru uwasilishaji wako na tunakushukuru kwa kusaidia kuongeza ufikiaji wa rasilimali salama, zilizothibitishwa kwa jamii anuwai ya LGBTQ +. Mashirika yote yaliyopendekezwa yanaweza kukaguliwa na wajitolea waliofunzwa wa InReach kabla ya kuchapishwa kwenye InReach.",
 		"required-info": "Taarifa zinazohitajika",
 		"subject-review": "Mashirika yote yaliyopendekezwa yanaweza kukaguliwa na InReach kabla ya kuchapishwa.",
-		"suggest-org": "Pendekeza shirika"
+		"suggest-org": "Suggest an organization"
 	},
 	"form": {
 		"btn-community": "Ongeza mwelekeo wa jamii ya LGBTQ+",
@@ -21,7 +21,7 @@
 		"org-name": "Jina la shirika",
 		"org-website": "Tovuti ya shirika",
 		"placeholder-address": "Ingiza anwani...",
-		"placeholder-name": "Ingiza jina la shirika...",
+		"placeholder-name": "Enter organization name...",
 		"placeholder-website": "Ingiza URL...",
 		"service-types": "Ni aina gani (s) ya huduma (s) ambayo shirika hili hutoa?"
 	},

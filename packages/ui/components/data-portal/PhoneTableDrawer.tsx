@@ -128,7 +128,7 @@ export const _PhoneTableDrawer = forwardRef<HTMLButtonElement, PhoneTableDrawerP
 	const { classes } = useStyles()
 	const { t } = useTranslation('phone-type')
 	// #region tRPC
-	const apiUtils = api.useContext()
+	const apiUtils = api.useUtils()
 	const { data: _data } = api.orgPhone.get.useQuery(
 		{ organizationId: organizationId ?? '' },
 		{
