@@ -279,7 +279,7 @@
 		"demonym_other": "Жителя Кокосовых островов"
 	},
 	"CHE": {
-		"name": "Суитзерленд",
+		"name": "Швейцария",
 		"demonym_one": "Швейцарец",
 		"demonym_few": "Швейцарцев",
 		"demonym_many": "Швейцарцев",
@@ -322,10 +322,10 @@
 	},
 	"COG": {
 		"name": "Республика Конго",
-		"demonym_one": "Конголезец",
-		"demonym_few": "Конголезцев",
+		"demonym_one": "Конголезцев",
+		"demonym_few": "Конголезца",
 		"demonym_many": "Конголезцев",
-		"demonym_other": "Конголезца"
+		"demonym_other": "Конголезцев"
 	},
 	"COK": {
 		"name": "Острова Кука",
@@ -435,9 +435,9 @@
 	"DOM": {
 		"name": "Доминиканская Республика",
 		"demonym_one": "Доминиканец",
-		"demonym_few": "Доминиканцев",
+		"demonym_few": "Доминиканца",
 		"demonym_many": "Доминиканцев",
-		"demonym_other": "Доминиканца"
+		"demonym_other": "Доминиканцев"
 	},
 	"DZA": {
 		"name": "Алжир",
@@ -518,9 +518,9 @@
 	},
 	"FRA": {
 		"name": "Франция",
-		"demonym_one": "Француз",
+		"demonym_one": "Француза",
 		"demonym_few": "Французов",
-		"demonym_many": "Французов",
+		"demonym_many": "Французев",
 		"demonym_other": "Француза"
 	},
 	"FRO": {
@@ -552,7 +552,7 @@
 		"demonym_other": "Британца"
 	},
 	"GEO": {
-		"name": "Джорджия",
+		"name": "Грузия",
 		"demonym_one": "Грузин",
 		"demonym_few": "Грузин",
 		"demonym_many": "Грузин",
@@ -725,9 +725,9 @@
 	"IOT": {
 		"name": "Британская Территория в Индийском океане",
 		"demonym_one": "Индиец",
-		"demonym_few": "Индийцев",
+		"demonym_few": "Индийца",
 		"demonym_many": "Индийцев",
-		"demonym_other": "Индийца"
+		"demonym_other": "Индийцев"
 	},
 	"IRL": {
 		"name": "Ирландия",
@@ -781,9 +781,9 @@
 	"JEY": {
 		"name": "Джерси",
 		"demonym_one": "Житель Нормандских островов",
-		"demonym_few": "Жителей Нормандских островов",
+		"demonym_few": "Жителя Нормандских островов",
 		"demonym_many": "Жителей Нормандских островов",
-		"demonym_other": "Жителя Нормандских островов"
+		"demonym_other": "Жителей Нормандских островов"
 	},
 	"JOR": {
 		"name": "Иордания",
@@ -934,10 +934,10 @@
 	},
 	"MAC": {
 		"name": "Макао",
-		"demonym_one": "Китаец",
-		"demonym_few": "Китайцев",
+		"demonym_one": "Китайцев",
+		"demonym_few": "Китайца",
 		"demonym_many": "Китайцев",
-		"demonym_other": "Китайца"
+		"demonym_other": "Китайцев"
 	},
 	"MAF": {
 		"name": "Сен-Мартен",
@@ -982,7 +982,7 @@
 		"demonym_other": "Мальдивца"
 	},
 	"MEX": {
-		"name": "Мехико",
+		"name": "Мексика",
 		"demonym_one": "Мексиканец",
 		"demonym_few": "Мексиканцев",
 		"demonym_many": "Мексиканцев",
@@ -1067,9 +1067,9 @@
 	},
 	"MTQ": {
 		"name": "Мартиника",
-		"demonym_one": "Француз",
+		"demonym_one": "Француза",
 		"demonym_few": "Французов",
-		"demonym_many": "Французов",
+		"demonym_many": "Французев",
 		"demonym_other": "Француза"
 	},
 	"MUS": {
@@ -1151,9 +1151,9 @@
 	},
 	"NLD": {
 		"name": "Нидерланды",
-		"demonym_one": "Житель Кюрасао",
+		"demonym_one": "Жителя Кюрасао",
 		"demonym_few": "Жителей Кюрасао",
-		"demonym_many": "Жителей Кюрасао",
+		"demonym_many": "Жителя Кюрасао",
 		"demonym_other": "Жителя Кюрасао"
 	},
 	"NOR": {
@@ -1298,9 +1298,9 @@
 	},
 	"REU": {
 		"name": "Реюньон",
-		"demonym_one": "Француз",
+		"demonym_one": "Француза",
 		"demonym_few": "Французов",
-		"demonym_many": "Французов",
+		"demonym_many": "Французев",
 		"demonym_other": "Француза"
 	},
 	"ROU": {
@@ -1366,7 +1366,7 @@
 		"name": "Шпицберген и Ян-Майен",
 		"demonym_one": "Ниуэанец",
 		"demonym_few": "Ниуэанцев",
-		"demonym_many": "Ниуэанцев",
+		"demonym_many": "Ниуэанца",
 		"demonym_other": "Ниуэанца"
 	},
 	"SLB": {
@@ -1406,9 +1406,9 @@
 	},
 	"SPM": {
 		"name": "Сен-Пьер и Микелон",
-		"demonym_one": "Француз",
+		"demonym_one": "Француза",
 		"demonym_few": "Французов",
-		"demonym_many": "Французов",
+		"demonym_many": "Французев",
 		"demonym_other": "Француза"
 	},
 	"SRB": {
@@ -1611,7 +1611,7 @@
 		"name": "Внешние малые острова США",
 		"demonym_one": "Американец",
 		"demonym_few": "Американцев",
-		"demonym_many": "Американцев",
+		"demonym_many": "Американца",
 		"demonym_other": "Американца"
 	},
 	"UNK": {
@@ -1632,7 +1632,7 @@
 		"name": "Соединённые Штаты Америки",
 		"demonym_one": "Американец",
 		"demonym_few": "Американцев",
-		"demonym_many": "Американцев",
+		"demonym_many": "Американца",
 		"demonym_other": "Американца"
 	},
 	"UZB": {
@@ -1645,9 +1645,9 @@
 	"VAT": {
 		"name": "Ватикан",
 		"demonym_one": "Итальянец",
-		"demonym_few": "Итальянцев",
+		"demonym_few": "Итальянца",
 		"demonym_many": "Итальянцев",
-		"demonym_other": "Итальянца"
+		"demonym_other": "Итальянцев"
 	},
 	"VCT": {
 		"name": "Сент-Винсент и Гренадины",
@@ -1674,7 +1674,7 @@
 		"name": "Виргинские Острова (США)",
 		"demonym_one": "Виргинец",
 		"demonym_few": "Виргинцев",
-		"demonym_many": "Виргинцев",
+		"demonym_many": "Виргинца",
 		"demonym_other": "Виргинца"
 	},
 	"VNM": {

@@ -37,12 +37,12 @@
 		"scholarships": "Beurse"
 	},
 	"food": {
-		"CATEGORYNAME": "Kos",
+		"CATEGORYNAME": "Food",
 		"food": "Kos",
 		"food-assistance": "Voedselbystand"
 	},
 	"housing": {
-		"CATEGORYNAME": "Behuising",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "Inloopsentrums vir LGBTQ-jeug",
 		"emergency-housing": "Nood behuising",
 		"housing-information-and-referrals": "Behuising inligting en verwysings",
@@ -60,7 +60,7 @@
 	"international-support": {
 		"CATEGORTYNAME": "International Support",
 		"financial-assistance": "Financial Assistance",
-		"mental-health": "Geestesgesondheid",
+		"mental-health": "Mental Health",
 		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
@@ -104,7 +104,7 @@
 		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Geestesgesondheid",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "BIPOC ondersteuningsgroepe",
 		"hotlines": "Blitslyne",
 		"private-therapy-and-counseling": "Privaat terapie en berading",
@@ -127,7 +127,7 @@
 		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Vertaling en interpretasie",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "Vir gesondheidsorg",
 		"for-legal-services": "Vir regsdienste",
 		"general-translation-and-interpretation": "Algemene vertaling en interpretasie"

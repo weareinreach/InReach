@@ -112,7 +112,7 @@
 	"find-resources": "查找资源",
 	"find-x": "找到 {{value}}",
 	"footer": {
-		"anti-hate": "反仇恨承诺",
+		"anti-hate": "反仇恨的承诺",
 		"digital-accessibility": "数字可访问性",
 		"disclaimer": "免责声明",
 		"privacy-statement": "隐私声明",
@@ -143,7 +143,7 @@
 	"link-copied": "链接已复制到剪贴板",
 	"list": {
 		"added": "资源已保存到列表： {{name}}",
-		"create-new": "创建新清单",
+		"create-new": "创建新列表",
 		"create-new-sub": "只有您和与您共享资源的任何人才能看到您的已保存资源列表。",
 		"create-new-sub2": "按类别、一周中的某一天或此列表适用于的任何人命名您的列表。",
 		"created": "已创建新列表： {{name}}",
@@ -196,7 +196,7 @@
 	"password-req-uppercase": "包含大写字母",
 	"password-reset": {
 		"email-body": "点击以下链接重置您的密码：",
-		"email-subject": "重置你的密码"
+		"email-subject": "重置您的密码"
 	},
 	"password-reset-success": "<Text>请使用 <LoginModal>登录</LoginModal> 使用您的新密码</Text>",
 	"password-saved": "密码已保存！",
