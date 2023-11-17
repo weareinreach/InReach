@@ -72,7 +72,7 @@ const nextConfig = {
 		tunnelRoute: '/monitoring',
 
 		// Hides source maps from generated client bundles
-		hideSourceMaps: false,
+		hideSourceMaps: true,
 
 		// Automatically tree-shake Sentry logger statements to reduce bundle size
 		disableLogger: isVercelProd || isVercelActiveDev,
@@ -81,6 +81,9 @@ const nextConfig = {
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
+
+		config.devtool = 'eval-source-map'
+
 		if (!isLocalDev) {
 			config.plugins.push(
 				new webpack.DefinePlugin({
