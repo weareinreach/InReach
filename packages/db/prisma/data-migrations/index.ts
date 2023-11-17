@@ -58,4 +58,5 @@ export * from './2023-10-25_service-tag-updates'
 export * from './2023-10-27_tlc-service-updates'
 export * from './2023-11-07_corrections'
 export * from './2023-11-15_phone-number-corrections'
+export * from './2023-11-17_data-load/index'
 // codegen:end
