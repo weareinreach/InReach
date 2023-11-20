@@ -67,7 +67,7 @@
 		"@types/inquirer": "9.0.7",
 		"@types/inquirer-autocomplete-prompt": "3.0.3",
 		"@types/luxon": "3.3.4",
-		"@types/node": "20.9.1",
+		"@types/node": "20.9.2",
 		"@types/papaparse": "5.3.11",
 		"@types/pg": "8.10.9",
 		"@types/terraformer__wkt": "2.0.2",
@@ -75,7 +75,7 @@
 		"@weareinreach/eslint-config": "0.100.0",
 		"dotenv": "16.3.1",
 		"dotenv-cli": "7.3.0",
-		"eslint": "8.53.0",
+		"eslint": "8.54.0",
 		"google-auth-library": "9.2.0",
 		"google-spreadsheet": "4.1.1",
 		"googleapis": "128.0.0",
@@ -100,11 +100,11 @@
 		"sql-bricks-postgres": "0.6.0",
 		"string-byte-length": "2.0.0",
 		"tiny-invariant": "1.3.1",
-		"tsx": "4.1.3",
+		"tsx": "4.1.4",
 		"type-fest": "4.8.1",
 		"typescript": "5.2.2",
 		"zod-prisma-types": "3.1.6",
-		"zod-to-json-schema": "3.21.4"
+		"zod-to-json-schema": "3.22.0"
 	},
 	"prisma": {
 		"seed": "turbo run db:run-seed"
