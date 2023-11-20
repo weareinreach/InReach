@@ -60,4 +60,5 @@ export * from './2023-11-07_corrections'
 export * from './2023-11-15_phone-number-corrections'
 export * from './2023-11-17_add-missing-websites/index'
 export * from './2023-11-17_data-load/index'
+export * from './2023-11-20_fix-listing'
 // codegen:end
