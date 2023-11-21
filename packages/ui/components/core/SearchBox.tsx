@@ -218,7 +218,7 @@ export const SearchBox = ({
 			router.push({
 				pathname: '/search/[...params]',
 				query: {
-					params: params.data,
+					params: params.data.map((val) => val.toString()),
 				},
 			})
 			setLoading(false)
