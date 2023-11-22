@@ -1,6 +1,9 @@
+import fs from 'fs'
+import path from 'path'
+
 import { prisma } from '~db/client'
 
-import data from './phone.json'
+const data = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'phone.json'), 'utf8'))
 
 const run = async () => {
 	const phoneIds = new Set<string>()
