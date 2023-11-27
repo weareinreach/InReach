@@ -62,5 +62,6 @@ export * from './2023-11-17_add-missing-websites/index'
 export * from './2023-11-17_data-load/index'
 export * from './2023-11-20_fix-listing'
 export * from './2023-11-21_add-missing-phones/index'
+export * from './2023-11-22_ad-hoc-updates/index'
 export * from './2023-11-22_update-alert-messages/index'
 // codegen:end
