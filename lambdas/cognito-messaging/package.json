@@ -20,12 +20,12 @@
 		"package": "cd dist && zip -r ../bundle.zip *"
 	},
 	"dependencies": {
-		"@aws-lambda-powertools/logger": "1.16.0"
+		"@aws-lambda-powertools/logger": "1.17.0"
 	},
 	"devDependencies": {
-		"@types/aws-lambda": "8.10.128",
+		"@types/aws-lambda": "8.10.129",
 		"@types/eslint": "8.44.7",
-		"@types/node": "20.9.4",
+		"@types/node": "20.10.0",
 		"@vercel/ncc": "0.38.1",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
