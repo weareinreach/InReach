@@ -13,7 +13,7 @@ jobs:
       - uses: github/privileged-requester@020a53bc1a3c4500c216c7c8100a58b0e6d7381e # v2.0.0
         if: ${{ github.event.requested_reviewer.login == 'InReach-svc'}}
         with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           robotUserToken: ${{ secrets.GH_ACT_PAT }}
           path: .github/autoapprove-config.yaml
           prCreator: ${{ github.event.pull_request.user.login }}
