@@ -36,7 +36,7 @@
 		"types:sync": "typesync"
 	},
 	"devDependencies": {
-		"@changesets/cli": "2.27.0",
+		"@changesets/cli": "2.27.1",
 		"@turbo/gen": "1.10.16",
 		"@types/lint-staged": "13.2.2",
 		"@types/node": "20.10.0",
@@ -45,7 +45,7 @@
 		"boxen": "7.1.1",
 		"dotenv": "16.3.1",
 		"husky": "8.0.3",
-		"knip": "3.0.2",
+		"knip": "3.2.0",
 		"lint-staged": "15.1.0",
 		"prettier": "3.1.0",
 		"prettier-plugin-jsdoc": "1.1.1",
