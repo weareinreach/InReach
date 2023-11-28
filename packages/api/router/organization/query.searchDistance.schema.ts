@@ -3,10 +3,12 @@ import { z } from 'zod'
 import { coerceCoordItems, pagination } from '~api/schemas/common'
 
 export const ZSearchDistanceSchema = z.object({
-	...coerceCoordItems,
-	dist: z.union([z.number(), z.string()]).pipe(z.coerce.number()),
+	lat: z.number().gte(-90).lte(90),
+	lon: z.number().gte(-180).lte(180),
+	dist: z.coerce.number(),
 	unit: z.enum(['mi', 'km']),
-	...pagination,
+	skip: z.coerce.number(),
+	take: z.coerce.number(),
 	services: z.string().array().optional(),
 	attributes: z.string().array().optional(),
 })

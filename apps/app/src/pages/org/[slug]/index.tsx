@@ -280,7 +280,7 @@ export const getStaticProps = async ({
 		}
 
 		const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
-		// if (!orgId) return { notFound: true, props: {} }
+		if (!orgId) return { notFound: true }
 
 		const [i18n] = await Promise.allSettled([
 			orgId
