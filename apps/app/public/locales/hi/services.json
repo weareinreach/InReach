@@ -37,12 +37,12 @@
 		"scholarships": "छात्रवृत्तियां"
 	},
 	"food": {
-		"CATEGORYNAME": "फ़ूड",
+		"CATEGORYNAME": "Food",
 		"food": "फ़ूड",
 		"food-assistance": "खाद्य सहायता"
 	},
 	"housing": {
-		"CATEGORYNAME": "हाउसिंग",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ युवाओं के लिए ड्रॉप-इन सेंटर",
 		"emergency-housing": "आपातकालीन आवास",
 		"housing-information-and-referrals": "आवास की जानकारी और रेफरल",
@@ -60,7 +60,7 @@
 	"international-support": {
 		"CATEGORTYNAME": "International Support",
 		"financial-assistance": "Financial Assistance",
-		"mental-health": "मानसिक स्वास्थ्य",
+		"mental-health": "Mental Health",
 		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
@@ -83,7 +83,7 @@
 		"u-visa": "यू वीज़ा"
 	},
 	"mail": {
-		"CATEGORYNAME": "मेल",
+		"CATEGORYNAME": "Mail",
 		"mail": "मेल"
 	},
 	"medical": {
@@ -104,7 +104,7 @@
 		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "मानसिक स्वास्थ्य",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "BIPOC सहायता समूह",
 		"hotlines": "हॉटलाइन",
 		"private-therapy-and-counseling": "निजी चिकित्सा और परामर्श",
@@ -127,7 +127,7 @@
 		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "अनुवाद और व्याख्या",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "हेल्थकेयर के लिए",
 		"for-legal-services": "कानूनी सेवाओं के लिए",
 		"general-translation-and-interpretation": "सामान्य अनुवाद और व्याख्या"

@@ -122,7 +122,7 @@ const _AddressDrawer = forwardRef<HTMLButtonElement, AddressDrawerProps>(({ loca
 	const { t } = useTranslation(['attribute', 'country', 'gov-dist'])
 	const { classes, cx } = useStyles()
 	const variants = useCustomVariant()
-	const apiUtils = api.useContext()
+	const apiUtils = api.useUtils()
 
 	// #region Get initial address
 	const { data, isLoading } = api.location.getAddress.useQuery(locationId ?? '', {

@@ -3,7 +3,7 @@
 		"scope": "typescript,typescriptreact",
 		"prefix": "!barrel",
 		"body": [
-			"// codegen:start {preset: barrel, include: ${1|./*.ts,./*.tsx,./*.ts\\, exclude: ./file.ts,./*.tsx\\, exclude: ./file.tsx|}}",
+			"// codegen:start {preset: barrel, include: ${1|./*.ts,./*.tsx,./*.ts\\, exclude: 'file.ts','*.tsx'\\, exclude: 'file.tsx'|}}",
 			"// codegen:end"
 		],
 		"description": "Code to have ESLint generate barrel file"

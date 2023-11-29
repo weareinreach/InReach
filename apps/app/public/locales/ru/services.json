@@ -1,6 +1,6 @@
 {
 	"abortion-care": {
-		"CATEGORYNAME": "Аборт",
+		"CATEGORYNAME": "Прерывание беременности",
 		"abortion-providers": "Услуги по прерыванию беременности",
 		"financial-assistance": "Финансовая помощь",
 		"lodging-assistance": "Помощь в аренде жилья",
@@ -73,7 +73,7 @@
 		"employment-authorization": "Разрешение на работу",
 		"family-petitions": "Семейные петиции",
 		"immigration-detention": "Задержание иммигрантов",
-		"legal-advice": "Юридические консультации",
+		"legal-advice": "Юридическая помощь",
 		"legal-hotlines": "Горячие линии по юридическим вопросам",
 		"name-and-gender-change": "Изменение имени и пола",
 		"refugee-claim": "Статус беженца",
@@ -87,7 +87,7 @@
 		"mail": "Почта"
 	},
 	"medical": {
-		"CATEGORYNAME": "Медицинский",
+		"CATEGORYNAME": "Медицинские услуги",
 		"covid-19-services": "Услуги по вопросам COVID-19",
 		"dental-care": "Стоматологическая помощь",
 		"hiv-and-sexual-health": "ВИЧ-инфекции и сексуальное здоровье",
@@ -127,10 +127,10 @@
 		"transport-relo-support": "Помощь в переезде"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Перевод и перевод",
+		"CATEGORYNAME": "Устный и письменный перевод",
 		"for-healthcare": "По медицинским вопросам",
 		"for-legal-services": "По юридическим вопросам",
-		"general-translation-and-interpretation": "Неузкоспециализированный перевод"
+		"general-translation-and-interpretation": "Устный и письменный перевод"
 	},
 	"transportation": {
 		"CATEGORYNAME": "Транспортные услуги",

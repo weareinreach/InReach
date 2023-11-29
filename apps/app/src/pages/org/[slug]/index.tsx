@@ -1,6 +1,7 @@
 import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticPropsContext, type InferGetStaticPropsType } from 'next'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -11,7 +12,7 @@ import { trpcServerClient } from '@weareinreach/api/trpc'
 // import { getEnv } from '@weareinreach/env'
 // import { prisma } from '@weareinreach/db/client'
 import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
-import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
+// import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
@@ -24,6 +25,9 @@ import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
+const GoogleMap = dynamic(() =>
+	import('@weareinreach/ui/components/core/GoogleMap').then((mod) => mod.GoogleMap)
+)
 const LoadingState = () => (
 	<>
 		<Grid.Col sm={8} order={1} pb={40}>
@@ -276,7 +280,7 @@ export const getStaticProps = async ({
 		}
 
 		const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
-		// if (!orgId) return { notFound: true, props: {} }
+		if (!orgId) return { notFound: true }
 
 		const [i18n] = await Promise.allSettled([
 			orgId

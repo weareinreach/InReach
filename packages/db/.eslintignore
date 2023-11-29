@@ -2,3 +2,5 @@ datastore/
 prisma/generated/
 zod-schemas/
 kysely-vercel/
+___*.ts
+_queries/

@@ -66,7 +66,7 @@ export const MultiSelectPopover = ({
 
 	const selected = items.filter(({ checked }) => checked).length
 
-	const { classes, cx } = useStyles({ selectedCount: selected, dimmed: Boolean(labelClassName) })
+	const { classes } = useStyles({ selectedCount: selected, dimmed: Boolean(labelClassName) })
 
 	const selectedCountIcon = <Text className={classes.count}>{selected}</Text>
 

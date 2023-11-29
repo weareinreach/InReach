@@ -6,7 +6,7 @@
 		"geo-public-transit-description": "公共交通/特定路线",
 		"has-confidentiality-policy": "有保密政策",
 		"offers-remote-services": "远程",
-		"private-practice": "私人诊所",
+		"private-practice": "私人练习",
 		"religiously-affiliated": "有宗教信仰",
 		"time-walk-in": "有上门时间",
 		"wheelchair-accessible_false": "无法访问",
@@ -66,7 +66,7 @@
 		"undocumented": "为无证移民提供服务的机会"
 	},
 	"cost": {
-		"CATEGORYNAME": "成本",
+		"CATEGORYNAME": "费用",
 		"cost-fees": "产生成本",
 		"cost-free": "免费的"
 	},
@@ -76,8 +76,8 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "资格要求",
-		"elig-age_max": "{{max}}以下",
-		"elig-age_min": "{{min}} 及更早版本",
+		"elig-age_max": "Under {{max}}",
+		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "其他（免费文字描述）",
 		"req-medical-insurance": "需要医疗保险",
@@ -89,7 +89,7 @@
 		"time-appointment-required": "需要预约"
 	},
 	"lang": {
-		"CATEGORYNAME": "语言",
+		"CATEGORYNAME": "语文",
 		"all-languages-by-interpreter": "所有语言均通过口译员",
 		"american-sign-language": "美国手语",
 		"lang-offered": "提供的特定语言"
@@ -154,7 +154,7 @@
 		"grassroots-direct": "基层直接服务组织",
 		"healthcare": "医疗保健提供商",
 		"lawyer": "律师",
-		"other": "其他（请注明）",
+		"other": "其他（请具体说明）",
 		"paralegal": "律师助理或其他法律支持人员",
 		"social-worker": "社会工作者",
 		"student-club": "学生俱乐部负责人/管理员",

@@ -13,7 +13,7 @@ import {
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { forwardRef, type ReactNode } from 'react'
+import { forwardRef, type JSX, type ReactNode } from 'react'
 
 import { serviceModalEvent } from '@weareinreach/analytics/events'
 import { supplementSchema } from '@weareinreach/api/schemas/attributeSupplement'

@@ -6,7 +6,7 @@
 		"geo-public-transit-description": "सार्वजनिक परिवहन/विशिष्ट दिशा-निर्देश",
 		"has-confidentiality-policy": "एक गोपनीयता नीति है",
 		"offers-remote-services": "रिमोट",
-		"private-practice": "प्राइवेट प्रैक्टिस",
+		"private-practice": "Private Practice",
 		"religiously-affiliated": "धार्मिक रूप से संबद्ध है",
 		"time-walk-in": "इसमें वॉक-इन ऑवर्स हैं",
 		"wheelchair-accessible_false": "ऐक्सेसिबल नहीं",
@@ -66,7 +66,7 @@
 		"undocumented": "ऐसे अवसर जो अनिर्दिष्ट आप्रवासियों की सेवा करते हैं"
 	},
 	"cost": {
-		"CATEGORYNAME": "लागत",
+		"CATEGORYNAME": "Cost",
 		"cost-fees": "लागत लगाती है",
 		"cost-free": "मुफ़्त"
 	},
@@ -76,8 +76,8 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "पात्रता आवश्यकताएँ",
-		"elig-age_max": "{{max}}के अंतर्गत",
-		"elig-age_min": "{{min}} और उससे अधिक",
+		"elig-age_max": "Under {{max}}",
+		"elig-age_min": "{{min}} and older",
 		"elig-age_range": "{{min}} - {{max}}",
 		"other-describe": "अन्य (मुफ्त टेक्स्ट विवरण)",
 		"req-medical-insurance": "चिकित्सा बीमा की आवश्यकता है",
@@ -89,7 +89,7 @@
 		"time-appointment-required": "समय पर नियुक्ति आवश्यक है"
 	},
 	"lang": {
-		"CATEGORYNAME": "भाषाएँ",
+		"CATEGORYNAME": "Languages",
 		"all-languages-by-interpreter": "इंटरप्रेटर के माध्यम से सभी भाषाएँ",
 		"american-sign-language": "अमेरिकन साइन लैंग्वेज",
 		"lang-offered": "पेश की जाने वाली विशिष्ट भाषाएं"
@@ -154,7 +154,7 @@
 		"grassroots-direct": "ग्रासरूट डायरेक्ट सर्विस ऑर्गनाइजेशन",
 		"healthcare": "हेल्थकेयर प्रदाता",
 		"lawyer": "वकील",
-		"other": "अन्य (कृपया निर्दिष्ट करें)",
+		"other": "Other (please specify)",
 		"paralegal": "पैरालीगल या अन्य कानूनी सहायता कर्मचारी",
 		"social-worker": "सामाजिक कार्यकर्ता",
 		"student-club": "स्टूडेंट क्लब लीडर/एडमिनिस्ट्रेटर",

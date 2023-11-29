@@ -89,15 +89,12 @@ const OutsideServiceArea = () => {
 		}
 	}, [router.isReady, router.isFallback, loading])
 
-	const { data: countryInfo } = api.misc.getCountryTranslation.useQuery(
-		{ cca2: router.query.country ?? '' },
-		{ enabled: notBlank(router.query.country) }
-	)
 	const { data } = api.organization.getIntlCrisis.useQuery(
 		{ cca2: router.query.country ?? '' },
 		{ enabled: notBlank(router.query.country), onSuccess: () => setLoading(false) }
 	)
-	const { t } = useTranslation(['services', 'common', 'attribute', 'country'])
+	const { t } = useTranslation(['services', 'common', 'attribute'])
+	const countryTranslate = new Intl.DisplayNames(router.locale, { type: 'region' })
 
 	const resultCount = 0
 
@@ -138,7 +135,7 @@ const OutsideServiceArea = () => {
 					<Title order={2}>
 						<Skeleton visible={loading}>
 							{t('common:crisis-support.outside-service-area', {
-								country: `$t(country:${countryInfo?.tsKey})`,
+								country: countryTranslate.of(router.query.country ?? ''),
 							})}
 						</Skeleton>
 					</Title>
@@ -171,8 +168,7 @@ export const getStaticProps = async ({
 
 	const ssg = await trpcServerClient({ session: null })
 	const [i18n] = await Promise.allSettled([
-		getServerSideTranslations(locale, ['services', 'common', 'attribute', 'country']),
-		ssg.misc.getCountryTranslation.prefetch({ cca2: parsedQuery.data.country }),
+		getServerSideTranslations(locale, ['services', 'common', 'attribute']),
 		ssg.organization.getIntlCrisis.prefetch({ cca2: parsedQuery.data.country }),
 	])
 	const props = {

@@ -1,3 +1,4 @@
+/* eslint-disable deprecation/deprecation */
 import { namespace as namespaces } from '~db/generated/namespaces'
 import { prisma, type Prisma } from '~db/index'
 import { slug } from '~db/lib/slugGen'

@@ -1,4 +1,4 @@
-import { Affix, createStyles, rem } from '@mantine/core'
+import { createStyles, rem } from '@mantine/core'
 import { ReactTableDevtools as RTDevtools } from '@tanstack/react-table-devtools'
 import { type ComponentProps } from 'react'
 

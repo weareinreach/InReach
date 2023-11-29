@@ -372,7 +372,7 @@
 	},
 	"FRA": {
 		"name": "France",
-		"demonym_one": "Français.e",
+		"demonym_one": "Français.e.s",
 		"demonym_other": "Français.e.s"
 	},
 	"FRO": {
@@ -765,7 +765,7 @@
 	},
 	"MTQ": {
 		"name": "Martinique",
-		"demonym_one": "Français.e",
+		"demonym_one": "Français.e.s",
 		"demonym_other": "Français.e.s"
 	},
 	"MUS": {
@@ -930,7 +930,7 @@
 	},
 	"REU": {
 		"name": "Réunion",
-		"demonym_one": "Français.e",
+		"demonym_one": "Français.e.s",
 		"demonym_other": "Français.e.s"
 	},
 	"ROU": {
@@ -1008,7 +1008,7 @@
 	},
 	"SPM": {
 		"name": "Saint-Pierre et Miquelon",
-		"demonym_one": "Français.e",
+		"demonym_one": "Français.e.s",
 		"demonym_other": "Français.e.s"
 	},
 	"SRB": {

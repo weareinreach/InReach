@@ -1,11 +1,11 @@
 {
 	"body": {
 		"accept-country": "Tanpri sonje ke nou ka sèlman aksepte òganizasyon ki sitiye nan peyi Etazini an, Meksik, ak Kanada nan moman sa a.",
-		"additional-info": "Lòt enfòmasyon",
+		"additional-info": "Additional information",
 		"intro-text": "Mèsi pou enterè ou nan kontribye nan App a InReach! Sèvi ak fòm sa a sijere yon òganizasyon (egzanp ONG, de baz oswa òganizasyon kominotè, sistèm swen sante, pratik prive, elatriye) ou panse yo ta dwe enkli. Li ok si ou pa gen tout enfòmasyon fòm nan mande pou - jis ranpli nan sa ou konnen, epi nou pral fè rès la! Nou apresye soumèt ou epi di ou mèsi pou ede ogmante aksè a resous san danje, verifye pou divès kominote LGBTQ+la. Tout òganizasyon sijere yo sijè a revize pa volontè ki resevwa fòmasyon InReach a anvan piblikasyon sou InReach.",
 		"required-info": "Enfòmasyon obligatwa",
 		"subject-review": "Tout òganizasyon sijere yo sijè a revize pa InReach anvan piblikasyon.",
-		"suggest-org": "Sijere yon òganizasyon"
+		"suggest-org": "Suggest an organization"
 	},
 	"form": {
 		"btn-community": "Ajoute LGBTQ+konsantre kominote (yo)",
@@ -21,7 +21,7 @@
 		"org-name": "Non òganizasyon an",
 		"org-website": "Sit wèb òganizasyon",
 		"placeholder-address": "Antre nan adrès...",
-		"placeholder-name": "Mete non òganizasyon...",
+		"placeholder-name": "Enter organization name...",
 		"placeholder-website": "Antre URL...",
 		"service-types": "Ki kalite (yo) nan sèvis (yo) òganizasyon sa a bay?"
 	},

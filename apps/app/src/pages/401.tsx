@@ -9,7 +9,7 @@ import { z } from 'zod'
 import { getServerSideTranslations } from '~app/utils/i18n'
 // import { LoginBody } from '@weareinreach/ui/modals/Login'
 
-const LoginBody = dynamic(() => import('@weareinreach/ui/modals/Login').then((mod) => mod.LoginBody))
+const LoginBody = dynamic(() => import('@weareinreach/ui/modals/LoginSignUp').then((mod) => mod.LoginBody))
 
 const RouteSchema = z.object({
 	pathname: z.string(),

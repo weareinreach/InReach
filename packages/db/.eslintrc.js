@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unused-modules */
 module.exports = {
 	extends: ['@weareinreach/eslint-config'],
 
@@ -6,7 +5,7 @@ module.exports = {
 	ignorePatterns: ['datastore/', 'prisma/generated/', 'zod-schemas/'],
 	overrides: [
 		{
-			files: ['./zod-schemas/*.ts'],
+			files: ['./zod-schemas/*.ts', './prisma/data-migrations/**/*.ts'],
 			rules: {
 				'@typescript-eslint/no-unused-vars': 'off',
 			},

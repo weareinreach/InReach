@@ -293,7 +293,7 @@ export const orgPhone = {
 	upsertMany: getTRPCMock({
 		path: ['orgPhone', 'upsertMany'],
 		type: 'mutation',
-		response: (input) => [],
+		response: () => [],
 	}),
 	forContactInfo: getTRPCMock({
 		path: ['orgPhone', 'forContactInfo'],

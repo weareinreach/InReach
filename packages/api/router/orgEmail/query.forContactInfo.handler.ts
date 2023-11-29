@@ -4,30 +4,43 @@ import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForContactInfoSchema } from './query.forContactInfo.schema'
 
-export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
-	const whereId = (): Prisma.OrgEmailWhereInput => {
-		switch (true) {
-			case isIdFor('organization', input.parentId): {
-				return {
-					organization: { some: { organization: { id: input.parentId, ...globalWhere.isPublic() } } },
-				}
-			}
-			case isIdFor('orgLocation', input.parentId): {
-				return { locations: { some: { location: { id: input.parentId, ...globalWhere.isPublic() } } } }
-			}
-			case isIdFor('orgService', input.parentId): {
-				return { services: { some: { service: { id: input.parentId, ...globalWhere.isPublic() } } } }
-			}
-			default: {
-				return {}
-			}
+const isPublic = globalWhere.isPublic()
+const whereId = (input: TForContactInfoSchema, isSingleLoc?: boolean): Prisma.OrgEmailWhereInput => {
+	switch (true) {
+		case isIdFor('organization', input.parentId): {
+			return isSingleLoc
+				? {
+						OR: [
+							{ organization: { some: { organization: { id: input.parentId, ...isPublic } } } },
+							{ locations: { some: { location: { organization: { id: input.parentId, ...isPublic } } } } },
+						],
+				  }
+				: { organization: { some: { organization: { id: input.parentId, ...isPublic } } } }
+		}
+		case isIdFor('orgLocation', input.parentId): {
+			return { locations: { some: { location: { id: input.parentId, ...isPublic } } } }
+		}
+		case isIdFor('orgService', input.parentId): {
+			return { services: { some: { service: { id: input.parentId, ...isPublic } } } }
+		}
+		default: {
+			return {}
 		}
 	}
+}
+
+export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInfoSchema>) => {
+	const locCount = isIdFor('organization', input.parentId)
+		? await prisma.orgLocation.count({
+				where: { organization: { id: input.parentId, ...isPublic }, ...isPublic },
+		  })
+		: 0
+	const isSingleLoc = locCount === 1
 
 	const result = await prisma.orgEmail.findMany({
 		where: {
-			...globalWhere.isPublic(),
-			...whereId(),
+			...isPublic,
+			...whereId(input, isSingleLoc),
 			...(input.locationOnly !== undefined ? { locationOnly: input.locationOnly } : {}),
 			...(input.serviceOnly !== undefined ? { serviceOnly: input.serviceOnly } : {}),
 		},

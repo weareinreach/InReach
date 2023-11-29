@@ -14,14 +14,14 @@ on:
       - renovate/*
   workflow_dispatch:
   schedule:
-    # ┌───────────── minute (0 - 59)
-    # │ ┌───────────── hour (0 - 23)
-    # │ │ ┌───────────── day of the month (1 - 31)
-    # │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
-    # │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
-    # │ │ │ │ │
-    # │ │ │ │ │
-    # │ │ │ │ │
+    #       ┌───────────── minute (0 - 59)
+    #       │ ┌───────────── hour (0 - 23)
+    #       │ │ ┌───────────── day of the month (1 - 31)
+    #       │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+    #       │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    #       │ │ │ │ │
+    #       │ │ │ │ │
+    #       │ │ │ │ │
     - cron: 0 8 * * *
 
 jobs:
@@ -80,11 +80,15 @@ jobs:
 
       - name: Push sources to Crowdin
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
-        run: crowdin push sources -b ${{ steps.sanitizebranch.outputs.value }}
+        run: crowdin push sources -b ${{ steps.sanitizebranch.outputs.value }} --no-progress
+
+      - name: Synchronize sources to Crowdin
+        if: steps.sanitizebranch.outputs.value == 'main'
+        run: crowdin push sources -b ${{ steps.sanitizebranch.outputs.value }} --no-progress
 
       - name: Pull updated translations from Crowdin
         if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
-        run: crowdin pull -b ${{ steps.sanitizebranch.outputs.value }}
+        run: crowdin pull -b ${{ steps.sanitizebranch.outputs.value }} --no-progress
 
       - name: Check for updated files
         if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
@@ -106,6 +110,7 @@ jobs:
         if: ((github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled') && steps.verify-changed-files.outputs.files_changed
         uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
         with:
+          token: ${{ secrets.GH_ACT_PAT }}
           commit-message: Updated translations from Crowdin
           committer: 'InReach [bot] <108850934+InReach-svc@users.noreply.github.com>'
           author: 'InReach [bot] <108850934+InReach-svc@users.noreply.github.com>'
@@ -119,5 +124,5 @@ jobs:
           delete-branch: true
 
       - name: Delete Crowdin Branch
-        if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev' && github.ref_name != 'dev'
-        run: crowdin branch delete ${{ steps.sanitizebranch.outputs.value }}
+        if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev' && steps.sanitizebranch.outputs.value != 'dev' && steps.sanitizebranch.outputs.value != 'main'
+        run: crowdin branch delete ${{ steps.sanitizebranch.outputs.value }} --no-progress

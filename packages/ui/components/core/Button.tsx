@@ -9,7 +9,7 @@ import {
 } from '@mantine/core'
 import { type PolymorphicComponentProps } from '@mantine/utils'
 import { merge } from 'merge-anything'
-import { forwardRef, type ReactNode } from 'react'
+import { forwardRef, type JSX, type ReactNode } from 'react'
 
 import { type variantNames } from '~ui/theme/variants'
 

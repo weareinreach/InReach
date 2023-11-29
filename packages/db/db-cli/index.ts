@@ -1,6 +1,7 @@
 import inquirer from 'inquirer'
 
 import { generateIdTask } from './task.generateId'
+import { generateSlugTask } from './task.generateSlug'
 
 const main = () =>
 	inquirer
@@ -11,6 +12,7 @@ const main = () =>
 				message: 'Select a task/tool',
 				choices: [
 					{ name: 'Generate IDs', value: 'generateId' },
+					{ name: 'Generate Slug', value: 'generateSlug' },
 					// { name: 'Quit', value: 'quit' },
 				],
 			},
@@ -20,7 +22,10 @@ const main = () =>
 			if (answers.task === 'quit') process.exit()
 			switch (answers.task) {
 				case 'generateId': {
-					generateIdTask()
+					return generateIdTask()
+				}
+				case 'generateSlug': {
+					return generateSlugTask()
 				}
 			}
 		})

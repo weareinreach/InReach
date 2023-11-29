@@ -401,7 +401,7 @@
 		"demonym_other": "Gigantes"
 	},
 	"GGY": {
-		"name": "Guernesey",
+		"name": "Guernsey",
 		"demonym_one": "Isla del Canal",
 		"demonym_other": "Islas del canal"
 	},
@@ -619,7 +619,7 @@
 		"demonym_other": "Laotianos"
 	},
 	"LBN": {
-		"name": "Líbano",
+		"name": "Lebanon",
 		"demonym_one": "Líbano",
 		"demonym_other": "Lebaneses"
 	},
@@ -826,7 +826,7 @@
 	"NLD": {
 		"name": "Países Bajos",
 		"demonym_one": "Holandés",
-		"demonym_other": "Duchas"
+		"demonym_other": "Holandés"
 	},
 	"NOR": {
 		"name": "Noruega",

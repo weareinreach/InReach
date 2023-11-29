@@ -17,7 +17,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type GetServerSideProps } from 'nextjs-routes'
-import { memo, useEffect, useMemo, useState } from 'react'
+import { type JSX, memo, useEffect, useMemo, useState } from 'react'
 import { z } from 'zod'
 
 import { SearchParamsSchema } from '@weareinreach/api/schemas/routes/search'
@@ -75,7 +75,7 @@ const SearchResults = () => {
 	const queryParams = SearchParamsSchema.safeParse(router.query.params)
 	const skip = (PageIndexSchema.parse(router.query.page) - 1) * SEARCH_RESULT_PAGE_SIZE
 	const take = SEARCH_RESULT_PAGE_SIZE
-	const apiUtils = api.useContext()
+	const apiUtils = api.useUtils()
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 
