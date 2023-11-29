@@ -10,7 +10,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: github/privileged-requester@020a53bc1a3c4500c216c7c8100a58b0e6d7381e # v2.0.0
+      - uses: github/privileged-requester@f8d60d9344e1c10976aad5c1af0c7c977badd677 # v2.1.0
         if: ${{ github.event.requested_reviewer.login == 'InReach-svc'}}
         with:
           github_token: ${{ secrets.GH_ACT_PAT }}
