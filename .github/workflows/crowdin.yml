@@ -14,14 +14,14 @@ on:
       - renovate/*
   workflow_dispatch:
   schedule:
-    # ┌───────────── minute (0 - 59)
-    # │ ┌───────────── hour (0 - 23)
-    # │ │ ┌───────────── day of the month (1 - 31)
-    # │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
-    # │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
-    # │ │ │ │ │
-    # │ │ │ │ │
-    # │ │ │ │ │
+    #       ┌───────────── minute (0 - 59)
+    #       │ ┌───────────── hour (0 - 23)
+    #       │ │ ┌───────────── day of the month (1 - 31)
+    #       │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+    #       │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    #       │ │ │ │ │
+    #       │ │ │ │ │
+    #       │ │ │ │ │
     - cron: 0 8 * * *
 
 jobs:
@@ -110,6 +110,7 @@ jobs:
         if: ((github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled') && steps.verify-changed-files.outputs.files_changed
         uses: peter-evans/create-pull-request@153407881ec5c347639a548ade7d8ad1d6740e38 # v5
         with:
+          token: ${{ secrets.GH_ACT_PAT }}
           commit-message: Updated translations from Crowdin
           committer: 'InReach [bot] <108850934+InReach-svc@users.noreply.github.com>'
           author: 'InReach [bot] <108850934+InReach-svc@users.noreply.github.com>'
