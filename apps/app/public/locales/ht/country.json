@@ -201,7 +201,7 @@
 		"demonym_other": "Cocos Islanders"
 	},
 	"CHE": {
-		"name": "Swis",
+		"name": "Switzerland",
 		"demonym_one": "Swis",
 		"demonym_other": "Swis"
 	},
@@ -232,8 +232,8 @@
 	},
 	"COG": {
 		"name": "Repiblik Kongo",
-		"demonym_one": "Kongolè",
-		"demonym_other": "Kongolè"
+		"demonym_one": "Congolese",
+		"demonym_other": "Congolese"
 	},
 	"COK": {
 		"name": "Zile Cook",
@@ -312,8 +312,8 @@
 	},
 	"DOM": {
 		"name": "Repiblik Dominikèn",
-		"demonym_one": "Dominikèn",
-		"demonym_other": "Dominiken"
+		"demonym_one": "Dominican",
+		"demonym_other": "Dominicans"
 	},
 	"DZA": {
 		"name": "Aljeri",
@@ -372,8 +372,8 @@
 	},
 	"FRA": {
 		"name": "Lafrans",
-		"demonym_one": "franse",
-		"demonym_other": "franse"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"FRO": {
 		"name": "Zile Faroe",
@@ -396,7 +396,7 @@
 		"demonym_other": "Britanik"
 	},
 	"GEO": {
-		"name": "Georgie",
+		"name": "Georgia",
 		"demonym_one": "Georgian",
 		"demonym_other": "Jòjyen"
 	},
@@ -520,8 +520,8 @@
 	},
 	"IOT": {
 		"name": "Teritwa Oseyan Endyen Britanik",
-		"demonym_one": "Endyen",
-		"demonym_other": "Endyen"
+		"demonym_one": "Indian",
+		"demonym_other": "Indians"
 	},
 	"IRL": {
 		"name": "Iland",
@@ -560,8 +560,8 @@
 	},
 	"JEY": {
 		"name": "Jersey",
-		"demonym_one": "Chèn Islander",
-		"demonym_other": "Chèn Island"
+		"demonym_one": "Channel Islander",
+		"demonym_other": "Channel Islanders"
 	},
 	"JOR": {
 		"name": "Jordan",
@@ -619,7 +619,7 @@
 		"demonym_other": "Laotians"
 	},
 	"LBN": {
-		"name": "Liban",
+		"name": "Lebanon",
 		"demonym_one": "Libanè",
 		"demonym_other": "Libanè"
 	},
@@ -670,8 +670,8 @@
 	},
 	"MAC": {
 		"name": "Macau",
-		"demonym_one": "Chinwa",
-		"demonym_other": "Chinwa"
+		"demonym_one": "Chinese",
+		"demonym_other": "Chinese"
 	},
 	"MAF": {
 		"name": "Saint Martin",
@@ -704,7 +704,7 @@
 		"demonym_other": "Maldivans"
 	},
 	"MEX": {
-		"name": "Meksik",
+		"name": "Mexico",
 		"demonym_one": "Meksiken",
 		"demonym_other": "Meksiken"
 	},
@@ -765,8 +765,8 @@
 	},
 	"MTQ": {
 		"name": "Matinik",
-		"demonym_one": "franse",
-		"demonym_other": "franse"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"MUS": {
 		"name": "Moris",
@@ -825,8 +825,8 @@
 	},
 	"NLD": {
 		"name": "Netherlands",
-		"demonym_one": "Olandè",
-		"demonym_other": "Olandè"
+		"demonym_one": "Dutch",
+		"demonym_other": "Dutch"
 	},
 	"NOR": {
 		"name": "Nòvèj",
@@ -930,8 +930,8 @@
 	},
 	"REU": {
 		"name": "Réunion",
-		"demonym_one": "franse",
-		"demonym_other": "franse"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"ROU": {
 		"name": "Woumani",
@@ -978,7 +978,7 @@
 	},
 	"SJM": {
 		"name": "Svalbard ak Jan Mayen",
-		"demonym_one": "Nòvejyen",
+		"demonym_one": "Norwegian",
 		"demonym_other": "Norwegians"
 	},
 	"SLB": {
@@ -1008,8 +1008,8 @@
 	},
 	"SPM": {
 		"name": "Saint Pierre ak Miquelon",
-		"demonym_one": "franse",
-		"demonym_other": "franse"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"SRB": {
 		"name": "Sèbi",
@@ -1153,8 +1153,8 @@
 	},
 	"UMI": {
 		"name": "Zile minè Etazini",
-		"demonym_one": "Ameriken",
-		"demonym_other": "Ameriken"
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UNK": {
 		"name": "Kosovo",
@@ -1168,8 +1168,8 @@
 	},
 	"USA": {
 		"name": "Etazini",
-		"demonym_one": "Ameriken",
-		"demonym_other": "Ameriken"
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UZB": {
 		"name": "Ouzbekistan",
@@ -1178,8 +1178,8 @@
 	},
 	"VAT": {
 		"name": "Vil Vatikan",
-		"demonym_one": "Italyen",
-		"demonym_other": "Italyen"
+		"demonym_one": "Italian",
+		"demonym_other": "Italians"
 	},
 	"VCT": {
 		"name": "Saint Vincent ak Grenadines yo",
@@ -1198,8 +1198,8 @@
 	},
 	"VIR": {
 		"name": "Zile Vyèj Etazini",
-		"demonym_one": "Vyèj Islander",
-		"demonym_other": "Vyèj Islanders"
+		"demonym_one": "Virgin Islander",
+		"demonym_other": "Virgin Islanders"
 	},
 	"VNM": {
 		"name": "Vyetnam",

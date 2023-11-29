@@ -2,7 +2,6 @@
 	"name": "@weareinreach/crowdin",
 	"version": "0.100.0",
 	"private": true,
-	"sideEffects": false,
 	"exports": {
 		"./api": "./api/index.ts",
 		"./api/edge": "./api/edge.ts",
@@ -40,10 +39,10 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@crowdin/crowdin-api-client": "1.24.0",
+		"@crowdin/crowdin-api-client": "1.28.1",
 		"@crowdin/ota-client": "1.0.0",
-		"@opentelemetry/api": "1.6.0",
-		"@vercel/kv": "0.2.3",
+		"@opentelemetry/api": "1.7.0",
+		"@vercel/kv": "1.0.0",
 		"@weareinreach/util": "workspace:*",
 		"flat": "6.0.1",
 		"object-sizeof": "2.6.3",
@@ -52,7 +51,7 @@
 	"devDependencies": {
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
-		"prettier": "3.0.3",
-		"typescript": "5.2.2"
+		"prettier": "3.1.0",
+		"typescript": "5.3.2"
 	}
 }

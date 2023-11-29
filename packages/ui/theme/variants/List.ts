@@ -85,7 +85,7 @@ export const List = {
 				alignItems: 'center',
 			},
 		}) satisfies Styles<ListStylesNames, ListStylesParams>,
-	inlineBullet: (theme) =>
+	inlineBullet: () =>
 		({
 			root: {
 				display: 'inline-flex',
@@ -108,7 +108,7 @@ export const List = {
 				alignItems: 'center',
 			},
 		}) satisfies Styles<ListStylesNames, ListStylesParams>,
-	inline: (theme) =>
+	inline: () =>
 		({
 			root: {
 				display: 'inline-flex',

@@ -39,5 +39,5 @@ export const middleware: NextMiddleware = async (req: NextRequest) => {
 }
 
 export const config = {
-	matcher: ['/((?!api|_next/static|_next/image|favicon|monitoring).*)'],
+	matcher: ['/((?!api|_next/static|_next/image|favicon|monitoring|_error).*)'],
 }

@@ -55,3 +55,10 @@ export const shake = {
 		'100%': { transform: `translate(0, 0) rotate(0deg)` },
 	}),
 }
+
+export const bounce = (distance: number) =>
+	keyframes({
+		'0%, 20%, 50%, 80%, 100%': { transform: `translateY(0)` },
+		'40%': { transform: `translateY(${rem(-distance)})` },
+		'60%': { transform: `translateY(${rem(-distance / 2)})` },
+	})

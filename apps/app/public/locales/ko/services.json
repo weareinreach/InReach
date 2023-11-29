@@ -14,7 +14,7 @@
 		"cultural-centers": "문화센터",
 		"lgbtq-centers": "LGBTQ 센터",
 		"reception-services": "접수처 서비스",
-		"reentry-services": "재입국 서비스",
+		"reentry-services": "수감과 재입국 서비스",
 		"spiritual-support": "영적인 지원",
 		"sponsors": "이민국 스폰서십"
 	},
@@ -44,10 +44,10 @@
 	"housing": {
 		"CATEGORYNAME": "주택",
 		"drop-in-centers-for-lgbtq-youth": "LGBTQ 청소년을 위한 예약 필요 없는 회관",
-		"emergency-housing": "긴급주거",
-		"housing-information-and-referrals": "주거 정보와 추천서",
-		"short-term-housing": "단기의 주거",
-		"trans-housing": "트랜스젠더 주거"
+		"emergency-housing": "긴급 주택",
+		"housing-information-and-referrals": "주택 정보와 추천서",
+		"short-term-housing": "단기의 주택",
+		"trans-housing": "트랜스젠더 주택"
 	},
 	"hygiene-and-clothing": {
 		"CATEGORYNAME": "위생과 의류",
@@ -75,8 +75,8 @@
 		"immigration-detention": "이민자 수용소",
 		"legal-advice": "법률 자문",
 		"legal-hotlines": "법률 핫라인",
-		"name-and-gender-change": "이름과 성별 마커 변경",
-		"refugee-claim": "난민 청구",
+		"name-and-gender-change": "표시된 이름과 성별 변화",
+		"refugee-claim": "난민 신청",
 		"residency": "거주",
 		"special-immigrant-juvenile-status-sijs": "청소년 특별 이민 (SIJS)",
 		"t-visa": "T 비자",
@@ -127,7 +127,7 @@
 		"transport-relo-support": "트랜스 재정착하기 지원"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "번역 및 통역",
+		"CATEGORYNAME": "일반 번역이랑 통역",
 		"for-healthcare": "건강관리 위해",
 		"for-legal-services": "법률 서비스 위해",
 		"general-translation-and-interpretation": "일반 번역이랑 통역"

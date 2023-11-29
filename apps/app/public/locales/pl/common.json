@@ -85,6 +85,11 @@
 		"website": "Bezpośrednia strona internetowa"
 	},
 	"disclaimer": "Zrzeczenie się odpowiedzialności",
+	"donate": {
+		"hover": "Wspomóż dzisiaj aby pomóc InReach za darmo dla wszystkich",
+		"popup": "Pomóż zapewnić bezpłatny dostęp dla wszystkich",
+		"to-inreach": "Wesprzyj do wnętrza 💝"
+	},
 	"dont-have-account": "Nie masz konta?",
 	"download-app": "Pobierz aplikację",
 	"edit-profile": "Edytuj profil",
@@ -110,9 +115,9 @@
 	"find-resources": "Znajdź zasoby",
 	"find-x": "Znajdź {{value}}",
 	"footer": {
-		"anti-hate": "Zaangażowanie przeciwko nienawiści",
+		"anti-hate": "Zaangażowanie antynienawiści",
 		"digital-accessibility": "Dostępność cyfrowa",
-		"disclaimer": "Zrzeczenie się odpowiedzialności",
+		"disclaimer": "Zastrzeżenie",
 		"privacy-statement": "Oświadczenie o ochronie prywatności",
 		"share-feedback": "Podziel się opinią",
 		"subscribe-newsletter": "Zapisz się do naszego newslettera",
@@ -384,6 +389,7 @@
 		"decline": "Odrzuć",
 		"delete": "Usuń",
 		"distance": "Odległość",
+		"donate": "Wesprzyj",
 		"email": "E-mail",
 		"home": "Strona główna",
 		"hours": "Godziny",

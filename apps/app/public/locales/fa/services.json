@@ -37,12 +37,12 @@
 		"scholarships": "بورس های تحصیلی"
 	},
 	"food": {
-		"CATEGORYNAME": "مواد غذایی",
+		"CATEGORYNAME": "Food",
 		"food": "مواد غذایی",
 		"food-assistance": "کمک های غذایی"
 	},
 	"housing": {
-		"CATEGORYNAME": "مسکن",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "مراکز رها کردن برای جوانان LGBTQ",
 		"emergency-housing": "مسکن اضطراری",
 		"housing-information-and-referrals": "اطلاعات مسکن و ارجاع",
@@ -60,7 +60,7 @@
 	"international-support": {
 		"CATEGORTYNAME": "International Support",
 		"financial-assistance": "Financial Assistance",
-		"mental-health": "سلامت روان",
+		"mental-health": "Mental Health",
 		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
@@ -83,7 +83,7 @@
 		"u-visa": "ویزای U"
 	},
 	"mail": {
-		"CATEGORYNAME": "نامه",
+		"CATEGORYNAME": "Mail",
 		"mail": "نامه"
 	},
 	"medical": {
@@ -104,7 +104,7 @@
 		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "سلامت روان",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "گروه های پشتیبانی BIPOC",
 		"hotlines": "خطوط تلفن",
 		"private-therapy-and-counseling": "مشاوره و درمان خصوصی",
@@ -127,7 +127,7 @@
 		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "ترجمه و تفسیر",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "برای مراقبت های بهداشتی",
 		"for-legal-services": "برای خدمات حقوقی",
 		"general-translation-and-interpretation": "ترجمه و تفسیر عمومی"

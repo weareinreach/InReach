@@ -78,7 +78,7 @@ export const Anchor = {
 			},
 		},
 	}),
-	inheritStyle: (theme) => ({
+	inheritStyle: () => ({
 		root: {
 			display: 'inline',
 			padding: '0 !important',
@@ -91,12 +91,12 @@ export const Anchor = {
 			},
 		},
 	}),
-	block: (theme) => ({
+	block: () => ({
 		root: {
 			display: 'block',
 		},
 	}),
-	card: (theme) => ({
+	card: () => ({
 		root: {
 			padding: '0 !important',
 			fontWeight: 'inherit !important' as unknown as 'normal',
@@ -126,7 +126,7 @@ export const Anchor = {
 			},
 		},
 	}),
-	navMenu: (theme) => ({
+	navMenu: () => ({
 		root: {
 			textDecoration: 'none !important',
 		},

@@ -483,7 +483,7 @@ export const BadgeGroup = ({ badges, withSeparator = false, ...props }: BadgeGro
 	const separator = (
 		<Divider w={4} size={4} style={{ borderRadius: '50%' }} color={theme.other.colors.secondary.black} />
 	)
-	const badgeList = badges.map((item: CustomBadgeProps, idx, arr) => (
+	const badgeList = badges.map((item: CustomBadgeProps, idx) => (
 		<List.Item key={idx}>
 			<Badge {...item} />
 		</List.Item>

@@ -82,6 +82,11 @@
 		"website": "ダイレクトウェブサイト"
 	},
 	"disclaimer": "免責事項",
+	"donate": {
+		"hover": "InReach を誰もが無料で利用できるようにするために今日寄付してください",
+		"popup": "誰もがInReachを無料に保つのを助ける",
+		"to-inreach": "InReach :heart_with_ribbonに寄付する"
+	},
 	"dont-have-account": "アカウントを持っていない？",
 	"download-app": "アプリをダウンロードする",
 	"edit-profile": "プロフィールを編集",
@@ -107,7 +112,7 @@
 	"find-resources": "リソースを探す",
 	"find-x": "{{value}}を検索",
 	"footer": {
-		"anti-hate": "反ヘイトコミットメント",
+		"anti-hate": "憎悪防止への取り組み",
 		"digital-accessibility": "デジタルアクセシビリティ",
 		"disclaimer": "免責事項",
 		"privacy-statement": "プライバシーステートメント",
@@ -191,7 +196,7 @@
 	"password-req-uppercase": "大文字が含まれています",
 	"password-reset": {
 		"email-body": "パスワードをリセットするには、次のリンクをクリックしてください。",
-		"email-subject": "パスワードをリセット"
+		"email-subject": "パスワードをリセットする"
 	},
 	"password-reset-success": "<Text>新しいパスワードを使用して <LoginModal>ログイン</LoginModal> してください。</Text>",
 	"password-saved": "パスワードが保存されました！",
@@ -381,6 +386,7 @@
 		"decline": "同意しない",
 		"delete": "[削除]",
 		"distance": "距離",
+		"donate": "寄付",
 		"email": "E メール",
 		"home": "ホーム",
 		"hours": "時間",
@@ -390,15 +396,15 @@
 		"next": "[次へ]",
 		"no": "いいえ",
 		"organization": "組織",
-		"password": "[パスワード]",
+		"password": "パスワード",
 		"phone": "[電話]",
 		"please-wait": "しばらくお待ちください...",
 		"prev": "前へ",
 		"print": "プリント",
 		"review": "レビュー",
 		"reviews": "レビュー",
-		"save": "[保存]",
-		"saved": "保存済み",
+		"save": "保存",
+		"saved": "保存しました",
 		"search": "検索",
 		"service-hours": "サービス時間",
 		"settings": "[設定]",

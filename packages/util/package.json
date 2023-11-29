@@ -2,11 +2,6 @@
 	"name": "@weareinreach/util",
 	"version": "0.100.0",
 	"private": true,
-	"sideEffects": false,
-	"exports": {
-		"./logger": "./logger/index.ts",
-		"./superjson": "./superjson/index.ts"
-	},
 	"main": "./index.ts",
 	"types": "./index.ts",
 	"scripts": {
@@ -19,12 +14,12 @@
 	},
 	"dependencies": {
 		"@vercel/edge-config": "0.4.1",
-		"luxon": "3.4.3",
-		"superjson": "1.13.3",
+		"luxon": "3.4.4",
+		"superjson": "2.2.1",
 		"tslog": "4.9.2"
 	},
 	"devDependencies": {
-		"@types/luxon": "3.3.2",
+		"@types/luxon": "3.3.5",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0"
 	}

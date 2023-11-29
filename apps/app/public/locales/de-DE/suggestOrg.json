@@ -1,0 +1,37 @@
+{
+	"body": {
+		"accept-country": "Bitte beachten Sie, dass wir derzeit nur Organisationen in den USA, Mexiko und Kanada akzeptieren können.",
+		"additional-info": "Zusätzliche Informationen",
+		"intro-text": "Vielen Dank für Ihr Interesse, zur InReach App beizutragen! Verwenden Sie dieses Formular, um eine Organisation vorzuschlagen (z. gemeinnützige Organisationen, gemeinnützige Organisationen, Gesundheitssysteme, private Praxis usw., sollten Ihrer Meinung nach einbezogen werden. Es ist in Ordnung, wenn Sie nicht alle Informationen im Formular haben - füllen Sie einfach das aus, was Sie wissen und wir tun den Rest! Wir freuen uns über Ihre Einreichung und danken Ihnen für Ihre Hilfe bei der Verbesserung des Zugangs zu sicheren, verifizierten Ressourcen für die vielfältige LGBTQ+-Community. Alle vorgeschlagenen Organisationen werden vor der Veröffentlichung auf InReach von ausgebildeten Freiwilligen überprüft.",
+		"required-info": "Erforderliche Informationen",
+		"subject-review": "Alle vorgeschlagenen Organisationen unterliegen der Überprüfung durch InReach vor der Veröffentlichung.",
+		"suggest-org": "Eine Organisation vorschlagen"
+	},
+	"form": {
+		"btn-community": "LGBTQ+ Community-Fokus(e) hinzufügen",
+		"btn-save-changes": "Änderungen speichern",
+		"btn-service": "Service Typ(en) hinzufügen",
+		"btn-submit": "Neue Organisation einreichen",
+		"community-focus": "Bietet diese Organisation Dienste(n) an, die sich auf bestimmte LGBTQ+-Gemeinschaften konzentrieren?",
+		"error-exists-active": "<Link>{{org}}</Link> ist bereits in InReach aufgelistet. Bitte verwenden Sie dieses Formular, um neue Organisationen vorzuschlagen.",
+		"error-exists-dismiss": "<Dismiss>Klicken Sie hier, wenn dies eine andere Organisation ist.</Dismiss>",
+		"error-exists-inactive": "<Link>{{org}}</Link> wurde bereits vorgeschlagen. Unser Team prüft immer noch Informationen oder diese Organisation erfüllt nicht alle Anforderungen.",
+		"org-address": "Adresse der Organisation",
+		"org-country": "In welchem Land befindet sich die Organisation?",
+		"org-name": "Name der Organisation",
+		"org-website": "Organisations-Webseite",
+		"placeholder-address": "Adresse eingeben...",
+		"placeholder-name": "Organisationsname eingeben...",
+		"placeholder-website": "URL eingeben...",
+		"service-types": "Welche Art von Dienst(en) bietet diese Organisation an?"
+	},
+	"modal": {
+		"community-sub": "Bietet diese Organisation Dienste(n) an, die sich auf bestimmte LGBTQ+-Gemeinschaften konzentrieren? Bitte wählen Sie alle Anwendungen.",
+		"community-title": "LGBTQ+ Community-Fokus(en)",
+		"dismiss": "Verwerfen",
+		"service-types-sub": "Welche Servicetyp(en) bietet diese Organisation an? Bitte wählen Sie alle diese Anwendungen.",
+		"service-types-title": "Service-Typen",
+		"thank-you": "Vielen Dank, dass Sie {{org}} eingereicht haben!",
+		"thank-you-sub": "Unser Team überprüft Ihre Einsendung, überprüft die Informationen und veröffentlicht die Organisation auf InReach, wenn sie unseren Kriterien entspricht."
+	}
+}

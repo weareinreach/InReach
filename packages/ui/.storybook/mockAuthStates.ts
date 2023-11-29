@@ -1,10 +1,9 @@
-import { ulid } from 'ulid'
-
 import { type Session } from '@weareinreach/auth'
+import { generateId } from '@weareinreach/db'
 
 const expires = (Date.now() / 1000 + 3600).toString()
 
-const createId = () => `user_${ulid()}`
+const createId = () => generateId('user')
 
 const states = {
 	unknown: {

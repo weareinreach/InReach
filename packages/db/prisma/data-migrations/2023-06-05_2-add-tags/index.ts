@@ -1,3 +1,4 @@
+/* eslint-disable deprecation/deprecation */
 import { Prisma } from '@prisma/client'
 
 import fs from 'fs'

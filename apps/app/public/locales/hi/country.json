@@ -201,7 +201,7 @@
 		"demonym_other": "कोकोस आइलैंडर्स"
 	},
 	"CHE": {
-		"name": "स्विट्जरलैंड",
+		"name": "Switzerland",
 		"demonym_one": "स्विस",
 		"demonym_other": "स्विस"
 	},
@@ -232,8 +232,8 @@
 	},
 	"COG": {
 		"name": "कांगो गणराज्य",
-		"demonym_one": "कांगो",
-		"demonym_other": "कांगो"
+		"demonym_one": "Congolese",
+		"demonym_other": "Congolese"
 	},
 	"COK": {
 		"name": "कुक आइलैंड्स",
@@ -312,8 +312,8 @@
 	},
 	"DOM": {
 		"name": "डोमिनिकन गणराज्य",
-		"demonym_one": "डोमिनिकन",
-		"demonym_other": "डोमिनिकन"
+		"demonym_one": "Dominican",
+		"demonym_other": "Dominicans"
 	},
 	"DZA": {
 		"name": "अल्जीरिया",
@@ -372,8 +372,8 @@
 	},
 	"FRA": {
 		"name": "फ्रांस",
-		"demonym_one": "फ्रेंच",
-		"demonym_other": "फ्रेंच"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"FRO": {
 		"name": "फरो आइलैंड्स",
@@ -396,12 +396,12 @@
 		"demonym_other": "ब्रिटिश"
 	},
 	"GEO": {
-		"name": "जॉर्जिया",
+		"name": "Georgia",
 		"demonym_one": "जॉर्जियाई",
 		"demonym_other": "जार्जियाई"
 	},
 	"GGY": {
-		"name": "ग्वेर्नसे",
+		"name": "Guernsey",
 		"demonym_one": "चैनल आइलैंडर",
 		"demonym_other": "चैनल आइलैंडर्स"
 	},
@@ -446,7 +446,7 @@
 		"demonym_other": "यूनानियों"
 	},
 	"GRD": {
-		"name": "ग्रेनेडा",
+		"name": "Grenada",
 		"demonym_one": "ग्रेनेडियन",
 		"demonym_other": "ग्रेनेडियन्स"
 	},
@@ -520,8 +520,8 @@
 	},
 	"IOT": {
 		"name": "ब्रिटिश हिंद महासागर क्षेत्र",
-		"demonym_one": "भारतीय",
-		"demonym_other": "भारतीयों"
+		"demonym_one": "Indian",
+		"demonym_other": "Indians"
 	},
 	"IRL": {
 		"name": "आयरलैंड",
@@ -559,9 +559,9 @@
 		"demonym_other": "जमैका"
 	},
 	"JEY": {
-		"name": "जर्सी",
-		"demonym_one": "चैनल आइलैंडर",
-		"demonym_other": "चैनल आइलैंडर्स"
+		"name": "Jersey",
+		"demonym_one": "Channel Islander",
+		"demonym_other": "Channel Islanders"
 	},
 	"JOR": {
 		"name": "जॉर्डन",
@@ -619,7 +619,7 @@
 		"demonym_other": "लाओटियन"
 	},
 	"LBN": {
-		"name": "लेबनान",
+		"name": "Lebanon",
 		"demonym_one": "लेबनानी",
 		"demonym_other": "लेबनानी"
 	},
@@ -670,8 +670,8 @@
 	},
 	"MAC": {
 		"name": "मकाउ",
-		"demonym_one": "चीनी",
-		"demonym_other": "चीनी"
+		"demonym_one": "Chinese",
+		"demonym_other": "Chinese"
 	},
 	"MAF": {
 		"name": "सैंट मार्टिन",
@@ -704,7 +704,7 @@
 		"demonym_other": "मालदीव"
 	},
 	"MEX": {
-		"name": "मेक्सिको",
+		"name": "Mexico",
 		"demonym_one": "मैक्सिकन",
 		"demonym_other": "मेक्सिको"
 	},
@@ -765,8 +765,8 @@
 	},
 	"MTQ": {
 		"name": "मार्टीनिक",
-		"demonym_one": "फ्रेंच",
-		"demonym_other": "फ्रेंच"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"MUS": {
 		"name": "मॉरीशस",
@@ -825,8 +825,8 @@
 	},
 	"NLD": {
 		"name": "नीदरलैंड",
-		"demonym_one": "डच",
-		"demonym_other": "डच"
+		"demonym_one": "Dutch",
+		"demonym_other": "Dutch"
 	},
 	"NOR": {
 		"name": "नॉर्वे",
@@ -930,8 +930,8 @@
 	},
 	"REU": {
 		"name": "रियूनियन",
-		"demonym_one": "फ्रेंच",
-		"demonym_other": "फ्रेंच"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"ROU": {
 		"name": "रोमानिया",
@@ -978,8 +978,8 @@
 	},
 	"SJM": {
 		"name": "स्वालबार्ड और जान मायेन",
-		"demonym_one": "नार्वेजियन",
-		"demonym_other": "नार्वेजियन"
+		"demonym_one": "Norwegian",
+		"demonym_other": "Norwegians"
 	},
 	"SLB": {
 		"name": "सोलोमन द्वीपसमूह",
@@ -1008,8 +1008,8 @@
 	},
 	"SPM": {
 		"name": "सेंट पिएरे और मिकेलॉन",
-		"demonym_one": "फ्रेंच",
-		"demonym_other": "फ्रेंच"
+		"demonym_one": "French",
+		"demonym_other": "French"
 	},
 	"SRB": {
 		"name": "सर्बिया",
@@ -1153,8 +1153,8 @@
 	},
 	"UMI": {
 		"name": "यूनाइटेड स्टेट्स माइनर आउटलाइंग आइलैंड्स",
-		"demonym_one": "अमरिकी",
-		"demonym_other": "अमेरिकियों"
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UNK": {
 		"name": "कोसोवो",
@@ -1168,8 +1168,8 @@
 	},
 	"USA": {
 		"name": "संयुक्त राज्य अमेरिका",
-		"demonym_one": "अमरिकी",
-		"demonym_other": "अमेरिकियों"
+		"demonym_one": "American",
+		"demonym_other": "Americans"
 	},
 	"UZB": {
 		"name": "उज़्बेकिस्तान",
@@ -1178,8 +1178,8 @@
 	},
 	"VAT": {
 		"name": "वैटिकन सिटी",
-		"demonym_one": "इतालवी",
-		"demonym_other": "इटालियंस"
+		"demonym_one": "Italian",
+		"demonym_other": "Italians"
 	},
 	"VCT": {
 		"name": "सेंट विंसेंट एंड द ग्रेनेडाइंस",
@@ -1198,8 +1198,8 @@
 	},
 	"VIR": {
 		"name": "संयुक्त राज्य अमेरिका वर्जिन द्वीपसमूह",
-		"demonym_one": "वर्जिन आइलैंडर",
-		"demonym_other": "वर्जिन आइलैंडर्स"
+		"demonym_one": "Virgin Islander",
+		"demonym_other": "Virgin Islanders"
 	},
 	"VNM": {
 		"name": "वियतनाम",

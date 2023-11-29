@@ -1,6 +1,7 @@
+/* eslint-disable node/no-process-env */
 /** @type {import('eslint').ESLint.ConfigData} */
 const config = {
-	plugins: ['codegen', 'turbo', 'node', /*'import',*/ '@tanstack/query'],
+	plugins: ['codegen', 'turbo', 'node', 'deprecation', /*'import',*/ '@tanstack/query'],
 	extends: [
 		'eslint:recommended',
 		// disable turbo plugin until vercel/turbo#5355 is resolved
@@ -74,7 +75,13 @@ const config = {
 			},
 		],
 		'import/no-self-import': 'error',
-		// 'import/no-cycle': 'error',
+		'import/no-cycle': [
+			process.env.ESLINT_FULL ? 'error' : 'off',
+			{
+				ignoreExternal: true,
+				maxDepth: 2,
+			},
+		],
 		'no-restricted-imports': [
 			'error',
 			{
@@ -96,6 +103,7 @@ const config = {
 		'@typescript-eslint/require-await': 'off',
 		'no-return-await': 'off',
 		'@typescript-eslint/return-await': 'off',
+		'deprecation/deprecation': 'warn',
 	},
 	overrides: [
 		{
@@ -111,6 +119,7 @@ const config = {
 				'@typescript-eslint/require-await': 'off',
 				'@typescript-eslint/return-await': 'off',
 				'@typescript-eslint/consistent-type-assertions': 'off',
+				'deprecation/deprecation': 'off',
 			},
 		},
 	],

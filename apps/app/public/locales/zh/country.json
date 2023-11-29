@@ -187,7 +187,7 @@
 	},
 	"COG": {
 		"name": "刚果共和国",
-		"demonym_other": "刚果人"
+		"demonym_other": "Congolese"
 	},
 	"COK": {
 		"name": "库克群岛",
@@ -299,7 +299,7 @@
 	},
 	"FRA": {
 		"name": "法国",
-		"demonym_other": "法语"
+		"demonym_other": "法文"
 	},
 	"FRO": {
 		"name": "法罗群岛",
@@ -322,7 +322,7 @@
 		"demonym_other": "格鲁吉亚人"
 	},
 	"GGY": {
-		"name": "根西岛",
+		"name": "Guernsey",
 		"demonym_other": "海峡岛民"
 	},
 	"GHA": {
@@ -449,8 +449,8 @@
 		"demonym_other": "牙买加人"
 	},
 	"JEY": {
-		"name": "泽西",
-		"demonym_other": "海峡岛民"
+		"name": "泽西岛",
+		"demonym_other": "海峡岛民协会"
 	},
 	"JOR": {
 		"name": "乔丹",
@@ -497,7 +497,7 @@
 		"demonym_other": "老挝人"
 	},
 	"LBN": {
-		"name": "黎巴嫩",
+		"name": "Lebanon",
 		"demonym_other": "黎巴嫩人"
 	},
 	"LBR": {
@@ -538,7 +538,7 @@
 	},
 	"MAC": {
 		"name": "澳门",
-		"demonym_other": "中国人"
+		"demonym_other": "中文"
 	},
 	"MAF": {
 		"name": "圣马丁",
@@ -614,7 +614,7 @@
 	},
 	"MTQ": {
 		"name": "马提尼克岛",
-		"demonym_other": "法语"
+		"demonym_other": "法文"
 	},
 	"MUS": {
 		"name": "毛里求斯",
@@ -662,7 +662,7 @@
 	},
 	"NLD": {
 		"name": "荷兰",
-		"demonym_other": "荷兰人"
+		"demonym_other": "荷兰语"
 	},
 	"NOR": {
 		"name": "挪威",
@@ -746,7 +746,7 @@
 	},
 	"REU": {
 		"name": "留尼汪岛",
-		"demonym_other": "法语"
+		"demonym_other": "法文"
 	},
 	"ROU": {
 		"name": "罗马尼亚",
@@ -809,7 +809,7 @@
 	},
 	"SPM": {
 		"name": "圣皮埃尔和密克隆",
-		"demonym_other": "法语"
+		"demonym_other": "法文"
 	},
 	"SRB": {
 		"name": "塞尔维亚",
@@ -925,7 +925,7 @@
 	},
 	"UMI": {
 		"name": "美国边远小岛屿",
-		"demonym_other": "美国人们"
+		"demonym_other": "美国人"
 	},
 	"UNK": {
 		"name": "科索沃",
@@ -937,7 +937,7 @@
 	},
 	"USA": {
 		"name": "美国",
-		"demonym_other": "美国人们"
+		"demonym_other": "美国人"
 	},
 	"UZB": {
 		"name": "乌兹别克斯坦",
@@ -945,7 +945,7 @@
 	},
 	"VAT": {
 		"name": "梵蒂冈城",
-		"demonym_other": "意大利人"
+		"demonym_other": "意大利文"
 	},
 	"VCT": {
 		"name": "圣文森特和格林纳丁斯",

@@ -80,7 +80,7 @@ export const AttachServAttribute = () => {
 		})
 	)
 
-	const dataParser = parser.transform(({ actorId, operation, data: parsedData }) => {
+	const dataParser = parser.transform(({ actorId, data: parsedData }) => {
 		const { orgId, orgServiceId, attributeId, supplement: supplementInput } = parsedData
 
 		const supplementId = supplementInput ? generateId('attributeSupplement') : undefined
@@ -170,7 +170,7 @@ export const AttachServAccess = () => {
 		})
 	)
 
-	const dataParser = parser.transform(({ actorId, operation, data: parsedData }) => {
+	const dataParser = parser.transform(({ actorId, data: parsedData }) => {
 		const { orgId, serviceId, attributeId, supplement: supplementInput } = parsedData
 
 		const supplementId = supplementInput ? generateId('attributeSupplement') : undefined

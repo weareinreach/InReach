@@ -1,4 +1,4 @@
-import { Container, Stack, Title } from '@mantine/core'
+import { Stack, Title } from '@mantine/core'
 import { type GetServerSideProps, type NextPage } from 'next'
 import Head from 'next/head'
 import { useSession } from 'next-auth/react'
@@ -11,7 +11,7 @@ import { getServerSideTranslations } from '~app/utils/i18n'
 
 const AdminIndex: NextPage = () => {
 	const { t } = useTranslation(['common'])
-	const { data: session, status } = useSession()
+	const { data: session } = useSession()
 	return (
 		<>
 			<Head>

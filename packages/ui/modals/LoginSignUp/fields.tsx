@@ -168,8 +168,8 @@ export const FormPassword = () => {
 		pwStrength === 100
 			? theme.other.colors.primary.allyGreen
 			: pwStrength > 50
-			? theme.other.colors.tertiary.yellow
-			: theme.other.colors.tertiary.red
+			  ? theme.other.colors.tertiary.yellow
+			  : theme.other.colors.tertiary.red
 	const [pwPopover, setPwPopover] = useState(false)
 
 	return (
@@ -244,7 +244,7 @@ export const FormLocation = () => {
 	api.geo.geoByPlaceId.useQuery(locationSearch, {
 		enabled: locationSearch !== '',
 		onSuccess: ({ result }) => {
-			if (result)
+			if (result && result.city && result.govDist && result.country)
 				form.setValues({ location: { city: result.city, govDist: result.govDist, country: result.country } })
 		},
 	})

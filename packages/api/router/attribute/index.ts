@@ -9,7 +9,7 @@ type AttributeQueryHandlerCache = {
 
 const HandlerCache: Partial<AttributeQueryHandlerCache> = {}
 export const attributeRouter = defineRouter({
-	getFilterOptions: publicProcedure.query(async ({ ctx }) => {
+	getFilterOptions: publicProcedure.query(async () => {
 		if (!HandlerCache.getFilterOptions)
 			HandlerCache.getFilterOptions = await import('./query.getFilterOptions.handler').then(
 				(mod) => mod.getFilterOptions

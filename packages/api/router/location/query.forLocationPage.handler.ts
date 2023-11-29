@@ -4,7 +4,6 @@ import { globalSelect, globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForLocationPageSchema } from './query.forLocationPage.schema'
-import { select } from './selects'
 
 export const forLocationPage = async ({ input }: TRPCHandlerParams<TForLocationPageSchema>) => {
 	const location = await prisma.orgLocation.findUniqueOrThrow({

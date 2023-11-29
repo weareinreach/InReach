@@ -23,10 +23,11 @@
 		"format": "turbo run format --parallel",
 		"generate:data": "turbo run generate:data",
 		"postinstall": "tsx ./lib/postinstall.ts",
+		"knip": "knip -c ./knip.config.ts",
 		"lint": "TIMING=1 turbo run lint --parallel",
 		"lint:fix": "TIMING=1 turbo run lint:fix --parallel",
-		"lint:pkg": "manypkg check",
-		"lint:pkg:fix": "manypkg fix",
+		"lint:pkg": "sherif",
+		"lint:pkg:fix": "sherif --fix",
 		"lint:staged": "lint-staged",
 		"notify:install": "tsx ./lib/runInstall.ts",
 		"prepare": "tsx ./lib/prepare.ts",
@@ -34,36 +35,32 @@
 		"types:check": "turbo type-check",
 		"types:sync": "typesync"
 	},
-	"dependencies": {
-		"@changesets/cli": "2.26.2",
-		"@manypkg/cli": "0.21.0",
-		"@turbo/gen": "1.10.14",
-		"@types/lint-staged": "13.2.0",
-		"@types/node": "18.18.3",
+	"devDependencies": {
+		"@changesets/cli": "2.27.1",
+		"@turbo/gen": "1.10.16",
+		"@types/lint-staged": "13.2.2",
+		"@types/node": "20.10.0",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
 		"boxen": "7.1.1",
 		"dotenv": "16.3.1",
 		"husky": "8.0.3",
-		"lint-staged": "14.0.1",
-		"prettier": "3.0.3",
-		"prettier-plugin-jsdoc": "1.0.2",
+		"knip": "3.3.2",
+		"lint-staged": "15.1.0",
+		"prettier": "3.1.0",
+		"prettier-plugin-jsdoc": "1.1.1",
 		"prettier-plugin-packagejson": "2.4.6",
 		"prettier-plugin-prisma": "5.0.0",
-		"tsx": "3.13.0",
-		"turbo": "1.10.14",
-		"typescript": "5.2.2",
+		"sherif": "0.6.1",
+		"tsx": "4.6.0",
+		"turbo": "1.10.16",
+		"typescript": "5.3.2",
 		"typesync": "0.11.1"
 	},
-	"packageManager": "pnpm@8.8.0",
+	"packageManager": "pnpm@8.11.0",
 	"engines": {
-		"node": "^18",
-		"pnpm": "^8"
-	},
-	"manypkg": {
-		"ignoredRules": [
-			"INTERNAL_MISMATCH"
-		]
+		"node": "^20.0.0",
+		"pnpm": "^8.10.5"
 	},
 	"nextBundleAnalysis": {
 		"budget": 588800,
@@ -77,6 +74,7 @@
 			"@npmcli/move-file": "npm:@npmcli/fs@^2.0.0",
 			"axe-core": "^4.7.0",
 			"chokidar": ">=3.0.0",
+			"crypto-js@<=4.1.1": "^4.2.0",
 			"csstype": "^3.1.2",
 			"eslint-plugin-import": "npm:eslint-plugin-i",
 			"eslint-plugin-node": "npm:eslint-plugin-n",
@@ -87,6 +85,7 @@
 			"msw@1.2.2": "1.2.1",
 			"node-fetch@<2.6.7": "^2.6.7",
 			"package-json@<7": "^7.0.0",
+			"postcss@^8": "^8.4.31",
 			"react-dom@<18": "^18",
 			"react@<18": "^18",
 			"sane": ">=5.0.0",

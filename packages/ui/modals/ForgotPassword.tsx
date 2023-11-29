@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import {
 	Box,
 	type ButtonProps,
@@ -24,81 +23,79 @@ import { trpc as api } from '~ui/lib/trpcClient'
 
 import { ModalTitle } from './ModalTitle'
 
-export const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModalBodyProps>(
-	(props, ref) => {
-		const { t } = useTranslation(['common'])
-		const EmailSchema = z.object({
-			email: z.string().email({ message: t('form-error-enter-valid-email') as string }),
-		})
-		const passwordResetForm = useForm<FormProps>({
-			validate: zodResolver(EmailSchema),
-			validateInputOnBlur: true,
-			initialValues: {
-				email: '',
-				cognitoSubject: t('password-reset.email-subject') as string,
-				cognitoMessage: t('password-reset.email-body') as string,
-			},
-		})
-		const variants = useCustomVariant()
-		const theme = useMantineTheme()
-		const pwResetHandler = api.user.forgotPassword.useMutation({ onSuccess: () => {} })
-		const { animateCSS, fireEvent } = useShake({ variant: 1 })
-		const [opened, handler] = useDisclosure(false)
-		const { isMobile } = useScreenSize()
-		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+const ForgotPasswordModalBody = forwardRef<HTMLButtonElement, ForgotPasswordModalBodyProps>((props, ref) => {
+	const { t } = useTranslation(['common'])
+	const EmailSchema = z.object({
+		email: z.string().email({ message: t('form-error-enter-valid-email') as string }),
+	})
+	const passwordResetForm = useForm<FormProps>({
+		validate: zodResolver(EmailSchema),
+		validateInputOnBlur: true,
+		initialValues: {
+			email: '',
+			cognitoSubject: t('password-reset.email-subject') as string,
+			cognitoMessage: t('password-reset.email-body') as string,
+		},
+	})
+	const variants = useCustomVariant()
+	const theme = useMantineTheme()
+	const pwResetHandler = api.user.forgotPassword.useMutation({ onSuccess: () => {} })
+	const { animateCSS, fireEvent } = useShake({ variant: 1 })
+	const [opened, handler] = useDisclosure(false)
+	const { isMobile } = useScreenSize()
+	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
 
-		const successMessage = (
-			<Group>
-				<Icon icon='carbon:checkmark-filled' color={theme.other.colors.primary.allyGreen} height={14} />
-				<Text variant={variants.Text.utility3}>{t('email-sent')}</Text>
-			</Group>
-		)
+	const successMessage = (
+		<Group>
+			<Icon icon='carbon:checkmark-filled' color={theme.other.colors.primary.allyGreen} height={14} />
+			<Text variant={variants.Text.utility3}>{t('email-sent')}</Text>
+		</Group>
+	)
 
-		const submitHandler = () => {
-			if (passwordResetForm.isValid()) {
-				pwResetHandler.mutate(passwordResetForm.values)
-			} else {
-				fireEvent()
-			}
+	const submitHandler = () => {
+		if (passwordResetForm.isValid()) {
+			pwResetHandler.mutate(passwordResetForm.values)
+		} else {
+			fireEvent()
 		}
-
-		return (
-			<>
-				<Modal
-					className={animateCSS}
-					title={modalTitle}
-					opened={opened}
-					onClose={() => handler.close()}
-					zIndex={550}
-					fullScreen={isMobile}
-				>
-					<Stack align='center' spacing={24}>
-						<Title order={2}>{t('reset-password')}</Title>
-						<Text variant={variants.Text.utility4darkGray}>{t('reset-password-message')}</Text>
-						<TextInput
-							label={t('words.email')}
-							placeholder={t('enter-email-placeholder') as string}
-							required
-							{...passwordResetForm.getInputProps('email')}
-							description={pwResetHandler.isSuccess ? successMessage : undefined}
-						/>
-						<Button
-							onClick={() => (pwResetHandler.isSuccess ? handler.close() : submitHandler())}
-							variant='primary-icon'
-							fullWidth
-							loaderPosition='center'
-							loading={pwResetHandler.isLoading}
-							// disabled={!passwordResetForm.isValid()}
-						>
-							{t(pwResetHandler.isSuccess ? 'words.close' : 'send-email')}
-						</Button>
-					</Stack>
-				</Modal>
-				<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
-			</>
-		)
 	}
-)
+
+	return (
+		<>
+			<Modal
+				className={animateCSS}
+				title={modalTitle}
+				opened={opened}
+				onClose={() => handler.close()}
+				zIndex={550}
+				fullScreen={isMobile}
+			>
+				<Stack align='center' spacing={24}>
+					<Title order={2}>{t('reset-password')}</Title>
+					<Text variant={variants.Text.utility4darkGray}>{t('reset-password-message')}</Text>
+					<TextInput
+						label={t('words.email')}
+						placeholder={t('enter-email-placeholder') as string}
+						required
+						{...passwordResetForm.getInputProps('email')}
+						description={pwResetHandler.isSuccess ? successMessage : undefined}
+					/>
+					<Button
+						onClick={() => (pwResetHandler.isSuccess ? handler.close() : submitHandler())}
+						variant='primary-icon'
+						fullWidth
+						loaderPosition='center'
+						loading={pwResetHandler.isLoading}
+						// disabled={!passwordResetForm.isValid()}
+					>
+						{t(pwResetHandler.isSuccess ? 'words.close' : 'send-email')}
+					</Button>
+				</Stack>
+			</Modal>
+			<Box component='button' ref={ref} onClick={() => handler.open()} {...props} />
+		</>
+	)
+})
 
 ForgotPasswordModalBody.displayName = 'ForgotPasswordModal'
 

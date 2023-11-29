@@ -19,18 +19,23 @@ const getBaseUrl = () => {
 }
 
 // eslint-disable-next-line node/no-process-env
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development' && process.env.VERCEL !== '1'
 export const api = createTRPCNext<AppRouter>({
 	config() {
 		return {
 			transformer,
 			links: [
-				devtoolsLink({
-					enabled: isDev,
-				}),
-				loggerLink({
-					enabled: () => isDev,
-				}),
+				...(isDev
+					? [
+							devtoolsLink({
+								enabled: isDev,
+							}),
+							loggerLink({
+								enabled: () => isDev,
+							}),
+					  ]
+					: []),
+
 				httpBatchStreamLink({
 					url: `${getBaseUrl()}/api/trpc`,
 				}),

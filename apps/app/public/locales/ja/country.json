@@ -187,7 +187,7 @@
 	},
 	"COG": {
 		"name": "コンゴ共和国",
-		"demonym_other": "コンゴ人"
+		"demonym_other": "Congolese"
 	},
 	"COK": {
 		"name": "クック諸島",
@@ -251,7 +251,7 @@
 	},
 	"DOM": {
 		"name": "ドミニカ共和国",
-		"demonym_other": "ドミニカ人"
+		"demonym_other": "ドミニク語"
 	},
 	"DZA": {
 		"name": "アルジェリア",
@@ -318,11 +318,11 @@
 		"demonym_other": "英国の"
 	},
 	"GEO": {
-		"name": "ジョージア",
+		"name": "ジョージア州",
 		"demonym_other": "グルジア人"
 	},
 	"GGY": {
-		"name": "ガーンジー島",
+		"name": "Guernsey",
 		"demonym_other": "チャンネル・アイランダーズ"
 	},
 	"GHA": {
@@ -418,7 +418,7 @@
 	},
 	"IOT": {
 		"name": "イギリス領インド洋地域",
-		"demonym_other": "インディアン"
+		"demonym_other": "インド人"
 	},
 	"IRL": {
 		"name": "アイルランド",
@@ -450,7 +450,7 @@
 	},
 	"JEY": {
 		"name": "ジャージー",
-		"demonym_other": "チャンネル・アイランダーズ"
+		"demonym_other": "チャネル諸島人"
 	},
 	"JOR": {
 		"name": "ヨルダン",
@@ -497,7 +497,7 @@
 		"demonym_other": "ラオス人"
 	},
 	"LBN": {
-		"name": "レバノン",
+		"name": "Lebanon",
 		"demonym_other": "レバノン"
 	},
 	"LBR": {
@@ -662,7 +662,7 @@
 	},
 	"NLD": {
 		"name": "オランダ",
-		"demonym_other": "オランダの"
+		"demonym_other": "オランダ語"
 	},
 	"NOR": {
 		"name": "ノルウェー",
@@ -785,7 +785,7 @@
 	},
 	"SJM": {
 		"name": "スバールバル諸島とヤンマイエン島",
-		"demonym_other": "ノルウェー人"
+		"demonym_other": "ノルウェー語"
 	},
 	"SLB": {
 		"name": "ソロモン諸島",
@@ -925,7 +925,7 @@
 	},
 	"UMI": {
 		"name": "合衆国領有小離島",
-		"demonym_other": "アメリカ人"
+		"demonym_other": "<unk>"
 	},
 	"UNK": {
 		"name": "コソボ",
@@ -937,7 +937,7 @@
 	},
 	"USA": {
 		"name": "米国",
-		"demonym_other": "アメリカ人"
+		"demonym_other": "<unk>"
 	},
 	"UZB": {
 		"name": "ウズベキスタン",
@@ -945,7 +945,7 @@
 	},
 	"VAT": {
 		"name": "バチカン市",
-		"demonym_other": "イタリア人"
+		"demonym_other": "イタリア"
 	},
 	"VCT": {
 		"name": "セントビンセントおよびグレナディーン諸島",
@@ -961,7 +961,7 @@
 	},
 	"VIR": {
 		"name": "アメリカ領バージン諸島",
-		"demonym_other": "ヴァージン諸島人"
+		"demonym_other": "ヴァージン諸島"
 	},
 	"VNM": {
 		"name": "ベトナム",

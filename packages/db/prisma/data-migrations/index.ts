@@ -1,4 +1,4 @@
-// codegen:start {preset: barrel, include: ./**/*.ts, exclude: './**/{!,___}*.ts'}
+// codegen:start {preset: barrel, include: ./**/*.ts, exclude: ['**/{!,___}*.ts']}
 export * from './2023-03-29_nest-attribs-primary-cntry'
 export * from './2023-03-31_suggestion-source'
 export * from './2023-04-04_badges/index'
@@ -54,4 +54,15 @@ export * from './2023-09-20_update-services'
 export * from './2023-09-22_service-areas'
 export * from './2023-09-22_update-alerts/index'
 export * from './2023-09-28_phone-number-normalization/index'
+export * from './2023-10-23_add-suggested-orgs/index'
+export * from './2023-10-25_service-tag-updates'
+export * from './2023-10-27_tlc-service-updates'
+export * from './2023-11-07_corrections'
+export * from './2023-11-15_phone-number-corrections'
+export * from './2023-11-17_add-missing-websites/index'
+export * from './2023-11-17_data-load/index'
+export * from './2023-11-20_fix-listing'
+export * from './2023-11-21_add-missing-phones/index'
+export * from './2023-11-22_ad-hoc-updates/index'
+export * from './2023-11-22_update-alert-messages/index'
 // codegen:end

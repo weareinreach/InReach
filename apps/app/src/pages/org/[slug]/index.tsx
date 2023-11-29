@@ -1,6 +1,7 @@
 import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { type GetStaticPaths, type GetStaticPropsContext, type InferGetStaticPropsType } from 'next'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
@@ -9,7 +10,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
-import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
+// import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
@@ -22,6 +23,33 @@ import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
 import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
+
+const GoogleMap = dynamic(() =>
+	import('@weareinreach/ui/components/core/GoogleMap').then((mod) => mod.GoogleMap)
+)
+const LoadingState = () => (
+	<>
+		<Grid.Col sm={8} order={1} pb={40}>
+			{/* Toolbar */}
+			<Skeleton h={48} w='100%' radius={8} />
+			<Stack pt={24} align='flex-start' spacing={40}>
+				{/* Listing Basic */}
+				<Skeleton h={260} w='100%' />
+				{/* Body */}
+				<Skeleton h={520} w='100%' />
+				{/* Tab panels */}
+			</Stack>
+		</Grid.Col>
+		<Grid.Col order={2}>
+			<Stack spacing={40}>
+				{/* Contact Card */}
+				<Skeleton h={520} w='100%' />
+				{/* Visit Card  */}
+				<Skeleton h={260} w='100%' />
+			</Stack>
+		</Grid.Col>
+	</>
+)
 
 const useStyles = createStyles((theme) => ({
 	tabsList: {
@@ -250,7 +278,7 @@ export const getStaticProps = async ({
 		}
 
 		const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
-		// if (!orgId) return { notFound: true, props: {} }
+		if (!orgId) return { notFound: true }
 
 		const [i18n] = await Promise.allSettled([
 			orgId

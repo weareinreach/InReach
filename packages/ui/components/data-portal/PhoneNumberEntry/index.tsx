@@ -31,7 +31,7 @@ const PhoneCountrySelectItem = forwardRef<HTMLDivElement, PhoneCountrySelectItem
 )
 PhoneCountrySelectItem.displayName = 'PhoneCountrySelectItem'
 
-const useCountrySelectStyles = createStyles((theme) => ({
+const useCountrySelectStyles = createStyles(() => ({
 	dropdown: {
 		width: 'fit-content !important',
 		left: 'unset !important',

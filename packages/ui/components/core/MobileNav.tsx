@@ -58,7 +58,7 @@ const useStyles = createStyles((theme) => ({
 		zIndex: 20,
 		backgroundColor: theme.other.colors.secondary.white,
 		boxShadow: `${rem(0)} ${rem(-8)} ${rem(16)} rgba(0, 0, 0, 0.05)`,
-		paddingBottom: rem(16),
+		// paddingBottom: rem(16),
 	},
 }))
 

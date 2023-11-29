@@ -53,7 +53,7 @@
 	"cookie-consent": {
 		"approve-all": "Aprobar todo",
 		"approve-selected": "Aprobar seleccionados",
-		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"body": "Utilizamos cookies y servicios de terceros en este sitio web. Algunas de ellas son esenciales, otras nos ayudan a mejorar tu experiencia de navegación. Consulte nuestra <PrivacyLink>Declaración de privacidad</PrivacyLink> para obtener más información.",
 		"intro": "Utilizamos las cookies necesarias para que nuestro sitio funcione. Nos gustaría configurar cookies adicionales para entender el uso del sitio, hacer mejoras en el sitio y recordar sus ajustes.",
 		"item-basic": "Cookies esenciales para la funcionalidad del sitio",
 		"item-ga4": "Analíticas para el uso interno de Alcance",
@@ -83,6 +83,11 @@
 		"website": "Sitio Web Directo"
 	},
 	"disclaimer": "Descargo de responsabilidad",
+	"donate": {
+		"hover": "Donar hoy para ayudar a mantener el alcance gratuito para todos",
+		"popup": "Ayuda a mantener el alcance gratuito para todos",
+		"to-inreach": "Donar para llegar a 💝"
+	},
 	"dont-have-account": "¿No tienes una cuenta?",
 	"download-app": "Descarga nuestra aplicación",
 	"edit-profile": "Editar perfil",
@@ -382,6 +387,7 @@
 		"decline": "Rechazar",
 		"delete": "Eliminar",
 		"distance": "Distancia",
+		"donate": "Donar",
 		"email": "E-mail",
 		"home": "Inicio",
 		"hours": "Horas",

@@ -1,12 +1,15 @@
 import { Container, rem, Stack, Title } from '@mantine/core'
 import { type GetStaticProps } from 'next'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type Route } from 'nextjs-routes'
 import { z } from 'zod'
 
-import { LoginBody } from '@weareinreach/ui/modals/Login'
 import { getServerSideTranslations } from '~app/utils/i18n'
+// import { LoginBody } from '@weareinreach/ui/modals/Login'
+
+const LoginBody = dynamic(() => import('@weareinreach/ui/modals/LoginSignUp').then((mod) => mod.LoginBody))
 
 const RouteSchema = z.object({
 	pathname: z.string(),

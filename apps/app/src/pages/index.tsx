@@ -16,9 +16,11 @@ import { getCookie } from 'cookies-next'
 import Autoplay from 'embla-carousel-autoplay'
 import { type GetStaticProps } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { type TFunction, Trans, useTranslation } from 'next-i18next'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+import { donateEvent } from '@weareinreach/analytics/events'
 import { ms } from '@weareinreach/api/lib/milliseconds'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { AntiHatePopup } from '@weareinreach/ui/components/core/AntiHateMessage'
@@ -26,7 +28,7 @@ import { Link } from '@weareinreach/ui/components/core/Link'
 import { UserReview } from '@weareinreach/ui/components/core/UserReview'
 import { CallOut } from '@weareinreach/ui/components/sections/CallOut'
 import { Hero } from '@weareinreach/ui/components/sections/Hero'
-import { useCustomVariant } from '@weareinreach/ui/hooks'
+import { useCustomVariant } from '@weareinreach/ui/hooks/useCustomVariant'
 import { AccountVerifyModal } from '@weareinreach/ui/modals/AccountVerified'
 import { PrivacyStatementModal } from '@weareinreach/ui/modals/PrivacyStatement'
 import { ResetPasswordModal } from '@weareinreach/ui/modals/ResetPassword'
@@ -133,7 +135,11 @@ const CardTranslation = ({ i18nKey, t }: { i18nKey: string; t: TFunction }) => {
 				),
 				Text: <Text component='p'>.</Text>,
 				LinkFree: (
-					<Link href='https://inreach.kindful.com/?utm_source=inreach-app' {...linkProps}>
+					<Link
+						href='https://inreach.kindful.com/?campaign=1274815'
+						onClick={donateEvent.click}
+						{...linkProps}
+					>
 						.
 					</Link>
 				),
@@ -153,7 +159,8 @@ const CardTranslation = ({ i18nKey, t }: { i18nKey: string; t: TFunction }) => {
 	)
 }
 
-const Home: NextPageWithOptions = () => {
+const Home: NextPageWithoutGrid = () => {
+	const router = useRouter()
 	const { t } = useTranslation('landingPage')
 	const theme = useMantineTheme()
 	const variants = useCustomVariant()
@@ -165,6 +172,11 @@ const Home: NextPageWithOptions = () => {
 	useAnimationOffsetEffect(embla, 5000)
 
 	const launchAHpopup = getCookie('inr-ahpop')
+
+	useEffect(() => {
+		router.prefetch('/search/[...params]')
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	return (
 		<>

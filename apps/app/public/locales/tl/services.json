@@ -37,12 +37,12 @@
 		"scholarships": "Scholarship"
 	},
 	"food": {
-		"CATEGORYNAME": "Pagkain",
+		"CATEGORYNAME": "Food",
 		"food": "Pagkain",
 		"food-assistance": "Tulong sa pagkain"
 	},
 	"housing": {
-		"CATEGORYNAME": "Pabahay",
+		"CATEGORYNAME": "Housing",
 		"drop-in-centers-for-lgbtq-youth": "Mga drop-in center para sa kabataan ng LGBTQ",
 		"emergency-housing": "Pabahay ng emerhensiya",
 		"housing-information-and-referrals": "Impormasyon sa pabahay at mga referral",
@@ -60,7 +60,7 @@
 	"international-support": {
 		"CATEGORTYNAME": "International Support",
 		"financial-assistance": "Financial Assistance",
-		"mental-health": "Kalusugan ng Kaisipan",
+		"mental-health": "Mental Health",
 		"resettlement-assistance": "Resettlement Assistance"
 	},
 	"legal": {
@@ -104,7 +104,7 @@
 		"trans-health-youth-care": "Trans health - youth care"
 	},
 	"mental-health": {
-		"CATEGORYNAME": "Kalusugan ng Kaisipan",
+		"CATEGORYNAME": "Mental Health",
 		"bipoc-support-groups": "Mga grupo ng suporta ng BIPOC",
 		"hotlines": "Mga Hotline",
 		"private-therapy-and-counseling": "Pribadong therapy at pagpapayo",
@@ -127,7 +127,7 @@
 		"transport-relo-support": "Trans relocation support"
 	},
 	"translation-and-interpretation": {
-		"CATEGORYNAME": "Pagsasalin at Interpretasyon",
+		"CATEGORYNAME": "Translation and Interpretation",
 		"for-healthcare": "Para sa pangangalagang pangkalusugan",
 		"for-legal-services": "Para sa mga legal na serbisyo",
 		"general-translation-and-interpretation": "Pangkalahatang pagsasalin at interpretasyon"

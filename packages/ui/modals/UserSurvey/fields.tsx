@@ -45,7 +45,7 @@ const useSelectItemStyles = createStyles((theme) => ({
 	},
 }))
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
 	answerContainer: {
 		height: '336px',
 	},
@@ -94,7 +94,7 @@ export const FormImmigration = () => {
 		}
 	})
 
-	const items = options?.map((item, index) => {
+	const items = options?.map((item) => {
 		return (
 			<Radio
 				label={t(item.tsKey, { ns: 'user' })}
@@ -230,7 +230,7 @@ export const FormIdentity = () => {
 			{TitleSubtitle('survey.question-3-title', 'survey.question-subtitle')}
 			<ScrollArea h={336} offsetScrollbars className={classes.scroll}>
 				<Checkbox.Group onChange={handleCheckboxChange} className={classes.answerContainer}>
-					{surveyOptions?.sog.map((item, index) => {
+					{surveyOptions?.sog.map((item) => {
 						return (
 							<Checkbox value={item.id} checked={false} label={t(item.tsKey, { ns: 'user' })} key={item.id} />
 						)
@@ -266,7 +266,7 @@ export const FormEthnicity = () => {
 			options.push(item)
 		}
 	})
-	const items = options?.map((item, index) => {
+	const items = options?.map((item) => {
 		return <Checkbox value={item.id} checked={false} label={t(item.tsKey, { ns: 'user' })} key={item.id} />
 	})
 	useEffect(() => {

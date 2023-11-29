@@ -98,7 +98,7 @@ export const CreateOrgLocationSchema = () => {
 	const { dataParser: parser, inputSchema } = MutationBase(
 		z.object({ orgId: z.string(), ...createOrgBaseFields, ...OrgLocationLinksSchema })
 	)
-	const dataParser = parser.transform(({ actorId, operation, from, to }) => {
+	const dataParser = parser.transform(({ actorId, to }) => {
 		const { emails, phones, services, ...dataTo } = to
 		const linkAuditLogs: Prisma.AuditLogUncheckedCreateWithoutOrgLocationInput[] = []
 		const serviceLinks = (
