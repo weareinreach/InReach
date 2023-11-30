@@ -3,7 +3,6 @@ import { DateTime, Interval } from 'luxon'
 import { useTranslation } from 'next-i18next'
 import { type JSX } from 'react'
 
-import { COGNITO_CUSTOMID_FIELDNAME } from '@weareinreach/auth'
 import { useCustomVariant } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
