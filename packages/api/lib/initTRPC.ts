@@ -1,11 +1,11 @@
 import { initTRPC } from '@trpc/server'
-import superjson from 'superjson'
 import { type TRPCPanelMeta } from 'trpc-panel'
 import { ZodError } from 'zod'
 
 import { type Permission } from '@weareinreach/db/generated/permission'
 
 import { type Context } from './context'
+import { transformer } from './transformer'
 
 export interface Meta extends TRPCPanelMeta {
 	hasPerm?: Permission | Permission[]
@@ -15,7 +15,7 @@ export const t = initTRPC
 	.context<Context>()
 	.meta<Meta>()
 	.create({
-		transformer: superjson,
+		transformer,
 		errorFormatter({ shape, error }) {
 			return {
 				...shape,
