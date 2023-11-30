@@ -2,7 +2,6 @@
 export * from './allAttributes'
 export * from './attributeCategory'
 export * from './attributesByCategory'
-export * from './common'
 export * from './langs'
 export * from './namespaces'
 export * from './permission'
