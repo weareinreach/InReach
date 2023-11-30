@@ -7253,6 +7253,11 @@ packages:
   /@sentry/utils@7.84.0:
     resolution: {integrity: sha512-qdUVuxnRBvaf05AU+28R+xYtZmi/Ymf8os3Njq9g4XuA+QEkZLbzmIpRK5W9Ja7vUtjOeg29Xgg43A8znde9LQ==}
     engines: {node: '>=8'}
+    dev: false
+
+  /@sentry/utils@7.80.1:
+    resolution: {integrity: sha512-bfFm2e/nEn+b9++QwjNEYCbS7EqmteT8uf0XUs7PljusSimIqqxDtK1pfD9zjynPgC8kW/fVBKv0pe2LufomeA==}
+    engines: {node: '>=8'}
     dependencies:
       '@sentry/types': 7.84.0
     dev: false
@@ -8161,6 +8166,12 @@ packages:
 
   /@storybook/core-events@7.6.2:
     resolution: {integrity: sha512-JciGNDclg3hx+WkXsAzcCBYWk0xsyIbyCAwqN7XVHUpGndR/dl97Qum5MkO9kPb8r5toKpeBOQo5Kxo2GiE0dg==}
+    dependencies:
+      ts-dedent: 2.2.0
+    dev: true
+
+  /@storybook/core-server@7.6.2:
+    resolution: {integrity: sha512-wEUMpSYyP+RxvnMkjX4dMRY7+G/Aev88/LBneqS7wx/qoLiBzN3UeQOhytl+MqCPkPD8XtDezFaBwg+LBcro9g==}
     dependencies:
       ts-dedent: 2.2.0
     dev: true
@@ -12535,6 +12546,7 @@ packages:
 
   /defaults@1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
+    requiresBuild: true
     dependencies:
       clone: 1.0.4
     dev: true
