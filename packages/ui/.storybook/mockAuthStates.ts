@@ -1,5 +1,5 @@
 import { type Session } from '@weareinreach/auth'
-import { generateId } from '@weareinreach/db'
+import { generateId } from '@weareinreach/db/lib/idGen'
 
 const expires = (Date.now() / 1000 + 3600).toString()
 
