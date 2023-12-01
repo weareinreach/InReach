@@ -109,7 +109,7 @@
 		"@total-typescript/ts-reset": "0.5.1",
 		"@types/eslint": "8.44.8",
 		"@types/gtag.js": "0.0.18",
-		"@types/luxon": "3.3.5",
+		"@types/luxon": "3.3.6",
 		"@types/node": "20.10.1",
 		"@types/react": "18.2.39",
 		"@types/react-dom": "18.2.17",
