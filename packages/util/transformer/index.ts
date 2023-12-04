@@ -1,7 +1,5 @@
 import { DateTime, Interval } from 'luxon'
-import SuperJSON from 'superjson'
-
-const superjson = new SuperJSON()
+import superjson from 'superjson'
 
 superjson.registerCustom<DateTime, string>(
 	{

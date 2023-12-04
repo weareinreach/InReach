@@ -128,6 +128,10 @@
 	"form-error-password-blank": "Password cannot be blank.",
 	"form-error-password-req": "Your password does not meet requirements, please try again.",
 	"go-to-x": "Go to {{value}}",
+	"hours": {
+		"closed": "Closed",
+		"open24": "Open 24 hours"
+	},
 	"in-reach-user": "InReach User",
 	"in-reach-verified-reviewer": "InReach Verified Reviewer",
 	"include": "Include",
