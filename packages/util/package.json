@@ -14,9 +14,12 @@
 	},
 	"dependencies": {
 		"@vercel/edge-config": "0.4.1",
+		"luxon": "3.4.4",
+		"superjson": "2.2.1",
 		"tslog": "4.9.2"
 	},
 	"devDependencies": {
+		"@types/luxon": "3.3.6",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0"
 	}
