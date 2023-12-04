@@ -5,8 +5,8 @@ import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 import { devtoolsLink } from 'trpc-client-devtools-link'
 
 import { getEnv } from '@weareinreach/env'
+import { transformer } from '@weareinreach/util/transformer'
 
-import { transformer } from '../lib/transformer'
 import { type AppRouter } from '../router'
 
 const getBaseUrl = () => {

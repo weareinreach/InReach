@@ -1,5 +1,6 @@
-import superjson from 'superjson'
 import { z } from 'zod'
+
+import { superjson } from '@weareinreach/util/transformer'
 
 import { type Prisma } from '..'
 

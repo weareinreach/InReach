@@ -3,7 +3,7 @@ import prettyBytes from 'pretty-bytes'
 
 import { type ApiInput, type ApiOutput } from '@weareinreach/api'
 import { getHTTPStatusCodeFromError, TRPC_ERROR_CODES_BY_KEY } from '@weareinreach/api/errorTypes'
-import { type SuperJSONResult, transformer } from '@weareinreach/api/lib/transformer'
+import { type SuperJSONResult, transformer } from '@weareinreach/util/transformer'
 
 const byteSize = (str: string) => Buffer.from(str).byteLength
 export type RpcResponse<Data> = RpcSuccessResponse<Data> | RpcErrorResponse
