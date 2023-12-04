@@ -1,7 +1,7 @@
 import mapObjectVals from 'just-map-values'
 
 import { prisma } from '@weareinreach/db'
-import { transformer } from '~api/lib/transformer'
+import { transformer } from '@weareinreach/util/transformer'
 import { globalSelect, globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 

@@ -1,4 +1,3 @@
-import superjson from 'superjson'
 import { z } from 'zod'
 
 import {
@@ -7,6 +6,7 @@ import {
 	JsonInputOrNull,
 	JsonNullValueInputSchema,
 } from '@weareinreach/db/zod_util'
+import { superjson } from '@weareinreach/util/transformer'
 import { nanoUrlRegex } from '~api/lib/nanoIdUrl'
 
 /**

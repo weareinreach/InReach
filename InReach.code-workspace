@@ -178,7 +178,9 @@
 		},
 		"files.exclude": {
 			".next/": true,
+			".trace/": true,
 			".turbo/": true,
+			".vercel/": true,
 			"*.tsbuildinfo": true,
 			"**/.DS_Store": true,
 			"**/.git": true,
