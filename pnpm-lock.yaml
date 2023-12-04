@@ -7788,10 +7788,10 @@ packages:
     peerDependencies:
       '@storybook/addon-docs': ^7.0.0
       '@storybook/addons': ^7.0.0
-      '@storybook/components': ^7.0.0 || 7
+      '@storybook/components': ^7.0.0
       '@storybook/manager-api': ^7.0.0
       '@storybook/preview-api': ^7.0.0
-      '@storybook/theming': ^7.0.0 || 7
+      '@storybook/theming': ^7.0.0
       react: ^18 || 18
       react-dom: ^18 || 18
     peerDependenciesMeta:
@@ -22804,11 +22804,11 @@ packages:
   /storybook-addon-pseudo-states@2.1.2(@storybook/components@7.6.3)(@storybook/core-events@7.6.3)(@storybook/manager-api@7.6.3)(@storybook/preview-api@7.6.3)(@storybook/theming@7.6.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-AHv6q1JiQEUnMyZE3729iV6cNmBW7bueeytc4Lga4+8W1En8YNea5VjqAdrDNJhXVU0QEEIGtxkD3EoC9aVWLw==}
     peerDependencies:
-      '@storybook/components': ^7.4.6 || 7
-      '@storybook/core-events': ^7.4.6 || 7
+      '@storybook/components': ^7.4.6
+      '@storybook/core-events': ^7.4.6
       '@storybook/manager-api': ^7.4.6
       '@storybook/preview-api': ^7.4.6
-      '@storybook/theming': ^7.4.6 || 7
+      '@storybook/theming': ^7.4.6
       react: ^18 || 18
       react-dom: ^18 || 18
     peerDependenciesMeta:
