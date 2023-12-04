@@ -1,6 +1,6 @@
-import superjson from 'superjson'
-import { type SuperJSONResult } from 'superjson/dist/types'
 import { z } from 'zod'
+
+import { superjson, type SuperJSONResult } from '@weareinreach/util/transformer'
 
 const isURL = (string: string) => z.string().url().safeParse(string).success
 

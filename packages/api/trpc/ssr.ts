@@ -3,8 +3,8 @@ import { type GetServerSidePropsContext, type NextApiRequest, type NextApiRespon
 
 import { getServerSession } from '@weareinreach/auth/next-auth/get-session'
 import { type Session } from '@weareinreach/auth/next-auth/types'
+import { transformer } from '@weareinreach/util/transformer'
 import { createContextInner } from '~api/lib/context'
-import { transformer } from '~api/lib/transformer'
 import { appRouter } from '~api/router'
 
 interface SSRContext {
