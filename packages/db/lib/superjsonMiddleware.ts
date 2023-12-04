@@ -1,9 +1,8 @@
 import { Prisma } from '@prisma/client'
-import superjson from 'superjson'
-import { type SuperJSONResult } from 'superjson/dist/types'
 import { z } from 'zod'
 
 import { createLoggerInstance } from '@weareinreach/util/logger'
+import { superjson, type SuperJSONResult } from '@weareinreach/util/transformer'
 
 import { NullableJsonValue } from './zod'
 

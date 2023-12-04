@@ -9,7 +9,7 @@ import { StrictMode, useEffect, useState } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { devtoolsLink } from 'trpc-client-devtools-link'
 
-import { transformer } from '@weareinreach/api/lib/transformer'
+import { transformer } from '@weareinreach/util/transformer'
 import { BodyGrid } from '~ui/layouts/BodyGrid'
 import { type StorybookTRPC, trpc } from '~ui/lib/trpcClient'
 import { GoogleMapsProvider } from '~ui/providers/GoogleMaps'

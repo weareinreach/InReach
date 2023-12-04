@@ -5,7 +5,7 @@ import path from 'path'
 import querystring from 'querystring'
 
 import { type ApiInput, type ApiOutput } from '@weareinreach/api'
-import { transformer } from '@weareinreach/api/lib/transformer'
+import { transformer } from '@weareinreach/util/transformer'
 
 import { getBaseUrl } from './trpcClient'
 import { type ErrorInput, jsonRpcErrorResponse, jsonRpcSuccessResponse } from './trpcResponse'
