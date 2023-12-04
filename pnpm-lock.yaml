@@ -4207,11 +4207,11 @@ packages:
     resolution: {integrity: sha512-M1CQabr1/IDG6ku0/+n6kZBvWTCSun7LndkGsaB89nTNaCcflWxflgY2HdcbjblLL8W0iT7QiW9TgWP4kcpn5Q==}
     peerDependencies:
       '@storybook/blocks': ^7.0.0
-      '@storybook/components': ^7.0.0 || 7
-      '@storybook/core-events': ^7.0.0 || 7
+      '@storybook/components': ^7.0.0
+      '@storybook/core-events': ^7.0.0
       '@storybook/manager-api': ^7.0.0
       '@storybook/preview-api': ^7.0.0
-      '@storybook/theming': ^7.0.0 || 7
+      '@storybook/theming': ^7.0.0
       '@storybook/types': ^7.0.0
       react: ^18 || 18
       react-dom: ^18 || 18
@@ -7237,8 +7237,8 @@ packages:
       '@sentry/core': 7.85.0
       '@sentry/hub': 7.85.0
       '@sentry/node': 7.85.0
-      '@sentry/types': 7.84.0
-      '@sentry/utils': 7.84.0
+      '@sentry/types': 7.85.0
+      '@sentry/utils': 7.85.0
       detect-libc: 2.0.2
       node-abi: 3.52.0
       node-gyp: 9.4.1
