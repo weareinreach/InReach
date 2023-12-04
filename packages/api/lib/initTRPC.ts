@@ -3,9 +3,9 @@ import { type TRPCPanelMeta } from 'trpc-panel'
 import { ZodError } from 'zod'
 
 import { type Permission } from '@weareinreach/db/generated/permission'
+import { transformer } from '@weareinreach/util/transformer'
 
 import { type Context } from './context'
-import { transformer } from './transformer'
 
 export interface Meta extends TRPCPanelMeta {
 	hasPerm?: Permission | Permission[]

@@ -1,5 +1,7 @@
 import { DateTime, Interval } from 'luxon'
-import superjson from 'superjson'
+import SuperJSON from 'superjson'
+
+const superjson = new SuperJSON()
 
 superjson.registerCustom<DateTime, string>(
 	{
@@ -7,7 +9,7 @@ superjson.registerCustom<DateTime, string>(
 		serialize: (v) => v.toJSON() ?? '',
 		deserialize: (v) => DateTime.fromISO(v),
 	},
-	'Luxon DateTime'
+	'LuxonDateTime'
 )
 superjson.registerCustom(
 	{
@@ -15,8 +17,9 @@ superjson.registerCustom(
 		serialize: (v) => v.toISO() ?? '',
 		deserialize: (v) => Interval.fromISO(v),
 	},
-	'Luxon Interval'
+	'LuxonInterval'
 )
 
 export { type SuperJSONResult } from 'superjson/dist/types'
 export const transformer = superjson
+export { superjson }

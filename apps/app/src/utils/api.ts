@@ -7,8 +7,8 @@ import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 import { devtoolsLink } from 'trpc-client-devtools-link'
 
 import { type AppRouter } from '@weareinreach/api'
-import { transformer } from '@weareinreach/api/lib/transformer'
 import { getEnv } from '@weareinreach/env'
+import { transformer } from '@weareinreach/util/transformer'
 // import { createLoggerInstance } from '@weareinreach/util/logger'
 
 // const log = createLoggerInstance('tRPC')
