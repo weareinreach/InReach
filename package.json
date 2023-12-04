@@ -102,9 +102,6 @@
 		},
 		"peerDependencyRules": {
 			"allowedVersions": {
-				"@storybook/components": "7",
-				"@storybook/core-events": "7",
-				"@storybook/theming": "7",
 				"babel-loader": "9",
 				"i18next-browser-languagedetector": "7",
 				"i18next-http-backend": "2",
