@@ -19,6 +19,7 @@ export const getAlerts = async ({ input }: TRPCHandlerParams<TGetAlertsSchema>) 
 			select: {
 				supplement: {
 					select: { text: { select: { tsKey: { select: { key: true, ns: true, text: true } } } } },
+					where: { active: true },
 				},
 				attribute: { select: { tag: true, icon: true } },
 			},
