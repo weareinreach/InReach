@@ -37,7 +37,7 @@ export const orgHoursRouter = defineRouter({
 			if (!HandlerCache.update) throw new Error('Failed to load handler')
 			return HandlerCache.update({ ctx, input })
 		}),
-	getTz: staffProcedure.input(schema.ZGetTzSchema).query(async ({ ctx, input }) => {
+	getTz: publicProcedure.input(schema.ZGetTzSchema).query(async ({ ctx, input }) => {
 		if (!HandlerCache.getTz)
 			HandlerCache.getTz = await import('./query.getTz.handler').then((mod) => mod.getTz)
 		if (!HandlerCache.getTz) throw new Error('Failed to load handler')
