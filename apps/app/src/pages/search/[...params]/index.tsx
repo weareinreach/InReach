@@ -181,7 +181,7 @@ const SearchResults = () => {
 			})
 		}
 		if (queryParams.success && !compare(queryParams.data, searchState.params)) {
-			searchStateActions.setParams(queryParams.data)
+			searchStateActions.setParams(queryParams.data.map((x) => x.toString()))
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
