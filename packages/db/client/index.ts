@@ -8,7 +8,6 @@ import { superjsonMiddleware } from '~db/lib/superjsonMiddleware'
 
 const log = createLoggerInstance('prisma')
 const verboseLogging = Boolean(
-	// eslint-disable-next-line turbo/no-undeclared-env-vars
 	process.env.NODE_ENV === 'development' && (!!process.env.NEXT_VERBOSE || !!process.env.PRISMA_VERBOSE)
 )
 

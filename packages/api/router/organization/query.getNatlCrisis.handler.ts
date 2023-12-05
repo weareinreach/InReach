@@ -1,8 +1,6 @@
-import superjson from 'superjson'
-import { type SuperJSONResult } from 'superjson/dist/types'
-
 import { prisma } from '@weareinreach/db'
 import { accessInstructions } from '@weareinreach/db/zod_util/attributeSupplement'
+import { superjson, type SuperJSONResult } from '@weareinreach/util/transformer'
 import { isPublic } from '~api/schemas/selects/common'
 import { type TRPCHandlerParams } from '~api/types/handler'
 

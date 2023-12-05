@@ -2,7 +2,7 @@ import { Card, createStyles, Group, rem, Skeleton, Stack, Text } from '@mantine/
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 
-import { transformer } from '@weareinreach/api/lib/transformer'
+import { transformer } from '@weareinreach/util/transformer'
 import { Badge, BadgeGroup } from '~ui/components/core/Badge'
 import { useCustomVariant, useScreenSize } from '~ui/hooks'
 import { Icon } from '~ui/icon'

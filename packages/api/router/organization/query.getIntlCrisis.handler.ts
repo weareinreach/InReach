@@ -1,8 +1,7 @@
-import superjson from 'superjson'
-import { type SuperJSONResult } from 'superjson/dist/types'
 import { z } from 'zod'
 
 import { prisma } from '@weareinreach/db'
+import { superjson, type SuperJSONResult } from '@weareinreach/util/transformer'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TGetIntlCrisisSchema } from './query.getIntlCrisis.schema'
