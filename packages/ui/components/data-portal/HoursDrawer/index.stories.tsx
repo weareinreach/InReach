@@ -9,7 +9,7 @@ import { organization } from '~ui/mockData/organization'
 import { orgHours } from '~ui/mockData/orgHours'
 import { service } from '~ui/mockData/orgService'
 
-import { HoursDrawer } from './HoursDrawer'
+import { HoursDrawer } from './index'
 
 export default {
 	title: 'Data Portal/Drawers/Hours',

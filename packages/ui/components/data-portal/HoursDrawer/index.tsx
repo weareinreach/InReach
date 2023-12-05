@@ -1,28 +1,25 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
 	type ButtonProps,
 	Checkbox,
 	createPolymorphicComponent,
-	createStyles,
 	Divider,
 	Drawer,
 	Group,
-	rem,
 	Select,
 	Stack,
 	Text,
 	Title,
-	UnstyledButton,
 } from '@mantine/core'
-import { TimeInput } from '@mantine/dates'
-import { Form, useForm, zodResolver } from '@mantine/form'
-import { useDebouncedValue, useDisclosure, useListState } from '@mantine/hooks'
+import { useDisclosure } from '@mantine/hooks'
 import { DateTime, Interval } from 'luxon'
-import { type ComponentPropsWithRef, forwardRef, type ReactNode, useEffect, useMemo, useState } from 'react'
+import { forwardRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { TimeInput } from 'react-hook-form-mantine'
 import timezones from 'timezones-list'
-import { z } from 'zod'
+import { type z } from 'zod'
 
-import { type ApiOutput } from '@weareinreach/api'
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
@@ -30,58 +27,9 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-const useStyles = createStyles((theme) => ({
-	drawerContent: {
-		borderRadius: `${rem(32)} 0 0 0`,
-		minWidth: '40vw',
-	},
-	drawerBody: {
-		padding: `${rem(40)} ${rem(32)}`,
-		'&:not(:only-child)': {
-			paddingTop: rem(40),
-		},
-	},
-	addNewButton: {
-		width: '100%',
-		border: `${rem(1)} dashed ${theme.other.colors.secondary.teal}`,
-		borderRadius: rem(8),
-		padding: rem(12),
-	},
-	addNewText: {
-		color: theme.other.colors.secondary.teal,
-	},
-}))
-
-const FormSchema = z
-	.object({
-		data: z
-			.object({
-				id: z.string().optional(),
-				dayIndex: z.coerce.number(),
-				start: z
-					.string({ required_error: 'Start time is required', invalid_type_error: 'Invalid entry' })
-					.length(5),
-				end: z
-					.string({ required_error: 'End time is required', invalid_type_error: 'Invalid entry' })
-					.length(5),
-				closed: z.coerce.boolean(),
-				open24: z.coerce.boolean().optional(),
-				new: z.coerce.boolean().optional(),
-				tz: z.string().nullable(),
-				delete: z.boolean().optional(),
-			})
-			.array(),
-	})
-	.superRefine((val, ctx) => {
-		// https://zod.dev/?id=superrefine
-	})
-
-const schemaTransform = ({ id, data }: FormSchema) => ({
-	id,
-	data: {
-		...data,
-	},
-})
+import { useDayFieldArray } from './fieldArray'
+import { FormSchema } from './schema'
+import { useStyles } from './styles'
 
 const tzGroup = new Set([
 	'Pacific/Honolulu',
@@ -112,14 +60,15 @@ const sortedTimezoneData = timezoneData.sort((a, b) => {
 })
 
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
-	const [opened, handler] = useDisclosure(false) //TODO: Change back to 'false' when done.
+	const [opened, handler] = useDisclosure(true) //TODO: Change back to 'false' when done.
 	const [isSaved, setIsSaved] = useState(false)
+	//data comes from api here
+	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '')
+	const utils = api.useUtils()
 
 	const form = useForm<z.infer<typeof FormSchema>>({
-		validate: zodResolver(FormSchema),
-		initialValues: {
-			data: [],
-		},
+		resolver: zodResolver(FormSchema),
+		defaultValues: async () => await utils.orgHours.forHoursDrawer.fetch(locationId ?? ''),
 	})
 	const [tzValue, setTzValue] = useState<string | null>(null)
 	const { classes } = useStyles()
@@ -135,38 +84,6 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		false,
 		false,
 	])
-
-	//data comes from api here
-	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '', {
-		onSuccess: (data) => {
-			if (data.length > 0) {
-				if (data[0] && data[0].tz) {
-					setTzValue(data[0].tz) // Set the tzValue based on the first item's tz property
-				}
-			}
-			const transformedData = data.map((item) => ({
-				...item,
-				start: item.start ?? '',
-				end: item.end ?? '',
-				closed: item.closed ?? false,
-				tz: item.tz ?? null,
-				id: item.id ?? generateId('orgHours'),
-				open24: item.start !== '' && item.end !== '' && item.start === item.end, // Update open24 condition
-				new: false, // Add default value for new
-				delete: false, // Add default value for delete
-			}))
-
-			form.setValues({ data: transformedData })
-
-			// Update the array of checked states based on open24 property
-			const newCheckedStates = checkedStates.map((_, index) =>
-				transformedData.some((item) => item.dayIndex === index && item.open24)
-			)
-			setCheckedStates(newCheckedStates)
-		},
-	})
-	console.log(form.values)
-	// Docs: https://mantine.dev/form/nested/
 
 	//check for time segment overlaps
 	const findOverlappingDayIndexes = (data: z.infer<typeof FormSchema>['data']): number[] => {
