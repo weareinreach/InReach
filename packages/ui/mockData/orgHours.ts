@@ -2,7 +2,7 @@ import { DateTime, Interval } from 'luxon'
 
 import { getTRPCMock, type MockDataObject, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
-const createInterval = (start: Time, end: Time, dayIndex: number, tz: string) => {
+export const createInterval = (start: Time, end: Time, dayIndex: number, tz: string) => {
 	const { weekYear, weekNumber } = DateTime.now()
 	return Interval.fromDateTimes(
 		DateTime.fromFormat(start, 'HH:mm', { zone: tz }).set({ weekday: dayIndex, weekYear, weekNumber }),
