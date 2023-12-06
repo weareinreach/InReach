@@ -1,4 +1,4 @@
-import { ActionIcon, Group, Input, type InputProps, Stack, Text } from '@mantine/core'
+import { ActionIcon, Group, Input, type InputProps, Stack, Text, useMantineTheme } from '@mantine/core'
 import { DateTime, Interval } from 'luxon'
 import { useEffect, useRef, useState } from 'react'
 import { type FieldValues, useController, type UseControllerProps, useFormContext } from 'react-hook-form'
@@ -33,6 +33,7 @@ export const TimeRange = <T extends FieldValues = { [k: string]: Interval<true> 
 	})
 	const form = useFormContext<T>()
 	const variant = useCustomVariant()
+	const theme = useMantineTheme()
 	const [openValue, setOpenValue] = useState(value?.start?.toFormat('HH:mm'))
 	const [closeValue, setCloseValue] = useState(value?.end?.toFormat('HH:mm'))
 	console.log(form)
@@ -53,6 +54,7 @@ export const TimeRange = <T extends FieldValues = { [k: string]: Interval<true> 
 			onChange(null)
 			form && form.setError(name, { message: 'Invalid time range' })
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [openValue, closeValue])
 
 	return (
@@ -82,7 +84,12 @@ export const TimeRange = <T extends FieldValues = { [k: string]: Interval<true> 
 						/>
 					</Stack>
 					<ActionIcon>
-						<Icon icon='carbon:trash-can' onClick={deleteHandler} height={24} />
+						<Icon
+							icon='carbon:trash-can'
+							onClick={deleteHandler}
+							height={24}
+							color={theme.other.colors.secondary.black}
+						/>
 					</ActionIcon>
 				</Group>
 				<Input.Error>{fieldState.error?.message}</Input.Error>
