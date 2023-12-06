@@ -65,7 +65,7 @@
 		"@hookform/resolvers": "3.3.2",
 		"@iconify-json/carbon": "1.1.24",
 		"@iconify-json/fluent-mdl2": "1.1.5",
-		"@iconify-json/mdi": "1.1.58",
+		"@iconify-json/mdi": "1.1.59",
 		"@iconify-json/ph": "1.1.8",
 		"@iconify-json/simple-icons": "1.1.82",
 		"@iconify/react": "4.1.1",
