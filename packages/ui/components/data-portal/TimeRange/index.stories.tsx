@@ -5,7 +5,7 @@ import { Form, useForm } from 'react-hook-form'
 
 import { createInterval } from '~ui/mockData/orgHours'
 
-import { TimeRange } from './TimeRange'
+import { TimeRange } from '.'
 
 const Wrapped = (props: ComponentProps<typeof TimeRange>) => {
 	const { control, watch } = useForm({ mode: 'all' })
