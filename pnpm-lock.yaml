@@ -1235,6 +1235,9 @@ importers:
       cookies-next:
         specifier: 4.1.0
         version: 4.1.0
+      crud-object-diff:
+        specifier: 2.3.6
+        version: 2.3.6
       escape-string-regexp:
         specifier: 5.0.0
         version: 5.0.0
@@ -12293,6 +12296,10 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  /crud-object-diff@2.3.6:
+    resolution: {integrity: sha512-pxiHs9jCgxX8tWMr8zJ33HPc42XNT++pKSChvQie15MHTFG0b1ilUqGEVJIQTUSBe4jdFrm8tmzeoyA/E2DtEw==}
+    dev: false
 
   /crypto-browserify@3.12.0:
     resolution: {integrity: sha512-fz4spIh+znjO2VjL+IdhEpRJ3YN6sMzITSBijk6FK2UvTqruSQW+/cCZTSNsMiZNvUeq0CqurF+dAbyiGOY6Wg==}
