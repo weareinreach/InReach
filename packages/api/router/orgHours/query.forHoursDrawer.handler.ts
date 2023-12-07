@@ -68,6 +68,6 @@ export const forHoursDrawer = async ({ input }: TRPCHandlerParams<TForHoursDrawe
 			interval,
 		}
 	})
-	const grouped = groupBy(intervalResults, ({ dayIndex }) => dayIndex)
+	const grouped = groupBy(intervalResults, ({ dayIndex }) => dayIndex.toString())
 	return grouped
 }
