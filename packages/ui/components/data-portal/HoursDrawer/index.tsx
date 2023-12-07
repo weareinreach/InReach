@@ -2,12 +2,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
 	type ButtonProps,
-	Checkbox,
 	createPolymorphicComponent,
 	Divider,
 	Drawer,
 	Group,
-	Select,
 	Stack,
 	Text,
 	Title,
@@ -15,20 +13,22 @@ import {
 import { useDisclosure } from '@mantine/hooks'
 import { DateTime, Interval } from 'luxon'
 import { forwardRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { TimeInput } from 'react-hook-form-mantine'
+import { useFieldArray, useForm } from 'react-hook-form'
+import { Checkbox, Select } from 'react-hook-form-mantine'
 import timezones from 'timezones-list'
 import { type z } from 'zod'
+// import { compareObjectVals } from 'crud-object-diff'
 
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
+import { TimeRange } from '~ui/components/data-portal/TimeRange'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { useDayFieldArray } from './fieldArray'
-import { FormSchema } from './schema'
+import { defaultInterval, updateClosed, updateOpen24, updateTz, useDayFieldArray } from './fieldArray'
+import { type DayIndex, dayIndicies, FormSchema, type ZFormSchema } from './schema'
 import { useStyles } from './styles'
 
 const tzGroup = new Set([
@@ -39,6 +39,15 @@ const tzGroup = new Set([
 	'America/Chicago',
 	'America/New_York',
 ])
+const days = {
+	'0': 'Sunday',
+	'1': 'Monday',
+	'2': 'Tuesday',
+	'3': 'Wednesday',
+	'4': 'Thursday',
+	'5': 'Friday',
+	'6': 'Saturday',
+} as const
 
 const timezoneData = timezones.map((item, index) => {
 	const { tzCode, ...rest } = item
@@ -66,258 +75,95 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '')
 	const utils = api.useUtils()
 
-	const form = useForm<z.infer<typeof FormSchema>>({
+	const form = useForm<ZFormSchema>({
 		resolver: zodResolver(FormSchema),
-		defaultValues: async () => await utils.orgHours.forHoursDrawer.fetch(locationId ?? ''),
+		defaultValues: async () => {
+			const data = await utils.orgHours.forHoursDrawer.fetch(locationId ?? '')
+			const closed: ZFormSchema['closed'] = Object.fromEntries(
+				dayIndicies.map((i) => [i, data[i]?.some((d) => d.closed) ?? false])
+			)
+			const open24hours: ZFormSchema['open24hours'] = Object.fromEntries(
+				dayIndicies.map((i) => [i, data[i]?.some((d) => d.open24hours) ?? false])
+			)
+			const tz: ZFormSchema['tz'] = ''
+
+			return {
+				...data,
+				closed,
+				open24hours,
+				tz,
+			}
+		},
 	})
+	const dayFields = useDayFieldArray(form.control)
+
 	const [tzValue, setTzValue] = useState<string | null>(null)
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 
-	// Initialize the array of checked states with false for each day
-	const [checkedStates, setCheckedStates] = useState<boolean[]>([
-		false,
-		false,
-		false,
-		false,
-		false,
-		false,
-		false,
-	])
-
-	//check for time segment overlaps
-	const findOverlappingDayIndexes = (data: z.infer<typeof FormSchema>['data']): number[] => {
-		const overlappingDayIndexes: number[] = []
-
-		for (let i = 0; i < data.length; i++) {
-			const currentItem = data[i]
-
-			// Skip if currentItem is undefined, an emtpy string, or if open24 is true, or if item is already marked as overlapping
-			if (!currentItem || currentItem.open24 || overlappingDayIndexes.includes(currentItem.dayIndex)) {
-				continue
-			}
-
-			const overlappingRanges = data.filter(
-				(item) =>
-					item.dayIndex === currentItem.dayIndex &&
-					!item.open24 &&
-					currentItem.start !== '' &&
-					currentItem.end !== '' &&
-					item.start !== '' &&
-					item.end !== '' &&
-					rangesOverlap([currentItem.start, currentItem.end], [item.start, item.end])
-			)
-
-			if (overlappingRanges.length > 1) {
-				console.log('day index is overlapping', currentItem.dayIndex)
-				overlappingDayIndexes.push(currentItem.dayIndex)
-			}
-		}
-
-		return overlappingDayIndexes
-	}
-
-	const rangesOverlap = (rangeA: string[], rangeB: string[]) => {
-		const [startA = '', endA = ''] = rangeA
-		const [startB = '', endB = ''] = rangeB
-
-		const startADateTime = DateTime.fromFormat(startA, 'HH:mm')
-		const endADateTime = DateTime.fromFormat(endA, 'HH:mm')
-		const startBDateTime = DateTime.fromFormat(startB, 'HH:mm')
-		const endBDateTime = DateTime.fromFormat(endB, 'HH:mm')
-
-		return !(endADateTime <= startBDateTime || endBDateTime <= startADateTime)
-	}
-
-	console.log(findOverlappingDayIndexes(form.values.data))
-
-	// Function to handle checkbox change for a specific day
-	const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, dayIndex: number) => {
-		const { checked } = event.currentTarget
-		// Create a new array with the updated checked state for the specific day
-		const newCheckedStates = [...checkedStates]
-		newCheckedStates[dayIndex] = checked
-		setCheckedStates(newCheckedStates)
-
-		// Check if there is a pre-existing time segment with the same dayIndex
-		const existingItemIndex = form.values.data.findIndex((item) => item.dayIndex === dayIndex && !item.new)
-
-		// Check if there are items with the same dayIndex and open24: true
-		//we dont want to add a time segment if one already exists
-		const existingOpen24ItemIndex = form.values.data.findIndex(
-			(item) => item.dayIndex === dayIndex && item.open24 === true
-		)
-
-		// Remove items with the same dayIndex and new: true
-		// This is because they were added and not saved before more changes were made
-		// to the form data and we don't want to have competing update and delete events
-		const newDataWithoutNew = form.values.data.filter(
-			(item) => !(item.dayIndex === dayIndex && item.new === true)
-		)
-
-		// Update the form data based on the checkbox state and other conditions
-		if (checked) {
-			if (existingItemIndex > -1) {
-				// An item exists which matches the dayIndex, let's update that item
-				const newData = form.values.data.map((item, index) => {
-					if (item.dayIndex === dayIndex) {
-						if (index === existingItemIndex) {
-							// Update start, end, and open24 for the first matching item
-							// and remove the delete property if it's true
-							const { delete: propToDelete, ...updatedObject } = item
-							return {
-								...updatedObject,
-								open24: true,
-								start: '00:00',
-								end: '00:00',
-							}
-						} else {
-							// Set delete: true for other matching items
-							return { ...item, delete: true }
-						}
-					} else {
-						return item // No changes for other items
-					}
-				})
-				form.setValues({ data: newData })
-			} else if (existingOpen24ItemIndex === -1 || newDataWithoutNew.length === 0) {
-				//if there are no pre-existing segments and no 'new' segments, add a new item with open24: true
-				const newData = [
-					...newDataWithoutNew,
-					{
-						start: '00:00',
-						end: '00:00',
-						id: generateId('orgHours'),
-						dayIndex,
-						closed: false,
-						open24: true,
-					},
-				]
-				form.setValues({ data: newData })
-			}
-		} else {
-			// If checkbox is unchecked, remove open24 property if it exists
-			const newDataWithoutOpen24 = newDataWithoutNew.map((item) => {
-				if (item.dayIndex === dayIndex && item.open24) {
-					const { open24, ...newItem } = item
-					return { ...newItem, new: true }
-				}
-				return item
-			})
-
-			// Update the form data without the open24 property
-			form.setValues({ data: newDataWithoutOpen24 })
-		}
-	}
-
 	const handleTimezoneChange = (selectedTzValue: string) => {
 		// Update the tz value for all items in the form data based on the dropdown selection
-		const updatedFormData = form.values.data.map((item) => ({
-			...item,
-			tz: selectedTzValue,
-		}))
-
-		// Update form values with the updated tz values
-		form.setValues({ data: updatedFormData })
+		// const updatedFormData = form.values.data.map((item) => ({
+		// 	...item,
+		// 	tz: selectedTzValue,
+		// }))
+		// // Update form values with the updated tz values
+		// form.setValues({ data: updatedFormData })
 	}
 
 	const handleUpdate = () => {
 		//TODO save to DB instead of sending to console.log
-		console.log('clicked save', form.isValid(), form.errors, form.values)
+		console.log('clicked save', form.getValues(), form.formState.errors)
 	}
 
-	const TimeRangeComponent = ({ arrayIdx, open24 }: { arrayIdx: number; open24?: boolean }) => {
-		return (
-			<Stack>
-				<Group>
-					<TimeInput
-						label='Open time'
-						maw={200}
-						mx='auto'
-						name='start'
-						{...form.getInputProps(`data.${arrayIdx}.start`)}
-						onFocus={undefined}
-						disabled={open24}
-					/>
-					<TimeInput
-						label='Close time'
-						maw={200}
-						mx='auto'
-						name='end'
-						{...form.getInputProps(`data.${arrayIdx}.end`)}
-						onFocus={undefined}
-						disabled={open24}
-					/>
-					<Icon
-						icon='carbon:trash-can'
-						onClick={() => {
-							if (form.values.data[arrayIdx].new) {
-								// Delete the item if new: true is set
-								const newData = form.values.data.filter((_, idx) => idx !== arrayIdx)
-								form.setValues({ data: newData })
-							} else {
-								// item not new so set delete flag to true
-								const newData = form.values.data.map((item, idx) =>
-									idx === arrayIdx ? { ...item, delete: true } : item
-								)
-								form.setValues({ data: newData })
-							}
-						}}
-						style={{
-							cursor: form.values.data[arrayIdx]?.open24 ? 'not-allowed' : 'pointer',
-							opacity: form.values.data[arrayIdx].open24 ? 0.5 : 1, // Adjust opacity for the disabled look
-						}}
-					/>
-				</Group>
-			</Stack>
-		)
-	}
-	const DayWrap = ({
-		dayIndex,
-		checked,
-		onCheckboxChange,
-		children,
-	}: {
-		dayIndex: number
-		checked: boolean
-		children: React.ReactNode
-	}) => {
+	const DayWrap = ({ dayIndex, children }: { dayIndex: DayIndex; children: React.ReactNode }) => {
 		const specificDayIndex = dayIndex // Set the specific day index
-
-		const days = {
-			0: 'Sunday',
-			1: 'Monday',
-			2: 'Tuesday',
-			3: 'Wednesday',
-			4: 'Thursday',
-			5: 'Friday',
-			6: 'Saturday',
-		}
 
 		return (
 			<Stack>
 				<Group position='apart'>
-					<Title order={3}>{days[dayIndex.toString()] ?? ''}</Title>
+					<Title order={3}>{days[dayIndex] ?? ''}</Title>
 					<Checkbox
+						control={form.control}
 						label='Open 24 Hours'
-						checked={checked}
-						onChange={(event) => onCheckboxChange(event, dayIndex)}
+						name={`open24hours.${dayIndex}`}
+						onChange={(event) =>
+							updateOpen24({
+								form,
+								dayFields,
+								dayIndex: `${dayIndex}`,
+								newValue: event.target.checked,
+							})
+						}
+					/>
+					<Checkbox
+						control={form.control}
+						label='Closed'
+						name={`closed.${dayIndex}`}
+						onChange={(event) =>
+							updateClosed({
+								form,
+								dayFields,
+								dayIndex: `${dayIndex}`,
+								newValue: event.target.checked,
+							})
+						}
 					/>
 				</Group>
 				{children}
 				<Button
 					variant='secondary'
 					onClick={() =>
-						form.insertListItem('data', {
-							start: '',
-							end: '',
-							id: generateId('orgHours'),
-							dayIndex,
+						dayFields[dayIndex].append({
 							closed: false,
-							new: true,
+							open24hours: false,
+							tz: form.getValues().tz,
+							dayIndex: parseInt(dayIndex),
+							id: generateId('orgHours'),
+							interval: defaultInterval(form.getValues().tz),
 						})
 					}
-					disabled={checked && dayIndex === specificDayIndex}
+					// disabled={checked && dayIndex === specificDayIndex}
 				>
 					<Group noWrap spacing={8}>
 						<Icon icon='carbon:add' className={classes.addNewText} height={24} />
@@ -332,23 +178,13 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		)
 	}
 
-	const dayRender: Record<string, JSX.Element[]> = {
-		0: [],
-		1: [],
-		2: [],
-		3: [],
-		4: [],
-		5: [],
-		6: [],
-	}
+	// form.values.data.forEach((item, idx) => {
+	// 	if (item.delete || !dayRender[item.dayIndex.toString()]) return
 
-	form.values.data.forEach((item, idx) => {
-		if (item.delete || !dayRender[item.dayIndex.toString()]) return
-
-		dayRender[item.dayIndex.toString()]?.push(
-			<TimeRangeComponent arrayIdx={idx} key={item.id ?? idx} open24={item.open24} />
-		)
-	})
+	// 	dayRender[item.dayIndex.toString()]?.push(
+	// 		<TimeRangeComponent arrayIdx={idx} key={item.id ?? idx} open24={item.open24} />
+	// 	)
+	// })
 
 	return (
 		<>
@@ -371,10 +207,10 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 						<Stack spacing={24} align='center'>
 							<Title order={2}>Hours</Title>
 							<Select
-								value={tzValue}
-								onChange={(selectedTzValue) => {
-									setTzValue(selectedTzValue)
-									handleTimezoneChange(selectedTzValue)
+								control={form.control}
+								name='tz'
+								onChange={(newValue) => {
+									newValue && updateTz({ form, newValue })
 								}}
 								label='Select a timezone for this location'
 								placeholder='Search for timezone'
@@ -386,14 +222,11 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							<Divider my='sm' />
 						</Stack>
 						<form>
-							{Object.entries(dayRender).map(([dayIndex, children]) => (
-								<DayWrap
-									key={dayIndex}
-									dayIndex={parseInt(dayIndex)}
-									checked={checkedStates[parseInt(dayIndex)]}
-									onCheckboxChange={(event) => handleCheckboxChange(event, parseInt(dayIndex))}
-								>
-									{children}
+							{dayIndicies.map((day) => (
+								<DayWrap dayIndex={day} key={day}>
+									{dayFields[day]?.fields.map((item, idx) => {
+										return <TimeRange key={item.id} name={`${day}.${idx}`} deleteHandler={() => {}} />
+									})}
 								</DayWrap>
 							))}
 						</form>
@@ -413,5 +246,3 @@ export const HoursDrawer = createPolymorphicComponent<'button', HoursDrawerProps
 interface HoursDrawerProps extends ButtonProps {
 	locationId?: string
 }
-
-type FormSchema = z.infer<typeof FormSchema>
