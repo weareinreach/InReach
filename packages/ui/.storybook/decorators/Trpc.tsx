@@ -2,7 +2,7 @@ import { type StoryContext, type StoryFn } from '@storybook/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { httpLink, loggerLink } from '@trpc/client'
-import { useEffect, useState } from 'react'
+import { /*useEffect,*/ useState } from 'react'
 import { devtoolsLink } from 'trpc-client-devtools-link'
 
 import { transformer } from '@weareinreach/util/transformer'
@@ -17,6 +17,8 @@ export const WithTRPC = (Story: StoryFn, { parameters }: StoryContext) => {
 				defaultOptions: {
 					queries: {
 						refetchOnWindowFocus: false,
+						staleTime: 1000 * 60 * 10, // 10 Minutes
+						cacheTime: 1000 * 60 * 60, // 1 Hour
 					},
 				},
 			})
@@ -35,13 +37,13 @@ export const WithTRPC = (Story: StoryFn, { parameters }: StoryContext) => {
 		transformer,
 	}
 
-	const [trpcClient, setTRPCClient] = useState(storybookTRPC.createClient(trpcClientOpts))
-	useEffect(() => {
-		queryClient.clear()
-		const trpc_client = storybookTRPC.createClient(trpcClientOpts)
-		setTRPCClient(trpc_client)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [setTRPCClient, queryClient])
+	const [trpcClient, _setTRPCClient] = useState(storybookTRPC.createClient(trpcClientOpts))
+	// useEffect(() => {
+	// 	// queryClient.clear()
+	// 	const trpc_client = storybookTRPC.createClient(trpcClientOpts)
+	// 	setTRPCClient(trpc_client)
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [queryClient])
 
 	return (
 		<storybookTRPC.Provider client={trpcClient} queryClient={queryClient}>
