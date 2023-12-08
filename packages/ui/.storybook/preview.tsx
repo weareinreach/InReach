@@ -1,6 +1,6 @@
 import './wdyr'
+import './font.css'
 import { type BADGE } from '@geometricpanda/storybook-addon-badges'
-import { type INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { type Preview } from '@storybook/react'
 import { type WhyDidYouRenderOptions } from '@welldone-software/why-did-you-render'
 import { type RequestHandler, rest } from 'msw'
@@ -27,8 +27,6 @@ import { i18n } from './i18next'
 import { viewport, type ViewportConfig } from './viewports'
 
 import type authStates from './mockAuthStates'
-
-import './font.css'
 
 initializeMsw({
 	serviceWorker: {
