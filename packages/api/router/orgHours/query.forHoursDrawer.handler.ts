@@ -68,22 +68,24 @@ export const forHoursDrawer = async ({ input }: TRPCHandlerParams<TForHoursDrawe
 			interval,
 		}
 	})
-	const groupedData = groupBy<(typeof intervalResults)[number], LiteralUnion<DataKeys, number>>(
-		intervalResults,
-		({ dayIndex }) =>
-			typeof dayIndex === 'number' && dayIndex >= 0 && dayIndex <= 6
-				? (dayIndex.toString() as DataKeys)
-				: dayIndex
-	)
-	const closed = Object.fromEntries(
-		dayIndicies.map((i) => [i.toString(), groupedData[i]?.some((d) => d.closed) ?? false])
-	) as { [key in DataKeys]: boolean }
-	const open24hours = Object.fromEntries(
-		dayIndicies.map((i) => [i.toString(), groupedData[i]?.some((d) => d.open24hours) ?? false])
-	) as { [key in DataKeys]: boolean }
-	const tzObj = Object.fromEntries(tzMap.entries())
-	// get the timezone with the most occurrences
-	const tz = Object.keys(tzObj).reduce((a, b) => ((tzObj[a] ?? 0) > (tzObj[b] ?? 0) ? a : b))
+	// move grouping to component
+	// const groupedData = groupBy<(typeof intervalResults)[number], LiteralUnion<DataKeys, number>>(
+	// 	intervalResults,
+	// 	({ dayIndex }) =>
+	// 		typeof dayIndex === 'number' && dayIndex >= 0 && dayIndex <= 6
+	// 			? (dayIndex.toString() as DataKeys)
+	// 			: dayIndex
+	// )
+	// const closed = Object.fromEntries(
+	// 	dayIndicies.map((i) => [i.toString(), groupedData[i]?.some((d) => d.closed) ?? false])
+	// ) as { [key in DataKeys]: boolean }
+	// const open24hours = Object.fromEntries(
+	// 	dayIndicies.map((i) => [i.toString(), groupedData[i]?.some((d) => d.open24hours) ?? false])
+	// ) as { [key in DataKeys]: boolean }
+	// const tzObj = Object.fromEntries(tzMap.entries())
+	// // get the timezone with the most occurrences
+	// const tz = Object.keys(tzObj).reduce((a, b) => ((tzObj[a] ?? 0) > (tzObj[b] ?? 0) ? a : b))
 
-	return { ...groupedData, closed, open24hours, tz }
+	// return { ...groupedData, closed, open24hours, tz }
+	return intervalResults
 }

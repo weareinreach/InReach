@@ -59,16 +59,16 @@ const HourRecord = z.object({
 	dayIndex: z.number().min(0).max(6),
 	interval: z.string().refine((val) => (Interval.fromISO(val).isValid ? true : 'Invalid interval')),
 })
-export const dayIndicies = ['0', '1', '2', '3', '4', '5', '6'] as DayIndex[]
-export const isDayKey = (key: string): key is DayIndex => dayIndicies.includes(key as DayIndex)
+export const dayIndicies = [0, 1, 2, 3, 4, 5, 6] as DayIndex[]
+export const isDayKey = (key: number): key is DayIndex => dayIndicies.includes(key as DayIndex)
 
-export const getDayRecords = (data: ZFormSchema) =>
-	Object.entries(data).reduce((data, [key, value]) => {
-		if (isDayKey(key) && Array.isArray(value)) {
-			data.push(...value)
-		}
-		return data
-	}, [] as ZHourRecord[])
+// export const getDayRecords = (data: ZFormSchema) =>
+// 	Object.entries(data).reduce((data, [key, value]) => {
+// 		if (isDayKey(key) && Array.isArray(value)) {
+// 			data.push(...value)
+// 		}
+// 		return data
+// 	}, [] as ZHourRecord[])
 
 const BoolObj = z.object({
 	'0': z.boolean().default(false),
@@ -81,17 +81,18 @@ const BoolObj = z.object({
 })
 
 export const FormSchema = z.object({
-	'0': HourRecord.array().optional(),
-	'1': HourRecord.array().optional(),
-	'2': HourRecord.array().optional(),
-	'3': HourRecord.array().optional(),
-	'4': HourRecord.array().optional(),
-	'5': HourRecord.array().optional(),
-	'6': HourRecord.array().optional(),
-	closed: BoolObj,
-	open24hours: BoolObj,
-	tz: z.string(),
+	// '0': HourRecord.array().optional(),
+	// '1': HourRecord.array().optional(),
+	// '2': HourRecord.array().optional(),
+	// '3': HourRecord.array().optional(),
+	// '4': HourRecord.array().optional(),
+	// '5': HourRecord.array().optional(),
+	// '6': HourRecord.array().optional(),
+	// closed: BoolObj,
+	// open24hours: BoolObj,
+	// tz: z.string(),
+	data: HourRecord.array(),
 })
 export type ZFormSchema = z.infer<typeof FormSchema>
 export type ZHourRecord = z.infer<typeof HourRecord>
-export type DayIndex = '0' | '1' | '2' | '3' | '4' | '5' | '6'
+export type DayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6
