@@ -1,7 +1,8 @@
-import { type V as ViewportMap } from '@storybook/addon-viewport/dist/Viewport-c277af0d'
+import { type INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 
 import { type Viewports } from './types'
 
+type ViewportMap = typeof INITIAL_VIEWPORTS
 export interface ViewportConfig {
 	viewports?: ViewportMap
 	defaultViewport?: Viewports
