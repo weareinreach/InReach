@@ -29,13 +29,13 @@
 		"dayjs": "1.11.10",
 		"embla-carousel-react": "7.1.0",
 		"i18next": "23.7.7",
-		"next": "14.0.3",
+		"next": "14.0.4",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-i18next": "13.5.0"
 	},
 	"devDependencies": {
-		"@next/bundle-analyzer": "14.0.3",
+		"@next/bundle-analyzer": "14.0.4",
 		"@types/eslint": "8.44.8",
 		"@types/node": "20.10.3",
 		"@types/react": "18.2.42",
