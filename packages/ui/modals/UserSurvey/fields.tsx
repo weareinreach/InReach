@@ -175,7 +175,7 @@ export const FormCountry = () => {
 	const { t } = useTranslation(['common', 'country'])
 	const { classes } = useStyles()
 	const form = useUserSurveyFormContext()
-
+	console.log(selectOptions)
 	const handleCountrySelect = (event: string) => {
 		form.setFieldValue('countryOriginId', event)
 	}

@@ -7,16 +7,18 @@ import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 
 interface TimeRangeComponent extends Omit<InputProps, 'value'> {
-	value?: Interval
+	value?: string
 	deleteHandler: () => void
 }
 export type HoursRangeProps<T extends FieldValues> = UseControllerProps<T> & TimeRangeComponent
 
-export const TimeRange = <T extends FieldValues = { [k: string]: Interval<true> }>({
+export const TimeRange = <T extends FieldValues = { [k: string]: string }>({
 	name,
 	control,
 	defaultValue,
-	rules = { validate: (val: unknown) => (Interval.isInterval(val) ? true : 'Invalid times') },
+	rules = {
+		validate: (val: string) => (Interval.isInterval(Interval.fromISO(val)) ? true : 'Invalid times'),
+	},
 	shouldUnregister,
 	deleteHandler,
 	...props
@@ -34,21 +36,23 @@ export const TimeRange = <T extends FieldValues = { [k: string]: Interval<true> 
 	const form = useFormContext<T>()
 	const variant = useCustomVariant()
 	const theme = useMantineTheme()
-	const [openValue, setOpenValue] = useState(value?.start?.toFormat('HH:mm'))
-	const [closeValue, setCloseValue] = useState(value?.end?.toFormat('HH:mm'))
-	console.log(form)
+	const [openValue, setOpenValue] = useState(Interval.fromISO(value)?.start?.toFormat('HH:mm'))
+	const [closeValue, setCloseValue] = useState(Interval.fromISO(value)?.end?.toFormat('HH:mm'))
+
 	useEffect(() => {
 		if (!openValue || !closeValue) return
 		const start = DateTime.fromFormat(openValue, 'HH:mm')
 		const end = DateTime.fromFormat(closeValue, 'HH:mm')
 
 		const updatedValue = value
-			? value.set({
-					start,
-					end,
-			  })
-			: Interval.fromDateTimes(start, end)
-		if (updatedValue.isValid) {
+			? Interval.fromISO(value)
+					.set({
+						start,
+						end,
+					})
+					.toISO()
+			: Interval.fromDateTimes(start, end).toISO()
+		if (Interval.fromISO(updatedValue).isValid) {
 			onChange(updatedValue)
 		} else {
 			onChange(null)

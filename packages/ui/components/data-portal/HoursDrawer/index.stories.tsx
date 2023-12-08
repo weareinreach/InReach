@@ -17,6 +17,7 @@ export default {
 	parameters: {
 		layout: 'fullscreen',
 		rqDevtools: true,
+		// wdyr: true,
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]/edit',

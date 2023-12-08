@@ -1,3 +1,4 @@
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
@@ -11,13 +12,12 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { DateTime, Interval } from 'luxon'
-import { forwardRef, useState } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
+// import { DateTime, Interval } from 'luxon'
+import { compareObjectVals } from 'crud-object-diff'
+import { forwardRef, useMemo, useState } from 'react'
+import { Form, useForm } from 'react-hook-form'
 import { Checkbox, Select } from 'react-hook-form-mantine'
 import timezones from 'timezones-list'
-import { type z } from 'zod'
-// import { compareObjectVals } from 'crud-object-diff'
 
 import { generateId } from '@weareinreach/db/lib/idGen'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
@@ -28,7 +28,15 @@ import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
 import { defaultInterval, updateClosed, updateOpen24, updateTz, useDayFieldArray } from './fieldArray'
-import { type DayIndex, dayIndicies, FormSchema, type ZFormSchema } from './schema'
+import {
+	type DayIndex,
+	dayIndicies,
+	FormSchema,
+	getDayRecords,
+	isDayKey,
+	type ZFormSchema,
+	type ZHourRecord,
+} from './schema'
 import { useStyles } from './styles'
 
 const tzGroup = new Set([
@@ -71,6 +79,7 @@ const sortedTimezoneData = timezoneData.sort((a, b) => {
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(true) //TODO: Change back to 'false' when done.
 	const [isSaved, setIsSaved] = useState(false)
+	// const [initialData, setInitialData] = useState<ZFormSchema | null>(null)
 	//data comes from api here
 	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '')
 	const utils = api.useUtils()
@@ -79,45 +88,38 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		resolver: zodResolver(FormSchema),
 		defaultValues: async () => {
 			const data = await utils.orgHours.forHoursDrawer.fetch(locationId ?? '')
-			const closed: ZFormSchema['closed'] = Object.fromEntries(
-				dayIndicies.map((i) => [i, data[i]?.some((d) => d.closed) ?? false])
-			)
-			const open24hours: ZFormSchema['open24hours'] = Object.fromEntries(
-				dayIndicies.map((i) => [i, data[i]?.some((d) => d.open24hours) ?? false])
-			)
-			const tz: ZFormSchema['tz'] = ''
-
-			return {
-				...data,
-				closed,
-				open24hours,
-				tz,
-			}
+			// setInitialData(data)
+			return data
 		},
+		mode: 'all',
 	})
+
 	const dayFields = useDayFieldArray(form.control)
 
-	const [tzValue, setTzValue] = useState<string | null>(null)
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 
-	const handleTimezoneChange = (selectedTzValue: string) => {
-		// Update the tz value for all items in the form data based on the dropdown selection
-		// const updatedFormData = form.values.data.map((item) => ({
-		// 	...item,
-		// 	tz: selectedTzValue,
-		// }))
-		// // Update form values with the updated tz values
-		// form.setValues({ data: updatedFormData })
-	}
+	console.log(form)
 
 	const handleUpdate = () => {
 		//TODO save to DB instead of sending to console.log
-		console.log('clicked save', form.getValues(), form.formState.errors)
+		if (!initialData) {
+			throw new Error('Missing initial data')
+		}
+		const initial = getDayRecords(initialData)
+		const current = getDayRecords(form.getValues())
+		console.log(initial, current)
+		const diffed = compareObjectVals([initial, current], 'id')
+
+		console.log('clicked save', diffed, form.formState.errors)
 	}
 
 	const DayWrap = ({ dayIndex, children }: { dayIndex: DayIndex; children: React.ReactNode }) => {
-		const specificDayIndex = dayIndex // Set the specific day index
+		const checkboxStates = form.watch([`open24hours.${dayIndex}`, `closed.${dayIndex}`])
+		const shouldDisable = useMemo(
+			() => checkboxStates.reduce((prev, curr) => (curr ? curr : prev), false),
+			[checkboxStates]
+		)
 
 		return (
 			<Stack>
@@ -163,12 +165,11 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							interval: defaultInterval(form.getValues().tz),
 						})
 					}
-					// disabled={checked && dayIndex === specificDayIndex}
+					disabled={shouldDisable}
 				>
 					<Group noWrap spacing={8}>
 						<Icon icon='carbon:add' className={classes.addNewText} height={24} />
 						<Text variant={variants.Text.utility2} className={classes.addNewText}>
-							{' '}
 							Add time range
 						</Text>
 					</Group>
@@ -177,14 +178,6 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 			</Stack>
 		)
 	}
-
-	// form.values.data.forEach((item, idx) => {
-	// 	if (item.delete || !dayRender[item.dayIndex.toString()]) return
-
-	// 	dayRender[item.dayIndex.toString()]?.push(
-	// 		<TimeRangeComponent arrayIdx={idx} key={item.id ?? idx} open24={item.open24} />
-	// 	)
-	// })
 
 	return (
 		<>
@@ -221,15 +214,23 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							/>
 							<Divider my='sm' />
 						</Stack>
-						<form>
-							{dayIndicies.map((day) => (
-								<DayWrap dayIndex={day} key={day}>
-									{dayFields[day]?.fields.map((item, idx) => {
-										return <TimeRange key={item.id} name={`${day}.${idx}`} deleteHandler={() => {}} />
-									})}
-								</DayWrap>
-							))}
-						</form>
+
+						{dayIndicies.map((day) => (
+							<DayWrap dayIndex={day} key={day}>
+								{dayFields[day]?.fields.map((item, idx) => {
+									return (
+										<TimeRange
+											key={item.id}
+											name={`${day}.${idx}.interval`}
+											deleteHandler={() => {
+												dayFields[day].remove(idx)
+											}}
+											control={form.control}
+										/>
+									)
+								})}
+							</DayWrap>
+						))}
 					</Drawer.Body>
 				</Drawer.Content>
 			</Drawer.Root>
@@ -237,10 +238,14 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 			<Stack>
 				<Box component='button' onClick={handler.open} ref={ref} {...props} />
 			</Stack>
+			<DevTool control={form.control} />
 		</>
 	)
 })
 _HoursDrawer.displayName = 'HoursDrawer'
+_HoursDrawer.whyDidYouRender = {
+	trackExtraHooks: [[require('react-hook-form'), 'useFieldArray']],
+}
 export const HoursDrawer = createPolymorphicComponent<'button', HoursDrawerProps>(_HoursDrawer)
 
 interface HoursDrawerProps extends ButtonProps {
