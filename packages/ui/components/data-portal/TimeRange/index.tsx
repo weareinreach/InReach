@@ -1,26 +1,62 @@
 import { ActionIcon, Group, Input, type InputProps, Stack, Text, useMantineTheme } from '@mantine/core'
 import { DateTime, Interval } from 'luxon'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { type FieldValues, useController, type UseControllerProps, useFormContext } from 'react-hook-form'
 
+import { type DayIndex, type ZFormSchema } from '~ui/components/data-portal/HoursDrawer/schema'
 import { useCustomVariant } from '~ui/hooks'
 import { Icon } from '~ui/icon'
 
 interface TimeRangeComponent extends Omit<InputProps, 'value'> {
 	value?: string
 	deleteHandler: () => void
+	dayIndex: DayIndex
 }
-export type HoursRangeProps<T extends FieldValues> = UseControllerProps<T> & TimeRangeComponent
+export type HoursRangeProps<T extends FieldValues = ZFormSchema> = UseControllerProps<T> & TimeRangeComponent
 
-export const TimeRange = <T extends FieldValues = { [k: string]: string }>({
+const { weekYear, weekNumber } = DateTime.now()
+
+const validateIntervals = <T extends ZFormSchema>(
+	currentVal: string,
+	fieldValues: T,
+	dayIndex: DayIndex,
+	itemId: string
+) => {
+	if (!Interval.isInterval(Interval.fromISO(currentVal))) {
+		return 'Invalid times'
+	}
+
+	console.log(`🚀 ~ file: index.tsx:26 ~ itemId:`, itemId)
+
+	const itemsToCheck = fieldValues.data.filter(
+		(record) => record.dayIndex === dayIndex && record.id !== itemId
+	)
+
+	console.log(`🚀 ~ file: index.tsx:29 ~ itemsToCheck:`, itemsToCheck)
+
+	if (itemsToCheck.length > 1) {
+		const intervalToValidate = Interval.fromISO(currentVal)
+
+		console.log(`🚀 ~ file: index.tsx:34 ~ intervalToValidate:`, intervalToValidate)
+
+		itemsToCheck.every(({ interval }) => {
+			const intervalToCheck = Interval.fromISO(interval)
+			const isValid = !intervalToValidate.overlaps(intervalToCheck)
+			return isValid ? true : 'Opening times for the same day cannot overlap!'
+		})
+	}
+	return true
+}
+
+export const TimeRange = <T extends FieldValues = ZFormSchema>({
 	name,
 	control,
 	defaultValue,
-	rules = {
-		validate: (val: string) => (Interval.isInterval(Interval.fromISO(val)) ? true : 'Invalid times'),
-	},
 	shouldUnregister,
 	deleteHandler,
+	disabled,
+	rules: _rules,
+	dayIndex,
 	...props
 }: HoursRangeProps<T>) => {
 	const {
@@ -30,22 +66,27 @@ export const TimeRange = <T extends FieldValues = { [k: string]: string }>({
 		name,
 		control,
 		defaultValue,
-		rules,
+		rules: {
+			validate: (val: string, formVals) => validateIntervals(val, formVals, dayIndex, props.key),
+		},
 		shouldUnregister,
+		disabled,
 	})
+
 	const form = useFormContext<T>()
 	const variant = useCustomVariant()
 	const theme = useMantineTheme()
-	const [openValue, setOpenValue] = useState(Interval.fromISO(value)?.start?.toFormat('HH:mm'))
-	const [closeValue, setCloseValue] = useState(Interval.fromISO(value)?.end?.toFormat('HH:mm'))
+	const interval = Interval.fromISO(value)
+	const [openValue, setOpenValue] = useState(interval?.start?.toFormat('HH:mm'))
+	const [closeValue, setCloseValue] = useState(interval?.end?.toFormat('HH:mm'))
 
 	useEffect(() => {
 		if (!openValue || !closeValue) return
-		const start = DateTime.fromFormat(openValue, 'HH:mm')
-		const end = DateTime.fromFormat(closeValue, 'HH:mm')
+		const start = DateTime.fromFormat(openValue, 'HH:mm').set({ weekYear, weekNumber, weekday: dayIndex })
+		const end = DateTime.fromFormat(closeValue, 'HH:mm').set({ weekYear, weekNumber, weekday: dayIndex })
 
 		const updatedValue = value
-			? Interval.fromISO(value)
+			? interval
 					.set({
 						start,
 						end,
@@ -72,6 +113,7 @@ export const TimeRange = <T extends FieldValues = { [k: string]: string }>({
 							value={openValue}
 							// error={fieldState.error?.message}
 							onChange={(e) => setOpenValue(e.target.value)}
+							disabled={disabled}
 							{...field}
 							{...props}
 						/>
@@ -83,11 +125,12 @@ export const TimeRange = <T extends FieldValues = { [k: string]: string }>({
 							value={closeValue}
 							// error={fieldState.error?.message}
 							onChange={(e) => setCloseValue(e.target.value)}
+							disabled={disabled}
 							{...field}
 							{...props}
 						/>
 					</Stack>
-					<ActionIcon>
+					<ActionIcon disabled={disabled}>
 						<Icon
 							icon='carbon:trash-can'
 							onClick={deleteHandler}

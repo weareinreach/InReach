@@ -3,10 +3,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
 	type ButtonProps,
+	Checkbox,
 	createPolymorphicComponent,
 	Divider,
 	Drawer,
 	Group,
+	Select,
 	Stack,
 	Text,
 	Title,
@@ -14,9 +16,9 @@ import {
 import { useDisclosure } from '@mantine/hooks'
 // import { DateTime, Interval } from 'luxon'
 import { compareObjectVals } from 'crud-object-diff'
-import { forwardRef, useMemo, useState } from 'react'
-import { Form, useForm } from 'react-hook-form'
-import { Checkbox, Select } from 'react-hook-form-mantine'
+import groupBy from 'just-group-by'
+import { forwardRef, useEffect, useState } from 'react'
+import { useFieldArray, useForm } from 'react-hook-form'
 import timezones from 'timezones-list'
 
 import { generateId } from '@weareinreach/db/lib/idGen'
@@ -27,16 +29,8 @@ import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { defaultInterval, updateClosed, updateOpen24, updateTz, useDayFieldArray } from './fieldArray'
-import {
-	type DayIndex,
-	dayIndicies,
-	FormSchema,
-	getDayRecords,
-	isDayKey,
-	type ZFormSchema,
-	type ZHourRecord,
-} from './schema'
+import { defaultInterval, updateClosed, updateOpen24, updateTz } from './fieldArray'
+import { type DayIndex, dayIndicies, FormSchema, type ZFormSchema } from './schema'
 import { useStyles } from './styles'
 
 const tzGroup = new Set([
@@ -79,22 +73,50 @@ const sortedTimezoneData = timezoneData.sort((a, b) => {
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
 	const [opened, handler] = useDisclosure(true) //TODO: Change back to 'false' when done.
 	const [isSaved, setIsSaved] = useState(false)
+	const [globalTz, setGlobalTz] = useState<string | null>(null)
 	// const [initialData, setInitialData] = useState<ZFormSchema | null>(null)
 	//data comes from api here
-	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '')
+	const { data: initialData } = api.orgHours.forHoursDrawer.useQuery(locationId ?? '', {
+		select: (data) => ({ data }),
+	})
 	const utils = api.useUtils()
 
 	const form = useForm<ZFormSchema>({
 		resolver: zodResolver(FormSchema),
 		defaultValues: async () => {
 			const data = await utils.orgHours.forHoursDrawer.fetch(locationId ?? '')
-			// setInitialData(data)
-			return data
+			return { data }
 		},
-		mode: 'all',
+		// mode: 'all',
 	})
+	const hoursObjects = useFieldArray({ control: form.control, name: 'data', keyName: 'id' })
+	const formData = form.getValues('data') ?? []
+	const groupedData = () => {
+		if (!formData) return
+		const grouped = groupBy(
+			formData.map((item, idx) => ({ ...item, idx })),
+			({ dayIndex }) => dayIndex
+		)
+		return new Map(Object.entries(grouped).map(([key, val]) => [Number(key), val]))
+	}
 
-	const dayFields = useDayFieldArray(form.control)
+	const tzMap = new Map<string, number>()
+	useEffect(() => {
+		if (!globalTz && Array.isArray(formData) && formData.length) {
+			for (const { tz } of formData) {
+				if (tzMap.has(tz)) {
+					tzMap.set(tz, tzMap.get(tz)! + 1)
+				} else {
+					tzMap.set(tz, 1)
+				}
+			}
+
+			const tzObj = Object.fromEntries(tzMap.entries())
+			const tzToSet = Object.keys(tzObj).reduce((a, b) => ((tzObj[a] ?? 0) > (tzObj[b] ?? 0) ? a : b))
+			setGlobalTz(tzToSet)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [formData])
 
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
@@ -103,66 +125,82 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 
 	const handleUpdate = () => {
 		//TODO save to DB instead of sending to console.log
+		form.trigger()
 		if (!initialData) {
 			throw new Error('Missing initial data')
 		}
-		const initial = getDayRecords(initialData)
-		const current = getDayRecords(form.getValues())
+		const initial = initialData.data
+		const current = form.getValues().data
 		console.log(initial, current)
 		const diffed = compareObjectVals([initial, current], 'id')
 
 		console.log('clicked save', diffed, form.formState.errors)
 	}
 
-	const DayWrap = ({ dayIndex, children }: { dayIndex: DayIndex; children: React.ReactNode }) => {
-		const checkboxStates = form.watch([`open24hours.${dayIndex}`, `closed.${dayIndex}`])
-		const shouldDisable = useMemo(
-			() => checkboxStates.reduce((prev, curr) => (curr ? curr : prev), false),
-			[checkboxStates]
+	const DayWrap = ({ dayIndex }: { dayIndex: DayIndex }) => {
+		const items = groupedData()?.get(dayIndex) ?? []
+		const [isClosed, setIsClosed] = useState(items.some((item) => item.closed && item.dayIndex === dayIndex))
+		const [isOpen24Hours, setIsOpen24Hours] = useState(
+			items.some((item) => item.open24hours && item.dayIndex === dayIndex)
 		)
-
+		const shouldDisable = isClosed || isOpen24Hours
 		return (
 			<Stack>
 				<Group position='apart'>
 					<Title order={3}>{days[dayIndex] ?? ''}</Title>
 					<Checkbox
-						control={form.control}
 						label='Open 24 Hours'
-						name={`open24hours.${dayIndex}`}
-						onChange={(event) =>
+						checked={isOpen24Hours}
+						onChange={(event) => {
 							updateOpen24({
 								form,
-								dayFields,
-								dayIndex: `${dayIndex}`,
+								formData,
+								dayIndex,
 								newValue: event.target.checked,
 							})
-						}
+							setIsOpen24Hours(event.target.checked)
+						}}
+						disabled={isClosed}
 					/>
 					<Checkbox
-						control={form.control}
 						label='Closed'
-						name={`closed.${dayIndex}`}
-						onChange={(event) =>
+						checked={isClosed}
+						onChange={(event) => {
 							updateClosed({
 								form,
-								dayFields,
-								dayIndex: `${dayIndex}`,
+								formData,
+								dayIndex,
 								newValue: event.target.checked,
 							})
-						}
+							setIsClosed(event.target.checked)
+						}}
+						disabled={isOpen24Hours}
 					/>
 				</Group>
-				{children}
+				{items?.map((item) => {
+					return (
+						<TimeRange
+							key={item.id}
+							name={`data.${item.idx}.interval`}
+							deleteHandler={() => {
+								hoursObjects.remove(item.idx)
+							}}
+							control={form.control}
+							disabled={shouldDisable}
+							dayIndex={dayIndex}
+						/>
+					)
+				})}
 				<Button
 					variant='secondary'
 					onClick={() =>
-						dayFields[dayIndex].append({
+						hoursObjects.append({
 							closed: false,
 							open24hours: false,
-							tz: form.getValues().tz,
-							dayIndex: parseInt(dayIndex),
+							tz: globalTz ?? 'America/New_York',
+							dayIndex,
 							id: generateId('orgHours'),
-							interval: defaultInterval(form.getValues().tz),
+							interval: defaultInterval(globalTz),
 						})
 					}
 					disabled={shouldDisable}
@@ -200,11 +238,11 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 						<Stack spacing={24} align='center'>
 							<Title order={2}>Hours</Title>
 							<Select
-								control={form.control}
-								name='tz'
 								onChange={(newValue) => {
-									newValue && updateTz({ form, newValue })
+									newValue && updateTz({ form, newValue, formData })
+									setGlobalTz(newValue)
 								}}
+								value={globalTz}
 								label='Select a timezone for this location'
 								placeholder='Search for timezone'
 								searchable
@@ -215,22 +253,11 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							<Divider my='sm' />
 						</Stack>
 
-						{dayIndicies.map((day) => (
-							<DayWrap dayIndex={day} key={day}>
-								{dayFields[day]?.fields.map((item, idx) => {
-									return (
-										<TimeRange
-											key={item.id}
-											name={`${day}.${idx}.interval`}
-											deleteHandler={() => {
-												dayFields[day].remove(idx)
-											}}
-											control={form.control}
-										/>
-									)
-								})}
-							</DayWrap>
-						))}
+						{dayIndicies.map((day) => {
+							const items = groupedData()?.get(day)
+							const shouldDisable = items?.some(({ closed, open24hours }) => closed || open24hours) ?? false
+							return <DayWrap dayIndex={day} key={day} />
+						})}
 					</Drawer.Body>
 				</Drawer.Content>
 			</Drawer.Root>
