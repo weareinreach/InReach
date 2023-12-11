@@ -66,22 +66,22 @@ export const ZUpdateSchema = z
 										},
 									},
 								},
-						  }
+							}
 						: {
 								attributes: {
 									delete: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
 								},
-						  }
+							}
 					: {}),
 				...(countryId
 					? {
 							country: { connect: { id: countryId } },
-					  }
+						}
 					: {}),
 				...(govDistId
 					? {
 							govDist: { connect: { id: govDistId } },
-					  }
+						}
 					: {}),
 				...(services
 					? {
@@ -89,7 +89,7 @@ export const ZUpdateSchema = z
 								createMany: { data: services.map((serviceId) => ({ serviceId })), skipDuplicates: true },
 								deleteMany: { NOT: { serviceId: { in: services } } },
 							},
-					  }
+						}
 					: {}),
 			},
 		})

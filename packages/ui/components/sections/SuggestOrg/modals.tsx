@@ -23,7 +23,7 @@ export const ServiceTypes = ({ disabled }: ModalProps) => {
 					label={t(item.tsKey, { ns: item.tsNs })}
 					{...form.getInputProps(`formOptions.serviceTypes.${i}.id`)}
 				/>
-		  ))
+			))
 		: null
 
 	return (
@@ -158,7 +158,7 @@ export const Communities = ({ disabled }: ModalProps) => {
 						</Checkbox.Group>
 					</div>
 				)
-		  })
+			})
 		: null
 
 	return (

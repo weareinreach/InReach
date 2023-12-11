@@ -79,7 +79,7 @@ export const upsertMany = async ({ ctx, input }: TRPCHandlerParams<TUpsertManySc
 										}),
 										update: { tsKey: { update: { text: description } } },
 									},
-							  }
+								}
 							: undefined,
 						auditLogs,
 					},

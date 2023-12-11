@@ -33,7 +33,7 @@ export const api = createTRPCNext<AppRouter>({
 							loggerLink({
 								enabled: () => isDev,
 							}),
-					  ]
+						]
 					: []),
 
 				httpBatchStreamLink({

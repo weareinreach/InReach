@@ -96,7 +96,7 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 						setStepOption(null)
 						handler.close()
 					},
-			  }
+				}
 			: {
 					option: 'back',
 					backTo: 'none',
@@ -104,7 +104,7 @@ const UserSurveyModalBody = forwardRef<HTMLButtonElement, UserSurveyModalBodyPro
 						setStep(1)
 						setStepOption(null)
 					},
-			  }
+				}
 
 	const titleRightSideProps = successMessage ? undefined : t('step-x-y', { ns: 'common', x: step, y: 5 })
 	const modalTitle = <ModalTitle breadcrumb={breadcrumbProps} rightText={titleRightSideProps} />

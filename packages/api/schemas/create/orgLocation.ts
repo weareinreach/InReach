@@ -109,7 +109,7 @@ export const CreateOrgLocationSchema = () => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', serviceId }))
 							return { serviceId }
 						})
-				  )
+					)
 		) satisfies Prisma.OrgLocationServiceCreateNestedManyWithoutLocationInput | undefined
 
 		const emailLinks = (
@@ -120,7 +120,7 @@ export const CreateOrgLocationSchema = () => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', orgEmailId }))
 							return { orgEmailId }
 						})
-				  )
+					)
 		) satisfies Prisma.OrgLocationEmailCreateNestedManyWithoutLocationInput | undefined
 		const phoneLinks = (
 			!phones
@@ -130,7 +130,7 @@ export const CreateOrgLocationSchema = () => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', phoneId }))
 							return { phoneId }
 						})
-				  )
+					)
 		) satisfies Prisma.OrgLocationPhoneCreateNestedManyWithoutLocationInput | undefined
 		const auditEntry = AuditLogSchema.parse({
 			actorId,
@@ -219,22 +219,22 @@ export const EditOrgLocationSchema = z
 										},
 									},
 								},
-						  }
+							}
 						: {
 								attributes: {
 									delete: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
 								},
-						  }
+							}
 					: {}),
 				...(countryId
 					? {
 							country: { connect: { id: countryId } },
-					  }
+						}
 					: {}),
 				...(govDistId
 					? {
 							govDist: { connect: { id: govDistId } },
-					  }
+						}
 					: {}),
 				...(services
 					? {
@@ -242,7 +242,7 @@ export const EditOrgLocationSchema = z
 								createMany: { data: services.map((serviceId) => ({ serviceId })), skipDuplicates: true },
 								deleteMany: { NOT: { serviceId: { in: services } } },
 							},
-					  }
+						}
 					: {}),
 			},
 		})

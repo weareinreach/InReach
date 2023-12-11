@@ -245,7 +245,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 						{...form.getInputProps(`formOptions.countries.${i}.id`)}
 					/>
 				)
-		  })
+			})
 		: null
 
 	return (
