@@ -47,7 +47,7 @@ export const ZCreateSchema = () => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', serviceId }))
 							return { serviceId }
 						})
-				  )
+					)
 		) satisfies Prisma.OrgLocationServiceCreateNestedManyWithoutLocationInput | undefined
 
 		const emailLinks = (
@@ -58,7 +58,7 @@ export const ZCreateSchema = () => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', orgEmailId }))
 							return { orgEmailId }
 						})
-				  )
+					)
 		) satisfies Prisma.OrgLocationEmailCreateNestedManyWithoutLocationInput | undefined
 		const phoneLinks = (
 			!phones
@@ -68,7 +68,7 @@ export const ZCreateSchema = () => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', phoneId }))
 							return { phoneId }
 						})
-				  )
+					)
 		) satisfies Prisma.OrgLocationPhoneCreateNestedManyWithoutLocationInput | undefined
 		const auditEntry = AuditLogSchema.parse({
 			actorId,

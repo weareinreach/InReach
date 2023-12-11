@@ -19,7 +19,7 @@ export const getNames = async ({ input }: TRPCHandlerParams<TGetNamesSchema>) =>
 						locations: {
 							some: { orgLocationId },
 						},
-				  }
+					}
 				: {}),
 		},
 		select: {

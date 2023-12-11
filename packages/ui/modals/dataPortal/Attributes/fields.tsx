@@ -18,8 +18,8 @@ const SuppBoolean = ({ handler }: SuppBooleanProps) => {
 				form.values.supplement?.boolean === undefined
 					? undefined
 					: form.values.supplement.boolean
-					  ? 'true'
-					  : 'false'
+						? 'true'
+						: 'false'
 			}
 			onChange={handler}
 		>

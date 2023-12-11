@@ -42,8 +42,8 @@ export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 									{closed
 										? t('hours.closed')
 										: interval.toDuration('hours').valueOf() === OPEN_24_MILLISECONDS
-										  ? t('hours.open24')
-										  : interval.toFormat('hh:mm a')}
+											? t('hours.open24')
+											: interval.toFormat('hh:mm a')}
 								</List.Item>
 							))}
 						</List>

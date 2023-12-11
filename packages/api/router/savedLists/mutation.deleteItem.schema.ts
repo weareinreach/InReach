@@ -25,7 +25,7 @@ export const ZDeleteItemSchema = () => {
 								listId: id,
 								organizationId,
 							},
-					  }
+						}
 					: undefined,
 				actorId
 			)
@@ -36,7 +36,7 @@ export const ZDeleteItemSchema = () => {
 								listId: id,
 								serviceId,
 							},
-					  }
+						}
 					: undefined,
 				actorId
 			)

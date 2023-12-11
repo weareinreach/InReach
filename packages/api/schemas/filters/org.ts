@@ -10,7 +10,7 @@ export const serviceFilter = (ids?: string[]): Prisma.OrganizationWhereInput | u
 					{ services: { some: serviceSome(ids) } },
 					{ locations: { some: { services: { some: { service: serviceSome(ids) } } } } },
 				],
-		  }
+			}
 		: undefined
 
 export const attributeFilter = (ids?: string[]): Prisma.OrganizationWhereInput | undefined =>
@@ -21,5 +21,5 @@ export const attributeFilter = (ids?: string[]): Prisma.OrganizationWhereInput |
 					{ locations: { some: attribSome(ids) } },
 					{ services: { some: attribSome(ids) } },
 				],
-		  }
+			}
 		: undefined

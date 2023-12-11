@@ -15,14 +15,14 @@ export const autocomplete = async ({ input }: TRPCHandlerParams<TAutocompleteSch
 	const types = input.cityOnly
 		? ['(cities)']
 		: input.fullAddress
-		  ? ['address']
-		  : ([
+			? ['address']
+			: ([
 					'administrative_area_level_2',
 					'administrative_area_level_3',
 					'neighborhood',
 					'locality',
 					'postal_code',
-		    ] as unknown as PlaceAutocompleteType)
+				] as unknown as PlaceAutocompleteType)
 
 	const { data } = await googleMapsApi.placeAutocomplete({
 		params: {
