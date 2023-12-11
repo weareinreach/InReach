@@ -86,7 +86,7 @@
 		"libphonenumber-js": "1.10.51",
 		"listr2": "8.0.0",
 		"luxon": "3.4.4",
-		"p-queue": "7.4.1",
+		"p-queue": "8.0.0",
 		"p-retry": "6.1.0",
 		"papaparse": "5.4.1",
 		"prettier": "3.1.0",
