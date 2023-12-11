@@ -42,7 +42,7 @@
 		"@crowdin/crowdin-api-client": "1.28.2",
 		"@crowdin/ota-client": "1.0.0",
 		"@opentelemetry/api": "1.7.0",
-		"@vercel/kv": "1.0.0",
+		"@vercel/kv": "1.0.1",
 		"@weareinreach/util": "workspace:*",
 		"flat": "6.0.1",
 		"object-sizeof": "2.6.3",
@@ -51,7 +51,7 @@
 	"devDependencies": {
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "workspace:*",
-		"prettier": "3.1.0",
+		"prettier": "3.1.1",
 		"typescript": "5.3.3"
 	}
 }
