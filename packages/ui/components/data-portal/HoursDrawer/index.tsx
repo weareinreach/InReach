@@ -80,6 +80,9 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 		select: (data) => ({ data }),
 	})
 	const utils = api.useUtils()
+	const mutationApi = api.orgHours.processDrawer.useMutation({
+		onSuccess: () => utils.orgHours.forHoursDrawer.invalidate(locationId),
+	})
 
 	const form = useForm<ZFormSchema>({
 		resolver: zodResolver(FormSchema),
@@ -121,20 +124,16 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 	const { classes } = useStyles()
 	const variants = useCustomVariant()
 
-	console.log(form)
-
 	const handleUpdate = () => {
-		//TODO save to DB instead of sending to console.log
 		form.trigger()
 		if (!initialData) {
 			throw new Error('Missing initial data')
 		}
 		const initial = initialData.data
 		const current = form.getValues().data
-		console.log(initial, current)
 		const diffed = compareObjectVals([initial, current], 'id')
-
-		console.log('clicked save', diffed, form.formState.errors)
+		// TODO: Double check validation
+		mutationApi.mutate(diffed)
 	}
 
 	const DayWrap = ({ dayIndex }: { dayIndex: DayIndex }) => {
@@ -253,11 +252,9 @@ const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ location
 							<Divider my='sm' />
 						</Stack>
 
-						{dayIndicies.map((day) => {
-							const items = groupedData()?.get(day)
-							const shouldDisable = items?.some(({ closed, open24hours }) => closed || open24hours) ?? false
-							return <DayWrap dayIndex={day} key={day} />
-						})}
+						{dayIndicies.map((day) => (
+							<DayWrap dayIndex={day} key={day} />
+						))}
 					</Drawer.Body>
 				</Drawer.Content>
 			</Drawer.Root>
