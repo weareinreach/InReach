@@ -220,6 +220,9 @@ importers:
       '@vercel/kv':
         specifier: 1.0.0
         version: 1.0.0
+      '@vercel/speed-insights':
+        specifier: 1.0.1
+        version: 1.0.1
       '@weareinreach/analytics':
         specifier: workspace:*
         version: link:../../packages/analytics
@@ -4207,11 +4210,11 @@ packages:
     resolution: {integrity: sha512-M1CQabr1/IDG6ku0/+n6kZBvWTCSun7LndkGsaB89nTNaCcflWxflgY2HdcbjblLL8W0iT7QiW9TgWP4kcpn5Q==}
     peerDependencies:
       '@storybook/blocks': ^7.0.0
-      '@storybook/components': ^7.0.0 || 7
-      '@storybook/core-events': ^7.0.0 || 7
+      '@storybook/components': ^7.0.0
+      '@storybook/core-events': ^7.0.0
       '@storybook/manager-api': ^7.0.0
       '@storybook/preview-api': ^7.0.0
-      '@storybook/theming': ^7.0.0 || 7
+      '@storybook/theming': ^7.0.0
       '@storybook/types': ^7.0.0
       react: ^18 || 18
       react-dom: ^18 || 18
@@ -10080,6 +10083,11 @@ packages:
       bufferutil: 4.0.8
       utf-8-validate: 6.0.3
       ws: 8.14.2(bufferutil@4.0.8)(utf-8-validate@6.0.3)
+    dev: false
+
+  /@vercel/speed-insights@1.0.1:
+    resolution: {integrity: sha512-cm8KTTsDgS1AbWsgIEZuMoyPUjclzeqJihyLp0tnA21B/x9iTE8hu2S5zM+/DBzihuHxWL1dx9pCWk22ctMFWQ==}
+    requiresBuild: true
     dev: false
 
   /@webassemblyjs/ast@1.11.6:
