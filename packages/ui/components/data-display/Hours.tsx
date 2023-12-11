@@ -1,4 +1,5 @@
 import { createStyles, List, rem, Stack, Table, Text, Title } from '@mantine/core'
+import { Interval } from 'luxon'
 import { useTranslation } from 'next-i18next'
 
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
@@ -32,12 +33,14 @@ export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 
 	const hourTable = Object.entries(data).map(([dayIdx, data]) => {
 		return (
-			<>
-				<tr>
-					<td className={classes.dow}>{dayMap.get(parseInt(dayIdx))}</td>
-					<td>
-						<List listStyleType='none'>
-							{data.map(({ id, interval, closed }) => (
+			<tr key={dayIdx}>
+				<td className={classes.dow}>{dayMap.get(parseInt(dayIdx))}</td>
+				<td>
+					<List listStyleType='none'>
+						{data.map(({ id, interval: intervalISO, closed }) => {
+							const interval = Interval.fromISO(intervalISO)
+
+							return (
 								<List.Item key={id}>
 									{closed
 										? t('hours.closed')
@@ -45,11 +48,11 @@ export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 											? t('hours.open24')
 											: interval.toFormat('hh:mm a')}
 								</List.Item>
-							))}
-						</List>
-					</td>
-				</tr>
-			</>
+							)
+						})}
+					</List>
+				</td>
+			</tr>
 		)
 	})
 
@@ -59,7 +62,9 @@ export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 				<Title order={3}>{t(labelKey)}</Title>
 				<Text variant={variants.Text.utility4darkGray}>{timezone}</Text>
 			</div>
-			<Table>{hourTable}</Table>
+			<Table>
+				<tbody>{hourTable}</tbody>
+			</Table>
 		</Stack>
 	)
 }

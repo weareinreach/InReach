@@ -3,13 +3,7 @@ import { DateTime, Interval } from 'luxon'
 
 import { getTRPCMock, type MockDataObject, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
-export function createInterval(
-	start: Time,
-	end: Time,
-	dayIndex: number,
-	tz: string,
-	toString?: false
-): Interval<true>
+export function createInterval(start: Time, end: Time, dayIndex: number, tz: string, toString?: false): string // Interval<true>
 export function createInterval(start: Time, end: Time, dayIndex: number, tz: string, toString?: true): string
 export function createInterval(
 	start: Time,
@@ -17,7 +11,7 @@ export function createInterval(
 	dayIndex: number,
 	tz: string,
 	toString?: boolean
-): string | Interval<true> {
+): string /*| Interval<true> */ {
 	const { weekYear, weekNumber } = DateTime.now()
 	const interval = Interval.fromDateTimes(
 		DateTime.fromFormat(start, 'HH:mm', { zone: tz }).set({ weekday: dayIndex, weekYear, weekNumber }),
@@ -25,7 +19,8 @@ export function createInterval(
 	)
 	if (!interval.isValid) throw new Error('Invalid interval')
 
-	return toString ? interval.toISO() : interval
+	// return toString ? interval.toISO() : interval
+	return interval.toISO()
 }
 type Time = `${string}:${string}`
 

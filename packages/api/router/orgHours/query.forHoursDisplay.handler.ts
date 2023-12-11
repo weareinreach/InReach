@@ -33,8 +33,6 @@ export const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisp
 		orderBy: [{ dayIndex: 'asc' }, { start: 'asc' }],
 	})
 
-	// TODO: alter db schema
-
 	const { weekYear, weekNumber } = DateTime.now()
 	const intervalResults = result.map(({ start, end, tz, dayIndex, ...rest }) => {
 		const interval = Interval.fromDateTimes(
@@ -48,7 +46,7 @@ export const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisp
 				weekYear,
 				weekNumber,
 			})
-		)
+		).toISO()
 		return {
 			tz,
 			dayIndex,
