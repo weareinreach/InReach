@@ -49,7 +49,7 @@ export const DeleteSavedItem = () => {
 							listId: id,
 							organizationId,
 						},
-				  }
+					}
 				: undefined,
 			actorId
 		)
@@ -60,7 +60,7 @@ export const DeleteSavedItem = () => {
 							listId: id,
 							serviceId,
 						},
-				  }
+					}
 				: undefined,
 			actorId
 		)

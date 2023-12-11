@@ -34,10 +34,10 @@ export const serviceAreaSelect = (subDistrictLevels: 0 | 1 | 2) =>
 											: {
 													select: subDistrictSelect,
 													orderBy: { name: 'asc' },
-											  },
+												},
 								},
 								orderBy: { name: 'asc' },
-						  },
+							},
 			},
 			orderBy: { name: 'asc' },
 		},

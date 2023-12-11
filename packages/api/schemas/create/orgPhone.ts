@@ -26,7 +26,7 @@ export const CreateOrgPhoneSchema = z
 		const phoneType = data.phoneTypeId
 			? { connect: { id: data.phoneTypeId } }
 			: data.phoneTypeNew
-			  ? {
+				? {
 						create: {
 							type: data.phoneTypeNew,
 							key: {
@@ -37,8 +37,8 @@ export const CreateOrgPhoneSchema = z
 								},
 							},
 						},
-			    }
-			  : undefined
+					}
+				: undefined
 
 		const { number, ext, locationOnly, primary, published } = data
 		return Prisma.validator<Prisma.OrgPhoneCreateInput>()({

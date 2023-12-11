@@ -44,7 +44,7 @@ const whereId = (
 							OR: [smWebOrg, smWebLoc],
 							...isPublic,
 						},
-				  }
+					}
 				: {
 						email: {
 							...emailOrg,
@@ -62,7 +62,7 @@ const whereId = (
 							...smWebOrg,
 							...isPublic,
 						},
-				  }
+					}
 		}
 		case isIdFor('orgLocation', input): {
 			return {

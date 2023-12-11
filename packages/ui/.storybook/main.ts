@@ -104,7 +104,7 @@ const config: StorybookConfig = {
 	env: isChromatic()
 		? {
 				SKIP_ENV_VALIDATION: 'true',
-		  }
+			}
 		: { NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string },
 }
 export default config

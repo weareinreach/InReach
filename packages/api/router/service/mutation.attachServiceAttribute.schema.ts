@@ -80,7 +80,7 @@ export const ZAttachServiceAttributeSchema = () => {
 			attributeSupplement: supplementData
 				? Prisma.validator<Prisma.AttributeSupplementCreateArgs>()({
 						data: supplementData,
-				  })
+					})
 				: undefined,
 			serviceAttribute: Prisma.validator<Prisma.ServiceAttributeCreateArgs>()({
 				data: {

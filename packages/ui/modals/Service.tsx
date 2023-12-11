@@ -352,7 +352,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 										icon,
 										tsNs,
 										variant: 'attribute',
-								  })
+									})
 								: subsections['misc'].push(t(tsKey, { ns: tsNs }))
 						}
 						break

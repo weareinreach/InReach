@@ -44,7 +44,7 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 						verifiedUser,
 					}
 					return <UserReview key={id} {...props} />
-			  })
+				})
 			: props.reviews.map((_, idx) => (
 					<UserReview
 						key={idx}
@@ -53,7 +53,7 @@ export const ReviewSection = (props: ReviewSectionProps) => {
 						verifiedUser={Boolean(Math.round(Math.random()))}
 						forceLoading
 					/>
-			  ))
+				))
 	const noReviews = <Text variant={variants.Text.darkGray}>{t('no-reviews', { ns: 'common' })}</Text>
 
 	return (

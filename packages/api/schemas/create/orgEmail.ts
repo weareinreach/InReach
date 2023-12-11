@@ -43,10 +43,10 @@ export const CreateOrgEmailSchema = z
 								},
 							},
 						},
-				  }
+					}
 				: titleId
-				  ? { connect: { id: titleId } }
-				  : undefined,
+					? { connect: { id: titleId } }
+					: undefined,
 		})
 	})
 

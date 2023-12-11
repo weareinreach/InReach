@@ -244,13 +244,13 @@ export const SearchBox = ({
 					rightSection: rightIcon,
 					icon: <Icon icon='carbon:search' className={classes.leftIcon} />,
 					variant: 'default',
-			  }
+				}
 			: {
 					placeholder: `${t(placeholderTextKey ?? 'search.location-placeholder')}`,
 					rightSection: rightIcon,
 					icon: <Icon icon='carbon:location-filled' className={classes.leftIcon} />,
 					variant: 'filled',
-			  }
+				}
 	) satisfies Partial<AutocompleteProps>
 
 	const matchText = (result: string, textToMatch: string) => {
