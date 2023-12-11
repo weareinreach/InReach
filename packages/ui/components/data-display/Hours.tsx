@@ -17,6 +17,14 @@ const useStyles = createStyles(() => ({
 	dow: {
 		verticalAlign: 'baseline',
 		paddingRight: rem(4),
+		borderTopStyle: 'none !important' as 'none',
+		paddingTop: '0 !important',
+		paddingBottom: '0 !important',
+	},
+	hours: {
+		borderTopStyle: 'none !important' as 'none',
+		paddingTop: '0 !important',
+		paddingBottom: '0 !important',
 	},
 }))
 
@@ -34,19 +42,23 @@ export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 	const hourTable = Object.entries(data).map(([dayIdx, data]) => {
 		return (
 			<tr key={dayIdx}>
-				<td className={classes.dow}>{dayMap.get(parseInt(dayIdx))}</td>
-				<td>
+				<td className={classes.dow}>
+					<Text>{dayMap.get(parseInt(dayIdx))}</Text>
+				</td>
+				<td className={classes.hours}>
 					<List listStyleType='none'>
 						{data.map(({ id, interval: intervalISO, closed }) => {
 							const interval = Interval.fromISO(intervalISO)
 
 							return (
 								<List.Item key={id}>
-									{closed
-										? t('hours.closed')
-										: interval.toDuration('hours').valueOf() === OPEN_24_MILLISECONDS
-											? t('hours.open24')
-											: interval.toFormat('hh:mm a')}
+									<Text>
+										{closed
+											? t('hours.closed')
+											: interval.toDuration('hours').valueOf() === OPEN_24_MILLISECONDS
+												? t('hours.open24')
+												: interval.toFormat('hh:mm a')}
+									</Text>
 								</List.Item>
 							)
 						})}
