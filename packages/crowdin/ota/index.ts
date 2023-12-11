@@ -19,7 +19,7 @@ export const crowdinOta =
 							return (await data.json()) as T
 						},
 					},
-			  }
+				}
 			: {}),
 	})
 if (process.env.NODE_ENV !== 'production') {

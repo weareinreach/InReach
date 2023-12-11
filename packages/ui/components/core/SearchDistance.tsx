@@ -51,14 +51,14 @@ export const SearchDistance = () => {
 					{ value: 2, dist: 50, label: '50 mi' },
 					{ value: 3, dist: 100, label: '100 mi' },
 					{ value: 4, dist: 250, label: '250 mi' },
-			  ]
+				]
 			: [
 					{ value: 0, dist: 20, label: '20 km' },
 					{ value: 1, dist: 50, label: '50 km' },
 					{ value: 2, dist: 100, label: '100 km' },
 					{ value: 3, dist: 250, label: '250 km' },
 					{ value: 4, dist: 500, label: '500 km' },
-			  ]
+				]
 	const [distance, setDistance] = useUncontrolled({ defaultValue: findClosestItemIndex(dist, marks) })
 	const [extended, setExtended] = useState(coerceBoolean(router.query.extended))
 

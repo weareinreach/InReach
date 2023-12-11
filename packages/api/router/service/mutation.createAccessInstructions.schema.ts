@@ -80,7 +80,7 @@ export const ZCreateAccessInstructionsSchema = () => {
 			attributeSupplement: supplementData
 				? Prisma.validator<Prisma.AttributeSupplementCreateArgs>()({
 						data: supplementData,
-				  })
+					})
 				: undefined,
 
 			serviceAccessAttribute: Prisma.validator<Prisma.ServiceAccessAttributeCreateArgs>()({

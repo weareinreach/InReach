@@ -34,7 +34,7 @@ export const createManyOptional = <T extends Array<any>>(data: T | undefined) =>
 					data: compact(data),
 					skipDuplicates: true,
 				},
-		  }
+			}
 /** Array to individual nested create records with individual Audit Logs */
 
 export const createManyWithAudit = <T extends Array<any>>(data: T | undefined, actorId: string) =>
@@ -45,14 +45,14 @@ export const createManyWithAudit = <T extends Array<any>>(data: T | undefined, a
 					...record,
 					auditLogs: CreateAuditLog({ actorId, operation: 'CREATE', to: record }),
 				})),
-		  } as const)
+			} as const)
 /** Individual create record */
 export const createOne = <T extends Record<string, any>>(data: T | undefined) =>
 	!data
 		? undefined
 		: ({
 				create: data,
-		  } as const)
+			} as const)
 /** Individual create record with audit log */
 
 export const createOneWithAudit = <T extends Record<string, any>>(data: T | undefined, actorId: string) =>
@@ -63,14 +63,14 @@ export const createOneWithAudit = <T extends Record<string, any>>(data: T | unde
 					...data,
 					auditLogs: CreateAuditLog({ actorId, operation: 'CREATE', to: data }),
 				},
-		  } as const)
+			} as const)
 
 export const connectOne = <T extends Record<string, any>>(data: T | undefined) =>
 	!data
 		? undefined
 		: ({
 				connect: data,
-		  } as const)
+			} as const)
 export const connectOneId = <T extends string>(id: T | undefined | null) =>
 	!id ? undefined : ({ connect: { id } } as const)
 export const connectOneIdRequired = <T extends string>(id: T) => {

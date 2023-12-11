@@ -82,7 +82,7 @@ export const ZCreateNewQuickSchema = () => {
 			? data.locations.map(({ latitude, longitude, ...record }) => ({
 					...record,
 					...createGeoFields({ latitude, longitude }),
-			  }))
+				}))
 			: undefined
 		return Prisma.validator<Prisma.OrganizationCreateArgs>()({
 			data: {

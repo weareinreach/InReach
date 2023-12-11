@@ -61,8 +61,8 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 	const preSelected = Array.isArray(router.query.s)
 		? router.query.s
 		: typeof router.query.s === 'string'
-		  ? [router.query.s]
-		  : []
+			? [router.query.s]
+			: []
 	const form = useForm<{ selected: string[] }>({
 		values: { selected: preSelected },
 	})

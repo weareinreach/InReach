@@ -73,7 +73,7 @@ export const forServiceEditDrawer = async ({ input }: TRPCHandlerParams<TForServ
 					id: serviceAreas.id,
 					countries: serviceAreas.countries.map(({ country }) => country.id),
 					districts: serviceAreas.districts.map(({ govDist }) => govDist.id),
-			  }
+				}
 			: null,
 		attributes: attributes.map(({ attribute, supplement }) => {
 			const { categories, ...attr } = attribute

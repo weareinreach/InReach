@@ -42,14 +42,14 @@ const QuickPromotionModalBody = forwardRef<HTMLButtonElement, QuickPromotionModa
 						option: 'back',
 						backTo: 'none',
 						onClick: () => router.back(),
-				  }
+					}
 				: {
 						option: 'close',
 						onClick: () => {
 							if (typeof onClose === 'function') onClose()
 							handler.close()
 						},
-				  }
+					}
 		) satisfies BreadcrumbProps
 		const modalTitle = (
 			<Group position='apart' align='center' noWrap>

@@ -32,14 +32,14 @@ export const ZCreateServiceAreaSchema = () => {
 			? parsedData.countries.map((countryId) => {
 					auditLog.push(GenerateAuditLog({ actorId, operation: 'LINK', serviceAreaId: id, countryId }))
 					return { serviceAreaId: id, countryId }
-			  })
+				})
 			: undefined
 		const serviceAreaDist: Prisma.ServiceAreaDistUncheckedCreateInput[] | undefined = parsedData.districts
 			?.length
 			? parsedData.districts.map((govDistId) => {
 					auditLog.push(GenerateAuditLog({ actorId, operation: 'LINK', serviceAreaId: id, govDistId }))
 					return { serviceAreaId: id, govDistId }
-			  })
+				})
 			: undefined
 
 		return { serviceArea, auditLog, serviceAreaCountry, serviceAreaDist }
