@@ -43,7 +43,7 @@ export const AttachOrgAttribute = () => {
 						text: supplementInput.text,
 						type: 'attSupp',
 						itemId: supplementId,
-				  })
+					})
 				: { freeText: undefined, translationKey: undefined }
 
 		const { boolean, countryId, data, govDistId, languageId } = supplementInput ?? {}
@@ -93,7 +93,7 @@ export const AttachOrgAttribute = () => {
 			attributeSupplement: supplementData
 				? Prisma.validator<Prisma.AttributeSupplementCreateArgs>()({
 						data: supplementData,
-				  })
+					})
 				: undefined,
 			organizationAttribute: Prisma.validator<Prisma.OrganizationAttributeCreateArgs>()({
 				data: {

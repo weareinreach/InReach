@@ -108,7 +108,7 @@ const jobs = new Listr(
 												record.is_published === undefined || record.is_published === null
 													? false
 													: record.is_published,
-									  }),
+										}),
 								...(existingOrg.deleted === record.is_deleted
 									? {}
 									: {
@@ -116,7 +116,7 @@ const jobs = new Listr(
 												record.is_deleted === undefined || record.is_deleted === null
 													? false
 													: record.is_deleted,
-									  }),
+										}),
 							},
 						})
 						task.output = padSpaces(`Added organization record`)
@@ -202,12 +202,12 @@ const jobs = new Listr(
 										? {}
 										: {
 												published: is_published === undefined || is_published === null ? false : is_published,
-										  }),
+											}),
 									...(existingOrg.deleted === is_deleted
 										? {}
 										: {
 												deleted: is_deleted === undefined || is_deleted === null ? false : is_deleted,
-										  }),
+											}),
 								},
 							}
 						})

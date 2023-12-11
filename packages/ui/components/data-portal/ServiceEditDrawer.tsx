@@ -148,12 +148,12 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 									<List.Item key={district}>
 										<Text variant={variants.Text.utility4}>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
 									</List.Item>
-							  )
+								)
 							: (serviceAreaObj[country] = [
 									<List.Item key={district}>
 										<Text variant={variants.Text.utility4}>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
 									</List.Item>,
-							  ])
+								])
 						continue
 					}
 					Array.isArray(array)
@@ -163,14 +163,14 @@ const _ServiceEditDrawer = forwardRef<HTMLButtonElement, ServiceEditDrawerProps>
 										{t(parentDist.tsKey, { ns: parentDist.tsNs })} - {t(govDist.tsKey, { ns: govDist.tsNs })}
 									</Text>
 								</List.Item>
-						  )
+							)
 						: (serviceAreaObj[country] = [
 								<List.Item key={district}>
 									<Text variant={variants.Text.utility4}>
 										{t(parentDist.tsKey, { ns: parentDist.tsNs })} - {t(govDist.tsKey, { ns: govDist.tsNs })}
 									</Text>
 								</List.Item>,
-						  ])
+							])
 					continue
 				}
 			}

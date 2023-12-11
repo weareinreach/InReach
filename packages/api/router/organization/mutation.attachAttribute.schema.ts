@@ -35,7 +35,7 @@ export const ZAttachAttributeSchema = () => {
 						text: supplementInput.text,
 						type: 'attSupp',
 						itemId: supplementId,
-				  })
+					})
 				: { freeText: undefined, translationKey: undefined }
 
 		const { boolean, countryId, data, govDistId, languageId } = supplementInput ?? {}
@@ -85,7 +85,7 @@ export const ZAttachAttributeSchema = () => {
 			attributeSupplement: supplementData
 				? Prisma.validator<Prisma.AttributeSupplementCreateArgs>()({
 						data: supplementData,
-				  })
+					})
 				: undefined,
 			organizationAttribute: Prisma.validator<Prisma.OrganizationAttributeCreateArgs>()({
 				data: {

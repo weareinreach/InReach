@@ -43,10 +43,10 @@ export const ZCreateSchema = z
 								},
 							},
 						},
-				  }
+					}
 				: titleId
-				  ? { connect: { id: titleId } }
-				  : undefined,
+					? { connect: { id: titleId } }
+					: undefined,
 		})
 	})
 export type TCreateSchema = z.infer<typeof ZCreateSchema>

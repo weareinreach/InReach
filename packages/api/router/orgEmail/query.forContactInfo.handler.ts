@@ -14,7 +14,7 @@ const whereId = (input: TForContactInfoSchema, isSingleLoc?: boolean): Prisma.Or
 							{ organization: { some: { organization: { id: input.parentId, ...isPublic } } } },
 							{ locations: { some: { location: { organization: { id: input.parentId, ...isPublic } } } } },
 						],
-				  }
+					}
 				: { organization: { some: { organization: { id: input.parentId, ...isPublic } } } }
 		}
 		case isIdFor('orgLocation', input.parentId): {
@@ -33,7 +33,7 @@ export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInf
 	const locCount = isIdFor('organization', input.parentId)
 		? await prisma.orgLocation.count({
 				where: { organization: { id: input.parentId, ...isPublic }, ...isPublic },
-		  })
+			})
 		: 0
 	const isSingleLoc = locCount === 1
 

@@ -31,10 +31,10 @@ export const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'p
 								update: { tsKey: { update: { text: textData.translationKey.text } } },
 							},
 						},
-				  }
+					}
 				: description === null
-				  ? { description: { delete: true } }
-				  : {}),
+					? { description: { delete: true } }
+					: {}),
 			...(countryId ? { country: { connect: { id: countryId } } } : {}),
 			...(phoneTypeId ? { phoneType: { connect: { id: phoneTypeId } } } : {}),
 		},

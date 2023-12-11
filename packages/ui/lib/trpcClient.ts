@@ -34,7 +34,7 @@ export const nextTRPC = () =>
 								loggerLink({
 									enabled: () => isDev,
 								}),
-						  ]
+							]
 						: []),
 					httpBatchStreamLink({
 						url: `${getBaseUrl()}/api/trpc`,
