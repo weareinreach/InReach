@@ -32,6 +32,7 @@ export const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisp
 		select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true },
 		orderBy: [{ dayIndex: 'asc' }, { start: 'asc' }],
 	})
+	if (!result.length) return null
 
 	const { weekYear, weekNumber } = DateTime.now()
 	const intervalResults = result.map(({ start, end, tz, dayIndex, ...rest }) => {
@@ -42,7 +43,7 @@ export const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisp
 				weekNumber,
 			}),
 			DateTime.fromJSDate(end, { zone: tz ?? 'America/New_York' }).set({
-				weekday: dayIndex,
+				weekday: start > end ? dayIndex + 1 : dayIndex,
 				weekYear,
 				weekNumber,
 			})

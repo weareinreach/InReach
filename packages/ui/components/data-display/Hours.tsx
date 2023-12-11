@@ -1,4 +1,4 @@
-import { createStyles, List, rem, Stack, Table, Text, Title } from '@mantine/core'
+import { createStyles, List, rem, Skeleton, Stack, Table, Text, Title } from '@mantine/core'
 import { Interval } from 'luxon'
 import { useTranslation } from 'next-i18next'
 
@@ -28,18 +28,28 @@ const useStyles = createStyles(() => ({
 	},
 }))
 
+const nullObj = {
+	0: [],
+	1: [],
+	2: [],
+	3: [],
+	4: [],
+	5: [],
+	6: [],
+}
+
 export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 	const { t, i18n } = useTranslation('common')
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
-	const { data } = api.orgHours.forHoursDisplay.useQuery(parentId)
+	const { data, isLoading } = api.orgHours.forHoursDisplay.useQuery(parentId)
 	const dayMap = useLocalizedDays(i18n.resolvedLanguage)
-	if (!data) return null
+	if (!data && !isLoading) return null
 
 	const labelKey = labelKeys[label]
 	const timezone: string | null = null
 
-	const hourTable = Object.entries(data).map(([dayIdx, data]) => {
+	const hourTable = Object.entries(data ?? nullObj).map(([dayIdx, data]) => {
 		return (
 			<tr key={dayIdx}>
 				<td className={classes.dow}>
@@ -70,13 +80,15 @@ export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 
 	return (
 		<Stack spacing={12}>
-			<div>
-				<Title order={3}>{t(labelKey)}</Title>
-				<Text variant={variants.Text.utility4darkGray}>{timezone}</Text>
-			</div>
-			<Table>
-				<tbody>{hourTable}</tbody>
-			</Table>
+			<Skeleton visible={isLoading}>
+				<div>
+					<Title order={3}>{t(labelKey)}</Title>
+					<Text variant={variants.Text.utility4darkGray}>{timezone}</Text>
+				</div>
+				<Table>
+					<tbody>{hourTable}</tbody>
+				</Table>
+			</Skeleton>
 		</Stack>
 	)
 }
