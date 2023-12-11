@@ -39,9 +39,6 @@ export const nextTRPC = () =>
 					httpBatchStreamLink({
 						url: `${getBaseUrl()}/api/trpc`,
 					}),
-					// httpBatchLink({
-					// 	url: `${getBaseUrl()}/api/trpc`,
-					// }),
 				],
 				queryClientConfig: {
 					defaultOptions: {

@@ -126,7 +126,7 @@ const config = {
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		EXPERIMENTAL_useProjectService: true,
-		// project: [ './packages/*/tsconfig.json', './apps/*/tsconfig.json', './tsconfig.json' ],
+		project: ['./packages/*/tsconfig.json', './apps/*/tsconfig.json', './tsconfig.json'],
 		emitDecoratorMetadata: true,
 		ecmaVersion: 2020,
 	},

@@ -1,3 +1,6 @@
+import groupBy from 'just-group-by'
+import { DateTime, Interval } from 'luxon'
+
 import { isIdFor, prisma, type Prisma } from '@weareinreach/db'
 import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
@@ -29,5 +32,28 @@ export const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisp
 		select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true },
 		orderBy: [{ dayIndex: 'asc' }, { start: 'asc' }],
 	})
-	return result
+
+	const { weekYear, weekNumber } = DateTime.now()
+	const intervalResults = result.map(({ start, end, tz, dayIndex, ...rest }) => {
+		const interval = Interval.fromDateTimes(
+			DateTime.fromJSDate(start, { zone: tz ?? 'America/New_York' }).set({
+				weekday: dayIndex,
+				weekYear,
+				weekNumber,
+			}),
+			DateTime.fromJSDate(end, { zone: tz ?? 'America/New_York' }).set({
+				weekday: dayIndex,
+				weekYear,
+				weekNumber,
+			})
+		).toISO()
+		return {
+			tz,
+			dayIndex,
+			...rest,
+			interval,
+		}
+	})
+	const grouped = groupBy(intervalResults, ({ dayIndex }) => dayIndex)
+	return grouped
 }
