@@ -40,6 +40,7 @@ export default {
 				response: { id: 'oloc_00000RECORD22ID' },
 			}),
 			orgHours.forHoursDrawer,
+			orgHours.processDrawer,
 		],
 	},
 	args: {

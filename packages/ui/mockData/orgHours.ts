@@ -1,3 +1,4 @@
+import compact from 'just-compact'
 import { DateTime, Interval } from 'luxon'
 
 import { getTRPCMock, type MockDataObject, type MockHandlerObject } from '~ui/lib/getTrpcMock'
@@ -198,6 +199,20 @@ export const orgHoursData = {
 			open24hours: true,
 		},
 	],
+	processDrawer: (data) => {
+		const replacementVals = compact([data.createdVals, data.updatedVals, data.deletedVals].flat())
+		const valueSet = new Set([
+			...replacementVals.map((val) => JSON.stringify(val)),
+			...orgHoursData.forHoursDrawer.map((val) => JSON.stringify(val)),
+		])
+		const newValues = [...valueSet].map((val) => JSON.parse(val))
+		orgHoursData.forHoursDrawer = newValues
+		return {
+			created: data.createdVals?.length ?? 0,
+			updated: data.updatedVals?.length ?? 0,
+			deleted: data.deletedVals?.length ?? 0,
+		}
+	},
 } satisfies MockDataObject<'orgHours'>
 
 export const orgHours = {
@@ -208,5 +223,10 @@ export const orgHours = {
 	forHoursDrawer: getTRPCMock({
 		path: ['orgHours', 'forHoursDrawer'],
 		response: orgHoursData.forHoursDrawer,
+	}),
+	processDrawer: getTRPCMock({
+		path: ['orgHours', 'processDrawer'],
+		response: orgHoursData.processDrawer,
+		type: 'mutation',
 	}),
 } satisfies MockHandlerObject<'orgHours'>
