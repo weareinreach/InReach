@@ -631,9 +631,9 @@ model OrgLocation {
   postCode String?
   primary  Boolean @default(false)
 
-  mailOnly     Boolean?
-  notVisitable Boolean?
-  mapCityOnly  Boolean?
+  mailOnly     Boolean @default(false)
+  notVisitable Boolean @default(false)
+  mapCityOnly  Boolean @default(false)
 
   description   FreeText? @relation(fields: [descriptionId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   descriptionId String?   @unique
