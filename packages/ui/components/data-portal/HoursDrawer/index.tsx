@@ -71,7 +71,7 @@ const sortedTimezoneData = timezoneData.sort((a, b) => {
 })
 
 const _HoursDrawer = forwardRef<HTMLButtonElement, HoursDrawerProps>(({ locationId, ...props }, ref) => {
-	const [opened, handler] = useDisclosure(true) //TODO: Change back to 'false' when done.
+	const [opened, handler] = useDisclosure(false)
 	const [isSaved, setIsSaved] = useState(false)
 	const [globalTz, setGlobalTz] = useState<string | null>(null)
 	// const [initialData, setInitialData] = useState<ZFormSchema | null>(null)

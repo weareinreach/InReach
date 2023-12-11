@@ -1,17 +1,7 @@
 import { DateTime, Interval } from 'luxon'
-import { type Control, useFieldArray, UseFieldArrayReturn, type UseFormReturn } from 'react-hook-form'
+import { type UseFormReturn } from 'react-hook-form'
 
-import { type DayIndex, dayIndicies, type ZFormSchema } from './schema'
-
-// export const useDayFieldArray = (control: Control<ZFormSchema>) => ({
-// 	'0': useFieldArray({ control, name: '0' }),
-// 	'1': useFieldArray({ control, name: '1' }),
-// 	'2': useFieldArray({ control, name: '2' }),
-// 	'3': useFieldArray({ control, name: '3' }),
-// 	'4': useFieldArray({ control, name: '4' }),
-// 	'5': useFieldArray({ control, name: '5' }),
-// 	'6': useFieldArray({ control, name: '6' }),
-// })
+import { type DayIndex, type ZFormSchema } from './schema'
 
 export const defaultInterval = (tz: string | null) => {
 	const interval = Interval.fromDateTimes(
