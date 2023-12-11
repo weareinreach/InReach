@@ -18,6 +18,8 @@ const getAbsolutePath = (value: string) => {
 	return abPath
 }
 
+const publicStatic = path.resolve(__dirname, '../../../apps/app/public')
+
 const config: StorybookConfig = {
 	stories: [`../(components|hooks|icon|layouts|modals|other)/**/${filePattern}`, '../other/**/*.mdx'],
 	staticDirs: [
@@ -38,7 +40,7 @@ const config: StorybookConfig = {
 		getAbsolutePath('@storybook/addon-interactions'),
 	],
 	framework: {
-		name: getAbsolutePath('@storybook/nextjs') as '@storybook/nextjs',
+		name: '@storybook/nextjs',
 		options: {
 			builder: {
 				lazyCompilation: Boolean(process.env.SB_LAZY),
@@ -88,7 +90,9 @@ const config: StorybookConfig = {
 					),
 					'next-i18next': 'react-i18next',
 				},
-				roots: [path.resolve(__dirname, '../../../apps/app/public')],
+				roots: Array.isArray(config.resolve?.roots)
+					? [...config.resolve.roots, publicStatic]
+					: [publicStatic],
 			},
 			stats: {
 				colors: true,

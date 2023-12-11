@@ -1,10 +1,9 @@
 import { z } from 'zod'
 
-import { prefixedId } from '~api/schemas/idPrefix'
+import { isIdFor } from '@weareinreach/db'
 
-export const ZForHoursDisplaySchema = z.union([
-	prefixedId('organization'),
-	prefixedId('orgService'),
-	prefixedId('orgLocation'),
-])
+export const ZForHoursDisplaySchema = z
+	.string()
+	.refine((val) => isIdFor('organization', val) || isIdFor('orgLocation', val) || isIdFor('orgService', val))
+
 export type TForHoursDisplaySchema = z.infer<typeof ZForHoursDisplaySchema>

@@ -1,4 +1,4 @@
-import { defineRouter, permissionedProcedure, publicProcedure, staffProcedure } from '~api/lib/trpc'
+import { defineRouter, permissionedProcedure, publicProcedure } from '~api/lib/trpc'
 
 import * as schema from './schemas'
 
@@ -7,6 +7,7 @@ type OrgHoursHandlerCache = {
 	create: typeof import('./mutation.create.handler').create
 	update: typeof import('./mutation.update.handler').update
 	createMany: typeof import('./mutation.createMany.handler').createMany
+	processDrawer: typeof import('./mutation.processDrawer.handler').processDrawer
 	getTz: typeof import('./query.getTz.handler').getTz
 	forHoursDisplay: typeof import('./query.forHoursDisplay.handler').forHoursDisplay
 	forHoursDrawer: typeof import('./query.forHoursDrawer.handler').forHoursDrawer
@@ -37,7 +38,17 @@ export const orgHoursRouter = defineRouter({
 			if (!HandlerCache.update) throw new Error('Failed to load handler')
 			return HandlerCache.update({ ctx, input })
 		}),
-	getTz: staffProcedure.input(schema.ZGetTzSchema).query(async ({ ctx, input }) => {
+	processDrawer: permissionedProcedure('updateHours')
+		.input(schema.ZProcessDrawerSchema)
+		.mutation(async ({ input, ctx }) => {
+			if (!HandlerCache.processDrawer)
+				HandlerCache.processDrawer = await import('./mutation.processDrawer.handler').then(
+					(mod) => mod.processDrawer
+				)
+			if (!HandlerCache.processDrawer) throw new Error('Failed to load handler')
+			return HandlerCache.processDrawer({ ctx, input })
+		}),
+	getTz: publicProcedure.input(schema.ZGetTzSchema).query(async ({ ctx, input }) => {
 		if (!HandlerCache.getTz)
 			HandlerCache.getTz = await import('./query.getTz.handler').then((mod) => mod.getTz)
 		if (!HandlerCache.getTz) throw new Error('Failed to load handler')

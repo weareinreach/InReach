@@ -97,7 +97,7 @@ type TRPCEndpointError<K1 extends keyof ApiInput, K2 extends keyof ApiInput[K1]>
 }
 
 export type MockDataObject<P extends keyof ApiOutput> = {
-	[K in keyof ApiOutput[P]]?: ApiOutput[P][K]
+	[K in keyof ApiOutput[P]]?: ApiOutput[P][K] | ((input: ApiInput[P][K]) => ApiOutput[P][K])
 }
 export type MockHandlerObject<P extends keyof ApiOutput> = {
 	[K in keyof ApiOutput[P]]?: RestHandler

@@ -1,50 +1,66 @@
-import { DateTime } from 'luxon'
+import { DateTime, Interval } from 'luxon'
 
 import { isIdFor, prisma, type Prisma } from '@weareinreach/db'
-import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForHoursDrawerSchema } from './query.forHoursDrawer.schema'
 
-export const forHoursDrawer = async ({ input }: TRPCHandlerParams<TForHoursDrawerSchema>) => {
-	const whereId = (): Prisma.OrgHoursWhereInput => {
-		switch (true) {
-			case isIdFor('organization', input): {
-				return { organization: { id: input, ...globalWhere.isPublic() } }
-			}
-			case isIdFor('orgLocation', input): {
-				return { orgLocation: { id: input, ...globalWhere.isPublic() } }
-			}
-			case isIdFor('orgService', input): {
-				return { orgService: { id: input, ...globalWhere.isPublic() } }
-			}
-			default: {
-				return {}
-			}
+const whereId = (input: TForHoursDrawerSchema): Prisma.OrgHoursWhereInput => {
+	switch (true) {
+		case isIdFor('organization', input): {
+			return { organization: { id: input } }
+		}
+		case isIdFor('orgLocation', input): {
+			return { orgLocation: { id: input } }
+		}
+		case isIdFor('orgService', input): {
+			return { orgService: { id: input } }
+		}
+		default: {
+			return {}
 		}
 	}
+}
 
+const { weekYear, weekNumber } = DateTime.now()
+
+export const forHoursDrawer = async ({ input }: TRPCHandlerParams<TForHoursDrawerSchema>) => {
 	const result = await prisma.orgHours.findMany({
 		where: {
-			...whereId(),
+			...whereId(input),
 		},
-		select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true },
+		select: { id: true, dayIndex: true, start: true, end: true, closed: true, tz: true, open24hours: true },
 		orderBy: [{ dayIndex: 'asc' }, { start: 'asc' }],
 	})
-	const transformedResult = result.map(({ start, end, ...rest }) => {
+
+	const tzMap = new Map<string, number>()
+	const intervalResults = result.map(({ start, end, tz, dayIndex, ...rest }) => {
+		if (tz) {
+			if (tzMap.has(tz)) {
+				tzMap.set(tz, tzMap.get(tz)! + 1)
+			} else {
+				tzMap.set(tz, 1)
+			}
+		}
+
+		const interval = Interval.fromDateTimes(
+			DateTime.fromJSDate(start, { zone: tz ?? 'America/New_York' }).set({
+				weekday: dayIndex,
+				weekYear,
+				weekNumber,
+			}),
+			DateTime.fromJSDate(end, { zone: tz ?? 'America/New_York' }).set({
+				weekday: dayIndex,
+				weekYear,
+				weekNumber,
+			})
+		).toISO()
 		return {
-			start: DateTime.fromJSDate(start, { zone: rest.tz ?? 'America/New_York' }).toISOTime({
-				suppressMilliseconds: true,
-				suppressSeconds: true,
-				includeOffset: false,
-			}),
-			end: DateTime.fromJSDate(end, { zone: rest.tz ?? 'America/New_York' }).toISOTime({
-				suppressMilliseconds: true,
-				suppressSeconds: true,
-				includeOffset: false,
-			}),
+			tz: tz ?? 'America/New_York',
+			dayIndex,
 			...rest,
+			interval,
 		}
 	})
-	return transformedResult
+	return intervalResults
 }
