@@ -1,6 +1,7 @@
 import { Space } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { type NextPage } from 'next'
 import { type AppProps, type NextWebVitalsMetric } from 'next/app'
 import dynamic from 'next/dynamic'
@@ -87,6 +88,7 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 					<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: { zIndex: 99998 } }} />
 				)}
 				<Analytics />
+				<SpeedInsights />
 				<DonateModal />
 			</Providers>
 		</>
