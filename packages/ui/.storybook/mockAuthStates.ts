@@ -1,9 +1,6 @@
 import { type Session } from '@weareinreach/auth'
-import { generateId } from '@weareinreach/db/lib/idGen'
 
 const expires = (Date.now() / 1000 + 3600).toString()
-
-const createId = () => generateId('user')
 
 const states = {
 	unknown: {
@@ -29,7 +26,7 @@ const states = {
 		session: {
 			data: {
 				user: {
-					id: createId(),
+					id: 'user_01HHCVWRJPJGPF91SX6HF2QTK3',
 					permissions: ['canAdmin', 'canUser'],
 					roles: ['admin', 'user'],
 					name: 'Administrator',
@@ -45,7 +42,7 @@ const states = {
 		session: {
 			data: {
 				user: {
-					id: createId(),
+					id: 'user_01HHCVWRJP2B0D2NDS9BNAHWBY',
 					roles: ['user'],
 					permissions: ['canUser'],
 					name: "Auth'd User",
@@ -62,7 +59,7 @@ const states = {
 		session: {
 			data: {
 				user: {
-					id: createId(),
+					id: 'user_01HHCVWRJPXQS3BN8A88G5YJ1M',
 					roles: ['user'],
 					permissions: ['canUser'],
 					name: 'User name',
@@ -78,7 +75,7 @@ const states = {
 		session: {
 			data: {
 				user: {
-					id: createId(),
+					id: 'user_01HHCVWRJPE7MR7HK1965BCHFA',
 					roles: ['user'],
 					permissions: ['canUser'],
 					email: 'user.name@gmail.com',
