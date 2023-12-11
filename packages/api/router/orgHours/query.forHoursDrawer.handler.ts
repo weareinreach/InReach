@@ -1,15 +1,9 @@
-import groupBy from 'just-group-by'
 import { DateTime, Interval } from 'luxon'
-import { type LiteralUnion } from 'type-fest'
 
 import { isIdFor, prisma, type Prisma } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TForHoursDrawerSchema } from './query.forHoursDrawer.schema'
-
-const dayIndicies = ['0', '1', '2', '3', '4', '5', '6'] as const
-
-type DataKeys = (typeof dayIndicies)[number]
 
 const whereId = (input: TForHoursDrawerSchema): Prisma.OrgHoursWhereInput => {
 	switch (true) {
@@ -68,24 +62,5 @@ export const forHoursDrawer = async ({ input }: TRPCHandlerParams<TForHoursDrawe
 			interval,
 		}
 	})
-	// move grouping to component
-	// const groupedData = groupBy<(typeof intervalResults)[number], LiteralUnion<DataKeys, number>>(
-	// 	intervalResults,
-	// 	({ dayIndex }) =>
-	// 		typeof dayIndex === 'number' && dayIndex >= 0 && dayIndex <= 6
-	// 			? (dayIndex.toString() as DataKeys)
-	// 			: dayIndex
-	// )
-	// const closed = Object.fromEntries(
-	// 	dayIndicies.map((i) => [i.toString(), groupedData[i]?.some((d) => d.closed) ?? false])
-	// ) as { [key in DataKeys]: boolean }
-	// const open24hours = Object.fromEntries(
-	// 	dayIndicies.map((i) => [i.toString(), groupedData[i]?.some((d) => d.open24hours) ?? false])
-	// ) as { [key in DataKeys]: boolean }
-	// const tzObj = Object.fromEntries(tzMap.entries())
-	// // get the timezone with the most occurrences
-	// const tz = Object.keys(tzObj).reduce((a, b) => ((tzObj[a] ?? 0) > (tzObj[b] ?? 0) ? a : b))
-
-	// return { ...groupedData, closed, open24hours, tz }
 	return intervalResults
 }
