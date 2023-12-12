@@ -374,6 +374,7 @@ const MoreFilterBody = forwardRef<HTMLButtonElement, MoreFilterProps>(
 				>
 					<Stack spacing={24}>
 						<ScrollArea.Autosize
+							placeholder={null}
 							classNames={{ viewport: accordionClasses.scrollArea }}
 							mah={scrollAreaMaxHeight}
 						>
