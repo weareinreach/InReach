@@ -2,6 +2,7 @@
 export * from './query.attributeCategories.schema'
 export * from './query.attributesByCategory.schema'
 export * from './query.countries.schema'
+export * from './query.getSubDistricts.schema'
 export * from './query.govDistsByCountry.schema'
 export * from './query.govDistsByCountryNoSub.schema'
 export * from './query.languages.schema'

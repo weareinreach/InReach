@@ -18,6 +18,7 @@ import { quickLinkRouter } from './quicklink'
 import { reviewRouter } from './review'
 import { savedListRouter } from './savedLists'
 import { serviceRouter } from './service'
+import { serviceAreaRouter } from './serviceArea'
 import { systemRouter } from './system'
 import { userRouter } from './user'
 
@@ -40,6 +41,7 @@ export const appRouter = defineRouter({
 	review: reviewRouter,
 	savedList: savedListRouter,
 	service: serviceRouter,
+	serviceArea: serviceAreaRouter,
 	system: systemRouter,
 	user: userRouter,
 })
