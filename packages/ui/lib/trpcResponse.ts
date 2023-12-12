@@ -1,5 +1,6 @@
 import { action } from '@storybook/addon-actions'
 import prettyBytes from 'pretty-bytes'
+import { type Promisable } from 'type-fest'
 
 import { type ApiInput, type ApiOutput } from '@weareinreach/api'
 import { getHTTPStatusCodeFromError, TRPC_ERROR_CODES_BY_KEY } from '@weareinreach/api/errorTypes'
@@ -33,7 +34,7 @@ export type RpcErrorResponse = {
 export const jsonRpcSuccessResponse = <
 	K1 extends keyof ApiInput,
 	K2 extends keyof ApiInput[K1],
-	T extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2]),
+	T extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => Promisable<ApiOutput[K1][K2]>),
 >(
 	path: [K1, K2],
 	data: T
