@@ -104,7 +104,7 @@
 		"type-fest": "4.8.3",
 		"typescript": "5.3.3",
 		"zod-prisma-types": "3.1.6",
-		"zod-to-json-schema": "3.22.1"
+		"zod-to-json-schema": "3.22.2"
 	},
 	"prisma": {
 		"seed": "turbo run db:run-seed"
