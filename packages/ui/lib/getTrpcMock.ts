@@ -1,22 +1,24 @@
 import { action } from '@storybook/addon-actions'
-import { rest, type RestHandler, type RestRequest } from 'msw'
+import { type DefaultBodyType, delay, http, type HttpHandler, HttpResponse, type StrictRequest } from 'msw'
 
 import path from 'path'
 import querystring from 'querystring'
 
 import { type ApiInput, type ApiOutput } from '@weareinreach/api'
+import { getHTTPStatusCodeFromError } from '@weareinreach/api/errorTypes'
 import { transformer } from '@weareinreach/util/transformer'
 
 import { getBaseUrl } from './trpcClient'
 import { type ErrorInput, jsonRpcErrorResponse, jsonRpcSuccessResponse } from './trpcResponse'
 
-const getReqData = async (req: RestRequest) => {
+const getReqData = async (req: StrictRequest<DefaultBodyType>) => {
 	if (req.method === 'POST') {
 		const body = await req.clone().text()
 		return body
 	}
-	const query = req.url.search.charAt(0) === '?' ? req.url.search.substring(1) : req.url.search
-	const parsed = querystring.parse(query)
+	const url = new URL(req.url)
+	// const query = req.url.search.charAt(0) === '?' ? req.url.search.substring(1) : req.url.search
+	const parsed = querystring.parse(url.searchParams.toString())
 	if (parsed.input) {
 		if (Array.isArray(parsed.input)) return parsed.input[0] ?? ''
 		return parsed.input
@@ -43,9 +45,9 @@ export const getTRPCMock = <
 	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2]),
 >(
 	endpoint: TRPCEndpointSuccess<K1, K2, O> | TRPCEndpointError<K1, K2>
-): RestHandler => {
+): HttpHandler => {
 	// #region msw handler
-	const fn = endpoint.type === 'mutation' ? rest.post : rest.get
+	const fn = endpoint.type === 'mutation' ? http.post : http.get
 
 	const type = endpoint.type === 'mutation' ? 'mutation' : 'query'
 	const trpcRequest = action(`${type === 'query' ? '❓' : '✍️'} tRPC Request [${endpoint.path.join('.')}]`)
@@ -54,26 +56,40 @@ export const getTRPCMock = <
 
 	if (typeof endpoint.response === 'function') {
 		const { response } = endpoint
-		return fn(route, async (req, res, ctx) => {
-			const data = await getReqData(req)
+		return fn(route, async (ctx) => {
+			const data = await getReqData(ctx.request)
+
 			const transformed = transformer.parse<ApiInput[K1][K2]>(data)
 			trpcRequest(transformed)
-			return res(
-				ctx.json(jsonRpcSuccessResponse(endpoint.path, response(transformed))),
-				ctx.delay(endpoint.delay)
-			)
+			await delay(endpoint.delay)
+			const responseData = jsonRpcSuccessResponse(endpoint.path, response(transformed))
+			return HttpResponse.json(responseData, { status: 200 })
 		})
 	}
 
-	return fn(route, async (req, res, ctx) => {
-		const data = await getReqData(req)
+	if (endpoint.error) {
+		return fn(route, async (ctx) => {
+			const data = await getReqData(ctx.request)
+			const transformed = transformer.parse<ApiInput[K1][K2]>(data)
+			trpcRequest(transformed)
+			await delay(endpoint.delay)
+			const responseData = jsonRpcErrorResponse(endpoint.path, endpoint.error)
+			const httpStatus = getHTTPStatusCodeFromError({
+				code: endpoint.error.code,
+				message: endpoint.error.message,
+				name: endpoint.error.code,
+			})
+			return HttpResponse.json(responseData, { status: httpStatus })
+		})
+	}
+
+	return fn(route, async (ctx) => {
+		const data = await getReqData(ctx.request)
 		const transformed = transformer.parse<ApiInput[K1][K2]>(data)
 		trpcRequest(transformed)
-		if (endpoint.error) {
-			return res(ctx.json(jsonRpcErrorResponse(endpoint.path, endpoint.error)), ctx.delay(endpoint.delay))
-		}
-
-		return res(ctx.json(jsonRpcSuccessResponse(endpoint.path, endpoint.response)), ctx.delay(endpoint.delay))
+		await delay(endpoint.delay)
+		const responseData = jsonRpcSuccessResponse(endpoint.path, endpoint.response)
+		return HttpResponse.json(responseData, { status: 200 })
 	})
 	// #endregion
 }
@@ -100,5 +116,5 @@ export type MockDataObject<P extends keyof ApiOutput> = {
 	[K in keyof ApiOutput[P]]?: ApiOutput[P][K] | ((input: ApiInput[P][K]) => ApiOutput[P][K])
 }
 export type MockHandlerObject<P extends keyof ApiOutput> = {
-	[K in keyof ApiOutput[P]]?: RestHandler
+	[K in keyof ApiOutput[P]]?: HttpHandler
 }
