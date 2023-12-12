@@ -2,10 +2,10 @@ import { type Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
 
-import { CoverageArea } from './CoverageArea'
+import { CoverageArea } from '.'
 
 export default {
-	title: 'Modals/CoverageArea',
+	title: 'Data Portal/Modals/Coverage Area',
 	component: CoverageArea,
 	parameters: {
 		design: {

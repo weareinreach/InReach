@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	ActionIcon,
 	Badge,
@@ -7,7 +8,6 @@ import {
 	Checkbox,
 	CloseButton,
 	createPolymorphicComponent,
-	createStyles,
 	Divider,
 	Grid,
 	Group,
@@ -19,55 +19,46 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import compact from 'just-compact'
+import { rest } from 'msw'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 import { Icon } from '~ui/icon'
+import { trpc as api } from '~ui/lib/trpcClient'
 
-import { ModalTitle } from './ModalTitle'
-
-const useStyles = createStyles((theme) => ({
-	borderedBox: {
-		padding: 20,
-		border: `1px solid ${theme.other.colors.tertiary.coolGray}`,
-		borderRadius: 8,
-	},
-	locationBadge: {
-		padding: '0px 12px',
-		borderColor: `${theme.other.colors.tertiary.coolGray}`,
-		'& *, & .mantine-Text-root': {
-			...theme.other.utilityFonts.utility1,
-		},
-	},
-	noHoverHighlight: {
-		'&:hover': { backgroundColor: 'inherit' },
-	},
-	ModalContent: {
-		'& > *': { width: '100%' },
-	},
-	selectSectionWrapper: {
-		'& .mantine-Select-input, & .mantine-Select-input::-webkit-input-placeholder': {
-			...theme.other.utilityFonts.utility1,
-			margin: 0,
-		},
-		'& *': {
-			...theme.other.utilityFonts.utility1,
-		},
-		'& .mantine-Select-rightSection': {
-			justifyContent: 'end',
-		},
-	},
-}))
+import { ServiceAreaForm, type ZServiceAreaForm } from './schema'
+import { useStyles } from './styles'
+import { ModalTitle } from '../ModalTitle'
 
 const MOCK_SELECT_VALUES = ['One', 'Two', 'Three']
 
-const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>((props, ref) => {
-	const { orgName, orgLocations, ...rest } = props
+const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id }, ref) => {
 	const { classes } = useStyles()
-	const { t } = useTranslation()
+	const { t, i18n } = useTranslation(['common', 'gov-dist'])
+	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 	const [opened, { open, close }] = useDisclosure()
 	const [activeTab, setActiveTab] = useState<string | null>('united-states')
-	// const form = useFormContext()
+	const [subDistParent, setSubDistParent] = useState<string>('')
+	const { data: dataServiceArea } = api.serviceArea.getServiceArea.useQuery(id)
+	const { data: dataCountry } = api.fieldOpt.govDistsByCountryNoSub.useQuery()
+	const { data: dataSubDist } = api.fieldOpt.getSubDistricts.useQuery(subDistParent, {
+		enabled: subDistParent !== '',
+	})
+	const apiUtils = api.useUtils()
+	const form = useForm<ZServiceAreaForm>({
+		resolver: zodResolver(ServiceAreaForm),
+		defaultValues: async () => {
+			const data = await apiUtils.serviceArea.getServiceArea.fetch(id)
+			const formatted = {
+				id: data?.id ?? id,
+				countries: data?.countries.map(({ country }) => country.id) ?? [],
+				districts: data?.districts.map(({ govDist }) => govDist.id) ?? [],
+			}
+			return formatted
+		},
+	})
 
 	const LocationSelect = ({ placeholder, data /*, inputPropsName*/ }: SelectFieldProps) => {
 		// Display close button when field is not empty
@@ -117,6 +108,27 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 		</Badge>
 	))
 
+	const activeAreas = compact(
+		[
+			dataServiceArea?.countries.map(({ country }) => (
+				<Badge key={country.id} variant='outline' className={classes.locationBadge}>
+					<Group spacing={8} align='center' noWrap>
+						<Text>{countryTranslation.of(country.cca2)}</Text>
+						<CloseButton variant='transparent' onClick={() => console.log('Delete: ', location)} />
+					</Group>
+				</Badge>
+			)),
+			dataServiceArea?.districts.map(({ govDist }) => (
+				<Badge key={govDist.id} variant='outline' className={classes.locationBadge}>
+					<Group spacing={8} align='center' noWrap>
+						<Text>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
+						<CloseButton variant='transparent' onClick={() => console.log('Delete: ', location)} />
+					</Group>
+				</Badge>
+			)),
+		].flat()
+	)
+
 	return (
 		<>
 			<Modal
@@ -128,7 +140,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 					<Stack align='center'>
 						<Title order={2}>{t('coverage-area')}</Title>
 						<Text sx={(theme) => ({ ...theme.other.utilityFonts.utility4, color: 'black' })}>
-							{`${t('organization')}: ${orgName}`}
+							{`${t('organization')}: `}
 						</Text>
 					</Stack>
 					<Tabs value={activeTab} onTabChange={setActiveTab}>
@@ -143,7 +155,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 							className={classes.noHoverHighlight}
 							label={t('can-help-people-in', { location: t(activeTab as string) })}
 						/>
-						<Group spacing={12}>{locationChips}</Group>
+						<Group spacing={12}>{activeAreas}</Group>
 					</Stack>
 					<Stack spacing={16}>
 						<Text sx={(theme) => theme.other.utilityFonts.utility1}>{t('add-coverage-area')}</Text>
@@ -176,10 +188,9 @@ CoverageAreaModal.displayName = 'coverageArea'
 
 export const CoverageArea = createPolymorphicComponent<HTMLButtonElement, Props>(CoverageAreaModal)
 
-type Props = {
-	orgName: string
-	orgLocations: string[]
-} & ButtonProps
+interface Props extends ButtonProps {
+	id: string
+}
 
 type SelectFieldProps = {
 	placeholder: string
