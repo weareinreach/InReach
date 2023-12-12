@@ -130,6 +130,10 @@
 	"form-error-password-blank": "Поле пароля не может быть пустым.",
 	"form-error-password-req": "Ваш пароль не соответствует нашим требованиям. Попробуйте еще раз.",
 	"go-to-x": "Перейти к {{value}}",
+	"hours": {
+		"closed": "Закрыто",
+		"open24": "Открыто 24 часа"
+	},
 	"in-reach-user": "Пользователь InReach",
 	"in-reach-verified-reviewer": "Проверенный обозреватель услуг InReach",
 	"include": "Добавить",
