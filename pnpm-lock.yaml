@@ -1555,8 +1555,8 @@ importers:
         specifier: 2.0.11
         version: 2.0.11(typescript@5.3.3)
       msw-storybook-addon:
-        specifier: 1.10.0
-        version: 1.10.0(msw@2.0.11)
+        specifier: 2.0.0--canary.122.06f0c92.0
+        version: 2.0.0--canary.122.06f0c92.0(msw@2.0.11)
       next:
         specifier: 14.0.4
         version: 14.0.4(@babel/core@7.23.6)(react-dom@18.2.0)(react@18.2.0)
@@ -18830,10 +18830,10 @@ packages:
   /ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  /msw-storybook-addon@1.10.0(msw@2.0.11):
-    resolution: {integrity: sha512-soCTMTf7DnLeaMnFHPrtVgbyeFTJALVvnDHpzzXpJad+HOzJgQdwU4EAzVfDs1q+X5cVEgxOdAhSMC7ljvnSXg==}
+  /msw-storybook-addon@2.0.0--canary.122.06f0c92.0(msw@2.0.11):
+    resolution: {integrity: sha512-Bm0kud8QoB5dVm3Zn9eWY+j9VTY5KEuNtFoGhCpliSjC6b+V196WzVeUOz5GQXixkx6cDFxawsow4rFDPKXTtQ==}
     peerDependencies:
-      msw: 1.2.1 || 1
+      msw: ^2.0.9 || 1
     dependencies:
       is-node-process: 1.2.0
       msw: 2.0.11(typescript@5.3.3)
