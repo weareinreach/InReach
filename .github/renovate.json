@@ -6,7 +6,7 @@
 	"packageRules": [
 		{
 			"groupName": "patched packages",
-			"matchPackageNames": ["@crowdin/ota-client", "trpc-panel"],
+			"matchPackageNames": ["@crowdin/ota-client", "trpc-panel", "msw-storybook-addon"],
 			"matchUpdateTypes": ["major", "minor", "patch"]
 		}
 	],
