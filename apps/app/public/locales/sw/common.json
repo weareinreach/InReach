@@ -128,6 +128,10 @@
 	"form-error-password-blank": "Nenosiri haliwezi kuwa tupu.",
 	"form-error-password-req": "Nenosiri lako halikidhi mahitaji, tafadhali jaribu tena.",
 	"go-to-x": "Nenda kwa {{value}}",
+	"hours": {
+		"closed": "Closed",
+		"open24": "Open 24 hours"
+	},
 	"in-reach-user": "Mtumiaji wa InReach",
 	"in-reach-verified-reviewer": "InReach Imethibitishwa Mkaguzi",
 	"include": "Jumuisha",

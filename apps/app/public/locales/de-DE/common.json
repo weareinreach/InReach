@@ -128,6 +128,10 @@
 	"form-error-password-blank": "Passwort darf nicht leer sein.",
 	"form-error-password-req": "Ihr Passwort erfüllt nicht die Anforderungen, bitte versuchen Sie es erneut.",
 	"go-to-x": "Gehe zu {{value}}",
+	"hours": {
+		"closed": "Geschlossen",
+		"open24": "24 Stunden geöffnet"
+	},
 	"in-reach-user": "InReach Benutzer",
 	"in-reach-verified-reviewer": "InReach geprüfter Prüfer",
 	"include": "Einschließen",

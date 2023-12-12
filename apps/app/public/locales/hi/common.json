@@ -128,6 +128,10 @@
 	"form-error-password-blank": "पासवर्ड रिक्त नहीं हो सकता।",
 	"form-error-password-req": "आपका पासवर्ड आवश्यकताओं को पूरा नहीं करता है, कृपया फिर से कोशिश करें।",
 	"go-to-x": "{{value}}पर जाएं",
+	"hours": {
+		"closed": "Closed",
+		"open24": "Open 24 hours"
+	},
 	"in-reach-user": "इनरीच यूज़र",
 	"in-reach-verified-reviewer": "इनरीच सत्यापित समीक्षक",
 	"include": "शामिल करें",

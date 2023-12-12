@@ -128,6 +128,10 @@
 	"form-error-password-blank": "La contraseña no puede estar vacía.",
 	"form-error-password-req": "Su contraseña no cumple con los requisitos, por favor inténtelo de nuevo.",
 	"go-to-x": "Ir a {{value}}",
+	"hours": {
+		"closed": "Cerrado",
+		"open24": "Abierto 24 horas"
+	},
 	"in-reach-user": "InReach usuario",
 	"in-reach-verified-reviewer": "InReach revisor verificado",
 	"include": "Incluye",

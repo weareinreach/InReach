@@ -127,6 +127,10 @@
 	"form-error-password-blank": "パスワードを空欄にすることはできません。",
 	"form-error-password-req": "パスワードが要件を満たしていません。もう一度試してください。",
 	"go-to-x": "{{value}}に移動",
+	"hours": {
+		"closed": "クローズ済み",
+		"open24": "24時間オープン"
+	},
 	"in-reach-user": "インリーチユーザー",
 	"in-reach-verified-reviewer": "InReach認証済みレビュアー",
 	"include": "含める",

@@ -130,6 +130,10 @@
 	"form-error-password-blank": "Hasło nie może być puste.",
 	"form-error-password-req": "Twoje hasło nie spełnia wymagań, spróbuj ponownie.",
 	"go-to-x": "Przejdź do {{value}}",
+	"hours": {
+		"closed": "Zamknięte",
+		"open24": "Otwarte 24 godziny"
+	},
 	"in-reach-user": "Użytkownik inReach",
 	"in-reach-verified-reviewer": "Zweryfikowany recenzent inReach",
 	"include": "Uwzględnij",

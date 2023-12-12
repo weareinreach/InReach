@@ -128,6 +128,10 @@
 	"form-error-password-blank": "Wagwoord kan nie leeg wees nie.",
 	"form-error-password-req": "Jou wagwoord voldoen nie aan vereistes nie, probeer asseblief weer.",
 	"go-to-x": "Gaan na {{value}}",
+	"hours": {
+		"closed": "Closed",
+		"open24": "Open 24 hours"
+	},
 	"in-reach-user": "InReach-gebruiker",
 	"in-reach-verified-reviewer": "InReach-geverifieerde beoordelaar",
 	"include": "Insluit",
