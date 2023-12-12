@@ -130,6 +130,10 @@
 	"form-error-password-blank": "Пароль не може бути порожнім.",
 	"form-error-password-req": "Ваш пароль не відповідає вимогам, спробуйте ще раз.",
 	"go-to-x": "Перейти до {{value}}",
+	"hours": {
+		"closed": "Зачинено",
+		"open24": "Відкрито цілодобово"
+	},
 	"in-reach-user": "Користувач InReach",
 	"in-reach-verified-reviewer": "InReach Перевірено рецензент",
 	"include": "Включити",
