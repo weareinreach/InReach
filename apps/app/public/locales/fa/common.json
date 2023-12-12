@@ -128,6 +128,10 @@
 	"form-error-password-blank": "رمز عبور نمی تواند خالی باشد.",
 	"form-error-password-req": "رمز عبور شما شرایط لازم را برآورده نمی کند، لطفا دوباره امتحان کنید.",
 	"go-to-x": "برو به {{value}}",
+	"hours": {
+		"closed": "Closed",
+		"open24": "Open 24 hours"
+	},
 	"in-reach-user": "کاربر INREACH",
 	"in-reach-verified-reviewer": "InReach تایید داور",
 	"include": "شامل",

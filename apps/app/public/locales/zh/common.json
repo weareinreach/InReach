@@ -127,6 +127,10 @@
 	"form-error-password-blank": "密码不能为空。",
 	"form-error-password-req": "您的密码不符合要求，请重试。",
 	"go-to-x": "转到 {{value}}",
+	"hours": {
+		"closed": "已关闭",
+		"open24": "24小时打开"
+	},
 	"in-reach-user": "inReach 用户",
 	"in-reach-verified-reviewer": "inReach 经过验证的审阅者",
 	"include": "包括",

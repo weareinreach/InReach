@@ -128,6 +128,10 @@
 	"form-error-password-blank": "Modpas pa ka vid.",
 	"form-error-password-req": "Modpas ou pa satisfè kondisyon, tanpri eseye ankò.",
 	"go-to-x": "Ale nan {{value}}",
+	"hours": {
+		"closed": "Closed",
+		"open24": "Open 24 hours"
+	},
 	"in-reach-user": "InREACH Itilizatè",
 	"in-reach-verified-reviewer": "InREACH verifye Reviewer",
 	"include": "Enkli",

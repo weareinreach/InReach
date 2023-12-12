@@ -128,6 +128,10 @@
 	"form-error-password-blank": "A senha não pode ficar em branco.",
 	"form-error-password-req": "Sua senha não atende aos requisitos, tente novamente.",
 	"go-to-x": "Vá para {{value}}",
+	"hours": {
+		"closed": "Fechado",
+		"open24": "Abra 24 horas"
+	},
 	"in-reach-user": "Usuário inReach",
 	"in-reach-verified-reviewer": "Avaliador verificado pela inReach",
 	"include": "Incluir",

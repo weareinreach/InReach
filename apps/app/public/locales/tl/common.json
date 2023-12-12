@@ -128,6 +128,10 @@
 	"form-error-password-blank": "Hindi maaaring blangko ang password.",
 	"form-error-password-req": "Ang iyong password ay hindi nakakatugon sa mga kinakailangan, mangyaring subukang muli.",
 	"go-to-x": "Pumunta sa {{value}}",
+	"hours": {
+		"closed": "Closed",
+		"open24": "Open 24 hours"
+	},
 	"in-reach-user": "InReach User",
 	"in-reach-verified-reviewer": "inReach Beripikadong Reviewer",
 	"include": "Isama",

@@ -132,6 +132,10 @@
 	"form-error-password-blank": "لا يمكن أن تكون كلمة المرور فارغة.",
 	"form-error-password-req": "كلمة المرور الخاصة بك لا تفي بالمتطلبات، الرجاء المحاولة مرة أخرى.",
 	"go-to-x": "الذهاب إلى {{value}}",
+	"hours": {
+		"closed": "مغلق",
+		"open24": "فتح 24 ساعة"
+	},
 	"in-reach-user": "الوصول إلى المستخدم",
 	"in-reach-verified-reviewer": "تم التحقق من المراجعة",
 	"include": "تضمين",
