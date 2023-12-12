@@ -15,7 +15,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@googlemaps/google-maps-services-js": "3.3.41",
+		"@googlemaps/google-maps-services-js": "3.3.42",
 		"@opentelemetry/api": "1.7.0",
 		"@sentry/nextjs": "7.86.0",
 		"@tanstack/react-query": "4.36.1",
