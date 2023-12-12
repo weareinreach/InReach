@@ -5,7 +5,6 @@ import {
 	Box,
 	Button,
 	type ButtonProps,
-	Checkbox,
 	CloseButton,
 	createPolymorphicComponent,
 	Divider,
@@ -14,13 +13,11 @@ import {
 	Modal,
 	Select,
 	Stack,
-	Tabs,
 	Text,
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import compact from 'just-compact'
-import { rest } from 'msw'
 import { useTranslation } from 'next-i18next'
 import { forwardRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -34,17 +31,43 @@ import { ModalTitle } from '../ModalTitle'
 
 const MOCK_SELECT_VALUES = ['One', 'Two', 'Three']
 
-const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id }, ref) => {
+const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }, ref) => {
 	const { classes } = useStyles()
 	const { t, i18n } = useTranslation(['common', 'gov-dist'])
 	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
-	const [opened, { open, close }] = useDisclosure()
+	const [opened, { open, close }] = useDisclosure(true) //TODO: remove `true` when done with dev
 	const [activeTab, setActiveTab] = useState<string | null>('united-states')
-	const [subDistParent, setSubDistParent] = useState<string>('')
+	const [selected, setSelected] = useState<SelectionState>({ country: null, govDist: null, subDist: null })
+	const setVal = {
+		country: (value: string) => setSelected((prev) => ({ ...prev, country: value })),
+		govDist: (value: string) => setSelected((prev) => ({ ...prev, govDist: value })),
+		subDist: (value: string) => setSelected((prev) => ({ ...prev, subDist: value })),
+		blank: () => setSelected({ country: null, govDist: null, subDist: null }),
+	}
+
+	const [subDistParent, setSubDistParent] = useState<string>('gdst_01GW2HJ1D3W61ZMBGY0FGKY9EC')
 	const { data: dataServiceArea } = api.serviceArea.getServiceArea.useQuery(id)
-	const { data: dataCountry } = api.fieldOpt.govDistsByCountryNoSub.useQuery()
-	const { data: dataSubDist } = api.fieldOpt.getSubDistricts.useQuery(subDistParent, {
-		enabled: subDistParent !== '',
+	const { data: dataCountry } = api.fieldOpt.countries.useQuery(
+		{ activeForOrgs: true },
+		{
+			select: (data) => data.map(({ id, cca2 }) => ({ value: id, label: countryTranslation.of(cca2) })) ?? [],
+			placeholderData: [],
+		}
+	)
+	const { data: dataDistrict } = api.fieldOpt.govDists.useQuery(
+		{ countryId: selected.country ?? '', parentsOnly: true },
+		{
+			enabled: selected.country !== null,
+			select: (data) =>
+				data?.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) })) ?? [],
+			placeholderData: [],
+		}
+	)
+	const { data: dataSubDist } = api.fieldOpt.getSubDistricts.useQuery(selected.govDist ?? '', {
+		enabled: selected.govDist !== null,
+		select: (data) =>
+			data?.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) })) ?? [],
+		placeholderData: [],
 	})
 	const apiUtils = api.useUtils()
 	const form = useForm<ZServiceAreaForm>({
@@ -60,53 +83,44 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id }, ref) => 
 		},
 	})
 
-	const LocationSelect = ({ placeholder, data /*, inputPropsName*/ }: SelectFieldProps) => {
-		// Display close button when field is not empty
-		// const displayClose = form.getInputProps(inputPropsName).value.length > 0
-		const rightSection = (
-			<Group noWrap spacing={5} position='right'>
-				{
-					//displayClose && (
-					<>
-						<ActionIcon
-							onClick={() => console.log('clicked')}
-							variant='transparent'
-							style={{ pointerEvents: 'all' }}
-						>
-							<Icon width={24} icon='carbon:close' />
-						</ActionIcon>
-						<Divider orientation='vertical' />
-					</>
-					/*)*/
-				}
-				<Icon width={24} icon='carbon:chevron-down' />
-			</Group>
-		)
+	// const LocationSelect = ({ placeholder, data /*, inputPropsName*/ }: SelectFieldProps) => {
+	// 	// Display close button when field is not empty
+	// 	// const displayClose = form.getInputProps(inputPropsName).value.length > 0
+	// 	const rightSection = (
+	// 		<Group noWrap spacing={5} position='right'>
+	// 			{
+	// 				//displayClose && (
+	// 				<>
+	// 					<ActionIcon
+	// 						onClick={() => console.log('clicked')}
+	// 						variant='transparent'
+	// 						style={{ pointerEvents: 'all' }}
+	// 					>
+	// 						<Icon width={24} icon='carbon:close' />
+	// 					</ActionIcon>
+	// 					<Divider orientation='vertical' />
+	// 				</>
+	// 				/*)*/
+	// 			}
+	// 			<Icon width={24} icon='carbon:chevron-down' />
+	// 		</Group>
+	// 	)
 
-		// Disable Select fields unless it's the state select field, or the state field has a value
-		// const disabled = inputPropsName.includes('state) || form.getInputProps('state').value.length === 0
+	// 	// Disable Select fields unless it's the state select field, or the state field has a value
+	// 	// const disabled = inputPropsName.includes('state) || form.getInputProps('state').value.length === 0
 
-		return (
-			<Select
-				rightSectionWidth={64}
-				rightSection={rightSection}
-				styles={{ rightSection: { pointerEvents: 'none' } }}
-				placeholder={placeholder as string}
-				data={data}
-				//disabled={disabled}
-				//form.getInputProps(inputPropsName)
-			/>
-		)
-	}
-
-	const locationChips = orgLocations.map((location) => (
-		<Badge key={location} variant='outline' className={classes.locationBadge}>
-			<Group spacing={8} align='center' noWrap>
-				<Text>{location}</Text>
-				<CloseButton variant='transparent' onClick={() => console.log('Delete: ', location)} />
-			</Group>
-		</Badge>
-	))
+	// 	return (
+	// 		<Select
+	// 			rightSectionWidth={64}
+	// 			rightSection={rightSection}
+	// 			styles={{ rightSection: { pointerEvents: 'none' } }}
+	// 			placeholder={placeholder as string}
+	// 			data={data}
+	// 			//disabled={disabled}
+	// 			//form.getInputProps(inputPropsName)
+	// 		/>
+	// 	)
+	// }
 
 	const activeAreas = compact(
 		[
@@ -143,18 +157,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id }, ref) => 
 							{`${t('organization')}: `}
 						</Text>
 					</Stack>
-					<Tabs value={activeTab} onTabChange={setActiveTab}>
-						<Tabs.List grow>
-							<Tabs.Tab value='united-states'>{t('united-states')}</Tabs.Tab>
-							<Tabs.Tab value='canada'>{t('canada')}</Tabs.Tab>
-							<Tabs.Tab value='mexico'>{t('mexico')}</Tabs.Tab>
-						</Tabs.List>
-					</Tabs>
-					<Stack spacing={16} className={classes.borderedBox}>
-						<Checkbox
-							className={classes.noHoverHighlight}
-							label={t('can-help-people-in', { location: t(activeTab as string) })}
-						/>
+					<Stack spacing={16}>
 						<Group spacing={12}>{activeAreas}</Group>
 					</Stack>
 					<Stack spacing={16}>
@@ -162,9 +165,13 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id }, ref) => 
 						<Grid gutter='xl' gutterXl='xl'>
 							<Grid.Col xs={9} sm={9}>
 								<Stack className={classes.selectSectionWrapper}>
-									<LocationSelect placeholder={t('select-state') as string} data={MOCK_SELECT_VALUES} />
-									<LocationSelect placeholder={t('select-country') as string} data={MOCK_SELECT_VALUES} />
-									<LocationSelect placeholder={t('select-city') as string} data={MOCK_SELECT_VALUES} />
+									<Select
+										placeholder={t('select-country')}
+										data={dataCountry ?? []}
+										onChange={setVal.country}
+									/>
+									{/* <LocationSelect placeholder={t('select-country') as string} data={MOCK_SELECT_VALUES} />
+									<LocationSelect placeholder={t('select-city') as string} data={MOCK_SELECT_VALUES} /> */}
 								</Stack>
 							</Grid.Col>
 							<Grid.Col xs={3} sm={3}>
@@ -179,7 +186,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id }, ref) => 
 					</Button>
 				</Stack>
 			</Modal>
-			<Box ref={ref} component={'button'} onClick={open} {...rest} />
+			<Box ref={ref} component={'button'} onClick={open} {...props} />
 		</>
 	)
 })
@@ -197,3 +204,5 @@ type SelectFieldProps = {
 	data: string[]
 	// inputPropsName: string
 }
+
+type SelectionState = { country: string | null; govDist: string | null; subDist: string | null }

@@ -1,6 +1,8 @@
 import { type Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
+import { fieldOpt } from '~ui/mockData/fieldOpt'
+import { serviceArea } from '~ui/mockData/serviceArea'
 
 import { CoverageArea } from '.'
 
@@ -14,6 +16,15 @@ export default {
 		},
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
+		msw: [
+			fieldOpt.govDistsByCountryNoSub,
+			fieldOpt.getSubDistricts,
+			fieldOpt.countries,
+			fieldOpt.govDists,
+			serviceArea.getServiceArea,
+		],
+		rqDevtools: true,
+		whyDidYouRender: { collapseGroups: true },
 	},
 	args: {
 		component: Button,
