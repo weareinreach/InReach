@@ -1,5 +1,5 @@
 import { action } from '@storybook/addon-actions'
-import { rest } from 'msw'
+import { delay, http, HttpResponse, type PathParams } from 'msw'
 
 import querystring from 'querystring'
 
@@ -14,26 +14,32 @@ const providerResponse = {
 }
 
 export const providers = () =>
-	rest.get('/api/auth/providers', (req, res, ctx) => res(ctx.delay(), ctx.json(providerResponse)))
+	http.get('/api/auth/providers', async () => {
+		await delay()
+		return HttpResponse.json(providerResponse)
+	})
 
 export const csrf = () =>
-	rest.get('/api/auth/csrf', (req, res, ctx) =>
-		res(
-			ctx.delay(),
-			ctx.json({ csrfToken: 'd11134f8413295d97df65b0dfdb7166db4bb1e49af48345a4d567a841ffd048b' })
-		)
-	)
+	http.get('/api/auth/csrf', async () => {
+		await delay()
+		return HttpResponse.json({
+			csrfToken: 'd11134f8413295d97df65b0dfdb7166db4bb1e49af48345a4d567a841ffd048b',
+		})
+	})
 
 export const signin = () =>
-	rest.all('/api/auth/signin', (req, res, ctx) => {
-		return res(ctx.delay(), ctx.json({ ...req.params }))
+	http.all('/api/auth/signin', async (ctx) => {
+		await delay()
+		return HttpResponse.json({ ...ctx.params })
 	})
 
 export const cognito = () =>
-	rest.post('/api/auth/callback/cognito', async (req, res, ctx) => {
-		const body = await req.text()
+	http.post<PathParams, SignInResponse>('/api/auth/callback/cognito', async (ctx) => {
+		const body = await ctx.request.text()
 		const data = querystring.parse(body)
 		const { password } = data
+
+		await delay()
 
 		if (password === 'good') {
 			const returnData = {
@@ -43,7 +49,7 @@ export const cognito = () =>
 				error: undefined,
 			}
 			action('Login with good credentials')(returnData)
-			return res(ctx.delay(), ctx.json(returnData))
+			return HttpResponse.json(returnData)
 		}
 		const returnData = {
 			error: 'Incorrect username or password.',
@@ -52,5 +58,12 @@ export const cognito = () =>
 			url: null,
 		}
 		action('Login with bad credentials')(returnData)
-		return res(ctx.delay(), ctx.status(401), ctx.json(returnData))
+		return HttpResponse.json(returnData, { status: 401 })
 	})
+
+interface SignInResponse {
+	error: string | undefined
+	status: number
+	ok: boolean
+	url: string | null
+}

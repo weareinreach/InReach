@@ -3,7 +3,7 @@ import './font.css'
 import { type BADGE } from '@geometricpanda/storybook-addon-badges'
 import { type Preview } from '@storybook/react'
 import { type WhyDidYouRenderOptions } from '@welldone-software/why-did-you-render'
-import { type RequestHandler, rest } from 'msw'
+import { http, passthrough, type RequestHandler } from 'msw'
 import { initialize as initializeMsw, mswLoader } from 'msw-storybook-addon'
 import { type BaseRouter } from 'next/dist/shared/lib/router/router'
 import { type Router } from 'next/router'
@@ -35,7 +35,7 @@ initializeMsw({
 		},
 	},
 	onUnhandledRequest: ({ method, url }) => {
-		if (url.pathname.startsWith('/trpc' || '/api')) {
+		if (url.startsWith('/trpc' || '/api')) {
 			console.error(`Unhandled ${method} request to ${url}.
 
         This exception has been only logged in the console, however, it's strongly recommended to resolve this error as you don't want unmocked data in Storybook stories.
@@ -74,7 +74,7 @@ const preview: Preview = {
 		// },
 		msw: {
 			handlers: {
-				passthrough: rest.get(/^\/(?!api|trpc).*$/, (req) => req.passthrough()),
+				passthrough: http.get(/^\/(?!api|trpc).*$/, () => passthrough()),
 			},
 		},
 	},
