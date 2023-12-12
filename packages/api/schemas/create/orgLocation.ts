@@ -168,7 +168,7 @@ export const EditOrgLocationSchema = z
 				city: z.string(),
 				postCode: z.string().nullable(),
 				primary: z.boolean(),
-				mailOnly: z.boolean().nullable(),
+				mailOnly: z.boolean().default(false),
 				longitude: z.number().nullable(),
 				latitude: z.number().nullable(),
 				geoJSON: Geometry,
@@ -187,7 +187,7 @@ export const EditOrgLocationSchema = z
 			.partial(),
 	})
 	.transform(({ id, data }) => {
-		const { accessible, countryId, govDistId, services, mailOnly, ...rest } = data
+		const { accessible, countryId, govDistId, services, ...rest } = data
 
 		const accessibleAttrId = allAttributes.find(({ tag }) => tag === 'wheelchair-accessible')?.id
 
@@ -197,7 +197,6 @@ export const EditOrgLocationSchema = z
 			where: { id },
 			data: {
 				...rest,
-				mailOnly: mailOnly === false ? null : mailOnly,
 				...(updateAccessibility
 					? accessible.boolean !== null
 						? {

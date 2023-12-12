@@ -77,7 +77,7 @@ const FormSchema = z.object({
 			city: z.string(),
 			postCode: z.string().nullable().transform(transformNullString),
 			primary: z.coerce.boolean(),
-			mailOnly: z.boolean().nullable(),
+			mailOnly: z.boolean(),
 			longitude: z.coerce.number().nullable(),
 			latitude: z.coerce.number().nullable(),
 			geoWKT: z.string().nullable().transform(transformNullString),
