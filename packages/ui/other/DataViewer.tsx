@@ -3,7 +3,7 @@ import { JsonViewer, type JsonViewerProps } from '@textea/json-viewer'
 
 export const DataViewer = ({ value, enableClipboard, dontCollapse, ...props }: DataViewerProps) => (
 	<Card>
-		<ScrollArea.Autosize mah='50vh'>
+		<ScrollArea.Autosize mah='50vh' placeholder={null}>
 			<JsonViewer
 				value={value}
 				quotesOnKeys={false}

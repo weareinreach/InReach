@@ -113,7 +113,7 @@ export const MultiSelectPopover = ({
 					</UnstyledButton>
 				</Popover.Target>
 				<Popover.Dropdown>
-					<ScrollArea.Autosize mah={250}>
+					<ScrollArea.Autosize mah={250} placeholder={null}>
 						{items.map((props, index) => (
 							<Checkbox
 								key={props.value}
