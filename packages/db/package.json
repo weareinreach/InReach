@@ -63,7 +63,7 @@
 		"@terraformer/wkt": "2.2.0",
 		"@turbo/gen": "1.11.2",
 		"@turf/helpers": "6.5.0",
-		"@types/eslint": "8.44.8",
+		"@types/eslint": "8.44.9",
 		"@types/inquirer": "9.0.7",
 		"@types/inquirer-autocomplete-prompt": "3.0.3",
 		"@types/luxon": "3.3.7",
