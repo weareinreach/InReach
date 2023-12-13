@@ -79,7 +79,7 @@ jobs:
           path: /home/runner/work/InReach/InReach/apps/app/.next/analyze/__bundle_analysis.json
 
       - name: Download base branch bundle stats
-        uses: dawidd6/action-download-artifact@f29d1b6a8930683e80acedfbe6baa2930cd646b4 # v2
+        uses: dawidd6/action-download-artifact@e7466d1a7587ed14867642c2ca74b5bcc1e19a2d # v3
         if: success() && github.event.number
         with:
           workflow: nextjs_bundle_analysis.yml
