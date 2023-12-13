@@ -17,7 +17,7 @@
 	"dependencies": {
 		"@googlemaps/google-maps-services-js": "3.3.42",
 		"@opentelemetry/api": "1.7.0",
-		"@sentry/nextjs": "7.86.0",
+		"@sentry/nextjs": "7.87.0",
 		"@tanstack/react-query": "4.36.1",
 		"@terraformer/wkt": "2.2.0",
 		"@trpc/client": "10.44.1",
@@ -48,7 +48,7 @@
 	},
 	"devDependencies": {
 		"@turbo/gen": "1.11.2",
-		"@types/eslint": "8.44.8",
+		"@types/eslint": "8.44.9",
 		"@types/google.maps": "3.54.10",
 		"@types/luxon": "3.3.7",
 		"@types/node": "20.10.4",
