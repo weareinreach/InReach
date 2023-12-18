@@ -1,13 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-	ActionIcon,
 	Badge,
 	Box,
 	Button,
 	type ButtonProps,
 	CloseButton,
 	createPolymorphicComponent,
-	Divider,
 	Grid,
 	Group,
 	Modal,
@@ -29,28 +27,26 @@ import { ServiceAreaForm, type ZServiceAreaForm } from './schema'
 import { useStyles } from './styles'
 import { ModalTitle } from '../ModalTitle'
 
-const MOCK_SELECT_VALUES = ['One', 'Two', 'Three']
-
 const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }, ref) => {
 	const { classes } = useStyles()
 	const { t, i18n } = useTranslation(['common', 'gov-dist'])
 	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 	const [opened, { open, close }] = useDisclosure(true) //TODO: remove `true` when done with dev
-	const [activeTab, setActiveTab] = useState<string | null>('united-states')
+
 	const [selected, setSelected] = useState<SelectionState>({ country: null, govDist: null, subDist: null })
 	const setVal = {
-		country: (value: string) => setSelected((prev) => ({ ...prev, country: value })),
-		govDist: (value: string) => setSelected((prev) => ({ ...prev, govDist: value })),
+		country: (value: string) => setSelected({ country: value, govDist: null, subDist: null }),
+		govDist: (value: string) => setSelected((prev) => ({ ...prev, govDist: value, subDist: null })),
 		subDist: (value: string) => setSelected((prev) => ({ ...prev, subDist: value })),
 		blank: () => setSelected({ country: null, govDist: null, subDist: null }),
 	}
 
-	const [subDistParent, setSubDistParent] = useState<string>('gdst_01GW2HJ1D3W61ZMBGY0FGKY9EC')
 	const { data: dataServiceArea } = api.serviceArea.getServiceArea.useQuery(id)
 	const { data: dataCountry } = api.fieldOpt.countries.useQuery(
 		{ activeForOrgs: true },
 		{
-			select: (data) => data.map(({ id, cca2 }) => ({ value: id, label: countryTranslation.of(cca2) })) ?? [],
+			select: (data) =>
+				data.map(({ id, cca2 }) => ({ value: id, label: countryTranslation.of(cca2), cca2 })) ?? [],
 			placeholderData: [],
 		}
 	)
@@ -59,14 +55,26 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 		{
 			enabled: selected.country !== null,
 			select: (data) =>
-				data?.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) })) ?? [],
+				data?.map(({ id, tsKey, tsNs, ...rest }) => ({
+					value: id,
+					label: t(tsKey, { ns: tsNs }),
+					tsKey,
+					tsNs,
+					...rest,
+				})) ?? [],
 			placeholderData: [],
 		}
 	)
 	const { data: dataSubDist } = api.fieldOpt.getSubDistricts.useQuery(selected.govDist ?? '', {
 		enabled: selected.govDist !== null,
 		select: (data) =>
-			data?.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) })) ?? [],
+			data?.map(({ id, tsKey, tsNs, ...rest }) => ({
+				value: id,
+				label: t(tsKey, { ns: tsNs }),
+				tsKey,
+				tsNs,
+				...rest,
+			})) ?? [],
 		placeholderData: [],
 	})
 	const apiUtils = api.useUtils()
@@ -76,12 +84,48 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 			const data = await apiUtils.serviceArea.getServiceArea.fetch(id)
 			const formatted = {
 				id: data?.id ?? id,
-				countries: data?.countries.map(({ country }) => country.id) ?? [],
-				districts: data?.districts.map(({ govDist }) => govDist.id) ?? [],
+				countries: data?.countries ?? [],
+				districts: data?.districts ?? [],
 			}
 			return formatted
 		},
 	})
+
+	const serviceAreaCountries = form.watch('countries')
+	const serviceAreaDistricts = form.watch('districts')
+
+	console.log(serviceAreaCountries, serviceAreaDistricts)
+
+	const handleAdd = () => {
+		switch (true) {
+			case !!selected.subDist:
+			case !!selected.govDist: {
+				const itemId = selected.subDist ?? selected.govDist
+				const valToAdd = selected.subDist
+					? dataSubDist?.find(({ value }) => value === itemId)
+					: dataDistrict?.find(({ value }) => value === itemId)
+				if (!valToAdd) return
+				form.setValue(
+					'districts',
+					[...serviceAreaDistricts, { id: valToAdd.value, tsKey: valToAdd.tsKey, tsNs: valToAdd.tsNs }],
+					{
+						shouldValidate: true,
+					}
+				)
+				setVal.blank()
+				break
+			}
+			case !!selected.country: {
+				const valToAdd = dataCountry?.find(({ value }) => value === selected.country)
+				if (!valToAdd) return
+				form.setValue('countries', [...serviceAreaCountries, { id: valToAdd?.value, cca2: valToAdd?.cca2 }], {
+					shouldValidate: true,
+				})
+				setVal.blank()
+				break
+			}
+		}
+	}
 
 	// const LocationSelect = ({ placeholder, data /*, inputPropsName*/ }: SelectFieldProps) => {
 	// 	// Display close button when field is not empty
@@ -124,7 +168,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 
 	const activeAreas = compact(
 		[
-			dataServiceArea?.countries.map(({ country }) => (
+			serviceAreaCountries?.map((country) => (
 				<Badge key={country.id} variant='outline' className={classes.locationBadge}>
 					<Group spacing={8} align='center' noWrap>
 						<Text>{countryTranslation.of(country.cca2)}</Text>
@@ -132,7 +176,9 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 					</Group>
 				</Badge>
 			)),
-			dataServiceArea?.districts.map(({ govDist }) => (
+
+			// Display -> Country / District / Sub-District
+			serviceAreaDistricts?.map((govDist) => (
 				<Badge key={govDist.id} variant='outline' className={classes.locationBadge}>
 					<Group spacing={8} align='center' noWrap>
 						<Text>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
@@ -170,12 +216,24 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 										data={dataCountry ?? []}
 										onChange={setVal.country}
 									/>
-									{/* <LocationSelect placeholder={t('select-country') as string} data={MOCK_SELECT_VALUES} />
-									<LocationSelect placeholder={t('select-city') as string} data={MOCK_SELECT_VALUES} /> */}
+									{selected.country && !!dataDistrict?.length && (
+										<Select
+											placeholder={t('select-next')}
+											data={dataDistrict ?? []}
+											onChange={setVal.govDist}
+										/>
+									)}
+									{selected.govDist && !!dataSubDist?.length && (
+										<Select
+											placeholder={t('select-next')}
+											data={dataSubDist ?? []}
+											onChange={setVal.subDist}
+										/>
+									)}
 								</Stack>
 							</Grid.Col>
 							<Grid.Col xs={3} sm={3}>
-								<Button px={32} py={6} h={40}>
+								<Button px={32} py={6} h={40} onClick={handleAdd}>
 									{t('add', { context: '' })}
 								</Button>
 							</Grid.Col>

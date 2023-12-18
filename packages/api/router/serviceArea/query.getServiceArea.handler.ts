@@ -24,8 +24,8 @@ export const getServiceArea = async ({ ctx, input }: TRPCHandlerParams<TGetServi
 						govDist: {
 							select: {
 								id: true,
-								parent: { select: { id: true, tsKey: true, tsNs: true } },
-								countryId: true,
+								parent: { select: { tsKey: true, tsNs: true } },
+								country: { select: { cca2: true } },
 								tsKey: true,
 								tsNs: true,
 							},
@@ -34,7 +34,16 @@ export const getServiceArea = async ({ ctx, input }: TRPCHandlerParams<TGetServi
 				},
 			},
 		})
-		return result
+
+		if (!result) return result
+
+		const { id, districts, countries } = result
+		const formatted = {
+			id,
+			districts: districts.map(({ govDist }) => govDist),
+			countries: countries.map(({ country }) => country),
+		}
+		return formatted
 	} catch (error) {
 		handleError(error)
 	}
