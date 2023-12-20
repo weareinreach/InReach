@@ -40,7 +40,6 @@ i18n
 				switch (format) {
 					case 'lowercase': {
 						if (typeof value === 'string') return value.toLowerCase()
-						break
 					}
 				}
 				return value

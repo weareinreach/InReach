@@ -1,6 +1,7 @@
 // codegen:start {preset: barrel, include: './{*,*/index}.ts*', exclude: "*.stories.tsx"}
 export * from './AccountVerified'
 export * from './ClaimOrg'
+export * from './CoverageArea'
 export * from './CreateNewList'
 export * from './DeleteModal'
 export * from './Example'

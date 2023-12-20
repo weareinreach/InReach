@@ -76,7 +76,7 @@ export const PhoneNumberEntry = ({
 	const topCountries = ['US', 'CA', 'MX']
 
 	api.fieldOpt.countries.useQuery(
-		{ where: { activeForOrgs: true } },
+		{ activeForOrgs: true },
 		{
 			onSuccess: (data) =>
 				setCountryList(

@@ -74,7 +74,10 @@ const preview: Preview = {
 		// },
 		msw: {
 			handlers: {
-				passthrough: http.get(/^\/(?!api|trpc).*$/, () => passthrough()),
+				passthrough: http.get(/^\/(?!api|trpc).*$/, (ctx) => {
+					console.log(`MSW Passthrough: ${ctx.request.url}`)
+					passthrough()
+				}),
 			},
 		},
 	},
