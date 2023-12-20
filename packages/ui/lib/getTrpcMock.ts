@@ -153,6 +153,11 @@ export type MockDataObject<P extends keyof ApiOutput> = {
 export type MockHandlerObject<P extends keyof ApiOutput> = {
 	[K in keyof ApiOutput[P]]?: HttpHandler
 }
+
+export type MockAPIHandler<K1 extends keyof ApiOutput, K2 extends keyof ApiOutput[K1]> = (
+	input: ApiInput[K1][K2]
+) => Promisable<ApiOutput[K1][K2]>
+
 type MockOutput<K1 extends keyof ApiOutput, K2 extends keyof ApiOutput[K1]> =
 	| ApiOutput[K1][K2]
-	| ((input: ApiInput[K1][K2]) => Promisable<ApiOutput[K1][K2]>)
+	| MockAPIHandler<K1, K2>
