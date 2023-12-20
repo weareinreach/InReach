@@ -81,20 +81,20 @@ export const Breadcrumb = (props: BreadcrumbProps) => {
 	const childrenRender = useMemo(() => {
 		switch (option) {
 			case 'close': {
-				return t('close')
+				return t('common:words.close')
 			}
 			case 'back': {
 				switch (backTo) {
 					case 'search': {
-						return t('breadcrumb.back-to-search')
+						return t('common:breadcrumb.back-to-search')
 					}
 					case 'none': {
-						return t('words.back')
+						return t('common:words.back')
 					}
 					case 'dynamicText': {
 						const page = backToText
 						if (isMobile) {
-							return t('words.back')
+							return t('common:words.back')
 						}
 						return (
 							<Trans

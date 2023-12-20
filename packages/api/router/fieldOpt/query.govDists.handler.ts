@@ -6,7 +6,6 @@ import { type TGovDistsSchema } from './query.govDists.schema'
 
 export const govDists = async ({ input }: TRPCHandlerParams<TGovDistsSchema>) => {
 	try {
-		console.log(input)
 		const results = await prisma.govDist.findMany({
 			where: input,
 			select: {
