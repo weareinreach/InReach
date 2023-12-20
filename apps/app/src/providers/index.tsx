@@ -2,7 +2,7 @@
 import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
 import dynamic, { type LoaderComponent } from 'next/dynamic'
-import { Work_Sans } from 'next/font/google'
+import { Noto_Color_Emoji, Work_Sans } from 'next/font/google'
 import { type Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import { Trans, useTranslation } from 'next-i18next'
@@ -13,6 +13,8 @@ import { GoogleMapsProvider } from '@weareinreach/ui/providers/GoogleMaps'
 import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 import 'react-hook-consent/dist/styles/style.css'
+
+const fallbackEmoji = Noto_Color_Emoji({ weight: '400' })
 
 const fontWorkSans = Work_Sans({
 	subsets: ['latin-ext'],
@@ -26,7 +28,8 @@ const fontWorkSans = Work_Sans({
 		'Arial',
 		'sans-serif',
 		'Apple Color Emoji',
-		'Segoe UI Emoji',
+		// 'Segoe UI Emoji',
+		fallbackEmoji.style.fontFamily,
 	],
 })
 
