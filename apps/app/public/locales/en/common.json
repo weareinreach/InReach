@@ -34,6 +34,7 @@
 		"back-to-dynamic": "Back to <u>{{page}}</u>",
 		"back-to-search": "Back to search"
 	},
+	"can-help-people-in": "Can help people located anywhere in {{location}}",
 	"cancel": "Cancel",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -210,6 +211,9 @@
 	"photo_one": "Photo",
 	"photo_other": "Photos",
 	"please-specify": "Please specify",
+	"portal-module": {
+		"service-area": "Service Area"
+	},
 	"powered-by-vercel": "Powered by Vercel",
 	"prefer-not-to-say": "Prefer not to say",
 	"privacy-policy": "Privacy policy",
@@ -263,6 +267,9 @@
 		"organization-placeholder": "Enter organization name...",
 		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Can't find it? <strong>Suggest an organization</strong> you think should be included."
+	},
+	"select": {
+		"base": "Select {{- item}}"
 	},
 	"send-email": "Send email",
 	"service": {

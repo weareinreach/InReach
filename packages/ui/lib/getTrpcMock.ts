@@ -1,5 +1,14 @@
 import { action } from '@storybook/addon-actions'
-import { type DefaultBodyType, delay, http, type HttpHandler, HttpResponse, type StrictRequest } from 'msw'
+import {
+	type DefaultBodyType,
+	delay,
+	http,
+	type HttpHandler,
+	HttpResponse,
+	type PathParams,
+	type StrictRequest,
+} from 'msw'
+import { type Promisable } from 'type-fest'
 
 import path from 'path'
 import querystring from 'querystring'
@@ -42,9 +51,9 @@ const getReqData = async (req: StrictRequest<DefaultBodyType>) => {
 export const getTRPCMock = <
 	K1 extends keyof ApiInput, // object itself
 	K2 extends keyof ApiInput[K1], // all its keys
-	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2]),
+	O extends MockOutput<K1, K2>,
 >(
-	endpoint: TRPCEndpointSuccess<K1, K2, O> | TRPCEndpointError<K1, K2>
+	endpoint: TRPCEndpointResponse<K1, K2, O>
 ): HttpHandler => {
 	// #region msw handler
 	const fn = endpoint.type === 'mutation' ? http.post : http.get
@@ -56,14 +65,25 @@ export const getTRPCMock = <
 
 	if (typeof endpoint.response === 'function') {
 		const { response } = endpoint
-		return fn(route, async (ctx) => {
+		return fn<PathParams, TRPCEndpointResponse<K1, K2, O>>(route, async (ctx) => {
 			const data = await getReqData(ctx.request)
 
 			const transformed = transformer.parse<ApiInput[K1][K2]>(data)
 			trpcRequest(transformed)
 			await delay(endpoint.delay)
-			const responseData = jsonRpcSuccessResponse(endpoint.path, response(transformed))
-			return HttpResponse.json(responseData, { status: 200 })
+			try {
+				const responseData = await response(transformed)
+
+				const apiResponse = jsonRpcSuccessResponse(endpoint.path, responseData)
+				return HttpResponse.json(apiResponse, { status: 200 })
+			} catch (error) {
+				const errorMessage = error instanceof Error ? error.message : `${error}`
+				const apiResponse = jsonRpcErrorResponse(endpoint.path, {
+					code: 'INTERNAL_SERVER_ERROR',
+					message: errorMessage,
+				})
+				return HttpResponse.json(apiResponse, { status: 500 })
+			}
 		})
 	}
 
@@ -83,20 +103,29 @@ export const getTRPCMock = <
 		})
 	}
 
-	return fn(route, async (ctx) => {
+	return fn<PathParams, TRPCEndpointResponse<K1, K2, O>>(route, async (ctx) => {
 		const data = await getReqData(ctx.request)
 		const transformed = transformer.parse<ApiInput[K1][K2]>(data)
 		trpcRequest(transformed)
-		await delay(endpoint.delay)
-		const responseData = jsonRpcSuccessResponse(endpoint.path, endpoint.response)
-		return HttpResponse.json(responseData, { status: 200 })
+		try {
+			await delay(endpoint.delay)
+			const responseData = jsonRpcSuccessResponse(endpoint.path, endpoint.response as ApiOutput[K1][K2])
+			return HttpResponse.json(responseData, { status: 200 })
+		} catch (error) {
+			const errorMessage = error instanceof Error ? error.message : `${error}`
+			const apiResponse = jsonRpcErrorResponse(endpoint.path, {
+				code: 'INTERNAL_SERVER_ERROR',
+				message: errorMessage,
+			})
+			return HttpResponse.json(apiResponse, { status: 500 })
+		}
 	})
 	// #endregion
 }
 type TRPCEndpointSuccess<
 	K1 extends keyof ApiInput,
 	K2 extends keyof ApiInput[K1],
-	O extends ApiOutput[K1][K2] | ((input: ApiInput[K1][K2]) => ApiOutput[K1][K2]),
+	O extends MockOutput<K1, K2>,
 > = {
 	path: [K1, K2]
 	response: O
@@ -112,9 +141,23 @@ type TRPCEndpointError<K1 extends keyof ApiInput, K2 extends keyof ApiInput[K1]>
 	delay?: number
 }
 
+type TRPCEndpointResponse<
+	K1 extends keyof ApiInput,
+	K2 extends keyof ApiInput[K1],
+	O extends MockOutput<K1, K2>,
+> = TRPCEndpointSuccess<K1, K2, O> | TRPCEndpointError<K1, K2>
+
 export type MockDataObject<P extends keyof ApiOutput> = {
-	[K in keyof ApiOutput[P]]?: ApiOutput[P][K] | ((input: ApiInput[P][K]) => ApiOutput[P][K])
+	[K in keyof ApiOutput[P]]?: MockOutput<P, K>
 }
 export type MockHandlerObject<P extends keyof ApiOutput> = {
 	[K in keyof ApiOutput[P]]?: HttpHandler
 }
+
+export type MockAPIHandler<K1 extends keyof ApiOutput, K2 extends keyof ApiOutput[K1]> = (
+	input: ApiInput[K1][K2]
+) => Promisable<ApiOutput[K1][K2]>
+
+type MockOutput<K1 extends keyof ApiOutput, K2 extends keyof ApiOutput[K1]> =
+	| ApiOutput[K1][K2]
+	| MockAPIHandler<K1, K2>

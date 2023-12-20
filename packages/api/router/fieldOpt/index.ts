@@ -14,6 +14,8 @@ type FieldOptHandlerCache = {
 	countries: typeof import('./query.countries.handler').countries
 	userTitle: typeof import('./query.userTitle.handler').userTitle
 	countryGovDistMap: typeof import('./query.countryGovDistMap.handler').countryGovDistMap
+	getSubDistricts: typeof import('./query.getSubDistricts.handler').getSubDistricts
+	govDists: typeof import('./query.govDists.handler').govDists
 }
 export const fieldOptRouter = defineRouter({
 	/** All government districts by country (active for org listings). Gives up to 2 levels of sub-districts */
@@ -95,5 +97,19 @@ export const fieldOptRouter = defineRouter({
 			)
 		if (!HandlerCache.countryGovDistMap) throw new Error('Failed to load handler')
 		return HandlerCache.countryGovDistMap()
+	}),
+	getSubDistricts: publicProcedure.input(schema.ZGetSubDistrictsSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.getSubDistricts)
+			HandlerCache.getSubDistricts = await import('./query.getSubDistricts.handler').then(
+				(mod) => mod.getSubDistricts
+			)
+		if (!HandlerCache.getSubDistricts) throw new Error('Failed to load handler')
+		return HandlerCache.getSubDistricts({ ctx, input })
+	}),
+	govDists: publicProcedure.input(schema.ZGovDistsSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.govDists)
+			HandlerCache.govDists = await import('./query.govDists.handler').then((mod) => mod.govDists)
+		if (!HandlerCache.govDists) throw new Error('Failed to load handler')
+		return HandlerCache.govDists({ ctx, input })
 	}),
 })
