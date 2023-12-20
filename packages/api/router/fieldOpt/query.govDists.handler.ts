@@ -14,6 +14,8 @@ export const govDists = async ({ input }: TRPCHandlerParams<TGovDistsSchema>) =>
 				tsKey: true,
 				tsNs: true,
 				abbrev: true,
+				country: { select: { cca2: true } },
+				govDistType: { select: { tsKey: true, tsNs: true } },
 			},
 		})
 		return results

@@ -15,6 +15,8 @@ export const getSubDistricts = async ({ input }: TRPCHandlerParams<TGetSubDistri
 				tsKey: true,
 				tsNs: true,
 				abbrev: true,
+				country: { select: { cca2: true } },
+				parent: { select: { tsKey: true, tsNs: true } },
 				govDistType: {
 					select: { tsKey: true, tsNs: true },
 				},

@@ -1,13 +1,9 @@
 import { z } from 'zod'
 
-// import fs from 'fs'
-// import path from 'path'
-import { type ApiInput, type ApiOutput } from '@weareinreach/api'
-import { getTRPCMock } from '~ui/lib/getTrpcMock'
+import { type ApiOutput } from '@weareinreach/api'
+import { getTRPCMock, type MockAPIHandler } from '~ui/lib/getTrpcMock'
 
-import countryGovDistMapData from './json/countryGovDistMap.json'
-
-const queryAttributeCategories = async (query: ApiInput['fieldOpt']['attributeCategories']) => {
+const queryAttributeCategories: MockAPIHandler<'fieldOpt', 'attributeCategories'> = async (query) => {
 	const attributeCategories = (await import('./json/fieldOpt.attributeCategories.json')).default
 	if (Array.isArray(query)) {
 		return attributeCategories.filter(({ tag }) => query.includes(tag))
@@ -15,7 +11,7 @@ const queryAttributeCategories = async (query: ApiInput['fieldOpt']['attributeCa
 	return attributeCategories
 }
 
-const queryAttributesByCategory = async (query: ApiInput['fieldOpt']['attributesByCategory']) => {
+const queryAttributesByCategory: MockAPIHandler<'fieldOpt', 'attributesByCategory'> = async (query) => {
 	const attributesByCategory = (await import('./json/fieldOpt.attributesByCategory.json')).default
 	if (typeof query === 'string' || Array.isArray(query)) {
 		return attributesByCategory.filter(({ categoryName }) =>
@@ -25,7 +21,7 @@ const queryAttributesByCategory = async (query: ApiInput['fieldOpt']['attributes
 	return attributesByCategory as ApiOutput['fieldOpt']['attributesByCategory']
 }
 
-const queryLanguages = async (query: ApiInput['fieldOpt']['languages']) => {
+const queryLanguages: MockAPIHandler<'fieldOpt', 'languages'> = async (query) => {
 	const languages = (await import('./json/fieldOpt.languages.json')).default
 	const { localeCode, activelyTranslated } = query ?? {}
 	if (localeCode || activelyTranslated) {
@@ -46,7 +42,7 @@ const queryLanguages = async (query: ApiInput['fieldOpt']['languages']) => {
 	return languages
 }
 
-const queryCountries = async (query: ApiInput['fieldOpt']['countries']) => {
+const queryCountries: MockAPIHandler<'fieldOpt', 'countries'> = async (query) => {
 	const countries = (await import('./json/fieldOpt.countries.json')).default
 	if (query) {
 		const { activeForOrgs, cca2 } = query
@@ -59,13 +55,13 @@ const queryCountries = async (query: ApiInput['fieldOpt']['countries']) => {
 	return countries
 }
 
-const queryGovDistsByCountry = async (query: ApiInput['fieldOpt']['govDistsByCountry']) => {
+const queryGovDistsByCountry: MockAPIHandler<'fieldOpt', 'govDistsByCountry'> = async (query) => {
 	const govDistsByCountry = (await import('./json/fieldOpt.govDistsByCountry.json')).default
 	if (query) return govDistsByCountry.filter(({ cca2 }) => cca2 === query)
 	return govDistsByCountry
 }
 
-const queryGovDistsByCountryNoSub = async (query: ApiInput['fieldOpt']['govDistsByCountryNoSub']) => {
+const queryGovDistsByCountryNoSub: MockAPIHandler<'fieldOpt', 'govDistsByCountryNoSub'> = async (query) => {
 	const govDistByCountryNoSub = (await import('./json/fieldOpt.govDistsByCountryNoSub.json')).default
 	if (query) return govDistByCountryNoSub.filter(({ cca2 }) => cca2 === query)
 	return govDistByCountryNoSub
@@ -129,10 +125,11 @@ const countryGovDistMapSchema = z
 	])
 	.array()
 
-const countryGovDistMap = new Map<string, CountryGovDistMapItem>(
-	countryGovDistMapSchema.parse(countryGovDistMapData)
-)
-const getSubDistricts = async (id: string) => {
+const countryGovDistMap = async () => {
+	const countryGovDistMapData = (await import('./json/fieldOpt.countryGovDistMap.json')).default
+	return new Map<string, CountryGovDistMapItem>(countryGovDistMapSchema.parse(countryGovDistMapData))
+}
+const getSubDistricts: MockAPIHandler<'fieldOpt', 'getSubDistricts'> = async (id) => {
 	const data = (await import('./json/fieldOpt.getSubDistricts.json')).default
 	const filtered = data.filter(({ parentId }) => parentId === id)
 	const formatted = filtered.map(({ parentId, ...data }) => data)
@@ -173,7 +170,7 @@ export const fieldOpt = {
 	}),
 	countryGovDistMap: getTRPCMock({
 		path: ['fieldOpt', 'countryGovDistMap'],
-		response: countryGovDistMap,
+		response: async () => await countryGovDistMap(),
 	}),
 	getSubDistricts: getTRPCMock({
 		path: ['fieldOpt', 'getSubDistricts'],
@@ -195,10 +192,10 @@ export const fieldOpt = {
 					}
 					return isMatch
 				})
-				const formatted = filtered.map(({ name, slug, iso, countryId, parentId, ...data }) => data)
+				const formatted = filtered.map(({ parentId, ...data }) => data)
 				return formatted
 			}
-			const formatted = data.map(({ name, slug, iso, countryId, parentId, ...data }) => data)
+			const formatted = data.map(({ parentId, ...data }) => data)
 			return formatted
 		},
 	}),
