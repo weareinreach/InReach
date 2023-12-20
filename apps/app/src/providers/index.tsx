@@ -14,7 +14,7 @@ import { SearchStateProvider } from '@weareinreach/ui/providers/SearchState'
 import { appCache, appTheme } from '@weareinreach/ui/theme'
 import 'react-hook-consent/dist/styles/style.css'
 
-const fallbackEmoji = Noto_Color_Emoji({ weight: '400' })
+// const fallbackEmoji = Noto_Color_Emoji({ weight: '400' })
 
 const fontWorkSans = Work_Sans({
 	subsets: ['latin-ext'],
@@ -29,7 +29,7 @@ const fontWorkSans = Work_Sans({
 		'sans-serif',
 		'Apple Color Emoji',
 		// 'Segoe UI Emoji',
-		fallbackEmoji.style.fontFamily,
+		'Noto Color Emoji',
 	],
 })
 
