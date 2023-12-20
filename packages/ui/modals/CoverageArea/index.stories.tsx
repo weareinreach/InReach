@@ -22,6 +22,7 @@ export default {
 			fieldOpt.countries,
 			fieldOpt.govDists,
 			serviceArea.getServiceArea,
+			serviceArea.update,
 		],
 		rqDevtools: true,
 		whyDidYouRender: { collapseGroups: true },

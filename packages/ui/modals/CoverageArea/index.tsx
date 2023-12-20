@@ -15,17 +15,28 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { compareArrayVals } from 'crud-object-diff'
 import compact from 'just-compact'
-import { useTranslation } from 'next-i18next'
-import { forwardRef, useState } from 'react'
+import { type TFunction, useTranslation } from 'next-i18next'
+import { forwardRef } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+import { useServiceAreaSelections } from './hooks'
 import { ServiceAreaForm, type ZServiceAreaForm } from './schema'
 import { useStyles } from './styles'
 import { ModalTitle } from '../ModalTitle'
+
+const reduceDistType = (data: { tsNs: string; tsKey: string }[] | undefined, t: TFunction) => {
+	if (!data) return ''
+	const valueSet = data.reduce((prev, curr) => {
+		const translated = t(curr.tsKey, { ns: curr.tsNs, count: 1 })
+		prev.add(translated)
+		return prev
+	}, new Set<string>())
+	return [...valueSet].sort().join('/')
+}
 
 const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }, ref) => {
 	const { classes } = useStyles()
@@ -33,15 +44,8 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 	const countryTranslation = new Intl.DisplayNames(i18n.language, { type: 'region' })
 	const [opened, { open, close }] = useDisclosure(true) //TODO: remove `true` when done with dev
 
-	const [selected, setSelected] = useState<SelectionState>({ country: null, govDist: null, subDist: null })
-	const setVal = {
-		country: (value: string) => setSelected({ country: value, govDist: null, subDist: null }),
-		govDist: (value: string) => setSelected((prev) => ({ ...prev, govDist: value, subDist: null })),
-		subDist: (value: string) => setSelected((prev) => ({ ...prev, subDist: value })),
-		blank: () => setSelected({ country: null, govDist: null, subDist: null }),
-	}
+	const [selected, setVal] = useServiceAreaSelections()
 
-	const { data: dataServiceArea } = api.serviceArea.getServiceArea.useQuery(id)
 	const { data: dataCountry } = api.fieldOpt.countries.useQuery(
 		{ activeForOrgs: true },
 		{
@@ -60,6 +64,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 					label: t(tsKey, { ns: tsNs }),
 					tsKey,
 					tsNs,
+					parent: null,
 					...rest,
 				})) ?? [],
 			placeholderData: [],
@@ -78,6 +83,9 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 		placeholderData: [],
 	})
 	const apiUtils = api.useUtils()
+
+	const updateServiceArea = api.serviceArea.update.useMutation()
+
 	const form = useForm<ZServiceAreaForm>({
 		resolver: zodResolver(ServiceAreaForm),
 		defaultValues: async () => {
@@ -94,7 +102,13 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 	const serviceAreaCountries = form.watch('countries')
 	const serviceAreaDistricts = form.watch('districts')
 
-	console.log(serviceAreaCountries, serviceAreaDistricts)
+	const placeHolders = {
+		first: t('select.base', { item: 'Country' }),
+		second: t('select.base', {
+			item: reduceDistType(dataDistrict?.map(({ govDistType }) => govDistType), t),
+		}),
+		third: t('select.base', { item: reduceDistType(dataSubDist?.map(({ govDistType }) => govDistType), t) }),
+	}
 
 	const handleAdd = () => {
 		switch (true) {
@@ -107,7 +121,16 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 				if (!valToAdd) return
 				form.setValue(
 					'districts',
-					[...serviceAreaDistricts, { id: valToAdd.value, tsKey: valToAdd.tsKey, tsNs: valToAdd.tsNs }],
+					[
+						...serviceAreaDistricts,
+						{
+							id: valToAdd.value,
+							tsKey: valToAdd.tsKey,
+							tsNs: valToAdd.tsNs,
+							parent: valToAdd.parent,
+							country: valToAdd.country,
+						},
+					],
 					{
 						shouldValidate: true,
 					}
@@ -127,67 +150,69 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 		}
 	}
 
-	// const LocationSelect = ({ placeholder, data /*, inputPropsName*/ }: SelectFieldProps) => {
-	// 	// Display close button when field is not empty
-	// 	// const displayClose = form.getInputProps(inputPropsName).value.length > 0
-	// 	const rightSection = (
-	// 		<Group noWrap spacing={5} position='right'>
-	// 			{
-	// 				//displayClose && (
-	// 				<>
-	// 					<ActionIcon
-	// 						onClick={() => console.log('clicked')}
-	// 						variant='transparent'
-	// 						style={{ pointerEvents: 'all' }}
-	// 					>
-	// 						<Icon width={24} icon='carbon:close' />
-	// 					</ActionIcon>
-	// 					<Divider orientation='vertical' />
-	// 				</>
-	// 				/*)*/
-	// 			}
-	// 			<Icon width={24} icon='carbon:chevron-down' />
-	// 		</Group>
-	// 	)
-
-	// 	// Disable Select fields unless it's the state select field, or the state field has a value
-	// 	// const disabled = inputPropsName.includes('state) || form.getInputProps('state').value.length === 0
-
-	// 	return (
-	// 		<Select
-	// 			rightSectionWidth={64}
-	// 			rightSection={rightSection}
-	// 			styles={{ rightSection: { pointerEvents: 'none' } }}
-	// 			placeholder={placeholder as string}
-	// 			data={data}
-	// 			//disabled={disabled}
-	// 			//form.getInputProps(inputPropsName)
-	// 		/>
-	// 	)
-	// }
-
 	const activeAreas = compact(
 		[
 			serviceAreaCountries?.map((country) => (
 				<Badge key={country.id} variant='outline' className={classes.locationBadge}>
 					<Group spacing={8} align='center' noWrap>
 						<Text>{countryTranslation.of(country.cca2)}</Text>
-						<CloseButton variant='transparent' onClick={() => console.log('Delete: ', location)} />
+						<CloseButton
+							variant='transparent'
+							onClick={() =>
+								form.setValue('countries', serviceAreaCountries?.filter(({ id }) => id !== country.id))
+							}
+						/>
 					</Group>
 				</Badge>
 			)),
 
 			// Display -> Country / District / Sub-District
-			serviceAreaDistricts?.map((govDist) => (
-				<Badge key={govDist.id} variant='outline' className={classes.locationBadge}>
-					<Group spacing={8} align='center' noWrap>
-						<Text>{t(govDist.tsKey, { ns: govDist.tsNs })}</Text>
-						<CloseButton variant='transparent' onClick={() => console.log('Delete: ', location)} />
-					</Group>
-				</Badge>
-			)),
+			serviceAreaDistricts?.map((govDist) => {
+				const { id, tsKey, tsNs, country, parent } = govDist
+
+				const displayName = compact([
+					country.cca2,
+					parent ? t(parent.tsKey, { ns: parent.tsNs }) : null,
+					t(tsKey, { ns: tsNs }),
+				]).join(' → ')
+
+				return (
+					<Badge key={id} variant='outline' className={classes.locationBadge}>
+						<Group spacing={8} align='center' noWrap>
+							<Text>{displayName}</Text>
+							<CloseButton
+								variant='transparent'
+								onClick={() =>
+									form.setValue('districts', serviceAreaDistricts?.filter(({ id }) => id !== govDist.id))
+								}
+							/>
+						</Group>
+					</Badge>
+				)
+			}),
 		].flat()
 	)
+
+	const handleSave = () => {
+		const initialData = {
+			id: form.formState.defaultValues?.id,
+			countries: compact(form.formState.defaultValues?.countries?.map((country) => country?.id) ?? []),
+			districts: compact(form.formState.defaultValues?.districts?.map((district) => district?.id) ?? []),
+		}
+		const data = form.getValues()
+		const currentData = {
+			id: data.id,
+			countries: data.countries.map((country) => country.id),
+			districts: data.districts.map((district) => district.id),
+		}
+
+		const changes = {
+			id: data.id,
+			countries: compareArrayVals([initialData.countries, currentData.countries]),
+			districts: compareArrayVals([initialData.districts, currentData.districts]),
+		}
+		updateServiceArea.mutate(changes)
+	}
 
 	return (
 		<>
@@ -198,7 +223,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 			>
 				<Stack spacing={24} className={classes.ModalContent} align='center'>
 					<Stack align='center'>
-						<Title order={2}>{t('coverage-area')}</Title>
+						<Title order={2}>{t('portal-module.service-area')}</Title>
 						<Text sx={(theme) => ({ ...theme.other.utilityFonts.utility4, color: 'black' })}>
 							{`${t('organization')}: `}
 						</Text>
@@ -207,26 +232,33 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 						<Group spacing={12}>{activeAreas}</Group>
 					</Stack>
 					<Stack spacing={16}>
-						<Text sx={(theme) => theme.other.utilityFonts.utility1}>{t('add-coverage-area')}</Text>
+						<Text sx={(theme) => theme.other.utilityFonts.utility1}>
+							{t('add', {
+								item: '$t(portal-module.service-area)',
+							})}
+						</Text>
 						<Grid gutter='xl' gutterXl='xl'>
 							<Grid.Col xs={9} sm={9}>
 								<Stack className={classes.selectSectionWrapper}>
 									<Select
-										placeholder={t('select-country')}
+										placeholder={placeHolders.first}
 										data={dataCountry ?? []}
+										value={selected.country}
 										onChange={setVal.country}
 									/>
 									{selected.country && !!dataDistrict?.length && (
 										<Select
-											placeholder={t('select-next')}
+											placeholder={placeHolders.second}
 											data={dataDistrict ?? []}
+											value={selected.govDist}
 											onChange={setVal.govDist}
 										/>
 									)}
 									{selected.govDist && !!dataSubDist?.length && (
 										<Select
-											placeholder={t('select-next')}
+											placeholder={placeHolders.third}
 											data={dataSubDist ?? []}
+											value={selected.subDist}
 											onChange={setVal.subDist}
 										/>
 									)}
@@ -239,7 +271,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 							</Grid.Col>
 						</Grid>
 					</Stack>
-					<Button size='lg' radius='md' type='submit' fullWidth>
+					<Button size='lg' radius='md' type='submit' fullWidth onClick={handleSave}>
 						{t('save-changes')}
 					</Button>
 				</Stack>
@@ -256,11 +288,3 @@ export const CoverageArea = createPolymorphicComponent<HTMLButtonElement, Props>
 interface Props extends ButtonProps {
 	id: string
 }
-
-type SelectFieldProps = {
-	placeholder: string
-	data: string[]
-	// inputPropsName: string
-}
-
-type SelectionState = { country: string | null; govDist: string | null; subDist: string | null }
