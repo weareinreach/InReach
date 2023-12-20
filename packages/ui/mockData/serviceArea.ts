@@ -32,4 +32,18 @@ export const serviceArea = {
 		path: ['serviceArea', 'getServiceArea'],
 		response: serviceAreaData.getServiceArea,
 	}),
+	update: getTRPCMock({
+		path: ['serviceArea', 'update'],
+		type: 'mutation',
+		response: (input) => ({
+			countries: {
+				created: input.countries.createdVals?.length ?? 0,
+				deleted: input.countries.deletedVals?.length ?? 0,
+			},
+			districts: {
+				created: input.districts.createdVals?.length ?? 0,
+				deleted: input.districts.deletedVals?.length ?? 0,
+			},
+		}),
+	}),
 } satisfies MockHandlerObject<'serviceArea'>

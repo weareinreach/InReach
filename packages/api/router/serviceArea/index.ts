@@ -13,8 +13,16 @@ export const serviceAreaRouter = defineRouter({
 		if (!HandlerCache.getServiceArea) throw new Error('Failed to load handler')
 		return HandlerCache.getServiceArea({ ctx, input })
 	}),
+	update: publicProcedure.input(schema.ZUpdateSchema).mutation(async ({ ctx, input }) => {
+		if (!HandlerCache.update) {
+			HandlerCache.update = await import('./mutation.update.handler').then((mod) => mod.update)
+		}
+		if (!HandlerCache.update) throw new Error('Failed to load handler')
+		return HandlerCache.update({ ctx, input })
+	}),
 })
 
 type HandlerCache = {
 	getServiceArea: typeof import('./query.getServiceArea.handler').getServiceArea
+	update: typeof import('./mutation.update.handler').update
 }
