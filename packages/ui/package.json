@@ -206,7 +206,7 @@
 		"react-error-boundary": "^4",
 		"react-hook-form": "^7.45.4",
 		"react-hook-form-mantine": "^2.0.0",
-		"react-i18next": "^13.0.0 || ^14.0.0"
+		"react-i18next": "^14.0.0"
 	},
 	"msw": {
 		"workerDirectory": "public"
