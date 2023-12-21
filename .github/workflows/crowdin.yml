@@ -126,3 +126,7 @@ jobs:
       - name: Delete Crowdin Branch
         if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev' && steps.sanitizebranch.outputs.value != 'dev' && steps.sanitizebranch.outputs.value != 'main'
         run: crowdin branch delete ${{ steps.sanitizebranch.outputs.value }} --no-progress
+
+      - name: Generate OTA Release
+        if: github.event_name == 'schedule' && secrets.CROWDIN_OTA_HASH
+        run: crowdin distribution release ${{ secrets.CROWDIN_OTA_HASH }} --no-progress --verbose
