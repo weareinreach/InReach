@@ -34,6 +34,7 @@
 		"back-to-dynamic": "بېرته <u>{{page}}</u>ته",
 		"back-to-search": "بېرته لټون ته"
 	},
+	"can-help-people-in": "Can help people located anywhere in {{location}}",
 	"cancel": "لغوه کړه",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -208,6 +209,9 @@
 	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"photo_interval": "(0) [تراوسه هیڅ عکس نشته]؛ (2-inf) [ټول {{count}} عکسونه وګورئ]؛",
 	"please-specify": "مهرباني وکړئ مشخص کړئ",
+	"portal-module": {
+		"service-area": "Service Area"
+	},
 	"powered-by-vercel": "د ورسیل لخوا پرمخ وړل شوی",
 	"prefer-not-to-say": "غوره ګ. ي چې ووایی",
 	"privacy-policy": "د محرمیت تګلاره",
@@ -257,6 +261,9 @@
 		"organization-placeholder": "د سازمان نوم دننه کړئ...",
 		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "دا نشي موندلی؟ <1>هغه سازمان وړاندیز</1> کړئ چې تاسو فکر کوئ باید پکې شامل شي."
+	},
+	"select": {
+		"base": "Select {{- item}}"
 	},
 	"send-email": "برېښناليک ولېږئ",
 	"service": {

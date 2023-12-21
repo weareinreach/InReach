@@ -34,6 +34,7 @@
 		"back-to-dynamic": "Retour à <u>{{page}}</u>",
 		"back-to-search": "Retour à la recherche"
 	},
+	"can-help-people-in": "Peut aider les personnes situées n'importe où dans {{location}}",
 	"cancel": "Annuler",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Revendiquer la page de profil de votre organisation et faire confiance à votre public sur InReach</textUtility1>\n<textUtility1>✍🏾 Mettre à jour les informations de votre organisation sur InReach</textUtility1>\n<textUtility1>📨 Inviter d'autres membres du personnel à rejoindre votre organisation sur InReach </textUtility1>\n<textUtility1>🔑 Accéder à des fonctionnalités futures conçues spécifiquement pour les prestataires affiliés sur InReach</textUtility1>",
@@ -208,6 +209,9 @@
 	"photo-count_interval": "(0)[Aucune photo.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"photo_interval": "(0)[Aucune photo];(3-inf)[Voir toutes les{{count}} photos];",
 	"please-specify": "Veuillez spécifier",
+	"portal-module": {
+		"service-area": "Zone de service"
+	},
 	"powered-by-vercel": "Marche à Vercel",
 	"prefer-not-to-say": "Préférer ne pas dire",
 	"privacy-policy": "Politique de confidentialité",
@@ -257,6 +261,9 @@
 		"organization-placeholder": "Entrer le nom de l'organisation...",
 		"organization-placeholder-searchby": "Chercher par nom d'organisme...",
 		"suggest-resource": "Vous ne le trouvez pas ? <strong>Proposez une organisation</strong> qui devrait être incluse."
+	},
+	"select": {
+		"base": "Sélectionnez {{- item}}"
 	},
 	"send-email": "Envoyer un e-mail",
 	"service": {
