@@ -34,6 +34,7 @@
 		"back-to-dynamic": "返回 <u>{{page}}</u>",
 		"back-to-search": "返回搜寻"
 	},
+	"can-help-people-in": "Can help people located anywhere in {{location}}",
 	"cancel": "取消",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 认领您的组织简介页面并在Inach上与您的受众建立信任</textUtility1>\n<textUtility1>:writing_hand_mediark_skin_tone: 更新您组织在Inach上的信息</textUtility1>\n<textUtility1><textUtility1> :incoming_envelle: 邀请其他工作人员加入您的组织，在Inach</textUtility1>\n<textUtility1>🔑 获取未来功能的访问权限，专门为附属服务提供商在 Inach</textUtility1>",
@@ -207,6 +208,9 @@
 	"photo-count_interval": "(0) [还没有照片。]; (1) [{{count}} 张照片] ;( 2-inf) [{{count}} 张照片]",
 	"photo_interval": "(0) [还没有照片]; (2-inf) [查看全部 {{count}} 张照片];",
 	"please-specify": "请具体说明",
+	"portal-module": {
+		"service-area": "服务区"
+	},
 	"powered-by-vercel": "由 Vercel 提供动力",
 	"prefer-not-to-say": "不想说",
 	"privacy-policy": "隐私政策",
@@ -256,6 +260,9 @@
 		"organization-placeholder": "输入组织名称...",
 		"organization-placeholder-searchby": "按组织名称搜索...",
 		"suggest-resource": "找不到？<1>建议一个你认为应该包括的组织</1>。"
+	},
+	"select": {
+		"base": "Select {{- item}}"
 	},
 	"send-email": "发送电子邮件",
 	"service": {

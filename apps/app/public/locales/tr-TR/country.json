@@ -1,0 +1,1244 @@
+{
+	"ABW": {
+		"name": "Aruba",
+		"demonym_one": "Arubalı",
+		"demonym_other": "Aruban"
+	},
+	"AFG": {
+		"name": "Afganistan",
+		"demonym_one": "Afgan",
+		"demonym_other": "Afganlar"
+	},
+	"AGO": {
+		"name": "Angola",
+		"demonym_one": "Angolalı",
+		"demonym_other": "Angolalılar"
+	},
+	"AIA": {
+		"name": "Anguilla",
+		"demonym_one": "Anguillian",
+		"demonym_other": "Anguillians"
+	},
+	"ALA": {
+		"name": "Åland Adaları",
+		"demonym_one": "Ålandaca",
+		"demonym_other": "Alandalılar"
+	},
+	"ALB": {
+		"name": "Arnavutluk",
+		"demonym_one": "Arnavutça",
+		"demonym_other": "Arnavutlar"
+	},
+	"AND": {
+		"name": "Andorra",
+		"demonym_one": "Andorran",
+		"demonym_other": "Andorranlar"
+	},
+	"ARE": {
+		"name": "Birleşik Arap Emirlikleri",
+		"demonym_one": "Emirlik",
+		"demonym_other": "Emiratesler"
+	},
+	"ARG": {
+		"name": "Arjantin",
+		"demonym_one": "Arjantinli",
+		"demonym_other": "Arjantinliler"
+	},
+	"ARM": {
+		"name": "Ermenistan",
+		"demonym_one": "Ermeni",
+		"demonym_other": "Ermeniler"
+	},
+	"ASM": {
+		"name": "Amerikan Samoası",
+		"demonym_one": "Amerikan Samoası",
+		"demonym_other": "Amerikalı Samoalılar"
+	},
+	"ATA": {
+		"name": "Antarktika",
+		"demonym_one": "Antarktika",
+		"demonym_other": "Antarktikalılar"
+	},
+	"ATF": {
+		"name": "Fransız Güney ve Antarktika Toprakları",
+		"demonym_one": "Fransızca",
+		"demonym_other": "Fransızca"
+	},
+	"ATG": {
+		"name": "Antigua ve Barbuda",
+		"demonym_one": "Antiguan, Barbudan",
+		"demonym_other": "Antiguanlar, Barbudalılar"
+	},
+	"AUS": {
+		"name": "Avustralya",
+		"demonym_one": "Avustralyalı",
+		"demonym_other": "Avustralyalılar"
+	},
+	"AUT": {
+		"name": "Avusturya",
+		"demonym_one": "Avusturyalı",
+		"demonym_other": "Avusturyalılar"
+	},
+	"AZE": {
+		"name": "Azerbaycan",
+		"demonym_one": "Azeri",
+		"demonym_other": "Azerbaycanlılar"
+	},
+	"BDI": {
+		"name": "Burundi",
+		"demonym_one": "Burundili",
+		"demonym_other": "Burundyalılar"
+	},
+	"BEL": {
+		"name": "Belçika",
+		"demonym_one": "Belçikalı",
+		"demonym_other": "Belçikalılar"
+	},
+	"BEN": {
+		"name": "Benin",
+		"demonym_one": "Beninese",
+		"demonym_other": "Beninese"
+	},
+	"BES": {
+		"name": "Karayip Hollanda"
+	},
+	"BFA": {
+		"name": "Burkina Faso",
+		"demonym_one": "Burkinabe",
+		"demonym_other": "Burkinabes"
+	},
+	"BGD": {
+		"name": "Bangladeş",
+		"demonym_one": "Bangladeşli",
+		"demonym_other": "Bangladeşliler"
+	},
+	"BGR": {
+		"name": "Bulgaristan",
+		"demonym_one": "Bulgarca",
+		"demonym_other": "Bulgarlar"
+	},
+	"BHR": {
+		"name": "Bahreyn",
+		"demonym_one": "Bahreyn",
+		"demonym_other": "Bahreynliler"
+	},
+	"BHS": {
+		"name": "Bahamalar",
+		"demonym_one": "Bahama",
+		"demonym_other": "Bahamyalılar"
+	},
+	"BIH": {
+		"name": "Bosna Hersek",
+		"demonym_one": "Boşnakça, Hersek",
+		"demonym_other": "Bosnalılar, Hersekliler"
+	},
+	"BLM": {
+		"name": "Saint Barthélemy",
+		"demonym_one": "Saint Barthélemy Adalı",
+		"demonym_other": "Saint Barthélemy Adalıları"
+	},
+	"BLR": {
+		"name": "Belarus",
+		"demonym_one": "Belaruslu",
+		"demonym_other": "Belaruslular"
+	},
+	"BLZ": {
+		"name": "Belize",
+		"demonym_one": "Belize'li",
+		"demonym_other": "Belizliler"
+	},
+	"BMU": {
+		"name": "Bermuda",
+		"demonym_one": "Bermudalı",
+		"demonym_other": "Bermudalılar"
+	},
+	"BOL": {
+		"name": "Bolivya",
+		"demonym_one": "Bolivyalı",
+		"demonym_other": "Bolivyalılar"
+	},
+	"BRA": {
+		"name": "Brezilya",
+		"demonym_one": "Brezilyalı",
+		"demonym_other": "Brezilyalılar"
+	},
+	"BRB": {
+		"name": "Barbados",
+		"demonym_one": "Barbadosu",
+		"demonym_other": "Barbadyalılar"
+	},
+	"BRN": {
+		"name": "Brunei",
+		"demonym_one": "Brunei",
+		"demonym_other": "Bruneyalılar"
+	},
+	"BTN": {
+		"name": "Bhutan",
+		"demonym_one": "Bhutan",
+		"demonym_other": "Bhutan"
+	},
+	"BVT": {
+		"name": "Bouvet Adası"
+	},
+	"BWA": {
+		"name": "Botsvana",
+		"demonym_one": "Motsvana",
+		"demonym_other": "Batsvana"
+	},
+	"CAF": {
+		"name": "Orta Afrika Cumhuriyeti",
+		"demonym_one": "Orta Afrika",
+		"demonym_other": "Orta Afrikalılar"
+	},
+	"CAN": {
+		"name": "Kanada",
+		"demonym_one": "Kanadalı",
+		"demonym_other": "Kanadalılar"
+	},
+	"CCK": {
+		"name": "Cocos (Keeling) Adaları",
+		"demonym_one": "Cocos Adalı",
+		"demonym_other": "Cocos Adalıları"
+	},
+	"CHE": {
+		"name": "İsviçre",
+		"demonym_one": "İsviçreli",
+		"demonym_other": "İsviçreli"
+	},
+	"CHL": {
+		"name": "Şili",
+		"demonym_one": "Şilili",
+		"demonym_other": "Şilililer"
+	},
+	"CHN": {
+		"name": "Çin",
+		"demonym_one": "Çince",
+		"demonym_other": "Çince"
+	},
+	"CIV": {
+		"name": "Fildişi Sahili",
+		"demonym_one": "Fildişili",
+		"demonym_other": "Fildişi"
+	},
+	"CMR": {
+		"name": "Kamerun",
+		"demonym_one": "Kamerunlu",
+		"demonym_other": "Kamerunlular"
+	},
+	"COD": {
+		"name": "Kongo Demokratik Cumhuriyeti",
+		"demonym_one": "Kongolu",
+		"demonym_other": "Kongolu"
+	},
+	"COG": {
+		"name": "Kongo Cumhuriyeti",
+		"demonym_one": "Kongolu",
+		"demonym_other": "Kongolu"
+	},
+	"COK": {
+		"name": "Cook Adaları",
+		"demonym_one": "Cook Adalı",
+		"demonym_other": "Cook Adalıları"
+	},
+	"COL": {
+		"name": "Kolombiya",
+		"demonym_one": "Kolombiyalı",
+		"demonym_other": "Kolombiyalılar"
+	},
+	"COM": {
+		"name": "Komorlar",
+		"demonym_one": "Komorlu",
+		"demonym_other": "Komorlular"
+	},
+	"CPV": {
+		"name": "Yeşil Burun Adaları",
+		"demonym_one": "Yeşil Burun Adaları",
+		"demonym_other": "Cape Verdililer"
+	},
+	"CRI": {
+		"name": "Kosta Rika",
+		"demonym_one": "Kosta Rika",
+		"demonym_other": "Kosta Rikalılar"
+	},
+	"CUB": {
+		"name": "Küba",
+		"demonym_one": "Kübalı",
+		"demonym_other": "Kübalılar"
+	},
+	"CUW": {
+		"name": "Curaçao",
+		"demonym_one": "Hollandalı",
+		"demonym_other": "Hollandalı"
+	},
+	"CXR": {
+		"name": "Christmas Adası",
+		"demonym_one": "Noel Adalı",
+		"demonym_other": "Noel Adalıları"
+	},
+	"CYM": {
+		"name": "Cayman Adaları",
+		"demonym_one": "Cayman Adaları",
+		"demonym_other": "Caymanyalılar"
+	},
+	"CYP": {
+		"name": "Kıbrıs",
+		"demonym_one": "Kıbrıslı",
+		"demonym_other": "Kıbrıslı"
+	},
+	"CZE": {
+		"name": "Çek Cumhuriyeti",
+		"demonym_one": "Çek",
+		"demonym_other": "Çekler"
+	},
+	"DEU": {
+		"name": "Almanya",
+		"demonym_one": "Alman",
+		"demonym_other": "Almanlar"
+	},
+	"DJI": {
+		"name": "Cibuti",
+		"demonym_one": "Cibuti",
+		"demonym_other": "Cibuti"
+	},
+	"DMA": {
+		"name": "Dominika",
+		"demonym_one": "Dominik",
+		"demonym_other": "Dominikliler"
+	},
+	"DNK": {
+		"name": "Danimarka",
+		"demonym_one": "Danca",
+		"demonym_other": "Danca"
+	},
+	"DOM": {
+		"name": "Dominik Cumhuriyeti",
+		"demonym_one": "Dominik",
+		"demonym_other": "Dominikliler"
+	},
+	"DZA": {
+		"name": "Cezayir",
+		"demonym_one": "Cezayirli",
+		"demonym_other": "Cezayirliler"
+	},
+	"ECU": {
+		"name": "Ekvador",
+		"demonym_one": "Ekvadorlu",
+		"demonym_other": "Ekvadorlular"
+	},
+	"EGY": {
+		"name": "Mısır",
+		"demonym_one": "Mısırlı",
+		"demonym_other": "Mısırlılar"
+	},
+	"ERI": {
+		"name": "Eritre",
+		"demonym_one": "Eritre",
+		"demonym_other": "Eritreliler"
+	},
+	"ESH": {
+		"name": "Batı Sahra",
+		"demonym_one": "Sahrawi",
+		"demonym_other": "Sahraviler"
+	},
+	"ESP": {
+		"name": "İspanya",
+		"demonym_one": "İspanyol",
+		"demonym_other": "İspanyol"
+	},
+	"EST": {
+		"name": "Estonya",
+		"demonym_one": "Estonyalı",
+		"demonym_other": "Estonyalılar"
+	},
+	"ETH": {
+		"name": "Etiyopya",
+		"demonym_one": "Etiyopyalı",
+		"demonym_other": "Etiyopyalılar"
+	},
+	"FIN": {
+		"name": "Finlandiya",
+		"demonym_one": "Fin",
+		"demonym_other": "Finliler"
+	},
+	"FJI": {
+		"name": "Fiji",
+		"demonym_one": "Fijice",
+		"demonym_other": "Fijililer"
+	},
+	"FLK": {
+		"name": "Falkland Adaları",
+		"demonym_one": "Falkland Adalı",
+		"demonym_other": "Falkland Adalıları"
+	},
+	"FRA": {
+		"name": "Fransa",
+		"demonym_one": "Fransızca",
+		"demonym_other": "Fransızca"
+	},
+	"FRO": {
+		"name": "Faroe Adaları",
+		"demonym_one": "Faroese",
+		"demonym_other": "Faroese"
+	},
+	"FSM": {
+		"name": "Mikronezya",
+		"demonym_one": "Mikronezya",
+		"demonym_other": "Mikronezyalılar"
+	},
+	"GAB": {
+		"name": "Gabon",
+		"demonym_one": "Gabonlu",
+		"demonym_other": "Gabonlu"
+	},
+	"GBR": {
+		"name": "Birleşik Krallık",
+		"demonym_one": "İngiliz",
+		"demonym_other": "İngiliz"
+	},
+	"GEO": {
+		"name": "Gürcistan",
+		"demonym_one": "Gürcü",
+		"demonym_other": "Gürcüler"
+	},
+	"GGY": {
+		"name": "Guernsey",
+		"demonym_one": "Kanal Adalı",
+		"demonym_other": "Kanal Adalıları"
+	},
+	"GHA": {
+		"name": "Gana",
+		"demonym_one": "Ganalı",
+		"demonym_other": "Ganalılar"
+	},
+	"GIB": {
+		"name": "Cebelitarık",
+		"demonym_one": "Cebelitarık",
+		"demonym_other": "Cebelitaryalılar"
+	},
+	"GIN": {
+		"name": "Gine",
+		"demonym_one": "Gineli",
+		"demonym_other": "Gineliler"
+	},
+	"GLP": {
+		"name": "Guadeloupe",
+		"demonym_one": "Guadeloupian",
+		"demonym_other": "Guadeloupiyalılar"
+	},
+	"GMB": {
+		"name": "Gambiya",
+		"demonym_one": "Gambiyalı",
+		"demonym_other": "Gambiyalılar"
+	},
+	"GNB": {
+		"name": "Gine Bissau",
+		"demonym_one": "Gine-Bissauan",
+		"demonym_other": "Gine Bissauları"
+	},
+	"GNQ": {
+		"name": "Ekvator Ginesi",
+		"demonym_one": "Ekvator Ginesi",
+		"demonym_other": "Ekvator Gineleri"
+	},
+	"GRC": {
+		"name": "Yunanistan",
+		"demonym_one": "Yunan",
+		"demonym_other": "Yunanlılar"
+	},
+	"GRD": {
+		"name": "Grenada",
+		"demonym_one": "Grenadyalı",
+		"demonym_other": "Grenadyalılar"
+	},
+	"GRL": {
+		"name": "Grönland",
+		"demonym_one": "Grönlandalı",
+		"demonym_other": "Grönlandlılar"
+	},
+	"GTM": {
+		"name": "Guatemala",
+		"demonym_one": "Guatemalalı",
+		"demonym_other": "Guatemallar"
+	},
+	"GUF": {
+		"name": "Fransız Guyanası"
+	},
+	"GUM": {
+		"name": "Guam",
+		"demonym_one": "Guamanca",
+		"demonym_other": "Guamanyalılar"
+	},
+	"GUY": {
+		"name": "Guyana",
+		"demonym_one": "Guyanalı",
+		"demonym_other": "Guyanalı"
+	},
+	"HKG": {
+		"name": "Hong Kong",
+		"demonym_one": "Hong Konglu",
+		"demonym_other": "Hong Konglular"
+	},
+	"HMD": {
+		"name": "Heard Adası ve McDonald Adaları",
+		"demonym_one": "Heard ve McDonald Adalı",
+		"demonym_other": "Heard ve McDonald Adalıları"
+	},
+	"HND": {
+		"name": "Honduras",
+		"demonym_one": "Honduraslı",
+		"demonym_other": "Honduralılar"
+	},
+	"HRV": {
+		"name": "Hırvatistan",
+		"demonym_one": "Hırvat",
+		"demonym_other": "Hırvatlar"
+	},
+	"HTI": {
+		"name": "Haiti",
+		"demonym_one": "Haitili",
+		"demonym_other": "Haitililer"
+	},
+	"HUN": {
+		"name": "Macaristan",
+		"demonym_one": "Macar",
+		"demonym_other": "Macarlar"
+	},
+	"IDN": {
+		"name": "Endonezya",
+		"demonym_one": "Endonezyalı",
+		"demonym_other": "Endonezyalılar"
+	},
+	"IMN": {
+		"name": "Man Adası",
+		"demonym_one": "Manks",
+		"demonym_other": "Manks"
+	},
+	"IND": {
+		"name": "Hindistan",
+		"demonym_one": "Hintli",
+		"demonym_other": "Kızılderililer"
+	},
+	"IOT": {
+		"name": "İngiliz Hint Okyanusu Bölgesi",
+		"demonym_one": "Hintli",
+		"demonym_other": "Kızılderililer"
+	},
+	"IRL": {
+		"name": "İrlanda",
+		"demonym_one": "İrlandalı",
+		"demonym_other": "İrlandalı"
+	},
+	"IRN": {
+		"name": "İran",
+		"demonym_one": "İranlı",
+		"demonym_other": "İranlılar"
+	},
+	"IRQ": {
+		"name": "Irak",
+		"demonym_one": "Iraklı",
+		"demonym_other": "Iraklılar"
+	},
+	"ISL": {
+		"name": "İzlanda",
+		"demonym_one": "İzlandalı",
+		"demonym_other": "İzlandalılar"
+	},
+	"ISR": {
+		"name": "İsrail",
+		"demonym_one": "İsrailli",
+		"demonym_other": "İsrailliler"
+	},
+	"ITA": {
+		"name": "İtalya",
+		"demonym_one": "İtalyan",
+		"demonym_other": "İtalyanlar"
+	},
+	"JAM": {
+		"name": "Jamaika",
+		"demonym_one": "Jamaikalı",
+		"demonym_other": "Jamaikalılar"
+	},
+	"JEY": {
+		"name": "Jersey'de",
+		"demonym_one": "Kanal Adalı",
+		"demonym_other": "Kanal Adalıları"
+	},
+	"JOR": {
+		"name": "Ürdün",
+		"demonym_one": "Ürdünlü",
+		"demonym_other": "Ürdünlüler"
+	},
+	"JPN": {
+		"name": "Japonca",
+		"demonym_one": "Japon",
+		"demonym_other": "Japon"
+	},
+	"KAZ": {
+		"name": "Kazakistan",
+		"demonym_one": "Kazakistanlı",
+		"demonym_other": "Kazakistanlılar"
+	},
+	"KEN": {
+		"name": "Kenya",
+		"demonym_one": "Kenyalı",
+		"demonym_other": "Kenyalılar"
+	},
+	"KGZ": {
+		"name": "Kırgızistan",
+		"demonym_one": "Kırgız",
+		"demonym_other": "Kırgız"
+	},
+	"KHM": {
+		"name": "Kamboçya",
+		"demonym_one": "Kamboçyalı",
+		"demonym_other": "Kamboçyalılar"
+	},
+	"KIR": {
+		"name": "Kiribati",
+		"demonym_one": "Kiribati",
+		"demonym_other": "I-Kiribatis"
+	},
+	"KNA": {
+		"name": "Saint Kitts ve Nevis",
+		"demonym_one": "Kittitian veya Nevizian",
+		"demonym_other": "Kittitiyanlar veya Nevizyalılar"
+	},
+	"KOR": {
+		"name": "Güney Kore",
+		"demonym_one": "Güney Kore",
+		"demonym_other": "Güney Koreliler"
+	},
+	"KWT": {
+		"name": "Kuveyt",
+		"demonym_one": "Kuveytli",
+		"demonym_other": "Kuveyt"
+	},
+	"LAO": {
+		"name": "Laos",
+		"demonym_one": "Laoslu",
+		"demonym_other": "Laoslular"
+	},
+	"LBN": {
+		"name": "Lübnan",
+		"demonym_one": "Lübnanlı",
+		"demonym_other": "Lübnanlı"
+	},
+	"LBR": {
+		"name": "Liberya",
+		"demonym_one": "Liberyalı",
+		"demonym_other": "Liberyalılar"
+	},
+	"LBY": {
+		"name": "Libya",
+		"demonym_one": "Libya",
+		"demonym_other": "Libyalılar"
+	},
+	"LCA": {
+		"name": "Saint Lucia",
+		"demonym_one": "Aziz Lucian",
+		"demonym_other": "Aziz Lucians"
+	},
+	"LIE": {
+		"name": "Lihtenştayn",
+		"demonym_one": "Liechtensteiner",
+		"demonym_other": "Liechtensteiners"
+	},
+	"LKA": {
+		"name": "Sri Lanka",
+		"demonym_one": "Sri Lankalı",
+		"demonym_other": "Sri Lankalılar"
+	},
+	"LSO": {
+		"name": "Lesotho",
+		"demonym_one": "Mosotho",
+		"demonym_other": "Basoto"
+	},
+	"LTU": {
+		"name": "Litvanya",
+		"demonym_one": "Litvanyalı",
+		"demonym_other": "Litvanyalı"
+	},
+	"LUX": {
+		"name": "Lüksemburg",
+		"demonym_one": "Lüksemburgca",
+		"demonym_other": "Lüksemburglar"
+	},
+	"LVA": {
+		"name": "Letonya",
+		"demonym_one": "Letonca",
+		"demonym_other": "Letonyalılar"
+	},
+	"MAC": {
+		"name": "Makao",
+		"demonym_one": "Çince",
+		"demonym_other": "Çince"
+	},
+	"MAF": {
+		"name": "Aziz Martin",
+		"demonym_one": "Saint Martin Adalı",
+		"demonym_other": "Saint Martin Adalıları"
+	},
+	"MAR": {
+		"name": "Fas",
+		"demonym_one": "Faslı",
+		"demonym_other": "Faslılar"
+	},
+	"MCO": {
+		"name": "Monako",
+		"demonym_one": "Monako",
+		"demonym_other": "Monegasques"
+	},
+	"MDA": {
+		"name": "Moldova",
+		"demonym_one": "Moldovalı",
+		"demonym_other": "Moldovalılar"
+	},
+	"MDG": {
+		"name": "Madagaskar",
+		"demonym_one": "Madagaskarlı",
+		"demonym_other": "Madagaskarlı"
+	},
+	"MDV": {
+		"name": "Maldivler",
+		"demonym_one": "Maldivler",
+		"demonym_other": "Maldivler"
+	},
+	"MEX": {
+		"name": "Meksika",
+		"demonym_one": "Meksikalı",
+		"demonym_other": "Meksikalılar"
+	},
+	"MHL": {
+		"name": "Marshall Adaları",
+		"demonym_one": "Marshallese",
+		"demonym_other": "Marshallese"
+	},
+	"MKD": {
+		"name": "Kuzey Makedonya",
+		"demonym_one": "Makedonyalı",
+		"demonym_other": "Makedonlar"
+	},
+	"MLI": {
+		"name": "Mali",
+		"demonym_one": "Malili",
+		"demonym_other": "Maliler"
+	},
+	"MLT": {
+		"name": "Malta",
+		"demonym_one": "Maltalı",
+		"demonym_other": "Maltalı"
+	},
+	"MMR": {
+		"name": "Myanmar",
+		"demonym_one": "Bamar",
+		"demonym_other": "Bamars"
+	},
+	"MNE": {
+		"name": "Karadağ",
+		"demonym_one": "Karadağlı",
+		"demonym_other": "Karadağlılar"
+	},
+	"MNG": {
+		"name": "Moğolistan",
+		"demonym_one": "Moğol",
+		"demonym_other": "Moğollar"
+	},
+	"MNP": {
+		"name": "Kuzey Mariana Adaları",
+		"demonym_one": "Amerika'lı",
+		"demonym_other": "Amerikalılar"
+	},
+	"MOZ": {
+		"name": "Mozambik",
+		"demonym_one": "Mozambikli",
+		"demonym_other": "Mozambikliler"
+	},
+	"MRT": {
+		"name": "Moritanya",
+		"demonym_one": "Moritanyalı",
+		"demonym_other": "Moritanyalılar"
+	},
+	"MSR": {
+		"name": "Montserrat",
+		"demonym_one": "Montserratian",
+		"demonym_other": "Montserratyalılar"
+	},
+	"MTQ": {
+		"name": "Martinik",
+		"demonym_one": "Fransızca",
+		"demonym_other": "Fransızca"
+	},
+	"MUS": {
+		"name": "Mauritius",
+		"demonym_one": "Mauritiuslu",
+		"demonym_other": "Mauritiuslu"
+	},
+	"MWI": {
+		"name": "Malavi",
+		"demonym_one": "Malavi",
+		"demonym_other": "Malaviler"
+	},
+	"MYS": {
+		"name": "Malezya",
+		"demonym_one": "Malezyalı",
+		"demonym_other": "Malezyalılar"
+	},
+	"MYT": {
+		"name": "Mayotte",
+		"demonym_one": "Mahoran",
+		"demonym_other": "Mahoranlar"
+	},
+	"NAM": {
+		"name": "Namibya",
+		"demonym_one": "Namibyalı",
+		"demonym_other": "Namibyalılar"
+	},
+	"NCL": {
+		"name": "Yeni Kaledonya",
+		"demonym_one": "Yeni Kaledonya",
+		"demonym_other": "Yeni Kaledonyalılar"
+	},
+	"NER": {
+		"name": "Nijer",
+		"demonym_one": "Nijeryalı",
+		"demonym_other": "Nijeryalı"
+	},
+	"NFK": {
+		"name": "Norfolk Adası",
+		"demonym_one": "Norfolk Adalı",
+		"demonym_other": "Norfolk Adalıları"
+	},
+	"NGA": {
+		"name": "Nijerya",
+		"demonym_one": "Nijeryalı",
+		"demonym_other": "Nijeryalılar"
+	},
+	"NIC": {
+		"name": "Nikaragua",
+		"demonym_one": "Nikaragualı",
+		"demonym_other": "Nikaragualılar"
+	},
+	"NIU": {
+		"name": "Niue",
+		"demonym_one": "Niuean",
+		"demonym_other": "Niuealılar"
+	},
+	"NLD": {
+		"name": "Hollanda",
+		"demonym_one": "Hollandalı",
+		"demonym_other": "Hollandalı"
+	},
+	"NOR": {
+		"name": "Norveç",
+		"demonym_one": "Norveççe",
+		"demonym_other": "Norveçliler"
+	},
+	"NPL": {
+		"name": "Nepal",
+		"demonym_one": "Nepalli",
+		"demonym_other": "Nepalli"
+	},
+	"NRU": {
+		"name": "Nauru",
+		"demonym_one": "Nauruan",
+		"demonym_other": "Naurualılar"
+	},
+	"NZL": {
+		"name": "Yeni Zelanda",
+		"demonym_one": "Yeni Zelandalı",
+		"demonym_other": "Yeni Zelandalılar"
+	},
+	"OMN": {
+		"name": "Umman",
+		"demonym_one": "Ummanlı",
+		"demonym_other": "Ummanlılar"
+	},
+	"PAK": {
+		"name": "Pakistan",
+		"demonym_one": "Pakistanlı",
+		"demonym_other": "Pakistanlılar"
+	},
+	"PAN": {
+		"name": "Panama",
+		"demonym_one": "Panamalı",
+		"demonym_other": "Panamalılar"
+	},
+	"PCN": {
+		"name": "Pitcairn Adaları",
+		"demonym_one": "Pitcairn Adalı",
+		"demonym_other": "Pitcairn Adalıları"
+	},
+	"PER": {
+		"name": "Peru",
+		"demonym_one": "Perulu",
+		"demonym_other": "Perulular"
+	},
+	"PHL": {
+		"name": "Filipinler",
+		"demonym_one": "Filipinli",
+		"demonym_other": "Filipinliler"
+	},
+	"PLW": {
+		"name": "Palau",
+		"demonym_one": "Palau",
+		"demonym_other": "Palaualılar"
+	},
+	"PNG": {
+		"name": "Papua Yeni Gine",
+		"demonym_one": "Papua Yeni Gine",
+		"demonym_other": "Papua Yeni Gine'liler"
+	},
+	"POL": {
+		"name": "Polonya",
+		"demonym_one": "Lehçe",
+		"demonym_other": "Lehçe"
+	},
+	"PRI": {
+		"name": "Porto Riko",
+		"demonym_one": "Porto Rikolu",
+		"demonym_other": "Porto Rikolular"
+	},
+	"PRK": {
+		"name": "Kuzey Kore",
+		"demonym_one": "Kuzey Kore",
+		"demonym_other": "Kuzey Koreliler"
+	},
+	"PRT": {
+		"name": "Portekiz",
+		"demonym_one": "Portekiz'li",
+		"demonym_other": "Portekiz'li"
+	},
+	"PRY": {
+		"name": "Paraguay",
+		"demonym_one": "Paraguaylı",
+		"demonym_other": "Paraguaylılar"
+	},
+	"PSE": {
+		"name": "Filistin",
+		"demonym_one": "Filistinli",
+		"demonym_other": "Filistinliler"
+	},
+	"PYF": {
+		"name": "Fransız Polinezyası",
+		"demonym_one": "Fransız Polinezyası",
+		"demonym_other": "Fransız Polinezyalılar"
+	},
+	"QAT": {
+		"name": "Katar",
+		"demonym_one": "Katar",
+		"demonym_other": "Katarlılar"
+	},
+	"REU": {
+		"name": "Reunion",
+		"demonym_one": "Fransızca",
+		"demonym_other": "Fransızca"
+	},
+	"ROU": {
+		"name": "romanya",
+		"demonym_one": "Rumen",
+		"demonym_other": "Romenler"
+	},
+	"RUS": {
+		"name": "Rusya",
+		"demonym_one": "Rus",
+		"demonym_other": "Ruslar"
+	},
+	"RWA": {
+		"name": "Ruanda",
+		"demonym_one": "Ruandalı",
+		"demonym_other": "Ruandalılar"
+	},
+	"SAU": {
+		"name": "Suudi Arabistan",
+		"demonym_one": "Suudi Arabistan",
+		"demonym_other": "Suudi Arablar"
+	},
+	"SDN": {
+		"name": "Sudan",
+		"demonym_one": "Sudanlı",
+		"demonym_other": "Sudanlı"
+	},
+	"SEN": {
+		"name": "Senegal",
+		"demonym_one": "Senegalli",
+		"demonym_other": "Senegalli"
+	},
+	"SGP": {
+		"name": "Singapur",
+		"demonym_one": "Singapurlu",
+		"demonym_other": "Singapurlular"
+	},
+	"SGS": {
+		"name": "Güney Gürcistan",
+		"demonym_one": "Güney Gürcü Güney Sandviç Adalı",
+		"demonym_other": "Güney Gürcü Güney Sandviç Adalıları"
+	},
+	"SHN": {
+		"name": "Saint Helena, Ascension ve Tristan da Cunha"
+	},
+	"SJM": {
+		"name": "Svalbard ve Jan Mayen",
+		"demonym_one": "Norveççe",
+		"demonym_other": "Norveçliler"
+	},
+	"SLB": {
+		"name": "Solomon Adaları",
+		"demonym_one": "Solomon Adalı",
+		"demonym_other": "Solomon Adalıları"
+	},
+	"SLE": {
+		"name": "Sierra Leone",
+		"demonym_one": "Sierra Leone",
+		"demonym_other": "Sierra Leone'lular"
+	},
+	"SLV": {
+		"name": "El Salvador",
+		"demonym_one": "El Salvadorlu",
+		"demonym_other": "Salvadorlular"
+	},
+	"SMR": {
+		"name": "San Marino",
+		"demonym_one": "Sammarinese",
+		"demonym_other": "Sammarinese"
+	},
+	"SOM": {
+		"name": "Somali",
+		"demonym_one": "Somali",
+		"demonym_other": "Somaliler"
+	},
+	"SPM": {
+		"name": "Saint Pierre ve Miquelon",
+		"demonym_one": "Fransızca",
+		"demonym_other": "Fransızca"
+	},
+	"SRB": {
+		"name": "Sırbistan",
+		"demonym_one": "Sırpça",
+		"demonym_other": "Sırplar"
+	},
+	"SSD": {
+		"name": "Güney Sudan",
+		"demonym_one": "Güney Sudanlı",
+		"demonym_other": "Güney Sudanlı"
+	},
+	"STP": {
+		"name": "São Tomé ve Príncipe",
+		"demonym_one": "Sao Tome",
+		"demonym_other": "São Tomé"
+	},
+	"SUR": {
+		"name": "Surinam",
+		"demonym_one": "Suriname",
+		"demonym_other": "Surinamlılar"
+	},
+	"SVK": {
+		"name": "Slovakya",
+		"demonym_one": "Slovak",
+		"demonym_other": "Slovaklar"
+	},
+	"SVN": {
+		"name": "Slovenya",
+		"demonym_one": "Sloven",
+		"demonym_other": "Slovenler"
+	},
+	"SWE": {
+		"name": "İsveç",
+		"demonym_one": "İsveçli",
+		"demonym_other": "İsveçli"
+	},
+	"SWZ": {
+		"name": "Eswatini",
+		"demonym_one": "Swazi",
+		"demonym_other": "Svaziler"
+	},
+	"SXM": {
+		"name": "Sint Maarten",
+		"demonym_one": "Aziz Maartener",
+		"demonym_other": "St. Maarteners"
+	},
+	"SYC": {
+		"name": "Seyşeller",
+		"demonym_one": "Seyşeller",
+		"demonym_other": "Seyşeller"
+	},
+	"SYR": {
+		"name": "Suriye",
+		"demonym_one": "Suriyeli",
+		"demonym_other": "Suriyeliler"
+	},
+	"TCA": {
+		"name": "Turks ve Caicos Adaları",
+		"demonym_one": "Turks ve Caicos Adalı",
+		"demonym_other": "Turks ve Caicos Adalıları"
+	},
+	"TCD": {
+		"name": "Çad",
+		"demonym_one": "Çat halkı",
+		"demonym_other": "Çadyalılar"
+	},
+	"TGO": {
+		"name": "Togo",
+		"demonym_one": "Togo",
+		"demonym_other": "Togo"
+	},
+	"THA": {
+		"name": "Tayland",
+		"demonym_one": "Tayland'lı",
+		"demonym_other": "Taylandlı"
+	},
+	"TJK": {
+		"name": "Tacikistan",
+		"demonym_one": "Tadzhik",
+		"demonym_other": "Tadzhikler"
+	},
+	"TKL": {
+		"name": "Tokelau",
+		"demonym_one": "Tokelauan",
+		"demonym_other": "Tokelaulular"
+	},
+	"TKM": {
+		"name": "Türkmenistan",
+		"demonym_one": "Türkmen",
+		"demonym_other": "Türkmenliler"
+	},
+	"TLS": {
+		"name": "Doğu Timor",
+		"demonym_one": "Doğu Timor",
+		"demonym_other": "Doğu Timor"
+	},
+	"TON": {
+		"name": "Tonga",
+		"demonym_one": "Tonga",
+		"demonym_other": "Tongalılar"
+	},
+	"TTO": {
+		"name": "Trinidad ve Tobago",
+		"demonym_one": "Trinidadyan",
+		"demonym_other": "Trinidadyalılar"
+	},
+	"TUN": {
+		"name": "Tunus",
+		"demonym_one": "Tunuslu",
+		"demonym_other": "Tunuslular"
+	},
+	"TUR": {
+		"name": "Türkiye",
+		"demonym_one": "Türk",
+		"demonym_other": "Türkler"
+	},
+	"TUV": {
+		"name": "Tuvalu",
+		"demonym_one": "Tuvalu",
+		"demonym_other": "Tuvalular"
+	},
+	"TWN": {
+		"name": "Tayvan",
+		"demonym_one": "Tayvanlı",
+		"demonym_other": "Tayvanlı"
+	},
+	"TZA": {
+		"name": "Tanzanya",
+		"demonym_one": "Tanzanyalı",
+		"demonym_other": "Tanzanyalılar"
+	},
+	"UGA": {
+		"name": "Uganda",
+		"demonym_one": "Ugandalı",
+		"demonym_other": "Ugandalılar"
+	},
+	"UKR": {
+		"name": "Ukrayna",
+		"demonym_one": "Ukraynalı",
+		"demonym_other": "Ukraynalılar"
+	},
+	"UMI": {
+		"name": "Amerika Birleşik Devletleri Küçük Dış Adaları",
+		"demonym_one": "Amerika'lı",
+		"demonym_other": "Amerikalılar"
+	},
+	"UNK": {
+		"name": "Kosova",
+		"demonym_one": "Kosovalı",
+		"demonym_other": "Kosovalılar"
+	},
+	"URY": {
+		"name": "Uruguay",
+		"demonym_one": "Uruguaylı",
+		"demonym_other": "Uruguaylılar"
+	},
+	"USA": {
+		"name": "Amerika Birleşik Devletleri",
+		"demonym_one": "Amerika'lı",
+		"demonym_other": "Amerikalılar"
+	},
+	"UZB": {
+		"name": "Özbekistan",
+		"demonym_one": "Özbekistanlı",
+		"demonym_other": "Özbekistanlılar"
+	},
+	"VAT": {
+		"name": "Vatikan",
+		"demonym_one": "İtalyan",
+		"demonym_other": "İtalyanlar"
+	},
+	"VCT": {
+		"name": "Saint Vincent ve Grenadinler",
+		"demonym_one": "Aziz Vincentian",
+		"demonym_other": "Aziz Vincentians"
+	},
+	"VEN": {
+		"name": "Venezuela",
+		"demonym_one": "Venezuelalı",
+		"demonym_other": "Venezuelalılar"
+	},
+	"VGB": {
+		"name": "Britanya Virjin Adaları",
+		"demonym_one": "Virgin Adalı",
+		"demonym_other": "Virgin Adalılar"
+	},
+	"VIR": {
+		"name": "Amerika Birleşik Devletleri Virgin Adaları",
+		"demonym_one": "Virgin Adalı",
+		"demonym_other": "Virgin Adalılar"
+	},
+	"VNM": {
+		"name": "Vietnam",
+		"demonym_one": "Vietnamlı",
+		"demonym_other": "Vietnamlı"
+	},
+	"VUT": {
+		"name": "vanuatu",
+		"demonym_one": "Ni-Vanuatu",
+		"demonym_other": "Ni-Vanuatu"
+	},
+	"WLF": {
+		"name": "Wallis ve Futuna",
+		"demonym_one": "Wallis ve Futuna Adalı",
+		"demonym_other": "Wallis ve Futuna Adalıları"
+	},
+	"WSM": {
+		"name": "Samoa",
+		"demonym_one": "Samoalı",
+		"demonym_other": "Samoalılar"
+	},
+	"YEM": {
+		"name": "Yemen",
+		"demonym_one": "Yemenli",
+		"demonym_other": "Yemenliler"
+	},
+	"ZAF": {
+		"name": "Güney Afrika",
+		"demonym_one": "Güney Afrikalı",
+		"demonym_other": "Güney Afrikalılar"
+	},
+	"ZMB": {
+		"name": "Zambiya",
+		"demonym_one": "Zambiyalı",
+		"demonym_other": "Zambiyalılar"
+	},
+	"ZWE": {
+		"name": "Zimbabve",
+		"demonym_one": "Zimbabve",
+		"demonym_other": "Zimbabveliler"
+	}
+}

@@ -34,6 +34,7 @@
 		"back-to-dynamic": "<u>{{page}}</u>पर वापस जाएं",
 		"back-to-search": "खोज पर वापस जाएं"
 	},
+	"can-help-people-in": "Can help people located anywhere in {{location}}",
 	"cancel": "कैंसिल करें",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -208,6 +209,9 @@
 	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"photo_interval": "(0) [अभी तक कोई फ़ोटो नहीं है]; (2-inf) [सभी {{count}} फ़ोटो देखें];",
 	"please-specify": "कृपया निर्दिष्ट करें",
+	"portal-module": {
+		"service-area": "Service Area"
+	},
 	"powered-by-vercel": "Vercel द्वारा संचालित",
 	"prefer-not-to-say": "नहीं कहना पसंद करते हैं",
 	"privacy-policy": "प्राइवेसी पॉलिसी",
@@ -257,6 +261,9 @@
 		"organization-placeholder": "संगठन का नाम दर्ज करें...",
 		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "यह नहीं मिल रहा है? <1>एक ऐसे संगठन का सुझाव दें जो</1> आपको लगता है कि इसमें शामिल किया जाना चाहिए।"
+	},
+	"select": {
+		"base": "Select {{- item}}"
 	},
 	"send-email": "ईमेल भेजें",
 	"service": {
