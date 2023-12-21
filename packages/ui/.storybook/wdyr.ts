@@ -3,5 +3,5 @@ import React from 'react'
 
 // eslint-disable-next-line node/no-process-env
 if (process.env.NODE_ENV === 'development') {
-	whyDidYouRender(React)
+	whyDidYouRender(React, { logOnDifferentValues: true, trackAllPureComponents: true, logOwnerReasons: true })
 }

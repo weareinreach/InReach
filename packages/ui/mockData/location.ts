@@ -13,7 +13,7 @@ const locationData = {
 			countryId: 'ctry_01GW2HHDK9M26M80SG63T21SVH',
 			latitude: 38.91,
 			longitude: -77.032,
-			mailOnly: null,
+			mailOnly: false,
 			published: true,
 			accessible: {
 				supplementId: undefined,

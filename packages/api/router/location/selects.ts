@@ -123,7 +123,7 @@ export const select = {
 							? {
 									where: { list: { ownedById: ctx.session.user.id } },
 									select: { list: { select: { id: true, name: true } } },
-							  }
+								}
 							: false,
 						id: true,
 					},

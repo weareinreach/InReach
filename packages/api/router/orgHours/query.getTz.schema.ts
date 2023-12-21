@@ -1,4 +1,9 @@
 import { z } from 'zod'
 
-export const ZGetTzSchema = z.object({ lat: z.number().gte(-90).lte(90), lon: z.number().gte(-180).lte(180) })
+import { isIdFor } from '@weareinreach/db/lib/idGen'
+
+export const ZGetTzSchema = z
+	.string()
+	.refine((val) => isIdFor('organization', val) || isIdFor('orgLocation', val) || isIdFor('orgService', val))
+
 export type TGetTzSchema = z.infer<typeof ZGetTzSchema>

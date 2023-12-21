@@ -34,6 +34,7 @@
 		"back-to-dynamic": "Rudi kwa <u>{{page}}</u>",
 		"back-to-search": "Rudi kutafuta"
 	},
+	"can-help-people-in": "Can help people located anywhere in {{location}}",
 	"cancel": "Ghairi",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -128,6 +129,10 @@
 	"form-error-password-blank": "Nenosiri haliwezi kuwa tupu.",
 	"form-error-password-req": "Nenosiri lako halikidhi mahitaji, tafadhali jaribu tena.",
 	"go-to-x": "Nenda kwa {{value}}",
+	"hours": {
+		"closed": "Closed",
+		"open24": "Open 24 hours"
+	},
 	"in-reach-user": "Mtumiaji wa InReach",
 	"in-reach-verified-reviewer": "InReach Imethibitishwa Mkaguzi",
 	"include": "Jumuisha",
@@ -204,6 +209,9 @@
 	"photo-count_interval": "(0) [Hakuna picha bado.]; (1) [{{count}} picha] ;( 2-inf) [{{count}} picha]",
 	"photo_interval": "(0) [Hakuna picha bado]; (2-inf) [Tazama picha zote {{count}} ];",
 	"please-specify": "Tafadhali taja",
+	"portal-module": {
+		"service-area": "Service Area"
+	},
 	"powered-by-vercel": "Inaendeshwa na Vercel",
 	"prefer-not-to-say": "Unapendelea kusema",
 	"privacy-policy": "Sera ya faragha",
@@ -253,6 +261,9 @@
 		"organization-placeholder": "Ingiza jina la shirika...",
 		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Haiwezi kuipata? <1>Pendekeza shirika unalofikiria</1> linapaswa kujumuishwa."
+	},
+	"select": {
+		"base": "Select {{- item}}"
 	},
 	"send-email": "Tuma barua pepe",
 	"service": {

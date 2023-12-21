@@ -1,0 +1,43 @@
+{
+	"banner": {
+		"redesign": "Blogumuzda inReach Uygulamasının yeniden tasarımının lansmanı hakkında bilgi edinin. <Link>Daha fazla bilgi edinin.</Link>"
+	},
+	"call-out": {
+		"hear-from-users": "<Title1>Kullanıcılarımızdan dinleyin</Title1>",
+		"who-we-are": "<Title1>Biz kimiz</Title1>\n<Text>Biz, çeşitli LGBTQ+topluluğu için kaynak erişimini artıran, trans liderliğindeki kar amacı gütmeyen bir teknoloji kuruluşuyuz.</Text>\n<Link>Hakkımızda daha fazla bilgi edinin.</Link>"
+	},
+	"hero": {
+		"community": {
+			"0": "LGBTQ+sığınmacılar",
+			"1": "LGBTQ+göçmenler",
+			"2": "LGBTQ+ mültecileri",
+			"3": "LGBTQ+gençlik",
+			"4": "transseksüel topluluk",
+			"5": "LGBTQ+BIPOC toplulukları",
+			"6": "LGBTQ+gençlerin bakıcıları"
+		},
+		"find-resources": "<Text>inReach ile </Text><Community></Community><Text> için doğrulanmış </Text><Service></Service><Text> bulun.</Text>",
+		"heading": "LGBTQ+kaynaklarını bulun.",
+		"privacy-disclaimer": "Cevabınız anonimdir ve bireysel bir kullanıcı olarak size bağlı değildir. Daha fazla bilgi edinmek için <Link>gizlilik politikamızı</Link> okuyun.",
+		"services": {
+			"0": "tıbbi bakım",
+			"1": "topluluk desteği",
+			"2": "akıl sağlığı bakımı",
+			"3": "eğitim",
+			"4": "iş",
+			"5": "gıda",
+			"6": "konut",
+			"7": "giysi",
+			"8": "hukuki yardım",
+			"9": "çeviri"
+		},
+		"subheading": "TLGBQ+ (transseksüel, lezbiyen, eşcinsel, biseksüel, queer ve daha fazla kimlik) kişileri güvenli, doğrulanmış kaynaklarla eşleştiren dünyanın ilk teknoloji platformuna hoş geldiniz."
+	},
+	"values": {
+		"free": "<Title2>Sonsuza kadar ücretsiz 🔑</Title2>\n<Text>Güvenli yardımın her zaman InReach olmasını sağlamak için teknoloji platformumuz herkes için% 100 ücretsizdir.</Text>\n<LinkFree>Platformumuzu ücretsiz tutmamıza yardımcı olmak için bağış yapın.</LinkFree>",
+		"innovative": "<Title2>Yenilikçi ✨</Title2>\n<Text>Biz, zulüm veya ayrımcılığa maruz kalan LGBTQ+ kişileri güvenli, bağımsız olarak doğrulanmış kaynaklarla eşleştiren dünyanın ilk teknoloji platformuyuz.</Text>\n<LinkInnovative>Kaynak kodumuzu görüntüleyin ve katkıda bulunun.</LinkInnovative>",
+		"intersectional": "<Title2>Intersectional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>LGBTQ+ eşitliğinin trans adalet, mülteci adaleti, ırksal adalet, üreme adaleti, dil adaleti ve daha fazlasını gerektirdiğine inanıyoruz.</Text>\n<LinkIntersect>İnceleme sürecimiz hakkında daha fazla bilgi edinin.</LinkIntersect>",
+		"our-values": "Değerlerimiz",
+		"safety-first": "<Title2>Önce güvenlik 🔒</Title2>\n<Text>Çevrimiçi anonimliğin LGBTQ+insanlar için bir ölüm kalım sorunu olabileceğini biliyoruz. Bu nedenle Uygulamamız, kullanıcıların çevrimiçi gizliliğini ve güvenliğini korumak için tasarlanmıştır.</Text>\n<LinkSafety>Gizlilik politikamız hakkında daha fazla bilgi edinin.</LinkSafety>"
+	}
+}

@@ -34,6 +34,7 @@
 		"back-to-dynamic": "بازگشت به <u>{{page}}</u>",
 		"back-to-search": "بازگشت به جستجو"
 	},
+	"can-help-people-in": "Can help people located anywhere in {{location}}",
 	"cancel": "لغو",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -128,6 +129,10 @@
 	"form-error-password-blank": "رمز عبور نمی تواند خالی باشد.",
 	"form-error-password-req": "رمز عبور شما شرایط لازم را برآورده نمی کند، لطفا دوباره امتحان کنید.",
 	"go-to-x": "برو به {{value}}",
+	"hours": {
+		"closed": "Closed",
+		"open24": "Open 24 hours"
+	},
 	"in-reach-user": "کاربر INREACH",
 	"in-reach-verified-reviewer": "InReach تایید داور",
 	"include": "شامل",
@@ -204,6 +209,9 @@
 	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"photo_interval": "(0) [هنوز عکس وجود ندارد]; (2-INF) [مشاهده همه {{count}} عکس];",
 	"please-specify": "لطفا مشخص کنید",
+	"portal-module": {
+		"service-area": "Service Area"
+	},
 	"powered-by-vercel": "طراحی شده توسط Vercel",
 	"prefer-not-to-say": "ترجیح می دهم بگویم",
 	"privacy-policy": "سیاست حفظ حریم خصوصی",
@@ -253,6 +261,9 @@
 		"organization-placeholder": "نام سازمان را وارد کنید...",
 		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "نمی توانید آن را پیدا کنید؟ <1>پیشنهاد یک سازمان</1> شما فکر می کنم باید شامل شود."
+	},
+	"select": {
+		"base": "Select {{- item}}"
 	},
 	"send-email": "ارسال ایمیل",
 	"service": {

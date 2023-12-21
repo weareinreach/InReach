@@ -34,6 +34,7 @@
 		"back-to-dynamic": "Tounen pou <u>{{page}}</u>",
 		"back-to-search": "Tounen pou fè rechèch"
 	},
+	"can-help-people-in": "Can help people located anywhere in {{location}}",
 	"cancel": "Anile",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -128,6 +129,10 @@
 	"form-error-password-blank": "Modpas pa ka vid.",
 	"form-error-password-req": "Modpas ou pa satisfè kondisyon, tanpri eseye ankò.",
 	"go-to-x": "Ale nan {{value}}",
+	"hours": {
+		"closed": "Closed",
+		"open24": "Open 24 hours"
+	},
 	"in-reach-user": "InREACH Itilizatè",
 	"in-reach-verified-reviewer": "InREACH verifye Reviewer",
 	"include": "Enkli",
@@ -204,6 +209,9 @@
 	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"photo_interval": "(0) [Pa gen foto ankò]; (2-inf) [Gade tout {{count}} foto];",
 	"please-specify": "Tanpri presize",
+	"portal-module": {
+		"service-area": "Service Area"
+	},
 	"powered-by-vercel": "Powered by Vercel",
 	"prefer-not-to-say": "Prefere pa di",
 	"privacy-policy": "Règleman sou enfòmasyon prive",
@@ -253,6 +261,9 @@
 		"organization-placeholder": "Mete non òganizasyon...",
 		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Pa ka jwenn li? <1>Sijere yon òganizasyon</1> ou panse yo ta dwe enkli."
+	},
+	"select": {
+		"base": "Select {{- item}}"
 	},
 	"send-email": "Voye imèl",
 	"service": {

@@ -23,11 +23,11 @@ const clientOptions = {
 				{ level: 'query', emit: 'event' },
 				{ level: 'error', emit: 'stdout' },
 				{ level: 'warn', emit: 'stdout' },
-		  ]
+			]
 		: [
 				{ level: 'error', emit: 'event' },
 				{ level: 'warn', emit: 'event' },
-		  ],
+			],
 	errorFormat: 'pretty',
 } satisfies Prisma.PrismaClientOptions
 

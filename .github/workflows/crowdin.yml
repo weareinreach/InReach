@@ -51,7 +51,7 @@ jobs:
 
       - name: Install Node.js
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
-        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4
+        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -126,3 +126,7 @@ jobs:
       - name: Delete Crowdin Branch
         if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev' && steps.sanitizebranch.outputs.value != 'dev' && steps.sanitizebranch.outputs.value != 'main'
         run: crowdin branch delete ${{ steps.sanitizebranch.outputs.value }} --no-progress
+
+      - name: Generate OTA Release
+        if: github.event_name == 'schedule'
+        run: crowdin distribution release ${{ secrets.CROWDIN_OTA_HASH }} --no-progress --verbose

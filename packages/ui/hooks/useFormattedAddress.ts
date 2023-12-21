@@ -28,8 +28,8 @@ export const useFormattedAddressParts = (location?: UseFormattedAddressProps) =>
 	const adminArea = parsedLocation.govDist?.abbrev
 		? parsedLocation.govDist.abbrev
 		: parsedLocation.govDist?.tsKey
-		  ? (t(parsedLocation.govDist.tsKey, { ns: parsedLocation.govDist.tsNs }) as string)
-		  : undefined
+			? (t(parsedLocation.govDist.tsKey, { ns: parsedLocation.govDist.tsNs }) as string)
+			: undefined
 	const formattedAddress = formatAddress({
 		addressLines: parsedLocation.street2
 			? [parsedLocation.street1.trim(), parsedLocation.street2.trim()]

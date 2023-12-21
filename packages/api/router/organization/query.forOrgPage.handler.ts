@@ -23,7 +23,7 @@ export const forOrgPage = async ({ ctx, input }: TRPCHandlerParams<TForOrgPageSc
 				? {
 						where: { list: { ownedById: ctx.session.user.id } },
 						select: { list: { select: { id: true, name: true } } },
-				  }
+					}
 				: undefined,
 			attributes,
 			reviews: {

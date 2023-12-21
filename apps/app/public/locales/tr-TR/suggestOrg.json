@@ -1,0 +1,37 @@
+{
+	"body": {
+		"accept-country": "Şu anda yalnızca ABD, Meksika ve Kanada'da bulunan kuruluşları kabul edebileceğimizi lütfen unutmayın.",
+		"additional-info": "Ek bilgi",
+		"intro-text": "inReach Uygulamasına katkıda bulunduğunuz ilgi için teşekkür ederiz! Dahil edilmesi gerektiğini düşündüğünüz bir kuruluş (ör. kar amacı gütmeyen kuruluşlar, taban veya toplum kuruluşları, sağlık sistemleri, özel muayenehane vb.) önermek için bu formu kullanın. Formun istediği tüm bilgilere sahip değilseniz sorun değil - sadece bildiklerinizi doldurun, gerisini biz hallederiz! Gönderiminizi takdir ediyoruz ve çeşitli LGBTQ+topluluğu için güvenli, doğrulanmış kaynaklara erişimi artırmaya yardımcı olduğunuz için teşekkür ederiz. Önerilen tüm kuruluşlar inReach'te yayınlanmadan önce inReach'in eğitimli gönüllüleri tarafından incelemeye tabidir.",
+		"required-info": "Gerekli bilgiler",
+		"subject-review": "Önerilen tüm kuruluşlar yayınlanmadan önce inReach tarafından incelemeye tabidir.",
+		"suggest-org": "Bir kuruluş önerin"
+	},
+	"form": {
+		"btn-community": "LGBTQ+topluluk odaklarını ekleyin",
+		"btn-save-changes": "Değişiklikleri kaydet",
+		"btn-service": "Hizmet türü (ler) i ekle",
+		"btn-submit": "Yeni kuruluş gönder",
+		"community-focus": "Bu kuruluş belirli LGBTQ+topluluklarına odaklanan hizmet (ler) sağlıyor mu?",
+		"error-exists-active": "<Link>{{org}}</Link> zaten inReach'te listelenmiştir. Lütfen bu formu yalnızca yeni kuruluşlar önermek için kullanın.",
+		"error-exists-dismiss": "<Dismiss>Bu farklı bir organizasyonsa buraya tıklayın.</Dismiss>",
+		"error-exists-inactive": "<Link>{{org}}</Link> zaten önerildi. Ekibimiz ya hala bilgileri doğruluyor ya da bu kuruluş tüm gereksinimlerimizi karşılamadı.",
+		"org-address": "Kuruluş adresi",
+		"org-country": "Kuruluş hangi ülkede bulunuyor?",
+		"org-name": "Kuruluş adı",
+		"org-website": "Organizasyon web sitesi",
+		"placeholder-address": "Adres girin...",
+		"placeholder-name": "Kuruluş adını girin...",
+		"placeholder-website": "URL girin...",
+		"service-types": "Bu kuruluş ne tür hizmet (ler) sağlar?"
+	},
+	"modal": {
+		"community-sub": "Bu kuruluş belirli LGBTQ+topluluklarına odaklanan hizmet (ler) sağlıyor mu? Lütfen geçerli olanların tümünü seçin.",
+		"community-title": "LGBTQ+topluluk odağı (lar)",
+		"dismiss": "Görevden alma",
+		"service-types-sub": "Bu kuruluş ne tür hizmet (ler) sağlar? Lütfen geçerli olanların tümünü seçin.",
+		"service-types-title": "Hizmet türleri",
+		"thank-you": "{{org}}gönderdiğiniz için teşekkür ederiz!",
+		"thank-you-sub": "Ekibimiz gönderiminizi inceleyecek, bilgileri doğrulayacak ve kriterlerimizi karşılıyorsa kuruluşu inReach'te yayınlayacaktır."
+	}
+}

@@ -139,12 +139,12 @@ export const Footer = () => {
 						{connect}
 						<Group noWrap className={classes.iconGroup}>
 							<SocialLink icon='facebook' href='https://www.facebook.com/weareinreach' />
-							<SocialLink icon='twitter' href='https://twitter.com/weareinreach' />
+							{/* <SocialLink icon='twitter' href='https://twitter.com/weareinreach' /> */}
 							<SocialLink icon='linkedin' href='https://www.linkedin.com/company/weareinreach' />
 							<SocialLink icon='instagram' href='https://www.instagram.com/weareinreach' />
+							<SocialLink icon='youtube' href='https://www.youtube.com/channel/UCJsVS5-0ymo40mRjCe4BIHA' />
 						</Group>
 						<Group noWrap className={classes.iconGroup} pb='24px'>
-							<SocialLink icon='youtube' href='https://www.youtube.com/channel/UCJsVS5-0ymo40mRjCe4BIHA' />
 							<SocialLink icon='tiktok' href='https://www.tiktok.com/@weareinreach' />
 							<SocialLink icon='github' href='https://github.com/weareinreach' />
 							<SocialLink icon='email' href='https://inreach.org/contact/' />

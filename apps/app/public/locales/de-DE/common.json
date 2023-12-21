@@ -34,6 +34,7 @@
 		"back-to-dynamic": "Zurück zu <u>{{page}}</u>",
 		"back-to-search": "Zurück zur Suche"
 	},
+	"can-help-people-in": "Kann Leuten helfen, die sich irgendwo in {{location}} befinden",
 	"cancel": "Abbrechen",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Fordere die Profilseite deiner Organisation an und baue Vertrauen mit deinem Publikum auf InReach</textUtility1>\n<textUtility1>:writing_hand_medium dark_skin_tone: Aktualisiere die Informationen deiner Organisation über InReach</textUtility1>\n<textUtility1>📨 Lade andere Mitarbeiter ein, um deiner Organisation auf InReach</textUtility1>\n\n<textUtility1>🔑 Erhalte Zugriff auf zukünftige Features, die speziell für angeschlossene Dienstleister auf InReach</textUtility1> erstellt wurden.",
@@ -128,6 +129,10 @@
 	"form-error-password-blank": "Passwort darf nicht leer sein.",
 	"form-error-password-req": "Ihr Passwort erfüllt nicht die Anforderungen, bitte versuchen Sie es erneut.",
 	"go-to-x": "Gehe zu {{value}}",
+	"hours": {
+		"closed": "Geschlossen",
+		"open24": "24 Stunden geöffnet"
+	},
 	"in-reach-user": "InReach Benutzer",
 	"in-reach-verified-reviewer": "InReach geprüfter Prüfer",
 	"include": "Einschließen",
@@ -204,6 +209,9 @@
 	"photo-count_interval": "(0)[Noch keine Foto.];(1)[{{count}} Foto];(2-inf)[{{count}} Fotos]",
 	"photo_interval": "(0)[Noch keine Fotos];(2-In)[Alle {{count}} Fotos ansehen];",
 	"please-specify": "Bitte angeben",
+	"portal-module": {
+		"service-area": "Service-Bereich"
+	},
 	"powered-by-vercel": "Unterstützt von Vercel",
 	"prefer-not-to-say": "Nicht sagen",
 	"privacy-policy": "Datenschutzerklärung",
@@ -253,6 +261,9 @@
 		"organization-placeholder": "Organisationsname eingeben...",
 		"organization-placeholder-searchby": "Suche nach Organisationsnamen...",
 		"suggest-resource": "Sie finden es nicht? <strong>schlagen Sie eine Organisation</strong> vor, die Ihrer Meinung nach enthalten sein sollte."
+	},
+	"select": {
+		"base": "{{- item}} auswählen"
 	},
 	"send-email": "E-Mail senden",
 	"service": {

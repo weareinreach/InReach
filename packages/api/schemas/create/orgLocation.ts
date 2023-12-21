@@ -109,7 +109,7 @@ export const CreateOrgLocationSchema = () => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', serviceId }))
 							return { serviceId }
 						})
-				  )
+					)
 		) satisfies Prisma.OrgLocationServiceCreateNestedManyWithoutLocationInput | undefined
 
 		const emailLinks = (
@@ -120,7 +120,7 @@ export const CreateOrgLocationSchema = () => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', orgEmailId }))
 							return { orgEmailId }
 						})
-				  )
+					)
 		) satisfies Prisma.OrgLocationEmailCreateNestedManyWithoutLocationInput | undefined
 		const phoneLinks = (
 			!phones
@@ -130,7 +130,7 @@ export const CreateOrgLocationSchema = () => {
 							linkAuditLogs.push(AuditLogSchema.parse({ actorId, operation: 'LINK', phoneId }))
 							return { phoneId }
 						})
-				  )
+					)
 		) satisfies Prisma.OrgLocationPhoneCreateNestedManyWithoutLocationInput | undefined
 		const auditEntry = AuditLogSchema.parse({
 			actorId,
@@ -168,7 +168,7 @@ export const EditOrgLocationSchema = z
 				city: z.string(),
 				postCode: z.string().nullable(),
 				primary: z.boolean(),
-				mailOnly: z.boolean().nullable(),
+				mailOnly: z.boolean().default(false),
 				longitude: z.number().nullable(),
 				latitude: z.number().nullable(),
 				geoJSON: Geometry,
@@ -187,7 +187,7 @@ export const EditOrgLocationSchema = z
 			.partial(),
 	})
 	.transform(({ id, data }) => {
-		const { accessible, countryId, govDistId, services, mailOnly, ...rest } = data
+		const { accessible, countryId, govDistId, services, ...rest } = data
 
 		const accessibleAttrId = allAttributes.find(({ tag }) => tag === 'wheelchair-accessible')?.id
 
@@ -197,7 +197,6 @@ export const EditOrgLocationSchema = z
 			where: { id },
 			data: {
 				...rest,
-				mailOnly: mailOnly === false ? null : mailOnly,
 				...(updateAccessibility
 					? accessible.boolean !== null
 						? {
@@ -219,22 +218,22 @@ export const EditOrgLocationSchema = z
 										},
 									},
 								},
-						  }
+							}
 						: {
 								attributes: {
 									delete: { locationId_attributeId: { locationId: id, attributeId: accessibleAttrId } },
 								},
-						  }
+							}
 					: {}),
 				...(countryId
 					? {
 							country: { connect: { id: countryId } },
-					  }
+						}
 					: {}),
 				...(govDistId
 					? {
 							govDist: { connect: { id: govDistId } },
-					  }
+						}
 					: {}),
 				...(services
 					? {
@@ -242,7 +241,7 @@ export const EditOrgLocationSchema = z
 								createMany: { data: services.map((serviceId) => ({ serviceId })), skipDuplicates: true },
 								deleteMany: { NOT: { serviceId: { in: services } } },
 							},
-					  }
+						}
 					: {}),
 			},
 		})
