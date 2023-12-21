@@ -101,4 +101,4 @@ export type NextPageWithOptions<Props = unknown, InitialProps = Props> = NextPag
 	omitGrid?: boolean
 	autoResetState?: boolean
 }
-type AppPropsWithGridSwitch = AppProps<{ session: Session }> & { Component: NextPageWithoutGrid }
+type AppPropsWithGridSwitch = AppProps<{ session: Session }> & { Component: NextPageWithOptions }

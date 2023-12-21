@@ -159,7 +159,7 @@ const CardTranslation = ({ i18nKey, t }: { i18nKey: string; t: TFunction }) => {
 	)
 }
 
-const Home: NextPageWithoutGrid = () => {
+const Home: NextPageWithOptions = () => {
 	const router = useRouter()
 	const { t } = useTranslation('landingPage')
 	const theme = useMantineTheme()

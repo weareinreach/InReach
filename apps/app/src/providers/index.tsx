@@ -110,12 +110,14 @@ export const Providers = ({ children, session }: ProviderProps) => {
 				emotionCache={appCache}
 			>
 				<ModalsProvider>
-					<SearchStateProvider>
-						<GoogleMapsProvider>
-							{children}
-							{/* <ConsentBanner {...consentBannerSettings}>{t('cookie-consent.intro')}</ConsentBanner> */}
-						</GoogleMapsProvider>
-					</SearchStateProvider>
+					<EditModeProvider>
+						<SearchStateProvider>
+							<GoogleMapsProvider>
+								{children}
+								{/* <ConsentBanner {...consentBannerSettings}>{t('cookie-consent.intro')}</ConsentBanner> */}
+							</GoogleMapsProvider>
+						</SearchStateProvider>
+					</EditModeProvider>
 				</ModalsProvider>
 			</MantineProvider>
 		</SessionProvider>

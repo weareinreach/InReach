@@ -263,6 +263,7 @@ export const ServiceFilter = ({ resultCount, isFetching, disabled }: ServiceFilt
 					classNames={accordionClasses}
 				>
 					<ScrollArea.Autosize
+						placeholder={undefined}
 						classNames={{ viewport: accordionClasses.scrollArea }}
 						mah={scrollAreaMaxHeight}
 					>
