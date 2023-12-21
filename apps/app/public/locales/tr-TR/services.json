@@ -1,0 +1,140 @@
+{
+	"abortion-care": {
+		"CATEGORYNAME": "Kürtaj Bakımı",
+		"abortion-providers": "Kürtaj sağlayıcıları",
+		"financial-assistance": "Mali yardım",
+		"lodging-assistance": "Konaklama yardımı",
+		"mail-order-services": "Posta siparişi hizmetleri",
+		"mental-health-support": "Ruh sağlığı desteği",
+		"travel-assistance": "Seyahat yardımı"
+	},
+	"community-support": {
+		"CATEGORYNAME": "Topluluk Desteği",
+		"community-social-groups": "Topluluk ve sosyal gruplar",
+		"cultural-centers": "Kültür merkezleri",
+		"lgbtq-centers": "LGBTQ merkezleri",
+		"reception-services": "Resepsiyon hizmetleri",
+		"reentry-services": "Hapsedilme ve yeniden giriş hizmetleri",
+		"spiritual-support": "Manevi destek",
+		"sponsors": "Göçmenlik sponsorluğu"
+	},
+	"computers-and-internet": {
+		"CATEGORYNAME": "Bilgisayarlar ve İnternet",
+		"computers-and-internet": "Bilgisayarlar ve internet"
+	},
+	"crisis-support": {
+		"CATEGORYNAME": "Kriz Desteği",
+		"crisis-support": "Kriz Desteği"
+	},
+	"education-and-employment": {
+		"CATEGORYNAME": "Eğitim ve İstihdama",
+		"career-counseling": "Kariyer danışmanlığı",
+		"educational-support-for-lgbtq-youth": "LGBTQ gençlere eğitim desteği",
+		"english-classes": "İngilizce dersleri",
+		"language-classes": "Dil dersleri",
+		"leadership-training-and-professional-development": "Liderlik eğitimi ve mesleki gelişim",
+		"libraries": "Kütüphaneler",
+		"scholarships": "Burslar"
+	},
+	"food": {
+		"CATEGORYNAME": "Gıda",
+		"food": "Gıda",
+		"food-assistance": "Gıda yardımı"
+	},
+	"housing": {
+		"CATEGORYNAME": "Konut",
+		"drop-in-centers-for-lgbtq-youth": "LGBTQ gençler için giriş merkezleri",
+		"emergency-housing": "Acil durum muhafazası",
+		"housing-information-and-referrals": "Konut bilgileri ve yönlendirmeler",
+		"short-term-housing": "Kısa süreli konut",
+		"trans-housing": "Trans konut"
+	},
+	"hygiene-and-clothing": {
+		"CATEGORYNAME": "Hijyen ve Giyim",
+		"clothes": "Kıyafetler",
+		"gender-affirming-items": "Cinsiyet onaylayan öğeler",
+		"gender-neutral-bathrooms": "Cinsiyet açısından tarafsız banyolar",
+		"haircuts-and-stylists": "Saç kesimi ve stilistler",
+		"hygiene": "Hijyen"
+	},
+	"international-support": {
+		"CATEGORTYNAME": "Uluslararası Destek",
+		"financial-assistance": "Mali Yardım",
+		"mental-health": "Ruh Sağlığı",
+		"resettlement-assistance": "Yeniden Yerleşim Yardımı"
+	},
+	"legal": {
+		"CATEGORYNAME": "Yasal",
+		"asylum-application": "İltica başvurusu",
+		"citizenship": "Vatandaşlık",
+		"crime-and-discrimination": "Suç ve ayrımcılık",
+		"deferred-action-for-childhood-arrivals-daca": "Çocukluk Çağı Gelenleri İçin Ertelenmiş Eylem (DACA)",
+		"deportation-or-removal": "Sınır dışı etme veya kaldırma",
+		"employment-authorization": "İstihdama yetkisi",
+		"family-petitions": "Aile dilekçeleri",
+		"immigration-detention": "Göçmenlik gözaltı",
+		"legal-advice": "Hukuki danışmanlık",
+		"legal-hotlines": "Yasal yardım hatları",
+		"name-and-gender-change": "İsim ve cinsiyet belirteci değişikliği",
+		"refugee-claim": "Mülteci talebi",
+		"residency": "İkamet",
+		"special-immigrant-juvenile-status-sijs": "Özel Göçmen Çocuk Statüsü (SIJS)",
+		"t-visa": "T vizesi",
+		"u-visa": "U vizesi"
+	},
+	"mail": {
+		"CATEGORYNAME": "Posta",
+		"mail": "Posta"
+	},
+	"medical": {
+		"CATEGORYNAME": "Tıbbi",
+		"covid-19-services": "COVID-19 hizmetleri",
+		"dental-care": "Diş bakımı",
+		"hiv-and-sexual-health": "HIV ve cinsel sağlık",
+		"medical-clinics": "Tıbbi klinikler",
+		"obgyn-services": "OBGYN hizmetleri",
+		"physical-evaluations-for-asylum-claim": "İltica talebi için fiziksel değerlendirmeler",
+		"physical-evaluations-for-refugee-claim": "Mülteci talebi için fiziksel değerlendirmeler",
+		"trans-health": "Trans sağlığı",
+		"trans-health-gender-affirming-surgery": "Trans sağlığı - cinsiyeti onaylayan cerrahi",
+		"trans-health-hormone-and-surgery-letters": "Trans sağlığı - hormon ve cerrahi mektupları",
+		"trans-health-hormone-therapy": "Trans sağlığı - hormon tedavisi",
+		"trans-health-primary-care": "Trans sağlığı - birinci basamak",
+		"trans-health-speech-therapy": "Trans sağlığı - konuşma terapisi",
+		"trans-health-youth-care": "Trans sağlık - gençlik bakımı"
+	},
+	"mental-health": {
+		"CATEGORYNAME": "Ruh Sağlığı",
+		"bipoc-support-groups": "BIPOC destek grupları",
+		"hotlines": "Yardım hatları",
+		"private-therapy-and-counseling": "Özel terapi ve danışmanlık",
+		"psychological-evaluations-for-asylum-claim": "İltica talebi için psikolojik değerlendirmeler",
+		"psychological-evaluations-for-refugee-claim": "Mülteci talebi için psikolojik değerlendirmeler",
+		"substance-use": "Madde kullanımı",
+		"support-for-caregivers-of-trans-youth": "Trans gençlerin bakıcılarına destek",
+		"support-for-conversion-therapy-survivors": "Dönüşüm terapisinden kurtulanlar için destek",
+		"support-groups": "Destek grupları",
+		"trans-support-groups": "Trans destek grupları"
+	},
+	"sports-and-entertainment": {
+		"CATEGORYNAME": "Eğlence ve Aktiviteler",
+		"art-music-literature": "Sanat, müzik ve edebiyat",
+		"sports-and-entertainment": "Spor ve eğlence"
+	},
+	"trans-focused-services": {
+		"CATEGORYNAME": "Trans Odaklı Hizmetler",
+		"transport-gacare": "Cinsiyeti onaylayan bakım için ulaşım",
+		"transport-relo-support": "Trans yer değiştirme desteği"
+	},
+	"translation-and-interpretation": {
+		"CATEGORYNAME": "Çeviri ve Tercümanlık",
+		"for-healthcare": "Sağlık hizmetleri için",
+		"for-legal-services": "Hukuk hizmetleri için",
+		"general-translation-and-interpretation": "Genel çeviri ve tercüme"
+	},
+	"transportation": {
+		"CATEGORYNAME": "Ulaşım",
+		"transit-passes-and-discounts": "Transit kartları ve indirimler",
+		"transportation-assistance": "Ulaşım yardımı"
+	}
+}

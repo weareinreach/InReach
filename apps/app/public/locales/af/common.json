@@ -34,6 +34,7 @@
 		"back-to-dynamic": "Terug na <u>{{page}}</u>",
 		"back-to-search": "Terug na soek"
 	},
+	"can-help-people-in": "Can help people located anywhere in {{location}}",
 	"cancel": "Kanselleer",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -208,6 +209,9 @@
 	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"photo_interval": "(0) [Nog geen foto's]; (2-inf) [Sien al {{count}} foto's];",
 	"please-specify": "Spesifiseer asseblief",
+	"portal-module": {
+		"service-area": "Service Area"
+	},
 	"powered-by-vercel": "Aangedryf deur Vercel",
 	"prefer-not-to-say": "Verkies om nie te sê nie",
 	"privacy-policy": "Privaatheidsbeleid",
@@ -257,6 +261,9 @@
 		"organization-placeholder": "Voer organisasie naam in...",
 		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Kan jy dit nie vind nie? <1>Stel 'n organisasie</1> voor wat u dink ingesluit moet word."
+	},
+	"select": {
+		"base": "Select {{- item}}"
 	},
 	"send-email": "Stuur e-pos",
 	"service": {

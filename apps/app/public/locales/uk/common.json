@@ -34,6 +34,7 @@
 		"back-to-dynamic": "Повернутися до <u>{{page}}</u>",
 		"back-to-search": "Повернутися до пошуку"
 	},
+	"can-help-people-in": "Може допомогти людям, які знаходяться в {{location}}",
 	"cancel": "Скасувати",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -210,6 +211,9 @@
 	"photo-count_interval": "(0) [Фото ще немає.]; (1) [{{count}} фото] ;( 2-інф) [{{count}} фото]",
 	"photo_interval": "(0) [Фото ще немає]; (2-інф) [Переглянути всі {{count}} фото];",
 	"please-specify": "Будь ласка, вкажіть",
+	"portal-module": {
+		"service-area": "Область обслуговування"
+	},
 	"powered-by-vercel": "Працює на Vercel",
 	"prefer-not-to-say": "Волію не говорити",
 	"privacy-policy": "Політика конфіденційності",
@@ -259,6 +263,9 @@
 		"organization-placeholder": "Введіть назву організації...",
 		"organization-placeholder-searchby": "Пошук за назвою організації...",
 		"suggest-resource": "Не можете його знайти? <1>Запропонуйте організацію</1>, на вашу думку, повинна бути включена."
+	},
+	"select": {
+		"base": "Вибрати {{- item}}"
 	},
 	"send-email": "Надіслати електронну пошту",
 	"service": {

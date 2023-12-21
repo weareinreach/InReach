@@ -34,6 +34,7 @@
 		"back-to-dynamic": "<u>{{page}}</u>に戻る",
 		"back-to-search": "検索に戻る"
 	},
+	"can-help-people-in": "{{location}} のどこかにいる人を助けることができます。",
 	"cancel": "[キャンセル]",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 組織のプロフィールページを要求し、InReach でオーディエンスと信頼関係を構築する</textUtility1>\n<textUtility1>✍🏾 組織のInReach に関する情報を更新する</textUtility1>\n<textUtility1>📨 InReach であなたの組織に参加するために他のスタッフを招待する</textUtility1>\n<textUtility1>🔑 InReach の関連サービスプロバイダー専用に構築された将来の機能へのアクセスを得る</textUtility1>",
@@ -207,6 +208,9 @@
 	"photo-count_interval": "(0)[まだ写真はありません。];(1)[{{count}} 写真];(2-inf)[{{count}} 写真]",
 	"photo_interval": "(0)[まだ写真はありません];(2-inf)[ {{count}} 枚の写真をすべて見る];",
 	"please-specify": "指定してください",
+	"portal-module": {
+		"service-area": "サービスエリア"
+	},
 	"powered-by-vercel": "パワー・バイ・バーセル",
 	"prefer-not-to-say": "言いたくない",
 	"privacy-policy": "プライバシーポリシー",
@@ -256,6 +260,9 @@
 		"organization-placeholder": "組織名を入力...",
 		"organization-placeholder-searchby": "組織名で検索...",
 		"suggest-resource": "見つかりませんか？<1>含めるべきだと思う組織を提案してください</1>。"
+	},
+	"select": {
+		"base": "{{- item}} を選択"
 	},
 	"send-email": "E メールを送信",
 	"service": {

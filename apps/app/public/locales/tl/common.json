@@ -34,6 +34,7 @@
 		"back-to-dynamic": "Bumalik sa <u>{{page}}</u>",
 		"back-to-search": "Bumalik sa paghahanap"
 	},
+	"can-help-people-in": "Can help people located anywhere in {{location}}",
 	"cancel": "Kanselahin",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 Claim your organization’s profile page and build trust with your audience on InReach</textUtility1>\n<textUtility1>✍🏾 Update your organization's information on InReach</textUtility1>\n<textUtility1>📨 Invite other staff to join your organization on InReach</textUtility1>\n<textUtility1>🔑 Gain access to future features built specifically for affiliated service providers on InReach</textUtility1>",
@@ -208,6 +209,9 @@
 	"photo-count_interval": "(0)[No photos yet.];(1)[{{count}} photo];(2-inf)[{{count}} photos]",
 	"photo_interval": "(0) [Wala pang mga larawan]; (2-inf) [Tingnan ang lahat ng {{count}} mga larawan];",
 	"please-specify": "Mangyaring tukuyin",
+	"portal-module": {
+		"service-area": "Service Area"
+	},
 	"powered-by-vercel": "Pinapagana ng Vercel",
 	"prefer-not-to-say": "Mas gusto na huwag sabihin",
 	"privacy-policy": "Patakaran sa privacy",
@@ -257,6 +261,9 @@
 		"organization-placeholder": "Ipasok ang pangalan ng samahan...",
 		"organization-placeholder-searchby": "Search by organization name...",
 		"suggest-resource": "Hindi mahanap ito? <1>Magmungkahi ng isang samahan</1> na sa palagay mo ay dapat isama."
+	},
+	"select": {
+		"base": "Select {{- item}}"
 	},
 	"send-email": "Magpadala ng email",
 	"service": {

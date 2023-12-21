@@ -34,6 +34,7 @@
 		"back-to-dynamic": "Voltar para <u>{{page}}</u>",
 		"back-to-search": "Voltar à pesquisa"
 	},
+	"can-help-people-in": "Pode ajudar pessoas localizadas em qualquer lugar no {{location}}",
 	"cancel": "Cancelar",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 reivindique a página de perfil da sua organização e construa confiança com o seu público em InReach</textUtility1>\n<textUtility1>:writing_hand_medi_skin_tone: Atualize as informações da sua organização em Infernir</textUtility1>\n<textUtility1>📨 Convide outros funcionários para se juntar à sua organização em Inach</textUtility1>\n<textUtility1>🔑 Ganhe acesso a recursos futuros construídos especificamente para provedores de serviços afiliados em Inferir</textUtility1>",
@@ -53,7 +54,7 @@
 	"cookie-consent": {
 		"approve-all": "Aprovar todos",
 		"approve-selected": "Aprovar selecionado(s)",
-		"body": "We use cookies and third party services on this website. Some of them are essential, others help us to improve your browsing experience. Please see our <PrivacyLink>Privacy Statement</PrivacyLink> for more information.",
+		"body": "Utilizamos cookies e serviços de terceiros neste site. Alguns deles são essenciais, outros nos ajudam a melhorar a sua experiência de navegação. Consulte nossa Declaração de Privacidade <PrivacyLink></PrivacyLink> para obter mais informações.",
 		"intro": "Usamos cookies necessários para fazer o nosso site funcionar. Gostaríamos de definir cookies adicionais para entender o uso do site, melhorar o site e lembrar de suas configurações.",
 		"item-basic": "Cookies necessários para a funcionalidade do site",
 		"item-ga4": "Análises para uso interno de InReach",
@@ -66,11 +67,11 @@
 	"country-select": "Escolha um país",
 	"create-new-list": "Criar nova lista",
 	"crisis-support": {
-		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-stay-safe": "<Title3>📣 Por favor, mantenha-se segure on-line</Title3>\n<Text>Visitar qualquer um desses sites <strong>pode deixar registros no seu computador ou navegador</strong>, assim como qualquer site que você visita. Por favor, tome as medidas necessárias para evitar situações inseguras em sua área.</Text>",
 		"intl-these-verified": "Estes recursos verificados podem ajudar a comunidade LGBTQ+ em qualquer lugar do mundo.",
 		"intl-we-recommend": "Recomendamos esses recursos internacionais",
 		"natl-find-help-now": "Encontre ajuda agora",
-		"natl-these-verified": "<Text>These verified resources can help the LGBTQ+ community in the United States. These services are <strong>remotely available, confidential,</strong> and <strong>free</strong>.</Text>",
+		"natl-these-verified": "<Text>Esses recursos verificados podem ajudar a comunidade LGBTQ+ nos Estados Unidos. Estes serviços são <strong>disponíveis remotamente, confidenciais,</strong> e <strong>gratuitos</strong>.</Text>",
 		"outside-service-area": "A inreach não opera em {{country}}",
 		"who-this-serves": "<Text><strong>Quem este recurso serve:</strong> {{targetPop}}</Text>"
 	},
@@ -208,6 +209,9 @@
 	"photo-count_interval": "(0) [Ainda não há fotos.]; (1) [{{count}} foto] ;( 2-inf) [{{count}} fotos]",
 	"photo_interval": "(0) [Ainda não há fotos]; (2-inf) [Ver todas as {{count}} fotos];",
 	"please-specify": "Por favor, especifique",
+	"portal-module": {
+		"service-area": "Área de Serviço"
+	},
 	"powered-by-vercel": "Desenvolvido por Vercel",
 	"prefer-not-to-say": "Prefiro não dizer",
 	"privacy-policy": "Política de privacidade",
@@ -217,7 +221,7 @@
 		"<title2>Dados demográficos do usuário</title2>",
 		"<textDarkGray><strong>Não exigimos nenhuma informação de identificação pessoal para usar o aplicativo gratuito inReach.</strong></textDarkGray>",
 		"<textDarkGray>Usuários que optam por criar uma conta gratuita de InReach têm <strong>a opção</strong> de compartilhar as seguintes informações demográficas por meio de uma pesquisa anônima on-line:</textDarkGray>",
-		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
+		"<textDarkGray><listGroup><listItem>Ano de nascimento</listItem>\n<listItem>País de origem</listItem>\n<listItem>Identidade LGBTQ+ (orientação sexual e identidade de gênero)</listItem>\n<listItem>Raça/etnia</listItem>\n<listItem>Status de imigração</listItem>\n<listItem>Localização atual</listItem></listGroup></textDarkGray>",
 		"<textDarkGray><strong>Todas essas informações confidenciais são armazenadas anonimamente e não são conectadas a qualquer usuário ou conta de usuário individual.*</strong></textDarkGray>",
 		"<textUtility4>(*A única exceção é o tipo de conta de usuário do Local Community Reviewer, que aproveita todas as informações demográficas coletadas para aprimorar a experiência e o impacto do voluntariado dos revisores comunitários locais. Para contas do Local Community Reviewer, exigimos que a localização e todas as outras informações demográficas sejam opcionais, mas estejam vinculadas ao registro do usuário. Esses dados só seriam visíveis fora da equipe da inReach se o revisor da comunidade local optasse por torná-los visíveis por meio das configurações de privacidade da conta. Compartilhar um perfil voltado para o público ajudará outros usuários a se sentirem mais confiantes em suas avaliações.)</textUtility4>",
 		"<textDarkGray>Compreender a demografia de nossos usuários pode nos ajudar a quantificar nosso impacto, arrecadar fundos e avaliar futuras decisões sobre produtos. Agradecemos que os usuários compartilhem voluntariamente essas informações conosco e tomamos essas medidas para proteger sua privacidade e anonimato.</textDarkGray>",
@@ -257,6 +261,9 @@
 		"organization-placeholder": "Insira o nome da organização...",
 		"organization-placeholder-searchby": "Pesquisar por nome da organização...",
 		"suggest-resource": "Não consegue encontrá-lo? <1>Sugira uma organização</1> que você acha que deveria ser incluída."
+	},
+	"select": {
+		"base": "Selecionar {{- item}}"
 	},
 	"send-email": "Enviar e-mail",
 	"service": {
