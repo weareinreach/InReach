@@ -38,3 +38,14 @@ jobs:
         with:
           prefix: '📦'
           separator: ' '
+  squash_merge:
+    name: 🏭 Add misc PR labels
+    runs-on: ubuntu-latest
+    if: github.base_ref != 'main'
+    steps:
+      - name: Kodiak squash merge
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: |
+            automerge
+            kodiak: merge.method = 'squash'
