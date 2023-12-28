@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 import { StorybookGridDouble } from '~ui/layouts/BodyGrid'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { moreFilterMock } from '~ui/mockData/moreFilter'
+import { attribute } from '~ui/mockData/attribute'
 
 import { MoreFilter } from './MoreFilter'
 
@@ -17,13 +17,7 @@ export default {
 			url: 'https://www.figma.com/file/gl8ppgnhpSq1Dr7Daohk55/Design-System-(2023)?node-id=51%3A493&t=OR50OY3K2rzSJbrl-0',
 		},
 		msw: {
-			handlers: [
-				getTRPCMock({
-					path: ['attribute', 'getFilterOptions'],
-					type: 'query',
-					response: moreFilterMock,
-				}),
-			],
+			handlers: [attribute.getFilterOptions],
 		},
 		layout: 'fullscreen',
 	},

@@ -2,7 +2,8 @@ import { type Meta, type StoryObj } from '@storybook/react'
 
 import { StorybookGridDouble } from '~ui/layouts'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { reviewMockIds, reviewsMock } from '~ui/mockData/reviews'
+import { organization } from '~ui/mockData/organization'
+import { review } from '~ui/mockData/review'
 
 import { ReviewSection } from './Reviews'
 
@@ -10,39 +11,11 @@ export default {
 	title: 'Sections/Reviews',
 	component: ReviewSection,
 	args: {
-		reviews: reviewMockIds,
+		reviews: [],
 	},
 	parameters: {
 		msw: {
-			handlers: [
-				getTRPCMock({
-					path: ['review', 'getByIds'],
-					type: 'query',
-					response: reviewsMock,
-				}),
-				getTRPCMock({
-					path: ['review', 'getAverage'],
-					type: 'query',
-					response: {
-						average: 4.3,
-						count: 10,
-					},
-				}),
-				getTRPCMock({
-					path: ['organization', 'getIdFromSlug'],
-					type: 'query',
-					response: {
-						id: 'orgn_ORGANIZATIONID',
-					},
-				}),
-				getTRPCMock({
-					path: ['review', 'create'],
-					type: 'mutation',
-					response: {
-						id: 'orev_NEWREVIEWID',
-					},
-				}),
-			],
+			handlers: [review.getByIds, review.getAverage, organization.getIdFromSlug, review.create],
 		},
 		nextjs: {
 			router: {
