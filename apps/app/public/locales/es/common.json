@@ -263,7 +263,7 @@
 		"suggest-resource": "¿No lo encuentras? <strong>Sugiera una organización</strong> que crea que debería incluirse."
 	},
 	"select": {
-		"base": "Seleccionar {{- item}}"
+		"base": "Selecciona {{- item}}"
 	},
 	"send-email": "Enviar email",
 	"service": {
