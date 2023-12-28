@@ -1,10 +1,10 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core/Button'
+import { location } from '~ui/mockData/location'
 import { organization } from '~ui/mockData/organization'
-import { location } from '~ui/mockData/orgLocation'
 import { orgPhone } from '~ui/mockData/orgPhone'
-import { service } from '~ui/mockData/orgService'
+import { service } from '~ui/mockData/service'
 import { phoneEmailFieldMocks } from '~ui/modals/dataPortal/PhoneEmail/fields.stories'
 
 import { PhoneTableDrawer } from './PhoneTableDrawer'

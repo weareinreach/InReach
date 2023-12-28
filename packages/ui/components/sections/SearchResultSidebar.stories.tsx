@@ -1,8 +1,7 @@
 import { type Meta } from '@storybook/react'
 
 import { StorybookGridSingle } from '~ui/layouts'
-import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { moreFilterMock } from '~ui/mockData/moreFilter'
+import { attribute } from '~ui/mockData/attribute'
 
 import { SearchResultSidebar } from './SearchResultSidebar'
 
@@ -13,13 +12,7 @@ export default {
 	parameters: {
 		layout: 'fullscreen',
 		msw: {
-			handlers: [
-				getTRPCMock({
-					path: ['attribute', 'getFilterOptions'],
-					type: 'query',
-					response: moreFilterMock,
-				}),
-			],
+			handlers: [attribute.getFilterOptions],
 		},
 	},
 	args: {

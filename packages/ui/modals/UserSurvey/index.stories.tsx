@@ -2,7 +2,7 @@ import { Center } from '@mantine/core'
 import { type Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core/Button'
-import { surveyOptions } from '~ui/mockData/surveyOptions'
+import { user } from '~ui/mockData/user'
 
 import { UserSurveyModalLauncher } from '.'
 import { getTRPCMock } from '../../lib/getTrpcMock'
@@ -13,11 +13,7 @@ export default {
 	parameters: {
 		layout: 'fullscreen',
 		msw: [
-			getTRPCMock({
-				path: ['user', 'surveyOptions'],
-				type: 'query',
-				response: { ...surveyOptions },
-			}),
+			user.surveyOptions,
 			getTRPCMock({
 				path: ['user', 'submitSurvey'],
 				type: 'mutation',

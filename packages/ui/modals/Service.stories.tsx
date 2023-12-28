@@ -2,8 +2,9 @@ import { type Meta } from '@storybook/react'
 
 import { Button } from '~ui/components/core/Button'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
-import { getAll } from '~ui/mockData/savedList'
-import { mockService } from '~ui/mockData/service'
+import { organization } from '~ui/mockData/organization'
+import { savedList } from '~ui/mockData/savedList'
+import { service } from '~ui/mockData/service'
 
 import { ServiceModal } from './Service'
 
@@ -13,24 +14,7 @@ export default {
 	title: 'Modals/Service Info',
 	component: ServiceModal,
 	parameters: {
-		msw: [
-			getTRPCMock({
-				path: ['service', 'getParentName'],
-				response: { name: 'Organization name' },
-			}),
-			getTRPCMock({
-				path: ['savedList', 'getAll'],
-				response: getAll,
-			}),
-			getTRPCMock({
-				path: ['organization', 'getIdFromSlug'],
-				type: 'query',
-				response: {
-					id: 'orgn_ORGANIZATIONID',
-				},
-			}),
-			mockService.forServiceModal,
-		],
+		msw: [service.getParentName, savedList.getAll, organization.getIdFromSlug, service.forServiceModal],
 		nextjs: {
 			router: {
 				pathname: '/org/[slug]',

@@ -1,10 +1,10 @@
 import { type Meta, type StoryFn, type StoryObj } from '@storybook/react'
 import { Fragment } from 'react'
 
-import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'
-import { getNames as getLocationNames } from '~ui/mockData/orgLocation'
-import { getNames as getServiceNames } from '~ui/mockData/orgService'
+import { location } from '~ui/mockData/location'
+import { organization } from '~ui/mockData/organization'
+import { service } from '~ui/mockData/service'
 
 import { formHookParams, PhoneEmailFormProvider, useForm } from './context'
 import { PhoneEmailFlags, PhoneTypeSelect } from './fields'
@@ -18,24 +18,11 @@ const FormContextDecorator = (Story: StoryFn) => {
 	)
 }
 
-// eslint-disable-next-line storybook/prefer-pascal-case
 export const phoneEmailFieldMocks = [
 	...allFieldOptHandlers,
-	getTRPCMock({
-		path: ['organization', 'getIdFromSlug'],
-		type: 'query',
-		response: {
-			id: 'orgn_ORGANIZATIONID',
-		},
-	}),
-	getTRPCMock({
-		path: ['service', 'getNames'],
-		response: getServiceNames,
-	}),
-	getTRPCMock({
-		path: ['location', 'getNames'],
-		response: getLocationNames,
-	}),
+	organization.getIdFromSlug,
+	location.getNames,
+	service.getNames,
 ]
 
 export default {
