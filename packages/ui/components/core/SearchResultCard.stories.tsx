@@ -1,7 +1,8 @@
 import { type Meta } from '@storybook/react'
 
 import { StorybookGridDouble } from '~ui/layouts'
-import { searchResultLongTitle, searchResultsMock } from '~ui/mockData/searchResults'
+import { trpc } from '~ui/lib/trpcClient'
+import { organization } from '~ui/mockData/organization'
 
 import { SearchResultCard } from './SearchResultCard'
 
@@ -20,24 +21,68 @@ export default {
 } satisfies Meta<typeof SearchResultCard>
 
 export const SingleResult = {
-	args: {
-		result: searchResultsMock.orgs[0],
+	parameters: {
+		msw: [organization.searchDistance],
+	},
+	render: () => {
+		const { data } = trpc.organization.searchDistance.useQuery({
+			dist: 0,
+			lat: 0,
+			lon: 0,
+			unit: 'mi',
+			skip: 0,
+			take: 0,
+		})
+		if (!data) return <>Loading mock data</>
+		const item = data.orgs.at(0)
+		if (!item) return <>Something is wrong with the mock data</>
+		return <SearchResultCard result={item} />
 	},
 }
 export const SingleResultWithLongName = {
-	args: {
-		result: searchResultLongTitle,
+	parameters: {
+		msw: [organization.searchDistanceLongTitle],
+	},
+	render: () => {
+		const { data } = trpc.organization.searchDistance.useQuery({
+			dist: 0,
+			lat: 0,
+			lon: 0,
+			unit: 'mi',
+			skip: 0,
+			take: 0,
+		})
+		if (!data) return <>Loading mock data</>
+		const item = data.orgs.at(0)
+		if (!item) return <>Something is wrong with the mock data</>
+		return <SearchResultCard result={item} />
 	},
 }
 
 export const MultipleResults = {
-	render: () => (
-		<>
-			{searchResultsMock.orgs.map((result) => (
-				<SearchResultCard key={result.id} result={result} />
-			))}
-		</>
-	),
+	parameters: {
+		msw: [organization.searchDistance],
+	},
+	render: () => {
+		const { data } = trpc.organization.searchDistance.useQuery({
+			dist: 0,
+			lat: 0,
+			lon: 0,
+			unit: 'mi',
+			skip: 0,
+			take: 0,
+		})
+		if (!data) return <>Loading mock data</>
+		const item = data.orgs.at(0)
+		if (!item) return <>Something is wrong with the mock data</>
+		return (
+			<>
+				{data.orgs.map((result) => (
+					<SearchResultCard key={result.id} result={result} />
+				))}
+			</>
+		)
+	},
 }
 export const SingleLoading = {
 	args: {

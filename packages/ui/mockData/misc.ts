@@ -1,12 +1,8 @@
-import { getTRPCMock, type MockDataObject, type MockHandlerObject } from '~ui/lib/getTrpcMock'
-
-const miscMockData = {
-	hasContactInfo: true,
-} satisfies MockDataObject<'misc'>
+import { getTRPCMock, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
 export const miscMock = {
 	hasContactInfo: getTRPCMock({
 		path: ['misc', 'hasContactInfo'],
-		response: miscMockData.hasContactInfo,
+		response: true,
 	}),
 } satisfies MockHandlerObject<'misc'>

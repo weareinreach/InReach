@@ -2,7 +2,7 @@ import { Center } from '@mantine/core'
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core/Button'
-import { geoAutocompleteCityState, geoByPlaceIdCityState } from '~ui/mockData/geo'
+import { geo } from '~ui/mockData/geo'
 
 import { SignupModalLauncher } from '.'
 import { getTRPCMock } from '../../lib/getTrpcMock'
@@ -13,15 +13,8 @@ export default {
 	parameters: {
 		layout: 'fullscreen',
 		msw: [
-			getTRPCMock({
-				path: ['geo', 'autocomplete'],
-				type: 'query',
-				response: geoAutocompleteCityState,
-			}),
-			getTRPCMock({
-				path: ['geo', 'geoByPlaceId'],
-				response: geoByPlaceIdCityState,
-			}),
+			geo.autocompleteCityState,
+			geo.placeIdCityState,
 			getTRPCMock({
 				path: ['user', 'create'],
 				type: 'mutation',

@@ -1,6 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
-import { getTRPCMock } from '~ui/lib/getTrpcMock'
+import { organization } from '~ui/mockData/organization'
 import { orgEmail } from '~ui/mockData/orgEmail'
 import { orgPhone } from '~ui/mockData/orgPhone'
 import { orgSocialMedia } from '~ui/mockData/orgSocialMedia'
@@ -25,13 +25,7 @@ export default {
 			},
 		},
 		msw: [
-			getTRPCMock({
-				path: ['organization', 'getIdFromSlug'],
-				type: 'query',
-				response: {
-					id: 'orgn_ORGANIZATIONID',
-				},
-			}),
+			organization.getIdFromSlug,
 			orgEmail.forContactInfo,
 			orgPhone.forContactInfo,
 			orgWebsite.forContactInfo,

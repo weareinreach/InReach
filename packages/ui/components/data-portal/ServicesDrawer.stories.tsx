@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core/Button'
 import { organization } from '~ui/mockData/organization'
-import { service } from '~ui/mockData/orgService'
+import { service } from '~ui/mockData/service'
 
 import { ServicesDrawer } from './ServicesDrawer'
 

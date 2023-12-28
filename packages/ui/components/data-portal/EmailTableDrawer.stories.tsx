@@ -2,10 +2,10 @@ import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core/Button'
 import { allFieldOptHandlers } from '~ui/mockData/fieldOpt'
+import { location } from '~ui/mockData/location'
 import { organization } from '~ui/mockData/organization'
 import { orgEmail } from '~ui/mockData/orgEmail'
-import { location } from '~ui/mockData/orgLocation'
-import { service } from '~ui/mockData/orgService'
+import { service } from '~ui/mockData/service'
 
 import { EmailTableDrawer } from './EmailTableDrawer'
 

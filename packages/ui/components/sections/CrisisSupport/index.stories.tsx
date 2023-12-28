@@ -1,6 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
-import { organizationData } from '~ui/mockData/organization'
+import { trpc } from '~ui/lib/trpcClient'
+import { organization } from '~ui/mockData/organization'
 
 import { CrisisSupport } from './index'
 
@@ -9,36 +10,50 @@ export default {
 	component: CrisisSupport,
 	parameters: {
 		layoutWrapper: 'gridDouble',
+		msw: [organization.getIntlCrisis, organization.getNatlCrisis],
 	},
 } satisfies Meta<typeof CrisisSupport>
 
 export const InternationalContainer = {
-	args: {
-		role: 'international',
-		children: organizationData.getIntlCrisis.map((item) => (
-			<CrisisSupport.International data={item} key={item.id} />
-		)),
+	render: () => {
+		const { data } = trpc.organization.getIntlCrisis.useQuery({ cca2: '' })
+
+		return (
+			<CrisisSupport role='international'>
+				{data?.map((item) => <CrisisSupport.International data={item} key={item.id} />)}
+			</CrisisSupport>
+		)
 	},
 } satisfies StoryObj<typeof CrisisSupport>
 export const InternationalOrgCard = {
-	args: {
-		data: organizationData.getIntlCrisis[0],
+	render: () => {
+		const { data } = trpc.organization.getIntlCrisis.useQuery({ cca2: '' })
+		const item = data?.at(0)
+
+		if (!item) return <>Loading...</>
+
+		return <CrisisSupport.International data={item} />
 	},
-	render: (args) => <CrisisSupport.International {...args} />,
 } satisfies StoryObj<typeof CrisisSupport.International>
 
 export const NationalContainer = {
-	args: {
-		role: 'national',
-		children: organizationData.getNatlCrisis.map((item) => (
-			<CrisisSupport.National data={item} key={item.id} />
-		)),
+	render: () => {
+		const { data } = trpc.organization.getNatlCrisis.useQuery({ cca2: '' })
+		return (
+			<CrisisSupport role='national'>
+				{data?.map((item) => <CrisisSupport.National data={item} key={item.id} />)}
+			</CrisisSupport>
+		)
 	},
 } satisfies StoryObj<typeof CrisisSupport>
 
 export const NationalOrgCard = {
-	args: {
-		data: organizationData.getNatlCrisis[0],
+	render: () => {
+		const { data } = trpc.organization.getNatlCrisis.useQuery({ cca2: '' })
+		const item = data?.at(0)
+
+		if (!item) return <>Loading...</>
+
+		return <CrisisSupport.National data={item} />
 	},
-	render: (args) => <CrisisSupport.National {...args} />,
 } satisfies StoryObj<typeof CrisisSupport.National>
