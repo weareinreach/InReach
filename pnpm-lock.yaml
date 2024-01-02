@@ -867,8 +867,8 @@ importers:
   packages/crowdin:
     dependencies:
       '@crowdin/crowdin-api-client':
-        specifier: 1.29.0
-        version: 1.29.0
+        specifier: 1.28.2
+        version: 1.28.2
       '@crowdin/ota-client':
         specifier: 1.0.0
         version: 1.0.0(patch_hash=refrge56ym5gomc3tkglzjdymy)
@@ -3745,8 +3745,8 @@ packages:
     dev: true
     optional: true
 
-  /@crowdin/crowdin-api-client@1.29.0:
-    resolution: {integrity: sha512-1wg2sP4cxumrhf7qkWSvujWNiPwUxCYThqFJLqT4EkG4qNuBSLWuaei6ykq4u91wYDWbQVRRxdMhDBHIJukqNw==}
+  /@crowdin/crowdin-api-client@1.28.2:
+    resolution: {integrity: sha512-MpLa0VoF4+7DgTd9ZWL8307+BFF60yBhLOl+Q8duaEy4BEO5E7tO2RZ5GIzx6Umv+msshPucva2UljIGBwFecw==}
     engines: {node: '>=12.9.0'}
     dependencies:
       axios: 1.6.3
