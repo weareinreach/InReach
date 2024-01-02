@@ -51,7 +51,7 @@
 		"@types/eslint": "8.56.0",
 		"@types/google.maps": "3.54.10",
 		"@types/luxon": "3.3.7",
-		"@types/node": "20.10.5",
+		"@types/node": "20.10.6",
 		"@types/terraformer__wkt": "2.0.2",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
