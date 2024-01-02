@@ -39,7 +39,7 @@
 		"with-env": "dotenv -e ../../.env --"
 	},
 	"dependencies": {
-		"@crowdin/crowdin-api-client": "1.28.2",
+		"@crowdin/crowdin-api-client": "1.29.0",
 		"@crowdin/ota-client": "1.0.0",
 		"@opentelemetry/api": "1.7.0",
 		"@vercel/kv": "1.0.1",
