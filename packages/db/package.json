@@ -51,7 +51,7 @@
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
 		"id128": "1.6.6",
-		"kysely": "0.27.0",
+		"kysely": "0.27.1",
 		"pg": "8.11.3",
 		"prisma-kysely": "1.7.1",
 		"sql-bricks": "3.0.1",
