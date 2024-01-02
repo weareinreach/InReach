@@ -1,4 +1,4 @@
-import { track } from '@vercel/analytics'
+import { track } from '@vercel/analytics/server'
 import { get } from '@vercel/edge-config'
 import { type NextMiddleware, type NextRequest, NextResponse } from 'next/server'
 
