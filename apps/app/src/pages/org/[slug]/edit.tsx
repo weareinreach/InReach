@@ -2,7 +2,7 @@ import { DevTool } from '@hookform/devtools'
 import { Grid, Stack } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
 import compact from 'just-compact'
-import { type GetServerSideProps } from 'next'
+import { type GetServerSidePropsContext, type InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
@@ -29,10 +29,17 @@ const formSchema = z
 	.partial()
 type FormSchema = z.infer<typeof formSchema>
 
-const OrganizationPage: NextPageWithOptions = () => {
+const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof getServerSideProps>> = (
+	props
+) => {
 	const router = useRouter<'/org/[slug]'>()
-	const { query } = router.isReady ? router : { query: { slug: '' } }
-	const { data, status } = api.organization.forOrgPageEdits.useQuery(query, { enabled: router.isReady })
+	const {
+		query: { slug: pageSlug },
+	} = router.isReady ? router : { query: { slug: '' } }
+	const { data, status } = api.organization.forOrgPageEdits.useQuery(
+		{ slug: pageSlug },
+		{ enabled: router.isReady }
+	)
 	const { t } = useTranslation()
 	const formMethods = useForm<FormSchema>({
 		values: {
@@ -100,10 +107,12 @@ const OrganizationPage: NextPageWithOptions = () => {
 	)
 }
 
-export const getServerSideProps: GetServerSideProps<
-	Record<string, unknown>,
-	RoutedQuery<'/org/[slug]'>
-> = async ({ locale, params, req, res }) => {
+export const getServerSideProps = async ({
+	locale,
+	params,
+	req,
+	res,
+}: GetServerSidePropsContext<RoutedQuery<'/org/[slug]'>>) => {
 	if (!params) return { notFound: true }
 	const { slug } = params
 
@@ -127,7 +136,6 @@ export const getServerSideProps: GetServerSideProps<
 
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, compact(['common', 'services', 'attribute', 'phone-type', orgId?.id])),
-		ssg.organization.getBySlug.prefetch({ slug }),
 		ssg.organization.forOrgPageEdits.prefetch({ slug }),
 	])
 	const props = {
