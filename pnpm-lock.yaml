@@ -71,8 +71,8 @@ importers:
         specifier: 8.0.3
         version: 8.0.3
       knip:
-        specifier: 3.9.0
-        version: 3.9.0(@types/node@20.10.6)(typescript@5.3.3)
+        specifier: 3.10.0
+        version: 3.10.0(@types/node@20.10.6)(typescript@5.3.3)
       lint-staged:
         specifier: 15.2.0
         version: 15.2.0
@@ -197,8 +197,8 @@ importers:
         specifier: 4.36.1
         version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-table':
-        specifier: 8.11.2
-        version: 8.11.2(react-dom@18.2.0)(react@18.2.0)
+        specifier: 8.11.3
+        version: 8.11.3(react-dom@18.2.0)(react@18.2.0)
       '@trpc/client':
         specifier: 10.45.0
         version: 10.45.0(@trpc/server@10.45.0)
@@ -263,8 +263,8 @@ importers:
         specifier: 6.0.1
         version: 6.0.1
       i18next:
-        specifier: 23.7.13
-        version: 23.7.13
+        specifier: 23.7.15
+        version: 23.7.15
       i18next-browser-languagedetector:
         specifier: 7.2.0
         version: 7.2.0
@@ -299,8 +299,8 @@ importers:
         specifier: 4.24.5
         version: 4.24.5(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
-        specifier: 15.1.1
-        version: 15.1.1(i18next@23.7.13)(next@14.0.4)(react-i18next@14.0.0)(react@18.2.0)
+        specifier: 15.1.2
+        version: 15.1.2(i18next@23.7.15)(next@14.0.4)(react-i18next@14.0.0)(react@18.2.0)
       next-seo:
         specifier: 6.4.0
         version: 6.4.0(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
@@ -336,7 +336,7 @@ importers:
         version: 2.0.0(@mantine/core@6.0.21)(@mantine/dates@6.0.21)(react-dom@18.2.0)(react-hook-form@7.49.2)(react@18.2.0)
       react-i18next:
         specifier: 14.0.0
-        version: 14.0.0(i18next@23.7.13)(react-dom@18.2.0)(react@18.2.0)
+        version: 14.0.0(i18next@23.7.15)(react-dom@18.2.0)(react@18.2.0)
       zod:
         specifier: 3.22.4
         version: 3.22.4
@@ -354,14 +354,14 @@ importers:
         specifier: 4.36.1
         version: 4.36.1(@tanstack/react-query@4.36.1)(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-table-devtools':
-        specifier: 8.7.6
-        version: 8.7.6(react-dom@18.2.0)(react@18.2.0)
+        specifier: 8.11.3
+        version: 8.11.3(react-dom@18.2.0)(react@18.2.0)
       '@total-typescript/ts-reset':
         specifier: 0.5.1
         version: 0.5.1
       '@types/eslint':
-        specifier: 8.56.0
-        version: 8.56.0
+        specifier: 8.56.1
+        version: 8.56.1
       '@types/gtag.js':
         specifier: 0.0.18
         version: 0.0.18
@@ -480,8 +480,8 @@ importers:
         specifier: 7.1.0
         version: 7.1.0(react@18.2.0)
       i18next:
-        specifier: 23.7.13
-        version: 23.7.13
+        specifier: 23.7.15
+        version: 23.7.15
       next:
         specifier: 14.0.4
         version: 14.0.4(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
@@ -493,14 +493,14 @@ importers:
         version: 18.2.0(react@18.2.0)
       react-i18next:
         specifier: 14.0.0
-        version: 14.0.0(i18next@23.7.13)(react-dom@18.2.0)(react@18.2.0)
+        version: 14.0.0(i18next@23.7.15)(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@next/bundle-analyzer':
         specifier: 14.0.4
         version: 14.0.4
       '@types/eslint':
-        specifier: 8.56.0
-        version: 8.56.0
+        specifier: 8.56.1
+        version: 8.56.1
       '@types/node':
         specifier: 20.10.6
         version: 20.10.6
@@ -533,8 +533,8 @@ importers:
         specifier: 8.10.130
         version: 8.10.130
       '@types/eslint':
-        specifier: 8.56.0
-        version: 8.56.0
+        specifier: 8.56.1
+        version: 8.56.1
       '@types/node':
         specifier: 20.10.6
         version: 20.10.6
@@ -576,8 +576,8 @@ importers:
         specifier: 8.10.130
         version: 8.10.130
       '@types/eslint':
-        specifier: 8.56.0
-        version: 8.56.0
+        specifier: 8.56.1
+        version: 8.56.1
       '@types/node':
         specifier: 20.10.6
         version: 20.10.6
@@ -728,8 +728,8 @@ importers:
         specifier: 1.11.2
         version: 1.11.2(@types/node@20.10.6)(typescript@5.3.3)
       '@types/eslint':
-        specifier: 8.56.0
-        version: 8.56.0
+        specifier: 8.56.1
+        version: 8.56.1
       '@types/google.maps':
         specifier: 3.54.10
         version: 3.54.10
@@ -810,8 +810,8 @@ importers:
         version: 3.22.4
     devDependencies:
       '@types/eslint':
-        specifier: 8.56.0
-        version: 8.56.0
+        specifier: 8.56.1
+        version: 8.56.1
       '@types/node':
         specifier: 20.10.6
         version: 20.10.6
@@ -858,8 +858,8 @@ importers:
         specifier: 11.0.1
         version: 11.0.1
       next-i18next:
-        specifier: 15.1.1
-        version: 15.1.1(i18next@23.7.13)(next@14.0.4)(react-i18next@13.5.0)(react@18.2.0)
+        specifier: 15.1.2
+        version: 15.1.2(i18next@23.7.15)(next@14.0.4)(react-i18next@14.0.0)(react@18.2.0)
       typescript:
         specifier: 5.3.3
         version: 5.3.3
@@ -867,8 +867,8 @@ importers:
   packages/crowdin:
     dependencies:
       '@crowdin/crowdin-api-client':
-        specifier: 1.28.2
-        version: 1.28.2
+        specifier: 1.29.2
+        version: 1.29.2
       '@crowdin/ota-client':
         specifier: 1.0.0
         version: 1.0.0(patch_hash=refrge56ym5gomc3tkglzjdymy)
@@ -980,8 +980,8 @@ importers:
         specifier: 6.5.0
         version: 6.5.0
       '@types/eslint':
-        specifier: 8.56.0
-        version: 8.56.0
+        specifier: 8.56.1
+        version: 8.56.1
       '@types/inquirer':
         specifier: 9.0.7
         version: 9.0.7
@@ -1137,8 +1137,8 @@ importers:
         specifier: 4.36.1
         version: 4.36.1(eslint@8.56.0)
       '@types/eslint':
-        specifier: 8.56.0
-        version: 8.56.0
+        specifier: 8.56.1
+        version: 8.56.1
       '@types/eslint-config-prettier':
         specifier: 6.11.3
         version: 6.11.3
@@ -1444,11 +1444,11 @@ importers:
         specifier: 4.36.1
         version: 4.36.1(@tanstack/react-query@4.36.1)(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-table':
-        specifier: 8.11.2
-        version: 8.11.2(react-dom@18.2.0)(react@18.2.0)
+        specifier: 8.11.3
+        version: 8.11.3(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-table-devtools':
-        specifier: 8.7.6
-        version: 8.7.6(react-dom@18.2.0)(react@18.2.0)
+        specifier: 8.11.3
+        version: 8.11.3(react-dom@18.2.0)(react@18.2.0)
       '@tomfreudenberg/next-auth-mock':
         specifier: 0.5.6
         version: 0.5.6(next-auth@4.24.5)(react@18.2.0)
@@ -1468,8 +1468,8 @@ importers:
         specifier: 7.9.6
         version: 7.9.6
       '@types/eslint':
-        specifier: 8.56.0
-        version: 8.56.0
+        specifier: 8.56.1
+        version: 8.56.1
       '@types/google.maps':
         specifier: 3.54.10
         version: 3.54.10
@@ -1531,8 +1531,8 @@ importers:
         specifier: 8.56.0
         version: 8.56.0
       i18next:
-        specifier: 23.7.13
-        version: 23.7.13
+        specifier: 23.7.15
+        version: 23.7.15
       i18next-browser-languagedetector:
         specifier: 7.2.0
         version: 7.2.0
@@ -1564,8 +1564,8 @@ importers:
         specifier: 4.24.5
         version: 4.24.5(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
       next-i18next:
-        specifier: 15.1.1
-        version: 15.1.1(i18next@23.7.13)(next@14.0.4)(react-i18next@14.0.0)(react@18.2.0)
+        specifier: 15.1.2
+        version: 15.1.2(i18next@23.7.15)(next@14.0.4)(react-i18next@14.0.0)(react@18.2.0)
       postcss-loader:
         specifier: 7.3.4
         version: 7.3.4(postcss@8.4.32)(typescript@5.3.3)(webpack@5.89.0)
@@ -1598,7 +1598,7 @@ importers:
         version: 1.4.0(react-dom@18.2.0)(react@18.2.0)
       react-i18next:
         specifier: 14.0.0
-        version: 14.0.0(i18next@23.7.13)(react-dom@18.2.0)(react@18.2.0)
+        version: 14.0.0(i18next@23.7.15)(react-dom@18.2.0)(react@18.2.0)
       resolve-url-loader:
         specifier: 5.0.0
         version: 5.0.0
@@ -3745,8 +3745,8 @@ packages:
     dev: true
     optional: true
 
-  /@crowdin/crowdin-api-client@1.28.2:
-    resolution: {integrity: sha512-MpLa0VoF4+7DgTd9ZWL8307+BFF60yBhLOl+Q8duaEy4BEO5E7tO2RZ5GIzx6Umv+msshPucva2UljIGBwFecw==}
+  /@crowdin/crowdin-api-client@1.29.2:
+    resolution: {integrity: sha512-SbXDco7L29gY5/ygEp9j5dmhYVMhdcxlFpPomtP4rin5wSle/wmUmgiIz5rT2RcpeAB8CnWVUMZ19lwiFBZ5pg==}
     engines: {node: '>=12.9.0'}
     dependencies:
       axios: 1.6.3
@@ -9204,25 +9204,14 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
 
-  /@tanstack/react-table-devtools@8.7.6(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-t6+8ch6BCsEOMjZ+WG2aWQd+Jy8/YfCIf7e7MWKtIXuqZcwCjyzHPsSeddjgzKalX+gGLlAkIEKcThWuISmqVg==}
+  /@tanstack/react-table-devtools@8.11.3(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-984pmzuKJZqebVCe9YLo1b/p8OMpmc3UE7R0W0EHafxWPxAK8uJDVmRmL1q9bYzNm5pxlcIlBJekARskmmvbkg==}
     engines: {node: '>=12'}
     peerDependencies:
       react: ^18 || 18
       react-dom: ^18 || 18
     dependencies:
-      '@tanstack/react-table': 8.0.0-alpha.1(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: true
-
-  /@tanstack/react-table@8.0.0-alpha.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-0fwp0ihCrvAhA3KWXdWMA3RL9uw3M/UjUvEVkj9APaBt1Q0fJmBTQfzAg3590MraLjRpiiX9/YsRLKj8Dv5b1w==}
-    engines: {node: '>=12'}
-    peerDependencies:
-      react: ^18 || 18
-      react-dom: ^18 || 18
-    dependencies:
+      '@tanstack/react-table': 8.11.3(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: true
@@ -9238,14 +9227,14 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  /@tanstack/react-table@8.11.2(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-ztLg2OpM3HZIWzkQYjQER1inZuhbt79fBwZxc9bPXzsvqY+7RYI3dCZLw3CynYd9s4YltdrTbmSyh4xQSHexDQ==}
+  /@tanstack/react-table@8.11.3(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Gwwm7po1MaObBguw69L+UiACkaj+eOtThQEArj/3fmUwMPiWaJcXvNG2X5Te5z2hg0HMx8h0T0Q7p5YmQlTUfw==}
     engines: {node: '>=12'}
     peerDependencies:
       react: ^18 || 18
       react-dom: ^18 || 18
     dependencies:
-      '@tanstack/table-core': 8.11.2
+      '@tanstack/table-core': 8.11.3
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -9261,8 +9250,8 @@ packages:
     resolution: {integrity: sha512-9t8brthhAmCBIjzk7fCDa/kPKoLQTtA31l9Ir76jYxciTlHU61r/6gYm69XF9cbg9n88gVL5y7rNpeJ2dc1AFA==}
     engines: {node: '>=12'}
 
-  /@tanstack/table-core@8.11.2:
-    resolution: {integrity: sha512-rR0VEQOtr0ARLvaNLaSQnt2BVwOp0OavOUA0LcZ3N45tLYXc4sXruNv8kJ7R7+5W1CrzGha217tzjBG83CpoMQ==}
+  /@tanstack/table-core@8.11.3:
+    resolution: {integrity: sha512-nkcFIL696wTf1QMvhGR7dEg60OIRwEZm1OqFTYYDTRc4JOWspgrsJO3IennsOJ7ptumHWLDjV8e5BjPkZcSZAQ==}
     engines: {node: '>=12'}
 
   /@tanstack/virtual-core@3.0.0-beta.63:
@@ -9659,12 +9648,12 @@ packages:
   /@types/eslint-scope@3.7.7:
     resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
     dependencies:
-      '@types/eslint': 8.56.0
+      '@types/eslint': 8.56.1
       '@types/estree': 1.0.5
     dev: true
 
-  /@types/eslint@8.56.0:
-    resolution: {integrity: sha512-FlsN0p4FhuYRjIxpbdXovvHQhtlG05O1GG/RNWvdAxTboR438IOTwmrY/vLA+Xfgg06BTkP045M3vpFwTMv1dg==}
+  /@types/eslint@8.56.1:
+    resolution: {integrity: sha512-18PLWRzhy9glDQp3+wOgfLYRWlhgX0azxgJ63rdpoUHyrC9z0f5CkFburjQx4uD7ZCruw85ZtMt6K+L+R8fLJQ==}
     dependencies:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
@@ -13687,7 +13676,7 @@ packages:
       '@babel/parser': 7.23.6
       '@babel/traverse': 7.23.7
       '@types/dedent': 0.7.0
-      '@types/eslint': 8.56.0
+      '@types/eslint': 8.56.1
       '@types/glob': 7.1.3
       '@types/jest': 29.0.0
       '@types/js-yaml': 3.12.5
@@ -15661,8 +15650,8 @@ packages:
     resolution: {integrity: sha512-k52N4CImVEDeA+jJo16EJIDdlemSIsWmX6MuBPyR5V8Ig1vQSqVG1acXiQkKE+txLxD8LnR6WKYhkcxTcR86kw==}
     dev: false
 
-  /i18next@23.7.13:
-    resolution: {integrity: sha512-DbCPlw6VmURSZa43iOnycxq9o15e+WuBWDBZ3aj+gQZcDz4sgnuKwrcwmP1n8gSSCwCN7CRFGTpnwTd93A16Mg==}
+  /i18next@23.7.15:
+    resolution: {integrity: sha512-WukNgiqkUgU7xSaY8k2B4nXNesD+O8O4ta5g344U5B6Ag7mG61A1EBcDmktFgc4aL447V0cmpjw5l18v58KUfg==}
     dependencies:
       '@babel/runtime': 7.23.7
 
@@ -17348,8 +17337,8 @@ packages:
     resolution: {integrity: sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==}
     engines: {node: '>= 8'}
 
-  /knip@3.9.0(@types/node@20.10.6)(typescript@5.3.3):
-    resolution: {integrity: sha512-pZgJdC4bSTEU/YT+4Q9uT22HuME+V0h0HT2fsOo0TrW7KY5Ghse+2ngNwOctzUn5LeYQ0eY83Z1DhKDIbe5WkA==}
+  /knip@3.10.0(@types/node@20.10.6)(typescript@5.3.3):
+    resolution: {integrity: sha512-SHofg5RlTzMal2zMCuMGT99lGhD1X5qrqPn1+7+FKr4BiChe5McyTFp1N3PGt4xSrrXhsBgYU8NbrqRAdiVQbA==}
     engines: {node: '>=18.6.0'}
     hasBin: true
     peerDependencies:
@@ -19164,44 +19153,24 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       uuid: 9.0.1
 
-  /next-i18next@15.1.1(i18next@23.7.13)(next@14.0.4)(react-i18next@13.5.0)(react@18.2.0):
-    resolution: {integrity: sha512-IueFofP7Z9G41VjSPX/LdKhjYDDXq/iLAUFap7Rcz/MlsjLQMC7aktzBslhKH6GBYLOXsuhAO98goBFQBdhelg==}
+  /next-i18next@15.1.2(i18next@23.7.15)(next@14.0.4)(react-i18next@14.0.0)(react@18.2.0):
+    resolution: {integrity: sha512-HfGVe0TRba9b+9jU9w7DJmOXobV7PTFxEeTEBYom/7HhKbTCspLzxAfzfhdaQSlCIbCJmXNeQAoWzXQ5wffsmA==}
     engines: {node: '>=14'}
     peerDependencies:
-      i18next: ^23.7.7
+      i18next: '>= 23.7.13'
       next: '>= 12.0.0 || 13'
       react: ^18 || 18
-      react-i18next: ^13.5.0 || 12
+      react-i18next: '>= 13.5.0 || 12'
     dependencies:
       '@babel/runtime': 7.23.7
       '@types/hoist-non-react-statics': 3.3.5
       core-js: 3.35.0
       hoist-non-react-statics: 3.3.2
-      i18next: 23.7.13
+      i18next: 23.7.15
       i18next-fs-backend: 2.3.1
       next: 14.0.4(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
-      react-i18next: 13.5.0(i18next@23.7.13)(react-dom@18.2.0)(react@18.2.0)
-    dev: true
-
-  /next-i18next@15.1.1(i18next@23.7.13)(next@14.0.4)(react-i18next@14.0.0)(react@18.2.0):
-    resolution: {integrity: sha512-IueFofP7Z9G41VjSPX/LdKhjYDDXq/iLAUFap7Rcz/MlsjLQMC7aktzBslhKH6GBYLOXsuhAO98goBFQBdhelg==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      i18next: ^23.7.7
-      next: '>= 12.0.0 || 13'
-      react: ^18 || 18
-      react-i18next: ^13.5.0 || 12
-    dependencies:
-      '@babel/runtime': 7.23.7
-      '@types/hoist-non-react-statics': 3.3.5
-      core-js: 3.35.0
-      hoist-non-react-statics: 3.3.2
-      i18next: 23.7.13
-      i18next-fs-backend: 2.3.1
-      next: 14.0.4(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-i18next: 14.0.0(i18next@23.7.13)(react-dom@18.2.0)(react@18.2.0)
+      react-i18next: 14.0.0(i18next@23.7.15)(react-dom@18.2.0)(react@18.2.0)
 
   /next-seo@6.4.0(next@14.0.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-XQFxkOL2hw0YE+P100HbI3EAvcludlHPxuzMgaIjKb7kPK0CvjGvLFjd9hszZFEDc5oiQkGFA8+cuWcnip7eYA==}
@@ -21301,27 +21270,7 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /react-i18next@13.5.0(i18next@23.7.13)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-CFJ5NDGJ2MUyBohEHxljOq/39NQ972rh1ajnadG9BjTk+UXbHLq4z5DKEbEQBDoIhUmmbuS/fIMJKo6VOax1HA==}
-    peerDependencies:
-      i18next: '>= 23.2.3'
-      react: ^18 || 18
-      react-dom: '*'
-      react-native: '*'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.23.7
-      html-parse-stringify: 3.0.1
-      i18next: 23.7.13
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: true
-
-  /react-i18next@14.0.0(i18next@23.7.13)(react-dom@18.2.0)(react@18.2.0):
+  /react-i18next@14.0.0(i18next@23.7.15)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-OCrS8rHNAmnr8ggGRDxjakzihrMW7HCbsplduTm3EuuQ6fyvWGT41ksZpqbduYoqJurBmEsEVZ1pILSUWkHZng==}
     peerDependencies:
       i18next: '>= 23.2.3'
@@ -21336,7 +21285,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.23.7
       html-parse-stringify: 3.0.1
-      i18next: 23.7.13
+      i18next: 23.7.15
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
