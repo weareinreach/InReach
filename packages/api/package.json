@@ -50,7 +50,7 @@
 		"@turbo/gen": "1.11.2",
 		"@types/eslint": "8.56.1",
 		"@types/google.maps": "3.54.10",
-		"@types/luxon": "3.3.7",
+		"@types/luxon": "3.3.8",
 		"@types/node": "20.10.6",
 		"@types/terraformer__wkt": "2.0.2",
 		"@weareinreach/config": "workspace:*",
