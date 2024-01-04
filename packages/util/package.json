@@ -19,7 +19,7 @@
 		"tslog": "4.9.2"
 	},
 	"devDependencies": {
-		"@types/luxon": "3.3.7",
+		"@types/luxon": "3.3.8",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0"
 	}
