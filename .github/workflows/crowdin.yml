@@ -92,7 +92,7 @@ jobs:
 
       - name: Check for updated files
         if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
-        uses: tj-actions/verify-changed-files@bc950d8b56b01c2c024b82bf5b8f93b685713725 # v17
+        uses: tj-actions/verify-changed-files@b742fc9c8c613945ae7ee756f8d2bb3bd2d1f7dd # v17
         id: verify-changed-files
         with:
           files: '**/locales/*/*.json'
