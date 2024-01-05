@@ -16,7 +16,7 @@
 			"5": "Communautés de BIPOC LGBTQ+",
 			"6": "soignants des jeunes LGBTQ+"
 		},
-		"find-resources": "<Text>Trouvez </Text><Service><Service></Service><Text> vérifié pour </Text><Community></Community><Text> avec InReach.</Text>",
+		"find-resources": "<Text>Trouvez </Text><Service></Service><Text> vérifié pour </Text><Community></Community><Text> avec InReach.</Text>",
 		"heading": "Trouver des ressources LGBTQ.",
 		"privacy-disclaimer": "Votre réponse est anonyme et n'est pas connectée à vous en tant qu'utilisateur individuel. Lire notre <Link>politique de confidentialité</Link> pour en savoir plus.",
 		"services": {
