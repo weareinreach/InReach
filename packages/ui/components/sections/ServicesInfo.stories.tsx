@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { StorybookGridDouble } from '~ui/layouts'
-import { mockService } from '~ui/mockData/service'
+import { service } from '~ui/mockData/service'
 
 import { ServicesInfoCard } from './ServicesInfo'
 
@@ -25,7 +25,7 @@ export default {
 				},
 			},
 		},
-		msw: [mockService.forServiceInfoCard, mockService.getParentName, mockService.byId],
+		msw: [service.forServiceInfoCard, service.getParentName, service.byId],
 		rqDevtools: true,
 	},
 	decorators: [StorybookGridDouble],

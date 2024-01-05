@@ -16,7 +16,7 @@
 			"5": "مجتمعات LGBTQ+ BIPOC",
 			"6": "مقدمو الرعاية لشباب المثليين جنسيا والمتحولين جنسيا +"
 		},
-		"find-resources": "<Text>ابحث عن </Text><Service><Service></Service><Text> ل </Text><Community></Community><Text> مع InReach.</Text>",
+		"find-resources": "<Text>ابحث عن </Text><Service></Service><Text> ل </Text><Community></Community><Text> مع InReach.</Text>",
 		"heading": "البحث عن موارد LGBTQ",
 		"privacy-disclaimer": "جوابك مجهول وغير متصل بك كمستخدم فردي. اقرأ سياسة الخصوصية الخاصة بنا <Link></Link> لمعرفة المزيد.",
 		"services": {

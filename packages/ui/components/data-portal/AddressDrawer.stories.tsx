@@ -3,10 +3,10 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { Button } from '~ui/components/core/Button'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { fieldOpt } from '~ui/mockData/fieldOpt'
-import { geoMocks } from '~ui/mockData/geo'
+import { geo } from '~ui/mockData/geo'
 import { location } from '~ui/mockData/location'
 import { organization } from '~ui/mockData/organization'
-import { service } from '~ui/mockData/orgService'
+import { service } from '~ui/mockData/service'
 
 import { AddressDrawer } from './AddressDrawer'
 
@@ -26,8 +26,8 @@ export default {
 			},
 		},
 		msw: [
-			geoMocks.autocomplete,
-			geoMocks.geocodeFullAddress,
+			geo.autocompleteFullAddress,
+			geo.geocodeFullAddress,
 			fieldOpt.govDistsByCountryNoSub,
 			organization.getIdFromSlug,
 			service.getNames,

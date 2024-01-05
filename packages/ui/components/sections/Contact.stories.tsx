@@ -3,6 +3,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 import { StorybookGridSingle } from '~ui/layouts'
 import { getTRPCMock } from '~ui/lib/getTrpcMock'
 import { miscMock } from '~ui/mockData/misc'
+import { organization } from '~ui/mockData/organization'
 import { orgEmail } from '~ui/mockData/orgEmail'
 import { orgPhone } from '~ui/mockData/orgPhone'
 import { orgSocialMedia } from '~ui/mockData/orgSocialMedia'
@@ -29,13 +30,7 @@ export default {
 			},
 		},
 		msw: [
-			getTRPCMock({
-				path: ['organization', 'getIdFromSlug'],
-				type: 'query',
-				response: {
-					id: 'orgn_ORGANIZATIONID',
-				},
-			}),
+			organization.getIdFromSlug,
 			orgEmail.forContactInfo,
 			orgPhone.forContactInfo,
 			orgWebsite.forContactInfo,
