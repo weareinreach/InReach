@@ -143,6 +143,7 @@ const run = async () => {
 		}
 	}
 	for (const item of rejected) {
+		console.log(item)
 	}
 
 	fs.writeFileSync(path.resolve(__dirname, './output.json'), JSON.stringify(output))
