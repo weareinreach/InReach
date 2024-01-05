@@ -11,6 +11,7 @@ import {
 	useMantineTheme,
 } from '@mantine/core'
 import { useReducedMotion } from '@mantine/hooks'
+import { useRouter } from 'next/router'
 import { Trans, useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 
@@ -83,7 +84,8 @@ const getRandomNumber = (min: number, max: number) => {
 }
 
 const RevolvingBox = ({ role }: RevolvingBoxProps) => {
-	const { t } = useTranslation('landingPage')
+	const router = useRouter()
+	const { t } = useTranslation('landingPage', { lng: router.locale })
 	const theme = useMantineTheme()
 	const reduceMotion = useReducedMotion()
 	const services = [
