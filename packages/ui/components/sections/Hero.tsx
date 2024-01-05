@@ -11,7 +11,7 @@ import {
 	useMantineTheme,
 } from '@mantine/core'
 import { useReducedMotion } from '@mantine/hooks'
-import { type TFunction, Trans, useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 
 import { Link } from '~ui/components/core/Link'
@@ -73,7 +73,6 @@ const useHeroStyles = createStyles((theme) => ({
 
 type RevolvingBoxProps = {
 	role: 'services' | 'community'
-	t: TFunction
 }
 type RandomArr = <T extends Array<unknown>>(arr: T) => T[number]
 
@@ -83,7 +82,8 @@ const getRandomNumber = (min: number, max: number) => {
 	return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-const RevolvingBox = ({ role, t }: RevolvingBoxProps) => {
+const RevolvingBox = ({ role }: RevolvingBoxProps) => {
+	const { t } = useTranslation('landingPage')
 	const theme = useMantineTheme()
 	const reduceMotion = useReducedMotion()
 	const services = [
@@ -236,7 +236,7 @@ const RevolvingBox = ({ role, t }: RevolvingBoxProps) => {
 }
 
 export const Hero = () => {
-	const { t } = useTranslation('landingPage')
+	const { t } = useTranslation(['landingPage', 'common'])
 	const { classes } = useHeroStyles()
 	const [isLoading, setLoading] = useState(false)
 	const variants = useCustomVariant()
@@ -260,8 +260,8 @@ export const Hero = () => {
 					className={classes.findText}
 					components={{
 						Text: <Text className={classes.findText} />,
-						Service: <RevolvingBox role='services' t={t} />,
-						Community: <RevolvingBox role='community' t={t} />,
+						Service: <RevolvingBox role='services' />,
+						Community: <RevolvingBox role='community' />,
 					}}
 				/>
 			</Group>
