@@ -61,7 +61,7 @@
 	"devDependencies": {
 		"@octokit/core": "5.0.2",
 		"@terraformer/wkt": "2.2.0",
-		"@turbo/gen": "1.11.2",
+		"@turbo/gen": "1.11.3",
 		"@turf/helpers": "6.5.0",
 		"@types/eslint": "8.56.1",
 		"@types/inquirer": "9.0.7",
