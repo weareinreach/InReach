@@ -685,8 +685,8 @@ importers:
         specifier: 11.0.1
         version: 11.0.1
       geo-tz:
-        specifier: 7.0.7
-        version: 7.0.7
+        specifier: 8.0.0
+        version: 8.0.0
       geolib:
         specifier: 3.3.4
         version: 3.3.4
@@ -14723,8 +14723,8 @@ packages:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
 
-  /geo-tz@7.0.7:
-    resolution: {integrity: sha512-Aq0sRSO1y4w62D5muRqzDmN4SWfFYnt703BLiqiHAvunlwsJs4qd3Fkl1pKSUa0bwuBmPFxIA8M1E+ilg2PSjw==}
+  /geo-tz@8.0.0:
+    resolution: {integrity: sha512-AMY7zEdz2EM9EEFzPxQhvQt623ZU4Vy9ZX1SLYXRf1Kt4F9KAuWrQU/gdaup+i+LNGv+RAaU03PNTB0WrXrv7Q==}
     engines: {node: '>=12'}
     dependencies:
       '@turf/boolean-point-in-polygon': 6.5.0
