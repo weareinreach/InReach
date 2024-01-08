@@ -1,0 +1,37 @@
+---
+- nodejs-extensions:
+    - .js
+    - .mjs
+    - .cjs
+    - .ts
+    - .mts
+    - .cts
+    - .jsx
+    - .tsx
+
+  template-extensions:
+    - .new
+    - .hbs
+    - ''
+
+  ignore-filenames:
+    - .vercelignore
+    - .DS_Store
+
+  ignore-paths:
+    - __MACOSX
+    - .git
+    - node_modules
+    - .next
+    - storybook_static
+
+  # ignore-extensions:
+  # - .jsx
+
+  # ignore-rules:
+  # - regex_injection_dos
+  # - pug_jade_template
+
+  # severity-filter:
+  # - WARNING
+  # - ERROR
