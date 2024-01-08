@@ -1025,8 +1025,8 @@ importers:
         specifier: 4.1.1
         version: 4.1.1(google-auth-library@9.4.1)
       googleapis:
-        specifier: 129.0.0
-        version: 129.0.0
+        specifier: 130.0.0
+        version: 130.0.0
       inquirer:
         specifier: 9.2.12
         version: 9.2.12
@@ -15092,8 +15092,8 @@ packages:
       - supports-color
     dev: true
 
-  /googleapis@129.0.0:
-    resolution: {integrity: sha512-gFatrzby+oh/GxEeMhJOKzgs9eG7yksRcTon9b+kPie4ZnDSgGQ85JgtUaBtLSBkcKpUKukdSP6Km1aCjs4y4Q==}
+  /googleapis@130.0.0:
+    resolution: {integrity: sha512-+ZSOowVv+vGBTueu1Ot9O7EqC0U4PS9l7fUjzc0ThCT4w4g+r78Vgn17q7eGBB5JMu4hxYC1hbbm1U/MCnYFdg==}
     engines: {node: '>=14.0.0'}
     dependencies:
       google-auth-library: 9.4.1
