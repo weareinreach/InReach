@@ -16,7 +16,10 @@ export const orgPhone = {
 	update: getTRPCMock({
 		path: ['orgPhone', 'update'],
 		type: 'mutation',
-		response: (input) => {},
+		response: async (input) => {
+			const { default: data } = await import('./json/orgPhone.update.json')
+			return { ...data, createdAt: new Date(data.createdAt), updatedAt: new Date(data.updatedAt) }
+		},
 	}),
 	forContactInfo: getTRPCMock({
 		path: ['orgPhone', 'forContactInfo'],
@@ -30,6 +33,9 @@ export const orgPhone = {
 	forEditDrawer: getTRPCMock({
 		path: ['orgPhone', 'forEditDrawer'],
 		type: 'query',
-		response: orgPhoneData.forEditDrawer,
+		response: async () => {
+			const { default: data } = await import(`./json/orgPhone.forEditDrawer.json`)
+			return data
+		},
 	}),
 } satisfies MockHandlerObject<'orgPhone'>

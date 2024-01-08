@@ -14,11 +14,22 @@ export const orgWebsite = {
 	forEditDrawer: getTRPCMock({
 		path: ['orgWebsite', 'forEditDrawer'],
 		type: 'query',
-		response: orgWebsiteData.forEditDrawer,
+		response: async () => {
+			const { default: data } = await import('./json/orgWebsite.forEditDrawer.json')
+			return {
+				description: undefined,
+				...data,
+				createdAt: new Date(data.createdAt),
+				updatedAt: new Date(data.updatedAt),
+			}
+		},
 	}),
 	update: getTRPCMock({
 		path: ['orgWebsite', 'update'],
 		type: 'mutation',
-		response: (input) => ({ ...orgWebsiteData.forEditDrawer, ...input.data }),
+		response: async (input) => {
+			const { default: data } = await import('./json/orgWebsite.forEditDrawer.json')
+			return { ...data, ...input.data, createdAt: new Date(data.createdAt), updatedAt: new Date(Date.now()) }
+		},
 	}),
 } satisfies MockHandlerObject<'orgWebsite'>
