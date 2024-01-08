@@ -31,7 +31,7 @@ jobs:
     if: contains(fromJson('["main", "l10_*"]'), github.base_ref) != true
     steps:
       - name: 🏷 Apply repo labels
-        uses: tinkurlab/monorepo-pr-labeler-action@6242ef35f78e617d14982c66ab715fa400b7ab25 # 4.1.4
+        uses: tinkurlab/monorepo-pr-labeler-action@290105bf438d979f86a9a2b1d20a080098c26edc # 4.1.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BASE_DIRS: 'apps|packages|lambas'
