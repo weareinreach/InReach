@@ -111,6 +111,7 @@ jobs:
           echo "body<<EOF" >> $GITHUB_OUTPUT
           echo "$(cat /home/runner/work/InReach/InReach/apps/app/.next/analyze/__bundle_analysis_comment.txt)" >> $GITHUB_OUTPUT
           echo EOF >> $GITHUB_OUTPUT
+          echo "$(cat /home/runner/work/InReach/InReach/apps/app/.next/analyze/__bundle_analysis_comment.txt)" >> $GITHUB_STEP_SUMMARY
 
       - name: Find Comment
         uses: peter-evans/find-comment@a54c31d7fa095754bfef525c0c8e5e5674c4b4b1 # v2
