@@ -26,6 +26,7 @@ on:
 
 jobs:
   synchronize-with-crowdin:
+    name: Crowdin Actions
     runs-on: ubuntu-latest
     env:
       CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
