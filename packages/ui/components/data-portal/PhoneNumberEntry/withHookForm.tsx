@@ -24,7 +24,7 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 	required,
 }: PhoneNumberEntryProps<T>) => {
 	const { data: countryList } = api.fieldOpt.countries.useQuery(
-		{ where: { activeForOrgs: true } },
+		{ activeForOrgs: true },
 		{
 			initialData: [],
 			select: (data) => transformCountryList(data),
