@@ -22,6 +22,7 @@ permissions:
 
 jobs:
   analyze:
+    name: 'Next.js Bundle Analysis'
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
