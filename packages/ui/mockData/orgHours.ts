@@ -1,5 +1,6 @@
 import { DateTime, Interval } from 'luxon'
 
+import { convertToLuxonWeekday } from '@weareinreach/util/luxon/weekday'
 import { getTRPCMock, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
 export function createInterval(start: Time, end: Time, dayIndex: number, tz: string, toString?: false): string // Interval<true>
@@ -13,8 +14,16 @@ export function createInterval(
 ): string /*| Interval<true> */ {
 	const { weekYear, weekNumber } = DateTime.now()
 	const interval = Interval.fromDateTimes(
-		DateTime.fromFormat(start, 'HH:mm', { zone: tz }).set({ weekday: dayIndex, weekYear, weekNumber }),
-		DateTime.fromFormat(end, 'HH:mm', { zone: tz }).set({ weekday: dayIndex, weekYear, weekNumber })
+		DateTime.fromFormat(start, 'HH:mm', { zone: tz }).set({
+			weekday: convertToLuxonWeekday(dayIndex),
+			weekYear,
+			weekNumber,
+		}),
+		DateTime.fromFormat(end, 'HH:mm', { zone: tz }).set({
+			weekday: convertToLuxonWeekday(dayIndex),
+			weekYear,
+			weekNumber,
+		})
 	)
 	if (!interval.isValid) throw new Error('Invalid interval')
 
