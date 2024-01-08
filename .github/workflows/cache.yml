@@ -1,4 +1,4 @@
-name: post-merge cache cleanup
+name: '🧹 Post-Merge GH Cache Cleanup'
 on:
   pull_request:
     types:
@@ -8,10 +8,10 @@ jobs:
   cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: ⤵️ Check out code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
-      - name: Cleanup
+      - name: '🧹 Cleanup'
         run: |
           gh extension install actions/gh-actions-cache
 
