@@ -2,7 +2,13 @@ import { ErrorMessage } from '@hookform/error-message'
 import { TextInput, type TextInputProps } from '@mantine/core'
 import { AsYouType } from 'libphonenumber-js'
 import { useEffect, useMemo } from 'react'
-import { type Control, type FieldValues, useController, type UseControllerProps } from 'react-hook-form'
+import {
+	type Control,
+	type FieldValues,
+	useController,
+	type UseControllerProps,
+	useWatch,
+} from 'react-hook-form'
 import { Select, type SelectProps } from 'react-hook-form-mantine'
 import { parsePhoneNumber } from 'react-phone-number-input'
 import PhoneInput, { type Props as PhoneInputProps } from 'react-phone-number-input/react-hook-form-input'
@@ -53,7 +59,8 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 		rules: peRules,
 		shouldUnregister: peShouldUnregister,
 	})
-	const phoneNumber = phoneNumbControl.field.value
+	// const phoneNumber = phoneNumbControl.field.value
+	const phoneNumber = useWatch({ name: peName, control })
 
 	const countryControl = useController<T>({
 		name: csName,
@@ -62,7 +69,8 @@ export const PhoneNumberEntry = <T extends FieldValues>({
 		rules: csRules,
 		shouldUnregister: csShouldUnregister,
 	})
-	const selectedCountry = countryControl.field.value
+	// const selectedCountry = countryControl.field.value
+	const selectedCountry = useWatch({ name: csName, control })
 
 	const { classes: countrySelectClasses } = useCountrySelectStyles()
 	const { classes: phoneEntryClasses } = usePhoneEntryStyles()

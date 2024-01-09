@@ -22,6 +22,8 @@ import { z } from 'zod'
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
 import { Button } from '~ui/components/core/Button'
 import { PhoneNumberEntry } from '~ui/components/data-portal/PhoneNumberEntry/withHookForm'
+import { useOrgInfo } from '~ui/hooks/useOrgInfo'
+import { parsePhoneNumber } from '~ui/hooks/usePhoneNumber'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
@@ -33,7 +35,7 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const FormSchema = z.object({
-	id: z.string().nullish(),
+	id: z.string(),
 	number: z.string(),
 	ext: z.string().nullish(),
 	primary: z.boolean(),
@@ -41,33 +43,39 @@ const FormSchema = z.object({
 	deleted: z.boolean(),
 	countryId: z.string(),
 	phoneTypeId: z.string().nullable(),
-	description: z
-		.object({
-			id: z.string(),
-			key: z.string(),
-			text: z.string(),
-		})
-		.nullish(),
+	description: z.string().nullable(),
 	locationOnly: z.boolean(),
 	serviceOnly: z.boolean(),
 })
 type FormSchema = z.infer<typeof FormSchema>
 const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...props }, ref) => {
 	const { t } = useTranslation(['phone-type'])
-	const { data, isFetching } = api.orgPhone.forEditDrawer.useQuery({ id })
+	const { id: orgId } = useOrgInfo()
+	const apiUtils = api.useUtils()
+	const { data, isFetching } = api.orgPhone.forEditDrawer.useQuery(
+		{ id },
+		{
+			select: (data) => ({ ...data, orgId: orgId ?? '' }),
+		}
+	)
 	const { data: phoneTypes } = api.fieldOpt.phoneTypes.useQuery(undefined, {
 		initialData: [],
 		select: (data) => data.map(({ id, tsKey, tsNs }) => ({ value: id, label: t(tsKey, { ns: tsNs }) })),
 	})
-	const [drawerOpened, drawerHandler] = useDisclosure(true)
+	const [drawerOpened, drawerHandler] = useDisclosure(false)
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const { classes } = useStyles()
 	const { control, handleSubmit, formState, reset, getValues, watch } = useForm<FormSchema>({
 		resolver: zodResolver(FormSchema),
-		values: data,
-		defaultValues: data,
+		// values: data,
+		defaultValues: async () => {
+			const data = await apiUtils.orgPhone.forEditDrawer.fetch({ id })
+			if (!data) throw new Error('Failed to fetch data')
+			// TODO: format phone numbers with country code --> +12025551234
+			return data
+		},
 	})
-	const apiUtils = api.useContext()
+
 	const siteUpdate = api.orgPhone.update.useMutation({
 		onSettled: (data) => {
 			apiUtils.orgPhone.forEditDrawer.invalidate()
@@ -89,13 +97,19 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 	}
 	return (
 		<>
-			<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right'>
+			<Drawer.Root
+				onClose={handleClose}
+				opened={drawerOpened}
+				position='right'
+				zIndex={10001}
+				keepMounted={false}
+			>
 				<Drawer.Overlay />
 				<Drawer.Content className={classes.drawerContent}>
 					<form
 						onSubmit={handleSubmit(
 							(data) => {
-								siteUpdate.mutate({ id, ...data })
+								siteUpdate.mutate({ orgId: orgId ?? '', ...data })
 							},
 							(error) => console.error(error)
 						)}
@@ -133,7 +147,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 										data={[...phoneTypes, { value: null as unknown as string, label: 'Custom' }]}
 									/>
 									{values.phoneTypeId === null && (
-										<TextInput label='Description' name='description.text' control={control} />
+										<TextInput label='Description' name='description' control={control} />
 									)}
 									<Stack>
 										<Checkbox label='Published' name='published' control={control} />
@@ -142,7 +156,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 								</Stack>
 							</Stack>
 						</Drawer.Body>
-						<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes'>
+						<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
 							<Stack align='center'>
 								<Text>You have unsaved changes</Text>
 								<Group noWrap>
@@ -152,7 +166,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 										loading={siteUpdate.isLoading}
 										onClick={() => {
 											siteUpdate.mutate(
-												{ id, data: getValues() },
+												{ ...getValues(), orgId: orgId ?? '' },
 												{
 													onSuccess: () => {
 														modalHandler.close()
