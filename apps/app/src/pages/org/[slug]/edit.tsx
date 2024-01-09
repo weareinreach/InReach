@@ -4,7 +4,6 @@ import { useElementSize } from '@mantine/hooks'
 import compact from 'just-compact'
 import { type GetServerSidePropsContext, type InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
 import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -29,9 +28,7 @@ const formSchema = z
 	.partial()
 type FormSchema = z.infer<typeof formSchema>
 
-const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof getServerSideProps>> = (
-	props
-) => {
+const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
 	const router = useRouter<'/org/[slug]'>()
 	const {
 		query: { slug: pageSlug },
@@ -40,7 +37,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 		{ slug: pageSlug },
 		{ enabled: router.isReady }
 	)
-	const { t } = useTranslation()
+
 	const formMethods = useForm<FormSchema>({
 		values: {
 			name: data?.name,
