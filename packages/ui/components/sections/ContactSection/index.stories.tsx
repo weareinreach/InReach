@@ -8,7 +8,7 @@ import { orgPhone } from '~ui/mockData/orgPhone'
 import { orgSocialMedia } from '~ui/mockData/orgSocialMedia'
 import { orgWebsite } from '~ui/mockData/orgWebsite'
 
-import { ContactSection } from './ContactSection'
+import { ContactSection } from './index'
 
 export default {
 	title: 'Sections/Contact Info - Individual API',
