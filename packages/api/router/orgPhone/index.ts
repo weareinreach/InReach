@@ -10,6 +10,7 @@ type OrgPhoneHandlerCache = {
 	get: typeof import('./query.get.handler').get
 	forContactInfo: typeof import('./query.forContactInfo.handler').forContactInfo
 	forEditDrawer: typeof import('./query.forEditDrawer.handler').forEditDrawer
+	forContactInfoEdit: typeof import('./query.forContactInfoEdit.handler').forContactInfoEdit
 }
 export const orgPhoneRouter = defineRouter({
 	create: permissionedProcedure('createNewPhone')
@@ -60,5 +61,15 @@ export const orgPhoneRouter = defineRouter({
 				)
 			if (!HandlerCache.forEditDrawer) throw new Error('Failed to load handler')
 			return HandlerCache.forEditDrawer({ ctx, input })
+		}),
+	forContactInfoEdit: permissionedProcedure('updatePhone')
+		.input(schema.ZForContactInfoEditSchema)
+		.query(async ({ ctx, input }) => {
+			if (!HandlerCache.forContactInfoEdit)
+				HandlerCache.forContactInfoEdit = await import('./query.forContactInfoEdit.handler').then(
+					(mod) => mod.forContactInfoEdit
+				)
+			if (!HandlerCache.forContactInfoEdit) throw new Error('Failed to load handler')
+			return HandlerCache.forContactInfoEdit({ ctx, input })
 		}),
 })
