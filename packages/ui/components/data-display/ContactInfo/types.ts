@@ -18,6 +18,7 @@ interface CommonProps {
 	locationOnly?: boolean
 	serviceOnly?: boolean
 	websiteDesc?: boolean
+	edit?: boolean
 }
 
 export type PhoneNumbersProps = CommonProps & (ApiData | PassedData<'orgPhone', 'forContactInfo'>)

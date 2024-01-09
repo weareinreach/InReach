@@ -87,7 +87,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 			</Grid.Col>
 			<Grid.Col order={2}>
 				<Stack spacing={40}>
-					<ContactSection role='org' parentId={data.id} />
+					<ContactSection role='org' parentId={data.id} edit />
 					<Stack ref={ref} miw='100%'>
 						{width && (
 							<GoogleMap
@@ -134,6 +134,7 @@ export const getServerSideProps = async ({
 	const [i18n] = await Promise.allSettled([
 		getServerSideTranslations(locale, compact(['common', 'services', 'attribute', 'phone-type', orgId?.id])),
 		ssg.organization.forOrgPageEdits.prefetch({ slug }),
+		ssg.fieldOpt.countries.prefetch({ activeForOrgs: true }),
 	])
 	const props = {
 		session,
