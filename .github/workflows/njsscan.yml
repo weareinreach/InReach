@@ -10,10 +10,10 @@ name: njsscan
 
 on:
   push:
-    branches: [ "dev", "main" ]
+    branches: ['dev', 'main']
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "dev" ]
+    branches: ['dev']
   schedule:
     - cron: '27 4 * * 1'
 
@@ -29,14 +29,14 @@ jobs:
     runs-on: ubuntu-latest
     name: njsscan code scanning
     steps:
-    - name: ⤵️ Check out code from GitHub
-      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-    - name: 🧐 nodejsscan scan
-      id: njsscan
-      uses: ajinabraham/njsscan-action@7237412fdd36af517e2745077cedbf9d6900d711
-      with:
-        args: '. --sarif --output results.sarif || true'
-    - name: Upload njsscan report
-      uses: github/codeql-action/upload-sarif@v2
-      with:
-        sarif_file: results.sarif
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: 🧐 nodejsscan scan
+        id: njsscan
+        uses: ajinabraham/njsscan-action@7237412fdd36af517e2745077cedbf9d6900d711
+        with:
+          args: '. --sarif --output results.sarif || true'
+      - name: Upload njsscan report
+        uses: github/codeql-action/upload-sarif@e5f05b81d5b6ff8cfa111c80c22c5fd02a384118 # v3
+        with:
+          sarif_file: results.sarif
