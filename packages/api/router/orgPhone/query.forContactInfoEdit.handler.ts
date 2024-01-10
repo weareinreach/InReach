@@ -54,7 +54,7 @@ export const forContactInfoEdit = async ({ input }: TRPCHandlerParams<TForContac
 			published: true,
 			deleted: true,
 		},
-		orderBy: { primary: 'desc' },
+		orderBy: [{ published: 'desc' }, { deleted: 'asc' }],
 	})
 	const transformed = result.map(({ description, phoneType, country, ...record }) => ({
 		...record,
