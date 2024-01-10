@@ -76,6 +76,7 @@ export const DonateModal = () => {
 
 	const isSupportPage = router.pathname === '/support'
 	const showPopover = !isSupportPage && (opened || !showEmoji)
+	const isMainPage = router.pathname === '/'
 
 	return (
 		<>
@@ -96,7 +97,10 @@ export const DonateModal = () => {
 				zIndex={200}
 			>
 				<Popover.Target>
-					<Affix position={buttonPosition} style={{ display: isSupportPage ? 'none' : undefined }}>
+					<Affix
+						position={buttonPosition}
+						style={{ display: isSupportPage || isMainPage ? 'none' : undefined }}
+					>
 						<Button
 							className={cx(
 								// 'kindful-donate-btn',

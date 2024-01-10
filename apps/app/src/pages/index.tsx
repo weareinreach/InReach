@@ -186,7 +186,7 @@ const Home: NextPageWithOptions = () => {
 			<Box className={classes.banner}>
 				<Text variant={variants.Text.utility1white}>
 					<Trans
-						i18nKey='banner.redesign'
+						i18nKey='banner.donate'
 						ns='landingPage'
 						components={{
 							Link: (
@@ -194,6 +194,15 @@ const Home: NextPageWithOptions = () => {
 									external
 									variant={variants.Link.inheritStyle}
 									href='https://inreach.org/introducing-the-redesigned-inreach-app'
+									target='_blank'
+								></Link>
+							),
+							DonateLink: (
+								<Link
+									external
+									variant={variants.Link.inheritStyle}
+									href='https://inreach.kindful.com/embeds/9e692b4a-fcfc-46a2-9a0e-4f9b8b0bd37b'
+									target='_blank'
 								></Link>
 							),
 						}}
