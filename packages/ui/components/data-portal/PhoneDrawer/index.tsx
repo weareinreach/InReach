@@ -1,3 +1,4 @@
+// import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,
@@ -14,7 +15,7 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
-import { forwardRef } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, Select, TextInput } from 'react-hook-form-mantine'
 import { z } from 'zod'
@@ -52,7 +53,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 	const { t } = useTranslation(['phone-type'])
 	const { id: orgId } = useOrgInfo()
 	const apiUtils = api.useUtils()
-	const { data, isFetching } = api.orgPhone.forEditDrawer.useQuery(
+	const { isFetching } = api.orgPhone.forEditDrawer.useQuery(
 		{ id },
 		{
 			select: (data) => ({ ...data, orgId: orgId ?? '' }),
@@ -64,6 +65,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 	})
 	const [drawerOpened, drawerHandler] = useDisclosure(false)
 	const [modalOpened, modalHandler] = useDisclosure(false)
+
 	const { classes } = useStyles()
 	const { control, handleSubmit, formState, reset, getValues, watch } = useForm<FormSchema>({
 		resolver: zodResolver(FormSchema),
@@ -71,25 +73,38 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 		defaultValues: async () => {
 			const data = await apiUtils.orgPhone.forEditDrawer.fetch({ id })
 			if (!data) throw new Error('Failed to fetch data')
-			// TODO: format phone numbers with country code --> +12025551234
-			return data
+			const parsedPhone = parsePhoneNumber(data.number, data.country)
+			return { ...data, number: parsedPhone?.number ?? data.number }
 		},
 	})
-
+	const { isDirty: formIsDirty } = formState
+	const [isSaved, setIsSaved] = useState(formIsDirty)
 	const siteUpdate = api.orgPhone.update.useMutation({
 		onSettled: (data) => {
 			apiUtils.orgPhone.forEditDrawer.invalidate()
-			reset(data)
+			apiUtils.orgPhone.forContactInfoEdit.invalidate()
+			const parsedPhone = parsePhoneNumber(data?.number ?? '')
+			reset({ ...data, number: parsedPhone?.number ?? data?.number })
+		},
+		onSuccess: () => {
+			setIsSaved(true)
 		},
 	})
-	const isSaved = siteUpdate.isSuccess && !formState.isDirty
+	// const isSaved = /*siteUpdate.isSuccess &&*/ !formState.isDirty
 
+	useEffect(() => {
+		if (isSaved && formIsDirty) {
+			setIsSaved(false)
+		}
+	}, [formIsDirty, isSaved])
+
+	console.log({ isSaved, formIsDirty })
 	const values = {
 		phoneTypeId: watch('phoneTypeId'),
 	}
 
 	const handleClose = () => {
-		if (formState.isDirty) {
+		if (formIsDirty) {
 			return modalHandler.open()
 		} else {
 			return drawerHandler.close()
@@ -121,7 +136,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 									variant='primary-icon'
 									leftIcon={<Icon icon={isSaved ? 'carbon:checkmark' : 'carbon:save'} />}
 									loading={siteUpdate.isLoading}
-									disabled={!formState.isDirty}
+									disabled={!formIsDirty}
 									type='submit'
 								>
 									{isSaved ? 'Saved' : 'Save'}
@@ -197,6 +212,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 			<Stack>
 				<Box component='button' onClick={drawerHandler.open} ref={ref} {...props} />
 			</Stack>
+			{/* <DevTool control={control} id={id} styles={{ button: { display: drawerOpened ? 'block' : 'none' } }} /> */}
 		</>
 	)
 })

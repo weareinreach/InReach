@@ -13,7 +13,7 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { forwardRef } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, TextInput } from 'react-hook-form-mantine'
 import { z } from 'zod'
@@ -39,7 +39,7 @@ const FormSchema = z.object({
 type FormSchema = z.infer<typeof FormSchema>
 const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(({ id, ...props }, ref) => {
 	const { data, isFetching } = api.orgWebsite.forEditDrawer.useQuery({ id })
-	const [drawerOpened, drawerHandler] = useDisclosure(true)
+	const [drawerOpened, drawerHandler] = useDisclosure(false)
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const { classes } = useStyles()
 	const { control, handleSubmit, formState, reset, getValues } = useForm<FormSchema>({
@@ -47,14 +47,26 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(({ id, 
 		values: data,
 		defaultValues: data,
 	})
-	const apiUtils = api.useContext()
+	const apiUtils = api.useUtils()
+
+	const { isDirty: formIsDirty } = formState
+	const [isSaved, setIsSaved] = useState(formIsDirty)
+
 	const siteUpdate = api.orgWebsite.update.useMutation({
 		onSettled: (data) => {
-			apiUtils.orgWebsite.forContactInfo.invalidate()
+			apiUtils.orgWebsite.forEditDrawer.invalidate()
+			apiUtils.orgWebsite.forContactInfoEdit.invalidate()
 			reset(data)
 		},
+		onSuccess: () => {
+			setIsSaved(true)
+		},
 	})
-	const isSaved = siteUpdate.isSuccess && !formState.isDirty
+	useEffect(() => {
+		if (isSaved && formIsDirty) {
+			setIsSaved(false)
+		}
+	}, [formIsDirty, isSaved])
 	const handleClose = () => {
 		if (formState.isDirty) {
 			return modalHandler.open()
@@ -64,7 +76,13 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(({ id, 
 	}
 	return (
 		<>
-			<Drawer.Root onClose={handleClose} opened={drawerOpened} position='right'>
+			<Drawer.Root
+				onClose={handleClose}
+				opened={drawerOpened}
+				position='right'
+				zIndex={10001}
+				keepMounted={false}
+			>
 				<Drawer.Overlay />
 				<Drawer.Content className={classes.drawerContent}>
 					<form
@@ -103,7 +121,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(({ id, 
 								</Stack>
 							</Stack>
 						</Drawer.Body>
-						<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes'>
+						<Modal opened={modalOpened} onClose={modalHandler.close} title='Unsaved Changes' zIndex={10002}>
 							<Stack align='center'>
 								<Text>You have unsaved changes</Text>
 								<Group noWrap>

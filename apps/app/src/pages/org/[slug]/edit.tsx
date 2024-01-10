@@ -98,7 +98,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 						)}
 					</Stack>
 				</Stack>
-				<DevTool control={formMethods.control} />
+				<DevTool control={formMethods.control} placement='bottom-right' id='page' />
 			</Grid.Col>
 		</FormProvider>
 	)

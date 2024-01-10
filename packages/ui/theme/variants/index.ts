@@ -96,6 +96,7 @@ export const variantNames: VariantNames = {
 		utility3darkGray: 'utility3darkGray',
 		utility4darkGray: 'utility4darkGray',
 		darkGray: 'darkGray',
+		darkGrayStrikethru: 'darkGrayStrikethru',
 		utility1white: 'utility1white',
 		coolGray: 'coolGray',
 		coolGrayStrikethru: 'coolGrayStrikethru',
