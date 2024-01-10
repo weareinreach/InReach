@@ -50,13 +50,17 @@ export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerS
 				description: { select: { id: true, key: true, tsKey: { select: { text: true } } } },
 				locationOnly: true,
 				serviceOnly: true,
+				country: { select: { cca2: true } },
 			},
 		})
 		const orgId = await getOrgId(input.id)
+		const { country, description, ...rest } = result
+
 		const reformatted = {
-			...result,
+			...rest,
+			description: description ? description?.tsKey?.text : null,
 			orgId,
-			description: result.description ? result.description?.tsKey?.text : null,
+			country: country?.cca2,
 		}
 		return reformatted
 	} catch (error) {
