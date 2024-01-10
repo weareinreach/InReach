@@ -97,6 +97,7 @@ jobs:
         id: verify-changed-files
         with:
           files: '**/locales/*/*.json'
+          separator: \n
 
       - name: Output changed file list
         id: output-changed-file-list
