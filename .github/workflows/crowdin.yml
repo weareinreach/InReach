@@ -102,7 +102,7 @@ jobs:
       - name: Output changed file list
         id: output-changed-file-list
         if: steps.verify-changed-files.outputs.files_changed == 'true'
-        run: echo ${{ steps.verify-changed-files.outputs.changed_files }} >> $GITHUB_STEP_SUMMARY
+        run: echo "${{ steps.verify-changed-files.outputs.changed_files }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Format json files
         if: ((github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled') && steps.verify-changed-files.outputs.files_changed
