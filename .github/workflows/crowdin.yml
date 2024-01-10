@@ -101,16 +101,20 @@ jobs:
 
       - name: Format json files
         if: ((github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled') && steps.verify-changed-files.outputs.files_changed
-        # working-directory: apps/app
+        working-directory: apps/app
         id: run-prettier
-        run: prettier --write --ignore-unknown ${{steps.verify-changed-files.outputs.changed_files}}
+        run: |
+          echo 'Installing package dependencies'
+          pnpm install
+          echo 'Running prettier'
+          pnpm format
 
       - name: Get files to commit
         if: steps.run-prettier.conclusion == 'success'
         uses: tj-actions/verify-changed-files@b742fc9c8c613945ae7ee756f8d2bb3bd2d1f7dd # v17
         id: get-pending-files
         with:
-          files: '**/locales/*/*.json'
+          files: 'apps/app/**/locales/*/*.json'
           separator: <br>
 
       - name: Commit files
