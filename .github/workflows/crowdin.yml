@@ -28,8 +28,6 @@ jobs:
   synchronize-with-crowdin:
     name: Crowdin Actions
     runs-on: ubuntu-latest
-    env:
-      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -49,7 +47,7 @@ jobs:
         id: pnpm-install
         with:
           run_install: |
-            args: [--global, prettier, "@crowdin/cli"]
+            args: [--global, "@crowdin/cli"]
 
       - name: Install Node.js
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
@@ -58,9 +56,6 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
           cache-dependency-path: pnpm-lock.yaml
-
-      # - name: Install Crowdin
-      #   run: pnpm -g add @crowdin/cli
 
       - name: Remove Jira ticket ID from branch name
         id: branchregex
@@ -82,14 +77,20 @@ jobs:
 
       - name: Push sources to Crowdin
         if: github.event_name != 'pull_request' && !startsWith(github.ref_name, 'l10n_')
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         run: crowdin push sources -b ${{ steps.sanitizebranch.outputs.value }} --no-progress
 
       - name: Synchronize sources to Crowdin
         if: steps.sanitizebranch.outputs.value == 'main'
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         run: crowdin push sources -b ${{ steps.sanitizebranch.outputs.value }} --no-progress
 
       - name: Pull updated translations from Crowdin
         if: (github.event_name != 'pull_request' && github.ref_name == 'dev') || github.event_name == 'scheduled'
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         run: crowdin pull -b ${{ steps.sanitizebranch.outputs.value }} --no-progress
 
       - name: Check for updated files
@@ -114,7 +115,6 @@ jobs:
         uses: tj-actions/verify-changed-files@b742fc9c8c613945ae7ee756f8d2bb3bd2d1f7dd # v17
         id: get-pending-files
         with:
-          files: 'apps/app/**/locales/*/*.json'
           separator: <br>
 
       - name: Commit files
@@ -151,8 +151,12 @@ jobs:
 
       - name: Delete Crowdin Branch
         if: github.event_name == 'pull_request' && github.ref_name != 'l10n_dev' && steps.sanitizebranch.outputs.value != 'dev' && steps.sanitizebranch.outputs.value != 'main'
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         run: crowdin branch delete ${{ steps.sanitizebranch.outputs.value }} --no-progress
 
       - name: Generate OTA Release
         if: github.event_name == 'schedule'
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
         run: crowdin distribution release ${{ secrets.CROWDIN_OTA_HASH }} --no-progress --verbose
