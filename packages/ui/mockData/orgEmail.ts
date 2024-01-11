@@ -32,4 +32,20 @@ export const orgEmail = {
 			return data
 		},
 	}),
+	forContactInfoEdit: getTRPCMock({
+		path: ['orgEmail', 'forContactInfoEdit'],
+		type: 'query',
+		response: async () => {
+			const { default: data } = await import('./json/orgEmail.forContactInfoEdit.json')
+			return data
+		},
+	}),
+	forEditDrawer: getTRPCMock({
+		path: ['orgEmail', 'forEditDrawer'],
+		type: 'query',
+		response: async () => {
+			const { default: data } = await import('./json/orgEmail.forEditDrawer.json')
+			return data
+		},
+	}),
 } satisfies MockHandlerObject<'orgEmail'>

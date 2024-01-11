@@ -9,6 +9,8 @@ type OrgEmailHandlerCache = {
 	upsertMany: typeof import('./mutation.upsertMany.handler').upsertMany
 	get: typeof import('./query.get.handler').get
 	forContactInfo: typeof import('./query.forContactInfo.handler').forContactInfo
+	forContactInfoEdit: typeof import('./query.forContactInfoEdit.handler').forContactInfoEdit
+	forEditDrawer: typeof import('./query.forEditDrawer.handler').forEditDrawer
 }
 export const orgEmailRouter = defineRouter({
 	create: permissionedProcedure('createNewEmail')
@@ -50,4 +52,24 @@ export const orgEmailRouter = defineRouter({
 		if (!HandlerCache.forContactInfo) throw new Error('Failed to load handler')
 		return HandlerCache.forContactInfo({ ctx, input })
 	}),
+	forContactInfoEdit: permissionedProcedure('updateEmail')
+		.input(schema.ZForContactInfoEditSchema)
+		.query(async ({ ctx, input }) => {
+			if (!HandlerCache.forContactInfoEdit)
+				HandlerCache.forContactInfoEdit = await import('./query.forContactInfoEdit.handler').then(
+					(mod) => mod.forContactInfoEdit
+				)
+			if (!HandlerCache.forContactInfoEdit) throw new Error('Failed to load handler')
+			return HandlerCache.forContactInfoEdit({ ctx, input })
+		}),
+	forEditDrawer: permissionedProcedure('updateEmail')
+		.input(schema.ZForEditDrawerSchema)
+		.query(async ({ ctx, input }) => {
+			if (!HandlerCache.forEditDrawer)
+				HandlerCache.forEditDrawer = await import('./query.forEditDrawer.handler').then(
+					(mod) => mod.forEditDrawer
+				)
+			if (!HandlerCache.forEditDrawer) throw new Error('Failed to load handler')
+			return HandlerCache.forEditDrawer({ ctx, input })
+		}),
 })
