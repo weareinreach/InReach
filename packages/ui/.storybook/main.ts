@@ -89,6 +89,7 @@ const config: StorybookConfig = {
 						'mockAuthStates.ts'
 					),
 					'next-i18next': 'react-i18next',
+					'msw/native': path.resolve(__dirname, '../node_modules/msw/lib/native/index.mjs'),
 				},
 				roots: Array.isArray(config.resolve?.roots)
 					? [...config.resolve.roots, publicStatic]
