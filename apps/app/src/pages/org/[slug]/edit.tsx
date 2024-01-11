@@ -89,7 +89,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 				<Stack spacing={40}>
 					<ContactSection role='org' parentId={data.id} edit />
 					<Stack ref={ref} miw='100%'>
-						{width && (
+						{!!width && (
 							<GoogleMap
 								locationIds={locations.map(({ id }) => id)}
 								width={width}
