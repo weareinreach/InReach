@@ -13,9 +13,11 @@ import {
 	Title,
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { useRouter } from 'next/router'
 import { forwardRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Checkbox, TextInput } from 'react-hook-form-mantine'
+import invariant from 'tiny-invariant'
 import { z } from 'zod'
 
 import { Breadcrumb } from '~ui/components/core/Breadcrumb'
@@ -35,16 +37,19 @@ const FormSchema = z.object({
 	locationOnly: z.boolean(),
 	serviceOnly: z.boolean(),
 	id: z.string(),
+	orgId: z.string(),
+	descriptionId: z.string().nullish(),
 })
 type FormSchema = z.infer<typeof FormSchema>
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
 	drawerContent: {
 		borderRadius: `${rem(32)} 0 0 0`,
 		minWidth: '40vw',
 	},
 }))
 export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(({ id, ...props }, ref) => {
-	const { data, isFetching } = api.orgEmail.forEditDrawer.useQuery({ id })
+	const router = useRouter<'/org/[slug]/edit'>()
+	const { isFetching } = api.orgEmail.forEditDrawer.useQuery({ id })
 	const [drawerOpened, drawerHandler] = useDisclosure(false)
 	const [modalOpened, modalHandler] = useDisclosure(false)
 	const { classes } = useStyles()
@@ -53,8 +58,10 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(({ i
 		resolver: zodResolver(FormSchema),
 		defaultValues: async () => {
 			const data = await apiUtils.orgEmail.forEditDrawer.fetch({ id })
-			if (!data) throw new Error('no data')
-			return data
+			const { id: orgId } = await apiUtils.organization.getIdFromSlug.fetch({ slug: router.query.slug ?? '' })
+			invariant(data, 'No data returned')
+			invariant(orgId, 'No orgId')
+			return { ...data, orgId }
 		},
 	})
 

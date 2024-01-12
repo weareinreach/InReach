@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-import { Prisma } from '@weareinreach/db'
 import { prefixedId } from '~api/schemas/idPrefix'
 
 export const ZUpdateSchema = z.object({

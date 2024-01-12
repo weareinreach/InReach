@@ -28,6 +28,7 @@ export default {
 		component: Button,
 		children: 'Open Drawer',
 		variant: 'inlineInvertedUtil1',
+		id: 'oeml_01GVH3VEVDX7QVQ4QA4C1XXVN3',
 	},
 } satisfies Meta<typeof EmailDrawer>
 

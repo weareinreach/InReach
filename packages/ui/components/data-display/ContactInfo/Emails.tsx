@@ -5,6 +5,7 @@ import { type ReactElement } from 'react'
 import { isExternal, Link } from '~ui/components/core/Link'
 import { EmailDrawer } from '~ui/components/data-portal/EmailDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useOrgInfo } from '~ui/hooks/useOrgInfo'
 import { useSlug } from '~ui/hooks/useSlug'
 import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -17,9 +18,8 @@ export const Emails = ({ edit, ...props }: EmailsProps) =>
 
 const EmailsDisplay = ({ parentId = '', passedData, direct, locationOnly, serviceOnly }: EmailsProps) => {
 	const output: ReactElement[] = []
-	const slug = useSlug()
-	const { data: orgId } = api.organization.getIdFromSlug.useQuery({ slug })
-	const { t } = useTranslation(orgId?.id ? ['common', orgId.id, 'user-title'] : ['common', 'user-title'])
+	const { id: orgId } = useOrgInfo()
+	const { t } = useTranslation(orgId ? ['common', orgId, 'user-title'] : ['common', 'user-title'])
 	const variants = useCustomVariant()
 	const { data } = api.orgEmail.forContactInfo.useQuery(
 		{ parentId, locationOnly, serviceOnly },
@@ -57,7 +57,7 @@ const EmailsDisplay = ({ parentId = '', passedData, direct, locationOnly, servic
 		const desc = title
 			? t(title.key, { ns: 'user-title' })
 			: description?.key
-				? t(description.key, { defaultValue: description.defaultText, ns: orgId?.id })
+				? t(description.key, { defaultValue: description.defaultText, ns: orgId })
 				: undefined
 
 		const item = (
