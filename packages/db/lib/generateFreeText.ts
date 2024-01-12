@@ -39,7 +39,7 @@ export const generateFreeText = <T extends GenerateFreeTextType>({
 		}
 	})()
 	const ns = namespaces.orgData
-	if (!key) throw new Error('Error creating key')
+	invariant(key, 'Error creating key')
 	return {
 		translationKey: Prisma.validator<Prisma.TranslationKeyUncheckedCreateInput>()({ key, text, ns }),
 		freeText: Prisma.validator<Prisma.FreeTextUncheckedCreateInput>()({
@@ -78,7 +78,7 @@ export const generateNestedFreeText = <T extends GenerateFreeTextType>({
 			}
 		}
 	})()
-	invariant(key)
+	invariant(key, 'Error creating key')
 	const ns = namespaces.orgData
 	return {
 		create: {
@@ -88,11 +88,64 @@ export const generateNestedFreeText = <T extends GenerateFreeTextType>({
 	}
 }
 
+export const generateNestedFreeTextUpsert = <T extends GenerateFreeTextType>({
+	orgId: orgSlug,
+	itemId,
+	text,
+	type,
+	freeTextId,
+}: GenerateFreeTextParams<T>) => {
+	const key = (() => {
+		switch (type) {
+			case 'orgDesc': {
+				return createKey([orgSlug, 'description'])
+			}
+			case 'attSupp': {
+				invariant(itemId)
+				return createKey([orgSlug, 'attribute', itemId])
+			}
+			case 'svcName': {
+				invariant(itemId)
+				return createKey([orgSlug, itemId, 'name'])
+			}
+			case 'websiteDesc':
+			case 'phoneDesc':
+			case 'emailDesc':
+			case 'svcDesc': {
+				invariant(itemId)
+				return createKey([orgSlug, itemId, 'description'])
+			}
+		}
+	})()
+	invariant(key, 'Error creating key')
+	const ns = namespaces.orgData
+
+	const id = freeTextId ?? generateId('freeText')
+	return {
+		upsert: {
+			where: { id },
+			create: {
+				id,
+				tsKey: { create: { key, text, namespace: { connect: { name: ns } } } },
+			},
+			update: {
+				tsKey: {
+					upsert: {
+						where: { key },
+						create: { key, text, namespace: { connect: { name: ns } } },
+						update: { text },
+					},
+				},
+			},
+		},
+	}
+}
+
 type GenerateFreeTextParams<T extends GenerateFreeTextType> = GenerateFreeTextWithItem<T>
 interface GenerateFreeTextBase {
 	text: string
 	orgId: string
-	freeTextId?: string
+	freeTextId?: string | null
 }
 
 type GenerateFreeTextType =
