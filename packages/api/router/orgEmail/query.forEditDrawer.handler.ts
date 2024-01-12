@@ -12,6 +12,7 @@ export const forEditDrawer = async ({ ctx, input }: TRPCHandlerParams<TForEditDr
 				id: true,
 				deleted: true,
 				description: { select: { tsKey: { select: { text: true, key: true, ns: true } } } },
+				descriptionId: true,
 				email: true,
 				firstName: true,
 				lastName: true,
