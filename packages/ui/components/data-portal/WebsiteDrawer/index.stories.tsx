@@ -4,7 +4,7 @@ import { Button } from '~ui/components/core/Button'
 import { organization } from '~ui/mockData/organization'
 import { orgWebsite } from '~ui/mockData/orgWebsite'
 
-import { WebsiteDrawer } from './WebsiteDrawer'
+import { WebsiteDrawer } from './index'
 
 export default {
 	title: 'Data Portal/Drawers/Website',
