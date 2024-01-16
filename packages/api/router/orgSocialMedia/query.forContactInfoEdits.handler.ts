@@ -1,4 +1,4 @@
-import { isIdFor, type Prisma, prisma } from '@weareinreach/db'
+import { isIdFor, prisma, type Prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -27,6 +27,8 @@ export const forContactInfoEdits = async ({ input }: TRPCHandlerParams<TForConta
 				username: true,
 				service: { select: { name: true, logoIcon: true } },
 				orgLocationOnly: true,
+				published: true,
+				deleted: true,
 			},
 		})
 		const transformed = result.map(({ service, ...record }) => ({
