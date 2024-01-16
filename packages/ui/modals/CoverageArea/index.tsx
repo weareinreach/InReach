@@ -105,9 +105,17 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 	const placeHolders = {
 		first: t('select.base', { item: 'Country' }),
 		second: t('select.base', {
-			item: reduceDistType(dataDistrict?.map(({ govDistType }) => govDistType), t),
+			item: reduceDistType(
+				dataDistrict?.map(({ govDistType }) => govDistType),
+				t
+			),
 		}),
-		third: t('select.base', { item: reduceDistType(dataSubDist?.map(({ govDistType }) => govDistType), t) }),
+		third: t('select.base', {
+			item: reduceDistType(
+				dataSubDist?.map(({ govDistType }) => govDistType),
+				t
+			),
+		}),
 	}
 
 	const handleAdd = () => {
@@ -159,7 +167,10 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 						<CloseButton
 							variant='transparent'
 							onClick={() =>
-								form.setValue('countries', serviceAreaCountries?.filter(({ id }) => id !== country.id))
+								form.setValue(
+									'countries',
+									serviceAreaCountries?.filter(({ id }) => id !== country.id)
+								)
 							}
 						/>
 					</Group>
@@ -183,7 +194,10 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 							<CloseButton
 								variant='transparent'
 								onClick={() =>
-									form.setValue('districts', serviceAreaDistricts?.filter(({ id }) => id !== govDist.id))
+									form.setValue(
+										'districts',
+										serviceAreaDistricts?.filter(({ id }) => id !== govDist.id)
+									)
 								}
 							/>
 						</Group>
