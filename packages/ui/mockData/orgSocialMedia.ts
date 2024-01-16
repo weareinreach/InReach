@@ -11,4 +11,12 @@ export const orgSocialMedia = {
 				: data
 		},
 	}),
+	forContactInfoEdits: getTRPCMock({
+		path: ['orgSocialMedia', 'forContactInfoEdits'],
+		type: 'query',
+		response: async () => {
+			const { default: data } = await import('./json/orgSocialMedia.forContactInfoEdits.json')
+			return data
+		},
+	}),
 } satisfies MockHandlerObject<'orgSocialMedia'>

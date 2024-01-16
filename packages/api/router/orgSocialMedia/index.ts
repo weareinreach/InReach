@@ -7,6 +7,7 @@ type OrgSocialMediaHandlerCache = {
 	create: typeof import('./mutation.create.handler').create
 	update: typeof import('./mutation.update.handler').update
 	forContactInfo: typeof import('./query.forContactInfo.handler').forContactInfo
+	forContactInfoEdits: typeof import('./query.forContactInfoEdits.handler').forContactInfoEdits
 }
 export const orgSocialMediaRouter = defineRouter({
 	create: permissionedProcedure('createNewSocial')
@@ -33,4 +34,14 @@ export const orgSocialMediaRouter = defineRouter({
 		if (!HandlerCache.forContactInfo) throw new Error('Failed to load handler')
 		return HandlerCache.forContactInfo({ ctx, input })
 	}),
+	forContactInfoEdits: permissionedProcedure('updateSocialMedia')
+		.input(schema.ZForContactInfoEditsSchema)
+		.query(async ({ ctx, input }) => {
+			if (!HandlerCache.forContactInfoEdits)
+				HandlerCache.forContactInfoEdits = await import('./query.forContactInfoEdits.handler').then(
+					(mod) => mod.forContactInfoEdits
+				)
+			if (!HandlerCache.forContactInfoEdits) throw new Error('Failed to load handler')
+			return HandlerCache.forContactInfoEdits({ ctx, input })
+		}),
 })
