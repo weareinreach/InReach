@@ -18,10 +18,6 @@ export const SearchParamsSchema = z
 		z.coerce.number().gte(0).describe('radius'),
 		z.enum(['mi', 'km']),
 	])
-	.transform<[string, number, number, number, 'mi' | 'km']>(([country, lon, lat, radius, unit]) => [
-		country,
-		lon,
-		lat,
-		radius,
-		unit,
-	])
+	.transform<
+		[string, number, number, number, 'mi' | 'km']
+	>(([country, lon, lat, radius, unit]) => [country, lon, lat, radius, unit])
