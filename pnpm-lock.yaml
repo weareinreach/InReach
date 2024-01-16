@@ -1215,8 +1215,8 @@ importers:
         specifier: 6.5.0
         version: 6.5.0
       '@tweenjs/tween.js':
-        specifier: 21.1.1
-        version: 21.1.1
+        specifier: 23.1.1
+        version: 23.1.1
       '@weareinreach/analytics':
         specifier: workspace:*
         version: link:../analytics
@@ -9813,8 +9813,8 @@ packages:
       '@turf/helpers': 6.5.0
     dev: false
 
-  /@tweenjs/tween.js@21.1.1:
-    resolution: {integrity: sha512-O2GetAwEC/0MOiRb3lxCLIt/eeugoDPX0nu+1SFWLqGKf835ZdWsfM9RzDpjF+aKkpYMhvOnEhO+SxMnHHjpfw==}
+  /@tweenjs/tween.js@23.1.1:
+    resolution: {integrity: sha512-ZpboH7pCPPeyBWKf8c7TJswtCEQObFo3bOBYalm99NzZarATALYCo5OhbCa/n4RQyJyHfhkdx+hNrdL5ByFYDw==}
     dev: false
 
   /@types/acorn@4.0.6:
