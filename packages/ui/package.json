@@ -25,7 +25,7 @@
 		"@terraformer/wkt": "2.2.0",
 		"@textea/json-viewer": "3.2.3",
 		"@turf/helpers": "6.5.0",
-		"@tweenjs/tween.js": "21.1.1",
+		"@tweenjs/tween.js": "23.1.1",
 		"@weareinreach/analytics": "workspace:*",
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
