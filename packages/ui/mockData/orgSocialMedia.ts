@@ -19,4 +19,28 @@ export const orgSocialMedia = {
 			return data
 		},
 	}),
+	getServiceTypes: getTRPCMock({
+		path: ['orgSocialMedia', 'getServiceTypes'],
+		type: 'query',
+		response: async () => {
+			const { default: data } = await import('./json/orgSocialMedia.getServiceTypes.json')
+			return data
+		},
+	}),
+	forEditDrawer: getTRPCMock({
+		path: ['orgSocialMedia', 'forEditDrawer'],
+		type: 'query',
+		response: async () => {
+			const { default: data } = await import('./json/orgSocialMedia.forEditDrawer.json')
+			return data
+		},
+	}),
+	update: getTRPCMock({
+		path: ['orgSocialMedia', 'update'],
+		type: 'mutation',
+		response: async (input) => {
+			const { default: data } = await import('./json/orgSocialMedia.forEditDrawer.json')
+			return { ...data, ...input }
+		},
+	}),
 } satisfies MockHandlerObject<'orgSocialMedia'>
