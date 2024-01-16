@@ -1,9 +1,9 @@
 /** @type {import('prettier').Config} */
 const config = {
 	plugins: [
-		'prettier-plugin-packagejson',
-		'./node_modules/prettier-plugin-jsdoc/dist/index.js',
-		'prettier-plugin-prisma',
+		require.resolve('prettier-plugin-packagejson'),
+		require.resolve('prettier-plugin-jsdoc'),
+		require.resolve('prettier-plugin-prisma'),
 	],
 	printWidth: 110,
 	tabWidth: 2,
@@ -35,6 +35,12 @@ const config = {
 			files: '*.{yml,yaml}',
 			options: {
 				useTabs: false,
+			},
+		},
+		{
+			files: '.swcrc',
+			options: {
+				parser: 'json',
 			},
 		},
 	],
