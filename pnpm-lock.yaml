@@ -1576,8 +1576,8 @@ importers:
         specifier: 15.2.0
         version: 15.2.0(i18next@23.7.16)(next@14.0.4)(react-i18next@14.0.0)(react@18.2.0)
       postcss-loader:
-        specifier: 7.3.4
-        version: 7.3.4(postcss@8.4.33)(typescript@5.3.3)(webpack@5.89.0)
+        specifier: 8.0.0
+        version: 8.0.0(postcss@8.4.33)(typescript@5.3.3)(webpack@5.89.0)
       prettier:
         specifier: 3.2.2
         version: 3.2.2
@@ -20591,6 +20591,22 @@ packages:
       webpack: ^5.0.0 || 5
     dependencies:
       cosmiconfig: 8.3.6(typescript@5.3.3)
+      jiti: 1.21.0
+      postcss: 8.4.33
+      semver: 7.5.4
+      webpack: 5.89.0(@swc/core@1.3.103)(esbuild@0.18.20)
+    transitivePeerDependencies:
+      - typescript
+    dev: true
+
+  /postcss-loader@8.0.0(postcss@8.4.33)(typescript@5.3.3)(webpack@5.89.0):
+    resolution: {integrity: sha512-+RiNlmYd1aXYv6QSBOAu6n9eJYy0ydyXTfjljAJ3vFU6MMo2M552zTVcBpBH+R5aAeKaYVG1K9UEyAVsLL1Qjg==}
+    engines: {node: '>= 18.12.0'}
+    peerDependencies:
+      postcss: ^8.4.31
+      webpack: ^5.0.0 || 5
+    dependencies:
+      cosmiconfig: 9.0.0(typescript@5.3.3)
       jiti: 1.21.0
       postcss: 8.4.33
       semver: 7.5.4
