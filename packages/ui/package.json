@@ -147,7 +147,7 @@
 		"next": "14.0.4",
 		"next-auth": "4.24.5",
 		"next-i18next": "15.2.0",
-		"postcss-loader": "7.3.4",
+		"postcss-loader": "8.0.0",
 		"prettier": "3.2.2",
 		"pretty-bytes": "6.1.1",
 		"react": "18.2.0",
