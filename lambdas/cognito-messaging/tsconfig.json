@@ -11,7 +11,7 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"isolatedModules": false
+		"isolatedModules": false,
 	},
-	"files": ["./src/index.ts"]
+	"files": ["./src/index.ts"],
 }

@@ -10,9 +10,9 @@
 			"~db/*": ["../../packages/db/*"],
 			"~ui/*": ["../../packages/ui/*"],
 			"~util/*": ["../../packages/util/*"],
-			"~web/*": ["../../apps/web/src/*"]
-		}
+			"~web/*": ["../../apps/web/src/*"],
+		},
 	},
 	"exclude": ["**/node_modules/**"],
-	"include": ["./**/*.ts"]
+	"include": ["./**/*.ts"],
 }
