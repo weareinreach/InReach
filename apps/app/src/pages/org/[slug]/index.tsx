@@ -277,12 +277,12 @@ export const getStaticProps = async ({
 			}
 		}
 
-		const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
+		const { id: orgId } = await ssg.organization.getIdFromSlug.fetch({ slug })
 		if (!orgId) return { notFound: true }
 
 		const [i18n] = await Promise.allSettled([
 			orgId
-				? getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId?.id])
+				? getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId])
 				: getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type']),
 			ssg.organization.forOrgPage.prefetch({ slug }),
 		])
@@ -290,7 +290,7 @@ export const getStaticProps = async ({
 
 		const props = {
 			trpcState: ssg.dehydrate(),
-			organizationId: orgId?.id,
+			organizationId: orgId,
 			slug,
 			...(i18n.status === 'fulfilled' ? i18n.value : {}),
 		}

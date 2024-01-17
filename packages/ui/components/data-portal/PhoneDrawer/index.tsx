@@ -98,7 +98,6 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, ...p
 		}
 	}, [formIsDirty, isSaved])
 
-	console.log({ isSaved, formIsDirty })
 	const values = {
 		phoneTypeId: watch('phoneTypeId'),
 	}
