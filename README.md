@@ -54,9 +54,9 @@
 
 ## About
 
-**InReach** is the world’s first tech platform matching LGBTQ+ people with safe, verified resources.
+**InReach** is the world’s first tech platform matching LGBTQ+ people facing persecution and discrimination with safe, verified resources.
 
-InReach is for the entire diverse LGBTQ+ community – including asylum seekers and refugees, undocumented and other immigrants, young people experiencing homelessness, those facing family or community rejection due to their identity, and other transgender and non-binary people in need of safe resources.
+The InReach App is available on web (desktop and mobile), and native iOS and Android. Over 9,000 services across the U.S. are currently listed, with new verified services added every day by trained volunteers. InReach’s open-source technology instantly matches LGBTQ+ people in need with independently verified safe housing, medical and mental health care, immigration and other legal help, meal assistance, education and employment, translation, community and spiritual support, and more critical services. InReach is a comprehensive, digital one-stop-shop for all intersectional community needs, with listed verified services for LGBTQ+ asylum seekers, refugees and other immigrants, BIPOC communities, transgender folks, youth and caregivers, and more. The InReach App is free for everyone – including lawyers, case managers, social workers, and other service providers and community organizations searching for affirming resource referrals for LGBTQ+ clients. 
 
 <!-- <details>
 <summary>Screenshots</summary>
