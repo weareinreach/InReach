@@ -119,6 +119,7 @@
 		"@typescript-eslint/parser": "6.19.0",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
+		"@welldone-software/why-did-you-render": "8.0.1",
 		"commander": "11.1.0",
 		"dotenv": "16.3.1",
 		"eslint": "8.56.0",

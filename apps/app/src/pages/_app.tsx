@@ -1,3 +1,5 @@
+import '../../lib/wdyr'
+
 import { Space } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import { Analytics } from '@vercel/analytics/react'

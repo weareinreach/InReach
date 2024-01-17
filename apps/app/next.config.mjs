@@ -78,9 +78,20 @@ const nextConfig = {
 		// Automatically tree-shake Sentry logger statements to reduce bundle size
 		disableLogger: isVercelProd || isVercelActiveDev,
 	},
-	webpack: (config, { isServer, webpack }) => {
+	webpack: (config, { dev, isServer, webpack }) => {
 		if (isServer) {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
+		}
+		if (dev && !isServer) {
+			const origEntry = config.entry
+			config.entry = async () => {
+				const wdyrPath = path.resolve(__dirname, './lib/wdyr.ts')
+				const entries = await origEntry()
+				if (entries['main.js'] && !entries['main.js'].includes(wdyrPath)) {
+					entries['main.js'].push(wdyrPath)
+				}
+				return entries
+			}
 		}
 
 		config.devtool = 'eval-source-map'

@@ -1,6 +1,6 @@
-import { Icon as Iconify, type IconifyIconProps, type IconProps } from '@iconify/react'
+import { Icon as Iconify, type IconifyIconHTMLElement, type IconifyIconProps } from '@iconify-icon/react'
 import { createStyles } from '@mantine/core'
-import { forwardRef, type SVGProps } from 'react'
+import { type Ref, type SVGProps } from 'react'
 import { type LiteralUnion } from 'type-fest'
 
 import { iconList } from './iconList'
@@ -19,20 +19,12 @@ const useStyles = createStyles((theme, { block }: IconStylesParams) => ({
 	},
 }))
 
-export const Icon = forwardRef<IconProps['ref'], CustomIconProps>(
-	({ icon, block, className, ...props }, ref) => {
-		const { classes, cx } = useStyles({ block })
-		return (
-			<Iconify
-				// @ts-expect-error Iconify doesn't like our ref...
-				ref={ref}
-				icon={validateIcon(icon)}
-				className={cx(classes.root, className)}
-				{...props}
-			/>
-		)
-	}
-)
+export const Icon = ({ icon, block, className, ref, ...props }: CustomIconProps) => {
+	const { classes, cx } = useStyles({ block })
+	Iconify.displayName = 'Iconify'
+	return <Iconify ref={ref} icon={validateIcon(icon)} className={cx(classes.root, className)} {...props} />
+}
+
 Icon.displayName = '@weareinreach/ui/icon'
 export type IconList = (typeof iconList)[number]
 interface IconStylesParams {
@@ -43,6 +35,6 @@ interface CustomIconifyIconProps extends IconifyIconProps, IconStylesParams {
 	/** [Search available icons here](https://icon-sets.iconify.design/carbon/) */
 	icon: LiteralUnion<IconList, string>
 }
-type IconElementProps = SVGProps<SVGSVGElement>
+type IconElementProps = SVGProps<IconifyIconHTMLElement>
 
-type CustomIconProps = IconElementProps & CustomIconifyIconProps //& { ref?: RefAttributes<SVGSVGElement> }
+type CustomIconProps = IconElementProps & CustomIconifyIconProps & { ref?: Ref<IconifyIconHTMLElement> }
