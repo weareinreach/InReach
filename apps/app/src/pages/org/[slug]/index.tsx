@@ -60,7 +60,10 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const OrganizationPage = ({
+	slug,
+	organizationId: orgId,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const router = useRouter<'/org/[slug]'>()
 	const { data, status } = api.organization.forOrgPage.useQuery({ slug }, { enabled: !!slug })
 	// const { query } = router
@@ -68,7 +71,7 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 		t,
 		i18n,
 		ready: i18nReady,
-	} = useTranslation(['common', 'services', 'attribute', 'phone-type', ...(data?.id ? [data.id] : [])])
+	} = useTranslation(['common', 'services', 'attribute', 'phone-type', ...(orgId ? [orgId] : [])])
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(

@@ -192,6 +192,7 @@
 	"other-specify": "Other (please specify)",
 	"page-title": {
 		"base": "{{- title}} - InReach",
+		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
 		"search-results": "Search Results"
 	},
 	"password": "Password",

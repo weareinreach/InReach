@@ -1,8 +1,10 @@
 import { DevTool } from '@hookform/devtools'
 import { Grid, Stack } from '@mantine/core'
 import { useElementSize } from '@mantine/hooks'
+import { t } from 'i18next'
 import compact from 'just-compact'
 import { type GetServerSidePropsContext, type InferGetServerSidePropsType } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useState } from 'react'
@@ -61,46 +63,51 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 	const { attributes, description, slug, locations, isClaimed } = data
 
 	return (
-		<FormProvider {...formMethods}>
-			<Grid.Col sm={8} order={1}>
-				<Stack pt={24} align='flex-start' spacing={40}>
-					<ListingBasicInfo
-						data={{
-							name: data.name,
-							id: data.id,
-							slug,
-							lastVerified: data.lastVerified,
-							attributes,
-							description,
-							locations,
-							isClaimed,
-						}}
-						edit
-					/>
+		<>
+			<Head>
+				<title>{t('page-title.edit-mode', { ns: 'common', title: data.name })}</title>
+			</Head>
+			<FormProvider {...formMethods}>
+				<Grid.Col sm={8} order={1}>
+					<Stack pt={24} align='flex-start' spacing={40}>
+						<ListingBasicInfo
+							data={{
+								name: data.name,
+								id: data.id,
+								slug,
+								lastVerified: data.lastVerified,
+								attributes,
+								description,
+								locations,
+								isClaimed,
+							}}
+							edit
+						/>
+						<Stack spacing={40}>
+							{locations.map((location) => (
+								<LocationCard key={location.id} locationId={location.id} />
+							))}
+							{hasRemote && <LocationCard remoteOnly />}
+						</Stack>
+					</Stack>
+				</Grid.Col>
+				<Grid.Col order={2}>
 					<Stack spacing={40}>
-						{locations.map((location) => (
-							<LocationCard key={location.id} locationId={location.id} />
-						))}
-						{hasRemote && <LocationCard remoteOnly />}
+						<ContactSection role='org' parentId={data.id} edit />
+						<Stack ref={ref} miw='100%'>
+							{!!width && (
+								<GoogleMap
+									locationIds={locations.map(({ id }) => id)}
+									width={width}
+									height={Math.floor(width * 1.185)}
+								/>
+							)}
+						</Stack>
 					</Stack>
-				</Stack>
-			</Grid.Col>
-			<Grid.Col order={2}>
-				<Stack spacing={40}>
-					<ContactSection role='org' parentId={data.id} edit />
-					<Stack ref={ref} miw='100%'>
-						{!!width && (
-							<GoogleMap
-								locationIds={locations.map(({ id }) => id)}
-								width={width}
-								height={Math.floor(width * 1.185)}
-							/>
-						)}
-					</Stack>
-				</Stack>
-				<DevTool control={formMethods.control} placement='bottom-right' id='page' />
-			</Grid.Col>
-		</FormProvider>
+					<DevTool control={formMethods.control} placement='bottom-right' id='page' />
+				</Grid.Col>
+			</FormProvider>
+		</>
 	)
 }
 
