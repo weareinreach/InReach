@@ -42,6 +42,29 @@ const multi = new MultiBackend(null, {
 	},
 })
 
+const plugins = () => {
+	/** @type {any[]} */
+	const pluginsToUse = [intervalPlural, LanguageDetector]
+	if (isBrowser) {
+		pluginsToUse.push(ChainedBackend)
+		if (isDev) {
+			// @ts-expect-error It is a valid package..
+			import('i18next-hmr/plugin').then(({ HMRPlugin }) =>
+				pluginsToUse.push(new HMRPlugin({ webpack: { client: true } }))
+			)
+		}
+	} else {
+		if (isDev) {
+			// @ts-expect-error It is a valid package..
+			import('i18next-hmr/plugin').then(({ HMRPlugin }) =>
+				pluginsToUse.push(new HMRPlugin({ webpack: { server: true } }))
+			)
+		}
+	}
+
+	return pluginsToUse
+}
+
 /** @type {import('next-i18next').UserConfig} */
 const config = {
 	i18n: {
@@ -76,7 +99,7 @@ const config = {
 		backends: isBrowser ? [multi] : [],
 	},
 	serializeConfig: false,
-	use: isBrowser ? [ChainedBackend, intervalPlural, LanguageDetector] : [intervalPlural, LanguageDetector],
+	use: plugins(),
 	maxParallelReads: 20,
 	joinArrays: '',
 	interpolation: {

@@ -12,7 +12,6 @@
 				"refresh": true
 			}
 		},
-		"target": "es2020",
 		"loose": false,
 		"externalHelpers": true,
 		"keepClassNames": false

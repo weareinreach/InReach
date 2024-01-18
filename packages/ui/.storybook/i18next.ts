@@ -1,5 +1,7 @@
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
+// @ts-expect-error It is a valid package..
+import { HMRPlugin } from 'i18next-hmr/plugin'
 import HttpApi, { type HttpBackendOptions } from 'i18next-http-backend'
 import intervalPlural from 'i18next-intervalplural-postprocessor'
 import { initReactI18next } from 'react-i18next'
@@ -15,6 +17,7 @@ i18n
 	.use(LanguageDetector)
 	.use(HttpApi)
 	.use(initReactI18next)
+	.use(new HMRPlugin({ webpack: { client: true } }))
 	.init<HttpBackendOptions>({
 		...config,
 		debug: false,

@@ -2,6 +2,8 @@
 import { type StorybookConfig } from '@storybook/nextjs'
 import isChromatic from 'chromatic/isChromatic'
 import dotenv from 'dotenv'
+// @ts-expect-error It is a valid package..
+import { I18NextHMRPlugin } from 'i18next-hmr/webpack'
 import { mergeAndConcat } from 'merge-anything'
 import { type PropItem } from 'react-docgen-typescript'
 
@@ -38,6 +40,7 @@ const config: StorybookConfig = {
 		getAbsolutePath('@storybook/addon-designs'),
 		getAbsolutePath('storybook-addon-pseudo-states'),
 		getAbsolutePath('@storybook/addon-interactions'),
+		'@storybook/addon-webpack5-compiler-swc',
 	],
 	framework: {
 		name: '@storybook/nextjs',
@@ -98,6 +101,16 @@ const config: StorybookConfig = {
 			},
 			devtool: options.configType === 'DEVELOPMENT' ? 'eval-source-map' : undefined,
 		}
+
+		/** I18 HMR */
+		if (options.configType === 'DEVELOPMENT') {
+			const plugin = new I18NextHMRPlugin({
+				localesDir: path.resolve(__dirname, '../../../apps/app/public/locales'),
+			})
+
+			Array.isArray(config.plugins) ? config.plugins.push(plugin) : (config.plugins = [plugin])
+		}
+
 		const mergedConfig = mergeAndConcat(config, configAdditions)
 		return mergedConfig
 	},
@@ -108,6 +121,9 @@ const config: StorybookConfig = {
 		? {
 				SKIP_ENV_VALIDATION: 'true',
 			}
-		: { NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string },
+		: {
+				NEXT_PUBLIC_GOOGLE_MAPS_API: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API as string,
+				STORYBOOK_PROJECT_ROOT: path.resolve(__dirname, '../'),
+			},
 }
 export default config

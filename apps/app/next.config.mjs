@@ -83,6 +83,7 @@ const nextConfig = {
 			config.plugins = [...config.plugins, new PrismaPlugin()]
 		}
 		if (dev && !isServer) {
+			/** WDYR */
 			const origEntry = config.entry
 			config.entry = async () => {
 				const wdyrPath = path.resolve(__dirname, './lib/wdyr.ts')
@@ -92,6 +93,14 @@ const nextConfig = {
 				}
 				return entries
 			}
+			/** I18 HMR */
+			import('i18next-hmr/webpack').then(({ I18NextHMRPlugin }) =>
+				config.plugins.push(
+					new I18NextHMRPlugin({
+						localesDir: path.resolve(__dirname, 'public/static/locales'),
+					})
+				)
+			)
 		}
 
 		config.devtool = 'eval-source-map'
