@@ -23,6 +23,7 @@ const config = {
 			files: '*.json',
 			options: {
 				singleQuote: false,
+				trailingComma: 'none',
 			},
 		},
 		{
