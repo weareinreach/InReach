@@ -1,9 +1,9 @@
 {
 	"compilerOptions": {
 		"baseUrl": "./",
-		"strict": true,
+		"strict": true
 	},
 	"extends": "../config/tsconfig/base.json",
 	"include": ["./**/*.js", "./**/*.ts", "../../@types/**/*.ts"],
-	"exclude": ["node_modules"],
+	"exclude": ["node_modules"]
 }

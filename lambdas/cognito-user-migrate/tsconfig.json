@@ -4,7 +4,7 @@
 		"baseUrl": "./src",
 		"paths": {
 			"~/*": ["./*"],
-			"~db/*": ["../../db/*"],
+			"~db/*": ["../../db/*"]
 		},
 		"target": "es2020",
 		"strict": true,
@@ -16,8 +16,8 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
-		"isolatedModules": false,
+		"isolatedModules": false
 	},
 	"exclude": ["dist", "node_modules"],
-	"include": ["./**/*.ts"],
+	"include": ["./**/*.ts"]
 }
