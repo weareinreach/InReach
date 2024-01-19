@@ -11,8 +11,8 @@
 			"~auth/*": ["../../packages/auth/*"],
 			"~db/*": ["../../packages/db/*"],
 			"~ui/*": ["../../packages/ui/*"],
-			"~util/*": ["../../packages/util/*"]
-		}
+			"~util/*": ["../../packages/util/*"],
+		},
 	},
 	"include": [
 		"./next-env.d.ts",
@@ -22,7 +22,7 @@
 		"./**/*.jsx",
 		"./**/*.mjs",
 		"./**/*.cjs",
-		"../../@types/**/*.ts"
+		"../../@types/**/*.ts",
 	],
-	"exclude": ["**/node_modules/**"]
+	"exclude": ["**/node_modules/**"],
 }
