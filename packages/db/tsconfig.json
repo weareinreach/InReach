@@ -12,9 +12,9 @@
 			"~db/*": ["./*"],
 			"~ui/*": ["../../packages/ui/*"],
 			"~web/*": ["../../apps/web/src/*"],
-			"~util/*": ["../../packages/util/*"],
-		},
+			"~util/*": ["../../packages/util/*"]
+		}
 	},
 	"exclude": ["**/node_modules", "./**/.*/"],
-	"include": ["./**/*.ts", "./**/*.js", "./**/*.mjs", "../../@types/**/*.ts"],
+	"include": ["./**/*.ts", "./**/*.js", "./**/*.mjs", "../../@types/**/*.ts"]
 }

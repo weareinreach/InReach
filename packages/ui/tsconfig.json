@@ -8,9 +8,9 @@
 			"~app/*": ["../../apps/app/src/*"],
 			"~auth/*": ["../../packages/auth/*"],
 			"~db/*": ["../../packages/db/*"],
-			"~util/*": ["../../packages/util/*"],
+			"~util/*": ["../../packages/util/*"]
 		},
-		"strict": true,
+		"strict": true
 	},
 	"include": [
 		"./**/*.ts",
@@ -18,7 +18,7 @@
 		".storybook/**/*",
 		"../../@types/**/*.ts",
 		"../../apps/app/src/types/nextjs-routes.d.ts",
-		"../../apps/app/src/types/i18next.d.ts",
+		"../../apps/app/src/types/i18next.d.ts"
 	],
-	"exclude": ["**/node_modules", "**/storybook-static/"],
+	"exclude": ["**/node_modules", "**/storybook-static/"]
 }
