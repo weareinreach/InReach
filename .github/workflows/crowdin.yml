@@ -134,6 +134,8 @@ jobs:
             kodiak: merge.method = 'squash'
             automerge
           delete-branch: true
+          add-paths: |
+            ./**/locales/*/*.json
 
       - name: Generate job summary
         id: generate-job-summary
