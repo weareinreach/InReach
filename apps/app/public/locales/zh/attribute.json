@@ -76,9 +76,9 @@
 	},
 	"eligibility": {
 		"CATEGORYNAME": "资格要求",
-		"elig-age_max": "Under {{max}}",
-		"elig-age_min": "{{min}} and older",
-		"elig-age_range": "{{min}} - {{max}}",
+		"elig-age_max": "低于 {{max}}",
+		"elig-age_min": "{{min}} 岁及以上",
+		"elig-age_range": "{{min}} 至{{max}} 之间",
 		"other-describe": "其他（免费文字描述）",
 		"req-medical-insurance": "需要医疗保险",
 		"req-photo-id": "需要带照片的身份证件",
