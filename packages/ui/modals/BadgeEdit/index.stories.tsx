@@ -1,16 +1,19 @@
-import { type Meta } from '@storybook/react'
+import { type Meta, type StoryObj } from '@storybook/react'
 
 import { Button } from '~ui/components/core'
+import { fieldOpt } from '~ui/mockData/fieldOpt'
+import { organization } from '~ui/mockData/organization'
 
 import { BadgeEditModal } from '.'
 
+type StoryDef = StoryObj<typeof BadgeEditModal>
 export default {
 	title: 'Data Portal/Modals/Badge Edit',
 	component: BadgeEditModal,
 	parameters: {
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
-		msw: [],
+		msw: [fieldOpt.orgBadges, organization.forBadgeEditModal],
 		rqDevtools: true,
 		whyDidYouRender: { collapseGroups: true },
 	},
@@ -21,4 +24,15 @@ export default {
 	},
 } satisfies Meta<typeof BadgeEditModal>
 
-export const Modal = {}
+export const OrgLeader = {
+	args: {
+		badgeType: 'organization-leadership',
+		orgId: 'orgn_123456',
+	},
+} satisfies StoryDef
+export const ServiceFocus = {
+	args: {
+		badgeType: 'service-focus',
+		orgId: 'orgn_123456',
+	},
+} satisfies StoryDef
