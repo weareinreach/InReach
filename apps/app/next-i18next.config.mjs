@@ -13,8 +13,6 @@ import path from 'path'
 // @ts-expect-error - yelling about declaration file
 import { localeList } from '@weareinreach/db/generated/locales.mjs'
 
-import loadHMRplugin from './i18n-hmr.cjs'
-
 const isBrowser = typeof window !== 'undefined'
 const isDev = process.env.NODE_ENV !== 'production' && !process.env.CI
 const isVerbose = !!process.env.NEXT_VERBOSE
@@ -51,7 +49,19 @@ const plugins = () => {
 	if (isBrowser) {
 		pluginsToUse.push(ChainedBackend)
 	}
-	pluginsToUse.push(loadHMRplugin())
+	if (process.env.NODE_ENV === 'development') {
+		if (isBrowser) {
+			// @ts-expect-error - yelling about declaration file
+			import('i18next-hmr/plugin').then(({ HMRPlugin }) =>
+				pluginsToUse.push(new HMRPlugin({ webpack: { client: true } }))
+			)
+		} else {
+			// @ts-expect-error - yelling about declaration file
+			import('i18next-hmr/plugin').then(({ HMRPlugin }) =>
+				pluginsToUse.push(new HMRPlugin({ webpack: { server: true } }))
+			)
+		}
+	}
 
 	return compact(pluginsToUse)
 }
