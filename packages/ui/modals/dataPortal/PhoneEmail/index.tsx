@@ -26,7 +26,7 @@ const PhoneEmailModalBody = forwardRef<HTMLButtonElement, PhoneEmailModalProps>(
 	const saveEmail = api.orgEmail.create.useMutation()
 	const form = useForm(formHookParams)
 	const [opened, handler] = useDisclosure(false)
-	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 	const { id: orgId, slug } = useOrgInfo()
 
 	const handleSubmit = () => {

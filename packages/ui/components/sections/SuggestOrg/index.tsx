@@ -321,7 +321,7 @@ export const SuggestOrg = ({ authPromptState }: SuggestOrgProps) => {
 				<Modal
 					opened={modalOpen}
 					onClose={modalHandler.close}
-					title={<ModalTitle breadcrumb={{ option: 'close' }} />}
+					title={<ModalTitle breadcrumb={{ option: 'close', onClick: modalHandler.close }} />}
 				>
 					<Stack align='center' spacing={16}>
 						<Title order={1}>🎉</Title>

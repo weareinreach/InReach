@@ -1,5 +1,4 @@
 import { Box, Group, Text } from '@mantine/core'
-import { closeAllModals } from '@mantine/modals'
 import { type MouseEventHandler } from 'react'
 
 import { ActionButtons } from '~ui/components/core/ActionButtons'
@@ -27,7 +26,7 @@ export const ModalTitle = (props: ModalTitleProps) => {
 	return (
 		<Group position='apart' align='center' noWrap>
 			<Box maw='70%' style={{ overflow: 'hidden' }}>
-				<Breadcrumb onClick={() => closeAllModals()} {...breadcrumb} />
+				<Breadcrumb {...breadcrumb} />
 			</Box>
 			{rightSection}
 		</Group>
@@ -38,7 +37,7 @@ export const ModalTitle = (props: ModalTitleProps) => {
 
 export type ModalTitleProps = {
 	breadcrumb: Omit<BreadcrumbProps, 'onClick'> & {
-		onClick?: MouseEventHandler<HTMLButtonElement>
+		onClick: MouseEventHandler<HTMLButtonElement> | (() => void)
 	}
 	icons?: ('save' | 'share')[]
 	rightText?: string

@@ -22,7 +22,7 @@ const PrivacyStatementModalBody = forwardRef<HTMLButtonElement, PrivacyModalProp
 	const [opened, handler] = useDisclosure(false)
 	const { isMobile } = useScreenSize()
 
-	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 
 	const components = {
 		emojiLg: <Text fz={40}>.</Text>,

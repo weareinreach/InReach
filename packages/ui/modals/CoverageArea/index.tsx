@@ -231,7 +231,7 @@ const CoverageAreaModal = forwardRef<HTMLButtonElement, Props>(({ id, ...props }
 	return (
 		<>
 			<Modal
-				title={<ModalTitle breadcrumb={{ option: 'close', onClick: () => close() }} />}
+				title={<ModalTitle breadcrumb={{ option: 'close', onClick: close }} />}
 				onClose={close}
 				opened={opened}
 			>

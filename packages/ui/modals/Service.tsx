@@ -79,10 +79,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 
 		if (isMobile || status === 'loading')
 			return (
-				<ModalTitle
-					breadcrumb={{ option: 'back', backTo: 'none', onClick: () => handler.close() }}
-					icons={icons}
-				/>
+				<ModalTitle breadcrumb={{ option: 'back', backTo: 'none', onClick: handler.close }} icons={icons} />
 			)
 
 		if (data && status === 'success')
@@ -92,7 +89,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 						option: 'back',
 						backTo: 'dynamicText',
 						backToText: data.name as string,
-						onClick: () => handler.close(),
+						onClick: handler.close,
 					}}
 					icons={icons}
 					serviceId={serviceId}
@@ -105,7 +102,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 					option: 'back',
 					backTo: 'dynamicText',
 					backToText: '...',
-					onClick: () => handler.close(),
+					onClick: handler.close,
 				}}
 				icons={icons}
 			/>

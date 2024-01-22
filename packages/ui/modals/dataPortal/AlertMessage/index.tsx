@@ -40,7 +40,7 @@ const AlertMessageBody = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 	return (
 		<>
 			<Modal
-				title={<ModalTitle breadcrumb={{ option: 'close', onClick: () => close() }} />}
+				title={<ModalTitle breadcrumb={{ option: 'close', onClick: close }} />}
 				opened={opened}
 				onClose={close}
 			>
