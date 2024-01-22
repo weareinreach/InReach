@@ -1,5 +1,6 @@
 // codegen:start {preset: barrel, include: ./*.ts*, exclude: "*.stories.*"}
 export * from './useCustomVariant'
+export * from './useEditMode'
 export * from './useFormattedAddress'
 export * from './useFreeText'
 export * from './useGoogleMapMarker'

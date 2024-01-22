@@ -25,7 +25,8 @@ import {
 	type CommunityTagProps,
 	type ServiceTagProps,
 } from '~ui/components/core/Badge'
-import { ContactInfo, hasContactInfo, Hours, type PassedDataObject } from '~ui/components/data-display'
+import { ContactInfo, hasContactInfo, Hours } from '~ui/components/data-display'
+import { type PassedDataObject } from '~ui/components/data-display/ContactInfo/types'
 import { getFreeText, useSlug } from '~ui/hooks'
 import { isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'

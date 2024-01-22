@@ -1,3 +1,5 @@
+import '../../lib/wdyr'
+
 import { Space } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import { Analytics } from '@vercel/analytics/react'
@@ -37,31 +39,11 @@ const defaultSEO = {
 	titleTemplate: '%s | InReach',
 	defaultTitle: 'InReach',
 	additionalLinkTags: [
-		{
-			rel: 'icon',
-			href: '/favicon-16x16.png',
-			sizes: '16x16',
-		},
-		{
-			rel: 'icon',
-			href: '/favicon-32x32.png',
-			sizes: '32x32',
-		},
-		{
-			rel: 'icon',
-			href: '/favicon-96x96.png',
-			sizes: '96x96',
-		},
-		{
-			rel: 'apple-touch-icon',
-			href: '/apple-icon-120x120.png',
-			sizes: '120x120',
-		},
-		{
-			rel: 'apple-touch-icon',
-			href: '/apple-icon-180x180.png',
-			sizes: '180x180',
-		},
+		{ rel: 'icon', href: '/favicon-16x16.png', sizes: '16x16' },
+		{ rel: 'icon', href: '/favicon-32x32.png', sizes: '32x32' },
+		{ rel: 'icon', href: '/favicon-96x96.png', sizes: '96x96' },
+		{ rel: 'apple-touch-icon', href: '/apple-icon-120x120.png', sizes: '120x120' },
+		{ rel: 'apple-touch-icon', href: '/apple-icon-180x180.png', sizes: '180x180' },
 	],
 } satisfies DefaultSeoProps
 
@@ -117,8 +99,8 @@ const MyApp = (appProps: AppPropsWithGridSwitch) => {
 
 export default api.withTRPC(appWithTranslation(MyApp, nextI18nConfig))
 
-export type NextPageWithoutGrid<P = unknown, IP = P> = NextPage<P, IP> & {
+export type NextPageWithOptions<Props = unknown, InitialProps = Props> = NextPage<Props, InitialProps> & {
 	omitGrid?: boolean
 	autoResetState?: boolean
 }
-type AppPropsWithGridSwitch = AppProps<{ session: Session }> & { Component: NextPageWithoutGrid }
+type AppPropsWithGridSwitch = AppProps<{ session: Session }> & { Component: NextPageWithOptions }

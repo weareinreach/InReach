@@ -2,6 +2,7 @@ import groupBy from 'just-group-by'
 import { DateTime, Interval } from 'luxon'
 
 import { isIdFor, prisma, type Prisma } from '@weareinreach/db'
+import { convertToLuxonWeekday } from '@weareinreach/util/luxon/weekday'
 import { globalWhere } from '~api/selects/global'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
@@ -38,12 +39,12 @@ export const forHoursDisplay = async ({ input }: TRPCHandlerParams<TForHoursDisp
 	const intervalResults = result.map(({ start, end, tz, dayIndex, ...rest }) => {
 		const interval = Interval.fromDateTimes(
 			DateTime.fromJSDate(start, { zone: tz ?? 'America/New_York' }).set({
-				weekday: dayIndex,
+				weekday: convertToLuxonWeekday(dayIndex),
 				weekYear,
 				weekNumber,
 			}),
 			DateTime.fromJSDate(end, { zone: tz ?? 'America/New_York' }).set({
-				weekday: start > end ? dayIndex + 1 : dayIndex,
+				weekday: convertToLuxonWeekday(start > end ? dayIndex + 1 : dayIndex),
 				weekYear,
 				weekNumber,
 			})

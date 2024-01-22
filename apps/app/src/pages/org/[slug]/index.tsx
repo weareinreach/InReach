@@ -9,12 +9,10 @@ import { type RoutedQuery } from 'nextjs-routes'
 import { useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
-// import { getEnv } from '@weareinreach/env'
-// import { prisma } from '@weareinreach/db/client'
 import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
 // import { GoogleMap } from '@weareinreach/ui/components/core/GoogleMap'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
-import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
+import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
 import { LocationCard } from '@weareinreach/ui/components/sections/LocationCard'
 import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
@@ -22,6 +20,7 @@ import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
 import { useSearchState } from '@weareinreach/ui/hooks/useSearchState'
+import { OrgPageLoading } from '@weareinreach/ui/loading-states/OrgPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
 
@@ -61,7 +60,10 @@ const useStyles = createStyles((theme) => ({
 	},
 }))
 
-const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const OrganizationPage = ({
+	slug,
+	organizationId: orgId,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const router = useRouter<'/org/[slug]'>()
 	const { data, status } = api.organization.forOrgPage.useQuery({ slug }, { enabled: !!slug })
 	// const { query } = router
@@ -69,7 +71,7 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 		t,
 		i18n,
 		ready: i18nReady,
-	} = useTranslation(['common', 'services', 'attribute', 'phone-type', ...(data?.id ? [data.id] : [])])
+	} = useTranslation(['common', 'services', 'attribute', 'phone-type', ...(orgId ? [orgId] : [])])
 	const [activeTab, setActiveTab] = useState<string | null>('services')
 	const [loading, setLoading] = useState(true)
 	const { data: hasRemote } = api.service.forServiceInfoCard.useQuery(
@@ -104,7 +106,7 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
-	if (loading || !data || router.isFallback) return <LoadingState />
+	if (loading || !data || router.isFallback) return <OrgPageLoading />
 
 	const { userLists, attributes, description, reviews, locations, isClaimed, id: organizationId } = data
 
@@ -218,7 +220,6 @@ const OrganizationPage = ({ slug }: InferGetStaticPropsType<typeof getStaticProp
 							/>
 						))}
 					<ListingBasicInfo
-						role='org'
 						data={{
 							name: data.name,
 							id: data.id,
@@ -279,12 +280,12 @@ export const getStaticProps = async ({
 			}
 		}
 
-		const orgId = await ssg.organization.getIdFromSlug.fetch({ slug })
+		const { id: orgId } = await ssg.organization.getIdFromSlug.fetch({ slug })
 		if (!orgId) return { notFound: true }
 
 		const [i18n] = await Promise.allSettled([
 			orgId
-				? getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId?.id])
+				? getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId])
 				: getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type']),
 			ssg.organization.forOrgPage.prefetch({ slug }),
 		])
@@ -292,7 +293,7 @@ export const getStaticProps = async ({
 
 		const props = {
 			trpcState: ssg.dehydrate(),
-			organizationId: orgId?.id,
+			organizationId: orgId,
 			slug,
 			...(i18n.status === 'fulfilled' ? i18n.value : {}),
 		}

@@ -44,13 +44,14 @@ export const forContactInfo = async ({ input }: TRPCHandlerParams<TForContactInf
 			id: true,
 			url: true,
 			username: true,
-			service: { select: { name: true } },
+			service: { select: { name: true, logoIcon: true } },
 			orgLocationOnly: true,
 		},
 	})
 	const transformed = result.map(({ service, ...record }) => ({
 		...record,
 		service: service?.name,
+		serviceIcon: service?.logoIcon,
 	}))
 	return transformed
 }

@@ -13,8 +13,8 @@ export const ZUpdateSchema = z
 				published: z.boolean(),
 				deleted: z.boolean(),
 				serviceId: z.string(),
-				organizationId: prefixedId('organization'),
-				orgLocationId: prefixedId('orgLocation'),
+				organizationId: prefixedId('organization').nullable(),
+				orgLocationId: prefixedId('orgLocation').nullable(),
 				orgLocationOnly: z.boolean(),
 			})
 			.partial(),

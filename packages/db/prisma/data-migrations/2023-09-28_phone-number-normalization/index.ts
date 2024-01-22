@@ -5,22 +5,14 @@ import { createLogger, type JobDef, jobPostRunner } from '~db/prisma/jobPreRun'
 
 /** Define the job metadata here. */
 const jobDef: JobDef = {
-	jobId: 'yyyy-mm-dd-shortDescription',
-	title: 'Descriptive Title',
-	createdBy: 'Your Name',
+	jobId: '2023-09-28-phone-number-normalization',
+	title: 'phone number normalization',
+	createdBy: 'Joe Karow',
 	/** Optional: Longer description for the job */
 	description: undefined,
 }
-/**
- * Job export - this variable MUST be UNIQUE
- *
- * Use the format `jobYYYYMMDD` and append a letter afterwards if there is already a job with this name.
- *
- * @example `job20230404`
- *
- * @example `job20230404b`
- */
-export const jobYYYYmmDD = {
+/** Job export - this variable MUST be UNIQUE */
+export const job20230928_phone_number_normalization = {
 	title: `[${jobDef.jobId}] ${jobDef.title}`,
 	task: async (_ctx, task) => {
 		/** Create logging instance */

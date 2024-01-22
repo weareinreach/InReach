@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import {
 	type BadgeProps,
 	type BadgeStylesNames,
@@ -476,7 +475,7 @@ export const Badge = forwardRef<HTMLDivElement, PolymorphicComponentProps<'div',
 		return badge
 	}
 )
-
+Badge.displayName = 'Badge'
 export const BadgeGroup = ({ badges, withSeparator = false, ...props }: BadgeGroupProps) => {
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()

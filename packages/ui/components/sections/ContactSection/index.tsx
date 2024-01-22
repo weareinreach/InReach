@@ -5,7 +5,7 @@ import { ContactInfo } from '~ui/components/data-display/ContactInfo'
 import { useScreenSize } from '~ui/hooks'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-export const ContactSection = ({ parentId }: ContactSectionProps) => {
+export const ContactSection = ({ parentId, edit }: ContactSectionProps) => {
 	const { t } = useTranslation(['common'])
 	const { isMobile, isTablet } = useScreenSize()
 	const { data: hasContactInfo } = api.misc.hasContactInfo.useQuery(parentId)
@@ -15,7 +15,7 @@ export const ContactSection = ({ parentId }: ContactSectionProps) => {
 	const body = (
 		<Stack spacing={isMobile ? 32 : 40}>
 			<Title order={2}>{t('contact')}</Title>
-			<ContactInfo parentId={parentId} gap={40} />
+			<ContactInfo parentId={parentId} gap={40} edit={edit} />
 		</Stack>
 	)
 	return isTablet || isMobile ? body : <Card>{body}</Card>
@@ -24,4 +24,5 @@ export const ContactSection = ({ parentId }: ContactSectionProps) => {
 export type ContactSectionProps = {
 	role: 'org' | 'location'
 	parentId: string
+	edit?: boolean
 }

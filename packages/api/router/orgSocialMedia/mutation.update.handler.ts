@@ -1,27 +1,29 @@
-import { prisma } from '@weareinreach/db'
-import { CreateAuditLog } from '~api/schemas/create/auditLog'
+import { getAuditedClient } from '@weareinreach/db'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
 import { type TUpdateSchema } from './mutation.update.schema'
 
 export const update = async ({ ctx, input }: TRPCHandlerParams<TUpdateSchema, 'protected'>) => {
 	const { where, data } = input
-	const updatedRecord = await prisma.$transaction(async (tx) => {
-		const current = await tx.orgSocialMedia.findUniqueOrThrow({ where })
-		const auditLogs = CreateAuditLog({
-			actorId: ctx.session.user.id,
-			operation: 'UPDATE',
-			from: current,
-			to: data,
-		})
-		const updated = await tx.orgSocialMedia.update({
-			where,
-			data: {
-				...data,
-				auditLogs,
+	const prisma = getAuditedClient(ctx.actorId)
+
+	const updated = await prisma.orgSocialMedia.update({
+		where,
+		data,
+		select: {
+			id: true,
+			username: true,
+			url: true,
+			deleted: true,
+			published: true,
+			serviceId: true,
+			organizationId: true,
+			orgLocationId: true,
+			orgLocationOnly: true,
+			service: {
+				select: { id: true, name: true, logoIcon: true },
 			},
-		})
-		return updated
+		},
 	})
-	return updatedRecord
+	return updated
 }

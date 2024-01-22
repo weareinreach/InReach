@@ -2,4 +2,7 @@
 export * from './mutation.create.schema'
 export * from './mutation.update.schema'
 export * from './query.forContactInfo.schema'
+export * from './query.forContactInfoEdits.schema'
+export * from './query.forEditDrawer.schema'
+export * from './query.getServiceTypes.schema'
 // codegen:end

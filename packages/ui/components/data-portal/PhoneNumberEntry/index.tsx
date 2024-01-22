@@ -56,19 +56,6 @@ const usePhoneEntryStyles = createStyles((theme) => ({
 		borderLeft: `1px solid ${theme.other.colors.primary.lightGray}`,
 	},
 }))
-export interface PhoneNumberEntryProps {
-	countrySelectProps: Omit<SelectProps, 'data' | 'itemComponent' | 'classNames' | 'clearable'>
-	phoneEntryProps: Omit<
-		SetOptional<
-			PhoneInputProps<Omit<TextInputProps, 'rightSection' | 'rightSectionWidth' | 'classNames'>>,
-			'onChange'
-		>,
-		'country' | 'defaultCountry' | 'itemComponent'
-	> & {
-		setError?: (err: string) => void
-		'data-autofocus'?: boolean
-	}
-}
 
 export const PhoneNumberEntry = ({
 	countrySelectProps,
@@ -161,6 +148,21 @@ export const PhoneNumberEntry = ({
 			{...phoneEntryProps}
 		/>
 	)
+}
+
+export interface PhoneNumberEntryProps {
+	countrySelectProps: Omit<SelectProps, 'data' | 'itemComponent' | 'classNames' | 'clearable'>
+	phoneEntryProps: Omit<
+		SetOptional<
+			PhoneInputProps<Omit<TextInputProps, 'rightSection' | 'rightSectionWidth' | 'classNames'>>,
+			'onChange'
+		>,
+		'country' | 'defaultCountry' | 'itemComponent'
+	> & {
+		setError?: (err: string) => void
+		'data-autofocus'?: boolean
+	}
+	hookForm?: boolean
 }
 
 type CountryList = ApiOutput['fieldOpt']['countries']

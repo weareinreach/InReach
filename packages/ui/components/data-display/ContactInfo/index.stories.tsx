@@ -6,7 +6,7 @@ import { orgPhone } from '~ui/mockData/orgPhone'
 import { orgSocialMedia } from '~ui/mockData/orgSocialMedia'
 import { orgWebsite } from '~ui/mockData/orgWebsite'
 
-import { ContactInfo } from './ContactInfo'
+import { ContactInfo } from './index'
 
 export default {
 	title: 'Data Display/Contact Info - Individual API',

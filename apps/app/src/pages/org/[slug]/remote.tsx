@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { Breadcrumb } from '@weareinreach/ui/components/core/Breadcrumb'
-import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
+import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'

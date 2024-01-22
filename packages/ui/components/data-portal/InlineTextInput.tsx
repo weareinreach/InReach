@@ -1,11 +1,12 @@
 import {
+	Box,
+	createPolymorphicComponent,
 	createStyles,
 	rem,
-	Textarea,
-	type TextareaProps,
 	TextInput,
 	type TextInputProps,
 } from '@mantine/core'
+import { forwardRef } from 'react'
 
 const useStyles = createStyles((theme) => ({
 	...theme.other.utilityFonts,
@@ -22,59 +23,39 @@ const useBaseStyles = createStyles((theme) => ({
 		'&:focus, &:focus-within': {
 			borderColor: theme.other.colors.secondary.black,
 			borderWidth: rem(1),
+			backgroundColor: theme.other.colors.secondary.white,
 		},
 		'&[data-isDirty=true]': {
-			backgroundColor: theme.other.colors.primary.lightGray,
+			backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.6),
 		},
 	},
 }))
 
-const useFontSize = ({ fontSize, classNames }: SingleLineTextProps | MultiLineTextProps) => {
+const useFontSize = ({ fontSize, classNames }: InlineEditProps) => {
 	const { classes } = useStyles()
 	const { classes: baseClasses, cx } = useBaseStyles()
 	return {
 		...classNames,
-		input: fontSize ? cx(classes[fontSize], baseClasses.input) : baseClasses.input,
+		input: fontSize
+			? cx(classNames?.input, classes[fontSize], baseClasses.input)
+			: cx(classNames?.input, baseClasses.input),
 	}
 }
 
-/**
- * Components works like TextInput. To use one of the variant fonts pass a string like 'h1', 'h2', 'utility1',
- * etc to the fontSize prop.
- *
- * @param props - TextInputProps
- * @param props.fontSize - HeadingSizes | utilitySizes
- * @returns JSX.Element
- */
-export const InlineTextInput = ({ fontSize, ...props }: SingleLineTextProps) => {
-	const variant = useFontSize({ fontSize, ...props })
+const _InlineTextInput = forwardRef<HTMLInputElement, InlineEditProps>(
+	({ fontSize, classNames, ...rest }, ref) => {
+		const variant = useFontSize({ fontSize, ...rest })
 
-	return <TextInput {...props} classNames={variant} />
-}
-
-/**
- * Component works like Textarea. To use one of the variant fonts pass a string like 'h1', 'h2', 'utility1',
- * etc to the fontSize prop.
- *
- * @param props - TextareaProps
- * @param props.fontSize - HeadingSizes | utilitySizes
- * @returns JSX.Element
- */
-export const InlineTextarea = ({ fontSize, ...props }: MultiLineTextProps) => {
-	const variant = useFontSize({ fontSize, ...props })
-
-	return <Textarea {...props} classNames={variant} />
-}
+		return <Box component={TextInput} classNames={variant} ref={ref} {...rest} />
+	}
+)
+_InlineTextInput.displayName = 'InlineEdit'
+export const InlineTextInput = createPolymorphicComponent<'input', InlineEditProps>(_InlineTextInput)
 
 type FontSizes = keyof ReturnType<typeof useStyles>['classes']
 
-interface SingleLineTextProps extends TextInputProps {
+interface InlineEditProps extends TextInputProps {
 	fontSize?: FontSizes
 	/** Flag if background color should change to indicate that the field was edited */
-	'data-isDirty'?: boolean
-}
-
-interface MultiLineTextProps extends TextareaProps {
-	fontSize?: FontSizes
 	'data-isDirty'?: boolean
 }

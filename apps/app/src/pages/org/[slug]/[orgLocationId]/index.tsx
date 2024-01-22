@@ -12,39 +12,15 @@ import { z } from 'zod'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
-import { ContactSection } from '@weareinreach/ui/components/sections/Contact'
+import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
 import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
 import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
-// import { useScreenSize } from '@weareinreach/ui/hooks/useScreenSize'
+import { OrgLocationPageLoading } from '@weareinreach/ui/loading-states/OrgLocationPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-
-const LoadingState = () => (
-	<>
-		<Grid.Col sm={8} order={1}>
-			{/* Toolbar */}
-			<Skeleton h={48} w='100%' radius={8} />
-			<Stack pt={24} align='flex-start' spacing={40}>
-				{/* Listing Basic */}
-				<Skeleton h={260} w='100%' />
-				{/* Body */}
-				<Skeleton h={520} w='100%' />
-				{/* Tab panels */}
-			</Stack>
-		</Grid.Col>
-		<Grid.Col order={2}>
-			<Stack spacing={40}>
-				{/* Contact Card */}
-				<Skeleton h={520} w='100%' />
-				{/* Visit Card  */}
-				<Skeleton h={260} w='100%' />
-			</Stack>
-		</Grid.Col>
-	</>
-)
 
 const useStyles = createStyles((theme) => ({
 	tabsList: {
@@ -89,7 +65,7 @@ const OrgLocationPage: NextPage = () => {
 	useEffect(() => {
 		if (data && status === 'success' && orgData && orgDataStatus === 'success') setLoading(false)
 	}, [data, status, orgData, orgDataStatus])
-	if (loading || !data || !orgData || router.isFallback) return <LoadingState />
+	if (loading || !data || !orgData || router.isFallback) return <OrgLocationPageLoading />
 
 	const { attributes, description, reviews } = data
 
@@ -125,7 +101,6 @@ const OrgLocationPage: NextPage = () => {
 							/>
 						))}
 					<ListingBasicInfo
-						role='location'
 						data={{
 							name: data.name || orgData.name,
 							id: data.id,
@@ -228,10 +203,9 @@ export const getStaticProps = async ({
 
 		const [i18n] = await Promise.allSettled([
 			getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId.id]),
-			ssg.organization.getBySlug.prefetch({ slug }),
-			// ssg.organization.getIdFromSlug.prefetch({ slug }),
 			ssg.location.forLocationPage.prefetch({ id: orgLocationId }),
 			ssg.organization.forLocationPage.prefetch({ slug }),
+			ssg.location.getAlerts.prefetch({ id: orgLocationId }),
 		])
 		const props = {
 			trpcState: ssg.dehydrate(),
