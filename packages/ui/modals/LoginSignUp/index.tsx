@@ -188,7 +188,7 @@ const SignUpModalBody = forwardRef<HTMLButtonElement, SignUpModalBodyProps>((pro
 
 	const breadcrumbProps: ModalTitleBreadcrumb =
 		stepOption === null || successMessage
-			? { option: 'close', onClick: () => handler.close() }
+			? { option: 'close', onClick: handler.close }
 			: { option: 'back', backTo: 'none', onClick: () => setStepOption(null) }
 
 	const titleRightSideProps = successMessage
@@ -561,7 +561,7 @@ export const LoginModalBody = forwardRef<HTMLButtonElement, LoginModalBodyProps>
 	const [opened, handler] = useDisclosure(false)
 	const { animateCSS, fireEvent } = useShake({ variant: 1 })
 	const { isMobile } = useScreenSize()
-	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 	return (
 		<>
 			<Modal

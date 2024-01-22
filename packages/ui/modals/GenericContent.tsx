@@ -55,7 +55,7 @@ const GenericContentModalBody = forwardRef<HTMLButtonElement, GenericContentModa
 
 		const modalChildren = content === 'custom' ? customBody : presetContent[content]
 		const modalTitle = accept ? undefined : (
-			<ModalTitle breadcrumb={{ option: 'close', onClick: () => handlers.close() }} />
+			<ModalTitle breadcrumb={{ option: 'close', onClick: handlers.close }} />
 		)
 
 		return (

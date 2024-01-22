@@ -1,3 +1,4 @@
+import { action } from '@storybook/addon-actions'
 import { type Meta, type StoryObj } from '@storybook/react'
 
 import { ModalTitle } from './ModalTitle'
@@ -13,6 +14,7 @@ export const Close = {
 	args: {
 		breadcrumb: {
 			option: 'close',
+			onClick: () => action('close clicked')(),
 		},
 	},
 } satisfies StoryDef
@@ -22,6 +24,7 @@ export const Back = {
 		breadcrumb: {
 			option: 'back',
 			backTo: 'none',
+			onClick: () => action('close clicked')(),
 		},
 	},
 } satisfies StoryDef
@@ -31,6 +34,7 @@ export const BackToSearch = {
 		breadcrumb: {
 			option: 'back',
 			backTo: 'search',
+			onClick: () => action('close clicked')(),
 		},
 	},
 } satisfies StoryDef
@@ -41,6 +45,7 @@ export const BackToDynamicText = {
 			option: 'back',
 			backTo: 'dynamicText',
 			backToText: 'Customizable text',
+			onClick: () => action('close clicked')(),
 		},
 	},
 } satisfies StoryDef
@@ -51,6 +56,7 @@ export const BackToDynamicTextWithIcons = {
 			option: 'back',
 			backTo: 'dynamicText',
 			backToText: 'Customizable text',
+			onClick: () => action('close clicked')(),
 		},
 		icons: ['share', 'save'],
 	},
