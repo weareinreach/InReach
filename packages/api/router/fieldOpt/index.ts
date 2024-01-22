@@ -16,8 +16,7 @@ type FieldOptHandlerCache = {
 	countryGovDistMap: typeof import('./query.countryGovDistMap.handler').countryGovDistMap
 	getSubDistricts: typeof import('./query.getSubDistricts.handler').getSubDistricts
 	govDists: typeof import('./query.govDists.handler').govDists
-	getLeaderBadges: typeof import('./query.getLeaderBadges.handler').getLeaderBadges
-	getServFocusBadges: typeof import('./query.getServFocusBadges.handler').getServFocusBadges
+	orgBadges: typeof import('./query.orgBadges.handler').orgBadges
 }
 export const fieldOptRouter = defineRouter({
 	/** All government districts by country (active for org listings). Gives up to 2 levels of sub-districts */
@@ -114,20 +113,10 @@ export const fieldOptRouter = defineRouter({
 		if (!HandlerCache.govDists) throw new Error('Failed to load handler')
 		return HandlerCache.govDists({ ctx, input })
 	}),
-	getLeaderBadges: publicProcedure.query(async ({ ctx }) => {
-		if (!HandlerCache.getLeaderBadges)
-			HandlerCache.getLeaderBadges = await import('./query.getLeaderBadges.handler').then(
-				(mod) => mod.getLeaderBadges
-			)
-		if (!HandlerCache.getLeaderBadges) throw new Error('Failed to load handler')
-		return HandlerCache.getLeaderBadges({ ctx })
-	}),
-	getServFocusBadges: publicProcedure.query(async ({ ctx }) => {
-		if (!HandlerCache.getServFocusBadges)
-			HandlerCache.getServFocusBadges = await import('./query.getServFocusBadges.handler').then(
-				(mod) => mod.getServFocusBadges
-			)
-		if (!HandlerCache.getServFocusBadges) throw new Error('Failed to load handler')
-		return HandlerCache.getServFocusBadges({ ctx })
+	orgBadges: publicProcedure.input(schema.ZOrgBadgesSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.orgBadges)
+			HandlerCache.orgBadges = await import('./query.orgBadges.handler').then((mod) => mod.orgBadges)
+		if (!HandlerCache.orgBadges) throw new Error('Failed to load handler')
+		return HandlerCache.orgBadges({ ctx, input })
 	}),
 })

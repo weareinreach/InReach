@@ -28,6 +28,7 @@ type OrganizationHandlerCache = {
 	forOrgPageEdits: typeof import('./query.forOrgPageEdits.handler').forOrgPageEdits
 	getAttributes: typeof import('./query.getAttributes.handler').getAttributes
 	getAlerts: typeof import('./query.getAlerts.handler').getAlerts
+	forBadgeEditModal: typeof import('./query.forBadgeEditModal.handler').forBadgeEditModal
 	// #endregion
 
 	//
@@ -202,6 +203,15 @@ export const orgRouter = defineRouter({
 
 		if (!HandlerCache.getAlerts) throw new Error('Failed to load handler')
 		return HandlerCache.getAlerts({ ctx, input })
+	}),
+	forBadgeEditModal: publicProcedure.input(schema.ZForBadgeEditModalSchema).query(async ({ ctx, input }) => {
+		if (!HandlerCache.forBadgeEditModal)
+			HandlerCache.forBadgeEditModal = await import('./query.forBadgeEditModal.handler').then(
+				(mod) => mod.forBadgeEditModal
+			)
+
+		if (!HandlerCache.forBadgeEditModal) throw new Error('Failed to load handler')
+		return HandlerCache.forBadgeEditModal({ ctx, input })
 	}),
 	// #endregion
 

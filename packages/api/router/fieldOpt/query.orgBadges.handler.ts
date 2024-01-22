@@ -2,12 +2,14 @@ import { prisma } from '@weareinreach/db'
 import { handleError } from '~api/lib/errorHandler'
 import { type TRPCHandlerParams } from '~api/types/handler'
 
-export const getLeaderBadges = async ({ ctx }: TRPCHandlerParams<undefined>) => {
+import { type TOrgBadgesSchema } from './query.orgBadges.schema'
+
+export const orgBadges = async ({ ctx, input }: TRPCHandlerParams<TOrgBadgesSchema>) => {
 	try {
 		const badges = await prisma.attribute.findMany({
 			where: {
 				active: true,
-				categories: { some: { category: { tag: 'organization-leadership' } } },
+				categories: { some: { category: { tag: input.badgeType } } },
 			},
 			select: {
 				id: true,

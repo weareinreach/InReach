@@ -199,18 +199,19 @@ export const fieldOpt = {
 			return formatted
 		},
 	}),
-	getLeaderBadges: getTRPCMock({
-		path: ['fieldOpt', 'getLeaderBadges'],
-		response: async () => {
-			const { default: data } = await import('./json/fieldOpt.getLeaderBadges.json')
-			return data
-		},
-	}),
-	getServFocusBadges: getTRPCMock({
-		path: ['fieldOpt', 'getServFocusBadges'],
-		response: async () => {
-			const { default: data } = await import('./json/fieldOpt.getServFocusBadges.json')
-			return data
+	orgBadges: getTRPCMock({
+		path: ['fieldOpt', 'orgBadges'],
+		response: async (input) => {
+			switch (input.badgeType) {
+				case 'organization-leadership': {
+					const { default: data } = await import('./json/fieldOpt.orgBadges.organization-leadership.json')
+					return data
+				}
+				case 'service-focus': {
+					const { default: data } = await import('./json/fieldOpt.orgBadges.service-focus.json')
+					return data
+				}
+			}
 		},
 	}),
 } satisfies MockHandlerObject<'fieldOpt'>

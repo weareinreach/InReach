@@ -7,4 +7,5 @@ export * from './query.govDists.schema'
 export * from './query.govDistsByCountry.schema'
 export * from './query.govDistsByCountryNoSub.schema'
 export * from './query.languages.schema'
+export * from './query.orgBadges.schema'
 // codegen:end

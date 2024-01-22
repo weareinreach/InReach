@@ -122,4 +122,20 @@ export const organization = {
 			return data as ApiOutput['organization']['searchDistance']
 		},
 	}),
+	forBadgeEditModal: getTRPCMock({
+		path: ['organization', 'forBadgeEditModal'],
+		response: async (input) => {
+			return input.badgeType === 'organization-leadership'
+				? ['attr_01GW2HHFVNPKMHYK12DDRVC1VJ']
+				: [
+						'attr_01GW2HHFVPCVX8F3B7M30ZJEHW',
+						'attr_01GW2HHFVPSYBCYF37B44WP6CZ',
+						'attr_01GW2HHFVPTK9555WHJHDBDA2J',
+						'attr_01GW2HHFVQ7SYGD3KM8WP9X50B',
+						'attr_01GW2HHFVQ8AGBKBBZJWTHNP2F',
+						'attr_01GW2HHFVQCZPA3Z5GW6J3MQHW',
+						'attr_01GW2HHFVRMQFJ9AMA633SQQGV',
+					]
+		},
+	}),
 } satisfies MockHandlerObject<'organization'> & { searchDistanceLongTitle: HttpHandler }
