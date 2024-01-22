@@ -263,7 +263,7 @@ const AttributeModalBody = forwardRef<HTMLButtonElement, AttributeModalProps>(
 		// #endregion
 
 		// #region Title & Selected items display
-		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+		const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 		const selectedItems = form.values.selected?.map(({ label, icon, variant, value, iconBg, tKey, data }) => {
 			switch (variant) {
 				case 'ATTRIBUTE': {

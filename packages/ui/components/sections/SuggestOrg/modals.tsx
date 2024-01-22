@@ -31,7 +31,7 @@ export const ServiceTypes = ({ disabled }: ModalProps) => {
 			<Modal
 				opened={open}
 				onClose={() => handler.close()}
-				title={<ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />}
+				title={<ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />}
 				scrollAreaComponent={Modal.NativeScrollArea}
 			>
 				<Stack spacing={24}>
@@ -166,7 +166,7 @@ export const Communities = ({ disabled }: ModalProps) => {
 			<Modal
 				opened={open}
 				onClose={() => handler.close()}
-				title={<ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />}
+				title={<ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />}
 				scrollAreaComponent={Modal.NativeScrollArea}
 			>
 				<Stack spacing={24}>

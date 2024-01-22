@@ -148,7 +148,7 @@ type PossibleBreadcrumbProps = {
 	backToText?: string
 }
 export type ModalTitleBreadcrumb = Omit<BreadcrumbProps, 'onClick'> & {
-	onClick?: MouseEventHandler<HTMLButtonElement>
+	onClick: MouseEventHandler<HTMLButtonElement>
 }
 export type BreadcrumbProps = (Close | Back | BackToDynamic) & { children?: React.ReactNode }
 interface Close {

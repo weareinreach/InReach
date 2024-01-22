@@ -78,11 +78,11 @@ const DeleteModalBody = forwardRef<HTMLButtonElement, DeleteModalProps>((props, 
 		deleteAccount.mutate(password)
 	}
 
-	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: () => handler.close() }} />
+	const modalTitle = <ModalTitle breadcrumb={{ option: 'close', onClick: handler.close }} />
 
 	return (
 		<>
-			<Modal title={modalTitle} opened={opened} onClose={() => handler.close()} fullScreen={isMobile}>
+			<Modal title={modalTitle} opened={opened} onClose={handler.close} fullScreen={isMobile}>
 				<form
 					noValidate
 					onSubmit={form.onSubmit(({ password }) => {
