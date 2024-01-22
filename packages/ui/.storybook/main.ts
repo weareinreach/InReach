@@ -11,7 +11,6 @@ import path, { dirname, join } from 'path'
 
 dotenv.config({ path: path.resolve(__dirname, '../../../.env') })
 
-const filePattern = '*.stories.@(ts|tsx)'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -23,7 +22,15 @@ const getAbsolutePath = (value: string) => {
 const publicStatic = path.resolve(__dirname, '../../../apps/app/public')
 
 const config: StorybookConfig = {
-	stories: [`../(components|hooks|icon|layouts|modals|other)/**/${filePattern}`, '../other/**/*.mdx'],
+	stories: [
+		'../components/**/*.stories.{ts,tsx}',
+		'../hooks/**/*.stories.{ts,tsx}',
+		'../icon/**/*.stories.{ts,tsx}',
+		'../layouts/**/*.stories.{ts,tsx}',
+		'../modals/**/*.stories.{ts,tsx}',
+		'../other/**/*.stories.{ts,tsx}',
+		'../other/**/*.mdx',
+	],
 	staticDirs: [
 		{
 			from: '../../../apps/app/public',
