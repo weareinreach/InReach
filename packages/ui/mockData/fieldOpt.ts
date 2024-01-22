@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { type ApiOutput } from '@weareinreach/api'
-import { getTRPCMock, type MockAPIHandler } from '~ui/lib/getTrpcMock'
+import { getTRPCMock, type MockAPIHandler, type MockHandlerObject } from '~ui/lib/getTrpcMock'
 
 const queryAttributeCategories: MockAPIHandler<'fieldOpt', 'attributeCategories'> = async (query) => {
 	const attributeCategories = (await import('./json/fieldOpt.attributeCategories.json')).default
@@ -199,7 +199,21 @@ export const fieldOpt = {
 			return formatted
 		},
 	}),
-}
+	getLeaderBadges: getTRPCMock({
+		path: ['fieldOpt', 'getLeaderBadges'],
+		response: async () => {
+			const { default: data } = await import('./json/fieldOpt.getLeaderBadges.json')
+			return data
+		},
+	}),
+	getServFocusBadges: getTRPCMock({
+		path: ['fieldOpt', 'getServFocusBadges'],
+		response: async () => {
+			const { default: data } = await import('./json/fieldOpt.getServFocusBadges.json')
+			return data
+		},
+	}),
+} satisfies MockHandlerObject<'fieldOpt'>
 
 export const allFieldOptHandlers = Object.values(fieldOpt)
 
