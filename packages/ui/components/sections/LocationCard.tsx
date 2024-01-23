@@ -26,7 +26,7 @@ const stopAnimations = (animationProcess: number) => {
 	}
 }
 
-export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
+export const LocationCard = ({ remoteOnly, locationId, edit }: LocationCardProps) => {
 	const { map, mapIsReady, mapEvents, camera } = useGoogleMaps()
 	const [initialPosition, setInitialPosition] = useState<google.maps.CameraOptions>()
 	const [canGetCenter, setCanGetCenter] = useState(map?.getCenter() !== undefined)
@@ -238,7 +238,7 @@ export const LocationCard = ({ remoteOnly, locationId }: LocationCardProps) => {
 	return (
 		<Link
 			href={{
-				pathname: '/org/[slug]/[orgLocationId]',
+				pathname: edit ? '/org/[slug]/[orgLocationId]/edit' : '/org/[slug]/[orgLocationId]',
 				query: {
 					slug: router.query.slug ?? '',
 					orgLocationId: data.id,
@@ -289,8 +289,10 @@ export type LocationCardProps = LocationProps | RemoteProps
 interface LocationProps {
 	locationId: string
 	remoteOnly?: false
+	edit?: boolean
 }
 interface RemoteProps {
 	locationId?: never
 	remoteOnly: true
+	edit?: boolean
 }

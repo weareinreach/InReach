@@ -85,7 +85,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 						/>
 						<Stack spacing={40}>
 							{locations.map((location) => (
-								<LocationCard key={location.id} locationId={location.id} />
+								<LocationCard key={location.id} locationId={location.id} edit />
 							))}
 							{hasRemote && <LocationCard remoteOnly />}
 						</Stack>
