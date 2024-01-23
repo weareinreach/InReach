@@ -1,17 +1,17 @@
-/* eslint-disable i18next/no-literal-string */
-import { Grid, Stack, Tabs, Title } from '@mantine/core'
+import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, useMantineTheme } from '@mantine/core'
 import { type GetServerSideProps, type NextPage } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
+import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
 import { Toolbar } from '@weareinreach/ui/components/core/Toolbar'
 import { ContactSection } from '@weareinreach/ui/components/sections/ContactSection'
 import { ListingBasicInfo } from '@weareinreach/ui/components/sections/ListingBasicInfo'
-// import {LocationCard } from '@weareinreach/ui/components/sections/LocationCard'
 import { PhotosSection } from '@weareinreach/ui/components/sections/Photos'
 import { ReviewSection } from '@weareinreach/ui/components/sections/Reviews'
 import { ServicesInfoCard } from '@weareinreach/ui/components/sections/ServicesInfo'
@@ -19,6 +19,15 @@ import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
 import { OrgLocationPageLoading } from '@weareinreach/ui/loading-states/OrgLocationPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
+
+const useStyles = createStyles((theme) => ({
+	tabsList: {
+		position: 'sticky',
+		top: 0,
+		zIndex: 10,
+		backgroundColor: theme.other.colors.secondary.white,
+	},
+}))
 
 const OrgLocationPage: NextPage = () => {
 	const { t } = useTranslation()
@@ -34,6 +43,17 @@ const OrgLocationPage: NextPage = () => {
 	const { data: isSaved } = api.savedList.isSaved.useQuery(orgData?.id as string, {
 		enabled: orgDataStatus === 'success' && Boolean(orgData?.id),
 	})
+	const { data: alertData } = api.location.getAlerts.useQuery(
+		{ id: orgLocationId },
+		{ enabled: router.isReady }
+	)
+	const hasAlerts = Array.isArray(alertData) && alertData.length > 0
+	const { classes } = useStyles()
+
+	const servicesRef = useRef<HTMLDivElement>(null)
+	const photosRef = useRef<HTMLDivElement>(null)
+	const reviewsRef = useRef<HTMLDivElement>(null)
+
 	useEffect(() => {
 		if (data && status === 'success' && orgData && orgDataStatus === 'success') setLoading(false)
 	}, [data, status, orgData, orgDataStatus])
@@ -52,8 +72,10 @@ const OrgLocationPage: NextPage = () => {
 
 	return (
 		<>
-			<Title order={1}>EDIT MODE</Title>
-			<Grid.Col sm={8} order={1}>
+			<Head>
+				<title>{t('page-title.edit-mode', { ns: 'common', title: `${orgData.name} - ${data.name}` })}</title>
+			</Head>
+			<Grid.Col xs={12} sm={8} order={1}>
 				<Toolbar
 					breadcrumbProps={{
 						option: 'back',
@@ -61,7 +83,7 @@ const OrgLocationPage: NextPage = () => {
 						backToText: orgData.name,
 						onClick: () =>
 							router.push({
-								pathname: '/org/[slug]',
+								pathname: '/org/[slug]/edit',
 								query: { slug: orgData.slug },
 							}),
 					}}
@@ -69,6 +91,16 @@ const OrgLocationPage: NextPage = () => {
 					saved={Boolean(isSaved)}
 				/>
 				<Stack pt={24} align='flex-start' spacing={40}>
+					{hasAlerts &&
+						alertData.map((alert) => (
+							<AlertMessage
+								key={alert.key}
+								iconKey={alert.icon}
+								ns={orgData.id}
+								textKey={alert.key}
+								defaultText={alert.text}
+							/>
+						))}
 					<ListingBasicInfo
 						data={{
 							name: data.name || orgData.name,
@@ -80,29 +112,52 @@ const OrgLocationPage: NextPage = () => {
 							attributes,
 							isClaimed: orgData.isClaimed,
 						}}
+						// edit
 					/>
-					<Tabs w='100%' value={activeTab} onTabChange={setActiveTab}>
-						<Tabs.List>
+					<Tabs
+						w='100%'
+						value={activeTab}
+						onTabChange={(tab) => {
+							setActiveTab(tab)
+							switch (tab) {
+								case 'services': {
+									servicesRef.current?.scrollIntoView({ behavior: 'smooth' })
+									break
+								}
+								case 'photos': {
+									photosRef.current?.scrollIntoView({ behavior: 'smooth' })
+									break
+								}
+								case 'reviews': {
+									reviewsRef.current?.scrollIntoView({ behavior: 'smooth' })
+									break
+								}
+							}
+						}}
+					>
+						<Tabs.List className={classes.tabsList}>
 							<Tabs.Tab value='services'>{t('services')}</Tabs.Tab>
 							<Tabs.Tab value='photos'>{t('photo', { count: 2 })}</Tabs.Tab>
 							<Tabs.Tab value='reviews'>{t('review', { count: 2 })}</Tabs.Tab>
 						</Tabs.List>
-						<Tabs.Panel value='services'>
-							<ServicesInfoCard parentId={data.id} />
-						</Tabs.Panel>
-						<Tabs.Panel value='photos'>
-							<PhotosSection parentId={data.id} />
-						</Tabs.Panel>
-						<Tabs.Panel value='reviews'>
-							<ReviewSection reviews={reviews} />
-						</Tabs.Panel>
+						<Stack spacing={40} pt={40}>
+							<div ref={servicesRef}>
+								<ServicesInfoCard parentId={data.id} />
+							</div>
+							<div ref={photosRef}>
+								<PhotosSection parentId={data.id} />
+							</div>
+							<div ref={reviewsRef}>
+								<ReviewSection reviews={reviews} />
+							</div>
+						</Stack>
 					</Tabs>
 				</Stack>
 			</Grid.Col>
 			<Grid.Col order={2}>
 				<Stack spacing={40}>
-					<ContactSection role='org' parentId={data.id} />
-					<VisitCard locationId={data.id} />
+					<ContactSection role='org' parentId={data.id} edit />
+					<VisitCard locationId={data.id} edit />
 				</Stack>
 			</Grid.Col>
 		</>

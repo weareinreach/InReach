@@ -12,8 +12,8 @@ import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
 import { validateIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-export const VisitCard = ({ edit, ...props }: VisitCardProps) =>
-	edit ? <VisitCardEdit {...props} /> : <VisitCardDisplay {...props} />
+export const VisitCard = (props: VisitCardProps) =>
+	props.edit ? <VisitCardEdit {...props} /> : <VisitCardDisplay {...props} />
 
 const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 	const { isMobile } = useScreenSize()
@@ -178,7 +178,7 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 	return isTablet ? body : <Card>{body}</Card>
 }
 
-export type VisitCardProps = {
+export interface VisitCardProps {
 	locationId: string
 	published?: boolean
 	edit?: boolean
