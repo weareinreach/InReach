@@ -4,16 +4,16 @@ import { Button } from '~ui/components/core'
 import { fieldOpt } from '~ui/mockData/fieldOpt'
 import { organization } from '~ui/mockData/organization'
 
-import { BadgeEditModal } from '.'
+import { BadgeEdit } from '.'
 
-type StoryDef = StoryObj<typeof BadgeEditModal>
+type StoryDef = StoryObj<typeof BadgeEdit>
 export default {
 	title: 'Data Portal/Modals/Badge Edit',
-	component: BadgeEditModal,
+	component: BadgeEdit,
 	parameters: {
 		layout: 'fullscreen',
 		layoutWrapper: 'centeredHalf',
-		msw: [fieldOpt.orgBadges, organization.forBadgeEditModal],
+		msw: [fieldOpt.orgBadges, organization.forBadgeEditModal, organization.updateAttributesBasic],
 		rqDevtools: true,
 		whyDidYouRender: { collapseGroups: true },
 	},
@@ -22,7 +22,7 @@ export default {
 		children: 'Open Modal',
 		orgId: 'orgn_123456',
 	},
-} satisfies Meta<typeof BadgeEditModal>
+} satisfies Meta<typeof BadgeEdit>
 
 export const OrgLeader = {
 	args: {

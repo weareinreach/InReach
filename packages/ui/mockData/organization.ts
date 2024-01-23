@@ -142,8 +142,8 @@ export const organization = {
 		path: ['organization', 'updateAttributesBasic'],
 		type: 'mutation',
 		response: (input) => ({
-			added: input.createdVals.length,
-			removed: input.deletedVals.length,
+			added: input.createdVals?.length ?? 0,
+			removed: input.deletedVals?.length ?? 0,
 		}),
 	}),
 } satisfies MockHandlerObject<'organization'> & { searchDistanceLongTitle: HttpHandler }
