@@ -88,9 +88,7 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 	const theme = useMantineTheme()
 	const { classes } = useCommonStyles()
 
-	if (!data?.length) return null
-
-	for (const phone of data) {
+	for (const phone of data ?? []) {
 		const { country, ext, number, phoneType, primary, description } = phone
 		const parsedPhone = parsePhoneNumber(number, country)
 		if (!parsedPhone) continue
@@ -153,6 +151,11 @@ const PhoneNumbersEdit = ({ parentId = '' }: PhoneNumbersProps) => {
 			<Title order={3}>{t('words.phone')}</Title>
 			<Stack spacing={12} className={classes.overlay}>
 				{output}
+				<Stack spacing={4}>
+					<PhoneDrawer component={Link} external variant={variants.Link.inlineInverted} createNew>
+						<Text variant={variants.Text.utility3}>➕ Create new</Text>
+					</PhoneDrawer>
+				</Stack>
 			</Stack>
 		</Stack>
 	)

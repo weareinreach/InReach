@@ -6,7 +6,7 @@ import { type TForEditDrawerSchema } from './query.forEditDrawer.schema'
 
 export const forEditDrawer = async ({ ctx, input }: TRPCHandlerParams<TForEditDrawerSchema>) => {
 	try {
-		const result = await prisma.orgSocialMedia.findUniqueOrThrow({
+		const result = await prisma.orgSocialMedia.findUnique({
 			where: input,
 			select: {
 				id: true,
@@ -23,6 +23,7 @@ export const forEditDrawer = async ({ ctx, input }: TRPCHandlerParams<TForEditDr
 				},
 			},
 		})
+		if (!result) return
 		return result
 	} catch (error) {
 		handleError(error)

@@ -89,9 +89,9 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 	const { classes } = useCommonStyles()
 	const { data } = api.orgEmail.forContactInfoEdit.useQuery({ parentId })
 
-	if (!data?.length) return null
+	// if (!data?.length) return null
 
-	for (const email of data) {
+	for (const email of data ?? []) {
 		const { primary, title, description, email: address, published, deleted, id } = email
 
 		const desc = title
@@ -147,6 +147,11 @@ const EmailsEdit = ({ parentId = '' }: EmailsProps) => {
 			<Title order={3}>{t('words.email')}</Title>
 			<Stack spacing={12} className={classes.overlay}>
 				{output}
+				<Stack spacing={4}>
+					<EmailDrawer component={Link} external variant={variants.Link.inlineInverted} createNew>
+						<Text variant={variants.Text.utility3}>➕ Create new</Text>
+					</EmailDrawer>
+				</Stack>
 			</Stack>
 		</Stack>
 	)

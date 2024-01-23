@@ -44,14 +44,13 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 	const { classes } = useCommonStyles()
 	const variants = useCustomVariant()
 	const theme = useMantineTheme()
-	if (!data?.length) return null
 
 	return (
 		<Stack spacing={12}>
 			<Title order={3}>{t('social.group-header')}</Title>
 			<Stack spacing={12} className={classes.overlay}>
 				<List listStyleType='none'>
-					{data.map((link) => {
+					{data?.map((link) => {
 						const renderItem = () => {
 							switch (true) {
 								case link.deleted: {
@@ -101,6 +100,13 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 							</List.Item>
 						)
 					})}
+					<List.Item>
+						<SocialMediaDrawer component={Link} external variant={variants.Link.inlineInverted} createNew>
+							<Group noWrap spacing={8}>
+								<Text variant={variants.Text.utility3}>➕ Create new</Text>
+							</Group>
+						</SocialMediaDrawer>
+					</List.Item>
 				</List>
 			</Stack>
 		</Stack>

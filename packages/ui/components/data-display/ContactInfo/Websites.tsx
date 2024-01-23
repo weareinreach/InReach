@@ -86,9 +86,7 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 	// eslint-disable-next-line no-useless-escape
 	const domainExtract = /https?:\/\/([^:\/\n?]+)/
 
-	if (!data?.length) return null
-
-	for (const website of data) {
+	for (const website of data ?? []) {
 		const { id, url, description, published, deleted } = website
 		const urlMatch = url.match(domainExtract)
 		const urlBase = urlMatch?.length ? urlMatch[1] : undefined
@@ -125,13 +123,14 @@ const WebsitesEdit = ({ parentId = '' }: WebsitesProps) => {
 		output.push(item)
 	}
 
-	if (!output.length) return null
-
 	return (
 		<Stack spacing={12}>
 			<Title order={3}>{t('website', { count: output.length })}</Title>
 			<Stack spacing={12} className={classes.overlay}>
 				{output}
+				<WebsiteDrawer component={Link} external variant={variants.Link.inlineInverted} createNew>
+					<Text variant={variants.Text.utility3}>➕ Create new</Text>
+				</WebsiteDrawer>
 			</Stack>
 		</Stack>
 	)
