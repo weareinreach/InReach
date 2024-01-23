@@ -90,6 +90,17 @@ export const locationRouter = defineRouter({
 		if (!HandlerCache.getAlerts) throw new Error('Failed to load handler')
 		return HandlerCache.getAlerts({ ctx, input })
 	}),
+	forVisitCardEdits: permissionedProcedure('createNewLocation')
+		.input(schema.ZForVisitCardEditsSchema)
+		.query(async ({ ctx, input }) => {
+			if (!HandlerCache.forVisitCardEdits) {
+				HandlerCache.forVisitCardEdits = await import('./query.forVisitCardEdits.handler').then(
+					(mod) => mod.forVisitCardEdits
+				)
+			}
+			if (!HandlerCache.forVisitCardEdits) throw new Error('Failed to load handler')
+			return HandlerCache.forVisitCardEdits({ ctx, input })
+		}),
 	// #endregion
 	//
 	// MUTATIONS
@@ -131,6 +142,7 @@ type LocationHandlerCache = {
 	forGoogleMaps: typeof import('./query.forGoogleMaps.handler').forGoogleMaps
 	forLocationPage: typeof import('./query.forLocationPage.handler').forLocationPage
 	getAlerts: typeof import('./query.getAlerts.handler').getAlerts
+	forVisitCardEdits: typeof import('./query.forVisitCardEdits.handler').forVisitCardEdits
 	// #endregion
 	//
 	// MUTATIONS

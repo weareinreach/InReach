@@ -2,6 +2,7 @@ import { createStyles, List, rem, Skeleton, Stack, Table, Text, Title } from '@m
 import { Interval } from 'luxon'
 import { useTranslation } from 'next-i18next'
 
+import { HoursDrawer } from '~ui/components/data-portal/HoursDrawer'
 import { useCustomVariant } from '~ui/hooks/useCustomVariant'
 import { useLocalizedDays } from '~ui/hooks/useLocalizedDays'
 import { trpc as api } from '~ui/lib/trpcClient'
@@ -38,7 +39,7 @@ const nullObj = {
 	6: [],
 }
 
-export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
+export const Hours = ({ parentId, label = 'regular', edit }: HoursProps) => {
 	const { t, i18n } = useTranslation('common')
 	const variants = useCustomVariant()
 	const { classes } = useStyles()
@@ -79,21 +80,30 @@ export const Hours = ({ parentId, label = 'regular' }: HoursProps) => {
 	})
 
 	return (
-		<Stack spacing={12}>
-			<Skeleton visible={isLoading}>
+		<Skeleton visible={isLoading}>
+			<Stack spacing={12}>
 				<div>
 					<Title order={3}>{t(labelKey)}</Title>
 					<Text variant={variants.Text.utility4darkGray}>{timezone}</Text>
 				</div>
-				<Table>
-					<tbody>{hourTable}</tbody>
-				</Table>
-			</Skeleton>
-		</Stack>
+				{edit ? (
+					<Table>
+						<HoursDrawer locationId={parentId} component='a'>
+							<tbody>{hourTable}</tbody>
+						</HoursDrawer>
+					</Table>
+				) : (
+					<Table>
+						<tbody>{hourTable}</tbody>
+					</Table>
+				)}
+			</Stack>
+		</Skeleton>
 	)
 }
 
 export interface HoursProps {
 	parentId: string
 	label?: keyof typeof labelKeys
+	edit?: boolean
 }
