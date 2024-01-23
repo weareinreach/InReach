@@ -10,8 +10,10 @@ import { z } from 'zod'
 
 import { type ApiInput } from '@weareinreach/api'
 import { Button } from '~ui/components/core/Button'
+import { Icon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
+import { useStyles } from './styles'
 import { ModalTitle } from '../ModalTitle'
 
 const FormSchema = z.object({
@@ -20,30 +22,30 @@ const FormSchema = z.object({
 })
 type FormData = z.infer<typeof FormSchema>
 const _BadgeEditModal = forwardRef<HTMLButtonElement, Props>(({ orgId, badgeType, ...props }, ref) => {
+	const { classes } = useStyles()
 	const { t } = useTranslation()
-	const [opened, handler] = useDisclosure(true)
-	const { data: badgeOptions } = api.fieldOpt.orgBadges.useQuery({ badgeType })
+	const [opened, handler] = useDisclosure(false)
 	const { data: initialData } = api.organization.forBadgeEditModal.useQuery({ id: orgId, badgeType })
-	const updateAttributes = api.organization.updateAttributesBasic.useMutation()
-
-	const apiUtil = api.useUtils()
 	const form = useForm<FormData>({
 		resolver: zodResolver(FormSchema),
-		defaultValues: async () => {
-			const data = await apiUtil.organization.forBadgeEditModal.fetch({ id: orgId, badgeType })
-			return {
-				id: orgId,
-				badges: data ?? [],
-			}
+		values: { id: orgId, badges: initialData ?? [] },
+	})
+	const { data: badgeOptions } = api.fieldOpt.orgBadges.useQuery({ badgeType })
+
+	const updateAttributes = api.organization.updateAttributesBasic.useMutation({
+		onSuccess: () => {
+			apiUtil.organization.invalidate()
+			form.reset()
+			handler.close()
 		},
 	})
+
+	const apiUtil = api.useUtils()
 
 	const handleSubmit = () => {
 		const data = form.getValues()
 		const changes = compareArrayVals([initialData ?? [], data.badges])
 		updateAttributes.mutate({ id: orgId, ...changes })
-		apiUtil.organization.forBadgeEditModal.invalidate()
-		form.reset()
 	}
 
 	return (
@@ -67,12 +69,20 @@ const _BadgeEditModal = forwardRef<HTMLButtonElement, Props>(({ orgId, badgeType
 								))}
 						</Stack>
 					</Chip.Group>
-					<Button size='lg' radius='md' type='submit' fullWidth onClick={handleSubmit}>
+					<Button
+						variant='primary-icon'
+						type='submit'
+						fullWidth
+						onClick={handleSubmit}
+						disabled={!form.formState.isDirty}
+						leftIcon={<Icon icon={updateAttributes.isSuccess ? 'carbon:checkmark' : 'carbon:save'} />}
+						loading={updateAttributes.isLoading}
+					>
 						{t('save-changes')}
 					</Button>
 				</Stack>
 			</Modal>
-			<Box ref={ref} component='button' onClick={handler.open} {...props} />
+			<Box ref={ref} component='button' onClick={handler.open} className={classes.overlay} {...props} />
 		</>
 	)
 })

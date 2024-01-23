@@ -8,7 +8,9 @@ import { type ApiOutput } from '@weareinreach/api'
 import { BadgeGroup, type CustomBadgeProps } from '~ui/components/core/Badge'
 import { Rating } from '~ui/components/core/Rating'
 import { InlineTextInput } from '~ui/components/data-portal/InlineTextInput'
-import { useCustomVariant, useFormattedAddress } from '~ui/hooks'
+import { useCustomVariant } from '~ui/hooks/useCustomVariant'
+import { useFormattedAddress } from '~ui/hooks/useFormattedAddress'
+import { BadgeEdit } from '~ui/modals/BadgeEdit'
 
 export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 	const { t, ready: i18nReady } = useTranslation(data.id)
@@ -81,7 +83,6 @@ ListingBasicDisplay.displayName = 'ListingBasicDisplay'
 export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
 	const form = useFormContext()
 	const { attributes, isClaimed } = data
-
 	const leaderAttributes = attributes.filter(({ attribute }) =>
 		attribute.categories.some(({ category }) => category.tag === 'organization-leadership')
 	)
@@ -102,6 +103,13 @@ export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
 					tsKey: entry.attribute.tsKey,
 				})
 			)
+		} else {
+			output.push({
+				variant: 'leader',
+				icon: '➕',
+				iconBg: '#FFF',
+				tsKey: 'Add leader badge',
+			})
 		}
 		if (data.lastVerified)
 			output.push({
@@ -130,7 +138,9 @@ export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
 					fontSize='h2'
 					data-isDirty={form.formState.dirtyFields['name']}
 				/>
-				<BadgeGroup badges={infoBadges()} withSeparator />
+				<BadgeEdit orgId={data.id} badgeType='organization-leadership' component='a'>
+					<BadgeGroup badges={infoBadges()} withSeparator />
+				</BadgeEdit>
 				<InlineTextInput
 					component={Textarea}
 					name='description'
@@ -138,7 +148,9 @@ export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
 					autosize
 					data-isDirty={form.formState.dirtyFields['description']}
 				/>
-				<BadgeGroup badges={focusedCommBadges} />
+				<BadgeEdit orgId={data.id} badgeType='service-focus' component='a'>
+					<BadgeGroup badges={focusedCommBadges} />
+				</BadgeEdit>
 			</Stack>
 		</form>
 	)
