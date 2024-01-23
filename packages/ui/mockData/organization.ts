@@ -138,4 +138,12 @@ export const organization = {
 					]
 		},
 	}),
+	updateAttributesBasic: getTRPCMock({
+		path: ['organization', 'updateAttributesBasic'],
+		type: 'mutation',
+		response: (input) => ({
+			added: input.createdVals.length,
+			removed: input.deletedVals.length,
+		}),
+	}),
 } satisfies MockHandlerObject<'organization'> & { searchDistanceLongTitle: HttpHandler }
