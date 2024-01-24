@@ -19,7 +19,7 @@ const AddressSchema = z.object({
 	}),
 })
 
-export const useFormattedAddressParts = (location?: UseFormattedAddressProps) => {
+export const useFormattedAddressParts = (location?: UseFormattedAddressProps | null) => {
 	const { t } = useTranslation('gov-dist')
 	const addressParts = AddressSchema.safeParse(location)
 	if (!addressParts.success) return null
@@ -42,7 +42,7 @@ export const useFormattedAddressParts = (location?: UseFormattedAddressProps) =>
 
 	return formattedAddress
 }
-export const useFormattedAddress = (location?: UseFormattedAddressProps) => {
+export const useFormattedAddress = (location?: UseFormattedAddressProps | null) => {
 	const address = useFormattedAddressParts(location)
 	if (Array.isArray(address)) return address.join(', ')
 	return address
