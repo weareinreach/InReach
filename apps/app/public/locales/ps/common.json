@@ -110,6 +110,9 @@
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
 	"exclude": "خارج کړئ",
+	"exit": {
+		"edit-mode": "Exit edit mode"
+	},
 	"filter-by-service": "د خدماتو لخوا فلټر",
 	"find-resources": "سرچینې ومومئ",
 	"find-x": "Find {{value}}",
@@ -189,6 +192,7 @@
 	"other-specify": "نور (مهرباني وکړئ مشخص کړئ)",
 	"page-title": {
 		"base": "{{title}} - انریچ",
+		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
 		"search-results": "د لټون پایلې"
 	},
 	"password": "شفر",
@@ -413,9 +417,13 @@
 		"please-wait": "مهرباني وکړئ انتظار وکړئ...",
 		"prev": "مخکی",
 		"print": "چاپ",
+		"publish": "Publish",
+		"restore": "Restore",
+		"reverify": "Reverify",
 		"review": "بیاکتنه",
 		"reviews": "کتنې",
 		"save": "Save",
+		"save-changes": "Save changes",
 		"saved": "Saved",
 		"search": "لټون",
 		"service-hours": "Service hours",
@@ -424,6 +432,7 @@
 		"sign-up": "نوم لیکنه",
 		"skip": "پرېښودل",
 		"support": "Support",
+		"unpublish": "Unpublish",
 		"website": "Website",
 		"yes": "هو"
 	},

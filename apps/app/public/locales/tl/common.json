@@ -110,6 +110,9 @@
 		"try-again-text": "<Text>May nagkamali! Mangyaring subukang muli.</Text>"
 	},
 	"exclude": "Ibukod",
+	"exit": {
+		"edit-mode": "Exit edit mode"
+	},
 	"filter-by-service": "I-filter ayon sa mga serbisyo",
 	"find-resources": "Maghanap ng mga mapagkukunan",
 	"find-x": "Hanapin ang {{value}}",
@@ -189,6 +192,7 @@
 	"other-specify": "Iba pa (mangyaring tukuyin)",
 	"page-title": {
 		"base": "{{title}} - inReach",
+		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
 		"search-results": "Mga Resulta sa Paghahanap"
 	},
 	"password": "Password",
@@ -413,9 +417,13 @@
 		"please-wait": "Mangyaring maghintay...",
 		"prev": "Prev",
 		"print": "I-print",
+		"publish": "Publish",
+		"restore": "Restore",
+		"reverify": "Reverify",
 		"review": "Suriin",
 		"reviews": "Mga Review",
 		"save": "Save",
+		"save-changes": "Save changes",
 		"saved": "Saved",
 		"search": "Paghahanap",
 		"service-hours": "Service hours",
@@ -424,6 +432,7 @@
 		"sign-up": "Mag-sign up",
 		"skip": "Laktawan",
 		"support": "Support",
+		"unpublish": "Unpublish",
 		"website": "Website",
 		"yes": "Oo"
 	},

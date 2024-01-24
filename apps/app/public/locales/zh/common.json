@@ -25,7 +25,7 @@
 	"badge": {
 		"claimed-tool-tip": "经核实的代表声称该组织。 <link1>了解更多。</link1>",
 		"community-tool-tip": "该组织所服务的社区。",
-		"national-tool-tip": "Offers services throughout {{country}}.",
+		"national-tool-tip": "在 {{country}} 内提供服务。",
 		"remote-tool-tip": "可远程使用",
 		"service-tool-tip": "该组织提供的服务。",
 		"unclaimed-tool-tip": "尚未有代表宣称拥有该组织。 <link1>声明此组织</link1> 以建立与我们社区的信任、更新您自己的信息等。"
@@ -34,7 +34,7 @@
 		"back-to-dynamic": "返回 <u>{{page}}</u>",
 		"back-to-search": "返回搜寻"
 	},
-	"can-help-people-in": "Can help people located anywhere in {{location}}",
+	"can-help-people-in": "可以帮助位于 {{location}} 内任何地方的人",
 	"cancel": "取消",
 	"claim-org-modal": {
 		"list": "<textUtility1>🔗 认领您的组织简介页面并在Inach上与您的受众建立信任</textUtility1>\n<textUtility1>:writing_hand_mediark_skin_tone: 更新您组织在Inach上的信息</textUtility1>\n<textUtility1><textUtility1> :incoming_envelle: 邀请其他工作人员加入您的组织，在Inach</textUtility1>\n<textUtility1>🔑 获取未来功能的访问权限，专门为附属服务提供商在 Inach</textUtility1>",
@@ -71,8 +71,8 @@
 		"intl-we-recommend": "我们建议这些国际资源",
 		"natl-find-help-now": "立即查找帮助",
 		"natl-these-verified": "<Text>这些已验证的资源可以帮助美国的LGBTQ+社区。 这些服务是 <strong>远程可用，保密，</strong> 和 <strong>免费</strong>。</Text>",
-		"outside-service-area": "InReach does not operate in {{country}}",
-		"who-this-serves": "<Text><strong>Who this resource serves:</strong> {{targetPop}}</Text>"
+		"outside-service-area": "InReach 不在 {{country}} 中运行",
+		"who-this-serves": "<Text><strong> 此资源服务于谁：</strong> {{targetPop}}</Text>"
 	},
 	"current-location": "当前所在地",
 	"delete-account": "删除你的账户？",
@@ -109,6 +109,9 @@
 		"try-again-text": "<Text>出了点问题！请再试一次。</Text>"
 	},
 	"exclude": "排除",
+	"exit": {
+		"edit-mode": "退出编辑模式"
+	},
 	"filter-by-service": "按服务筛选",
 	"find-resources": "查找资源",
 	"find-x": "找到 {{value}}",
@@ -188,6 +191,7 @@
 	"other-specify": "其他（请注明）",
 	"page-title": {
 		"base": "{{title}} -inReach",
+		"edit-mode": "{{- title}} [编辑模式] - InReach",
 		"search-results": "搜寻结果"
 	},
 	"password": "密码",
@@ -262,7 +266,7 @@
 		"suggest-resource": "找不到？<1>建议一个你认为应该包括的组织</1>。"
 	},
 	"select": {
-		"base": "Select {{- item}}"
+		"base": "选择 {{- item}}"
 	},
 	"send-email": "发送电子邮件",
 	"service": {
@@ -382,7 +386,7 @@
 	},
 	"view-list": "查看清单",
 	"visit": "参观",
-	"welcome-name": "Welcome, {{name}}!",
+	"welcome-name": "欢迎， {{name}}！",
 	"words": {
 		"accept": "接受",
 		"account": "账户",
@@ -412,9 +416,13 @@
 		"please-wait": "请稍候...",
 		"prev": "上一页",
 		"print": "打印",
+		"publish": "发布",
+		"restore": "恢复",
+		"reverify": "重新验证",
 		"review": "点评",
 		"reviews": "点评",
 		"save": "保存",
+		"save-changes": "保存更改",
 		"saved": "已保存",
 		"search": "搜寻",
 		"service-hours": "服务时间",
@@ -423,6 +431,7 @@
 		"sign-up": "注册",
 		"skip": "跳过",
 		"support": "支持",
+		"unpublish": "取消发布",
 		"website": "网址",
 		"yes": "是的"
 	},

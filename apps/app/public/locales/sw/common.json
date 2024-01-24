@@ -110,6 +110,9 @@
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
 	"exclude": "Wala",
+	"exit": {
+		"edit-mode": "Exit edit mode"
+	},
 	"filter-by-service": "Chuja kwa huduma",
 	"find-resources": "Kupata rasilimali",
 	"find-x": "Pata {{value}}",
@@ -189,6 +192,7 @@
 	"other-specify": "Nyingine (tafadhali taja)",
 	"page-title": {
 		"base": "{{title}} - Katika Kufikia",
+		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
 		"search-results": "Matokeo ya Utafutaji"
 	},
 	"password": "Nenosiri",
@@ -413,9 +417,13 @@
 		"please-wait": "Tafadhali subiri...",
 		"prev": "Kabla",
 		"print": "Chapisha",
+		"publish": "Publish",
+		"restore": "Restore",
+		"reverify": "Reverify",
 		"review": "Mapitio",
 		"reviews": "Mapitio",
 		"save": "Save",
+		"save-changes": "Save changes",
 		"saved": "Saved",
 		"search": "Tafuta",
 		"service-hours": "Service hours",
@@ -424,6 +432,7 @@
 		"sign-up": "Ishara ya juu",
 		"skip": "Ruka",
 		"support": "Support",
+		"unpublish": "Unpublish",
 		"website": "Website",
 		"yes": "Ndio"
 	},
