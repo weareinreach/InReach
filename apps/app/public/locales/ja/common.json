@@ -66,7 +66,7 @@
 	"country-select": "国を選択してください",
 	"create-new-list": "新しいリストを作成",
 	"crisis-support": {
-		"intl-stay-safe": "<Title3>📣 Please stay safe online</Title3>\n<Text>Visiting any of these websites <strong>may leave a record on your computer or browser</strong>, just like any website does after you visit it. Please take steps to avoid unsafe situations in your own area.</Text>",
+		"intl-stay-safe": "<Title3>📣 オンライン上の安全を確保しましょう</Title3>\n<Text>これらのウェブサイトにアクセスすると<strong>、他のウェブサイトにアクセスする際と同様に、コンピューターまたはブラウザに記録が残る場合があります</strong>。お住まいの地域での安全を確保するために措置を講じてください。</Text>",
 		"intl-these-verified": "これらの検証済みリソースは、世界中のどこでもLGBTQ+コミュニティを助けることができます。",
 		"intl-we-recommend": "私たちはこれらの国際的なリソースをお勧めします",
 		"natl-find-help-now": "今すぐヘルプを探す",
@@ -109,6 +109,9 @@
 		"try-again-text": "<Text>何かが間違っています！もう一度試してください。</Text>"
 	},
 	"exclude": "除外",
+	"exit": {
+		"edit-mode": "編集モードを終了"
+	},
 	"filter-by-service": "サービスで絞り込む",
 	"find-resources": "リソースを探す",
 	"find-x": "{{value}}を検索",
@@ -170,7 +173,7 @@
 	"message_text": "メッセージ テキスト",
 	"message_title": "メッセージタイトル",
 	"modal-content": {
-		"accessibility": "<stack16>\n<title2>Accessibility Statement</title2>\n<textDarkGray>InReach’s open source technology is built for the diverse LGBTQ+ community, including users with disabilities.</textDarkGray>\n<textDarkGray>The free InReach App is available on web (desktop and mobile), and native iOS and Android. Beginning with the launch of our latest redesign (June 2023), InReach will strive to meet <linkAccessibility>Web Content Accessibility Guidelines (WCAG) level AA criteria.</linkAccessibility></textDarkGray>\n<textDarkGray>At InReach, we strive to make our tech platform accessible for as many users and devices as possible in alignment with our mission to serve all LGBTQ+ people facing persecution or discrimination.</textDarkGray>",
+		"accessibility": "<stack16>\n<title2>アクセシビリティに関する声明</title2>\n<textDarkGray>InReach のオープンソース テクノロジーは、障害のあるユーザーを含む多様な LGBTQ+ コミュニティ向けに構築されています。</textDarkGray>\n<textDarkGray>無料の InReach アプリは、Web (デスクトップおよびモバイル)、ネイティブアプリ iOS および Android で利用できます。最新の再設計 (2023 年 6 月) の開始から、InReach は Web コンテンツ アクセシビリティ ガイドライン (WCAG) レベルの <linkAccessibility>AA 基準を満たすよう努めています。</linkAccessibility></textDarkGray>\n<textDarkGray>InReach では、迫害や差別に直面している全ての LGBTQ+ の人々にサービスを提供するという使命に沿って、できるだけ多くのユーザーやデバイスがテクノロジー プラットフォームにアクセスできるよう努めています。</textDarkGray>",
 		"disclaimer": "<stack16>\n<title2>inReach免責事項</title2>\n<textReg>inReachチームは、このウェブサイトに掲載されているサービスプロバイダーに関する適格性と基本的な事実を確認するために最善を尽くします。ただし、そのようなプロバイダーの存続可能性や能力を保証することはできません。したがって、InReachは、本ウェブサイトに掲載されているプロバイダーの行為について一切の責任を負わず、そのようなプロバイダーに連絡するユーザーは自己責任で行ってください。</textReg>\n</stack16>"
 	},
 	"modal-more-options": {
@@ -188,6 +191,7 @@
 	"other-specify": "その他 (指定してください)",
 	"page-title": {
 		"base": "{{title}} -インリーチ",
+		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
 		"search-results": "[検索結果]"
 	},
 	"password": "[パスワード]",
@@ -220,12 +224,12 @@
 		"<title2>ユーザ人口統計データ</title2>",
 		"<textDarkGray><strong>無料のInReachアプリを使用するにあたり、個人を特定できる情報は必要ありません。</strong></textDarkGray>",
 		"<textDarkGray>InReachユーザーアカウントを作成することを選択したユーザーには、匿名のオンラインアンケートを通じて以下の人口統計情報を共有するオプション <strong></strong> があります。</textDarkGray>",
-		"<textDarkGray><listGroup><listItem>Birth year</listItem>\n<listItem>Country of origin</listItem>\n<listItem>LGBTQ+ identity (sexual orientation and gender identity)</listItem>\n<listItem>Race/ethnicity</listItem>\n<listItem>Immigration status</listItem>\n<listItem>Current location</listItem></listGroup></textDarkGray>",
+		"<textDarkGray><listGroup><listItem>誕生年</listItem>\n<listItem>出身国</listItem>\n<listItem>LGBTQ+アイデンティティ（性的思考および性自認）</listItem>\n<listItem>人種/民族</listItem>\n<listItem>在留資格</listItem>\n<listItem>現在地</listItem></listGroup></textDarkGray>",
 		"<textDarkGray><strong>この機密情報はすべて匿名で保存され、単一の個人ユーザーまたはユーザーアカウントには接続されません。*</strong></textDarkGray>",
 		"<textUtility4>(*唯一の例外は、Local Community Reviewer のユーザーアカウントタイプです。これは、収集された人口統計情報を活用して、Local Community Reviewerのボランティア活動の経験と影響力を高めます。Local Community Reviewer アカウントの場合、位置情報やその他の人口統計情報は任意ですが、ユーザーレコードに関連付けられます。このデータは、ローカルコミュニティレビュー担当者がアカウントのプライバシー設定で公開することを選択した場合にのみ、inReachスタッフ以外には表示されません。プロフィールを公開すると、他のユーザーがあなたのレビューに自信を持てるようになります。）</textUtility4>",
 		"<textDarkGray>ユーザー層を理解することは、インパクトの定量化、資金調達、将来の製品に関する意思決定の評価に役立ちます。ユーザーが自発的にこの情報を私たちと共有してくれることに感謝し、私たちはあなたのプライバシーと匿名性を保護するためにこれらの措置を講じています。</textDarkGray>",
 		"<textDarkGray><title2>サイト利用分析</title2></textDarkGray>",
-		"<textDarkGray>InReach uses Google Analytics to anonymously analyze and track App usage data (e.g., user searches and other behavior) in the aggregate. Google Analytics is GDPR compliant and does not collect any personally identifiable information and anonymizes all data collected. Users cannot be identified and are never tracked across websites.</textDarkGray>",
+		"<textDarkGray>InReachは、Google Analyticsを使用しアプリの使用状況データ（ユーザーの検索事項やその他）を匿名で分析及び追跡します。Goolge AnalyticsはGDPRに準拠しており、個人を特定できる情報は収集せず、収集されたデータは匿名化されます。ウェブサイトをまたいでユーザーは特定されたり、追跡されたりすることはありません。</textDarkGray>",
 		"<textDarkGray>InReachは、ウェブのバイタルやパフォーマンスの分析にもVercel Analyticsを使用しています。Vercel Analyticsは、個々の訪問者やIPアドレスに縛られたり、関連付けられたりすることなく、サイトの使用状況情報を提供します。データポイントの記録は匿名で行われ、アナリティクス機能は、Vercelがページ間のブラウジングセッションを再構築したり、ユーザーを特定したりできるような情報を収集または保存しません。</textDarkGray>"
 	],
 	"privacy-statement-foot": "<linkPolicy>詳細については、当社のプライバシーポリシー全文をお読みください。</linkPolicy>",
@@ -234,7 +238,7 @@
 	"profile": "プロフィール",
 	"questions": "質問?",
 	"quick-promo-body": "<textUtility1>💚 パーソナライズされたリソースリストを保存して共有する</textUtility1>\n<textUtility1>💬 公開評価/組織レビューを残す</textUtility1>\n<textUtility1>🏠 お住まいの地域の組織を提案する</textUtility1>\n<textUtility1>🔗 組織のプロフィールページを入手する (近日公開予定!</textUtility1>",
-	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>You need to log in to do that.</title2>\n<textDarkGray>With a free InReach account you can unlock additional features:</textDarkGray>",
+	"quick-promo-heading": "<emojiLg>🌈</emojiLg>\n<title2>これを行うにはログインする必要があります。</title2>\n<textDarkGray>無料のInReachアカウントを使用すると、追加の機能を利用することができます。</textDarkGray>",
 	"remote-services": "リモートで利用できるサービス",
 	"remote-services-page-title": "リモートサービス",
 	"reset-password": "パスワードをリセット",
@@ -306,7 +310,7 @@
 		"lcr-screen3": "InReachのウェブサイトの「 <Link><strong>Local Community Reviewer</strong></Link> 」ページを確認しましたが、要件を満たしています。",
 		"modal-body": [
 			"<title3>どのタイプのアカウントを作成したいですか?</title3>",
-			"<group>\n<button data-option='individual'>Individual</button>\n<button data-option='provider'>Professional/Provider</button>\n<button data-option='lcr'>Local Community Reviewer</button>\n</group>",
+			"<group>\n<button data-option='individual'>個人</button>\n<button data-option='provider'>専門家/提供者</button>\n<button data-option='lcr'>地域コミュニティレビュアー</button>\n</group>",
 			"<loginLink>すでにアカウントをお持ちですか？</loginLink>"
 		],
 		"name-use-any": "使い慣れた名前を使用してください。",
@@ -412,9 +416,13 @@
 		"please-wait": "しばらくお待ちください...",
 		"prev": "前へ",
 		"print": "プリント",
+		"publish": "公開",
+		"restore": "復元",
+		"reverify": "再確認する",
 		"review": "レビュー",
 		"reviews": "レビュー",
 		"save": "保存",
+		"save-changes": "変更を保存",
 		"saved": "保存しました",
 		"search": "検索",
 		"service-hours": "サービス時間",
@@ -423,6 +431,7 @@
 		"sign-up": "サインアップ",
 		"skip": "スキップ",
 		"support": "サポート",
+		"unpublish": "公開しない",
 		"website": "ウェブサイト",
 		"yes": "はい"
 	},

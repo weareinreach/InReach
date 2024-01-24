@@ -110,6 +110,9 @@
 		"try-again-text": "<Text>Iets het verkeerd geloop! Probeer asseblief weer.</Text>"
 	},
 	"exclude": "Uitsluit",
+	"exit": {
+		"edit-mode": "Exit edit mode"
+	},
 	"filter-by-service": "Filter deur dienste",
 	"find-resources": "Soek hulpbronne",
 	"find-x": "Vind {{value}}",
@@ -189,6 +192,7 @@
 	"other-specify": "Ander (spesifiseer asseblief)",
 	"page-title": {
 		"base": "{{title}} - In bereik",
+		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
 		"search-results": "Soek Resultate"
 	},
 	"password": "Wagwoord",
@@ -413,9 +417,13 @@
 		"please-wait": "Wag asseblief...",
 		"prev": "Vorige",
 		"print": "Druk",
+		"publish": "Publish",
+		"restore": "Restore",
+		"reverify": "Reverify",
 		"review": "Hersiening",
 		"reviews": "Resensies",
 		"save": "Save",
+		"save-changes": "Save changes",
 		"saved": "Saved",
 		"search": "Soek",
 		"service-hours": "Service hours",
@@ -424,6 +432,7 @@
 		"sign-up": "Teken in",
 		"skip": "Slaan",
 		"support": "Support",
+		"unpublish": "Unpublish",
 		"website": "Website",
 		"yes": "Ja"
 	},

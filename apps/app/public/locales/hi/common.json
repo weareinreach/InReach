@@ -110,6 +110,9 @@
 		"try-again-text": "<Text>कुछ गलत हुआ! कृपया फिर से कोशिश करें।</Text>"
 	},
 	"exclude": "बाहर निकालें",
+	"exit": {
+		"edit-mode": "Exit edit mode"
+	},
 	"filter-by-service": "सेवाओं के अनुसार फ़िल्टर करें",
 	"find-resources": "संसाधन ढूंढें",
 	"find-x": "{{value}}ढूंढें",
@@ -189,6 +192,7 @@
 	"other-specify": "अन्य (कृपया निर्दिष्ट करें)",
 	"page-title": {
 		"base": "{{title}} - इनरीच",
+		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
 		"search-results": "खोज के परिणाम"
 	},
 	"password": "पासवर्ड",
@@ -413,9 +417,13 @@
 		"please-wait": "कृपया प्रतीक्षा करें...",
 		"prev": "पिछला",
 		"print": "प्रिंट करें",
+		"publish": "Publish",
+		"restore": "Restore",
+		"reverify": "Reverify",
 		"review": "समीक्षा",
 		"reviews": "समीक्षाएं",
 		"save": "Save",
+		"save-changes": "Save changes",
 		"saved": "Saved",
 		"search": "सर्च",
 		"service-hours": "Service hours",
@@ -424,6 +432,7 @@
 		"sign-up": "साइन अप करें",
 		"skip": "स्किप",
 		"support": "Support",
+		"unpublish": "Unpublish",
 		"website": "Website",
 		"yes": "हाँ"
 	},
