@@ -53,7 +53,7 @@ export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerS
 				country: { select: { cca2: true } },
 			},
 		})
-		if (!result) return
+		if (!result) return null
 		const orgId = await getOrgId(input.id)
 		const { country, description, ...rest } = result
 

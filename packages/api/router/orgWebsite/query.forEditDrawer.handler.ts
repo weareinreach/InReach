@@ -12,7 +12,7 @@ export const forEditDrawer = async ({ input }: TRPCHandlerParams<TForEditDrawerS
 				description: { include: { tsKey: true } },
 			},
 		})
-		if (!result) return
+		if (!result) return null
 		const reformatted = {
 			...result,
 			description: result.description?.tsKey?.text,

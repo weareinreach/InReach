@@ -28,7 +28,7 @@ export const forVisitCardEdits = async ({ input }: TRPCHandlerParams<TForVisitCa
 				longitude: true,
 			},
 		})
-		if (!result) return
+		if (!result) return null
 		const { attributes, ...rest } = result
 		const transformed = {
 			...rest,

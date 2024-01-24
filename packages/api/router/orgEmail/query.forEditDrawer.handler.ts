@@ -23,7 +23,7 @@ export const forEditDrawer = async ({ ctx, input }: TRPCHandlerParams<TForEditDr
 				titleId: true,
 			},
 		})
-		if (!result) return
+		if (!result) return null
 		const { description, ...rest } = result
 
 		const reformatted = {
