@@ -101,7 +101,13 @@ const SocialMediaEdit = ({ parentId = '' }: SocialMediaProps) => {
 						)
 					})}
 					<List.Item>
-						<SocialMediaDrawer component={Link} external variant={variants.Link.inlineInverted} createNew>
+						<SocialMediaDrawer
+							key='new'
+							component={Link}
+							external
+							variant={variants.Link.inlineInverted}
+							createNew
+						>
 							<Group noWrap spacing={8}>
 								<Text variant={variants.Text.utility3}>➕ Create new</Text>
 							</Group>

@@ -52,12 +52,12 @@ const useStyles = createStyles(() => ({
 export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
 		const router = useRouter<'/org/[slug]/edit'>()
-		const emailId = createNew ? generateId('orgEmail') : id
+		const [emailId] = useState(createNew ? generateId('orgEmail') : id)
 		const { id: orgId } = useOrgInfo()
 		const { data: initialData, isFetching } = api.orgEmail.forEditDrawer.useQuery(
 			{ id: emailId },
 			{
-				enabled: !!orgId,
+				enabled: !!orgId || !createNew,
 				select: (data) => (data ? { ...data, orgId: orgId ?? '' } : data),
 			}
 		)
@@ -67,7 +67,7 @@ export const _EmailDrawer = forwardRef<HTMLButtonElement, EmailDrawerProps>(
 		const apiUtils = api.useUtils()
 		const { control, handleSubmit, formState, reset, getValues } = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema),
-			values: initialData,
+			values: initialData ? initialData : undefined,
 		})
 
 		const { isDirty: formIsDirty } = formState

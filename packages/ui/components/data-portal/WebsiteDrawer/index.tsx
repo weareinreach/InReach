@@ -40,14 +40,17 @@ const FormSchema = z.object({
 type FormSchema = z.infer<typeof FormSchema>
 const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
-		const websiteId = createNew ? generateId('orgWebsite') : id
-		const { data, isFetching } = api.orgWebsite.forEditDrawer.useQuery({ id: websiteId })
+		const [websiteId] = useState(createNew ? generateId('orgWebsite') : id)
+		const { data, isFetching } = api.orgWebsite.forEditDrawer.useQuery(
+			{ id: websiteId },
+			{ enabled: !createNew }
+		)
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
 		const { classes } = useStyles()
 		const { control, handleSubmit, formState, reset, getValues } = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema),
-			values: data,
+			values: data ? data : undefined,
 		})
 		const apiUtils = api.useUtils()
 
@@ -171,7 +174,7 @@ const _WebsiteDrawer = forwardRef<HTMLButtonElement, WebsiteDrawerProps>(
 _WebsiteDrawer.displayName = 'WebsiteDrawer'
 
 export const WebsiteDrawer = createPolymorphicComponent<'button', WebsiteDrawerProps>(_WebsiteDrawer)
-
+WebsiteDrawer.whyDidYouRender = true
 type WebsiteDrawerProps = WebsiteExisting | WebsiteNew
 
 interface WebsiteExisting {

@@ -65,14 +65,17 @@ SelectItem.displayName = 'SelectItem'
 
 const _SocialMediaDrawer = forwardRef<HTMLButtonElement, SocialMediaDrawerProps>(
 	({ id, createNew, ...props }, ref) => {
-		const socialId = createNew ? generateId('orgSocialMedia') : id
-		const { data, isFetching } = api.orgSocialMedia.forEditDrawer.useQuery({ id: socialId })
+		const [socialId] = useState(createNew ? generateId('orgSocialMedia') : id)
+		const { data, isFetching } = api.orgSocialMedia.forEditDrawer.useQuery(
+			{ id: socialId },
+			{ enabled: !createNew }
+		)
 		const [drawerOpened, drawerHandler] = useDisclosure(false)
 		const [modalOpened, modalHandler] = useDisclosure(false)
 		const { classes } = useStyles()
 		const { control, handleSubmit, formState, reset, getValues } = useForm<FormSchema>({
 			resolver: zodResolver(FormSchema),
-			values: data,
+			values: data ? data : undefined,
 		})
 		const apiUtils = api.useUtils()
 		const { data: services } = api.orgSocialMedia.getServiceTypes.useQuery(undefined, {

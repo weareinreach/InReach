@@ -52,13 +52,13 @@ const FormSchema = z.object({
 type FormSchema = z.infer<typeof FormSchema>
 const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, createNew, ...props }, ref) => {
 	const { t } = useTranslation(['phone-type'])
-	const phoneId = createNew ? generateId('orgPhone') : id
+	const [phoneId] = useState(createNew ? generateId('orgPhone') : id)
 	const { id: orgId } = useOrgInfo()
 	const apiUtils = api.useUtils()
 	const { data: initialData, isFetching } = api.orgPhone.forEditDrawer.useQuery(
 		{ id: phoneId },
 		{
-			enabled: !!orgId,
+			enabled: !!orgId || !createNew,
 			select: (data) => {
 				if (!data) return data
 				const parsedPhone = parsePhoneNumber(data.number, data.country)
@@ -76,13 +76,7 @@ const _PhoneDrawer = forwardRef<HTMLButtonElement, PhoneDrawerProps>(({ id, crea
 	const { classes } = useStyles()
 	const { control, handleSubmit, formState, reset, getValues, watch } = useForm<FormSchema>({
 		resolver: zodResolver(FormSchema),
-		values: initialData,
-		// defaultValues: async () => {
-		// 	const data = await apiUtils.orgPhone.forEditDrawer.fetch({ id })
-		// 	if (!data) throw new Error('Failed to fetch data')
-		// 	const parsedPhone = parsePhoneNumber(data.number, data.country)
-		// 	return { ...data, number: parsedPhone?.number ?? data.number }
-		// },
+		values: initialData ? initialData : undefined,
 	})
 	const { isDirty: formIsDirty } = formState
 	const [isSaved, setIsSaved] = useState(formIsDirty)
