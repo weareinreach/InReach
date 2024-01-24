@@ -110,6 +110,9 @@
 		"try-again-text": "<Text>Yon bagay ale mal! Tanpri eseye ankò.</Text>"
 	},
 	"exclude": "Ekskli",
+	"exit": {
+		"edit-mode": "Exit edit mode"
+	},
 	"filter-by-service": "Filtre pa sèvis yo",
 	"find-resources": "Jwenn resous",
 	"find-x": "Jwenn {{value}}",
@@ -189,6 +192,7 @@
 	"other-specify": "Lòt (tanpri presize)",
 	"page-title": {
 		"base": "{{title}} - InReach",
+		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
 		"search-results": "Recherche rezilta"
 	},
 	"password": "Modpas",
@@ -413,9 +417,13 @@
 		"please-wait": "Tanpri, tann...",
 		"prev": "Prev",
 		"print": "Enprime",
+		"publish": "Publish",
+		"restore": "Restore",
+		"reverify": "Reverify",
 		"review": "Revize",
 		"reviews": "Revi",
 		"save": "Save",
+		"save-changes": "Save changes",
 		"saved": "Saved",
 		"search": "Recherche",
 		"service-hours": "Service hours",
@@ -424,6 +432,7 @@
 		"sign-up": "Enskri",
 		"skip": "Sote",
 		"support": "Support",
+		"unpublish": "Unpublish",
 		"website": "Website",
 		"yes": "Wi"
 	},

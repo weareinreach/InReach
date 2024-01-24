@@ -110,6 +110,9 @@
 		"try-again-text": "<Text>¡Algo salió mal! Por favor, inténtalo de nuevo.</Text>"
 	},
 	"exclude": "Excluir",
+	"exit": {
+		"edit-mode": "Salir del modo de edición"
+	},
 	"filter-by-service": "Filtrar por servicios",
 	"find-resources": "Encuentra recursos",
 	"find-x": "Encuentra {{value}}",
@@ -189,6 +192,7 @@
 	"other-specify": "Otra (por favor especifique)",
 	"page-title": {
 		"base": "{{- title}} - InReach",
+		"edit-mode": "{{- title}} [MODO EDIT] - Alcance",
 		"search-results": "Resultados de búsqueda"
 	},
 	"password": "Contraseña",
@@ -413,9 +417,13 @@
 		"please-wait": "Por favor espere...",
 		"prev": "Anterior",
 		"print": "Imprimir",
+		"publish": "Publicar",
+		"restore": "Restaurar",
+		"reverify": "Reverificar",
 		"review": "Reseña",
 		"reviews": "Reseñas",
 		"save": "Guardar",
+		"save-changes": "Guardar cambios",
 		"saved": "Guardado",
 		"search": "Buscar",
 		"service-hours": "Horas de servicio",
@@ -424,6 +432,7 @@
 		"sign-up": "Regístrate",
 		"skip": "Saltar",
 		"support": "Apoyo",
+		"unpublish": "No publicar",
 		"website": "Página web",
 		"yes": "Sí"
 	},

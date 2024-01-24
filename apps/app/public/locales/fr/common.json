@@ -110,6 +110,9 @@
 		"try-again-text": "<Text>Une erreur s'est produite ! Veuillez réessayer.</Text>"
 	},
 	"exclude": "Exclure",
+	"exit": {
+		"edit-mode": "Quitter le mode édition"
+	},
 	"filter-by-service": "Filtrer par services",
 	"find-resources": "Trouver des ressources",
 	"find-x": "Trouver {{value}}",
@@ -189,6 +192,7 @@
 	"other-specify": "Autre (veuillez préciser)",
 	"page-title": {
 		"base": "{{title}} - InReach",
+		"edit-mode": "{{- title}} [MODE ÉDITION] - InReach",
 		"search-results": "Résultats de recherche"
 	},
 	"password": "Mot de passe",
@@ -413,9 +417,13 @@
 		"please-wait": "Veuillez attendre...",
 		"prev": "Précédent",
 		"print": "Imprimer",
+		"publish": "Publier",
+		"restore": "Restaurer",
+		"reverify": "Revérifier",
 		"review": "Passer en revue",
 		"reviews": "Avis",
 		"save": "Enregistrer",
+		"save-changes": "Enregistrer les modifications",
 		"saved": "Enregistré",
 		"search": "Chercher",
 		"service-hours": "Heures de service",
@@ -424,6 +432,7 @@
 		"sign-up": "S'inscrire",
 		"skip": "Ignorer",
 		"support": "Assistance",
+		"unpublish": "Dépublier",
 		"website": "Site Web",
 		"yes": "Oui"
 	},
