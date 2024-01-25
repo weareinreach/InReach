@@ -1,4 +1,4 @@
-import { Skeleton, Stack, Text, Title } from '@mantine/core'
+import { Divider, Group, Skeleton, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useTranslation } from 'next-i18next'
 import { memo } from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -83,6 +83,7 @@ ListingBasicDisplay.displayName = 'ListingBasicDisplay'
 export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
 	const form = useFormContext()
 	const { attributes, isClaimed } = data
+	const theme = useMantineTheme()
 	const leaderAttributes = attributes.filter(({ attribute }) =>
 		attribute.categories.some(({ category }) => category.tag === 'organization-leadership')
 	)
@@ -92,25 +93,28 @@ export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
 		)
 	)
 
+	const leaderBadges = (): CustomBadgeProps[] => {
+		if (leaderAttributes.length) {
+			return leaderAttributes.map(({ attribute }) => ({
+				variant: 'leader',
+				icon: attribute.icon ?? '',
+				iconBg: attribute.iconBg ?? '#FFF',
+				tsKey: attribute.tsKey,
+			}))
+		} else {
+			return [
+				{
+					variant: 'leader',
+					icon: '➕',
+					iconBg: '#FFF',
+					tsKey: 'Add leader badge',
+				},
+			]
+		}
+	}
+
 	const infoBadges = () => {
 		const output: CustomBadgeProps[] = []
-		if (leaderAttributes.length) {
-			leaderAttributes.forEach((entry) =>
-				output.push({
-					variant: 'leader',
-					icon: entry.attribute.icon ?? '',
-					iconBg: entry.attribute.iconBg ?? '#FFF',
-					tsKey: entry.attribute.tsKey,
-				})
-			)
-		} else {
-			output.push({
-				variant: 'leader',
-				icon: '➕',
-				iconBg: '#FFF',
-				tsKey: 'Add leader badge',
-			})
-		}
 		if (data.lastVerified)
 			output.push({
 				variant: 'verified',
@@ -138,9 +142,18 @@ export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
 					fontSize='h2'
 					data-isDirty={form.formState.dirtyFields['name']}
 				/>
-				<BadgeEdit orgId={data.id} badgeType='organization-leadership' component='a'>
+				<Group noWrap spacing={8}>
+					<BadgeEdit orgId={data.id} badgeType='organization-leadership' component='a'>
+						<BadgeGroup badges={leaderBadges()} withSeparator />
+					</BadgeEdit>
+					<Divider
+						w={4}
+						size={4}
+						style={{ borderRadius: '50%' }}
+						color={theme.other.colors.secondary.black}
+					/>
 					<BadgeGroup badges={infoBadges()} withSeparator />
-				</BadgeEdit>
+				</Group>
 				<InlineTextInput
 					component={Textarea}
 					name='description'
