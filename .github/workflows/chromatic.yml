@@ -23,6 +23,7 @@ jobs:
       OVERRIDE_CI: true
       FORCE_COLOR: true
       SKIP_ENV_VALIDATION: true
+      HUSKY: 0
     runs-on: ubuntu-latest
     defaults:
       run:
