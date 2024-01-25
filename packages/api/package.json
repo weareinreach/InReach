@@ -17,7 +17,7 @@
 	"dependencies": {
 		"@googlemaps/google-maps-services-js": "3.3.42",
 		"@opentelemetry/api": "1.7.0",
-		"@sentry/nextjs": "7.95.0",
+		"@sentry/nextjs": "7.98.0",
 		"@tanstack/react-query": "4.36.1",
 		"@terraformer/wkt": "2.2.0",
 		"@trpc/client": "10.45.0",
@@ -32,7 +32,7 @@
 		"@weareinreach/env": "workspace:*",
 		"@weareinreach/util": "workspace:*",
 		"alex": "11.0.1",
-		"geo-tz": "8.0.0",
+		"geo-tz": "8.0.1",
 		"geolib": "3.3.4",
 		"just-compact": "3.2.0",
 		"just-flush": "2.3.0",
