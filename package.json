@@ -30,7 +30,7 @@
 		"lint:pkg:fix": "sherif --fix",
 		"lint:staged": "lint-staged",
 		"notify:install": "tsx ./lib/runInstall.ts",
-		"prepare": "tsx ./lib/prepare.ts",
+		"prepare": "husky",
 		"scripts:post-install": "turbo run post-install --continue",
 		"types:check": "turbo type-check",
 		"types:sync": "typesync"

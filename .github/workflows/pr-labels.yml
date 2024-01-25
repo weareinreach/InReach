@@ -9,6 +9,8 @@ jobs:
   pr_labels:
     name: 🏭 Verify labels
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
       - name: 🏷 Verify PR has a valid label
         uses: mheap/github-action-required-labels@4e9ef4ce8c697cf55716ecbf7f13a3d9e0b6ac6a # v5
@@ -19,6 +21,8 @@ jobs:
   pr_wip_check:
     runs-on: ubuntu-latest
     name: 🏭 Check for blocking labels
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
       - name: 🏷 Check PR for a merge-blocking label
         uses: tim-actions/wip-check@8c84f5987215d49440b86475062d61e4f099e1b7 # main branch
@@ -29,6 +33,8 @@ jobs:
     name: 🏭 Label PR With Repo(s)
     runs-on: ubuntu-latest
     if: contains(fromJson('["main", "l10_*"]'), github.base_ref) != true
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
       - name: 🏷 Apply repo labels
         uses: tinkurlab/monorepo-pr-labeler-action@290105bf438d979f86a9a2b1d20a080098c26edc # 4.1.5
@@ -42,6 +48,8 @@ jobs:
     name: 🏭 Add misc PR labels
     runs-on: ubuntu-latest
     if: github.base_ref != 'main'
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ACT_PAT }}
     steps:
       - name: Kodiak squash merge
         uses: actions-ecosystem/action-add-labels@18f1af5e3544586314bbe15c0273249c770b2daf # v1
