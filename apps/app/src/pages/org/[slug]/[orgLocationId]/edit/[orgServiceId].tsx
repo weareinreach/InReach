@@ -41,7 +41,15 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params, r
 	const ssg = await trpcServerClient({ session })
 	const { id: orgId } = await ssg.organization.getIdFromSlug.fetch({ slug })
 	const [i18n] = await Promise.all([
-		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId]),
+		getServerSideTranslations(locale, [
+			'common',
+			'services',
+			'attribute',
+			'phone-type',
+			'country',
+			'gov-dist',
+			orgId,
+		]),
 		ssg.organization.getBySlug.prefetch({ slug }),
 		ssg.location.getById.prefetch({ id: orgLocationId }),
 	])
