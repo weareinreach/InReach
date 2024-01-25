@@ -6,6 +6,7 @@ import { useTranslation } from 'next-i18next'
 import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
+import { prefixedId } from '@weareinreach/api/schemas/idPrefix'
 import { trpcServerClient } from '@weareinreach/api/trpc'
 import { checkServerPermissions } from '@weareinreach/auth'
 import { AlertMessage } from '@weareinreach/ui/components/core/AlertMessage'
@@ -165,15 +166,14 @@ const OrgLocationPage: NextPage = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ locale, params, req, res }) => {
-	const urlParams = z.object({ slug: z.string(), orgLocationId: z.string() }).safeParse(params)
+	const urlParams = z.object({ slug: z.string(), orgLocationId: prefixedId('orgLocation') }).safeParse(params)
 	if (!urlParams.success) return { notFound: true }
-	const { slug, orgLocationId } = urlParams.data
+	const { slug, orgLocationId: id } = urlParams.data
 	const session = await checkServerPermissions({
 		ctx: { req, res },
 		permissions: ['dataPortalBasic'],
 		has: 'some',
 	})
-
 	if (!session) {
 		return {
 			redirect: {
@@ -183,12 +183,17 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params, r
 		}
 	}
 	const ssg = await trpcServerClient({ session })
-	await ssg.organization.getBySlug.prefetch({ slug })
-	await ssg.location.getById.prefetch({ id: orgLocationId })
+	const { id: orgId } = await ssg.organization.getIdFromSlug.fetch({ slug })
+	const [i18n] = await Promise.all([
+		getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', orgId]),
+		ssg.organization.getBySlug.prefetch({ slug }),
+		ssg.location.forLocationPage.prefetch({ id }),
+		ssg.location.getAlerts.prefetch({ id }),
+	])
 	const props = {
 		session,
 		trpcState: ssg.dehydrate(),
-		...(await getServerSideTranslations(locale, ['common', 'services', 'attribute', 'phone-type', slug])),
+		...i18n,
 	}
 
 	return {

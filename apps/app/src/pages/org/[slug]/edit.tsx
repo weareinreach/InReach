@@ -83,7 +83,7 @@ const OrganizationPage: NextPageWithOptions<InferGetServerSidePropsType<typeof g
 							}}
 							edit
 						/>
-						<Stack spacing={40}>
+						<Stack spacing={40} w='100%'>
 							{locations.map((location) => (
 								<LocationCard key={location.id} locationId={location.id} edit />
 							))}
