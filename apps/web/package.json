@@ -27,7 +27,7 @@
 		"@weareinreach/ui": "workspace:*",
 		"dayjs": "1.11.10",
 		"embla-carousel-react": "7.1.0",
-		"i18next": "23.7.18",
+		"i18next": "23.7.19",
 		"next": "14.1.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
