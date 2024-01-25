@@ -44,7 +44,7 @@
 		"@weareinreach/eslint-config": "0.100.0",
 		"boxen": "7.1.1",
 		"dotenv": "16.4.0",
-		"husky": "8.0.3",
+		"husky": "9.0.3",
 		"knip": "4.2.1",
 		"lint-staged": "15.2.0",
 		"prettier": "3.2.4",
