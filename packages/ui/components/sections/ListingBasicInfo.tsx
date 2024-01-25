@@ -80,7 +80,7 @@ export const ListingBasicDisplay = memo(({ data }: ListingBasicInfoProps) => {
 })
 ListingBasicDisplay.displayName = 'ListingBasicDisplay'
 
-export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
+export const ListingBasicEdit = ({ data, location }: ListingBasicInfoProps) => {
 	const form = useFormContext()
 	const { attributes, isClaimed } = data
 	const theme = useMantineTheme()
@@ -143,36 +143,44 @@ export const ListingBasicEdit = ({ data }: ListingBasicInfoProps) => {
 					data-isDirty={form.formState.dirtyFields['name']}
 				/>
 				<Group noWrap spacing={8}>
-					<BadgeEdit orgId={data.id} badgeType='organization-leadership' component='a'>
-						<BadgeGroup badges={leaderBadges()} withSeparator />
-					</BadgeEdit>
-					<Divider
-						w={4}
-						size={4}
-						style={{ borderRadius: '50%' }}
-						color={theme.other.colors.secondary.black}
-					/>
+					{!location && (
+						<>
+							<BadgeEdit orgId={data.id} badgeType='organization-leadership' component='a'>
+								<BadgeGroup badges={leaderBadges()} withSeparator />
+							</BadgeEdit>
+							<Divider
+								w={4}
+								size={4}
+								style={{ borderRadius: '50%' }}
+								color={theme.other.colors.secondary.black}
+							/>
+						</>
+					)}
 					<BadgeGroup badges={infoBadges()} withSeparator />
 				</Group>
-				<InlineTextInput
-					component={Textarea}
-					name='description'
-					control={form.control}
-					autosize
-					data-isDirty={form.formState.dirtyFields['description']}
-				/>
-				<BadgeEdit orgId={data.id} badgeType='service-focus' component='a'>
-					<BadgeGroup badges={focusedCommBadges} />
-				</BadgeEdit>
+				{!location && (
+					<>
+						<InlineTextInput
+							component={Textarea}
+							name='description'
+							control={form.control}
+							autosize
+							data-isDirty={form.formState.dirtyFields['description']}
+						/>
+						<BadgeEdit orgId={data.id} badgeType='service-focus' component='a'>
+							<BadgeGroup badges={focusedCommBadges} />
+						</BadgeEdit>
+					</>
+				)}
 			</Stack>
 		</form>
 	)
 }
 ListingBasicEdit.displayName = 'ListingBasicEdit'
 
-export const ListingBasicInfo = ({ data, edit }: ListingBasicInfoProps) =>
-	edit ? <ListingBasicEdit data={data} /> : <ListingBasicDisplay data={data} />
-export type ListingBasicInfoProps = { edit?: boolean } & OrgInfoProps
+export const ListingBasicInfo = ({ edit, ...props }: ListingBasicInfoProps) =>
+	edit ? <ListingBasicEdit {...props} /> : <ListingBasicDisplay {...props} />
+export type ListingBasicInfoProps = { edit?: boolean; location?: boolean } & OrgInfoProps
 
 export interface OrgInfoProps {
 	data: {
