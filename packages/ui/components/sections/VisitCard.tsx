@@ -1,11 +1,13 @@
-import { Card, Stack, Text, Title, useMantineTheme } from '@mantine/core'
+import { Card, createStyles, rem, Stack, Text, Title, useMantineTheme } from '@mantine/core'
 import { useElementSize, useMediaQuery } from '@mantine/hooks'
 import { useTranslation } from 'next-i18next'
 import { useEffect } from 'react'
 
 import { Badge } from '~ui/components/core/Badge'
 import { GoogleMap } from '~ui/components/core/GoogleMap'
+import { Link } from '~ui/components/core/Link'
 import { Hours } from '~ui/components/data-display/Hours'
+import { AddressDrawer } from '~ui/components/data-portal/AddressDrawer'
 import { useCustomVariant, useFormattedAddress, useScreenSize } from '~ui/hooks'
 import { useGoogleMapMarker } from '~ui/hooks/useGoogleMapMarker'
 import { useGoogleMaps } from '~ui/hooks/useGoogleMaps'
@@ -97,8 +99,17 @@ const VisitCardDisplay = ({ locationId }: VisitCardProps) => {
 }
 // TODO: [IN-785] Create variant for Remote/Unpublished address
 
+const useEditStyles = createStyles((theme) => ({
+	overlay: {
+		backgroundColor: theme.fn.lighten(theme.other.colors.secondary.teal, 0.9),
+		borderRadius: rem(16),
+		margin: rem(-8),
+		padding: rem(8),
+	},
+}))
 const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 	const { isMobile } = useScreenSize()
+	const { classes } = useEditStyles()
 	const { t } = useTranslation(['common', 'attribute'])
 	const { ref, width } = useElementSize()
 	const variants = useCustomVariant()
@@ -135,7 +146,9 @@ const VisitCardEdit = ({ locationId }: VisitCardProps) => {
 	const address = formattedAddress && (
 		<Stack spacing={12} ref={ref}>
 			<Title order={3}>{t('address', { context: data.remote ? 'physical' : undefined })}</Title>
-			<Text>{formattedAddress}</Text>
+			<AddressDrawer locationId={locationId} external component={Link} variant={variants.Link.inlineInverted}>
+				<Text className={classes.overlay}>{formattedAddress}</Text>
+			</AddressDrawer>
 			<GoogleMap locationIds={data.id} height={Math.floor(width * 0.625)} width={width} />
 		</Stack>
 	)
