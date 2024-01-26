@@ -112,6 +112,9 @@
 		"try-again-text": "<Text>Coś poszło nie tak! Proszę spróbować ponownie.</Text>"
 	},
 	"exclude": "Wyklucz",
+	"exit": {
+		"edit-mode": "Wyjdź z trybu edycji"
+	},
 	"filter-by-service": "Filtruj według usług",
 	"find-resources": "Znajdź zasoby",
 	"find-x": "Znajdź {{value}}",
@@ -191,6 +194,7 @@
 	"other-specify": "Inne (proszę określić)",
 	"page-title": {
 		"base": "{{title}} - InReach",
+		"edit-mode": "{{- title}} [TRYB EDIT] - Osiągnij",
 		"search-results": "Wyniki wyszukiwania"
 	},
 	"password": "Hasło",
@@ -415,9 +419,13 @@
 		"please-wait": "Proszę czekać...",
 		"prev": "Poprzedni",
 		"print": "Drukuj",
+		"publish": "Opublikuj",
+		"restore": "Przywróć",
+		"reverify": "Zweryfikuj ponownie",
 		"review": "Recenzja",
 		"reviews": "Recenzje",
 		"save": "Zapisz",
+		"save-changes": "Zapisz zmiany",
 		"saved": "Zapisano",
 		"search": "Szukaj",
 		"service-hours": "Godziny pracy",
@@ -426,6 +434,7 @@
 		"sign-up": "Zarejestruj się",
 		"skip": "Pomiń",
 		"support": "Wsparcie",
+		"unpublish": "Cofnij publikację",
 		"website": "Strona internetowa",
 		"yes": "tak"
 	},

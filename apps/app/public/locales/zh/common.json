@@ -109,6 +109,9 @@
 		"try-again-text": "<Text>出了点问题！请再试一次。</Text>"
 	},
 	"exclude": "排除",
+	"exit": {
+		"edit-mode": "退出编辑模式"
+	},
 	"filter-by-service": "按服务筛选",
 	"find-resources": "查找资源",
 	"find-x": "找到 {{value}}",
@@ -188,6 +191,7 @@
 	"other-specify": "其他（请注明）",
 	"page-title": {
 		"base": "{{title}} -inReach",
+		"edit-mode": "{{- title}} [编辑模式] - InReach",
 		"search-results": "搜寻结果"
 	},
 	"password": "密码",
@@ -412,9 +416,13 @@
 		"please-wait": "请稍候...",
 		"prev": "上一页",
 		"print": "打印",
+		"publish": "发布",
+		"restore": "恢复",
+		"reverify": "重新验证",
 		"review": "点评",
 		"reviews": "点评",
 		"save": "保存",
+		"save-changes": "保存更改",
 		"saved": "已保存",
 		"search": "搜寻",
 		"service-hours": "服务时间",
@@ -423,6 +431,7 @@
 		"sign-up": "注册",
 		"skip": "跳过",
 		"support": "支持",
+		"unpublish": "取消发布",
 		"website": "网址",
 		"yes": "是的"
 	},

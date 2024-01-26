@@ -109,6 +109,9 @@
 		"try-again-text": "<Text>뭔가 잘못됐습니다! 다시 시도해 주십시요.</Text>"
 	},
 	"exclude": "제외함",
+	"exit": {
+		"edit-mode": "편집모드 종료"
+	},
 	"filter-by-service": "서비스별 걸러내십시오",
 	"find-resources": "자원을 찾기",
 	"find-x": "{{value}}찾기",
@@ -188,6 +191,7 @@
 	"other-specify": "다른거 (명시 해주세요)",
 	"page-title": {
 		"base": "{{- title}} -InReach",
+		"edit-mode": "{{- title}} [편집 모드] - 인리치",
 		"search-results": "검색 결과"
 	},
 	"password": "비밀번호",
@@ -412,9 +416,13 @@
 		"please-wait": "잠시만요...",
 		"prev": "이전",
 		"print": "프린트",
+		"publish": "출판하기",
+		"restore": "복원",
+		"reverify": "재확인",
 		"review": "후기",
 		"reviews": "후기들",
 		"save": "저장",
+		"save-changes": "변경 저장",
 		"saved": "저장됨",
 		"search": "검색",
 		"service-hours": "서비스한 시간",
@@ -423,6 +431,7 @@
 		"sign-up": "등록하기",
 		"skip": "넘어가기",
 		"support": "지원하기",
+		"unpublish": "출판하기 취소",
 		"website": "웹사이트",
 		"yes": "예"
 	},

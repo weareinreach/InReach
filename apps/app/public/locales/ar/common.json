@@ -114,6 +114,9 @@
 		"try-again-text": "<Text>حدث خطأ ما! الرجاء المحاولة مرة أخرى</Text>"
 	},
 	"exclude": "استبعاد",
+	"exit": {
+		"edit-mode": "الخروج من وضع التحرير"
+	},
 	"filter-by-service": "تصفية حسب الخدمات",
 	"find-resources": "البحث عن الموارد",
 	"find-x": "البحث عن {{value}}",
@@ -193,6 +196,7 @@
 	"other-specify": "أخرى (يرجى التحديد)",
 	"page-title": {
 		"base": "{{title}} - InReach",
+		"edit-mode": "{{- title}} [EDIT MODE] - الوصول",
 		"search-results": "نتائج البحث"
 	},
 	"password": "كلمة المرور",
@@ -417,9 +421,13 @@
 		"please-wait": "الرجاء الانتظار...",
 		"prev": "المسبق",
 		"print": "طباعة",
+		"publish": "نشر",
+		"restore": "إستعادة",
+		"reverify": "إعادة التحقق",
 		"review": "مراجعة",
 		"reviews": "عمليات المراجعة",
 		"save": "حفظ",
+		"save-changes": "حفظ التغييرات",
 		"saved": "محفوظ",
 		"search": "البحث",
 		"service-hours": "ساعات الخدمة",
@@ -428,6 +436,7 @@
 		"sign-up": "تسجيل الدخول",
 		"skip": "تخطي",
 		"support": "الدعم",
+		"unpublish": "إلغاء النشر",
 		"website": "الموقع",
 		"yes": "نعم"
 	},

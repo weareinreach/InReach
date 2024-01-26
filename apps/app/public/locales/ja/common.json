@@ -109,6 +109,9 @@
 		"try-again-text": "<Text>何かが間違っています！もう一度試してください。</Text>"
 	},
 	"exclude": "除外",
+	"exit": {
+		"edit-mode": "編集モードを終了"
+	},
 	"filter-by-service": "サービスで絞り込む",
 	"find-resources": "リソースを探す",
 	"find-x": "{{value}}を検索",
@@ -188,6 +191,7 @@
 	"other-specify": "その他 (指定してください)",
 	"page-title": {
 		"base": "{{title}} -インリーチ",
+		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
 		"search-results": "[検索結果]"
 	},
 	"password": "[パスワード]",
@@ -412,9 +416,13 @@
 		"please-wait": "しばらくお待ちください...",
 		"prev": "前へ",
 		"print": "プリント",
+		"publish": "公開",
+		"restore": "復元",
+		"reverify": "再確認する",
 		"review": "レビュー",
 		"reviews": "レビュー",
 		"save": "保存",
+		"save-changes": "変更を保存",
 		"saved": "保存しました",
 		"search": "検索",
 		"service-hours": "サービス時間",
@@ -423,6 +431,7 @@
 		"sign-up": "サインアップ",
 		"skip": "スキップ",
 		"support": "サポート",
+		"unpublish": "公開しない",
 		"website": "ウェブサイト",
 		"yes": "はい"
 	},
