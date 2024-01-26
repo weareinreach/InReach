@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/react'
 
 import { commonTheme as theme } from '~ui/theme/common'
 
-import { Badge, BadgeGroup } from './Badge'
+import { Badge, BadgeGroup } from './index'
 
 export default {
 	title: 'Design System/Tags and Badges',
@@ -271,15 +271,15 @@ export const ServiceGroup = {
 
 export const Verified = {
 	args: {
-		variant: 'verified',
 		lastverified: new Date(2023, 1, 15),
 	},
 	parameters: {
 		controls: {
-			include: ['lastverified', 'variant'],
+			include: ['lastverified'],
 		},
 	},
-} satisfies StoryDef
+	render: (args) => <Badge.Verified {...args} />,
+} satisfies StoryObj<typeof Badge.Verified>
 
 export const Claimed = {
 	args: {
@@ -333,13 +333,13 @@ export const Remote = {
 
 export const National = {
 	args: {
-		variant: 'national',
-		tsKey: 'USA.name',
+		countries: ['US'],
 	},
-} satisfies StoryDef
+	render: (args) => <Badge.National {...args} />,
+} satisfies StoryObj<typeof Badge.National>
 export const NationalMultiple = {
 	args: {
-		variant: 'national',
-		tsKey: ['USA.name', 'CAN.name'],
+		countries: ['US', 'CA'],
 	},
-} satisfies StoryDef
+	render: (args) => <Badge.National {...args} />,
+} satisfies StoryObj<typeof Badge.National>
