@@ -192,7 +192,7 @@
 	"other-specify": "Otra (por favor especifique)",
 	"page-title": {
 		"base": "{{- title}} - InReach",
-		"edit-mode": "{{- title}} [MODO EDIT] - Alcance",
+		"edit-mode": "{{- title}} [MODO EDIT] - InReach",
 		"search-results": "Resultados de búsqueda"
 	},
 	"password": "Contraseña",
