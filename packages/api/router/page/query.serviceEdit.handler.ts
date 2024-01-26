@@ -15,11 +15,16 @@ export const serviceEdit = async ({ ctx, input }: TRPCHandlerParams<TServiceEdit
 				createdAt: true,
 				updatedAt: true,
 				serviceName: { select: { tsKey: { select: { key: true, text: true, ns: true } } } },
+				description: { select: { tsKey: { select: { key: true, text: true, ns: true } } } },
+				services: { select: { tag: { select: { id: true, tsKey: true, tsNs: true } } } },
 			},
 		})
-		const { serviceName, ...rest } = result ?? {}
+		if (!result) return null
+		const { serviceName, description, services, ...rest } = result
 		return {
 			name: serviceName?.tsKey,
+			description: description?.tsKey,
+			services: services?.map((service) => ({ ...service.tag, variant: 'service' as const })),
 			...rest,
 		}
 	} catch (error) {

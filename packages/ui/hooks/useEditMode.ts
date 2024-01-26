@@ -9,7 +9,13 @@ export const useEditMode = () => {
 	if (!ctx) {
 		throw new Error('useEditMode must be used within a EditModeProvider')
 	}
-	const isEditMode = router.pathname.endsWith('/edit')
+	const editPaths: (typeof router.pathname)[] = [
+		'/org/[slug]/edit',
+		'/org/[slug]/[orgLocationId]/edit',
+		'/org/[slug]/[orgLocationId]/edit/[orgServiceId]',
+	]
+
+	const isEditMode = editPaths.includes(router.pathname)
 
 	return {
 		isEditMode,
