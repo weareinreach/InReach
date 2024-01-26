@@ -1,3 +1,4 @@
+import { DevTool } from '@hookform/devtools'
 import { createStyles, Divider, Grid, Skeleton, Stack, Tabs, Title, useMantineTheme } from '@mantine/core'
 import { type InferGetServerSidePropsType, type NextPage } from 'next'
 import Head from 'next/head'
@@ -22,7 +23,7 @@ import { VisitCard } from '@weareinreach/ui/components/sections/VisitCard'
 import { OrgLocationPageLoading } from '@weareinreach/ui/loading-states/OrgLocationPage'
 import { api } from '~app/utils/api'
 import { getServerSideTranslations } from '~app/utils/i18n'
-import { MultiSelectPopover } from '~ui/components/data-portal/MultiSelectPopover'
+import { MultiSelectPopover } from '~ui/components/data-portal/MultiSelectPopover/hook-form'
 
 const useStyles = createStyles((theme) => ({
 	tabsList: {
@@ -66,11 +67,12 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 			refetchOnWindowFocus: false,
 		}
 	)
+	const defaultFormValues = data
+		? { name: data.name, services: data.services.map(({ serviceId }) => serviceId) }
+		: undefined
+
 	const formMethods = useForm<FormSchema>({
-		values: {
-			name: data?.name,
-			services: data?.services.map(({ serviceId }) => serviceId) ?? [],
-		},
+		values: defaultFormValues,
 	})
 
 	const hasAlerts = Array.isArray(alertData) && alertData.length > 0
@@ -172,7 +174,13 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 								<Stack spacing={20} ref={servicesRef}>
 									<Stack spacing={8}>
 										<Title order={3}>{'Associate service(s) to this location'}</Title>
-										<MultiSelectPopover label='Services available' data={orgServices} />
+										<MultiSelectPopover
+											label='Services available'
+											data={orgServices}
+											control={formMethods.control}
+											name='services'
+											indicateWhenDirty
+										/>
 									</Stack>
 									<Stack spacing={8}>
 										<Title order={3}>{'Associated services'}</Title>
@@ -195,6 +203,7 @@ const OrgLocationPage: NextPage<InferGetServerSidePropsType<typeof getServerSide
 						<VisitCard locationId={data.id} edit />
 					</Stack>
 				</Grid.Col>
+				<DevTool control={formMethods.control} />
 			</FormProvider>
 		</>
 	)
