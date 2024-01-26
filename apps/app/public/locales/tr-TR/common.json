@@ -110,6 +110,9 @@
 		"try-again-text": "<Text>Bir şeyler ters gitti! Lütfen tekrar deneyin.</Text>"
 	},
 	"exclude": "Hariç",
+	"exit": {
+		"edit-mode": "Düzenleme modundan çık"
+	},
 	"filter-by-service": "Hizmetlere göre filtrele",
 	"find-resources": "Kaynakları bulun",
 	"find-x": "Bul {{value}}",
@@ -189,6 +192,7 @@
 	"other-specify": "Diğer (lütfen belirtin)",
 	"page-title": {
 		"base": "{{- title}} - inReach",
+		"edit-mode": "{{- title}} [DÜZENLEME MODU] - inReach",
 		"search-results": "Arama Sonuçları"
 	},
 	"password": "Şifre",
@@ -413,9 +417,13 @@
 		"please-wait": "Lütfen bekleyin...",
 		"prev": "Önceki",
 		"print": "Yazdır",
+		"publish": "Yayınla",
+		"restore": "Geri Yükleme",
+		"reverify": "Yeniden Doğrulayın",
 		"review": "Gözden Geçirme",
 		"reviews": "Yorumlar",
 		"save": "Kaydet",
+		"save-changes": "Değişiklikleri kaydet",
 		"saved": "Kaydedildi",
 		"search": "Arama",
 		"service-hours": "Hizmet Saatleri",
@@ -424,6 +432,7 @@
 		"sign-up": "Üye ol",
 		"skip": "Atla",
 		"support": "Destek",
+		"unpublish": "Yayınlanmayı Kaldır",
 		"website": "İnternet sitesi",
 		"yes": "Evet"
 	},

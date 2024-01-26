@@ -1,5 +1,6 @@
 {
 	"banner": {
+		"donate": "Hilf InReach für alle kostenlos. <DonateLink>Spende jetzt!</DonateLink>💝",
 		"redesign": "Lesen Sie mehr über den Start des InReach App-Redesigns in unserem Blog. <Link>Erfahre mehr.</Link>"
 	},
 	"call-out": {
@@ -36,7 +37,7 @@
 	"values": {
 		"free": "<Title2>Kostenlos für immer 🔑</Title2>\n<Text>Unsere Technologieplattform ist 100% kostenlos für alle, um sichere Hilfe zu gewährleisten, ist immer InReach.</Text>\n<LinkFree>Spenden Sie uns, um unsere Plattform frei zu halten.</LinkFree>",
 		"innovative": "<Title2>Innovativ :funkeln:</Title2>\n<Text>Wir sind die weltweit erste Technologieplattform, die LGBTQ+ Menschen mit Verfolgung oder Diskriminierung mit Sicherheit begegnet unabhängig überprüfte Ressourcen.</Text>\n<LinkInnovative>Sehen Sie sich unseren Quellcode an und tragen Sie bei.</LinkInnovative>",
-		"intersectional": "<Title2>Intersektional✊🏿<unk> :raised_fist_medium dark_skin_tone:✊🏽</Title2>\n<Text>Wir glauben, dass die Gleichheit von LGBTQ+ Trans Gerechtigkeit erfordert Flüchtlingsrecht, rassische Gerechtigkeit, reproduktive Gerechtigkeit, Sprachgerechtigkeit und vieles mehr.</Text>\n<LinkIntersect>Erfahre mehr über unseren Überprüfungsprozess.</LinkIntersect>",
+		"intersectional": "<Title2>Intersektional ✊🏿‍✊🏾✊🏽</Title2>\n<Text>Wir glauben, dass die Gleichheit von LGBTQ+ Trans Gerechtigkeit erfordert Flüchtlingsrecht, rassische Gerechtigkeit, reproduktive Gerechtigkeit, Sprachgerechtigkeit und vieles mehr.</Text>\n<LinkIntersect>Erfahre mehr über unseren Überprüfungsprozess.</LinkIntersect>",
 		"our-values": "Unsere Werte",
 		"safety-first": "<Title2>Safety-first 🔒</Title2>\n<Text>We know online anonymity can be a life-or-death issue for LGBTQ+ people. That's why our App is designed to protect users' confidentiality and safety online.</Text>\n<LinkSafety>Learn more about our privacy policy.</LinkSafety>"
 	}

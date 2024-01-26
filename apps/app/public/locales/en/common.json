@@ -110,6 +110,9 @@
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
 	"exclude": "Exclude",
+	"exit": {
+		"edit-mode": "Exit edit mode"
+	},
 	"filter-by-service": "Filter by services",
 	"find-resources": "Find resources",
 	"find-x": "Find {{value}}",
@@ -189,6 +192,7 @@
 	"other-specify": "Other (please specify)",
 	"page-title": {
 		"base": "{{- title}} - InReach",
+		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
 		"search-results": "Search Results"
 	},
 	"password": "Password",
@@ -423,9 +427,13 @@
 		"please-wait": "Please wait...",
 		"prev": "Prev",
 		"print": "Print",
+		"publish": "Publish",
+		"restore": "Restore",
+		"reverify": "Reverify",
 		"review": "Review",
 		"reviews": "Reviews",
 		"save": "Save",
+		"save-changes": "Save changes",
 		"saved": "Saved",
 		"search": "Search",
 		"service-hours": "Service hours",
@@ -434,6 +442,7 @@
 		"sign-up": "Sign up",
 		"skip": "Skip",
 		"support": "Support",
+		"unpublish": "Unpublish",
 		"website": "Website",
 		"yes": "Yes"
 	}

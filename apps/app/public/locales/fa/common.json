@@ -110,6 +110,9 @@
 		"try-again-text": "<Text>Something went wrong! Please try again.</Text>"
 	},
 	"exclude": "محروم کردن",
+	"exit": {
+		"edit-mode": "Exit edit mode"
+	},
 	"filter-by-service": "فیلتر بر اساس خدمات",
 	"find-resources": "منابع را پیدا کنید",
 	"find-x": "پیدا کردن {{value}}",
@@ -189,6 +192,7 @@
 	"other-specify": "دیگر (لطفا مشخص کنید)",
 	"page-title": {
 		"base": "{{title}} - دور از دسترس",
+		"edit-mode": "{{- title}} [EDIT MODE] - InReach",
 		"search-results": "نتایج جستجو"
 	},
 	"password": "کلمه عبور",
@@ -413,9 +417,13 @@
 		"please-wait": "لطفا صبر کنید...",
 		"prev": "قبلی",
 		"print": "چاپ",
+		"publish": "Publish",
+		"restore": "Restore",
+		"reverify": "Reverify",
 		"review": "مرور",
 		"reviews": "نقدها",
 		"save": "Save",
+		"save-changes": "Save changes",
 		"saved": "Saved",
 		"search": "جستجو",
 		"service-hours": "Service hours",
@@ -424,6 +432,7 @@
 		"sign-up": "ثبت نام کنید",
 		"skip": "پرش",
 		"support": "Support",
+		"unpublish": "Unpublish",
 		"website": "Website",
 		"yes": "بله"
 	},
