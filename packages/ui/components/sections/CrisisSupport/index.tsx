@@ -28,12 +28,9 @@ export const CrisisSupport = ({ children, role }: ContainerProps) => {
 		role === 'international' ? (
 			<>
 				<Stack spacing={16}>
-					<Badge
-						variant='service'
-						tsKey='international-support.CATEGORTYNAME'
-						hideTooltip
-						className={classes.categoryBadge}
-					/>
+					<Badge.Service hideTooltip className={classes.categoryBadge}>
+						{t('international-support.CATEGORTYNAME')}
+					</Badge.Service>
 					<Title order={2}>{t('common:crisis-support.intl-we-recommend')}</Title>
 					<Text>{t('common:crisis-support.intl-these-verified')}</Text>
 				</Stack>
@@ -47,12 +44,9 @@ export const CrisisSupport = ({ children, role }: ContainerProps) => {
 		) : (
 			<>
 				<Stack spacing={16}>
-					<Badge
-						variant='service'
-						tsKey='crisis-support.CATEGORYNAME'
-						hideTooltip
-						className={classes.categoryBadge}
-					/>
+					<Badge.Service hideTooltip className={classes.categoryBadge}>
+						{t('crisis-support.CATEGORYNAME')}
+					</Badge.Service>
 					<Title order={2}>{t('common:crisis-support.natl-find-help-now')}</Title>
 					<Trans i18nKey='common:crisis-support.natl-these-verified' components={{ Text: <Text></Text> }} />
 				</Stack>
