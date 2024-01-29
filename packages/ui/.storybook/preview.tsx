@@ -111,10 +111,7 @@ declare module '@storybook/react' {
 		locale?: LocaleCodes
 		i18n?: typeof i18n
 		viewport?: ViewportConfig
-		design?: {
-			type: 'figma'
-			url: `https://${string}`
-		}
+		design?: DesignParams | DesignParams[]
 		msw?: RequestHandler[] | { handlers: RequestHandler[] | Record<string, RequestHandler> }
 		nextAuthMock?: { session: keyof typeof authStates }
 		badges?: BADGE[]
@@ -136,3 +133,15 @@ type PseudoStates =
 	| 'visited'
 	| 'link'
 	| 'target'
+
+type DesignParams = { name?: string } & (
+	| {
+			type: 'figma'
+			url: `https://${string}`
+	  }
+	| {
+			type: 'figspec'
+			url: `https://${string}`
+			accessToken: string
+	  }
+)
