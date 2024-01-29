@@ -31,7 +31,7 @@ import { getFreeText, useSlug } from '~ui/hooks'
 import { isValidIcon } from '~ui/icon'
 import { trpc as api } from '~ui/lib/trpcClient'
 
-import { ModalTitle, type ModalTitleProps } from './ModalTitle'
+import { ModalTitle, type ModalTitleProps } from '../ModalTitle'
 
 const useStyles = createStyles((theme) => ({
 	sectionDivider: {
@@ -198,8 +198,8 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 							break
 						}
 						case 'phone': {
-							const country = locations.find(({ location }) => Boolean(location.country))?.location.country
-								.cca2
+							const country = locations.find(({ location }) => Boolean(location.country))?.location?.country
+								?.cca2
 							if (!country) break
 							contactData.phones.push({
 								id,
@@ -449,7 +449,7 @@ const ServiceModalBody = forwardRef<HTMLButtonElement, ServiceModalProps>(({ ser
 					component='button'
 					ref={ref}
 					onClick={() => {
-						serviceModalEvent.opened({ serviceId, serviceName: serviceName?.tsKey.text, orgSlug: slug })
+						serviceModalEvent.opened({ serviceId, serviceName: serviceName?.tsKey?.text, orgSlug: slug })
 						handler.open()
 					}}
 					{...props}

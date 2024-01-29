@@ -6,7 +6,7 @@ import { organization } from '~ui/mockData/organization'
 import { savedList } from '~ui/mockData/savedList'
 import { service } from '~ui/mockData/service'
 
-import { ServiceModal } from './Service'
+import { ServiceModal } from './index'
 
 const serviceId = 'svce_KLSDJFKLSJDF'
 
