@@ -74,7 +74,7 @@
 		"embla-carousel-autoplay": "7.1.0",
 		"embla-carousel-react": "7.1.0",
 		"flat": "6.0.1",
-		"i18next": "23.7.20",
+		"i18next": "23.8.1",
 		"i18next-browser-languagedetector": "7.2.0",
 		"i18next-chained-backend": "4.6.2",
 		"i18next-http-backend": "2.4.2",
@@ -111,7 +111,7 @@
 		"@types/eslint": "8.56.2",
 		"@types/gtag.js": "0.0.18",
 		"@types/luxon": "3.4.2",
-		"@types/node": "20.11.7",
+		"@types/node": "20.11.10",
 		"@types/react": "18.2.48",
 		"@types/react-dom": "18.2.18",
 		"@types/umami": "0.1.5",
@@ -125,7 +125,7 @@
 		"eslint": "8.56.0",
 		"eslint-plugin-i18next": "6.0.3",
 		"i18next-hmr": "3.0.4",
-		"listr2": "8.0.1",
+		"listr2": "8.0.2",
 		"prettier": "3.2.4",
 		"trpc-client-devtools-link": "0.2.1-next",
 		"trpc-panel": "1.3.4",
@@ -140,7 +140,7 @@
 	"nextBundleAnalysis": {
 		"budget": 588800,
 		"budgetPercentIncreaseRed": 20,
-		"minimumChangeThreshold": 0,
+		"minimumChangeThreshold": 768,
 		"showDetails": true
 	}
 }
