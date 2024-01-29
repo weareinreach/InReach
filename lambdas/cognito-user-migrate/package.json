@@ -28,7 +28,7 @@
 	"devDependencies": {
 		"@types/aws-lambda": "8.10.132",
 		"@types/eslint": "8.56.2",
-		"@types/node": "20.11.7",
+		"@types/node": "20.11.10",
 		"@vercel/ncc": "0.38.1",
 		"@weareinreach/config": "workspace:*",
 		"@weareinreach/eslint-config": "0.100.0",
