@@ -3,7 +3,7 @@ name: PR Labels
 
 on:
   pull_request:
-    types: [opened, labeled, unlabeled, reopened, edited, ready_for_review, review_requested]
+    types: [opened, labeled, unlabeled, synchronize, reopened, edited, ready_for_review, review_requested]
 
 jobs:
   pr_labels:
